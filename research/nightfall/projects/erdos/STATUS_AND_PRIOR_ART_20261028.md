@@ -82,6 +82,7 @@ This bracket should not be presented with a completely certified lower-end statu
 - [Ben Zanghi, independent 4096-cell normalization warning](https://www.benzanghi.com/blog/erdos-minimum-overlap-technical).
 - [NIGHTFALL receipt (2026-10-27)](../../audit/erdos-arena-submission-receipt.json).
 - [Reviewer issue #1](https://github.com/d3lefts/d3lefts/issues/1).
+- [Missing accepted-submission identity issue #6](https://github.com/d3lefts/d3lefts/issues/6).
 - [Frozen certificate publication issue #5](https://github.com/d3lefts/d3lefts/issues/5).
 
 **Interpretation policy:** Internal independent implementation ≠ independent external specialist referee. A timestamped leaderboard screenshot ≠ a mathematical construction certificate. A verified finite numerical inequality ≠ an independently reviewed analytic transfer theorem.
