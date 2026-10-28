@@ -21,7 +21,7 @@ Define the twisted translation label \(\delta(t)=S(t)t^{-1}\), its image \(D=\de
 
 If the minimum is zero, distinct messages have identical encoded words, so the separation zero is a statement about the encoding map. For positive minimum it equals the usual minimum code distance.
 
-The label fibers are exactly the **right cosets** of \(H\), giving \(|D|=q\). Maximizing (1) over all translation tuples gives the sharp formula
+The label fibers are exactly the **left cosets** \(tH\) of \(H\), giving \(|D|=q\). Maximizing (1) over all translation tuples gives the sharp formula
 
 \[
 \boxed{\max_T d_{\min}(C_T)=m-\lceil m/q\rceil.}
@@ -53,7 +53,7 @@ Thus, for fixed \(x\ne y\), every matching coordinate belongs to one and the sam
 \[
  S(t)^{-1}S(u)=t^{-1}u,
 \]
-which says \(t^{-1}u\in H\). Hence all labels are in bijection with the right coset set \(G/H\); each class has \(h\) translation elements, and \(|D|=q\). No normality of \(H\) is assumed.
+which says \(t^{-1}u\in H\). Hence all labels are in bijection with the left coset set \(G/H\); each class has \(h\) translation elements, and \(|D|=q\). No normality of \(H\) is assumed.
 
 **Lemma 3 (every label attainable).** For \(c\in D\) with \(c\ne e\), take \(y=e\) and \(x=c\). For \(c=e\), choose \(y\) moved by \(S\), and put \(x=S(y)\ne y\). In both cases \(S(y)^{-1}x=c\). Therefore some pair of distinct messages realizes all \(n_c\) collisions of every label. Lemma 1 gives (1), and balancing \(m\) items over \(q\) available labels gives (2).
 
@@ -131,3 +131,14 @@ The expression extends continuously to \(p=0,1\). A universal guarantee under an
 - Bailey et al., *Increasing the minimum distance of codes by twisting*, Electronic Journal of Combinatorics 25(3), 2018: https://www.combinatorics.org/ojs/index.php/eljc/article/download/v25i3p36/pdf/
 - Gluesing-Luerssen and Lehmann, *Automorphism groups and isometries for cyclic orbit codes*, Advances in Mathematics of Communications 17(1), 2023: https://www.aimsciences.org/article/doi/10.3934/amc.2021040
 - NIGHTFALL Part I & II original finite abelian shadow-code construction: `research/nightfall/projects/involution-shadow-codes/`.
+### Priority assessment and terminology correction — 28 October 2026
+
+The label fiber identity \(\delta(t)=\delta(u)\iff t^{-1}u\in H\) gives the **left cosets** \(tH\), conventionally denoted \(G/H\). An earlier draft called them right cosets; this terminology has been corrected. The exact distance, full spectrum, and erasure conclusions remain unchanged.
+
+The coset-embedding mechanism is established in the theory of symmetric spaces: see the Cartan embedding map \(g\mapsto g\sigma(g^{-1})\) in Gudmundsson and Lindström, *A Unifying Framework for Complex-Valued Eigenfunctions via the Cartan Embedding* (2025), https://doi.org/10.1007/s12220-025-02090-5. Our label \(\delta(t)=\sigma(t)t^{-1}\) is exactly that map evaluated at \(g=\sigma(t)\).
+
+Existing research on **twisted permutation codes and their inner distance distributions** includes Gillespie, Praeger, Spiga, *Twisted permutation codes*, *Journal of Group Theory* 18 (2015), 407–433, https://doi.org/10.1515/jgth-2014-0049; and Akbari, Gillespie, Praeger, *Increasing the Minimum Distance of Codes by Twisting*, *Electronic Journal of Combinatorics* 25 (2018), #P3.36, https://doi.org/10.37236/5852. These constructions differ in definition; they establish that group-automorphism coding and distance-distribution analyses precede our manuscript.
+
+The balanced allocation proof is an application of classical discrete convexity/majorization. See Hwang and Rothblum, *Partition-Optimization with Schur Convex Sum Objective Functions*, *SIAM Journal on Discrete Mathematics* 18 (2004), 512–524, https://doi.org/10.1137/S0895480198347167.
+
+**Publication novelty:** The exact combination of orbit-symbol encoding, closed pairwise enumerator, and all-cardinality erasure formulas was not located in this targeted source audit. Absence from a finite literature search is insufficient evidence of a globally original theorem. Treat this as an independently proved extension **within the NIGHTFALL research program**, with mathematical priority **unresolved**. No unconditional worldwide novelty claim is supported.
