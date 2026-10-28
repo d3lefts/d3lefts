@@ -3,6 +3,7 @@
 Static, dependency-free site for the NIGHTFALL PHASESHIFT research archive.
 
 - `index.html` — editorial research portfolio, filterable source index, open review invitations.
+- Discovery Engine: discovery.html, discovery-core.js, discovery-app.js, discovery.css — executable bounded proxy lab and portable evidence workspace.
 - `review.html` — four independent audit briefs, status disclaimers, and structured GitHub reporting forms.
 - `evidence.html` — reproducibility archive hashes, evidence-access status, desktop release steps.
 - `ai-safety.html` — September theorem/evidence series, with SourceBound evaluated separately.

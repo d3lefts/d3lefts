@@ -105,6 +105,10 @@ def main() -> int:
         FAILURES.append(f"Sitemap mismatch: missing={sorted(expected_urls - actual_urls)}, extra={sorted(actual_urls - expected_urls)}")
     for page_path, parsed in pages.items():
         src = page_path.read_text(encoding="utf-8")
+        if page_path.name == "discovery.html":
+            if not all(k in src for k in ("discovery-core.js", "discovery-app.js", "discovery.css", 'id="app"')):
+                FAILURES.append("Discovery Engine dependencies / mount missing")
+            continue
         if "menu-button" not in parsed.ids or "site-nav" not in parsed.ids:
             FAILURES.append(f"{page_path}: missing responsive navigation control or target")
         if not re.search(r'<script\s+src="site.js"\s+defer\s*></script>', src):

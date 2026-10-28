@@ -55,6 +55,19 @@ try{
     assert.fail(file+" horizontal overflow "+overflow+"px at "+width+"; culprits="+JSON.stringify(culprits));
    }
   }
+  await page.goto(origin+"discovery.html",{waitUntil:"load"});
+  assert.equal(await page.locator(".context h1").innerText(),"Minimum overlap · EA #36","Discovery Engine initial project");
+  await page.locator('[data-tab="experiments"]').first().click();
+  await page.locator("#prediction").fill("Finite toy max <= 3");
+  await page.locator('[data-act="run"]').first().click();
+  assert.equal(await page.locator(".evidence").count(),1,"Discovery experiment saved");
+  assert.match(await page.locator(".audit-flags").innerText(),/DIRECT REPLAY PASS/,"Exact second-path replay");
+  await page.locator("[data-replay]").first().click();
+  await page.locator("[data-tab=package]").first().click();
+  const [zipDownload]=await Promise.all([page.waitForEvent("download"),page.locator("[data-act=export]").first().click()]);
+  assert.match(zipDownload.suggestedFilename(),/\.zip$/,"Exported ZIP");
+  const engineOverflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
+  assert.ok(engineOverflow<=3,"Discovery overflow: "+engineOverflow+" at "+width);
   if(width===390){
    await page.goto(origin+"index.html",{waitUntil:"load"});
    await page.locator("#project-search").fill("werner");
@@ -65,7 +78,7 @@ try{
   assert.deepEqual(faults,[],"Browser failures at "+width+": "+faults.join("; "));
   await page.close();
  }
- console.log("PASS: 5 pages × 3 widths, visible mobile links, Escape, overflow, catalogue search");
+ console.log("PASS: 5 portfolio pages plus Discovery Engine × 3 widths, exact experiment and ZIP export");
 }finally{
  await browser?.close();
  await new Promise(resolve=>server.close(resolve));

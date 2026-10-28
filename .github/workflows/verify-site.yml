@@ -8,6 +8,8 @@ on:
       - "scripts/check_site.py"
       - "scripts/audit_release_scope.py"
       - "scripts/site_browser_smoke.mjs"
+      - "scripts/test_discovery_core.cjs"
+      - "scripts/test_discovery_worker.py"
       - "scripts/verify_*.py"
       - "research/nightfall/AGENT_TASKS.json"
       - ".github/workflows/verify-site.yml"
@@ -31,7 +33,13 @@ jobs:
       - name: Validate static pages, source links, anchors, and fallback catalogue
         run: python3 scripts/check_site.py
       - name: Parse JavaScript without executing browser code
-        run: node --check docs/site.js
+        run: |
+          node --check docs/site.js
+          node --check docs/discovery-core.js
+          node --check docs/discovery-app.js
+          node scripts/test_discovery_core.cjs
+      - name: Discovery Engine external worker acceptance and tamper tests
+        run: python3 scripts/test_discovery_worker.py
       - name: Self-test offline publication-scope scanner
         run: python3 scripts/audit_release_scope.py --self-test
       - name: Browser smoke test (mobile, tablet, desktop)
