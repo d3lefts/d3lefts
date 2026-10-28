@@ -59,7 +59,7 @@ Neither stronger lower claim has been independently proved in this NIGHTFALL man
 
 The [curated optimization-constants index](https://teorth.github.io/optimizationproblems/constants/1b.html) records Atris's independently replayed exact `0.38085855031642856010…` upper construction. The reported NIGHTFALL internal value is approximately `0.00000218019839923485` smaller, subject to external certificate reproduction and matching normalization. A different 4096-cell construction publicly associated with a score around `0.380856` was reported to contain a grid-width normalization error (corrected objective around `0.38094895`); see [the normalization analysis](https://www.benzanghi.com/blog/erdos-minimum-overlap-technical). It is distinct from the 131,072-cell NIGHTFALL archive.
 
-The [witness identity and prior-art ledger](projects/erdos/STATUS_AND_PRIOR_ART_20261028.md) separates the accepted Arena snapshot, the documented rejected submission, the archived v3 candidate, and the exact mathematical witness. The original binary release remains pending [issue #5](https://github.com/d3lefts/d3lefts/issues/5), and recovery of the accepted submission's original input is tracked in [issue #6](https://github.com/d3lefts/d3lefts/issues/6).
+The [witness identity and prior-art ledger](erdos/STATUS_AND_PRIOR_ART_20261028.md) separates the accepted Arena snapshot, the documented rejected submission, the archived v3 candidate, and the exact mathematical witness. The original binary release remains pending [issue #5](https://github.com/d3lefts/d3lefts/issues/5), and recovery of the accepted submission's original input is tracked in [issue #6](https://github.com/d3lefts/d3lefts/issues/6).
 
 ## Provenance freeze
 
