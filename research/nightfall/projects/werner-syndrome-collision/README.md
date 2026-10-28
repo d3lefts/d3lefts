@@ -14,7 +14,7 @@ Take the nine existing pairs `B = S×T` with `S={(0,0),(1,0),(2,0)}`, `T={(0,0),
 |<vec E_ab, W vec E_cd>| >= 1/4 .
 ```
 
-The maximum absolute **matrix-unit** cross coefficient in the 81×81 off-sector block equals `1/4` for 16 omitted pairs and `1/2` for 56 omitted pairs. This is a bound on matrix entries, **not** the operator norm.
+The maximum absolute **matrix-unit** cross coefficient in the 81×81 off-sector block equals `1/4` for 16 omitted pairs and `1/2` for 56 omitted pairs. The corresponding **sharp operator norms** are, respectively, `3/8` and `1/2`, as independently certified below. These two measurements are different and must be compared separately.
 
 The matrix `C±=E_ab±E_cd` has rank at most two. Hence the decomposition is genuinely non-additive **inside the admissible rank-two witness cone**:
 
@@ -37,6 +37,19 @@ Thus no strictly larger family obtained by simply adding one unrestricted syndro
 
 3. The attached [72_collision_witnesses.json](72_collision_witnesses.json) gives one four-word witness for **each** of the 72 possible extensions, with the old colliding pair and exact numerator. The standalone [checker](../../../../scripts/verify_werner_syndrome_collision.py) verifies the field equations, full coverage, and all coefficients by a **separately derived 16-term subset expansion**. It independently re-enumerates every 81×81 off-sector matrix-unit block and checks the complete maximum-entry histogram. It rejects a corrupted witness coefficient.
 4. The rank of a sum of two rank-one matrix units is at most two, regardless of their row/column supports. The claimed admissible non-additivity follows.
+
+## Exact full operator-norm classification
+
+For each old/new pair, the Werner endpoint kernel conserves the coordinatewise difference `u=a-b=c-d` over `F3^4`. The 81×81 cross operator therefore splits orthogonally into **nine 9×9 matrices** indexed by the nine possible differences `u` satisfying `H(u)=s-t`. Let `N_u=16B_u`, an integer matrix.
+
+A sharp claimed upper bound `||B||≤q/16` is equivalent to the positive semidefiniteness of all `q²I−N_uᵀN_u`. Using exact rational Schur-complement elimination, the independent checker verifies this for each block with `q=6` or `q=8`. At least one block has **nonzero nullity**, certifying equality and thus the exact sharp operator norm. No floating-point eigenvalue estimate is used.
+
+| Omitted single-block extensions | Sharp full coupling operator norm |
+| ---: | ---: |
+| 16 | `3/8` |
+| 56 | `1/2` |
+
+Reproduce with `python3 scripts/verify_werner_collision_operator_norm.py`. The checker additionally rejects a forged oversized interaction. This supplies **quantitative coupling constants** for a future rank-two-aware Schur inequality. It does **not** by itself certify positivity on any new witness class; the diagonal margins and compatibility with the rank-two cone still require proof.
 
 ## Interpretation relative to Lemnis's 4209-dimensional extension
 

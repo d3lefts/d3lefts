@@ -86,6 +86,10 @@ jobs:
         run: |
           python3 -m py_compile scripts/verify_lemnis_4209_independent.py
           python3 scripts/verify_lemnis_4209_independent.py
+      - name: Prove exact sharp Werner cross-sector operator norms
+        run: |
+          python3 -m py_compile scripts/verify_werner_collision_operator_norm.py
+          python3 scripts/verify_werner_collision_operator_norm.py
       - name: Audit all 72 qutrit Werner syndrome collisions with exact formulas
         run: |
           python3 -m py_compile scripts/verify_werner_syndrome_collision.py
