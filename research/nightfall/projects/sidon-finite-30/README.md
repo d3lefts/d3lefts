@@ -28,6 +28,18 @@ The BASE row maximum increases exactly by five under each max-plus multiplicatio
 **Related work:** Jie Ma and Quanyu Tang, *Largest Sidon subsets in weak Sidon sets*, arXiv:2602.23282; 7bkzb8 reader construction (October 2026) establishing 5/9. This note claims neither worldwide novelty nor a new competition record.
 
 
+## Rebuild the independent 7,801-state proof DAG
+
+The original exact DAG is 924,255 bytes and is bundled in the frozen ZIP awaiting Release upload. Its deterministic [public source generator](generate_proof_dag.py) regenerates the identical SHA-256 from the [public 30-point witness](witness_30.txt), using only Python's standard library. Fresh local regeneration on October 28 returned **7,801 nodes**, 8,473 recursive calls, and the exact original file hash:
+
+```bash
+python3 research/nightfall/projects/sidon-finite-30/generate_proof_dag.py
+sha256sum research/nightfall/projects/sidon-finite-30/sidon_no_18_proof.json
+# 4e31c53667cba63db34354eb861f503ac7284a0e76cd7219306dff8239032181
+```
+
+The full original independent proof checker and four mutation fixtures remain inside `NIGHTFALL_SIDON30_MACHINE_PROOF_20261028.zip`. The already public standalone search verifier supplies a separate finite proof path. Generated data is intentionally kept out of the ordinary source tree until the complete original ZIP release is mirrored.
+
 ## Independent machine proof — October 28
 
 An independently generated 7,801-state **proof DAG** now establishes the 30-element `(4,5)` example unconditionally at the finite level. Each branch proves every one of the three possible ways to hit an uncovered three-term progression; terminal states give explicit families of disjoint progressions exceeding the remaining deletion budget. A separate small checker validates all proof transitions without solving the optimization problem anew.
