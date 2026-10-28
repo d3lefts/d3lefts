@@ -30,6 +30,14 @@ GitHub Actions confirms successful Pages deployments on 2026-10-28. Direct publi
 
 The design takes inspiration from editorial research portfolios, while its layout, identity, copy, and review-oriented content are original to NIGHTFALL. All third-party links and mathematical source authors retain their proper attribution.
 
+## Observatory integration status (DRAFT, release-gated)
+
+The Observatory evidence graph, scientific constitution, frozen identifiers, exact Sidon proof replay and five investigation modes have been brought forward into the **owner's 23-line research-library architecture** on a fresh integration branch. The public flagship pages, 23-line research library, Original Findings, agenda, reviewer pages, sitemap and navigation remain unmodified by this integration.
+
+The graph prototype is deliberately **unlinked** until Gate C's matched-budget graph-vs-flat experiment produces inspectable outcomes. Gates A and B cover machine-source integrity and separately implemented finite arithmetic; Gate D requires the completed evaluation and editorial review. This integration PR is a testable preview, not a public discovery claim.
+
+Run `python3 scripts/verify_observatory.py` and `node --check docs/observatory.js`; GitHub Actions additionally checks the byte-exact graph mirror and exercises the browser preview at mobile and desktop widths.
+
 ## Maintenance
 
 Run `python3 scripts/check_site.py`, `node --check docs/site.js`, and `node --check scripts/site_browser_smoke.mjs` at the repository root before updating the live site. The website CI additionally runs headless Chromium checks at mobile and desktop widths, including menu interactions and research filtering. GitHub's workflow [Verify research website](../.github/workflows/verify-site.yml) enforces both on relevant pushes and pull requests. This is **a website-integrity check**, distinct from the mathematics, source SDPs, and external peer review.

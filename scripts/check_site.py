@@ -160,12 +160,37 @@ def main() -> int:
     ids = re.findall(r'^\["([^"]+)"', seeds, re.M)
     if ids != ["ea36", "sidon", "pas"]:
         FAILURES.append(f"ORIGINALITY GATE: Discovery presets must be ea36/sidon/pas; found {ids!r}")
-    # Every public HTML page must be discoverable, and mobile menus must be wired.
+    # Gate D distinguishes an unlinked experimental page from a released page.
+    # A draft Observatory is deliberately excluded from sitemap / public nav.
+    preview_name = "observatory.html"
+    preview = DOCS / preview_name
+    preview_mode = False
+    if preview.is_file():
+        import json
+        gate_path = ROOT / "research/nightfall/observatory/RELEASE_GATES.json"
+        if not gate_path.is_file():
+            FAILURES.append("OBSERVATORY PREVIEW: missing release-gate ledger")
+        else:
+            gate = json.loads(gate_path.read_text(encoding="utf-8"))
+            preview_mode = gate.get("gates", {}).get("D", {}).get("status") == "blocked"
+            if preview_mode:
+                preview_html = preview.read_text(encoding="utf-8")
+                if '<meta name="robots" content="noindex,nofollow">' not in preview_html:
+                    FAILURES.append("OBSERVATORY PREVIEW: blocked research page needs noindex")
+                for page_path, parsed in pages.items():
+                    if page_path.name == preview_name:
+                        continue
+                    if any("observatory.html" in href for href, _ in parsed.links):
+                        FAILURES.append(f"OBSERVATORY PREVIEW: premature public navigation on {page_path.name}")
+            else:
+                FAILURES.append("OBSERVATORY PREVIEW: release promotion requires separate Gate D review")
+    # Every publicly released HTML page must be discoverable.
     sitemap = (DOCS / "sitemap.xml").read_text(encoding="utf-8")
     actual_urls = set(re.findall(r"<loc>([^<]+)</loc>", sitemap))
     expected_urls = {
         "https://d3lefts.github.io/d3lefts/" + ("" if p.name == "index.html" else p.name)
         for p in pages
+        if not (preview_mode and p.name == preview_name)
     }
     if actual_urls != expected_urls:
         FAILURES.append(f"Sitemap mismatch: missing={sorted(expected_urls - actual_urls)}, extra={sorted(actual_urls - expected_urls)}")

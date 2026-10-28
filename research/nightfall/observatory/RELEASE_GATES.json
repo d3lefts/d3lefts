@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "as_of": "2026-10-28",
+  "status": "experimental-preview-only",
+  "gates": {
+    "A": {
+      "status": "passed",
+      "requirement": "Frozen claim identity, schema, typed evidence and allowlisted implication; CI validation",
+      "evidence": "Automated Gate A and mutation-control verification passed in GitHub Actions 2026-10-28 run 40782321424; scientific validity still scoped to cited premises."
+    },
+    "B": {
+      "status": "passed",
+      "requirement": "Second independently implemented exact scientific reproduction with original input bytes, hashes and published receipt",
+      "scope": "Two independently coded exact finite Sidon 30 checks: standalone recursive search and independently verified regenerated 7801-state AP-hitting proof DAG. This is a machine reproducibility result, not external human referee review.",
+      "evidence_run": "https://github.com/d3lefts/d3lefts/actions/runs/40782321424",
+      "artifact": "https://github.com/d3lefts/d3lefts/actions/runs/40782321424/artifacts/12857956395",
+      "artifact_name": "nightfall-sidon-gate-b-proof",
+      "artifact_retention_days": 90,
+      "witness_sha256": "dc4697ce051a57987049199965967cc2b981433816d3daac284454262395978f",
+      "dag_sha256": "4e31c53667cba63db34354eb861f503ac7284a0e76cd7219306dff8239032181",
+      "permanent_archive_needed": true
+    },
+    "C": {
+      "status": "pending",
+      "requirement": "Frozen six-task matched-budget Observatory versus flat baseline evaluation with complete outputs"
+    },
+    "D": {
+      "status": "blocked",
+      "requirement": "A B C passed, scientific editorial review, accessible cross-device UI, external replay"
+    }
+  }
+}

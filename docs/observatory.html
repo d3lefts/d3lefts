@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0c1716">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="NIGHTFALL Observatory: explore immutable scientific claims, typed evidence relationships, proof boundaries, failed transfers and open research dependencies. Experimental preview.">
+<link rel="canonical" href="https://d3lefts.github.io/d3lefts/observatory.html">
+<title>Observatory — NIGHTFALL PHASESHIFT</title>
+<link rel="stylesheet" href="site.css"><link rel="stylesheet" href="observatory.css">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script src="site.js" defer></script><script src="observatory.js" defer></script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a><div class="topline"></div>
+<header class="header">
+  <div class="wrap header-inner">
+    <a href="./" class="brand" aria-label="NIGHTFALL, homepage">
+      <span class="mark" aria-hidden="true">N∕F</span>
+      <span class="brand-copy">NIGHTFALL <span>PHASESHIFT / RESEARCH ARCHIVE</span></span>
+    </a>
+    <button type="button" class="menu-toggle" id="menu-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">MENU +</button>
+    <nav class="nav" id="site-nav" aria-label="Primary navigation">
+      <a href="./#work">Findings</a>
+      <a href="research.html">Research library</a>
+      <a href="observatory.html" aria-current="page">Observatory</a>
+      <a href="agenda.html">Research agenda</a>
+      <a href="./#review">Independent review</a>
+      <a href="./#method">Methods</a>
+      
+      <a href="review.html">Reviewer guide</a>
+      <a href="evidence.html">Evidence access</a>
+      <a class="nav-call" href="https://github.com/d3lefts/d3lefts/tree/main/research/nightfall" target="_blank" rel="noopener">Source archive ↗</a>
+    </nav>
+  </div>
+</header>
+<main id="main" class="obs-shell">
+<div class="obs-wrap">
+<section class="obs-hero" aria-labelledby="obs-title">
+<div><div class="obs-eyebrow">NIGHTFALL / THE OBSERVATORY / EXPERIMENTAL PREVIEW</div>
+<h1 class="obs-title" id="obs-title">Knowledge<br><em>has structure.</em></h1>
+<p>An inspectable map of claims, proofs, dependencies and failed transfers. Explore why a result holds, exactly where it ends, and which experiment might extend it. Relationships are typed; mathematical analogy never implies a theorem.</p>
+</div>
+<div class="obs-meta" aria-label="Registry inventory"><span>SCOPED CLAIMS<strong>14</strong></span><span>TYPED RELATIONS<strong>09</strong></span><span>RELATION CLASSES<strong>05</strong></span><span>PUBLIC RELEASE<strong>GATED</strong></span></div>
+</section>
+<div class="obs-science"><div><strong>Scientific status:</strong> a reproducible registry preview. The weighted block proof is a classical technique with one exact rational illustration. Cross-program positivity theorems, external independent reproduction and matched-budget discovery gains are still open. <a href="https://github.com/d3lefts/d3lefts/blob/32df9e1b2b0049e0dbc7e27a465957a741843c5a/research/nightfall/observatory/CONSTITUTION.md" target="_blank" rel="noopener">Read the scientific constitution</a>.</div></div>
+<section class="obs-toolbar" aria-label="Observatory controls">
+<div class="obs-modes" role="group" aria-label="Choose scientific investigation mode">
+<button class="obs-mode" type="button" data-obs-mode="scope" aria-pressed="true">01 / Scope Boundary</button>
+<button class="obs-mode" type="button" data-obs-mode="evidence" aria-pressed="false">02 / Evidence Trace</button>
+<button class="obs-mode" type="button" data-obs-mode="transfer" aria-pressed="false">03 / Transfer Explorer</button>
+<button class="obs-mode" type="button" data-obs-mode="failure" aria-pressed="false">04 / Failure History</button>
+<button class="obs-mode" type="button" data-obs-mode="frontier" aria-pressed="false">05 / Research Frontier</button>
+</div>
+<div class="obs-toolbar-line"><div class="obs-filters">
+<label for="obs-discipline">DISCIPLINE</label><select id="obs-discipline"><option value="all">All disciplines</option><option value="mathematics">Mathematics</option><option value="quantum">Quantum</option><option value="safety">Safety</option><option value="systems">Systems</option></select>
+<label for="obs-search">FIND CLAIM</label><input id="obs-search" type="search" placeholder="Search claim title..." autocomplete="off"></div>
+<div class="obs-legend" aria-label="Graph edge conventions"><span>Proven / certified</span><span>Proposed / analogy</span><span>Falsified</span></div></div>
+</section>
+<section class="obs-stage" aria-label="Interactive scientific claim network">
+<div class="obs-canvas"><div class="obs-canvas-head"><strong>RESEARCH CLAIM GRAPH / V1</strong><span id="obs-visible-count">Loading graph…</span></div>
+<div class="obs-scroll"><svg id="obs-graph" class="obs-graph" viewBox="0 0 1040 560" role="group" aria-label="Interactive nodes and classified scientific edges. Select nodes with Enter or Space."></svg></div>
+<div class="obs-map-foot"><span id="obs-load-status" role="status">Loading evidence manifest…</span><span>SELECT NODE / SELECT EDGE / TAB TO NAVIGATE</span></div></div>
+<aside class="obs-panel" id="obs-inspector" aria-live="polite"><h2>Evidence is loading</h2><p>The complete static sources are linked below.</p></aside>
+</section>
+<section class="obs-listing" aria-labelledby="obs-listing-title"><div class="obs-listing-head"><h2 id="obs-listing-title">Scope Boundary</h2><p class="obs-section-desc" id="obs-listing-desc">Precise claim scopes and their extension barriers.</p></div>
+<div class="obs-map-foot"><span id="obs-results-count">14 inspectable entries</span><span>Every label is a scoped research statement.</span></div>
+<div class="obs-items" id="obs-items"></div></section>
+<div class="obs-sources">
+<noscript><p>The interactive graph uses JavaScript. The scientific source registry and exact theorem note remain available below.</p></noscript>
+<p>Permanent archive: <a href="https://github.com/d3lefts/d3lefts/blob/047f0f61c9aac887296f28c69e6c55842a7d8d60/research/nightfall/observatory/claims-v1.json" target="_blank" rel="noopener">Claim registry v1</a> ·
+<a href="https://github.com/d3lefts/d3lefts/blob/32df9e1b2b0049e0dbc7e27a465957a741843c5a/research/nightfall/observatory/TRANSFER_0001.md" target="_blank" rel="noopener">Exact block-positivity proof</a> ·
+<a href="https://github.com/d3lefts/d3lefts/blob/32df9e1b2b0049e0dbc7e27a465957a741843c5a/research/nightfall/observatory/TRANSFER_REGISTRY.md" target="_blank" rel="noopener">Transfer history</a> ·
+<a href="https://github.com/d3lefts/d3lefts/blob/32df9e1b2b0049e0dbc7e27a465957a741843c5a/research/nightfall/observatory/GATE_C_PREREGISTRATION.md" target="_blank" rel="noopener">Matched-budget evaluation plan</a> ·
+<a href="https://github.com/d3lefts/d3lefts/blob/32df9e1b2b0049e0dbc7e27a465957a741843c5a/research/nightfall/observatory/RELEASE_GATES.json" target="_blank" rel="noopener">Release status</a>.
+The graph follows registered evidence rather than creating proof by visual proximity.</p>
+</div></div>
+</main>
+<footer class="footer"><div class="wrap footer-bottom"><span>© 2026 Devin J. Wright · NIGHTFALL PHASESHIFT</span><span>Vesper / Observatory · Experimental scientific registry</span></div></footer>
+</body></html>

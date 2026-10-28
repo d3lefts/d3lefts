@@ -1,0 +1,84 @@
+{
+  "schema_version": "Gate-C-Freeze-v1",
+  "freeze_date": "2026-10-28",
+  "frozen_source_commit": "df9511c622c309046180fd0e015aca88577c58ec",
+  "random_seed": 1729,
+  "design": "Paired, two-arm, six-task, blinded decision quality comparison. No outcome-generating trial has been run.",
+  "condition_arms": [
+    "graph",
+    "flat"
+  ],
+  "available_scientific_sources_identical": true,
+  "condition_difference": "Graph arm may inspect frozen typed claims-v1.json; flat arm receives the same underlying sources as a chronological list without typed relationships.",
+  "per_condition_budget": {
+    "model_tokens_input_plus_output": 2000,
+    "external_tool_calls": 20,
+    "wall_clock_minutes": 30
+  },
+  "primary_endpoint": "Number of tasks identifying a decisive scientifically correct next test with exact acceptance criterion under equal budget; judged blinded.",
+  "secondary_endpoints": [
+    "false implication promotion",
+    "valid blocker detection",
+    "exact source citations",
+    "tool calls",
+    "token count",
+    "negative result identification"
+  ],
+  "no_results_or_answer_keys_in_manifest": true,
+  "tasks": [
+    {
+      "id": "FF-01",
+      "family": "finite-field",
+      "source_paths": [
+        "research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/README.md",
+        "research/nightfall/projects/finite-field-retrieval-handoff-excerpt.txt"
+      ],
+      "prompt": "Specify the most decisive exact test for the missing short-vector span-count premise, with the precise field and failure event; state which current downstream identities survive."
+    },
+    {
+      "id": "FF-02",
+      "family": "finite-field",
+      "source_paths": [
+        "research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/README.md",
+        "research/nightfall/projects/discovery-proposals-2026-10-28/README.md"
+      ],
+      "prompt": "Select the smallest reproducible small-field rank experiment that could distinguish a Frobenius-lift rank defect from the fourth-root symmetry ambiguity; define seeds and exact pass/fail."
+    },
+    {
+      "id": "WR-01",
+      "family": "werner",
+      "source_paths": [
+        "research/nightfall/projects/werner-correlated-6-9/S2_4471_CERTIFICATE_AUDIT.md",
+        "research/nightfall/projects/werner-final-4-25/README.md"
+      ],
+      "prompt": "Choose the first exact subspace coupling inequality needed to extend the six-qutrit source-conditional certificate beyond its encoded witness class; specify the unproven margin."
+    },
+    {
+      "id": "WR-02",
+      "family": "werner",
+      "source_paths": [
+        "research/nightfall/projects/werner-final-4-25/README.md",
+        "research/nightfall/projects/werner-atlas/README.md"
+      ],
+      "prompt": "Identify the strongest single falsification check to perform before public promotion of the 25-copy certificate, separating exact downstream arithmetic from inherited source assumptions."
+    },
+    {
+      "id": "SP-01",
+      "family": "spectral",
+      "source_paths": [
+        "research/nightfall/projects/discovery-proposals-2026-10-28/README.md",
+        "research/nightfall/projects/werner-correlated-6-9/S2_4471_CERTIFICATE_AUDIT.md"
+      ],
+      "prompt": "Choose a precise rank-doubling and scale-window experiment testing whether block-diagonal positivity margins dominate off-block operator couplings, with a numerical failure condition."
+    },
+    {
+      "id": "SP-02",
+      "family": "spectral",
+      "source_paths": [
+        "research/nightfall/projects/discovery-proposals-2026-10-28/README.md",
+        "research/nightfall/projects/werner-final-4-25/README.md"
+      ],
+      "prompt": "For a finite-to-infinite positivity claim, identify an explicit sufficient block condition and the mathematical obstruction preventing promotion without uniform tail control."
+    }
+  ]
+}
