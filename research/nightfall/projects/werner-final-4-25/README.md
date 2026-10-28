@@ -32,6 +32,8 @@ Frozen original hashes:
 
 The original [approved Werner 4–20 registry](../werner-atlas/README.md) remains a separate evidence tier: earlier 4–18 stronger alternate values rely on quantitatively imported source margins. No automatic replacement occurs.
 
+A separate six-qutrit no-additional-slack source certificate at t=0.4471 is recorded in [the correlated-spectator audit](../werner-correlated-6-9/S2_4471_CERTIFICATE_AUDIT.md); this does not alter the three-column approved registry.
+
 Original recovered source notes: [dimension-uniform 17–23](UNIVERSAL_17_TO_23_SOURCE_NOTE.md), [earlier all finite k](PRIOR_ALL_FINITE_K_PROOF_20261028.md), [earlier checkpoint](RECOVERED_WERNER_CHECKPOINT_20261028_084128.md).
 
 Source comparison: [Tejasvi S. Tomar, October 2026](https://www.mefyi.com/papers/werner-states-copies/). Originality review remains pending.
