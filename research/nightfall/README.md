@@ -7,6 +7,10 @@
 
 The research program uses representation changes, independent verification, proof-carrying artifacts, and a strict distinction between finite results and global theorems. Competition rankings, mathematical validity, and publication priority are tracked separately.
 
+## AI safety theorem-and-evidence series (review release: 28 October 2026)
+
+The [public peer-review dossier](projects/ai-safety-peer-review-2026-10-28/README.md) unifies September observation, provenance, authorization and oversight theory; SourceBound remains a separately evaluated October implementation. The original 116-file ZIP is frozen separately. Its SHA-256 and public-mirror limitations are recorded in the [release manifest](projects/ai-safety-peer-review-2026-10-28/MANIFEST.md).
+
 ## September foundations and newly recovered results
 
 The initial release emphasized the October mathematics campaign. A dated review of September–October research on 2026-10-28 recovered several important earlier manuscripts. These additions are working research artifacts with source-specific proof statuses, not unconditional priority claims.

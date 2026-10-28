@@ -1,6 +1,7 @@
 "use strict";
 const root="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/";
 const entries=[
+ {category:"ai-safety",name:"AI safety theorem-and-evidence series (Oct 28)",summary:"September oversight theorems, corrected claim registry, 27,740 finite checks, and a separate SourceBound evaluation protocol.",status:"Peer-review edition · external audit requested",path:"projects/ai-safety-peer-review-2026-10-28/README.md"},
  {category:"mathematics",name:"Erdős minimum overlap",summary:"Exact rational upper-bound witness; 131,072 cells and all signed correlations. The platform's rejected oversized submission is recorded separately.",status:"Exact finite witness · review requested",path:"projects/erdos-overlap-paper.md"},
  {category:"quantum",name:"Werner-state undistillability",summary:"Exact dual multipliers and separable spectators for six to nine qutrit copies. Dependent on imported lower-copy inequalities.",status:"Exact conditional constructions",path:"projects/werner-direct-margin/README.md"},
  {category:"mathematics",name:"Finite-field phase retrieval",summary:"Uniform fourth-power sensing and lattice decoding. The original manuscript awaits independent proof analysis.",status:"Manuscript proof · audit pending",path:"projects/finite-field-retrieval-handoff-excerpt.txt"},
