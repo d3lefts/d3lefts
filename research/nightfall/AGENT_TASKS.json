@@ -100,6 +100,20 @@
         "Prior-art novelty not determined",
         "Full separate proof DAG distributed as 120 KB ZIP outside GitHub until release upload"
       ]
+    },
+    {
+      "id": "SAT-UNIVERSAL-FACTOR-NETWORK",
+      "source": "research/nightfall/projects/sat-network-compression.md",
+      "proof": "research/nightfall/projects/sat-network-universal/THEOREM_AND_SCOPE.md",
+      "verifier": "research/nightfall/projects/sat-network-universal/check_structural_certificate.py",
+      "machine_verdict": "research/nightfall/projects/sat-network-universal/AGENT_VERDICT.json",
+      "claim": "Universal weighted q-ary factor partition functions over commutative semirings admit exact bipartite occurrence/equality tensor networks with 3L-2v wires and max degree <=max(3,r); wire count minimal within binary-bridge grammar",
+      "status": "PASS: universally quantified elementary bijection and polynomial-time per-instance structural proof checker; 3829 exhaustive small CNFs, 510 signed weighted factor tests, 11 adversarial certificate rejections",
+      "source_lineage": "Generalizes earlier October 27 SAT-degree-three compiler; COPY tensor encodings have established prior art",
+      "unverified_external_dependencies": [
+        "No outside contraction algorithm audited",
+        "No formal proof-assistant formalization performed"
+      ]
     }
   ]
 }
