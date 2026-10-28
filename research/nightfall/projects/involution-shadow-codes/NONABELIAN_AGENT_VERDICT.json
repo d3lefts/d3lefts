@@ -11,9 +11,9 @@
     "Balanced label allocations simultaneously maximize minimum distance and minimize every B_r and every independent-erasure failure probability"
   ],
   "independent_checks": {
-    "cyclic_and_nonabelian_automorphism_actions": 13,
-    "translation_tuples_verified": 20554,
-    "ordered_distinct_message_pairs_verified": 772976,
+    "cyclic_and_nonabelian_automorphism_actions": 14,
+    "translation_tuples_verified": 20736,
+    "ordered_distinct_message_pairs_verified": 1417256,
     "independent_S4_cayley_structural_instance": {
       "group_order": 24,
       "fixed_subgroup_order": 4,
@@ -29,7 +29,8 @@
     "direct_S4_erasure_subsets": 8192,
     "allocations_exhaustively_compared": 8568,
     "optimal_allocations": 6,
-    "adversarial_corruptions_rejected": 7
+    "adversarial_corruptions_rejected": 7,
+    "simple_group_test": "A5 outer involution; order 60, |Fix(S)|=6, q=10, coboundary image non-subgroup"
   },
   "tests": [
     "verify_nonabelian.py -- independently constructs and checks finite group Cayley tables, automorphisms, direct orbit encoding and all ordered pair spectra (full source in downloadable audit archive)",
