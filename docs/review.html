@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#18221e">
+<meta name="description" content="Independent verification assignments for NIGHTFALL mathematical and AI-safety research, with precise falsification targets and source documents.">
+<title>Independent Review — NIGHTFALL</title>
+<link rel="stylesheet" href="site.css"><link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>
+.review-hero{padding:85px 0 70px;border-bottom:1px solid var(--line)}.review-hero h1{font:400 clamp(65px,9vw,135px)/.89 var(--serif);letter-spacing:-.03em;max-width:1000px;margin:30px 0 36px}.review-hero h1 i{color:#658572}.review-hero p{font-size:18px;line-height:1.6;max-width:760px;color:var(--muted)}
+.review-summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border-bottom:1px solid var(--line)}.review-summary article{padding:30px 30px;border-right:1px solid var(--line)}.review-summary article:first-child{padding-left:0}.review-summary article:last-child{border:0}.review-summary b{display:block;font:400 33px var(--serif);margin:10px 0}.review-summary span{color:var(--muted);font:12px/1.5 var(--mono)}
+.review-dossier{display:grid;grid-template-columns:.5fr 1.5fr;gap:55px;padding:74px 0 80px;border-bottom:1px solid var(--line)}.dossier-number{font:500 12px var(--mono);color:var(--muted)}.dossier-number small{display:block;margin-top:11px;line-height:1.6}.dossier-content h2{font:400 clamp(46px,5.4vw,75px)/1 var(--serif);letter-spacing:-.02em;margin-bottom:21px}.dossier-desc{max-width:730px;color:var(--muted);font-size:15px;line-height:1.7;margin-bottom:28px}.status-strip{font:500 11px var(--mono);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 0;color:#45614c;margin-bottom:26px}.checks{list-style:none;padding:0;counter-reset:check}.checks li{counter-increment:check;display:grid;grid-template-columns:32px 1fr;gap:17px;max-width:790px;padding:16px 0;border-bottom:1px solid #d9dbd3;font-size:14px;line-height:1.57}.checks li:before{content:counter(check,decimal-leading-zero);font:11px var(--mono);color:var(--muted);padding-top:4px}.source-links{display:flex;align-items:center;gap:15px;flex-wrap:wrap;margin-top:30px}.source-links a{font:500 11px var(--mono);border-bottom:1px solid currentColor;padding-bottom:5px}
+.review-warning{margin-top:29px;max-width:810px;padding:17px 20px;background:#e8ecdf;border-left:3px solid #557b5d;font-size:13px;line-height:1.66;color:#35483a}
+.submit{background:var(--deep);color:#ebf3e8;padding:72px 0}.submit-grid{display:grid;grid-template-columns:1fr 1fr;gap:55px}.submit h2{font:400 67px/.98 var(--serif);max-width:530px}.submit p{color:#c0d0c3;font-size:14px;line-height:1.75;max-width:650px;margin:15px 0}.submit ol{padding-left:23px;color:#d9e6d9;font:13px/1.9 var(--mono)}.submit .button{background:var(--accent);color:var(--ink);border-color:var(--accent);margin-top:22px}.note{font-size:12px!important;color:#b2c0b3!important}.copy{background:transparent;color:var(--ink);border:1px solid var(--ink);padding:10px 13px;font:500 11px var(--mono);margin-top:14px}.copy:hover{background:var(--soft)}
+@media(max-width:800px){.review-hero{padding:60px 0}.review-summary{grid-template-columns:1fr}.review-summary article,.review-summary article:first-child{padding:17px 0;border-right:0;border-bottom:1px solid var(--line)}.review-dossier{display:block;padding:50px 0}.dossier-number{margin-bottom:18px}.submit-grid{grid-template-columns:1fr;gap:15px}.submit h2{font-size:54px}}
+</style>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="topline"></div>
+<header class="header"><div class="wrap header-inner">
+<a class="brand" href="./"><span class="mark">N∕F</span><span class="brand-copy">NIGHTFALL<span>PHASESHIFT / EXTERNAL REVIEW</span></span></a>
+<nav class="nav" style="display:flex;gap:24px;position:static;box-shadow:none;padding:0;border:0;flex-direction:row">
+<a href="index.html#work">Research</a><a href="index.html#method">Methods</a>
+<a class="nav-call" href="https://github.com/d3lefts/d3lefts/tree/main/research/nightfall" target="_blank" rel="noopener">GitHub archive ↗</a>
+</nav></div></header>
+<main id="main">
+<section class="review-hero wrap">
+<span class="kicker">OPEN INVITATION / EVIDENCE-FIRST SCIENCE</span>
+<h1>Review the claim.<br><i>Challenge the proof.</i></h1>
+<p>These four assignments are deliberately finite. They identify exact objects, imported assumptions, likely failure modes, and a useful external deliverable. Any valid counterexample, correction, or clean reproduction will be credited.</p>
+<div class="hero-actions"><a class="button" href="#erdos">Browse assignments ↘</a><a class="text-link" href="#submit">How to contribute ↓</a></div>
+</section>
+<div class="review-summary wrap">
+<article><span>01 / REPRODUCIBILITY</span><b>4 open dossiers</b><span>Specific expected outputs and independent proof attacks.</span></article>
+<article><span>02 / CLAIM INTEGRITY</span><b>Conditions exposed</b><span>Original source theorems remain attributable and auditable.</span></article>
+<article><span>03 / INPUT COMPLETENESS</span><b>Binary mirror pending</b><span>Some original certificates are still in the researcher's frozen release ZIP.</span></article>
+</div>
+<div class="wrap">
+<article class="review-dossier" id="erdos" aria-labelledby="erdos-title">
+<div class="dossier-number">REVIEW / 01<small>FINITE OPTIMIZATION<br>EXACT RATIONAL CERTIFICATE</small></div>
+<div class="dossier-content">
+<h2 id="erdos-title">Erdős minimum overlap</h2>
+<p class="dossier-desc">Claim: a finite rational 131,072-cell step-function witness has continuous-translation supremum <strong>0.380856370118029325246…</strong>. A published Arena submission receipt documents that the platform rejected a different 131,072-cell attempt due to the 100,000-entry submission limit. Neither rejection determines mathematical validity.</p>
+<div class="status-strip">STATUS: EXACT INTERNAL REPLAY REPORTED · INDEPENDENT EXTERNAL REVIEW REQUESTED</div>
+<ol class="checks">
+<li>Confirm rational heights are in [0,1], with mass exactly one under the stated support width.</li>
+<li>Prove the continuous translation maximum is attained at grid breakpoint events. Include all signed shifts and zero-extension endpoints.</li>
+<li>Compute the exact maximizing rational fraction by a separately written integer convolution implementation; check CRT uniqueness and input hashes.</li>
+<li>Compare normalization, support, and current prior art at the same mathematical definition. Report tolerance and discretization dependence.</li>
+</ol>
+<div class="source-links">
+<a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/erdos-overlap-paper.md" target="_blank" rel="noopener">Read dossier ↗</a>
+<a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/audit/erdos-arena-submission-receipt.json" target="_blank" rel="noopener">Read receipt ↗</a>
+<a href="https://www.benzanghi.com/blog/erdos-minimum-overlap-technical" target="_blank" rel="noopener">Related lower-bound research ↗</a>
+</div>
+<div class="review-warning">External validation needs the full, frozen witness and residue archive. These large binary inputs are prepared in the complete research release and are not yet publicly mirrored in GitHub. Flag that input-access gap in your report.</div>
+<button type="button" class="copy" data-copy="erdos">Copy reviewer checklist</button>
+</div>
+</article>
+<article class="review-dossier" id="werner" aria-labelledby="werner-title">
+<div class="dossier-number">REVIEW / 02<small>QUANTUM INFORMATION<br>CONDITIONAL EXACT IDENTITIES</small></div>
+<div class="dossier-content">
+<h2 id="werner-title">Werner-state source inequalities</h2>
+<p class="dossier-desc">Claim: exact-rational dual constructions yield thresholds 0.448760 (six qutrit copies), 0.432280 (seven), 0.419900 (eight), and 0.409600 (nine) <strong>conditional on imported quantitative four- and five-copy input inequalities</strong>.</p>
+<div class="status-strip">STATUS: DOWNSTREAM EXACT ARITHMETIC PASSES · SOURCE SDP REPLAY OUTSTANDING</div>
+<ol class="checks">
+<li>Rebuild each polynomial identity from valid rank-two and separability rows, with exact rational arithmetic.</li>
+<li>Audit the correlated spectator's separability and site-factorization conventions; independently test Schmidt-rank preservation.</li>
+<li>Independently reconstruct the four- and five-copy quantitative inequalities from the primary source's SDP witnesses and certified numerical errors.</li>
+<li>Compare any gain at fixed local dimension and copy count against the latest literature, acknowledging original authors.</li>
+</ol>
+<div class="source-links">
+<a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/werner-direct-margin/README.md" target="_blank" rel="noopener">Read exact source contract ↗</a>
+<a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/werner-correlated-6-9/RESEARCH_NOTE.md" target="_blank" rel="noopener">Read higher-copy note ↗</a>
+</div>
+<div class="review-warning">Exact downstream coefficients alone cannot certify imported SDP inequalities. A valid external check must report which source hypotheses were independently verified.</div>
+<button type="button" class="copy" data-copy="werner">Copy reviewer checklist</button>
+</div>
+</article>
+<article class="review-dossier" id="phase" aria-labelledby="phase-title">
+<div class="dossier-number">REVIEW / 03<small>FINITE-FIELD INVERSE PROBLEMS<br>PROBABILITY / LLL AUDIT</small></div>
+<div class="dossier-content">
+<h2 id="phase-title">Finite-field phase retrieval</h2>
+<p class="dossier-desc">Claim: a systematic fourth-power sensing scheme uses an ordinary LLL-based decoder to recover all signals, up to fourth-root phase, for most large-field random designs. Separate manuscripts explore the optimal 2k-measurement regime through cyclotomic lattices.</p>
+<div class="status-strip">STATUS: PROOF MANUSCRIPT / COMPUTATIONAL TESTS · EXTERNAL REFEREE NEEDED</div>
+<ol class="checks">
+<li>Re-derive the good-design probability uniformly over all input signals and phase patterns.</li>
+<li>Independently check lattice rank, exact LLL requirements, small-vector separation, zero coordinates, and phase normalization.</li>
+<li>Verify expected polynomial bit complexity under the stated field-size and randomness assumptions.</li>
+<li>Construct an independent decoder and attack the exceptional events, output-list size, and missing field hypotheses.</li>
+</ol>
+<div class="source-links"><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/finite-field-retrieval-handoff-excerpt.txt" target="_blank" rel="noopener">Read theorem handoff ↗</a><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/SEPTEMBER_EXPANSION.md" target="_blank" rel="noopener">Original manuscripts inventory ↗</a></div>
+<div class="review-warning">The extended cyclotomic manuscript and executable parameter certificates are frozen in the expanded research release; reviewer access to complete source files remains a publication task.</div>
+<button type="button" class="copy" data-copy="phase">Copy reviewer checklist</button>
+</div>
+</article>
+<article class="review-dossier" id="safety" aria-labelledby="safety-title">
+<div class="dossier-number">REVIEW / 04<small>FORMAL AI OVERSIGHT<br>THEOREM QUANTIFIERS / MODEL SCOPE</small></div>
+<div class="dossier-content">
+<h2 id="safety-title">Agent safety and authorization</h2>
+<p class="dossier-desc">Claim: observation-fiber structure, provenance summaries, and reference-class reachability yield exact conditions for enforcement, collateral denial, and compositional capability escape.</p>
+<div class="status-strip">STATUS: MATHEMATICAL MANUSCRIPTS · SCOPE AND PRIORITY CHECK OPEN</div>
+<ol class="checks">
+<li>Audit the distinction among property recognition, sound prevention, and permissive enforcement.</li>
+<li>Check all quantifiers for restricted protocol classes, stochastic monitors, adaptive evidence, and available decision rules.</li>
+<li>Independently reconstruct binary Horn-system complexity reductions and exhibit minimal counterexamples where an assumption fails.</li>
+<li>Separate synthetic replay and finite model checks from empirical evidence about actual deployed AI agents.</li>
+</ol>
+<div class="source-links"><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/agent-safety-under-abstraction/README.md" target="_blank" rel="noopener">Agent-safety dossier ↗</a><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-09-counterfactual-authorization/counterfactual_authorization_gap_arxiv.tex" target="_blank" rel="noopener">Full authorization manuscript ↗</a></div>
+<div class="review-warning">The September 30 boundary audit corrected an invalid unrestricted converse in a separate draft. Explicitly check that current theorem versions preserve the repaired hypothesis.</div>
+<button type="button" class="copy" data-copy="safety">Copy reviewer checklist</button>
+</div>
+</article>
+</div>
+<section class="submit" id="submit">
+<div class="wrap submit-grid">
+<div><span class="kicker">SUBMISSION CONTRACT</span><h2>A finding counts when it can travel.</h2><p>Every external review receives a traceable entry. Failed proofs and failed reruns are welcome; they help correct the public record.</p></div>
+<div>
+<ol>
+<li>Choose a bounded review assignment and read its primary source.</li>
+<li>Record your environment, source version, exact file hashes, and reproduction commands.</li>
+<li>Submit a concise pass / fail / inconclusive judgment with proof or counterexample.</li>
+<li>Propose a report through a GitHub pull request to the research archive; reviewer credit is attributed with consent.</li>
+</ol>
+<a class="button" href="https://github.com/d3lefts/d3lefts/pulls" target="_blank" rel="noopener">Open GitHub pull requests ↗</a>
+<p class="note">GitHub Issues are currently disabled in this repository. Enable them in repository Settings → General → Features to accept direct review threads. The full certificate ZIP also needs a public binary mirror for complete third-party reproduction.</p>
+<a class="text-link" style="color:#eef3e9;display:inline-block;margin-top:6px" href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/REVIEW_PROTOCOL.md" target="_blank" rel="noopener">Reviewer report template and submission standard ↗</a>
+</div></div>
+</section>
+</main>
+<footer class="footer"><div class="wrap footer-bottom"><span>© 2026 Devin J. Wright · NIGHTFALL PHASESHIFT</span><span><a href="./">← Back to research homepage</a></span></div></footer>
+<script>
+const tasks={
+erdos:"Erdős: check exact mass, both lag signs, piecewise-linear shift extremum, independent CRT correlation, and full certificate hash.",
+werner:"Werner: independently reconstruct the rational dual identities, the separable spectator, and the imported four-/five-copy inequalities.",
+phase:"Finite-field retrieval: check uniform probability, lattice/LLL parameters, zero-coordinate edge cases, expected bit complexity, and independent decoder failures.",
+safety:"Agent safety: audit factorization quantifiers, restricted protocol classes, Horn-rule reductions, finite counterexamples, and empirical scope."
+};
+document.querySelectorAll("[data-copy]").forEach(btn=>btn.addEventListener("click",async()=>{
+ const msg=tasks[btn.dataset.copy]||"";
+ try{await navigator.clipboard.writeText(msg);btn.textContent="Copied ✓";setTimeout(()=>btn.textContent="Copy reviewer checklist",1700)}catch(e){btn.textContent="Select the tests above to copy";}
+}));
+</script>
+</body></html>
