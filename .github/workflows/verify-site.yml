@@ -6,6 +6,7 @@ on:
       - "docs/**"
       - "research/nightfall/**"
       - "scripts/check_site.py"
+      - "scripts/site_browser_smoke.mjs"
       - "scripts/verify_*.py"
       - "research/nightfall/AGENT_TASKS.json"
       - ".github/workflows/verify-site.yml"
@@ -14,6 +15,7 @@ on:
       - "docs/**"
       - "research/nightfall/**"
       - "scripts/check_site.py"
+      - "scripts/site_browser_smoke.mjs"
       - ".github/workflows/verify-site.yml"
   workflow_dispatch:
 permissions:
