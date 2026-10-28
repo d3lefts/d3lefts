@@ -31,5 +31,8 @@
     "Worldwide novelty/priority assessment",
     "Independent proof-assistant kernel formalization",
     "Full binary release mirror"
-  ]
+  ],
+  "novelty_assessment": "METHODS PREEXISTING: Shabtay and Kaspi 2006; Benoit et al. 2010; Oron, Shabtay and Steiner 2017. Narrow translated-involution group-code synthesis potentially distinctive; global priority unverified.",
+  "prior_art_file": "research/nightfall/projects/involution-shadow-codes/PRIOR_ART_ASSESSMENT_20261028.md",
+  "global_novelty_claim": false
 }
