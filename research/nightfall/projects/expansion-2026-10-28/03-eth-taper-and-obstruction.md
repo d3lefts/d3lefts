@@ -2,6 +2,8 @@
 
 **Sources:** \`NIGHTFALL_ETH_TAPER_PROOF.md\` (2026-10-26), \`ETH_WEIGHT_REFINEMENT_OBSTRUCTION_20261027.md\` (2026-10-27). **Status:** exact mathematical argument manuscripts; reported separate code-path tests; literature-priority and source-integration audit open. **No improved universal SAT exponent is claimed.**
 
+**Primary source text:** [October 26 exact 2-adic taper manuscript](sources/NIGHTFALL_ETH_TAPER_PROOF.md). The separate October 27 weight-refinement obstruction is summarized below; its original source remains outside this public tree.
+
 ## A. 2-adic Hermite interpolation taper
 
 Let \(L=2^a\), \(a\ge u\ge1\), \(M\ge1\), \(D=M(2L-1)\). Assign interpolation nodes at 2-adic valuation \(i\) an integer multiplicity \(q_i\) for \(0\le i<u\). Define
