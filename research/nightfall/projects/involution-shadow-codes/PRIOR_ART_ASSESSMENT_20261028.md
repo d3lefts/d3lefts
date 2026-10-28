@@ -12,6 +12,18 @@
 4. **A. W. Marshall, I. Olkin, B. C. Arnold (2009/2011)**, *Inequalities: Theory of Majorization and Its Applications*, 2nd ed., Springer, DOI [10.1007/978-0-387-68276-1](https://doi.org/10.1007/978-0-387-68276-1). Classical Schur-convexity/majorization explains why balanced occupancy minimizes every symmetric convex occupancy penalty, including `sum_c binom(n_c,r)`. The distribution-free union-of-events identity is elementary inclusion–exclusion.
 5. **Classical PARTITION / subset-sum dynamic programming**: reachable (cardinality, total weight) states and pseudo-polynomial algorithms predate NIGHTFALL. Its exact two-label Pareto frontier is a straightforward augmentation, applied to the specific code's two separate performance metrics.
 
+## More direct reliability-model equivalence (2003 and earlier)
+
+**The exact code-recovery criterion is a 2-out-of-q system of parallel-redundant groups.** For each label class, declare its component “working” if at least one coordinate in that class survives. Full message discrimination occurs precisely when at least **two** such components work. This gives:
+
+- For **q=2**, exactly the usual **two-stage series reliability** with parallel-redundant components. The failure probability is `F_1+F_2-F_1 F_2`, where `F_c=prod_{j in I_c}r_j`.
+- For general **q**, a standard 2-out-of-q success system, with internally redundant groups. The independent-erasure formula is the familiar probability of zero or one successful class after collapsing each redundant group to one component.
+- For **arbitrary correlated erasures**, the class indicators can be dependent; general k-out-of-n reliability was studied well before 2026, including exact probability formulas in:
+  - **M. Koucký (2003)**, “Exact reliability formula and bounds for general k-out-of-n systems,” *Reliability Engineering & System Safety* **82**(2):229–231, DOI [10.1016/S0951-8320(03)00126-1](https://doi.org/10.1016/S0951-8320(03)00126-1).
+  - **A. M. Rushdi (1993)**, “Reliability of k-out-of-n Systems,” *Fundamental Studies in Engineering* **16**:185–227, DOI [10.1016/B978-0-444-81660-3.50014-9](https://doi.org/10.1016/B978-0-444-81660-3.50014-9).
+
+**Conclusion:** The distribution-free identity is a useful exact representation of this particular orbit code, not a new general correlated reliability theorem. This match is *stronger* than simply citing general inclusion–exclusion.
+
 ## Claim-by-claim classification
 
 | NIGHTFALL subclaim | Novelty status |
