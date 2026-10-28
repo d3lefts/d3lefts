@@ -1,0 +1,45 @@
+{
+  "result": "PASS",
+  "scope": "Original frozen input, 131072 height constraints, 262143 signed shifts, exact peak and runner-up",
+  "date_utc": "2026-10-28T08:53:58.283121+00:00",
+  "research_lead": "Devin J. Wright",
+  "input": {
+    "master_zip_sha256": "77665ced561a9ae1d882baffdc5417188166049c27267afd6cb7b408ec9559cb",
+    "nested_evidence_sha256": "e78bc5c90562033df412e0dbbd7265f37cb8228061bc7d436c792a8157d8cf96",
+    "witness_sha256": "a574c280f8839503c90076507a27f4c819455fb2512fae6a43b6a17f6a784b8e",
+    "witness_bytes": 2156159
+  },
+  "checker": {
+    "method": "GMP 6.3.0 packed integer multiplication, independent of original six-prime NTT",
+    "source_sha256": "4775c2c704d92459762f9f25e921073ea9c7d88daf1d1dd9aaacbd774a5adb79",
+    "geometry_test_sha256": "260dd5d7fbb1967a516228990c197f02427102353a1cb4c59d51f0cfcc291fd5",
+    "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+    "python": "3.13.5",
+    "status": "PASS",
+    "direct_integer_shift_crosschecks": 27,
+    "independent_exact_small_geometry_tests": 1720,
+    "checked_signed_shifts": 262143
+  },
+  "mathematical_result": {
+    "peak_fraction": "34788888032212764146872525963225147703298526879/91343852333181432387730302044767688728495783936",
+    "unique_maximizing_signed_lag": -17280,
+    "physical_shift": "135/512",
+    "runner_up_signed_lag": 36482,
+    "runner_up_fraction": "34788888032196508685160787678357375369567622621/91343852333181432387730302044767688728495783936",
+    "grid_margin_fraction": "8127730855869142433886166865452129/45671926166590716193865151022383844364247891968",
+    "l1_integer_perturbation_sufficient_bound": 3442227910668,
+    "continuum_bridge": "Proved by exact step-intersection affine interpolation in accompanying report; not proof-assistant certified"
+  },
+  "status_boundaries": [
+    "PASS is an internally executed independent-algorithm arithmetic check, not a human referee endorsement",
+    "Public release assets still await owner upload",
+    "Official accepted Arena input and proof of its score remain separate and unresolved",
+    "No new universal lower bound, exact global optimum, or external novelty priority claimed"
+  ],
+  "reproduction": {
+    "command": "python3 replay_erdos_gmp.py NIGHTFALL_GitHub_Release_2026-10-27.zip",
+    "requires": "Python 3.10+, GNU g++ with libgmp-dev",
+    "source": "research/nightfall/agent-reports/ea36_131072/replay_erdos_gmp.py",
+    "checker": "research/nightfall/agent-reports/ea36_131072/independent_gmp_audit.cpp"
+  }
+}
