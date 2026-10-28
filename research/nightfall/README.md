@@ -11,6 +11,21 @@ The research program uses representation changes, independent verification, proo
 
 The [public peer-review dossier](projects/ai-safety-peer-review-2026-10-28/README.md) unifies September observation, provenance, authorization and oversight theory; SourceBound remains a separately evaluated October implementation. The original 116-file ZIP is [published as a verified GitHub Release](https://github.com/d3lefts/d3lefts/releases/tag/ai-safety-review-2026-10-28), with a [direct download](https://github.com/d3lefts/d3lefts/releases/download/ai-safety-review-2026-10-28/NIGHTFALL_AI_Safety_Peer_Review_Package_2026-10-28.zip). Its SHA-256, exact byte size and validation scope are recorded in the [release manifest](projects/ai-safety-peer-review-2026-10-28/MANIFEST.md).
 
+## Eight-dossier October 28 research expansion
+
+The [October 28 research expansion](projects/expansion-2026-10-28/README.md) publishes eight curated, text-first technical dossiers recovered from September–October manuscript checkpoints. Their proof dependencies and open audit gates are explicit. Original binary manuscripts and certificate packages are still being prepared for separately hashed release assets.
+
+- [Werner finite-copy margins, 25–100-copy source-conditional continuation, restricted four-copy syndrome sectors](projects/expansion-2026-10-28/01-werner-margins.md)
+- [Periodic four-dimensional forest-gauge obstruction, exact defect conservation, and independently executed integer checker](projects/expansion-2026-10-28/02-periodic-forest.md)
+- [ETH Hermite taper and the restricted middle-layer tensor rank barrier](projects/expansion-2026-10-28/03-eth-taper-and-obstruction.md)
+- [Fresh-layer Busy Beaver theorem and five BB(6) arithmetic return maps](projects/expansion-2026-10-28/04-busy-beaver-return-maps.md)
+- [Selection-aware Gaussian partial-pivoting spectral bound](projects/expansion-2026-10-28/05-selection-aware-pivoting.md)
+- [Hidden-function interpretability audits and blinded evaluation protocol](projects/expansion-2026-10-28/06-hidden-function-audits.md)
+- [Directed causal cuts, Cognition First, evaluation transport, and obstruction calculus](projects/expansion-2026-10-28/07-causal-cognition-proof-search.md)
+- [Einstein Arena UP25/C1/C2 audit checkpoints and negative-result registry](projects/expansion-2026-10-28/08-arena-and-negative-results.md)
+
+The periodic forest-gauge checker was independently executed on 32 finite integer test cases before this publication. Other manuscripts and exact-checker reports retain their original internal-evidence status; no original unmirrored binary is represented as a publicly downloadable artifact. The existing Werner approved 4–20 registry remains authoritative until a source-lineage reconciliation explicitly changes it.
+
 ## September foundations and newly recovered results
 
 The initial release emphasized the October mathematics campaign. A dated review of September–October research on 2026-10-28 recovered several important earlier manuscripts. These additions are working research artifacts with source-specific proof statuses, not unconditional priority claims.
