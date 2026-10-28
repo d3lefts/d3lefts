@@ -55,6 +55,14 @@ A separate widely discussed **4096-cell 0.380856 normalization error** was analy
 
 - White (2023) established **c > 0.379005**.
 - Price (2026) reports **c > 0.38055470**. The finite interval-arithmetic certificate was independently reproduced by VibeMathed and additional reviewers; MathWorld (as updated Oct 26, 2026) observes that specialist review of the entire analytic reduction had not been documented.
+- Wetch's separately public [Erdős #36 repository](https://github.com/justinwetch/erdos-36-minimum-overlap) reports the stronger **c > 0.380627425**, with original/local full fresh-copy verification and explicit analytic premises. Wetch's own README states that these are **not externally peer-reviewed**. This is a stronger **source-reported result**, rather than a lower bound independently rerun in this research turn.
+- **If Wetch's full bound holds**, the sharper bracket is:
+
+```
+0.380627425 < c <= 0.380856370118029325246...
+conditional gap width < 0.000228945118029325246...
+```
+
 - **If the full Price reduction is valid**, the joint bracket is:
 
 ```
@@ -68,6 +76,7 @@ This bracket should not be presented with a completely certified lower-end statu
 
 - [Tao / teorth optimization constants, Erdős minimum-overlap](https://teorth.github.io/optimizationproblems/constants/1b.html) — historical upper constructions and source links.
 - [Wolfram MathWorld minimum-overlap](https://mathworld.wolfram.com/MinimumOverlapProblem.html) — Price lower-bound status.
+- [Justin Wetch, Erdős #36 exact local verification](https://github.com/justinwetch/erdos-36-minimum-overlap) — stronger source-reported lower bound with explicit lack of external peer review.
 - [Together AI public upper-bound construction](https://github.com/togethercomputer/EinsteinArena-new-SOTA/tree/main/erdos-minimum-overlap).
 - [Beck–Ogren–Kobren, Hill Sampling, arXiv:2609.25510](https://arxiv.org/abs/2609.25510).
 - [Ben Zanghi, independent 4096-cell normalization warning](https://www.benzanghi.com/blog/erdos-minimum-overlap-technical).
