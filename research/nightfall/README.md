@@ -7,6 +7,20 @@
 
 The research program uses representation changes, independent verification, proof-carrying artifacts, and a strict distinction between finite results and global theorems. Competition rankings, mathematical validity, and publication priority are tracked separately.
 
+## September foundations and newly recovered results
+
+The initial release emphasized the October mathematics campaign. A dated review of September–October research on 2026-10-28 recovered several important earlier manuscripts. These additions are working research artifacts with source-specific proof statuses, not unconditional priority claims.
+
+| Track | Manuscript result | Evidence and open gate |
+| --- | --- | --- |
+| Agent Safety Under Abstraction (September) | Formal observation-fiber obstruction, collateral denial, provenance monoid, history and composition criteria | Original 43-page mathematical research manuscript, finite property-based tests and Sep 30 corrected audit; external review pending |
+| Affine Source Rigidity (Sep 26) | Exact shifted-prime-zeta expansion, affine source collision rigidity, rational dilation fibers, principal-layer isolation | Original corrected LaTeX manuscript and conditional analytic sequel published here; external analytic and novelty audit pending |
+| Counterfactual Authorization Gap (Sep 28) | Reference-class capability envelopes, compositional escape, audit complexity | Original LaTeX mathematical source published; proof and priority checks outstanding |
+| Three Ceilings on Oversight (September) | View-relative information, computational, and evidence-authority limitations | Revised manuscript framework, internal review; assumption-bound scope |
+| Involution shadow codes (Oct 13) | Exact minimum distance and optimal view allocation under finite abelian-group involutions | Original extended manuscript transcription and an additional 3,325-case direct test run on Oct 28; reviewer certification outstanding |
+| Cyclotomic 2k-measurement phase decoder (Oct 13) | General powered finite-field sensing via lattice decoding for selected d | Manuscript proof plus 54-case reported independent testing; unpublished source binary in Library |
+| Prime-frequency quantum geometry (Oct 27) | Fisher-information trichotomy and constructive countermodel to symmetry-only zero confinement | Research manuscript derivations; external review and theta/primes interface open |
+
 ## Principal findings
 
 | Research area | Strongest documented result | Validation and limits |
@@ -22,6 +36,14 @@ The research program uses representation changes, independent verification, proo
 | Research methodology and contests | Human/AI collaboration with cross-verification, basin changes, exact witness audits and dated contest results. | Observational case study. Contest outcome does not establish global optimality. |
 
 ## Source manuscripts and reproduction notes
+
+- [Agent Safety Under Abstraction — original September theoretical foundation](projects/agent-safety-under-abstraction/README.md)
+- [September Affine Source Rigidity — original LaTeX and analytical sequel](2026-09-affine-source-rigidity/README.md)
+- [September Counterfactual Authorization Gap — original LaTeX](2026-09-counterfactual-authorization/README.md)
+- [September Three Ceilings on Oversight — revised scope](2026-09-three-ceilings/README.md)
+- [What Survives the Cut — universal involution-shadow coding](projects/involution-shadow-codes/README.md)
+- [Prime-Frequency Quantum Geometry — derived laws and countermodel](projects/quantum-prime-geometry/README.md)
+
 
 - [Erdős overlap construction](projects/erdos-overlap-paper.md)
 - [Werner finite-copy source-dependent rational certificates](projects/werner-direct-margin/README.md)
