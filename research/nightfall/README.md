@@ -37,6 +37,9 @@ The initial release emphasized the October mathematics campaign. A dated review 
 
 ## Source manuscripts and reproduction notes
 
+- [September–October recovered-research supplement: SHA-256, source inventory and validation boundaries](SEPTEMBER_EXPANSION.md)
+
+
 - [Agent Safety Under Abstraction — original September theoretical foundation](projects/agent-safety-under-abstraction/README.md)
 - [September Affine Source Rigidity — original LaTeX and analytical sequel](2026-09-affine-source-rigidity/README.md)
 - [September Counterfactual Authorization Gap — original LaTeX](2026-09-counterfactual-authorization/README.md)
