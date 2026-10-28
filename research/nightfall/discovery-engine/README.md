@@ -105,3 +105,7 @@ All comparative results must use the latest corrected `granularity_study.py` and
 ### Search-space correction
 
 The first selection grid omitted the fully atomic representation. The corrected 19-option grid explicitly includes it. The trained policy therefore may choose uncompressed input when that wins the preregistered exact downstream gain objective. Comparisons against restricted 18-option reports must remain labeled diagnostic. A selected policy is a training-instance optimum within the stated discrete grid, never a global mathematical optimum.
+
+## Measured outcome (2026-10-28)
+
+The corrected 19-option boundary-policy training selected **atomic resolution**. See the [full bounded experimental log](EXPERIMENT_20261028.md) and the linked CI artifact. The earlier 96/96 source-span diagnostic contained oracle-label leakage and has been demoted. Fixed versus adaptive compression exhibits a synthetic source-span improvement, while adaptive compression fails to outperform atomic on the frozen held-out suites. This negative result is preserved, with source, checker, and complete SHA-256 provenance.
