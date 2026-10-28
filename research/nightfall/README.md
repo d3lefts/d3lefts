@@ -76,6 +76,7 @@ The public index excludes the Xi/critical-line and prime-frequency programs. Alr
 - [Werner six–nine copy construction](projects/werner-correlated-6-9/RESEARCH_NOTE.md)
 - [SIDON finite witness](projects/sidon-finite-30/README.md)
 - [SAT-to-network theorem](projects/sat-network-compression.md)
+- [Universal weighted factor-to-network identity — complete bijection, exact wire accounting and independent machine checker](projects/sat-network-universal/THEOREM_AND_SCOPE.md)
 - [Proof After Scarcity: negative result, graph freeze status, and evidence](projects/pas-overview.md)
 - [PAS public 372-family ranking, SHA-256 and regeneration code](projects/pas/README.md)
 - [SourceBound source audit](projects/sourcebound/CLAIM_EVIDENCE_LEDGER.md)
