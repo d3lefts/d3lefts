@@ -5,7 +5,7 @@ import {join,normalize,resolve,sep} from "node:path";
 import {chromium} from "playwright-core";
 
 const root=resolve("docs");
-const pages=["index.html","review.html","evidence.html","agenda.html"];
+const pages=["index.html","review.html","evidence.html","agenda.html","observatory.html"];
 const types={".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".svg":"image/svg+xml"};
 const server=createServer(async (req,res)=>{
  try{
@@ -94,6 +94,25 @@ try{
     assert.equal(await page.locator("#agenda-list .research-proposal:visible").count(),1,"SourceBound search");
     await page.locator("#agenda-search").fill("");
     assert.equal(await page.locator("#agenda-list .research-proposal:visible").count(),10,"agenda search reset");
+  }
+  if(width===390){
+    await page.goto(origin+"observatory.html",{waitUntil:"load"});
+    await page.locator("#obs-graph .obs-node").first().waitFor();
+    assert.equal(await page.locator("#obs-graph .obs-node").count(),14,"Observatory claim count");
+    assert.equal(await page.locator("#obs-graph .obs-line-group").count(),9,"Observatory relation count");
+    await page.locator('[data-obs-mode="evidence"]').click();
+    assert.match(await page.locator("#obs-inspector").innerText(),/Frozen claim SHA-256/,"evidence hash shown");
+    await page.locator('[data-obs-mode="transfer"]').click();
+    assert.equal(await page.locator("#obs-items .obs-item").count(),9,"all typed transfers inspectable");
+    await page.locator('[data-obs-mode="failure"]').click();
+    assert.ok(await page.locator("#obs-items .obs-item").count()>=2,"failure history visible");
+    await page.locator('[data-obs-mode="frontier"]').click();
+    assert.equal(await page.locator("#obs-items .obs-item").count(),4,"research frontier four scoped blockers");
+    await page.locator('[data-obs-mode="scope"]').click();
+    await page.locator("#obs-discipline").selectOption("quantum");
+    assert.equal(await page.locator("#obs-items .obs-item").count(),3,"quantum scope filter");
+    const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
+    assert.ok(overflow<=3,"Observatory mobile horizontal overflow: "+overflow);
   }
   assert.deepEqual(faults,[],"Browser failures at "+width+": "+faults.join("; "));
   await page.close();

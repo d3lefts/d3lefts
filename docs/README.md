@@ -4,6 +4,7 @@ Static, dependency-free site for NIGHTFALL’s **original, inspectable research 
 
 - `index.html` — curated original-findings portfolio and open reviews.
 - `agenda.html` and `agenda.js` — separate five-discipline research agenda with ten untested proposals.
+- `observatory.html`, `observatory.js`, `observatory.css`, `observatory-data.json` — experimental evidence-graph UI; Gate D release is blocked until independent replication and controlled evaluation.
 - Discovery Engine: discovery.html, discovery-core.js, discovery-app.js, discovery.css — executable bounded proxy lab and portable evidence workspace.
 - `review.html` — three review assignments for the approved original contributions.
 - `evidence.html` — reproducibility archive hashes, evidence-access status, desktop release steps.
@@ -49,3 +50,9 @@ The verification system uses independent agent roles and deterministic outputs r
 ## Future research and safe releases
 
 The [Research Agenda](agenda.html) contains two untested investigations each in Mathematics, Quantum, Super Intelligence, Safety, and Systems. Proposal entries never enlarge the original-findings whitelist. Site changes should be made on topic branches with green PR checks. Workflow concurrency cancels stale checks. A GitHub branch ruleset is required to enforce PR-only merges; see [contributing guide](../CONTRIBUTING.md).
+
+## Observatory scientific preview
+
+The site prototype contains five progressively enhanced investigations: Scope Boundary, Evidence Trace, Transfer Explorer, Failure History, Research Frontier. Its data originates in `research/nightfall/observatory/claims-v1.json` and is copied byte-for-byte to `observatory-data.json` at the scoped release commit. Claims have frozen identity hashes and typed evidence relations enforced by `scripts/verify_observatory.py`.
+
+**Release restraint:** A mechanical integrity pass alone is insufficient. Gate B (independent exact reproduction from complete public artifacts) and Gate C (a frozen matched-budget graph-assisted versus flat-source experiment) remain pending. The Observatory is presently a branch PR preview; the public site stays on Original Findings until release Gate D is satisfied.

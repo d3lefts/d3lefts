@@ -296,9 +296,9 @@
       "provenance": [
         {
           "path": "research/nightfall/observatory/TRANSFER_0001.md",
-          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/observatory/TRANSFER_0001.md",
-          "revision": "release-v1",
-          "role": "original-v1-file"
+          "url": "https://github.com/d3lefts/d3lefts/blob/32df9e1b2b0049e0dbc7e27a465957a741843c5a/research/nightfall/observatory/TRANSFER_0001.md",
+          "revision": "32df9e1b2b0049e0dbc7e27a465957a741843c5a",
+          "role": "archived-v1-source"
         }
       ],
       "failure_conditions": [
@@ -328,9 +328,9 @@
       "provenance": [
         {
           "path": "research/nightfall/observatory/TRANSFER_0001.md",
-          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/observatory/TRANSFER_0001.md",
-          "revision": "release-v1",
-          "role": "original-v1-file"
+          "url": "https://github.com/d3lefts/d3lefts/blob/32df9e1b2b0049e0dbc7e27a465957a741843c5a/research/nightfall/observatory/TRANSFER_0001.md",
+          "revision": "32df9e1b2b0049e0dbc7e27a465957a741843c5a",
+          "role": "archived-v1-source"
         }
       ],
       "failure_conditions": [
@@ -423,9 +423,9 @@
       "provenance": [
         {
           "path": "research/nightfall/observatory/GATE_C_PREREGISTRATION.md",
-          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/observatory/GATE_C_PREREGISTRATION.md",
-          "revision": "release-v1",
-          "role": "original-v1-file"
+          "url": "https://github.com/d3lefts/d3lefts/blob/32df9e1b2b0049e0dbc7e27a465957a741843c5a/research/nightfall/observatory/GATE_C_PREREGISTRATION.md",
+          "revision": "32df9e1b2b0049e0dbc7e27a465957a741843c5a",
+          "role": "archived-v1-source"
         }
       ],
       "failure_conditions": [

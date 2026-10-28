@@ -1,0 +1,548 @@
+{
+  "schema_version": "1.0.0",
+  "snapshot_date": "2026-10-28",
+  "publication_gate": "A-structure-only",
+  "constitution": "research/nightfall/observatory/CONSTITUTION.md",
+  "immutable_identity": "SHA256 of sorted, UTF8 encoded compact JSON: id,revision,scope,source_key,statement",
+  "nodes": [
+    {
+      "id": "NF-ERDOS-131072-v1",
+      "title": "Minimum overlap: 131,072-cell witness",
+      "discipline": "mathematics",
+      "status": "certified-finite",
+      "statement": "An explicit 131072-cell rational admissible witness has internally audited signed-shift score 0.380856370118029325246...; global optimality and leaderboard priority are unclaimed.",
+      "scope": "One explicit rational step function on [0,2], every signed grid-event shift, with zero padding; supplied exact arithmetic record. Complete binary mirror pending.",
+      "source_key": "research/nightfall/projects/erdos-overlap-paper.md",
+      "owner": "NIGHTFALL",
+      "boundary": "A valid individual upper witness cannot establish a universal optimal bound or priority; original binary array needs public mirroring.",
+      "dependencies": [],
+      "reproduce": [
+        "python3 scripts/verify_erdos_independent.py --self-test"
+      ],
+      "revision": 1,
+      "identity_sha256": "c6e1d7b7f39039243bf7f75c449e975afd992e91dfcb1c6361d6a5d60611c010",
+      "provenance": [
+        {
+          "path": "research/nightfall/projects/erdos-overlap-paper.md",
+          "url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/erdos-overlap-paper.md",
+          "revision": "df9511c622c309046180fd0e015aca88577c58ec",
+          "role": "archived-source"
+        }
+      ],
+      "failure_conditions": [
+        "Incorrect signed-lag normalization",
+        "Mismatch of original witness hash",
+        "Any unverified full-binary input"
+      ]
+    },
+    {
+      "id": "NF-SIDON30-v1",
+      "title": "Sidon (4,5): finite 30-point witness",
+      "discipline": "mathematics",
+      "status": "certified-finite",
+      "statement": "The displayed 30-point finite (4,5) witness has maximum Sidon subset cardinality 17 under an exact finite certificate; known asymptotic 5/9 remains prior art.",
+      "scope": "The particular 30 integers in witness_30.txt and finite subsets; no asymptotic extremal improvement and no worldwide priority claim.",
+      "source_key": "research/nightfall/projects/sidon-finite-30/README.md",
+      "owner": "NIGHTFALL",
+      "boundary": "Extending the family to an improved universal asymptotic constant needs a separate construction and proof.",
+      "dependencies": [],
+      "reproduce": [
+        "python3 research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py"
+      ],
+      "revision": 1,
+      "identity_sha256": "5053158908c2b71b9dacc7581f244e6faf8ab9095726393ac518d4d2eb7c063e",
+      "provenance": [
+        {
+          "path": "research/nightfall/projects/sidon-finite-30/README.md",
+          "url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/sidon-finite-30/README.md",
+          "revision": "df9511c622c309046180fd0e015aca88577c58ec",
+          "role": "archived-source"
+        }
+      ],
+      "failure_conditions": [
+        "An 18-element progression-free subset",
+        "Failure of progression enumeration",
+        "Widening the finite conclusion to an asymptotic record"
+      ]
+    },
+    {
+      "id": "NF-SIDON-CHECK-v1",
+      "title": "Independent Sidon search verifier",
+      "discipline": "systems",
+      "status": "certified-finite",
+      "statement": "A standard-library exact search verifier validates the 30-point witness and excludes the prohibited 18-point progression-free subset.",
+      "scope": "Finite integer search for the archived witness and the specific 18-point exclusion; binary original machine DAG is separate and pending public mirror.",
+      "source_key": "research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py",
+      "owner": "NIGHTFALL",
+      "boundary": "A source-code pass is a finite arithmetic check, not a novelty or external referee verdict.",
+      "dependencies": [],
+      "reproduce": [
+        "python3 research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py"
+      ],
+      "revision": 1,
+      "identity_sha256": "dc64a66664d82c2d693dadf823df42d80c6a5456900b195828af3f8a1d73391e",
+      "provenance": [
+        {
+          "path": "research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py",
+          "url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py",
+          "revision": "df9511c622c309046180fd0e015aca88577c58ec",
+          "role": "archived-source"
+        }
+      ],
+      "failure_conditions": [
+        "Disagreement with a separate checker",
+        "A missed progression or invalid pruning step"
+      ]
+    },
+    {
+      "id": "NF-PAS20-v1",
+      "title": "Proof After Scarcity: adverse 20-case result",
+      "discipline": "safety",
+      "status": "empirical-negative",
+      "statement": "On a retrospective 20-case category-matching test, risk-priority scored 8/20 and upstream-first scored 11/20; the proposed priority rule underperformed this baseline.",
+      "scope": "One historically selected, retrospective twenty-case set with outcome-aware sampling; not an empirical estimate of general error detection efficacy.",
+      "source_key": "research/nightfall/projects/pas-overview.md",
+      "owner": "NIGHTFALL",
+      "boundary": "Prospective preregistered evaluations and complete primary case files are needed for general prediction claims.",
+      "dependencies": [],
+      "reproduce": [
+        "Inspect the case inventory and compare the frozen 20 scored labels"
+      ],
+      "revision": 1,
+      "identity_sha256": "9620165b036f7f5837fff7aead6ea895c4c6a9c4c78c4d8b7b339b325f7cd088",
+      "provenance": [
+        {
+          "path": "research/nightfall/projects/pas-overview.md",
+          "url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/pas-overview.md",
+          "revision": "df9511c622c309046180fd0e015aca88577c58ec",
+          "role": "archived-source"
+        }
+      ],
+      "failure_conditions": [
+        "Using censored four controls in the denominator",
+        "Reporting prospective efficacy from retrospective labels"
+      ]
+    },
+    {
+      "id": "NF-PAS-DOMINANCE-v1",
+      "title": "PAS superiority hypothesis on archived cases",
+      "discipline": "safety",
+      "status": "falsified",
+      "statement": "The archived risk-priority rule would outperform upstream-first in the retrospective first-choice category score on the archived twenty cases.",
+      "scope": "Only the archived first-choice category score on the twenty challenged historical cases; this is a rejected empirical claim, not a theorem about all review settings.",
+      "source_key": "research/nightfall/projects/pas-overview.md",
+      "owner": "NIGHTFALL",
+      "boundary": "The observed 8/20 versus 11/20 reverses the predicted comparison; the hypothesis is preserved as an adverse historical record.",
+      "dependencies": [
+        "NF-PAS20-v1"
+      ],
+      "reproduce": [
+        "Recompute first-choice agreement scores for the 20 challenged cases"
+      ],
+      "revision": 1,
+      "identity_sha256": "98987501f9bdd6c6e925c7ff3c8b468a39a30f36ee4064a5b461ea37202cc99e",
+      "provenance": [
+        {
+          "path": "research/nightfall/projects/pas-overview.md",
+          "url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/pas-overview.md",
+          "revision": "df9511c622c309046180fd0e015aca88577c58ec",
+          "role": "archived-source"
+        }
+      ],
+      "failure_conditions": [
+        "8 is below 11"
+      ]
+    },
+    {
+      "id": "NF-FIELD-SPAN-v1",
+      "title": "Finite-field powered retrieval tail certificate",
+      "discipline": "mathematics",
+      "status": "conditional",
+      "statement": "Reported prime-field powered phase-retrieval tail estimate below 2^-96 under a Gaussian span-count lemma; the independent checkers verify downstream identities only.",
+      "scope": "Prime characteristic p congruent to 1 modulo 4, prescribed delta and eta, log2(q)>=3.69k+9.2; source-conditional and subject to independent decoder review.",
+      "source_key": "research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/README.md",
+      "owner": "NIGHTFALL / Axiom audit",
+      "boundary": "Independent proof of the short-vector span-count lemma and an end-to-end decoder are outstanding.",
+      "dependencies": [],
+      "reproduce": [
+        "python3 research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/verify_tail_A.py",
+        "python3 research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/verify_tail_B.py"
+      ],
+      "revision": 1,
+      "identity_sha256": "7f1d2465b1556e740cc128b9420e00f65ed895238d33f53f86b29c5c7a5cf864",
+      "provenance": [
+        {
+          "path": "research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/README.md",
+          "url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/README.md",
+          "revision": "df9511c622c309046180fd0e015aca88577c58ec",
+          "role": "archived-source"
+        }
+      ],
+      "failure_conditions": [
+        "Counterexample to span-count lemma",
+        "Unreconciled fourth-root ambiguity",
+        "Incompatible measurement probability model"
+      ]
+    },
+    {
+      "id": "NF-AXIOM-KERNEL-v1",
+      "title": "Axiom: fourth-power Frobenius kernel candidate",
+      "discipline": "mathematics",
+      "status": "candidate",
+      "statement": "Axiom is investigating a field-linear lifted recovery map for fourth-power finite-field measurements; no uniform rank-tail theorem is independently established in this registry.",
+      "scope": "Exploratory field characteristic five and higher-dimensional finite-field lifts; measurement law and fourth-root symmetry must be formally fixed before any probability theorem.",
+      "source_key": "research/nightfall/projects/finite-field-retrieval-handoff-excerpt.txt",
+      "owner": "Axiom",
+      "boundary": "Uniform failure law, characteristic, measurement distribution, symmetry class and unsuccessful samples need independent proof and replay.",
+      "dependencies": [
+        "NF-FIELD-SPAN-v1"
+      ],
+      "reproduce": [
+        "Publish deterministic exact-rank experiment data with seeds and field arithmetic"
+      ],
+      "revision": 1,
+      "identity_sha256": "5a99a927db2b61faa30832e19302700a931ef2f7f6f26033f876847e95baa3c8",
+      "provenance": [
+        {
+          "path": "research/nightfall/projects/finite-field-retrieval-handoff-excerpt.txt",
+          "url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/finite-field-retrieval-handoff-excerpt.txt",
+          "revision": "df9511c622c309046180fd0e015aca88577c58ec",
+          "role": "archived-source"
+        }
+      ],
+      "failure_conditions": [
+        "Unexplained rank-deficient samples",
+        "Unproved fresh-constraint independence",
+        "Existing NIGHTFALL prior art subsumes the claim"
+      ]
+    },
+    {
+      "id": "NF-WERNER25-v1",
+      "title": "Werner 24-25 copy rational checks",
+      "discipline": "quantum",
+      "status": "conditional",
+      "statement": "Exact rational checkers report qutrit thresholds 0.34636 at 24 copies and 0.34584 at 25 copies, conditional on published source premises.",
+      "scope": "Qutrit finite-copy constructions at k=24 and k=25, exact downstream rational identities; source-theorem and novelty review unresolved.",
+      "source_key": "research/nightfall/projects/werner-final-4-25/README.md",
+      "owner": "NIGHTFALL",
+      "boundary": "Imported endpoint theorems and corrected U tensor conjugate-U twirl must be justified; exact arithmetic alone is insufficient.",
+      "dependencies": [],
+      "reproduce": [
+        "python3 research/nightfall/projects/werner-final-4-25/construct_A.py",
+        "python3 research/nightfall/projects/werner-final-4-25/verify_independent.py"
+      ],
+      "revision": 1,
+      "identity_sha256": "dceaf236bb8e8c11e3da5e640dcd222b9e7a3218d2b8e507635f2308fb8ea152",
+      "provenance": [
+        {
+          "path": "research/nightfall/projects/werner-final-4-25/README.md",
+          "url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/werner-final-4-25/README.md",
+          "revision": "df9511c622c309046180fd0e015aca88577c58ec",
+          "role": "archived-source"
+        }
+      ],
+      "failure_conditions": [
+        "Incorrect twirl symmetry",
+        "Failure of imported inequality",
+        "Nonpositive rational margin"
+      ]
+    },
+    {
+      "id": "NF-WERNER6-v1",
+      "title": "Werner six-copy correlated-spectator certificate",
+      "discipline": "quantum",
+      "status": "conditional",
+      "statement": "A source-conditional six-qutrit rank-two certificate reports an exact parameter 4471/10000 with a strictly positive rational margin.",
+      "scope": "Rank-at-most-two six-qutrit coefficient matrices under the imported 3/4/5-copy endpoint premises and two-group inequality.",
+      "source_key": "research/nightfall/projects/werner-correlated-6-9/S2_4471_CERTIFICATE_AUDIT.md",
+      "owner": "NIGHTFALL / Lemnis audit",
+      "boundary": "New admissible witness classes require an exact separation argument and preserved margin with source premises checked.",
+      "dependencies": [],
+      "reproduce": [
+        "Recover published original certificate ZIP and execute exact Fraction verifier"
+      ],
+      "revision": 1,
+      "identity_sha256": "0b4beaeeaee1152e67d73871bf7c88935acefdd826c51ec23840864b80343201",
+      "provenance": [
+        {
+          "path": "research/nightfall/projects/werner-correlated-6-9/S2_4471_CERTIFICATE_AUDIT.md",
+          "url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/werner-correlated-6-9/S2_4471_CERTIFICATE_AUDIT.md",
+          "revision": "df9511c622c309046180fd0e015aca88577c58ec",
+          "role": "archived-source"
+        }
+      ],
+      "failure_conditions": [
+        "Twirl-sector mismatch",
+        "Negative dual multiplier",
+        "Failure beyond encoded witness family"
+      ]
+    },
+    {
+      "id": "NF-WEIGHTED-SCHUR-v1",
+      "title": "Weighted block-coercivity criterion",
+      "discipline": "mathematics",
+      "status": "established-method",
+      "statement": "Weighted block diagonal dominance implies a uniform quadratic-form lower bound for bounded off-diagonal couplings, given explicit positive margins.",
+      "scope": "Self-adjoint block quadratic forms with diagonal lower bounds, norm-controlled interactions, positive weights and summable bounded degree; classical technique.",
+      "source_key": "research/nightfall/observatory/TRANSFER_0001.md",
+      "owner": "Vesper",
+      "boundary": "Transferring it into a specific positivity program requires real diagonal margins, cross-block operator bounds and uniformity in its scale variables.",
+      "dependencies": [],
+      "reproduce": [
+        "python3 scripts/verify_observatory.py"
+      ],
+      "revision": 1,
+      "identity_sha256": "0f8b7311374ad2a6d57ae874a68a2fd675980d9c304738f3e05dd1beb4ec4d54",
+      "provenance": [
+        {
+          "path": "research/nightfall/observatory/TRANSFER_0001.md",
+          "url": "https://github.com/d3lefts/d3lefts/blob/32df9e1b2b0049e0dbc7e27a465957a741843c5a/research/nightfall/observatory/TRANSFER_0001.md",
+          "revision": "32df9e1b2b0049e0dbc7e27a465957a741843c5a",
+          "role": "archived-v1-source"
+        }
+      ],
+      "failure_conditions": [
+        "Unbounded interaction row sums",
+        "No positive weight vector",
+        "A source form lacks a valid block decomposition"
+      ]
+    },
+    {
+      "id": "NF-BLOCK-EXAMPLE-v1",
+      "title": "Exact three-block positivity illustration",
+      "discipline": "mathematics",
+      "status": "certified-finite",
+      "statement": "The symmetric tridiagonal 3-by-3 matrix with diagonal 2,1,2 and adjacent coupling 4/5 has quadratic-form lower bound 1/5 from weights 1,2,1.",
+      "scope": "One explicit rational 3-by-3 symmetric matrix; illustrates a classical weighted block bound and gives no new Werner or spectral positivity theorem.",
+      "source_key": "research/nightfall/observatory/TRANSFER_0001.md",
+      "owner": "Vesper",
+      "boundary": "The example contains no physical Werner operator, arithmetic spectral form or new quantitative bound on an archived research target.",
+      "dependencies": [
+        "NF-WEIGHTED-SCHUR-v1"
+      ],
+      "reproduce": [
+        "python3 scripts/verify_observatory.py"
+      ],
+      "revision": 1,
+      "identity_sha256": "b13b26ff123a39d550a9969d5bae2b7dba9b63d9047fd67ff064ea07cdc2dff6",
+      "provenance": [
+        {
+          "path": "research/nightfall/observatory/TRANSFER_0001.md",
+          "url": "https://github.com/d3lefts/d3lefts/blob/32df9e1b2b0049e0dbc7e27a465957a741843c5a/research/nightfall/observatory/TRANSFER_0001.md",
+          "revision": "32df9e1b2b0049e0dbc7e27a465957a741843c5a",
+          "role": "archived-v1-source"
+        }
+      ],
+      "failure_conditions": [
+        "Exact weighted margin below 1/5",
+        "Nonpositive Sylvester principal minor"
+      ]
+    },
+    {
+      "id": "NF-SPECTRAL-BRIDGE-v1",
+      "title": "Finite-to-infinite spectral positivity bridge",
+      "discipline": "mathematics",
+      "status": "proposed",
+      "statement": "A scale-uniform block gap and off-diagonal norm estimate might upgrade finite reciprocal-Hankel positivity to a rank-independent theorem.",
+      "scope": "Open research problem across finite and infinite ranks and all scale regimes; no uniform bounds or all-degree positivity theorem presently certified.",
+      "source_key": "research/nightfall/projects/discovery-proposals-2026-10-28/README.md",
+      "owner": "Vesper",
+      "boundary": "The missing uniform near/middle/far-scale margins and off-diagonal coupling bound prevent promotion.",
+      "dependencies": [
+        "NF-WEIGHTED-SCHUR-v1"
+      ],
+      "reproduce": [
+        "Preregister rank-doubling off-diagonal interval tests; publish exact source data"
+      ],
+      "revision": 1,
+      "identity_sha256": "990da1c643df425bbbb50ef632481e86037ecde6c1017996ab23dfe39680971f",
+      "provenance": [
+        {
+          "path": "research/nightfall/projects/discovery-proposals-2026-10-28/README.md",
+          "url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/discovery-proposals-2026-10-28/README.md",
+          "revision": "df9511c622c309046180fd0e015aca88577c58ec",
+          "role": "archived-source"
+        }
+      ],
+      "failure_conditions": [
+        "Coupling bound exceeds smallest positive block gap",
+        "Missing time-scale interval",
+        "A spectral negative mode"
+      ]
+    },
+    {
+      "id": "NF-LEMNIS-EXT-v1",
+      "title": "Lemnis: larger Werner witness class",
+      "discipline": "quantum",
+      "status": "proposed",
+      "statement": "Seek a quantitative margin-preserving positivity certificate valid on a strictly larger rank-two witness class than an encoded family.",
+      "scope": "Target statement only; fixed-parameter all-copy extension to unrestricted witnesses has not been certified.",
+      "source_key": "research/nightfall/projects/werner-correlated-6-9/S2_4471_CERTIFICATE_AUDIT.md",
+      "owner": "Lemnis",
+      "boundary": "A new witness family must be specified and the worst outside-class perturbation bounded against the inherited margin.",
+      "dependencies": [
+        "NF-WERNER6-v1"
+      ],
+      "reproduce": [
+        "Find smallest outside-class counterexample or an exact margin certificate"
+      ],
+      "revision": 1,
+      "identity_sha256": "b596b38e21f94d79d3f8af1c7462376400532c5ab4ac0564bfa23044641a7336",
+      "provenance": [
+        {
+          "path": "research/nightfall/projects/werner-correlated-6-9/S2_4471_CERTIFICATE_AUDIT.md",
+          "url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/werner-correlated-6-9/S2_4471_CERTIFICATE_AUDIT.md",
+          "revision": "df9511c622c309046180fd0e015aca88577c58ec",
+          "role": "archived-source"
+        }
+      ],
+      "failure_conditions": [
+        "Zero margin at an excluded witness",
+        "Invalid rank-two reduction",
+        "Changed source endpoint premise"
+      ]
+    },
+    {
+      "id": "NF-GRAPH-EVAL-v1",
+      "title": "Graph-assisted discovery: matched-budget evaluation",
+      "discipline": "systems",
+      "status": "proposed",
+      "statement": "A predeclared matched-budget test will compare graph-guided transfer triage with a flat-source baseline on identical research tasks.",
+      "scope": "Preregistered evaluation design only; no outcome, success rate or acceleration evidence yet.",
+      "source_key": "research/nightfall/observatory/GATE_C_PREREGISTRATION.md",
+      "owner": "Vesper",
+      "boundary": "No superiority claim until comparator outcomes, budget accounting and independent reproduction are available.",
+      "dependencies": [
+        "NF-PAS20-v1"
+      ],
+      "reproduce": [
+        "Follow GATE_C_PREREGISTRATION.md and publish source-hashed signed receipts"
+      ],
+      "revision": 1,
+      "identity_sha256": "2743ca5db20ba25f8f4a85303d5386ea03d9e46a3091c5ad9edd1b76bf8be3af",
+      "provenance": [
+        {
+          "path": "research/nightfall/observatory/GATE_C_PREREGISTRATION.md",
+          "url": "https://github.com/d3lefts/d3lefts/blob/32df9e1b2b0049e0dbc7e27a465957a741843c5a/research/nightfall/observatory/GATE_C_PREREGISTRATION.md",
+          "revision": "32df9e1b2b0049e0dbc7e27a465957a741843c5a",
+          "role": "archived-v1-source"
+        }
+      ],
+      "failure_conditions": [
+        "Unequal task or token budgets",
+        "Peeking at outcomes before freeze",
+        "Missing baseline logs"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "TR-001",
+      "from": "NF-WEIGHTED-SCHUR-v1",
+      "to": "NF-BLOCK-EXAMPLE-v1",
+      "type": "proven-implication",
+      "statement": "Applying weighted diagonal dominance with w=(1,2,1) certifies a rational lower bound 1/5 on the explicit three-block matrix.",
+      "assumptions": "The stated matrix and classical quadratic-form inequality; all fractions verified exactly.",
+      "evidence": "research/nightfall/observatory/TRANSFER_0001.md",
+      "verifier": "scripts/verify_observatory.py",
+      "experiment": "Exact rational principal minors and weighted margins",
+      "status": "reproduced"
+    },
+    {
+      "id": "TR-002",
+      "from": "NF-SIDON30-v1",
+      "to": "NF-SIDON-CHECK-v1",
+      "type": "certified-computational-dependency",
+      "statement": "The finite 30-point Sidon finding depends on the exact standalone integer checker for its public machine audit.",
+      "assumptions": "Source integer list and algorithm correspond to the recorded witness.",
+      "evidence": "research/nightfall/projects/sidon-finite-30/README.md",
+      "verifier": "research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py",
+      "experiment": "Run the standalone finite integer audit",
+      "status": "reproduced"
+    },
+    {
+      "id": "TR-003",
+      "from": "NF-SIDON30-v1",
+      "to": "NF-ERDOS-131072-v1",
+      "type": "shared-mathematical-mechanism",
+      "statement": "Both finite constructions require exact combinatorial integer witnesses and separate audit of all defining constraints; neither implies the other.",
+      "assumptions": "Only proof-method analogy, no inequality transfer.",
+      "evidence": "research/nightfall/observatory/TRANSFER_0001.md",
+      "verifier": null,
+      "experiment": "Benchmark certificate representations without changing either theorem",
+      "status": "classified"
+    },
+    {
+      "id": "TR-004",
+      "from": "NF-WEIGHTED-SCHUR-v1",
+      "to": "NF-SPECTRAL-BRIDGE-v1",
+      "type": "proposed-transfer",
+      "statement": "Test whether weighted block control can dominate cross-rank spectral tail coupling uniformly in continuous scale.",
+      "assumptions": "Certified diagonal lower envelopes and operator-norm tails for every scale and rank, with a positive global residual.",
+      "evidence": "research/nightfall/observatory/TRANSFER_0001.md",
+      "verifier": null,
+      "experiment": "Two independent interval-bound implementations on rank-doubling windows",
+      "status": "untested"
+    },
+    {
+      "id": "TR-005",
+      "from": "NF-WERNER6-v1",
+      "to": "NF-WEIGHTED-SCHUR-v1",
+      "type": "proposed-transfer",
+      "statement": "Use source-conditional Werner rational margins as input to a Schur-complement extension test for larger witness classes.",
+      "assumptions": "A full quadratic-form block decomposition with an exact outside-class coupling bound and valid imported endpoint inequalities.",
+      "evidence": "research/nightfall/observatory/TRANSFER_0001.md",
+      "verifier": null,
+      "experiment": "Find the smallest outside-class rank-two witness and bound its Schur complement",
+      "status": "untested"
+    },
+    {
+      "id": "TR-006",
+      "from": "NF-PAS-DOMINANCE-v1",
+      "to": "NF-PAS20-v1",
+      "type": "falsified-transfer",
+      "statement": "Transferring the claimed causal-triage advantage to the archived first-choice test fails: 8/20 trails the upstream-first 11/20 baseline.",
+      "assumptions": "The retrospective twenty-case first-choice scoring definition.",
+      "evidence": "research/nightfall/projects/pas-overview.md",
+      "verifier": null,
+      "experiment": "Preserve 8/20 versus 11/20 failure as a permanent adverse trace",
+      "status": "falsified"
+    },
+    {
+      "id": "TR-007",
+      "from": "NF-FIELD-SPAN-v1",
+      "to": "NF-AXIOM-KERNEL-v1",
+      "type": "shared-mathematical-mechanism",
+      "statement": "Both investigate powered finite-field measurement collisions and rank control; an exact theorem-level comparison is pending.",
+      "assumptions": "Axiom's field and ambiguity conventions must first match the archived manuscript.",
+      "evidence": "research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/README.md",
+      "verifier": null,
+      "experiment": "Align model assumptions and compare two identical finite-field test instances",
+      "status": "classified"
+    },
+    {
+      "id": "TR-008",
+      "from": "NF-WERNER6-v1",
+      "to": "NF-LEMNIS-EXT-v1",
+      "type": "proposed-transfer",
+      "statement": "Attempt to transport the exact six-copy conditional margin to a strictly larger coefficient family.",
+      "assumptions": "Prove additional class coverage and keep the original source-conditional margins valid.",
+      "evidence": "research/nightfall/projects/werner-correlated-6-9/S2_4471_CERTIFICATE_AUDIT.md",
+      "verifier": null,
+      "experiment": "Search the boundary of the encoded family for a negative Schur complement",
+      "status": "untested"
+    },
+    {
+      "id": "TR-009",
+      "from": "NF-PAS20-v1",
+      "to": "NF-GRAPH-EVAL-v1",
+      "type": "shared-mathematical-mechanism",
+      "statement": "The adverse PAS result motivates explicit flat-priority baselines, blinded decisions and measured research budgets.",
+      "assumptions": "Methodological lesson only, no empirical advantage inferred.",
+      "evidence": "research/nightfall/projects/pas-overview.md",
+      "verifier": null,
+      "experiment": "Preregister matched-budget graph-guided and flat triage",
+      "status": "classified"
+    }
+  ]
+}

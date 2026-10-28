@@ -35,6 +35,18 @@ jobs:
       - uses: actions/checkout@v4
       - name: Validate static pages, source links, anchors, and fallback catalogue
         run: python3 scripts/check_site.py
+      - name: Check Observatory frozen claims, typed edges and exact rational transfer
+        run: |
+          python3 -m py_compile scripts/verify_observatory.py
+          python3 scripts/verify_observatory.py
+      - name: Parse Observatory JavaScript and ensure registry mirror
+        run: |
+          node --check docs/observatory.js
+          python3 - <<'PY'
+          from pathlib import Path
+          assert Path('docs/observatory-data.json').read_bytes() == Path('research/nightfall/observatory/claims-v1.json').read_bytes()
+          print('PASS: Observatory source mirror is byte-identical')
+          PY
       - name: Parse JavaScript without executing browser code
         run: |
           node --check docs/site.js
