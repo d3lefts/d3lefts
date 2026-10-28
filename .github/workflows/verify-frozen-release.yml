@@ -30,3 +30,30 @@ jobs:
           name: nightfall-frozen-evidence-${{ github.run_id }}
           path: verification-report.json
           if-no-files-found: warn
+  agent-gmp-reproduction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      GH_TOKEN: ${{ github.token }}
+      RELEASE_TAG: ${{ github.event.release.tag_name || 'nightfall-research-2026-10-28' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download original exact-byte master ZIP
+        run: |
+          mkdir -p frozen-assets
+          gh release download "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --dir frozen-assets \
+            --pattern NIGHTFALL_GitHub_Release_2026-10-27.zip
+      - name: Provision GMP development headers
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq libgmp-dev
+      - name: Independently reproduce exact upper bound and grid-isolation certificate
+        run: |
+          python3 research/nightfall/agent-reports/ea36_131072/replay_erdos_gmp.py \
+            frozen-assets/NIGHTFALL_GitHub_Release_2026-10-27.zip \
+            | tee independent-gmp-receipt.json
+      - name: Upload separate agent algorithm's reproducible receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-gmp-independent-${{ github.run_id }}
+          path: independent-gmp-receipt.json
+          if-no-files-found: warn
