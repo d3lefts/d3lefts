@@ -31,3 +31,7 @@ The design takes inspiration from editorial research portfolios, while its layou
 ## Maintenance
 
 Run `python3 scripts/check_site.py` and `node --check docs/site.js` at the repository root before updating the live site. GitHub's workflow [Verify research website](../.github/workflows/verify-site.yml) enforces both on relevant pushes and pull requests. This is **a website-integrity check**, distinct from the mathematics, source SDPs, and external peer review.
+
+## Agent-first verification
+
+The verification system uses independent agent roles and deterministic outputs rather than human recruitment. The [protocol](../research/nightfall/AGENT_VERIFICATION_PROTOCOL.md), [machine-readable tasks](../research/nightfall/AGENT_TASKS.json), [fresh exact checker](../scripts/verify_erdos_independent.py) and [release-triggered replay workflow](../.github/workflows/verify-frozen-release.yml) are versioned. Machine checks remain scoped to their explicit mathematical assertions; source premises and global analytic lemmas are separate proof gates.
