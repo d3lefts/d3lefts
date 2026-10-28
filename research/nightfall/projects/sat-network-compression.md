@@ -99,3 +99,10 @@ As executed on 27 October 2026: 1,050 randomized CNF comparisons, including 554 
 - General s/sqrt(log s) contraction complexity: *published-theorem-based corollary* relying on OpenAI's new Theorem D.1, externally under review at date of this note.
 - Formalized comparison: OpenAI's documented Lean general #k-SAT bound is slower by extra log-log factors; transfer to this graph compiler has not been formalized here.
 - All-rank affine-quadratic stabilizer compression: remains unresolved. No stronger claim is made.
+## 7. Agent verification update — 28 October 2026
+
+A separate agent reconstructed this transfer as a **fully general factor-network identity** over arbitrary finite alphabets and commutative semirings, retaining repeated variable positions, zero-arity factors and signed weights. The [universal theorem and proof](sat-network-universal/THEOREM_AND_SCOPE.md) give the exact formulas `Z(F)=(q*1_R)^(n-v) Z(G)` and `s=3L-2v`, plus a **wire-minimality theorem within the explicitly restricted binary equality-bridge grammar**.
+
+The [standalone checker](sat-network-universal/check_structural_certificate.py) accepts a JSON incidence/equality certificate and verifies polynomial-time that its wire equivalence classes correspond one-to-one with the active original variables. Combined with the written bijection, passing this check implies the exact contraction identity for **all possible local factor weights** on the submitted graph. The [machine verdict](sat-network-universal/AGENT_VERDICT.json) records 3,829 canonical small 3CNFs checked, 2,357 complete edge contractions, 510 signed weighted q-ary cases, 663 formal monomial comparisons, and 11 rejected corruptions.
+
+The underlying COPY-tensor correspondence is established prior art; this audit contributes a precise proof-carrying implementation and explicit accounting. **No external tensor contraction complexity theorem was used** in this additional proof. The full standalone suite is preserved in the dated conversation ZIP `NIGHTFALL_UNIVERSAL_FACTOR_MACHINE_PROOF_20261028.zip` until its original binary archive is published separately.
