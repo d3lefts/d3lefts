@@ -136,7 +136,7 @@
         "simple_group_case": "A5 (60 elements), outer involution, q=10"
       },
       "full_repro_archive_name": "NIGHTFALL_NONABELIAN_SHADOW_BREAKTHROUGH_20261028.zip",
-      "full_repro_archive_sha256": "679fdd82413e41148a54b3c69fd8659d7160313bef19cc96036ae83fe65dda09",
+      "full_repro_archive_sha256": "a974448b10bb987f4b84b5801bf08a0ecffb0d13d3069579bc8d3b0e567af21b",
       "open_gates": [
         "Independent proof-assistant kernel formalization",
         "Comprehensive international prior-art audit",
