@@ -36,7 +36,7 @@ The initial release emphasized the October mathematics campaign. A dated review 
 | Affine Source Rigidity (Sep 26) | Exact shifted-prime-zeta expansion, affine source collision rigidity, rational dilation fibers, principal-layer isolation | Original corrected LaTeX manuscript and conditional analytic sequel published here; external analytic and novelty audit pending |
 | Counterfactual Authorization Gap (Sep 28) | Reference-class capability envelopes, compositional escape, audit complexity | Original LaTeX mathematical source published; proof and priority checks outstanding |
 | Three Ceilings on Oversight (September) | View-relative information, computational, and evidence-authority limitations | Revised manuscript framework, internal review; assumption-bound scope |
-| Involution shadow codes (Oct 13) | Exact minimum distance and optimal view allocation under finite abelian-group involutions | Original extended manuscript transcription and an additional 3,325-case direct test run on Oct 28; reviewer certification outstanding |
+| Involution shadow codes (Oct 13; generalized Oct 28) | **New self-contained nonabelian finite-group theorem:** exact distance, optimum allocation, full ordered-pair spectrum, and simultaneous error/erasure optimality | Independent exact tests: 13 group actions, 20,554 translation lists, 772,976 message-pair checks, 8,192 erasure masks, 8,568 allocations; global novelty and kernel formalization pending |
 | Cyclotomic 2k-measurement phase decoder (Oct 13) | General powered finite-field sensing via lattice decoding for selected d | Manuscript proof plus 54-case reported independent testing; unpublished source binary in Library |
 
 ## Principal findings
@@ -64,6 +64,7 @@ The public index excludes the Xi/critical-line and prime-frequency programs. Alr
 - [September Counterfactual Authorization Gap — original LaTeX](2026-09-counterfactual-authorization/README.md)
 - [September Three Ceilings on Oversight — revised scope](2026-09-three-ceilings/README.md)
 - [What Survives the Cut — universal involution-shadow coding](projects/involution-shadow-codes/README.md)
+- [Nonabelian involution-shadow distance, spectrum, and simultaneous error–erasure optimality theorem](projects/involution-shadow-codes/NONABELIAN_SHADOW_THEOREM.md)
 
 
 - [Erdős overlap construction](projects/erdos-overlap-paper.md)
