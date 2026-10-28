@@ -29,6 +29,7 @@
     <nav class="nav" id="site-nav" aria-label="Primary navigation">
       <a href="#work">Findings</a>
       <a href="research.html">Research library</a>
+      <a href="claim-lab.html">Claim Lab</a>
       <a href="agenda.html">Research agenda</a>
       <a href="#review">Independent review</a>
       <a href="#method">Methods</a>
@@ -48,6 +49,7 @@
       <div class="hero-actions">
         <a class="button" href="#flagships">Explore flagship research <span aria-hidden="true">↓</span></a>
         <a class="text-link" href="research.html">Browse the research library ↗</a>
+        <a class="text-link" href="claim-lab.html">Try Claim Lab ↗</a>
       </div>
     </div>
     <aside class="hero-aside" aria-label="Research status">
@@ -106,6 +108,36 @@
       </article>
     </div>
     <div class="flagship-after"><p><strong>Beyond the three:</strong> 23 source-led research lines covering mathematics, physics, safety, verification systems and informative failed approaches.</p><a class="text-link" href="research.html">Open the complete research library ↗</a></div>
+  </section>
+
+  <section class="section wrap lab-section" id="claim-lab" aria-labelledby="claim-lab-title">
+    <div class="section-head">
+      <span class="section-id">RESEARCH SYSTEMS / INTERACTIVE TOOL</span>
+      <div><h2 class="section-title" id="claim-lab-title">A workspace for <em>what comes next.</em></h2><p class="section-intro">The research archive shows the evidence. Claim Lab helps organize the missing links, independent checks, and decisive experiments behind each claim.</p></div>
+    </div>
+    <div class="lab-feature">
+      <div class="lab-feature-copy">
+        <div class="lab-meta"><span>N∕F — CLAIM LAB / 01</span><span class="lab-ready"><span aria-hidden="true"></span> INTERACTIVE DEMO</span></div>
+        <h3>Make uncertainty<br><em>inspectable.</em></h3>
+        <p>Map proof dependencies, expose evidence gaps, prioritize bottlenecks, and preregister experiments. An evidence-aware workspace for the actual process of discovery.</p>
+        <div class="lab-capabilities" aria-label="Claim Lab features"><span>Claim registry</span><span>Dependency graph</span><span>Audit queue</span><span>Experiment log</span></div>
+        <div class="lab-launch"><a class="button" href="claim-lab.html">Launch Claim Lab <span aria-hidden="true">↗</span></a><span>Local browser storage · JSON export</span></div>
+        <p class="lab-fineprint">Publicly accessible software; records stay in the browser until you export them. Starts with illustrative examples. The app identifies missing evidence fields; it does not execute proof checkers or establish mathematical validity.</p>
+      </div>
+      <div class="lab-feature-visual" aria-hidden="true">
+        <div class="lab-windowbar"><span><i></i><i></i><i></i></span><strong>CLAIM LAB / DEPENDENCIES</strong><small>DEMO DATA</small></div>
+        <svg viewBox="0 0 680 352" preserveAspectRatio="xMidYMid meet" focusable="false">
+          <defs><marker id="lab-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="none" stroke="#74b4aa" stroke-width="1.1"/></marker></defs>
+          <g fill="none" stroke="#345558" stroke-width="2" marker-end="url(#lab-arrow)"><path d="M202 106 C249 106 267 93 316 93"/><path d="M202 258 C246 258 264 238 316 238"/><path d="M454 93 C488 93 496 177 524 177"/><path d="M454 238 C488 238 496 177 524 177"/></g>
+          <g font-size="10" font-family="ui-monospace,monospace" fill="#87a19d" letter-spacing="1.5"><text x="27" y="31">SOURCE CLAIMS</text><text x="318" y="31">VERIFICATION</text><text x="524" y="31">DOWNSTREAM</text></g>
+          <g><rect x="27" y="67" rx="8" width="176" height="78" fill="#1b343b" stroke="#548078"/><rect x="27" y="216" rx="8" width="176" height="78" fill="#1b343b" stroke="#548078"/><rect x="316" y="54" rx="8" width="139" height="78" fill="#203041" stroke="#52758a"/><rect x="316" y="199" rx="8" width="139" height="78" fill="#203041" stroke="#52758a"/><rect x="524" y="138" rx="8" width="132" height="78" fill="#213c35" stroke="#74b4aa"/></g>
+          <g fill="#eff8f3" font-size="12" font-weight="600" font-family="ui-sans-serif,system-ui"><text x="42" y="94">Source lemma</text><text x="42" y="243">Finite witness</text><text x="330" y="81">Exact check</text><text x="330" y="226">Independent test</text><text x="538" y="165">Target theorem</text></g>
+          <g fill="#a6bbb8" font-size="10" font-family="ui-monospace,monospace"><text x="42" y="121">OPEN DEPENDENCY</text><text x="42" y="270">NUMERICAL CANDIDATE</text><text x="330" y="107">CERTIFICATE PATH</text><text x="330" y="252">AUDIT PENDING</text><text x="538" y="190">CONDITIONAL</text></g>
+          <rect x="27" y="323" width="628" height="1" fill="#345558"/>
+        </svg>
+        <div class="lab-windowfoot"><span><i></i> Dependencies visible</span><span>Example only / no external data</span></div>
+      </div>
+    </div>
   </section>
 
   <section class="wrap" aria-label="Originality policy" style="padding:22px 0;border-bottom:1px solid var(--line)">
