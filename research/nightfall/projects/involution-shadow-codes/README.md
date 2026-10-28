@@ -1,6 +1,6 @@
 # What Survives the Cut — finite-group shadow codes
 
-## Heterogeneous reliability extension — October 28, 2026
+**Prior-art correction (28 October):** The weighted reliability allocation and its NP-hardness sit inside established convex workload-partition research (2006–2017); a 2010 reliability-placement paper already uses 3-PARTITION. The two-class Pareto DP uses classical subset-sum states. [Source-backed claim audit](PRIOR_ART_ASSESSMENT_20261028.md) identifies the narrower, still-unresolved group-code-specific novelty question.\n\n## Heterogeneous reliability extension — October 28, 2026
 
 Unequal coordinate survival rates change the optimal allocation. The [exact reliability and complexity theorem](HETEROGENEOUS_ERASURE_COMPLEXITY.md) derives a convex workload identity, proves NP-completeness of variable-class reliability allocation even on cyclic groups, and establishes a pseudo-polynomial dynamic program computing the **entire** error–erasure Pareto frontier for two labels. A [standalone exact verifier](verify_heterogeneous_erasure.py) checks the formula against direct orbit observations, the cyclic four-measurement separation example, both 3-PARTITION fixtures, and random optimal-frontier comparisons.
 
