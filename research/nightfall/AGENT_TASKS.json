@@ -114,6 +114,33 @@
         "No outside contraction algorithm audited",
         "No formal proof-assistant formalization performed"
       ]
+    },
+    {
+      "id": "INVOLUTION-NONABELIAN-ERASURE",
+      "date": "2026-10-28",
+      "parent": "October 13 NIGHTFALL finite abelian involution-shadow codes",
+      "claim": "For every finite group G with nontrivial involutive automorphism S, exact distance d=m-max n_c, optimal m-ceil(m/q), full ordered-pair distance spectrum, exact erasure-failure counts, and universal balanced allocation optimality, q=[G:Fix(S)]",
+      "status": "PASS: explicit universal algebraic proof and reproducible exact finite audits; no Lean/Coq kernel verification or global novelty priority",
+      "theorem": "research/nightfall/projects/involution-shadow-codes/NONABELIAN_SHADOW_THEOREM.md",
+      "checker": "research/nightfall/projects/involution-shadow-codes/certify_nonabelian_instance.py",
+      "finite_certificate": "research/nightfall/projects/involution-shadow-codes/S4_nonabelian_certificate.json",
+      "erasure_checker": "research/nightfall/projects/involution-shadow-codes/verify_nonabelian_erasure_optimum.py",
+      "machine_verdict": "research/nightfall/projects/involution-shadow-codes/NONABELIAN_AGENT_VERDICT.json",
+      "test_counts": {
+        "actions": 13,
+        "translation_tuples": 20554,
+        "ordered_message_pairs": 772976,
+        "S4_erasure_patterns": 8192,
+        "label_allocations": 8568,
+        "adversarial_mutations_rejected": 7
+      },
+      "full_repro_archive_name": "NIGHTFALL_NONABELIAN_SHADOW_BREAKTHROUGH_20261028.zip",
+      "full_repro_archive_sha256": "679fdd82413e41148a54b3c69fd8659d7160313bef19cc96036ae83fe65dda09",
+      "open_gates": [
+        "Independent proof-assistant kernel formalization",
+        "Comprehensive international prior-art audit",
+        "Public mirror of frozen complete source ZIP"
+      ]
     }
   ]
 }
