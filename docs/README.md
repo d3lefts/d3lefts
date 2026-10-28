@@ -6,6 +6,7 @@ Static, dependency-free site for the NIGHTFALL PHASESHIFT research archive.
 - `review.html` — four independent audit briefs, status disclaimers, and structured GitHub reporting forms.
 - `evidence.html` — reproducibility archive hashes, evidence-access status, desktop release steps.
 - `ai-safety.html` — September theorem/evidence series, with SourceBound evaluated separately.
+- `werner.html` — copy-by-copy bounds, evidence distinctions, and certificate review tasks.
 - `sitemap.xml` — direct site page discovery.
 - `site.css` — responsive layout and accessible typography.
 - `site.js` — original source links and category filtering.
@@ -30,7 +31,7 @@ The design takes inspiration from editorial research portfolios, while its layou
 
 ## Maintenance
 
-Run `python3 scripts/check_site.py` and `node --check docs/site.js` at the repository root before updating the live site. GitHub's workflow [Verify research website](../.github/workflows/verify-site.yml) enforces both on relevant pushes and pull requests. This is **a website-integrity check**, distinct from the mathematics, source SDPs, and external peer review.
+Run `python3 scripts/check_site.py`, `node --check docs/site.js`, and `node --check scripts/site_browser_smoke.mjs` at the repository root before updating the live site. The website CI additionally runs headless Chromium checks at mobile and desktop widths, including menu interactions and research filtering. GitHub's workflow [Verify research website](../.github/workflows/verify-site.yml) enforces both on relevant pushes and pull requests. This is **a website-integrity check**, distinct from the mathematics, source SDPs, and external peer review.
 
 ## Agent-first verification
 

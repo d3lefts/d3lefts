@@ -21,13 +21,17 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - name: Validate static pages, source links, anchors, and fallback catalogue
         run: python3 scripts/check_site.py
       - name: Parse JavaScript without executing browser code
         run: node --check docs/site.js
+      - name: Browser smoke test (mobile, tablet, desktop)
+        run: |
+          npm install --no-save --no-package-lock playwright-core@1.56.1
+          CHROME_BIN="$(command -v google-chrome)" node scripts/site_browser_smoke.mjs
       - name: Compile verification scripts and check machine-readable task ledger
         run: |
           python3 -m py_compile scripts/verify_erdos_independent.py scripts/verify_frozen_release.py

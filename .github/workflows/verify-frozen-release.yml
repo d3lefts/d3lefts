@@ -7,6 +7,7 @@ permissions:
   contents: read
 jobs:
   exact-reproduction:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.release.tag_name == 'nightfall-research-2026-10-28' }}
     runs-on: ubuntu-latest
     timeout-minutes: 35
     env:
@@ -31,6 +32,7 @@ jobs:
           path: verification-report.json
           if-no-files-found: warn
   agent-gmp-reproduction:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.release.tag_name == 'nightfall-research-2026-10-28' }}
     runs-on: ubuntu-latest
     timeout-minutes: 25
     env:

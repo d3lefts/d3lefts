@@ -35,7 +35,8 @@
 <div class="topline"></div>
 <header class="header"><div class="wrap header-inner">
 <a href="index.html" class="brand"><span class="mark" aria-hidden="true">N∕F</span><span class="brand-copy">NIGHTFALL<span>PHASESHIFT / REPRODUCIBILITY</span></span></a>
-<nav class="review-nav" aria-label="Page links">
+<button type="button" class="menu-toggle" id="menu-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">MENU +</button>
+<nav class="review-nav subpage-nav" id="site-nav" aria-label="Page links">
 <a href="index.html">Research home</a><a href="review.html">Reviewer guide</a>
 <a href="https://github.com/d3lefts/d3lefts/issues/5" target="_blank" rel="noopener" class="nav-call">Release task ↗</a>
 </nav>
@@ -81,8 +82,8 @@ unzip -t NIGHTFALL_Expanded_Research_2026-10-28.zip</code></pre>
 <pre><code>Get-FileHash .\NIGHTFALL_GitHub_Release_2026-10-27.zip -Algorithm SHA256
 Get-FileHash .\NIGHTFALL_Expanded_Research_2026-10-28.zip -Algorithm SHA256</code></pre>
 <p class="small">A successful hash comparison authenticates archive identity. Mathematical validation additionally requires running the project-specific checker, checking its analytic assumptions, and distinguishing local arithmetic replay from independent expert approval.</p>
-<h2>Agent verification 01 — independently reproduced.</h2>
-<p>A newly authored GNU MP integer-convolution verifier examined every signed grid shift of the frozen 131,072-cell overlap witness. It recovered the exact upper bound, discovered the second-highest grid value with a positive exact separation, and established a sufficient integer-height stability radius for the unique maximizing shift. A separate exact-rational geometry control passed 1,720 small cases; the accompanying elementary proof bridges grid shifts to all real translations. <strong>This is internal agent-executed reproducibility, distinct from formal-kernel proof checking and external specialist peer review.</strong></p>
+<h2>Agent verification 01 — independent implementation, internal replay passed.</h2>
+<p>An independently implemented GNU MP integer-convolution verifier, executed internally, examined every signed grid shift of the frozen 131,072-cell overlap witness. It recovered the exact upper bound, discovered the second-highest grid value with a positive exact separation, and established a sufficient integer-height stability radius for the unique maximizing shift. A separate exact-rational geometry control passed 1,720 small cases; the accompanying elementary proof bridges grid shifts to all real translations. <strong>This is internal agent-executed reproducibility, distinct from formal-kernel proof checking and external specialist peer review.</strong></p>
 <div class="source-links">
 <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/agent-reports/ea36_131072/EA36_AGENT_AUDIT_REPORT.md" target="_blank" rel="noopener">Read complete audit and lemma ↗</a>
 <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/agent-reports/ea36_131072/AGENT_VERDICT.json" target="_blank" rel="noopener">Machine verdict ↗</a>
@@ -102,4 +103,5 @@ Get-FileHash .\NIGHTFALL_Expanded_Research_2026-10-28.zip -Algorithm SHA256</cod
 <a href="https://github.com/d3lefts/d3lefts/blob/main/scripts/verify_erdos_independent.py" target="_blank" rel="noopener">Independent bigint checker ↗</a>
 </div></main>
 <footer class="footer"><div class="wrap footer-bottom"><span>© 2026 Devin J. Wright · NIGHTFALL PHASESHIFT</span><span><a href="index.html">← Research home</a></span></div></footer>
+<script src="site.js" defer></script>
 </body></html>

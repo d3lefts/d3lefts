@@ -58,7 +58,8 @@ if(menu&&nav){
   menu.setAttribute("aria-expanded",String(open));
   menu.textContent=open?"CLOSE −":"MENU +";
  });
- nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{
-  nav.classList.remove("open");menu.setAttribute("aria-expanded","false");menu.textContent="MENU +";
- }));
+ const closeMenu=()=>{nav.classList.remove("open");menu.setAttribute("aria-expanded","false");menu.textContent="MENU +";};
+ nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",closeMenu));
+ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&nav.classList.contains("open")){closeMenu();menu.focus();}});
+ document.addEventListener("click",e=>{if(nav.classList.contains("open")&&!nav.contains(e.target)&&!menu.contains(e.target))closeMenu();});
 }

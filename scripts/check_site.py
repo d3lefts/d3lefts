@@ -94,6 +94,21 @@ def main() -> int:
         FAILURES.append(f"Research catalogue mismatch: static-only={sorted(static - sources)}, js-only={sorted(sources - static)}")
     if len(static) < 10:
         FAILURES.append("Static research catalogue has fewer than 10 entries")
+    # Every public HTML page must be discoverable, and mobile menus must be wired.
+    sitemap = (DOCS / "sitemap.xml").read_text(encoding="utf-8")
+    actual_urls = set(re.findall(r"<loc>([^<]+)</loc>", sitemap))
+    expected_urls = {
+        "https://d3lefts.github.io/d3lefts/" + ("" if p.name == "index.html" else p.name)
+        for p in pages
+    }
+    if actual_urls != expected_urls:
+        FAILURES.append(f"Sitemap mismatch: missing={sorted(expected_urls - actual_urls)}, extra={sorted(actual_urls - expected_urls)}")
+    for page_path, parsed in pages.items():
+        src = page_path.read_text(encoding="utf-8")
+        if "menu-button" not in parsed.ids or "site-nav" not in parsed.ids:
+            FAILURES.append(f"{page_path}: missing responsive navigation control or target")
+        if not re.search(r'<script\\s+src="site.js"\\s+defer\\s*></script>', src):
+            FAILURES.append(f"{page_path}: missing shared navigation JavaScript")
     # Public source scope and verified metadata baseline.
     excluded = ("research/nightfall/projects/xi-dossier.md",
                 "research/nightfall/projects/xi-continuous-shift-rank22.md",
