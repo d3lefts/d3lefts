@@ -36,6 +36,8 @@ jobs:
         run: python3 scripts/verify_erdos_independent.py --self-test
       - name: Check agent GMP source, exact-rational geometry and JSON receipt
         run: |
+          echo "4775c2c704d92459762f9f25e921073ea9c7d88daf1d1dd9aaacbd774a5adb79  research/nightfall/agent-reports/ea36_131072/independent_gmp_audit.cpp" | sha256sum --check
+          echo "260dd5d7fbb1967a516228990c197f02427102353a1cb4c59d51f0cfcc291fd5  research/nightfall/agent-reports/ea36_131072/verify_bridge.py" | sha256sum --check
           python3 -m py_compile research/nightfall/agent-reports/ea36_131072/replay_erdos_gmp.py research/nightfall/agent-reports/ea36_131072/verify_bridge.py
           python3 -m json.tool research/nightfall/agent-reports/ea36_131072/AGENT_VERDICT.json > /dev/null
           python3 research/nightfall/agent-reports/ea36_131072/verify_bridge.py
