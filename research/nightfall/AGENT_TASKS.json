@@ -127,12 +127,13 @@
       "erasure_checker": "research/nightfall/projects/involution-shadow-codes/verify_nonabelian_erasure_optimum.py",
       "machine_verdict": "research/nightfall/projects/involution-shadow-codes/NONABELIAN_AGENT_VERDICT.json",
       "test_counts": {
-        "actions": 13,
-        "translation_tuples": 20554,
-        "ordered_message_pairs": 772976,
+        "actions": 14,
+        "translation_tuples": 20736,
+        "ordered_message_pairs": 1417256,
         "S4_erasure_patterns": 8192,
         "label_allocations": 8568,
-        "adversarial_mutations_rejected": 7
+        "adversarial_mutations_rejected": 7,
+        "simple_group_case": "A5 (60 elements), outer involution, q=10"
       },
       "full_repro_archive_name": "NIGHTFALL_NONABELIAN_SHADOW_BREAKTHROUGH_20261028.zip",
       "full_repro_archive_sha256": "679fdd82413e41148a54b3c69fd8659d7160313bef19cc96036ae83fe65dda09",
