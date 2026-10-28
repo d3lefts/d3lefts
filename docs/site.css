@@ -66,19 +66,19 @@ a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:poi
 /* All standalone research pages share the accessible responsive menu. */
 @media(max-width:760px){
  .header{position:relative}
- .subpage-nav{
+ .header .review-nav.subpage-nav{
   display:none;position:absolute;top:100%;left:0;right:0;z-index:20;
   padding:22px 18px;background:var(--paper);
   box-shadow:0 10px 15px #0001;border-bottom:1px solid var(--line);
   flex-direction:column;align-items:stretch;gap:19px;font-size:13px
  }
- .subpage-nav.open{display:flex}
- .subpage-nav a:nth-child(2){display:block}
- .subpage-nav .nav-call{display:inline-flex;align-self:flex-start;padding:11px 15px}
+ .header .review-nav.subpage-nav.open{display:flex}
+ .header .review-nav.subpage-nav a:nth-child(2){display:block}
+ .header .review-nav.subpage-nav .nav-call{display:inline-flex;align-self:flex-start;padding:11px 15px}
 }
 @media(max-width:440px){
- .subpage-nav .nav-call{display:inline-flex}
- .subpage-nav a:first-child{padding:0;border:0}
+ .header .review-nav.subpage-nav .nav-call{display:inline-flex}
+ .header .review-nav.subpage-nav a:first-child{padding:0;border:0}
 }
 
 /* Long publication identifiers wrap within the mobile viewport. */
