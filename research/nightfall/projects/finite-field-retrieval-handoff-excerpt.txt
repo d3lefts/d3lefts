@@ -1,0 +1,218 @@
+# Transcribed textual research source
+
+Source file: Quarter_Turn_Claude_Complete_Handoff_2026-10-15.pdf
+This is extracted text for GitHub search and independent inspection. Equations, typesetting, figures, and pagination should be checked against the original PDF. It is not a byte-equivalent copy of the PDF.
+This is an excerpt; the original source has additional pages.
+
+---
+
+<PARSED TEXT FOR PAGE: 1 / 49>
+QUARTER-TURN RESEARCH / CLAUDE HANDOFF                                                                  15 October 2026
+
+
+
+                       Quarter-Turn Retrieval and Decoding
+                                   Complete research handoff for Claude
+                         Uniform finite-field fourth-power decoding, oracle-free LLL,
+                        exact preimage enumeration, and explicit-design experiments
+                    Research owner: Devin J. Wright          | Consolidated: 15 October 2026
+
+Read      first.         The    canonical    theorem   is   in   the    latest  14-page   manuscript
+manuscript/quarter_turn_latest.pdf; the canonical execution source is the patched reference
+bundle. The six-direction bound is incorporated into Theorem 1. The hybrid decoder and one-parameter The
+algebraic designs are separate follow-up work. This handoff distinguishes theorem statements, verified
+implementation runs, and conditional research claims.
+
+
+principal result in one sentence. For a uniformly random systematic design over Fpr , p ≡ 1 (mod 4), if q ≥ 28 16k ,
+the supplied manuscript claims a probability greater than 1 − 16k /(4q) that every length-k signal is recovered up to
+a fourth root of unity with ordinary certified LLL and at most 1024 phase checks, without an SVP oracle. The same
+full-lattice method enumerates the complete preimage list for every design, though the list may be exponentially
+large. Proof checked by AI audit, still requiring external human review.
+
+
+Contents
+
+1 Exact problem and terminology                                                                                        2
+  1.1 Result-status matrix . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   2
+
+2 Principal theorems and runtime interpretation                                                                        2
+  2.1 Theorem 1: uniform plain-LLL retrieval at the counting scale . . . . . . . . . . . . . . . . . . . . . .         2
+  2.2 Theorem 2: complete preimage enumeration . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .         2
+
+3 Why the LLL argument works                                                                                           3
+  3.1 Deterministic LLL span cut (Lemma 3.1) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .         3
+  3.2 Fourth-root normalization and modular span (Lemmas 3.2 and 3.4) . . . . . . . . . . . . . . . . . . .            3
+  3.3 Uniform probability count (Lemma 3.5) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .        3
+
+4 Six-direction closed-form certificate                                                                                3
+
+5 Other decoding approaches developed in the session                                                                   4
+
+6 Computational record and reproducibility                                                                             4
+
+7 Separate branch: explicit and low-randomness designs                                                                 5
+  7.1 Fixed-pattern feasibility is a rank condition . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    5
+  7.2 Symmetry obstruction (proved in accompanying note) . . . . . . . . . . . . . . . . . . . . . . . . . .           5
+  7.3 Asymmetric Cauchy-family probe (computed, not proved universally) . . . . . . . . . . . . . . . . .              5
+
+8 Novelty, attribution and prior-art guardrails                                                                        5
+
+9 What Claude should do next                                                                                           6
+
+10 Package map                                                                                                         6
+
+
+
+
+Consolidation; preserve provenance and proof-status labels                                                             1
+<PARSED TEXT FOR PAGE: 2 / 49>
+QUARTER-TURN RESEARCH / CLAUDE HANDOFF                                                                       15 October 2026
+
+
+
+1. Exact problem and terminology
+Set q = pr with prime p ≡ 1 (mod 4), so µ4 = {±1, ±ρ} ⊂ Fp , ρ2 = −1. Given B ∈ Fk×k           q , the systematic sensing
+design [Ik ; B] records
+                              RB (x) = x41 , . . . , x4k , (Bx)41 , . . . , (Bx)4k , x ∈ Fkq .
+                                                                                  
+
+The natural equivalence is x ∼ ωx, ω ∈ µ4 . A design retrieves if equal readings imply equivalent signals. The
+phrase uniform decoding means one fixed design works for every input signal, not merely that a random signal is
+easy. Complete preimage enumeration means returning exactly all equivalence classes consistent with observed
+measurements; it does not mean error-correcting list decoding.
+
+1.1 Result-status matrix
+Result                               Formal guarantee/claim                         Current status
+Uniform retrieval           q ≥ 256 · 16k , PrB (good) > 1 − 16k /(4q) ≥            Complete manuscript proof; AI audit,
+                            1 − 2−10                                                human review outstanding.
+Plain-LLL decoding          Rank at most 4k, no SVP oracle, at most                 Theorem 1 in latest manuscript; exact
+                            45 = 1024 candidate checks on same good                 parameter certificate rerun.
+                            event
+Complete preimages          Algorithm 3.3 includes every signal class               Deterministic proof (Lemma 3.4); ex-
+                            for any design                                          ponential outputs possible.
+Extension-field kernel      r ≥ 4: at most four assignments; r = 3: at              Section 4; exact-field tests supplied.
+                            most sixteen
+Adaptive row sketch         Exact GS tail certificate allows early                  Working prototypes and experiments;
+                            complete-list return; otherwise full-lattice            no independent uniform bound on
+                            fallback                                                sketch stage.
+Explicit low-randomness de- Symmetry obstruction; finite k ≤ 5 Cauchy-              Obstruction/criterion proved in ac-
+signs                       family success; conditional degree theorem              companying note; universal Cauchy
+                                                                                    theorem open.
+
+
+2. Principal theorems and runtime interpretation
+2.1 Theorem 1: uniform plain-LLL retrieval at the counting scale
+The current manuscript’s headline statement: if q = pr ≥ 24k+8 , p ≡ 1 (mod 4), and B is uniformly random, then
+with probability strictly exceeding
+                                                  16k
+                                             1−        ≥ 1 − 2−10 ,
+                                                   4q
+B retrieves and a full Gaussian-integer lattice LLL decoder recovers every signal. Select rational parameters
+                                      9999                       1001                          4,000,000
+                     δ = 0.9999 =          ,      η = 0.5005 =        ,   α = (δ − η 2 )−1 =             .
+                                     10000                       2000                          2,997,599
+The implementation must certify the LLL inequalities exactly after using floating point; these are not generic
+textbook LLL settings. Outside the exceptional event, dimFp W ≤ 6, giving at most 46−1 = 1024 phase assignments.
+The LLL rank is at most 4k; the algorithm is polynomial in k and input bit length on the good event. No dependence
+on an exact SVP/BKZ oracle remains.
+
+2.2 Theorem 2: complete preimage enumeration
+For every design and valid reading vector, form phase roots, the corresponding modular Gaussian lattice, and the
+Fp -span of reductions of sufficiently short LLL basis vectors. Enumerate its µ4 -valued points by pivot normalization,
+and retain those reproducing the complete reading vector. This lists exactly all µ4 -orbits of preimages. It may
+require 4e−1 checks with e large (up to k); the list itself can contain 4k−1 classes (e.g., B = 0, full input support).
+The 1024 bound is high-probability and uniform in x, not unconditional in B.
+
+
+Consolidation; preserve provenance and proof-status labels                                                                 2
+<PARSED TEXT FOR PAGE: 3 / 49>
+QUARTER-TURN RESEARCH / CLAUDE HANDOFF                                                                 15 October 2026
+
+
+
+   Implementation caution resolved in patched bundle. An earlier span/spandec.py silently returned an
+empty list if e exceeded a default candidate cap. The patched reference now enumerates without a cap by default
+and raises CandidateBudgetExceeded when a caller imposes one; an exception must never mean “no preimages.”
+Regression cases B = 0, k = 2, 3, 4, 12 were reproduced. This is a code-level fix, not a change to the mathematical
+theorem.
+
+
+3. Why the LLL argument works
+3.1 Deterministic LLL span cut (Lemma 3.1)
+                          PN
+Write a lattice vector v = j=1 cj bj in an LLL-reduced integer basis, and let h be the highest index with ch ̸= 0. Its
+b∗h Gram–Schmidt component has norm |ch |∥b∗h ∥, so ∥b∗h ∥ ≤ ∥v∥. LLL’s size reduction and Lovász inequalities imply
+
+                                                  ∥bi ∥2 ≤ αN −1 ∥v∥2   (i ≤ h).
+                                     √
+Hence every vector with ∥v∥ ≤ n lies in the integer span of the basis vectors selected by ∥bi ∥2 ≤ αN −1 n. This
+costs one LLL approximation factor, not a product of two factors as in the older successive-minima gap method.
+
+3.2 Fourth-root normalization and modular span (Lemmas 3.2 and 3.4)
+Let S = supp(x), J = supp(Bx), and n = |S| + |J| ≤ 2k. A consistent preimage corresponds to a phase vector
+(u, v) ∈ µn4 in a linear measurement kernel. Lift each phase into Gaussian units Z[i]; the resulting lattice vector has
+squared norm n. The preceding lemma captures every such lift in selected short basis vectors; reduction through
+ι : Z[i] → Fp gives an Fp -span W containing all feasible phase patterns.
+    If dim W = e, choose pivot coordinates of a row-reduced basis of W . Normalize the first selected phase to 1 and
+independently choose the other e − 1 pivot phases in µ4 . This yields at most 4e−1 assignments, with exact validation
+against all readings. Zero measurement coordinates are handled by the support sets. There is no reliance on unique
+retrieval for completeness.
+
+3.3 Uniform probability count (Lemma 3.5)
+Let the Fp -images of all short Gaussian vectors in the normalized lattice span dimension at least t + 1. With the
+true all-ones phase included, choose t additional independent short witnesses. Input projection of the phase kernel is
+injective, preserving the t + 1 independent input patterns. For fixed supports |S| = s, |J| = m:
+• A row j ∈ J satisfies t independent linear conditions.
+• A row j ∈
+          / J satisfies t + 1 conditions (including the zero-output relation).
+• For fixed signal class and witness set, the row probability is q −tm−(t+1)(k−m) . The union over at most q s−1
+  projective signal classes leaves q s+m−1−(t+1)k .
+Let Mn count nonzero short Gaussian vectors modulo the four Gaussian units; taking supports and witness sets
+yields
+                                       k    k           
+                                      X    X   k   k    Ms+m s+m−1−(t+1)k
+                            Pt (q) =                           q              .
+                                     s=t+1 m=0
+                                               s  m       t
+
+The argument counts independence after reduction modulo p; it needs neither Gaussian-minor transfer nor the earlier
+characteristic bound p > 3T 4 . This is the substantive reason ordinary LLL suffices for the stated random-design
+theorem.
+
+
+4. Six-direction closed-form certificate
+Take t = 6 and the parameters above. The exact integer test is
+
+                                   4,000,00012 < 32 · 2,997,59912       ⇐⇒    48 log2 α < 20.
+
+
+
+
+Consolidation; preserve provenance and proof-status labels                                                           3
+<PARSED TEXT FOR PAGE: 4 / 49>
+QUARTER-TURN RESEARCH / CLAUDE HANDOFF                                                                     15 October 2026
+
+
+
+For k ≤ 6, the input projection immediately gives dim W ≤ |S| ≤ 6, so no counting is required. For k ≥ 7, every
+term in P6 has s ≥ 7, hence n = s + m ≥ 7. Only for those terms, apply the Euclidean-ball volume bound to obtain
+                                                                                   √
+                       #{v ∈ Z[i]n : ∥v∥ ≤ Rn } < (8α2n )n ,      Rn = α(2n−1)/2 n, n ≥ 7.
+
+(The unusual volume constant evaluates to approximately 7.862656 < 8 for these parameters.) Use M6n ≤ Mn6 , the
+                                                                                                    
+
+identity s+m=n ks m      = 2kn , and n ≤ 2k, then extend the resulting nonnegative binomial sum to all n. This
+        P            k      
+
+gives
+                                                                                     2
+                               P6 (q) ≤ q −7k−1 (1 + 86 α24k q)2k ≤ q −5k−1 238k α48k .
+At q = 24k+8 ,
+                                    log2 P6 (q) ≤ (48 log2 α − 20)k 2 − 6k − 8 < −6k − 8.
+Because all exponents of q in qP6 (q) are negative, larger fields improve the desired error comparison. This is below
+the residual error budget 3 · 4k−1 /q, completing the six-direction contribution to Theorem 1 when combined with
+retrieval. The method upgrades the earlier 4096-candidate parameterization without appealing to a numerical
+small-k sweep.
+    Source caveat: All probability and lattice details should still be checked independently by a human referee.
