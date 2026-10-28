@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#18221e">
+<meta name="description" content="NIGHTFALL frozen research archives: SHA-256 hashes, upload status, and exact steps for independent verification.">
+<meta property="og:title" content="Reproducibility evidence | NIGHTFALL">
+<meta property="og:description" content="Frozen checksums, file manifests, evidence availability, and audit procedures for independent reviewers.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://d3lefts.github.io/d3lefts/evidence.html">
+<link rel="canonical" href="https://d3lefts.github.io/d3lefts/evidence.html">
+<title>Evidence &amp; Reproduction — NIGHTFALL</title>
+<link rel="stylesheet" href="site.css"><link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>
+.evidence-page{max-width:1080px;padding:72px 0 100px}
+.evidence-page h1{font:400 clamp(68px,8.4vw,115px)/.95 var(--serif);letter-spacing:-.03em;margin:24px 0}
+.evidence-page .lede{font-size:18px;line-height:1.65;max-width:820px;color:#46574a;margin-bottom:40px}
+.provenance-state{padding:20px 24px;border-left:4px solid #7d966b;background:#e6ece0;margin:30px 0;font-size:14px;line-height:1.7}
+.provenance-state strong{display:block;font:600 11px var(--mono);letter-spacing:.04em;margin-bottom:7px}
+.evidence-page h2{font:400 clamp(39px,4vw,63px)/1.03 var(--serif);margin:65px 0 20px}
+.evidence-page p{line-height:1.72}
+.asset-table{width:100%;border-collapse:collapse;margin:24px 0 13px;font-size:14px}
+.asset-table th{font:600 11px var(--mono);text-align:left;padding:12px 10px;border-bottom:2px solid var(--ink)}
+.asset-table td{padding:18px 10px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.55}
+.asset-table code{display:block;font:11px/1.8 var(--mono);overflow-wrap:anywhere;margin-top:7px}
+.evidence-page .small{font:12px/1.7 var(--mono);color:var(--muted)}
+.code-label{font:500 11px var(--mono);letter-spacing:.04em;margin:25px 0 9px}
+.evidence-page pre{overflow-x:auto;padding:20px;background:var(--ink);color:#edffda;font:12px/1.85 var(--mono)}
+.evidence-page pre code{font:inherit}
+.steps{padding-left:22px;max-width:860px}.steps li{padding:13px 0;line-height:1.7}
+.source-links{display:flex;gap:20px;flex-wrap:wrap;margin:25px 0}.source-links a{text-decoration:underline;text-underline-offset:4px;font:12px var(--mono)}
+.evidence-page .action-row{display:flex;gap:14px;flex-wrap:wrap;margin:32px 0}
+@media(max-width:750px){.evidence-page{padding:55px 0 76px}.asset-table{display:block;overflow-x:auto}.asset-table td{min-width:165px}.evidence-page pre{font-size:11px}}
+</style></head><body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="topline"></div>
+<header class="header"><div class="wrap header-inner">
+<a href="index.html" class="brand"><span class="mark" aria-hidden="true">N∕F</span><span class="brand-copy">NIGHTFALL<span>PHASESHIFT / REPRODUCIBILITY</span></span></a>
+<nav class="review-nav" aria-label="Page links">
+<a href="index.html">Research home</a><a href="review.html">Reviewer guide</a>
+<a href="https://github.com/d3lefts/d3lefts/issues/5" target="_blank" rel="noopener" class="nav-call">Release task ↗</a>
+</nav>
+</div></header>
+<main class="wrap evidence-page" id="main">
+<span class="kicker">EVIDENCE ACCESS / FROZEN ASSETS / OCTOBER 28, 2026</span>
+<h1>Inspect the exact<br><i>evidence.</i></h1>
+<p class="lede">Independent review depends on access to the original bytes, together with their verification procedures. Both frozen archives are complete in the research workspace. Public release hosting is the remaining access step.</p>
+<div class="provenance-state">
+<strong>PUBLIC ASSET STATUS — UPLOAD PENDING</strong>
+The GitHub repository currently exposes source manuscripts, checkers and audit summaries. The two complete binary archives are queued for desktop upload. <a href="https://github.com/d3lefts/d3lefts/issues/5" target="_blank" rel="noopener"><u>Track upload status in issue #5</u></a>. This website will identify the download links only after the public assets and their checksums have been verified.
+</div>
+<h2>Two immutable archive files.</h2>
+<div style="overflow-x:auto">
+<table class="asset-table">
+<thead><tr><th scope="col">Archive</th><th scope="col">Bytes</th><th scope="col">Contents</th></tr></thead>
+<tbody>
+<tr><td><strong>NIGHTFALL_GitHub_Release_2026-10-27.zip</strong><code>77665ced561a9ae1d882baffdc5417188166049c27267afd6cb7b408ec9559cb</code></td><td>20,981,017</td><td>214 ZIP entries; original research manuscripts, exact checkers, logs and nested certificates</td></tr>
+<tr><td><strong>NIGHTFALL_Expanded_Research_2026-10-28.zip</strong><code>fca5dba595475783e3482d72d5e4888e76b91c38052a0589577f0fde578b8275</code></td><td>22,753,993</td><td>226 ZIP entries; original release plus the September–October research supplement</td></tr>
+</tbody></table></div>
+<p class="small">Each hexadecimal string is the complete SHA-256 of the named original archive. Both CRC-integrity tests passed again on October 28. These hashes refer to the archives themselves, distinct from hashes of individual mathematical witnesses.</p>
+<h2>Desktop publishing checklist.</h2>
+<ol class="steps">
+<li>Download the unchanged original files from the research chat to the same folder on your desktop.</li>
+<li>Open <a href="https://github.com/d3lefts/d3lefts/releases/new" target="_blank" rel="noopener"><u>GitHub’s new-release page</u></a>. Choose the tag <code>nightfall-research-2026-10-28</code>; name the release <strong>NIGHTFALL — Frozen reproducibility collection</strong>.</li>
+<li>Attach both ZIP files as release assets. Clearly label the included mathematics by its documented status: internally reproduced finite witnesses, conditional source deductions, and conjectural manuscripts. Avoid claiming external referee acceptance.</li>
+<li>Publish, confirm anonymous access, download both assets anew, and compare their actual SHA-256s with the two strings above.</li>
+<li>Post the public release link in <a href="https://github.com/d3lefts/d3lefts/issues/5" target="_blank" rel="noopener"><u>issue #5</u></a>. The website’s evidence links can then be changed from <em>pending</em> to <em>publicly accessible</em>.</li>
+</ol>
+<div class="code-label">MACOS / LINUX — VERIFY BOTH ARCHIVES</div>
+<pre><code>shasum -a 256 NIGHTFALL_GitHub_Release_2026-10-27.zip
+shasum -a 256 NIGHTFALL_Expanded_Research_2026-10-28.zip
+unzip -t NIGHTFALL_GitHub_Release_2026-10-27.zip
+unzip -t NIGHTFALL_Expanded_Research_2026-10-28.zip</code></pre>
+<div class="code-label">WINDOWS POWERSHELL — VERIFY SHA-256</div>
+<pre><code>Get-FileHash .\NIGHTFALL_GitHub_Release_2026-10-27.zip -Algorithm SHA256
+Get-FileHash .\NIGHTFALL_Expanded_Research_2026-10-28.zip -Algorithm SHA256</code></pre>
+<p class="small">A successful hash comparison authenticates archive identity. Mathematical validation additionally requires running the project-specific checker, checking its analytic assumptions, and distinguishing local arithmetic replay from independent expert approval.</p>
+<h2>What a referee receives.</h2>
+<p>The master archive contains <code>research/nightfall/AUDIT.md</code>, <code>SHA256SUMS.txt</code>, project checkers, finite witness files, and replay logs. Read the <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/REVIEW_PROTOCOL.md" target="_blank" rel="noopener"><u>independent-review protocol</u></a> before reporting a pass. A separate unresolved task, <a href="https://github.com/d3lefts/d3lefts/issues/6" target="_blank" rel="noopener"><u>issue #6</u></a>, seeks the exact input behind the accepted Arena leaderboard result.</p>
+<div class="action-row">
+<a class="button" href="https://github.com/d3lefts/d3lefts/issues/5" target="_blank" rel="noopener">Track archive release ↗</a>
+<a class="button button-light" href="review.html">Choose a review task ↗</a>
+</div>
+<div class="source-links">
+<a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/RELEASE.md" target="_blank" rel="noopener">Archive manifest ↗</a>
+<a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/SEPTEMBER_EXPANSION.md" target="_blank" rel="noopener">Supplement manifest ↗</a>
+<a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/AUDIT.md" target="_blank" rel="noopener">Audit ledger ↗</a>
+</div></main>
+<footer class="footer"><div class="wrap footer-bottom"><span>© 2026 Devin J. Wright · NIGHTFALL PHASESHIFT</span><span><a href="index.html">← Research home</a></span></div></footer>
+</body></html>
