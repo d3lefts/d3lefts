@@ -45,3 +45,22 @@ Execute only the fixed allowlisted scientific checker scripts and record a scope
     python3 research/nightfall/discovery-engine/runner.py PACKAGE.zip --out receipt.json
 
 The worker validates ZIP SHA-256 hashes and preregistration digests, executes source-controlled scripts in a temporary directory, captures source and output hashes, and records logs and exit codes. Optional Python dependencies such as sympy require a locally provisioned environment. Each receipt explicitly retains the imported-premise and independent-agent gates. Run the worker test harness with python3 scripts/test_discovery_worker.py.
+
+
+## Adaptive resolution: Cartesia H-Net research synthesis (2026-10-28)
+
+The [adaptive abstraction design](ARCHITECTURE.md) extends the existing representation studio and coarsen/refine operator portfolio. It treats **chunk boundaries and granularity as first-class representation decisions**, preserves byte-exact source identity, and forces resegmentation at counterexamples, changed active constraints, and source-attribution boundaries. Cartesia's work motivates the hierarchy, while NIGHTFALL retains its stricter raw-data/independent-checker certificate gate.
+
+- [Exact two-stage segmentation reference implementation](adaptive_resolution.py): injectable context-dependent boundary scores, forced evidence splits, SHA-256 per chunk, lossless reconstruction, parent-child coverage checks, resegmentation after a verifier failure.
+- [Seven engineering regression tests](test_adaptive_resolution.py): 299 randomized binary inputs, empty source, Unicode bytes, failure-driven split, segmentation-invariant raw checking, stale hash rejection, invalid boundary and adversarial mutation controls.
+
+```bash
+cd research/nightfall/discovery-engine
+python3 -m unittest discover -v -p 'test_*.py'
+```
+
+**Integration state:** The Python module is an experimentally validated **deterministic baseline**, rather than a trained H-Net. It is currently separate from the browser's JavaScript optimizer and from the scientific worker's allowlisted scripts. The browser representation studio links its design and remains the entry point for operator selection. Future adapter work will map EA #36 raw cells/contact events and SourceBound evidence spans into this shared raw-atom contract, then compare constant, heuristic, frozen learned, and jointly trained boundaries at identical discovery compute budgets.
+
+**Research metric:** compute per independently replayable certified result and downstream transfer. The Cartesia language-model compute multipliers are external findings, and no analogous NIGHTFALL gain has been measured.
+
+Primary sources: [Cartesia H-Net Part I](https://www.cartesia.ai/blog/from-tokens-to-bytes-part-1), [Part II](https://www.cartesia.ai/blog/from-tokens-to-bytes-part-2).
