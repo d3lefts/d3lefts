@@ -26,3 +26,20 @@ The BASE row maximum increases exactly by five under each max-plus multiplicatio
 **Verification recorded in the complete release package:** exhaustive exact C++ test of all 27,405 four-element candidates and exact hitting-set search at K=2, finding maximum Sidon subset size 17; independent Python/MILP checks and max-plus test K=0..3. The actual checkers and witness files are in the separate master reproducibility ZIP and require byte-for-byte GitHub upload for a self-contained remote reproduction.
 
 **Related work:** Jie Ma and Quanyu Tang, *Largest Sidon subsets in weak Sidon sets*, arXiv:2602.23282; 7bkzb8 reader construction (October 2026) establishing 5/9. This note claims neither worldwide novelty nor a new competition record.
+
+
+## Independent machine proof — October 28
+
+An independently generated 7,801-state **proof DAG** now establishes the 30-element `(4,5)` example unconditionally at the finite level. Each branch proves every one of the three possible ways to hit an uncovered three-term progression; terminal states give explicit families of disjoint progressions exceeding the remaining deletion budget. A separate small checker validates all proof transitions without solving the optimization problem anew.
+
+- [30 exact witness coordinates](witness_30.txt) — SHA-256 `dc4697ce051a57987049199965967cc2b981433816d3daac284454262395978f`
+- [Standalone exact independent search verifier](verify_sidon30_standalone.py) — 27,405 four-point tests, 28 progression edges, explicit 17-subset pair-sum verification, and no possible 12-deletion AP cover; standard-library Python.
+- Frozen checkable DAG ZIP: `NIGHTFALL_SIDON30_MACHINE_PROOF_20261028.zip`, distributed with the research conversation until publication as a public GitHub Release asset. The exact DAG file inside has SHA-256 `4e31c53667cba63db34354eb861f503ac7284a0e76cd7219306dff8239032181` and is verified with a separate interpreter, including adversarially corrupted proof fixtures.
+- **Automated CI:** the standalone source script runs on project updates, independently of the October 24 C++ search.
+
+```bash
+python3 research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py
+```
+
+The finite result gives the exact ratio `17/30<4/7`. The asymptotic `5/9` reduction belongs to the earlier reader construction and is a separate prior-art result. The DAG proves this **particular finite witness**, without presuming the infinite self-similar family theorem.
+
