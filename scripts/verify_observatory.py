@@ -4,6 +4,7 @@ Standard library only. Mechanical integrity gate, not a general theorem prover.
 """
 from __future__ import annotations
 
+import argparse
 import copy
 from fractions import Fraction as F
 import hashlib
@@ -83,6 +84,9 @@ def validate(graph: dict, locks: dict, gates: dict) -> list[str]:
     frozen_dependencies = locks.get("dependencies", {})
     frozen_provenance = locks.get("provenance", {})
     frozen_edges = locks.get("edges", {})
+    frozen_attestations = locks.get("attestations", {})
+    if set(frozen_attestations) != set(ids):
+        errors.append("Frozen status attestation register mismatches the graph")
     if set(frozen) != set(ids):
         errors.append("Frozen claim identity register mismatches the graph")
     for n in nodes:
@@ -106,6 +110,10 @@ def validate(graph: dict, locks: dict, gates: dict) -> list[str]:
             errors.append(f"{ident}: frozen identity mismatch; issue a NEW claim identity")
         if frozen_dependencies.get(ident) != n["dependencies"] or frozen_provenance.get(ident) != n["provenance"]:
             errors.append(f"{ident}: immutable provenance/dependencies changed; issue a NEW claim identity")
+        attestation_fields = ("status", "title", "owner", "boundary", "reproduce", "failure_conditions")
+        snapshot = {k: n[k] for k in attestation_fields}
+        if frozen_attestations.get(ident) != snapshot:
+            errors.append(f"{ident}: frozen status/scope-attestation mismatch; new reviewed claim identity required")
         for proof_source in n["provenance"]:
             commit = proof_source.get("revision", "")
             expected_url = "https://github.com/d3lefts/d3lefts/blob/" + commit + "/" + n["source_key"]
@@ -206,6 +214,18 @@ def validate(graph: dict, locks: dict, gates: dict) -> list[str]:
     return errors
 
 
+def validate_baseline(locks: dict, baseline: dict) -> list[str]:
+    """Prevent rewriting historical scientific locks when a published baseline exists."""
+    errors = []
+    for category in ("claims", "dependencies", "provenance", "edges", "attestations"):
+        old = baseline.get(category, {})
+        new = locks.get(category, {})
+        for key, value in old.items():
+            if key not in new or new[key] != value:
+                errors.append(f"published {category} record {key} was rewritten; append a new identity")
+    return errors
+
+
 def self_test(graph: dict, locks: dict, gates: dict) -> list[str]:
     errors = []
     changed = copy.deepcopy(graph)
@@ -236,23 +256,45 @@ def self_test(graph: dict, locks: dict, gates: dict) -> list[str]:
     changed["edges"][0]["assumptions"] += " silently widened"
     if not any("immutable scientific relationship" in msg for msg in validate(changed, locks, gates)):
         errors.append("MUTATION CONTROL missed altered scientific edge")
+    changed = copy.deepcopy(graph)
+    candidate = next(n for n in changed["nodes"] if n["id"] == "NF-AXIOM-KERNEL-v1")
+    candidate["status"] = "certified-finite"
+    if not any("frozen status/scope-attestation mismatch" in msg for msg in validate(changed, locks, gates)):
+        errors.append("MUTATION CONTROL missed candidate-to-certified promotion")
+    changed = copy.deepcopy(graph)
+    changed["nodes"][0]["reproduce"] = ["python3 fabricated_check.py"]
+    if not any("frozen status/scope-attestation mismatch" in msg for msg in validate(changed, locks, gates)):
+        errors.append("MUTATION CONTROL missed checker-path substitution")
+    changed = copy.deepcopy(graph)
+    changed["nodes"][0]["failure_conditions"] = ["none"]
+    if not any("frozen status/scope-attestation mismatch" in msg for msg in validate(changed, locks, gates)):
+        errors.append("MUTATION CONTROL missed falsifier substitution")
+    altered_lock = copy.deepcopy(locks)
+    altered_lock["attestations"]["NF-AXIOM-KERNEL-v1"]["status"] = "certified-finite"
+    if not any("published attestations record" in msg for msg in validate_baseline(altered_lock, locks)):
+        errors.append("MUTATION CONTROL missed changed published status lock")
     return errors
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--baseline-lock", type=Path, help="Read published main-branch lock and forbid edits to existing scientific identities")
+    args = parser.parse_args()
     graph = json.loads(GRAPH.read_text(encoding="utf-8"))
     locks = json.loads(LOCKS.read_text(encoding="utf-8"))
     gates = json.loads(GATES.read_text(encoding="utf-8"))
     errors = validate(graph, locks, gates) + self_test(graph, locks, gates)
+    if args.baseline_lock:
+        errors += validate_baseline(locks, json.loads(args.baseline_lock.read_text(encoding="utf-8")))
     if errors:
         print("OBSERVATORY GATE A FAILED")
         for issue in errors:
             print(" -", issue)
         return 1
     print(f"PASS: {len(graph['nodes'])} frozen claims, {len(graph['edges'])} typed edges, "
-          "five edge classes, exact 3-block fractions, three adversarial mutations")
+          "five edge classes, exact 3-block fractions, status/provenance/edge mutation controls")
     print("GATE A: mechanical data integrity PASS (pending external scientific editorial review)")
-    print("GATES B/C: PENDING; GATE D: BLOCKED")
+    print("Scientific release follows RELEASE_GATES.json; current PR stays draft until Gate D")
     return 0
 
 
