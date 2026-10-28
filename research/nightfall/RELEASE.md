@@ -7,6 +7,25 @@
 **Archive source size:** ~21 MB compressed, 21,707,919 bytes uncompressed.  
 **Compiled:** 2026-10-27; GitHub text publication began 2026-10-28.
 
+## Frozen archive upload checklist — pending owner upload
+
+The files below were frozen before this website correction. Upload their **original bytes** as two assets of the same GitHub Release tagged `nightfall-research-2026-10-28`; keep the names unchanged. As of this ledger update, neither binary asset is publicly downloadable.
+
+| Release asset | Compressed size | SHA-256 | Expected ZIP entries |
+| --- | ---: | --- | ---: |
+| `NIGHTFALL_GitHub_Release_2026-10-27.zip` | 20,981,017 bytes | `77665ced561a9ae1d882baffdc5417188166049c27267afd6cb7b408ec9559cb` | 214 |
+| `NIGHTFALL_Expanded_Research_2026-10-28.zip` | 22,753,993 bytes | `fca5dba595475783e3482d72d5e4888e76b91c38052a0589577f0fde578b8275` | 226 |
+
+On desktop, use [the release upload page](https://github.com/d3lefts/d3lefts/releases/new) and follow [the release blocker, issue #5](https://github.com/d3lefts/d3lefts/issues/5). Check both hashes locally, publish, then verify anonymous downloads and re-check each downloaded hash. Publishing does **not** itself upgrade an internal replay to an external independent reproduction.
+
+```bash
+sha256sum NIGHTFALL_GitHub_Release_2026-10-27.zip NIGHTFALL_Expanded_Research_2026-10-28.zip
+unzip -t NIGHTFALL_GitHub_Release_2026-10-27.zip
+unzip -t NIGHTFALL_Expanded_Research_2026-10-28.zip
+```
+
+Recovering the distinct accepted Arena submission input is tracked in [issue #6](https://github.com/d3lefts/d3lefts/issues/6); neither frozen master release hash substitutes for that input's own SHA-256.
+
 ## GitHub publication scope
 
 The public tree contains the evidence-status overview and selected original source texts. **A GitHub text mirror is not a full byte-for-byte mirror of the 214-entry master archive.** In particular, large manuscript PDFs, exact witness arrays, compiled artifacts, NTT residue bundles and several verifiers remain in the separately prepared master ZIP. Their absence from this GitHub tree should not be interpreted as an independent check of their contents.
