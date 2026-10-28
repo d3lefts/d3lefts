@@ -5,7 +5,7 @@ import {join,normalize,resolve,sep} from "node:path";
 import {chromium} from "playwright-core";
 
 const root=resolve("docs");
-const pages=["index.html","review.html","evidence.html"];
+const pages=["index.html","review.html","evidence.html","agenda.html"];
 const types={".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".svg":"image/svg+xml"};
 const server=createServer(async (req,res)=>{
  try{
@@ -81,6 +81,19 @@ try{
    assert.equal(await page.locator("#project-list .research-row").count(),0,"original-only catalogue excludes Werner");
    await page.locator("#project-search").fill("");
    assert.equal(await page.locator("#project-list .research-row").count(),3,"three curated original results reset");
+  }
+  if(width===390){
+    await page.goto(origin+"agenda.html",{waitUntil:"load"});
+    assert.equal(await page.locator("#agenda-list .research-proposal:visible").count(),10,"ten proposals");
+    for(const cat of ["mathematics","quantum","super-intelligence","safety","systems"]){
+      await page.locator('[data-agenda-filter="'+cat+'"]').click();
+      assert.equal(await page.locator("#agenda-list .research-proposal:visible").count(),2,cat+" has two proposed studies");
+    }
+    await page.locator('[data-agenda-filter="all"]').click();
+    await page.locator("#agenda-search").fill("SourceBound");
+    assert.equal(await page.locator("#agenda-list .research-proposal:visible").count(),1,"SourceBound search");
+    await page.locator("#agenda-search").fill("");
+    assert.equal(await page.locator("#agenda-list .research-proposal:visible").count(),10,"agenda search reset");
   }
   assert.deepEqual(faults,[],"Browser failures at "+width+": "+faults.join("; "));
   await page.close();

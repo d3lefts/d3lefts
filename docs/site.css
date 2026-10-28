@@ -110,3 +110,17 @@ code{overflow-wrap:anywhere}
  }
  .header .nav.open{display:flex}
 }
+
+/* Research agenda: future experiments separate from original findings. */
+.agenda-teaser{display:flex;justify-content:space-between;align-items:center;gap:28px;padding:40px 0 52px;border-bottom:1px solid var(--line)}
+.agenda-teaser h2{font:400 clamp(31px,3.4vw,49px)/1.06 var(--serif);margin:10px 0}
+.agenda-teaser p{color:var(--muted);font-size:14px;line-height:1.6;max-width:720px}
+.agenda-teaser .button{flex-shrink:0}
+.agenda-page .agenda-status{border-left:3px solid var(--ink);background:var(--soft);padding:15px 17px;font:11px/1.6 var(--mono);margin-bottom:22px}
+.agenda-page .agenda-count{font:500 11px var(--mono);padding:15px 0;color:var(--muted)}
+.agenda-page .research-proposal{background:#eef1e9;border-left:3px solid #9aaf95;padding-left:13px}
+.agenda-page .research-proposal:hover{background:#e4eadf}
+.agenda-page .agenda-footer{border-top:1px solid var(--line);padding:28px 0;display:flex;flex-direction:column;align-items:flex-start;gap:15px}
+.agenda-page .agenda-footer p{font-size:13px;line-height:1.65;max-width:800px;color:var(--muted)}
+.agenda-page [hidden]{display:none!important}
+@media(max-width:760px){.agenda-teaser{flex-direction:column;align-items:flex-start}.agenda-page .research-proposal{padding-left:9px}}

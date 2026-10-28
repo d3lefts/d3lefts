@@ -2,7 +2,8 @@
 
 Static, dependency-free site for NIGHTFALL’s **original, inspectable research contributions**. The broader public GitHub repository is retained as the attributed historical research archive.
 
-- `index.html` — editorial research portfolio, filterable source index, open review invitations.
+- `index.html` — curated original-findings portfolio and open reviews.
+- `agenda.html` and `agenda.js` — separate five-discipline research agenda with ten untested proposals.
 - Discovery Engine: discovery.html, discovery-core.js, discovery-app.js, discovery.css — executable bounded proxy lab and portable evidence workspace.
 - `review.html` — three review assignments for the approved original contributions.
 - `evidence.html` — reproducibility archive hashes, evidence-access status, desktop release steps.
@@ -37,10 +38,14 @@ Run `python3 scripts/check_site.py`, `node --check docs/site.js`, and `node --ch
 
 The **site includes only distinct original contributions**: the 131,072-cell exact Erdős upper witness, the concrete 30-point Sidon finite certificate, and the bounded adverse 20-case Proof After Scarcity experiment. These are original *artifacts and measurements*; each has explicit scope, and no worldwide publication-priority claim is implied. See [full originality sweep](../research/nightfall/SITE_ORIGINALITY_AUDIT_20261028.md).
 
-**Removed from GitHub Pages:** standalone AI-safety and Werner atlas pages, research proposals, recycled tensor-network encodings, classical erasure-reliability claims, source-dependent candidate theorems, and broader unreviewed research-manuscript marketing. Earlier public GitHub records remain with source credit and retractions/novelty corrections; the Pages portfolio and source archive intentionally have different inclusion rules.
+**Excluded from the original-findings catalogue:** standalone AI-safety and Werner atlas pages, untested proposals promoted as results, recycled tensor-network encodings, classical erasure-reliability claims, source-dependent candidate theorems, and broader unreviewed research-manuscript marketing. Earlier public GitHub records remain with source credit and retractions/novelty corrections; the Pages portfolio and source archive intentionally have different inclusion rules.
 
 The [static site verification script](../scripts/check_site.py) maintains a strict allowed-artifact whitelist. Its gate protects presentation consistency; a dated external prior-art comparison is still required before approving new mathematical novelty.
 
 ## Agent-first verification
 
 The verification system uses independent agent roles and deterministic outputs rather than human recruitment. The [protocol](../research/nightfall/AGENT_VERIFICATION_PROTOCOL.md), [machine-readable tasks](../research/nightfall/AGENT_TASKS.json), [fresh exact checker](../scripts/verify_erdos_independent.py) and [release-triggered replay workflow](../.github/workflows/verify-frozen-release.yml) are versioned. Machine checks remain scoped to their explicit mathematical assertions; source premises and global analytic lemmas are separate proof gates.
+
+## Future research and safe releases
+
+The [Research Agenda](agenda.html) contains two untested investigations each in Mathematics, Quantum, Super Intelligence, Safety, and Systems. Proposal entries never enlarge the original-findings whitelist. Site changes should be made on topic branches with green PR checks. Workflow concurrency cancels stale checks. A GitHub branch ruleset is required to enforce PR-only merges; see [contributing guide](../CONTRIBUTING.md).

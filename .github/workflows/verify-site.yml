@@ -22,6 +22,9 @@ on:
       - "scripts/site_browser_smoke.mjs"
       - ".github/workflows/verify-site.yml"
   workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
@@ -35,6 +38,7 @@ jobs:
       - name: Parse JavaScript without executing browser code
         run: |
           node --check docs/site.js
+          node --check docs/agenda.js
           node --check docs/discovery-core.js
           node --check docs/discovery-app.js
           node scripts/test_discovery_core.cjs

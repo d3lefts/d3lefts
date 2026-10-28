@@ -111,6 +111,26 @@ def main() -> int:
             FAILURES.append(f"Unoriginal promotional link returned: {removed}")
     if "research-proposal" in homepage_text or 'kind:"proposal"' in js or '"kind":"proposal"' in js:
         FAILURES.append("Untested proposals cannot appear in the public original-findings catalogue")
+    # The Research Agenda is separate from the original-findings whitelist.
+    agenda = (DOCS / "agenda.html").read_text(encoding="utf-8")
+    proposal_source = (ROOT / "research/nightfall/projects/discovery-proposals-2026-10-28/README.md").read_text(encoding="utf-8")
+    agenda_rows = re.findall('data-agenda-category="([^"]+)" href="([^"]+)"', agenda)
+    agenda_categories = ["mathematics", "quantum", "super-intelligence", "safety", "systems"]
+    if len(agenda_rows) != 10 or any(sum(k == cat for k, _ in agenda_rows) != 2 for cat in agenda_categories):
+        FAILURES.append("AGENDA GATE: expected exactly two proposals per discipline")
+    if re.findall('data-agenda-filter="([^"]+)"', agenda) != ["all", *agenda_categories]:
+        FAILURES.append("AGENDA GATE: five discipline filters missing")
+    if agenda.count("Research proposal · untested") != 10:
+        FAILURES.append("AGENDA GATE: missing untested status")
+    if proposal_source.count("## P") != 10:
+        FAILURES.append("AGENDA GATE: source must have ten headings")
+    if len({href for _, href in agenda_rows}) != 10:
+        FAILURES.append("AGENDA GATE: proposal links must be unique")
+    for code_num in range(1, 11):
+        if "#p" + str(code_num).zfill(2) + "-" not in agenda:
+            FAILURES.append("AGENDA GATE: missing numbered proposal anchor")
+    if 'href="agenda.html"' not in homepage_text or 'src="agenda.js"' not in agenda:
+        FAILURES.append("AGENDA GATE: public navigation missing")
     # Discovery Engine seeded presets are part of the public presentation.
     # Legacy locally saved browser work can survive without being featured.
     core = (DOCS / "discovery-core.js").read_text(encoding="utf-8")
