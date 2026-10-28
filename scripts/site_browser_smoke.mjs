@@ -113,6 +113,13 @@ try{
     assert.equal(await page.locator("#obs-items .obs-item").count(),3,"quantum scope filter");
     const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
     assert.ok(overflow<=3,"Observatory mobile horizontal overflow: "+overflow);
+    await page.locator("#obs-discipline").selectOption("all");
+    await page.screenshot({path:"observatory-preview-mobile.png",fullPage:true});
+  }
+  if(width===1280){
+    await page.goto(origin+"observatory.html",{waitUntil:"load"});
+    await page.locator("#obs-graph .obs-node").first().waitFor();
+    await page.screenshot({path:"observatory-preview-desktop.png",fullPage:true});
   }
   assert.deepEqual(faults,[],"Browser failures at "+width+": "+faults.join("; "));
   await page.close();

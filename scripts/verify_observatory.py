@@ -162,6 +162,29 @@ def validate(graph: dict, locks: dict, gates: dict) -> list[str]:
     if len(seen_edges) < 5 or {e.get("type") for e in edges} != ALLOWED_TYPES:
         errors.append("Each of five required scientific relationship classes must be represented")
     errors.extend(exact_positivity_example())
+    # Gate C: frozen challenge specification; no outcomes enter this source file.
+    task_path = DIR / "GATE_C_TASK_SET_v1.json"
+    if not task_path.is_file():
+        errors.append("Gate C evaluation task set missing")
+    else:
+        study = json.loads(task_path.read_text(encoding="utf-8"))
+        tasks = study.get("tasks", [])
+        families = ["finite-field", "werner", "spectral"]
+        budget = study.get("per_condition_budget", {})
+        if study.get("schema_version") != "Gate-C-Freeze-v1" or \
+           study.get("frozen_source_commit") != "df9511c622c309046180fd0e015aca88577c58ec" or \
+           study.get("condition_arms") != ["graph", "flat"] or \
+           len(tasks) != 6 or \
+           any(sum(t.get("family") == f for t in tasks) != 2 for f in families) or \
+           len({t.get("id") for t in tasks}) != 6:
+            errors.append("Gate C evaluation arms, frozen sources or six-case balance invalid")
+        if budget != {"model_tokens_input_plus_output":2000, "external_tool_calls":20, "wall_clock_minutes":30}:
+            errors.append("Gate C experiment research budgets drifted")
+        if not study.get("no_results_or_answer_keys_in_manifest") or "results" in study or "gold" in study:
+            errors.append("Gate C input manifest leaked experimental outcomes")
+        for task in tasks:
+            if not task.get("prompt") or not task.get("source_paths") or any(not safe_file(path) for path in task.get("source_paths", [])):
+                errors.append("Gate C source context or scientific decision prompt missing")
     gate_records = gates.get("gates", {})
     if set(gate_records) != {"A", "B", "C", "D"}:
         errors.append("Release gate A/B/C/D missing")

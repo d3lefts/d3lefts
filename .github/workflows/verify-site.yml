@@ -78,6 +78,14 @@ jobs:
         run: |
           npm install --no-save --no-package-lock playwright-core@1.56.1
           CHROME_BIN="$(command -v google-chrome)" node scripts/site_browser_smoke.mjs
+      - name: Archive Observatory mobile and desktop design preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-observatory-design-preview
+          path: |
+            observatory-preview-mobile.png
+            observatory-preview-desktop.png
+          retention-days: 90
       - name: Compile verification scripts and check machine-readable task ledger
         run: |
           python3 -m py_compile scripts/verify_erdos_independent.py scripts/verify_frozen_release.py
