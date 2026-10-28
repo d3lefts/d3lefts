@@ -35,7 +35,7 @@ Thus no strictly larger family obtained by simply adding one unrestricted syndro
 16 W_{ab,cd} = prod_{j=1}^4 (2 delta_{a_j,c_j}delta_{b_j,d_j} - delta_{a_j,b_j}delta_{c_j,d_j}).
 ```
 
-3. The attached [72_collision_witnesses.json](72_collision_witnesses.json) gives one four-word witness for **each** of the 72 possible extensions, with the old colliding pair and exact numerator. The standalone [checker](../../../scripts/verify_werner_syndrome_collision.py) verifies the field equations, full coverage, and all coefficients by a **separately derived 16-term subset expansion**. It independently re-enumerates every 81×81 off-sector matrix-unit block and checks the complete maximum-entry histogram. It rejects a corrupted witness coefficient.
+3. The attached [72_collision_witnesses.json](72_collision_witnesses.json) gives one four-word witness for **each** of the 72 possible extensions, with the old colliding pair and exact numerator. The standalone [checker](../../../../scripts/verify_werner_syndrome_collision.py) verifies the field equations, full coverage, and all coefficients by a **separately derived 16-term subset expansion**. It independently re-enumerates every 81×81 off-sector matrix-unit block and checks the complete maximum-entry histogram. It rejects a corrupted witness coefficient.
 4. The rank of a sum of two rank-one matrix units is at most two, regardless of their row/column supports. The claimed admissible non-additivity follows.
 
 ## Interpretation relative to Lemnis's 4209-dimensional extension
