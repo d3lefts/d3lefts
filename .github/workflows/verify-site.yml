@@ -6,6 +6,8 @@ on:
       - "docs/**"
       - "research/nightfall/**"
       - "scripts/check_site.py"
+      - "scripts/verify_*.py"
+      - "research/nightfall/AGENT_TASKS.json"
       - ".github/workflows/verify-site.yml"
   pull_request:
     paths:
@@ -26,3 +28,9 @@ jobs:
         run: python3 scripts/check_site.py
       - name: Parse JavaScript without executing browser code
         run: node --check docs/site.js
+      - name: Compile verification scripts and check machine-readable task ledger
+        run: |
+          python3 -m py_compile scripts/verify_erdos_independent.py scripts/verify_frozen_release.py
+          python3 -m json.tool research/nightfall/AGENT_TASKS.json > /dev/null
+      - name: Self-test independent exact convolution against direct arithmetic
+        run: python3 scripts/verify_erdos_independent.py --self-test
