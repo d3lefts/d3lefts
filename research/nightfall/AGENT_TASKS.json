@@ -16,12 +16,16 @@
       "source": "research/nightfall/projects/erdos/STATUS_AND_PRIOR_ART_20261028.md",
       "target_sha256": "a574c280f8839503c90076507a27f4c819455fb2512fae6a43b6a17f6a784b8e",
       "expected_fraction": "34788888032212764146872525963225147703298526879/91343852333181432387730302044767688728495783936",
-      "internal_check": "PASS; fresh Python big-integer convolution against frozen source bytes",
+      "internal_check": "PASS: original frozen SHA-256, 262143 signed grid shifts, 27 direct O(N) sum crosschecks, exact continuum proof and 1720 rational geometry controls; fresh GMP implementation",
       "public_external_agent_check": "BLOCKED_BY_PUBLIC_ARCHIVE_RELEASE",
       "limitations": [
         "Continuum breakpoint proof is a separate gate",
         "Accepted Arena input identity is separate and unrecovered"
-      ]
+      ],
+      "verdict_receipt": "research/nightfall/agent-reports/ea36_131072/AGENT_VERDICT.json",
+      "audit_report": "research/nightfall/agent-reports/ea36_131072/EA36_AGENT_AUDIT_REPORT.md",
+      "grid_runner_up_gap_exact": "8127730855869142433886166865452129/45671926166590716193865151022383844364247891968",
+      "stable_maximizer_integer_l1_radius": 3442227910668
     },
     {
       "id": "WERNER-QUTRIT-6-9",
