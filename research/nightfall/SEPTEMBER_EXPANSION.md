@@ -34,7 +34,6 @@ September original manuscripts:
 Additional October mathematical results:
 - [Involution-shadow codes, with runnable direct verifier](projects/involution-shadow-codes/README.md)
 - [General cyclotomic decoder (pending PDF mirror)](projects/finite-field-retrieval-handoff-excerpt.txt)
-- [Quantum prime-frequency geometry](projects/quantum-prime-geometry/README.md)
 
 **Publication boundary:** The GitHub connector writes text files but does not currently mirror the expanded ZIP's binaries. The full original PDFs and audit supplementary material remain in the expanded downloadable archive. Manuscript proof claims are independent from peer review; the accompanying files preserve conditional hypotheses, negative findings, and model limitations.
 

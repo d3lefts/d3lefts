@@ -1,7 +1,6 @@
 "use strict";
 const root="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/";
 const entries=[
- {category:"ai-safety",name:"AI safety theorem-and-evidence series (Oct 28)",summary:"September oversight theorems, corrected claim registry, 27,740 finite checks, and a separate SourceBound evaluation protocol.",status:"Peer-review edition · external audit requested",path:"projects/ai-safety-peer-review-2026-10-28/README.md"},
  {category:"mathematics",name:"Erdős minimum overlap",summary:"Exact rational upper-bound witness; 131,072 cells and all signed correlations. The platform's rejected oversized submission is recorded separately.",status:"Exact finite witness · review requested",path:"projects/erdos-overlap-paper.md"},
  {category:"quantum",name:"Werner-state undistillability",summary:"Exact dual multipliers and separable spectators for six to nine qutrit copies. Dependent on imported lower-copy inequalities.",status:"Exact conditional constructions",path:"projects/werner-direct-margin/README.md"},
  {category:"mathematics",name:"Finite-field phase retrieval",summary:"Uniform fourth-power sensing and lattice decoding. The original manuscript awaits independent proof analysis.",status:"Manuscript proof · audit pending",path:"projects/finite-field-retrieval-handoff-excerpt.txt"},
@@ -11,11 +10,10 @@ const entries=[
  {category:"ai-safety",name:"Counterfactual authorization gap",summary:"Capabilities induced by combining grants; reference-class escape and complexity of auditing.",status:"Original LaTeX published · review open",path:"2026-09-counterfactual-authorization/README.md"},
  {category:"ai-safety",name:"Three ceilings on oversight",summary:"Information, computation, and trusted evidence as relative limits on oversight guarantees.",status:"Revised scope · review open",path:"2026-09-three-ceilings/README.md"},
  {category:"systems",name:"SourceBound",summary:"Restricted evidence-to-triple admission boundary with browser checks, synthetic fixtures, and adversarial mutation tests.",status:"Reproducible prototype · held-out study open",path:"projects/sourcebound/CLAIM_EVIDENCE_LEDGER.md"},
- {category:"systems",name:"Proof After Scarcity",summary:"Proof-dependency graphs, provenance-preserving verification policy, and negative stress tests.",status:"Model & research prototype",path:"projects/pas-overview.md"},
+ {category:"systems",name:"Proof After Scarcity",summary:"Proof-dependency graphs, provenance-preserving verification policy, and negative stress tests.",status:"Public metadata freeze · graph prereg pending",path:"projects/pas-overview.md"},
  {category:"mathematics",name:"Sidon finite constructions",summary:"A thirty-point (4,5) configuration with maximum Sidon subset size 17, supported by finite exact checking.",status:"Finite certificate · scoped",path:"projects/sidon-finite-30/README.md"},
  {category:"mathematics",name:"SAT tensor-network encoding",summary:"Exact degree-three Boolean graph compiler; asymptotic complexity transfer depends on an external published theorem.",status:"Exact reduction · conditional runtime",path:"projects/sat-network-compression.md"},
- {category:"mathematics",name:"Xi spectral investigations",summary:"Fixed-rank reciprocal-semigroup results and isolated-zero certificates; global all-degree positivity remains an open proof gate.",status:"Partial regime · global question open",path:"projects/xi-dossier.md"},
- {category:"quantum",name:"Prime-frequency quantum geometry",summary:"Finite prime-state Fisher information calculations and a countermodel to symmetry-only zero confinement.",status:"Derived identities · spectral bridge open",path:"projects/quantum-prime-geometry/README.md"}
+ {category:"ai-safety",name:"AI safety theorem-and-evidence series (Oct 28)",summary:"September oversight theorems, corrected claim registry, 27,740 finite checks, and a separate SourceBound evaluation protocol.",status:"Peer-review edition · external audit requested",path:"projects/ai-safety-peer-review-2026-10-28/README.md"},
 ];
 const list=document.getElementById("project-list");
 const search=document.getElementById("project-search");

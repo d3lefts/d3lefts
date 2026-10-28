@@ -94,6 +94,23 @@ def main() -> int:
         FAILURES.append(f"Research catalogue mismatch: static-only={sorted(static - sources)}, js-only={sorted(sources - static)}")
     if len(static) < 10:
         FAILURES.append("Static research catalogue has fewer than 10 entries")
+    # Public source scope and verified metadata baseline.
+    excluded = ("research/nightfall/projects/xi-dossier.md",
+                "research/nightfall/projects/xi-continuous-shift-rank22.md",
+                "research/nightfall/projects/quantum-prime-geometry/README.md")
+    public_index_files = (DOCS / "index.html", DOCS / "site.js", ROOT / "research/nightfall/README.md")
+    for rel in excluded:
+        if (ROOT / rel).exists():
+            FAILURES.append("Out-of-program source still present: " + rel)
+        for page in public_index_files:
+            if rel.split("research/nightfall/")[-1] in page.read_text(encoding="utf-8"):
+                FAILURES.append(f"Out-of-program link in {page}: {rel}")
+    pas = (ROOT / "research/nightfall/projects/pas-overview.md").read_text(encoding="utf-8")
+    if not all(k in pas for k in ("8 of 20", "11 of 20", "802", "2027-04-06")):
+        FAILURES.append("PAS claims/freeze protocol missing")
+    rank = ROOT / "research/nightfall/projects/pas/openai_math_priority_ranking_2026-10-06.csv"
+    if len(rank.read_text(encoding="utf-8").splitlines()) != 373:
+        FAILURES.append("PAS frozen metadata ranking must have 372 entries")
     if FAILURES:
         print("SITE AUDIT FAILED")
         for err in FAILURES:
