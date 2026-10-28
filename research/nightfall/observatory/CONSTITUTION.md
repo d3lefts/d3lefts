@@ -12,6 +12,8 @@ Every public claim has:
 - A source record tied to original archive paths. Existing sources use the pinned Git commit `df9511c622c309046180fd0e015aca88577c58ec`; new Observatory notes are marked release-v1 until their own publication commit is pinned. The Git history and identity lock together preserve the published record.
 - An honest reproducibility distinction: a source-conditional exact arithmetic check proves only its downstream identity; a source-theorem dependency remains conditional until independently justified.
 
+A second, per-claim frozen status attestation in `claim-identities.lock.json` records status, title, owner, boundary, reproduction commands and falsification conditions. Dependencies, full provenance and scientific edge content have separate immutable lock records. The pull-request checker rejects edits to any lock already published on the target branch. Status promotions receive a **new claim identity** with an evidence-linked review event; retained historical claims remain inspectable. New initial locks still need human scientific review: a local hash can detect an inadvertent mutation, yet cannot independently establish truth.
+
 Claim status vocabulary: `certified-finite`, `established-method`, `empirical-negative`, `conditional`, `candidate`, `proposed`, `falsified`, `withdrawn`.
 
 ## Article II — Typed edges are scientific assertions
