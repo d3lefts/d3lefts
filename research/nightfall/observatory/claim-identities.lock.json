@@ -1,6 +1,6 @@
 {
   "schema_version": "1",
-  "note": "Immutable claim identity records: changed statement/scope/source requires new id and revision; fingerprints are reproduced independently by Python CI. The lock additionally freezes every dependency, full provenance record and the complete body of every scientific edge.",
+  "note": "Immutable claims, dependencies, full provenance, edge bodies and initial scoped status attestations. A certification change requires a new identity plus reviewed evidence; the CI compares existing locks against the published base for subsequent PRs. This is a mechanical integrity record, not an external expert attestation.",
   "claims": {
     "NF-ERDOS-131072-v1": "c6e1d7b7f39039243bf7f75c449e975afd992e91dfcb1c6361d6a5d60611c010",
     "NF-SIDON30-v1": "5053158908c2b71b9dacc7581f244e6faf8ab9095726393ac518d4d2eb7c063e",
@@ -276,6 +276,201 @@
       "experiment": "Preregister matched-budget graph-guided and flat triage",
       "status": "classified",
       "provenance_url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/pas-overview.md"
+    }
+  },
+  "attestations": {
+    "NF-ERDOS-131072-v1": {
+      "status": "certified-finite",
+      "title": "Minimum overlap: 131,072-cell witness",
+      "owner": "NIGHTFALL",
+      "boundary": "A valid individual upper witness cannot establish a universal optimal bound or priority; original binary array needs public mirroring.",
+      "reproduce": [
+        "python3 scripts/verify_erdos_independent.py --self-test"
+      ],
+      "failure_conditions": [
+        "Incorrect signed-lag normalization",
+        "Mismatch of original witness hash",
+        "Any unverified full-binary input"
+      ]
+    },
+    "NF-SIDON30-v1": {
+      "status": "certified-finite",
+      "title": "Sidon (4,5): finite 30-point witness",
+      "owner": "NIGHTFALL",
+      "boundary": "Extending the family to an improved universal asymptotic constant needs a separate construction and proof.",
+      "reproduce": [
+        "python3 research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py"
+      ],
+      "failure_conditions": [
+        "An 18-element progression-free subset",
+        "Failure of progression enumeration",
+        "Widening the finite conclusion to an asymptotic record"
+      ]
+    },
+    "NF-SIDON-CHECK-v1": {
+      "status": "certified-finite",
+      "title": "Independent Sidon search verifier",
+      "owner": "NIGHTFALL",
+      "boundary": "A source-code pass is a finite arithmetic check, not a novelty or external referee verdict.",
+      "reproduce": [
+        "python3 research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py"
+      ],
+      "failure_conditions": [
+        "Disagreement with a separate checker",
+        "A missed progression or invalid pruning step"
+      ]
+    },
+    "NF-PAS20-v1": {
+      "status": "empirical-negative",
+      "title": "Proof After Scarcity: adverse 20-case result",
+      "owner": "NIGHTFALL",
+      "boundary": "Prospective preregistered evaluations and complete primary case files are needed for general prediction claims.",
+      "reproduce": [
+        "Inspect the case inventory and compare the frozen 20 scored labels"
+      ],
+      "failure_conditions": [
+        "Using censored four controls in the denominator",
+        "Reporting prospective efficacy from retrospective labels"
+      ]
+    },
+    "NF-PAS-DOMINANCE-v1": {
+      "status": "falsified",
+      "title": "PAS superiority hypothesis on archived cases",
+      "owner": "NIGHTFALL",
+      "boundary": "The observed 8/20 versus 11/20 reverses the predicted comparison; the hypothesis is preserved as an adverse historical record.",
+      "reproduce": [
+        "Recompute first-choice agreement scores for the 20 challenged cases"
+      ],
+      "failure_conditions": [
+        "8 is below 11"
+      ]
+    },
+    "NF-FIELD-SPAN-v1": {
+      "status": "conditional",
+      "title": "Finite-field powered retrieval tail certificate",
+      "owner": "NIGHTFALL / Axiom audit",
+      "boundary": "Independent proof of the short-vector span-count lemma and an end-to-end decoder are outstanding.",
+      "reproduce": [
+        "python3 research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/verify_tail_A.py",
+        "python3 research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/verify_tail_B.py"
+      ],
+      "failure_conditions": [
+        "Counterexample to span-count lemma",
+        "Unreconciled fourth-root ambiguity",
+        "Incompatible measurement probability model"
+      ]
+    },
+    "NF-AXIOM-KERNEL-v1": {
+      "status": "candidate",
+      "title": "Axiom: fourth-power Frobenius kernel candidate",
+      "owner": "Axiom",
+      "boundary": "Uniform failure law, characteristic, measurement distribution, symmetry class and unsuccessful samples need independent proof and replay.",
+      "reproduce": [
+        "Publish deterministic exact-rank experiment data with seeds and field arithmetic"
+      ],
+      "failure_conditions": [
+        "Unexplained rank-deficient samples",
+        "Unproved fresh-constraint independence",
+        "Existing NIGHTFALL prior art subsumes the claim"
+      ]
+    },
+    "NF-WERNER25-v1": {
+      "status": "conditional",
+      "title": "Werner 24-25 copy rational checks",
+      "owner": "NIGHTFALL",
+      "boundary": "Imported endpoint theorems and corrected U tensor conjugate-U twirl must be justified; exact arithmetic alone is insufficient.",
+      "reproduce": [
+        "python3 research/nightfall/projects/werner-final-4-25/construct_A.py",
+        "python3 research/nightfall/projects/werner-final-4-25/verify_independent.py"
+      ],
+      "failure_conditions": [
+        "Incorrect twirl symmetry",
+        "Failure of imported inequality",
+        "Nonpositive rational margin"
+      ]
+    },
+    "NF-WERNER6-v1": {
+      "status": "conditional",
+      "title": "Werner six-copy correlated-spectator certificate",
+      "owner": "NIGHTFALL / Lemnis audit",
+      "boundary": "New admissible witness classes require an exact separation argument and preserved margin with source premises checked.",
+      "reproduce": [
+        "Recover published original certificate ZIP and execute exact Fraction verifier"
+      ],
+      "failure_conditions": [
+        "Twirl-sector mismatch",
+        "Negative dual multiplier",
+        "Failure beyond encoded witness family"
+      ]
+    },
+    "NF-WEIGHTED-SCHUR-v1": {
+      "status": "established-method",
+      "title": "Weighted block-coercivity criterion",
+      "owner": "Vesper",
+      "boundary": "Transferring it into a specific positivity program requires real diagonal margins, cross-block operator bounds and uniformity in its scale variables.",
+      "reproduce": [
+        "python3 scripts/verify_observatory.py"
+      ],
+      "failure_conditions": [
+        "Unbounded interaction row sums",
+        "No positive weight vector",
+        "A source form lacks a valid block decomposition"
+      ]
+    },
+    "NF-BLOCK-EXAMPLE-v1": {
+      "status": "certified-finite",
+      "title": "Exact three-block positivity illustration",
+      "owner": "Vesper",
+      "boundary": "The example contains no physical Werner operator, arithmetic spectral form or new quantitative bound on an archived research target.",
+      "reproduce": [
+        "python3 scripts/verify_observatory.py"
+      ],
+      "failure_conditions": [
+        "Exact weighted margin below 1/5",
+        "Nonpositive Sylvester principal minor"
+      ]
+    },
+    "NF-SPECTRAL-BRIDGE-v1": {
+      "status": "proposed",
+      "title": "Finite-to-infinite spectral positivity bridge",
+      "owner": "Vesper",
+      "boundary": "The missing uniform near/middle/far-scale margins and off-diagonal coupling bound prevent promotion.",
+      "reproduce": [
+        "Preregister rank-doubling off-diagonal interval tests; publish exact source data"
+      ],
+      "failure_conditions": [
+        "Coupling bound exceeds smallest positive block gap",
+        "Missing time-scale interval",
+        "A spectral negative mode"
+      ]
+    },
+    "NF-LEMNIS-EXT-v1": {
+      "status": "proposed",
+      "title": "Lemnis: larger Werner witness class",
+      "owner": "Lemnis",
+      "boundary": "A new witness family must be specified and the worst outside-class perturbation bounded against the inherited margin.",
+      "reproduce": [
+        "Find smallest outside-class counterexample or an exact margin certificate"
+      ],
+      "failure_conditions": [
+        "Zero margin at an excluded witness",
+        "Invalid rank-two reduction",
+        "Changed source endpoint premise"
+      ]
+    },
+    "NF-GRAPH-EVAL-v1": {
+      "status": "proposed",
+      "title": "Graph-assisted discovery: matched-budget evaluation",
+      "owner": "Vesper",
+      "boundary": "No superiority claim until comparator outcomes, budget accounting and independent reproduction are available.",
+      "reproduce": [
+        "Follow GATE_C_PREREGISTRATION.md and publish source-hashed signed receipts"
+      ],
+      "failure_conditions": [
+        "Unequal task or token budgets",
+        "Peeking at outcomes before freeze",
+        "Missing baseline logs"
+      ]
     }
   }
 }
