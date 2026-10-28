@@ -101,7 +101,7 @@ try{
     assert.equal(await page.locator("#obs-graph .obs-node").count(),14,"Observatory claim count");
     assert.equal(await page.locator("#obs-graph .obs-line-group").count(),9,"Observatory relation count");
     await page.locator('[data-obs-mode="evidence"]').click();
-    assert.match(await page.locator("#obs-inspector").innerText(),/Frozen claim SHA-256/,"evidence hash shown");
+    assert.match(await page.locator("#obs-inspector").innerText(),/Frozen claim SHA-256/i,"evidence hash shown");
     await page.locator('[data-obs-mode="transfer"]').click();
     assert.equal(await page.locator("#obs-items .obs-item").count(),9,"all typed transfers inspectable");
     await page.locator('[data-obs-mode="failure"]').click();
