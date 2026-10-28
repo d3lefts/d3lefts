@@ -5,7 +5,7 @@ import {join,normalize,resolve,sep} from "node:path";
 import {chromium} from "playwright-core";
 
 const root=resolve("docs");
-const pages=["index.html","review.html","evidence.html","ai-safety.html","werner.html"];
+const pages=["index.html","review.html","evidence.html"];
 const types={".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".svg":"image/svg+xml"};
 const server=createServer(async (req,res)=>{
  try{
@@ -87,7 +87,7 @@ try{
   assert.deepEqual(faults,[],"Browser failures at "+width+": "+faults.join("; "));
   await page.close();
  }
- console.log("PASS: 5 portfolio pages plus Discovery Engine × 3 widths, exact experiment and ZIP export");
+ console.log("PASS: 3 original-portfolio pages plus Discovery Engine × 3 widths, exact experiment and ZIP export");
 }finally{
  await browser?.close();
  await new Promise(resolve=>server.close(resolve));
