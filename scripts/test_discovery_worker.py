@@ -53,4 +53,30 @@ with tempfile.TemporaryDirectory() as d:
     try:parse_package(dest)
     except ValueError as err:assert "SHA-256" in str(err)
     else:raise AssertionError("Tamper was accepted")
-print("PASS: Discovery worker plan, allowlisted exact external replay, tamper rejection")
+    # Same archive protocol, genuinely executed through the new allowlisted
+    # granularity worker path with a small frozen training/heldout split.
+    plan2={**plan,"project":"granularity",
+           "config":{"granularity":{"seed":1729,"train":3,"test":3}}}
+    exp2={**exp,"plan":plan2,"prereg_hash":digest(compact(plan2))}
+    files["problem.json"]=json.dumps({"id":"granularity"}).encode()
+    files["experiments.json"]=json.dumps([exp2],ensure_ascii=False).encode()
+    files["manifest.json"]=json.dumps({
+        "schema":"1.0.0","hash_algorithm":"SHA-256",
+        "files":{k:digest(v) for k,v in files.items() if k!="manifest.json"}
+    }).encode()
+    with zipfile.ZipFile(dest,"w") as z:
+        for k,v in files.items():z.writestr(k,v)
+    project,entries,_=parse_package(dest)
+    assert project=="granularity"
+    receipt=execute(project,entries[0],120)
+    assert receipt["verdict"]=="PASS",receipt
+    assert len(receipt["source_hashes"])==3
+    assert receipt["outputs"]["granularity_results.json"]["bytes"]>1000
+    assert receipt["study_config"]==plan2["config"]["granularity"]
+    assert "POLICY" in receipt["steps"][0]["stdout_tail"]
+    bad={**entries[0],"plan":{**plan2,"config":{"granularity":{"seed":1729,"train":2,"test":3}}}}
+    try:execute(project,bad,120)
+    except ValueError as e:assert "invalid granularity configuration" in str(e)
+    else:raise AssertionError("Unsafe worker configuration accepted")
+print("PASS: Discovery worker sourcebound and granularity replay, exact hashes, tamper rejection")
+
