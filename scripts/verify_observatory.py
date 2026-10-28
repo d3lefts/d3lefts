@@ -80,6 +80,9 @@ def validate(graph: dict, locks: dict, gates: dict) -> list[str]:
         errors.append("Claim IDs duplicated or catalogue incomplete")
     by_id = {n.get("id"): n for n in nodes}
     frozen = locks.get("claims", {})
+    frozen_dependencies = locks.get("dependencies", {})
+    frozen_provenance = locks.get("provenance", {})
+    frozen_edges = locks.get("edges", {})
     if set(frozen) != set(ids):
         errors.append("Frozen claim identity register mismatches the graph")
     for n in nodes:
@@ -101,6 +104,13 @@ def validate(graph: dict, locks: dict, gates: dict) -> list[str]:
             errors.append(f"{ident}: source artifact missing/unsafe")
         if n["identity_sha256"] != identity_hash(n) or frozen.get(ident) != identity_hash(n):
             errors.append(f"{ident}: frozen identity mismatch; issue a NEW claim identity")
+        if frozen_dependencies.get(ident) != n["dependencies"] or frozen_provenance.get(ident) != n["provenance"]:
+            errors.append(f"{ident}: immutable provenance/dependencies changed; issue a NEW claim identity")
+        for proof_source in n["provenance"]:
+            commit = proof_source.get("revision", "")
+            expected_url = "https://github.com/d3lefts/d3lefts/blob/" + commit + "/" + n["source_key"]
+            if not re.fullmatch(r"[0-9a-f]{40}", commit) or proof_source.get("url") != expected_url:
+                errors.append(f"{ident}: source citation lacks an immutable commit")
         if not n["reproduce"] or not n["failure_conditions"]:
             errors.append(f"{ident}: missing reproduction/falsification")
         if not n["provenance"] or any(p.get("path") != n["source_key"] or
@@ -121,6 +131,8 @@ def validate(graph: dict, locks: dict, gates: dict) -> list[str]:
                          "evidence", "experiment", "status"):
             if not isinstance(e.get(required), str) or not e[required].strip():
                 errors.append(f"{eid}: missing {required}")
+        if frozen_edges.get(eid) != e:
+            errors.append(f"{eid}: immutable scientific relationship changed; issue a NEW edge identity")
         if e.get("from") not in by_id or e.get("to") not in by_id:
             errors.append(f"{eid}: unresolved edge endpoint")
         if e.get("type") not in ALLOWED_TYPES:
@@ -128,6 +140,8 @@ def validate(graph: dict, locks: dict, gates: dict) -> list[str]:
         if not safe_file(e.get("evidence", "")):
             errors.append(f"{eid}: missing proof/evidence source")
         source_link = e.get("provenance_url", "")
+        if not re.match(r"^https://github.com/d3lefts/d3lefts/blob/[0-9a-f]{40}/", source_link):
+            errors.append(f"{eid}: source edge reference is not tied to a full immutable commit")
         if not source_link.startswith("https://github.com/d3lefts/d3lefts/blob/") or not source_link.endswith("/" + e.get("evidence", "<missing>")) or "/blob/main/" in source_link:
             errors.append(f"{eid}: missing immutable source revision")
         if e.get("type") == "proven-implication":
@@ -153,9 +167,19 @@ def validate(graph: dict, locks: dict, gates: dict) -> list[str]:
         errors.append("Release gate A/B/C/D missing")
     if gate_records.get("D", {}).get("status") != "blocked":
         errors.append("Gate D must stay BLOCKED while B/C lack independently audited receipts")
-    if gate_records.get("B", {}).get("status") != "pending" or \
-       gate_records.get("C", {}).get("status") != "pending":
-        errors.append("Independent B/C evaluations have been promoted without evidence")
+    if gate_records.get("A", {}).get("status") not in ("pending", "passed"):
+        errors.append("Gate A has invalid evidence-integrity state")
+    b = gate_records.get("B", {})
+    if b.get("status") == "passed":
+        if not safe_file("scripts/verify_sidon_dag_independent.py") or \
+           b.get("dag_sha256") != "4e31c53667cba63db34354eb861f503ac7284a0e76cd7219306dff8239032181" or \
+           b.get("witness_sha256") != "dc4697ce051a57987049199965967cc2b981433816d3daac284454262395978f" or \
+           "40782321424" not in b.get("evidence_run", ""):
+            errors.append("Gate B pass lacks pinned exact proof and independent replay receipt")
+    elif b.get("status") != "pending":
+        errors.append("Gate B has an unsupported status")
+    if gate_records.get("C", {}).get("status") != "pending":
+        errors.append("Gate C improperly promoted without matched-budget results")
     return errors
 
 
@@ -181,6 +205,14 @@ def self_test(graph: dict, locks: dict, gates: dict) -> list[str]:
             break
     if not any("incorrectly promoted" in msg for msg in validate(changed, locks, gates)):
         errors.append("MUTATION CONTROL failed to block proposed-transfer promotion")
+    changed = copy.deepcopy(graph)
+    changed["nodes"][0]["dependencies"].append("NF-PAS20-v1")
+    if not any("immutable provenance/dependencies" in msg for msg in validate(changed, locks, gates)):
+        errors.append("MUTATION CONTROL missed proof dependency substitution")
+    changed = copy.deepcopy(graph)
+    changed["edges"][0]["assumptions"] += " silently widened"
+    if not any("immutable scientific relationship" in msg for msg in validate(changed, locks, gates)):
+        errors.append("MUTATION CONTROL missed altered scientific edge")
     return errors
 
 

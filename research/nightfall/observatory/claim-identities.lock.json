@@ -1,6 +1,6 @@
 {
   "schema_version": "1",
-  "note": "Immutable claim identity records: changed statement/scope/source requires new id and revision; fingerprints are reproduced independently by Python CI.",
+  "note": "Immutable claim identity records: changed statement/scope/source requires new id and revision; fingerprints are reproduced independently by Python CI. The lock additionally freezes every dependency, full provenance record and the complete body of every scientific edge.",
   "claims": {
     "NF-ERDOS-131072-v1": "c6e1d7b7f39039243bf7f75c449e975afd992e91dfcb1c6361d6a5d60611c010",
     "NF-SIDON30-v1": "5053158908c2b71b9dacc7581f244e6faf8ab9095726393ac518d4d2eb7c063e",
@@ -16,5 +16,266 @@
     "NF-SPECTRAL-BRIDGE-v1": "990da1c643df425bbbb50ef632481e86037ecde6c1017996ab23dfe39680971f",
     "NF-LEMNIS-EXT-v1": "b596b38e21f94d79d3f8af1c7462376400532c5ab4ac0564bfa23044641a7336",
     "NF-GRAPH-EVAL-v1": "2743ca5db20ba25f8f4a85303d5386ea03d9e46a3091c5ad9edd1b76bf8be3af"
+  },
+  "dependencies": {
+    "NF-ERDOS-131072-v1": [],
+    "NF-SIDON30-v1": [],
+    "NF-SIDON-CHECK-v1": [],
+    "NF-PAS20-v1": [],
+    "NF-PAS-DOMINANCE-v1": [
+      "NF-PAS20-v1"
+    ],
+    "NF-FIELD-SPAN-v1": [],
+    "NF-AXIOM-KERNEL-v1": [
+      "NF-FIELD-SPAN-v1"
+    ],
+    "NF-WERNER25-v1": [],
+    "NF-WERNER6-v1": [],
+    "NF-WEIGHTED-SCHUR-v1": [],
+    "NF-BLOCK-EXAMPLE-v1": [
+      "NF-WEIGHTED-SCHUR-v1"
+    ],
+    "NF-SPECTRAL-BRIDGE-v1": [
+      "NF-WEIGHTED-SCHUR-v1"
+    ],
+    "NF-LEMNIS-EXT-v1": [
+      "NF-WERNER6-v1"
+    ],
+    "NF-GRAPH-EVAL-v1": [
+      "NF-PAS20-v1"
+    ]
+  },
+  "provenance": {
+    "NF-ERDOS-131072-v1": [
+      {
+        "path": "research/nightfall/projects/erdos-overlap-paper.md",
+        "url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/erdos-overlap-paper.md",
+        "revision": "df9511c622c309046180fd0e015aca88577c58ec",
+        "role": "archived-source"
+      }
+    ],
+    "NF-SIDON30-v1": [
+      {
+        "path": "research/nightfall/projects/sidon-finite-30/README.md",
+        "url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/sidon-finite-30/README.md",
+        "revision": "df9511c622c309046180fd0e015aca88577c58ec",
+        "role": "archived-source"
+      }
+    ],
+    "NF-SIDON-CHECK-v1": [
+      {
+        "path": "research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py",
+        "url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py",
+        "revision": "df9511c622c309046180fd0e015aca88577c58ec",
+        "role": "archived-source"
+      }
+    ],
+    "NF-PAS20-v1": [
+      {
+        "path": "research/nightfall/projects/pas-overview.md",
+        "url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/pas-overview.md",
+        "revision": "df9511c622c309046180fd0e015aca88577c58ec",
+        "role": "archived-source"
+      }
+    ],
+    "NF-PAS-DOMINANCE-v1": [
+      {
+        "path": "research/nightfall/projects/pas-overview.md",
+        "url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/pas-overview.md",
+        "revision": "df9511c622c309046180fd0e015aca88577c58ec",
+        "role": "archived-source"
+      }
+    ],
+    "NF-FIELD-SPAN-v1": [
+      {
+        "path": "research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/README.md",
+        "url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/README.md",
+        "revision": "df9511c622c309046180fd0e015aca88577c58ec",
+        "role": "archived-source"
+      }
+    ],
+    "NF-AXIOM-KERNEL-v1": [
+      {
+        "path": "research/nightfall/projects/finite-field-retrieval-handoff-excerpt.txt",
+        "url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/finite-field-retrieval-handoff-excerpt.txt",
+        "revision": "df9511c622c309046180fd0e015aca88577c58ec",
+        "role": "archived-source"
+      }
+    ],
+    "NF-WERNER25-v1": [
+      {
+        "path": "research/nightfall/projects/werner-final-4-25/README.md",
+        "url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/werner-final-4-25/README.md",
+        "revision": "df9511c622c309046180fd0e015aca88577c58ec",
+        "role": "archived-source"
+      }
+    ],
+    "NF-WERNER6-v1": [
+      {
+        "path": "research/nightfall/projects/werner-correlated-6-9/S2_4471_CERTIFICATE_AUDIT.md",
+        "url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/werner-correlated-6-9/S2_4471_CERTIFICATE_AUDIT.md",
+        "revision": "df9511c622c309046180fd0e015aca88577c58ec",
+        "role": "archived-source"
+      }
+    ],
+    "NF-WEIGHTED-SCHUR-v1": [
+      {
+        "path": "research/nightfall/observatory/TRANSFER_0001.md",
+        "url": "https://github.com/d3lefts/d3lefts/blob/32df9e1b2b0049e0dbc7e27a465957a741843c5a/research/nightfall/observatory/TRANSFER_0001.md",
+        "revision": "32df9e1b2b0049e0dbc7e27a465957a741843c5a",
+        "role": "archived-v1-source"
+      }
+    ],
+    "NF-BLOCK-EXAMPLE-v1": [
+      {
+        "path": "research/nightfall/observatory/TRANSFER_0001.md",
+        "url": "https://github.com/d3lefts/d3lefts/blob/32df9e1b2b0049e0dbc7e27a465957a741843c5a/research/nightfall/observatory/TRANSFER_0001.md",
+        "revision": "32df9e1b2b0049e0dbc7e27a465957a741843c5a",
+        "role": "archived-v1-source"
+      }
+    ],
+    "NF-SPECTRAL-BRIDGE-v1": [
+      {
+        "path": "research/nightfall/projects/discovery-proposals-2026-10-28/README.md",
+        "url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/discovery-proposals-2026-10-28/README.md",
+        "revision": "df9511c622c309046180fd0e015aca88577c58ec",
+        "role": "archived-source"
+      }
+    ],
+    "NF-LEMNIS-EXT-v1": [
+      {
+        "path": "research/nightfall/projects/werner-correlated-6-9/S2_4471_CERTIFICATE_AUDIT.md",
+        "url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/werner-correlated-6-9/S2_4471_CERTIFICATE_AUDIT.md",
+        "revision": "df9511c622c309046180fd0e015aca88577c58ec",
+        "role": "archived-source"
+      }
+    ],
+    "NF-GRAPH-EVAL-v1": [
+      {
+        "path": "research/nightfall/observatory/GATE_C_PREREGISTRATION.md",
+        "url": "https://github.com/d3lefts/d3lefts/blob/32df9e1b2b0049e0dbc7e27a465957a741843c5a/research/nightfall/observatory/GATE_C_PREREGISTRATION.md",
+        "revision": "32df9e1b2b0049e0dbc7e27a465957a741843c5a",
+        "role": "archived-v1-source"
+      }
+    ]
+  },
+  "edges": {
+    "TR-001": {
+      "id": "TR-001",
+      "from": "NF-WEIGHTED-SCHUR-v1",
+      "to": "NF-BLOCK-EXAMPLE-v1",
+      "type": "proven-implication",
+      "statement": "Applying weighted diagonal dominance with w=(1,2,1) certifies a rational lower bound 1/5 on the explicit three-block matrix.",
+      "assumptions": "The stated matrix and classical quadratic-form inequality; all fractions verified exactly.",
+      "evidence": "research/nightfall/observatory/TRANSFER_0001.md",
+      "verifier": "scripts/verify_observatory.py",
+      "experiment": "Exact rational principal minors and weighted margins",
+      "status": "reproduced",
+      "provenance_url": "https://github.com/d3lefts/d3lefts/blob/32df9e1b2b0049e0dbc7e27a465957a741843c5a/research/nightfall/observatory/TRANSFER_0001.md"
+    },
+    "TR-002": {
+      "id": "TR-002",
+      "from": "NF-SIDON30-v1",
+      "to": "NF-SIDON-CHECK-v1",
+      "type": "certified-computational-dependency",
+      "statement": "The finite 30-point Sidon finding depends on the exact standalone integer checker for its public machine audit.",
+      "assumptions": "Source integer list and algorithm correspond to the recorded witness.",
+      "evidence": "research/nightfall/projects/sidon-finite-30/README.md",
+      "verifier": "research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py",
+      "experiment": "Run the standalone finite integer audit",
+      "status": "reproduced",
+      "provenance_url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/sidon-finite-30/README.md"
+    },
+    "TR-003": {
+      "id": "TR-003",
+      "from": "NF-SIDON30-v1",
+      "to": "NF-ERDOS-131072-v1",
+      "type": "shared-mathematical-mechanism",
+      "statement": "Both finite constructions require exact combinatorial integer witnesses and separate audit of all defining constraints; neither implies the other.",
+      "assumptions": "Only proof-method analogy, no inequality transfer.",
+      "evidence": "research/nightfall/observatory/TRANSFER_0001.md",
+      "verifier": null,
+      "experiment": "Benchmark certificate representations without changing either theorem",
+      "status": "classified",
+      "provenance_url": "https://github.com/d3lefts/d3lefts/blob/32df9e1b2b0049e0dbc7e27a465957a741843c5a/research/nightfall/observatory/TRANSFER_0001.md"
+    },
+    "TR-004": {
+      "id": "TR-004",
+      "from": "NF-WEIGHTED-SCHUR-v1",
+      "to": "NF-SPECTRAL-BRIDGE-v1",
+      "type": "proposed-transfer",
+      "statement": "Test whether weighted block control can dominate cross-rank spectral tail coupling uniformly in continuous scale.",
+      "assumptions": "Certified diagonal lower envelopes and operator-norm tails for every scale and rank, with a positive global residual.",
+      "evidence": "research/nightfall/observatory/TRANSFER_0001.md",
+      "verifier": null,
+      "experiment": "Two independent interval-bound implementations on rank-doubling windows",
+      "status": "untested",
+      "provenance_url": "https://github.com/d3lefts/d3lefts/blob/32df9e1b2b0049e0dbc7e27a465957a741843c5a/research/nightfall/observatory/TRANSFER_0001.md"
+    },
+    "TR-005": {
+      "id": "TR-005",
+      "from": "NF-WERNER6-v1",
+      "to": "NF-WEIGHTED-SCHUR-v1",
+      "type": "proposed-transfer",
+      "statement": "Use source-conditional Werner rational margins as input to a Schur-complement extension test for larger witness classes.",
+      "assumptions": "A full quadratic-form block decomposition with an exact outside-class coupling bound and valid imported endpoint inequalities.",
+      "evidence": "research/nightfall/observatory/TRANSFER_0001.md",
+      "verifier": null,
+      "experiment": "Find the smallest outside-class rank-two witness and bound its Schur complement",
+      "status": "untested",
+      "provenance_url": "https://github.com/d3lefts/d3lefts/blob/32df9e1b2b0049e0dbc7e27a465957a741843c5a/research/nightfall/observatory/TRANSFER_0001.md"
+    },
+    "TR-006": {
+      "id": "TR-006",
+      "from": "NF-PAS-DOMINANCE-v1",
+      "to": "NF-PAS20-v1",
+      "type": "falsified-transfer",
+      "statement": "Transferring the claimed causal-triage advantage to the archived first-choice test fails: 8/20 trails the upstream-first 11/20 baseline.",
+      "assumptions": "The retrospective twenty-case first-choice scoring definition.",
+      "evidence": "research/nightfall/projects/pas-overview.md",
+      "verifier": null,
+      "experiment": "Preserve 8/20 versus 11/20 failure as a permanent adverse trace",
+      "status": "falsified",
+      "provenance_url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/pas-overview.md"
+    },
+    "TR-007": {
+      "id": "TR-007",
+      "from": "NF-FIELD-SPAN-v1",
+      "to": "NF-AXIOM-KERNEL-v1",
+      "type": "shared-mathematical-mechanism",
+      "statement": "Both investigate powered finite-field measurement collisions and rank control; an exact theorem-level comparison is pending.",
+      "assumptions": "Axiom's field and ambiguity conventions must first match the archived manuscript.",
+      "evidence": "research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/README.md",
+      "verifier": null,
+      "experiment": "Align model assumptions and compare two identical finite-field test instances",
+      "status": "classified",
+      "provenance_url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/README.md"
+    },
+    "TR-008": {
+      "id": "TR-008",
+      "from": "NF-WERNER6-v1",
+      "to": "NF-LEMNIS-EXT-v1",
+      "type": "proposed-transfer",
+      "statement": "Attempt to transport the exact six-copy conditional margin to a strictly larger coefficient family.",
+      "assumptions": "Prove additional class coverage and keep the original source-conditional margins valid.",
+      "evidence": "research/nightfall/projects/werner-correlated-6-9/S2_4471_CERTIFICATE_AUDIT.md",
+      "verifier": null,
+      "experiment": "Search the boundary of the encoded family for a negative Schur complement",
+      "status": "untested",
+      "provenance_url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/werner-correlated-6-9/S2_4471_CERTIFICATE_AUDIT.md"
+    },
+    "TR-009": {
+      "id": "TR-009",
+      "from": "NF-PAS20-v1",
+      "to": "NF-GRAPH-EVAL-v1",
+      "type": "shared-mathematical-mechanism",
+      "statement": "The adverse PAS result motivates explicit flat-priority baselines, blinded decisions and measured research budgets.",
+      "assumptions": "Methodological lesson only, no empirical advantage inferred.",
+      "evidence": "research/nightfall/projects/pas-overview.md",
+      "verifier": null,
+      "experiment": "Preregister matched-budget graph-guided and flat triage",
+      "status": "classified",
+      "provenance_url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/pas-overview.md"
+    }
   }
 }
