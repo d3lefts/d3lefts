@@ -59,6 +59,23 @@
       "limitations": [
         "Formal model scope and independent deployed-system tests unresolved"
       ]
+    },
+    {
+      "id": "EA-36-LOWER-V5P",
+      "parent_id": "EA-36-FINITE-131072",
+      "issue": "https://github.com/d3lefts/d3lefts/issues/1",
+      "claim": "Conditional universal lower deduction c > 0.38062747462668 using the fixed Wetch analytic kernel, V5 Gram certificates, and exact eight-row mean cover",
+      "target": "9515686865667/25000000000000",
+      "frozen_original_zip_sha256": "fe2a2027910a89ffdfa6c28cfd5f70228ffe5a26fa0e6c5d5dd12a5656d91f91",
+      "internal_check": "PASS: independent exact-rational eight-window check, V5 Gram replay, adversarial mutated targets, 398 analytic rational controls, 45540 exact flow controls, archived outer-ball comparisons",
+      "public_external_agent_check": "PENDING: original Wetch Arb continuum integrals and original central/outer interval functions must be freshly reexecuted",
+      "report": "research/nightfall/agent-reports/ea36_lower_20261028/RESEARCH_NOTE.md",
+      "fixed_family_ceiling": "190313737313343/500000000000000",
+      "limits": [
+        "Newly rerun exact row algebra establishes a conditional statement, not independent proof of Wetch original Arb integrations",
+        "Maximum available improvement from the unchanged eight-row family is less than 6e-15",
+        "Significant improvement requires a new universally valid kernel or different feasible dual multipliers"
+      ]
     }
   ]
 }
