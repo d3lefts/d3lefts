@@ -76,6 +76,30 @@
         "Maximum available improvement from the unchanged eight-row family is less than 6e-15",
         "Significant improvement requires a new universally valid kernel or different feasible dual multipliers"
       ]
+    },
+    {
+      "id": "SIDON-30-FINITE-H17",
+      "claim": "The frozen 30-point integer set is a (4,5)-set and its exact Sidon number is 17",
+      "proof_status": "PASS: complete finite combinatorial certificate; no imported analytic premise",
+      "witness": "research/nightfall/projects/sidon-finite-30/witness_30.txt",
+      "witness_sha256": "dc4697ce051a57987049199965967cc2b981433816d3daac284454262395978f",
+      "verifier": "research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py",
+      "independent_proof_archive": "NIGHTFALL_SIDON30_MACHINE_PROOF_20261028.zip",
+      "archive_sha256": "ebc4b70241a912a992d12d918c692dc3ef0c4ee29728ceb9f04c1e1a92076524",
+      "explicit_proof_dag_sha256": "4e31c53667cba63db34354eb861f503ac7284a0e76cd7219306dff8239032181",
+      "checks": [
+        "27405 weak-Sidon four-subsets",
+        "28 exact 3-term AP constraints",
+        "7801 independently checked unsatisfiability DAG states",
+        "17-element explicit full Sidon witness",
+        "four adversarial proof and witness mutations rejected"
+      ],
+      "limitations": [
+        "Finite construction only",
+        "All-depth recursion and asymptotic 5/9 established by separate source",
+        "Prior-art novelty not determined",
+        "Full separate proof DAG distributed as 120 KB ZIP outside GitHub until release upload"
+      ]
     }
   ]
 }
