@@ -1,0 +1,28 @@
+name: Verify research website
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "research/nightfall/**"
+      - "scripts/check_site.py"
+      - ".github/workflows/verify-site.yml"
+  pull_request:
+    paths:
+      - "docs/**"
+      - "research/nightfall/**"
+      - "scripts/check_site.py"
+      - ".github/workflows/verify-site.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate static pages, source links, anchors, and fallback catalogue
+        run: python3 scripts/check_site.py
+      - name: Parse JavaScript without executing browser code
+        run: node --check docs/site.js
