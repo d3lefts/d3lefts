@@ -44,3 +44,5 @@ jobs:
           python3 -m json.tool research/nightfall/agent-reports/ea36_131072/AGENT_VERDICT.json > /dev/null
           python3 research/nightfall/agent-reports/ea36_131072/verify_bridge.py
           g++ -O3 -std=c++17 research/nightfall/agent-reports/ea36_131072/independent_gmp_audit.cpp -lgmpxx -lgmp -o /tmp/nightfall-gmp-audit
+      - name: Machine-certify the exact 30-point Sidon theorem
+        run: python3 research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py
