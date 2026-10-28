@@ -1,0 +1,265 @@
+# Transcribed textual research source
+
+Source file: SourceBound_Research_Revision3_2026-10-27.pdf
+This is extracted text for GitHub search and independent inspection. Equations, typesetting, figures, and pagination should be checked against the original PDF. It is not a byte-equivalent copy of the PDF.
+
+
+---
+
+<PARSED TEXT FOR PAGE: 1 / 5>
+                                                SourceBound
+                  An Auditable Admission Boundary for Web Knowledge Extraction
+
+                                                    Devin J. Wright
+                                 Independent research / reproducible systems prototype
+
+
+                      27 October 2026           |    Manuscript for technical peer review
+
+
+                                                          Abstract
+         Information extraction from messy HTML can publish plausible yet unsupported triples even when each
+     triple carries a source URL and text witness. We study a narrow systems question: how can a publisher
+     detect discrepancies between an extracted triple and the evidence attributed to it before the triple enters
+     a queryable graph? SourceBound separates candidate generation from admission, introduces a separately
+     implemented restricted evidence-to-triple re-binding check, and retains independent browser visibility, temporal
+     scope, same-page conflict reconciliation, and version-bound entity links. An external review exposed a concrete
+     failure: replacing the object of a CEO triple left the original evidence unchanged, yet both existing checks
+     accepted it. The re-binding stage rejects such field mutations, including subject, relation, object, and qualifier
+     edits. On 14,000 researcher-constructed synthetic pages, the revision recovers all 6,000 fixture-labeled assertions;
+     21 unit tests, including independent browser tests, passed in the complete rerun. The revised browser test
+     also accepts a table cell beneath a browser-inserted tbody, and a malformed JSON-LD block quarantines only
+     comparable fields. These findings establish restricted-grammar consistency and specific interoperability repairs;
+     they are not evidence of general semantic entailment, natural-web extraction accuracy, or real-world recall. We
+     release the failure cases, code, test protocol, and a prospective domain-held-out evaluation design.
+
+
+
+1    Problem and claim
+A web page may contain multiple overlapping representations of the same entity: a title, article subsections, hidden
+panels, scripts, structured data, quoted speech, and changing factual statements. A parser that attaches every
+eligible sentence to the page title can create a ghost edge: a fluent knowledge-graph relation without valid subject
+ownership. Even a source-linked edge can be semantically wrong, since a digest proves byte identity and a matching
+sentence establishes a source assertion, not truth about the world.
+Our contribution is an inspectable publication contract, implemented as a small prototype and tested
+against independently supplied counterexamples. We make no claim to have invented source grounding, wrappers,
+knowledge-graph provenance, factual verification, or graph invalidation. The intended downstream artifact is a
+source-assertion index with explicit abstention, not a globally verified truth graph.
+Formally, a candidate is a tuple
+                                                c = (s, r, o, q, u, h, e, p, v),
+with subject s, relation r, object o, temporal qualifier q, source URL or page identifier u, content digest h, textual
+evidence e, DOM location p, and extraction-rule version v. Publication is a separate operation A(c, D, M, R) ∈
+{publish, quarantine}, where D is source HTML, M is available structured metadata and R is an optional
+independent rendered-DOM view.
+
+
+2    Prior art and design choices
+The strongest adjacent work already uses entity linking, weak supervision, browser structure, provenance and
+natural-web evaluation. We therefore claim a composition with a testable publication boundary, not a novel
+general-purpose extraction model. A strict verifier must ultimately use evidence with failure modes different from
+those of the extractor. Replaying the extractor’s lexical grammar is insufficient for semantic validation.
+
+
+
+
+                                                               1
+<PARSED TEXT FOR PAGE: 2 / 5>
+SOURCEBOUND / RESEARCH PROTOTYPE                                                                         27 OCTOBER 2026
+
+
+
+            Table 1: Closest relevant lines of research and the precise design implication for SourceBound.
+Prior art          Established approach                                     Incorporated decision
+Wrapper            Learn or transfer extraction rules from semi-            Keep discovery extensible; isolate acceptance from
+induction;         structured websites                                      any single wrapper
+CERES;
+OpenCeres
+[1, 2, 3]
+Boilerpipe [4]     Separate meaningful content from navigational boil-      Exclude template and non-content context from ad-
+                   erplate                                                  missible source witnesses
+WebIE; Web-        Robust IE and structural understanding under di-         Evaluate held-out domains and negative passages,
+SRC [5, 6]         verse HTML                                               not only hand-built layouts
+ProVe [7]          Distinguish a cited source from textual support for      Treat a syntactic witness as weaker than entailment;
+                   a KG triple                                              allow a separate support checker
+Parser differen-   Different HTML parsers can assign different DOM          Require browser-rendered checks when making a
+tials [8]          structure                                                visibility claim
+Wikidata           Source references, temporal qualifiers, and publisher-   Preserve time scope; quarantine discrepancies among
+qualifiers;        supplied structured metadata                             directly comparable claims
+schema.org
+[9, 10]
+LiveWeb-IE         Test extraction against changing websites                Freeze source versions and measure invalida-
+[11]                                                                        tion/freshness explicitly
+
+
+3     System design
+3.1     Discovery, admission and publication
+Candidate generation recognizes a deliberately restricted set of relations (chief executive, headquarters, founding
+year) in explicit prose, labels, and simple semistructured regions. Those candidate rules are replaceable by learned
+extractors; the acceptance policy is a distinct component. The static gate checks document SHA-256, evidence
+location, text agreement, subject scope, excluded contexts, temporal patterns and basic value types. A new
+restricted independent binding stage, applied through a public API to candidates supplied by a replaceable extractor,
+interprets the source text through a separate implementation and checks that the candidate’s subject, relation,
+object, and qualifier agree with the recovered fields. Unlike a digest check or witness equality alone, a changed
+object attached to unchanged text now fails. This check supports only the declared narrow language grammar; it
+makes no claim about arbitrary paraphrases, source veracity, or discourse-level entailment. Rejected records retain
+reason codes for audit and potential human review.
+The first independent signal is the Chromium-rendered view. In strict mode, a candidate must map to a uniquely
+located browser DOM element whose text matches and whose ancestors pass computed visibility checks. The
+reviewer detected failures caused by Chromium inserting exttttbody and by implicit document-root normalization.
+The repair permits a unique exact-text leaf fallback when a parser-specific XPath fails, and abstains when multiple
+nodes match. This detects failures caused by page CSS that are invisible to a simple HTML parser. Browser
+rendering does not establish entailment. Script execution and remote resources must be controlled in a real
+deployment; the provided prototype processes supplied HTML.
+
+
+3.2     New: same-page consistency and structured metadata
+A second admission layer parses bounded, inline application/ld+json records without network dereferencing. For
+an unambiguously named Organization, it compares two well-defined, directly comparable fields: foundingDate
+against the extracted founding year, and address.addressLocality against the extracted headquarters locality.
+When comparable same-source fields disagree, the record is quarantined. The CEO relation is excluded from this
+structured-data comparison because there is no corresponding reliably specified property in the current extractor
+contract.
+Within a single page, two distinct values for the same (s, r, q) key are quarantined together. This deliberately
+sacrifices some coverage rather than choosing an arbitrary winner. Agreement between text and JSON-LD is
+
+
+                                                                2
+<PARSED TEXT FOR PAGE: 3 / 5>
+SOURCEBOUND / RESEARCH PROTOTYPE                                                                   27 OCTOBER 2026
+
+
+not independent corroboration: both are publisher-controlled, and both may be wrong. In this release it only
+removes one class of internal inconsistency. Malformed or excessively large structured payloads quarantine the
+two comparable relations; the CEO relation remains outside the JSON-LD comparison. A malformed unrelated
+JSON-LD block therefore does not automatically invalidate a syntactically supported CEO assertion. Unrelated
+organizations’ metadata is not used to invalidate a page subject.
+
+
+3.3    Lineage, revisions and multi-hop queries
+Every active assertion points to its exact source-version digest. Reviewed entity links are distinct, version-bound
+records; unreviewed links cannot justify cross-document joins. A failed replacement quarantines the affected
+source. Successful source replacement revokes incident identity links, so a multi-hop answer depending on the
+changed version becomes unavailable pending revalidation. The executable tests cover two-hop joins, review-gating,
+source-change revocation and failure quarantine. These are local correctness properties; no production-scale
+reindexing costs were measured.
+
+
+4      Evaluation and adversarial findings
+4.1    What is measured
+We report three different evidence strata and keep their denominators separate: inherited researcher-authored
+synthetic fixtures, an independently authored adversarial suite supplied during review, and newly authored regression
+fixtures built after inspecting the errors. No sampled natural-web test set is claimed.
+
+
+Table 2: Replay and reviewer-triggered regression results. All source pages are synthetic; counts are not natural-web
+quality estimates.
+Test                                                          Size   Observed outcome
+Inherited synthetic regression suites               14,000 pages     6,000/6,000 fixture assertions retained; 0 additional
+                                                                     emissions
+External-review adversarial suite (previously ob-        20 cases    Prior generator emitted 21 questionable assertions;
+served)                                                              conservative contextual filter withholds them
+Independent field-binding mutations (new)                 4 cases    Changed subject, relation, object, and qualifier re-
+                                                                     jected
+Other reviewer-inspired tests (new)                       7 cases    Malformed JSON-LD, implicit tbody, abbreviated
+                                                                     HTML, malformed lists, duplicate witnesses, source
+                                                                     deletion
+Combined unit suite                                      21 tests    All passed in the complete rerun
+
+
+The informative failure modes came before the repaired scores: the previous layout parser bound text from
+unrelated sections to the page subject; static extraction admitted CSS-hidden assertions; earlier lexical rules
+accepted past-tense leadership or historical tables stripped of qualifiers. These observations motivate distinct
+context, rendered-DOM and temporal controls. They also delimit the guarantee: a visible, syntactically supported
+lie can still pass.
+The new regression suite intentionally covers field tampering, malformed JSON-LD, Chromium table normalization,
+missing tags and document roots, ambiguous witness fallbacks, and source deletion. These supplement the earlier
+internal conflict and rendered-visibility tests. They demonstrate specific fault containment in the test grammar.
+They are neither a random sample nor a realistic estimate of fielded false-positive rates. The browser can be costly;
+no large-scale serving latency or cost claim is made here.
+
+
+5      Publication guarantee and its boundary
+An accepted record under strict mode has, under correct execution of the supplied components, a matching
+source digest, a declared source witness, restricted lexical triple binding, no conflict identified by the implemented
+
+
+                                                          3
+<PARSED TEXT FOR PAGE: 4 / 5>
+SOURCEBOUND / RESEARCH PROTOTYPE                                                                     27 OCTOBER 2026
+
+
+consistency checks, and a rendered DOM witness. The result is a restricted-grammar, traceable source assertion. It
+is not a proof that the source is reliable, that the proposition is true, or that the text logically entails an unrestricted
+paraphrase.
+If E(D) is the candidate set and A(D) the admitted subset, then by construction A(D) ⊆ E(D). This set inclusion
+and the recorded check lineage are program invariants. Their usefulness depends on the independent strength of
+the checks and the costs of abstention. A separate semantic support model, independent human audit, or calibrated
+entailment evaluator remains necessary to test actual support quality. SourceBound deliberately makes such stages
+pluggable, with their decisions auditable as distinct evidence types.
+
+
+6     Required natural-web experiment
+A prospective test should freeze a domain-held-out set of real organization pages before tuning. Sample different
+website designs and publication styles, retaining source HTML, screenshots, crawl times, references and review
+permissions. Annotators should mark subject identity, explicit temporal scope, evidence passage, and supported
+relation. A Wikidata item may provide candidate distant labels but cannot substitute for an independent
+contemporaneous annotation: corporate officers change and public databases lag.
+Compare four systems on the same candidate budget: (B0) deterministic candidate generator; (B1) generator
+plus static contextual admission; (B2) B1 plus browser witness; (B3) B2 plus same-page consistency and an
+independently evaluated semantic support stage. If an LLM extractor is available, report it alone and behind
+the identical gates. Choose operating points at matched recall; report unsupported-published-edge rate, support
+precision, subject-binding error, temporal error, abstention rate, end-to-end answer accuracy, p50/p95 latency
+and compute cost. Stratify by domain and HTML structure; bootstrap at the domain level to avoid counting
+many pages from the same site as independent evidence. A disconfirming outcome—excessive abstention without a
+reduction in unsupported answers—must count against the proposed architecture.
+
+
+7     Relation to Proof After Scarcity and conclusion
+This project arose from a distinct research program, Proof After Scarcity: Causal Verification for Machine-Generated
+Mathematics, which models the allocation of scarce verification effort across claim dependencies. SourceBound
+addresses an earlier operational boundary: whether a proposed fact enters a model-facing source-assertion index.
+The former’s marginal-risk allocation model could later prioritize expensive human checks in the latter, yet this
+manuscript makes no claim to have calibrated its transfer coefficients or measured review-allocation gains. They
+are separate papers with different hypotheses.
+SourceBound provides a reproducible publication boundary and explicit failure accounting. The distinguishing
+engineering judgment is to preserve provenance and abstain when internal representations disagree, while testing
+browser visibility separately from syntax. The central empirical claim remains open: whether this architecture
+improves supported retrieval from previously unseen, naturally occurring websites at competitive coverage and cost.
+
+
+References
+ [1] N. Kushmerick. “Wrapper Induction: Efficiency and Expressiveness.” Artificial Intelligence 118 (2000), 15–68. https:
+     //doi.org/10.1016/S0004-3702(99)00100-9.
+ [2] C. Lockard et al. “CERES: Distantly Supervised Relation Extraction from the Semi-Structured Web.” PVLDB 11(10),
+     2018. https://doi.org/10.14778/3231751.3231758.
+ [3] C. Lockard, P. Shiralkar, X. L. Dong. “OpenCeres: When Open Information Extraction Meets the Semi-Structured
+     Web.” NAACL, 2019. https://aclanthology.org/N19-1309/.
+ [4] C. Kohlschütter, P. Fankhauser, W. Nejdl. “Boilerplate Detection using Shallow Text Features.” WSDM, 2010.
+     https://doi.org/10.1145/1718487.1718542.
+ [5] C. Whitehouse et al. “WebIE: Faithful and Robust Information Extraction on the Web.” ACL, 2023. https://
+     aclanthology.org/2023.acl-long.428/.
+
+
+
+                                                             4
+<PARSED TEXT FOR PAGE: 5 / 5>
+SOURCEBOUND / RESEARCH PROTOTYPE                                                                27 OCTOBER 2026
+
+
+ [6] X. Chen et al. “WebSRC: A Dataset for Web-Based Structural Reading Comprehension.” EMNLP, 2021. https:
+     //aclanthology.org/2021.emnlp-main.343/.
+ [7] G. Amaral, O. Rodrigues, E. Simperl. “ProVe: A pipeline for automated provenance verification of knowledge graphs
+     against textual sources.” Semantic Web, 2024. https://doi.org/10.3233/SW-233467.
+ [8] M. Johns and D. Klein. “Parse Me, Baby, One More Time: Bypassing HTML Sanitizer via Parsing Differen-
+     tials.” CASA publication page, 2024; venue unverified. https://casa.rub.de/en/research/publications/detail/
+     parse-me-baby-one-more-time-bypassing-html-sanitizer-via-parsing-differentials.
+ [9] Wikidata contributors. “Wikidata data model: qualifiers and references.” https://www.wikidata.org/wiki/Help:
+     Data_model.
+[10] Schema.org. “Markup Validator: supported structured data formats.” https://schema.org/docs/validator.html.
+[11] S. Yang et al. “LiveWeb-IE: A Benchmark for Online Web Information Extraction.” ICLR, 2026. https://proceedings.
+     iclr.cc/paper_files/paper/2026/hash/3184497246703156104b3ceb1e379dc5-Abstract-Conference.html.
+
+
+
+
+                                                          5
