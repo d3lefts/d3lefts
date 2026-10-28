@@ -17,6 +17,15 @@ This expansion preserves distinct lines of mathematical and AI-systems research 
 | 07 | [Causal cuts, cognition and proof-search calculus](07-causal-cognition-proof-search.md) | Finite-state directed-cut factorization; synthetic evaluation transport; admissible obstruction-pair calculus | Framework, finite mathematics and synthetic studies |
 | 08 | [Arena and negative-result audits](08-arena-and-negative-results.md) | UP25 exact root-audit candidate plus scorer discrepancy; C1/C2 provenance and failed-operator register | Historical research records, no new leaderboard standing |
 
+## Public primary sources added with this expansion
+
+- [Periodic forest-gauge October 27 source theorem](sources/NIGHTFALL_QCD_periodic_forest_no_go_20261027.md)
+- [2-adic Hermite taper exact proof text](sources/NIGHTFALL_ETH_TAPER_PROOF.md)
+- [Transport Control Run 001: executed synthetic study](sources/Transport_Control_Run_001.md)
+- [New direct integer verifier for periodic forest defect conservation](verify_periodic_forest.py)
+
+The original ETH rank-barrier full-text mirror was unavailable in this publication pass; the mathematical claim, proof outline, and explicit limitations are recorded in [Dossier 03](03-eth-taper-and-obstruction.md). No claim of a full eight-manuscript source mirror is made.
+
 ## Verification performed in this publication turn
 
 A separate, directly enumerating Python [forest checker](verify_periodic_forest.py) was run locally under Python 3 with pure integer arithmetic. **32 trials passed**: dimensions 4 and 5; periodic side lengths 3 and 4; eight deterministic random forests per setting. It separately forms the plaquette-pair adjacency graph, counts forest components and defect terms, and checks the exact identity. This checks representative finite cases rather than certifying the universal argument.
