@@ -2,7 +2,7 @@
 
 ## Nonabelian breakthrough — 28 October 2026
 
-A new **unconditional algebraic extension** now covers every finite group, including noncommutative groups, with a nonidentity order-two automorphism. Translated orbit measurements obey the exact distance rule, and their twisted-coboundary label classes are right cosets of the automorphism's fixed subgroup.
+A new **unconditional algebraic extension** now covers every finite group, including noncommutative groups, with a nonidentity order-two automorphism. Translated orbit measurements obey the exact distance rule, and their twisted-coboundary label classes are left cosets \(tH\) of the automorphism's fixed subgroup.
 
 The [complete universal theorem and proof](NONABELIAN_SHADOW_THEOREM.md) establishes all of the following:
 
@@ -31,3 +31,5 @@ These are sharp minimum-Hamming-distance and optimal label-allocation formulas. 
 The original Part II research archive reports 918 finite-group configurations, 474,794 erasure-pattern tests, 5,052 mixed-fault tests, 1,293 probabilistic-law checks and additional allocation checks. A **new independent direct-orbit test on October 28** exhaustively compared the formula across **3,325 separate small-group/translation instances** (2,925 sign involutions on Zₙ and 400 coordinate-swaps on Zₙ²); all passed. These finite checks reinforce, but cannot substitute for, proof of universal finite-group statements.
 
 [Searchable text transcribed from Part II expanded manuscript](What_Survives_the_Cut_II_extracted.txt). Original PDF and full verifier remain in the research Library.
+
+**Prior-art and terminology update (28 October):** The coset-label mechanism is a finite-group version of a standard Cartan-embedding identity, and balancing occupancies applies classical majorization. Related group-automorphism code families and distance spectra predate this work. The present precise theorem package is a new extension of our earlier abelian result, with global novelty unresolved. The label fibers are **left cosets** \(tH\), correcting an earlier right-coset mislabel. See [detailed source audit](NONABELIAN_SHADOW_THEOREM.md#priority-assessment-and-terminology-correction--28-october-2026).
