@@ -111,6 +111,152 @@ def main() -> int:
             FAILURES.append(f"Unoriginal promotional link returned: {removed}")
     if "research-proposal" in homepage_text or 'kind:"proposal"' in js or '"kind":"proposal"' in js:
         FAILURES.append("Untested proposals cannot appear in the public original-findings catalogue")
+    # Proposals are allowed solely in the separately marked research agenda.
+    agenda = (DOCS / "agenda.html").read_text(encoding="utf-8")
+    proposal_source = (ROOT / "research/nightfall/projects/discovery-proposals-2026-10-28/README.md").read_text(encoding="utf-8")
+    rows = re.findall(r'<a class="research-row research-proposal" data-agenda-category="([^"]+)" href="([^"]+)"', agenda)
+    categories = ["mathematics","quantum","super-intelligence","safety","systems"]
+    if len(rows) != 10 or any(sum(c == k for c,_ in rows)!=2 for k in categories):
+        FAILURES.append("AGENDA GATE: expected ten proposals, two per discipline")
+    if re.findall(r'data-agenda-filter="([^"]+)"', agenda) != ["all", *categories]:
+        FAILURES.append("AGENDA GATE: filter mismatch")
+    if agenda.count("Research proposal · untested") != 10:
+        FAILURES.append("AGENDA GATE: proposal status omitted")
+    headings = re.findall(r'^## (P\\d\\d)\\. (.+)
+    # Legacy locally saved browser work can survive without being featured.
+    core = (DOCS / "discovery-core.js").read_text(encoding="utf-8")
+    seeds = core.split("const PROJECTS=[", 1)[-1].split("].map(([id,title", 1)[0]
+    ids = re.findall(r'^\["([^"]+)"', seeds, re.M)
+    if ids != ["ea36", "sidon", "pas"]:
+        FAILURES.append(f"ORIGINALITY GATE: Discovery presets must be ea36/sidon/pas; found {ids!r}")
+    # Every public HTML page must be discoverable, and mobile menus must be wired.
+    sitemap = (DOCS / "sitemap.xml").read_text(encoding="utf-8")
+    actual_urls = set(re.findall(r"<loc>([^<]+)</loc>", sitemap))
+    expected_urls = {
+        "https://d3lefts.github.io/d3lefts/" + ("" if p.name == "index.html" else p.name)
+        for p in pages
+    }
+    if actual_urls != expected_urls:
+        FAILURES.append(f"Sitemap mismatch: missing={sorted(expected_urls - actual_urls)}, extra={sorted(actual_urls - expected_urls)}")
+    for page_path, parsed in pages.items():
+        src = page_path.read_text(encoding="utf-8")
+        if page_path.name == "discovery.html":
+            if not all(k in src for k in ("discovery-core.js", "discovery-app.js", "discovery.css", 'id="app"')):
+                FAILURES.append("Discovery Engine dependencies / mount missing")
+            continue
+        if "menu-button" not in parsed.ids or "site-nav" not in parsed.ids:
+            FAILURES.append(f"{page_path}: missing responsive navigation control or target")
+        if not re.search(r'<script\s+src="site.js"\s+defer\s*></script>', src):
+            FAILURES.append(f"{page_path}: missing shared navigation JavaScript")
+    # Public source scope and verified metadata baseline.
+    excluded = ("research/nightfall/projects/xi-dossier.md",
+                "research/nightfall/projects/xi-continuous-shift-rank22.md",
+                "research/nightfall/projects/quantum-prime-geometry/README.md")
+    public_index_files = (DOCS / "index.html", DOCS / "site.js", ROOT / "research/nightfall/README.md")
+    for rel in excluded:
+        if (ROOT / rel).exists():
+            FAILURES.append("Out-of-program source still present: " + rel)
+        for page in public_index_files:
+            if rel.split("research/nightfall/")[-1] in page.read_text(encoding="utf-8"):
+                FAILURES.append(f"Out-of-program link in {page}: {rel}")
+    pas = (ROOT / "research/nightfall/projects/pas-overview.md").read_text(encoding="utf-8")
+    if not all(k in pas for k in ("8 of 20", "11 of 20", "802", "2027-04-06")):
+        FAILURES.append("PAS claims/freeze protocol missing")
+    rank = ROOT / "research/nightfall/projects/pas/openai_math_priority_ranking_2026-10-06.csv"
+    if len(rank.read_text(encoding="utf-8").splitlines()) != 373:
+        FAILURES.append("PAS frozen metadata ranking must have 372 entries")
+    # Independent Python standard-library verification of the JS-generated public ranking.
+    import hashlib
+    import csv
+    import io
+    blob = rank.read_bytes()
+    checksum = hashlib.sha256(blob).hexdigest()
+    recorded = (rank.parent / "SHA256SUMS.txt").read_text(encoding="utf-8").split()[0]
+    if checksum != recorded or checksum != "3e303b69ef8e530b5c618e61f9cb5c4527ea717b0588c59f2fb75b4afd5924e7":
+        FAILURES.append("PAS public CSV SHA-256 mismatch")
+    ranked = list(csv.DictReader(io.StringIO(blob.decode("utf-8"), newline="")))
+    seq = ",".join(row["id"] for row in ranked)
+    fnv = 0xcbf29ce484222325
+    for b in seq.encode("ascii"):
+        fnv = ((fnv ^ b) * 0x100000001b3) & 0xffffffffffffffff
+    if len(ranked) != 372 or f"{fnv:016x}" != "c429732aac46eae9":
+        FAILURES.append("PAS historical FNV ranking fingerprint mismatch")
+    # User-approved October 28 Werner registry is the authoritative comparison source.
+    from fractions import Fraction
+    import csv as wcsv
+    atlas_dir = ROOT / "research/nightfall/projects/werner-atlas"
+    with (atlas_dir / "werner_registry_4_to_20.csv").open(encoding="utf-8",newline="") as stream:
+        reg = list(wcsv.DictReader(stream))
+    with (atlas_dir / "bounds_1_to_24.csv").open(encoding="utf-8",newline="") as stream:
+        early = list(wcsv.DictReader(stream))
+    with (atlas_dir / "bounds_1_to_100.csv").open(encoding="utf-8",newline="") as stream:
+        hundred = list(wcsv.DictReader(stream))
+    approved = [[4,"0.49791","0.49790","0.49375"],[5,"0.47189","0.47000","0.45000"],[6,"0.44819","≥0.36872","0.36872"],[7,"0.43140","0.42980","0.31429"],[8,"0.41889","0.41750","0.27973"],[9,"0.40920","0.40800","0.24932"],[10,"0.40148","0.40030","0.22472"],[11,"0.39500","0.39420","0.20441"],[12,"0.38980","0.38900","0.18744"],[13,"0.38540","0.38470","0.17304"],[14,"0.38160","0.38090","0.16067"],[15,"0.37849","0.37752","0.14996"],[16,"0.37564","0.37492","0.14059"],[17,"0.37313","0.37226","0.13176"],[18,"0.37089","0.37007","0.12444"],[19,"0.36812","0.36812","0.11789"],[20,"0.36636","0.36636","0.11200"]]
+    if [int(row["k"]) for row in reg] != list(range(4,21)):
+        FAILURES.append("Werner 4–20 registry is missing copy counts")
+    else:
+        for row,values in zip(reg,approved):
+            k,q,t,u = values
+            if (row["best_qutrit_t"],row["theorem_only_qutrit_t"],row["best_all_dimension_t"]) != (q,t,u):
+                FAILURES.append(f"Werner current comparison mismatch at k={k}")
+            if row["best_qutrit_evidence"] != ("quantitative source margins" if k<=18 else "published theorem statements"):
+                FAILURES.append(f"Werner source-tier mismatch at k={k}")
+    latest = {21:Fraction(36119,100000),22:Fraction(36119,100000),23:Fraction(35151,100000),24:Fraction(34001,100000)}
+    if [int(row["k"]) for row in early] != list(range(1,25)):
+        FAILURES.append("Werner 1–24 exact registry missing rows")
+    else:
+        for row in early:
+            k=int(row["k"])
+            exact=Fraction(row["t_exact"])
+            if exact != Fraction(row["t_decimal"]):
+                FAILURES.append(f"Werner k={k} exact rational/decimal mismatch")
+            if k<=3 and exact != Fraction(1,2):
+                FAILURES.append(f"Werner published sharp input incorrect at k={k}")
+            if 4<=k<=20 and exact != Fraction(reg[k-4]["best_qutrit_t"]):
+                FAILURES.append(f"Werner k={k} 1–24 exact registry differs from 4–20")
+            if k in latest and exact != latest[k]:
+                FAILURES.append(f"Werner k={k} later exact threshold changed")
+            if k>3 and exact<=Fraction(1,3):
+                FAILURES.append(f"Werner k={k} fails qutrit NPT threshold")
+    if [int(row["k"]) for row in hundred] != list(range(1,101)):
+        FAILURES.append("Werner 1–100 complete registry missing rows")
+    else:
+        for row in hundred:
+            k=int(row["k"])
+            if k<=24 and row["qutrit_t_exact_or_symbolic"] != early[k-1]["t_exact"]:
+                FAILURES.append(f"Werner 1–100 early consistency failure at k={k}")
+            if k>=25:
+                expected=f"1/3+(121/20)/(6*{k})*(B24/(121/20))^(2^({k}-24))"
+                if row["qutrit_t_exact_or_symbolic"] != expected:
+                    FAILURES.append(f"Werner analytic 25–100 expression changed at k={k}")
+                if row["all_dimension_t_exact"] != f"56/(25*{k})":
+                    FAILURES.append(f"Werner all-dimension published fallback changed at k={k}")
+    atlas=(atlas_dir / "README.md").read_text(encoding="utf-8")
+    if "0.448760" not in atlas or "historical" not in atlas.lower():
+        FAILURES.append("Werner historical higher alternative was silently lost")
+    if "25–100" not in atlas:
+        FAILURES.append("Werner 1–100 symbolic boundary missing")
+    if not (atlas_dir / "ANALYTIC_CONTINUATION.md").is_file():
+        FAILURES.append("Werner analytic proof note missing")
+    if FAILURES:
+        print("SITE AUDIT FAILED")
+        for err in FAILURES:
+            print(" -", err)
+        return 1
+    print(f"PASS: {len(pages)} pages, {sum(len(p.links) for p in pages.values())} anchors/links, "
+          f"{len(static)} static research entries aligned with JavaScript.")
+    return 0
+
+if __name__ == "__main__":
+    sys.exit(main())
+, proposal_source, re.M)
+    def proposal_slug(t):
+        return re.sub(r"\\s+", "-", re.sub(r"[^\\w .-]", "", t.lower()).replace(".", ""))
+    urls = {"https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/discovery-proposals-2026-10-28/README.md#"+proposal_slug(code+" "+title) for code,title in headings}
+    if len(headings)!=10 or {href for _,href in rows}!=urls:
+        FAILURES.append("AGENDA GATE: invalid source anchors")
+    if 'href="agenda.html"' not in homepage_text or 'src="agenda.js"' not in agenda:
+        FAILURES.append("AGENDA GATE: nav/script missing")
     # Discovery Engine seeded presets are part of the public presentation.
     # Legacy locally saved browser work can survive without being featured.
     core = (DOCS / "discovery-core.js").read_text(encoding="utf-8")
