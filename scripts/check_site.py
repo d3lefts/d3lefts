@@ -107,7 +107,7 @@ def main() -> int:
         src = page_path.read_text(encoding="utf-8")
         if "menu-button" not in parsed.ids or "site-nav" not in parsed.ids:
             FAILURES.append(f"{page_path}: missing responsive navigation control or target")
-        if not re.search(r'<script\\s+src="site.js"\\s+defer\\s*></script>', src):
+        if not re.search(r'<script\s+src="site.js"\s+defer\s*></script>', src):
             FAILURES.append(f"{page_path}: missing shared navigation JavaScript")
     # Public source scope and verified metadata baseline.
     excluded = ("research/nightfall/projects/xi-dossier.md",
