@@ -86,7 +86,8 @@ def verify():
     bound=F(2*(1<<18)-1,1<<36)
     assert exhaustive(yes,2)[0]==bound
     assert exhaustive(no,2)[0]>bound
-    exchangeable_checks=check_correlated()\n    rng=Random(20261028)
+    exchangeable_checks=check_correlated()
+    rng=Random(20261028)
     direct_tests=0; pareto_tests=0
     for q in [2,3,4]:
         for m in range(1,8):
