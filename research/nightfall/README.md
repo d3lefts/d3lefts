@@ -33,6 +33,11 @@ The research program uses representation changes, independent verification, proo
 - [Continuous-shift rank-22 Xi theorem dossier](projects/xi-continuous-shift-rank22.md)
 - [Xi program's evidence/regime distinctions](projects/xi-dossier.md)
 - [Archive verification notes](AUDIT.md)
+- [Finite-field phase retrieval: handoff excerpt](projects/finite-field-retrieval-handoff-excerpt.txt)
+- [SourceBound research manuscript: searchable text](projects/sourcebound/sourcebound-revision3-extracted.txt)
+- [NIGHTFALL research methods: searchable study](projects/research-methods-2026-10-20.txt)
+- [Master release SHA-256, completeness boundary](RELEASE.md)
+- [Archived Arena submission and exact-recheck receipt](audit/erdos-arena-submission-receipt.json)
 
 **Document-status policy:** An exact-arithmetic verifier checks an identity under its stated hypotheses. Conditional imported inequalities remain conditional. A reported certificate whose full primary objects have not been replayed is explicitly labeled source-reported. Novelty and universal theorems need separate external checks. A rejected platform submission is never called a competition advance.
 
@@ -40,4 +45,4 @@ The research program uses representation changes, independent verification, proo
 
 Human research leadership: **Devin J. Wright**. Mathematical/engineering assistance across project files: GPT-6, ChatGPT Work, Claude and other credited collaborators. External authors' published theorems and foundational methods are credited in the respective manuscripts. Formal external peer-review and source-priority checks are pending.
 
-**Publication note:** Source documents are being populated into this GitHub tree. The master reproducibility ZIP is preserved separately; a complete byte-for-byte mirror of every binary artifact should be checked against the original SHA-256 inventory before being declared complete.
+**Publication note:** Selected source documents have been committed to this GitHub tree. The master reproducibility ZIP is preserved separately; a complete byte-for-byte mirror of every binary artifact should be checked against the original SHA-256 inventory before being declared complete.
