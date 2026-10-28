@@ -161,7 +161,8 @@
         "three_partition_yes_no_instances": 2
       },
       "external_dependency": "NP-completeness derives from established strongly NP-complete 3-PARTITION",
-      "prior_art": "Heterogeneous-failure resource allocation and partition NP hardness have established prior art; subject-specific equivalence is the NIGHTFALL contribution"
+      "prior_art": "research/nightfall/projects/involution-shadow-codes/PRIOR_ART_ASSESSMENT_20261028.md",
+      "novelty_status": "GENERAL COMPLEXITY/ALGORITHM CLAIMS PREEXISTING (2006–2017). Only application-level group-code synthesis potentially distinctive; exact priority pending."
     }
   ]
 }
