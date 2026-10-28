@@ -1,16 +1,14 @@
 # NIGHTFALL public research website
 
-Static, dependency-free site for the NIGHTFALL PHASESHIFT research archive.
+Static, dependency-free site for NIGHTFALL’s **original, inspectable research contributions**. The broader public GitHub repository is retained as the attributed historical research archive.
 
 - `index.html` — editorial research portfolio, filterable source index, open review invitations.
 - Discovery Engine: discovery.html, discovery-core.js, discovery-app.js, discovery.css — executable bounded proxy lab and portable evidence workspace.
-- `review.html` — four independent audit briefs, status disclaimers, and structured GitHub reporting forms.
+- `review.html` — three review assignments for the approved original contributions.
 - `evidence.html` — reproducibility archive hashes, evidence-access status, desktop release steps.
-- `ai-safety.html` — September theorem/evidence series, with SourceBound evaluated separately.
-- `werner.html` — copy-by-copy bounds, evidence distinctions, and certificate review tasks.
 - `sitemap.xml` — direct site page discovery.
 - `site.css` — responsive layout and accessible typography.
-- `site.js` — original source links and category filtering.
+- `site.js` — three-item originality-approved research index and category filtering.
 - `favicon.svg` — original geometric identity.
 - `.nojekyll` — permit direct static publishing without Jekyll processing.
 
@@ -33,6 +31,15 @@ The design takes inspiration from editorial research portfolios, while its layou
 ## Maintenance
 
 Run `python3 scripts/check_site.py`, `node --check docs/site.js`, and `node --check scripts/site_browser_smoke.mjs` at the repository root before updating the live site. The website CI additionally runs headless Chromium checks at mobile and desktop widths, including menu interactions and research filtering. GitHub's workflow [Verify research website](../.github/workflows/verify-site.yml) enforces both on relevant pushes and pull requests. This is **a website-integrity check**, distinct from the mathematics, source SDPs, and external peer review.
+
+
+## Public originality filter (effective 28 October 2026)
+
+The **site includes only distinct original contributions**: the 131,072-cell exact Erdős upper witness, the concrete 30-point Sidon finite certificate, and the bounded adverse 20-case Proof After Scarcity experiment. These are original *artifacts and measurements*; each has explicit scope, and no worldwide publication-priority claim is implied. See [full originality sweep](../research/nightfall/SITE_ORIGINALITY_AUDIT_20261028.md).
+
+**Removed from GitHub Pages:** standalone AI-safety and Werner atlas pages, research proposals, recycled tensor-network encodings, classical erasure-reliability claims, source-dependent candidate theorems, and broader unreviewed research-manuscript marketing. Earlier public GitHub records remain with source credit and retractions/novelty corrections; the Pages portfolio and source archive intentionally have different inclusion rules.
+
+The [static site verification script](../scripts/check_site.py) maintains a strict allowed-artifact whitelist. Its gate protects presentation consistency; a dated external prior-art comparison is still required before approving new mathematical novelty.
 
 ## Agent-first verification
 
