@@ -16,7 +16,7 @@
 = 0.3808563701180293252462787636560246135327211883155...
 ```
 
-- **Maximizing signed lag:** -17,280.
+- **Maximizing signed lag:** -17,280. **Lag convention:** with zero-extended cell heights, the exact numerator at signed index k is `sum_i A_i * (D - A_{i-k})` over valid pairs, with `i` in `[max(0,k),min(N,N+k))`. Under the opposite `i+k` indexing, the numerical value at k changes; use the original checker’s stated orientation.
 - **Witness height file SHA-256:** `a574c280f8839503c90076507a27f4c819455fb2512fae6a43b6a17f6a784b8e`.
 - **Recorded internal verification:** six-prime NTT/CRT reconstruction, signed-lag integer checks, mass and bounds checks, continuum breakpoint argument, and dyadic fiber audits. Replayed by the research collaboration on 2026-10-27. **No external human referee has yet verified the whole result.**
 - **Download access:** exact original proof and witness bundle is contained inside `NIGHTFALL_Meta_Paper_v2.0_Source_and_Evidence.zip`, nested under `release/reproduction/overlap_latest/NIGHTFALL_Erdos_Latest/` in the frozen master research ZIP. Public binary mirror tracked at [Issue #5](https://github.com/d3lefts/d3lefts/issues/5).
