@@ -40,13 +40,13 @@
 <div class="dossier-number">REVIEW / 01<small>FINITE OPTIMIZATION<br>EXACT RATIONAL CERTIFICATE</small></div>
 <div class="dossier-content">
 <h2 id="erdos-title">Erdős minimum overlap</h2>
-<p class="dossier-desc">Claim: a finite rational 131,072-cell step-function witness has continuous-translation supremum <strong>0.380856370118029325246…</strong>. A published Arena submission receipt documents that the platform rejected a different 131,072-cell attempt due to the 100,000-entry submission limit. Neither rejection determines mathematical validity.</p>
-<div class="status-strip">STATUS: EXACT INTERNAL REPLAY REPORTED · INDEPENDENT EXTERNAL REVIEW REQUESTED</div>
+<p class="dossier-desc">Claim: a finite rational 131,072-cell step-function witness has continuous-translation supremum <strong>0.380856370118029325246…</strong>. The archived source gives the exact witness SHA-256 <code>a574c280f8839503…</code>, maximizing lag −17,280, and source-reported six-prime internal replay. A separate oversized 131,072-cell attempt at <strong>0.380856370118029394982…</strong> was rejected by the Arena due to the 100,000-value limit. The accepted first-place entry at <strong>0.3808564043546676</strong> has an as-yet unrecovered cell count and input hash. This accepted entry is a separate object.</p>
+<div class="status-strip">STATUS: EXACT INTERNAL REPLAY REPORTED · NO EXTERNAL REPLAY CLAIMED · REVIEW OPEN</div>
 <ol class="checks">
 <li>Confirm rational heights are in [0,1], with mass exactly one under the stated support width.</li>
 <li>Prove the continuous translation maximum is attained at grid breakpoint events. Include all signed shifts and zero-extension endpoints.</li>
 <li>Compute the exact maximizing rational fraction by a separately written integer convolution implementation; check CRT uniqueness and input hashes.</li>
-<li>Compare normalization, support, and current prior art at the same mathematical definition. Report tolerance and discretization dependence.</li>
+<li>Compare normalization and support against verified upper bounds: Atris 0.380858550316428560…, SimpleTES 0.380868, TTT-Discover 0.380876 and AlphaEvolve 0.380924. Report tolerance, discretization dependence and publication date.</li>
 </ol>
 <div class="source-links">
 <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/erdos-overlap-paper.md" target="_blank" rel="noopener">Read dossier ↗</a>
@@ -54,7 +54,7 @@
 <a href="https://www.benzanghi.com/blog/erdos-minimum-overlap-technical" target="_blank" rel="noopener">Related lower-bound research ↗</a>
 </div>
 <a class="button button-light" target="_blank" rel="noopener" href="https://github.com/d3lefts/d3lefts/issues/1">Join external review #1 ↗</a>
-<div class="review-warning">External validation needs the full, frozen witness and residue archive. These large binary inputs are prepared in the complete research release and are not yet publicly mirrored in GitHub. Flag that input-access gap in your report.</div>
+<div class="review-warning">External validation needs the full frozen witness and residue archive. These large binary inputs are in the frozen research release and still await a public mirror. <a href="https://github.com/d3lefts/d3lefts/issues/5" target="_blank" rel="noopener">Follow binary publication ↗</a>. The claimed lower bound c &gt; 0.38055470 (Price, 2026) has independently reproduced finite arithmetic and an outstanding full-reduction specialist review. <a href="https://mathworld.wolfram.com/MinimumOverlapProblem.html" target="_blank" rel="noopener">Read the status ↗</a>.</div>
 <button type="button" class="copy" data-copy="erdos">Copy reviewer checklist</button>
 </div>
 </article>
