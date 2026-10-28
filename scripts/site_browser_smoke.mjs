@@ -93,6 +93,39 @@ try{
     await page.locator("#atlas-search").fill("");
     assert.equal(await page.locator(".atlas-card:visible").count(),23,"library filter reset");
   }
+  // Claim Lab has independent in-app navigation, separate from site.js.
+  await page.goto(origin+"claim-lab.html",{waitUntil:"load"});
+  assert.equal(await page.locator('.demoNotice').count(),1,"Claim Lab demo disclaimer displayed");
+  assert.equal(await page.locator('[data-tab]').count(),5,"Five distinct research tool sections");
+  await page.locator('[data-tab="map"]').click();
+  assert.equal(await page.locator('.graphNode').count(),7,"Seven illustrative dependency nodes");
+  await page.locator('[data-tab="audit"]').click();
+  assert.ok((await page.locator(".issueRow").count())>0,"Demo evidence gaps visibly flagged");
+  const labOverflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
+  assert.ok(labOverflow<=3,"Claim Lab global horizontal overflow "+labOverflow+" at "+width);
+  if(width===390){
+    await page.locator("#newClaimBtn").click();
+    await page.locator("#claimTitle").fill("Independent rank-two audit");
+    await page.locator("#claimStatus").selectOption("3");
+    await page.locator("#claimForm button[type=submit]").click();
+    assert.equal(await page.locator(".demoNotice").count(),1,"Editing demo must not silently convert illustrative data");
+    await page.reload({waitUntil:"load"});
+    assert.equal(await page.locator(".demoNotice").count(),1,"Demo status survives reload");
+    const [labExport]=await Promise.all([page.waitForEvent("download"),page.locator("#exportBtn").click()]);
+    assert.match(labExport.suggestedFilename(),/NIGHTFALL_claim_lab_backup_.*\\.json$/);
+    const backup=JSON.parse(await readFile(await labExport.path(),"utf8"));
+    assert.equal(backup.sample,true,"Exported demo data stays marked illustrative");
+    assert.equal(backup.claims.length,8,"New sample-context claim retained");
+    page.once("dialog",d=>d.accept());
+    await page.locator("#importFile").setInputFiles({name:"demo.json",mimeType:"application/json",buffer:Buffer.from(JSON.stringify(backup))});
+    assert.equal(await page.locator(".demoNotice").count(),1,"Imported demo backup still labeled illustrative");
+    page.once("dialog",d=>d.accept());
+    await page.locator('[data-action="clear-demo"]').first().click();
+    assert.equal(await page.locator(".demoNotice").count(),0,"Only explicit empty-workspace action clears demo");
+    await page.reload({waitUntil:"load"});
+    assert.equal(await page.locator(".demoNotice").count(),0,"Empty workspace persists");
+    assert.match(await page.locator("#content").innerText(),/Tracked claims\\s*0/,"Empty workspace contains zero claims");
+  }
   if(width===390){
     await page.goto(origin+"agenda.html",{waitUntil:"load"});
     assert.equal(await page.locator("#agenda-list .research-proposal:visible").count(),10,"ten proposals");

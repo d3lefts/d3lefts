@@ -175,6 +175,22 @@ def main() -> int:
             if not all(k in src for k in ("discovery-core.js", "discovery-app.js", "discovery.css", 'id="app"')):
                 FAILURES.append("Discovery Engine dependencies / mount missing")
             continue
+        if page_path.name == "claim-lab.html":
+            # Claim Lab is a standalone local-first application with its own
+            # navigation, not a missing shared-site header.
+            required = ('data-tab="overview"', 'data-tab="claims"',
+                        'data-tab="map"', 'data-tab="audit"',
+                        'data-tab="experiments"', 'id="importFile"',
+                        'id="exportBtn"', 'const KEY=',
+                        'const freshDemo=', 'function issueList(',
+                        "sample:!!o.sample", "data=parsed;",
+                        'does not execute it')
+            for marker in required:
+                if marker not in src:
+                    FAILURES.append(f"Claim Lab standalone contract missing: {marker}")
+            if "data.sample=false;" in src:
+                FAILURES.append("Claim Lab must not silently relabel demo data as real on edit/import")
+            continue
         if "menu-button" not in parsed.ids or "site-nav" not in parsed.ids:
             FAILURES.append(f"{page_path}: missing responsive navigation control or target")
         if not re.search(r'<script\s+src="site.js"\s+defer\s*></script>', src):

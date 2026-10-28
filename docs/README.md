@@ -30,6 +30,14 @@ GitHub Actions confirms successful Pages deployments on 2026-10-28. Direct publi
 
 The design takes inspiration from editorial research portfolios, while its layout, identity, copy, and review-oriented content are original to NIGHTFALL. All third-party links and mathematical source authors retain their proper attribution.
 
+## Claim Lab: standalone local-first research tool
+
+The [Claim Lab](claim-lab.html) is a separate research workspace with five modes: overview, claims, dependency map, audit queue, and experiment register. Its manually assigned evidence labels are metadata **only**. The application never executes mathematical verifiers, confirms a SHA-256 against its referenced source bytes, or certifies originality. Local browser storage may be lost; JSON backups remain the operator's responsibility.
+
+Illustrative demo claims are retained with a visible demo warning **until the operator explicitly clears the sample workspace**. Adding, editing, deleting, exporting and re-importing demo records do not silently convert hypothetical source records into published research.
+
+The standalone application intentionally has its own navigation architecture. Site CI verifies its required controls, imports and demo labeling, browser persistence, live JSON export, and responsive behavior while preserving the original homepage originality gate.
+
 ## Maintenance
 
 Run `python3 scripts/check_site.py`, `node --check docs/site.js`, and `node --check scripts/site_browser_smoke.mjs` at the repository root before updating the live site. The website CI additionally runs headless Chromium checks at mobile and desktop widths, including menu interactions and research filtering. GitHub's workflow [Verify research website](../.github/workflows/verify-site.yml) enforces both on relevant pushes and pull requests. This is **a website-integrity check**, distinct from the mathematics, source SDPs, and external peer review.
