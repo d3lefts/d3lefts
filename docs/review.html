@@ -40,18 +40,19 @@
 <div class="dossier-number">REVIEW / 01<small>FINITE OPTIMIZATION<br>EXACT RATIONAL CERTIFICATE</small></div>
 <div class="dossier-content">
 <h2 id="erdos-title">Erdős minimum overlap</h2>
-<p class="dossier-desc">Claim: a finite rational 131,072-cell step-function witness has continuous-translation supremum <strong>0.380856370118029325246…</strong>. The archived source gives the exact witness SHA-256 <code>a574c280f8839503…</code>, maximizing lag −17,280, and source-reported six-prime internal replay. A separate oversized 131,072-cell attempt at <strong>0.380856370118029394982…</strong> was rejected by the Arena due to the 100,000-value limit. The accepted first-place entry at <strong>0.3808564043546676</strong> has an as-yet unrecovered cell count and input hash. This accepted entry is a separate object.</p>
+<p class="dossier-desc">Claim: a finite rational 131,072-cell step-function witness has continuous-translation supremum <strong>0.380856370118029325246…</strong>. The archived source gives the exact witness SHA-256 <code>a574c280f8839503…</code>, maximizing lag −17,280, and source-reported six-prime internal replay. A separate oversized 131,072-cell attempt at <strong>0.380856370118029394982…</strong> was rejected by the Arena due to the 100,000-value limit. The accepted first-place entry shown in the October 27 snapshot at <strong>0.3808564043546676</strong> has an as-yet unrecovered cell count, input hash and exact rational objective (<a href="https://github.com/d3lefts/d3lefts/issues/6" target="_blank" rel="noopener">recovery issue #6 ↗</a>). This accepted entry is a separate object.</p>
 <div class="status-strip">STATUS: EXACT INTERNAL REPLAY REPORTED · NO EXTERNAL REPLAY CLAIMED · REVIEW OPEN</div>
 <ol class="checks">
 <li>Confirm rational heights are in [0,1], with mass exactly one under the stated support width.</li>
 <li>Prove the continuous translation maximum is attained at grid breakpoint events. Include all signed shifts and zero-extension endpoints.</li>
 <li>Compute the exact maximizing rational fraction by a separately written integer convolution implementation; check CRT uniqueness and input hashes.</li>
-<li>Compare normalization and support against verified upper bounds: Atris 0.380858550316428560…, SimpleTES 0.380868, TTT-Discover 0.380876 and AlphaEvolve 0.380924. Report tolerance, discretization dependence and publication date.</li>
+<li>Compare on identical mass, support, grid-width and signed-shift conventions against Atris 0.380858550316428560…, TTT-Discover 0.380876 and AlphaEvolve 0.380924. Treat the listed SimpleTES 0.380868 as a historical comparison subject to a published, separate 4096-cell normalization correction; identify the exact source artifact for each number.</li>
 </ol>
 <div class="source-links">
 <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/erdos-overlap-paper.md" target="_blank" rel="noopener">Read dossier ↗</a>
 <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/audit/erdos-arena-submission-receipt.json" target="_blank" rel="noopener">Read receipt ↗</a>
-<a href="https://www.benzanghi.com/blog/erdos-minimum-overlap-technical" target="_blank" rel="noopener">Related lower-bound research ↗</a>
+<a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/erdos/STATUS_AND_PRIOR_ART_20261028.md" target="_blank" rel="noopener">Witness identity &amp; prior-art ledger ↗</a>
+<a href="https://www.benzanghi.com/blog/erdos-minimum-overlap-technical" target="_blank" rel="noopener">4096-cell normalization audit ↗</a>
 </div>
 <a class="button button-light" target="_blank" rel="noopener" href="https://github.com/d3lefts/d3lefts/issues/1">Join external review #1 ↗</a>
 <div class="review-warning">External validation needs the full frozen witness and residue archive. These large binary inputs are in the frozen research release and still await a public mirror. <a href="https://github.com/d3lefts/d3lefts/issues/5" target="_blank" rel="noopener">Follow binary publication ↗</a>. Price reports c &gt; 0.38055470 (finite arithmetic independently reproduced; full analytic reduction pending specialist review). Wetch reports the stronger c &gt; 0.380627425 (local fresh-copy validation; external peer review pending). <a href="https://mathworld.wolfram.com/MinimumOverlapProblem.html" target="_blank" rel="noopener">Price status ↗</a> · <a href="https://github.com/justinwetch/erdos-36-minimum-overlap" target="_blank" rel="noopener">Wetch source ↗</a>.</div>
