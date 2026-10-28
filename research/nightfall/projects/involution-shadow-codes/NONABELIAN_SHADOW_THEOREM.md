@@ -69,18 +69,58 @@ For nonabelian \(G\), the coboundary image \(D\) need not be closed under multip
 
 Its 552 ordered distinct pairs are all explicitly checked against the orbit code.
 
+## Theorem (simultaneous optimality under erasures and adversarial errors)
+
+Retain a coordinate set \(J\subseteq\{1,\ldots,m\}\). The restricted measurement map \(x\mapsto ( [xt_j]_S )_{j\in J}\) is injective **if and only if** the retained coordinates contain at least **two distinct coboundary labels**.
+
+**Proof.** If all surviving coordinates have label \(c\), Lemma 3 supplies a pair of distinct messages colliding in every such coordinate. If at least two different labels survive, Lemma 1 prevents any pair from agreeing in all surviving coordinates. This includes \(J=\varnothing\), whose measurement map is noninjective because \(|G|\ge 2\). **QED.**
+
+For each retained cardinality \(r\), the exact number \(B_r\) of ambiguous surviving coordinate subsets is
+
+\[
+ B_0=1,\qquad \boxed{B_r=\sum_{c\in D}\binom{n_c}{r}\quad(1\le r\le m)}.
+\tag{4}
+\]
+
+Here \(\binom nr=0\) for \(n<r\). If \(m=aq+b\), \(0\le b<q\), the minimum of **every** \(B_r\), taken simultaneously over all translation designs, is
+
+\[
+ \boxed{B_r^*=(q-b)\binom a r+b\binom{a+1}{r}}\qquad(r\ge1).
+\tag{5}
+\]
+
+**Proof of global optimality.** If two label occupancies satisfy \(u\ge v+2\), transfer one measurement from the larger class to the smaller. At each size \(r\ge1\), the change in the objective is
+
+\[
+\bigl[\binom{u-1}{r}+\binom{v+1}{r}\bigr]-\bigl[\binom u r+\binom v r\bigr]
+= -\binom{u-1}{r-1}+\binom v{r-1}\le 0.
+\]
+
+Repeated transfers yield the balanced occupancy vector (5), without increasing any \(B_r\). Thus the same balanced design that maximizes worst-case Hamming distance also minimizes **every fixed-cardinality erasure ambiguity probability** \(B_r/\binom mr\) and, by taking nonnegative mixtures across cardinalities, the failure probability for **every independent erasure survival probability**. **QED.**
+
+For independent survival probability \(p\in(0,1)\), the exact failure probability is
+
+\[
+ \boxed{P_{\rm fail}(p)=(1-p)^m\bigl[1-q+\sum_{c\in D}(1-p)^{-n_c}\bigr]}.
+\tag{6}
+\]
+
+The expression extends continuously to \(p=0,1\). A universal guarantee under an arbitrary adversarial erasure pattern holds whenever at most \(d_{\min}-1\) symbols disappear. The same measurement allocation is optimal for both adversarial symbol corruption and every cardinality of random erasures.
+
+**Machine audit of the nonabelian \(S_4\) example.** A separate verifier enumerated all \(2^{13}=8,192\) surviving coordinate subsets and compared the actual encoded messages, finding \(B_0=1\), \(B_1=13\), \(B_2=8\), \(B_3=1\), and \(B_r=0\) for \(r\ge4\). It exhaustively compared all \(\binom{18}{5}=8,568\) occupancy vectors of total 13 across six labels: exactly six allocations (choice of the one size-three label) tie for simultaneous optimality.
+
 ## Machine-verification record
 
-- **Thirteen test actions:** inversion on four finite cyclic groups, \(S_3\), \(S_4\), an outer involution of \(A_4\), four dihedral groups, and two involutions of \(Q_8\).
-- **20,554 translation tuples**, including every ordered tuple of lengths 1–5 for \(S_3\) and \(D_6\).
-- **772,976 ordered distinct message pairs** explicitly checked; every full distance enumerator matched (3).
+- **Nine test actions:** \(S_3\), \(S_4\), outer involution of \(A_4\), four dihedral groups, and two involutions of \(Q_8\).
+- **19,866 translation tuples**, including every ordered tuple of lengths 1–5 for \(S_3\) and \(D_6\).
+- **745,064 ordered distinct message pairs** explicitly checked; every full distance enumerator matched (3).
 - Independently, `certify_cayley_instance.py` verifies the Cayley table's group axioms, the involution's homomorphism law, the exact orbit words and the entire spectrum of the separate \(S_4\) instance, requiring only Python's standard library. Seven mutated inputs are rejected.
-- To reproduce: `python3 verify_nonabelian.py`, `python3 certify_cayley_instance.py S4_certificate.json`, `python3 adversarial_controls.py`.
+- To reproduce: `python3 verify_nonabelian.py`, `python3 certify_cayley_instance.py S4_certificate.json`, `python3 adversarial_controls.py`, `python3 verify_erasure_optimality.py`.
 - Exact source hashes and runtime output are frozen in `MANIFEST.json` and `audit_result.json`.
 
 ## Claims, limits, and prior art
 
-1. **Proved in this note:** all finite groups with a nontrivial involutive automorphism satisfy (1)–(3), with the stated balancing and spectral-equivalence corollaries. No conjectural assumption enters the algebra.
+1. **Proved in this note:** all finite groups with a nontrivial involutive automorphism satisfy (1)–(6), including the simultaneous optimization of distance and erasure resilience. No conjectural assumption enters the algebra.
 2. **Computational scope:** finite instances and explicit corrupted-certificate checks are reproducible; the universal proof is written mathematics, not a Lean/Coq kernel certificate.
 3. **Novelty scope:** the October 13 NIGHTFALL manuscript addressed finite *abelian* groups. This is a new, concrete nonabelian extension within that program. Twisted automorphism actions, group coboundaries and related orbit/permutation codes have established prior art. An initial literature search has not identified this precise three-equation package, yet this is insufficient for a worldwide originality declaration.
 4. **Security scope:** minimum distance gives classical error correction bounds; it proves no cryptographic one-wayness, discrete-logarithm attack, or quantum advantage.
