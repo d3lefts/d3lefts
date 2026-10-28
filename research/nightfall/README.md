@@ -74,6 +74,7 @@ The public index excludes the Xi/critical-line and prime-frequency programs. Alr
 - [September Three Ceilings on Oversight — revised scope](2026-09-three-ceilings/README.md)
 - [What Survives the Cut — universal involution-shadow coding](projects/involution-shadow-codes/README.md)
 - [Nonabelian involution-shadow distance, spectrum, and simultaneous error–erasure optimality theorem](projects/involution-shadow-codes/NONABELIAN_SHADOW_THEOREM.md)
+- [Heterogeneous and correlated erasure theorem](projects/involution-shadow-codes/HETEROGENEOUS_ERASURE_COMPLEXITY.md) — arbitrary correlated failure identity, exchangeable optimality, cyclic-group NP-completeness and exact Pareto DP
 
 
 - [Erdős overlap construction](projects/erdos-overlap-paper.md)
