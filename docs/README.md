@@ -19,7 +19,7 @@ This URL is a **deployment target**, not a claim that the site is currently live
 
 ## Needed for independent referees
 
-1. Enable **GitHub Issues** in **Settings → General → Features → Issues**, then replace the current pull-request-only contact with actual review issue links.
+1. **GitHub Issues has been enabled and four external-review invitations are live**: [#1 Erdős](https://github.com/d3lefts/d3lefts/issues/1), [#2 Werner](https://github.com/d3lefts/d3lefts/issues/2), [#3 finite-field](https://github.com/d3lefts/d3lefts/issues/3), [#4 AI safety](https://github.com/d3lefts/d3lefts/issues/4).
 2. Mirror the unuploaded large proof bundles, witness arrays, and exact-checker inputs to a public immutable GitHub Release or other versioned archive. The current GitHub text mirror is incomplete.
 3. Keep the claim-status ladder and external source dependencies accurate whenever a reviewer reports a counterexample or correction.
 
