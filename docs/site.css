@@ -207,3 +207,8 @@ code{overflow-wrap:anywhere}
  .header .nav{display:none;position:absolute;top:100%;left:0;right:0;z-index:20;padding:25px 24px;background:var(--paper);box-shadow:0 10px 15px #0001;border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;gap:18px;font-size:13px}
  .header .nav.open{display:flex}
 }
+
+@media(min-width:901px) and (max-width:1170px){
+ .header .review-nav.subpage-nav{display:none;position:absolute;top:100%;left:0;right:0;z-index:20;padding:22px 18px;background:var(--paper);box-shadow:0 10px 15px #0001;border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;gap:19px;font-size:13px}
+ .header .review-nav.subpage-nav.open{display:flex}
+}
