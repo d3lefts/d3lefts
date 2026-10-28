@@ -4,7 +4,7 @@
 
 **Classification:** New theorem-level extension within NIGHTFALL's nonabelian involution-shadow framework. The distribution-free ambiguity identity, universal optimality under correlated exchangeable erasures, restricted NP-completeness reduction, and exact two-class Pareto dynamic program are proved below. Finite checks provide independently implemented corroboration. No worldwide novelty claim; related heterogeneous replication/allocation hardness is documented in earlier literature.
 
-## 1. Model and the exact reliability law
+**Prior-art correction (28 October 2026):** The optimization \(\sum_c e^{W_c}\) is a special case of the convex **Workload Partition Problem** studied at least by Shabtay–Kaspi (2006) and Oron–Shabtay–Steiner (2017). Heterogeneous replication reliability, a balancing argument, and a 3-PARTITION hardness reduction appear in Benoit–Marchal–Robert–Sinnen (2010). The two-bin dynamic program is standard cardinality/subset-sum methodology. This paper's defensible current contribution is the **specific translated-involution code application**, exact code-dependent formulas, and joint distance–reliability packaging; priority for even that particular combination remains unverified. See [prior-art assessment](PRIOR_ART_ASSESSMENT_20261028.md).\n\n## 1. Model and the exact reliability law
 
 Let G be a finite group with a nonidentity involutive automorphism S, H=Fix(S), q=[G:H] >=2. Use the orbit code C_T(x)=([x t_1]_S,...,[x t_m]_S), with labels δ(t)=S(t)t^{-1}. The existing NIGHTFALL theorem establishes that a set of retained observations distinguishes **all** messages precisely when it contains at least two distinct labels. This result is independent of whether G is abelian.
 
