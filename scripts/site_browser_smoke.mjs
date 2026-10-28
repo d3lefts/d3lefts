@@ -5,7 +5,7 @@ import {join,normalize,resolve,sep} from "node:path";
 import {chromium} from "playwright-core";
 
 const root=resolve("docs");
-const pages=["index.html","review.html","evidence.html","agenda.html"];
+const pages=["index.html","review.html","evidence.html","agenda.html","research.html"];
 const types={".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".svg":"image/svg+xml"};
 const server=createServer(async (req,res)=>{
  try{
@@ -81,6 +81,17 @@ try{
    assert.equal(await page.locator("#project-list .research-row").count(),0,"original-only catalogue excludes Werner");
    await page.locator("#project-search").fill("");
    assert.equal(await page.locator("#project-list .research-row").count(),3,"three curated original results reset");
+  }
+  if(width===390){
+    await page.goto(origin+"research.html",{waitUntil:"load"});
+    assert.equal(await page.locator(".atlas-card:visible").count(),23,"23 curated research entries");
+    await page.locator('[data-atlas-filter="quantum"]').click();
+    assert.equal(await page.locator(".atlas-card:visible").count(),3,"quantum source entries");
+    await page.locator('[data-atlas-filter="all"]').click();
+    await page.locator("#atlas-search").fill("SourceBound");
+    assert.equal(await page.locator(".atlas-card:visible").count(),1,"library source search");
+    await page.locator("#atlas-search").fill("");
+    assert.equal(await page.locator(".atlas-card:visible").count(),23,"library filter reset");
   }
   if(width===390){
     await page.goto(origin+"agenda.html",{waitUntil:"load"});
