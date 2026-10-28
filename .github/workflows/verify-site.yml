@@ -38,6 +38,7 @@ jobs:
       - name: Parse JavaScript without executing browser code
         run: |
           node --check docs/site.js
+          node --check docs/research.js
           node --check docs/agenda.js
           node --check docs/discovery-core.js
           node --check docs/discovery-app.js

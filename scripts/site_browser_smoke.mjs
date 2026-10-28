@@ -5,7 +5,7 @@ import {join,normalize,resolve,sep} from "node:path";
 import {chromium} from "playwright-core";
 
 const root=resolve("docs");
-const pages=["index.html","review.html","evidence.html","agenda.html"];
+const pages=["index.html","review.html","evidence.html","agenda.html","research.html"];
 const types={".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".svg":"image/svg+xml"};
 const server=createServer(async (req,res)=>{
  try{
@@ -24,7 +24,7 @@ let browser;
 try{
  const executablePath=process.env.CHROME_BIN||"/usr/bin/chromium";
  browser=await chromium.launch({headless:true,executablePath,args:["--no-sandbox"]});
- for(const width of [390,768,1280]){
+ for(const width of [390,768,1024,1280]){
   const page=await browser.newPage({viewport:{width,height:850}});
   const faults=[];
   page.on("pageerror",e=>faults.push(e.message));
@@ -35,7 +35,7 @@ try{
    const nav=page.locator("#site-nav");
    assert.equal(await menu.count(),1,file+" missing menu");
    assert.equal(await nav.count(),1,file+" missing nav");
-   const mobile=width<=900;
+   const mobile=width<=1170;
    assert.equal(await menu.isVisible(),mobile,file+" menu visibility at "+width);
    assert.equal(await nav.isVisible(),!mobile,file+" nav visibility at "+width);
    if(mobile){
@@ -81,6 +81,17 @@ try{
    assert.equal(await page.locator("#project-list .research-row").count(),0,"original-only catalogue excludes Werner");
    await page.locator("#project-search").fill("");
    assert.equal(await page.locator("#project-list .research-row").count(),3,"three curated original results reset");
+  }
+  if(width===390){
+    await page.goto(origin+"research.html",{waitUntil:"load"});
+    assert.equal(await page.locator(".atlas-card:visible").count(),23,"23 curated research entries");
+    await page.locator('[data-atlas-filter="quantum"]').click();
+    assert.equal(await page.locator(".atlas-card:visible").count(),3,"quantum source entries");
+    await page.locator('[data-atlas-filter="all"]').click();
+    await page.locator("#atlas-search").fill("SourceBound");
+    assert.equal(await page.locator(".atlas-card:visible").count(),1,"library source search");
+    await page.locator("#atlas-search").fill("");
+    assert.equal(await page.locator(".atlas-card:visible").count(),23,"library filter reset");
   }
   if(width===390){
     await page.goto(origin+"agenda.html",{waitUntil:"load"});

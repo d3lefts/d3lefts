@@ -2,7 +2,8 @@
 
 Static, dependency-free site for NIGHTFALL’s **original, inspectable research contributions**. The broader public GitHub repository is retained as the attributed historical research archive.
 
-- `index.html` — curated original-findings portfolio and open reviews.
+- `index.html` — three flagship research programs with explicit evidence tiers, plus the three approved original findings and open reviews.
+- `research.html` / `research.js` — 23 source-linked September–October research lines with discipline filters, search, and explicit scope boundaries; broader than the Original Findings whitelist.
 - `agenda.html` and `agenda.js` — separate five-discipline research agenda with ten untested proposals.
 - Discovery Engine: discovery.html, discovery-core.js, discovery-app.js, discovery.css — executable bounded proxy lab and portable evidence workspace.
 - `review.html` — three review assignments for the approved original contributions.

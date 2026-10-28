@@ -102,6 +102,28 @@ def main() -> int:
         FAILURES.append("ORIGINALITY GATE: public findings differ from three approved primary artifacts. "
                         "Any change requires a new dated prior-art audit and evidence review.")
     homepage_text = (DOCS / "index.html").read_text(encoding="utf-8")
+    # Separate working-research library: preserve originality whitelist and evidence boundaries.
+    library = (DOCS / "research.html").read_text(encoding="utf-8")
+    entries = re.findall(r'<article class="atlas-card" data-domain="([^"]+)" data-evidence="([^"]+)"', library)
+    expected_domains = {"mathematics": 10, "quantum": 3, "safety": 7, "systems": 3}
+    if len(entries) != 23 or any(sum(domain == cat for domain, _ in entries) != count
+                              for cat, count in expected_domains.items()):
+        FAILURES.append("RESEARCH LIBRARY: curated 23-source discipline inventory changed")
+    for state in ("finite", "conditional", "working", "empirical", "software", "proposal"):
+        if not any(evidence == state for _, evidence in entries):
+            FAILURES.append(f"RESEARCH LIBRARY: missing evidence tier {state}")
+    link_paths = re.findall(r'href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/([^"]+)"', library)
+    if len(link_paths) < 23 or len(set(link_paths)) < 23:
+        FAILURES.append("RESEARCH LIBRARY: 23 unique source-linked research dossiers required")
+    for path in link_paths:
+        if not (ROOT / "research/nightfall" / path).is_file():
+            FAILURES.append("RESEARCH LIBRARY: source dossier missing: " + path)
+    if library.count("Evidence boundary") < 23 or "Only three entries qualify" not in library:
+        FAILURES.append("RESEARCH LIBRARY: scoped claim boundaries or original-finding distinction missing")
+    if homepage_text.count('class="flagship-card ') != 3 or 'href="research.html"' not in homepage_text:
+        FAILURES.append("FLAGSHIPS: three explicitly scoped research programs and library navigation required")
+    if "conditional tail target" not in homepage_text or "IMPORTED THEOREMS" not in homepage_text:
+        FAILURES.append("FLAGSHIPS: source-conditional theorem boundaries absent")
     if "SITE_ORIGINALITY_AUDIT_20261028.md" not in homepage_text:
         FAILURES.append("Homepage missing original-results inclusion policy")
     for removed in ("ai-safety.html", "werner.html"):
