@@ -1,0 +1,462 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{enumitem}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{problem}[theorem]{Open Problem}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\C}{\mathbb C}
+\newcommand{\N}{\mathbb Z_{\geq0}}
+\newcommand{\Znt}{Z_{\mathrm{nt}}}
+\newcommand{\ord}{\operatorname{ord}}
+\newcommand{\Sing}{\operatorname{Sing}}
+\newcommand{\Log}{\operatorname{Log}}
+
+\title{\textbf{Arithmetic Singularity Transfer\\for the Shifted Prime-Zeta Series}\\[3pt]
+\large Möbius Visibility, RH Rigidity, and Principal-Layer Singularities}
+\author{Devin J. Wright}
+\date{Version 2 Draft --- September 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Let
+\[
+P(s)=\sum_p p^{-s},\qquad A^+(s)=\sum_p(p-1)^{-s},\qquad \Re s>1.
+\]
+We derive the exact identity
+\[
+A^+(s)=\sum_{k=0}^{\infty}\frac{(s)_k}{k!}P(s+k).
+\]
+For a non-trivial zero $\rho$ of $\zeta$, rational dilations of $\rho$ form a finite fibre
+\[
+\mathcal C_\lambda=\{m\ge1:m\lambda\in Z_{\rm nt}\}.
+\]
+We attach to this fibre the multiplicity-weighted Möbius coefficient
+\[
+M(\lambda)=\sum_{m\in\mathcal C_\lambda}\frac{\mu(m)}m\ord_{m\lambda}\zeta.
+\]
+The formal transfer map is $T(\rho,m,k)=\rho/m-k$. An unconditional affine-rigidity theorem shows that equality of two such transfer points forces equality of the translation layer and a rational-dilation relation between the underlying zeros. Under RH, every non-trivial dilation fibre is a singleton, so $M(\rho/m)=\mu(m)\ord_\rho\zeta/m$.
+
+For the principal layer $k=0$, we give a local analytic realization under explicit branch and isolation hypotheses. In particular, under RH, every squarefree principal source $\rho/m$ is an actual logarithmic singularity of $A^+$, with coefficient $\mu(m)\ord_\rho\zeta/m$. The proof uses a local Möbius representation for $P$ and the fact that every shifted term $P(s+j)$, $j\ge1$, is holomorphic near a principal source. The deeper layers $\rho/m-k$, $k\ge1$, require continuation into the left half-plane and remain open. No implication toward or away from RH is claimed.
+\end{abstract}
+
+\section{Introduction}
+
+The prime-zeta function
+\[
+P(s)=\sum_p p^{-s},\qquad \Re s>1,
+\]
+encodes the primes through a Dirichlet series. Its classical Möbius representation links its singular source geometry to the zeros of the Riemann zeta function. A branch-sensitive treatment is required once continuation leaves the initial half-plane.
+
+We study the shifted prime-zeta series
+\[
+A^+(s)=\sum_p(p-1)^{-s},\qquad \Re s>1.
+\]
+The elementary factorization
+\[
+(p-1)^{-s}=p^{-s}(1-p^{-1})^{-s}
+\]
+produces an exact shifted expansion. A singular source of $P$ at $\lambda$ formally enters the $k$th shifted layer at $\lambda-k$.
+
+The paper separates three levels:
+\[
+\boxed{\text{formal source}\;\longrightarrow\;\text{visible source}\;\longrightarrow\;\text{actual singularity}.}
+\]
+The first two are arithmetic or geometric. The third requires local analytic continuation.
+
+The principal analytic result is deliberately narrower than a global continuation theorem: under RH and explicit local hypotheses, squarefree points $\rho/m$ are realized as logarithmic singularities of $A^+$. The layers with $k\ge1$ remain continuation problems.
+
+\section{Exact Shifted Expansion}
+
+\begin{theorem}[Exact shifted expansion]
+For $\Re s>1$,
+\[
+\boxed{A^+(s)=\sum_{k=0}^{\infty}\frac{(s)_k}{k!}P(s+k).}
+\tag{2.1}
+\]
+\end{theorem}
+
+\begin{proof}
+For every prime $p$,
+\[
+(p-1)^{-s}=p^{-s}(1-p^{-1})^{-s}
+=p^{-s}\sum_{k=0}^{\infty}\frac{(s)_k}{k!}p^{-k}.
+\]
+For $\Re s>1$, the resulting double series is absolutely convergent. Indeed, the inner binomial series is absolutely convergent for every prime, and the total sum is bounded by
+\[
+\sum_p p^{-\sigma}(1-p^{-1})^{-\sigma}
+\le 2^\sigma\sum_p p^{-\sigma}<\infty,
+\qquad \sigma=\Re s>1,
+\]
+since $p\ge2$. Fubini's theorem therefore permits interchange of the prime and $k$ sums, giving (2.1).
+\end{proof}
+
+\section{Möbius Source Geometry}
+
+Let
+\[
+Z_{\rm nt}=\{\rho\in\C:\zeta(\rho)=0,\ 0<\Re\rho<1\}.
+\]
+For $\lambda\in\C$, define the non-trivial dilation fibre
+\[
+\boxed{\mathcal C_\lambda=\{m\ge1:m\lambda\in Z_{\rm nt}\}.}
+\tag{3.1}
+\]
+When the fibre is finite, define
+\[
+\boxed{M(\lambda)=\sum_{m\in\mathcal C_\lambda}\frac{\mu(m)}m\ord_{m\lambda}\zeta.}
+\tag{3.2}
+\]
+
+\begin{proposition}[Finite dilation fibres]
+For every $\lambda\in\C$, the set $\mathcal C_\lambda$ is finite. More precisely, if $\lambda\ne0$ and $m\in\mathcal C_\lambda$, then
+\[
+0<m\Re\lambda<1,
+\]
+so, whenever $\Re\lambda>0$,
+\[
+m<\frac1{\Re\lambda}.
+\]
+If $\Re\lambda\le0$, then $\mathcal C_\lambda=\varnothing$.
+\end{proposition}
+
+\begin{proof}
+If $m\lambda\in Z_{\rm nt}$, then $0<\Re(m\lambda)<1$. Since $m>0$, this gives the stated bound and finiteness.
+\end{proof}
+
+The classical local Möbius source associated with a non-trivial zero $m\lambda$ has leading logarithmic coefficient
+\[
+\frac{\mu(m)}m\ord_{m\lambda}\zeta.
+\]
+Thus the total leading coefficient at a common source $\lambda$ is the arithmetic quantity $M(\lambda)$, once the corresponding local branches and source terms have been isolated.
+
+For a source triple $(\rho,m,k)$ define
+\[
+\boxed{T(\rho,m,k)=\frac{\rho}{m}-k.}
+\tag{3.3}
+\]
+The formal source family is therefore
+\[
+\frac{\rho}{m}-k,\qquad \rho\in Z_{\rm nt},\ m\ge1,\ k\ge0.
+\]
+
+\section{Affine Source Rigidity}
+
+\begin{theorem}[Affine transfer rigidity]
+For $\rho_1,\rho_2\in Z_{\rm nt}$ and $m_1,m_2\ge1$, $k_1,k_2\ge0$,
+\[
+\frac{\rho_1}{m_1}-k_1=\frac{\rho_2}{m_2}-k_2
+\]
+implies
+\[
+\boxed{k_1=k_2,\qquad m_2\rho_1=m_1\rho_2.}
+\tag{4.1}
+\]
+Conversely, these two relations imply equality of the transfer points.
+\end{theorem}
+
+\begin{proof}
+Taking real parts gives
+\[
+\frac{\Re\rho_1}{m_1}-\frac{\Re\rho_2}{m_2}=k_1-k_2.
+\]
+Since $0<\Re\rho_i<1$, the left side lies strictly between $-1$ and $1$. The right side is an integer. Hence $k_1=k_2$. The original equality then gives
+\[
+\frac{\rho_1}{m_1}=\frac{\rho_2}{m_2},
+\]
+which is equivalent to $m_2\rho_1=m_1\rho_2$.
+\end{proof}
+
+\begin{remark}
+This theorem is unconditional. It uses only the critical strip location of non-trivial zeta zeros. A collision is a coincidence of candidate source coordinates; it is not itself an assertion that $A^+$ has a singularity there.
+\end{remark}
+
+\section{RH Rigidity and Möbius Visibility}
+
+\begin{theorem}[Singleton dilation fibres under RH]
+Assume RH. For every $\rho\in Z_{\rm nt}$ and $m\ge1$,
+\[
+\boxed{\mathcal C_{\rho/m}=\{m\}.}
+\tag{5.1}
+\]
+\end{theorem}
+
+\begin{proof}
+Suppose $n\rho/m=\rho'$ for some $\rho'\in Z_{\rm nt}$. Under RH,
+\[
+\Re\rho=\Re\rho'=\frac12.
+\]
+Taking real parts yields
+\[
+\frac{n}{m}\frac12=\frac12,
+\]
+so $n=m$ and then $\rho'=\rho$.
+\end{proof}
+
+\begin{corollary}[Möbius visibility under RH]
+Assume RH. For every $\rho\in Z_{\rm nt}$ and $m\ge1$,
+\[
+\boxed{M(\rho/m)=\frac{\mu(m)}m\ord_\rho\zeta.}
+\tag{5.2}
+\]
+Hence the leading Möbius coefficient is nonzero precisely when $m$ is squarefree.
+\end{corollary}
+
+\section{Local Prime-Zeta Realization}
+
+The next statement isolates the analytic input. The local continuation is formulated as a hypothesis so that branch dependence and source isolation remain explicit.
+
+\begin{hypothesis}[Local source chart]
+Fix $\lambda\in Z_{\rm nt}$. Suppose there exist a simply connected slit neighborhood $U^\ast\subset U$ of $\lambda$, a branch of the local Möbius representation of $P$ on $U^\ast$, and an integer $N\ge1$ such that
+\[
+P(s)=\sum_{n=1}^{N}\frac{\mu(n)}n\Log_n\zeta(ns)+R_N(s)
+\tag{6.1}
+\]
+on $U^\ast$, where each displayed logarithm is defined on its chosen slit domain and $R_N$ is holomorphic on $U$.
+Assume further that $U$ contains no source point from the finitely many displayed terms other than $\lambda$.
+\end{hypothesis}
+
+\begin{lemma}[Local leading logarithm]
+Assume RH and the Local source chart at $\lambda=\rho/m$, where $\rho\in Z_{\rm nt}$ has multiplicity $r$. Then, for a compatible local branch,
+\[
+\boxed{P(s)=r\frac{\mu(m)}m\Log(s-\lambda)+h(s),\qquad h\in\mathcal O(U).}
+\tag{6.2}
+\]
+\end{lemma}
+
+\begin{proof}
+Choose the chart so that $U$ contains no displayed source other than $\lambda$. A non-trivial-zero contribution from the $n$th term requires $n\lambda\in Z_{\rm nt}$. Since $\lambda=\rho/m$, RH gives
+\[
+\Re(n\lambda)=\frac{n}{2m}.
+\]
+For this to equal $1/2$, one must have $n=m$. The pole of $\zeta$ produces source points $1/n$, which are real, while $\lambda$ is non-real. Thus the unique local non-trivial-zero term is the $m$th term.
+
+Write
+\[
+\zeta(z)=(z-\rho)^r g(z),\qquad g(\rho)\ne0.
+\]
+Then locally
+\[
+\Log\zeta(ms)=r\Log(s-\lambda)+\text{holomorphic term}.
+\]
+Multiplication by $\mu(m)/m$ yields (6.2), with all remaining terms absorbed into $h$.
+\end{proof}
+
+\section{Principal-Layer Realization}
+
+\begin{theorem}[Principal-layer singularity transfer]
+Assume RH. Let $\rho\in Z_{\rm nt}$ have multiplicity $r$, let $m\ge1$ be squarefree, and set
+\[
+\lambda=\frac{\rho}{m}.
+\]
+Assume the Local source chart at $\lambda$. Then $A^+$ has a local continuation on a slit neighborhood of $\lambda$ of the form
+\[
+\boxed{A^+(s)=r\frac{\mu(m)}m\Log(s-\lambda)+H(s),\qquad H\in\mathcal O(U).}
+\tag{7.1}
+\]
+Consequently,
+\[
+\boxed{\lambda=\frac{\rho}{m}\in\Sing(A^+).}
+\tag{7.2}
+\]
+\end{theorem}
+
+\begin{proof}
+By the exact expansion on $\Re s>1$ and analytic continuation through the local representation, write locally
+\[
+A^+(s)=P(s)+\sum_{j\ge1}\frac{(s)_j}{j!}P(s+j).
+\tag{7.3}
+\]
+The principal term $P(s)$ has the expansion (6.2).
+
+For every $j\ge1$ and $s$ sufficiently close to $\lambda$,
+\[
+\Re(s+j)>1,
+\]
+because $\Re\lambda=1/(2m)$. Hence each $P(s+j)$ is given by its original Dirichlet series and is holomorphic near $\lambda$.
+
+It remains to justify local uniform convergence of the shifted tail. On a sufficiently small compact neighborhood $K$ of $\lambda$, there are constants $C,a>0$ such that
+\[
+\left|\frac{(s)_j}{j!}\right|\le Cj^a,
+\qquad s\in K,
+\]
+while, for all sufficiently large $j$,
+\[
+|P(s+j)|\le \sum_{n\ge2}n^{-j-\inf_K\Re s}\le C'2^{-j}.
+\]
+Thus the shifted tail is normally convergent on $K$. It defines a holomorphic function there. Combining it with the holomorphic part of $P$ proves (7.1). Since $m$ is squarefree, $\mu(m)\ne0$, so the logarithmic term has nonzero coefficient and cannot be removed by a holomorphic function.
+\end{proof}
+
+\begin{remark}
+The proof uses RH for source uniqueness and the local source chart for the prime-zeta logarithm. The higher shifted terms require no continuation of $P$ because they lie in the original half-plane near a principal source.
+\end{remark}
+
+\section{Principal-Layer Theorem}
+
+\begin{corollary}
+Under RH and the Local source chart hypotheses,
+\[
+\boxed{
+\left\{\frac{\rho}{m}:\rho\in Z_{\rm nt},\ m\ge1,\ m\ \text{squarefree}\right\}
+\subseteq \Sing(A^+).
+}
+\tag{8.1}
+\]
+For a zero $\rho$ of multiplicity $r$, the corresponding logarithmic coefficient is
+\[
+\boxed{r\frac{\mu(m)}m.}
+\tag{8.2}
+\]
+\end{corollary}
+
+\section{Deeper Shifted Layers}
+
+For $k\ge1$, the formal transfer points are
+\[
+\boxed{\frac{\rho}{m}-k.}
+\tag{9.1}
+\]
+Their real parts satisfy
+\[
+\Re\left(\frac{\rho}{m}-k\right)<0.
+\]
+At such points, terms $P(s+j)$ can reach continuation-sensitive regions. The principal-layer argument therefore gives no automatic realization theorem for $k\ge1$.
+
+\begin{problem}[Realization of deeper layers]
+Determine whether the formal sources
+\[
+\frac{\rho}{m}-k,\qquad k\ge1,
+\]
+are actual singularities of $A^+$, and construct a continuation theory sufficient to establish realization or cancellation.
+\end{problem}
+
+\section{Arithmetic Cancellation}
+
+Away from RH, several elements of a dilation fibre can occur. Their leading logarithmic coefficients can cancel arithmetically. A synthetic example is
+\[
+\frac{\mu(6)}6+\frac{\mu(7)}7+\frac{\mu(42)}{42}
+=\frac16-\frac17+\frac1{42}=0.
+\tag{10.1}
+\]
+This demonstrates coefficient cancellation at the arithmetic level. It does not assert that the displayed integers form a realizable zeta-zero dilation fibre.
+
+Under RH, the singleton-fibre theorem removes this leading-coefficient cancellation mechanism for each principal source.
+
+\section{Computational Validation}
+
+The computations are supplementary and independent of the analytic proofs.
+
+For $p\le100$, $K=80$, and 50-digit arithmetic, direct evaluation and the shifted expansion agree to approximately
+\[
+10^{-23}
+\]
+at the tested points
+\[
+s=2+0.7i,\qquad s=1.3+2i.
+\]
+
+For the first 200 non-trivial zeros, $1\le m\le30$, and $0\le k\le20$, the tested grid contains
+\[
+200\cdot30\cdot21=126000
+\]
+transfer triples. The minimum observed full complex separation is
+\[
+\boxed{5.76298818597532\ldots\times10^{-4}.}
+\]
+Among $1\le m\le30$, there are 19 squarefree values, giving
+\[
+200\cdot19\cdot21=79800
+\]
+formally visible triples under RH.
+
+These finite computations validate the stated formulas and implementation at the tested precision. They provide no global separation theorem.
+
+\section{Logical Status of the Main Claims}
+
+\begin{center}
+\begin{tabular}{p{0.52\textwidth}p{0.37\textwidth}}
+\toprule
+\textbf{Claim} & \textbf{Status}\\
+\midrule
+Exact shifted expansion & Proven for $\Re s>1$.\\
+Finite dilation fibres & Unconditional.\\
+Affine transfer rigidity & Unconditional.\\
+RH singleton fibres & Conditional on RH.\\
+Möbius visibility formula & Arithmetic consequence of the fibre theorem.\\
+Local leading logarithm & Conditional on the stated local source chart.\\
+Principal-layer realization & Conditional on RH and the local source chart.\\
+Deeper-layer realization ($k\ge1$) & Open.\\
+Complete local-germ cancellation & Open.\\
+Any implication toward or away from RH & Open.\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Discussion and Scope}
+
+The paper establishes a compact chain:
+\[
+\boxed{
+A^+
+\xrightarrow{\text{exact expansion}}
+P(s+k)
+\xrightarrow{\text{Möbius sources}}
+\frac{\rho}{m}-k
+}
+\]
+followed by the unconditional affine rigidity relation
+\[
+\boxed{
+\frac{\rho_1}{m_1}-k_1=\frac{\rho_2}{m_2}-k_2
+\Longrightarrow
+k_1=k_2,\quad m_2\rho_1=m_1\rho_2.
+}
+\]
+Under RH,
+\[
+\boxed{
+\mathcal C_{\rho/m}=\{m\},\qquad
+M(\rho/m)=\frac{\mu(m)}m\ord_\rho\zeta.
+}
+\]
+The principal layer then admits an actual singularity theorem after the local source chart has been fixed.
+
+The resulting frontier is
+\[
+\boxed{
+\underbrace{\rho/m-k}_{\text{formal source for all }k\ge0}
+\qquad
+\begin{cases}
+\text{actual singularity under the principal-layer hypotheses},&k=0,\\
+\text{continuation problem},&k\ge1.
+\end{cases}}
+\]
+
+The manuscript makes no claim that the shifted series encodes an equivalent formulation of RH. A failure of RH would require an additional arithmetic bridge producing a relevant dilation relation, followed by analytic survival of the resulting source. Those bridges remain open.
+
+\section{Conclusion}
+
+The central structural result is the separation of source geometry from analytic realization. The affine map
+\[
+(\rho,m,k)\mapsto \rho/m-k
+\]
+has a rigid collision structure throughout the non-trivial zero sector. RH sharpens this structure to singleton dilation fibres and explicit Möbius visibility. For the principal layer, the local prime-zeta logarithm transfers directly to $A^+$, producing genuine singularities at squarefree dilates $\rho/m$ under the stated local hypotheses.
+
+The deeper layers remain a continuation problem. Complete local-germ cancellation, global continuation, and any converse relation with RH remain outside the present theorem package.
+
+\end{document}\end{document}
