@@ -80,9 +80,9 @@ try{
   if(width===390){
    await page.goto(origin+"index.html",{waitUntil:"load"});
    await page.locator("#project-search").fill("werner");
-   assert.equal(await page.locator("#project-list .research-row").count(),3,"research and Werner proposal search");
+   assert.equal(await page.locator("#project-list .research-row").count(),0,"original-only catalogue excludes Werner");
    await page.locator("#project-search").fill("");
-   assert.equal(await page.locator("#project-list .research-row").count(),23,"research and proposal reset");
+   assert.equal(await page.locator("#project-list .research-row").count(),3,"three curated original results reset");
   }
   assert.deepEqual(faults,[],"Browser failures at "+width+": "+faults.join("; "));
   await page.close();

@@ -87,13 +87,13 @@ def main() -> int:
             check_ref(src, href, props, pages)
     js = (DOCS / "site.js").read_text(encoding="utf-8")
     sources = set("https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/" + path
-                  for path in re.findall(r'path:"([^"]+)"', js))
+                  for path in re.findall(r'(?:\bpath|"path")\s*:\s*"([^"]+)"', js))
     homepage = pages[DOCS.joinpath("index.html").resolve()]
     static = set(homepage.research_rows)
     if sources != static:
         FAILURES.append(f"Research catalogue mismatch: static-only={sorted(static - sources)}, js-only={sorted(sources - static)}")
-    if len(static) < 10:
-        FAILURES.append("Static research catalogue has fewer than 10 entries")
+    if len(static) < 3:
+        FAILURES.append("Curated original-results catalogue has fewer than three entries")
     # Every public HTML page must be discoverable, and mobile menus must be wired.
     sitemap = (DOCS / "sitemap.xml").read_text(encoding="utf-8")
     actual_urls = set(re.findall(r"<loc>([^<]+)</loc>", sitemap))
