@@ -7,6 +7,18 @@
 **Archive source size:** ~21 MB compressed, 21,707,919 bytes uncompressed.  
 **Compiled:** 2026-10-27; GitHub text publication began 2026-10-28.
 
+## Publication-scope hold — owner review required
+
+Before public upload, follow the [publication-scope review gate](PUBLICATION_SCOPE.md) and inspect the actual ZIP contents, including nested archives and PDFs. The expanded archive's published inventory includes `PHASESHIFT_Quantum_Interference_Referee_Draft_20261027.pdf`, while the public research index excludes the associated critical-line research track. A text-index exclusion does not restrict a public ZIP download.
+
+Run the offline advisory inventory:
+
+```bash
+python3 scripts/audit_release_scope.py NIGHTFALL_GitHub_Release_2026-10-27.zip NIGHTFALL_Expanded_Research_2026-10-28.zip
+```
+
+**Decision required:** explicitly approve full original-byte disclosure, or create a separately named/hash-verified curated public derivative and keep original frozen source privately archived. A scope-redacted ZIP can never retain the original SHA-256. The release-triggered verification job runs after publishing; it is not a confidentiality gate.
+
 ## Frozen archive upload checklist — pending owner upload
 
 The files below were frozen before this website correction. Upload their **original bytes** as two assets of the same GitHub Release tagged `nightfall-research-2026-10-28`; keep the names unchanged. As of this ledger update, neither binary asset is publicly downloadable.
