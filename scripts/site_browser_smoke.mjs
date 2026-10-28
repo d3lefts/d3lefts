@@ -71,9 +71,9 @@ try{
   if(width===390){
    await page.goto(origin+"index.html",{waitUntil:"load"});
    await page.locator("#project-search").fill("werner");
-   assert.equal(await page.locator("#project-list .research-row").count(),1,"research search");
+   assert.equal(await page.locator("#project-list .research-row").count(),3,"research and Werner proposal search");
    await page.locator("#project-search").fill("");
-   assert.equal(await page.locator("#project-list .research-row").count(),13,"research reset");
+   assert.equal(await page.locator("#project-list .research-row").count(),23,"research and proposal reset");
   }
   assert.deepEqual(faults,[],"Browser failures at "+width+": "+faults.join("; "));
   await page.close();
