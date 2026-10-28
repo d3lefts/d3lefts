@@ -1,0 +1,659 @@
+Extracted source text — original What_Survives_the_Cut_II_Cryptographic_Edition.pdf.
+
+This GitHub text transcription was produced from the researcher's archived PDF for search and inspection. Mathematical display, glyphs, line breaks, footnotes, and diagrams may be degraded. The original PDF is the authoritative formatted source. Statements are researcher manuscript claims pending external review and are distinct from formal proof certificates.
+
+----------
+
+<PARSED TEXT FOR PAGE: 1 / 12>
+   What Survives the Cut
+   Part II (Expanded): Exact Shadow Codes, Cryptographic Recovery, and
+Fresh-State Cuts
+
+   Devin J. Wright
+   Independent Researcher
+   13 October 2026
+
+
+
+
+                                                  Abstract
+         The first paper established a sharp distance formula for codes built from translated observations
+     modulo sign. Here we extend the mechanism to every nonidentity involutive automorphism S of a
+     finite abelian group A. Observing the two-point orbit of x + t produces a nonlinear code whose
+     exact distance is determined by the occupancy of the finite image (S − I)A. More strongly, we
+     determine the complete pairwise distance enumerator, give an O(m2 ) reconstruction algorithm
+     independent of |A| in its candidate count, and characterize every correctable erasure pattern:
+     two surviving views with distinct symmetry labels always determine the original state, while a
+     single surviving label can suffice only at a specified fixed-state class. This yields an exact failure
+     event even under correlated erasures, an explicit probability under conditionally independent
+     erasures, and a theorem showing that balanced view placement simultaneously maximizes worst-case
+     Hamming distance and minimizes both mean and worst-case source-conditioned erasure ambiguity
+     under an independent exchangeable model. For heterogeneous per-view disruption costs, the design
+     objective becomes an exact multiprocessor load-balancing problem, with a simple constructive bound.
+     Finally, exact reconstruction is composed with fresh-state causal cuts under explicit assumptions,
+     giving an end-to-end semantic continuity guarantee and a model-scoped fault-transfer bound. The
+     cryptographic extension reconstructs elliptic points from translated coordinates and combines
+     protected subgroup residues with a residual discrete logarithm. An independent small-curve verifier
+     confirms all 96 private-scalar cases under stated assumptions. The existing verifier checks 918 finite
+     configurations, 474,794 deterministic erasure-pattern cases, 5,052 mixed-fault decoding trials, 1,293
+     exact independent-erasure probability cases, 2,046 correlated-law checks, 150 allocation optima, and
+     272 greedy-weighted-bound checks.
+
+
+Status and provenance. The statements are proved here and supported by finite checks. They
+extend the project-specific translated-sign formula from What Survives the Cut [6]. Classical orbit
+codes, coding bounds, automata minimization, scheduling, and causal abstraction are prior art;
+external priority for these specialized formulas has not been independently established. The added
+cryptographic algorithm is an exact point-recovery and conditional scalar-recovery composition, not a
+general cryptanalytic speedup; no universal containment claim is made.
+<PARSED TEXT FOR PAGE: 2 / 12>
+WHAT SURVIVES THE CUT / II                                                    Research continuation / October 2026
+
+
+1    A symmetry can conceal a state without destroying it
+Suppose a measurement returns an equivalence class rather than a state. The basic example is
+[x] = {x, −x}. Previous work showed that controlled translations can make multiple such observations
+injective and error-correcting [7, 6]. In parallel, directed causal cuts model systems in which the old
+runtime is discarded and only an explicitly specified future-sufficient interface reaches a newly initialized
+phase [8]. The constructive problem is to encode that interface in views that remain decodable under
+failures, without smuggling unmodeled old state across the boundary.
+    A sign flip is only one involution. A coordinate swap (a, b) 7→ (b, a), reflection of a selected
+coordinate, and many finite-module automorphisms also satisfy S 2 = I. The algebra of translated
+quotient observations is essentially identical across all of them, and leads to stronger conclusions than
+minimum distance alone.
+Definition 1.1 (Translated involution-shadow code). Let A be a finite abelian group, written additively,
+with N = |A| ≥ 2. Let S ∈ Aut(A) satisfy S 2 = I and S ̸= I. Denote its orbit symbol by
+                                    [z]S = {z, Sz},           πS : A −→ A/⟨S⟩.
+For translations T = (t1 , . . . , tm ), m ≥ 1, define
+                                                                              
+                                      CT (x) = [x + t1 ]S , . . . , [x + tm ]S .
+Set L = (S − I)A, K = ker(S − I), q = |L| > 1, and k = |K| = N/q. Write
+                            ℓj = (S − I)tj ∈ L,          nc = |{j : ℓj = c}| (c ∈ L).
+We call ℓj the symmetry label of view j and nc the label occupancy.
+   The relation qk = N is the first isomorphism theorem. The same statements hold with repeated
+translations and fixed points of S; neither case is swept aside.
+
+
+2    One equation determines all pair collisions
+Lemma 2.1 (Unique collision class). For x ̸= y the views at translation t agree if and only if
+                              [x + t]S = [y + t]S        ⇐⇒      (S − I)t = x − Sy.                            (1)
+Consequently, all colliding view indices for a pair of distinct states have one and the same symmetry
+label; if x − Sy ∈
+                 / L, the states disagree at every view.
+Proof. Two orbit symbols agree precisely when their representatives agree, or one representative is S
+applied to the other. If x + t = y + t, then x = y, contrary to assumption. Thus equality holds precisely
+when x + t = S(y + t) = Sy + St, equivalent to (1). Every solution has the same label x − Sy.
+
+Theorem 2.2 (Universal involution distance and optimum). For every nonidentity involutive auto-
+morphism on a finite abelian group,
+
+                                              d(CT ) = m − max nc .                                            (2)
+                                                                c∈L
+
+The optimal length-m distance over all possible translations is
+                                                                       m
+                                                                       
+                                           d∗ (m, A, S) = m −            .                                     (3)
+                                                                       q
+
+Both statements hold for arbitrary m, including m > q.
+
+                                                          2
+<PARSED TEXT FOR PAGE: 3 / 12>
+WHAT SURVIVES THE CUT / II                                                  Research continuation / October 2026
+
+
+Proof. By Lemma 2.1, any distinct pair agrees on either zero coordinates or the nc coordinates with
+one label c ∈ L. This gives d ≥ m − max nc . To attain equality, fix a label c of maximal occupancy.
+Since q > 1, choose x with (I − S)x ̸= c. Define y = S(x − c). Then x ̸= y and x − Sy = c, so
+precisely the nc coordinates collide. This proves (2). There are q freely selectable labels, each attained
+as (S − I)t for some t. Pigeonhole gives max nc ≥ ⌈m/q⌉, and distributing occupancy values as equally
+as possible achieves equality.
+
+Remark 2.3 (The identity involution). If S = I, each orbit symbol is already a singleton and d = m
+for N > 1. It is not covered by (2), which requires q > 1 and genuine information loss.
+
+
+3    A complete distance spectrum, not just a minimum
+Distance measures the closest pair; the full distribution describes the number of potential confusions.
+Here even that distribution is algebraically rigid.
+Theorem 3.1 (Exact distance enumerator). The polynomial counting unordered distinct state pairs
+at each Hamming distance is
+                              X                                    N − k X m−nc N (N − q) m
+               WT (z) =                   z dH (CT (x),CT (y)) =           z   +         z .                 (4)
+                          {x,y}⊂A, x̸=y
+                                                                     2 c∈L          2
+
+In particular, each label c accounts for exactly (N − k)/2 unordered pairs, irrespective of its occupancy.
+Every remaining pair differs at all m coordinates.
+Proof. For fixed c ∈ L, the relation x − Sy = c gives exactly one y = S(x − c) for each x ∈ A. There
+are N ordered solutions. It has k diagonal solutions x = y, since (I − S)x = c has exactly k solutions.
+If (x, y) is an ordered solution then (y, x) is too: the latter difference equals y − Sx = −Sc = c,
+because c = (S − I)t implies Sc = −c. Therefore there are (N − k)/2 unordered distinct pairs with
+collision class c. Different classes cannot describe the same distinct pair. For each fixed x, these
+classes contribute q − 1 distinct alternatives (the remaining class gives y = x), leaving N − q distinct
+states with no collision label. Dividing N (N − q) by two counts those full-distance pairs. Add their
+contributions to obtain (4).
+
+Corollary 3.2 (The neighbor spectrum of one state). For a fixed x put cx = (I − S)x ∈ L. For every
+c ∈ L \ {cx } there is exactly one competitor yc = S(x − c) at distance m − nc from x, while the other
+N − q states are at distance m. Thus the number of potentially close competitors is at most q − 1,
+even if N is enormous.
+Proof. The construction in the preceding proof gives one candidate for each label; c = cx gives yc = x
+and all other labels give distinct competitors. All other y have x − Sy ∈/ L and hence no colliding
+coordinate.
+
+
+4    Decoding without enumerating the group
+Theorem 4.1 (Quadratic-time candidate decoding). Let a received word consist of orbit symbols and
+erasures. If e surviving symbols have been substituted and s positions erased, and
+
+                                                   2e + s < d(CT ),                                          (5)
+
+then the transmitted state x is uniquely reconstructible. It suffices to enumerate at most 2m candidate
+states from the received nonerased symbols and check their distances. This requires O(m2 ) group
+
+                                                            3
+<PARSED TEXT FOR PAGE: 4 / 12>
+WHAT SURVIVES THE CUT / II                                                        Research continuation / October 2026
+
+
+operations and comparisons, independent of |A| in the number of candidates, provided group operations
+and orbit comparisons are unit-cost.
+Proof. At least one nonerased coordinate is correct: otherwise e + s ≥ m ≥ d, contradicting (5). At
+such a coordinate j, the actual state satisfies x + tj ∈ [zj ]S , hence lies among the one or two candidates
+zj − tj and Szj − tj . Collect candidates from all nonerased views, at most 2m in total. Evaluate the
+disagreement count on the nonerased coordinates, accepting a state only if it disagrees in at most
+e places. The true state passes. If y ̸= x passed too, then their codewords would differ in at most
+2e + s coordinates (triangle inequality on the nonerased coordinates, plus at most s erased ones),
+contradicting (5). Testing at most 2m candidates against m views takes O(m2 ) operations.
+
+   This result does not claim that orbit-symbol encoding has constant bit complexity as |A| grows;
+representing group elements may itself be expensive. Its point is the absence of an exhaustive search
+over all source states.
+
+
+5     Erasure recovery is exactly characterizable
+Let J ⊆ {1, . . . , m} be the surviving coordinate set, and let L(J) = {ℓj : j ∈ J} be its distinct surviving
+labels.
+Theorem 5.1 (Complete erasure-pattern characterization). For transmitted state x, reconstruction
+from the unerased orbit symbols is unique if and only if
+                                                                          
+                    J ̸= ∅ and      |L(J)| ≥ 2 or L(J) = {cx } ,                   cx = (I − S)x.                  (6)
+
+In particular, two surviving views with distinct symmetry labels suffice for every state. If all surviving
+views share one label c ̸= cx , precisely one other state is consistent with the observations. If no view
+survives, every state is consistent.
+Proof. A competing y ̸= x must, by Lemma 2.1, match every surviving coordinate at a single label
+c = x − Sy. If there are two distinct surviving labels, this is impossible. If only label c survives,
+there is exactly one candidate y = S(x − c) consistent with those views; it equals x exactly when
+c = (I − S)x = cx . Empty J supplies no restriction.
+
+5.1   A probability formula without independence assumptions
+Let J be a random set of surviving coordinates with any joint distribution, potentially correlated across
+channels and dependent on environment. Write Fx for the event that x is not uniquely determined.
+Theorem 5.1 gives the disjoint-event identity
+                                                    X                                            
+                          P(Fx ) = P(J = ∅) +                   P J ̸= ∅, L(J) = {c} .                             (7)
+                                                 c∈L\{cx }
+
+This is an exact reliability observable: collecting the set of surviving symmetry labels is sufficient to
+measure reconstruction failure, even for catastrophic common-mode outages. No independent-channel
+premise enters (7).
+Theorem 5.2 (Independent-erasure formula). Condition on a fixed input state x. Suppose coordinate
+j erases independently with probability ϵj ∈ [0, 1], and write E0 = mj=1 ϵj . For a label c, let Jc = {j :
+                                                                   Q
+
+ℓj = c}. Then
+                                                                                       
+                                               X             Y                   Y
+                             P(Fx ) = E0 +                          ϵj  1 −          ϵj  .                     (8)
+                                             c∈L\{cx }       j ∈J
+                                                               / c               j∈Jc
+
+
+                                                         4
+<PARSED TEXT FOR PAGE: 5 / 12>
+WHAT SURVIVES THE CUT / II                                                    Research continuation / October 2026
+
+
+Empty products equal one. If all ϵj = ϵ, this becomes
+                                                       X
+                                    P(Fx ) = ϵm +              ϵm−nc (1 − ϵnc ).                               (9)
+                                                      c̸=cx
+
+Proof. Failure occurs in the mutually exclusive events of (7). For J = ∅, all positions erase. For
+the second event, all views outside Jc erase, and at least one within Jc survives. Under independent
+erasures these probabilities multiply, giving (8). The equal-probability specialization is immediate.
+
+Theorem 5.3 (One allocation optimizes three different objectives). Assume 0 < ϵ < 1 is the same
+independent erasure probability at every view and that source x is uniform on A. Among all length-m
+translations, a balanced occupancy vector nc ∈ {⌊m/q⌋, ⌈m/q⌉} both
+
+ (i) maximizes the adversarial minimum Hamming distance; and
+
+(ii) minimizes the mean probability of nonunique reconstruction under erasures; and
+
+(iii) minimizes the worst-case source-conditioned probability of nonunique reconstruction.
+
+The second objective has the exact expression
+
+                                                           1 X m−nc
+                                                           
+                                 P fail = ϵm + 1 −                  − ϵm .
+                                                                        
+                                                                 ϵ                                            (10)
+                                                           q c∈L
+
+The worst-case source-conditioned failure probability is also explicit:
+                                    X
+                      Pmax = ϵm +         f (nc ) − min f (nc ),         f (n) = ϵm−n − ϵm .                  (11)
+                                                     c∈L
+                                    c∈L
+
+
+Proof. Part (i) is Theorem 2.2. Because x 7→ (I − S)x is a surjective homomorphism with equally sized
+fibers, cx is uniform on L for uniformly distributed x. Averaging (9) excludes each term with probability
+1/q, proving (10). The occupancy-dependent quantity is c ϵm−nc = ϵm c (1/ϵ)nc . If na ≥ nb + 2,
+                                                              P               P
+
+moving one observation from a to b strictly decreases this sum, by strict convexity of rn for r = 1/ϵ > 1.
+Repeated exchanges terminate at a balanced vector and establish mean optimality. For any source x,
+(9) equals ϵm + c f (nc ) − f (ncx ). As cx ranges over all L, the worst case excludes the smallest f (nc ),
+                  P
+                                                          P
+proving (11). The same balancing move strictly lowers c f (nc ), while the minimum occupancy (and
+hence minc f (nc )) cannot decrease. Therefore Pmax cannot increase. Repeated balancing minimizes
+the worst-case failure probability as well.
+
+    The average-source and independence assumptions matter for the second claim. Under source-
+dependent attack strategies or a common-mode outage, the optimal placement can differ; (7) remains
+valid and can be used instead.
+
+
+6    Heterogeneous disruptions and constructive placement
+Different observations may have different costs to erase or corrupt. Give coordinate j a positive weight
+wj and define weighted Hamming distance as the sum of weights on differing coordinates.
+
+Theorem 6.1 (Weighted design is exact load balancing). For any fixed assignment of translations,
+                                                       X                       X
+                             dw (CT ) = W − max                 wj ,     W =           wj .                   (12)
+                                                c∈L
+                                                      j:ℓj =c                      j
+
+
+                                                           5
+<PARSED TEXT FOR PAGE: 6 / 12>
+WHAT SURVIVES THE CUT / II                                            Research continuation / October 2026
+
+
+Optimizing this distance over all translation assignments is exactly the problem of assigning m weighted
+jobs to q identical machines to minimize their maximum load. A greedy construction that places each
+new weight in a currently least-loaded class satisfies
+
+                                                  W      1
+                                                                  
+                                   dw ≥ W −         + 1−   wmax .                                      (13)
+                                                  q      q
+
+Proof. By Lemma 2.1, two distinct states agree precisely in the class c (or nowhere). Their weighted
+distance is W minus the weight of that class; every class is realized by a distinct pair, as in Theorem 2.2.
+This proves (12) and the scheduling equivalence. For greedy placement, consider the job of weight w
+whose assignment creates the final maximum load M . Immediately before its assignment its chosen
+bin is a least-loaded bin, at most (W − w)/q, so M ≤ W/q + (1 − 1/q)w ≤ W/q + (1 − 1/q)wmax .
+Substitute into (12).
+
+Remark 6.2 (An optimization boundary). For q = 2, deciding whether maxc j:ℓj =c wj ≤ W/2 is
+                                                                                     P
+
+precisely the integer Partition decision problem. Thus exact weighted allocation is weakly NP-hard
+in general (for binary-encoded integer weights), although balanced unit-weight allocation is immediate.
+This invokes a standard scheduling complexity fact, not a new hardness mechanism.
+
+
+7    Across an irreversible cut
+The code is useful at a causal boundary only when it carries the state actually needed by the successor.
+Let P be the predecessor’s internal state space and R : P → A its future-sufficient extraction. Let
+D : A → P ′ initialize the successor from scratch. A valid fresh cut replaces a predecessor state p
+by D(R(p)) and gives the new phase no other route to p’s memory, credentials, mutable storage, or
+implicit controller state [8].
+
+Theorem 7.1 (Exact reconstruction preserves the causal interface). At each of a finite sequence of cuts,
+encode a = R(p) using CT , transmit orbit symbols, decode with the bounded-distance algorithm, and
+either initialize the successor from D(â) or stop when verification fails. Suppose the actual symbol errors
+eh and erasures sh at every cut obey 2eh + sh < dh , and there are no other predecessor-to-successor
+state channels. Then the resulting successor states and every subsequent deterministic evolution are
+identical to those of an ideal fault-free cut system. The predecessor’s discarded degrees of freedom
+remain causally inaccessible.
+
+Proof. At each boundary, Theorem 4.1 gives â = R(p). Therefore the newly initialized state D(â)
+equals D(R(p)), the ideal successor state. It has no other input from the predecessor by the fresh-cut
+assumption. Apply this equality inductively at each boundary. Exact equality proves preservation of
+downstream deterministic behavior; the absence of any other predecessor channel proves the causal
+separation.
+
+    For probabilistic cut failure, define ph as a valid upper bound on history-conditional semantic
+transfer failure at cut h, including the separately modeled validation and decoder failure modes. A
+union bound gives P(any error in the first H cuts) ≤ H
+                                                      P
+                                                        h=1 ph without independence across cuts. On a
+directed compromise graph, if valid conditional edge bounds form a nonnegative matrix B, the existing
+causal-cut propagation result applies: expected descendant faults satisfy zh ≤ z0 B h , and are summable
+when spr(B) < 1 [6, 8, 9]. The present contribution is an exact way to calculate the erasure component
+of an edge bound; it does not certify payload semantics or a safe parser, and the bound cannot be
+promoted to a security statement without those validations.
+
+
+
+                                                     6
+<PARSED TEXT FOR PAGE: 7 / 12>
+WHAT SURVIVES THE CUT / II                                               Research continuation / October 2026
+
+
+8    Exact worked example and reproducible checks
+Take A = Z/101Z, Sx = −x, and six translations T = (0, 1, 2, 3, 4, 5). Since doubling is bijective here,
+the six symmetry labels are distinct; q = 101, d = 5, and substitutions satisfy the sharp two-error
+radius. Now suppose erasures, not substitutions, occur independently with probability ϵ = 7/25.
+   Only an empty surviving set or a singleton surviving symmetry-label set can fail reconstruction.
+By Theorem 5.2, if cx is among the six used labels, the exact failure probability is
+                                                           1630279
+                           Pactive = ϵ6 + 5ϵ5 (1 − ϵ) =             ≈ 0.006677622784.
+                                                          244140625
+If cx is not used, it is
+                                                           386561
+                            Pother = ϵ6 + 6ϵ5 (1 − ϵ) =            = 0.00791676928.
+                                                          48828125
+For a uniform state, the exact mean is
+                                6            95            193398149
+                    P fail =       Pactive +     Pother =             ≈ 0.007843156617.
+                               101           101          24658203125
+For any source state, Pfail ≤ 0.00791676928. Four fresh successors with appropriately history-conditional
+independent-erasure assumptions would therefore have an erasure-only reproduction bound ≤ 4Pother =
+0.03166707712. This is a different fault model from the first paper’s two-substitution correction
+calculation (there P ≈ 0.21958 per edge), not an apples-to-apples improvement claim. Common-mode
+erasures must instead be evaluated from (7). For instance, if all six observations are jointly erased
+with probability 0.28 and otherwise all survive, then the failure probability is 0.28, not 0.00791676928:
+the independent-channel calculation cannot be reused for correlated failures.
+
+            Independent exact or deterministic verification                               Passed
+            Involution configurations (cyclic automorphisms and coordinate swaps)             918
+            Pairwise and weighted distance enumerator instances                               918
+            Every erasure pattern, each source, on small systems                          474,794
+            Mixed substitutions/erasures within the decoding guarantee                      5,052
+            Exact rational probability identities                                           1,293
+            Exhaustive mean and worst-case allocation optima                                  150
+            Correlated erasure distribution identities                                      2,046
+            Greedy weighted-allocation inequalities                                           272
+
+The standalone verify_involution_cuts.py uses only Python’s standard library, integer oper-
+ations, and exact Fraction arithmetic (seed 20261013). It records machine-readable totals in
+verification.json. Code tests are supporting evidence, not part of the general proofs.
+
+
+9    Cryptographic recovery: from hidden point coordinates to scalar
+     residues
+The first two papers describe how a quotient observation loses a distinction and how translated views
+restore it with controlled redundancy. Here we incorporate the two cryptographic instances from the
+earlier Elliptic Shadow and Five Missing Channels (045) notes [1, 2]. They solve different inverse
+problems: reconstructing a whole elliptic-curve point from its compressed coordinates, and reducing
+the private-scalar search using a genuine homomorphic quotient. We then compose both with the
+error-correcting cut architecture.
+
+                                                          7
+<PARSED TEXT FOR PAGE: 8 / 12>
+WHAT SURVIVES THE CUT / II                                                Research continuation / October 2026
+
+
+9.1    Elliptic point recovery from translated horizontal views
+Let p > 3 be prime, let E/Fp : y 2 = f (x) = x3 + ax + b be nonsingular, and put x(O) = ∞ for the
+                                                                                                    ̸ u,
+identity. For a known translation T = (u, v) of nonzero vertical coordinate, take P = (x, y) with x =
+and measure r = x(P + T ). The ordinary chord law gives
+                                 2
+                           y−v                    f (x) + f (u) − (r + x + u)(x − u)2
+                       
+          r+x+u=                      ,      y=                                          (mod p).         (14)
+                           x−u                                     2v
+This is an exact algebraic coordinate-recovery identity. If P = O or x(P ) = u, reconstruction instead
+uses x(O) = ∞ and direct comparison of P = T versus P = −T . When 2T =           ̸ O, these cases are
+distinguishable.
+Theorem 9.1 (Reliable recovery of an elliptic point). Choose translations T1 , . . . , Tm ∈ E(Fp ) such
+that their doubled points [2]Tj are pairwise distinct. The code
+                                      P 7−→ (x(P + T1 ), . . . , x(P + Tm ))
+has minimum distance m − 1, and uniquely recovers P after e arbitrary substitutions and s erasures
+whenever 2e + s < m − 1. A decoder can use at most 2m candidate points, with full-coordinate checks
+against the received word.
+Proof. On an elliptic curve, equal extended horizontal coordinates mean two points differ by the
+involution S(P ) = −P . The collision criterion is P + Q = −2Tj for P ̸= Q. Each distinct doubled
+translation therefore contributes at most one agreement for a distinct pair, and some pair attains one
+agreement. The distance is exactly m − 1. Each received non-erased symbol x(R) supplies at most two
+candidate points R, −R; subtract the known translation and check all supplied coordinates. The usual
+distance inequality proves unique decoding under 2e + s < d.
+
+    Recovering the point Q = [k]G this way is not recovering k. Indeed, the translated-view discrete-
+logarithm problem and the ordinary full-point discrete-logarithm problem reduce to one another with
+polynomial overhead: from a full point one computes all views, and from two appropriate views one
+reconstructs the full point. The distinction matters for claims about real cryptographic security. Prior
+work on horizontal-to-vertical coordinate recovery includes Okeya and Sakurai [3].
+
+9.2    The actual key-space reduction: a homomorphic observation
+Fix a cyclic subgroup ⟨G⟩ of known order N , a public Q = [k]G, and group homomorphisms
+                                      fi : ⟨G⟩ → Hi ,       di = ord(fi (G)).
+Assume the values fi (Q) are available and that the corresponding discrete logarithms in their images
+can be solved. The latter assumption must be costed, not silently treated as an oracle of unit complexity.
+Theorem 9.2 (Exact recovered residue and residual discrete logarithm). The observations fi (Q)
+determine k modulo
+                              L = lcm(d1 , . . . , dr ), L | N.                          (15)
+Let k0 ∈ {0, . . . , L − 1} be the unique compatible residue from the generalized Chinese remainder
+theorem. Then
+                                Q − [k0 ]G = [j]([L]G),   j ∈ Z/(N/L)Z.                         (16)
+The remaining
+      p        search has exactly N/L possible scalars. It can be solved by standard baby-step/giant-step
+in O( N/L + 1) group operations and storage, in addition to the costs of computing and decoding the
+quotient observations.
+
+                                                        8
+<PARSED TEXT FOR PAGE: 9 / 12>
+WHAT SURVIVES THE CUT / II                                           Research continuation / October 2026
+
+
+Proof. The element fi (G) has order di | N . Since fi (Q) = [k]fi (G), solving its cyclic image discrete
+logarithm supplies k mod di . Two scalars have the same entire collection of images if and only if their
+difference is divisible by every di , hence by L. Thus the observation fiber is exactly k0 + LZ modulo N ,
+comprising N/L choices. Substitution gives (16); [L]G has order N/L. Standard baby-step/giant-step
+applies to this subgroup, with its square-root time/memory guarantee. Verification of the resulting
+[k]G = Q completes recovery.
+
+Proposition 9.3 (Tate-curve component of the recovery algorithm). For a Tate elliptic curve over
+a complete discretely valued field, using its uniformization Eq (K) ≃ K × /q Z with m = v(q) > 0, the
+component map
+                                   τ ([u]) = v(u) (mod m) ∈ Z/mZ
+is a homomorphism. If G has order N and a = τ (G), its image order is d = m/ gcd(m, a), which
+divides N . Given the uniformization coordinates of G and Q = [k]G, τ (Q) = ka mod m determines
+k mod d and leaves exactly N/d residual possibilities. If N is prime and N ∤ m, then d = 1 and this
+component carries no scalar information.
+Proof. Changing a Tate representative by q r changes its valuation by rm, so τ is well-defined and
+additive. Its cyclic image generated by a has order m/ gcd(m, a) and must divide the order N of G.
+Applying Theorem 9.2 with this one homomorphism proves the reduction. If N is prime and N ∤ m,
+the only common divisor of N and m is one, so d = 1.
+
+Access condition. The valuation theorem requires a valid Tate uniformization representation;
+obtaining such a representation from an ordinary public elliptic-curve point over a cryptographic prime
+field is not supplied by this theorem. Likewise, merely adding public translated x-views to a public
+point does not create new homomorphic leakage. These distinctions prevent circular or misleading
+claims of faster general cryptanalysis.
+
+9.3   Fault-tolerant composition of the complete recovery procedure
+The preceding constructions can be combined rather than placed side by side.
+Theorem 9.4 (Certified recovery across damaged cryptographic observations). Let Q = [k]G be an
+authenticated point of a cyclic elliptic subgroup of order N . Suppose (i) its translated horizontal-
+coordinate code has distance dE ; (ii) each available homomorphic leakage value hi = fi (Q) is encoded
+using a translated-involution shadow code on Hi of distance δi ; (iii) every code is decoded with its
+stated distance guarantee; (iv) cyclic image logs of orders di and a residual DLP of order N/L can be
+solved. If the received point word has (eE , sE ) faults with 2eE + sE < dE and each leakage word has
+(ei , si ) faults with 2ei + si < δi , then the procedure below returns exactly k mod N :
+  1. Decode the translated horizontal views and reconstruct Q; check Q ∈ ⟨G⟩ and authenticate its
+     binding to the intended key identity.
+  2. Decode each transmitted quotient observation hi and verify hi = fi (Q) wherever independently
+     computable.
+  3. Compute ki = logfi (G) hi (mod di ) in each image, reconcile the residues by generalized CRT to
+     obtain k0 (mod L).
+  4. Solve Q − [k0 ]G = [j]([L]G) for j (mod N/L); return k = k0 + Lj and verify [k]G = Q.
+With standard
+           p generic square-root discrete-logarithm algorithms, the search portion is bounded by
+   P √
+O( i di + N/L) group operations (up to representation-dependent costs), plus coding and conversion
+overhead. A genuine security improvement over generic search is not claimed.
+
+                                                    9
+<PARSED TEXT FOR PAGE: 10 / 12>
+WHAT SURVIVES THE CUT / II                                           Research continuation / October 2026
+
+
+Proof. The distance conditions give the correct Q and all the correct hi by unique decoding. Theorem 9.2
+yields the correct compatible residue k0 and reduces the remaining unknown to the uniquely solvable
+subgroup equation. The final multiplication check verifies the result. The running-time estimate
+counts separate standard square-root solvers for each image and the residual subgroup. The causal-cut
+composition in Theorem 7.1 permits the verified recovered interface to initialize a fresh successor
+without retaining the preceding runtime.
+
+Remark 9.5 (Secrecy, fault tolerance, and authentication are distinct). These translated codes are
+designed for recovery, not secrecy. Publishing sufficiently many views can remove quotient ambiguity;
+homomorphic observations may leak scalar residues. An attacker allowed to choose all transmitted
+observations, substitute an entirely different valid codeword, or replace the authenticated public-key
+identity is not covered by a bounded-distance guarantee. A deployment therefore needs authenticated
+channels, explicit authorization to recover a key, and a reason the recipient should possess the leakage
+data. For prime-order cryptographic groups, all proper homomorphic-image reductions may be trivial;
+nothing here breaks standard ECDLP.
+
+9.4   Exhaustive small-curve certificate
+Our standalone verifier verify_key_recovery.py uses the curve
+
+           E/F101 : y 2 = x3 + 2x + 3,       #E(F101 ) = 96,     G = (1, 39),    ord(G) = 96.
+
+Its four point-view translations are (1, 39), (1, 62), (3, 6), (3, 95), with pairwise distinct doubles and
+dE = 3. For the two homomorphic quotient channels fd (Q) = [96/d]Q with d = 8 and 6, the image logs
+determine k mod 8 and k mod 6; their least-common-multiple modulus is L = 24, leaving 96/24 = 4
+scalar possibilities. Each quotient residue is separately protected by five translated sign-orbit views
+with shifts (0, 1, 2, 3, 4); both resulting codes have distance 3 and correct one arbitrary substitution.
+    For an example k = 71, the public point is Q = (50, 60), its point-view word is (44, 63, 49, 47), and
+the two recovered residues are k ≡ 7 (mod 8), k ≡ 5 (mod 6). CRT gives k0 = 23 (mod 24) and the
+residual equation gives j = 2, hence k = 23 + 24(2) = 71. We tested the same procedure for all 96 key
+values; results include:
+
+         Exact finite-field check                                                         Passed
+         Generic short-Weierstrass vertical-coordinate formula                              8,742
+         One-substitution point-view decoding trials                                        2,276
+         One-substitution quotient-view decoding trials                                     3,360
+         CRT combinations and final scalar-recovery cases                                96 each
+         Tate-component congruence and exact fiber tests                                  17,960
+         Full point-pair distance distribution                                        4,560 pairs
+
+All quantities follow from exact integer modular arithmetic, not floating-point tolerances. The verifier
+intentionally uses a small composite-order test group; the example is not an attack on deployed
+cryptographic systems. The script also exhibits a two-substitution input outside the guaranteed radius
+that decodes to a different point, verifying the sharpness of the error bound.
+
+
+10     Prior art, claims, and a falsifiable next experiment
+What was searched first. We searched for translated quotient and Kummer-code constructions,
+error-correcting codes from automorphism orbits, and 2025–2026 results on causal abstractions and het-
+erogeneous storage codes. Raja’s work on codes and orbit covers of finite abelian groups (2023/2024) [10]
+
+
+                                                    10
+<PARSED TEXT FOR PAGE: 11 / 12>
+WHAT SURVIVES THE CUT / II                                            Research continuation / October 2026
+
+
+and Mesnager–Raja on ideals in automorphism orbit codes (2026) [11] are relevant nearby constructions,
+but their advertised code objects differ from the translated S-orbit symbols here. For the cryptographic
+extension, horizontal-coordinate recovery was already studied by Okeya and Sakurai [3], while the
+cyclic-quotient/residual-log architecture is closely related to the classical Pohlig–Hellman method [4].
+Group-orbit coding and stabilizer methods are established [12], as are standard decoding, scheduling,
+and fault-propagation tools. None of the sources examined establishes exclusive priority for (4), (7), or
+their composition. The justified claim is a new, fully worked extension within this research program,
+with a further originality review needed before journal submission.
+Preregisterable experiment. Use the same source group, the same number of views, and a fresh-
+state receiver. Compare balanced and deliberately clustered symmetry-label assignments under (i)
+adversarial mixed errors and erasures, (ii) independent random erasures, and (iii) common-mode erased
+groups. Before measuring, freeze the predicted minimum distance, the complete pairwise enumerator,
+and the exact distribution-free success condition. Under independent erasures and uniformly sampled
+states, the balanced allocation must weakly outperform every clustered allocation in both mean and
+worst-case nonunique reconstruction probability; the difference is strict for occupancy imbalances of at
+least two. Under correlated erasures, report the empirical frequencies of surviving label sets rather
+than quietly replacing them with independent-channel estimates.
+
+
+Conclusion
+The productive common thread is neither maximal preservation nor indiscriminate compression. It
+is the constructive design of the right distinctions: controlled transformations recover hidden state,
+redundancy keeps that recovery possible after damage, and fresh initialization prevents irrelevant
+past state from propagating. For any nontrivial finite abelian involution, the algebraic collision
+labels determine exact distance, pairwise spectrum, deterministic erasure correction, probabilistic
+erasure failure, and optimal equal-reliability placement. These are operational design quantities, not
+metaphors. The causal-cut theorem then states precisely which of those reconstructed distinctions may
+survive into the future. In the cryptographic specialization, translated views recover a point, protected
+homomorphic observations constrain a private scalar, and a residual subgroup logarithm completes
+recovery under explicitly stated access, verification and fault assumptions. These are complementary
+operations; none implies a faster general discrete-logarithm algorithm.
+
+
+References
+ [1] D. J. Wright, The Elliptic Shadow: Coordinate Reconstruction, Translation Codes, and the Boundary of
+     Cryptographic Disclosure, research note, 8 October 2026.
+
+ [2] D. J. Wright, Five Missing Channels, Section 045, “Tropical–Phase Reduction of Elliptic Discrete Loga-
+     rithms,” research note, 8 October 2026.
+
+ [3] K. Okeya and K. Sakurai, “Efficient Elliptic Curve Cryptosystems from a Scalar Multiplication Algorithm
+     with Recovery of the y-Coordinate on a Montgomery-Form Elliptic Curve,” CHES 2001, LNCS 2162, pp.
+     126–141, https://doi.org/10.1007/3-540-44709-1_12.
+
+ [4] S. C. Pohlig and M. E. Hellman, “An Improved Algorithm for Computing Logarithms over GF(p) and Its
+     Cryptographic Significance,” IEEE Trans. Inform. Theory 24(1), pp. 106–110 (1978), https://doi.org/
+     10.1109/TIT.1978.1055817.
+
+ [5] A. Langley, M. Hamburg and S. Turner, Elliptic Curves for Security, RFC 7748 (2016), https://www.
+     rfc-editor.org/rfc/rfc7748.
+
+
+
+                                                    11
+<PARSED TEXT FOR PAGE: 12 / 12>
+WHAT SURVIVES THE CUT / II                                              Research continuation / October 2026
+
+
+ [6] D. J. Wright, What Survives the Cut: Symmetry, Shadow Codes, and Irreversible Computation, research
+     note, 13 October 2026.
+
+ [7] D. J. Wright, Vanishing Geometries: Projection, Reconstruction, Elliptic Curves, and Translation Codes,
+     research manuscript, October 2026.
+
+ [8] D. J. Wright, Complex Flowtime and Directed Causal Cuts, research manuscript, 2026.
+
+ [9] D. J. Wright, Causal Cut Containment, research manuscript, 2026.
+
+[10] R. Raja, “Codes and Orbit Covers of Finite Abelian Groups,” arXiv:2306.15387 (2023); published in
+     Discrete Mathematics 347 (2024), 113900. https://arxiv.org/abs/2306.15387.
+
+[11] S. Mesnager and R. Raja, “On order ideals in orbit codes of finite Abelian groups: Results and impacts,”
+     Discrete Mathematics 349 (2026), 114727. https://doi.org/10.1016/j.disc.2025.114727.
+
+[12] “Group-orbit code,” Error Correction Zoo, https://errorcorrectionzoo.org/c/group_orbit (accessed
+     2026).
+
+[13] K. M. Xia and E. Bareinboim, “Causal Abstraction Inference under Lossy Representations,” Proc. ICML,
+     PMLR 267 (2025). https://proceedings.mlr.press/v267/xia25a.html.
+
+[14] Y. Felekis, T. Damoulas and P. Giampouras, “Distributionally Robust Causal Abstractions,” Proc. ICML,
+     PMLR 306 (2026). https://proceedings.mlr.press/v306/felekis26a.html.
+
+[15] S.   Kadekodi    et   al.,  “Practical  Design Considerations   for  Wide    Locally  Re-
+     coverable     Codes,”      USENIX      FAST     (2023).     https://research.google/pubs/
+     practical-design-considerations-for-wide-locally-recoverable-codes-lrcs/.
+
+
+
+
+                                                    12
