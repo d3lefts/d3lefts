@@ -50,7 +50,10 @@ try{
     assert.equal(await menu.getAttribute("aria-expanded"),"false",file+" Escape state");
    }
    const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
-   assert.ok(overflow<=3,file+" horizontal overflow "+overflow+"px at "+width);
+   if(overflow>3){
+    const culprits=await page.evaluate(()=>[...document.body.querySelectorAll("*")].map(el=>({el,rect:el.getBoundingClientRect()})).filter(x=>x.rect.right>innerWidth+3&&x.rect.width>0).slice(0,8).map(x=>({tag:x.el.tagName,class:x.el.className?.baseVal??x.el.className,scrollWidth:x.el.scrollWidth,right:Math.round(x.rect.right)})));
+    assert.fail(file+" horizontal overflow "+overflow+"px at "+width+"; culprits="+JSON.stringify(culprits));
+   }
   }
   if(width===390){
    await page.goto(origin+"index.html",{waitUntil:"load"});
