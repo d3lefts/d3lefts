@@ -49,7 +49,12 @@ def run(p,exhaustive):
         if x==(zero,zero):continue
         assert rank(feature(a,x) for a in rows)==3,x
         good+=1
-    return {'prime':p,'field_size':q,'quadratic_nonsquare':d,'tested_nonzero_signals':good,'sensing_rows':len(rows),'rank':3}
+    # Attained maximal zero count for P(t,b)=b^p-t^(p-1)*b.
+    zeros=0
+    for t,b in rows:
+        if power(b,p)==mul(power(t,p-1),b):zeros+=1
+    assert zeros==1+p*(q-1)
+    return {'prime':p,'field_size':q,'quadratic_nonsquare':d,'tested_nonzero_signals':good,'sensing_rows':len(rows),'rank':3,'sharp_zero_count':zeros,'expected_zero_count':1+p*(q-1)}
 
 if __name__=='__main__':
     print(json.dumps({'status':'PASS','cases':[run(3,True),run(5,False),run(7,False)]},indent=2))
