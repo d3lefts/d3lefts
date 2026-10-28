@@ -2,6 +2,8 @@
 
 **Source dates:** 2026-10-01 to 2026-10-12. **Status:** mathematical framework manuscripts plus synthetic studies; no physical time theory or frontier-system capability claim.
 
+**Primary synthetic study:** [Transport Control — Run 001, recovered research text](sources/Transport_Control_Run_001.md). The other original PDFs await their binary release mirrors.
+
 ## A. Directed causal-cut factorization
 
 A directed causal-cut system begins each deterministic phase in canonical fresh data specified by an interface state \(q\). A phase either halts, diverges, or crosses an irreversible cut that emits the interface state \(\sigma(q)\) for the next phase. The entire evolution factors through the forward orbit of the partial map \(\sigma\).
