@@ -1,6 +1,6 @@
-# Werner-state undistillability — October 28 reconciled research atlas
+# NIGHTFALL Werner-state bounds — complete 4–20 comparison and 1–100 scoped registry
 
-**Research lead:** Devin J. Wright, NIGHTFALL / PHASESHIFT. AI-assisted computation, source assembly and verification. **Checkpoint:** 28 October 2026, after the 22–24-copy refinement. **Scope:** Every statement is a sufficient undistillability threshold under the declared hypotheses; no optimality claim. **Peer-review status:** external source-operator and mathematical-priority review open.
+**Research lead:** Devin J. Wright, NIGHTFALL / PHASESHIFT. AI-assisted computation, source assembly and verification. **Checkpoint:** October 28, 2026. Latest approved 4–20 comparison and separate 21–24 final refinement. **Scope:** Every statement is a sufficient undistillability threshold under the declared hypotheses; no optimality claim. **Peer-review status:** external source-operator and mathematical-priority review open.
 
 [Public research home](../../README.md) · [Copy-by-copy CSV](bounds_1_to_24.csv) · [Analytic finite-copy continuation](ANALYTIC_CONTINUATION.md) · [Review and asset manifest](REVIEW_AND_ASSETS.md) · [Independent review assignment](../../../../docs/review.html#werner)
 
@@ -25,68 +25,58 @@ Q_k(t,C) = Σ_{J⊆{1,…,k}} (-t)^|J| ‖Tr_J C‖_F²
 
 A proved inequality `Q_k(t,C)≥0` for **every** such `C` is a sufficient k-copy undistillability statement. Larger positive `t` is stronger. The qutrit state is NPT when `t>1/3`; in dimension `d` the boundary is `1/d`. An archive certificate expands the target vector `(1-tz)^k` into a strictly positive rational constant plus nonnegative rational multiples of mathematically admissible source-profile rows. That formal vector identity is useful only after all source rows have genuine rank-two positivity justifications.
 
-## Strongest retrieved qutrit thresholds, 1–24 copies
+## NIGHTFALL Werner bounds: 4–20 copies
 
-The table takes the maximum **within matching qutrit and source-assumption scopes** across the October 27 direct-margin and correlated archives, the October 28 sub-20 refinements, and the final October 28 22–24-copy reconciliation. The October 28 1–100 spreadsheet itself contains older **weaker** six-, seven-, eight-, and nine-copy numbers; the earlier stronger certificates are preserved here. Copy 21 inherits copy 22 by traceless rank-one padding.
+**Current approved registry · October 28, 2026 · all 17 copy counts.** Convention: `α=−t`; a larger positive `t` gives a stronger sufficient undistillability threshold. Qutrit NPT starts at `t>1/3`; at dimension `d` the boundary is `t>1/d`.
 
-| Copies `k` | Exact `t` | Decimal `t` | Evidence tier |
-|---:|---:|---:|---|
-| 1 | `1/2` | **0.500000** | Published sharp |
-| 2 | `1/2` | **0.500000** | Published sharp |
-| 3 | `1/2` | **0.500000** | Published sharp |
-| 4 | `49791/100000` | **0.497910** | Quantitative-margin transfer |
-| 5 | `47189/100000` | **0.471890** | Quantitative-margin transfer |
-| 6 | `11219/25000` | **0.448760** | Quantitative-margin transfer |
-| 7 | `10807/25000` | **0.432280** | Quantitative-margin transfer |
-| 8 | `4199/10000` | **0.419900** | Quantitative-margin transfer |
-| 9 | `256/625` | **0.409600** | Quantitative-margin transfer |
-| 10 | `10037/25000` | **0.401480** | Quantitative-margin transfer |
-| 11 | `79/200` | **0.395000** | Quantitative-margin transfer |
-| 12 | `1949/5000` | **0.389800** | Quantitative-margin transfer |
-| 13 | `1927/5000` | **0.385400** | Quantitative-margin transfer |
-| 14 | `477/1250` | **0.381600** | Quantitative-margin transfer |
-| 15 | `37849/100000` | **0.378490** | Quantitative-margin transfer |
-| 16 | `9391/25000` | **0.375640** | Quantitative-margin transfer |
-| 17 | `37313/100000` | **0.373130** | Quantitative-margin transfer |
-| 18 | `37089/100000` | **0.370890** | Quantitative-margin transfer |
-| 19 | `9203/25000` | **0.368120** | Theorem-only transfer |
-| 20 | `9159/25000` | **0.366360** | Theorem-only transfer |
-| 21 | `36119/100000` | **0.361190** | Theorem-only transfer |
-| 22 | `36119/100000` | **0.361190** | Theorem-only transfer |
-| 23 | `35151/100000` | **0.351510** | Theorem-only transfer |
-| 24 | `34001/100000` | **0.340010** | Theorem-only transfer |
-
-**Machine-readable:** [bounds_1_to_24.csv](bounds_1_to_24.csv) stores the exact rational value, the displayed decimal, source tier and originating checkpoint. These are *research ledger values*, with archived exact-checker results reported. The source JSON and checker files required for independent public execution are **pending publication**, not implicitly certified by the CSV. The qutrit table is not a complete table of theorem-only alternatives at k=4–18; it intentionally preserves the stronger conditional-margin tier.
-
-For the three newest certified-source-transfer candidates, the final October 28 report gives positive rational margins approximately
-
-| k | t | Reported positive residual |
-|---:|---:|---:|
-| 22 | 0.36119 | 1.4254464548 × 10⁻⁷ |
-| 23 | 0.35151 | 3.4514193376 × 10⁻⁷ |
-| 24 | 0.34001 | 9.7811538998 × 10⁻⁷ |
-
-These figures come from the reported `refined_k22.json`, `refined_k23.json`, `refined_k24.json` and the independent `verify_B.py` audit in the preserved private research package. The **October 28 08:41** preliminary certificate checkpoint established weaker `0.36110, 0.35100, 0.34000`, superseded later that morning. The downstream exact-checker reports are distinct from external independent scientific certification.
-
-## Separate dimension-uniform results
-
-These constructions claim sufficient thresholds for every integer local dimension `d≥3` at the displayed count. Their quantitative gain refers to the cited conservative general-dimensional comparison, **not** to the qutrit-only table.
-
-| k | Exact `t` | New `t` | Published comparison `t` |
+| Copies | Best qutrit | Theorem-only qutrit | Best all-dimension |
 |---:|---:|---:|---:|
-| 8 | `27973/100000` | **0.279730** | 0.275000 |
-| 9 | `6233/25000` | **0.249320** | 0.24888889 |
-| 10 | `2809/12500` | **0.224720** | 0.224000 |
-| 11 | `20441/100000` | **0.204410** | 0.20363636 |
-| 12 | `2343/12500` | **0.187440** | 0.18666667 |
-| 13 | `2163/12500` | **0.173040** | 0.17230769 |
-| 14 | `16067/100000` | **0.160670** | 0.160000 |
-| 15 | `3749/25000` | **0.149960** | 0.14933333 |
-| 16 | `14059/100000` | **0.140590** | 0.140000 |
+| 4 | **0.49791** | 0.49790 | 0.49375 |
+| 5 | **0.47189** | 0.47000 | 0.45000 |
+| 6 | **0.44819** | ≥0.36872 | 0.36872 |
+| 7 | **0.43140** | 0.42980 | 0.31429 |
+| 8 | **0.41889** | 0.41750 | 0.27973 |
+| 9 | **0.40920** | 0.40800 | 0.24932 |
+| 10 | **0.40148** | 0.40030 | 0.22472 |
+| 11 | **0.39500** | 0.39420 | 0.20441 |
+| 12 | **0.38980** | 0.38900 | 0.18744 |
+| 13 | **0.38540** | 0.38470 | 0.17304 |
+| 14 | **0.38160** | 0.38090 | 0.16067 |
+| 15 | **0.37849** | 0.37752 | 0.14996 |
+| 16 | **0.37564** | 0.37492 | 0.14059 |
+| 17 | **0.37313** | 0.37226 | 0.13176 |
+| 18 | **0.37089** | 0.37007 | 0.12444 |
+| 19 | **0.36812** | 0.36812 | 0.11789 |
+| 20 | **0.36636** | 0.36636 | 0.11200 |
 
-The nine exact rational identities use dimension-free sharp two-copy inequalities, the trace-difference inequality in its **correct** coefficient normalization, valid three-/four-/five-copy grouped sources, and admissible positive separable spectators. The dimension-uniform source note records the failed initial coefficient interpretation: a trace-difference term was encoded with `−1` where the source gave `−1/2`. The invalid early six-to-sixteen-copy certificates were demoted and excluded; the corrected eight-to-sixteen rows alone appear above. For NPT significance, `t>1/d` must additionally hold, which varies by dimension.
+**Evidence:** Qutrit best values at 4–18 import quantitative four-/five-copy source margins conservatively inferred from rounded published SDP/error figures; their upstream witness replay is pending. The theorem-only column uses published source theorem statements and downstream exact-certificate claims without those extra quantitative premises. The six-copy entry `≥0.36872` means an available theorem-only floor, not a sharp endpoint. The leading 19–20-copy values already belong to the theorem-only tier. The all-dimension column combines published results and corrected dimension-uniform exact source-conditional 8–16 constructions. The latter are NPT only in dimensions with `t>1/d`. The full independent certificate JSON and checkers remain outside this GitHub tree.
 
-The underlying dimension-uniform JSON and pure-Python `Fraction` checker are preserved in the October 28 workspace. An independent referee must audit the source-to-row implications and compare priority against [Tomar's current published theorems](https://www.mefyi.com/papers/werner-states-copies/).
+[Download the exact 17-row comparison CSV](werner_registry_4_to_20.csv) · [See the 1–24 exact-fraction ledger](bounds_1_to_24.csv) · [See the complete 1–100 registry](bounds_1_to_100.csv).
+
+### Historical higher six-to-nine-copy alternatives
+
+The [October 27 direct-margin working note](../werner-direct-margin/README.md) and [correlated spectator working note](../werner-correlated-6-9/RESEARCH_NOTE.md) report higher conditional alternatives: k6 **0.448760**, k7 **0.432280**, k8 **0.419900**, k9 **0.409600**. They remain published as **historical alternative source-dependent claims**, outside the latest user-confirmed 4–20 comparison registry. Independently reconcile the exact premise scope, source-margin provenance and certificate lineage before combining numerical tiers. This is a provenance distinction, not a finding that the older certificates are mathematically false.
+
+## Later refinements: 21–24 copies
+
+The separate final October 28 refinement reports:
+
+| Copies | Qutrit bound `t` | Claim scope |
+|---:|---:|---|
+| 21 | **0.36119** | Published-theorem-transfer claim; exact archive checker reported |
+| 22 | **0.36119** | Published-theorem-transfer claim; exact archive checker reported |
+| 23 | **0.35151** | Published-theorem-transfer claim; exact archive checker reported |
+| 24 | **0.34001** | Published-theorem-transfer claim; exact archive checker reported |
+
+Copy 21 inherits copy 22 via traceless rank-one padding. The final 22–24 approximate positive margins are respectively `1.4254464548e−7`, `3.4514193376e−7`, and `9.7811538998e−7`. Original `refined_k22–24.json` and independent checker bytes still await public mirroring. The earlier preliminary 22–24 values `0.36110,0.35100,0.34000` were refined in the final report.
+
+## Full 1–100-copy registry
+
+The [100-row public CSV](bounds_1_to_100.csv) distinguishes 1–3 published sharp values, 4–20 current approved three-column values, 21–24 source-theorem-transfer rational claims, and 25–100 symbolic qutrit finite-copy continuations. The latter use `B24`, whose original exact numerator/denominator and dependencies need a public mirror. This is a **symbolic analytic guarantee, not 76 additional finite-copy exact LP certificates**. The all-dimension 25–100 column uses a separately published general-dimensional fallback.
+
+## All-dimension construction audit
+
+The 8–16-copy extensions depend on correct published source inequalities. An earlier exploratory generator used trace-difference coefficient `−1` where the published theorem required `−1/2`; those invalid early candidates were excluded. Only corrected downstream certificate claims appear in this registry. All-dimension values 4–7 and 17–20 use published source/theorem fallback checkpoints.
 
 ## Finite-k analytical results — qualitative scope
 

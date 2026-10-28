@@ -127,47 +127,74 @@ def main() -> int:
         fnv = ((fnv ^ b) * 0x100000001b3) & 0xffffffffffffffff
     if len(ranked) != 372 or f"{fnv:016x}" != "c429732aac46eae9":
         FAILURES.append("PAS historical FNV ranking fingerprint mismatch")
-    # Reconciled Werner ledger: 24 exact rational rows, preservation of stronger old certificates,
-    # an honest evidence-tier split, public presentation, and rejected-25 firewall.
+    # User-approved October 28 Werner registry is the authoritative comparison source.
     from fractions import Fraction
+    import csv as wcsv
     atlas_dir = ROOT / "research/nightfall/projects/werner-atlas"
-    import csv as werner_csv
-    with (atlas_dir / "bounds_1_to_24.csv").open(encoding="utf-8", newline="") as f:
-        werner_rows = list(werner_csv.DictReader(f))
-    expected_werner = {6: Fraction(11219,25000), 7: Fraction(10807,25000),
-        8: Fraction(4199,10000), 9: Fraction(256,625),
-        15: Fraction(37849,100000), 16: Fraction(9391,25000),
-        17: Fraction(37313,100000), 18: Fraction(37089,100000),
-        21: Fraction(36119,100000), 22: Fraction(36119,100000),
-        23: Fraction(35151,100000), 24: Fraction(34001,100000)}
-    if len(werner_rows) != 24 or [int(r["k"]) for r in werner_rows] != list(range(1,25)):
-        FAILURES.append("Werner copy ledger must contain k=1..24 exactly once")
+    with (atlas_dir / "werner_registry_4_to_20.csv").open(encoding="utf-8",newline="") as stream:
+        reg = list(wcsv.DictReader(stream))
+    with (atlas_dir / "bounds_1_to_24.csv").open(encoding="utf-8",newline="") as stream:
+        early = list(wcsv.DictReader(stream))
+    with (atlas_dir / "bounds_1_to_100.csv").open(encoding="utf-8",newline="") as stream:
+        hundred = list(wcsv.DictReader(stream))
+    approved = [[4,"0.49791","0.49790","0.49375"],[5,"0.47189","0.47000","0.45000"],[6,"0.44819","≥0.36872","0.36872"],[7,"0.43140","0.42980","0.31429"],[8,"0.41889","0.41750","0.27973"],[9,"0.40920","0.40800","0.24932"],[10,"0.40148","0.40030","0.22472"],[11,"0.39500","0.39420","0.20441"],[12,"0.38980","0.38900","0.18744"],[13,"0.38540","0.38470","0.17304"],[14,"0.38160","0.38090","0.16067"],[15,"0.37849","0.37752","0.14996"],[16,"0.37564","0.37492","0.14059"],[17,"0.37313","0.37226","0.13176"],[18,"0.37089","0.37007","0.12444"],[19,"0.36812","0.36812","0.11789"],[20,"0.36636","0.36636","0.11200"]]
+    if [int(row["k"]) for row in reg] != list(range(4,21)):
+        FAILURES.append("Werner 4–20 registry is missing copy counts")
     else:
-        for row in werner_rows:
-            k = int(row["k"])
-            exact = Fraction(row["t_exact"])
-            displayed = Fraction(row["t_decimal"])
-            if exact != displayed:
-                FAILURES.append(f"Werner exact/decimal mismatch at k={k}")
-            if k > 3 and exact <= Fraction(1,3):
-                FAILURES.append(f"Werner qutrit NPT threshold not strictly above 1/3 at k={k}")
-            if k in expected_werner and exact != expected_werner[k]:
-                FAILURES.append(f"Werner strongest-archive checkpoint changed at k={k}")
-            tier = row["evidence_tier"]
-            if k<=3 and tier != "published sharp" or 4<=k<=18 and tier != "quantitative source margins" or k>=19 and tier != "published theorem statements":
-                FAILURES.append(f"Werner source tier mismatch at k={k}")
-    atlas = (atlas_dir / "README.md").read_text(encoding="utf-8")
-    continuation = (atlas_dir / "ANALYTIC_CONTINUATION.md").read_text(encoding="utf-8")
-    asset = (atlas_dir / "REVIEW_AND_ASSETS.md").read_text(encoding="utf-8")
-    webpage = (DOCS / "werner.html").read_text(encoding="utf-8")
-    if "0.34001" not in webpage or "0.35151" not in webpage or "0.36119" not in webpage:
-        FAILURES.append("Werner public page missing final k=22–24 results")
-    if "0.448760" not in webpage or "0.432280" not in webpage or "0.419900" not in webpage:
-        FAILURES.append("Werner public page lost stronger k=6–8 checkpoints")
-    if any(s not in atlas + continuation + asset for s in ("source margins", "every-finite-k", "failed", "pending")):
-        FAILURES.append("Werner dossier missing source caveat or failed experiment")
-    if "t=0.34" in (atlas_dir / "bounds_1_to_24.csv").read_text(encoding="utf-8"):
-        FAILURES.append("Failed 25-copy LP candidate accidentally promoted")
+        for row,values in zip(reg,approved):
+            k,q,t,u = values
+            if (row["best_qutrit_t"],row["theorem_only_qutrit_t"],row["best_all_dimension_t"]) != (q,t,u):
+                FAILURES.append(f"Werner current comparison mismatch at k={k}")
+            if row["best_qutrit_evidence"] != ("quantitative source margins" if k<=18 else "published theorem statements"):
+                FAILURES.append(f"Werner source-tier mismatch at k={k}")
+    latest = {21:Fraction(36119,100000),22:Fraction(36119,100000),23:Fraction(35151,100000),24:Fraction(34001,100000)}
+    if [int(row["k"]) for row in early] != list(range(1,25)):
+        FAILURES.append("Werner 1–24 exact registry missing rows")
+    else:
+        for row in early:
+            k=int(row["k"])
+            exact=Fraction(row["t_exact"])
+            if exact != Fraction(row["t_decimal"]):
+                FAILURES.append(f"Werner k={k} exact rational/decimal mismatch")
+            if k<=3 and exact != Fraction(1,2):
+                FAILURES.append(f"Werner published sharp input incorrect at k={k}")
+            if 4<=k<=20 and exact != Fraction(reg[k-4]["best_qutrit_t"]):
+                FAILURES.append(f"Werner k={k} 1–24 exact registry differs from 4–20")
+            if k in latest and exact != latest[k]:
+                FAILURES.append(f"Werner k={k} later exact threshold changed")
+            if k>3 and exact<=Fraction(1,3):
+                FAILURES.append(f"Werner k={k} fails qutrit NPT threshold")
+    if [int(row["k"]) for row in hundred] != list(range(1,101)):
+        FAILURES.append("Werner 1–100 complete registry missing rows")
+    else:
+        for row in hundred:
+            k=int(row["k"])
+            if k<=24 and row["qutrit_t_exact_or_symbolic"] != early[k-1]["t_exact"]:
+                FAILURES.append(f"Werner 1–100 early consistency failure at k={k}")
+            if k>=25:
+                expected=f"1/3+(121/20)/(6*{k})*(B24/(121/20))^(2^({k}-24))"
+                if row["qutrit_t_exact_or_symbolic"] != expected:
+                    FAILURES.append(f"Werner analytic 25–100 expression changed at k={k}")
+                if row["all_dimension_t_exact"] != f"56/(25*{k})":
+                    FAILURES.append(f"Werner all-dimension published fallback changed at k={k}")
+    site=(DOCS / "werner.html").read_text(encoding="utf-8")
+    reg_section=re.search(r'<section id="registry">(.*?)</section>',site,re.S)
+    if reg_section is None:
+        FAILURES.append("Werner public 4–20 table missing")
+    else:
+        for k,q,t,u in approved:
+            if f"<tr><td>{k}</td><td>{q}</td><td>{t}</td><td>{u}</td></tr>" not in reg_section.group(1):
+                FAILURES.append(f"Werner public 4–20 comparison missing at k={k}")
+    for k,b in latest.items():
+        if f"<tr><td>{k}</td><td>{float(b):.5f}</td>" not in site:
+            FAILURES.append(f"Werner public 21–24 result missing k={k}")
+    atlas=(atlas_dir / "README.md").read_text(encoding="utf-8")
+    if "0.448760" not in atlas or "historical" not in atlas.lower():
+        FAILURES.append("Werner historical higher alternative was silently lost")
+    if "25–100" not in site or "25–100" not in atlas:
+        FAILURES.append("Werner 1–100 symbolic boundary missing")
+    if not (atlas_dir / "ANALYTIC_CONTINUATION.md").is_file():
+        FAILURES.append("Werner analytic proof note missing")
     if FAILURES:
         print("SITE AUDIT FAILED")
         for err in FAILURES:

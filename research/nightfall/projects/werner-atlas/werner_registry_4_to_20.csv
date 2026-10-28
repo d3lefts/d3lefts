@@ -1,0 +1,18 @@
+k,best_qutrit_t,theorem_only_qutrit_t,best_all_dimension_t,best_qutrit_evidence,all_dimension_evidence
+4,0.49791,0.49790,0.49375,quantitative source margins,published bound or theorem-only source
+5,0.47189,0.47000,0.45000,quantitative source margins,published bound or theorem-only source
+6,0.44819,≥0.36872,0.36872,quantitative source margins,published bound or theorem-only source
+7,0.43140,0.42980,0.31429,quantitative source margins,published bound or theorem-only source
+8,0.41889,0.41750,0.27973,quantitative source margins,corrected source-conditional construction
+9,0.40920,0.40800,0.24932,quantitative source margins,corrected source-conditional construction
+10,0.40148,0.40030,0.22472,quantitative source margins,corrected source-conditional construction
+11,0.39500,0.39420,0.20441,quantitative source margins,corrected source-conditional construction
+12,0.38980,0.38900,0.18744,quantitative source margins,corrected source-conditional construction
+13,0.38540,0.38470,0.17304,quantitative source margins,corrected source-conditional construction
+14,0.38160,0.38090,0.16067,quantitative source margins,corrected source-conditional construction
+15,0.37849,0.37752,0.14996,quantitative source margins,corrected source-conditional construction
+16,0.37564,0.37492,0.14059,quantitative source margins,corrected source-conditional construction
+17,0.37313,0.37226,0.13176,quantitative source margins,published bound or theorem-only source
+18,0.37089,0.37007,0.12444,quantitative source margins,published bound or theorem-only source
+19,0.36812,0.36812,0.11789,published theorem statements,published bound or theorem-only source
+20,0.36636,0.36636,0.11200,published theorem statements,published bound or theorem-only source
