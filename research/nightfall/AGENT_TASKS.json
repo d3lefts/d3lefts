@@ -142,6 +142,26 @@
         "Comprehensive international prior-art audit",
         "Public mirror of frozen complete source ZIP"
       ]
+    },
+    {
+      "id": "SHADOW-ERASURE-HETEROGENEOUS-COMPLEXITY",
+      "parent": "INVOLUTION-NONABELIAN-ERASURE",
+      "date": "2026-10-28",
+      "claim": "Exact probability of ambiguous group-shadow recovery for arbitrary correlated erasures; exchangeable correlated-fault optimality; heterogeneous independent failure convex load criterion; variable-label NP-completeness; exact two-label Pareto DP",
+      "status": "PASS: self-contained written algebraic and combinatorial proof; exact finite testing passed; formal proof assistant certification and comprehensive novelty review open",
+      "theorem": "research/nightfall/projects/involution-shadow-codes/HETEROGENEOUS_ERASURE_COMPLEXITY.md",
+      "verifier": "research/nightfall/projects/involution-shadow-codes/verify_heterogeneous_erasure.py",
+      "full_archive": "NIGHTFALL_HETEROGENEOUS_ERASURE_COMPLEXITY_20261028.zip",
+      "archive_sha256": "52ee564da6480f9515c42eaefe08833ad0e2ff8498351243a369f23cb0d238ca",
+      "machine_tests": {
+        "direct_group_orbit_trials": 252,
+        "subset_sum_optima": 90,
+        "complete_pareto_frontiers": 120,
+        "exchangeable_correlated_allocations": 729,
+        "three_partition_yes_no_instances": 2
+      },
+      "external_dependency": "NP-completeness derives from established strongly NP-complete 3-PARTITION",
+      "prior_art": "Heterogeneous-failure resource allocation and partition NP hardness have established prior art; subject-specific equivalence is the NIGHTFALL contribution"
     }
   ]
 }
