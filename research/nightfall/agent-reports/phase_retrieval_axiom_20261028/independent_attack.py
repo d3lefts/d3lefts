@@ -76,6 +76,14 @@ def main():
         x=(I,)*(k)
         maxzeros,tests=zero_polynomial_attack(x,k)
         cases[f'zero_probability_k{k}']={'nontrivial_pairs_tested':tests,'max_zero_rows':maxzeros,'possible_rows':25**k,'schwartz_zippel_limit':5*25**(k-1)}
+    # Exact equality case for the improved structured-polynomial zero bound.
+    x=(I,Z); u=(Z,I);v=(Z,I)
+    witness_zero_rows=0
+    for a in product(E,repeat=2):
+        if dot([raised(ai,5) for ai in a],u)==times(raised(dot(a,x),4),dot(a,v)):
+            witness_zero_rows+=1
+    assert witness_zero_rows==1+5*(25-1)==121
+    cases['sharp_zero_density_witness']={'zeros':witness_zero_rows,'total':625,'fraction':'121/625','sharp_bound':'(p*(q-1)+1)/q**2'}
     # Random designs; independently compare all-signal feature rank to full orbit injection.
     rng=Random(20261028)
     for m in (4,6,8,12,16):
