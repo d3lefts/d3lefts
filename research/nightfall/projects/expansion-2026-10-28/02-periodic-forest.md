@@ -2,6 +2,8 @@
 
 **Source:** \`NIGHTFALL_QCD_periodic_forest_no_go_20261027.md\` (2026-10-27). **Evidence:** self-contained exact counting proof and reported independent integer checks. **Originality audit:** open. **Continuum Yang–Mills:** unresolved.
 
+**Primary manuscript:** [Full recovered October 27 research note](sources/NIGHTFALL_QCD_periodic_forest_no_go_20261027.md). **New test program:** [Direct integer checker](verify_periodic_forest.py).
+
 ## Exact four-dimensional theorem
 
 Let \(\Lambda=(\mathbb Z/L\mathbb Z)^4\), \(L\ge3\), with its standard cubical cell structure. There are \(V=L^4\) vertices, \(4V\) edges, and \(6V\) plaquettes. Let \(F\) be an undirected forest of fixed edges with \(c=V-|F|\ge1\) components. Each plaquette \(p\) has \(r_p\) fixed edges, and \(n_j=\#\{p:r_p=j\}\). For every free edge \(e\), let \(d_F(e)\) count **distinct** other free edges sharing a plaquette with \(e\). Then
