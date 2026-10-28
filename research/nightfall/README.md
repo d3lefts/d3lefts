@@ -11,6 +11,15 @@ The research program uses representation changes, independent verification, proo
 
 The [public peer-review dossier](projects/ai-safety-peer-review-2026-10-28/README.md) unifies September observation, provenance, authorization and oversight theory; SourceBound remains a separately evaluated October implementation. The original 116-file ZIP is [published as a verified GitHub Release](https://github.com/d3lefts/d3lefts/releases/tag/ai-safety-review-2026-10-28), with a [direct download](https://github.com/d3lefts/d3lefts/releases/download/ai-safety-review-2026-10-28/NIGHTFALL_AI_Safety_Peer_Review_Package_2026-10-28.zip). Its SHA-256, exact byte size and validation scope are recorded in the [release manifest](projects/ai-safety-peer-review-2026-10-28/MANIFEST.md).
 
+## New replayable source packages — October 28
+
+Two additional research checkpoints now have public, executable source code:
+
+- [Final qutrit Werner 24/25 exact rational certificates: 0.34636 and 0.34584](projects/werner-final-4-25/README.md), including a clean-Python constructor and a separately structured rational checker. The all-finite-k source-conditional sequence 1/3 + 0.31/k is recorded with its precise scope. Earlier 4–20 rows remain in their approved evidence registry pending premise reconciliation.
+- [Finite-field phase retrieval: 40-bit stronger certified span-tail reduction](projects/finite-field-phase-retrieval-2026-10-28/README.md), including two independent checkers for the conditional 2^-96 bound.
+
+The [pending original-byte GitHub Release asset queue](RELEASE_ASSET_QUEUE_20261028.md) records measured file sizes and SHA-256 hashes for the frozen masters, original Werner packages, finite-field, Sidon machine proof, factor-network source, and Erdős lower-bound reviews. This queue is **not** a claim that binary release assets have been uploaded.
+
 ## Eight-dossier October 28 research expansion
 
 The [October 28 research expansion](projects/expansion-2026-10-28/README.md) publishes eight curated, text-first technical dossiers recovered from September–October manuscript checkpoints. Their proof dependencies and open audit gates are explicit. Original binary manuscripts and certificate packages are still being prepared for separately hashed release assets.
