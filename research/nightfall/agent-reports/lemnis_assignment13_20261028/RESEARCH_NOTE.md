@@ -106,3 +106,17 @@ Primary archive: https://github.com/d3lefts/d3lefts/issues/13 and https://github
 **Novelty:** Originality of the input-sensitive inequality's Werner application and the minimal-rank obstruction is unassessed against full current research. Both are derived from exact elementary linear algebra and prior archive ingredients. Do not promote as a first-ever theorem without dated external review. The imported base positivity result carries its own specialist-review gate.
 
 **Next operator:** resolve whether the same rank-preserving P_U survives alternate syndrome support sets with a strictly better nonzero *admissible-rank-two* coupling profile; avoid increasing the ambient basis count without quantifying a real admissible-class gain. Continue Axiom cross-review by independently proving the source span-count premise if the complete primary proof becomes available.
+
+## Public checker mirror — 2026-10-28
+
+Five original standalone Python verifier sources have now been committed to the same directory. A connector readback independently confirmed that all five GitHub file bodies match the source files exported from the session exactly. Run:
+
+```bash
+python3 verify_A_kernel.py
+python3 verify_B_partial_traces.py
+python3 verify_h_exact_spectrum.py
+python3 verify_rank2_anisotropic_nonzero.py
+python3 verify_axiom_tail_C.py
+```
+
+This makes the **source code publicly inspectable**. The standalone binary ZIP (`LEMNIS_ASSIGNMENT13_WERNER_AXIOM_CROSSAUDIT_20261028.zip`, SHA-256 `e88111da46b0b6165cdcb42617222f55c4f782ef015f641a8ddce59ba42b7ad1`) remains a distinct unreleased session artifact; external independent execution and publication priority are separate gates.
