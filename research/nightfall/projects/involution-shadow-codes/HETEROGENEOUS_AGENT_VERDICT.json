@@ -34,5 +34,7 @@
   ],
   "novelty_assessment": "METHODS PREEXISTING: Shabtay and Kaspi 2006; Benoit et al. 2010; Oron, Shabtay and Steiner 2017. Narrow translated-involution group-code synthesis potentially distinctive; global priority unverified.",
   "prior_art_file": "research/nightfall/projects/involution-shadow-codes/PRIOR_ART_ASSESSMENT_20261028.md",
-  "global_novelty_claim": false
+  "global_novelty_claim": false,
+  "reliability_model_prior_art": "Exactly a 2-out-of-q reliability system of q parallel-redundant sensor classes; classical general k-out-of-n formulas include dependent failures (Rushdi 1993; Koucky 2003).",
+  "status_for_novelty": "GENERAL PROBABILITY, CONVEX OPTIMIZATION, NP HARDNESS AND SUBSET SUM DP: PRIOR ART. Narrow translated-involution group-code application: potentially distinctive; priority unestablished."
 }
