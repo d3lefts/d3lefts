@@ -69,3 +69,7 @@ jobs:
           python3 -m py_compile research/nightfall/projects/involution-shadow-codes/certify_nonabelian_instance.py research/nightfall/projects/involution-shadow-codes/verify_nonabelian_erasure_optimum.py
           python3 research/nightfall/projects/involution-shadow-codes/certify_nonabelian_instance.py research/nightfall/projects/involution-shadow-codes/S4_nonabelian_certificate.json
           python3 research/nightfall/projects/involution-shadow-codes/verify_nonabelian_erasure_optimum.py
+      - name: Verify heterogeneous erasure reliability and full two-label Pareto frontier
+        run: |
+          python3 -m py_compile research/nightfall/projects/involution-shadow-codes/verify_heterogeneous_erasure.py
+          python3 research/nightfall/projects/involution-shadow-codes/verify_heterogeneous_erasure.py
