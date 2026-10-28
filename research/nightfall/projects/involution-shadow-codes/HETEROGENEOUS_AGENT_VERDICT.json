@@ -1,0 +1,35 @@
+{
+  "program": "NIGHTFALL PHASESHIFT",
+  "date": "2026-10-28",
+  "research_lead": "Devin J. Wright",
+  "verdict": "PASS",
+  "precise_scope": "Algebraic theorem with explicit written proof; independent exact finite test cases passed; no proof assistant kernel verification",
+  "new_results": [
+    "Distribution-free formula for all correlated erasure patterns in the finite-group translated involution-orbit code",
+    "Every exchangeable correlated erasure law is optimized simultaneously by balanced coboundary label counts",
+    "Independent heterogeneous erasure rates yield convex exponential-weight bin placement",
+    "Variable-label decision allocation NP-complete on cyclic inversion-orbit groups by reduction from strongly NP-complete 3-PARTITION",
+    "Two-label dyadic reliability versus guaranteed-distance Pareto frontier solved in pseudo-polynomial O(m^2 W) time"
+  ],
+  "checks": {
+    "random_direct_orbit_reliability_trials": 252,
+    "subset_sum_optimality_instances": 90,
+    "full_pareto_frontiers_vs_complete_enumeration": 120,
+    "correlated_exchangeable_allocations": 729,
+    "correlated_exchangeable_optimal_ties": 90,
+    "dyadic_partition_reduction_yes_and_no_instances": 2,
+    "four_measurement_tradeoff": "19/64 versus 15/64; error-distance 2 versus 1"
+  },
+  "source": {
+    "manuscript": "research/nightfall/projects/involution-shadow-codes/HETEROGENEOUS_ERASURE_COMPLEXITY.md",
+    "ci_verifier": "research/nightfall/projects/involution-shadow-codes/verify_heterogeneous_erasure.py",
+    "full_verifier_archive_name": "NIGHTFALL_HETEROGENEOUS_ERASURE_COMPLEXITY_20261028.zip",
+    "full_verifier_archive_sha256": "52ee564da6480f9515c42eaefe08833ad0e2ff8498351243a369f23cb0d238ca"
+  },
+  "external_dep": "3-PARTITION strong NP-completeness is established prior art. Convex reliability allocation hardness has analogous prior results.",
+  "open_gates": [
+    "Worldwide novelty/priority assessment",
+    "Independent proof-assistant kernel formalization",
+    "Full binary release mirror"
+  ]
+}
