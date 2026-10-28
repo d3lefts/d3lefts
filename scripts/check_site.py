@@ -111,6 +111,22 @@ def main() -> int:
     rank = ROOT / "research/nightfall/projects/pas/openai_math_priority_ranking_2026-10-06.csv"
     if len(rank.read_text(encoding="utf-8").splitlines()) != 373:
         FAILURES.append("PAS frozen metadata ranking must have 372 entries")
+    # Independent Python standard-library verification of the JS-generated public ranking.
+    import hashlib
+    import csv
+    import io
+    blob = rank.read_bytes()
+    checksum = hashlib.sha256(blob).hexdigest()
+    recorded = (rank.parent / "SHA256SUMS.txt").read_text(encoding="utf-8").split()[0]
+    if checksum != recorded or checksum != "3e303b69ef8e530b5c618e61f9cb5c4527ea717b0588c59f2fb75b4afd5924e7":
+        FAILURES.append("PAS public CSV SHA-256 mismatch")
+    ranked = list(csv.DictReader(io.StringIO(blob.decode("utf-8"), newline="")))
+    seq = ",".join(row["id"] for row in ranked)
+    fnv = 0xcbf29ce484222325
+    for b in seq.encode("ascii"):
+        fnv = ((fnv ^ b) * 0x100000001b3) & 0xffffffffffffffff
+    if len(ranked) != 372 or f"{fnv:016x}" != "c429732aac46eae9":
+        FAILURES.append("PAS historical FNV ranking fingerprint mismatch")
     if FAILURES:
         print("SITE AUDIT FAILED")
         for err in FAILURES:
