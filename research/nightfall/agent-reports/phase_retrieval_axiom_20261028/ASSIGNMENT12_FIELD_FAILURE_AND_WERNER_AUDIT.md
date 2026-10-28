@@ -51,3 +51,9 @@ The script `failed_sample_audit.py` uses Numpy only to vectorize exhaustive fini
 ## Handoff / next decisive experiment
 
 The field program should attack the coupling of extra Frobenius-kernel vectors to actual powered-measurement ambiguities, as evidenced by 6 rank-only defects among 9 failure cases at k=4. A structured list-decoder may rescue such inputs while preserving fixed-field algebraic runtime. For the Werner cross-review, inspect and independently prove the archived nine-word positivity premise before promoting the 4,209 extension beyond conditional scope; then seek a rank-two-aware nonzero-cross-term inequality that strictly enlarges the current class.
+
+## Dated amendment — nine-word foundational premise independently reconstructed (2026-10-28)
+
+After the cross-sector audit, Axiom recovered the original nine-word affine-code proof from the research Library (`RESEARCH_NOTE(20261028-080810).md`) and independently reconstructed the 25-group exact rational positivity decomposition. A fresh source `audit_nineword_base.py` on this branch checks all **531,441** ordered d=3 integer kernel coefficients, the residual histogram `0:81, 4:216, 6:72, 8:216, 12:144`, and all **2,304** d=4 diagonal residuals. The rank-three negative control has exact `16Q=-3`. Details: [AUDIT_NINEWORD_BASE.md](AUDIT_NINEWORD_BASE.md).
+
+**Status change:** The imported nine-word premise now has a separately implemented exact finite replay plus a complete analytic proof argument. Human expert proof review and world-priority validation remain open. The earlier text stating it had yet to be reconstructed describes the prior checkpoint and is superseded by this dated amendment. No unrestricted Werner endpoint assertion follows.
