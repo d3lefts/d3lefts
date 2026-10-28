@@ -6,6 +6,7 @@ on:
       - "docs/**"
       - "research/nightfall/**"
       - "scripts/check_site.py"
+      - "scripts/audit_release_scope.py"
       - "scripts/site_browser_smoke.mjs"
       - "scripts/verify_*.py"
       - "research/nightfall/AGENT_TASKS.json"
@@ -15,6 +16,7 @@ on:
       - "docs/**"
       - "research/nightfall/**"
       - "scripts/check_site.py"
+      - "scripts/audit_release_scope.py"
       - "scripts/site_browser_smoke.mjs"
       - ".github/workflows/verify-site.yml"
   workflow_dispatch:
@@ -30,6 +32,8 @@ jobs:
         run: python3 scripts/check_site.py
       - name: Parse JavaScript without executing browser code
         run: node --check docs/site.js
+      - name: Self-test offline publication-scope scanner
+        run: python3 scripts/audit_release_scope.py --self-test
       - name: Browser smoke test (mobile, tablet, desktop)
         run: |
           npm install --no-save --no-package-lock playwright-core@1.56.1

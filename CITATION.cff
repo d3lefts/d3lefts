@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: >-
+  Please cite this archive as a whole with this metadata, and cite the
+  specific manuscript, author, release, and primary evidence for each
+  individual mathematical claim.
+title: "NIGHTFALL / PHASESHIFT — Independent Research Archive"
+type: dataset
+authors:
+  - family-names: Wright
+    given-names: Devin J.
+date-released: 2026-10-28
+repository-code: "https://github.com/d3lefts/d3lefts"
+url: "https://d3lefts.github.io/d3lefts/"
+abstract: >-
+  A public research archive of mathematical constructions, exact finite
+  certificates, source-conditional deductions, reproducibility tools,
+  research manuscripts, and AI-systems experiments. Claim-level validation
+  status and external source dependencies are recorded separately.
+keywords:
+  - reproducible mathematics
+  - mathematical research
+  - exact arithmetic
+  - quantum information
+  - independent verification
+  - AI safety
