@@ -96,7 +96,7 @@ Here \(\binom nr=0\) for \(n<r\). If \(m=aq+b\), \(0\le b<q\), the minimum of **
 = -\binom{u-1}{r-1}+\binom v{r-1}\le 0.
 \]
 
-Repeated transfers yield the balanced occupancy vector (5), without increasing any \(B_r\). Thus the same balanced design that maximizes worst-case Hamming distance also minimizes **every fixed-cardinality erasure ambiguity probability** \(B_r/\binom mr\) and, by taking nonnegative mixtures across cardinalities, the failure probability for **every independent erasure survival probability**. **QED.**
+Repeated transfers yield the balanced occupancy vector (5), without increasing any \(B_r\). Thus the same balanced design that maximizes worst-case Hamming distance also minimizes **every fixed-cardinality erasure ambiguity probability** \(B_r/\binom mr\) and, by taking nonnegative mixtures across cardinalities, the failure probability for **every common independent erasure survival probability**. **QED.**
 
 For independent survival probability \(p\in(0,1)\), the exact failure probability is
 
@@ -105,7 +105,7 @@ For independent survival probability \(p\in(0,1)\), the exact failure probabilit
 \tag{6}
 \]
 
-The expression extends continuously to \(p=0,1\). A universal guarantee under an arbitrary adversarial erasure pattern holds whenever at most \(d_{\min}-1\) symbols disappear. The same measurement allocation is optimal for both adversarial symbol corruption and every cardinality of random erasures.
+The expression extends continuously to \(p=0,1\). A universal guarantee under an arbitrary adversarial erasure pattern holds whenever at most \(d_{\min}-1\) symbols disappear. The same measurement allocation is optimal for both adversarial symbol corruption and every cardinality of random erasures under identically distributed coordinate erasures. With heterogeneous coordinate reliability, the optimization changes; see [the extension](HETEROGENEOUS_ERASURE_COMPLEXITY.md).
 
 **Machine audit of the nonabelian \(S_4\) example.** A separate verifier enumerated all \(2^{13}=8,192\) surviving coordinate subsets and compared the actual encoded messages, finding \(B_0=1\), \(B_1=13\), \(B_2=8\), \(B_3=1\), and \(B_r=0\) for \(r\ge4\). It exhaustively compared all \(\binom{18}{5}=8,568\) occupancy vectors of total 13 across six labels: exactly six allocations (choice of the one size-three label) tie for simultaneous optimality.
 
