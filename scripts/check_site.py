@@ -92,8 +92,25 @@ def main() -> int:
     static = set(homepage.research_rows)
     if sources != static:
         FAILURES.append(f"Research catalogue mismatch: static-only={sorted(static - sources)}, js-only={sorted(sources - static)}")
-    if len(static) < 3:
-        FAILURES.append("Curated original-results catalogue has fewer than three entries")
+    # Public website originality rule: source archives remain broader than this list.
+    allowed_originals = {
+        PREFIX + "/blob/main/research/nightfall/projects/erdos-overlap-paper.md",
+        PREFIX + "/blob/main/research/nightfall/projects/sidon-finite-30/README.md",
+        PREFIX + "/blob/main/research/nightfall/projects/pas-overview.md",
+    }
+    if sources != allowed_originals or static != allowed_originals:
+        FAILURES.append("ORIGINALITY GATE: public findings differ from three approved primary artifacts. "
+                        "Any change requires a new dated prior-art audit and evidence review.")
+    homepage_text = (DOCS / "index.html").read_text(encoding="utf-8")
+    if "SITE_ORIGINALITY_AUDIT_20261028.md" not in homepage_text:
+        FAILURES.append("Homepage missing original-results inclusion policy")
+    for removed in ("ai-safety.html", "werner.html"):
+        if (DOCS / removed).exists():
+            FAILURES.append(f"Removed unverified-priority portfolio page republished: {removed}")
+        if 'href="' + removed + '"' in homepage_text or 'href="' + removed + '"' in js:
+            FAILURES.append(f"Unoriginal promotional link returned: {removed}")
+    if "research-proposal" in homepage_text or 'kind:"proposal"' in js or '"kind":"proposal"' in js:
+        FAILURES.append("Untested proposals cannot appear in the public original-findings catalogue")
     # Every public HTML page must be discoverable, and mobile menus must be wired.
     sitemap = (DOCS / "sitemap.xml").read_text(encoding="utf-8")
     actual_urls = set(re.findall(r"<loc>([^<]+)</loc>", sitemap))
@@ -196,21 +213,10 @@ def main() -> int:
                     FAILURES.append(f"Werner analytic 25–100 expression changed at k={k}")
                 if row["all_dimension_t_exact"] != f"56/(25*{k})":
                     FAILURES.append(f"Werner all-dimension published fallback changed at k={k}")
-    site=(DOCS / "werner.html").read_text(encoding="utf-8")
-    reg_section=re.search(r'<section id="registry">(.*?)</section>',site,re.S)
-    if reg_section is None:
-        FAILURES.append("Werner public 4–20 table missing")
-    else:
-        for k,q,t,u in approved:
-            if f"<tr><td>{k}</td><td>{q}</td><td>{t}</td><td>{u}</td></tr>" not in reg_section.group(1):
-                FAILURES.append(f"Werner public 4–20 comparison missing at k={k}")
-    for k,b in latest.items():
-        if f"<tr><td>{k}</td><td>{float(b):.5f}</td>" not in site:
-            FAILURES.append(f"Werner public 21–24 result missing k={k}")
     atlas=(atlas_dir / "README.md").read_text(encoding="utf-8")
     if "0.448760" not in atlas or "historical" not in atlas.lower():
         FAILURES.append("Werner historical higher alternative was silently lost")
-    if "25–100" not in site or "25–100" not in atlas:
+    if "25–100" not in atlas:
         FAILURES.append("Werner 1–100 symbolic boundary missing")
     if not (atlas_dir / "ANALYTIC_CONTINUATION.md").is_file():
         FAILURES.append("Werner analytic proof note missing")
