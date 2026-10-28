@@ -71,9 +71,9 @@ Its 552 ordered distinct pairs are all explicitly checked against the orbit code
 
 ## Machine-verification record
 
-- **Nine test actions:** \(S_3\), \(S_4\), outer involution of \(A_4\), four dihedral groups, and two involutions of \(Q_8\).
-- **19,866 translation tuples**, including every ordered tuple of lengths 1–5 for \(S_3\) and \(D_6\).
-- **745,064 ordered distinct message pairs** explicitly checked; every full distance enumerator matched (3).
+- **Thirteen test actions:** inversion on four finite cyclic groups, \(S_3\), \(S_4\), an outer involution of \(A_4\), four dihedral groups, and two involutions of \(Q_8\).
+- **20,554 translation tuples**, including every ordered tuple of lengths 1–5 for \(S_3\) and \(D_6\).
+- **772,976 ordered distinct message pairs** explicitly checked; every full distance enumerator matched (3).
 - Independently, `certify_cayley_instance.py` verifies the Cayley table's group axioms, the involution's homomorphism law, the exact orbit words and the entire spectrum of the separate \(S_4\) instance, requiring only Python's standard library. Seven mutated inputs are rejected.
 - To reproduce: `python3 verify_nonabelian.py`, `python3 certify_cayley_instance.py S4_certificate.json`, `python3 adversarial_controls.py`.
 - Exact source hashes and runtime output are frozen in `MANIFEST.json` and `audit_result.json`.
