@@ -9,7 +9,7 @@ The research program uses representation changes, independent verification, proo
 
 ## AI safety theorem-and-evidence series (review release: 28 October 2026)
 
-The [public peer-review dossier](projects/ai-safety-peer-review-2026-10-28/README.md) unifies September observation, provenance, authorization and oversight theory; SourceBound remains a separately evaluated October implementation. The original 116-file ZIP is frozen separately. Its SHA-256 and public-mirror limitations are recorded in the [release manifest](projects/ai-safety-peer-review-2026-10-28/MANIFEST.md).
+The [public peer-review dossier](projects/ai-safety-peer-review-2026-10-28/README.md) unifies September observation, provenance, authorization and oversight theory; SourceBound remains a separately evaluated October implementation. The original 116-file ZIP is [published as a verified GitHub Release](https://github.com/d3lefts/d3lefts/releases/tag/ai-safety-review-2026-10-28), with a [direct download](https://github.com/d3lefts/d3lefts/releases/download/ai-safety-review-2026-10-28/NIGHTFALL_AI_Safety_Peer_Review_Package_2026-10-28.zip). Its SHA-256, exact byte size and validation scope are recorded in the [release manifest](projects/ai-safety-peer-review-2026-10-28/MANIFEST.md).
 
 ## September foundations and newly recovered results
 

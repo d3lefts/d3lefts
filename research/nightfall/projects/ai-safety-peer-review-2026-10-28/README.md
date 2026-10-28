@@ -16,7 +16,12 @@ September 2026 agent-safety research is organized as a series on **information s
 - [Three Ceilings on Oversight](../../2026-09-three-ceilings/README.md): observation, computation and authenticated evidence, each relative to the evaluator.
 - [SourceBound research record](../sourcebound/CLAIM_EVIDENCE_LEDGER.md): source-linked claims, browser evidence, revision tests.
 
-**The 28 October peer-review ZIP is frozen separately.** This GitHub directory is a *textual public mirror / reviewer index*, not a byte-for-byte upload of the 116-file archive. The complete ZIP includes three newly typeset PDFs, LaTeX, a revised SourceBound runnable implementation, original September PDFs, full logs, and verifier scripts. [Release inventory and SHA-256](MANIFEST.md). Do not treat the absence of unmirrored binaries here as verification.
+**The complete 116-file ZIP is published as a verified [GitHub Release](https://github.com/d3lefts/d3lefts/releases/tag/ai-safety-review-2026-10-28).** [Download the full archive](https://github.com/d3lefts/d3lefts/releases/download/ai-safety-review-2026-10-28/NIGHTFALL_AI_Safety_Peer_Review_Package_2026-10-28.zip) (4,272,825 bytes; SHA-256: `c2cd8db71f7116a90d6ba0d0ddfaf6a08b6d710328c0c7d463fa1d1af5f74618`). The ZIP includes three newly typeset PDFs, LaTeX, the bug-fixed SourceBound implementation, original September PDFs, run logs and verifiers. This folder remains the *textual reviewer index*; the full binary source package is the linked Release asset. [Release manifest](MANIFEST.md).
+
+## Direct downloads
+
+- [Download exact frozen review ZIP](https://github.com/d3lefts/d3lefts/releases/download/ai-safety-review-2026-10-28/NIGHTFALL_AI_Safety_Peer_Review_Package_2026-10-28.zip)
+- [GitHub Release with verified SHA-256](https://github.com/d3lefts/d3lefts/releases/tag/ai-safety-review-2026-10-28)
 
 ## Main findings
 
