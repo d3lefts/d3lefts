@@ -25,7 +25,7 @@ The initial release emphasized the October mathematics campaign. A dated review 
 
 | Research area | Strongest documented result | Validation and limits |
 | --- | --- | --- |
-| Erdős minimum overlap | Exact 131,072-cell continuous-translation upper bound **0.380856370118029325246278763656…** | Archived six-prime NTT/CRT proof and independent checks reported passing; the 131,072-value Arena submission was rejected for exceeding the 100,000-value limit. Earlier accepted first-place score **0.3808564043546676** is separate. No new universal lower bound is claimed. |
+| Erdős minimum overlap | Exact 131,072-cell continuous-translation upper bound **0.380856370118029325246278763656…** | Six-prime NTT/CRT internally rerun by separate implementations; external specialist replay pending. The exact 131,072-cell witness (SHA-256 `a574c280…`) differs from an oversize rejected 131,072-cell attempt (score 0.380856370118029394982…) and a first-place accepted snapshot at **0.3808564043546676** (input file/cell count unrecovered). Price reports c > 0.38055470 (finite check replayed); Wetch reports a stronger c > 0.380627425 (locally verified), both subject to stated full-reduction review limits. No new NIGHTFALL global lower bound is claimed. |
 | Werner-state distillation | Qutrit finite-copy conditional exact-rational thresholds **six: 0.448760; seven: 0.432280; eight: 0.419900; nine: 0.409600** | Certificate identities and rational margin checks passed; quantitative external four-/five-copy source inequalities remain imported premises whose primary SDP witnesses require independent replay. |
 | Fourth-power finite-field retrieval | A systematic random sensing construction using certified ordinary LLL, with **at most 1,024** candidate checks on a high-probability good-design event, recovers every signal up to fourth-root phase. | Manuscript proof/AI audit and computational tests; external expert review outstanding. Arbitrary-design full-preimage enumeration can be exponential. |
 | Finite Sidon (4,5) structures | Explicit 30-element set with maximum Sidon subset **17**, ratio **17/30**; finite-depth extensions analyzed. | Exact C++ subset audit and independent Python/transfer checks. Asymptotic 5/9 is established background, not claimed as a new record. |
@@ -49,6 +49,7 @@ The initial release emphasized the October mathematics campaign. A dated review 
 
 
 - [Erdős overlap construction](projects/erdos-overlap-paper.md)
+- [Erdős witness identity, prior-art bound comparison and lower-bound qualifications](projects/erdos/STATUS_AND_PRIOR_ART_20261028.md)
 - [Werner finite-copy source-dependent rational certificates](projects/werner-direct-margin/README.md)
 - [Werner six–nine copy construction](projects/werner-correlated-6-9/RESEARCH_NOTE.md)
 - [SIDON finite witness](projects/sidon-finite-30/README.md)
