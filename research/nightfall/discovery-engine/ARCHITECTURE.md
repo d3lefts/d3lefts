@@ -97,3 +97,11 @@ Sources:
 2. **Next implementation:** wrap the already working exact overlap lab's source atoms; add candidate/version/lineage JSON and event-driven resegmentation.
 3. **Second-domain transfer:** wrap SourceBound's assertion spans, plus fixed-source rebinding verifier; run seeded counterexample tasks.
 4. **Learned router:** define an end-to-end objective over valid certified discoveries, use test-time feedback strictly on exploration splits; compare against frozen and heuristic router policies at matched compute. This remains a research task, with no existing trained model.
+
+## Executed Stage 2: downstream-supervised policy selection
+
+The workbench contains `granularity_study.py`, with independent `granularity_oracle.py` as the exact atomic verification path. Candidate state and chunk policy are independent experimental coordinates. Frozen fixed, event-adaptive heuristic, atomic and training-selected policies see identical candidate pools and exact verification budgets.
+
+The policy selector searches a grid of 18 configurations of max fine span, edge-trigger value, and max coarse children. It optimizes exact downstream training gains, with coarse-operation cost only as a tie break. The held-out split uses independent deterministic seeds and is excluded from model choice. This is a discrete supervised control baseline, not a neural H-Net recreation.
+
+The pre-registered report includes: source SHA-256 digests by split; raw objective values; exact budget; per-policy certified proxy gains; rejected proposed source spans; compression ratios; coarse scoring-operation totals; selected parameters; and explicit domain-transfer limitations. Performance gains, if any, belong to this restricted synthetic suite pending additional splits, confidence intervals, compute accounting and independent execution. The immutable source/trust boundaries and source-domain checker decisions are evaluated from original atoms after candidate selection.

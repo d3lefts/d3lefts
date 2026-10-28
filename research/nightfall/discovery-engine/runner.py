@@ -47,6 +47,14 @@ RUNNERS = {
         "outputs": [],
         "scope": "Small finite oversight assertions, not a held-out SourceBound performance result."
     },
+    "granularity": {
+        "files": ["research/nightfall/discovery-engine/adaptive_resolution.py",
+                  "research/nightfall/discovery-engine/granularity_oracle.py",
+                  "research/nightfall/discovery-engine/granularity_study.py"],
+        "steps": [("granularity_study.py", "--output", "granularity_results.json")],
+        "outputs": ["granularity_results.json"],
+        "scope": "Paired synthetic cyclic overlap and source-span proxies. Certified finite checks, no continuous EA36 or natural-web SourceBound claim."
+    },
     "ea36": {
         "files": ["scripts/verify_erdos_independent.py"],
         "steps": [("verify_erdos_independent.py", "--self-test")],
@@ -128,6 +136,19 @@ def execute(project: str, experiment: dict, timeout: int):
             (work/source.name).write_bytes(data)
             receipt["source_hashes"][path]=digest(data)
         for argv in spec["steps"]:
+            if project == "granularity":
+                config=experiment.get("plan",{}).get("config",{}).get("granularity",{})
+                if not isinstance(config,dict):
+                    raise ValueError("granularity configuration must be a mapping")
+                values={}
+                for name,default,low,high in (("seed",1729,0,2**32-1),
+                                              ("train",12,3,32),("test",12,3,32)):
+                    value=config.get(name,default)
+                    if type(value) is not int or not low<=value<=high:
+                        raise ValueError("invalid granularity configuration: "+name)
+                    values[name]=value
+                argv=(*argv,"--seed",str(values["seed"]),"--train",str(values["train"]),"--test",str(values["test"]))
+                receipt["study_config"]=values
             args=[sys.executable,*argv]
             try:
                 proc=subprocess.run(args,cwd=work,capture_output=True,text=True,timeout=timeout,check=False,

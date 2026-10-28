@@ -68,6 +68,15 @@ try{
   assert.match(zipDownload.suggestedFilename(),/\.zip$/,"Exported ZIP");
   const engineOverflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
   assert.ok(engineOverflow<=3,"Discovery overflow: "+engineOverflow+" at "+width);
+  await page.locator('[data-project="granularity"]').click();
+  await page.locator('[data-tab="experiments"]').first().click();
+  assert.equal(await page.locator('[data-studysetting="train"]').count(),1,"Granularity train control");
+  assert.equal(await page.locator('[data-studysetting="test"]').count(),1,"Granularity held-out control");
+  await page.locator('[data-studysetting="train"]').fill("4");
+  await page.locator('[data-studysetting="train"]').dispatchEvent("change");
+  await page.locator('[data-act="run"]').first().click();
+  assert.equal(await page.locator(".evidence").count(),1,"Granularity frozen external plan");
+  assert.match(await page.locator(".evidence").innerText(),/EXTERNAL RUN PENDING/,"No fabricated scientific result");
   if(width===390){
    await page.goto(origin+"index.html",{waitUntil:"load"});
    await page.locator("#project-search").fill("werner");

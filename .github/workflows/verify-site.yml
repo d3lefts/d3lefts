@@ -40,6 +40,22 @@ jobs:
           node scripts/test_discovery_core.cjs
       - name: Discovery Engine external worker acceptance and tamper tests
         run: python3 scripts/test_discovery_worker.py
+      - name: Check adaptive granularity study with exact adversarial tests
+        run: |
+          python3 -m unittest discover -s research/nightfall/discovery-engine -p 'test_adaptive_resolution.py'
+          python3 -m unittest discover -s research/nightfall/discovery-engine -p 'test_granularity_study.py'
+      - name: Run frozen paired held-out granularity benchmark
+        run: |
+          python3 research/nightfall/discovery-engine/granularity_study.py --seed 1729 --train 12 --test 12 --output /tmp/granularity_results.json
+          python3 -m json.tool /tmp/granularity_results.json > /dev/null
+          sha256sum /tmp/granularity_results.json
+          cp /tmp/granularity_results.json granularity_results.json
+      - name: Archive bounded synthetic study receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-granularity-study
+          path: granularity_results.json
+          retention-days: 90
       - name: Self-test offline publication-scope scanner
         run: python3 scripts/audit_release_scope.py --self-test
       - name: Browser smoke test (mobile, tablet, desktop)

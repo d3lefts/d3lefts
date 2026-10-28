@@ -2,7 +2,7 @@
 const assert=require("node:assert/strict");
 const C=require("../docs/discovery-core.js");
 assert.equal(C.VERSION,"1.0.0");
-assert.equal(C.PROJECTS.length,5);
+assert.equal(C.PROJECTS.length,6);
 assert.equal(C.FAMILIES.length,8);
 let checks=0;
 for(let n=5;n<=23;n++)for(let m=2;m<n;m++)for(const op of C.FAMILIES){

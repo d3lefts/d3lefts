@@ -64,3 +64,32 @@ python3 -m unittest discover -v -p 'test_*.py'
 **Research metric:** compute per independently replayable certified result and downstream transfer. The Cartesia language-model compute multipliers are external findings, and no analogous NIGHTFALL gain has been measured.
 
 Primary sources: [Cartesia H-Net Part I](https://www.cartesia.ai/blog/from-tokens-to-bytes-part-1), [Part II](https://www.cartesia.ai/blog/from-tokens-to-bytes-part-2).
+
+## Stage 2 — Granularity as an optimized experimental coordinate (2026-10-28)
+
+The scientific worker now accepts the **Adaptive granularity study** environment. It executes the bounded paired study using its source-controlled `granularity_study.py`, `granularity_oracle.py`, and `adaptive_resolution.py` modules, then exports a hashed results receipt.
+
+The study compares **atomic**, **fixed**, **event-adaptive heuristic**, and **trained discrete policy-selection** schemes. The training selector jointly searches fine chunk budget, edge-trigger strength, and coarse grouping width, using exact *training* outcomes as its objective. Held-out cases are generated from distinct frozen seeds. Each arm receives identical candidate pools and the same count of independent exact oracle calls.
+
+Two proxy domains are included: binary *cyclic* overlap and source-span support with immutable trust boundaries. These are **synthetic engineering benchmarks**, with no claimed transfer to continuous EA #36 or real-world SourceBound effectiveness. The independent atomic oracle reconstructs the original byte atoms for each accepted result. Every policy is checked for lossless reconstruction and trust-boundary preservation.
+
+### Run the complete matched-budget study
+
+```bash
+python3 -m unittest discover -s research/nightfall/discovery-engine -p 'test_granularity_study.py'
+python3 research/nightfall/discovery-engine/granularity_study.py --seed 1729 --train 12 --test 12 --output granularity_results.json
+```
+
+The GitHub website verification workflow runs the exact tests and this study, writes the result SHA-256, and publishes its report as a downloadable workflow artifact.
+
+A saved browser workspace can select **Adaptive granularity study**, set its training/test counts and seed, freeze the experiment, export the ordinary 8-file research ZIP, and send it to the allowlisted local scientific worker:
+
+```bash
+python3 research/nightfall/discovery-engine/runner.py PACKAGE.zip --out receipt.json
+```
+
+The worker restricts the configurations to training/test sizes 3–32 and a 32-bit random seed, and signs no scientific validity beyond its stated exact finite scope. Its package receipt hashes the benchmark's generated JSON.
+
+### What this establishes
+
+The implementation establishes downstream-supervised *discrete selection* of representation boundaries and a matched evaluation protocol. It is **not** Cartesia's differentiable end-to-end boundary network. The measured compute model records coarse scoring operations and exact calls separately; training/segmentation overhead and elapsed time must be included for any systems-speedup claim. Third-party independent replay, natural-web held-out trials, and continuous-overlap validation remain separate gates.
