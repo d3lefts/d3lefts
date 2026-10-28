@@ -1,0 +1,907 @@
+
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,array}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage{parskip}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{longtable}
+
+\hypersetup{pdftitle={The Counterfactual Authorization Gap: Why Least Privilege Does Not Compose},
+  pdfauthor={Devin J. Wright},
+  pdfsubject={Compositional authorization, least privilege, capability envelopes}}
+\pagestyle{fancy}\fancyhf{}\fancyfoot[C]{\thepage}
+\setlength{\headheight}{14pt}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newcommand{\TC}{\operatorname{TC}}
+\newcommand{\Adm}{\operatorname{Adm}}
+\newcommand{\Env}{E}
+\newcommand{\CCE}{\Delta}
+\newcommand{\rhoCF}{\rho}
+\newcommand{\etaMin}{\eta}
+\newcommand{\kappaC}{\kappa}
+\newcommand{\Pow}{\mathcal P}
+\newcommand{\Cset}{\mathcal C}
+\newcommand{\Tset}{\mathcal T}
+\newcommand{\Qset}{\mathcal Q}
+
+\title{\textbf{The Counterfactual Authorization Gap:}\\
+Why Least Privilege Does Not Compose\\[4pt]
+\large Capability Envelopes, Resource Frontiers, and the Limits of Local Authorization}
+\author{Devin J. Wright\\Independent Researcher}
+\date{September 28, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Least-privilege authorization commonly evaluates whether individual grants are sufficient for a task. Agentic systems challenge this decomposition because capabilities can emerge from combinations of individually admissible tools, data, credentials, and delegated authorities. We study whether local least privilege composes into global least privilege.
+
+We introduce the \emph{counterfactual authorization gap}: the set of capabilities realizable by an agent that are absent from every resource-matched admissible alternative. For a reference class $Q$, its capability envelope is
+\[
+E(Q)=\bigcup_{q\in Q}\TC(q),
+\]
+and the gap of a realized agent $J$ is
+\[
+\Delta(J,Q)=\TC(J)\setminus E(Q).
+\]
+The union is essential: closing the union permits arbitrary recombination across counterfactual configurations and, when singleton grants are admissible, collapses the boundary.
+
+The framework separates grant excess from capability excess. A configuration may violate a resource budget while producing no capability outside the counterfactual envelope. We define a counterfactual resource frontier $\rho(\tau)$, the minimum resource level of an admissible configuration that realizes capability $\tau$, and characterize escape as the region where realized capabilities require more resources than the authorized reference budget.
+
+We establish a precise information boundary for local authorization: mechanisms whose authorization state depends only on per-component closure observations cannot, in general, determine whether a composition remains inside its counterfactual envelope. The distinction is witnessed by two rule systems with identical singleton behavior and identical singleton-based envelopes but different conjunctive composition. We further prove a tight family in which every proper subconfiguration is absorbed by a cardinality budget while the full composition escapes.
+
+Auditing the counterfactual boundary is computationally hard. For monotone Horn systems with binary rules, the absorption problem is NP-complete and escape is coNP-complete; the problem is polynomial for unary rules, explicitly enumerated reference classes, and every fixed budget. Sound cut and fractional-packing certificates provide practical sufficient conditions for escape while remaining incomplete in general.
+
+The result is a reference-class theory of least privilege: least privilege is a property of a comparison class, and under conjunctive dependencies that property is generally non-compositional. The theory is intended as a formal layer between local permission checks and chain-aware authorization systems.
+\end{abstract}
+
+\textbf{Keywords:} least privilege; authorization; agent security; compositional security; capability systems; Horn closure; counterfactual reasoning; separation of duty; attack graphs; AI agents
+
+\section{Introduction}
+
+Authorization systems are usually decomposed into decisions about principals, permissions, resources, tools, credentials, or individual actions. This decomposition is useful because it makes policy enforceable at well-defined control points. It also creates a question that becomes acute in agentic systems: what happens when individually admissible authorities interact?
+
+An agent may simultaneously hold tools, private-data access, credentials, delegated authorities, memory, child agents, and temporary resources. Its effective capability therefore need not be readable directly from its primitive grants. The distinction between grants and realized capability is classical in protection systems and attack-graph analysis, while recent work has made the same structural problem explicit for AI agents \cite{harrison1976, sheyner2002, ou2005,spera2026,campbell2026}.
+
+The usual composition question is whether two or more individually safe configurations can jointly reach a forbidden capability. Spera gives a formal negative answer for conjunctive capability systems: the safe region need not be closed under union \cite{spera2026}. Recent empirical and architectural work reaches the same boundary from different directions. Skill ecosystems can contain pairs of individually screened skills whose composition satisfies a forbidden conjunction \cite{wang2026}; multi-tool authorization schemes increasingly compose policy at chain level rather than relying on independent tool checks \cite{schneider2026}; and agent authorization frameworks address privilege escalation, runtime acquisition, and identity governance at adjacent layers \cite{ji2026,yang2026,zhu2026,booth2026}.
+
+This paper asks a narrower comparative question:
+
+\[
+\boxed{\text{Can local least privilege compose into global least privilege?}}
+\]
+
+The answer developed here is negative in a precise model. The key is to stop treating ``least privilege'' as a property of a grant set alone. A capability can be excessive relative to one comparison class and entirely acceptable relative to another. The appropriate object is therefore a \emph{counterfactual envelope}: what can at least one admissible, resource-matched alternative configuration accomplish?
+
+For a realized agent $J$ and reference class $Q$,
+\[
+E(Q)=\bigcup_{q\in Q}\TC(q),
+\qquad
+\Delta(J,Q)=\TC(J)\setminus E(Q).
+\]
+The set $\Delta(J,Q)$ is the \emph{counterfactual authorization gap}. It contains precisely those capabilities of $J$ that no single member of the reference class can realize.
+
+This definition produces a structural distinction that ordinary budget checks erase:
+\[
+\text{excess authority}\neq\text{excess capability}.
+\]
+A configuration may be over budget while all of its realized capabilities remain available to some compliant alternative. Conversely, a composition can cross a capability boundary even when each constituent is individually represented within the reference envelope.
+
+The paper makes four contributions.
+
+\begin{enumerate}[leftmargin=*]
+\item It introduces the counterfactual authorization gap $\Delta(J,Q)$ and the capability envelope $E(Q)$ as a reference-class formulation of least privilege.
+\item It formalizes an information boundary for local authorization: per-component closure observations do not generally determine compositional safety.
+\item It defines a counterfactual resource frontier $\rhoCF(\tau)$ and uses it to characterize capability-relevant excess independently of raw grant count.
+\item It gives the computational boundary of the audit: coNP-completeness for binary Horn rules, tractable special cases, and sound but incomplete escape certificates.
+\end{enumerate}
+
+The paper deliberately does not claim that compositional privilege, least privilege, counterfactual security reasoning, or minimum-generator hardness is new. Those bodies of work predate this formulation. The intended contribution is their synthesis around a specific authorization boundary: \emph{what a realized composition can do that no resource-matched admissible alternative can do}.
+
+\section{Positioning and Related Work}
+
+\subsection{Compositional capability safety}
+
+The closest mathematical antecedent is Spera's formal treatment of non-compositional safety in conjunctive capability hypergraphs \cite{spera2026}. In that model, two configurations can each be safe with respect to a fixed forbidden set while their union reaches a forbidden capability. The safe region is consequently a lower set that need not be closed under union.
+
+The present framework does not rediscover that phenomenon. Instead, it makes the forbidden region endogenous to a reference class:
+\[
+F_Q=\Tset\setminus E(Q).
+\]
+A configuration is counterfactually admissible precisely when
+\[
+\TC(G)\cap F_Q=\varnothing.
+\]
+The structural non-compositionality is therefore inherited from capability closure; the distinctive question is how the boundary $F_Q$ is generated and audited.
+
+\subsection{Protection systems, separation of duty, and attack graphs}
+
+The underlying combinatorics have long security antecedents. The safety problem for protection systems asks what rights can eventually be acquired \cite{harrison1976}. Separation-of-duty verification studies constraints on combinations of roles and permissions and has established coNP-complete verification problems \cite{li2007}. Attack graphs represent privilege escalation through reachability, often with conjunctions corresponding to Horn-style dependencies \cite{sheyner2002,ou2005,jha2002}. Minimum critical attack sets and $k$-zero-day metrics likewise ask for the smallest initial capability set that reaches a target \cite{jha2002,pamula2006,wang2014}.
+
+These works supply the combinatorial substrate for minimum generating sets. The counterfactual envelope changes the authorization question from ``is this capability forbidden?'' to ``is this capability absent from every configuration satisfying the chosen resource constraint?''
+
+\subsection{Agent authorization and composition}
+
+Recent agent-security work makes composition operational. Campbell's composition-drift model treats tools, data sources, delegated authorities, and child agents as a runtime capability supply chain and reports empirical drift in which individually approved changes accumulate into unapproved reach \cite{campbell2026}. Wang et al.\ measure structurally risky compositions among individually screened agent skills \cite{wang2026}. Schneider et al.\ compose per-tool policies into chain-level controls and propagate constraints through runtime tool use \cite{schneider2026}. Ji et al.\ use mandatory access control and information-flow structure to constrain agent-tool interactions \cite{ji2026}. Yang et al.\ study a different counterfactual least-privilege problem: whether an agent selects a higher-privilege tool when a sufficient lower-privilege tool exists \cite{yang2026}. Zhu studies runtime authorization of resources acquired by agents, including relational envelopes over resource-capability graphs \cite{zhu2026}.
+
+The present paper is complementary to these approaches. Tool-level counterfactuals compare alternative tools for a decision; the present envelope compares alternative \emph{configurations}. Chain-aware policy composition computes an authorization state for a particular chain; the present theory asks whether that state lies within a reference-class envelope. Runtime acquisition adds new authority over time; the present framework can treat acquired primitives as members of the realized configuration, while leaving acquisition provenance as an implementation concern.
+
+NIST's 2026 concept paper identifies identity, authorization, auditing, and prompt-injection controls as central requirements for software and AI agents \cite{booth2026}. The framework here supplies a mathematical layer for one specific question in that broader authorization problem.
+
+\subsection{Counterfactual security}
+
+Counterfactual reasoning has established uses in security policy analysis and trace auditing \cite{peralta2011,mccall2017,zhou2026}. Those works typically compare a baseline with a hypothetical modification: a policy submission, credential change, or skill attachment. Here the counterfactual object is a class:
+\[
+Q=\{q:\Adm(q)\land \kappa(q)\le m\}.
+\]
+The comparison is therefore
+\[
+\TC(J)\stackrel{?}{\subseteq}\bigcup_{q\in Q}\TC(q).
+\]
+The class quantifier is the essential difference.
+
+\section{Formal Model}
+
+\subsection{Transformations and closure}
+
+Let $\Tset$ be a finite universe of transformations and $\Cset\subseteq\Tset$ the grantable primitive capabilities. A transformation may represent reading a resource, creating a resource, modifying data, issuing a credential, delegating authority, invoking another agent, or producing a persistent artifact.
+
+A rule system $R$ is a finite set of rules
+\[
+S\rightarrow t,
+\qquad S\subseteq\Tset,\ t\in\Tset.
+\]
+For $X\subseteq\Tset$, let $\TC(X)$ be the least superset of $X$ closed under $R$. Thus $\TC$ is extensive, idempotent, and monotone:
+\[
+X\subseteq Y\quad\Longrightarrow\quad\TC(X)\subseteq\TC(Y).
+\]
+We study potential capability rather than execution probability. Deny rules, revocation, temporal controls, guardrails, and other non-monotone mechanisms require an extension of the model.
+
+An agent $J$ has primitive configuration $C(J)\subseteq\Cset$ and potential capability
+\[
+\TC(J):=\TC(C(J)).
+\]
+
+\subsection{Reference classes}
+
+A reference class is defined by an admissibility predicate and a resource constraint. For the principal results, let $\kappa:\Pow(\Cset)\to\mathbb R_{\ge0}$ be a scalar resource cost, monotone under inclusion, and let $m\ge0$ be a budget. Define
+\[
+Q_m=\{q\subseteq\Cset:\Adm(q)\land \kappa(q)\le m\}.
+\]
+More generally, a vector-valued resource constraint may be used; the scalar case isolates the main phenomenon.
+
+The class is assumed downward closed:
+\[
+q\in Q_m,\ s\subseteq q
+\quad\Longrightarrow\quad s\in Q_m.
+\]
+The reference class must be defined independently of the target capability under audit. Otherwise the comparison becomes circular.
+
+\section{The Counterfactual Authorization Gap}
+
+\subsection{The envelope}
+
+\begin{definition}[Counterfactual capability envelope]
+For a reference class $Q$,
+\[
+E(Q)=\bigcup_{q\in Q}\TC(q).
+\]
+\end{definition}
+
+The envelope contains transformations realized by at least one admissible configuration. It does not contain transformations that require combining capabilities drawn from several different admissible configurations.
+
+This distinction is essential. If $q_1,q_2\in Q$ and $x\in\TC(q_1)$, $y\in\TC(q_2)$, the fact that $x,y\in E(Q)$ does not imply that $x$ and $y$ can be jointly present in one admissible configuration. Closing the union would erase exactly the resource correlation that defines the reference class.
+
+\begin{lemma}[Collapse of unrestricted envelope closure]
+Suppose every singleton $\{c\}$ for $c\in\Cset$ belongs to $Q$. Then
+\[
+\TC(E(Q))=\TC(\Cset).
+\]
+Consequently, defining the envelope as $\TC(E(Q))$ makes escape impossible for every agent whose grants are drawn from $\Cset$.
+\end{lemma}
+
+\begin{proof}
+For every $c\in\Cset$, $c\in\TC(\{c\})\subseteq E(Q)$, hence $\Cset\subseteq E(Q)$ and $\TC(\Cset)\subseteq\TC(E(Q))$. Conversely, each $q\in Q$ is a subset of $\Cset$, so $\TC(q)\subseteq\TC(\Cset)$ and therefore $E(Q)\subseteq\TC(\Cset)$. Idempotence and monotonicity give the reverse inclusion.
+\end{proof}
+
+\subsection{Escape}
+
+\begin{definition}[Counterfactual authorization gap]
+For a realized agent $J$ and reference class $Q$,
+\[
+\boxed{\Delta(J,Q)=\TC(J)\setminus E(Q).}
+\]
+A transformation $\tau$ is an escape when $\tau\in\Delta(J,Q)$.
+\end{definition}
+
+The gap is relational. If $Q_1\subseteq Q_2$, then
+\[
+E(Q_1)\subseteq E(Q_2)
+\]
+and hence
+\[
+\Delta(J,Q_2)\subseteq\Delta(J,Q_1).
+\]
+Thus ``excessive capability'' is not an intrinsic property of $\tau$. It is a property of the triple $(J,\tau,Q)$.
+
+\begin{proposition}[Budget-compliant agents do not escape]
+If $C(J)\in Q$, and $J$ uses the same rule system as the reference class, then
+\[
+\Delta(J,Q)=\varnothing.
+\]
+\end{proposition}
+
+\begin{proof}
+Since $C(J)\in Q$, its closure is one of the terms in the union defining $E(Q)$. Hence $\TC(J)\subseteq E(Q)$.
+\end{proof}
+
+This yields the first important conceptual separation:
+\[
+\begin{array}{ll}
+\text{grant excess:}&C(J)\notin Q,\\[2pt]
+\text{capability excess:}&\TC(J)\not\subseteq E(Q),\\[2pt]
+\text{redundant excess:}&C(J)\notin Q\ \land\ \TC(J)\subseteq E(Q).
+\end{array}
+\]
+A conventional budget audit identifies the first condition. The counterfactual audit distinguishes the second from the third.
+
+\section{Why Local Authorization Does Not Compose}
+
+\subsection{Local observations}
+
+A local authorization mechanism can observe each primitive in isolation. A natural formalization is its singleton closure profile:
+\[
+L_R(c)=\TC_R(\{c\}),\qquad c\in\Cset.
+\]
+Any authorization procedure whose input about a composition $G$ is restricted to the collection
+\[
+\{L_R(c):c\in G\}
+\]
+cannot infer arbitrary conjunctive interactions that are absent from singleton closures.
+
+The limitation is information-theoretic rather than merely algorithmic.
+
+\begin{theorem}[Local authorization impossibility]
+There exist two monotone Horn rule systems $R_1,R_2$, a reference class $Q$, and a composition $G$ such that:
+\begin{enumerate}[label=(\roman*)]
+\item $L_{R_1}(c)=L_{R_2}(c)$ for every $c\in G$;
+\item $E_{R_1}(Q)=E_{R_2}(Q)$;
+\item $\TC_{R_1}(G)\subseteq E_{R_1}(Q)$;
+\item $\TC_{R_2}(G)\not\subseteq E_{R_2}(Q)$.
+\end{enumerate}
+Therefore no authorization mechanism whose decision about $G$ depends only on per-component closure observations can determine compositional counterfactual safety in general.
+\end{theorem}
+
+\begin{proof}
+Let $\Cset=\{a,b\}$ and $Q=\{\varnothing,\{a\},\{b\}\}$. Let $R_1$ contain no rule with antecedent $\{a,b\}$ and let $R_2$ add the rule
+\[
+\{a,b\}\rightarrow\tau.
+\]
+No rule derives $\tau$ from either singleton, so
+\[
+\TC_{R_1}(\{a\})=\TC_{R_2}(\{a\})=\{a\},
+\quad
+\TC_{R_1}(\{b\})=\TC_{R_2}(\{b\})=\{b\}.
+\]
+Thus the singleton profiles and envelopes coincide:
+\[
+E_{R_1}(Q)=E_{R_2}(Q)=\{a,b\}.
+\]
+For $G=\{a,b\}$, system $R_1$ yields $\TC_{R_1}(G)=\{a,b\}\subseteq E(Q)$, whereas $R_2$ yields $\TC_{R_2}(G)=\{a,b,\tau\}$ and $\tau\notin E(Q)$. Hence the local observations are identical while the compositional verdict differs.
+\end{proof}
+
+The theorem does not assert that all practical authorization engines are limited to singleton information. A policy engine may explicitly encode pairwise or higher-order constraints. The result identifies the minimum architectural lesson: \emph{compositional authorization requires relational information beyond independent component decisions}.
+
+\subsection{Envelope separation}
+
+The local theorem is strengthened by the following structural identity:
+\[
+E(Q)\neq\TC(E(Q))
+\]
+in general. The first object preserves the correlation structure of admissible configurations; the second permits arbitrary recombination.
+
+The distinction can be read as:
+\[
+\underbrace{\bigcup_{q\in Q}\TC(q)}_{\text{one admissible alternative at a time}}
+\quad\neq\quad
+\underbrace{\TC\left(\bigcup_{q\in Q}q\right)}_{\text{arbitrary recombination}}.
+\]
+This is the mathematical core of the paper.
+
+\section{Least Privilege as a Reference-Class Property}
+
+\subsection{Counterfactual resource frontier}
+
+\begin{definition}[Counterfactual resource requirement]
+For a transformation $\tau$, define
+\[
+\boxed{
+\rhoCF(\tau)=
+\min\{\kappa(q):q\subseteq\Cset,\ \Adm(q),\ \tau\in\TC(q)\},
+}
+\]
+with $\rhoCF(\tau)=\infty$ if no admissible configuration realizes $\tau$.
+\end{definition}
+
+For the budget class $Q_m$,
+\[
+\boxed{
+\tau\in E(Q_m)\iff \rhoCF(\tau)\le m.
+}
+\]
+Consequently,
+\[
+\boxed{
+\tau\in\Delta(J,Q_m)
+\iff
+\tau\in\TC(J)\land\rhoCF(\tau)>m.
+}
+\]
+
+The frontier turns a binary authorization question into a quantitative one. For a realized agent with resource level $\kappa(C(J))$:
+\[
+\begin{array}{c|c}
+\rhoCF(\tau)\le m & \text{counterfactually absorbed}\\
+m<\rhoCF(\tau)\le\kappa(C(J)) & \text{counterfactual escape}\\
+\rhoCF(\tau)>\kappa(C(J)) & \text{unreachable by }J.
+\end{array}
+\]
+
+For cardinality cost and universal admissibility,
+\[
+\rhoCF(\tau)=\etaMin(\tau)
+=\min\{|G|:\tau\in\TC(G)\}.
+\]
+Thus the minimum-generator quantity in the companion manuscript becomes a special case of the resource frontier rather than the conceptual starting point.
+
+\subsection{Reference-class relativity}
+
+The frontier depends on the admissibility predicate as well as the resource cost. Two organizations can therefore assign different counterfactual requirements to the same capability without disagreeing about the rule system:
+\[
+\rhoCF_{Q_1}(\tau)\neq\rhoCF_{Q_2}(\tau).
+\]
+This is a feature rather than a defect. Least privilege is normative: a policy must specify what configurations count as legitimate alternatives.
+
+The framework therefore separates two questions:
+\[
+\text{What can be done?}
+\qquad\text{and}\qquad
+\text{What should count as an admissible alternative?}
+\]
+The first is supplied by $\TC$; the second is supplied by $Q$.
+
+\section{Minimal Compositional Certificates}
+
+For a target $\tau$, let
+\[
+\mathcal G(\tau)=
+\{G\subseteq\Cset:\Adm(G)\land\tau\in\TC(G)\}.
+\]
+Let $\mathcal G_{\min}(\tau)$ be its inclusion-minimal members. For universal admissibility, $\etaMin(\tau)$ is the minimum cardinality of a generator.
+
+Under cardinality budget $m$,
+\[
+\tau\in\Delta(J,Q_m)
+\Longrightarrow
+\etaMin(\tau)>m.
+\]
+If $M_J(\tau)\subseteq C(J)$ is a minimum-cardinality support for $\tau$, then
+\[
+\mu_J(\tau)=|M_J(\tau)|\ge \etaMin(\tau)>m.
+\]
+Hence every escape is at least $(m+1)$-way compositional.
+
+\begin{theorem}[Tight separation]
+For every $m\ge1$, there exists a monotone Horn system with rules of arity at most two, an agent $J$ with $|C(J)|=m+1$, and a target $\tau$ such that:
+\begin{enumerate}[label=(\roman*)]
+\item every proper subconfiguration $S\subsetneq C(J)$ is in $Q_m$ and satisfies $\TC(S)\subseteq E(Q_m)$;
+\item $\tau\in\TC(J)$ and $\tau\notin E(Q_m)$;
+\item the escape is certified by $m+1$ pairwise disjoint cuts.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Take primitives $c_1,\ldots,c_{m+1}$ and rules
+\[
+\{c_1,c_2\}\to z_2,\qquad
+\{z_{j-1},c_j\}\to z_j,\quad 3\le j\le m+1,
+\]
+with $\tau=z_{m+1}$. The target requires all $m+1$ primitives. Every proper subset has at most $m$ elements and is therefore itself in $Q_m$, while $\tau$ cannot be generated by any such subset. The singleton cuts $\{c_i\}$ are pairwise disjoint.
+\end{proof}
+
+This theorem gives the sharp form of non-compositional least privilege within the present model:
+\[
+\boxed{
+\text{every proper subconfiguration is admissible, while the full composition is not.}
+}
+\]
+The phenomenon is already known structurally in capability safety \cite{spera2026}; the contribution here is to place it against an endogenous counterfactual envelope.
+
+\section{Certificates and Computational Complexity}
+
+\subsection{Generating sets and cuts}
+
+A set $K\subseteq\Cset$ is a cut for $\tau$ when
+\[
+\tau\notin\TC(\Cset\setminus K).
+\]
+Let $\mathcal K(\tau)$ denote the minimal cuts. A configuration generates $\tau$ exactly when it intersects every cut. Thus minimal generators and minimal cuts are blockers of one another, connecting the audit to classical transversal duality \cite{edmonds1965}.
+
+A collection of pairwise disjoint cuts
+\[
+K_1,\ldots,K_r
+\]
+certifies
+\[
+\etaMin(\tau)\ge r.
+\]
+More generally, if nonnegative weights $y_i$ satisfy
+\[
+\sum_{i:c\in K_i}y_i\le1
+\quad\forall c\in\Cset,
+\]
+then
+\[
+\etaMin(\tau)\ge\left\lceil\sum_i y_i\right\rceil.
+\]
+These certificates are polynomially checkable when closure is efficiently computable.
+
+They are necessarily incomplete in general. A threshold family with $n=2k$ primitives and target derivable exactly when at least $k+1$ primitives are present has
+\[
+\etaMin(\tau)=k+1,
+\]
+while every fractional cut packing has value at most $2$. Thus cut packing cannot certify every escape unless a major complexity collapse occurs.
+
+\subsection{Hardness}
+
+Define ABSORB:
+\[
+\text{given }(R,\tau,m),\quad
+\exists q,\ |q|\le m,\ \tau\in\TC(q)?
+\]
+Its complement is ESCAPE:
+\[
+\forall q,\ |q|\le m,\quad\tau\notin\TC(q).
+\]
+
+\begin{theorem}[Complexity of the counterfactual boundary]
+ABSORB is NP-complete and ESCAPE is coNP-complete even when every rule has at most two antecedents. ABSORB is W[2]-hard when parameterized by $m$.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+Membership in NP follows because a configuration $q$ of size at most $m$ is a polynomial witness and Horn closure is computable by forward chaining \cite{dowling1984}. For hardness, reduce from Hitting Set. Given universe elements $e_1,\ldots,e_n$, sets $S_1,\ldots,S_k$, and bound $m$, introduce atoms $h_j$ and chain atoms $g_j$, with rules
+\[
+e_i\to h_j\quad(i\in S_j),
+\]
+\[
+\{h_1,h_2\}\to g_2,\qquad
+\{g_{j-1},h_j\}\to g_j.
+\]
+Set $\tau=g_k$. A set of primitives generates $\tau$ exactly when it intersects every $S_j$, so minimum generation size equals minimum hitting-set size. The construction uses binary rules and preserves the parameter $m$. W[2]-hardness follows from the parameterized Hitting Set problem \cite{garey1979,downey1999}.
+\end{proof}
+
+The hardness belongs to the combination of conjunctive generation and a compactly specified reference class. Several special cases remain tractable.
+
+\begin{itemize}[leftmargin=*]
+\item \textbf{Unary rules.} Every non-initial target has a singleton generator, so reachability reduces to graph reachability.
+\item \textbf{Explicit reference classes.} If $Q=\{q_1,\ldots,q_r\}$ is explicitly listed, compute $\TC(q_i)$ for each member and take their union.
+\item \textbf{Fixed budget.} For fixed $m$, enumerate all $O(|\Cset|^m)$ configurations of size at most $m$.
+\end{itemize}
+
+The distinction is useful operationally. A two-of-three policy such as the Agents Rule of Two has a small fixed budget, making exhaustive reference-class auditing feasible in the finite capability abstraction \cite{meta2025}.
+
+\section{Authorization Architecture}
+
+The theory separates three authorization layers:
+\[
+\begin{array}{rcl}
+\text{Local authorization} && c\mapsto\{\mathrm{allow},\mathrm{deny}\},\\
+\text{Compositional authorization} && G\mapsto\TC(G)\mapsto\{\mathrm{allow},\mathrm{deny}\},\\
+\text{Counterfactual authorization} && \TC(G)\stackrel{?}{\subseteq}E(Q).
+\end{array}
+\]
+
+These questions are logically distinct.
+
+A local engine can verify every constituent grant while lacking a representation of conjunctive interaction. A chain-aware engine can evaluate a particular composition against a fixed policy. The counterfactual layer additionally asks whether that composition exceeds the capability boundary achieved by resource-matched alternatives.
+
+This suggests a layered architecture:
+\[
+\boxed{
+\text{grants}
+\rightarrow
+\text{capability closure}
+\rightarrow
+\text{reference-class envelope}
+\rightarrow
+\text{frontier comparison}
+\rightarrow
+\text{authorization decision}.
+}
+\]
+
+The framework does not require every production system to compute full closure. A practical implementation can use conservative approximations, explicit forbidden conjunctions, chain-level policy composition, cut certificates, or solver-backed search. The mathematical requirement is that the mechanism preserve enough relational information to distinguish a member of $E(Q)$ from a capability outside it.
+
+\subsection{Rule of Two as a reference class}
+
+Meta's Agents Rule of Two constrains a session to at most two of three properties: processing untrusted inputs, accessing sensitive systems or private data, and changing state or communicating externally \cite{meta2025}. This is naturally represented as a budget-defined reference class.
+
+The present theory adds a distinction that a syntactic rule alone cannot make. An over-budget configuration can be capability-redundant if its rule system contains no transformation requiring the forbidden combination. Conversely, a configuration can contain individually represented capabilities whose conjunction produces an escape.
+
+For example, let $A,B,C$ denote the three risk classes and let a session budget at most two classes. If rules produce
+\[
+A+B\to x,\qquad
+A+C\to y,\qquad
+B+C\to z,
+\]
+then $x,y,z$ can each be absorbed by some compliant configuration. If a further rule produces
+\[
+x+C\to\tau,
+\]
+then $\tau$ requires all three classes and lies outside the envelope. The escape is therefore a capability-level consequence of composition, not merely a count violation.
+
+The example also shows the framework's dependence on the modeled rule system. If the rule connecting untrusted input to private-data steering is absent, the corresponding exfiltration capability may disappear from the closure even though the syntactic budget violation remains. The framework consequently audits a declared capability model; it does not infer all possible model behavior.
+
+\section{Evaluation Program}
+
+The original manuscript contains an exhaustive validation harness checking its formal claims over generated monotone Horn systems. Those experiments should remain as formal validation rather than being presented as evidence about deployed systems.
+
+A revised empirical program should directly test the counterfactual formulation.
+
+\subsection{Synthetic capability frontiers}
+
+Generate rule systems with varying primitive count, conjunction density, derivation depth, resource budget, and reference-class structure. For each target $\tau$, compute $\rhoCF(\tau)$ by exhaustive search for small instances and solver-backed optimization for larger ones.
+
+Measure the realized capability excess:
+\[
+R(J,Q_m)=
+\frac{
+|\TC(J)\setminus E(Q_m)|
+}{
+|\TC(J)|
+}.
+\]
+This quantity should be reported separately from the fraction of configurations that violate the raw budget.
+
+\subsection{Local versus compositional authorization}
+
+Construct pairs $(R_1,R_2)$ with identical singleton closure profiles and identical reference envelopes but different higher-order rules. Theorem 4.1 predicts that any local-only mechanism will give the same result to both systems, while a relational mechanism will distinguish them.
+
+This is a direct experimental instantiation of the information boundary.
+
+\subsection{Capability-redundant excess}
+
+For random over-budget configurations, compare
+\[
+C(J)\notin Q_m
+\]
+with
+\[
+\Delta(J,Q_m)\neq\varnothing.
+\]
+The original manuscript reports substantial capability redundancy in generated instances; those rates are generator-dependent and should remain illustrative. The scientifically meaningful quantity is the divergence between budget-violation detection and capability-boundary detection.
+
+\subsection{Agent and tool case studies}
+
+The framework can be instantiated over:
+\begin{itemize}[leftmargin=*]
+\item tool combinations;
+\item MCP servers and tool acquisition;
+\item filesystem and private-data permissions;
+\item network egress;
+\item delegated credentials;
+\item child-agent authority;
+\item dynamic resource acquisition.
+\end{itemize}
+The goal is to map concrete authorization controls onto the three layers above, rather than to claim that a synthetic Horn model predicts deployment frequency.
+
+\section{Limitations}
+
+The framework has five principal limitations.
+
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Monotone potential capability.} Revocation, deny rules, temporal constraints, mutual exclusion, and guardrails can make effective capability non-monotone. The present results apply to potential reach under a shared monotone rule system.
+\item \textbf{Known rule system.} The closure computation assumes a declared rule system. For language-model agents, rules such as ``untrusted content can steer operations on private data'' are modeling assumptions. Missing interactions can yield false absorption.
+\item \textbf{Normative reference class.} The choice of $Q$ is policy input. The framework says what follows from a reference class; it does not determine which reference class an organization should adopt.
+\item \textbf{Single-agent configurations.} Coalitions of separately budgeted agents require an extension that treats delegation and joint execution explicitly.
+\item \textbf{Synthetic validation.} Exhaustive generated experiments validate mathematical claims. They do not establish prevalence in deployed systems.
+\end{enumerate}
+
+These limitations also define the next research problems: learning or auditing capability rules, non-monotone closure, temporal envelopes, coalition reference classes, and approximate frontier computation.
+
+\section{Discussion}
+
+The principal conceptual result can be summarized by one equation:
+\[
+\boxed{
+\bigcup_{q\in Q}\TC(q)
+\neq
+\TC\left(\bigcup_{q\in Q}q\right).
+}
+\]
+The left side asks what some single admissible alternative can do. The right side asks what can be achieved by recombining resources drawn from multiple alternatives. Authorization based on the right side therefore answers a different question and can trivialize the counterfactual boundary.
+
+This yields two title-level conclusions within the stated model:
+\[
+\boxed{\text{Least privilege is a property of a reference class, not merely a grant set.}}
+\]
+and
+\[
+\boxed{\text{Reference-class least privilege is generally non-compositional.}}
+\]
+
+The first statement is a matter of definition made explicit: without a comparison class, ``minimum privilege'' lacks a counterfactual baseline. The second follows structurally from conjunctive generation: a composition can be outside the envelope even when every proper subconfiguration lies inside it.
+
+The distinction also clarifies the relationship between local and global authorization. A system that evaluates
+\[
+c\in P
+\]
+for each component answers a local question. A system that evaluates
+\[
+\TC(G)\subseteq P
+\]
+answers a compositional policy question. The counterfactual audit evaluates
+\[
+\TC(G)\subseteq E(Q),
+\]
+which asks whether the composition remains within what resource-matched alternatives can accomplish.
+
+These layers should not be collapsed. A local grant can be valid while its composition is unsafe. A composition can violate a syntactic budget while remaining capability-redundant. A capability can be absorbed by one reference class and escape another. The counterfactual authorization gap is designed to keep these cases distinct.
+
+\section{Conclusion}
+
+Least privilege is often operationalized as a constraint on individual grants. In conjunctive capability systems, that constraint does not generally compose. The relevant boundary is comparative: what can the realized agent do that no resource-matched admissible alternative can do?
+
+The counterfactual authorization gap
+\[
+\Delta(J,Q)=\TC(J)\setminus\bigcup_{q\in Q}\TC(q)
+\]
+answers that question directly. It separates grant excess from capability excess, preserves the correlations induced by the reference class, and exposes the information lost when authorization is reduced to independent component decisions.
+
+The theory does not introduce compositional privilege as a new security phenomenon. Existing work establishes the underlying non-compositionality, and contemporary agent-security systems increasingly address it with chain-level policies, runtime authorization, information-flow controls, and compositional scanning \cite{spera2026,campbell2026,wang2026,schneider2026,ji2026,zhu2026}. The contribution here is a comparative authorization object that makes the boundary itself explicit.
+
+The counterfactual resource frontier
+\[
+\rhoCF(\tau)=
+\min\{\kappa(q):\Adm(q),\tau\in\TC(q)\}
+\]
+then turns that boundary into a resource-relative quantity. Under cardinality budgets, the frontier reduces to minimum generating-set size, yielding a clean characterization:
+\[
+\tau\in\Delta(J,Q_m)
+\iff
+\tau\in\TC(J)\land\etaMin(\tau)>m.
+\]
+The resulting audit is computationally hard in general: ESCAPE is coNP-complete even for binary Horn rules. Yet important special cases are tractable, and sound cut certificates provide useful practical evidence.
+
+The architectural implication is concise:
+\[
+\boxed{
+\text{compositional authorization requires relational capability information.}
+}
+\]
+A permission system that stores only independent local decisions cannot, in general, reconstruct the boundary created by their conjunction. A system that retains interaction structure can evaluate the composition directly or approximate the counterfactual frontier with conservative certificates.
+
+The central research program is therefore:
+\[
+\boxed{
+\text{Local Grants}
+\rightarrow
+\text{Capability Closure}
+\rightarrow
+\text{Counterfactual Envelope}
+\rightarrow
+\text{Resource Frontier}
+\rightarrow
+\text{Authorization Audit}.
+}
+\]
+
+\appendix
+
+\section{Worked Separation Example}
+
+Let
+\[
+\Cset=\{a,b,c,d\}
+\]
+and rules
+\[
+\{a,b\}\to x,\qquad
+\{c,d\}\to y,\qquad
+\{x,y\}\to\tau.
+\]
+For the cardinality reference class $Q_2$, the envelope contains $a,b,c,d,x,y$ but not $\tau$. The configuration
+\[
+J=\{a,b,c,d\}
+\]
+therefore has
+\[
+\Delta(J,Q_2)=\{\tau\}.
+\]
+Every proper subconfiguration has at most two primitives and is itself a member of $Q_2$. Thus the escape is genuinely compositional.
+
+If the envelope were closed after taking the union, then $x,y\in E(Q_2)$ would imply $\tau\in\TC(E(Q_2))$, eliminating the separation. This example is therefore a compact proof obligation for any implementation of counterfactual authorization.
+
+\section{Certificate View}
+
+For the same example, the cuts
+\[
+\{a\},\{b\},\{c\},\{d\}
+\]
+are pairwise disjoint. Every generator of $\tau$ must intersect each cut, so every generator has size at least four. Since $J$ itself has size four,
+\[
+\etaMin(\tau)=4.
+\]
+Thus $\tau$ escapes every budget $m\le3$ and is absorbed at $m=4$.
+
+More generally, the tight theorem in Section 6 produces a chain requiring exactly $m+1$ primitives for every budget $m$.
+
+\section{Validation From the Source Manuscript}
+
+The source manuscript reports exhaustive checks of the mathematical claims, including: 1,200 collapse checks; 6,000 budget-compliant agents with zero escapes; 1,500 binary-rule hitting-set reductions; 3,961 generator/cut duality checks; and threshold constructions exhibiting the incompleteness of fractional cut packing. These are retained as validation of the formal machinery rather than as empirical estimates of real-world incidence.
+
+\section{References}
+
+\begin{thebibliography}{99}
+
+\bibitem{spera2026}
+C. Spera.
+\newblock Safety is Non-Compositional: A Formal Framework for Capability-Based AI Systems.
+\newblock arXiv:2603.15973, 2026.
+
+\bibitem{campbell2026}
+R. Campbell.
+\newblock Agentic Shadow Infrastructure: How AI Supply-Chain Drift Creates Unmanaged Enterprise Infrastructure.
+\newblock \emph{Computers}, 15(8):510, 2026.
+
+\bibitem{harrison1976}
+M. A. Harrison, W. L. Ruzzo, J. D. Ullman.
+\newblock Protection in operating systems.
+\newblock \emph{Communications of the ACM}, 19(8):461--471, 1976.
+
+\bibitem{li2007}
+N. Li, M. V. Tripunitara, Z. Bizri.
+\newblock On mutually exclusive roles and separation-of-duty.
+\newblock \emph{ACM Transactions on Information and System Security}, 10(2), 2007.
+
+\bibitem{sheyner2002}
+O. Sheyner, J. Haines, S. Jha, R. Lippmann, J. M. Wing.
+\newblock Automated generation and analysis of attack graphs.
+\newblock In \emph{IEEE Symposium on Security and Privacy}, 2002.
+
+\bibitem{ou2005}
+X. Ou, S. Govindavajhala, A. W. Appel.
+\newblock MulVAL: A logic-based network security analyzer.
+\newblock In \emph{USENIX Security Symposium}, 2005.
+
+\bibitem{jha2002}
+S. Jha, O. Sheyner, J. Wing.
+\newblock Two formal analyses of attack graphs.
+\newblock In \emph{IEEE Computer Security Foundations Workshop}, 2002.
+
+\bibitem{pamula2006}
+J. Pamula, S. Jajodia, P. Ammann, V. Swarup.
+\newblock A weakest-adversary security metric for network configuration security analysis.
+\newblock In \emph{ACM Workshop on Quality of Protection}, 2006.
+
+\bibitem{wang2014}
+L. Wang, S. Jajodia, A. Singhal, P. Cheng, S. Noel.
+\newblock k-Zero Day Safety: A Network Security Metric for Measuring the Risk of Unknown Vulnerabilities.
+\newblock \emph{IEEE Transactions on Dependable and Secure Computing}, 11(1):30--44, 2014.
+
+\bibitem{hardy1988}
+N. Hardy.
+\newblock The confused deputy (or why capabilities might have been invented).
+\newblock \emph{ACM SIGOPS Operating Systems Review}, 22(4):36--38, 1988.
+
+\bibitem{lucchesi1978}
+C. L. Lucchesi, S. L. Osborn.
+\newblock Candidate keys for relations.
+\newblock \emph{Journal of Computer and System Sciences}, 17(2):270--279, 1978.
+
+\bibitem{wang2026}
+S. Wang, P. Qian, Y. Chen, J. You, X. Wang, X. Jiang, L. Liu, H. Yu, J. Xu.
+\newblock When Safe Skills Collide: Measuring Compositional Risk in Agent Skill Ecosystems.
+\newblock arXiv:2606.00448, 2026.
+
+\bibitem{schneider2026}
+C. Schneider, K. Faujdar, P. Schoenegger, B. Bariach.
+\newblock Securing Multi-Tool AI Agent Chains With Dynamic, Real-Time Compositional Policies.
+\newblock arXiv:2607.03423, 2026.
+
+\bibitem{ji2026}
+Z. Ji, D. Wu, W. Jiang, P. Ma, Z. Li, Y. Gao, S. Wang, Y. Li.
+\newblock Taming Various Privilege Escalation in LLM-Based Agent Systems: A Mandatory Access Control Framework.
+\newblock arXiv:2601.11893, 2026.
+
+\bibitem{yang2026}
+K. Yang, Y. Bu, J. Yi, Y. Wang, B. Zhou, J. Dai, S. Hu, Y. Yang.
+\newblock When Lower Privileges Suffice: Investigating Over-Privileged Tool Selection in LLM Agents.
+\newblock arXiv:2606.20023, 2026.
+
+\bibitem{iyer2026}
+L. G. Iyer, R. S. Babu.
+\newblock Capability Minimization as a Safety Primitive: Risk-Aware Causal Gating for Least-Privilege LLM Agents.
+\newblock arXiv:2606.13884, 2026.
+
+\bibitem{zhu2026}
+G. Zhu.
+\newblock Runtime Authorization for Resources Acquired by AI Agents.
+\newblock arXiv:2609.14744, 2026.
+
+\bibitem{willison2025}
+S. Willison.
+\newblock The lethal trifecta for AI agents: private data, untrusted content, and external communication.
+\newblock 2025.
+
+\bibitem{meta2025}
+Meta AI.
+\newblock Agents Rule of Two: A Practical Approach to AI Agent Security.
+\newblock Meta AI, 2025.
+
+\bibitem{booth2026}
+H. Booth, W. Fisher, R. Galluzzo, J. Roberts.
+\newblock Accelerating the Adoption of Software and Artificial Intelligence Agent Identity and Authorization.
+\newblock NIST NCCoE Concept Paper, 2026.
+
+\bibitem{peralta2011}
+M. Peralta, S. Mukhopadhyay, R. Bharadwaj.
+\newblock Counterfactually reasoning about security.
+\newblock In \emph{International Conference on Security of Information and Networks}, 2011.
+
+\bibitem{mccall2017}
+M. McCall, L. K. Loh, L. Jia.
+\newblock A Sequent Calculus for Counterfactual Reasoning.
+\newblock CMU-CyLab Technical Report CMU-CyLab-17-003, 2017.
+
+\bibitem{zhou2026}
+X. Zhou, J. Liu, L. Li, R. A. Rossi, X. Hu.
+\newblock Counterfactual Trace Auditing of LLM Agent Skills.
+\newblock arXiv:2605.11946, 2026.
+
+\bibitem{hermann2008}
+M. Hermann, B. Sertkaya.
+\newblock On the complexity of computing generators of closed sets.
+\newblock In \emph{Formal Concept Analysis}, LNCS 4933, 2008.
+
+\bibitem{bylander1991}
+T. Bylander, D. Allemang, M. C. Tanner, J. R. Josephson.
+\newblock The computational complexity of abduction.
+\newblock \emph{Artificial Intelligence}, 49(1--3):25--60, 1991.
+
+\bibitem{edmonds1965}
+J. Edmonds, D. R. Fulkerson.
+\newblock Bottleneck extrema.
+\newblock \emph{Journal of Combinatorial Theory}, 8(3):299--306, 1970.
+
+\bibitem{dowling1984}
+W. F. Dowling, J. H. Gallier.
+\newblock Linear-time algorithms for testing the satisfiability of propositional Horn formulae.
+\newblock \emph{Journal of Logic Programming}, 1(3):267--284, 1984.
+
+\bibitem{garey1979}
+M. R. Garey, D. S. Johnson.
+\newblock \emph{Computers and Intractability: A Guide to the Theory of NP-Completeness}.
+\newblock W. H. Freeman, 1979.
+
+\bibitem{downey1999}
+R. G. Downey, M. R. Fellows.
+\newblock \emph{Parameterized Complexity}.
+\newblock Springer, 1999.
+
+\end{thebibliography}
+
+\end{document}\end{document}
