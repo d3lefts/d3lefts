@@ -39,6 +39,16 @@ jobs:
         run: |
           python3 -m py_compile scripts/verify_observatory.py
           python3 scripts/verify_observatory.py
+      - name: Protect scientific identities already published on the base branch
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          git fetch origin "${{ github.base_ref }}" --depth=1
+          if git cat-file -e "origin/${{ github.base_ref }}:research/nightfall/observatory/claim-identities.lock.json" 2>/dev/null; then
+            git show "origin/${{ github.base_ref }}:research/nightfall/observatory/claim-identities.lock.json" > /tmp/observatory-base-lock.json
+            python3 scripts/verify_observatory.py --baseline-lock /tmp/observatory-base-lock.json
+          else
+            echo "First publication: no baseline on base branch; independent review required."
+          fi
       - name: Parse Observatory JavaScript and ensure registry mirror
         run: |
           node --check docs/observatory.js
