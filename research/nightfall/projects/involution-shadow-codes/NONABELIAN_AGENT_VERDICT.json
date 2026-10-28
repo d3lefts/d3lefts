@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-28",
+  "research_lead": "Devin J. Wright",
+  "result": "PASS",
+  "claim_scope": "Universal finite-group proof with exact orbit-based computational controls; no proof-assistant kernel formalization",
+  "theorems": [
+    "For every finite group and nonidentity involutive automorphism S, minimum message separation is m-max_c n_c",
+    "Uniform right Fix(S)-coset fibers, q=[G:Fix(S)], sharp optimal distance m-ceil(m/q)",
+    "Exact ordered-pair Hamming distance enumerator: (|G|-h)*sum_c z^(m-n_c)+|G|*(|G|-q)*z^m",
+    "Exact all-cardinality erasure failure counts B_r=sum_c binom(n_c,r), B_0=1",
+    "Balanced label allocations simultaneously maximize minimum distance and minimize every B_r and every independent-erasure failure probability"
+  ],
+  "independent_checks": {
+    "cyclic_and_nonabelian_automorphism_actions": 13,
+    "translation_tuples_verified": 20554,
+    "ordered_distinct_message_pairs_verified": 772976,
+    "independent_S4_cayley_structural_instance": {
+      "group_order": 24,
+      "fixed_subgroup_order": 4,
+      "label_count": 6,
+      "measurements": 13,
+      "distance": 10,
+      "ordered_pair_spectrum": {
+        "10": 20,
+        "11": 100,
+        "13": 432
+      }
+    },
+    "direct_S4_erasure_subsets": 8192,
+    "allocations_exhaustively_compared": 8568,
+    "optimal_allocations": 6,
+    "adversarial_corruptions_rejected": 7
+  },
+  "tests": [
+    "verify_nonabelian.py -- independently constructs and checks finite group Cayley tables, automorphisms, direct orbit encoding and all ordered pair spectra (full source in downloadable audit archive)",
+    "certify_nonabelian_instance.py -- independent input-checking proof receipt for S4",
+    "verify_nonabelian_erasure_optimum.py -- complete direct orbit erasure enumeration and 8568 allocation comparison",
+    "adversarial_controls.py -- seven deliberate invalid certificate rejections (downloadable audit archive)"
+  ],
+  "public_reproducibility": {
+    "theorem": "research/nightfall/projects/involution-shadow-codes/NONABELIAN_SHADOW_THEOREM.md",
+    "checker": "research/nightfall/projects/involution-shadow-codes/certify_nonabelian_instance.py",
+    "finite_instance": "research/nightfall/projects/involution-shadow-codes/S4_nonabelian_certificate.json",
+    "erasure_audit": "research/nightfall/projects/involution-shadow-codes/verify_nonabelian_erasure_optimum.py"
+  },
+  "boundaries": [
+    "New to the October 13 NIGHTFALL finite abelian theorem; global published-priority novelty pending",
+    "Universal proof exists as explicit algebra, without Lean/Coq kernel check",
+    "No claim of cryptographic hardness, quantum advantage, or a general discrete-log attack"
+  ]
+}
