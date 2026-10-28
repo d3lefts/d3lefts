@@ -101,3 +101,7 @@ An initial diagnostic implementation used the same raw binary support labels for
 The revised benchmark uses *observable noisy source cues* for boundary routing and coarse selection, and a separately generated *hidden atomic support annotation* for exact adjudication. Training labels are available only through the downstream training outcome; held-out annotations never enter boundary construction or selection. Reported per-case hashes distinguish observable source bytes from annotation bytes. A negative-control test flips every hidden annotation label while holding observable bytes fixed and verifies that all candidate-selection traces remain unchanged. This fixes the demonstrable direct-leakage path; real-world transfer remains untested.
 
 All comparative results must use the latest corrected `granularity_study.py` and its SHA-256 report. Earlier unisolated source-proxy numbers are diagnostic and superseded.
+
+### Search-space correction
+
+The first selection grid omitted the fully atomic representation. The corrected 19-option grid explicitly includes it. The trained policy therefore may choose uncompressed input when that wins the preregistered exact downstream gain objective. Comparisons against restricted 18-option reports must remain labeled diagnostic. A selected policy is a training-instance optimum within the stated discrete grid, never a global mathematical optimum.

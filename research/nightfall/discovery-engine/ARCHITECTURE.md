@@ -102,10 +102,14 @@ Sources:
 
 The workbench contains `granularity_study.py`, with independent `granularity_oracle.py` as the exact atomic verification path. Candidate state and chunk policy are independent experimental coordinates. Frozen fixed, event-adaptive heuristic, atomic and training-selected policies see identical candidate pools and exact verification budgets.
 
-The policy selector searches a grid of 18 configurations of max fine span, edge-trigger value, and max coarse children. It optimizes exact downstream training gains, with coarse-operation cost only as a tie break. The held-out split uses independent deterministic seeds and is excluded from model choice. This is a discrete supervised control baseline, not a neural H-Net recreation.
+The policy selector searches a grid of 19 configurations (including the atomic identity policy) of max fine span, edge-trigger value, and max coarse children. It optimizes exact downstream training gains, with coarse-operation cost only as a tie break. The held-out split uses independent deterministic seeds and is excluded from model choice. This is a discrete supervised control baseline, not a neural H-Net recreation.
 
 The pre-registered report includes: source SHA-256 digests by split; raw objective values; exact budget; per-policy certified proxy gains; rejected proposed source spans; compression ratios; coarse scoring-operation totals; selected parameters; and explicit domain-transfer limitations. Performance gains, if any, belong to this restricted synthetic suite pending additional splits, confidence intervals, compute accounting and independent execution. The immutable source/trust boundaries and source-domain checker decisions are evaluated from original atoms after candidate selection.
 
 ### Falsification and revision note: annotation isolation
 
 A constructed SourceBound proxy had observable bits identical to its oracle support labels. Under that representation, downstream selection scores were effectively given the answer. The corrected study separates a noisy observable atom stream from hidden source adjudication labels. A full-label-inversion negative control requires unchanged candidate-selection traces under the identical observable source and immutable trust zones. The exact source-span oracle alone consumes the hidden annotation. This is a non-neural, seeded synthetic control and cannot validate natural-web provenance or factual recall.
+
+### Policy-search baseline audit
+
+The first 18-option trained selector omitted the atomic identity representation. This made any claim of globally optimal granularity unwarranted. The next evaluation includes atomic as a trainable option (19 choices total), in addition to retaining atomic, fixed, and event-adaptive as reported baselines. If training chooses atomic, that is evidence **against** useful compression under this benchmark objective, not a failed experiment to suppress.

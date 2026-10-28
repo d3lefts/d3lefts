@@ -32,10 +32,11 @@ class Policy:
     coarse: int
 
 
-POLICIES=tuple(Policy(f,e,c) for f in (3,6,12) for e in (0,1,2) for c in (2,4))
 FIXED=Policy(6,0,4)
 ADAPTIVE=Policy(6,2,4)
 ATOMIC=Policy(1,0,1)
+# Atomic precision is a valid policy choice, not merely an external control.
+POLICIES=(ATOMIC,)+tuple(Policy(f,e,c) for f in (3,6,12) for e in (0,1,2) for c in (2,4))
 
 
 def fixture(domain: str, seed: int) -> dict:
@@ -254,6 +255,7 @@ def run_study(seed:int=1729,training:int=TRAIN,testing:int=TEST)->dict:
             "seed":seed,"training_per_domain":training,"heldout_per_domain":testing,
             "candidate_pool_per_round":POOL,"exact_verifier_calls_per_case":TRIALS,
             "selection_search_count":len(POLICIES),
+            "policy_set":"Atomic included in training candidate pool (19 options)",
             "learned_policy":asdict(learned),
             "training_selected_on":"certified training gains, proxy-cost tiebreak; heldout data excluded",
             "raw_identity_sha256":source_hashes,
