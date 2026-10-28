@@ -12,14 +12,21 @@
 .review-warning{margin-top:29px;max-width:810px;padding:17px 20px;background:#e8ecdf;border-left:3px solid #557b5d;font-size:13px;line-height:1.66;color:#35483a}
 .submit{background:var(--deep);color:#ebf3e8;padding:72px 0}.submit-grid{display:grid;grid-template-columns:1fr 1fr;gap:55px}.submit h2{font:400 67px/.98 var(--serif);max-width:530px}.submit p{color:#c0d0c3;font-size:14px;line-height:1.75;max-width:650px;margin:15px 0}.submit ol{padding-left:23px;color:#d9e6d9;font:13px/1.9 var(--mono)}.submit .button{background:var(--accent);color:var(--ink);border-color:var(--accent);margin-top:22px}.note{font-size:12px!important;color:#b2c0b3!important}.copy{background:transparent;color:var(--ink);border:1px solid var(--ink);padding:10px 13px;font:500 11px var(--mono);margin-top:14px}.copy:hover{background:var(--soft)}
 @media(max-width:800px){.review-hero{padding:60px 0}.review-summary{grid-template-columns:1fr}.review-summary article,.review-summary article:first-child{padding:17px 0;border-right:0;border-bottom:1px solid var(--line)}.review-dossier{display:block;padding:50px 0}.dossier-number{margin-bottom:18px}.submit-grid{grid-template-columns:1fr;gap:15px}.submit h2{font-size:54px}}
-@media(max-width:760px){body:has(.review-hero) .header .nav{display:none!important}}
+
+.review-nav{display:flex;gap:22px;align-items:center;font-size:13px;font-weight:600}
+.review-nav a:not(.nav-call){border-bottom:1px solid transparent}
+.review-nav a:hover:not(.nav-call){border-color:currentColor}
+.review-nav .nav-call{padding:11px 15px;background:var(--ink);color:var(--paper)}
+@media(max-width:760px){.review-nav{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end;font-size:11px}.review-nav a:nth-child(2){display:none}.review-nav .nav-call{padding:9px 10px}.review-nav a{white-space:nowrap}.review-nav a:first-child{display:inline-flex}}
+@media(max-width:430px){.review-nav .nav-call{display:none}.review-nav a:first-child{padding:10px;border:1px solid var(--line)}}
+
 </style>
 </head><body>
 <a class="skip" href="#main">Skip to content</a>
 <div class="topline"></div>
 <header class="header"><div class="wrap header-inner">
 <a class="brand" href="./"><span class="mark">N∕F</span><span class="brand-copy">NIGHTFALL<span>PHASESHIFT / EXTERNAL REVIEW</span></span></a>
-<nav class="nav" style="display:flex;gap:24px;position:static;box-shadow:none;padding:0;border:0;flex-direction:row">
+<nav class="review-nav" aria-label="Reviewer navigation">
 <a href="index.html#work">Research</a><a href="index.html#method">Methods</a>
 <a class="nav-call" href="https://github.com/d3lefts/d3lefts/tree/main/research/nightfall" target="_blank" rel="noopener">GitHub archive ↗</a>
 </nav></div></header>
