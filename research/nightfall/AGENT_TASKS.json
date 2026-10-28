@@ -1,0 +1,60 @@
+{
+  "version": "1.0.0",
+  "snapshot": "2026-10-28",
+  "program": "NIGHTFALL PHASESHIFT",
+  "policy": "PASS/FAIL/INCONCLUSIVE always scoped to specific check. Model consensus alone is insufficient.",
+  "roles": [
+    "independent_reproducer",
+    "adversarial_auditor",
+    "formalizer"
+  ],
+  "tasks": [
+    {
+      "id": "EA-36-FINITE-131072",
+      "issue": "https://github.com/d3lefts/d3lefts/issues/1",
+      "claim": "Exact signed-grid overlap rational upper bound for 131072-cell step function",
+      "source": "research/nightfall/projects/erdos/STATUS_AND_PRIOR_ART_20261028.md",
+      "target_sha256": "a574c280f8839503c90076507a27f4c819455fb2512fae6a43b6a17f6a784b8e",
+      "expected_fraction": "34788888032212764146872525963225147703298526879/91343852333181432387730302044767688728495783936",
+      "internal_check": "PASS; fresh Python big-integer convolution against frozen source bytes",
+      "public_external_agent_check": "BLOCKED_BY_PUBLIC_ARCHIVE_RELEASE",
+      "limitations": [
+        "Continuum breakpoint proof is a separate gate",
+        "Accepted Arena input identity is separate and unrecovered"
+      ]
+    },
+    {
+      "id": "WERNER-QUTRIT-6-9",
+      "issue": "https://github.com/d3lefts/d3lefts/issues/2",
+      "source": "research/nightfall/projects/werner-correlated-6-9/RESEARCH_NOTE.md",
+      "claim": "Exact downstream polynomial dual certificates conditional on source inequalities",
+      "internal_check": "PASS for source-reported finite identities",
+      "public_external_agent_check": "PENDING",
+      "limitations": [
+        "Imported four-/five-copy source-SDP inequalities must be independently checked"
+      ]
+    },
+    {
+      "id": "PHASE-RETRIEVAL-LLL",
+      "issue": "https://github.com/d3lefts/d3lefts/issues/3",
+      "source": "research/nightfall/projects/finite-field-retrieval-handoff-excerpt.txt",
+      "claim": "Uniform all-signal finite-field phase decoder under specified large-field assumptions",
+      "internal_check": "MANUSCRIPT_AND_TESTS_REPORTED",
+      "public_external_agent_check": "PENDING",
+      "limitations": [
+        "Full manuscript and parameter certificates required"
+      ]
+    },
+    {
+      "id": "AGENT-SAFETY-AXIOMS",
+      "issue": "https://github.com/d3lefts/d3lefts/issues/4",
+      "source": "research/nightfall/projects/ai-safety-peer-review-2026-10-28/README.md",
+      "claim": "Oversight and composition theorem series with source-specific quantifiers",
+      "internal_check": "FINITE_TESTS_REPORTED",
+      "public_external_agent_check": "PENDING",
+      "limitations": [
+        "Formal model scope and independent deployed-system tests unresolved"
+      ]
+    }
+  ]
+}
