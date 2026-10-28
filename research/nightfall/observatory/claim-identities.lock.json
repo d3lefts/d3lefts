@@ -1,0 +1,20 @@
+{
+  "schema_version": "1",
+  "note": "Immutable claim identity records: changed statement/scope/source requires new id and revision; fingerprints are reproduced independently by Python CI.",
+  "claims": {
+    "NF-ERDOS-131072-v1": "c6e1d7b7f39039243bf7f75c449e975afd992e91dfcb1c6361d6a5d60611c010",
+    "NF-SIDON30-v1": "5053158908c2b71b9dacc7581f244e6faf8ab9095726393ac518d4d2eb7c063e",
+    "NF-SIDON-CHECK-v1": "dc64a66664d82c2d693dadf823df42d80c6a5456900b195828af3f8a1d73391e",
+    "NF-PAS20-v1": "9620165b036f7f5837fff7aead6ea895c4c6a9c4c78c4d8b7b339b325f7cd088",
+    "NF-PAS-DOMINANCE-v1": "98987501f9bdd6c6e925c7ff3c8b468a39a30f36ee4064a5b461ea37202cc99e",
+    "NF-FIELD-SPAN-v1": "7f1d2465b1556e740cc128b9420e00f65ed895238d33f53f86b29c5c7a5cf864",
+    "NF-AXIOM-KERNEL-v1": "5a99a927db2b61faa30832e19302700a931ef2f7f6f26033f876847e95baa3c8",
+    "NF-WERNER25-v1": "dceaf236bb8e8c11e3da5e640dcd222b9e7a3218d2b8e507635f2308fb8ea152",
+    "NF-WERNER6-v1": "0b4beaeeaee1152e67d73871bf7c88935acefdd826c51ec23840864b80343201",
+    "NF-WEIGHTED-SCHUR-v1": "0f8b7311374ad2a6d57ae874a68a2fd675980d9c304738f3e05dd1beb4ec4d54",
+    "NF-BLOCK-EXAMPLE-v1": "b13b26ff123a39d550a9969d5bae2b7dba9b63d9047fd67ff064ea07cdc2dff6",
+    "NF-SPECTRAL-BRIDGE-v1": "990da1c643df425bbbb50ef632481e86037ecde6c1017996ab23dfe39680971f",
+    "NF-LEMNIS-EXT-v1": "b596b38e21f94d79d3f8af1c7462376400532c5ab4ac0564bfa23044641a7336",
+    "NF-GRAPH-EVAL-v1": "2743ca5db20ba25f8f4a85303d5386ea03d9e46a3091c5ad9edd1b76bf8be3af"
+  }
+}
