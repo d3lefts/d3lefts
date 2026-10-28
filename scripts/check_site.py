@@ -122,7 +122,15 @@ def main() -> int:
         FAILURES.append("AGENDA GATE: filter mismatch")
     if agenda.count("Research proposal · untested") != 10:
         FAILURES.append("AGENDA GATE: proposal status omitted")
-    headings = re.findall(r'^## (P\\d\\d)\\. (.+)
+    if proposal_source.count("## P") != 10:
+        FAILURES.append("AGENDA GATE: source briefs must include ten project headings")
+    if len({href for _, href in rows}) != 10:
+        FAILURES.append("AGENDA GATE: proposal links must be distinct")
+    if any("#p" + str(i).zfill(2) + "-" not in agenda for i in range(1, 11)):
+        FAILURES.append("AGENDA GATE: numbered proposal anchors missing")
+    if 'href="agenda.html"' not in homepage_text or 'src="agenda.js"' not in agenda:
+        FAILURES.append("AGENDA GATE: agenda navigation or filtering script missing")
+    # Discovery Engine seeded presets are part of the public presentation.
     # Legacy locally saved browser work can survive without being featured.
     core = (DOCS / "discovery-core.js").read_text(encoding="utf-8")
     seeds = core.split("const PROJECTS=[", 1)[-1].split("].map(([id,title", 1)[0]
