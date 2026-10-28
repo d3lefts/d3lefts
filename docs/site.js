@@ -15,10 +15,7 @@ function render(){
  const matches=entries.filter(x=>(filter==="all"||x.category===filter)&&
    [x.name,x.summary,x.status,x.category].join(" ").toLocaleLowerCase().includes(term));
  const frag=document.createDocumentFragment();
- const groups=[
-  {kind:"research",title:"ORIGINAL RESEARCH FINDINGS",detail:"Distinct finite witnesses and a bounded original experiment; prior-art methods are attributed."},
-  {kind:"proposal",title:"UNPUBLISHED IDEAS",detail:"No untested proposals are promoted as findings."}
- ];
+ const groups=[{kind:"research",title:"ORIGINAL RESEARCH FINDINGS",detail:"Distinct finite witnesses and a bounded original experiment; prior-art methods are attributed."}];
  groups.forEach(group=>{
   const items=matches.filter(x=>(x.kind||"research")===group.kind);
   if(!items.length)return;
