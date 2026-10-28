@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "as_of": "2026-10-28",
+  "status": "experimental-preview-only",
+  "gates": {
+    "A": {
+      "status": "pending-ci",
+      "requirement": "Frozen claim identity, schema, typed evidence and allowlisted implication; CI validation"
+    },
+    "B": {
+      "status": "pending",
+      "requirement": "Second independently implemented exact scientific reproduction with original input bytes, hashes and published receipt"
+    },
+    "C": {
+      "status": "pending",
+      "requirement": "Frozen six-task matched-budget Observatory versus flat baseline evaluation with complete outputs"
+    },
+    "D": {
+      "status": "blocked",
+      "requirement": "A B C passed, scientific editorial review, accessible cross-device UI, external replay"
+    }
+  }
+}
