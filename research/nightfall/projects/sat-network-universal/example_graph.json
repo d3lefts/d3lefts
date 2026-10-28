@@ -1,0 +1,81 @@
+{
+  "alphabet_size": 3,
+  "variable_count": 3,
+  "scopes": [
+    [
+      0,
+      1
+    ],
+    [
+      0
+    ]
+  ],
+  "vertices": {
+    "F0": {
+      "role": "factor",
+      "ports": [
+        0,
+        1
+      ]
+    },
+    "F1": {
+      "role": "factor",
+      "ports": [
+        2
+      ]
+    },
+    "O0_0": {
+      "role": "occurrence",
+      "var": 0,
+      "ports": [
+        0,
+        3
+      ]
+    },
+    "O0_1": {
+      "role": "occurrence",
+      "var": 1,
+      "ports": [
+        1
+      ]
+    },
+    "O1_0": {
+      "role": "occurrence",
+      "var": 0,
+      "ports": [
+        2,
+        4
+      ]
+    },
+    "B0_0": {
+      "role": "bridge",
+      "var": 0,
+      "ports": [
+        3,
+        4
+      ]
+    }
+  },
+  "edges": [
+    [
+      "O0_0",
+      "F0"
+    ],
+    [
+      "O0_1",
+      "F0"
+    ],
+    [
+      "O1_0",
+      "F1"
+    ],
+    [
+      "O0_0",
+      "B0_0"
+    ],
+    [
+      "O1_0",
+      "B0_0"
+    ]
+  ]
+}
