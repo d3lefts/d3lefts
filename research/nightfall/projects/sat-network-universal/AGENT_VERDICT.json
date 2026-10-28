@@ -1,0 +1,40 @@
+{
+  "version": "1.0",
+  "date": "2026-10-28",
+  "research_lead": "Devin J. Wright",
+  "status": "PASS",
+  "theorem": "For finite q>=2 and commutative semiring R, Z(F)=(q*1_R)^(n-v)*Z(G); bipartite network uses 3L-2v edges and maximum vertex degree <=max(3,r)",
+  "verification_type": "Universal elementary bijection argument; standalone polynomial-time verifier for each finite network construction; bounded exhaustive and symbolic exact audits",
+  "full_audit_zip": "NIGHTFALL_UNIVERSAL_FACTOR_MACHINE_PROOF_20261028.zip",
+  "full_audit_zip_sha256": "b026cc5e0c069da58d0ecc02f9339f1df2dba9780ee7d622d66a5539f4fac98b",
+  "checks": {
+    "canonical_3cnf_formulas": 3829,
+    "canonical_complete_edge_contractions": 2357,
+    "canonical_truth_assignments": 29912,
+    "random_valid_3cnfs": 245,
+    "random_empty_clause_cases": 175,
+    "random_weighted_qary_factors": 510,
+    "weighted_factor_alphabet_sizes": [
+      2,
+      3,
+      4
+    ],
+    "extra_complete_edge_contractions": 671,
+    "formal_polynomial_monomial_equalities": 663,
+    "bridge_subthreshold_graphs": 2144,
+    "adversarial_invalid_certificates_rejected": 11,
+    "adversarial_source_logic_controls": 2
+  },
+  "source_documents": [
+    "research/nightfall/projects/sat-network-universal/THEOREM_AND_SCOPE.md",
+    "research/nightfall/projects/sat-network-universal/check_structural_certificate.py",
+    "research/nightfall/projects/sat-network-universal/example_graph.json"
+  ],
+  "scope_limitations": [
+    "Standard COPY tensor construction is prior art, so no novelty claim for the equivalence",
+    "Edge optimality holds only inside the stated incidence/binary equality bridge grammar",
+    "General theorem has an elementary self-contained proof; no kernel-checked Lean formalization",
+    "External 2026 contraction complexity theorem is outside this audit and is not used",
+    "Full 20 KB test package is a conversation attachment, not yet mirrored on GitHub"
+  ]
+}
