@@ -7,6 +7,7 @@ archive input hash and expected rational are fixed before the run.
 """
 from __future__ import annotations
 import hashlib
+import random
 import sys
 from fractions import Fraction
 from pathlib import Path
@@ -22,6 +23,46 @@ EXPECTED_SCORE = Fraction(
 )
 EXPECTED_LAG = -17280
 
+def packed_convolution(values: list[int], scale: int, width: int) -> list[int]:
+    """Convolve x with reverse(scale-x) using carry-free packed integers."""
+    n = len(values)
+    if n * scale * scale >= (1 << (8 * width)):
+        raise ValueError("Packing base too small")
+    a = int.from_bytes(
+        b"".join(x.to_bytes(width, "little") for x in values), "little"
+    )
+    b = int.from_bytes(
+        b"".join((scale - x).to_bytes(width, "little") for x in reversed(values)),
+        "little",
+    )
+    raw = (a * b).to_bytes((2 * n - 1) * width, "little")
+    return [
+        int.from_bytes(raw[i * width:(i + 1) * width], "little")
+        for i in range(2 * n - 1)
+    ]
+
+
+def self_test() -> None:
+    """Independent small direct-sum comparison for every signed shift."""
+    random_gen = random.Random(0x36E)
+    for n in (1, 2, 3, 5, 9, 19):
+        scale = 1 << 5
+        for _ in range(20):
+            heights = [random_gen.randrange(scale + 1) for _ in range(n)]
+            packed = packed_convolution(heights, scale, 3)
+            direct = [
+                sum(
+                    heights[i] * (scale - heights[i - lag])
+                    for i in range(n)
+                    if 0 <= i - lag < n
+                )
+                for lag in range(-n + 1, n)
+            ]
+            if packed != direct:
+                raise ValueError("Packed convolution differs from direct sum")
+    print("PASS packed convolution compared with all signed direct sums")
+
+
 def verify(path: Path) -> dict[str, str]:
     raw = path.read_bytes()
     digest = hashlib.sha256(raw).hexdigest()
@@ -34,20 +75,11 @@ def verify(path: Path) -> dict[str, str]:
         raise ValueError("Height range violation")
     if sum(values) != H * D:
         raise ValueError("Unit mass violation")
-    if N * D * D >= 1 << (8 * WIDTH):
-        raise ValueError("Packing width cannot isolate coefficients")
-    p = int.from_bytes(b"".join(x.to_bytes(WIDTH, "little") for x in values), "little")
-    q = int.from_bytes(
-        b"".join((D - x).to_bytes(WIDTH, "little") for x in reversed(values)), "little"
-    )
     # Big-integer multiplication is an independent convolution algorithm.
-    raw_product = (p * q).to_bytes((2 * N - 1) * WIDTH, "little")
+    correlations = packed_convolution(values, D, WIDTH)
     peak = -1
     maximizing_shifts: list[int] = []
-    for i in range(2 * N - 1):
-        coefficient = int.from_bytes(
-            raw_product[i * WIDTH:(i + 1) * WIDTH], "little"
-        )
+    for i, coefficient in enumerate(correlations):
         lag = i - (N - 1)  # Σ_i A_i (D - A_{i-lag}) with zero extension
         if coefficient > peak:
             peak = coefficient
@@ -71,6 +103,9 @@ def verify(path: Path) -> dict[str, str]:
 
 if __name__ == "__main__":
     import json
-    if len(sys.argv) != 2:
-        raise SystemExit("Usage: python3 scripts/verify_erdos_independent.py PATH_TO_heights_u70.txt")
-    print(json.dumps(verify(Path(sys.argv[1])), indent=2))
+    if len(sys.argv) == 2 and sys.argv[1] == "--self-test":
+        self_test()
+    elif len(sys.argv) == 2:
+        print(json.dumps(verify(Path(sys.argv[1])), indent=2))
+    else:
+        raise SystemExit("Usage: verify_erdos_independent.py --self-test | PATH_TO_heights_u70.txt")
