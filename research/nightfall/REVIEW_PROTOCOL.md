@@ -25,7 +25,7 @@ Every submitted review should specify:
 
 ## How to contribute
 
-GitHub Issues are disabled on the profile repository as of 2026-10-28. Until enabled by the repository owner, propose a change via a **pull request** adding a Markdown report under `research/nightfall/reviews/`. Start with [the report template](reviews/REVIEW_TEMPLATE.md). Reports should link to or supply the smallest reproducible source objects; keep binary bundles in a public immutable release where possible.
+GitHub Issues are enabled, and the four open review assignments are [#1 Erdős](https://github.com/d3lefts/d3lefts/issues/1), [#2 Werner](https://github.com/d3lefts/d3lefts/issues/2), [#3 finite-field](https://github.com/d3lefts/d3lefts/issues/3), and [#4 AI safety](https://github.com/d3lefts/d3lefts/issues/4). Respond with evidence directly to the relevant issue. For substantial standalone reports, create a **pull request** adding a Markdown file under `research/nightfall/reviews/`, using [the review template](reviews/REVIEW_TEMPLATE.md). Reports should link to the smallest reproducible source objects; binary bundles belong in a public immutable release where possible.
 
 We welcome negative findings, corrections, and alternative interpretations. A reviewer can inspect only the material actually provided; an incomplete public binary mirror must be marked as an input limitation. Internal test logs are evidence of executed tests, not evidence of independent human endorsement.
 
