@@ -52,6 +52,8 @@ def check_ref(src: Path, href: str, props: dict, pages: dict[Path, Page]):
     if href.startswith(("#", "./", "../")) or not re.match(r"^[a-zA-Z][a-zA-Z0-9+.-]*:", href):
         u = urlsplit(href)
         file = (src.parent / unquote(u.path)).resolve() if u.path else src.resolve()
+        if file.is_dir():
+            file = file / "index.html"
         if not file.is_file():
             FAILURES.append(f"{src}: missing local link: {href}")
             return
