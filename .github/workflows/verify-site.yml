@@ -34,3 +34,9 @@ jobs:
           python3 -m json.tool research/nightfall/AGENT_TASKS.json > /dev/null
       - name: Self-test independent exact convolution against direct arithmetic
         run: python3 scripts/verify_erdos_independent.py --self-test
+      - name: Check agent GMP source, exact-rational geometry and JSON receipt
+        run: |
+          python3 -m py_compile research/nightfall/agent-reports/ea36_131072/replay_erdos_gmp.py research/nightfall/agent-reports/ea36_131072/verify_bridge.py
+          python3 -m json.tool research/nightfall/agent-reports/ea36_131072/AGENT_VERDICT.json > /dev/null
+          python3 research/nightfall/agent-reports/ea36_131072/verify_bridge.py
+          g++ -O3 -std=c++17 research/nightfall/agent-reports/ea36_131072/independent_gmp_audit.cpp -lgmpxx -lgmp -o /tmp/nightfall-gmp-audit
