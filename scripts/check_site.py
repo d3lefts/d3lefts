@@ -171,6 +171,22 @@ def main() -> int:
         FAILURES.append(f"Sitemap mismatch: missing={sorted(expected_urls - actual_urls)}, extra={sorted(actual_urls - expected_urls)}")
     for page_path, parsed in pages.items():
         src = page_path.read_text(encoding="utf-8")
+        if page_path.name == "claim-lab.html":
+            # A standalone local-first application has its own internal tab
+            # navigation. Requiring the site's shared #site-nav and site.js
+            # would splice unrelated global state into a private workspace.
+            required = (
+                'id="content"', 'id="claimForm"', 'id="expForm"',
+                'id="importFile"', 'id="exportBtn"',
+                'aria-label="Sections"', 'nightfall_claim_lab_v1',
+                'localStorage.getItem', 'localStorage.setItem',
+                'illustrative demo data', 'no automated mathematical verification',
+            )
+            if not all(token in src for token in required):
+                FAILURES.append(f"{page_path}: standalone local-first workspace contract broken")
+            if re.search(r'<script[^>]+src="https?://', src):
+                FAILURES.append(f"{page_path}: unexpected remotely loaded script")
+            continue
         if page_path.name == "discovery.html":
             if not all(k in src for k in ("discovery-core.js", "discovery-app.js", "discovery.css", 'id="app"')):
                 FAILURES.append("Discovery Engine dependencies / mount missing")

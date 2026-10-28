@@ -106,6 +106,29 @@ try{
     await page.locator("#agenda-search").fill("");
     assert.equal(await page.locator("#agenda-list .research-proposal:visible").count(),10,"agenda search reset");
   }
+  if(width===390){
+    await page.goto(origin+"claim-lab.html",{waitUntil:"load"});
+    assert.equal(await page.locator(".demoNotice").count(),1,"Claim Lab starts with clearly labeled illustrative data");
+    assert.equal(await page.locator('[data-tab="claims"]').count(),1,"Claim Lab independent app navigation available");
+    await page.locator("#newClaimBtn").click();
+    await page.locator("#claimTitle").fill("Browser-only unverified theorem fixture");
+    await page.locator("#claimStatus").selectOption("3");
+    await page.locator("#claimForm button[type=submit]").click();
+    await page.locator('[data-tab="audit"]').click();
+    const auditText=await page.locator("#content").innerText();
+    assert.match(auditText,/Missing artifact reference/,"Manual Theorem label does not bypass evidence requirements");
+    assert.match(auditText,/Missing \/ invalid SHA-256 digest/,"Unverified artifact hash must be flagged");
+    assert.match(auditText,/Proof and checker reference missing/,"Unverified theorem proof must be flagged");
+    await page.reload({waitUntil:"load"});
+    await page.locator('[data-tab="claims"]').click();
+    assert.match(await page.locator("#content").innerText(),/Browser-only unverified theorem fixture/,"Local-first workspace persists across reload");
+    const [jsonBackup]=await Promise.all([
+      page.waitForEvent("download"),
+      page.locator("#exportBtn").click()
+    ]);
+    assert.match(jsonBackup.suggestedFilename(),/^NIGHTFALL_claim_lab_backup_.*\.json$/,"Portable JSON backup");
+    assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth))<=3,"Claim Lab mobile overflow");
+  }
   assert.deepEqual(faults,[],"Browser failures at "+width+": "+faults.join("; "));
   await page.close();
  }
