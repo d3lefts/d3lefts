@@ -40,12 +40,12 @@
 <section class="review-hero wrap">
 <span class="kicker">OPEN INVITATION / EVIDENCE-FIRST SCIENCE</span>
 <h1>Review the claim.<br><i>Challenge the proof.</i></h1>
-<p>These four assignments are deliberately finite. They identify exact objects, imported assumptions, likely failure modes, and a useful external deliverable. Any valid counterexample, correction, or clean reproduction will be credited.</p>
+<p>Four independent agent assignments identify exact objects, imported assumptions, failure modes, and executable deliverables. Reproducer agents, adversarial agents, and formalization agents produce distinct evidence. A consensus of model opinions alone is insufficient.</p>
 <div class="hero-actions"><a class="button" href="#erdos">Browse assignments ↘</a><a class="text-link" href="#submit">How to contribute ↓</a></div>
 </section>
 <div class="review-summary wrap">
-<article><span>01 / REPRODUCIBILITY</span><b>4 open dossiers</b><span>Specific expected outputs and independent proof attacks.</span></article>
-<article><span>02 / CLAIM INTEGRITY</span><b>Conditions exposed</b><span>Original source theorems remain attributable and auditable.</span></article>
+<article><span>01 / AGENT TASK QUEUE</span><b>4 open dossiers</b><span>Frozen tasks with independent reconstruction and adversarial checks.</span></article>
+<article><span>02 / VERDICT GATES</span><b>Evidence first</b><span>Separate input integrity, finite arithmetic, analytic proof, and formalization.</span></article>
 <article><span>03 / INPUT COMPLETENESS</span><b>Binary mirror pending</b><span>Some original certificates are still in the researcher's frozen release ZIP.</span></article>
 </div>
 <div class="wrap">
@@ -132,14 +132,16 @@
 </div>
 <section class="submit" id="submit">
 <div class="wrap submit-grid">
-<div><span class="kicker">SUBMISSION CONTRACT</span><h2>A finding counts when it can travel.</h2><p>Every external review receives a traceable entry. Failed proofs and failed reruns are welcome; they help correct the public record.</p></div>
+<div><span class="kicker">SUBMISSION CONTRACT</span><h2>A finding counts when it can travel.</h2><p>Every agent run must have an immutable claim ID, input hashes, implementation and environment, reproducible commands, and a scoped verdict. Failed proofs and failed reruns are recorded.</p></div>
 <div>
 <ol>
-<li>Choose a bounded review assignment and read its primary source.</li>
-<li>Record your environment, source version, exact file hashes, and reproduction commands.</li>
-<li>Submit a concise pass / fail / inconclusive judgment with proof or counterexample.</li>
-<li>Post findings in the matching public GitHub issue; attach an independent script through a pull request if appropriate. Reviewer credit is attributed with consent.</li>
+<li>Assign distinct reproducer, adversarial-auditor, and proof-formalization agents to one frozen claim.</li>
+<li>Each agent records its model and tool versions, source commit, input SHA-256s, original code, and executable commands.</li>
+<li>Run independent checks and require deterministic re-execution for every PASS; record counterexamples for FAIL and remaining premises for INCONCLUSIVE.</li>
+<li>Post proof artifacts and a scoped PASS / FAIL / INCONCLUSIVE receipt in the matching issue. Store reproducible code under the agent-report path with attribution.</li>
 </ol>
+<a class="button button-light" href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/AGENT_VERIFICATION_PROTOCOL.md" target="_blank" rel="noopener">Read agent verification protocol ↗</a>
+<a class="text-link" style="color:#e6f1dc" href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/AGENT_TASKS.json" target="_blank" rel="noopener">Machine-readable agent task queue ↗</a>
 <a class="button" href="https://github.com/d3lefts/d3lefts/issues/new/choose" target="_blank" rel="noopener">Submit an independent report ↗</a>
 <p class="note"><a href="https://github.com/d3lefts/d3lefts/issues" target="_blank" rel="noopener"><u>Browse current review threads</u></a>. GitHub provides a structured verification form and a separate source-correction form.</p>
 <p class="note">Independent review issues are open. The complete certificate ZIP still needs a public binary mirror for full third-party reproduction. <a href="evidence.html">See exact checksums and archive status ↗</a>. <a href="https://github.com/d3lefts/d3lefts/issues/5" target="_blank" rel="noopener">Follow evidence-release progress ↗</a>.</p>
