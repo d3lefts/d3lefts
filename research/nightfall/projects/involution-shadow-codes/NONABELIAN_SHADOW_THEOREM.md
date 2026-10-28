@@ -67,7 +67,7 @@ For nonabelian \(G\), the coboundary image \(D\) need not be closed under multip
  A_T(z)=20z^{10}+100z^{11}+432z^{13}.
 \]
 
-Its 552 ordered distinct pairs are all explicitly checked against the orbit code.
+Its 552 ordered distinct pairs are all explicitly checked against the orbit code. A second test uses an outer involution of the **nonabelian simple group \(A_5\)** induced by conjugation by an odd permutation in \(S_5\): \(|A_5|=60\), \(|H|=6\), \(q=10\), and the twisted-coboundary labels again fail to form a subgroup. This confirms that the extension applies to simple groups, beyond solvable structures.
 
 ## Theorem (simultaneous optimality under erasures and adversarial errors)
 
@@ -111,9 +111,9 @@ The expression extends continuously to \(p=0,1\). A universal guarantee under an
 
 ## Machine-verification record
 
-- **Nine test actions:** \(S_3\), \(S_4\), outer involution of \(A_4\), four dihedral groups, and two involutions of \(Q_8\).
-- **19,866 translation tuples**, including every ordered tuple of lengths 1–5 for \(S_3\) and \(D_6\).
-- **745,064 ordered distinct message pairs** explicitly checked; every full distance enumerator matched (3).
+- **Fourteen test actions:** inversions on four cyclic groups, \(S_3\), \(S_4\), outer involutions on \(A_4\) and the nonabelian simple group \(A_5\), four dihedral groups, and two involutions of \(Q_8\).
+- **20,736 translation tuples**, including every ordered tuple of lengths 1–5 for \(S_3\) and \(D_6\).
+- **1,417,256 ordered distinct message pairs** explicitly checked; every full distance enumerator matched (3).
 - Independently, `certify_cayley_instance.py` verifies the Cayley table's group axioms, the involution's homomorphism law, the exact orbit words and the entire spectrum of the separate \(S_4\) instance, requiring only Python's standard library. Seven mutated inputs are rejected.
 - To reproduce: `python3 verify_nonabelian.py`, `python3 certify_cayley_instance.py S4_certificate.json`, `python3 adversarial_controls.py`, `python3 verify_erasure_optimality.py`.
 - Exact source hashes and runtime output are frozen in `MANIFEST.json` and `audit_result.json`.
