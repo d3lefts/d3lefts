@@ -64,7 +64,7 @@ a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:poi
 @media(max-width:440px){.review-nav .nav-call{display:none}.review-nav a:first-child{padding:9px 10px;border:1px solid var(--line)}}
 
 /* All standalone research pages share the accessible responsive menu. */
-@media(max-width:760px){
+@media(max-width:900px){
  .header{position:relative}
  .header .review-nav.subpage-nav{
   display:none;position:absolute;top:100%;left:0;right:0;z-index:20;
@@ -88,3 +88,15 @@ a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:poi
 
 /* Preserve exact hashes and formulas while permitting narrow-screen wrapping. */
 code{overflow-wrap:anywhere}
+
+/* Switch only the top navigation to a menu on narrow tablet widths. */
+@media(max-width:900px){.header .menu-toggle{display:block}}
+@media(min-width:761px) and (max-width:900px){
+ .header{position:relative}
+ .header .nav{
+  display:none;position:absolute;top:100%;left:0;right:0;z-index:20;
+  padding:25px 24px;background:var(--paper);box-shadow:0 10px 15px #0001;
+  flex-direction:column;align-items:stretch;gap:20px;border-bottom:1px solid var(--line)
+ }
+ .header .nav.open{display:flex}
+}

@@ -35,7 +35,7 @@ try{
    const nav=page.locator("#site-nav");
    assert.equal(await menu.count(),1,file+" missing menu");
    assert.equal(await nav.count(),1,file+" missing nav");
-   const mobile=width<=760;
+   const mobile=width<=900;
    assert.equal(await menu.isVisible(),mobile,file+" menu visibility at "+width);
    assert.equal(await nav.isVisible(),!mobile,file+" nav visibility at "+width);
    if(mobile){
