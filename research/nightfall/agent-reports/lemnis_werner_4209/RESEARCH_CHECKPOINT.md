@@ -20,7 +20,8 @@ This is a **5.77× increase in ambient linear dimension** relative to U, not a m
 - Projected Gram matrices: exact rational elimination in 81 difference fibres gives ranks E_0=728, E_2=272, E_4=1. PASS.
 - Separately constructed Fourier evaluation matrices over F7 (primitive third root 2); ranks again 728,272,1. PASS.
 - Direct sparse partial-trace tests: 108 split identities; an explicit non-coordinate E_2 vector has norm² 36, Q=9, and Q(C0+D2)=145/16. PASS.
-- This session's complete reproducibility bundle **LEMNIS_WERNER_4209_CERTIFICATE_20261028.zip** has SHA-256 `c2ef13db05499d673fabcb037f9a24393e0be6145f8b900d4d31afc7820460b6`. The ZIP was generated in the session; a public immutable release and human review are pending.
+- Strict new rank-two witness: two row words from distinct code cosets, a column beyond the old 27-column support, Q(C0)=5/16, Q(D)=5, Q(C)=85/16. This verifies nonempty rank-two coverage beyond the original rectangle. PASS.
+- This session's complete reproducibility bundle **LEMNIS_WERNER_4209_CERTIFICATE_20261028.zip** has SHA-256 `eb5432d2b55e0dedc5f4dfa2993f527ea336d1987346afe2e88ec940b0ab7d84`. The ZIP was generated in the session; a public immutable release and human review are pending.
 
 ## Key caveats and next step
 The original nine-word theorem has a self-contained rank-two trace certificate; its coefficient identity was independently re-evaluated here. The spectral lift itself is standard representation theory applied to this particular support. Novelty of the exact 4,209-dimensional application requires separate prior-art review, including Bharti–Gajjala–Haug (arXiv:2607.24479), Song–Chen (arXiv:2607.23416), and Tomar's October 2026 work. No stronger unrestricted parameter bound follows. Next: rank-two-aware inequalities controlling colliding syndrome differences, beyond positive eigenspace directions.
