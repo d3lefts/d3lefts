@@ -2,7 +2,7 @@
 
 **Research lead:** Devin J. Wright. **Independent extension:** October 28, 2026.
 
-**Classification:** New theorem-level extension within NIGHTFALL's nonabelian involution-shadow framework. The reliability identity, restricted NP-completeness reduction, and exact two-class Pareto dynamic program are proved below. Finite checks provide independently implemented corroboration. No worldwide novelty claim; related heterogeneous replication/allocation hardness is documented in earlier literature.
+**Classification:** New theorem-level extension within NIGHTFALL's nonabelian involution-shadow framework. The distribution-free ambiguity identity, universal optimality under correlated exchangeable erasures, restricted NP-completeness reduction, and exact two-class Pareto dynamic program are proved below. Finite checks provide independently implemented corroboration. No worldwide novelty claim; related heterogeneous replication/allocation hardness is documented in earlier literature.
 
 ## 1. Model and the exact reliability law
 
@@ -22,6 +22,24 @@ Suppose coordinate j independently survives with probability p_j in (0,1). Write
     P_fail >= R * (q exp(W/q) - q + 1),
 
 with equality precisely when every class has the same total log-failure weight W/q. Equal survival probabilities recover the original balanced-cardinality theorem.
+
+## 1b. Distribution-free identity and universal correlated-erasure optimality
+
+**Theorem A′ (arbitrary correlated erasure distributions).** Let J be any random subset of surviving coordinates, with **no independence assumption**. Then
+
+    Pr(ambiguous) = sum_c Pr(J is a subset of I_c) - (q-1) Pr(J is empty).
+
+This is a distribution-free inclusion-exclusion identity: all pairwise intersections of the events {J is a subset of I_c} are exactly {J is empty}, giving the displayed correction term. Theorem A follows when each erasure decision is independent.
+
+**Theorem A″ (exchangeable correlated-erasure optimality).** Suppose the joint distribution of J is invariant under all permutations of measurement coordinates. Let α_r=Pr(|J|=r). Conditional on |J|=r, every r-element coordinate subset is equally likely, even though erasures can be arbitrarily correlated. The exact failure law is
+
+    Pr(ambiguous) = α_0 + sum_{r=1}^m α_r * [sum_c binom(n_c,r)]/binom(m,r).
+
+For all such correlated exchangeable erasure distributions, a balanced cardinality assignment n_c in {floor(m/q),ceil(m/q)} is simultaneously optimal. The proof uses the elementary binomial transfer inequality: moving one item from a class of size u to one of size v when u>=v+2 weakly decreases binom(u,r)+binom(v,r) for every r>=1. This applies for every nonnegative mixture α_r, so independence of failures is unnecessary. The same allocation also maximizes adversarial Hamming distance. QED.
+
+**Sharp boundary:** Exchangeable erasures (potentially correlated) retain the original universal balance theorem; unequal independent erasure rates already lead to the more difficult weighted problem of Theorem B.
+
+An exact independent audit constructs a correlated, exchangeable law on six coordinates, with size-distribution α=(1,2,5,3,5,2,2)/20. Direct orbit-code enumeration gives balanced failure 1/5. Every one of the 729 assignments to three labels was checked; exactly 90 balanced assignments tie for optimality.
 
 ## 2. Exact incompatibility of equal-count distance and unequal-reliability resilience
 
@@ -74,6 +92,7 @@ The self-contained `verify_heterogeneous.py` uses independent *direct orbit-word
 Frozen audit coverage (verified October 28):
 
 - 252 seeded, independently drawn direct group-orbit reliability comparisons, q in {2,3,4}, lengths 1–7, strictly positive integer dyadic weights.
+- One exchangeable, **correlated** six-coordinate erasure law tested by direct group-orbit enumeration, followed by exhaustive comparison of all **729** allocations (90 optimal ties).
 - 90 random independent q=2 subset-sum DP versus full brute-allocation optimum comparisons.
 - 120 random q=2 **entire Pareto frontier** DP comparisons against brute enumeration of every allocation.
 - 2 adversarial 3-PARTITION fixtures with B=18: a feasible vector (5,6,7,5,6,7) attains τ=524287/68719476736 exactly; an infeasible vector (5,5,5,7,7,7) has minimum 655359/68719476736>τ. Each fixture's complete 2^6 allocation space is enumerated.
