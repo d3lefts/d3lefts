@@ -1,0 +1,11 @@
+# Research portfolio summary for OpenAI Search – Knowledge Graphs
+
+**Proof After Scarcity: From Causal Verification to Evidence-Grounded Knowledge Graphs** (27 October 2026)
+
+This research explores how to turn heterogeneous source materials into knowledge representations that retain evidence, revision history, and the distinction between association and actual dependence. The original Proof After Scarcity paper formalized conservative defect propagation on finite claim-dependency DAGs and described separate dynamics for repeated reuse across artifacts. The new research edition adapts that framework to agentic search: extracting versioned atomic claims, distinguishing cited versus supported relationships, retrieving complete evidence chains, and evaluating downstream answer quality under fixed token and compute budgets.
+
+**What is already demonstrated:** A prospective PAS corpus and frozen ranking exist; the archival analysis distinguishes 722 manuscripts, 597 bibliographic citation links, and 73 mutual-citation groups from any claim-level proof graph. A 24-case retrospective stress test found that an uncalibrated causal triage rule underperformed a simple upstream-first baseline (8/20 vs 11/20 first-check category matches). A newly bundled exact Python reference model passed 216 reproducible DAG exposure tests and 802 independent edge-derivative checks. These are mathematical and methodological results, not measured web-scale retrieval benefits.
+
+**Research direction:** Source-anchored knowledge graphs should be optimized against evidence-complete question answering, not graph size alone. A credible experiment would compare flat retrieval, GraphRAG, source-grounded retrieval, and a calibrated query-conditioned verification policy on a temporally held-out, independently annotated corpus. The primary outcomes are complete evidence support, answer correctness, relation-level extraction fidelity, latency, and reviewer-hours per consequential defect found.
+
+**Research collaboration:** Human-directed work with multiple AI-assisted research collaborators. Manuscript, code, negative findings, and attribution available in the full portfolio package.
