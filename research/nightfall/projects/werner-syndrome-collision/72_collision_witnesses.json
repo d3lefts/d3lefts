@@ -1,0 +1,1254 @@
+{
+  "format": "NIGHTFALL-WERNER-SYNDROME-COLLISION-v1",
+  "date": "2026-10-28",
+  "field": "F_3",
+  "H": "(a3-a1-a2,a4-a1-2a2)",
+  "endpoint": "t=1/2",
+  "old_row_syndromes": [
+    "00",
+    "10",
+    "20"
+  ],
+  "old_col_syndromes": [
+    "00",
+    "01",
+    "02"
+  ],
+  "scaling": "W=prod_i (delta_{(a_i,b_i),(c_i,d_i)} - (1/2)delta_{a_i,b_i}delta_{c_i,d_i}); entry=numerator/16",
+  "results": {
+    "existing_blocks": 9,
+    "omitted_blocks": 72,
+    "max_entry_histogram_numerator": {
+      "4": 16,
+      "8": 56
+    },
+    "certified_min_abs_entry": "1/4",
+    "rank_of_two_unit_sum_at_most": 2
+  },
+  "witnesses": [
+    {
+      "added": [
+        "00",
+        "10"
+      ],
+      "collides_with": [
+        "20",
+        "00"
+      ],
+      "difference": "20",
+      "a": "0020",
+      "b": "0221",
+      "c": "0000",
+      "d": "0201",
+      "numerator": -4,
+      "max_abs_numerator": 4
+    },
+    {
+      "added": [
+        "00",
+        "11"
+      ],
+      "collides_with": [
+        "20",
+        "01"
+      ],
+      "difference": "22",
+      "a": "0020",
+      "b": "1121",
+      "c": "0000",
+      "d": "1101",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "00",
+        "12"
+      ],
+      "collides_with": [
+        "20",
+        "02"
+      ],
+      "difference": "21",
+      "a": "0020",
+      "b": "1122",
+      "c": "0000",
+      "d": "1102",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "00",
+        "20"
+      ],
+      "collides_with": [
+        "10",
+        "00"
+      ],
+      "difference": "10",
+      "a": "0010",
+      "b": "0112",
+      "c": "0000",
+      "d": "0102",
+      "numerator": -4,
+      "max_abs_numerator": 4
+    },
+    {
+      "added": [
+        "00",
+        "21"
+      ],
+      "collides_with": [
+        "10",
+        "01"
+      ],
+      "difference": "12",
+      "a": "0010",
+      "b": "2211",
+      "c": "0000",
+      "d": "2201",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "00",
+        "22"
+      ],
+      "collides_with": [
+        "10",
+        "02"
+      ],
+      "difference": "11",
+      "a": "0010",
+      "b": "2212",
+      "c": "0000",
+      "d": "2202",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "01",
+        "00"
+      ],
+      "collides_with": [
+        "00",
+        "02"
+      ],
+      "difference": "01",
+      "a": "0000",
+      "b": "0220",
+      "c": "0001",
+      "d": "0221",
+      "numerator": -4,
+      "max_abs_numerator": 4
+    },
+    {
+      "added": [
+        "01",
+        "01"
+      ],
+      "collides_with": [
+        "00",
+        "00"
+      ],
+      "difference": "00",
+      "a": "0000",
+      "b": "1120",
+      "c": "0001",
+      "d": "1121",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "01",
+        "02"
+      ],
+      "collides_with": [
+        "00",
+        "01"
+      ],
+      "difference": "02",
+      "a": "0000",
+      "b": "0110",
+      "c": "0001",
+      "d": "0111",
+      "numerator": -4,
+      "max_abs_numerator": 4
+    },
+    {
+      "added": [
+        "01",
+        "10"
+      ],
+      "collides_with": [
+        "20",
+        "02"
+      ],
+      "difference": "21",
+      "a": "0020",
+      "b": "0111",
+      "c": "2020",
+      "d": "2111",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "01",
+        "11"
+      ],
+      "collides_with": [
+        "20",
+        "00"
+      ],
+      "difference": "20",
+      "a": "0020",
+      "b": "0112",
+      "c": "2020",
+      "d": "2112",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "01",
+        "12"
+      ],
+      "collides_with": [
+        "20",
+        "01"
+      ],
+      "difference": "22",
+      "a": "0020",
+      "b": "0001",
+      "c": "2020",
+      "d": "2001",
+      "numerator": -4,
+      "max_abs_numerator": 4
+    },
+    {
+      "added": [
+        "01",
+        "20"
+      ],
+      "collides_with": [
+        "10",
+        "02"
+      ],
+      "difference": "11",
+      "a": "0010",
+      "b": "2021",
+      "c": "0110",
+      "d": "2121",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "01",
+        "21"
+      ],
+      "collides_with": [
+        "10",
+        "00"
+      ],
+      "difference": "10",
+      "a": "0010",
+      "b": "2022",
+      "c": "0110",
+      "d": "2122",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "01",
+        "22"
+      ],
+      "collides_with": [
+        "10",
+        "01"
+      ],
+      "difference": "12",
+      "a": "0010",
+      "b": "0001",
+      "c": "0110",
+      "d": "0101",
+      "numerator": -4,
+      "max_abs_numerator": 4
+    },
+    {
+      "added": [
+        "02",
+        "00"
+      ],
+      "collides_with": [
+        "00",
+        "01"
+      ],
+      "difference": "02",
+      "a": "0000",
+      "b": "0110",
+      "c": "0002",
+      "d": "0112",
+      "numerator": -4,
+      "max_abs_numerator": 4
+    },
+    {
+      "added": [
+        "02",
+        "01"
+      ],
+      "collides_with": [
+        "00",
+        "02"
+      ],
+      "difference": "01",
+      "a": "0000",
+      "b": "0220",
+      "c": "0002",
+      "d": "0222",
+      "numerator": -4,
+      "max_abs_numerator": 4
+    },
+    {
+      "added": [
+        "02",
+        "02"
+      ],
+      "collides_with": [
+        "00",
+        "00"
+      ],
+      "difference": "00",
+      "a": "0000",
+      "b": "1120",
+      "c": "0002",
+      "d": "1122",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "02",
+        "10"
+      ],
+      "collides_with": [
+        "20",
+        "01"
+      ],
+      "difference": "22",
+      "a": "0020",
+      "b": "1012",
+      "c": "0220",
+      "d": "1212",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "02",
+        "11"
+      ],
+      "collides_with": [
+        "20",
+        "02"
+      ],
+      "difference": "21",
+      "a": "0020",
+      "b": "0002",
+      "c": "0220",
+      "d": "0202",
+      "numerator": -4,
+      "max_abs_numerator": 4
+    },
+    {
+      "added": [
+        "02",
+        "12"
+      ],
+      "collides_with": [
+        "20",
+        "00"
+      ],
+      "difference": "20",
+      "a": "0020",
+      "b": "1011",
+      "c": "0220",
+      "d": "1211",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "02",
+        "20"
+      ],
+      "collides_with": [
+        "10",
+        "01"
+      ],
+      "difference": "12",
+      "a": "0010",
+      "b": "0222",
+      "c": "1010",
+      "d": "1222",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "02",
+        "21"
+      ],
+      "collides_with": [
+        "10",
+        "02"
+      ],
+      "difference": "11",
+      "a": "0010",
+      "b": "0002",
+      "c": "1010",
+      "d": "1002",
+      "numerator": -4,
+      "max_abs_numerator": 4
+    },
+    {
+      "added": [
+        "02",
+        "22"
+      ],
+      "collides_with": [
+        "10",
+        "00"
+      ],
+      "difference": "10",
+      "a": "0010",
+      "b": "0221",
+      "c": "1010",
+      "d": "1221",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "10",
+        "10"
+      ],
+      "collides_with": [
+        "00",
+        "00"
+      ],
+      "difference": "00",
+      "a": "0000",
+      "b": "1202",
+      "c": "0010",
+      "d": "1212",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "10",
+        "11"
+      ],
+      "collides_with": [
+        "00",
+        "01"
+      ],
+      "difference": "02",
+      "a": "0000",
+      "b": "2102",
+      "c": "0010",
+      "d": "2112",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "10",
+        "12"
+      ],
+      "collides_with": [
+        "00",
+        "02"
+      ],
+      "difference": "01",
+      "a": "0000",
+      "b": "1201",
+      "c": "0010",
+      "d": "1211",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "10",
+        "20"
+      ],
+      "collides_with": [
+        "20",
+        "00"
+      ],
+      "difference": "20",
+      "a": "0020",
+      "b": "0221",
+      "c": "0010",
+      "d": "0211",
+      "numerator": -4,
+      "max_abs_numerator": 4
+    },
+    {
+      "added": [
+        "10",
+        "21"
+      ],
+      "collides_with": [
+        "20",
+        "01"
+      ],
+      "difference": "22",
+      "a": "0020",
+      "b": "1121",
+      "c": "0010",
+      "d": "1111",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "10",
+        "22"
+      ],
+      "collides_with": [
+        "20",
+        "02"
+      ],
+      "difference": "21",
+      "a": "0020",
+      "b": "1122",
+      "c": "0010",
+      "d": "1112",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "11",
+        "00"
+      ],
+      "collides_with": [
+        "10",
+        "02"
+      ],
+      "difference": "11",
+      "a": "0010",
+      "b": "2100",
+      "c": "0011",
+      "d": "2101",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "11",
+        "01"
+      ],
+      "collides_with": [
+        "10",
+        "00"
+      ],
+      "difference": "10",
+      "a": "0010",
+      "b": "1120",
+      "c": "0011",
+      "d": "1121",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "11",
+        "02"
+      ],
+      "collides_with": [
+        "10",
+        "01"
+      ],
+      "difference": "12",
+      "a": "0010",
+      "b": "1200",
+      "c": "0011",
+      "d": "1201",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "11",
+        "10"
+      ],
+      "collides_with": [
+        "00",
+        "02"
+      ],
+      "difference": "01",
+      "a": "0000",
+      "b": "0111",
+      "c": "2000",
+      "d": "2111",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "11",
+        "11"
+      ],
+      "collides_with": [
+        "00",
+        "00"
+      ],
+      "difference": "00",
+      "a": "0000",
+      "b": "0112",
+      "c": "2000",
+      "d": "2112",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "11",
+        "12"
+      ],
+      "collides_with": [
+        "00",
+        "01"
+      ],
+      "difference": "02",
+      "a": "0000",
+      "b": "0222",
+      "c": "2000",
+      "d": "2222",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "11",
+        "20"
+      ],
+      "collides_with": [
+        "20",
+        "02"
+      ],
+      "difference": "21",
+      "a": "0020",
+      "b": "0002",
+      "c": "0120",
+      "d": "0102",
+      "numerator": -4,
+      "max_abs_numerator": 4
+    },
+    {
+      "added": [
+        "11",
+        "21"
+      ],
+      "collides_with": [
+        "20",
+        "00"
+      ],
+      "difference": "20",
+      "a": "0020",
+      "b": "1011",
+      "c": "0120",
+      "d": "1111",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "11",
+        "22"
+      ],
+      "collides_with": [
+        "20",
+        "01"
+      ],
+      "difference": "22",
+      "a": "0020",
+      "b": "1012",
+      "c": "0120",
+      "d": "1112",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "12",
+        "00"
+      ],
+      "collides_with": [
+        "10",
+        "01"
+      ],
+      "difference": "12",
+      "a": "0010",
+      "b": "1200",
+      "c": "0012",
+      "d": "1202",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "12",
+        "01"
+      ],
+      "collides_with": [
+        "10",
+        "02"
+      ],
+      "difference": "11",
+      "a": "0010",
+      "b": "2100",
+      "c": "0012",
+      "d": "2102",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "12",
+        "02"
+      ],
+      "collides_with": [
+        "10",
+        "00"
+      ],
+      "difference": "10",
+      "a": "0010",
+      "b": "1120",
+      "c": "0012",
+      "d": "1122",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "12",
+        "10"
+      ],
+      "collides_with": [
+        "00",
+        "01"
+      ],
+      "difference": "02",
+      "a": "0000",
+      "b": "1012",
+      "c": "0200",
+      "d": "1212",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "12",
+        "11"
+      ],
+      "collides_with": [
+        "00",
+        "02"
+      ],
+      "difference": "01",
+      "a": "0000",
+      "b": "2021",
+      "c": "0200",
+      "d": "2221",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "12",
+        "12"
+      ],
+      "collides_with": [
+        "00",
+        "00"
+      ],
+      "difference": "00",
+      "a": "0000",
+      "b": "1011",
+      "c": "0200",
+      "d": "1211",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "12",
+        "20"
+      ],
+      "collides_with": [
+        "20",
+        "01"
+      ],
+      "difference": "22",
+      "a": "0020",
+      "b": "0001",
+      "c": "1020",
+      "d": "1001",
+      "numerator": -4,
+      "max_abs_numerator": 4
+    },
+    {
+      "added": [
+        "12",
+        "21"
+      ],
+      "collides_with": [
+        "20",
+        "02"
+      ],
+      "difference": "21",
+      "a": "0020",
+      "b": "0111",
+      "c": "1020",
+      "d": "1111",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "12",
+        "22"
+      ],
+      "collides_with": [
+        "20",
+        "00"
+      ],
+      "difference": "20",
+      "a": "0020",
+      "b": "0112",
+      "c": "1020",
+      "d": "1112",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "20",
+        "10"
+      ],
+      "collides_with": [
+        "10",
+        "00"
+      ],
+      "difference": "10",
+      "a": "0010",
+      "b": "0112",
+      "c": "0020",
+      "d": "0122",
+      "numerator": -4,
+      "max_abs_numerator": 4
+    },
+    {
+      "added": [
+        "20",
+        "11"
+      ],
+      "collides_with": [
+        "10",
+        "01"
+      ],
+      "difference": "12",
+      "a": "0010",
+      "b": "2211",
+      "c": "0020",
+      "d": "2221",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "20",
+        "12"
+      ],
+      "collides_with": [
+        "10",
+        "02"
+      ],
+      "difference": "11",
+      "a": "0010",
+      "b": "2212",
+      "c": "0020",
+      "d": "2222",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "20",
+        "20"
+      ],
+      "collides_with": [
+        "00",
+        "00"
+      ],
+      "difference": "00",
+      "a": "0000",
+      "b": "1202",
+      "c": "0020",
+      "d": "1222",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "20",
+        "21"
+      ],
+      "collides_with": [
+        "00",
+        "01"
+      ],
+      "difference": "02",
+      "a": "0000",
+      "b": "2102",
+      "c": "0020",
+      "d": "2122",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "20",
+        "22"
+      ],
+      "collides_with": [
+        "00",
+        "02"
+      ],
+      "difference": "01",
+      "a": "0000",
+      "b": "1201",
+      "c": "0020",
+      "d": "1221",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "21",
+        "00"
+      ],
+      "collides_with": [
+        "20",
+        "02"
+      ],
+      "difference": "21",
+      "a": "0020",
+      "b": "2100",
+      "c": "0021",
+      "d": "2101",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "21",
+        "01"
+      ],
+      "collides_with": [
+        "20",
+        "00"
+      ],
+      "difference": "20",
+      "a": "0020",
+      "b": "2210",
+      "c": "0021",
+      "d": "2211",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "21",
+        "02"
+      ],
+      "collides_with": [
+        "20",
+        "01"
+      ],
+      "difference": "22",
+      "a": "0020",
+      "b": "1200",
+      "c": "0021",
+      "d": "1201",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "21",
+        "10"
+      ],
+      "collides_with": [
+        "10",
+        "02"
+      ],
+      "difference": "11",
+      "a": "0010",
+      "b": "0002",
+      "c": "2010",
+      "d": "2002",
+      "numerator": -4,
+      "max_abs_numerator": 4
+    },
+    {
+      "added": [
+        "21",
+        "11"
+      ],
+      "collides_with": [
+        "10",
+        "00"
+      ],
+      "difference": "10",
+      "a": "0010",
+      "b": "0221",
+      "c": "2010",
+      "d": "2221",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "21",
+        "12"
+      ],
+      "collides_with": [
+        "10",
+        "01"
+      ],
+      "difference": "12",
+      "a": "0010",
+      "b": "0222",
+      "c": "2010",
+      "d": "2222",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "21",
+        "20"
+      ],
+      "collides_with": [
+        "00",
+        "02"
+      ],
+      "difference": "01",
+      "a": "0000",
+      "b": "2021",
+      "c": "0100",
+      "d": "2121",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "21",
+        "21"
+      ],
+      "collides_with": [
+        "00",
+        "00"
+      ],
+      "difference": "00",
+      "a": "0000",
+      "b": "1011",
+      "c": "0100",
+      "d": "1111",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "21",
+        "22"
+      ],
+      "collides_with": [
+        "00",
+        "01"
+      ],
+      "difference": "02",
+      "a": "0000",
+      "b": "1012",
+      "c": "0100",
+      "d": "1112",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "22",
+        "00"
+      ],
+      "collides_with": [
+        "20",
+        "01"
+      ],
+      "difference": "22",
+      "a": "0020",
+      "b": "1200",
+      "c": "0022",
+      "d": "1202",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "22",
+        "01"
+      ],
+      "collides_with": [
+        "20",
+        "02"
+      ],
+      "difference": "21",
+      "a": "0020",
+      "b": "2100",
+      "c": "0022",
+      "d": "2102",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "22",
+        "02"
+      ],
+      "collides_with": [
+        "20",
+        "00"
+      ],
+      "difference": "20",
+      "a": "0020",
+      "b": "2210",
+      "c": "0022",
+      "d": "2212",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "22",
+        "10"
+      ],
+      "collides_with": [
+        "10",
+        "01"
+      ],
+      "difference": "12",
+      "a": "0010",
+      "b": "0001",
+      "c": "0210",
+      "d": "0201",
+      "numerator": -4,
+      "max_abs_numerator": 4
+    },
+    {
+      "added": [
+        "22",
+        "11"
+      ],
+      "collides_with": [
+        "10",
+        "02"
+      ],
+      "difference": "11",
+      "a": "0010",
+      "b": "2021",
+      "c": "0210",
+      "d": "2221",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "22",
+        "12"
+      ],
+      "collides_with": [
+        "10",
+        "00"
+      ],
+      "difference": "10",
+      "a": "0010",
+      "b": "2022",
+      "c": "0210",
+      "d": "2222",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "22",
+        "20"
+      ],
+      "collides_with": [
+        "00",
+        "01"
+      ],
+      "difference": "02",
+      "a": "0000",
+      "b": "0222",
+      "c": "1000",
+      "d": "1222",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "22",
+        "21"
+      ],
+      "collides_with": [
+        "00",
+        "02"
+      ],
+      "difference": "01",
+      "a": "0000",
+      "b": "0111",
+      "c": "1000",
+      "d": "1111",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    },
+    {
+      "added": [
+        "22",
+        "22"
+      ],
+      "collides_with": [
+        "00",
+        "00"
+      ],
+      "difference": "00",
+      "a": "0000",
+      "b": "0112",
+      "c": "1000",
+      "d": "1112",
+      "numerator": -8,
+      "max_abs_numerator": 8
+    }
+  ]
+}
