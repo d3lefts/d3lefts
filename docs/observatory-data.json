@@ -446,7 +446,8 @@
       "evidence": "research/nightfall/observatory/TRANSFER_0001.md",
       "verifier": "scripts/verify_observatory.py",
       "experiment": "Exact rational principal minors and weighted margins",
-      "status": "reproduced"
+      "status": "reproduced",
+      "provenance_url": "https://github.com/d3lefts/d3lefts/blob/32df9e1b2b0049e0dbc7e27a465957a741843c5a/research/nightfall/observatory/TRANSFER_0001.md"
     },
     {
       "id": "TR-002",
@@ -458,7 +459,8 @@
       "evidence": "research/nightfall/projects/sidon-finite-30/README.md",
       "verifier": "research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py",
       "experiment": "Run the standalone finite integer audit",
-      "status": "reproduced"
+      "status": "reproduced",
+      "provenance_url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/sidon-finite-30/README.md"
     },
     {
       "id": "TR-003",
@@ -470,7 +472,8 @@
       "evidence": "research/nightfall/observatory/TRANSFER_0001.md",
       "verifier": null,
       "experiment": "Benchmark certificate representations without changing either theorem",
-      "status": "classified"
+      "status": "classified",
+      "provenance_url": "https://github.com/d3lefts/d3lefts/blob/32df9e1b2b0049e0dbc7e27a465957a741843c5a/research/nightfall/observatory/TRANSFER_0001.md"
     },
     {
       "id": "TR-004",
@@ -482,7 +485,8 @@
       "evidence": "research/nightfall/observatory/TRANSFER_0001.md",
       "verifier": null,
       "experiment": "Two independent interval-bound implementations on rank-doubling windows",
-      "status": "untested"
+      "status": "untested",
+      "provenance_url": "https://github.com/d3lefts/d3lefts/blob/32df9e1b2b0049e0dbc7e27a465957a741843c5a/research/nightfall/observatory/TRANSFER_0001.md"
     },
     {
       "id": "TR-005",
@@ -494,7 +498,8 @@
       "evidence": "research/nightfall/observatory/TRANSFER_0001.md",
       "verifier": null,
       "experiment": "Find the smallest outside-class rank-two witness and bound its Schur complement",
-      "status": "untested"
+      "status": "untested",
+      "provenance_url": "https://github.com/d3lefts/d3lefts/blob/32df9e1b2b0049e0dbc7e27a465957a741843c5a/research/nightfall/observatory/TRANSFER_0001.md"
     },
     {
       "id": "TR-006",
@@ -506,7 +511,8 @@
       "evidence": "research/nightfall/projects/pas-overview.md",
       "verifier": null,
       "experiment": "Preserve 8/20 versus 11/20 failure as a permanent adverse trace",
-      "status": "falsified"
+      "status": "falsified",
+      "provenance_url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/pas-overview.md"
     },
     {
       "id": "TR-007",
@@ -518,7 +524,8 @@
       "evidence": "research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/README.md",
       "verifier": null,
       "experiment": "Align model assumptions and compare two identical finite-field test instances",
-      "status": "classified"
+      "status": "classified",
+      "provenance_url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/README.md"
     },
     {
       "id": "TR-008",
@@ -530,7 +537,8 @@
       "evidence": "research/nightfall/projects/werner-correlated-6-9/S2_4471_CERTIFICATE_AUDIT.md",
       "verifier": null,
       "experiment": "Search the boundary of the encoded family for a negative Schur complement",
-      "status": "untested"
+      "status": "untested",
+      "provenance_url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/werner-correlated-6-9/S2_4471_CERTIFICATE_AUDIT.md"
     },
     {
       "id": "TR-009",
@@ -542,7 +550,8 @@
       "evidence": "research/nightfall/projects/pas-overview.md",
       "verifier": null,
       "experiment": "Preregister matched-budget graph-guided and flat triage",
-      "status": "classified"
+      "status": "classified",
+      "provenance_url": "https://github.com/d3lefts/d3lefts/blob/df9511c622c309046180fd0e015aca88577c58ec/research/nightfall/projects/pas-overview.md"
     }
   ]
 }

@@ -127,6 +127,9 @@ def validate(graph: dict, locks: dict, gates: dict) -> list[str]:
             errors.append(f"{eid}: unapproved scientific edge classification")
         if not safe_file(e.get("evidence", "")):
             errors.append(f"{eid}: missing proof/evidence source")
+        source_link = e.get("provenance_url", "")
+        if not source_link.startswith("https://github.com/d3lefts/d3lefts/blob/") or not source_link.endswith("/" + e.get("evidence", "<missing>")) or "/blob/main/" in source_link:
+            errors.append(f"{eid}: missing immutable source revision")
         if e.get("type") == "proven-implication":
             if ALLOWED_PROVEN.get(eid) != (e.get("from"), e.get("to")) or \
                e.get("verifier") != "scripts/verify_observatory.py" or \

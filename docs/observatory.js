@@ -71,7 +71,7 @@
       inspector.append(element("div","obs-panel-eyebrow","RESEARCH RELATION / "+e.id),element("h2","",e.type.replaceAll("-"," ")));
       inspector.append(element("span","obs-status",e.status));
       inspector.append(element("p","",e.statement),textRow("Source claim",node(e.from).title),textRow("Target claim",node(e.to).title),textRow("Required assumptions",e.assumptions),textRow("Decisive experiment",e.experiment));
-      const a=element("a","", "Inspect evidence source");a.href="https://github.com/d3lefts/d3lefts/blob/main/"+e.evidence;a.target="_blank";a.rel="noopener";inspector.append(a);
+      const a=element("a","", "Inspect evidence source");a.href=e.provenance_url;a.target="_blank";a.rel="noopener";inspector.append(a);
       return;
     }
     const n=node(chosen);
@@ -103,7 +103,7 @@
       function visit(id){if(chain.has(id))return;chain.add(id);for(const dep of node(id)?.dependencies||[])visit(dep);}
       visit(chosen);
       for(const id of chain){const a=node(id);cards.append(card(a.id,a.title,a.source_key,"SHA-256 "+a.identity_sha256.slice(0,20)+"…",()=>selectNode(id)));}
-      cards.append(card("SOURCE INTEGRITY","Proof status follows the claim","External mathematical premises and missing binary archives remain unresolved until reproduced.","Published source links do not establish independent proof.",()=>{window.open("https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/observatory/CONSTITUTION.md","_blank","noopener");}));
+      cards.append(card("SOURCE INTEGRITY","Proof status follows the claim","External mathematical premises and missing binary archives remain unresolved until reproduced.","Published source links do not establish independent proof.",()=>{window.open("https://github.com/d3lefts/d3lefts/blob/32df9e1b2b0049e0dbc7e27a465957a741843c5a/research/nightfall/observatory/CONSTITUTION.md","_blank","noopener");}));
     } else if(mode==="transfer"){
       for(const e of data.edges){
         const source=node(e.from),target=node(e.to);
