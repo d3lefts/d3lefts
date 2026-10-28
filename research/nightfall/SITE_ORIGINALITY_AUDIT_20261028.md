@@ -48,3 +48,11 @@ These are original **artifacts/observations**, rather than certified global rese
 A source-content change requires an editorial review of this whitelist. The versioned site checker guards the three approved research links and ensures removed unoriginal pages remain absent. This is a *curation safeguard*, not an automatic machine oracle for mathematical novelty.
 
 **Status:** Editorial sweep implemented 2026-10-28. Future review can promote a demonstrably original new result with explicit prior-art comparison and validation.
+
+## Dated site-policy clarification — October 28, 2026
+
+**Site-owner authorization:** add a separate, clearly status-labeled research library linking the valuable September–October working archive, and showcase three flagship *research programs* (Erdős overlap, finite-field phase retrieval, Werner states). Flagship status expresses research breadth and importance; it **does not** express new mathematical originality, external certification, or unconditional conclusions.
+
+The original-finding whitelist above remains exactly three: the 131,072-cell overlap witness, the 30-point Sidon witness, and the bounded adverse PAS experiment. The independent source archive and new research library have different inclusion rules from the Original Findings index. Candidate finite-field and source-dependent Werner programs are explicitly labeled as conditional, with open proof and priority gates. Existing uncredited classical methods are described as established techniques, not newly invented results.
+
+This amendment is a presentation reclassification and a navigation change, not a scientific status promotion. No original certificate, score, prior-art disposition or source artifact is revised here.
