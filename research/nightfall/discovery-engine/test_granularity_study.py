@@ -46,6 +46,18 @@ class GranularityStudyTests(unittest.TestCase):
             self.assertEqual(z["exact_calls"],x["exact_calls"])
             self.assertEqual(z["case_sha256"],x["case_sha256"])
 
+    def test_hidden_labels_cannot_affect_candidate_selection(self):
+        source=fixture("source_spans_proxy",2026)
+        self.assertNotEqual(source["raw"],source["truth"])
+        inverted={**source,"truth":bytes(49 if b==48 else 48 for b in source["truth"])}
+        for policy in (ATOMIC,FIXED,ADAPTIVE,*POLICIES):
+            a=evaluate_case(source,policy)
+            b=evaluate_case(inverted,policy)
+            self.assertEqual(a["case_sha256"],b["case_sha256"])
+            self.assertEqual(a["selected_slots"],b["selected_slots"])
+            self.assertEqual(a["coarse_ops"],b["coarse_ops"])
+            self.assertNotEqual(a["annotation_sha256"],b["annotation_sha256"])
+
     def test_train_heldout_nonleakage(self):
         r=run_study(seed=1729,training=3,testing=3)
         self.assertEqual(r["selection_search_count"],len(POLICIES))

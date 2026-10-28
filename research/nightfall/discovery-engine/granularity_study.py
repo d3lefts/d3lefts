@@ -62,6 +62,10 @@ def fixture(domain: str, seed: int) -> dict:
             label=49 if rng.random()<0.56 else 48
             raw.extend(bytes([label])*rng.randrange(2,10))
         raw=bytes(raw[:n])
+        # Model input contains only observable, noisy source cues.
+        # The atomic adjudication labels are generated separately and are
+        # unavailable to every representation router and coarse ranker.
+        truth=bytes(v if rng.random()<0.84 else (49 if v==48 else 48) for v in raw)
         hard=(12,24,36)
         rounds=[]
         for _ in range(TRIALS):
@@ -71,7 +75,7 @@ def fixture(domain: str, seed: int) -> dict:
                 end=min(n,start+rng.randrange(1,8))
                 spans.append((start,end))
             rounds.append(spans)
-        return {"domain":domain,"raw":raw,"hard":hard,"rounds":rounds}
+        return {"domain":domain,"raw":raw,"truth":truth,"hard":hard,"rounds":rounds}
     raise ValueError("Unknown synthetic study domain")
 
 
@@ -127,6 +131,7 @@ def evaluate_case(case:dict,policy:Policy) -> dict:
     reductions=[]
     false_selection=0
     certified_positive=0
+    selected_slots=[]
     if case["domain"]=="overlap_proxy":
         baseline=overlap_certificate(base,case["mass"])["max"]
         current=base
@@ -158,6 +163,7 @@ def evaluate_case(case:dict,policy:Policy) -> dict:
             reductions.append(len(base)/max(1,len(tree.coarse)))
             choices.append((rank,slot))
         selected=min(choices)[1]
+        selected_slots.append(selected)
         oracle_calls+=1
         if case["domain"]=="overlap_proxy":
             a,b=candidates[selected]
@@ -167,7 +173,7 @@ def evaluate_case(case:dict,policy:Policy) -> dict:
             best=min(best,verified["max"])
         else:
             a,b=candidates[selected]
-            passed=source_certificate(base,hard,a,b)
+            passed=source_certificate(case["truth"],hard,a,b)
             certified_positive+=int(passed)
             false_selection+=int(not passed)
     if case["domain"]=="overlap_proxy":
@@ -176,10 +182,13 @@ def evaluate_case(case:dict,policy:Policy) -> dict:
     else:
         gain=certified_positive
         metric=certified_positive
-    return {"case_sha256":sha256(raw).hexdigest(),"certified_gain":gain,
+    return {"case_sha256":sha256(raw).hexdigest(),
+            "annotation_sha256":sha256(case.get("truth",raw)).hexdigest(),
+            "certified_gain":gain,
             "initial_score":baseline,"final_score":best,
             "exact_calls":oracle_calls,"coarse_ops":proxy_ops,
             "mean_compression":round(sum(reductions)/len(reductions),5),
+            "selected_slots":selected_slots,
             "verified_source_admissions":certified_positive,
             "rejected_source_proposals":false_selection,
             "metric":metric}
@@ -239,6 +248,8 @@ def run_study(seed:int=1729,training:int=TRAIN,testing:int=TEST)->dict:
             raise AssertionError("inconsistent raw test cases")
     source_hashes={d:{k:[sha256(fixture(d,s)["raw"]).hexdigest() for s in v]
                       for k,v in parts.items()} for d,parts in seeds.items()}
+    annotation_hashes={d:{k:[sha256(fixture(d,s)["truth" if d=="source_spans_proxy" else "raw"]).hexdigest() for s in v]
+                           for k,v in parts.items()} for d,parts in seeds.items()}
     return {"schema":SCHEMA,"label":"BOUNDED SYNTHETIC BENCHMARK — NOT A SCIENTIFIC RECORD",
             "seed":seed,"training_per_domain":training,"heldout_per_domain":testing,
             "candidate_pool_per_round":POOL,"exact_verifier_calls_per_case":TRIALS,
@@ -246,9 +257,10 @@ def run_study(seed:int=1729,training:int=TRAIN,testing:int=TEST)->dict:
             "learned_policy":asdict(learned),
             "training_selected_on":"certified training gains, proxy-cost tiebreak; heldout data excluded",
             "raw_identity_sha256":source_hashes,
+            "hidden_annotation_identity_sha256":annotation_hashes,
             "results":results,
             "limits":["Synthetic binary cyclic-overlap proxy, separate from continuous EA #36.",
-                      "Synthetic atomic support spans, separate from natural-web SourceBound accuracy.",
+                      "Synthetic noisy source cues and separate hidden adjudication labels, separate from natural-web SourceBound accuracy.",
                       "Discrete joint policy-selection, no neural end-to-end training.",
                       "Repeated domains, training effort and independent peer review remain outstanding."]}
 

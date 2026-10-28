@@ -93,3 +93,11 @@ The worker restricts the configurations to training/test sizes 3–32 and a 32-b
 ### What this establishes
 
 The implementation establishes downstream-supervised *discrete selection* of representation boundaries and a matched evaluation protocol. It is **not** Cartesia's differentiable end-to-end boundary network. The measured compute model records coarse scoring operations and exact calls separately; training/segmentation overhead and elapsed time must be included for any systems-speedup claim. Third-party independent replay, natural-web held-out trials, and continuous-overlap validation remain separate gates.
+
+### 2026-10-28 adversarial correction — proxy-label isolation
+
+An initial diagnostic implementation used the same raw binary support labels for candidate ranking and exact source-span adjudication. That admitted label leakage: apparent 96/96 valid SourceBound proxy selections could reflect direct exposure to ground truth. The result has **no standing as external transfer evidence**.
+
+The revised benchmark uses *observable noisy source cues* for boundary routing and coarse selection, and a separately generated *hidden atomic support annotation* for exact adjudication. Training labels are available only through the downstream training outcome; held-out annotations never enter boundary construction or selection. Reported per-case hashes distinguish observable source bytes from annotation bytes. A negative-control test flips every hidden annotation label while holding observable bytes fixed and verifies that all candidate-selection traces remain unchanged. This fixes the demonstrable direct-leakage path; real-world transfer remains untested.
+
+All comparative results must use the latest corrected `granularity_study.py` and its SHA-256 report. Earlier unisolated source-proxy numbers are diagnostic and superseded.
