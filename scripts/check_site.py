@@ -127,6 +127,47 @@ def main() -> int:
         fnv = ((fnv ^ b) * 0x100000001b3) & 0xffffffffffffffff
     if len(ranked) != 372 or f"{fnv:016x}" != "c429732aac46eae9":
         FAILURES.append("PAS historical FNV ranking fingerprint mismatch")
+    # Reconciled Werner ledger: 24 exact rational rows, preservation of stronger old certificates,
+    # an honest evidence-tier split, public presentation, and rejected-25 firewall.
+    from fractions import Fraction
+    atlas_dir = ROOT / "research/nightfall/projects/werner-atlas"
+    import csv as werner_csv
+    with (atlas_dir / "bounds_1_to_24.csv").open(encoding="utf-8", newline="") as f:
+        werner_rows = list(werner_csv.DictReader(f))
+    expected_werner = {6: Fraction(11219,25000), 7: Fraction(10807,25000),
+        8: Fraction(4199,10000), 9: Fraction(256,625),
+        15: Fraction(37849,100000), 16: Fraction(9391,25000),
+        17: Fraction(37313,100000), 18: Fraction(37089,100000),
+        21: Fraction(36119,100000), 22: Fraction(36119,100000),
+        23: Fraction(35151,100000), 24: Fraction(34001,100000)}
+    if len(werner_rows) != 24 or [int(r["k"]) for r in werner_rows] != list(range(1,25)):
+        FAILURES.append("Werner copy ledger must contain k=1..24 exactly once")
+    else:
+        for row in werner_rows:
+            k = int(row["k"])
+            exact = Fraction(row["t_exact"])
+            displayed = Fraction(row["t_decimal"])
+            if exact != displayed:
+                FAILURES.append(f"Werner exact/decimal mismatch at k={k}")
+            if k > 3 and exact <= Fraction(1,3):
+                FAILURES.append(f"Werner qutrit NPT threshold not strictly above 1/3 at k={k}")
+            if k in expected_werner and exact != expected_werner[k]:
+                FAILURES.append(f"Werner strongest-archive checkpoint changed at k={k}")
+            tier = row["evidence_tier"]
+            if k<=3 and tier != "published sharp" or 4<=k<=18 and tier != "quantitative source margins" or k>=19 and tier != "published theorem statements":
+                FAILURES.append(f"Werner source tier mismatch at k={k}")
+    atlas = (atlas_dir / "README.md").read_text(encoding="utf-8")
+    continuation = (atlas_dir / "ANALYTIC_CONTINUATION.md").read_text(encoding="utf-8")
+    asset = (atlas_dir / "REVIEW_AND_ASSETS.md").read_text(encoding="utf-8")
+    webpage = (DOCS / "werner.html").read_text(encoding="utf-8")
+    if "0.34001" not in webpage or "0.35151" not in webpage or "0.36119" not in webpage:
+        FAILURES.append("Werner public page missing final k=22–24 results")
+    if "0.448760" not in webpage or "0.432280" not in webpage or "0.419900" not in webpage:
+        FAILURES.append("Werner public page lost stronger k=6–8 checkpoints")
+    if any(s not in atlas + continuation + asset for s in ("source margins", "every-finite-k", "failed", "pending")):
+        FAILURES.append("Werner dossier missing source caveat or failed experiment")
+    if "t=0.34" in (atlas_dir / "bounds_1_to_24.csv").read_text(encoding="utf-8"):
+        FAILURES.append("Failed 25-copy LP candidate accidentally promoted")
     if FAILURES:
         print("SITE AUDIT FAILED")
         for err in FAILURES:

@@ -5,7 +5,7 @@
 | Track | Recorded validation | Status |
 |---|---|---|
 | Erdős minimum overlap | Recompiled C++ NTT with six moduli, regenerated and compared residue files, exact CRT shift maximum, dyadic fiber checks | **PASS in archived session**; 131,072-cell witness, Arena 100,000-entry cap exceeded |
-| Werner 6–9 | Independent exact rational dual coefficient identities, source polynomial reconstruction, adversarial mutations | **PASS conditioned on external source inequalities** |
+| Werner 1–24 | Reconciled earlier 6–9 and later 10–24 qutrit exact-certificate reports; corrected dimension-uniform 8–16; analytic finite-k draft | **Archived exact rational checker results, conditional on source theorems and for 4–18 on un-replayed quantitative source margins.** Original Oct 28 JSON/checkers await a public GitHub mirror; external mathematical/source replay open. See [Werner atlas](projects/werner-atlas/README.md). |
 | SAT degree-3 compiler | 1,050 random CNF comparisons (including 554 full edge enumerations) and 496 mode-count checks | **PASS in archived session**; faster runtime relies on external theorem |
 | Sidon finite 30 | Exact C++ size-17 certificate, independent Python/MILP and max-plus transfer | **PASS in archived session** |
 | SourceBound | Synthetic, browser, adversarial regression cases | **Engineering validation only**, no blind natural-web trial |
