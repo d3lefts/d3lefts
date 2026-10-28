@@ -1,5 +1,11 @@
 # What Survives the Cut — finite-group shadow codes
 
+## Heterogeneous reliability extension — October 28, 2026
+
+Unequal coordinate survival rates change the optimal allocation. The [exact reliability and complexity theorem](HETEROGENEOUS_ERASURE_COMPLEXITY.md) derives a convex workload identity, proves NP-completeness of variable-class reliability allocation even on cyclic groups, and establishes a pseudo-polynomial dynamic program computing the **entire** error–erasure Pareto frontier for two labels. A [standalone exact verifier](verify_heterogeneous_erasure.py) checks the formula against direct orbit observations, the cyclic four-measurement separation example, both 3-PARTITION fixtures, and random optimal-frontier comparisons.
+
+The earlier simultaneous cardinality-balancing theorem assumes identical survival probabilities. This newer result specifies the boundary and produces optimal designs under heterogeneous rates. Global publication priority and proof-assistant formalization remain open.
+
 ## Nonabelian breakthrough — 28 October 2026
 
 A new **unconditional algebraic extension** now covers every finite group, including noncommutative groups, with a nonidentity order-two automorphism. Translated orbit measurements obey the exact distance rule, and their twisted-coboundary label classes are left cosets \(tH\) of the automorphism's fixed subgroup.
