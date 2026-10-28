@@ -35,6 +35,28 @@ jobs:
       - uses: actions/checkout@v4
       - name: Validate static pages, source links, anchors, and fallback catalogue
         run: python3 scripts/check_site.py
+      - name: Check Observatory frozen claims, typed edges and exact rational transfer
+        run: |
+          python3 -m py_compile scripts/verify_observatory.py
+          python3 scripts/verify_observatory.py
+      - name: Protect scientific identities already published on the base branch
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          git fetch origin "${{ github.base_ref }}" --depth=1
+          if git cat-file -e "origin/${{ github.base_ref }}:research/nightfall/observatory/claim-identities.lock.json" 2>/dev/null; then
+            git show "origin/${{ github.base_ref }}:research/nightfall/observatory/claim-identities.lock.json" > /tmp/observatory-base-lock.json
+            python3 scripts/verify_observatory.py --baseline-lock /tmp/observatory-base-lock.json
+          else
+            echo "First publication: no baseline on base branch; independent review required."
+          fi
+      - name: Parse Observatory JavaScript and ensure registry mirror
+        run: |
+          node --check docs/observatory.js
+          python3 - <<'PY'
+          from pathlib import Path
+          assert Path('docs/observatory-data.json').read_bytes() == Path('research/nightfall/observatory/claims-v1.json').read_bytes()
+          print('PASS: Observatory source mirror is byte-identical')
+          PY
       - name: Parse JavaScript without executing browser code
         run: |
           node --check docs/site.js
@@ -67,6 +89,14 @@ jobs:
         run: |
           npm install --no-save --no-package-lock playwright-core@1.56.1
           CHROME_BIN="$(command -v google-chrome)" node scripts/site_browser_smoke.mjs
+      - name: Archive Observatory mobile and desktop design preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-observatory-design-preview
+          path: |
+            observatory-preview-mobile.png
+            observatory-preview-desktop.png
+          retention-days: 90
       - name: Compile verification scripts and check machine-readable task ledger
         run: |
           python3 -m py_compile scripts/verify_erdos_independent.py scripts/verify_frozen_release.py
@@ -85,6 +115,20 @@ jobs:
           g++ -O3 -std=c++17 research/nightfall/agent-reports/ea36_131072/independent_gmp_audit.cpp -lgmpxx -lgmp -o /tmp/nightfall-gmp-audit
       - name: Machine-certify the exact 30-point Sidon theorem
         run: python3 research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py
+      - name: Independently reconstruct exact Sidon proof DAG and arithmetic witness
+        run: |
+          python3 research/nightfall/projects/sidon-finite-30/generate_proof_dag.py
+          python3 scripts/verify_sidon_dag_independent.py
+          sha256sum research/nightfall/projects/sidon-finite-30/sidon_no_18_proof.json
+      - name: Archive exact finite Sidon proof and independent Gate B receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-sidon-gate-b-proof
+          path: |
+            research/nightfall/projects/sidon-finite-30/sidon_no_18_proof.json
+            research/nightfall/projects/sidon-finite-30/witness_30.txt
+            nightfall_gate_b_sidon_receipt.json
+          retention-days: 90
       - name: Certify universal factor-network equality quotient
         run: |
           python3 -m py_compile research/nightfall/projects/sat-network-universal/check_structural_certificate.py
