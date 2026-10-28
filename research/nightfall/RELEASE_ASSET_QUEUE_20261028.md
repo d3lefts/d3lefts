@@ -18,6 +18,8 @@ Date: October 28, 2026. This is an **upload queue** with checksums measured from
 | NIGHTFALL_EA36_LOWER_AGENT_AUDIT_20261028.zip | 5,492,486 | a3dba636f60d0fdde354b322acaa86c4e7d3744cb6a9b9969eedf707ef1bb57d | Complete conditional lower-bound mathematical audit |
 | NIGHTFALL_EA36_AGENT_VERIFICATION_2026-10-28.zip | 12,200 | 4ef601e4ed7c00f8461a47a1759b93c61e9318fa4aa4a06be0eb8c1b8a528ddd | Independent overlap witness review receipts |
 
+Additional narrow source asset: `NIGHTFALL_WERNER_S2_4471_CERTIFIED(2).zip` (6,078 bytes, five entries, SHA-256 `ab1e4cde6f4866755dbe54be111f73cb197366134c00dac0bb8f2e5318091980`). Its original exact verifier was replayed and passed the seven coefficient identities.
+
 ## Reproduced before queuing
 
 - Original final Werner 4–25: `CHECK_ALL.sh`, all original SHA-256 entries, `construct_A.py` and `verify_B.py` passed.
