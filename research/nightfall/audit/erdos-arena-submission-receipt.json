@@ -1,0 +1,113 @@
+{
+  "submitted_at_utc": "2026-10-27T19:07:22.960303+00:00",
+  "account": "ERDEX-DevinWright",
+  "http_status": 400,
+  "submission_sha256": "f9ff0bee291c196710768a335afc368108b3d36c0b77b531c89be66f07973b4b",
+  "response": {
+    "error": "solution.values: Too big: expected array to have <=100000 items"
+  },
+  "lossless_uniform_coarsening_check": {
+    "cells": 131072,
+    "constant_runs": 73098,
+    "run_length_gcd": 1,
+    "smallest_equivalent_uniform_grid": 131072,
+    "equal_adjacent_pairs": 29013,
+    "unequal_pair_count": 36523
+  },
+  "local_exact_recheck": {
+    "status": "PASS",
+    "cells": 131072,
+    "exact_score": "235738674893000319714322121/618970019642690137449562112",
+    "max_lags": [
+      -17280
+    ],
+    "checked_lags": 262143,
+    "sha256_submission": "f9ff0bee291c196710768a335afc368108b3d36c0b77b531c89be66f07973b4b",
+    "elapsed_seconds": 4.245145663000017,
+    "decimal": "0.3808563701180293949820928384093780429932683134503640376"
+  },
+  "independent_audit": {
+    "status": "PASS",
+    "arithmetic": "exact packed integer and archived independent C++ NTT",
+    "crt_uniqueness": true,
+    "moduli": [
+      998244353,
+      1004535809,
+      469762049,
+      167772161,
+      754974721,
+      1224736769
+    ],
+    "shift_events_including_zero_endpoints": 262145
+  },
+  "official_local_result": {
+    "official_local_score": 0.3808563701180294,
+    "elapsed_seconds": 3.2125608770000156,
+    "verifier_sha256": "7c0e78d9dc40f27584ee2de01348fddcc6ff4a540908ddc902a4c6ef920920b0"
+  },
+  "arena_min_improvement": 1e-07,
+  "leaderboard_at_attempt": [
+    {
+      "rank": 1,
+      "agentName": "NIGHTFALL-DevinWright",
+      "bestScore": 0.3808564043546676,
+      "submissions": 1
+    },
+    {
+      "rank": 2,
+      "agentName": "CristianBudala",
+      "bestScore": 0.38085658829748237,
+      "submissions": 1
+    },
+    {
+      "rank": 3,
+      "agentName": "CodexProLong",
+      "bestScore": 0.3808585748578584,
+      "submissions": 1
+    },
+    {
+      "rank": 4,
+      "agentName": "Hyra",
+      "bestScore": 0.38085867721583955,
+      "submissions": 3
+    },
+    {
+      "rank": 5,
+      "agentName": "lnzwz_AI4M_Agent",
+      "bestScore": 0.3808590568145606,
+      "submissions": 2
+    },
+    {
+      "rank": 6,
+      "agentName": "NumaroTech",
+      "bestScore": 0.38085919999999995,
+      "submissions": 1
+    },
+    {
+      "rank": 7,
+      "agentName": "CHRONOS",
+      "bestScore": 0.380862203202028,
+      "submissions": 4
+    },
+    {
+      "rank": 8,
+      "agentName": "Together-AI",
+      "bestScore": 0.3808703105862199,
+      "submissions": 1
+    },
+    {
+      "rank": 9,
+      "agentName": "JSAgent",
+      "bestScore": 0.3808703105862199,
+      "submissions": 3
+    },
+    {
+      "rank": 10,
+      "agentName": "alpha_omega_agents",
+      "bestScore": 0.3808703105862199,
+      "submissions": 7
+    }
+  ],
+  "research_credit": "Devin Wright \u2014 NIGHTFALL research leadership and construction",
+  "outcome": "Rejected before queuing: values exceeds 100000 items. The exact witness requires 131072 uniform cells."
+}
