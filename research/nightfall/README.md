@@ -41,6 +41,14 @@ The [October 28 research expansion](projects/expansion-2026-10-28/README.md) pub
 
 The periodic forest-gauge checker was independently executed on 32 finite integer test cases before this publication. Other manuscripts and exact-checker reports retain their original internal-evidence status; no original unmirrored binary is represented as a publicly downloadable artifact. The existing Werner approved 4–20 registry remains authoritative until a source-lineage reconciliation explicitly changes it.
 
+## Originality disclosure — public portfolio vs. historical archive
+
+**The public site features only three scoped original outputs:** the exact 131,072-cell overlap witness, the 30-point Sidon finite witness, and the bounded 20-case adverse PAS experiment. See the [complete originality sweep and dated prior-art dispositions](SITE_ORIGINALITY_AUDIT_20261028.md).
+
+**This broader GitHub research archive includes established mathematics, derived reductions, externally sourced theorems, manuscript candidates, and failed experiments. Its presence here does not claim original discovery, external proof acceptance, or world-first priority.** The SAT tensor-copy construction, generic heterogeneous erasure optimization, 2-out-of-q reliability model, and standard factorization/majorization principles are established prior art. Original implementations can still be useful engineering work without being novel mathematical results.
+
+Before any new site promotion, require an exact primary contribution, an independently reproducible scope-matched certificate, and a dated comparison with the closest earlier research. Historical text and source archives are preserved for traceability, with corrections linked where appropriate.
+
 ## September foundations and newly recovered results
 
 The initial release emphasized the October mathematics campaign. A dated review of September–October research on 2026-10-28 recovered several important earlier manuscripts. These additions are working research artifacts with source-specific proof statuses, not unconditional priority claims.
@@ -51,10 +59,10 @@ The initial release emphasized the October mathematics campaign. A dated review 
 | Affine Source Rigidity (Sep 26) | Exact shifted-prime-zeta expansion, affine source collision rigidity, rational dilation fibers, principal-layer isolation | Original corrected LaTeX manuscript and conditional analytic sequel published here; external analytic and novelty audit pending |
 | Counterfactual Authorization Gap (Sep 28) | Reference-class capability envelopes, compositional escape, audit complexity | Original LaTeX mathematical source published; proof and priority checks outstanding |
 | Three Ceilings on Oversight (September) | View-relative information, computational, and evidence-authority limitations | Revised manuscript framework, internal review; assumption-bound scope |
-| Involution shadow codes (Oct 13; generalized Oct 28) | **New self-contained nonabelian finite-group theorem:** exact distance, optimum allocation, full ordered-pair spectrum, and simultaneous error/erasure optimality | Independent exact tests: 14 group actions including simple A5, 20,736 translation lists, 1,417,256 message-pair checks, 8,192 erasure masks, 8,568 allocations; global novelty and kernel formalization pending |
+| Involution shadow codes (Oct 13; generalized Oct 28) | **Self-contained nonabelian group-code result, publication priority unverified:** exact distance, optimum allocation, full ordered-pair spectrum, and simultaneous error/erasure optimality | Independent exact tests: 14 group actions including simple A5, 20,736 translation lists, 1,417,256 message-pair checks, 8,192 erasure masks, 8,568 allocations; global novelty and kernel formalization pending |
 | Cyclotomic 2k-measurement phase decoder (Oct 13) | General powered finite-field sensing via lattice decoding for selected d | Manuscript proof plus 54-case reported independent testing; unpublished source binary in Library |
 
-## Principal findings
+## Research results and source-dependent records (not all original)
 
 | Research area | Strongest documented result | Validation and limits |
 | --- | --- | --- |
@@ -62,9 +70,9 @@ The initial release emphasized the October mathematics campaign. A dated review 
 | Werner-state distillation | Current approved **4–20-copy three-column registry** covers all 17 counts: best qutrit, theorem-only qutrit and best all-dimension. At k=6 **0.44819 / ≥0.36872 / 0.36872**; at k=8 **0.41889 / 0.41750 / 0.27973**. Later 22–24 qutrit results **0.36119 / 0.35151 / 0.34001**; 1–100 ledger marks 25–100 symbolic. | [Werner atlas](projects/werner-atlas/README.md) separates current registry from historical higher alternate 6–9 source-dependent claims pending lineage audit, quantitative 4/5 source margins pending independent replay, and original certificate JSON awaiting public mirroring. |
 | Fourth-power finite-field retrieval | A systematic random sensing construction using certified ordinary LLL, with **at most 1,024** candidate checks on a high-probability good-design event, recovers every signal up to fourth-root phase. | Manuscript proof/AI audit and computational tests; external expert review outstanding. Arbitrary-design full-preimage enumeration can be exponential. |
 | Finite Sidon (4,5) structures | Explicit 30-element set with maximum Sidon subset **17**, ratio **17/30**; finite-depth extensions analyzed. | Exact C++ subset audit and independent Python/transfer checks. Asymptotic 5/9 is established background, not claimed as a new record. |
-| Exact SAT tensor network | Degree-three bipartite encoding with **s=3L−2v≤9m**, **#SAT(F)=2^(n−v)Z(G(F))**; a separate explicit mode-count bound. | 1,050 finite CNF cases plus 496 mode-count tests passed. A faster complexity corollary depends on an external published contraction theorem; no new unconditional P=NP proof. |
+| Exact SAT tensor network (derived / prior art) | Standard COPY/equality-tensor encoding with **s=3L−2v≤9m**, **#SAT(F)=2^(n−v)Z(G(F))**; a separate explicit mode-count bound. | 1,050 finite CNF cases plus 496 mode-count tests passed. A faster complexity corollary depends on an external published contraction theorem; no new unconditional P=NP proof; COPY/equality tensor construction is established prior art. |
 | Proof After Scarcity | Retrospective adverse result (8/20 versus 11/20 upstream-first); public 372-family metadata ranking with SHA-256; separate graph preregistration pending. | Exact finite identities; original graph bytes and external historical freeze timestamp still absent. |
-| SourceBound | Auditable source-assertion publication gate with independent source-to-triple rebinding and browser-visible checks. | Engineering prototype with synthetic and adversarial tests; independently annotated natural-web evaluation remains open. |
+| SourceBound (engineering implementation, priority unverified) | Auditable source-assertion publication gate with independent source-to-triple rebinding and browser-visible checks. | Engineering prototype with synthetic and adversarial tests; independently annotated natural-web evaluation remains open. |
 | Research methodology and contests | Human/AI collaboration with cross-verification, basin changes, exact witness audits and dated contest results. | Observational case study. Contest outcome does not establish global optimality. |
 
 The public index excludes the Xi/critical-line and prime-frequency programs. Already-frozen historical ZIP inventories remain unchanged; deletion from this GitHub tree does not rewrite prior archived bytes.
