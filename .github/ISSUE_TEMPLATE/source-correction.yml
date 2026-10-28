@@ -1,0 +1,38 @@
+name: Source or status correction
+description: Report a broken link, wrong file hash, unsupported claim, or misattribution.
+title: "[Correction] "
+body:
+  - type: input
+    id: source
+    attributes:
+      label: Page, claim or source URL
+      placeholder: https://d3lefts.github.io/d3lefts/...
+    validations:
+      required: true
+  - type: dropdown
+    id: issue_type
+    attributes:
+      label: Correction type
+      options:
+        - Proof status / unsupported generalization
+        - Arithmetic / mathematical counterexample
+        - Source attribution / novelty comparison
+        - Wrong file hash / incomplete evidence
+        - Broken link / accessibility / site issue
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: explanation
+    attributes:
+      label: What needs correction?
+      description: Give the smallest decisive evidence and the replacement wording if known.
+    validations:
+      required: true
+  - type: textarea
+    id: references
+    attributes:
+      label: Source links and reproduction steps
+      description: Cite authoritative material, archived snapshots, exact commands or primary-source quotes.
+    validations:
+      required: false
