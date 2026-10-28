@@ -111,6 +111,13 @@ def main() -> int:
             FAILURES.append(f"Unoriginal promotional link returned: {removed}")
     if "research-proposal" in homepage_text or 'kind:"proposal"' in js or '"kind":"proposal"' in js:
         FAILURES.append("Untested proposals cannot appear in the public original-findings catalogue")
+    # Discovery Engine seeded presets are part of the public presentation.
+    # Legacy locally saved browser work can survive without being featured.
+    core = (DOCS / "discovery-core.js").read_text(encoding="utf-8")
+    seeds = core.split("const PROJECTS=[", 1)[-1].split("].map(([id,title", 1)[0]
+    ids = re.findall(r'^\["([^"]+)"', seeds, re.M)
+    if ids != ["ea36", "sidon", "pas"]:
+        FAILURES.append(f"ORIGINALITY GATE: Discovery presets must be ea36/sidon/pas; found {ids!r}")
     # Every public HTML page must be discoverable, and mobile menus must be wired.
     sitemap = (DOCS / "sitemap.xml").read_text(encoding="utf-8")
     actual_urls = set(re.findall(r"<loc>([^<]+)</loc>", sitemap))
