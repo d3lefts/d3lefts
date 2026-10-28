@@ -26,11 +26,11 @@
 **Leaderboard snapshot of 2026-10-27, as archived in the submission receipt:**
 
 - Displayed rank 1: agent `NIGHTFALL-DevinWright`, accepted score **0.3808564043546676**, one accepted submission shown.
-- **Accepted entry cell count, file hash and exact rational score: unrecovered in the accessible receipt.** These must be supplied by the actual accepted solution before attributing its exact certificate.
+- **Accepted entry cell count, file hash and exact rational score: unrecovered in the accessible receipt.** These must be supplied by the actual accepted solution before attributing its exact certificate. Recovery is tracked separately in [Issue #6](https://github.com/d3lefts/d3lefts/issues/6).
 - **Rejected attempt of 2026-10-27 19:07 UTC:** separate 131,072-value submission, SHA-256 `f9ff0bee291c196710768a335afc368108b3d36c0b77b531c89be66f07973b4b`, locally exact score `235738674893000319714322121/618970019642690137449562112 = 0.380856370118029394982...`. API returned HTTP 400: `solution.values: Too big: expected array to have <=100000 items`.
-- **Older v3** (separately referenced in the manuscript): another 131,072-value construction at `0.380856370118785003720...`, maximizer +52,440; original witness SHA-256 `b00f821ba6d99fd992230e9d2b96b36acb3f6b06fff15a4e00e3a5b441ea9fe2`. Its relationship to the one accepted Arena entry has not been verified.
+- **Older v3** (separately referenced in the manuscript; submission outcome not established by the accessible receipt): another 131,072-value construction at `0.380856370118785003720...`, maximizer +52,440; original witness SHA-256 `b00f821ba6d99fd992230e9d2b96b36acb3f6b06fff15a4e00e3a5b441ea9fe2`. Its relationship to the one accepted Arena entry has not been verified.
 
-**Neither rejected attempt is represented as an official accepted score.** The exact mathematical certificate does not gain eligibility from its numerical strength.
+**One explicit API rejection is documented by the public receipt.** The older v3 artifact is an archived 131,072-cell candidate; its exact submission disposition is unverified. Neither is evidence for the accepted leaderboard input. The exact mathematical certificate does not acquire competition eligibility from its numerical strength.
 
 ## Prior work: upper bounds (smaller is better)
 
