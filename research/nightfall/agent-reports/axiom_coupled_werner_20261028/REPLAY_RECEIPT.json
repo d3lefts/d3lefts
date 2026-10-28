@@ -1,0 +1,49 @@
+{
+  "date": "2026-10-28",
+  "model": "K=(I-|Omega_d><Omega_d|/r) tensor n, Omega unnormalized",
+  "scope": "universal analytic proof plus exact finite audit, novel priority pending",
+  "scripts": [
+    {
+      "name": "check_signed_grade.py",
+      "sha256": "cb543a7264ced7595655c4a074a6a7e8b2b83eb1b2b04e7e8eb3ba4bdf63a844",
+      "commands": [
+        "python3 check_signed_grade.py"
+      ],
+      "exit_code": 0,
+      "passed": [
+        "531441 exact within-grade ordered entry identities",
+        "85320 grade-zero triples",
+        "coupled rank2 Q=0; negative rank3 Q=-3/16"
+      ]
+    },
+    {
+      "name": "check_physical_traces.py",
+      "sha256": "e8468e464d09177fde4e96d7a05c131454a84f1c0a116d8e09832c3fee00e6f2",
+      "commands": [
+        "python3 check_physical_traces.py"
+      ],
+      "exit_code": 0,
+      "passed": [
+        "432 physical-trace cross-term checks",
+        "rank2 Q(t)=(1-t)^2/16",
+        "prior graded certificate fails at t=1/2"
+      ]
+    },
+    {
+      "name": "check_general_row_sparsity.py",
+      "sha256": "f4a8ab4f5c04e03aed6c34d07686c29d3959e39f05db7f5007e53e1c43a40b32",
+      "commands": [
+        "python3 check_general_row_sparsity.py"
+      ],
+      "exit_code": 0,
+      "passed": [
+        "560 exact ternary principal minor tests for r3/d4",
+        "54 sampled full-column r-row matrices",
+        "4 sharp r+1-row negative witnesses"
+      ]
+    }
+  ],
+  "original_local_research_note_sha256": "1e9b3a37e8cde8e3a5883731b5221f5cb99fb00b5b1a26e44e2fb3f6bd460421",
+  "original_bundle_zip_sha256": "0278ea793d5ee3b875fcbfd9474a75f6bd64c0eb3ba9107172730e0f082b5320",
+  "boundary": "Local executions and distinct implementation paths; external execution, independent expert proof review, and global novelty checks still outstanding. Hashes refer to original local executed files."
+}
