@@ -7,6 +7,12 @@
 
 The research program uses representation changes, independent verification, proof-carrying artifacts, and a strict distinction between finite results and global theorems. Competition rankings, mathematical validity, and publication priority are tracked separately.
 
+## NIGHTFALL Discovery Engine — executable research workflow
+
+The [Discovery Engine v1](discovery-engine/README.md) provides problem contracts, candidate representation lineage, eight reusable search-operator families, finite cyclic-overlap experiments, exact replay, falsification controls, scientific worker handoffs, and portable evidence manifests. Launch the [live research interface](https://d3lefts.github.io/d3lefts/discovery.html).
+
+The October 28 [Cartesia-informed adaptive abstraction design](discovery-engine/ARCHITECTURE.md) adds reversible multi-scale representation boundaries and an independently tested [two-stage Python prototype](discovery-engine/adaptive_resolution.py). It preserves raw-source hashes and promotes counterexample spans to hard boundaries. A trained router, integrated browser execution and demonstrated cross-domain efficiency gains remain future work.
+
 ## AI safety theorem-and-evidence series (review release: 28 October 2026)
 
 The [public peer-review dossier](projects/ai-safety-peer-review-2026-10-28/README.md) unifies September observation, provenance, authorization and oversight theory; SourceBound remains a separately evaluated October implementation. The original 116-file ZIP is [published as a verified GitHub Release](https://github.com/d3lefts/d3lefts/releases/tag/ai-safety-review-2026-10-28), with a [direct download](https://github.com/d3lefts/d3lefts/releases/download/ai-safety-review-2026-10-28/NIGHTFALL_AI_Safety_Peer_Review_Package_2026-10-28.zip). Its SHA-256, exact byte size and validation scope are recorded in the [release manifest](projects/ai-safety-peer-review-2026-10-28/MANIFEST.md).
