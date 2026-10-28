@@ -10,7 +10,7 @@ We study the constructive upper-bound problem for Erdős' minimum-overlap consta
 \mu\le\frac{34788888032212764146872525963225147703298526879}{91343852333181432387730302044767688728495783936}=0.380856370118029325246278763656\ldots.
 \]
 
-An earlier archived Arena submission witness, v3, has exact score
+An earlier archived 131,072-cell v3 candidate (Arena acceptance unverified) has exact score
 
 \[
 \mu\le\frac{58934668723367004717445487}{154742504910672534362390528}=0.380856370118785003720186184925\ldots.
@@ -31,7 +31,7 @@ Each translation interval between grid breakpoints has affine overlap; the supre
 
 ## Reproducible endpoints
 
-**Archived Arena submission v3** (`ARENA_overlap_submission_v3(1).zip`): `N=131072`, 131,072 discrete values, maximizing lag `+52440`; internal float submission score around 0.3808563701187851. This artifact includes a verifier and metadata. The screenshot shows NIGHTFALL in first place but does not prove this exact archive was the last scored entry.
+**Archived v3 candidate** (`ARENA_overlap_submission_v3(1).zip`): `N=131072`, 131,072 discrete values, maximizing lag `+52440`; internal float submission score around 0.3808563701187851. This artifact includes a verifier and metadata. The October 27 Arena receipt shows one accepted leaderboard entry at 0.3808564043546676; its original cell count, input hash, and exact rational score remain unrecovered. This v3 artifact is not identified as the accepted submission.
 
 **Strongest supplied internal archive** (`NIGHTFALL_Erdos_Latest(1).zip`): `N=131072`, heights of denominator `2^70`, exact maximizing lag `-17280`, exact signed-shift checks listed as 262143. This archive includes six-prime NTT residue files, CRT verification, a separate fiber rigidity proof, and lower fixed-row analysis. I inspected archived certificates and manifest but **did not rerun the full NTT proof in this session**.
 
@@ -46,9 +46,20 @@ Each translation interval between grid breakpoints has affine overlap; the supre
 
 For dyadic widths `m=2,4,8,16,32,64`, the latest archive claims and records an exact rational verifier showing that uniform residual rescaling cannot improve the fixed 131,072-cell witness. At `m=128`, a two-lag affine-in-`1-theta^2` argument bounds all improvement within the scalar family by `1.8426438153379315e-13`. These eliminate a specific search class, not independent multiblock or topology-changing searches.
 
-## Lower bound and remaining gap
+## Lower bound and remaining gap — editorial update, 2026-10-28
 
-The archived lower reference `mu > 0.380627425` is attributed to Wetch's earlier verified lower-bound work; the current archive did **not** reprove or improve it. The interval gap remains substantial. A theorem giving a tighter global lower bound would likely be more significant than another tiny upper-bound polish.
+The historically peer-reviewed lower reference is White's `mu > 0.379005`. More recent source-reported lower bounds require their individual verification status to travel with the number:
+
+- Price (2026): `mu > 0.38055470`. Independent reproduction covers the finite interval certificate; specialist review of the full analytic reduction remains outstanding, as documented by [MathWorld](https://mathworld.wolfram.com/MinimumOverlapProblem.html). Conditional gap to our internally replayed upper witness: `0.000301670118029325246…`.
+- Wetch (2026): `mu > 0.380627425`. [The source repository](https://github.com/justinwetch/erdos-36-minimum-overlap) reports exact fresh-copy local checks, with full external peer review still outstanding. Conditional gap: `0.000228945118029325246…`.
+
+Neither stronger lower claim has been independently proved in this NIGHTFALL manuscript. The mathematical upper construction also still awaits a public binary mirror and external reproduction. These conditional intervals must not be presented as jointly independently certified bounds. A verified global lower-bound improvement would be more significant than tiny fixed-witness refinements.
+
+### Comparison with other upper constructions
+
+The [curated optimization-constants index](https://teorth.github.io/optimizationproblems/constants/1b.html) records Atris's independently replayed exact `0.38085855031642856010…` upper construction. The reported NIGHTFALL internal value is approximately `0.00000218019839923485` smaller, subject to external certificate reproduction and matching normalization. A different 4096-cell construction publicly associated with a score around `0.380856` was reported to contain a grid-width normalization error (corrected objective around `0.38094895`); see [the normalization analysis](https://www.benzanghi.com/blog/erdos-minimum-overlap-technical). It is distinct from the 131,072-cell NIGHTFALL archive.
+
+The [witness identity and prior-art ledger](projects/erdos/STATUS_AND_PRIOR_ART_20261028.md) separates the accepted Arena snapshot, the documented rejected submission, the archived v3 candidate, and the exact mathematical witness. The original binary release remains pending [issue #5](https://github.com/d3lefts/d3lefts/issues/5), and recovery of the accepted submission's original input is tracked in [issue #6](https://github.com/d3lefts/d3lefts/issues/6).
 
 ## Provenance freeze
 
