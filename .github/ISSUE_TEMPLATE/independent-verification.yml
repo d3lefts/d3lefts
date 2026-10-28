@@ -1,0 +1,76 @@
+name: Independent verification report
+description: Submit a mathematical certificate replay, proof audit, or independent counterexample.
+title: "[Review] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for checking the evidence independently. Positive, negative and inconclusive findings receive equal attention. Cite the exact source version and preserve any external theorem assumptions.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Research area
+      description: Choose the matching open review assignment.
+      options:
+        - Erdős minimum overlap — issue #1
+        - Werner-state bounds — issue #2
+        - Finite-field phase retrieval — issue #3
+        - AI safety and authorization — issue #4
+        - Another NIGHTFALL claim
+    validations:
+      required: true
+  - type: dropdown
+    id: verdict
+    attributes:
+      label: Finding
+      options:
+        - PASS within stated scope
+        - FAIL — counterexample or invalid proof step
+        - INCONCLUSIVE — missing inputs or unverified source premises
+    validations:
+      required: true
+  - type: input
+    id: reference
+    attributes:
+      label: Exact claim and version
+      description: Link the theorem/witness and give a source commit, manuscript version, or certificate hash.
+      placeholder: https://github.com/d3lefts/d3lefts/blob/<commit>/research/nightfall/...
+    validations:
+      required: true
+  - type: textarea
+    id: method
+    attributes:
+      label: Independent method and finding
+      description: State what you rederived, where your implementation differs, and any mathematical failure.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction commands, inputs and hashes
+      description: Provide commands, environment, source SHA-256, exact outputs, and a minimal reproducer where feasible.
+      render: shell
+    validations:
+      required: false
+  - type: textarea
+    id: limitations
+    attributes:
+      label: Imported hypotheses and missing evidence
+      description: Identify any external theorem, unmirrored witness, numerical tolerance, or proof step left unchecked.
+    validations:
+      required: true
+  - type: checkboxes
+    id: evidence
+    attributes:
+      label: Evidence declaration
+      options:
+        - label: I identified the source inputs and distinguished my own verification from source-reported claims.
+          required: true
+  - type: input
+    id: credit
+    attributes:
+      label: Public credit (optional)
+      placeholder: Your preferred attribution or "anonymous"
+    validations:
+      required: false
