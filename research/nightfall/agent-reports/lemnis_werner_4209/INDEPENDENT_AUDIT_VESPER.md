@@ -36,6 +36,33 @@ Choose `C=E_(0000,0000)+E_(1111,2222)`. The first matrix unit is inside `U`. The
 
 The exact endpoint form gives `Q(E_(0000,0000))=1/16`, `Q(E_(1111,2222))=1`, cross term `0` and `Q(C)=17/16`. This independent explicit witness establishes genuinely new rank-two coverage relative to the 729-dimensional rectangle, rather than only a larger ambient linear space.
 
+## Maximality within the original orthogonal-positive method
+
+**Additional exact structural theorem.** Let `W` denote the fourfold Werner endpoint operator. Its positive spectral subspace is `E_+=E_0⊕E_2⊕E_4`, with respective positive eigenvalues `1,1/4,1/16`. Consider every candidate extra space
+
+```
+D = E_+ ∩ U^⊥ ∩ (W U)^⊥.
+```
+
+The first orthogonality constraint keeps the projection onto the original rectangle equal to `P_S C P_T), hence rank-preserving. The second eliminates all cross terms with the original rectangle in the quadratic form.
+
+**Exact claim:** `D=(E_0∩U^⊥)⊕(E_2∩U^⊥)` and `dim_C D=3480`. Thus **4,209** is maximal among *this specific type* of positive-spectral, Hilbert–Schmidt-orthogonal, quadratic-form-decoupled linear extension. This is a conditional-method maximality theorem, **not** maximality among all rank-two positive witness subspaces.
+
+**Proof.** Let `K=ker H` (nine words), and `Z=Σ_{a∈K}E_{aa}∈U`. The independent integer Gram matrices verify `P_{E_0}Z=P_{E_2}Z=0` while `P_{E_4}Z≠0`. These identities also follow from Fourier analysis of the four-coordinate linear code: its nonzero dual words have weight three, so the diagonal-code indicator has spectral support in `E_1⊕E_4`.
+
+For any `D=D_0+D_2+D_4∈E_+∩(W U)^⊥`, pair `W D` with `Z`. The `E_0,E_2` pairings vanish, leaving `(1/16)⟨Z,D_4⟩=0`. Since `E_4` is one-dimensional and `P_{E_4}Z≠0`, we have `D_4=0`.
+
+Now `D∈U^⊥` and `D∈(W U)^⊥` give, after projection to `U`,
+
+```
+P_U D_0 + P_U D_2 = 0,
+P_U D_0 + (1/4) P_U D_2 = 0.
+```
+
+Their difference forces `P_U D_2=0`, then `P_U D_0=0`. Conversely, every vector in `(E_0∩U^⊥)⊕(E_2∩U^⊥)` satisfies both constraints. The exact projection ranks `728` and `272` give `3368+112=3480`. QED.
+
+**Research consequence:** further strictly larger *linear* theorem classes require an altered decoupling condition, a controlled mixture involving negative eigenlevels, or a genuinely rank-two-aware inequality for interacting sectors. Increasing the number of positive spectral basis vectors within the old orthogonal method is exhausted.
+
 ### Proof status and forward target
 
 Reproduction:

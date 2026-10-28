@@ -126,6 +126,30 @@ def main():
     ldim=9*9*9+(8**4-ranks[0][0])+(6*8**2-ranks[2][0])
     if ldim!=4209:
         raise AssertionError("4209-dimensional sum incorrect")
+    # A missing direction in the four-scalar spectral sector cannot be
+    # added while preserving BOTH Hilbert-Schmidt orthogonality to U
+    # and quadratic-form orthogonality to U.
+    #
+    # Z=sum_{a in kernel H} E_aa lies in U. The projected Gram row sum
+    # vanishes on E0 and E2, yet E4 sees a nonzero scalar component.
+    # This supplies a separating vector for the whole E4 eigenlevel.
+    diagonal_pairs=FIBRES[(0,0,0,0)]
+    assert len(diagonal_pairs)==9 and all(a==b for a,b in diagonal_pairs)
+    gram0=gram_integer((0,0,0,0),0)
+    gram2=gram_integer((0,0,0,0),2)
+    gram4=gram_integer((0,0,0,0),4)
+    if any(sum(row)!=0 for row in gram0+gram2):
+        raise AssertionError("Kernel-code diagonal Z has a forbidden E0/E2 component")
+    if sum(sum(row) for row in gram4)!=81:
+        raise AssertionError("Code diagonal Z has zero E4 component")
+    # If D lies in E_even and is orthogonal to both U and W(U), testing
+    # against Z forces its E4 component to vanish. The two remaining
+    # orthogonality equations (1,1) and (1,1/4) force each E0 and E2
+    # component to be separately U-orthogonal. Therefore the entire
+    # admissible positive-eigenlevel decoupling space has dimension 3480.
+    pure_positive_decoupling_dim=(8**4-ranks[0][0])+(6*8**2-ranks[2][0])
+    assert pure_positive_decoupling_dim==3480
+
     # A minimal strict enlargement: rank-two sum of two disjoint matrix
     # units, the new unit having all four local factors traceless.
     a=b=(0,0,0,0)
@@ -155,6 +179,10 @@ def main():
         "added_orthogonal_E0_dimension":3368,
         "added_orthogonal_E2_dimension":112,
         "derived_complex_dimension":ldim,
+        "maximality_scope":"largest extension using exclusively even positive eigenlevels, U-orthogonality and W-orthogonality",
+        "pure_positive_decoupling_dimension":pure_positive_decoupling_dim,
+        "E4_separating_code_diagonal_sum":"Z has E0 and E2 components zero, E4 component nonzero; exact integer Gram check",
+
         "fiber_size":9,
         "difference_fibers":81,
         "E0_ranks_per_fiber":ranks[0][1],
