@@ -1,0 +1,620 @@
+# Transcribed textual research source
+
+Source file: NIGHTFALL_Meta_Paper_v2.0.pdf
+This is extracted text for GitHub search and independent inspection. Equations, typesetting, figures, and pagination should be checked against the original PDF. It is not a byte-equivalent copy of the PDF.
+
+
+---
+
+<PARSED TEXT FOR PAGE: 1 / 12>
+   COMPUTATIONAL MATHEMATICS • RESEARCH PROCESS STUDY
+
+
+   NIGHTFALL:
+   From Search to Certificate
+   A Human–AI Research Campaign across Three
+   Mathematical Optimization Problems
+
+   NIGHTFALL Research Collaboration
+   Human-directed research; ChatGPT, ChatGPT Work, and Claude research instances
+
+   Research window: 18–20 October 2026           |   Version 2.0: 20 October 2026
+
+
+
+
+   Evidence statement. This is an observational, reproducibility-oriented account of a research collaboration,
+   not a controlled experiment establishing AI-agent superiority. Its main constructive upper-bound claims are
+   supported by archived exact witnesses; its competition placements are supported separately by the public
+   EinsteinArena pages, viewed on 20 October 2026. Exact candidate bounds, accepted platform scores, and
+   global mathematical optimality are not interchangeable.
+
+
+
+
+   Executive finding
+   The major performance jumps were associated with changes of representation, basins, and collaboration hand-
+offs, while exact certificates prevented numerical or grading artifacts from becoming unsupported mathematical
+claims. Within roughly three days, this workflow yielded a first-place EinsteinArena entry for Erdős’ minimum-
+overlap problem and second-place entries in the first-autocorrelation and uncertainty-principle tasks. The cam-
+paign did not solve the underlying infinite-dimensional optimization problems. Working research manuscript. Re-
+
+
+sults, authorship, and provenance should be reviewed before public preprint submission.
+<PARSED TEXT FOR PAGE: 2 / 12>
+NIGHTFALL / RESEARCH METHODS / V2.0                                                                      20 October 2026
+
+
+                                                         Abstract
+          We reconstruct an intensive human-coordinated, multi-agent mathematical research campaign conducted
+     during 18–20 October 2026. A human collaborator set research priorities, routed certificates and search strate-
+     gies among ChatGPT, ChatGPT Work, and Claude instances, imposed a strict threshold for material progress,
+     and repeatedly redirected stalled searches. The agents produced candidate constructions, optimization soft-
+     ware, falsification tests, and exact verifiers. The principal test case was Erdős’ minimum-overlap problem: a
+     historical witness of approximately 0.38085658829748237 was improved to an archived exact internal upper
+     witness of 0.380856370118029325 . . .. A separately archived Arena-format v3 construction has exact mathe-
+     matical score 0.380856370118785003 . . .. The public EinsteinArena page shows NIGHTFALL-DevinWright
+     in first place with a rounded score of 0.3808564, but its visible display does not identify the full-precision up-
+     loaded vector. Two subsequent problem lines reached public second-place positions: the first autocorrelation
+     inequality and an uncertainty-principle root-construction task. We specify the mathematical proof objects,
+     the chronological intervention and agent handoff graph, and the distinction between search success, exact
+     certification, verifier acceptance, and scientific novelty. The case yields testable hypotheses about collective
+     AI research: an explicit human-governed handoff contract, representation-switching after plateau detection,
+     and verification as a parallel rather than terminal task. Because the record is observational, it supports those
+     hypotheses as operational explanations, not identified causal effects.
+
+Keywords: human–AI collaboration; multi-agent discovery; exact computation; mathematical optimization; Ein-
+steinArena; Erdős minimum overlap; autocorrelation; proof-carrying artifacts; research governance.
+
+
+
+
+                                                             1
+<PARSED TEXT FOR PAGE: 3 / 12>
+NIGHTFALL / RESEARCH METHODS / V2.0                                                             20 October 2026
+
+
+Contents
+
+1 What the collaboration set out to do                                                                           3
+
+2 Related work and scope                                                                                         3
+
+3 The observable three-day record                                                                                4
+   3.1   October 18: gain discipline and first exact witnesses . . . . . . . . . . . . . . . . . . . . . . .     4
+   3.2   October 19: parallel branches and a change of representation . . . . . . . . . . . . . . . . . . .      4
+   3.3   October 20: stronger upper records, public scores, and transfer . . . . . . . . . . . . . . . . . .     4
+
+4 The underlying mathematical proof objects                                                                      5
+   4.1   Overlap: a continuous maximum reduced to finitely many exact events . . . . . . . . . . . . . .         5
+   4.2   Why the numerical search was harder than the certificate . . . . . . . . . . . . . . . . . . . . .      5
+   4.3   Two other problem classes, two different validation contracts . . . . . . . . . . . . . . . . . . .     6
+
+5 Why the collaboration accumulated progress                                                                     6
+   5.1   The coordinator performed five nontrivial functions . . . . . . . . . . . . . . . . . . . . . . . .     6
+   5.2   A handoff was an executable state, not a paragraph of encouragement . . . . . . . . . . . . . .         7
+   5.3   Representation-switching and plateau recognition . . . . . . . . . . . . . . . . . . . . . . . . .      7
+   5.4   Verification ran alongside exploration . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    7
+
+6 Evidence states and the submission boundary                                                                    7
+   6.1   A reproducibility manifest as a claim graph . . . . . . . . . . . . . . . . . . . . . . . . . . . .     8
+
+7 What can and cannot be inferred                                                                                8
+   7.1   Four supported conclusions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      8
+   7.2   Four conclusions the data do not support . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      9
+
+8 From a case study to a falsifiable research program                                                            9
+
+9 Conclusion                                                                                                     9
+
+A Numerical ledger and comparison hygiene                                                                       10
+
+B Archive reproduction guide                                                                                    10
+
+C Selected source file identities                                                                               10
+
+D Research ethics and attribution checklist                                                                     11
+
+
+
+
+                                                        2
+<PARSED TEXT FOR PAGE: 4 / 12>
+NIGHTFALL / RESEARCH METHODS / V2.0                                                              20 October 2026
+
+
+1 What the collaboration set out to do
+
+The narrow objective was not to produce a fluent mathematical argument. It was to obtain an explicitly checkable
+improvement over the strongest available construction in a difficult nonsmooth optimization problem, then repeat
+the procedure on other open benchmarks. This required separate progress on three axes: finding new feasible
+objects, proving their claimed bounds, and meeting the platform’s submission criteria.
+   The human collaborator, posting under a leaderboard handle that included DevinWright, acted as research
+coordinator rather than a passive requester. The coordinator selected problems, supplied and compared prior
+certificates, moved methods between agent instances, initiated parallel searches, made tradeoffs between upper-
+and lower-bound programs, and set a reporting gate. In particular, once the gains grew small, the coordinator
+required improvements of at least 10−8 over the strongest available certified record before a local step counted
+as a substantive milestone. Later, the leaderboard’s own per-problem submission requirements took precedence:
+no submission unless the current platform threshold was met.
+    This was a heterogeneous collaboration. Different instances had different access to solvers, file collections,
+execution windows, and external interfaces. The effective research unit was therefore not a single model session:
+it was a shared lineage of numerical candidates, code, exact certificates, and human decisions. A model could
+contribute a genuinely useful improvement to the search without being the instance that later certified or submitted
+it.
+
+  Central research question. What practices made a short, human-directed collection of fallible AI research
+  instances capable of cumulative, verifiable progress—and which of those practices can be tested indepen-
+  dently of this one favorable campaign?
+
+
+
+2 Related work and scope
+
+Erdős’ minimum-overlap problem has a long analytic and computational history. We use the step-function for-
+mulation associated with Haugland and White [1, 2], and compare against the public certificate lineages and
+prior work already discussed in the earlier NIGHTFALL manuscript [4, 8]. The October 9 public Wetch repos-
+itory reported the lower reference µEO > 0.380627425 as part of a separately evidenced two-sided study; this
+manuscript does not reproduce or improve that universal lower-bound proof. Published and agent-generated
+upper constructions are inputs to the search history, not discoveries automatically attributable to NIGHTFALL.
+   EinsteinArena’s own research study, Harnessing the Collective Intelligence of AI Agents in the Wild for New
+Discoveries, describes an open, distributed system in which public leaderboards, discussion, and agent borrowing
+produce cumulative results [3]. NIGHTFALL complements rather than independently confirms that study: here
+the collaboration was coordinated directly by a human over a short interval, used private cross-instance handoffs
+as well as public sources, and placed unusual emphasis on exact certificate continuity. The same evidence can be
+consistent with other explanations—a lucky seed, larger aggregate compute, better available prior constructions,
+or the value of a single high-performing optimizer. We do not claim the collaboration itself has been causally
+isolated.
+
+
+
+
+                                                         3
+<PARSED TEXT FOR PAGE: 5 / 12>
+NIGHTFALL / RESEARCH METHODS / V2.0                                                                20 October 2026
+
+
+3 The observable three-day record
+
+3.1 October 18: gain discipline and first exact witnesses
+
+Early research began from a strong historical overlap construction. Agents searched over equal-width and occa-
+sionally nonuniform rational step-function encodings. They applied mass-preserving perturbations and restricted
+minimax optimizations, then compared candidates with exact finite-shift overlap values. Gains were often at the
+scale 10−15 –10−11 . The methodological commitment that survived was more important than any individual small
+move: a certificate with integral mass, box feasibility, and a complete shift check could be transferred without
+relying on another model’s numerical impression.
+   The human coordinator repeatedly asked for larger structural contributions rather than multiplication of similar
+local certificates. This established a selection pressure in the collaboration: optimization runs were useful only
+insofar as they produced transferable objects or opened a new search regime. Early archives also proved that file
+numbering, a model’s own improvement claim, and the global best-so-far score were different orderings.
+
+
+3.2 October 19: parallel branches and a change of representation
+
+The overlap search diversified into fixed-grid minimax LP, smooth maximum continuation, fine-grid lifts, block
+averaging, mass transports, donor-block crossover, and exact quantization. Numerically smooth objectives were
+optimized first; the nonsmooth maximum of the actual overlap spectrum controlled acceptance. A notable re-
+finement improved the 072 branch by about 1.4013 × 10−8 to an exact 079 witness, crossing the collaboration’s
+milestone scale in that local branch.
+   The decisive episode was the passage through a coarser representation and then back to a finer one. A branch
+identified as the Claude B1024 witness had score about 0.380856530848315 on 1,024 cells. Lifting and reopti-
+mizing the same lineage on 2,048 cells produced the B2048 score 0.380856416809955, a drop of approximately
+1.1404 × 10−7 . The intervention combined a different basin, smoothmax continuation, refinement, and subse-
+quent sequential linear programming; the archives cannot separate the causal contribution of each ingredient.
+
+
+3.3 October 20: stronger upper records, public scores, and transfer
+
+A projected B2048 line reached approximately 0.380856407054191. Later archived 131,072-cell overlap
+witnesses improved the explicit upper bound to 0.380856370118029325 . . .. A related Arena-format v3 con-
+struction has score 0.380856370118785003 . . . and an independent submission payload. The public overlap
+leaderboard, inspected for this paper, lists NIGHTFALL-DevinWright first at 0.3808564 (rounded) ahead of
+CristianBudala at 0.3808566 (rounded) [5]. The visible page and the archived v3 package are mutually
+consistent at display precision, but that is not, by itself, a complete upload receipt binding the final accepted entry
+to a particular file digest.
+   Two transfers followed. In the first autocorrelation inequality, a public Arena entry under CLOADEX25-
+DevinWright appeared second with rounded score 1.50274350, while an internal exactly checked 65,536-cell
+candidate attained about 1.502743486285383074 [6]. The visible leaderboard entry and stronger internal
+candidate are not the same evidence object: the public C1 discussion explicitly describes the submission as a
+deliberately detuned derivative.
+   In the uncertainty-principle task, the same leaderboard handle appeared second at 0.313093 (rounded); the
+archived legal 25-root construction has a mathematically certified score close to 0.31309310122257694 [7]. The
+UP25 mathematical validation involves controlling the last positive sign-changing root, not merely reproducing
+a finite-window scan. Both branches are upper-bound constructions, not proofs of the optimum or current first-
+place status.
+
+                                                          4
+<PARSED TEXT FOR PAGE: 6 / 12>
+NIGHTFALL / RESEARCH METHODS / V2.0                                                                         20 October 2026
+
+
+Table 1: Evidence ledger. The first four rows are mathematical overlap witnesses; the last three describe visible competition
+outcomes. The first-place row must not be numerically substituted with the internal latest archive.
+
+Object / stage                          Value or finding                                           Status
+Overlap historical comparison           0.38085658829748237                                        Benchmark
+Overlap B2048                           0.380856416809955 . . .                                    Exact archive
+Overlap Arena v3 candidate              0.380856370118785003 . . .                                 Exact archive + payload
+Overlap strongest supplied internal     0.380856370118029325 . . .                                 Exact archive (fresh replay)
+Overlap public leaderboard              NIGHTFALL-DevinWright #1, 0.3808564                        Rounded public entry
+First autocorrelation public board      CLOADEX25-DevinWright #2, 1.50274350                       Rounded public entry
+Uncertainty principle public board      CLOADEX25-DevinWright #2, 0.313093                         Rounded public entry
+
+
+4 The underlying mathematical proof objects
+
+4.1 Overlap: a continuous maximum reduced to finitely many exact events
+                                         ∫2
+For a measurable f : [0, 2] → [0, 1] with 0 f (x) dx = 1, extend f and g = 1[0,2] − f by zero outside [0, 2] and
+write                                               ∫
+                                      µEO = inf sup f (x)g(x − t) dx.                                         (1)
+                                                     f t∈R        R
+
+For an equal-width partition of [0, 2] into N = 2H cells, choose integer heights ai and common denominator D
+such that
+                                                          ∑
+                                                          N −1
+                                         0 ≤ ai ≤ D,           ai = HD.                                   (2)
+                                                                       i=0
+
+The associated step density is ai /D on [i/H, (i + 1)/H). For signed integer lag k define
+                                        ∑                                        max−N ≤k≤N Tk
+                            Tk =                ai (D − ai−k ),         B(a) =                 .                           (3)
+                                                                                     HD2
+                                       0≤i<N
+                                      0≤i−k<N
+
+Proposition 1 (Finite-event verification). Every vector obeying (2) defines a feasible continuous profile with µEO ≤
+B(a); its supremum over all real translations equals the finite maximum in (3).
+
+Proof. The functions are constant on rational-grid intervals. Correlation is a finite sum of overlap lengths of
+shifted cell pairs with fixed coefficients. Each overlap length is continuous and affine between differences of
+grid endpoints, which are multiples of 1/H. Therefore the complete correlation is piecewise affine with knots at
+signed integer-grid shifts; it vanishes outside [−2, 2]. A global maximum occurs at a knot. At knot k/H, direct
+integration gives Tk /(HD2 ). The constraints guarantee integral one and box feasibility.
+
+   This elementary geometric reduction is what made proof objects shareable across agents: once a finite coeffi-
+cient vector was fixed, no numerical optimization theorem was needed to prove its upper bound. Integer arithmetic
+sufficed.
+
+
+4.2 Why the numerical search was harder than the certificate
+                                             ∑
+For a mass-preserving displacement d (           i di = 0) and any lag k, direct expansion yields
+                                                      ∑[                                          ]
+                          Tk (a + d) − Tk (a) =                 di (D − ai−k ) − ai di−k − di di−k .                       (4)
+                                                      i valid
+
+
+                                                                   5
+<PARSED TEXT FOR PAGE: 7 / 12>
+NIGHTFALL / RESEARCH METHODS / V2.0                                                                 20 October 2026
+
+
+Hence a search direction that reduces today’s worst lag may increase a previously harmless one, and linearized
+LP predictions are not certificates for the global maximum. Smooth log-sum-exp continuation, SLP, and grid
+changes generated trial vectors. They did not replace final exact evaluation of every lag. A candidate was only
+promoted after exact quantization, mass repair, feasible box checks, and a maximum over the full event set.
+  At 131,072 cells, the strongest available archive uses a six-prime number-theoretic transform plus Chinese
+remainder reconstruction to check 262,143 event values exactly. The recorded score is
+              34788888032212764146872525963225147703298526879
+     µEO ≤                                                    = 0.380856370118029325 . . . .                      (5)
+              91343852333181432387730302044767688728495783936
+Its archive reports a mass-and-box check and congruent complete convolution spectrum; the present v2 drafting
+pass also executed the complete six-modulus reconstruction afresh, compared every saved residue with a newly
+generated one, and recomputed the pinned exact peak and mass constraints (see the supplement replay log). Rel-
+ative to 0.38085658829748237, the reduction is about 2.18179453 × 10−7 . The exact fraction (5) is an explicit
+construction, not a claim that the infimum in (1) has been determined.
+
+
+4.3 Two other problem classes, two different validation contracts
+
+For the first autocorrelation problem, the Arena objective for an n-vector a ≥ 0 is
+
+                                   2n max0≤k≤2n−2 (a ∗ a)k                        ∑
+                        C1 (a) =         ∑                 ,         (a ∗ a)k =           ai aj .                 (6)
+                                        ( n−1
+                                           i=0 ai )
+                                                    2
+                                                                                  i+j=k
+
+This differs from overlap’s cross-correlation with a complement; nevertheless, exact integer convolution, mass-
+preserving moves, and finite-spectrum comparisons transfer directly. The archived 65,536-cell C1 multitransport
+witness has exact rational score 1.502743486285383074 . . ., also replayed from the portable verifier in prepa-
+ration of this manuscript. It was not the displayed accepted second-place payload, and was much too small an
+incremental advance to justify a new first-place-threshold submission.
+   For the uncertainty-principle problem, the legal submission is expressed through at most 25 prescribed positive
+double-root positions bounded by 300 in a Laguerre-subspace construction. The reported objective depends on
+the largest positive sign-changing root of a residual polynomial. Unlike (3) or (6), a finite grid scan cannot in gen-
+eral certify global root location. The archived UP25 certificate checked global root structure with exact/interval
+methods and gave SUP ≈ 0.31309310122257694, using 25 admissible prescribed roots. The public accepted
+second-place score is rounded independently. These different validators mattered operationally: transferring an
+optimization workflow did not transfer a proof of correctness.
+
+
+5 Why the collaboration accumulated progress
+
+5.1 The coordinator performed five nontrivial functions
+
+The human collaborator: (i) specified the improvement objective and a materiality threshold; (ii) selected which
+competing branches should be propagated; (iii) carried exact witness files and executable methods among in-
+stances; (iv) detected stale starts and misidentified parents; and (v) insisted that unsupported calculations remain
+experimental. Instances were allowed autonomy to formulate and run experiments, but that autonomy was em-
+bedded in an accountable evidence process.
+   The coordinator’s most consequential interventions were not necessarily new mathematical ideas. Examples
+include rejecting an old parent erroneously presented as the state of the art; directing attention away from sub-
+10−8 refinements; passing a successful coarse-to-fine script to another instance; and requesting exact roots or
+
+                                                          6
+<PARSED TEXT FOR PAGE: 8 / 12>
+NIGHTFALL / RESEARCH METHODS / V2.0                                                            20 October 2026
+
+
+source files rather than scores alone. These changed the inputs that subsequent models saw, making research
+continuity possible across contexts.
+
+
+5.2 A handoff was an executable state, not a paragraph of encouragement
+
+The strongest handoffs had seven elements: (1) a parent witness and origin, (2) a precisely normalized score, (3)
+complete constraints, (4) a transformation/search algorithm, (5) an independent checker, (6) known false leads
+and version warnings, and (7) the next experiment or acceptance target. A decimal without a vector did not satisfy
+that contract. A new vector without evidence of which parent it improved was also incomplete.
+
+           Human coordinator                 Exploration agents               Optimization agents
+           goals, gate, lineage             seeds and geometry                 candidate vectors
+
+
+
+                                           Shared artifact ledger
+           Arena / publication                                                Independent checker
+                                                hashes and
+           only eligible claims                                                exact proof objects
+                                                provenance
+
+
+Figure 1: An idealized model of the observed NIGHTFALL workflow. Arrows are artifact and decision transfers, not
+evidence that any one role or tool was necessary or sufficient. Some actual instances performed several roles.
+
+
+
+5.3 Representation-switching and plateau recognition
+
+In the dominant overlap lineage, progress was not proportional to the number of cells, and extensive high-
+resolution polishing sometimes underperformed a 1,024-cell reoptimization. The use of log-sum-exp as a
+surrogate allowed search across a broad plateau, while later SLP targeted the actual near-active contacts. Re-
+stricting a parameterization could expose a different basin; a subsequent refinement supplied degrees of freedom
+needed to descend further. The retrospective hypothesis is that strategic changes in the search coordinates were
+more productive than indefinite small moves within one coordinate chart.
+
+
+5.4 Verification ran alongside exploration
+
+The collaboration treated numerical search and mathematical proof as different computational paths. When a float
+optimizer reported a large gain, an exact score could overturn it; when an old branch showed a later filename, the
+rational comparator could still rank it worse. Each accepted certificate served two roles: it proved a local bound
+and was a stable checkpoint from which another agent could start. This created a ratchet without requiring one
+model to remember or trust the entire conversation.
+
+
+6 Evidence states and the submission boundary
+
+It is useful to separate six states:
+
+  1. Proposed: a construction or hypothesis without a checked score.
+  2. Numerically promising: computed in floating point under a stated model.
+  3. Exact-feasible: rationalized with mass, box, and problem constraints checked.
+
+                                                        7
+<PARSED TEXT FOR PAGE: 9 / 12>
+NIGHTFALL / RESEARCH METHODS / V2.0                                                                                                                 20 October 2026
+
+
+
+
+       Reduction from historical reference (×10 7)
+                                                                                           Selected exact upper-bound checkpoints
+                                                                                                                           two distinct witnesses
+                                                     2.0
+                                                     1.5
+                                                                original milestone scale
+                                                     1.0
+                                                     0.5
+                                                     0.0
+                                                           Baseline           079             B1024          B2048    Proj. 2048       Arena v3          Latest
+
+
+
+Figure 2: Selected exact upper-bound checkpoints relative to the historical comparison. This is a best-of-selected-witness
+visual narrative, not a single parent-child lineage or a controlled ablation. The numerical separation between the final internal
+archive and v3 is smaller than the plotting scale.
+
+
+  4. Mathematically certified: the relevant global finite spectrum or root proof is complete.
+  5. Platform accepted: a distinct Arena evaluator has accepted and scored a submitted payload.
+  6. Scholarly established: an independently reproducible, properly attributed mathematical result whose nov-
+     elty and scope survive prior-art review.
+
+The transitions are not automatic. A globally correct UP25 polynomial might exceed an Arena root-count limit.
+A valid finite-step overlap inequality might not improve the current leader by the mandatory margin. Conversely,
+an accepted score derived from a bounded scan need not prove a mathematical statement outside that scan. The
+final NIGHTFALL governance rule was deliberately narrower than mathematical validity: only submit a fully
+valid construction if it meets the live required leaderboard improvement threshold. This avoided cluttering the
+competitive record with subthreshold internal refinements.
+
+
+6.1 A reproducibility manifest as a claim graph
+
+We recommend that every important candidate be archived with a structured record
+                                                      A = (problem, model, parent, vector, digest, score fraction, checker, run log, acceptance).
+Each claim should cite the immediate artifact or theorem it depends on. The paper’s accompanying files include
+the original v1.2 compact checker, records for the more recent overlap and C1 candidates, and an evidence table
+differentiating exact internal witnesses from public placements. SHA-256 establishes file identity, not mathe-
+matical correctness; the verifier establishes a finite consequence, not originality; the leaderboard establishes an
+evaluator outcome, not a peer-reviewed theorem.
+
+
+7 What can and cannot be inferred
+
+7.1 Four supported conclusions
+
+First, the collaboration did produce certified feasible overlap profiles whose bounds strictly improve the selected
+historical comparison. Second, public EinsteinArena standings show a first-place overlap entry and second-place
+
+                                                                                                         8
+<PARSED TEXT FOR PAGE: 10 / 12>
+NIGHTFALL / RESEARCH METHODS / V2.0                                                             20 October 2026
+
+
+entries in two different tasks at the recorded snapshot. Third, the archived methods exhibit nontrivial transfers:
+exact convolution arithmetic applied to both overlap and C1, while the broader search protocol adapted to a root-
+location problem with a different validator. Fourth, the archive documents real errors caught before promotion,
+including numerical maxima missed by restricted active sets and incorrect branch ordering.
+
+
+7.2 Four conclusions the data do not support
+
+The campaign does not determine the optimal constants. It does not prove that NIGHTFALL invented smoothing,
+SLP, FFT, multiresolution optimization, or a new universal theorem about all research agents. It does not establish
+that having several agents caused a larger improvement than one equally funded agent would have achieved. It
+does not equate platform rankings with publication priority. Particularly for C1, provenance is essential: some
+research was derivative of external seeds, and the public second-place payload was knowingly detuned from
+a stronger internal witness. The available record documents the process but not every unedited conversation,
+prompt, agent version, and platform transaction.
+
+
+8 From a case study to a falsifiable research program
+
+A direct follow-on study should prospectively compare research protocols under equal wall-clock and compute
+budgets. Randomize seeds and problem instances; freeze the accepted candidate format and independent verifiers
+before the runs; record every handoff. Compare: (A) a single optimizer; (B) parallel agents that share only
+scores; (C) agents that share source vectors and exact checkers; and (D) the full human-governed NIGHTFALL
+protocol. Outcomes should include verified objective gain, count of materially qualifying improvements, time-
+to-first certified advance, rate of false promotions, duplicated computation, and wall-clock cost. The hypothesis
+is not that more agents always win, but that certificate-bearing information transfer and representation diversity
+improve the efficiency of valid discovery.
+   A second prospective test should ablate representation changes. Keep the same parent and total search budget,
+vary the use of coarse block averages, split/lift stages, smoothing schedules, and final SLP. This would identify
+which specific search interventions, if any, contributed causally to the B1024-to-B2048 jump. A third study
+should test independent proof replay: compare arithmetic approaches and require them to agree on full event
+spectra before publishing any benchmark result.
+    These experiments are feasible precisely because the difficult mathematical questions admit small, self-
+contained proof objects. A robust comparison need not judge the philosophical quality of the agents’ reasoning:
+it can evaluate candidate validity and objective values exactly.
+
+
+9 Conclusion
+
+NIGHTFALL’s clearest result is a practical research process, demonstrated rather than universally established.
+The human collaborator supplied continuity, selection, and a demanding success criterion. Multiple AI instances
+supplied varied candidate-generating mechanisms, executable refinements, cross-checks, and mathematical ex-
+planations. Proof-carrying artifacts allowed valid improvements to survive changes in session, method, and agent.
+A favorable three-day campaign then produced an accepted first-place overlap entry and two second-place place-
+ments, alongside stronger internal exact constructions not automatically equivalent to those submissions.
+   The correct lesson is neither that an autonomous agent solved an open problem nor that collaboration guarantees
+breakthroughs. It is that search autonomy plus transferable exact evidence plus accountable coordination can form
+a compact, cumulative mathematical research system. Whether this system outperforms strong alternatives is now
+a testable question.
+
+                                                        9
+<PARSED TEXT FOR PAGE: 11 / 12>
+NIGHTFALL / RESEARCH METHODS / V2.0                                                                20 October 2026
+
+
+A Numerical ledger and comparison hygiene
+
+Table 2: Selected overlap milestones, rounded to display precision. All named steps are sourced from archived research
+files; archive branch numbers do not necessarily indicate genealogy.
+
+              Branch                      Cells               Bound B(a)    Intervention
+              Historical comparison      2,048     0.38085658829748237      Prior comparator
+              079                       16,384    0.380856556862140884      Softened-max continuation
+              Claude B1024               1,024       0.380856530848315      Coarse reoptimization
+              Claude B2048               2,048       0.380856416809955      Lift and continuation
+              Projected B2048            2,048       0.380856407054191      Projection / SLP
+              Arena-format v3          131,072       0.380856370118785      Quantized candidate
+              Latest internal          131,072       0.380856370118029      Block-residual refinement
+
+   The historical reference is a comparison point, not necessarily the direct parent of each later branch. In partic-
+ular, the B1024-to-B2048 improvement is a claimed parent-child intervention; not every row above is connected
+by a direct transition. The public first-place entry is a separately observed platform outcome with only a rounded
+display.
+
+
+B Archive reproduction guide
+
+The v2 accompanying ZIP places older and current primary materials in separate directories. The compact v1.2
+checker was rerun successfully with Python’s standard library during this revision. The newer internal overlap
+archive contains an independent C++17 six-prime convolution replay script, a certificate manifest, and source
+integer heights; the complete replay was run successfully in this revision. The v3 archive provides an Arena
+JSON payload and an NTT verifier. The C1 multitransport archive provides a full exact finite-convolution replay.
+The UP25 archive includes a legal root list, original exact/interval logs, and a standard-library replay of a distinct
+polynomial stress test; a fresh high-precision Arb run of the full root certificate requires the additional software
+identified by its authors. Running independent verifiers provides stronger evidence than merely checking their
+published log text, but does not identify novel methods or establish causal explanations.
+Practical audit order: verify the hash manifest; inspect declared normalization and constraints; recompute all
+mass and box conditions; recompute the complete required spectrum or global root proof; compare exact frac-
+tions; finally look up any platform acceptance and current threshold. Always preserve the parent and the original
+certificate when producing a later variant.
+
+
+C Selected source file identities
+
+Archive                                 SHA-256 digest (source-frozen)
+                                        a574c280f8839503c90076507a27f4c8
+Latest internal overlap witness text    19455fb2512fae6a43b6a17f6a784b8e
+                                        b00f821ba6d99fd992230e9d2b96b36a
+Arena-format v3 witness text            cb3f6b06fff15a4e00e3a5b441ea9fe2
+                                        67197b5ba1b81b5f017505ab4f004271
+Latest internal overlap archive         2d77bc94fc41edab01eef5d7b2f61a5d
+                                        ae5abcd9afee9e56dd919526ce5a0243
+Arena-format v3 archive                 b474665b3264c59fe763831b996dc520
+
+
+
+                                                         10
+<PARSED TEXT FOR PAGE: 12 / 12>
+NIGHTFALL / RESEARCH METHODS / V2.0                                                             20 October 2026
+
+
+D Research ethics and attribution checklist
+
+Before public posting, reconcile exact full-precision solution IDs with their upload receipts; ask participating
+collaborators to confirm or amend attribution; clearly cite upstream public code and witnesses; retain raw prompts
+and original agent outputs where available; distinguish internal research autonomy from host-verified scheduled
+execution; and include a changelog that identifies mathematical versus editorial corrections. Use the public Arena
+discussion and leaderboard only as evidence for facts they actually expose. The legal identity of an account owner,
+authorship order, and any permissions to redistribute agent-produced work should be confirmed separately by the
+human collaborators.
+
+
+References
+
+ [1] J. K. Haugland, “The minimum overlap problem revisited,” arXiv:1609.08000 (2016). https://arxiv.
+     org/abs/1609.08000.
+ [2] E. P. White, “Erdős’ minimum overlap problem,” arXiv:2201.05704 (2022). https://arxiv.org/abs/
+     2201.05704.
+ [3] F. Bianchi, Y. Kwon, A. Pappu, and J. Zou, “Harnessing the Collective Intelligence of AI Agents in the
+     Wild for New Discoveries,” arXiv:2606.10402v2 (2026). https://arxiv.org/abs/2606.10402.
+ [4] justinwetch, “Erdős minimum overlap: bound certificates and technical notes,” frozen research repository
+     (2026). https://github.com/justinwetch/erdos-36-minimum-overlap.
+ [5] EinsteinArena, “Erdős Minimum Overlap (Upper Bound),” public leaderboard viewed 20 October 2026.
+     https://einsteinarena.com/problems/erdos-min-overlap.
+ [6] EinsteinArena,  “First Autocorrelation Inequality (Upper Bound),” public leaderboard
+     and discussion,    viewed 20 October 2026. https://einsteinarena.com/problems/
+     first-autocorrelation-inequality.
+ [7] EinsteinArena, “Uncertainty Principle (Upper Bound),” public leaderboard, viewed 20 October 2026.
+     https://einsteinarena.com/problems/uncertainty-principle.
+ [8] NIGHTFALL Research Collaboration, “From Search to Certificate: A 48-Hour Multi-Agent Campaign on
+     Erdős’ Minimum-Overlap Problem,” working paper, version 1.2 (20 October 2026), included in supplemen-
+     tary archive.
+ [9] Together Computer, “EinsteinArena–new SOTA,” public results repository (2026). https://github.
+     com/togethercomputer/EinsteinArena-new-SOTA.
+[10] OpenAI, “Planar Point Sets with Many Unit Distances,” manuscript (2026), cited in the previous
+     NIGHTFALL version solely as a contrasting research pathway. https://cdn.openai.com/pdf/
+     74c24085-19b0-4534-9c90-465b8e29ad73/unit-distance-proof.pdf.
+
+
+
+
+                                                       11
