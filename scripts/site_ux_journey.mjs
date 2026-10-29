@@ -215,11 +215,24 @@ try{
     await page.waitForFunction(()=>!document.querySelector("#send-claim-lab")?.disabled,null,{timeout:20000});
     const sourceFingerprint=await page.locator("#result").innerText();
     assert.match(sourceFingerprint,/SHA-256/i);
-    page.once("dialog",d=>d.accept());
     await page.locator("#send-claim-lab").click();
-    await page.waitForURL(/claim-lab\.html/, {timeout:20000});
-    await page.waitForFunction(()=>document.querySelector("#content")?.textContent?.includes("Referee receipt"),null,{timeout:20000});
-    assert.match(await page.locator("#content").innerText(),/Referee receipt|IMPORTED REPORT ONLY|TESTED/i);
+    await page.waitForURL(/claim-lab\\.html/, {timeout:20000});
+    // A real staged preview replaces the older native confirm dialog.
+    await page.locator("#bridgeMask").waitFor({state:"visible",timeout:20000});
+    assert.match(await page.locator("#bridgeMeta").innerText(),/Scientific review: unreviewed/);
+    const before = await page.evaluate(()=>localStorage.getItem("nightfall_claim_lab_v1"));
+    assert.equal(await page.locator("#sendDiscovery").isDisabled(),true,"Unapproved receipt cannot reach Discovery");
+    const [backup] = await Promise.all([
+      page.waitForEvent("download"),
+      page.locator("#bridgeApprove").click()
+    ]);
+    assert.match(backup.suggestedFilename(),/PRE_BRIDGE/);
+    const after = await page.evaluate(()=>localStorage.getItem("nightfall_claim_lab_v1"));
+    assert.notEqual(after,before,"Only approved attachment may write local workspace");
+    const parsed = JSON.parse(after);
+    assert.equal(parsed.experiments.at(-1).status,"tested");
+    assert.equal(parsed.experiments.at(-1).claimId,"");
+    assert.match(parsed.experiments.at(-1).result,/UNREVIEWED/);
     assert.ok(await page.locator("#sendDiscovery").isEnabled());
     note("strength","Referee receipt requires explicit user approval and imports as unreviewed metadata, with no proof-status promotion.","receipt-handoff");
     await screenshot("06-claimlab-receipt.png");
