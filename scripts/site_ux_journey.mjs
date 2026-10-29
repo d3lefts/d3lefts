@@ -60,6 +60,30 @@ try{
     assert.equal(labels.length,3);
     assert.ok(labels.some(x=>/finite/i.test(x)),"Explicit finite scope absent");
     assert.ok(labels.some(x=>/conditional|candidate|imported|manuscript/i.test(x)),"Conditional status absent");
+    const editorial=await page.evaluate(()=>{
+      const dramatic=document.querySelector(".nf-interlude");
+      const quiet=document.querySelector(".nf-quiet-note");
+      const systems=[...document.querySelectorAll(".sf-ecosystem .sf-system-card")];
+      return {
+        dramaticHeading:dramatic?.querySelector("h2")?.textContent?.trim()||"",
+        dramaticBackground:dramatic?getComputedStyle(dramatic).backgroundColor:"",
+        quietHeading:quiet?.querySelector("h2")?.textContent?.trim()||"",
+        correctSequence:!!(dramatic&&quiet&&
+          (document.querySelector("#live-case").compareDocumentPosition(dramatic)&Node.DOCUMENT_POSITION_FOLLOWING)&&
+          (document.querySelector("#evidence").compareDocumentPosition(quiet)&Node.DOCUMENT_POSITION_FOLLOWING)),
+        cardWidths:systems.map(x=>Math.round(x.getBoundingClientRect().width)),
+        cardRows:systems.map(x=>Math.round(x.getBoundingClientRect().top))
+      };
+    });
+    assert.match(editorial.dramaticHeading,/Make room.*for doubt/s);
+    assert.match(editorial.quietHeading,/Leave the.*uncertainty visible/s);
+    assert.equal(editorial.dramaticBackground,"rgb(24, 43, 35)");
+    assert.equal(editorial.correctSequence,true,"Editorial pacing should preserve claim hierarchy");
+    assert.equal(editorial.cardWidths.length,4);
+    assert.ok(editorial.cardWidths[0]<editorial.cardWidths[1],"Asymmetric cards collapsed on desktop");
+    assert.equal(editorial.cardRows[0],editorial.cardRows[1]);
+    assert.equal(editorial.cardRows[2],editorial.cardRows[3]);
+    assert.ok(editorial.cardRows[2]>editorial.cardRows[0]);
     note("strength","Immediate research proposition, three distinct flagships, and explicit evidence tiering are visible.","homepage");
     await screenshot("01-desktop-home.png");
   });
@@ -247,6 +271,15 @@ try{
     assert.equal(await page.locator("#site-nav").isVisible(),true);
     await page.keyboard.press("Escape");
     assert.equal(await page.locator("#site-nav").isVisible(),false);
+    assert.ok(await page.locator(".nf-interlude h2").isVisible());
+    assert.ok(await page.locator(".nf-quiet-note h2").isVisible());
+    const mobileLayout=await page.evaluate(()=>{
+      const cards=[...document.querySelectorAll(".sf-ecosystem .sf-system-card")];
+      const boxes=cards.map(x=>x.getBoundingClientRect());
+      return {stacked:boxes.every((r,i)=>i===0||r.top>boxes[i-1].top),widths:boxes.map(x=>x.width)};
+    });
+    assert.ok(mobileLayout.stacked,"Instrument cards must stack on narrow phones");
+    assert.ok(mobileLayout.widths.every(x=>x<390));
     const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
     assert.ok(overflow<=3,"Homepage horizontal overflow "+overflow);
     await screenshot("08-mobile-home.png");
