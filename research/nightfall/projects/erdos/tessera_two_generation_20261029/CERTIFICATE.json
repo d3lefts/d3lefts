@@ -1,0 +1,42 @@
+{
+  "all_affine_cases": 234360,
+  "color_bound_sufficient": 196797,
+  "color_hist": {
+    "10": 99000,
+    "11": 22524,
+    "12": 834,
+    "7": 1056,
+    "8": 16608,
+    "9": 94338
+  },
+  "exact_search_cases": 37563,
+  "fixed_second_shift": 2334,
+  "max_collision_edges": 162,
+  "max_new_retained": 10,
+  "mean_collision_edges": 112.536,
+  "min_collision_edges": 86,
+  "min_new_deletions": 16,
+  "new_witness_sha256_newline_decimal": "0f9e837791f4471cab8a9b1e31dffa253aae1574de7de6e7a6f521836f8632cf",
+  "old_sha256_newline_decimal": "feb60c46538147823f59d57f0cc868c40a1b7deab3256ede8a9e2f02c57980dd",
+  "protected_old_size": 23,
+  "scope": "fixed protected 23-mark first-generation integer Sidon set; only new Singer marks may be deleted; no globally optimal 3-block Sidon construction claim",
+  "search_nodes": 94924,
+  "source": "q25 cyclic trace Singer source from PR #192, all 360 units x 651 cuts",
+  "source_K": 26,
+  "v": 651,
+  "witness_cut": 72,
+  "witness_max_mark": 2953,
+  "witness_new_values": [
+    0,
+    11,
+    172,
+    203,
+    259,
+    356,
+    366,
+    418,
+    500,
+    619
+  ],
+  "witness_unit": 92
+}
