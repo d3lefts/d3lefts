@@ -660,3 +660,15 @@ html:not([data-nf-theme="dusk"]) :is(.join-result-grid a,.join-quiet,
   .join-disclosure a,.cj-next a):focus-visible{
   outline:3px solid #f8d2aa;outline-offset:4px;
 }
+
+/* The Archive contributor process is a rose-lit chapter, not a second
+   near-black panel. Fallback fills keep browser contrast measurable. */
+html:not([data-nf-theme="dusk"]) :is(.join-method,.join-method .join-method-steps){
+  background:#54314c linear-gradient(155deg,#70405f 0%,#54314c 53%,#3b2846 100%);
+  color:#fff0e7;border-color:#826682;
+}
+html:not([data-nf-theme="dusk"]) .join-method-steps>div{
+  background:#56344f;color:#fff0e7;border-color:#826682;
+}
+html:not([data-nf-theme="dusk"]) .join-method :is(.join-heading p,.join-method-steps p){color:#dec9de}
+html:not([data-nf-theme="dusk"]) .join-method :is(.join-heading>span,.join-method-steps b){color:#f5b78b}

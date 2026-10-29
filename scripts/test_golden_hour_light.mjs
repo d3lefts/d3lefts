@@ -72,7 +72,7 @@ try{
     "index.html":{nav:"rgb(25, 19, 39)",heroAction:"rgb(245, 183, 139)",
       system:"rgb(25, 19, 39)",lens:"rgb(245, 183, 139)"},
     "constellation.html":{coreAction:"rgb(245, 183, 139)"},
-    "join.html":{joinMethod:"rgb(25, 19, 39)",raised:"rgb(59, 44, 75)"},
+    "join.html":{joinMethod:"rgb(84, 49, 76)",raised:"rgb(59, 44, 75)"},
     "living-paper.html":{sidon:"rgb(25, 19, 39)"},
     "erdos-paper.html":{sidon:"rgb(25, 19, 39)",epConsole:"rgb(59, 44, 75)"},
     "discovery.html":{discoverySidebar:"rgb(49, 35, 63)",discoveryMark:"rgb(245, 183, 139)"},
@@ -100,7 +100,13 @@ try{
         [".join-result-grid article a",".join-result-grid article"],
         [".join-method-steps b",".join-method-steps>div"],
         [".join-workspace-header p",".join-workspace"],
-        [".join-empty",".join-empty"]
+        [".join-empty",".join-empty"],
+         [".join-hero-aside li b",".join-hero-aside"],
+         [".join-choice>span",".join-choice"],
+         [".join-choice p",".join-choice"],
+         [".cj-pickers label",".cj-section"],
+         [".cj-work p",".cj-work"],
+         [".join-method .join-heading p",".join-method"]
       ];
       return pairs.map(([textSel,panelSel])=>{
         const ink=getComputedStyle(document.querySelector(textSel)).color;
@@ -127,7 +133,7 @@ try{
   });
   assert.ok(contrast(...comps.nav)>=4.5,"Archive navigation button text meets WCAG AA");
   assert.ok(contrast(...comps.cta)>=4.5,"Apricot action text meets WCAG AA");
-  assert.ok(contrast(...comps.body)>=7,"Body text on cocoa comfortably exceeds AA");
+  assert.ok(contrast(...comps.body)>=7,"Body text on twilight plum comfortably exceeds AA");
   const toggle=page.locator(".nf-theme-toggle");
   await toggle.click();
   await page.waitForFunction(()=>document.documentElement.dataset.nfTheme==="dusk");
