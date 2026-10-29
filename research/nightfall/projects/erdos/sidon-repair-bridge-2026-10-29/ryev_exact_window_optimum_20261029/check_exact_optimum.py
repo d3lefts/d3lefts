@@ -37,6 +37,7 @@ def exact_checks():
     first=multiply(multiply(a,a),[-1,64])     # N1(64r-1)
     second=multiply(multiply([-1,256],[-1,256]),multiply([0,0,0,884736],[-1,-96,6144]))
     P=add(first,scale(second,-1))
+    while len(P)>1 and P[-1]==0: P.pop()  # cancel exact high-degree polynomial coefficients
     assert P==[-1,-320,-30720,5603328,377487360],P
     # Positivity for r>=1: positive top term dominates the
     # three negative lower terms, each bounded by its value*r^4.
@@ -46,15 +47,9 @@ def exact_checks():
     # D(alpha1) = (1024r²+192r+1)/(262144r³) >0
     # for alpha1=(96r+1)/(2048r²).
     b=multiply(base,base)
-    derivative_num=add(scale([0,0,0,1],3*262144),
-                       add(scale(multiply([0,1],base),-64*128),
-                           scale(b,1)))
     # 3*262144*r³-8192*r*(96r+1)+ (96r+1)^2
     # This would be incorrect for r dependence if one denominator
     # term is missing; explicitly verify the correct expression next:
-    D=add(scale([0,0,0,1],3*262144),
-          add(scale(multiply([0,1],base),-8192),
-              b))
     # Note denominator scaling: 64r*alpha1 =
     # (96r+1)/(32r); times 262144 r³ gives 8192r²(96r+1).
     D=add(scale([0,0,0,1],3*262144),
