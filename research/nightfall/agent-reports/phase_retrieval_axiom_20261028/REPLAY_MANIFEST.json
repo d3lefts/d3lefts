@@ -1,0 +1,16 @@
+{
+  "date_new_york": "2026-10-28",
+  "exact_claim": "distinct maximum-density 5-hyperplane lifted-kernel events indexed by Gr(2,k;F25)",
+  "verdicts": {
+    "finite_arithmetic": "PASS",
+    "analytical_structural_proof": "PASS (internal proof audit)",
+    "external_referee": "OPEN",
+    "global_priority": "OPEN"
+  },
+  "files_sha256": {
+    "RESEARCH_NOTE.md": "b8942369b70d87c9fc71f776a4781440a34cfe08a5d478cbc95b06d6feb96c31",
+    "verify_incidence_barrier.py": "d951f8a383242209ee20769755e2131704d0981b620df2798caa2091aa331a49",
+    "verify_incidence_barrier.log": "9ac6107128784d9157162add6dab8d50ba3f6eaecef083e565eb3227a54f6f30"
+  },
+  "command": "python3 verify_incidence_barrier.py"
+}
