@@ -20,16 +20,13 @@
     </a>
     <button type="button" class="menu-toggle" id="menu-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">MENU +</button>
     <nav class="nav" id="site-nav" aria-label="Primary navigation">
-      <a href="./#work">Findings</a>
-      <a href="research.html" aria-current="page">Research library</a>
-      <a href="exact-research.html">Research tools</a><a href="agenda.html">Agenda</a>
-      <a href="./#review">Independent review</a>
-      <a href="./#method">Methods</a>
-      
-      <a href="review.html">Reviewer guide</a>
-      <a href="evidence.html">Evidence access</a>
-      <a class="nav-call" href="https://github.com/d3lefts/d3lefts/tree/main/research/nightfall" target="_blank" rel="noopener">Source archive ↗</a>
-    </nav>
+ <a href="./#flagships">Research</a>
+ <a href="research.html" aria-current="page">Library</a>
+ <a href="exact-research.html">Tools</a>
+ <a href="review.html">Review</a>
+ <a href="evidence.html">Evidence</a>
+ <a class="nav-call" href="https://github.com/d3lefts/d3lefts/tree/main/research/nightfall" target="_blank" rel="noopener">Source archive <span aria-hidden="true">↗</span></a>
+ </nav>
   </div>
 </header>
 <main id="main">
@@ -47,8 +44,16 @@
  <button type="button" data-atlas-filter="quantum" aria-pressed="false">Quantum</button>
  <button type="button" data-atlas-filter="safety" aria-pressed="false">Safety</button>
  <button type="button" data-atlas-filter="systems" aria-pressed="false">Systems</button></div>
- <label class="atlas-search-label" for="atlas-search">SEARCH RESEARCH<input type="search" id="atlas-search" placeholder="Find a mechanism or claim…" autocomplete="off"></label></div>
- <p class="atlas-counter" id="atlas-counter" role="status">30 source documents shown</p>
+ <div class="atlas-filtertools">
+ <label class="atlas-evidence-label" for="atlas-evidence">EVIDENCE TIER
+ <select id="atlas-evidence" aria-label="Filter by evidence tier">
+ <option value="all">All statuses</option><option value="finite">Exact finite</option>
+ <option value="conditional">Conditional</option><option value="working">Working research</option>
+ <option value="software">Research software</option><option value="empirical">Empirical</option>
+ </select></label>
+ <label class="atlas-search-label" for="atlas-search">SEARCH RESEARCH<input type="search" id="atlas-search" placeholder="Find a mechanism or claim…" autocomplete="off"></label>
+ </div></div>
+ <div class="atlas-results-line"><p class="atlas-counter" id="atlas-counter" role="status">30 source documents shown</p><p class="atlas-shortcut">Press <kbd>/</kbd> to search · <kbd>Esc</kbd> to clear</p></div>
  <section class="atlas-group" data-atlas-group="mathematics" aria-labelledby="atlas-mathematics"><div class="atlas-group-head"><span class="section-id">01 / FIELD</span><div><h2 id="atlas-mathematics">Mathematics &amp; algorithms</h2><p>11 curated documents · Exact constructions, reconstruction theory, coding, complexity and rigorous negative results</p></div></div><div class="atlas-grid"><article class="atlas-card" data-domain="mathematics" data-evidence="finite" data-doc-id="01" data-search="erdős minimum overlap exact finite construction finite 131,072-cell rational upper-bound witness with an internally replayed all-shift score of 0.380856370118029325…; external specialist audit remains open. an explicit construction and its exact audit; separate from the accepted arena entry. mathematics"><div class="atlas-card-top"><span>01 / Exact finite construction</span><span class="atlas-status atlas-status-finite">Finite</span></div><h3>Erdős minimum overlap</h3><p>131,072-cell rational upper-bound witness with an internally replayed all-shift score of 0.380856370118029325…; external specialist audit remains open.</p><div class="atlas-boundary"><strong>Evidence boundary</strong><p>An explicit construction and its exact audit; separate from the accepted Arena entry.</p></div><a class="atlas-link" href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/erdos/STATUS_AND_PRIOR_ART_20261028.md" target="_blank" rel="noopener">Inspect source record <span aria-hidden="true">↗</span></a></article>
 <article class="atlas-card" data-domain="mathematics" data-evidence="finite" data-doc-id="02" data-search="sidon (4,5): 30-point witness exact finite construction finite a 30-integer configuration whose largest sidon subset contains 17 elements, with an exhaustive finite checker. a distinct finite witness; existing asymptotic results remain credited to prior researchers. mathematics"><div class="atlas-card-top"><span>02 / Exact finite construction</span><span class="atlas-status atlas-status-finite">Finite</span></div><h3>Sidon (4,5): 30-point witness</h3><p>A 30-integer configuration whose largest Sidon subset contains 17 elements, with an exhaustive finite checker.</p><div class="atlas-boundary"><strong>Evidence boundary</strong><p>A distinct finite witness; existing asymptotic results remain credited to prior researchers.</p></div><a class="atlas-link" href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/README.md" target="_blank" rel="noopener">Inspect source record <span aria-hidden="true">↗</span></a></article>
 <article class="atlas-card" data-domain="mathematics" data-evidence="conditional" data-doc-id="03" data-search="fourth-power finite-field reconstruction uniform-decoder manuscript conditional fourth-power sensing and lll reconstruction up to a root-of-unity ambiguity, with a systematic decoder manuscript and finite tests. the public handoff is an excerpt; quantified all-signal event, full decoder and mathematical priority require independent audit. mathematics"><div class="atlas-card-top"><span>03 / Uniform-decoder manuscript</span><span class="atlas-status atlas-status-conditional">Conditional</span></div><h3>Fourth-power finite-field reconstruction</h3><p>Fourth-power sensing and LLL reconstruction up to a root-of-unity ambiguity, with a systematic decoder manuscript and finite tests.</p><div class="atlas-boundary"><strong>Evidence boundary</strong><p>The public handoff is an excerpt; quantified all-signal event, full decoder and mathematical priority require independent audit.</p></div><a class="atlas-link" href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/finite-field-retrieval-handoff-excerpt.txt" target="_blank" rel="noopener">Inspect source record <span aria-hidden="true">↗</span></a></article>
