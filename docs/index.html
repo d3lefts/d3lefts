@@ -27,17 +27,12 @@
     </a>
     <button type="button" class="menu-toggle" id="menu-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">MENU +</button>
     <nav class="nav" id="site-nav" aria-label="Primary navigation">
-      <a href="#work">Findings</a>
-      <a href="research.html">Research library</a>
-      <a href="claim-lab.html">Claim Lab</a>
-      <a href="referee.html">Referee</a>
-      <a href="agenda.html">Research agenda</a>
-      <a href="#review">Independent review</a>
-      <a href="#method">Methods</a>
-      
-      <a href="review.html">Reviewer guide</a>
-      <a href="evidence.html">Evidence access</a>
-      <a class="nav-call" href="https://github.com/d3lefts/d3lefts/tree/main/research/nightfall" target="_blank" rel="noopener">Source archive ↗</a>
+      <a href="#flagships">Research</a>
+      <a href="research.html">Library</a>
+      <a href="#instruments">Instruments</a>
+      <a href="review.html">Review</a>
+      <a href="evidence.html">Evidence</a>
+      <a class="nav-call" href="https://github.com/d3lefts/d3lefts/tree/main/research/nightfall" target="_blank" rel="noopener">Source archive <span aria-hidden="true">↗</span></a>
     </nav>
   </div>
 </header>
@@ -50,7 +45,7 @@
       <div class="hero-actions">
         <a class="button" href="#flagships">Explore flagship research <span aria-hidden="true">↓</span></a>
         <a class="text-link" href="research.html">Browse the research library ↗</a>
-        <a class="text-link" href="claim-lab.html">Try Claim Lab ↗</a>
+        <a class="text-link" href="#instruments">Use the research instruments ↓</a>
       </div>
     </div>
     <aside class="hero-aside" aria-label="Research status">
@@ -76,7 +71,7 @@
   </section>
 
   <div class="ticker wrap" aria-label="Original evidence overview">
-    <div class="metric"><b>23</b><span>Research lines<br>September → October 2026</span></div>
+    <div class="metric"><b>30</b><span>Curated research documents<br>September → October 2026</span></div>
     <div class="metric"><b>3</b><span>Flagship programs<br>Different evidence tiers</span></div>
     <div class="metric"><b>3</b><span>Original findings<br>Separate publication gate</span></div>
     <div class="metric"><b>Open</b><span>Independent review<br>Reproducible sources</span></div>
@@ -109,6 +104,19 @@
       </article>
     </div>
     <div class="flagship-after"><p><strong>Beyond the three:</strong> 30 selected, source-linked papers and technical dossiers across mathematics, quantum research, safety, and research systems—with evidence status visible.</p><a class="text-link" href="research.html">Open the complete research library ↗</a></div>
+  </section>
+
+  <section class="instrument-directory wrap" id="instruments" aria-labelledby="instrument-directory-title">
+    <div class="instrument-directory-heading"><span class="section-id">02 / RESEARCH INSTRUMENTS</span>
+      <div><h2 id="instrument-directory-title">From conjecture to <em>checkable evidence.</em></h2>
+      <p>Four complementary research tools. Each operates within an explicit evidence boundary; local calculations and draft claims do not certify a general theorem.</p></div>
+    </div>
+    <div class="instrument-directory-grid">
+      <a class="instrument-directory-card" href="claim-lab.html"><span class="instrument-number">01 / ORGANIZE</span><h3>Claim Lab</h3><p>Map dependencies, track missing premises, and preserve your private research workspace.</p><span class="instrument-action">Local-first workspace <span aria-hidden="true">↗</span></span></a>
+      <a class="instrument-directory-card" href="referee.html"><span class="instrument-number">02 / CHALLENGE</span><h3>Referee</h3><p>Recompute finite witnesses with adversarial controls and export scoped evidence receipts.</p><span class="instrument-action">Exact finite verification <span aria-hidden="true">↗</span></span></a>
+      <a class="instrument-directory-card" href="exact-research.html"><span class="instrument-number">03 / COMPUTE</span><h3>Exact Research</h3><p>Probe four-qutrit Werner forms and enumerate F₂₅ phase-retrieval examples.</p><span class="instrument-action">Bounded arithmetic tools <span aria-hidden="true">↗</span></span></a>
+      <a class="instrument-directory-card" href="discovery.html"><span class="instrument-number">04 / EXPERIMENT</span><h3>Discovery Engine</h3><p>Plan falsifiable tests, replay bounded experiments, and package their evidence.</p><span class="instrument-action">Research experiment lab <span aria-hidden="true">↗</span></span></a>
+    </div>
   </section>
 
   <section class="section wrap lab-section" id="claim-lab" aria-labelledby="claim-lab-title">
@@ -173,7 +181,7 @@
 
   <section class="section wrap" aria-labelledby="featured-title">
     <div class="section-head">
-      <div><span class="section-id">02 / ORIGINAL FINDINGS</span></div>
+      <div><span class="section-id">03 / ORIGINAL FINDINGS</span></div>
       <div><h2 class="section-title" id="featured-title">Original evidence, in depth.</h2><p class="section-intro">Each entry is a distinct finite witness or an original, narrowly scoped experimental observation. No worldwide priority claim is implied.</p></div>
     </div>
     <div class="feature-grid">
@@ -235,7 +243,7 @@
 
   <section class="section wrap" id="work" aria-labelledby="work-title">
     <div class="section-head">
-      <span class="section-id">02 / RESEARCH INDEX</span>
+      <span class="section-id">03 / ORIGINAL FINDINGS INDEX</span>
       <div>
         <h2 class="section-title" id="work-title">Original work, indexed.</h2>
         <p class="section-intro">Only distinct results with original project artifacts are listed. Imported theorems, repackaged prior art, untested proposals, and unsupported priority claims are excluded.</p>
@@ -269,7 +277,7 @@
   <section class="section review-section" id="review" aria-labelledby="review-title">
     <div class="wrap">
       <div class="section-head">
-        <span class="section-id">03 / OPEN VALIDATION INVITATIONS</span>
+        <span class="section-id">04 / OPEN VALIDATION INVITATIONS</span>
         <div><h2 class="section-title" id="review-title">Help us find<br><i>what survives.</i></h2><p class="section-intro">Independent verification agents reconstruct, falsify, and formalize claims. The decisive output is executable evidence: a reproduced certificate, a counterexample, or a kernel-checked proof.</p></div>
       </div>
       <div class="review-intro">
@@ -301,7 +309,7 @@
 
   <section class="section wrap" id="method" aria-labelledby="method-title">
     <div class="section-head">
-      <span class="section-id">04 / HOW CLAIMS ADVANCE</span>
+      <span class="section-id">05 / HOW CLAIMS ADVANCE</span>
       <div><h2 class="section-title" id="method-title">The verification contract.</h2><p class="section-intro">The research process is explicit, evidence-dependent, and designed to survive changes in models, collaborators, and techniques.</p></div>
     </div>
     <div class="method-grid">
