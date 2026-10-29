@@ -123,20 +123,27 @@ def exact_repair(D,a,mod,lookup=None,verify=False):
         for C in cycles:
             best=(INF,None)
             for s0 in opts[C[0]]:
-                frontier={s0:(dp[C[0]][s0],[s0])}
+                frontier={s0:dp[C[0]][s0]}
+                predecessors=[]
                 for k in range(1,len(C)):
-                    previous=C[k-1];node=C[k];new={}
+                    previous=C[k-1];node=C[k];new={};trace={}
                     for sn in opts[node]:
-                        vals=[(val+dp[node][sn],path+[sn])
-                              for sp,(val,path) in frontier.items()
+                        vals=[(val+dp[node][sn],sp) for sp,val in frontier.items()
                               if sp or sn&bit[previous]]
-                        if vals:new[sn]=min(vals)
-                    frontier=new
-                vals=[pair for s,pair in frontier.items()
-                      if s or s0&bit[C[-1]]]
-                if vals:
-                    candidate=min(vals)
-                    if candidate[0]<best[0]:best=candidate
+                        if vals:
+                            cost,sp=min(vals)
+                            new[sn]=cost;trace[sn]=sp
+                    frontier=new;predecessors.append(trace)
+                admissible=[(val,s) for s,val in frontier.items()
+                            if s or s0&bit[C[-1]]]
+                if admissible:
+                    cost,last=min(admissible)
+                    if cost<best[0]:
+                        path=[None]*len(C);path[-1]=last
+                        for k in range(len(C)-1,0,-1):
+                            path[k-1]=predecessors[k-1][path[k]]
+                        assert path[0]==s0
+                        best=cost,path
             assert best[1] is not None
             total+=best[0]
             for i,s in zip(C,best[1]):states[i]=s
