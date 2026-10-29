@@ -2,14 +2,54 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#10201e"><meta name="description" content="NIGHTFALL Exact Research Tools: offline arbitrary-precision Werner witness checking and exhaustive F25 phase retrieval experiments. Bounded examples, no theorem certification.">
+<meta name="theme-color" content="#10201e"><meta name="description" content="NIGHTFALL Research Tools: Referee exact verification, Claim Lab dependencies, Discovery Engine, Werner witness arithmetic, and exhaustive finite-field phase retrieval.">
 <link rel="canonical" href="https://d3lefts.github.io/d3lefts/exact-research.html">
 <link rel="stylesheet" href="site.css"><link rel="icon" href="favicon.svg" type="image/svg+xml">
-<title>Exact Research Tools — NIGHTFALL</title>
+<title>Research Tools — NIGHTFALL PHASESHIFT</title>
 <script src="site.js" defer></script><script src="research-tools-core.js" defer></script><script src="research-tools-app.js" defer></script>
 <style>
 .rt-hero{padding-top:70px;padding-bottom:42px}.rt-hero h1{font-size:clamp(40px,7vw,78px);letter-spacing:-.065em;line-height:1.04;max-width:950px;margin:14px 0 20px}.rt-lead{font-size:17px;line-height:1.7;max-width:730px;color:#647467}.rt-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;padding-bottom:85px}.rt-card{border:1px solid #cad1c6;background:#f7f8f2;border-radius:18px;padding:27px;min-width:0}.rt-number{font-size:11px;font-weight:800;letter-spacing:.13em;color:#4c6b54}.rt-card h2{font-size:26px;letter-spacing:-.035em;line-height:1.13;margin:11px 0 12px}.rt-card p{font-size:13px;line-height:1.7;color:#58665b;margin:6px 0 14px}.rt-label{display:block;font-size:12px;font-weight:700;margin:17px 0 8px}.rt-input{width:100%;background:#10201e;color:#e6f6e9;border:1px solid #3c5449;border-radius:10px;padding:15px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;line-height:1.55;min-height:181px;resize:vertical}.rt-input:focus-visible,.rt-btn:focus-visible{outline:3px solid #77a78b;outline-offset:2px}.rt-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:15px 0}.rt-btn{border:1px solid #355b43;background:#183b2a;color:#ebfff1;border-radius:9px;font-size:12px;font-weight:750;padding:11px 16px;cursor:pointer}.rt-btn.secondary{background:transparent;color:#2e5540}.rt-btn:disabled{opacity:.5}.rt-result{white-space:pre-wrap;overflow:auto;background:#e8eee4;color:#173524;border:1px solid #bcc9b9;border-radius:9px;padding:15px;min-height:105px;max-height:410px;font:12px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace}.rt-result.error{background:#f7e9e6;color:#853a30;border-color:#d0b0a7}.rt-boundary{padding:17px 20px;border-left:3px solid #56765b;background:#edf2e9;margin:0 0 25px;color:#465848;font-size:13px;line-height:1.7}.rt-tip{font-size:11px;color:#6a776c}.rt-footer{margin-bottom:68px}.rt-footer a{text-decoration:underline}
 @media(max-width:850px){.rt-grid{grid-template-columns:1fr}.rt-hero{padding-top:45px}.rt-card{padding:20px}} 
+
+/* Research tools directory: new curated portal above preserved exact calculators. */
+.rt-hero{padding-top:82px;padding-bottom:53px}
+.rt-hero h1{font:400 clamp(70px,8vw,121px)/.89 var(--serif);letter-spacing:-.035em;max-width:1030px;margin:23px 0 25px}
+.rt-hero h1 em{font-weight:400;color:#567765}
+.rt-directory{padding-bottom:78px;border-bottom:1px solid var(--line)}
+.rt-directory-heading{display:grid;grid-template-columns:minmax(130px,1fr) 2fr;gap:26px;align-items:end;margin-bottom:27px}
+.rt-directory-heading h2{font:400 clamp(35px,4vw,60px)/1 var(--serif)}
+.rt-directory-heading p{grid-column:2;font:14px/1.6 var(--sans);color:var(--muted);margin:4px 0 0}
+.rt-directory-grid{display:grid;grid-template-columns:1.15fr .9fr .9fr;gap:14px}
+.rt-launch-card{display:flex;flex-direction:column;min-width:0;padding:27px 25px 23px;border:1px solid #c5cebd;background:#f7f8f2;min-height:417px;transition:transform .18s,border-color .18s,background .18s}
+.rt-launch-card:hover{transform:translateY(-3px);border-color:#536e5c;background:#ecf0e6}
+.rt-launch-card:focus-visible{outline:3px solid #688e43;outline-offset:4px}
+.rt-launch-feature{background:#18291f;border-color:#18291f;color:#eef6e9}
+.rt-launch-feature:hover{background:#23392b;border-color:#23392b}
+.rt-launch-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font:600 10px/1.5 var(--mono);letter-spacing:.04em;color:#627362}
+.rt-launch-feature .rt-launch-top{color:#b5cdb6}
+.rt-launch-status{display:flex;align-items:center;gap:7px;color:#d9ff5e}
+.rt-launch-status i{width:6px;height:6px;border-radius:50%;background:#d9ff5e;display:inline-block}
+.rt-launch-art{margin:22px 0 5px;border:1px solid #405b47;background:radial-gradient(circle,#294a35 0%,#152920 72%);height:166px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.rt-launch-art svg{width:100%;height:100%}
+.rt-launch-glyph{font:400 clamp(50px,5vw,74px)/1 var(--serif);color:#7d977b;margin:auto 0 4px;letter-spacing:.03em}
+.rt-launch-glyph span{color:#254c35}
+.rt-launch-body{margin-top:auto}
+.rt-launch-body h3{font:400 clamp(37px,3.6vw,55px)/1 var(--serif);letter-spacing:-.025em;margin:18px 0 12px}
+.rt-launch-body p{font:13px/1.68 var(--sans);color:#647267}
+.rt-launch-feature .rt-launch-body p{color:#c1d0c0}
+.rt-launch-foot{display:flex;align-items:end;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:20px;margin-top:21px;border-top:1px solid #c6cebe}
+.rt-launch-feature .rt-launch-foot{border-color:#496350}
+.rt-launch-foot span{font:10px/1.6 var(--mono);max-width:240px;color:#647667}
+.rt-launch-feature .rt-launch-foot span{color:#b1c8b4}
+.rt-launch-foot strong{font:600 11px var(--mono);white-space:nowrap}
+.rt-launch-feature .rt-launch-foot strong{color:#d9ff5e}
+.rt-directory-disclosure{font:12px/1.7 var(--sans);color:var(--muted);margin:21px 0 0;max-width:1000px}
+.rt-exact-heading{padding-top:79px;padding-bottom:25px}
+.rt-exact-heading h2{font:400 clamp(44px,5vw,74px)/1 var(--serif);margin:16px 0}
+.rt-exact-heading p{font:14px/1.7 var(--sans);color:var(--muted);max-width:750px}
+@media(max-width:1070px){.rt-directory-grid{grid-template-columns:1fr 1fr}.rt-launch-feature{grid-column:1/-1;min-height:0}.rt-launch-art{max-width:650px;width:100%}.rt-launch-secondary{min-height:330px}}
+@media(max-width:720px){.rt-hero h1{font-size:clamp(58px,12vw,83px)}.rt-directory-heading{display:block}.rt-directory-heading h2{margin:14px 0 9px}.rt-directory-heading p{margin:0}.rt-directory-grid{grid-template-columns:1fr}.rt-launch-feature{grid-column:auto}.rt-launch-card{padding:23px;min-height:0}.rt-launch-secondary{min-height:265px}.rt-launch-art{height:145px}.rt-launch-glyph{margin:38px 0 4px}.rt-exact-heading{padding-top:53px}.rt-exact-heading h2{font-size:47px}.rt-directory{padding-bottom:50px}}
+
 </style>
 </head>
 <body>
@@ -18,14 +58,41 @@
 <a href="./" class="brand" aria-label="NIGHTFALL home"><span class="mark" aria-hidden="true">N∕F</span><span class="brand-copy">NIGHTFALL <span>PHASESHIFT / RESEARCH TOOLS</span></span></a>
 <button type="button" class="menu-toggle" id="menu-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">MENU +</button>
 <nav class="nav" id="site-nav" aria-label="Primary navigation">
-<a href="./#work">Findings</a><a href="research.html">Research library</a><a href="claim-lab.html">Claim Lab</a><a href="referee.html">Referee</a><a href="agenda.html">Research agenda</a><a href="review.html">Reviewer guide</a><a href="evidence.html">Evidence access</a><a class="nav-call" href="./">Research site ↗</a>
+<a href="./#work">Findings</a><a href="research.html">Research library</a><a href="exact-research.html" aria-current="page">Research tools</a><a href="agenda.html">Research agenda</a><a href="review.html">Reviewer guide</a><a href="evidence.html">Evidence access</a><a class="nav-call" href="./">Research site ↗</a>
 </nav></div></header>
 <main id="main">
-<section class="rt-hero wrap"><span class="section-id">NIGHTFALL / RESEARCH INSTRUMENTS / 01</span>
-<h1>Try to break<br><em>the claim.</em></h1>
-<p class="rt-lead">Two small, exact computation instruments for the active Werner and finite-field campaigns. They perform local arithmetic on bounded inputs; they do not substitute for general proofs, source verification, or independent review.</p>
-<p><a href="claim-lab.html" class="text-link">← Return to Claim Lab</a></p></section>
-<div class="wrap"><div class="rt-boundary"><strong>Trust boundary:</strong> calculations take place in this browser, with no server submission, telemetry, saved inputs, external packages, or executable imports. Results concern the exact examples entered here. They cannot elevate a Claim Lab status into a certified mathematical theorem.</div></div>
+
+<section class="rt-hero wrap" aria-labelledby="tools-heading">
+  <span class="section-id">NIGHTFALL / RESEARCH SYSTEMS</span>
+  <h1 id="tools-heading">Tools that make<br><em>research testable.</em></h1>
+  <p class="rt-lead">Move from candidate discovery to explicit assumptions, adversarial checks and reproducible finite evidence. Each instrument states exactly what it tests and the boundaries of its conclusions.</p>
+</section>
+<section class="wrap rt-directory" id="research-tools-directory" aria-labelledby="directory-title">
+  <div class="rt-directory-heading"><span class="section-id">01 / WORKFLOW INSTRUMENTS</span><h2 id="directory-title">Choose a research instrument.</h2><p>Three complementary workspaces, each accessible directly in your browser.</p></div>
+  <div class="rt-directory-grid">
+    <a class="rt-launch-card rt-launch-feature" href="referee.html" aria-label="Launch NIGHTFALL Referee exact finite verification instrument">
+      <div class="rt-launch-top"><span>01 / ADVERSARIAL VERIFICATION</span><span class="rt-launch-status"><i></i> EXECUTABLE</span></div>
+      <div class="rt-launch-art" aria-hidden="true"><svg viewBox="0 0 500 170"><g fill="none" stroke="#557867"><circle cx="247" cy="83" r="62"/><circle cx="247" cy="83" r="34"/><path d="M66 83H434M247 7V163" stroke-dasharray="5 6"/></g><path d="M74 129L169 49 269 98 392 37" fill="none" stroke="#d9ff5e" stroke-width="3"/><path d="M74 129L169 59 269 114 392 37" fill="none" stroke="#a1caba" stroke-width="2" stroke-dasharray="5 5"/><g fill="#d9ff5e"><circle cx="74" cy="129" r="5"/><circle cx="169" cy="49" r="5"/><circle cx="269" cy="98" r="6"/><circle cx="392" cy="37" r="5"/></g><circle cx="269" cy="114" r="6" fill="#10251d" stroke="#a1caba" stroke-width="2"/></svg></div>
+      <div class="rt-launch-body"><h3>Referee</h3><p>Recompute finite witnesses with exact integer methods, test corrupted claims, and export SHA-256 evidence receipts. Includes continuous overlap and the 30-point Sidon certificate.</p></div>
+      <div class="rt-launch-foot"><span>Exact arithmetic · negative controls · scoped verdicts</span><strong>Launch Referee ↗</strong></div>
+    </a>
+    <a class="rt-launch-card rt-launch-secondary" href="claim-lab.html" aria-label="Open NIGHTFALL Claim Lab research claim registry">
+      <div class="rt-launch-top"><span>02 / CLAIM INTELLIGENCE</span><span>LOCAL-FIRST</span></div>
+      <div class="rt-launch-glyph" aria-hidden="true">⊶ <span>⊕</span> ⊶</div>
+      <div class="rt-launch-body"><h3>Claim Lab</h3><p>Trace proof dependencies, flag missing evidence, rank bottlenecks, and preregister decisive experiments. Illustrative records remain clearly labeled.</p></div>
+      <div class="rt-launch-foot"><span>Registry · dependency map · audits</span><strong>Open workspace ↗</strong></div>
+    </a>
+    <a class="rt-launch-card rt-launch-secondary" href="discovery.html" aria-label="Open NIGHTFALL Discovery Engine research experiment workspace">
+      <div class="rt-launch-top"><span>03 / RESEARCH DISCOVERY</span><span>EXPERIMENTAL</span></div>
+      <div class="rt-launch-glyph" aria-hidden="true">∿ <span>⟡</span> ∿</div>
+      <div class="rt-launch-body"><h3>Discovery Engine</h3><p>Build research contracts, explore representations and operators, preregister tests, run a bounded finite toy, and package reproducible evidence.</p></div>
+      <div class="rt-launch-foot"><span>Representations · operators · handoffs</span><strong>Explore engine ↗</strong></div>
+    </a>
+  </div>
+  <p class="rt-directory-disclosure"><strong>Evidence policy:</strong> A browser calculation is a finite test within its specified scope. Same-package cross-checks provide arithmetic redundancy, not external peer review. Claim status changes require separate evidence and authorization.</p>
+</section>
+<section class="wrap rt-exact-heading" id="exact-instruments" aria-labelledby="exact-title"><span class="section-id">02 / DOMAIN-SPECIFIC CALCULATORS</span><h2 id="exact-title">Exact arithmetic, bounded claims.</h2><p>Two additional offline instruments for active Werner-state and finite-field reconstruction research. These calculators inspect specific examples; they do not certify general theorems.</p></section>
+<div class="wrap"><div class="rt-boundary"><strong>Calculator boundary:</strong> the two calculators below compute locally in the browser, without submitted data, telemetry, saved inputs, external packages, or executable imports. Their numerical and exact finite outputs never automatically elevate a Claim Lab claim to theorem status.</div></div>
 <div class="wrap rt-grid">
 <section class="rt-card" aria-labelledby="werner-heading">
 <span class="rt-number">TOOL A / QUANTUM INFORMATION</span><h2 id="werner-heading">Exact Werner witness</h2>
