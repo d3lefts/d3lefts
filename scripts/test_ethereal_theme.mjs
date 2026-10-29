@@ -57,6 +57,13 @@ try{
    assert.equal(await control.isVisible(),true,file+": visible theme control");
    assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk",file+": theme restored before ready");
    assert.equal(await control.getAttribute("aria-pressed"),"true",file+": control state restored");
+   if(file==="claim-lab.html"){
+    assert.equal(await page.locator(".topActions .nf-theme-toggle").count(),1,"Theme toggle is in Claim Lab toolbar");
+    await page.locator("#newClaimBtn").click();
+    await page.locator("#claimTitle").fill("Theme toolbar regression fixture");
+    await page.locator("#claimForm button[type=submit]").click({timeout:2500});
+    assert.equal(await page.locator(".modalMask.show").count(),0,"Claim Lab submit remains usable with theme control");
+   }
    const appearance=await page.evaluate(()=>{
     const s=getComputedStyle(document.body);
     return {color:s.color,image:s.backgroundImage,overflow:document.documentElement.scrollWidth-innerWidth};

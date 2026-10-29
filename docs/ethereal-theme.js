@@ -38,7 +38,9 @@ function mount(){
   button.innerHTML='<span class="nf-theme-symbol" aria-hidden="true"></span><span class="nf-theme-word" aria-hidden="true"></span>';
   const header=document.querySelector(".header-inner");
   const menu=header && header.querySelector("#menu-button");
+  const toolActions=document.querySelector(".topActions");
   if(header)header.insertBefore(button,menu||header.querySelector(".nav")||null);
+  else if(toolActions)toolActions.prepend(button);
   else {
     button.classList.add("nf-theme-floating");
     document.body.append(button);

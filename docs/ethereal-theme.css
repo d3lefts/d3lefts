@@ -166,3 +166,7 @@ html[data-nf-theme="dusk"] .join-hero-aside li b{color:#b7bce8}
 @media(prefers-reduced-motion:reduce){
   .nf-theme-toggle{transition:none!important;animation:none!important}
 }
+
+/* A modal's controls must always take precedence over floating page chrome. */
+body:has(.modalMask.show) .nf-theme-floating{visibility:hidden;pointer-events:none}
+.topActions .nf-theme-toggle{min-height:36px;padding:8px 10px}
