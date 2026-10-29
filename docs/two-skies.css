@@ -1,0 +1,345 @@
+/* NIGHTFALL / TWO SKIES — 2026-10-29
+   The archive is cocoa dusk + golden-hour light, not parchment.
+   The underbelly is new-moon black + navy/indigo + jasmine/moonlight.
+   Layered LAST after the research-system and narrative stylesheets.
+   Scientific status remains expressed by text, provenance, and line type. */
+
+/* A / GOLDEN-HOUR ARCHIVE. Deep chocolate and warm cream, like a starlit
+   browser skin; honey is reserved for actions and selected evidence. */
+html:not([data-nf-theme="dusk"]){
+  color-scheme:dark;
+  --lf-paper:#28190F; --lf-paper-raised:#3B281D; --lf-paper-deep:#332116;
+  --lf-line:#75574A; --lf-ink:#F7E8DB; --lf-muted:#CEB6A7;
+  --lf-primary:#EDC16E; --lf-primary-hover:#F5D88F; --lf-blush:#C99B80;
+  --lf-oxblood:#1B100B; --lf-oxblood-soft:#51372B; --lf-oxblood-deep:#130A07;
+  --nf-cocoa:#28190F; --nf-cocoa-raised:#3B281D; --nf-cocoa-midtone:#51382B;
+  --nf-goldenhour:#EDC16E; --nf-amber-rule:#9C7659;
+  --paper:var(--lf-paper); --ink:var(--lf-ink); --line:var(--lf-line);
+  --soft:var(--lf-paper-deep); --muted:var(--lf-muted);
+  --accent:var(--lf-primary); --deep:var(--lf-oxblood);
+  --lime:var(--lf-primary); --green:var(--lf-blush);
+  --fg:var(--lf-ink); --fline:var(--lf-line);
+  --nf-inline-panel:#392417; --nf-inline-foreground:#F7E8DB;
+  --nf-inline-border:#74503D; --nf-inline-quiet:#DEC6B6;
+  --nf-highlight:var(--lf-primary);
+}
+html:not([data-nf-theme="dusk"]) body {
+  color:var(--lf-ink); background-color:#28190F;
+  background-image:
+    radial-gradient(circle at 15% 12%,rgba(248,211,142,.52) 0 .7px,transparent 1.4px),
+    radial-gradient(circle at 68% 44%,rgba(246,202,132,.38) 0 .6px,transparent 1.4px),
+    radial-gradient(circle at 35% 78%,rgba(249,225,176,.29) 0 .6px,transparent 1.3px),
+    radial-gradient(ellipse at 88% 8%,rgba(104,66,36,.30),transparent 52%),
+    linear-gradient(172deg,#29190C 0%,#28190F 48%,#21150E 100%);
+  background-size:329px 307px,443px 391px,557px 503px,100% 100%,100% 100%;
+  background-attachment:fixed;
+}
+html:not([data-nf-theme="dusk"]) ::selection{background:#EDC16E;color:#21150E}
+html:not([data-nf-theme="dusk"]) :is(.header,.nav.open,.nf-journey-rail,.nf-process-thread){
+  background:#2C1C13; border-color:#75574A; color:#F7E8DB;
+}
+html:not([data-nf-theme="dusk"]) .topline{background:#1B100B}
+html:not([data-nf-theme="dusk"]) .topline::after{
+  background:linear-gradient(90deg,#9A6949,#D29E63,#EDC16E);
+}
+html:not([data-nf-theme="dusk"]) :is(.mark,.nav .nav-call){
+  background:#1B100B;color:#F7E8DB!important;border-color:#75574A;
+}
+html:not([data-nf-theme="dusk"]) :is(.nav .nav-call:hover,.mark:hover){background:#3D281B}
+html:not([data-nf-theme="dusk"]) .nf-theme-toggle{
+  background:#533A2C;color:#FFF0E1;border-color:#94705B;
+  box-shadow:0 0 17px #EDC16E14;
+}
+html:not([data-nf-theme="dusk"]) .nf-theme-toggle:hover{background:#634837}
+html:not([data-nf-theme="dusk"]) :is(.button:not(.button-light),.hero-actions .button:not(.button-light),
+  .instrument-bridge-invite .button,.nf-home-tool-entry .button,.join-action,
+  .join-evidence-archive button,.cj-actions button:not(:disabled),.cj-primary,
+  .co-page .co-primary,.desk-add,.desk-session-shortcut,
+  .nf-observatory-lenses button[aria-pressed="true"]){
+  background:#EDC16E;color:#28190F;border-color:#EDC16E;
+}
+html:not([data-nf-theme="dusk"]) :is(.button:not(.button-light),.hero-actions .button:not(.button-light),
+  .instrument-bridge-invite .button,.nf-home-tool-entry .button,.join-action,.cj-primary,
+  .co-page .co-primary,.desk-add,.desk-session-shortcut):hover{
+  background:#F5D88F;color:#28190F;border-color:#F5D88F;
+}
+html:not([data-nf-theme="dusk"]) :is(.button-light,.hero-actions .button-light){
+  background:transparent;color:#F7E8DB;border-color:#C99B80;
+}
+html:not([data-nf-theme="dusk"]) :is(.button-light,.hero-actions .button-light):hover{
+  background:#3B281D;color:#F7E8DB;
+}
+html:not([data-nf-theme="dusk"]) :is(.hero-title em,.section-title em,
+  .nf-observatory-head h2 em,.nf-dual-intro h2 em,.lp-page h1 em,
+  .lp-page h2 em,.join-hero h1 em,.desk-hero h1 em,.nf-dual-colophon h2 em){
+  color:#EDC16E;
+}
+html:not([data-nf-theme="dusk"]) :is(.section-id,.kicker,.eyebrow,.micro,.number,
+  .nf-archive-id,.nf-archive-accession small,.nf-observatory-label,.nf-observatory-inspector>small){
+  color:#EDC16E;
+}
+html:not([data-nf-theme="dusk"]) :is(.feature,.feature.lime,.flagship-card,
+  .flagship-sage,.flagship-paper,.flagship-ivory,.sf-system-card,
+  .research-proposal,.atlas-card,.review-card,.instrument-workflow a,
+  .nf-home-toolbox,.join-result-grid article,.nf-archive-shelf,
+  .nf-observatory-inspector,.nf-observatory-node,.ep-console,
+  .ep-theory,.lp-panel,.lp-point,.lp-console,.lp-method,.lp-note,
+  .join-pad,.join-next,.join-choice,.join-workspace,.join-match,.join-contract,
+  .join-evidence-archive,.cj-workspace,.cj-work,.cj-next){
+  background:#3B281D;color:#F7E8DB;border-color:#75574A;
+}
+html:not([data-nf-theme="dusk"]) :is(.feature.dark,.flagship-dark,.review-section,
+  .sf-case-panel,.nf-home-tool-entry,.join-method,.join-evidence,
+  .lp-hero-aside,.cj-contract,.desk-readout,.rs-intro-aside,.rs-insight){
+  background:#1B100B;color:#F7E8DB;border-color:#715240;
+}
+html:not([data-nf-theme="dusk"]) :is(.feature.dark,.flagship-dark,.review-section,
+  .sf-case-panel,.nf-home-tool-entry,.join-method) :is(h2,h3,strong){color:#F7E8DB}
+html:not([data-nf-theme="dusk"]) :is(.feature.dark,.flagship-dark,.review-section,
+  .sf-case-panel,.nf-home-tool-entry,.join-method) :is(p,small){color:#D7BEAE}
+html:not([data-nf-theme="dusk"]) :is(.research-row:hover,.research-proposal:hover,
+  .feature:hover,.review-card:hover,.join-choice:hover){background:#4B3326}
+html:not([data-nf-theme="dusk"]) :is(.nf-home-toolbox>summary,.nf-section-index>summary,
+  .nf-home-toolbox-content,.nf-journey-rail,.nf-process-thread){
+  background:#332116;color:#F7E8DB;border-color:#75574A;
+}
+html:not([data-nf-theme="dusk"]) .nf-home-toolbox-content>.desk-entry[style]{
+  background:#24160E!important;color:#F7E8DB!important;border-color:#74503D!important;
+}
+html:not([data-nf-theme="dusk"]) .nf-home-toolbox-content>.desk-entry[style] :is(span,strong,a)[style]{
+  color:#EDC16E!important;
+}
+html:not([data-nf-theme="dusk"]) :is(.nf-observatory-field,.co-sky){
+  background:radial-gradient(ellipse at 50% 39%,#76503D70,transparent 62%),#2D1D15;
+}
+html:not([data-nf-theme="dusk"]) :is(.nf-observatory-node[aria-pressed="true"],
+  .co-node[aria-pressed="true"],.nf-archive-accession:hover){
+  background:#574033;color:#F7E8DB;border-color:#EDC16E;
+}
+html:not([data-nf-theme="dusk"]) :is(.nf-observatory-star,.co-star,.pulse::before){
+  background:#EDC16E;
+}
+html:not([data-nf-theme="dusk"]) :is(input,textarea,select,.search,
+  .desk-page #desk-search,.desk-page #desk-filter){
+  background:#312116;color:#F7E8DB;border-color:#8D6A55;caret-color:#EDC16E;
+}
+html:not([data-nf-theme="dusk"]) :is(input,textarea,select)::placeholder{color:#C9B2A3}
+html:not([data-nf-theme="dusk"]) :is(a,button,input,textarea,select,summary):focus-visible{
+  outline:2px solid #F5D88F;outline-offset:3px;
+}
+html:not([data-nf-theme="dusk"]) :is(.footer,.review-section,.nf-dual-colophon){
+  background:#21150E;color:#F7E8DB;border-color:#75574A;
+}
+html:not([data-nf-theme="dusk"]) :is(.nf-archive-shelf,.nf-archive-accession){
+  background:#3B281D;color:#F7E8DB;border-color:#75574A;
+}
+html:not([data-nf-theme="dusk"]) .nf-archive-accession:hover{background:#543A2C}
+html:not([data-nf-theme="dusk"]) :is(.nf-archive-accession strong,
+  .nf-archive-id,.nf-archive-accession small,
+  .nf-dual-colophon-links a){color:#EDC16E;border-color:#75574A}
+html:not([data-nf-theme="dusk"]) #main>.hero{
+  background:radial-gradient(ellipse at 93% 20%,rgba(166,109,57,.22),transparent 59%);
+}
+html:not([data-nf-theme="dusk"]) #main>.hero .hero-aside{
+  box-shadow:8px 8px 0 #4D3426;
+}
+html:not([data-nf-theme="dusk"]) :is(.nf-archive-accession>span:not(.nf-archive-id),
+  .nf-dual-colophon p,.nf-dual-intro>p,.hero-description,
+  .section-intro,.research-desc,.research-row p,.nf-observatory-intro p,
+  .nf-observatory-inspector p,.join-lead,.lp-lead,.ep-hint){color:#CEB6A7}
+html:not([data-nf-theme="dusk"]) :is(.diagram text,.hero-aside .diagram text){fill:#CEB6A7}
+html:not([data-nf-theme="dusk"]) :is(.nf-observatory-edge,.co-edge){stroke:#B69B7D}
+html:not([data-nf-theme="dusk"]) :is(.sf-point.chosen,.sf-case-aside,
+  .lab-launch .button,.sf-case-links .button){background:#EDC16E;color:#28190F;border-color:#EDC16E}
+html:not([data-nf-theme="dusk"]) :is(.rs-card,.pp-dimension,.ma-detail,.ma-relation,
+  .pp-picker a,.pp-source,.pp-event,.rs-coverage,.pp-coverage,
+  .nf-safety-window-side,.nf-replay-path,.nf-observatory-layout){
+  background-color:#3B281D;color:#F7E8DB;border-color:#75574A;
+}
+html:not([data-nf-theme="dusk"]) :is(.pp-metric,.ma-canvas,.pp-picker a[aria-current="true"],
+  .rs-insight){background:#1B100B;color:#F7E8DB;border-color:#75574A}
+html:not([data-nf-theme="dusk"]) :is(.pp-metric strong,.ma-node[aria-pressed="true"]){color:#EDC16E}
+html:not([data-nf-theme="dusk"]) body:has(#app){
+  --bg:#28190F;--side:#332116;--paper:#3B281D;--panel:#3B281D;
+  --panel2:#50362A;--line:#75574A;--text:#F7E8DB;--soft:#CEB6A7;
+  --muted:#CEB6A7;--lime:#EDC16E;
+  background:#28190F;color:#F7E8DB;color-scheme:dark;
+}
+html:not([data-nf-theme="dusk"]) body:has(#app) :is(.side,.top,.panel,
+  .metric,.card,.op,.rep-card,.context-figure,.feature-panel,.aside-note){
+  background:#332116;color:#F7E8DB;border-color:#75574A;
+}
+html:not([data-nf-theme="dusk"]) body:has(#app) :is(.navitem:hover,.portfolio:hover,
+  .navitem.selected,.portfolio.active,.status,.tag.passed,.tag.pending){
+  background:#51382B;color:#F7E8DB;border-color:#75574A;
+}
+html:not([data-nf-theme="dusk"]) body:has(#app) :is(.btn.primary,.brand-mark,.toast:not(.bad)){
+  background:#EDC16E;color:#28190F;border-color:#EDC16E;
+}
+html:not([data-nf-theme="dusk"]) body:has(#app) :is(.navitem,
+  .side-label,.side-bottom,.step small,.metric span,.metric small){color:#CEB6A7}
+html:not([data-nf-theme="dusk"]) body:has(.app){
+  --bg:#28190F;--surface:#3B281D;--surface2:#50362A;--surface3:#604737;
+  --text:#F7E8DB;--muted:#CEB6A7;--subtle:#CEB6A7;--line:#75574A;
+  --mint:#EDC16E;--mint2:#604737;--gold:#EDC16E;--shadow:0 12px 35px #12090366;
+  background:#28190F;color:#F7E8DB;color-scheme:dark;
+}
+html:not([data-nf-theme="dusk"]) body:has(.app) :is(.sidebar,.side,.nav button.active,
+  .brandMark,.sideBottom,.toast:not(.bad)){
+  background:#332116;color:#F7E8DB;border-color:#75574A;
+}
+html:not([data-nf-theme="dusk"]) body:has(.app) :is(button.primary,.btnPrimary,.primaryBtn){
+  background:#EDC16E;color:#28190F;border-color:#EDC16E;
+}
+html:not([data-nf-theme="dusk"]) .co-page,
+html:not([data-nf-theme="dusk"]) body.co-page[data-theme="light"]{
+  --paper:#28190F;--ink:#F7E8DB;--line:#75574A;--soft:#332116;
+  --muted:#CEB6A7;--accent:#EDC16E;
+  --co-surface:#3B281D;--co-panel:#332116;--co-faint:#CEB6A7;
+  --co-lime:#EDC16E;--co-deep:#1B100B;--co-border:#75574A;
+  --co-glow:#F5D88F;--co-muted:#CEB6A7;
+  color-scheme:dark;background:#28190F;color:#F7E8DB;
+}
+
+/* B / NEW MOON. Absolute dark canvas, navy/indigo structure, jasmine copy,
+   tempered violet and cooler lunar gold. No decorative moon on this side. */
+html[data-nf-theme="dusk"]{
+  color-scheme:dark;
+  --nf-night:#04060B;--nf-night-panel:#0C1527;
+  --nf-violet:#B4B5D9;--nf-moon-violet:#B4B5D9;
+  --nf-champagne:#E6DEAA;--nf-champagne-hover:#F2E8BB;
+  --nf-lightray-gold:#E6DEAA;--nf-brass:#8F865F;
+  --nf-gold-wash:rgba(230,222,170,.13);
+  --nf-dusk-ink:#0B1425;--nf-dusk-muted:#BEC3D6;
+  --nf-inline-panel:#0C1527;--nf-inline-foreground:#F1EEDC;
+  --nf-inline-border:#33405D;--nf-inline-quiet:#BEC3D6;
+  --nf-highlight:#E6DEAA;
+  --paper:#04060B;--ink:#F1EEDC;--line:#2B3653;--soft:#0C1527;
+  --muted:#BEC3D6;--accent:#E6DEAA;--deep:#111C35;
+  --bg:#04060B;--side:#091120;--panel:#0C1527;--panel2:#16223C;
+  --text:#F1EEDC;--lime:#E6DEAA;--green:#B4B5D9;
+  --mint:#B4B5D9;--fline:#33405D;--fg:#F1EEDC;
+  --ia-bg:#04060B;--ia-ink:#F1EEDC;--ia-muted:#BEC3D6;
+  --ia-line:#33405D;--ia-dark:#091120;
+}
+html[data-nf-theme="dusk"] body {
+  background-color:#04060B;color:#F1EEDC;
+  background-image:
+    radial-gradient(circle at 18% 11%,rgba(244,242,220,.53) 0 .65px,transparent 1.3px),
+    radial-gradient(circle at 66% 52%,rgba(177,194,227,.42) 0 .55px,transparent 1.2px),
+    radial-gradient(circle at 41% 79%,rgba(194,196,235,.30) 0 .6px,transparent 1.25px),
+    radial-gradient(ellipse at 78% 7%,rgba(33,40,91,.25),transparent 55%),
+    linear-gradient(160deg,#04060B 0%,#070B16 55%,#03040A 100%);
+  background-size:353px 317px,457px 409px,593px 531px,100% 100%,100% 100%;
+  background-attachment:fixed;
+}
+html[data-nf-theme="dusk"] :is(.header,.nav.open){
+  background:rgba(5,8,17,.92);border-color:#2B3653;
+}
+html[data-nf-theme="dusk"] :is(.topline,.footer){
+  background:#060911;color:#F1EEDC;border-color:#2B3653;
+}
+html[data-nf-theme="dusk"] :is(.feature,.feature.lime,.review-card,
+  .research-proposal,.atlas-card,.sf-system-card,.instrument-workflow a,
+  .nf-home-toolbox,.join-pad,.join-next,.join-choice,.join-workspace,
+  .join-evidence-archive,.lp-panel,.lp-point,.lp-console,
+  .nf-observatory-inspector,.f-card,.f-panel,.desk-pane,
+  .pp-dimension,.rs-card,.ma-detail,.ma-relation){
+  background:#0C1527;color:#F1EEDC;border-color:#33405D;
+}
+html[data-nf-theme="dusk"] :is(.feature.dark,.flagship-dark,.review-section,
+  .nf-home-tool-entry,.nf-safety-window-lead,.rs-insight,.ma-canvas,
+  .pp-metric,.lp-hero-aside,.cj-contract){
+  background:#0A1021;color:#F1EEDC;border-color:#2B3653;
+}
+html[data-nf-theme="dusk"] :is(.feature:hover,.review-card:hover,
+  .research-proposal:hover,.join-choice:hover){background:#16223C}
+html[data-nf-theme="dusk"] :is(.nf-observatory-field,.co-sky){
+  background:radial-gradient(ellipse at 45% 42%,rgba(61,64,121,.27),transparent 64%),#070D1A;
+}
+html[data-nf-theme="dusk"] :is(.nf-observatory-node[aria-pressed="true"],
+  .co-node[aria-pressed="true"],.nf-observatory-lenses button:focus-visible){
+  background:#25304C;border-color:#E6DEAA;
+}
+html[data-nf-theme="dusk"] :is(.nf-process-case,.nf-underbelly-ledger .nf-process-case){
+  background:#0C1527;color:#F1EEDC;border-color:#33405D;
+}
+html[data-nf-theme="dusk"] :is(.nf-process-case:hover,.nf-underbelly-ledger .nf-process-case:hover){
+  background:#16223C;border-color:#717AAB;
+}
+html[data-nf-theme="dusk"] :is(.nf-journey-rail,.nf-process-thread,
+  .nf-home-toolbox-content,.nf-home-toolbox>summary){
+  background:#091120;color:#F1EEDC;border-color:#33405D;
+}
+html[data-nf-theme="dusk"] :is(.nf-home-tool-entry,.join-pad,.join-next,.join-contract,
+  .join-evidence-archive,.cj-workspace,.cj-work,.cj-next,.lp-page .lp-panel,
+  .lp-page .lp-console,.lp-page .lp-point){
+  background:#0C1527;color:#F1EEDC;border-color:#33405D;
+}
+html[data-nf-theme="dusk"] :is(.button:not(.button-light),.nav-call,
+  .hero-actions .button:not(.button-light),.nf-home-tool-entry .button,
+  .join-action,.cj-primary,.lp-page .lp-primary,
+  .nf-observatory-lenses button[aria-pressed="true"],
+  .co-page .co-primary,.desk-page .desk-add){
+  background:#E6DEAA;color:#0B1425;border-color:#E6DEAA;
+}
+html[data-nf-theme="dusk"] :is(.button:not(.button-light),.nav-call,
+  .hero-actions .button:not(.button-light),.nf-home-tool-entry .button,
+  .join-action,.cj-primary,.lp-page .lp-primary):hover{
+  background:#F2E8BB;color:#0B1425;border-color:#F2E8BB;
+}
+html[data-nf-theme="dusk"] :is(.button-light,.hero-actions .button-light){
+  background:transparent;color:#F1EEDC;border-color:#8590AB;
+}
+html[data-nf-theme="dusk"] :is(.hero-title em,.section-title em,
+  .nf-observatory-head h2 em,.co-headline h1 em,
+  .nf-underbelly-ledger .nf-case-step,.nf-dual-intro h2 em){
+  color:#E6DEAA;
+}
+html[data-nf-theme="dusk"] :is(.nf-observatory-label,.nf-observatory-inspector>small,
+  .nf-process-case small,.nf-dual-colophon-links a,.research-status,
+  .co-overline,.co-work-tag){color:#E6DEAA}
+html[data-nf-theme="dusk"] .nf-dual-colophon{
+  background:radial-gradient(ellipse at 70% 28%,rgba(29,40,89,.23),transparent 65%);
+  color:#F1EEDC;border-color:#33405D;
+}
+html[data-nf-theme="dusk"] :is(.desk-page,.frontier,.co-page){
+  --paper:#04060B;--ink:#F1EEDC;--line:#2B3653;--soft:#0C1527;
+  --accent:#E6DEAA;--lime:#E6DEAA;--green:#B4B5D9;
+}
+html[data-nf-theme="dusk"] body:has(#app){
+  --bg:#04060B;--side:#091120;--paper:#0C1527;--panel:#0C1527;
+  --panel2:#16223C;--line:#33405D;--text:#F1EEDC;
+  --lime:#E6DEAA;--muted:#BEC3D6;
+  background:#04060B;color:#F1EEDC;
+}
+html[data-nf-theme="dusk"] body:has(.app){
+  --bg:#04060B;--surface:#0C1527;--surface2:#16223C;
+  --surface3:#25304C;--text:#F1EEDC;--muted:#BEC3D6;
+  --line:#33405D;--mint:#E6DEAA;--mint2:#35375A;--gold:#E6DEAA;
+  background:#04060B;color:#F1EEDC;
+}
+html[data-nf-theme="dusk"] body:has(#app) :is(.side,.top,.main,.panel,
+  .status,.toast:not(.bad)),html[data-nf-theme="dusk"] body:has(.app) :is(.sidebar,.side,.top){
+  background-color:#0C1527;border-color:#33405D;
+}
+html[data-nf-theme="dusk"] body:has(#app) :is(.btn.primary,.brand-mark),
+html[data-nf-theme="dusk"] body:has(.app) :is(button.primary,.btnPrimary,.primaryBtn){
+  background:#E6DEAA;color:#0B1425;border-color:#E6DEAA;
+}
+html[data-nf-theme="dusk"] :is(.nf-theme-toggle,.nf-theme-toggle.nf-theme-floating){
+  background:#17203C;color:#F1EEDC;border-color:#596388;
+  box-shadow:inset 0 0 14px #B4B5D921;
+}
+html[data-nf-theme="dusk"] :is(.nf-theme-toggle:hover,.nf-theme-toggle.nf-theme-floating:hover){
+  background:#283052;
+}
+html[data-nf-theme="dusk"] :is(a,button,input,textarea,select,summary):focus-visible{
+  outline:2px solid #E6DEAA;outline-offset:3px;
+}
+html[data-nf-theme="dusk"] body:has(.lp-page){
+  background:#04060B!important;background-image:none!important;
+}
+@media(prefers-reduced-motion:reduce){
+ html .nf-theme-toggle,html .feature,html .nf-process-case{transition:none!important}
+}
