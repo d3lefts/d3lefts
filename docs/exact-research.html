@@ -6,7 +6,7 @@
 <link rel="canonical" href="https://d3lefts.github.io/d3lefts/exact-research.html">
 <link rel="stylesheet" href="site.css"><link rel="icon" href="favicon.svg" type="image/svg+xml">
 <title>Research Tools — NIGHTFALL PHASESHIFT</title>
-<script src="site.js" defer></script><script src="research-tools-core.js" defer></script><script src="research-tools-app.js" defer></script>
+<script src="site.js" defer></script><script src="research-tools-core.js" defer></script><script src="research-tools-app.js" defer></script><script src="referee-core.js" defer></script><script src="sidon-sharpness-core.js" defer></script><script src="sidon-sharpness-app.js" defer></script>
 <style>
 .rt-hero{padding-top:70px;padding-bottom:42px}.rt-hero h1{font-size:clamp(40px,7vw,78px);letter-spacing:-.065em;line-height:1.04;max-width:950px;margin:14px 0 20px}.rt-lead{font-size:17px;line-height:1.7;max-width:730px;color:#647467}.rt-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;padding-bottom:85px}.rt-card{border:1px solid #cad1c6;background:#f7f8f2;border-radius:18px;padding:27px;min-width:0}.rt-number{font-size:11px;font-weight:800;letter-spacing:.13em;color:#4c6b54}.rt-card h2{font-size:26px;letter-spacing:-.035em;line-height:1.13;margin:11px 0 12px}.rt-card p{font-size:13px;line-height:1.7;color:#58665b;margin:6px 0 14px}.rt-label{display:block;font-size:12px;font-weight:700;margin:17px 0 8px}.rt-input{width:100%;background:#10201e;color:#e6f6e9;border:1px solid #3c5449;border-radius:10px;padding:15px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;line-height:1.55;min-height:181px;resize:vertical}.rt-input:focus-visible,.rt-btn:focus-visible{outline:3px solid #77a78b;outline-offset:2px}.rt-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:15px 0}.rt-btn{border:1px solid #355b43;background:#183b2a;color:#ebfff1;border-radius:9px;font-size:12px;font-weight:750;padding:11px 16px;cursor:pointer}.rt-btn.secondary{background:transparent;color:#2e5540}.rt-btn:disabled{opacity:.5}.rt-result{white-space:pre-wrap;overflow:auto;background:#e8eee4;color:#173524;border:1px solid #bcc9b9;border-radius:9px;padding:15px;min-height:105px;max-height:410px;font:12px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace}.rt-result.error{background:#f7e9e6;color:#853a30;border-color:#d0b0a7}.rt-boundary{padding:17px 20px;border-left:3px solid #56765b;background:#edf2e9;margin:0 0 25px;color:#465848;font-size:13px;line-height:1.7}.rt-tip{font-size:11px;color:#6a776c}.rt-footer{margin-bottom:68px}.rt-footer a{text-decoration:underline}
 @media(max-width:850px){.rt-grid{grid-template-columns:1fr}.rt-hero{padding-top:45px}.rt-card{padding:20px}} 
@@ -68,6 +68,32 @@
 .rt-journey-boundary{font:12px/1.8 var(--sans);color:#55685c;margin-top:24px;max-width:1040px}
 @media(max-width:1020px){.rt-journey-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:690px){.rt-journey{padding:50px 0}.rt-journey-header{display:block}.rt-journey-headline{margin-top:25px}.rt-journey-grid{grid-template-columns:1fr}.rt-stage{min-height:200px}.rt-stage h3{margin-top:20px}}
+
+
+/* Research outcome reproduced as a finite, locally checkable event. */
+.rt-rigidity{padding-top:53px;padding-bottom:73px;border-block:1px solid #bcc9b7}
+.rt-rigidity-head{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(25px,5vw,75px);align-items:end;margin:13px 0 29px}
+.rt-rigidity-head h2{font:400 clamp(43px,5.5vw,77px)/1.0 var(--serif);letter-spacing:-.04em;margin:16px 0}
+.rt-rigidity-head h2 em{color:#597b62}
+.rt-rigidity-head p{font-size:15px;line-height:1.65;color:#4e6655;max-width:570px}
+.rt-rigidity-panel{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:0;background:#1d3428;color:#eaf5e8}
+.rt-rigidity-form{padding:clamp(22px,3vw,43px);border-right:1px solid #46604b}
+.rt-rigidity-form>p{font:13px/1.7 var(--sans);color:#bdd4c0;margin:20px 0}
+.rt-rigidity-form label{display:grid;gap:8px;margin:18px 0;color:#c4d9c1;font:600 11px/1.6 var(--mono);letter-spacing:.035em}
+.rt-rigidity-form input{color:#f4f8ee;background:#10231b;border:1px solid #66886a;max-width:100%;padding:13px;font:14px var(--mono)}
+.rt-rigidity-form input:focus-visible{outline:3px solid #d9ff5e;outline-offset:2px}
+.rt-rigidity-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}
+.rt-rigidity-actions button{padding:12px 15px;font:600 11px var(--mono);border:1px solid #d9ff5e;background:#d9ff5e;color:#1d3428;cursor:pointer}
+.rt-rigidity-actions button.secondary{color:#d9ff5e;background:transparent}
+.rt-rigidity-actions button:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.rt-rigidity-actions button:disabled{opacity:.4;cursor:default}
+.rt-rigidity-result{padding:clamp(22px,3vw,43px);min-width:0}
+.rt-rigidity-result>span{display:block;font:500 10px var(--mono);color:#d9ff5e;letter-spacing:.08em;margin-bottom:18px}
+.rt-rigidity-result output{display:block;min-height:200px;white-space:pre-wrap;overflow-wrap:anywhere;color:#dcebd7;font:12px/1.7 var(--mono)}
+.rt-rigidity-note{display:flex;flex-wrap:wrap;justify-content:space-between;gap:15px;border-top:1px solid #a8bfa9;padding:22px 0 0;margin-top:22px}
+.rt-rigidity-note p{font-size:12px;line-height:1.65;color:#4f6955;max-width:700px;margin:0}
+.rt-rigidity-note a{font:600 11px/1.5 var(--mono);border-bottom:1px solid}
+@media(max-width:760px){.rt-rigidity-head,.rt-rigidity-panel{grid-template-columns:1fr}.rt-rigidity-form{border-right:0;border-bottom:1px solid #46604b}.rt-rigidity-result output{min-height:230px}}
 
 </style>
 </head>
@@ -138,6 +164,31 @@
     </a>
   </div>
   <p class="rt-journey-boundary"><strong>Connected workflow:</strong> Run the finite Sidon Referee, then select <em>Send to Claim Lab</em>. Claim Lab checks the source fingerprint and requests your approval before recording test metadata. Select <em>Discovery replay</em> to transfer the exact source into Discovery, which recomputes the finite arithmetic and adversarial checks. Both handoffs stay in your browser. <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/edge_essentiality_certificate.json" target="_blank" rel="noopener">Inspect the newly published complete 28-constraint source certificate ↗</a>. <strong>Scope boundary:</strong> Same-code browser replay and a SHA-256 input digest are neither external peer review nor signatures. The Observatory remains a separate unreleased trust boundary. <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/RESEARCH_INSTRUMENT_HANDOFF_20261028.md" target="_blank" rel="noopener">Read the handoff and evidence contract ↗</a></p>
+</section>
+
+<section class="wrap rt-rigidity" id="research-replay" aria-labelledby="rt-rigidity-title">
+ <div class="rt-rigidity-head">
+  <div><span class="section-id">RESEARCH REPLAY / EXACT FAILURE BOUNDARY</span><h2 id="rt-rigidity-title">A failed search.<br><em>A sharper theorem.</em></h2></div>
+  <p>An attempt to improve the 30-point Sidon ratio by adding points led to a universal one-/two-point obstruction. A third added point exposes exactly where that result stops. Recompute its explicit 33-point counterexample with the existing Referee arithmetic, then export a scoped receipt.</p>
+ </div>
+ <div class="rt-rigidity-panel">
+  <div class="rt-rigidity-form">
+   <span class="rt-number" style="color:#d9ff5e">OPEN EXPERIMENT / 33 INTEGERS</span>
+   <p>Add three marks <code>t+M, t+2M, t+3M</code> to the frozen 30-point set. The default values preserve the strict (4,5) condition and give an exact Sidon maximum of 19. Change either value to test the boundary.</p>
+   <label for="sharpness-spacing">INTEGER SPACING M
+    <input id="sharpness-spacing" type="text" value="40000000" inputmode="numeric" spellcheck="false" autocomplete="off">
+   </label>
+   <label for="sharpness-offset">INTEGER OFFSET t
+    <input id="sharpness-offset" type="text" value="1" inputmode="numeric" spellcheck="false" autocomplete="off">
+   </label>
+   <div class="rt-rigidity-actions"><button id="sharpness-run" type="button">Run exact replay ↗</button><button id="sharpness-reset" type="button" class="secondary">Restore example</button><button id="sharpness-export" type="button" class="secondary" disabled>Export receipt ↧</button></div>
+  </div>
+  <div class="rt-rigidity-result">
+   <span>REFEREE CORE / FINITE VERDICT</span>
+   <output id="sharpness-output" role="status" aria-live="polite">Frozen demonstration ready. Run the exact replay. This browser recomputes the 30-point maximum, the 33-point four-distinctness checks, the explicit 19-mark Sidon certificate, and the three-new-mark progression obstruction.</output>
+  </div>
+ </div>
+ <div class="rt-rigidity-note"><p><strong>Evidence boundary:</strong> The interactive check is local and shares Referee's arithmetic engine. The full one-/two-point theorem, independent Python checker, integer-wide case reduction, adversarial tests, and priority review remain in a separate draft research package. This demonstration is neither an external referee verdict nor a new asymptotic bound.</p><a href="https://github.com/d3lefts/d3lefts/pull/72" target="_blank" rel="noopener">Inspect draft theorem and proof ↗</a></div>
 </section>
 <section class="wrap rt-exact-heading" id="exact-instruments" aria-labelledby="exact-title"><span class="section-id">03 / DOMAIN-SPECIFIC CALCULATORS</span><h2 id="exact-title">Exact arithmetic, bounded claims.</h2><p>Two additional offline instruments for active Werner-state and finite-field reconstruction research. These calculators inspect specific examples; they do not certify general theorems.</p></section>
 <div class="wrap"><div class="rt-boundary"><strong>Calculator boundary:</strong> the two calculators below compute locally in the browser, without submitted data, telemetry, saved inputs, external packages, or executable imports. Their numerical and exact finite outputs never automatically elevate a Claim Lab claim to theorem status.</div></div>
