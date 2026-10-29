@@ -17,3 +17,5 @@ jobs:
       - uses: actions/checkout@v4
       - name: "Run arithmetic cross-checks"
         run: python3 research/nightfall/agent-reports/ryev_q7_second_shell_20261029/verify_second_shell.py
+      - name: "Independent Q5 closed-two-cochain exhaustive enumerator"
+        run: python3 research/nightfall/agent-reports/ryev_q7_second_shell_20261029/q5_second_shell_exact.py
