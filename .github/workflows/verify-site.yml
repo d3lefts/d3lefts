@@ -33,7 +33,7 @@ jobs:
       - name: Validate static pages, source links, anchors, and fallback catalogue
         run: |
           python3 scripts/check_site.py
-          python3 -c "import xml.etree.ElementTree as ET; ET.parse(\u0027docs/sitemap.xml\u0027); print(\u0027Sitemap XML valid\u0027)"
+          python3 -c 'import xml.etree.ElementTree as ET; ET.parse("docs/sitemap.xml"); print("Sitemap XML valid")'
       - name: Parse JavaScript without executing browser code
         run: |
           node --check docs/site.js
