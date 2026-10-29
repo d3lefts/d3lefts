@@ -17,6 +17,15 @@ assert(original.trackedCount>=6);
 assert(original.claims.some(c=>c.id==="erdos36" && c.publicFinite));
 assert(original.claims.some(c=>c.id==="phase" && !c.publicFinite));
 assert(original.changes.length>0);
+assert.equal(original.mechanisms.length,base.mechanisms.length,"canonical mechanisms must be projected");
+assert(original.mechanisms.some(m=>m.id==="symmetry-reduction" && m.kind==="analogy"),
+  "Untested symmetry analogy must retain its status");
+assert(original.mechanisms.some(m=>m.id==="dependency-gates" &&
+  m.connections.some(e=>e.relation==="open-premise" && e.claimId==="werner")),
+  "Werner premise cannot silently be promoted into a verified transfer");
+assert(original.mechanisms.every(m=>m.connections.every(e=>
+  ["finite-check","method","open-premise","analogy"].includes(e.relation))),
+  "Graph edges must retain their authored evidence type");
 assert(original.claims.every(c=>c.validityLabel && c.reproducibilityLabel));
 assert(original.claims.every(c=>c.sources.every(s=>core.safeUrl(s.url)===s.url)));
 
@@ -40,6 +49,21 @@ assert.equal(after.claims[0].id,"novel-test-portfolio");
 assert.equal(after.claims[0].publicFinite,false);
 assert.equal(after.claims[0].sources.length,1);
 assert.equal(after.changes[0].date,"2026-10-30");
+newer.mechanisms.push({
+  id:"novel-mechanism",title:"Source-bound experiment transfer",kind:"analogy",
+  description:"Candidate only",scope:"No same-model transfer established."
+});
+newer.edges.push({
+  from:"novel-test-portfolio",to:"novel-mechanism",relation:"analogy",
+  label:"Unreviewed similarity",note:"An analogy, not a proof",
+  source:"https://github.com/d3lefts/d3lefts/issues/1"
+});
+const withEdge=core.project(newer);
+assert(withEdge.mechanisms.some(m=>m.id==="novel-mechanism" &&
+  m.connections.some(e=>e.claimId==="novel-test-portfolio" && e.relation==="analogy")));
+newer.edges.push({from:"unknown-claim",to:"novel-mechanism",relation:"finite-check"});
+assert.equal(core.project(newer).mechanisms.find(m=>m.id==="novel-mechanism").connections.length,1,
+  "Unknown claims must not be linked to canonical mechanisms");
 // Status changes follow the registry, never preserve a stale elevated status.
 newer.claims[newer.claims.length-1].validity={level:"finite",label:"Exact finite replay"};
 newer.claims[newer.claims.length-1].reproducibility={level:"public",label:"Public reproducibility"};
@@ -63,4 +87,11 @@ for(const file of ["docs/index.html","docs/about.html","docs/sitemap.xml","READM
   assert(!read(file).includes("portfolio.html"),file+" must not expose a public-facing link");
 }
 assert(!read("docs/sitemap.xml").includes("/portfolio"));
-console.log("Unlisted portfolio: canonical-registry tracking, append, demotion, unsafe-source, and discovery exclusions pass.");
+assert(page.includes('id="approved-findings"'));
+assert.equal((page.match(/<article><span>0[1-5] \/ /g)||[]).length,5,
+  "Exactly five site-approved scoped findings must appear");
+assert(page.includes("SITE_ORIGINALITY_ADDENDUM_20261029.md"));
+assert(page.includes('id="pf-mechanism-list"'));
+assert(page.includes('id="pf-evaluation-title"'));
+assert(page.includes("No graph edge is a new theorem"));
+console.log("Portfolio: approved scoped findings, source-linked mechanism transfers, updates, demotions and unlisted boundaries pass.");
