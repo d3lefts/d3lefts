@@ -41,9 +41,25 @@
         "54 sampled full-column r-row matrices",
         "4 sharp r+1-row negative witnesses"
       ]
+    },
+    {
+      "name": "check_global_capacity.py",
+      "sha256": "5ddc10ffd407f4012a914e038e3761258deee7711fea1d3ad6297439d34e29fc",
+      "commands": [
+        "python3 check_global_capacity.py"
+      ],
+      "exit_code": 0,
+      "passed": [
+        "exact grade/group capacities for n=1..6: maximum dimension 8^n",
+        "count of maximum coordinate supports 3^(n*7^(n-1))",
+        "4096-support 4-copy construction and 64 exact negative one-point extension triples"
+      ]
     }
   ],
   "original_local_research_note_sha256": "1e9b3a37e8cde8e3a5883731b5221f5cb99fb00b5b1a26e44e2fb3f6bd460421",
   "original_bundle_zip_sha256": "0278ea793d5ee3b875fcbfd9474a75f6bd64c0eb3ba9107172730e0f082b5320",
-  "boundary": "Local executions and distinct implementation paths; external execution, independent expert proof review, and global novelty checks still outstanding. Hashes refer to original local executed files."
+  "boundary": "Local executions and distinct implementation paths; external execution, independent expert proof review, and global novelty checks still outstanding. Hashes refer to original local executed files.",
+  "global_capacity_addendum_local_sha256": "0fdf9ea8d8beb2c2e44e83ee07d17e3531a177b430bb85c9b1dcff5fdc472c64",
+  "original_bundle_zip_v2_sha256": "013dea3e660f1f08939295896a7526c1064cd1c6768e50f64d82c9a488bb6a25",
+  "additional_source_dependency": "Lemnis all-n diagonal 2^n rigidity theorem: research/nightfall/agent-reports/lemnis_diagonal_rigidity_20261028/RESEARCH_NOTE.md"
 }
