@@ -1,0 +1,35 @@
+name: Preflight Observatory Gate C frozen inputs
+on:
+  push:
+    paths:
+      - 'research/nightfall/evaluations/gate_c/**'
+      - 'scripts/check_gate_c_preflight.cjs'
+      - '.github/workflows/observatory-gate-c-preflight.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/evaluations/gate_c/**'
+      - 'scripts/check_gate_c_preflight.cjs'
+      - '.github/workflows/observatory-gate-c-preflight.yml'
+permissions:
+  contents: read
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch independently frozen scientific source and Observatory commits
+        run: |
+          git fetch --no-tags --depth=1 origin df9511c622c309046180fd0e015aca88577c58ec
+          git fetch --no-tags --depth=1 origin f1ee6ad517a46e5065ad700571a7080f7d5ee9e9
+      - name: Verify frozen task, graph, source SHA-256 and adversarial mutations
+        run: |
+          node --check scripts/check_gate_c_preflight.cjs
+          node scripts/check_gate_c_preflight.cjs --json --self-test > gate-c-preflight-report.json
+          python3 -m json.tool gate-c-preflight-report.json >/dev/null
+          cat gate-c-preflight-report.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gate-c-input-integrity-only
+          path: gate-c-preflight-report.json
+          retention-days: 90
