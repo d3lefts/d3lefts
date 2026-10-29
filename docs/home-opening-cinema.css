@@ -100,7 +100,7 @@
 .nf-opening-constellation .nf-opening-node--oxblood{fill:#8c4050}
 .nf-opening-veil{position:absolute;inset:0}
 .nf-opening-sky--gold .nf-opening-veil{
-  background:linear-gradient(90deg,#28190ff2 0%,#28190fda 37%,#28190f58 70%,transparent 100%);
+  background:linear-gradient(90deg,#39243cf2 0%,#39243cda 37%,#39243c58 70%,transparent 100%);
 }
 .nf-opening-sky--night .nf-opening-veil{
   background:linear-gradient(90deg,#04060bf5 0%,#04060bda 37%,#04060b60 72%,transparent 100%);
@@ -140,7 +140,7 @@ html[data-nf-theme="dusk"] .nf-opening-reading--night{display:inline}
   #main>.hero.nf-opening{padding-bottom:85px}
   .nf-opening-art{inset:0}
   .nf-opening-sky--gold .nf-opening-veil{
-    background:linear-gradient(90deg,#28190ffa 0%,#28190fee 53%,#28190f8c 100%);
+    background:linear-gradient(90deg,#39243cfa 0%,#39243cee 53%,#39243c8c 100%);
   }
   .nf-opening-sky--night .nf-opening-veil{
     background:linear-gradient(90deg,#04060bf9 0%,#04060beb 54%,#04060b91 100%);
