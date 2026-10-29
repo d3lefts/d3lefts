@@ -117,7 +117,7 @@ try{
   }));
   assert.equal(dark.bg,"rgb(4, 6, 11)","Dusk midnight canvas unchanged");
   assert.equal(dark.primary,"rgb(230, 222, 170)","Dusk champagne CTA unchanged");
-  assert.equal(await page.locator('meta[name="theme-color"]').getAttribute("content"),"#101727","Dusk browser chrome remains midnight navy");
+  assert.equal(await page.locator('meta[name="theme-color"]').getAttribute("content"),"#04060b","Dusk browser chrome remains midnight navy");
   await toggle.click();
   assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Switching back restores cocoa archive");
   await page.waitForFunction(()=>getComputedStyle(document.body).backgroundColor==="rgb(40, 25, 15)",null,{timeout:3500});
