@@ -39,8 +39,8 @@
       "evidence": "working",
       "type": "Automata theorem manuscript",
       "title": "One-way planar Busy Beaver factorization",
-      "summary": "A fresh-row decomposition relates one-way planar halting steps to the classical Busy Beaver function, with an at-most-n phase factor.",
-      "boundary": "Proof manuscript; halting conventions, edge cases and existing automata literature require external review.",
+      "summary": "A proposed fresh-row decomposition relates one-way planar halting steps to the classical Busy Beaver function; its at-most-n phase factor remains unproved.",
+      "boundary": "Proof gap: repeated row-entry control states do not alone imply repeated global configurations. The n-phase upper bound is conjectural pending a valid invariant or proof.",
       "source": "projects/automata-fresh-layer/README.md"
     },
     {
