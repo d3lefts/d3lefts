@@ -30,7 +30,7 @@
 <div class="sideBottom"><div class="local"><span class="pulse"></span> PRIVATE WORKSPACE</div><p>Publicly accessible application. Workspace records stay in this browser; no backend, accounts, telemetry, external libraries, or in-app network requests.</p><div class="privacy">Local browser storage · JSON backups</div></div>
 </aside>
 <main class="main">
-<div class="topbar"><div class="eyebrow"><span class="pulse"></span> Evidence-first research infrastructure <span style="opacity:.35">/</span> <span id="sectionCrumb">Overview</span></div><div class="topActions"><a class="btn ghost" href="./" aria-label="Return to the NIGHTFALL research website">← Research site</a><a class="btn ghost" href="referee.html" aria-label="Open the exact finite Referee verification instrument">Run Referee ↗</a><a class="btn" href="exact-research.html" aria-label="Open exact Werner and F25 research calculations">∑ Exact tools</a><button class="btn" id="receiptImportBtn" title="Import Referee receipt metadata; no claim status promotion">⇢ Referee receipt</button><button class="btn" id="importBtn">↥ Import JSON</button><button class="btn" id="exportBtn">↧ Export backup</button><button class="btn primary" id="newClaimBtn">＋ New claim</button></div></div>
+<div class="topbar"><div class="eyebrow"><span class="pulse"></span> Evidence-first research infrastructure <span style="opacity:.35">/</span> <span id="sectionCrumb">Overview</span></div><div class="topActions"><a class="btn ghost" href="./" aria-label="Return to the NIGHTFALL research website">← Research site</a><a class="btn ghost" href="referee.html" aria-label="Open the exact finite Referee verification instrument">Run Referee ↗</a><a class="btn" href="exact-research.html" aria-label="Open exact Werner and F25 research calculations">∑ Exact tools</a><button class="btn" id="receiptImportBtn" title="Import Referee receipt metadata; no claim status promotion">⇢ Referee receipt</button><button class="btn" id="sendDiscovery" disabled title="Transfer latest hash-checked Referee receipt to Discovery for local finite replay; no claim promotion">⇢ Discovery replay</button><button class="btn" id="importBtn">↥ Import JSON</button><button class="btn" id="exportBtn">↧ Export backup</button><button class="btn primary" id="newClaimBtn">＋ New claim</button></div></div>
 <div id="content"></div>
 </main>
 </div>
@@ -137,58 +137,72 @@ $('#content').addEventListener('click',e=>{const b=e.target.closest('[data-actio
 $('#content').addEventListener('input',e=>{if(e.target.id==='searchClaims'){searchText=e.target.value;const pos=e.target.selectionStart;render();const node=$('#searchClaims');node?.focus();node?.setSelectionRange(pos,pos)}});
 $('#content').addEventListener('change',e=>{if(e.target.id==='statusFilter'){statusFilter=e.target.value;render()}});
 
-
-/* RYEV Evidence Bridge — strict versioned preview, isolated from claim-status writes. */
+/* Single canonical strict adapter for file and same-tab Referee inputs. */
 let pendingBridge=null;
 const bridgeClose=()=>{$('#bridgeMask').classList.remove('show');pendingBridge=null};
 $('#bridgeCancel').addEventListener('click',bridgeClose);
 $('#bridgeCancelTop').addEventListener('click',bridgeClose);
 $('#bridgeMask').addEventListener('mousedown',e=>{if(e.target.id==='bridgeMask')bridgeClose()});
+async function stageRefereeReceipt(raw,sourceLabel){
+ const seen=new Set(data.experiments.flatMap(e=>Array.from(String(e.evidence||'').matchAll(/BRIDGE-ID:([0-9a-f]{64})/g),m=>m[1])));
+ const preview=await window.NightfallEvidenceBridge.preview(raw,{
+  refereeCore:window.RefereeCore,exactCore:window.NIGHTFALL_EXACT,seenInputHashes:seen
+ });
+ if(data.experiments.length>=10000)throw Error('Experiment register is full.');
+ pendingBridge={preview,fileName:String(sourceLabel).slice(0,125),originalReceipt:raw};
+ $('#bridgeTitle').textContent='Review: '+preview.title;
+ $('#bridgeScope').textContent=preview.scope;
+ $('#bridgeMeta').textContent=[
+  'Format: '+preview.sourceFormat,
+  'Producer version: '+preview.producerVersion,
+  'Input SHA-256: '+preview.inputSha256,
+  'Receipt SHA-256: '+preview.receiptSha256,
+  'Local recomputation: '+preview.resultStatus,
+  'Scientific review: '+preview.reviewStatus,
+  'External referee / signature: NONE'
+ ].join('\n');
+ $('#bridgeDraft').textContent=[
+  'Title: '+preview.proposedExperiment.title,
+  'Status: tested / unaudited',
+  'Conclusion: '+preview.proposedExperiment.result,
+  'No claims, statuses, or published records modified.'
+ ].join('\n');
+ $('#bridgeMask').classList.add('show');
+}
 $('#receiptImportBtn').addEventListener('click',()=>$('#receiptImportFile').click());
 $('#receiptImportFile').addEventListener('change',async event=>{
  const file=event.target.files?.[0];if(!file)return;
  try{
   if(file.size>1000000)throw Error('Receipt exceeds 1 MB.');
-  const seen=new Set(data.experiments.flatMap(e=>{
-    const text=String(e.evidence||'');
-    return Array.from(text.matchAll(/BRIDGE-ID:([0-9a-f]{64})/g),m=>m[1]);
-  }));
-  const preview=await window.NightfallEvidenceBridge.preview(await file.text(),{
-    refereeCore:window.RefereeCore,exactCore:window.NIGHTFALL_EXACT,seenInputHashes:seen
-  });
-  if(data.experiments.length>=10000)throw Error('Experiment register is full.');
-  pendingBridge={preview,fileName:file.name.slice(0,125)};
-  $('#bridgeTitle').textContent='Review: '+preview.title;
-  $('#bridgeScope').textContent=preview.scope;
-  $('#bridgeMeta').textContent=[
-    'Format: '+preview.sourceFormat,
-    'Producer version: '+preview.producerVersion,
-    'Input SHA-256: '+preview.inputSha256,
-    'Receipt SHA-256: '+preview.receiptSha256,
-    'Local recomputation: '+preview.resultStatus,
-    'Scientific review: '+preview.reviewStatus,
-    'External referee / signature: NONE'
-  ].join('\n');
-  $('#bridgeDraft').textContent=[
-    'Title: '+preview.proposedExperiment.title,
-    'Status: tested / unaudited',
-    'Conclusion: '+preview.proposedExperiment.result,
-    'No claims, statuses, or published records modified.'
-  ].join('\n');
-  $('#bridgeMask').classList.add('show');
+  await stageRefereeReceipt(await file.text(),file.name);
  }catch(err){toast('Evidence Bridge refused: '+(err.code?err.code+' — ':'')+err.message)}
  finally{event.target.value=''}
 });
+// Preserve owner's one-shot same-tab Referee handoff. It uses the identical strict parser.
+if(new URLSearchParams(location.search).get('referee_handoff')==='1'){
+ try{
+  const raw=sessionStorage.getItem('nightfall.referee.pending.v1');
+  sessionStorage.removeItem('nightfall.referee.pending.v1');
+  history.replaceState(null,'',location.pathname);
+  if(!raw||raw.length>1000000)throw Error('Missing or oversized Referee handoff receipt.');
+  stageRefereeReceipt(raw,'same-tab Referee handoff')
+   .catch(err=>toast('Evidence Bridge refused: '+(err.code?err.code+' — ':'')+err.message));
+ }catch(err){toast('Handoff refused: '+err.message)}
+}
+$('#sendDiscovery').addEventListener('click',()=>{
+ try{
+  if(!sessionStorage.getItem('nightfall.discovery.pending.v1'))throw Error('Import and approve a valid Referee receipt first.');
+  location.assign('discovery.html?referee_handoff=1');
+ }catch(err){toast('Discovery handoff unavailable: '+err.message)}
+});
+try{$('#sendDiscovery').disabled=!sessionStorage.getItem('nightfall.discovery.pending.v1')}catch(_){$('#sendDiscovery').disabled=true}
 $('#bridgeApprove').addEventListener('click',()=>{
  if(!pendingBridge)return;
- const {preview,fileName}=pendingBridge;
+ const {preview,fileName,originalReceipt}=pendingBridge;
  try{
   const raw=localStorage.getItem(KEY);
-  if(data.experiments.some(e=>String(e.evidence||'').includes('BRIDGE-ID:'+preview.receiptId))){
-    throw Error('Duplicate receipt; this finite input is already attached.');
-  }
+  if(data.experiments.some(e=>String(e.evidence||'').includes('BRIDGE-ID:'+preview.receiptId)))throw Error('Duplicate receipt; this finite input is already attached.');
   if(data.experiments.length>=10000)throw Error('Experiment register is full.');
-  // Backup the complete current workspace before any mutation. Download first.
   const oldJSON=raw??JSON.stringify(data);
   const blob=new Blob([oldJSON],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');
   try{
@@ -200,10 +214,22 @@ $('#bridgeApprove').addEventListener('click',()=>{
     evidence:preview.proposedExperiment.evidence+'; Original receipt: '+fileName});
   next.sample=false;
   const nextJSON=JSON.stringify(next);
-  localStorage.setItem(KEY,nextJSON); // Fail closed: no in-memory modification until write success.
-  if(localStorage.getItem(KEY)!==nextJSON){localStorage.setItem(KEY,oldJSON);throw Error('Storage readback verification failed.');}
-  data=next;bridgeClose();go('experiments');
-  toast('Backup downloaded; unreviewed receipt metadata attached. Claim labels unchanged.');
+  localStorage.setItem(KEY,nextJSON);
+  if(localStorage.getItem(KEY)!==nextJSON){
+   if(raw===null)localStorage.removeItem(KEY);else localStorage.setItem(KEY,raw);
+   throw Error('Storage readback verification failed.');
+  }
+  data=next;
+  bridgeClose();go('experiments');
+  // Owner's Discovery replay accepts only Referee receipts. Handoff follows approved import.
+  if(preview.sourceFormat==='nightfall-referee-receipt-v1'){
+   try{
+    sessionStorage.setItem('nightfall.discovery.pending.v1',
+      typeof originalReceipt==='string'?originalReceipt:JSON.stringify(originalReceipt));
+    $('#sendDiscovery').disabled=false;
+   }catch(_){$('#sendDiscovery').disabled=true}
+  }
+  toast('Backup generated; unreviewed metadata attached. Claim labels unchanged.');
  }catch(err){toast('Attachment refused: '+err.message)}
 });
 $('#importBtn').addEventListener('click',()=>$('#importFile').click());$('#importFile').addEventListener('change',async e=>{const f=e.target.files?.[0];if(!f)return;if(f.size>2e6){toast('JSON import exceeds 2 MB size limit');e.target.value='';return}try{const parsed=normalize(JSON.parse(await f.text()));if(!confirm(`Replace your current workspace with ${parsed.claims.length} imported claims? Export your current data first if needed.`))return;data=parsed;data.sample=false;chosenNode=null;searchText='';statusFilter='all';persist();render();toast('JSON workspace imported.')}catch(err){toast('Invalid JSON backup: '+err.message)}finally{e.target.value=''}});
