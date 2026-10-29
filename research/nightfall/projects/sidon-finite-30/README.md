@@ -55,3 +55,29 @@ python3 research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py
 
 The finite result gives the exact ratio `17/30<4/7`. The asymptotic `5/9` reduction belongs to the earlier reader construction and is a separate prior-art result. The DAG proves this **particular finite witness**, without presuming the infinite self-similar family theorem.
 
+
+## New finite structural theorem: all 28 progression constraints essential (October 28)
+
+For the same frozen 30-coordinate weak (4,5) set, form the 3-uniform hypergraph H whose 28 edges are exactly the index triples `(i,j,k)` with `i<j<k` and `a_i+a_k=2a_j`. The new exact structural certificate establishes
+
+```
+tau(H) = 13
+tau(H - e) = 12  for each of the 28 edges e.
+```
+
+Here `tau` is the minimum vertex-cover (hitting-set) size. **Every one of the 28 progression constraints is essential** for forbidding an 18-element progression-free selection: deleting just that *constraint* (without altering the underlying 30 numbers) admits an 18-point subset whose only remaining arithmetic progression is the omitted edge. All 28 explicit 18-point selections are supplied. This is a finite, edge-critical obstruction theorem for this particular hypergraph, not an extension of the known 5/9 asymptotic result.
+
+**Complete newly generated, independently regenerable primary evidence** (no private binary archive required):
+
+- [Full 30-coordinate + 28-edge counterwitness certificate (JSON)](edge_essentiality_certificate.json), including every omitted AP triple and an explicit 18-survivor index set for it. Indices are zero-based into the published ascending coordinate vector.
+- [Independent exact Python checker and certificate generator](edge_essentiality.py): enumerates all four-distinct pair-sum tests, constructs the entire 28-edge set from integer arithmetic, exhaustively proves that no 12-vertex hitting set exists via complete three-way branching, checks all 28 deletion witnesses, and rejects a deliberately corrupted witness.
+- [Passing GitHub Actions reproduction](https://github.com/d3lefts/d3lefts/actions/runs/40814933934): regenerates and compares the full published JSON object to the independently computed exact result. The 12-cover contradiction uses **639 memoized Python states** (includes base cases; an alternative JavaScript implementation counted 503 nonterminal states). No numerical optimization solver, online oracle, tolerance, or published-proposition assumption is used.
+
+```bash
+cd research/nightfall/projects/sidon-finite-30
+python3 edge_essentiality.py                    # full exact replay + mutation rejection
+python3 edge_essentiality.py --json > rebuilt.json
+python3 -c 'import json; assert json.load(open("rebuilt.json")) == json.load(open("edge_essentiality_certificate.json"))'
+```
+
+**Logical scope:** the paper's original weak Sidon condition is checked independently on this fixed set; hence within this witness, distinct pair-sum failures reduce to three-term progressions. The calculation proves the finite hypergraph's essentiality, with no statement about optimality among all 30-point constructions. Specialist prior-art review and manuscript-level novelty assessment are still open.
