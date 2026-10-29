@@ -24,6 +24,8 @@ jobs:
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
@@ -45,6 +47,17 @@ jobs:
           if python3 research/nightfall/referee/independent_verify.py /tmp/ryev-bridge-fixtures/tamperedSidon.json; then
             echo "ERROR: Python accepted tampered witness"; exit 1
           fi
+      - name: Invariant Forge positive metamorphic controls
+        run: |
+          node --check research/nightfall/evidence-bridge/invariant_forge.cjs
+          node research/nightfall/evidence-bridge/invariant_forge.cjs > /tmp/invariant-forge.json
+          python3 -m json.tool /tmp/invariant-forge.json > /dev/null
+      - name: Freeze Gate C inputs and enforce blinded matched allocations
+        run: |
+          node --check research/nightfall/observatory/gate-c-ryev/runner.cjs
+          node research/nightfall/observatory/gate-c-ryev/runner.cjs --selftest
+          node research/nightfall/observatory/gate-c-ryev/runner.cjs --freeze /tmp/ryev-gate-c
+          python3 -m json.tool /tmp/ryev-gate-c/freeze.json > /dev/null
       - name: Browser consent, backup, reload, import security
         run: |
           npm install --no-save --no-package-lock playwright-core@1.56.1
@@ -55,3 +68,4 @@ jobs:
           name: ryEV-evidence-bridge-security-receipts
           path: /tmp/ryev-bridge-fixtures
           retention-days: 90
+
