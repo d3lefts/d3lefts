@@ -7,6 +7,32 @@
 <meta property="og:title" content="Mechanism Atlas — NIGHTFALL">
 <title>Mechanism Atlas — NIGHTFALL</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="site.css"><link rel="stylesheet" href="research-system.css">
 <script src="site.js" defer></script><script src="research-registry.js" defer></script><script src="atlas.js" defer></script>
+
+<style>
+/* Research Atlas: source-backed transfers, no new calculator or status engine. */
+.constellation-lead{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(230px,.55fr);gap:28px;align-items:stretch;border-top:1px solid var(--line);padding:34px 0}
+.constellation-lead h3{font:400 clamp(36px,4.2vw,62px)/1 var(--serif);letter-spacing:-.025em;margin:15px 0 19px}
+.constellation-lead h3 em{font-weight:400;color:#607c62}
+.constellation-lead p,.constellation-transfer p,.constellation-footnote{font:13px/1.8 var(--sans);color:#4e6252}
+.constellation-lead p+p{margin-top:12px}
+.constellation-stats{display:grid;align-content:start;gap:21px;padding:26px;background:#20372a;color:#f1f8ed}
+.constellation-stats>div{border-bottom:1px solid #536b58;padding-bottom:16px}
+.constellation-stats strong{display:block;font:400 clamp(36px,4vw,56px)/1 var(--serif);color:#d9ff5e}
+.constellation-stats span{display:block;font:10px/1.7 var(--mono);color:#c4d5c0;margin-top:7px}
+.constellation-stats small{font:10px/1.65 var(--mono);color:#cbdac8}
+.constellation-links{display:flex;flex-wrap:wrap;gap:8px 17px;margin-top:19px}
+.constellation-links a{font:600 11px/1.5 var(--mono);text-decoration:underline;text-underline-offset:4px;color:#355f43}
+.constellation-transfers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin:8px 0 23px}
+.constellation-transfer{border:1px solid #b8c6b8;background:#ebefe7;padding:24px;display:flex;flex-direction:column;min-width:0}
+.constellation-transfer h3{font:400 clamp(29px,2.7vw,41px)/1.06 var(--serif);margin:16px 0 15px}
+.constellation-transfer p{flex:1}
+.constellation-transfer .constellation-boundary{border-top:1px solid #bcc9bc;padding-top:15px;margin-top:16px}
+.constellation-transfer .constellation-links{margin-top:19px}
+.constellation-footnote{padding:22px 0 24px;border-top:1px solid #cbd2c8}
+.constellation-footnote a{color:#315741;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:960px){.constellation-transfers{grid-template-columns:1fr 1fr}.constellation-lead{grid-template-columns:1fr}}
+@media(max-width:620px){.constellation-transfers{grid-template-columns:1fr}.constellation-stats{grid-template-columns:1fr 1fr}.constellation-stats small{grid-column:1/-1}.constellation-lead{padding:20px 0}.constellation-transfer{padding:20px}}
+</style>
 </head>
 <body>
 <a class="skip" href="#atlas-explore">Skip to research map</a><div class="topline"></div>
@@ -28,7 +54,60 @@
 <div id="ma-relations" class="ma-relations" aria-live="polite"></div>
 <p class="rs-gate" style="margin-top:24px"><strong>INTERPRETATION RULE</strong>This is a curated research map, not a causal theorem. “Shared method” means documented verification practice. “Analogy” means an untested conceptual parallel. A source-linked open premise remains unsolved until its proof is established independently.</p>
 </section>
-<section class="rs-section" aria-labelledby="history-title"><div class="rs-head"><span class="rs-kicker">03 / PROVENANCE &amp; CORRECTION</span><div><h2 id="history-title">A history that <em>remembers failure.</em></h2><p>Documented evidence events are drawn from the same canonical registry as Proof Passports. These are dated editorial records—not a complete, automatically synchronized GitHub activity feed.</p></div></div><div id="ma-history" class="ma-history"></div><div class="pp-actions"><a href="passport.html" class="rs-btn">Inspect Proof Passports ↗</a><a href="review.html" class="rs-btn light">Independent review tasks ↗</a><a href="desk.html" class="rs-btn light">Assemble a research session ↗</a></div></section>
+
+<section class="rs-section" id="transfer-ledger" aria-labelledby="transfer-title">
+  <div class="rs-head">
+    <span class="rs-kicker">03 / TESTED TRANSFERS · OCT 29</span>
+    <div>
+      <h2 id="transfer-title">Where the proofs <em>meet.</em></h2>
+      <p>Tonight's strongest cross-agent synthesis is a set of exact representations, reusable verifiers and documented failure boundaries. These connections are source-scoped research evidence, <strong>not new Original Findings</strong>.</p>
+    </div>
+  </div>
+  <div class="constellation-lead">
+    <div>
+      <span class="rs-kicker">DIRECTLY REPLAYED · CLASSICAL REDUCTION</span>
+      <h3>One conflict language.<br><em>Two extremal problems.</em></h3>
+      <p>In maximal Sidon sets, collisions are equal unordered pair sums. In a hypercube, collisions are four chosen edges completing a coordinate square. Both become independent sets in a conflict hypergraph. A single certificate grammar can test forbidden subsets and pointwise maximality.</p>
+      <p><strong>Different objectives remain different:</strong> Erdős #156 minimizes the size of a maximal Sidon set; Erdős #86 maximizes a C4-free edge set. A locally maximal set may be smaller than a global maximum.</p>
+      <div class="constellation-links">
+        <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/CONSTELLATION_MECHANISM_SYNTHESIS_20261029.md" target="_blank" rel="noopener">Read proof and transfer ledger ↗</a>
+        <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/constellation/verify_cross_domain.py" target="_blank" rel="noopener">Run independent Python checks ↗</a>
+      </div>
+    </div>
+    <div class="constellation-stats" aria-label="Scoped exact-replay sizes">
+      <div><strong>4,094</strong><span>integer subset cases · N ≤ 11</span></div>
+      <div><strong>4,096</strong><span>all subgraphs of the 3-cube</span></div>
+      <div><strong>448 / 672</strong><span>Q7 candidate edges / coordinate squares</span></div>
+      <small>Bounded representation checks. No N=184 SAT/UNSAT answer; no Q7 305-edge answer.</small>
+    </div>
+  </div>
+  <div class="constellation-transfers">
+    <article class="constellation-transfer">
+      <span class="rs-kicker">TRANSFER 01 / COMPOSABLE PROOF METHOD</span>
+      <h3>From collision to repair.</h3>
+      <p>Axiom's one-point Sidon deletion matching, Vesper's batch collision-core reduction, Ryev's independent Blossom replay and Tessera's one-point pseudoforest solver address the same explicit collision supports. Axiom's Singer two-insertion obstruction shows why a small batch need not give a small branching core.</p>
+      <p class="constellation-boundary"><strong>Unproved:</strong> a batch-size-only polynomial repair guarantee for all Singer blocks. This mechanism proves no infinite density gain.</p>
+      <div class="constellation-links"><a href="https://github.com/d3lefts/d3lefts/pull/110">Batch theorem ↗</a><a href="https://github.com/d3lefts/d3lefts/pull/136">One-point algorithm ↗</a><a href="https://github.com/d3lefts/d3lefts/pull/135">High-core obstruction ↗</a></div>
+    </article>
+    <article class="constellation-transfer">
+      <span class="rs-kicker">TRANSFER 02 / FAILED SCALE INFERENCE</span>
+      <h3>Finite gains need recursion.</h3>
+      <p>Fixed-prefix Sidon repairs achieve coefficients above 1/√2 for each fixed prefix. Tessera's source-switch experiment shows that equal average collision counts can conceal different deletion costs. Vesper's two-window bound proves that <em>that particular certificate</em> loses its guaranteed gap when prefix size grows.</p>
+      <p class="constellation-boundary"><strong>Missing:</strong> a recursively closed, growing-prefix family with source-uniform repair loss and endpoint control. Erdős #44 and #329 remain open.</p>
+      <div class="constellation-links"><a href="https://github.com/d3lefts/d3lefts/pull/84">Fixed-prefix bound ↗</a><a href="https://github.com/d3lefts/d3lefts/pull/128">Source-switch counterexample ↗</a><a href="https://github.com/d3lefts/d3lefts/pull/103">Proxy obstruction ↗</a></div>
+    </article>
+    <article class="constellation-transfer">
+      <span class="rs-kicker">TRANSFER 03 / SENSING-MODEL DISCIPLINE</span>
+      <h3>Uniqueness is not decoding.</h3>
+      <p>Vesper's iid F25 phase-collision bound establishes information-theoretic identifiability under its assumptions. Axiom's prime-subfield formulation supplies a candidate polynomial-time decoder under the same iid law. Its adaptive and fixed-graph decoders belong to different measurement models and must be compared separately.</p>
+      <p class="constellation-boundary"><strong>Review open:</strong> external proof and same-scope priority checks. Raw measurement coefficients across distinct sensing laws are not interchangeable records.</p>
+      <div class="constellation-links"><a href="https://github.com/d3lefts/d3lefts/pull/31">Identifiability ↗</a><a href="https://github.com/d3lefts/d3lefts/pull/16">Efficient candidate ↗</a><a href="https://github.com/d3lefts/d3lefts/pull/121">Graph model ↗</a></div>
+    </article>
+  </div>
+  <p class="constellation-footnote"><strong>Other tracks, correctly scoped:</strong> Ryev's Q7 parity-syndrome theorem adds a necessary condition, not a 305-edge witness (<a href="https://github.com/d3lefts/d3lefts/pull/148">PR #148</a>). Lemnis's 27-base gadget exclusions remain finite (<a href="https://github.com/d3lefts/d3lefts/pull/57">PR #57</a>). Tessara's universal continuum lower-bound proof remains open (<a href="https://github.com/d3lefts/d3lefts/issues/76">Issue #76</a>). Werner partial-trace inequalities remain restricted-family statements (<a href="https://github.com/d3lefts/d3lefts/pull/38">PR #38</a>). Vesper's PAS audit shield applies classical min-cut with explicit reproof assumptions (<a href="https://github.com/d3lefts/d3lefts/pull/133">PR #133</a>).</p>
+  <p class="rs-gate"><strong>EDITORIAL / PUBLICATION GATE</strong>This is a tested methods ledger, not a proof that results transfer between domains. Exact finite replay, internal independent implementations, external mathematical refereeing, priority review and owner publication approval remain separate stages. The five existing source-scoped Original Findings and four flagship programs are unchanged.</p>
+</section>
+<section class="rs-section" aria-labelledby="history-title"><div class="rs-head"><span class="rs-kicker">04 / PROVENANCE &amp; CORRECTION</span><div><h2 id="history-title">A history that <em>remembers failure.</em></h2><p>Documented evidence events are drawn from the same canonical registry as Proof Passports. These are dated editorial records—not a complete, automatically synchronized GitHub activity feed.</p></div></div><div id="ma-history" class="ma-history"></div><div class="pp-actions"><a href="passport.html" class="rs-btn">Inspect Proof Passports ↗</a><a href="review.html" class="rs-btn light">Independent review tasks ↗</a><a href="desk.html" class="rs-btn light">Assemble a research session ↗</a></div></section>
 </main>
 <footer class="wrap rs-footer"><span>© 2026 Devin J. Wright · NIGHTFALL PHASESHIFT</span><span>Curated evidence graph · snapshot 29 October 2026</span></footer>
 </body></html>

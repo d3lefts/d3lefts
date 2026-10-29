@@ -1,0 +1,100 @@
+{
+  "cube": {
+    "Q3": {
+      "candidate_edges": 12,
+      "coordinate_squares": 6,
+      "maximal_subgraphs": 74,
+      "maximum_maximal_size": 9,
+      "minimum_maximal_size": 8,
+      "subgraphs_checked": 4096,
+      "vertices": 8
+    },
+    "Q4": {
+      "candidate_edges": 32,
+      "coordinate_squares": 24,
+      "seeded_checks": 200
+    },
+    "Q7": {
+      "candidate_edges": 448,
+      "coordinate_squares": 672,
+      "global_305_status": "undecided"
+    }
+  },
+  "date": "2026-10-29",
+  "limitations": [
+    "Hypergraph independence/maximality is classical",
+    "N184 nine-mark Sidon SAT/UNSAT remains undecided",
+    "Q7 305-edge C4-free existence remains undecided",
+    "No transfer of optimal cardinalities between conflict hypergraphs"
+  ],
+  "schema": "nightfall-cross-domain-hypergraph-v1",
+  "scientific_status": "Classical hypergraph encoding, exact bounded audit; neither open problem solved",
+  "sidon_integer": {
+    "N10_sample": [
+      4,
+      6,
+      7
+    ],
+    "N_tested": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "maximal_sets_checked": 282,
+    "per_N": {
+      "1": {
+        "conflict_hyperedges": 0,
+        "maximal_sets": 1
+      },
+      "10": {
+        "conflict_hyperedges": 70,
+        "maximal_sets": 64
+      },
+      "11": {
+        "conflict_hyperedges": 95,
+        "maximal_sets": 110
+      },
+      "2": {
+        "conflict_hyperedges": 0,
+        "maximal_sets": 1
+      },
+      "3": {
+        "conflict_hyperedges": 1,
+        "maximal_sets": 3
+      },
+      "4": {
+        "conflict_hyperedges": 3,
+        "maximal_sets": 3
+      },
+      "5": {
+        "conflict_hyperedges": 7,
+        "maximal_sets": 6
+      },
+      "6": {
+        "conflict_hyperedges": 13,
+        "maximal_sets": 14
+      },
+      "7": {
+        "conflict_hyperedges": 22,
+        "maximal_sets": 20
+      },
+      "8": {
+        "conflict_hyperedges": 34,
+        "maximal_sets": 24
+      },
+      "9": {
+        "conflict_hyperedges": 50,
+        "maximal_sets": 36
+      }
+    },
+    "subsets_checked": 4094
+  }
+}

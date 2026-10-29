@@ -1,0 +1,19 @@
+name: Verify CONSTELLATION transfer representations
+on:
+  pull_request:
+    paths:
+      - 'docs/atlas.html'
+      - 'research/nightfall/constellation/**'
+      - 'research/nightfall/CONSTELLATION_MECHANISM_SYNTHESIS_20261029.md'
+      - '.github/workflows/verify-constellation-transfer.yml'
+  workflow_dispatch:
+jobs:
+  exact-domain-bridge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reproduce independent classical hypergraph reductions and frozen receipt
+        run: python3 research/nightfall/constellation/verify_cross_domain.py
+      - name: Check site links, anchors and existing claim whitelist
+        run: python3 scripts/check_site.py
