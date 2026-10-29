@@ -44,6 +44,7 @@ def audit(e):
   for v,mask in enumerate(fibers):
    k=mask.bit_count();hist[k]+=1
    if k>=29:heavy.append((a,v,mask))
+ assert sum(hist.values()) == (3**9-1)//2*3
  # A rank-2 affine section of size>=29 lies in 4 affine hyperplanes.
  # Every pair of distinct projective normals is independent.
  sections={}
