@@ -536,7 +536,7 @@ try{
   }
   if(width===390 || width===1280){
     await page.goto(origin+"exact-research.html#guided-replay",{waitUntil:"load"});
-    assert.equal(await page.locator("#guided-replay .rt-stage").count(),4,"Four-stage claim-to-replay journey");
+    assert.equal(await page.locator("#guided-replay .rt-stage").count(),5,"Five-stage source-to-replay-and-registration journey");
     assert.match(await page.locator("#guided-replay").innerText(),/30-POINT SIDON/,"Original finite scope remains visible");
     assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth))<=3,"Guided research journey fits viewport");
     await page.locator('#guided-replay a[href="referee.html?domain=sidon#workbench"]').first().click();
