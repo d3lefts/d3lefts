@@ -1,0 +1,58 @@
+{
+  "schema": "nightfall-public-reproducibility-v1",
+  "asOf": "2026-10-29",
+  "policy": "Machine-readable finite-evidence access manifest, not a theorem certifier, external peer-review decision or novelty claim.",
+  "repository": "https://github.com/d3lefts/d3lefts",
+  "publicRelease": "https://github.com/d3lefts/d3lefts/releases/tag/nightfall-research-2026-10-28",
+  "approvals": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/CURATED_PUBLIC_RELEASE_APPROVAL_20261029.md",
+  "replayReceipt": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/CURATED_PUBLIC_DOWNLOAD_RECEIPT_20261029.json",
+  "releaseAssets": [
+    {
+      "id": "curated-math-v2",
+      "file": "NIGHTFALL_Curated_Math_Evidence_CANDIDATE_v2_20261029.zip",
+      "bytes": 11882806,
+      "sha256": "f01702cd554a727711dfdff2908cc21b28b715689885ae8eadf562bdef878d23",
+      "url": "https://github.com/d3lefts/d3lefts/releases/download/nightfall-research-2026-10-28/NIGHTFALL_Curated_Math_Evidence_CANDIDATE_v2_20261029.zip"
+    },
+    {
+      "id": "curated-supplementary-v2",
+      "file": "NIGHTFALL_Curated_Supplementary_Certificates_CANDIDATE_v2_20261029.zip",
+      "bytes": 1046556,
+      "sha256": "7c3769047fa247a0abd922bbfafd3a8ab885af62d1cd2c949828805559bb2665",
+      "url": "https://github.com/d3lefts/d3lefts/releases/download/nightfall-research-2026-10-28/NIGHTFALL_Curated_Supplementary_Certificates_CANDIDATE_v2_20261029.zip"
+    }
+  ],
+  "claims": [
+    {
+      "id": "sidon30",
+      "kind": "finite-construction",
+      "claim": "The published 30-point weak (4,5) Sidon witness has maximum Sidon subset size 17.",
+      "proofPassport": "passport.html?claim=sidon30",
+      "scope": "This particular finite coordinate list; no asymptotic record claimed.",
+      "primarySource": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/README.md",
+      "checker": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/edge_essentiality.py",
+      "replayCommand": "python3 research/nightfall/projects/sidon-finite-30/edge_essentiality.py",
+      "status": "public finite certificate, independent mathematical review open"
+    },
+    {
+      "id": "erdos36",
+      "kind": "finite-upper-bound-witness",
+      "claim": "The archived 131,072-cell rational step-function witness has reported continuous signed-shift maximum 0.380856370118029325246…",
+      "proofPassport": "passport.html?claim=erdos36",
+      "scope": "Finite witness and specified normalization; accepted Arena payload identity separately unresolved.",
+      "witnessMember": "programs/erdos-overlap/frozen-witness/heights_u70.txt",
+      "witnessSha256": "a574c280f8839503c90076507a27f4c819455fb2512fae6a43b6a17f6a784b8e",
+      "maximizingSignedLag": -17280,
+      "exactScore": "34788888032212764146872525963225147703298526879/91343852333181432387730302044767688728495783936",
+      "archiveId": "curated-math-v2",
+      "downloadCommand": "python3 scripts/download_nightfall_curated_assets.py public-assets",
+      "replayCommand": "python3 scripts/verify_erdos_independent.py public-assets/heights_u70.txt",
+      "status": "approved public witness and recorded internal exact replay, independent external specialist review open"
+    }
+  ],
+  "boundaries": [
+    "Public ZIP access has been byte and manifest verified; historical private master archives have not been published.",
+    "The submitted Arena leaderboard entry and the 131,072-cell mathematical witness have distinct identities.",
+    "Finite arithmetic tests, independent mathematical refereeing, publication priority and competition eligibility remain separate gates."
+  ]
+}

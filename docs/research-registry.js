@@ -118,9 +118,9 @@ const REGISTRY={
         "detail": "The archived collaboration reports independent integer-convolution replay and a grid-to-continuum argument; external expert audit remains open."
       },
       "reproducibility": {
-        "level": "pending",
-        "label": "Complete archive mirror pending",
-        "detail": "Checker source is public. The complete frozen witness archive is pending public Release upload (issue #5)."
+        "level": "public",
+        "label": "Curated finite witness public; independent audit open",
+        "detail": "The approved public mathematical ZIP contains the 131,072-cell heights and independent finite arithmetic checker; anonymous download SHA-256 and replay checks were recorded on 2026-10-29. Historical master archives remain private. This is public reproducibility, not external peer review."
       },
       "originality": {
         "level": "scoped",
@@ -136,10 +136,10 @@ const REGISTRY={
         "Precisely specified signed lag convention and zero extension.",
         "All step heights lie in [0,1] and integrate to mass one.",
         "No equivalence is assumed between the accepted Arena input and the archive witness.",
-        "Full frozen binary provenance remains required for remote reproduction."
+        "The original height-array identity and public curated release checksum must be checked when reproducing the finite result."
       ],
       "open": [
-        "Publicly mirror the original frozen 131,072-cell witness bytes.",
+        "Obtain independent, externally authored reproduction of the published 131,072-cell witness.",
         "Independent external reproduction and source identity comparison.",
         "Recover accepted competition input identity (issue #6)."
       ],
@@ -149,12 +149,12 @@ const REGISTRY={
           "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/erdos/STATUS_AND_PRIOR_ART_20261028.md"
         },
         {
-          "label": "Evidence access and missing archives",
+          "label": "Public witness, checksums and reproduction commands",
           "url": "evidence.html"
         },
         {
-          "label": "External archive task #5",
-          "url": "https://github.com/d3lefts/d3lefts/issues/5"
+          "label": "Approved public binary release",
+          "url": "https://github.com/d3lefts/d3lefts/releases/tag/nightfall-research-2026-10-28"
         }
       ],
       "tools": [
@@ -175,6 +175,13 @@ const REGISTRY={
           "label": "Mathematical witness separated from Arena entry",
           "detail": "The source audit distinguishes the internal construction, accepted leaderboard snapshot and rejected submission.",
           "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/erdos/STATUS_AND_PRIOR_ART_20261028.md"
+        },
+        {
+          "date": "2026-10-29",
+          "kind": "public-evidence-release",
+          "label": "Approved curated witness released and anonymous replay recorded",
+          "detail": "The approved mathematical evidence ZIP provides the 131,072-cell heights and checker. Anonymous asset checks and independent-internal arithmetic replay passed; external peer review and accepted Arena payload recovery remain open.",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/CURATED_PUBLIC_DOWNLOAD_RECEIPT_20261029.json"
         }
       ]
     },
@@ -612,8 +619,8 @@ const REGISTRY={
       "from": "erdos36",
       "to": "dependency-gates",
       "relation": "open-premise",
-      "label": "Missing public frozen witness release",
-      "note": "Internal replay is recorded separately from public external reproducer access.",
+      "label": "External independent witness review outstanding",
+      "note": "The curated witness bytes and arithmetic checker are publicly downloadable; independent mathematical refereeing and the distinct accepted Arena payload remain outstanding.",
       "source": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/erdos/STATUS_AND_PRIOR_ART_20261028.md"
     }
   ]

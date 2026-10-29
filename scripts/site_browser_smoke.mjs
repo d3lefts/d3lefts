@@ -57,6 +57,32 @@ try{
    }
   }
   if(width===390){
+   // Progressive enhancement is an evidence guarantee: identical finite witness
+   // coordinates remain visible without JavaScript, not a perpetual loader.
+   await page.goto(origin+"index.html",{waitUntil:"load"});
+   assert.equal(await page.locator("#sidon-witness .sf-point").count(),30,"30 exact finite points on first view");
+   assert.equal(await page.locator("#sidon-witness .sf-point.chosen").count(),17,"17-point subset highlighted");
+   assert.equal(await page.locator("#sidon-toggle").isDisabled(),false,"interactivity enabled only after the checker loads");
+   assert.equal(await page.locator(".instrument-workflow a").count(),4,"four source-linked research stages");
+   assert.match(await page.locator("#instruments-heading").innerText(),/Four stages/);
+   assert.equal(await page.locator(".nf-replay-steps li").count(),4,"four actionable independent-replay steps");
+   assert.match(await page.locator(".nf-replay-release").innerText(),/public research archives/);
+   const portalManifest=await (await page.request.get(origin+"reproduction-manifest.json")).json();
+   assert.equal(portalManifest.claims.length,2,"only exact public finite claims in machine manifest");
+   assert.equal(portalManifest.releaseAssets.length,2,"two owner-approved releases only");
+   assert.equal(await page.evaluate(()=>window.NightfallRegistry.claimById("erdos36").reproducibility.level),"public","canonical public archive status");
+   const noScript=await browser.newPage({javaScriptEnabled:false,viewport:{width:390,height:850}});
+   await noScript.goto(origin+"index.html",{waitUntil:"load"});
+   assert.equal(await noScript.locator("#sidon-witness .sf-point").count(),30,"no-JS exact witness");
+   assert.equal(await noScript.locator("#sidon-witness .sf-point.chosen").count(),17,"no-JS chosen subset");
+   assert.equal(await noScript.locator("#sidon-toggle").isDisabled(),true,"no inert pretend interaction");
+   assert.equal(await noScript.locator(".nf-replay-steps a").count(),4,"no-JS reproduction pathway");
+   await noScript.close();
+   await page.goto(origin+"passport.html?claim=erdos36",{waitUntil:"load"});
+   assert.equal(await page.locator("#passport-picker a").count(),6,"six canonical Proof Passports");
+   assert.match(await page.locator(".pp-coverage").innerText(),/Six canonical Proof Passports/);
+   await page.goto(origin+"research.html",{waitUntil:"load"});
+   assert.match(await page.locator(".archive-coverage").innerText(),/six Proof Passports/i);
    // Results -> method -> assignment -> bounded on-site work -> framed tool -> return.
    await page.goto(origin+"join.html",{waitUntil:"load"});
    assert.match(await page.locator("#join-title").innerText(),/See the result/);
