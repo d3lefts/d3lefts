@@ -5,11 +5,13 @@
 **Applicant / research owner:** Devin J. Wright  
 **Direct portfolio:** https://d3lefts.github.io/d3lefts/portfolio.html  
 **Evidence and code:** https://github.com/d3lefts/d3lefts  
-**Status:** Research portfolio prepared for use with an application; no application submitted. The person's employment history, academic credentials, personal contact and eligibility details have not been supplied and must not be inferred.
+**Status:** Research work sample ready for applicant review; no application submitted. Professional background, West Point education and an MBA are now documented in the separate career portfolio. Work authorization and other application-specific answers must still come from the applicant.
+
+**Career-first context:** [public résumé](https://d3lefts.github.io/d3lefts/resume.html) · [professional work samples](https://d3lefts.github.io/d3lefts/portfolio.html#career) · [OpenAI research-program packet](../openai-research-programs/README.md). Search/Knowledge Graphs remains a more technical stretch opportunity; the résumé establishes strong research-program leadership experience, not independent web-scale ML engineering experience.
 
 ## The 30-second review
 
-The research focuses on converting uncertain, heterogeneous sources into structured information that retains provenance and can be challenged. The strongest directly related package is SourceBound: an evidence-admission system that binds candidate subject–relation–object assertions to source versions, spans, identities and temporal qualifiers. Its public, bug-fixed frozen package records 27 unit tests and a 14,000-page *synthetic known-fixture* replay with 6,000 retained fixture assertions and zero extra fixture emissions. The result is **not** an independent natural-web precision or scale estimate.
+The recent NIGHTFALL project focuses on converting uncertain, heterogeneous sources into structured information that retains provenance and can be challenged. It is a self-directed AI-assisted effort since August 2026, distinct from the applicant's prior paid technology and operations career. AI tools generated a substantial share of the code and mathematical material. The strongest directly related package is SourceBound: an evidence-admission system that binds candidate subject–relation–object assertions to source versions, spans, identities and temporal qualifiers. Its public, bug-fixed frozen package records 27 unit tests and a 14,000-page *synthetic known-fixture* replay with 6,000 retained fixture assertions and zero extra fixture emissions. The result is **not** an independent natural-web precision or scale estimate.
 
 Proof After Scarcity extends the same concern to typed evidence and citation/dependency graphs. Its adverse retrospective comparison—8/20 for the proposed prioritizer against 11/20 for simpler baselines—remains public. Together they motivate explicit source tracking and error-aware evaluation, without claiming current research accuracy gains.
 
@@ -35,7 +37,7 @@ The job's role description asks specifically for `reliably at web scale` and for
 2. **GitHub profile / repository URL:** https://github.com/d3lefts/d3lefts
 3. **Optional research statement:** [RESEARCH_STATEMENT.md](RESEARCH_STATEMENT.md) (ready to copy into a statement/additional-information field where offered).
 4. **Evidence checking:** [CLAIM_AUDIT.md](CLAIM_AUDIT.md) plus [source-recovery checkpoint](../RESEARCH_CONTEXT_20261029.md).
-5. **Resume/CV and personal application answers:** require the applicant's verified education, employment dates, contact details and work authorization. No invented stand-in is provided.
+5. **Resume/CV and personal application answers:** a [web résumé](https://d3lefts.github.io/d3lefts/resume.html) and career evidence map are now available. The applicant must personally verify dates and figures, supply any requested file, answer work-authorization questions, and explicitly submit.
 
 ## Reproduce the portfolio claims
 
