@@ -15,6 +15,9 @@
   <link rel="stylesheet" href="site.css">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <script src="site.js" defer></script>
+  <script src="research-registry.js" defer></script>
+  <script src="referee-core.js" defer></script>
+  <script src="home-system.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -120,58 +123,35 @@
  </div></div>
  </section>
 
- <section class="section wrap lab-section" id="claim-lab" aria-labelledby="claim-lab-title">
-    <div class="section-head">
-      <span class="section-id">RESEARCH TOOLS / INTERACTIVE WORKSPACES</span>
-      <div><h2 class="section-title" id="claim-lab-title">A workspace for <em>what comes next.</em></h2><p class="section-intro">The research archive shows the evidence. Claim Lab helps organize the missing links, independent checks, and decisive experiments behind each claim.</p></div>
-    </div>
-    <div class="lab-feature">
-      <div class="lab-feature-copy">
-        <div class="lab-meta"><span>N∕F — CLAIM LAB / 01</span><span class="lab-ready"><span aria-hidden="true"></span> INTERACTIVE DEMO</span></div>
-        <h3>Make uncertainty<br><em>inspectable.</em></h3>
-        <p>Map proof dependencies, expose evidence gaps, prioritize bottlenecks, and preregister experiments. An evidence-aware workspace for the actual process of discovery.</p>
-        <div class="lab-capabilities" aria-label="Claim Lab features"><span>Claim registry</span><span>Dependency graph</span><span>Audit queue</span><span>Experiment log</span></div>
-        <div class="lab-launch"><a class="button" href="claim-lab.html">Launch Claim Lab <span aria-hidden="true">↗</span></a><span>Local browser storage · JSON export</span></div>
-        <p class="lab-fineprint">Publicly accessible software; records stay in the browser until you export them. Starts with illustrative examples. The app identifies missing evidence fields; it does not execute proof checkers or establish mathematical validity.</p>
-      </div>
-      <div class="lab-feature-visual" aria-hidden="true">
-        <div class="lab-windowbar"><span><i></i><i></i><i></i></span><strong>CLAIM LAB / DEPENDENCIES</strong><small>DEMO DATA</small></div>
-        <svg viewBox="0 0 680 352" preserveAspectRatio="xMidYMid meet" focusable="false">
-          <defs><marker id="lab-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="none" stroke="#74b4aa" stroke-width="1.1"/></marker></defs>
-          <g fill="none" stroke="#345558" stroke-width="2" marker-end="url(#lab-arrow)"><path d="M202 106 C249 106 267 93 316 93"/><path d="M202 258 C246 258 264 238 316 238"/><path d="M454 93 C488 93 496 177 524 177"/><path d="M454 238 C488 238 496 177 524 177"/></g>
-          <g font-size="10" font-family="ui-monospace,monospace" fill="#87a19d" letter-spacing="1.5"><text x="27" y="31">SOURCE CLAIMS</text><text x="318" y="31">VERIFICATION</text><text x="524" y="31">DOWNSTREAM</text></g>
-          <g><rect x="27" y="67" rx="8" width="176" height="78" fill="#1b343b" stroke="#548078"/><rect x="27" y="216" rx="8" width="176" height="78" fill="#1b343b" stroke="#548078"/><rect x="316" y="54" rx="8" width="139" height="78" fill="#203041" stroke="#52758a"/><rect x="316" y="199" rx="8" width="139" height="78" fill="#203041" stroke="#52758a"/><rect x="524" y="138" rx="8" width="132" height="78" fill="#213c35" stroke="#74b4aa"/></g>
-          <g fill="#eff8f3" font-size="12" font-weight="600" font-family="ui-sans-serif,system-ui"><text x="42" y="94">Source lemma</text><text x="42" y="243">Finite witness</text><text x="330" y="81">Exact check</text><text x="330" y="226">Independent test</text><text x="538" y="165">Target theorem</text></g>
-          <g fill="#a6bbb8" font-size="10" font-family="ui-monospace,monospace"><text x="42" y="121">OPEN DEPENDENCY</text><text x="42" y="270">NUMERICAL CANDIDATE</text><text x="330" y="107">CERTIFICATE PATH</text><text x="330" y="252">AUDIT PENDING</text><text x="538" y="190">CONDITIONAL</text></g>
-          <rect x="27" y="323" width="628" height="1" fill="#345558"/>
-        </svg>
-        <div class="lab-windowfoot"><span><i></i> Dependencies visible</span><span>Example only / no external data</span></div>
-      </div>
-    </div>
-  </section>
+ 
+<section class="section wrap sf-case" id="live-case" aria-labelledby="sidon-case-heading">
+  <div class="section-head"><span class="section-id">02 / OPEN A DISCOVERY</span><div><h2 class="section-title" id="sidon-case-heading">One result.<br><em>Every reason to believe it.</em></h2><p class="section-intro">A finite mathematical witness can be inspected from its coordinates through to its proof obligations. Explore the published 30-point construction, then challenge its claim in Referee.</p></div></div>
+  <div class="sf-case-panel">
+   <div class="sf-case-main">
+    <div class="sf-case-top"><span>CASE FILE 001 / ADDITIVE COMBINATORICS</span><span>EXACT FINITE CLAIM</span></div>
+    <h3 id="sidon-live-title">30-point Sidon construction</h3>
+    <p id="sidon-live-scope">An explicit finite witness; no claim of a new asymptotic bound.</p>
+    <div class="sf-witness-header"><span>WITNESS / 30 ORDERED POINTS</span><span>17-POINT SIDON SUBSET</span></div>
+    <div class="sf-witness" id="sidon-witness" role="list" aria-label="Thirty ordered witness points"><span class="sf-point">01</span><span class="sf-point chosen">02</span><span class="sf-point">03</span><span class="sf-point chosen">04</span></div>
+    <div class="sf-case-interact"><button id="sidon-toggle" type="button" aria-pressed="false">Highlight 17-point subset ↗</button><span>Rank positions are displayed; exact integer coordinates are in the linked dossier.</span></div>
+    <div class="sf-case-links"><a class="button" href="passport.html?claim=sidon30">Inspect Proof Passport ↗</a><a class="text-link" href="referee.html?domain=sidon">Run exact finite check ↗</a></div>
+   </div>
+   <aside class="sf-case-aside"><div><span class="sf-label">FINITE SUBSET MAXIMUM</span><strong class="sf-big" id="sidon-live-metric">17 / 30</strong><p>This bound concerns a specific 30-point weak Sidon (4,5) set.</p></div><div class="sf-aside-stats"><div><span>FOUR-POINT CHECKS</span><strong>27,405</strong></div><div><span>PROOF DAG STATES</span><strong>7,801</strong></div></div><div class="sf-aside-foot"><span>EXTERNAL REVIEW</span><strong>OPEN</strong></div></aside>
+  </div>
+  <p class="sf-case-boundary"><strong>Scientific boundary.</strong> The check concerns a particular finite construction, with a public witness and standalone verifier. Existing 5/9 asymptotics belong to prior researchers. <a href="passport.html?claim=sidon30">See the claim and sources ↗</a></p>
+</section>
+<section class="section wrap sf-ecosystem" id="research-systems" aria-labelledby="sf-systems-heading">
+  <div class="section-head"><span class="section-id">03 / RESEARCH SYSTEMS</span><div><h2 id="sf-systems-heading" class="section-title">From a claim<br><em>to the next discovery.</em></h2><p class="section-intro">Choose a focused research experience. Every tool preserves the distinction between an executable finite check, an experimental hypothesis, and an independently reviewed theorem.</p></div></div>
+  <div class="sf-ecosystem-grid">
+   <a href="passport.html" class="sf-system-card"><span>01 / INSPECT</span><h3>Proof Passports</h3><p>Exact claims, four distinct evidence dimensions, assumptions, sources, and historical changes.</p><strong>Read evidence ↗</strong></a>
+   <a href="referee.html" class="sf-system-card"><span>02 / TEST</span><h3>Referee</h3><p>Recompute finite witnesses, test falsified outputs, and export exact-arithmetic receipts.</p><strong>Challenge a witness ↗</strong></a>
+   <a href="atlas.html" class="sf-system-card sf-system-card-accent"><span>03 / CONNECT</span><h3>Mechanism Atlas</h3><p>Explore source-grounded links between discoveries, documented methods, and open premises.</p><strong>Follow connections ↗</strong></a>
+   <a href="exact-research.html" class="sf-system-card"><span>04 / CONSTRUCT</span><h3>Research Tools</h3><p>Discovery Engine, Claim Lab, and exact Werner and finite-field workbenches.</p><strong>Enter workbenches ↗</strong></a>
+  </div>
+  <div class="sf-evidence-snapshot"><div><span class="section-id">EVIDENCE HISTORY / SOURCE LINKED</span><h3>Knowledge changes.<br><em>The record stays.</em></h3><p>Corrections and adverse results remain accessible across versions. No proof status is promoted merely by an attractive visualization.</p><a class="text-link" href="atlas.html#history-title">Inspect the evidence timeline ↗</a></div><div id="home-evidence-history" class="sf-evidence-events"><a href="passport.html?claim=sidon30">Review the finite Sidon evidence record ↗</a></div></div>
+</section>
 
-  <section class="wrap referee-showcase" id="referee" aria-labelledby="referee-title">
-    <div class="referee-showcase-label"><span>RESEARCH TOOLS / INSTRUMENT 02</span><span>FINITE EXACT VERIFICATION</span></div>
-    <div class="referee-showcase-body">
-      <div class="referee-showcase-copy">
-        <div class="referee-seal" aria-hidden="true">N∕F <span>02</span></div>
-        <h2 id="referee-title">Claims need<br><em>an opponent.</em></h2>
-        <p>Meet Referee: submit an integer witness, independently recompute its finite objective through separate arithmetic paths, challenge it with deliberate mutations, and preserve the verdict in a SHA-256 evidence receipt.</p>
-        <div class="referee-tags"><span>EXACT RATIONAL SCORES</span><span>DUAL-PATH REPLAY</span><span>NEGATIVE CONTROLS</span></div>
-        <a href="referee.html" class="button">Launch Referee <span aria-hidden="true">↗</span></a>
-        <p class="referee-scope">Research software / finite proof scope. A passing test does not establish external peer review, mathematical novelty, or a general theorem.</p>
-      </div>
-      <div class="referee-showcase-art" aria-hidden="true">
-        <div class="referee-art-head"><span>REFEREE / ADVERSARIAL RUN</span><span>DEMONSTRATION</span></div>
-        <div class="referee-art-target"><span>EXACT INTEGER WITNESS</span><strong>259/512</strong><small>Illustrative 16-cell test fixture · signed lag -7</small></div>
-        <div class="referee-art-panels"><div><span>A / DIRECT LAGS</span><b>RECOMPUTE</b><i>Exact grid scan</i></div><div><span>B / PAIR DIFFERENCES</span><b>REPLAY</b><i>Independent code path</i></div></div>
-        <div class="referee-art-bottom"><span><i>✓</i> CROSS-PATH AGREEMENT</span><span><i>×</i> MUTATED CLAIM REJECTED</span></div>
-        <div class="referee-art-foot">FINITE TEST PASSED <span>≠ GLOBAL PROOF</span></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="wrap" aria-label="Originality policy" style="padding:22px 0;border-bottom:1px solid var(--line)">
+<section class="wrap" aria-label="Originality policy" style="padding:22px 0;border-bottom:1px solid var(--line)">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap">
       <div><span class="section-id">EDITORIAL RULE / 28 OCT 2026</span>
       <h2 style="font:400 clamp(26px,3vw,40px)/1.1 var(--serif);margin:8px 0">The original findings standard.</h2>
@@ -242,34 +222,12 @@
     </div>
   </section>
 
-  <section class="section wrap" id="work" aria-labelledby="work-title">
-    <div class="section-head">
-      <span class="section-id">02 / RESEARCH INDEX</span>
-      <div>
-        <h2 class="section-title" id="work-title">Original work, indexed.</h2>
-        <p class="section-intro">Only distinct results with original project artifacts are listed. Imported theorems, repackaged prior art, untested proposals, and unsupported priority claims are excluded.</p>
-      </div>
-    </div>
-    <noscript><p class="empty">The complete research index is available below. Search and filtering require JavaScript.</p><style>.filterbar{display:none}</style></noscript>
-    <div class="filterbar">
-      <div class="filter-buttons" role="group" aria-label="Research discipline filters">
-        <button class="filter" type="button" data-filter="all" aria-pressed="true">All</button>
-        <button class="filter" type="button" data-filter="mathematics" aria-pressed="false">Mathematics</button>
-        <button class="filter" type="button" data-filter="systems" aria-pressed="false">Systems</button>
-      </div>
-      <label><span class="visually-hidden" style="position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden">Search research projects</span>
-        <input class="search" id="project-search" type="search" placeholder="Search topics / claims…" autocomplete="off">
-      </label>
-    </div>
-    <div id="project-list" aria-live="polite">
-      <!-- Static original-results whitelist; mirrored in docs/site.js and scripts/originality_gate.py. -->
-      <div class="index-subhead"><strong>ORIGINAL RESEARCH FINDINGS</strong><span>Distinct evidence-backed contributions; context is cited separately.</span></div>
-      <a class="research-row" href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/erdos-overlap-paper.md" target="_blank" rel="noopener" aria-label="Open original result: Erdős minimum overlap"><span class="number">01</span><h3 class="research-title">Erdős minimum overlap</h3><p class="research-desc">Original 131,072-cell rational witness, exact continuous-shift value and independent integer-convolution audit. A distinct finite construction; no global optimality claim.</p><span class="research-status">New explicit finite witness · exact audit</span><span class="research-arrow" aria-hidden="true">↗</span></a>
-      <a class="research-row" href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/README.md" target="_blank" rel="noopener" aria-label="Open original result: 30-point Sidon construction"><span class="number">02</span><h3 class="research-title">30-point Sidon construction</h3><p class="research-desc">An explicitly supplied 30-point integer (4,5) set with exact maximum Sidon subset size 17, verified by an exhaustive finite proof. Known 5/9 asymptotics remain prior art.</p><span class="research-status">Original finite witness · no asymptotic record claim</span><span class="research-arrow" aria-hidden="true">↗</span></a>
-      <a class="research-row" href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/pas-overview.md" target="_blank" rel="noopener" aria-label="Open original result: Proof After Scarcity: adverse test"><span class="number">03</span><h3 class="research-title">Proof After Scarcity: adverse test</h3><p class="research-desc">An original bounded 20-case verification-priority comparison: upstream-first 11/20 against risk-priority 8/20. Archived negative result; no general efficacy claim.</p><span class="research-status">Original limited empirical result · evidence-qualified</span><span class="research-arrow" aria-hidden="true">↗</span></a>
-    </div>
-  </section>
-  <section class="wrap agenda-teaser" aria-labelledby="agenda-teaser-title">
+  
+<section class="section wrap sf-library-invite" id="work" aria-labelledby="work-title">
+ <div><span class="section-id">RESEARCH LIBRARY / 30 SOURCE-LINKED DOCUMENTS</span><h2 id="work-title" class="section-title">Every project.<br><em>One evidence standard.</em></h2><p class="section-intro">The complete library preserves its source-led documentation across mathematics, quantum information, AI safety, and research systems. The five Proof Passports provide a more detailed, separately curated layer.</p></div>
+ <div class="sf-library-actions"><a class="button" href="research.html">Explore the research library ↗</a><a class="text-link" href="passport.html">Inspect Proof Passports ↗</a></div>
+</section>
+<section class="wrap agenda-teaser" aria-labelledby="agenda-teaser-title">
     <div><span class="section-id">RESEARCH AGENDA / TEN UNTESTED INVESTIGATIONS</span>
       <h2 id="agenda-teaser-title">What we investigate next.</h2>
       <p>Two proposed studies in each of five disciplines. Independent tests and failure criteria precede any scientific claim.</p></div>
