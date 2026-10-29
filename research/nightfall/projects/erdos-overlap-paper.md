@@ -21,7 +21,7 @@ The stronger internal witness improves v3 by 7.556784739074212685045889050664065
 ## Mathematical model
 
 For measurable `f:[0,2] -> [0,1]` of integral one, write
-`R_f(t) = integral_R f(x) (1-f(x+t)) dx`, with both functions zero-extended outside `[0,2]`. The aim is to minimize `sup_t R_f(t)` over admissible `f`.
+**Complement zero-extension convention (explicit):** for admissible `f:[0,2] -> [0,1]` with integral 1, define `F(x) = 1_[0,2](x) f(x)` and independently `G(x) = 1_[0,2](x) (1-f(x))`. Then `R_f(t) = integral_R F(x) G(x+t) dx` and the objective is `inf_f sup_t R_f(t)`. Do **not** replace `G(x)` by `1-F(x)` on the full real line: that incorrectly assigns the complementary function value 1 outside the interval and makes the supremum identically 1. This specification correction does not assert any defect in the archived witness-scoring code. See [exact transport/boundary audit](projects/erdos/overlap_transport_20261029/RESEARCH_NOTE.md).
 
 With `N=2H` equal-width cells, heights `a_i=A_i/D` for integer `0 <= A_i <= D` and `sum_i A_i=HD`, the event overlap at signed lag k is
 
