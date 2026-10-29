@@ -105,8 +105,8 @@ def main() -> int:
     registry_text = (DOCS / "research-registry.js").read_text(encoding="utf-8")
     if "FIVE DISTINCT DECISIONS" in homepage_text or "Five decisions." in homepage_text:
         FAILURES.append("EDITORIAL: homepage names five decisions but exposes four stages")
-    if "FOUR EXPLICIT STAGES" not in homepage_text or "Four stages." not in homepage_text:
-        FAILURES.append("EDITORIAL: four-stage narrative missing")
+    if 'id="instruments-heading"' not in homepage_text or 'class="instrument-workflow"' not in homepage_text:
+        FAILURES.append("EDITORIAL: four-stage workflow section missing")
     if "Explore the six Proof Passports" not in library_text or "Explore the five Proof Passports" in library_text:
         FAILURES.append("EDITORIAL: canonical six-Passport link miscount")
     stages = re.search(r'<nav class="instrument-workflow"[^>]*>(.*?)</nav>', homepage_text, re.S)
