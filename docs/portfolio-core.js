@@ -39,7 +39,7 @@
       const open=Array.isArray(raw.open)?raw.open.map(text).filter(Boolean):[];
       claims.push({
         id:raw.id,title:text(raw.title),kind:text(raw.kind),field:text(raw.field),
-        short:text(raw.short),measurement:text(raw.measurement),metric:text(raw.metric),
+        short:text(raw.short),statement:text(raw.statement),conditions:text(raw.conditions),measurement:text(raw.measurement),metric:text(raw.metric),
         validityLevel:validity,validityLabel:text(raw.validity.label)||validity,
         reproducibilityLevel:reproducibility,
         reproducibilityLabel:text(raw.reproducibility.label)||reproducibility,
