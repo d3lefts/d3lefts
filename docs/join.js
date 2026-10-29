@@ -5,12 +5,17 @@
  if(!C||!E){$("join-choices").textContent="The frozen assignment or finite evidence checker could not be loaded. Use Frontier Dispatch or the research archive.";return;}
  const KEY="nightfall.journey.v1",LEDGER="nightfall_nf_frontier_local_v1";
  const ROOTS=C.ranked();
+ const LOG_KINDS=new Set(["hypothesis","experiment","failure","next"]),LOG_LIMIT=24;
+ function rememberFocus(id){
+  try{localStorage.setItem("nightfall.active.case.v1",JSON.stringify({version:1,kind:"frontier",id,at:new Date().toISOString()}));}catch{}
+  window.dispatchEvent(new Event("nightfall:case-changed"));
+ }
  const INTERESTS={
   proof:{preferred:"NF-156-184-9",reason:"Recommended: the nine-mark maximal Sidon decision has explicit existence and impossibility proof obligations."},
   compute:{preferred:"NF-Q7-R6",reason:"Recommended: the bounded Q7 graph search defines an exact finite configuration and independent four-cycle checks."},
   audit:{preferred:"NF-156-184-9",reason:"Recommended: audit the nine-mark existence encoding and its claimed complete UNSAT certificate. The Q7 branch is also available."}
  };
- const empty=()=>({version:1,rootId:null,assignmentId:null,interest:"proof",notes:{},evidence:{}});
+ const empty=()=>({version:1,rootId:null,assignmentId:null,interest:"proof",notes:{},evidence:{},drafts:{},log:{}});
  function load(){
   try{const x=JSON.parse(localStorage.getItem(KEY)||"null");
    if(!x||x.version!==1||typeof x.notes!=="object"||x.notes===null)return empty();
@@ -25,9 +30,16 @@
     }
     evidence[r.id]=arr;
    }
+   const log=Object.fromEntries(ROOTS.map(r=>[r.id,
+     (Array.isArray(x.log?.[r.id])?x.log[r.id]:[]).filter(item=>
+      item&&LOG_KINDS.has(item.kind)&&typeof item.text==="string"&&
+      item.text.length>0&&item.text.length<=700&&typeof item.at==="string"&&
+      /^\\d{4}-\\d\\d-\\d\\dT/.test(item.at)&&item.at.length<=40
+     ).slice(-LOG_LIMIT).map(item=>({kind:item.kind,text:item.text,at:item.at}))]));
    return {version:1,rootId:root?root.id:null,assignmentId:typeof x.assignmentId==="string"?x.assignmentId:null,
     interest,notes:Object.fromEntries(ROOTS.map(r=>[r.id,typeof x.notes[r.id]==="string"?x.notes[r.id].slice(0,4000):""])),
-    evidence,evidenceWarning:invalid?"Rejected "+invalid+" altered or oversized local evidence ledger(s). Re-enter exact inputs.":""};
+    drafts:Object.fromEntries(ROOTS.map(r=>[r.id,typeof x.drafts?.[r.id]==="string"?x.drafts[r.id].slice(0,2000):""])),
+    log,evidence,evidenceWarning:invalid?"Rejected "+invalid+" altered or oversized local evidence ledger(s). Re-enter exact inputs.":""};
   }catch{return empty()}
  }
  const state=load(); let checkedResult=null,saveIssue=state.evidenceWarning||"",lastCheck=null,lastAttack=null,lastPacket=null;
@@ -57,7 +69,7 @@
     elem("h3","",x.title),elem("p","",x.question),elem("p","",x.why));
    const btn=elem("button","",state.rootId===x.id?"Selected — resume question ↗":"Work on this question ↗");
    btn.type="button";
-   btn.addEventListener("click",()=>{state.rootId=x.id;state.assignmentId=x.id;checkedResult=null;lastCheck=null;lastAttack=null;lastPacket=null;save();render();$("workspace").scrollIntoView({behavior:"smooth",block:"start"})});
+   btn.addEventListener("click",()=>{state.rootId=x.id;state.assignmentId=x.id;checkedResult=null;lastCheck=null;lastAttack=null;lastPacket=null;save();rememberFocus(x.id);render();$("workspace").scrollIntoView({behavior:"smooth",block:"start"})});
    card.append(btn);box.append(card);
   }
  }
@@ -85,6 +97,39 @@
   }
   if(!list.length)history.textContent="No preserved tests yet. All outcomes, including rejected candidates, may be recorded.";
  }
+ function drawCasebook(){
+  const t=task(),root=t&&C.base(t.rootId);if(!root)return;
+  const id=root.id,sidon=id==="NF-156-184-9",notes=(state.notes[id]||"").trim();
+  const archived=(state.evidence[id]||[]).length;
+  const steps=[
+   ["join-case-frame",!!notes,notes?"Hypothesis written":"Hypothesis pending"],
+   ["join-case-test",!!(sidon&&lastCheck&&lastCheck.agreement),sidon?"Exact local calculation":"External graph checker needed"],
+   ["join-case-attack",!!(sidon&&lastAttack?.status==="LOCAL_ATTACK_CONTROLS_PASSED"),sidon?"Negative-control challenge":"Independent attack pending"],
+   ["join-case-record",archived>0,archived?archived+" local receipts preserved":"Reproducible receipt pending"]
+  ];
+  for(const [node,done,label] of steps){
+   const el=$(node);el.dataset.done=String(done);
+   el.querySelector("span").textContent=label;
+  }
+  const hasDraft=(state.drafts[id]||"").trim().length>0;
+  const next=!notes?"Write a falsifiable hypothesis and explicit stop rule below.":
+    !sidon?"This Q7 scope has no on-page proof oracle. Specify the source mask, six removals and seven additions; take the exact checker to Frontier for independent verification.":
+    !hasDraft?"Enter an exact nine-mark candidate below; the draft will now survive navigation and reloads.":
+    !lastCheck?"Run the exact finite checker. Restored draft inputs never inherit a previous pass.":
+    !lastAttack?"Run independent difference checks and deliberate negative controls on the unchanged input.":
+    !archived?"Review the candidate and explicitly preserve its source-bound local receipt.":
+    "Export the casebook, then request outside review; no internal status is promoted.";
+  $("join-case-next").textContent=next;
+  const history=$("join-log-history");history.replaceChildren();
+  const items=state.log[id]||[];
+  for(const entry of items.slice().reverse()){
+   const li=elem("li","join-log-entry");
+   const tag=elem("strong","",entry.kind.toUpperCase()+" · "+entry.at.slice(0,16).replace("T"," "));
+   li.append(tag,elem("p","",entry.text));history.append(li);
+  }
+  if(!items.length)history.append(elem("li","join-log-empty","No observations yet. Failed attempts belong here too."));
+  $("join-log-status").textContent=items.length+" / "+LOG_LIMIT+" unreviewed local observations for this exact assignment.";
+ }
  function drawActive(){
   const t=task(),x=t&&C.base(t.rootId),has=!!x;
   $("join-active").hidden=!has;$("join-active-empty").hidden=has;
@@ -98,6 +143,7 @@
   $("join-stop").textContent=x.stop;
   $("join-frontier-link").href="frontier.html?task="+encodeURIComponent(t.id)+"#active-title";
   $("join-notes").value=state.notes[x.id]||"";
+  $("join-values").value=state.drafts[x.id]||"";
   const sidon=x.id==="NF-156-184-9";
   $("join-sidon-starter").hidden=!sidon;$("join-q7-starter").hidden=sidon;
   $("join-starter-title").textContent=sidon?"Challenge a nine-mark candidate":"Frame a six-deletion search";
@@ -112,7 +158,7 @@
   document.querySelector('[data-stage="challenge"] strong').textContent=sidon?"Run exact attacks on this candidate ↗":"Plan proof and checker attacks ↗";
   document.querySelector('[data-stage="record"] strong').textContent=sidon?"Preserve a source-bound evidence packet ↗":"Carry unreviewed contract to Claim Lab ↗";
   $("join-github").href=C.issueUrl(t,"ASSIGNMENT REQUEST","I would like to work on this source-linked unresolved branch. Proposed approach:\n"+(state.notes[x.id]||"To be specified."));
-  sourceLinks(x);
+  sourceLinks(x);drawCasebook();
  }
  function render(){drawChoices();drawActive()}
  function route(stage){
@@ -144,26 +190,30 @@
  function exportBrief(){
   const t=task();if(!t)return;
   const root=C.base(t.rootId);
+  const log=(state.log[root.id]||[]).map(x=>x.at+" ["+x.kind+"] "+x.text).join("\n");
   const s=C.brief(t)+"\n\nWORKING NOTES (AUTHOR-SUPPLIED, UNREVIEWED)\n"+(state.notes[root.id]||"No notes yet.")+
+   "\n\nRESTORED DRAFT INPUT (UNVERIFIED)\n"+(state.drafts[root.id]||"None")+"\n\nLOCAL RESEARCH HISTORY / UNREVIEWED\n"+(log||"No observations yet.")+
   "\n\nSTATUS: Research input only. No independent verification and no automatic claim promotion.\n";
   const url=URL.createObjectURL(new Blob([s],{type:"text/plain"}));
   const a=elem("a");a.href=url;a.download="NIGHTFALL_"+t.rootId+"_research_brief.txt";
   document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
  }
  const query=new URLSearchParams(location.search).get("task");
- if(C.base(query)){state.rootId=query;state.assignmentId=query;save()}
+ if(C.base(query)){state.rootId=query;state.assignmentId=query;save();rememberFocus(query)}
  $("join-interest").value=state.interest;
  $("join-interest").addEventListener("change",e=>{state.interest=INTERESTS[e.target.value]?e.target.value:"proof";save();drawChoices()});
  $("join-notes").addEventListener("input",e=>{
   if(!state.rootId)return;state.notes[state.rootId]=e.target.value.slice(0,4000);
   const persisted=save();$("join-save").textContent=persisted?"Saved locally; still unreviewed.":"Storage unavailable; export a brief before leaving.";
+  drawCasebook();
   const t=task();if(t)$("join-github").href=C.issueUrl(t,"ASSIGNMENT REQUEST","I would like to work on this source-linked unresolved branch. Proposed approach:\n"+state.notes[state.rootId]);
  });
  $("join-values").addEventListener("input",()=>{
+  if(state.rootId){state.drafts[state.rootId]=$("join-values").value.slice(0,2000);save()}
   lastCheck=null;lastAttack=null;lastPacket=null;checkedResult=null;saveIssue="Input changed. Run the exact check again; earlier computed results cannot follow edited data.";
   $("join-check-output").textContent="Source modified — run exact finite check.";
   $("join-attack-output").textContent="Challenge cleared because the source input changed.";
-  drawEvidence();
+  drawEvidence();drawCasebook();
  });
  $("join-run-check").addEventListener("click",()=>{
   const t=task();if(!t||t.rootId!=="NF-156-184-9")return;
@@ -180,7 +230,7 @@
   }catch(e){checkedResult="Candidate input rejected: "+e.message;saveIssue="Finite input refused; preserve no scientific conclusion.";}
   $("join-check-output").textContent=checkedResult;
   $("join-attack-output").textContent="Run the separate challenge step on this exact input.";
-  drawEvidence();
+  drawEvidence();drawCasebook();
  });
  function runAttack(){
   const t=task();
@@ -195,7 +245,7 @@
    "\n"+lastAttack.actual_obstruction+
    "\n"+lastAttack.controls.map(c=>c.name+": "+(c.rejected_as_expected?"PASS":"FAIL")).join("\n"):
    "Attacks need the unchanged exact source input.";
-  drawEvidence();
+  drawEvidence();drawCasebook();
  }
  $("join-run-attack").addEventListener("click",runAttack);
  $("join-save-evidence").addEventListener("click",()=>{
@@ -212,7 +262,7 @@
    if(!save())throw Error("Local evidence storage failed — export is recommended.");
    saveIssue="Source, exact result, attack controls and your unreviewed note preserved locally; no theorem claim promoted.";
   }catch(e){saveIssue="Evidence preservation refused: "+e.message}
-  drawEvidence();
+  drawEvidence();drawCasebook();
  });
  $("join-export-evidence").addEventListener("click",()=>{
   const t=task(),root=t&&C.base(t.rootId);if(!root||root.id!=="NF-156-184-9")return;
@@ -224,6 +274,34 @@
   const url=URL.createObjectURL(new Blob([JSON.stringify(packet,null,2)],{type:"application/json"}));
   const a=elem("a");a.href=url;a.download="NIGHTFALL_N184_source_bound_evidence.json";
   document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ });
+ $("join-add-entry").addEventListener("click",()=>{
+  const t=task(),root=t&&C.base(t.rootId);if(!root)return;
+  const text=$("join-log-text").value.trim().slice(0,700),kind=$("join-log-kind").value;
+  const items=state.log[root.id]||[];
+  if(!LOG_KINDS.has(kind)||text.length<12){$("join-log-status").textContent="Describe at least 12 characters and choose a valid observation type.";return}
+  if(items.length>=LOG_LIMIT){$("join-log-status").textContent="Casebook limit reached. Export JSON before removing an old entry.";return}
+  if(items.some(x=>x.kind===kind&&x.text===text)){$("join-log-status").textContent="Duplicate local observation. Edit the wording if the evidence changed.";return}
+  state.log[root.id]=items.concat({kind,text,at:new Date().toISOString()});
+  if(!save()){state.log[root.id]=items;$("join-log-status").textContent="Browser storage unavailable. Export your notes before leaving.";return}
+  $("join-log-text").value="";rememberFocus(root.id);drawCasebook();
+ });
+ $("join-export-case").addEventListener("click",()=>{
+  const t=task(),root=t&&C.base(t.rootId);if(!root)return;
+  let packet;
+  try{
+   const entries=state.evidence[root.id]||[];
+   if(entries.some(x=>!E.verify(x,C).valid))throw Error("Local finite evidence failed independent replay");
+   packet={schema:"nightfall-source-bound-casebook-v1",reviewStatus:"unreviewed",source:C.packet(t),
+    frozenRoot:root.id,workingNotes:state.notes[root.id]||"",
+    candidateDraft:root.id==="NF-156-184-9"?state.drafts[root.id]||"":null,
+    observations:state.log[root.id]||[],localReceipts:entries,
+    limitations:["Local observations are unreviewed.","Draft candidate inputs have no inherited calculation status.","This record is no substitute for independent source replay or public assignment."]};
+  }catch(e){$("join-log-status").textContent="Export blocked: "+e.message;return}
+  const url=URL.createObjectURL(new Blob([JSON.stringify(packet,null,2)],{type:"application/json"}));
+  const a=elem("a");a.href=url;a.download="NIGHTFALL_"+root.id+"_UNREVIEWED_casebook.json";
+  document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  $("join-log-status").textContent="Casebook exported. Check its contents before sharing publicly.";
  });
  document.querySelectorAll("[data-stage]").forEach(b=>b.addEventListener("click",()=>route(b.dataset.stage)));
  $("join-next-action").addEventListener("click",()=>route("explore"));
