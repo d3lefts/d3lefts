@@ -525,4 +525,4 @@ html:not([data-nf-theme="dusk"]) :is(.feature.dark,.flagship-dark,.review-sectio
 html:not([data-nf-theme="dusk"]){--nf-inline-foreground:#fcf3ea}
 
 /* Explicit higher-specificity cream ink on oxblood navigation. */
-html:not([data-nf-theme="dusk"]) .nav .nav-call{color:#fcf3ea}
+html:not([data-nf-theme="dusk"]) .nav .nav-call{color:#fcf3ea!important}
