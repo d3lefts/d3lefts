@@ -1,0 +1,51 @@
+name: RYEV three-grid theorem exact audit
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/agent-reports/ryev_three_grid_20261029/**"
+      - ".github/workflows/ryev-three-grid.yml"
+  push:
+    paths:
+      - "research/nightfall/agent-reports/ryev_three_grid_20261029/**"
+      - ".github/workflows/ryev-three-grid.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  independent-finite-proof-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Strict syntax and field sanity checks
+        run: |
+          python3 -m py_compile research/nightfall/agent-reports/ryev_three_grid_20261029/check_48_grid.py
+          python3 -m py_compile research/nightfall/agent-reports/ryev_three_grid_20261029/verify_nine_schedule.py
+      - name: All 2925 center multisets by independent exact calculations
+        run: python3 research/nightfall/agent-reports/ryev_three_grid_20261029/check_48_grid.py | tee /tmp/ryev-three-grid-audit.json
+      - name: Nine-query decoder: 256 phase classes, 3000 signals, 32 supports
+        run: python3 research/nightfall/agent-reports/ryev_three_grid_20261029/verify_nine_schedule.py | tee /tmp/ryev-nine-query-audit.json
+      - name: Assert machine-readable exact evidence boundaries
+        run: |
+          python3 - <<'PY'
+          import json
+          a=json.load(open('/tmp/ryev-three-grid-audit.json'))
+          b=json.load(open('/tmp/ryev-nine-query-audit.json'))
+          assert a['status']==b['status']=='PASS'
+          assert a['cases']['rank2']['minimumLargestBucket']==9
+          assert all(v['translationMultisets']==2925 for v in a['cases'].values())
+          assert b['fullSupportPhasePatterns']==256
+          assert b['randomVectors']==3000 and b['supportPatterns']==32
+          assert b['maximumReadings']==9
+          print('PASS: exact geometric lower bound and constructive upper bound in same restricted schedule')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ryEV-three-grid-exact-finite-audits
+          path: |
+            /tmp/ryev-three-grid-audit.json
+            /tmp/ryev-nine-query-audit.json
+          retention-days: 90
