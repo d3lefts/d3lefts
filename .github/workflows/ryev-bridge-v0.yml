@@ -1,0 +1,52 @@
+name: Ryev Evidence Bridge v0 independent replay and browser handoff
+on:
+  push:
+    branches: ["ryev/bridge-v0-rebased-20261029"]
+  pull_request:
+    paths:
+      - "docs/claim-lab.html"
+      - "docs/evidence-bridge-core.js"
+      - "research/nightfall/evidence-bridge/**"
+      - ".github/workflows/ryev-bridge-v0.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  receipt-and-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Syntax and exact source parity
+        run: |
+          cmp docs/evidence-bridge-core.js research/nightfall/evidence-bridge/core.js
+          node --check research/nightfall/evidence-bridge/core.js
+          node --check research/nightfall/evidence-bridge/test.cjs
+          node --check research/nightfall/evidence-bridge/invariant_forge.cjs
+          node --check research/nightfall/evidence-bridge/test_browser.mjs
+          node --check research/nightfall/evidence-bridge/test_owner_handoff.mjs
+      - name: Genuine first-party receipts and adversarial refusals
+        run: BRIDGE_FIXTURE_DIR=/tmp/bridge-fixtures node research/nightfall/evidence-bridge/test.cjs
+      - name: Independent Python arithmetic
+        run: |
+          python3 research/nightfall/referee/independent_verify.py /tmp/bridge-fixtures/sidon.json
+          python3 research/nightfall/referee/independent_verify.py /tmp/bridge-fixtures/overlap.json
+          if python3 research/nightfall/referee/independent_verify.py /tmp/bridge-fixtures/tamperedSidon.json; then exit 1; fi
+      - name: Invariant-preserving metamorphic checks
+        run: node research/nightfall/evidence-bridge/invariant_forge.cjs > /tmp/invariant-forge.json
+      - name: Owner direct-path and file-import Chromium regression
+        run: |
+          npm install --no-save --no-package-lock playwright-core@1.56.1
+          BRIDGE_FIXTURE_DIR=/tmp/bridge-fixtures CHROME_BIN="$(command -v google-chrome)" node research/nightfall/evidence-bridge/test_browser.mjs
+          CHROME_BIN="$(command -v google-chrome)" node research/nightfall/evidence-bridge/test_owner_handoff.mjs
+      - name: Archive accepted and rejected internal fixtures
+        uses: actions/upload-artifact@v4
+        with:
+          name: ryEV-bridge-v0-internal-replay
+          path: |
+            /tmp/bridge-fixtures
+            /tmp/invariant-forge.json
+          retention-days: 90
