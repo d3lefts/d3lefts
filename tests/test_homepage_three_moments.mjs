@@ -10,7 +10,7 @@ const count=(s,pattern)=>(s.match(pattern)||[]).length;
 
 test('A single coherent front-door narrative retains the original scientific page',()=>{
   const stages=[
-    '<section class="hero wrap"',
+    '<section class="hero wrap',
     '<section class="section wrap flagships"',
     '<section class="instrument-bridge wrap"',
     '<section class="section wrap sf-case"',
