@@ -14,7 +14,7 @@ The public program publishes explicit assumptions, exact finite witnesses where 
 | Erdős minimum overlap | Exact 131,072-cell rational finite witness; original archives pending public mirror; external reproduction open | [Continuous overlap and exact audit](research/nightfall/projects/erdos/STATUS_AND_PRIOR_ART_20261028.md) |
 | Werner undistillability | Finite-copy conditional certificate registry; source-SDP margins and complete public certificate assets awaiting verification | [Werner atlas and audit gates](research/nightfall/projects/werner-atlas/README.md) |
 | Finite-field phase retrieval | Uniform decoding manuscript and finite checks; complete original decoder package and expert review outstanding | [Phase-retrieval handoff](research/nightfall/projects/finite-field-retrieval-handoff-excerpt.txt) |
-| Deterministic adaptive finite-field decoder | Two-round ≤2k−1 measurement proof candidate; 18,725 exact finite inputs independently checked; outside proof and priority review pending | [Adaptive decoder proof and checker](research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/README.md) |
+| Deterministic adaptive finite-field decoder | Two-round k+⌈(k−1)/(r−1)⌉ adaptive measurement proof candidate, optimal at k+1 for 2≤k≤r; 53,478 exact finite inputs checked; external proof and priority review pending | [Adaptive decoder proof and checker](research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/README.md) |
 | Agent safety and SourceBound | Mathematical theory separated from experimental implementation; original 116-file review ZIP publicly released | [Theorem-and-evidence dossier](research/nightfall/projects/ai-safety-peer-review-2026-10-28/README.md) |
 
 ## Verify, challenge, and cite
