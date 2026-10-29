@@ -68,6 +68,9 @@ try{
    await page.locator("#nf-values").fill("1, 2, 6, 13, 26, 28, 36, 42, 45");
    await page.locator("#nf-check").click();
    assert.match(await page.locator("#nf-check-output").innerText(),/not maximal/,"correct finite but nonmaximal controls");
+   await page.locator("#nf-near").click();
+   await page.locator("#nf-check").click();
+   assert.match(await page.locator("#nf-check-output").innerText(),/16, 166/,"source-linked near-candidate remains open");
    await page.locator("#nf-claim").click();
    assert.match(await page.locator("#nf-session-list").innerText(),/CLAIMED/,"local claim recorded");
    await page.locator("#nf-split").click();
@@ -85,6 +88,12 @@ try{
    assert.match(frontierDownload.suggestedFilename(),/frontier_local_ledger\.json$/);
    await page.reload({waitUntil:"load"});
    assert.match(await page.locator("#nf-session-list").innerText(),/PROPOSED/,"browser-local reload persists review status");
+   await page.locator('#nf-tool-links a[href="orchestrator.html"]').click();
+   await page.waitForURL(/orchestrator\\.html/);
+   assert.match(await page.locator("#claim-text").inputValue(),/smallest selected mark in \\[1, 184\\]/,"exact scope transferred");
+   assert.match(await page.locator("#orch-message").innerText(),/editable fields/,"user-reviewed handoff");
+   assert.equal(await page.locator("#orch-export").isDisabled(),true,"no autonomous dispatch or proof promotion");
+
   }
   await page.goto(origin+"discovery.html",{waitUntil:"load"});
   assert.equal(await page.locator(".context h1").innerText(),"Minimum overlap · EA #36","Discovery Engine initial project");
