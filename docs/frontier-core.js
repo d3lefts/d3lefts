@@ -105,7 +105,7 @@
       id:t.id.slice(0,80),
       claim:x.question+" Restricted to "+predicate(t)+".",
       source:x.evidence+" | Agent NF snapshot "+VERSION,
-      falsifier:"A claimed positive witness fails if: "+x.closureYes+" A claimed negative proof fails if a counterexample survives or its purported complete certificate cannot be independently replayed. "+x.closureNo
+      falsifier:"A claimed YES fails if any positive-certificate requirement is violated: "+x.closureYes+" A claimed NO fails if a valid witness survives, an assigned branch is omitted, or the complete proof cannot be replayed. Required negative certificate: "+x.closureNo
     };
   }
   function checkSidonCandidate(values,N,task){
