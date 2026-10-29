@@ -1,0 +1,24 @@
+name: Verify Tessera q25 two-generation and continuum two-lag
+on:
+  push:
+    paths:
+      - "research/nightfall/projects/erdos/tessera_two_generation_20261029/**"
+      - ".github/workflows/verify-tessera-two-generation-20261029.yml"
+  pull_request:
+    paths:
+      - "research/nightfall/projects/erdos/tessera_two_generation_20261029/**"
+      - ".github/workflows/verify-tessera-two-generation-20261029.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile and independently replay 234360 affine cases, witness and rational continuum tests
+        run: python3 research/nightfall/projects/erdos/tessera_two_generation_20261029/test.py
