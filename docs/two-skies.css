@@ -510,3 +510,51 @@ html:not([data-nf-theme="dusk"]) .review-warning{background:#51382b;color:#f7e8d
 /* Standalone Constellation overrides its own body background; honor both skies. */
 html[data-nf-theme="dusk"] body.co-page{background-color:#04060b}
 html:not([data-nf-theme="dusk"]) body.co-page{background-color:#28190f}
+
+
+/* Whole-site computed-style audit — 26 themed pages, both viewports.
+   Source models, labels, SVG numbers and evidence classes stay intact.
+   These are presentation surfaces formerly painted with parchment. */
+html:not([data-nf-theme="dusk"]){
+ --nf-clean-surface:#3b281d;--nf-clean-ink:#f7e8db;
+ --nf-clean-border:#75574a;--nf-clean-muted:#ceb6a7;
+ --nf-clean-raised:#51382b;--nf-clean-gold:#edc16e;
+}
+html[data-nf-theme="dusk"]{
+ --nf-clean-surface:#0c1527;--nf-clean-ink:#f1eedc;
+ --nf-clean-border:#33405d;--nf-clean-muted:#bec3d6;
+ --nf-clean-raised:#16223c;--nf-clean-gold:#e6deaa;
+}
+html :is(.about-card,.ep-study,.ep-card,.ep-comparison,.provenance-state,
+ .rt-adversary-companion,.rt-stage,.rt-launch-card.rt-launch-secondary,
+ .rt-boundary,.rt-card,.rt-result,.sa-status,.sa-step,.sa-formula,.sa-hist,
+ .sa-link,.lp-steps article,.lp-final-actions a,.co-page #co-sky){
+ background-color:var(--nf-clean-surface)!important;
+ color:var(--nf-clean-ink);border-color:var(--nf-clean-border);
+}
+html :is(.about-card,.ep-study,.ep-card,.provenance-state,
+ .rt-adversary-companion,.rt-stage,.rt-boundary,.rt-card,
+ .sa-status,.sa-step,.sa-formula,.sa-link,.lp-steps article,.lp-final-actions a)
+ :is(h2,h3,strong,b){color:var(--nf-clean-ink)}
+html :is(.about-card,.ep-study,.ep-card,.provenance-state,
+ .rt-adversary-companion,.rt-stage,.rt-boundary,.rt-card,
+ .sa-status,.sa-step,.sa-link,.lp-steps article,.lp-final-actions a)
+ :is(p,small){color:var(--nf-clean-muted)}
+html :is(.rt-stage,.rt-launch-card.rt-launch-secondary,.sa-link,.lp-final-actions a):hover{
+ background-color:var(--nf-clean-raised)!important;
+ border-color:var(--nf-clean-gold);
+}
+html :is(#desk-notes,#ep-hash-button,#lp-delete){
+ background-color:var(--nf-clean-surface)!important;
+ color:var(--nf-clean-ink);border-color:var(--nf-clean-border);
+}
+html :is(#desk-notes,#ep-hash-button,#lp-delete):disabled{
+ color:var(--nf-clean-muted);opacity:.78;
+}
+html :is(.pp-badge.finite,.pp-badge.public,.pp-badge.scoped,.pp-badge.bounded){
+ background-color:var(--nf-clean-raised)!important;
+ color:var(--nf-clean-gold);border-color:var(--nf-clean-border);
+}
+html :is(.sa-formula,.sa-hist,.rt-result){
+ overflow-wrap:anywhere;
+}
