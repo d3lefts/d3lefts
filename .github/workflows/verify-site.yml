@@ -85,12 +85,6 @@ jobs:
           retention-days: 90
       - name: Self-test offline publication-scope scanner
         run: python3 scripts/audit_release_scope.py --self-test
-      - name: Browser smoke test (mobile, tablet, desktop)
-        run: |
-          npm install --no-save --no-package-lock playwright-core@1.56.1
-          mkdir -p browser-artifacts
-          set -o pipefail
-          CHROME_BIN="$(command -v google-chrome)" node scripts/site_browser_smoke.mjs 2>&1 | tee browser-artifacts/browser-smoke.log
       - name: Verify ethereal theme across 22 pages and capture previews
         run: |
           set -o pipefail
@@ -103,6 +97,12 @@ jobs:
           path: browser-artifacts/ethereal-*.png
           if-no-files-found: ignore
           retention-days: 14
+      - name: Browser smoke test (mobile, tablet, desktop)
+        run: |
+          npm install --no-save --no-package-lock playwright-core@1.56.1
+          mkdir -p browser-artifacts
+          set -o pipefail
+          CHROME_BIN="$(command -v google-chrome)" node scripts/site_browser_smoke.mjs 2>&1 | tee browser-artifacts/browser-smoke.log
       - name: Preserve browser failure log
         if: failure()
         uses: actions/upload-artifact@v4

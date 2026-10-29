@@ -327,6 +327,10 @@ try{
   }
   if(width===390){
     await page.goto(origin+"claim-lab.html",{waitUntil:"load"});
+    // Earlier tests may have persisted a non-demo claim registry in this context.
+    // Reset the fixture before asserting the initial illustrative-data notice.
+    await page.evaluate(()=>localStorage.removeItem("nightfall_claim_lab_v1"));
+    await page.reload({waitUntil:"load"});
     assert.equal(await page.locator(".demoNotice").count(),1,"Claim Lab demo explicitly labeled");
     assert.equal(await page.locator('[data-tab="claims"]').count(),1,"Claim Lab standalone navigation");
     await page.locator("#newClaimBtn").click();
