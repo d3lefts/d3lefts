@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-29",
+  "exact_controls": {
+    "exhaustive_signals_per_presentation": 31875,
+    "graphs_t0_t1_t2_k4_14": "all deletion subsets",
+    "removed_edge_counterexamples": 151,
+    "two_field_presentations": 2
+  },
+  "files": {
+    "GRAPH_PHASE_THEOREM.md": {
+      "bytes": 9341,
+      "sha256": "5f7e1b812758cec040e087f07d614af02ccec44c2ac7d316d20af816d3c0ae5a"
+    },
+    "verify_graph_phase.log": {
+      "bytes": 1008,
+      "sha256": "6176f7dc98e2d0c805d67ba048e829cd5d23bc575df2b9540187d9b2724cc27c"
+    },
+    "verify_graph_phase.py": {
+      "bytes": 4523,
+      "sha256": "99433f521b5402073e25538ce7b2b4845b993331c5bcf911a3241d1b31b16f73"
+    },
+    "verify_independent.log": {
+      "bytes": 397,
+      "sha256": "db2ada4fdd6e28016db1b62afc2c8f05d75a690fb04a0df24f01803e02da9a4c"
+    },
+    "verify_independent.py": {
+      "bytes": 3266,
+      "sha256": "7c5d8cf08834e45d419db40c5a2f6bf846331262ee803a673b61d9338e9da08f"
+    }
+  },
+  "github_issue": 119,
+  "status": "internally_proved_and_exact_audited; external_priority_review_pending"
+}
