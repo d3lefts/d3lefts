@@ -59,6 +59,16 @@ try{
   if(width===390){
    // An unlisted page must still render its real canonical records.
    await page.goto(origin+"portfolio.html",{waitUntil:"load"});
+   assert.equal(await page.locator("#career .pf-career-card").count(),3,
+     "Career-first portfolio shows precisely Walmart, Autograph, Amazon");
+   assert.match(await page.locator("#career").innerText(),/Walmart Global Tech/);
+   assert.match(await page.locator("#career").innerText(),/Autograph/);
+   assert.match(await page.locator("#career").innerText(),/Amazon/);
+   assert.match(await page.locator("#foundations").innerText(),/NIGHTFALL/);
+   assert.match(await page.locator("#foundations").innerText(),/ChatGPT.*Claude/s);
+   assert((await page.locator("#career").boundingBox()).y <
+     (await page.locator("#work").boundingBox()).y,
+     "Professional work must be discoverable before research prototypes");
    const canonicalTotal=await page.evaluate(()=>window.NightfallRegistry.claims.length);
    assert.equal(await page.locator("#pf-live-records .pf-ledger-card").count(),canonicalTotal,
      "Portfolio must include every published canonical claim, no manual copy");
