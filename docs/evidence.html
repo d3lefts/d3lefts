@@ -55,6 +55,23 @@
 <strong>MASTER ARCHIVE STATUS — TWO UPLOADS PENDING</strong>
 The GitHub repository currently exposes source manuscripts, checkers, audit summaries and a fresh independent big-integer verifier. The two complete binary archives are queued for desktop upload. Once published, a release-triggered GitHub Actions check will download the frozen assets and independently reconstruct the finite 131,072-cell maximum. <a href="https://github.com/d3lefts/d3lefts/issues/5" target="_blank" rel="noopener"><u>Track upload status in issue #5</u></a>. This website will identify the download links only after the public assets and their checksums have been verified.
 </div>
+
+<section aria-labelledby="new-finite-evidence">
+<h2 id="new-finite-evidence">Complete finite evidence, available now.</h2>
+<p>The 30-point Sidon construction now has a separately regenerated <strong>edge-essentiality certificate</strong> with all original coordinate integers, all 28 arithmetic-progression constraints, and 28 explicit 18-point survivor sets. The exact Python search excludes all 12-vertex progression covers using 639 memoized states. Its mutation control rejects a corrupted witness. This is a complete primary source package for <em>that specific finite theorem</em>, independent of the pending master binary archives.</p>
+<div class="source-links">
+<a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/edge_essentiality_certificate.json" target="_blank" rel="noopener">Full source + 28 counterwitnesses (JSON) ↗</a>
+<a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/edge_essentiality.py" target="_blank" rel="noopener">Exact source generator and checker ↗</a>
+<a href="https://github.com/d3lefts/d3lefts/actions/runs/40814933934" target="_blank" rel="noopener">Successful independent CI reconstruction ↗</a>
+<a href="passport.html?claim=sidon30">Sidon Proof Passport ↗</a>
+</div>
+<div class="code-label">REPLAY THE COMPLETE PUBLIC FINITE CERTIFICATE</div>
+<pre><code>cd research/nightfall/projects/sidon-finite-30
+python3 edge_essentiality.py
+python3 edge_essentiality.py --json &gt; rebuilt.json
+python3 -c 'import json; assert json.load(open("rebuilt.json")) == json.load(open("edge_essentiality_certificate.json"))'</code></pre>
+<p class="small">Scope: the 28 AP constraints are individually essential for the fixed 30-point hypergraph. This establishes neither an asymptotic Sidon improvement nor external mathematical novelty. The finite source files are publicly downloadable now. The two master ZIPs below remain privately held pending their existing disclosure gate.</p>
+</section>
 <h2>Two immutable archive files.</h2>
 <div style="overflow-x:auto">
 <table class="asset-table">
