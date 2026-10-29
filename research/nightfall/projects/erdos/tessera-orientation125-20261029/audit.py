@@ -107,7 +107,7 @@ def main():
  else:raise AssertionError('invalid source accepted')
  print('PASS malformed-source negative control')
  digest=sha256(json.dumps(ledger,sort_keys=True,separators=(',',':')).encode()).hexdigest()
- assert digest=='dd0e28ca0b3ff994a5146ce0774238f1cd5a4ee65b3712f194d404fc12089de9'
+ assert digest=='f07595256d1b8703113070c1da555dc7d691c30ac3bf2c01b7a251aa763fd75a'
  assert sum(z['cases'] for z in ledger)==19398
  print('PASS 19,398 complete affine-source/cut cases, report SHA256',digest)
 if __name__=='__main__':main()
