@@ -104,8 +104,7 @@ try{
     assert.ok(await page.locator('a[href="desk.html"]').count()>0);
     assert.ok(await page.locator('a[href="research.html"]').count()>0);
     const sections=await page.locator("main section").count();
-    assert.equal(await page.locator("#lab-jump-nav a").count(),8);
-    assert.ok(await page.locator('#lab-jump-nav a[href="investigate.html"]').count()===1);
+    assert.equal(await page.locator("#lab-jump-nav a").count(),7);
     assert.equal(await page.locator(".flagship-context").count(),4);
     note("improvement","The full homepage still contains "+sections+" sections; a section index offers immediate navigation without truncating content.","homepage");
   });
@@ -285,42 +284,31 @@ try{
   });
 
   // 50–60: Mobile exploration and accessibility friction under realistic viewport.
-  await step("CONSTELLATION","Night theme and same-context guided investigation",async()=>{
+  await step("CONSTELLATION / NIGHT","Canonical Join route and persistent visual theme",async()=>{
     await page.setViewportSize({width:1440,height:900});
-    await visit("investigate.html");
-    await page.evaluate(()=>{
-      localStorage.removeItem("nightfall.theme.v1");
-      localStorage.removeItem("nightfall.investigation.v1");
-    });
+    await visit("join.html");
+    await page.evaluate(()=>{localStorage.removeItem("nightfall.theme.v1");localStorage.removeItem("nightfall.journey.v1")});
     await page.reload();
     assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"night");
     assert.ok(await page.locator(".nf-theme-toggle").isVisible());
-    await page.locator(".iv-option[data-issue='cycles']").click();
-    await page.locator('input[name="iv-role"][value="challenge"]').check();
-    await page.locator("#iv-start-button").click();
-    assert.equal(await page.locator(".iv-step").count(),6);
-    assert.match(await page.locator("#iv-session-status").innerText(),/Erdős.*CHALLENGE.*STAGE 1\/6/i);
-    await page.locator("#iv-note").fill("Test cycle lifting without assuming an abelian deck group.");
-    await page.locator(".iv-step-actions button").click();
-    assert.match(await page.locator("#iv-session-status").innerText(),/STAGE 2\/6/);
-    await visit("referee.html");
-    assert.ok(await page.locator(".nf-journey-return").isVisible());
-    assert.match(await page.locator(".nf-journey-return").innerText(),/CYCLE FRONTIER/i);
+    await page.locator("#join-interest").selectOption("compute");
+    await page.locator(".join-choice button").first().click();
+    assert.equal(await page.locator("#join-active").isVisible(),true);
+    await page.locator("#join-notes").fill("Try a bounded, independently checkable Q7 proof obligation.");
+    await visit("research.html");
+    assert.ok(await page.locator(".nf-journey-rail").count()===1);
+    assert.ok(await page.locator(".nf-theme-toggle").count()===1);
     await page.locator(".nf-theme-toggle").click();
     assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"paper");
-    await visit("research.html");
+    await visit("join.html");
     assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"paper");
-    await page.locator(".nf-journey-return").click();
-    assert.match(await page.locator("#iv-session-status").innerText(),/STAGE 2\/6/);
-    assert.equal(await page.locator("#iv-note").inputValue(),"Test cycle lifting without assuming an abelian deck group.");
-    await page.locator("#iv-reset").click();
-    assert.match(await page.locator("#iv-session-status").innerText(),/No active session/);
+    assert.equal(await page.locator("#join-notes").inputValue(),"Try a bounded, independently checkable Q7 proof obligation.");
     await page.locator(".nf-theme-toggle").click();
     assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"night");
     await page.setViewportSize({width:390,height:844});
-    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)<=3,"Investigation mobile horizontal overflow");
-    await screenshot("constellation-night-investigation.png");
-    note("strength","Night/Paper persists across pages; active evidence-bounded problem and private note survive the tool handoff.","constellation");
+    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)<=3,"Join night-theme mobile overflow");
+    await screenshot("constellation-night-join.png");
+    note("strength","Night and Paper remain persistent. The canonical Join assignment survives tool navigation and carries its unreviewed note.","constellation");
   });
   await step("50–53","Phone 390px: navigation, hierarchy and horizontal overflow",async()=>{
     await page.setViewportSize({width:390,height:844});

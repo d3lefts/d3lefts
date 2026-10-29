@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en"><head>
+<script>try{document.documentElement.dataset.nfTheme=localStorage.getItem("nightfall.theme.v1")==="paper"?"paper":"night"}catch(e){document.documentElement.dataset.nfTheme="night"}</script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#18251d">
+<meta name="description" content="Follow a NIGHTFALL result, understand its evidence, then work on an explicitly unsolved research question in a single guided workspace.">
+<link rel="canonical" href="https://d3lefts.github.io/d3lefts/join.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="site.css"><link rel="stylesheet" href="join.css">
+<title>Join an Open Problem — NIGHTFALL</title>
+<script src="site.js" defer></script><script src="frontier-core.js" defer></script><script src="join.js" defer></script>
+<link rel="stylesheet" href="night-theme.css">
+<script src="nightfall-shell.js" defer></script>
+</head><body>
+<a class="skip" href="#main">Skip to the research path</a><div class="topline"></div>
+<header class="header"><div class="wrap header-inner">
+<a class="brand" href="./" aria-label="NIGHTFALL home"><span class="mark">N∕F</span><span class="brand-copy">NIGHTFALL <span>CONSTELLATION / RESEARCH</span></span></a>
+<button type="button" class="menu-toggle" id="menu-button" aria-label="Toggle navigation" aria-controls="site-nav" aria-expanded="false">MENU +</button>
+<nav id="site-nav" class="nav" aria-label="Primary navigation"><a href="./#flagships">Results</a><a href="#method">The process</a><a href="#assignment" aria-current="page">Join a problem</a><a href="research.html">Research library</a><a class="nav-call" href="exact-research.html">All instruments ↗</a></nav>
+</div></header>
+<main id="main">
+<section class="join-hero wrap" aria-labelledby="join-title">
+<div><p class="join-kicker">NIGHTFALL / THE CONTRIBUTOR PATH</p><h1 id="join-title">See the result.<br><em>Find the gap.</em><br>Work on it.</h1><p class="join-lead">Research is more useful when you can follow the evidence to a precise unanswered question. This is one continuous path—from published work to a bounded investigation you can begin here.</p><div class="join-hero-actions"><a class="button" href="#assignment">Find my research question ↓</a><a class="join-quiet" href="#results">First, show me the results ↓</a></div></div>
+<aside class="join-hero-aside"><span>YOUR PATH</span><ol><li><b>01</b><span>Read a result and its status</span></li><li><b>02</b><span>Understand how evidence is tested</span></li><li><b>03</b><span>Take a defined open problem</span></li><li><b>04</b><span>Investigate, challenge, and submit for review</span></li></ol><p>Local work stays in this browser unless you export it. Public coordination takes place through GitHub.</p></aside>
+</section>
+<section class="join-section join-results wrap" id="results" aria-labelledby="join-results-title">
+<div class="join-heading"><span>01 / THE RESULTS</span><div><h2 id="join-results-title">Start with what<br><em>has evidence.</em></h2><p>Every NIGHTFALL claim has a stated scope. A finite computation, a theorem proof, external reproduction, and a competitive record are different claims.</p></div></div>
+<div class="join-result-grid">
+<article><span>EXACT FINITE WITNESS / EXTERNAL REPLAY OPEN</span><h3>Erdős minimum overlap</h3><strong>131,072 cells</strong><p>A finite rational construction with internally replayed arithmetic. External reconstruction and complete public source availability are separate checks.</p><a href="passport.html?claim=erdos36">Read its Proof Passport ↗</a></article>
+<article><span>CONDITIONAL CERTIFICATES / SOURCE GATES</span><h3>Werner-state positivity</h3><strong>4–25 copies</strong><p>Finite-copy calculations retain explicit imported assumptions, analytical margins, and unclosed review obligations.</p><a href="research.html">Inspect the research record ↗</a></article>
+<article><span>PROOF CAMPAIGN / INDEPENDENT AUDIT OPEN</span><h3>Finite-field phase retrieval</h3><strong>Exact finite checks</strong><p>Decoder claims are tracked separately from exhaustive checks, foundational proof dependencies, and independent mathematical criticism.</p><a href="research.html">Trace the dependencies ↗</a></article>
+</div><p class="join-disclosure">These examples demonstrate the evidence system; they do not imply that the featured claims are fully peer reviewed. <a href="./#flagships">Explore the complete flagship selection ↗</a></p>
+</section>
+<section class="join-section join-method" id="method" aria-labelledby="join-method-title"><div class="wrap">
+<div class="join-heading"><span>02 / THE PROCESS</span><div><h2 id="join-method-title">A result is a claim<br><em>with a route to criticism.</em></h2><p>We keep an explicit question attached to its sources, mechanism, attempted experiments, checker, limitations, and reviewer decision. You enter through a problem, then the relevant instrument is selected for you.</p></div></div>
+<div class="join-method-steps"><div><b>FRAME</b><strong>Freeze the exact question.</strong><p>Positive and negative outcomes have distinct certificates.</p></div><div><b>EXPLORE</b><strong>Test a decisive idea.</strong><p>Record predictions, operators, and failures rather than only successes.</p></div><div><b>CHALLENGE</b><strong>Try to break the claim.</strong><p>Search for missing assumptions and independently replay finite checks.</p></div><div><b>RECORD</b><strong>Submit for independent review.</strong><p>No local result automatically becomes a theorem or publication claim.</p></div></div>
+</div></section>
+<section class="join-section join-assignment wrap" id="assignment" aria-labelledby="join-assignment-title">
+<div class="join-heading"><span>03 / JOIN THE WORK</span><div><h2 id="join-assignment-title">Take the next<br><em>unsolved piece.</em></h2><p>Choose the kind of attack you want to make. The matching pool is currently two frozen mathematical problems with explicit source references and closure conditions. Other review opportunities remain in the <a href="desk.html">Research Desk</a>.</p></div></div>
+<div class="join-match"><label for="join-interest">I want to work on</label><select id="join-interest"><option value="proof">Structural proofs and mathematical arguments</option><option value="compute">Exact computation and search</option><option value="audit">Adversarial review and independent verification</option></select><p id="join-match-reason" aria-live="polite"></p></div>
+<div class="join-choices" id="join-choices" aria-label="Available source-linked assignments"><p>Loading open problem contracts…</p></div>
+<section class="join-workspace" id="workspace" aria-labelledby="join-workspace-title">
+<div class="join-workspace-header"><div><span>04 / YOUR RESEARCH WORKSPACE</span><h2 id="join-workspace-title">One question.<br><em>One continuous record.</em></h2><p id="join-active-intro">Choose an assignment above to enter the workbench.</p></div><span id="join-status" class="join-state">LOCAL / UNREVIEWED</span></div>
+<div id="join-active-empty" class="join-empty">Select “Work on this question” above. Your selected scope, notes, and next step will remain linked across research instruments on this browser.</div>
+<div id="join-active" hidden>
+<div class="join-contract"><div><span>THE QUESTION</span><h3 id="join-question"></h3><p id="join-why"></p><p class="join-scope" id="join-scope"></p></div><div class="join-contract-criteria"><div><b>WHAT A YES NEEDS</b><p id="join-yes"></p></div><div><b>WHAT A NO NEEDS</b><p id="join-no"></p></div></div></div>
+<nav class="join-tool-route" aria-label="Research stages for current assignment">
+<button type="button" data-stage="frame"><span>01 / FRAME</span><strong>Define independent attacks ↗</strong></button>
+<button type="button" data-stage="explore"><span>02 / EXPLORE</span><strong>Open a scoped experiment ↗</strong></button>
+<button type="button" data-stage="challenge"><span>03 / CHALLENGE</span><strong>Test the failure modes ↗</strong></button>
+<button type="button" data-stage="record"><span>04 / RECORD</span><strong>Carry evidence to Claim Lab ↗</strong></button>
+</nav>
+<div class="join-working-grid"><div class="join-pad">
+<span>START WORKING HERE</span><h3 id="join-starter-title">First decisive test</h3><p id="join-starter-description"></p>
+<div id="join-sidon-starter" hidden><label for="join-values">Nine distinct integers in [1,184], separated by commas or spaces</label><textarea id="join-values" rows="3" spellcheck="false" placeholder="49, 50, 56, 78, 93, 104, 125, 139, 149"></textarea><button class="join-action" id="join-run-check" type="button">Run exact finite check</button><pre id="join-check-output" aria-live="polite">No calculation run in this session.</pre></div>
+<div id="join-q7-starter" hidden><p>The Q7 branch has no complete in-browser proof oracle. Define a falsifiable six-deletion search, then move to the source-linked checker and Frontier decomposition.</p><a id="join-q7-source" href="https://github.com/d3lefts/d3lefts/issues/48" target="_blank" rel="noopener">Examine the global checker and issue ↗</a></div>
+<label class="join-notes-label" for="join-notes">Your hypothesis, test, result, or counterexample</label><textarea id="join-notes" rows="5" maxlength="4000" placeholder="What exactly will you test? What result would falsify it? Include versions and inputs."></textarea><p id="join-save" class="join-note">Notes are local and carry no proof status.</p>
+</div><aside class="join-next">
+<span>STAY WITH THE QUESTION</span><h3>Your next actions</h3><p>These links keep the same research contract. Use Frontier to claim or split the exact interval; other instruments receive a scoped, unreviewed handoff.</p>
+<a id="join-frontier-link" class="join-action-link" href="frontier.html">Open assignment and exact branching ↗</a>
+<button id="join-next-action" type="button">Continue to the recommended next instrument ↗</button>
+<div class="join-export-actions"><button id="join-export" type="button">Export research brief ↓</button><a id="join-github" href="https://github.com/d3lefts/d3lefts/issues" target="_blank" rel="noopener">Request public assignment / review ↗</a></div>
+<details><summary>Sources and stop rule</summary><p id="join-stop"></p><div id="join-source-links"></div></details>
+</aside></div>
+</div>
+</section>
+<p class="join-disclosure">A local selection is not an exclusive public assignment. A proposed proof or computation requires a source-linked, reproducible submission and independent review. GitHub sign-in is handled by GitHub, never by this page.</p>
+</section></main>
+<footer class="footer"><div class="wrap footer-bottom"><span>© 2026 Devin J. Wright · NIGHTFALL / CONSTELLATION</span><span><a href="research.html">Full library</a> · <a href="exact-research.html">Advanced instruments</a> · <a href="review.html">Independent review</a></span></div></footer>
+</body></html>

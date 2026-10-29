@@ -5,7 +5,8 @@
   const KEY="nightfall_nf_frontier_local_v1";
   const $=id=>document.getElementById(id);
   const messages=$("nf-message"),tasks=[];
-  let selectedId=C.ranked()[0].id;
+  const requested=new URLSearchParams(location.search).get("task");
+   let selectedId=typeof requested==="string"&&requested.length<170&&C.base(requested.split("/")[0])?requested:C.ranked()[0].id;
   function inform(text){messages.textContent=text;$("nf-session-state").textContent=text;}
   function safeLoad(){
     try{
@@ -118,7 +119,17 @@
       item.append(content,b);box.append(item);
     }
   }
-  function paint(){active();rankList();listTasks();}
+  function paint(){
+    active();rankList();listTasks();
+    try {
+      const t=selectedTask(),key="nightfall.journey.v1";
+      const state=JSON.parse(localStorage.getItem(key)||"null");
+      if(state&&state.version===1&&state.notes&&typeof state.notes==="object"){
+        state.rootId=t.rootId;state.assignmentId=t.id;
+        localStorage.setItem(key,JSON.stringify(state));
+      }
+    }catch(_){/* Local storage is optional; no proof status is changed. */}
+  }
   function ensureStored(){
     let t=taskById(selectedId);
     if(t)return t;

@@ -67,3 +67,26 @@ if(menu&&nav){
  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&nav.classList.contains("open")){closeMenu();menu.focus();}});
  document.addEventListener("click",e=>{if(nav.classList.contains("open")&&!nav.contains(e.target)&&!menu.contains(e.target))closeMenu();});
 }
+
+/* Guided entry / return route. Existing scientific instruments keep their own checkers. */
+(() => {
+ if(location.pathname.endsWith("/join.html")||document.querySelector(".nf-journey-rail"))return;
+ const main=document.querySelector("main");if(!main)return;
+ let title="";
+ try{
+   const state=JSON.parse(localStorage.getItem("nightfall.journey.v1")||"null");
+   const names={"NF-156-184-9":"Maximal Sidon boundary","NF-Q7-R6":"Q7 graph boundary"};
+   if(state&&state.version===1&&Object.prototype.hasOwnProperty.call(names,state.rootId))title=names[state.rootId];
+ }catch(_){}
+ const style=document.createElement("style");
+ style.textContent=".nf-journey-rail{position:relative;z-index:2;border-bottom:1px solid #b6c7b4;background:#e5eddf;color:#25432c;padding:11px max(20px,calc((100vw - 1240px)/2));display:flex;align-items:center;gap:18px;flex-wrap:wrap;font:600 12px/1.5 system-ui,sans-serif}.nf-journey-rail>span{font:600 10px/1.4 ui-monospace,monospace;color:#607963;letter-spacing:.06em}.nf-journey-rail a{color:#254f33;text-decoration:underline;text-underline-offset:3px}.nf-journey-rail a:first-of-type{font-weight:800}.nf-journey-rail .nf-rail-spacer{flex:1}";
+ document.head.append(style);
+ const bar=document.createElement("nav");bar.className="nf-journey-rail";bar.setAttribute("aria-label","Guided research navigation");
+ const tag=document.createElement("span");tag.textContent=title?"RESUME RESEARCH":"ONE GUIDED PATH";
+ const primary=document.createElement("a");primary.href=title?"join.html#workspace":"join.html#results";
+ primary.textContent=title?"Return to "+title+" ↗":"Results → process → open problem ↗";
+ const gap=document.createElement("span");gap.className="nf-rail-spacer";
+ const method=document.createElement("a");method.href="join.html#method";method.textContent="The process";
+ const entry=document.createElement("a");entry.href="join.html#assignment";entry.textContent="Find a problem";
+ bar.append(tag,primary,gap,method,entry);main.before(bar);
+})();
