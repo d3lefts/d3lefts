@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-29",
+  "files": {
+    "UNIFORM_PREFIX_EXTENSION_THEOREM.md": {
+      "bytes": 8570,
+      "sha256": "d563b1edec4d0150a7246aeea11b690c95b69045bf7deaa9fa162f85e6bafedd"
+    },
+    "bound.log": {
+      "bytes": 219,
+      "sha256": "414396f0373756a6bb5b6b7ce9383d7122363a32e3914de17f8a94a90f7ad4b3"
+    },
+    "certificate_p1009_delta027.json": {
+      "bytes": 8288,
+      "sha256": "b0adb8d9e055d0b624439b634497aee1f3aa29e91e49185777deea1efe524888"
+    },
+    "construct_prefix.py": {
+      "bytes": 4288,
+      "sha256": "0e5c7a66a57a8d2a655d4aefe47bb2f4bd58279cf7701558ca95353ae74f1482"
+    },
+    "generate_frozen.py": {
+      "bytes": 508,
+      "sha256": "d02d9f3ae2b1e2c67694e47cd1704a4d42e6fe94adac88c3df4de772e538ee1b"
+    },
+    "generated.log": {
+      "bytes": 447,
+      "sha256": "09f673ca58be21313469a3c15bc20b8c803a19699a64a1e4b9c751c141815898"
+    },
+    "verified.log": {
+      "bytes": 305,
+      "sha256": "c98fdc2ef3d83ae4e3114cdf208896e0257d87ab4b08bedea46b726c55b56cde"
+    },
+    "verify_certificate.py": {
+      "bytes": 2127,
+      "sha256": "849a7cc75b482385db7fdf8337516d3ed860660646b7eaea55e0c9944cf9850c"
+    },
+    "verify_uniform_constant.py": {
+      "bytes": 892,
+      "sha256": "e3c305fceb0cf68dca5dba7a68db4e7eebd1858976f486e1c72e5135a6e111f7"
+    }
+  },
+  "project": "NIGHTFALL Axiom #49 uniform finite-prefix Sidon transfer",
+  "proof_file": "UNIFORM_PREFIX_EXTENSION_THEOREM.md",
+  "status": "INTERNAL_ANALYTIC_PROOF_CHECKED / EXTERNAL_NOVELTY_PENDING"
+}
