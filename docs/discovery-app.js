@@ -35,7 +35,29 @@ const studyMini=(k,min,max)=>'<label class="mini-field"><span>'+k.toUpperCase()+
 const mini=(k,min,max)=>'<label class="mini-field"><span>'+k.toUpperCase()+'</span><input type="number" data-setting="'+k+'" value="'+E(state.cfg[k])+'" min="'+min+'" max="'+max+'"></label>';
 function experiments(){let x=q(),r=x.representations.find(y=>y.id===x.selectedRep),op=C.FAMILIES.find(y=>y.id===state.operator),toy=x.mode==="toy";return head("04","Experiment lab","Preregister a prediction and a falsification test, then execute the finite local lab or export a scientific run manifest.")+'<div class="twocol wide-left"><section class="panel pad"><div class="panel-head"><h3>Freeze an experiment</h3>'+tag("PREREGISTRATION")+'</div><div class="form-grid"><label class="field"><span>Prediction</span><small>Quantitative expectation whenever possible</small><textarea id="prediction" rows="3" placeholder="Predicted score, gap, or structural transition"></textarea></label><label class="field"><span>Falsifying / distinguishing outcomes</span><small>What explanations would each outcome eliminate?</small><textarea id="discriminator" rows="3" placeholder="Predicted alternative outcomes and decisive failures"></textarea></label><label class="field"><span>Cost and stop</span><input id="cost" value="Bounded finite local run; source audit separate"></label></div><div class="config"><div><span class="tiny muted">SELECTED OPERATOR</span><strong>'+E(op.name)+'</strong><small>'+E(op.failure)+'</small></div><button class="subtle" data-tab="operators">Change ↗</button></div><div class="config"><div><span class="tiny muted">ACTIVE REPRESENTATION</span><strong>'+E(r.name)+'</strong><small>'+E(r.id)+(r.bits?" · finite candidate seed":" · no saved finite seed")+'</small></div><button class="subtle" data-tab="represent">Change ↗</button></div>'+(toy?'<div class="toy-settings"><div class="tiny muted">LOCAL INTEGER CYCLIC-OVERLAP PROXY</div><div class="settings">'+mini("n",5,48)+mini("mass",2,47)+mini("seed",0,4294967295)+mini("steps",1,2000)+'</div><div class="note caution">Proxy only: this discrete cyclic objective differs from EA #36 continuous signed-shift overlap. Local success cannot advance its record.</div></div>':(x.id==="granularity"?'<div class="toy-settings"><div class="tiny muted">HELD-OUT GRANULARITY STUDY / TWO SYNTHETIC DOMAINS</div><div class="settings">'+studyMini("seed",0,4294967295)+studyMini("train",3,32)+studyMini("test",3,32)+'</div><div class="note caution">Training selects discrete boundary-policy parameters using exact training outcomes. The held-out suite compares fixed, adaptive, atomic and trained policies at identical exact replay budgets. Execute the exported manifest with the scientific worker.</div></div>':'<div class="note caution">This project is configured for an external scientific runner. The interface records an immutable-in-ledger plan and packages it for independent execution; no compute backend is connected to this page.</div>'))+btn(toy?"Freeze and execute finite experiment ↗":"Freeze external-run manifest ↗","run","primary wide")+'</section><section class="panel"><div class="panel-head"><h3>Recent experiments</h3><span class="tiny muted">PROJECT SCOPE</span></div>'+recent()+'<div class="aside-note"><span>A / CONSTRUCTOR</span><p>Representation and search operator generate a candidate. Deterministic integer toy runs have exact reproducible seeds.</p></div><div class="aside-note"><span>B / ADVERSARIAL CHECK</span><p>Direct shift-by-shift arithmetic independently recomputes the toy score. A deliberately corrupted claim must fail. External agent independence is a further gate.</p></div></section></div>'}
 function chart(r){let trace=r?.trace||[],max=Math.max(1,...trace.map(x=>x.max)),steps=Math.max(1,r.steps_budget),points=trace.map(t=>(14+590*t.step/steps)+","+(110-75*t.max/max)).join(" ");return '<div class="chart"><svg viewBox="0 0 620 126" role="img" aria-label="Best integer toy score by accepted step"><path d="M14 110H604" stroke="#829e87"/><polyline points="'+points+'" fill="none" stroke="#d9ff71" stroke-width="3"/><text x="14" y="16" fill="#b8cbb7" font-size="11">BEST MAX CORRELATION ↓</text></svg></div>'}
-function evidence(){let rows=q().runs.slice().reverse();return head("05","Evidence ledger","Exact checks and independent agent reviews have separate labels. Recompute a finite witness directly from its stored bits.")+(rows.length?rows.map(r=>'<article class="panel evidence"><div class="ev-head"><div><span class="tiny muted">'+E(r.created)+'</span><h3>'+E(r.id)+'</h3><small>'+E(r.operator)+' / '+E(r.repId)+'</small></div>'+tag(r.result?r.result.claim_label:"EXTERNAL RUN PENDING",r.result?"passed":"pending")+'</div><div class="ev-facts"><div><span>FROZEN PREREGISTRATION SHA-256</span><code>'+E(r.prereg_hash||"hash unavailable")+'</code></div><div><span>PREDICTION</span><p>'+E(r.prediction)+'</p></div><div><span>CHECKED OUTCOME</span><p>'+E(r.result?"Integer max "+r.result.best_max+" · lower "+r.result.lower_bound+" · gap "+r.result.gap:"External scientific execution outstanding")+'</p></div><div><span>RESEARCH SCOPE</span><p>'+E(r.result?r.result.scope_warning:"Unexecuted manifest; no mathematical result claimed")+'</p></div></div>'+(r.result?chart(r)+'<div class="audit-flags"><span>DIRECT REPLAY '+r.result.verifier+'</span><span>CORRUPTED CLAIM '+r.result.negative_control+'</span><span>EXTERNAL AGENT PENDING</span></div><button class="btn ghost" data-replay="'+E(r.id)+'">Re-run exact verification B</button><button class="btn ghost" data-fork="'+E(r.id)+'">Fork candidate as representation</button>':'<button class="btn ghost" data-tab="package">Package run manifest ↗</button>')+'</article>').join(""):'<div class="panel empty">No experiments recorded. Register one in the experiment lab.</div>')}
+function evidence(){
+ let rows=q().runs.slice().reverse();
+ return head("05","Evidence ledger","Exact checks and independent reviews retain separate status. Referee handoffs replay their original finite inputs; they do not certify a general theorem.")+
+ (rows.length?rows.map(r=>{
+  const handed=!!r.handoff, measured=!!r.result;
+  const label=measured?r.result.claim_label:handed?"LOCAL FINITE REPLAY · REVIEW OPEN":"EXTERNAL RUN PENDING";
+  const hashlabel=handed?"SOURCE INPUT SHA-256":"FROZEN PREREGISTRATION SHA-256";
+  const hash=handed?r.handoff.sourceSha256:r.prereg_hash||"hash unavailable";
+  const outcome=measured?"Integer max "+r.result.best_max+" · lower "+r.result.lower_bound+" · gap "+r.result.gap:
+   handed?"Finite "+r.handoff.domain+" · "+r.handoff.localReplayStatus+"; source inputs and attacks matched":"External scientific execution outstanding";
+  const scope=measured?r.result.scope_warning:handed?
+   r.handoff.scope+" Same-code browser replay; independent external review is still required.":
+   "Unexecuted manifest; no mathematical result claimed";
+  let actions;
+  if(measured){
+   actions=chart(r)+'<div class="audit-flags"><span>DIRECT REPLAY '+E(r.result.verifier)+'</span><span>CORRUPTED CLAIM '+E(r.result.negative_control)+'</span><span>EXTERNAL AGENT PENDING</span></div><button class="btn ghost" data-replay="'+E(r.id)+'">Re-run exact verification B</button><button class="btn ghost" data-fork="'+E(r.id)+'">Fork candidate as representation</button>';
+  }else if(handed){
+   const dest=r.handoff.domain==="weak-sidon-4-5-finite"?"sidon30":"erdos36";
+   actions='<div class="audit-flags"><span>INPUT HASH MATCH</span><span>FINITE SOURCE + ATTACK REPLAY</span><span>INDEPENDENT REVIEW OPEN</span></div><a class="btn ghost" href="passport.html?claim='+dest+'">Inspect corresponding Proof Passport ↗</a><button class="btn ghost" data-tab="package">Package source and evidence ↗</button>';
+  }else actions='<button class="btn ghost" data-tab="package">Package run manifest ↗</button>';
+  return '<article class="panel evidence"><div class="ev-head"><div><span class="tiny muted">'+E(r.created)+'</span><h3>'+E(r.id)+'</h3><small>'+E(r.operator)+' / '+E(r.repId)+'</small></div>'+tag(label,measured?"passed":"pending")+'</div><div class="ev-facts"><div><span>'+hashlabel+'</span><code>'+E(hash)+'</code></div><div><span>PREDICTION</span><p>'+E(r.prediction)+'</p></div><div><span>CHECKED OUTCOME</span><p>'+E(outcome)+'</p></div><div><span>RESEARCH SCOPE</span><p>'+E(scope)+'</p></div></div>'+actions+'</article>';
+ }).join(""):'<div class="panel empty">No experiments recorded. Register one in the experiment lab.</div>');
+}
 function packageView(){let x=q(),last=x.runs[x.runs.length-1];return head("06","Package & handoff","Export a portable research bundle with intact contract, representations, operator registry, experiments, checks, and scope boundaries.")+'<div class="twocol"><section class="panel pad"><div class="panel-head"><h3>Research package</h3>'+tag("LOCAL EXPORT")+'</div><div class="package-files">'+["README.md","problem.json","representations.json","operator-registry.json","experiments.json","verification.json","HANDOFF.md","manifest.json"].map((s,i)=>'<div><span>0'+(i+1)+'</span><b>'+s+'</b><small>✓ included</small></div>').join("")+'</div><div class="notice">ZIP includes per-file SHA-256 digests. A locally created package is distinct from a publicly frozen release.</div>'+btn("Build ZIP research package ↗","export","primary wide")+btn("Export complete workspace JSON","json","ghost wide")+'</section><section class="panel pad"><div class="panel-head"><h3>Independent agent handoff</h3><span class="tiny muted">REPRODUCER / AUDITOR</span></div><p class="bodycopy">Freeze the claim and inputs. A separate reproducer constructs fresh verification code without access to A’s intermediate arrays. An adversarial auditor probes gaps. A formalizer identifies every remaining proof dependency.</p><p class="bodycopy" style="margin-top:16px">External worker: <code>python3 research/nightfall/discovery-engine/runner.py PACKAGE.zip --out receipt.json</code></p><div class="handoff"><b>LATEST EXPERIMENT</b><span>'+E(last?.id||"None")+'</span><b>EVIDENCE STATUS</b><span>'+E(last?.result?.claim_label||"Unverified / external run pending")+'</span><b>NEXT DECISIVE STEP</b><span>'+E(x.contract.cheap)+'</span><b>OPEN GATES</b><span>Independent external replay · imported hypotheses · dated prior art · release signoff</span></div>'+btn("Download readable research handoff","md","ghost wide")+'</section></div>'}
 function render(){const views={overview,contract,represent:representations,operators,experiments,evidence,package:packageView};app.innerHTML=sidebar()+'<div id="workspace-content" class="main">'+topbar()+'<div class="main-inner">'+context()+views[state.tab]()+'<footer class="footer">NIGHTFALL PHASESHIFT / DISCOVERY ENGINE <span>PROVENANCE OVER RANKINGS · V1</span></footer></div></div><input type="file" accept=".json,application/json" id="file-import" hidden><div id="toast" class="toast" aria-live="polite" role="status"></div>'}
 
@@ -60,5 +82,66 @@ case"md":download(handoff(q()),"NIGHTFALL_Handoff_"+q().id+".md","text/markdown"
 case"import":document.getElementById("file-import").click();break;
 }});
 app.addEventListener("change",ev=>{let el=ev.target;if(el.dataset.field){q().contract[el.dataset.field]=el.value;save()}if(el.dataset.setting){state.cfg[el.dataset.setting]=Number(el.value);save()}if(el.dataset.studysetting){state.gcfg[el.dataset.studysetting]=Number(el.value);save()}if(el.id==="file-import"){let file=el.files?.[0];if(!file)return;if(file.size>5000000){toast("JSON import limit is 5 MB.",true);return}file.text().then(s=>{let v=JSON.parse(s);if(v.version!==C.VERSION||!Array.isArray(v.projects)||!v.projects.every(a=>a.id&&a.contract&&Array.isArray(a.representations)&&Array.isArray(a.runs)))throw Error("Incompatible schema");if(!confirm("Replace all local research workspace data?"))return;for(let x of v.projects)if(!/^https:\/\/github\.com\/d3lefts\/d3lefts(?:\/|$)/.test(x.repo||""))x.repo="https://github.com/d3lefts/d3lefts";state=v;save();render();toast("Imported workspace. Review claims and provenance.")}).catch(err=>toast("Import failed: "+err.message,true))}});
+
+// One-shot, explicit user-approved input transfer: Claim Lab to Discovery.
+// Re-hash the source and rerun both arithmetic and negative controls locally.
+// Same-code browser arithmetic is NEVER an independent external proof review.
+async function importRefereeHandoff(){
+ if(new URLSearchParams(location.search).get("referee_handoff")!=="1")return;
+ try{
+  const raw=sessionStorage.getItem("nightfall.discovery.pending.v1");
+  sessionStorage.removeItem("nightfall.discovery.pending.v1");
+  history.replaceState(null,"",location.pathname);
+  if(!raw||raw.length>2000000)throw Error("Missing or oversized handoff receipt");
+  const r=JSON.parse(raw),V=window.RefereeCore;
+  if(!V||r.format!=="nightfall-referee-receipt-v1"||r.version!==V.VERSION)
+   throw Error("Unrecognized verifier or receipt version");
+  if(!r.source||!r.result||!r.negativeControls)throw Error("Incomplete receipt");
+  if(!["weak-sidon-4-5-finite","continuous-step-overlap"].includes(r.domain))
+   throw Error("Unsupported finite domain");
+  if(!/^[a-f0-9]{64}$/.test(r.inputSha256||""))throw Error("Missing source fingerprint");
+  const canonical=r.domain==="weak-sidon-4-5-finite"
+   ?{domain:r.domain,input:r.source,claimedMaximum:r.claimedMaximum}
+   :{domain:r.domain,input:r.source,claimedScore:r.claimedScore??null};
+  const actual=await digest(JSON.stringify(canonical));
+  if(actual!==r.inputSha256)throw Error("Source fingerprint mismatch");
+  const local=r.domain==="weak-sidon-4-5-finite"
+   ?V.checkSidon(r.source,r.claimedMaximum):V.checkOverlap(r.source,r.claimedScore);
+  const attacks=r.domain==="weak-sidon-4-5-finite"
+   ?V.sidonAttacks(r.source,r.claimedMaximum):V.overlapAttacks(r.source,local);
+  if(JSON.stringify(local)!==JSON.stringify(r.result)||
+     JSON.stringify(attacks)!==JSON.stringify(r.negativeControls))
+   throw Error("Finite result or adversarial controls differ from the imported receipt");
+  const ok=r.domain==="weak-sidon-4-5-finite"
+   ?local.status==="FINITE_CHECK_PASSED"&&attacks.understatedMaximumRejected&&attacks.corruptedSubsetRejected
+   :local.status==="FINITE_CHECK_PASSED"&&local.dualPathAgreement&&attacks.scoreTamperRejected&&attacks.massPreservingWitnessMutation?.rejected===true;
+  const expected=ok?"FINITE_CHECK_PASSED":r.domain==="weak-sidon-4-5-finite"
+   ?"REJECTED_OR_INCONCLUSIVE":local.status==="REJECT"?"REJECTED":"INCONCLUSIVE";
+  if(r.verdict!==expected)throw Error("Reported verdict contradicts replay");
+  if(!confirm("Source SHA-256, finite arithmetic, and negative controls agree on local replay. Record this as a scoped Discovery experiment? Independent external proof review remains OPEN."))return;
+  const projectId=r.domain==="weak-sidon-4-5-finite"?"sidon":"ea36";
+  const project=state.projects.find(x=>x.id===projectId);
+  if(!project)throw Error("Research project unavailable");
+  if(project.runs.some(x=>x.handoff?.sourceSha256===actual))
+   throw Error("This exact source fingerprint is already recorded");
+  project.runs.push({
+   id:"exp-referee-"+id(),created:now(),operator:"referee-finite-replay",
+   repId:project.selectedRep,prediction:"Previously reported "+r.verdict+" for the supplied finite input",
+   discriminator:"Mismatch in source hash, exact arithmetic, or adversarial controls",
+   cost:"Local replay; total compute budget unmeasured",
+   plan:{schema:C.VERSION,project:projectId,source:"Explicit Referee/Claim Lab handoff",
+         source_input_sha256:actual,scope:"Historical input; no prospective preregistration"},
+   prereg_hash:null,result:null,
+   handoff:{domain:r.domain,sourceSha256:actual,receiptVerdict:r.verdict,
+    localReplayStatus:local.status,scope:local.scope,source:r.source,
+    claimedValue:r.domain==="weak-sidon-4-5-finite"?r.claimedMaximum:r.claimedScore,
+    exactResult:local,negativeControls:attacks,sourceDossier:r.sourceDossier||null,
+    independentExternalReplay:false,priorPreregistration:false}
+  });
+  state.active=projectId;state.tab="evidence";save();render();
+  toast("Finite source replayed and recorded. External proof review remains open.");
+ }catch(err){toast("Referee handoff rejected: "+err.message,true)}
+}
 render();
+importRefereeHandoff();
 })();
