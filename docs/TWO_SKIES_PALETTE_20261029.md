@@ -6,19 +6,19 @@ The appearance switch exchanges distinct editorial experiences. It does not alte
 
 ## Archive / golden hour
 
-The reference is a cocoa-brown, starlit browser theme, with sunset-yellow light. The earlier pale parchment design is retired.
+The current Archive is an afterglow sky: aubergine, plum, dusty rose, coral cloudlight, and apricot controls. The previous cocoa-brown treatment was retired after mobile contrast review. The earlier pale parchment iteration remains in history.
 
 | Role | Value | Application |
 |---|---|---|
-| Cocoa sky | `#28190F` | Overall background |
-| Deep chocolate | `#1B100B` | Dark featured panels and navigation |
-| Raised cocoa | `#3B281D` | Cards, tools and reading surfaces |
-| Soft cocoa | `#332116` | Secondary panels |
-| Warm cream | `#F7E8DB` | Primary text |
-| Warm secondary | `#CEB6A7` | Metadata and descriptions |
-| Golden hour | `#EDC16E` | Selected states, primary actions |
-| Late-sun yellow | `#F5D88F` | Hover, focus |
-| Warm rule | `#75574A` | Dividers |
+| Aubergine sky | `#39243C` | Overall background |
+| Dark plum | `#302039` | Featured panels and navigation |
+| Rose-plum panel | `#583A57` | Cards, tools and reading surfaces |
+| Heather-plum surface | `#493047` | Secondary panels |
+| Warm ivory | `#FFF0E8` | Primary text |
+| Blush copy | `#F0CCD8` | Metadata and descriptions |
+| Apricot sun | `#FFC39E` | Selected states, primary actions |
+| Soft peach light | `#FFDFC5` | Hover, focus |
+| Muted lilac rose | `#A07B95` | Dividers |
 
 ## Underbelly / new moon
 
@@ -38,7 +38,7 @@ Absolute-black-near canvas; deep navy and indigo structure; pale jasmine text an
 
 ## Rules
 
-- The dark Underbelly remains the default first visit; the Archive is selectable and persists as a preference.
+- The dark Underbelly remains the default first visit; the sunset Archive is selectable and persists as a preference.
 - Source labels and evidentiary classifications remain legible and are never inferred from hue.
 - Living Paper reading surfaces remain free of star textures.
 - Main text and button ink have tested WCAG AA contrast against their intended filled backgrounds.
@@ -51,4 +51,8 @@ Oxblood is an **atmospheric punctuation mark**, never a scientific-status legend
 
 ## Consistency policy
 
-The active palettes are determined by `docs/two-skies.css` and `docs/mobile-scroll-cinema.css`, both loaded after the historical stylesheets. Older base declarations remain documented as fallback history, not a license to reintroduce parchment. The computed-style browser audit checks large displayed surfaces in both modes for obsolete background colors and tests mobile overflow. The homepage's three formerly hardcoded instrument colors now use the palette tokens.
+The active palettes are determined by `docs/two-skies.css`, `docs/home-dual-experience.css`, `docs/home-opening-cinema.css`, and `docs/mobile-scroll-cinema.css`, layered after historical stylesheets as applicable. Older base declarations remain documented as fallback history, not a license to reintroduce parchment. The computed-style browser audit checks large displayed surfaces in both modes for obsolete background colors and tests mobile overflow. The homepage's three formerly hardcoded instrument colors now use the palette tokens.
+
+## Sunset review correction — 29 October 2026
+
+Mobile screenshots 4–9 exposed a cocoa-heavy canvas and unreadable inherited dark labels on dark paper. The archive now uses aubergine sky, blush-plum panels, coral-to-peach cinematic gradients, and WCAG-AA-conscious ivory, muted blush, and apricot text. Contributor labels, source-bound cards, process stages, input controls, and links have explicit Archive contrast contracts. The navy New Moon tokens, research text, proof scopes, and evidence states are unchanged. Sunset ink `#302039` against apricot `#FFC39E` is approximately 9.5:1; blush text `#F0CCD8` against raised plum `#70465F` is approximately 5.2:1. These are token-pair checks; full page-level browser verification is tracked separately.
