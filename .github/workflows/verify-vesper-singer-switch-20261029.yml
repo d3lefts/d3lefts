@@ -1,0 +1,26 @@
+name: Verify Vesper Singer source-switch finite audit
+on:
+  push:
+    paths:
+      - "research/nightfall/projects/erdos/vesper-singer-switch-audit-20261029/**"
+      - ".github/workflows/verify-vesper-singer-switch-20261029.yml"
+  pull_request:
+    paths:
+      - "research/nightfall/projects/erdos/vesper-singer-switch-audit-20261029/**"
+      - ".github/workflows/verify-vesper-singer-switch-20261029.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  independent-finite-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Regenerate finite-field sources, source-switch cuts and minimal repairs
+        run: |
+          cd research/nightfall/projects/erdos/vesper-singer-switch-audit-20261029
+          python3 test.py
