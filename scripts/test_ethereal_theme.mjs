@@ -99,6 +99,24 @@ try{
     assert.equal(action.bg,"rgb(216, 195, 138)","Constellation action matches primary champagne");
     assert.equal(action.fg,"rgb(21, 27, 48)","Constellation action retains navy ink");
    }
+   if(file==="discovery.html"){
+    const nav=await page.locator(".navitem.selected").first().evaluate(el=>getComputedStyle(el).backgroundColor);
+    assert.equal(nav,"rgb(48, 44, 66)","Discovery selected navigation is violet-navy, not moss green");
+    const appAccent=await page.evaluate(()=>getComputedStyle(document.body).getPropertyValue("--lime").trim());
+    assert.equal(appAccent,"#d8c38a","Discovery's original lime token resolves to champagne");
+    const sourceStatus=await page.locator(".status").first().evaluate(el=>getComputedStyle(el).backgroundColor);
+    assert.equal(sourceStatus,"rgb(52, 47, 69)","Discovery source status is no longer green");
+   }
+   if(file==="claim-lab.html"){
+    const brandColor=await page.locator(".brandMark").first().evaluate(el=>getComputedStyle(el).color);
+    assert.equal(brandColor,"rgb(216, 195, 138)","Claim Lab emblem carries moon-gold");
+    const toastColor=await page.locator(".toast").first().evaluate(el=>getComputedStyle(el).backgroundColor);
+    assert.equal(toastColor,"rgb(40, 46, 68)","Claim Lab toast uses dusk navy, not teal green");
+   }
+   if(file==="desk.html"){
+    const readout=await page.locator(".desk-readout").first().evaluate(el=>getComputedStyle(el).backgroundColor);
+    assert.equal(readout,"rgb(27, 38, 59)","Research Desk no longer inherits green readout background");
+   }
    if(file==="join.html"){
     const action=await page.locator(".join-choice button").first().evaluate(el=>getComputedStyle(el).backgroundColor);
     assert.equal(action,"rgb(216, 195, 138)","Join task action uses champagne");
