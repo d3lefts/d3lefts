@@ -169,8 +169,8 @@
       "evidence": "working",
       "type": "Algebraic proof candidate · exact finite tests",
       "title": "Deterministic adaptive finite-field decoder",
-      "summary": "Axiom's two-round 2k−1 powered-measurement reconstruction up to global base-field scaling; an independently coded checker exhaustively passes 18,725 vectors over F_25 and F_49.",
-      "boundary": "Adaptive sensing is separate from the random nonadaptive lattice-decoding model; external proof review and same-model priority audit remain open.",
+      "summary": "Axiom's two-round extension-degree packed decoder uses at most k+⌈(k−1)/(r−1)⌉ powered measurements (q>2); k+1 is globally optimal for 2≤k≤r. The independent checker passes 53,478 vectors and 1,500 nonadaptive collision certificates.",
+      "boundary": "Noiseless K-linear adaptive sensing, global F_q× equivalence, explicit extension-field representation; q=2 has exact optimum k. External proof and publication-priority reviews open. Classic complement-property precedent is credited.",
       "source": "projects/adaptive-finite-field-decoder-2026-10-29/README.md"
     },
     {
