@@ -265,13 +265,19 @@ def main() -> int:
     ids = re.findall(r'^\["([^"]+)"', seeds, re.M)
     if ids != ["ea36", "sidon", "pas"]:
         FAILURES.append(f"ORIGINALITY GATE: Discovery presets must be ea36/sidon/pas; found {ids!r}")
-    # Every public HTML page must be discoverable, and mobile menus must be wired.
+    # Public pages belong in the sitemap. Deliberately unlisted pages
+    # require an explicit robots noindex marker and remain accessible by URL.
     sitemap = (DOCS / "sitemap.xml").read_text(encoding="utf-8")
     actual_urls = set(re.findall(r"<loc>([^<]+)</loc>", sitemap))
+    is_unlisted = lambda p: 'name="robots" content="noindex' in p.read_text(encoding="utf-8")
     expected_urls = {
         "https://d3lefts.github.io/d3lefts/" + ("" if p.name == "index.html" else p.name)
-        for p in pages
+        for p in pages if not is_unlisted(p)
     }
+    if not is_unlisted(DOCS / "portfolio.html"):
+        FAILURES.append("UNLISTED PORTFOLIO: missing robots noindex")
+    if "https://d3lefts.github.io/d3lefts/portfolio.html" in actual_urls:
+        FAILURES.append("UNLISTED PORTFOLIO: page must be absent from sitemap")
     if actual_urls != expected_urls:
         FAILURES.append(f"Sitemap mismatch: missing={sorted(expected_urls - actual_urls)}, extra={sorted(actual_urls - expected_urls)}")
     for page_path, parsed in pages.items():
