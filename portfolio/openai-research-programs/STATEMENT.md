@@ -1,0 +1,14 @@
+# Application narrative — Research Program Management / Frontier Assurance
+
+I have spent my career helping technical, creative and operational teams turn ambiguous goals into working products and accountable programs. At Walmart Global Tech's Store No. 8, I worked on immersive-commerce initiatives spanning Roblox experiences, virtual advertising and physical-to-digital shopping integrations. I helped secure executive support for more than $20 million in annual innovation investment and coordinated product work across engineering, design, commercial partners and leadership.
+
+Before Walmart, I joined Autograph's early team and helped launch and develop a consumer digital-collectibles marketplace. I worked with product and partnership teams around programs involving DraftKings, ESPN and Lionsgate. Earlier at Amazon, my work combined content analytics, original-content planning and product prioritization for Prime Video and Amazon Kids. I began my career in the U.S. Army, where I commanded an artillery battery of approximately 100 soldiers and managed complex logistics and readiness responsibilities. Those experiences taught me to set decision criteria, align stakeholders and adapt quickly when conditions change.
+
+My interest in structured research predates these commercial roles. As a West Point systems-engineering undergraduate, I coauthored a 2015 conference paper on reducing a military unit's dependence on field support representatives through training, interviews and operational design. Since August 2026, after leaving a regional operations role, I have used ChatGPT and Claude for self-directed mathematical exploration under the NIGHTFALL name. The project has strengthened my interest in adversarial testing, experiment design, provenance and publication of negative results. The models generate significant parts of its proofs and code; I do not represent those outputs as independently authored scientific achievements.
+
+I am interested in OpenAI's research-program and assurance work because the same operational discipline matters when an experimental result, model limitation or safety claim must withstand scrutiny. My strongest contribution is coordinating difficult technical efforts, making tradeoffs visible and creating a process where evidence can correct the plan. I would welcome the opportunity to bring that discipline to research and evaluation programs with established technical leadership, independent reviewers and real-world accountability.
+
+**Selected delivery and research evidence:** https://d3lefts.github.io/d3lefts/portfolio.html  
+**Professional background:** https://d3lefts.github.io/d3lefts/resume.html
+
+*This statement is a draft for applicant review; dates and specific metrics should be confirmed before a formal application.*
