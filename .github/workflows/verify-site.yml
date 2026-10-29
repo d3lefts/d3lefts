@@ -121,6 +121,7 @@ jobs:
         run: |
           python3 research/nightfall/projects/sidon-finite-30/extension-rigidity-20261029/verify_independent.py
           python3 research/nightfall/projects/sidon-finite-30/extension-rigidity-20261029/adversarial_crosscheck.py
+          python3 research/nightfall/projects/sidon-finite-30/extension-rigidity-20261029/sharpness_check.py
       - name: Certify universal factor-network equality quotient
         run: |
           python3 -m py_compile research/nightfall/projects/sat-network-universal/check_structural_certificate.py
