@@ -70,7 +70,7 @@ try{
    assert.ok(v.overflow<=4,name+": no "+width+"px horizontal overflow ("+v.overflow+")");
    const expectations={
     "index.html":{nav:"rgb(27, 16, 11)",heroAction:"rgb(237, 193, 110)",
-      system:"rgb(27, 16, 11)",lens:"rgb(27, 16, 11)"},
+      system:"rgb(27, 16, 11)",lens:"rgb(237, 193, 110)"},
     "constellation.html":{coreAction:"rgb(237, 193, 110)"},
     "join.html":{joinMethod:"rgb(27, 16, 11)",raised:"rgb(59, 40, 29)"},
     "living-paper.html":{sidon:"rgb(27, 16, 11)"},
