@@ -55,9 +55,10 @@ Only Python 3 standard library is required. From this directory:
 
 ```sh
 python3 verify_independent.py
+python3 adversarial_crosscheck.py
 ```
 
-Expected status: `PASS — bounded exact theorem`; source SHA-256 above; portfolio SHA-256 `fd0fc220e4b2ef5e458c5a5ef21a0baacb2cfdb226b14b503959b3c1a4dd782a`. The independent checker re-enumerates all 27,405 four-mark weak-Sidon collision tests, the 28 original progression constraints, the entire 12-deletion proof search (7,801 states), the affine exception families and the 11-set portfolio, with three adversarial mutation checks. It imports **no exploratory builder, optimizer, Numba dependency, reference verifier, or precomputed solver verdict**. Average run on the research container: approximately 3 seconds.
+Expected status: `PASS — bounded exact theorem`; source SHA-256 above; portfolio SHA-256 `fd0fc220e4b2ef5e458c5a5ef21a0baacb2cfdb226b14b503959b3c1a4dd782a`. The independent checker re-enumerates all 27,405 four-mark weak-Sidon collision tests, the 28 original progression constraints, the entire 12-deletion proof search (7,801 states), the affine exception families and the 11-set portfolio, with adversarial mutation controls. A separate direct-arithmetic crosscheck tests 205 reproducible integer pairs against the incremental admissibility rule and rejects forged witness and portfolio bytes. It imports **no exploratory builder, optimizer, Numba dependency, reference verifier, or precomputed solver verdict**. Average run on the research container: approximately 3 seconds.
 
 To replay the preexisting baseline independently in the source repository:
 
@@ -75,7 +76,7 @@ See [`validation_receipt.json`](validation_receipt.json) for exact counts and di
 - **Claim Lab / Evidence Bridge:** the signed-scope status and hashes are represented in the portable `validation_receipt.json`. Importing a record into a browser ledger must never promote mathematical status. This research file does not claim to have operated a remote agent, passed a reviewer's credentials, or produced a trusted cryptographic signature.
 - **Adversary:** deliberately invalid arithmetic progressions and a corrupted Sidon subset are rejected by the checker.
 
-**Falsification target:** produce an integer `x` (or distinct `x,y`) such that the enlarged set is (4,5) and has `h` less than `18` (respectively `19`); alternatively exhibit an omitted affine exception class, a false portfolio subset, or an incorrect 12-cover exclusion.
+**Falsification target:** produce an integer `x` (or distinct `x,y`) such that the enlarged set is weak Sidon and has `h` less than `18` (respectively `19`); alternatively exhibit an omitted affine exception class, a false portfolio subset, or an incorrect 12-cover exclusion.
 
 ## Prior art and attribution
 
