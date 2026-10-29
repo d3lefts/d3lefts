@@ -50,6 +50,15 @@ jobs:
              assert not sq.issubset(E)
              squares+=1
           assert squares==672
+          # Independent path-based C4 oracle: any two vertices have at most
+          # one common neighbor (a C4 gives two distinct two-edge routes).
+          neighbors=[set() for _ in range(128)]
+          for u,v in E:
+           neighbors[u].add(v);neighbors[v].add(u)
+          for u in range(128):
+           for v in range(u+1,128):
+            if (u^v).bit_count()==2:
+             assert len(neighbors[u]&neighbors[v])<=1
           print('INDEPENDENT 304-EDGE C4 AUDIT PASSED',hashlib.sha256(data).hexdigest())
           PY
       - name: Archive positive join and exact-pair outcome
