@@ -109,6 +109,8 @@
   $("join-attack-output").textContent=lastAttack?"LOCAL ATTACK: "+lastAttack.status+"\n"+lastAttack.actual_obstruction+"\n"+lastAttack.controls.map(c=>c.name+": "+(c.rejected_as_expected?"PASS":"FAIL")).join("\n"):"Check a candidate first. Exact attack controls have not run.";
   drawEvidence();
   $("join-next-action").textContent=sidon?"Continue to Discovery with this exact scope ↗":"Design a scoped experiment in Discovery ↗";
+  document.querySelector('[data-stage="challenge"] strong').textContent=sidon?"Run exact attacks on this candidate ↗":"Plan proof and checker attacks ↗";
+  document.querySelector('[data-stage="record"] strong').textContent=sidon?"Preserve a source-bound evidence packet ↗":"Carry unreviewed contract to Claim Lab ↗";
   $("join-github").href=C.issueUrl(t,"ASSIGNMENT REQUEST","I would like to work on this source-linked unresolved branch. Proposed approach:\n"+(state.notes[x.id]||"To be specified."));
   sourceLinks(x);
  }
