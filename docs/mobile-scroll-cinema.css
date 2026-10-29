@@ -15,7 +15,7 @@
   color:#f1eedc;
   border-block:1px solid var(--line);
 }
-html:not([data-nf-theme="dusk"]) .nf-cinema{background:#20140e;color:#f7e8db;border-color:#75574a}
+html:not([data-nf-theme="dusk"]) .nf-cinema{background:#34213e;color:#fff0e8;border-color:#a07b95}
 html[data-nf-theme="dusk"] .nf-cinema{background:#03050a;color:#f1eedc;border-color:#273149}
 .nf-cinema[data-motion="active"]{height:218svh}
 .nf-cinema-stage{
@@ -33,9 +33,9 @@ html:not([data-nf-theme="dusk"]) .nf-cinema-world--night,
 html[data-nf-theme="dusk"] .nf-cinema-world--archive{display:none}
 .nf-cinema-world--archive{
   background:
-    radial-gradient(ellipse at 50% 73%,rgba(176,95,42,.45),transparent 46%),
-    radial-gradient(ellipse at 50% 0%,rgba(200,135,82,.12),transparent 73%),
-    linear-gradient(175deg,#1d130e 0%,#382215 47%,#4e2d19 78%,#2b190f 100%);
+    radial-gradient(ellipse at 50% 73%,rgba(252,151,117,.49),transparent 46%),
+    radial-gradient(ellipse at 50% 0%,rgba(230,120,151,.23),transparent 73%),
+    linear-gradient(175deg,#39243c 0%,#673650 47%,#ae5c6e 78%,#42263d 100%);
 }
 .nf-cinema-world--night{
   background:
@@ -56,7 +56,7 @@ html[data-nf-theme="dusk"] .nf-cinema-world--archive{display:none}
   transform:translate3d(0,calc(var(--nf-aurora-rise) * -.45),0);
   will-change:transform;
 }
-.nf-cinema-world--archive::before{color:#f4ce8a;opacity:.42}
+.nf-cinema-world--archive::before{color:#ffdcc9;opacity:.42}
 .nf-cinema-world--night::before{color:#d8e0ff;opacity:.66}
 .nf-cinema-sun{
   position:absolute;
@@ -180,14 +180,14 @@ html:not([data-nf-theme="dusk"]) .nf-cinema-meter::before{background:#edc16e}
   opacity:1;transform:translate3d(0,0,0);
 }
 .nf-cinema:not([data-motion="active"]) .nf-cinema-steps span:first-child{opacity:1;transform:none}
-html:not([data-nf-theme="dusk"]) .nf-cinema-steps{color:#ffebca}
+html:not([data-nf-theme="dusk"]) .nf-cinema-steps{color:#ffe6dc}
 .nf-cinema-static-note{
   position:absolute;z-index:2;right:max(42px,calc((100% - 1200px)/2));
   bottom:clamp(24px,4vw,49px);max-width:35ch;
   font:400 10px/1.6 var(--mono);letter-spacing:.04em;
   color:#b5b8ce;text-align:right;
 }
-html:not([data-nf-theme="dusk"]) .nf-cinema-static-note{color:#d6b999}
+html:not([data-nf-theme="dusk"]) .nf-cinema-static-note{color:#efd0c9}
 .nf-cinema[data-motion="active"] .nf-cinema-scrollhint{display:inline}
 .nf-cinema-scrollhint{display:none}
 .nf-cinema[data-motion="active"] .nf-cinema-scrollhint::after{content:" ↓"}
@@ -246,7 +246,7 @@ html:not([data-nf-theme="dusk"]) .nf-cinema-static-note{color:#d6b999}
   .nf-cinema-orbit{width:118vw;height:118vw;left:58%;top:41%}
   .nf-cinema-constellation{width:140vw;left:61%}
   .nf-cinema-vignette{background:linear-gradient(0deg,#04060bea,transparent 52%,#04060b8a)}
-  html:not([data-nf-theme="dusk"]) .nf-cinema-vignette{background:linear-gradient(0deg,#1b110aea,transparent 55%,#21130994)}
+  html:not([data-nf-theme="dusk"]) .nf-cinema-vignette{background:linear-gradient(0deg,#302039ee,transparent 55%,#442845a0)}
   .nf-cinema-content{align-self:start;padding-top:clamp(55px,15svh,110px)}
   .nf-cinema-steps{bottom:86px;right:21px;font-size:13px;min-height:4em}
   .nf-cinema-status{bottom:28px}
@@ -316,8 +316,8 @@ html:not([data-nf-theme="dusk"]) .nf-cinema-static-note{color:#d6b999}
 .nf-cinema[data-motion="active"] .nf-cinema-stillhint{display:none}
 html:not([data-nf-theme="dusk"]) .nf-cinema-vignette{
   background:
-    linear-gradient(90deg,rgba(25,13,8,.96) 0%,rgba(29,15,9,.87) 32%,rgba(29,15,9,.69) 51%,rgba(31,17,10,.17) 85%),
-    linear-gradient(0deg,#180f0aef 0%,transparent 34%,transparent 70%,#24160cb0 100%);
+    linear-gradient(90deg,rgba(48,32,57,.96) 0%,rgba(57,34,58,.87) 32%,rgba(73,40,64,.70) 51%,rgba(78,39,64,.17) 85%),
+    linear-gradient(0deg,#302039ef 0%,transparent 34%,transparent 70%,#3b254aa8 100%);
 }
 @media(max-width:760px){
   html:not([data-nf-theme="dusk"]) .nf-cinema-world--archive .nf-cinema-sun{
@@ -325,8 +325,8 @@ html:not([data-nf-theme="dusk"]) .nf-cinema-vignette{
   }
   html:not([data-nf-theme="dusk"]) .nf-cinema-vignette{
     background:
-      linear-gradient(90deg,rgba(25,13,8,.91) 0%,rgba(28,14,9,.75) 42%,rgba(28,14,9,.15) 96%),
-      linear-gradient(0deg,#180f0aef 0%,transparent 40%,transparent 78%,#24160cb3 100%);
+      linear-gradient(90deg,rgba(48,32,57,.94) 0%,rgba(58,33,57,.80) 42%,rgba(71,38,58,.17) 96%),
+      linear-gradient(0deg,#302039ef 0%,transparent 40%,transparent 78%,#3b254aab 100%);
   }
   .nf-cinema-steps{bottom:78px;max-width:calc(100% - 42px);min-height:2.8em}
   .nf-cinema-steps span{font-weight:500;text-shadow:0 2px 18px #000a}
