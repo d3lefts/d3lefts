@@ -36,7 +36,7 @@ def geometry():
     return edges,squares,faces,directions
 
 def decode(text,edges):
-    assert len(text)==112 and set(text)<set("0123456789abcdef")
+    assert len(text)==112 and set(text)<=set("0123456789abcdef")
     old=[(v,v|(1<<d)) for d in range(7) for v in range(128) if not(v&(1<<d))]
     mapping={(u,v):k for k,(u,v,_) in enumerate(edges)}
     raw=bytes.fromhex(text)
