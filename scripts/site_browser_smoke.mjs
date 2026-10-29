@@ -80,16 +80,15 @@ try{
    assert.match(await page.locator(".ticker").innerText(),/32/,"homepage current library count");
    assert.equal(await page.locator("#instruments .instrument-workflow span").count(),4,"four instrument workflow stages");
    assert.equal(await page.locator('#instruments a[href="exact-research.html"]').count(),1,"research tools hub CTA");
-   await page.locator("#project-search").fill("werner");
-   assert.equal(await page.locator("#project-list .research-row").count(),0,"original-only catalogue excludes Werner");
-   await page.locator("#project-search").fill("");
-   assert.equal(await page.locator("#project-list .research-row").count(),3,"three curated original results reset");
+   assert.equal(await page.locator("#work.sf-library-invite").count(),1,"owner-curated full research library invitation");
+   assert.equal(await page.locator('#work a[href="research.html"]').count(),1,"full research library entry");
+   assert.equal(await page.locator('#work a[href="passport.html"]').count(),1,"separate original proof passport entry");
   }
   if(width===390){
     await page.goto(origin+"research.html",{waitUntil:"load"});
     assert.equal(await page.locator(".atlas-card:visible").count(),32,"32 owner-curated research entries");
     await page.locator('[data-atlas-filter="quantum"]').click();
-    assert.equal(await page.locator(".atlas-card:visible").count(),8,"eight quantum source entries");
+    assert.equal(await page.locator(".atlas-card:visible").count(),4,"four distinct quantum source entries");
     await page.locator('[data-atlas-filter="all"]').click();
     await page.locator("#atlas-search").fill("SourceBound");
     assert.equal(await page.locator(".atlas-card:visible").count(),1,"library source search");
