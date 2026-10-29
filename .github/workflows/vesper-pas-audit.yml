@@ -25,6 +25,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Verify original exact source bytes
+        run: echo 'a8ff3191bd5c351238156f9012af24ae4136fad416a3ea0a78f0a4cc46a3d9b9  research/nightfall/agent-reports/vesper_pas_audit_20261029/audit_cut.py' | sha256sum --check
       - name: Compile exact solver
         run: python3 -m py_compile research/nightfall/agent-reports/vesper_pas_audit_20261029/audit_cut.py
       - name: Full 15,288-case independent audit
