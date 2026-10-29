@@ -1,0 +1,35 @@
+name: NIGHTFALL Frontier verified participation demo
+on:
+  pull_request:
+    paths:
+      - "docs/frontier*"
+      - "docs/orchestrator.js"
+      - "research/nightfall/frontier/**"
+      - ".github/workflows/frontier-demo.yml"
+  push:
+    branches: [main]
+    paths:
+      - "docs/frontier*"
+      - "docs/orchestrator.js"
+      - "research/nightfall/frontier/**"
+      - ".github/workflows/frontier-demo.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  frontier:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check source syntax and independent finite proof fixtures
+        run: |
+          node --check docs/frontier-core.js
+          node --check docs/frontier.js
+          node --check research/nightfall/frontier/test.cjs
+          node --check research/nightfall/frontier/test_browser.mjs
+          node research/nightfall/frontier/test.cjs
+      - name: Install Chromium driver
+        run: npm install --no-save --no-package-lock playwright-core@1.56.1
+      - name: Reproduce real mobile and desktop participation
+        run: CHROME_BIN="$(command -v google-chrome)" node research/nightfall/frontier/test_browser.mjs
