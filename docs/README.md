@@ -65,7 +65,7 @@ The [Research Agenda](agenda.html) contains two untested investigations each in 
 
 ## Site-owner polish (October 28, 2026)
 
-The homepage now reflects the existing 30-document research library. Shared navigation is consolidated around Research, Library, Tools, Review, Evidence, and Source archive, with a compact workflow bridge to the existing Research Tools hub. The library supports combinable discipline, evidence-tier, and text filters, plus keyboard shortcuts (/ to focus search, Escape to clear). The Original Findings whitelist remains exactly three. New browser regressions validate current counts, tool discovery, and evidence filters.
+The homepage now reflects the owner-approved 32-document research library. Shared navigation is consolidated around Research, Library, Tools, Review, Evidence, and Source archive, with a compact workflow bridge to the existing Research Tools hub. The library supports combinable discipline, evidence-tier, and text filters, plus keyboard shortcuts (/ to focus search, Escape to clear). The Original Findings whitelist remains exactly three. New browser regressions validate current counts, tool discovery, and evidence filters.
 
 
 ## October 28: owner-approved 32-document breadth
