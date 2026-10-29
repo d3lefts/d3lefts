@@ -1,0 +1,37 @@
+name: Verify Vesper q25 three-block Singer spectrum
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/projects/erdos/vesper-q25-threeblock-20261029/**'
+      - '.github/workflows/verify-vesper-q25-threeblock.yml'
+  push:
+    paths:
+      - 'research/nightfall/projects/erdos/vesper-q25-threeblock-20261029/**'
+      - '.github/workflows/verify-vesper-q25-threeblock.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-finite-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Regenerate all affine Singer cut states and independent incremental sweep
+        run: |
+          cd research/nightfall/projects/erdos/vesper-q25-threeblock-20261029
+          python3 generate.py --out /tmp/vesper-q25-spectrum
+      - name: Exhaust all 79,396,460 q25 triples including repeated spectra
+        run: |
+          cd research/nightfall/projects/erdos/vesper-q25-threeblock-20261029
+          g++ -O3 -std=c++17 -Wall -Wextra -pedantic enumerate.cpp -o /tmp/vesper-q25-enumerate
+          /tmp/vesper-q25-enumerate /tmp/vesper-q25-spectrum/states.tsv /tmp/vesper-q25-spectrum/prefixes.tsv > /tmp/vesper-q25-spectrum/results.txt
+          cat /tmp/vesper-q25-spectrum/results.txt
+      - name: Independent literal mark/sum verifier and hashes
+        run: |
+          cd research/nightfall/projects/erdos/vesper-q25-threeblock-20261029
+          python3 independent.py /tmp/vesper-q25-spectrum/results.txt
+          sha256sum generate.py enumerate.cpp independent.py /tmp/vesper-q25-spectrum/*.tsv /tmp/vesper-q25-spectrum/results.txt
