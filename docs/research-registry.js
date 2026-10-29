@@ -241,43 +241,53 @@ const REGISTRY={
       "title": "Deterministic adaptive finite-field decoder",
       "field": "Finite-field algebra",
       "kind": "Algebraic proof candidate · independently coded exhaustive tests",
-      "short": "Two-round powered measurements recover any finite-extension vector up to base-field scaling using at most 2k−1 queries.",
-      "statement": "Let K=F_(q^r), r≥2, with powered linear queries (a·x)^(q−1). A deterministic two-round construction outputs a representative of x modulo multiplication by F_q× with k+max(s−1,0) ≤ 2k−1 measurements, where s is the support size.",
-      "conditions": "Explicit finite-field representation, adaptive second-round query vectors, noiseless measurements, quotient by the global base-subfield scalar group. For K=F_25/F_5, measurements are fourth powers.",
-      "measurement": "≤ 2k−1",
-      "metric": "Adaptive queries",
+      "short": "Two-round extension-degree packing retrieves r−1 relative phases per mixed query: at most k+⌈(k−1)/(r−1)⌉ queries over F_(q^r), q>2.",
+      "statement": "For K=F_(q^r), r≥2, q>2, adaptive powered-linear queries (a·x)^(q−1) deterministically reconstruct every x up to F_q× in k+⌈max(s−1,0)/(r−1)⌉ measurements, where s is the support size. If 2≤k≤r, the worst-case k+1 count is globally optimal. When q=2, exactly k queries are optimal.",
+      "conditions": "Two rounds, explicitly represented extension field, noiseless K-linear queries with a selectable basis, first-round coordinate phases, second-round batch mixing, global F_q× ambiguity; q=2 exception stated separately.",
+      "measurement": "k + ⌈(k−1)/(r−1)⌉",
+      "metric": "Worst-case two-round queries · q>2",
       "validity": {
         "level": "working",
-        "label": "Complete proof argument · external review open",
-        "detail": "Frobenius kernel, independent anchor mixing and projective ratio extraction give an explicit algebraic proof argument. Non-author mathematical referee pending."
+        "label": "Complete batched proof argument · external review open",
+        "detail": "An F_q-basis packs r−1 relative coordinate phases per adaptive query. Exact decision-tree counting proves k+1 optimal for 2≤k≤r, q>2. Independent mathematician review remains open."
       },
       "reproducibility": {
         "level": "finite",
-        "label": "18,725 exact finite inputs pass",
-        "detail": "Independent exact checker exhaustively reconstructs F_25 inputs for k=1,2,3 and F_49 inputs for k=1,2; projective equivalence and worst query count checked."
+        "label": "53,478 exact finite inputs pass",
+        "detail": "Independent standalone prime-base-field checker passes 53,478 exact input vectors across extensions of degrees 2–4 and 1,500 constructive collisions for nonadaptive frames; mathematical theorem covers all prime-power base fields."
       },
       "originality": {
         "level": "open",
         "label": "Same-model priority review open",
-        "detail": "Prior work in adaptive phase retrieval and polarization exists; this precise finite-extension guarantee has not received a comprehensive same-model novelty audit."
+        "detail": "The complementary nonadaptive obstruction is a finite-field application of the known complement-property argument. Extension-degree batch packing, global optimality, and same-model adaptive separation require independent novelty review."
       },
       "significance": {
         "level": "prospective",
-        "label": "Deterministic adaptive algebraic mechanism",
-        "detail": "Replaces random sampling with two-round phase synchronization in a distinct sensing model; quadratic-extension k≤3 query optimality is shown by decision-tree output counting."
+        "label": "Measurement-optimal high-extension decoding",
+        "detail": "For q>2 and 2≤k≤r, k+1 adaptive measurements are globally optimal, while every fixed nonadaptive design needs at least 2k−1. A strict separation occurs for r≥3,k≥3."
       },
       "assumptions": [
-        "All measurement forms are permitted K-linear and adapt to first-round outputs.",
-        "No adversarial response corruption or physical noise stability guarantee is claimed.",
-        "Comparisons with random nonadaptive fourth-power bounds require separate hypotheses and are not interchangeable.",
-        "External proof review and novelty audit are not yet completed."
+        "Oracle returns (a·x)^(q−1) with arbitrarily chosen K-linear rows; second-round rows adapt to first-round output.",
+        "The extension-field basis and finite-field arithmetic are explicitly available.",
+        "Exact reconstruction is modulo a single global factor in F_q×, with no noise guarantee.",
+        "For q=2, power measurements reveal coordinates directly: exact minimum k.",
+        "Comparisons with a separate random nonadaptive fourth-power lattice decoder involve different measurement hypotheses."
       ],
       "open": [
-        "Independent referee: rederive Frobenius-kernel extraction and all zero-support edge cases.",
-        "Complete same-model prior-art and attribution review.",
-        "Investigate worst-case optimality for k≥4 and query-efficient robustness."
+        "Non-author proof verification of extension-degree packed linear extraction and global lower-bound counting.",
+        "Same-model novelty and priority audit, including existing complement-property and adaptive phase retrieval literature.",
+        "Exact optimal measurement complexity for k>r and potentially compressed sparse-support localization.",
+        "Noise and corrupt-response robustness without losing the phase-packing advantage."
       ],
       "sources": [
+        {
+          "label": "Batched theorem, proofs, lower bounds and prior-art boundary",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/EXTENSION_DEGREE_PACKING_20261029.md"
+        },
+        {
+          "label": "Independent 53,478-vector and 1,500-collision verifier",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/verify_extension_packing.py"
+        },
         {
           "label": "Public proof dossier and audit scope",
           "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/README.md"
@@ -302,6 +312,13 @@ const REGISTRY={
           "label": "Adaptive decoder promoted to fourth flagship",
           "detail": "Axiom's adaptive decoder, general-extension proof argument and independently coded exact finite audits published as a flagship research program. External referee and priority audit remain open.",
           "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/README.md"
+        },
+        {
+          "date": "2026-10-29",
+          "kind": "proof-candidate",
+          "label": "Extension-degree packing improves adaptive measurement count",
+          "detail": "General two-round bound k+ceil((k−1)/(r−1)), exact k+1 optimality when 2≤k≤r and q>2, and a same-model nonadaptive complement-property lower bound. Verified by 53,478 reconstructions and 1,500 collision certificates; external review pending.",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/EXTENSION_DEGREE_PACKING_20261029.md"
         }
       ]
     },
