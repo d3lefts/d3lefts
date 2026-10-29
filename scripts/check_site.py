@@ -102,6 +102,18 @@ def main() -> int:
         FAILURES.append("ORIGINALITY GATE: public findings differ from three approved primary artifacts. "
                         "Any change requires a new dated prior-art audit and evidence review.")
     homepage_text = (DOCS / "index.html").read_text(encoding="utf-8")
+    # A public, guided claim-to-replay walkthrough must use real local verifier routes.
+    hub = (DOCS / "exact-research.html").read_text(encoding="utf-8")
+    if ('id="guided-replay"' not in hub or
+        'referee.html?domain=sidon#workbench' not in hub or
+        "RESEARCH_INSTRUMENT_HANDOFF_20261028.md" not in hub or
+        hub.count('class="rt-stage"') != 4):
+        FAILURES.append("RESEARCH JOURNEY: source-to-replay evidence walkthrough incomplete")
+    ref_js = (DOCS / "referee-app.js").read_text(encoding="utf-8")
+    if 'requestedDomain === "sidon"' not in ref_js:
+        FAILURES.append("RESEARCH JOURNEY: allowlisted Sidon verifier deep link absent")
+    if '<b>30</b><span>Curated research documents' not in homepage_text:
+        FAILURES.append("EDITORIAL: 30-document owner-curated homepage inventory mismatch")
     # Separate working-research library: preserve originality whitelist and evidence boundaries.
     library = (DOCS / "research.html").read_text(encoding="utf-8")
     entries = re.findall(r'<article class="atlas-card" data-domain="([^"]+)" data-evidence="([^"]+)"', library)

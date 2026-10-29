@@ -156,6 +156,19 @@ try{
     assert.equal(await page.locator("#agenda-list .research-proposal:visible").count(),10,"agenda search reset");
   }
   if(width===390 || width===1280){
+    await page.goto(origin+"exact-research.html#guided-replay",{waitUntil:"load"});
+    assert.equal(await page.locator("#guided-replay .rt-stage").count(),4,"Four-stage claim-to-replay journey");
+    assert.match(await page.locator("#guided-replay").innerText(),/30-POINT SIDON/,"Original finite scope remains visible");
+    assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth))<=3,"Guided research journey fits viewport");
+    await page.locator('#guided-replay a[href="referee.html?domain=sidon#workbench"]').first().click();
+    await page.waitForURL(/referee\.html\?domain=sidon/);
+    assert.equal(await page.locator("#tab-sidon").getAttribute("aria-selected"),"true","Guided replay selects Sidon domain");
+    assert.equal(await page.locator("#pane-sidon").isVisible(),true,"Sidon witness editor visible");
+    assert.equal(await page.locator("#run-sidon").count(),1,"Witness verifier available");
+    await page.goto(origin+"referee.html?domain=unexpected",{waitUntil:"load"});
+    assert.equal(await page.locator("#tab-overlap").getAttribute("aria-selected"),"true","Unrecognized domain does not affect default selection");
+  }
+  if(width===390 || width===1280){
     await page.goto(origin+"exact-research.html",{waitUntil:"load"});
     await page.locator("#werner-run").click();
     assert.ok((await page.locator("#werner-output").innerText()).includes('"qExact": "-3/16"'),"Rank-three obstruction exact value");

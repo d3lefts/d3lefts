@@ -50,6 +50,25 @@
 @media(max-width:1070px){.rt-directory-grid{grid-template-columns:1fr 1fr}.rt-launch-feature{grid-column:1/-1;min-height:0}.rt-launch-art{max-width:650px;width:100%}.rt-launch-secondary{min-height:330px}}
 @media(max-width:720px){.rt-hero h1{font-size:clamp(58px,12vw,83px)}.rt-directory-heading{display:block}.rt-directory-heading h2{margin:14px 0 9px}.rt-directory-heading p{margin:0}.rt-directory-grid{grid-template-columns:1fr}.rt-launch-feature{grid-column:auto}.rt-launch-card{padding:23px;min-height:0}.rt-launch-secondary{min-height:265px}.rt-launch-art{height:145px}.rt-launch-glyph{margin:38px 0 4px}.rt-exact-heading{padding-top:53px}.rt-exact-heading h2{font-size:47px}.rt-directory{padding-bottom:50px}}
 
+/* A single source-to-checker journey, placed inside the existing research tools hub. */
+.rt-journey{padding:72px 0 82px;border-bottom:1px solid var(--line)}
+.rt-journey-header{display:grid;grid-template-columns:1fr 1.7fr;gap:38px;align-items:end;margin-bottom:28px}
+.rt-journey-header h2{font:400 clamp(42px,4.8vw,70px)/1 var(--serif);letter-spacing:-.025em;margin:12px 0 18px}
+.rt-journey-header h2 em{color:#5b7c65}
+.rt-journey-header p{max-width:650px;color:var(--muted);font:14px/1.7 var(--sans)}
+.rt-journey-headline{border-left:2px solid #a3b99d;padding:15px 0 15px 24px;font:15px/1.7 var(--sans);color:#42574a}
+.rt-journey-headline strong{display:block;font:600 12px/1.5 var(--mono);letter-spacing:.025em;color:#1f3c29;margin-bottom:10px}
+.rt-journey-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.rt-stage{display:flex;flex-direction:column;min-width:0;min-height:260px;padding:23px;border:1px solid #c3cdc0;background:#f0f3ec;text-decoration:none;color:inherit}
+.rt-stage:hover,.rt-stage:focus-visible{border-color:#547a5d;background:#e7eee2}
+.rt-stage .rt-stage-number{font:700 10px/1.4 var(--mono);color:#52715b;letter-spacing:.085em}
+.rt-stage h3{font:400 35px/1.07 var(--serif);letter-spacing:-.015em;margin:31px 0 14px}
+.rt-stage p{font:12px/1.75 var(--sans);color:#5a6e5f;margin:0}
+.rt-stage .rt-stage-action{margin-top:auto;padding-top:26px;font:700 11px/1.5 var(--mono);color:#234e36}
+.rt-journey-boundary{font:12px/1.8 var(--sans);color:#55685c;margin-top:24px;max-width:1040px}
+@media(max-width:1020px){.rt-journey-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:690px){.rt-journey{padding:50px 0}.rt-journey-header{display:block}.rt-journey-headline{margin-top:25px}.rt-journey-grid{grid-template-columns:1fr}.rt-stage{min-height:200px}.rt-stage h3{margin-top:20px}}
+
 </style>
 </head>
 <body>
@@ -96,7 +115,28 @@
   </div>
   <p class="rt-directory-disclosure"><strong>Evidence policy:</strong> A browser calculation is a finite test within its specified scope. Same-package cross-checks provide arithmetic redundancy, not external peer review. Claim status changes require separate evidence and authorization.</p>
 </section>
-<section class="wrap rt-exact-heading" id="exact-instruments" aria-labelledby="exact-title"><span class="section-id">02 / DOMAIN-SPECIFIC CALCULATORS</span><h2 id="exact-title">Exact arithmetic, bounded claims.</h2><p>Two additional offline instruments for active Werner-state and finite-field reconstruction research. These calculators inspect specific examples; they do not certify general theorems.</p></section>
+<section class="wrap rt-journey" id="guided-replay" aria-labelledby="guided-replay-title">
+  <div class="rt-journey-header">
+    <div><span class="section-id">02 / GUIDED RESEARCH REPLAY</span><h2 id="guided-replay-title">One claim.<br><em>Four inspections.</em></h2><p>Follow one real, narrowly scoped finding from its source record to a bounded arithmetic check. The same workflow applies to larger claims only after the relevant proof obligations are met.</p></div>
+    <div class="rt-journey-headline"><strong>THE TEST CASE / 30-POINT SIDON (4,5)</strong>An explicit set of 30 integers has a maximum Sidon subset of 17. This is a finite construction; it does not improve the established asymptotic 5/9 result. The complete claim and its conditional historical dependencies are documented in the source.</div>
+  </div>
+  <div class="rt-journey-grid">
+    <a class="rt-stage" href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/README.md" target="_blank" rel="noopener">
+      <span class="rt-stage-number">01 / SOURCE</span><h3>Read the claim.</h3><p>Inspect the 30 integers, the exact finite statement, the known asymptotic result, and the source conditions.</p><span class="rt-stage-action">Open source dossier ↗</span>
+    </a>
+    <a class="rt-stage" href="referee.html?domain=sidon#workbench">
+      <span class="rt-stage-number">02 / RECOMPUTE</span><h3>Run the test.</h3><p>Open Referee directly in Sidon mode. Recompute the 17-element certificate and its finite exclusion search.</p><span class="rt-stage-action">Open exact Sidon verifier ↗</span>
+    </a>
+    <a class="rt-stage" href="referee.html?domain=sidon#workbench">
+      <span class="rt-stage-number">03 / ATTACK</span><h3>Try to break it.</h3><p>Run the built-in negative controls, alter the claimed maximum or corrupt the subset, and inspect which checks reject the claim.</p><span class="rt-stage-action">Challenge the witness ↗</span>
+    </a>
+    <a class="rt-stage" href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/referee/README.md" target="_blank" rel="noopener">
+      <span class="rt-stage-number">04 / REPRODUCE</span><h3>Keep the evidence.</h3><p>Export a local JSON receipt and consult the separate Python replay instructions. External referee approval stays a distinct gate.</p><span class="rt-stage-action">Review replay protocol ↗</span>
+    </a>
+  </div>
+  <p class="rt-journey-boundary"><strong>Scope boundary:</strong> a finite checker can establish only its specified calculation and exclusion procedure. A SHA-256 digest identifies input bytes; it is neither a digital signature nor external validation. The browser does not automatically transfer evidence to Claim Lab or the Observatory. <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/RESEARCH_INSTRUMENT_HANDOFF_20261028.md" target="_blank" rel="noopener">Read the handoff and evidence contract ↗</a></p>
+</section>
+<section class="wrap rt-exact-heading" id="exact-instruments" aria-labelledby="exact-title"><span class="section-id">03 / DOMAIN-SPECIFIC CALCULATORS</span><h2 id="exact-title">Exact arithmetic, bounded claims.</h2><p>Two additional offline instruments for active Werner-state and finite-field reconstruction research. These calculators inspect specific examples; they do not certify general theorems.</p></section>
 <div class="wrap"><div class="rt-boundary"><strong>Calculator boundary:</strong> the two calculators below compute locally in the browser, without submitted data, telemetry, saved inputs, external packages, or executable imports. Their numerical and exact finite outputs never automatically elevate a Claim Lab claim to theorem status.</div></div>
 <div class="wrap rt-grid">
 <section class="rt-card" aria-labelledby="werner-heading">
