@@ -29,6 +29,7 @@ const deprecated=[
   "rgb(231, 198, 179)","rgb(238, 209, 189)"
 ];
 let browser;
+const allSurfaceLeaks=[];
 try{
  browser=await chromium.launch({
   headless:true,executablePath:process.env.CHROME_BIN||"/usr/bin/chromium",
@@ -75,7 +76,7 @@ try{
     assert.equal(summary.bg,expected,p+" "+mode+" canvas");
     assert.equal(summary.theme,mode,p+" expected mode");
     assert.ok(summary.overflow<=4,p+" "+mode+" "+width+"px overflow "+summary.overflow);
-    assert.deepEqual(summary.leaks,[],p+" "+mode+" "+width+"px visible obsolete surfaces: "+JSON.stringify(summary.leaks));
+    if(summary.leaks.length)allSurfaceLeaks.push({page:p,mode,width,leaks:summary.leaks});
     if(mode==="dusk"){
       assert.equal(summary.oxblood,"#4a1f24",p+" new-moon oxblood token");
       assert.equal(summary.moonlight,"#e6deaa",p+" moonlight remains primary");
@@ -85,6 +86,7 @@ try{
    await context.close();
   }
  }
+ assert.deepEqual(allSurfaceLeaks,[],"Visible obsolete surfaces "+allSurfaceLeaks.length+" pages: "+JSON.stringify(allSurfaceLeaks.slice(0,45)));
  const css=await readFile(join(root,"two-skies.css"),"utf8");
  const matches=[...css.matchAll(/var\(--nf-oxblood-rare\)/g)];
  assert.ok(matches.length<=4,"Oxblood is rare by contract, found "+matches.length+" usage(s)");

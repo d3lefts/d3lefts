@@ -502,3 +502,7 @@ html:not([data-nf-theme="dusk"]) :is(
  .atlas-passport-link:hover){
  background-color:#3b281d!important;color:#f7e8db;border-color:#75574a;
 }
+
+/* The review access/certificate warning inherits an obsolete parchment background. */
+html[data-nf-theme="dusk"] .review-warning{background:#16223c;color:#f1eedc;border-color:#e6deaa}
+html:not([data-nf-theme="dusk"]) .review-warning{background:#51382b;color:#f7e8db;border-color:#edc16e}
