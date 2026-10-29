@@ -25,3 +25,7 @@ jobs:
           python-version: '3.12'
       - name: Independent symmetric-pair integer convolution and negative control
         run: python3 research/nightfall/independent-audits/tao-constants/c1d_600_exact.py --fetch
+      - name: Independent 300-cell third-party replay, source hash and negative control
+        run: python3 research/nightfall/independent-audits/tao-constants/c1d_300_exact.py --fetch
+      - name: Audited NIGHTFALL 33-item calibration inventory
+        run: python3 research/nightfall/evaluations/calibration_20261029/audit_inventory.py
