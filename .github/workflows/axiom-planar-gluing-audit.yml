@@ -26,3 +26,7 @@ jobs:
         run: python3 research/nightfall/agent-reports/axiom_planar_gluing_20261029/verify.py
       - name: Independent planar spectra and constructive blockers
         run: python3 research/nightfall/agent-reports/axiom_planar_gluing_20261029/structural_audit.py
+      - name: Affine-equivalence falsifier (negative result)
+        run: |
+          g++ -O3 -std=c++17 research/nightfall/agent-reports/axiom_planar_gluing_20261029/codim2_standalone.cpp -o /tmp/axiom_codim2
+          /tmp/axiom_codim2
