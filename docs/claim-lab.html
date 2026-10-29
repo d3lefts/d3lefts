@@ -71,6 +71,7 @@
 <script src="referee-core.js"></script>
 <script src="research-tools-core.js"></script>
 <script src="evidence-bridge-core.js"></script>
+<script src="frontier-core.js"></script>
 <script>
 'use strict';
 const KEY='nightfall_claim_lab_v1';
@@ -236,6 +237,46 @@ $('#importBtn').addEventListener('click',()=>$('#importFile').click());$('#impor
 $('#exportBtn').addEventListener('click',()=>{const payload={...data,exportedAt:new Date().toISOString(),format:'nightfall-claim-lab-v1'};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='NIGHTFALL_claim_lab_backup_'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('JSON backup generated. Keep it in a safe private location.')});
 $('#claimStatus').innerHTML=STATUSES.map((s,i)=>`<option value="${i}">${esc(s)}</option>`).join('');$('#expOperator').innerHTML=OPERATORS.map(s=>`<option value="${esc(s)}">${esc(s)}</option>`).join('');
 window.addEventListener('resize',()=>{if(activeTab==='map')requestAnimationFrame(drawEdges)});
+
+// Explicit, one-use Frontier assignment handoff. This never imports a certificate.
+if(new URLSearchParams(location.search).get('frontier_handoff')==='1'){
+ try{
+  const raw=sessionStorage.getItem('nightfall.frontier.claimlab.v1');
+  sessionStorage.removeItem('nightfall.frontier.claimlab.v1');
+  if(!raw||raw.length>7000)throw Error('Missing or oversized Frontier assignment.');
+  const packet=JSON.parse(raw);
+  if(!window.NFFrontier)throw Error('Exact Frontier contract validator unavailable.');
+  const checked=window.NFFrontier.validatePacket(packet);
+  const assignment=checked.assignment,source=checked.root;
+  if(data.claims.some(c=>c.frontierId===packet.assignmentId))throw Error('That assignment is already imported.');
+  if(data.claims.length>=2000)throw Error('Claim register is full.');
+  if(confirm('Import '+packet.assignmentId+' ('+packet.scope+') as an UNREVIEWED local claim? This changes this browser only and grants no mathematical status.')){
+   const previous=localStorage.getItem(KEY);
+   const next=structuredClone(data);
+   next.claims.push({
+    id:'frontier-'+packet.assignmentId,frontierId:packet.assignmentId,
+    title:'Frontier / '+source.parent+' / '+packet.scope,domain:source.parent,
+    summary:packet.question+'\nRestricted to '+packet.scope+'\nYES: '+packet.positive+'\nNO: '+packet.negative,
+    status:0,effort:1,next:'Produce independent exact certificate for '+packet.scope,
+    artifact:packet.source,command:'',hash:'',auditor:'',proof:'',novelty:'',
+    leaderboard:'',signoff:'',deps:[]
+   });
+   next.sample=false;
+   const content=JSON.stringify(next);
+   try{
+    localStorage.setItem(KEY,content);
+    if(localStorage.getItem(KEY)!==content)throw Error('Storage readback mismatch');
+   }catch(err){
+    if(previous===null)localStorage.removeItem(KEY);else localStorage.setItem(KEY,previous);
+    throw err;
+   }
+   data=next;activeTab='claims';chosenNode=null;
+   toast('Frontier scope imported as Conjecture. No proof status changed.');
+  }else{toast('Frontier transfer declined; existing workspace preserved.');}
+ }catch(err){toast('Frontier handoff refused: '+err.message);}
+ finally{history.replaceState(null,'',location.pathname);}
+}
+
 render();
 </script>
 </body></html>
