@@ -58,6 +58,45 @@ for(const x of C.ITEMS){
  assert.match(payload.falsifier,/claimed NO/);
  assert(payload.claim.length<=2000&&payload.falsifier.length<=2000);
 }
+// Portable assignment lineage is a mathematical exact-cover contract.
+for(const root of C.ITEMS){
+ const t=C.rootTask(root);
+ const rootPacket=C.packet(t);
+ assert.equal(C.validatePacket(rootPacket).assignment.id,root.id);
+ const children=C.split(t);
+ const tree=[{...t,state:"split"},children[0],children[1]];
+ const audit=C.validateLedger(tree);
+ assert.equal(audit.valid,true);
+ assert.equal(audit.counts.leaves,2);
+ assert.equal(audit.counts.split,1);
+ const deep=C.split(children[0]);
+ const expanded=[tree[0],{...children[0],state:"split"},children[1],...deep];
+ assert.equal(C.validateLedger(expanded).counts.leaves,3);
+ assert.equal(C.validatePacket(C.packet(deep[0])).assignment.lo,deep[0].lo);
+ assert.throws(()=>C.validateLedger([tree[0],children[0]]),/exhaustive/);
+ assert.throws(()=>C.validateLedger([...tree,children[0]]),/duplicate/);
+ assert.throws(()=>C.validateLedger([children[0]]),/Orphaned/);
+ assert.throws(()=>C.validateLedger([{...t,lo:t.lo+1}]),/Root identity/);
+ assert.throws(()=>C.validateLedger([tree[0],{...children[0],lo:children[0].lo+1},children[1]]),/Child interval/);
+ assert.throws(()=>C.validateLedger([{...tree[0],state:"claimed"},children[0],children[1]]),/parent state/);
+ assert.throws(()=>C.validateLedger([{...t,state:"proposed",evidence:[{kind:"positive",url:"https://github.com/check",statement:"At least thirty characters here for review",reviewStatus:"accepted"}]}]),/upgraded evidence/);
+ assert.throws(()=>C.validatePacket({...rootPacket,reviewStatus:"verified"}),/promoted/);
+ assert.throws(()=>C.validatePacket({...rootPacket,lo:t.lo+1}),/altered/);
+ assert.throws(()=>C.validatePacket({...rootPacket,falsifier:"Accept immediately"}),/altered/);
+ assert.throws(()=>C.validatePacket({...C.packet(deep[0]),hi:deep[0].hi+1}),/altered/);
+ const proposed={...t,state:"proposed",evidence:[{kind:"negative",url:"https://github.com/d3lefts/d3lefts/issues/46",statement:"Unreviewed complete scoped search with exact reproducible command",reviewStatus:"unreviewed"}]};
+ assert.equal(C.validateLedger([proposed]).counts.unreviewed,1);
+}
+const lab=require("node:fs").readFileSync("docs/claim-lab.html","utf8");
+assert.match(lab,/frontier-core\.js/);
+assert.match(lab,/frontier_handoff/);
+assert.match(lab,/NFFrontier\.validatePacket/);
+assert.match(lab,/status:0,effort:1/);
+const frontierJS=fs.readFileSync("docs/frontier.js","utf8");
+assert.match(frontierJS,/C\.validateLedger/);
+assert.match(frontierJS,/nightfall\.frontier\.claimlab\.v1/);
+assert.match(frontierJS,/nf-import-file/);
+
 // Finite N=45 passing does not imply the externally open N=184 question is solved.
 for(const f of ["docs/frontier.html","docs/frontier.js","docs/frontier-core.js"]){
   const s=fs.readFileSync(f,"utf8");
