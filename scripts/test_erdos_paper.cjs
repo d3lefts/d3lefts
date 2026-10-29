@@ -52,7 +52,7 @@ for(let i=0;i<16;i++)for(let j=0;j<16;j++){
 assert.ok(mutations>190);
 const html=fs.readFileSync(path.join(root,"docs/erdos-paper.html"),"utf8");
 assert.match(html,/educational fixture/i);
-assert.match(html,/research witness/);
+assert.match(html,/research witness/i);
 assert.match(html,/external expert review is open/i);
 assert.match(html,/erdos-paper-core.js/);
 assert.match(html,/ep-hash-button/);
