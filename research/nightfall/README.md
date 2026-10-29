@@ -13,6 +13,10 @@ The [website research library](https://d3lefts.github.io/d3lefts/research.html) 
 
 The curated 30 are **not** 30 original discoveries. The site continues to identify exactly three approved original findings; conditional source margins, restricted Werner witness classes, classical antecedents, code/prototype evidence, and private original PDF/ZIP archives are disclosed explicitly. Two restricted four-copy Werner source digests have been newly mirrored in text form: [nine-word affine code](projects/werner-affine-code/RESEARCH_DIGEST.md) and [complementary-syndrome gluing](projects/werner-syndrome-gluing/RESEARCH_DIGEST.md).
 
+## Original publications and flagship selection
+
+The [Original Publication Program (29 October 2026)](ORIGINAL_PUBLICATION_PROGRAM_20261029.md) sets **original publication** as the explicit outcome for Axiom, Lemnis, Ryev, Tessara, Tessera and Vesper. Every independently supportable, human-approved original publication is eligible for a research-portfolio feature; exceptional work can be selected for prominent flagship treatment. Paper proofs, exact finite outputs, journal peer review, world priority, and site editorial approval carry distinct labels. This program does **not** upgrade the status of existing archive documents or the older finite Original Findings.
+
 ## NIGHTFALL Discovery Engine — executable research workflow
 
 The [Discovery Engine v1](discovery-engine/README.md) provides problem contracts, candidate representation lineage, eight reusable search-operator families, finite cyclic-overlap experiments, exact replay, falsification controls, scientific worker handoffs, and portable evidence manifests. Launch the [live research interface](https://d3lefts.github.io/d3lefts/discovery.html).
