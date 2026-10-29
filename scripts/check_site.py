@@ -110,7 +110,7 @@ def main() -> int:
     if "Explore the six Proof Passports" not in library_text or "Explore the five Proof Passports" in library_text:
         FAILURES.append("EDITORIAL: canonical six-Passport link miscount")
     stages = re.search(r'<nav class="instrument-workflow"[^>]*>(.*?)</nav>', homepage_text, re.S)
-    if not stages or len(re.findall(r'<a\\s', stages.group(1))) != 4:
+    if not stages or len(re.findall(r'<a\s', stages.group(1))) != 4:
         FAILURES.append("JOURNEY: precisely four linked stages required")
     if "Complete archive mirror pending" in registry_text or "Missing public frozen witness release" in registry_text:
         FAILURES.append("REPRODUCIBILITY: canonical registry repeats superseded release claim")
@@ -118,15 +118,15 @@ def main() -> int:
         FAILURES.append("REPRODUCIBILITY: reviewer or library contradicts approved release")
     # Progressive HTML must supply the real integer witness even with scripts disabled.
     core_text = (DOCS / "referee-core.js").read_text(encoding="utf-8")
-    match = re.search(r'const SIDON_WITNESS=\\[([^\\]]+)\\];', core_text)
-    subset_match = re.search(r'const SIDON_SUBSET=\\[([^\\]]+)\\];', core_text)
+    match = re.search(r'const SIDON_WITNESS=\[([^\]]+)\];', core_text)
+    subset_match = re.search(r'const SIDON_SUBSET=\[([^\]]+)\];', core_text)
     chart_match = re.search(r'<div class="sf-witness"[^>]*>(.*?)</div>', homepage_text, re.S)
     if not (match and subset_match and chart_match):
         FAILURES.append("ACCESSIBILITY: static Sidon witness coordinates or source missing")
     else:
         coords = [int(x) for x in match.group(1).split(",")]
         subset = {int(x) for x in subset_match.group(1).split(",")}
-        tokens = re.findall(r'<span class="sf-point( chosen)?" role="listitem" title="Integer coordinate (-?\\d+)"', chart_match.group(1))
+        tokens = re.findall(r'<span class="sf-point( chosen)?" role="listitem" title="Integer coordinate (-?\d+)"', chart_match.group(1))
         if [int(x) for _, x in tokens] != coords or {int(x) for mark, x in tokens if mark} != subset:
             FAILURES.append("ACCESSIBILITY: no-JS witness mismatches canonical exact arithmetic")
         if len(coords) != 30 or len(subset) != 17:
