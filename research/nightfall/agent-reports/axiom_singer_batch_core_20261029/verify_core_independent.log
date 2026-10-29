@@ -1,0 +1,8 @@
+v 7 k 3 pair_count 6 minimum_high 1 maximum_high 3 shared_max 1 bound 0 worst (2, 4)
+v 13 k 4 pair_count 36 minimum_high 1 maximum_high 4 shared_max 1 bound 0 worst (7, 8)
+v 21 k 5 pair_count 120 minimum_high 2 maximum_high 5 shared_max 1 bound 0 worst (2, 5)
+v 31 k 6 pair_count 300 minimum_high 2 maximum_high 6 shared_max 1 bound 0 worst (7, 9)
+v 57 k 8 pair_count 1176 minimum_high 3 maximum_high 8 shared_max 1 bound 1 worst (8, 51)
+v 73 k 9 pair_count 2016 minimum_high 4 maximum_high 9 shared_max 1 bound 2 worst (2, 60)
+v 91 k 10 pair_count 3240 minimum_high 5 maximum_high 10 shared_max 1 bound 2 worst (4, 67)
+PASS: 6894 full outside-batch cases, diagonal and nonperfect controls
