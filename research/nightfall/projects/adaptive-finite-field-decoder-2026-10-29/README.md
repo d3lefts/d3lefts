@@ -16,10 +16,11 @@ The original 2k-1 bound below is recovered at extension degree r=2. **This stric
 
 **Global adaptive optimality:** when q>2 and 2<=k<=r, **k+1 is optimal among all deterministic adaptive protocols**, by an exact decision-tree counting identity. A classical complement-property-style obstruction also forces every fixed nonadaptive design in the **same powered-field measurement model** to use at least 2k-1 rows. This gives a strict adaptive/nonadaptive separation for r>=3,k>=3. The older random/nonadaptive LLL phase-retrieval program remains a distinct problem with distinct assumptions.
 
-**New exact audit:** 53,478 independently coded reconstruction tests and 1,500 constructive collision certificates pass, including the q=2 exception. The checker is self-contained and uses integer polynomial finite-field arithmetic. Same-model publication priority and external proof refereeing remain open.
+**New exact audit:** 332,086 independently coded reconstruction tests and 3,000 constructive collision certificates pass, including q=2 and q=4 characteristic-two cases. Two independent self-contained checkers use integer polynomial arithmetic for prime-base extensions and binary polynomial arithmetic for the q=4 subfield. Same-model publication priority and external proof refereeing remain open.
 
 - [Full theorems, proofs, exact optimality, and source-attributed nonadaptive obstruction](EXTENSION_DEGREE_PACKING_20261029.md)
 - [Independent extension-degree checker](verify_extension_packing.py) (run: python3 verify_extension_packing.py)
+- [Independent characteristic-two F4-subfield checker](verify_characteristic_two_subfield.py) (run: python3 verify_characteristic_two_subfield.py)
 
 **Archival note.** The next section records the initial 2k-1 decoder milestone as originally published; the batched extension-degree result above supersedes its general measurement-count claim.
 
