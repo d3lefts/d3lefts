@@ -1,0 +1,29 @@
+name: JP-01 independent instrument preflight
+
+on:
+  push:
+    paths:
+      - 'scripts/audit_jp01_instrument.py'
+      - 'scripts/check_judgment_provenance.py'
+      - 'research/nightfall/projects/judgment-provenance-2026-10-29/**'
+      - '.github/workflows/jp01-instrument-preflight.yml'
+  pull_request:
+    paths:
+      - 'scripts/audit_jp01_instrument.py'
+      - 'scripts/check_judgment_provenance.py'
+      - 'research/nightfall/projects/judgment-provenance-2026-10-29/**'
+      - '.github/workflows/jp01-instrument-preflight.yml'
+  workflow_dispatch:
+
+jobs:
+  synthetic-instrument:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Independent provenance instrument and mutation controls
+        run: python3 scripts/audit_jp01_instrument.py --self-test
+      - name: Descriptive estimator synthetic negative controls
+        run: python3 scripts/check_judgment_provenance.py --self-test
