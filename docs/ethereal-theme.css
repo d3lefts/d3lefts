@@ -302,3 +302,23 @@ html.nf-theme-transit .nf-process-thread,html.nf-theme-transit .footer{
  html.nf-theme-transit .nf-observatory-field,html.nf-theme-transit .nf-observatory-inspector,
  html.nf-theme-transit .nf-process-thread,html.nf-theme-transit .footer{transition:none!important}
 }
+
+
+/* Constellation now obeys the single global light/dusk switch, matching the archive. */
+html[data-nf-theme="dusk"] body.co-page{
+ --paper:#111a2c;--ink:#edf0fb;--line:#465571;--soft:#1a253a;--muted:#b7c4de;
+ --accent:#d8c6fa;--co-surface:#1b263d;--co-panel:#242e46;--co-faint:#afbddd;
+ --co-lime:#d8c6fa;--co-deep:#12192d;--co-border:#4d5674;
+ --co-glow:#c2b0ed;--co-muted:#bcc7dc;
+ background-color:#111a2c;color:#edf0fb;color-scheme:dark
+}
+html[data-nf-theme="dusk"] .co-page .co-sky{
+ background:radial-gradient(ellipse at 48% 53%,#756aa72b,transparent 52%),#141e34;
+}
+html[data-nf-theme="dusk"] .co-page .co-sky:before{opacity:.6}
+html[data-nf-theme="dusk"] .co-page .co-node{box-shadow:0 0 24px #d3b6ff14}
+html[data-nf-theme="dusk"] .co-page .co-node:hover,
+html[data-nf-theme="dusk"] .co-page .co-node[aria-pressed="true"]{box-shadow:0 0 25px #a99ae447}
+html[data-nf-theme="dusk"] .co-page .co-primary{color:#151a30}
+html[data-nf-theme="dusk"] .co-page .nav-call{color:#151a30}
+html[data-nf-theme="dusk"] .co-page .nf-journey-rail a{color:#e4d4ff}
