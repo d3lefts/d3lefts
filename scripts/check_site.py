@@ -119,15 +119,15 @@ def main() -> int:
     ref_js = (DOCS / "referee-app.js").read_text(encoding="utf-8")
     if 'requestedDomain === "sidon"' not in ref_js:
         FAILURES.append("RESEARCH JOURNEY: allowlisted Sidon verifier deep link absent")
-    if '<b>32</b><span>Curated research documents' not in homepage_text:
-        FAILURES.append("EDITORIAL: 32-document owner-curated homepage inventory mismatch")
+    if '<b>33</b><span>Curated research documents' not in homepage_text:
+        FAILURES.append("EDITORIAL: 33-document curated homepage inventory mismatch")
     # Separate working-research library: preserve originality whitelist and evidence boundaries.
     library = (DOCS / "research.html").read_text(encoding="utf-8")
     entries = re.findall(r'<article class="atlas-card" data-domain="([^"]+)" data-evidence="([^"]+)"', library)
-    # Owner-curated 32-entry ledger is the authoritative ordered public inventory; at least 30 source-linked entries across four fields.
+    # Dated 33-entry ledger extends and preserves the 2026-10-28 owner-curated snapshot.
     # Check exact category/status sequence, uniqueness and every promised source.
     import json
-    snapshot = ROOT / "research/nightfall/SITE_CURATED_32_20261028.json"
+    snapshot = ROOT / "research/nightfall/SITE_CURATED_33_20261029.json"
     curated = json.loads(snapshot.read_text(encoding="utf-8"))
     records = curated.get("entries", [])
     if len(records) < 30 or curated.get("original_findings_whitelist_count") != 3:
@@ -155,8 +155,8 @@ def main() -> int:
             FAILURES.append("RESEARCH LIBRARY: source dossier missing: " + path)
     if library.count("Evidence boundary") < len(records) or "Only three entries qualify" not in library:
         FAILURES.append("RESEARCH LIBRARY: scoped claim boundaries or original-finding distinction missing")
-    if homepage_text.count('class="flagship-card ') != 3 or 'href="research.html"' not in homepage_text:
-        FAILURES.append("FLAGSHIPS: three explicitly scoped research programs and library navigation required")
+    if homepage_text.count('class="flagship-card ') != 4 or 'href="research.html"' not in homepage_text:
+        FAILURES.append("FLAGSHIPS: four explicitly scoped research programs and library navigation required")
     if "conditional tail target" not in homepage_text or "IMPORTED THEOREMS" not in homepage_text:
         FAILURES.append("FLAGSHIPS: source-conditional theorem boundaries absent")
     if "SITE_ORIGINALITY_AUDIT_20261028.md" not in homepage_text:
