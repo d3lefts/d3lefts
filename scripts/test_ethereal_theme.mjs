@@ -9,7 +9,7 @@ import {chromium} from "playwright-core";
 
 const root=resolve("docs");
 const pages=[
-  "about.html","adversary.html","agenda.html","atlas.html","claim-lab.html",
+  "about.html","adversary.html","agenda.html","atlas.html","claim-lab.html","constellation.html",
   "desk.html","discovery.html","erdos-paper.html","evidence-practice.html","evidence.html",
   "exact-research.html","findings-20261029.html","frontier.html","index.html",
   "join.html","living-investigation.html","living-paper.html","orchestrator.html",
@@ -85,7 +85,7 @@ try{
   assert.deepEqual(errors,[],width+"px page errors: "+errors.join("; "));
   await context.close();
  }
- console.log("PASS: theme toggle, persistence, no initial override, 23 pages, mobile/desktop, starfield, accessibility and reduced motion");
+ console.log("PASS: theme toggle, persistence, no initial override, 24 pages, mobile/desktop, starfield, accessibility and reduced motion");
 }finally{
  await browser?.close();
  await new Promise(resolve=>server.close(resolve));
