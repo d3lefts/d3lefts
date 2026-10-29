@@ -1,5 +1,8 @@
 # NIGHTFALL / LIGHT — GOLDEN-HOUR EDITORIAL ARCHIVE
 
+**Historical palette (superseded 29 October 2026).** Current implementation and audit: [Two Skies palette](TWO_SKIES_PALETTE_20261029.md). Original values below are retained as design provenance.
+
+
 **29 October 2026 · Theme-only change · Scientific content and status unchanged**
 
 The light theme is now a Southern California golden-hour research archive: **rose parchment**, **blackcherry oxblood**, and **sunlit terracotta**. Dusk remains the distinct **navy, violet and champagne observatory**.
