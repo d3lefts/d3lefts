@@ -58,7 +58,6 @@ for(const mutate of [
  t=>t.records.push(JSON.parse(JSON.stringify(t.records[0])))
 ]){
  const poisoned=structuredClone(s);mutate(poisoned);
- assert.ok(C.replay(poisoned).status==="REJECTED"||(()=>{try{C.replay(poisoned);return true}catch{return true}})(),"Malformed claim never passes as locally replayed");
  let rejected=false;try{rejected=C.replay(poisoned).status!=="LOCALLY_REPLAYED"}catch{rejected=true}
  assert.equal(rejected,true,"Tainted pilot packet must not replay");
 }
