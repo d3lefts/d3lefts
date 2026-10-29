@@ -32,6 +32,17 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install "cgshop2027-pyutils>=0.2.0,<1"
           python -c "from cgshop2027_pyutils.verify import SolutionValidator; print('Official verifier available')"
+      - name: Obtain verifier wheel for separate independent local replay
+        shell: bash
+        run: |
+          python -m pip download --no-deps --dest verifier-wheelhouse "cgshop2027-pyutils>=0.2.0,<1"
+      - name: Preserve official verifier for replay
+        uses: actions/upload-artifact@v4
+        with:
+          name: cgshop2027-official-verifier-wheel
+          path: verifier-wheelhouse/*
+          if-no-files-found: error
+          retention-days: 7
       - name: Fetch challenge dataset v0
         shell: bash
         run: |
