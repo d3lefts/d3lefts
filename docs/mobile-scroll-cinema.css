@@ -343,3 +343,9 @@ html:not([data-nf-theme="dusk"]) .nf-cinema-vignette{
   .nf-cinema-steps span{visibility:hidden}
   .nf-cinema-steps span:first-child{visibility:visible}
 }
+
+
+/* Caption handoff must be legible on the very first frame after a scroll.
+   The sun/constellation provide the motion; explanatory language never fades to
+   near-invisible while a finger is actively scrolling. */
+.nf-cinema-steps span{transition:none!important;transform:none!important}
