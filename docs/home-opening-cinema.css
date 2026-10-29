@@ -171,3 +171,8 @@ html[data-nf-theme="dusk"] .nf-opening-reading--night{display:inline}
   .nf-opening-art,.nf-opening-endmark{display:none!important}
   #main>.hero.nf-opening{min-height:0;padding-bottom:30px;overflow:visible}
 }
+/* The legacy node name remains for Archive continuity; New Moon treats the
+   illustrative point as cool starlight, never as an evidence-status colour. */
+html[data-nf-theme="dusk"] .nf-opening-constellation .nf-opening-node--oxblood{
+  fill:#a7add7;
+}
