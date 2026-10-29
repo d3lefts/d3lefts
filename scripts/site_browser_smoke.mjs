@@ -435,9 +435,14 @@ try{
     assert.equal(parsedReceipt.experiments.at(-1).claimId,"","Finite receipt remains unassigned");
     assert.match(parsedReceipt.experiments.at(-1).result,/UNREVIEWED/);
     assert.ok(await page.locator("#sendDiscovery").isEnabled());
+    // Explicit human consent for the second, independent Discovery import.
+    page.once("dialog",async dialog=>{
+      assert.match(dialog.message(),/Source SHA-256.*negative controls agree/,"Discovery discloses finite source replay");
+      await dialog.accept();
+    });
     await page.locator("#sendDiscovery").click();
-   await page.waitForURL(url=>url.pathname.endsWith("/discovery.html"));
-    await page.waitForFunction(()=>document.querySelector(".panel.evidence")?.textContent?.includes("LOCAL FINITE REPLAY"),{timeout:20000});
+    await page.waitForURL(url=>url.pathname.endsWith("/discovery.html"));
+    await page.waitForFunction(()=>document.querySelector(".panel.evidence")?.textContent?.includes("LOCAL FINITE REPLAY"),null,{timeout:20000});
     const finiteLedger=await page.locator(".panel.evidence").first().innerText();
     assert.match(finiteLedger,/LOCAL FINITE REPLAY/,"Discovery distinguishes local replay");
     assert.match(finiteLedger,/INPUT HASH MATCH/,"Discovery records exact source fingerprint");
