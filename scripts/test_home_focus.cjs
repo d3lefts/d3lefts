@@ -8,9 +8,16 @@ const between=(a,b)=>{
  assert.ok(i>=0&&j>i,"Expected unchanged homepage anchor "+a.slice(0,50));
  return html.slice(i,j);
 };
-const hero=between('<div class="hero-actions"','</div>');
-const hrefs=[...hero.matchAll(/<a\b[^>]*href="([^"]+)"/g)].map(x=>x[1]);
-assert.deepEqual(hrefs,["#flagships","join.html#claim-investigation"],"One result action and one claim-continuation action");
+const actions=[...html.matchAll(/<div class="hero-actions"[^>]*>([\s\S]*?)<\/div>/g)]
+ .map(m=>[...m[1].matchAll(/<a\b[^>]*href="([^"]+)"/g)].map(x=>x[1]));
+assert.deepEqual(actions,[["#flagships","evidence.html"],["join.html#assignment","passport.html?claim=phase"]],
+ "Archive and Underbelly each present two meaningful, mode-specific first decisions");
+assert.ok(html.includes('id="nf-archive-index-title"'),"Archive accession section preserved");
+assert.ok(html.includes('id="nf-underbelly-index-title"'),"Underbelly proof-gate ledger preserved");
+assert.ok(html.includes('class="nf-experience nf-experience-archive nf-dual-colophon'),"Archive contains its distinct colophon");
+assert.ok(html.includes('class="nf-experience nf-experience-underbelly nf-dual-colophon'),"Night contains its action handoff");
+assert.ok(html.includes('Cross-references<br>')&&html.includes('next test.'),"Mode-specific content continues through shared research sections");
+assert.ok(html.includes('href="join.html#claim-investigation"'),"Shared claim investigation path preserved");
 const nav=between('<nav class="nav" id="site-nav"','</nav>');
 assert.equal((nav.match(/<a\b/g)||[]).length,5,"Homepage primary navigation has only five destinations");
 assert.ok(nav.includes('href="constellation.html"'));
@@ -36,4 +43,4 @@ for(const term of ["external review","public research archives","Original eviden
 assert.ok(css.includes("@media(max-width:760px)"));
 assert.ok(css.includes(".nf-home-toolbox>summary:focus-visible"));
 assert.ok(css.includes(".nf-section-index>summary:focus-visible"));
-console.log("PASS homepage focus: 2 first decisions, 5 primary nav destinations, 7 original section links and 8 preserved research instruments behind optional directory.");
+console.log("PASS homepage focus: 2 mode-specific first decisions per experience, 5 primary nav destinations, 7 original section links and 8 preserved research instruments behind optional directory.");
