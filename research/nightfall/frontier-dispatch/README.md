@@ -81,6 +81,16 @@ node research/nightfall/frontier-dispatch/test.cjs
 
 This is an **internal software-verification checkpoint**, not a new theorem or an independently reviewed mathematical discovery. Real multiuser leases, authenticated assignment lifecycles, source-commit hashes, server-side closure aggregation and reviewer-hour experiments remain separate future work. Human review controls all public research status.
 
+## Product architecture decision — integrated journey, independent engines
+
+**October 29, 2026:** Frontier and Discovery are one contributor journey with two independent mathematical responsibilities. Frontier owns the frozen parent question, interval partition and admissible YES/NO certificates. Discovery owns representations, operator selection, prospective experiments, failures and portable research handoffs. Source-linked Proof Passports and Referee remain independent evidence consumers; Claim Lab remains a manually governed evidence ledger. Retain the separate cores rather than mix unreviewed experimental work with authoritative problem scope.
+
+The **Investigate this branch in Discovery** action is now a one-shot, same-tab, consent-based handoff. A pure adapter revalidates the original Frontier contract and reconstructs the exact integer interval from the trusted source snapshot. It creates a *new* external-mode Discovery workspace, carries the positive and negative proof obligations and stop rule, and imports zero experiments, numerical results or evidence-tier promotions. It never maps the open nine-mark N=184 question onto Discovery's pre-existing 30-point Sidon example. Altered source URLs, scope, falsifier, or review label fail closed; duplicate assignment IDs are rejected. Local storage readback and rollback protect the prior workspace if writes fail.
+
+**Non-goals:** shared-agent dispatch, credentials, transactionally assigned work, static pages claiming to prove unrestricted mathematics, or unreviewed claims becoming accepted theorems. The current five-stage homepage journey remains the navigation model; optional Orchestrator planning is still available. Preserve independent standalone checkers and external reviewer gates.
+
+Reproduce using `node research/nightfall/frontier-dispatch/test.cjs`; the site browser smoke exercises source branch → Discovery project → altered packet rejection → duplicate rejection at mobile width. There is no invented research outcome in this software test.
+
 ## Next deployment milestones
 
 To become a true multiuser research system: generate dated Agent NF bottleneck candidates from approved proof dependencies; store authenticated durable claim/work IDs with transactional collision-free leases and expiries; preserve mathematical split-cover proofs; pass proof-carrying work packets between Orchestrator/Claim Lab/Evidence Bridge; run distinct certificate verifiers with external scientific review; measure decisive independently checked outcomes **per reviewer-hour**. Public status changes require owner-approved scientific governance.

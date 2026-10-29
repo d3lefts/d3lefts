@@ -166,6 +166,39 @@ try{
   assert.match(await page.locator(".evidence").innerText(),/EXTERNAL RUN PENDING/,"No invented mathematical result");
   assert.equal(await page.locator(".portfolio").count(),3,"Only original research presets shown");
   if(width===390){
+   // Frontier → Discovery is one research journey, with separate exact research responsibilities.
+   await page.goto(origin+"frontier.html",{waitUntil:"load"});
+   assert.equal(await page.locator('#nf-tool-links a[href="discovery.html"]').count(),1);
+   await page.locator("#nf-session-list .f-session-item button").nth(1).click();
+   assert((await page.locator("#active-predicate").innerText()).includes("[1, 92]"));
+   page.once("dialog",dialog=>dialog.accept());
+   await page.locator('#nf-tool-links a[href="discovery.html"]').click();
+   await page.waitForURL(url=>url.pathname.endsWith("/discovery.html"));
+   assert((await page.locator(".context h1").innerText()).includes("Frontier / Erdős #156"));
+   assert.equal(await page.locator(".portfolio").count(),4,"Imported branch is isolated from the three published demonstration projects");
+   const record=await page.evaluate(()=>{
+    const state=JSON.parse(localStorage.getItem("nightfall.discovery.v1"));
+    return state.projects.find(p=>p.frontier?.assignmentId==="NF-156-184-9/1-92");
+   });
+   assert(record,"The canonical child interval must survive the transfer");
+   assert.equal(record.frontier.scope,"smallest selected mark in [1, 92]");
+   assert.equal(record.mode,"external","No built-in solver for unrelated problem");
+   assert.equal(record.runs.length,0,"Neither an experiment nor a mathematical certificate was invented");
+   assert.match(record.status,/Unreviewed/);
+   assert.match(record.contract.threshold,/45 unordered sums/);
+   assert.equal(await page.evaluate(()=>sessionStorage.getItem("nightfall.frontier.discovery.v1")),null,"Single-use handoff consumed");
+   const canonical=await page.evaluate(()=>window.NFFrontier.packet(
+      window.NFFrontier.split(window.NFFrontier.rootTask(window.NFFrontier.ITEMS[0]))[0]));
+   const previous=await page.evaluate(()=>JSON.parse(localStorage.getItem("nightfall.discovery.v1")).projects.length);
+   await page.evaluate(p=>sessionStorage.setItem("nightfall.frontier.discovery.v1",JSON.stringify({...p,hi:p.hi+1})),canonical);
+   await page.goto(origin+"discovery.html?frontier_handoff=1",{waitUntil:"load"});
+   assert.match(await page.locator("#toast").innerText(),/Frontier handoff refused/);
+   assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem("nightfall.discovery.v1")).projects.length),previous,"Forged interval preserved the exact workspace");
+   await page.evaluate(p=>sessionStorage.setItem("nightfall.frontier.discovery.v1",JSON.stringify(p)),canonical);
+   await page.goto(origin+"discovery.html?frontier_handoff=1",{waitUntil:"load"});
+   assert.match(await page.locator("#toast").innerText(),/already in Discovery/);
+   assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem("nightfall.discovery.v1")).projects.length),previous,"Duplicate frozen branch cannot create two portfolios");
+
    await page.goto(origin+"index.html",{waitUntil:"load"});
    assert.match(await page.locator(".ticker").innerText(),/33/,"homepage current library count");
    assert.equal(await page.locator("#instruments .instrument-workflow span").count(),4,"four instrument workflow stages");
@@ -256,7 +289,7 @@ try{
     assert.match(parsedReceipt.experiments.at(-1).result,/UNREVIEWED/);
     assert.ok(await page.locator("#sendDiscovery").isEnabled());
     await page.locator("#sendDiscovery").click();
-    await page.waitForURL(/discovery\.html/);
+   await page.waitForURL(url=>url.pathname.endsWith("/discovery.html"));
     await page.waitForFunction(()=>document.querySelector(".panel.evidence")?.textContent?.includes("LOCAL FINITE REPLAY"),{timeout:20000});
     const finiteLedger=await page.locator(".panel.evidence").first().innerText();
     assert.match(finiteLedger,/LOCAL FINITE REPLAY/,"Discovery distinguishes local replay");

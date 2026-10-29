@@ -142,6 +142,46 @@ async function importRefereeHandoff(){
   toast("Finite source replayed and recorded. External proof review remains open.");
  }catch(err){toast("Referee handoff rejected: "+err.message,true)}
 }
+
+/* A Frontier assignment is a question to investigate, never an imported result.
+   Reconstruct exact branch identity from the public frozen core before consent. */
+function importFrontierHandoff(){
+ if(new URLSearchParams(location.search).get("frontier_handoff")!=="1")return;
+ try{
+  const raw=sessionStorage.getItem("nightfall.frontier.discovery.v1");
+  sessionStorage.removeItem("nightfall.frontier.discovery.v1");
+  if(!raw||raw.length>7000)throw Error("Missing or oversized scoped Frontier packet");
+  const packet=JSON.parse(raw);
+  const adapter=window.NightfallFrontierDiscovery,frontier=window.NFFrontier;
+  if(!adapter||!frontier)throw Error("Frozen source-contract verifier unavailable");
+  const project=adapter.build(packet,frontier);
+  adapter.checkUnique(state.projects,project);
+  if(state.projects.length>=64)throw Error("Local research workspace limit reached");
+  if(!confirm("Investigate "+packet.assignmentId+" as a new UNVERIFIED Discovery project? The exact interval and source conditions are preserved. No experiment runs or result is certified.")){
+   toast("Frontier handoff declined; existing research data preserved.");
+   return;
+  }
+  const backup=localStorage.getItem(KEY);
+  const next=structuredClone(state);
+  next.projects.push(project);
+  next.active=project.id;
+  next.tab="contract";
+  const serialized=JSON.stringify(next);
+  try{
+   localStorage.setItem(KEY,serialized);
+   if(localStorage.getItem(KEY)!==serialized)throw Error("Storage readback mismatch");
+  }catch(e){
+   try{if(backup===null)localStorage.removeItem(KEY);else localStorage.setItem(KEY,backup)}catch(_){}
+   throw Error("Local research storage failed: "+e.message);
+  }
+  state=next;
+  render();
+  toast("Exact Frontier scope imported as an unverified external research project. No experiments inherited.");
+ }catch(err){toast("Frontier handoff refused: "+err.message,true)}
+ finally{history.replaceState(null,"",location.pathname)}
+}
+
 render();
 importRefereeHandoff();
+importFrontierHandoff();
 })();

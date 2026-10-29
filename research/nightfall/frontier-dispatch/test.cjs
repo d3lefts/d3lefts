@@ -94,8 +94,38 @@ assert.match(lab,/NFFrontier\.validatePacket/);
 assert.match(lab,/status:0,effort:1/);
 const frontierJS=fs.readFileSync("docs/frontier.js","utf8");
 assert.match(frontierJS,/C\.validateLedger/);
-assert.match(frontierJS,/nightfall\.frontier\.claimlab\.v1/);
+assert(frontierJS.includes("nightfall.frontier.discovery.v1"));
 assert.match(frontierJS,/nf-import-file/);
+
+
+const D=require("../../../docs/frontier-discovery-core.js");
+for(const source of C.ITEMS){
+ const root=C.rootTask(source),child=C.split(root)[0];
+ for(const t of [root,child]){
+  const packet=C.packet(t),project=D.build(packet,C);
+  assert.equal(project.frontier.assignmentId,t.id);
+  assert.equal(project.frontier.scope,C.predicate(t));
+  assert.equal(project.mode,"external","No fake direct numerical solver for new open question");
+  assert.equal(project.runs.length,0,"No finite witness or verified result inherited");
+  assert.match(project.status,/Unreviewed/);
+  assert(project.contract.objective.includes("["+t.lo+", "+t.hi+"]"));
+  assert.equal(D.checkUnique([],project),true);
+  assert.throws(()=>D.checkUnique([project],project),/already in Discovery/);
+  assert.throws(()=>D.build({...packet,reviewStatus:"theorem"},C),/promoted/);
+  assert.throws(()=>D.build({...packet,lo:packet.lo+1},C),/altered/);
+  assert.throws(()=>D.build({...packet,sourceProblem:"https://example.org"},C),/altered/);
+  assert.notEqual(project.id,"sidon","N184 must never overwrite the 30-point Sidon preset");
+ }
+}
+const discoveryHTML=fs.readFileSync("docs/discovery.html","utf8");
+assert(discoveryHTML.includes("frontier-core.js"));
+assert(discoveryHTML.includes("frontier-discovery-core.js"));
+const discoveryApp=fs.readFileSync("docs/discovery-app.js","utf8");
+assert.match(discoveryApp,/importFrontierHandoff/);
+assert.match(discoveryApp,/frontier_handoff/);
+assert.match(discoveryApp,/checkUnique/);
+assert.match(discoveryApp,/No experiments inherited/);
+assert(frontierJS.includes("nightfall.frontier.discovery.v1"));
 
 // Finite N=45 passing does not imply the externally open N=184 question is solved.
 for(const f of ["docs/frontier.html","docs/frontier.js","docs/frontier-core.js"]){
