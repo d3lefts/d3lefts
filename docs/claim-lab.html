@@ -30,11 +30,12 @@
 <div class="sideBottom"><div class="local"><span class="pulse"></span> PRIVATE WORKSPACE</div><p>Publicly accessible application. Workspace records stay in this browser; no backend, accounts, telemetry, external libraries, or in-app network requests.</p><div class="privacy">Local browser storage · JSON backups</div></div>
 </aside>
 <main class="main">
-<div class="topbar"><div class="eyebrow"><span class="pulse"></span> Evidence-first research infrastructure <span style="opacity:.35">/</span> <span id="sectionCrumb">Overview</span></div><div class="topActions"><a class="btn ghost" href="./" aria-label="Return to the NIGHTFALL research website">← Research site</a><a class="btn ghost" href="referee.html" aria-label="Open the exact finite Referee verification instrument">Run Referee ↗</a><a class="btn" href="exact-research.html" aria-label="Open exact Werner and F25 research calculations">∑ Exact tools</a><button class="btn" id="importBtn">↥ Import JSON</button><button class="btn" id="exportBtn">↧ Export backup</button><button class="btn primary" id="newClaimBtn">＋ New claim</button></div></div>
+<div class="topbar"><div class="eyebrow"><span class="pulse"></span> Evidence-first research infrastructure <span style="opacity:.35">/</span> <span id="sectionCrumb">Overview</span></div><div class="topActions"><a class="btn ghost" href="./" aria-label="Return to the NIGHTFALL research website">← Research site</a><a class="btn ghost" href="referee.html" aria-label="Open the exact finite Referee verification instrument">Run Referee ↗</a><a class="btn" href="exact-research.html" aria-label="Open exact Werner and F25 research calculations">∑ Exact tools</a><button class="btn" id="receiptImportBtn" title="Import Referee receipt metadata; no claim status promotion">⇢ Referee receipt</button><button class="btn" id="importBtn">↥ Import JSON</button><button class="btn" id="exportBtn">↧ Export backup</button><button class="btn primary" id="newClaimBtn">＋ New claim</button></div></div>
 <div id="content"></div>
 </main>
 </div>
 <input id="importFile" type="file" accept="application/json,.json" hidden>
+<input id="receiptImportFile" type="file" accept="application/json,.json" hidden>
 <div class="modalMask" id="claimMask" role="presentation"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="claimModalTitle"><div class="modalTop"><h2 id="claimModalTitle">New claim</h2><button id="closeClaim" aria-label="Close">×</button></div><form id="claimForm"><div class="formGrid">
 <input type="hidden" name="id" id="claimId">
 <div class="formField full"><label for="claimTitle">Claim / deliverable title *</label><input id="claimTitle" name="title" required maxlength="150" placeholder="e.g. A dimension-independent operator estimate"></div>
@@ -131,6 +132,42 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeClaim();closeE
 $('#content').addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(!b)return;switch(b.dataset.action){case'edit-claim':openClaim(b.dataset.id);break;case'edit-exp':openExp(b.dataset.id);break;case'new-claim':openClaim();break;case'new-exp':openExp();break;case'go-map':go('map');break;case'go-audit':go('audit');break;case'choose-node':chosenNode=b.dataset.id;render();break;case'clear-demo':if(confirm('Replace the illustrative dataset with an empty private workspace? Export a backup first if needed.')){data={version:1,sample:false,claims:[],experiments:[]};chosenNode=null;persist();render()}break;}});
 $('#content').addEventListener('input',e=>{if(e.target.id==='searchClaims'){searchText=e.target.value;const pos=e.target.selectionStart;render();const node=$('#searchClaims');node?.focus();node?.setSelectionRange(pos,pos)}});
 $('#content').addEventListener('change',e=>{if(e.target.id==='statusFilter'){statusFilter=e.target.value;render()}});
+
+/* Referee JSON handoff: validate canonical input SHA-256 only; never infer proof authority. */
+$('#receiptImportBtn').addEventListener('click',()=>$('#receiptImportFile').click());
+$('#receiptImportFile').addEventListener('change',async event=>{
+ const file=event.target.files?.[0];if(!file)return;
+ try{
+  if(file.size>2000000)throw Error('Receipt must be 2 MB or smaller.');
+  if(!window.crypto?.subtle)throw Error('A secure context is required for SHA-256 validation.');
+  const report=JSON.parse(await file.text());
+  if(report?.format!=='nightfall-referee-receipt-v1'||report.version!=='1.0.0')throw Error('Unsupported Referee receipt version.');
+  if(!['continuous-step-overlap','weak-sidon-4-5-finite'].includes(report.domain))throw Error('Unknown Referee domain.');
+  if(!report.source||typeof report.source!=='object'||!report.result||typeof report.result!=='object')throw Error('Missing receipt input or results.');
+  if(!['FINITE_CHECK_PASSED','REJECTED','INCONCLUSIVE','REJECTED_OR_INCONCLUSIVE'].includes(report.verdict))throw Error('Invalid verdict label.');
+  if(!/^[0-9a-f]{64}$/.test(report.inputSha256||''))throw Error('Invalid input SHA-256 digest.');
+  const canonical=report.domain==='continuous-step-overlap'
+   ?{domain:report.domain,input:report.source,claimedScore:report.claimedScore??null}
+   :{domain:report.domain,input:report.source,claimedMaximum:report.claimedMaximum};
+  const digest=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(JSON.stringify(canonical)));
+  const actual=Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,'0')).join('');
+  if(actual!==report.inputSha256)throw Error('Input SHA-256 mismatch. Receipt import blocked.');
+  if(data.experiments.length>=10000)throw Error('Experiment register is full.');
+  if(!confirm('Input fingerprint matches. Claim Lab has not replayed the mathematics or authenticated this report. Import as TESTED / UNAUDITED metadata, leaving every claim status unchanged?'))return;
+  const label=report.domain==='weak-sidon-4-5-finite'?'Finite Sidon':'Finite step-overlap';
+  data.experiments.push({
+   id:uid(),title:'Referee receipt / '+label,claimId:'',operator:'Imported finite exact verification report',
+   prediction:'User-supplied Referee finite witness and claimed result',
+   falsifier:'Independently rerun the exact witness, challenge the checker, and audit the scope.',
+   status:'tested',cost:0,
+   result:'IMPORTED REPORT ONLY — asserted verdict: '+report.verdict+'. Claim Lab checked input SHA-256 consistency; this does not authenticate the claimed computation, signature, reviewer, or mathematical proof.',
+   evidence:'Original JSON receipt held by importing user. Input SHA-256: '+report.inputSha256+'; file: '+file.name.slice(0,125)
+  });
+  data.sample=false;persist();go('experiments');toast('Referee receipt metadata imported. Claim statuses unchanged.');
+ }catch(err){toast('Receipt rejected: '+err.message)}
+ finally{event.target.value=''}
+});
+
 $('#importBtn').addEventListener('click',()=>$('#importFile').click());$('#importFile').addEventListener('change',async e=>{const f=e.target.files?.[0];if(!f)return;if(f.size>2e6){toast('JSON import exceeds 2 MB size limit');e.target.value='';return}try{const parsed=normalize(JSON.parse(await f.text()));if(!confirm(`Replace your current workspace with ${parsed.claims.length} imported claims? Export your current data first if needed.`))return;data=parsed;data.sample=false;chosenNode=null;searchText='';statusFilter='all';persist();render();toast('JSON workspace imported.')}catch(err){toast('Invalid JSON backup: '+err.message)}finally{e.target.value=''}});
 $('#exportBtn').addEventListener('click',()=>{const payload={...data,exportedAt:new Date().toISOString(),format:'nightfall-claim-lab-v1'};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='NIGHTFALL_claim_lab_backup_'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('JSON backup generated. Keep it in a safe private location.')});
 $('#claimStatus').innerHTML=STATUSES.map((s,i)=>`<option value="${i}">${esc(s)}</option>`).join('');$('#expOperator').innerHTML=OPERATORS.map(s=>`<option value="${esc(s)}">${esc(s)}</option>`).join('');
