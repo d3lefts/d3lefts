@@ -94,6 +94,30 @@ try{
    await page.locator("#join-values").fill("1, 2, 3, 4, 5, 6, 7, 8, 9");
    await page.locator("#join-run-check").click();
    assert.match(await page.locator("#join-check-output").innerText(),/CANDIDATE REJECTED/);
+   assert.match(await page.locator("#join-check-output").innerText(),/PAIR_COLLISION/,"Finite Sidon candidate fails in both local checker paths");
+   await page.locator('[data-stage="challenge"]').click();
+   assert.equal(new URL(page.url()).pathname,"/join.html","Exact Sidon challenge remains in one workspace");
+   assert.match(await page.locator("#join-attack-output").innerText(),/LOCAL_ATTACK_CONTROLS_PASSED/,"Source-bound exact attacks execute");
+   assert.match(await page.locator("#join-attack-output").innerText(),/known extendable strong Sidon control: PASS/,"Adversarial nonmaximal control survives");
+   assert.equal(await page.locator("#join-export-evidence").isDisabled(),true,"No downloadable scientific evidence until explicitly saved");
+   await page.locator('[data-stage="record"]').click();
+   assert.match(await page.locator("#join-evidence-status").innerText(),/preserve/i);
+   await page.locator("#join-save-evidence").click();
+   assert.match(await page.locator("#join-evidence-count").innerText(),/1 preserved/,"One exact candidate persists after human approval");
+   const [joinReceipt]=await Promise.all([page.waitForEvent("download"),page.locator("#join-export-evidence").click()]);
+   assert.equal(joinReceipt.suggestedFilename(),"NIGHTFALL_N184_source_bound_evidence.json");
+   await page.reload({waitUntil:"load"});
+   assert.match(await page.locator("#join-evidence-count").innerText(),/1 preserved/,"Source-bound evidence survives reload with local recomputation");
+   assert.match(await page.locator("#join-evidence-history").innerText(),/PAIR_COLLISION/,"Explicit rejected candidate persisted for review");
+   await page.evaluate(()=>{
+     const key="nightfall.journey.v1",v=JSON.parse(localStorage.getItem(key));
+     v.evidence["NF-156-184-9"][0].calculation.primary_status="MAXIMAL_FINITE";
+     localStorage.setItem(key,JSON.stringify(v));
+   });
+   await page.reload({waitUntil:"load"});
+   assert.match(await page.locator("#join-evidence-count").innerText(),/0 preserved/,"Tampered evidence not trusted after reload");
+   assert.match(await page.locator("#join-evidence-status").innerText(),/Rejected 1 altered/,"Corruption is visible to researcher");
+
    assert.match(await page.locator("#join-github").getAttribute("href"),/issues\/new\?/);
    await page.locator('[data-stage="frame"]').click();
    await page.waitForURL(/orchestrator\.html\?frontier_handoff=1/);

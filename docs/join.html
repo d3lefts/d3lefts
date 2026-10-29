@@ -7,7 +7,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="site.css"><link rel="stylesheet" href="join.css">
 <title>Join an Open Problem — NIGHTFALL</title>
-<script src="site.js" defer></script><script src="frontier-core.js" defer></script><script src="join.js" defer></script>
+<script src="site.js" defer></script><script src="frontier-core.js" defer></script><script src="join-evidence-core.js" defer></script><script src="join.js" defer></script>
 </head><body>
 <a class="skip" href="#main">Skip to the research path</a><div class="topline"></div>
 <header class="header"><div class="wrap header-inner">
@@ -44,18 +44,28 @@
 <nav class="join-tool-route" aria-label="Research stages for current assignment">
 <button type="button" data-stage="frame"><span>01 / FRAME</span><strong>Define independent attacks ↗</strong></button>
 <button type="button" data-stage="explore"><span>02 / EXPLORE</span><strong>Open a scoped experiment ↗</strong></button>
-<button type="button" data-stage="challenge"><span>03 / CHALLENGE</span><strong>Test the failure modes ↗</strong></button>
-<button type="button" data-stage="record"><span>04 / RECORD</span><strong>Carry evidence to Claim Lab ↗</strong></button>
+<button type="button" data-stage="challenge"><span>03 / CHALLENGE</span><strong>Run exact attacks on this candidate ↗</strong></button>
+<button type="button" data-stage="record"><span>04 / RECORD</span><strong>Preserve a replayable evidence packet ↗</strong></button>
 </nav>
 <div class="join-working-grid"><div class="join-pad">
 <span>START WORKING HERE</span><h3 id="join-starter-title">First decisive test</h3><p id="join-starter-description"></p>
-<div id="join-sidon-starter" hidden><label for="join-values">Nine distinct integers in [1,184], separated by commas or spaces</label><textarea id="join-values" rows="3" spellcheck="false" placeholder="49, 50, 56, 78, 93, 104, 125, 139, 149"></textarea><button class="join-action" id="join-run-check" type="button">Run exact finite check</button><pre id="join-check-output" aria-live="polite">No calculation run in this session.</pre></div>
+<div id="join-sidon-starter" hidden><label for="join-values">Nine distinct integers in [1,184], separated by commas or spaces</label><textarea id="join-values" rows="3" spellcheck="false" placeholder="49, 50, 56, 78, 93, 104, 125, 139, 149"></textarea><button class="join-action" id="join-run-check" type="button">Run exact finite check</button><pre id="join-check-output" aria-live="polite">No calculation run in this session.</pre>
+<div class="join-evidence" id="join-evidence-panel">
+ <p class="join-evidence-kicker">STEP 02 / CHALLENGE THE SAME INPUT</p>
+ <p>The local verifier and a distinct difference-based method must agree. Run intentional negative controls, then choose whether to preserve this source-bound candidate for independent review.</p>
+ <button class="join-action" id="join-run-attack" type="button" disabled>Run independent challenge and negative controls</button>
+ <pre id="join-attack-output" aria-live="polite">Check a candidate first. Exact attack controls have not run.</pre>
+ <button class="join-action" id="join-save-evidence" type="button" disabled>Approve preservation of local evidence</button>
+ <p class="join-note" id="join-evidence-status">No scientific claim is promoted by checking or saving this source.</p>
+ <div class="join-evidence-archive"><h4>Evidence trail for this exact problem</h4><p id="join-evidence-count">0 reviewed local runs</p><div id="join-evidence-history" aria-live="polite">No preserved tests yet.</div><button id="join-export-evidence" type="button" disabled>Download source-bound evidence JSON ↓</button></div>
+</div></div>
 <div id="join-q7-starter" hidden><p>The Q7 branch has no complete in-browser proof oracle. Define a falsifiable six-deletion search, then move to the source-linked checker and Frontier decomposition.</p><a id="join-q7-source" href="https://github.com/d3lefts/d3lefts/issues/48" target="_blank" rel="noopener">Examine the global checker and issue ↗</a></div>
 <label class="join-notes-label" for="join-notes">Your hypothesis, test, result, or counterexample</label><textarea id="join-notes" rows="5" maxlength="4000" placeholder="What exactly will you test? What result would falsify it? Include versions and inputs."></textarea><p id="join-save" class="join-note">Notes are local and carry no proof status.</p>
 </div><aside class="join-next">
 <span>STAY WITH THE QUESTION</span><h3>Your next actions</h3><p>These links keep the same research contract. Use Frontier to claim or split the exact interval; other instruments receive a scoped, unreviewed handoff.</p>
 <a id="join-frontier-link" class="join-action-link" href="frontier.html">Open assignment and exact branching ↗</a>
 <button id="join-next-action" type="button">Continue to the recommended next instrument ↗</button>
+<button id="join-claimlab-link" type="button">Carry unreviewed assignment to Claim Lab ↗</button>
 <div class="join-export-actions"><button id="join-export" type="button">Export research brief ↓</button><a id="join-github" href="https://github.com/d3lefts/d3lefts/issues" target="_blank" rel="noopener">Request public assignment / review ↗</a></div>
 <details><summary>Sources and stop rule</summary><p id="join-stop"></p><div id="join-source-links"></div></details>
 </aside></div>

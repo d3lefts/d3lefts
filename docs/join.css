@@ -78,3 +78,21 @@
 @media(max-width:930px){.join-hero,.join-heading,.join-working-grid,.join-contract{grid-template-columns:1fr}.join-hero-aside{border-left:0;border-top:1px solid #b8c8b6;padding:22px 0}.join-result-grid{grid-template-columns:1fr 1fr}.join-method-steps{grid-template-columns:1fr 1fr}.join-heading{gap:12px}.join-contract{gap:15px}}
 @media(max-width:640px){.join-hero{padding-top:45px;padding-bottom:50px}.join-hero h1{font-size:clamp(56px,14vw,85px)}.join-section{padding-top:52px;padding-bottom:64px}.join-result-grid,.join-choices,.join-tool-route,.join-method-steps{grid-template-columns:1fr}.join-result-grid article{min-height:0}.join-method-steps>div{min-height:0}.join-tool-route button{min-height:0}.join-match select{min-width:0}.join-workspace-header{display:block}.join-state{display:inline-block;margin-top:14px}.join-pad,.join-next{padding:20px}}
 @media(prefers-reduced-motion:reduce){.join-section{scroll-behavior:auto}}
+
+
+/* Inline, source-bound human-in-the-loop finite verification route. */
+.join-evidence{border-top:1px solid #b8c9b5;margin-top:28px;padding-top:24px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-width:0}
+.join-evidence-kicker{font:700 10px/1.4 var(--mono)!important;letter-spacing:.09em;color:#3b5d41!important}
+.join-evidence>p{max-width:730px}
+.join-evidence .join-action{white-space:normal;margin:5px 0;padding:12px 15px}
+.join-evidence .join-action:disabled{opacity:.43;cursor:not-allowed}
+#join-attack-output{width:100%;max-height:240px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;background:#e2eadb;border:1px solid #afc3ac;padding:17px;color:#173b27;font:12px/1.6 var(--mono)}
+.join-evidence-archive{background:#e6ede0;border:1px solid #bbcbb8;margin-top:12px;padding:20px;width:100%;min-width:0}
+.join-evidence-archive h4{font:400 29px/1.1 var(--serif);margin:0 0 9px}
+.join-evidence-archive>p{color:#425e46}
+.join-evidence-archive button{background:#244b31;color:#f6fff4;border:1px solid #244b31;padding:11px 14px;font:600 12px var(--sans);margin-top:15px;max-width:100%}
+.join-evidence-archive button:disabled{opacity:.5}
+.join-evidence-record{border-top:1px solid #c5d3bf;font:11px/1.6 var(--mono)!important;overflow-wrap:anywhere;padding:12px 0;margin-top:9px;color:#24472e!important}
+#join-evidence-history{font:12px/1.6 var(--sans);color:#536b52}
+#join-evidence-status{font:12px/1.6 var(--sans);color:#395b3c}
+#join-claimlab-link{background:#e6f0dc;color:#264a31;border-color:#638a65}
