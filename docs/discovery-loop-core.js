@@ -152,7 +152,7 @@ function advance(snapshot,approval){
  const result=enumerate(choice.target.n,choice.target.mass);
  const surprise=choice.prediction.gap!==null&&choice.prediction.gap!==result.gap;
  const record={index:s.records.length+1,target:choice.target,
-  prediction:choice.prediction,selection_reason:choice.rationale,
+  prediction:choice.prediction,selection_reason:decision?.source==="HUMAN_REDIRECTION"?"Human-selected alternative, rank "+decision.rank_at_approval+" at review; reason preserved in decision note.":choice.rationale,
   result,surprise,
   verdict:choice.prediction.gap===null?"INITIAL_MEASUREMENT":surprise?"LOCAL_PREDICTION_FALSIFIED":"LOCAL_PREDICTION_SURVIVED",
   claim_status:"EXACT_FINITE_LOCAL_ENUMERATION / INDEPENDENT_AUDIT_OPEN"};
