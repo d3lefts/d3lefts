@@ -1,0 +1,12 @@
+{
+  "canonical_rows_sha256": "c71436b535140658623893cd3e7be752e1508b33a084f2d738d92c1fc530c92c",
+  "cases": 20668,
+  "date": "2026-10-29",
+  "max_set_size": 6,
+  "schema": "nightfall-sidon-repair-matching-v1",
+  "scope": "bounded exact tests; theorem proof awaits external referee",
+  "tested_moduli": [
+    3,
+    15
+  ]
+}
