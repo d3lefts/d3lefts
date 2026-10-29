@@ -94,6 +94,10 @@ jobs:
         run: |
           python3 research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/checker.py
           python3 research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/separator_checker.py
+      - name: Verify extension-degree packing, exact optimality and nonadaptive obstruction
+        run: |
+          python3 research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/verify_extension_packing.py
+          python3 research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/verify_characteristic_two_subfield.py
       - name: Machine-certify the exact 30-point Sidon theorem
         run: python3 research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py
       - name: Certify universal factor-network equality quotient
