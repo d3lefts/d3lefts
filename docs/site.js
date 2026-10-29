@@ -91,5 +91,6 @@ if(menu&&nav){
  const gap=document.createElement("span");gap.className="nf-rail-spacer";
  const method=document.createElement("a");method.href="join.html#method";method.textContent="The process";
  const entry=document.createElement("a");entry.href="join.html#assignment";entry.textContent="Find a problem";
- const constellation=document.createElement("a");constellation.href="constellation.html";constellation.textContent="Constellation";\n bar.append(tag,primary,gap,constellation,method,entry);main.before(bar);
+ const constellation=document.createElement("a");constellation.href="constellation.html";constellation.textContent="Constellation";
+ bar.append(tag,primary,gap,constellation,method,entry);main.before(bar);
 })();
