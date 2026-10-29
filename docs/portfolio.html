@@ -4,6 +4,7 @@
 <script>try{if(localStorage.getItem("nightfall.theme.v1")==="dusk")document.documentElement.setAttribute("data-nf-theme","dusk")}catch(_){}</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="theme-color" content="#4a1f24">
 <meta name="description" content="Devin J. Wright — applied AI research, verification engineering and reproducible computational research. Three evidence-linked technical case studies.">
 <meta property="og:type" content="website">
@@ -16,6 +17,9 @@
 <link rel="stylesheet" href="portfolio.css">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <script src="site.js" defer></script>
+<script src="research-registry.js" defer></script>
+<script src="portfolio-core.js" defer></script>
+<script src="portfolio.js" defer></script>
 <link rel="stylesheet" href="ethereal-theme.css">
 <script src="ethereal-theme.js" defer></script>
 </head>
@@ -31,13 +35,13 @@
 <main id="main">
 <section class="pf-hero wrap" aria-labelledby="pf-title">
 <div class="pf-hero-main">
-<p class="kicker">DEVIN J. WRIGHT / SELECTED TECHNICAL WORK</p>
+<p class="kicker">NIGHTFALL / UNLISTED COLLECTIVE REFERENCE</p>
 <h1 id="pf-title">Research ideas.<br><em>Executable evidence.</em></h1>
 <p class="pf-lead">Independent AI research and verification engineering across source-grounded knowledge systems, exact optimization, and research tooling. The emphasis is on what runs, what the evidence shows, and what is still unproven.</p>
 <div class="pf-actions"><a class="button" href="#work">Explore three case studies <span aria-hidden="true">↓</span></a><a class="pf-underlink" href="https://github.com/d3lefts/d3lefts">Inspect GitHub repository ↗</a></div>
 </div>
 <aside class="pf-hero-aside" aria-label="Portfolio guide">
-<div class="pf-overline">A FIVE-MINUTE TECHNICAL TOUR / 2026</div>
+<div class="pf-overline">CURATED REFERENCE POINTS / INTERNAL WORKFLOW</div>
 <ol>
 <li><a href="#sourcebound"><span>01</span><strong>AI safety &amp; provenance</strong><small>Admission policies and evaluation boundaries</small></a></li>
 <li><a href="#overlap"><span>02</span><strong>Numerical optimization</strong><small>Exact arithmetic and public replay</small></a></li>
@@ -88,12 +92,28 @@
 </article>
 </section>
 
+
+<section class="pf-live wrap" id="recorded-work" aria-labelledby="pf-live-title">
+  <div class="pf-live-intro">
+    <div><span class="section-id">02 / LIVE RESEARCH LEDGER</span>
+      <h2 id="pf-live-title">What the record<br><em>actually supports.</em></h2></div>
+    <div><p>The claims below are read directly from the site's canonical Proof Passport registry. New records, revised statuses, sources and open obligations appear here when those registry changes are merged and deployed. An agent proposal, session note or internal test does not become a verified breakthrough by appearing here.</p>
+      <p id="pf-live-summary" role="status">Loading canonical research records…</p>
+      <span class="pf-live-stamp" id="pf-live-stamp"></span></div>
+  </div>
+  <div class="pf-ledger-list" id="pf-live-records"><p>Loading claim-level source records…</p></div>
+  <div class="pf-history">
+    <div><h3>Recent recorded changes</h3><p>History is copied from the dated canonical claim records. Corrections, counterexamples and demotions remain visible alongside supporting checks.</p></div>
+    <ol id="pf-live-events" aria-label="Latest source registry changes"><li>Loading dated research history…</li></ol>
+  </div>
+  <p class="pf-ledger-note"><strong>Update contract:</strong> author or revise an evidence-scoped claim in <code>docs/research-registry.js</code>; review it through the existing site CI and publication-scope controls; merge to <code>main</code>. The portfolio reads the deployed registry without a second copy of claims. Static case studies above remain curated and are revised editorially, never promoted automatically. This page is unlisted and publicly accessible to anyone with its URL; <code>noindex</code> is not authentication.</p>
+</section>
 <section class="pf-lesson wrap" aria-labelledby="pf-lesson-title">
-<div><span class="section-id">02 / RESEARCH JUDGMENT</span><h2 id="pf-lesson-title">Negative findings<br><em>count as results.</em></h2></div>
+<div><span class="section-id">03 / RESEARCH JUDGMENT</span><h2 id="pf-lesson-title">Negative findings<br><em>count as results.</em></h2></div>
 <div><h3>Proof After Scarcity — causal verification triage</h3><p>In a retrospective, outcome-aware 20-case stress test, an uncalibrated triage method chose the documented weak-link category first in <strong>8/20</strong> cases. Two simpler baselines achieved <strong>11/20</strong>. The failure is published instead of being recast as a win. Prospective predictions, blinded labels and complete graph artifacts remain separate open work.</p><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/pas-overview.md">Read the adverse result and preregistration limits ↗</a></div>
 </section>
 <section class="pf-last wrap" aria-labelledby="pf-last-title">
-<div><span class="section-id">03 / COLLABORATION AND REVIEW</span><h2 id="pf-last-title">Work that can be inspected.</h2><p>The research is human-led by Devin J. Wright with AI-assisted coding, synthesis and critique. Prior mathematical foundations and external contributors are attributed. Internal independent implementations do not substitute for external referees.</p></div>
+<div><span class="section-id">04 / COLLABORATION AND REVIEW</span><h2 id="pf-last-title">Work that can be inspected.</h2><p>The research is human-led by Devin J. Wright with AI-assisted coding, synthesis and critique. Prior mathematical foundations and external contributors are attributed. Internal independent implementations do not substitute for external referees.</p></div>
 <div class="pf-end-links"><a href="about.html">Research leadership and method ↗</a><a href="review.html">Open referee assignments ↗</a><a href="https://github.com/d3lefts/d3lefts">Browse public source and issues ↗</a></div>
 </section>
 </main>
