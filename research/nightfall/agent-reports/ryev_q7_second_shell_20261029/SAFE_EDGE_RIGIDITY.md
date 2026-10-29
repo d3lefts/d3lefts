@@ -14,7 +14,7 @@ Let Q_n be the binary n-cube; an **odd-square** edge set H contains exactly 1 or
 
 Write n=2m+1. Vertex-star switching (toggling all n incident edges at v) preserves square parity and changes |H| by n−2deg_H(v). Since |H|=M_n−1, every vertex has deg_H(v)≥m (otherwise a switch improves past M_n).
 
-Suppose e=uv is missing and C4-safe. Every square through e must have exactly one selected H-edge (three would become four). The n−1 other edges incident to u or v lie in distinct e-squares, each containing at most one of those edges. Therefore deg_H(u)+deg_H(v)≤n−1=2m. The degree lower bounds force deg_H(u)=deg_H(v)=m. Switching at u **or** at v produces a maximum odd-square graph K_u or K_v, each with M_n edges.
+Suppose e=uv is missing and C4-safe. Every square through e must have exactly one selected H-edge (three would become four). The 2(n−1) other edges incident to u or v occur in n−1 distinct e-squares, two per square. Each e-square contains at most one selected member of its incident pair. Therefore deg_H(u)+deg_H(v)≤n−1=2m. The degree lower bounds force deg_H(u)=deg_H(v)=m. Switching at u **or** at v produces a maximum odd-square graph K_u or K_v, each with M_n edges.
 
 Every maximum odd-square graph K is C4-saturated: switching forces deg_K(w)≥m+1 at every vertex, whereas a safe missing edge ab would have deg_K(a)+deg_K(b)≤2m. Hence no safe missing edge remains in K.
 
@@ -23,7 +23,7 @@ Assume f≠e is another C4-safe missing edge for H. If f is absent from every sq
 **Geometric two-endpoint lemma.** If e=uv is a cube edge, and f lies in (possibly different) coordinate squares containing u and v respectively, then e and f lie in a common coordinate square. To prove it, label e in direction i and f in direction j. If j=i, the projection of f off coordinate j differs from that of e in at most one coordinate, so f=e or is opposite e in a square. If j≠i, projecting off j gives adjacent vertices u',v' in Q_(n−1). The projected location of f is at Hamming distance at most one from each. The intersection of their radius-one balls is {u',v'}, so f is incident to u or v. Both cases are cofacial.
 
 Thus e,f are cofacial. The cofacial case is forbidden by the exact argument in THEOREM.md, restated here:
-- For adjacent e,f, their common square has e,f absent. Since both are safe, the edges opposite e and opposite f must both be absent, contradicting odd-square parity.
+- For adjacent e,f, their common square has e,f absent. The safe-edge endpoint-degree equalities above saturate the n−1 incident-pair slots, so every edge opposite e in an e-square is absent, and likewise for f. Thus both remaining edges are absent, contradicting odd-square parity.
 - For opposite e,f, the common square has exactly one selected edge g. Switch the endpoint of e incident to g; its degree is m, so this produces an M_n-edge odd-square graph. The switch toggles e and g on the common square but leaves f absent, and no other f-square meets the switched vertex. The still-safe f contradicts maximum saturation.
 
 Therefore no two distinct C4-safe missing edges exist in H. QED, **subject to independent referee checking of the geometric projection and switching dependencies**.
