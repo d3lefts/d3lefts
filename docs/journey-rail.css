@@ -1,0 +1,37 @@
+/* Shared editorial research-return rail. Deliberately independent of tool CSS.
+   Retains paper, ink, mono metadata and visible keyboard focus on every page. */
+.nf-journey-rail{
+  --rail-paper:var(--soft,#e9ebe2);
+  --rail-ink:var(--ink,#18221e);
+  --rail-line:var(--line,#c5c8be);
+  --rail-mono:var(--mono,"IBM Plex Mono",ui-monospace,monospace);
+  position:relative;z-index:2;
+  border-block:1px solid var(--rail-line);
+  background:var(--rail-paper);color:var(--rail-ink);
+  padding:12px max(18px,calc((100vw - 1240px)/2));
+  display:flex;align-items:center;gap:10px 20px;flex-wrap:wrap;
+  font:500 12px/1.55 var(--rail-mono);
+}
+.nf-journey-rail>span:first-child{
+  color:#526d57;font:600 10px/1.5 var(--rail-mono);
+  letter-spacing:.065em;white-space:nowrap;
+}
+.nf-journey-rail a{
+  color:#234b30;text-decoration:underline;text-underline-offset:4px;
+  text-decoration-thickness:1px;overflow-wrap:anywhere;
+}
+.nf-journey-rail a:first-of-type{font-weight:600}
+.nf-journey-rail a:hover{text-decoration-thickness:2px}
+.nf-journey-rail a:focus-visible{outline:3px solid #668d54;outline-offset:4px}
+.nf-journey-rail .nf-rail-spacer{flex:1}
+@media(max-width:600px){
+  .nf-journey-rail{padding:13px 18px;gap:7px 17px}
+  .nf-journey-rail>span:first-child{flex-basis:100%}
+  .nf-journey-rail .nf-rail-spacer{display:none}
+}
+@media(max-width:360px){
+  .nf-journey-rail a:first-of-type{flex-basis:100%}
+}
+@media(prefers-reduced-motion:reduce){
+  .nf-journey-rail *{transition:none}
+}
