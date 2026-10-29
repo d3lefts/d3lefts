@@ -88,6 +88,27 @@ try{
    assert.match(frontierDownload.suggestedFilename(),/frontier_local_ledger\.json$/);
    await page.reload({waitUntil:"load"});
    assert.match(await page.locator("#nf-session-list").innerText(),/PROPOSED/,"browser-local reload persists review status");
+   const cleanLedger=await page.evaluate(()=>{
+     const saved=JSON.parse(localStorage.getItem("nightfall_nf_frontier_local_v1"));
+     return {schema:"nightfall-frontier-local-evidence-v1",snapshot:saved.version,reviewStatus:"unreviewed",tasks:saved.tasks};
+   });
+   const modifiedLedger=structuredClone(cleanLedger);
+   modifiedLedger.tasks.find(t=>t.parentId==="NF-156-184-9").lo+=1;
+   await page.locator("#nf-import-file").setInputFiles({name:"modified.json",mimeType:"application/json",buffer:Buffer.from(JSON.stringify(modifiedLedger))});
+   assert.match(await page.locator("#nf-message").innerText(),/Frontier import refused/);
+   assert.match(await page.locator("#nf-progress").innerText(),/2 unresolved leaf obligations/);
+   page.once("dialog",d=>d.accept());
+   await page.locator("#nf-reset").click();
+   assert.match(await page.locator("#nf-session-list").innerText(),/NO LOCAL ASSIGNMENTS/);
+   page.once("dialog",d=>d.accept());
+   const [preRestoreBackup]=await Promise.all([
+      page.waitForEvent("download"),
+      page.locator("#nf-import-file").setInputFiles({name:"verified.json",mimeType:"application/json",buffer:Buffer.from(JSON.stringify(cleanLedger))})
+   ]);
+   assert.match(preRestoreBackup.suggestedFilename(),/frontier_local_ledger\.json$/);
+   assert.match(await page.locator("#nf-session-list").innerText(),/PROPOSED/);
+   assert.match(await page.locator("#nf-progress").innerText(),/2 unresolved leaf obligations/);
+
    await page.locator('#nf-tool-links a[href="orchestrator.html"]').click();
    await page.waitForURL(/orchestrator\.html/);
    assert.match(await page.locator("#claim-text").inputValue(),/smallest selected mark in \[1, 184\]/,"exact scope transferred");
@@ -110,6 +131,18 @@ try{
    assert.match(await page.locator(".claimCard").filter({hasText:"Frontier /"}).first().innerText(),/Conjecture/,"import cannot promote proof tier");
    assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem("nightfall_claim_lab_v1")).claims.some(c=>c.frontierId==="NF-156-184-9"&&c.status===0)),true,"Frontier provenance preserved");
    assert.equal(await page.evaluate(()=>sessionStorage.getItem("nightfall.frontier.claimlab.v1")),null,"one-shot handoff consumed");
+   const countBefore=await page.evaluate(()=>JSON.parse(localStorage.getItem("nightfall_claim_lab_v1")).claims.length);
+   await page.evaluate(p=>sessionStorage.setItem("nightfall.frontier.claimlab.v1",
+     JSON.stringify({...p,lo:p.lo+1})),packet);
+   await page.goto(origin+"claim-lab.html?frontier_handoff=1",{waitUntil:"load"});
+   assert.match(await page.locator("#toast").innerText(),/Frontier handoff refused/);
+   assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem("nightfall_claim_lab_v1")).claims.length),countBefore);
+   const existingPacket=await page.evaluate(()=>window.NFFrontier.packet(window.NFFrontier.rootTask(window.NFFrontier.ITEMS[0])));
+   await page.evaluate(p=>sessionStorage.setItem("nightfall.frontier.claimlab.v1",JSON.stringify(p)),existingPacket);
+   await page.goto(origin+"claim-lab.html?frontier_handoff=1",{waitUntil:"load"});
+   assert.match(await page.locator("#toast").innerText(),/already imported/);
+   assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem("nightfall_claim_lab_v1")).claims.length),countBefore);
+
 
   }
   await page.goto(origin+"discovery.html",{waitUntil:"load"});
