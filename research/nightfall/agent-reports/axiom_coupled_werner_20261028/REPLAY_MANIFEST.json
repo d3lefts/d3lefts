@@ -1,0 +1,25 @@
+{
+  "program": "NIGHTFALL / AXIOM",
+  "date_ny": "2026-10-28",
+  "reference_claims": [
+    "PR35 Lemnis two-sided locally orthogonal rank-r blocks",
+    "PR38 Vesper one-sided extension"
+  ],
+  "new_claims": [
+    "exact sharp-boundary sum-of-squares",
+    "full complex zero-cone rigidity",
+    "quantitative swap-spectral gap"
+  ],
+  "verdicts": {
+    "source_analytic_identity": "PASS (independent mathematical audit)",
+    "finite_exact_checks": "PASS",
+    "publication_priority": "INCONCLUSIVE",
+    "external_referee": "INCONCLUSIVE"
+  },
+  "command": "python3 verify_rigidity.py",
+  "files": {
+    "REVIEW_AND_RIGIDITY.md": "e82e717c599a1125f26239a4d6aac290e03c4b466f13bd8f54d04cbc9fe1e4d9",
+    "verify_rigidity.py": "ae5d60eb014b021c2c50599b7218df7f82dc98ab2bb09f1c917d80f58d09ad03",
+    "verify_rigidity.log": "38e1c814e1668c2bd0fb8a006e007483c65697e41e4de04317afe9932620f864"
+  }
+}
