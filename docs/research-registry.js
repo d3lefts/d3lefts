@@ -241,20 +241,20 @@ const REGISTRY={
       "title": "Deterministic adaptive finite-field decoder",
       "field": "Finite-field algebra",
       "kind": "Algebraic proof candidate · independently coded exhaustive tests",
-      "short": "Two-round extension-degree packing retrieves r−1 relative phases per mixed query: at most k+⌈(k−1)/(r−1)⌉ queries over F_(q^r), q>2.",
-      "statement": "For K=F_(q^r), r≥2, q>2, adaptive powered-linear queries (a·x)^(q−1) deterministically reconstruct every x up to F_q× in k+⌈max(s−1,0)/(r−1)⌉ measurements, where s is the support size. If 2≤k≤r, the worst-case k+1 count is globally optimal. When q=2, exactly k queries are optimal.",
+      "short": "New q=3 cancellation packing retrieves r relative signs per mixed query: k+⌈(k−1)/r⌉ worst-case; general q>2 baseline remains k+⌈(k−1)/(r−1)⌉.",
+      "statement": "For K=F_(3^r), r≥2, two-round adaptive square measurements recover every x modulo ±1 using k+⌈max(s−1,0)/r⌉ queries, with exact k+1 optimality for 2≤k≤r+1; one mixed query packs r relative signs, sharply. For all q>2, the earlier bound k+⌈max(s−1,0)/(r−1)⌉ remains valid; q=2 optimum is k.",
       "conditions": "Two rounds, explicitly represented extension field, noiseless K-linear queries with a selectable basis, first-round coordinate phases, second-round batch mixing, global F_q× ambiguity; q=2 exception stated separately.",
-      "measurement": "k + ⌈(k−1)/(r−1)⌉",
-      "metric": "Worst-case two-round queries · q>2",
+      "measurement": "k + ⌈(k−1)/r⌉",
+      "metric": "Worst-case two-round queries · q=3",
       "validity": {
         "level": "working",
         "label": "Complete batched proof argument · external review open",
-        "detail": "An F_q-basis packs r−1 relative coordinate phases per adaptive query. Exact decision-tree counting proves k+1 optimal for 2≤k≤r, q>2. Independent mathematician review remains open."
+        "detail": "For q=3, zero-pattern cancellation packs r relative signs per mixed query and reaches k+1 for 2≤k≤r+1; a linear-dependence argument proves this per-query packing is sharp. General q>2 packs r−1. Independent referee review remains open."
       },
       "reproducibility": {
         "level": "finite",
         "label": "332,086 exact finite inputs pass",
-        "detail": "Two independent checkers pass 332,086 exact input vectors across q=2,3,4,5 and extension degrees 2–4, with 3,000 constructive collisions (including characteristic two). The theorem covers all prime-power base fields."
+        "detail": "The previous two independent checkers pass 332,086 exact inputs and 3,000 nonadaptive collisions. A separate characteristic-three checker passes 54,461 additional reconstruction trials and six constructive one-query collisions. Mathematical validity for arbitrary r is carried by the supplied proof argument."
       },
       "originality": {
         "level": "open",
@@ -264,7 +264,7 @@ const REGISTRY={
       "significance": {
         "level": "prospective",
         "label": "Measurement-optimal high-extension decoding",
-        "detail": "For q>2 and 2≤k≤r, k+1 adaptive measurements are globally optimal, while every fixed nonadaptive design needs at least 2k−1. A strict separation occurs for r≥3,k≥3."
+        "detail": "For q=3 and 2≤k≤r+1, k+1 adaptive measurements are globally optimal, with further counting-optimal dimensions; every fixed nonadaptive design needs at least 2k−1. For other q>2, the earlier high-extension optimality range remains 2≤k≤r."
       },
       "assumptions": [
         "Oracle returns (a·x)^(q−1) with arbitrarily chosen K-linear rows; second-round rows adapt to first-round output.",
@@ -280,6 +280,14 @@ const REGISTRY={
         "Noise and corrupt-response robustness without losing the phase-packing advantage."
       ],
       "sources": [
+        {
+          "label": "New characteristic-three cancellation packing theorem and sharp one-query obstruction",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/CHARACTERISTIC_THREE_CANCELLATION_20261029.md"
+        },
+        {
+          "label": "Characteristic-three cancellation exact verifier",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/verify_q3_cancellation.py"
+        },
         {
           "label": "Batched theorem, proofs, lower bounds and prior-art boundary",
           "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/EXTENSION_DEGREE_PACKING_20261029.md"
