@@ -1,0 +1,29 @@
+name: NIGHTFALL protected Sidon exact audit
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/agent-reports/vesper_protected_sidon_20261029/**'
+      - '.github/workflows/protected-sidon-audit.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/agent-reports/vesper_protected_sidon_20261029/**'
+      - '.github/workflows/protected-sidon-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  independent-finite-audit:
+    name: Protected finite-group repair / 81948 exhaustive cases
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Exhaustive protected-point Sidon matching cross-check
+        run: python3 research/nightfall/agent-reports/vesper_protected_sidon_20261029/verify_protected_sidon.py
