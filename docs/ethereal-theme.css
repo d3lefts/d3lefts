@@ -1,0 +1,140 @@
+/* NIGHTFALL / ETHEREAL DUSK — opt-in, no images, no tracking.
+   Applied after the existing site styles. Original light theme is untouched. */
+html[data-nf-theme="dusk"] {
+  color-scheme:dark;
+  --paper:#101727; --ink:#edf0fb; --line:#3b4860; --soft:#1b2639;
+  --muted:#abb8cf; --accent:#d7c0ff; --deep:#27354c;
+  --bg:#101727; --side:#12192c; --panel:#1b263b; --panel2:#222d45;
+  --text:#edf0fb; --lime:#d7c0ff; --fline:#46516a; --fg:#edf0fb;
+  --green:#a6b6e1; --ia-bg:#101727; --ia-ink:#edf0fb;
+  --ia-muted:#b5bed5; --ia-line:#46516a; --ia-dark:#17213a;
+}
+html[data-nf-theme="dusk"] body {
+  color:var(--ink);
+  background-color:#101727;
+  background-image:
+    radial-gradient(circle at 16% 17%,rgba(243,239,255,.68) 0 .7px,transparent 1.3px),
+    radial-gradient(circle at 70% 44%,rgba(189,202,244,.55) 0 .75px,transparent 1.4px),
+    radial-gradient(circle at 36% 83%,rgba(219,184,249,.52) 0 .65px,transparent 1.25px),
+    radial-gradient(ellipse at 82% 4%,rgba(103,72,130,.31),transparent 53%),
+    radial-gradient(ellipse at 8% 90%,rgba(39,81,119,.22),transparent 57%),
+    linear-gradient(165deg,#121a30 0%,#101626 49%,#18182b 100%);
+  background-size:311px 293px,443px 379px,587px 491px,100% 100%,100% 100%,100% 100%;
+  background-attachment:fixed;
+}
+html[data-nf-theme="dusk"] ::selection {background:#ac92dd;color:#101626}
+html[data-nf-theme="dusk"] :is(a,button,input,textarea,select):focus-visible {
+  outline:2px solid #e0caff;outline-offset:3px;
+}
+html[data-nf-theme="dusk"] .topline{background:#293451}
+html[data-nf-theme="dusk"] .topline::after{background:linear-gradient(90deg,#8caacb,#d9b6f4)}
+html[data-nf-theme="dusk"] .header{background:rgba(15,21,38,.88);border-color:var(--line)}
+html[data-nf-theme="dusk"] .mark{background:#ddd2fa;color:#1c2038}
+html[data-nf-theme="dusk"] .nav{background-color:transparent}
+html[data-nf-theme="dusk"] .nav.open{background:#151e34;border-color:#47546b;box-shadow:0 18px 44px #05091777}
+html[data-nf-theme="dusk"] .nav-call{background:#ddd2fa;color:#161b32}
+html[data-nf-theme="dusk"] .nav-call:hover{background:#ede2ff}
+html[data-nf-theme="dusk"] :is(.menu-toggle,.filter,.search){
+  color:var(--ink);border-color:var(--line);
+}
+html[data-nf-theme="dusk"] .hero-title em,
+html[data-nf-theme="dusk"] :is(.join-hero h1 em,.lp-page em,.desk-hero h1 em){color:#bcaddf}
+html[data-nf-theme="dusk"] :is(.hero-description,.research-desc,.section-intro,.aside-footer p,
+  .method p,.join-lead,.join-heading p,.desk-hero p,.lp-lead){color:#bac6dc}
+html[data-nf-theme="dusk"] .pulse::before{background:#c5b4f1;box-shadow:0 0 0 4px #5e507c55}
+html[data-nf-theme="dusk"] .button{background:#d9d0f2;color:#11182b;border-color:#d9d0f2}
+html[data-nf-theme="dusk"] .button:hover{background:#eee4ff}
+html[data-nf-theme="dusk"] .button-light{background:transparent;color:#eff0fd;border-color:#8994b0}
+html[data-nf-theme="dusk"] .button-light:hover{background:#2a324b}
+html[data-nf-theme="dusk"] :is(.feature,.atlas-card,.research-proposal,.review-card,
+  .join-result-grid article,.nf-safety-window-side,.sf-system-card,.instrument-workflow a) {
+  background:#1b263b;color:#edf0fb;border-color:#44506b;
+}
+html[data-nf-theme="dusk"] :is(.feature.dark,.review-section,.nf-safety-window-lead){
+  background:#202039;color:#f5f0ff;border-color:#525172;
+}
+html[data-nf-theme="dusk"] .feature.lime{background:#2a2b47;border-color:#555272}
+html[data-nf-theme="dusk"] .feature:hover{box-shadow:0 18px 48px #05071170}
+html[data-nf-theme="dusk"] .review-card:hover{background:#302f50}
+html[data-nf-theme="dusk"] :is(.research-row:hover,.research-proposal:hover){background:#202b42}
+html[data-nf-theme="dusk"] :is(.research-status,.research-proposal .number,.research-proposal .research-status,
+  .join-result-grid strong,.join-result-grid span,.lp-eyebrow){color:#c7bbf1}
+html[data-nf-theme="dusk"] .review-section .section-intro{color:#bfc4df}
+html[data-nf-theme="dusk"] .footer{background:#141b2e;color:#dfe6f5}
+html[data-nf-theme="dusk"] .filter[aria-pressed="true"]{background:#d9d0f2;color:#171e33}
+html[data-nf-theme="dusk"] :is(.search,input,textarea,select){
+  color:var(--ink);caret-color:#d8c4ff;
+}
+html[data-nf-theme="dusk"] :is(input,textarea,select)::placeholder{color:#9eabc6}
+html[data-nf-theme="dusk"] :is(.join-quiet,.join-results a,.join-disclosure a,.desk-hero-link){color:#d9c7ff}
+html[data-nf-theme="dusk"] :is(.join-kicker,.join-heading>span,.join-workspace-header span,
+  .join-pad>span,.join-next>span){color:#aebbe0}
+html[data-nf-theme="dusk"] :is(.join-hero-aside,.join-result-grid article,.desk-readout,.lp-hero-aside){
+  border-color:#465370;
+}
+html[data-nf-theme="dusk"] :is(.join-result-grid p,.join-hero-aside p,.nf-safety-window-side p){color:#c0c9e0}
+html[data-nf-theme="dusk"] :is(.desk-page,.frontier,.ia-page){background:transparent;color:var(--ink)}
+html[data-nf-theme="dusk"] .desk-page{--paper:#101727;--ink:#edf0fb}
+html[data-nf-theme="dusk"] .frontier{
+  --fline:#4c5871;--fg:#edf0fb;--green:#ced0f3;--lime:#d9c6ff;
+}
+html[data-nf-theme="dusk"] :is(.f-board,.f-card,.f-panel,.desk-pane,.desk-session,
+  .join-workspace,.join-result-grid article,.lp-panel,.lp-point){
+  border-color:#45536c;
+}
+html[data-nf-theme="dusk"] :is(.f-card,.f-panel,.desk-pane,.join-workspace,.lp-panel){
+  background:#1b263b;color:#edf0fb;
+}
+html[data-nf-theme="dusk"] :is(.f-hero-facts,.desk-readout,.lp-hero-aside){background:#242943}
+html[data-nf-theme="dusk"] .ia-header{background:#11192b;color:#edf0fb}
+html[data-nf-theme="dusk"] .ia-header .menu-toggle{color:#edf0fb;border-color:#53617a}
+html[data-nf-theme="dusk"] .ia-handoff-note{background:#252d46;color:#e4e2fa;border-color:#4e567b}
+html[data-nf-theme="dusk"] :is(.side,.sidebar){background:#151c30;border-color:#3a4760}
+html[data-nf-theme="dusk"] :is(.panel,.card,.rep-card,.op,.metrics){border-color:#46516b}
+html[data-nf-theme="dusk"] .companion-handoff-note{background:#252d46;color:#e7e4fc;border-color:#595d87}
+/* Dedicated lab applications begin dark; preserve their independent contrasts while
+   harmonizing the background, surfaces and accent tokens. */
+html[data-nf-theme="dusk"] body:has(#app){--bg:#101727;--side:#151c30;--paper:#182237;--panel:#202b40;--panel2:#29324a;--line:#46516b;--text:#edf0fb;--lime:#d7c0ff}
+html[data-nf-theme="dusk"] body:has(.app){--bg:#101727;--surface:#182237;--surface2:#202b40;--surface3:#29324a;--mint:#b9b5f8;--line:#45516a}
+html[data-nf-theme="dusk"] body:has(#app) :is(.side,.top,.main){border-color:#46516b}
+html[data-nf-theme="dusk"] :is(.atlas-card,.atlas-group,.atlas-final,.nf-safety-window,
+  .instrument-bridge,.nf-evidence-summary){border-color:var(--line)}
+/* The persistent control lives in the global header where possible, detached
+   in immersive tools. It remains visible without obstructing the mobile menu. */
+.nf-theme-toggle{
+  appearance:none;flex:none;display:inline-flex;align-items:center;justify-content:center;
+  gap:8px;min-width:88px;min-height:40px;padding:9px 12px;
+  border:1px solid #8c968b;border-radius:999px;
+  background:#f4f4e9;color:#25352b;
+  font:600 10px/1.15 "IBM Plex Mono",ui-monospace,monospace;
+  letter-spacing:.055em;white-space:nowrap;cursor:pointer;
+  transition:background-color .28s ease,color .28s ease,border-color .28s ease,box-shadow .28s ease;
+}
+.nf-theme-toggle:hover{box-shadow:0 0 0 3px #8a6ab022}
+.nf-theme-toggle .nf-theme-symbol{font-size:17px;line-height:1}
+html[data-nf-theme="dusk"] .nf-theme-toggle{
+  background:#262a44;color:#efe4ff;border-color:#8f83b1;
+  box-shadow:inset 0 0 17px #b397f017,0 0 17px #9d81de1f;
+}
+html[data-nf-theme="dusk"] .nf-theme-toggle:hover{background:#363554;box-shadow:0 0 24px #b7a1f148}
+.nf-theme-toggle.nf-theme-floating{
+  position:fixed;bottom:18px;right:18px;z-index:100;
+  box-shadow:0 5px 24px #0003;
+}
+@media(max-width:760px){
+  .header-inner>.nf-theme-toggle{min-width:40px;width:40px;height:40px;padding:8px;order:1}
+  .header-inner>.nf-theme-toggle .nf-theme-word{display:none}
+  .header-inner>.menu-toggle{order:2;margin-left:0}
+  .header-inner>.brand{min-width:0;margin-right:auto}
+  .header-inner>.brand .brand-copy{min-width:0}
+  .header-inner>.brand .brand-copy span{font-size:9px}
+  .nf-theme-toggle.nf-theme-floating{bottom:12px;right:12px}
+}
+@media(max-width:390px){
+  .header-inner>.brand .brand-copy span{display:none}
+  .header-inner{gap:9px}
+}
+@media(prefers-reduced-motion:reduce){
+  .nf-theme-toggle{transition:none}
+  html[data-nf-theme="dusk"] body{background-attachment:scroll}
+}
