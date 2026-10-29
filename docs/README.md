@@ -9,6 +9,7 @@ Static, dependency-free site for NIGHTFALL’s **five evidence-scoped original f
 - Discovery Engine: discovery.html, discovery-core.js, discovery-app.js, discovery.css — executable bounded proxy lab and portable evidence workspace.
 - `review.html` — three foundational reproducibility review tracks and two additional bounded-artifact checking routes; publication and proof status remain separate.
 - `adversary.html` / `adversary-core.js` / `adversary-app.js` / `adversary.css` — Imaginary Adversary (Devil’s Advocate), a bounded counterexample and proof-obligation planner complementary to Referee, tested in `scripts/test_adversary.cjs`.
+- `companion-handoff-core.js` — canonical one-shot input-only Referee ↔ Imaginary Adversary adapter, with exact integer/model-size checks, unreviewed import notices, distinct Sidon predicates, and `scripts/test_companion_handoff.cjs` and mobile/desktop handoff tests. No finite verifier output or manuscript status is ever transferred.
 - `evidence.html` — two actually published curated ZIPs, hashes, verified public download links and reproduction commands.
 - `sitemap.xml` — direct site page discovery.
 - `site.css` — responsive layout and accessible typography.
