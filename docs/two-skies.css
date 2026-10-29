@@ -352,3 +352,157 @@ html[data-nf-theme="dusk"] body:has(.app) .brandMark{color:#e6deaa}
 /* Final input-contract priority: yellow always carries chocolate ink. */
 html:not([data-nf-theme="dusk"]) :is(.hero-actions .button:not(.button-light),.nf-home-tool-entry .button,.join-action,.cj-primary,.co-page .co-primary,.desk-add,.desk-session-shortcut){color:#28190f!important}
 html:not([data-nf-theme="dusk"]) :is(.hero-actions .button:not(.button-light),.nf-home-tool-entry .button,.join-action,.cj-primary,.co-page .co-primary,.desk-add,.desk-session-shortcut):hover{color:#28190f!important}
+
+/* PALETTE CONSISTENCY v2 / OCT 29, 2026
+   Third-layer legacy surfaces are recolored here so no pale parchment slips
+   through old standalone component styles. Text labels keep their semantics.
+   Ox-blood has a deliberately tiny, decorative role in New Moon only. */
+html[data-nf-theme="dusk"]{
+  --nf-oxblood-rare:#4a1f24;
+  --nf-oxblood-lit:#a76573;
+  --rs-paper:#04060b;--rs-ink:#f1eedc;--rs-deep:#0c1527;
+  --rs-line:#33405d;--rs-muted:#bec3d6;
+  --rs-lime:#e6deaa;--rs-sage:#b4b5d9;
+}
+html:not([data-nf-theme="dusk"]){
+  --rs-paper:#28190f;--rs-ink:#f7e8db;--rs-deep:#1b100b;
+  --rs-line:#75574a;--rs-muted:#ceb6a7;
+  --rs-lime:#edc16e;--rs-sage:#c99b80;
+}
+html[data-nf-theme="dusk"] :is(.nf-archive-shelf,.nf-archive-accession,.nf-dual-colophon){
+  background:#0c1527;color:#f1eedc;border-color:#33405d;
+}
+html:not([data-nf-theme="dusk"]) :is(.nf-archive-shelf,.nf-archive-accession,.nf-dual-colophon){
+  background:#3b281d;color:#f7e8db;border-color:#75574a;
+}
+html:not([data-nf-theme="dusk"]) :is(.nf-archive-accession strong,.nf-archive-accession h3){
+  color:#f7e8db;
+}
+html:not([data-nf-theme="dusk"]) :is(.nf-archive-id,.nf-archive-accession small,.nf-dual-colophon h2 em){
+  color:#edc16e;
+}
+html:not([data-nf-theme="dusk"]) :is(.nf-section-index,.nf-home-toolbox,
+  .evidence-inner,.lab-feature-visual,.lab-windowbar,.lab-windowfoot,
+  .rs-card,.rs-gate,.pp-dimension,.pp-source,.pp-event,.pp-coverage,.rs-coverage,
+  .pp-picker a,.pp-metric,.ma-detail,.ma-relation,.ma-canvas,
+  .join-empty,.join-tool-route button,.join-match,.join-choice,
+  .ep-filecheck,.ep-command,.ep-warning,.ep-grid-readout>div,#ep-curve,
+  .lp-lab,.lp-workbench,.lp-point,.lp-method,.lp-rule,.lp-note,.lp-console,
+  .desk-queue,.desk-notes,.desk-claim-button,.desk-dimension,.desk-open-row,
+  .cj-section,.cj-work,.cj-next,.cj-workspace,.cj-pickers select,.cj-work textarea){
+  background:#3b281d;color:#f7e8db;border-color:#75574a;
+}
+html[data-nf-theme="dusk"] :is(.nf-section-index,.nf-home-toolbox,
+  .evidence-inner,.lab-feature-visual,.lab-windowbar,.lab-windowfoot,
+  .rs-card,.rs-gate,.pp-dimension,.pp-source,.pp-event,.pp-coverage,.rs-coverage,
+  .pp-picker a,.pp-metric,.ma-detail,.ma-relation,.ma-canvas,
+  .join-empty,.join-tool-route button,.join-match,.join-choice,
+  .ep-filecheck,.ep-command,.ep-warning,.ep-grid-readout>div,#ep-curve,
+  .lp-lab,.lp-workbench,.lp-point,.lp-method,.lp-rule,.lp-note,.lp-console,
+  .desk-queue,.desk-notes,.desk-claim-button,.desk-dimension,.desk-open-row,
+  .cj-section,.cj-work,.cj-next,.cj-workspace,.cj-pickers select,.cj-work textarea){
+  background:#0c1527;color:#f1eedc;border-color:#33405d;
+}
+html:not([data-nf-theme="dusk"]) :is(.nf-section-index>summary,.nf-section-index>summary span,
+  .nf-home-toolbox>summary,.nf-home-toolbox>summary strong,.nf-home-toolbox>summary span,
+  .lp-point small,.desk-claim-button small,.ep-grid-readout span,.rs-gate p){
+  color:#ceb6a7;
+}
+html[data-nf-theme="dusk"] :is(.nf-section-index>summary,.nf-section-index>summary span,
+  .nf-home-toolbox>summary,.nf-home-toolbox>summary strong,.nf-home-toolbox>summary span,
+  .lp-point small,.desk-claim-button small,.ep-grid-readout span,.rs-gate p){
+  color:#bec3d6;
+}
+html:not([data-nf-theme="dusk"]) :is(.nf-section-index>summary:hover,
+  .nf-home-toolbox>summary:hover,.nf-archive-accession:hover,.pp-picker a[aria-current="true"],
+  .lp-point.is-edge,.desk-claim-button[aria-pressed="true"]){
+  background:#51382b;color:#f7e8db;border-color:#edc16e;
+}
+html[data-nf-theme="dusk"] :is(.nf-section-index>summary:hover,
+  .nf-home-toolbox>summary:hover,.pp-picker a[aria-current="true"],
+  .lp-point.is-edge,.desk-claim-button[aria-pressed="true"]){
+  background:#16223c;color:#f1eedc;border-color:#e6deaa;
+}
+html:not([data-nf-theme="dusk"]) :is(.nf-section-index>summary,
+  .nf-home-toolbox>summary)::before{background:#332116;color:#edc16e;border-color:#75574a}
+html[data-nf-theme="dusk"] :is(.nf-section-index>summary,
+  .nf-home-toolbox>summary)::before{background:#091120;color:#e6deaa;border-color:#33405d}
+html:not([data-nf-theme="dusk"]) :is(.ep-value span,.rs-btn.light,.pp-metric strong,
+  .ep-grid-readout strong,.desk-readout strong,.lp-point.is-edge strong){color:#edc16e}
+html[data-nf-theme="dusk"] :is(.ep-value span,.rs-btn.light,.pp-metric strong,
+  .ep-grid-readout strong,.desk-readout strong,.lp-point.is-edge strong){color:#e6deaa}
+html:not([data-nf-theme="dusk"]) :is(.rs-btn,.lp-btn-primary,.desk-session-actions button){
+  background:#edc16e;color:#28190f;border-color:#edc16e;
+}
+html[data-nf-theme="dusk"] :is(.rs-btn,.lp-btn-primary,.desk-session-actions button){
+  background:#e6deaa;color:#0b1425;border-color:#e6deaa;
+}
+html:not([data-nf-theme="dusk"]) :is(.nf-archive-accession,.nf-archive-accession strong,
+  .nf-archive-accession>span:not(.nf-archive-id),.nf-dual-colophon-links a){
+  color:#f7e8db;
+}
+html:not([data-nf-theme="dusk"]) .nf-dual-colophon-links a{color:#edc16e}
+html[data-nf-theme="dusk"] .nf-dual-colophon-links a{color:#e6deaa}
+html:not([data-nf-theme="dusk"]) .desk-entry[style] :is(.desk-entry-stat strong,.desk-entry-stat a){color:#edc16e!important}
+html[data-nf-theme="dusk"] .desk-entry[style] :is(.desk-entry-stat strong,.desk-entry-stat a){color:#e6deaa!important}
+
+/* NEW MOON OXBLOOD: three atmospheric marks, never status, proof or CTA. */
+html[data-nf-theme="dusk"] #main>.flagships>.section-head{
+  border-image:linear-gradient(180deg,var(--nf-oxblood-lit) 0%,var(--nf-oxblood-rare) 42%,#e6deaa 100%) 1;
+}
+html[data-nf-theme="dusk"] .nf-cinema-world--night{
+  background-image:
+    radial-gradient(ellipse at 10% 95%,rgba(74,31,36,.21),transparent 37%),
+    radial-gradient(ellipse at 50% 45%,rgba(49,63,119,.29),transparent 54%),
+    radial-gradient(ellipse at 87% 8%,rgba(32,29,80,.22),transparent 38%),
+    linear-gradient(180deg,#020308 0%,#080e20 63%,#050712 100%);
+}
+html[data-nf-theme="dusk"] .nf-cinema-constellation .nf-cinema-node:nth-child(3){
+  fill:var(--nf-oxblood-rare);stroke:var(--nf-oxblood-lit);
+  filter:drop-shadow(0 0 13px #a7657344);
+}
+html[data-nf-theme="dusk"] .nf-dual-colophon{
+  border-top:1px solid #4a1f24;
+  box-shadow:inset 0 1px 0 #a7657336;
+}
+/* Readability and scannability: no color coding without words, every scene
+   detail is decorative and never substitutes for evidence annotations. */
+
+/* A selected research route remains visually raised, with evidence label unchanged. */
+html[data-nf-theme="dusk"] .join-choice[data-recommended="true"]{background:#28334b;color:#f1eedc;border-color:#e6deaa}
+html:not([data-nf-theme="dusk"]) .join-choice[data-recommended="true"]{background:#51382b;color:#f7e8db;border-color:#edc16e}
+
+/* The first offered Join assignment is visually raised as the primary route. */
+html[data-nf-theme="dusk"] .join-choices>.join-choice:first-child{background:#28334b;color:#f1eedc;border-color:#e6deaa}
+html:not([data-nf-theme="dusk"]) .join-choices>.join-choice:first-child{background:#51382b;color:#f7e8db;border-color:#edc16e}
+
+/* Force the leading, user-visible assignment card above generic inherited panels. */
+html[data-nf-theme="dusk"] #join-choices > article.join-choice:first-of-type{background-color:#28334b!important}
+html:not([data-nf-theme="dusk"]) #join-choices > article.join-choice:first-of-type{background-color:#51382b!important}
+
+
+/* From the computed mobile audit: flagship themes, the schematic index chips,
+   second replay step and old tool links had hardcoded parchment backgrounds.
+   This set outranks those older selector variants in both editorial modes. */
+html[data-nf-theme="dusk"] :is(
+ .flagship-card.flagship-sage,.flagship-card.flagship-paper,
+ .referee-showcase-body,.instrument-workflow span,.atlas-shortcut kbd,
+ .lab-jump-nav a,.instrument-workflow a:nth-child(3),
+ .atlas-grid .atlas-card:nth-child(4n + 1),.nf-replay-steps li:nth-child(2),
+ .sf-system-card:hover,.sf-system-card:focus-visible,.sf-evidence-events a:hover,
+ .atlas-passport-link:hover){
+ background-color:#0c1527!important;color:#f1eedc;border-color:#33405d;
+}
+html:not([data-nf-theme="dusk"]) :is(
+ .flagship-card.flagship-sage,.flagship-card.flagship-paper,
+ .referee-showcase-body,.instrument-workflow span,.atlas-shortcut kbd,
+ .lab-jump-nav a,.instrument-workflow a:nth-child(3),
+ .atlas-grid .atlas-card:nth-child(4n + 1),.nf-replay-steps li:nth-child(2),
+ .sf-system-card:hover,.sf-system-card:focus-visible,.sf-evidence-events a:hover,
+ .atlas-passport-link:hover){
+ background-color:#3b281d!important;color:#f7e8db;border-color:#75574a;
+}
+
+/* The review access/certificate warning inherits an obsolete parchment background. */
+html[data-nf-theme="dusk"] .review-warning{background:#16223c;color:#f1eedc;border-color:#e6deaa}
+html:not([data-nf-theme="dusk"]) .review-warning{background:#51382b;color:#f7e8db;border-color:#edc16e}

@@ -114,6 +114,10 @@ jobs:
         run: |
           set -o pipefail
           CHROME_BIN="$(command -v google-chrome)" node scripts/test_golden_hour_light.mjs 2>&1 | tee browser-artifacts/golden-hour-light.log
+      - name: Reject visible parchment regressions and audit rare midnight oxblood
+        run: |
+          set -o pipefail
+          CHROME_BIN="$(command -v google-chrome)" node scripts/test_palette_consistency.mjs 2>&1 | tee browser-artifacts/palette-consistency.log
       - name: Test scroll-driven animation in both themes, narrow phones, and reduced motion
         run: |
           set -o pipefail

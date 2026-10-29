@@ -44,3 +44,11 @@ Absolute-black-near canvas; deep navy and indigo structure; pale jasmine text an
 - Main text and button ink have tested WCAG AA contrast against their intended filled backgrounds.
 - `docs/two-skies.css` is loaded last on every themed page; `scripts/check_palette_contract.mjs` checks palette tokens, neon regressions, and CSS inclusion.
 - Mobile/desktop screenshots, reversible theme switching, source links and reduced-motion checks are covered by the website CI.
+
+## Rare oxblood accent in New Moon
+
+Oxblood is an **atmospheric punctuation mark**, never a scientific-status legend, focus ring, or main action. The archived blackcherry value `#4A1F24` is now the `--nf-oxblood-rare` variable in the Night skin, with an illuminated `#A76573` companion for visible fine edges. It is limited to the flagship section divider, a low-intensity cinematic glow and one illustrative constellation node, and the final-colophon hairline. Navy, indigo, jasmine and moonlight remain the dominant palette.
+
+## Consistency policy
+
+The active palettes are determined by `docs/two-skies.css` and `docs/mobile-scroll-cinema.css`, both loaded after the historical stylesheets. Older base declarations remain documented as fallback history, not a license to reintroduce parchment. The computed-style browser audit checks large displayed surfaces in both modes for obsolete background colors and tests mobile overflow. The homepage's three formerly hardcoded instrument colors now use the palette tokens.
