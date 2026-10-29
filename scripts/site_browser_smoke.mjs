@@ -190,6 +190,26 @@ try{
     assert.equal(await page.locator("#agenda-list .research-proposal:visible").count(),10,"agenda search reset");
   }
   if(width===390 || width===1280){
+    await page.goto(origin+"passport.html?claim=outdated-claim-id",{waitUntil:"load"});
+    assert.equal(await page.locator("#passport-unknown").isVisible(),true,"Unknown proof claim explicitly reported");
+    assert.match(await page.locator("#passport-unknown").innerText(),/outdated-claim-id/,"Stale claim identifier shown for diagnosis");
+    assert.match(await page.locator("#passport-title").innerText(),/Sidon/i,"Default example is disclosed");
+    assert.equal(new URL(page.url()).searchParams.get("claim"),"outdated-claim-id","Stale link remains diagnosable");
+    await page.locator("#passport-picker a[href='passport.html?claim=werner']").click();
+    assert.equal(await page.locator("#passport-unknown").isVisible(),false,"Valid Passport clears warning");
+    assert.match(await page.locator(".pp-coverage").innerText(),/Five canonical Proof Passports, 32 research dossiers/,"Passports explain editorial coverage");
+    await page.goto(origin+"index.html",{waitUntil:"load"});
+    assert.equal(await page.locator("#lab-jump-nav a").count(),7,"Long laboratory has seven topical jumps");
+    assert.equal(await page.locator(".flagship-context").count(),3,"Each flagship explains meaning of headline metric");
+    assert.match(await page.locator(".flagship-context").first().innerText(),/maximum overlap/i,"Numerical extremal value interpreted");
+    await page.locator('#lab-jump-nav a[href="#research-systems"]').click();
+    assert.equal(new URL(page.url()).hash,"#research-systems","Section-index jump works");
+    await page.goto(origin+"research.html",{waitUntil:"load"});
+    assert.match(await page.locator(".archive-coverage").innerText(),/Thirty-two dossiers.*Five claim passports.*Three original findings/s,"Library explains record hierarchy");
+    await page.goto(origin+"atlas.html",{waitUntil:"load"});
+    assert.match(await page.locator(".rs-coverage").innerText(),/five nodes represent a library of 32 documents/i,"Atlas explains limited canonical graph");
+  }
+  if(width===390 || width===1280){
     await page.goto(origin+"desk.html?claim=phase",{waitUntil:"load"});
     assert.equal(await page.locator(".desk-claim-button").count(),5,"Five canonical research claims visible");
     assert.match(await page.locator(".desk-detail-heading").innerText(),/finite-field reconstruction/i,"Deep link selects finite-field claim");
@@ -202,6 +222,10 @@ try{
     await page.locator("#desk-search").fill("");
     await page.locator(".desk-open-row .desk-add").first().click();
     assert.match(await page.locator("#desk-count").innerText(),/1 step/,"Open obligation pinned");
+    assert.equal(await page.locator("#desk-session-shortcut").isVisible(),true,"Selected task exposes quick session jump");
+    assert.match(await page.locator("#desk-session-shortcut").innerText(),/1 selected check/,"Quick jump counts selected tasks");
+    await page.locator("#desk-session-shortcut").click();
+    assert.equal(new URL(page.url()).hash,"#session","Quick jump moves to session anchor");
     await page.locator("#desk-notes").fill("Check a source lemma with a second proof path.");
     await page.reload({waitUntil:"load"});
     assert.equal(await page.locator(".desk-queue-row").count(),1,"Local session queue survives reload");
@@ -216,6 +240,7 @@ try{
     page.once("dialog",dialog=>dialog.accept());
     await page.locator("#desk-clear").click();
     assert.equal(await page.locator(".desk-queue-row").count(),0,"Explicit local session clearing");
+    assert.equal(await page.locator("#desk-session-shortcut").isVisible(),false,"Session shortcut hides with an empty queue");
     assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth))<=3,"Research Desk fits viewport");
   }
   if(width===390 || width===1280){
