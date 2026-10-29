@@ -1,0 +1,19 @@
+{
+  "Python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "checker": "verify_f25_independent.py",
+  "checker_sha256": "1a4ab0960365aed8c3badb874cbf5eb123c8dab9125e94b7638ede5b63817e02",
+  "date": "2026-10-28",
+  "exit_code": 0,
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+  "research_audit_sha256": "d77729f5bd6c6bfe72d2798ab7c9e11bb6aae545614e1e17e0dde84d83c6b215",
+  "run_command": "python3 verify_f25_independent.py",
+  "status": "exact finite checks PASS; complete elementary theorem proof manuscript; historical novelty and external human review open",
+  "stderr": "",
+  "stdout": [
+    "PASS full polynomial coefficient enumeration: 15624 triples; max zero rows=121/625",
+    "PASS max-attainment count: 720 zero-count histogram: {1: 2880, 25: 11424, 49: 600, 121: 720}",
+    "PASS GF25 v\u00b2=3; seed 330417 4x625 full decoder outputs at k2,m13 and 3x25 sampled outputs k3,m19",
+    "PASS zero input and zero-design boundary logic; exact 11^5882 < 5^8764",
+    "SOURCE_SHA256 1a4ab0960365aed8c3badb874cbf5eb123c8dab9125e94b7638ede5b63817e02"
+  ]
+}
