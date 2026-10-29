@@ -30,6 +30,7 @@ function verify(job,r){
  const expected=makeBase(job,r.model);
  for(const k of Object.keys(expected))assert.deepEqual(p.payload[k],expected[k],"Changed prompt/source/graph field "+k);
  assert.deepEqual(Object.keys(p.payload).sort(),[...Object.keys(expected),"max_output_tokens"].sort(),"Unrecognized provider request fields.");
+ assert.deepEqual(p.countPayload,{model:expected.model,input:expected.input,instructions:expected.instructions,tools:expected.tools},"Source bytes/instructions used for preflight token counting must match the generated request.");
  assert.ok(Number.isSafeInteger(p.inputCountRaw?.input_tokens)&&p.inputCountRaw.input_tokens>0,"Input-token counter must be provider captured, never zero/estimated.");
  assert.equal(p.inputCountRaw.object,"response.input_tokens","Wrong token-count endpoint response type");
  assert.equal(p.requestPayloadSha256,sha(JSON.stringify(p.payload)),"Provider request digest changed.");
