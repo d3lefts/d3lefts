@@ -1,0 +1,34 @@
+{
+  "program": "NIGHTFALL PHASESHIFT",
+  "research_role": "Lemnis",
+  "date": "2026-10-28",
+  "proof_scope": "restricted locally orthogonal two-block rank-two Werner family, all finite n,d, heterogeneous t_j",
+  "internal_checks": {
+    "direct_physical_traces": "PASS",
+    "rational_spectral_grade_baseline": "PASS",
+    "independent_complex_d4_blocks": "PASS",
+    "heterogeneous_sharp_iff_and_negative_control": "PASS"
+  },
+  "frozen_results": {
+    "q4_rank2_witness": "3",
+    "independent_theorem_lower": "1/4",
+    "old_grade_sufficient_lower": "3/2-sqrt(5/2)<0",
+    "same_grade_cross": "-1/8",
+    "negative_rank3_mutation": "-3/16",
+    "heterogeneous_threshold_example_negative": "-1/9",
+    "locally_overlapping_mutation": "-9/10"
+  },
+  "source_sha256": {
+    "THEOREM.md": "08452c784f8eacde5edd1d2b750555505816e579913689f20be39d362733b6fa",
+    "README.md": "05960c0e0b495100bda4599551c187e49a900e7a6f416a3b97e9fa43c529d0db",
+    "verify_physical.py": "32d3f29e0f3a9c1b430fab14b65648c99e3b2ab47bfd21119486ea7289858976",
+    "verify_spectral.py": "98bea07b9882e2a43276b2e1d7f0aa02768d29bad2c87851b542b6f10f89cd4f",
+    "verify_two_block_complex.py": "cae445e9dbefeabffb2f5a5a313ec246183951a0c68a673d19e50f40bbbe416e",
+    "verify_heterogeneous.py": "d8801b07212b57ad0dd14aa3346ddd4f4c6ffbbb441a84b6e76c6e6bb09f6a29"
+  },
+  "unresolved": [
+    "external proof referee",
+    "comprehensive priority against prior tensor-positive-map results",
+    "Axiom/Vesper independent adversarial replay"
+  ]
+}
