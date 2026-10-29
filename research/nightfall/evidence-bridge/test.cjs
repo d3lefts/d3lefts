@@ -77,6 +77,12 @@ async function run(){
  rejected.push(await reject(x,"NEGATIVE_CONTROLS","forged negative control"));
  x=clone(sidon);x.verdict="THEOREM_PROVED";
  rejected.push(await reject(x,"VERDICT","forged proof verdict"));
+ x=clone(sidon);x.verifier="External Certified Referee";
+ rejected.push(await reject(x,"SOURCE_METADATA","forged canonical Referee producer identity"));
+ x=clone(sidon);x.sourceDossier="https://attacker.invalid/research/false-proof";
+ rejected.push(await reject(x,"SOURCE_METADATA","tampered source dossier metadata"));
+ x=clone(sidon);x.notes=["Externally verified and peer reviewed"]; 
+ rejected.push(await reject(x,"AUTHORITY_SPOOF","forged scientific review claim hidden in source notes"));
  x=clone(sidon);x.result.reviewed=true;
  rejected.push(await reject(x,"AUTHORITY_SPOOF","nested forged reviewer authority"));
  x=clone(exactWerner);x.result.engine="exact-four-qutrit-werner-v7";
