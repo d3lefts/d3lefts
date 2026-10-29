@@ -44,7 +44,7 @@ Secondary outcomes: methodology errors by type, analyst time, abstentions, expli
 
 | Stage | Cheapest decisive test | Required certificate | Status |
 |---|---|---|---|
-| 0 / instrumentation | Synthetic balanced rows with known F=(1,.5,0), then deliberate corruptions | Standard-library executable checker and negative controls | PLANNED |
+| 0 / instrumentation | Synthetic balanced rows with known F=(1,.5,0), then deliberate corruptions | Standard-library checker; 4 rejection controls and a clustered-vs-naive counterexample | CI SYNTHETIC PASS / NO HUMAN DATA |
 | 1 / feasibility | Small consenting pilot with balanced randomized leans and process logs | Frozen task pack, assignment manifest, audit of blinding, evaluator rubric, cost metrics | UNRUN |
 | 2 / confirmatory | Independently powered randomized human trial; sample size fixed **before** enrollment | Preregistered analysis, immutable commit/hash, consent and ethics determination | UNRUN |
 | 3 / external audit | Reviewer with no access to preferred findings independently reruns scoring and tests leakage | Signed, provenance-linked reproducibility receipt and limitations | UNRUN |
@@ -62,6 +62,8 @@ This extension is a **new proposed NIGHTFALL test design**, not a demonstrated n
 ## Data contract (v0.1)
 
 Accepted CSV columns: `participant_id,arm,decision_id,lean,choice`. Allowed arm values: `ordinary,adversary,blind`; decision_id 1–4; lean and choice 0/1. Exactly one row per participant and decision, and one arm per participant. Real runs additionally require separately secured randomized-assignment manifests, consent metadata and retained blind process logs; these are **outside** the checker. The checker refuses sparse arm-by-decision lean cells and emits an analysis-only verdict; see `scripts/check_judgment_provenance.py`. Test data **must** carry the `SYNTHETIC_FIXTURE` label. No fabricated human observations.
+
+[Independent audit and experiment authorization tracker](https://github.com/d3lefts/d3lefts/issues/170) — participation and external review remain unstarted.
 
 ## Independent review assignments
 
