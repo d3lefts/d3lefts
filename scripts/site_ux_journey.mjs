@@ -104,7 +104,8 @@ try{
     assert.ok(await page.locator('a[href="desk.html"]').count()>0);
     assert.ok(await page.locator('a[href="research.html"]').count()>0);
     const sections=await page.locator("main section").count();
-    assert.equal(await page.locator("#lab-jump-nav a").count(),7);
+    assert.equal(await page.locator("#lab-jump-nav a").count(),8);
+    assert.ok(await page.locator('#lab-jump-nav a[href="investigate.html"]').count()===1);
     assert.equal(await page.locator(".flagship-context").count(),4);
     note("improvement","The full homepage still contains "+sections+" sections; a section index offers immediate navigation without truncating content.","homepage");
   });
