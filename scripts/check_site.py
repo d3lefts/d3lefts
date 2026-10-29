@@ -97,6 +97,65 @@ def main() -> int:
     if ('class="compare-table-wrap" role="region" tabindex="0"' not in
             (DOCS / "index.html").read_text(encoding="utf-8")):
         FAILURES.append("ACCESSIBILITY: evidence comparison requires keyboard-scrollable region")
+    # Cross-page editorial and archival consistency is a correctness property,
+    # distinct from arithmetic verification and from external mathematical review.
+    homepage_text = (DOCS / "index.html").read_text(encoding="utf-8")
+    library_text = (DOCS / "research.html").read_text(encoding="utf-8")
+    review_text = (DOCS / "review.html").read_text(encoding="utf-8")
+    registry_text = (DOCS / "research-registry.js").read_text(encoding="utf-8")
+    if "FIVE DISTINCT DECISIONS" in homepage_text or "Five decisions." in homepage_text:
+        FAILURES.append("EDITORIAL: homepage names five decisions but exposes four stages")
+    if "FOUR EXPLICIT STAGES" not in homepage_text or "Four stages." not in homepage_text:
+        FAILURES.append("EDITORIAL: four-stage narrative missing")
+    if "Explore the six Proof Passports" not in library_text or "Explore the five Proof Passports" in library_text:
+        FAILURES.append("EDITORIAL: canonical six-Passport link miscount")
+    stages = re.search(r'<nav class="instrument-workflow"[^>]*>(.*?)</nav>', homepage_text, re.S)
+    if not stages or len(re.findall(r'<a\\s', stages.group(1))) != 4:
+        FAILURES.append("JOURNEY: precisely four linked stages required")
+    if "Complete archive mirror pending" in registry_text or "Missing public frozen witness release" in registry_text:
+        FAILURES.append("REPRODUCIBILITY: canonical registry repeats superseded release claim")
+    if "remain outside that curated public release" in review_text or "release queue" in library_text:
+        FAILURES.append("REPRODUCIBILITY: reviewer or library contradicts approved release")
+    # Progressive HTML must supply the real integer witness even with scripts disabled.
+    core_text = (DOCS / "referee-core.js").read_text(encoding="utf-8")
+    match = re.search(r'const SIDON_WITNESS=\\[([^\\]]+)\\];', core_text)
+    subset_match = re.search(r'const SIDON_SUBSET=\\[([^\\]]+)\\];', core_text)
+    chart_match = re.search(r'<div class="sf-witness"[^>]*>(.*?)</div>', homepage_text, re.S)
+    if not (match and subset_match and chart_match):
+        FAILURES.append("ACCESSIBILITY: static Sidon witness coordinates or source missing")
+    else:
+        coords = [int(x) for x in match.group(1).split(",")]
+        subset = {int(x) for x in subset_match.group(1).split(",")}
+        tokens = re.findall(r'<span class="sf-point( chosen)?" role="listitem" title="Integer coordinate (-?\\d+)"', chart_match.group(1))
+        if [int(x) for _, x in tokens] != coords or {int(x) for mark, x in tokens if mark} != subset:
+            FAILURES.append("ACCESSIBILITY: no-JS witness mismatches canonical exact arithmetic")
+        if len(coords) != 30 or len(subset) != 17:
+            FAILURES.append("ACCESSIBILITY: exact finite witness dimensions mismatch")
+    if "Loading the exact 30-point diagram" in homepage_text or "disabled title=" not in homepage_text:
+        FAILURES.append("ACCESSIBILITY: stuck loading fallback or unsafe pre-hydration toggle")
+
+    # The portable JSON manifest is checked against the immutable public byte receipt.
+    import json as _json
+    public_manifest = DOCS / "reproduction-manifest.json"
+    if not public_manifest.is_file():
+        FAILURES.append("REPRODUCIBILITY: machine-readable public manifest missing")
+    else:
+        manifest = _json.loads(public_manifest.read_text(encoding="utf-8"))
+        receipt = _json.loads((ROOT / "research/nightfall/CURATED_PUBLIC_DOWNLOAD_RECEIPT_20261029.json").read_text(encoding="utf-8"))
+        listed = {(x["file"], x["sha256"], x["bytes"]) for x in manifest.get("releaseAssets", [])}
+        attested = {(x["asset"], x["sha256"], x["bytes"]) for x in receipt.get("assets", [])}
+        if manifest.get("schema") != "nightfall-public-reproducibility-v1" or listed != attested or len(listed) != 2:
+            FAILURES.append("REPRODUCIBILITY: asset identities differ from immutable public replay receipt")
+        claims = {x.get("id"): x for x in manifest.get("claims", [])}
+        if set(claims) != {"sidon30", "erdos36"} or claims["erdos36"].get("witnessSha256") != receipt["exact_arithmetic"]["witness_sha256"]:
+            FAILURES.append("REPRODUCIBILITY: published witness or claim scope differs from exact receipt")
+        if "independent external specialist review open" not in claims["erdos36"].get("status", ""):
+            FAILURES.append("REPRODUCIBILITY: external mathematical review must remain open")
+        for page_name in ("index.html", "evidence.html", "passport.html"):
+            if 'href="reproduction-manifest.json"' not in (DOCS / page_name).read_text(encoding="utf-8"):
+                FAILURES.append("DISCOVERY: portable manifest link missing from " + page_name)
+    if '"level": "public"' not in registry_text or "Curated finite witness public; independent audit open" not in registry_text:
+        FAILURES.append("REPRODUCIBILITY: finite witness release absent from canonical Passport")
     sources = set("https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/" + path
                   for path in re.findall(r'(?:\bpath|"path")\s*:\s*"([^"]+)"', js))
     homepage = pages[DOCS.joinpath("index.html").resolve()]
