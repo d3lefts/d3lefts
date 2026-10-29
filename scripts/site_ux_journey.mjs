@@ -118,9 +118,11 @@ try{
     assert.match(panel,/REPRODUCIBILITY/i);
     assert.match(panel,/ORIGINALITY/i);
     assert.match(panel,/SIGNIFICANCE/i);
-    assert.match(panel,/pending|archive mirror|complete archive/i);
-    assert.ok(await page.locator("#passport-sources a").count()>=2);
-    note("strength","The strongest overlap number is separated from the incomplete external witness release.","passport");
+    assert.match(panel,/Curated finite witness public/i);
+    assert.match(panel,/external peer review/i);
+    assert.ok(await page.locator("#passport-sources a").count()>=3);
+    assert.match(await page.locator("#passport-sources").innerText(),/Approved public binary release/i);
+    note("strength","The publicly released finite witness and checksum are separate from internal replay, external expert review, and the unrecovered Arena submission identity.","passport");
     await screenshot("02-overlap-passport.png");
   });
   await step("13–17","Proof Passport: conditional finite-field theorem boundaries",async()=>{
