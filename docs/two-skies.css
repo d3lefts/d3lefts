@@ -475,3 +475,7 @@ html:not([data-nf-theme="dusk"]) .join-choice[data-recommended="true"]{backgroun
 /* The first offered Join assignment is visually raised as the primary route. */
 html[data-nf-theme="dusk"] .join-choices>.join-choice:first-child{background:#28334b;color:#f1eedc;border-color:#e6deaa}
 html:not([data-nf-theme="dusk"]) .join-choices>.join-choice:first-child{background:#51382b;color:#f7e8db;border-color:#edc16e}
+
+/* Force the leading, user-visible assignment card above generic inherited panels. */
+html[data-nf-theme="dusk"] #join-choices > article.join-choice:first-of-type{background-color:#28334b!important}
+html:not([data-nf-theme="dusk"]) #join-choices > article.join-choice:first-of-type{background-color:#51382b!important}
