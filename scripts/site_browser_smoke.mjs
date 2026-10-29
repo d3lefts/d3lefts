@@ -496,7 +496,7 @@ try{
     await page.locator('#lab-jump-nav a[href="#research-systems"]').click();
     assert.equal(new URL(page.url()).hash,"#research-systems","Section-index jump works");
     await page.goto(origin+"research.html",{waitUntil:"load"});
-    assert.match(await page.locator(".archive-coverage").innerText(),/Thirty-three dossiers.*Six claim passports.*Three original findings/s,"Library explains record hierarchy");
+    assert.match(await page.locator(".archive-coverage").innerText(),/Thirty-three dossiers.*Six claim passports.*Five original finite artifacts and bounded observations/s,"Library explains record hierarchy");
     await page.goto(origin+"atlas.html",{waitUntil:"load"});
     assert.match(await page.locator(".rs-coverage").innerText(),/six claims represent a library of 33 documents/i,"Atlas explains limited canonical graph");
   }
