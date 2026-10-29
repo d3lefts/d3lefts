@@ -24,7 +24,7 @@ let browser;
 try{
  const executablePath=process.env.CHROME_BIN||"/usr/bin/chromium";
  browser=await chromium.launch({headless:true,executablePath,args:["--no-sandbox"]});
- for(const width of [390,768,1024,1280]){
+ for(const width of [390,768,1024,1280,1440]){
   const page=await browser.newPage({viewport:{width,height:850}});
   const faults=[];
   page.on("pageerror",e=>faults.push(e.message));
@@ -35,7 +35,8 @@ try{
    const nav=page.locator("#site-nav");
    assert.equal(await menu.count(),1,file+" missing menu");
    assert.equal(await nav.count(),1,file+" missing nav");
-   const mobile=width<=1170;
+   // The published site stylesheet uses the collapsed nav through 1300px.
+   const mobile=width<=1300;
    assert.equal(await menu.isVisible(),mobile,file+" menu visibility at "+width);
    assert.equal(await nav.isVisible(),!mobile,file+" nav visibility at "+width);
    if(mobile){
