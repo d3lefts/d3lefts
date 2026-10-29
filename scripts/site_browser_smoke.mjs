@@ -57,6 +57,35 @@ try{
    }
   }
   if(width===390){
+   // Canonical claim trace: source identity, exact open gate, map synchronization.
+   await page.goto(origin+"constellation.html",{waitUntil:"load"});
+   assert.equal(await page.locator("#co-trace-picker button").count(),6,"six canonical claim choices");
+   assert.equal(await page.locator("#co-trace-grid article").count(),4,"four scoped trace stages");
+   assert.ok((await page.locator("#co-trace-summary").innerText()).includes("Erdős minimum overlap"));
+   const traceIds=await page.evaluate(()=>window.NightfallRegistry.claims.map(x=>x.id));
+   for(const id of traceIds){
+    await page.locator('#co-trace-picker button[data-claim="'+id+'"]').click();
+    const expected=await page.evaluate(id=>{const c=window.NightfallRegistry.claimById(id);return {title:c.title,statement:c.statement,gate:c.open[0],validity:c.validity.label}},id);
+    assert.ok((await page.locator("#co-trace-summary").innerText()).includes(expected.title),"canonical claim title "+id);
+    assert.equal(await page.locator("#co-trace-grid .co-trace-cell").first().locator("p").first().innerText(),expected.statement,"canonical exact statement "+id);
+    assert.ok((await page.locator("#co-trace-grid").innerText()).includes(expected.validity),"unpromoted validity "+id);
+    if(expected.gate){
+     assert.ok((await page.locator("#co-trace-grid .co-trace-cell").nth(2).innerText()).includes(expected.gate),"canonical open gate "+id);
+     assert.ok((await page.locator("#co-trace-grid a").filter({hasText:"Take this specific review obligation"}).getAttribute("href")).includes("claim="+id+"&obligation=0"),"specific review identity "+id);
+    }
+   }
+   await page.locator('[data-node="sidon30"]').click();
+   assert.ok((await page.locator("#co-trace-summary").innerText()).includes("30-point Sidon construction"),"map updates trace");
+   assert.equal(await page.locator('#co-trace-picker button[data-claim="sidon30"]').getAttribute("aria-pressed"),"true");
+   await page.locator('#co-trace-picker button[data-claim="phase"]').click();
+   assert.match(new URL(page.url()).search,/claim=phase/,"trace updates map/deep link");
+   await page.goto(origin+"constellation.html?claim=not-real%3Cscript%3E",{waitUntil:"load"});
+   assert.ok((await page.locator("#co-trace-summary").innerText()).includes("Erdős minimum overlap"),"bad ID fails closed");
+   await page.goto(origin+"constellation.html?claim=erdos36",{waitUntil:"load"});
+   await page.locator("#co-trace-grid a").filter({hasText:"Take this specific review obligation"}).click();
+   assert.equal(await page.locator("#cj-claim").inputValue(),"erdos36","claim carried into research work");
+   assert.equal(await page.locator("#cj-obligation").inputValue(),"0","first unresolved obligation carried");
+
    await page.goto(origin+"living-paper.html",{waitUntil:"load"});
    assert.equal(await page.locator("#lp-points .lp-point").count(),30,"Living Paper 30 exact coordinates");
    assert.equal(await page.locator("#lp-edge-select option").count(),28,"Living Paper 28 progression constraints");
