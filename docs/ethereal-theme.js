@@ -24,11 +24,16 @@ function apply(value){
   const button=document.querySelector(".nf-theme-toggle");
   if(button){
     const active=current===DUSK;
+    const onHomepage=!!document.querySelector("#main > .hero .nf-experience-archive");
     button.setAttribute("aria-pressed",String(active));
-    button.setAttribute("aria-label",active?"Switch to light mode":"Enable dusky starfield mode");
-    button.title=active?"Switch to light mode":"Enable dusky starfield mode";
+    button.setAttribute("aria-label",onHomepage
+      ?(active?"Enter the Illusionary Archive (light mode)":"Enter the Night Underbelly (night mode)")
+      :(active?"Switch to light mode":"Enter Night mode"));
+    button.title=onHomepage
+      ?(active?"Enter the Illusionary Archive":"Enter the Night Underbelly")
+      :(active?"Switch to light mode":"Enter Night mode");
     button.querySelector(".nf-theme-symbol").textContent=active?"☼":"✧";
-    button.querySelector(".nf-theme-word").textContent=active?"LIGHT":"DUSK";
+    button.querySelector(".nf-theme-word").textContent=onHomepage?(active?"ARCHIVE":"NIGHT"):(active?"LIGHT":"NIGHT");
   }
 }
 apply(current);

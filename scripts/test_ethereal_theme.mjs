@@ -42,11 +42,31 @@ try{
   assert.equal(await toggle.count(),1,"One toggle in header");
   assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk","Fresh visitor sees dusk without a light flash");
   assert.equal(await toggle.getAttribute("aria-pressed"),"true","First-visit dusk accessible state");
+  assert.equal((await toggle.locator(".nf-theme-word").innerText()).trim(),"ARCHIVE","First visit offers the alternate Archive rather than a generic theme label");
+  assert.equal(await page.locator(".nf-experience-underbelly").first().isVisible(),true,"Dusk opens the Underbelly narrative");
+  assert.equal(await page.locator(".nf-experience-archive").first().isVisible(),false,"Archive narrative is absent from dusk reading order");
+  for(const id of ["flagship-title","instruments-heading","nf-observatory-title","nf-replay-title","sf-systems-heading","evidence-title","review-title","method-title"]){
+   assert.equal(await page.locator("#"+id+" .nf-experience-underbelly").isVisible(),true,id+": Night has its own editorial framing");
+   assert.equal(await page.locator("#"+id+" .nf-experience-archive").isVisible(),false,id+": Archive framing is removed from Night reading order");
+  }
+  assert.equal(await page.locator(".nf-process-case").count(),3,"Underbelly has three sourced research gates");
+  assert.equal(await page.locator(".nf-process-case").first().isVisible(),true,"Unresolved proof gate is visible");
+  assert.match(await toggle.getAttribute("aria-label"),/Illusionary Archive.*light mode/i,"Homepage toggle identifies the alternate editorial destination");
   assert.equal(await page.evaluate(()=>localStorage.getItem("nightfall.theme.v1")),null,"Default never overwrites an explicit future preference");
   await page.screenshot({path:"browser-artifacts/ethereal-dusk-"+width+".png",fullPage:false});
   await toggle.click();
   assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Light mode remains selectable");
   assert.equal(await toggle.getAttribute("aria-pressed"),"false","Chosen light mode accessible");
+  assert.equal((await toggle.locator(".nf-theme-word").innerText()).trim(),"NIGHT","Archive offers entry to Night as the alternate homepage");
+  assert.equal(await page.locator(".nf-experience-archive").first().isVisible(),true,"Light reveals the Archive narrative");
+  assert.equal(await page.locator(".nf-experience-underbelly").first().isVisible(),false,"Underbelly is absent from Archive reading order");
+  for(const id of ["flagship-title","instruments-heading","nf-observatory-title","nf-replay-title","sf-systems-heading","evidence-title","review-title","method-title"]){
+   assert.equal(await page.locator("#"+id+" .nf-experience-archive").isVisible(),true,id+": Archive has its own cataloguing perspective");
+   assert.equal(await page.locator("#"+id+" .nf-experience-underbelly").isVisible(),false,id+": Night framing is removed from Archive reading order");
+  }
+  assert.equal(await page.locator(".nf-archive-accession").count(),3,"Archive provides three specific accession records");
+  assert.equal(await page.locator(".nf-archive-accession").first().isVisible(),true,"Archive records are visible");
+  assert.match(await toggle.getAttribute("aria-label"),/Night Underbelly.*night mode/i,"Archive toggle offers the Underbelly destination");
   const palette=await page.evaluate(()=>{
     const s=getComputedStyle(document.documentElement),button=getComputedStyle(document.querySelector(".hero-actions .button"));
     return {paper:s.getPropertyValue("--lf-paper").trim(),primary:s.getPropertyValue("--lf-primary").trim(),text:button.color};
@@ -58,6 +78,8 @@ try{
   await toggle.click();
   await page.waitForTimeout(350);
   assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk","Dusk re-enabled");
+  assert.equal(await page.locator(".nf-experience-underbelly").first().isVisible(),true,"Restoring dusk restores process narrative");
+  assert.equal(await page.locator(".nf-experience-archive").first().isVisible(),false,"Archive stays hidden after round-trip");
   assert.equal(await toggle.getAttribute("aria-pressed"),"true","Dusk accessible state");
   assert.match(await toggle.getAttribute("aria-label"),/light mode/i);
   assert.equal(await page.evaluate(()=>localStorage.getItem("nightfall.theme.v1")),"dusk","Preference persisted");
@@ -226,7 +248,7 @@ try{
   assert.deepEqual(errors,[],width+"px page errors: "+errors.join("; "));
   await context.close();
  }
- console.log("PASS: light/archive and dusk/observatory, canonical relationships, shared journey, calm papers, 25 pages, mobile/desktop, accessibility and reduced motion");
+ console.log("PASS: alternate Archive and Underbelly homepages, dusk-first preference, canonical relationships, shared journey, calm papers, 25 pages, mobile/desktop, accessibility and reduced motion");
 }finally{
  await browser?.close();
  await new Promise(resolve=>server.close(resolve));

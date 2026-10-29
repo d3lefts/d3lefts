@@ -147,7 +147,7 @@ try{
    assert.equal(await page.locator("#sidon-witness .sf-point.chosen").count(),17,"17-point subset highlighted");
    assert.equal(await page.locator("#sidon-toggle").isDisabled(),false,"interactivity enabled only after the checker loads");
    assert.equal(await page.locator(".instrument-workflow a").count(),4,"four source-linked research stages");
-   assert.match(await page.locator("#instruments-heading").innerText(),/Four stages/);
+   assert.match(await page.locator("#instruments-heading").innerText(),/Four chances to fail|Four stages/,"Four-stage workflow is framed appropriately for the active experience");
    assert.equal(await page.locator(".nf-replay-steps li").count(),4,"four actionable independent-replay steps");
    assert.match(await page.locator(".nf-replay-release").innerText(),/public research archives/);
    const portalManifest=await (await page.request.get(origin+"reproduction-manifest.json")).json();
@@ -498,7 +498,10 @@ try{
     assert.equal(await page.locator("#lab-jump-nav a").count(),7,"Long laboratory has seven topical jumps");
     assert.equal(await page.locator(".nf-section-index").evaluate(el=>el.open),false,"Section directory collapsed by default");
     assert.equal(await page.locator(".nf-home-toolbox").evaluate(el=>el.open),false,"Specialist directory collapsed by default");
-    assert.equal(await page.locator(".hero-actions a").count(),2,"Hero only offers result and contribution paths");
+    assert.equal(await page.locator(".nf-experience-archive .hero-actions a").count(),2,"Archive offers two source-reading paths");
+    assert.equal(await page.locator(".nf-experience-underbelly .hero-actions a").count(),2,"Underbelly offers two investigation paths");
+    assert.equal(await page.locator(".nf-experience-underbelly .hero-actions a").first().isVisible(),true,"Dusk entry offers the active process path");
+    assert.equal(await page.locator(".nf-experience-archive .hero-actions a").first().isVisible(),false,"Archive entry is hidden in dusk");
     await page.locator(".nf-section-index summary").click();
     assert.equal(await page.locator("#lab-jump-nav").isVisible(),true,"Open section index retains all topical links");
 
