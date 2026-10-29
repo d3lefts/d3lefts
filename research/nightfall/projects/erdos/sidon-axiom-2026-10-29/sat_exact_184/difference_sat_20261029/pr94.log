@@ -1,0 +1,2 @@
+PASS: m=1..10000, 7380 exact cubic endpoint cases, and h=1..2000 translation counts
+RESULT: Tessara c_m>1/sqrt2, yet Ryev c′_m> Tessara c_m for every integer m>=1 by positive polynomials
