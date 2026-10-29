@@ -8,7 +8,7 @@ For k=2, the minimum worst-case number of adaptive fourth-power linear queries i
 
 For general k>=1 every deterministic adaptive protocol needs at least
 m >= ceil(log_7(1+(25^k-1)/4))
-measurements in its worst case. In particular, Axiom's <=2k-1 protocol is measurement-optimal for k=1,2,3.
+measurements in its worst case. In particular, Axiom's <=2k-1 protocol is measurement-optimal for k=1,2,3,4 (k=4 uses the sharper fibre bound below).
 
 ## Proof: universal adaptive lower bound
 The map t -> t^4 takes F25 to {0} union a subgroup of size 24/4=6. Each query therefore has at most seven possible answers, even when its sensing row depends on all earlier answers. A decision tree of depth m has at most 7^m transcripts. Since F25^k has 1+(25^k-1)/4 equivalence classes under scalar multiplication by mu4=F5*, distinct classes must have distinct transcripts. Hence 7^m >= 1+(25^k-1)/4. For k=1,2,3 this forces m>=1,3,5, matching Axiom's adaptive worst-case counts.
@@ -31,4 +31,13 @@ Original standalone source SHA-256: 8c64a4007bdb8634fd06da8532215ca01da70d090417
 Git blob SHA-1: 25c48d180e9f89fd60d2486760c461e46aabd99d.
 
 ## Boundary
-These are exact measurement-count results for the stated sensing law and dimension. They make no worldwide novelty claim, and do not imply a nonadaptive polynomial-time random-design inverse. Do not apply 3-vs-4 beyond k=2. The universal counting bound allows fewer than 2k-1 measurements for k>=4; its attainability is open.
+These are exact measurement-count results for the stated sensing law and dimension. They make no worldwide novelty claim, and do not imply a nonadaptive polynomial-time random-design inverse. Do not apply 3-vs-4 beyond k=2. The universal counting bound allows fewer than 2k-1 measurements for k>=5; its attainability is open.
+
+## Stronger adaptive decision-tree obstruction at k=4
+**Theorem:** The minimum worst-case number of adaptive F25 fourth-power linear readings is exactly **7** for k=4, matching Axiom's construction; the six-reading possibility is mathematically excluded.
+
+**Proof.** Suppose a six-query adaptive protocol recovered all 97,657 global mu4 classes. Its first sensing row must be nonzero: a zero row wastes one reading, and five seven-valued queries offer at most 7^5=16,807 transcripts, fewer than the total classes. Fix any **nonzero** fourth-power response to the first nonzero linear form. The surviving set has exactly 25^3=15,625 distinct global-mu4 classes, because the linear form has four roots and 25^3-dimensional-fibre points per root, and all such signals are nonzero.
+
+The protocol chooses its second row based on the fixed first answer. If the second row is dependent on the first, its response is predetermined and the survivor count remains 15,625. If the two rows are independent, choose a nonzero second fourth-power response. The two simultaneous equations have 4*4*25^2 field-valued solutions, grouped freely into mu4-orbits of size four, leaving exactly 4*25^2=2,500 inequivalent signals. Both cases leave **at least 2,500** classes sharing the first two outputs. Four queries remain. They generate at most 7^4=2,401 possible continuations, a strict contradiction. Thus six adaptive queries are insufficient; Axiom's seven-query protocol is optimal. QED.
+
+This is an exact integer/fibre-count obstruction, independent of the exhaustive k=2 checker. It further establishes Axiom's upper bound as optimal for k=1,2,3,4. An improvement gap remains from k=5 onward. Test next: k=5 with 8 adaptive readings; generic leaf counting permits this, so a new structural obstruction or a new phase-compression representation is required.
