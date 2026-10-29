@@ -36,7 +36,7 @@
   "point_count": 30,
   "ap_edge_count": 28,
   "minimum_ap_hitting_set_size": 13,
-  "full_no_12_cover_states": 503,
+  "full_no_12_cover_states": 639,
   "theorem": "Each of the 28 three-term AP constraints is essential: deleting any one admits 18 survivors with only that AP, whereas all 28 forbid 18 AP-free survivors.",
   "edge_deletion_witnesses": [
     {
