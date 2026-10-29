@@ -62,6 +62,16 @@ jobs:
         run: |
           npm install --no-save --no-package-lock playwright-core@1.56.1
           BRIDGE_FIXTURE_DIR=/tmp/ryev-bridge-fixtures CHROME_BIN="$(command -v google-chrome)" node research/nightfall/evidence-bridge/test_browser.mjs
+      - name: Archive Invariant Forge and blinded Gate C execution package
+        uses: actions/upload-artifact@v4
+        with:
+          name: ryEV-invariant-and-gate-c-frozen-inputs
+          path: |
+            /tmp/invariant-forge.json
+            /tmp/ryev-gate-c/freeze.json
+            /tmp/ryev-gate-c/operator-jobs.json
+            /tmp/ryev-gate-c/blind-grading-template.json
+          retention-days: 90
       - name: Archive receipt fixtures and refusal explanations
         uses: actions/upload-artifact@v4
         with:
