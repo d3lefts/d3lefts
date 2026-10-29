@@ -145,15 +145,27 @@ try{
   if(width===390){
     // Genuine user-directed Referee → Claim Lab → Discovery finite-evidence handoff.
     // Browser prompts explicitly authorize each separate transition.
-    const acceptResearchHandoffDialog=d=>d.accept();
-    page.on("dialog",acceptResearchHandoffDialog);
     await page.goto(origin+"referee.html?domain=sidon",{waitUntil:"load"});
     await page.locator("#run-sidon").click();
     await page.waitForFunction(()=>document.querySelector("#send-claim-lab")?.disabled===false);
     await page.locator("#send-claim-lab").click();
     await page.waitForURL(/claim-lab\.html/);
-    await page.waitForFunction(()=>document.querySelector("#sendDiscovery")?.disabled===false);
-    assert.match(await page.locator("#content").innerText(),/Referee receipt \/ Finite Sidon/,"Referee hash-checked metadata imported without claim promotion");
+    // Strict Evidence Bridge v0: no native confirm; a separate read-only preview.
+    await page.locator("#bridgeMask").waitFor({state:"visible"});
+    assert.match(await page.locator("#bridgeMeta").innerText(),/Scientific review: unreviewed/);
+    const beforeReceipt=await page.evaluate(()=>localStorage.getItem("nightfall_claim_lab_v1"));
+    assert.equal(await page.locator("#sendDiscovery").isDisabled(),true,"No Discovery handoff before consent");
+    const [preReceiptBackup]=await Promise.all([
+      page.waitForEvent("download"),page.locator("#bridgeApprove").click()
+    ]);
+    assert.match(preReceiptBackup.suggestedFilename(),/PRE_BRIDGE/);
+    const afterReceipt=await page.evaluate(()=>localStorage.getItem("nightfall_claim_lab_v1"));
+    assert.notEqual(afterReceipt,beforeReceipt,"Explicit approval creates one new record");
+    const parsedReceipt=JSON.parse(afterReceipt);
+    assert.equal(parsedReceipt.experiments.at(-1).status,"tested");
+    assert.equal(parsedReceipt.experiments.at(-1).claimId,"","Finite receipt remains unassigned");
+    assert.match(parsedReceipt.experiments.at(-1).result,/UNREVIEWED/);
+    assert.ok(await page.locator("#sendDiscovery").isEnabled());
     await page.locator("#sendDiscovery").click();
     await page.waitForURL(/discovery\.html/);
     await page.waitForFunction(()=>document.querySelector(".panel.evidence")?.textContent?.includes("LOCAL FINITE REPLAY"),{timeout:20000});
@@ -174,7 +186,6 @@ try{
     await page.waitForFunction(()=>document.querySelector("#toast")?.textContent?.includes("rejected"));
     const afterTamper=await page.evaluate(()=>JSON.parse(localStorage.getItem("nightfall.discovery.v1")).projects.find(p=>p.id==="sidon").runs.length);
     assert.equal(afterTamper,beforeTamper,"Forged input SHA-256 must never create a research run");
-    page.off("dialog",acceptResearchHandoffDialog);
   }
   if(width===390){
     await page.goto(origin+"agenda.html",{waitUntil:"load"});
