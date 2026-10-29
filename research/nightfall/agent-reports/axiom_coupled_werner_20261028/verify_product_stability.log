@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "exact_two_site_controls": [
+    {
+      "amp": 4,
+      "defect": "32",
+      "epsilon": "64/289",
+      "product_fidelity": "16/17",
+      "lower_bound": "0"
+    },
+    {
+      "amp": 8,
+      "defect": "128",
+      "epsilon": "256/4225",
+      "product_fidelity": "64/65",
+      "lower_bound": "2177/4225"
+    },
+    {
+      "amp": 16,
+      "defect": "512",
+      "epsilon": "1024/66049",
+      "product_fidelity": "256/257",
+      "lower_bound": "57857/66049"
+    },
+    {
+      "amp": 32,
+      "defect": "2048",
+      "epsilon": "4096/1050625",
+      "product_fidelity": "1024/1025",
+      "lower_bound": "1017857/1050625"
+    }
+  ],
+  "gap_mutation": "100x gap rejected",
+  "no_external_dependencies": true
+}

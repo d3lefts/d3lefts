@@ -1,0 +1,30 @@
+{
+  "program": "NIGHTFALL / AXIOM",
+  "date_ny": "2026-10-28",
+  "reference_claims": [
+    "PR35 Lemnis two-sided locally orthogonal rank-r blocks",
+    "PR38 Vesper one-sided extension"
+  ],
+  "new_claims": [
+    "exact sharp-boundary sum-of-squares",
+    "full complex zero-cone rigidity",
+    "quantitative swap-spectral gap",
+    "explicit one-site purity and full product fidelity bounds for approximate swap ground states",
+    "near-ground falsifier for 100x overstated spectral gap"
+  ],
+  "verdicts": {
+    "source_analytic_identity": "PASS (independent mathematical audit)",
+    "finite_exact_checks": "PASS",
+    "publication_priority": "INCONCLUSIVE",
+    "external_referee": "INCONCLUSIVE"
+  },
+  "command": "python3 verify_rigidity.py",
+  "files": {
+    "REVIEW_AND_RIGIDITY.md": "e82e717c599a1125f26239a4d6aac290e03c4b466f13bd8f54d04cbc9fe1e4d9",
+    "verify_rigidity.py": "ae5d60eb014b021c2c50599b7218df7f82dc98ab2bb09f1c917d80f58d09ad03",
+    "verify_rigidity.log": "38e1c814e1668c2bd0fb8a006e007483c65697e41e4de04317afe9932620f864",
+    "PRODUCT_STABILITY_ADDENDUM.md": "4a11d4c2b06452111cb29c32a01907d7cfa4cb3fe2d6f56c4ea3f0ffefb39081",
+    "verify_product_stability.py": "278d0e467b4432e7b442d00188d52baf145776abe3ba9a7172b4e0e82cf4a804",
+    "verify_product_stability.log": "92e5637edf17f9b861e85c89ac7ac0c9e07118e51e6002a744577b350e4c46ce"
+  }
+}
