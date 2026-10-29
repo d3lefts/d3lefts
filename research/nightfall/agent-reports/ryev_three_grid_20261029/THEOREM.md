@@ -69,3 +69,36 @@ The relative phases (1,z2,z3), z2,z3∈F5*, yield seven response buckets of size
 - This work credits Axiom's nine-query upper and Vesper's coordinate-first eight-query obstruction. It is a new internal architecture theorem, not an accepted external discovery, universal lower bound, or iid nonadaptive result.
 
 Run the associated Python standard-library scripts and retain their output. The paper's mathematical proof is independent of their finite exhaustive checks.
+
+
+## Generalization — an infinite family of sharp prime-field incidence theorems
+
+**Prime-family theorem.** For every prime p≥5, any U,V,c1,c2,c3∈F_p², the 3(p−1)² indexed vectors c_i+sU+tV with i=1,2,3 and s,t∈F_p* contain at least **3(p−2)** instances in one of the p+2 zero/projective-line classes. This constant is best possible.
+
+### Proof
+
+When U,V span F_p², normalize them to e1,e2 with GL2(F_p). Classify centers into T with both coordinates nonzero, A with exactly one coordinate nonzero, and Z at zero, where T+A+Z=3. Along each of the p−1 non-axial projective directions of slope r∈F_p*, the total occupancy equals
+
+    N_r = (p−3)T + (p−2)A + (p−1)Z + n_r,
+
+where n_r counts generic centers of slope r. On the horizontal and vertical directions respectively the counts are (p−2)T+(p−1)A_x and (p−2)T+(p−1)A_y.
+
+The common diagonal baseline is 3(p−3)+A+2Z. We need a line with at least 3(p−2)=3(p−3)+3 states. If T=3, the horizontal direction has exactly 3(p−2). If T=2,A=1,Z=0, one axial line contains 2(p−2)+(p−1)=3p−5, strictly above the target. For all remaining combinations, either A+2Z≥3, making every diagonal line sufficient, or A+2Z=2 and T≥1, so some generic center contributes n_r≥1 and one diagonal reaches the target. This proves the rank-two case.
+
+If U,V span one F_p-direction W and both are nonzero, the scalar sum as+bt (s,t∈F_p*) attains zero in p−1 ways and each nonzero scalar in p−2 ways. Each translated grid lies on an affine line parallel to W. If that line passes through the origin, at least (p−1)(p−2)≥3(p−2) contributions are nonzero on W. Otherwise each of the p projective directions distinct from W occurs at least p−2 times for each of the three grids, giving 3(p−2).
+
+If exactly one of U,V is nonzero, each grid is p−1 copies of each of p−1 affine-line points. A line through the origin gives at least (p−1)(p−2) in direction W. Otherwise each grid occupies p−1 of the same p nonparallel directions. Across three grids, some direction occurs in at least ceil(3(p−1)/p)=3 grids, with multiplicity at least 3(p−1)≥3(p−2). If both U,V vanish, one center is repeated (p−1)²≥3(p−2) times. All cases cover every p≥5.
+
+**Sharpness:** choose U=e1, V=e2 and c1=(1,1), c2=(1,2), c3=(1,3). Their coordinates are nonzero and their slopes are distinct for all p≥5. Every axial direction has exactly 3(p−2) states. Each non-axial direction has at most 3(p−3)+1<3(p−2); the zero class has 3. Hence the maximum is exactly 3(p−2). QED.
+
+### New prime-family adaptive consequence
+
+Work in F_(p²), exponent p−1, global phase F_p*, k=5, and the same adaptive rank schedule 3 independent / 1 dependent / 2 independent / 2 arbitrary. Every powered query has exactly p+2 possible outputs: zero and the (p+1) one-dimensional F_p-subspaces of F_(p²).
+
+After three nonzero basis readings, there are (p−1)² independent relative-phase possibilities. The fourth dependent query has at most p+2 values. Since (p−1)²>2(p+2) for every prime p≥5, some fourth-output bucket contains at least three old-phase candidates. The fifth and sixth independent readings, fixed to nonzero values, introduce two free F_p* phase factors, producing at least 3(p−1)² candidate classes sharing six observations.
+
+The seventh query reduces on three of those old candidates to the generalized three-grid lemma. At least 3(p−2) candidates share its output. But 3(p−2)>p+2 for all p≥5, so the final eighth query cannot separate them. Thus **all such eight-query adaptive protocols fail for every prime p≥5**. QED.
+
+The nine-query *sharpness for the same schedule* has been constructed and exactly tested for p=5. For arbitrary p, Axiom's nine-query adaptive upper bound applies in a different two-stage coordinate-first architecture; the same-schedule nine-query upper is asserted here only for p=5.
+
+**General-prime executable spot checks:** check_prime_family.py exhaustively checks all 2,925 unordered centers for p=5 and 20,825 for p=7 using the closed projective-direction formula, and checks an explicit sharpness witness at p=11,13,17,19. The analytic proof above covers every p≥5 independently of this finite audit.
