@@ -1,0 +1,559 @@
+{
+  "N": 184,
+  "date": "2026-10-29",
+  "near_candidate": [
+    49,
+    50,
+    56,
+    78,
+    93,
+    104,
+    125,
+    139,
+    149
+  ],
+  "near_candidate_missing": [
+    16,
+    166
+  ],
+  "one_mark_extensions": [
+    {
+      "missing": [
+        150,
+        154,
+        157,
+        158,
+        159,
+        162,
+        163,
+        173,
+        175,
+        177,
+        179,
+        182,
+        184
+      ],
+      "new_mark": 145,
+      "sidon": true
+    },
+    {
+      "missing": [
+        151,
+        154,
+        157,
+        158,
+        159,
+        161,
+        163,
+        168,
+        170,
+        174,
+        177,
+        178,
+        184
+      ],
+      "new_mark": 146,
+      "sidon": true
+    },
+    {
+      "missing": null,
+      "new_mark": 147,
+      "sidon": false
+    },
+    {
+      "missing": [
+        157,
+        158,
+        159,
+        161,
+        162,
+        163,
+        166,
+        170,
+        173,
+        174,
+        178,
+        179,
+        182
+      ],
+      "new_mark": 148,
+      "sidon": true
+    },
+    {
+      "missing": null,
+      "new_mark": 149,
+      "sidon": false
+    },
+    {
+      "missing": [
+        145,
+        158,
+        159,
+        161,
+        162,
+        163,
+        168,
+        174,
+        175,
+        178,
+        182,
+        184
+      ],
+      "new_mark": 150,
+      "sidon": true
+    },
+    {
+      "missing": [
+        146,
+        159,
+        161,
+        162,
+        163,
+        166,
+        168,
+        170,
+        173,
+        175,
+        177,
+        179
+      ],
+      "new_mark": 151,
+      "sidon": true
+    },
+    {
+      "missing": [
+        157,
+        161,
+        162,
+        163,
+        166,
+        170,
+        174,
+        177,
+        178,
+        182
+      ],
+      "new_mark": 152,
+      "sidon": true
+    },
+    {
+      "missing": null,
+      "new_mark": 153,
+      "sidon": false
+    },
+    {
+      "missing": [
+        145,
+        146,
+        159,
+        162,
+        163,
+        166,
+        168,
+        173,
+        178,
+        179,
+        182,
+        184
+      ],
+      "new_mark": 154,
+      "sidon": true
+    },
+    {
+      "missing": null,
+      "new_mark": 155,
+      "sidon": false
+    },
+    {
+      "missing": null,
+      "new_mark": 156,
+      "sidon": false
+    },
+    {
+      "missing": [
+        145,
+        146,
+        148,
+        152,
+        162,
+        166,
+        168,
+        170,
+        174,
+        175,
+        179,
+        182
+      ],
+      "new_mark": 157,
+      "sidon": true
+    },
+    {
+      "missing": [
+        145,
+        146,
+        148,
+        150,
+        163,
+        166,
+        168,
+        170,
+        173,
+        175,
+        177,
+        182,
+        184
+      ],
+      "new_mark": 158,
+      "sidon": true
+    },
+    {
+      "missing": [
+        145,
+        146,
+        148,
+        150,
+        151,
+        154,
+        168,
+        170,
+        173,
+        174,
+        177,
+        178,
+        184
+      ],
+      "new_mark": 159,
+      "sidon": true
+    },
+    {
+      "missing": null,
+      "new_mark": 160,
+      "sidon": false
+    },
+    {
+      "missing": [
+        146,
+        148,
+        150,
+        151,
+        152,
+        166,
+        170,
+        173,
+        174,
+        175,
+        178,
+        179
+      ],
+      "new_mark": 161,
+      "sidon": true
+    },
+    {
+      "missing": [
+        145,
+        148,
+        150,
+        151,
+        152,
+        154,
+        157,
+        170,
+        173,
+        174,
+        175,
+        177,
+        179,
+        184
+      ],
+      "new_mark": 162,
+      "sidon": true
+    },
+    {
+      "missing": [
+        145,
+        146,
+        148,
+        150,
+        151,
+        152,
+        154,
+        158,
+        168,
+        173,
+        174,
+        175,
+        177,
+        178,
+        182
+      ],
+      "new_mark": 163,
+      "sidon": true
+    },
+    {
+      "missing": null,
+      "new_mark": 164,
+      "sidon": false
+    },
+    {
+      "missing": null,
+      "new_mark": 165,
+      "sidon": false
+    },
+    {
+      "missing": [
+        148,
+        151,
+        152,
+        154,
+        157,
+        158,
+        161,
+        174,
+        175,
+        177,
+        178,
+        179,
+        184
+      ],
+      "new_mark": 166,
+      "sidon": true
+    },
+    {
+      "missing": null,
+      "new_mark": 167,
+      "sidon": false
+    },
+    {
+      "missing": [
+        146,
+        150,
+        151,
+        154,
+        157,
+        158,
+        159,
+        163,
+        173,
+        177,
+        178,
+        179,
+        182
+      ],
+      "new_mark": 168,
+      "sidon": true
+    },
+    {
+      "missing": null,
+      "new_mark": 169,
+      "sidon": false
+    },
+    {
+      "missing": [
+        146,
+        148,
+        151,
+        152,
+        157,
+        158,
+        159,
+        161,
+        162,
+        175,
+        178,
+        179,
+        182,
+        184
+      ],
+      "new_mark": 170,
+      "sidon": true
+    },
+    {
+      "missing": null,
+      "new_mark": 171,
+      "sidon": false
+    },
+    {
+      "missing": null,
+      "new_mark": 172,
+      "sidon": false
+    },
+    {
+      "missing": [
+        145,
+        148,
+        151,
+        154,
+        158,
+        159,
+        161,
+        162,
+        163,
+        168,
+        178,
+        182,
+        184
+      ],
+      "new_mark": 173,
+      "sidon": true
+    },
+    {
+      "missing": [
+        146,
+        148,
+        150,
+        152,
+        157,
+        159,
+        161,
+        162,
+        163,
+        166,
+        179,
+        182,
+        184
+      ],
+      "new_mark": 174,
+      "sidon": true
+    },
+    {
+      "missing": [
+        145,
+        150,
+        151,
+        157,
+        158,
+        161,
+        162,
+        163,
+        166,
+        170,
+        184
+      ],
+      "new_mark": 175,
+      "sidon": true
+    },
+    {
+      "missing": null,
+      "new_mark": 176,
+      "sidon": false
+    },
+    {
+      "missing": [
+        145,
+        146,
+        151,
+        152,
+        158,
+        159,
+        162,
+        163,
+        166,
+        168,
+        182
+      ],
+      "new_mark": 177,
+      "sidon": true
+    },
+    {
+      "missing": [
+        146,
+        148,
+        150,
+        152,
+        154,
+        159,
+        161,
+        163,
+        166,
+        168,
+        170,
+        173
+      ],
+      "new_mark": 178,
+      "sidon": true
+    },
+    {
+      "missing": [
+        145,
+        148,
+        151,
+        154,
+        157,
+        161,
+        162,
+        166,
+        168,
+        170,
+        174,
+        184
+      ],
+      "new_mark": 179,
+      "sidon": true
+    },
+    {
+      "missing": null,
+      "new_mark": 180,
+      "sidon": false
+    },
+    {
+      "missing": null,
+      "new_mark": 181,
+      "sidon": false
+    },
+    {
+      "missing": [
+        145,
+        148,
+        150,
+        152,
+        154,
+        157,
+        158,
+        163,
+        168,
+        170,
+        173,
+        174,
+        177
+      ],
+      "new_mark": 182,
+      "sidon": true
+    },
+    {
+      "missing": null,
+      "new_mark": 183,
+      "sidon": false
+    },
+    {
+      "missing": [
+        145,
+        146,
+        150,
+        154,
+        158,
+        159,
+        162,
+        166,
+        170,
+        173,
+        174,
+        175,
+        179
+      ],
+      "new_mark": 184,
+      "sidon": true
+    }
+  ],
+  "schema": "nightfall-sidon156-one-mark-lift-v1",
+  "scope": "exhaustive only for the fixed 8-mark Huber witness; not exhaustive for all 9-mark sets",
+  "source_witness": [
+    8,
+    48,
+    68,
+    69,
+    71,
+    75,
+    104,
+    120
+  ]
+}
