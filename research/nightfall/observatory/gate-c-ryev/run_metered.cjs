@@ -7,6 +7,7 @@ const fs=require("node:fs"),path=require("node:path"),crypto=require("node:crypt
 const dir=process.argv[2],url="https://api.openai.com/v1/responses";
 const key=process.env.OPENAI_API_KEY,model=process.env.GATE_C_MODEL,blind=process.env.GATE_C_BLIND_KEY;
 const sha=x=>crypto.createHash("sha256").update(x).digest("hex");
+const M=require("./metering_core.cjs");
 function requireValid(){
  assert.ok(dir&&path.isAbsolute(dir),"Usage: node run_metered.cjs /absolute/private/frozen/study (requires OPENAI_API_KEY, GATE_C_MODEL and GATE_C_BLIND_KEY)");
  assert.ok(key&&key.startsWith("sk-")&&key.length>18,"Missing real OPENAI_API_KEY; study cannot run with invented accounting.");
@@ -28,8 +29,6 @@ async function post(endpoint,payload){
  if(!res.ok)throw Error("OpenAI API "+endpoint+" HTTP "+res.status+" / "+String(response.error?.type||"request failed").slice(0,160));
  return {response,requestId:res.headers.get("x-request-id"),elapsedMs:Date.now()-started};
 }
-function extractText(v){return(v.output||[]).filter(x=>x.type==="message").flatMap(x=>(x.content||[]).filter(y=>y.type==="output_text").map(y=>y.text||"")).join("\n").trim()}
-function same(a,b){return JSON.stringify(a)===JSON.stringify(b)}
 async function run(){
  requireValid();
  const jobs=JSON.parse(fs.readFileSync(path.join(dir,"operator-jobs.json"),"utf8"));
@@ -37,16 +36,7 @@ async function run(){
  const rows=[],tmp=path.join(dir,"raw-outputs.partial.json");
  assert.ok(!fs.existsSync(tmp),"Partial raw output exists; resolve it before starting a new study.");
  for(const job of jobs){
-  const prompt={
-   task:job.taskId,
-   question:job.prompt,
-   originalSources:job.baselineRetrieval,
-   sourceClaimFacts:job.commonNodeFacts,
-   typedRelationships:job.graphEdges,
-   quarantinedEdges:job.quarantinedEdgeIds,
-   constraints:"Name one decisive next test with exact falsification criterion. Source evidence and proof scope are mandatory. No theorem-status promotion without source proof."
-  };
-  const base={model,input:JSON.stringify(prompt),instructions:"Answer the supplied scientific decision question. Use only the listed original source excerpts. Make uncertainty explicit, cite the file and line when possible. Treat analogies and proposed transfers as unproved.",store:false,tools:[],truncation:"disabled"};
+  const base=M.makeBase(job,model);
   const inputCount=await post(url+"/input_tokens",base);
   const count=inputCount.response.input_tokens;
   assert.ok(Number.isSafeInteger(count)&&count>0,"Provider did not return an exact input-token count.");
@@ -62,11 +52,11 @@ async function run(){
   assert.ok(usage&&Number.isSafeInteger(usage.input_tokens)&&Number.isSafeInteger(usage.output_tokens),"Actual provider usage missing.");
   assert.equal(usage.input_tokens,count,"Preflight provider input-token count differs from generation usage.");
   assert.ok(usage.input_tokens+usage.output_tokens<=job.maxTotalTokens,"Over-budget actual provider usage; mark trial invalid.");
-  const answer=extractText(response);
+  const answer=M.answerFromResponse(response);
   assert.ok(answer.length>=30,"Provider produced no adequately readable scientific decision.");
   const record={
    blindId:job.blindId,taskId:job.taskId,inputSha256:job.inputSha256,
-   answer,model,modelConfig:"openai-responses-v1|tools-none|truncation-disabled|store-false|output-"+max_output_tokens,
+   answer,model,modelConfig:M.modelConfig,
    executionAgentId:"RYEV-RESPONSES-API-RUNNER",
    startedAt:now,finishedAt:new Date().toISOString(),
    usageEvents:[{inputTokens:usage.input_tokens,outputTokens:usage.output_tokens,requestId:response.id,source:"provider.response.usage"}],
@@ -79,6 +69,7 @@ async function run(){
     responseSha256:sha(JSON.stringify(response)),requestPayloadSha256:sha(JSON.stringify(payload))
    }
   };
+  M.verify(job,record); // Validate provider raw trace against exact sent prompt and matched source.
   rows.push(record);
   fs.writeFileSync(tmp,JSON.stringify(rows,null,2)+"\n",{mode:0o600});
   console.log("Captured provider-metered "+rows.length+"/12, blindId "+job.blindId+"; tokens="+(usage.input_tokens+usage.output_tokens));
