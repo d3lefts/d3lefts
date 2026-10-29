@@ -1,0 +1,24 @@
+name: Audit Tessera Singer source orientation law
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/projects/erdos/tessera-orientation125-20261029/**"
+      - ".github/workflows/audit-tessera-orientation125.yml"
+  push:
+    paths:
+      - "research/nightfall/projects/erdos/tessera-orientation125-20261029/**"
+      - ".github/workflows/audit-tessera-orientation125.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check 19,398 affine/cut cases and complete covariance identity
+        run: python3 research/nightfall/projects/erdos/tessera-orientation125-20261029/audit.py
