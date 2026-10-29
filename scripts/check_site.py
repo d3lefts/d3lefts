@@ -169,7 +169,7 @@ def main() -> int:
             "04 / ORIGINAL FINITE SIDON CONSTRUCTION", "05 / ORIGINAL BOUNDED NEGATIVE TEST",
             "findings-20261029.html#singer975", "findings-20261029.html#graph-3port")) or
         not all(marker in findings for marker in ("id=\"singer975\"", "id=\"graph-3port\"",
-                                                  "HUMAN REFEREE OPEN", "SOURCE")) or
+                                                  "HUMAN REFEREE OPEN", "Reproduce:")) or
         not all(marker in review for marker in ("id=\"review-map\"", "id=\"singer-review\"",
                                                 "id=\"graph-review\"", "Five source-scoped findings"))):
         FAILURES.append("EDITORIAL: five approved finite findings lack dated addendum, primary sources or reviewer routes")
