@@ -302,3 +302,44 @@ html:not([data-nf-theme="dusk"]) .nf-cinema-static-note{color:#d6b999}
   .nf-cinema-world{opacity:.5}
   .nf-cinema-steps{display:none}
 }
+
+
+/* Visual audit: independently replayed 390px and 1280px midpoint captures.
+   Keep text readable across the bright Golden Hour sun, and never blend
+   two sequential captions into unreadable overlapping lines. */
+.nf-cinema-steps span{visibility:hidden}
+.nf-cinema[data-chapter="1"] .nf-cinema-steps span:nth-child(1),
+.nf-cinema[data-chapter="2"] .nf-cinema-steps span:nth-child(2),
+.nf-cinema[data-chapter="3"] .nf-cinema-steps span:nth-child(3){
+  visibility:visible;
+}
+.nf-cinema[data-motion="active"] .nf-cinema-stillhint{display:none}
+html:not([data-nf-theme="dusk"]) .nf-cinema-vignette{
+  background:
+    linear-gradient(90deg,rgba(25,13,8,.96) 0%,rgba(29,15,9,.87) 32%,rgba(29,15,9,.69) 51%,rgba(31,17,10,.17) 85%),
+    linear-gradient(0deg,#180f0aef 0%,transparent 34%,transparent 70%,#24160cb0 100%);
+}
+@media(max-width:760px){
+  html:not([data-nf-theme="dusk"]) .nf-cinema-world--archive .nf-cinema-sun{
+    left:76%;top:50%;
+  }
+  html:not([data-nf-theme="dusk"]) .nf-cinema-vignette{
+    background:
+      linear-gradient(90deg,rgba(25,13,8,.91) 0%,rgba(28,14,9,.75) 42%,rgba(28,14,9,.15) 96%),
+      linear-gradient(0deg,#180f0aef 0%,transparent 40%,transparent 78%,#24160cb3 100%);
+  }
+  .nf-cinema-steps{bottom:78px;max-width:calc(100% - 42px);min-height:2.8em}
+  .nf-cinema-steps span{font-weight:500;text-shadow:0 2px 18px #000a}
+  .nf-cinema-status{bottom:27px;gap:16px}
+  .nf-cinema-scrollhint{display:none!important}
+  .nf-cinema-stillhint{display:none}
+}
+@media(max-width:420px){
+  html:not([data-nf-theme="dusk"]) .nf-cinema-world--archive .nf-cinema-sun{
+    left:78%;top:52%;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .nf-cinema-steps span{visibility:hidden}
+  .nf-cinema-steps span:first-child{visibility:visible}
+}
