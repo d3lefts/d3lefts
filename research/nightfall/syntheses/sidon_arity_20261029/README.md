@@ -79,6 +79,10 @@ The two-insertion exact-cost problem from the first checkpoint is now completed 
 
 The direct two-point minimum deletion costs and full joint core/cost table have now been exhaustively computed. Construct an explicit two-orbit quotient using these frozen data, then require it to reproduce exact optima for all 3,240 batches, with the 42 c=5 and 78 c=10 cases serving as adversarial controls. Include diagonal/repeated-summand cases, infeasibility/protected-mark controls, source and output hashes. A finite clean sweep gives a candidate; **an all-q algorithm needs a proof**. Two genuine counterexamples to the same proposed quotient should force an operator change.
 
+## Dated external-literature check (2026-10-29)
+
+A targeted current literature search checked [Carter–O'Bryant–Tao, *On the diameter and distribution of Sidon sets*, arXiv:2610.36207 (submitted October 26, 2026)](https://arxiv.org/abs/2610.36207), [Eberhard–Manners, *The Apparent Structure of Dense Sidon Sets* (2023)](https://doi.org/10.37236/11191), and [Alexeev–Mixon, *Forbidden Sidon subsets of perfect difference sets* (2026)](https://doi.org/10.1073/pnas.2531760123). These establish timely background on density, finite geometry, and failures of perfect-difference extension; their abstracted main questions differ from exact minimum-deletion insertion algorithms. **This limited search is not a claim of originality clearance** for either the constituent theorems or the finite core-cost counterexample. The Carter–O'Bryant–Tao preprint is relevant to any future numeric interval-Sidon-capacity comparison, and must be checked before presenting a new global bound.
+
 ## Evidence gates
 
 **Verified locally this session:** exact independent 91-element finite census and single-insertion optimum checks.  
