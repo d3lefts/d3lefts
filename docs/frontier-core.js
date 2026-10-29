@@ -231,7 +231,8 @@
     if(current.id!==p.assignmentId||current.lo!==p.lo||current.hi!==p.hi||
        p.scope!==predicate(current)||p.question!==x.question||
        p.source!==x.evidence||p.sourceProblem!==x.source||
-       p.positive!==x.closureYes||p.negative!==x.closureNo)
+       p.positive!==x.closureYes||p.negative!==x.closureNo||
+       p.falsifier!=="A verified counterexample to the proposed YES or NO, under "+predicate(current))
       throw Error("Frontier contract altered during transfer");
     return {assignment:current,root:x};
   }
