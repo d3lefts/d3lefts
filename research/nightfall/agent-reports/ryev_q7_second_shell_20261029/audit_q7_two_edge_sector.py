@@ -41,12 +41,26 @@ def run():
         counts[k]+=1
     assert dict(counts)=={10:4032,12:96096}
     assert len(syndrome_to_pair)==100128
+    # Independently enumerate the next 12-square sector: three edges incident
+    # at one vertex, distinct from every zero/one/two-edge syndrome in Q7.
+    three_star=set()
+    for v in vertices:
+        incident=[i for i,(a,b) in enumerate(edges) if v in (a,b)]
+        assert len(incident)==7
+        for triple in combinations(incident,3):
+            support=frozenset(edge_cofaces[triple[0]] ^ edge_cofaces[triple[1]] ^ edge_cofaces[triple[2]])
+            assert len(support)==12
+            assert support not in syndrome_to_pair
+            assert support not in three_star
+            three_star.add(support)
+    assert len(three_star)==4480
     # Canonical source-derived count digest; each pair is unique by construction.
     serial='\n'.join(f'{i},{j},{k}' for i,j,k in (
         (i,j,len(edge_cofaces[i]^edge_cofaces[j])) for i,j in combinations(range(len(edges)),2)))+'\n'
     result={'vertices':128,'edges':448,'squares':672,
             'forbidden_if_analytic_stability_holds':{'single_edge_stars':448,
-            'two_edge_weight10':counts[10],'two_edge_weight12':counts[12]},
+            'two_edge_weight10':counts[10],'two_edge_weight12':counts[12],
+            'three_incident_edge_weight12':len(three_star)},
             'unique_two_edge_syndromes':len(syndrome_to_pair),
             'canonical_pair_weight_ledger_sha256':sha256(serial.encode()).hexdigest(),
             'status':'exact finite enumeration; analytic stability separately pending independent review'}
