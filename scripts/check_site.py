@@ -153,8 +153,34 @@ def main() -> int:
     for path in link_paths:
         if not (ROOT / "research/nightfall" / path).is_file():
             FAILURES.append("RESEARCH LIBRARY: source dossier missing: " + path)
-    if library.count("Evidence boundary") < len(records) or "Only three entries qualify" not in library:
-        FAILURES.append("RESEARCH LIBRARY: scoped claim boundaries or original-finding distinction missing")
+    if library.count("Evidence boundary") < len(records) or "Five source-scoped artifacts" not in library:
+        FAILURES.append("RESEARCH LIBRARY: 33-document evidence limits or five-finding editorial layer missing")
+    # The legacy 2026-10-28 source trio is locked separately. A dated, reviewed
+    # 2026-10-29 addendum explicitly approves two additional *finite* findings.
+    addendum = ROOT / "research/nightfall/SITE_ORIGINALITY_ADDENDUM_20261029.md"
+    findings = (DOCS / "findings-20261029.html").read_text(encoding="utf-8")
+    review = (DOCS / "review.html").read_text(encoding="utf-8")
+    if (not addendum.is_file() or
+        "The previous three remain unchanged" not in addendum.read_text(encoding="utf-8") or
+        '<span><strong>05</strong>Original findings</span>' not in library or
+        'Five original finite artifacts' not in library or
+        "Explore the six Proof Passports" not in library or
+        not all(marker in homepage_text for marker in (
+            "04 / ORIGINAL FINITE SIDON CONSTRUCTION", "05 / ORIGINAL BOUNDED NEGATIVE TEST",
+            "findings-20261029.html#singer975", "findings-20261029.html#graph-3port")) or
+        not all(marker in findings for marker in ("id=\"singer975\"", "id=\"graph-3port\"",
+                                                  "HUMAN REFEREE OPEN", "Reproduce:")) or
+        not all(marker in review for marker in ("id=\"review-map\"", "id=\"singer-review\"",
+                                                "id=\"graph-review\"", "Five source-scoped findings"))):
+        FAILURES.append("EDITORIAL: five approved finite findings lack dated addendum, primary sources or reviewer routes")
+    public_release = "https://github.com/d3lefts/d3lefts/releases/tag/nightfall-research-2026-10-28"
+    evidence = (DOCS / "evidence.html").read_text(encoding="utf-8")
+    if (public_release not in evidence or public_release not in review or
+        "Curated v2 public" not in review or
+        "public mirror" in review.lower() or
+        "full frozen data remains pending public release" in homepage_text.lower() or
+        "full binary evidence packets still need a public mirror" in homepage_text.lower()):
+        FAILURES.append("EVIDENCE ACCESS: approved public curated release misreported as missing")
     if homepage_text.count('class="flagship-card ') != 4 or 'href="research.html"' not in homepage_text:
         FAILURES.append("FLAGSHIPS: four explicitly scoped research programs and library navigation required")
     if "conditional tail target" not in homepage_text or "IMPORTED THEOREMS" not in homepage_text:

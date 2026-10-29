@@ -305,7 +305,16 @@ try{
     await page.locator('#lab-jump-nav a[href="#research-systems"]').click();
     assert.equal(new URL(page.url()).hash,"#research-systems","Section-index jump works");
     await page.goto(origin+"research.html",{waitUntil:"load"});
-    assert.match(await page.locator(".archive-coverage").innerText(),/Thirty-three dossiers.*Six claim passports.*Three original findings/s,"Library explains record hierarchy");
+    assert.match(await page.locator(".archive-coverage").innerText(),/Thirty-three dossiers.*Six claim passports.*Five original finite artifacts/s,"Library explains the reconciled 33/6/5 record hierarchy");
+    await page.goto(origin+"review.html",{waitUntil:"load"});
+    assert.equal(await page.locator(".review-map a").count(),5,"Five direct reviewer routes must remain accessible");
+    assert.match(await page.locator(".review-summary").innerText(),/3 core \+ 2 finite.*Curated v2 public/s,"Core audits and two new finite dossiers are distinct");
+    assert.equal(await page.locator('a[href="https://github.com/d3lefts/d3lefts/releases/tag/nightfall-research-2026-10-28"]').count()>=1,true,"Curated release linked from reviewer contract");
+    await page.locator('.review-map a[href="#singer-review"]').click();
+    assert.equal(new URL(page.url()).hash,"#singer-review","New Singer review deep link works");
+    await page.locator("#singer-review").click();
+    await page.waitForURL(/findings-20261029\.html#singer975/);
+    assert.match(await page.locator("#singer975").innerText(),/475,800 unordered pair sums/,"Singer reviewer path retains exact finite statement");
     await page.goto(origin+"atlas.html",{waitUntil:"load"});
     assert.match(await page.locator(".rs-coverage").innerText(),/six claims represent a library of 33 documents/i,"Atlas explains limited canonical graph");
   }

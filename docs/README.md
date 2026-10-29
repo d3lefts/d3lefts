@@ -1,17 +1,17 @@
 # NIGHTFALL public research website
 
-Static, dependency-free site for NIGHTFALL’s **three evidence-scoped original findings, four flagship research programs, and a broader 33-document curated research library**. The repository retains the full attributed historical research archive.
+Static, dependency-free site for NIGHTFALL’s **five evidence-scoped original findings, four flagship research programs, and a broader 33-document curated research library**. The repository retains the full attributed historical research archive.
 
-- `index.html` — four flagship research programs with explicit evidence tiers, plus the three approved original findings and open reviews.
+- `index.html` — four flagship research programs with explicit evidence tiers, plus five approved, source-limited original findings and open reviews.
 - `desk.html` / `desk.css` / `desk.js` — internal, local-first Research Desk: six registry-driven evidence records, open mathematical obligations, session notes, scoped handoff exports and independent verifier routes; never upgrades theorem status.
 - `research.html` / `research.js` — 33 curated, source-linked September–October research lines in Mathematics, Quantum, Safety and Systems, with discipline filters, search, and explicit scope boundaries; broader than the Original Findings whitelist.
 - `agenda.html` and `agenda.js` — separate five-discipline research agenda with ten untested proposals.
 - Discovery Engine: discovery.html, discovery-core.js, discovery-app.js, discovery.css — executable bounded proxy lab and portable evidence workspace.
-- `review.html` — three review assignments for the approved original contributions; the fourth flagship remains a working proof candidate and is tracked separately in its public dossier.
+- `review.html` — three core reviewer checklists plus two additional source-scoped finite reviews; other flagship theorem candidates retain separate proof gates.
 - `evidence.html` — reproducibility archive hashes, evidence-access status, verified public download links and reproducible commands.
 - `sitemap.xml` — direct site page discovery.
 - `site.css` — responsive layout and accessible typography.
-- `site.js` — three-item originality-approved research index and category filtering.
+- `site.js` — legacy three-entry inline research index (distinct from the homepage's five approved Original Findings); category filtering. The newer two findings have their own sourced publication page and reviewer invitations.
 - `favicon.svg` — original geometric identity.
 - `.nojekyll` — permit direct static publishing without Jekyll processing.
 
@@ -21,7 +21,7 @@ On `d3lefts/d3lefts` select **Settings → Pages → Build and deployment → De
 
 `https://d3lefts.github.io/d3lefts/`
 
-GitHub Actions confirms successful Pages deployments on 2026-10-28. Direct public browser rendering remains an additional check. A separate [static-site verifier](../scripts/check_site.py) automatically checks local links, anchors, researcher-source paths, page metadata, and consistency of the HTML and JavaScript research indexes. Its GitHub Actions workflow runs on updates and pull requests.
+GitHub Actions confirmed a successful Pages deployment after the curated release on 2026-10-29. Direct public browser rendering remains an additional check. A separate [static-site verifier](../scripts/check_site.py) automatically checks local links, anchors, researcher-source paths, page metadata, and consistency of the HTML and JavaScript research indexes. Its GitHub Actions workflow runs on updates and pull requests.
 
 ## Needed for independent referees
 
@@ -41,7 +41,7 @@ Run `node scripts/test_research_tools.cjs` for the independent 180-entry tensor/
 
 The [Research Tools](exact-research.html#guided-replay) hub includes a source-backed four-stage walkthrough of the finite 30-point Sidon construction: statement → live Referee run → deliberate adversarial controls → independent Python receipt replay. The domain-specific URL `referee.html?domain=sidon#workbench` opens the finite verifier with its original source fixture; unrecognized `domain` strings have no effect. All steps retain their own evidence limits. This is navigation and transparency, **not** a proof-status promotion or automated cross-tool import.
 
-The [research instrument handoff contract](../research/nightfall/RESEARCH_INSTRUMENT_HANDOFF_20261028.md) identifies existing receipt formats and defines the release boundary required before a common bridge can link evidence to claims.
+The [research instrument handoff contract](../research/nightfall/RESEARCH_INSTRUMENT_HANDOFF_20261028.md) records the historical receipt boundary. The subsequently merged Evidence Bridge now stages bounded receipts through preview, explicit consent, and a workspace backup, without mathematical proof-status promotion.
 
 ## Maintenance
 
@@ -78,3 +78,9 @@ The public library preserves **15 Mathematics, 4 Quantum, 6 Safety, 7 Systems** 
 ### Fourth flagship (29 October 2026)
 
 [Axiom's deterministic adaptive finite-field decoder](../research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/README.md) now has a homepage flagship card, a separately scoped Proof Passport and independently reproducible exact finite checker. The improved extension-degree batched decoder needs k+⌈(k−1)/(r−1)⌉ queries and is globally optimal at k+1 for 2≤k≤r and q>2. The adaptive two-round model remains distinct from the conditional random nonadaptive fourth-power lattice-decoding track. Publication priority and external mathematical proof review remain open.
+
+## Finding and evidence-count reconciliation (2026-10-29)
+
+**Publication layers:** 33 library dossiers, six canonical Proof Passports, and five approved *source-scoped* Original Findings. The three legacy inline index rows in `site.js` are a historical subset and must never be interpreted as the complete approved findings count. The other two are described in [`findings-20261029.html`](findings-20261029.html) and reviewed under [`review.html#new-finite-reviews`](review.html#new-finite-reviews). Their publication addendum is [`SITE_ORIGINALITY_ADDENDUM_20261029.md`](../research/nightfall/SITE_ORIGINALITY_ADDENDUM_20261029.md).
+
+The two approved curated binary archives were released and anonymously verified on 2026-10-29. See [`evidence.html`](evidence.html), [the GitHub Release](https://github.com/d3lefts/d3lefts/releases/tag/nightfall-research-2026-10-28), and [`CURATED_PUBLIC_DOWNLOAD_RECEIPT_20261029.json`](../research/nightfall/CURATED_PUBLIC_DOWNLOAD_RECEIPT_20261029.json). Historical master ZIPs stay private and the accepted Arena #2628 payload remains separately unresolved under issue #6. A successful internal arithmetic replay cannot replace outside mathematical peer review.
