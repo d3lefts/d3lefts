@@ -20,6 +20,8 @@ Fix the cyclic perfect difference set `D={0,1,3,8,12,18}` in `Z/31Z`, with 6 mar
 
 Reason: all blocks have diameter <=30, so the universal bound gives <=15 retained marks. The only sorted 3-block size partitions of 14 and 15 (each size <=6) are `(5,5,5), (6,5,4), (6,6,3), (6,4,4), (5,5,4), (6,5,3), (6,6,2)`. The provided exhaustive checker enumerates every affine Singer source and retained subblock, indexes each by its **positive integer difference spectrum**, and verifies that no triple with these sizes has pairwise disjoint spectra. This excludes all Sidon unions of size >=14, for **any** translations, regardless of finite separation. No hidden claim about inequivalent q=5 sources is made; all lie in one affine orbit.
 
+**Stronger anchored-source profile:** for each of the 28 possible positive-difference spectra of a full affine Singer six-mark source, **zero** five-mark affine Singer subblocks have disjoint positive differences; the number of allowed four-mark successor spectra is 0 for 24 source spectra, 1 for 3, and 2 for 1. In the last case the two four-mark successor spectra overlap, so they cannot both be attached. Thus a protected full source immediately forces a second block to retain at most 4 marks in this restricted class. These are exact *finite-orbit* statements, not a field-uniform Singer theorem.
+
 Literal sharp witness in three successive blocks:
 
 - Initial full 6-mark block `B0=(2,6,12,25,26,28)` (protected).
@@ -30,7 +32,7 @@ Combined 13 integers: `2,6,12,25,26,28,100,118,125,130,1008,1017,1025`. Directly
 
 ## Reproduction and falsification
 
-Execute `python3 research/nightfall/agent-reports/vesper_three_block_20261029/verify.py` (Python standard library). Expected: 310 distinct integer Singer cuts; distinct difference spectra by retained size `1,30,150,300,150,28`; all seven capacity-critical partitions impossible; explicit 13-mark witness PASS; duplicated full-block negative control FAILS the Sidon uniqueness predicate. Frozen verifier SHA-256: `d59daf035c5434fba4d851a00f1f28f183ff4033ef4cdf7bb90008bb5a28edc7`.
+Execute `python3 research/nightfall/agent-reports/vesper_three_block_20261029/verify.py` (Python standard library). Expected: 310 distinct integer Singer cuts; distinct difference spectra by retained size `1,30,150,300,150,28`; all seven capacity-critical partitions impossible; explicit 13-mark witness PASS; duplicated full-block negative control FAILS the Sidon uniqueness predicate. Frozen verifier SHA-256: `5481675676511d15731957e60a810147e2edaf1d9555ae8900ab49be6fc328a6`.
 
 An independent verifier should regenerate 31 cyclic residues and all affine source variants without importing our masks; independently form literal pair sums and test all `k_total>=14` compatible candidates. Negative tests: omit a difference, omit diagonal pair sums, treat modular and integer differences as interchangeable, omit unit multiplier variants, or improperly treat two affine trace constructions as inequivalent.
 
