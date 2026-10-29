@@ -71,6 +71,11 @@ int main(){
  for(int k=0;k<54;k++)if(hist[0][k]!=hist[1][k]){
   fprintf(stderr,"distinct histograms at %d\n",k);return 4;
  }
+ if(hist[0][29]!=26){fprintf(stderr,"expected exactly 26 large affine sections, got %lld\n",hist[0][29]);return 5;}
+ for(int k=19;k<54;k++)if(k!=29 && hist[0][k]){
+  fprintf(stderr,"unexpected high-intersection affine section size %d\n",k);return 6;
+ }
+ printf("PASS: exactly 26 affine codim-2 sections meet 53 points in 29 points; no other section meets >=19\n");
  printf("PASS: %lld codimension-two quotients; identical histograms\n",total);
  for(int k=0;k<54;k++)if(hist[0][k])printf("max=%d count=%lld\n",k,hist[0][k]);
  return 0;
