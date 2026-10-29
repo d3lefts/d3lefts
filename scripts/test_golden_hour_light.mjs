@@ -39,7 +39,7 @@ try{
   await page.goto(origin+"index.html",{waitUntil:"load"});
   assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk","Dusk is the fresh-visit default");
   await page.locator(".nf-theme-toggle").click();
-  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Explicit light opt-in activates rose parchment");
+  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Explicit light opt-in activates cocoa archive");
   assert.equal(await page.evaluate(()=>localStorage.getItem("nightfall.theme.v1")),"light","Explicit light choice is persisted");
   page.on("response",r=>{if(r.url().startsWith(origin)&&r.status()>=400)errors.push(r.url()+": "+r.status())});
   for(const name of pages){
@@ -63,35 +63,35 @@ try{
       epConsole:pick(".ep-console"),overflow:document.documentElement.scrollWidth-innerWidth};
    });
    assert.equal(v.theme,null,name+": saved light choice remains respected");
-   assert.equal(v.paper,"#f4e7df",name+": rose parchment contract");
-   assert.equal(v.oxblood,"#4a1f24",name+": oxblood identity");
-   assert.equal(v.primary,"#d97a4a",name+": sunset action accent");
-   assert.equal(v.bodyBg,"rgb(244, 231, 223)",name+": light canvas");
+   assert.equal(v.paper,"#28190f",name+": cocoa archive contract");
+   assert.equal(v.oxblood,"#1b100b",name+": oxblood identity");
+   assert.equal(v.primary,"#edc16e",name+": sunset action accent");
+   assert.equal(v.bodyBg,"rgb(40, 25, 15)",name+": light canvas");
    assert.ok(v.overflow<=4,name+": no "+width+"px horizontal overflow ("+v.overflow+")");
    const expectations={
-    "index.html":{nav:"rgb(74, 31, 36)",heroAction:"rgb(217, 122, 74)",
-      system:"rgb(74, 31, 36)",lens:"rgb(74, 31, 36)"},
-    "constellation.html":{coreAction:"rgb(217, 122, 74)"},
-    "join.html":{joinMethod:"rgb(74, 31, 36)",raised:"rgb(252, 243, 234)"},
-    "living-paper.html":{sidon:"rgb(74, 31, 36)"},
-    "erdos-paper.html":{sidon:"rgb(74, 31, 36)",epConsole:"rgb(252, 243, 234)"},
-    "discovery.html":{discoverySidebar:"rgb(238, 223, 214)",discoveryMark:"rgb(217, 122, 74)"},
-    "claim-lab.html":{claimSidebar:"rgb(238, 223, 214)"},
-    "desk.html":{readout:"rgb(74, 31, 36)"}
+    "index.html":{nav:"rgb(27, 16, 11)",heroAction:"rgb(237, 193, 110)",
+      system:"rgb(27, 16, 11)",lens:"rgb(27, 16, 11)"},
+    "constellation.html":{coreAction:"rgb(237, 193, 110)"},
+    "join.html":{joinMethod:"rgb(27, 16, 11)",raised:"rgb(59, 40, 29)"},
+    "living-paper.html":{sidon:"rgb(27, 16, 11)"},
+    "erdos-paper.html":{sidon:"rgb(27, 16, 11)",epConsole:"rgb(59, 40, 29)"},
+    "discovery.html":{discoverySidebar:"rgb(51, 33, 22)",discoveryMark:"rgb(237, 193, 110)"},
+    "claim-lab.html":{claimSidebar:"rgb(51, 33, 22)"},
+    "desk.html":{readout:"rgb(27, 16, 11)"}
    };
    if(name==="index.html"){
     const diagram=await page.evaluate(()=>{
       const svg=document.querySelector(".hero-aside .diagram");
       return {signal:getComputedStyle(svg.querySelector('circle[fill="#d8c38a"]')).fill,
-        curve:getComputedStyle(svg.querySelector('path[stroke="#4a1f24"]')).stroke,
+        curve:getComputedStyle(svg.querySelector('path[stroke="#1b100b"]')).stroke,
         toolbar:document.querySelector('meta[name="theme-color"]')?.content};
     });
     assert.equal(diagram.signal,"rgb(216, 195, 138)","Mathematical hero signal uses muted blackcherry");
     assert.equal(diagram.curve,"rgb(74, 31, 36)","Hero's forest-green path uses oxblood");
-    assert.equal(diagram.toolbar,"#4a1f24","Browser chrome follows blackcherry identity");
+    assert.equal(diagram.toolbar,"#28190f","Browser chrome follows cocoa identity");
    }
    for(const [key,target] of Object.entries(expectations[name]||{})){
-    assert.equal(v[key],target,name+" "+width+"px "+key+" matches sunset parchment");
+    assert.equal(v[key],target,name+" "+width+"px "+key+" matches cocoa archive");
    }
    if(["index.html","join.html","constellation.html","living-paper.html","discovery.html","claim-lab.html"].includes(name)){
     await page.screenshot({path:"browser-artifacts/golden-hour-"+name.replace(".html","")+"-"+width+".png",fullPage:false});
@@ -104,28 +104,28 @@ try{
    return {nav:styles(".nav-call"),cta:styles(".hero-actions .button"),
      body:styles("body")};
   });
-  assert.ok(contrast(...comps.nav)>=4.5,"Oxblood navigation button text meets WCAG AA");
-  assert.ok(contrast(...comps.cta)>=4.5,"Blackcherry action text meets WCAG AA");
-  assert.ok(contrast(...comps.body)>=7,"Body ink on parchment comfortably exceeds AA");
+  assert.ok(contrast(...comps.nav)>=4.5,"Cocoa navigation button text meets WCAG AA");
+  assert.ok(contrast(...comps.cta)>=4.5,"Golden-hour action text meets WCAG AA");
+  assert.ok(contrast(...comps.body)>=7,"Body text on cocoa comfortably exceeds AA");
   const toggle=page.locator(".nf-theme-toggle");
   await toggle.click();
   await page.waitForFunction(()=>document.documentElement.dataset.nfTheme==="dusk");
-  await page.waitForFunction(()=>getComputedStyle(document.body).backgroundColor==="rgb(16, 23, 39)",null,{timeout:3500});
+  await page.waitForFunction(()=>getComputedStyle(document.body).backgroundColor==="rgb(4, 6, 11)",null,{timeout:3500});
   const dark=await page.evaluate(()=>({
     bg:getComputedStyle(document.body).backgroundColor,
     primary:getComputedStyle(document.querySelector(".hero-actions .button")).backgroundColor
   }));
-  assert.equal(dark.bg,"rgb(16, 23, 39)","Dusk midnight canvas unchanged");
-  assert.equal(dark.primary,"rgb(216, 195, 138)","Dusk champagne CTA unchanged");
+  assert.equal(dark.bg,"rgb(4, 6, 11)","Dusk midnight canvas unchanged");
+  assert.equal(dark.primary,"rgb(230, 222, 170)","Dusk champagne CTA unchanged");
   assert.equal(await page.locator('meta[name="theme-color"]').getAttribute("content"),"#101727","Dusk browser chrome remains midnight navy");
   await toggle.click();
-  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Switching back restores rose parchment");
-  await page.waitForFunction(()=>getComputedStyle(document.body).backgroundColor==="rgb(244, 231, 223)",null,{timeout:3500});
-  assert.equal(await page.locator('meta[name="theme-color"]').getAttribute("content"),"#4a1f24","Light browser chrome returns to blackcherry");
+  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Switching back restores cocoa archive");
+  await page.waitForFunction(()=>getComputedStyle(document.body).backgroundColor==="rgb(40, 25, 15)",null,{timeout:3500});
+  assert.equal(await page.locator('meta[name="theme-color"]').getAttribute("content"),"#28190f","Light browser chrome returns to blackcherry");
   assert.equal(await page.locator("body").evaluate(e=>getComputedStyle(e).backgroundColor),
-   "rgb(244, 231, 223)","Rose parchment survives reversal");
+   "rgb(40, 25, 15)","Cocoa archive survives reversal");
   assert.deepEqual(errors,[],"No missing assets or browser JS errors at "+width+"px");
   await context.close();
  }
- console.log("PASS rose parchment light: dusk-first, 10 light pages × mobile/desktop, blackcherry action palette, AA contrast, unchanged dusk and reversible state");
+ console.log("PASS cocoa archive light: dusk-first, 10 light pages × mobile/desktop, blackcherry action palette, AA contrast, unchanged dusk and reversible state");
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve))}

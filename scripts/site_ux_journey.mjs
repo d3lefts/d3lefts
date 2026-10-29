@@ -92,7 +92,7 @@ try{
     });
     assert.match(editorial.dramaticHeading,/Make room.*for doubt/s);
     assert.match(editorial.quietHeading,/Leave the.*uncertainty visible/s);
-    assert.equal(editorial.dramaticBackground,"rgb(58, 22, 27)","Sunset editorial interlude remains deep blackcherry");
+    assert.equal(editorial.dramaticBackground,"rgb(27, 16, 11)","Sunset editorial interlude remains deep blackcherry");
     assert.equal(editorial.correctSequence,true,"Editorial pacing should preserve claim hierarchy");
     assert.equal(editorial.cardWidths.length,4);
     assert.ok(editorial.cardWidths[0]<editorial.cardWidths[1],"Asymmetric cards collapsed on desktop");

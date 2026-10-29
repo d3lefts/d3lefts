@@ -29,15 +29,19 @@ for(const f of files){
  }
 }
 assert.deepEqual(exceptions,[],"No neon lime/chartreuse presentation colors may survive");
-const light=readFileSync(join(root,"golden-hour-light.css"),"utf8");
-const dusk=readFileSync(join(root,"ethereal-theme.css"),"utf8");
-for(const token of ["--lf-paper:#f4e7df","--lf-primary:#d97a4a","--lf-oxblood:#4a1f24"]){
+for(const file of files.filter(x=>x.endsWith(".html")&&readFileSync(join(root,x),"utf8").includes("ethereal-theme.css"))){
+ const html=readFileSync(join(root,file),"utf8");
+ assert.ok(html.includes('href="two-skies.css"'),file+" missing shared palette stylesheet");
+}
+const light=readFileSync(join(root,"two-skies.css"),"utf8");
+const dusk=readFileSync(join(root,"two-skies.css"),"utf8");
+for(const token of ["--lf-paper:#28190f","--lf-primary:#edc16e","--lf-oxblood:#1b100b"]){
  assert.ok(light.includes(token),"Missing sunset token: "+token);
 }
-for(const token of ["--nf-champagne:#d8c38a","--nf-lightray-gold:#d8c38a"]){
+for(const token of ["--nf-champagne:#e6deaa","--nf-lightray-gold:#e6deaa"]){
  assert.ok(dusk.includes(token),"Missing midnight gold token: "+token);
 }
-assert.ok(contrast("#2a1f1d","#d97a4a")>=4.5,"Dark ink on sunset CTA must meet WCAG AA");
-assert.ok(contrast("#fcf3ea","#4a1f24")>=4.5,"Cream on oxblood must meet WCAG AA");
-assert.ok(contrast("#d8c38a","#101727")>=4.5,"Lightray gold on midnight must meet WCAG AA");
+assert.ok(contrast("#28190f","#edc16e")>=4.5,"Dark ink on sunset CTA must meet WCAG AA");
+assert.ok(contrast("#f7e8db","#1b100b")>=4.5,"Cream on oxblood must meet WCAG AA");
+assert.ok(contrast("#e6deaa","#04060b")>=4.5,"Lightray gold on midnight must meet WCAG AA");
 console.log("Palette contract OK: "+files.length+" public assets; no neon lime; text contrast checks pass");
