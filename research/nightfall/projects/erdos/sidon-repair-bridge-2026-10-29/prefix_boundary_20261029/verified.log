@@ -1,0 +1,1 @@
+{"count": 1001, "diffs": 500500, "max": 1890093, "negative_control": {"insertion": 3, "witness": {"collision": [[1, 2], [2, 3]], "kind": "difference"}}, "p": 1009, "ratio": 0.7281024470094891, "sha256": "255f8cbf21a1dc65b52d38a4ad7253f51743eae03c19b7631676984a8c9e805d", "status": "PASS", "sums": 501501}
