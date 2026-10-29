@@ -1,0 +1,30 @@
+name: NIGHTFALL Sidon transfer certificate audit
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/agent-reports/vesper_sidon_transfer_20261029/**'
+      - '.github/workflows/vesper-sidon-transfer.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/agent-reports/vesper_sidon_transfer_20261029/**'
+      - '.github/workflows/vesper-sidon-transfer.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-transfer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile standalone exact arithmetic checker
+        run: python3 -m py_compile research/nightfall/agent-reports/vesper_sidon_transfer_20261029/verify_ceiling.py
+      - name: Check proxy bounds and abstract adversarial oracle
+        run: python3 research/nightfall/agent-reports/vesper_sidon_transfer_20261029/verify_ceiling.py
