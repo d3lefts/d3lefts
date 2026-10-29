@@ -56,3 +56,14 @@ A source-content change requires an editorial review of this whitelist. The vers
 The original-finding whitelist above remains exactly three: the 131,072-cell overlap witness, the 30-point Sidon witness, and the bounded adverse PAS experiment. The independent source archive and new research library have different inclusion rules from the Original Findings index. Candidate finite-field and source-dependent Werner programs are explicitly labeled as conditional, with open proof and priority gates. Existing uncredited classical methods are described as established techniques, not newly invented results.
 
 This amendment is a presentation reclassification and a navigation change, not a scientific status promotion. No original certificate, score, prior-art disposition or source artifact is revised here.
+
+---
+
+## 2026-10-29 superseding editorial addendum — five scoped Original Findings
+
+The 2026-10-28 whitelist count of three above is a **historical snapshot**, not the current display count after the research owner's instruction to add exactly two more independently checkable finite artifacts. The original three claims remain unchanged. Two specifically scoped additions are approved for site inclusion:
+
+4. **Tessera Singer 975 finite Sidon construction and 40/40 fixed-template repair certificate** — exact integer object, internal independently reimplemented arithmetic, 52 colliding hyperedges, matching 40-edge packing and cover; no extremal/world-record/infinite-bound claim.
+5. **Lemnis 27-graph fixed two-gadget exhaustive negative search** — 3,221,225,472 exact configurations across two prescribed gadgets and 27 literal graph6 inputs; zero C4/C8/C16 survivors; no general Erdős #64 proof.
+
+Full primary identities, independent checkers, pinned source paths, attribution, source provenance, same-scope baseline, and open publication-priority caveats are in [SITE_ORIGINALITY_ADDENDUM_20261029.md](SITE_ORIGINALITY_ADDENDUM_20261029.md). These are *bounded original artifacts and observations*, equivalent in editorial type to the previously allowed finite construction and bounded PAS observation, **not** new global theorem priority certificates. The public new evidence page is [findings-20261029.html](../../docs/findings-20261029.html). Underlying source drafts PR #82 and PR #57 retain mathematical-review gates.
