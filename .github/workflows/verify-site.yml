@@ -35,6 +35,9 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+      - name: Syntax-check all JavaScript test entrypoints
+        run: |
+          find scripts -type f \( -name "*.cjs" -o -name "*.mjs" -o -name "*.js" \) -print0 | xargs -0 -r -n1 node --check
       - name: Validate static pages, source links, anchors, and fallback catalogue
         run: python3 scripts/check_site.py
       - name: Parse JavaScript without executing browser code
@@ -78,7 +81,16 @@ jobs:
       - name: Browser smoke test (mobile, tablet, desktop)
         run: |
           npm install --no-save --no-package-lock playwright-core@1.56.1
-          CHROME_BIN="$(command -v google-chrome)" node scripts/site_browser_smoke.mjs
+          mkdir -p browser-artifacts
+          CHROME_BIN="$(command -v google-chrome)" node scripts/site_browser_smoke.mjs 2>&1 | tee browser-artifacts/browser-smoke.log
+      - name: Preserve browser failure log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-browser-failure-${{ github.run_id }}
+          path: browser-artifacts/
+          if-no-files-found: ignore
+          retention-days: 30
       - name: Compile verification scripts and check machine-readable task ledger
         run: |
           python3 -m py_compile scripts/verify_erdos_independent.py scripts/verify_frozen_release.py
