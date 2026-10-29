@@ -141,7 +141,8 @@ const REGISTRY={
       "open": [
         "Obtain independent, externally authored reproduction of the published 131,072-cell witness.",
         "Independent external reproduction and source identity comparison.",
-        "Recover accepted competition input identity (issue #6)."
+        "Recover accepted competition input identity (issue #6).",
+        "Independently audit the conditional lower-bound dual returns and inherited analytic and interval-arithmetic premises."
       ],
       "sources": [
         {
@@ -155,6 +156,10 @@ const REGISTRY={
         {
           "label": "Approved public binary release",
           "url": "https://github.com/d3lefts/d3lefts/releases/tag/nightfall-research-2026-10-28"
+        },
+        {
+          "label": "Conditional lower-bound derivation and outstanding source obligations",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/agent-reports/ea36_lower_20261028/RESEARCH_NOTE.md"
         }
       ],
       "tools": [
