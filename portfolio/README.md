@@ -1,5 +1,7 @@
 # NIGHTFALL — unlisted collective research portfolio
 
+**OpenAI Search / Knowledge Graphs work-sample release:** [submission packet, source-backed research statement and claim audit](openai-search-kg/README.md). Prepared for an application; no submission has been made.
+
 **Direct-link working page:** https://d3lefts.github.io/d3lefts/portfolio.html
 
 **Visibility:** Intentionally unlisted in public website navigation, homepage, root README and sitemap. The page has a `noindex, nofollow, noarchive` meta tag. GitHub Pages and the source repository are public. This is *not access control*; never store confidential information here.
