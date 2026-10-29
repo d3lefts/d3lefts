@@ -81,8 +81,6 @@ jobs:
             /tmp/ryev-gate-c/operator-jobs.json
             /tmp/ryev-gate-c/blind-grading-template.json
             /tmp/ryev-original-gate-c/freeze.json
-            /tmp/ryev-original-gate-c/operator-jobs.json
-            /tmp/ryev-original-gate-c/review-forms.json
             /tmp/ryev-scope-faultline.json
           retention-days: 90
       - name: Archive receipt fixtures and refusal explanations
