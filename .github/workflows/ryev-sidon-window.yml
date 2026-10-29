@@ -22,11 +22,18 @@ jobs:
           grep "symbolic polynomial cross-product" /tmp/ryev-sidon-window.log
           grep "501501 pair sums" /tmp/ryev-sidon-window.log
           grep "insertion M-1 rejected" /tmp/ryev-sidon-window.log
+      - name: Construct actual optimized-window integer Sidon sets at three primes
+        run: |
+          python3 -m py_compile research/nightfall/projects/erdos/sidon-repair-bridge-2026-10-29/ryev_window_optimization_20261029/construct_window.py
+          python3 research/nightfall/projects/erdos/sidon-repair-bridge-2026-10-29/ryev_window_optimization_20261029/construct_window.py | tee /tmp/ryev-window-constructions.log
+          grep "PASS: actual optimized-window" /tmp/ryev-window-constructions.log
       - name: Archive exact report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: ryEV-sidon-window-independent-audit
-          path: /tmp/ryev-sidon-window.log
+          path: |
+            /tmp/ryev-sidon-window.log
+            /tmp/ryev-window-constructions.log
           if-no-files-found: warn
           retention-days: 90
