@@ -164,6 +164,16 @@
       "source": "agent-reports/ea36_lower_20261028/RESEARCH_NOTE.md"
     },
     {
+      "id": "33",
+      "category": "mathematics",
+      "evidence": "working",
+      "type": "Algebraic proof candidate · exact finite tests",
+      "title": "Deterministic adaptive finite-field decoder",
+      "summary": "Axiom's two-round 2k−1 powered-measurement reconstruction up to global base-field scaling; an independently coded checker exhaustively passes 18,725 vectors over F_25 and F_49.",
+      "boundary": "Adaptive sensing is separate from the random nonadaptive lattice-decoding model; external proof review and same-model priority audit remain open.",
+      "source": "projects/adaptive-finite-field-decoder-2026-10-29/README.md"
+    },
+    {
       "id": "16",
       "category": "quantum",
       "evidence": "conditional",
@@ -332,16 +342,6 @@
       "summary": "Erdős, C1/C2, UP25, rejected submissions, provenance conflicts, and unsuccessful operators in one evidence-aware chronology.",
       "boundary": "Leaderboard standing, mathematical validity, and source completeness are tracked separately.",
       "source": "projects/expansion-2026-10-28/08-arena-and-negative-results.md"
-    },
-    {
-      "id": "33",
-      "category": "mathematics",
-      "evidence": "working",
-      "type": "Algebraic proof candidate · exact finite tests",
-      "title": "Deterministic adaptive finite-field decoder",
-      "summary": "Axiom's two-round 2k−1 powered-measurement reconstruction up to global base-field scaling; an independently coded checker exhaustively passes 18,725 vectors over F_25 and F_49.",
-      "boundary": "Adaptive sensing is separate from the random nonadaptive lattice-decoding model; external proof review and same-model priority audit remain open.",
-      "source": "projects/adaptive-finite-field-decoder-2026-10-29/README.md"
     }
   ]
 }
