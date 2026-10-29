@@ -675,3 +675,117 @@ html[data-nf-theme="dusk"] .hero-aside .diagram circle[fill="#b0db58"]{fill:var(
   50%{box-shadow:0 0 17px #e6d4a6c4,0 0 34px #c9af7a77}
  }
 }
+
+
+/* Deep workbench repair: these instruments predate the shared light/dusk skin and
+   contain hard-coded green fills. Remap rendered UI only; leave evidence data intact. */
+html[data-nf-theme="dusk"] body:has(#app){
+ --lime:var(--nf-champagne);--soft:var(--nf-dusk-muted);
+ --muted:#b7bed5;--panel:#1b263b;--panel2:#232e47;
+ --text:#edf0fb;--paper:#1b263b;--side:#151c30;
+}
+html[data-nf-theme="dusk"] body:has(#app) :is(.navitem.selected,.portfolio.active){
+ background:#302c42;border-color:var(--nf-champagne);color:#f0e5cd;
+}
+html[data-nf-theme="dusk"] body:has(#app) :is(.navitem,.portfolio,.portfolio small,
+ .navitem em,.side-bottom,.side-bottom small,.context .sub,.sect-head p,
+ .metric span,.metric small,.aside-note p){color:#bcc7de}
+html[data-nf-theme="dusk"] body:has(#app) :is(.navitem.selected em,.eyebrow,
+ .step>b,.subtle,.side-label button,.meta a,.context-figure strong,
+ .aside-note span,.saved.on){color:var(--nf-champagne)}
+html[data-nf-theme="dusk"] body:has(#app) :is(.navitem:hover,.portfolio:hover){
+ background:#283249;
+}
+html[data-nf-theme="dusk"] body:has(#app) :is(.portfolio.active .dot,.live-dot){
+ background:var(--nf-champagne);
+}
+html[data-nf-theme="dusk"] body:has(#app) .dot{background:#a59ac6}
+html[data-nf-theme="dusk"] body:has(#app) .status,
+html[data-nf-theme="dusk"] body:has(#app) .tag.passed{
+ background:#342f45;color:#f0dfb5;border-color:#776b65;
+}
+html[data-nf-theme="dusk"] body:has(#app) .tag.pending{
+ background:#292c40;color:#d4c9ef;border-color:#4f5574;
+}
+html[data-nf-theme="dusk"] body:has(#app) :is(.context-figure,.feature-panel,.aside-note){
+ background:linear-gradient(140deg,#272940,#19263c);border-color:#52607b;
+}
+html[data-nf-theme="dusk"] body:has(#app) :is(.context-figure span,.context-figure small){
+ color:#d3cee3;
+}
+html[data-nf-theme="dusk"] body:has(#app) .btn.primary{
+ background:var(--nf-champagne);border-color:var(--nf-champagne);
+ color:var(--nf-dusk-ink);
+}
+html[data-nf-theme="dusk"] body:has(#app) .btn.primary:hover{
+ background:var(--nf-champagne-hover);border-color:var(--nf-champagne-hover);
+}
+html[data-nf-theme="dusk"] body:has(#app) .toast:not(.bad){
+ background:var(--nf-champagne);color:var(--nf-dusk-ink);
+ border-color:var(--nf-champagne-hover);
+}
+html[data-nf-theme="dusk"] body:has(#app) .meta a{border-color:#b49b6a}
+
+/* Claim Lab has its own historic green success/toast chrome. Copy, status and
+   operation gates remain explicit regardless of the action color. */
+html[data-nf-theme="dusk"] body:has(.app){
+ --mint:var(--nf-champagne);--mint2:#4c4368;--gold:var(--nf-champagne);
+}
+html[data-nf-theme="dusk"] body:has(.app) .brandMark{
+ background:linear-gradient(140deg,#38344f,#1b263b);
+ color:var(--nf-champagne);border-color:#857657;
+}
+html[data-nf-theme="dusk"] body:has(.app) .nav button.active{
+ background:#343047;color:var(--nf-champagne);
+ box-shadow:inset 3px 0 var(--nf-champagne);
+}
+html[data-nf-theme="dusk"] body:has(.app) :is(.local,.local .pulse){
+ color:var(--nf-champagne);
+}
+html[data-nf-theme="dusk"] body:has(.app) .local .pulse{
+ background:var(--nf-champagne);box-shadow:0 0 0 3px #d8c38a22;
+}
+html[data-nf-theme="dusk"] body:has(.app) .toast:not(.bad){
+ background:#282e44;color:#f0e7d3;border-color:#9b8758;
+}
+html[data-nf-theme="dusk"] body:has(.app) .sideBottom .privacy{
+ background:#212d43;border-color:#465775;color:#d8dce9;
+}
+
+/* Research Desk: convert remaining green pane colors and action bars in dusk. */
+html[data-nf-theme="dusk"] .desk-page :is(.desk-readout,.desk-claim-button,
+ .desk-dimension,.desk-queue,.desk-notes,.desk-quick-actions a,
+ .desk-session-actions button,.desk-add,.desk-open-row,.desk-session){
+ background:#1b263b;color:#edf0fb;border-color:#465775;
+}
+html[data-nf-theme="dusk"] .desk-page :is(.desk-claim-button:hover,
+ .desk-claim-button[aria-pressed="true"]){
+ background:#302e46;border-color:#998356;
+}
+html[data-nf-theme="dusk"] .desk-page .desk-claim-button[aria-pressed="true"]{
+ box-shadow:inset 4px 0 var(--nf-champagne);
+}
+html[data-nf-theme="dusk"] .desk-page :is(.desk-readout strong,
+ .desk-hero h1 em,.desk-session h2 em,.desk-footer h2 em,
+ .desk-claim-button>span,.desk-detail-field,.desk-quick-actions a){
+ color:var(--nf-champagne);
+}
+html[data-nf-theme="dusk"] .desk-page :is(.desk-readout span,.desk-readout small,
+ .desk-trust p,.desk-pane-head p,.desk-claim-button small,
+ .desk-dimension>span,.desk-dimension p,.desk-statement,
+ .desk-condition,.desk-session-header p,.desk-queue-head span){
+ color:#bdc7de;
+}
+html[data-nf-theme="dusk"] .desk-page :is(#desk-search,#desk-filter){
+ background:#182438;color:#edf0fb;border-color:#5b6079;
+}
+html[data-nf-theme="dusk"] .desk-page :is(.desk-add,.desk-session-actions button){
+ background:var(--nf-champagne);border-color:var(--nf-champagne);
+ color:var(--nf-dusk-ink);
+}
+html[data-nf-theme="dusk"] .desk-page :is(.desk-add,.desk-session-actions button):disabled{
+ background:#30354a;color:#b6bed2;border-color:#465775;
+}
+html[data-nf-theme="dusk"] .desk-page :is(.desk-claim-button,
+ .desk-dimension,.desk-queue,.desk-notes){color:#edf0fb}
+html[data-nf-theme="dusk"] .desk-page .desk-condition{border-left-color:#8f7a4a}
