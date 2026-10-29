@@ -43,14 +43,14 @@ def certify_constants():
         return left
     # Work with t=r. Explicit polynomial product arithmetic:
     # (1-1/(256r))²/(2-1/(32r))
-    #     = (256r-1)²/[4096r(64r-1)]
+    #     = (256r-1)²/[2048r(64r-1)]
     # (1-2/(675r))²/(2-1/(40r))
-    #     = 2(675r-2)²/[2278125r(80r-1)]
+    #     = 8(675r-2)²/[91125r(80r-1)]
     # (Note the following denominators are verified algebraically from
     # the exact fractions, so an accidental hand transcription fails.)
     for r in [1,2,3,5,7,10,17,101,1000,10000]:
-        assert new_sq(r)==F((256*r-1)**2,4096*r*(64*r-1))
-        assert old_sq(r)==F(2*(675*r-2)**2,2278125*r*(80*r-1))
+        assert new_sq(r)==F((256*r-1)**2,2048*r*(64*r-1))
+        assert old_sq(r)==F(8*(675*r-2)**2,91125*r*(80*r-1))
     def mul(a,b):
         z=[0]*(len(a)+len(b)-1)
         for i,x in enumerate(a):
@@ -59,9 +59,9 @@ def certify_constants():
     # Exact polynomial derivation after denominators:
     # delta = [N_new*D_old - N_old*D_new]/[D_new*D_old].
     nnew=mul([-1,256],[-1,256])  # (256r-1)^2
-    dnew=mul([0,4096],[-1,64])   # 4096*r*(64r-1)
-    nold=[2*x for x in mul([-2,675],[-2,675])]
-    dold=mul([0,2278125],[-1,80])
+    dnew=mul([0,2048],[-1,64])   # 2048*r*(64r-1)
+    nold=[8*x for x in mul([-2,675],[-2,675])]
+    dold=mul([0,91125],[-1,80])
     cross=[a-b for a,b in zip(mul(nnew,dold),mul(nold,dnew))]
     assert cross[0]==0 and cross[-1]==0
     # Positive polynomial identity in the compact reduced expression.
