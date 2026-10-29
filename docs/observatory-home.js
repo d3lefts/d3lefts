@@ -63,6 +63,10 @@
   item.append(make("b","",kinds[edge.relation]||"SOURCED RELATION"),make("span","",edge.label));
   const counterpart=make("small","nf-observatory-counterpart",nameOf(edge.from)+" → "+nameOf(edge.to));
   item.append(counterpart);
+  // The canonical note carries the scope boundary (fixture size, unresolved gate,
+  // or untested transfer). Never drop it from the compact Field Guide.
+  if(typeof edge.note==="string"&&edge.note.trim())
+   item.append(make("p","nf-observatory-relation-note",edge.note));
   const source=link("Inspect source ↗",edge.source);
   if(source)item.append(source);
   return item;
