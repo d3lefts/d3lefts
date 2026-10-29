@@ -36,3 +36,11 @@ All refusal conditions return a human-readable reason. The JSON receipt cannot e
 **Limitations:** The browser can prove only that first-party programs agree with declared finite inputs. A valid hash is a fingerprint, not a digital signature. The local backup download event and readback were exercised in Chromium; disk persistence beyond the browser download subsystem is not asserted. Independent external peer review and Observatory Gate C's actual matched-budget model experiment remain pending.
 
 **Reproducible evidence:** Workflow test fixtures were uploaded as a time-limited GitHub Actions artifact named ryEV-evidence-bridge-security-receipts. Its output includes accepted and rejected receipts with refusal explanations. Run the tests from README.md to regenerate them.
+
+## Additional integration checks (current review branch; latest CI run pending)
+
+- Producer `verifier` metadata mismatch -> `SOURCE_METADATA` refusal.
+- Forged/mismatched `sourceDossier` -> `SOURCE_METADATA` refusal.
+- False external-review assertion in `notes` -> `AUTHORITY_SPOOF` refusal.
+- Real same-tab Referee -> Claim Lab -> Discovery transfer shares the strict file-upload adapter, explicit user consent, backup and reload integrity. The latest Chromium integration test is committed; completion remains to be confirmed on current head.
+- Provider `usage.input_tokens` and `usage.output_tokens` must be read from the actual captured response body, reconciled against the count endpoint and the exact source/graph prompt. Synthetic negative fixtures include zero input tokens attached to a large prompt and a changed source excerpt SHA; these fixtures are **not** actual study outcomes.
