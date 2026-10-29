@@ -13,7 +13,7 @@ for(const claim of R.claims){
   assert.equal(C.parse(R,"?claim="+claim.id).contract.key,claim.id+"|0");
   assert.match(C.brief(c,"attempted contradiction"),/UNREVIEWED/);
   assert.match(C.brief(c,"attempted contradiction"),/attempted contradiction/);
-  assert.match(decodeURIComponent(C.issue(c,"test falsifier")),"/ obligation "+(i+1));
+  assert.ok(decodeURIComponent(C.issue(c,"test falsifier")).includes("/ obligation "+(i+1)));
   assert.ok(!/\bcertified\b/i.test(C.issue(c,"test falsifier")),"No false approval in review proposal");
   assert.equal(C.url(claim.id,i),"join.html?claim="+claim.id+"&obligation="+i+"#claim-investigation");
   count++;
