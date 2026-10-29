@@ -13,3 +13,18 @@
  .top nav.open{display:flex}
  .top nav a{display:block;padding:10px 5px;border-top:1px solid var(--line)}
 }
+/* Human-in-the-loop steering: readable, accessible approval controls. */
+.review-controls{display:flex;flex-direction:column;gap:9px;min-width:min(100%,510px);max-width:600px;width:100%}
+.review-controls>label{font:600 11px var(--mono);color:var(--ink)}
+.review-controls>label span{font-weight:400;color:var(--muted)}
+.review-controls select,.review-controls textarea{width:100%;min-width:0;background:#21372a;color:var(--ink);border:1px solid #608066;padding:10px 12px;border-radius:3px;font:12px/1.5 var(--sans)}
+.review-controls select:focus-visible,.review-controls textarea:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.review-controls .review-explanation{color:#c4d8c4;font-size:11px;line-height:1.6;max-width:590px}
+.review-controls .review-caution{color:var(--muted);font-size:10px;line-height:1.55}
+.review-controls .commands{justify-content:flex-start;max-width:none;margin:6px 0 3px}
+.budget-metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
+.metric-item{min-height:84px;border:1px solid #405945;padding:14px;background:#1a3224;display:flex;flex-direction:column;justify-content:space-between;gap:8px}
+.metric-item span{font:500 9px/1.4 var(--mono);color:#b5c7b4}
+.metric-item strong{font:400 clamp(24px,2.8vw,39px)/1 var(--serif);color:var(--accent);overflow-wrap:anywhere}
+@media(max-width:1000px){.review-controls{max-width:none;margin-top:22px}}
+@media(max-width:450px){.budget-metrics{grid-template-columns:1fr 1fr}.commands button{flex:1 1 45%}}
