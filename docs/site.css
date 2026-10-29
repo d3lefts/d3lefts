@@ -379,3 +379,15 @@ html{scroll-padding-top:22px}
 }
 
 .sf-witness-fallback{grid-column:1/-1;padding:19px;border:1px dashed #597b61;color:#b7cdb7;font:11px/1.6 var(--mono)}
+
+/* Evidence-linked internal Research Desk entry; preserve the full homepage. */
+.desk-entry{display:grid;grid-template-columns:1.3fr .7fr;gap:50px;margin:35px 0 22px;background:#233b2d;color:#f2f6e9;padding:38px 42px;border:1px solid #304c35}
+.desk-entry>div>span{font:600 10px/1.5 var(--mono);color:#c8d7b5;letter-spacing:.08em}
+.desk-entry h3{font:400 clamp(41px,4.5vw,68px)/1 var(--serif);margin:18px 0}
+.desk-entry p{font:14px/1.7 var(--sans);color:#d0dfc9;max-width:750px}
+.desk-entry-stat{display:flex;flex-direction:column;align-items:start;justify-content:center;border-left:1px solid #63856a;padding-left:40px}
+.desk-entry-stat strong{font:400 82px/1 var(--serif);color:#d9ff5e}
+.desk-entry-stat span{font:11px var(--mono);color:#c4d6ba;margin:10px 0 28px}
+.desk-entry-stat a{display:inline-block;font:600 11px var(--mono);padding:14px 17px;border:1px solid #d9ff5e;color:#d9ff5e}
+.desk-entry-stat a:hover{background:#d9ff5e;color:#213c2c}
+@media(max-width:760px){.desk-entry{display:block;padding:26px 23px;margin:24px 0}.desk-entry-stat{margin-top:25px;padding:21px 0 0;border-left:0;border-top:1px solid #63856a}.desk-entry-stat strong{font-size:60px}}
