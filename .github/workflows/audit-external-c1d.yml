@@ -29,5 +29,7 @@ jobs:
         run: python3 research/nightfall/independent-audits/tao-constants/c1d_300_exact.py --fetch
       - name: Independent K6144 Barnard-Steinerberger autocorrelation certificate
         run: python3 research/nightfall/independent-audits/tao-constants/c1c_6144_exact.py --fetch
+      - name: Independent historical C1c K3072 exact replay
+        run: python3 research/nightfall/independent-audits/tao-constants/c1c_3072_exact.py --fetch
       - name: Audited NIGHTFALL 33-item calibration inventory
         run: python3 research/nightfall/evaluations/calibration_20261029/audit_inventory.py
