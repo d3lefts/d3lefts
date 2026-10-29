@@ -5,7 +5,7 @@ import {join,normalize,resolve,sep} from "node:path";
 import {chromium} from "playwright-core";
 
 const root=resolve("docs");
-const pages=["index.html","review.html","evidence.html","agenda.html","research.html"];
+const pages=["index.html","review.html","evidence.html","agenda.html","research.html","exact-research.html"];
 const types={".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".svg":"image/svg+xml"};
 const server=createServer(async (req,res)=>{
  try{
@@ -84,14 +84,14 @@ try{
   }
   if(width===390){
     await page.goto(origin+"research.html",{waitUntil:"load"});
-    assert.equal(await page.locator(".atlas-card:visible").count(),23,"23 curated research entries");
+    assert.equal(await page.locator(".atlas-card:visible").count(),30,"30 owner-curated research entries");
     await page.locator('[data-atlas-filter="quantum"]').click();
-    assert.equal(await page.locator(".atlas-card:visible").count(),3,"quantum source entries");
+    assert.equal(await page.locator(".atlas-card:visible").count(),8,"eight quantum source entries");
     await page.locator('[data-atlas-filter="all"]').click();
     await page.locator("#atlas-search").fill("SourceBound");
     assert.equal(await page.locator(".atlas-card:visible").count(),1,"library source search");
     await page.locator("#atlas-search").fill("");
-    assert.equal(await page.locator(".atlas-card:visible").count(),23,"library filter reset");
+    assert.equal(await page.locator(".atlas-card:visible").count(),30,"30-entry library filter reset");
   }
   if(width===390){
     await page.goto(origin+"referee.html",{waitUntil:"load"});
@@ -136,6 +136,25 @@ try{
     assert.equal(await page.locator("#agenda-list .research-proposal:visible").count(),1,"SourceBound search");
     await page.locator("#agenda-search").fill("");
     assert.equal(await page.locator("#agenda-list .research-proposal:visible").count(),10,"agenda search reset");
+  }
+  if(width===390 || width===1280){
+    await page.goto(origin+"exact-research.html",{waitUntil:"load"});
+    await page.locator("#werner-run").click();
+    assert.ok((await page.locator("#werner-output").innerText()).includes('"qExact": "-3/16"'),"Rank-three obstruction exact value");
+    assert.match(await page.locator("#werner-output").innerText(),/"rankAtMostTwo": false/,"Rank-three scope fence");
+    await page.locator("#werner-rank2").click();
+    assert.ok((await page.locator("#werner-output").innerText()).includes('"qExact": "7/2"'),"Rank-two Lemnis physical form");
+    const [wm]=await Promise.all([page.waitForEvent("download"),page.locator("#werner-export").click()]);
+    assert.equal(wm.suggestedFilename(),"NIGHTFALL_werner_exact_receipt.json","Portable exact Werner receipt");
+    await page.locator("#field-run").click();
+    assert.match(await page.locator("#field-output").innerText(),/"phaseOrbits": 4/,"F25 independent phase ambiguity");
+    await page.locator("#field-ambiguous").click();
+    assert.match(await page.locator("#field-output").innerText(),/"phaseOrbits": 157/,"Zero-information adversarial control");
+    await page.locator("#werner-input").fill("invalid-json");
+    await page.locator("#werner-run").click();
+    assert.match(await page.locator("#werner-output").innerText(),/Input rejected/,"Malformed witness rejected");
+    assert.equal(await page.locator("#werner-export").isDisabled(),true,"Invalid input cannot export stale certificate");
+    assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth))<=3,"Exact workbench overflow");
   }
   assert.deepEqual(faults,[],"Browser failures at "+width+": "+faults.join("; "));
   await page.close();

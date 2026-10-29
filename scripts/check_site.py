@@ -105,20 +105,36 @@ def main() -> int:
     # Separate working-research library: preserve originality whitelist and evidence boundaries.
     library = (DOCS / "research.html").read_text(encoding="utf-8")
     entries = re.findall(r'<article class="atlas-card" data-domain="([^"]+)" data-evidence="([^"]+)"', library)
-    expected_domains = {"mathematics": 10, "quantum": 3, "safety": 7, "systems": 3}
-    if len(entries) != 23 or any(sum(domain == cat for domain, _ in entries) != count
-                              for cat, count in expected_domains.items()):
-        FAILURES.append("RESEARCH LIBRARY: curated 23-source discipline inventory changed")
-    for state in ("finite", "conditional", "working", "empirical", "software", "proposal"):
-        if not any(evidence == state for _, evidence in entries):
-            FAILURES.append(f"RESEARCH LIBRARY: missing evidence tier {state}")
+    # Owner-curated 30-entry ledger is the authoritative ordered public inventory.
+    # Check exact category/status sequence, uniqueness and every promised source.
+    import json
+    snapshot = ROOT / "research/nightfall/SITE_CURATED_30_20261028.json"
+    curated = json.loads(snapshot.read_text(encoding="utf-8"))
+    records = curated.get("entries", [])
+    if len(records) != 30 or curated.get("original_findings_whitelist_count") != 3:
+        FAILURES.append("RESEARCH LIBRARY: frozen 30-entry editorial source count or originality gate changed")
+    expected = [(item.get("category"), item.get("evidence")) for item in records]
+    if entries != expected:
+        FAILURES.append("RESEARCH LIBRARY: HTML discipline/evidence sequence differs from owner curated ledger")
+    if len({item.get("id") for item in records}) != len(records):
+        FAILURES.append("RESEARCH LIBRARY: duplicate curated source identifier")
+    expected_domains = {"mathematics", "quantum", "safety", "systems"}
+    if {d for d, _ in entries} != expected_domains:
+        FAILURES.append("RESEARCH LIBRARY: scope unexpectedly lost a research field")
+    permitted_evidence = {"finite", "conditional", "working", "empirical", "software", "proposal"}
+    if any(state not in permitted_evidence for _, state in entries):
+        FAILURES.append("RESEARCH LIBRARY: unrecognized evidence tier")
     link_paths = re.findall(r'href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/([^"]+)"', library)
-    if len(link_paths) < 23 or len(set(link_paths)) < 23:
-        FAILURES.append("RESEARCH LIBRARY: 23 unique source-linked research dossiers required")
+    if len(link_paths) < 30 or len(set(link_paths)) < 30:
+        FAILURES.append("RESEARCH LIBRARY: 30 unique source-linked research dossiers required")
+    linked = set(link_paths)
+    for row in records:
+        if row.get("source") not in linked:
+            FAILURES.append("RESEARCH LIBRARY: curated source missing in public HTML: " + str(row.get("source")))
     for path in link_paths:
         if not (ROOT / "research/nightfall" / path).is_file():
             FAILURES.append("RESEARCH LIBRARY: source dossier missing: " + path)
-    if library.count("Evidence boundary") < 23 or "Only three entries qualify" not in library:
+    if library.count("Evidence boundary") < 30 or "Only three entries qualify" not in library:
         FAILURES.append("RESEARCH LIBRARY: scoped claim boundaries or original-finding distinction missing")
     if homepage_text.count('class="flagship-card ') != 3 or 'href="research.html"' not in homepage_text:
         FAILURES.append("FLAGSHIPS: three explicitly scoped research programs and library navigation required")
