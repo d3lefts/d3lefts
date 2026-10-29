@@ -65,17 +65,17 @@ try{
    assert.equal(v.theme,null,name+": saved light choice remains respected");
    assert.equal(v.paper,"#241a34",name+": Sunset Boulevard archive contract");
    assert.equal(v.oxblood,"#191327",name+": oxblood identity");
-   assert.equal(v.primary,"#f5b78b",name+": sunset action accent");
+   assert.equal(v.primary,"#e7b768",name+": sunset action accent");
    assert.equal(v.bodyBg,"rgb(36, 26, 52)",name+": light canvas");
    assert.ok(v.overflow<=4,name+": no "+width+"px horizontal overflow ("+v.overflow+")");
    const expectations={
-    "index.html":{nav:"rgb(25, 19, 39)",heroAction:"rgb(245, 183, 139)",
-      system:"rgb(25, 19, 39)",lens:"rgb(245, 183, 139)"},
-    "constellation.html":{coreAction:"rgb(245, 183, 139)"},
+    "index.html":{nav:"rgb(25, 19, 39)",heroAction:"rgb(231, 183, 104)",
+      system:"rgb(25, 19, 39)",lens:"rgb(231, 183, 104)"},
+    "constellation.html":{coreAction:"rgb(231, 183, 104)"},
     "join.html":{joinMethod:"rgb(84, 49, 76)",raised:"rgb(59, 44, 75)"},
     "living-paper.html":{sidon:"rgb(25, 19, 39)"},
     "erdos-paper.html":{sidon:"rgb(25, 19, 39)",epConsole:"rgb(59, 44, 75)"},
-    "discovery.html":{discoverySidebar:"rgb(49, 35, 63)",discoveryMark:"rgb(245, 183, 139)"},
+    "discovery.html":{discoverySidebar:"rgb(49, 35, 63)",discoveryMark:"rgb(231, 183, 104)"},
     "claim-lab.html":{claimSidebar:"rgb(49, 35, 63)"},
     "desk.html":{readout:"rgb(25, 19, 39)"}
    };
@@ -143,7 +143,7 @@ try{
     primary:getComputedStyle(document.querySelector(".hero-actions .button")).backgroundColor
   }));
   assert.equal(dark.bg,"rgb(4, 6, 11)","Dusk midnight canvas unchanged");
-  assert.equal(dark.primary,"rgb(230, 222, 170)","Dusk champagne CTA unchanged");
+  assert.equal(dark.primary,"rgb(226, 210, 140)","Dusk champagne CTA unchanged");
   assert.equal(await page.locator('meta[name="theme-color"]').getAttribute("content"),"#04060b","Dusk browser chrome remains midnight navy");
   await toggle.click();
   assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Switching back restores Sunset Boulevard archive");
