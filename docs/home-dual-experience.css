@@ -17,13 +17,13 @@ html:not([data-nf-theme="dusk"]) #main>.hero{
   background:radial-gradient(ellipse at 100% 20%,#e1d1dc65,transparent 52%);
 }
 html:not([data-nf-theme="dusk"]) #main>.hero .hero-title em{
-  color:#6a304e;font-style:italic;
+  color:#d97a4a;font-style:italic;
 }
 html:not([data-nf-theme="dusk"]) #main>.hero .hero-aside{
-  box-shadow:8px 8px 0 #e2d5dc;
+  box-shadow:8px 8px 0 #ecd8cc;
 }
 html:not([data-nf-theme="dusk"]) .nf-dual-index{
-  border-top:1px solid #c8b7c0;border-bottom:1px solid #c8b7c0;
+  border-top:1px solid #c9b2a6;border-bottom:1px solid #c9b2a6;
   display:grid;grid-template-columns:minmax(230px,.65fr) minmax(0,1.35fr);
   gap:clamp(32px,5vw,78px);
   padding-block:clamp(48px,6vw,88px);
@@ -37,38 +37,38 @@ html:not([data-nf-theme="dusk"]) .nf-dual-index{
   max-width:47ch;font:400 14px/1.72 var(--sans);
   color:var(--muted);
 }
-html:not([data-nf-theme="dusk"]) .nf-dual-intro h2 em{color:#6a304e}
+html:not([data-nf-theme="dusk"]) .nf-dual-intro h2 em{color:#d97a4a}
 .nf-archive-shelf{
   display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:0;border:1px solid #c8b7c0;
-  background:#fbf7f5;
+  gap:0;border:1px solid #c9b2a6;
+  background:#fcf3ea;
 }
 .nf-archive-accession{
-  color:#29212a;background:transparent;text-decoration:none;min-width:0;
+  color:#2a1f1d;background:transparent;text-decoration:none;min-width:0;
   display:flex;flex-direction:column;align-items:flex-start;gap:14px;
   padding:clamp(19px,2.3vw,32px);
-  border-right:1px solid #c8b7c0;
+  border-right:1px solid #c9b2a6;
   transition:background .22s ease;
 }
 .nf-archive-accession:last-child{border-right:0}
-.nf-archive-accession:hover{background:#f1e7eb}
+.nf-archive-accession:hover{background:#f5e4d9}
 .nf-archive-accession:focus-visible{
-  outline:3px solid #6a304e;outline-offset:-4px;position:relative;z-index:1;
+  outline:3px solid #d97a4a;outline-offset:-4px;position:relative;z-index:1;
 }
 .nf-archive-id{
-  display:block;padding:0 0 13px;border-bottom:1px solid #c8b7c0;
-  font:600 9px/1.5 var(--mono);letter-spacing:.085em;color:#6a304e;
+  display:block;padding:0 0 13px;border-bottom:1px solid #c9b2a6;
+  font:600 9px/1.5 var(--mono);letter-spacing:.085em;color:#d97a4a;
   width:100%;
 }
 .nf-archive-accession strong{
   font:400 clamp(26px,2.4vw,39px)/1.08 var(--serif);
-  letter-spacing:-.02em;color:#451c35;
+  letter-spacing:-.02em;color:#4a1f24;
 }
 .nf-archive-accession>span:not(.nf-archive-id){
-  font:400 12px/1.67 var(--sans);color:#574852;
+  font:400 12px/1.67 var(--sans);color:#5c4944;
 }
 .nf-archive-accession small{
-  font:600 10px/1.5 var(--mono);color:#6a304e;
+  font:600 10px/1.5 var(--mono);color:#d97a4a;
   margin-top:auto;padding-top:18px;
   text-decoration:underline;text-underline-offset:4px;
 }
@@ -174,7 +174,7 @@ html[data-nf-theme="dusk"] .nf-dual-intro>p{color:#bec8df}
 }
 @media(max-width:760px){
  .nf-archive-shelf{grid-template-columns:1fr}
- .nf-archive-accession{border-right:0;border-bottom:1px solid #c8b7c0;padding:22px}
+ .nf-archive-accession{border-right:0;border-bottom:1px solid #c9b2a6;padding:22px}
  .nf-archive-accession:last-child{border-bottom:0}
  .nf-archive-accession strong{font-size:31px}
  .nf-process-case{padding:20px}
@@ -202,11 +202,11 @@ html[data-nf-theme="dusk"] .nf-dual-intro>p{color:#bec8df}
  flex:1;justify-content:space-between;gap:12px;flex-wrap:wrap;
 }
 html:not([data-nf-theme="dusk"]) #main :is(.flagships,.nf-observatory,.sf-ecosystem,.nf-replay-path){
- border-color:#c8b7c0;
+ border-color:#c9b2a6;
 }
 html:not([data-nf-theme="dusk"]) #main .flagships>.section-head{
  position:relative;padding-left:25px;
- border-left:2px solid #8b5b73;
+ border-left:2px solid #a8684f;
 }
 html:not([data-nf-theme="dusk"]) #main :is(.flagships,.sf-ecosystem) .section-id{
  letter-spacing:.065em;
@@ -216,7 +216,7 @@ html:not([data-nf-theme="dusk"]) #main .nf-observatory-head{
 }
 html:not([data-nf-theme="dusk"]) #main :is(#flagship-title,#instruments-heading,#nf-observatory-title,#nf-replay-title,#sf-systems-heading,#review-title,#method-title) em,
 html:not([data-nf-theme="dusk"]) #main #review-title i{
- color:#6a304e;
+ color:#d97a4a;
 }
 html[data-nf-theme="dusk"] #main .flagships>.section-head{
  position:relative;padding-left:24px;

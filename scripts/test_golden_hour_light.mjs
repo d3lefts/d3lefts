@@ -63,35 +63,35 @@ try{
       epConsole:pick(".ep-console"),overflow:document.documentElement.scrollWidth-innerWidth};
    });
    assert.equal(v.theme,null,name+": saved light choice remains respected");
-   assert.equal(v.paper,"#f4eeed",name+": rose parchment contract");
-   assert.equal(v.oxblood,"#451c35",name+": oxblood identity");
-   assert.equal(v.primary,"#6a304e",name+": blackcherry action accent");
-   assert.equal(v.bodyBg,"rgb(244, 238, 237)",name+": light canvas");
+   assert.equal(v.paper,"#f4e7df",name+": rose parchment contract");
+   assert.equal(v.oxblood,"#4a1f24",name+": oxblood identity");
+   assert.equal(v.primary,"#d97a4a",name+": sunset action accent");
+   assert.equal(v.bodyBg,"rgb(244, 231, 223)",name+": light canvas");
    assert.ok(v.overflow<=4,name+": no "+width+"px horizontal overflow ("+v.overflow+")");
    const expectations={
-    "index.html":{nav:"rgb(69, 28, 53)",heroAction:"rgb(106, 48, 78)",
-      system:"rgb(69, 28, 53)",lens:"rgb(69, 28, 53)"},
-    "constellation.html":{coreAction:"rgb(106, 48, 78)"},
-    "join.html":{joinMethod:"rgb(69, 28, 53)",raised:"rgb(251, 247, 245)"},
-    "living-paper.html":{sidon:"rgb(69, 28, 53)"},
-    "erdos-paper.html":{sidon:"rgb(69, 28, 53)",epConsole:"rgb(251, 247, 245)"},
-    "discovery.html":{discoverySidebar:"rgb(236, 225, 228)",discoveryMark:"rgb(106, 48, 78)"},
-    "claim-lab.html":{claimSidebar:"rgb(236, 225, 228)"},
-    "desk.html":{readout:"rgb(69, 28, 53)"}
+    "index.html":{nav:"rgb(74, 31, 36)",heroAction:"rgb(217, 122, 74)",
+      system:"rgb(74, 31, 36)",lens:"rgb(74, 31, 36)"},
+    "constellation.html":{coreAction:"rgb(217, 122, 74)"},
+    "join.html":{joinMethod:"rgb(74, 31, 36)",raised:"rgb(252, 243, 234)"},
+    "living-paper.html":{sidon:"rgb(74, 31, 36)"},
+    "erdos-paper.html":{sidon:"rgb(74, 31, 36)",epConsole:"rgb(252, 243, 234)"},
+    "discovery.html":{discoverySidebar:"rgb(238, 223, 214)",discoveryMark:"rgb(217, 122, 74)"},
+    "claim-lab.html":{claimSidebar:"rgb(238, 223, 214)"},
+    "desk.html":{readout:"rgb(74, 31, 36)"}
    };
    if(name==="index.html"){
     const diagram=await page.evaluate(()=>{
       const svg=document.querySelector(".hero-aside .diagram");
-      return {signal:getComputedStyle(svg.querySelector('circle[fill="#b0db58"]')).fill,
-        curve:getComputedStyle(svg.querySelector('path[stroke="#213e2d"]')).stroke,
+      return {signal:getComputedStyle(svg.querySelector('circle[fill="#a76450"]')).fill,
+        curve:getComputedStyle(svg.querySelector('path[stroke="#4a1f24"]')).stroke,
         toolbar:document.querySelector('meta[name="theme-color"]')?.content};
     });
-    assert.equal(diagram.signal,"rgb(106, 48, 78)","Mathematical hero signal uses muted blackcherry");
-    assert.equal(diagram.curve,"rgb(69, 28, 53)","Hero's forest-green path uses oxblood");
-    assert.equal(diagram.toolbar,"#451c35","Browser chrome follows blackcherry identity");
+    assert.equal(diagram.signal,"rgb(217, 122, 74)","Mathematical hero signal uses muted blackcherry");
+    assert.equal(diagram.curve,"rgb(74, 31, 36)","Hero's forest-green path uses oxblood");
+    assert.equal(diagram.toolbar,"#4a1f24","Browser chrome follows blackcherry identity");
    }
    for(const [key,target] of Object.entries(expectations[name]||{})){
-    assert.equal(v[key],target,name+" "+width+"px "+key+" matches rose parchment");
+    assert.equal(v[key],target,name+" "+width+"px "+key+" matches sunset parchment");
    }
    if(["index.html","join.html","constellation.html","living-paper.html","discovery.html","claim-lab.html"].includes(name)){
     await page.screenshot({path:"browser-artifacts/golden-hour-"+name.replace(".html","")+"-"+width+".png",fullPage:false});
@@ -120,10 +120,10 @@ try{
   assert.equal(await page.locator('meta[name="theme-color"]').getAttribute("content"),"#101727","Dusk browser chrome remains midnight navy");
   await toggle.click();
   assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Switching back restores rose parchment");
-  await page.waitForFunction(()=>getComputedStyle(document.body).backgroundColor==="rgb(244, 238, 237)",null,{timeout:3500});
-  assert.equal(await page.locator('meta[name="theme-color"]').getAttribute("content"),"#451c35","Light browser chrome returns to blackcherry");
+  await page.waitForFunction(()=>getComputedStyle(document.body).backgroundColor==="rgb(244, 231, 223)",null,{timeout:3500});
+  assert.equal(await page.locator('meta[name="theme-color"]').getAttribute("content"),"#4a1f24","Light browser chrome returns to blackcherry");
   assert.equal(await page.locator("body").evaluate(e=>getComputedStyle(e).backgroundColor),
-   "rgb(244, 238, 237)","Rose parchment survives reversal");
+   "rgb(244, 231, 223)","Rose parchment survives reversal");
   assert.deepEqual(errors,[],"No missing assets or browser JS errors at "+width+"px");
   await context.close();
  }
