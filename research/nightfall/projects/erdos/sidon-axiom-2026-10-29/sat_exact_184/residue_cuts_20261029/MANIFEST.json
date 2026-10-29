@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-29",
+  "dependency": "PR55 research/nightfall/projects/erdos/sidon-axiom-2026-10-29/sat_exact_184/difference_sat_20261029/build_difference_sat.py",
+  "dimacs_sha256": "b3c1054e1bcbe3eaa8b26ebbb367a1b98d223f833d02bc8b04bf5230dedfe9af",
+  "files": {
+    "RESEARCH_NOTE.md": {
+      "bytes": 7360,
+      "sha256": "ebb08c78be9ac3dbe203fb0daeeeef9c72c667ae744f6b6f51035fbb2083f2bf"
+    },
+    "augment_difference_cnf.py": {
+      "bytes": 3874,
+      "sha256": "54d54a8ce285f3081b65475c5ef1199523659471d77552b9c887901d4adf8a9f"
+    },
+    "augmented.log": {
+      "bytes": 711,
+      "sha256": "2690b92301a0275b6fa07032c1d9eff5c30c9842ca76c5258f7d99c08ccb7abb"
+    },
+    "counter.log": {
+      "bytes": 93,
+      "sha256": "82feeac8fcac5a6f605ef4eeebaa3193d7c55266b29bec18fca9191f7201dd69"
+    },
+    "independent_oracle.py": {
+      "bytes": 2270,
+      "sha256": "7df1784c25b924a17c3387b2f1993bfaf6cdb8a77bf53ba2faaec7f509a737ba"
+    },
+    "oracle.log": {
+      "bytes": 324,
+      "sha256": "0b16fbd0626326721a4f7da615bfcde59e05045e288675422dd66d8cc6ed4ecf"
+    },
+    "residue_bounds.py": {
+      "bytes": 2153,
+      "sha256": "67fa8bceef451ffa5ad1bd0ebb454ab59103c5e57f2cee8122a551cbf519ce2e"
+    },
+    "residue_census.log": {
+      "bytes": 2715,
+      "sha256": "030261d14daa85a9c5fecd89f6fd321f217f929caf911b2de0dd9f95f2e9656e"
+    },
+    "verify_counter.py": {
+      "bytes": 1710,
+      "sha256": "8eb40a32c0c3d73d1e5d89a48e9d6e2bb8e2d83586773f40a4f5cf913023ae2f"
+    }
+  },
+  "schema": "nightfall-axiom-sidon-residue-capacity-v1",
+  "status": "R1 analytic necessary cuts; N184 k9 undecided"
+}
