@@ -22,3 +22,6 @@ jobs:
           python-version: "3.12"
       - name: Verify modular difference sets and exhaustive packing/cover gap
         run: python3 research/nightfall/projects/erdos/tessera-singer-hypergraph-gap-20261029/verify_integrality.py
+
+      - name: Verify q25 full Singer subfield triangle and determinant-two obstruction
+        run: python3 research/nightfall/projects/erdos/tessera-singer-hypergraph-gap-20261029/verify_q25_subfield.py
