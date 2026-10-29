@@ -216,7 +216,7 @@ try{
     const sourceFingerprint=await page.locator("#result").innerText();
     assert.match(sourceFingerprint,/SHA-256/i);
     await page.locator("#send-claim-lab").click();
-    await page.waitForURL(/claim-lab\\.html/, {timeout:20000});
+    await page.waitForURL(/claim-lab\.html/, {timeout:20000});
     // A real staged preview replaces the older native confirm dialog.
     await page.locator("#bridgeMask").waitFor({state:"visible",timeout:20000});
     assert.match(await page.locator("#bridgeMeta").innerText(),/Scientific review: unreviewed/);
