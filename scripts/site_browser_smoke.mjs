@@ -5,7 +5,7 @@ import {join,normalize,resolve,sep} from "node:path";
 import {chromium} from "playwright-core";
 
 const root=resolve("docs");
-const pages=["index.html","living-paper.html","erdos-paper.html","join.html","constellation.html","review.html","evidence.html","agenda.html","research.html","exact-research.html","desk.html","frontier.html"];
+const pages=["index.html","living-paper.html","erdos-paper.html","join.html","constellation.html","review.html","evidence.html","agenda.html","research.html","exact-research.html","desk.html","frontier.html","portfolio.html"];
 const types={".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".svg":"image/svg+xml"};
 const server=createServer(async (req,res)=>{
  try{
@@ -57,6 +57,17 @@ try{
    }
   }
   if(width===390){
+   // An unlisted page must still render its real canonical records.
+   await page.goto(origin+"portfolio.html",{waitUntil:"load"});
+   const canonicalTotal=await page.evaluate(()=>window.NightfallRegistry.claims.length);
+   assert.equal(await page.locator("#pf-live-records .pf-ledger-card").count(),canonicalTotal,
+     "Portfolio must include every published canonical claim, no manual copy");
+   assert.equal(await page.locator("#pf-live-events li").count(),8,
+     "Portfolio should show eight latest dated source events");
+   assert.equal(await page.locator('meta[name="robots"]').getAttribute("content"),
+     "noindex, nofollow, noarchive","Unlisted page should prohibit indexing");
+   assert.equal(await page.locator('.pf-ledger-card[data-claim-id="erdos36"]').count(),1,
+     "Known finite claim retained in live intake");
    await page.goto(origin+"living-paper.html",{waitUntil:"load"});
    assert.equal(await page.locator("#lp-points .lp-point").count(),30,"Living Paper 30 exact coordinates");
    assert.equal(await page.locator("#lp-edge-select option").count(),28,"Living Paper 28 progression constraints");
