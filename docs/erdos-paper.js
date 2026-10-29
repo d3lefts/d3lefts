@@ -135,7 +135,7 @@
  saveSelects();show();
  // Explicit, immutable cross-check against published local manifest data.
  const manifest=registry?.claimById?.("erdos36");
- if(!manifest||!manifest.conditions.includes("2^70")||FULL_SCORE.length<100){
+ if(!manifest||!manifest.conditions.includes("2^70")||$("ep-exact-score").textContent.replace(/\s+/g,"")!==FULL_SCORE){
   $("ep-output").textContent="RESEARCH METADATA UNAVAILABLE / Site registry source invariant failed; inspect the public manifest.";
  }
 })();
