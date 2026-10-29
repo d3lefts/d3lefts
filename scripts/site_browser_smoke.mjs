@@ -73,9 +73,9 @@ try{
    const canonicalMechanisms=await page.evaluate(()=>window.NightfallRegistry.mechanisms.length);
    assert.equal(await page.locator("#pf-mechanism-list .pf-mechanism").count(),canonicalMechanisms,
      "Every canonical mechanism must be projected from the registry");
-   assert.match(await page.locator("#pf-mechanism-list").innerText(),/analogy/i,
+   assert.match(await page.locator("#pf-mechanism-list").textContent(),/analogy/i,
      "Untested analogy stays explicitly marked");
-   assert.match(await page.locator("#process-evaluation").innerText(),/held-out|Blind natural-web/i,
+   assert.match(await page.locator("#process-evaluation").textContent(),/held-out|Blind natural-web/i,
      "Portfolio must show decisive external evaluation gap");
    assert.equal(await page.locator("#pf-search-output .pf-search-result").count(),1,
      "Grounded retriever shows a supported default Werner record");
