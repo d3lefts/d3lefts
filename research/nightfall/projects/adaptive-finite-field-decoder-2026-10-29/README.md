@@ -26,7 +26,22 @@ For (K=\mathbb F_p[\alpha]), (\alpha^2=D) a non-square, any nonzero ((p-1))-st p
 
 ## Information lower bound and its limit
 
-One query returns at most (M=1+(q^r-1)/(q-1)) different values. There are (S=1+(q^{rk}-1)/(q-1)) input classes modulo global (L^\times). A deterministic adaptive decision tree therefore needs (M^m\ge S), regardless of its choice of future rows. When (r=2) and (q=p\ge5), elementary arithmetic gives (S>(p+2)^{2k-2}) for (k=1,2,3), so **(2k-1) is worst-case optimal in these dimensions**. Optimality for all (k\ge4) is open. These are information counts, not a claim of noise robustness.
+One query returns at most (M=1+(q^r-1)/(q-1)) different values. There are (S=1+(q^{rk}-1)/(q-1)) input classes modulo global (L^\times). A deterministic adaptive decision tree therefore needs (M^m\ge S), regardless of its choice of future rows. When (r=2) and (q=p\ge5), elementary arithmetic gives (S>(p+2)^{2k-2}) for (k=1,2,3), so **(2k-1) is worst-case optimal in these dimensions**. A separate two-query fibre argument settles the quadratic-extension case k=4 for base-field size q>=5 (below). Optimality beyond the proved dimensions remains unresolved. These are information counts, not a claim of noise robustness.
+
+## Sharp dimension-four lower bound over quadratic extensions
+
+**Theorem (internal algebraic proof, exact finite audit).** For every prime-power $q\ge5$, any deterministic adaptive protocol recovering **every** $x\in\mathbb F_{q^2}^4$ up to a common scalar in $\mathbb F_q^\times$, using only queries $(a\cdot x)^{q-1}$, needs **at least seven readings in the worst case**. Axiom's two-round $2k-1$ decoder meets this lower bound at $k=4$. This sharpens the previously documented dimensions $1$–$3$ under precisely the same sensing model.
+
+**Proof.** Every powered reading has at most $M=q+2$ outputs: zero plus the $q+1$ nonzero $(q-1)$-power values. Suppose an adaptive six-query procedure succeeds. Examine the first two rounds, choosing a nonzero output whenever a queried linear form is independent of the earlier forms. Such a branch is always feasible because a new independent linear functional ranges over the full extension field.
+
+* If the two linear forms are independent, choose nonzero readings for both. Each has $q-1$ possible roots; the two unconstrained coordinates have $q^2$ choices apiece. The $(q-1)^2q^4$ signal vectors split into free global-scalar orbits of size $q-1$, leaving exactly **$(q-1)q^4$ inequivalent signals** with the same first two responses.
+* If the second form is proportional to the first, its powered response is already determined by the first response; a nonzero first reading leaves $q^6$ inequivalent signals. If the first row is zero, take a nonzero output from the second row when possible, leaving the same $q^6$ classes. If both rows vanish, even more classes remain. Thus in every case at least $(q-1)q^4$ classes survive one feasible two-step transcript.
+
+The four remaining queries generate at most $(q+2)^4$ continuation transcripts. Yet $(q-1)q^4>(q+2)^4$ for all $q\ge5$: the function $(q-1)(q/(q+2))^4$ is strictly increasing for real $q>1$, and its value at $q=5$ is $2500/2401>1$. At least two surviving phase classes therefore share their complete six-query output transcript. Contradiction. The explicit seven-query decoder provides the matching upper bound.
+
+**Independent arithmetic certificate.** Run \`python3 sharp_k4_lower.py\`. Using only the scalar action of $\mathbb F_5^\times$ on a two-component representation of $\mathbb F_{25}$, it enumerates **2,500** surviving phase classes after two independent nonzero readings and **15,625** after one independent nonzero reading. The decisive integer comparison is $2500>7^4=2401$. A separate integer loop checks base sizes $5$–$100$ as a regression control. The monotonic inequality above, rather than this finite loop, certifies the general $q\ge5$ extension.
+
+**Review and provenance.** The original F25 $k=4$ obstruction appears in Vesper's internal [PR #37 audit](https://github.com/d3lefts/d3lefts/pull/37), \`VESPER_ADAPTIVE_GAP_REVIEW.md\`. This proof makes the quadratic-extension $q\ge5$ consequence explicit and adds a separate enumerating checker. Axiom retains attribution for the adaptive construction; NIGHTFALL research leadership: Devin J. Wright. Specialist external proof review and matched-model priority comparison remain open. This is **not** an independently accepted publication-priority claim.
 
 ## Independent finite audit
 
@@ -47,7 +62,7 @@ Axiom's separate sparse protocol uses fourth powers in (\mathbb F_p), (p\equiv5\
 - **Validity:** algebraic argument supplied; non-author proof review pending.
 - **Computational audit:** the public exhaustive checker independently reruns exactly; finite fields and dimensions are explicitly limited.
 - **Priority:** related work includes Alexeev–Bandeira–Fickus–Mixon, *Phase Retrieval with Polarization* (2014), DOI 10.1137/12089939X; Charikar–Wu–Ye, *Adaptive Discrete Phase Retrieval* (2020), DOI 10.1137/1.9781611976014.9; and earlier finite-field powered-interpolation methods. A focused same-model novelty audit remains outstanding.
-- **Open problems:** optimal query counts for (k\ge4); adversarial error correction with additive redundancy; same-model nonadaptive construction; extended-field root extraction implementation edge cases.
+- **Open problems:** optimal query counts in higher dimensions, including F25 at k>=5; adversarial error correction with additive redundancy; same-model nonadaptive construction; extended-field root extraction implementation edge cases.
 - **Attribution:** Axiom proposed the adaptive decoder; the 29 October review derived the general extension and separately audited the Cauchy coefficient menu. Research program and project leadership: Devin J. Wright. Include original source contributors on further publication.
 
 No unreviewed claim is labeled a theorem accepted by the community, a competitive record, or a novel published result.
