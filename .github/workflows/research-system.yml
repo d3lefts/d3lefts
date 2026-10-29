@@ -1,4 +1,5 @@
 name: NIGHTFALL canonical research system
+# Scope parity: every file checked on main is checked in pull requests.
 on:
   push:
     branches: [main]
@@ -19,10 +20,18 @@ on:
       - ".github/workflows/research-system.yml"
   pull_request:
     paths:
+      - "docs/index.html"
+      - "docs/research.html"
+      - "docs/research.js"
+      - "docs/site.css"
       - "docs/research-registry.js"
+      - "docs/research-system.css"
       - "docs/passport.*"
       - "docs/atlas.*"
       - "docs/home-system.js"
+      - "docs/claim-lab.html"
+      - "docs/referee-app.js"
+      - "docs/sitemap.xml"
       - "research/nightfall/research-system/**"
       - ".github/workflows/research-system.yml"
   workflow_dispatch:
