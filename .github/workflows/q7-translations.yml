@@ -1,0 +1,43 @@
+name: RYEV Q7 translation-closed face joins
+on:
+  push:
+    branches: ["ryev/q7-translation-closure-20261029"]
+  pull_request:
+    paths:
+      - "research/nightfall/projects/erdos/q7-face-matching-20261029/**"
+      - ".github/workflows/q7-translations.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-translation-family:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Original source SHA-256 and exact existing matching oracle
+        run: |
+          echo '2c4a0bfdcbac0d2751a6d2ab3b8b345cd6d4dd2febe437d63cadc2af960168a1  research/nightfall/projects/erdos/q7-global-face-20261029/canonical_180.txt' | sha256sum -c -
+          python3 research/nightfall/projects/erdos/q7-face-matching-20261029/test_matching.py
+      - name: Build independently implemented C++ six-dimensional recombination verifier
+        run: |
+          g++ -O3 -std=c++17 -Wall -Wextra -Werror research/nightfall/projects/erdos/q7-face-matching-20261029/q7_translation.cpp -o /tmp/q7_translation
+      - name: Exhaust all 4,464,064 unordered high-face joins under 64 translations
+        run: |
+          /tmp/q7_translation research/nightfall/projects/erdos/q7-global-face-20261029/canonical_180.txt | tee /tmp/q7_translation.log
+          if grep -q '^FOUND_CANDIDATE_EDGE_COUNT ' /tmp/q7_translation.log; then
+            python3 research/nightfall/projects/erdos/q7-face-matching-20261029/verify_translated_candidate.py q7_translation_candidate_edges.txt
+          else
+            grep -q '^TRIALS 4464064$' /tmp/q7_translation.log
+            grep -q '^CANDIDATES 0$' /tmp/q7_translation.log
+          fi
+      - name: Retain raw result, including null and candidate evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: q7-translation-family-evidence
+          path: |
+            /tmp/q7_translation.log
+            q7_translation_candidate_edges.txt
+          if-no-files-found: warn
+          retention-days: 90
