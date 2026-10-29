@@ -13,7 +13,7 @@
   return e;
  };
  const safeLink=url=>typeof url==="string"&&
-  (/^https:\/\/[^\s"'<>]+$/.test(url)||/^[a-z0-9-]+\.html(?:\?claim=[a-z0-9_-]+)?(?:#[a-z0-9-]+)?$/i.test(url));
+  (/^https:\/\/[^\s"'<>]+$/.test(url)||/^[a-z0-9-]+\.html(?:\?claim=[a-z0-9_-]+(?:&obligation=0)?)?(?:#[a-z0-9-]+)?$/i.test(url));
  const anchor=(label,url)=>{
   if(!safeLink(url))return null;
   const a=doc("a","",label);a.href=url;
@@ -67,7 +67,7 @@
    first||"No outstanding review obligation is listed in this dated snapshot. This is not an external approval.");
   if(first){
    const work=anchor("Take this specific review obligation ↗",
-    "join.html?claim="+encodeURIComponent(c.id)+"#claim-investigation");
+    "join.html?claim="+encodeURIComponent(c.id)+"&obligation=0#claim-investigation");
    if(work)gate.append(work);
    gate.append(doc("p","co-trace-conditions",obligations.length+
     " unresolved obligation(s) listed in the Passport; only the first is displayed here."));
