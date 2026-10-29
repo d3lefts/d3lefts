@@ -66,4 +66,20 @@ Run \`python3 research/nightfall/projects/erdos/overlap_transport_20261029/check
 
 The common **certification failure pattern** with Tessera's Singer lane is representational information loss: reducing an integer Sidon set modulo \(v\) creates wraparound collisions, while averaging an admissible overlap profile can erase subcell correlation peaks. This is a **tested analogy of failure modes**, not a proved mapping between the respective structures or a new transfer theorem. Any future cross-domain result must give an actual functor/map of witnesses, preserved predicates and exact loss bounds. Singer source-switch work [PR #192](https://github.com/d3lefts/d3lefts/pull/192) and Vesper affine-cut [PR #195](https://github.com/d3lefts/d3lefts/pull/195) retain their restricted scopes.
 
-**Next tests:** (1) Lemnis independently audits the BV constant and zero-extension conventions; (2) Ryev implements a distinct interval/step exact checker with corrupted support controls; (3) Tessera attempts a genuine universal two-lag **lower** dual with valid off-diagonal terms and rational falsifiers; (4) source-aware q25 two-generation Singer transport stays separately in #95. **Stop:** do not claim new Erdős #36 record, an infinite Sidon theorem or novelty from these classical approximation/carry facts.
+**Next tests:** (1) Lemnis independently audits the BV constant and zero-extension conventions; (2) Ryev implements a distinct interval/step exact checker with corrupted support controls; (3) Tessera attempts a genuine universal two-lag **lower** dual with valid off-diagonal terms and rational falsifiers; (4) source-aware q25 two-generation Singer transport stays separately in #95, **after** checking source equivalence. A new primitive generator, trace weight or irreducible polynomial gives only an affine-relabelled *classical Singer* difference set. Do not claim independent q25 source families from such changes. Finding an inequivalent cyclic planar source would be a distinct, source-qualified problem (its existence cannot be assumed). **Stop:** do not claim new Erdős #36 record, an infinite Sidon theorem or novelty from these classical approximation/carry facts.
+
+
+## Follow-up source-family feasibility audit (classical equivalence, no novelty claim)
+
+For the classical Singer construction over \(K=\mathbb F_{q^3}\), let \(\alpha\) be primitive and \(v=(q^3-1)/(q-1)\). Each nonzero \(\mathbb F_q\)-linear form is \(x\mapsto\operatorname{Tr}(\beta x)\) with \(\beta=\alpha^j\ne 0\). Its associated cyclic difference set is
+\[
+ D_{\alpha,\beta}=\{i\bmod v:\operatorname{Tr}(\beta\alpha^i)=0\}
+ =D_{\alpha,1}-j.
+\]
+If \(\alpha'=\alpha^u\) is another primitive generator, then \(u\) is invertible modulo \(v\), and
+\[
+ D_{\alpha',\beta}=u^{-1}(D_{\alpha,1}-j).
+\]
+Field-coordinate/isomorphic-polynomial changes preserve this equivalence. Thus **all classical field-trace Singer sources obtained by these controls are affine equivalent as cyclic difference sets**, for *every prime power q*, including \(q=25\). Source checks against [Singer difference set equivalence](https://personal.ntu.edu.sg/bernhard/Publications/pub/Singer.pdf) and [Sage difference-family construction](https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/designs/difference_family.html). This is the standard projective-plane source equivalence, not a new research result. The existence/classification of **other** cyclic planar difference sets outside this construction must be researched separately; do not assume q25 offers a second inequivalent source.
+
+**Revised next test in lane S:** either (a) hold the affine source class fixed and test *two generations and growing hostile prefixes* without calling a source switch independent, or (b) first exhibit and externally source an actually inequivalent cyclic planar difference set and only then compare repair behavior. The latter is conditional on feasibility. This corrects the earlier wording in #95/#96 requesting inequivalent q25 Singer “fields” as if changing the field presentation were sufficient.
