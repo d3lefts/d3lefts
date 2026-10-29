@@ -532,7 +532,7 @@ const REGISTRY={
       "to": "exact-enumeration",
       "relation": "finite-check",
       "label": "Exact signed-lag arithmetic",
-      "note": "Integer-convolution replay of the finite grid; full frozen witness release is still pending.",
+      "note": "Integer-convolution replay of the finite grid is documented with a curated public witness release; independent external mathematical audit remains open.",
       "source": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/erdos/STATUS_AND_PRIOR_ART_20261028.md"
     },
     {
@@ -548,7 +548,7 @@ const REGISTRY={
       "to": "proof-provenance",
       "relation": "method",
       "label": "Input hash + independent replay",
-      "note": "Provenance auditing identifies missing complete frozen public assets.",
+      "note": "The curated finite witness and checksum manifest are publicly released; independent external mathematical replay remains open.",
       "source": "evidence.html"
     },
     {
