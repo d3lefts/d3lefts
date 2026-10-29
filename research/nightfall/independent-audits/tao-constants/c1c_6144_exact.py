@@ -34,21 +34,21 @@ def read_source(raw):
     return c, w
 
 
-def correlate_pair_first(w):
+def correlate_pair_first(w, kmax):
     # For every ordered (i,j), i<=j, contribute to lag j-i exactly once.
     # Contrast the claimant's lag-major correlation verifier.
-    result = [0] * (K + 1)
+    result = [0] * (kmax + 1)
     for i, wi in enumerate(w):
         if not wi:
             continue
-        for j in range(i, min(N, i + K + 1)):
+        for j in range(i, min(len(w), i + kmax + 1)):
             result[j-i] += wi * w[j]
     return result
 
 
 def verify(raw):
     data, w = read_source(raw)
-    sums = correlate_pair_first(w)
+    sums = correlate_pair_first(w, K)
     smallest = min(sums)
     kmin = sums.index(smallest)
     total = sum(w)
