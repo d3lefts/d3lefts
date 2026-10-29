@@ -1,4 +1,6 @@
 "use strict";
+/* Shared chrome is a private module: never overwrite an embedded tool renderer. */
+(() => {
 const root="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/";
 const entries=[
  {"category":"mathematics","name":"Erdős minimum overlap","summary":"Original 131,072-cell rational witness, exact continuous-shift value and independent integer-convolution audit. A distinct finite construction; no global optimality claim.","status":"New explicit finite witness · exact audit","path":"projects/erdos-overlap-paper.md"},
@@ -150,4 +152,6 @@ if(menu&&nav){
   if(rail)rail.insertAdjacentElement("afterend",nav);
   else main.before(nav);
  }
+})();
+
 })();
