@@ -1,0 +1,42 @@
+name: RYEV Q7 parity-syndrome theorem audit
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/agent-reports/ryev_q7_parity_gap_20261029/**"
+      - ".github/workflows/ryev-q7-parity-gap.yml"
+  push:
+    branches: [ryev/q7-parity-syndrome-global-gate-20261029]
+  workflow_dispatch:
+
+jobs:
+  parity-gap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify syntax and source hash
+        run: |
+          python3 -m py_compile research/nightfall/agent-reports/ryev_q7_parity_gap_20261029/verify_parity_gap.py
+          sha256sum research/nightfall/agent-reports/ryev_q7_parity_gap_20261029/verify_parity_gap.py
+      - name: Reproduce Q4 full syndrome spectrum and Q7 controls
+        run: |
+          python3 research/nightfall/agent-reports/ryev_q7_parity_gap_20261029/verify_parity_gap.py | tee /tmp/ryev_parity_gap.json
+          python3 - <<'PY'
+          import json
+          r=json.load(open('/tmp/ryev_parity_gap.json'))
+          assert r['q4']['syndromes']==131072
+          assert r['q4']['weight3']==32 and r['q4']['weight4']==102
+          assert r['q7']['minimal_syndromes']==448
+          assert r['q7']['two_edge_weight_spectrum']=={'10':4032,'12':96096}
+          assert r['q7']['invalid_addition_rejected']
+          print('PASS: all independent source-level parity checks')
+          PY
+      - name: Archive exact finite witness receipt only
+        uses: actions/upload-artifact@v4
+        with:
+          name: ryev-q7-parity-gap-receipt
+          path: /tmp/ryev_parity_gap.json
+          retention-days: 30
