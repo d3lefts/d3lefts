@@ -1,0 +1,24 @@
+name: Verify Tessera affine Singer source adaptation
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/projects/erdos/tessera-affine117-20261029/**"
+      - ".github/workflows/verify-tessera-affine117.yml"
+  push:
+    paths:
+      - "research/nightfall/projects/erdos/tessera-affine117-20261029/**"
+      - ".github/workflows/verify-tessera-affine117.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-sidon-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Full source-adaptive affine census, all 66 sums, complete q7 full repair
+        run: python3 research/nightfall/projects/erdos/tessera-affine117-20261029/certify.py
