@@ -37,15 +37,16 @@ const CASES=Object.freeze([
 const NEAR=[49,50,56,78,93,104,125,139,149];
 function score(c){return Object.keys(RUBRIC).reduce((s,k)=>s+RUBRIC[k]*c.rubric[k],0)}
 function prioritize(cs=CASES){return cs.slice().sort((a,b)=>score(b)-score(a)||a.id.localeCompare(b.id))}
-function verifyNine(input){
+function verifyFinite(input,N=184,k=9){
+ if(!Number.isSafeInteger(N)||N<3||N>512||!Number.isSafeInteger(k)||k<1||k>N)throw Error("Unsupported finite witness dimensions.");
  const raw=String(input||"").trim();if(raw.length>1200)return {status:"INVALID_INPUT",message:"Input exceeds the 1200-character limit."};
  const parts=raw.split(/[\s,;]+/).filter(Boolean);
- if(parts.length!==9)return {status:"INVALID_INPUT",message:"Provide exactly nine integer marks; received "+parts.length+"."};
+ if(parts.length!==k)return {status:"INVALID_INPUT",message:"Provide exactly "+k+" integer marks; received "+parts.length+"."};
  if(parts.some(x=>!/^\d+$/.test(x)))return {status:"INVALID_INPUT",message:"Marks must be whole decimal integers."};
  const marks=parts.map(Number);
- if(marks.some(x=>!Number.isSafeInteger(x)||x<1||x>184))return {status:"INVALID_INPUT",message:"Each mark must be an integer from 1 through 184."};
+ if(marks.some(x=>!Number.isSafeInteger(x)||x<1||x>N))return {status:"INVALID_INPUT",message:"Each mark must be an integer from 1 through "+N+"."};
  const sorted=marks.slice().sort((a,b)=>a-b);
- if(new Set(sorted).size!==9)return {status:"INVALID_INPUT",message:"All nine marks must be distinct."};
+ if(new Set(sorted).size!==k)return {status:"INVALID_INPUT",message:"All marks must be distinct."};
  function pairs(A){
   const seen=new Map();
   for(let i=0;i<A.length;i++)for(let j=i;j<A.length;j++){
@@ -59,12 +60,13 @@ function verifyNine(input){
  if(collision)return {status:"INVALID_SIDON",marks:sorted,collision,
   message:"Repeated unordered pair sum "+collision.sum+" from "+collision.first.join("+")+" and "+collision.second.join("+")+". Diagonal pairs count."};
  const current=new Set(sorted),addable=[];
- for(let x=1;x<=184;x++)if(!current.has(x)&&!pairs(sorted.concat(x)))addable.push(x);
- if(addable.length)return {status:"NOT_MAXIMAL",marks:sorted,addable,checked:175,
-  message:"Sidon property holds, yet "+addable.length+" omitted mark(s) can still be inserted: "+addable.join(", ")+". This candidate does not settle N=184."};
- return {status:"FINITE_YES_CHECK_PASSED",marks:sorted,addable:[],checked:175,
-  message:"Exact local check passed: 45 distinct unordered pair sums and all 175 omitted marks blocked. This witnesses YES for the finite N=184, k=9 existence question. Independent replay and dated priority review remain separate."};
+ for(let x=1;x<=N;x++)if(!current.has(x)&&!pairs(sorted.concat(x)))addable.push(x);
+ if(addable.length)return {status:"NOT_MAXIMAL",marks:sorted,addable,checked:N-k,
+  message:"Sidon property holds, yet "+addable.length+" omitted mark(s) can still be inserted: "+addable.join(", ")+". This candidate does not settle the finite decision."};
+ return {status:"FINITE_YES_CHECK_PASSED",marks:sorted,addable:[],checked:N-k,
+  message:"Exact local check passed: "+(k*(k+1)/2)+" distinct unordered pair sums and all "+(N-k)+" omitted marks blocked. This witnesses YES for the finite N="+N+", k="+k+" existence question. Independent replay and dated priority review remain separate."};
 }
+function verifyNine(input){return verifyFinite(input,184,9)}
 function workItem(caseId,partId,children=[]){
  const c=CASES.find(x=>x.id===caseId);if(!c)return null;
  const base=c.parts.find(x=>x.id===partId);if(base)return {...base,caseId,nodeId:caseId+":"+base.id,source:c.source,issue:c.issue};
@@ -90,5 +92,5 @@ function contract(item){if(!item)throw Error("Select a work branch.");
   requiredEvidence:["exact statement and assumptions","source commit and SHA-256","construction or proof","independent verifier and negative controls","dated same-scope priority check"],
   status:"OPEN — personal assignment proposal; external assignment requires a public GitHub issue",review:"Pending independent reproduction and mathematical review"};
 }
-return Object.freeze({VERSION,SNAPSHOT,RUBRIC,CASES,NEAR,score,prioritize,verifyNine,workItem,split,contract});
+return Object.freeze({VERSION,SNAPSHOT,RUBRIC,CASES,NEAR,score,prioritize,verifyFinite,verifyNine,workItem,split,contract});
 });
