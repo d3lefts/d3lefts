@@ -77,4 +77,4 @@ The public library preserves **15 Mathematics, 4 Quantum, 6 Safety, 7 Systems** 
 
 ### Fourth flagship (29 October 2026)
 
-[Axiom's deterministic adaptive finite-field decoder](../research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/README.md) now has a homepage flagship card, a separately scoped Proof Passport and independently reproducible exact finite checker. The adaptive two-round measurement result is distinct from the conditional nonadaptive fourth-power phase-retrieval track. Publication priority and external mathematical proof review remain open.
+[Axiom's deterministic adaptive finite-field decoder](../research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/README.md) now has a homepage flagship card, a separately scoped Proof Passport and independently reproducible exact finite checker. The improved extension-degree batched decoder needs k+⌈(k−1)/(r−1)⌉ queries and is globally optimal at k+1 for 2≤k≤r and q>2. The adaptive two-round model remains distinct from the conditional random nonadaptive fourth-power lattice-decoding track. Publication priority and external mathematical proof review remain open.
