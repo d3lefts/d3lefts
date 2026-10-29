@@ -48,17 +48,17 @@
  </nav>
 </div></header>
 <main class="wrap evidence-page" id="main">
-<span class="kicker">EVIDENCE ACCESS / FROZEN ASSETS / OCTOBER 28, 2026</span>
+<span class="kicker">EVIDENCE ACCESS / VERIFIED PUBLIC ASSETS / OCTOBER 29, 2026</span>
 <h1>Inspect the exact<br><i>evidence.</i></h1>
 <p class="lede">Independent review depends on access to the original bytes, together with their verification procedures. The archived source bundles are preserved for forensic reproducibility. Items lacking a substantiated original contribution are excluded from the public findings index.</p>
 <div class="provenance-state">
-<strong>MASTER ARCHIVE STATUS — ORIGINAL BYTES RECOVERED; PUBLIC RELEASE GATED</strong>
-Both original frozen ZIP archives were recovered from owner-held sources on October 29 and copied to a private release-review location without changing their contents. Fresh post-transfer SHA-256 and ZIP CRC tests passed for both archives. They are <em>not publicly downloadable yet</em>. A nested-content disclosure review identified a research-scope conflict in the expanded archive, so an authorized full-source release or a separately hashed curated derivative must be selected before publication. <a href="https://github.com/d3lefts/d3lefts/issues/5" target="_blank" rel="noopener"><u>Track the public release gate in issue #5</u></a>. Download links will appear only after anonymous downloads and hashes are verified.
+<strong>PUBLIC RELEASE — TWO APPROVED CURATED ARCHIVES, VERIFIED</strong>
+The two owner-approved curated v2 ZIPs are now <a href="https://github.com/d3lefts/d3lefts/releases/tag/nightfall-research-2026-10-28" target="_blank" rel="noopener"><u>published as GitHub Release assets</u></a>. Fresh anonymous downloads passed exact SHA-256, byte count, ZIP CRC, complete member manifests, and all 78 nested supplementary-member checks on October 29. The historical master archives and excluded research remain private. Publication and finite arithmetic replay do not change mathematical proof or external-review status.
 </div>
 
 <section aria-labelledby="new-finite-evidence">
 <h2 id="new-finite-evidence">Complete finite evidence, available now.</h2>
-<p>The 30-point Sidon construction now has a separately regenerated <strong>edge-essentiality certificate</strong> with all original coordinate integers, all 28 arithmetic-progression constraints, and 28 explicit 18-point survivor sets. The exact Python search excludes all 12-vertex progression covers using 639 memoized states. Its mutation control rejects a corrupted witness. This is a complete primary source package for <em>that specific finite theorem</em>, independent of the pending master binary archives.</p>
+<p>The 30-point Sidon construction now has a separately regenerated <strong>edge-essentiality certificate</strong> with all original coordinate integers, all 28 arithmetic-progression constraints, and 28 explicit 18-point survivor sets. The exact Python search excludes all 12-vertex progression covers using 639 memoized states. Its mutation control rejects a corrupted witness. This is a complete primary source package for <em>that specific finite theorem</em>, separately available from the curated release below.</p>
 <div class="source-links">
 <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/edge_essentiality_certificate.json" target="_blank" rel="noopener">Full source + 28 counterwitnesses (JSON) ↗</a>
 <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/edge_essentiality.py" target="_blank" rel="noopener">Exact source generator and checker ↗</a>
@@ -70,33 +70,27 @@ Both original frozen ZIP archives were recovered from owner-held sources on Octo
 python3 edge_essentiality.py
 python3 edge_essentiality.py --json &gt; rebuilt.json
 python3 -c 'import json; assert json.load(open("rebuilt.json")) == json.load(open("edge_essentiality_certificate.json"))'</code></pre>
-<p class="small">Scope: the 28 AP constraints are individually essential for the fixed 30-point hypergraph. This establishes neither an asymptotic Sidon improvement nor external mathematical novelty. The finite source files are publicly downloadable now. The two master ZIPs below remain privately held pending their existing disclosure gate.</p>
+<p class="small">Scope: the 28 AP constraints are individually essential for the fixed 30-point hypergraph. This establishes neither an asymptotic Sidon improvement nor external mathematical novelty. The finite source files are publicly downloadable now. The historical masters remain private; only the two approved curated derivatives are public.</p>
 </section>
-<h2>Two immutable archive files.</h2>
+<h2 id="public-downloads">Download the verified evidence.</h2>
 <div style="overflow-x:auto">
 <table class="asset-table">
-<thead><tr><th scope="col">Archive</th><th scope="col">Bytes</th><th scope="col">Contents</th></tr></thead>
+<thead><tr><th scope="col">Approved archive / SHA-256</th><th scope="col">Bytes</th><th scope="col">Contents</th></tr></thead>
 <tbody>
-<tr><td><strong>NIGHTFALL_GitHub_Release_2026-10-27.zip</strong><code>77665ced561a9ae1d882baffdc5417188166049c27267afd6cb7b408ec9559cb</code></td><td>20,981,017</td><td>214 ZIP entries; original research manuscripts, exact checkers, logs and nested certificates</td></tr>
-<tr><td><strong>NIGHTFALL_Expanded_Research_2026-10-28.zip</strong><code>fca5dba595475783e3482d72d5e4888e76b91c38052a0589577f0fde578b8275</code></td><td>22,753,993</td><td>226 ZIP entries; original release plus the September–October research supplement</td></tr>
+<tr><td><a href="https://github.com/d3lefts/d3lefts/releases/download/nightfall-research-2026-10-28/NIGHTFALL_Curated_Math_Evidence_CANDIDATE_v2_20261029.zip"><strong>Download curated mathematical evidence (ZIP)</strong></a><code>f01702cd554a727711dfdff2908cc21b28b715689885ae8eadf562bdef878d23</code></td><td>11,882,806</td><td>88 ZIP members, including the exact 131,072-cell witness, checkers, manifests and proof-status notices.</td></tr>
+<tr><td><a href="https://github.com/d3lefts/d3lefts/releases/download/nightfall-research-2026-10-28/NIGHTFALL_Curated_Supplementary_Certificates_CANDIDATE_v2_20261029.zip"><strong>Download supplementary certificates (ZIP)</strong></a><code>7c3769047fa247a0abd922bbfafd3a8ab885af62d1cd2c949828805559bb2665</code></td><td>1,046,556</td><td>16 ZIP members plus 78 nested certificate members; source-scoped Sidon, finite-field, Werner and Erdős material.</td></tr>
 </tbody></table></div>
-<p class="small">Each hexadecimal string is the complete SHA-256 of the named original archive. Both CRC-integrity tests passed again on October 28. These hashes refer to the archives themselves, distinct from hashes of individual mathematical witnesses.</p>
-<h2>Release verification and disclosure gate.</h2>
-<ol class="steps">
-<li>Preserve both byte-identical originals under the hashes above; the owner's private research release-review folder now contains recovered copies.</li>
-<li>Apply the <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/PUBLICATION_SCOPE.md" target="_blank" rel="noopener"><u>public-disclosure scope gate</u></a> to all original PDFs, nested bundles and logs. A filename-level scope conflict is documented; an advisory token scan is not disclosure authorization.</li>
-<li>Publish either the specifically approved originals or a new, manifest-backed curated archive with its own SHA-256. Keep any excluded original bytes private.</li>
-<li>Verify each published asset by fresh anonymous download, SHA-256 and ZIP CRC; rerun the relevant mathematical checkers. Only then post the release URL in <a href="https://github.com/d3lefts/d3lefts/issues/5" target="_blank" rel="noopener"><u>issue #5</u></a>.</li>
-</ol>
-<div class="code-label">MACOS / LINUX — VERIFY BOTH ARCHIVES</div>
-<pre><code>shasum -a 256 NIGHTFALL_GitHub_Release_2026-10-27.zip
-shasum -a 256 NIGHTFALL_Expanded_Research_2026-10-28.zip
-unzip -t NIGHTFALL_GitHub_Release_2026-10-27.zip
-unzip -t NIGHTFALL_Expanded_Research_2026-10-28.zip</code></pre>
-<div class="code-label">WINDOWS POWERSHELL — VERIFY SHA-256</div>
-<pre><code>Get-FileHash .\NIGHTFALL_GitHub_Release_2026-10-27.zip -Algorithm SHA256
-Get-FileHash .\NIGHTFALL_Expanded_Research_2026-10-28.zip -Algorithm SHA256</code></pre>
-<p class="small">A successful hash comparison authenticates archive identity. Mathematical validation additionally requires running the project-specific checker, checking its analytic assumptions, and distinguishing local arithmetic replay from independent expert approval.</p>
+<p class="small">The historical CANDIDATE_v2 filenames are unchanged: the owner approved these exact bytes. Original master ZIPs are not part of this release. Their historical identities remain in the <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/CURATED_PUBLIC_RELEASE_APPROVAL_20261029.md">disclosure ledger</a>.</p>
+<h2>Reproduce the public download.</h2>
+<p>From a checkout of the repository, run the following. The downloader uses no account, token or private Drive URL and validates both complete manifests before accepting the bytes.</p>
+<pre><code>python3 scripts/download_nightfall_curated_assets.py public-assets
+python3 research/nightfall/agent-reports/ea36_131072/replay_erdos_gmp.py public-assets/NIGHTFALL_Curated_Math_Evidence_CANDIDATE_v2_20261029.zip</code></pre>
+<p class="small">The exact GMP replay requires Python 3, g++ and GMP development headers. The byte/manifest checker uses only Python's standard library. Hashes establish identity; mathematical claims retain their stated assumptions. Imported Werner premises, upstream lower-bound Arb computations and external proof refereeing remain separate gates.</p>
+<div class="source-links">
+<a href="https://github.com/d3lefts/d3lefts/releases/tag/nightfall-research-2026-10-28">Release notes and assets ↗</a>
+<a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/CURATED_PUBLIC_DOWNLOAD_RECEIPT_20261029.json">Anonymous download and exact arithmetic receipt ↗</a>
+<a href="https://github.com/d3lefts/d3lefts/blob/main/scripts/verify_nightfall_curated_assets.py">Offline asset verifier ↗</a>
+</div>
 <h2>Agent verification 01 — independent implementation, internal replay passed.</h2>
 <p>An independently implemented GNU MP integer-convolution verifier, executed internally, examined every signed grid shift of the frozen 131,072-cell overlap witness. It recovered the exact upper bound, discovered the second-highest grid value with a positive exact separation, and established a sufficient integer-height stability radius for the unique maximizing shift. A separate exact-rational geometry control passed 1,720 small cases; the accompanying elementary proof bridges grid shifts to all real translations. <strong>This is internal agent-executed reproducibility, distinct from formal-kernel proof checking and external specialist peer review.</strong></p>
 <div class="source-links">
@@ -105,9 +99,9 @@ Get-FileHash .\NIGHTFALL_Expanded_Research_2026-10-28.zip -Algorithm SHA256</cod
 <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/agent-reports/ea36_131072/replay_erdos_gmp.py" target="_blank" rel="noopener">Independent replay source ↗</a>
 </div>
 <h2>What a referee receives.</h2>
-<p>The master archive contains <code>research/nightfall/AUDIT.md</code>, <code>SHA256SUMS.txt</code>, project checkers, finite witness files, and replay logs. Read the <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/REVIEW_PROTOCOL.md" target="_blank" rel="noopener"><u>independent-review protocol</u></a> before reporting a pass. A separate unresolved task, <a href="https://github.com/d3lefts/d3lefts/issues/6" target="_blank" rel="noopener"><u>issue #6</u></a>, seeks the exact input behind the accepted Arena leaderboard result.</p>
+<p>The curated assets contain project checkers, finite witness files, replay material, <code>NOTICE_AND_PROOF_STATUS.txt</code>, complete member manifests and explicit exclusions. Read the <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/REVIEW_PROTOCOL.md" target="_blank" rel="noopener"><u>independent-review protocol</u></a> before reporting a pass. A separate unresolved task, <a href="https://github.com/d3lefts/d3lefts/issues/6" target="_blank" rel="noopener"><u>issue #6</u></a>, seeks the exact input behind the accepted Arena leaderboard result.</p>
 <div class="action-row">
-<a class="button" href="https://github.com/d3lefts/d3lefts/issues/5" target="_blank" rel="noopener">Track archive release ↗</a>
+<a class="button" href="https://github.com/d3lefts/d3lefts/issues/5" target="_blank" rel="noopener">Release verification record ↗</a>
 <a class="button button-light" href="review.html">Choose a review task ↗</a>
 </div>
 <div class="source-links">

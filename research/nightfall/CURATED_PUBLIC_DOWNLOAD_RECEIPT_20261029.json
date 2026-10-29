@@ -1,0 +1,54 @@
+{
+  "status": "PASS",
+  "verified_at_utc": "2026-10-29T06:37:53.122400+00:00",
+  "release_url": "https://github.com/d3lefts/d3lefts/releases/tag/nightfall-research-2026-10-28",
+  "release_id": 427532911,
+  "assets": [
+    {
+      "asset": "NIGHTFALL_Curated_Math_Evidence_CANDIDATE_v2_20261029.zip",
+      "status": "PASS",
+      "bytes": 11882806,
+      "sha256": "f01702cd554a727711dfdff2908cc21b28b715689885ae8eadf562bdef878d23",
+      "members": 88,
+      "nested_members": 0,
+      "download_url": "https://github.com/d3lefts/d3lefts/releases/download/nightfall-research-2026-10-28/NIGHTFALL_Curated_Math_Evidence_CANDIDATE_v2_20261029.zip",
+      "anonymous_download": true
+    },
+    {
+      "asset": "NIGHTFALL_Curated_Supplementary_Certificates_CANDIDATE_v2_20261029.zip",
+      "status": "PASS",
+      "bytes": 1046556,
+      "sha256": "7c3769047fa247a0abd922bbfafd3a8ab885af62d1cd2c949828805559bb2665",
+      "members": 16,
+      "nested_members": 78,
+      "download_url": "https://github.com/d3lefts/d3lefts/releases/download/nightfall-research-2026-10-28/NIGHTFALL_Curated_Supplementary_Certificates_CANDIDATE_v2_20261029.zip",
+      "anonymous_download": true
+    }
+  ],
+  "exact_arithmetic": {
+    "result": "PASS",
+    "scope": "finite rational heights, mass, all signed grid-lag coefficients",
+    "method": "independently authored packed Python big-integer convolution",
+    "witness_sha256": "a574c280f8839503c90076507a27f4c819455fb2512fae6a43b6a17f6a784b8e",
+    "height_count": "131072",
+    "maximizing_lag": "-17280",
+    "exact_score": "34788888032212764146872525963225147703298526879/91343852333181432387730302044767688728495783936"
+  },
+  "commands": [
+    "python3 scripts/download_nightfall_curated_assets.py public-assets",
+    "python3 scripts/verify_erdos_independent.py public-assets/heights_u70.txt"
+  ],
+  "witness_source_member": "programs/erdos-overlap/frozen-witness/heights_u70.txt",
+  "checker_sha256": {
+    "scripts/verify_nightfall_curated_assets.py": "c5851d5d26b8af6d50e186cade393c4a41d494a061c1c4a6ebba81571ed33a6f",
+    "scripts/download_nightfall_curated_assets.py": "c710c9beaedd045b9188690ee664f830c4df6244c37103c5d4df04f075f30232",
+    "scripts/verify_erdos_independent.py": "9a14639dac17e05ff1cae8f00402b14f6a4a3d09340d5be99ec1e4fec7d828f9"
+  },
+  "arithmetic_checker_source_commit": "c211c6be29e7e97c4d36dc8ea6c3ea47d3c6cefe",
+  "limitations": [
+    "Internal replay of separately authored finite arithmetic checker; no external peer-review or novelty promotion.",
+    "Historical master archives and excluded research remain private.",
+    "Accepted Arena payload identity is separate under issue #6.",
+    "GMP replay is delegated to CI because this local environment lacks gmpxx.h."
+  ]
+}

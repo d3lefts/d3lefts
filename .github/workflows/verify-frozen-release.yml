@@ -3,59 +3,54 @@ on:
   release:
     types: [published]
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/verify-frozen-release.yml"
+      - "scripts/download_nightfall_curated_assets.py"
+      - "scripts/verify_nightfall_curated_assets.py"
+      - "research/nightfall/agent-reports/ea36_131072/**"
+  pull_request:
+    paths:
+      - ".github/workflows/verify-frozen-release.yml"
+      - "scripts/download_nightfall_curated_assets.py"
+      - "scripts/verify_nightfall_curated_assets.py"
+      - "research/nightfall/agent-reports/ea36_131072/**"
 permissions:
   contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
-  exact-reproduction:
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.release.tag_name == 'nightfall-research-2026-10-28' }}
+  curated-public-reproduction:
+    if: ${{ github.event_name != 'release' || github.event.release.tag_name == 'nightfall-research-2026-10-28' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 35
-    env:
-      GH_TOKEN: ${{ github.token }}
-      RELEASE_TAG: ${{ github.event.release.tag_name || 'nightfall-research-2026-10-28' }}
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - name: Download original public release assets
-        run: |
-          mkdir -p frozen-assets
-          gh release download "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --dir frozen-assets \
-            --pattern NIGHTFALL_GitHub_Release_2026-10-27.zip \
-            --pattern NIGHTFALL_Expanded_Research_2026-10-28.zip
-      - name: Verify immutable asset hashes, CRC and independent exact convolution
-        run: |
-          python3 scripts/verify_frozen_release.py frozen-assets | tee verification-report.json
-      - name: Archive machine-verification receipt
-        if: always()
-        uses: actions/upload-artifact@v4
         with:
-          name: nightfall-frozen-evidence-${{ github.run_id }}
-          path: verification-report.json
-          if-no-files-found: warn
-  agent-gmp-reproduction:
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.release.tag_name == 'nightfall-research-2026-10-28' }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 25
-    env:
-      GH_TOKEN: ${{ github.token }}
-      RELEASE_TAG: ${{ github.event.release.tag_name || 'nightfall-research-2026-10-28' }}
-    steps:
-      - uses: actions/checkout@v4
-      - name: Download original exact-byte master ZIP
+          persist-credentials: false
+      - name: Fresh anonymous downloads and complete curated manifest checks
+        shell: bash
         run: |
-          mkdir -p frozen-assets
-          gh release download "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --dir frozen-assets \
-            --pattern NIGHTFALL_GitHub_Release_2026-10-27.zip
+          set -euo pipefail
+          python3 scripts/download_nightfall_curated_assets.py frozen-assets | tee public-asset-receipt.json
       - name: Provision GMP development headers
         run: sudo apt-get update -qq && sudo apt-get install -y -qq libgmp-dev
-      - name: Independently reproduce exact upper bound and grid-isolation certificate
+      - name: Independently reproduce all signed shifts from the public curated witness
+        shell: bash
         run: |
+          set -euo pipefail
           python3 research/nightfall/agent-reports/ea36_131072/replay_erdos_gmp.py \
-            frozen-assets/NIGHTFALL_GitHub_Release_2026-10-27.zip \
+            frozen-assets/NIGHTFALL_Curated_Math_Evidence_CANDIDATE_v2_20261029.zip \
             | tee independent-gmp-receipt.json
-      - name: Upload separate agent algorithm's reproducible receipt
+      - name: Archive byte identity and finite arithmetic receipts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: nightfall-gmp-independent-${{ github.run_id }}
-          path: independent-gmp-receipt.json
+          name: nightfall-curated-public-replay-${{ github.run_id }}
+          path: |
+            public-asset-receipt.json
+            independent-gmp-receipt.json
           if-no-files-found: warn
+          retention-days: 90

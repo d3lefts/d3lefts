@@ -1,6 +1,7 @@
 name: Preflight Observatory Gate C frozen inputs
 on:
   push:
+    branches: [main]
     paths:
       - 'research/nightfall/evaluations/gate_c/**'
       - 'scripts/check_gate_c_preflight.cjs'
@@ -10,6 +11,9 @@ on:
       - 'research/nightfall/evaluations/gate_c/**'
       - 'scripts/check_gate_c_preflight.cjs'
       - '.github/workflows/observatory-gate-c-preflight.yml'
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
