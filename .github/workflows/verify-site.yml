@@ -111,6 +111,18 @@ jobs:
         run: |
           set -o pipefail
           CHROME_BIN="$(command -v google-chrome)" node scripts/test_golden_hour_light.mjs 2>&1 | tee browser-artifacts/golden-hour-light.log
+      - name: Test scroll-driven animation in both themes, narrow phones, and reduced motion
+        run: |
+          set -o pipefail
+          CHROME_BIN="$(command -v google-chrome)" node scripts/test_scroll_cinema.mjs 2>&1 | tee browser-artifacts/scroll-cinema.log
+      - name: Upload mobile scroll-cinema screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-scroll-cinema-${{ github.run_id }}
+          path: browser-artifacts/scroll-cinema-*.png
+          if-no-files-found: ignore
+          retention-days: 14
       - name: Upload golden-hour light design screenshots
         if: always()
         uses: actions/upload-artifact@v4
