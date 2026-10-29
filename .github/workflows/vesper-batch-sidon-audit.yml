@@ -1,0 +1,31 @@
+name: NIGHTFALL Vesper batch Sidon exact audit
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/agent-reports/vesper_batch_sidon_20261029/**'
+      - '.github/workflows/vesper-batch-sidon-audit.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/agent-reports/vesper_batch_sidon_20261029/**'
+      - '.github/workflows/vesper-batch-sidon-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  batch-sidon:
+    name: Exhaustive group sums vs parameterized repair
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile sources
+        run: python3 -m py_compile research/nightfall/agent-reports/vesper_batch_sidon_20261029/*.py
+      - name: Independent exhaustive direct-sum oracle
+        run: python3 research/nightfall/agent-reports/vesper_batch_sidon_20261029/audit.py
