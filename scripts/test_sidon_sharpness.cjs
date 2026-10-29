@@ -17,7 +17,7 @@ assert.deepEqual(passed.data.newPoints,["40000001","80000001","120000001"]);
 const bad=S.check(C,"40000000","0");
 assert.equal(bad.verdict,"NO_CERTIFICATE_FOR_SELECTED_INPUT");
 assert.equal(bad.checks.fourFive.pass,false);
-const collision=S.check(C,"1","0");
+const collision=S.check(C,"1","-1");
 assert.equal(collision.verdict,"NO_CERTIFICATE_FOR_SELECTED_INPUT");
 assert.equal(collision.checks.distinctNewMarks,false);
 assert.throws(()=>S.check(C,"1.5","1"));
