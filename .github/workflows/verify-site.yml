@@ -113,3 +113,22 @@ jobs:
         run: |
           python3 -m py_compile research/nightfall/projects/involution-shadow-codes/verify_heterogeneous_erasure.py
           python3 research/nightfall/projects/involution-shadow-codes/verify_heterogeneous_erasure.py
+
+      - name: Ryev all-prime sharp three-grid theorem and 9-query adaptive decoder
+        run: |
+          python3 research/nightfall/agent-reports/ryev_three_grid_20261029/check_48_grid.py > /tmp/ryev-grid.json
+          python3 research/nightfall/agent-reports/ryev_three_grid_20261029/check_prime_family.py > /tmp/ryev-primes.json
+          python3 research/nightfall/agent-reports/ryev_three_grid_20261029/verify_nine_schedule.py > /tmp/ryev-adaptive.json
+          python3 research/nightfall/agent-reports/ryev_three_grid_20261029/check_global_optimum.py > /tmp/ryev-global.json
+          python3 - <<'PY'
+          import json
+          files=['/tmp/ryev-grid.json','/tmp/ryev-primes.json','/tmp/ryev-adaptive.json','/tmp/ryev-global.json']
+          a,b,c,d=[json.load(open(f)) for f in files]
+          assert a['status']==b['status']==c['status']=='PASS'
+          assert d['verdict']=='PASS'
+          assert a['cases']['rank2']['minimumLargestBucket']==9
+          assert b['results']['7']['centerMultisets']==20825
+          assert c['maximumReadings']==9
+          assert d['globalLowerBoundCertificate']['allCoefficientsStrictlyPositive']
+          print('PASS verified: exact projective 3-grid lemma, all-p polynomial, and 9-query all-signal decoder')
+          PY
