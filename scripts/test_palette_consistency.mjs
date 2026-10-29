@@ -86,8 +86,8 @@ try{
     if(summary.leaks.length)allSurfaceLeaks.push({page:p,mode,width,leaks:summary.leaks});
     if(mode==="dusk"){
       assert.equal(summary.oxblood,"#4a1f24",p+" new-moon oxblood token");
-      assert.equal(summary.moonlight,"#e6deaa",p+" moonlight remains primary");
-    }else assert.equal(summary.golden,"#f5b78b",p+" Golden Hour accent remains primary");
+      assert.equal(summary.moonlight,"#e2d28c",p+" moonlight remains primary");
+    }else assert.equal(summary.golden,"#e7b768",p+" Golden Hour accent remains primary");
    }
    assert.deepEqual(faults,[],mode+" "+width+"px no browser errors");
    await context.close();
