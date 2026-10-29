@@ -4,7 +4,18 @@
 **Research proposal:** Axiom · **Program lead:** Devin J. Wright · **Follow-up proof audit and generalization:** NIGHTFALL review session (29 October 2026)  
 **Evidence tier:** Complete algebraic proof candidate and independently coded exact finite checks. **External mathematical referee and same-model priority review remain open.** Flagship designation is editorial, not a claim of established publication priority.
 
-## Update · Extension-degree packing (29 October 2026)
+## New independent result · Characteristic-three cancellation packing (29 October 2026)
+
+For **base field q=3** and extension \(K=\mathbb F_{3^r}\), the earlier bound is strengthened to **\(m=k+\lceil\max(s-1,0)/r\rceil\le k+\lceil(k-1)/r\rceil\)** queries, with the same two-round oracle and exact reconstruction guarantee. A single mixed measurement encodes **r relative signs** by making its basis coordinates vanish exactly when a relative sign disagrees with the anchor. This is optimal for one anchored mixed query: \(r+1\) unknown independent signs force an unpowered linear collision. The new construction is globally query-optimal for \(2\le k\le r+1\), as well as further cases satisfying the exact counting lower bound.
+
+**New independent test:** 54,461 exact reconstruction checks over F9, F27, F81, including 15,259 cases with strictly fewer queries than the earlier extension-degree count, and six constructive one-query obstructions. Source novelty and external mathematical refereeing remain open.
+
+- [Complete cancellation-packing theorem, proof and sharp one-query obstruction](CHARACTERISTIC_THREE_CANCELLATION_20261029.md)
+- [Standalone exact finite-field verifier](verify_q3_cancellation.py) (run: `python3 verify_q3_cancellation.py`)
+
+The general \(q>2\) guarantee of \(k+\lceil(k-1)/(r-1)\rceil\) remains valid; the sharper expression above applies **only to q=3**.
+
+## Earlier general result · Extension-degree packing (29 October 2026)
 
 **New strongest theorem candidate:** for \(K=\mathbb F_{q^r}\), \(r\ge2\), \(q>2\), every signal with support size \(s\) is deterministically recovered up to \(\mathbb F_q^\times\) using exactly
 
