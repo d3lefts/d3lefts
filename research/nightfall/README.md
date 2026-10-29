@@ -7,6 +7,12 @@
 
 The research program uses representation changes, independent verification, proof-carrying artifacts, and a strict distinction between finite results and global theorems. Competition rankings, mathematical validity, and publication priority are tracked separately.
 
+## Curated 30-document public research library — October 28
+
+The [website research library](https://d3lefts.github.io/d3lefts/research.html) now contains **30** individually linked and claim-qualified source documents: 11 mathematics and algorithms, 8 quantum/spectral, 7 safety/provenance/cognition, and 4 research systems/evaluations. See the [machine-readable selection](SITE_CURATED_30_20261028.json) and [editorial review with inclusion/exclusion decisions](SITE_CURATED_30_EDITORIAL_REVIEW_20261028.md).
+
+The curated 30 are **not** 30 original discoveries. The site continues to identify exactly three approved original findings; conditional source margins, restricted Werner witness classes, classical antecedents, code/prototype evidence, and private original PDF/ZIP archives are disclosed explicitly. Two restricted four-copy Werner source digests have been newly mirrored in text form: [nine-word affine code](projects/werner-affine-code/RESEARCH_DIGEST.md) and [complementary-syndrome gluing](projects/werner-syndrome-gluing/RESEARCH_DIGEST.md).
+
 ## NIGHTFALL Discovery Engine — executable research workflow
 
 The [Discovery Engine v1](discovery-engine/README.md) provides problem contracts, candidate representation lineage, eight reusable search-operator families, finite cyclic-overlap experiments, exact replay, falsification controls, scientific worker handoffs, and portable evidence manifests. Launch the [live research interface](https://d3lefts.github.io/d3lefts/discovery.html).
