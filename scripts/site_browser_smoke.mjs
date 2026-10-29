@@ -78,7 +78,7 @@ try{
   assert.equal(await page.locator(".portfolio").count(),3,"Only original research presets shown");
   if(width===390){
    await page.goto(origin+"index.html",{waitUntil:"load"});
-   assert.match(await page.locator(".ticker").innerText(),/32/,"homepage current library count");
+   assert.match(await page.locator(".ticker").innerText(),/33/,"homepage current library count");
    assert.equal(await page.locator("#instruments .instrument-workflow span").count(),4,"four instrument workflow stages");
    assert.equal(await page.locator('#instruments a[href="exact-research.html"]').count(),1,"research tools hub CTA");
    assert.equal(await page.locator("#work.sf-library-invite").count(),1,"owner-curated full research library invitation");
@@ -87,14 +87,14 @@ try{
   }
   if(width===390){
     await page.goto(origin+"research.html",{waitUntil:"load"});
-    assert.equal(await page.locator(".atlas-card:visible").count(),32,"32 owner-curated research entries");
+    assert.equal(await page.locator(".atlas-card:visible").count(),33,"33 curated research entries");
     await page.locator('[data-atlas-filter="quantum"]').click();
     assert.equal(await page.locator(".atlas-card:visible").count(),4,"four distinct quantum source entries");
     await page.locator('[data-atlas-filter="all"]').click();
     await page.locator("#atlas-search").fill("SourceBound evidence prototype");
     assert.equal(await page.locator(".atlas-card:visible").count(),1,"library source search");
     await page.locator("#atlas-search").fill("");
-    assert.equal(await page.locator(".atlas-card:visible").count(),32,"32-entry library filter reset");
+    assert.equal(await page.locator(".atlas-card:visible").count(),33,"33-entry library filter reset");
     await page.locator("#atlas-evidence").selectOption("conditional");
     assert.equal(await page.locator(".atlas-card:visible").count(),6,"conditional evidence-tier filter");
     await page.locator('[data-atlas-filter="quantum"]').click();
@@ -102,14 +102,14 @@ try{
     assert.ok(intersection>0&&intersection<=6,"combined field and evidence filter");
     await page.locator('[data-atlas-filter="all"]').click();
     await page.locator("#atlas-evidence").selectOption("all");
-    assert.equal(await page.locator(".atlas-card:visible").count(),32,"evidence tiers reset");
+    assert.equal(await page.locator(".atlas-card:visible").count(),33,"evidence tiers reset");
     await page.locator("body").click({position:{x:5,y:5}});
     await page.keyboard.press("/");
     assert.equal(await page.locator("#atlas-search").evaluate(el=>document.activeElement===el),true,"keyboard search focus");
     await page.locator("#atlas-search").fill("no-such-entry");
     assert.equal(await page.locator(".atlas-card:visible").count(),0,"library empty search");
     await page.keyboard.press("Escape");
-    assert.equal(await page.locator(".atlas-card:visible").count(),32,"keyboard search reset");
+    assert.equal(await page.locator(".atlas-card:visible").count(),33,"keyboard search reset");
   }
   if(width===390){
     await page.goto(origin+"referee.html",{waitUntil:"load"});
@@ -197,21 +197,21 @@ try{
     assert.equal(new URL(page.url()).searchParams.get("claim"),"outdated-claim-id","Stale link remains diagnosable");
     await page.locator("#passport-picker a[href='passport.html?claim=werner']").click();
     assert.equal(await page.locator("#passport-unknown").isVisible(),false,"Valid Passport clears warning");
-    assert.match(await page.locator(".pp-coverage").innerText(),/Five canonical Proof Passports, 32 research dossiers/,"Passports explain editorial coverage");
+    assert.match(await page.locator(".pp-coverage").innerText(),/Six canonical Proof Passports, 33 research dossiers/,"Passports explain editorial coverage");
     await page.goto(origin+"index.html",{waitUntil:"load"});
     assert.equal(await page.locator("#lab-jump-nav a").count(),7,"Long laboratory has seven topical jumps");
-    assert.equal(await page.locator(".flagship-context").count(),3,"Each flagship explains meaning of headline metric");
+    assert.equal(await page.locator(".flagship-context").count(),4,"Each flagship explains meaning of headline metric");
     assert.match(await page.locator(".flagship-context").first().innerText(),/maximum overlap/i,"Numerical extremal value interpreted");
     await page.locator('#lab-jump-nav a[href="#research-systems"]').click();
     assert.equal(new URL(page.url()).hash,"#research-systems","Section-index jump works");
     await page.goto(origin+"research.html",{waitUntil:"load"});
-    assert.match(await page.locator(".archive-coverage").innerText(),/Thirty-two dossiers.*Five claim passports.*Three original findings/s,"Library explains record hierarchy");
+    assert.match(await page.locator(".archive-coverage").innerText(),/Thirty-three dossiers.*Six claim passports.*Three original findings/s,"Library explains record hierarchy");
     await page.goto(origin+"atlas.html",{waitUntil:"load"});
-    assert.match(await page.locator(".rs-coverage").innerText(),/five nodes represent a library of 32 documents/i,"Atlas explains limited canonical graph");
+    assert.match(await page.locator(".rs-coverage").innerText(),/six claims represent a library of 33 documents/i,"Atlas explains limited canonical graph");
   }
   if(width===390 || width===1280){
     await page.goto(origin+"desk.html?claim=phase",{waitUntil:"load"});
-    assert.equal(await page.locator(".desk-claim-button").count(),5,"Five canonical research claims visible");
+    assert.equal(await page.locator(".desk-claim-button").count(),6,"Six canonical research claims visible");
     assert.match(await page.locator(".desk-detail-heading").innerText(),/finite-field reconstruction/i,"Deep link selects finite-field claim");
     assert.equal(await page.locator(".desk-dimension").count(),4,"Four independently scoped evidence dimensions");
     await page.locator("#desk-filter").selectOption("conditional");
