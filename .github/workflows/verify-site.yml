@@ -31,7 +31,9 @@ jobs:
         run: |
           find scripts -type f \( -name "*.cjs" -o -name "*.mjs" -o -name "*.js" \) -print0 | xargs -0 -r -n1 node --check
       - name: Validate static pages, source links, anchors, and fallback catalogue
-        run: python3 scripts/check_site.py
+        run: |
+          python3 scripts/check_site.py
+          python3 -c 'import xml.etree.ElementTree as ET; ET.parse("docs/sitemap.xml"); print("Sitemap XML valid")'
       - name: Parse JavaScript without executing browser code
         run: |
           node --check docs/site.js
@@ -46,6 +48,12 @@ jobs:
           node scripts/test_discovery_loop.cjs
           node --check docs/living-paper.js
           node scripts/test_living_paper.cjs
+          node --check docs/erdos-paper-core.js
+          node --check docs/erdos-paper.js
+          node scripts/test_erdos_paper.cjs
+          node --check docs/claim-journey-core.js
+          node --check docs/claim-journey.js
+          node scripts/test_claim_journey.cjs
           node --check docs/join-evidence-core.js
           node scripts/test_join_evidence.cjs
       - name: Independently verify exact Werner and finite-field tools
@@ -89,7 +97,7 @@ jobs:
         run: |
           npm install --no-save --no-package-lock playwright-core@1.56.1
           mkdir -p browser-artifacts
-      - name: Verify ethereal theme across 24 pages and capture previews
+      - name: Verify ethereal theme across 25 pages and capture previews
         run: |
           set -o pipefail
           CHROME_BIN="$(command -v google-chrome)" node scripts/test_ethereal_theme.mjs 2>&1 | tee browser-artifacts/ethereal-theme.log

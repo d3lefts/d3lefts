@@ -54,6 +54,12 @@ Passing one row **never** silently passes another. For the Erdős construction, 
 
 This currently establishes a functioning **deterministic verification lane**, not a fleet of independently provisioned LLM agents. Agent prompts and task IDs here make additional autonomous reviewers reproducible once connected. Neither the deterministic lane nor an agent verdict constitutes human peer review; the objective is transparent machine-certified evidence.
 
+## Additional judgment-provenance gate (JP-01; proposed, unvalidated)
+
+A correct calculation does not reveal who selected the assumptions, endpoint or interpretation. For any consequential choice with two defensible analyses, the Proof Passport should retain: (i) the analyst's time-stamped provisional choice **before** seeing the favored recommendation; (ii) origin and model of each proposal; (iii) an independently prepared opposing case that has not been exposed to the favored conclusion; (iv) the final decision with reasons and attribution; (v) declared shared model/prompt/source dependencies. Label this `JUDGMENT_PROVENANCE_RECORDED` only when records exist; label `JUDGMENT_INDEPENDENCE_UNTESTED` when they do not. This information supplements rather than replaces mathematical replay, proof checking, and independent human oversight.
+
+The [Judgment Provenance experiment](projects/judgment-provenance-2026-10-29/README.md) defines a randomized three-workflow test of agent-preference influence and a separate methodological-quality preservation gate. The proposed protocol is **not a completed study, a certified intervention, or an Original Finding**. Synthetic unit tests prove only that the proposed data-analysis checker obeys its documented arithmetic contract.
+
 ## Privacy and safety
 
 Only public research artifacts may be processed by external services. Logs, prompts and receipt text must omit credentials, private workspace records, personal identifiers and unpublished account data. Refuse any upload/release workflow that exposes those items.

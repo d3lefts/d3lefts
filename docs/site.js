@@ -72,11 +72,25 @@ if(menu&&nav){
 (() => {
  if(location.pathname.endsWith("/join.html")||document.querySelector(".nf-journey-rail"))return;
  const main=document.querySelector("main");if(!main)return;
+ // App-owned grid layouts have their own navigation and must remain untouched.
+ if(main.closest(".app")||document.querySelector("#app"))return;
  let title="";
  try{
    const state=JSON.parse(localStorage.getItem("nightfall.journey.v1")||"null");
    const names={"NF-156-184-9":"Maximal Sidon boundary","NF-Q7-R6":"Q7 graph boundary"};
    if(state&&state.version===1&&Object.prototype.hasOwnProperty.call(names,state.rootId))title=names[state.rootId];
+ }catch(_){}
+ // Prefer the last explicitly selected claim obligation over a generic tool-directory handoff.
+ // Whitelisted IDs are display labels, never arbitrary links or saved HTML.
+ let claimReturn=null;
+ try{
+  const last=JSON.parse(localStorage.getItem("nightfall.claim.journey.v1")||"null");
+  const labels={sidon30:"30-point Sidon",erdos36:"Erdős overlap",phase:"Phase retrieval",adaptive:"Adaptive decoder",werner:"Werner states",pas:"Proof After Scarcity"};
+  const target=last?.selected;
+  if(last?.version===1&&Object.prototype.hasOwnProperty.call(labels,target?.claimId)&&
+     Number.isSafeInteger(target.index)&&target.index>=0&&target.index<20){
+   claimReturn={title:labels[target.claimId],url:"join.html?claim="+encodeURIComponent(target.claimId)+"&obligation="+target.index+"#claim-investigation"};
+  }
  }catch(_){}
  // One shared stylesheet across otherwise independent research tools.
  if(!document.querySelector('link[data-nf-rail-style]')){
@@ -85,9 +99,9 @@ if(menu&&nav){
   sheet.dataset.nfRailStyle="";document.head.append(sheet);
  }
  const bar=document.createElement("nav");bar.className="nf-journey-rail";bar.setAttribute("aria-label","Guided research navigation");
- const tag=document.createElement("span");tag.textContent=title?"RESUME RESEARCH":"ONE GUIDED PATH";
- const primary=document.createElement("a");primary.href=title?"join.html#workspace":"join.html#results";
- primary.textContent=title?"Return to "+title+" ↗":"Results → process → open problem ↗";
+ const tag=document.createElement("span");tag.textContent=claimReturn?"RESUME THIS CLAIM":title?"RESUME RESEARCH":"ONE GUIDED PATH";
+ const primary=document.createElement("a");primary.href=claimReturn?claimReturn.url:title?"join.html#workspace":"join.html#results";
+ primary.textContent=claimReturn?"Return to "+claimReturn.title+" / exact obligation ↗":title?"Return to "+title+" ↗":"Results → process → open problem ↗";
  const gap=document.createElement("span");gap.className="nf-rail-spacer";
  const method=document.createElement("a");method.href="join.html#method";method.textContent="The process";
  const entry=document.createElement("a");entry.href="join.html#assignment";entry.textContent="Find a problem";

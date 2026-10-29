@@ -333,6 +333,37 @@ try{
     assert.match(await page.locator("main").innerText(),/conditional|source|premise/i);
     note("strength","Research proof status and available evidence remain distinct after navigating among mathematical disciplines.","scope");
   });
+  // A source-bound end-to-end loop: actual Living Paper → exact open obligation →
+  // user-authored note → review draft → return to the original result.
+  await step("claim continuity","Living Papers: original claim survives an entire contribution-and-return loop",async()=>{
+    await page.setViewportSize({width:1440,height:900});
+    await visit("erdos-paper.html");
+    await page.locator('a[href*="join.html?claim=erdos36"][href*="obligation=0"]').first().click();
+    assert.equal(await page.locator("#cj-claim").inputValue(),"erdos36");
+    assert.equal(await page.locator("#cj-obligation").inputValue(),"0");
+    assert.match(await page.locator("#cj-condition").innerText(),/zero extension/i);
+    assert.match(await page.locator("#cj-duty").innerText(),/131,072-cell witness/i);
+    assert.equal(await page.locator("#join-active").isVisible(),false,"Unrelated Frontier task must remain unselected");
+    await page.locator("#cj-notes").fill("Independent replay: obtain approved heights_u70.txt, audit all signed lags and SHA-256.");
+    await page.locator("#cj-save").click();
+    assert.match(await page.locator("#cj-save-status").innerText(),/saved locally/i);
+    const issue=decodeURIComponent(await page.locator("#cj-submit").getAttribute("href"));
+    assert.match(issue,/Independent replay/);
+    assert.match(issue,/No theorem, novelty/);
+    await screenshot("11-claim-continuity.png");
+    await page.locator("#cj-return").click();
+    assert.match(page.url(),/erdos-paper\.html#obligations/);
+    assert.match(await page.locator(".nf-journey-rail a").first().getAttribute("href"),/erdos36.*obligation=0/);
+    await visit("join.html?claim=erdos36&obligation=0#claim-investigation");
+    assert.match(await page.locator("#cj-notes").inputValue(),/heights_u70\.txt/);
+    await page.locator("#cj-obligation").selectOption("2");
+    assert.match(await page.locator("#cj-duty").innerText(),/competition input identity/i);
+    await visit("living-paper.html");
+    await page.locator('a[href*="join.html?claim=sidon30"][href*="obligation=0"]').first().click();
+    assert.equal(await page.locator("#cj-claim").inputValue(),"sidon30");
+    assert.match(await page.locator("#cj-duty").innerText(),/specialist audit/i);
+    note("strength","A sourced Living Paper now preserves the exact open obligation and saved unreviewed notes across a return trip; an unrelated finite assignment is never auto-selected.","claim-continuity");
+  });
 } finally {
   report.realElapsedMs=Date.now()-started;
   if(page)await page.close().catch(()=>{});
