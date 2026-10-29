@@ -1,4 +1,4 @@
-/* Golden-hour light acceptance: functional color, WCAG contrast, and dusk isolation.
+/* Rose-parchment light acceptance: functional color, WCAG contrast, and dusk isolation.
    Source/claim evidence is explicitly not part of this decorative test. */
 import assert from "node:assert/strict";
 import {createServer} from "node:http";
@@ -35,6 +35,12 @@ try{
   const page=await context.newPage();
   const errors=[];
   page.on("pageerror",e=>errors.push("pageerror: "+e.message));
+  // A fresh visitor sees dusk; this suite then explicitly selects light.
+  await page.goto(origin+"index.html",{waitUntil:"load"});
+  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk","Dusk is the fresh-visit default");
+  await page.locator(".nf-theme-toggle").click();
+  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Explicit light opt-in activates rose parchment");
+  assert.equal(await page.evaluate(()=>localStorage.getItem("nightfall.theme.v1")),"light","Explicit light choice is persisted");
   page.on("response",r=>{if(r.url().startsWith(origin)&&r.status()>=400)errors.push(r.url()+": "+r.status())});
   for(const name of pages){
    await page.goto(origin+name,{waitUntil:"load"});
@@ -44,7 +50,7 @@ try{
     return {theme:document.documentElement.getAttribute("data-nf-theme"),
       paper:css.getPropertyValue("--lf-paper").trim(),
       oxblood:css.getPropertyValue("--lf-oxblood").trim(),
-      sunset:css.getPropertyValue("--lf-orange").trim(),
+      primary:css.getPropertyValue("--lf-primary").trim(),
       bodyBg:body.backgroundColor,
       nav:pick(".nav-call"),heroAction:pick(".hero-actions .button"),
       coreAction:pick(".co-primary"),joinMethod:pick(".join-method"),
@@ -56,23 +62,22 @@ try{
       readout:pick(".desk-readout"),raised:pick(".join-result-grid article"),
       epConsole:pick(".ep-console"),overflow:document.documentElement.scrollWidth-innerWidth};
    });
-   assert.equal(v.theme,null,name+": light must be the fresh-visit default");
-   assert.equal(v.paper,"#f4e7df",name+": rose parchment contract");
-   assert.equal(v.oxblood,"#4a1f24",name+": oxblood identity");
-   assert.equal(v.sunset,"#d97a4a",name+": sunset action accent");
-   assert.equal(v.bodyBg,"rgb(244, 231, 223)",name+": light canvas");
+   assert.equal(v.theme,null,name+": saved light choice remains respected");
+   assert.equal(v.paper,"#f4eeed",name+": rose parchment contract");
+   assert.equal(v.oxblood,"#451c35",name+": oxblood identity");
+   assert.equal(v.primary,"#6a304e",name+": blackcherry action accent");
+   assert.equal(v.bodyBg,"rgb(244, 238, 237)",name+": light canvas");
    assert.ok(v.overflow<=4,name+": no "+width+"px horizontal overflow ("+v.overflow+")");
    const expectations={
-    "index.html":{nav:"rgb(74, 31, 36)",heroAction:"rgb(217, 122, 74)",
-      feature:"rgb(244, 214, 197)",system:"rgb(74, 31, 36)",
-      observatory:"rgb(237, 216, 203)",lens:"rgb(74, 31, 36)"},
-    "constellation.html":{coreAction:"rgb(217, 122, 74)"},
-    "join.html":{joinMethod:"rgb(74, 31, 36)",raised:"rgb(248, 238, 232)"},
-    "living-paper.html":{sidon:"rgb(74, 31, 36)"},
-    "erdos-paper.html":{sidon:"rgb(74, 31, 36)",epConsole:"rgb(248, 238, 232)"},
-    "discovery.html":{discoverySidebar:"rgb(238, 223, 214)",discoveryMark:"rgb(217, 122, 74)"},
-    "claim-lab.html":{claimSidebar:"rgb(238, 223, 214)",claimMark:"rgb(240, 206, 188)"},
-    "desk.html":{readout:"rgb(74, 31, 36)"}
+    "index.html":{nav:"rgb(69, 28, 53)",heroAction:"rgb(106, 48, 78)",
+      system:"rgb(69, 28, 53)",lens:"rgb(69, 28, 53)"},
+    "constellation.html":{coreAction:"rgb(106, 48, 78)"},
+    "join.html":{joinMethod:"rgb(69, 28, 53)",raised:"rgb(251, 247, 245)"},
+    "living-paper.html":{sidon:"rgb(69, 28, 53)"},
+    "erdos-paper.html":{sidon:"rgb(69, 28, 53)",epConsole:"rgb(251, 247, 245)"},
+    "discovery.html":{discoverySidebar:"rgb(236, 225, 228)",discoveryMark:"rgb(106, 48, 78)"},
+    "claim-lab.html":{claimSidebar:"rgb(236, 225, 228)"},
+    "desk.html":{readout:"rgb(69, 28, 53)"}
    };
    if(name==="index.html"){
     const diagram=await page.evaluate(()=>{
@@ -81,12 +86,12 @@ try{
         curve:getComputedStyle(svg.querySelector('path[stroke="#213e2d"]')).stroke,
         toolbar:document.querySelector('meta[name="theme-color"]')?.content};
     });
-    assert.equal(diagram.signal,"rgb(217, 122, 74)","Mathematical hero signal uses sunset orange, not neon lime");
-    assert.equal(diagram.curve,"rgb(74, 31, 36)","Hero's forest-green path uses oxblood");
-    assert.equal(diagram.toolbar,"#4a1f24","Browser chrome follows blackcherry identity");
+    assert.equal(diagram.signal,"rgb(106, 48, 78)","Mathematical hero signal uses muted blackcherry");
+    assert.equal(diagram.curve,"rgb(69, 28, 53)","Hero's forest-green path uses oxblood");
+    assert.equal(diagram.toolbar,"#451c35","Browser chrome follows blackcherry identity");
    }
    for(const [key,target] of Object.entries(expectations[name]||{})){
-    assert.equal(v[key],target,name+" "+width+"px "+key+" matches golden hour");
+    assert.equal(v[key],target,name+" "+width+"px "+key+" matches rose parchment");
    }
    if(["index.html","join.html","constellation.html","living-paper.html","discovery.html","claim-lab.html"].includes(name)){
     await page.screenshot({path:"browser-artifacts/golden-hour-"+name.replace(".html","")+"-"+width+".png",fullPage:false});
@@ -100,7 +105,7 @@ try{
      body:styles("body")};
   });
   assert.ok(contrast(...comps.nav)>=4.5,"Oxblood navigation button text meets WCAG AA");
-  assert.ok(contrast(...comps.cta)>=4.5,"Sunset-orange action text meets WCAG AA");
+  assert.ok(contrast(...comps.cta)>=4.5,"Blackcherry action text meets WCAG AA");
   assert.ok(contrast(...comps.body)>=7,"Body ink on parchment comfortably exceeds AA");
   const toggle=page.locator(".nf-theme-toggle");
   await toggle.click();
@@ -114,13 +119,13 @@ try{
   assert.equal(dark.primary,"rgb(216, 195, 138)","Dusk champagne CTA unchanged");
   assert.equal(await page.locator('meta[name="theme-color"]').getAttribute("content"),"#101727","Dusk browser chrome remains midnight navy");
   await toggle.click();
-  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Switching back restores warm light");
-  await page.waitForFunction(()=>getComputedStyle(document.body).backgroundColor==="rgb(244, 231, 223)",null,{timeout:3500});
-  assert.equal(await page.locator('meta[name="theme-color"]').getAttribute("content"),"#4a1f24","Light browser chrome returns to blackcherry");
+  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Switching back restores rose parchment");
+  await page.waitForFunction(()=>getComputedStyle(document.body).backgroundColor==="rgb(244, 238, 237)",null,{timeout:3500});
+  assert.equal(await page.locator('meta[name="theme-color"]').getAttribute("content"),"#451c35","Light browser chrome returns to blackcherry");
   assert.equal(await page.locator("body").evaluate(e=>getComputedStyle(e).backgroundColor),
-   "rgb(244, 231, 223)","Golden hour survives reversal");
+   "rgb(244, 238, 237)","Rose parchment survives reversal");
   assert.deepEqual(errors,[],"No missing assets or browser JS errors at "+width+"px");
   await context.close();
  }
- console.log("PASS golden-hour light: 10 pages × mobile/desktop; oxblood structure, rose parchment, sunset actions; AA contrast; unchanged dusk and reversible state");
+ console.log("PASS rose parchment light: dusk-first, 10 light pages × mobile/desktop, blackcherry action palette, AA contrast, unchanged dusk and reversible state");
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve))}
