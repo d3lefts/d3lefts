@@ -120,7 +120,9 @@ try{
    await page.goto(origin+"erdos-paper.html",{waitUntil:"load"});
    assert.match(await page.locator(".nf-journey-rail a").first().getAttribute("href"),/claim=erdos36&obligation=0/);
    await page.goto(origin+"living-paper.html",{waitUntil:"load"});
-   await page.locator('a[href*="join.html?claim=sidon30"][href*="obligation=0"]').first().click();
+   const sidonInvestigationLink=page.locator('a[href*="join.html?claim=sidon30"][href*="obligation=0"]').first();
+   if(!(await sidonInvestigationLink.isVisible())) await page.locator("#menu-button").click();
+   await sidonInvestigationLink.click();
    assert.equal(await page.locator("#cj-claim").inputValue(),"sidon30");
    assert.match(await page.locator("#cj-duty").innerText(),/Independent external specialist audit/i);
    await page.goto(origin+"join.html?claim=not-a-real-claim&obligation=0#claim-investigation",{waitUntil:"load"});
