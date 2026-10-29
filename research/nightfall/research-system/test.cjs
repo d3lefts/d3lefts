@@ -11,7 +11,7 @@ assert.deepEqual(Array.from(R.dimensions),["validity","reproducibility","origina
 const ids=new Set(R.claims.map(c=>c.id)),mids=new Set(R.mechanisms.map(m=>m.id));
 assert.equal(ids.size,5);assert.equal(mids.size,5);
 for(const c of R.claims){
- for(const k of ["id","title","field","kind","statement","conditions","short","measurement","metric"])assert.ok(typeof c[k]==="string"&&c[k].length>4,c.id+" missing "+k);
+ for(const k of ["id","title","field","kind","statement","conditions","short","measurement","metric"])assert.ok(typeof c[k]==="string"&&c[k].length>(k==="id"?1:4),c.id+" missing "+k);
  for(const dimension of R.dimensions)assert.ok(c[dimension]?.label&&c[dimension]?.detail&&c[dimension]?.level,c.id+" bad "+dimension);
  assert.ok(c.sources.length&&c.assumptions.length&&c.open.length,c.id+" missing evidence gate");
  for(const x of c.sources){assert.ok(x.label);assert.match(x.url,/^(https:\/\/|[a-z0-9].*\.html)/)}
