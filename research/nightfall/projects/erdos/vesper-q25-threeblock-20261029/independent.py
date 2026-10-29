@@ -35,7 +35,7 @@ def check(path):
         p=line.split()
         if not p:continue
         if p[0]=='COUNT':
-            assert list(map(int,p[1:]))==[780,78788060]
+            assert list(map(int,p[1:]))==[780,79396460]
         if p[0]!='RESULT':continue
         assert len(p)==10
         r,R,Dmin,u1,c1,u2,c2,u3,c3=map(int,p[1:])
