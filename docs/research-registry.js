@@ -289,6 +289,10 @@ const REGISTRY={
           "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/verify_extension_packing.py"
         },
         {
+          "label": "Independent characteristic-two F4-subfield verifier",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/verify_characteristic_two_subfield.py"
+        },
+        {
           "label": "Public proof dossier and audit scope",
           "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/README.md"
         },
