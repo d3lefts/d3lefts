@@ -665,7 +665,7 @@ try{
    await page.evaluate(()=>localStorage.removeItem("nightfall.journey.v1"));
    assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth))<=3,"Constellation fits "+width+"px screen");
   }
-  assert.deepEqual(faults,[],"Browser failures at +width+": "+faults.join("; "));
+  assert.deepEqual(faults,[],"Browser failures at "+width+": "+faults.join("; "));
   await page.close();
  }
  console.log("PASS: 3 original-portfolio pages plus Discovery Engine × 3 widths, exact experiment and ZIP export");
