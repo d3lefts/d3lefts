@@ -30,7 +30,7 @@
   <div>
    <p class="eyebrow">EXPERIMENT 001 / THE DISCOVERY LOOP</p>
    <h1>Can research<br><em>surprise itself?</em></h1>
-   <p class="lede">Give a finite investigation an initial question. It chooses its next test from prior evidence, risks a prediction, computes the complete answer, and preserves anything that breaks its expectations.</p>
+   <p class="lede">Give a finite investigation an initial question. It proposes its next test, explains the trade-offs, and requests your approval. Each approved experiment tests a prediction and preserves whatever breaks its expectations.</p>
    <p class="scope">This is a deterministic, browser-local pilot on <strong>finite cyclic binary configurations</strong> — a separate problem from the continuous Erdős minimum-overlap benchmark. No agent, remote model, server runner, independent external verifier, or autonomous publication process is connected.</p>
   </div>
   <div class="intro-art" aria-hidden="true">
@@ -41,13 +41,21 @@
   <div>
    <p class="eyebrow">CONTROL / VISIBLE EXECUTION</p>
    <h2 id="control-head">One question. Then the next.</h2>
-   <p>Run up to twelve exact experiments. The initial 15-position, six-mark case is seeded; subsequent targets are selected using the previous results. State stays in this browser until you export it.</p>
+   <p>Review and approve one exact experiment at a time, up to twelve total. The initial 15-position, six-mark case is seeded; subsequent options respond to prior evidence. Redirect the investigation with a written reason. State remains in this browser until exported.</p>
   </div>
-  <div class="commands">
-   <button id="run-one" class="primary" type="button">Run next experiment <span aria-hidden="true">↗</span></button>
-   <button id="run-four" class="secondary" type="button">Run four steps</button>
-   <button id="export" class="secondary" type="button" disabled>Export evidence JSON</button>
-   <button id="reset" class="quiet" type="button">Reset local investigation</button>
+  <div class="review-controls">
+   <label for="candidate-choice">Next experiment — human review required</label>
+   <select id="candidate-choice" aria-describedby="candidate-detail"></select>
+   <p id="candidate-detail" class="review-explanation" aria-live="polite">Loading ranked experimental candidates…</p>
+   <label for="review-note">Researcher's reason / hypothesis note <span>(required for redirection)</span></label>
+   <textarea id="review-note" rows="2" maxlength="280" placeholder="What structure should this test distinguish? Optional for the recommended candidate."></textarea>
+   <div class="commands">
+    <button id="run-one" class="primary" type="button">Approve and run one test <span aria-hidden="true">↗</span></button>
+    <button id="run-four" class="secondary" type="button" aria-pressed="false">Show all candidates</button>
+    <button id="export" class="secondary" type="button" disabled>Export evidence JSON</button>
+    <button id="reset" class="quiet" type="button">Reset local investigation</button>
+   </div>
+   <p class="review-caution">Your click approves exactly one finite experiment. Your selection and reason travel in the replayable evidence record. Browser interaction does not establish identity, external review, or a new theorem.</p>
   </div>
  </section>
  <div class="grid">
@@ -65,12 +73,18 @@
   </section>
   <section class="panel history-panel" aria-labelledby="history-head">
    <div class="panel-top"><span>03 / EVIDENCE BEFORE CLAIMS</span><span id="audit-label">REPLAY PENDING</span></div>
-   <h2 id="history-head">The experiment trail</h2>
-   <p class="sub">Each test enumerates every subset containing position zero. Translation makes this sufficient for global finite coverage at fixed length and mass. A separate direct-shift calculation rechecks the displayed witness.</p>
+   <h2 id="history-head">Approved experiment trail</h2>
+   <p class="sub">Every recorded test was selected through a human review gate, unless explicitly labeled as a legacy automatic step. Each test enumerates every subset containing position zero. Translation makes this sufficient for global finite coverage at fixed length and mass. A separate direct-shift calculation rechecks the displayed witness.</p>
    <div id="history" class="history" aria-live="polite"><p class="empty-note">Run the first experiment to generate an evidence trail.</p></div>
   </section>
+  <section class="panel metrics-panel" aria-labelledby="metrics-head">
+   <div class="panel-top"><span>05 / INFORMATION PER EXPERIMENT</span><span>LOCAL SCOPE ONLY</span></div>
+   <h2 id="metrics-head">A budget you can audit.</h2>
+   <p class="sub">Counts reflect exhaustively enumerated anchored subsets and locally falsified heuristic predictions. They measure work and surprise, not mathematical originality.</p>
+   <div id="budget-metrics" class="budget-metrics" aria-live="polite"></div>
+  </section>
   <section class="panel residue-panel" aria-labelledby="residue-head">
-   <div class="panel-top"><span>04 / STRUCTURE LEFT BEHIND</span><span id="residue-count">0 RESIDUES</span></div>
+   <div class="panel-top"><span>06 / STRUCTURE LEFT BEHIND</span><span id="residue-count">0 RESIDUES</span></div>
    <h2 id="residue-head">Discovery residues</h2>
    <p class="sub">A wrong prediction is useful evidence. It can generate the next question while remaining separate from a proved family-wide invariant.</p>
    <div id="residues" class="residues" aria-live="polite"><p class="empty-note">No deviations recorded yet.</p></div>
