@@ -90,7 +90,14 @@ def main() -> int:
                   for path in re.findall(r'(?:\bpath|"path")\s*:\s*"([^"]+)"', js))
     homepage = pages[DOCS.joinpath("index.html").resolve()]
     static = set(homepage.research_rows)
-    if sources != static:
+    # The current editorial layout keeps the verified original-finding catalogue in
+    # site.js and moves the homepage body to a separately curated library invitation.
+    # Preserve the original whitelist even when that gallery is absent from HTML.
+    homepage_text = (DOCS / "index.html").read_text(encoding="utf-8")
+    new_library_invite = ('class="sf-library-invite"' in homepage_text
+                          and 'href="research.html"' in homepage_text
+                          and 'href="passport.html"' in homepage_text)
+    if static != sources and not (not static and new_library_invite):
         FAILURES.append(f"Research catalogue mismatch: static-only={sorted(static - sources)}, js-only={sorted(sources - static)}")
     # Public website originality rule: source archives remain broader than this list.
     allowed_originals = {
@@ -98,7 +105,7 @@ def main() -> int:
         PREFIX + "/blob/main/research/nightfall/projects/sidon-finite-30/README.md",
         PREFIX + "/blob/main/research/nightfall/projects/pas-overview.md",
     }
-    if sources != allowed_originals or static != allowed_originals:
+    if sources != allowed_originals or (static and static != allowed_originals) or (not static and not new_library_invite):
         FAILURES.append("ORIGINALITY GATE: public findings differ from three approved primary artifacts. "
                         "Any change requires a new dated prior-art audit and evidence review.")
     homepage_text = (DOCS / "index.html").read_text(encoding="utf-8")
