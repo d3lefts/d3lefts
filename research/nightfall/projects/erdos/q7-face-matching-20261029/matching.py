@@ -54,7 +54,8 @@ def source_faces():
         raw = bytes.fromhex(hexmask)
         chosen = [e for e in range(448) if raw[e >> 3] & (128 >> (e & 7))]
         assert len(chosen) == 304
-        assert all(sum(e in set(chosen) for e in sq) <= 3 for sq in S7) if source_id == 0 else True
+        chosen_set = set(chosen)
+        assert all(sum(e in chosen_set for e in sq) <= 3 for sq in S7), "Invalid source Q7 witness"
         for fixed in range(7):
             for bit in (0,1):
                 ids = []
