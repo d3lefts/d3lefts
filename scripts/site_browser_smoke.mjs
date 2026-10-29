@@ -269,6 +269,18 @@ try{
   }
   if(width===390 || width===1280){
     await page.goto(origin+"exact-research.html",{waitUntil:"load"});
+    await page.locator("#sharpness-run").click();
+    await page.waitForFunction(()=>document.querySelector("#sharpness-output")?.textContent?.includes("FINITE_EXAMPLE_CHECK_PASSED"));
+    assert.match(await page.locator("#sharpness-output").innerText(),/40,920 checked/,"All 33-point four-mark strict difference checks");
+    assert.match(await page.locator("#sharpness-output").innerText(),/h\(B ∪ X\) = 19/,"Correct exact sharpness witness bound");
+    const [sharpnessReceipt]=await Promise.all([page.waitForEvent("download"),page.locator("#sharpness-export").click()]);
+    assert.equal(sharpnessReceipt.suggestedFilename(),"NIGHTFALL_SIDON_SHARPNESS_RECEIPT.json","Evidence scope receipt exported");
+    await page.locator("#sharpness-offset").fill("0");
+    await page.locator("#sharpness-run").click();
+    await page.waitForFunction(()=>document.querySelector("#sharpness-output")?.textContent?.includes("NO_CERTIFICATE_FOR_SELECTED_INPUT"));
+    assert.match(await page.locator("#sharpness-output").innerText(),/\(4,5\) four-point condition: FAIL/,"Negative control rejects invalid offset");
+    await page.locator("#sharpness-reset").click();
+    assert.equal(await page.locator("#sharpness-export").isDisabled(),true,"Reset clears prior evidence");
     await page.locator("#werner-run").click();
     assert.ok((await page.locator("#werner-output").innerText()).includes('"qExact": "-3/16"'),"Rank-three obstruction exact value");
     assert.match(await page.locator("#werner-output").innerText(),/"rankAtMostTwo": false/,"Rank-three scope fence");
