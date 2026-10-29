@@ -435,9 +435,14 @@ try{
     assert.equal(parsedReceipt.experiments.at(-1).claimId,"","Finite receipt remains unassigned");
     assert.match(parsedReceipt.experiments.at(-1).result,/UNREVIEWED/);
     assert.ok(await page.locator("#sendDiscovery").isEnabled());
+    // Explicit human consent for the second, independent Discovery import.
+    page.once("dialog",async dialog=>{
+      assert.match(dialog.message(),/Source SHA-256.*negative controls agree/,"Discovery discloses finite source replay");
+      await dialog.accept();
+    });
     await page.locator("#sendDiscovery").click();
-   await page.waitForURL(url=>url.pathname.endsWith("/discovery.html"));
-    await page.waitForFunction(()=>document.querySelector(".panel.evidence")?.textContent?.includes("LOCAL FINITE REPLAY"),{timeout:20000});
+    await page.waitForURL(url=>url.pathname.endsWith("/discovery.html"));
+    await page.waitForFunction(()=>document.querySelector(".panel.evidence")?.textContent?.includes("LOCAL FINITE REPLAY"),null,{timeout:20000});
     const finiteLedger=await page.locator(".panel.evidence").first().innerText();
     assert.match(finiteLedger,/LOCAL FINITE REPLAY/,"Discovery distinguishes local replay");
     assert.match(finiteLedger,/INPUT HASH MATCH/,"Discovery records exact source fingerprint");
@@ -491,7 +496,7 @@ try{
     await page.locator('#lab-jump-nav a[href="#research-systems"]').click();
     assert.equal(new URL(page.url()).hash,"#research-systems","Section-index jump works");
     await page.goto(origin+"research.html",{waitUntil:"load"});
-    assert.match(await page.locator(".archive-coverage").innerText(),/Thirty-three dossiers.*Six claim passports.*Three original findings/s,"Library explains record hierarchy");
+    assert.match(await page.locator(".archive-coverage").innerText(),/Thirty-three dossiers.*Six claim passports.*Five original finite artifacts and bounded observations/s,"Library explains record hierarchy");
     await page.goto(origin+"atlas.html",{waitUntil:"load"});
     assert.match(await page.locator(".rs-coverage").innerText(),/six claims represent a library of 33 documents/i,"Atlas explains limited canonical graph");
   }
@@ -531,7 +536,7 @@ try{
   }
   if(width===390 || width===1280){
     await page.goto(origin+"exact-research.html#guided-replay",{waitUntil:"load"});
-    assert.equal(await page.locator("#guided-replay .rt-stage").count(),4,"Four-stage claim-to-replay journey");
+    assert.equal(await page.locator("#guided-replay .rt-stage").count(),5,"Five-stage source-to-replay-and-registration journey");
     assert.match(await page.locator("#guided-replay").innerText(),/30-POINT SIDON/,"Original finite scope remains visible");
     assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth))<=3,"Guided research journey fits viewport");
     await page.locator('#guided-replay a[href="referee.html?domain=sidon#workbench"]').first().click();
@@ -686,12 +691,15 @@ try{
    assert.equal(await page.locator("#co-count-claims").innerText(),"06","Claim count sourced from registry");
    assert.equal(await page.locator("#co-count-edges").innerText(),"13","Thirteen source-grounded relationships");
    assert.equal(await page.locator(".co-relation").count(),6,"Representative relationships by default");
-   assert.equal(await page.locator("body").getAttribute("data-theme"),"dark","Dusk first paint is explicit");
-   await page.locator("#co-theme").click();
-   assert.equal(await page.locator("body").getAttribute("data-theme"),"light","Appearance toggle changes skin");
-   assert.equal(await page.locator("#co-theme").getAttribute("aria-pressed"),"false","Theme state accessible");
+   assert.equal(await page.locator("body").getAttribute("data-theme"),"light","Constellation shares archive's light default");
+   assert.equal(await page.locator(".nf-theme-toggle").count(),1,"A single global appearance control");
+   await page.locator(".nf-theme-toggle").click();
+   assert.equal(await page.locator("body").getAttribute("data-theme"),"dark","Constellation uses global dusk skin");
+   assert.equal(await page.locator(".nf-theme-toggle").getAttribute("aria-pressed"),"true","Theme state accessible");
    await page.reload({waitUntil:"load"});
-   assert.equal(await page.locator("body").getAttribute("data-theme"),"light","Appearance persists locally");
+   assert.equal(await page.locator("body").getAttribute("data-theme"),"dark","Global appearance persists locally");
+   await page.locator(".nf-theme-toggle").click();
+   assert.equal(await page.locator("body").getAttribute("data-theme"),"light","Return to paper appearance");
    await page.locator('[data-co-filter="open-premise"]').click();
    assert.equal(await page.locator(".co-relation").count(),3,"Open premises stay separately classified");
    assert.equal(await page.locator('[data-co-filter="open-premise"]').getAttribute("aria-pressed"),"true");

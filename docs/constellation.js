@@ -116,16 +116,7 @@
    $("co-work-source").href=r.issue;$("co-work-source").target="_blank";$("co-work-source").rel="noopener noreferrer";
   }
  }catch(_){/* Invalid storage never changes the canonical graph. */}
- // Dusk is the default presentation; choice affects only visual skin.
- const themeKey="nightfall.constellation.theme.v1",theme=$("co-theme");
- function applyTheme(choice){
-  const dark=choice!=="light";document.body.dataset.theme=dark?"dark":"light";
-  theme.setAttribute("aria-pressed",String(dark));theme.setAttribute("aria-label",dark?"Switch to light appearance":"Switch to dusk appearance");
-  theme.querySelector("span:first-child").textContent=dark?"☾":"☼";
-  $("co-theme-label").textContent=dark?"DUSK":"DAY";
-  document.querySelector('meta[name="theme-color"]')?.setAttribute("content",dark?"#0d1712":"#f2f2e9");
- }
- try{applyTheme(localStorage.getItem(themeKey)||"dark");}catch(_){applyTheme("dark");}
- theme.addEventListener("click",()=>{const next=document.body.dataset.theme==="dark"?"light":"dark";applyTheme(next);try{localStorage.setItem(themeKey,next);}catch(_){}});
+ // Appearance is controlled by the shared, persistent NIGHTFALL theme toggle.
+ document.body.dataset.theme=document.documentElement.dataset.nfTheme==="dusk"?"dark":"light";
  update();
 })();

@@ -19,6 +19,8 @@ function apply(value){
   if(current===DUSK)doc.setAttribute("data-nf-theme",DUSK);
   else doc.removeAttribute("data-nf-theme");
   if(meta)meta.content=current===DUSK?"#101727":originalMeta;
+  if(document.body?.classList.contains("co-page"))document.body.dataset.theme=current===DUSK?"dark":"light";
+  window.dispatchEvent(new Event("nightfall-theme-change"));
   const button=document.querySelector(".nf-theme-toggle");
   if(button){
     const active=current===DUSK;
@@ -48,6 +50,10 @@ function mount(){
   button.addEventListener("click",function(){
     const next=current===DUSK?LIGHT:DUSK;
     persist(next);
+    if(!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches){
+      doc.classList.add("nf-theme-transit");
+      setTimeout(()=>doc.classList.remove("nf-theme-transit"),780);
+    }
     apply(next);
   });
   apply(current);

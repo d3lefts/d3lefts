@@ -68,7 +68,9 @@ try{
     const s=getComputedStyle(document.body);
     return {color:s.color,image:s.backgroundImage,overflow:document.documentElement.scrollWidth-innerWidth};
    });
-   assert.match(appearance.image,/radial-gradient/i,file+": CSS starfield loaded");
+   if(["living-paper.html","erdos-paper.html"].includes(file))
+    assert.equal(appearance.image,"none",file+": scientific reading deliberately has no starfield");
+   else assert.match(appearance.image,/radial-gradient/i,file+": atmospheric starfield loaded");
    if(file==="index.html"){
     const heroButton=await page.locator(".hero-actions .button").first().evaluate(el=>({bg:getComputedStyle(el).backgroundColor,fg:getComputedStyle(el).color}));
     assert.equal(heroButton.bg,"rgb(222, 210, 250)","Dusk primary CTA has light background");
@@ -80,6 +82,29 @@ try{
    if(["join.html","discovery.html","claim-lab.html","erdos-paper.html"].includes(file))
     await page.screenshot({path:"browser-artifacts/ethereal-"+file.replace(".html","")+"-"+width+".png",fullPage:false});
   }
+  // The star map is real navigation through canonical source claims, not ornament.
+  await page.goto(origin+"index.html",{waitUntil:"load"});
+  assert.equal(await page.locator("#nf-observatory-field .nf-observatory-node").count(),11,"Canonical graph has six claims and five mechanisms");
+  assert.equal(await page.locator(".nf-observatory-edge").count(),13,"Thirteen typed relationships drawn from registry");
+  assert.equal(await page.locator(".nf-process-thread a").count(),5,"Five-stage cross-tool research journey");
+  assert.equal(await page.locator('.nf-process-thread a[aria-current="step"]').count(),1,"Research journey has one location marker");
+  await page.locator('.nf-observatory-node[data-node="phase"]').click();
+  assert.equal(await page.locator('.nf-observatory-node[data-node="phase"]').getAttribute("aria-pressed"),"true","Selected source node accessible");
+  assert.match(await page.locator("#nf-observatory-inspector").innerText(),/span-count|span count/i,"Unresolved prerequisite visible");
+  assert.equal(await page.locator('#nf-observatory-inspector a[href="passport.html?claim=phase"]').count(),1,"Proof Passport is source-linked");
+  assert.match(await page.locator("#nf-observatory-inspector").innerText(),/UNRESOLVED PREMISE/,"Open premise explicitly classified");
+  await page.locator('.nf-observatory-node[data-node="phase"]').click();
+  await page.locator("#observatory").screenshot({path:"browser-artifacts/ethereal-observatory-"+width+".png"});
+  await page.goto(origin+"living-paper.html",{waitUntil:"load"});
+  const paperBg=await page.evaluate(()=>getComputedStyle(document.body).backgroundImage);
+  assert.equal(paperBg,"none","Dusk mathematics reading canvas has no stars behind equations");
+  await page.goto(origin+"constellation.html",{waitUntil:"load"});
+  assert.equal(await page.locator("#co-theme").count(),0,"No competing constellation theme toggle");
+  assert.equal(await page.locator("body").getAttribute("data-theme"),"dark","Constellation follows global dusk");
+  await page.locator(".nf-theme-toggle").click();
+  assert.equal(await page.locator("body").getAttribute("data-theme"),"light","Constellation follows global light");
+  await page.locator(".nf-theme-toggle").click();
+  assert.equal(await page.locator("body").getAttribute("data-theme"),"dark","Constellation can return to global dusk");
   await page.goto(origin+"index.html",{waitUntil:"load"});
   await page.emulateMedia({reducedMotion:"reduce"});
   assert.equal(await toggle.evaluate(el=>getComputedStyle(el).transitionDuration),"0s","Reduced motion removes toggle transition");
@@ -92,7 +117,7 @@ try{
   assert.deepEqual(errors,[],width+"px page errors: "+errors.join("; "));
   await context.close();
  }
- console.log("PASS: theme toggle, persistence, no initial override, 25 pages, mobile/desktop, starfield, accessibility and reduced motion");
+ console.log("PASS: light/archive and dusk/observatory, canonical relationships, shared journey, calm papers, 25 pages, mobile/desktop, accessibility and reduced motion");
 }finally{
  await browser?.close();
  await new Promise(resolve=>server.close(resolve));

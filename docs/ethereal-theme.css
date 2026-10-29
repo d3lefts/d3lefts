@@ -170,3 +170,176 @@ html[data-nf-theme="dusk"] .join-hero-aside li b{color:#b7bce8}
 /* A modal's controls must always take precedence over floating page chrome. */
 body:has(.modalMask.show) .nf-theme-floating{visibility:hidden;pointer-events:none}
 .topActions .nf-theme-toggle{min-height:36px;padding:8px 10px}
+
+
+/* OBSERVATORY EXPERIENCE / 2026-10-29
+   Stable scientific content. Light reads as archive; dusk as a working observatory. */
+.nf-observatory{margin-block:clamp(65px,8vw,118px);border-top:1px solid var(--line);padding-top:clamp(30px,4vw,60px)}
+.nf-observatory-head{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(250px,.7fr);align-items:end;gap:clamp(25px,5vw,75px);margin-bottom:36px}
+.nf-observatory-head h2{font:400 clamp(43px,5vw,80px)/1.03 var(--serif);letter-spacing:-.035em;margin-top:18px}
+.nf-observatory-head h2 em{font-weight:400}
+.nf-observatory-intro p{font:clamp(13px,1.3vw,16px)/1.72 var(--sans);color:var(--muted);max-width:45ch}
+.nf-observatory-intro>span{display:block;margin-top:19px;font:600 10px/1.7 var(--mono);letter-spacing:.03em;color:var(--muted)}
+.nf-observatory-layout{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(260px,.68fr);border:1px solid var(--line);min-width:0}
+.nf-observatory-field{position:relative;min-width:0;min-height:595px;padding:22px;background:#ecede5;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-content:space-evenly;gap:6px 18px}
+.nf-observatory-lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;display:none}
+.nf-observatory-node{position:relative;z-index:2;appearance:none;border:1px solid #c5d0c1;border-radius:0;text-align:left;background:#f8f8f0;color:var(--ink);padding:14px 12px;display:flex;align-items:center;gap:10px;min-width:0;cursor:pointer;transition:background .25s,border-color .25s,box-shadow .25s,color .25s}
+.nf-observatory-node:hover,.nf-observatory-node[aria-pressed="true"]{border-color:#688f6e;background:#e3eee0;box-shadow:0 3px 15px #11281514}
+.nf-observatory-star{width:9px;height:9px;min-width:9px;border-radius:50%;background:#2c704c;box-shadow:0 0 0 3px #d1e4d3}
+.nf-observatory-node-text{min-width:0;display:block}
+.nf-observatory-node-text small{display:block;font:600 8px/1.5 var(--mono);letter-spacing:.04em;color:#536b56}
+.nf-observatory-node-text strong{display:block;font:500 clamp(11px,1.1vw,14px)/1.34 var(--sans);margin-top:4px;overflow-wrap:anywhere}
+.nf-observatory-inspector{min-width:0;min-height:595px;padding:clamp(20px,2.8vw,38px);background:#f8f8f0;border-left:1px solid var(--line);overflow-wrap:anywhere}
+.nf-observatory-label,.nf-observatory-inspector>small{display:block;font:600 9px/1.6 var(--mono);letter-spacing:.075em;color:#54705a}
+.nf-observatory-inspector h3{font:400 clamp(29px,2.7vw,43px)/1.08 var(--serif);margin:20px 0}
+.nf-observatory-inspector>p{font:13px/1.75 var(--sans);color:#415345}
+.nf-observatory-scope{border-left:2px solid #6a8f71;padding:10px 0 11px 15px;margin:24px 0;font:12px/1.65 var(--sans);color:#46574b}
+.nf-observatory-relations{border-top:1px solid var(--line);margin-top:23px;padding-top:21px}
+.nf-observatory-relation{display:grid;grid-template-columns:1fr auto;gap:5px 12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.nf-observatory-relation b{font:600 9px/1.6 var(--mono);letter-spacing:.04em;color:#496a51;grid-column:1/-1}
+.nf-observatory-relation[data-relation="open-premise"] b{color:#855f34}
+.nf-observatory-relation[data-relation="analogy"] b{color:#6f6889}
+.nf-observatory-relation span{font:12px/1.5 var(--sans)}
+.nf-observatory-relation a{font:600 10px/1.6 var(--mono);text-decoration:underline;text-underline-offset:3px}
+.nf-observatory-actions{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:24px}
+.nf-observatory-actions a,.nf-observatory-inspector>a{display:inline-block;font:600 11px/1.6 var(--mono);text-decoration:underline;text-underline-offset:4px;margin-top:10px}
+.nf-observatory-disclosure{max-width:96ch;padding:15px 0 0;font:10px/1.75 var(--mono);color:var(--muted)}
+html[data-nf-theme="dusk"] .nf-observatory{border-top-color:#474c70}
+html[data-nf-theme="dusk"] .nf-observatory-head h2 em{color:#d4bdf4}
+html[data-nf-theme="dusk"] .nf-observatory-intro p{color:#bdc8e0}
+html[data-nf-theme="dusk"] .nf-observatory-intro>span{color:#a9b9d7}
+html[data-nf-theme="dusk"] .nf-observatory-layout{border:1px solid #4c5876;box-shadow:0 18px 80px #05081465}
+html[data-nf-theme="dusk"] .nf-observatory-field{display:block;min-height:720px;padding:0;background:radial-gradient(ellipse at 48% 47%,#3d37594b,transparent 50%),radial-gradient(circle at 18% 83%,#2839585c,transparent 40%),linear-gradient(135deg,#101a30,#17172d 72%,#232139)}
+html[data-nf-theme="dusk"] .nf-observatory-field:before{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle,#dbd6f5a5 .7px,transparent 1.4px),radial-gradient(circle,#b3b9e77c .6px,transparent 1.3px);background-size:71px 81px,119px 127px;background-position:12px 8px,45px 35px;opacity:.58}
+html[data-nf-theme="dusk"] .nf-observatory-lines{display:block}
+html[data-nf-theme="dusk"] .nf-observatory-node{position:absolute;top:var(--n-y);transform:translateY(-50%);width:35%;min-height:52px;padding:8px 7px;gap:10px;background:transparent;border-color:transparent;color:#edf0fb}
+html[data-nf-theme="dusk"] .nf-observatory-node[data-kind="claim"]{left:2%;flex-direction:row-reverse;text-align:right}
+html[data-nf-theme="dusk"] .nf-observatory-node[data-kind="mechanism"]{left:63%}
+html[data-nf-theme="dusk"] .nf-observatory-node-text small{color:#afb8d9;font-size:8px}
+html[data-nf-theme="dusk"] .nf-observatory-node-text strong{font-size:clamp(10px,1vw,13px);color:#f2eefa}
+html[data-nf-theme="dusk"] .nf-observatory-node:hover,
+html[data-nf-theme="dusk"] .nf-observatory-node[aria-pressed="true"]{background:#433d6394;border-color:#9d8cc4;box-shadow:0 0 25px #c3a1f42a}
+html[data-nf-theme="dusk"] .nf-observatory-node.is-dim{opacity:.36}
+html[data-nf-theme="dusk"] .nf-observatory-star{width:10px;height:10px;min-width:10px;background:#e8d8ff;border:1px solid #fff4ff;box-shadow:0 0 12px #dec5ff,0 0 28px #8878d9a0}
+.nf-observatory-edge{stroke:#91aacc;stroke-width:1;stroke-opacity:.4;fill:none}
+.nf-observatory-edge.edge-finite-check{stroke:#bce2d4;stroke-opacity:.65}
+.nf-observatory-edge.edge-method{stroke:#b4b6ea}
+.nf-observatory-edge.edge-analogy{stroke:#8f9cba;stroke-dasharray:7 8}
+.nf-observatory-edge.edge-open-premise{stroke:#dbb68d;stroke-dasharray:2 6}
+.nf-observatory-edge.selected{stroke-opacity:.96;stroke-width:2}
+html[data-nf-theme="dusk"] .nf-observatory-inspector{background:#1c263c;border-left-color:#4c5876;color:#f0ecfa}
+html[data-nf-theme="dusk"] .nf-observatory-inspector>p{color:#c2cde0}
+html[data-nf-theme="dusk"] .nf-observatory-label,html[data-nf-theme="dusk"] .nf-observatory-inspector>small{color:#c9b8ef}
+html[data-nf-theme="dusk"] .nf-observatory-scope{color:#cad4e6;border-left-color:#aa99d8}
+html[data-nf-theme="dusk"] .nf-observatory-relation b{color:#b7d9d6}
+html[data-nf-theme="dusk"] .nf-observatory-relation[data-relation="open-premise"] b{color:#e6bc8d}
+html[data-nf-theme="dusk"] .nf-observatory-relation[data-relation="analogy"] b{color:#ccbcea}
+html[data-nf-theme="dusk"] .nf-observatory-actions a,
+html[data-nf-theme="dusk"] .nf-observatory-inspector>a,
+html[data-nf-theme="dusk"] .nf-observatory-relation a{color:#e1d3ff}
+html[data-nf-theme="dusk"] .nf-observatory-disclosure{color:#bdc5dd}
+
+/* The research path is identical in both modes. Dusk makes the progression tangible. */
+.nf-process-thread{--thread-line:#9daf9d;display:flex;align-items:center;justify-content:center;gap:0;padding:16px max(24px,calc((100% - 1240px)/2));margin:0 auto;border-bottom:1px solid var(--line);background:var(--paper);max-width:100%;overflow-x:auto;scrollbar-width:thin}
+.nf-process-thread a{flex:0 1 180px;min-width:105px;position:relative;text-align:center;padding:6px 8px;color:var(--muted);font:600 10px/1.5 var(--mono);letter-spacing:.025em;white-space:nowrap}
+.nf-process-thread a:before{content:"";display:block;position:relative;z-index:1;width:8px;height:8px;border:1px solid #54705a;border-radius:50%;background:var(--paper);margin:0 auto 9px}
+.nf-process-thread a:not(:first-child):after{content:"";position:absolute;top:9px;right:50%;width:100%;border-top:1px solid var(--thread-line);pointer-events:none}
+.nf-process-thread a[aria-current="step"]{font-weight:700;color:#204a30}
+.nf-process-thread a[aria-current="step"]:before{background:#477b58;box-shadow:0 0 0 4px #b6d2b9}
+.nf-process-thread a:hover{text-decoration:underline;text-underline-offset:4px}
+.nf-process-thread:focus-within{scrollbar-color:auto}
+html[data-nf-theme="dusk"] .nf-process-thread{--thread-line:#697092;background:#171f34;border-color:#404d68}
+html[data-nf-theme="dusk"] .nf-process-thread a{color:#aebed9}
+html[data-nf-theme="dusk"] .nf-process-thread a:before{background:#222c45;border-color:#b4a6df;box-shadow:0 0 10px #b4a6df22}
+html[data-nf-theme="dusk"] .nf-process-thread a[aria-current="step"]{color:#f2e6ff;text-shadow:0 0 10px #a68ed788}
+html[data-nf-theme="dusk"] .nf-process-thread a[aria-current="step"]:before{background:#e9d9ff;box-shadow:0 0 0 4px #7c67934d,0 0 22px #cab5f8a8}
+
+/* Calm surfaces under dense mathematical content: no stars behind equations. */
+html[data-nf-theme="dusk"] body:has(.lp-page){background-image:none!important;background-color:#111a2b!important}
+html[data-nf-theme="dusk"] .lp-page{background:linear-gradient(180deg,#151d30 0,#101827 680px,#121a2b 100%);color:#edf0fb}
+html[data-nf-theme="dusk"] .lp-page .lp-hero{border-bottom:1px solid #46516b}
+html[data-nf-theme="dusk"] .lp-page :is(.lp-console,.lp-panel,.lp-point,.ep-console,.ep-theory,.lp-method,.lp-note){background:#1a263a;color:#edf0fb;border-color:#465571;box-shadow:none}
+html[data-nf-theme="dusk"] .lp-page :is(.ep-equation,.lp-hero-aside){background:#212c44;color:#f3f0fb;border:1px solid #59617b;box-shadow:inset 0 1px #bfaaff1e}
+html[data-nf-theme="dusk"] .lp-page :is(.lp-lead,.ep-hint,.lp-body p,.ep-theory p){color:#c3cfe1}
+html[data-nf-theme="dusk"] .lp-page :is(.lp-eyebrow,.lp-label){color:#d1c0f4}
+html[data-nf-theme="dusk"] .lp-page :is(.lp-hero h1 em,.lp-page h2 em){color:#d8c4fb}
+html[data-nf-theme="dusk"] .lp-page :is(input,select,textarea){background:#101b30;color:#eef0fc;border-color:#606c85}
+html[data-nf-theme="dusk"] .lp-page :is(button,a):focus-visible{outline:2px solid #e4d3ff;outline-offset:4px}
+
+/* Light = publication; dusk = observatory. Keep geometry and content stable. */
+html[data-nf-theme="dusk"] .hero{position:relative}
+html[data-nf-theme="dusk"] .hero-aside{background:radial-gradient(circle at 70% 25%,#7660a43a,transparent 60%),linear-gradient(155deg,#212a43,#171e33);border:1px solid #57547c;box-shadow:0 18px 65px #0307115e}
+html[data-nf-theme="dusk"] .feature:not(.dark):not(.lime){box-shadow:inset 0 1px #bfb2ed14,0 10px 30px #090d1e3c}
+html[data-nf-theme="dusk"] .footer{position:relative;overflow:hidden;background:linear-gradient(180deg,#121b30,#18182e 48%,#302844 100%)}
+html[data-nf-theme="dusk"] .footer:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.27;background-image:radial-gradient(circle,#ebddff .8px,transparent 1.6px);background-size:127px 113px}
+html[data-nf-theme="dusk"] .footer>.wrap{position:relative;z-index:1}
+html.nf-theme-transit body,html.nf-theme-transit .hero-aside,
+html.nf-theme-transit .nf-observatory-field,html.nf-theme-transit .nf-observatory-inspector,
+html.nf-theme-transit .nf-process-thread,html.nf-theme-transit .footer{
+ transition:background-color .68s ease,background-image .68s ease,color .5s ease,border-color .5s ease,box-shadow .5s ease
+}
+@media(max-width:1060px){
+ .nf-observatory-layout{grid-template-columns:minmax(0,1.25fr) minmax(260px,.8fr)}
+ html[data-nf-theme="dusk"] .nf-observatory-node-text strong{font-size:11px}
+}
+@media(max-width:860px){
+ .nf-observatory-head,.nf-observatory-layout{grid-template-columns:1fr}
+ .nf-observatory-field,html[data-nf-theme="dusk"] .nf-observatory-field{min-height:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:18px}
+ .nf-observatory-lines,html[data-nf-theme="dusk"] .nf-observatory-lines{display:none}
+ .nf-observatory-node,html[data-nf-theme="dusk"] .nf-observatory-node{position:relative;top:auto;left:auto;width:auto;transform:none;min-height:56px;padding:12px;text-align:left;flex-direction:row}
+ html[data-nf-theme="dusk"] .nf-observatory-node[data-kind="claim"],html[data-nf-theme="dusk"] .nf-observatory-node[data-kind="mechanism"]{position:relative;left:auto;flex-direction:row;text-align:left;width:auto}
+ html[data-nf-theme="dusk"] .nf-observatory-node{background:#273249c5;border-color:#495572}
+ .nf-observatory-inspector{border-left:0;border-top:1px solid var(--line);min-height:250px}
+}
+@media(max-width:510px){
+ .nf-observatory-field,html[data-nf-theme="dusk"] .nf-observatory-field{grid-template-columns:1fr}
+ .nf-observatory-head h2{font-size:43px}
+ .nf-process-thread{justify-content:flex-start;padding:12px 15px}
+ .nf-process-thread a{flex:0 0 112px;font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){
+ .nf-observatory-node,html.nf-theme-transit body,html.nf-theme-transit .hero-aside,
+ html.nf-theme-transit .nf-observatory-field,html.nf-theme-transit .nf-observatory-inspector,
+ html.nf-theme-transit .nf-process-thread,html.nf-theme-transit .footer{transition:none!important}
+}
+
+
+/* Constellation now obeys the single global light/dusk switch, matching the archive. */
+html[data-nf-theme="dusk"] body.co-page{
+ --paper:#111a2c;--ink:#edf0fb;--line:#465571;--soft:#1a253a;--muted:#b7c4de;
+ --accent:#d8c6fa;--co-surface:#1b263d;--co-panel:#242e46;--co-faint:#afbddd;
+ --co-lime:#d8c6fa;--co-deep:#12192d;--co-border:#4d5674;
+ --co-glow:#c2b0ed;--co-muted:#bcc7dc;
+ background-color:#111a2c;color:#edf0fb;color-scheme:dark
+}
+html[data-nf-theme="dusk"] .co-page .co-sky{
+ background:radial-gradient(ellipse at 48% 53%,#756aa72b,transparent 52%),#141e34;
+}
+html[data-nf-theme="dusk"] .co-page .co-sky:before{opacity:.6}
+html[data-nf-theme="dusk"] .co-page .co-node{box-shadow:0 0 24px #d3b6ff14}
+html[data-nf-theme="dusk"] .co-page .co-node:hover,
+html[data-nf-theme="dusk"] .co-page .co-node[aria-pressed="true"]{box-shadow:0 0 25px #a99ae447}
+html[data-nf-theme="dusk"] .co-page .co-primary{color:#151a30}
+html[data-nf-theme="dusk"] .co-page .nav-call{color:#151a30}
+html[data-nf-theme="dusk"] .co-page .nf-journey-rail a{color:#e4d4ff}
+
+
+/* Twilight ink repair: SVG diagram paths on the homepage stay readable. */
+html[data-nf-theme="dusk"] .hero-aside .diagram circle[stroke]{stroke:#8896ba}
+html[data-nf-theme="dusk"] .hero-aside .diagram path[stroke="#213e2d"]{stroke:#dfcaff}
+html[data-nf-theme="dusk"] .hero-aside .diagram path[stroke="#7f987d"]{stroke:#a7b4de}
+html[data-nf-theme="dusk"] .hero-aside .diagram circle[fill="#18221e"]{fill:#dbd1f3}
+html[data-nf-theme="dusk"] .hero-aside .diagram circle[fill="#b0db58"]{fill:#e3c6ff}
+html[data-nf-theme="dusk"] .hero-aside .diagram text{fill:#c3b9e2}
+
+
+/* Tablet breakpoint: preserve button affordances without horizontal overflow.
+   Applies equally to the editorial archive and the dusk observatory. */
+@media(min-width:761px) and (max-width:900px){
+  .hero{grid-template-columns:minmax(0,1fr);gap:32px;min-height:0;padding-block:65px 55px}
+  .hero-aside{max-width:100%;border-left:0;border-top:1px solid var(--line);padding:26px 0 0}
+}
+@media(max-width:950px){
+ .button{max-width:100%;white-space:normal;min-width:0;overflow-wrap:anywhere}
+ .hero-actions,.instrument-bridge-invite{min-width:0;max-width:100%}
+}

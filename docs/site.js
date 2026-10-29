@@ -1,4 +1,6 @@
 "use strict";
+/* Shared chrome is a private module: never overwrite an embedded tool renderer. */
+(() => {
 const root="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/";
 const entries=[
  {"category":"mathematics","name":"Erdős minimum overlap","summary":"Original 131,072-cell rational witness, exact continuous-shift value and independent integer-convolution audit. A distinct finite construction; no global optimality claim.","status":"New explicit finite witness · exact audit","path":"projects/erdos-overlap-paper.md"},
@@ -107,4 +109,49 @@ if(menu&&nav){
  const entry=document.createElement("a");entry.href="join.html#assignment";entry.textContent="Find a problem";
  const constellation=document.createElement("a");constellation.href="constellation.html";constellation.textContent="Constellation";
  bar.append(tag,primary,gap,constellation,method,entry);main.before(bar);
+})();
+
+
+/* One continuous research path, shared across themes.
+   Current location is a navigation hint, never a completed-proof assertion. */
+(() => {
+ const main=document.querySelector("main");if(!main||document.querySelector(".nf-process-thread"))return;
+ if(document.querySelector("#app")||document.querySelector(".app")||main.closest(".app"))return;
+ const page=location.pathname.split("/").pop()||"index.html",hash=location.hash;
+ const steps=[
+  {id:"results",label:"01 / Results",href:"index.html#flagships"},
+  {id:"process",label:"02 / Process",href:"join.html#method"},
+  {id:"assignment",label:"03 / Assignment",href:"join.html#assignment"},
+  {id:"investigate",label:"04 / Investigation",href:"join.html#claim-investigation"},
+  {id:"review",label:"05 / Review",href:"review.html"}
+ ];
+ const byPage={
+  "index.html":"results","research.html":"results","living-paper.html":"results","erdos-paper.html":"results",
+  "passport.html":"results","findings-20261029.html":"results","atlas.html":"process",
+  "referee.html":"review","adversary.html":"review","review.html":"review","evidence.html":"review","evidence-practice.html":"review",
+  "frontier.html":"investigate","discovery.html":"investigate","orchestrator.html":"investigate",
+  "claim-lab.html":"investigate","exact-research.html":"investigate","constellation.html":"process"
+ };
+ const inferred=page==="join.html"?
+   hash==="#method"?"process":hash==="#assignment"?"assignment":
+   hash==="#claim-investigation"||hash==="#workspace"?"investigate":"results":
+   byPage[page]||"process";
+ const nav=document.createElement("nav");nav.className="nf-process-thread";
+ nav.setAttribute("aria-label","Research journey: stages are locations, not completion markers");
+ for(const step of steps){
+  const a=document.createElement("a");a.href=step.href;a.textContent=step.label;
+  if(step.id===inferred)a.setAttribute("aria-current","step");
+  nav.append(a);
+ }
+ if(page==="join.html"){
+  const hero=main.querySelector(".join-hero");
+  if(hero)hero.insertAdjacentElement("afterend",nav);
+  else main.prepend(nav);
+ }else{
+  const rail=document.querySelector(".nf-journey-rail");
+  if(rail)rail.insertAdjacentElement("afterend",nav);
+  else main.before(nav);
+ }
+})();
+
 })();
