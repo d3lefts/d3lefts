@@ -68,7 +68,9 @@ try{
     const s=getComputedStyle(document.body);
     return {color:s.color,image:s.backgroundImage,overflow:document.documentElement.scrollWidth-innerWidth};
    });
-   assert.match(appearance.image,/radial-gradient/i,file+": CSS starfield loaded");
+   if(["living-paper.html","erdos-paper.html"].includes(file))
+    assert.equal(appearance.image,"none",file+": scientific reading deliberately has no starfield");
+   else assert.match(appearance.image,/radial-gradient/i,file+": atmospheric starfield loaded");
    if(file==="index.html"){
     const heroButton=await page.locator(".hero-actions .button").first().evaluate(el=>({bg:getComputedStyle(el).backgroundColor,fg:getComputedStyle(el).color}));
     assert.equal(heroButton.bg,"rgb(222, 210, 250)","Dusk primary CTA has light background");
