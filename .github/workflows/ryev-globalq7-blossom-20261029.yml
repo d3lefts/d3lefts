@@ -1,0 +1,29 @@
+name: Ryev global Q7 PB and independent Sidon Blossom
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/agent-reports/ryev_globalq7_blossom_20261029/**"
+      - ".github/workflows/ryev-globalq7-blossom-20261029.yml"
+  push:
+    paths:
+      - "research/nightfall/agent-reports/ryev_globalq7_blossom_20261029/**"
+      - ".github/workflows/ryev-globalq7-blossom-20261029.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-independent-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 -m pip install networkx==3.4.2
+      - name: Check global Q7 exact PB model SHA and geometry
+        run: python3 research/nightfall/agent-reports/ryev_globalq7_blossom_20261029/q7_global_opb.py
+      - name: Independently verify Blossom, direct Sidon sums and protected optimal deletion
+        run: python3 research/nightfall/agent-reports/ryev_globalq7_blossom_20261029/blossom_batch.py
+      - name: Prove improved exceptional-support exponent formula
+        run: python3 research/nightfall/agent-reports/ryev_globalq7_blossom_20261029/refined_core_bound.py
