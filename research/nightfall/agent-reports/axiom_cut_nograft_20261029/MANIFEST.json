@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-29",
+  "status": "INTERNAL_ANALYTIC_THEOREM_AND_EXACT_FINITE_CHECKS",
+  "repo_issue": 109,
+  "files": {
+    "RESEARCH_NOTE.md": {
+      "sha256": "8ef2624d71989460079c4d2d5c25cbec5a8b6565a4ac6716b67573894a3636cd",
+      "bytes": 7670
+    },
+    "verify_wrap_barrier.py": {
+      "sha256": "66ac941879c2d1794ac5f1054d2bcb3b151c8aae07319feb7d0e5a8b414dab0f",
+      "bytes": 3476
+    },
+    "verify_anchor_envelope.py": {
+      "sha256": "a48528e78ff0911ae12269cdd2eee22d81ab1a344222d1214f429e5d79a6675f",
+      "bytes": 1519
+    },
+    "field_receipt.json": {
+      "sha256": "0f75ddf787b781c5f465a665c2aeedef30a24d0c7f17242366dbf85fc6cecffb",
+      "bytes": 3297
+    },
+    "anchor_receipt.json": {
+      "sha256": "220ca74a18a924543735c84f01df9050c7703266f972e281d5119098d7a4bc54",
+      "bytes": 541
+    }
+  },
+  "scope": "rotation-only no-graft obstruction, affine-orbit ceiling; not global Sidon bound"
+}
