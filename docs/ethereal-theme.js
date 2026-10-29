@@ -1,4 +1,4 @@
-/* Accessible, site-wide, opt-in theme switch. No external assets or animation loops. */
+/* Accessible theme switch: first visit dusk; explicit light preference persists. */
 (function(){
 "use strict";
 const KEY="nightfall.theme.v1";
@@ -7,8 +7,8 @@ const doc=document.documentElement;
 const meta=document.querySelector('meta[name="theme-color"]');
 const originalMeta=meta ? meta.content : null;
 function saved(){
-  try {return localStorage.getItem(KEY)===DUSK?DUSK:LIGHT;}
-  catch (_) {return LIGHT;}
+  try {return localStorage.getItem(KEY)===LIGHT?LIGHT:DUSK;}
+  catch (_) {return DUSK;}
 }
 function persist(value){
   try {localStorage.setItem(KEY,value);} catch (_) {}
@@ -18,7 +18,7 @@ function apply(value){
   current=value===DUSK?DUSK:LIGHT;
   if(current===DUSK)doc.setAttribute("data-nf-theme",DUSK);
   else doc.removeAttribute("data-nf-theme");
-  if(meta)meta.content=current===DUSK?"#101727":"#4a1f24";
+  if(meta)meta.content=current===DUSK?"#101727":"#451c35";
   if(document.body?.classList.contains("co-page"))document.body.dataset.theme=current===DUSK?"dark":"light";
   window.dispatchEvent(new Event("nightfall-theme-change"));
   const button=document.querySelector(".nf-theme-toggle");
@@ -61,6 +61,6 @@ function mount(){
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",mount,{once:true});
 else mount();
 window.addEventListener("storage",function(event){
-  if(event.key===KEY)apply(event.newValue===DUSK?DUSK:LIGHT);
+  if(event.key===KEY)apply(event.newValue===LIGHT?LIGHT:DUSK);
 });
 })();
