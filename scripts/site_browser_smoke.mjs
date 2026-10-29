@@ -89,8 +89,8 @@ try{
    await page.reload({waitUntil:"load"});
    assert.match(await page.locator("#nf-session-list").innerText(),/PROPOSED/,"browser-local reload persists review status");
    await page.locator('#nf-tool-links a[href="orchestrator.html"]').click();
-   await page.waitForURL(/orchestrator\\.html/);
-   assert.match(await page.locator("#claim-text").inputValue(),/smallest selected mark in \\[1, 184\\]/,"exact scope transferred");
+   await page.waitForURL(/orchestrator\.html/);
+   assert.match(await page.locator("#claim-text").inputValue(),/smallest selected mark in \[1, 184\]/,"exact scope transferred");
    assert.match(await page.locator("#orch-message").innerText(),/editable fields/,"user-reviewed handoff");
    assert.equal(await page.locator("#orch-export").isDisabled(),true,"no autonomous dispatch or proof promotion");
 
