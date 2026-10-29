@@ -1,0 +1,19 @@
+name: Verify one-sided multi-block Werner theorem
+on:
+  push:
+    paths:
+      - 'research/nightfall/agent-reports/vesper_one_sided_multiblock_20261028/**'
+      - '.github/workflows/verify-werner-multiblock.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/agent-reports/vesper_one_sided_multiblock_20261028/**'
+      - '.github/workflows/verify-werner-multiblock.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 research/nightfall/agent-reports/vesper_one_sided_multiblock_20261028/verify_multiblock_one_sided.py
