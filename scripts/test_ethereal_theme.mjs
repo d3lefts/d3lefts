@@ -110,7 +110,7 @@ try{
     assert.equal(heroButton.bg,"rgb(216, 195, 138)","Dusk primary CTA uses the new moon-gold accent");
     assert.equal(heroButton.fg,"rgb(21, 27, 48)","Dusk gold CTA has high-contrast navy ink");
     const railLink=await page.locator(".nf-journey-rail a").first().evaluate(el=>getComputedStyle(el).color);
-    assert.equal(railLink,"rgb(224, 214, 255)","Journey-rail links legible in dusk");
+    assert.equal(railLink,"rgb(216, 195, 138)","Journey-rail focus links use legible champagne in dusk");
    }
    assert.ok(appearance.overflow<=4,file+": overflow in dusk at "+width+"px: "+appearance.overflow);
    if(["join.html","discovery.html","claim-lab.html","erdos-paper.html"].includes(file))
