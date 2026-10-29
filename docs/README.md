@@ -1,6 +1,6 @@
 # NIGHTFALL public research website
 
-Static, dependency-free site for NIGHTFALL’s **original, inspectable research contributions**. The broader public GitHub repository is retained as the attributed historical research archive.
+Static, dependency-free site for NIGHTFALL’s **three evidence-scoped original findings, three flagship research programs, and a broader 32-document curated research library**. The repository retains the full attributed historical research archive.
 
 - `index.html` — three flagship research programs with explicit evidence tiers, plus the three approved original findings and open reviews.
 - `research.html` / `research.js` — 30 curated, source-linked September–October research lines with discipline filters, search, and explicit scope boundaries; broader than the Original Findings whitelist.
@@ -49,9 +49,9 @@ Run `python3 scripts/check_site.py`, `node --check docs/site.js`, and `node --ch
 
 ## Public originality filter (effective 28 October 2026)
 
-The **site includes only distinct original contributions**: the 131,072-cell exact Erdős upper witness, the concrete 30-point Sidon finite certificate, and the bounded adverse 20-case Proof After Scarcity experiment. These are original *artifacts and measurements*; each has explicit scope, and no worldwide publication-priority claim is implied. See [full originality sweep](../research/nightfall/SITE_ORIGINALITY_AUDIT_20261028.md).
+The **homepage Original Findings index** includes only distinct original contributions: the 131,072-cell exact Erdős upper witness, the concrete 30-point Sidon finite certificate, and the bounded adverse 20-case Proof After Scarcity experiment. These are original *artifacts and measurements*; each has explicit scope, and no worldwide publication-priority claim is implied. See [full originality sweep](../research/nightfall/SITE_ORIGINALITY_AUDIT_20261028.md).
 
-**Excluded from the original-findings catalogue:** standalone AI-safety and Werner atlas pages, untested proposals promoted as results, recycled tensor-network encodings, classical erasure-reliability claims, source-dependent candidate theorems, and broader unreviewed research-manuscript marketing. Earlier public GitHub records remain with source credit and retractions/novelty corrections; the Pages portfolio and source archive intentionally have different inclusion rules.
+**Excluded from the original-findings catalogue:** standalone AI-safety and Werner atlas pages, untested proposals promoted as results, recycled tensor-network encodings, classical erasure-reliability claims, source-dependent candidate theorems, and broader unreviewed research-manuscript marketing. Earlier public GitHub records remain with source credit and retractions/novelty corrections. The owner-approved, four-category public research library includes carefully labeled conditional manuscripts, reproducible code, rigorous negative results and empirical studies; inclusion does not upgrade any manuscript to an original certified theorem.
 
 The [static site verification script](../scripts/check_site.py) maintains a strict allowed-artifact whitelist. Its gate protects presentation consistency; a dated external prior-art comparison is still required before approving new mathematical novelty.
 
@@ -66,3 +66,10 @@ The [Research Agenda](agenda.html) contains two untested investigations each in 
 ## Site-owner polish (October 28, 2026)
 
 The homepage now reflects the existing 30-document research library. Shared navigation is consolidated around Research, Library, Tools, Review, Evidence, and Source archive, with a compact workflow bridge to the existing Research Tools hub. The library supports combinable discipline, evidence-tier, and text filters, plus keyboard shortcuts (/ to focus search, Escape to clear). The Original Findings whitelist remains exactly three. New browser regressions validate current counts, tool discovery, and evidence filters.
+
+
+## October 28: owner-approved 32-document breadth
+
+Eight overlapping library cards were replaced by distinct source records spanning one-way automata, the degree-restricted UP25 exclusion, first-autocorrelation integer verification, Zerothesis support births, research-methods history, autonomous verification, the PAS 372-family freeze, and a controlled adaptive-granularity experiment. The two added cards cover BB(6) arithmetic return maps and the conditional minimum-overlap fixed-dual lower-bound audit. Full prior Werner-stage reports and AI safety manuscripts remain in GitHub even when their individual promotional cards have been replaced.
+
+The public library preserves **15 Mathematics, 4 Quantum, 6 Safety, 7 Systems** entries; three homepage flagships and the three-entry Original Findings whitelist are unchanged. Source-specific mathematical assumptions, inherited source artefacts, and negative-result limitations remain in each card. See [the editorial change ledger](../research/nightfall/SITE_CURATED_32_EDITORIAL_CHANGELOG_20261028.md).
