@@ -79,7 +79,7 @@ try{
        golden:html.getPropertyValue("--nf-goldenhour").trim(),
        overflow:document.documentElement.scrollWidth-innerWidth};
     },deprecated);
-    const expected=mode==="dusk"?"rgb(4, 6, 11)":"rgb(40, 25, 15)";
+    const expected=mode==="dusk"?"rgb(4, 6, 11)":"rgb(36, 26, 52)";
     if(summary.bg!==expected)allCanvasLeaks.push({page:p,mode,width,bg:summary.bg,expected});
     assert.equal(summary.theme,mode,p+" expected mode");
     assert.ok(summary.overflow<=4,p+" "+mode+" "+width+"px overflow "+summary.overflow);
@@ -87,7 +87,7 @@ try{
     if(mode==="dusk"){
       assert.equal(summary.oxblood,"#4a1f24",p+" new-moon oxblood token");
       assert.equal(summary.moonlight,"#e6deaa",p+" moonlight remains primary");
-    }else assert.equal(summary.golden,"#edc16e",p+" Golden Hour accent remains primary");
+    }else assert.equal(summary.golden,"#f5b78b",p+" Golden Hour accent remains primary");
    }
    assert.deepEqual(faults,[],mode+" "+width+"px no browser errors");
    await context.close();
@@ -99,5 +99,5 @@ try{
  const matches=[...css.matchAll(/var\(--nf-oxblood-rare\)/g)];
  assert.ok(matches.length<=4,"Oxblood is rare by contract, found "+matches.length+" usage(s)");
  assert.ok(css.includes("--nf-oxblood-rare:#4a1f24"),"Canonical archival oxblood registered in midnight");
- console.log("PASS palette: 26 pages × two themes × two viewports; no parchment surfaces, rare oxblood, intact gold, no overflow");
+ console.log("PASS palette: 26 pages × two themes × two viewports; no parchment surfaces, rare oxblood, intact apricot, no overflow");
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve))}

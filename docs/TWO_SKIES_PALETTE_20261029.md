@@ -6,19 +6,19 @@ The appearance switch exchanges distinct editorial experiences. It does not alte
 
 ## Archive / golden hour
 
-The reference is a cocoa-brown, starlit browser theme, with sunset-yellow light. The earlier pale parchment design is retired.
+The reference is Sunset Boulevard at blue hour: plum and violet, rose haze, and apricot sunlight. It replaces the too-brown cocoa archive while retaining luminous type and a starlit atmosphere.
 
 | Role | Value | Application |
 |---|---|---|
-| Cocoa sky | `#28190F` | Overall background |
-| Deep chocolate | `#1B100B` | Dark featured panels and navigation |
-| Raised cocoa | `#3B281D` | Cards, tools and reading surfaces |
-| Soft cocoa | `#332116` | Secondary panels |
-| Warm cream | `#F7E8DB` | Primary text |
-| Warm secondary | `#CEB6A7` | Metadata and descriptions |
-| Golden hour | `#EDC16E` | Selected states, primary actions |
-| Late-sun yellow | `#F5D88F` | Hover, focus |
-| Warm rule | `#75574A` | Dividers |
+| Twilight plum | `#241A34` | Overall background |
+| Night plum | `#191327` | Dark featured panels and navigation |
+| Velvet violet | `#3B2C4B` | Cards, tools and reading surfaces |
+| Rose-violet | `#31233F` | Secondary panels |
+| Pearl cream | `#FFF0E7` | Primary text |
+| Orchid mist | `#DEC9DE` | Metadata and descriptions |
+| Apricot light | `#F5B78B` | Selected states, primary actions |
+| Peach light | `#F8D2AA` | Hover, focus |
+| Violet rule | `#826682` | Dividers |
 
 ## Underbelly / new moon
 
@@ -51,4 +51,4 @@ Oxblood is an **atmospheric punctuation mark**, never a scientific-status legend
 
 ## Consistency policy
 
-The active palettes are determined by `docs/two-skies.css` and `docs/mobile-scroll-cinema.css`, both loaded after the historical stylesheets. Older base declarations remain documented as fallback history, not a license to reintroduce parchment. The computed-style browser audit checks large displayed surfaces in both modes for obsolete background colors and tests mobile overflow. The homepage's three formerly hardcoded instrument colors now use the palette tokens.
+The screenshot-led October 29 revision corrects contrast on the Contributor Path: process panels, status labels, result links, workspace and empty state; it keeps the Night theme navy, replacing only the anomalous wine-red process field.\n\nThe active palettes are determined by `docs/two-skies.css` and `docs/mobile-scroll-cinema.css`, both loaded after the historical stylesheets. Older base declarations remain documented as fallback history, not a license to reintroduce parchment. The computed-style browser audit checks large displayed surfaces in both modes for obsolete background colors and tests mobile overflow. The homepage's three formerly hardcoded instrument colors now use the palette tokens.

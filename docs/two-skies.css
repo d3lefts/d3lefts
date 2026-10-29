@@ -1,82 +1,83 @@
 /* NIGHTFALL / TWO SKIES — 2026-10-29
-   The archive is cocoa dusk + golden-hour light, not parchment.
+   The Archive is Sunset Boulevard: plum dusk, rose haze and apricot light.
    The underbelly is new-moon black + navy/indigo + jasmine/moonlight.
    Layered LAST after the research-system and narrative stylesheets.
    Scientific status remains expressed by text, provenance, and line type. */
 
-/* A / GOLDEN-HOUR ARCHIVE. Deep chocolate and warm cream, like a starlit
-   browser skin; honey is reserved for actions and selected evidence. */
+/* A / SUNSET BOULEVARD ARCHIVE. Deep violet-plum and rose haze,
+   cream for reading, apricot for selected actions and evidence. */
 html:not([data-nf-theme="dusk"]){
   color-scheme:dark;
-  --lf-paper:#28190f; --lf-paper-raised:#3b281d; --lf-paper-deep:#332116;
-  --lf-line:#75574a; --lf-ink:#f7e8db; --lf-muted:#ceb6a7;
-  --lf-primary:#edc16e; --lf-primary-hover:#f5d88f; --lf-blush:#c99b80;
-  --lf-oxblood:#1b100b; --lf-oxblood-soft:#51372b; --lf-oxblood-deep:#130a07;
-  --nf-cocoa:#28190f; --nf-cocoa-raised:#3b281d; --nf-cocoa-midtone:#51382b;
-  --nf-goldenhour:#edc16e; --nf-amber-rule:#9c7659;
+  --lf-paper:#241a34; --lf-paper-raised:#3b2c4b; --lf-paper-deep:#31233f;
+  --lf-line:#826682; --lf-ink:#fff0e7; --lf-muted:#dec9de;
+  --lf-primary:#f5b78b; --lf-primary-hover:#f8d2aa; --lf-blush:#dbaac2;
+  --lf-oxblood:#191327; --lf-oxblood-soft:#553b5b; --lf-oxblood-deep:#151022;
+  --nf-cocoa:#241a34; --nf-cocoa-raised:#3b2c4b; --nf-cocoa-midtone:#503757;
+  --nf-goldenhour:#f5b78b; --nf-amber-rule:#c892a5;
   --paper:var(--lf-paper); --ink:var(--lf-ink); --line:var(--lf-line);
   --soft:var(--lf-paper-deep); --muted:var(--lf-muted);
   --accent:var(--lf-primary); --deep:var(--lf-oxblood);
   --lime:var(--lf-primary); --green:var(--lf-blush);
   --fg:var(--lf-ink); --fline:var(--lf-line);
-  --nf-inline-panel:#392417; --nf-inline-foreground:#f7e8db;
-  --nf-inline-border:#74503d; --nf-inline-quiet:#dec6b6;
+  --nf-inline-panel:#342544; --nf-inline-foreground:#fff0e7;
+  --nf-inline-border:#78627f; --nf-inline-quiet:#dec6b6;
   --nf-highlight:var(--lf-primary);
 }
 html:not([data-nf-theme="dusk"]) body {
-  color:var(--lf-ink); background-color:#28190f;
+  color:var(--lf-ink); background-color:#241a34;
   background-image:
-    radial-gradient(circle at 15% 12%,rgba(248,211,142,.52) 0 .7px,transparent 1.4px),
-    radial-gradient(circle at 68% 44%,rgba(246,202,132,.38) 0 .6px,transparent 1.4px),
-    radial-gradient(circle at 35% 78%,rgba(249,225,176,.29) 0 .6px,transparent 1.3px),
-    radial-gradient(ellipse at 88% 8%,rgba(104,66,36,.30),transparent 52%),
-    linear-gradient(172deg,#29190c 0%,#28190f 48%,#21150e 100%);
-  background-size:329px 307px,443px 391px,557px 503px,100% 100%,100% 100%;
+    radial-gradient(circle at 15% 12%,rgba(252,206,187,.44) 0 .7px,transparent 1.4px),
+    radial-gradient(circle at 68% 44%,rgba(238,170,206,.32) 0 .6px,transparent 1.4px),
+    radial-gradient(circle at 35% 78%,rgba(249,213,171,.31) 0 .6px,transparent 1.3px),
+    radial-gradient(ellipse at 88% 7%,rgba(213,100,139,.20),transparent 51%),
+    radial-gradient(ellipse at 7% 91%,rgba(248,163,110,.11),transparent 51%),
+    linear-gradient(165deg,#2d1f40 0%,#241a34 55%,#2d1b3e 100%);
+  background-size:329px 307px,443px 391px,557px 503px,100% 100%,100% 100%,100% 100%;
   background-attachment:fixed;
 }
-html:not([data-nf-theme="dusk"]) ::selection{background:#edc16e;color:#21150e}
+html:not([data-nf-theme="dusk"]) ::selection{background:#f5b78b;color:#20162d}
 html:not([data-nf-theme="dusk"]) :is(.header,.nav.open,.nf-journey-rail,.nf-process-thread){
-  background:#2c1c13; border-color:#75574a; color:#f7e8db;
+  background:#291d38; border-color:#826682; color:#fff0e7;
 }
-html:not([data-nf-theme="dusk"]) .topline{background:#1b100b}
+html:not([data-nf-theme="dusk"]) .topline{background:#191327}
 html:not([data-nf-theme="dusk"]) .topline::after{
-  background:linear-gradient(90deg,#9a6949,#d29e63,#edc16e);
+  background:linear-gradient(90deg,#c5738e,#ed9b89,#f5b78b);
 }
 html:not([data-nf-theme="dusk"]) :is(.mark,.nav .nav-call){
-  background:#1b100b;color:#f7e8db!important;border-color:#75574a;
+  background:#191327;color:#fff0e7!important;border-color:#826682;
 }
-html:not([data-nf-theme="dusk"]) :is(.nav .nav-call:hover,.mark:hover){background:#3d281b}
+html:not([data-nf-theme="dusk"]) :is(.nav .nav-call:hover,.mark:hover){background:#453052}
 html:not([data-nf-theme="dusk"]) .nf-theme-toggle{
-  background:#533a2c;color:#fff0e1;border-color:#94705b;
+  background:#47334d;color:#fff0e1;border-color:#957a99;
   box-shadow:0 0 17px #edc16e14;
 }
-html:not([data-nf-theme="dusk"]) .nf-theme-toggle:hover{background:#634837}
+html:not([data-nf-theme="dusk"]) .nf-theme-toggle:hover{background:#5b4361}
 html:not([data-nf-theme="dusk"]) :is(.button:not(.button-light),.hero-actions .button:not(.button-light),
   .instrument-bridge-invite .button,.nf-home-tool-entry .button,.join-action,
   .join-evidence-archive button,.cj-actions button:not(:disabled),.cj-primary,
   .co-page .co-primary,.desk-add,.desk-session-shortcut,
   .nf-observatory-lenses button[aria-pressed="true"]){
-  background:#edc16e;color:#28190f;border-color:#edc16e;
+  background:#f5b78b;color:#241a34;border-color:#f5b78b;
 }
 html:not([data-nf-theme="dusk"]) :is(.button:not(.button-light),.hero-actions .button:not(.button-light),
   .instrument-bridge-invite .button,.nf-home-tool-entry .button,.join-action,.cj-primary,
   .co-page .co-primary,.desk-add,.desk-session-shortcut):hover{
-  background:#f5d88f;color:#28190f;border-color:#f5d88f;
+  background:#f8d2aa;color:#241a34;border-color:#f8d2aa;
 }
 html:not([data-nf-theme="dusk"]) :is(.button-light,.hero-actions .button-light){
-  background:transparent;color:#f7e8db;border-color:#c99b80;
+  background:transparent;color:#fff0e7;border-color:#dbaac2;
 }
 html:not([data-nf-theme="dusk"]) :is(.button-light,.hero-actions .button-light):hover{
-  background:#3b281d;color:#f7e8db;
+  background:#3b2c4b;color:#fff0e7;
 }
 html:not([data-nf-theme="dusk"]) :is(.hero-title em,.section-title em,
   .nf-observatory-head h2 em,.nf-dual-intro h2 em,.lp-page h1 em,
   .lp-page h2 em,.join-hero h1 em,.desk-hero h1 em,.nf-dual-colophon h2 em){
-  color:#edc16e;
+  color:#f5b78b;
 }
 html:not([data-nf-theme="dusk"]) :is(.section-id,.kicker,.eyebrow,.micro,.number,
   .nf-archive-id,.nf-archive-accession small,.nf-observatory-label,.nf-observatory-inspector>small){
-  color:#edc16e;
+  color:#f5b78b;
 }
 html:not([data-nf-theme="dusk"]) :is(.feature,.feature.lime,.flagship-card,
   .flagship-sage,.flagship-paper,.flagship-ivory,.sf-system-card,
@@ -86,119 +87,119 @@ html:not([data-nf-theme="dusk"]) :is(.feature,.feature.lime,.flagship-card,
   .ep-theory,.lp-panel,.lp-point,.lp-console,.lp-method,.lp-note,
   .join-pad,.join-next,.join-choice,.join-workspace,.join-match,.join-contract,
   .join-evidence-archive,.cj-workspace,.cj-work,.cj-next){
-  background:#3b281d;color:#f7e8db;border-color:#75574a;
+  background:#3b2c4b;color:#fff0e7;border-color:#826682;
 }
 html:not([data-nf-theme="dusk"]) :is(.feature.dark,.flagship-dark,.review-section,
   .sf-case-panel,.nf-home-tool-entry,.join-method,.join-evidence,
   .lp-hero-aside,.cj-contract,.desk-readout,.rs-intro-aside,.rs-insight){
-  background:#1b100b;color:#f7e8db;border-color:#715240;
+  background:#191327;color:#fff0e7;border-color:#78607c;
 }
 html:not([data-nf-theme="dusk"]) :is(.feature.dark,.flagship-dark,.review-section,
-  .sf-case-panel,.nf-home-tool-entry,.join-method) :is(h2,h3,strong){color:#f7e8db}
+  .sf-case-panel,.nf-home-tool-entry,.join-method) :is(h2,h3,strong){color:#fff0e7}
 html:not([data-nf-theme="dusk"]) :is(.feature.dark,.flagship-dark,.review-section,
-  .sf-case-panel,.nf-home-tool-entry,.join-method) :is(p,small){color:#d7beae}
+  .sf-case-panel,.nf-home-tool-entry,.join-method) :is(p,small){color:#e2cde1}
 html:not([data-nf-theme="dusk"]) :is(.research-row:hover,.research-proposal:hover,
-  .feature:hover,.review-card:hover,.join-choice:hover){background:#4b3326}
+  .feature:hover,.review-card:hover,.join-choice:hover){background:#4c365b}
 html:not([data-nf-theme="dusk"]) :is(.nf-home-toolbox>summary,.nf-section-index>summary,
   .nf-home-toolbox-content,.nf-journey-rail,.nf-process-thread){
-  background:#332116;color:#f7e8db;border-color:#75574a;
+  background:#31233f;color:#fff0e7;border-color:#826682;
 }
 html:not([data-nf-theme="dusk"]) .nf-home-toolbox-content>.desk-entry[style]{
-  background:#24160e!important;color:#f7e8db!important;border-color:#74503d!important;
+  background:#20172e!important;color:#fff0e7!important;border-color:#78627f!important;
 }
 html:not([data-nf-theme="dusk"]) .nf-home-toolbox-content>.desk-entry[style] :is(span,strong,a)[style]{
-  color:#edc16e!important;
+  color:#f5b78b!important;
 }
 html:not([data-nf-theme="dusk"]) :is(.nf-observatory-field,.co-sky){
-  background:radial-gradient(ellipse at 50% 39%,#76503d70,transparent 62%),#2d1d15;
+  background:radial-gradient(ellipse at 50% 39%,#b96aaf70,transparent 62%),#2a1d3b;
 }
 html:not([data-nf-theme="dusk"]) :is(.nf-observatory-node[aria-pressed="true"],
   .co-node[aria-pressed="true"],.nf-archive-accession:hover){
-  background:#574033;color:#f7e8db;border-color:#edc16e;
+  background:#5a405e;color:#fff0e7;border-color:#f5b78b;
 }
 html:not([data-nf-theme="dusk"]) :is(.nf-observatory-star,.co-star,.pulse::before){
-  background:#edc16e;
+  background:#f5b78b;
 }
 html:not([data-nf-theme="dusk"]) :is(input,textarea,select,.search,
   .desk-page #desk-search,.desk-page #desk-filter){
-  background:#312116;color:#f7e8db;border-color:#8d6a55;caret-color:#edc16e;
+  background:#2c203d;color:#fff0e7;border-color:#967d9c;caret-color:#f5b78b;
 }
-html:not([data-nf-theme="dusk"]) :is(input,textarea,select)::placeholder{color:#c9b2a3}
+html:not([data-nf-theme="dusk"]) :is(input,textarea,select)::placeholder{color:#d3bbd1}
 html:not([data-nf-theme="dusk"]) :is(a,button,input,textarea,select,summary):focus-visible{
-  outline:2px solid #f5d88f;outline-offset:3px;
+  outline:2px solid #f8d2aa;outline-offset:3px;
 }
 html:not([data-nf-theme="dusk"]) :is(.footer,.review-section,.nf-dual-colophon){
-  background:#21150e;color:#f7e8db;border-color:#75574a;
+  background:#20162d;color:#fff0e7;border-color:#826682;
 }
 html:not([data-nf-theme="dusk"]) :is(.nf-archive-shelf,.nf-archive-accession){
-  background:#3b281d;color:#f7e8db;border-color:#75574a;
+  background:#3b2c4b;color:#fff0e7;border-color:#826682;
 }
-html:not([data-nf-theme="dusk"]) .nf-archive-accession:hover{background:#543a2c}
+html:not([data-nf-theme="dusk"]) .nf-archive-accession:hover{background:#563c5c}
 html:not([data-nf-theme="dusk"]) :is(.nf-archive-accession strong,
   .nf-archive-id,.nf-archive-accession small,
-  .nf-dual-colophon-links a){color:#edc16e;border-color:#75574a}
+  .nf-dual-colophon-links a){color:#f5b78b;border-color:#826682}
 html:not([data-nf-theme="dusk"]) #main>.hero{
-  background:radial-gradient(ellipse at 93% 20%,rgba(166,109,57,.22),transparent 59%);
+  background:radial-gradient(ellipse at 93% 20%,rgba(238,146,165,.19),transparent 59%);
 }
 html:not([data-nf-theme="dusk"]) #main>.hero .hero-aside{
-  box-shadow:8px 8px 0 #4d3426;
+  box-shadow:8px 8px 0 #493455;
 }
 html:not([data-nf-theme="dusk"]) :is(.nf-archive-accession>span:not(.nf-archive-id),
   .nf-dual-colophon p,.nf-dual-intro>p,.hero-description,
   .section-intro,.research-desc,.research-row p,.nf-observatory-intro p,
-  .nf-observatory-inspector p,.join-lead,.lp-lead,.ep-hint){color:#ceb6a7}
-html:not([data-nf-theme="dusk"]) :is(.diagram text,.hero-aside .diagram text){fill:#ceb6a7}
-html:not([data-nf-theme="dusk"]) :is(.nf-observatory-edge,.co-edge){stroke:#b69b7d}
+  .nf-observatory-inspector p,.join-lead,.lp-lead,.ep-hint){color:#dec9de}
+html:not([data-nf-theme="dusk"]) :is(.diagram text,.hero-aside .diagram text){fill:#dec9de}
+html:not([data-nf-theme="dusk"]) :is(.nf-observatory-edge,.co-edge){stroke:#d8afd0}
 html:not([data-nf-theme="dusk"]) :is(.sf-point.chosen,.sf-case-aside,
-  .lab-launch .button,.sf-case-links .button){background:#edc16e;color:#28190f;border-color:#edc16e}
+  .lab-launch .button,.sf-case-links .button){background:#f5b78b;color:#241a34;border-color:#f5b78b}
 html:not([data-nf-theme="dusk"]) :is(.rs-card,.pp-dimension,.ma-detail,.ma-relation,
   .pp-picker a,.pp-source,.pp-event,.rs-coverage,.pp-coverage,
   .nf-safety-window-side,.nf-replay-path,.nf-observatory-layout){
-  background-color:#3b281d;color:#f7e8db;border-color:#75574a;
+  background-color:#3b2c4b;color:#fff0e7;border-color:#826682;
 }
 html:not([data-nf-theme="dusk"]) :is(.pp-metric,.ma-canvas,.pp-picker a[aria-current="true"],
-  .rs-insight){background:#1b100b;color:#f7e8db;border-color:#75574a}
-html:not([data-nf-theme="dusk"]) :is(.pp-metric strong,.ma-node[aria-pressed="true"]){color:#edc16e}
+  .rs-insight){background:#191327;color:#fff0e7;border-color:#826682}
+html:not([data-nf-theme="dusk"]) :is(.pp-metric strong,.ma-node[aria-pressed="true"]){color:#f5b78b}
 html:not([data-nf-theme="dusk"]) body:has(#app){
-  --bg:#28190f;--side:#332116;--paper:#3b281d;--panel:#3b281d;
-  --panel2:#50362a;--line:#75574a;--text:#f7e8db;--soft:#ceb6a7;
-  --muted:#ceb6a7;--lime:#edc16e;
-  background-color:#28190f;color:#f7e8db;color-scheme:dark;
+  --bg:#241a34;--side:#31233f;--paper:#3b2c4b;--panel:#3b2c4b;
+  --panel2:#50362a;--line:#826682;--text:#fff0e7;--soft:#dec9de;
+  --muted:#dec9de;--lime:#f5b78b;
+  background-color:#241a34;color:#fff0e7;color-scheme:dark;
 }
 html:not([data-nf-theme="dusk"]) body:has(#app) :is(.side,.top,.panel,
   .metric,.card,.op,.rep-card,.context-figure,.feature-panel,.aside-note){
-  background:#332116;color:#f7e8db;border-color:#75574a;
+  background:#31233f;color:#fff0e7;border-color:#826682;
 }
 html:not([data-nf-theme="dusk"]) body:has(#app) :is(.navitem:hover,.portfolio:hover,
   .navitem.selected,.portfolio.active,.status,.tag.passed,.tag.pending){
-  background:#51382b;color:#f7e8db;border-color:#75574a;
+  background:#503757;color:#fff0e7;border-color:#826682;
 }
 html:not([data-nf-theme="dusk"]) body:has(#app) :is(.btn.primary,.brand-mark,.toast:not(.bad)){
-  background:#edc16e;color:#28190f;border-color:#edc16e;
+  background:#f5b78b;color:#241a34;border-color:#f5b78b;
 }
 html:not([data-nf-theme="dusk"]) body:has(#app) :is(.navitem,
-  .side-label,.side-bottom,.step small,.metric span,.metric small){color:#ceb6a7}
+  .side-label,.side-bottom,.step small,.metric span,.metric small){color:#dec9de}
 html:not([data-nf-theme="dusk"]) body:has(.app){
-  --bg:#28190f;--surface:#3b281d;--surface2:#50362a;--surface3:#604737;
-  --text:#f7e8db;--muted:#ceb6a7;--subtle:#ceb6a7;--line:#75574a;
-  --mint:#edc16e;--mint2:#604737;--gold:#edc16e;--shadow:0 12px 35px #12090366;
-  background-color:#28190f;color:#f7e8db;color-scheme:dark;
+  --bg:#241a34;--surface:#3b2c4b;--surface2:#50362a;--surface3:#604737;
+  --text:#fff0e7;--muted:#dec9de;--subtle:#dec9de;--line:#826682;
+  --mint:#f5b78b;--mint2:#604737;--gold:#f5b78b;--shadow:0 12px 35px #12090366;
+  background-color:#241a34;color:#fff0e7;color-scheme:dark;
 }
 html:not([data-nf-theme="dusk"]) body:has(.app) :is(.sidebar,.side,.nav button.active,
   .brandMark,.sideBottom,.toast:not(.bad)){
-  background:#332116;color:#f7e8db;border-color:#75574a;
+  background:#31233f;color:#fff0e7;border-color:#826682;
 }
 html:not([data-nf-theme="dusk"]) body:has(.app) :is(button.primary,.btnPrimary,.primaryBtn){
-  background:#edc16e;color:#28190f;border-color:#edc16e;
+  background:#f5b78b;color:#241a34;border-color:#f5b78b;
 }
 html:not([data-nf-theme="dusk"]) .co-page,
 html:not([data-nf-theme="dusk"]) body.co-page[data-theme="light"]{
-  --paper:#28190f;--ink:#f7e8db;--line:#75574a;--soft:#332116;
-  --muted:#ceb6a7;--accent:#edc16e;
-  --co-surface:#3b281d;--co-panel:#332116;--co-faint:#ceb6a7;
-  --co-lime:#edc16e;--co-deep:#1b100b;--co-border:#75574a;
-  --co-glow:#f5d88f;--co-muted:#ceb6a7;
-  color-scheme:dark;background:#28190f;color:#f7e8db;
+  --paper:#241a34;--ink:#fff0e7;--line:#826682;--soft:#31233f;
+  --muted:#dec9de;--accent:#f5b78b;
+  --co-surface:#3b2c4b;--co-panel:#31233f;--co-faint:#dec9de;
+  --co-lime:#f5b78b;--co-deep:#191327;--co-border:#826682;
+  --co-glow:#f8d2aa;--co-muted:#dec9de;
+  color-scheme:dark;background:#241a34;color:#fff0e7;
 }
 
 /* B / NEW MOON. Absolute dark canvas, navy/indigo structure, jasmine copy,
@@ -345,13 +346,13 @@ html[data-nf-theme="dusk"] body:has(.lp-page){
 }
 
 /* The quiet editorial interlude is part of the same cocoa/new-moon system. */
-html:not([data-nf-theme="dusk"]) .nf-interlude{background:#1b100b;color:#f7e8db;border-color:#75574a}
+html:not([data-nf-theme="dusk"]) .nf-interlude{background:#191327;color:#fff0e7;border-color:#826682}
 html[data-nf-theme="dusk"] .nf-interlude{background:#0a1021;color:#f1eedc;border-color:#33405d}
 html[data-nf-theme="dusk"] body:has(.app) .brandMark{color:#e6deaa}
 
 /* Final input-contract priority: yellow always carries chocolate ink. */
-html:not([data-nf-theme="dusk"]) :is(.hero-actions .button:not(.button-light),.nf-home-tool-entry .button,.join-action,.cj-primary,.co-page .co-primary,.desk-add,.desk-session-shortcut){color:#28190f!important}
-html:not([data-nf-theme="dusk"]) :is(.hero-actions .button:not(.button-light),.nf-home-tool-entry .button,.join-action,.cj-primary,.co-page .co-primary,.desk-add,.desk-session-shortcut):hover{color:#28190f!important}
+html:not([data-nf-theme="dusk"]) :is(.hero-actions .button:not(.button-light),.nf-home-tool-entry .button,.join-action,.cj-primary,.co-page .co-primary,.desk-add,.desk-session-shortcut){color:#241a34!important}
+html:not([data-nf-theme="dusk"]) :is(.hero-actions .button:not(.button-light),.nf-home-tool-entry .button,.join-action,.cj-primary,.co-page .co-primary,.desk-add,.desk-session-shortcut):hover{color:#241a34!important}
 
 /* PALETTE CONSISTENCY v2 / OCT 29, 2026
    Third-layer legacy surfaces are recolored here so no pale parchment slips
@@ -365,21 +366,21 @@ html[data-nf-theme="dusk"]{
   --rs-lime:#e6deaa;--rs-sage:#b4b5d9;
 }
 html:not([data-nf-theme="dusk"]){
-  --rs-paper:#28190f;--rs-ink:#f7e8db;--rs-deep:#1b100b;
-  --rs-line:#75574a;--rs-muted:#ceb6a7;
-  --rs-lime:#edc16e;--rs-sage:#c99b80;
+  --rs-paper:#241a34;--rs-ink:#fff0e7;--rs-deep:#191327;
+  --rs-line:#826682;--rs-muted:#dec9de;
+  --rs-lime:#f5b78b;--rs-sage:#dbaac2;
 }
 html[data-nf-theme="dusk"] :is(.nf-archive-shelf,.nf-archive-accession,.nf-dual-colophon){
   background:#0c1527;color:#f1eedc;border-color:#33405d;
 }
 html:not([data-nf-theme="dusk"]) :is(.nf-archive-shelf,.nf-archive-accession,.nf-dual-colophon){
-  background:#3b281d;color:#f7e8db;border-color:#75574a;
+  background:#3b2c4b;color:#fff0e7;border-color:#826682;
 }
 html:not([data-nf-theme="dusk"]) :is(.nf-archive-accession strong,.nf-archive-accession h3){
-  color:#f7e8db;
+  color:#fff0e7;
 }
 html:not([data-nf-theme="dusk"]) :is(.nf-archive-id,.nf-archive-accession small,.nf-dual-colophon h2 em){
-  color:#edc16e;
+  color:#f5b78b;
 }
 html:not([data-nf-theme="dusk"]) :is(.nf-section-index,.nf-home-toolbox,
   .evidence-inner,.lab-feature-visual,.lab-windowbar,.lab-windowfoot,
@@ -390,7 +391,7 @@ html:not([data-nf-theme="dusk"]) :is(.nf-section-index,.nf-home-toolbox,
   .lp-lab,.lp-workbench,.lp-point,.lp-method,.lp-rule,.lp-note,.lp-console,
   .desk-queue,.desk-notes,.desk-claim-button,.desk-dimension,.desk-open-row,
   .cj-section,.cj-work,.cj-next,.cj-workspace,.cj-pickers select,.cj-work textarea){
-  background:#3b281d;color:#f7e8db;border-color:#75574a;
+  background:#3b2c4b;color:#fff0e7;border-color:#826682;
 }
 html[data-nf-theme="dusk"] :is(.nf-section-index,.nf-home-toolbox,
   .evidence-inner,.lab-feature-visual,.lab-windowbar,.lab-windowfoot,
@@ -406,7 +407,7 @@ html[data-nf-theme="dusk"] :is(.nf-section-index,.nf-home-toolbox,
 html:not([data-nf-theme="dusk"]) :is(.nf-section-index>summary,.nf-section-index>summary span,
   .nf-home-toolbox>summary,.nf-home-toolbox>summary strong,.nf-home-toolbox>summary span,
   .lp-point small,.desk-claim-button small,.ep-grid-readout span,.rs-gate p){
-  color:#ceb6a7;
+  color:#dec9de;
 }
 html[data-nf-theme="dusk"] :is(.nf-section-index>summary,.nf-section-index>summary span,
   .nf-home-toolbox>summary,.nf-home-toolbox>summary strong,.nf-home-toolbox>summary span,
@@ -416,7 +417,7 @@ html[data-nf-theme="dusk"] :is(.nf-section-index>summary,.nf-section-index>summa
 html:not([data-nf-theme="dusk"]) :is(.nf-section-index>summary:hover,
   .nf-home-toolbox>summary:hover,.nf-archive-accession:hover,.pp-picker a[aria-current="true"],
   .lp-point.is-edge,.desk-claim-button[aria-pressed="true"]){
-  background:#51382b;color:#f7e8db;border-color:#edc16e;
+  background:#503757;color:#fff0e7;border-color:#f5b78b;
 }
 html[data-nf-theme="dusk"] :is(.nf-section-index>summary:hover,
   .nf-home-toolbox>summary:hover,.pp-picker a[aria-current="true"],
@@ -424,26 +425,26 @@ html[data-nf-theme="dusk"] :is(.nf-section-index>summary:hover,
   background:#16223c;color:#f1eedc;border-color:#e6deaa;
 }
 html:not([data-nf-theme="dusk"]) :is(.nf-section-index>summary,
-  .nf-home-toolbox>summary)::before{background:#332116;color:#edc16e;border-color:#75574a}
+  .nf-home-toolbox>summary)::before{background:#31233f;color:#f5b78b;border-color:#826682}
 html[data-nf-theme="dusk"] :is(.nf-section-index>summary,
   .nf-home-toolbox>summary)::before{background:#091120;color:#e6deaa;border-color:#33405d}
 html:not([data-nf-theme="dusk"]) :is(.ep-value span,.rs-btn.light,.pp-metric strong,
-  .ep-grid-readout strong,.desk-readout strong,.lp-point.is-edge strong){color:#edc16e}
+  .ep-grid-readout strong,.desk-readout strong,.lp-point.is-edge strong){color:#f5b78b}
 html[data-nf-theme="dusk"] :is(.ep-value span,.rs-btn.light,.pp-metric strong,
   .ep-grid-readout strong,.desk-readout strong,.lp-point.is-edge strong){color:#e6deaa}
 html:not([data-nf-theme="dusk"]) :is(.rs-btn,.lp-btn-primary,.desk-session-actions button){
-  background:#edc16e;color:#28190f;border-color:#edc16e;
+  background:#f5b78b;color:#241a34;border-color:#f5b78b;
 }
 html[data-nf-theme="dusk"] :is(.rs-btn,.lp-btn-primary,.desk-session-actions button){
   background:#e6deaa;color:#0b1425;border-color:#e6deaa;
 }
 html:not([data-nf-theme="dusk"]) :is(.nf-archive-accession,.nf-archive-accession strong,
   .nf-archive-accession>span:not(.nf-archive-id),.nf-dual-colophon-links a){
-  color:#f7e8db;
+  color:#fff0e7;
 }
-html:not([data-nf-theme="dusk"]) .nf-dual-colophon-links a{color:#edc16e}
+html:not([data-nf-theme="dusk"]) .nf-dual-colophon-links a{color:#f5b78b}
 html[data-nf-theme="dusk"] .nf-dual-colophon-links a{color:#e6deaa}
-html:not([data-nf-theme="dusk"]) .desk-entry[style] :is(.desk-entry-stat strong,.desk-entry-stat a){color:#edc16e!important}
+html:not([data-nf-theme="dusk"]) .desk-entry[style] :is(.desk-entry-stat strong,.desk-entry-stat a){color:#f5b78b!important}
 html[data-nf-theme="dusk"] .desk-entry[style] :is(.desk-entry-stat strong,.desk-entry-stat a){color:#e6deaa!important}
 
 /* NEW MOON OXBLOOD: three atmospheric marks, never status, proof or CTA. */
@@ -470,15 +471,15 @@ html[data-nf-theme="dusk"] .nf-dual-colophon{
 
 /* A selected research route remains visually raised, with evidence label unchanged. */
 html[data-nf-theme="dusk"] .join-choice[data-recommended="true"]{background:#28334b;color:#f1eedc;border-color:#e6deaa}
-html:not([data-nf-theme="dusk"]) .join-choice[data-recommended="true"]{background:#51382b;color:#f7e8db;border-color:#edc16e}
+html:not([data-nf-theme="dusk"]) .join-choice[data-recommended="true"]{background:#503757;color:#fff0e7;border-color:#f5b78b}
 
 /* The first offered Join assignment is visually raised as the primary route. */
 html[data-nf-theme="dusk"] .join-choices>.join-choice:first-child{background:#28334b;color:#f1eedc;border-color:#e6deaa}
-html:not([data-nf-theme="dusk"]) .join-choices>.join-choice:first-child{background:#51382b;color:#f7e8db;border-color:#edc16e}
+html:not([data-nf-theme="dusk"]) .join-choices>.join-choice:first-child{background:#503757;color:#fff0e7;border-color:#f5b78b}
 
 /* Force the leading, user-visible assignment card above generic inherited panels. */
 html[data-nf-theme="dusk"] #join-choices > article.join-choice:first-of-type{background-color:#28334b!important}
-html:not([data-nf-theme="dusk"]) #join-choices > article.join-choice:first-of-type{background-color:#51382b!important}
+html:not([data-nf-theme="dusk"]) #join-choices > article.join-choice:first-of-type{background-color:#503757!important}
 
 
 /* From the computed mobile audit: flagship themes, the schematic index chips,
@@ -500,25 +501,25 @@ html:not([data-nf-theme="dusk"]) :is(
  .atlas-grid .atlas-card:nth-child(4n + 1),.nf-replay-steps li:nth-child(2),
  .sf-system-card:hover,.sf-system-card:focus-visible,.sf-evidence-events a:hover,
  .atlas-passport-link:hover){
- background-color:#3b281d!important;color:#f7e8db;border-color:#75574a;
+ background-color:#3b2c4b!important;color:#fff0e7;border-color:#826682;
 }
 
 /* The review access/certificate warning inherits an obsolete parchment background. */
 html[data-nf-theme="dusk"] .review-warning{background:#16223c;color:#f1eedc;border-color:#e6deaa}
-html:not([data-nf-theme="dusk"]) .review-warning{background:#51382b;color:#f7e8db;border-color:#edc16e}
+html:not([data-nf-theme="dusk"]) .review-warning{background:#503757;color:#fff0e7;border-color:#f5b78b}
 
 /* Standalone Constellation overrides its own body background; honor both skies. */
 html[data-nf-theme="dusk"] body.co-page{background-color:#04060b}
-html:not([data-nf-theme="dusk"]) body.co-page{background-color:#28190f}
+html:not([data-nf-theme="dusk"]) body.co-page{background-color:#241a34}
 
 
 /* Whole-site computed-style audit — 26 themed pages, both viewports.
    Source models, labels, SVG numbers and evidence classes stay intact.
    These are presentation surfaces formerly painted with parchment. */
 html:not([data-nf-theme="dusk"]){
- --nf-clean-surface:#3b281d;--nf-clean-ink:#f7e8db;
- --nf-clean-border:#75574a;--nf-clean-muted:#ceb6a7;
- --nf-clean-raised:#51382b;--nf-clean-gold:#edc16e;
+ --nf-clean-surface:#3b2c4b;--nf-clean-ink:#fff0e7;
+ --nf-clean-border:#826682;--nf-clean-muted:#dec9de;
+ --nf-clean-raised:#503757;--nf-clean-gold:#f5b78b;
 }
 html[data-nf-theme="dusk"]{
  --nf-clean-surface:#0c1527;--nf-clean-ink:#f1eedc;
@@ -557,4 +558,105 @@ html :is(.pp-badge.finite,.pp-badge.public,.pp-badge.scoped,.pp-badge.bounded){
 }
 html :is(.sa-formula,.sa-hist,.rt-result){
  overflow-wrap:anywhere;
+}
+
+/* SUNSET BOULEVARD / OCT 29 — Screenshot-led contrast repair.
+   The light sky is plum, blush and apricot; the New Moon remains navy.
+   No change to evidence labels, scientific status, source links or JS state. */
+html:not([data-nf-theme="dusk"]){
+  --nf-sunset-rose:#dbaac2;--nf-sunset-apricot:#f5b78b;
+  --nf-sunset-plum:#241a34;--nf-sunset-ink:#fff0e7;
+  --nf-sunset-secondary:#dec9de;--nf-sunset-rule:#826682;
+}
+html:not([data-nf-theme="dusk"]) :is(.join-method,.join-method .join-method-steps){
+  background:#191327;color:#fff0e7;border-color:#826682;
+}
+html:not([data-nf-theme="dusk"]) .join-method-steps>div{
+  background:#30223e;color:#fff0e7;border-color:#826682;
+}
+html:not([data-nf-theme="dusk"]) .join-method .join-heading h2 em{color:#f5b78b}
+html:not([data-nf-theme="dusk"]) :is(.join-method .join-heading p,.join-method-steps p){color:#dec9de}
+html:not([data-nf-theme="dusk"]) :is(.join-method-steps b,.join-method .join-heading>span){color:#f5b78b}
+html:not([data-nf-theme="dusk"]) :is(.join-hero-aside li,.join-workspace,.join-state,.cj-section){border-color:#826682}
+html:not([data-nf-theme="dusk"]) :is(.join-kicker,.join-heading>span,.join-workspace-header span,
+  .join-hero-aside li b,.join-result-grid span,.join-result-grid strong,
+  .join-choice>span,.join-choice[data-recommended="true"]>span,.join-pad>span,
+  .join-next>span,.cj-kicker,.cj-context span,.cj-pickers label){color:#f5b78b}
+html:not([data-nf-theme="dusk"]) :is(.join-hero h1 em,.join-heading h2 em,
+  .join-workspace h2 em){color:#e8a3bf}
+html:not([data-nf-theme="dusk"]) :is(.join-hero-aside p,.join-heading p,.join-lead,
+  .join-result-grid p,.join-choice p,.join-workspace-header p,.join-disclosure,
+  .join-pad p,.join-next p,.join-next details,.cj-work p,.cj-next p,
+  .join-match p,.join-match label,.join-note,.cj-context p){color:#dec9de}
+html:not([data-nf-theme="dusk"]) :is(.join-quiet,.join-results a,.join-disclosure a,
+  .join-result-grid a,.join-next a,.cj-next a,.cj-context a,
+  .join-hero a:not(.button)){color:#f5b78b}
+html:not([data-nf-theme="dusk"]) :is(.join-result-grid article,.join-choice,.join-match,
+  .join-pad,.join-next,.join-empty,.cj-section,.cj-work,.cj-next,.cj-workspace,
+  .join-evidence-archive,.join-evidence,.join-tool-route button){
+  background:#3b2c4b;color:#fff0e7;border-color:#826682;
+}
+html:not([data-nf-theme="dusk"]) :is(.join-result-grid h3,.join-choice h3,
+  .join-workspace h2,.join-pad h3,.join-next h3,.join-empty,
+  .cj-work h3,.cj-next h3,.join-method-steps strong){color:#fff0e7}
+html:not([data-nf-theme="dusk"]) :is(.join-choices>.join-choice:first-child,
+  .join-choice[data-recommended="true"],#join-choices>article.join-choice:first-of-type){
+  background:#503757!important;border-color:#f5b78b;
+}
+html:not([data-nf-theme="dusk"]) :is(.join-choices>.join-choice:first-child,
+  .join-choice[data-recommended="true"]) :is(p,h3){color:#fff0e7}
+html:not([data-nf-theme="dusk"]) :is(.join-choices .join-choice button,
+  .join-action,.join-next button,.join-action-link,.cj-actions button,
+  .join-next #join-next-action){
+  background:#f5b78b;color:#191327;border-color:#f5b78b;
+}
+html:not([data-nf-theme="dusk"]) :is(.join-choices .join-choice button,
+  .join-action,.join-next button,.join-action-link,.cj-actions button):hover{
+  background:#f8d2aa;color:#191327;border-color:#f8d2aa;
+}
+html:not([data-nf-theme="dusk"]) :is(.join-match select,.join-pad textarea,
+  .cj-pickers select,.cj-work textarea,#join-notes,#cj-notes){
+  background:#241a34;color:#fff0e7;border-color:#a28aa8;caret-color:#f5b78b;
+}
+html:not([data-nf-theme="dusk"]) :is(.join-match select,.join-pad textarea,
+  .cj-pickers select,.cj-work textarea)::placeholder{color:#dec9de}
+html:not([data-nf-theme="dusk"]) .join-state{color:#f5b78b;background:#241a34}
+html:not([data-nf-theme="dusk"]) :is(.join-tool-route,.cj-columns){background:#826682}
+html:not([data-nf-theme="dusk"]) :is(.join-tool-route span,
+  .join-evidence-kicker,.join-evidence-status,.join-evidence-record,
+  .join-evidence-archive>p){color:#dec9de!important}
+html:not([data-nf-theme="dusk"]) :is(.join-next .join-export-actions button,
+  #join-claimlab-link,.cj-actions button+button){
+  background:transparent;color:#f5b78b;border-color:#a28aa8;
+}
+/* Remove residual oxblood and muted green from the New Moon contributor path.
+   The midnight palette remains unchanged outside this specific page. */
+html[data-nf-theme="dusk"] .join-method{background:#091120;color:#f1eedc}
+html[data-nf-theme="dusk"] .join-method-steps{background:#33405d}
+html[data-nf-theme="dusk"] .join-method-steps>div{background:#0c1527;color:#f1eedc}
+html[data-nf-theme="dusk"] :is(.join-method .join-heading h2 em,
+  .join-method-steps b,.join-result-grid strong,.join-result-grid span,
+  .join-hero-aside li b,.join-choice>span){color:#e6deaa}
+html[data-nf-theme="dusk"] :is(.join-workspace-header p,.join-hero-aside p,
+  .join-disclosure,.join-pad p,.join-next p,.join-choice p,
+  .join-method-steps p,.join-heading p,.cj-work p,.cj-next p){color:#bec3d6}
+html[data-nf-theme="dusk"] :is(.join-hero-aside li,.join-state,.join-workspace){border-color:#33405d}
+html[data-nf-theme="dusk"] :is(.join-match label,.cj-pickers label,
+  .join-pad label,.join-match p){color:#f1eedc}
+html[data-nf-theme="dusk"] :is(.join-quiet,.join-results a,.join-disclosure a,
+  .join-result-grid a,.cj-next a){color:#d6c7f2}
+html[data-nf-theme="dusk"] .join-state{color:#e6deaa;background:#091120}
+
+/* The light header and legacy small links must never retain dark oxblood ink. */
+html:not([data-nf-theme="dusk"]) :is(.header .brand,.header .brand-copy,
+  .header .brand-copy span,.header .nav a:not(.nav-call),.header .menu-toggle,
+  .review-nav a:not(.nav-call)){color:#fff0e7}
+html:not([data-nf-theme="dusk"]) :is(.header .nav a:not(.nav-call):hover,
+  .footer a:hover,.join-hero-aside a:hover){color:#f5b78b}
+html:not([data-nf-theme="dusk"]) .header .menu-toggle{
+  border-color:#826682;background:#241a34;
+}
+html:not([data-nf-theme="dusk"]) :is(.join-result-grid a,.join-quiet,
+  .join-disclosure a,.cj-next a):focus-visible{
+  outline:3px solid #f8d2aa;outline-offset:4px;
 }

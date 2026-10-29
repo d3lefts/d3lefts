@@ -75,8 +75,8 @@ try{
     const s=getComputedStyle(document.documentElement),button=getComputedStyle(document.querySelector(".hero-actions .button"));
     return {paper:s.getPropertyValue("--lf-paper").trim(),primary:s.getPropertyValue("--lf-primary").trim(),text:button.color};
   });
-  assert.equal(palette.paper,"#28190f","Cocoa archive token contract");
-  assert.equal(palette.primary,"#edc16e","Golden-hour yellow action accent");
+  assert.equal(palette.paper,"#241a34","Sunset Boulevard token contract");
+  assert.equal(palette.primary,"#f5b78b","Sunset apricot action accent");
   assert.equal(palette.text,"rgb(40, 25, 15)","Primary button uses legible light text");
   await page.screenshot({path:"browser-artifacts/ethereal-light-"+width+".png",fullPage:false});
   await toggle.click();
