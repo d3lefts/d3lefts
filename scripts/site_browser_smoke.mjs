@@ -90,7 +90,7 @@ try{
     await page.locator('[data-atlas-filter="quantum"]').click();
     assert.equal(await page.locator(".atlas-card:visible").count(),4,"four distinct quantum source entries");
     await page.locator('[data-atlas-filter="all"]').click();
-    await page.locator("#atlas-search").fill("SourceBound");
+    await page.locator("#atlas-search").fill("SourceBound evidence prototype");
     assert.equal(await page.locator(".atlas-card:visible").count(),1,"library source search");
     await page.locator("#atlas-search").fill("");
     assert.equal(await page.locator(".atlas-card:visible").count(),32,"32-entry library filter reset");
