@@ -189,3 +189,53 @@ html[data-nf-theme="dusk"] .nf-dual-intro>p{color:#bec8df}
  html[data-nf-theme="dusk"] .nf-experience-archive{display:block!important}
  .nf-dual-index{break-inside:avoid}
 }
+
+
+/* Second act: the same objects through radically different editorial apertures.
+   No evidence, scope or calculation changes with the experience switch. */
+#main .section-head .nf-experience,
+#main .nf-observatory-head .nf-experience,
+#main .nf-replay-lead .nf-experience,
+#main .instrument-bridge-intro .nf-experience,
+#main #evidence-title .nf-experience{min-width:0}
+#main .instrument-bridge-head>.nf-experience{
+ flex:1;justify-content:space-between;gap:12px;flex-wrap:wrap;
+}
+html:not([data-nf-theme="dusk"]) #main :is(.flagships,.nf-observatory,.sf-ecosystem,.nf-replay-path){
+ border-color:#c8b7c0;
+}
+html:not([data-nf-theme="dusk"]) #main .flagships>.section-head{
+ position:relative;padding-left:25px;
+ border-left:2px solid #8b5b73;
+}
+html:not([data-nf-theme="dusk"]) #main :is(.flagships,.sf-ecosystem) .section-id{
+ letter-spacing:.065em;
+}
+html:not([data-nf-theme="dusk"]) #main .nf-observatory-head{
+ padding-top:8px;
+}
+html:not([data-nf-theme="dusk"]) #main :is(#flagship-title,#instruments-heading,#nf-observatory-title,#nf-replay-title,#sf-systems-heading,#review-title,#method-title) em,
+html:not([data-nf-theme="dusk"]) #main #review-title i{
+ color:#6a304e;
+}
+html[data-nf-theme="dusk"] #main .flagships>.section-head{
+ position:relative;padding-left:24px;
+ border-left:2px solid #d8c38a;
+}
+html[data-nf-theme="dusk"] #main .flagships>.section-head:before{
+ content:"INPUT / EXACT FINITE WITNESS";position:absolute;
+ left:24px;top:-24px;font:600 9px/1.4 var(--mono);letter-spacing:.07em;color:#d8c38a;
+}
+html[data-nf-theme="dusk"] #main :is(#flagship-title,#instruments-heading,#nf-observatory-title,#nf-replay-title,#sf-systems-heading,#review-title,#method-title) em,
+html[data-nf-theme="dusk"] #main #review-title i{color:#d8c38a}
+html[data-nf-theme="dusk"] #main :is(.instrument-bridge,.nf-observatory,.nf-replay-path,.sf-ecosystem){
+ border-color:#505a76;
+}
+html[data-nf-theme="dusk"] #main #evidence-title{
+ text-wrap:balance;
+}
+@media(max-width:760px){
+ #main .instrument-bridge-head>.nf-experience{display:flex;flex-direction:column;gap:3px}
+ #main .flagships>.section-head{padding-left:16px}
+ html[data-nf-theme="dusk"] #main .flagships>.section-head:before{left:16px}
+}
