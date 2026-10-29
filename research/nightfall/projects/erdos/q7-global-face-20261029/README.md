@@ -23,6 +23,23 @@ In particular, for **any hypothetical m≥305**:
 
 This is a seed-independent necessary condition and a useful face-first branching rule. It does **not** improve the known global 304≤ex(Q7,C4)≤308 bound. The double-counting and recurrence are elementary established mathematics, *not* a newly discovered theorem.
 
+The same exact proof gives a hierarchy for all currently possible upper-end candidates:
+
+| Hypothetical Q7 edges | Every directional count ≥ | Sum of Q6-face deficits | At least this many Q6 faces with ≥131 edges |
+|---:|---:|---:|---:|
+| 305 | 41 | 18 | 5 |
+| 306 | 42 | 12 | 8 |
+| 307 | 43 | 6 | 11 |
+| 308 | 44 | 0 | 14 |
+
+If a 308-edge C4-free graph exists, **all fourteen Q6 half-faces must be individually extremal (132 edges)** and all seven directions must contain exactly 44 edges. This is a valid global face-structure restriction, *not* an improvement to 308.
+
+### Actual execution, October 29, 2026
+
+[GitHub Actions exact face audit and bounded trial](https://github.com/d3lefts/d3lefts/actions/runs/40828770774) succeeded. The archived JSON audit verified all 180 frozen masks and found the following histogram of Q6 half-faces of size ≥131 among the **304-edge input seeds**: `{2:4, 3:5, 4:29, 5:57, 6:46, 7:19, 8:20}`. The independent compact spin seed has 304 edges, degree profile `4:32,5:96`, three extremal Q6 faces and total deficit 24. Source hash matched.
+
+The face-first MILP held a full 132-edge Q6 face fixed and tested all remaining 256 binary edge variables for a 305-edge solution with 672 square, 14 Q6 and 84 Q5 restrictions. **Result:** 20.003-second HiGHS time limit; *no feasible incumbent and no checkable infeasibility proof*. This experiment supplies a different global search representation, **no new bound**.
+
 ## Independently implemented geometry and negative controls
 
 `face_gate.py` constructs 128 vertices, 448 edges and 672 coordinate squares in **vertex-major** ordering, independently reconstructs the Q7 graph with a distinct common-neighbour C4 check, and decodes all 180 attributed seed masks from the original direction-major ordering. It checks the frozen source SHA-256 `2c4a0bfdcbac0d2751a6d2ab3b8b345cd6d4dd2febe437d63cadc2af960168a1`.
