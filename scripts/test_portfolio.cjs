@@ -88,7 +88,8 @@ for(const file of ["docs/index.html","docs/about.html","docs/sitemap.xml","READM
 }
 assert(!read("docs/sitemap.xml").includes("/portfolio"));
 assert(page.includes('id="approved-findings"'));
-assert.equal((page.match(/<article><span>0[1-5] \/ /g)||[]).length,5,
+const approvedOnly=page.split('<div class="pf-five-grid">')[1]?.split('</div>\n  <p class="pf-five-boundary">')[0] || "";
+assert.equal((approvedOnly.match(/<article>/g)||[]).length,5,
   "Exactly five site-approved scoped findings must appear");
 assert(page.includes("SITE_ORIGINALITY_ADDENDUM_20261029.md"));
 assert(page.includes('id="pf-mechanism-list"'));
