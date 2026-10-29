@@ -180,6 +180,7 @@ try{
    await noScript.goto(origin+"constellation.html",{waitUntil:"load"});
    assert.equal(await noScript.locator('#co-trace-picker a[href*="/projects/erdos/STATUS_AND_PRIOR_ART_20261028.md"]').count(),1,"no-script static research dossier fallback");
    assert.ok((await noScript.locator("#co-trace-summary").innerText()).includes("Without scripts"),"no false loading claim");
+   await noScript.goto(origin+"index.html",{waitUntil:"load"});
    assert.equal(await noScript.locator(".nf-replay-steps a").count(),4,"no-JS reproduction pathway");
    await noScript.close();
    await page.goto(origin+"passport.html?claim=erdos36",{waitUntil:"load"});
