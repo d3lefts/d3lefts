@@ -1,24 +1,24 @@
-/* NIGHTFALL — GOLDEN HOUR / 6:30 PM COASTAL CALIFORNIA
-   A true light palette, intentionally separate from moon-gold dusk.
+/* NIGHTFALL — ROSE PARCHMENT / BLACKCHERRY ARCHIVE
+   A quiet editorial light palette, independent of moon-gold dusk.
    Visual semantics never imply a scientific-status upgrade.
    Loaded by the shared theme stylesheet on every page. */
 html:not([data-nf-theme="dusk"]){
   color-scheme:light;
-  --lf-paper:#f4e7df;--lf-paper-raised:#f8eee8;--lf-paper-deep:#eedfd6;
-  --lf-line:#c9b2a6;--lf-ink:#2a1f1d;--lf-muted:#5c4944;
-  --lf-orange:#d97a4a;--lf-orange-hover:#c96a3b;--lf-apricot:#e3a065;
-  --lf-oxblood:#4a1f24;--lf-oxblood-soft:#6a2d35;--lf-oxblood-deep:#3a161b;
+  --lf-paper:#f4eeed;--lf-paper-raised:#fbf7f5;--lf-paper-deep:#ece1e4;
+  --lf-line:#c8b7c0;--lf-ink:#29212a;--lf-muted:#65545d;
+  --lf-primary:#6a304e;--lf-primary-hover:#84445e;--lf-blush:#d7a6b6;
+  --lf-oxblood:#451c35;--lf-oxblood-soft:#672a48;--lf-oxblood-deep:#341427;
   --paper:var(--lf-paper);--ink:var(--lf-ink);--line:var(--lf-line);
   --soft:var(--lf-paper-deep);--muted:var(--lf-muted);
-  --accent:var(--lf-orange);--deep:var(--lf-oxblood);
-  --lime:var(--lf-orange);--green:var(--lf-oxblood);
+  --accent:var(--lf-primary);--deep:var(--lf-oxblood);
+  --lime:var(--lf-primary);--green:var(--lf-oxblood);
   --fg:var(--lf-ink);--fline:var(--lf-line);
 }
 html:not([data-nf-theme="dusk"]) body{
   background:var(--lf-paper);color:var(--lf-ink);
 }
 html:not([data-nf-theme="dusk"]) ::selection{
-  background:#e3a065;color:#2a1f1d;
+  background:#d7a6b6;color:#29212a;
 }
 html:not([data-nf-theme="dusk"]) :is(a,button,input,textarea,select,summary):focus-visible{
   outline:3px solid var(--lf-oxblood-soft);outline-offset:3px;
@@ -28,7 +28,7 @@ html:not([data-nf-theme="dusk"]) :is(.topline,.header){
 }
 html:not([data-nf-theme="dusk"]) .topline{background:var(--lf-oxblood)}
 html:not([data-nf-theme="dusk"]) .topline::after{
-  background:linear-gradient(90deg,#b85042,#e3a065);
+  background:linear-gradient(90deg,#ab4f74,#d7a6b6);
 }
 html:not([data-nf-theme="dusk"]) :is(.header,.nav.open){
   background:var(--lf-paper);border-color:var(--lf-line);
@@ -44,10 +44,10 @@ html:not([data-nf-theme="dusk"]) .nav-call:hover{
 }
 html:not([data-nf-theme="dusk"]) .nf-theme-toggle{
   background:var(--lf-paper-raised);color:var(--lf-oxblood);
-  border-color:#af8378;
+  border-color:#a97e8f;
 }
 html:not([data-nf-theme="dusk"]) .nf-theme-toggle:hover{
-  background:#f9e0c9;box-shadow:0 0 0 3px #d97a4a2c;
+  background:#e9d9df;box-shadow:0 0 0 3px #6a304e2c;
 }
 html:not([data-nf-theme="dusk"]) :is(.hero-title em,.flagships .section-title em,
   .section-title em,.instrument-bridge h2 em,.nf-replay-lead h2 em,
@@ -67,18 +67,18 @@ html:not([data-nf-theme="dusk"]) :is(.hero-description,.research-desc,.section-i
   color:var(--lf-muted);
 }
 html:not([data-nf-theme="dusk"]) .pulse::before{
-  background:var(--lf-orange);box-shadow:0 0 0 4px #d97a4a29;
+  background:var(--lf-primary);box-shadow:0 0 0 4px #6a304e29;
 }
 html:not([data-nf-theme="dusk"]) :is(.button,.hero-actions .button,.instrument-bridge-invite .button,
   .nf-home-tool-entry .button,.join-action,.join-evidence-archive button,
   .cj-actions button,.cj-primary,.desk-add,.desk-session-shortcut){
-  background:var(--lf-orange);color:var(--lf-oxblood);
-  border-color:var(--lf-orange);
+  background:var(--lf-primary);color:var(--lf-oxblood);
+  border-color:var(--lf-primary);
 }
 html:not([data-nf-theme="dusk"]) :is(.button,.hero-actions .button,.instrument-bridge-invite .button,
   .nf-home-tool-entry .button,.join-action,.join-evidence-archive button,
   .cj-actions button,.cj-primary,.desk-add,.desk-session-shortcut):hover{
-  background:var(--lf-apricot);border-color:var(--lf-apricot);
+  background:var(--lf-primary-hover);border-color:var(--lf-primary-hover);
   color:var(--lf-oxblood);
 }
 html:not([data-nf-theme="dusk"]) .button-light{
@@ -94,7 +94,7 @@ html:not([data-nf-theme="dusk"]) :is(.nf-hero-sky-link,.join-quiet,.join-results
   color:var(--lf-oxblood);
 }
 
-/* Editorial homepage: warm layers, sunset signals, blackcherry authority. */
+/* Editorial homepage: warm layers, muted rose details, blackcherry authority. */
 html:not([data-nf-theme="dusk"]) :is(.feature,.flagship-card:not(.flagship-dark),
   .sf-system-card,.research-proposal,.atlas-card,.review-card,
   .instrument-workflow a,.nf-home-toolbox,.join-result-grid article){
@@ -102,7 +102,7 @@ html:not([data-nf-theme="dusk"]) :is(.feature,.flagship-card:not(.flagship-dark)
   border-color:var(--lf-line);
 }
 html:not([data-nf-theme="dusk"]) :is(.feature.lime,.flagship-sage,.sf-system-card:nth-child(2)){
-  background:#f4d6c5;color:var(--lf-ink);
+  background:#e6d3db;color:var(--lf-ink);
 }
 html:not([data-nf-theme="dusk"]) :is(.feature.dark,.flagship-dark,.review-section,
   .sf-case-panel,.nf-home-tool-entry,.join-method){
@@ -111,29 +111,29 @@ html:not([data-nf-theme="dusk"]) :is(.feature.dark,.flagship-dark,.review-sectio
 }
 html:not([data-nf-theme="dusk"]) :is(.feature.dark,.flagship-dark,.review-section,
   .sf-case-panel,.nf-home-tool-entry,.join-method) :is(p,small){
-  color:#edcfc5;
+  color:#e3cfd7;
 }
 html:not([data-nf-theme="dusk"]) :is(.feature.dark,.flagship-dark,.review-section,
   .sf-case-panel,.nf-home-tool-entry,.join-method) :is(.section-id,.micro,.number){
-  color:#f0b18a;
+  color:#d9a1b7;
 }
-html:not([data-nf-theme="dusk"]) .flagship-paper{background:#f0ddd3}
+html:not([data-nf-theme="dusk"]) .flagship-paper{background:#e9dae0}
 html:not([data-nf-theme="dusk"]) .flagship-ivory{background:#fcf1e9}
 html:not([data-nf-theme="dusk"]) .research-row:hover,
 html:not([data-nf-theme="dusk"]) .research-proposal:hover{
-  background:#f0d8cd;
+  background:#e7d6dd;
 }
 html:not([data-nf-theme="dusk"]) :is(.footer,.nf-home-toolbox,.nf-observatory-toolbar){
   background:var(--lf-paper-deep);
 }
-html:not([data-nf-theme="dusk"]) .nf-home-tool-entry :is(p,.section-id){color:#f0d8d1}
+html:not([data-nf-theme="dusk"]) .nf-home-tool-entry :is(p,.section-id){color:#e9d8df}
 html:not([data-nf-theme="dusk"]) .nf-home-tool-entry .button{
-  color:var(--lf-oxblood);background:var(--lf-orange);border-color:var(--lf-orange);
+  color:var(--lf-oxblood);background:var(--lf-primary);border-color:var(--lf-primary);
 }
 html:not([data-nf-theme="dusk"]) .nf-home-toolbox>summary,
 html:not([data-nf-theme="dusk"]) .nf-section-index>summary{color:var(--lf-oxblood)}
 html:not([data-nf-theme="dusk"]) :is(.nf-home-toolbox>summary:hover,
- .nf-section-index>summary:hover){background:#f0d5c6}
+ .nf-section-index>summary:hover){background:#e5d1d9}
 html:not([data-nf-theme="dusk"]) .nf-home-toolbox>summary::before{
   background:var(--lf-paper-raised);color:var(--lf-oxblood);border-color:var(--lf-line);
 }
@@ -144,7 +144,7 @@ html:not([data-nf-theme="dusk"]) .nf-journey-rail{
 }
 html:not([data-nf-theme="dusk"]) .nf-journey-rail a{color:var(--lf-oxblood)}
 html:not([data-nf-theme="dusk"]) .nf-process-thread{
-  --thread-line:#bd9890;background:var(--lf-paper-deep);
+  --thread-line:#b895a3;background:var(--lf-paper-deep);
 }
 html:not([data-nf-theme="dusk"]) .nf-process-thread a:before{
   border-color:var(--lf-oxblood-soft);background:var(--lf-paper-deep);
@@ -153,13 +153,13 @@ html:not([data-nf-theme="dusk"]) .nf-process-thread a[aria-current="step"]{
   color:var(--lf-oxblood);
 }
 html:not([data-nf-theme="dusk"]) .nf-process-thread a[aria-current="step"]:before{
-  background:var(--lf-orange);box-shadow:0 0 0 4px #d97a4a33;
+  background:var(--lf-primary);box-shadow:0 0 0 4px #6a304e33;
 }
 html:not([data-nf-theme="dusk"]) .sf-point{
-  background:#70404a;color:#fff0e7;border-color:#a66863;
+  background:#6b4554;color:#f6f0f2;border-color:#9f6a7f;
 }
 html:not([data-nf-theme="dusk"]) :is(.sf-witness-header,.sf-case-top){
-  color:#efd4cd;
+  color:#e7d5dc;
 }
 html:not([data-nf-theme="dusk"]) :is(.nf-replay-steps li,.nf-evidence-summary,
  .nf-safety-window-side,.sf-witness-stat,.nf-replay-step){
@@ -168,21 +168,21 @@ html:not([data-nf-theme="dusk"]) :is(.nf-replay-steps li,.nf-evidence-summary,
 
 /* Observatory: light is an archival source map, not a green dashboard.
    Semantic types keep labels and distinct marks; proof meaning never comes from hue. */
-html:not([data-nf-theme="dusk"]) .nf-observatory-field{background:#edd8cb}
+html:not([data-nf-theme="dusk"]) .nf-observatory-field{background:#e5d3da}
 html:not([data-nf-theme="dusk"]) .nf-observatory-inspector{
   background:var(--lf-paper-raised);color:var(--lf-ink);
 }
 html:not([data-nf-theme="dusk"]) .nf-observatory-node{
-  background:#fcf0e7;color:var(--lf-ink);
+  background:#f5eef1;color:var(--lf-ink);
   border-color:var(--lf-line);
 }
 html:not([data-nf-theme="dusk"]) .nf-observatory-node:hover,
 html:not([data-nf-theme="dusk"]) .nf-observatory-node[aria-pressed="true"]{
-  background:#f0c8b3;border-color:var(--lf-oxblood);
-  box-shadow:0 3px 16px #4a1f241f;
+  background:#dec5cf;border-color:var(--lf-oxblood);
+  box-shadow:0 3px 16px #451c351f;
 }
 html:not([data-nf-theme="dusk"]) .nf-observatory-star{
-  background:var(--lf-orange);box-shadow:0 0 0 3px #f0c3ab;
+  background:var(--lf-primary);box-shadow:0 0 0 3px #dbc0cb;
 }
 html:not([data-nf-theme="dusk"]) :is(.nf-observatory-node-text small,
  .nf-observatory-inspector>small,.nf-observatory-label,
@@ -194,79 +194,79 @@ html:not([data-nf-theme="dusk"]) .nf-observatory-relation-note{
   color:var(--lf-muted);
 }
 html:not([data-nf-theme="dusk"]) .nf-observatory-scope{
-  border-left-color:var(--lf-orange);color:var(--lf-muted);
+  border-left-color:var(--lf-primary);color:var(--lf-muted);
 }
 html:not([data-nf-theme="dusk"]) .nf-observatory-lenses button{
   color:var(--lf-oxblood);
 }
 html:not([data-nf-theme="dusk"]) .nf-observatory-lenses button[aria-pressed="true"]{
-  background:var(--lf-oxblood);color:#fff0e7;border-color:var(--lf-oxblood);
+  background:var(--lf-oxblood);color:#f6f0f2;border-color:var(--lf-oxblood);
 }
 html:not([data-nf-theme="dusk"]) .nf-observatory-lenses button:hover{
-  background:#f0c8b3;border-color:var(--lf-line);
+  background:#dec5cf;border-color:var(--lf-line);
 }
 html:not([data-nf-theme="dusk"]) .nf-observatory-path{
-  background:#f8e9df;color:var(--lf-oxblood);border-color:var(--lf-line);
-  border-left-color:var(--lf-orange);
+  background:#f1e6ea;color:var(--lf-oxblood);border-color:var(--lf-line);
+  border-left-color:var(--lf-primary);
 }
 html:not([data-nf-theme="dusk"]) .nf-observatory-path:nth-child(2){
   border-left-color:var(--lf-oxblood);
 }
 html:not([data-nf-theme="dusk"]) .nf-observatory-path:hover{
-  background:#efcbb8;border-color:#bd9586;
+  background:#dfc8d1;border-color:#b78c9d;
 }
 html:not([data-nf-theme="dusk"]) :is(.nf-observatory-path small,
  .nf-observatory-path span,.nf-observatory-counterpart,
  .nf-observatory-toolbar>p){color:var(--lf-muted)}
-html:not([data-nf-theme="dusk"]) .nf-observatory-edge.edge-finite-check{stroke:#be5a38}
-html:not([data-nf-theme="dusk"]) .nf-observatory-edge.edge-method{stroke:#6a2d35}
-html:not([data-nf-theme="dusk"]) .nf-observatory-edge.edge-open-premise{stroke:#b07a41}
+html:not([data-nf-theme="dusk"]) .nf-observatory-edge.edge-finite-check{stroke:#af4771}
+html:not([data-nf-theme="dusk"]) .nf-observatory-edge.edge-method{stroke:#672a48}
+html:not([data-nf-theme="dusk"]) .nf-observatory-edge.edge-open-premise{stroke:#a44d70}
 html:not([data-nf-theme="dusk"]) .nf-observatory-edge.edge-analogy{stroke:#918195;stroke-dasharray:7 8}
-html:not([data-nf-theme="dusk"]) .nf-lens-mark.mark-finite{background:#be5a38}
-html:not([data-nf-theme="dusk"]) .nf-lens-mark.mark-method{background:#6a2d35}
-html:not([data-nf-theme="dusk"]) .nf-lens-mark.mark-open{background:#b07a41}
+html:not([data-nf-theme="dusk"]) .nf-lens-mark.mark-finite{background:#af4771}
+html:not([data-nf-theme="dusk"]) .nf-lens-mark.mark-method{background:#672a48}
+html:not([data-nf-theme="dusk"]) .nf-lens-mark.mark-open{background:#a44d70}
 html:not([data-nf-theme="dusk"]) .nf-lens-mark.mark-analogy{
   background:repeating-linear-gradient(90deg,#918195 0 3px,transparent 3px 5px);
 }
 
-/* Constellation's explicitly selected LIGHT variant: sunset parchment, oxblood
-   source labels, terracotta focus. Shared DUSK rules are completely untouched. */
+/* Constellation's explicitly selected LIGHT variant: rose parchment, oxblood
+   source labels, blackcherry focus. Shared DUSK rules are completely untouched. */
 html:not([data-nf-theme="dusk"]) body.co-page,
 html:not([data-nf-theme="dusk"]) body.co-page[data-theme="light"]{
-  --paper:#f4e7df;--ink:#2a1f1d;--line:#c9b2a6;--soft:#eedfd6;
-  --muted:#5c4944;--accent:#d97a4a;
-  --co-surface:#f8eee8;--co-panel:#eedfd6;
-  --co-faint:#664b49;--co-lime:#4a1f24;--co-deep:#ecd6cc;
-  --co-border:#c9b2a6;--co-glow:#8e443a;--co-muted:#5c4944;
+  --paper:#f4eeed;--ink:#29212a;--line:#c8b7c0;--soft:#ece1e4;
+  --muted:#65545d;--accent:#6a304e;
+  --co-surface:#fbf7f5;--co-panel:#ece1e4;
+  --co-faint:#634c55;--co-lime:#451c35;--co-deep:#e5d3da;
+  --co-border:#c8b7c0;--co-glow:#85435d;--co-muted:#65545d;
   background:var(--lf-paper);color:var(--lf-ink);color-scheme:light;
 }
 html:not([data-nf-theme="dusk"]) .co-page .co-sky{
-  background:radial-gradient(circle at 46% 43%,#eabfac,transparent 60%),#f0ded3;
+  background:radial-gradient(circle at 46% 43%,#e1b5c7,transparent 60%),#e9dae0;
 }
 html:not([data-nf-theme="dusk"]) .co-page :is(.co-node,.co-inspector,
  .co-relations,.co-work-card,.co-protocol,.co-history article){
   border-color:var(--lf-line);
 }
 html:not([data-nf-theme="dusk"]) .co-page .co-primary{
-  background:var(--lf-orange);color:var(--lf-oxblood);
-  border-color:var(--lf-orange);
+  background:var(--lf-primary);color:var(--lf-oxblood);
+  border-color:var(--lf-primary);
 }
-html:not([data-nf-theme="dusk"]) .co-page .co-primary:hover{background:var(--lf-apricot)}
+html:not([data-nf-theme="dusk"]) .co-page .co-primary:hover{background:var(--lf-primary-hover)}
 html:not([data-nf-theme="dusk"]) .co-page .co-node[aria-pressed="true"]{
-  border-color:var(--lf-oxblood);box-shadow:0 0 0 3px #d97a4a35;
+  border-color:var(--lf-oxblood);box-shadow:0 0 0 3px #6a304e35;
 }
 html:not([data-nf-theme="dusk"]) .co-page .co-overline,
 html:not([data-nf-theme="dusk"]) .co-page .co-section-head h2 em{
   color:var(--lf-oxblood);
 }
 html:not([data-nf-theme="dusk"]) .co-page .co-orbit{
-  background:radial-gradient(circle,#e6ae922b,transparent 60%);
+  background:radial-gradient(circle,#d99fb62b,transparent 60%);
 }
 html:not([data-nf-theme="dusk"]) .co-page .co-star{
-  background:var(--lf-orange);box-shadow:0 0 12px #d97a4a33;
+  background:var(--lf-primary);box-shadow:0 0 12px #6a304e33;
 }
 
-/* Join, SourceBound investigation, Living Papers: quiet clay paper reading
+/* Join, SourceBound investigation, Living Papers: quiet rose-paper reading
    surfaces, blackcherry panels, explicit controls and adversarial receipts. */
 html:not([data-nf-theme="dusk"]) :is(.join-result-grid article,.join-workspace,
  .join-pad,.join-next,.join-choice,.join-contract,.join-match,
@@ -289,7 +289,7 @@ html:not([data-nf-theme="dusk"]) :is(.join-hero-aside p,.join-result-grid p,
 }
 html:not([data-nf-theme="dusk"]) :is(.join-evidence-archive,
  #join-attack-output,.ep-grid-readout>div,.lp-lab,.ep-equation){
-  background:#eedbd0;color:var(--lf-ink);border-color:var(--lf-line);
+  background:#e7d7dd;color:var(--lf-ink);border-color:var(--lf-line);
 }
 html:not([data-nf-theme="dusk"]) :is(.join-hero-aside,.join-evidence,
  .join-evidence-record,.lp-rule,.ep-plot,.ep-bars){
@@ -300,28 +300,28 @@ html:not([data-nf-theme="dusk"]) :is(.join-evidence-archive h4,
   color:var(--lf-oxblood);
 }
 html:not([data-nf-theme="dusk"]) .join-evidence-archive button{
-  background:var(--lf-orange);color:var(--lf-oxblood);border-color:var(--lf-orange);
+  background:var(--lf-primary);color:var(--lf-oxblood);border-color:var(--lf-primary);
 }
 html:not([data-nf-theme="dusk"]) .lp-hero-aside{
-  background:var(--lf-oxblood);color:#fff0e7;
+  background:var(--lf-oxblood);color:#f6f0f2;
 }
 html:not([data-nf-theme="dusk"]) .lp-hero-aside :is(.lp-eyebrow,
- .lp-hero-number b,.lp-hero-aside>strong span){color:#e9aa80}
-html:not([data-nf-theme="dusk"]) .lp-hero-aside :is(p,.lp-disclosure){color:#edd0c7}
+ .lp-hero-number b,.lp-hero-aside>strong span){color:#d594ae}
+html:not([data-nf-theme="dusk"]) .lp-hero-aside :is(p,.lp-disclosure){color:#e4d0d8}
 html:not([data-nf-theme="dusk"]) .lp-page :is(.lp-btn,.lp-point button){
-  accent-color:var(--lf-orange);
+  accent-color:var(--lf-primary);
 }
-html:not([data-nf-theme="dusk"]) .ep-equation{background:var(--lf-oxblood);color:#fff0e7}
-html:not([data-nf-theme="dusk"]) .ep-equation small{color:#f1c2a9}
-html:not([data-nf-theme="dusk"]) .ep-value span{color:#e9aa80}
+html:not([data-nf-theme="dusk"]) .ep-equation{background:var(--lf-oxblood);color:#f6f0f2}
+html:not([data-nf-theme="dusk"]) .ep-equation small{color:#dbc0ca}
+html:not([data-nf-theme="dusk"]) .ep-value span{color:#d594ae}
 html:not([data-nf-theme="dusk"]) .ep-bars span{
-  background:#b45a45;border-color:#87443a;
+  background:#a85174;border-color:#7f425a;
 }
 html:not([data-nf-theme="dusk"]) .ep-bars-complement span{
-  background:#e3a065;border-color:#bc7448;
+  background:#d7a6b6;border-color:#af5579;
 }
 html:not([data-nf-theme="dusk"]) .ep-bars-product span{
-  background:#4a1f24;border-color:#4a1f24;
+  background:#451c35;border-color:#451c35;
 }
 html:not([data-nf-theme="dusk"]) .ep-console input[type="range"]{
   accent-color:var(--lf-oxblood);
@@ -330,13 +330,13 @@ html:not([data-nf-theme="dusk"]) .cj-section{
   background:var(--lf-paper-deep);border-color:var(--lf-line);
 }
 html:not([data-nf-theme="dusk"]) .cj-contract{
-  background:var(--lf-oxblood);color:#fff0e7;
+  background:var(--lf-oxblood);color:#f6f0f2;
 }
 html:not([data-nf-theme="dusk"]) .cj-contract :is(p,.cj-condition,.cj-obligation small){
-  color:#efd4c8;
+  color:#e5d2da;
 }
 html:not([data-nf-theme="dusk"]) .cj-contract :is(.cj-kicker,.cj-obligation>span){
-  color:#e3a065;
+  color:#d7a6b6;
 }
 html:not([data-nf-theme="dusk"]) .cj-workspace,.cj-columns{
   border-color:var(--lf-line);
@@ -352,16 +352,16 @@ html:not([data-nf-theme="dusk"]) .cj-actions button+button{
 /* Research Desk light workbench: panel surfaces and authority ink. */
 html:not([data-nf-theme="dusk"]) .desk-page :is(.desk-readout,
  .desk-session-actions button,.desk-add){
-  background:var(--lf-oxblood);color:#fff0e7;border-color:var(--lf-oxblood);
+  background:var(--lf-oxblood);color:#f6f0f2;border-color:var(--lf-oxblood);
 }
-html:not([data-nf-theme="dusk"]) .desk-page .desk-readout strong{color:#f1ad82}
+html:not([data-nf-theme="dusk"]) .desk-page .desk-readout strong{color:#d79cb4}
 html:not([data-nf-theme="dusk"]) .desk-page :is(.desk-readout span,
- .desk-readout small){color:#efd2c7}
+ .desk-readout small){color:#e5d1d9}
 html:not([data-nf-theme="dusk"]) .desk-page :is(.desk-claim-button,
  .desk-dimension,.desk-queue,.desk-notes,.desk-quick-actions a,
  .desk-open-row){background:var(--lf-paper-raised);color:var(--lf-ink);border-color:var(--lf-line)}
 html:not([data-nf-theme="dusk"]) .desk-page :is(.desk-claim-button:hover,
- .desk-claim-button[aria-pressed="true"]){background:#f0d0be;border-color:#b17663}
+ .desk-claim-button[aria-pressed="true"]){background:#e2ccd5;border-color:#a86c84}
 html:not([data-nf-theme="dusk"]) .desk-page .desk-claim-button[aria-pressed="true"]{
   box-shadow:inset 4px 0 var(--lf-oxblood);
 }
@@ -374,17 +374,17 @@ html:not([data-nf-theme="dusk"]) .desk-page :is(.desk-claim-button small,
 html:not([data-nf-theme="dusk"]) .desk-page :is(#desk-search,#desk-filter){
   background:var(--lf-paper-raised);color:var(--lf-ink);border-color:var(--lf-line);
 }
-html:not([data-nf-theme="dusk"]) .desk-page .desk-add{background:var(--lf-orange);color:var(--lf-oxblood);border-color:var(--lf-orange)}
+html:not([data-nf-theme="dusk"]) .desk-page .desk-add{background:var(--lf-primary);color:var(--lf-oxblood);border-color:var(--lf-primary)}
 html:not([data-nf-theme="dusk"]) .desk-page .desk-session-shortcut{
-  background:var(--lf-orange);color:var(--lf-oxblood);border-color:var(--lf-orange);
+  background:var(--lf-primary);color:var(--lf-oxblood);border-color:var(--lf-primary);
 }
 
 /* Discovery Engine: light-side mode for formerly dark-by-default tools.
    Dusk retains the independent navy/violet/gold workbench unchanged. */
 html:not([data-nf-theme="dusk"]) body:has(#app){
-  --bg:#f4e7df;--side:#eedfd6;--paper:#f8eee8;
-  --panel:#f4e5db;--panel2:#ecd6c9;--line:#c9b2a6;
-  --text:#2a1f1d;--soft:#6a4e48;--muted:#6a4e48;--lime:#d97a4a;
+  --bg:#f4eeed;--side:#ece1e4;--paper:#fbf7f5;
+  --panel:#eee1e6;--panel2:#e4d1d9;--line:#c8b7c0;
+  --text:#29212a;--soft:#664c56;--muted:#664c56;--lime:#6a304e;
   background:var(--bg);color:var(--text);color-scheme:light;
 }
 html:not([data-nf-theme="dusk"]) body:has(#app) :is(.side,.top,.panel,.metrics,
@@ -395,59 +395,59 @@ html:not([data-nf-theme="dusk"]) body:has(#app) :is(.navitem,.portfolio,
   color:var(--lf-muted);
 }
 html:not([data-nf-theme="dusk"]) body:has(#app) :is(.navitem:hover,.portfolio:hover,
-  .navitem.selected,.portfolio.active){background:#f0cdbc;color:var(--lf-oxblood)}
+  .navitem.selected,.portfolio.active){background:#e1cbd4;color:var(--lf-oxblood)}
 html:not([data-nf-theme="dusk"]) body:has(#app) .navitem.selected{
   border-left-color:var(--lf-oxblood);
 }
 html:not([data-nf-theme="dusk"]) body:has(#app) :is(.brand-mark,.btn.primary){
-  background:var(--lf-orange);color:var(--lf-oxblood);border-color:var(--lf-orange);
+  background:var(--lf-primary);color:var(--lf-oxblood);border-color:var(--lf-primary);
 }
 html:not([data-nf-theme="dusk"]) body:has(#app) :is(.navitem.selected em,
   .navitem em,.saved.on,.eyebrow,.context-figure strong,.step>b,
   .side-label button,.meta a,.subtle){color:var(--lf-oxblood)}
 html:not([data-nf-theme="dusk"]) body:has(#app) :is(.portfolio.active .dot,
-  .live-dot){background:var(--lf-orange)}
-html:not([data-nf-theme="dusk"]) body:has(#app) .dot{background:#a67b6d}
+  .live-dot){background:var(--lf-primary)}
+html:not([data-nf-theme="dusk"]) body:has(#app) .dot{background:#a07385}
 html:not([data-nf-theme="dusk"]) body:has(#app) :is(.status,.tag.pending,
   .tag.passed,.context-figure,.feature-panel,.aside-note){
-  background:#eed8cd;color:var(--lf-oxblood);border-color:var(--lf-line);
+  background:#e7d4dc;color:var(--lf-oxblood);border-color:var(--lf-line);
 }
 html:not([data-nf-theme="dusk"]) body:has(#app) .context-figure{
-  background:linear-gradient(145deg,#f1cfb9,#eeddd4);
+  background:linear-gradient(145deg,#e0cad3,#e8dae0);
 }
 html:not([data-nf-theme="dusk"]) body:has(#app) :is(.context-figure small,
  .context-figure span,.context-figure strong){color:var(--lf-oxblood)}
 html:not([data-nf-theme="dusk"]) body:has(#app) .btn.primary:hover{
-  background:var(--lf-apricot);border-color:var(--lf-apricot);
+  background:var(--lf-primary-hover);border-color:var(--lf-primary-hover);
 }
 html:not([data-nf-theme="dusk"]) body:has(#app) .toast:not(.bad){
-  background:var(--lf-orange);color:var(--lf-oxblood);border-color:var(--lf-oxblood-soft);
+  background:var(--lf-primary);color:var(--lf-oxblood);border-color:var(--lf-oxblood-soft);
 }
 html:not([data-nf-theme="dusk"]) body:has(#app) :is(.side,.panel,.main,.top){
   color:var(--lf-ink);
 }
 
 /* Claim Lab: independent tool has inline default-dark styles.
-   Its LIGHT mode is a warm paper desk, while DUSK stays navy. */
+   Its LIGHT mode is a rose-paper desk, while DUSK stays navy. */
 html:not([data-nf-theme="dusk"]) body:has(.app){
-  --bg:#f4e7df;--surface:#f8eee8;--surface2:#f2ddd2;
-  --surface3:#eed6ca;--text:#2a1f1d;--muted:#5c4944;
-  --subtle:#705a52;--line:#c9b2a6;--mint:#4a1f24;
-  --mint2:#a2635c;--gold:#d97a4a;--shadow:0 12px 35px #4a1f241f;
+  --bg:#f4eeed;--surface:#fbf7f5;--surface2:#eadae0;
+  --surface3:#e5d3da;--text:#29212a;--muted:#65545d;
+  --subtle:#6d555f;--line:#c8b7c0;--mint:#451c35;
+  --mint2:#9a647a;--gold:#6a304e;--shadow:0 12px 35px #451c351f;
   background:var(--bg);color:var(--text);color-scheme:light;
 }
 html:not([data-nf-theme="dusk"]) body:has(.app) :is(.sidebar,.side){
   background:var(--lf-paper-deep);border-color:var(--lf-line);
 }
 html:not([data-nf-theme="dusk"]) body:has(.app) :is(.brandMark,.nav button.active){
-  background:#f0cebc;color:var(--lf-oxblood);border-color:var(--lf-line);
-  box-shadow:inset 3px 0 0 var(--lf-orange);
+  background:#e1cbd4;color:var(--lf-oxblood);border-color:var(--lf-line);
+  box-shadow:inset 3px 0 0 var(--lf-primary);
 }
 html:not([data-nf-theme="dusk"]) body:has(.app) :is(.nav button,.nav button:hover,
  .sideBottom,.helpText,.subtitle,.inlineStats){color:var(--lf-ink)}
 html:not([data-nf-theme="dusk"]) body:has(.app) .local{color:var(--lf-oxblood)}
 html:not([data-nf-theme="dusk"]) body:has(.app) .pulse{
-  background:var(--lf-orange);box-shadow:0 0 0 3px #d97a4a28;
+  background:var(--lf-primary);box-shadow:0 0 0 3px #6a304e28;
 }
 html:not([data-nf-theme="dusk"]) body:has(.app) .toast:not(.bad){
   background:var(--lf-paper-deep);color:var(--lf-oxblood);border-color:var(--lf-line);
@@ -456,25 +456,25 @@ html:not([data-nf-theme="dusk"]) body:has(.app) .sideBottom .privacy{
   background:var(--lf-paper-raised);color:var(--lf-muted);border-color:var(--lf-line);
 }
 html:not([data-nf-theme="dusk"]) body:has(.app) :is(button.primary,
-  .btnPrimary,.primaryBtn){background:var(--lf-orange);color:var(--lf-oxblood)}
+  .btnPrimary,.primaryBtn){background:var(--lf-primary);color:var(--lf-oxblood)}
 
 
 /* Final first-fold art correction: the original SVG encodes green presentation
    attributes. Restyle it only in LIGHT; leave paths, geometry, labels unchanged. */
 html:not([data-nf-theme="dusk"]) .hero-aside .diagram circle[stroke="#b2bfb1"],
 html:not([data-nf-theme="dusk"]) .hero-aside .diagram path[stroke="#abb8aa"]{
- stroke:#c9b2a6;
+ stroke:#c8b7c0;
 }
-html:not([data-nf-theme="dusk"]) .hero-aside .diagram path[stroke="#213e2d"]{stroke:#4a1f24}
-html:not([data-nf-theme="dusk"]) .hero-aside .diagram path[stroke="#7f987d"]{stroke:#bd7958}
-html:not([data-nf-theme="dusk"]) .hero-aside .diagram circle[fill="#18221e"]{fill:#4a1f24}
+html:not([data-nf-theme="dusk"]) .hero-aside .diagram path[stroke="#213e2d"]{stroke:#451c35}
+html:not([data-nf-theme="dusk"]) .hero-aside .diagram path[stroke="#7f987d"]{stroke:#b26383}
+html:not([data-nf-theme="dusk"]) .hero-aside .diagram circle[fill="#18221e"]{fill:#451c35}
 html:not([data-nf-theme="dusk"]) .hero-aside .diagram circle[fill="#b0db58"]{
- fill:#d97a4a;stroke:#4a1f24;
+ fill:#6a304e;stroke:#451c35;
 }
-html:not([data-nf-theme="dusk"]) .hero-aside .diagram text{fill:#6a4742}
+html:not([data-nf-theme="dusk"]) .hero-aside .diagram text{fill:#664653}
 html:not([data-nf-theme="dusk"]) :is(.flagship-card svg circle[fill="#d9ff5e"],
- .flagship-card svg g[fill="#d9ff5e"] circle){fill:#e3a065}
-html:not([data-nf-theme="dusk"]) .feature-art g[stroke="#d9ff5e"]{stroke:#e3a065}
+ .flagship-card svg g[fill="#d9ff5e"] circle){fill:#d7a6b6}
+html:not([data-nf-theme="dusk"]) .feature-art g[stroke="#d9ff5e"]{stroke:#d7a6b6}
 /* Inline legacy specialty-tools styles need explicit scope-limited overrides. */
 html:not([data-nf-theme="dusk"]) .nf-home-toolbox-content>.desk-entry[style]{
  background:#4a1f24!important;color:#fff0e7!important;border-color:#6a2d35!important;
@@ -488,3 +488,11 @@ html:not([data-nf-theme="dusk"]) .nf-home-toolbox-content>.desk-entry[style] :is
 html:not([data-nf-theme="dusk"]) .nf-home-toolbox-content>.desk-entry[style] span[style*="color:#d6e0"]{
  color:#ebd2c6!important;
 }
+
+/* Rose Parchment: wine actions require pale type; the outline button stays ink. */
+html:not([data-nf-theme="dusk"]) :is(.hero-actions .button:not(.button-light),.nf-home-tool-entry .button,.join-action,.join-evidence-archive button,.cj-primary,.desk-add,.desk-session-shortcut,.co-page .co-primary){background:var(--lf-primary);border-color:var(--lf-primary);color:var(--lf-paper-raised)}
+html:not([data-nf-theme="dusk"]) :is(.hero-actions .button:not(.button-light),.nf-home-tool-entry .button,.join-action,.join-evidence-archive button,.cj-primary,.desk-add,.desk-session-shortcut,.co-page .co-primary):hover{background:var(--lf-primary-hover);border-color:var(--lf-primary-hover);color:var(--lf-paper-raised)}
+html:not([data-nf-theme="dusk"]) .hero-actions .button-light{background:transparent;color:var(--lf-oxblood);border-color:var(--lf-oxblood)}
+html:not([data-nf-theme="dusk"]) .hero-actions .button-light:hover{background:var(--lf-paper-deep);color:var(--lf-oxblood)}
+html:not([data-nf-theme="dusk"]) body:has(#app) :is(.btn.primary,.brand-mark){color:var(--lf-paper-raised)}
+html:not([data-nf-theme="dusk"]) body:has(.app) :is(button.primary,.btnPrimary,.primaryBtn){color:var(--lf-paper-raised)}
