@@ -90,8 +90,8 @@ try{
         cardRows:systems.map(x=>Math.round(x.getBoundingClientRect().top))
       };
     });
-    assert.match(editorial.dramaticHeading,/Make room.*for doubt/s);
-    assert.match(editorial.quietHeading,/Leave the.*uncertainty visible/s);
+    assert.match(editorial.dramaticHeading,/Let the evidence.*face criticism/s);
+    assert.match(editorial.quietHeading,/Name what.*remains open/s);
     assert.equal(editorial.dramaticBackground,"rgb(10, 16, 33)","Default new-moon editorial interlude uses deep indigo");
     assert.equal(editorial.correctSequence,true,"Editorial pacing should preserve claim hierarchy");
     assert.equal(editorial.cardWidths.length,4);
