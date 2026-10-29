@@ -23,12 +23,13 @@
  const picker=$("co-trace-picker"),grid=$("co-trace-grid");
  if(!R||!Array.isArray(R.claims)||!R.claims.length){
   $("co-trace-summary").textContent="Canonical Proof Passport registry unavailable. The research review portal remains available.";
-  picker.replaceChildren();grid.replaceChildren();return;
+  grid.replaceChildren();return;
  }
  const exists=id=>typeof id==="string"&&R.claimById(id);
  const fromQuery=new URLSearchParams(location.search).get("claim");
  let selected=exists(fromQuery)?fromQuery:(exists("erdos36")?"erdos36":R.claims[0].id);
  const chooser=new Map();
+ picker.replaceChildren();
  for(const c of R.claims){
   const button=doc("button","",c.title);button.type="button";
   button.dataset.claim=c.id;
