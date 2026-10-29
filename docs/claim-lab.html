@@ -30,7 +30,7 @@
 <div class="sideBottom"><div class="local"><span class="pulse"></span> PRIVATE WORKSPACE</div><p>Publicly accessible application. Workspace records stay in this browser; no backend, accounts, telemetry, external libraries, or in-app network requests.</p><div class="privacy">Local browser storage · JSON backups</div></div>
 </aside>
 <main class="main">
-<div class="topbar"><div class="eyebrow"><span class="pulse"></span> Evidence-first research infrastructure <span style="opacity:.35">/</span> <span id="sectionCrumb">Overview</span></div><div class="topActions"><a class="btn ghost" href="./" aria-label="Return to the NIGHTFALL research website">← Research site</a><a class="btn ghost" href="referee.html" aria-label="Open the exact finite Referee verification instrument">Run Referee ↗</a><a class="btn" href="exact-research.html" aria-label="Open exact Werner and F25 research calculations">∑ Exact tools</a><button class="btn" id="receiptImportBtn" title="Import Referee receipt metadata; no claim status promotion">⇢ Referee receipt</button><button class="btn" id="importBtn">↥ Import JSON</button><button class="btn" id="exportBtn">↧ Export backup</button><button class="btn primary" id="newClaimBtn">＋ New claim</button></div></div>
+<div class="topbar"><div class="eyebrow"><span class="pulse"></span> Evidence-first research infrastructure <span style="opacity:.35">/</span> <span id="sectionCrumb">Overview</span></div><div class="topActions"><a class="btn ghost" href="./" aria-label="Return to the NIGHTFALL research website">← Research site</a><a class="btn ghost" href="referee.html" aria-label="Open the exact finite Referee verification instrument">Run Referee ↗</a><a class="btn" href="exact-research.html" aria-label="Open exact Werner and F25 research calculations">∑ Exact tools</a><button class="btn" id="receiptImportBtn" title="Import Referee receipt metadata; no claim status promotion">⇢ Referee receipt</button><button class="btn" id="sendDiscovery" disabled title="Transfer latest hash-checked Referee receipt to Discovery for local finite replay; no claim promotion">⇢ Discovery replay</button><button class="btn" id="importBtn">↥ Import JSON</button><button class="btn" id="exportBtn">↧ Export backup</button><button class="btn primary" id="newClaimBtn">＋ New claim</button></div></div>
 <div id="content"></div>
 </main>
 </div>
@@ -159,9 +159,21 @@ async function acceptRefereeReceipt(report,sourceLabel){
    result:'IMPORTED REPORT ONLY — asserted verdict: '+report.verdict+'. Claim Lab checked input SHA-256 consistency; this does not authenticate the claimed computation, signature, reviewer, or mathematical proof.',
    evidence:'Original JSON receipt held by importing user. Input SHA-256: '+report.inputSha256+'; file: '+String(sourceLabel).slice(0,125)
   });
-  data.sample=false;persist();go('experiments');toast('Referee receipt metadata imported. Claim statuses unchanged.');
+  data.sample=false;persist();go('experiments');
+  try{
+   sessionStorage.setItem('nightfall.discovery.pending.v1',JSON.stringify(report));
+   $('#sendDiscovery').disabled=false;
+  }catch(_){$('#sendDiscovery').disabled=true}
+  toast('Referee metadata imported. Claim statuses unchanged; Discovery can replay the finite source.');
  }catch(err){toast('Receipt rejected: '+err.message)}
 }
+$('#sendDiscovery').addEventListener('click',()=>{
+ try{
+  if(!sessionStorage.getItem('nightfall.discovery.pending.v1'))throw Error('First import a valid Referee receipt.');
+  location.assign('discovery.html?referee_handoff=1');
+ }catch(err){toast('Discovery handoff unavailable: '+err.message)}
+});
+try{$('#sendDiscovery').disabled=!sessionStorage.getItem('nightfall.discovery.pending.v1')}catch(_){$('#sendDiscovery').disabled=true}
 $('#receiptImportBtn').addEventListener('click',()=>$('#receiptImportFile').click());
 $('#receiptImportFile').addEventListener('change',async event=>{
  const file=event.target.files?.[0];if(!file)return;
