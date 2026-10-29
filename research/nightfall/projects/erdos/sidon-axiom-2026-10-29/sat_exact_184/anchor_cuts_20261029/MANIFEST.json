@@ -1,0 +1,86 @@
+{
+  "date": "2026-10-29",
+  "files": {
+    "RESEARCH_NOTE.md": {
+      "bytes": 6281,
+      "sha256": "433577244dff979f435cdf1b59a186a1e93d8d97491662cf00c05fe3e508ea9a"
+    },
+    "difference_N184_k9.cnf": {
+      "bytes": 2863723,
+      "sha256": "224fb414674d778046f91760e046b3cfb076ae19f74f53ea13850438bb9c8b80"
+    },
+    "difference_N184_k9_with_local_cuts.cnf": {
+      "bytes": 2870487,
+      "sha256": "d4db70f5a363226a49e9549fe9cea09c5cb16128aa9bcef5d4d79df6009b8da8"
+    },
+    "exact_exchange.cpp": {
+      "bytes": 2405,
+      "sha256": "4dc1befd41497a7a961061103b35f307ca4084d8fdb6efcb6630c6c0da7e96ec"
+    },
+    "exact_exchange.log": {
+      "bytes": 854,
+      "sha256": "1bb7243ec93a44e0409bee12ca93a8824d51b6f7fe9194b28919b02d08aea64d"
+    },
+    "verify_and_cut.log": {
+      "bytes": 348,
+      "sha256": "ae41a306142ccf3428c945fa9457fef485a9ef963b48a23c24915e6db2a005db"
+    },
+    "verify_and_cut.py": {
+      "bytes": 3545,
+      "sha256": "00e5b0f331f4663911129c522f7cb751cc62eaf9d78ebc68382d448bf089e955"
+    },
+    "verify_exchange_direct.cpp": {
+      "bytes": 2000,
+      "sha256": "34299593792e30b47b97dc2122189bd0f52599f2641c0e42bbe980cd425ab853"
+    },
+    "verify_exchange_direct.log": {
+      "bytes": 344,
+      "sha256": "91c49a5ab573a3116720bd1cecf7f294621c3f7f6345375abf2a97356dda08ff"
+    },
+    "z3_smtlib_exact.py": {
+      "bytes": 2252,
+      "sha256": "506d41be00a101f30a8a370ff6316e795899a9fb6319f1b209f701e3a1efb6cf"
+    },
+    "z3_strengthened.log": {
+      "bytes": 213,
+      "sha256": "1d0f34dc1f7ff8d5af2fff645de029982502145acfb66228b7689610c4923afb"
+    }
+  },
+  "inputs": {
+    "N": 184,
+    "k": 9,
+    "seeds": [
+      [
+        16,
+        49,
+        50,
+        56,
+        78,
+        93,
+        104,
+        125,
+        139,
+        149
+      ],
+      [
+        49,
+        50,
+        56,
+        78,
+        93,
+        104,
+        125,
+        139,
+        149,
+        166
+      ]
+    ]
+  },
+  "runs": {
+    "exchange_cpp": "2 independent complete enumeration paths agree; 3627920 evaluations",
+    "python": "independent r2 exhaustive and 20k r3 samples",
+    "z3": "unknown at 12000 ms timeout"
+  },
+  "scope": "finite exact local exclusion only; global SAT/UNSAT open",
+  "title": "AXIOM N184 nine-mark valid local cuts"
+}
