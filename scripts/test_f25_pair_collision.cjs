@@ -17,6 +17,7 @@ for(const x of E){
   }
 }
 assert.equal(97n**7n<5n**20n,true);
+assert.equal(97n**83n<625n**59n,true);
 for(let k=1;k<=5;k++){
   const Q=25n;
   const independentPairs=((Q**BigInt(k)-1n)*(Q**BigInt(k)-Q))/32n;

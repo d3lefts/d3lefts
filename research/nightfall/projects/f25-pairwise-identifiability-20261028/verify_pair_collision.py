@@ -53,6 +53,7 @@ def main():
     assert 97**7==80798284478113
     assert 5**20==95367431640625
     assert 97**7<5**20
+    assert 97**83<625**59
     assert all(pow4(mul(o,a))==pow4(a) for o in O for a in E)
     assert len(set(O))==4
     assert sum(pow4(u)==pow4(v) for u in E for v in E)==97
@@ -64,7 +65,7 @@ def main():
         if k>1: assert 32*p==(Q**k-1)*(Q**k-Q)
         else: assert p==0
         for s in (1,2,5):
-            m=(7*k+1)//2+s
+            m=(83*k+23)//24+s
             lines=(Q**k-1)//24
             bound=Fraction(lines,Q**m)+p*RHO**m
             assert bound<Fraction(1,5**s),(k,s,bound)
@@ -87,7 +88,7 @@ def main():
     print(json.dumps({'status':'PASS','scope':'fixed-q exact finite pair collision and deterministic k=2 injectivity',
                       'q':25,'per_row_independent_collision_numerator':97,
                       'per_row_dependent_nonphase_collision_numerator':25,
-                      'required_integer_inequality':'97^7 < 5^20',
+                      'required_integer_inequality':'97^83 < 625^59',
                       'identity_two_row_control':identity,'one_zero_row_control':zero,
                       'injective_eight_row_design':selected,
                       'certification':'independent exact finite test; theorem follows from supplied counting proof'},sort_keys=True,indent=2))

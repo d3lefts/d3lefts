@@ -4,7 +4,7 @@
 
 ## Precise theorem
 
-Let \(\mathbb F=\mathbb F_{25}\), \(k\ge 1\), \(s\ge1\) and \(m\ge \lceil 7k/2\rceil+s\). Choose each of the \(m\) rows \(a_j\in\mathbb F^k\) independently uniformly, with replacement; reveal \(A\) to the observer. Consider
+Let \(\mathbb F=\mathbb F_{25}\), \(k\ge 1\), \(s\ge1\) and \(m\ge \lceil 83k/24\rceil+s\). Choose each of the \(m\) rows \(a_j\in\mathbb F^k\) independently uniformly, with replacement; reveal \(A\) to the observer. Consider
 
 \[
 \Phi_A(x)=((a_1\cdot x)^4,\ldots,(a_m\cdot x)^4),\qquad x\in\mathbb F^k.
@@ -21,7 +21,7 @@ Write \(\mu_4=\{\omega\in\mathbb F^\times:\omega^4=1\}\); in characteristic five
 
 The zero signal forms a singleton orbit. A deterministic brute-force decoder that enumerates all \(25^k\) signals and returns the matching \(\mu_4\)-orbit is correct under this event; its worst-case running time is exponential in \(k\).
 
-**Comparison within NIGHTFALL:** Axiom's separate Frobenius-kernel theorem (draft PR #16) guarantees a one-dimensional lifted kernel and a polynomial-time decoder under the same iid F25 observation law with \(m\ge\lceil(2941/500)k\rceil+s=\lceil5.882k\rceil+s\). The new \(\lceil3.5k\rceil+s\) sufficient count is **40.5% smaller in leading coefficient**, for the weaker, information-theoretic target. It neither improves the proven *efficient-decoding guarantee* nor establishes same-scope external publication priority. The older systematic 2k large-field LLL method uses a different ensemble and field-size regime.
+**Comparison within NIGHTFALL:** Axiom's separate Frobenius-kernel theorem (draft PR #16) guarantees a one-dimensional lifted kernel and a polynomial-time decoder under the same iid F25 observation law with \(m\ge\lceil(2941/500)k\rceil+s=\lceil5.882k\rceil+s\). The new \(\lceil(83/24)k\rceil+s\) sufficient count is **approximately 41.2% smaller in leading coefficient**, for the weaker, information-theoretic target. It neither improves the proven *efficient-decoding guarantee* nor establishes same-scope external publication priority. The older systematic 2k large-field LLL method uses a different ensemble and field-size regime.
 
 ## Exact counting proof
 
@@ -53,40 +53,41 @@ For \(k=1\), \(P_k=0\). Union bounding the genuinely different independent pairs
 
 This bound is valid for every \(m,k\), without assuming the terms independent.
 
-**Sample count.** Define \(B=q^2\rho^{7/2}\). The fully exact integer inequality
+**Sharper sample count.** Let c=83/24≈3.458333, and B=q²ρ^c. The exact integer inequality
 
 \[
-97^7=80\,798\,284\,478\,113
-<
-95\,367\,431\,640\,625=5^{20}
+97^{83}<625^{59}
 \]
 
-implies \(B^2=97^7/5^{20}<1\). Since \(\rho<1/5\), for \(m\ge\lceil7k/2\rceil+s\),
+implies \(B^{24}=97^{83}/625^{59}<1\). Since \(\rho=97/625<1/5\), for every \(m\ge\lceil c k\rceil+s\),
 
 \[
 P_k\rho^m<
-\frac{1}{32}\,B^k5^{-s}
+\frac{1}{32}\,(q^2\rho^c)^k\rho^s
 <
 \frac{1}{32}5^{-s}.
 \]
 
-For the rank term, \(L_k<q^k/(q-1)\) and \(m\ge7k/2+s\) give
+Since \(c>3\), the rank-deficient term satisfies
 
 \[
 L_kq^{-m}<
-\frac{q^{-5k/2}}{q-1}q^{-s}
-\le\frac{1}{75000}5^{-s}.
+\frac{q^{(1-c)k}}{q-1}q^{-s}
+<
+\frac{1}{24q^2}5^{-s}
+=\frac{1}{15000}5^{-s}.
 \]
 
-Since \(1/32+1/75000<1\), adding the terms proves the claimed strict \(<5^{-s}\) failure probability.
+Thus the sum in \((*)\) is strictly below \((1/32+1/15000)5^{-s}<5^{-s}\), proving the new rational-coefficient theorem. The earlier \(m\ge\lceil 7k/2\rceil+s\) follows as a weaker corollary.
 
-The expression \((*)\) is often much tighter than the simple displayed theorem, especially for small \(k\). The limiting pairwise-union coefficient is
+**Exact limiting coefficient.** The identical proof works for
 
 \[
+m\ge \lceil c_* k\rceil+s,\quad
 c_*=\frac{2\log25}{\log(625/97)}\approx3.4555078421748546.
 \]
 
-This is the threshold of this *particular first-moment bound*, not a lower bound on all possible algorithms or designs. Our rational \(7/2\) choice makes the uniform failure inequality exact and uncomplicated.
+At \(c=c_*\), \(q^2\rho^c=1\); the fixed finite prefactors and \(\rho^s<5^{-s}\) still give a strict failure bound. The rational \(83/24>c_*\) gives an elementary integer-power certificate without reliance on floating-point logarithms. Neither coefficient is a necessary bound for identifiability: both describe sufficient measurements under this particular union argument. The decoder remains exponential-time in k.
 
 ## Reproduction and independent proof checks
 
@@ -97,7 +98,7 @@ python3 research/nightfall/projects/f25-pairwise-identifiability-20261028/verify
 node scripts/test_f25_pair_collision.cjs
 \`\`\`
 
-The Python checker uses the separate field realization \(\mathbb F_5[u]/(u^2-2)\) and exact integer/rational arithmetic. It explicitly counts all \(625\) possible \((u,v)\), verifies \(97\) one-row collisions, enumerates all \(625\) two-coordinate signals for deterministic eight-row designs, checks no non-phase collisions in an accepted design, and confirms failure of the coordinate-only and zero-row controls. It tests \((*)\) for multiple \(k,s\) and the exact inequality \(97^7<5^{20}\).
+The Python checker uses the separate field realization \(\mathbb F_5[u]/(u^2-2)\) and exact integer/rational arithmetic. It explicitly counts all \(625\) possible \((u,v)\), verifies \(97\) one-row collisions, enumerates all \(625\) two-coordinate signals for deterministic eight-row designs, checks no non-phase collisions in an accepted design, and confirms failure of the coordinate-only and zero-row controls. It tests \((*)\) for multiple \(k,s\) and the exact rational inequality \(97^{83}<625^{59}\), alongside the original \(97^7<5^{20}\) control.
 
 The independent Node checker uses **only** the arithmetic API already on the website in \`docs/research-tools-core.js\`, cross-checks field power and full pair-collision enumeration, and independently verifies the combinatorial pair count. The mathematical proof does not depend on either test.
 
