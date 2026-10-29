@@ -188,3 +188,35 @@ html[data-nf-theme="dusk"] .pf-search-controls button{background:#d4c6ed;color:#
 .pf-deep-intro{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:6px}
 @media(max-width:900px){.pf-search-intro{grid-template-columns:1fr;gap:25px}}
 @media(max-width:650px){.pf-search-section{padding-top:65px;padding-bottom:70px}.pf-search-shell{padding:17px}.pf-search-controls{flex-direction:column}.pf-search-controls button{width:100%}.pf-search-result{padding:17px}.pf-deep-research>summary{padding-top:34px;padding-bottom:34px;align-items:start;flex-wrap:wrap}.pf-deep-research>summary .section-id{width:100%}.pf-deep-research>summary strong{font-size:28px}}
+
+/* Career-first portfolio (Oct 2026): restrained portfolio identity, same evidence archive. */
+.pf-intro-note{max-width:740px;margin-top:26px;font-size:12px;line-height:1.85;color:var(--muted)}
+.pf-hero-main .pf-actions{flex-wrap:wrap;row-gap:12px}
+.pf-career,.pf-foundations{padding-top:94px;padding-bottom:98px;border-top:1px solid var(--line)}
+.pf-career .pf-section-intro,.pf-foundations .pf-section-intro{margin-bottom:42px}
+.pf-career-list{display:grid;gap:18px}
+.pf-career-card{display:grid;grid-template-columns:minmax(172px,.30fr) minmax(0,1fr);gap:clamp(25px,4.5vw,78px);padding:34px 0 38px;border-top:1px solid var(--line)}
+.pf-career-card:last-child{border-bottom:1px solid var(--line)}
+.pf-career-rail{display:flex;flex-direction:column;align-items:start;gap:12px;padding-top:9px}
+.pf-career-rail strong{font:400 clamp(29px,3.4vw,44px)/1.05 var(--serif);color:var(--pf-detail)}
+.pf-career-rail small{font-size:12px;line-height:1.5;color:var(--muted)}
+.pf-company-index,.pf-foundation-grid article>span{font:600 10px/1.5 var(--mono);letter-spacing:.05em;color:var(--pf-detail)}
+.pf-career-body{max-width:820px}
+.pf-career-body h3{font:400 clamp(33px,3.8vw,53px)/1.09 var(--serif);letter-spacing:-.022em}
+.pf-career-body>p:not(.pf-career-role){font-size:14px;line-height:1.78;color:var(--ink);max-width:760px}
+.pf-career-role{font:600 11px/1.65 var(--mono);color:var(--pf-detail);margin:11px 0 16px}
+.pf-project-tags{display:flex;flex-wrap:wrap;gap:7px;margin:17px 0 18px}
+.pf-project-tags span{font:500 10px/1.5 var(--mono);padding:7px 11px;border:1px solid var(--pf-border);border-radius:50px;color:var(--pf-detail)}
+.pf-career-body .pf-career-result{font-size:12px!important;color:var(--muted)!important;margin-top:12px}
+.pf-career-body .pf-career-result strong{color:var(--ink)}
+.pf-career-body .pf-links{margin-top:18px}
+.pf-foundation-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.pf-foundation-grid article{border:1px solid var(--pf-border);padding:30px;min-width:0;background:var(--pf-surface)}
+.pf-foundation-grid h3{font:400 clamp(28px,3vw,40px)/1.1 var(--serif);margin:13px 0}
+.pf-foundation-grid p{font-size:13px;line-height:1.83;color:var(--ink)}
+.pf-foundation-grid .pf-detail-note{font-size:11px;color:var(--muted);margin-top:14px}
+.pf-foundation-grid p+p{margin-top:14px}
+.pf-foundation-grid a,.pf-career-bottom a{font:600 11px/1.6 var(--mono);text-decoration:underline;text-underline-offset:4px;color:var(--pf-detail)}
+.pf-career-bottom{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:30px}
+@media(max-width:880px){.pf-career-card{grid-template-columns:165px minmax(0,1fr);gap:24px}.pf-foundation-grid article{padding:22px}}
+@media(max-width:680px){.pf-career,.pf-foundations{padding-top:65px;padding-bottom:68px}.pf-career-card{grid-template-columns:1fr;gap:14px;padding:28px 0}.pf-career-rail{flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:8px 16px}.pf-career-rail small{width:100%}.pf-foundation-grid{grid-template-columns:1fr}.pf-foundation-grid article{padding:23px}.pf-career-body h3{font-size:37px}.pf-intro-note{margin-top:19px}.pf-career-role{font-size:10px}}
