@@ -343,3 +343,152 @@ html[data-nf-theme="dusk"] .hero-aside .diagram text{fill:#c3b9e2}
  .button{max-width:100%;white-space:normal;min-width:0;overflow-wrap:anywhere}
  .hero-actions,.instrument-bridge-invite{min-width:0;max-width:100%}
 }
+
+
+/* FIELD GUIDE 002 — evidence becomes navigable, never decorative proof.
+   No API calls, particle engines, video, or external images. */
+.nf-hero-sky-link{
+ display:inline-flex;gap:18px;align-items:center;align-self:flex-start;
+ margin-top:12px;padding:6px 0;color:#3c6047;
+ font:600 11px/1.45 var(--mono);text-decoration:underline;text-underline-offset:5px;
+}
+.nf-hero-sky-link:hover{text-decoration-thickness:2px}
+html[data-nf-theme="dusk"] .nf-hero-sky-link{color:#dec7ff}
+html[data-nf-theme="dusk"] .nf-hero-guide{color:#c3cde5}
+.nf-observatory-toolbar{
+ display:flex;align-items:center;justify-content:space-between;
+ gap:12px 24px;flex-wrap:wrap;
+ padding:12px 14px;border:1px solid var(--line);border-bottom:0;
+ background:#e7ebe2;
+}
+.nf-observatory-lenses{display:flex;align-items:center;gap:6px;flex-wrap:wrap;max-width:100%}
+.nf-observatory-lenses button{
+ display:inline-flex;align-items:center;gap:7px;min-height:36px;padding:8px 12px;
+ appearance:none;cursor:pointer;border:1px solid transparent;background:transparent;
+ color:#435b48;font:600 10px/1.3 var(--mono);white-space:nowrap;
+ transition:background .22s ease,border-color .22s ease,color .22s ease;
+}
+.nf-observatory-lenses button:hover{border-color:#96ac98;background:#f6f7ef}
+.nf-observatory-lenses button[aria-pressed="true"]{
+ background:#1d3929;color:#f2f6e9;border-color:#1d3929;
+}
+.nf-observatory-lenses button:focus-visible,.nf-observatory-path:focus-visible,
+.nf-observatory-clear:focus-visible,.nf-observatory-node:focus-visible{
+ outline:3px solid #5d8d65;outline-offset:2px;position:relative;z-index:3;
+}
+.nf-lens-mark{width:11px;height:3px;flex:none;border-radius:2px;display:inline-block;background:#547f66}
+.nf-lens-mark.mark-finite{background:#5d937f}
+.nf-lens-mark.mark-method{background:#8486ae}
+.nf-lens-mark.mark-open{background:#bb956c}
+.nf-lens-mark.mark-analogy{background:repeating-linear-gradient(90deg,#7c81a8 0 3px,transparent 3px 5px)}
+.nf-observatory-toolbar>p{
+ max-width:43ch;color:#526856;font:500 9px/1.55 var(--mono);
+ letter-spacing:.015em;overflow-wrap:anywhere;
+}
+.nf-observatory-selection-top{display:flex;justify-content:space-between;align-items:start;gap:8px}
+.nf-observatory-selection-top .nf-observatory-label{padding-top:9px}
+.nf-observatory-clear{
+ border:1px solid #a9b9a8;background:transparent;color:#3b6044;
+ padding:7px 9px;cursor:pointer;font:600 10px/1.4 var(--mono);
+ white-space:nowrap;
+}
+.nf-observatory-clear:hover{background:#e8ede5}
+.nf-observatory-validity{
+ font:600 10px/1.65 var(--mono)!important;
+ border-top:1px solid var(--line);padding-top:15px;margin-top:16px;
+ color:#31573b!important;
+}
+.nf-observatory-paths{margin:23px 0 15px;display:grid;gap:10px}
+.nf-observatory-path{
+ appearance:none;text-align:left;display:grid;gap:7px;padding:17px 18px;
+ border:1px solid #bacabd;border-left:3px solid #68866b;
+ background:#ecf2e9;color:#1d3426;cursor:pointer;min-width:0;
+ transition:transform .2s,border-color .2s,background .2s;
+}
+.nf-observatory-path:nth-child(2){border-left-color:#ac8455}
+.nf-observatory-path:hover{transform:translateX(3px);background:#f4f8f0;border-color:#7c987e}
+.nf-observatory-path small{font:700 9px/1.5 var(--mono);letter-spacing:.075em;color:#47694d}
+.nf-observatory-path:nth-child(2) small{color:#795a38}
+.nf-observatory-path strong{font:400 clamp(19px,2.15vw,28px)/1.08 var(--serif)}
+.nf-observatory-path span{font:12px/1.6 var(--sans);color:#405b48}
+.nf-observatory-counterpart{display:block;grid-column:1/-1;font:400 10px/1.5 var(--mono);color:#57715b}
+.nf-observatory-inspector .nf-observatory-paths + a{margin-top:12px}
+.nf-observatory-node.is-dim{opacity:.43}
+.nf-observatory-node.is-dim:hover,.nf-observatory-node.is-dim:focus-visible{opacity:1}
+.nf-observatory-field{scroll-margin-top:22px}
+.nf-observatory-inspector{scroll-margin-top:24px}
+html[data-nf-theme="dusk"] .nf-observatory-toolbar{
+ background:#181f33;color:#edf0fb;border-color:#495676;
+}
+html[data-nf-theme="dusk"] .nf-observatory-lenses button{color:#c1cce5}
+html[data-nf-theme="dusk"] .nf-observatory-lenses button:hover{border-color:#8a82ad;background:#28324c}
+html[data-nf-theme="dusk"] .nf-observatory-lenses button[aria-pressed="true"]{
+ background:#d9c8f5;color:#19172d;border-color:#d9c8f5;
+}
+html[data-nf-theme="dusk"] .nf-observatory-toolbar>p{color:#aebcda}
+html[data-nf-theme="dusk"] .nf-observatory-clear{
+ color:#e2d4fb;border-color:#666783;background:transparent;
+}
+html[data-nf-theme="dusk"] .nf-observatory-clear:hover{background:#343550}
+html[data-nf-theme="dusk"] .nf-observatory-validity{color:#d8cafa!important;border-color:#505d78}
+html[data-nf-theme="dusk"] .nf-observatory-path{
+ background:#252e49;color:#f0edff;border-color:#505e7b;border-left-color:#a38fd9;
+}
+html[data-nf-theme="dusk"] .nf-observatory-path:nth-child(2){border-left-color:#d5ae87}
+html[data-nf-theme="dusk"] .nf-observatory-path:hover{
+ background:#333a58;border-color:#9f96c4;
+}
+html[data-nf-theme="dusk"] .nf-observatory-path small{color:#d6c6fb}
+html[data-nf-theme="dusk"] .nf-observatory-path:nth-child(2) small{color:#e9c39c}
+html[data-nf-theme="dusk"] .nf-observatory-path span{color:#bbc9e3}
+html[data-nf-theme="dusk"] .nf-observatory-counterpart{color:#b9c5df}
+html[data-nf-theme="dusk"] .nf-observatory-lenses button:focus-visible,
+html[data-nf-theme="dusk"] .nf-observatory-node:focus-visible,
+html[data-nf-theme="dusk"] .nf-observatory-path:focus-visible,
+html[data-nf-theme="dusk"] .nf-observatory-clear:focus-visible{
+ outline:2px solid #eddaff;outline-offset:3px;
+}
+/* An active star breathes very slowly and only while the viewer has made a selection.
+   Its glow communicates focus, not certainty. */
+@media(prefers-reduced-motion:no-preference){
+ html[data-nf-theme="dusk"] .nf-observatory-node[aria-pressed="true"] .nf-observatory-star{
+  animation:nf-evidence-focus 4.6s ease-in-out infinite;
+ }
+ @keyframes nf-evidence-focus{
+  0%,100%{box-shadow:0 0 11px #dec5ff,0 0 22px #8878d995}
+  50%{box-shadow:0 0 18px #f3e7ff,0 0 38px #ad8cf1c4}
+ }
+}
+/* On small screens, show the explanation BEFORE the catalogue of eleven nodes.
+   This avoids a long scroll to see feedback from a selected item. */
+@media(max-width:860px){
+ .nf-observatory-inspector{grid-row:1;border-top:0;border-bottom:1px solid var(--line)}
+ .nf-observatory-field{grid-row:2}
+ .nf-observatory-toolbar{display:block;padding:10px 12px 13px}
+ .nf-observatory-lenses{display:flex;flex-wrap:nowrap;overflow-x:auto;scroll-snap-type:x proximity;overscroll-behavior-inline:contain;padding:2px 0 8px}
+ .nf-observatory-lenses button{flex:0 0 auto;scroll-snap-align:start}
+ .nf-observatory-toolbar>p{max-width:100%;margin-top:4px}
+}
+@media(max-width:510px){
+ .nf-observatory-field,html[data-nf-theme="dusk"] .nf-observatory-field{
+  grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;padding:12px;
+ }
+ .nf-observatory-node,html[data-nf-theme="dusk"] .nf-observatory-node{
+  min-height:75px;align-items:start;padding:11px 8px;gap:7px;
+ }
+ html[data-nf-theme="dusk"] .nf-observatory-node-text strong{font-size:10px;line-height:1.35}
+ .nf-observatory-node-text strong{font-size:11px;line-height:1.35}
+ .nf-observatory-node-text small,html[data-nf-theme="dusk"] .nf-observatory-node-text small{font-size:7px;letter-spacing:0}
+ .nf-observatory-star{margin-top:3px}
+ .nf-observatory-path strong{font-size:25px}
+ .nf-hero-sky-link{margin-top:16px}
+}
+@media(prefers-reduced-motion:reduce){
+ .nf-observatory-path,.nf-observatory-lenses button{transition:none!important;animation:none!important}
+}
+/* Focused print styling: the light archive remains a legible reference document. */
+@media print{
+ .nf-observatory-toolbar,.nf-observatory-field,.nf-theme-toggle,.nf-process-thread{display:none!important}
+ .nf-observatory-layout{display:block}
+ .nf-observatory-inspector{border:1px solid #aaa}
+}
