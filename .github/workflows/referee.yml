@@ -29,7 +29,26 @@ jobs:
           node --check research/nightfall/referee/check_receipt.cjs
           node --check research/nightfall/referee/test.cjs
       - name: Positive witnesses, adversarial controls and replay
-        run: node research/nightfall/referee/test.cjs
+        run: |
+          REFEREE_FIXTURE_DIR=/tmp/referee-fixtures node research/nightfall/referee/test.cjs
+      - name: Cross-language independent Python replay and forged receipt controls
+        run: |
+          python3 research/nightfall/referee/independent_verify.py /tmp/referee-fixtures/overlap.json
+          python3 research/nightfall/referee/independent_verify.py /tmp/referee-fixtures/sidon.json
+          python3 - <<'PY'
+          from pathlib import Path
+          import json,subprocess
+          py="research/nightfall/referee/independent_verify.py"
+          for name in ("overlap","sidon"):
+              base=json.loads(Path(f"/tmp/referee-fixtures/{name}.json").read_text())
+              for field,value in (("inputSha256","0"*64),("verdict","COMPETITIVE_RECORD")):
+                  tampered={**base,field:value}
+                  path=Path(f"/tmp/referee-fixtures/{name}-{field}.json")
+                  path.write_text(json.dumps(tampered))
+                  r=subprocess.run(["python3",py,str(path)],capture_output=True,text=True)
+                  assert r.returncode!=0,(name,field,r.stdout)
+          print("PASS: separate Python replay and forged digest / verdict rejection")
+          PY
       - name: Static page and local dependency integrity
         run: |
           python3 - <<'PY'
