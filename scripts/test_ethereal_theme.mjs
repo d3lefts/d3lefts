@@ -44,6 +44,7 @@ try{
   assert.equal(await toggle.getAttribute("aria-pressed"),"false","Light mode accessible state");
   await page.screenshot({path:"browser-artifacts/ethereal-light-"+width+".png",fullPage:false});
   await toggle.click();
+  await page.waitForTimeout(350);
   assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk","Dusk enabled");
   assert.equal(await toggle.getAttribute("aria-pressed"),"true","Dusk accessible state");
   assert.match(await toggle.getAttribute("aria-label"),/light mode/i);
@@ -61,6 +62,13 @@ try{
     return {color:s.color,image:s.backgroundImage,overflow:document.documentElement.scrollWidth-innerWidth};
    });
    assert.match(appearance.image,/radial-gradient/i,file+": CSS starfield loaded");
+   if(file==="index.html"){
+    const heroButton=await page.locator(".hero-actions .button").first().evaluate(el=>({bg:getComputedStyle(el).backgroundColor,fg:getComputedStyle(el).color}));
+    assert.equal(heroButton.bg,"rgb(222, 210, 250)","Dusk primary CTA has light background");
+    assert.equal(heroButton.fg,"rgb(20, 25, 45)","Dusk primary CTA has dark text");
+    const railLink=await page.locator(".nf-journey-rail a").first().evaluate(el=>getComputedStyle(el).color);
+    assert.equal(railLink,"rgb(224, 214, 255)","Journey-rail links legible in dusk");
+   }
    assert.ok(appearance.overflow<=4,file+": overflow in dusk at "+width+"px: "+appearance.overflow);
    if(["join.html","discovery.html","claim-lab.html"].includes(file))
     await page.screenshot({path:"browser-artifacts/ethereal-"+file.replace(".html","")+"-"+width+".png",fullPage:false});

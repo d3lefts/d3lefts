@@ -286,7 +286,7 @@ try{
    await page.goto(origin+"index.html",{waitUntil:"load"});
    assert.match(await page.locator(".ticker").innerText(),/33/,"homepage current library count");
    assert.equal(await page.locator("#instruments .instrument-workflow span").count(),4,"four instrument workflow stages");
-   assert.equal(await page.locator('#instruments a[href="exact-research.html"]').count(),1,"research tools hub CTA");
+   assert.equal(await page.locator('#instruments a[href="exact-research.html#research-tools-directory"]').count(),1,"research tools hub CTA");
    assert.equal(await page.locator("#work.sf-library-invite").count(),1,"owner-curated full research library invitation");
    assert.equal(await page.locator('#work a[href="research.html"]').count(),1,"full research library entry");
    assert.equal(await page.locator('#work a[href="passport.html"]').count(),1,"separate original proof passport entry");

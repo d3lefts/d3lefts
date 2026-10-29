@@ -73,7 +73,7 @@ html[data-nf-theme="dusk"] :is(.join-hero-aside,.join-result-grid article,.desk-
   border-color:#465370;
 }
 html[data-nf-theme="dusk"] :is(.join-result-grid p,.join-hero-aside p,.nf-safety-window-side p){color:#c0c9e0}
-html[data-nf-theme="dusk"] :is(.desk-page,.frontier,.ia-page){background:transparent;color:var(--ink)}
+html[data-nf-theme="dusk"] :is(.desk-page,.frontier,.ia-page){color:var(--ink)}
 html[data-nf-theme="dusk"] .desk-page{--paper:#101727;--ink:#edf0fb}
 html[data-nf-theme="dusk"] .frontier{
   --fline:#4c5871;--fg:#edf0fb;--green:#ced0f3;--lime:#d9c6ff;
@@ -138,3 +138,26 @@ html[data-nf-theme="dusk"] .nf-theme-toggle:hover{background:#363554;box-shadow:
   .nf-theme-toggle{transition:none}
   html[data-nf-theme="dusk"] body{background-attachment:scroll}
 }
+
+/* Contrast repair after browser screenshot audit: all navigational copy stays
+   legible against the twilight surfaces, including the injected journey rail. */
+html[data-nf-theme="dusk"] .nf-journey-rail {
+  --rail-paper:#1b273d;--rail-ink:#edf0fb;--rail-line:#46546c;
+  background:#1b273d;color:#edf0fb;
+}
+html[data-nf-theme="dusk"] .nf-journey-rail>span:first-child{color:#b8cafa}
+html[data-nf-theme="dusk"] .nf-journey-rail a{color:#e0d6ff}
+html[data-nf-theme="dusk"] :is(.hero-actions .button,.instrument-bridge-invite .button) {
+  background:#ded2fa;color:#14192d;border-color:#ded2fa;
+}
+html[data-nf-theme="dusk"] .rt-lead,
+html[data-nf-theme="dusk"] .rt-directory-heading p{color:#bbc8e0}
+html[data-nf-theme="dusk"] :is(.rt-card,.rt-launch-card){
+  background:#1c273c;color:#eef0fb;border-color:#465470;
+}
+html[data-nf-theme="dusk"] :is(.rt-card p,.rt-launch-body p,.rt-launch-top,.rt-tip){color:#b9c7dd}
+html[data-nf-theme="dusk"] :is(.rt-result,.rt-boundary){
+  background:#182437;color:#dfebf8;border-color:#485571;
+}
+html[data-nf-theme="dusk"] .rt-btn.secondary{color:#d9cbff}
+html[data-nf-theme="dusk"] :is(.rt-hero h1 em,.rt-number){color:#c8b7ef}
