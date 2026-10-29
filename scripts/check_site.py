@@ -171,6 +171,23 @@ def main() -> int:
         FAILURES.append(f"Sitemap mismatch: missing={sorted(expected_urls - actual_urls)}, extra={sorted(actual_urls - expected_urls)}")
     for page_path, parsed in pages.items():
         src = page_path.read_text(encoding="utf-8")
+        if page_path.name == "referee.html":
+            # Standalone exact finite-verification tool with its own accessible
+            # interaction contract. It must ship all local source dependencies.
+            required = (
+                'id="run-overlap"', 'id="run-sidon"', 'id="result"',
+                'id="export-receipt"', 'referee-core.js',
+                'referee-app.js', 'id="tab-overlap"', 'id="tab-sidon"',
+                'Exact', 'finite',
+            )
+            if not all(token in src for token in required):
+                FAILURES.append(f"{page_path}: standalone Referee evidence/workbench contract broken")
+            if re.search(r'<script[^>]+src="https?://', src):
+                FAILURES.append(f"{page_path}: external code not permitted in Referee")
+            for script in ("referee-core.js", "referee-app.js"):
+                if not (DOCS / script).is_file():
+                    FAILURES.append(f"{page_path}: missing Referee local script {script}")
+            continue
         if page_path.name == "claim-lab.html":
             # Claim Lab is a standalone browser-local workspace. Its own tab
             # interface intentionally has no shared global menu or site.js.
