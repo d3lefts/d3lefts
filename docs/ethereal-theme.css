@@ -322,3 +322,12 @@ html[data-nf-theme="dusk"] .co-page .co-node[aria-pressed="true"]{box-shadow:0 0
 html[data-nf-theme="dusk"] .co-page .co-primary{color:#151a30}
 html[data-nf-theme="dusk"] .co-page .nav-call{color:#151a30}
 html[data-nf-theme="dusk"] .co-page .nf-journey-rail a{color:#e4d4ff}
+
+
+/* Twilight ink repair: SVG diagram paths on the homepage stay readable. */
+html[data-nf-theme="dusk"] .hero-aside .diagram circle[stroke]{stroke:#8896ba}
+html[data-nf-theme="dusk"] .hero-aside .diagram path[stroke="#213e2d"]{stroke:#dfcaff}
+html[data-nf-theme="dusk"] .hero-aside .diagram path[stroke="#7f987d"]{stroke:#a7b4de}
+html[data-nf-theme="dusk"] .hero-aside .diagram circle[fill="#18221e"]{fill:#dbd1f3}
+html[data-nf-theme="dusk"] .hero-aside .diagram circle[fill="#b0db58"]{fill:#e3c6ff}
+html[data-nf-theme="dusk"] .hero-aside .diagram text{fill:#c3b9e2}

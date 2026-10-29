@@ -396,16 +396,6 @@ try{
     await page.locator("#claimStatus").selectOption("3");
     await page.locator("#claimForm button[type=submit]").click();
     await page.locator('[data-tab="audit"]').click();
-    const auditDiagnostic=await page.evaluate(()=>{
-      const b=document.querySelector('[data-tab="audit"]'),r=b.getBoundingClientRect(),target=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);
-      return {crumb:document.querySelector("#sectionCrumb")?.textContent,clicked:b.outerHTML.slice(0,190),active:[...document.querySelectorAll('[data-tab].active')].map(x=>x.dataset.tab),
-        topTarget:target?.outerHTML.slice(0,180),modal:document.querySelector("#claimMask")?.className,focus:document.activeElement?.outerHTML.slice(0,160)};
-    });
-    console.log("Claim Lab audit pointer diagnostic",JSON.stringify(auditDiagnostic));
-    if(auditDiagnostic.crumb!=="Audit queue"){
-      await page.locator('[data-tab="audit"]').dispatchEvent('click');
-      console.log("Claim Lab audit synthetic click result",await page.locator("#sectionCrumb").innerText());
-    }
     await page.waitForFunction(()=>document.querySelector("#sectionCrumb")?.textContent==="Audit queue");
     const auditText=await page.locator("#content").innerText();
     assert.match(auditText,/Missing artifact reference/,"manual label cannot bypass missing artifact");
