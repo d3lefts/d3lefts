@@ -210,7 +210,7 @@ try{
   await page.reload({waitUntil:"load"});
   assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Light preference persists on reload");
   const lightColor=await page.locator(".hero-actions .button").first().evaluate(el=>getComputedStyle(el).backgroundColor);
-  assert.notEqual(lightColor,"rgb(216, 195, 138)","Opt-out restores the original light-theme accent");
+  assert.equal(lightColor,"rgb(217, 122, 74)","Opt-out restores golden-hour orange, never dusk champagne");
   assert.equal(await page.evaluate(()=>localStorage.getItem("nightfall.theme.v1")),"light","Light stored");
   assert.deepEqual(errors,[],width+"px page errors: "+errors.join("; "));
   await context.close();
