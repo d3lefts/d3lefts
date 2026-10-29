@@ -1,6 +1,6 @@
 # NIGHTFALL — Research Instrument Handoff Contract
-**Version:** 2026-10-28 / 1.0 (integration requirements; not a signed attestation)  
-**Status:** design contract for independent review; the tools remain separately implemented.
+**Version:** 2026-10-28 / 1.1 (scoped browser integration; not a signed attestation)  
+**Status:** a direct Referee → Claim Lab → Discovery finite-input handoff is implemented and browser-tested; cross-tool theorem promotion and the Observatory remain deliberately disconnected.
 
 ## Purpose
 
@@ -18,13 +18,24 @@ The first public walkthrough uses the 30-point finite Sidon construction. The re
 | **Discovery Engine** | Research contracts, selection operators, toy-experiment parameters | Synthetic/local experiments are not proof of research improvement; reporting remains separate | Versioned experiment handoff; validate against the actual engine |
 | **Observatory (draft)** | Frozen identifiers and independently reviewed evidence edges | Gate C matched-budget evaluation and Gate D editorial authorization still outstanding | No public claim-promotion workflow |
 
-## Proposed evidence exchange envelope (future; no existing tool guarantees this schema)
+
+## Implemented same-origin finite evidence path (v1.1)
+
+1. Referee performs its bounded integer check and negative controls. After a SHA-256 input digest is available, **Send to Claim Lab** writes the complete receipt to ephemeral same-tab `sessionStorage` key `nightfall.referee.pending.v1` and navigates locally to `claim-lab.html?referee_handoff=1`. The standard JSON export remains supported.
+2. Claim Lab consumes and deletes that pending payload, independently recomputes its canonical input fingerprint, enforces the domain/version/size contract and asks the user for confirmation. It records **TESTED / UNAUDITED METADATA ONLY**; existing claim statuses are unchanged. The *Discovery replay* button is enabled only when a valid receipt has been imported.
+3. With separate user action, Claim Lab transfers the raw source/result/attacks to `nightfall.discovery.pending.v1`. Discovery consumes this one-shot payload, independently computes the input SHA-256 and **reruns the exact finite arithmetic and adversarial mutation tests** using the existing `RefereeCore` library. Bit-for-bit serialized finite-result and attack results must match the imported receipt. A forged digest or modified result is rejected without a research-run insertion.
+4. Discovery files the original source, domain, SHA-256, local replay outcome and negative-control results in its Sidon or minimum-overlap project. The run is explicitly tagged **LOCAL FINITE REPLAY · REVIEW OPEN**, has no prospective preregistration, and does not become a global theorem, external audit, priority claim, or verified continuous-overlap record. The package exporter retains the source and the handoff metadata.
+5. Discovery’s evidence ledger links to the associated Proof Passport, where the mathematical scope and independently open obligations remain visible. Primary finite source for a newly established 28-edge Sidon essentiality property is independently available at [certificate JSON](projects/sidon-finite-30/edge_essentiality_certificate.json) and [exact generator](projects/sidon-finite-30/edge_essentiality.py), with [passing CI reproduction](https://github.com/d3lefts/d3lefts/actions/runs/40814933934).
+
+The UI implementation deliberately uses browser same-code replay, **not a cryptographically signed result, off-device independent checker, or publication authority**. The separate published Python source checker establishes finite facts for a frozen source witness without relying on the browser receipt. The original master archive ZIPs remain behind publication-scope approval.
+
+## Proposed general evidence exchange envelope (future; the implemented finite adapter is narrower)
 
 Any future adapter should require, at minimum, a versioned `record_type`, `producer` plus exact version/commit, a domain-specific statement with quantifiers and assumptions, canonical input and a digest, the exact scoped result, negative-control outcome, the checker source or immutable reference, explicit provenance, and reviewer adjudication as an **independent field**. A scientific status must be imported as **unreviewed** even when the receipt says `FINITE_CHECK_PASSED` or has a valid SHA-256 hash.
 
 Acceptance rules: reject malformed/unbounded payloads, unknown version without an explicit converter, conflicting input digests, missing domain/scope, and accidental cross-domain claims. Maintain records of rejected inputs. Never execute imported commands or HTML. Imported data shall never overwrite the browser's current Claim Lab workspace without explicit user approval and a recoverable backup. Never automatically promote to "theorem", "original contribution", "peer reviewed", or "competitive record".
 
-### Pilot test (assigned to Ryev)
+### Extended evaluation contract (pilot partially executed)
 
 1. Round-trip a genuine Sidon receipt through a new **preview-only adapter**, never through automatic claim promotion.
 2. Reject a one-character changed input with the original digest; reject a spoofed `independently_checked` label; reject a receipt claiming asymptotic significance from a 30-point finite check.
@@ -33,7 +44,7 @@ Acceptance rules: reject malformed/unbounded payloads, unknown version without a
 
 ## Publication policy
 
-The [owner-curated 30-source library](SITE_CURATED_30_20261028.json) is a **research inventory**, distinct from the three-item Original Findings list. Every mathematical theorem requires a proof audit within its own scope. Passing CI tests proves only the tested repository/build invariants. The two original frozen reproducibility archives remain an external replay dependency until publicly mirrored. The public Observatory remains unlinked pending Gate C/D.
+The [owner-curated 32-source library](SITE_CURATED_32_20261028.json) is a **research inventory**, distinct from the three-item Original Findings list. Every mathematical theorem requires a proof audit within its own scope. Passing CI tests proves only the tested repository/build invariants. The two original frozen reproducibility archives remain an external replay dependency until publicly mirrored. The public Observatory remains unlinked pending Gate C/D.
 
 **Owner of the research archive:** Devin J. Wright.  
 **Instrument integration and scoped review:** NIGHTFALL research team.
