@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem("nightfall.theme.v1")==="dusk")document.documentElement.setAttribute("data-nf-theme","dusk")}catch(_){}</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#4a1f24">
+<meta name="description" content="Devin J. Wright — applied AI research, verification engineering and reproducible computational research. Three evidence-linked technical case studies.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Devin J. Wright — AI Research & Verification Engineering">
+<meta property="og:description" content="Source-bound AI systems, exact numerical optimization and tools that make research reproducible.">
+<meta property="og:url" content="https://d3lefts.github.io/d3lefts/portfolio.html">
+<link rel="canonical" href="https://d3lefts.github.io/d3lefts/portfolio.html">
+<title>Devin J. Wright — Research & Engineering Portfolio</title>
+<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="portfolio.css">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script src="site.js" defer></script>
+<link rel="stylesheet" href="ethereal-theme.css">
+<script src="ethereal-theme.js" defer></script>
+</head>
+<body class="pf-body">
+<a class="skip" href="#main">Skip to portfolio</a>
+<div class="topline"></div>
+<header class="header"><div class="wrap header-inner">
+<a href="./" class="brand" aria-label="NIGHTFALL homepage"><span class="mark" aria-hidden="true">N∕F</span><span class="brand-copy">NIGHTFALL <span>PHASESHIFT / RESEARCH ARCHIVE</span></span></a>
+<button type="button" class="menu-toggle" id="menu-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">MENU +</button>
+<nav class="nav" id="site-nav" aria-label="Primary navigation">
+<a href="./">Research</a><a href="#work" aria-current="page">Portfolio</a><a href="evidence.html">Evidence</a><a href="about.html">About</a><a class="nav-call" href="https://github.com/d3lefts/d3lefts">GitHub source ↗</a>
+</nav></div></header>
+<main id="main">
+<section class="pf-hero wrap" aria-labelledby="pf-title">
+<div class="pf-hero-main">
+<p class="kicker">DEVIN J. WRIGHT / SELECTED TECHNICAL WORK</p>
+<h1 id="pf-title">Research ideas.<br><em>Executable evidence.</em></h1>
+<p class="pf-lead">Independent AI research and verification engineering across source-grounded knowledge systems, exact optimization, and research tooling. The emphasis is on what runs, what the evidence shows, and what is still unproven.</p>
+<div class="pf-actions"><a class="button" href="#work">Explore three case studies <span aria-hidden="true">↓</span></a><a class="pf-underlink" href="https://github.com/d3lefts/d3lefts">Inspect GitHub repository ↗</a></div>
+</div>
+<aside class="pf-hero-aside" aria-label="Portfolio guide">
+<div class="pf-overline">A FIVE-MINUTE TECHNICAL TOUR / 2026</div>
+<ol>
+<li><a href="#sourcebound"><span>01</span><strong>AI safety &amp; provenance</strong><small>Admission policies and evaluation boundaries</small></a></li>
+<li><a href="#overlap"><span>02</span><strong>Numerical optimization</strong><small>Exact arithmetic and public replay</small></a></li>
+<li><a href="#instruments"><span>03</span><strong>Research infrastructure</strong><small>Browser tools, negative controls and CI</small></a></li>
+</ol>
+<p class="pf-aside-note">A portfolio of research and systems engineering. This is not a claim to have trained or deployed a production ML model.</p>
+</aside>
+</section>
+
+<section class="pf-proof wrap" aria-label="Evidence checkpoints">
+<div><strong>14,000</strong><span>Synthetic pages in SourceBound's known-fixture evaluation</span></div>
+<div><strong>131,072</strong><span>Cells in the public exact overlap witness</span></div>
+<div><strong>8/20</strong><span>PAS retrospective triage, against 11/20 simple baselines</span></div>
+</section>
+
+<section id="work" class="pf-work wrap" aria-labelledby="pf-work-title">
+<div class="pf-section-intro"><div><span class="section-id">01 / SELECTED CASE STUDIES</span><h2 id="pf-work-title">Three ways to<br><em>make claims testable.</em></h2></div>
+<p>Each case separates the problem, implementation, evaluation and remaining gap. Repository links point to primary evidence, executable checkers or frozen public assets.</p></div>
+
+<article class="pf-case" id="sourcebound" aria-labelledby="pf-sourcebound-title">
+<div class="pf-case-head"><div><span class="pf-index">01 / AI SAFETY · SOURCE PROVENANCE</span><h3 id="pf-sourcebound-title">SourceBound</h3><p class="pf-case-deck">A constrained admission boundary for source-grounded machine-readable assertions.</p></div><div class="pf-type">Implementation + frozen test package<br>External field evaluation open</div></div>
+<div class="pf-case-grid">
+<div><h4>Problem and approach</h4><p>Generated records can silently switch subjects, rely on stale pages, or confuse an assertion in a source with independently established truth. SourceBound retains evidence spans, source versions, subject–relation–object binding and revision-aware checks before admitting a record.</p></div>
+<div><h4>What was measured</h4><p>A bug-fixed known-fixture replay reports 27 unit tests; 14,000 synthetic pages yielded 6,000 fixture-labeled retained assertions with zero extra fixture emissions. These are synthetic and post-hoc regression checks, not held-out natural-web accuracy.</p></div>
+</div>
+<div class="pf-flow" aria-label="SourceBound mechanism"><span>Candidate assertion</span><b aria-hidden="true">→</b><span>Source + span + version</span><b aria-hidden="true">→</b><span>Binding and consistency gates</span><b aria-hidden="true">→</b><span>Admit / quarantine</span></div>
+<div class="pf-case-bottom"><p><strong>Open evaluation:</strong> domain-held-out annotation, precision/recall at matched coverage, false-assertion rate, latency and cost. No world-truth or universal-safety guarantee is asserted.</p><div class="pf-links"><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/ai-safety-peer-review-2026-10-28/SOURCEBOUND_EVALUATION.md">Evaluation protocol ↗</a><a href="https://github.com/d3lefts/d3lefts/releases/tag/ai-safety-review-2026-10-28">Source and test ZIP ↗</a></div></div>
+</article>
+
+<article class="pf-case" id="overlap" aria-labelledby="pf-overlap-title">
+<div class="pf-case-head"><div><span class="pf-index">02 / COMPUTATIONAL MATHEMATICS · OPTIMIZATION</span><h3 id="pf-overlap-title">Erdős minimum overlap</h3><p class="pf-case-deck">Turn a numerical candidate into an inspectable exact-rational construction.</p></div><div class="pf-type">Public finite construction<br>External mathematical referee open</div></div>
+<div class="pf-case-grid">
+<div><h4>Problem and approach</h4><p>Minimize a worst-case translation-overlap functional subject to mass and range constraints. A 131,072-cell step-function witness is stored as integer heights with denominator 2<sup>70</sup>; the audit checks mass, bounds and signed shifts using integer arithmetic.</p></div>
+<div><h4>What was measured</h4><p>The archived exact objective is <strong>0.380856370118029325…</strong>, an upper-bound construction rather than a proof of global optimality. The public curated asset was anonymously downloaded, hash-verified and replayed in CI, including every signed grid shift.</p></div>
+</div>
+<div class="pf-flow" aria-label="Optimization verification path"><span>Finite witness</span><b aria-hidden="true">→</b><span>SHA-256 + mass + bounds</span><b aria-hidden="true">→</b><span>Exact shift audit</span><b aria-hidden="true">→</b><span>Upper-bound certificate</span></div>
+<div class="pf-case-bottom"><p><strong>Scope:</strong> the 131,072-entry candidate exceeded the Arena's 100,000-entry limit. Its mathematical construction and competition eligibility are separate; the accepted leaderboard entry has unresolved source-file provenance.</p><div class="pf-links"><a href="erdos-paper.html">Interactive explanation ↗</a><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/erdos/STATUS_AND_PRIOR_ART_20261028.md">Bound and prior art ↗</a><a href="https://github.com/d3lefts/d3lefts/blob/main/scripts/verify_erdos_independent.py">Checker source ↗</a></div></div>
+</article>
+
+<article class="pf-case" id="instruments" aria-labelledby="pf-instruments-title">
+<div class="pf-case-head"><div><span class="pf-index">03 / RESEARCH ENGINEERING · VERIFICATION SYSTEMS</span><h3 id="pf-instruments-title">The discovery-to-review toolchain</h3><p class="pf-case-deck">Interactive research tools with explicit evidence boundaries, adversarial checks and regression tests.</p></div><div class="pf-type">Browser demos + GitHub Actions<br>Research workflow, not autonomous theorem proof</div></div>
+<div class="pf-case-grid">
+<div><h4>Problem and approach</h4><p>Research artifacts often lose their assumptions while moving between ideation, counterexample search, checking and presentation. NIGHTFALL provides a bounded workflow across Frontier, Orchestrator, the Imaginary Adversary, Referee, Claim Lab and evidence-linked investigations.</p></div>
+<div><h4>What was tested</h4><p>The repository includes targeted Node regression suites, site-link and metadata validation, headless mobile/desktop browser checks, corrupted-input controls and GitHub Actions workflows. An exact local demonstration is intentionally kept distinct from external peer review or a deployed ML service.</p></div>
+</div>
+<div class="pf-flow" aria-label="Toolchain sequence"><span>Frame question</span><b aria-hidden="true">→</b><span>Generate and attack</span><b aria-hidden="true">→</b><span>Check finite claims</span><b aria-hidden="true">→</b><span>Archive scope</span></div>
+<div class="pf-case-bottom"><p><strong>Reproduce:</strong> <code>python3 scripts/check_site.py</code>, <code>node scripts/test_adversary.cjs</code> and <code>node scripts/test_companion_handoff.cjs</code> from the repository root. The full browser matrix runs in CI.</p><div class="pf-links"><a href="exact-research.html#guided-replay">Guided tool demo ↗</a><a href="https://github.com/d3lefts/d3lefts/tree/main/scripts">Tests and scripts ↗</a><a href="https://github.com/d3lefts/d3lefts/actions">CI history ↗</a></div></div>
+</article>
+</section>
+
+<section class="pf-lesson wrap" aria-labelledby="pf-lesson-title">
+<div><span class="section-id">02 / RESEARCH JUDGMENT</span><h2 id="pf-lesson-title">Negative findings<br><em>count as results.</em></h2></div>
+<div><h3>Proof After Scarcity — causal verification triage</h3><p>In a retrospective, outcome-aware 20-case stress test, an uncalibrated triage method chose the documented weak-link category first in <strong>8/20</strong> cases. Two simpler baselines achieved <strong>11/20</strong>. The failure is published instead of being recast as a win. Prospective predictions, blinded labels and complete graph artifacts remain separate open work.</p><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/pas-overview.md">Read the adverse result and preregistration limits ↗</a></div>
+</section>
+<section class="pf-last wrap" aria-labelledby="pf-last-title">
+<div><span class="section-id">03 / COLLABORATION AND REVIEW</span><h2 id="pf-last-title">Work that can be inspected.</h2><p>The research is human-led by Devin J. Wright with AI-assisted coding, synthesis and critique. Prior mathematical foundations and external contributors are attributed. Internal independent implementations do not substitute for external referees.</p></div>
+<div class="pf-end-links"><a href="about.html">Research leadership and method ↗</a><a href="review.html">Open referee assignments ↗</a><a href="https://github.com/d3lefts/d3lefts">Browse public source and issues ↗</a></div>
+</section>
+</main>
+<footer class="pf-footer"><div class="wrap"><span>DEVIN J. WRIGHT / NIGHTFALL — 2026</span><a href="./">Back to research archive ↑</a></div></footer>
+</body>
+</html>
