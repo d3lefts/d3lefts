@@ -121,7 +121,7 @@ try{
     const action=await page.locator(".join-choice button").first().evaluate(el=>getComputedStyle(el).backgroundColor);
     assert.equal(action,"rgb(216, 195, 138)","Join task action uses champagne");
     const panel=await page.locator(".join-choice").first().evaluate(el=>getComputedStyle(el).backgroundColor);
-    assert.equal(panel,"rgb(27, 38, 59)","Join cards use navy panels, not faded green");
+    assert.equal(panel,"rgb(40, 51, 75)","Recommended Join card has the intentional raised navy focus treatment");
    }
    if(file==="index.html"){
     const heroButton=await page.locator(".hero-actions .button").first().evaluate(el=>({bg:getComputedStyle(el).backgroundColor,fg:getComputedStyle(el).color}));
