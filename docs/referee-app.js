@@ -71,4 +71,5 @@ $("overlap-heights").value=C.OVERLAP_DEMO.heights.join(", ");$("sidon-points").v
 const requestedDomain = new URLSearchParams(window.location.search).get("domain");
 if (requestedDomain === "sidon") setTab("sidon");
 $("app-version").textContent="ENGINE V"+C.VERSION+" · BROWSER-LOCAL";
+if(new URLSearchParams(location.search).get("domain")==="sidon")setTab("sidon");
 })();
