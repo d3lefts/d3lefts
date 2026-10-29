@@ -457,3 +457,34 @@ html:not([data-nf-theme="dusk"]) body:has(.app) .sideBottom .privacy{
 }
 html:not([data-nf-theme="dusk"]) body:has(.app) :is(button.primary,
   .btnPrimary,.primaryBtn){background:var(--lf-orange);color:var(--lf-oxblood)}
+
+
+/* Final first-fold art correction: the original SVG encodes green presentation
+   attributes. Restyle it only in LIGHT; leave paths, geometry, labels unchanged. */
+html:not([data-nf-theme="dusk"]) .hero-aside .diagram circle[stroke="#b2bfb1"],
+html:not([data-nf-theme="dusk"]) .hero-aside .diagram path[stroke="#abb8aa"]{
+ stroke:#c9b2a6;
+}
+html:not([data-nf-theme="dusk"]) .hero-aside .diagram path[stroke="#213e2d"]{stroke:#4a1f24}
+html:not([data-nf-theme="dusk"]) .hero-aside .diagram path[stroke="#7f987d"]{stroke:#bd7958}
+html:not([data-nf-theme="dusk"]) .hero-aside .diagram circle[fill="#18221e"]{fill:#4a1f24}
+html:not([data-nf-theme="dusk"]) .hero-aside .diagram circle[fill="#b0db58"]{
+ fill:#d97a4a;stroke:#4a1f24;
+}
+html:not([data-nf-theme="dusk"]) .hero-aside .diagram text{fill:#6a4742}
+html:not([data-nf-theme="dusk"]) :is(.flagship-card svg circle[fill="#d9ff5e"],
+ .flagship-card svg g[fill="#d9ff5e"] circle){fill:#e3a065}
+html:not([data-nf-theme="dusk"]) .feature-art g[stroke="#d9ff5e"]{stroke:#e3a065}
+/* Inline legacy specialty-tools styles need explicit scope-limited overrides. */
+html:not([data-nf-theme="dusk"]) .nf-home-toolbox-content>.desk-entry[style]{
+ background:#4a1f24!important;color:#fff0e7!important;border-color:#6a2d35!important;
+}
+html:not([data-nf-theme="dusk"]) .nf-home-toolbox-content>.desk-entry[style] p{
+ color:#efd3c9!important;
+}
+html:not([data-nf-theme="dusk"]) .nf-home-toolbox-content>.desk-entry[style] :is(a,strong,span)[style*="color:#d9ff"]{
+ color:#efb083!important;
+}
+html:not([data-nf-theme="dusk"]) .nf-home-toolbox-content>.desk-entry[style] span[style*="color:#d6e0"]{
+ color:#ebd2c6!important;
+}
