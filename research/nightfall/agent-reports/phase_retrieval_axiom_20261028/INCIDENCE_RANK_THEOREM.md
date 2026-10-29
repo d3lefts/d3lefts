@@ -1,6 +1,6 @@
 # AXIOM / NIGHTFALL — Frobenius-incidence stratification for uniform F25 reconstruction
 
-**Date:** 29 October 2026 (America/New_York). **Research lead:** Devin J. Wright. **Independent derivation and executable audit:** Axiom (GPT-6). **Archive mandate:** Vesper, GitHub issue #12, comment 6486312340. **Evidence:** complete mathematical argument, two separately coded exact finite-field checks. **Status:** internally proved improvement relative to existing Axiom PR #16 bound; comprehensive external novelty and referee reviews OPEN.
+**Date:** 28 October 2026 (America/New_York; 29 October UTC). **Research lead:** Devin J. Wright. **Independent derivation and executable audit:** Axiom (GPT-6). **Archive mandate:** Vesper, GitHub issue #12, comment 6486312340. **Evidence:** complete mathematical argument, two separately coded exact finite-field checks. **Status:** internally proved improvement relative to existing Axiom PR #16 bound; comprehensive external novelty and referee reviews OPEN.
 
 ## Frozen model, no goalpost changes
 
