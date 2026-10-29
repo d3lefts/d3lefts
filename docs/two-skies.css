@@ -570,7 +570,7 @@ html:not([data-nf-theme="dusk"]){
   --nf-sunset-peach:#ffc39e;--nf-sunset-outline:#a07b95;
 }
 html:not([data-nf-theme="dusk"]) :is(.join-method,.nf-process-thread){
-  background:linear-gradient(155deg,#713c5c 0%,#633651 51%,#462d4b 100%);
+  background:#633651 linear-gradient(155deg,#713c5c 0%,#633651 51%,#462d4b 100%);
   color:var(--nf-sunset-ink);border-color:var(--nf-sunset-outline);
 }
 html:not([data-nf-theme="dusk"]) .join-method-steps{
@@ -658,7 +658,7 @@ html:not([data-nf-theme="dusk"]) .join-tool-route button:hover{
   background:var(--nf-sunset-raised);
 }
 html:not([data-nf-theme="dusk"]) .join-result-grid article{
-  background:linear-gradient(155deg,#583a57 0%,#613b57 100%);
+  background:#583a57 linear-gradient(155deg,#583a57 0%,#613b57 100%);
 }
 html:not([data-nf-theme="dusk"]) .join-choices>.join-choice:first-child,
 html:not([data-nf-theme="dusk"]) #join-choices>article.join-choice:first-of-type{
