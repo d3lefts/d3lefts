@@ -8,7 +8,7 @@
  const ink={"finite-check":"#d9ff73","method":"#87ccb0","open-premise":"#e2b475","analogy":"#9abed5"};
  const claims=R.claims,methods=R.mechanisms,edges=R.edges;
  const doc=(tag,cls,value)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(value!==undefined)e.textContent=String(value);return e;};
- const safeLink=(href)=>typeof href==="string"&&(/^(https:\/\/github\.com\/|https:\/\/www\.erdosproblems\.com\/|https:\/\/oeis\.org\/)/.test(href)||/^[a-z0-9-]+\.html(?:#[a-z0-9-]+)?$/i.test(href))?href:null;
+ const safeLink=(href)=>typeof href==="string"&&(/^(https:\/\/github\.com\/|https:\/\/www\.erdosproblems\.com\/|https:\/\/oeis\.org\/)/.test(href)||/^[a-z0-9-]+\.html(?:\\?claim=[a-z0-9_-]+)?(?:#[a-z0-9-]+)?$/i.test(href))?href:null;
  function link(label,href){const safe=safeLink(href);if(!safe)return null;const a=doc("a","",label);a.href=safe;if(safe.startsWith("https:")){a.target="_blank";a.rel="noopener noreferrer"}return a;}
  const filterButtons=[...document.querySelectorAll("[data-co-filter]")];
  let type="all",selected=null,raf=0;
@@ -49,8 +49,6 @@
    const first=link("Primary source ↗",n.sources[0].url);if(first)box.append(first);
   }
  }
- // Canonical Passport links need query-string support without accepting arbitrary URL input.
- function passportLink(id){if(!R.claimById(id))return null;const a=doc("a","","Open this Proof Passport ↗");a.href="passport.html?claim="+encodeURIComponent(id);return a;}
  function renderDetails(){
   describe();
   const list=matching(),box=$("co-relations");box.replaceChildren();
