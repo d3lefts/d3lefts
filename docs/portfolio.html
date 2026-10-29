@@ -6,13 +6,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="theme-color" content="#4a1f24">
-<meta name="description" content="Devin J. Wright — applied AI research, verification engineering and reproducible computational research. Three evidence-linked technical case studies.">
+<meta name="description" content="Devin J. Wright — source-grounded knowledge extraction, verification research, and a runnable evidence-aware retrieval demonstration, with reproducible limitations.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Devin J. Wright — AI Research & Verification Engineering">
-<meta property="og:description" content="Source-bound AI systems, exact numerical optimization and tools that make research reproducible.">
+<meta property="og:title" content="Devin J. Wright — Source-Grounded Knowledge Systems">
+<meta property="og:description" content="Evidence-grounded web assertions, typed proof dependencies and auditable retrieval. Runnable code and evidence limits.">
 <meta property="og:url" content="https://d3lefts.github.io/d3lefts/portfolio.html">
 <link rel="canonical" href="https://d3lefts.github.io/d3lefts/portfolio.html">
-<title>Devin J. Wright — Research & Engineering Portfolio</title>
+<title>Devin J. Wright — Knowledge Systems Research Portfolio</title>
 <link rel="stylesheet" href="site.css">
 <link rel="stylesheet" href="portfolio.css">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -20,6 +20,8 @@
 <script src="research-registry.js" defer></script>
 <script src="portfolio-core.js" defer></script>
 <script src="portfolio.js" defer></script>
+<script src="portfolio-search-core.js" defer></script>
+<script src="portfolio-search.js" defer></script>
 <link rel="stylesheet" href="ethereal-theme.css">
 <script src="ethereal-theme.js" defer></script>
 </head>
@@ -35,68 +37,84 @@
 <main id="main">
 <section class="pf-hero wrap" aria-labelledby="pf-title">
 <div class="pf-hero-main">
-<p class="kicker">NIGHTFALL / UNLISTED COLLECTIVE REFERENCE</p>
-<h1 id="pf-title">Research ideas.<br><em>Executable evidence.</em></h1>
-<p class="pf-lead">A working index of what the NIGHTFALL collaboration can reproduce, where our research mechanisms connect, and which independent tests must still be passed. Each claim keeps its original scope and attribution.</p>
-<div class="pf-actions"><a class="button" href="#work">Explore the evidence <span aria-hidden="true">↓</span></a><a class="pf-underlink" href="https://github.com/d3lefts/d3lefts">Inspect GitHub repository ↗</a></div>
+<p class="kicker">DEVIN J. WRIGHT / RESEARCH & ENGINEERING</p>
+<h1 id="pf-title">Grounded claims.<br><em>Inspectable systems.</em></h1>
+<p class="pf-lead">I direct NIGHTFALL, a human-led, AI-assisted research program. We investigate how to turn heterogeneous source material into structured, source-linked assertions while preserving identity, provenance, time and uncertainty. Below are concrete implementations, reproducible checks and the limits they have not yet crossed.</p>
+<div class="pf-actions"><a class="button" href="#work">Review the technical work <span aria-hidden="true">↓</span></a><a class="pf-underlink" href="https://github.com/d3lefts/d3lefts">Inspect GitHub repository ↗</a></div>
 </div>
 <aside class="pf-hero-aside" aria-label="Portfolio guide">
-<div class="pf-overline">CURATED REFERENCE POINTS / INTERNAL WORKFLOW</div>
+<div class="pf-overline">60-SECOND TECHNICAL TOUR</div>
 <ol>
 <li><a href="#sourcebound"><span>01</span><strong>AI safety &amp; provenance</strong><small>Admission policies and evaluation boundaries</small></a></li>
-<li><a href="#overlap"><span>02</span><strong>Numerical optimization</strong><small>Exact arithmetic and public replay</small></a></li>
-<li><a href="#instruments"><span>03</span><strong>Research infrastructure</strong><small>Browser tools, negative controls and CI</small></a></li>
+<li><a href="#pas"><span>02</span><strong>Evidence graphs</strong><small>Dependency modeling and a published negative result</small></a></li>
+<li><a href="#search-lab"><span>03</span><strong>Runnable retrieval</strong><small>Source-scoped knowledge lookup and abstention</small></a></li>
 </ol>
-<p class="pf-aside-note">Internal reference for research decisions, future technical presentations and reviewer handoffs. This is not an externally reviewed claim of autonomous discovery or an evaluated production ML model.</p>
+<p class="pf-aside-note">Evidence-first work sample, with public source and checks. No claim of production search deployment, web-scale model evaluation, or outside mathematical refereeing.</p>
 </aside>
 </section>
 
 <section class="pf-proof wrap" aria-label="Evidence checkpoints">
-<div><strong>05</strong><span>Owner-approved finite or bounded Original Findings</span></div>
-<div><strong id="pf-metric-records">06</strong><span>Canonical claim records, all evidence levels retained</span></div>
-<div><strong id="pf-metric-mechanisms">05</strong><span>Canonical shared mechanisms, including untested analogies</span></div>
+<div><strong>27</strong><span>SourceBound regression tests in the frozen known-fixture release</span></div>
+<div><strong>14,000</strong><span>Synthetic pages in the SourceBound fixture evaluation, not a natural-web study</span></div>
+<div><strong id="pf-metric-records">06</strong><span>Canonical records in the runnable, explicitly curated evidence index</span></div>
+<span class="pf-hidden-metric" id="pf-metric-mechanisms" aria-hidden="true">05</span>
 </section>
 
 <section id="work" class="pf-work wrap" aria-labelledby="pf-work-title">
-<div class="pf-section-intro"><div><span class="section-id">01 / SELECTED CASE STUDIES</span><h2 id="pf-work-title">Three ways to<br><em>make claims testable.</em></h2></div>
-<p>Each case separates the problem, implementation, evaluation and remaining gap. Repository links point to primary evidence, executable checkers or frozen public assets.</p></div>
+<div class="pf-section-intro"><div><span class="section-id">01 / RESEARCH CASE STUDIES</span><h2 id="pf-work-title">Structure matters.<br><em>Evidence decides.</em></h2></div>
+<p>The first two cases address structured extraction and dependency-aware verification; the live lab shows a smaller, executable retrieval component. Every displayed figure is scoped to its original test, with primary sources and explicit gaps.</p></div>
 
 <article class="pf-case" id="sourcebound" aria-labelledby="pf-sourcebound-title">
-<div class="pf-case-head"><div><span class="pf-index">01 / AI SAFETY · SOURCE PROVENANCE</span><h3 id="pf-sourcebound-title">SourceBound</h3><p class="pf-case-deck">A constrained admission boundary for source-grounded machine-readable assertions.</p></div><div class="pf-type">Implementation + frozen test package<br>External field evaluation open</div></div>
+<div class="pf-case-head"><div><span class="pf-index">01 / SOURCE-GROUNDED EXTRACTION & KNOWLEDGE GRAPH SAFETY</span><h3 id="pf-sourcebound-title">SourceBound</h3><p class="pf-case-deck">Conservative admission of machine-readable assertions from messy, changing web content.</p></div><div class="pf-type">Source/test release available<br>Real-web held-out evaluation open</div></div>
 <div class="pf-case-grid">
-<div><h4>Problem and approach</h4><p>Generated records can silently switch subjects, rely on stale pages, or confuse an assertion in a source with independently established truth. SourceBound retains evidence spans, source versions, subject–relation–object binding and revision-aware checks before admitting a record.</p></div>
-<div><h4>What was measured</h4><p>A bug-fixed known-fixture replay reports 27 unit tests; 14,000 synthetic pages yielded 6,000 fixture-labeled retained assertions with zero extra fixture emissions. These are synthetic and post-hoc regression checks, not held-out natural-web accuracy.</p></div>
+<div><h4>The engineering problem</h4><p>A generated subject–relation–object statement may refer to the wrong entity, use a stale web page or quietly change its qualifier. SourceBound separates candidate generation from admission: retain source digests, evidence spans, DOM locators, identity links, temporal qualifiers and version-aware checks before publishing an assertion.</p></div>
+<div><h4>What actually ran</h4><p>The bug-fixed, <strong>known-fixture</strong> package reports 27 tests, 14,000 synthetic pages and 6,000 fixture-labeled retained assertions with zero extra fixture emissions. These are post-hoc regression and synthetic checks, not held-out natural-web precision, retrieval lift or production throughput.</p></div>
 </div>
-<div class="pf-flow" aria-label="SourceBound mechanism"><span>Candidate assertion</span><b aria-hidden="true">→</b><span>Source + span + version</span><b aria-hidden="true">→</b><span>Binding and consistency gates</span><b aria-hidden="true">→</b><span>Admit / quarantine</span></div>
-<div class="pf-case-bottom"><p><strong>Open evaluation:</strong> domain-held-out annotation, precision/recall at matched coverage, false-assertion rate, latency and cost. No world-truth or universal-safety guarantee is asserted.</p><div class="pf-links"><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/ai-safety-peer-review-2026-10-28/SOURCEBOUND_EVALUATION.md">Evaluation protocol ↗</a><a href="https://github.com/d3lefts/d3lefts/releases/tag/ai-safety-review-2026-10-28">Source and test ZIP ↗</a></div></div>
+<div class="pf-flow" aria-label="SourceBound evidence flow"><span>Proposed triple</span><b aria-hidden="true">→</b><span>Source + version + span</span><b aria-hidden="true">→</b><span>Identity and consistency gates</span><b aria-hidden="true">→</b><span>Retain / quarantine</span></div>
+<div class="pf-case-bottom"><p><strong>Research judgment:</strong> proof of source support is distinct from the truth of that source. The next decisive test is independent domain-held-out annotation with unsupported-assertion rate <em>at matched recall</em>, plus latency, cost and abstention reporting.</p><div class="pf-links"><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/ai-safety-peer-review-2026-10-28/SOURCEBOUND_EVALUATION.md">Methods + evaluation protocol ↗</a><a href="https://github.com/d3lefts/d3lefts/releases/tag/ai-safety-review-2026-10-28">Frozen source, fixtures and tests ↗</a></div></div>
 </article>
 
-<article class="pf-case" id="overlap" aria-labelledby="pf-overlap-title">
-<div class="pf-case-head"><div><span class="pf-index">02 / COMPUTATIONAL MATHEMATICS · OPTIMIZATION</span><h3 id="pf-overlap-title">Erdős minimum overlap</h3><p class="pf-case-deck">Turn a numerical candidate into an inspectable exact-rational construction.</p></div><div class="pf-type">Public finite construction<br>External mathematical referee open</div></div>
+<article class="pf-case" id="pas" aria-labelledby="pf-pas-title">
+<div class="pf-case-head"><div><span class="pf-index">02 / STRUCTURED PROVENANCE & CAUSAL VERIFICATION</span><h3 id="pf-pas-title">Proof After Scarcity</h3><p class="pf-case-deck">Separate bibliographic links, logical dependencies and verification priorities before drawing conclusions from a research graph.</p></div><div class="pf-type">Finite graph model + adverse result<br>Prospective utility not established</div></div>
 <div class="pf-case-grid">
-<div><h4>Problem and approach</h4><p>Minimize a worst-case translation-overlap functional subject to mass and range constraints. A 131,072-cell step-function witness is stored as integer heights with denominator 2<sup>70</sup>; the audit checks mass, bounds and signed shifts using integer arithmetic.</p></div>
-<div><h4>What was measured</h4><p>The archived exact objective is <strong>0.380856370118029325…</strong>, an upper-bound construction rather than a proof of global optimality. The public curated asset was anonymously downloaded, hash-verified and replayed in CI, including every signed grid shift.</p></div>
+<div><h4>The representation</h4><p>A manuscript can cite another manuscript without logically depending on it. The dossier distinguishes a citation/reuse graph from a single-proof dependency DAG and explicitly treats shared sources and uncertain links as risks to inference. Its archived October snapshot lists 722 manuscripts, 597 bibliographic edges and 73 mutual-citation groups; these are <strong>not</strong> measured logical entailment edges.</p></div>
+<div><h4>A published falsification</h4><p>The proposed risk-priority strategy found the retrospectively labeled weak-link category first in <strong>8/20</strong> cases; two simple baselines scored <strong>11/20</strong>. The cases and graph labels were selected after outcomes were known. The result is adverse evidence, not demonstrated improvement in web search, source verification or reviewer time saved.</p></div>
 </div>
-<div class="pf-flow" aria-label="Optimization verification path"><span>Finite witness</span><b aria-hidden="true">→</b><span>SHA-256 + mass + bounds</span><b aria-hidden="true">→</b><span>Exact shift audit</span><b aria-hidden="true">→</b><span>Upper-bound certificate</span></div>
-<div class="pf-case-bottom"><p><strong>Scope:</strong> the 131,072-entry candidate exceeded the Arena's 100,000-entry limit. Its mathematical construction and competition eligibility are separate; the accepted leaderboard entry has unresolved source-file provenance.</p><div class="pf-links"><a href="erdos-paper.html">Interactive explanation ↗</a><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/erdos/STATUS_AND_PRIOR_ART_20261028.md">Bound and prior art ↗</a><a href="https://github.com/d3lefts/d3lefts/blob/main/scripts/verify_erdos_independent.py">Checker source ↗</a></div></div>
-</article>
-
-<article class="pf-case" id="instruments" aria-labelledby="pf-instruments-title">
-<div class="pf-case-head"><div><span class="pf-index">03 / RESEARCH ENGINEERING · VERIFICATION SYSTEMS</span><h3 id="pf-instruments-title">The discovery-to-review toolchain</h3><p class="pf-case-deck">Interactive research tools with explicit evidence boundaries, adversarial checks and regression tests.</p></div><div class="pf-type">Browser demos + GitHub Actions<br>Research workflow, not autonomous theorem proof</div></div>
-<div class="pf-case-grid">
-<div><h4>Problem and approach</h4><p>Research artifacts often lose their assumptions while moving between ideation, counterexample search, checking and presentation. NIGHTFALL provides a bounded workflow across Frontier, Orchestrator, the Imaginary Adversary, Referee, Claim Lab and evidence-linked investigations.</p></div>
-<div><h4>What was tested</h4><p>The repository includes targeted Node regression suites, site-link and metadata validation, headless mobile/desktop browser checks, corrupted-input controls and GitHub Actions workflows. An exact local demonstration is intentionally kept distinct from external peer review or a deployed ML service.</p></div>
-</div>
-<div class="pf-flow" aria-label="Toolchain sequence"><span>Frame question</span><b aria-hidden="true">→</b><span>Generate and attack</span><b aria-hidden="true">→</b><span>Check finite claims</span><b aria-hidden="true">→</b><span>Archive scope</span></div>
-<div class="pf-case-bottom"><p><strong>Reproduce:</strong> <code>python3 scripts/check_site.py</code>, <code>node scripts/test_adversary.cjs</code> and <code>node scripts/test_companion_handoff.cjs</code> from the repository root. The full browser matrix runs in CI.</p><div class="pf-links"><a href="exact-research.html#guided-replay">Guided tool demo ↗</a><a href="https://github.com/d3lefts/d3lefts/tree/main/scripts">Tests and scripts ↗</a><a href="https://github.com/d3lefts/d3lefts/actions">CI history ↗</a></div></div>
+<div class="pf-flow" aria-label="PAS graph-evidence workflow"><span>Source records</span><b aria-hidden="true">→</b><span>Typed graph + dependencies</span><b aria-hidden="true">→</b><span>Priority hypothesis</span><b aria-hidden="true">→</b><span>Baseline / falsifier</span></div>
+<div class="pf-case-bottom"><p><strong>Next test:</strong> prospective, frozen weak-link predictions with blinded assessment and separately published dependency graphs. The finite-DAG nilpotence property is established algebra; it does not by itself validate a real-world prioritization algorithm.</p><div class="pf-links"><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/pas-overview.md">Results, source graph and limitations ↗</a><a href="https://github.com/d3lefts/d3lefts/tree/main/research/nightfall/projects/pas">Public freeze and metadata reproduction ↗</a></div></div>
 </article>
 </section>
 
+<section class="pf-search-section wrap" id="search-lab" aria-labelledby="pf-search-title">
+<div class="pf-search-intro"><div><span class="section-id">02 / RUNNABLE KNOWLEDGE RETRIEVAL</span><h2 id="pf-search-title">A small graph.<br><em>A strict answer boundary.</em></h2></div>
+<div><p>Query the site's real canonical Proof Passport records. This reproducible, deterministic retriever finds matching claims, returns their verbatim source-scoped statements, exposes typed evidence relationships and abstains when no record supports a query.</p><p><strong>Measurement boundary:</strong> six manually curated records; no live-web extraction, embeddings, learned ranking, model answering or held-out retrieval-quality claim. The point of this demo is inspectable behavior, not scale.</p></div></div>
+<div class="pf-search-shell">
+<form id="pf-search-form" class="pf-search-form">
+<label for="pf-search-query">Search canonical evidence records</label>
+<div class="pf-search-controls"><input id="pf-search-query" name="query" type="search" value="Werner" maxlength="140" autocomplete="off" placeholder="Try Werner, Sidon, Erdős, phase retrieval…"><button type="submit">Retrieve evidence ↗</button></div>
+</form>
+<div class="pf-search-prompts"><span>TRY</span><button type="button" data-pf-query="Werner">Conditional source dependency</button><button type="button" data-pf-query="Sidon">Finite witness</button><button type="button" data-pf-query="Search engine retrieval benchmark">Unsupported query → abstain</button></div>
+<p id="pf-search-status" role="status" aria-live="polite">Loading canonical claims…</p>
+<div id="pf-search-output"><p>Evidence results appear here when scripts load.</p></div>
+<noscript><p>JavaScript is required for this local demonstration. See <a href="passport.html">Proof Passports</a> for the same canonical source records.</p></noscript>
+</div>
+<div class="pf-search-sources"><span>REPRODUCE THE IMPLEMENTATION</span><a href="https://github.com/d3lefts/d3lefts/blob/main/docs/portfolio-search-core.js">Pure retrieval core ↗</a><a href="https://github.com/d3lefts/d3lefts/blob/main/scripts/test_portfolio_search.cjs">Tested matches, abstention and negative controls ↗</a><a href="https://github.com/d3lefts/d3lefts/blob/main/docs/research-registry.js">Canonical source dataset ↗</a></div>
+</section>
 
+<section class="pf-work wrap pf-engineering-case" id="instruments" aria-labelledby="pf-eng-title">
+<div class="pf-section-intro"><div><span class="section-id">03 / REPRODUCIBLE SYSTEMS ENGINEERING</span><h2 id="pf-eng-title">Evidence that<br><em>survives replay.</em></h2></div><p>Independent finite arithmetic and adversarial UI tests are supporting engineering work, separate from extraction-model accuracy or scientific priority.</p></div>
+<article class="pf-case" id="overlap"><div class="pf-case-head"><div><span class="pf-index">03 / EXACT NUMERICAL OPTIMIZATION</span><h3>Erdős minimum overlap</h3><p class="pf-case-deck">Hash-verified finite witness, exact signed-shift audit and a grid-to-continuum argument.</p></div><div class="pf-type">131,072-cell rational witness<br>External mathematical review open</div></div>
+<div class="pf-case-grid"><div><h4>Artifact</h4><p>The archived finite step function stores integer heights over denominator 2<sup>70</sup>. Its reported continuous-shift upper-bound score is <strong>0.380856370118029325…</strong>; the public curated release includes witness bytes and independent arithmetic checker.</p></div><div><h4>Claim boundary</h4><p>The candidate exceeds the Einstein Arena's 100,000-entry submission limit. It is a separately published mathematical witness, not a certified global optimum or the reconstructed input of an accepted leaderboard entry.</p></div></div>
+<div class="pf-case-bottom"><p><strong>Transferable method:</strong> retain data identity, exact replay, negative controls and unresolved claims with each computational artifact.</p><div class="pf-links"><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/erdos/STATUS_AND_PRIOR_ART_20261028.md">Witness scope ↗</a><a href="https://github.com/d3lefts/d3lefts/releases/tag/nightfall-research-2026-10-28">Reproduction release ↗</a><a href="https://github.com/d3lefts/d3lefts/blob/main/scripts/verify_erdos_independent.py">Independent checker ↗</a></div></div></article>
+<p class="pf-eng-note"><strong>Research engineering:</strong> the <a href="exact-research.html#guided-replay">browser toolchain</a> combines local claims, finite Referee checks, corrupted-input controls and GitHub Actions regression suites. This is a runnable verification workflow; no production ML serving claim is made.</p>
+</section>
 
+<details class="pf-deep-research" id="deep-research">
+<summary class="wrap"><span class="section-id">04 / DEEP RESEARCH DOSSIER</span><strong>Expand five scoped findings, canonical claims, mechanisms and review gates</strong><span aria-hidden="true">＋</span></summary>
+<div class="pf-deep-intro wrap">This is the full internal evidence ledger. It is included for review and source tracing, not as a list of externally established global discoveries.</div>
 <section class="pf-five wrap" id="approved-findings" aria-labelledby="pf-five-title">
   <div class="pf-five-intro">
-    <div><span class="section-id">02 / EDITORIALLY APPROVED FINITE &amp; BOUNDED FINDINGS</span>
+    <div><span class="section-id">04A / EDITORIALLY APPROVED FINITE &amp; BOUNDED FINDINGS</span>
       <h2 id="pf-five-title">Five findings.<br><em>Five exact boundaries.</em></h2></div>
     <p>These five artifacts and observations have owner-approved inclusion in the site's narrowly scoped Original Findings list as of 29 October 2026. This is an editorial designation, not a claim of worldwide priority, a new unrestricted theorem, journal acceptance, or external human refereeing. The six canonical Proof Passport claims below are a <strong>different</strong> index.</p>
   </div>
@@ -112,7 +130,7 @@
 
 <section class="pf-live wrap" id="recorded-work" aria-labelledby="pf-live-title">
   <div class="pf-live-intro">
-    <div><span class="section-id">03 / LIVE RESEARCH LEDGER</span>
+    <div><span class="section-id">04B / LIVE RESEARCH LEDGER</span>
       <h2 id="pf-live-title">What the record<br><em>actually supports.</em></h2></div>
     <div><p>The claims below are read directly from the site's canonical Proof Passport registry. New records, revised statuses, sources and open obligations appear here when those registry changes are merged and deployed. An agent proposal, session note or internal test does not become a verified breakthrough by appearing here.</p>
       <p id="pf-live-summary" role="status">Loading canonical research records…</p>
@@ -128,13 +146,13 @@
 
 <section class="pf-mechanism-section wrap" id="shared-mechanisms" aria-labelledby="pf-mechanism-title">
   <div class="pf-five-intro">
-    <div><span class="section-id">04 / CROSS-PROBLEM TRANSFER MAP</span><h2 id="pf-mechanism-title">Mechanisms travel.<br><em>Certificates set limits.</em></h2></div>
+    <div><span class="section-id">04C / CROSS-PROBLEM TRANSFER MAP</span><h2 id="pf-mechanism-title">Mechanisms travel.<br><em>Certificates set limits.</em></h2></div>
     <div><p>The relationships below come directly from the canonical registry's mechanism nodes and sourced edges. A method demonstrated in two tasks is a reusable engineering pattern; an analogy remains an untested analogy. No graph edge is a new theorem.</p><p id="pf-mechanism-total" class="pf-mechanism-total">Loading registry graph…</p></div>
   </div>
   <div id="pf-mechanism-list" class="pf-mechanism-list"><p>Loading source-scoped mechanism relationships…</p></div>
 </section>
 <section class="pf-evaluation wrap" id="process-evaluation" aria-labelledby="pf-evaluation-title">
-  <div><span class="section-id">05 / WHAT WOULD CHANGE OUR CONFIDENCE</span><h2 id="pf-evaluation-title">The missing<br><em>external tests.</em></h2>
+  <div><span class="section-id">04D / WHAT WOULD CHANGE OUR CONFIDENCE</span><h2 id="pf-evaluation-title">The missing<br><em>external tests.</em></h2>
     <p>Process improvements and mathematical discoveries have different denominators. Exact internal replay can establish a narrow computation while still leaving field efficacy, publication priority and research acceleration unresolved.</p></div>
   <div class="pf-evaluation-list">
     <article><span>01 / SOURCEBOUND</span><h3>Blind natural-web support evaluation</h3><p>Freeze unseen domains, annotations and matched-recall baselines. Report unsupported assertion rates, abstention, latency and costs. Synthetic fixture success is insufficient.</p><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/ai-safety-peer-review-2026-10-28/SOURCEBOUND_EVALUATION.md">Preregistered evaluation design ↗</a></article>
@@ -142,12 +160,13 @@
     <article><span>03 / SCIENTIFIC REVIEW</span><h3>Independent certificates and novelty checks</h3><p>Obtain outside replay, review proof dependencies and search same-scope prior art. Separate numerical witnesses, conditional Werner deductions, finite-field decoder candidates and globally valid theorems.</p><a href="review.html">Open referee routes ↗</a></article>
   </div>
 </section>
+</details>
 <section class="pf-lesson wrap" aria-labelledby="pf-lesson-title">
-<div><span class="section-id">06 / RESEARCH JUDGMENT</span><h2 id="pf-lesson-title">Negative findings<br><em>count as results.</em></h2></div>
+<div><span class="section-id">05 / RESEARCH JUDGMENT</span><h2 id="pf-lesson-title">Negative findings<br><em>count as results.</em></h2></div>
 <div><h3>Proof After Scarcity — causal verification triage</h3><p>In a retrospective, outcome-aware 20-case stress test, an uncalibrated triage method chose the documented weak-link category first in <strong>8/20</strong> cases. Two simpler baselines achieved <strong>11/20</strong>. The failure is published instead of being recast as a win. Prospective predictions, blinded labels and complete graph artifacts remain separate open work.</p><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/pas-overview.md">Read the adverse result and preregistration limits ↗</a></div>
 </section>
 <section class="pf-last wrap" aria-labelledby="pf-last-title">
-<div><span class="section-id">07 / COLLABORATION AND REVIEW</span><h2 id="pf-last-title">Work that can be inspected.</h2><p>The research is human-led by Devin J. Wright. Vesper coordinates scientific integration; Axiom, Lemnis, Ryev, and Tessera contribute distinct construction, structural review, engineering and transfer work. Tessera incorporates the former Tessara research stream. Historical author credit is preserved; AI-agent agreement is not external independent peer review.</p></div>
+<div><span class="section-id">06 / COLLABORATION AND REVIEW</span><h2 id="pf-last-title">Work that can be inspected.</h2><p>The research is human-led by Devin J. Wright. Vesper coordinates scientific integration; Axiom, Lemnis, Ryev, and Tessera contribute distinct construction, structural review, engineering and transfer work. Tessera incorporates the former Tessara research stream. Historical author credit is preserved; AI-agent agreement is not external independent peer review.</p></div>
 <div class="pf-end-links"><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/TEAM_ROLES_20261029.md">Agent roles, evidence limits and historical attribution ↗</a><a href="about.html">Research leadership and method ↗</a><a href="review.html">Open referee assignments ↗</a><a href="https://github.com/d3lefts/d3lefts">Browse public source and issues ↗</a></div>
 </section>
 </main>
