@@ -88,7 +88,7 @@ try{
     });
     assert.equal(diagram.signal,"rgb(216, 195, 138)","Mathematical hero signal uses muted blackcherry");
     assert.equal(diagram.curve,"rgb(74, 31, 36)","Hero's forest-green path uses oxblood");
-    assert.equal(diagram.toolbar,"#39243c","Browser chrome follows cocoa identity");
+    assert.equal(diagram.toolbar,"#39243c","Browser chrome follows sunset identity");
    }
    for(const [key,target] of Object.entries(expectations[name]||{})){
     assert.equal(v[key],target,name+" "+width+"px "+key+" matches sunset archive");
@@ -106,7 +106,38 @@ try{
   });
   assert.ok(contrast(...comps.nav)>=4.5,"Sunset navigation button text meets WCAG AA");
   assert.ok(contrast(...comps.cta)>=4.5,"Golden-hour action text meets WCAG AA");
-  assert.ok(contrast(...comps.body)>=7,"Body text on cocoa comfortably exceeds AA");
+  assert.ok(contrast(...comps.body)>=7,"Body text on aubergine comfortably exceeds AA");
+
+  // Mobile regression for inherited dark-ink-on-dark-surface labels in the
+  // contributor path (the failure visible in the October 29 screenshots).
+  await page.goto(origin+"join.html",{waitUntil:"load"});
+  const contributorContrast=await page.evaluate(()=>{
+    const targets=[
+      ".join-hero-aside li b",".join-heading p",".join-result-grid span",
+      ".join-result-grid p",".join-choice>span",".join-choice p",
+      ".join-method-steps b",".join-workspace-header p",
+      ".cj-pickers label",".cj-work p"
+    ];
+    return targets.map(selector=>{
+      const el=document.querySelector(selector);
+      if(!el)return {selector,missing:true};
+      const fg=getComputedStyle(el).color;
+      let node=el,bg="rgb(57, 36, 60)";
+      while(node){
+        const value=getComputedStyle(node).backgroundColor;
+        if(value&&value!=="rgba(0, 0, 0, 0)"&&value!=="transparent"){bg=value;break}
+        node=node.parentElement;
+      }
+      return {selector,fg,bg};
+    });
+  });
+  for(const sample of contributorContrast){
+    assert.ok(!sample.missing,"Contributor selector exists: "+sample.selector);
+    assert.ok(contrast(sample.fg,sample.bg)>=4.5,
+      sample.selector+" text/paint contrast: "+sample.fg+" / "+sample.bg);
+  }
+
+  await page.goto(origin+"index.html",{waitUntil:"load"});
   const toggle=page.locator(".nf-theme-toggle");
   await toggle.click();
   await page.waitForFunction(()=>document.documentElement.dataset.nfTheme==="dusk");
@@ -121,7 +152,7 @@ try{
   await toggle.click();
   assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Switching back restores sunset archive");
   await page.waitForFunction(()=>getComputedStyle(document.body).backgroundColor==="rgb(57, 36, 60)",null,{timeout:3500});
-  assert.equal(await page.locator('meta[name="theme-color"]').getAttribute("content"),"#39243c","Light browser chrome returns to blackcherry");
+  assert.equal(await page.locator('meta[name="theme-color"]').getAttribute("content"),"#39243c","Light browser chrome returns to plum");
   assert.equal(await page.locator("body").evaluate(e=>getComputedStyle(e).backgroundColor),
    "rgb(57, 36, 60)","Sunset archive survives reversal");
   assert.deepEqual(errors,[],"No missing assets or browser JS errors at "+width+"px");
