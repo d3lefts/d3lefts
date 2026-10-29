@@ -91,6 +91,39 @@ try{
    await page.locator("#ep-reset").click();
    assert.equal(await page.locator("#ep-export").isDisabled(),true);
    assert.match(await page.locator("#ep-maximum").innerText(),/0\.505859375/);
+   // Carry the original mathematical claim into an exact obligation, preserve local
+   // unreviewed notes, and return to the same claim. Do not silently retarget Frontier.
+   await page.goto(origin+"erdos-paper.html",{waitUntil:"load"});
+   await page.locator('a[href*="join.html?claim=erdos36"][href*="obligation=0"]').first().click();
+   assert.match(new URL(page.url()).search,/claim=erdos36/);
+   assert.equal(await page.locator("#cj-workspace").isVisible(),true,"Claim-specific workspace active");
+   assert.match(await page.locator("#cj-duty").innerText(),/131,072-cell witness/);
+   assert.equal(await page.locator("#cj-claim").inputValue(),"erdos36");
+   assert.equal(await page.locator("#cj-obligation").inputValue(),"0");
+   assert.equal(await page.locator("#join-active").isVisible(),false,"Do not auto-assign unrelated frozen task");
+   await page.locator("#cj-notes").fill("Repeat signed-shift arithmetic from exact released bytes; verify all lags.");
+   await page.locator("#cj-save").click();
+   assert.match(await page.locator("#cj-save-status").innerText(),/saved locally/i);
+   await page.locator("#cj-obligation").selectOption("2");
+   assert.match(await page.locator("#cj-duty").innerText(),/competition input identity/i);
+   await page.locator("#cj-notes").fill("Reconstruct the accepted submitted input and exact hash.");
+   await page.locator("#cj-save").click();
+   assert.match(decodeURIComponent(await page.locator("#cj-submit").getAttribute("href")) , /competition input identity/);
+   await page.goto(origin+"passport.html?claim=erdos36",{waitUntil:"load"});
+   assert.equal(await page.locator("#passport-open a").count(),4,"Every Erdős open obligation gets a continuation");
+   await page.locator('#passport-open a[href*="obligation=0"]').click();
+   assert.equal(await page.locator("#cj-obligation").inputValue(),"0");
+   assert.match(await page.locator("#cj-notes").inputValue(),/signed-shift arithmetic/);
+   await page.goto(origin+"erdos-paper.html",{waitUntil:"load"});
+   assert.match(await page.locator(".nf-journey-rail a").first().getAttribute("href"),/claim=erdos36&obligation=0/);
+   await page.goto(origin+"living-paper.html",{waitUntil:"load"});
+   await page.locator('a[href*="join.html?claim=sidon30"][href*="obligation=0"]').first().click();
+   assert.equal(await page.locator("#cj-claim").inputValue(),"sidon30");
+   assert.match(await page.locator("#cj-duty").innerText(),/Independent external specialist audit/i);
+   await page.goto(origin+"join.html?claim=not-a-real-claim&obligation=0#claim-investigation",{waitUntil:"load"});
+   assert.equal(await page.locator("#cj-workspace").isVisible(),false,"Invalid claim deep link fails closed");
+   assert.equal(await page.locator("#cj-invalid").isVisible(),true);
+   assert.equal(await page.locator("#join-active").isVisible(),false,"No fallback to unrelated assignment");
    // Progressive enhancement is an evidence guarantee: identical finite witness
    // coordinates remain visible without JavaScript, not a perpetual loader.
    await page.goto(origin+"index.html",{waitUntil:"load"});
