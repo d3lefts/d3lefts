@@ -45,6 +45,9 @@ def audit(e):
    k=mask.bit_count();hist[k]+=1
    if k>=29:heavy.append((a,v,mask))
  assert sum(hist.values()) == (3**9-1)//2*3
+ # Symbolic theorem predicts only coordinate-type, origin-containing heavy planes.
+ assert len(heavy)==26
+ assert all(v==0 and not any(a[3:6]) and (any(a[:3]) != any(a[6:])) for a,v,m in heavy)
  # A rank-2 affine section of size>=29 lies in 4 affine hyperplanes.
  # Every pair of distinct projective normals is independent.
  sections={}
