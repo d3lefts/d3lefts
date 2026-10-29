@@ -1,0 +1,39 @@
+name: Verify Q7 180-orbit local certificate
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/projects/erdos/q7-180-orbit-20261029/**'
+      - '.github/workflows/verify-q7-180-orbit.yml'
+  workflow_dispatch:
+
+jobs:
+  exact-q7-local:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: SHA-256 and exact finite audit
+        run: |
+          cd research/nightfall/projects/erdos/q7-180-orbit-20261029
+          sha256sum canonical_180.txt check.py
+          python3 check.py
+      - name: Negative control for a forbidden C4
+        run: |
+          python3 - <<'PY'
+          import sys
+          sys.path.insert(0, 'research/nightfall/projects/erdos/q7-180-orbit-20261029')
+          from check import cube, decode, MASK_FILE
+          edges, squares, _ = cube()
+          x = list(decode(MASK_FILE.read_text().splitlines()[0]))
+          assert sum(x) == 304
+          missing = next(e for e in range(448) if not x[e])
+          x[missing] = True
+          assert sum(x) == 305
+          assert any(all(x[e] for e in sq) for sq in squares)
+          print('negative control: forbidden square correctly detected')
+          PY
