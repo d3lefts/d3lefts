@@ -52,11 +52,13 @@ try{
   // 00–10: Enter with no prior NIGHTFALL knowledge. Assess first mental model.
   await step("00–03","Homepage: identify research thesis, claims, next action",async()=>{
     await visit("index.html");
-    const hero=await page.locator("h1").first().innerText();
-    assert.match(hero,/Discovery.*needs.*witnesses/s);
+    assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk","First-time journey enters Night");
+    const hero=await page.locator("#main > .hero h1:visible").innerText();
+    assert.match(hero,/Before a result.*the resistance/s,"Night centers the open scientific process");
     assert.equal(await page.locator(".flagship-card").count(),4);
     assert.match(await page.locator(".ticker").innerText(),/33/);
-    assert.equal(await page.locator(".hero-actions a").count(),2,"Homepage hero must present only two decisions");
+    assert.equal(await page.locator(".nf-experience-underbelly .hero-actions a:visible").count(),2,"Night opens two concrete research decisions");
+    assert.equal(await page.locator(".nf-experience-archive .hero-actions a:visible").count(),0,"Archive decisions are excluded from the Night experience");
     assert.equal(await page.locator(".nf-section-index").evaluate(el=>el.open),false,"Section index is opt-in");
     assert.equal(await page.locator(".nf-home-toolbox").evaluate(el=>el.open),false,"Specialist directory is opt-in");
     assert.equal(await page.locator('.nf-home-tool-entry a[href="join.html#claim-investigation"]').count(),1);
