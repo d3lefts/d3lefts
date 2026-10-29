@@ -1,0 +1,24 @@
+name: Axiom hyperplane-sieve independent audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/agent-reports/axiom_hyperplane_sieve_20261029/**'
+      - '.github/workflows/axiom-hyperplane-sieve.yml'
+  workflow_dispatch:
+jobs:
+  exact-hyperplane-certificate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify frozen source SHA256
+        run: echo 'b5639e60116378b4496c846d6e587a2c5b19ab09bbe42ebb5e9f0f285e10dece  research/nightfall/agent-reports/axiom_hyperplane_sieve_20261029/hyperplane_audit.py' | sha256sum -c -
+      - name: Verify q81 independent source SHA256
+        run: echo '660d20ebc6876d362bd787374b63a759b425088b2a878016756b271336df1d5a  research/nightfall/agent-reports/axiom_hyperplane_sieve_20261029/q81_scalar_control.py' | sha256sum -c -
+      - name: Run complete hyperplane sieve and adverse controls
+        run: python3 research/nightfall/agent-reports/axiom_hyperplane_sieve_20261029/hyperplane_audit.py
+      - name: Run independent q81 scalar fiber control
+        run: python3 research/nightfall/agent-reports/axiom_hyperplane_sieve_20261029/q81_scalar_control.py
