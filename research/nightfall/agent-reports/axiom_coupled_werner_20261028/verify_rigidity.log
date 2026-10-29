@@ -1,0 +1,19 @@
+{
+  "even_boundary_zero_tests": 3,
+  "independent_four_qutrit_Q": "3",
+  "odd_boundary_zero_tests": 2,
+  "random_complex_exact_checks": 54,
+  "sample": {
+    "Q": "192",
+    "d": 4,
+    "delta": [
+      "55",
+      "76"
+    ],
+    "n": 2,
+    "r": 2,
+    "trace_cross": "0"
+  },
+  "spectral_gap_bound": "PASS",
+  "status": "PASS"
+}
