@@ -66,7 +66,7 @@
    if(r.verifier!=="NIGHTFALL Referee")refuse("SOURCE_METADATA","Referee producer metadata differs from the canonical first-party label.");
    const canonicalDossier="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/README.md";
    if(Object.hasOwn(r,"sourceDossier")&&(r.domain!=="weak-sidon-4-5-finite"||r.sourceDossier!==canonicalDossier))refuse("SOURCE_METADATA","Source dossier path disagrees with the allowlisted finite witness.");
-   if(Object.hasOwn(r,"notes")&&(!Array.isArray(r.notes)||r.notes.some(x=>typeof x!=="string"||x.length>450||/\\b(?:independently certified|externally verified|peer reviewed|global theorem proven|official record)\\b/i.test(x))))refuse("AUTHORITY_SPOOF","Receipt notes contain unsupported source-review authority.");
+   if(Object.hasOwn(r,"notes")&&(!Array.isArray(r.notes)||r.notes.some(x=>typeof x!=="string"||x.length>450||/\b(?:independently certified|externally verified|peer reviewed|global theorem proven|official record)\b/i.test(x))))refuse("AUTHORITY_SPOOF","Receipt notes contain unsupported source-review authority.");
 
    if(typeof r.inputSha256!=="string"||!/^[a-f0-9]{64}$/.test(r.inputSha256))refuse("INPUT_HASH","Referee input fingerprint is missing or malformed.");
    engine=r.domain;sourceVersion=r.version;
