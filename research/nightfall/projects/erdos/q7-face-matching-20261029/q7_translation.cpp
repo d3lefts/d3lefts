@@ -25,9 +25,7 @@ static int lpar[32],nl=0;
 static uint64_t adj[64];
 static int mate[64];
 static uint64_t seen=0;
-static int calls=0;
 static void must(bool b,const char *msg){if(!b)throw runtime_error(msg);}
-static string hexline(int n,int t){ostringstream o;o<<n<<":"<<t;return o.str();}
 static void geometry(){
  for(int v=0;v<64;v++)for(int d=0;d<6;d++)id6[v][d]=-1;
  for(int v=0;v<128;v++)for(int d=0;d<7;d++)id7[v][d]=-1;
