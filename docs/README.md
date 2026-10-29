@@ -56,3 +56,10 @@ The verification system uses independent agent roles and deterministic outputs r
 ## Future research and safe releases
 
 The [Research Agenda](agenda.html) contains two untested investigations each in Mathematics, Quantum, Super Intelligence, Safety, and Systems. Proposal entries never enlarge the original-findings whitelist. Site changes should be made on topic branches with green PR checks. Workflow concurrency cancels stale checks. A GitHub branch ruleset is required to enforce PR-only merges; see [contributing guide](../CONTRIBUTING.md).
+
+## Site-owner editorial and interaction polish · October 28, 2026
+
+- Homepage and research-library totals reflect **30** curated source-linked documents. The Original Findings whitelist remains three.
+- Shared navigation prioritizes Research, Library, Instruments, Review, Evidence, and Source archive. A four-card instrument directory connects Claim Lab, Referee, Exact Research and Discovery Engine, preserving each tool's exact evidence scope.
+- Library filtering combines research field, evidence tier, and text search. Press `/` to focus search and `Escape` to clear it. All controls work on existing source-linked cards.
+- Responsive layout, visible keyboard focus, and reduced-motion settings are covered by browser regression.
