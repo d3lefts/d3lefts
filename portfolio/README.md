@@ -1,8 +1,14 @@
-# Devin J. Wright — selected AI research and engineering
+# NIGHTFALL — unlisted collective research portfolio
 
-**Live portfolio:** https://d3lefts.github.io/d3lefts/portfolio.html
+**Direct-link working page:** https://d3lefts.github.io/d3lefts/portfolio.html
 
-Three source-backed case studies from the public NIGHTFALL research program, organized for research engineering, applied AI safety, and source-grounded knowledge-system roles. This is a navigation layer over existing work, not a separate claim of scientific novelty, professional deployment, or independent external validation.
+**Visibility:** Intentionally unlisted in public website navigation, homepage, root README and sitemap. The page has a `noindex, nofollow, noarchive` meta tag. GitHub Pages and the source repository are public. This is *not access control*; never store confidential information here.
+
+**Automatic update boundary:** The page loads `docs/research-registry.js` and projects every canonical Proof Passport claim and its dated history using `docs/portfolio-core.js` and `docs/portfolio.js`. Claims added or revised in that registry appear when the corresponding commit reaches the published site. Displays validity, reproducibility, originality, significance, primary sources and open review obligations verbatim. New numerical candidates remain candidates; corrected or demoted claims remain corrected or demoted. The three long-form project case studies stay editorially curated.
+
+**Maintenance test:** `node scripts/test_portfolio.cjs` checks new claim intake, status demotion, source URL filtering, and unlisted-site boundaries. This test is run by the main website verification workflow.
+
+Three source-backed case studies from the NIGHTFALL research program retained for our collective reference, with a live registry-backed claim ledger. These case studies can also inform research engineering, applied AI safety, and source-grounded knowledge-system applications when explicitly approved for external presentation. This is a navigation layer over existing work, not a separate claim of scientific novelty, professional deployment, or independent external validation.
 
 | Case study | Implemented artifact | Evidence | Scope boundary |
 |---|---|---|---|
