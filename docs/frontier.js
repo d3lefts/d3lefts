@@ -112,9 +112,8 @@
    "Please coordinate duplicate work in the parent issue before assuming exclusive ownership."
   ].join("\n\n");
   const url="https://github.com/d3lefts/d3lefts/issues/new?title="+encodeURIComponent(title)+"&body="+encodeURIComponent(body);
-  const win=window.open(url,"_blank","noopener,noreferrer");
-  if(!win)status("GitHub popup blocked. Allow popups for this site and try again. No public issue has been created.");
-  else status("GitHub draft opened. Your assignment becomes public only after you submit it there.");
+  window.open(url,"_blank","noopener,noreferrer");
+  status("Requested a GitHub issue draft in a new tab. If it opens, review and submit there. No public assignment was automatically created.");
  }
  $("frontier-publish").addEventListener("click",publicIssue);
  $("frontier-orchestrate").addEventListener("click",()=>{
