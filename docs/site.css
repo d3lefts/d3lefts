@@ -553,3 +553,82 @@ html{scroll-padding-top:22px}
 @media(prefers-reduced-motion:reduce){
   .nf-interlude-link,.sf-ecosystem .sf-system-card{scroll-behavior:auto;transition:none}
 }
+
+
+/* 29 October / a single navigable research path. No new dashboard. */
+.instrument-bridge{
+  padding:72px 0 82px;
+  border-top:1px solid #385342;
+  border-bottom:1px solid #9cafa0;
+}
+.instrument-bridge-body{display:block;margin-top:30px}
+.instrument-bridge-intro{
+  display:grid;grid-template-columns:minmax(0,1.3fr) minmax(275px,.7fr);
+  gap:clamp(30px,6vw,108px);align-items:end
+}
+.instrument-bridge-intro>div:first-child p{
+  font:15px/1.7 var(--sans);color:#526757;max-width:650px;margin-top:18px
+}
+.instrument-bridge-invite{border-left:1px solid #9baf9b;padding:9px 0 7px 24px}
+.instrument-bridge-invite>span{
+  font:600 10px/1.6 var(--mono);letter-spacing:.08em;color:#53725a
+}
+.instrument-bridge-invite p{
+  font:13px/1.7 var(--sans);max-width:390px;color:#455c4b;margin:14px 0 22px
+}
+.instrument-bridge-invite .button{font-size:11px}
+.instrument-workflow{
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+  width:100%;gap:0;margin-top:48px;border-block:1px solid #345440
+}
+.instrument-workflow a{
+  display:flex;flex-direction:column;gap:0;min-width:0;min-height:238px;
+  padding:22px 18px 25px;text-decoration:none;color:var(--ink);
+  border-right:1px solid #a8b7a5;transition:background .18s
+}
+.instrument-workflow a:first-child{border-left:1px solid #a8b7a5}
+.instrument-workflow a:nth-child(3){background:#e8eee3}
+.instrument-workflow a:nth-child(5){background:#233d2f;color:#f1f8ed;border-color:#233d2f}
+.instrument-workflow a:hover,.instrument-workflow a:focus-visible{background:#d6e6c6}
+.instrument-workflow a:nth-child(5):hover,.instrument-workflow a:nth-child(5):focus-visible{background:#365a42}
+.instrument-workflow a b{
+  display:block;color:#5b785f;font:600 10px/1.45 var(--mono);
+  margin:0 0 auto;letter-spacing:.07em
+}
+.instrument-workflow a:nth-child(5) b{color:#d9ff5e}
+.instrument-workflow a strong{
+  display:block;font:400 clamp(23px,2.45vw,35px)/1.03 var(--serif);
+  letter-spacing:-.025em;max-width:210px;margin:30px 0 16px
+}
+.instrument-workflow a span{
+  display:block;border:0;background:none;padding:0;
+  color:#5d705f;font:11px/1.65 var(--mono);min-height:45px
+}
+.instrument-workflow a:nth-child(5) span{color:#c8dbc8}
+.instrument-bridge-foot{
+  margin-top:17px;max-width:1080px;font:12px/1.75 var(--sans);
+  color:#566b5c
+}
+.instrument-bridge-foot a{font-weight:600;text-decoration:underline;text-underline-offset:4px}
+#instruments{scroll-margin-top:80px}
+@media(max-width:1050px){
+  .instrument-workflow{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .instrument-workflow a{border-bottom:1px solid #a8b7a5;min-height:190px}
+  .instrument-workflow a:nth-child(4){border-left:1px solid #a8b7a5}
+  .instrument-workflow a:nth-child(5){grid-column:span 2}
+}
+@media(max-width:690px){
+  .instrument-bridge{padding:54px 0 60px}
+  .instrument-bridge-intro{display:block}
+  .instrument-bridge-invite{margin-top:26px;padding-left:18px}
+  .instrument-workflow{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:34px}
+  .instrument-workflow a{padding:17px 14px 20px;min-height:173px}
+  .instrument-workflow a:nth-child(odd){border-left:1px solid #a8b7a5}
+  .instrument-workflow a:nth-child(4){border-left:0}
+  .instrument-workflow a:nth-child(5){grid-column:1/-1;min-height:147px}
+  .instrument-workflow a strong{font-size:27px;margin:25px 0 10px}
+  .instrument-workflow a span{font-size:10px;min-height:0}
+}
+@media(prefers-reduced-motion:reduce){
+  .instrument-workflow a{transition:none}
+}
