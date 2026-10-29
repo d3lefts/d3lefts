@@ -44,6 +44,12 @@ try{
   assert.equal(payload.children.length,1);assert.equal(payload.children[0].parent,"NF-156-184:witness");
   await page.reload({waitUntil:"load"});
   assert.equal(await page.locator(".fr-branch").count(),4,"Local child survives reload");
+  await page.evaluate(()=>{window.__frontierGitHub=null;window.open=(...args)=>{window.__frontierGitHub=args;return null;};});
+  await page.locator("#frontier-publish").click();
+  const draft=await page.evaluate(()=>window.__frontierGitHub);
+  assert.match(draft[0],/^https:\/\/github\.com\/d3lefts\/d3lefts\/issues\/new\?/,"Explicit public issue draft path");
+  assert.match(decodeURIComponent(draft[0]),/Classify the two remaining insertion blockers/,"The child question is source-scoped");
+  assert.match(await page.locator("#frontier-claim-status").innerText(),/No public assignment was automatically created/);
   await page.locator("#frontier-orchestrate").click();
   await page.waitForURL(/orchestrator\.html/);
   assert.match(await page.locator("#claim-text").inputValue(),/Classify the two remaining/);
