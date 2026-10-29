@@ -722,3 +722,39 @@ html{scroll-padding-top:24px}
   .instrument-workflow a{min-height:132px;border-left:1px solid #a8b7a5}
   .instrument-workflow a:nth-child(4){border-left:1px solid #a8b7a5}
 }
+
+/* Reproduction-first academic entry. One source-specific claim, four auditable actions.
+   Fully static links remain usable without script, browser storage, or external APIs. */
+.nf-replay-path{padding:clamp(54px,7vw,96px) 0;border-bottom:1px solid var(--line)}
+.nf-replay-lead{display:grid;grid-template-columns:minmax(180px,.62fr) minmax(0,1.38fr);gap:18px 42px;align-items:start}
+.nf-replay-lead>.section-id{padding-top:12px}
+.nf-replay-lead h2{font:400 clamp(43px,5.5vw,77px)/1 var(--serif);letter-spacing:-.025em}
+.nf-replay-lead h2 em{font-weight:400;color:#587a61}
+.nf-replay-lead p{grid-column:2;max-width:72ch;color:var(--muted);font:14px/1.75 var(--sans);margin-top:0}
+.nf-replay-steps{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin:36px 0 0;padding:0;border-block:1px solid var(--line)}
+.nf-replay-steps li{display:flex;flex-direction:column;align-items:flex-start;gap:0;min-width:0;border-right:1px solid var(--line);padding:24px clamp(15px,2vw,29px) 27px}
+.nf-replay-steps li:first-child{border-left:1px solid var(--line)}
+.nf-replay-steps li:nth-child(2){background:#e8eee6}
+.nf-replay-steps li>span{font:600 10px/1.5 var(--mono);letter-spacing:.05em;color:#526a56}
+.nf-replay-steps strong{font:400 clamp(25px,2.4vw,35px)/1.08 var(--serif);letter-spacing:-.014em;margin:27px 0 15px}
+.nf-replay-steps p{font:12px/1.65 var(--sans);color:var(--muted);margin-bottom:25px}
+.nf-replay-steps a{font:600 11px/1.5 var(--mono);color:#234832;text-decoration:underline;text-underline-offset:4px;margin-top:auto}
+.nf-replay-steps a:hover{text-decoration-thickness:2px}
+.nf-replay-steps a:focus-visible{outline:3px solid #668d54;outline-offset:4px}
+.nf-replay-release{font:12px/1.7 var(--mono);max-width:98ch;color:#425749;margin-top:20px}
+.nf-replay-release a{text-decoration:underline;text-underline-offset:3px;font-weight:600}
+@media(max-width:960px){.nf-replay-steps{grid-template-columns:repeat(2,minmax(0,1fr))}.nf-replay-steps li{border-bottom:1px solid var(--line)}.nf-replay-steps li:nth-child(3){border-left:1px solid var(--line)}}
+@media(max-width:620px){
+ .nf-replay-lead{display:block}
+ .nf-replay-lead h2{font-size:clamp(42px,11vw,65px);margin:15px 0}
+ .nf-replay-lead p{margin-top:17px}
+ .nf-replay-steps{grid-template-columns:minmax(0,1fr)}
+ .nf-replay-steps li,.nf-replay-steps li:nth-child(3){border-inline:1px solid var(--line);padding:22px}
+ .nf-replay-steps strong{font-size:32px;margin-top:15px}
+ .nf-replay-steps p{margin-bottom:18px}
+}
+/* Preserve the exact 30-coordinate witness as first paint, before the
+   independent Referee module upgrades the same nodes with highlighting. */
+.sf-witness{min-height:clamp(132px,16vw,196px);align-content:start}
+.sf-point{font-variant-numeric:tabular-nums}
+.sf-case-interact button:disabled{opacity:.6;cursor:not-allowed}
