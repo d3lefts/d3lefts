@@ -88,6 +88,16 @@ try{
    assert.match(frontierDownload.suggestedFilename(),/frontier_local_ledger\.json$/);
    await page.reload({waitUntil:"load"});
    assert.match(await page.locator("#nf-session-list").innerText(),/PROPOSED/,"browser-local reload persists review status");
+   const cleanLedger=await page.evaluate(()=>{
+     const saved=JSON.parse(localStorage.getItem("nightfall_nf_frontier_local_v1"));
+     return {schema:"nightfall-frontier-local-evidence-v1",snapshot:saved.version,reviewStatus:"unreviewed",tasks:saved.tasks};
+   });
+   const modifiedLedger=structuredClone(cleanLedger);
+   modifiedLedger.tasks.find(t=>t.parentId==="NF-156-184-9").lo+=1;
+   await page.locator("#nf-import-file").setInputFiles({name:"modified.json",mimeType:"application/json",buffer:Buffer.from(JSON.stringify(modifiedLedger))});
+   assert.match(await page.locator("#nf-message").innerText(),/Frontier import refused/);
+   assert.match(await page.locator("#nf-progress").innerText(),/2 unresolved leaf obligations/);
+
    await page.locator('#nf-tool-links a[href="orchestrator.html"]').click();
    await page.waitForURL(/orchestrator\.html/);
    assert.match(await page.locator("#claim-text").inputValue(),/smallest selected mark in \[1, 184\]/,"exact scope transferred");
