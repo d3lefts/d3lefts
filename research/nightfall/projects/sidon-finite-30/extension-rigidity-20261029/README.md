@@ -43,6 +43,15 @@ The only potentially obstructing cases are exhaustive:
 
 All remaining cases are either unconstrained, have just one old-old-new progression, or have just one new-new-old progression. These are discharged by the same explicit portfolio's singleton checks.
 
+## Sharpness: a 33-point (4,5) extension with h=19
+
+The theorem's two-point limit is **sharp**. Let
+`X={40,000,001,80,000,001,120,000,001}`. The enlarged set `B∪X` satisfies the **stronger (4,5) condition** on every one of its `C(33,4)=40,920` four-point subsets. The three added marks form an arithmetic progression: `40,000,001+120,000,001=2·80,000,001`. Every Sidon subset therefore includes at most two new marks, while at most 17 may come from B, giving `h(B∪X)≤19`. Appending the first two new marks to the first 17-element portfolio set gives 19 distinct-pair-sum Sidon marks, proving **`h(B∪X)=19` exactly**.
+
+This is a *counterexample to extending this specific rigidity theorem from two new points to three*, not an improved upper-bound construction (its ratio 19/33 is higher than the original 17/30). The standalone [sharpness checker](sharpness_check.py) exhausts all 40,920 strict (4,5) quadruples, checks the explicit Sidon-19 witness, cites the separate B30 maximum proof, and rejects a deliberately bad offset 0. Its finite checks form a mandatory CI gate.
+
+**General boundary principle (elementary):** For any finite integer (4,5)-set `A`, choose a fixed integer `t∉A`. For sufficiently large positive integer `M`, the three additional marks `t+M,t+2M,t+3M` preserve the (4,5) condition and give `h(A∪{t+M,t+2M,t+3M})=h(A)+2`. In a four-point selection: (i) with three old marks, the three old-to-new differences are distinct and large, and the old triple has at least two differences; (ii) with two old marks, all four cross differences are distinct, and the remaining two differences are separate; (iii) with one old mark, the three cross differences and the two new-only differences are five distinct values because `t` is outside A. Any old maximum Sidon subset together with the first two new marks remains Sidon for sufficiently large M; the new three-term progression forbids selecting all three. The assertion is a general illustration of why a two-extension phenomenon need not persist, without a publication-priority claim.
+
 ## Compact witness certificate
 
 [`portfolio_certificate.json`](portfolio_certificate.json) contains **11 explicit old 17-point Sidon subsets** `S_1,…,S_11 ⊆ B`. The verifier independently checks every pair sum (including doubled marks), then checks that **every admissible exception above** has at least one `i` for which both new marks can be appended while preserving the Sidon property. It likewise checks every one-point case and all 30 generic single-old-mark exclusions.
@@ -56,6 +65,7 @@ Only Python 3 standard library is required. From this directory:
 ```sh
 python3 verify_independent.py
 python3 adversarial_crosscheck.py
+python3 sharpness_check.py
 ```
 
 Expected status: `PASS — bounded exact theorem`; source SHA-256 above; portfolio SHA-256 `fd0fc220e4b2ef5e458c5a5ef21a0baacb2cfdb226b14b503959b3c1a4dd782a`. The independent checker re-enumerates all 27,405 four-mark weak-Sidon collision tests, the 28 original progression constraints, the entire 12-deletion proof search (7,801 states), the affine exception families and the 11-set portfolio, with adversarial mutation controls. A separate direct-arithmetic crosscheck tests 205 reproducible integer pairs against the incremental admissibility rule and rejects forged witness and portfolio bytes. It imports **no exploratory builder, optimizer, Numba dependency, reference verifier, or precomputed solver verdict**. Average run on the research container: approximately 3 seconds.
