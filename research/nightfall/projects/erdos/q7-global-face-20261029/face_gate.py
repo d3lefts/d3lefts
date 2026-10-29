@@ -74,9 +74,13 @@ def audit(selected,geo,face_cap=Q6_EXTREMAL,require_c4=True):
     assert all(f[2*i]+f[2*i+1]+d[i]==m for i in range(7))
     assert all(d[i]>=m-2*face_cap for i in range(7))
     if m>=305:
-        assert min(d)>=41
-        assert sum(v>=131 for v in f)>=5
-        assert len({i for i in range(7) if max(f[2*i:2*i+2])>=131})>=3
+        # For any m in 305..308, at most floor((1848-6*m)/2)
+        # faces can have deficit >= 2. This is an exact integer inequality.
+        assert 305<=m<=308
+        near_min=14-(1848-6*m)//2
+        assert min(d)>=m-264
+        assert sum(v>=131 for v in f)>=near_min
+        assert len({i for i in range(7) if max(f[2*i:2*i+2])>=131})>=(near_min+1)//2
     return {"edges":m,"dir":d,"faces":f,
       "deficit":sum(Q6_EXTREMAL-v for v in f),
       "nearExtremalFaces":sum(v>=131 for v in f),
@@ -132,6 +136,12 @@ def main():
       "inputSha256":INPUT_SHA,
       "importedQ6UpperBound":132,
       "priorArt":"Harborth–Nienborg (1994) Q6 C4-free maximum; OEIS A245762 recurrence",
+      "candidateNecessaryByEdgeCount":[
+          {"selected":m,"minDirection":m-264,
+           "maxTotalFaceDeficit":1848-6*m,
+           "minQ6FacesAtLeast131":14-(1848-6*m)//2}
+          for m in (305,306,307,308)
+      ],
       "candidate305Necessity":{"directionMinimum":41,"near131FacesMinimum":5,
          "coordinateDirectionsWithNearFaceMinimum":3,"totalQ6FaceDeficit":18},
       "catalogueCount":180,
