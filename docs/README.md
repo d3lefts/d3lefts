@@ -1,17 +1,17 @@
 # NIGHTFALL public research website
 
-Static, dependency-free site for NIGHTFALL’s **three evidence-scoped original findings, four flagship research programs, and a broader 33-document curated research library**. The repository retains the full attributed historical research archive.
+Static, dependency-free site for NIGHTFALL’s **five evidence-scoped original finite or bounded findings, four flagship research programs, and a 33-document curated research library**. The core index carries the original three findings; a separately reviewed publication note adds the Singer 975 and bounded graph-gadget exclusions. The repository retains the full attributed historical research archive.
 
-- `index.html` — four flagship research programs with explicit evidence tiers, plus the three approved original findings and open reviews.
+- `index.html` — four flagship research programs, five scoped Original Findings, an editorial five-decision research path, and accurate internal-review limits.
 - `desk.html` / `desk.css` / `desk.js` — internal, local-first Research Desk: six registry-driven evidence records, open mathematical obligations, session notes, scoped handoff exports and independent verifier routes; never upgrades theorem status.
 - `research.html` / `research.js` — 33 curated, source-linked September–October research lines in Mathematics, Quantum, Safety and Systems, with discipline filters, search, and explicit scope boundaries; broader than the Original Findings whitelist.
 - `agenda.html` and `agenda.js` — separate five-discipline research agenda with ten untested proposals.
 - Discovery Engine: discovery.html, discovery-core.js, discovery-app.js, discovery.css — executable bounded proxy lab and portable evidence workspace.
-- `review.html` — three review assignments for the approved original contributions; the fourth flagship remains a working proof candidate and is tracked separately in its public dossier.
-- `evidence.html` — reproducibility archive hashes, evidence-access status, verified public download links and reproducible commands.
+- `review.html` — three foundational reproducibility review tracks and two additional bounded-artifact checking routes; publication and proof status remain separate.
+- `evidence.html` — two actually published curated ZIPs, hashes, verified public download links and reproduction commands.
 - `sitemap.xml` — direct site page discovery.
 - `site.css` — responsive layout and accessible typography.
-- `site.js` — three-item originality-approved research index and category filtering.
+- `site.js` — three-item original indexed subset and category filtering; the additional two bounded findings have a source-scoped publication note in `findings-20261029.html`.
 - `favicon.svg` — original geometric identity.
 - `.nojekyll` — permit direct static publishing without Jekyll processing.
 
@@ -21,11 +21,15 @@ On `d3lefts/d3lefts` select **Settings → Pages → Build and deployment → De
 
 `https://d3lefts.github.io/d3lefts/`
 
-GitHub Actions confirms successful Pages deployments on 2026-10-28. Direct public browser rendering remains an additional check. A separate [static-site verifier](../scripts/check_site.py) automatically checks local links, anchors, researcher-source paths, page metadata, and consistency of the HTML and JavaScript research indexes. Its GitHub Actions workflow runs on updates and pull requests.
+GitHub Actions confirms successful Pages deployments on 2026-10-29. Direct public browser rendering remains an additional check. A separate [static-site verifier](../scripts/check_site.py) automatically checks local links, anchors, researcher-source paths, page metadata, and consistency of the HTML and JavaScript research indexes. Its GitHub Actions workflow runs on updates and pull requests.
 
-## Needed for independent referees
+## Reproducibility for one-human operation
 
-1. **GitHub Issues has been enabled and four external-review invitations are live**: [#1 Erdős](https://github.com/d3lefts/d3lefts/issues/1), [#2 Werner](https://github.com/d3lefts/d3lefts/issues/2), [#3 finite-field](https://github.com/d3lefts/d3lefts/issues/3), [#4 AI safety](https://github.com/d3lefts/d3lefts/issues/4).
+The human research owner can operate the full cycle without a required outside reviewer: [Frontier](frontier.html) defines a bounded question → [Orchestrator](orchestrator.html) separates construction and falsification lanes → [Discovery Engine](discovery.html) explores operators → [Referee](referee.html?domain=sidon#workbench) recomputes exact finite evidence → [Claim Lab](claim-lab.html) stages a consented local evidence record. The recommended entry is the [five-step 30-point Sidon replay](exact-research.html#guided-replay). **An internal agent or independent code path is internal validation, not external peer review**, and no tool autonomously publishes a theorem.
+
+External contributions remain welcome but are not a website publication dependency. Existing source-grounded reviewer tasks remain available:
+
+1. **Four historical review issue threads are live**: [#1 Erdős](https://github.com/d3lefts/d3lefts/issues/1), [#2 Werner](https://github.com/d3lefts/d3lefts/issues/2), [#3 finite-field](https://github.com/d3lefts/d3lefts/issues/3), [#4 AI safety](https://github.com/d3lefts/d3lefts/issues/4).
 2. The [two approved curated ZIPs](https://github.com/d3lefts/d3lefts/releases/tag/nightfall-research-2026-10-28) are public. Run `python3 scripts/download_nightfall_curated_assets.py public-assets` for fresh anonymous downloads with complete manifest checks. The [evidence page](evidence.html) links both assets and the exact replay. Historical master ZIPs remain private; do not ask the owner to upload them.
 3. Keep the claim-status ladder and external source dependencies accurate whenever a reviewer reports a counterexample or correction.
 
@@ -48,13 +52,13 @@ The [research instrument handoff contract](../research/nightfall/RESEARCH_INSTRU
 Run `python3 scripts/check_site.py`, `node --check docs/site.js`, and `node --check scripts/site_browser_smoke.mjs` at the repository root before updating the live site. The website CI additionally runs headless Chromium checks at mobile and desktop widths, including menu interactions and research filtering. GitHub's workflow [Verify research website](../.github/workflows/verify-site.yml) enforces both on relevant pushes and pull requests. This is **a website-integrity check**, distinct from the mathematics, source SDPs, and external peer review.
 
 
-## Public originality filter (effective 28 October 2026)
+## Public originality filter (updated 29 October 2026)
 
-The **homepage Original Findings index** includes only distinct original contributions: the 131,072-cell exact Erdős upper witness, the concrete 30-point Sidon finite certificate, and the bounded adverse 20-case Proof After Scarcity experiment. These are original *artifacts and measurements*; each has explicit scope, and no worldwide publication-priority claim is implied. See [full originality sweep](../research/nightfall/SITE_ORIGINALITY_AUDIT_20261028.md).
+The **core JavaScript Original Findings index** includes the 131,072-cell exact Erdős upper witness, the concrete 30-point Sidon finite certificate, and the bounded adverse 20-case Proof After Scarcity experiment. Two additional source-scoped Original Findings are presented in `findings-20261029.html`: the Singer 975-mark fixed-template repair certificate and the finite 27-base/two-gadget cycle exclusion. These are original *artifacts and measurements*; each has explicit scope, and no worldwide publication-priority claim is implied. See [full originality sweep](../research/nightfall/SITE_ORIGINALITY_AUDIT_20261028.md).
 
 **Excluded from the original-findings catalogue:** standalone AI-safety and Werner atlas pages, untested proposals promoted as results, recycled tensor-network encodings, classical erasure-reliability claims, source-dependent candidate theorems, and broader unreviewed research-manuscript marketing. Earlier public GitHub records remain with source credit and retractions/novelty corrections. The owner-approved, four-category public research library includes carefully labeled conditional manuscripts, reproducible code, rigorous negative results and empirical studies; inclusion does not upgrade any manuscript to an original certified theorem.
 
-The [static site verification script](../scripts/check_site.py) maintains a strict allowed-artifact whitelist. Its gate protects presentation consistency; a dated external prior-art comparison is still required before approving new mathematical novelty.
+The [static site verification script](../scripts/check_site.py) maintains an approved, source-scoped artifact whitelist. Its gate protects presentation consistency; a dated external prior-art comparison is still required before approving new mathematical novelty.
 
 ## Agent-first verification
 
