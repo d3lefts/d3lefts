@@ -1,0 +1,40 @@
+/* Claim-continuity workspace: distinct from the frozen Frontier assignment branch. */
+.cj-section{background:#e8eee5;border-block:1px solid #bacbb8;padding-block:76px}
+.cj-section .join-heading{margin-bottom:27px}
+.cj-pickers{display:grid;grid-template-columns:1fr 1.25fr;gap:12px;margin-bottom:20px}
+.cj-pickers label{display:flex;flex-direction:column;gap:9px;font:600 11px/1.5 var(--mono);color:#465f4a}
+.cj-pickers select{border:1px solid #94ae95;min-width:0;width:100%;padding:14px;background:#fbfcf7;color:#193b26;font:13px/1.5 var(--sans);min-height:48px}
+.cj-warning{background:#f3ebdc;border-left:3px solid #a17a43;padding:15px 18px;margin-bottom:18px;font:12px/1.7 var(--sans)}
+.cj-workspace{border:1px solid #aec3ac;background:#f8faf4}
+.cj-contract{background:#263b2d;color:#f0f4e7;padding:clamp(24px,4vw,38px);display:grid;grid-template-columns:1.15fr .85fr;gap:31px}
+.cj-kicker,.cj-obligation>span,.cj-context span{display:block;font:600 10px/1.55 var(--mono);letter-spacing:.09em;color:#558063}
+.cj-contract .cj-kicker,.cj-obligation>span{color:#d9ff71}
+.cj-contract h3{font:400 clamp(35px,4.5vw,61px)/1.03 var(--serif);margin:14px 0 18px;letter-spacing:-.035em}
+.cj-contract p{font:13px/1.7 var(--sans);color:#d6e3d1}
+.cj-contract .cj-condition{color:#c3e0bd;margin-top:16px}
+.cj-obligation{border-left:1px solid #667c69;padding-left:25px}
+.cj-obligation strong{font:400 clamp(25px,2.7vw,38px)/1.18 var(--serif);display:block;margin:17px 0 21px}
+.cj-obligation small{font:11px/1.7 var(--mono);color:#ccdcca}
+.cj-columns{display:grid;grid-template-columns:1.15fr .85fr;gap:1px;background:#bdcdb9}
+.cj-work,.cj-next{background:#f8faf4;min-width:0;padding:clamp(20px,3vw,36px)}
+.cj-next{background:#edf3e9;display:flex;flex-direction:column}
+.cj-work h3,.cj-next h3{font:400 32px/1.13 var(--serif);margin:15px 0}
+.cj-work p,.cj-next p{font:13px/1.7 var(--sans);color:#526c59}
+.cj-work label{display:block;font:600 11px/1.6 var(--mono);margin:23px 0 9px}
+.cj-work textarea{display:block;min-height:140px;width:100%;resize:vertical;border:1px solid #a6bca2;background:#fff;color:#203a26;padding:15px;font:12px/1.7 var(--mono)}
+.cj-actions{display:flex;gap:10px;flex-wrap:wrap;margin:17px 0}
+.cj-actions button{font:600 12px/1.4 var(--sans);padding:12px 15px;background:#254e32;color:#fff;border:1px solid #254e32;cursor:pointer}
+.cj-actions button+button{background:transparent;color:#254e32}
+.cj-actions button:hover,.cj-actions button:focus-visible{outline:2px solid #669d64;outline-offset:2px}
+.cj-work .cj-status{font:11px/1.6 var(--mono);margin-top:16px}
+.cj-next a{font:600 12px/1.5 var(--sans);display:block;margin:7px 0;color:#2e603e;text-decoration:underline;text-underline-offset:3px}
+.cj-next .cj-primary{background:#d9ff71;border:1px solid #a5c66b;padding:15px;text-decoration:none;color:#23432c}
+.cj-next details{margin:22px 0 14px;border-top:1px solid #b6c7b1;padding:16px 0}
+.cj-next summary{font:600 12px/1.6 var(--sans);cursor:pointer}
+#cj-sources a{font:11px/1.6 var(--sans);margin:10px 0;overflow-wrap:anywhere}
+.cj-context{padding-top:17px;border-top:1px solid #b6c7b1;margin-top:auto}
+.cj-context span{color:#4e7056}
+.cj-context p{font:11px/1.6 var(--sans)}
+.cj-section select:focus-visible,.cj-section textarea:focus-visible,.cj-section a:focus-visible{outline:3px solid #759c6a;outline-offset:2px}
+@media(max-width:900px){.cj-contract,.cj-columns{grid-template-columns:1fr}.cj-obligation{border-left:0;border-top:1px solid #667c69;padding:20px 0 0}}
+@media(max-width:600px){.cj-section{padding-block:52px}.cj-pickers{grid-template-columns:1fr}.cj-contract{padding:23px}.cj-work,.cj-next{padding:22px}}
