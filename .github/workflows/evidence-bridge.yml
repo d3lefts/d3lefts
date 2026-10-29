@@ -1,0 +1,57 @@
+name: RYEV Evidence Bridge and controlled-evaluation checks
+on:
+  pull_request:
+    paths:
+      - "docs/claim-lab.html"
+      - "docs/evidence-bridge-core.js"
+      - "research/nightfall/evidence-bridge/**"
+      - "research/nightfall/observatory/gate-c-ryev/**"
+      - ".github/workflows/evidence-bridge.yml"
+  push:
+    branches: [main]
+    paths:
+      - "docs/claim-lab.html"
+      - "docs/evidence-bridge-core.js"
+      - "research/nightfall/evidence-bridge/**"
+      - "research/nightfall/observatory/gate-c-ryev/**"
+      - ".github/workflows/evidence-bridge.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  receipt-security-and-independent-arithmetic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Parse source and assert published adapter matches test source
+        run: |
+          node --check docs/evidence-bridge-core.js
+          node --check research/nightfall/evidence-bridge/core.js
+          node --check research/nightfall/evidence-bridge/test.cjs
+          node --check research/nightfall/evidence-bridge/test_browser.mjs
+          cmp docs/evidence-bridge-core.js research/nightfall/evidence-bridge/core.js
+      - name: Strict receipt tests and frozen fixture exports
+        run: |
+          BRIDGE_FIXTURE_DIR=/tmp/ryev-bridge-fixtures node research/nightfall/evidence-bridge/test.cjs
+          python3 -m json.tool /tmp/ryev-bridge-fixtures/refusals.json > /dev/null
+      - name: Independent Python finite replay
+        run: |
+          python3 research/nightfall/referee/independent_verify.py /tmp/ryev-bridge-fixtures/sidon.json
+          python3 research/nightfall/referee/independent_verify.py /tmp/ryev-bridge-fixtures/overlap.json
+          if python3 research/nightfall/referee/independent_verify.py /tmp/ryev-bridge-fixtures/tamperedSidon.json; then
+            echo "ERROR: Python accepted tampered witness"; exit 1
+          fi
+      - name: Browser consent, backup, reload, import security
+        run: |
+          npm install --no-save --no-package-lock playwright-core@1.56.1
+          BRIDGE_FIXTURE_DIR=/tmp/ryev-bridge-fixtures CHROME_BIN="$(command -v google-chrome)" node research/nightfall/evidence-bridge/test_browser.mjs
+      - name: Archive receipt fixtures and refusal explanations
+        uses: actions/upload-artifact@v4
+        with:
+          name: ryEV-evidence-bridge-security-receipts
+          path: /tmp/ryev-bridge-fixtures
+          retention-days: 90
