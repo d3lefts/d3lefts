@@ -110,7 +110,7 @@ try{
    await page.locator("#cj-save").click();
    assert.match(decodeURIComponent(await page.locator("#cj-submit").getAttribute("href")) , /competition input identity/);
    await page.goto(origin+"passport.html?claim=erdos36",{waitUntil:"load"});
-   assert.equal(await page.locator("#passport-open a").count(),3,"Each open obligation gets a continuation");
+   assert.equal(await page.locator("#passport-open a").count(),4,"Every Erdős open obligation gets a continuation");
    await page.locator('#passport-open a[href*="obligation=0"]').click();
    assert.equal(await page.locator("#cj-obligation").inputValue(),"0");
    assert.match(await page.locator("#cj-notes").inputValue(),/signed-shift arithmetic/);
