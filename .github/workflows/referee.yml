@@ -1,6 +1,7 @@
 name: NIGHTFALL Referee exact verification
 on:
   push:
+    branches: [main]
     paths:
       - "docs/referee*"
       - "research/nightfall/referee/**"
@@ -11,6 +12,9 @@ on:
       - "research/nightfall/referee/**"
       - ".github/workflows/referee.yml"
   workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:

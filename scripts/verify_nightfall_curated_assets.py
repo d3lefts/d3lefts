@@ -38,6 +38,8 @@ def safe_names(names):
 
 
 def verify(path):
+    if not __debug__:
+        raise RuntimeError("Run without -O: verification assertions must be enabled")
     assert path.name in EXPECTED, f'unapproved asset name {path.name}'
     expected_sha, size, count, nested_count = EXPECTED[path.name]
     payload = path.read_bytes()

@@ -2,7 +2,7 @@
 
 **Decision recorded:** 2026-10-29. **Public disclosure of the two specified curated v2 derivatives is approved by research owner Devin J. Wright.** Approval is documented in [issue #5](https://github.com/d3lefts/d3lefts/issues/5#issuecomment-6489276164). This is a scope authorization, not evidence of external refereeing or scientific priority.
 
-**Current delivery status:** **PENDING BINARY UPLOAD AND ANONYMOUS VERIFICATION.** These are private source files until real GitHub Release ZIP assets have been uploaded and anonymously retrieved. The proposed tag `nightfall-research-2026-10-28` must be checked for an existing release immediately before creation.
+**Current delivery status:** **PUBLISHED; ANONYMOUS BYTE VERIFICATION PASSED.** The [GitHub Release](https://github.com/d3lefts/d3lefts/releases/tag/nightfall-research-2026-10-28) contains exactly the two approved ZIP assets. Fresh anonymous downloads on October 29 matched all identities and manifests below. See [the public replay receipt](CURATED_PUBLIC_DOWNLOAD_RECEIPT_20261029.json). Mathematical status is unchanged.
 
 ## Exact approved byte identities
 
@@ -43,4 +43,4 @@ The conditional Erdős lower-source replay does not independently regenerate Wet
 5. Only then update `docs/evidence.html` with verified direct public binary links and open a narrowly scoped website PR. Preserve all four flagships, 33 dossiers, three Original Findings, and attribution/proof boundaries.
 6. Run repository and website CI, browser visitor/mobile checks, then merge and verify GitHub Pages. Close issue #5 only after the archive assets and website links have passed public verification. Keep issue #6 open until the accepted Arena input is actually recovered.
 
-**Reason publication is pending:** Connected GitHub actions available to the release auditor cannot create/upload GitHub Release binary assets, and authenticated private Drive downloads cannot be transferred anonymously by those actions. Approval resolves the disclosure gate; it does not itself complete binary upload. Use a capable browser/Work environment for the upload, without requiring a desktop file transfer by the owner.
+**Resolved delivery dependency:** Work's authenticated Cloud Browser uploaded the exact approved binaries. Public verification uses anonymous HTTP downloads, independent of that signed-in browser. No original master or extra private asset was published.

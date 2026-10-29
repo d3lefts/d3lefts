@@ -1,7 +1,12 @@
 name: Ryev Evidence Bridge v0 independent replay and browser handoff
 on:
   push:
-    branches: ["ryev/bridge-v0-rebased-20261029"]
+    branches: [main]
+    paths:
+      - "docs/claim-lab.html"
+      - "docs/evidence-bridge-core.js"
+      - "research/nightfall/evidence-bridge/**"
+      - ".github/workflows/ryev-bridge-v0.yml"
   pull_request:
     paths:
       - "docs/claim-lab.html"
@@ -9,6 +14,9 @@ on:
       - "research/nightfall/evidence-bridge/**"
       - ".github/workflows/ryev-bridge-v0.yml"
   workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:

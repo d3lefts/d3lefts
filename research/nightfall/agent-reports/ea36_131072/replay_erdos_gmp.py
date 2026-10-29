@@ -17,6 +17,8 @@ import sys
 import tempfile
 from zipfile import ZipFile
 
+CURATED_HASH = "f01702cd554a727711dfdff2908cc21b28b715689885ae8eadf562bdef878d23"
+CURATED_HEIGHT = "programs/erdos-overlap/frozen-witness/heights_u70.txt"
 ROOT_HASH = "77665ced561a9ae1d882baffdc5417188166049c27267afd6cb7b408ec9559cb"
 HEIGHT_HASH = "a574c280f8839503c90076507a27f4c819455fb2512fae6a43b6a17f6a784b8e"
 NESTED = "research/nightfall/artifacts/NIGHTFALL_Meta_Paper_v2.0_Source_and_Evidence.zip"
@@ -33,14 +35,24 @@ EXPECTED_SECOND = Fraction(
 
 def verify(zip_path: Path) -> dict[str, object]:
     root_hash = sha256(zip_path.read_bytes()).hexdigest()
-    assert root_hash == ROOT_HASH, f"Master archive SHA-256 mismatch: {root_hash}"
-    with ZipFile(zip_path) as master:
-        assert master.testzip() is None, "Master ZIP CRC failure"
-        assert len(master.infolist()) == 214, "Master archive entry count changed"
-        nested_bytes = master.read(NESTED)
-    with ZipFile(BytesIO(nested_bytes)) as nested:
-        assert nested.testzip() is None, "Nested evidence CRC failure"
-        witness = nested.read(HEIGHT)
+    if not __debug__:
+        raise RuntimeError("Run without -O: verification assertions must be enabled")
+    if root_hash not in (ROOT_HASH, CURATED_HASH):
+        raise ValueError(f"Unapproved archive SHA-256: {root_hash}")
+    nested_bytes = None
+    with ZipFile(zip_path) as archive:
+        if archive.testzip() is not None:
+            raise ValueError("Archive ZIP CRC failure")
+        if root_hash == CURATED_HASH:
+            assert len(archive.infolist()) == 88, "Curated archive entry count changed"
+            witness = archive.read(CURATED_HEIGHT)
+        else:
+            assert len(archive.infolist()) == 214, "Master archive entry count changed"
+            nested_bytes = archive.read(NESTED)
+    if nested_bytes is not None:
+        with ZipFile(BytesIO(nested_bytes)) as nested:
+            assert nested.testzip() is None, "Nested evidence CRC failure"
+            witness = nested.read(HEIGHT)
     witness_hash = sha256(witness).hexdigest()
     assert witness_hash == HEIGHT_HASH, f"Witness SHA-256 mismatch: {witness_hash}"
 
@@ -77,7 +89,8 @@ def verify(zip_path: Path) -> dict[str, object]:
         "scope":"original witness hash, 131072 rational box/mass values, 262143 signed grid shifts, integer maximum and runner-up",
         "real_shift_bridge":"affine interpolation for grid-step densities, proved algebraically in companion report; geometry regression is not a formal proof",
         "timestamp_utc":datetime.now(timezone.utc).isoformat(),
-        "input":{"master_zip_sha256":root_hash,"nested_evidence_sha256":sha256(nested_bytes).hexdigest(),
+        "input":{"archive_sha256":root_hash,"archive_kind":"curated_v2" if root_hash == CURATED_HASH else "historical_master",
+                 "nested_evidence_sha256":sha256(nested_bytes).hexdigest() if nested_bytes is not None else None,
                  "witness_sha256":witness_hash,"witness_bytes":len(witness)},
         "implementation":{"method":"GMP Kronecker packed-integer multiplication, no original NTT residues",
              "source_sha256":sha256(source.read_bytes()).hexdigest(),
@@ -108,7 +121,7 @@ def verify(zip_path: Path) -> dict[str, object]:
 
 if __name__=="__main__":
     if len(sys.argv)!=2:
-        raise SystemExit("Usage: python3 replay_erdos_gmp.py NIGHTFALL_GitHub_Release_2026-10-27.zip")
+        raise SystemExit("Usage: python3 replay_erdos_gmp.py APPROVED_CURATED_MATH_ZIP_OR_HISTORICAL_MASTER.zip")
     try:
         print(json.dumps(verify(Path(sys.argv[1])),indent=2,sort_keys=True))
     except Exception as e:

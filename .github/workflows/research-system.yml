@@ -1,6 +1,7 @@
 name: NIGHTFALL canonical research system
 on:
   push:
+    branches: [main]
     paths:
       - "docs/index.html"
       - "docs/research.html"
@@ -25,6 +26,9 @@ on:
       - "research/nightfall/research-system/**"
       - ".github/workflows/research-system.yml"
   workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:

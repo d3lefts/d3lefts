@@ -8,7 +8,7 @@ Static, dependency-free site for NIGHTFALL’s **three evidence-scoped original 
 - `agenda.html` and `agenda.js` — separate five-discipline research agenda with ten untested proposals.
 - Discovery Engine: discovery.html, discovery-core.js, discovery-app.js, discovery.css — executable bounded proxy lab and portable evidence workspace.
 - `review.html` — three review assignments for the approved original contributions; the fourth flagship remains a working proof candidate and is tracked separately in its public dossier.
-- `evidence.html` — reproducibility archive hashes, evidence-access status, desktop release steps.
+- `evidence.html` — reproducibility archive hashes, evidence-access status, verified public download links and reproducible commands.
 - `sitemap.xml` — direct site page discovery.
 - `site.css` — responsive layout and accessible typography.
 - `site.js` — three-item originality-approved research index and category filtering.
@@ -26,7 +26,7 @@ GitHub Actions confirms successful Pages deployments on 2026-10-28. Direct publi
 ## Needed for independent referees
 
 1. **GitHub Issues has been enabled and four external-review invitations are live**: [#1 Erdős](https://github.com/d3lefts/d3lefts/issues/1), [#2 Werner](https://github.com/d3lefts/d3lefts/issues/2), [#3 finite-field](https://github.com/d3lefts/d3lefts/issues/3), [#4 AI safety](https://github.com/d3lefts/d3lefts/issues/4).
-2. Mirror the large proof bundles, witness arrays, and exact-checker inputs through [the frozen-release upload task](https://github.com/d3lefts/d3lefts/issues/5). The [evidence page](evidence.html) gives verified SHA-256s, and the [ready-to-paste release description](../research/nightfall/RELEASE_NOTES_FOR_UPLOAD.md) documents claim scope. The current GitHub text mirror remains incomplete.
+2. The [two approved curated ZIPs](https://github.com/d3lefts/d3lefts/releases/tag/nightfall-research-2026-10-28) are public. Run `python3 scripts/download_nightfall_curated_assets.py public-assets` for fresh anonymous downloads with complete manifest checks. The [evidence page](evidence.html) links both assets and the exact replay. Historical master ZIPs remain private; do not ask the owner to upload them.
 3. Keep the claim-status ladder and external source dependencies accurate whenever a reviewer reports a counterexample or correction.
 
 The design takes inspiration from editorial research portfolios, while its layout, identity, copy, and review-oriented content are original to NIGHTFALL. All third-party links and mathematical source authors retain their proper attribution.

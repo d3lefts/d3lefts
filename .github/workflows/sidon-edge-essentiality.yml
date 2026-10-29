@@ -1,6 +1,7 @@
 name: Certify Sidon edge-essentiality primary evidence
 on:
   push:
+    branches: [main]
     paths:
       - 'research/nightfall/projects/sidon-finite-30/edge_essentiality.py'
       - 'research/nightfall/projects/sidon-finite-30/edge_essentiality_certificate.json'
@@ -11,6 +12,9 @@ on:
       - 'research/nightfall/projects/sidon-finite-30/edge_essentiality_certificate.json'
       - '.github/workflows/sidon-edge-essentiality.yml'
   workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
