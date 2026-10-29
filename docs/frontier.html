@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#18221e">
+<meta name="description" content="NIGHTFALL Frontier: a transparent Agent NF triage demo for real open mathematical questions, exact witness checks, and source-scoped research assignments.">
+<meta property="og:title" content="Frontier — NIGHTFALL"><meta property="og:description" content="Find a real missing proof obligation. Claim it, check it or split it into smaller research questions.">
+<link rel="canonical" href="https://d3lefts.github.io/d3lefts/frontier.html">
+<link rel="stylesheet" href="site.css"><link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>Frontier / Agent NF — NIGHTFALL</title>
+<script src="site.js" defer></script><script src="frontier-core.js" defer></script><script src="frontier.js" defer></script>
+<style>
+.fr-hero{padding:76px 0 66px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1.3fr .7fr;gap:45px}
+.fr-hero h1{font:400 clamp(73px,9vw,132px)/.87 var(--serif);letter-spacing:-.042em;margin:23px 0 31px}
+.fr-hero h1 em,.fr-head h2 em{color:#5a8063}
+.fr-lead{max-width:760px;color:#475d4d;font:17px/1.7 var(--sans)}
+.fr-hero-aside{padding:24px 29px;background:var(--ink);color:#f2f3e9;display:flex;flex-direction:column;justify-content:space-between;min-height:330px}
+.fr-eyebrow{font:600 10px/1.7 var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.fr-hero-aside strong{font:400 clamp(36px,4vw,58px)/1.05 var(--serif);letter-spacing:-.02em}
+.fr-hero-aside p{font:12px/1.8 var(--sans);color:#c6d0c3}
+.fr-hero-links{display:flex;flex-wrap:wrap;gap:22px;margin-top:28px}
+.fr-banner{padding:19px 0 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:30px;align-items:center}
+.fr-banner p{max-width:870px;color:var(--muted);font:12px/1.7 var(--sans)}
+.fr-pill{font:600 10px/1.4 var(--mono);border:1px solid #66806a;color:#335a40;padding:9px 12px;white-space:nowrap}
+.fr-section{padding:74px 0;border-bottom:1px solid var(--line)}
+.fr-head{display:grid;grid-template-columns:.7fr 2fr;gap:35px;align-items:end;margin-bottom:28px}
+.fr-head h2{font:400 clamp(44px,5vw,72px)/.97 var(--serif);margin:7px 0 10px}
+.fr-head p{font:14px/1.7 var(--sans);color:#506458;max-width:720px}
+.fr-rank-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.fr-rank{display:flex;flex-direction:column;text-align:left;background:#edf0e8;color:var(--ink);border:1px solid #bfcbc0;padding:25px;min-height:315px;min-width:0;transition:background .15s,transform .15s}
+.fr-rank:hover{background:#e1ecd9;transform:translateY(-2px)}
+.fr-rank[aria-pressed="true"]{background:#20372b;color:#f4f4e9;border-color:#20372b}
+.fr-rank-top{display:flex;justify-content:space-between;align-items:center;gap:12px;font:600 10px/1.5 var(--mono)}
+.fr-rank h3{font:400 clamp(34px,3.7vw,53px)/1.02 var(--serif);margin:39px 0 15px}
+.fr-rank p{font:13px/1.65 var(--sans);opacity:.85;max-width:450px}
+.fr-rank-bottom{border-top:1px solid currentColor;padding-top:18px;margin-top:auto;display:flex;justify-content:space-between;gap:10px;font:600 11px/1.6 var(--mono)}
+.fr-snapshot{margin-top:24px;font:12px/1.7 var(--sans);color:var(--muted)}
+.fr-board{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.89fr);gap:18px;align-items:start}
+.fr-problem{background:#eff1e9;padding:30px;border:1px solid #c6cebf}
+.fr-context{margin:22px 0 24px;font:15px/1.7 var(--sans);max-width:770px}
+.fr-problem h3{font:400 clamp(35px,3.6vw,53px)/1.04 var(--serif);margin:13px 0}
+.fr-source{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+.fr-source a{border-bottom:1px solid currentColor;font:600 11px/1.6 var(--mono)}
+.fr-proof-chain{display:grid;gap:13px;margin-top:30px}
+.fr-stage{display:flex;align-items:start;gap:13px;padding:17px 19px;background:#e1eadc;border-left:3px solid #52775b}
+.fr-stage span{min-width:25px;font:700 10px var(--mono);color:#47634b}
+.fr-stage strong{display:block;font:600 12px/1.5 var(--sans)}
+.fr-stage p{font:12px/1.6 var(--sans);color:#506456;margin-top:5px}
+.fr-branches{margin-top:25px;display:grid;gap:8px}
+.fr-branches h4{font:400 29px var(--serif);margin-bottom:7px}
+.fr-branch{background:#f8f8f3;border:1px solid #c4cbbf;padding:15px 17px;text-align:left;display:flex;justify-content:space-between;gap:20px;align-items:center}
+.fr-branch[aria-pressed="true"]{border-color:#2d6640;outline:2px solid #2d6640}
+.fr-branch strong{display:block;font:600 13px/1.5 var(--sans)}
+.fr-branch span{font:10px/1.5 var(--mono);color:#59705d}
+.fr-workbench{background:#182b20;color:#eaf1e6;padding:30px;border:1px solid #182b20}
+.fr-workbench h3{font:400 39px/1.08 var(--serif);margin:12px 0 14px}
+.fr-workbench p{font:12px/1.7 var(--sans);color:#ccdacf;margin:12px 0}
+.fr-workbench .fr-work-title{font:400 27px/1.12 var(--serif);color:#e3eeda;margin:17px 0}
+.fr-workbench .fr-work-test{font:13px/1.6 var(--sans);color:#e6f0e4}
+.fr-workbench label{display:block;margin:24px 0 8px;font:600 11px/1.5 var(--mono);color:#c4ddbe}
+.fr-workbench input,.fr-workbench textarea{display:block;width:100%;font:13px/1.6 var(--mono);padding:13px;background:#f3f5ed;border:1px solid #c8d3c2;color:#15291a;resize:vertical;border-radius:0}
+.fr-workbench textarea{min-height:96px}
+.fr-buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}
+.fr-buttons button,.fr-buttons a{display:inline-flex;align-items:center;justify-content:center;padding:11px 13px;background:#d9ff5e;border:1px solid #d9ff5e;color:#18291e;font:700 11px/1.4 var(--mono);min-height:42px;text-decoration:none}
+.fr-buttons button.secondary,.fr-buttons a.secondary{background:transparent;color:#eaf1e6;border-color:#829889}
+.fr-buttons button:disabled{opacity:.43;cursor:default}
+.fr-result{padding:13px 16px;background:#2e4637;border-left:3px solid #d9ff5e;white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.65 var(--mono);margin-top:17px;min-height:45px}
+.fr-subhead{border-top:1px solid #58705e;padding-top:21px;margin-top:31px;font:400 28px var(--serif)}
+.fr-local-note{font:11px/1.75 var(--sans);color:#b8cbbc;margin-top:14px}
+.fr-bottom{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px;margin-top:31px}
+.fr-bottom a{border:1px solid var(--line);padding:23px;background:#e8ede3;display:flex;flex-direction:column;gap:13px}
+.fr-bottom strong{font:400 31px var(--serif)}
+.fr-bottom span{font:12px/1.7 var(--sans);color:#53665a}
+.fr-bottom small{font:700 11px var(--mono);margin-top:auto}
+@media(max-width:1000px){.fr-board{grid-template-columns:1fr}.fr-hero{grid-template-columns:1fr}.fr-hero-aside{min-height:220px}.fr-rank-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:690px){.fr-hero{padding:53px 0 45px}.fr-hero h1{font-size:clamp(70px,15vw,100px)}.fr-hero-aside{padding:23px}.fr-banner{align-items:start;flex-direction:column}.fr-section{padding:52px 0}.fr-head{display:block}.fr-rank-grid,.fr-bottom{grid-template-columns:1fr}.fr-rank{min-height:220px}.fr-rank h3{margin:21px 0}.fr-problem,.fr-workbench{padding:22px}.fr-branch{padding:13px}}
+</style></head>
+<body><a class="skip" href="#main">Skip to Frontier</a><div class="topline"></div>
+<header class="header"><div class="wrap header-inner">
+<a class="brand" href="./" aria-label="NIGHTFALL home"><span class="mark" aria-hidden="true">N∕F</span><span class="brand-copy">NIGHTFALL <span>PHASESHIFT / RESEARCH FRONTIER</span></span></a>
+<button type="button" class="menu-toggle" id="menu-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">MENU +</button>
+<nav class="nav" id="site-nav" aria-label="Primary navigation"><a href="./">Home</a><a href="research.html">Library</a><a href="exact-research.html">Tools</a><a href="desk.html">Desk</a><a href="frontier.html" aria-current="page">Frontier</a><a href="review.html">Review</a></nav>
+</div></header>
+<main id="main">
+<section class="fr-hero wrap" aria-labelledby="frontier-title"><div><span class="section-id">AGENT NF / RESEARCH FRONTIER / DEMONSTRATION 01</span><h1 id="frontier-title">Find the<br><em>missing piece.</em></h1>
+<p class="fr-lead">A real unresolved question. A reason to work on it. A proof obligation you can own. Take one branch, test a construction, and close it with checkable evidence—or divide it into smaller questions.</p>
+<div class="fr-hero-links"><a class="button" href="#triage">Explore NF priorities ↓</a><a class="text-link" href="#work">Open a research branch ↗</a></div>
+</div><aside class="fr-hero-aside"><span class="fr-eyebrow">ANATOMY OF A DISCOVERY / 01</span><strong>Choose.<br>Attack.<br>Prove.<br>Compound.</strong><p>Agent NF prioritizes an archived set of open research obligations with an inspectable deterministic rubric. This is a dated triage snapshot, not a live AI inference service.</p></aside></section>
+<div class="wrap fr-banner"><p><strong>Research-integrity boundary:</strong> A local claim is personal workspace state, not an exclusive public assignment. The public GitHub handoff requires you to review and submit an issue yourself. A browser check verifies only its stated finite instance; proofs of impossibility and broader theorems require separate independent evidence.</p><span class="fr-pill">LOCAL-FIRST / PUBLIC HANDOFF EXPLICIT</span></div>
+<section class="fr-section wrap" id="triage" aria-labelledby="triage-title">
+<div class="fr-head"><span class="section-id">01 / AGENT NF TRIAGE</span><div><h2 id="triage-title">Priority has<br><em>a reason.</em></h2><p>Three real, source-linked problems from the NIGHTFALL backlog. Scores reflect transparent editorial priorities—decisive verification (×2), tractable first step (×2), research leverage (×1), and existing evidence readiness (×1), each rated 1–5. No likelihood of proof is inferred.</p></div></div>
+<div id="frontier-rankings" class="fr-rank-grid" aria-label="Ranked real research problems"><p>Loading dated issue snapshot…</p></div>
+<p class="fr-snapshot" id="frontier-snapshot">Agent NF / dated static priority snapshot — scores recomputed in this browser. Scores are internal editorial heuristics, not proof quality, universal truth, or live difficulty prediction.</p>
+</section>
+<section class="fr-section wrap" id="work" aria-labelledby="work-title">
+<div class="fr-head"><span class="section-id">02 / A FINITE FRONTIER</span><div><h2 id="work-title">A question you<br><em>can actually test.</em></h2><p>Choose an independent branch, preserve its falsifier, and move from conjecture to exact arithmetic or to a smaller research question.</p></div></div>
+<div class="fr-board">
+<section class="fr-problem" aria-labelledby="problem-head"><span class="fr-eyebrow" id="frontier-problem-meta">OPEN MATHEMATICAL QUESTION</span><h3 id="problem-head">N=184, nine-element maximal Sidon</h3><p class="fr-context" id="frontier-problem-description">The exact decision remains unresolved in the source record.</p>
+<div class="fr-source"><a id="frontier-source" target="_blank" rel="noopener" href="https://github.com/d3lefts/d3lefts/issues/46">Read research source ↗</a><a id="frontier-issue" target="_blank" rel="noopener" href="https://github.com/d3lefts/d3lefts/issues/46">Original open issue ↗</a></div>
+<div class="fr-proof-chain" aria-label="Resolution and review states"><div class="fr-stage"><span>01</span><div><strong>Open mathematical obligation</strong><p>Statement, finite scope, source, existing failed methods.</p></div></div><div class="fr-stage"><span>02</span><div><strong>Conclusive local test / subdivided proof</strong><p>An exact constructive YES witness, a checkable proof, or a narrower unresolved branch.</p></div></div><div class="fr-stage"><span>03</span><div><strong>Independent reproduction and provenance</strong><p>Independent check, source comparison, dated priority and owner scientific signoff.</p></div></div></div>
+<div class="fr-branches" id="frontier-branches"><h4>Choose a branch.</h4><p>Loading the real proof obligations…</p></div>
+</section>
+<section class="fr-workbench" aria-labelledby="workbench-title">
+<span class="fr-eyebrow">03 / YOUR RESEARCH CONTRACT</span><h3 id="workbench-title">Take the next step.</h3>
+<p class="fr-work-title" id="frontier-active-title">Select a branch</p><p class="fr-work-test" id="frontier-active-claim">A precise claim and falsifier will appear here.</p>
+<p id="frontier-active-falsifier">Counterexample condition: pending selection.</p>
+<div class="fr-buttons"><button id="frontier-claim" type="button">Claim locally</button><button id="frontier-publish" type="button" class="secondary">Open public GitHub handoff ↗</button></div>
+<p class="fr-local-note" id="frontier-claim-status" role="status" aria-live="polite">Unclaimed. A personal claim is saved only in this browser.</p>
+<section id="frontier-witness-section"><h4 class="fr-subhead">Try the exact checker.</h4><p>This browser tests one finite existence claim using all 45 unordered pair sums and every omitted integer. It cannot prove UNSAT.</p>
+<label for="frontier-witness">Nine distinct integers in [1,184]</label><input id="frontier-witness" type="text" maxlength="1200" autocomplete="off" spellcheck="false" placeholder="49, 50, 56, 78, 93, 104, 125, 139, 149">
+<div class="fr-buttons"><button id="frontier-near" type="button" class="secondary">Load archived near-candidate</button><button id="frontier-check" type="button">Check all omitted marks</button></div></section>
+<div class="fr-result" id="frontier-result" role="status" aria-live="polite">No finite witness checked. Scientific status: OPEN.</div>
+<h4 class="fr-subhead">Split the problem.</h4><p>When the current question needs a smaller lemma, create a child with its own falsification condition. Children retain their parent and source in the exported research contract.</p>
+<form id="frontier-split-form"><label for="frontier-child-title">Next decidable question</label><input id="frontier-child-title" maxlength="180" required minlength="10" placeholder="Prove an exact blocker lemma for ...">
+<label for="frontier-child-falsifier">What would falsify the proposed lemma?</label><textarea id="frontier-child-falsifier" maxlength="450" required minlength="12" rows="3" placeholder="One counterexample satisfying the stated hypotheses..."></textarea>
+<div class="fr-buttons"><button type="submit" class="secondary">Add a child obligation</button></div></form>
+<h4 class="fr-subhead">Transfer to a research instrument.</h4>
+<div class="fr-buttons"><button id="frontier-orchestrate" type="button" class="secondary">Pre-fill Orchestrator ↗</button><button id="frontier-export" type="button" class="secondary">Export local evidence ↗</button></div>
+<p class="fr-local-note">No account is needed to experiment. Public issue creation requires GitHub login and your explicit submission. Neither a successful local check nor a work-plan receipt grants external-review status.</p>
+<div class="fr-buttons"><button id="frontier-clear" type="button" class="secondary">Clear only Frontier's local workspace</button></div>
+</section></div>
+<div class="fr-bottom"><a href="orchestrator.html"><strong>Orchestrator</strong><span>Freeze a mathematical claim, generate independent research lanes and handoff receipts.</span><small>FREEZE THE CONTRACT ↗</small></a><a href="claim-lab.html"><strong>Claim Lab</strong><span>Map hypotheses, dependency edges, audit flags and unreviewed evidence records.</span><small>TRACE DEPENDENCIES ↗</small></a><a href="referee.html"><strong>Referee</strong><span>Verify supported, scoped finite arithmetic. Different mathematical domains require different checkers.</span><small>REPLAY A CERTIFICATE ↗</small></a></div>
+</section></main>
+<footer class="footer"><div class="wrap footer-bottom"><span>© 2026 Devin J. Wright · NIGHTFALL PHASESHIFT</span><span>Open research · Dated NF triage · Local drafts are not public assignments</span></div></footer>
+</body></html>
