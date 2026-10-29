@@ -60,6 +60,13 @@ try{
    // Canonical claim trace: source identity, exact open gate, map synchronization.
    await page.goto(origin+"constellation.html",{waitUntil:"load"});
    assert.equal(await page.locator("#co-trace-picker button").count(),6,"six canonical claim choices");
+   assert.equal(await page.locator("#stewards .co-team-card").count(),5,"five active Constellation personas");
+   assert.equal(await page.locator("#co-agent-tessera").count(),1,"one canonical Tessera persona");
+   assert.equal(await page.locator("#co-agent-tessara").count(),0,"retired Tessara is not an active card");
+   assert.equal(await page.locator('#stewards a[href="https://github.com/d3lefts/d3lefts/issues/76"]').count(),1,"continuum evidence lane retained");
+   assert.equal(await page.locator('#stewards a[href="https://github.com/d3lefts/d3lefts/issues/95"]').count(),1,"Singer evidence lane retained");
+   assert.match(await page.locator("#co-agent-tessera").innerText(),/Tessera/,"single persona displayed");
+
    assert.equal(await page.locator("#co-trace-grid article").count(),4,"four scoped trace stages");
    assert.ok((await page.locator("#co-trace-summary").innerText()).includes("Erdős minimum overlap"));
    const traceIds=await page.evaluate(()=>window.NightfallRegistry.claims.map(x=>x.id));
