@@ -359,18 +359,6 @@ try{
     await page.locator("#claimStatus").selectOption("3");
     await page.locator("#claimForm button[type=submit]").click();
     await page.locator('[data-tab="audit"]').click();
-    const claimLabTab=await page.evaluate(()=>({crumb:document.querySelector("#sectionCrumb")?.textContent,
-     active:[...document.querySelectorAll("[data-tab].active")].map(x=>x.dataset.tab),
-     modal:document.querySelector("#claimMask")?.className,
-     chosen:document.querySelector("[data-tab=audit]")?.outerHTML.slice(0,300)}));
-    console.log("Claim Lab navigation diagnostic",JSON.stringify(claimLabTab));
-    const cdp=await page.context().newCDPSession(page);
-    const obj=await cdp.send("Runtime.evaluate",{expression:'document.querySelector("[data-tab=audit]")'});
-    const ev=await cdp.send("DOMDebugger.getEventListeners",{objectId:obj.result.objectId});
-    console.log("Claim Lab tab listeners",JSON.stringify(ev.listeners.map(x=>({type:x.type,scriptId:x.scriptId,line:x.lineNumber}))));
-    await cdp.detach();
-    await page.locator('[data-tab="audit"]').evaluate(el=>el.click());
-    console.log("Claim Lab DOM click result",await page.locator("#sectionCrumb").innerText());
     const auditText=await page.locator("#content").innerText();
     assert.match(auditText,/Missing artifact reference/,"manual label cannot bypass missing artifact");
     assert.match(auditText,/Missing \/ invalid SHA-256 digest/,"missing digest remains flagged");
