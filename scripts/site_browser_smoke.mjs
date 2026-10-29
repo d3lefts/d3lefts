@@ -84,14 +84,14 @@ try{
   }
   if(width===390){
     await page.goto(origin+"research.html",{waitUntil:"load"});
-    assert.equal(await page.locator(".atlas-card:visible").count(),23,"23 curated research entries");
+    assert.equal(await page.locator(".atlas-card:visible").count(),30,"30 owner-curated research entries");
     await page.locator('[data-atlas-filter="quantum"]').click();
-    assert.equal(await page.locator(".atlas-card:visible").count(),3,"quantum source entries");
+    assert.equal(await page.locator(".atlas-card:visible").count(),8,"eight quantum source entries");
     await page.locator('[data-atlas-filter="all"]').click();
     await page.locator("#atlas-search").fill("SourceBound");
     assert.equal(await page.locator(".atlas-card:visible").count(),1,"library source search");
     await page.locator("#atlas-search").fill("");
-    assert.equal(await page.locator(".atlas-card:visible").count(),23,"library filter reset");
+    assert.equal(await page.locator(".atlas-card:visible").count(),30,"30-entry library filter reset");
   }
   if(width===390){
     await page.goto(origin+"referee.html",{waitUntil:"load"});
