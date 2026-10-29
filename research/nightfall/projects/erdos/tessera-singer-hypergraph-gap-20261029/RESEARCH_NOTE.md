@@ -44,3 +44,28 @@ The standard-library checker independently enumerates **all nonzero modular diff
 **Scientific scope and consequence:** The exact equality ν=τ=40 in Tessera's q=1009 975-mark certificate, PR #82, remains a valid **template-specific** dual certificate. The observed 3/2 gap makes it mathematically invalid to extrapolate ν=τ to arbitrary Singer templates, even in the same near-boundary geometry. This local obstruction alone cannot imply any asymptotic lower bound on τ/q, so standing #95's uniform-in-scale question remains open. A next-step research goal is to test whether such motifs persist inside genuine unbounded-q Singer sources, quantifying all prefix and window parameters.
 
 Prior art: Singer's classical perfect difference-set theorem; elementary general hypergraph matching and vertex-cover nonintegrality. Problem status: [Erdős #44](https://www.erdosproblems.com/44), [#329](https://www.erdosproblems.com/329); research assignments [#95](https://github.com/d3lefts/d3lefts/issues/95), [#100](https://github.com/d3lefts/d3lefts/issues/100). **External theorem priority and non-author review have not been completed.**
+
+
+## Uniform-in-field-size strengthening: an odd collision cycle for unbounded Singer q
+
+**Proposition (internally proved).** For every integer t≥1 with 3 not dividing t, let q=5^t, v=q²+q+1 and s=v/31. There is a cyclic Singer (v,q+1,1) perfect difference set D and an admissible prefix/cut/translation instance with **A={s,2s,4s}**, cut=8s, h=7s, T=24s whose complete repair-incidence matrix contains a 3×3 submatrix with determinant 2. Consequently **the repair-incidence matrix is not totally unimodular for arbitrarily large genuine Singer sources**.
+
+**Algebraic proof.** Identify the Singer group G with the quotient F_(q³)^× / F_q^×, a cyclic group of order v. Set E=F_(5³)⊂F_(q³). Since gcd(t,3)=1, E∩F_q=F_5, so the image H of E^× in G has order (5³−1)/(5−1)=31. Under G≅Z/v, H is the subgroup s(Z/31). Choose a Singer difference set D from the trace-zero plane Tr_(F_(q³)/F_q)(x)=0. For x∈E, its trace is x+x^(5^t)+x^(5^(2t))=x+x^5+x^25, since t and 2t modulo 3 permute 1 and 2. Thus **D∩H** is precisely the order-5 Singer difference set from the trace-zero projective subplane PG(2,5).
+
+A suitable generator/translation of H identifies this intersection with s*{0,1,3,8,12,18}: for example in F_125=F_5[x]/(x³+x+1), the primitive element 4x+x² has trace-zero exponent set {3,4,7,13,15,20}; multiplication by 8 and translation by 7 modulo 31 yield {0,1,3,8,12,18}. The automorphism on H extends to a unit multiplier on cyclic G (reduction (Z/v)^×→(Z/31)^× is surjective). Translation by a member of H finishes the normalization, preserving the full Singer difference-set property.
+
+Apply the cut 8s. The rotated full source necessarily contains the six marks s*{0,4,10,23,24,26}. With old prefix A={s,2s,4s} and new translation T=24s, the three collision equations
+
+- s+48s = 2s+47s,
+- s+50s = 4s+47s,
+- 2s+50s = 4s+48s
+
+produce precisely the three 2-vertex hyperedges joining the source marks at 23s, 24s and 26s in a triangle. Take those three hyperedge rows and three vertex columns: their incidence matrix, in a suitable ordering, is [[1,1,0],[0,1,1],[1,0,1]], determinant **2**. This is a submatrix of the **full** (q+1)-source repair matrix: extra source marks cannot erase these exact equalities.
+
+The near-boundary conditions hold for every s≥1: h=7s<31s/4, v−h=24s>8s=2max(A), L=h+max(A)+1=11s+1 has 2L=22s+2<31s=v, and T=v−h belongs to [v−h,v−ceil(h/2)]. Therefore the construction is in the exact parameter regime used by the fixed-prefix boundary lemma, at unbounded q.
+
+**Limitation:** Non-total-unimodularity does *not* prove that the optimum integral vertex cover exceeds the optimum fractional cover, nor that ν<τ for the **whole** large-q hypergraph. It rules out an automatic TU/network-matrix proof for this entire Singer-template regime. The preserved prefix here changes with q; this does not produce a fixed-prefix asymptotic lower bound.
+
+**Independent q=25 field check:** `python3 verify_q25_subfield.py`. In F_(5^6)=F_5[x]/(x^6+x²+x+1), the primitive element 1+3x generates 15,624 nonzero elements. The trace-zero Singer source for q=25 gives 26 exponents modulo v=651 with all 650 nonzero differences unique. Its order-31 subgroup intersection is {1,5,17,22,23,25}; multiplying by 11 and translating by 7 sends these residues to the small q=5 source. The full source after cut/shift gives a collision triangle on source indices (21,22,25). The direct sum checker extracts the exact 3×3 determinant **2** from the complete q=25 repair hypergraph.
+
+**Novelty boundary:** This is a projective-subfield embedding plus an elementary odd-cycle incidence obstruction; Singer planes, traces and total-unimodularity are established concepts. Whether this exact application has prior art is unresolved. The proposition is a structural no-go for a class of *proof strategies*, not a solution of either Erdős conjecture.
