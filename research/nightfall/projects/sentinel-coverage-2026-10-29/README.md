@@ -26,3 +26,23 @@ Run `python3 test_sentinel.py` from this directory. The source replay and separa
 Create an independently anchored effect-gateway ledger and separate reviewer ledger; reconcile by event ID, including skipped/reordered/compacted activity; classify missing coverage as `COVERAGE_INCOMPLETE` rather than `PASS`. Then run a preregistered held-out comparison versus transcript-only monitoring with matched false-positive and review budgets. A globally original contribution requires independent review and demonstrated novel mechanism or comparative effect, not another restatement of known security principles.
 
 **Authorship/review:** Prepared as an assistant-generated research candidate for NIGHTFALL. The alternate checker is same-author independently coded, not independent external review. Production/security claims, originality and publication await separate gates and human approval.
+
+## Novelty falsification checkpoint — updated 2026-10-29
+
+**Candidate “dual-ledger coverage certificate” is explicitly RETRACTED as a proposed original contribution.** Independent reconciliation, cryptographic receipts, complete mediation, action-policy gates, tamper-evident logs, and monitorability with missing events all have substantial precedent. Do not promote this code or architecture as a mathematical theorem advance or global record.
+
+Closest comparisons discovered after the initial design:
+- NIST reference monitor: https://csrc.nist.gov/glossary/term/reference_monitor
+- AWS CloudTrail integrity/digest chaining: https://docs.aws.amazon.com/en_en/awscloudtrail/latest/userguide/cloudtrail-log-file-validation-intro.html
+- Sigstore Rekor transparency protocol: https://github.com/sigstore/architecture-docs/blob/main/rekor-spec.md
+- TRACE (2026): https://doi.org/10.1109/BigDataSecurity69476.2026.00021
+- AgentLedger: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6417378
+- Proof-of-Behavior IETF Internet-Draft (expired Oct 22, 2026; work in progress, not a standard): https://datatracker.ietf.org/doc/html/draft-dembowski-agentledger-proof-of-behavior-00
+- Qin et al. 2026 trace tampering: https://arxiv.org/abs/2609.30266
+- Uncertainty in runtime verification (2023): https://www.sciencedirect.com/science/article/pii/S1574013723000618
+- Anthropic, Red-Teaming Auto Mode (2026-10-22): https://alignment.anthropic.com/2026/red-teaming-auto-mode/
+- Anthropic SLEIGHT-Bench (2026-05-19): https://alignment.anthropic.com/2026/sleight-bench/
+- METR, per-action monitor and coverage claims (2026-09-27): https://metr.org/notes/2026-09-27-implementing-a-basic-blocking-action-monitor/
+
+**Revised scientific target:** experimentally reduce successful *cross-context* monitor evasions (including adversarial compaction and multi-agent shared workspaces), evaluated on held-out attacks at matched review cost, false-positive rate, and latency, against 2026 frontier-monitor baselines. The existence of a dual ledger is an engineering prerequisite, not the result. Do not claim progress until independent evaluation on pre-registered, unseen tasks measures a significant change. If no gain, publish a negative result. No agent or live monitor test is reported here.
+
