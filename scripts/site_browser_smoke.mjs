@@ -62,8 +62,8 @@ try{
    assert.equal(await page.locator("#career .pf-career-card").count(),3,
      "Career-first portfolio shows precisely Walmart, Autograph, Amazon");
    assert.match(await page.locator("#career").innerText(),/Walmart Global Tech/i);
-   assert.match(await page.locator("#career").innerText(),/Autograph/);
-   assert.match(await page.locator("#career").innerText(),/Amazon/);
+   assert.match(await page.locator("#career").innerText(),/Autograph/i);
+   assert.match(await page.locator("#career").innerText(),/Amazon/i);
    assert.match(await page.locator("#foundations").innerText(),/NIGHTFALL/);
    assert.match(await page.locator("#foundations").innerText(),/ChatGPT.*Claude/s);
    assert((await page.locator("#career").boundingBox()).y <
