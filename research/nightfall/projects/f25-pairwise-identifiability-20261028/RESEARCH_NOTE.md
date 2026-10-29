@@ -21,7 +21,7 @@ Write \(\mu_4=\{\omega\in\mathbb F^\times:\omega^4=1\}\); in characteristic five
 
 The zero signal forms a singleton orbit. A deterministic brute-force decoder that enumerates all \(25^k\) signals and returns the matching \(\mu_4\)-orbit is correct under this event; its worst-case running time is exponential in \(k\).
 
-**Comparison within NIGHTFALL:** Axiom's separate Frobenius-kernel theorem (draft PR #16) guarantees a one-dimensional lifted kernel and a polynomial-time decoder under the same iid F25 observation law with \(m\ge\lceil(2941/500)k\rceil+s=\lceil5.882k\rceil+s\). The new \(\lceil(83/24)k\rceil+s\) sufficient count is **approximately 41.2% smaller in leading coefficient**, for the weaker, information-theoretic target. It neither improves the proven *efficient-decoding guarantee* nor establishes same-scope external publication priority. The older systematic 2k large-field LLL method uses a different ensemble and field-size regime.
+**Comparison within NIGHTFALL:** Axiom's latest rank-stratified Frobenius-kernel theorem (draft PR #16) guarantees a one-dimensional lifted kernel and a polynomial-time decoder under the same iid F25 observation law with \(m\ge\lceil(149/38)k\rceil+s\), i.e. a sufficient leading coefficient \(\approx3.9211\) (improved from an earlier \(5.882\)). The new \(\lceil(83/24)k\rceil+s\) uniqueness-only count uses approximately **11.8% fewer leading measurements** than Axiom's latest efficient-decoder sufficient count, while proving a strictly weaker computational guarantee. It neither improves the proven *efficient-decoding guarantee* nor establishes same-scope external publication priority. The older systematic 2k large-field LLL method uses a different ensemble and field-size regime.
 
 ## Exact counting proof
 
