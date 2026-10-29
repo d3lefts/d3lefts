@@ -239,3 +239,30 @@ html[data-nf-theme="dusk"] #main #evidence-title{
  #main .flagships>.section-head{padding-left:16px}
  html[data-nf-theme="dusk"] #main .flagships>.section-head:before{left:16px}
 }
+
+/* The archival colophon and night-shift dispatch replace generic footers with
+   competing conclusions. Existing source links and evidence tiering stay shared. */
+.nf-dual-colophon{padding-block:clamp(55px,7vw,110px);border-top:1px solid var(--line);
+ display:grid;grid-template-columns:minmax(0,1.15fr) minmax(235px,.65fr);gap:clamp(30px,7vw,100px)}
+.nf-dual-colophon h2{font:400 clamp(38px,5.2vw,74px)/1.02 var(--serif);
+ letter-spacing:-.035em;margin:19px 0 23px}
+.nf-dual-colophon h2 em{font-weight:400}
+.nf-dual-colophon p{max-width:64ch;font:400 14px/1.8 var(--sans);color:var(--muted)}
+.nf-dual-colophon-links{display:flex;flex-direction:column;justify-content:center;gap:0}
+.nf-dual-colophon-links a{display:flex;gap:20px;justify-content:space-between;align-items:center;
+ padding:19px 5px;border-bottom:1px solid var(--line);text-decoration:none;
+ font:600 11px/1.6 var(--mono)}
+.nf-dual-colophon-links a:hover{text-decoration:underline;text-underline-offset:5px}
+.nf-dual-colophon-links a:focus-visible{outline:2px solid currentColor;outline-offset:4px}
+html:not([data-nf-theme="dusk"]) .nf-dual-colophon{color:#451c35;background:#f4eeed}
+html:not([data-nf-theme="dusk"]) .nf-dual-colophon h2 em{color:#6a304e}
+html:not([data-nf-theme="dusk"]) .nf-dual-colophon-links a{color:#6a304e;border-color:#c8b7c0}
+html[data-nf-theme="dusk"] .nf-dual-colophon{
+ color:#edf0fb;border-color:#4b5672;
+ background:radial-gradient(ellipse at 74% 33%,#43375635,transparent 68%)
+}
+html[data-nf-theme="dusk"] .nf-dual-colophon h2 em{color:#d8c38a}
+html[data-nf-theme="dusk"] .nf-dual-colophon p{color:#c0cbe0}
+html[data-nf-theme="dusk"] .nf-dual-colophon-links a{color:#e9d8ae;border-color:#4b5672}
+@media(max-width:760px){.nf-dual-colophon{grid-template-columns:1fr;gap:20px}.nf-dual-colophon h2{font-size:48px}}
+@media print{.nf-dual-colophon{break-inside:avoid}}
