@@ -1,0 +1,25 @@
+name: Audit TESSERA exact one-point Sidon insertion
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/projects/erdos/tessera-linear-insertion-20261029/**"
+      - ".github/workflows/audit-tessera-linear-insertion.yml"
+  push:
+    paths:
+      - "research/nightfall/projects/erdos/tessera-linear-insertion-20261029/**"
+      - ".github/workflows/audit-tessera-linear-insertion.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-insertion:
+    name: Brute-force vs functional-graph exact deletion
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 -m py_compile research/nightfall/projects/erdos/tessera-linear-insertion-20261029/abelian_repair.py
+      - run: python3 research/nightfall/projects/erdos/tessera-linear-insertion-20261029/abelian_repair.py
