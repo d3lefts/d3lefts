@@ -29,7 +29,9 @@
 <script src="ethereal-theme.js" defer></script>
 <link rel="stylesheet" href="two-skies.css">
 <link rel="stylesheet" href="mobile-scroll-cinema.css">
+<link rel="stylesheet" href="home-opening-cinema.css">
 <script src="scroll-cinema.js" defer></script>
+<script src="home-opening-cinema.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -51,7 +53,36 @@
   </div>
 </header>
 <main id="main">
-  <section class="hero wrap" aria-label="NIGHTFALL research, two perspectives">
+  <section class="hero wrap nf-opening" aria-label="NIGHTFALL research, two perspectives">
+    <!-- The opening sky is illustrative; all claim text and destinations remain in the foreground. -->
+    <div class="nf-opening-art nf-opening-art--gold" aria-hidden="true">
+      <div class="nf-opening-sky nf-opening-sky--gold">
+        <div class="nf-opening-arc"></div><div class="nf-opening-sun"></div>
+        <div class="nf-opening-horizon"></div><div class="nf-opening-veil"></div>
+      </div>
+    </div>
+    <div class="nf-opening-art nf-opening-art--night" aria-hidden="true">
+      <div class="nf-opening-sky nf-opening-sky--night">
+        <div class="nf-opening-nightfield"></div><div class="nf-opening-lattice"></div>
+        <svg class="nf-opening-constellation" viewBox="0 0 1200 720" focusable="false">
+          <g>
+            <path pathLength="1" d="M115 420 L310 268 L480 364 L671 164 L866 248 L1069 104"/>
+            <path pathLength="1" d="M310 268 L403 100 L671 164 L755 531 L1075 610"/>
+            <path pathLength="1" d="M115 420 L329 619 L480 364 L755 531 L866 248"/>
+            <path pathLength="1" d="M329 619 L600 648 L755 531"/>
+          </g>
+          <g>
+            <circle cx="115" cy="420" r="5"/><circle cx="310" cy="268" r="7"/>
+            <circle cx="403" cy="100" r="4"/><circle class="nf-opening-node--gold" cx="480" cy="364" r="8"/>
+            <circle cx="671" cy="164" r="6"/><circle cx="866" cy="248" r="5"/>
+            <circle cx="1069" cy="104" r="4"/><circle class="nf-opening-node--gold" cx="755" cy="531" r="7"/>
+            <circle class="nf-opening-node--oxblood" cx="329" cy="619" r="5"/>
+            <circle cx="600" cy="648" r="4"/><circle cx="1075" cy="610" r="4"/>
+          </g>
+        </svg>
+        <div class="nf-opening-veil"></div>
+      </div>
+    </div>
     <div class="hero-main">
       <div class="nf-experience nf-experience-archive">
         <div class="kicker">NIGHTFALL / THE PUBLIC RESEARCH RECORD</div>
@@ -94,6 +125,13 @@
         <div class="nf-experience nf-experience-underbelly"><strong>This diagram is illustrative, not a certificate.</strong><p>The real evidence is in the linked inputs, checkers, and source arguments.</p></div>
       </div>
     </aside>
+    <div class="nf-opening-endmark" aria-hidden="true">
+      <span class="nf-opening-reading nf-opening-reading--gold">GOLDEN HOUR / THE RECORD</span>
+      <span class="nf-opening-reading nf-opening-reading--night">NEW MOON / THE INQUIRY</span>
+      <span class="nf-opening-track"></span>
+      <span>SCROLL TO UNFOLD</span>
+      <span class="nf-opening-down">↓</span>
+    </div>
   </section>
 
 

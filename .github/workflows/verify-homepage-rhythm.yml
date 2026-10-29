@@ -4,6 +4,9 @@ on:
     paths:
       - 'docs/index.html'
       - 'docs/home-rhythm.css'
+      - 'docs/home-opening-cinema.css'
+      - 'docs/home-opening-cinema.js'
+      - 'tests/test_home_opening_cinema.mjs'
       - 'tests/test_homepage_three_moments.mjs'
       - '.github/workflows/verify-homepage-rhythm.yml'
   push:
@@ -11,6 +14,9 @@ on:
     paths:
       - 'docs/index.html'
       - 'docs/home-rhythm.css'
+      - 'docs/home-opening-cinema.css'
+      - 'docs/home-opening-cinema.js'
+      - 'tests/test_home_opening_cinema.mjs'
       - 'tests/test_homepage_three_moments.mjs'
       - '.github/workflows/verify-homepage-rhythm.yml'
   workflow_dispatch:
@@ -26,4 +32,4 @@ jobs:
         with:
           node-version: '22'
       - name: Verify three moments and preserve all evidence routes
-        run: node --test tests/test_homepage_three_moments.mjs
+        run: node --test tests/test_homepage_three_moments.mjs tests/test_home_opening_cinema.mjs
