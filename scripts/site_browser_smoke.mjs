@@ -5,7 +5,7 @@ import {join,normalize,resolve,sep} from "node:path";
 import {chromium} from "playwright-core";
 
 const root=resolve("docs");
-const pages=["index.html","review.html","evidence.html","agenda.html","research.html","exact-research.html","desk.html","frontier.html"];
+const pages=["index.html","join.html","review.html","evidence.html","agenda.html","research.html","exact-research.html","desk.html","frontier.html"];
 const types={".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".svg":"image/svg+xml"};
 const server=createServer(async (req,res)=>{
  try{
@@ -57,6 +57,28 @@ try{
    }
   }
   if(width===390){
+   // Results -> method -> assignment -> bounded on-site work -> framed tool -> return.
+   await page.goto(origin+"join.html",{waitUntil:"load"});
+   assert.match(await page.locator("#join-title").innerText(),/See the result/);
+   assert.equal(await page.locator(".join-choice").count(),2,"only source-linked frozen open slices are assignable");
+   await page.locator(".join-choice").first().locator("button").click();
+   assert.match(await page.locator("#join-scope").innerText(),/smallest selected mark in \\[1, 184\\]/);
+   assert.equal(await page.locator("#join-active").isVisible(),true);
+   await page.locator("#join-notes").fill("Candidate experiment: compare independent exact maximality replay against the finite browser oracle.");
+   await page.locator("#join-values").fill("1, 2, 3, 4, 5, 6, 7, 8, 9");
+   await page.locator("#join-run-check").click();
+   assert.match(await page.locator("#join-check-output").innerText(),/CANDIDATE REJECTED/);
+   assert.match(await page.locator("#join-github").getAttribute("href"),/issues\\/new\\?/);
+   await page.locator('[data-stage="frame"]').click();
+   await page.waitForURL(/orchestrator\\.html\\?frontier_handoff=1/);
+   assert.match(await page.locator("#claim-text").inputValue(),/smallest selected mark in \\[1, 184\\]/);
+   assert.match(await page.locator(".nf-journey-rail").innerText(),/Return to Maximal Sidon boundary/);
+   await page.goto(origin+"join.html#workspace",{waitUntil:"load"});
+   assert.match(await page.locator("#join-notes").inputValue(),/independent exact maximality replay/);
+   assert.match(await page.locator("#join-yes").innerText(),/Nine distinct integers/);
+   await page.locator("#join-interest").selectOption("compute");
+   assert.equal(await page.locator(".join-choice").first().getAttribute("data-recommended"),"true");
+   assert.match(await page.locator(".join-choice").first().innerText(),/Q7/);
    await page.goto(origin+"frontier.html",{waitUntil:"load"});
    assert.equal(await page.locator(".f-rank").count(),2,"two source-linked finite frontier slices");
    assert.match(await page.locator(".f-rank").first().innerText(),/37/,"transparent deterministic Agent NF rank");
