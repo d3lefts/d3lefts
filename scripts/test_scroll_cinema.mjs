@@ -54,6 +54,7 @@ try{
   ]){
    if(mode==="light")await page.locator(".nf-theme-toggle").click();
    assert.equal(await page.locator("html").getAttribute("data-nf-theme"),mode==="dusk"?"dusk":null,"Theme selector restores correct narrative");
+   await page.waitForFunction(expected=>getComputedStyle(document.body).backgroundColor===expected,expectedBg,{timeout:4000});
    const bg=await page.locator("body").evaluate(el=>getComputedStyle(el).backgroundColor);
    assert.equal(bg,expectedBg,"Correct palette canvas "+mode);
    assert.equal(await page.locator(visibleArt).isVisible(),true,mode+" illustration visible");
