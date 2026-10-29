@@ -9,19 +9,21 @@
 
 Let `B` denote exactly the sorted 30-integer set in [`witness_30.txt`](witness_30.txt), SHA-256 `dc4697ce051a57987049199965967cc2b981433816d3daac284454262395978f`. Its (4,5) property and Sidon number `h(B)=17` have an earlier published exact finite checker.
 
-**Theorem (specific-witness, universal integer extension rigidity).** For *every* integer `x∉B`, if `B∪{x}` is a (4,5)-set, then
+**Theorem (specific-witness, universal integer extension rigidity).** For *every* integer `x∉B`, if `B∪{x}` is a **weak Sidon set** (all sums of two distinct marks are different), then
 
 `h(B∪{x}) = 18`.
 
-For *every* pair of distinct integers `x,y∉B`, if `B∪{x,y}` is a (4,5)-set, then
+For *every* pair of distinct integers `x,y∉B`, if `B∪{x,y}` is **weak Sidon**, then
 
 `h(B∪{x,y}) = 19`.
 
-Thus any attempt to improve the ratio `h(A)/|A|` by simply adjoining one or two integer points to **this particular** 30-point construction cannot work. These statements have *unbounded* integer quantifiers; their verification reduces those quantifiers to finite, exact cases with a complete affine case split. They do **not** say all 30-point constructions have this property, exclude replacement of old points, prove a new global bound, or improve the known asymptotic `5/9` upper construction.
+Thus any attempt to improve the ratio `h(A)/|A|` by simply adjoining one or two integer points to **this particular** 30-point construction cannot work. Every (4,5)-set is weak Sidon, so the corresponding one-/two-point (4,5) statement follows as a corollary. The converse fails: `{1,2,3,5}` is weak Sidon yet has only four distinct distances among its four marks. The 305/44,255/7,174/23 counts below classify the larger **weak-Sidon-admissible** extension space, not only (4,5) extensions.
+
+These statements have *unbounded* integer quantifiers; their verification reduces those quantifiers to finite, exact cases with a complete affine case split. They do **not** say all 30-point constructions have this property, exclude replacement of old points, prove a new global bound, or improve the known asymptotic `5/9` upper construction.
 
 ## Why the infinite integer search reduces to finite checks
 
-Let `H` be the 3-uniform hypergraph whose edges are the 3-term arithmetic progressions of `B`. Because every four-point subset of `B` has at least five different positive distances, any additive collision within a (4,5) superextension involves a repeated mark, hence corresponds to a 3-term progression. A Sidon subset is exactly an independent set of this progression hypergraph.
+Let `H` be the 3-uniform hypergraph whose edges are the 3-term arithmetic progressions of `B`. Because a weak Sidon extension has no equality of distinct-index pair sums, any Sidon obstruction inside it involves a repeated mark, hence is a 3-term progression. The full (4,5) condition is stricter and is used only as an inherited corollary. A Sidon subset is exactly an independent set of this progression hypergraph.
 
 The 30-point set has exactly 28 progression edges, and exhaustive arithmetic shows its minimum progression transversal is 13, hence `h(B)=17`.
 
@@ -29,9 +31,9 @@ For a new mark `x`, an old-old-new progression occurs only for
 
 `x = 2a-b`, `x = 2b-a`, or `x=(a+b)/2` (the last expression integral), with distinct `a,b∈B`.
 
-This yields **1,132** distinct candidates outside `B`. Adding `x` violates the four-point condition iff `x=b+c-a` for three distinct marks `a,b,c∈B`. **827** of the 1,132 are ruled out this way. Every one of the remaining **305** creates exactly one old-old-new progression. Other integers create none.
+This yields **1,132** distinct candidates outside `B`. Adding `x` violates weak Sidon iff `x=b+c-a` for three distinct marks `a,b,c∈B`. **827** of the 1,132 are ruled out this way. Every one of the remaining **305** creates exactly one old-old-new progression. Other integers create none.
 
-For two marks `x,y`, any *additional* progression must have the form `x+y=2b`, `2x-y=b`, or `2y-x=b` for some `b∈B`. Their joint (4,5) admissibility is exactly the pair of extra checks that `x+y` is absent from old distinct-pair sums and `|x-y|` is absent from old positive differences, in addition to individual admissibility.
+For two marks `x,y`, any *additional* progression must have the form `x+y=2b`, `2x-y=b`, or `2y-x=b` for some `b∈B`. Their joint weak Sidon admissibility is exactly the pair of extra checks that `x+y` is absent from old distinct-pair sums and `|x-y|` is absent from old positive differences, in addition to individual admissibility.
 
 The only potentially obstructing cases are exhaustive:
 
@@ -45,7 +47,7 @@ All remaining cases are either unconstrained, have just one old-old-new progress
 
 [`portfolio_certificate.json`](portfolio_certificate.json) contains **11 explicit old 17-point Sidon subsets** `S_1,…,S_11 ⊆ B`. The verifier independently checks every pair sum (including doubled marks), then checks that **every admissible exception above** has at least one `i` for which both new marks can be appended while preserving the Sidon property. It likewise checks every one-point case and all 30 generic single-old-mark exclusions.
 
-For each admissible one- or two-point extension there is therefore an explicit Sidon subset containing all new points of size `18` or `19`. The reverse inequalities are immediate by deleting the new points from any Sidon subset and using `h(B)=17`. This completes the proof.
+For each weak-Sidon-admissible one- or two-point extension there is therefore an explicit Sidon subset containing all new points of size `18` or `19`. The reverse inequalities are immediate by deleting the new points from any Sidon subset and using `h(B)=17`. This completes the proof.
 
 ## Exact independent reproduction
 
@@ -55,7 +57,7 @@ Only Python 3 standard library is required. From this directory:
 python3 verify_independent.py
 ```
 
-Expected status: `PASS — bounded exact theorem`; source SHA-256 above; portfolio SHA-256 `fd0fc220e4b2ef5e458c5a5ef21a0baacb2cfdb226b14b503959b3c1a4dd782a`. The independent checker re-enumerates all 27,405 four-mark tests, the 28 original progression constraints, the entire 12-deletion proof search (7,801 states), the affine exception families and the 11-set portfolio, with three adversarial mutation checks. It imports **no exploratory builder, optimizer, Numba dependency, reference verifier, or precomputed solver verdict**. Average run on the research container: approximately 3 seconds.
+Expected status: `PASS — bounded exact theorem`; source SHA-256 above; portfolio SHA-256 `fd0fc220e4b2ef5e458c5a5ef21a0baacb2cfdb226b14b503959b3c1a4dd782a`. The independent checker re-enumerates all 27,405 four-mark weak-Sidon collision tests, the 28 original progression constraints, the entire 12-deletion proof search (7,801 states), the affine exception families and the 11-set portfolio, with three adversarial mutation checks. It imports **no exploratory builder, optimizer, Numba dependency, reference verifier, or precomputed solver verdict**. Average run on the research container: approximately 3 seconds.
 
 To replay the preexisting baseline independently in the source repository:
 
@@ -81,3 +83,7 @@ See [`validation_receipt.json`](validation_receipt.json) for exact counts and di
 - The anonymously submitted self-similar `5/9` construction (October 17–19, 2026) has priority for that asymptotic bound; its base set `O`, affine map, and all-depth mechanism are fully credited by NIGHTFALL's original `sidon-finite-30/README.md`.
 - NIGHTFALL's October 24 distinct finite 30-point endpoint construction and October 28 exact 28-edge criticality certificate supply the fixed source witness used here.
 - This research note reports a new **internally derived finite structural statement** about that exact witness. Comprehensive mathematical novelty review is incomplete. A direct search of the named literature found no prior statement of this particular one-/two-point rigidity, which is insufficient for priority certification.
+
+## Scope stress test (mandatory)
+
+The four-point `(4,5)` distance condition must **never** be confused with weak Sidon. The verifier asserts that `{1,2,3,5}` satisfies the weak-Sidon four-distinct sum rule while failing `(4,5)` (only four distinct positive differences). This negative control guards the exact hypothesis used by the affine classification.
