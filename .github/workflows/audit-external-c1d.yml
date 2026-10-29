@@ -1,4 +1,4 @@
-name: External exact witness replay — C1d 600-cell
+name: External exact witness replay — C1c and C1d
 on:
   pull_request:
     paths:
@@ -17,7 +17,7 @@ permissions:
 jobs:
   independent-exact-replay:
     runs-on: ubuntu-latest
-    timeout-minutes: 6
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -27,5 +27,7 @@ jobs:
         run: python3 research/nightfall/independent-audits/tao-constants/c1d_600_exact.py --fetch
       - name: Independent 300-cell third-party replay, source hash and negative control
         run: python3 research/nightfall/independent-audits/tao-constants/c1d_300_exact.py --fetch
+      - name: Independent K6144 Barnard-Steinerberger autocorrelation certificate
+        run: python3 research/nightfall/independent-audits/tao-constants/c1c_6144_exact.py --fetch
       - name: Audited NIGHTFALL 33-item calibration inventory
         run: python3 research/nightfall/evaluations/calibration_20261029/audit_inventory.py
