@@ -44,7 +44,7 @@ for(const [tamperIndex,tamper] of [
  x=>x.reviewStatus="verified",
  x=>x.human_action="AUTO_PUBLISH",
  x=>x.frontier_snapshot="forged"
-]){
+].entries()){
  const changed=structuredClone(receipt);tamper(changed);
  assert.equal(E.verify(changed,F).valid,false,"Tampered scientific field #"+tamperIndex+" must be rejected.");
 }
