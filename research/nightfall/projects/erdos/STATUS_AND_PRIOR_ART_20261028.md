@@ -19,7 +19,7 @@
 - **Maximizing signed lag:** -17,280. **Lag convention:** with zero-extended cell heights, the exact numerator at signed index k is `sum_i A_i * (D - A_{i-k})` over valid pairs, with `i` in `[max(0,k),min(N,N+k))`. Under the opposite `i+k` indexing, the numerical value at k changes; use the original checker’s stated orientation.
 - **Witness height file SHA-256:** `a574c280f8839503c90076507a27f4c819455fb2512fae6a43b6a17f6a784b8e`.
 - **Recorded internal verification:** six-prime NTT/CRT reconstruction, signed-lag integer checks, mass and bounds checks, continuum breakpoint argument, and dyadic fiber audits. Replayed by the research collaboration on 2026-10-27. **No external human referee has yet verified the whole result.**
-- **Download access:** exact original proof and witness bundle is contained inside `NIGHTFALL_Meta_Paper_v2.0_Source_and_Evidence.zip`, nested under `release/reproduction/overlap_latest/NIGHTFALL_Erdos_Latest/` in the frozen master research ZIP. Public binary mirror tracked at [Issue #5](https://github.com/d3lefts/d3lefts/issues/5).
+- **Download access (updated 29 October):** the owner-approved [curated math evidence ZIP](https://github.com/d3lefts/d3lefts/releases/tag/nightfall-research-2026-10-28) is public, anonymously downloadable and hash-verified; it contains `programs/erdos-overlap/frozen-witness/heights_u70.txt` matching the frozen source hash above. Public CI independently replayed every signed grid shift with GMP ([completed release issue #5](https://github.com/d3lefts/d3lefts/issues/5)). This resolves public byte access; it does **not** establish external human refereeing. See [referee packet](EXTERNAL_REFEREE_PACKET_20261029.md).
 
 ## Arena records — distinct objects
 
@@ -85,6 +85,6 @@ This bracket should not be presented with a completely certified lower-end statu
 - [NIGHTFALL receipt (2026-10-27)](../../audit/erdos-arena-submission-receipt.json).
 - [Reviewer issue #1](https://github.com/d3lefts/d3lefts/issues/1).
 - [Missing accepted-submission identity issue #6](https://github.com/d3lefts/d3lefts/issues/6).
-- [Frozen certificate publication issue #5](https://github.com/d3lefts/d3lefts/issues/5).
+- [Public curated certificate release — issue #5, closed](https://github.com/d3lefts/d3lefts/issues/5).
 
 **Interpretation policy:** Internal independent implementation ≠ independent external specialist referee. A timestamped leaderboard screenshot ≠ a mathematical construction certificate. A verified finite numerical inequality ≠ an independently reviewed analytic transfer theorem.
