@@ -64,6 +64,14 @@ const REGISTRY={
         {
           "label": "Independent Python finite checker",
           "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py"
+        },
+        {
+          "label": "Complete 28-constraint essentiality certificate (JSON)",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/edge_essentiality_certificate.json"
+        },
+        {
+          "label": "Independent edge-essentiality proof generator and checker",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/edge_essentiality.py"
         }
       ],
       "tools": [
@@ -84,6 +92,13 @@ const REGISTRY={
           "label": "Proof DAG and standalone check documented",
           "detail": "The public note reports 7,801 proof states, 28 progressions and a separately executable Python checker.",
           "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/README.md"
+        },
+        {
+          "date": "2026-10-28",
+          "kind": "evidence",
+          "label": "All 28 arithmetic-progression constraints proven essential",
+          "detail": "For the fixed 30-point witness, the exact 12-cover exclusion and 28 explicit 18-survivor counterwitnesses independently regenerate from published source. A distinct finite hypergraph property; novelty review open.",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/edge_essentiality.py"
         }
       ]
     },
