@@ -170,11 +170,11 @@ try{
    await page.goto(origin+"frontier.html",{waitUntil:"load"});
    assert.equal(await page.locator('#nf-tool-links a[href="discovery.html"]').count(),1);
    await page.locator("#nf-session-list .f-session-item button").nth(1).click();
-   assert.match(await page.locator("#active-predicate").innerText(),/\\[1, 92\\]/);
+   assert((await page.locator("#active-predicate").innerText()).includes("[1, 92]"));
    page.once("dialog",dialog=>dialog.accept());
    await page.locator('#nf-tool-links a[href="discovery.html"]').click();
-   await page.waitForURL(/discovery\\.html/);
-   assert.match(await page.locator(".context h1").innerText(),/Frontier \\/ Erdős #156/);
+   await page.waitForURL(url=>url.pathname.endsWith("/discovery.html"));
+   assert((await page.locator(".context h1").innerText()).includes("Frontier / Erdős #156"));
    assert.equal(await page.locator(".portfolio").count(),4,"Imported branch is isolated from the three published demonstration projects");
    const record=await page.evaluate(()=>{
     const state=JSON.parse(localStorage.getItem("nightfall.discovery.v1"));
@@ -289,7 +289,7 @@ try{
     assert.match(parsedReceipt.experiments.at(-1).result,/UNREVIEWED/);
     assert.ok(await page.locator("#sendDiscovery").isEnabled());
     await page.locator("#sendDiscovery").click();
-    await page.waitForURL(/discovery\.html/);
+   await page.waitForURL(url=>url.pathname.endsWith("/discovery.html"));
     await page.waitForFunction(()=>document.querySelector(".panel.evidence")?.textContent?.includes("LOCAL FINITE REPLAY"),{timeout:20000});
     const finiteLedger=await page.locator(".panel.evidence").first().innerText();
     assert.match(finiteLedger,/LOCAL FINITE REPLAY/,"Discovery distinguishes local replay");
