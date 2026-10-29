@@ -44,66 +44,6 @@
     {
       "id": "04",
       "category": "mathematics",
-      "evidence": "working",
-      "type": "Theorem manuscript · finite tests",
-      "title": "Nonabelian involution-shadow codes",
-      "summary": "Finite-group shadow encodings with exact distance, pair-spectrum and balanced erasure-allocation formulas, including nonabelian test cases.",
-      "boundary": "Algebraic manuscript and finite checks; formal-kernel verification and worldwide novelty audit still open.",
-      "source": "projects/involution-shadow-codes/NONABELIAN_SHADOW_THEOREM.md"
-    },
-    {
-      "id": "05",
-      "category": "mathematics",
-      "evidence": "working",
-      "type": "Manuscript proof · finite tests",
-      "title": "Periodic forest-gauge obstruction",
-      "summary": "A periodic four-dimensional combinatorial defect identity, accompanied by a separate integer checker.",
-      "boundary": "Thirty-two representative finite checks reproduce the identity; universal proof and priority still require outside review.",
-      "source": "projects/expansion-2026-10-28/02-periodic-forest.md"
-    },
-    {
-      "id": "06",
-      "category": "mathematics",
-      "evidence": "working",
-      "type": "Corrected manuscript",
-      "title": "Affine source rigidity",
-      "summary": "September work on affine source collisions, shifted prime-series expansions, and rational dilation fibers.",
-      "boundary": "Analytic assumptions and originality remain under review.",
-      "source": "2026-09-affine-source-rigidity/README.md"
-    },
-    {
-      "id": "07",
-      "category": "mathematics",
-      "evidence": "software",
-      "type": "Exact implementation · established methods",
-      "title": "Factor-network compilation",
-      "summary": "A checked factor-network equality compiler with explicit structural certificates.",
-      "boundary": "Compiler behavior is reproducible; COPY tensors and factor-graph compilation are known constructions.",
-      "source": "projects/sat-network-universal/README.md"
-    },
-    {
-      "id": "08",
-      "category": "mathematics",
-      "evidence": "working",
-      "type": "Conditional mathematical analysis",
-      "title": "ETH Hermite taper and rank barrier",
-      "summary": "An interpolation precision allowance improvement and a lower bound for restricted disjoint middle-layer refinements.",
-      "boundary": "A restricted obstruction result, with no claimed new SAT worst-case exponent.",
-      "source": "projects/expansion-2026-10-28/03-eth-taper-and-obstruction.md"
-    },
-    {
-      "id": "09",
-      "category": "mathematics",
-      "evidence": "conditional",
-      "type": "Conditional derivation",
-      "title": "Selection-aware Gaussian pivoting",
-      "summary": "A selected-row Gaussian spectral-tail analysis that retains triangular elimination loss.",
-      "boundary": "The final matrix-growth-factor improvement remains open.",
-      "source": "projects/expansion-2026-10-28/05-selection-aware-pivoting.md"
-    },
-    {
-      "id": "10",
-      "category": "mathematics",
       "evidence": "conditional",
       "type": "Exact downstream arithmetic",
       "title": "Finite-field span-tail reduction",
@@ -112,7 +52,17 @@
       "source": "projects/finite-field-phase-retrieval-2026-10-28/README.md"
     },
     {
-      "id": "11",
+      "id": "05",
+      "category": "mathematics",
+      "evidence": "working",
+      "type": "Theorem manuscript · finite tests",
+      "title": "Nonabelian involution-shadow codes",
+      "summary": "Finite-group shadow encodings with exact distance, pair-spectrum and balanced erasure-allocation formulas, including nonabelian test cases.",
+      "boundary": "Algebraic manuscript and finite checks; formal-kernel verification and worldwide novelty audit still open.",
+      "source": "projects/involution-shadow-codes/NONABELIAN_SHADOW_THEOREM.md"
+    },
+    {
+      "id": "06",
       "category": "mathematics",
       "evidence": "working",
       "type": "Algebraic proof and finite tests",
@@ -122,7 +72,67 @@
       "source": "projects/involution-shadow-codes/HETEROGENEOUS_ERASURE_COMPLEXITY.md"
     },
     {
+      "id": "07",
+      "category": "mathematics",
+      "evidence": "working",
+      "type": "Manuscript proof · finite tests",
+      "title": "Periodic forest-gauge obstruction",
+      "summary": "A periodic four-dimensional combinatorial defect identity, accompanied by a separate integer checker.",
+      "boundary": "Thirty-two representative finite checks reproduce the identity; universal proof and priority still require outside review.",
+      "source": "projects/expansion-2026-10-28/02-periodic-forest.md"
+    },
+    {
+      "id": "08",
+      "category": "mathematics",
+      "evidence": "working",
+      "type": "Corrected manuscript",
+      "title": "Affine source rigidity",
+      "summary": "September work on affine source collisions, shifted prime-series expansions, and rational dilation fibers.",
+      "boundary": "Analytic assumptions and originality remain under review.",
+      "source": "2026-09-affine-source-rigidity/README.md"
+    },
+    {
+      "id": "09",
+      "category": "mathematics",
+      "evidence": "software",
+      "type": "Exact implementation · established methods",
+      "title": "Factor-network compilation",
+      "summary": "A checked factor-network equality compiler with explicit structural certificates.",
+      "boundary": "Compiler behavior is reproducible; COPY tensors and factor-graph compilation are known constructions.",
+      "source": "projects/sat-network-universal/README.md"
+    },
+    {
+      "id": "10",
+      "category": "mathematics",
+      "evidence": "working",
+      "type": "Conditional mathematical analysis",
+      "title": "ETH Hermite taper and rank barrier",
+      "summary": "An interpolation precision allowance improvement and a lower bound for restricted disjoint middle-layer refinements.",
+      "boundary": "A restricted obstruction result, with no claimed new SAT worst-case exponent.",
+      "source": "projects/expansion-2026-10-28/03-eth-taper-and-obstruction.md"
+    },
+    {
+      "id": "11",
+      "category": "mathematics",
+      "evidence": "conditional",
+      "type": "Conditional derivation",
+      "title": "Selection-aware Gaussian pivoting",
+      "summary": "A selected-row Gaussian spectral-tail analysis that retains triangular elimination loss.",
+      "boundary": "The final matrix-growth-factor improvement remains open.",
+      "source": "projects/expansion-2026-10-28/05-selection-aware-pivoting.md"
+    },
+    {
       "id": "12",
+      "category": "quantum",
+      "evidence": "conditional",
+      "type": "Evidence-tiered Werner registry",
+      "title": "Werner finite-copy evidence atlas",
+      "summary": "Separates 4–20 qutrit and all-dimension thresholds, reported 21–24 improvements and symbolic 25–100 continuation.",
+      "boundary": "Historic 6–9 alternatives and imported 4-/5-copy SDP margins remain separate until original source witnesses are independently checked.",
+      "source": "projects/werner-atlas/README.md"
+    },
+    {
+      "id": "13",
       "category": "quantum",
       "evidence": "conditional",
       "type": "Source-dependent certificate",
@@ -132,7 +142,7 @@
       "source": "projects/werner-final-4-25/README.md"
     },
     {
-      "id": "13",
+      "id": "14",
       "category": "quantum",
       "evidence": "conditional",
       "type": "Historical 6–8-copy candidates",
@@ -140,16 +150,6 @@
       "summary": "A separable correlated-spectator transfer yields 6-, 7-, and 8-copy conditional candidates 0.448760, 0.432280 and 0.419900.",
       "boundary": "Historical higher bounds import quantitative source-SDP assumptions, whose witness replay and lineage reconciliation remain open.",
       "source": "projects/werner-direct-margin/README.md"
-    },
-    {
-      "id": "14",
-      "category": "quantum",
-      "evidence": "conditional",
-      "type": "Evidence-tiered Werner registry",
-      "title": "Werner finite-copy evidence atlas",
-      "summary": "Separates 4–20 qutrit and all-dimension thresholds, reported 21–24 improvements and symbolic 25–100 continuation.",
-      "boundary": "Historic 6–9 alternatives and imported 4-/5-copy SDP margins remain separate until original source witnesses are independently checked.",
-      "source": "projects/werner-atlas/README.md"
     },
     {
       "id": "15",
@@ -294,22 +294,22 @@
     {
       "id": "29",
       "category": "systems",
-      "evidence": "working",
-      "type": "Historical research audit",
-      "title": "Competition and negative-result registry",
-      "summary": "Erdős, C1/C2, UP25, rejected submissions, provenance conflicts, and unsuccessful operators in one evidence-aware chronology.",
-      "boundary": "Leaderboard standing, mathematical validity, and source completeness are tracked separately.",
-      "source": "projects/expansion-2026-10-28/08-arena-and-negative-results.md"
-    },
-    {
-      "id": "30",
-      "category": "systems",
       "evidence": "software",
       "type": "Architecture and tested prototype",
       "title": "Adaptive-resolution research architecture",
       "summary": "Reversible multiscale representations and counterexample-sensitive segmentation with preserved source hashes and a tested non-ML prototype.",
       "boundary": "A trained selector, cross-domain efficiency improvements and held-out matched-budget trials remain future work.",
       "source": "discovery-engine/ARCHITECTURE.md"
+    },
+    {
+      "id": "30",
+      "category": "systems",
+      "evidence": "working",
+      "type": "Historical research audit",
+      "title": "Competition and negative-result registry",
+      "summary": "Erdős, C1/C2, UP25, rejected submissions, provenance conflicts, and unsuccessful operators in one evidence-aware chronology.",
+      "boundary": "Leaderboard standing, mathematical validity, and source completeness are tracked separately.",
+      "source": "projects/expansion-2026-10-28/08-arena-and-negative-results.md"
     }
   ]
 }
