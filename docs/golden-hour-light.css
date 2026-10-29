@@ -523,3 +523,6 @@ html:not([data-nf-theme="dusk"]) .nf-theme-toggle:hover{background:#eed0bc}
 html:not([data-nf-theme="dusk"]) :is(.feature.dark,.flagship-dark,.review-section,.sf-case-panel,.nf-home-tool-entry,.join-method){color:#fcf3ea}
 html:not([data-nf-theme="dusk"]) :is(.feature.dark,.flagship-dark,.review-section,.sf-case-panel,.nf-home-tool-entry,.join-method) h3{color:#fcf3ea}
 html:not([data-nf-theme="dusk"]){--nf-inline-foreground:#fcf3ea}
+
+/* Explicit higher-specificity cream ink on oxblood navigation. */
+html:not([data-nf-theme="dusk"]) .nav .nav-call{color:#fcf3ea}
