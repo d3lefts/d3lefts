@@ -5,6 +5,12 @@
  const R=window.NightfallRegistry,C=window.NFClaimJourney,$=id=>document.getElementById(id);
  if(!R||!C){$("cj-empty").textContent="The canonical claim registry is unavailable. Open a Proof Passport to inspect source evidence.";return}
  const parsed=C.parse(R,location.search);
+ const rememberFocus=contract=>{
+  try{localStorage.setItem("nightfall.active.case.v1",JSON.stringify({
+   version:1,kind:"claim",id:contract.claim.id,index:contract.index,at:new Date().toISOString()
+  }));}catch{}
+  window.dispatchEvent(new Event("nightfall:case-changed"));
+ };
  function read(){
   try{return C.sanitize(R,JSON.parse(localStorage.getItem(C.KEY)||"null"))}catch{return C.sanitize(R,null)}
  }
@@ -75,10 +81,10 @@
   });
   $("cj-context-status").textContent="Retains the claim and exact open obligation in this browser. Working notes have no proof status.";
  }
- function choose(id,index,{updateURL=true}={}){
+ function choose(id,index,{updateURL=true,activate=true}={}){
   const contract=C.get(R,id,index);if(!contract)return false;
   selected=contract;selectClaim.value=id;loadDuties(id);selectDuty.value=String(index);
-  state.selected={claimId:id,index};saveState();showInvalid("");
+  state.selected={claimId:id,index};saveState();if(activate)rememberFocus(contract);showInvalid("");
   if(updateURL)history.replaceState(null,"",C.url(id,index));
   render();
   return true;
@@ -106,7 +112,7 @@
    $("cj-save-status").textContent="Browser storage unavailable. Export your research note before navigating away.";
    return;
   }
-  dirty=false;
+  dirty=false;rememberFocus(selected);
   $("cj-save-status").textContent="Unreviewed note saved locally for "+selected.claim.id+" / obligation "+(selected.index+1)+". No scientific claim promoted.";
  });
  $("cj-export").addEventListener("click",()=>{
@@ -122,5 +128,5 @@
   showInvalid(parsed.reason);$("cj-empty").textContent="The supplied claim or obligation was rejected. Choose a source-backed option above; no unrelated assignment has been selected.";
   if(state.selected)selectClaim.value="";
  }else if(parsed.contract)choose(parsed.contract.claim.id,parsed.contract.index,{updateURL:false});
- else if(state.selected)choose(state.selected.claimId,state.selected.index,{updateURL:false});
+ else if(state.selected)choose(state.selected.claimId,state.selected.index,{updateURL:false,activate:false});
 })();
