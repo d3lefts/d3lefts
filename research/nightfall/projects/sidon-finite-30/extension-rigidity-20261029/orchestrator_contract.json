@@ -3,9 +3,9 @@
   "mode": "local planning only",
   "frozen": {
     "id": "SIDON30-EXTENSION-RIGIDITY-20261029",
-    "claim": "For all integers x,y distinct outside B: if B+x and B+x+y preserve the four-point (4,5) property, then h(B+x)=18 and h(B+x+y)=19 respectively.",
+    "claim": "For all integers x,y distinct outside B: if B+x or B+x+y is weak Sidon (all off-diagonal two-mark sums distinct), then h(B+x)=18 and h(B+x+y)=19 respectively. The (4,5) extension statement is a corollary.",
     "source": "research/nightfall/projects/sidon-finite-30/witness_30.txt @ frozen SHA-256 dc4697ce051a57987049199965967cc2b981433816d3daac284454262395978f",
-    "falsifier": "Find a (4,5) integer superextension of B of size 31 or 32 having Sidon number below 18 or 19 respectively, or falsify a finite affine case.",
+    "falsifier": "Find an integer weak-Sidon superextension of B of size 31 or 32 with Sidon number below 18 or 19, or falsify one of the finite affine exception classes.",
     "digest": "dc4697ce051a57987049199965967cc2b981433816d3daac284454262395978f"
   },
   "tasks": [
