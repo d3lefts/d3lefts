@@ -127,9 +127,26 @@ def selftest():
         except ContractError:
             continue
         raise AssertionError("Contract rejection failed for mutation %d" % index)
+    # A separate counterexample to treating four correlated decisions as four people.
+    # Every participant has the same lean and outcome on all four decisions.
+    # Both lean arms have a 50% A-choice rate, so the exact influence is zero.
+    correlated = []
+    for arm in ARMS:
+        for j in range(12):
+            z = j % 2
+            y = 1 if j % 4 in (2, 3) else 0
+            for d in DECISIONS:
+                correlated.append({"participant_id": arm + "-cluster-" + str(j),
+                                   "arm": arm, "decision_id": str(d),
+                                   "lean": str(z), "choice": str(y)})
+    clustered = analyze(correlated)
+    cs = clustered["arms"]["ordinary"]["cluster_se"]
+    naive = math.sqrt(0.25 / 24 + 0.25 / 24)
+    assert math.isclose(clustered["arms"]["ordinary"]["pooled_lean_effect"], 0, abs_tol=1e-12)
+    assert cs > 2 * naive, "Correlated decisions must be clustered by participant"
     # All output must be serializable without nonfinite floats.
     assert '"NaN"' not in json.dumps(result, allow_nan=False)
-    print("JP-01 SYNTHETIC_FIXTURE: 36 pseudo-subjects, exact F=(1,0.5,0); 4 negative controls PASS")
+    print("JP-01 SYNTHETIC_FIXTURE: 36 pseudo-subjects, exact F=(1,0.5,0); 4 rejection controls, cluster-dependence control PASS")
     print("STATUS: schema and arithmetic self-test only; no humans, model trials or empirical finding")
 
 
