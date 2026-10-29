@@ -5,6 +5,7 @@ const fs=require("node:fs"),path=require("node:path"),cp=require("node:child_pro
 const root=__dirname+"/frozen-vesper",tasks=require(root+"/GATE_C_TASK_SET_v1.json"),locks=require(root+"/SOURCE_BLOB_LOCK_v1.json"),graph=require(root+"/claims-v1.json");
 const sha=x=>crypto.createHash("sha256").update(x).digest("hex");
 const randomSeed=1729,tokenCap=2000,toolCap=20;
+const Meter=require("./metering_core.cjs");
 // A secret per-study key masks condition IDs. Public seed alone cannot blind an evaluator.
 const key=process.env.GATE_C_BLIND_KEY||"PREVIEW_ONLY_PUBLIC_NONSECRET_ID";
 const secured=typeof process.env.GATE_C_BLIND_KEY==="string"&&/^[a-f0-9]{64}$/i.test(process.env.GATE_C_BLIND_KEY);
@@ -133,6 +134,7 @@ function validateOutputs(out){
  let modelConfig=null;
  for(const j of jobs){
   const r=map.get(j.blindId);assert.ok(r,"Missing response "+j.blindId);
+  Meter.verify(j,r); // Demand raw provider token counts and exact sent source/graph payload.
   assert.equal(r.inputSha256,j.inputSha256,"Frozen input mismatch for "+j.blindId);
   assert.equal(r.taskId,j.taskId,"Wrong task metadata");
   assert.ok(typeof r.answer==="string"&&r.answer.trim().length>=30,"Missing model answer");
