@@ -27,3 +27,22 @@ For real study operators (keep environment/key and output directory PRIVATE):
     node research/nightfall/observatory/gate-c-ryev/score_original_v1.cjs /private/study
 
 The last two commands require twelve genuine controlled model responses and twelve separately documented blind grades. No outcomes exist from this engineering campaign. Observatory Gate C remains pending; Gate D remains blocked.
+
+## Provider-measured execution (additional Vesper Gate C safeguard, 29 October 2026)
+
+The original v1 parity runner now **refuses raw outputs with merely caller-supplied counters**. Genuine study execution uses `run_metered.cjs` with `OPENAI_API_KEY`, an explicitly chosen `GATE_C_MODEL`, and the existing private `GATE_C_BLIND_KEY`. The script calls OpenAI's Responses input-token count endpoint on the *exact assembled input*, sets `max_output_tokens` to fit the 2,000-token ceiling, then makes the Responses request without model tools or source mutation. It captures response ID, HTTP request ID, raw returned `usage.input_tokens` and `usage.output_tokens`, full response JSON, exact prompt and source excerpts, and the preflight count response. The same model, instructions and retrieval interface apply to all twelve arms.
+
+**The accounting validator rejects** a missing provider response, zero input tokens, mismatched count endpoint and response usage, incorrect declared totals, altered source excerpts, hidden graph-only answer hints, a changed prompt, excessive output allowance, an over-budget response, mismatched model configuration, and a fabricated answer detached from the raw provider output. Unit tests use explicitly synthetic fixture records and confirm these refusals, **without treating the fixture as an actual trial**.
+
+Run only in a confidential operator environment (never inside untrusted pull-request CI):
+
+    export OPENAI_API_KEY=...           # secret, never commit
+    export GATE_C_MODEL=...             # one agreed model for all 12 arms
+    export GATE_C_BLIND_KEY=...         # original confidential freeze key
+    node research/nightfall/observatory/gate-c-ryev/run_metered.cjs /absolute/private/frozen/study
+
+API calls can incur charges. The script demands provider credentials and a previously frozen secret allocation, writes restricted-permission intermediate output, and never invents results when these inputs are missing. It currently requires all twelve responses in one completed batch; an interrupted batch retains an explicit partial record and **cannot** count as a completed study.
+
+**Trust boundary:** captured response usage is an actual provider-produced API field when this direct runner executes. A copied JSON trace is still user-editable and **is not a provider-signed attestation**. Independent adjudication should cross-check provider request IDs against service billing/log records when available, archive immutable raw HTTP data securely, and preserve null or failed runs. Source parity is an engineering invariant; measured research improvement awaits genuine trials and blinded grading.
+
+**Reproducible negative controls:** `node research/nightfall/observatory/gate-c-ryev/test_metering.cjs` (synthetic fixture only). Current availability of a model API key has not been established inside this ChatGPT session; no real provider requests or trial results are claimed.
