@@ -158,7 +158,7 @@ try{
   if(width===390 || width===1280){
     await page.goto(origin+"desk.html?claim=phase",{waitUntil:"load"});
     assert.equal(await page.locator(".desk-claim-button").count(),5,"Five canonical research claims visible");
-    assert.match(await page.locator(".desk-detail-heading").innerText(),/phase retrieval/i,"Deep link selects finite-field claim");
+    assert.match(await page.locator(".desk-detail-heading").innerText(),/finite-field reconstruction/i,"Deep link selects finite-field claim");
     assert.equal(await page.locator(".desk-dimension").count(),4,"Four independently scoped evidence dimensions");
     await page.locator("#desk-filter").selectOption("conditional");
     assert.equal(await page.locator(".desk-claim-button").count(),2,"Conditional proof claims separated");
@@ -172,7 +172,7 @@ try{
     await page.reload({waitUntil:"load"});
     assert.equal(await page.locator(".desk-queue-row").count(),1,"Local session queue survives reload");
     assert.match(await page.locator("#desk-notes").inputValue(),/second proof path/,"Session notes persist");
-    assert.match(await page.locator(".desk-detail-heading").innerText(),/phase retrieval/i,"Deep link remains selected");
+    assert.match(await page.locator(".desk-detail-heading").innerText(),/finite-field reconstruction/i,"Deep link remains selected");
     await page.locator(".desk-queue-row input[type=checkbox]").check();
     assert.match(await page.locator("#desk-count").innerText(),/1 marked complete/,"Local completion only");
     const [handoff]=await Promise.all([page.waitForEvent("download"),page.locator("#desk-export-md").click()]);
