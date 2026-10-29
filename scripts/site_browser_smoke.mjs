@@ -444,6 +444,43 @@ try{
     assert.equal(await page.locator("#export-attack").isDisabled(),false,"Adversarial brief exported without theorem status");
     assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth))<=3,"Adversary fits viewport "+width);
   }
+  if(width===390 || width===1280){
+    await page.goto(origin+"referee.html?domain=sidon",{waitUntil:"load"});
+    await page.locator("#sidon-points").fill("1, 2, 3, 5");
+    await page.locator("#send-to-adversary").click();
+    await page.waitForURL(/adversary\.html.*companion_handoff=1/);
+    assert.match(await page.locator("#handoff-note").innerText(),/UNREVIEWED/,"Only unreviewed Referee input transferred");
+    assert.equal(await page.locator("#points").inputValue(),"1, 2, 3, 5","Sidon marks are identical in Adversary");
+    assert.equal(await page.locator("#export-attack").isDisabled(),true,"Import cannot inherit any finite certificate");
+    await page.locator("#run-attack").click();
+    await page.waitForFunction(()=>document.querySelector("#result")?.textContent?.includes("COUNTEREXAMPLE_FOUND"));
+    await page.locator("#property").selectOption("weak-sidon");
+    await page.locator("#send-to-referee").click();
+    assert.match(await page.locator("#handoff-note").innerText(),/TRANSFER REFUSED/,"Distinct Sidon predicates cannot silently transfer");
+    await page.locator("#property").selectOption("four-five");
+    await page.locator("#send-to-referee").click();
+    await page.waitForURL(/referee\.html.*companion_handoff=1/);
+    assert.match(await page.locator("#companion-handoff-note").innerText(),/explicit classical Sidon subset/,"Referee demands fresh maximal-subset obligations");
+    assert.equal(await page.locator("#sidon-points").inputValue(),"1, 2, 3, 5");
+    assert.equal(await page.locator("#sidon-subset").inputValue(),"","No invented subset");
+    assert.equal(await page.locator("#sidon-max").inputValue(),"","No invented finite maximum");
+    assert.equal(await page.locator("#export-receipt").isDisabled(),true,"No verifier status imported");
+
+    await page.goto(origin+"referee.html?domain=overlap",{waitUntil:"load"});
+    const original=await page.locator("#overlap-heights").inputValue();
+    await page.locator("#send-to-adversary").click();
+    await page.waitForURL(/adversary\.html.*companion_handoff=1/);
+    assert.equal(await page.locator("#heights").inputValue(),original,"Finite overlap input identical after companion transfer");
+    assert.equal(await page.locator("#domain").inputValue(),"overlap");
+    assert.equal(await page.locator("#export-attack").isDisabled(),true);
+    await page.locator("#run-attack").click();
+    assert.equal(await page.locator("#export-attack").isDisabled(),false,"Attack requires its own Run action");
+    await page.locator("#send-to-referee").click();
+    await page.waitForURL(/referee\.html.*companion_handoff=1/);
+    assert.equal(await page.locator("#overlap-heights").inputValue(),original,"Referee original input restored by a fresh input-only transfer");
+    assert.equal(await page.locator("#send-claim-lab").isDisabled(),true,"Attack cannot promote evidence in Claim Lab");
+    assert.match(await page.locator("#companion-handoff-note").innerText(),/UNREVIEWED/);
+  }
   assert.deepEqual(faults,[],"Browser failures at "+width+": "+faults.join("; "));
   await page.close();
  }
