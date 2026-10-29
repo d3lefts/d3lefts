@@ -98,3 +98,11 @@
 @media(max-width:760px){.desk-hero{padding:55px 0}.desk-hero h1{font-size:clamp(60px,13vw,90px)}.desk-readout{padding:20px 10px}.desk-readout strong{font-size:33px}.desk-readout span{font-size:8px}.desk-readout small{font-size:9px}.desk-trust,.desk-main,.desk-session-grid,.desk-footer{display:block}.desk-trust>p,.desk-trust>span{display:block;margin-top:10px}.desk-main{padding-top:48px;padding-bottom:56px}.desk-list-pane{padding:0 0 35px}.desk-detail-pane{padding:36px 0 0;border-left:0;border-top:1px solid #9aaf9a}.desk-session{padding:55px 0}.desk-queue{margin-bottom:14px}.desk-footer{padding:55px 0}.desk-footer .desk-steps{margin-top:35px}.desk-dimensions{grid-template-columns:1fr}.desk-open-row{grid-template-columns:1fr}.desk-add{justify-self:start}}
 @media(max-width:380px){.desk-readout strong{font-size:27px}.desk-session-actions button{width:100%}}
 @media(prefers-reduced-motion:reduce){.desk-page *{scroll-behavior:auto!important}}
+
+
+/* Persistent-but-unobtrusive queue access after selecting a proof obligation. */
+.desk-session-shortcut{display:flex;gap:10px;align-items:center;justify-content:center;margin-top:18px;border:1px solid #4a8052;background:#d9ff5e;padding:15px 17px;color:#1d4228;font:600 12px/1.5 var(--mono);scroll-margin-top:65px}
+.desk-session-shortcut:hover{background:#c6ed48}
+.desk-session-shortcut[hidden]{display:none!important}
+#session,#desk-queue-list{scroll-margin-top:65px}
+@media(max-width:760px){.desk-readout span{font-size:10px}.desk-readout small{font-size:10px}.desk-session-shortcut{position:sticky;bottom:10px;z-index:9;box-shadow:0 6px 20px #13261725;padding:15px 12px}.desk-claim-button small{font-size:11px}.desk-search-label{font-size:11px}}

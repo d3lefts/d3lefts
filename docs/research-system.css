@@ -86,3 +86,23 @@
 @media(max-width:960px){.rs-intro{grid-template-columns:1fr;gap:26px}.rs-intro-aside{min-height:0}.pp-hero{grid-template-columns:1fr}.pp-metric{min-height:0}.pp-dimensions{grid-template-columns:repeat(2,1fr)}.ma-grid{grid-template-columns:1fr 65px 1fr}.ma-middle{min-height:580px}.ma-history-row{grid-template-columns:110px 1fr}.ma-history-row>a{grid-column:2}}
 @media(max-width:680px){.rs-crumb{padding-top:22px}.rs-intro{padding:34px 0 42px}.rs-intro h1{font-size:clamp(59px,14vw,85px)}.rs-intro p{font-size:14px}.rs-section{padding:49px 0}.rs-head{display:block;margin-bottom:22px}.rs-head h2{font-size:51px;margin-top:12px}.rs-insight{grid-template-columns:1fr}.pp-picker{padding:16px 0}.pp-hero{padding:35px 0 45px}.pp-hero h1{font-size:61px}.pp-dimensions,.pp-grid{grid-template-columns:1fr}.pp-dimension strong{margin:11px 0}.pp-event{grid-template-columns:1fr;gap:6px}.ma-canvas{padding:15px}.ma-grid{grid-template-columns:1fr 30px 1fr;gap:6px}.ma-middle{font-size:8px;min-height:620px}.ma-node{padding:10px 8px;min-height:109px}.ma-node strong{font-size:12px}.ma-node small,.ma-node span{font-size:8px}.ma-col h3{font-size:9px}.ma-detail{grid-template-columns:1fr;padding:21px}.ma-history-row{grid-template-columns:1fr;gap:7px}.ma-history-row>a{grid-column:auto}.ma-relation{display:block}.ma-relation small{display:block;margin-top:8px}}
 @media(prefers-reduced-motion:reduce){.rs-btn{transition:none}}
+
+
+/* Claim-passport coverage and honest invalid-link handling. */
+.pp-unknown{padding:20px 23px;margin:16px 0 10px;border:1px solid #a57050;border-left:4px solid #87522e;background:#f3ece0;color:#3b3628;display:grid;gap:7px}
+.pp-unknown strong{font:600 12px/1.4 var(--mono)}
+.pp-unknown span{font:13px/1.65 var(--sans)}
+.pp-unknown code{font:600 12px var(--mono);overflow-wrap:anywhere}
+.pp-unknown a,.pp-coverage a,.rs-coverage a{text-decoration:underline;text-underline-offset:3px}
+.pp-unknown[hidden]{display:none!important}
+.pp-coverage{margin:8px 0 15px;font:12px/1.7 var(--sans);color:#59705d;max-width:950px}
+.pp-coverage strong{font-weight:700;color:#304e38}
+.rs-coverage{margin:13px 0 10px;padding:22px 24px;background:#e8f0e6;border:1px solid #bdceba;display:grid;gap:10px}
+.rs-coverage strong{font:600 12px var(--mono);color:#345b3b}
+.rs-coverage p{font:13px/1.75 var(--sans);color:#506a56}
+@media(max-width:680px){
+  .ma-node small,.ma-node span{font-size:10px;line-height:1.4}
+  .ma-col h3{font-size:10px}
+  .pp-unknown{padding:17px}
+  .rs-coverage{padding:19px}
+}

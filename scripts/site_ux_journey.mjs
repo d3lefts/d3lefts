@@ -80,7 +80,9 @@ try{
     assert.ok(await page.locator('a[href="desk.html"]').count()>0);
     assert.ok(await page.locator('a[href="research.html"]').count()>0);
     const sections=await page.locator("main section").count();
-    note("friction","The homepage contains "+sections+" major sections; exploration depth is high, increasing wayfinding burden for unfamiliar visitors.","homepage");
+    assert.equal(await page.locator("#lab-jump-nav a").count(),7);
+    assert.equal(await page.locator(".flagship-context").count(),3);
+    note("improvement","The full homepage still contains "+sections+" sections; a section index offers immediate navigation without truncating content.","homepage");
   });
 
   // 10–20: From a bold numerical result to the fine print.
@@ -113,13 +115,17 @@ try{
     await visit("passport.html?claim=unknown-visitor-id");
     const title=await page.locator("#passport-title").innerText();
     assert.match(title,/Sidon/i);
-    note("friction","Unknown claim IDs silently redirect to Sidon. A curious user may think an intended claim was loaded; consider an explicit invalid-link notice.","passport");
+    assert.equal(await page.locator("#passport-unknown").isVisible(),true);
+    assert.match(await page.locator("#passport-unknown").innerText(),/unknown-visitor-id/);
+    assert.equal(new URL(page.url()).searchParams.get("claim"),"unknown-visitor-id");
+    note("resolved","Unknown claim IDs now show a diagnostic notice while preserving the original link.","passport");
   });
 
   // 20–30: Discover more work and follow typed relationships.
   await step("20–24","Research Library: browse, intersect filters, reset empty search",async()=>{
     await visit("research.html");
     assert.equal(await page.locator(".atlas-card:visible").count(),32);
+    assert.match(await page.locator(".archive-coverage").innerText(),/Thirty-two dossiers.*Five claim passports.*Three original findings/s);
     await page.locator("#atlas-search").fill("SourceBound");
     assert.ok((await page.locator(".atlas-card:visible").count())>=1);
     await page.locator("#atlas-search").fill("");
@@ -209,6 +215,9 @@ try{
     assert.match(await page.locator(".desk-detail-heading").innerText(),/finite.field reconstruction/i);
     const task=page.locator(".desk-open-row .desk-add").first();
     await task.click();
+    assert.equal(await page.locator("#desk-session-shortcut").isVisible(),true);
+    await page.locator("#desk-session-shortcut").click();
+    assert.equal(new URL(page.url()).hash,"#session");
     await page.locator("#desk-notes").fill("Independent span-count audit; try adversarial rank strata before publication.");
     await page.reload({waitUntil:"load"});
     assert.equal(await page.locator(".desk-queue-row").count(),1);

@@ -156,6 +156,9 @@
     $("desk-queued-total").textContent = String(state.items.length).padStart(2,"0");
     $("desk-export-md").disabled = !state.items.length && !state.notes.trim();
     $("desk-export-json").disabled = !state.items.length && !state.notes.trim();
+    const shortcut=$("desk-session-shortcut");
+    shortcut.hidden=state.items.length===0;
+    shortcut.textContent="Review "+state.items.length+" selected check"+(state.items.length===1?"":"s")+" in your session ↓";
   }
   function snapshotItems() {
     return state.items.map(x => {
