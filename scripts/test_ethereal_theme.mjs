@@ -89,6 +89,7 @@ try{
   assert.equal(await page.locator(".nf-process-thread a").count(),5,"Five-stage cross-tool research journey");
   assert.equal(await page.locator('.nf-process-thread a[aria-current="step"]').count(),1,"Research journey has one location marker");
   assert.equal(await page.locator(".nf-observatory-path").count(),2,"Two grounded entry routes are visible before a selection");
+  await page.locator("#observatory").screenshot({path:"browser-artifacts/ethereal-observatory-overview-"+width+".png"});
   assert.equal(await page.locator('#nf-observatory-lenses [aria-pressed="true"]').count(),1,"One active evidence lens");
   assert.equal(await page.locator('.nf-observatory-lenses [data-lens="all"]').getAttribute("aria-pressed"),"true","All sources is the default lens");
   await page.locator('[data-lens="finite-check"]').click();
@@ -119,6 +120,9 @@ try{
   assert.ok(!page.url().includes("claim=phase"),"Clearing selection removes stale deep link");
   await page.locator('[data-lens="all"]').click();
   await page.waitForFunction(()=>document.querySelectorAll(".nf-observatory-edge").length===13);
+  await page.locator('.nf-observatory-node[data-node="symmetry-reduction"]').click();
+  assert.equal(await page.locator('#nf-observatory-inspector a[href="constellation.html?claim=symmetry-reduction"]').count(),1,"Mechanism opens its selected canonical source map");
+  await page.locator('.nf-observatory-node[data-node="symmetry-reduction"]').click();
   assert.equal(await page.locator(".nf-observatory-edge").count(),13,"All typed relationships restored after switching lenses");
 
   await page.locator('.nf-observatory-node[data-node="phase"]').click();

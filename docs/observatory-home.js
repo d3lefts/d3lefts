@@ -115,7 +115,7 @@
    const p=link("Proof Passport ↗","passport.html?claim="+encodeURIComponent(selected));
    if(p)links.append(p);
   }
-  const map=link("Full constellation ↗","constellation.html"+(isClaim?"?claim="+encodeURIComponent(selected):""));
+  const map=link("Full constellation ↗","constellation.html?claim="+encodeURIComponent(selected));
   if(map)links.append(map);
   pane.append(links);
  }
