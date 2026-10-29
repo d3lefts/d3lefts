@@ -69,9 +69,15 @@ Let G be C4-free with |G|>M_n. If its syndrome were zero, it would be odd-square
 
 Run (stdlib Python): \`python3 verify_parity_gap.py\`
 
-- Q4: all 2¹⁷=131,072 distinct 24-square syndromes; exactly 32 nonzero weight-3 words, each the six-dimensional analogue's Q4 single-edge star; next attainable weight 4 (102 words).
+- Q4: all 2¹⁷=131,072 distinct 24-square syndromes; exactly 32 nonzero weight-3 words, each precisely a Q4 single-edge star; next attainable weight 4 (102 words).
 - Q7: independent reconstruction of 128 vertices, 448 edges and 672 squares. All 448 one-edge syndromes are distinct of weight six. All 100,128 unordered two-edge toggles have weights 10 (4,032 cases) or 12 (96,096).
-- Construct an odd-square Q7 graph directly using b(v,d), then improve it by exact vertex switching. Seed 1729 yields 299 edges, 53 switches, minimum degree four. For every 149 absent edges, adding that edge creates a complete 4-cycle; an intentional one-edge addition is rejected. This **does not** certify 304 optimality: the sharp value 304 is an explicitly imported, independently sourced theorem.
+- Construct an odd-square Q7 graph directly using b(v,d), then improve it by exact vertex switching. Seed 1729 (after the 128 gauge controls) yields 301 edges, 63 switches, minimum degree four. For every 147 absent edges, adding that edge creates a complete 4-cycle; an intentional one-edge addition is rejected. This **does not** certify 304 optimality: the sharp value 304 is an explicitly imported, independently sourced theorem.
 - 128 random vertex-switch subsets preserve every odd square exactly. No floating point or external optimizer is used. Failure of any invariant terminates with nonzero exit.
 
 **Proof status discipline:** The general syndrome-gap and saturation proofs are analytic. Finite checker tests support the indexing, boundary cases and sharpness. The Q7 numerical corollary imports the externally stated odd-square M₇=304 result; it must be reviewed in its original source before publication as a novel research claim. The global problem 304≤f(7)≤308 is unchanged.
+
+### Replayed committed-source checkpoint / 29 October 2026
+
+- The committed verifier (SHA-256 `d0a3f69bf85a22951d4f96b344843ad1f4d2ea2edd9fb2f85cb3aafe1bff5eb0`) passed [GitHub Actions run 40837654800](https://github.com/d3lefts/d3lefts/actions/runs/40837654800).
+- The committed implementation intentionally consumes the shared seeded RNG during 128 gauge controls; its deterministic switched odd graph has **301** edges, **63** vertex switches and **147** blocked missing edges. An earlier independent local prototype reset the RNG before greedy switching and produced **299** edges, 53 switches and 149 blocked edges. Both passed their stated graph invariants; this note records the committed CI implementation as authoritative.
+- The 301-edge switched graph is **not** the imported maximum 304, and its construction is a saturation *control*, not an extremal witness. No global 305 feasibility claim follows.
