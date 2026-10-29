@@ -4,3 +4,12 @@
 @media(max-width:1000px){.top nav{margin-left:0}.top .scope-tag{margin-left:auto}.intro{grid-template-columns:1fr .5fr}.intro h1{font-size:clamp(63px,8.5vw,100px)}.command{display:block}.commands{justify-content:flex-start;margin-top:22px}.panel{padding:23px}}
 @media(max-width:750px){main{padding-inline:22px}.top{padding:20px 22px;gap:14px}.top nav{order:3;width:100%;gap:16px}.top .scope-tag{margin-left:auto}.brand{font-size:25px}.brand span:last-child{display:block;margin:7px 0 0}.intro{display:block;padding:58px 0 40px}.intro-art{display:none}.intro h1{font-size:clamp(63px,12vw,91px)}.lede{font-size:16px}.command{padding:28px 0}.grid{grid-template-columns:1fr;padding-top:25px}.coverage{gap:3px;grid-template-columns:26px repeat(9,minmax(0,1fr))}.cell{min-height:22px;font-size:9px}.closing{grid-template-columns:1fr;gap:25px;padding:50px 0 70px}.closing h2{font-size:65px}footer{padding-inline:22px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+/* Shared menu semantics, intentionally implemented without the light-site stylesheet. */
+.menu-toggle{display:none;border:1px solid #688069;background:transparent;color:var(--ink);font:600 11px var(--mono);padding:9px 11px}
+@media(max-width:750px){
+ .menu-toggle{display:block;margin-left:auto}
+ .top .scope-tag{margin-left:0}
+ .top nav{display:none;flex-direction:column;gap:0;width:100%;order:5;margin:0;padding:8px 0}
+ .top nav.open{display:flex}
+ .top nav a{display:block;padding:10px 5px;border-top:1px solid var(--line)}
+}
