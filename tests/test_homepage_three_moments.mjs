@@ -61,6 +61,16 @@ test('Internal homepage fragment destinations remain navigable',()=>{
   assert.ok(html.includes('href="home-dual-experience.css"'),'Dual experience CSS is loaded');
 });
 
+test('Editorial north star is explicit, both experiences are plainspoken, and scientific limits remain visible',()=>{
+  assert.ok(html.includes('id="hero-title-archive">Discovery needs<br><em>witnesses.</em>'));
+  assert.ok(html.includes('id="hero-title">Put the claim<br><em>to the test.</em>'));
+  assert.ok(html.includes('DISCOVERY NEEDS WITNESSES / RESEARCH IN PROGRESS'));
+  for (const stale of ['What survives<br>', 'Before a result,<br>', 'A quiet room.<br>', 'Four chances to fail.', 'The catalogue of relations.'])
+    assert.ok(!html.includes(stale),'Stale copy survived: '+stale);
+  for (const limit of ['external review', 'unproved', 'failed experiment', 'internal exact replay'])
+    assert.ok(html.toLowerCase().includes(limit), 'Evidence qualifier missing: '+limit);
+});
+
 test('Readability and responsive treatments exist in both appearance modes',()=>{
   assert.ok(html.includes('href="home-rhythm.css"'));
   for(const s of [
