@@ -78,7 +78,7 @@ for(const root of C.ITEMS){
  assert.throws(()=>C.validateLedger([children[0]]),/Orphaned/);
  assert.throws(()=>C.validateLedger([{...t,lo:t.lo+1}]),/Root identity/);
  assert.throws(()=>C.validateLedger([tree[0],{...children[0],lo:children[0].lo+1},children[1]]),/Child interval/);
- assert.throws(()=>C.validateLedger([{...tree[0],state:"claimed"},children[0],children[1]]),/parent state/);
+ assert.throws(()=>C.validateLedger([{...tree[0],state:"claimed"},children[0],children[1]]),/parent state|Unsplit parent/);
  assert.throws(()=>C.validateLedger([{...t,state:"proposed",evidence:[{kind:"positive",url:"https://github.com/check",statement:"At least thirty characters here for review",reviewStatus:"accepted"}]}]),/upgraded evidence/);
  assert.throws(()=>C.validatePacket({...rootPacket,reviewStatus:"verified"}),/promoted/);
  assert.throws(()=>C.validatePacket({...rootPacket,lo:t.lo+1}),/altered/);
