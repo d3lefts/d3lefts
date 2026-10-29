@@ -29,6 +29,10 @@ This is a *necessary-condition* proof: it does not need to test new squares invo
 - No two absent edges can be unlocked together after two deletions in any orbit.
 - A separate JavaScript implementation computed the blocker families, pairwise compatibility, all K4s and joint feasibility, reproducing the same seven exceptional orbit indices and zero jointly unlockable K4s. This is *algorithmic independence*, not human refereeing.
 
+**Reproducible input SHA-256:** 2c4a0bfdcbac0d2751a6d2ab3b8b345cd6d4dd2febe437d63cadc2af960168a1 (canonical_180.txt). **Checker SHA-256:** 348cb84a2ecc48073a52687edb06a9c9e964efedee23159f61eb5b5f2e9f51c2 (check.py). **CI:** [GitHub Actions run 40821207509](https://github.com/d3lefts/d3lefts/actions/runs/40821207509) passed the full 180-orbit exact audit and an intentionally invalid 305-edge negative control. Pairwise compatibility edges across all 180 graphs: **20,668**.
+
+**Symmetry corollary (conditional on the source orbit classification):** cube automorphisms preserve edge count, C4-freeness and deletion distance. Minamoto's independently archived orbit census reports 180 distinct orbits containing **34,227,200** labelled graphs in total. Thus the same four-deletion exclusion extends to all 34,227,200 *images of these representatives*, not to all possible 304-edge graphs. The labelled count is inherited from the upstream census, not recomputed by this checker.
+
 **Run:** from this directory, python3 check.py. Standard library only; prints a JSON result including SHA-256 of the exact canonical_180.txt bytes. The pull-request CI runs this verifier.
 
 ## Mechanism and limits
