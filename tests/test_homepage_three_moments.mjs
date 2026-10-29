@@ -52,7 +52,8 @@ test('Internal homepage fragment destinations remain navigable',()=>{
   for(const m of html.matchAll(/href="#([a-z0-9_-]+)"/gi))
     assert.ok(ids.has(m[1]),'#'+m[1]);
   assert.ok(count(html,/href="/g)>=95,'Research archive URLs were lost');
-  assert.equal(count(html,/<section\b/g)-count(html,/class="nf-dual-index/g)-count(html,/class="nf-experience nf-experience-(?:archive|underbelly) nf-dual-colophon/g),17,'The 17 original source sections remain intact');
+  assert.equal(count(html,/<section\b/g)-count(html,/class="nf-dual-index/g)-count(html,/class="nf-experience nf-experience-(?:archive|underbelly) nf-dual-colophon/g)-count(html,/id="nf-scroll-cinema"/g),17,'The 17 original source sections remain intact beyond the new visual chapter');
+  assert.equal(count(html,/id="nf-scroll-cinema"/g),1,'One visual-only transition adds to—not replaces—the original source sections');
   assert.equal(count(html,/class="nf-experience nf-experience-(?:archive|underbelly) nf-dual-colophon/g),2,'Two distinct concluding editorial handoffs');
   assert.equal(count(html,/class="nf-dual-index/g),2,'Two mutually exclusive editorial entrances are present');
   const dual=readFileSync('docs/home-dual-experience.css','utf8');
