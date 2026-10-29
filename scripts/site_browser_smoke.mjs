@@ -132,12 +132,12 @@ try{
   if(width===390 || width===1280){
     await page.goto(origin+"exact-research.html",{waitUntil:"load"});
     await page.locator("#werner-run").click();
-    assert.match(await page.locator("#werner-output").innerText(),/"qExact": "-3\\/16"/,"Rank-three obstruction exact value");
+    assert.ok((await page.locator("#werner-output").innerText()).includes('"qExact": "-3/16"'),"Rank-three obstruction exact value");
     assert.match(await page.locator("#werner-output").innerText(),/"rankAtMostTwo": false/,"Rank-three scope fence");
     await page.locator("#werner-rank2").click();
-    assert.match(await page.locator("#werner-output").innerText(),/"qExact": "7\\/2"/,"Rank-two Lemnis physical form");
+    assert.ok((await page.locator("#werner-output").innerText()).includes('"qExact": "7/2"'),"Rank-two Lemnis physical form");
     const [wm]=await Promise.all([page.waitForEvent("download"),page.locator("#werner-export").click()]);
-    assert.match(wm.suggestedFilename(),/werner_exact_receipt\\.json$/,"Portable exact Werner receipt");
+    assert.equal(wm.suggestedFilename(),"NIGHTFALL_werner_exact_receipt.json","Portable exact Werner receipt");
     await page.locator("#field-run").click();
     assert.match(await page.locator("#field-output").innerText(),/"phaseOrbits": 4/,"F25 independent phase ambiguity");
     await page.locator("#field-ambiguous").click();

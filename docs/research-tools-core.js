@@ -42,6 +42,7 @@
       const index = v.findIndex(x => x !== 0n);
       if (index !== -1) {
         pivots.push({ index, v });
+        pivots.sort((a,b)=>a.index-b.index); // eliminate in pivot-column order
         if (pivots.length >= 3) return { rank: "at least 3", rankAtMostTwo: false };
       }
     }
