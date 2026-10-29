@@ -1,0 +1,33 @@
+name: NIGHTFALL hour-equivalent visitor journey
+on:
+  pull_request:
+    paths:
+      - "docs/**"
+      - "scripts/site_ux_journey.mjs"
+      - ".github/workflows/ux-visitor-journey.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  journey:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install headless Chromium driver
+        run: npm install --no-save --no-package-lock playwright-core@1.56.1
+      - name: Parse and execute simulated 60-minute informed-visitor exploration
+        run: |
+          node --check scripts/site_ux_journey.mjs
+          CHROME_BIN="$(command -v google-chrome)" node scripts/site_ux_journey.mjs
+      - name: Archive actual browser screenshots, chapter timeline and findings
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-curious-user-session
+          path: ux-journey-artifacts/
+          if-no-files-found: warn
+          retention-days: 30
