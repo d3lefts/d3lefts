@@ -487,7 +487,7 @@ try{
     assert.equal(await page.locator("#lab-jump-nav a").count(),7,"Long laboratory has seven topical jumps");
     assert.equal(await page.locator(".nf-section-index").evaluate(el=>el.open),false,"Section directory collapsed by default");
     assert.equal(await page.locator(".nf-home-toolbox").evaluate(el=>el.open),false,"Specialist directory collapsed by default");
-    assert.equal(await page.locator(".hero-actions a").count(),2,"Hero only offers result and contribution paths");
+    assert.equal(await page.locator(".hero-actions a:visible").count(),2,"The active editorial homepage offers exactly two meaningful first decisions");
     await page.locator(".nf-section-index summary").click();
     assert.equal(await page.locator("#lab-jump-nav").isVisible(),true,"Open section index retains all topical links");
 
