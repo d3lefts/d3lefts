@@ -46,7 +46,7 @@ for n,r in product(range(1,6),range(2,5)):
         phases=([1,-1] if r==2 else [1,1,-2] if r==3 else [1,-1,1j,-1j])
         C=combine(*(diagonal(n,i,z) for i,z in enumerate(phases)))
         assert q(C,n,t)==0
-print("PASS: 20 sharp endpoint tests n=1..5,r=2..4")
+print("PASS: 15 sharp endpoint tests n=1..5,r=2..4")
 
 for n in (1,3,5):
     C=combine(*(diagonal(n,i,1) for i in range(3)))
