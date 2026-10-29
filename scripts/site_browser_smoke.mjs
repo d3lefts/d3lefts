@@ -5,7 +5,7 @@ import {join,normalize,resolve,sep} from "node:path";
 import {chromium} from "playwright-core";
 
 const root=resolve("docs");
-const pages=["index.html","living-paper.html","join.html","review.html","evidence.html","agenda.html","research.html","exact-research.html","desk.html","frontier.html"];
+const pages=["index.html","living-paper.html","join.html","constellation.html","review.html","evidence.html","agenda.html","research.html","exact-research.html","desk.html","frontier.html"];
 const types={".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".svg":"image/svg+xml"};
 const server=createServer(async (req,res)=>{
  try{
@@ -610,6 +610,39 @@ try{
     await page.reload({waitUntil:"load"});
     assert.match(await page.locator("#history").innerText(),/HUMAN_REDIRECTION/,"Reviewed research persists and replays");
     assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth))<=3,"Living Investigation horizontal overflow at "+width);
+  }
+
+  if(width===390 || width===1280){
+   await page.goto(origin+"constellation.html",{waitUntil:"load"});
+   assert.equal(await page.locator(".co-node").count(),11,"Exactly six canonical claims and five mechanisms");
+   assert.equal(await page.locator("#co-count-claims").innerText(),"06","Claim count sourced from registry");
+   assert.equal(await page.locator("#co-count-edges").innerText(),"13","Thirteen source-grounded relationships");
+   assert.equal(await page.locator(".co-relation").count(),6,"Representative relationships by default");
+   assert.equal(await page.locator("body").getAttribute("data-theme"),"dark","Dusk first paint is explicit");
+   await page.locator("#co-theme").click();
+   assert.equal(await page.locator("body").getAttribute("data-theme"),"light","Appearance toggle changes skin");
+   assert.equal(await page.locator("#co-theme").getAttribute("aria-pressed"),"false","Theme state accessible");
+   await page.reload({waitUntil:"load"});
+   assert.equal(await page.locator("body").getAttribute("data-theme"),"light","Appearance persists locally");
+   await page.locator('[data-co-filter="open-premise"]').click();
+   assert.equal(await page.locator(".co-relation").count(),3,"Open premises stay separately classified");
+   assert.equal(await page.locator('[data-co-filter="open-premise"]').getAttribute("aria-pressed"),"true");
+   await page.locator('[data-node="phase"]').click();
+   assert.match(await page.locator("#co-inspector-scope").innerText(),/span-count/i,"Foundational unproved gate visible");
+   assert.equal(await page.locator(".co-relation").count(),1,"Selected node is connected to only its source-linked premise");
+   assert.match(await page.locator(".co-relation").first().innerText(),/UNRESOLVED PREMISE/);
+   assert.equal(await page.locator('#co-inspector-links a[href="passport.html?claim=phase"]').count(),1,"Canonical Proof Passport deep-link available");
+   await page.evaluate(()=>localStorage.setItem("nightfall.journey.v1",JSON.stringify({
+    version:1,rootId:"NF-156-184-9",assignmentId:"NF-156-184-9",interest:"proof",notes:{"NF-156-184-9":"Independent local hypothesis"},evidence:{}
+   })));
+   await page.reload({waitUntil:"load"});
+   assert.match(await page.locator("#co-work-tag").innerText(),/LOCAL UNREVIEWED/,"Constellation never promotes browser state");
+   assert.match(await page.locator("#co-work-name").innerText(),/Nine marks/);
+   await page.locator("#co-work-action").click();
+   await page.waitForURL(/join\.html#workspace/);
+   assert.match(await page.locator("#join-notes").inputValue(),/Independent local hypothesis/,"Local investigation is resumed intact");
+   await page.evaluate(()=>localStorage.removeItem("nightfall.journey.v1"));
+   assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth))<=3,"Constellation fits "+width+"px screen");
   }
   assert.deepEqual(faults,[],"Browser failures at "+width+": "+faults.join("; "));
   await page.close();
