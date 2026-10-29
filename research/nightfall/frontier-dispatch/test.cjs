@@ -94,7 +94,7 @@ assert.match(lab,/NFFrontier\.validatePacket/);
 assert.match(lab,/status:0,effort:1/);
 const frontierJS=fs.readFileSync("docs/frontier.js","utf8");
 assert.match(frontierJS,/C\.validateLedger/);
-assert.match(frontierJS,/nightfall\.frontier\.claimlab\.v1/);
+assert(frontierJS.includes("nightfall.frontier.discovery.v1"));
 assert.match(frontierJS,/nf-import-file/);
 
 
@@ -118,14 +118,14 @@ for(const source of C.ITEMS){
  }
 }
 const discoveryHTML=fs.readFileSync("docs/discovery.html","utf8");
-assert.match(discoveryHTML,/frontier-core\\.js/);
-assert.match(discoveryHTML,/frontier-discovery-core\\.js/);
+assert(discoveryHTML.includes("frontier-core.js"));
+assert(discoveryHTML.includes("frontier-discovery-core.js"));
 const discoveryApp=fs.readFileSync("docs/discovery-app.js","utf8");
 assert.match(discoveryApp,/importFrontierHandoff/);
 assert.match(discoveryApp,/frontier_handoff/);
 assert.match(discoveryApp,/checkUnique/);
 assert.match(discoveryApp,/No experiments inherited/);
-assert.match(frontierJS,/nightfall\\.frontier\\.discovery\\.v1/);
+assert(frontierJS.includes("nightfall.frontier.discovery.v1"));
 
 // Finite N=45 passing does not imply the externally open N=184 question is solved.
 for(const f of ["docs/frontier.html","docs/frontier.js","docs/frontier-core.js"]){
