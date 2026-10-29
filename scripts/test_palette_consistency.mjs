@@ -30,6 +30,7 @@ const deprecated=[
 ];
 let browser;
 const allSurfaceLeaks=[];
+const allCanvasLeaks=[];
 try{
  browser=await chromium.launch({
   headless:true,executablePath:process.env.CHROME_BIN||"/usr/bin/chromium",
@@ -73,7 +74,7 @@ try{
        overflow:document.documentElement.scrollWidth-innerWidth};
     },deprecated);
     const expected=mode==="dusk"?"rgb(4, 6, 11)":"rgb(40, 25, 15)";
-    assert.equal(summary.bg,expected,p+" "+mode+" canvas");
+    if(summary.bg!==expected)allCanvasLeaks.push({page:p,mode,width,bg:summary.bg,expected});
     assert.equal(summary.theme,mode,p+" expected mode");
     assert.ok(summary.overflow<=4,p+" "+mode+" "+width+"px overflow "+summary.overflow);
     if(summary.leaks.length)allSurfaceLeaks.push({page:p,mode,width,leaks:summary.leaks});
@@ -86,6 +87,7 @@ try{
    await context.close();
   }
  }
+ assert.deepEqual(allCanvasLeaks,[],"Unexpected theme canvases: "+JSON.stringify(allCanvasLeaks));
  assert.deepEqual(allSurfaceLeaks,[],"Visible obsolete surfaces "+allSurfaceLeaks.length+" pages: "+JSON.stringify(allSurfaceLeaks.slice(0,45)));
  const css=await readFile(join(root,"two-skies.css"),"utf8");
  const matches=[...css.matchAll(/var\(--nf-oxblood-rare\)/g)];
