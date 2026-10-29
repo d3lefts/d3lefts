@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#18221e">
+<meta name="description" content="NIGHTFALL Judgment Provenance: a proposed randomized test of whether blind, precommitted review reduces arbitrary AI influence while preserving research quality. No human outcomes are reported.">
+<meta property="og:title" content="Judgment Provenance — NIGHTFALL Research Methods">
+<link rel="canonical" href="https://d3lefts.github.io/d3lefts/judgment-provenance.html">
+<title>Judgment Provenance — NIGHTFALL</title>
+<link rel="stylesheet" href="site.css"><link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script src="site.js" defer></script>
+<style>
+.jp-hero{padding:80px 0 65px;border-bottom:1px solid var(--line)}
+.jp-kicker{font:600 12px var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.jp-hero h1{font:400 clamp(58px,9vw,130px)/.94 var(--serif);letter-spacing:-.04em;max-width:1100px;margin:24px 0 30px}
+.jp-hero h1 em{font-weight:400;color:#638474}
+.jp-lead{font-size:clamp(18px,2vw,23px);line-height:1.55;max-width:830px}
+.jp-status{font:600 12px var(--mono);letter-spacing:.04em;margin-top:24px;color:var(--muted)}
+.jp-section{padding:58px 0;border-bottom:1px solid var(--line)}
+.jp-section h2{font:400 clamp(37px,5vw,65px)/1.05 var(--serif);margin:0 0 25px}
+.jp-section p{max-width:860px;line-height:1.7}
+.jp-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:30px}
+.jp-grid article{border:1px solid var(--line);padding:25px;min-height:220px}
+.jp-grid article span{font:600 11px var(--mono);color:var(--muted)}
+.jp-grid h3{font:400 31px/1.15 var(--serif);margin:18px 0}
+.jp-grid p{font-size:15px;margin:0;line-height:1.6}
+.jp-links{display:flex;flex-wrap:wrap;gap:15px;margin:26px 0 0}
+.jp-links a{padding:12px 17px;border:1px solid currentColor;font-size:14px;text-decoration:none}
+.jp-links a:focus-visible{outline:3px solid #6a9477;outline-offset:3px}
+.jp-table{width:100%;border-collapse:collapse;margin-top:24px}
+.jp-table th,.jp-table td{text-align:left;border-bottom:1px solid var(--line);padding:17px 14px 17px 0;vertical-align:top}
+.jp-table th{font-family:var(--mono);font-size:12px;letter-spacing:.05em}
+@media(max-width:740px){.jp-hero{padding:45px 0}.jp-grid{grid-template-columns:1fr}.jp-grid article{min-height:auto}.jp-section{padding:45px 0}.jp-table{font-size:14px}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a><div class="topline"></div>
+<header class="header"><div class="wrap header-inner">
+<a href="./" class="brand" aria-label="NIGHTFALL homepage"><span class="mark" aria-hidden="true">N∕F</span><span class="brand-copy">NIGHTFALL <span>PHASESHIFT / RESEARCH METHODS</span></span></a>
+<button type="button" class="menu-toggle" id="menu-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">MENU +</button>
+<nav class="nav" id="site-nav" aria-label="Primary navigation">
+<a href="./#flagships">Results</a><a href="join.html#method">The process</a><a href="join.html#assignment">Join research</a><a href="review.html">Independent review</a><a class="nav-call" href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/judgment-provenance-2026-10-29/README.md" target="_blank" rel="noopener">Protocol ↗</a>
+</nav></div></header>
+<main id="main">
+<section class="jp-hero wrap">
+<p class="jp-kicker">Methods / proposed experiment / JP-01</p>
+<h1>Who made<br><em>the judgment?</em></h1>
+<p class="jp-lead">A correct calculation can still conceal the origin of a consequential choice. We are designing a randomized test of whether blind, precommitted adversarial review protects independent scientific judgment while preserving the quality of the research.</p>
+<p class="jp-status">STATUS / PREREGISTRATION DRAFT · NO HUMAN STUDY RUN · NO EFFECTIVENESS CLAIM</p>
+</section>
+<section class="jp-section wrap" aria-labelledby="jp-study">
+<h2 id="jp-study">Three ways to review one decision.</h2>
+<p>The same frozen evidence is presented under three review protocols. In each condition, an agent is randomly assigned an honest, defensible analytical preference. We measure whether that arbitrary preference changes the analyst's final methodological choice.</p>
+<div class="jp-grid">
+<article><span>01 / ORDINARY</span><h3>Agent-led review</h3><p>The analyst receives an evidence-supported recommendation from a research agent.</p></article>
+<article><span>02 / ADVERSARY</span><h3>Visible challenge</h3><p>An opposing agent makes the case for a plausible alternative, with arguments attributed.</p></article>
+<article><span>03 / BLIND</span><h3>Independent judgment first</h3><p>The analyst freezes a provisional view before the lead recommendation appears. A source-blind adversarial assessment follows.</p></article>
+</div></section>
+<section class="jp-section wrap" aria-labelledby="jp-gates">
+<h2 id="jp-gates">Two claims. Two evidence gates.</h2>
+<p>First measure the difference between the influence of randomized agent preferences under ordinary and blind review. Then independently grade methodological errors. An intervention that merely makes reviewers disagree with agents, while increasing errors, fails our scientific goal.</p>
+<table class="jp-table"><thead><tr><th>TEST</th><th>CRITERION</th><th>CURRENT STATUS</th></tr></thead><tbody>
+<tr><td>Judgment influence</td><td>Predeclared difference in preference-induced choice shifts, clustered by participant</td><td>Unmeasured</td></tr>
+<tr><td>Quality preservation</td><td>Blindly graded severe error rate with a separately justified noninferiority margin</td><td>Unmeasured</td></tr>
+<tr><td>Process integrity</td><td>Frozen prompts, randomization manifest, timestamps, leakage audit, independent scoring</td><td>Protocol under review</td></tr>
+</tbody></table>
+</section>
+<section class="jp-section wrap" aria-labelledby="jp-evidence">
+<h2 id="jp-evidence">The current evidence boundary.</h2>
+<p>Anthropic's October 2026 study reported strong influence of randomly assigned agent preferences on intermediate analytic choices. Its effect on the final policy decision was statistically inconclusive under the registered primary estimator. NIGHTFALL's intervention is a proposed extension, with zero recruited participants and zero empirical intervention results.</p>
+<p>A standard-library checker and synthetic mutation tests are provided to verify the arithmetic and data contract. Passing those software tests cannot establish that real reviewers were randomized, blinded, independent, or effective.</p>
+<div class="jp-links">
+<a href="https://www.anthropic.com/research/agents-judgment-calls" target="_blank" rel="noopener">Foundational study ↗</a>
+<a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/judgment-provenance-2026-10-29/README.md" target="_blank" rel="noopener">Read full protocol ↗</a>
+<a href="https://github.com/d3lefts/d3lefts/blob/main/scripts/check_judgment_provenance.py" target="_blank" rel="noopener">Inspect checker ↗</a>
+<a href="review.html">Independent review ↗</a>
+</div></section>
+</main>
+<footer class="footer"><div class="wrap footer-bottom"><span>© 2026 Devin J. Wright · NIGHTFALL / CONSTELLATION</span><span><a href="join.html#assignment">Join research</a> · <a href="review.html">Review</a> · <a href="./">Homepage</a></span></div></footer>
+</body></html>
