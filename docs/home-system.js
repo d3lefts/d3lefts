@@ -29,7 +29,7 @@
   const chosen=new Set(C.SIDON_SUBSET.map(String));
   const group=$("#sidon-witness"),toggle=$("#sidon-toggle");
   group.innerHTML=C.SIDON_WITNESS.map((x,i)=>'<span class="sf-point'+(chosen.has(String(x))?' chosen':'')+'" role="listitem" title="Integer coordinate '+esc(x)+'" aria-label="Point '+(i+1)+', '+esc(x)+(chosen.has(String(x))?', in the explicit 17-point Sidon subset':'')+'">'+String(i+1).padStart(2,"0")+'</span>').join("");
-  const render=()=>{const only=toggle?.getAttribute("aria-pressed")==="true";group.classList.toggle("show-subset",only);if(toggle)toggle.textContent=only?"Show all 30 points ↺":"Highlight 17-point subset ↗"};
+  const render=()=>{const only=toggle?.getAttribute("aria-pressed")==="true";group.classList.toggle("show-subset",only);if(toggle){toggle.disabled=false;toggle.removeAttribute("title");toggle.textContent=only?"Show all 30 points ↺":"Highlight 17-point subset ↗"}};
   toggle?.addEventListener("click",()=>{toggle.setAttribute("aria-pressed",String(toggle.getAttribute("aria-pressed")!=="true"));render()});
   render();
  }
