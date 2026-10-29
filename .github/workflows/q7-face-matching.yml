@@ -1,0 +1,74 @@
+name: RYEV Q7 exact bipartite face recombination
+on:
+  push:
+    branches:
+      - "ryev/q7-exact-face-matching-20261029"
+  pull_request:
+    paths:
+      - "research/nightfall/projects/erdos/q7-face-matching-20261029/**"
+      - "research/nightfall/projects/erdos/q7-global-face-20261029/canonical_180.txt"
+      - ".github/workflows/q7-face-matching.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exhaustive-pair-recombination:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Parse checker and adversarial oracle
+        run: |
+          python3 -m py_compile research/nightfall/projects/erdos/q7-face-matching-20261029/matching.py
+          python3 -m py_compile research/nightfall/projects/erdos/q7-face-matching-20261029/test_matching.py
+      - name: All Q3 matching and invalid square oracle controls
+        run: |
+          python3 research/nightfall/projects/erdos/q7-face-matching-20261029/test_matching.py | tee /tmp/matching-oracle.log
+      - name: Complete fixed catalogue face-pair audit
+        run: |
+          python3 research/nightfall/projects/erdos/q7-face-matching-20261029/matching.py | tee /tmp/matching-result.json
+          grep -q 'CATALOGUE_RECOMBINATION_UPPER_BOUND_304' /tmp/matching-result.json
+          python3 -m json.tool /tmp/matching-result.json >/dev/null
+      - name: Independent pure-coordinate C4 check on constructed best join
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib
+          p=Path('research/nightfall/projects/erdos/q7-face-matching-20261029/best_join_edges.txt')
+          data=p.read_bytes()
+          assert len(data.splitlines())==304
+          E={tuple(map(int,line.split())) for line in data.decode().splitlines()}
+          assert len(E)==304
+          assert all(0<=a<b<128 and (a^b).bit_count()==1 for a,b in E)
+          squares=0
+          for a in range(7):
+           for b in range(a+1,7):
+            for v in range(128):
+             if v & ((1<<a)|(1<<b)):continue
+             u,w,z=v|(1<<a),v|(1<<b),v|(1<<a)|(1<<b)
+             sq={(v,u),(v,w),(u,z),(w,z)}
+             assert not sq.issubset(E)
+             squares+=1
+          assert squares==672
+          # Independent path-based C4 oracle: any two vertices have at most
+          # one common neighbor (a C4 gives two distinct two-edge routes).
+          neighbors=[set() for _ in range(128)]
+          for u,v in E:
+           neighbors[u].add(v);neighbors[v].add(u)
+          for u in range(128):
+           for v in range(u+1,128):
+            if (u^v).bit_count()==2:
+             assert len(neighbors[u]&neighbors[v])<=1
+          print('INDEPENDENT 304-EDGE C4 AUDIT PASSED',hashlib.sha256(data).hexdigest())
+          PY
+      - name: Archive positive join and exact-pair outcome
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ryEV-q7-bipartite-face-pair-receipts
+          path: |
+            /tmp/matching-oracle.log
+            /tmp/matching-result.json
+            research/nightfall/projects/erdos/q7-face-matching-20261029/best_join_edges.txt
+          if-no-files-found: warn
+          retention-days: 90
