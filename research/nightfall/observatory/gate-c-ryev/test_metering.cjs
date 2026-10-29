@@ -20,7 +20,7 @@ const row={blindId:job.blindId,taskId:job.taskId,inputSha256:job.inputSha256,
  startedAt:"2026-10-29T03:00:00Z",finishedAt:"2026-10-29T03:01:00Z",
  usageEvents:[{inputTokens:count,outputTokens:out,requestId:response.id,source:"provider.response.usage"}],
  retrievalEvents:[{query:job.prompt,response:source,responseSha256:M.sha(JSON.stringify(source))}],otherToolCalls:2,
- providerTrace:{transport:"openai-responses-http-v1",model,payload,inputCountRaw:{object:"response.input_tokens",input_tokens:count},
+ providerTrace:{transport:"openai-responses-http-v1",model,payload,countPayload:{model:payload.model,input:payload.input,instructions:payload.instructions,tools:payload.tools},inputCountRaw:{object:"response.input_tokens",input_tokens:count},
   inputCountRequestId:"req_fixture_input",requestId:"req_fixture_output",response,
   responseSha256:M.sha(JSON.stringify(response)),requestPayloadSha256:M.sha(JSON.stringify(payload))}};
 function rejects(name,fn){
