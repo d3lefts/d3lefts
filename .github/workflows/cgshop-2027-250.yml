@@ -41,6 +41,13 @@ jobs:
             --output cgshop2027_challenge_v0.zip
           unzip -tq cgshop2027_challenge_v0.zip
           sha256sum cgshop2027_challenge_v0.zip | tee challenge_sha256.txt
+      - name: Archive official benchmark for offline independent analysis
+        uses: actions/upload-artifact@v4
+        with:
+          name: cgshop2027-official-250-input
+          path: cgshop2027_challenge_v0.zip
+          if-no-files-found: error
+          retention-days: 7
       - name: Solve and officially verify all 250 instances
         shell: bash
         run: |
