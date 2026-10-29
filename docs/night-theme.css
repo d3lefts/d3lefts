@@ -1,0 +1,77 @@
+/* NIGHTFALL / CONSTELLATION — dual visual modes. Night is default.
+   Overrides preserve the paper, ink, Instrument Serif and chartreuse identity. */
+html[data-nf-theme="night"]{
+ color-scheme:dark;--paper:#101a15;--ink:#edf2e7;--line:#354c3d;
+ --soft:#1e3025;--muted:#adbdac;--accent:#d9ff5e;--deep:#2c4937;
+ --bg:#101a15;--panel:#1b2b21;--side:#14231a;--panel2:#25382b;
+ --text:#edf2e7;--lime:#d9ff5e;--surface:#18251e;--surface2:#202f25;
+ --surface3:#273a2c;--subtle:#9aaf9d;--mint:#d9ff5e;
+ --ia-bg:#101a15;--ia-ink:#edf2e7;--ia-muted:#b0c5af;--ia-line:#385440;--ia-dark:#14241a;
+}
+html[data-nf-theme="night"] body{background:#101a15;color:#edf2e7}
+html[data-nf-theme="night"] :is(.header,.masthead,.top,.ia-header){background:#101a15;border-color:#354c3d}
+html[data-nf-theme="night"] :is(.hero-description,.lede,.section-intro,.research-desc,.desk-hero p,.desk-trust p,.orch-hero p,.ia-hero p){color:#bdcdb9}
+html[data-nf-theme="night"] :is(.hero-title em,.intro h1 em,.section-title em,.orch-hero h1 em,.desk-hero h1 em,.ia-hero h1 em){color:#c1ed79}
+html[data-nf-theme="night"] :is(.feature,.feature.lime,.flagship-card,.atlas-card,.review-card,.method,.research-row:hover,.orch-panel,.orch-lane,.orch-note,.desk-claim-button,.desk-claim-button[aria-pressed="true"]){
+ background:#203126;color:#eef4e8;border-color:#405a45;
+}
+html[data-nf-theme="night"] :is(.feature.dark,.flagship-dark){background:#17271e;color:#f2f7ed;border-color:#4e704c}
+html[data-nf-theme="night"] :is(.feature.lime,.flagship-sage){background:#334a2c;color:#f5faee}
+html[data-nf-theme="night"] :is(.research-row,.desk-detail-pane,.desk-hero,.desk-trust){border-color:#3b5140}
+html[data-nf-theme="night"] :is(.research-status,.research-arrow,.desk-kicker,.rs-kicker,.ia-eyebrow){color:#bce28b}
+html[data-nf-theme="night"] :is(.filter,.search,#desk-search,#desk-filter,.orch-panel input,.orch-panel textarea,.orch-panel select,.review-controls select,.review-controls textarea){
+ background:#16261c;color:#eef4e8;border-color:#537057;
+}
+html[data-nf-theme="night"] :is(.feature p,.research-desc,.desk-pane-head p,.desk-trust p,.desk-claim-button small,.bar .lead){color:#c0d1bf;opacity:1}
+html[data-nf-theme="night"] .brand .mark{background:#d9ff5e;color:#102018}
+html[data-nf-theme="night"] .ia-hero p strong{color:#f4f8ed}
+html[data-nf-theme="night"] .ia-hero em{color:#d9ff5e}
+html[data-nf-theme="night"] .ia-orbit{border-color:#547b53}
+html[data-nf-theme="night"] .orch-button.alt{color:#d9ff5e}
+html[data-nf-theme="night"] :is(.desk-claim-button,.desk-claim-button[aria-pressed="true"]){box-shadow:none}
+html[data-nf-theme="night"] :is(.desk-claim-button strong,.desk-claim-button>span){color:#eff6e7}
+html[data-nf-theme="night"] :is(.nav-call,.button,.primary-link,.run-button){border-color:#d9ff5e}
+html[data-nf-theme="night"] :is(.evidence-sources,.footer,.scope){color:#b8cbb7}
+html[data-nf-theme="night"] ::selection{background:#d9ff5e;color:#101a15}
+/* Dark-native workbenches already use night surfaces. Paper is a deliberate alternative. */
+html[data-nf-theme="paper"]{color-scheme:light}
+html[data-nf-theme="paper"].nf-living{
+ --bg:#f5f4ee;--panel:#e7eee3;--line:#c0d0bf;--ink:#18271d;--muted:#526a58;--accent:#49692d;
+}
+html[data-nf-theme="paper"].nf-living body{background:#f5f4ee;color:#18271d}
+html[data-nf-theme="paper"].nf-living :is(.lede,.question-prose,.closing div:last-child p,.history-entry p,.residue-entry p,.factline span){color:#3c5743}
+html[data-nf-theme="paper"].nf-living :is(.commands .secondary,.cell,.review-controls select,.review-controls textarea){background:#e1e9df;color:#18271d;border-color:#b2c6ae}
+html[data-nf-theme="paper"].nf-living :is(.cell.found,.cell.surprise){background:#d4e7b1;color:#18271d}
+html[data-nf-theme="paper"].nf-living .commands .primary{background:#233f2b;color:#f5f4ee;border-color:#233f2b}
+html[data-nf-theme="paper"].nf-living :is(.panel-top,.scope-tag,.history-id,.residue-kind){color:#456534}
+html[data-nf-theme="paper"].nf-living .intro-art{filter:brightness(.68)}
+html[data-nf-theme="paper"].nf-discovery{
+ --bg:#f5f4ee;--side:#e9eee4;--paper:#f5f4ee;--panel:#e0eadd;--panel2:#e8eee4;--line:#b9c9b9;
+ --text:#1a2c20;--soft:#426044;--muted:#526b56;--lime:#446927;
+}
+html[data-nf-theme="paper"].nf-discovery body{background:#f5f4ee;color:#1a2c20}
+html[data-nf-theme="paper"].nf-discovery :is(.navitem,.portfolio,.side-bottom,.side-bottom small){color:#2f4c35}
+html[data-nf-theme="paper"].nf-discovery :is(.navitem.selected,.portfolio.active,.navitem:hover){background:#d8e6d1;color:#294a26}
+html[data-nf-theme="paper"].nf-claim{
+ --bg:#f5f4ee;--surface:#f2f3ea;--surface2:#e6eddf;--surface3:#dae8d5;--text:#192c20;
+ --muted:#4c6553;--subtle:#506d57;--line:#c0cfbd;--mint:#305c2a;
+}
+html[data-nf-theme="paper"].nf-claim body{background:#f5f4ee;color:#192c20}
+html[data-nf-theme="paper"].nf-claim :is(.sidebar,.nav button.active,.nav button:hover){background:#e0e9db;color:#1e3927}
+html[data-nf-theme="paper"].nf-claim .nav button{color:#385a40}
+html[data-nf-theme="paper"].nf-claim .btn{background:#e4ece0;color:#1b3623}
+html[data-nf-theme="paper"].nf-claim .btn.primary{background:#305c2a;color:white}
+html[data-nf-theme="night"].nf-claim :is(.sidebar,.nav button.active){background:#14231a}
+html[data-nf-theme="night"].nf-claim .brandMark{background:#253b29;color:#d9ff5e}
+/* A visible, accessible theme control and cross-tool research return rail. */
+.nf-shell-controls{position:fixed;z-index:1500;right:16px;bottom:16px;display:flex;gap:9px;align-items:center;font:600 11px/1.2 "IBM Plex Mono",ui-monospace,monospace}
+.nf-theme-toggle{background:#d9ff5e;color:#102017;border:1px solid #d9ff5e;padding:11px 14px;min-height:42px;box-shadow:0 6px 24px #0004;cursor:pointer;white-space:nowrap}
+html[data-nf-theme="paper"] .nf-theme-toggle{background:#17291e;color:#f5f4ee;border-color:#17291e}
+.nf-theme-toggle:focus-visible,.nf-journey-return:focus-visible{outline:3px solid #91bd57;outline-offset:3px}
+.nf-journey-return{position:fixed;z-index:1499;bottom:17px;left:16px;display:flex;gap:12px;align-items:center;max-width:min(430px,calc(100vw - 150px));padding:10px 14px;text-decoration:none;background:#21362a;color:#eef5e7;border:1px solid #70916b;box-shadow:0 8px 30px #0005;font:500 11px/1.45 "IBM Plex Mono",monospace}
+.nf-journey-return strong{color:#d9ff5e;font-weight:600}
+.nf-journey-return span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+html[data-nf-theme="paper"] .nf-journey-return{background:#ecf0e5;color:#19321f;border-color:#8fa58e;box-shadow:0 6px 22px #0002}
+html[data-nf-theme="paper"] .nf-journey-return strong{color:#355f2c}
+@media(max-width:620px){.nf-shell-controls{bottom:10px;right:10px}.nf-theme-toggle{padding:10px;font-size:10px}.nf-journey-return{left:10px;bottom:11px;padding:9px 10px;font-size:10px;max-width:calc(100vw - 138px)}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto} .nf-theme-toggle,.nf-journey-return{transition:none!important}}
