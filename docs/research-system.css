@@ -106,3 +106,29 @@
   .pp-unknown{padding:17px}
   .rs-coverage{padding:19px}
 }
+
+
+/* 2026-10-29 targeted Atlas legibility and mobile navigation polish. */
+.ma-controls{gap:8px;flex-wrap:wrap}
+.ma-controls button{min-height:40px;line-height:1.45}
+.ma-canvas{border-color:#3c5848;background-image:radial-gradient(circle at 50% 0,rgba(115,154,125,.095),transparent 63%);padding:clamp(16px,2.5vw,32px)}
+.ma-node{min-width:0;transition:border-color .16s,background-color .16s,transform .16s}
+.ma-node:hover{transform:translateY(-2px)}
+.ma-node:focus-visible{outline-color:#d9ff5e;outline-offset:3px}
+.ma-detail{border-left:4px solid #62816b;background:#e7eee4;gap:clamp(20px,3vw,45px)}
+.ma-detail h3{max-width:19ch}
+.ma-relation{border-left:2px solid #adbdac}
+.ma-relation:focus-within{border-color:#6e8c70;background:#e8f0e5}
+.ma-history-row{transition:background-color .18s}
+.ma-history-row:hover{background:#edf1e9}
+.rs-coverage{background:#e8ede4;border-color:#c4d1c0}
+@media(max-width:680px){
+ .ma-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ .ma-controls button{white-space:normal;padding:10px}
+ .ma-controls button:last-child:nth-child(odd){grid-column:1/-1}
+ .ma-node{padding:12px;min-height:81px}
+ .ma-node:hover{transform:none}
+ .ma-detail{padding:21px 19px}
+ .ma-detail h3{font-size:35px}
+}
+@media(prefers-reduced-motion:reduce){.ma-node,.ma-history-row{transition:none}.ma-node:hover{transform:none}}

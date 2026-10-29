@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en"><head>
+<script>try{document.documentElement.dataset.nfTheme=localStorage.getItem("nightfall.theme.v1")==="paper"?"paper":"night"}catch(e){document.documentElement.dataset.nfTheme="night"}</script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#18221e">
+<meta name="description" content="NIGHTFALL evidence practice: one exact external-math witness replay, safety experiment preregistration, finite Lean proof gate, and honestly incomplete research calibration.">
+<title>Evidence in Practice — NIGHTFALL</title>
+<link rel="canonical" href="https://d3lefts.github.io/d3lefts/evidence-practice.html">
+<link rel="stylesheet" href="site.css"><link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script src="site.js" defer></script>
+<style>
+.ep-hero{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(240px,.7fr);gap:60px;padding:75px 0 72px;align-items:end;border-bottom:1px solid var(--ink)}
+.ep-eyebrow{font:600 10px/1.5 var(--mono);letter-spacing:.09em;color:#516d56}
+.ep-hero h1{font:400 clamp(64px,8vw,126px)/.88 var(--serif);letter-spacing:-.041em;margin:23px 0 33px}
+.ep-hero h1 em,.ep-heading em{font-weight:400;color:#5c7c61}
+.ep-hero p{font:clamp(16px,1.55vw,21px)/1.55 var(--sans);color:#405246;max-width:65ch}
+.ep-aside{padding:22px 0 9px 27px;border-left:1px solid var(--line)}
+.ep-aside strong{font:400 55px/1 var(--serif);display:block;margin:14px 0}
+.ep-aside p{font:13px/1.75 var(--sans);color:var(--muted)}
+.ep-gate{display:grid;grid-template-columns:180px minmax(0,1fr);gap:26px;border-bottom:1px solid var(--line);padding:22px 0 24px}
+.ep-gate strong{font:600 11px var(--mono);letter-spacing:.05em}.ep-gate p{font:13px/1.6 var(--sans);color:#506354}
+.ep-section{padding:72px 0;border-bottom:1px solid var(--line)}
+.ep-heading{display:grid;grid-template-columns:210px minmax(0,1fr);gap:40px;align-items:start;margin-bottom:30px}
+.ep-heading h2{font:400 clamp(42px,4.9vw,73px)/.99 var(--serif);letter-spacing:-.025em;max-width:20ch}
+.ep-study{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);background:#e7eee3;border:1px solid #c7d3c4;min-height:340px}
+.ep-study-text{padding:clamp(23px,4vw,48px);display:flex;flex-direction:column}
+.ep-study-text h3{font:400 clamp(33px,4vw,55px)/1.04 var(--serif);margin:22px 0}
+.ep-study-text p{font:14px/1.7 var(--sans);color:#405448;max-width:60ch}
+.ep-study-data{background:#1d3329;color:#f0f4e8;padding:clamp(23px,4vw,48px);display:flex;flex-direction:column;justify-content:space-between;gap:42px}
+.ep-study-data small{font:600 10px/1.4 var(--mono);color:#a8c4ac;letter-spacing:.07em}
+.ep-study-data strong{font:400 clamp(35px,3.6vw,57px)/1.04 var(--serif);overflow-wrap:anywhere}
+.ep-study-data p{font:11px/1.75 var(--mono);color:#bdcebd}
+.ep-link{display:inline-flex;align-items:center;justify-content:space-between;gap:15px;padding-top:16px;margin-top:auto;border-top:1px solid currentColor;font:600 11px/1.5 var(--mono)}
+.ep-link:hover{text-decoration:underline;text-underline-offset:4px}
+.ep-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.ep-card{padding:clamp(22px,3vw,34px);background:#f0f1eb;border:1px solid #ccd3c6;min-height:340px;display:flex;flex-direction:column;gap:16px}
+.ep-card:nth-child(2){background:#e4ece1}.ep-card:nth-child(3){background:#eaece6}
+.ep-card h3{font:400 clamp(31px,2.8vw,44px)/1.04 var(--serif);margin:10px 0 0}
+.ep-card p{font:13px/1.73 var(--sans);color:#46594d;max-width:50ch}
+.ep-card .ep-link{margin-top:auto}
+.ep-meta{display:flex;flex-wrap:wrap;gap:13px;margin-top:21px;font:11px/1.6 var(--mono);color:#526b57}
+.ep-list{display:grid;grid-template-columns:170px 1fr;gap:21px;border-top:1px solid var(--line);padding:21px 0;font:13px/1.66 var(--sans)}
+.ep-list strong{font:600 11px/1.5 var(--mono);letter-spacing:.03em}
+.ep-list p{color:#506452;max-width:72ch}
+.ep-footer{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:35px 0 47px;font:11px/1.6 var(--mono);color:var(--muted)}
+@media(max-width:900px){.ep-hero,.ep-study,.ep-heading{grid-template-columns:1fr}.ep-hero{gap:25px}.ep-aside{border-left:0;border-top:1px solid var(--line);padding:24px 0 0}.ep-grid{grid-template-columns:1fr}.ep-card{min-height:240px}}
+@media(max-width:600px){.ep-hero{padding:51px 0}.ep-hero h1{font-size:clamp(62px,14vw,89px)}.ep-section{padding:51px 0}.ep-gate,.ep-list{grid-template-columns:1fr;gap:10px}.ep-study-data strong{font-size:39px}}
+</style>
+<link rel="stylesheet" href="night-theme.css">
+<script src="nightfall-shell.js" defer></script>
+</head><body>
+<a class="skip" href="#main">Skip to evidence</a><div class="topline"></div>
+<header class="header"><div class="wrap header-inner">
+<a class="brand" href="./" aria-label="NIGHTFALL homepage"><span class="mark">N∕F</span><span class="brand-copy">NIGHTFALL<span>PHASESHIFT / EVIDENCE PRACTICE</span></span></a>
+<button class="menu-toggle" id="menu-button" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">MENU +</button>
+<nav class="nav" id="site-nav" aria-label="Primary navigation"><a href="index.html#flagships">Research</a><a href="research.html">Library</a><a href="exact-research.html">Tools</a><a href="atlas.html">Mechanisms</a><a href="review.html">Review</a><a href="evidence.html">Evidence</a><a class="nav-call" href="passport.html">Proof Passports ↗</a></nav>
+</div></header>
+<main class="wrap" id="main">
+<div class="ep-hero"><div><div class="ep-eyebrow">NIGHTFALL / VERIFIED DISCOVERY PRACTICE</div><h1>Evidence,<br><em>in practice.</em></h1><p>Methods matter when they are tested outside their original setting. Here are four deliberately different evidence campaigns, with completed checks separated from preregistrations and open proof obligations.</p></div><aside class="ep-aside"><span class="ep-eyebrow">CURRENT CHECKPOINT</span><strong>2 exact replays.</strong><p>Two third-party C1d numerical witnesses independently rederived. Three further workstreams have explicit measurement and proof gates. No new scientific flagship or originality claim is asserted.</p></aside></div>
+<div class="ep-gate"><strong>STATUS / MIXED</strong><p>A successful finite arithmetic computation does not establish a universal theorem. A formal proof outline is not a kernel proof. A preregistration is not an empirical result. This page keeps those distinctions visible.</p></div>
+<section class="ep-section" aria-labelledby="ep-audit-title">
+ <div class="ep-heading"><span class="ep-eyebrow">01 / INDEPENDENT REPLICATION</span><h2 id="ep-audit-title">Check someone else's <em>number.</em></h2></div>
+ <div class="ep-study">
+  <div class="ep-study-text"><span class="ep-eyebrow">EXACT FINITE REPLAY / COMPLETED IN SESSION</span><h3>Signed autoconvolution, two certificates.</h3><p>Against pinned third-party public certificates, separate integer-only calculations reconstructed the exact IEEE-754 inputs, checked all 599 and 1,199 convolution knots, and reproduced the original 300- and 600-cell rational bounds. The original witness is credited to its authors; this is a verification result.</p><a class="ep-link" href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/independent-audits/tao-constants/README.md">Evidence note, source credits and limits <span aria-hidden="true">↗</span></a></div>
+  <div class="ep-study-data"><div><small>EXACT RATIONAL BOUND</small><strong>1.4602172840…</strong><p>C₁d upper witness; 600 cells · 1,199 knots · peak lag 631. The 300-cell witness also matches exactly (ratio 1.4630715826…, peak lag 414).</p></div><a class="ep-link" href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/independent-audits/tao-constants/README.md">Both exact checkers and source receipts <span aria-hidden="true">↗</span></a></div>
+ </div>
+ <div class="ep-meta"><span>Two of ten candidate external audits executed</span><span>·</span><span>No universal mathematical optimality claim</span></div>
+</section>
+<section class="ep-section" aria-labelledby="ep-other-title"><div class="ep-heading"><span class="ep-eyebrow">02 / EXPERIMENTS AND FORMAL PROOFS</span><h2 id="ep-other-title">The next gates <em>are public.</em></h2></div>
+ <div class="ep-grid">
+  <article class="ep-card"><span class="ep-eyebrow">SAFETY / PREREGISTERED PLAN</span><h3>AgentDojo intervention.</h3><p>A falsifiable test of an authorization boundary for tool-using agents. The planned comparison includes task-cluster uncertainty and legitimate-task utility. No model trials have been completed; compute costs require separate authorization.</p><a class="ep-link" href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/evaluations/agentdojo_asua_20261029/PREREGISTRATION.md">Review the frozen study design ↗</a></article>
+  <article class="ep-card"><span class="ep-eyebrow">FORMAL METHODS / FINITE KERNEL PASS</span><h3>Characteristic three.</h3><p>Two elementary finite modulo-three identities passed pinned Lean 4.35.0 kernel checking with no axioms. This is a narrow machine-checked component; the adaptive decoder query-count theorem remains unformalized.</p><a class="ep-link" href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/formalization/characteristic_three/README.md">Inspect formalization scope ↗</a></article>
+  <article class="ep-card"><span class="ep-eyebrow">CALIBRATION / ARCHIVE CENSUS</span><h3>Count what survived.</h3><p>33 curated dossiers have exact category and evidence-label counts. Missing preregistration and stage-transition denominators remain explicitly unavailable; no fabricated discovery hit rate is reported.</p><a class="ep-link" href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/evaluations/calibration_20261029/README.md">Read the calibration baseline ↗</a></article>
+ </div>
+</section>
+<section class="ep-section" aria-labelledby="ep-next-title"><div class="ep-heading"><span class="ep-eyebrow">03 / WHAT WOULD CHANGE THE CLAIM?</span><h2 id="ep-next-title">Evidence has <em>failure conditions.</em></h2></div>
+<div class="ep-list"><strong>Safety</strong><p>A paired evaluation that fails to separate from seed variance, or materially harms legitimate task completion, becomes a negative result. A proposed control cannot be called an effective defense before those runs.</p></div>
+<div class="ep-list"><strong>External math</strong><p>Matching an exact witness confirms its finite arithmetic. A discrepancy triggers frozen-input reconciliation, negative controls, and author notification. Success is not automatically a world-first finding.</p></div>
+<div class="ep-list"><strong>Lean</strong><p>The passing finite-mod-3 kernel check establishes only those two finite lemmas. An actual decoder theorem requires a faithful full statement and a separate accepted kernel certificate with no hidden axioms.</p></div>
+<div class="ep-list"><strong>Calibration</strong><p>Without a complete historical candidate population and preregistered prediction ledger, survival and success rates remain unavailable. Begin prospective measurement rather than invent retrospective precision.</p></div>
+</section>
+</main><footer class="wrap ep-footer"><span>© 2026 Devin J. Wright · NIGHTFALL PHASESHIFT</span><span><a href="evidence.html" style="text-decoration:underline">Evidence archive ↗</a> · 29 October 2026</span></footer>
+</body></html>
