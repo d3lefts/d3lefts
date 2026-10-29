@@ -25,10 +25,13 @@ jobs:
           python3 -m py_compile research/nightfall/agent-reports/ryev_three_grid_20261029/check_48_grid.py
           python3 -m py_compile research/nightfall/agent-reports/ryev_three_grid_20261029/verify_nine_schedule.py
           python3 -m py_compile research/nightfall/agent-reports/ryev_three_grid_20261029/check_prime_family.py
+          python3 -m py_compile research/nightfall/agent-reports/ryev_three_grid_20261029/check_global_optimum.py
       - name: All 2925 center multisets by independent exact calculations
         run: python3 research/nightfall/agent-reports/ryev_three_grid_20261029/check_48_grid.py | tee /tmp/ryev-three-grid-audit.json
       - name: Prime-family theorem p=5 and p=7 exhaustive center audit
         run: python3 research/nightfall/agent-reports/ryev_three_grid_20261029/check_prime_family.py | tee /tmp/ryev-prime-family-audit.json
+      - name: Universal optimum p>=7 exact polynomial certificate
+        run: python3 research/nightfall/agent-reports/ryev_three_grid_20261029/check_global_optimum.py | tee /tmp/ryev-global-optimum.json
       - name: Nine-query decoder: 256 phase classes, 3000 signals, 32 supports
         run: python3 research/nightfall/agent-reports/ryev_three_grid_20261029/verify_nine_schedule.py | tee /tmp/ryev-nine-query-audit.json
       - name: Assert machine-readable exact evidence boundaries
@@ -43,6 +46,10 @@ jobs:
           assert b['fullSupportPhasePatterns']==256
           assert b['randomVectors']==3000 and b['supportPatterns']==32
           assert b['maximumReadings']==9
+          d=json.load(open('/tmp/ryev-global-optimum.json'))
+          assert d['verdict']=='PASS'
+          assert d['adaptiveQueryOptimum']==9
+          assert d['globalLowerBoundCertificate']['allCoefficientsStrictlyPositive']
           c=json.load(open('/tmp/ryev-prime-family-audit.json'))
           assert c['status']=='PASS'
           assert c['results']['7']['centerMultisets']==20825
@@ -56,4 +63,5 @@ jobs:
             /tmp/ryev-three-grid-audit.json
             /tmp/ryev-nine-query-audit.json
             /tmp/ryev-prime-family-audit.json
+            /tmp/ryev-global-optimum.json
           retention-days: 90
