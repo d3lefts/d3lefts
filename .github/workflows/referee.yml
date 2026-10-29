@@ -1,0 +1,44 @@
+name: NIGHTFALL Referee exact verification
+on:
+  push:
+    paths:
+      - "docs/referee*"
+      - "research/nightfall/referee/**"
+      - ".github/workflows/referee.yml"
+  pull_request:
+    paths:
+      - "docs/referee*"
+      - "research/nightfall/referee/**"
+      - ".github/workflows/referee.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  finite-verification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: JavaScript syntax
+        run: |
+          node --check docs/referee-core.js
+          node --check docs/referee-app.js
+          node --check research/nightfall/referee/check_receipt.cjs
+          node --check research/nightfall/referee/test.cjs
+      - name: Positive witnesses, adversarial controls and replay
+        run: node research/nightfall/referee/test.cjs
+      - name: Static page and local dependency integrity
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path("docs/referee.html").read_text()
+          assert 'referee-core.js' in p and 'referee-app.js' in p
+          assert 'referee.css' in p and 'id="workbench"' in p
+          assert 'id="run-overlap"' in p and 'id="run-sidon"' in p
+          assert 'id="export-receipt"' in p
+          assert 'not an external reviewer' in p.lower()
+          print("PASS: executable local assets, interactive controls and evidence-boundary disclosure")
+          PY
