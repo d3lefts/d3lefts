@@ -47,11 +47,8 @@ def exact_checks():
     # D(alpha1) = (1024r²+192r+1)/(262144r³) >0
     # for alpha1=(96r+1)/(2048r²).
     b=multiply(base,base)
-    # 3*262144*r³-8192*r*(96r+1)+ (96r+1)^2
-    # This would be incorrect for r dependence if one denominator
-    # term is missing; explicitly verify the correct expression next:
-    # Note denominator scaling: 64r*alpha1 =
-    # (96r+1)/(32r); times 262144 r³ gives 8192r²(96r+1).
+    # 3*262144*r³ - 8192*r²*(96r+1) + (96r+1)².
+    # The exact r² factor is essential when clearing 262144*r³.
     D=add(scale([0,0,0,1],3*262144),
           add(scale(multiply([0,0,1],base),-8192),b))
     assert D==[1,192,1024,0],D
