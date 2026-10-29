@@ -132,7 +132,7 @@ try{
   assert.match(await page.locator("#nf-observatory-inspector").innerText(),/span-count|span count/i,"Unresolved prerequisite visible");
   assert.equal(await page.locator('#nf-observatory-inspector a[href="passport.html?claim=phase"]').count(),1,"Proof Passport is source-linked");
   assert.match(await page.locator("#nf-observatory-inspector").innerText(),/UNRESOLVED PREMISE/,"Open premise explicitly classified");
-  assert.match(await page.locator("#nf-observatory-inspector .nf-observatory-relation-note").first().innerText(),/cannot be promoted without its foundational lemma/i,"Foundational condition is visible in the compact inspector");
+  assert.match(await page.locator('#nf-observatory-inspector .nf-observatory-relation[data-relation="open-premise"] .nf-observatory-relation-note').first().innerText(),/cannot be promoted without its foundational lemma/i,"Foundational condition is visible in the compact inspector");
   await page.locator('.nf-observatory-node[data-node="phase"]').click();
   await page.locator('.nf-observatory-node[data-node="erdos36"]').click();
   assert.match(await page.locator("#nf-observatory-inspector").innerText(),/16-cell demonstration is distinct from the 131,072-cell archived witness/i,"Small finite control explicitly distinguished from archival witness");
