@@ -1,0 +1,31 @@
+name: NF Frontier Dispatch — exact scope and witness audit
+on:
+  pull_request:
+    paths:
+      - "docs/frontier*"
+      - "research/nightfall/frontier-dispatch/**"
+      - "scripts/site_browser_smoke.mjs"
+      - ".github/workflows/frontier-dispatch.yml"
+  push:
+    branches: [main]
+    paths:
+      - "docs/frontier*"
+      - "research/nightfall/frontier-dispatch/**"
+      - "scripts/site_browser_smoke.mjs"
+      - ".github/workflows/frontier-dispatch.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-frontier-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Parse implementation and exact verifier
+        run: |
+          node --check docs/frontier-core.js
+          node --check docs/frontier.js
+          node --check research/nightfall/frontier-dispatch/test.cjs
+      - name: Audit mathematical partition and independent finite oracle
+        run: node research/nightfall/frontier-dispatch/test.cjs
