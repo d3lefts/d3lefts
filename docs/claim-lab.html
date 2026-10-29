@@ -87,7 +87,7 @@ const num=x=>Number.isFinite(Number(x))?Number(x):0;
 let data;
 try{const raw=localStorage.getItem(KEY);data=raw?normalize(JSON.parse(raw)):freshDemo()}catch(e){data=freshDemo()}
 let activeTab='overview',searchText='',statusFilter='all',chosenNode=null;
-const $=(s,root=document)=>root.querySelector(s),$=(s,root=document)=>Array.from(root.querySelectorAll(s));
+const $=(s,root=document)=>root.querySelector(s),$$=(s,root=document)=>Array.from(root.querySelectorAll(s));
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uid=()=>Math.random().toString(36).slice(2,10)+Date.now().toString(36);
 function normalize(o){if(!o||!Array.isArray(o.claims)||!Array.isArray(o.experiments)||o.claims.length>2000||o.experiments.length>10000)throw Error('Unsupported file shape');return {version:1,sample:!!o.sample,claims:o.claims.filter(x=>x&&typeof x==='object'&&typeof x.id==='string').map(x=>({...x,id:String(x.id).slice(0,100),title:String(x.title||'Untitled').slice(0,150),status:Math.min(5,Math.max(0,Math.floor(num(x.status)))),deps:Array.isArray(x.deps)?x.deps.filter(d=>typeof d==='string').slice(0,100):[],effort:Math.max(.5,num(x.effort)||1)})),experiments:o.experiments.filter(x=>x&&typeof x==='object'&&typeof x.id==='string').map(x=>({...x,title:String(x.title||'Untitled').slice(0,160)}))}}
