@@ -4,6 +4,25 @@
 **Research proposal:** Axiom · **Program lead:** Devin J. Wright · **Follow-up proof audit and generalization:** NIGHTFALL review session (29 October 2026)  
 **Evidence tier:** Complete algebraic proof candidate and independently coded exact finite checks. **External mathematical referee and same-model priority review remain open.** Flagship designation is editorial, not a claim of established publication priority.
 
+## Update · Extension-degree packing (29 October 2026)
+
+**New strongest theorem candidate:** for \(K=\mathbb F_{q^r}\), \(r\ge2\), \(q>2\), every signal with support size \(s\) is deterministically recovered up to \(\mathbb F_q^\times\) using exactly
+
+    m = k + ceil(max(s-1, 0)/(r-1)) <= k + ceil((k-1)/(r-1))
+
+powered linear measurements in two rounds. For q=2, the global optimum is k queries.
+
+The original 2k-1 bound below is recovered at extension degree r=2. **This strictly improves the worst-case measurement count for r>=3, k>=3.** One second-round measurement now recovers up to r-1 distinct relative phases by scaling coordinate representatives onto an extension-field basis.
+
+**Global adaptive optimality:** when q>2 and 2<=k<=r, **k+1 is optimal among all deterministic adaptive protocols**, by an exact decision-tree counting identity. A classical complement-property-style obstruction also forces every fixed nonadaptive design in the **same powered-field measurement model** to use at least 2k-1 rows. This gives a strict adaptive/nonadaptive separation for r>=3,k>=3. The older random/nonadaptive LLL phase-retrieval program remains a distinct problem with distinct assumptions.
+
+**New exact audit:** 53,478 independently coded reconstruction tests and 1,500 constructive collision certificates pass, including the q=2 exception. The checker is self-contained and uses integer polynomial finite-field arithmetic. Same-model publication priority and external proof refereeing remain open.
+
+- [Full theorems, proofs, exact optimality, and source-attributed nonadaptive obstruction](EXTENSION_DEGREE_PACKING_20261029.md)
+- [Independent extension-degree checker](verify_extension_packing.py) (run: python3 verify_extension_packing.py)
+
+**Archival note.** The next section records the initial 2k-1 decoder milestone as originally published; the batched extension-degree result above supersedes its general measurement-count claim.
+
 ## Result at a glance
 
 Let (L=\mathbb F_q), let (K=\mathbb F_{q^r}) with (r\ge2), and let the unknown signal be (x\in K^k). A permitted query chooses (a\in K^k) and returns ((a\cdot x)^{q-1}\in K). Query vectors in round two may depend on the outputs of round one.
