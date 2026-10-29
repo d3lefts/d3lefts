@@ -19,6 +19,7 @@ jobs:
         run: |
           echo '2c4a0bfdcbac0d2751a6d2ab3b8b345cd6d4dd2febe437d63cadc2af960168a1  research/nightfall/projects/erdos/q7-global-face-20261029/canonical_180.txt' | sha256sum -c -
           python3 research/nightfall/projects/erdos/q7-face-matching-20261029/test_matching.py
+          python3 research/nightfall/projects/erdos/q7-face-matching-20261029/test_translations.py
       - name: Build independently implemented C++ six-dimensional recombination verifier
         run: |
           g++ -O3 -std=c++17 -Wall -Wextra -Werror research/nightfall/projects/erdos/q7-face-matching-20261029/q7_translation.cpp -o /tmp/q7_translation
@@ -31,6 +32,19 @@ jobs:
             grep -q '^TRIALS 4464064$' /tmp/q7_translation.log
             grep -q '^CANDIDATES 0$' /tmp/q7_translation.log
           fi
+      - name: Reject count-damaged source catalogue with the same C++ checker
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          src=Path('research/nightfall/projects/erdos/q7-global-face-20261029/canonical_180.txt').read_text()
+          first,rest=src.split('\n',1)
+          flipped=('0' if first[0]!='0' else 'f')+first[1:]
+          Path('/tmp/q7_corrupt_180.txt').write_text(flipped+'\n'+rest)
+          PY
+          if /tmp/q7_translation /tmp/q7_corrupt_180.txt > /tmp/q7-corrupt.log 2>&1; then
+            echo 'ERROR: Invalid mutated catalogue passed'; exit 1
+          fi
+          grep -q '^REJECTED ' /tmp/q7-corrupt.log
       - name: Retain raw result, including null and candidate evidence
         if: always()
         uses: actions/upload-artifact@v4
