@@ -3,11 +3,14 @@
 Fixed-template theorem only. Standard library, no solver or builder imports.
 """
 from collections import defaultdict
+from math import isqrt
 from hashlib import sha256
 p=1009
 v=p*p+p+1
 A=(1,2,4,8,13)
 assert v==1019091
+assert all(p % d for d in range(2,isqrt(p)+1)) # primality of base field
+assert 3*37*9181==v and all(all(f % d for d in range(2,isqrt(f)+1)) for f in (3,37,9181)) # prime projective factors
 assert all((x*x*x+2)%p for x in range(p)) # irreducible cubic X^3+2
 
 def mul(s,t):
