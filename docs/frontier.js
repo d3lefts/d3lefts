@@ -45,7 +45,7 @@
     $("nf-tool-hint").textContent=root.toolHint;
     const list=$("nf-tool-links");list.replaceChildren();
     for(const url of root.tools){
-      const a=document.createElement("a");a.href=url;a.textContent=url==="orchestrator.html"?"Orchestrator / prefill this exact branch ↗":url==="claim-lab.html"?"Claim Lab ↗":url==="desk.html"?"Research Desk ↗":"Mechanism Atlas ↗";
+      const a=document.createElement("a");a.href=url;a.textContent=url==="orchestrator.html"?"Orchestrator / independent lanes ↗":url==="discovery.html"?"Discovery / investigate this branch ↗":url==="claim-lab.html"?"Claim Lab / evidence register ↗":url==="desk.html"?"Research Desk ↗":"Mechanism Atlas ↗";
       if(url==="orchestrator.html")a.addEventListener("click",event=>{
         event.preventDefault();
         try{
@@ -53,6 +53,15 @@
           sessionStorage.setItem("nightfall.frontier.orchestrator.v1",JSON.stringify(payload));
           location.assign("orchestrator.html?frontier_handoff=1");
         }catch(e){inform("Orchestrator handoff unavailable: "+e.message+". Copy the frozen research brief.");}
+      });
+      if(url==="discovery.html")a.addEventListener("click",event=>{
+        event.preventDefault();
+        try{
+          const payload=C.packet(selectedTask());
+          C.validatePacket(payload);
+          sessionStorage.setItem("nightfall.frontier.discovery.v1",JSON.stringify(payload));
+          location.assign("discovery.html?frontier_handoff=1");
+        }catch(e){inform("Discovery handoff refused: "+e.message+". Copy the frozen research brief instead.");}
       });
       if(url==="claim-lab.html")a.addEventListener("click",event=>{
         event.preventDefault();
