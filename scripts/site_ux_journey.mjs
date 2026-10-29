@@ -298,7 +298,7 @@ try{
     await page.locator('input[name="iv-role"][value="challenge"]').check();
     await page.locator("#iv-start-button").click();
     assert.equal(await page.locator(".iv-step").count(),6);
-    assert.match(await page.locator("#iv-session-status").innerText(),/cycle frontier.*CHALLENGE.*STAGE 1\/6/i);
+    assert.match(await page.locator("#iv-session-status").innerText(),/Erdős.*CHALLENGE.*STAGE 1\/6/i);
     await page.locator("#iv-note").fill("Test cycle lifting without assuming an abelian deck group.");
     await page.locator(".iv-step-actions button").click();
     assert.match(await page.locator("#iv-session-status").innerText(),/STAGE 2\/6/);
