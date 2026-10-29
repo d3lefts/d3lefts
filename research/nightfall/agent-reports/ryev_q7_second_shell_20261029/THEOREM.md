@@ -6,7 +6,7 @@
 
 For edge set E in the binary hypercube Q_n, write dE for the set (mod two) of coordinate squares containing an odd number of E-edges. An odd-square graph H has exactly 1 or 3 selected edges on every square; M_n is the maximum cardinality of such a graph. For a C4-free G, its even-square syndrome T(G) is the set of squares containing 0 or 2 selected edges, namely dG plus the all-squares vector.
 
-**A. Sharp second-weight classification.** For every n>=5, any nonzero dE has weight n-1 or weight >=2(n-2). The first class is exactly the n-1 incident squares of a single edge. **Every syndrome of weight exactly 2(n-2) equals d{e,f} for two distinct edges in one coordinate square.** Conversely such pairs attain the weight. The original E is determined only up to a vertex cut.
+**A. Sharp second-weight classification.** For every n>=5, any nonzero dE has weight n-1 or weight >=2(n-2). The first class is exactly the n-1 incident squares of a single edge. **Every syndrome of weight exactly 2(n-2) equals d{e,f} for two distinct edges in one coordinate square.** Conversely such pairs attain the weight. The two-edge representative is unique: if two different pairs had the same syndrome, their symmetric difference would be a nonempty cut supported on at most four edges, impossible since every nonempty Q_n cut has >=n>=5 edges. General E representatives can differ by vertex cuts.
 
 **B. Near-optimal stability.** For odd n>=5, if H is odd-square with |H|=M_n-1, it cannot have two missing edges belonging to one square such that adding either one individually preserves C4-freeness.
 
