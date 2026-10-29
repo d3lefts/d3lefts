@@ -1,8 +1,8 @@
 == verify_checkerboard.py ==
-n3,d3 alternating side: exact full-trace cross -1/4 PASS
-PASS
 n4,d3 rank2 even rainbow triangle Q= 31/16 cross between X and -Y = -1/4; outside ambient coordinate PSD PASS
 n4 all three row symbols present at every site Q 49/16 exact theorem margin>=1/16 PASS
+r=3 mixed-side n=2: all three complex-rank-one blocks couple; exact Q=21/4 PASS
+negative mutation without separation at site 2: L>=M yet Q=-9/10 PASS
 == verify_rational_physical.py ==
 PASS: exact Q 39201/20000 cross -1/4 theorem positive lower 1/16 negative rank3 mutation -3/16
 PASS: all proper partial traces crossed zero; full local row and column alphabet; rank=2
