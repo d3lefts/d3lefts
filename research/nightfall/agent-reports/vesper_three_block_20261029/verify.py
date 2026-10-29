@@ -45,6 +45,19 @@ def exhaustive():
                 assert pair_sums_unique(block)
                 family[size].setdefault(differences(block), block)
     assert tuple(len(family[k]) for k in range(1,7)) == (1, 30, 150, 300, 150, 28)
+    # Stronger anchored extension audit: holding an entire 6-mark source fixed,
+    # count allowed four- and five-mark successor difference spectra.
+    admissible_four_counts = []
+    for first in family[6]:
+        allowed_four = [d for d in family[4] if first.isdisjoint(d)]
+        allowed_five = [d for d in family[5] if first.isdisjoint(d)]
+        assert not allowed_five
+        admissible_four_counts.append(len(allowed_four))
+        assert len(allowed_four) <= 2
+        assert not any(a.isdisjoint(b) for a,b in combinations(allowed_four,2))
+    assert (admissible_four_counts.count(0),
+            admissible_four_counts.count(1),
+            admissible_four_counts.count(2)) == (24, 3, 1)
 
     def exists_three(sizes):
         a, b, c = sizes
@@ -81,6 +94,7 @@ def exhaustive():
     assert not pair_sums_unique(corrupted)
     print('PASS: 31 modular residues; 310 distinct affine Singer cuts')
     print('PASS: deduplicated difference masks by subblock size = 1,30,150,300,150,28')
+    print('PASS: anchored full-block successor 5-marks impossible; allowed 4-mask counts 24/3/1')
     print('PASS: no pairwise-difference-disjoint 3-block packing with >=14 marks')
     print('PASS: literal 13-mark witness has all 91 unordered pair sums distinct')
     print('PASS: duplicated full-block negative control correctly rejected')
