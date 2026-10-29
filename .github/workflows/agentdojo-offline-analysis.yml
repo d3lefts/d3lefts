@@ -24,7 +24,9 @@ jobs:
         with:
           python-version: '3.12'
       - name: Validate synthetic matched-pair scorer and negative controls
-        run: python3 -m unittest discover -v -s research/nightfall/evaluations/agentdojo_asua_20261029 -p test_score_paired.py
+        run: python3 -m unittest discover -v -s research/nightfall/evaluations/agentdojo_asua_20261029 -p 'test_*.py'
+      - name: Emit gate-source checksum
+        run: sha256sum research/nightfall/evaluations/agentdojo_asua_20261029/authority_gate.py
       - name: Emit protocol-source checksums for freeze preparation
         run: |
           sha256sum research/nightfall/evaluations/agentdojo_asua_20261029/PREREGISTRATION.md
