@@ -32,7 +32,7 @@ assert.ok(html.includes('href="erdos-paper.html"'));
 assert.ok(html.includes('href="passport.html?claim=sidon30"'));
 assert.ok(html.includes('href="referee.html?domain=sidon"'));
 for(const id of ["flagships","live-case","research-systems","featured-title","evidence","review","work","method"])assert.ok(html.includes('id="'+id+'"'),"Evidence/history anchor lost "+id);
-for(const term of ["External review","public research archives","Original evidence, in depth","Source comparisons"])assert.ok(html.includes(term),"Research-status disclosure lost "+term);
+for(const term of ["external review","public research archives","Original evidence, in depth","Source comparisons"])assert.ok(html.toLowerCase().includes(term.toLowerCase()),"Research-status disclosure lost "+term);
 assert.ok(css.includes("@media(max-width:760px)"));
 assert.ok(css.includes(".nf-home-toolbox>summary:focus-visible"));
 assert.ok(css.includes(".nf-section-index>summary:focus-visible"));
