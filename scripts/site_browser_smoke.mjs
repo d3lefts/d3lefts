@@ -474,6 +474,7 @@ try{
     assert.equal(await page.locator("#domain").inputValue(),"overlap");
     assert.equal(await page.locator("#export-attack").isDisabled(),true);
     await page.locator("#run-attack").click();
+    await page.waitForFunction(()=>!document.querySelector("#export-attack")?.disabled);
     assert.equal(await page.locator("#export-attack").isDisabled(),false,"Attack requires its own Run action");
     await page.locator("#send-to-referee").click();
     await page.waitForURL(/referee\.html.*companion_handoff=1/);
