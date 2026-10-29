@@ -30,6 +30,15 @@ GitHub Actions confirms successful Pages deployments on 2026-10-28. Direct publi
 
 The design takes inspiration from editorial research portfolios, while its layout, identity, copy, and review-oriented content are original to NIGHTFALL. All third-party links and mathematical source authors retain their proper attribution.
 
+## Exact research instruments (bounded, local-first)
+
+The [Exact Research Tools](exact-research.html) page supplements [Claim Lab](claim-lab.html) with two **executable arithmetic checkers**, with no network execution, telemetry, local data storage, external libraries, or claim promotion:
+
+- **Four-qutrit Werner witness:** exact signed-integer sparse 81×81 quadratic form at `t=1/2` via `16Q` tensor kernel; exact rational rank up to the rank-three obstruction; syndrome and difference-grade labels. Negative rank-three vectors are explicitly flagged outside the rank-two witness class.
+- **F25 fourth-power reconstruction:** complete enumeration of 625 two-coordinate signals in `F5[u]/(u²−2)`, partitioned into fourth-root phase orbits for a user-supplied sensing matrix. Reports exact finite ambiguities, never uniform probability guarantees.
+
+Both export **locally generated arithmetic receipts** labeled as calculations, never as independently audited theorem certificates. The independently coded regression in `scripts/test_research_tools.cjs` compares 180 Werner cross coefficients against the 16-term signed physical partial-trace expansion, checks exact rank and negative controls, and tests F25 arithmetic / full preimage counts. The browser smoke test checks the UI at mobile and desktop widths.
+
 ## Maintenance
 
 Run `python3 scripts/check_site.py`, `node --check docs/site.js`, and `node --check scripts/site_browser_smoke.mjs` at the repository root before updating the live site. The website CI additionally runs headless Chromium checks at mobile and desktop widths, including menu interactions and research filtering. GitHub's workflow [Verify research website](../.github/workflows/verify-site.yml) enforces both on relevant pushes and pull requests. This is **a website-integrity check**, distinct from the mathematics, source SDPs, and external peer review.
