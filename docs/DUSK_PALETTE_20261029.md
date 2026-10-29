@@ -1,5 +1,8 @@
 # NIGHTFALL | CONSTELLATION — Dusk Palette
 
+**Historical palette (superseded 29 October 2026).** Current implementation and audit: [Two Skies palette](TWO_SKIES_PALETTE_20261029.md). Original values below are retained as design provenance.
+
+
 **29 October 2026 · Scoped visual system · No scientific claim changes**
 
 The dusk theme uses **midnight navy + violet + moon-gold**. The warm accent marks human-selected actions, focused objects, and research navigation. The original light/editorial research-paper theme remains unchanged. Scientific statuses and relationship types retain their literal labels, source and qualified scope.
