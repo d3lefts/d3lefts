@@ -8,6 +8,7 @@ on:
       - "scripts/check_site.py"
       - "scripts/audit_release_scope.py"
       - "scripts/site_browser_smoke.mjs"
+      - "scripts/test_orchestrator.cjs"
       - "scripts/test_discovery_core.cjs"
       - "scripts/test_discovery_worker.py"
       - "scripts/verify_*.py"
@@ -20,6 +21,7 @@ on:
       - "scripts/check_site.py"
       - "scripts/audit_release_scope.py"
       - "scripts/site_browser_smoke.mjs"
+      - "scripts/test_orchestrator.cjs"
       - ".github/workflows/verify-site.yml"
   workflow_dispatch:
 concurrency:
