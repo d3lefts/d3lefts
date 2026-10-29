@@ -147,6 +147,20 @@ for design in range(3):
 A_bad=[[0,0] for _ in range(13)]
 assert rank(M(A_bad,(1,0)))==0
 assert decode(A_bad,[0]*13) is None
+# Explicit Vesper/Claim-Lab counterexample fixtures under the same field law.
+phases={b for b in E if power(b,4)==1}
+assert len(phases)==4
+A_coordinate=[[1,0],[0,1]]
+ys=[1,1]
+preimages=[x for x in product(E,repeat=2) if all(power(dot(row,x),4)==y for row,y in zip(A_coordinate,ys))]
+def orbit_key(x):
+    return min(tuple(mul(omega,xi) for xi in x) for omega in phases)
+assert len(preimages)==16 and len({orbit_key(x) for x in preimages})==4
+assert decode(A_coordinate,ys) is None # planted kernel is not a unique line.
+A_zero_one=[[0,0]]
+zero_preimages=[x for x in product(E,repeat=2) if power(dot(A_zero_one[0],x),4)==0]
+assert len(zero_preimages)==625 and len({orbit_key(x) for x in zero_preimages})==157
+assert decode(A_zero_one,[0]) is None
 # Gaussian matrix rank for k1 and x!=0: if a!=0, two columns are proportional.
 assert rank(M([[1]],(1,)))==1
 # Exact integer proof of advertised 5.882 coefficient.
@@ -155,5 +169,6 @@ assert 121*5<625
 print('PASS full polynomial coefficient enumeration: 15624 triples; max zero rows=121/625')
 print('PASS max-attainment count:',len(maximizers),'zero-count histogram:',dict(sorted(hist.items())))
 print('PASS GF25 v²=3; seed',seed,'4x625 full decoder outputs at k2,m13 and 3x25 sampled outputs k3,m19')
-print('PASS zero input and zero-design boundary logic; exact 11^5882 < 5^8764')
+print('PASS coordinate A=I2 yields 16 preimages/4 phase orbits; zero sensing row yields 625/157')
+print('PASS zero input, planted kernel, and bad-design controls; exact 11^5882 < 5^8764')
 print('SOURCE_SHA256',sha256(Path(__file__).read_bytes()).hexdigest())
