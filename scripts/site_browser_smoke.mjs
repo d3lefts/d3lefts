@@ -5,7 +5,7 @@ import {join,normalize,resolve,sep} from "node:path";
 import {chromium} from "playwright-core";
 
 const root=resolve("docs");
-const pages=["index.html","join.html","review.html","evidence.html","agenda.html","research.html","exact-research.html","desk.html","frontier.html"];
+const pages=["index.html","living-paper.html","join.html","review.html","evidence.html","agenda.html","research.html","exact-research.html","desk.html","frontier.html"];
 const types={".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".svg":"image/svg+xml"};
 const server=createServer(async (req,res)=>{
  try{
@@ -57,6 +57,18 @@ try{
    }
   }
   if(width===390){
+   await page.goto(origin+"living-paper.html",{waitUntil:"load"});
+   assert.equal(await page.locator("#lp-points .lp-point").count(),30,"Living Paper 30 exact coordinates");
+   assert.equal(await page.locator("#lp-edge-select option").count(),28,"Living Paper 28 progression constraints");
+   await page.locator("#lp-edge-select").selectOption("10");
+   await page.locator("#lp-delete").click();
+   assert.equal(await page.locator("#lp-points .lp-point.is-on").count(),18,"edge removal constructs 18 survivors");
+   assert.match(await page.locator("#lp-output").innerText(),/Uncovered progression constraints: 1 of 28/);
+   await page.locator("#lp-run").click();
+   assert.match(await page.locator("#lp-output").innerText(),/LOCAL FINITE CHECK PASSED/);
+   assert.match(await page.locator("#lp-output").innerText(),/Edge-deletion witnesses checked: 28\/28/);
+   assert.equal(await page.locator("#lp-export").isDisabled(),false);
+   assert.equal(await page.locator("#lp-history-items article").count(),3,"canonical Sidon evidence history");
    // Progressive enhancement is an evidence guarantee: identical finite witness
    // coordinates remain visible without JavaScript, not a perpetual loader.
    await page.goto(origin+"index.html",{waitUntil:"load"});
