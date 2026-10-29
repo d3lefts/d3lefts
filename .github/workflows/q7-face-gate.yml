@@ -1,0 +1,37 @@
+name: Q7 global face-gate exact audit
+on:
+  push:
+    branches: [ryev/q7-global-face-gate-20261029]
+  pull_request:
+    paths: ['research/nightfall/projects/erdos/q7-global-face-20261029/**']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Reconstruct and audit all supplied Q7 seeds
+        run: |
+          python3 -m py_compile research/nightfall/projects/erdos/q7-global-face-20261029/face_gate.py
+          python3 research/nightfall/projects/erdos/q7-global-face-20261029/face_gate.py > /tmp/q7-face.json
+          python3 -m json.tool /tmp/q7-face.json > /dev/null
+      - name: Bounded global face-first trial
+        run: |
+          python3 -m pip install -q scipy==1.14.1
+          python3 research/nightfall/projects/erdos/q7-global-face-20261029/face_first_milp.py 20 > /tmp/q7-face-mip.json
+          python3 -m json.tool /tmp/q7-face-mip.json > /dev/null
+      - name: Archive both exact audit and bounded trial
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: q7-face-global-operator-log
+          path: |
+            /tmp/q7-face.json
+            /tmp/q7-face-mip.json
+          if-no-files-found: warn
