@@ -1,0 +1,31 @@
+name: NIGHTFALL Lean kernel sanity — finite characteristic three
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/characteristic_three/**'
+      - 'lean-toolchain'
+      - '.github/workflows/lean-char3-sanity.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/characteristic_three/**'
+      - 'lean-toolchain'
+      - '.github/workflows/lean-char3-sanity.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lean-kernel-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Lean toolchain
+        uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          use-github-cache: false
+      - name: Kernel-elaborate both finite mod-3 lemmas
+        run: ~/.elan/bin/lean research/nightfall/formalization/characteristic_three/Finite3.lean
