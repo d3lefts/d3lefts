@@ -35,7 +35,7 @@ Source: [verify_literal_groups.py](verify_literal_groups.py), standard Python 3,
 | S3 | 5292 | 7938 | 0,0,0,0,96,336,0 |
 | D8 | 7056 | 10584 | 0,0,0,0,96,336,0 |
 
-Locally executed and PASS with reference source SHA256 7d385d969c0c3d1c6caf96237bfcdbff9c42f936e2aa06d4d0ba4380880996d1 in the frozen ZIP. The GitHub source is a whitespace/comment-trimmed mirror, not byte-identical to that locally executed reference; its dedicated Actions workflow has been committed but an Actions replay has not yet been confirmed. External replay remains requested.
+Locally executed and PASS with reference source SHA256 7d385d969c0c3d1c6caf96237bfcdbff9c42f936e2aa06d4d0ba4380880996d1 in the frozen ZIP. The GitHub source is a whitespace/comment-trimmed mirror, not byte-identical to that locally executed reference. The **GitHub mirror itself** passed dedicated Actions run 40952783622 at commit 20f9d6fbbd7b132093667101583f22e81b4a95fe; the older cyclic K3,3 certificate also passed run 40952783665. This is an independent execution environment within the project, not an independent mathematical referee. External scientific proof review remains requested.
 
 ## Scope, priority, and stop
 
