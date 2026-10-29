@@ -1,0 +1,490 @@
+/* NIGHTFALL — GOLDEN HOUR / 6:30 PM COASTAL CALIFORNIA
+   A true light palette, intentionally separate from moon-gold dusk.
+   Visual semantics never imply a scientific-status upgrade.
+   Loaded by the shared theme stylesheet on every page. */
+html:not([data-nf-theme="dusk"]){
+  color-scheme:light;
+  --lf-paper:#f4e7df;--lf-paper-raised:#f8eee8;--lf-paper-deep:#eedfd6;
+  --lf-line:#c9b2a6;--lf-ink:#2a1f1d;--lf-muted:#5c4944;
+  --lf-orange:#d97a4a;--lf-orange-hover:#c96a3b;--lf-apricot:#e3a065;
+  --lf-oxblood:#4a1f24;--lf-oxblood-soft:#6a2d35;--lf-oxblood-deep:#3a161b;
+  --paper:var(--lf-paper);--ink:var(--lf-ink);--line:var(--lf-line);
+  --soft:var(--lf-paper-deep);--muted:var(--lf-muted);
+  --accent:var(--lf-orange);--deep:var(--lf-oxblood);
+  --lime:var(--lf-orange);--green:var(--lf-oxblood);
+  --fg:var(--lf-ink);--fline:var(--lf-line);
+}
+html:not([data-nf-theme="dusk"]) body{
+  background:var(--lf-paper);color:var(--lf-ink);
+}
+html:not([data-nf-theme="dusk"]) ::selection{
+  background:#e3a065;color:#2a1f1d;
+}
+html:not([data-nf-theme="dusk"]) :is(a,button,input,textarea,select,summary):focus-visible{
+  outline:3px solid var(--lf-oxblood-soft);outline-offset:3px;
+}
+html:not([data-nf-theme="dusk"]) :is(.topline,.header){
+  border-color:var(--lf-line);
+}
+html:not([data-nf-theme="dusk"]) .topline{background:var(--lf-oxblood)}
+html:not([data-nf-theme="dusk"]) .topline::after{
+  background:linear-gradient(90deg,#b85042,#e3a065);
+}
+html:not([data-nf-theme="dusk"]) :is(.header,.nav.open){
+  background:var(--lf-paper);border-color:var(--lf-line);
+}
+html:not([data-nf-theme="dusk"]) .mark{
+  background:var(--lf-oxblood);color:var(--lf-paper-raised);
+}
+html:not([data-nf-theme="dusk"]) .nav-call{
+  background:var(--lf-oxblood);color:var(--lf-paper-raised);
+}
+html:not([data-nf-theme="dusk"]) .nav-call:hover{
+  background:var(--lf-oxblood-soft);
+}
+html:not([data-nf-theme="dusk"]) .nf-theme-toggle{
+  background:var(--lf-paper-raised);color:var(--lf-oxblood);
+  border-color:#af8378;
+}
+html:not([data-nf-theme="dusk"]) .nf-theme-toggle:hover{
+  background:#f9e0c9;box-shadow:0 0 0 3px #d97a4a2c;
+}
+html:not([data-nf-theme="dusk"]) :is(.hero-title em,.flagships .section-title em,
+  .section-title em,.instrument-bridge h2 em,.nf-replay-lead h2 em,
+  .nf-safety-window-header h2 em,.join-hero h1 em,.join-heading em,
+  .join-workspace h2 em,.lp-page em,.desk-hero h1 em,
+  .desk-session h2 em,.desk-footer h2 em,.nf-observatory-head h2 em){
+  color:var(--lf-oxblood-soft);
+}
+html:not([data-nf-theme="dusk"]) :is(.section-id,.kicker,.eyebrow,.hero-aside-head,
+  .join-kicker,.join-heading>span,.join-workspace-header span,
+  .lp-eyebrow,.lp-label,.nf-observatory-label,.nf-observatory-inspector>small){
+  color:var(--lf-oxblood);
+}
+html:not([data-nf-theme="dusk"]) :is(.hero-description,.research-desc,.section-intro,
+  .join-lead,.join-heading p,.join-result-grid p,.lp-lead,.lp-section>div:nth-child(2)>p,
+  .ep-hint,.nf-safety-window-header p,.nf-observatory-intro p){
+  color:var(--lf-muted);
+}
+html:not([data-nf-theme="dusk"]) .pulse::before{
+  background:var(--lf-orange);box-shadow:0 0 0 4px #d97a4a29;
+}
+html:not([data-nf-theme="dusk"]) :is(.button,.hero-actions .button,.instrument-bridge-invite .button,
+  .nf-home-tool-entry .button,.join-action,.join-evidence-archive button,
+  .cj-actions button,.cj-primary,.desk-add,.desk-session-shortcut){
+  background:var(--lf-orange);color:var(--lf-oxblood);
+  border-color:var(--lf-orange);
+}
+html:not([data-nf-theme="dusk"]) :is(.button,.hero-actions .button,.instrument-bridge-invite .button,
+  .nf-home-tool-entry .button,.join-action,.join-evidence-archive button,
+  .cj-actions button,.cj-primary,.desk-add,.desk-session-shortcut):hover{
+  background:var(--lf-apricot);border-color:var(--lf-apricot);
+  color:var(--lf-oxblood);
+}
+html:not([data-nf-theme="dusk"]) .button-light{
+  background:transparent;color:var(--lf-oxblood);
+  border-color:var(--lf-oxblood);
+}
+html:not([data-nf-theme="dusk"]) .button-light:hover{
+  background:var(--lf-paper-deep);
+}
+html:not([data-nf-theme="dusk"]) :is(.nf-hero-sky-link,.join-quiet,.join-results a,
+ .join-disclosure a,.research-status,.research-proposal .number,.research-proposal .research-status,
+ .nf-observatory-actions a,.nf-observatory-relation a,.lp-claim-links a){
+  color:var(--lf-oxblood);
+}
+
+/* Editorial homepage: warm layers, sunset signals, blackcherry authority. */
+html:not([data-nf-theme="dusk"]) :is(.feature,.flagship-card:not(.flagship-dark),
+  .sf-system-card,.research-proposal,.atlas-card,.review-card,
+  .instrument-workflow a,.nf-home-toolbox,.join-result-grid article){
+  background:var(--lf-paper-raised);color:var(--lf-ink);
+  border-color:var(--lf-line);
+}
+html:not([data-nf-theme="dusk"]) :is(.feature.lime,.flagship-sage,.sf-system-card:nth-child(2)){
+  background:#f4d6c5;color:var(--lf-ink);
+}
+html:not([data-nf-theme="dusk"]) :is(.feature.dark,.flagship-dark,.review-section,
+  .sf-case-panel,.nf-home-tool-entry,.join-method){
+  background:var(--lf-oxblood);color:var(--lf-paper-raised);
+  border-color:var(--lf-oxblood);
+}
+html:not([data-nf-theme="dusk"]) :is(.feature.dark,.flagship-dark,.review-section,
+  .sf-case-panel,.nf-home-tool-entry,.join-method) :is(p,small){
+  color:#edcfc5;
+}
+html:not([data-nf-theme="dusk"]) :is(.feature.dark,.flagship-dark,.review-section,
+  .sf-case-panel,.nf-home-tool-entry,.join-method) :is(.section-id,.micro,.number){
+  color:#f0b18a;
+}
+html:not([data-nf-theme="dusk"]) .flagship-paper{background:#f0ddd3}
+html:not([data-nf-theme="dusk"]) .flagship-ivory{background:#fcf1e9}
+html:not([data-nf-theme="dusk"]) .research-row:hover,
+html:not([data-nf-theme="dusk"]) .research-proposal:hover{
+  background:#f0d8cd;
+}
+html:not([data-nf-theme="dusk"]) :is(.footer,.nf-home-toolbox,.nf-observatory-toolbar){
+  background:var(--lf-paper-deep);
+}
+html:not([data-nf-theme="dusk"]) .nf-home-tool-entry :is(p,.section-id){color:#f0d8d1}
+html:not([data-nf-theme="dusk"]) .nf-home-tool-entry .button{
+  color:var(--lf-oxblood);background:var(--lf-orange);border-color:var(--lf-orange);
+}
+html:not([data-nf-theme="dusk"]) .nf-home-toolbox>summary,
+html:not([data-nf-theme="dusk"]) .nf-section-index>summary{color:var(--lf-oxblood)}
+html:not([data-nf-theme="dusk"]) :is(.nf-home-toolbox>summary:hover,
+ .nf-section-index>summary:hover){background:#f0d5c6}
+html:not([data-nf-theme="dusk"]) .nf-home-toolbox>summary::before{
+  background:var(--lf-paper-raised);color:var(--lf-oxblood);border-color:var(--lf-line);
+}
+html:not([data-nf-theme="dusk"]) .nf-hero-guide{color:var(--lf-muted)}
+html:not([data-nf-theme="dusk"]) .nf-journey-rail{
+  background:var(--lf-paper-deep);color:var(--lf-ink);border-color:var(--lf-line);
+  --rail-paper:var(--lf-paper-deep);--rail-ink:var(--lf-ink);--rail-line:var(--lf-line);
+}
+html:not([data-nf-theme="dusk"]) .nf-journey-rail a{color:var(--lf-oxblood)}
+html:not([data-nf-theme="dusk"]) .nf-process-thread{
+  --thread-line:#bd9890;background:var(--lf-paper-deep);
+}
+html:not([data-nf-theme="dusk"]) .nf-process-thread a:before{
+  border-color:var(--lf-oxblood-soft);background:var(--lf-paper-deep);
+}
+html:not([data-nf-theme="dusk"]) .nf-process-thread a[aria-current="step"]{
+  color:var(--lf-oxblood);
+}
+html:not([data-nf-theme="dusk"]) .nf-process-thread a[aria-current="step"]:before{
+  background:var(--lf-orange);box-shadow:0 0 0 4px #d97a4a33;
+}
+html:not([data-nf-theme="dusk"]) .sf-point{
+  background:#70404a;color:#fff0e7;border-color:#a66863;
+}
+html:not([data-nf-theme="dusk"]) :is(.sf-witness-header,.sf-case-top){
+  color:#efd4cd;
+}
+html:not([data-nf-theme="dusk"]) :is(.nf-replay-steps li,.nf-evidence-summary,
+ .nf-safety-window-side,.sf-witness-stat,.nf-replay-step){
+  border-color:var(--lf-line);
+}
+
+/* Observatory: light is an archival source map, not a green dashboard.
+   Semantic types keep labels and distinct marks; proof meaning never comes from hue. */
+html:not([data-nf-theme="dusk"]) .nf-observatory-field{background:#edd8cb}
+html:not([data-nf-theme="dusk"]) .nf-observatory-inspector{
+  background:var(--lf-paper-raised);color:var(--lf-ink);
+}
+html:not([data-nf-theme="dusk"]) .nf-observatory-node{
+  background:#fcf0e7;color:var(--lf-ink);
+  border-color:var(--lf-line);
+}
+html:not([data-nf-theme="dusk"]) .nf-observatory-node:hover,
+html:not([data-nf-theme="dusk"]) .nf-observatory-node[aria-pressed="true"]{
+  background:#f0c8b3;border-color:var(--lf-oxblood);
+  box-shadow:0 3px 16px #4a1f241f;
+}
+html:not([data-nf-theme="dusk"]) .nf-observatory-star{
+  background:var(--lf-orange);box-shadow:0 0 0 3px #f0c3ab;
+}
+html:not([data-nf-theme="dusk"]) :is(.nf-observatory-node-text small,
+ .nf-observatory-inspector>small,.nf-observatory-label,
+ .nf-observatory-relation b,.nf-observatory-validity){
+  color:var(--lf-oxblood);
+}
+html:not([data-nf-theme="dusk"]) .nf-observatory-inspector>p,
+html:not([data-nf-theme="dusk"]) .nf-observatory-relation-note{
+  color:var(--lf-muted);
+}
+html:not([data-nf-theme="dusk"]) .nf-observatory-scope{
+  border-left-color:var(--lf-orange);color:var(--lf-muted);
+}
+html:not([data-nf-theme="dusk"]) .nf-observatory-lenses button{
+  color:var(--lf-oxblood);
+}
+html:not([data-nf-theme="dusk"]) .nf-observatory-lenses button[aria-pressed="true"]{
+  background:var(--lf-oxblood);color:#fff0e7;border-color:var(--lf-oxblood);
+}
+html:not([data-nf-theme="dusk"]) .nf-observatory-lenses button:hover{
+  background:#f0c8b3;border-color:var(--lf-line);
+}
+html:not([data-nf-theme="dusk"]) .nf-observatory-path{
+  background:#f8e9df;color:var(--lf-oxblood);border-color:var(--lf-line);
+  border-left-color:var(--lf-orange);
+}
+html:not([data-nf-theme="dusk"]) .nf-observatory-path:nth-child(2){
+  border-left-color:var(--lf-oxblood);
+}
+html:not([data-nf-theme="dusk"]) .nf-observatory-path:hover{
+  background:#efcbb8;border-color:#bd9586;
+}
+html:not([data-nf-theme="dusk"]) :is(.nf-observatory-path small,
+ .nf-observatory-path span,.nf-observatory-counterpart,
+ .nf-observatory-toolbar>p){color:var(--lf-muted)}
+html:not([data-nf-theme="dusk"]) .nf-observatory-edge.edge-finite-check{stroke:#be5a38}
+html:not([data-nf-theme="dusk"]) .nf-observatory-edge.edge-method{stroke:#6a2d35}
+html:not([data-nf-theme="dusk"]) .nf-observatory-edge.edge-open-premise{stroke:#b07a41}
+html:not([data-nf-theme="dusk"]) .nf-observatory-edge.edge-analogy{stroke:#918195;stroke-dasharray:7 8}
+html:not([data-nf-theme="dusk"]) .nf-lens-mark.mark-finite{background:#be5a38}
+html:not([data-nf-theme="dusk"]) .nf-lens-mark.mark-method{background:#6a2d35}
+html:not([data-nf-theme="dusk"]) .nf-lens-mark.mark-open{background:#b07a41}
+html:not([data-nf-theme="dusk"]) .nf-lens-mark.mark-analogy{
+  background:repeating-linear-gradient(90deg,#918195 0 3px,transparent 3px 5px);
+}
+
+/* Constellation's explicitly selected LIGHT variant: sunset parchment, oxblood
+   source labels, terracotta focus. Shared DUSK rules are completely untouched. */
+html:not([data-nf-theme="dusk"]) body.co-page,
+html:not([data-nf-theme="dusk"]) body.co-page[data-theme="light"]{
+  --paper:#f4e7df;--ink:#2a1f1d;--line:#c9b2a6;--soft:#eedfd6;
+  --muted:#5c4944;--accent:#d97a4a;
+  --co-surface:#f8eee8;--co-panel:#eedfd6;
+  --co-faint:#664b49;--co-lime:#4a1f24;--co-deep:#ecd6cc;
+  --co-border:#c9b2a6;--co-glow:#8e443a;--co-muted:#5c4944;
+  background:var(--lf-paper);color:var(--lf-ink);color-scheme:light;
+}
+html:not([data-nf-theme="dusk"]) .co-page .co-sky{
+  background:radial-gradient(circle at 46% 43%,#eabfac,transparent 60%),#f0ded3;
+}
+html:not([data-nf-theme="dusk"]) .co-page :is(.co-node,.co-inspector,
+ .co-relations,.co-work-card,.co-protocol,.co-history article){
+  border-color:var(--lf-line);
+}
+html:not([data-nf-theme="dusk"]) .co-page .co-primary{
+  background:var(--lf-orange);color:var(--lf-oxblood);
+  border-color:var(--lf-orange);
+}
+html:not([data-nf-theme="dusk"]) .co-page .co-primary:hover{background:var(--lf-apricot)}
+html:not([data-nf-theme="dusk"]) .co-page .co-node[aria-pressed="true"]{
+  border-color:var(--lf-oxblood);box-shadow:0 0 0 3px #d97a4a35;
+}
+html:not([data-nf-theme="dusk"]) .co-page .co-overline,
+html:not([data-nf-theme="dusk"]) .co-page .co-section-head h2 em{
+  color:var(--lf-oxblood);
+}
+html:not([data-nf-theme="dusk"]) .co-page .co-orbit{
+  background:radial-gradient(circle,#e6ae922b,transparent 60%);
+}
+html:not([data-nf-theme="dusk"]) .co-page .co-star{
+  background:var(--lf-orange);box-shadow:0 0 12px #d97a4a33;
+}
+
+/* Join, SourceBound investigation, Living Papers: quiet clay paper reading
+   surfaces, blackcherry panels, explicit controls and adversarial receipts. */
+html:not([data-nf-theme="dusk"]) :is(.join-result-grid article,.join-workspace,
+ .join-pad,.join-next,.join-choice,.join-contract,.join-match,
+ .join-evidence-archive,.lp-panel,.lp-point,.ep-console,.ep-theory,
+ .lp-workbench,.lp-notebook,.lp-console,.lp-method,.lp-note,
+ .nf-observatory-layout,.cj-workspace,.cj-work,.cj-next){
+  background:var(--lf-paper-raised);color:var(--lf-ink);
+  border-color:var(--lf-line);
+}
+html:not([data-nf-theme="dusk"]) :is(.join-hero-aside li b,
+ .join-result-grid strong,.join-result-grid span,.join-pad>span,
+ .join-next>span,.join-workspace-header span,.lp-eyebrow,.lp-label,
+ .ep-plot-label small,.ep-grid-readout span){
+  color:var(--lf-oxblood);
+}
+html:not([data-nf-theme="dusk"]) :is(.join-hero-aside p,.join-result-grid p,
+ .join-method p,.lp-lead,.ep-hint,.ep-theory p,
+ .join-choice p,.cj-work p,.cj-next p){
+  color:var(--lf-muted);
+}
+html:not([data-nf-theme="dusk"]) :is(.join-evidence-archive,
+ #join-attack-output,.ep-grid-readout>div,.lp-lab,.ep-equation){
+  background:#eedbd0;color:var(--lf-ink);border-color:var(--lf-line);
+}
+html:not([data-nf-theme="dusk"]) :is(.join-hero-aside,.join-evidence,
+ .join-evidence-record,.lp-rule,.ep-plot,.ep-bars){
+  border-color:var(--lf-line);
+}
+html:not([data-nf-theme="dusk"]) :is(.join-evidence-archive h4,
+ .join-evidence-record,#join-evidence-status,#join-evidence-history){
+  color:var(--lf-oxblood);
+}
+html:not([data-nf-theme="dusk"]) .join-evidence-archive button{
+  background:var(--lf-orange);color:var(--lf-oxblood);border-color:var(--lf-orange);
+}
+html:not([data-nf-theme="dusk"]) .lp-hero-aside{
+  background:var(--lf-oxblood);color:#fff0e7;
+}
+html:not([data-nf-theme="dusk"]) .lp-hero-aside :is(.lp-eyebrow,
+ .lp-hero-number b,.lp-hero-aside>strong span){color:#e9aa80}
+html:not([data-nf-theme="dusk"]) .lp-hero-aside :is(p,.lp-disclosure){color:#edd0c7}
+html:not([data-nf-theme="dusk"]) .lp-page :is(.lp-btn,.lp-point button){
+  accent-color:var(--lf-orange);
+}
+html:not([data-nf-theme="dusk"]) .ep-equation{background:var(--lf-oxblood);color:#fff0e7}
+html:not([data-nf-theme="dusk"]) .ep-equation small{color:#f1c2a9}
+html:not([data-nf-theme="dusk"]) .ep-value span{color:#e9aa80}
+html:not([data-nf-theme="dusk"]) .ep-bars span{
+  background:#b45a45;border-color:#87443a;
+}
+html:not([data-nf-theme="dusk"]) .ep-bars-complement span{
+  background:#e3a065;border-color:#bc7448;
+}
+html:not([data-nf-theme="dusk"]) .ep-bars-product span{
+  background:#4a1f24;border-color:#4a1f24;
+}
+html:not([data-nf-theme="dusk"]) .ep-console input[type="range"]{
+  accent-color:var(--lf-oxblood);
+}
+html:not([data-nf-theme="dusk"]) .cj-section{
+  background:var(--lf-paper-deep);border-color:var(--lf-line);
+}
+html:not([data-nf-theme="dusk"]) .cj-contract{
+  background:var(--lf-oxblood);color:#fff0e7;
+}
+html:not([data-nf-theme="dusk"]) .cj-contract :is(p,.cj-condition,.cj-obligation small){
+  color:#efd4c8;
+}
+html:not([data-nf-theme="dusk"]) .cj-contract :is(.cj-kicker,.cj-obligation>span){
+  color:#e3a065;
+}
+html:not([data-nf-theme="dusk"]) .cj-workspace,.cj-columns{
+  border-color:var(--lf-line);
+}
+html:not([data-nf-theme="dusk"]) .cj-pickers select,
+html:not([data-nf-theme="dusk"]) .cj-work textarea{
+  background:var(--lf-paper-raised);color:var(--lf-ink);border-color:var(--lf-line);
+}
+html:not([data-nf-theme="dusk"]) .cj-actions button+button{
+  background:transparent;color:var(--lf-oxblood);border-color:var(--lf-oxblood);
+}
+
+/* Research Desk light workbench: panel surfaces and authority ink. */
+html:not([data-nf-theme="dusk"]) .desk-page :is(.desk-readout,
+ .desk-session-actions button,.desk-add){
+  background:var(--lf-oxblood);color:#fff0e7;border-color:var(--lf-oxblood);
+}
+html:not([data-nf-theme="dusk"]) .desk-page .desk-readout strong{color:#f1ad82}
+html:not([data-nf-theme="dusk"]) .desk-page :is(.desk-readout span,
+ .desk-readout small){color:#efd2c7}
+html:not([data-nf-theme="dusk"]) .desk-page :is(.desk-claim-button,
+ .desk-dimension,.desk-queue,.desk-notes,.desk-quick-actions a,
+ .desk-open-row){background:var(--lf-paper-raised);color:var(--lf-ink);border-color:var(--lf-line)}
+html:not([data-nf-theme="dusk"]) .desk-page :is(.desk-claim-button:hover,
+ .desk-claim-button[aria-pressed="true"]){background:#f0d0be;border-color:#b17663}
+html:not([data-nf-theme="dusk"]) .desk-page .desk-claim-button[aria-pressed="true"]{
+  box-shadow:inset 4px 0 var(--lf-oxblood);
+}
+html:not([data-nf-theme="dusk"]) .desk-page :is(.desk-hero h1 em,
+ .desk-session h2 em,.desk-footer h2 em,.desk-detail-field,
+ .desk-claim-button>span){color:var(--lf-oxblood)}
+html:not([data-nf-theme="dusk"]) .desk-page :is(.desk-claim-button small,
+ .desk-pane-head p,.desk-statement,.desk-condition,.desk-trust p,
+ .desk-session-header p){color:var(--lf-muted)}
+html:not([data-nf-theme="dusk"]) .desk-page :is(#desk-search,#desk-filter){
+  background:var(--lf-paper-raised);color:var(--lf-ink);border-color:var(--lf-line);
+}
+html:not([data-nf-theme="dusk"]) .desk-page .desk-add{background:var(--lf-orange);color:var(--lf-oxblood);border-color:var(--lf-orange)}
+html:not([data-nf-theme="dusk"]) .desk-page .desk-session-shortcut{
+  background:var(--lf-orange);color:var(--lf-oxblood);border-color:var(--lf-orange);
+}
+
+/* Discovery Engine: light-side mode for formerly dark-by-default tools.
+   Dusk retains the independent navy/violet/gold workbench unchanged. */
+html:not([data-nf-theme="dusk"]) body:has(#app){
+  --bg:#f4e7df;--side:#eedfd6;--paper:#f8eee8;
+  --panel:#f4e5db;--panel2:#ecd6c9;--line:#c9b2a6;
+  --text:#2a1f1d;--soft:#6a4e48;--muted:#6a4e48;--lime:#d97a4a;
+  background:var(--bg);color:var(--text);color-scheme:light;
+}
+html:not([data-nf-theme="dusk"]) body:has(#app) :is(.side,.top,.panel,.metrics,
+  .metric,.card,.op,.rep-card){border-color:var(--lf-line)}
+html:not([data-nf-theme="dusk"]) body:has(#app) :is(.navitem,.portfolio,
+  .side-label,.side-bottom,.brand small,.metric span,.metric small,
+  .context .sub,.sect-head p,.meta,.step small,.aside-note p){
+  color:var(--lf-muted);
+}
+html:not([data-nf-theme="dusk"]) body:has(#app) :is(.navitem:hover,.portfolio:hover,
+  .navitem.selected,.portfolio.active){background:#f0cdbc;color:var(--lf-oxblood)}
+html:not([data-nf-theme="dusk"]) body:has(#app) .navitem.selected{
+  border-left-color:var(--lf-oxblood);
+}
+html:not([data-nf-theme="dusk"]) body:has(#app) :is(.brand-mark,.btn.primary){
+  background:var(--lf-orange);color:var(--lf-oxblood);border-color:var(--lf-orange);
+}
+html:not([data-nf-theme="dusk"]) body:has(#app) :is(.navitem.selected em,
+  .navitem em,.saved.on,.eyebrow,.context-figure strong,.step>b,
+  .side-label button,.meta a,.subtle){color:var(--lf-oxblood)}
+html:not([data-nf-theme="dusk"]) body:has(#app) :is(.portfolio.active .dot,
+  .live-dot){background:var(--lf-orange)}
+html:not([data-nf-theme="dusk"]) body:has(#app) .dot{background:#a67b6d}
+html:not([data-nf-theme="dusk"]) body:has(#app) :is(.status,.tag.pending,
+  .tag.passed,.context-figure,.feature-panel,.aside-note){
+  background:#eed8cd;color:var(--lf-oxblood);border-color:var(--lf-line);
+}
+html:not([data-nf-theme="dusk"]) body:has(#app) .context-figure{
+  background:linear-gradient(145deg,#f1cfb9,#eeddd4);
+}
+html:not([data-nf-theme="dusk"]) body:has(#app) :is(.context-figure small,
+ .context-figure span,.context-figure strong){color:var(--lf-oxblood)}
+html:not([data-nf-theme="dusk"]) body:has(#app) .btn.primary:hover{
+  background:var(--lf-apricot);border-color:var(--lf-apricot);
+}
+html:not([data-nf-theme="dusk"]) body:has(#app) .toast:not(.bad){
+  background:var(--lf-orange);color:var(--lf-oxblood);border-color:var(--lf-oxblood-soft);
+}
+html:not([data-nf-theme="dusk"]) body:has(#app) :is(.side,.panel,.main,.top){
+  color:var(--lf-ink);
+}
+
+/* Claim Lab: independent tool has inline default-dark styles.
+   Its LIGHT mode is a warm paper desk, while DUSK stays navy. */
+html:not([data-nf-theme="dusk"]) body:has(.app){
+  --bg:#f4e7df;--surface:#f8eee8;--surface2:#f2ddd2;
+  --surface3:#eed6ca;--text:#2a1f1d;--muted:#5c4944;
+  --subtle:#705a52;--line:#c9b2a6;--mint:#4a1f24;
+  --mint2:#a2635c;--gold:#d97a4a;--shadow:0 12px 35px #4a1f241f;
+  background:var(--bg);color:var(--text);color-scheme:light;
+}
+html:not([data-nf-theme="dusk"]) body:has(.app) :is(.sidebar,.side){
+  background:var(--lf-paper-deep);border-color:var(--lf-line);
+}
+html:not([data-nf-theme="dusk"]) body:has(.app) :is(.brandMark,.nav button.active){
+  background:#f0cebc;color:var(--lf-oxblood);border-color:var(--lf-line);
+  box-shadow:inset 3px 0 0 var(--lf-orange);
+}
+html:not([data-nf-theme="dusk"]) body:has(.app) :is(.nav button,.nav button:hover,
+ .sideBottom,.helpText,.subtitle,.inlineStats){color:var(--lf-ink)}
+html:not([data-nf-theme="dusk"]) body:has(.app) .local{color:var(--lf-oxblood)}
+html:not([data-nf-theme="dusk"]) body:has(.app) .pulse{
+  background:var(--lf-orange);box-shadow:0 0 0 3px #d97a4a28;
+}
+html:not([data-nf-theme="dusk"]) body:has(.app) .toast:not(.bad){
+  background:var(--lf-paper-deep);color:var(--lf-oxblood);border-color:var(--lf-line);
+}
+html:not([data-nf-theme="dusk"]) body:has(.app) .sideBottom .privacy{
+  background:var(--lf-paper-raised);color:var(--lf-muted);border-color:var(--lf-line);
+}
+html:not([data-nf-theme="dusk"]) body:has(.app) :is(button.primary,
+  .btnPrimary,.primaryBtn){background:var(--lf-orange);color:var(--lf-oxblood)}
+
+
+/* Final first-fold art correction: the original SVG encodes green presentation
+   attributes. Restyle it only in LIGHT; leave paths, geometry, labels unchanged. */
+html:not([data-nf-theme="dusk"]) .hero-aside .diagram circle[stroke="#b2bfb1"],
+html:not([data-nf-theme="dusk"]) .hero-aside .diagram path[stroke="#abb8aa"]{
+ stroke:#c9b2a6;
+}
+html:not([data-nf-theme="dusk"]) .hero-aside .diagram path[stroke="#213e2d"]{stroke:#4a1f24}
+html:not([data-nf-theme="dusk"]) .hero-aside .diagram path[stroke="#7f987d"]{stroke:#bd7958}
+html:not([data-nf-theme="dusk"]) .hero-aside .diagram circle[fill="#18221e"]{fill:#4a1f24}
+html:not([data-nf-theme="dusk"]) .hero-aside .diagram circle[fill="#b0db58"]{
+ fill:#d97a4a;stroke:#4a1f24;
+}
+html:not([data-nf-theme="dusk"]) .hero-aside .diagram text{fill:#6a4742}
+html:not([data-nf-theme="dusk"]) :is(.flagship-card svg circle[fill="#d9ff5e"],
+ .flagship-card svg g[fill="#d9ff5e"] circle){fill:#e3a065}
+html:not([data-nf-theme="dusk"]) .feature-art g[stroke="#d9ff5e"]{stroke:#e3a065}
+/* Inline legacy specialty-tools styles need explicit scope-limited overrides. */
+html:not([data-nf-theme="dusk"]) .nf-home-toolbox-content>.desk-entry[style]{
+ background:#4a1f24!important;color:#fff0e7!important;border-color:#6a2d35!important;
+}
+html:not([data-nf-theme="dusk"]) .nf-home-toolbox-content>.desk-entry[style] p{
+ color:#efd3c9!important;
+}
+html:not([data-nf-theme="dusk"]) .nf-home-toolbox-content>.desk-entry[style] :is(a,strong,span)[style*="color:#d9ff"]{
+ color:#efb083!important;
+}
+html:not([data-nf-theme="dusk"]) .nf-home-toolbox-content>.desk-entry[style] span[style*="color:#d6e0"]{
+ color:#ebd2c6!important;
+}
