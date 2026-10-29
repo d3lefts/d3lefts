@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="adversary.css">
 <script src="site.js" defer></script>
 <script src="adversary-core.js" defer></script>
+<script src="companion-handoff-core.js" defer></script>
 <script src="adversary-app.js" defer></script>
 <title>Imaginary Adversary · Devil's Advocate — NIGHTFALL</title>
 </head>
@@ -36,6 +37,7 @@
  <div class="ia-section-heading"><span>01 / ATTACK CONTRACT</span><h2 id="bench-title">Give doubt<br><em>something precise.</em></h2><p>The controls are deterministic. They make exact finite checks when the domain permits one; the remaining objections are explicit review questions, never generated evidence.</p></div>
  <div class="ia-workspace">
   <div class="ia-terminal"><span>IMAGINARY ADVERSARY / LOCAL BROWSER</span><span id="engine-version">EXACT BOUNDED ATTACK ENGINE</span></div>
+  <div class="ia-handoff-note" id="handoff-note" role="status" aria-live="polite" hidden></div>
   <div class="ia-fields">
    <div class="ia-field"><label for="domain">Attack domain</label><select id="domain"><option value="sidon">Sidon / additive combinatorics</option><option value="overlap">Minimum overlap / step functions</option><option value="general">General claim / proof assumptions</option></select></div>
    <div class="ia-field"><label for="reach">Claim reach</label><select id="reach"><option value="finite">Finite, supplied instance</option><option value="universal">Universal / asymptotic theorem</option></select></div>
@@ -60,7 +62,7 @@
    </div>
   </section>
   <section id="general-fields" class="ia-domain ia-general" aria-label="General proof attack" hidden><p>No arbitrary theorem solver is claimed. This mode generates a structured adversarial brief covering quantifier scope, proof dependencies, reproduction, and closest prior work. Supply a domain-specific finite input to execute a mathematical falsifier.</p></section>
-  <div class="ia-toolbar"><button id="run-attack" class="ia-run" type="button">Run Devil's Advocate <span aria-hidden="true">↗</span></button><button id="load-fixture" type="button" class="ia-alt">Load a deliberate counterexample</button><button id="export-attack" type="button" class="ia-alt" disabled>Export attack JSON ↓</button><button id="copy-brief" type="button" class="ia-alt" disabled>Copy adversarial brief</button></div>
+  <div class="ia-toolbar"><button id="run-attack" class="ia-run" type="button">Run Devil's Advocate <span aria-hidden="true">↗</span></button><button id="load-fixture" type="button" class="ia-alt">Load a deliberate counterexample</button><button id="send-to-referee" type="button" class="ia-alt">Send finite input to Referee ↗</button><button id="export-attack" type="button" class="ia-alt" disabled>Export attack JSON ↓</button><button id="copy-brief" type="button" class="ia-alt" disabled>Copy adversarial brief</button></div>
   <div id="result" class="ia-results" role="status" aria-live="polite"><span>AWAITING PRECISE CLAIM</span><h3>Nothing is established yet.</h3><p>Choose a domain and run an attack to see the exact counterexample or test boundary, plus questions that a reviewer should try to answer.</p></div>
   <div class="ia-trust">LOCAL INPUT · NO NETWORK UPLOAD · REVIEW QUESTIONS ARE HYPOTHESES · JSON HASH IS AN INPUT FINGERPRINT, NOT A SIGNATURE</div>
  </div>
