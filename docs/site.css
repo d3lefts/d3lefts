@@ -306,3 +306,63 @@ html{scroll-padding-top:22px}
 }
 @media(max-width:480px){.atlas-filtertools{flex-direction:column}.atlas-evidence-label,.atlas-search-label{width:100%}.atlas-search-label input{width:100%;max-width:100%}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.atlas-card,.button{transition:none}.button:hover{transform:none}}
+
+
+/* NIGHTFALL 2026 Living Research System — a case-first research homepage. */
+.sf-case{padding-top:84px;padding-bottom:84px;border-bottom:1px solid var(--line)}
+.sf-case-panel{display:grid;grid-template-columns:1.32fr .68fr;background:#172b21;color:#f0f6eb;margin-top:29px;min-height:510px}
+.sf-case-main{padding:clamp(27px,4vw,54px);display:flex;flex-direction:column}
+.sf-case-top,.sf-witness-header{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font:600 10px/1.5 var(--mono);letter-spacing:.06em;color:#b6c9b9}
+.sf-case-main h3{font:400 clamp(40px,5vw,72px)/1 var(--serif);margin:37px 0 12px;letter-spacing:-.03em}
+.sf-case-main>p{font:13px/1.7 var(--sans);color:#bad0bf;max-width:630px}
+.sf-witness-header{border-top:1px solid #577360;padding-top:19px;margin:35px 0 15px}
+.sf-witness{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:7px}
+.sf-point{display:flex;align-items:center;justify-content:center;aspect-ratio:1/1;min-width:0;font:11px var(--mono);color:#b8d0b6;background:#284734;border:1px solid #56765d;transition:opacity .2s,background .2s}
+.sf-point.chosen{background:#d9ff5e;color:#1a3020;border-color:#d9ff5e}
+.sf-witness.show-subset .sf-point:not(.chosen){opacity:.19}
+.sf-case-interact{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px}
+.sf-case-interact button{font:600 11px var(--mono);background:transparent;border-bottom:1px solid #a4c49d;color:#d9ff5e;padding:8px 0}
+.sf-case-interact button:focus-visible{outline:2px solid var(--accent)}
+.sf-case-interact span{font:10px/1.6 var(--mono);color:#afc5b1;max-width:390px}
+.sf-case-links{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:auto;padding-top:35px}
+.sf-case-links .button{background:#d9ff5e;color:#172b21;border-color:#d9ff5e}
+.sf-case-links .text-link{color:#d8f3ce}
+.sf-case-aside{background:#d9ff5e;color:#172b21;padding:clamp(25px,3.4vw,47px);display:flex;flex-direction:column;justify-content:space-between}
+.sf-label{display:block;font:600 10px var(--mono);letter-spacing:.05em}
+.sf-big{font:400 clamp(63px,7vw,110px)/.95 var(--serif);display:block;letter-spacing:-.04em;margin:24px 0}
+.sf-case-aside p{font:14px/1.6 var(--sans);max-width:300px}
+.sf-aside-stats{border-top:1px solid #769850;border-bottom:1px solid #769850;padding:16px 0;display:grid;gap:13px}
+.sf-aside-stats div{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.sf-aside-stats span,.sf-aside-foot span{font:10px/1.5 var(--mono)}.sf-aside-stats strong{font:500 24px var(--serif)}
+.sf-aside-foot{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:18px}
+.sf-aside-foot strong{font:600 11px var(--mono)}
+.sf-case-boundary{font:12px/1.75 var(--sans);margin-top:18px;color:var(--muted);max-width:1050px}
+.sf-case-boundary a{text-decoration:underline;text-underline-offset:3px}
+.sf-ecosystem{padding-top:84px;padding-bottom:90px;border-bottom:1px solid var(--line)}
+.sf-ecosystem-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.sf-system-card{border:1px solid #b9c7b8;padding:28px 24px;min-height:320px;background:#e8eee5;display:flex;flex-direction:column;transition:background .18s,border-color .18s}
+.sf-system-card>span{font:600 10px/1.5 var(--mono);color:#54705a}
+.sf-system-card h3{font:400 clamp(29px,3vw,45px)/1.05 var(--serif);margin:51px 0 14px}
+.sf-system-card p{font:13px/1.7 var(--sans);color:#526655}
+.sf-system-card strong{font:600 11px var(--mono);margin-top:auto;padding-top:20px}
+.sf-system-card:hover,.sf-system-card:focus-visible{background:#dae7d4;border-color:#607c63}
+.sf-system-card-accent{background:#213d2c;color:#e9f6e5;border-color:#213d2c}
+.sf-system-card-accent>span,.sf-system-card-accent p{color:#b9d0bd}
+.sf-system-card-accent strong{color:#d9ff5e}
+.sf-system-card-accent:hover,.sf-system-card-accent:focus-visible{background:#34573e}
+.sf-evidence-snapshot{display:grid;grid-template-columns:.8fr 1.2fr;gap:50px;align-items:center;padding:65px 0 0;margin-top:55px;border-top:1px solid var(--line)}
+.sf-evidence-snapshot h3{font:400 clamp(40px,4vw,62px)/.99 var(--serif);margin:15px 0}
+.sf-evidence-snapshot h3 em{color:#577a5b}
+.sf-evidence-snapshot p{font:13px/1.7 var(--sans);max-width:370px;color:var(--muted);margin-bottom:23px}
+.sf-evidence-events{display:grid}
+.sf-evidence-events a{display:grid;grid-template-columns:106px 1fr auto;gap:15px;align-items:center;padding:20px 5px;border-top:1px solid #bcc8ba;font:12px/1.5 var(--sans)}
+.sf-evidence-events a:last-child{border-bottom:1px solid #bcc8ba}
+.sf-evidence-events time{font:11px var(--mono);color:#647a69}
+.sf-evidence-events strong{font:10px var(--mono);white-space:nowrap}
+.sf-evidence-events a:hover{background:#e5ebe1}
+.sf-library-invite{display:grid;grid-template-columns:1.5fr .5fr;gap:45px;padding:65px 0;border-bottom:1px solid var(--line)}
+.sf-library-invite .section-title{margin:15px 0 19px}.sf-library-invite .section-title em{color:#5b775f}
+.sf-library-actions{display:flex;flex-direction:column;align-items:start;justify-content:center;gap:24px}
+@media(max-width:1100px){.sf-ecosystem-grid{grid-template-columns:repeat(2,1fr)}.sf-case-panel{grid-template-columns:1fr}.sf-case-aside{display:grid;grid-template-columns:1fr 1fr;gap:25px}.sf-case-aside .sf-aside-foot{grid-column:1/-1}}
+@media(max-width:760px){.sf-case,.sf-ecosystem{padding-top:54px;padding-bottom:59px}.sf-case-panel{grid-template-columns:1fr}.sf-case-main{padding:24px}.sf-case-main h3{margin:22px 0;font-size:49px}.sf-witness{gap:4px;grid-template-columns:repeat(6,minmax(0,1fr))}.sf-point{font-size:10px}.sf-case-aside{display:block;padding:27px}.sf-big{font-size:75px}.sf-aside-stats{margin-top:25px}.sf-case-interact{align-items:start}.sf-ecosystem-grid{grid-template-columns:1fr}.sf-system-card{min-height:225px;padding:24px}.sf-system-card h3{margin:23px 0 11px;font-size:40px}.sf-evidence-snapshot{grid-template-columns:1fr;gap:26px;padding-top:37px;margin-top:40px}.sf-evidence-events a{grid-template-columns:1fr auto;gap:6px}.sf-evidence-events time{grid-column:1/-1}.sf-library-invite{grid-template-columns:1fr;gap:20px;padding:46px 0}}
+@media(prefers-reduced-motion:reduce){.sf-point,.sf-system-card{transition:none}}
