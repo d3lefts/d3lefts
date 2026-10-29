@@ -5,7 +5,7 @@ import {join,normalize,resolve,sep} from "node:path";
 import {chromium} from "playwright-core";
 
 const root=resolve("docs");
-const pages=["index.html","living-paper.html","join.html","review.html","evidence.html","agenda.html","research.html","exact-research.html","desk.html","frontier.html"];
+const pages=["index.html","living-paper.html","erdos-paper.html","join.html","review.html","evidence.html","agenda.html","research.html","exact-research.html","desk.html","frontier.html"];
 const types={".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".svg":"image/svg+xml"};
 const server=createServer(async (req,res)=>{
  try{
@@ -69,6 +69,29 @@ try{
    assert.match(await page.locator("#lp-output").innerText(),/Edge-deletion witnesses checked: 28\/28/);
    assert.equal(await page.locator("#lp-export").isDisabled(),false);
    assert.equal(await page.locator("#lp-history-items article").count(),3,"canonical Sidon evidence history");
+   await page.goto(origin+"erdos-paper.html",{waitUntil:"load"});
+   assert.equal(await page.locator("#ep-f span").count(),16,"Erdős educational fixture must have 16 heights");
+   assert.equal(await page.locator("#ep-g span").count(),16,"Translated complement bars align");
+   assert.equal(await page.locator("#ep-product span").count(),16,"Product bars align");
+   assert.match(await page.locator("#ep-maximum").innerText(),/0\.505859375/,"Exact small-fixture maximum");
+   await page.locator("#ep-lag").evaluate(el=>{el.value="-7";el.dispatchEvent(new Event("input",{bubbles:true}));});
+   assert.match(await page.locator("#ep-lag-value").innerText(),/k = -7/);
+   await page.locator("#ep-from").selectOption("1");
+   await page.locator("#ep-to").selectOption("10");
+   await page.locator("#ep-transfer").click();
+   assert.match(await page.locator("#ep-message").innerText(),/Exact mass/);
+   assert.equal(await page.locator("#ep-export").isDisabled(),true);
+   await page.locator("#ep-audit").click();
+   assert.match(await page.locator("#ep-output").innerText(),/LOCAL EXACT EXERCISE PASSED/);
+   assert.match(await page.locator("#ep-output").innerText(),/61 \/ 61/);
+   assert.equal(await page.locator("#ep-export").isDisabled(),false);
+   await page.locator("#ep-file").setInputFiles({name:"heights_u70.txt",mimeType:"text/plain",buffer:Buffer.from("invalid witness fixture")});
+   await page.locator("#ep-hash-button").click();
+   await page.waitForFunction(()=>/BYTE IDENTITY MISMATCH/.test(document.querySelector("#ep-hash-output")?.textContent||""));
+   assert.match(await page.locator("#ep-hash-output").innerText(),/BYTE IDENTITY MISMATCH/,"Corrupted full-witness byte identity must fail");
+   await page.locator("#ep-reset").click();
+   assert.equal(await page.locator("#ep-export").isDisabled(),true);
+   assert.match(await page.locator("#ep-maximum").innerText(),/0\.505859375/);
    // Progressive enhancement is an evidence guarantee: identical finite witness
    // coordinates remain visible without JavaScript, not a perpetual loader.
    await page.goto(origin+"index.html",{waitUntil:"load"});
@@ -327,8 +350,6 @@ try{
   }
   if(width===390){
     await page.goto(origin+"claim-lab.html",{waitUntil:"load"});
-    // Earlier tests may have persisted a non-demo claim registry in this context.
-    // Reset the fixture before asserting the initial illustrative-data notice.
     await page.evaluate(()=>localStorage.removeItem("nightfall_claim_lab_v1"));
     await page.reload({waitUntil:"load"});
     assert.equal(await page.locator(".demoNotice").count(),1,"Claim Lab demo explicitly labeled");

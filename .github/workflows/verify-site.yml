@@ -89,7 +89,7 @@ jobs:
         run: |
           npm install --no-save --no-package-lock playwright-core@1.56.1
           mkdir -p browser-artifacts
-      - name: Verify ethereal theme across 22 pages and capture previews
+      - name: Verify ethereal theme across 23 pages and capture previews
         run: |
           set -o pipefail
           CHROME_BIN="$(command -v google-chrome)" node scripts/test_ethereal_theme.mjs 2>&1 | tee browser-artifacts/ethereal-theme.log
