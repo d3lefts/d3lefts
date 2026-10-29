@@ -112,19 +112,19 @@ def main() -> int:
     ref_js = (DOCS / "referee-app.js").read_text(encoding="utf-8")
     if 'requestedDomain === "sidon"' not in ref_js:
         FAILURES.append("RESEARCH JOURNEY: allowlisted Sidon verifier deep link absent")
-    if '<b>30</b><span>Curated research documents' not in homepage_text:
-        FAILURES.append("EDITORIAL: 30-document owner-curated homepage inventory mismatch")
+    if '<b>32</b><span>Curated research documents' not in homepage_text:
+        FAILURES.append("EDITORIAL: 32-document owner-curated homepage inventory mismatch")
     # Separate working-research library: preserve originality whitelist and evidence boundaries.
     library = (DOCS / "research.html").read_text(encoding="utf-8")
     entries = re.findall(r'<article class="atlas-card" data-domain="([^"]+)" data-evidence="([^"]+)"', library)
-    # Owner-curated 30-entry ledger is the authoritative ordered public inventory.
+    # Owner-curated 32-entry ledger is the authoritative ordered public inventory; at least 30 source-linked entries across four fields.
     # Check exact category/status sequence, uniqueness and every promised source.
     import json
-    snapshot = ROOT / "research/nightfall/SITE_CURATED_30_20261028.json"
+    snapshot = ROOT / "research/nightfall/SITE_CURATED_32_20261028.json"
     curated = json.loads(snapshot.read_text(encoding="utf-8"))
     records = curated.get("entries", [])
-    if len(records) != 30 or curated.get("original_findings_whitelist_count") != 3:
-        FAILURES.append("RESEARCH LIBRARY: frozen 30-entry editorial source count or originality gate changed")
+    if len(records) < 30 or curated.get("original_findings_whitelist_count") != 3:
+        FAILURES.append("RESEARCH LIBRARY: owner-curated 30+ entry source inventory or originality gate changed")
     expected = [(item.get("category"), item.get("evidence")) for item in records]
     if entries != expected:
         FAILURES.append("RESEARCH LIBRARY: HTML discipline/evidence sequence differs from owner curated ledger")
@@ -137,8 +137,8 @@ def main() -> int:
     if any(state not in permitted_evidence for _, state in entries):
         FAILURES.append("RESEARCH LIBRARY: unrecognized evidence tier")
     link_paths = re.findall(r'href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/([^"]+)"', library)
-    if len(link_paths) < 30 or len(set(link_paths)) < 30:
-        FAILURES.append("RESEARCH LIBRARY: 30 unique source-linked research dossiers required")
+    if len(link_paths) < len(records) or len(set(link_paths)) < len(records):
+        FAILURES.append("RESEARCH LIBRARY: each curated document needs one unique source-linked dossier")
     linked = set(link_paths)
     for row in records:
         if row.get("source") not in linked:
@@ -146,7 +146,7 @@ def main() -> int:
     for path in link_paths:
         if not (ROOT / "research/nightfall" / path).is_file():
             FAILURES.append("RESEARCH LIBRARY: source dossier missing: " + path)
-    if library.count("Evidence boundary") < 30 or "Only three entries qualify" not in library:
+    if library.count("Evidence boundary") < len(records) or "Only three entries qualify" not in library:
         FAILURES.append("RESEARCH LIBRARY: scoped claim boundaries or original-finding distinction missing")
     if homepage_text.count('class="flagship-card ') != 3 or 'href="research.html"' not in homepage_text:
         FAILURES.append("FLAGSHIPS: three explicitly scoped research programs and library navigation required")
