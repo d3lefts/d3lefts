@@ -1,0 +1,6 @@
+PASS independent zero rows 625 out of 15625
+PASS independent zero rows 625 out of 15625
+PASS independent zero rows 625 out of 15625
+PASS dependent zero rows 3025 out of 15625
+PASS dependent zero rows 25 out of 15625
+PASS alternate field-basis and exact count checks
