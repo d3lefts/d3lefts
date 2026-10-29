@@ -1,0 +1,37 @@
+"use strict";
+const assert=require("node:assert/strict");
+const nf=require("../../../docs/frontier-core.js");
+assert.equal(nf.VERSION,"nightfall-frontier-v1");
+const ranked=nf.prioritize();
+assert.deepEqual(ranked.map(x=>x.id),["NF-156-184","NF-86-Q7","NF-36-LOWER"]);
+assert.equal(nf.score(ranked[0]),29);
+assert.equal(nf.score(ranked[1]),23);
+assert.equal(nf.score(ranked[2]),15);
+for(const c of ranked){
+ assert.match(c.source,/^https:\/\/github\.com\/d3lefts\/d3lefts\//);
+ assert.equal(c.parts.length,3);
+ for(const part of c.parts)assert.ok(part.claim.length>20&&part.falsifier.length>20);
+}
+const near=nf.verifyNine(nf.NEAR.join(", "));
+assert.equal(near.status,"NOT_MAXIMAL");
+assert.deepEqual(near.addable,[16,166],"Archived exact N184 near-candidate must expose exactly two blockers");
+assert.equal(near.checked,175);
+assert.equal(nf.verifyFinite("4,6,7",10,3).status,"FINITE_YES_CHECK_PASSED","Independent small complete yes witness");
+assert.equal(nf.verifyFinite("8,48,68,69,71,75,104,120",144,8).status,"FINITE_YES_CHECK_PASSED","Published Huber N144 eight mark witness");
+assert.equal(nf.verifyNine("1 2 3 4 5 6 7 8 9").status,"INVALID_SIDON","Diagonal sums and collisions must be detected");
+assert.equal(nf.verifyNine("49 50 56 78 93 104 125 139 139").status,"INVALID_INPUT","Duplicate mark refusal");
+assert.equal(nf.verifyNine("49 50 56 78 93 104 125 139 185").status,"INVALID_INPUT","Out of domain refusal");
+assert.equal(nf.verifyNine("49 50 56 78 93 104 125 139 x").status,"INVALID_INPUT","Noninteger refusal");
+assert.equal(nf.verifyNine("49 50 56 78 93 104 125 139").status,"INVALID_INPUT","Cardinality refusal");
+const first=nf.workItem("NF-156-184","witness");
+assert.equal(first.issue,46);assert.equal(first.nodeId,"NF-156-184:witness");
+assert.deepEqual(nf.contract(first).requiredEvidence.length,5);
+const child=nf.split(first.caseId,first.id,"Can the two exceptional addable marks be blocked simultaneously?","One exact Sidon candidate with both original addable marks surviving.",[]);
+const item=nf.workItem("NF-156-184",child.id,[child]);
+assert.equal(item.parent,"NF-156-184:witness");
+const grandchild=nf.split("NF-156-184",child.id,"Prove a single local swap cannot block both insertion points","One swap that blocks both x values.",[child]);
+assert.equal(grandchild.depth,2);
+assert.throws(()=>nf.split("NF-156-184","invalid","A long enough mathematical question","One explicit counterexample at fixed inputs",[]));
+assert.throws(()=>nf.split("NF-156-184",child.id,"too short","tiny",[child]));
+assert.equal(nf.workItem("NF-156-184","nonsense"),null);
+console.log("PASS Agent NF triage, exact maximal-Sidon oracle, archived near-candidate, Huber independent positives, scoped splits and receipts");
