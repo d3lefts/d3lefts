@@ -1,0 +1,34 @@
+name: Axiom planar gluing exact Sidon audit
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/agent-reports/axiom_planar_gluing_20261029/**"
+      - ".github/workflows/axiom-planar-gluing-audit.yml"
+  push:
+    paths:
+      - "research/nightfall/agent-reports/axiom_planar_gluing_20261029/**"
+      - ".github/workflows/axiom-planar-gluing-audit.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-gluing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile two independent implementations
+        run: python3 -m py_compile research/nightfall/agent-reports/axiom_planar_gluing_20261029/*.py
+      - name: Direct full sums and external insertions
+        run: python3 research/nightfall/agent-reports/axiom_planar_gluing_20261029/verify.py
+      - name: Independent planar spectra and constructive blockers
+        run: python3 research/nightfall/agent-reports/axiom_planar_gluing_20261029/structural_audit.py
+      - name: Exact planar-graph EA inequivalence via normalized polarization commutator
+        run: python3 research/nightfall/agent-reports/axiom_planar_gluing_20261029/ea_inequivalence.py
+      - name: Affine-equivalence falsifier (negative result)
+        run: |
+          g++ -O3 -std=c++17 research/nightfall/agent-reports/axiom_planar_gluing_20261029/codim2_standalone.cpp -o /tmp/axiom_codim2
+          /tmp/axiom_codim2
