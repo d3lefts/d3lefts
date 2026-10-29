@@ -36,13 +36,13 @@ const expectedHash=crypto.createHash("sha256").update(C.SIDON_WITNESS.join(",")+
 assert.equal(expectedHash,"dc4697ce051a57987049199965967cc2b981433816d3daac284454262395978f");
 const y=C.checkSidon(sidonInput,17);
 assert.equal(y.status,"FINITE_CHECK_PASSED");
-assert.equal(y.weakSidonA.pass,true);assert.equal(y.weakSidonA.tested,27405);
+assert.equal(y.weakSidonA.pass,true);assert.equal(y.weakSidonA.tested,27405);assert.equal(y.fourFive.pass,true);assert.equal(y.weakSidon.pass,true);
 assert.equal(y.weakSidonB.pass,true);assert.equal(y.subset.pairSums,153);
 assert.equal(y.proof.arithmeticProgressions,28);
 assert.equal(y.proof.status,"PROVED");
 assert.equal(y.proof.states,7801);
 const atk=C.sidonAttacks(sidonInput,17);
-assert.equal(atk.understatedMaximumRejected,true);assert.equal(atk.corruptedSubsetRejected,true);
+assert.equal(atk.understatedMaximumRejected,true);assert.equal(atk.corruptedSubsetRejected,true);assert.equal(atk.strengthDistinctionDetected,true);
 assert.notEqual(C.checkSidon(sidonInput,16).status,"FINITE_CHECK_PASSED");
 const ry=receipt("weak-sidon-4-5-finite",sidonInput,17);
 assert.equal(audit(ry).status,"REPLAY_PASS");
@@ -52,6 +52,14 @@ const small={points:["0","1","3","7"],subset:["0","1","3","7"]};
 assert.equal(C.checkSidon(small,4).status,"FINITE_CHECK_PASSED");
 const weak={points:["0","1","2","3"],subset:["0","1","2"]};
 assert.notEqual(C.checkSidon(weak,3).status,"FINITE_CHECK_PASSED");
+// The two checks are NOT equivalent. This fixture is weak Sidon and fails (4,5).
+const strictCounterexample={points:["1","2","3","5"],subset:["1","2","5"]};
+const scoped=C.checkSidon(strictCounterexample,3);
+assert.equal(scoped.weakSidon.pass,true);
+assert.equal(scoped.fourFive.pass,false);
+assert.equal(scoped.status,"REJECT_OR_INCONCLUSIVE");
+assert.equal(C.sidonAttacks(strictCounterexample,3).strengthDistinctionDetected,true);
+
 if(process.env.REFEREE_FIXTURE_DIR){
  const fs=require("node:fs"),path=require("node:path"),dir=process.env.REFEREE_FIXTURE_DIR;
  fs.mkdirSync(dir,{recursive:true});
