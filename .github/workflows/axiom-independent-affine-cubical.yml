@@ -1,0 +1,35 @@
+name: AXIOM — independent affine review and cubical three-edge sector
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/agent-reports/axiom_affine_independent_20261029/**'
+      - 'research/nightfall/agent-reports/axiom_cubical_triples_20261029/**'
+      - '.github/workflows/axiom-independent-affine-cubical.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/agent-reports/axiom_affine_independent_20261029/**'
+      - 'research/nightfall/agent-reports/axiom_cubical_triples_20261029/**'
+      - '.github/workflows/axiom-independent-affine-cubical.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-geometry-and-field-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Exact F27 matrix-multiplication independent audit of Axiom 142
+        run: python3 research/nightfall/agent-reports/axiom_affine_independent_20261029/audit_companion_matrix.py
+      - name: Exhaust all 14.9 million Q7 three-edge configurations
+        run: python3 research/nightfall/agent-reports/axiom_cubical_triples_20261029/verify_three_edge_sector.py
+      - name: Hash exact frozen verifier sources
+        run: |
+          sha256sum research/nightfall/agent-reports/axiom_affine_independent_20261029/audit_companion_matrix.py
+          sha256sum research/nightfall/agent-reports/axiom_cubical_triples_20261029/verify_three_edge_sector.py
