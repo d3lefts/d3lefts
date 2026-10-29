@@ -63,6 +63,12 @@ try{
     await screenshot("01-desktop-home.png");
     await page.locator(".nf-home-toolbox summary").click();
     assert.equal(await page.locator(".sf-ecosystem .sf-system-card:visible").count(),4,"All instruments remain discoverable on demand");
+    const frontierDisclosure=page.locator(".nf-frontiers-disclosure");
+    assert.equal(await frontierDisclosure.evaluate(el=>el.open),false,"Secondary flagships should initially be folded");
+    assert.match(await frontierDisclosure.locator("summary").innerText(),/conditional.*imported.*candidate/i,
+      "Proof-status distinctions must be visible before expansion");
+    await frontierDisclosure.locator("summary").click();
+    assert.equal(await frontierDisclosure.evaluate(el=>el.open),true,"Secondary flagships must open on demand");
     const labels=await page.locator(".flagship-eyebrow").allInnerTexts();
     assert.equal(labels.length,4);
     assert.ok(labels.some(x=>/finite/i.test(x)),"Explicit finite scope absent");

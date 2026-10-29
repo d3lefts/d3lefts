@@ -1,0 +1,29 @@
+name: Verify homepage editorial rhythm
+on:
+  pull_request:
+    paths:
+      - 'docs/index.html'
+      - 'docs/home-rhythm.css'
+      - 'tests/test_homepage_three_moments.mjs'
+      - '.github/workflows/verify-homepage-rhythm.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/index.html'
+      - 'docs/home-rhythm.css'
+      - 'tests/test_homepage_three_moments.mjs'
+      - '.github/workflows/verify-homepage-rhythm.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  narrative-and-archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify three moments and preserve all evidence routes
+        run: node --test tests/test_homepage_three_moments.mjs
