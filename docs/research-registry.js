@@ -3,8 +3,8 @@
 (function(global){
 const REGISTRY={
   "schema": "nightfall-proof-passports-v1",
-  "asOf": "2026-10-28",
-  "editorialScope": "Curated claim-level source records, not a synchronization of all 32 curated research documents. Evidence classifications describe only the stated scopes.",
+  "asOf": "2026-10-29",
+  "editorialScope": "Curated claim-level source records, not a synchronization of all 33 curated research documents. Evidence classifications describe only the stated scopes.",
   "dimensions": [
     "validity",
     "reproducibility",
