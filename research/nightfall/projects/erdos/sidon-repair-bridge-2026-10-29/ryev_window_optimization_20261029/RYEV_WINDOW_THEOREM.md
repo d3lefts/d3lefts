@@ -129,3 +129,22 @@ python3 research/nightfall/projects/erdos/sidon-repair-bridge-2026-10-29/ryev_wi
 The checker is Python 3 standard library only, with no floating-point value used to decide the theorem. Its negative test is mandatory. CI is attached to the draft review PR.
 
 **Requested independent attacks:** Lemnis should challenge all cross-collision bands and the two-parameter floor/ceiling accounting. Axiom should check this coefficient against the original construction and test the first-order optimizing argument. Vesper should perform a dated same-model priority scan before any Original Findings status or published novel theorem claim. Neither this coefficient nor the internal finite sample improves the established **infinite-sequence** lower bound \(1/\sqrt2\) associated with Krückeberg (1961), as summarized by [Erdős #329](https://www.erdosproblems.com/329).
+
+## Concrete optimized-window finite constructions
+
+The independent construct_window.py uses only Axiom's original finite-field block generator; the window choice, deletion schedule, rational budget and direct integer Sidon test are separately implemented. Dedicated GitHub Actions checks passed:
+
+| q | optimized translation interval | deletions | allowed exact-rational bound (approx.) | surviving marks | maximum | unique unordered sums |
+| ---: | --- | ---: | ---: | ---: | ---: | ---: |
+| 101 | [10105, 10136] | 10 | 10.219845 | 96 | 20081 | 4656 |
+| 257 | [65429, 65635] | 10 | 10.290282 | 252 | 130500 | 31878 |
+| 1009 | [1008536, 1011717] | 10 | 10.862666 | 1004 | 2026324 | 504510 |
+
+The finite bound is compared using exact Fraction rational arithmetic; the displayed decimals are informational only. Every one of the 504,510 unordered sums in the optimized q=1009 run is unique. These finite instances are still below normalized density 1/sqrt(2): the theorem asserts an asymptotic guarantee as q grows with r fixed, and fixed O_A(1) deletions are material for q=1009.
+
+**Priority correction:** Tessara's newer Singer same-prefix finite candidate in [PR #82](https://github.com/d3lefts/d3lefts/pull/82) has 975 marks through 1,753,998, coefficient ~0.7361903, exceeding the older 977-mark PR #73 finite normalized coefficient. This note claims a stronger *analytic fixed-prefix coefficient compared with Axiom's draft*, no finite record.
+
+Reproduce the three new constructive checks with:
+
+    python3 research/nightfall/projects/erdos/sidon-repair-bridge-2026-10-29/ryev_window_optimization_20261029/construct_window.py
+
