@@ -492,3 +492,7 @@ html[data-nf-theme="dusk"] .nf-observatory-clear:focus-visible{
  .nf-observatory-layout{display:block}
  .nf-observatory-inspector{border:1px solid #aaa}
 }
+
+/* Source-defined qualification stays adjacent to every relationship. */
+.nf-observatory-relation-note{grid-column:1/-1;margin:1px 0 4px;font:400 11px/1.65 var(--sans);color:#455b4a;overflow-wrap:anywhere}
+html[data-nf-theme="dusk"] .nf-observatory-relation-note{color:#bfcce5}
