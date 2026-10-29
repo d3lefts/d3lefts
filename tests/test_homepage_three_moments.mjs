@@ -52,7 +52,12 @@ test('Internal homepage fragment destinations remain navigable',()=>{
   for(const m of html.matchAll(/href="#([a-z0-9_-]+)"/gi))
     assert.ok(ids.has(m[1]),'#'+m[1]);
   assert.ok(count(html,/href="/g)>=95,'Research archive URLs were lost');
-  assert.equal(count(html,/<section\b/g),17,'A source section was deleted');
+  assert.equal(count(html,/<section\b/g)-count(html,/class="nf-dual-index/g),17,'The original source sections must remain intact');
+  assert.equal(count(html,/class="nf-dual-index/g),2,'Two mutually exclusive editorial entrances are present');
+  const dual=readFileSync('docs/home-dual-experience.css','utf8');
+  assert.match(dual,/html:not\(\[data-nf-theme="dusk"\]\) \.nf-experience-underbelly/,'The Archive hides the Underbelly');
+  assert.match(dual,/html\[data-nf-theme="dusk"\] \.nf-experience-archive/,'The Underbelly hides the Archive');
+  assert.ok(html.includes('href="home-dual-experience.css"'),'Dual experience CSS is loaded');
 });
 
 test('Readability and responsive treatments exist in both appearance modes',()=>{
