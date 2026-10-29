@@ -6,7 +6,7 @@ The light theme is now a Southern California golden-hour research archive: **ros
 
 | Role | Hex | Application |
 | --- | --- | --- |
-| Page paper | `#F4E7DF` | Red-tinted parchment canvas |
+| Sunset paper | `#F4E7DF` | Red-tinted parchment canvas |
 | Raised paper | `#F8EEE8` | Cards, evidence tables, reading and tools |
 | Soft clay | `#EEDFD6` | Grouped panels and the constellation field |
 | Warm rule | `#C9B2A6` | Borders and separators |
@@ -42,3 +42,7 @@ Primary actions use sunset orange with oxblood text; hover becomes the lighter a
 `docs/golden-hour-light.css` is a dedicated theme-only sheet imported by the existing, shared `docs/ethereal-theme.css`. **Every selector is conditional on `html:not([data-nf-theme="dusk"])`**, leaving dusk's styles and calculations unchanged; the existing global control persists both directions.
 
 Visual acceptance: `scripts/test_golden_hour_light.mjs` covers 10 key pages on 390px and 1280px viewports, computed colors, contrast, overflow, missing assets, and reversible dusk. The complete website suite also covers site navigation, tools, source integrity, and 25-page theme behavior. Changes must not be promoted unless these tests pass.
+
+## October 29 final palette check
+
+Light now uses the above sunset/blackcherry values as runtime tokens; lightray gold `#E7BA70` serves decorative sunlight, while `#D97A4A` serves actions with dark ink. Text on oxblood stays cream. Historic green source art is recolored visually; scientific labels, source states and evidence are unchanged.

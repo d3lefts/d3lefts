@@ -38,3 +38,7 @@ Dusk should remain calm around mathematical expressions: no stars on Living Pape
 All dusk changes live under `html[data-nf-theme="dusk"]` in `docs/ethereal-theme.css`, loaded after original page styles. The high-level tokens are `--nf-night`, `--nf-night-panel`, `--nf-violet`, `--nf-champagne`, `--nf-champagne-hover`, `--nf-brass`, `--nf-gold-wash`, `--nf-dusk-ink`, `--nf-dusk-muted`.
 
 Validation: `scripts/test_ethereal_theme.mjs` covers both 390px mobile and 1280px desktop, primary navigation, research cards, Observatory selection, Constellation controls, 25 pages, reduced-motion behavior and preserving light-mode appearance.
+
+## October 29 final palette check
+
+The canonical lightray gold in midnight mode is `#D8C38A`; the `--nf-lightray-gold` alias shares this value with `--nf-champagne`. Navy and violet carry the atmospheric workbench; scientific annotations retain their labels and evidence scope.
