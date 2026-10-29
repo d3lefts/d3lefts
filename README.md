@@ -5,7 +5,9 @@ Research led by **Devin J. Wright** · September–October 2026 research archive
 
 The public program publishes explicit assumptions, exact finite witnesses where available, conditional deductions, counterexamples, source dependencies, and open referee assignments. The status of an arithmetic check is kept distinct from a formal theorem proof, external peer review, publication priority, and official competition standing.
 
-[Research website](https://d3lefts.github.io/d3lefts/) · [Independent review portal](https://d3lefts.github.io/d3lefts/review.html) · [Evidence access](https://d3lefts.github.io/d3lefts/evidence.html) · [Research index](research/nightfall/README.md)
+[Research website](https://d3lefts.github.io/d3lefts/) · [Research and engineering portfolio](https://d3lefts.github.io/d3lefts/portfolio.html) · [Independent review portal](https://d3lefts.github.io/d3lefts/review.html) · [Evidence access](https://d3lefts.github.io/d3lefts/evidence.html) · [Research index](research/nightfall/README.md)
+
+For hiring readers: [three concise, evidence-linked technical case studies](portfolio/README.md) cover source-grounded AI safety, reproducible numerical optimization, and research verification tooling, including their limitations. The broader research archive remains the complete record.
 
 ## Selected research
 

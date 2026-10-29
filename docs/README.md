@@ -2,6 +2,7 @@
 
 Static, dependency-free site for NIGHTFALL’s **five evidence-scoped original finite or bounded findings, four flagship research programs, and a 33-document curated research library**. The core index carries the original three findings; a separately reviewed publication note adds the Singer 975 and bounded graph-gadget exclusions. The repository retains the full attributed historical research archive.
 
+- `portfolio.html` / `portfolio.css` — accessible three-case-study technical portfolio for AI safety and research engineering roles, linked to frozen artifacts, external-review limits and reproducibility steps. A companion [recruiter README](../portfolio/README.md) collects evidence routes.
 - `index.html` — four flagship research programs, five scoped Original Findings, an editorial five-decision research path, and accurate internal-review limits.
 - `desk.html` / `desk.css` / `desk.js` — internal, local-first Research Desk: six registry-driven evidence records, open mathematical obligations, session notes, scoped handoff exports and independent verifier routes; never upgrades theorem status.
 - `research.html` / `research.js` — 33 curated, source-linked September–October research lines in Mathematics, Quantum, Safety and Systems, with discipline filters, search, and explicit scope boundaries; broader than the Original Findings whitelist.
