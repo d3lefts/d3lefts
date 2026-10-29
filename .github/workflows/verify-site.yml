@@ -27,6 +27,8 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # compare full source state against PR base / push predecessor
       - name: Syntax-check all JavaScript test entrypoints
         run: |
           find scripts -type f \( -name "*.cjs" -o -name "*.mjs" -o -name "*.js" \) -print0 | xargs -0 -r -n1 node --check
@@ -34,6 +36,14 @@ jobs:
         run: |
           python3 scripts/check_site.py
           python3 -c 'import xml.etree.ElementTree as ET; ET.parse("docs/sitemap.xml"); print("Sitemap XML valid")'
+      - name: Verify claim graph and report directly affected evidence
+        env:
+          CLAIM_IMPACT_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          node scripts/test_claim_impact.cjs
+          node scripts/claim_impact.cjs
+      - name: Reject signed-overlap boundary and zero-extension regressions
+        run: python3 scripts/test_overlap_boundary.py
       - name: Parse JavaScript without executing browser code
         run: |
           node --check docs/site.js
