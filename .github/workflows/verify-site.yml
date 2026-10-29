@@ -102,6 +102,18 @@ jobs:
         run: |
           set -o pipefail
           CHROME_BIN="$(command -v google-chrome)" node scripts/test_ethereal_theme.mjs 2>&1 | tee browser-artifacts/ethereal-theme.log
+      - name: Verify golden-hour light palette, WCAG colors, and dusk isolation
+        run: |
+          set -o pipefail
+          CHROME_BIN="$(command -v google-chrome)" node scripts/test_golden_hour_light.mjs 2>&1 | tee browser-artifacts/golden-hour-light.log
+      - name: Upload golden-hour light design screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: golden-hour-light-preview-${{ github.run_id }}
+          path: browser-artifacts/golden-hour-*.png
+          if-no-files-found: ignore
+          retention-days: 14
       - name: Upload ethereal theme screenshots for human approval
         if: always()
         uses: actions/upload-artifact@v4
