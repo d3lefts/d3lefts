@@ -73,10 +73,34 @@ try{
    const canonicalMechanisms=await page.evaluate(()=>window.NightfallRegistry.mechanisms.length);
    assert.equal(await page.locator("#pf-mechanism-list .pf-mechanism").count(),canonicalMechanisms,
      "Every canonical mechanism must be projected from the registry");
-   assert.match(await page.locator("#pf-mechanism-list").innerText(),/analogy/i,
+   assert.match(await page.locator("#pf-mechanism-list").textContent(),/analogy/i,
      "Untested analogy stays explicitly marked");
-   assert.match(await page.locator("#process-evaluation").innerText(),/held-out|Blind natural-web/i,
+   assert.match(await page.locator("#process-evaluation").textContent(),/held-out|Blind natural-web/i,
      "Portfolio must show decisive external evaluation gap");
+   assert.equal(await page.locator("#pf-search-output .pf-search-result").count(),1,
+     "Grounded retriever shows a supported default Werner record");
+   assert.match(await page.locator("#pf-search-output").innerText(),/open-premise/i,
+     "Conditional evidence dependency is shown as an unresolved typed edge");
+   await page.locator('[data-pf-query="Search engine retrieval benchmark"]').click();
+   assert.match(await page.locator("#pf-search-status").innerText(),/ABSTAIN/,
+     "Unrecorded performance result should fail closed");
+   assert.equal(await page.locator("#pf-search-output .pf-search-result").count(),0,
+     "Unsupported query must produce no invented evidence cards");
+   await page.locator('[data-pf-query="Sidon"]').click();
+   assert.equal(await page.locator("#pf-search-output .pf-search-result").count(),1,
+     "Exact finite Sidon witness is retrieved by canonical title");
+   await page.locator("#pf-search-query").fill("not an existing knowledge graph");
+   await page.locator("#pf-search-form button[type=submit]").click();
+   assert.match(await page.locator("#pf-search-status").innerText(),/ABSTAIN/,
+     "Arbitrary unsupported input must also abstain");
+   const deep=page.locator("#deep-research");
+   assert.equal(await deep.getAttribute("open"),null,"Long internal appendix starts collapsed");
+   await deep.locator("summary").click();
+   assert.equal(await deep.getAttribute("open"),"",
+     "Source-rich appendix can expand deliberately");
+   assert.equal(await page.locator("#approved-findings .pf-five-grid article").count(),5);
+   await deep.locator("summary").click();
+
 
    await page.goto(origin+"living-paper.html",{waitUntil:"load"});
    assert.equal(await page.locator("#lp-points .lp-point").count(),30,"Living Paper 30 exact coordinates");
