@@ -14,16 +14,16 @@ html[data-nf-theme="dusk"] .nf-experience-archive{display:none!important}
 
 /* The archive: cocoa accession columns, sunlight strokes, and unhurried negative space. */
 html:not([data-nf-theme="dusk"]) #main>.hero{
-  background:radial-gradient(ellipse at 100% 20%,#b4764124,transparent 52%);
+  background:radial-gradient(ellipse at 100% 20%,#ed8b9e32,transparent 52%);
 }
 html:not([data-nf-theme="dusk"]) #main>.hero .hero-title em{
-  color:#edc16e;font-style:italic;
+  color:#ffc39e;font-style:italic;
 }
 html:not([data-nf-theme="dusk"]) #main>.hero .hero-aside{
-  box-shadow:8px 8px 0 #5b3d2a;
+  box-shadow:8px 8px 0 #5b3858;
 }
 html:not([data-nf-theme="dusk"]) .nf-dual-index{
-  border-top:1px solid #75574a;border-bottom:1px solid #75574a;
+  border-top:1px solid #a07b95;border-bottom:1px solid #a07b95;
   display:grid;grid-template-columns:minmax(230px,.65fr) minmax(0,1.35fr);
   gap:clamp(32px,5vw,78px);
   padding-block:clamp(48px,6vw,88px);
@@ -37,38 +37,38 @@ html:not([data-nf-theme="dusk"]) .nf-dual-index{
   max-width:47ch;font:400 14px/1.72 var(--sans);
   color:var(--muted);
 }
-html:not([data-nf-theme="dusk"]) .nf-dual-intro h2 em{color:#edc16e}
+html:not([data-nf-theme="dusk"]) .nf-dual-intro h2 em{color:#ffc39e}
 .nf-archive-shelf{
   display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:0;border:1px solid #75574a;
-  background:#3b281d;
+  gap:0;border:1px solid #a07b95;
+  background:#583a57;
 }
 .nf-archive-accession{
-  color:#f7e8db;background:transparent;text-decoration:none;min-width:0;
+  color:#fff0e8;background:transparent;text-decoration:none;min-width:0;
   display:flex;flex-direction:column;align-items:flex-start;gap:14px;
   padding:clamp(19px,2.3vw,32px);
-  border-right:1px solid #75574a;
+  border-right:1px solid #a07b95;
   transition:background .22s ease;
 }
 .nf-archive-accession:last-child{border-right:0}
-.nf-archive-accession:hover{background:#51382b}
+.nf-archive-accession:hover{background:#70465f}
 .nf-archive-accession:focus-visible{
-  outline:3px solid #edc16e;outline-offset:-4px;position:relative;z-index:1;
+  outline:3px solid #ffc39e;outline-offset:-4px;position:relative;z-index:1;
 }
 .nf-archive-id{
-  display:block;padding:0 0 13px;border-bottom:1px solid #75574a;
-  font:600 9px/1.5 var(--mono);letter-spacing:.085em;color:#edc16e;
+  display:block;padding:0 0 13px;border-bottom:1px solid #a07b95;
+  font:600 9px/1.5 var(--mono);letter-spacing:.085em;color:#ffc39e;
   width:100%;
 }
 .nf-archive-accession strong{
   font:400 clamp(26px,2.4vw,39px)/1.08 var(--serif);
-  letter-spacing:-.02em;color:#f7e8db;
+  letter-spacing:-.02em;color:#fff0e8;
 }
 .nf-archive-accession>span:not(.nf-archive-id){
   font:400 12px/1.67 var(--sans);color:#ceb6a7;
 }
 .nf-archive-accession small{
-  font:600 10px/1.5 var(--mono);color:#edc16e;
+  font:600 10px/1.5 var(--mono);color:#ffc39e;
   margin-top:auto;padding-top:18px;
   text-decoration:underline;text-underline-offset:4px;
 }
@@ -174,7 +174,7 @@ html[data-nf-theme="dusk"] .nf-dual-intro>p{color:#bec8df}
 }
 @media(max-width:760px){
  .nf-archive-shelf{grid-template-columns:1fr}
- .nf-archive-accession{border-right:0;border-bottom:1px solid #75574a;padding:22px}
+ .nf-archive-accession{border-right:0;border-bottom:1px solid #a07b95;padding:22px}
  .nf-archive-accession:last-child{border-bottom:0}
  .nf-archive-accession strong{font-size:31px}
  .nf-process-case{padding:20px}
@@ -202,11 +202,11 @@ html[data-nf-theme="dusk"] .nf-dual-intro>p{color:#bec8df}
  flex:1;justify-content:space-between;gap:12px;flex-wrap:wrap;
 }
 html:not([data-nf-theme="dusk"]) #main :is(.flagships,.nf-observatory,.sf-ecosystem,.nf-replay-path){
- border-color:#75574a;
+ border-color:#a07b95;
 }
 html:not([data-nf-theme="dusk"]) #main .flagships>.section-head{
  position:relative;padding-left:25px;
- border-left:2px solid #a8684f;
+ border-left:2px solid #f19b94;
 }
 html:not([data-nf-theme="dusk"]) #main :is(.flagships,.sf-ecosystem) .section-id{
  letter-spacing:.065em;
@@ -216,7 +216,7 @@ html:not([data-nf-theme="dusk"]) #main .nf-observatory-head{
 }
 html:not([data-nf-theme="dusk"]) #main :is(#flagship-title,#instruments-heading,#nf-observatory-title,#nf-replay-title,#sf-systems-heading,#review-title,#method-title) em,
 html:not([data-nf-theme="dusk"]) #main #review-title i{
- color:#edc16e;
+ color:#ffc39e;
 }
 html[data-nf-theme="dusk"] #main .flagships>.section-head{
  position:relative;padding-left:24px;
@@ -254,9 +254,9 @@ html[data-nf-theme="dusk"] #main #evidence-title{
  font:600 11px/1.6 var(--mono)}
 .nf-dual-colophon-links a:hover{text-decoration:underline;text-underline-offset:5px}
 .nf-dual-colophon-links a:focus-visible{outline:2px solid currentColor;outline-offset:4px}
-html:not([data-nf-theme="dusk"]) .nf-dual-colophon{color:#f7e8db;background:#21150e}
-html:not([data-nf-theme="dusk"]) .nf-dual-colophon h2 em{color:#edc16e}
-html:not([data-nf-theme="dusk"]) .nf-dual-colophon-links a{color:#edc16e;border-color:#75574a}
+html:not([data-nf-theme="dusk"]) .nf-dual-colophon{color:#fff0e8;background:#302039}
+html:not([data-nf-theme="dusk"]) .nf-dual-colophon h2 em{color:#ffc39e}
+html:not([data-nf-theme="dusk"]) .nf-dual-colophon-links a{color:#ffc39e;border-color:#a07b95}
 html[data-nf-theme="dusk"] .nf-dual-colophon{
  color:#edf0fb;border-color:#4b5672;
  background:radial-gradient(ellipse at 74% 33%,#43375635,transparent 68%)
