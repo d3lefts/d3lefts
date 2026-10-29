@@ -94,6 +94,37 @@ try{
     assert.equal(await page.locator(".atlas-card:visible").count(),23,"library filter reset");
   }
   if(width===390){
+    await page.goto(origin+"referee.html",{waitUntil:"load"});
+    assert.equal(await page.locator("#run-overlap").count(),1,"Referee overlap verifier controls");
+    assert.equal(await page.locator("#run-sidon").count(),1,"Referee Sidon verifier controls");
+    await page.locator("#run-overlap").click();
+    assert.match(await page.locator("#result").innerText(),/EXACT MAXIMUM|Finite witness survives|Local evidence remains open/i,"Referee bounded exact overlap result");
+    assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth))<=3,"Referee mobile overflow");
+  }
+  if(width===390){
+    await page.goto(origin+"claim-lab.html",{waitUntil:"load"});
+    assert.equal(await page.locator(".demoNotice").count(),1,"Claim Lab demo explicitly labeled");
+    assert.equal(await page.locator('[data-tab="claims"]').count(),1,"Claim Lab standalone navigation");
+    await page.locator("#newClaimBtn").click();
+    await page.locator("#claimTitle").fill("Owner storage-preservation fixture");
+    await page.locator("#claimStatus").selectOption("3");
+    await page.locator("#claimForm button[type=submit]").click();
+    await page.locator('[data-tab="audit"]').click();
+    const auditText=await page.locator("#content").innerText();
+    assert.match(auditText,/Missing artifact reference/,"manual label cannot bypass missing artifact");
+    assert.match(auditText,/Missing \/ invalid SHA-256 digest/,"missing digest remains flagged");
+    assert.match(auditText,/Proof and checker reference missing/,"missing theorem proof remains flagged");
+    const beforeReload=await page.evaluate(()=>localStorage.getItem("nightfall_claim_lab_v1"));
+    assert.ok(beforeReload?.includes("Owner storage-preservation fixture"),"saved workspace is in localStorage");
+    await page.reload({waitUntil:"load"});
+    await page.locator('[data-tab="claims"]').click();
+    assert.match(await page.locator("#content").innerText(),/Owner storage-preservation fixture/,"saved claim survives reload");
+    assert.equal(await page.evaluate(()=>localStorage.getItem("nightfall_claim_lab_v1")),beforeReload,"reload does not rewrite stored workspace");
+    const [backup]=await Promise.all([page.waitForEvent("download"),page.locator("#exportBtn").click()]);
+    assert.match(backup.suggestedFilename(),/^NIGHTFALL_claim_lab_backup_.*\.json$/,"downloadable JSON backup");
+    assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth))<=3,"Claim Lab mobile overflow");
+  }
+  if(width===390){
     await page.goto(origin+"agenda.html",{waitUntil:"load"});
     assert.equal(await page.locator("#agenda-list .research-proposal:visible").count(),10,"ten proposals");
     for(const cat of ["mathematics","quantum","super-intelligence","safety","systems"]){
