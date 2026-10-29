@@ -1,0 +1,18 @@
+== verify_checkerboard.py ==
+n4,d3 rank2 even rainbow triangle Q= 31/16 cross between X and -Y = -1/4; outside ambient coordinate PSD PASS
+n4 all three row symbols present at every site Q 49/16 exact theorem margin>=1/16 PASS
+r=3 mixed-side n=2: all three complex-rank-one blocks couple; exact Q=21/4 PASS
+negative mutation without separation at site 2: L>=M yet Q=-9/10 PASS
+== verify_rational_physical.py ==
+PASS: exact Q 39201/20000 cross -1/4 theorem positive lower 1/16 negative rank3 mutation -3/16
+PASS: all proper partial traces crossed zero; full local row and column alphabet; rank=2
+== verify_predecessor_projection.py ==
+C0 {((0, 0, 0, 0), (0, 0, 0, 0)): Fraction(1, 1), ((2, 2, 2, 0), (0, 0, 0, 0)): Fraction(1, 1)} Q0 9/16
+old values w 306359/135000 resid2 645059/270000 base 193459/180000 leak terms {(0, 0, 0, 0): Fraction(5, 12)} Q 39201/20000
+R_positive True grade bound fail True
+nonzero cross -1/4
+== verify_f25_projective.py ==
+Independent-rank zero probability = 625/15625 = 1/25 PASS
+k2 650 rank<=1 exceptional classes, 1 delta-only class PASS
+k 1..20 projective counts, exponent certificate, finite-s bound PASS
+PASS
