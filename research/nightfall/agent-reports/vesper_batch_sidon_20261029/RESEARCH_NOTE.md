@@ -64,7 +64,7 @@ Run from repository root:
 python3 research/nightfall/agent-reports/vesper_batch_sidon_20261029/audit.py
 ```
 
-The GitHub workflow `vesper-batch-sidon-audit.yml` runs these checks on the PR and on main. Source code and CI constitute independent-in-project exact checks, **not** external peer review.
+The GitHub workflow `vesper-batch-sidon-audit.yml` runs these checks on the PR and on main. **Verified GitHub Actions run [40830849729](https://github.com/d3lefts/d3lefts/actions/runs/40830849729): 52,886 exact (D,E,F) cases** across nine cyclic/product groups: (4,) 104; (5,) 420; (6,) 972; (7,) 4242; (8,) 8144; (2,2) 56; (2,3) 972; (2,4) 3632; (3,3) 34344. **674 (D,E) pairs had ordinary supports with at least one incidence-3 mark**; this specifically exercises the new core-branching mechanism, not merely the pre-existing one-point matching case. The exact canonical row SHA-256 is `75a2a71c22e9194d4cfe04f78c136ec2120b4db8228d3aed051670a1d1531d38`. Each test directly compares the solver's deletion count against exhaustive enumeration and checks the Sidon property of the returned witness. Source code and CI constitute independent-in-project exact checks, **not** external peer review.
 
 ## Next theorem
 
