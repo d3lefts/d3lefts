@@ -52,8 +52,8 @@
 <h1>Inspect the exact<br><i>evidence.</i></h1>
 <p class="lede">Independent review depends on access to the original bytes, together with their verification procedures. The archived source bundles are preserved for forensic reproducibility. Items lacking a substantiated original contribution are excluded from the public findings index.</p>
 <div class="provenance-state">
-<strong>MASTER ARCHIVE STATUS — TWO UPLOADS PENDING</strong>
-The GitHub repository currently exposes source manuscripts, checkers, audit summaries and a fresh independent big-integer verifier. The two complete binary archives are queued for desktop upload. Once published, a release-triggered GitHub Actions check will download the frozen assets and independently reconstruct the finite 131,072-cell maximum. <a href="https://github.com/d3lefts/d3lefts/issues/5" target="_blank" rel="noopener"><u>Track upload status in issue #5</u></a>. This website will identify the download links only after the public assets and their checksums have been verified.
+<strong>MASTER ARCHIVE STATUS — ORIGINAL BYTES RECOVERED; PUBLIC RELEASE GATED</strong>
+Both original frozen ZIP archives were recovered from owner-held sources on October 29 and copied to a private release-review location without changing their contents. Fresh post-transfer SHA-256 and ZIP CRC tests passed for both archives. They are <em>not publicly downloadable yet</em>. A nested-content disclosure review identified a research-scope conflict in the expanded archive, so an authorized full-source release or a separately hashed curated derivative must be selected before publication. <a href="https://github.com/d3lefts/d3lefts/issues/5" target="_blank" rel="noopener"><u>Track the public release gate in issue #5</u></a>. Download links will appear only after anonymous downloads and hashes are verified.
 </div>
 
 <section aria-labelledby="new-finite-evidence">
@@ -81,13 +81,12 @@ python3 -c 'import json; assert json.load(open("rebuilt.json")) == json.load(ope
 <tr><td><strong>NIGHTFALL_Expanded_Research_2026-10-28.zip</strong><code>fca5dba595475783e3482d72d5e4888e76b91c38052a0589577f0fde578b8275</code></td><td>22,753,993</td><td>226 ZIP entries; original release plus the September–October research supplement</td></tr>
 </tbody></table></div>
 <p class="small">Each hexadecimal string is the complete SHA-256 of the named original archive. Both CRC-integrity tests passed again on October 28. These hashes refer to the archives themselves, distinct from hashes of individual mathematical witnesses.</p>
-<h2>Desktop publishing checklist.</h2>
+<h2>Release verification and disclosure gate.</h2>
 <ol class="steps">
-<li>Download the unchanged original files from the research chat to the same folder on your desktop.</li>
-<li>Open <a href="https://github.com/d3lefts/d3lefts/releases/new" target="_blank" rel="noopener"><u>GitHub’s new-release page</u></a>. Choose the tag <code>nightfall-research-2026-10-28</code>; name the release <strong>NIGHTFALL — Frozen reproducibility collection</strong>.</li>
-<li>Attach both ZIP files as release assets. Use the <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/RELEASE_NOTES_FOR_UPLOAD.md" target="_blank" rel="noopener"><u>prepared release description</u></a>, which clearly distinguishes internally reproduced finite witnesses, conditional source deductions and conjectural manuscripts. External referee acceptance remains pending.</li>
-<li>Publish, confirm anonymous access, download both assets anew, and compare their actual SHA-256s with the two strings above.</li>
-<li>Post the public release link in <a href="https://github.com/d3lefts/d3lefts/issues/5" target="_blank" rel="noopener"><u>issue #5</u></a>. The website’s evidence links can then be changed from <em>pending</em> to <em>publicly accessible</em>.</li>
+<li>Preserve both byte-identical originals under the hashes above; the owner's private research release-review folder now contains recovered copies.</li>
+<li>Apply the <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/PUBLICATION_SCOPE.md" target="_blank" rel="noopener"><u>public-disclosure scope gate</u></a> to all original PDFs, nested bundles and logs. A filename-level scope conflict is documented; an advisory token scan is not disclosure authorization.</li>
+<li>Publish either the specifically approved originals or a new, manifest-backed curated archive with its own SHA-256. Keep any excluded original bytes private.</li>
+<li>Verify each published asset by fresh anonymous download, SHA-256 and ZIP CRC; rerun the relevant mathematical checkers. Only then post the release URL in <a href="https://github.com/d3lefts/d3lefts/issues/5" target="_blank" rel="noopener"><u>issue #5</u></a>.</li>
 </ol>
 <div class="code-label">MACOS / LINUX — VERIFY BOTH ARCHIVES</div>
 <pre><code>shasum -a 256 NIGHTFALL_GitHub_Release_2026-10-27.zip
