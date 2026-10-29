@@ -284,6 +284,32 @@ try{
   });
 
   // 50–60: Mobile exploration and accessibility friction under realistic viewport.
+  await step("CONSTELLATION / NIGHT","Canonical Join route and persistent visual theme",async()=>{
+    await page.setViewportSize({width:1440,height:900});
+    await visit("join.html");
+    await page.evaluate(()=>{localStorage.removeItem("nightfall.theme.v1");localStorage.removeItem("nightfall.journey.v1")});
+    await page.reload();
+    assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"night");
+    assert.ok(await page.locator(".nf-theme-toggle").isVisible());
+    await page.locator("#join-interest").selectOption("compute");
+    await page.locator(".join-choice button").first().click();
+    assert.equal(await page.locator("#join-active").isVisible(),true);
+    await page.locator("#join-notes").fill("Try a bounded, independently checkable Q7 proof obligation.");
+    await visit("research.html");
+    assert.ok(await page.locator(".nf-journey-rail").count()===1);
+    assert.ok(await page.locator(".nf-theme-toggle").count()===1);
+    await page.locator(".nf-theme-toggle").click();
+    assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"paper");
+    await visit("join.html");
+    assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"paper");
+    assert.equal(await page.locator("#join-notes").inputValue(),"Try a bounded, independently checkable Q7 proof obligation.");
+    await page.locator(".nf-theme-toggle").click();
+    assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"night");
+    await page.setViewportSize({width:390,height:844});
+    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)<=3,"Join night-theme mobile overflow");
+    await screenshot("constellation-night-join.png");
+    note("strength","Night and Paper remain persistent. The canonical Join assignment survives tool navigation and carries its unreviewed note.","constellation");
+  });
   await step("50–53","Phone 390px: navigation, hierarchy and horizontal overflow",async()=>{
     await page.setViewportSize({width:390,height:844});
     await visit("index.html");
