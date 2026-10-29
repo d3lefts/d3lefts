@@ -36,7 +36,7 @@ assert.throws(()=>core.validate(base.slice(1)),/16/);
 assert.throws(()=>core.validate(base.map((x,i)=>i===0?x+1:x)),/mass/i);
 assert.throws(()=>core.validate(base.map((x,i)=>i===0?9:x)),/integer heights/i);
 assert.throws(()=>core.transfer(base,0,0),/different/);
-assert.throws(()=>core.transfer(base,3,5),/blocked/); // 4th cell is full
+assert.throws(()=>core.transfer(base,0,3),/blocked/); // 4th cell is full
 let mutations=0;
 for(let i=0;i<16;i++)for(let j=0;j<16;j++){
  if(i===j||base[i]===0||base[j]===8)continue;
