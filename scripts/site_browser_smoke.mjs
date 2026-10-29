@@ -420,6 +420,30 @@ try{
     assert.equal(await page.locator("#werner-export").isDisabled(),true,"Invalid input cannot export stale certificate");
     assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth))<=3,"Exact workbench overflow");
   }
+  if(width===390 || width===1280){
+    await page.goto(origin+"adversary.html?domain=sidon",{waitUntil:"load"});
+    assert.equal(await page.locator("#domain").inputValue(),"sidon","Adversary domain deep-link");
+    await page.locator("#run-attack").click();
+    await page.waitForFunction(()=>document.querySelector("#result")?.textContent?.includes("COUNTEREXAMPLE_FOUND"));
+    assert.match(await page.locator("#result").innerText(),/1,\s*2,\s*3,\s*5/,"Exact (4,5) counterexample visible");
+    assert.match(await page.locator("#result").innerText(),/MISSING DEFENSES/i,"Missing provenance visible");
+    const [adversaryReceipt]=await Promise.all([page.waitForEvent("download"),page.locator("#export-attack").click()]);
+    assert.equal(adversaryReceipt.suggestedFilename(),"nightfall-imaginary-adversary-v1.json","Scoped local attack receipt exported");
+    await page.locator("#property").selectOption("weak-sidon");
+    await page.locator("#run-attack").click();
+    await page.waitForFunction(()=>document.querySelector("#result")?.textContent?.includes("NO_COUNTEREXAMPLE_IN_TESTED_SCOPE"));
+    assert.match(await page.locator("#result").innerText(),/proves no universal assertion/,"No false proof promotion");
+    await page.locator("#domain").selectOption("overlap");
+    await page.locator("#load-fixture").click();
+    await page.locator("#run-attack").click();
+    await page.waitForFunction(()=>document.querySelector("#result")?.textContent?.includes("COUNTEREXAMPLE_FOUND"));
+    assert.match(await page.locator("#result").innerText(),/EXACT SIGNED-LAG MAXIMUM/,"Exact overlap falsifier displayed");
+    await page.locator("#domain").selectOption("general");
+    await page.locator("#run-attack").click();
+    await page.waitForFunction(()=>document.querySelector("#result")?.textContent?.includes("INCONCLUSIVE"));
+    assert.equal(await page.locator("#export-attack").isDisabled(),false,"Adversarial brief exported without theorem status");
+    assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth))<=3,"Adversary fits viewport "+width);
+  }
   assert.deepEqual(faults,[],"Browser failures at "+width+": "+faults.join("; "));
   await page.close();
  }
