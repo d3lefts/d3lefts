@@ -158,7 +158,7 @@
   history.replaceState(history.state,"",url.pathname+url.search+url.hash);
  }
  function choose(id,user){
-  selected=id&&nodes.has(id)?id:null;
+  selected=id&&nodes.has(id)?(selected===id?null:id):null;
   if(user)updateUrl();
   sync();
   if(user&&window.matchMedia("(max-width:860px)").matches){
