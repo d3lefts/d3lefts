@@ -131,7 +131,7 @@ html:not([data-nf-theme="dusk"]) .nf-cinema-vignette{
   font:600 11px/1.5 var(--mono);letter-spacing:.13em;
   color:#e6deaa;text-transform:uppercase;margin:0 0 clamp(15px,2vw,27px);
 }
-html:not([data-nf-theme="dusk"]) .nf-cinema-overline{color:#edc16e}
+html:not([data-nf-theme="dusk"]) .nf-cinema-overline{color:#ffc39e}
 .nf-cinema-title{
   font:400 clamp(54px,8.3vw,132px)/.96 var(--serif);
   letter-spacing:-.065em;max-width:1050px;margin:0;
@@ -159,7 +159,7 @@ html:not([data-nf-theme="dusk"]) .nf-cinema-status{color:#edcfad}
   content:"";display:block;height:2px;background:#e6deaa;
   width:calc(100% * var(--nf-progress));transform:translateY(-.5px);
 }
-html:not([data-nf-theme="dusk"]) .nf-cinema-meter::before{background:#edc16e}
+html:not([data-nf-theme="dusk"]) .nf-cinema-meter::before{background:#ffc39e}
 .nf-cinema-status b{font:inherit;min-width:45px;white-space:nowrap}
 .nf-cinema-steps{
   position:absolute;z-index:2;bottom:clamp(62px,7vw,97px);
