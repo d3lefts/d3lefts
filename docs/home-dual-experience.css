@@ -1,0 +1,218 @@
+/* NIGHTFALL / TWO READINGS OF ONE RESEARCH RECORD
+   THE ILLUSIONARY ARCHIVE (light) and THE UNDERBELLY (dusk).
+   Layout is narrative; claim data, source records, and verification tiers stay shared.
+   An experience switch is not an evidence-status switch. */
+
+html:not([data-nf-theme="dusk"]) .nf-experience-underbelly,
+html[data-nf-theme="dusk"] .nf-experience-archive{display:none!important}
+
+#main>.hero .hero-main>.nf-experience{width:100%}
+#main>.hero .hero-main .nf-hero-guide{max-width:60ch;letter-spacing:.07em;font-size:10px}
+#main>.hero .hero-main .hero-description{max-width:600px}
+#main>.hero .hero-title{letter-spacing:-.043em}
+.hero-aside .nf-experience{max-width:100%}
+
+/* The archive: cut-paper columns, accession stamps, ink, unhurried negative space. */
+html:not([data-nf-theme="dusk"]) #main>.hero{
+  background:radial-gradient(ellipse at 100% 20%,#e1d1dc65,transparent 52%);
+}
+html:not([data-nf-theme="dusk"]) #main>.hero .hero-title em{
+  color:#6a304e;font-style:italic;
+}
+html:not([data-nf-theme="dusk"]) #main>.hero .hero-aside{
+  box-shadow:8px 8px 0 #e2d5dc;
+}
+html:not([data-nf-theme="dusk"]) .nf-dual-index{
+  border-top:1px solid #c8b7c0;border-bottom:1px solid #c8b7c0;
+  display:grid;grid-template-columns:minmax(230px,.65fr) minmax(0,1.35fr);
+  gap:clamp(32px,5vw,78px);
+  padding-block:clamp(48px,6vw,88px);
+}
+.nf-dual-intro h2{
+  font:400 clamp(38px,4.3vw,65px)/1.03 var(--serif);
+  letter-spacing:-.035em;margin:21px 0 19px;
+}
+.nf-dual-intro h2 em{font-weight:400}
+.nf-dual-intro>p{
+  max-width:47ch;font:400 14px/1.72 var(--sans);
+  color:var(--muted);
+}
+html:not([data-nf-theme="dusk"]) .nf-dual-intro h2 em{color:#6a304e}
+.nf-archive-shelf{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:0;border:1px solid #c8b7c0;
+  background:#fbf7f5;
+}
+.nf-archive-accession{
+  color:#29212a;background:transparent;text-decoration:none;min-width:0;
+  display:flex;flex-direction:column;align-items:flex-start;gap:14px;
+  padding:clamp(19px,2.3vw,32px);
+  border-right:1px solid #c8b7c0;
+  transition:background .22s ease;
+}
+.nf-archive-accession:last-child{border-right:0}
+.nf-archive-accession:hover{background:#f1e7eb}
+.nf-archive-accession:focus-visible{
+  outline:3px solid #6a304e;outline-offset:-4px;position:relative;z-index:1;
+}
+.nf-archive-id{
+  display:block;padding:0 0 13px;border-bottom:1px solid #c8b7c0;
+  font:600 9px/1.5 var(--mono);letter-spacing:.085em;color:#6a304e;
+  width:100%;
+}
+.nf-archive-accession strong{
+  font:400 clamp(26px,2.4vw,39px)/1.08 var(--serif);
+  letter-spacing:-.02em;color:#451c35;
+}
+.nf-archive-accession>span:not(.nf-archive-id){
+  font:400 12px/1.67 var(--sans);color:#574852;
+}
+.nf-archive-accession small{
+  font:600 10px/1.5 var(--mono);color:#6a304e;
+  margin-top:auto;padding-top:18px;
+  text-decoration:underline;text-underline-offset:4px;
+}
+
+/* The underbelly: visible stage gates, adversarial ledger and incomplete work. */
+html[data-nf-theme="dusk"] #main>.hero .hero-title em{
+  color:#e5d4ae;text-shadow:0 0 30px #d8c38a25;
+}
+html[data-nf-theme="dusk"] #main>.hero .hero-aside{
+  border-color:#5b5b78;
+  box-shadow:0 0 0 1px #d8c38a16,0 20px 90px #05071478;
+}
+html[data-nf-theme="dusk"] #main>.hero .hero-aside-head{
+  color:#d8c38a;
+}
+html[data-nf-theme="dusk"] .nf-dual-index{
+  display:grid;grid-template-columns:minmax(240px,.75fr) minmax(0,1.25fr);
+  gap:clamp(35px,6vw,100px);
+  padding-block:clamp(60px,7vw,100px);
+  border-top:1px solid #4b5672;border-bottom:1px solid #4b5672;
+  position:relative;
+}
+html[data-nf-theme="dusk"] .nf-dual-index:before{
+  content:"";position:absolute;pointer-events:none;
+  left:0;top:0;width:94px;height:1px;
+  background:#d8c38a;
+}
+html[data-nf-theme="dusk"] .nf-dual-intro .section-id{
+  color:#d8c38a;
+}
+html[data-nf-theme="dusk"] .nf-dual-intro h2{
+  color:#f3efff;
+}
+html[data-nf-theme="dusk"] .nf-dual-intro h2 em{
+  color:#d8c38a;
+}
+html[data-nf-theme="dusk"] .nf-dual-intro>p{color:#bec8df}
+.nf-underbelly-ledger{
+  position:relative;display:grid;gap:1px;
+  padding-left:25px;background:transparent;
+}
+.nf-underbelly-ledger:before{
+  content:"";position:absolute;left:7px;top:25px;bottom:25px;width:1px;
+  background:linear-gradient(#d8c38a,#70698f);
+}
+.nf-process-case{
+  position:relative;min-width:0;text-decoration:none;
+  display:grid;grid-template-columns:minmax(0,1fr) auto;
+  gap:9px 25px;padding:20px 25px;
+  background:#1c263d;border:1px solid #465574;
+  color:#e8eaf7;
+  transition:background .2s ease,border-color .2s ease;
+}
+.nf-process-case:before{
+  content:"";position:absolute;left:-22px;top:26px;width:9px;height:9px;
+  background:#d8c38a;box-shadow:0 0 0 5px #1a243a;border:1px solid #d8c38a;
+  border-radius:50%;
+}
+.nf-process-case:hover{
+  background:#28314b;border-color:#9a8fae;
+}
+.nf-process-case:focus-visible{
+  outline:2px solid #f0dcad;outline-offset:3px;z-index:1;
+}
+.nf-case-step{
+  grid-column:1/-1;
+  color:#d8c38a;letter-spacing:.075em;
+  font:600 9px/1.55 var(--mono);
+}
+.nf-process-case strong{
+  font:400 clamp(23px,2.3vw,34px)/1.1 var(--serif);
+  letter-spacing:-.018em;color:#f1eaff;
+  grid-column:1/-1;
+}
+.nf-process-case>span:not(.nf-case-step){
+  color:#c3cee1;font:400 12px/1.66 var(--sans);grid-column:1/-1;
+}
+.nf-process-case small{
+  grid-column:1/-1;justify-self:start;
+  font:600 10px/1.45 var(--mono);
+  color:#e9d8ae;text-decoration:underline;text-underline-offset:4px;
+}
+.nf-underbelly-next{
+  grid-column:2;display:flex;flex-wrap:wrap;align-items:center;
+  gap:15px;justify-content:space-between;margin-top:-35px;
+  padding-left:25px;
+}
+.nf-underbelly-next>span{
+  color:#abb8d1;font:600 9px/1.5 var(--mono);letter-spacing:.08em;
+}
+.nf-underbelly-next>a{
+  font:600 11px/1.5 var(--mono);color:#e9d8ae;
+  text-decoration:underline;text-underline-offset:4px;
+}
+.nf-underbelly-next>a:focus-visible{outline:2px solid #d8c38a;outline-offset:4px}
+
+/* Distinct reading ergonomics, same real links and source hierarchy. */
+@media(max-width:1150px){
+ html:not([data-nf-theme="dusk"]) .nf-dual-index,
+ html[data-nf-theme="dusk"] .nf-dual-index{grid-template-columns:1fr;gap:28px}
+ .nf-dual-intro>p{max-width:70ch}
+ .nf-underbelly-next{grid-column:1;margin-top:-6px}
+}
+@media(max-width:760px){
+ .nf-archive-shelf{grid-template-columns:1fr}
+ .nf-archive-accession{border-right:0;border-bottom:1px solid #c8b7c0;padding:22px}
+ .nf-archive-accession:last-child{border-bottom:0}
+ .nf-archive-accession strong{font-size:31px}
+ .nf-process-case{padding:20px}
+ .nf-dual-intro h2{font-size:48px}
+ html[data-nf-theme="dusk"] .nf-dual-index:before{width:65px}
+}
+@media(prefers-reduced-motion:reduce){
+ .nf-process-case,.nf-archive-accession{transition:none!important}
+}
+@media print{
+ html[data-nf-theme="dusk"] .nf-experience-underbelly{display:none!important}
+ html[data-nf-theme="dusk"] .nf-experience-archive{display:block!important}
+ .nf-dual-index{break-inside:avoid}
+}
+
+/* The archival colophon and night-shift dispatch replace generic footers with
+   competing conclusions. Existing source links and evidence tiering stay shared. */
+.nf-dual-colophon{padding-block:clamp(55px,7vw,110px);border-top:1px solid var(--line);
+ display:grid;grid-template-columns:minmax(0,1.15fr) minmax(235px,.65fr);gap:clamp(30px,7vw,100px)}
+.nf-dual-colophon h2{font:400 clamp(38px,5.2vw,74px)/1.02 var(--serif);
+ letter-spacing:-.035em;margin:19px 0 23px}
+.nf-dual-colophon h2 em{font-weight:400}
+.nf-dual-colophon p{max-width:64ch;font:400 14px/1.8 var(--sans);color:var(--muted)}
+.nf-dual-colophon-links{display:flex;flex-direction:column;justify-content:center;gap:0}
+.nf-dual-colophon-links a{display:flex;gap:20px;justify-content:space-between;align-items:center;
+ padding:19px 5px;border-bottom:1px solid var(--line);text-decoration:none;
+ font:600 11px/1.6 var(--mono)}
+.nf-dual-colophon-links a:hover{text-decoration:underline;text-underline-offset:5px}
+.nf-dual-colophon-links a:focus-visible{outline:2px solid currentColor;outline-offset:4px}
+html:not([data-nf-theme="dusk"]) .nf-dual-colophon{color:#451c35;background:#f4eeed}
+html:not([data-nf-theme="dusk"]) .nf-dual-colophon h2 em{color:#6a304e}
+html:not([data-nf-theme="dusk"]) .nf-dual-colophon-links a{color:#6a304e;border-color:#c8b7c0}
+html[data-nf-theme="dusk"] .nf-dual-colophon{
+ color:#edf0fb;border-color:#4b5672;
+ background:radial-gradient(ellipse at 74% 33%,#43375635,transparent 68%)
+}
+html[data-nf-theme="dusk"] .nf-dual-colophon h2 em{color:#d8c38a}
+html[data-nf-theme="dusk"] .nf-dual-colophon p{color:#c0cbe0}
+html[data-nf-theme="dusk"] .nf-dual-colophon-links a{color:#e9d8ae;border-color:#4b5672}
+@media(max-width:760px){.nf-dual-colophon{grid-template-columns:1fr;gap:20px}.nf-dual-colophon h2{font-size:48px}}
+@media print{.nf-dual-colophon{break-inside:avoid}}
