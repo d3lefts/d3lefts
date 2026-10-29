@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#18221e">
+<meta name="description" content="Living Paper 001: inspect, recompute, and challenge the 30-point finite Sidon construction with exact integer arithmetic and published source evidence.">
+<link rel="canonical" href="https://d3lefts.github.io/d3lefts/living-paper.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="site.css"><link rel="stylesheet" href="living-paper.css">
+<title>Living Paper 001 · The 30-point Sidon certificate — NIGHTFALL</title>
+<script src="site.js" defer></script><script src="research-registry.js" defer></script>
+<script src="referee-core.js" defer></script><script src="living-paper.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to paper</a><div class="topline"></div>
+<header class="header"><div class="wrap header-inner">
+<a class="brand" href="./" aria-label="NIGHTFALL home"><span class="mark">N∕F</span><span class="brand-copy">NIGHTFALL<span>PHASESHIFT / DISCOVERY SYSTEM</span></span></a>
+<button class="menu-toggle" id="menu-button" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">MENU +</button>
+<nav class="nav" id="site-nav" aria-label="Primary navigation"><a href="index.html#flagships">Research</a><a href="research.html">Library</a><a href="atlas.html?claim=sidon30">Mechanisms</a><a href="passport.html?claim=sidon30">Proof Passport</a><a href="review.html#sidon">Review</a><a class="nav-call" href="join.html#assignment">Contribute ↗</a></nav>
+</div></header>
+<main id="main" class="lp-page">
+<div class="wrap lp-breadcrumb"><a href="./">Research</a><span aria-hidden="true">/</span><a href="passport.html?claim=sidon30">Additive combinatorics</a><span aria-hidden="true">/</span><strong>Living Paper 001</strong></div>
+<section class="wrap lp-hero" aria-labelledby="lp-title">
+<div class="lp-hero-main"><span class="lp-eyebrow">LIVING PAPER / 001 / EXACT FINITE CONSTRUCTION</span>
+<h1 id="lp-title">Thirty points.<br>Twenty-eight constraints.<br><em>One finite proof.</em></h1>
+<p class="lp-lead">An explicit integer configuration has a largest Sidon subset of exactly 17 points. Inspect the 30 coordinates, run the exact finite checker, then remove any one progression constraint and construct an 18-point counterwitness.</p>
+<div class="lp-hero-actions"><a class="button" href="#experiment">Explore the witness ↓</a><a class="text-link" href="#claim">Read the claim and limitations ↓</a></div></div>
+<aside class="lp-hero-aside" aria-label="Claim status"><span class="lp-eyebrow">CERTIFICATE / SCOPE</span><strong>17<span>/30</span></strong><p>Exact maximum within one frozen finite set.</p><div class="lp-rule"></div><div class="lp-hero-number"><b>28</b><span>three-term progressions<br>all edge-essential</span></div><p class="lp-disclosure">Browser replay is a same-source finite computation. Independent external specialist review is still open. The prior 5/9 asymptotic construction is credited to earlier researchers.</p></aside>
+</section>
+<section id="claim" class="wrap lp-section lp-claim" aria-labelledby="claim-title">
+<div class="lp-label">01 / DEFINE THE CLAIM</div><div><h2 id="claim-title">What exactly<br><em>is established?</em></h2>
+<p>A <strong>Sidon subset</strong> has unique unordered pair sums, including sums of an element with itself. In a weak (4,5) set, each four-element selection determines at least five distinct positive pairwise differences. For this specific published 30-coordinate set, a 17-point Sidon subset exists; every 18-point selection fails.</p>
+<p>The last step can be phrased as a finite hitting-set problem: the configuration contains 28 three-term arithmetic progressions. Removing only 12 points cannot hit them all; removing 13 can. This is a finite exact statement, with no worldwide extremal optimality claim.</p>
+<div class="lp-claim-links"><a href="passport.html?claim=sidon30">Claim passport and four evidence dimensions ↗</a><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/README.md" target="_blank" rel="noopener">Original research note ↗</a></div>
+</div></section>
+<section class="lp-lab" id="experiment" aria-labelledby="experiment-title"><div class="wrap">
+<div class="lp-label">02 / THE INTERACTIVE CONSTRUCTION</div>
+<div class="lp-lab-heading"><div><h2 id="experiment-title">Move the constraint.<br><em>Watch the boundary.</em></h2><p>Choose a progression and remove only that mathematical constraint. The point coordinates remain unchanged. The local exact search then constructs 18 surviving points whose sole remaining progression is the selected one.</p></div><div class="lp-status-pill">LOCAL COMPUTATION · UNREVIEWED</div></div>
+<div class="lp-lab-grid">
+<div class="lp-workbench">
+<div class="lp-controls"><label for="lp-edge-select">Progression to test <select id="lp-edge-select"><option>Loading 28 constraints…</option></select></label>
+<div class="lp-actions"><button type="button" id="lp-run" class="lp-btn lp-btn-primary">Run full finite check</button><button type="button" id="lp-delete" class="lp-btn">Remove this constraint</button><button type="button" id="lp-reset" class="lp-btn lp-btn-quiet">Restore 17-point subset</button></div></div>
+<div class="lp-mark-legend"><span><i class="lp-dot lp-dot-on"></i> Surviving / selected point</span><span><i class="lp-dot lp-dot-edge"></i> Selected progression</span><span><i class="lp-dot lp-dot-off"></i> Excluded point</span></div>
+<div id="lp-points" class="lp-points" role="list" aria-label="30 exact integer points"></div>
+<div class="lp-readout" aria-live="polite"><span id="lp-readout-kicker">INITIAL EXACT WITNESS</span><strong id="lp-readout-title">17 points retained</strong><p id="lp-readout-detail">The published 17-point subset contains no repeated pair sum. Select a three-term progression to examine the constraint.</p></div>
+<div class="lp-lab-footer"><button type="button" class="lp-export" id="lp-export" disabled>Export checked local evidence JSON ↓</button><a href="referee.html?domain=sidon#workbench">Open Referee for adversarial mutations ↗</a></div>
+</div>
+<aside class="lp-notebook" aria-labelledby="lp-notebook-title"><span class="lp-eyebrow">WHAT THE COMPUTATION CAN PROVE</span><h3 id="lp-notebook-title">A precise, bounded test.</h3>
+<dl><div><dt>Weak (4,5) test</dt><dd>27,405 four-element selections</dd></div><div><dt>Sidon witness</dt><dd>153 unordered sums from 17 points</dd></div><div><dt>Progression hypergraph</dt><dd>28 exact three-point constraints</dd></div><div><dt>Hitting-set boundary</dt><dd>12 deletions impossible; 13 sufficient</dd></div></dl>
+<div class="lp-output"><span>LOCAL VERIFIER OUTPUT</span><pre id="lp-output" role="status" aria-live="polite">No full finite replay requested yet.</pre></div>
+<p class="lp-note">The full replay invokes the repository’s published browser Referee implementation. The selected-edge search is a second view of the same finite witness; neither is an independent external referee.</p>
+</aside></div></div></section>
+<section class="wrap lp-section lp-mechanism" aria-labelledby="mechanism-title"><div class="lp-label">03 / WHY THE PROOF WORKS</div><div><h2 id="mechanism-title">A witness becomes<br><em>a graph of obligations.</em></h2><div class="lp-steps">
+<article><small>REPRESENT</small><h3>30 integer vertices</h3><p>List every exact coordinate. The (4,5) condition rules out disjoint-pair sum collisions.</p></article>
+<article><small>REDUCE</small><h3>28 progression edges</h3><p>Within this weak Sidon set, remaining pair-sum collisions are three-term progressions.</p></article>
+<article><small>CERTIFY</small><h3>No 12-point cover</h3><p>Exact branching excludes every way of deleting 12 vertices to hit all 28 edges.</p></article>
+<article><small>ATTACK</small><h3>Remove one edge</h3><p>Each deleted constraint admits an explicit 12-point cover, with 18 surviving vertices and exactly that progression.</p></article>
+</div>
+<div class="lp-mechanism-links"><a class="lp-outline" href="atlas.html?claim=sidon30">Explore this claim in the Mechanism Atlas ↗</a><a class="lp-outline" href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/edge_essentiality_certificate.json" target="_blank" rel="noopener">View all 28 certified deletion witnesses ↗</a></div></div></section>
+<section class="lp-history" aria-labelledby="history-title"><div class="wrap"><div class="lp-label">04 / EVIDENCE OBSERVATORY</div><div class="lp-history-grid"><div><h2 id="history-title">Discovery has<br><em>a version history.</em></h2><p>This timeline is drawn from the canonical Proof Passport registry, alongside the documented constraints of the present test. It is an editorial evidence timeline, rather than a live agent activity feed.</p><a href="atlas.html#history-title">Explore the full evidence history ↗</a></div><div id="lp-history-items" class="lp-history-items"><p>Loading documented evidence events…</p></div></div></div></section>
+<section class="wrap lp-final" aria-labelledby="lp-final-title"><div class="lp-label">05 / CONTINUE THE SAME RESEARCH THREAD</div><div><h2 id="lp-final-title">Read. Recompute.<br><em>Challenge. Contribute.</em></h2><p>A local replay is the beginning of scrutiny. Follow the canonical record and choose a precise next action; only independent evidence and human approval can advance a publication status.</p>
+<div class="lp-final-actions"><a href="passport.html?claim=sidon30"><b>01 / READ</b><strong>Inspect the proof obligations</strong><span>Canonical claim and assumptions ↗</span></a><a href="referee.html?domain=sidon"><b>02 / RECOMPUTE</b><strong>Attack the finite witness</strong><span>Exact checker and negative controls ↗</span></a><a href="review.html#sidon"><b>03 / AUDIT</b><strong>Submit independent criticism</strong><span>Reviewer brief and evidence requirements ↗</span></a><a href="join.html#assignment"><b>04 / CONTRIBUTE</b><strong>Find a distinct open assignment</strong><span>Source-bound unsolved problems ↗</span></a></div>
+</div></section>
+</main>
+<footer class="footer"><div class="wrap footer-bottom"><span>© 2026 Devin J. Wright · NIGHTFALL PHASESHIFT</span><span>Finite evidence · public sources · independent review open</span></div></footer>
+</body></html>
