@@ -105,9 +105,10 @@ function next(s){
   const pred=predictionFor(s.records,t),dn=Math.abs(t.n-last.target.n),dm=Math.abs(t.mass-last.target.mass);
   const nearby=dm===0&&dn===1?100:dn===0&&dm===1?82:dm===0?65:dn<=1&&dm<=1?51:0;
   const surprise=last.surprise&&dm===0?16:0;
+  const forward=dm===0&&t.n===last.target.n+1?8:0;
   const novelty=pred.kind==="BASELINE"?9:0;
   const complexity=Math.log2(choose(t.n-1,t.mass-1));
-  const score=nearby+surprise+novelty-complexity/12;
+  const score=nearby+surprise+forward+novelty-complexity/12;
   return {target:t,prediction:pred,rationale:"Selected by deterministic nearby-boundary and surprise-followup priority, with a small enumeration-cost penalty.",score};
  }).sort((a,b)=>b.score-a.score||a.target.n-b.target.n||a.target.mass-b.target.mass);
  const best=ranked[0];
