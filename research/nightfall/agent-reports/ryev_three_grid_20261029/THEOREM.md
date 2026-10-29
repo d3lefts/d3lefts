@@ -102,3 +102,34 @@ The seventh query reduces on three of those old candidates to the generalized th
 The nine-query *sharpness for the same schedule* has been constructed and exactly tested for p=5. For arbitrary p, Axiom's nine-query adaptive upper bound applies in a different two-stage coordinate-first architecture; the same-schedule nine-query upper is asserted here only for p=5.
 
 **General-prime executable spot checks:** check_prime_family.py exhaustively checks all 2,925 unordered centers for p=5 and 20,825 for p=7 using the closed projective-direction formula, and checks an explicit sharpness witness at p=11,13,17,19. The analytic proof above covers every p≥5 independently of this finite audit.
+
+
+## Exact unrestricted adaptive optimum in dimension five for all primes p≥7
+
+**Corollary (sharp global measurement complexity).** Let p≥7 be any prime. In the unrestricted adaptive sensing model over F_(p²), with measurements (a·x)^(p−1) and recovery modulo global F_p* phase, the **minimum worst-case number of measurements to recover all x∈F_(p²)^5 is exactly nine**.
+
+**Upper bound:** Axiom's previously established deterministic adaptive protocol uses k coordinate readings followed by at most k−1 one-coordinate phase-sync readings for any k; with k=5 this is 9. It works for F_(p^r), r≥2, and in particular for the current F_(p²).
+
+**Lower bound:** Every powered output is one of exactly p+2 possibilities: zero plus p+1 nonzero F_p-projective directions. A depth-eight adaptive decision tree can distinguish at most (p+2)^8 different transcripts, regardless of how its sensing rows depend on preceding outputs. The number of signal equivalence classes is
+
+    N(p) = 1 + (p^10−1)/(p−1) = 1 + Σ_(j=0)^9 p^j.
+
+For every p≥7, N(p)>(p+2)^8. One explicit *exact integer certificate* uses t=p−7≥0. Expanding gives
+
+    N(7+t)−(9+t)^8 =
+       4,032,488
+       + 21,145,725 t
+       + 18,454,080 t²
+       + 7,608,378 t³
+       + 1,839,258 t⁴
+       + 281,982 t⁵
+       + 27,966 t⁶
+       + 1,749 t⁷
+       + 63 t⁸
+       + t⁹.
+
+All coefficients are strictly positive. In particular N(7)=47,079,209 and 9^8=43,046,721. Thus eight queries fail even with completely unrestricted adaptivity, and Axiom's nine-query upper bound is optimal. QED.
+
+**Interpretation and novelty:** This global sharp classification is a new *deduction from Axiom's previously established all-prime adaptive upper bound* and the elementary decision-tree lower bound, not a claim that an entirely novel deep mathematical tool is needed for p≥7. The genuinely open k=5 case under this family is p=5; the sharp three-grid theorem above strengthens its architecture exclusions. The exact counting corollary resolves all primes p≥7 within the stated family, without settling other exponent/field regimes.
+
+**Independent exact audit:** check_global_optimum.py uses only Python integer arithmetic to verify the polynomial certificate coefficient-by-coefficient and the p=7 boundary, plus exact evaluations at multiple larger primes. The polynomial identity proves the infinite quantification; the finite evaluations are redundant sanity checks.
