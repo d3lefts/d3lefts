@@ -30,6 +30,12 @@ GitHub Actions confirms successful Pages deployments on 2026-10-28. Direct publi
 
 The design takes inspiration from editorial research portfolios, while its layout, identity, copy, and review-oriented content are original to NIGHTFALL. All third-party links and mathematical source authors retain their proper attribution.
 
+## Additional exact quantum and finite-field tools
+
+The [Exact Research Tools](exact-research.html) workbench complements Claim Lab's manual records and the owner's exact overlap/Sidon [Referee](referee.html). It supports a bounded four-qutrit integer rank-two witness verifier and exhaustive F25 fourth-power phase-ambiguity enumeration. JSON receipts are local finite calculations, never independent theorem certificates. All arithmetic uses BigInt or exact field operations, with independently expanded physical partial traces and browser adversarial tests.
+
+Run `node scripts/test_research_tools.cjs` for the independent 180-entry tensor/trace comparison and full finite-field controls. Web smoke covers mobile, desktop, exact rank, negative-rank-three input warnings, F25 phase orbits, and receipt export.
+
 ## Maintenance
 
 Run `python3 scripts/check_site.py`, `node --check docs/site.js`, and `node --check scripts/site_browser_smoke.mjs` at the repository root before updating the live site. The website CI additionally runs headless Chromium checks at mobile and desktop widths, including menu interactions and research filtering. GitHub's workflow [Verify research website](../.github/workflows/verify-site.yml) enforces both on relevant pushes and pull requests. This is **a website-integrity check**, distinct from the mathematics, source SDPs, and external peer review.
