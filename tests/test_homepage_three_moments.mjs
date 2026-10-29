@@ -18,7 +18,7 @@ test('A single coherent front-door narrative retains the original scientific pag
   ].map(find);
   assert.ok(stages.every((v,i)=>v>=0&&(i===0||v>stages[i-1])),String(stages));
   assert.equal(count(html,/<article class="flagship-card/g),4);
-  assert.equal(count(html,/<a class="feature (?:dark|lime)?"/g),5);
+  assert.equal(count(html,/<a class="feature(?: (?:dark|lime))?"/g),5);
   assert.equal(count(html,/class="review-card"/g),3);
   for(const id of ['main','flagships','instruments','live-case','observatory','section-index','research-systems','featured-title','evidence','work','review','method']){
     assert.ok(html.includes('id="'+id+'"'),id);
