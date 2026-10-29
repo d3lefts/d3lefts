@@ -98,6 +98,28 @@ The coordinate support includes `E_(0000,0000)`, `E_(0100,0100)` and `E_(2222,22
 
 The rank-two witness has Hilbert–Schmidt norm squared `1377`, hence normalized physical value `4689/(16*1377)` and normalized theorem lower bound `729/(16*1377)`.
 
+### 4a. Exact failure of all three older NIGHTFALL spectral certificates
+
+The old 729-dimensional syndrome rectangle `U`, the 4,209-dimensional lift `U+W0+W2`, and Axiom's graded sufficient tube can be audited **on this exact new C** without using the new theorem to assume positive projected subblocks. With `C0=P_U C`, `D0=P_(W0)C`, `D2=P_(W2)C`, `R=C-C0-D0-D2`, the independent input replay of the archived rational spectral-projection algorithm gives
+
+`||C0||²=153`, `Q(C0)=295/4`, `||D0||²=15959/36`, `||D2||²=40`, `||R||²=26665/36`.
+
+Thus the archived positive spectral margin is
+
+`w=||D0||² + ||D2||²/4 =16319/36`, and `w-||R||²/2=1991/24`.
+
+For each conserved difference grade `g` put `h_g=||(I-P_U)K(C0)_g||`, `r_g=||R_g||`. The **graded** sufficient bound (Axiom's strongest prior variant) is
+
+`w-||R||²/2 - 2 sum_g h_g*r_g`.
+
+The exact checker finds **20 different grades** satisfying `h_g²*r_g² > 49/4`; using only any **12** of these grades, the bound is strictly less than
+
+`1991/24 - 2*12*(7/2) = -25/24 < 0`.
+
+This is a rigorous *rational inequality*, free from floating-point sign ambiguity. The older ungraded input-sensitive and uniform tubes are weaker and likewise fail. `||R||²>0` excludes membership in the 4,209-dimensional linear lift. This is the stronger, full **union-of-known-certificates** strictness check required by [issue #13](https://github.com/d3lefts/d3lefts/issues/13). A negative **sufficient bound** does not imply a negative physical Q; the exact physical Q is `4689/16 >0`.
+
+`check_old_grade.py` replays these projections with exact SymPy rational linear algebra. It is based on the previously archived Lemnis spectral projector, with a fresh four-qutrit input and grade-level rational inequality. Thus it is an **independent input audit** of the old certificate, not an independent derivation of that spectral projector. Independent partial-trace and matrix-unit kernel calculations separately establish the new physical quadratic values.
+
 ## 5. Strict nonzero-overlap control and its scope
 
 As an exact qutrit example take `u1=v1=|0000>`, `u2=(|0>+5|1>+5|2>)^⊗4`, and `v2=|0000>+|1111>+|2220>`. Put `C=u1 v1*+u2 v2*`. At each site, `U1=span{|0>}`, `U2=span{|0>+5|1>+5|2>}`, and compatible unrestricted column subspaces give
