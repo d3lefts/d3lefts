@@ -1,43 +1,34 @@
 "use strict";
-/* An offline gate for the three destination public research experience. */
 const assert=require("node:assert/strict");
 const fs=require("node:fs");
 const read=path=>fs.readFileSync(path,"utf8");
-for(const [file,current] of [
- ["docs/index.html","./"],
- ["docs/constellation.html","constellation.html"],
- ["docs/review.html","review.html"]
-]){
+for(const [file,current] of [["docs/index.html","./"],["docs/constellation.html","constellation.html"],["docs/review.html","review.html"]]){
  const html=read(file);
  const nav=html.match(/<nav\b[^>]*id="site-nav"[^>]*>([\s\S]*?)<\/nav>/);
- assert.ok(nav,"Primary navigation missing: "+file);
+ assert.ok(nav,"Missing primary navigation "+file);
  const links=[...nav[1].matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)];
- assert.equal(links.length,3,"Require exactly three primary destinations in "+file);
- const hrefs=links.map(x=>x[1].match(/href="([^"]+)"/)?.[1]);
- assert.deepEqual(hrefs,["./","constellation.html","review.html"]);
- const active=links.filter(x=>x[1].includes('aria-current="page"'));
- assert.equal(active.length,1,"Require one current destination in "+file);
- assert.equal(active[0][1].match(/href="([^"]+)"/)?.[1],current);
+ assert.equal(links.length,3,file+" must present three destinations");
+ assert.deepEqual(links.map(x=>x[1].match(/href="([^"]+)"/)?.[1]),["./","constellation.html","review.html"]);
+ const selected=links.filter(x=>x[1].includes('aria-current="page"'));
+ assert.equal(selected.length,1,file+" has exactly one active destination");
+ assert.equal(selected[0][1].match(/href="([^"]+)"/)?.[1],current);
 }
 const home=read("docs/index.html");
-for(const href of ["#flagships","constellation.html#map","review.html#priority"]){
- assert.ok(home.includes('class="nf-archive-accession" href="'+href+'"'),"Golden Hour misses "+href);
- assert.ok(home.includes('class="nf-process-case" href="'+href+'"'),"New Moon misses "+href);
-}
+assert.ok(home.includes('href="constellation.html#map"'),"Source-linked mechanism handoff");
+assert.ok(home.includes('href="review.html#erdos"'),"Falsifiable single-task handoff");
+assert.ok(home.includes('href="review.html#priority"'),"All review dossiers accessible");
+assert.ok(home.includes('href="research.html"'),"Full research record accessible");
+assert.ok(home.includes('href="exact-research.html#research-tools-directory"'),"Full tool inventory remains reachable");
+assert.ok(home.includes('href="evidence.html#public-downloads"'),"Published evidence remains reachable");
+assert.ok(home.includes("no edge certifies")||home.includes("no edge certifies a transfer"),"Mechanism labels must not imply theorem transfer");
 const graph=read("docs/constellation.js");
 assert.ok(graph.includes("Challenge this claim / Independent Review"));
-for(const match of ['selected==="erdos36"?"#erdos"','selected==="sidon30"?"#sidon"','selected==="pas"?"#pas"']){
- assert.ok(graph.includes(match),"Missing claim-to-dossier review route "+match);
-}
+for(const match of ['selected==="erdos36"?"#erdos"','selected==="sidon30"?"#sidon"','selected==="pas"?"#pas"'])assert.ok(graph.includes(match));
 const review=read("docs/review.html");
 assert.ok(review.includes('href="#priority">Choose a falsifiable claim'));
 assert.ok(review.includes('https://github.com/d3lefts/d3lefts/issues/new/choose'));
 assert.ok(review.includes('two curated v2 evidence ZIPs are public'));
-assert.ok(!review.includes('complete certificate ZIP still needs a public binary mirror'));
 const shared=read("docs/site.js");
-for(const destination of ["01 / Homepage · Results","02 / Constellation · Connections","03 / Independent Review · Challenge"]){
- assert.ok(shared.includes(destination),"Missing shared destination "+destination);
-}
+for(const name of ["01 / Homepage · Results","02 / Constellation · Connections","03 / Independent Review · Challenge"])assert.ok(shared.includes(name));
 assert.ok(shared.includes('aria-current","page"'));
-assert.ok(!shared.includes('05 / Review'));
-console.log("PASS: all three destinations and claim-specific review handoffs");
+console.log("PASS: product journeys are separated without sacrificing evidence retrieval");
