@@ -5,7 +5,7 @@ import {join,normalize,resolve,sep} from "node:path";
 import {chromium} from "playwright-core";
 
 const root=resolve("docs");
-const pages=["index.html","review.html","evidence.html","agenda.html","research.html","exact-research.html","desk.html"];
+const pages=["index.html","review.html","evidence.html","agenda.html","research.html","exact-research.html","desk.html","frontier.html"];
 const types={".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".svg":"image/svg+xml"};
 const server=createServer(async (req,res)=>{
  try{
@@ -55,6 +55,36 @@ try{
     const culprits=await page.evaluate(()=>[...document.body.querySelectorAll("*")].map(el=>({el,rect:el.getBoundingClientRect()})).filter(x=>x.rect.right>innerWidth+3&&x.rect.width>0).slice(0,8).map(x=>({tag:x.el.tagName,class:x.el.className?.baseVal??x.el.className,scrollWidth:x.el.scrollWidth,right:Math.round(x.rect.right)})));
     assert.fail(file+" horizontal overflow "+overflow+"px at "+width+"; culprits="+JSON.stringify(culprits));
    }
+  }
+  if(width===390){
+   await page.goto(origin+"frontier.html",{waitUntil:"load"});
+   assert.equal(await page.locator(".f-rank").count(),2,"two source-linked finite frontier slices");
+   assert.match(await page.locator(".f-rank").first().innerText(),/37/,"transparent deterministic Agent NF rank");
+   assert.match(await page.locator("#active-predicate").innerText(),/\[1, 184\]/,"full original N184 branch");
+   assert.match(await page.locator("#nf-check-output").innerText(),/Ready for nine integers/);
+   await page.locator("#nf-values").fill("1, 2, 3, 4, 5, 6, 7, 8, 9");
+   await page.locator("#nf-check").click();
+   assert.match(await page.locator("#nf-check-output").innerText(),/Repeated pair sum/,"non-Sidon values rejected");
+   await page.locator("#nf-values").fill("1, 2, 6, 13, 26, 28, 36, 42, 45");
+   await page.locator("#nf-check").click();
+   assert.match(await page.locator("#nf-check-output").innerText(),/not maximal/,"correct finite but nonmaximal controls");
+   await page.locator("#nf-claim").click();
+   assert.match(await page.locator("#nf-session-list").innerText(),/CLAIMED/,"local claim recorded");
+   await page.locator("#nf-split").click();
+   assert.match(await page.locator("#nf-message").innerText(),/Exact partition created/,"split coverage user feedback");
+   assert.match(await page.locator("#nf-session-list").innerText(),/\[1, 92\]/,"first exhaustive half");
+   assert.match(await page.locator("#nf-session-list").innerText(),/\[93, 184\]/,"second exhaustive half");
+   const childLink=await page.locator("#nf-public").getAttribute("href");
+   assert(childLink.includes("issues/new")&&childLink.includes("CLAIM%20REQUEST"),"real GitHub request");
+   await page.locator("#nf-reference").fill("https://github.com/d3lefts/d3lefts/issues/46");
+   await page.locator("#nf-summary").fill("This is a bounded simulated attempt with independent checker absent. It is an unresolved negative research trace.");
+   await page.locator("#nf-submit").click();
+   assert.match(await page.locator("#nf-submitted").innerText(),/UNREVIEWED/,"no automatic scientific resolution");
+   assert.equal(await page.locator("#nf-review-link").isVisible(),true,"review handoff opens");
+   const [frontierDownload]=await Promise.all([page.waitForEvent("download"),page.locator("#nf-export").click()]);
+   assert.match(frontierDownload.suggestedFilename(),/frontier_local_ledger\.json$/);
+   await page.reload({waitUntil:"load"});
+   assert.match(await page.locator("#nf-session-list").innerText(),/PROPOSED/,"browser-local reload persists review status");
   }
   await page.goto(origin+"discovery.html",{waitUntil:"load"});
   assert.equal(await page.locator(".context h1").innerText(),"Minimum overlap · EA #36","Discovery Engine initial project");
