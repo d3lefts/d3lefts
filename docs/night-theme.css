@@ -77,3 +77,32 @@ html[data-nf-theme="paper"] .nf-journey-return{background:#f7f7ef;color:#19321f;
 html[data-nf-theme="paper"] .nf-journey-return strong{color:#355f2c}
 @media(max-width:620px){.nf-shell-controls{padding:5px 14px;min-height:44px;gap:7px}.nf-theme-toggle{padding:8px 11px;font-size:10px}.nf-journey-return{max-width:calc(100vw - 138px);padding:7px 9px;font-size:9px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.nf-theme-toggle,.nf-journey-return{transition:none!important}}
+
+/* Respect the existing canonical Join journey. One rail, one question. */
+.nf-journey-rail .nf-shell-controls{position:static;z-index:auto;min-height:0;padding:0;margin:0 0 0 auto;background:transparent!important;border:0!important;flex:none}
+.nf-journey-rail .nf-theme-toggle{min-height:34px}
+html[data-nf-theme="night"] .nf-journey-rail{background:#203428!important;color:#edf5e7!important;border-color:#425c46!important}
+html[data-nf-theme="night"] .nf-journey-rail :is(a,span){color:#d2e7c9!important}
+html[data-nf-theme="night"] .nf-journey-rail .nf-rail-spacer{flex:1}
+html[data-nf-theme="night"] .join-hero-aside,html[data-nf-theme="night"] .join-workspace{border-color:#425a46}
+html[data-nf-theme="night"] :is(.join-lead,.join-heading p,.join-hero-aside p,.join-workspace-header p,.join-choice p,.join-result-grid p,.join-disclosure,.join-pad p,.join-next p,.join-next details,.join-match p){color:#bdcdbb}
+html[data-nf-theme="night"] :is(.join-kicker,.join-heading>span,.join-workspace-header span,.join-pad>span,.join-next>span,.join-result-grid span,.join-choice>span){color:#bddf9d}
+html[data-nf-theme="night"] :is(.join-hero h1 em,.join-heading em,.join-workspace h2 em){color:#c6ef8e}
+html[data-nf-theme="night"] :is(.join-result-grid article,.join-match,.join-choice,.join-choice[data-recommended="true"],.join-empty,.join-pad,.join-next){
+ background:#203126;color:#eff5e8;border-color:#547158
+}
+html[data-nf-theme="night"] .join-choice[data-recommended="true"]{background:#2a422d;border-color:#bddf89}
+html[data-nf-theme="night"] .join-result-grid strong{color:#d9ff71}
+html[data-nf-theme="night"] :is(.join-quiet,.join-results a,.join-disclosure a,.join-next details a,.join-next .join-export-actions a){color:#d3f39f}
+html[data-nf-theme="night"] .join-match select,html[data-nf-theme="night"] .join-pad textarea{
+ background:#13251a;color:#edf5e8;border-color:#5a785e
+}
+html[data-nf-theme="night"] .join-tool-route{background:#506451}
+html[data-nf-theme="night"] .join-tool-route button{background:#253b2c;color:#edf5e8}
+html[data-nf-theme="night"] .join-tool-route button:hover{background:#35533a}
+html[data-nf-theme="night"] .join-tool-route span{color:#c3e792}
+html[data-nf-theme="night"] .join-next .join-export-actions button{color:#e6f6d5;border-color:#8ba97f}
+html[data-nf-theme="night"] .join-choice button{background:#d9ff5e;color:#1a3320;border-color:#d9ff5e}
+html[data-nf-theme="night"] #join-check-output{background:#112318;color:#e5f5d6;border:1px solid #486447}
+html[data-nf-theme="night"] .join-state{border-color:#68836b}
+html[data-nf-theme="night"] .join-hero-aside li{border-color:#425a46}
