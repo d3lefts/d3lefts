@@ -68,41 +68,66 @@ if(menu&&nav){
  document.addEventListener("click",e=>{if(nav.classList.contains("open")&&!nav.contains(e.target)&&!menu.contains(e.target))closeMenu();});
 }
 
-/* Guided entry / return route. Existing scientific instruments keep their own checkers. */
+/* A single return path for either canonical claim obligations or frozen Frontier tasks.
+ * This pointer contains identifiers only. Source state stays in its own validated workspace. */
 (() => {
- if(location.pathname.endsWith("/join.html")||document.querySelector(".nf-journey-rail"))return;
- const main=document.querySelector("main");if(!main)return;
- let title="";
- try{
-   const state=JSON.parse(localStorage.getItem("nightfall.journey.v1")||"null");
-   const names={"NF-156-184-9":"Maximal Sidon boundary","NF-Q7-R6":"Q7 graph boundary"};
-   if(state&&state.version===1&&Object.prototype.hasOwnProperty.call(names,state.rootId))title=names[state.rootId];
- }catch(_){}
- // Prefer the last explicitly selected claim obligation over a generic tool-directory handoff.
- // Whitelisted IDs are display labels, never arbitrary links or saved HTML.
- let claimReturn=null;
- try{
-  const last=JSON.parse(localStorage.getItem("nightfall.claim.journey.v1")||"null");
-  const labels={sidon30:"30-point Sidon",erdos36:"Erdős overlap",phase:"Phase retrieval",adaptive:"Adaptive decoder",werner:"Werner states",pas:"Proof After Scarcity"};
-  const target=last?.selected;
-  if(last?.version===1&&Object.prototype.hasOwnProperty.call(labels,target?.claimId)&&
-     Number.isSafeInteger(target.index)&&target.index>=0&&target.index<20){
-   claimReturn={title:labels[target.claimId],url:"join.html?claim="+encodeURIComponent(target.claimId)+"&obligation="+target.index+"#claim-investigation"};
+ const CASE_KEY="nightfall.active.case.v1";
+ const frontierNames={"NF-156-184-9":"Maximal Sidon decision","NF-Q7-R6":"Q7 exact graph search"};
+ const claimNames={erdos36:"Erdős overlap",sidon30:"30-point Sidon",phase:"Finite-field phase retrieval",
+  adaptive:"Adaptive finite-field decoder",werner:"Werner positivity",pas:"Proof After Scarcity"};
+ function active(){
+  try{
+   const obj=JSON.parse(localStorage.getItem(CASE_KEY)||"null");
+   if(obj&&obj.version===1&&obj.kind==="frontier"&&Object.hasOwn(frontierNames,obj.id))
+    return {name:frontierNames[obj.id],href:"join.html?task="+encodeURIComponent(obj.id)+"#workspace",kind:"FRONTIER"};
+   if(obj&&obj.version===1&&obj.kind==="claim"&&Object.hasOwn(claimNames,obj.id)&&
+      Number.isSafeInteger(obj.index)&&obj.index>=0&&obj.index<30){
+    const R=window.NightfallRegistry;
+    if(R&&(!R.claimById(obj.id)||!Array.isArray(R.claimById(obj.id).open)||
+       obj.index>=R.claimById(obj.id).open.length))return null;
+    return {name:claimNames[obj.id],href:"join.html?claim="+encodeURIComponent(obj.id)+
+       "&obligation="+obj.index+"#claim-investigation",kind:"REVIEW"};
+   }
+   // Legacy local journey gets a usable return path, without promoting evidence.
+   const legacy=JSON.parse(localStorage.getItem("nightfall.journey.v1")||"null");
+   if(legacy?.version===1&&Object.hasOwn(frontierNames,legacy.rootId))
+    return {name:frontierNames[legacy.rootId],href:"join.html?task="+
+     encodeURIComponent(legacy.rootId)+"#workspace",kind:"FRONTIER"};
+  }catch{}
+  return null;
+ }
+ function updateResume(){
+  const data=active(),box=document.getElementById("join-resume");
+  if(box){
+   box.hidden=!data;
+   if(data){
+    document.getElementById("join-resume-title").textContent=data.name;
+    document.getElementById("join-resume-detail").textContent=
+     (data.kind==="REVIEW"?"Canonical claim / unresolved obligation":"Frozen exact research scope")+
+     " · only identifiers are shared between instruments; local drafts remain unreviewed.";
+    document.getElementById("join-resume-link").href=data.href;
+   }
   }
- }catch(_){}
- // One shared stylesheet across otherwise independent research tools.
+  const tag=document.getElementById("nf-rail-state"),go=document.getElementById("nf-rail-resume");
+  if(tag)tag.textContent=data?"RESUME RESEARCH / "+data.kind:"ONE GUIDED PATH";
+  if(go){go.href=data?data.href:"join.html#results";
+   go.textContent=data?"Return to "+data.name+" ↗":"Results → process → open problem ↗";}
+ }
+ window.addEventListener("nightfall:case-changed",updateResume);
+ if(location.pathname.endsWith("/join.html")){updateResume();return}
+ if(document.querySelector(".nf-journey-rail"))return;
+ const main=document.querySelector("main");if(!main)return;
  if(!document.querySelector('link[data-nf-rail-style]')){
-  const sheet=document.createElement("link");
-  sheet.rel="stylesheet";sheet.href="journey-rail.css";
+  const sheet=document.createElement("link");sheet.rel="stylesheet";sheet.href="journey-rail.css";
   sheet.dataset.nfRailStyle="";document.head.append(sheet);
  }
- const bar=document.createElement("nav");bar.className="nf-journey-rail";bar.setAttribute("aria-label","Guided research navigation");
- const tag=document.createElement("span");tag.textContent=claimReturn?"RESUME THIS CLAIM":title?"RESUME RESEARCH":"ONE GUIDED PATH";
- const primary=document.createElement("a");primary.href=claimReturn?claimReturn.url:title?"join.html#workspace":"join.html#results";
- primary.textContent=claimReturn?"Return to "+claimReturn.title+" / exact obligation ↗":title?"Return to "+title+" ↗":"Results → process → open problem ↗";
+ const bar=document.createElement("nav");bar.className="nf-journey-rail";
+ bar.setAttribute("aria-label","Guided research navigation");
+ const tag=document.createElement("span");tag.id="nf-rail-state";
+ const primary=document.createElement("a");primary.id="nf-rail-resume";
  const gap=document.createElement("span");gap.className="nf-rail-spacer";
+ const constellation=document.createElement("a");constellation.href="constellation.html";constellation.textContent="Constellation";
  const method=document.createElement("a");method.href="join.html#method";method.textContent="The process";
  const entry=document.createElement("a");entry.href="join.html#assignment";entry.textContent="Find a problem";
- const constellation=document.createElement("a");constellation.href="constellation.html";constellation.textContent="Constellation";
- bar.append(tag,primary,gap,constellation,method,entry);main.before(bar);
+ bar.append(tag,primary,gap,constellation,method,entry);main.before(bar);updateResume();
 })();
