@@ -1,0 +1,8 @@
+{'modulus': 7, 'marks': 3, 'external_pair_cases': 6, 'min_high_incidence': 1, 'max_high_incidence': 3, 'worst_pair': (2, 4), 'proven_lower_bound': 0, 'max_common_supports': 1, 'max_common_diagonal_supports': 1}
+{'modulus': 13, 'marks': 4, 'external_pair_cases': 36, 'min_high_incidence': 1, 'max_high_incidence': 4, 'worst_pair': (7, 8), 'proven_lower_bound': 0, 'max_common_supports': 1, 'max_common_diagonal_supports': 1}
+{'modulus': 21, 'marks': 5, 'external_pair_cases': 120, 'min_high_incidence': 2, 'max_high_incidence': 5, 'worst_pair': (2, 5), 'proven_lower_bound': 0, 'max_common_supports': 1, 'max_common_diagonal_supports': 1}
+{'modulus': 31, 'marks': 6, 'external_pair_cases': 300, 'min_high_incidence': 2, 'max_high_incidence': 6, 'worst_pair': (7, 9), 'proven_lower_bound': 1, 'max_common_supports': 1, 'max_common_diagonal_supports': 1}
+{'modulus': 57, 'marks': 8, 'external_pair_cases': 1176, 'min_high_incidence': 3, 'max_high_incidence': 8, 'worst_pair': (8, 51), 'proven_lower_bound': 0, 'max_common_supports': 1, 'max_common_diagonal_supports': 1}
+{'modulus': 73, 'marks': 9, 'external_pair_cases': 2016, 'min_high_incidence': 4, 'max_high_incidence': 9, 'worst_pair': (2, 60), 'proven_lower_bound': 2, 'max_common_supports': 1, 'max_common_diagonal_supports': 1}
+{'modulus': 91, 'marks': 10, 'external_pair_cases': 3240, 'min_high_incidence': 5, 'max_high_incidence': 10, 'worst_pair': (4, 67), 'proven_lower_bound': 3, 'max_common_supports': 1, 'max_common_diagonal_supports': 1}
+PASS: independently constructed supports and exact q-linear high-incidence proof bounds
