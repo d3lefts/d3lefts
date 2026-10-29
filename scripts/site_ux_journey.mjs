@@ -358,6 +358,12 @@ try{
     await page.setViewportSize({width:1440,height:900});
     await visit("erdos-paper.html");
     await page.locator('a[href*="join.html?claim=erdos36"][href*="obligation=0"]').first().click();
+    // Navigation may complete before deferred claim-journey initialization.
+    // Require the same source-bound claim to be actually selected; do not bypass a failure.
+    await page.waitForFunction(
+      () => document.querySelector("#cj-claim")?.value === "erdos36",
+      null,{timeout:5000}
+    );
     assert.equal(await page.locator("#cj-claim").inputValue(),"erdos36");
     assert.equal(await page.locator("#cj-obligation").inputValue(),"0");
     assert.match(await page.locator("#cj-condition").innerText(),/zero extension/i);
@@ -379,6 +385,10 @@ try{
     assert.match(await page.locator("#cj-duty").innerText(),/competition input identity/i);
     await visit("living-paper.html");
     await page.locator('a[href*="join.html?claim=sidon30"][href*="obligation=0"]').first().click();
+    await page.waitForFunction(
+      () => document.querySelector("#cj-claim")?.value === "sidon30",
+      null,{timeout:5000}
+    );
     assert.equal(await page.locator("#cj-claim").inputValue(),"sidon30");
     assert.match(await page.locator("#cj-duty").innerText(),/specialist audit/i);
     note("strength","A sourced Living Paper now preserves the exact open obligation and saved unreviewed notes across a return trip; an unrelated finite assignment is never auto-selected.","claim-continuity");

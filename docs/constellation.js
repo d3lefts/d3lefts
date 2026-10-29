@@ -88,9 +88,18 @@
   const matched=matching(),relevant=new Set(matched.flatMap(e=>[e.from,e.to]));
   for(const [id,b] of nodes){b.setAttribute("aria-pressed",String(id===selected));b.classList.toggle("is-muted",!relevant.has(id)&&!!(selected||type!=="all"));}
   for(const b of filterButtons)b.setAttribute("aria-pressed",String(b.dataset.coFilter===type));
-  renderDetails();if(raf)cancelAnimationFrame(raf);raf=requestAnimationFrame(drawLines);
+  renderDetails();
+  window.dispatchEvent(new CustomEvent("nightfall:claim-selected",{detail:{claimId:R.claimById(selected)?selected:null}}));
+  if(raf)cancelAnimationFrame(raf);raf=requestAnimationFrame(drawLines);
  }
  filterButtons.forEach(b=>b.addEventListener("click",()=>{type=b.dataset.coFilter;update();}));
+ window.addEventListener("nightfall:trace-request",e=>{
+  const id=e?.detail?.claimId;
+  if(!R.claimById(id))return;
+  selected=id;
+  const url=new URL(location.href);url.searchParams.set("claim",selected);
+  history.replaceState(null,"",url);update();
+ });
  window.addEventListener("resize",()=>{if(raf)cancelAnimationFrame(raf);raf=requestAnimationFrame(drawLines)},{passive:true});
  if(typeof ResizeObserver!=="undefined"){const observer=new ResizeObserver(()=>{if(raf)cancelAnimationFrame(raf);raf=requestAnimationFrame(drawLines)});observer.observe($("co-sky"));}
  // Curated history events: editorial snapshot, not GitHub synchronization.
