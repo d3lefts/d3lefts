@@ -1,0 +1,107 @@
+{
+  "schema": "nightfall-gate-c-prereg-v1",
+  "frozenAt": "2026-10-28",
+  "sourceCommit": "2429d0a04825bb8deeaa5f13e3a6d894917b5771",
+  "sourceFormat": "GitHub blobs SHA-1 pinned at a specific immutable commit; receipt runner also records SHA-256 bytes.",
+  "seed": 1729,
+  "primaryEndpoint": "Number of correctly identified decisive scientific next tests, under a reproduced exact acceptance criterion, in each of six paired challenges.",
+  "conditions": {
+    "G": "Graph condition: same source records plus the frozen typed scoped-edge summary, including open premises and failed transfers.",
+    "F": "Flat condition: identical source bytes and searchable chronological source list without typed graph edges."
+  },
+  "budget": {
+    "maxTotalModelTokensPerArm": 2000,
+    "maxExternalToolCallsPerArm": 20,
+    "acceptedModel": "Must be recorded at execution and identical across arms",
+    "modelParameterFreeze": "Record before outcome-generating trials",
+    "sourceReadPolicy": "Identical source blob SHA per task in both arms"
+  },
+  "blinding": "Each arm emits masked anonymous answer; graders see neither G/F nor allocation. Randomized presentation seed 1729.",
+  "scope": "Preregistration only. This file contains no measured effect and does not satisfy Observatory Gate C until independent paired runs and grading are complete.",
+  "sources": {
+    "ff": {
+      "path": "research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/README.md",
+      "blobSha": "42f5f89d3411077426558177ae7972bb6cb4e9e2"
+    },
+    "fh": {
+      "path": "research/nightfall/projects/finite-field-retrieval-handoff-excerpt.txt",
+      "blobSha": "a44b19eeb08671e592616e7bbb8061e51326de7b"
+    },
+    "wa": {
+      "path": "research/nightfall/projects/werner-atlas/README.md",
+      "blobSha": "77dd5b946a89256ed4fdaf9b1ffdd6c8e7568d25"
+    },
+    "wc": {
+      "path": "research/nightfall/projects/werner-correlated-6-9/S2_4471_CERTIFICATE_AUDIT.md",
+      "blobSha": "3cb55d39c7c8fa175868f92729bce5cb9fa5b6b6"
+    },
+    "wf": {
+      "path": "research/nightfall/projects/werner-final-4-25/README.md",
+      "blobSha": "bfbef88e2d38250ff658275fb51106cf70b17fda"
+    },
+    "ds": {
+      "path": "research/nightfall/projects/discovery-proposals-2026-10-28/README.md",
+      "blobSha": "7f613c66ff834d33253d9e3a7920a641ce93901b"
+    }
+  },
+  "tasks": [
+    {
+      "id": "FF01",
+      "field": "finite-field",
+      "sourceIDs": [
+        "ff",
+        "fh"
+      ],
+      "prompt": "Identify the single least expensive decisive test required to elevate the stated fourth-power finite-field tail estimate to a uniform theorem. Give exact assumptions, a falsifying outcome and the minimal acceptable independent evidence. Is checking only the downstream algebra sufficient?",
+      "graphCue": "A conditional tail estimate depends on a foundational span-count statement; downstream exact checks do not discharge the premise."
+    },
+    {
+      "id": "FF02",
+      "field": "finite-field",
+      "sourceIDs": [
+        "fh",
+        "ff"
+      ],
+      "prompt": "The research handoff describes an oracle-free LLL decoder and finite-field fourth-power sensing. Give the decisive scope check that separates the published large-field guarantee from an incorrect claim applying to all small q and dimensions. Specify an executable exact counterexample search and its acceptance criterion.",
+      "graphCue": "Field-size conditions, phase quotient, Frobenius rank and exceptional-event control are explicit dependencies; small dimensions can falsify overbroad scope."
+    },
+    {
+      "id": "WE01",
+      "field": "Werner",
+      "sourceIDs": [
+        "wc",
+        "wa"
+      ],
+      "prompt": "Audit the six-qutrit t=0.4471 certificate. Identify the cheapest exact independent step able to reject a flawed twirl normalization or separability premise before using the inequality to claim unconditional rank-two positivity. Give a precise failure condition.",
+      "graphCue": "Finite coefficient identities and the U⊗conjugate-U twirl have distinct source gates; a source theorem remains imported."
+    },
+    {
+      "id": "WE02",
+      "field": "Werner",
+      "sourceIDs": [
+        "wf",
+        "wa"
+      ],
+      "prompt": "Assess the reported 24- and 25-copy thresholds against the source assumptions. What exact arithmetic can be replayed, what imported inequality must remain conditional, and which targeted check should be prioritized? State when a numerically improved threshold is insufficient.",
+      "graphCue": "Conditional source-operator inequalities limit the theorem status of exact rational coefficient rows. Margin and symmetry must be checked independently."
+    },
+    {
+      "id": "SP01",
+      "field": "finite-rank spectral",
+      "sourceIDs": [
+        "ds"
+      ],
+      "prompt": "For proposal P01, what single rank-doubling interval test best discriminates finite positivity from a uniform finite-to-infinite theorem? State the needed off-diagonal norm comparison, measurable margin and falsification threshold.",
+      "graphCue": "Positive finite blocks alone do not control the cross-block operator. A uniform off-diagonal norm versus positive gap is an unresolved premise."
+    },
+    {
+      "id": "SP02",
+      "field": "finite-rank spectral",
+      "sourceIDs": [
+        "ds"
+      ],
+      "prompt": "A collaborator reports positive reciprocal-Hankel principal blocks to a very large rank and concludes all-rank positivity for all scale parameters. Identify an exact small block-coupling counterexample mechanism that invalidates that inference and specify the inequality a valid transfer theorem must establish.",
+      "graphCue": "A Schur-complement crossing can defeat diagonal positivity; a uniform gap and cross-sector bound are required to transfer a finite check."
+    }
+  ]
+}

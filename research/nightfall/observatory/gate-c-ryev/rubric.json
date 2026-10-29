@@ -1,0 +1,73 @@
+{
+  "schema": "nightfall-gate-c-rubric-v1",
+  "hiddenFromOperators": true,
+  "freezeSeed": 1729,
+  "grading": {
+    "primaryPass": "Names one scientifically decisive next test with correct quantifier scope and exact reproducible acceptance/falsification criterion.",
+    "score": {
+      "0": "Incorrect or promotes unproved claim",
+      "1": "Names plausible next test but lacks a decisive acceptance criterion",
+      "2": "Correct actionable test with exact threshold/criterion and dependency scope"
+    },
+    "secondary": [
+      "falsePromotion",
+      "missingDependency",
+      "validObstruction",
+      "filesRead",
+      "toolCalls",
+      "modelTokens",
+      "wallClockMs"
+    ],
+    "blinding": "Evaluate masked answers in random order; label reveal after grading."
+  },
+  "tasks": [
+    {
+      "id": "FF01",
+      "required": [
+        "Foundational Gaussian short-vector span-count lemma remains unproved",
+        "Independent symbolic or exact-counting check of precise lemma and quantifiers",
+        "Downstream 2^-96 computation alone insufficient"
+      ]
+    },
+    {
+      "id": "FF02",
+      "required": [
+        "Distinguish large-field guarantee from arbitrary small q",
+        "Search exact finite field counterexamples at k=3,4 and report phase orbits/rank events",
+        "Honor random design versus systematic construction assumptions"
+      ]
+    },
+    {
+      "id": "WE01",
+      "required": [
+        "U-tensor-conjugate-U twirl, not U-tensor-U",
+        "Reproduce exact sector coefficients and S/72 normalization",
+        "Imported 3/4/5-copy theorem assumptions separate"
+      ]
+    },
+    {
+      "id": "WE02",
+      "required": [
+        "Check exact rational constructor and independent verifier",
+        "Compare 24/25-copy margins to imported theorem premises",
+        "Do not promote conditional thresholds with a positive rational remainder alone"
+      ]
+    },
+    {
+      "id": "SP01",
+      "required": [
+        "Uniform positive diagonal margin",
+        "Off-diagonal norm bound below Schur complement/positive gap",
+        "Rank-doubling interval verified for all claimed t, including worst regime"
+      ]
+    },
+    {
+      "id": "SP02",
+      "required": [
+        "Exhibit positive diagonal blocks with indefinite coupled 2x2 matrix",
+        "Schur complement negative when b²≥ad",
+        "Uniform inequality and no missing time interval required for infinite transfer"
+      ]
+    }
+  ]
+}

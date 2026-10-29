@@ -66,7 +66,11 @@
 <div class="formField full"><label for="expResult">Observed result / verifier notes</label><textarea id="expResult" name="result" placeholder="Outcome, exact counts, error bounds, negative findings"></textarea></div>
 <div class="formField full"><label for="expEvidence">Result artifact + independent checker reference</label><input id="expEvidence" name="evidence" placeholder="Reference; the app does not execute it"></div>
 </div><div class="formActions"><button type="button" class="btn danger" id="deleteExp">Delete experiment</button><div class="right"><button type="button" class="btn" id="cancelExp">Cancel</button><button type="submit" class="btn primary">Save experiment</button></div></div></form></div></div>
+<div class="modalMask" id="bridgeMask" role="presentation"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="bridgeTitle" aria-describedby="bridgeScope"><div class="modalTop"><h2 id="bridgeTitle">Evidence Bridge / pending review</h2><button type="button" id="bridgeCancelTop" aria-label="Close receipt preview">×</button></div><div class="formGrid" style="padding:25px;gap:16px"><p class="note" id="bridgeScope" style="margin:0">Local exact scope preview. This adapter does not establish external scientific verification.</p><div class="formField full"><label>Receipt source and checksum</label><pre id="bridgeMeta" style="white-space:pre-wrap;overflow-wrap:anywhere;background:#0c1420;border:1px solid #344252;color:#b6c9d0;border-radius:8px;padding:13px;font:11px/1.6 monospace"></pre></div><div class="formField full"><label>Proposed attachment — tested / unaudited</label><pre id="bridgeDraft" style="white-space:pre-wrap;overflow-wrap:anywhere;background:#0c1420;border:1px solid #344252;color:#b6c9d0;border-radius:8px;padding:13px;font:11px/1.6 monospace"></pre></div><p class="note" style="margin:0">You must approve the attachment. A JSON workspace backup is downloaded before any local record changes. Preserve the original receipt for independent replay. Claim statuses remain untouched.</p><div class="modalActions" style="display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap"><button type="button" class="btn" id="bridgeCancel">Cancel / no changes</button><button type="button" class="btn primary" id="bridgeApprove">Download backup &amp; attach unaudited record</button></div></div></div></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="referee-core.js"></script>
+<script src="research-tools-core.js"></script>
+<script src="evidence-bridge-core.js"></script>
 <script>
 'use strict';
 const KEY='nightfall_claim_lab_v1';
@@ -133,41 +137,75 @@ $('#content').addEventListener('click',e=>{const b=e.target.closest('[data-actio
 $('#content').addEventListener('input',e=>{if(e.target.id==='searchClaims'){searchText=e.target.value;const pos=e.target.selectionStart;render();const node=$('#searchClaims');node?.focus();node?.setSelectionRange(pos,pos)}});
 $('#content').addEventListener('change',e=>{if(e.target.id==='statusFilter'){statusFilter=e.target.value;render()}});
 
-/* Referee JSON handoff: validate canonical input SHA-256 only; never infer proof authority. */
+
+/* RYEV Evidence Bridge — strict versioned preview, isolated from claim-status writes. */
+let pendingBridge=null;
+const bridgeClose=()=>{$('#bridgeMask').classList.remove('show');pendingBridge=null};
+$('#bridgeCancel').addEventListener('click',bridgeClose);
+$('#bridgeCancelTop').addEventListener('click',bridgeClose);
+$('#bridgeMask').addEventListener('mousedown',e=>{if(e.target.id==='bridgeMask')bridgeClose()});
 $('#receiptImportBtn').addEventListener('click',()=>$('#receiptImportFile').click());
 $('#receiptImportFile').addEventListener('change',async event=>{
  const file=event.target.files?.[0];if(!file)return;
  try{
-  if(file.size>2000000)throw Error('Receipt must be 2 MB or smaller.');
-  if(!window.crypto?.subtle)throw Error('A secure context is required for SHA-256 validation.');
-  const report=JSON.parse(await file.text());
-  if(report?.format!=='nightfall-referee-receipt-v1'||report.version!=='1.0.0')throw Error('Unsupported Referee receipt version.');
-  if(!['continuous-step-overlap','weak-sidon-4-5-finite'].includes(report.domain))throw Error('Unknown Referee domain.');
-  if(!report.source||typeof report.source!=='object'||!report.result||typeof report.result!=='object')throw Error('Missing receipt input or results.');
-  if(!['FINITE_CHECK_PASSED','REJECTED','INCONCLUSIVE','REJECTED_OR_INCONCLUSIVE'].includes(report.verdict))throw Error('Invalid verdict label.');
-  if(!/^[0-9a-f]{64}$/.test(report.inputSha256||''))throw Error('Invalid input SHA-256 digest.');
-  const canonical=report.domain==='continuous-step-overlap'
-   ?{domain:report.domain,input:report.source,claimedScore:report.claimedScore??null}
-   :{domain:report.domain,input:report.source,claimedMaximum:report.claimedMaximum};
-  const digest=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(JSON.stringify(canonical)));
-  const actual=Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,'0')).join('');
-  if(actual!==report.inputSha256)throw Error('Input SHA-256 mismatch. Receipt import blocked.');
-  if(data.experiments.length>=10000)throw Error('Experiment register is full.');
-  if(!confirm('Input fingerprint matches. Claim Lab has not replayed the mathematics or authenticated this report. Import as TESTED / UNAUDITED metadata, leaving every claim status unchanged?'))return;
-  const label=report.domain==='weak-sidon-4-5-finite'?'Finite Sidon':'Finite step-overlap';
-  data.experiments.push({
-   id:uid(),title:'Referee receipt / '+label,claimId:'',operator:'Imported finite exact verification report',
-   prediction:'User-supplied Referee finite witness and claimed result',
-   falsifier:'Independently rerun the exact witness, challenge the checker, and audit the scope.',
-   status:'tested',cost:0,
-   result:'IMPORTED REPORT ONLY — asserted verdict: '+report.verdict+'. Claim Lab checked input SHA-256 consistency; this does not authenticate the claimed computation, signature, reviewer, or mathematical proof.',
-   evidence:'Original JSON receipt held by importing user. Input SHA-256: '+report.inputSha256+'; file: '+file.name.slice(0,125)
+  if(file.size>1000000)throw Error('Receipt exceeds 1 MB.');
+  const seen=new Set(data.experiments.flatMap(e=>{
+    const text=String(e.evidence||'');
+    return Array.from(text.matchAll(/BRIDGE-ID:([0-9a-f]{64})/g),m=>m[1]);
+  }));
+  const preview=await window.NightfallEvidenceBridge.preview(await file.text(),{
+    refereeCore:window.RefereeCore,exactCore:window.NIGHTFALL_EXACT,seenInputHashes:seen
   });
-  data.sample=false;persist();go('experiments');toast('Referee receipt metadata imported. Claim statuses unchanged.');
- }catch(err){toast('Receipt rejected: '+err.message)}
+  if(data.experiments.length>=10000)throw Error('Experiment register is full.');
+  pendingBridge={preview,fileName:file.name.slice(0,125)};
+  $('#bridgeTitle').textContent='Review: '+preview.title;
+  $('#bridgeScope').textContent=preview.scope;
+  $('#bridgeMeta').textContent=[
+    'Format: '+preview.sourceFormat,
+    'Producer version: '+preview.producerVersion,
+    'Input SHA-256: '+preview.inputSha256,
+    'Receipt SHA-256: '+preview.receiptSha256,
+    'Local recomputation: '+preview.resultStatus,
+    'Scientific review: '+preview.reviewStatus,
+    'External referee / signature: NONE'
+  ].join('\n');
+  $('#bridgeDraft').textContent=[
+    'Title: '+preview.proposedExperiment.title,
+    'Status: tested / unaudited',
+    'Conclusion: '+preview.proposedExperiment.result,
+    'No claims, statuses, or published records modified.'
+  ].join('\n');
+  $('#bridgeMask').classList.add('show');
+ }catch(err){toast('Evidence Bridge refused: '+(err.code?err.code+' — ':'')+err.message)}
  finally{event.target.value=''}
 });
-
+$('#bridgeApprove').addEventListener('click',()=>{
+ if(!pendingBridge)return;
+ const {preview,fileName}=pendingBridge;
+ try{
+  const raw=localStorage.getItem(KEY);
+  if(data.experiments.some(e=>String(e.evidence||'').includes('BRIDGE-ID:'+preview.receiptId))){
+    throw Error('Duplicate receipt; this finite input is already attached.');
+  }
+  if(data.experiments.length>=10000)throw Error('Experiment register is full.');
+  // Backup the complete current workspace before any mutation. Download first.
+  const oldJSON=raw??JSON.stringify(data);
+  const blob=new Blob([oldJSON],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+  try{
+   a.href=url;a.download='NIGHTFALL_claim_lab_PRE_BRIDGE_'+new Date().toISOString().slice(0,10)+'.json';
+   document.body.appendChild(a);a.click();a.remove();
+  }finally{URL.revokeObjectURL(url)}
+  const next=structuredClone(data);
+  next.experiments.push({id:uid(),claimId:'',...preview.proposedExperiment,
+    evidence:preview.proposedExperiment.evidence+'; Original receipt: '+fileName});
+  next.sample=false;
+  const nextJSON=JSON.stringify(next);
+  localStorage.setItem(KEY,nextJSON); // Fail closed: no in-memory modification until write success.
+  if(localStorage.getItem(KEY)!==nextJSON){localStorage.setItem(KEY,oldJSON);throw Error('Storage readback verification failed.');}
+  data=next;bridgeClose();go('experiments');
+  toast('Backup downloaded; unreviewed receipt metadata attached. Claim labels unchanged.');
+ }catch(err){toast('Attachment refused: '+err.message)}
+});
 $('#importBtn').addEventListener('click',()=>$('#importFile').click());$('#importFile').addEventListener('change',async e=>{const f=e.target.files?.[0];if(!f)return;if(f.size>2e6){toast('JSON import exceeds 2 MB size limit');e.target.value='';return}try{const parsed=normalize(JSON.parse(await f.text()));if(!confirm(`Replace your current workspace with ${parsed.claims.length} imported claims? Export your current data first if needed.`))return;data=parsed;data.sample=false;chosenNode=null;searchText='';statusFilter='all';persist();render();toast('JSON workspace imported.')}catch(err){toast('Invalid JSON backup: '+err.message)}finally{e.target.value=''}});
 $('#exportBtn').addEventListener('click',()=>{const payload={...data,exportedAt:new Date().toISOString(),format:'nightfall-claim-lab-v1'};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='NIGHTFALL_claim_lab_backup_'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('JSON backup generated. Keep it in a safe private location.')});
 $('#claimStatus').innerHTML=STATUSES.map((s,i)=>`<option value="${i}">${esc(s)}</option>`).join('');$('#expOperator').innerHTML=OPERATORS.map(s=>`<option value="${esc(s)}">${esc(s)}</option>`).join('');

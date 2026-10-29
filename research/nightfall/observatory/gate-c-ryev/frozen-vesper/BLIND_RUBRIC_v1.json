@@ -1,0 +1,45 @@
+{
+  "schema": "nightfall-gate-c-original-v1-blind-rubric",
+  "source": "Vesper frozen Gate-C-Freeze-v1 task set",
+  "seed": 1729,
+  "primaryEndpoint": "Decisive scientifically correct next test with exact acceptance/failure criterion, evaluated blinded.",
+  "score": [
+    {
+      "value": 0,
+      "meaning": "Incorrect test, wrong mathematical scope, falsified dependency promoted, or unsupported theorem conclusion"
+    },
+    {
+      "value": 1,
+      "meaning": "Scientifically plausible candidate next test but missing exact scope, target, reproducible falsifier or acceptance threshold"
+    },
+    {
+      "value": 2,
+      "meaning": "Concrete decisive next test with compatible quantifiers, exact executable acceptance/failure criterion, and clear source-dependency boundary"
+    }
+  ],
+  "blinding": "Human graders receive answer, task ID and source evidence without G/F condition, edge list, treatment allocation, or model identity. Evaluator ID must differ from execution agent. Resolve missing grades before unmasking.",
+  "categories": [
+    "falsePromotion",
+    "validObstruction",
+    "sourceTrace",
+    "necessaryDependency",
+    "explicitFailureCondition"
+  ],
+  "taskScope": {
+    "FF-01": "Source-conditional Gaussian short-vector span-count premise and downstream identity must be distinguished.",
+    "FF-02": "Separate finite-field phase ambiguity from rank defect in a small seeded, exactly reproducible experiment.",
+    "WR-01": "Source-theorem-dependent six-qutrit threshold versus genuine extension beyond encoded class.",
+    "WR-02": "Exact 25-copy rational identity versus imported source assumptions and symmetry prerequisites.",
+    "SP-01": "Only a proposal for rank-doubling and scale-window test; this is not a primary spectral proof packet.",
+    "SP-02": "Only a proposal for finite-to-infinite uniform coupling test; cannot confirm an archived all-rank theorem."
+  },
+  "reporting": {
+    "sixPairs": true,
+    "pairedDifference": true,
+    "rawOutputs": true,
+    "independentGrading": true,
+    "nullAndHarmfulIncluded": true,
+    "noPopulationGeneralization": true
+  },
+  "adjudicationStatus": "unperformed; rubric frozen before agent outcomes"
+}
