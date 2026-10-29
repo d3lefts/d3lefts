@@ -72,7 +72,7 @@ if(menu&&nav){
 
 /* Guided entry / return route. Existing scientific instruments keep their own checkers. */
 (() => {
- if(location.pathname.endsWith("/join.html")||document.querySelector(".nf-journey-rail"))return;
+ if(location.pathname.endsWith("/join.html")||location.pathname.endsWith("/index.html")||location.pathname.endsWith("/")||document.querySelector(".nf-journey-rail"))return;
  const main=document.querySelector("main");if(!main)return;
  // App-owned grid layouts have their own navigation and must remain untouched.
  if(main.closest(".app")||document.querySelector("#app"))return;
@@ -118,6 +118,8 @@ if(menu&&nav){
  const main=document.querySelector("main");if(!main||document.querySelector(".nf-process-thread"))return;
  if(document.querySelector("#app")||document.querySelector(".app")||main.closest(".app"))return;
  const page=location.pathname.split("/").pop()||"index.html",hash=location.hash;
+ // Homepage already exposes the three canonical destinations in its header.
+ if(page==="index.html")return;
  const steps=[
  {id:"home",label:"01 / Homepage · Results",href:"index.html#flagships"},
  {id:"constellation",label:"02 / Constellation · Connections",href:"constellation.html#map"},
