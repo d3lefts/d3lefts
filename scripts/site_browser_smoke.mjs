@@ -5,7 +5,7 @@ import {join,normalize,resolve,sep} from "node:path";
 import {chromium} from "playwright-core";
 
 const root=resolve("docs");
-const pages=["index.html","review.html","evidence.html","agenda.html","research.html","exact-research.html"];
+const pages=["index.html","review.html","evidence.html","agenda.html","research.html","exact-research.html","desk.html"];
 const types={".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".svg":"image/svg+xml"};
 const server=createServer(async (req,res)=>{
  try{
@@ -154,6 +154,35 @@ try{
     assert.equal(await page.locator("#agenda-list .research-proposal:visible").count(),1,"SourceBound search");
     await page.locator("#agenda-search").fill("");
     assert.equal(await page.locator("#agenda-list .research-proposal:visible").count(),10,"agenda search reset");
+  }
+  if(width===390 || width===1280){
+    await page.goto(origin+"desk.html?claim=phase",{waitUntil:"load"});
+    assert.equal(await page.locator(".desk-claim-button").count(),5,"Five canonical research claims visible");
+    assert.match(await page.locator(".desk-detail-heading").innerText(),/phase retrieval/i,"Deep link selects finite-field claim");
+    assert.equal(await page.locator(".desk-dimension").count(),4,"Four independently scoped evidence dimensions");
+    await page.locator("#desk-filter").selectOption("conditional");
+    assert.equal(await page.locator(".desk-claim-button").count(),2,"Conditional proof claims separated");
+    await page.locator("#desk-filter").selectOption("all");
+    await page.locator("#desk-search").fill("Werner");
+    assert.equal(await page.locator(".desk-claim-button").count(),1,"Title search filters");
+    await page.locator("#desk-search").fill("");
+    await page.locator(".desk-open-row .desk-add").first().click();
+    assert.match(await page.locator("#desk-count").innerText(),/1 step/,"Open obligation pinned");
+    await page.locator("#desk-notes").fill("Check a source lemma with a second proof path.");
+    await page.reload({waitUntil:"load"});
+    assert.equal(await page.locator(".desk-queue-row").count(),1,"Local session queue survives reload");
+    assert.match(await page.locator("#desk-notes").inputValue(),/second proof path/,"Session notes persist");
+    assert.match(await page.locator(".desk-detail-heading").innerText(),/phase retrieval/i,"Deep link remains selected");
+    await page.locator(".desk-queue-row input[type=checkbox]").check();
+    assert.match(await page.locator("#desk-count").innerText(),/1 marked complete/,"Local completion only");
+    const [handoff]=await Promise.all([page.waitForEvent("download"),page.locator("#desk-export-md").click()]);
+    assert.equal(handoff.suggestedFilename(),"NIGHTFALL_research_session.md","Markdown research handoff");
+    const [receipt]=await Promise.all([page.waitForEvent("download"),page.locator("#desk-export-json").click()]);
+    assert.equal(receipt.suggestedFilename(),"NIGHTFALL_research_session.json","Portable JSON session");
+    page.once("dialog",dialog=>dialog.accept());
+    await page.locator("#desk-clear").click();
+    assert.equal(await page.locator(".desk-queue-row").count(),0,"Explicit local session clearing");
+    assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth))<=3,"Research Desk fits viewport");
   }
   if(width===390 || width===1280){
     await page.goto(origin+"exact-research.html#guided-replay",{waitUntil:"load"});
