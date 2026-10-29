@@ -1,13 +1,13 @@
 # NIGHTFALL public research website
 
-Static, dependency-free site for NIGHTFALL’s **three evidence-scoped original findings, three flagship research programs, and a broader 32-document curated research library**. The repository retains the full attributed historical research archive.
+Static, dependency-free site for NIGHTFALL’s **three evidence-scoped original findings, four flagship research programs, and a broader 33-document curated research library**. The repository retains the full attributed historical research archive.
 
-- `index.html` — three flagship research programs with explicit evidence tiers, plus the three approved original findings and open reviews.
-- `desk.html` / `desk.css` / `desk.js` — internal, local-first Research Desk: five registry-driven evidence records, open mathematical obligations, session notes, scoped handoff exports and independent verifier routes; never upgrades theorem status.
-- `research.html` / `research.js` — 32 curated, source-linked September–October research lines in Mathematics, Quantum, Safety and Systems, with discipline filters, search, and explicit scope boundaries; broader than the Original Findings whitelist.
+- `index.html` — four flagship research programs with explicit evidence tiers, plus the three approved original findings and open reviews.
+- `desk.html` / `desk.css` / `desk.js` — internal, local-first Research Desk: six registry-driven evidence records, open mathematical obligations, session notes, scoped handoff exports and independent verifier routes; never upgrades theorem status.
+- `research.html` / `research.js` — 33 curated, source-linked September–October research lines in Mathematics, Quantum, Safety and Systems, with discipline filters, search, and explicit scope boundaries; broader than the Original Findings whitelist.
 - `agenda.html` and `agenda.js` — separate five-discipline research agenda with ten untested proposals.
 - Discovery Engine: discovery.html, discovery-core.js, discovery-app.js, discovery.css — executable bounded proxy lab and portable evidence workspace.
-- `review.html` — three review assignments for the approved original contributions.
+- `review.html` — three review assignments for the approved original contributions; the fourth flagship remains a working proof candidate and is tracked separately in its public dossier.
 - `evidence.html` — reproducibility archive hashes, evidence-access status, desktop release steps.
 - `sitemap.xml` — direct site page discovery.
 - `site.css` — responsive layout and accessible typography.
@@ -74,3 +74,7 @@ The homepage now reflects the owner-approved 32-document research library. Share
 Eight overlapping library cards were replaced by distinct source records spanning one-way automata, the degree-restricted UP25 exclusion, first-autocorrelation integer verification, Zerothesis support births, research-methods history, autonomous verification, the PAS 372-family freeze, and a controlled adaptive-granularity experiment. The two added cards cover BB(6) arithmetic return maps and the conditional minimum-overlap fixed-dual lower-bound audit. Full prior Werner-stage reports and AI safety manuscripts remain in GitHub even when their individual promotional cards have been replaced.
 
 The public library preserves **15 Mathematics, 4 Quantum, 6 Safety, 7 Systems** entries; three homepage flagships and the three-entry Original Findings whitelist are unchanged. Source-specific mathematical assumptions, inherited source artefacts, and negative-result limitations remain in each card. See [the editorial change ledger](../research/nightfall/SITE_CURATED_32_EDITORIAL_CHANGELOG_20261028.md).
+
+### Fourth flagship (29 October 2026)
+
+[Axiom's deterministic adaptive finite-field decoder](../research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/README.md) now has a homepage flagship card, a separately scoped Proof Passport and independently reproducible exact finite checker. The adaptive two-round measurement result is distinct from the conditional nonadaptive fourth-power phase-retrieval track. Publication priority and external mathematical proof review remain open.

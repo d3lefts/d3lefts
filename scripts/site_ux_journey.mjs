@@ -54,10 +54,10 @@ try{
     await visit("index.html");
     const hero=await page.locator("h1").first().innerText();
     assert.match(hero,/Discovery.*needs.*witnesses/s);
-    assert.equal(await page.locator(".flagship-card").count(),3);
-    assert.match(await page.locator(".ticker").innerText(),/32/);
+    assert.equal(await page.locator(".flagship-card").count(),4);
+    assert.match(await page.locator(".ticker").innerText(),/33/);
     const labels=await page.locator(".flagship-eyebrow").allInnerTexts();
-    assert.equal(labels.length,3);
+    assert.equal(labels.length,4);
     assert.ok(labels.some(x=>/finite/i.test(x)),"Explicit finite scope absent");
     assert.ok(labels.some(x=>/conditional|candidate|imported|manuscript/i.test(x)),"Conditional status absent");
     const editorial=await page.evaluate(()=>{
@@ -84,7 +84,7 @@ try{
     assert.equal(editorial.cardRows[0],editorial.cardRows[1]);
     assert.equal(editorial.cardRows[2],editorial.cardRows[3]);
     assert.ok(editorial.cardRows[2]>editorial.cardRows[0]);
-    note("strength","Immediate research proposition, three distinct flagships, and explicit evidence tiering are visible.","homepage");
+    note("strength","Immediate research proposition, four evidence-scoped flagships, and explicit evidence tiering are visible.","homepage");
     await screenshot("01-desktop-home.png");
   });
   await step("03–06","Homepage: interactive Sidon witness and transparent finite scope",async()=>{
@@ -105,7 +105,7 @@ try{
     assert.ok(await page.locator('a[href="research.html"]').count()>0);
     const sections=await page.locator("main section").count();
     assert.equal(await page.locator("#lab-jump-nav a").count(),7);
-    assert.equal(await page.locator(".flagship-context").count(),3);
+    assert.equal(await page.locator(".flagship-context").count(),4);
     note("improvement","The full homepage still contains "+sections+" sections; a section index offers immediate navigation without truncating content.","homepage");
   });
 
@@ -148,14 +148,14 @@ try{
   // 20–30: Discover more work and follow typed relationships.
   await step("20–24","Research Library: browse, intersect filters, reset empty search",async()=>{
     await visit("research.html");
-    assert.equal(await page.locator(".atlas-card:visible").count(),32);
-    assert.match(await page.locator(".archive-coverage").innerText(),/Thirty-two dossiers.*Five claim passports.*Three original findings/s);
+    assert.equal(await page.locator(".atlas-card:visible").count(),33);
+    assert.match(await page.locator(".archive-coverage").innerText(),/Thirty-three dossiers.*Six claim passports.*Three original findings/s);
     await page.locator("#atlas-search").fill("SourceBound");
     assert.ok((await page.locator(".atlas-card:visible").count())>=1);
     await page.locator("#atlas-search").fill("");
     await page.locator("#atlas-evidence").selectOption("conditional");
     const conditional=await page.locator(".atlas-card:visible").count();
-    assert.ok(conditional>0&&conditional<32);
+    assert.ok(conditional>0&&conditional<33);
     await page.locator('[data-atlas-filter="quantum"]').click();
     const mixed=await page.locator(".atlas-card:visible").count();
     assert.ok(mixed<=conditional);
@@ -165,7 +165,7 @@ try{
     assert.equal(await page.locator(".atlas-card:visible").count(),0);
     assert.ok(await page.locator("#atlas-empty").isVisible());
     await page.locator("#atlas-search").fill("");
-    assert.equal(await page.locator(".atlas-card:visible").count(),32);
+    assert.equal(await page.locator(".atlas-card:visible").count(),33);
     await screenshot("03-research-library.png");
     note("strength","Thirty-two document cards, source links, evidence-tier filters, and empty-search recovery are operational.","library");
   });
@@ -286,7 +286,7 @@ try{
   });
   await step("53–56","Phone: long research library and modal-less claim tasks",async()=>{
     await visit("research.html");
-    assert.equal(await page.locator(".atlas-card:visible").count(),32);
+    assert.equal(await page.locator(".atlas-card:visible").count(),33);
     await page.locator("#atlas-search").fill("Werner");
     const count=await page.locator(".atlas-card:visible").count();
     assert.ok(count>=1);

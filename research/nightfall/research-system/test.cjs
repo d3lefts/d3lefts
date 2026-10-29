@@ -5,11 +5,11 @@ const read=x=>fs.readFileSync(x,"utf8"),ctx={};
 vm.runInNewContext(read("docs/research-registry.js"),ctx,{filename:"research-registry.js"});
 const R=ctx.NightfallRegistry;
 assert.equal(R.schema,"nightfall-proof-passports-v1");
-assert.equal(R.asOf,"2026-10-28");
-assert.equal(R.claims.length,5);assert.equal(R.mechanisms.length,5);assert.equal(R.edges.length,13);
+assert.equal(R.asOf,"2026-10-29");
+assert.equal(R.claims.length,6);assert.equal(R.mechanisms.length,5);assert.equal(R.edges.length,13);
 assert.deepEqual(Array.from(R.dimensions),["validity","reproducibility","originality","significance"]);
 const ids=new Set(R.claims.map(c=>c.id)),mids=new Set(R.mechanisms.map(m=>m.id));
-assert.equal(ids.size,5);assert.equal(mids.size,5);
+assert.equal(ids.size,6);assert.equal(mids.size,5);
 for(const c of R.claims){
  for(const k of ["id","title","field","kind","statement","conditions","short","measurement","metric"])assert.ok(typeof c[k]==="string"&&c[k].length>(k==="id"||k==="measurement"?1:4),c.id+" missing "+k);
  for(const dimension of R.dimensions)assert.ok(c[dimension]?.label&&c[dimension]?.detail&&c[dimension]?.level,c.id+" bad "+dimension);
@@ -24,6 +24,8 @@ assert.equal(R.claimById("sidon30").measurement,"17 / 30");
 assert.match(R.claimById("phase").validity.label,/Conditional/);
 assert.match(R.claimById("erdos36").reproducibility.detail,/pending/i);
 assert.match(R.claimById("pas").statement,/11\/20/);
+assert.match(R.claimById("adaptive").statement,/2k−1/);
+assert.match(R.claimById("adaptive").originality.label,/review open/i);
 const html={home:read("docs/index.html"),passport:read("docs/passport.html"),atlas:read("docs/atlas.html"),research:read("docs/research.html"),lab:read("docs/claim-lab.html"),referee:read("docs/referee.html"),tools:read("docs/exact-research.html"),sitemap:read("docs/sitemap.xml")};
 for(const [id,file] of [["sidon-witness",html.home],["home-evidence-history",html.home],["passport-picker",html.passport],["passport-dimensions",html.passport],["passport-history",html.passport],["ma-canvas",html.atlas],["ma-relations",html.atlas],["ma-history",html.atlas]])assert.ok(file.includes('id="'+id+'"'),"Missing interactive anchor "+id);
 for(const page of ["home","research","atlas","passport"])assert.ok(html[page].includes("research-registry.js"),page+" missing shared source");
@@ -39,5 +41,5 @@ for(const file of ["docs/home-system.js","docs/passport.js","docs/atlas.js","doc
  assert.ok(src,"No JavaScript in "+file);new vm.Script(src,{filename:file});
 }
 console.log("PASS: "+R.claims.length+" claims, "+R.mechanisms.length+" mechanisms, "+R.edges.length+" source-typed edges, "+R.events.length+" provenance events");
-console.log("PASS: homepage, Passport, Atlas, Claim Lab, 30-document library, Referee and sitemap contracts");
+console.log("PASS: homepage, Passport, Atlas, Claim Lab, 33-document library, Referee and sitemap contracts");
 console.log("PASS: browser JavaScript and Claim Lab inline script parse");

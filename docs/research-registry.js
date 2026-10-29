@@ -3,8 +3,8 @@
 (function(global){
 const REGISTRY={
   "schema": "nightfall-proof-passports-v1",
-  "asOf": "2026-10-28",
-  "editorialScope": "Curated claim-level source records, not a synchronization of all 32 curated research documents. Evidence classifications describe only the stated scopes.",
+  "asOf": "2026-10-29",
+  "editorialScope": "Curated claim-level source records, not a synchronization of all 33 curated research documents. Evidence classifications describe only the stated scopes.",
   "dimensions": [
     "validity",
     "reproducibility",
@@ -233,6 +233,75 @@ const REGISTRY={
           "label": "Foundational lemma kept as an open premise",
           "detail": "The research library explicitly distinguishes the downstream tail bound from its unverified counting hypothesis.",
           "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/README.md"
+        }
+      ]
+    },
+    {
+      "id": "adaptive",
+      "title": "Deterministic adaptive finite-field decoder",
+      "field": "Finite-field algebra",
+      "kind": "Algebraic proof candidate · independently coded exhaustive tests",
+      "short": "Two-round powered measurements recover any finite-extension vector up to base-field scaling using at most 2k−1 queries.",
+      "statement": "Let K=F_(q^r), r≥2, with powered linear queries (a·x)^(q−1). A deterministic two-round construction outputs a representative of x modulo multiplication by F_q× with k+max(s−1,0) ≤ 2k−1 measurements, where s is the support size.",
+      "conditions": "Explicit finite-field representation, adaptive second-round query vectors, noiseless measurements, quotient by the global base-subfield scalar group. For K=F_25/F_5, measurements are fourth powers.",
+      "measurement": "≤ 2k−1",
+      "metric": "Adaptive queries",
+      "validity": {
+        "level": "working",
+        "label": "Complete proof argument · external review open",
+        "detail": "Frobenius kernel, independent anchor mixing and projective ratio extraction give an explicit algebraic proof argument. Non-author mathematical referee pending."
+      },
+      "reproducibility": {
+        "level": "finite",
+        "label": "18,725 exact finite inputs pass",
+        "detail": "Independent exact checker exhaustively reconstructs F_25 inputs for k=1,2,3 and F_49 inputs for k=1,2; projective equivalence and worst query count checked."
+      },
+      "originality": {
+        "level": "open",
+        "label": "Same-model priority review open",
+        "detail": "Prior work in adaptive phase retrieval and polarization exists; this precise finite-extension guarantee has not received a comprehensive same-model novelty audit."
+      },
+      "significance": {
+        "level": "prospective",
+        "label": "Deterministic adaptive algebraic mechanism",
+        "detail": "Replaces random sampling with two-round phase synchronization in a distinct sensing model; quadratic-extension k≤3 query optimality is shown by decision-tree output counting."
+      },
+      "assumptions": [
+        "All measurement forms are permitted K-linear and adapt to first-round outputs.",
+        "No adversarial response corruption or physical noise stability guarantee is claimed.",
+        "Comparisons with random nonadaptive fourth-power bounds require separate hypotheses and are not interchangeable.",
+        "External proof review and novelty audit are not yet completed."
+      ],
+      "open": [
+        "Independent referee: rederive Frobenius-kernel extraction and all zero-support edge cases.",
+        "Complete same-model prior-art and attribution review.",
+        "Investigate worst-case optimality for k≥4 and query-efficient robustness."
+      ],
+      "sources": [
+        {
+          "label": "Public proof dossier and audit scope",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/README.md"
+        },
+        {
+          "label": "Independent exhaustive Python checker",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/checker.py"
+        },
+        {
+          "label": "Separate sparse-prime coefficient menu audit",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/separator_checker.py"
+        }
+      ],
+      "tools": [
+        "referee.html",
+        "exact-research.html"
+      ],
+      "history": [
+        {
+          "date": "2026-10-29",
+          "kind": "proof-candidate",
+          "label": "Adaptive decoder promoted to fourth flagship",
+          "detail": "Axiom's adaptive decoder, general-extension proof argument and independently coded exact finite audits published as a flagship research program. External referee and priority audit remain open.",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/README.md"
         }
       ]
     },

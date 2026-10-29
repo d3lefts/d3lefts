@@ -4,7 +4,7 @@
  const R=window.NightfallRegistry,C=window.RefereeCore;
  if(!R)return;
  const $=s=>document.querySelector(s),esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
- const ids=["erdos36","phase","werner"];
+ const ids=["erdos36","phase","werner","adaptive"];
  [...document.querySelectorAll(".flagship-grid .flagship-card")].forEach((card,i)=>{
    const c=R.claimById(ids[i]);if(!c)return;
    const t=card.querySelector(".flagship-eyebrow"),h=card.querySelector("h3"),v=card.querySelector(".flagship-value"),p=card.querySelector(".flagship-body p"),a=card.querySelector(".flagship-link");
