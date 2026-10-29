@@ -1,0 +1,15 @@
+PASS exact integer and rational all-k envelope inequalities
+PASS 15624 nonzero polynomial triples, zero-count histogram {1: 2880, 25: 11424, 49: 600, 121: 720}
+PASS sharp rank-one equality witness: 121/625
+PASS independent-Frobenius-forms rank-two density 625/15625
+PASS rank-one density 3025/15625 (sharp)
+PASS k= 1 Nx= 1 rank<=1 lines= 0 rank2 lines= 0
+PASS k= 2 Nx= 26 rank<=1 lines= 650 rank2 lines= 0
+PASS k= 3 Nx= 651 rank<=1 lines= 16900 rank2 lines= 390000
+PASS k= 4 Nx= 16276 rank<=1 lines= 423150 rank2 lines= 253890000
+PASS k= 5 Nx= 406901 rank<=1 lines= 10579400 rank2 lines= 158935140000
+PASS k= 6 Nx= 10172526 rank<=1 lines= 264485650 rank2 lines= 99340810140000
+PASS k= 7 Nx= 254313151 rank<=1 lines= 6612141900 rank2 lines= 62088165028890000
+PASS k= 8 Nx= 6357828776 rank<=1 lines= 165303548150 rank2 lines= 38805107110341390000
+PASS k= 9 Nx= 158945719401 rank<=1 lines= 4132588704400 rank2 lines= 24253192043145497640000
+PASS separate incidence upper bounds for k=1..9; universal proof is in theorem
