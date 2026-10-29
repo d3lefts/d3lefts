@@ -1,0 +1,12 @@
+PASS: exact 121/625 line and 601/15625 triple incidences; rank-two 25/625
+PASS: two integer certificates and k=1..99 exact total failure estimate s=1
+PASS design 2 0 m 8 signals 625 max_dim 1
+PASS design 2 1 m 8 signals 625 max_dim 1
+PASS design 2 2 m 8 signals 625 max_dim 1
+PASS design 2 3 m 8 signals 625 max_dim 1
+PASS design 2 4 m 8 signals 625 max_dim 1
+PASS design 2 5 m 8 signals 625 max_dim 1
+PASS design 3 0 m 12 signals 300 max_dim 1
+PASS design 3 1 m 12 signals 300 max_dim 1
+PASS sub-3.5k polynomial-time list decoder
+sha 772b1bacfd540a7676a1ef1e3a177fb168bf42895d89baaef8a2d16f97473877
