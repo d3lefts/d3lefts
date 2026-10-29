@@ -56,6 +56,13 @@ try{
     assert.match(hero,/Discovery.*needs.*witnesses/s);
     assert.equal(await page.locator(".flagship-card").count(),4);
     assert.match(await page.locator(".ticker").innerText(),/33/);
+    assert.equal(await page.locator(".hero-actions a").count(),2,"Homepage hero must present only two decisions");
+    assert.equal(await page.locator(".nf-section-index").evaluate(el=>el.open),false,"Section index is opt-in");
+    assert.equal(await page.locator(".nf-home-toolbox").evaluate(el=>el.open),false,"Specialist directory is opt-in");
+    assert.equal(await page.locator('.nf-home-tool-entry a[href="join.html#claim-investigation"]').count(),1);
+    await screenshot("01-desktop-home.png");
+    await page.locator(".nf-home-toolbox summary").click();
+    assert.equal(await page.locator(".sf-ecosystem .sf-system-card:visible").count(),4,"All instruments remain discoverable on demand");
     const labels=await page.locator(".flagship-eyebrow").allInnerTexts();
     assert.equal(labels.length,4);
     assert.ok(labels.some(x=>/finite/i.test(x)),"Explicit finite scope absent");
@@ -85,7 +92,7 @@ try{
     assert.equal(editorial.cardRows[2],editorial.cardRows[3]);
     assert.ok(editorial.cardRows[2]>editorial.cardRows[0]);
     note("strength","Immediate research proposition, four evidence-scoped flagships, and explicit evidence tiering are visible.","homepage");
-    await screenshot("01-desktop-home.png");
+    await screenshot("01-desktop-expanded-tools.png");
   });
   await step("03–06","Homepage: interactive Sidon witness and transparent finite scope",async()=>{
     await visit("index.html#live-case");
@@ -105,6 +112,7 @@ try{
     assert.ok(await page.locator('a[href="research.html"]').count()>0);
     const sections=await page.locator("main section").count();
     assert.equal(await page.locator("#lab-jump-nav a").count(),7);
+    assert.equal(await page.locator(".nf-section-index").evaluate(el=>el.open),false);
     assert.equal(await page.locator(".flagship-context").count(),4);
     note("improvement","The full homepage still contains "+sections+" sections; a section index offers immediate navigation without truncating content.","homepage");
   });
@@ -296,6 +304,9 @@ try{
     assert.equal(await page.locator("#site-nav").isVisible(),false);
     assert.ok(await page.locator(".nf-interlude h2").isVisible());
     assert.ok(await page.locator(".nf-quiet-note h2").isVisible());
+    assert.equal(await page.locator(".nf-home-toolbox").evaluate(el=>el.open),false);
+    await screenshot("08-mobile-home.png");
+    await page.locator(".nf-home-toolbox summary").click();
     const mobileLayout=await page.evaluate(()=>{
       const cards=[...document.querySelectorAll(".sf-ecosystem .sf-system-card")];
       const boxes=cards.map(x=>x.getBoundingClientRect());
@@ -305,7 +316,7 @@ try{
     assert.ok(mobileLayout.widths.every(x=>x<390));
     const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
     assert.ok(overflow<=3,"Homepage horizontal overflow "+overflow);
-    await screenshot("08-mobile-home.png");
+    await screenshot("08-mobile-tools-expanded.png");
   });
   await step("53–56","Phone: long research library and modal-less claim tasks",async()=>{
     await visit("research.html");

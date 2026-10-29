@@ -472,6 +472,12 @@ try{
     assert.match(await page.locator(".pp-coverage").innerText(),/Six canonical Proof Passports, 33 research dossiers/,"Passports explain editorial coverage");
     await page.goto(origin+"index.html",{waitUntil:"load"});
     assert.equal(await page.locator("#lab-jump-nav a").count(),7,"Long laboratory has seven topical jumps");
+    assert.equal(await page.locator(".nf-section-index").evaluate(el=>el.open),false,"Section directory collapsed by default");
+    assert.equal(await page.locator(".nf-home-toolbox").evaluate(el=>el.open),false,"Specialist directory collapsed by default");
+    assert.equal(await page.locator(".hero-actions a").count(),2,"Hero only offers result and contribution paths");
+    await page.locator(".nf-section-index summary").click();
+    assert.equal(await page.locator("#lab-jump-nav").isVisible(),true,"Open section index retains all topical links");
+
     assert.equal(await page.locator(".flagship-context").count(),4,"Each flagship explains meaning of headline metric");
     assert.match(await page.locator(".flagship-context").first().innerText(),/maximum overlap/i,"Numerical extremal value interpreted");
     await page.locator('#lab-jump-nav a[href="#research-systems"]').click();
