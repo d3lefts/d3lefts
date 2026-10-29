@@ -135,6 +135,7 @@ function parseDecision(s,input){
   throw Error("Review target must be an exact finite parameter pair.");
  const match=candidates(s,TARGETS.length).find(x=>x.target.n===input.target.n&&x.target.mass===input.target.mass);
  if(!match)throw Error("Approved target already used, out of scope, or investigation finished.");
+ if(match.rank>1&&input.note.trim().length<10)throw Error("Redirecting a recommended experiment requires an explanatory note (at least 10 characters).");
  return {choice:match,decision:{action:"APPROVE_ONE",target:{n:match.target.n,mass:match.target.mass},
   note:input.note,source:match.rank===1?"RECOMMENDED":"HUMAN_REDIRECTION",
   rank_at_approval:match.rank}};
