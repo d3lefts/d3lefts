@@ -42,6 +42,9 @@
    const a=link("Open this Proof Passport ↗","passport.html?claim="+encodeURIComponent(selected));
    // Passport target is assembled only from canonical IDs.
    if(a)box.append(a);
+   const anchor=selected==="erdos36"?"#erdos":selected==="sidon30"?"#sidon":selected==="pas"?"#pas":"#priority";
+   const challenge=link("Challenge this claim / Independent Review ↗","review.html"+anchor);
+   if(challenge)box.append(challenge);
   }
   const atlas=link("Detailed Mechanism Atlas ↗","atlas.html"+(R.claimById(selected)?"?claim="+encodeURIComponent(selected):""));
   if(atlas)box.append(atlas);

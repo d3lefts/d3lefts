@@ -36,6 +36,7 @@ jobs:
         run: |
           python3 scripts/check_site.py
           python3 scripts/test_review_queue.py
+          node scripts/test_product_destinations.cjs
           python3 -c 'import xml.etree.ElementTree as ET; ET.parse("docs/sitemap.xml"); print("Sitemap XML valid")'
       - name: Verify claim graph and report directly affected evidence
         env:

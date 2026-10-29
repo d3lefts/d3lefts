@@ -175,8 +175,8 @@ try{
   await page.goto(origin+"index.html",{waitUntil:"load"});
   assert.equal(await page.locator("#nf-observatory-field .nf-observatory-node").count(),11,"Canonical graph has six claims and five mechanisms");
   assert.equal(await page.locator(".nf-observatory-edge").count(),13,"Thirteen typed relationships drawn from registry");
-  assert.equal(await page.locator(".nf-process-thread a").count(),5,"Five-stage cross-tool research journey");
-  assert.equal(await page.locator('.nf-process-thread a[aria-current="step"]').count(),1,"Research journey has one location marker");
+  assert.equal(await page.locator(".nf-process-thread a").count(),3,"Three research destinations are consistently visible");
+  assert.equal(await page.locator('.nf-process-thread a[aria-current="page"]').count(),1,"Site navigation identifies one current destination");
   assert.equal(await page.locator(".nf-observatory-path").count(),2,"Two grounded entry routes are visible before a selection");
   await page.locator("#observatory").screenshot({path:"browser-artifacts/ethereal-observatory-overview-"+width+".png"});
   assert.equal(await page.locator('#nf-observatory-lenses [aria-pressed="true"]').count(),1,"One active evidence lens");

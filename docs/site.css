@@ -758,3 +758,7 @@ html{scroll-padding-top:24px}
 .sf-witness{min-height:clamp(132px,16vw,196px);align-content:start}
 .sf-point{font-variant-numeric:tabular-nums}
 .sf-case-interact button:disabled{opacity:.6;cursor:not-allowed}
+
+/* Public product grammar: exactly three identifiable destinations, on both skies. */
+.header nav a[aria-current="page"]{text-decoration:underline;text-underline-offset:8px;text-decoration-thickness:2px}
+.header nav a[aria-current="page"]:focus-visible{outline:3px solid currentColor;outline-offset:6px}

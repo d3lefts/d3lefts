@@ -10,14 +10,16 @@ const between=(a,b)=>{
 };
 const actions=[...html.matchAll(/<div class="hero-actions"[^>]*>([\s\S]*?)<\/div>/g)]
  .map(m=>[...m[1].matchAll(/<a\b[^>]*href="([^"]+)"/g)].map(x=>x[1]));
-assert.deepEqual(actions,[["#flagships","evidence.html"],["join.html#assignment","passport.html?claim=phase"]],
- "Light and dark each offer two distinct, meaningful first actions");
+assert.deepEqual(actions,[["#flagships","evidence.html"],["#flagships","review.html#priority"]],
+ "Light and dark preserve deliberate results-first entrances with complementary evidence and review links");
 assert.ok(html.includes('id="nf-archive-index-title"'),"Light-side evidence index preserved");
 assert.ok(html.includes('id="nf-underbelly-index-title"'),"Dark-side open-problem index preserved");
 assert.ok(html.includes('href="join.html#claim-investigation"'),"Shared claim investigation path preserved");
 const nav=between('<nav class="nav" id="site-nav"','</nav>');
-assert.equal((nav.match(/<a\b/g)||[]).length,5,"Homepage primary navigation has only five destinations");
+assert.equal((nav.match(/<a\b/g)||[]).length,3,"Homepage primary navigation has exactly three destinations");
 assert.ok(nav.includes('href="constellation.html"'));
+assert.ok(nav.includes('href="review.html"'));
+assert.ok(nav.includes('href="./" aria-current="page"'));
 const jump=between('<details class="nf-section-index wrap"','</details>');
 assert.equal((jump.match(/<a\b/g)||[]).length,7,"All seven original jump points remain");
 assert.match(jump,/<summary>Browse the rest of the site/);
@@ -40,4 +42,4 @@ for(const term of ["external review","public research archives","Five finite fin
 assert.ok(css.includes("@media(max-width:760px)"));
 assert.ok(css.includes(".nf-home-toolbox>summary:focus-visible"));
 assert.ok(css.includes(".nf-section-index>summary:focus-visible"));
-console.log("PASS homepage focus: 2 mode-specific first decisions per experience, 5 primary nav destinations, 7 original section links and 8 preserved research instruments behind optional directory.");
+console.log("PASS homepage focus: 2 opening actions per sky, 3 primary destinations, 7 original section links and 8 research instruments behind optional directory.");
