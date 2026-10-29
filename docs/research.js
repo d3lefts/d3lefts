@@ -17,7 +17,7 @@
   document.querySelectorAll(".atlas-group").forEach(group=>{
    group.hidden=![...group.querySelectorAll(".atlas-card")].some(card=>!card.hidden);
   });
-  if(counter)counter.textContent=count+" research line"+(count===1?"":"s")+" shown";
+  if(counter)counter.textContent=count+" source document"+(count===1?"":"s")+" shown";
   if(empty)empty.hidden=count!==0;
  }
  buttons.forEach(b=>b.addEventListener("click",()=>{
