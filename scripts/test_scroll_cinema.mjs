@@ -50,7 +50,7 @@ try{
   await targetCheck();
   for(const [mode,expectedBg,visibleArt] of [
    ["dusk","rgb(4, 6, 11)",".nf-cinema-world--night"],
-   ["light","rgb(40, 25, 15)",".nf-cinema-world--archive"]
+   ["light","rgb(57, 36, 60)",".nf-cinema-world--archive"]
   ]){
    if(mode==="light")await page.locator(".nf-theme-toggle").click();
    assert.equal(await page.locator("html").getAttribute("data-nf-theme"),mode==="dusk"?"dusk":null,"Theme selector restores correct narrative");
