@@ -43,7 +43,7 @@ jobs:
           node --check docs/discovery-loop-core.js
           node --check docs/living-investigation.js
           node scripts/test_discovery_core.cjs
-          node scripts/test_discovery_loop.cjs
+          node scripts/test_discovery_loop.cjs\n          node --check docs/living-paper.js\n          node scripts/test_living_paper.cjs
           node --check docs/join-evidence-core.js
           node scripts/test_join_evidence.cjs
       - name: Independently verify exact Werner and finite-field tools
