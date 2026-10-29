@@ -5,7 +5,7 @@
  const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
  const safeUrl=url=>/^(https:\/\/[^\s"<>]+|[a-z0-9][a-z0-9./#?=&_-]*\.html(?:\?[^\s"<>]*)?(?:#[^\s"<>]*)?)$/i.test(url)?url:"#";
  const names={"finite-check":"Finite check","method":"Documented method","open-premise":"Open premise","analogy":"Analogy only"};
- const colors={"finite-check":"#d9ff5e","method":"#83bea1","open-premise":"#dbb471","analogy":"#92b6c9"};
+ const colors={"finite-check":"#d8c38a","method":"#a76450","open-premise":"#dbb471","analogy":"#92b6c9"};
  let type="all",selected=null,resizeRaf=0;
  const query=new URLSearchParams(location.search).get("claim");
  if(R.claimById(query))selected=query;
