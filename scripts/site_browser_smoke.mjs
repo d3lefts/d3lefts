@@ -159,7 +159,7 @@ try{
     const finiteLedger=await page.locator(".panel.evidence").first().innerText();
     assert.match(finiteLedger,/LOCAL FINITE REPLAY/,"Discovery distinguishes local replay");
     assert.match(finiteLedger,/INPUT HASH MATCH/,"Discovery records exact source fingerprint");
-    assert.match(finiteLedger,/EXTERNAL REVIEW OPEN/,"No external proof promotion");
+    assert.match(finiteLedger,/INDEPENDENT REVIEW OPEN/,"No external proof promotion");
     const beforeTamper=await page.evaluate(()=>JSON.parse(localStorage.getItem("nightfall.discovery.v1")).projects.find(p=>p.id==="sidon").runs.length);
     await page.evaluate(()=>{
       const fake={format:"nightfall-referee-receipt-v1",version:"1.0.0",domain:"weak-sidon-4-5-finite",
