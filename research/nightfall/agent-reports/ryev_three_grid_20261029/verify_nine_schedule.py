@@ -30,7 +30,7 @@ def separator(candidates):
 def decode(x):
  y=[measure(coordinate(i),x) for i in range(3)];alpha=[ROOT[z] for z in y];queries=3
  candidates=None
- if all(y):
+ if all(v!=Z for v in y):
   row=(power(alpha[0],23),mul(T,power(alpha[1],23)),
        mul(add(E,T),power(alpha[2],23)))
   observed=measure(row,x);queries+=1
@@ -49,7 +49,7 @@ def decode(x):
   guess=list(good[0])+[Z,Z];h=0;remaining=(3,4)
  else:
   guess=[Z]*5
-  active=[j for j in range(5) if y[j]]
+  active=[j for j in range(5) if y[j]!=Z]
   if not active:
    assert all(z==Z for z in x)
    return queries
