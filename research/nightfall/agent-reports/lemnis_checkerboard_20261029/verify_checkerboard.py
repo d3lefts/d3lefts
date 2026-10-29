@@ -97,3 +97,17 @@ Q=q(combine(X,{k:-v for k,v in Y.items()}),4,(F(1,2),)*4)
 assert check_pair(X,Y,4,(F(1,2),)*4)==F(1,4)
 assert Q>=F(1,16)
 print('n4 all three row symbols present at every site Q',Q,'exact theorem margin>=1/16 PASS')
+# Three simultaneously interacting checkerboard blocks, no one-sided row decomposition.
+blocks=[]
+for i in range(3):
+    ui={(a,i):1 for a in range(3)}
+    vi={(i,i):1}
+    blocks.append(outer(ui,vi))
+all_three=combine(*blocks)
+assert q(all_three,2,(F(1,2),F(1,2)))==F(21,4)
+assert all(check_pair(blocks[i],blocks[j],2,(F(1,2),F(1,2)))==F(1,2) for i,j in combinations(range(3),2))
+print('r=3 mixed-side n=2: all three complex-rank-one blocks couple; exact Q=21/4 PASS')
+# Relaxing the sitewise either-side separation produces a negative rank-two fixture.
+bad={( (0,0),(0,0) ):1,((1,0),(1,0)):1}
+assert q(bad,2,(F(3,4),F(1,10)))==-F(9,10)
+print('negative mutation without separation at site 2: L>=M yet Q=-9/10 PASS')
