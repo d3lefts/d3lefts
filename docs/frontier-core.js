@@ -132,5 +132,110 @@
     if(addable.length)return {ok:false,reason:"Sidon condition passes; the set is not maximal. Addable marks: "+addable.slice(0,18).join(", ")+(addable.length>18?" …":""),values:A,addableCount:addable.length,sumCount:sums.count};
     return {ok:true,reason:"Exact finite checks pass: 45 distinct unordered pair sums and all "+(N-9)+" omitted marks block insertion. Independent reproduction remains required.",values:A,sumCount:sums.count,checkedOmissions:N-9};
   }
-  return Object.freeze({VERSION,ITEMS,WEIGHTS,score,ranked,base,rootTask,assertTask,split,validPartition,predicate,brief,issueUrl,orchestratorInput,checkSidonCandidate});
+
+  // Research state is an assignment tree, not a bag of user-editable records.
+  // Verify the entire chain before consuming exported data from another browser.
+  const STATES=new Set(["open","claimed","split","proposed"]);
+  const EVIDENCE=new Set(["positive","negative","obstruction"]);
+  function validateLedger(items) {
+    if(!Array.isArray(items)||items.length>250)throw Error("Ledger must contain at most 250 assignments.");
+    const seen=new Map(),errors=[];
+    for(const t of items){
+      if(!t||!assertTask(t)||!STATES.has(t.state)||typeof t.id!=="string"||t.id.length>160||seen.has(t.id)){
+        errors.push("Malformed or duplicate task");continue;
+      }
+      if(!Number.isInteger(t.depth)||t.depth<0||t.depth>16||!Array.isArray(t.evidence)||t.evidence.length>8){
+        errors.push("Malformed task depth or evidence");continue;
+      }
+      if(t.claimedAt!==null&&t.claimedAt!==undefined&&(typeof t.claimedAt!=="string"||t.claimedAt.length>50))
+        errors.push("Invalid local claim date");
+      for(const e of t.evidence){
+        if(!e||!EVIDENCE.has(e.kind)||typeof e.url!=="string"||e.url.length>700||
+           !/^https:\/\/[^\s<>"']+$/.test(e.url)||typeof e.statement!=="string"||
+           e.statement.length<30||e.statement.length>1800||e.reviewStatus!=="unreviewed")
+          errors.push("Malformed or upgraded evidence metadata");
+      }
+      if(t.evidence.length>0&&t.state!=="proposed")errors.push("Evidence state mismatch");
+      seen.set(t.id,t);
+    }
+    if(errors.length)throw Error(errors[0]);
+    for(const t of seen.values()){
+      if(t.parentId===null){
+        const root=base(t.rootId),canonical=root&&rootTask(root);
+        if(!canonical||t.id!==canonical.id||t.depth!==0||t.lo!==canonical.lo||t.hi!==canonical.hi)
+          throw Error("Root identity or interval changed");
+      }else{
+        const parent=seen.get(t.parentId);
+        if(!parent||parent.state!=="split"||parent.rootId!==t.rootId||t.depth!==parent.depth+1)
+          throw Error("Orphaned child or parent state mismatch");
+        const expected=split(parent);
+        if(!expected.some(x=>x.id===t.id&&x.lo===t.lo&&x.hi===t.hi))
+          throw Error("Child interval or canonical identity changed");
+      }
+      if(t.state==="split"){
+        const expected=split(t);
+        if(expected.some(child=>!seen.has(child.id))||
+           !validPartition(t,expected))
+          throw Error("Split parent lacks an exhaustive pair of children");
+      }else if([...seen.values()].some(x=>x.parentId===t.id)){
+        throw Error("Unsplit parent has an unexpected child");
+      }
+    }
+    return {valid:true,counts:summarizeLedger(items)};
+  }
+  function summarizeLedger(items){
+    const counts={total:items.length,open:0,claimed:0,split:0,proposed:0,unreviewed:0,leaves:0};
+    for(const t of items){
+      if(STATES.has(t.state))counts[t.state]++;
+      if(t.state!=="split")counts.leaves++;
+      counts.unreviewed+=Array.isArray(t.evidence)?t.evidence.length:0;
+    }
+    return counts;
+  }
+  const PACKET_SCHEMA="nightfall-frontier-assignment-v1";
+  function packet(t){
+    if(!assertTask(t))throw Error("Invalid assignment for transfer");
+    const x=base(t.rootId);
+    const reconstructed=t.parentId===null?rootTask(x):null;
+    if(t.parentId===null&&(t.id!==reconstructed.id||t.lo!==reconstructed.lo||t.hi!==reconstructed.hi))
+      throw Error("Root scope mismatch");
+    if(t.parentId!==null&&!/^NF-(?:156-184-9|Q7-R6)(?:\/\d+-\d+)+$/.test(t.id))
+      throw Error("Invalid branch identity");
+    return {schema:PACKET_SCHEMA,snapshot:VERSION,assignmentId:t.id,rootId:t.rootId,
+      lo:t.lo,hi:t.hi,parentId:t.parentId,depth:t.depth,scope:predicate(t),
+      question:x.question,source:x.evidence,sourceProblem:x.source,
+      positive:x.closureYes,negative:x.closureNo,falsifier:"A verified counterexample to the proposed YES or NO, under "+predicate(t),
+      reviewStatus:"unreviewed"};
+  }
+  function validatePacket(p){
+    if(!p||p.schema!==PACKET_SCHEMA||p.snapshot!==VERSION||
+       typeof p.assignmentId!=="string"||p.assignmentId.length>160||
+       p.reviewStatus!=="unreviewed")throw Error("Unsupported or promoted Frontier packet");
+    const x=base(p.rootId);
+    if(!x||!Number.isSafeInteger(p.lo)||!Number.isSafeInteger(p.hi)||
+       p.lo<x.scale.min||p.hi>x.scale.max||p.lo>p.hi||
+       !Number.isInteger(p.depth)||p.depth<0||p.depth>16)
+      throw Error("Invalid Frontier scope");
+    let current=rootTask(x);
+    if(p.parentId!==null){
+      const chunks=p.assignmentId.split("/");
+      if(chunks[0]!==x.id||chunks.length!==p.depth+1)throw Error("Branch lineage mismatch");
+      for(const chunk of chunks.slice(1)){
+        const children=split(current);
+        const match=children.find(c=>c.id===current.id+"/"+chunk);
+        if(!match)throw Error("Invalid branch partition lineage");
+        current=match;
+      }
+      if(current.parentId!==p.parentId)throw Error("Branch parent mismatch");
+    }else if(p.depth!==0)throw Error("Invalid root depth");
+    if(current.id!==p.assignmentId||current.lo!==p.lo||current.hi!==p.hi||
+       p.scope!==predicate(current)||p.question!==x.question||
+       p.source!==x.evidence||p.sourceProblem!==x.source||
+       p.positive!==x.closureYes||p.negative!==x.closureNo||
+       p.falsifier!=="A verified counterexample to the proposed YES or NO, under "+predicate(current))
+      throw Error("Frontier contract altered during transfer");
+    return {assignment:current,root:x};
+  }
+
+  return Object.freeze({VERSION,ITEMS,WEIGHTS,score,ranked,base,rootTask,assertTask,split,validPartition,predicate,brief,issueUrl,orchestratorInput,checkSidonCandidate,validateLedger,summarizeLedger,packet,validatePacket});
 });

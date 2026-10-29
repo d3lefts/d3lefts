@@ -10,16 +10,17 @@
   function safeLoad(){
     try{
       const o=JSON.parse(localStorage.getItem(KEY)||"null");
-      if(!o||o.version!==C.VERSION||!Array.isArray(o.tasks)||o.tasks.length>250)return;
-      for(const item of o.tasks)if(C.assertTask(item)&&["open","claimed","split","proposed"].includes(item.state)&&item.id.length<160){
+      if(!o||o.version!==C.VERSION||!Array.isArray(o.tasks))throw Error("Unsupported saved snapshot");
+      C.validateLedger(o.tasks);
+      for(const item of o.tasks){
         tasks.push({id:item.id,rootId:item.rootId,lo:item.lo,hi:item.hi,parentId:item.parentId||null,
           depth:Number.isInteger(item.depth)?item.depth:0,state:item.state,claimedAt:item.claimedAt||null,
           evidence:Array.isArray(item.evidence)?item.evidence.slice(0,8).filter(x=>x&&typeof x.url==="string"):[]});
       }
-    }catch(e){inform("Stored demo data could not be read. Existing browser data was left untouched.")}
+    }catch(e){inform("Stored assignment data was rejected ("+e.message+"). Export your original backup before resetting; no public work was affected.")}
   }
   function store(){
-    try{localStorage.setItem(KEY,JSON.stringify({version:C.VERSION,snapshotDate:"2026-10-29",tasks}));return true}
+    try{C.validateLedger(tasks);localStorage.setItem(KEY,JSON.stringify({version:C.VERSION,snapshotDate:"2026-10-29",tasks}));return true}
     catch(e){inform("Browser storage unavailable. Export your local record to preserve it.");return false}
   }
   const taskById=id=>tasks.find(t=>t.id===id)||null;
@@ -53,6 +54,14 @@
           location.assign("orchestrator.html?frontier_handoff=1");
         }catch(e){inform("Orchestrator handoff unavailable: "+e.message+". Copy the frozen research brief.");}
       });
+      if(url==="claim-lab.html")a.addEventListener("click",event=>{
+        event.preventDefault();
+        try{
+          const payload=C.packet(selectedTask());
+          sessionStorage.setItem("nightfall.frontier.claimlab.v1",JSON.stringify(payload));
+          location.assign("claim-lab.html?frontier_handoff=1");
+        }catch(e){inform("Claim Lab handoff rejected: "+e.message+". Export the research brief instead.");}
+      });
       list.appendChild(a);
     }
     const sidon=t.rootId==="NF-156-184-9";
@@ -80,6 +89,8 @@
   }
   function listTasks(){
     const box=$("nf-session-list");box.replaceChildren();
+    const stats=C.summarizeLedger(tasks);
+    $("nf-progress").textContent=stats.total+" scoped assignments · "+stats.leaves+" unresolved leaf obligations · "+stats.proposed+" proposals awaiting review · "+stats.unreviewed+" unreviewed evidence entries. None are certified by this interface.";
     if(!tasks.length){
       const el=document.createElement("div");el.className="f-session-item";
       const d=document.createElement("div"),h=document.createElement("strong"),p=document.createElement("p");
@@ -165,13 +176,33 @@
     $("nf-submitted").textContent="Recorded locally / UNREVIEWED. Scientific closure requires independent checking of the exact certificate. Export the record, then use the public review link below.";
     inform("Evidence proposal stored locally; no public proof status or parent problem state has changed.");
   });
-  $("nf-export").addEventListener("click",()=>{
+  function exportLedger(){
+    C.validateLedger(tasks);
     const payload={schema:"nightfall-frontier-local-evidence-v1",snapshot:C.VERSION,exportedAt:new Date().toISOString(),
       source:"https://d3lefts.github.io/d3lefts/frontier.html",reviewStatus:"unreviewed",tasks:tasks.map(t=>({...t,scope:C.predicate(t)}))};
     const data=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"}),url=URL.createObjectURL(data);
     const a=document.createElement("a");a.href=url;a.download="NIGHTFALL_frontier_local_ledger.json";
     document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200);
     inform("Local evidence ledger exported. It does not constitute a verified certificate.");
+  }
+  $("nf-export").addEventListener("click",exportLedger);
+  $("nf-import").addEventListener("click",()=>$("nf-import-file").click());
+  $("nf-import-file").addEventListener("change",async event=>{
+    const file=event.target.files?.[0];if(!file)return;
+    try{
+      if(file.size>500000)throw Error("Import exceeds 500 KB");
+      const payload=JSON.parse(await file.text());
+      if(payload.schema!=="nightfall-frontier-local-evidence-v1"||payload.snapshot!==C.VERSION||payload.reviewStatus!=="unreviewed")throw Error("Unsupported or upgraded ledger snapshot");
+      const report=C.validateLedger(payload.tasks);
+      if(!confirm("Import "+report.counts.total+" assignments? Existing browser assignments will be exported before replacement. No public claims change."))return;
+      exportLedger();
+      const prev=tasks.slice();const oldSelected=selectedId;
+      tasks.splice(0,tasks.length,...payload.tasks.map(t=>({id:t.id,rootId:t.rootId,lo:t.lo,hi:t.hi,parentId:t.parentId,depth:t.depth,state:t.state,claimedAt:t.claimedAt,evidence:t.evidence.map(e=>({kind:e.kind,url:e.url,statement:e.statement,createdAt:e.createdAt,reviewStatus:"unreviewed"}))})));
+      selectedId=C.ranked()[0].id;
+      if(!store()){tasks.splice(0,tasks.length,...prev);selectedId=oldSelected;throw Error("Browser storage failed; existing state restored");}
+      paint();inform("Validated "+report.counts.total+" assignments and restored exact branch lineage; every evidence entry stays unreviewed.");
+    }catch(e){inform("Frontier import refused: "+e.message);}
+    finally{event.target.value="";}
   });
   $("nf-reset").addEventListener("click",()=>{
     if(!window.confirm("Reset this browser's NF Frontier demo assignments? Export your ledger first if you need it."))return;

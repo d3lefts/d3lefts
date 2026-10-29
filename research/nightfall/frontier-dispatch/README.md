@@ -62,6 +62,25 @@ Run:
 
 The checker tests exact score ordering, recursive split coverage, malformed partitions, repeat-sum rejections, protected branch conditions and the known nine-mark Golomb-ruler sample [1,2,6,13,26,28,36,42,45]. It passes as a maximal nine-mark Sidon set at N=45 and correctly **fails** maximality at N=184. This is a negative control, not a new solution to N184. Browser smoke covers mobile/tablet/desktop and a full claim → split → negative witness → unreviewed submission → export → reload sequence.
 
+## Audited portfolio workflow (October 29 integration)
+
+Frontier now rejects malformed and incomplete lineage at **two distinct trust boundaries**: before loading a local/exported assignment ledger and when Claim Lab receives a single-use assignment packet. Every accepted split includes two disjoint children covering the complete integer interval; a child is reconstructed from the original frozen root and each canonical split, not trusted from an arbitrary incoming `id` string. Unsupported snapshots, modified scope, missing siblings, duplicate IDs, unknown evidence states, and forged review promotions fail closed. Tests include mutation attempts.
+
+- **Local progress:** leaf obligations, claimed assignments, split parents and unreviewed evidence counts; these represent workflow workload, **not** established mathematical facts.
+- **Portable restore:** explicit user-selected JSON input (500 KB maximum), complete tree validation, mandatory consent, automatic backup export before replacement, and readback/rollback on browser storage failure. No cross-user locking, shared database, or certificate authentication exists.
+- **Orchestrator:** previously shipped handoff retains a precisely scoped question and independent task lanes. A plan does not launch agents.
+- **Claim Lab:** an explicit same-tab, same-origin session handoff is independently validated against frozen source question, parent, exact interval, and closure conditions. Only after user confirmation does it add a claim with status **Conjecture (0)**; repeat imports of the same assignment are rejected. No evidence tier is elevated.
+- **Discovery / Referee:** existing approved Referee → Claim Lab → Discovery replay is preserved. Referee remains scoped to its exact finite models. The N184 maximal-Sidon and Q7 six-deletion cases require their domain-specific independent verifiers; neither can be certified by clicking a generic tool link.
+
+### Reproduce and inspect
+
+```bash
+node research/nightfall/frontier-dispatch/test.cjs
+# Browser smoke in GitHub Actions additionally traverses Frontier → Orchestrator and Frontier → Claim Lab at mobile width.
+```
+
+This is an **internal software-verification checkpoint**, not a new theorem or an independently reviewed mathematical discovery. Real multiuser leases, authenticated assignment lifecycles, source-commit hashes, server-side closure aggregation and reviewer-hour experiments remain separate future work. Human review controls all public research status.
+
 ## Next deployment milestones
 
 To become a true multiuser research system: generate dated Agent NF bottleneck candidates from approved proof dependencies; store authenticated durable claim/work IDs with transactional collision-free leases and expiries; preserve mathematical split-cover proofs; pass proof-carrying work packets between Orchestrator/Claim Lab/Evidence Bridge; run distinct certificate verifiers with external scientific review; measure decisive independently checked outcomes **per reviewer-hour**. Public status changes require owner-approved scientific governance.
