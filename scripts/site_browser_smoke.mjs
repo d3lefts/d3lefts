@@ -131,6 +131,17 @@ try{
    assert.match(await page.locator(".claimCard").filter({hasText:"Frontier /"}).first().innerText(),/Conjecture/,"import cannot promote proof tier");
    assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem("nightfall_claim_lab_v1")).claims.some(c=>c.frontierId==="NF-156-184-9"&&c.status===0)),true,"Frontier provenance preserved");
    assert.equal(await page.evaluate(()=>sessionStorage.getItem("nightfall.frontier.claimlab.v1")),null,"one-shot handoff consumed");
+   const countBefore=await page.evaluate(()=>JSON.parse(localStorage.getItem("nightfall_claim_lab_v1")).claims.length);
+   await page.evaluate(p=>sessionStorage.setItem("nightfall.frontier.claimlab.v1",
+     JSON.stringify({...p,lo:p.lo+1})),packet);
+   await page.goto(origin+"claim-lab.html?frontier_handoff=1",{waitUntil:"load"});
+   assert.match(await page.locator("#toast").innerText(),/Frontier handoff refused/);
+   assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem("nightfall_claim_lab_v1")).claims.length),countBefore);
+   await page.evaluate(p=>sessionStorage.setItem("nightfall.frontier.claimlab.v1",JSON.stringify(p)),packet);
+   await page.goto(origin+"claim-lab.html?frontier_handoff=1",{waitUntil:"load"});
+   assert.match(await page.locator("#toast").innerText(),/already imported/);
+   assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem("nightfall_claim_lab_v1")).claims.length),countBefore);
+
 
   }
   await page.goto(origin+"discovery.html",{waitUntil:"load"});
