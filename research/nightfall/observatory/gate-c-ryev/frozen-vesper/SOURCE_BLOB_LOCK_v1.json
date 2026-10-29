@@ -1,0 +1,41 @@
+{
+  "schema": "nightfall-gate-c-source-lock-v1",
+  "status": "preflight-only; experimental outcomes absent",
+  "archive_commit": "df9511c622c309046180fd0e015aca88577c58ec",
+  "observatory_draft_commit": "f1ee6ad517a46e5065ad700571a7080f7d5ee9e9",
+  "observatory_files": {
+    "research/nightfall/observatory/GATE_C_TASK_SET_v1.json": "9cfb17a4b23fe0978931efe25840e02b7df2cf74",
+    "research/nightfall/observatory/claims-v1.json": "bea5ab4af94a188eb78663105d717c132e552222",
+    "research/nightfall/observatory/GATE_C_PREREGISTRATION.md": "6633baae1e6eb6489e5835dedb83ccbd0e27e987"
+  },
+  "sources": {
+    "research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/README.md": "42f5f89d3411077426558177ae7972bb6cb4e9e2",
+    "research/nightfall/projects/finite-field-retrieval-handoff-excerpt.txt": "a44b19eeb08671e592616e7bbb8061e51326de7b",
+    "research/nightfall/projects/discovery-proposals-2026-10-28/README.md": "7f613c66ff834d33253d9e3a7920a641ce93901b",
+    "research/nightfall/projects/werner-correlated-6-9/S2_4471_CERTIFICATE_AUDIT.md": "3cb55d39c7c8fa175868f92729bce5cb9fa5b6b6",
+    "research/nightfall/projects/werner-final-4-25/README.md": "bfbef88e2d38250ff658275fb51106cf70b17fda",
+    "research/nightfall/projects/werner-atlas/README.md": "77dd5b946a89256ed4fdaf9b1ffdd6c8e7568d25"
+  },
+  "hard_gates": {
+    "task_families": {
+      "finite-field": 2,
+      "werner": 2,
+      "spectral": 2
+    },
+    "source_equality": "both conditions may retrieve all pinned source bytes; every retrieval logged and charged identically",
+    "graph_fairness": "same atomic claim facts exposed in G and F; only typed relationships differ; semantic parity not yet attested",
+    "token_budget": 2000,
+    "tool_budget": 20,
+    "random_seed": 1729,
+    "source_aware_retrieval": "required; several source documents exceed typical all-at-once token budget",
+    "reviewer_blind": "masked condition labels and no answer keys in participant inputs",
+    "independent_adjudication": "required",
+    "spectral_primary_input": "missing; v1 spectral tasks are proposed architecture checks, not primary empirical spectral proof audits"
+  },
+  "limitations": [
+    "Graph-only derived answer hints may confound pairing; parity requires reviewer audit before trials",
+    "The old NF-AXIOM-KERNEL-v1 historical proof dependency differs from TR-007's analogy classification",
+    "Gate B proof DAG still requires permanent primary archive mirroring",
+    "Ryev must run actual paired agents; this script tests frozen inputs, not comparative efficacy"
+  ]
+}
