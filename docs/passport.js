@@ -6,8 +6,14 @@
  const safeUrl=url=>/^(https:\/\/[^\s"<>]+|[a-z0-9][a-z0-9./#?=&_-]*\.html(?:\?[^\s"<>]*)?(?:#[^\s"<>]*)?)$/i.test(url)?url:"#";
  const titleDim={validity:"Validity",reproducibility:"Reproducibility",originality:"Originality",significance:"Significance"};
  const id=new URLSearchParams(location.search).get("claim");
- const claim=R.claimById(id)||R.claimById("sidon30");
- if(id&&!R.claimById(id)){history.replaceState(null,"","passport.html?claim=sidon30")}
+ const found=id?R.claimById(id):null;
+ const claim=found||R.claimById("sidon30");
+ if(id&&!found){
+   // Preserve the original address so a reviewer can diagnose a stale link.
+   // Display unknown input as text, never as HTML.
+   $("passport-unknown-id").textContent=id.slice(0,160);
+   $("passport-unknown").hidden=false;
+ }
  document.title=claim.title+" / Proof Passport — NIGHTFALL";
  $("passport-category").textContent="NIGHTFALL / "+claim.field.toUpperCase()+" / "+claim.id.toUpperCase();
  $("passport-title").textContent=claim.title;
