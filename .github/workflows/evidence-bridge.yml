@@ -58,6 +58,15 @@ jobs:
           node research/nightfall/observatory/gate-c-ryev/runner.cjs --selftest
           node research/nightfall/observatory/gate-c-ryev/runner.cjs --freeze /tmp/ryev-gate-c
           python3 -m json.tool /tmp/ryev-gate-c/freeze.json > /dev/null
+      - name: Vesper original v1 equal-retrieval and Scope Faultline preflight
+        run: |
+          node --check research/nightfall/observatory/gate-c-ryev/parity_runner.cjs
+          node --check research/nightfall/evidence-bridge/scope_faultline.cjs
+          node research/nightfall/observatory/gate-c-ryev/parity_runner.cjs --selftest
+          node research/nightfall/observatory/gate-c-ryev/parity_runner.cjs --freeze /tmp/ryev-original-gate-c
+          node research/nightfall/evidence-bridge/scope_faultline.cjs --selftest
+          node research/nightfall/evidence-bridge/scope_faultline.cjs --json > /tmp/ryev-scope-faultline.json
+          python3 -m json.tool /tmp/ryev-original-gate-c/freeze.json >/dev/null
       - name: Browser consent, backup, reload, import security
         run: |
           npm install --no-save --no-package-lock playwright-core@1.56.1
@@ -71,6 +80,10 @@ jobs:
             /tmp/ryev-gate-c/freeze.json
             /tmp/ryev-gate-c/operator-jobs.json
             /tmp/ryev-gate-c/blind-grading-template.json
+            /tmp/ryev-original-gate-c/freeze.json
+            /tmp/ryev-original-gate-c/operator-jobs.json
+            /tmp/ryev-original-gate-c/review-forms.json
+            /tmp/ryev-scope-faultline.json
           retention-days: 90
       - name: Archive receipt fixtures and refusal explanations
         uses: actions/upload-artifact@v4
