@@ -92,9 +92,11 @@ try{
   assert.equal(await page.locator('#nf-observatory-lenses [aria-pressed="true"]').count(),1,"One active evidence lens");
   assert.equal(await page.locator('.nf-observatory-lenses [data-lens="all"]').getAttribute("aria-pressed"),"true","All sources is the default lens");
   await page.locator('[data-lens="finite-check"]').click();
+  await page.waitForFunction(()=>document.querySelectorAll(".nf-observatory-edge").length===4);
   assert.equal(await page.locator(".nf-observatory-edge").count(),4,"Finite-check lens filters exact documented relationships");
   assert.equal(await page.locator('[data-lens="finite-check"]').getAttribute("aria-pressed"),"true");
   await page.locator('[data-lens="open-premise"]').click();
+  await page.waitForFunction(()=>document.querySelectorAll(".nf-observatory-edge").length===3);
   assert.equal(await page.locator(".nf-observatory-edge").count(),3,"Open-premise lens shows three explicitly unresolved relationships");
   assert.match(await page.locator("#nf-observatory-view-status").innerText(),/Unresolved premises/);
   if(width===390){
@@ -106,6 +108,7 @@ try{
   }
   await page.locator('[data-start="phase"]').click();
   assert.match(page.url(),/\?claim=phase/,"Node selection makes a shareable canonical deep link");
+  await page.waitForFunction(()=>document.querySelectorAll(".nf-observatory-edge").length===1);
   assert.equal(await page.locator(".nf-observatory-edge").count(),1,"Selected phase claim has one unresolved source edge");
   await page.reload({waitUntil:"load"});
   assert.equal(await page.locator('.nf-observatory-node[data-node="phase"]').getAttribute("aria-pressed"),"true","Canonical deep link restores selected node");
@@ -115,6 +118,7 @@ try{
   assert.equal(await page.locator('.nf-observatory-node[data-node="phase"]').getAttribute("aria-pressed"),"false","Escape clears selection");
   assert.ok(!page.url().includes("claim=phase"),"Clearing selection removes stale deep link");
   await page.locator('[data-lens="all"]').click();
+  await page.waitForFunction(()=>document.querySelectorAll(".nf-observatory-edge").length===13);
   assert.equal(await page.locator(".nf-observatory-edge").count(),13,"All typed relationships restored after switching lenses");
 
   await page.locator('.nf-observatory-node[data-node="phase"]').click();
