@@ -157,3 +157,67 @@ assert five_counts == {10: 2688}
 assert not new_five
 print('new five-edge weight12 syndromes',len(new_five))
 print('conditional surviving 12-face syndromes require min edge support >=6')
+
+# Six-edge sector: w=12 forces >=12 cofacial pairs. If the cofacial
+# graph has K4, both other edges must touch the K4 (otherwise P<=11).
+six_dense = set()
+six_weights = Counter()
+six_pairs = Counter()
+for q in cliques:
+    outside = sorted(set.union(*(neighbors[x] for x in q)) - set(q))
+    degree_to_q = {e: sum(e in neighbors[x] for x in q) for e in outside}
+    for i, e in enumerate(outside):
+        for f in outside[i+1:]:
+            p = 6 + degree_to_q[e] + degree_to_q[f] + (f in neighbors[e])
+            if p < 12:
+                continue
+            candidate = tuple(sorted((*q, e, f)))
+            if candidate in six_dense:
+                continue
+            six_dense.add(candidate)
+            six_pairs[p] += 1
+            six_weights[reduce(int.__xor__, (stars[x] for x in candidate), 0).bit_count()] += 1
+assert len(six_dense) == 54656
+assert six_pairs == {12: 53760, 15: 896}
+assert six_weights == {16: 53760, 6: 896}
+
+# Adverse case: a K4-free 6-vertex graph with >=12 edges must be K2,2,2.
+# Check all 2^15 simple graphs, independently of cube incidence.
+six_vertex_pairs = list(combinations(range(6), 2))
+four_masks = []
+for quad in combinations(range(6), 4):
+    four_masks.append(sum(1 << k for k, pair in enumerate(six_vertex_pairs)
+                          if pair[0] in quad and pair[1] in quad))
+max_k4_free = 0
+extremal_graphs = 0
+for mask in range(1 << 15):
+    if any(mask & km == km for km in four_masks):
+        continue
+    edges_count = mask.bit_count()
+    max_k4_free = max(max_k4_free, edges_count)
+    if edges_count == 12:
+        extremal_graphs += 1
+        # Every missing pair has the other four vertices as common neighbors.
+        for k, (a, b) in enumerate(six_vertex_pairs):
+            if mask & (1 << k):
+                continue
+            for c in range(6):
+                if c in (a, b):
+                    continue
+                ac = six_vertex_pairs.index(tuple(sorted((a, c))))
+                bc = six_vertex_pairs.index(tuple(sorted((b, c))))
+                assert mask & (1 << ac) and mask & (1 << bc)
+assert max_k4_free == 12 and extremal_graphs == 15
+
+codegrees = Counter()
+for a, b in combinations(range(448), 2):
+    if b not in neighbors[a]:
+        codegrees[len(neighbors[a] & neighbors[b])] += 1
+assert codegrees == {0: 79296, 2: 3360, 3: 13440}
+# No noncofacial edge pair has four common cofacial neighbors, hence
+# no induced K2,2,2 and no remaining dense K4-free six-edge set.
+print('six-edge dense K4 sets',len(six_dense),'P',dict(sorted(six_pairs.items())),
+      'weights',dict(sorted(six_weights.items())))
+print('K4-free six-vertex extremal graphs',extremal_graphs,
+      'noncofacial codegrees',dict(sorted(codegrees.items())))
+print('new six-edge weight12 syndromes 0; conditional surviving support >=7')
