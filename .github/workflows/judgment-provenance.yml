@@ -1,0 +1,43 @@
+name: Judgment provenance — synthetic contract tests
+on:
+  pull_request:
+    paths:
+      - "scripts/check_judgment_provenance.py"
+      - "research/nightfall/projects/judgment-provenance-2026-10-29/**"
+      - "docs/judgment-provenance.html"
+      - ".github/workflows/judgment-provenance.yml"
+  push:
+    branches: [main]
+    paths:
+      - "scripts/check_judgment_provenance.py"
+      - "research/nightfall/projects/judgment-provenance-2026-10-29/**"
+      - "docs/judgment-provenance.html"
+      - ".github/workflows/judgment-provenance.yml"
+  workflow_dispatch:
+jobs:
+  synthetic-controls:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile standard-library checker
+        run: python -m py_compile scripts/check_judgment_provenance.py
+      - name: Verify arithmetic and four mutation controls (synthetic, never humans)
+        run: python scripts/check_judgment_provenance.py --self-test
+      - name: Verify page status and source boundaries
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          page=Path('docs/judgment-provenance.html').read_text()
+          protocol=Path('research/nightfall/projects/judgment-provenance-2026-10-29/README.md').read_text()
+          assert 'NO HUMAN STUDY RUN' in page
+          assert 'NO HUMAN RESULTS' in protocol
+          assert 'ANALYSIS_ONLY_NOT_EXPERIMENTALLY_VALIDATED' in Path('scripts/check_judgment_provenance.py').read_text()
+          assert 'Anthropic' in page and 'Anthropic' in protocol
+          print('Evidence-status boundary PASS')
+          PY
