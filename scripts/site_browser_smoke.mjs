@@ -106,8 +106,8 @@ try{
    page.once("dialog",dialog=>dialog.accept());
    await page.locator('#nf-tool-links a[href="claim-lab.html"]').click();
    await page.waitForURL(/claim-lab\.html/);
-   assert.match(await page.locator(".claimCard").first().innerText(),/Frontier/,"Claim Lab received explicit Frontier transfer");
-   assert.match(await page.locator(".claimCard").first().innerText(),/Conjecture/,"import cannot promote proof tier");
+   assert.match(await page.locator(".claimCard").filter({hasText:"Frontier /"}).first().innerText(),/Frontier/,"Claim Lab received explicit Frontier transfer");
+   assert.match(await page.locator(".claimCard").filter({hasText:"Frontier /"}).first().innerText(),/Conjecture/,"import cannot promote proof tier");
    assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem("nightfall_claim_lab_v1")).claims.some(c=>c.frontierId==="NF-156-184-9"&&c.status===0)),true,"Frontier provenance preserved");
    assert.equal(await page.evaluate(()=>sessionStorage.getItem("nightfall.frontier.claimlab.v1")),null,"one-shot handoff consumed");
 
