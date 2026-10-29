@@ -19,6 +19,7 @@
 .submit{background:var(--deep);color:#ebf3e8;padding:72px 0}.submit-grid{display:grid;grid-template-columns:1fr 1fr;gap:55px}.submit h2{font:400 67px/.98 var(--serif);max-width:530px}.submit p{color:#c0d0c3;font-size:14px;line-height:1.75;max-width:650px;margin:15px 0}.submit ol{padding-left:23px;color:#d9e6d9;font:13px/1.9 var(--mono)}.submit .button{background:var(--accent);color:var(--ink);border-color:var(--accent);margin-top:22px}.note{font-size:12px!important;color:#b2c0b3!important}.copy{background:transparent;color:var(--ink);border:1px solid var(--ink);padding:10px 13px;font:500 11px var(--mono);margin-top:14px}.copy:hover{background:var(--soft)}
 @media(max-width:800px){.review-hero{padding:60px 0}.review-summary{grid-template-columns:1fr}.review-summary article,.review-summary article:first-child{padding:17px 0;border-right:0;border-bottom:1px solid var(--line)}.review-dossier{display:block;padding:50px 0}.dossier-number{margin-bottom:18px}.submit-grid{grid-template-columns:1fr;gap:15px}.submit h2{font-size:54px}}
 
+.review-map{display:flex;flex-wrap:wrap;gap:12px;padding:24px 0;border-bottom:1px solid var(--line)}.review-map a{font:500 11px/1.4 var(--mono);color:var(--ink);padding:10px 13px;border:1px solid var(--line);text-decoration:none}.review-map a:hover,.review-map a:focus-visible{background:var(--soft);border-color:var(--ink)}
 .review-nav{display:flex;gap:22px;align-items:center;font-size:13px;font-weight:600}
 .review-nav a:not(.nav-call){border-bottom:1px solid transparent}
 .review-nav a:hover:not(.nav-call){border-color:currentColor}
@@ -48,13 +49,20 @@
 <span class="kicker">OPEN INVITATION / EVIDENCE-FIRST SCIENCE</span>
 <h1>Review the claim.<br><i>Challenge the proof.</i></h1>
 <p>Five source-scoped findings have review paths: three established core dossiers and two additional finite evidence audits. Reviewers examine proof objects, provenance, and falsification targets. Reproducer agents, adversarial agents, and formalization agents produce distinct evidence. A consensus of model opinions alone is insufficient.</p>
-<div class="hero-actions"><a class="button" href="#erdos">Browse assignments ↘</a><a class="text-link" href="#submit">How to contribute ↓</a></div>
+<div class="hero-actions"><a class="button" href="#review-map">Browse all five reviews ↘</a><a class="text-link" href="#submit">How to contribute ↓</a></div>
 </section>
 <div class="review-summary wrap">
 <article><span>01 / AGENT TASK QUEUE</span><b>3 core + 2 finite</b><span>Five scoped finding reviews; separate mathematical and provenance gates remain open.</span></article>
 <article><span>02 / VERDICT GATES</span><b>Evidence first</b><span>Separate input integrity, finite arithmetic, analytic proof, and formalization.</span></article>
 <article><span>03 / INPUT COMPLETENESS</span><b>Curated v2 public</b><span>Two verified archives are downloadable. Historical master research remains private.</span></article>
 </div>
+<nav class="review-map wrap" id="review-map" aria-label="Five finding review routes">
+<a href="#erdos">01 / Overlap</a>
+<a href="#sidon">02 / Sidon 30</a>
+<a href="#pas">03 / Adverse test</a>
+<a href="#new-finite-reviews">04 / Singer 975</a>
+<a href="#new-finite-reviews">05 / 27-graph exclusion</a>
+</nav>
 <div class="wrap">
 <article class="review-dossier" id="erdos" aria-labelledby="erdos-title">
 <div class="dossier-number">REVIEW / 01<small>FINITE OPTIMIZATION<br>EXACT RATIONAL CERTIFICATE</small></div>
@@ -135,7 +143,9 @@
 <div class="feature-grid">
 <a class="feature lime" href="findings-20261029.html#singer975"><div class="feature-top"><span>04 / FINITE SIDON CERTIFICATE</span><span>↗</span></div><div class="feature-body"><h3 class="feature-title">Singer 975</h3><p>Rebuild the source finite field, test the final integer pair sums, and attack the matching 40-edge packing/40-mark deletion cover.</p></div><div class="feature-tag"><span>HUMAN MATHEMATICAL REVIEW OPEN</span><span>→</span></div></a>
 <a class="feature dark" href="findings-20261029.html#graph-3port"><div class="feature-top"><span>05 / GRAPH FAMILY EXCLUSION</span><span>↗</span></div><div class="feature-body"><h3 class="feature-title">27 bases. Two fixed gadgets.</h3><p>Independently decode the graph6 inputs and replay the two exact all-subset replacement counts, checking C4, C8 and C16.</p></div><div class="feature-tag"><span>HUMAN MATHEMATICAL REVIEW OPEN</span><span>→</span></div></a>
-</div></section>
+</div>
+<p class="evidence-sources"><strong>Independent reviewer routes:</strong> <a href="https://github.com/d3lefts/d3lefts/issues/95" target="_blank" rel="noopener">Singer-field repair theorem and source audit (#95) ↗</a> · <a href="https://github.com/d3lefts/d3lefts/issues/47" target="_blank" rel="noopener">Graph-cycle obstruction and finite-gadget audit (#47) ↗</a>. Submit a reproduction, counterexample, or precise missing-premise report; these GitHub threads concern wider research assignments, while this page's 04/05 tests remain limited to the stated finite artifacts.</p>
+</section>
 </main>
 <footer class="footer"><div class="wrap footer-bottom"><span>© 2026 Devin J. Wright · NIGHTFALL PHASESHIFT</span><span><a href="./">← Back to research homepage</a></span></div></footer>
 <script>
