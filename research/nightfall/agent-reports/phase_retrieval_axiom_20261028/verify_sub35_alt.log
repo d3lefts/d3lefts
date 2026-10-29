@@ -1,0 +1,7 @@
+PASS alternate GF25 exact incidence 121,601,25 and both adversarial 2D fixtures
+PASS independent field design 2 0 m 8 signals 625
+PASS independent field design 2 1 m 8 signals 625
+PASS independent field design 2 2 m 8 signals 625
+PASS independent field design 3 0 m 12 signals 125
+PASS all exact independent tests
+sha 2230723881e6b86dffd91685619e8faa1cc7b18bbb0b567217026388762a7f07
