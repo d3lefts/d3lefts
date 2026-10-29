@@ -163,7 +163,7 @@ html:not([data-nf-theme="dusk"]) body:has(#app){
   --bg:#28190f;--side:#332116;--paper:#3b281d;--panel:#3b281d;
   --panel2:#50362a;--line:#75574a;--text:#f7e8db;--soft:#ceb6a7;
   --muted:#ceb6a7;--lime:#edc16e;
-  background:#28190f;color:#f7e8db;color-scheme:dark;
+  background-color:#28190f;color:#f7e8db;color-scheme:dark;
 }
 html:not([data-nf-theme="dusk"]) body:has(#app) :is(.side,.top,.panel,
   .metric,.card,.op,.rep-card,.context-figure,.feature-panel,.aside-note){
@@ -182,7 +182,7 @@ html:not([data-nf-theme="dusk"]) body:has(.app){
   --bg:#28190f;--surface:#3b281d;--surface2:#50362a;--surface3:#604737;
   --text:#f7e8db;--muted:#ceb6a7;--subtle:#ceb6a7;--line:#75574a;
   --mint:#edc16e;--mint2:#604737;--gold:#edc16e;--shadow:0 12px 35px #12090366;
-  background:#28190f;color:#f7e8db;color-scheme:dark;
+  background-color:#28190f;color:#f7e8db;color-scheme:dark;
 }
 html:not([data-nf-theme="dusk"]) body:has(.app) :is(.sidebar,.side,.nav button.active,
   .brandMark,.sideBottom,.toast:not(.bad)){
@@ -311,13 +311,13 @@ html[data-nf-theme="dusk"] body:has(#app){
   --bg:#04060b;--side:#091120;--paper:#0c1527;--panel:#0c1527;
   --panel2:#16223c;--line:#33405d;--text:#f1eedc;
   --lime:#e6deaa;--muted:#bec3d6;
-  background:#04060b;color:#f1eedc;
+  background-color:#04060b;color:#f1eedc;
 }
 html[data-nf-theme="dusk"] body:has(.app){
   --bg:#04060b;--surface:#0c1527;--surface2:#16223c;
   --surface3:#25304c;--text:#f1eedc;--muted:#bec3d6;
   --line:#33405d;--mint:#e6deaa;--mint2:#35375a;--gold:#e6deaa;
-  background:#04060b;color:#f1eedc;
+  background-color:#04060b;color:#f1eedc;
 }
 html[data-nf-theme="dusk"] body:has(#app) :is(.side,.top,.main,.panel,
   .status,.toast:not(.bad)),html[data-nf-theme="dusk"] body:has(.app) :is(.sidebar,.side,.top){
