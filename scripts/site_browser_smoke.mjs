@@ -77,6 +77,9 @@ try{
   assert.equal(await page.locator(".portfolio").count(),3,"Only original research presets shown");
   if(width===390){
    await page.goto(origin+"index.html",{waitUntil:"load"});
+   assert.match(await page.locator(".ticker").innerText(),/30/,"homepage current library count");
+   assert.equal(await page.locator("#instruments .instrument-workflow span").count(),4,"four instrument workflow stages");
+   assert.equal(await page.locator('#instruments a[href="exact-research.html"]').count(),1,"research tools hub CTA");
    await page.locator("#project-search").fill("werner");
    assert.equal(await page.locator("#project-list .research-row").count(),0,"original-only catalogue excludes Werner");
    await page.locator("#project-search").fill("");
@@ -92,6 +95,21 @@ try{
     assert.equal(await page.locator(".atlas-card:visible").count(),1,"library source search");
     await page.locator("#atlas-search").fill("");
     assert.equal(await page.locator(".atlas-card:visible").count(),30,"30-entry library filter reset");
+    await page.locator("#atlas-evidence").selectOption("conditional");
+    assert.equal(await page.locator(".atlas-card:visible").count(),6,"conditional evidence-tier filter");
+    await page.locator('[data-atlas-filter="quantum"]').click();
+    const intersection=await page.locator(".atlas-card:visible").count();
+    assert.ok(intersection>0&&intersection<=6,"combined field and evidence filter");
+    await page.locator('[data-atlas-filter="all"]').click();
+    await page.locator("#atlas-evidence").selectOption("all");
+    assert.equal(await page.locator(".atlas-card:visible").count(),30,"evidence tiers reset");
+    await page.locator("body").click({position:{x:5,y:5}});
+    await page.keyboard.press("/");
+    assert.equal(await page.locator("#atlas-search").evaluate(el=>document.activeElement===el),true,"keyboard search focus");
+    await page.locator("#atlas-search").fill("no-such-entry");
+    assert.equal(await page.locator(".atlas-card:visible").count(),0,"library empty search");
+    await page.keyboard.press("Escape");
+    assert.equal(await page.locator(".atlas-card:visible").count(),30,"keyboard search reset");
   }
   if(width===390){
     await page.goto(origin+"referee.html",{waitUntil:"load"});
