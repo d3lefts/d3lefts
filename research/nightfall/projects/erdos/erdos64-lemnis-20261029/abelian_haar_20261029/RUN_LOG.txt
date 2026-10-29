@@ -1,0 +1,68 @@
+UNIVERSAL 16 WORD 0101012010201212
+DANGEROUS 6/10-CHORD DISPLACEMENTS 12
+(-3, 0) -> 8 01012102
+(-3, 1) -> 8 01212102
+(-2, 1) -> 4 0121
+(-2, 2) -> 4 2121
+(-1, 1) -> 8 01212012
+(-1, 2) -> 4 2021
+(0, 1) -> 8 01202012
+(0, 2) -> 4 2020
+(1, 1) -> 4 1020
+(1, 2) -> 8 10102120
+(2, 0) -> 4 1010
+(2, 1) -> 8 10202012
+PASS: every possible early identification forces a reduced C4/C8 word
+PASS: 32 one-symbol mutation controls rejected
+{'cyclic': 2006, 'cyclic_no4': 1800, 'cyclic_no4no8': 1128, 'noncyclic': 97, 'noncyclic_no4': 87, 'noncyclic_no4no8': 79}
+PASS independent literal graph and simple-cycle checks
+PASS field primitive generator and 1009 Bose-Chowla exponents
+PASS B digest, exact 970 marks, every one of 470935 sums distinct
+exact pair-type split {'AA': 15, 'AB': 4825, 'BB': 466095}
+PASS all 44 individually excluded marks have an explicit new collision (local inclusion-maximality)
+first 6 exclusion certificates (index, new_z, other_x, old_u, old_v):
+(1, 778972, 780989, 8, 1559953)
+(8, 787406, 831065, 13, 1618458)
+(15, 793398, 809619, 1, 1603016)
+(18, 795631, 837587, 1, 1633217)
+(20, 799673, 789367, 8, 1589032)
+(23, 802393, 824657, 4, 1627046)
+witness-type counts {'BAB': 19, 'AAB': 9, 'ABB': 16}
+REMOVAL_WITNESS_SHA256 638607a0232d503d98a4924d402e353f5435efa3e73d94fd7bcdf6a192b2c40e
+Z_3^2 PASS cases, exceptional 2a, deduplicated supports (756, 252, 252)
+Z_4^2 PASS cases, exceptional 2a, deduplicated supports (5680, 3696, 0)
+max_m 120 searched 3534 noC4 3306 noC4C8 2626 noC4C8C16 0
+seed=259831 draws=400 cyclic=0
+K4 fibers=13 vertices=52 draws=400 no4=16 no4no8=0 no4no8no16=0
+K4 fibers=17 vertices=68 draws=400 no4=16 no4no8=0 no4no8no16=0
+K4 fibers=19 vertices=76 draws=400 no4=21 no4no8=0 no4no8no16=0
+K4 fibers=23 vertices=92 draws=400 no4=23 no4no8=0 no4no8no16=0
+K4 fibers=29 vertices=116 draws=400 no4=21 no4no8=0 no4no8no16=0
+K4 fibers=37 vertices=148 draws=400 no4=18 no4no8=0 no4no8no16=0
+K4 fibers=47 vertices=188 draws=400 no4=26 no4no8=0 no4no8no16=0
+K4 fibers=67 vertices=268 draws=400 no4=15 no4no8=0 no4no8no16=0
+K33 fibers=13 vertices=78 draws=400 no4=0 no4no8=0 no4no8no16=0
+K33 fibers=17 vertices=102 draws=400 no4=0 no4no8=0 no4no8no16=0
+K33 fibers=19 vertices=114 draws=400 no4=0 no4no8=0 no4no8no16=0
+K33 fibers=23 vertices=138 draws=400 no4=0 no4no8=0 no4no8no16=0
+K33 fibers=29 vertices=174 draws=400 no4=0 no4no8=0 no4no8no16=0
+K33 fibers=37 vertices=222 draws=400 no4=0 no4no8=0 no4no8no16=0
+K33 fibers=47 vertices=282 draws=400 no4=0 no4no8=0 no4no8no16=0
+K33 fibers=67 vertices=402 draws=400 no4=0 no4no8=0 no4no8no16=0
+seed=259831 draws=1000 cyclic=1
+K4 fibers=13 vertices=52 draws=1000 no4=775 no4no8=446 no4no8no16=0
+K4 fibers=17 vertices=68 draws=1000 no4=837 no4no8=526 no4no8no16=0
+K4 fibers=19 vertices=76 draws=1000 no4=861 no4no8=603 no4no8no16=0
+K4 fibers=23 vertices=92 draws=1000 no4=869 no4no8=637 no4no8no16=0
+K4 fibers=29 vertices=116 draws=1000 no4=886 no4no8=710 no4no8no16=0
+K4 fibers=37 vertices=148 draws=1000 no4=918 no4no8=772 no4no8no16=0
+K4 fibers=47 vertices=188 draws=1000 no4=942 no4no8=802 no4no8no16=0
+K4 fibers=67 vertices=268 draws=1000 no4=961 no4no8=876 no4no8no16=0
+K33 fibers=13 vertices=78 draws=1000 no4=467 no4no8=21 no4no8no16=0
+K33 fibers=17 vertices=102 draws=1000 no4=575 no4no8=50 no4no8no16=0
+K33 fibers=19 vertices=114 draws=1000 no4=587 no4no8=70 no4no8no16=0
+K33 fibers=23 vertices=138 draws=1000 no4=706 no4no8=104 no4no8no16=0
+K33 fibers=29 vertices=174 draws=1000 no4=718 no4no8=167 no4no8no16=0
+K33 fibers=37 vertices=222 draws=1000 no4=753 no4no8=248 no4no8no16=0
+K33 fibers=47 vertices=282 draws=1000 no4=827 no4no8=340 no4no8no16=0
+K33 fibers=67 vertices=402 draws=1000 no4=878 no4no8=469 no4no8no16=0
