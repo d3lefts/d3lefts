@@ -3,7 +3,7 @@
 **Version:** 2026-10-29 / Vesper evaluation 01  
 **Research owner:** Devin J. Wright  
 **Coordination and site integration:** Vesper  
-**Scope:** Axiom, Lemnis, Ryev, **Tessara**. This document supersedes overlapping role descriptions for work begun after this date; existing research artifacts, historical credit, status labels, and open obligations remain unchanged. Tessara joined after the initial three-worker assessment; her portfolio is assigned from an uncovered mathematical frontier, **not from an invented performance history**.
+**Scope:** Axiom, Lemnis, Ryev, **Tessara**, **Tessera**, and Vesper's separate mathematical assignment. This document supersedes overlapping role descriptions for work begun after this date; existing research artifacts, historical credit, status labels, and open obligations remain unchanged. Tessara joined after the initial three-worker assessment; her portfolio is assigned from an uncovered mathematical frontier, **not from an invented performance history**.
 
 ## Evaluation rule
 
@@ -15,7 +15,7 @@ Judge each worker by **verified mechanism and quality of evidence**, not volume 
 | **Lemnis** | Restricted rank-two Werner transfer and cross-sector interacting witness (PR [#35](https://github.com/d3lefts/d3lefts/pull/35)); coordinated exact coupled-sector work (PR [#20](https://github.com/d3lefts/d3lefts/pull/20)); 3,221,225,472 fixed-gadget expansions excluded across 27 supplied base graphs using separate check paths (PR [#57](https://github.com/d3lefts/d3lefts/pull/57)) | Restricted positivity theorem and exact finite exclusions; no unrestricted Werner positivity claim, power-of-two-cycle counterexample, or established publication priority. Completeness of 27-base upstream catalogue not independently proved. | Structural obstruction, adversarial proof analysis, transfer lemmas, independent reasoning |
 | **Ryev** | Q7 local obstruction extended to 180 attributed 304-edge orbit representatives (PR [#63](https://github.com/d3lefts/d3lefts/pull/63)); projective-grid incidence theorem draft (PR [#45](https://github.com/d3lefts/d3lefts/pull/45)); Evidence Bridge versioned receipt parser, tamper controls, and Chromium handoff (PR [#64](https://github.com/d3lefts/d3lefts/pull/64)) | Q7 result is seed-catalogue-local, global window unchanged; Gate C has zero genuine paired model trials/grades. Bridge's latest PR head passed website, visitor-journey, and dedicated replay CI after earlier failed integration tests; owner review still controls release. | Exact computational exploration, engineering trustworthy evidence pipelines, constraint search, executable adversarial tests |
 
-**Tessara onboarding note (29 Oct):** No prior Tessara-authored GitHub research artifacts were found as of this assignment. [Assignment #76](https://github.com/d3lefts/d3lefts/issues/76) is a prospective, outcome-driven scientific mandate. Evaluate her demonstrated strengths after independently checked contributions, using the same standards as the initial three workers.
+**Tessara onboarding note (29 Oct):** Tessara is distinct from Tessera, the Singer/Sidon investigator. No prior Tessara-authored GitHub research artifacts were found as of this assignment. [Assignment #76](https://github.com/d3lefts/d3lefts/issues/76) is a prospective, outcome-driven scientific mandate. Evaluate her demonstrated strengths after independently checked contributions, using the same standards as the initial three workers.
 
 ## Revised roles
 
@@ -79,6 +79,22 @@ Judge each worker by **verified mechanism and quality of evidence**, not volume 
 
 **Delivery:** a mathematical statement with explicit universal quantifiers, candidate operator, adversarial test and counterexample record, certificate and source hashes, exact comparison with the best same-premise bound, and a proof/priority status. After three structurally distinct operators fail, establish the sharp obstruction they encounter and change representation.
 
+### TESSERA — Singer Hypergraph and Uniform Repair Theorem Lead
+
+**Standing assignment:** [#95 — Singer repair hypergraphs and scale-uniform Sidon theorem](https://github.com/d3lefts/d3lefts/issues/95).
+
+**Mission:** Develop a genuinely field-uniform Singer difference-set collision/repair theorem, leveraging exact packing-cover certificates to obtain a nontrivial quantified result beyond a finite instance. Her established [PR #82](https://github.com/d3lefts/d3lefts/pull/82) offers a 975-mark fixed-prefix witness and a 40/40 *fixed-template* exact cover lower/upper certificate; this is finite internal evidence, with global novelty and asymptotic progress still open.
+
+**Distinctness:** Tessera is a separate agent from Tessara. Tessera owns Singer-field constructions and uniform **hypergraph repair**; Axiom owns Bose–Chowla/algebraic extension and saturated-Sidon search. A fixed Singer optimum never proves an asymptotic bound. The desired consequence is an independently verified asymptotic improvement or a sharp family-wide obstruction, with prefix size, field size, and total deletions explicitly controlled. Lemnis attacks proofs, Axiom checks the field calculations, Ryev independently verifies finite cases, Vesper checks scale/priority.
+
+### VESPER — Scientific Coordinator and Discrete Scale-Transfer Investigator
+
+**Standing mathematical assignment:** [#96 — quantitative finite-to-infinite Sidon transfer](https://github.com/d3lefts/d3lefts/issues/96).
+
+**Mission:** Independently prove, qualify, or obstruct a *nontrivial* finite-to-infinite transfer theorem for nested Sidon extensions with explicit prefix-growth and density quantifiers. Investigate whether Axiom/Tessera's finite extension operators meet the hypotheses; if their guarantees degrade with prefix length, quantify the precise missing uniformity. A routine diagonal argument alone is below the breakthrough threshold. Lemnis attacks logical quantifiers; Axiom and Tessera independently test construction hypotheses; Ryev checks exact evidence. Vesper also owns team coordination, repository scientific scope, publication hygiene and prior-art review — these operational duties cannot substitute for the mathematical assignment.
+
+**Naming rule:** TESSARA (continuum overlap) and TESSERA (discrete Singer repair) identify different agents with different assignments. Human research and publication authority remain with Devin J. Wright.
+
 ## Cross-audit ownership
 
 | Proposal owner | Independent mathematical attacker | Independent executable verification / systems reviewer | Final claim gate |
@@ -88,6 +104,8 @@ Judge each worker by **verified mechanism and quality of evidence**, not volume 
 | Ryev research theorem / bound | Lemnis | Axiom checks proof dependencies; Vesper checks tooling | Vesper checks scope and prior work; Devin human sign-off |
 | Ryev site / evidence tool | Vesper checks consent, provenance and security | Owner-wide CI + negative-control browser runs | Devin/Owner site release review |
 | Tessara continuum / transfer theorem | Lemnis attacks quantifiers and infinite-dimensional reduction | Ryev builds a distinct interval/finite checker; Axiom tests algebraic feasibility | Vesper source and scope review; Devin human sign-off |
+| Tessera Singer repair theorem | Lemnis challenges uniformity and collision classes; Axiom checks field structure | Ryev independently checks Sidon and cover instances | Vesper checks scale/priority; Devin human sign-off |
+| Vesper discrete transfer theorem | Lemnis independently challenges quantifier logic | Axiom/Tessera test constructions; Ryev checks constants | Devin scientific significance and final sign-off |
 
 No worker grants proof status to their own output. Exact checker agreement inside the project is internal independent validation, not external peer review. CI success is evidence of repository-defined tests only.
 
@@ -105,4 +123,4 @@ No worker grants proof status to their own output. Exact checker agreement insid
 
 Track (a) candidate-to-independent-check survival rate, (b) certified gain per computation-hour, (c) time to first valid construction or exact obstruction, (d) prediction hit rate, (e) demotions after counterexample or source changes, (f) methods that transfer productively between tasks. Do not substitute line count, solver iterations, UI surface area, or brute-force instance count for these measures.
 
-**Team-lead decision:** Keep Axiom focused on constructive algebraic synthesis, Lemnis on sharp structural attacks and self-owned theorem work, Ryev on exact computational discovery plus trustworthy systems integration, and Tessara on rigorous continuum mathematics and scale-transition mechanisms. The roles are complementary, not silo boundaries. Tessara's appointment is provisional until verified original research enables a performance-based assessment. The purpose is greater verified mathematical leverage per research turn.
+**Team-lead decision:** Keep Axiom focused on constructive Bose–Chowla algebra and saturated Sidon sets, Lemnis on sharp graph obstructions and adversarial proof, Ryev on Q7 exact discovery and trustworthy systems, Tessara on continuum universal lower bounds, Tessera on Singer hypergraph repair theorems, and Vesper on coordination plus independent discrete scale-transfer mathematics. The roles are complementary. Tessara's appointment remains provisional pending independently validated research. Every agent has a standing consequential scientific outcome distinct from supporting tasks.
