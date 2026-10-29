@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+"use strict";
+const assert=require("node:assert/strict");
+const C=require("../docs/referee-core.js");
+const S=require("../docs/sidon-sharpness-core.js");
+const passed=S.check(C,"40000000","1");
+assert.equal(passed.verdict,"FINITE_EXAMPLE_CHECK_PASSED");
+assert.equal(passed.checks.fourFive.pass,true);
+assert.equal(passed.checks.fourFive.quadruplesTested,40920);
+assert.equal(passed.checks.weakSidon.pass,true);
+assert.equal(passed.checks.oldExactMaximum.pass,true);
+assert.equal(passed.checks.oldExactMaximum.states,7801);
+assert.equal(passed.checks.explicitSidon19.pass,true);
+assert.equal(passed.checks.explicitSidon19.distinctPairSums,190);
+assert.equal(passed.checks.threeNewInArithmeticProgression,true);
+assert.deepEqual(passed.data.newPoints,["40000001","80000001","120000001"]);
+const bad=S.check(C,"40000000","0");
+assert.equal(bad.verdict,"NO_CERTIFICATE_FOR_SELECTED_INPUT");
+assert.equal(bad.checks.fourFive.pass,false);
+const collision=S.check(C,"1","0");
+assert.equal(collision.verdict,"NO_CERTIFICATE_FOR_SELECTED_INPUT");
+assert.equal(collision.checks.distinctNewMarks,false);
+assert.throws(()=>S.check(C,"1.5","1"));
+assert.throws(()=>S.check(C,"0","1"));
+assert.throws(()=>S.check(C,"40000000","Infinity"));
+console.log("PASS: frozen B30 h=17 + 33-point strict (4,5) all 40,920 quadruples + explicit h=19 + two negative controls");
