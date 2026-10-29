@@ -632,3 +632,12 @@ html{scroll-padding-top:22px}
 @media(prefers-reduced-motion:reduce){
   .instrument-workflow a{transition:none}
 }
+
+/* Four consecutive guided stages; legacy fifth-tool emphasis is retired. */
+.instrument-workflow{grid-template-columns:repeat(4,minmax(0,1fr))}
+.instrument-workflow a:nth-child(4){background:#233d2f;color:#f1f8ed;border-color:#233d2f}
+.instrument-workflow a:nth-child(4) b{color:#d9ff5e}
+.instrument-workflow a:nth-child(4) span{color:#c8dbc8}
+.instrument-workflow a:nth-child(4):hover,.instrument-workflow a:nth-child(4):focus-visible{background:#365a42}
+@media(max-width:1000px){.instrument-workflow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.instrument-workflow{grid-template-columns:repeat(2,minmax(0,1fr))}.instrument-workflow a:nth-child(4){border-left:0}}
