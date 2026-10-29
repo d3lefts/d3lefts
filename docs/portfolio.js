@@ -70,4 +70,36 @@
     items.append(li);
   }
   events.replaceChildren(items);
+
+  // The mechanism atlas shares exactly the registry used by Proof Passports.
+  // Method, finite check, open premise and analogy remain different edge types.
+  const mechanismHost=document.getElementById("pf-mechanism-list");
+  const mechanismTotal=document.getElementById("pf-mechanism-total");
+  if(mechanismHost){
+    const fragment=document.createDocumentFragment();
+    for(const mechanism of view.mechanisms){
+      const article=node("article","pf-mechanism");
+      const head=node("div","pf-mechanism-head");
+      head.append(node("span","pf-mechanism-kind",mechanism.kind==="analogy"?"Analogy / untested transfer":"Recorded research method"),
+        node("span","pf-mechanism-count",mechanism.connections.length+" sourced links"));
+      article.append(head,node("h3","",mechanism.title),
+        node("p","pf-mechanism-description",mechanism.description),
+        node("p","pf-mechanism-scope",mechanism.scope));
+      const connections=node("ul","pf-mechanism-connections");
+      for(const edge of mechanism.connections){
+        const li=node("li","");
+        li.append(node("strong","",edge.claimTitle),
+          node("span","pf-edge-type",edge.relation.replaceAll("-"," ")));
+        if(edge.note)li.append(node("p","",edge.note));
+        const a=link({url:edge.url,label:"Evidence"},"Inspect source ↗");
+        if(a)li.append(a);
+        connections.append(li);
+      }
+      article.append(connections);
+      fragment.append(article);
+    }
+    mechanismHost.replaceChildren(fragment);
+    if(mechanismTotal)mechanismTotal.textContent=view.mechanisms.length+
+      " canonical mechanisms · relation types preserved";
+  }
 })();
