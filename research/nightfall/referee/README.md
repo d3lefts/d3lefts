@@ -42,8 +42,9 @@ Run from repository root:
 
     node research/nightfall/referee/test.cjs
     node research/nightfall/referee/check_receipt.cjs /path/to/exported-receipt.json
+    python3 research/nightfall/referee/independent_verify.py /path/to/exported-receipt.json
 
-The CLI replays the exact input, verified arithmetic, negative controls, and SHA-256 digest, and compares them against the reported results. A forged result, digest or verdict is rejected with a nonzero exit code. CLI replay uses the *same core implementation* as the browser: it is reproducibility, **not** independent outside verification.
+The CLI replays the exact input, verified arithmetic, negative controls, and SHA-256 digest, and compares them against the reported results. A forged result, digest or verdict is rejected with a nonzero exit code. The Node CLI uses the *same core implementation* as the browser. The Python replay implements separate integer and finite-exclusion algorithms and checks the digest, complete overlap transcript, proof-state count and negative controls. Both are from the same research team and are **not** independent outside review.
 
 GitHub Actions workflow: [.github/workflows/referee.yml](../../../.github/workflows/referee.yml). The test suite checks both positive examples and adversarial alterations and is expected to fail closed on a regression.
 
