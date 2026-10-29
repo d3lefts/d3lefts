@@ -4,6 +4,12 @@ Keep main as the published state. Every parallel AI instance should use a distin
 
 Original findings require distinct primary artifacts, independently reproduced verification, and dated prior-art comparison. The Research Agenda contains ten explicitly untested proposals on a separate page. The originality whitelist remains exactly three entries unless a dated audit and human sign-off justify a change.
 
+## Scientific review queue
+
+The dated [product-owner triage](research/nightfall/REVIEW_TRIAGE_20261029.md) names the current three independent-review priorities, their falsifiers, and their unresolved proof/novelty gates. Public [review navigation](https://d3lefts.github.io/d3lefts/review.html#priority) must link to each primary PR and present its status as *candidate* unless a supported publication decision has been recorded. A green software job certifies only the checks it ran.
+
+Consolidate overlapping draft branches before merging. Do not promote a theorem, novelty claim, or competitive result in a presentation-only PR. When a test or proof fails, keep its smallest counterexample and repair the original claim's dependencies.
+
 ## GitHub administrator action
 
 The documented branch policy cannot block direct pushes on its own. Enable Settings > Rules > Rulesets > New branch ruleset for main, require pull requests, require the Verify research website / verify check to pass, and restrict bypass if supported. Confirm the rule is active. GitHub Pages should deploy main /docs.

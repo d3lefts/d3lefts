@@ -28,6 +28,22 @@
 @media(max-width:760px){.review-nav{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end;font-size:11px}.review-nav a:nth-child(2){display:none}.review-nav .nav-call{padding:9px 10px}.review-nav a{white-space:nowrap}.review-nav a:first-child{display:inline-flex}}
 @media(max-width:430px){.review-nav .nav-call{display:none}.review-nav a:first-child{padding:10px;border:1px solid var(--line)}}
 
+
+/* Review queue: quiet editorial emphasis on independently reviewable decisions. */
+.review-priority{padding:58px 0 64px;border-bottom:1px solid var(--line)}
+.review-priority-head{display:grid;grid-template-columns:minmax(140px,.5fr) minmax(0,1.5fr);gap:55px;align-items:start;margin-bottom:30px}
+.review-priority-head h2{font:400 clamp(36px,5.3vw,62px)/1.04 var(--serif);letter-spacing:-.025em;margin:0 0 15px}
+.review-priority-head p{max-width:740px;color:var(--muted);line-height:1.7;font-size:14px}
+.review-priority-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:1px solid var(--line)}
+.review-priority-card{padding:29px 26px 31px;min-width:0;border-right:1px solid var(--line)}
+.review-priority-card:last-child{border-right:0}
+.review-priority-card .review-priority-state{display:block;font:500 10px/1.6 var(--mono);letter-spacing:.055em;color:var(--muted)}
+.review-priority-card h3{font:400 clamp(26px,2.6vw,38px)/1.14 var(--serif);margin:20px 0 15px}
+.review-priority-card p{font-size:13px;line-height:1.75;color:var(--muted);margin:0 0 20px}
+.review-priority-card a{font:600 11px/1.8 var(--mono);border-bottom:1px solid currentColor}
+.review-priority-note{font-size:12px;line-height:1.65;color:var(--muted);margin-top:18px}
+@media(max-width:850px){.review-priority-head{display:block}.review-priority-head .kicker{display:block;margin-bottom:18px}.review-priority-grid{grid-template-columns:1fr}.review-priority-card{border-right:0;border-bottom:1px solid var(--line)}.review-priority-card:last-child{border-bottom:0}}
+
 </style>
 <link rel="stylesheet" href="ethereal-theme.css">
 <script src="ethereal-theme.js" defer></script>
@@ -61,13 +77,45 @@
 <article><span>02 / VERDICT GATES</span><b>Separate verdicts</b><span>A valid input, a correct calculation, and a complete proof are different findings.</span></article>
 <article><span>03 / INPUT COMPLETENESS</span><b>Curated archives available</b><span>Public releases contain approved witness and replay materials; other upstream inputs may still be missing.</span></article>
 </div>
+
+<section class="review-priority wrap" id="priority" aria-labelledby="priority-title">
+  <div class="review-priority-head">
+    <span class="kicker">CURRENT REVIEW QUEUE / 29 OCT 2026</span>
+    <div>
+      <h2 id="priority-title">Three claims worth<br><em>challenging next.</em></h2>
+      <p>The strongest next step is a non-author attack on a precise theorem, family, or transfer barrier. These are source-linked <strong>candidates</strong>; internal arithmetic checks and agent agreement do not establish human peer review or worldwide novelty.</p>
+    </div>
+  </div>
+  <div class="review-priority-grid">
+    <article class="review-priority-card">
+      <span class="review-priority-state">01 / THEOREM CANDIDATE · HUMAN REVIEW OPEN</span>
+      <h3>Affine gluing, all dimensions.</h3>
+      <p>Audit the scalar-fiber inequality, completeness of heavy affine sections, and intrinsic recovery of two glued planar components for every stated dimension. Attack the universal quantifier before the finite examples.</p>
+      <a href="https://github.com/d3lefts/d3lefts/pull/203" target="_blank" rel="noopener">Axiom claim and proof obligations ↗</a>
+    </article>
+    <article class="review-priority-card">
+      <span class="review-priority-state">02 / FAMILY CANDIDATE · HUMAN REVIEW OPEN</span>
+      <h3>A uniform family of cubic covers.</h3>
+      <p>Independently derive the cycle-obstruction polynomials, primitive-element existence and connectivity arguments. Verify the stated girth and 32-cycle without converting the family into a claim of solving the larger conjecture.</p>
+      <a href="https://github.com/d3lefts/d3lefts/pull/204" target="_blank" rel="noopener">Lemnis construction and falsifiers ↗</a>
+    </article>
+    <article class="review-priority-card">
+      <span class="review-priority-state">03 / RESEARCH GUARDRAIL · HUMAN REVIEW OPEN</span>
+      <h3>Where grid certificates fail to transfer.</h3>
+      <p>Check the exact zero-extension specification, pulse-function counterexample and bounded-variation error constant. Reconcile new transport tests with the corrected main-branch definition.</p>
+      <a href="https://github.com/d3lefts/d3lefts/pull/199" target="_blank" rel="noopener">Tessera transport audit ↗</a>
+    </article>
+  </div>
+  <p class="review-priority-note">Dated editorial snapshot; check each live pull request for its current status. A failed proof, missing premise or negative test is a useful finding. <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/REVIEW_TRIAGE_20261029.md" target="_blank" rel="noopener">Full triage, owner decisions and release gates ↗</a></p>
+</section>
+
 <div class="wrap">
 <article class="review-dossier" id="erdos" aria-labelledby="erdos-title">
 <div class="dossier-number">REVIEW / 01<small>FINITE OPTIMIZATION<br>EXACT RATIONAL CERTIFICATE</small></div>
 <div class="dossier-content">
 <h2 id="erdos-title">Erdős minimum overlap</h2>
 <p class="dossier-desc">Claim: a finite rational 131,072-cell step-function witness has continuous-translation supremum <strong>0.380856370118029325246…</strong>. The archived source gives the exact witness SHA-256 <code>a574c280f8839503…</code>, maximizing lag −17,280, and source-reported six-prime internal replay. A separate oversized 131,072-cell attempt at <strong>0.380856370118029394982…</strong> was rejected by the Arena due to the 100,000-value limit. The accepted first-place entry shown in the October 27 snapshot at <strong>0.3808564043546676</strong> has an as-yet unrecovered cell count, input hash and exact rational objective (<a href="https://github.com/d3lefts/d3lefts/issues/6" target="_blank" rel="noopener">recovery issue #6 ↗</a>). This accepted entry is a separate object.</p>
-<div class="status-strip">STATUS: EXACT INTERNAL REPLAY REPORTED · NO EXTERNAL REPLAY CLAIMED · REVIEW OPEN</div>
+<div class="status-strip">STATUS: PUBLIC FRESH-DOWNLOAD MACHINE REPLAY PASS · INDEPENDENT HUMAN REVIEW OPEN</div>
 <ol class="checks">
 <li>Confirm rational heights are in [0,1], with mass exactly one under the stated support width.</li>
 <li>Prove the continuous translation maximum is attained at grid breakpoint events. Include all signed shifts and zero-extension endpoints.</li>
