@@ -16,8 +16,8 @@ The reference is Sunset Boulevard at blue hour: plum and violet, rose haze, and 
 | Rose-violet | `#31233F` | Secondary panels |
 | Pearl cream | `#FFF0E7` | Primary text |
 | Orchid mist | `#DEC9DE` | Metadata and descriptions |
-| Apricot light | `#F5B78B` | Selected states, primary actions |
-| Peach light | `#F8D2AA` | Hover, focus |
+| Apricot with 24k warmth | `#E7B768` | Selected states, primary actions |
+| Soft gilded peach | `#F0CC8F` | Hover, focus |
 | Violet rule | `#826682` | Dividers |
 
 ## Underbelly / new moon
@@ -30,8 +30,8 @@ Absolute-black-near canvas; deep navy and indigo structure; pale jasmine text an
 | Midnight navy | `#0C1527` | Cards and evidence |
 | Indigo | `#16223C` | Selected and lifted layers |
 | Jasmine | `#F1EEDC` | Primary text |
-| Moonlit gold | `#E6DEAA` | Active controls, trust-navigation cues |
-| Moonlight hover | `#F2E8BB` | Focused elements |
+| Gilded moonlight | `#E2D28C` | Active controls, trust-navigation cues |
+| Pale-gold hover | `#EEE0A7` | Focused elements |
 | Starlit violet | `#B4B5D9` | Secondary atmosphere |
 | Quiet lavender | `#BEC3D6` | Metadata |
 | Deep divider | `#33405D` | Panels and structure |
@@ -52,3 +52,9 @@ Oxblood is an **atmospheric punctuation mark**, never a scientific-status legend
 ## Consistency policy
 
 The screenshot-led October 29 revision corrects contrast on the Contributor Path: process panels, status labels, result links, workspace and empty state; it keeps the Night theme navy, replacing only the anomalous wine-red process field.\n\nThe active palettes are determined by `docs/two-skies.css` and `docs/mobile-scroll-cinema.css`, both loaded after the historical stylesheets. Older base declarations remain documented as fallback history, not a license to reintroduce parchment. The computed-style browser audit checks large displayed surfaces in both modes for obsolete background colors and tests mobile overflow. The homepage's three formerly hardcoded instrument colors now use the palette tokens.
+
+## 24k trace refinement — 29 October 2026
+
+The shared metallic reference is `#D4AF37`, a familiar digital approximation of 24k gold (not a literal rendered metal). Both experiences retain distinct matte primary accents: Archive `#E7B768` and New Moon `#E2D28C`. The warmer accent is paired with an apricot hover `#F0CC8F`; the cooler one with `#EEE0A7`. Metallic gold appears only as a short portion of fine navigation rules / selected cinematic strokes, never as normal body text or a proxy for evidence status. The Archive sunrise has less saturated pink and a softer glow; the New Moon retains its navy canvas and quiet lavender text.
+
+Calculated WCAG contrast at designated pairings: Archive primary `#E7B768` on raised plum `#503757` = 5.61:1; Archive button ink `#191327` on `#E7B768` = 9.77:1; New Moon primary `#E2D28C` on canvas `#04060B` = 13.35:1. These token checks do not replace the cross-page computed-style browser tests.
