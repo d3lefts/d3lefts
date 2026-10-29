@@ -1,0 +1,42 @@
+[
+  {
+    "anchor": "S1",
+    "N": 188,
+    "translation": 1,
+    "marks": [
+      17,
+      50,
+      51,
+      57,
+      79,
+      94,
+      105,
+      126,
+      140,
+      150
+    ],
+    "pair_sums": 55,
+    "blocked_exclusions": 178,
+    "first_unblocked": 189
+  },
+  {
+    "anchor": "S2",
+    "N": 189,
+    "translation": 1,
+    "marks": [
+      50,
+      51,
+      57,
+      79,
+      94,
+      105,
+      126,
+      140,
+      150,
+      167
+    ],
+    "pair_sums": 55,
+    "blocked_exclusions": 179,
+    "first_unblocked": 190
+  }
+]
