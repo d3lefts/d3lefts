@@ -145,7 +145,8 @@ try{
   if(width===390){
     // Genuine user-directed Referee → Claim Lab → Discovery finite-evidence handoff.
     // Browser prompts explicitly authorize each separate transition.
-    page.on("dialog",d=>d.accept());
+    const acceptResearchHandoffDialog=d=>d.accept();
+    page.on("dialog",acceptResearchHandoffDialog);
     await page.goto(origin+"referee.html?domain=sidon",{waitUntil:"load"});
     await page.locator("#run-sidon").click();
     await page.waitForFunction(()=>document.querySelector("#send-claim-lab")?.disabled===false);
@@ -173,6 +174,7 @@ try{
     await page.waitForFunction(()=>document.querySelector("#toast")?.textContent?.includes("rejected"));
     const afterTamper=await page.evaluate(()=>JSON.parse(localStorage.getItem("nightfall.discovery.v1")).projects.find(p=>p.id==="sidon").runs.length);
     assert.equal(afterTamper,beforeTamper,"Forged input SHA-256 must never create a research run");
+    page.off("dialog",acceptResearchHandoffDialog);
   }
   if(width===390){
     await page.goto(origin+"agenda.html",{waitUntil:"load"});
