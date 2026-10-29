@@ -79,9 +79,46 @@ $("send-claim-lab").addEventListener("click",()=>{
  }catch(err){alert("Local handoff unavailable: "+err.message+"\nExport the JSON receipt and import it manually in Claim Lab.")}
 });
 
+const Companion=window.NightfallCompanionHandoff;
+$("send-to-adversary").addEventListener("click",()=>{
+ try{
+  const input=tab==="overlap"
+   ?{...overlapInput(),claimedUpper:$("overlap-claimed").value.trim()}
+   :{points:tokens($("sidon-points").value)};
+  const packet=Companion.build("referee","adversary",tab,input);
+  sessionStorage.setItem(Companion.KEY,JSON.stringify(packet));
+  location.assign("adversary.html?domain="+tab+"&companion_handoff=1#workbench");
+ }catch(e){const note=$("companion-handoff-note");note.hidden=false;
+  note.textContent="COMPANION TRANSFER REFUSED: "+e.message+" Export the finite source separately if it exceeds the Adversary's bounded scope.";
+ }
+});
 $("overlap-heights").value=C.OVERLAP_DEMO.heights.join(", ");$("sidon-points").value=C.SIDON_WITNESS.join(", ");$("sidon-subset").value=C.SIDON_SUBSET.join(", ");
 // Explicit, allowlisted deep-link for an inspectable source-to-verifier journey.
 const requestedDomain = new URLSearchParams(window.location.search).get("domain");
 if (requestedDomain === "sidon") setTab("sidon");
 $("app-version").textContent="ENGINE V"+C.VERSION+" · BROWSER-LOCAL";
+const incoming=new URLSearchParams(window.location.search);
+if(incoming.get("companion_handoff")==="1"){
+ const note=$("companion-handoff-note");
+ try{
+  const raw=sessionStorage.getItem(Companion.KEY);sessionStorage.removeItem(Companion.KEY);
+  const packet=Companion.parse(raw,"referee");
+  setTab(packet.domain);
+  if(packet.domain==="overlap"){
+   $("overlap-den").value=packet.input.denominator;
+   $("overlap-heights").value=packet.input.heights.join(", ");
+   $("overlap-claimed").value=packet.input.claimedUpper;
+  }else{
+   $("sidon-points").value=packet.input.points.join(", ");
+   $("sidon-subset").value="";
+   $("sidon-max").value="";
+  }
+  note.hidden=false;
+  note.textContent=packet.domain==="sidon"
+   ?"INPUT ONLY · UNREVIEWED · Imported marks from Devil's Advocate. Referee additionally requires an explicit classical Sidon subset and claimed maximum h(B). Supply and inspect both before verification; no attack verdict was imported."
+   :"INPUT ONLY · UNREVIEWED · Imported exact cells from Devil's Advocate. Referee has not computed a verdict. Run its separate exact verifier.";
+ }catch(e){note.hidden=false;note.textContent="COMPANION IMPORT REFUSED: "+e.message;}
+ history.replaceState(null,"",location.pathname+(location.hash||""));
+}
+
 })();

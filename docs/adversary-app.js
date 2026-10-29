@@ -9,6 +9,7 @@ function switchDomain(){
  const d=domainInput.value;
  ["sidon","overlap","general"].forEach(x=>$(x+"-fields").hidden=x!==d);
  $("referee-link").href="referee.html?domain="+(d==="overlap"?"overlap":"sidon")+"#workbench";
+ $("send-to-referee").disabled=d==="general";
  $("export-attack").disabled=true;$("copy-brief").disabled=true;latest=null;
  result.innerHTML='<span>ATTACK CONTRACT READY</span><h3>Run the bounded falsifier.</h3><p>Claims of universal reach stay open after finite checks.</p>';
 }
@@ -101,7 +102,48 @@ $("copy-brief").addEventListener("click",async()=>{
   const b=$("copy-brief");b.textContent="Brief copied ✓";setTimeout(()=>b.textContent="Copy adversarial brief",1800);
  }catch(e){$("result").insertAdjacentHTML("beforeend",'<p>Clipboard unavailable. Export the JSON receipt and copy from the saved record.</p>');}
 });
+
+const Companion=window.NightfallCompanionHandoff;
+$("send-to-referee").addEventListener("click",()=>{
+ const note=$("handoff-note");
+ try{
+  const source=inputs();
+  if(source.domain==="general")throw Error("The general proof planner has no compatible finite Referee model.");
+  if(source.domain==="sidon"&&source.property!=="four-five")throw Error("Referee tests the (4,5) property plus h(B), not the selected weak/classical Sidon predicate. Keep this attack as its own JSON brief.");
+  const input=source.domain==="sidon"?{points:source.points}:{denominator:source.denominator,heights:source.heights,claimedUpper:source.claimedUpper};
+  const packet=Companion.build("adversary","referee",source.domain,input);
+  sessionStorage.setItem(Companion.KEY,JSON.stringify(packet));
+  location.assign("referee.html?domain="+source.domain+"&companion_handoff=1#workbench");
+ }catch(e){note.hidden=false;note.textContent="COMPANION TRANSFER REFUSED: "+e.message;}
+});
 const query=new URLSearchParams(location.search);
 if(["sidon","overlap","general"].includes(query.get("domain")))domainInput.value=query.get("domain");
 switchDomain();
+if(query.get("companion_handoff")==="1"){
+ const note=$("handoff-note");
+ try{
+  const raw=sessionStorage.getItem(Companion.KEY);sessionStorage.removeItem(Companion.KEY);
+  const packet=Companion.parse(raw,"adversary");
+  domainInput.value=packet.domain;switchDomain();
+  $("reach").value="finite";
+  $("source").value="Referee editor input (unverified transfer)";
+  $("baseline").value="";
+  if(packet.domain==="sidon"){
+   $("property").value="four-five";$("points").value=packet.input.points.join(", ");
+   $("statement").value="Every four-point subset of these exact marks has at least five distinct pairwise distances.";
+   $("assumptions").value="Finite (4,5) predicate on these supplied distinct integer marks; does not assert h(B) or global optimality.";
+  }else{
+   $("denominator").value=packet.input.denominator;
+   $("heights").value=packet.input.heights.join(", ");
+   $("claimed-upper").value=packet.input.claimedUpper;
+   $("statement").value=packet.input.claimedUpper
+    ?"The exact continuous signed-shift maximum of the supplied rational step function is at most "+packet.input.claimedUpper+"."
+    :"Compute the exact continuous maximum of the supplied rational step function and test legal one-unit mass-preserving improvements.";
+   $("assumptions").value="Finite equal-width cells on [0,2] with exact unit mass; one-unit perturbations are a bounded local search.";
+  }
+  note.hidden=false;
+  note.textContent="INPUT ONLY · UNREVIEWED · Referee editor inputs were transferred for a distinct adversarial attack. No Referee arithmetic verdict, negative-control result or proof status was imported. Click Run Devil's Advocate.";
+ }catch(e){note.hidden=false;note.textContent="COMPANION IMPORT REFUSED: "+e.message;}
+ history.replaceState(null,"",location.pathname+(location.hash||""));
+}
 })();

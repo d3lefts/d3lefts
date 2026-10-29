@@ -10,3 +10,5 @@ body{background:var(--ia-bg);color:var(--ia-ink);font-family:var(--ia-sans);marg
  .ia-header .ia-nav.open{display:flex;flex-direction:column;align-items:stretch;gap:0}
  .ia-header .ia-nav a{display:block;padding:12px 0}
 }
+
+.ia-handoff-note{margin:20px 29px 0;padding:14px 16px;background:#e0eade;border:1px solid #8ea68d;font:12px/1.7 var(--ia-mono);color:#28513c}.ia-handoff-note[hidden]{display:none}@media(max-width:600px){.ia-handoff-note{margin:16px 18px 0}}
