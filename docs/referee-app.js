@@ -6,7 +6,7 @@ const E=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt
 const tokens=s=>String(s).trim().split(/[\s,;]+/).filter(Boolean);
 let tab="overlap",latest=null;
 const repo="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/witness_30.txt";
-function setTab(t){tab=t;["overlap","sidon"].forEach(x=>{$("tab-"+x).setAttribute("aria-selected",String(x===t));$("pane-"+x).hidden=x!==t});$("result").innerHTML='<div class="idle"><span class="idle-icon">⌁</span><h3>Awaiting a witness.</h3><p>Run the selected domain verifier to produce a scoped evidence report.</p></div>';latest=null;$("export-receipt").disabled=true;$("send-claim-lab").disabled=true;}
+function setTab(t){tab=t;const companion=document.getElementById("adversary-link"),nav=document.getElementById("adversary-nav");if(companion)companion.href="adversary.html?domain="+t+"#workbench";if(nav)nav.href="adversary.html?domain="+t;["overlap","sidon"].forEach(x=>{$("tab-"+x).setAttribute("aria-selected",String(x===t));$("pane-"+x).hidden=x!==t});$("result").innerHTML='<div class="idle"><span class="idle-icon">⌁</span><h3>Awaiting a witness.</h3><p>Run the selected domain verifier to produce a scoped evidence report.</p></div>';latest=null;$("export-receipt").disabled=true;$("send-claim-lab").disabled=true;}
 function overlapInput(){return{denominator:$("overlap-den").value.trim(),heights:tokens($("overlap-heights").value)}}
 function sidonInput(){return{points:tokens($("sidon-points").value),subset:tokens($("sidon-subset").value)}}
 function resetOverlap(){$("overlap-den").value=C.OVERLAP_DEMO.denominator;$("overlap-heights").value=C.OVERLAP_DEMO.heights.join(", ");$("overlap-claimed").value="";setTab("overlap")}
