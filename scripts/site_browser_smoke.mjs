@@ -178,7 +178,7 @@ try{
    assert.equal(await noScript.locator("#sidon-witness .sf-point.chosen").count(),17,"no-JS chosen subset");
    assert.equal(await noScript.locator("#sidon-toggle").isDisabled(),true,"no inert pretend interaction");
    await noScript.goto(origin+"constellation.html",{waitUntil:"load"});
-   assert.equal(await noScript.locator('#co-trace-picker a[href="passport.html?claim=erdos36"]').count(),1,"no-script source passport fallback");
+   assert.equal(await noScript.locator('#co-trace-picker a[href*="/projects/erdos/STATUS_AND_PRIOR_ART_20261028.md"]').count(),1,"no-script static research dossier fallback");
    assert.ok((await noScript.locator("#co-trace-summary").innerText()).includes("Without scripts"),"no false loading claim");
    assert.equal(await noScript.locator(".nf-replay-steps a").count(),4,"no-JS reproduction pathway");
    await noScript.close();
