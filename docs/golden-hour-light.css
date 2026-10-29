@@ -468,8 +468,8 @@ html:not([data-nf-theme="dusk"]) .hero-aside .diagram path[stroke="#abb8aa"]{
 html:not([data-nf-theme="dusk"]) .hero-aside .diagram path[stroke="#4a1f24"]{stroke:#4a1f24}
 html:not([data-nf-theme="dusk"]) .hero-aside .diagram path[stroke="#a76450"]{stroke:#bd7c60}
 html:not([data-nf-theme="dusk"]) .hero-aside .diagram circle[fill="#3a161b"]{fill:#4a1f24}
-html:not([data-nf-theme="dusk"]) .hero-aside .diagram circle[fill="#a76450"]{
- fill:#d97a4a;stroke:#4a1f24;
+html:not([data-nf-theme="dusk"]) .hero-aside .diagram circle[fill="#d8c38a"]{
+ fill:#d8c38a;stroke:#4a1f24;
 }
 html:not([data-nf-theme="dusk"]) .hero-aside .diagram text{fill:#664653}
 html:not([data-nf-theme="dusk"]) :is(.flagship-card svg circle[fill="#d8c38a"],

@@ -330,7 +330,7 @@ html[data-nf-theme="dusk"] .hero-aside .diagram circle[stroke]{stroke:#8896ba}
 html[data-nf-theme="dusk"] .hero-aside .diagram path[stroke="#4a1f24"]{stroke:#dfcaff}
 html[data-nf-theme="dusk"] .hero-aside .diagram path[stroke="#a76450"]{stroke:#a7b4de}
 html[data-nf-theme="dusk"] .hero-aside .diagram circle[fill="#3a161b"]{fill:#dbd1f3}
-html[data-nf-theme="dusk"] .hero-aside .diagram circle[fill="#a76450"]{fill:#e3c6ff}
+html[data-nf-theme="dusk"] .hero-aside .diagram circle[fill="#d8c38a"]{fill:#e3c6ff}
 html[data-nf-theme="dusk"] .hero-aside .diagram text{fill:#c3b9e2}
 
 
@@ -665,7 +665,7 @@ html[data-nf-theme="dusk"] .co-page .co-node[aria-pressed="true"]{
 }
 /* Older green inline diagram ink is remapped visually, never edited mathematically. */
 html[data-nf-theme="dusk"] .hero-aside .diagram path[stroke="#4a1f24"]{stroke:var(--nf-champagne)}
-html[data-nf-theme="dusk"] .hero-aside .diagram circle[fill="#a76450"]{fill:var(--nf-champagne)}
+html[data-nf-theme="dusk"] .hero-aside .diagram circle[fill="#d8c38a"]{fill:var(--nf-champagne)}
 /* Focus glows use champagne only after deliberate selection; reduced motion honored. */
 @media(prefers-reduced-motion:no-preference){
  html[data-nf-theme="dusk"] .nf-observatory-node[aria-pressed="true"] .nf-observatory-star{

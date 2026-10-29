@@ -82,11 +82,11 @@ try{
    if(name==="index.html"){
     const diagram=await page.evaluate(()=>{
       const svg=document.querySelector(".hero-aside .diagram");
-      return {signal:getComputedStyle(svg.querySelector('circle[fill="#a76450"]')).fill,
+      return {signal:getComputedStyle(svg.querySelector('circle[fill="#d8c38a"]')).fill,
         curve:getComputedStyle(svg.querySelector('path[stroke="#4a1f24"]')).stroke,
         toolbar:document.querySelector('meta[name="theme-color"]')?.content};
     });
-    assert.equal(diagram.signal,"rgb(217, 122, 74)","Mathematical hero signal uses muted blackcherry");
+    assert.equal(diagram.signal,"rgb(216, 195, 138)","Mathematical hero signal uses muted blackcherry");
     assert.equal(diagram.curve,"rgb(74, 31, 36)","Hero's forest-green path uses oxblood");
     assert.equal(diagram.toolbar,"#4a1f24","Browser chrome follows blackcherry identity");
    }

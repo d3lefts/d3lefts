@@ -101,6 +101,8 @@ jobs:
         run: |
           npm install --no-save --no-package-lock playwright-core@1.56.1
           mkdir -p browser-artifacts
+      - name: Enforce no-lime palette contract and theme contrast
+        run: node scripts/check_palette_contract.mjs
       - name: Verify ethereal theme across 25 pages and capture previews
         run: |
           set -o pipefail
