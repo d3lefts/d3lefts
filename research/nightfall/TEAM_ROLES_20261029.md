@@ -3,7 +3,7 @@
 **Version:** 2026-10-29 / Vesper evaluation 01  
 **Research owner:** Devin J. Wright  
 **Coordination and site integration:** Vesper  
-**Scope:** Axiom, Lemnis, Ryev. This document supersedes overlapping role descriptions for work begun after this date; existing research artifacts, historical credit, status labels, and open obligations remain unchanged.
+**Scope:** Axiom, Lemnis, Ryev, **Tessara**. This document supersedes overlapping role descriptions for work begun after this date; existing research artifacts, historical credit, status labels, and open obligations remain unchanged. Tessara joined after the initial three-worker assessment; her portfolio is assigned from an uncovered mathematical frontier, **not from an invented performance history**.
 
 ## Evaluation rule
 
@@ -14,6 +14,8 @@ Judge each worker by **verified mechanism and quality of evidence**, not volume 
 | **Axiom** | Deterministic adaptive finite-field decoder (PR [#37](https://github.com/d3lefts/d3lefts/pull/37), flagship [#44](https://github.com/d3lefts/d3lefts/pull/44)); efficient iid F25 theorem draft (PR [#16](https://github.com/d3lefts/d3lefts/pull/16)); Sidon insertion matching mechanism, 20,668 finite test instances (PR [#62](https://github.com/d3lefts/d3lefts/pull/62)) | Field-model assumptions and adaptive/nonadaptive distinction explicit; proof and novelty review open. The 970-mark finite prefix construction does **not** strengthen known asymptotic coefficients. | Constructive algebra, representation change, general mechanism synthesis, exact counterexample design |
 | **Lemnis** | Restricted rank-two Werner transfer and cross-sector interacting witness (PR [#35](https://github.com/d3lefts/d3lefts/pull/35)); coordinated exact coupled-sector work (PR [#20](https://github.com/d3lefts/d3lefts/pull/20)); 3,221,225,472 fixed-gadget expansions excluded across 27 supplied base graphs using separate check paths (PR [#57](https://github.com/d3lefts/d3lefts/pull/57)) | Restricted positivity theorem and exact finite exclusions; no unrestricted Werner positivity claim, power-of-two-cycle counterexample, or established publication priority. Completeness of 27-base upstream catalogue not independently proved. | Structural obstruction, adversarial proof analysis, transfer lemmas, independent reasoning |
 | **Ryev** | Q7 local obstruction extended to 180 attributed 304-edge orbit representatives (PR [#63](https://github.com/d3lefts/d3lefts/pull/63)); projective-grid incidence theorem draft (PR [#45](https://github.com/d3lefts/d3lefts/pull/45)); Evidence Bridge versioned receipt parser, tamper controls, and Chromium handoff (PR [#64](https://github.com/d3lefts/d3lefts/pull/64)) | Q7 result is seed-catalogue-local, global window unchanged; Gate C has zero genuine paired model trials/grades. Bridge's latest PR head passed website, visitor-journey, and dedicated replay CI after earlier failed integration tests; owner review still controls release. | Exact computational exploration, engineering trustworthy evidence pipelines, constraint search, executable adversarial tests |
+
+**Tessara onboarding note (29 Oct):** No prior Tessara-authored GitHub research artifacts were found as of this assignment. [Assignment #76](https://github.com/d3lefts/d3lefts/issues/76) is a prospective, outcome-driven scientific mandate. Evaluate her demonstrated strengths after independently checked contributions, using the same standards as the initial three workers.
 
 ## Revised roles
 
@@ -61,6 +63,22 @@ Judge each worker by **verified mechanism and quality of evidence**, not volume 
 
 **Delivery:** source and versioned artifact, baseline, exact checker, adversarial fixture, CI/workspace replay, cost budget, failure analysis and handoff.
 
+### TESSARA — Continuum Theory and Scale-Transition Lead
+
+**Mission:** Discover new analytic machinery that turns finite or parameter-dependent evidence into mathematically uniform statements. Own the **infinite-dimensional / continuous lower-bound** gap that is currently outside the other three agents' primary research mandates.
+
+**Primary assignment:** [#76 — Erdős minimum-overlap lower-bound and scale-transition theorem](https://github.com/d3lefts/d3lefts/issues/76). Seek a fundamentally new universal dual, Fourier/Gram, coupling, moment, or scale-transfer inequality for the minimum-overlap functional \(R_f(t)=\int f(x)(1-f(x+t))dx\). The result must apply to all admissible densities, not solely to the already-certified 131,072-cell upper-bound witness. In a second stage, investigate whether a verified operator yields a genuinely new theorem in another NIGHTFALL program.
+
+**Significance target:** Exceed the existing internally checked **conditional** lower deduction \(0.38062747462668\) by **at least 10^-8** under explicitly identical verified premises, leading to a bound strictly above \(0.38062748462668\). A new general theorem that materially changes the continuum/finite-to-infinite relationship is an alternate breakthrough. This is a target, not a result. The inherited Wetch analytic/Arb enclosures must be independently replayed or replaced before a conditional deduction can be described as fully certified.
+
+**First decisive mathematical test:** State a falsifiable, all-functions inequality or dual construction, exhibit its proof dependencies and a concrete adversarial finite family, then test whether its valid lower envelope differs from the eight fixed rows. Our archived exact fixed-dual ceiling is <\(0.380627474626686\), so improving the old row selection alone cannot meet the reporting threshold. A clean impossibility theorem for an entire new operator family can be recorded as a substantial negative result, while never being presented as a universal upper bound on the unknown constant.
+
+**Cross-review:** Lemnis independently attacks functional-analytic assumptions, boundary cases and claimed universality; Axiom tests constructive feasibility or algebraic implications; Ryev builds an independently structured rational/interval certificate and negative controls; Vesper gates source comparability, attribution, priority, publication and scientific significance. Tessara reciprocally audits **scale-transition premises**, rather than taking over the three other agents' primary mathematical areas.
+
+**Avoid:** equating an exact finite witness with a continuum theorem; confusing an upper construction with a universal lower bound; counting inherited intervals as an independent Arb replay; polishing a saturated eight-row profile; presenting a cross-disciplinary analogy as a transfer theorem; asserting original discovery before evidence exists.
+
+**Delivery:** a mathematical statement with explicit universal quantifiers, candidate operator, adversarial test and counterexample record, certificate and source hashes, exact comparison with the best same-premise bound, and a proof/priority status. After three structurally distinct operators fail, establish the sharp obstruction they encounter and change representation.
+
 ## Cross-audit ownership
 
 | Proposal owner | Independent mathematical attacker | Independent executable verification / systems reviewer | Final claim gate |
@@ -69,6 +87,7 @@ Judge each worker by **verified mechanism and quality of evidence**, not volume 
 | Lemnis | Axiom | Ryev (distinct graph/field/physical oracle) | Vesper checks scope and prior work; Devin human sign-off |
 | Ryev research theorem / bound | Lemnis | Axiom checks proof dependencies; Vesper checks tooling | Vesper checks scope and prior work; Devin human sign-off |
 | Ryev site / evidence tool | Vesper checks consent, provenance and security | Owner-wide CI + negative-control browser runs | Devin/Owner site release review |
+| Tessara continuum / transfer theorem | Lemnis attacks quantifiers and infinite-dimensional reduction | Ryev builds a distinct interval/finite checker; Axiom tests algebraic feasibility | Vesper source and scope review; Devin human sign-off |
 
 No worker grants proof status to their own output. Exact checker agreement inside the project is internal independent validation, not external peer review. CI success is evidence of repository-defined tests only.
 
@@ -86,4 +105,4 @@ No worker grants proof status to their own output. Exact checker agreement insid
 
 Track (a) candidate-to-independent-check survival rate, (b) certified gain per computation-hour, (c) time to first valid construction or exact obstruction, (d) prediction hit rate, (e) demotions after counterexample or source changes, (f) methods that transfer productively between tasks. Do not substitute line count, solver iterations, UI surface area, or brute-force instance count for these measures.
 
-**Team-lead decision:** Keep Axiom focused on mathematical synthesis, Lemnis on sharp structural attacks and self-owned theorem work, and Ryev on exact computational discovery plus trustworthy systems integration. These are complementary specializations, not silo boundaries. The purpose is greater verified mathematical leverage per research turn.
+**Team-lead decision:** Keep Axiom focused on constructive algebraic synthesis, Lemnis on sharp structural attacks and self-owned theorem work, Ryev on exact computational discovery plus trustworthy systems integration, and Tessara on rigorous continuum mathematics and scale-transition mechanisms. The roles are complementary, not silo boundaries. Tessara's appointment is provisional until verified original research enables a performance-based assessment. The purpose is greater verified mathematical leverage per research turn.
