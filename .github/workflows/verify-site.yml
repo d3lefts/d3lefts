@@ -1,4 +1,6 @@
 name: Verify research website
+# Broad docs, research and scripts globs intentionally cover all site regressions.
+# Avoid redundant explicit paths: nested file paths are already included.
 on:
   push:
     branches: [main]
@@ -6,22 +8,12 @@ on:
       - "docs/**"
       - "research/nightfall/**"
       - "scripts/**"
-      - "scripts/audit_release_scope.py"
-      - "scripts/site_browser_smoke.mjs"
-      - "scripts/test_orchestrator.cjs"
-      - "scripts/test_discovery_core.cjs"
-      - "scripts/test_discovery_worker.py"
-      - "scripts/verify_*.py"
-      - "research/nightfall/AGENT_TASKS.json"
       - ".github/workflows/verify-site.yml"
   pull_request:
     paths:
       - "docs/**"
       - "research/nightfall/**"
       - "scripts/**"
-      - "scripts/audit_release_scope.py"
-      - "scripts/site_browser_smoke.mjs"
-      - "scripts/test_orchestrator.cjs"
       - ".github/workflows/verify-site.yml"
   workflow_dispatch:
 concurrency:

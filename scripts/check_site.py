@@ -86,6 +86,17 @@ def main() -> int:
         for href, props in p.links:
             check_ref(src, href, props, pages)
     js = (DOCS / "site.js").read_text(encoding="utf-8")
+    css = (DOCS / "site.css").read_text(encoding="utf-8")
+    rail = DOCS / "journey-rail.css"
+    # Prevent visual regression to a removed five-stage tool flow or an
+    # unstyled cross-tool return rail. Never change scientific evidence gates.
+    if not rail.is_file() or "journey-rail.css" not in js:
+        FAILURES.append("DESIGN: shared guided navigation stylesheet missing")
+    if ".instrument-workflow a:nth-child(5)" in css or "grid-template-columns:repeat(5,minmax(0,1fr))" in css:
+        FAILURES.append("DESIGN: superseded fifth-stage layout was reintroduced")
+    if ('class="compare-table-wrap" role="region" tabindex="0"' not in
+            (DOCS / "index.html").read_text(encoding="utf-8")):
+        FAILURES.append("ACCESSIBILITY: evidence comparison requires keyboard-scrollable region")
     sources = set("https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/" + path
                   for path in re.findall(r'(?:\bpath|"path")\s*:\s*"([^"]+)"', js))
     homepage = pages[DOCS.joinpath("index.html").resolve()]
