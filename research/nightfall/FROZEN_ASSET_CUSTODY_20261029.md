@@ -19,6 +19,20 @@
 
 These are private staging copies, with ZIP integrity checked at source; supplementary Drive transfers were confirmed by filename and byte size.
 
+## Additional privately staged source bundles
+
+The same private folder now also contains the following owner-held assets, transferred October 29 without publication:
+
+- `LEMNIS_WERNER_4209_CERTIFICATE_20261028.zip`
+- `LEMNIS_WERNER_COUPLING_TUBE_20261028.zip`
+- `NIGHTFALL_SIDON30_MACHINE_PROOF_20261028.zip`
+- `NIGHTFALL_Adaptive_Decoder_Optimized_20261029.zip`
+- `AXIOM_Sidon_Exact_SAT_20261029.zip`
+- `NIGHTFALL_Erdos_Campaign_20261029_Verification.zip`
+- `NIGHTFALL_WERNER_4_TO_25_FINAL_20261028.zip`
+
+These transfers establish secure custody, **not** claim validation, GitHub Release availability, or eligibility for Original Findings.
+
 ## Advisory prepublication audit
 
 The 226-entry expanded archive was recursively opened through nested ZIPs (to depth four); its 25 PDFs had extractable text scanned, along with 692 text-like members. No key-pattern hit (GitHub/OpenAI/AWS/Google API key regexes and PEM private-key header patterns) was found in that examined text. The broad privacy-phrase scan flagged 12 text members (16 occurrences). Binary files, fonts/images and any unparsable or sensitive content still require manual review. A token-pattern miss is **not** proof that release is safe.
