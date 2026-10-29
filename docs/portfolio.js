@@ -27,6 +27,10 @@
     events.replaceChildren();
     return;
   }
+  const recordMetric=document.getElementById("pf-metric-records");
+  const mechanismMetric=document.getElementById("pf-metric-mechanisms");
+  if(recordMetric)recordMetric.textContent=String(view.trackedCount).padStart(2,"0");
+  if(mechanismMetric)mechanismMetric.textContent=String(view.mechanisms.length).padStart(2,"0");
   summary.textContent=view.trackedCount+" canonical records · "+view.publicFiniteCount+
     " public finite-evidence records · exact claim statuses retained";
   if(stamp)stamp.textContent=view.asOf?"Registry dated "+view.asOf:"Registry date unspecified";
