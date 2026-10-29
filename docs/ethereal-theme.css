@@ -161,3 +161,8 @@ html[data-nf-theme="dusk"] :is(.rt-result,.rt-boundary){
 }
 html[data-nf-theme="dusk"] .rt-btn.secondary{color:#d9cbff}
 html[data-nf-theme="dusk"] :is(.rt-hero h1 em,.rt-number){color:#c8b7ef}
+
+html[data-nf-theme="dusk"] .join-hero-aside li b{color:#b7bce8}
+@media(prefers-reduced-motion:reduce){
+  .nf-theme-toggle{transition:none!important;animation:none!important}
+}
