@@ -44,7 +44,16 @@
     $("nf-tool-hint").textContent=root.toolHint;
     const list=$("nf-tool-links");list.replaceChildren();
     for(const url of root.tools){
-      const a=document.createElement("a");a.href=url;a.textContent=url==="orchestrator.html"?"Orchestrator ↗":url==="claim-lab.html"?"Claim Lab ↗":url==="desk.html"?"Research Desk ↗":"Mechanism Atlas ↗";list.appendChild(a);
+      const a=document.createElement("a");a.href=url;a.textContent=url==="orchestrator.html"?"Orchestrator / prefill this exact branch ↗":url==="claim-lab.html"?"Claim Lab ↗":url==="desk.html"?"Research Desk ↗":"Mechanism Atlas ↗";
+      if(url==="orchestrator.html")a.addEventListener("click",event=>{
+        event.preventDefault();
+        try{
+          const payload=C.orchestratorInput(selectedTask());
+          sessionStorage.setItem("nightfall.frontier.orchestrator.v1",JSON.stringify(payload));
+          location.assign("orchestrator.html?frontier_handoff=1");
+        }catch(e){inform("Orchestrator handoff unavailable: "+e.message+". Copy the frozen research brief.");}
+      });
+      list.appendChild(a);
     }
     const sidon=t.rootId==="NF-156-184-9";
     $("nf-check").disabled=!sidon;$("nf-values").disabled=!sidon;
