@@ -1,0 +1,22 @@
+{
+  "adversarial_controls": "PASS incl. weak-Sidon versus (4,5) distinction",
+  "certificate_sha256": "fd0fc220e4b2ef5e458c5a5ef21a0baacb2cfdb226b14b503959b3c1a4dd782a",
+  "counts": {
+    "admissible_ap": 305,
+    "base_ap": 28,
+    "candidate_ap": 1132,
+    "caseI": 44255,
+    "caseII": 7174,
+    "caseIII": 23,
+    "invalid_ap": 827,
+    "portfolio": 11
+  },
+  "external_prior_art_review": "PENDING",
+  "new_max_after_one": 18,
+  "new_max_after_two": 19,
+  "old_cover12_reject_states": 7801,
+  "old_max_sidon": 17,
+  "scope": "Every weak-Sidon-preserving 1- or 2-integer superextension of this specific 30-point witness; (4,5) follows as a corollary; no global optimum or asymptotic claim.",
+  "source_sha256": "dc4697ce051a57987049199965967cc2b981433816d3daac284454262395978f",
+  "verdict": "PASS \u2014 bounded exact theorem"
+}

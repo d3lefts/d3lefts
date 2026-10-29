@@ -1,0 +1,63 @@
+{
+  "schema": "nightfall-orchestrator-plan-v1",
+  "mode": "local planning only",
+  "frozen": {
+    "id": "SIDON30-EXTENSION-RIGIDITY-20261029",
+    "claim": "For all integers x,y distinct outside B: if B+x or B+x+y is weak Sidon (all off-diagonal two-mark sums distinct), then h(B+x)=18 and h(B+x+y)=19 respectively. The (4,5) extension statement is a corollary.",
+    "source": "research/nightfall/projects/sidon-finite-30/witness_30.txt @ frozen SHA-256 dc4697ce051a57987049199965967cc2b981433816d3daac284454262395978f",
+    "falsifier": "Find an integer weak-Sidon superextension of B of size 31 or 32 with Sidon number below 18 or 19, or falsify one of the finite affine exception classes.",
+    "digest": "dc4697ce051a57987049199965967cc2b981433816d3daac284454262395978f"
+  },
+  "tasks": [
+    {
+      "id": "A",
+      "role": "constructor",
+      "depends": [],
+      "brief": "Attempt 31/32 finite improvement; derive all affine completion candidates and compact universal Sidon portfolio."
+    },
+    {
+      "id": "B",
+      "role": "reproducer",
+      "depends": [
+        "freeze"
+      ],
+      "brief": "Independently rederive all AP candidates, valid four-point insertion constraints, full affine case split and check every pair-sum witness."
+    },
+    {
+      "id": "C",
+      "role": "adversary",
+      "depends": [
+        "freeze"
+      ],
+      "brief": "Mutate witness hashes and portfolio, test 4-distinct collision and Sidon repeated sums, search unclassified pair configurations."
+    },
+    {
+      "id": "D",
+      "role": "formalizer",
+      "depends": [
+        "freeze"
+      ],
+      "brief": "Write universal integer-to-finite affine reduction; make quantifier scope explicit, document all exceptions."
+    },
+    {
+      "id": "E",
+      "role": "integrator",
+      "depends": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "brief": "Compare receipts, run independent CI; preserve no-priority/no-global-bound gates and request outside specialist review."
+    }
+  ],
+  "requiredReceipt": [
+    "frozen source commit and SHA-256",
+    "checker commit and SHA-256",
+    "exact command and environment",
+    "output and scope",
+    "PASS/FAIL/INCONCLUSIVE",
+    "counterexample or unresolved obligations"
+  ],
+  "gate": "No automatic promotion of scientific status."
+}
