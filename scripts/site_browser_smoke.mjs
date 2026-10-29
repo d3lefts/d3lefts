@@ -94,6 +94,14 @@ try{
     assert.equal(await page.locator(".atlas-card:visible").count(),23,"library filter reset");
   }
   if(width===390){
+    await page.goto(origin+"referee.html",{waitUntil:"load"});
+    assert.equal(await page.locator("#run-overlap").count(),1,"Referee overlap verifier controls");
+    assert.equal(await page.locator("#run-sidon").count(),1,"Referee Sidon verifier controls");
+    await page.locator("#run-overlap").click();
+    assert.match(await page.locator("#result").innerText(),/EXACT MAXIMUM|Finite witness survives|Local evidence remains open/i,"Referee bounded exact overlap result");
+    assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth))<=3,"Referee mobile overflow");
+  }
+  if(width===390){
     await page.goto(origin+"claim-lab.html",{waitUntil:"load"});
     assert.equal(await page.locator(".demoNotice").count(),1,"Claim Lab demo explicitly labeled");
     assert.equal(await page.locator('[data-tab="claims"]').count(),1,"Claim Lab standalone navigation");
