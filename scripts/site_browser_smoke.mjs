@@ -143,6 +143,38 @@ try{
     assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth))<=3,"Claim Lab mobile overflow");
   }
   if(width===390){
+    // Genuine user-directed Referee → Claim Lab → Discovery finite-evidence handoff.
+    // Browser prompts explicitly authorize each separate transition.
+    page.on("dialog",d=>d.accept());
+    await page.goto(origin+"referee.html?domain=sidon",{waitUntil:"load"});
+    await page.locator("#run-sidon").click();
+    await page.waitForFunction(()=>document.querySelector("#send-claim-lab")?.disabled===false);
+    await page.locator("#send-claim-lab").click();
+    await page.waitForURL(/claim-lab\.html/);
+    await page.waitForFunction(()=>document.querySelector("#sendDiscovery")?.disabled===false);
+    assert.match(await page.locator("#content").innerText(),/Referee receipt \/ Finite Sidon/,"Referee hash-checked metadata imported without claim promotion");
+    await page.locator("#sendDiscovery").click();
+    await page.waitForURL(/discovery\.html/);
+    await page.waitForFunction(()=>document.querySelector(".panel.evidence")?.textContent?.includes("LOCAL FINITE REPLAY"),{timeout:20000});
+    const finiteLedger=await page.locator(".panel.evidence").first().innerText();
+    assert.match(finiteLedger,/LOCAL FINITE REPLAY/,"Discovery distinguishes local replay");
+    assert.match(finiteLedger,/INPUT HASH MATCH/,"Discovery records exact source fingerprint");
+    assert.match(finiteLedger,/EXTERNAL REVIEW OPEN/,"No external proof promotion");
+    const beforeTamper=await page.evaluate(()=>JSON.parse(localStorage.getItem("nightfall.discovery.v1")).projects.find(p=>p.id==="sidon").runs.length);
+    await page.evaluate(()=>{
+      const fake={format:"nightfall-referee-receipt-v1",version:"1.0.0",domain:"weak-sidon-4-5-finite",
+        source:{points:["1","2","3"],subset:["1","2"]},claimedMaximum:2,
+        inputSha256:"0".repeat(64),result:{status:"FINITE_CHECK_PASSED"},
+        negativeControls:{understatedMaximumRejected:true,corruptedSubsetRejected:true},
+        verdict:"FINITE_CHECK_PASSED"};
+      sessionStorage.setItem("nightfall.discovery.pending.v1",JSON.stringify(fake));
+    });
+    await page.goto(origin+"discovery.html?referee_handoff=1",{waitUntil:"load"});
+    await page.waitForFunction(()=>document.querySelector("#toast")?.textContent?.includes("rejected"));
+    const afterTamper=await page.evaluate(()=>JSON.parse(localStorage.getItem("nightfall.discovery.v1")).projects.find(p=>p.id==="sidon").runs.length);
+    assert.equal(afterTamper,beforeTamper,"Forged input SHA-256 must never create a research run");
+  }
+  if(width===390){
     await page.goto(origin+"agenda.html",{waitUntil:"load"});
     assert.equal(await page.locator("#agenda-list .research-proposal:visible").count(),10,"ten proposals");
     for(const cat of ["mathematics","quantum","super-intelligence","safety","systems"]){
