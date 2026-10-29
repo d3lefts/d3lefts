@@ -7,6 +7,7 @@ if(!C)return;
 const $=id=>document.getElementById(id);
 const escape=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 let state=C.empty(),warning="";
+let selectedTarget="",showAll=false;
 try{
  const stored=localStorage.getItem(KEY);
  if(stored){
@@ -28,6 +29,38 @@ function nextMarkup(next){
   '<p class="question-prose">'+escape(expect)+'. '+escape(p.explanation)+'</p>'+
   '<p class="question-prose" style="margin-top:11px">'+escape(next.rationale)+'</p>'+
   '<div class="factline"><span>FLOOR ≥ '+C.bound(t.n,t.mass)+'</span><span>'+amount.toLocaleString("en-US")+' SUBSETS TO ENUMERATE</span><span>EXACT INTEGER</span></div>';
+}
+function renderCandidateControls(){
+ const options=C.candidates(state,showAll?C.TARGETS.length:4);
+ const selected=options.find(c=>c.target.n+":"+c.target.mass===selectedTarget)||options[0]||null;
+ selectedTarget=selected?selected.target.n+":"+selected.target.mass:"";
+ const select=$("candidate-choice");
+ select.disabled=!options.length;
+ select.innerHTML=options.map(c=>'<option value="'+c.target.n+':'+c.target.mass+'">'+
+  '#'+c.rank+' · n='+c.target.n+', m='+c.target.mass+' · '+c.anchored_subsets.toLocaleString("en-US")+' checks · '+escape(c.selection_signal)+'</option>').join("");
+ if(selected)select.value=selectedTarget;
+ select.onchange=()=>{selectedTarget=select.value;render()};
+ $("candidate-detail").textContent=selected?
+  (selected.rank===1?"Recommended by the fixed heuristic. ":"Human-selected alternative (#"+selected.rank+"). State your scientific reason for redirecting. ")+
+  "Predicted gap: "+(selected.prediction.gap===null?"unavailable":selected.prediction.gap)+
+  ". Exact checks required: "+selected.anchored_subsets.toLocaleString("en-US")+
+  ". Selection signal: "+selected.selection_signal+
+  ". Ranking approximates proximity and compute cost, not information gain."
+  :"Stop rule reached. Export your complete experiment history.";
+ $("run-four").disabled=state.records.length>=C.MAX_STEPS;
+ $("run-four").textContent=showAll?"Show top four":"Show all candidates";
+ $("run-four").setAttribute("aria-pressed",String(showAll));
+ return selected;
+}
+function renderMetrics(){
+ const m=C.metrics(state);
+ $("budget-metrics").innerHTML=[
+  ["APPROVED EXPERIMENTS",m.user_approved_steps+" / "+C.MAX_STEPS],
+  ["EXACT SUBSETS SEARCHED",m.anchored_subsets_checked.toLocaleString("en-US")],
+  ["FALSIFIED LOCAL PREDICTIONS",String(m.failed_local_predictions)],
+  ["STRICT FINITE GAPS",String(m.strict_finite_gaps)],
+  ["HUMAN REDIRECTIONS",String(m.user_redirected_steps)]
+ ].map(([label,value])=>'<div class="metric-item"><span>'+escape(label)+'</span><strong>'+escape(value)+'</strong></div>').join("");
 }
 function renderCoverage(){
  const results=new Map(state.records.map(r=>[r.target.n+":"+r.target.mass,r]));
@@ -54,7 +87,9 @@ function renderHistory(){
    '<p>Elementary floor: <b>'+result.lower_bound+'</b>. Exact finite minimax: <b>'+result.exact_minimax+'</b>. Gap: <b>'+result.gap+'</b>.</p>'+
    '<p>Anchor-complete subsets: <code>'+result.anchored_subsets.toLocaleString("en-US")+'</code>. One optimal mark set: <code>['+result.one_optimal_set.join(", ")+']</code>.</p>'+
    '<p>Prediction: '+(p.gap===null?"no earlier same-mass measurement":'gap '+p.gap+' from '+escape(p.parent))+
-   '. '+escape(result.verification)+'</p></article>';
+   '. '+escape(result.verification)+'</p>'+
+   '<p><b>Selection:</b> '+(r.decision?escape(r.decision.source)+' · UI-recorded approval, rank '+r.decision.rank_at_approval:'LEGACY AUTOMATIC STEP · previously saved v1 research data')+'</p>'+
+   (r.decision?.note?'<p><b>Researcher note:</b> '+escape(r.decision.note)+'</p>':'')+'</article>';
  }).join("");
 }
 function renderResidues(){
@@ -69,28 +104,31 @@ function renderResidues(){
   '<p><code>'+escape(r.status)+'</code></p></article>').join("");
 }
 function render(){
- const next=C.next(state),audit=C.replay(state);
+ const selected=renderCandidateControls(),audit=C.replay(state);
  $("step-label").textContent=state.records.length+" / "+C.MAX_STEPS;
- $("next-question").innerHTML=nextMarkup(next)+(warning?'<p class="question-prose" role="alert" style="margin-top:14px;color:#ffe0b1">'+escape(warning)+'</p>':"");
- $("run-one").disabled=!next;$("run-four").disabled=!next;
+ $("next-question").innerHTML=nextMarkup(selected)+(warning?'<p class="question-prose" role="alert" style="margin-top:14px;color:#ffe0b1">'+escape(warning)+'</p>':"");
+ $("run-one").disabled=!selected;
  $("export").disabled=!state.records.length;
  $("audit-label").textContent=audit.status==="LOCALLY_REPLAYED"?"DETERMINISTIC LOCAL REPLAY PASS":"REPLAY REJECTED";
- renderCoverage();renderHistory();renderResidues();
+ renderCoverage();renderHistory();renderMetrics();renderResidues();
 }
-function step(count){
+function step(){
+ const previous=state;
  try{
   warning="";
-  for(let i=0;i<count;i++){if(!C.next(state))break;state=C.advance(state);}
+  if(!selectedTarget)throw Error("No untested finite question remains.");
+  const [n,mass]=selectedTarget.split(":").map(Number);
+  state=C.advance(state,{action:"APPROVE_ONE",target:{n,mass},note:$("review-note").value});
   const audit=C.replay(state);
   if(audit.status!=="LOCALLY_REPLAYED")throw Error("Local replay failed: "+audit.issues.join("; "));
-  save();render();
- }catch(e){warning="Execution stopped: "+e.message;render();}
+  selectedTarget="";$("review-note").value="";save();render();
+ }catch(e){state=previous;warning="Experiment refused: "+e.message;render();}
 }
-$("run-one").addEventListener("click",()=>step(1));
-$("run-four").addEventListener("click",()=>step(4));
+$("run-one").addEventListener("click",step);
+$("run-four").addEventListener("click",()=>{showAll=!showAll;render()});
 $("reset").addEventListener("click",()=>{
  if(!confirm("Reset all locally saved discovery-loop steps and residues? Export first if you need them."))return;
- state=C.empty();warning="Local pilot reset. No external records were changed.";save();render();
+ state=C.empty();selectedTarget="";showAll=false;$("review-note").value="";warning="Local pilot reset. No external records were changed.";save();render();
 });
 $("export").addEventListener("click",()=>{
  const audit=C.replay(state);

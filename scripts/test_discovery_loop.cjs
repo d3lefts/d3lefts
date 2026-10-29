@@ -61,6 +61,48 @@ for(const mutate of [
  let rejected=false;try{rejected=C.replay(poisoned).status!=="LOCALLY_REPLAYED"}catch{rejected=true}
  assert.equal(rejected,true,"Tainted pilot packet must not replay");
 }
+// Human approval is a real input to experiment selection, not a decorative UI.
+let reviewed=C.empty();
+assert.deepEqual(C.candidates(reviewed,4).map(v=>v.target),[{n:15,mass:6}]);
+assert.throws(()=>C.advance(reviewed,{target:{n:15,mass:6},note:""}),/explicit approval/);
+reviewed=C.advance(reviewed,{action:"APPROVE_ONE",target:{n:15,mass:6},note:""});
+assert.equal(reviewed.records[0].decision.source,"RECOMMENDED");
+assert.equal(reviewed.records[0].decision.rank_at_approval,1);
+assert.equal(C.replay(reviewed).status,"LOCALLY_REPLAYED");
+const ranked=C.candidates(reviewed,4);
+assert.deepEqual(ranked[0].target,{n:16,mass:6});
+assert.ok(ranked.some(v=>v.target.n===14&&v.target.mass===6));
+assert.throws(()=>C.advance(reviewed,{action:"APPROVE_ONE",target:{n:14,mass:6},note:""}),/requires an explanatory note/);
+reviewed=C.advance(reviewed,{action:"APPROVE_ONE",target:{n:14,mass:6},note:"Check whether sharpness persists on the smaller neighboring cycle."});
+assert.equal(reviewed.records[1].decision.source,"HUMAN_REDIRECTION");
+assert.equal(C.metrics(reviewed).user_redirected_steps,1);
+assert.equal(C.metrics(reviewed).user_approved_steps,2);
+assert.equal(C.replay(reviewed).status,"LOCALLY_REPLAYED");
+assert.equal(C.metrics(reviewed).anchored_subsets_checked,
+ C.choose(14,5)+C.choose(13,5));
+for(const corrupt of [
+ t=>t.records[1].decision.note="",
+ t=>t.records[1].decision.rank_at_approval=1,
+ t=>t.records[1].decision.target.n=16,
+ t=>t.records[1].decision.source="RECOMMENDED",
+ t=>t.independent_audit=true,
+ t=>t.peer_review=true,
+ t=>t.original_finding=true,
+ t=>t.step_budget=100000
+]){
+ const poisoned=structuredClone(reviewed);corrupt(poisoned);
+ let rejected=false;try{rejected=C.replay(poisoned).status!=="LOCALLY_REPLAYED"}catch{rejected=true}
+ assert.equal(rejected,true,"Human-decision or trust-status tampering rejected");
+}
+assert.throws(()=>C.advance(reviewed,{action:"APPROVE_ONE",target:{n:14,mass:6},note:"Repeated approved target"}),/already used/);
+assert.throws(()=>C.candidates(reviewed,100),/limit/);
+while(C.next(reviewed)){
+ const target=C.next(reviewed).target;
+ reviewed=C.advance(reviewed,{action:"APPROVE_ONE",target,note:""});
+}
+assert.equal(reviewed.records.length,C.MAX_STEPS);
+assert.equal(C.replay(reviewed).status,"LOCALLY_REPLAYED");
+assert.equal(C.metrics(reviewed).user_approved_steps,C.MAX_STEPS);
 assert.throws(()=>C.enumerate(17,6),/Pilot scope/);
 assert.throws(()=>C.enumerate(16,7),/Pilot scope/);
 for(let i=2;i<C.MAX_STEPS;i++)s=C.advance(s);
