@@ -149,7 +149,7 @@ try{
   await step("20–24","Research Library: browse, intersect filters, reset empty search",async()=>{
     await visit("research.html");
     assert.equal(await page.locator(".atlas-card:visible").count(),33);
-    assert.match(await page.locator(".archive-coverage").innerText(),/Thirty-three dossiers.*Six claim passports.*Three original findings/s);
+    assert.match(await page.locator(".archive-coverage").innerText(),/Thirty-three dossiers.*Six claim passports.*Five original/s);
     await page.locator("#atlas-search").fill("SourceBound");
     assert.ok((await page.locator(".atlas-card:visible").count())>=1);
     await page.locator("#atlas-search").fill("");
@@ -166,8 +166,16 @@ try{
     assert.ok(await page.locator("#atlas-empty").isVisible());
     await page.locator("#atlas-search").fill("");
     assert.equal(await page.locator(".atlas-card:visible").count(),33);
+    await visit("findings-20261029.html");
+    assert.match(await page.locator("#singer975").innerText(),/975 marks/);
+    assert.match(await page.locator("#graph-3port").innerText(),/3,221,225,472/);
+    assert.match(await page.locator("main").innerText(),/no global Sidon record/);
+    assert.ok(await page.locator('a[href*="tessera-singer975-20261029/audit.py"]').count()>=1);
+    assert.ok(await page.locator('a[href*="expand_search.cpp"]').count()>=1);
+    note("scope","Two additional Original Findings are displayed with primary checkers and narrow finite status.","findings");
+    await visit("research.html");
     await screenshot("03-research-library.png");
-    note("strength","Thirty-two document cards, source links, evidence-tier filters, and empty-search recovery are operational.","library");
+    note("strength","Thirty-three document cards, evidence-tier filters, and empty-search recovery are operational.","library");
   });
   await step("24–27","Mechanism Atlas: inspect a claim and distinguish analogy from proof",async()=>{
     await visit("atlas.html?claim=werner");
