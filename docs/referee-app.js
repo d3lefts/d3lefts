@@ -6,7 +6,7 @@ const E=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt
 const tokens=s=>String(s).trim().split(/[\s,;]+/).filter(Boolean);
 let tab="overlap",latest=null;
 const repo="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/witness_30.txt";
-function setTab(t){tab=t;["overlap","sidon"].forEach(x=>{$("tab-"+x).setAttribute("aria-selected",String(x===t));$("pane-"+x).hidden=x!==t});$("result").innerHTML='<div class="idle"><span class="idle-icon">⌁</span><h3>Awaiting a witness.</h3><p>Run the selected domain verifier to produce a scoped evidence report.</p></div>';latest=null;$("export-receipt").disabled=true;}
+function setTab(t){tab=t;["overlap","sidon"].forEach(x=>{$("tab-"+x).setAttribute("aria-selected",String(x===t));$("pane-"+x).hidden=x!==t});$("result").innerHTML='<div class="idle"><span class="idle-icon">⌁</span><h3>Awaiting a witness.</h3><p>Run the selected domain verifier to produce a scoped evidence report.</p></div>';latest=null;$("export-receipt").disabled=true;$("send-claim-lab").disabled=true;}
 function overlapInput(){return{denominator:$("overlap-den").value.trim(),heights:tokens($("overlap-heights").value)}}
 function sidonInput(){return{points:tokens($("sidon-points").value),subset:tokens($("sidon-subset").value)}}
 function resetOverlap(){$("overlap-den").value=C.OVERLAP_DEMO.denominator;$("overlap-heights").value=C.OVERLAP_DEMO.heights.join(", ");$("overlap-claimed").value="";setTab("overlap")}
@@ -26,7 +26,7 @@ try{
  const ok=result.status==="FINITE_CHECK_PASSED"&&result.dualPathAgreement&&attacks.scoreTamperRejected&&attacks.massPreservingWitnessMutation.rejected===true;
  const claimed=result.claimMatches===null?"Computed without a supplied score":result.claimMatches?"Claimed fraction matches":"Claimed fraction rejected";
  const report={format:"nightfall-referee-receipt-v1",verifier:"NIGHTFALL Referee",version:C.VERSION,createdAt:new Date().toISOString(),domain:"continuous-step-overlap",source,claimedScore:claim,inputSha256:digest,verdict:ok?"FINITE_CHECK_PASSED":result.status==="REJECT"?"REJECTED":"INCONCLUSIVE",result,negativeControls:attacks,notes:["Same-page arithmetic implementations are independent code paths, not independent external reviewers.","Exact finite uniform-step and signed-lag scope only; does not verify the archived 131072-cell witness.","Graph bars are approximate visualization only. All verdicts derive from exact BigInt."]};
- latest=report;$("export-receipt").disabled=false;
+ latest=report;$("export-receipt").disabled=false;$("send-claim-lab").disabled=false;
  const score=C.formatOverlap(result);
  const title=result.status==="REJECT"?"Claimed score rejected.":ok?"Finite witness survives.":"Local evidence remains open.";
  const desc="Exact maximum "+score+" · maximizing signed lag"+(result.summary.maxLags.length===1?" ":"s ")+result.summary.maxLags.join(", ")+". "+claimed+".";
@@ -47,7 +47,7 @@ try{
  const digest=await hashInput({domain:"weak-sidon-4-5-finite",input:source,claimedMaximum:claimed});
  const ok=result.status==="FINITE_CHECK_PASSED"&&attacks.understatedMaximumRejected&&attacks.corruptedSubsetRejected;
  const report={format:"nightfall-referee-receipt-v1",verifier:"NIGHTFALL Referee",version:C.VERSION,createdAt:new Date().toISOString(),domain:"weak-sidon-4-5-finite",source,claimedMaximum:claimed,inputSha256:digest,verdict:ok?"FINITE_CHECK_PASSED":"REJECTED_OR_INCONCLUSIVE",result,negativeControls:attacks,sourceDossier:"https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/README.md",notes:["Exact finite scope only; no asymptotic bound, priority, or external human validation implied.","Two weak-Sidon formulations and an AP-based exclusion proof run in one browser implementation package.","Search cap yields INCONCLUSIVE, never a proof."]};
- latest=report;$("export-receipt").disabled=false;
+ latest=report;$("export-receipt").disabled=false;$("send-claim-lab").disabled=false;
  const proof=result.proof||{},title=ok?"Finite Sidon bound survives.":"Finite Sidon claim remains open.";
  const desc=result.cellCount+" points · claimed maximum "+claimed+" · explicit subset size "+result.subsetSize+".";
  let html=statusBlock(ok,title,desc,!ok&&proof.status==="INCONCLUSIVE");
@@ -58,7 +58,7 @@ try{
 }
 function digestLine(d){return '<p class="digest">INPUT SHA-256 · <strong>'+E(d||"UNAVAILABLE — secure browser context required")+'</strong><br>Evidence scope: exact finite in-browser checks; independent external review and proof of global claims remain open.</p>'}
 function showBusy(){$("result").innerHTML='<div class="idle"><span class="idle-icon">⌁</span><h3>Running exact arithmetic…</h3><p>Evaluating the finite witness and its deterministic negative controls.</p></div>'}
-function showError(e){latest=null;$("export-receipt").disabled=true;$("result").innerHTML='<div class="result-head"><h3>Input rejected.</h3><div class="verdict fail">NO CERTIFICATE</div></div><div class="error-result">'+E(e.message||String(e))+'</div>'}
+function showError(e){latest=null;$("export-receipt").disabled=true;$("send-claim-lab").disabled=true;$("result").innerHTML='<div class="result-head"><h3>Input rejected.</h3><div class="verdict fail">NO CERTIFICATE</div></div><div class="error-result">'+E(e.message||String(e))+'</div>'}
 function exportReceipt(){if(!latest)return;const content=JSON.stringify(latest,null,2)+"\n",blob=new Blob([content],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="NIGHTFALL_REFEREE_"+latest.domain+"_"+new Date().toISOString().slice(0,10)+".json";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000)}
 $("tab-overlap").addEventListener("click",()=>setTab("overlap"));$("tab-sidon").addEventListener("click",()=>setTab("sidon"));
 $("reset-overlap").addEventListener("click",resetOverlap);$("reset-sidon").addEventListener("click",resetSidon);
@@ -66,6 +66,19 @@ $("run-overlap").addEventListener("click",runOverlap);$("run-sidon").addEventLis
 $("pin-overlap").addEventListener("click",()=>{try{$("overlap-claimed").value=C.formatOverlap(C.checkOverlap(overlapInput()));}catch(e){showError(e)}});
 $("sidon-source").addEventListener("click",()=>window.open(repo,"_blank","noopener,noreferrer"));
 $("export-receipt").addEventListener("click",exportReceipt);
+$("send-claim-lab").addEventListener("click",()=>{
+ if(!latest||!/^[0-9a-f]{64}$/.test(latest.inputSha256||"")){
+  alert("First complete a secure-context exact verification with a SHA-256 input fingerprint.");
+  return;
+ }
+ try{
+  // Same-origin, same-tab, ephemeral transfer. Claim Lab independently checks SHA-256,
+  // asks before importing, and creates metadata only. No automatic proof-status upgrade.
+  sessionStorage.setItem("nightfall.referee.pending.v1",JSON.stringify(latest));
+  location.assign("claim-lab.html?referee_handoff=1");
+ }catch(err){alert("Local handoff unavailable: "+err.message+"\nExport the JSON receipt and import it manually in Claim Lab.")}
+});
+
 $("overlap-heights").value=C.OVERLAP_DEMO.heights.join(", ");$("sidon-points").value=C.SIDON_WITNESS.join(", ");$("sidon-subset").value=C.SIDON_SUBSET.join(", ");
 // Explicit, allowlisted deep-link for an inspectable source-to-verifier journey.
 const requestedDomain = new URLSearchParams(window.location.search).get("domain");
