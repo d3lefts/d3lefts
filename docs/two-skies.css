@@ -467,3 +467,7 @@ html[data-nf-theme="dusk"] .nf-dual-colophon{
 }
 /* Readability and scannability: no color coding without words, every scene
    detail is decorative and never substitutes for evidence annotations. */
+
+/* A selected research route remains visually raised, with evidence label unchanged. */
+html[data-nf-theme="dusk"] .join-choice[data-recommended="true"]{background:#28334b;color:#f1eedc;border-color:#e6deaa}
+html:not([data-nf-theme="dusk"]) .join-choice[data-recommended="true"]{background:#51382b;color:#f7e8db;border-color:#edc16e}
