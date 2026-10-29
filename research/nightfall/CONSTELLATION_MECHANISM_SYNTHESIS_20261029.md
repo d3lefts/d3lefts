@@ -24,7 +24,7 @@ The separate standard-library implementation `research/nightfall/constellation/v
 - All **4,096** edge subsets of Q3 (C4 avoidance and inclusion maximality); Q3 has **maximal C4-free sets of both sizes 8 and 9**, a direct falsifier of “maximal means maximum.”
 - 200 seeded Q4 subset checks; Q4 has 32 edges and 24 squares.
 - Two distinct exact Q7 indexing formulas agree on **448 edges and 672 squares**.
-- Frozen execution receipt: [EXACT_REPLAY.json](constellation/EXACT_REPLAY.json); independent script SHA-256 `f06305a09f99d60068734bf179f7b2c1e619bd8764f170ab6ef9a4c323e12820`; receipt SHA-256 `91da1e49b00a79f55ee3ab64fe5873fde0754ac253e30ff0b3fa0befb9fc503a`.
+- Frozen execution receipt: [EXACT_REPLAY.json](constellation/EXACT_REPLAY.json); independent script SHA-256 `e13baea549bbfcd7417892045d042bbc11edc357b5e8b5325e0b27b355cad4ed`; receipt SHA-256 `d6918377dc19b4349dd8b748c02af52246e9f6776dfa7ceb7863477cc9decf07`.
 
 These numbers certify the **bounded encoding tests**, not the N=184 or 305-edge decision.
 
