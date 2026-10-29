@@ -181,7 +181,7 @@ try{
    assert.equal(await page.locator("#sidon-witness .sf-point.chosen").count(),17,"17-point subset highlighted");
    assert.equal(await page.locator("#sidon-toggle").isDisabled(),false,"interactivity enabled only after the checker loads");
    assert.equal(await page.locator(".instrument-workflow a").count(),4,"four source-linked research stages");
-   assert.match(await page.locator("#instruments-heading").innerText(),/Four chances to fail|Four stages/,"Four-stage workflow is framed appropriately for the active experience");
+   assert.match(await page.locator("#instruments-heading").innerText(),/From open question.*to a checkable test|How a claim.*earns confidence/s,"Four-stage workflow is framed appropriately for the active experience");
    assert.equal(await page.locator(".nf-replay-steps li").count(),4,"four actionable independent-replay steps");
    assert.match(await page.locator(".nf-replay-release").innerText(),/public research archives/);
    const portalManifest=await (await page.request.get(origin+"reproduction-manifest.json")).json();
@@ -544,7 +544,7 @@ try{
     await page.locator('#lab-jump-nav a[href="#research-systems"]').click();
     assert.equal(new URL(page.url()).hash,"#research-systems","Section-index jump works");
     await page.goto(origin+"research.html",{waitUntil:"load"});
-    assert.match(await page.locator(".archive-coverage").innerText(),/Thirty-three dossiers.*Six claim passports.*Five original finite artifacts and bounded observations/s,"Library explains record hierarchy");
+    assert.match(await page.locator(".archive-coverage").innerText(),/33 research records.*Six detailed claim passports.*Five separately approved finite findings/s,"Library explains record hierarchy");
     await page.goto(origin+"atlas.html",{waitUntil:"load"});
     assert.match(await page.locator(".rs-coverage").innerText(),/six claims represent a library of 33 documents/i,"Atlas explains limited canonical graph");
   }

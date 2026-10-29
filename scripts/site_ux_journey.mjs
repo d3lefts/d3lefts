@@ -54,7 +54,7 @@ try{
     await visit("index.html");
     assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk","First-time journey enters Night");
     const hero=await page.locator("#main > .hero h1:visible").innerText();
-    assert.match(hero,/Before a result.*the resistance/s,"Night centers the open scientific process");
+    assert.match(hero,/Put the claim.*to the test/s,"Night invites the visitor into a concrete scientific test");
     assert.equal(await page.locator(".flagship-card").count(),4);
     assert.match(await page.locator(".ticker").innerText(),/33/);
     assert.equal(await page.locator(".nf-experience-underbelly .hero-actions a:visible").count(),2,"Night opens two concrete research decisions");
@@ -90,8 +90,8 @@ try{
         cardRows:systems.map(x=>Math.round(x.getBoundingClientRect().top))
       };
     });
-    assert.match(editorial.dramaticHeading,/Make room.*for doubt/s);
-    assert.match(editorial.quietHeading,/Leave the.*uncertainty visible/s);
+    assert.match(editorial.dramaticHeading,/Let the evidence.*face criticism/s);
+    assert.match(editorial.quietHeading,/Name what.*remains open/s);
     assert.equal(editorial.dramaticBackground,"rgb(10, 16, 33)","Default new-moon editorial interlude uses deep indigo");
     assert.equal(editorial.correctSequence,true,"Editorial pacing should preserve claim hierarchy");
     assert.equal(editorial.cardWidths.length,4);
@@ -167,7 +167,7 @@ try{
   await step("20–24","Research Library: browse, intersect filters, reset empty search",async()=>{
     await visit("research.html");
     assert.equal(await page.locator(".atlas-card:visible").count(),33);
-    assert.match(await page.locator(".archive-coverage").innerText(),/Thirty-three dossiers.*Six claim passports.*Five original/s);
+    assert.match(await page.locator(".archive-coverage").innerText(),/33 research records.*Six detailed claim passports.*Five separately approved finite findings/s);
     await page.locator("#atlas-search").fill("SourceBound");
     assert.ok((await page.locator(".atlas-card:visible").count())>=1);
     await page.locator("#atlas-search").fill("");
