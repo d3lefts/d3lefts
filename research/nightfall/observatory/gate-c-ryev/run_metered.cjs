@@ -37,7 +37,8 @@ async function run(){
  assert.ok(!fs.existsSync(tmp),"Partial raw output exists; resolve it before starting a new study.");
  for(const job of jobs){
   const base=M.makeBase(job,model);
-  const inputCount=await post(url+"/input_tokens",base);
+  const countPayload={model:base.model,input:base.input,instructions:base.instructions,tools:base.tools};
+  const inputCount=await post(url+"/input_tokens",countPayload);
   const count=inputCount.response.input_tokens;
   assert.ok(Number.isSafeInteger(count)&&count>0,"Provider did not return an exact input-token count.");
   assert.ok(count+16<=job.maxTotalTokens,"Prompt consumes 2000-token budget: "+job.taskId);
@@ -64,7 +65,7 @@ async function run(){
    otherToolCalls:2, // conservative: include token-count and Responses API calls
    filesRead:job.sourceFamilies.slice(),
    providerTrace:{
-    transport:"openai-responses-http-v1",model,payload,inputCountRaw:inputCount.response,
+    transport:"openai-responses-http-v1",model,payload,inputCountRaw:inputCount.response,countPayload,
     inputCountRequestId:inputCount.requestId,response,requestId:called.requestId,
     responseSha256:sha(JSON.stringify(response)),requestPayloadSha256:sha(JSON.stringify(payload))
    }
