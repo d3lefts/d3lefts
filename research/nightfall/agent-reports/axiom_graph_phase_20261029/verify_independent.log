@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "field": "F5[v]/(v\u00b2\u22123)",
+  "exhaustive_state_counts": [
+    [
+      2,
+      1,
+      625,
+      0,
+      157
+    ],
+    [
+      3,
+      2,
+      15049,
+      576,
+      3799
+    ],
+    [
+      3,
+      3,
+      15625,
+      0,
+      3907
+    ]
+  ],
+  "nonzero_ratio_classes": 24,
+  "Harary_3connected_sizes": 11,
+  "each_edge_removal_ambiguous_controls": 151
+}
