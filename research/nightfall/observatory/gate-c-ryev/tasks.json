@@ -1,13 +1,13 @@
 {
-  "schema": "nightfall-gate-c-prereg-v1",
+  "schema": "nightfall-gate-c-v2-proposed-exploratory-v1",
   "frozenAt": "2026-10-28",
   "sourceCommit": "2429d0a04825bb8deeaa5f13e3a6d894917b5771",
   "sourceFormat": "GitHub blobs SHA-1 pinned at a specific immutable commit; receipt runner also records SHA-256 bytes.",
   "seed": 1729,
   "primaryEndpoint": "Number of correctly identified decisive scientific next tests, under a reproduced exact acceptance criterion, in each of six paired challenges.",
   "conditions": {
-    "G": "Graph condition: same source records plus the frozen typed scoped-edge summary, including open premises and failed transfers.",
-    "F": "Flat condition: identical source bytes and searchable chronological source list without typed graph edges."
+    "G": "Exploratory v2 only. Identical source facts and typed relationship treatment require independent semantic-parity adjudication.",
+    "F": "Exploratory v2 only. Original v1 is evaluated separately through parity_runner.cjs."
   },
   "budget": {
     "maxTotalModelTokensPerArm": 2000,
@@ -17,7 +17,7 @@
     "sourceReadPolicy": "Identical source blob SHA per task in both arms"
   },
   "blinding": "Each arm emits masked anonymous answer; graders see neither G/F nor allocation. Randomized presentation seed 1729.",
-  "scope": "Preregistration only. This file contains no measured effect and does not satisfy Observatory Gate C until independent paired runs and grading are complete.",
+  "scope": "EXPLORATORY V2 DRAFT, NO OUTCOMES. Prompts differ from immutable original Vesper v1. This variant is prohibited from being reported as a v1 outcome; live studies require separate v2 preregistration and review.",
   "sources": {
     "ff": {
       "path": "research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/README.md",
