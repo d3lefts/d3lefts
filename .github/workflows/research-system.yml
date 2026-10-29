@@ -1,0 +1,47 @@
+name: NIGHTFALL canonical research system
+on:
+  push:
+    paths:
+      - "docs/index.html"
+      - "docs/research.html"
+      - "docs/research.js"
+      - "docs/site.css"
+      - "docs/research-registry.js"
+      - "docs/research-system.css"
+      - "docs/passport.*"
+      - "docs/atlas.*"
+      - "docs/home-system.js"
+      - "docs/claim-lab.html"
+      - "docs/referee-app.js"
+      - "docs/sitemap.xml"
+      - "research/nightfall/research-system/**"
+      - ".github/workflows/research-system.yml"
+  pull_request:
+    paths:
+      - "docs/research-registry.js"
+      - "docs/passport.*"
+      - "docs/atlas.*"
+      - "docs/home-system.js"
+      - "research/nightfall/research-system/**"
+      - ".github/workflows/research-system.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  claim-system-integrity:
+    name: Canonical registry / routes / evidence claims
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Syntax validation
+        run: |
+          for f in docs/research-registry.js docs/passport.js docs/atlas.js docs/home-system.js docs/research.js docs/referee-app.js; do node --check "$f"; done
+          node --check research/nightfall/research-system/test.cjs
+      - name: Claim graph, shared evidence and site route tests
+        run: node research/nightfall/research-system/test.cjs
+      - name: Referee exact arithmetic regression
+        run: node research/nightfall/referee/test.cjs
