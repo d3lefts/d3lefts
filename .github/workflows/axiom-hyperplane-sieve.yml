@@ -15,6 +15,6 @@ jobs:
         with:
           python-version: '3.12'
       - name: Verify frozen source SHA256
-        run: echo 'bfd44c3fb99bf41550280497b00df33401624c5335af933dce4340f2f03312ef  research/nightfall/agent-reports/axiom_hyperplane_sieve_20261029/hyperplane_audit.py' | sha256sum -c -
+        run: echo 'b5639e60116378b4496c846d6e587a2c5b19ab09bbe42ebb5e9f0f285e10dece  research/nightfall/agent-reports/axiom_hyperplane_sieve_20261029/hyperplane_audit.py' | sha256sum -c -
       - name: Run complete hyperplane sieve and adverse controls
         run: python3 research/nightfall/agent-reports/axiom_hyperplane_sieve_20261029/hyperplane_audit.py
