@@ -68,6 +68,42 @@ try{
      "noindex, nofollow, noarchive","Unlisted page should prohibit indexing");
    assert.equal(await page.locator('.pf-ledger-card[data-claim-id="erdos36"]').count(),1,
      "Known finite claim retained in live intake");
+   // Canonical claim trace: source identity, exact open gate, map synchronization.
+   await page.goto(origin+"constellation.html",{waitUntil:"load"});
+   assert.equal(await page.locator("#co-trace-picker button").count(),6,"six canonical claim choices");
+   assert.equal(await page.locator("#stewards .co-team-card").count(),5,"five active Constellation personas");
+   assert.equal(await page.locator("#co-agent-tessera").count(),1,"one canonical Tessera persona");
+   assert.equal(await page.locator("#co-agent-tessara").count(),0,"retired Tessara is not an active card");
+   assert.equal(await page.locator('#stewards a[href="https://github.com/d3lefts/d3lefts/issues/76"]').count(),1,"continuum evidence lane retained");
+   assert.equal(await page.locator('#stewards a[href="https://github.com/d3lefts/d3lefts/issues/95"]').count(),1,"Singer evidence lane retained");
+   assert.match(await page.locator("#co-agent-tessera").innerText(),/Tessera/,"single persona displayed");
+
+   assert.equal(await page.locator("#co-trace-grid article").count(),4,"four scoped trace stages");
+   assert.ok((await page.locator("#co-trace-summary").innerText()).includes("Erdős minimum overlap"));
+   const traceIds=await page.evaluate(()=>window.NightfallRegistry.claims.map(x=>x.id));
+   for(const id of traceIds){
+    await page.locator('#co-trace-picker button[data-claim="'+id+'"]').click();
+    const expected=await page.evaluate(id=>{const c=window.NightfallRegistry.claimById(id);return {title:c.title,statement:c.statement,gate:c.open[0],validity:c.validity.label}},id);
+    assert.ok((await page.locator("#co-trace-summary").innerText()).includes(expected.title),"canonical claim title "+id);
+    assert.equal(await page.locator("#co-trace-grid .co-trace-cell").first().locator("p").first().innerText(),expected.statement,"canonical exact statement "+id);
+    assert.ok((await page.locator("#co-trace-grid").innerText()).includes(expected.validity),"unpromoted validity "+id);
+    if(expected.gate){
+     assert.ok((await page.locator("#co-trace-grid .co-trace-cell").nth(2).innerText()).includes(expected.gate),"canonical open gate "+id);
+     assert.ok((await page.locator("#co-trace-grid a").filter({hasText:"Take this specific review obligation"}).getAttribute("href")).includes("claim="+id+"&obligation=0"),"specific review identity "+id);
+    }
+   }
+   await page.locator('[data-node="sidon30"]').click();
+   assert.ok((await page.locator("#co-trace-summary").innerText()).includes("30-point Sidon construction"),"map updates trace");
+   assert.equal(await page.locator('#co-trace-picker button[data-claim="sidon30"]').getAttribute("aria-pressed"),"true");
+   await page.locator('#co-trace-picker button[data-claim="phase"]').click();
+   assert.match(new URL(page.url()).search,/claim=phase/,"trace updates map/deep link");
+   await page.goto(origin+"constellation.html?claim=not-real%3Cscript%3E",{waitUntil:"load"});
+   assert.ok((await page.locator("#co-trace-summary").innerText()).includes("Erdős minimum overlap"),"bad ID fails closed");
+   await page.goto(origin+"constellation.html?claim=erdos36",{waitUntil:"load"});
+   await page.locator("#co-trace-grid a").filter({hasText:"Take this specific review obligation"}).click();
+   assert.equal(await page.locator("#cj-claim").inputValue(),"erdos36","claim carried into research work");
+   assert.equal(await page.locator("#cj-obligation").inputValue(),"0","first unresolved obligation carried");
+
    await page.goto(origin+"living-paper.html",{waitUntil:"load"});
    assert.equal(await page.locator("#lp-points .lp-point").count(),30,"Living Paper 30 exact coordinates");
    assert.equal(await page.locator("#lp-edge-select option").count(),28,"Living Paper 28 progression constraints");
@@ -159,6 +195,10 @@ try{
    assert.equal(await noScript.locator("#sidon-witness .sf-point").count(),30,"no-JS exact witness");
    assert.equal(await noScript.locator("#sidon-witness .sf-point.chosen").count(),17,"no-JS chosen subset");
    assert.equal(await noScript.locator("#sidon-toggle").isDisabled(),true,"no inert pretend interaction");
+   await noScript.goto(origin+"constellation.html",{waitUntil:"load"});
+   assert.equal(await noScript.locator('#co-trace-picker a[href*="/projects/erdos/STATUS_AND_PRIOR_ART_20261028.md"]').count(),1,"no-script static research dossier fallback");
+   assert.ok((await noScript.locator("#co-trace-summary").innerText()).includes("Without scripts"),"no false loading claim");
+   await noScript.goto(origin+"index.html",{waitUntil:"load"});
    assert.equal(await noScript.locator(".nf-replay-steps a").count(),4,"no-JS reproduction pathway");
    await noScript.close();
    await page.goto(origin+"passport.html?claim=erdos36",{waitUntil:"load"});
