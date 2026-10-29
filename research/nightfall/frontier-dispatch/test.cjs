@@ -44,6 +44,20 @@ assert.match(C.checkSidonCandidate([0,2,6,13,26,28,36,42,45],184).reason,/within
 const branch=C.split(C.rootTask(C.ITEMS[0]));
 assert.equal(C.checkSidonCandidate(golombNine,184,branch[1]).ok,false);
 assert.match(C.checkSidonCandidate(golombNine,184,branch[1]).reason,/outside/);
+const archivedNear=[49,50,56,78,93,104,125,139,149];
+const near=C.checkSidonCandidate(archivedNear,184,C.rootTask(C.ITEMS[0]));
+assert.equal(near.ok,false);
+assert.deepEqual(near.addableCount,2);
+assert.match(near.reason,/16, 166/,"Archived near-candidate must retain exactly two addable integers");
+for(const x of C.ITEMS){
+ const t=C.split(C.rootTask(x))[0],payload=C.orchestratorInput(t);
+ assert.match(payload.claim,/Restricted to/);
+ assert.match(payload.claim,/in \[/,"Exact child interval must survive the handoff");
+ assert.match(payload.source,/^https:\/\/github\.com\/d3lefts\/d3lefts\//);
+ assert.match(payload.falsifier,/claimed YES/);
+ assert.match(payload.falsifier,/claimed NO/);
+ assert(payload.claim.length<=2000&&payload.falsifier.length<=2000);
+}
 // Finite N=45 passing does not imply the externally open N=184 question is solved.
 for(const f of ["docs/frontier.html","docs/frontier.js","docs/frontier-core.js"]){
   const s=fs.readFileSync(f,"utf8");

@@ -44,10 +44,19 @@
     $("nf-tool-hint").textContent=root.toolHint;
     const list=$("nf-tool-links");list.replaceChildren();
     for(const url of root.tools){
-      const a=document.createElement("a");a.href=url;a.textContent=url==="orchestrator.html"?"Orchestrator ↗":url==="claim-lab.html"?"Claim Lab ↗":url==="desk.html"?"Research Desk ↗":"Mechanism Atlas ↗";list.appendChild(a);
+      const a=document.createElement("a");a.href=url;a.textContent=url==="orchestrator.html"?"Orchestrator / prefill this exact branch ↗":url==="claim-lab.html"?"Claim Lab ↗":url==="desk.html"?"Research Desk ↗":"Mechanism Atlas ↗";
+      if(url==="orchestrator.html")a.addEventListener("click",event=>{
+        event.preventDefault();
+        try{
+          const payload=C.orchestratorInput(selectedTask());
+          sessionStorage.setItem("nightfall.frontier.orchestrator.v1",JSON.stringify(payload));
+          location.assign("orchestrator.html?frontier_handoff=1");
+        }catch(e){inform("Orchestrator handoff unavailable: "+e.message+". Copy the frozen research brief.");}
+      });
+      list.appendChild(a);
     }
     const sidon=t.rootId==="NF-156-184-9";
-    $("nf-check").disabled=!sidon;$("nf-values").disabled=!sidon;
+    $("nf-check").disabled=!sidon;$("nf-near").disabled=!sidon;$("nf-values").disabled=!sidon;
     $("nf-check-output").textContent=sidon?"Ready for nine integers. Every omitted mark will be tested.":"Exact browser oracle unavailable for Q7; use the independent cube and square checker in the cited research files.";
     $("nf-review-link").hidden=true;
     $("nf-review-link").style.display="none";
@@ -119,6 +128,12 @@
       if(!navigator.clipboard?.writeText)throw Error("Clipboard unavailable");
       await navigator.clipboard.writeText(payload);inform("Copied the frozen research contract. Paste it into your AI research session.");
     }catch(e){window.prompt("Copy this exact research contract:",payload);inform("Research brief ready for manual copying.");}
+  });
+  $("nf-near").addEventListener("click",()=>{
+    const t=selectedTask();
+    if(t.rootId!=="NF-156-184-9")return;
+    $("nf-values").value="49, 50, 56, 78, 93, 104, 125, 139, 149";
+    $("nf-check-output").textContent="Archived N=184 nine-mark near-candidate loaded from Axiom PR #55. Run the exact finite checker: insertion at 16 and 166 remains possible, so this is an unresolved example.";
   });
   $("nf-check").addEventListener("click",()=>{
     const t=selectedTask();

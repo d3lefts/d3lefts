@@ -98,6 +98,16 @@
     const body=brief(t)+"\n\nSubmission kind: "+kind+"\nEvidence / approach:\n"+String(details||"(to be supplied)")+"\n\nReview request: independently check statement, source version and exact scope.";
     return ROOT+"/issues/new?title="+encodeURIComponent(title)+"&body="+encodeURIComponent(body);
   }
+  function orchestratorInput(t){
+    const x=base(t&&t.rootId);
+    if(!x||!assertTask(t))throw Error("Invalid frozen Frontier assignment.");
+    return {
+      id:t.id.slice(0,80),
+      claim:x.question+" Restricted to "+predicate(t)+".",
+      source:x.evidence+" | Agent NF snapshot "+VERSION,
+      falsifier:"A claimed YES fails if any positive-certificate requirement is violated: "+x.closureYes+" A claimed NO fails if a valid witness survives, an assigned branch is omitted, or the complete proof cannot be replayed. Required negative certificate: "+x.closureNo
+    };
+  }
   function checkSidonCandidate(values,N,task){
     if(!Array.isArray(values)||!Number.isSafeInteger(N)||N<1)throw Error("Invalid finite input.");
     if(values.length!==9)return {ok:false,reason:"The assignment requires exactly nine integers."};
@@ -122,5 +132,5 @@
     if(addable.length)return {ok:false,reason:"Sidon condition passes; the set is not maximal. Addable marks: "+addable.slice(0,18).join(", ")+(addable.length>18?" …":""),values:A,addableCount:addable.length,sumCount:sums.count};
     return {ok:true,reason:"Exact finite checks pass: 45 distinct unordered pair sums and all "+(N-9)+" omitted marks block insertion. Independent reproduction remains required.",values:A,sumCount:sums.count,checkedOmissions:N-9};
   }
-  return Object.freeze({VERSION,ITEMS,WEIGHTS,score,ranked,base,rootTask,assertTask,split,validPartition,predicate,brief,issueUrl,checkSidonCandidate});
+  return Object.freeze({VERSION,ITEMS,WEIGHTS,score,ranked,base,rootTask,assertTask,split,validPartition,predicate,brief,issueUrl,orchestratorInput,checkSidonCandidate});
 });
