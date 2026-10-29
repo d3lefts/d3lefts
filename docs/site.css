@@ -553,3 +553,11 @@ html{scroll-padding-top:22px}
 @media(prefers-reduced-motion:reduce){
   .nf-interlude-link,.sf-ecosystem .sf-system-card{scroll-behavior:auto;transition:none}
 }
+
+/* Frontier: a quieter handoff between the research programme and its tools. */
+.frontier-entry{display:grid;grid-template-columns:minmax(0,1.5fr) auto;align-items:end;gap:30px;border:1px solid #afc2b0;background:#dfe9d9;padding:30px 34px;margin:0 0 25px}
+.frontier-entry span{font:600 10px/1.5 var(--mono);letter-spacing:.05em;color:#47624d}
+.frontier-entry h3{font:400 clamp(35px,3.6vw,56px)/1 var(--serif);margin:16px 0}
+.frontier-entry p{font:13px/1.7 var(--sans);max-width:830px;color:#536859}
+.frontier-entry a{padding:15px 20px;background:#192f20;color:#f5f6ee;font:600 11px/1.5 var(--mono);text-align:center;white-space:nowrap}
+@media(max-width:760px){.frontier-entry{grid-template-columns:1fr;padding:24px}.frontier-entry a{white-space:normal}}
