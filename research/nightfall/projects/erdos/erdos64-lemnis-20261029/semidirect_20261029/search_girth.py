@@ -68,5 +68,8 @@ for d in (2,3):
     zeros=sum(term(c,a)==0 for c in steps)
     candidates.append((zeros,sum(term(c,a)==0 for c in steps14),a))
   candidates.sort()
+  assert len(candidates)==(64 if d==2 else 512)
+  assert sum(v[0]==0 for v in candidates)==(24 if d==2 else 224)
+  assert {z:sum(c[0]==0 and c[1]==z for c in candidates) for z in sorted(set(c[1] for c in candidates if c[0]==0))} == ({6:24} if d==2 else {7:56,9:56,10:56,12:56})
   print('zero12-free C14 constraint distribution',{z:sum(c[0]==0 and c[1]==z for c in candidates) for z in sorted(set(c[1] for c in candidates if c[0]==0))});print('32 closing options',len(candidates),'zero12-free tuples',sum(c[0]==0 for c in candidates),'distribution', {k:sum(v[0]==k for v in candidates) for k in sorted(set(v[0] for v in candidates))},'minimum:',candidates[:10])
 
