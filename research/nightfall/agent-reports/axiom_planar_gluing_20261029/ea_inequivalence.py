@@ -14,9 +14,14 @@ conjugation, so pairwise commutation is an invariant.
 
 Result: all 676 ordered nonzero-x,z commutators vanish for f=x^2;
 432 of 676 have F3-rank 2 for f=x^4 (the other 244 have rank 0).
-This falsifies equivalence of the *individual planar graphs*.
-It does NOT certify affine inequivalence of the complete 53-point
-glued Sidon unions in the full 9-dimensional ambient space.
+The companion exhaustive codimension-two checker proves that exactly 26
+seven-dimensional affine sections contain 29 of 53 marks. These 26
+sections split into two intrinsic 13-section classes with pairwise
+intersections 27 within a class and 5 across classes. Therefore every
+ambient affine equivalence of full glued unions MUST preserve or exchange
+the two planar components. Combining this recovery with the normalized
+commutator obstruction rules out full ambient affine equivalence.
+Scientific world-priority and independent human review remain open.
 """
 import json
 from collections import Counter
@@ -129,6 +134,54 @@ def audit(exponent):
     return dict(sorted(histogram.items()))
 
 
+
+def component_recovery(exponent):
+    """Explicit 26 sections, 29 points each; compare every pair.
+
+    Completeness of the 26-section list is separately proved by the
+    exhaustive 8,069,620-quotient C++ verifier (asserts no others).
+    """
+    points_p = {(x, power(x, exponent), 0) for x in range(27)}
+    points_c = {(0, minus(power(z, exponent)), z) for z in range(27)}
+    points = points_p | points_c
+    assert len(points) == 53 and len(points_p & points_c) == 1
+    lines = sorted({frozenset((0, x, minus(x))) for x in range(1, 27)},
+                   key=lambda u: tuple(sorted(u)))
+    assert len(lines) == 13
+    sections = []
+    for line in lines:
+        p_section = frozenset(v for v in points if v[2] in line)
+        c_section = frozenset(v for v in points if v[0] in line)
+        assert len(p_section) == 29 and len(c_section) == 29
+        assert p_section == points_p | {v for v in points_c if v[2] in line}
+        assert c_section == points_c | {v for v in points_p if v[0] in line}
+        sections.extend((("P", p_section), ("C", c_section)))
+    assert len({s for _, s in sections}) == 26
+    shared_same = shared_cross = 0
+    for i in range(26):
+        for j in range(i+1, 26):
+            ka, aa = sections[i]
+            kb, bb = sections[j]
+            overlap = aa & bb
+            if ka == kb:
+                assert len(overlap) == 27
+                assert overlap == (points_p if ka == "P" else points_c)
+                shared_same += 1
+            else:
+                assert len(overlap) == 5
+                shared_cross += 1
+    assert shared_same == 2 * 13 * 12 // 2 == 156
+    assert shared_cross == 13 * 13 == 169
+    return {
+        "affine_codim_two_large_sections": len(sections),
+        "intersection_29_sections_same_component": {
+            "pairs": shared_same, "intersection_size": 27},
+        "intersection_29_sections_different_component": {
+            "pairs": shared_cross, "intersection_size": 5},
+        "intrinsic_components": [27, 27],
+    }
+
+
 def main():
     # Irreducible T^3-T+1: no root in F3. Check T^3=T-1.
     t = 3
@@ -138,6 +191,9 @@ def main():
 
     quadratic = audit(2)
     quartic = audit(4)
+    rec_quadratic = component_recovery(2)
+    rec_quartic = component_recovery(4)
+    assert rec_quadratic == rec_quartic
     assert quadratic == {0: 676}
     assert quartic == {0: 244, 2: 432}
     left = normalized(4)(3, normalized(4)(9, 3))
@@ -152,12 +208,13 @@ def main():
         "missing_differences_each_graph": 702,
         "quadratic_commutator_ranks": quadratic,
         "quartic_commutator_ranks": quartic,
+        "full_union_recovery": rec_quartic,
         "quartic_witness": {
             "x": "T", "z": "T^2", "input": "T",
             "N_T(N_T2(T))": 6, "N_T2(N_T(T))": 8,
             "inequal": True
         },
-        "scope": "no EA/vertical-preserving affine equivalence between component planar graphs; full 53-point unions unclassified"
+        "scope": "full ambient F3^9 affine inequivalence, conditional only on separately exhaustively verified 26-section completeness; no novelty/priority clearance"
     }, indent=2, sort_keys=True))
 
 
