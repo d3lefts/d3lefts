@@ -59,7 +59,7 @@ try{
        if(s.display==="none"||s.visibility==="hidden"||Number(s.opacity)===0)continue;
        if(obsolete.has(s.backgroundColor)){
         const path=e.id?"#"+e.id:e.className&&typeof e.className==="string"?"."+e.className.trim().split(/\s+/).slice(0,2).join("."):e.tagName.toLowerCase();
-        leaks.push({el:path,bg:s.backgroundColor,size:Math.round(r.width*r.height)});
+        leaks.push({el:path,parent:e.parentElement?.className||e.parentElement?.tagName,bg:s.backgroundColor,size:Math.round(r.width*r.height),sample:e.outerHTML.slice(0,140)});
        }
       }
       const html=getComputedStyle(document.documentElement);
