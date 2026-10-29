@@ -331,3 +331,15 @@ html[data-nf-theme="dusk"] .hero-aside .diagram path[stroke="#7f987d"]{stroke:#a
 html[data-nf-theme="dusk"] .hero-aside .diagram circle[fill="#18221e"]{fill:#dbd1f3}
 html[data-nf-theme="dusk"] .hero-aside .diagram circle[fill="#b0db58"]{fill:#e3c6ff}
 html[data-nf-theme="dusk"] .hero-aside .diagram text{fill:#c3b9e2}
+
+
+/* Tablet breakpoint: preserve button affordances without horizontal overflow.
+   Applies equally to the editorial archive and the dusk observatory. */
+@media(min-width:761px) and (max-width:900px){
+  .hero{grid-template-columns:minmax(0,1fr);gap:32px;min-height:0;padding-block:65px 55px}
+  .hero-aside{max-width:100%;border-left:0;border-top:1px solid var(--line);padding:26px 0 0}
+}
+@media(max-width:950px){
+ .button{max-width:100%;white-space:normal;min-width:0;overflow-wrap:anywhere}
+ .hero-actions,.instrument-bridge-invite{min-width:0;max-width:100%}
+}
