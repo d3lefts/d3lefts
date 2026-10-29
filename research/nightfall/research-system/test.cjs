@@ -35,7 +35,12 @@ for(const page of ["home","research","atlas","passport","tools"])assert.ok(html[
 assert.ok(!html.home.includes('class="lab-section"')&&!html.home.includes('class="referee-showcase"'),"Duplicate showcases remain");
 assert.ok(html.home.includes('id="featured-title"')&&html.home.includes('id="review"'),"Homepage evidence or review removed");
 assert.ok(html.research.includes("research.js"),"Research library removed");
-assert.ok(html.lab.includes("receiptImportFile")&&html.lab.includes("Claim statuses unchanged"),"No status-preserving receipt import");
+// Import is now a staged, consented Evidence Bridge flow; guard the new contract rather than a retired banner.
+assert.ok(html.lab.includes("receiptImportFile")&&html.lab.includes('src="evidence-bridge-core.js"')&&html.lab.includes('id="bridgeApprove"'),"Missing strict preview-only receipt import");
+assert.ok(html.lab.includes("No claims, statuses, or published records modified.")&&html.lab.includes("Cancel / no changes"),"Missing explicit status-preservation and refusal affordances");
+assert.ok(html.lab.includes("const oldJSON=raw??JSON.stringify(data)")&&html.lab.includes("const next=structuredClone(data)")&&html.lab.includes("next.experiments.push({id:uid(),claimId:''"),"Import must back up current data and append only an unassigned experiment");
+const bridgeCore=read("docs/evidence-bridge-core.js");
+assert.match(bridgeCore,/reviewStatus:"unreviewed",promotionAllowed:false,claimsTouched:\[\],authoritativeReviewer:null/,"Adapter must never confer scientific review or promote a claim");
 assert.ok(html.referee.includes("referee-app.js")&&html.tools.includes('id="werner-run"')&&html.tools.includes('id="field-run"'),"Original research calculators missing");
 for(const name of ["atlas.html","passport.html"])assert.ok(html.sitemap.includes("/"+name),"Unindexed route "+name);
 for(const file of ["docs/home-system.js","docs/passport.js","docs/atlas.js","docs/research.js","docs/claim-lab.html"]){
