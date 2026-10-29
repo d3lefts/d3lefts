@@ -74,6 +74,17 @@ try{
     "claim-lab.html":{claimSidebar:"rgb(238, 223, 214)",claimMark:"rgb(240, 206, 188)"},
     "desk.html":{readout:"rgb(74, 31, 36)"}
    };
+   if(name==="index.html"){
+    const diagram=await page.evaluate(()=>{
+      const svg=document.querySelector(".hero-aside .diagram");
+      return {signal:getComputedStyle(svg.querySelector('circle[fill="#b0db58"]')).fill,
+        curve:getComputedStyle(svg.querySelector('path[stroke="#213e2d"]')).stroke,
+        toolbar:document.querySelector('meta[name="theme-color"]')?.content};
+    });
+    assert.equal(diagram.signal,"rgb(217, 122, 74)","Mathematical hero signal uses sunset orange, not neon lime");
+    assert.equal(diagram.curve,"rgb(74, 31, 36)","Hero's forest-green path uses oxblood");
+    assert.equal(diagram.toolbar,"#4a1f24","Browser chrome follows blackcherry identity");
+   }
    for(const [key,target] of Object.entries(expectations[name]||{})){
     assert.equal(v[key],target,name+" "+width+"px "+key+" matches golden hour");
    }
@@ -101,9 +112,11 @@ try{
   }));
   assert.equal(dark.bg,"rgb(16, 23, 39)","Dusk midnight canvas unchanged");
   assert.equal(dark.primary,"rgb(216, 195, 138)","Dusk champagne CTA unchanged");
+  assert.equal(await page.locator('meta[name="theme-color"]').getAttribute("content"),"#101727","Dusk browser chrome remains midnight navy");
   await toggle.click();
   assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Switching back restores warm light");
   await page.waitForFunction(()=>getComputedStyle(document.body).backgroundColor==="rgb(244, 231, 223)",null,{timeout:3500});
+  assert.equal(await page.locator('meta[name="theme-color"]').getAttribute("content"),"#4a1f24","Light browser chrome returns to blackcherry");
   assert.equal(await page.locator("body").evaluate(e=>getComputedStyle(e).backgroundColor),
    "rgb(244, 231, 223)","Golden hour survives reversal");
   assert.deepEqual(errors,[],"No missing assets or browser JS errors at "+width+"px");
