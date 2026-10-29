@@ -1,0 +1,41 @@
+name: Certify Sidon edge-essentiality primary evidence
+on:
+  push:
+    paths:
+      - 'research/nightfall/projects/sidon-finite-30/edge_essentiality.py'
+      - 'research/nightfall/projects/sidon-finite-30/edge_essentiality_certificate.json'
+      - '.github/workflows/sidon-edge-essentiality.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/projects/sidon-finite-30/edge_essentiality.py'
+      - 'research/nightfall/projects/sidon-finite-30/edge_essentiality_certificate.json'
+      - '.github/workflows/sidon-edge-essentiality.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rebuild and compare full frozen primary certificate
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PYTHONPATH="$PWD/research/nightfall/projects/sidon-finite-30"
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          from edge_essentiality import certificate, check
+          source=Path('research/nightfall/projects/sidon-finite-30/edge_essentiality_certificate.json')
+          frozen=json.loads(source.read_text(encoding='utf-8'))
+          rebuilt=certificate()
+          check(frozen)
+          assert frozen == rebuilt, 'Frozen source differs from exact independently rebuilt finite certificate'
+          assert len(frozen['edge_deletion_witnesses']) == 28
+          assert frozen['minimum_ap_hitting_set_size'] == 13
+          assert frozen['full_no_12_cover_states'] == 639
+          print('PASS: full 30-point primary source, no 12-point hitting set, 28/28 necessary AP edges, 28 explicit 18-survivor witnesses and mutated-source rejection')
+          PY
+          sha256sum research/nightfall/projects/sidon-finite-30/edge_essentiality.py research/nightfall/projects/sidon-finite-30/edge_essentiality_certificate.json
