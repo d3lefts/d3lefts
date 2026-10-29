@@ -94,7 +94,7 @@ def main() -> int:
     # site.js and moves the homepage body to a separately curated library invitation.
     # Preserve the original whitelist even when that gallery is absent from HTML.
     homepage_text = (DOCS / "index.html").read_text(encoding="utf-8")
-    new_library_invite = ('class="sf-library-invite"' in homepage_text
+    new_library_invite = ('id="work"' in homepage_text and 'sf-library-invite' in homepage_text
                           and 'href="research.html"' in homepage_text
                           and 'href="passport.html"' in homepage_text)
     if static != sources and not (not static and new_library_invite):
