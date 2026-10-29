@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101b18">
+<meta name="description" content="Living Investigation: watch a bounded research loop choose, exhaustively test, falsify and preserve finite mathematical questions.">
+<link rel="canonical" href="https://d3lefts.github.io/d3lefts/living-investigation.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="living-investigation.css">
+<title>Living Investigation — NIGHTFALL / CONSTELLATION</title>
+<script src="site.js" defer></script>
+<script src="discovery-loop-core.js" defer></script>
+<script src="living-investigation.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#workspace">Skip to investigation</a>
+<header class="top">
+ <a href="./" class="brand" aria-label="NIGHTFALL homepage">N<span class="slash">∕</span>F <span>CONSTELLATION / LABORATORY</span></a>
+ <button type="button" class="menu-toggle" id="menu-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">MENU +</button>
+ <nav id="site-nav" aria-label="Investigation navigation">
+  <a href="exact-research.html">Research tools</a>
+  <a href="discovery.html">Discovery Engine</a>
+  <a href="review.html">Review</a>
+ </nav>
+ <span class="scope-tag">BOUNDED PILOT · LOCAL ONLY</span>
+</header>
+<main id="workspace">
+ <section class="intro">
+  <div>
+   <p class="eyebrow">EXPERIMENT 001 / THE DISCOVERY LOOP</p>
+   <h1>Can research<br><em>surprise itself?</em></h1>
+   <p class="lede">Give a finite investigation an initial question. It chooses its next test from prior evidence, risks a prediction, computes the complete answer, and preserves anything that breaks its expectations.</p>
+   <p class="scope">This is a deterministic, browser-local pilot on <strong>finite cyclic binary configurations</strong> — a separate problem from the continuous Erdős minimum-overlap benchmark. No agent, remote model, server runner, independent external verifier, or autonomous publication process is connected.</p>
+  </div>
+  <div class="intro-art" aria-hidden="true">
+   <svg viewBox="0 0 390 390" role="presentation"><circle cx="195" cy="194" r="139" fill="none" stroke="#4d6d58"/><circle cx="195" cy="194" r="95" fill="none" stroke="#4d6d58" stroke-dasharray="4 11"/><circle cx="195" cy="194" r="50" fill="none" stroke="#688b66"/><path d="M50 280C112 257 122 112 190 177S266 268 349 92" stroke="#dbff77" stroke-width="3" fill="none"/><path d="M31 132C105 76 188 319 284 222S333 100 368 155" stroke="#91ad99" stroke-width="1.5" fill="none"/><circle cx="190" cy="177" r="8" fill="#dbff77"/><circle cx="284" cy="222" r="5" fill="#9db7a0"/><text x="57" y="64" fill="#a9c4ab" font-size="10" font-family="monospace">QUESTION</text><text x="280" y="335" fill="#a9c4ab" font-size="10" font-family="monospace">RESIDUE →</text></svg>
+  </div>
+ </section>
+ <section class="command" aria-labelledby="control-head">
+  <div>
+   <p class="eyebrow">CONTROL / VISIBLE EXECUTION</p>
+   <h2 id="control-head">One question. Then the next.</h2>
+   <p>Run up to twelve exact experiments. The initial 15-position, six-mark case is seeded; subsequent targets are selected using the previous results. State stays in this browser until you export it.</p>
+  </div>
+  <div class="commands">
+   <button id="run-one" class="primary" type="button">Run next experiment <span aria-hidden="true">↗</span></button>
+   <button id="run-four" class="secondary" type="button">Run four steps</button>
+   <button id="export" class="secondary" type="button" disabled>Export evidence JSON</button>
+   <button id="reset" class="quiet" type="button">Reset local investigation</button>
+  </div>
+ </section>
+ <div class="grid">
+  <section class="panel next-panel" aria-labelledby="next-head">
+   <div class="panel-top"><span>01 / SELF-SELECTED QUESTION</span><span id="step-label">0 / 12</span></div>
+   <h2 id="next-head">Next decisive test</h2>
+   <div id="next-question" aria-live="polite">Loading research state…</div>
+  </section>
+  <section class="panel state-panel" aria-labelledby="coverage-head">
+   <div class="panel-top"><span>02 / TESTED SPACE</span><span>FINITE &amp; EXACT</span></div>
+   <h2 id="coverage-head">Coverage map</h2>
+   <p class="sub">Every filled cell is an exhaustively searched cyclic parameter pair. A highlight means the elementary lower bound is strictly unattainable.</p>
+   <div id="coverage" class="coverage" aria-label="Investigated parameter map"></div>
+   <div class="legend"><span><i class="dot found"></i> bound attained</span><span><i class="dot surprise"></i> strict gap</span><span><i class="dot empty"></i> unexplored</span></div>
+  </section>
+  <section class="panel history-panel" aria-labelledby="history-head">
+   <div class="panel-top"><span>03 / EVIDENCE BEFORE CLAIMS</span><span id="audit-label">REPLAY PENDING</span></div>
+   <h2 id="history-head">The experiment trail</h2>
+   <p class="sub">Each test enumerates every subset containing position zero. Translation makes this sufficient for global finite coverage at fixed length and mass. A separate direct-shift calculation rechecks the displayed witness.</p>
+   <div id="history" class="history" aria-live="polite"><p class="empty-note">Run the first experiment to generate an evidence trail.</p></div>
+  </section>
+  <section class="panel residue-panel" aria-labelledby="residue-head">
+   <div class="panel-top"><span>04 / STRUCTURE LEFT BEHIND</span><span id="residue-count">0 RESIDUES</span></div>
+   <h2 id="residue-head">Discovery residues</h2>
+   <p class="sub">A wrong prediction is useful evidence. It can generate the next question while remaining separate from a proved family-wide invariant.</p>
+   <div id="residues" class="residues" aria-live="polite"><p class="empty-note">No deviations recorded yet.</p></div>
+  </section>
+ </div>
+ <section class="closing" aria-label="Scientific boundaries and next steps">
+  <div><p class="eyebrow">THE TRUST BOUNDARY</p><h2>Interesting is not<br><em>yet original.</em></h2></div>
+  <div><p>These observations are bounded local enumerations and heuristic predictions. Novelty comparison, an independent implementation, an explanation beyond finite enumeration, and scientific publication approval remain separate gates.</p>
+   <p>For a real mathematical result, export the pilot evidence, formulate the smallest surviving theorem, attack it in the <a href="adversary.html">Imaginary Adversary</a>, check domain-appropriate finite claims in <a href="referee.html">Referee</a>, and preserve explicit proof obligations in <a href="claim-lab.html">Claim Lab</a>. The pilot's cyclic proxy is not directly compatible with the continuous-overlap Referee.</p>
+   <a class="source-link" href="https://github.com/d3lefts/d3lefts/blob/main/docs/discovery-loop-core.js" target="_blank" rel="noopener">Inspect the experiment algorithm ↗</a>
+  </div>
+ </section>
+</main>
+<footer><span>NIGHTFALL / CONSTELLATION PROTOCOL</span><span>LOCAL SCIENTIFIC PILOT · NO AUTOMATIC CLAIM PROMOTION</span></footer>
+</body>
+</html>

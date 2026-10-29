@@ -482,6 +482,35 @@ try{
     assert.equal(await page.locator("#send-claim-lab").isDisabled(),true,"Attack cannot promote evidence in Claim Lab");
     assert.match(await page.locator("#companion-handoff-note").innerText(),/UNREVIEWED/);
   }
+  if(width===390 || width===1280){
+    await page.goto(origin+"living-investigation.html",{waitUntil:"load"});
+    assert.match(await page.locator("#next-question").innerText(),/15 cyclic positions \/ 6 marks/,"Seed mathematical question visible");
+    assert.equal(await page.locator("#export").isDisabled(),true,"No evidence before experiment");
+    await page.locator("#run-one").click();
+    assert.match(await page.locator("#step-label").innerText(),/1 \/ 12/);
+    assert.match(await page.locator("#next-question").innerText(),/16 cyclic positions \/ 6 marks/,"System chooses next adjacent test");
+    await page.locator("#run-one").click();
+    assert.match(await page.locator("#step-label").innerText(),/2 \/ 12/);
+    assert.match(await page.locator("#history").innerText(),/LOCAL_PREDICTION_FALSIFIED/,"Local prediction is explicitly falsified");
+    assert.match(await page.locator("#history").innerText(),/Exact finite minimax: 3/,"Exact minimum visible");
+    assert.match(await page.locator("#residues").innerText(),/PREDICTION_FALSIFIED/,"Residue created from refutation");
+    assert.match(await page.locator("#audit-label").innerText(),/LOCAL REPLAY PASS/,"Deterministic replay check visible");
+    const [pilotReceipt]=await Promise.all([page.waitForEvent("download"),page.locator("#export").click()]);
+    assert.equal(pilotReceipt.suggestedFilename(),"nightfall-living-investigation-v1.json");
+    await page.evaluate(()=>{
+      const key="nightfall.living-investigation.v1";
+      const saved=JSON.parse(localStorage.getItem(key));
+      saved.records[1].result.exact_minimax=2;
+      localStorage.setItem(key,JSON.stringify(saved));
+    });
+    await page.reload({waitUntil:"load"});
+    assert.match(await page.locator("#next-question").innerText(),/Saved state was refused and reset/,"Forged stored exact result cannot be trusted");
+    assert.match(await page.locator("#step-label").innerText(),/0 \/ 12/);
+    assert.equal(await page.locator("#export").isDisabled(),true,"Rejected data cannot be exported as accepted");
+    await page.locator("#run-four").click();
+    assert.match(await page.locator("#step-label").innerText(),/4 \/ 12/,"Multi-step run remains bounded");
+    assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth))<=3,"Living Investigation horizontal overflow at "+width);
+  }
   assert.deepEqual(faults,[],"Browser failures at "+width+": "+faults.join("; "));
   await page.close();
  }
