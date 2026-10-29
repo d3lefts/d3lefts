@@ -94,6 +94,7 @@ try{
   const toggle=page.locator(".nf-theme-toggle");
   await toggle.click();
   await page.waitForFunction(()=>document.documentElement.dataset.nfTheme==="dusk");
+  await page.waitForFunction(()=>getComputedStyle(document.body).backgroundColor==="rgb(16, 23, 39)",null,{timeout:3500});
   const dark=await page.evaluate(()=>({
     bg:getComputedStyle(document.body).backgroundColor,
     primary:getComputedStyle(document.querySelector(".hero-actions .button")).backgroundColor
@@ -102,6 +103,7 @@ try{
   assert.equal(dark.primary,"rgb(216, 195, 138)","Dusk champagne CTA unchanged");
   await toggle.click();
   assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Switching back restores warm light");
+  await page.waitForFunction(()=>getComputedStyle(document.body).backgroundColor==="rgb(244, 231, 223)",null,{timeout:3500});
   assert.equal(await page.locator("body").evaluate(e=>getComputedStyle(e).backgroundColor),
    "rgb(244, 231, 223)","Golden hour survives reversal");
   assert.deepEqual(errors,[],"No missing assets or browser JS errors at "+width+"px");
