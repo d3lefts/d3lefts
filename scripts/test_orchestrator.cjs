@@ -4,4 +4,4 @@ assert.match(c.audit(receipts).verdict,/task checks only/);
 assert.equal(c.audit(receipts.slice(1)).verdict,"INCONCLUSIVE");
 assert.equal(c.audit([...receipts,receipts[0]]).verdict,"INCONCLUSIVE");
 assert.equal(c.audit(receipts.map((r,i)=>i===1?{...r,outcome:"FAIL"}:r)).verdict,"FAIL");
-console.log("Orchestrator tests: PASS");\n
+console.log("Orchestrator tests: PASS");
