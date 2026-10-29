@@ -112,7 +112,7 @@ def main() -> int:
     ref_js = (DOCS / "referee-app.js").read_text(encoding="utf-8")
     if 'requestedDomain === "sidon"' not in ref_js:
         FAILURES.append("RESEARCH JOURNEY: allowlisted Sidon verifier deep link absent")
-    if '<b>30</b><span>Curated research dossiers' not in homepage_text:
+    if '<b>30</b><span>Curated research documents' not in homepage_text:
         FAILURES.append("EDITORIAL: 30-document owner-curated homepage inventory mismatch")
     # Separate working-research library: preserve originality whitelist and evidence boundaries.
     library = (DOCS / "research.html").read_text(encoding="utf-8")
