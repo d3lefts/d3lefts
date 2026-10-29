@@ -20,6 +20,9 @@ jobs:
         run: |
           python3 -m py_compile research/nightfall/projects/erdos/q7-180-orbit-20261029/depth5.py
           python3 research/nightfall/projects/erdos/q7-180-orbit-20261029/check.py > /tmp/q7-depth4-baseline.log
+      - name: Independent brute-force small-universe oracle and corrupted witness
+        run: |
+          python3 research/nightfall/projects/erdos/q7-180-orbit-20261029/test_depth5.py
       - name: Exact five-deletion pair-cover test on 180 supplied representatives
         run: |
           python3 research/nightfall/projects/erdos/q7-180-orbit-20261029/depth5.py > /tmp/q7-depth5-result.log
