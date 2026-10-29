@@ -52,7 +52,11 @@ test('Internal homepage fragment destinations remain navigable',()=>{
   for(const m of html.matchAll(/href="#([a-z0-9_-]+)"/gi))
     assert.ok(ids.has(m[1]),'#'+m[1]);
   assert.ok(count(html,/href="/g)>=95,'Research archive URLs were lost');
-  assert.equal(count(html,/<section\b/g),17,'A source section was deleted');
+  // The original 17 source sections remain, plus 2 mode-specific entry sections
+  // and 2 editorial colophons. This is deliberate growth, not lost provenance.
+  assert.equal(count(html,/<section\b/g),21,'17 original sections plus four mode-specific editorial sections');
+  assert.equal(count(html,/class="nf-dual-index nf-experience/g),2,'Two separate homepage entry experiences');
+  assert.equal(count(html,/class="nf-experience nf-experience-(?:archive|underbelly) nf-dual-colophon/g),2,'Both experiences retain a concluding handoff');
 });
 
 test('Readability and responsive treatments exist in both appearance modes',()=>{
