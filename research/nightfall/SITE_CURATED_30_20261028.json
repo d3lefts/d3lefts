@@ -1,0 +1,315 @@
+{
+  "version": 1,
+  "snapshot": "2026-10-28",
+  "scope": "Accessible August–October 2026 Library and linked research archive; selected papers are predominantly September–October. Complete publication-priority review remains pending.",
+  "criteria": [
+    "distinct mathematical or engineering contribution",
+    "specific reproducible evidence",
+    "well-defined unresolved premises",
+    "portfolio breadth across four fields",
+    "historical correction and attribution"
+  ],
+  "original_findings_whitelist_count": 3,
+  "entries": [
+    {
+      "id": "01",
+      "category": "mathematics",
+      "evidence": "finite",
+      "type": "Exact finite construction",
+      "title": "Erdős minimum overlap",
+      "summary": "131,072-cell rational upper-bound witness with an internally replayed all-shift score of 0.380856370118029325…; external specialist audit remains open.",
+      "boundary": "An explicit construction and its exact audit; separate from the accepted Arena entry.",
+      "source": "projects/erdos/STATUS_AND_PRIOR_ART_20261028.md"
+    },
+    {
+      "id": "02",
+      "category": "mathematics",
+      "evidence": "finite",
+      "type": "Exact finite construction",
+      "title": "Sidon (4,5): 30-point witness",
+      "summary": "A 30-integer configuration whose largest Sidon subset contains 17 elements, with an exhaustive finite checker.",
+      "boundary": "A distinct finite witness; existing asymptotic results remain credited to prior researchers.",
+      "source": "projects/sidon-finite-30/README.md"
+    },
+    {
+      "id": "03",
+      "category": "mathematics",
+      "evidence": "conditional",
+      "type": "Uniform-decoder manuscript",
+      "title": "Fourth-power finite-field reconstruction",
+      "summary": "Fourth-power sensing and LLL reconstruction up to a root-of-unity ambiguity, with a systematic decoder manuscript and finite tests.",
+      "boundary": "The public handoff is an excerpt; quantified all-signal event, full decoder and mathematical priority require independent audit.",
+      "source": "projects/finite-field-retrieval-handoff-excerpt.txt"
+    },
+    {
+      "id": "04",
+      "category": "mathematics",
+      "evidence": "working",
+      "type": "Theorem manuscript · finite tests",
+      "title": "Nonabelian involution-shadow codes",
+      "summary": "Finite-group shadow encodings with exact distance, pair-spectrum and balanced erasure-allocation formulas, including nonabelian test cases.",
+      "boundary": "Algebraic manuscript and finite checks; formal-kernel verification and worldwide novelty audit still open.",
+      "source": "projects/involution-shadow-codes/NONABELIAN_SHADOW_THEOREM.md"
+    },
+    {
+      "id": "05",
+      "category": "mathematics",
+      "evidence": "working",
+      "type": "Manuscript proof · finite tests",
+      "title": "Periodic forest-gauge obstruction",
+      "summary": "A periodic four-dimensional combinatorial defect identity, accompanied by a separate integer checker.",
+      "boundary": "Thirty-two representative finite checks reproduce the identity; universal proof and priority still require outside review.",
+      "source": "projects/expansion-2026-10-28/02-periodic-forest.md"
+    },
+    {
+      "id": "06",
+      "category": "mathematics",
+      "evidence": "working",
+      "type": "Corrected manuscript",
+      "title": "Affine source rigidity",
+      "summary": "September work on affine source collisions, shifted prime-series expansions, and rational dilation fibers.",
+      "boundary": "Analytic assumptions and originality remain under review.",
+      "source": "2026-09-affine-source-rigidity/README.md"
+    },
+    {
+      "id": "07",
+      "category": "mathematics",
+      "evidence": "software",
+      "type": "Exact implementation · established methods",
+      "title": "Factor-network compilation",
+      "summary": "A checked factor-network equality compiler with explicit structural certificates.",
+      "boundary": "Compiler behavior is reproducible; COPY tensors and factor-graph compilation are known constructions.",
+      "source": "projects/sat-network-universal/README.md"
+    },
+    {
+      "id": "08",
+      "category": "mathematics",
+      "evidence": "working",
+      "type": "Conditional mathematical analysis",
+      "title": "ETH Hermite taper and rank barrier",
+      "summary": "An interpolation precision allowance improvement and a lower bound for restricted disjoint middle-layer refinements.",
+      "boundary": "A restricted obstruction result, with no claimed new SAT worst-case exponent.",
+      "source": "projects/expansion-2026-10-28/03-eth-taper-and-obstruction.md"
+    },
+    {
+      "id": "09",
+      "category": "mathematics",
+      "evidence": "conditional",
+      "type": "Conditional derivation",
+      "title": "Selection-aware Gaussian pivoting",
+      "summary": "A selected-row Gaussian spectral-tail analysis that retains triangular elimination loss.",
+      "boundary": "The final matrix-growth-factor improvement remains open.",
+      "source": "projects/expansion-2026-10-28/05-selection-aware-pivoting.md"
+    },
+    {
+      "id": "10",
+      "category": "mathematics",
+      "evidence": "conditional",
+      "type": "Exact downstream arithmetic",
+      "title": "Finite-field span-tail reduction",
+      "summary": "Independent exact checkers establish a 2⁻⁹⁶ arithmetic tail envelope for stated large-field parameters under a span-count hypothesis.",
+      "boundary": "The central Gaussian short-vector span-count lemma and end-to-end decoder guarantee are unverified; arithmetic checks remain conditional.",
+      "source": "projects/finite-field-phase-retrieval-2026-10-28/README.md"
+    },
+    {
+      "id": "11",
+      "category": "mathematics",
+      "evidence": "working",
+      "type": "Algebraic proof and finite tests",
+      "title": "Heterogeneous erasure complexity",
+      "summary": "Shadow-code erasure reliability under correlated and heterogeneous losses, with a two-class dynamic program and complexity reduction.",
+      "boundary": "Several complexity and allocation principles predate this construction; only the scope-matched synthesis is under novelty review.",
+      "source": "projects/involution-shadow-codes/HETEROGENEOUS_ERASURE_COMPLEXITY.md"
+    },
+    {
+      "id": "12",
+      "category": "quantum",
+      "evidence": "conditional",
+      "type": "Source-dependent certificate",
+      "title": "Werner 24–25-copy rational certificates",
+      "summary": "Exact-rational downstream certificates report qutrit thresholds 0.34636 at 24 copies and 0.34584 at 25 copies under lower-copy theorems.",
+      "boundary": "Distinct from the approved 4–20 registry; original quantitative source inequalities and full scope still require outside replay.",
+      "source": "projects/werner-final-4-25/README.md"
+    },
+    {
+      "id": "13",
+      "category": "quantum",
+      "evidence": "conditional",
+      "type": "Historical 6–8-copy candidates",
+      "title": "Werner correlated-spectator certificates",
+      "summary": "A separable correlated-spectator transfer yields 6-, 7-, and 8-copy conditional candidates 0.448760, 0.432280 and 0.419900.",
+      "boundary": "Historical higher bounds import quantitative source-SDP assumptions, whose witness replay and lineage reconciliation remain open.",
+      "source": "projects/werner-direct-margin/README.md"
+    },
+    {
+      "id": "14",
+      "category": "quantum",
+      "evidence": "conditional",
+      "type": "Evidence-tiered Werner registry",
+      "title": "Werner finite-copy evidence atlas",
+      "summary": "Separates 4–20 qutrit and all-dimension thresholds, reported 21–24 improvements and symbolic 25–100 continuation.",
+      "boundary": "Historic 6–9 alternatives and imported 4-/5-copy SDP margins remain separate until original source witnesses are independently checked.",
+      "source": "projects/werner-atlas/README.md"
+    },
+    {
+      "id": "15",
+      "category": "quantum",
+      "evidence": "working",
+      "type": "Restricted rank-two theorem",
+      "title": "Nine-word affine-code endpoint",
+      "summary": "A four-copy qutrit code supports an explicit trace-inequality decomposition certifying endpoint positivity on a nine-dimensional Alice range.",
+      "boundary": "Restricted witnesses only; this public digest summarizes a Library manuscript, whose frozen source ZIP still needs a public mirror.",
+      "source": "projects/werner-affine-code/RESEARCH_DIGEST.md"
+    },
+    {
+      "id": "16",
+      "category": "quantum",
+      "evidence": "working",
+      "type": "Restricted 27×27 extension",
+      "title": "Complementary-syndrome gluing",
+      "summary": "A syndrome-difference selection rule extends the affine-code theorem to coherent rank-two witnesses on 27×27 supports.",
+      "boundary": "Colliding syndrome differences create cross terms; the original source PDF and checker archive are separate from this curated digest.",
+      "source": "projects/werner-syndrome-gluing/RESEARCH_DIGEST.md"
+    },
+    {
+      "id": "17",
+      "category": "quantum",
+      "evidence": "working",
+      "type": "Exact positive-eigenmode lift",
+      "title": "Werner 4,209-dimensional witness lift",
+      "summary": "An internally audited spectral extension enlarges the 729-dimensional syndrome rectangle to a 4,209-dimensional linear support.",
+      "boundary": "Linear dimension is not rank-two coverage; endpoint positivity remains restricted and original-priority review is outstanding.",
+      "source": "agent-reports/lemnis_werner_4209/RESEARCH_CHECKPOINT.md"
+    },
+    {
+      "id": "18",
+      "category": "quantum",
+      "evidence": "working",
+      "type": "Exact coupling and sufficient condition",
+      "title": "Sharp Werner cross-syndrome coupling",
+      "summary": "The exact off-sector norm 1/√2 supports a rank-two-safe positivity criterion reaching beyond the original linear witness space.",
+      "boundary": "The norm is already saturated by a rank-one example; no unrestricted four-copy positivity theorem follows.",
+      "source": "agent-reports/lemnis_werner_coupling_20261028/RESEARCH_NOTE.md"
+    },
+    {
+      "id": "19",
+      "category": "quantum",
+      "evidence": "working",
+      "type": "Combinatorial no-go theorem",
+      "title": "Ternary diagonal rigidity obstruction",
+      "summary": "A Hamming-parity and symplectic argument bounds positive diagonal coordinate supports by 2ᵏ and classifies the binary-cube extremizers.",
+      "boundary": "An ambient diagonal-subspace obstruction, not a claim of unrestricted rank-two positivity; outside novelty review remains open.",
+      "source": "agent-reports/lemnis_diagonal_rigidity_20261028/RESEARCH_NOTE.md"
+    },
+    {
+      "id": "20",
+      "category": "safety",
+      "evidence": "working",
+      "type": "Formal research manuscript",
+      "title": "Agent Safety Under Abstraction",
+      "summary": "A September analysis of observation fibers, collateral-denial effects, provenance composition, and agent-side information limits.",
+      "boundary": "Classical factorization results are identified; stronger authority claims require proof and priority review.",
+      "source": "projects/agent-safety-under-abstraction/README.md"
+    },
+    {
+      "id": "21",
+      "category": "safety",
+      "evidence": "working",
+      "type": "Reviewed research dossier",
+      "title": "AI safety theorem-and-evidence series",
+      "summary": "An integrated September–October account of observation sufficiency, authority, oversight, and adversarial provenance.",
+      "boundary": "Distinguishes finite checks and manuscript dependencies from independently established new guarantees.",
+      "source": "projects/ai-safety-peer-review-2026-10-28/README.md"
+    },
+    {
+      "id": "22",
+      "category": "safety",
+      "evidence": "software",
+      "type": "Prototype · held-out test pending",
+      "title": "SourceBound evidence prototype",
+      "summary": "An implementation track for source admission, claim provenance, and evidence-aware responses.",
+      "boundary": "Natural-web controlled effectiveness remains an open evaluation; overlapping prior products are credited.",
+      "source": "projects/sourcebound/CLAIM_EVIDENCE_LEDGER.md"
+    },
+    {
+      "id": "23",
+      "category": "safety",
+      "evidence": "working",
+      "type": "September manuscript",
+      "title": "Counterfactual authorization gap",
+      "summary": "Formal models of reference-class capability envelopes, audit burden, and composition-induced escape.",
+      "boundary": "The status is a theoretical manuscript requiring external proof and priority review.",
+      "source": "2026-09-counterfactual-authorization/README.md"
+    },
+    {
+      "id": "24",
+      "category": "safety",
+      "evidence": "working",
+      "type": "September framework",
+      "title": "Three ceilings on oversight",
+      "summary": "A synthesis of information, computational, and evidence-authority limits in AI oversight.",
+      "boundary": "Each claim has an assumption-specific scope; general systems efficacy is untested.",
+      "source": "2026-09-three-ceilings/README.md"
+    },
+    {
+      "id": "25",
+      "category": "safety",
+      "evidence": "working",
+      "type": "Finite algebra · prospective evaluation",
+      "title": "Hidden-function interpretability",
+      "summary": "Paired observational and causal residual checks, an exact small-state demonstration, and a blinded evaluation design.",
+      "boundary": "The example is limited in scale; empirical generalization awaits controlled tests.",
+      "source": "projects/expansion-2026-10-28/06-hidden-function-audits.md"
+    },
+    {
+      "id": "26",
+      "category": "safety",
+      "evidence": "working",
+      "type": "Framework · synthetic evidence",
+      "title": "Causal cuts and research selection",
+      "summary": "Directed-cut factorization, evaluation transport, and obstruction-pair reasoning for decision-oriented research.",
+      "boundary": "The finite algebraic examples and synthetic studies carry no general causal discovery theorem.",
+      "source": "projects/expansion-2026-10-28/07-causal-cognition-proof-search.md"
+    },
+    {
+      "id": "27",
+      "category": "systems",
+      "evidence": "empirical",
+      "type": "Original adverse experiment",
+      "title": "Proof After Scarcity",
+      "summary": "The archived 20-case ranking study produced 8/20 versus an upstream-first 11/20 baseline.",
+      "boundary": "An informative bounded negative outcome; no claimed general superiority.",
+      "source": "projects/pas-overview.md"
+    },
+    {
+      "id": "28",
+      "category": "systems",
+      "evidence": "software",
+      "type": "Executable research system",
+      "title": "NIGHTFALL Discovery Engine",
+      "summary": "Reproducible search contracts, representation changes, exact replay, falsification controls, and adaptive-resolution experiments.",
+      "boundary": "Prototype and synthetic evidence; domain-wide improvements await held-out, matched-budget evaluation.",
+      "source": "discovery-engine/README.md"
+    },
+    {
+      "id": "29",
+      "category": "systems",
+      "evidence": "working",
+      "type": "Historical research audit",
+      "title": "Competition and negative-result registry",
+      "summary": "Erdős, C1/C2, UP25, rejected submissions, provenance conflicts, and unsuccessful operators in one evidence-aware chronology.",
+      "boundary": "Leaderboard standing, mathematical validity, and source completeness are tracked separately.",
+      "source": "projects/expansion-2026-10-28/08-arena-and-negative-results.md"
+    },
+    {
+      "id": "30",
+      "category": "systems",
+      "evidence": "software",
+      "type": "Architecture and tested prototype",
+      "title": "Adaptive-resolution research architecture",
+      "summary": "Reversible multiscale representations and counterexample-sensitive segmentation with preserved source hashes and a tested non-ML prototype.",
+      "boundary": "A trained selector, cross-domain efficiency improvements and held-out matched-budget trials remain future work.",
+      "source": "discovery-engine/ARCHITECTURE.md"
+    }
+  ]
+}
