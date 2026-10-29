@@ -1,0 +1,26 @@
+name: Audit TESSERA fixed-prefix Sidon extension
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/projects/erdos/tessera-uniform-prefix-20261029/**"
+      - ".github/workflows/audit-tessera-prefix-extension.yml"
+  push:
+    paths:
+      - "research/nightfall/projects/erdos/tessera-uniform-prefix-20261029/**"
+      - ".github/workflows/audit-tessera-prefix-extension.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Adversarial finite exact checks
+        run: python3 research/nightfall/projects/erdos/tessera-uniform-prefix-20261029/check_small.py
+      - name: Independent 1009 Singer exact source and grafting check
+        run: python3 research/nightfall/projects/erdos/tessera-uniform-prefix-20261029/check_singer.py
