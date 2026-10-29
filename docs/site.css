@@ -366,3 +366,14 @@ html{scroll-padding-top:22px}
 @media(max-width:1100px){.sf-ecosystem-grid{grid-template-columns:repeat(2,1fr)}.sf-case-panel{grid-template-columns:1fr}.sf-case-aside{display:grid;grid-template-columns:1fr 1fr;gap:25px}.sf-case-aside .sf-aside-foot{grid-column:1/-1}}
 @media(max-width:760px){.sf-case,.sf-ecosystem{padding-top:54px;padding-bottom:59px}.sf-case-panel{grid-template-columns:1fr}.sf-case-main{padding:24px}.sf-case-main h3{margin:22px 0;font-size:49px}.sf-witness{gap:4px;grid-template-columns:repeat(6,minmax(0,1fr))}.sf-point{font-size:10px}.sf-case-aside{display:block;padding:27px}.sf-big{font-size:75px}.sf-aside-stats{margin-top:25px}.sf-case-interact{align-items:start}.sf-ecosystem-grid{grid-template-columns:1fr}.sf-system-card{min-height:225px;padding:24px}.sf-system-card h3{margin:23px 0 11px;font-size:40px}.sf-evidence-snapshot{grid-template-columns:1fr;gap:26px;padding-top:37px;margin-top:40px}.sf-evidence-events a{grid-template-columns:1fr auto;gap:6px}.sf-evidence-events time{grid-column:1/-1}.sf-library-invite{grid-template-columns:1fr;gap:20px;padding:46px 0}}
 @media(prefers-reduced-motion:reduce){.sf-point,.sf-system-card{transition:none}}
+
+
+/* Canonical Proof Passport link on each curated source-library dossier. */
+.atlas-passport-link{display:inline-flex;align-items:center;margin:5px 24px 23px;padding:10px 0;border-bottom:1px solid #56775d;color:#2e5640;font:600 11px/1.5 var(--mono);align-self:start}
+.atlas-passport-link:hover{color:#17291f;background:#dce9db}
+@media(min-width:901px) and (max-width:1300px){
+ .header{position:relative}
+ .header .menu-toggle{display:block}
+ .header .nav,.header .review-nav.subpage-nav{display:none;position:absolute;top:100%;left:0;right:0;z-index:20;padding:24px;background:var(--paper);box-shadow:0 10px 15px #0001;border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;gap:18px;font-size:13px}
+ .header .nav.open,.header .review-nav.subpage-nav.open{display:flex}
+}
