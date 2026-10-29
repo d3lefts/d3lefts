@@ -97,6 +97,17 @@ try{
    await page.locator("#nf-import-file").setInputFiles({name:"modified.json",mimeType:"application/json",buffer:Buffer.from(JSON.stringify(modifiedLedger))});
    assert.match(await page.locator("#nf-message").innerText(),/Frontier import refused/);
    assert.match(await page.locator("#nf-progress").innerText(),/2 unresolved leaf obligations/);
+   page.once("dialog",d=>d.accept());
+   await page.locator("#nf-reset").click();
+   assert.match(await page.locator("#nf-session-list").innerText(),/NO LOCAL ASSIGNMENTS/);
+   page.once("dialog",d=>d.accept());
+   const [preRestoreBackup]=await Promise.all([
+      page.waitForEvent("download"),
+      page.locator("#nf-import-file").setInputFiles({name:"verified.json",mimeType:"application/json",buffer:Buffer.from(JSON.stringify(cleanLedger))})
+   ]);
+   assert.match(preRestoreBackup.suggestedFilename(),/frontier_local_ledger\.json$/);
+   assert.match(await page.locator("#nf-session-list").innerText(),/PROPOSED/);
+   assert.match(await page.locator("#nf-progress").innerText(),/2 unresolved leaf obligations/);
 
    await page.locator('#nf-tool-links a[href="orchestrator.html"]').click();
    await page.waitForURL(/orchestrator\.html/);
