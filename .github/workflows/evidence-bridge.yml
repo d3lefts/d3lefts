@@ -62,6 +62,10 @@ jobs:
       - name: Vesper original v1 equal-retrieval and Scope Faultline preflight
         run: |
           node --check research/nightfall/observatory/gate-c-ryev/parity_runner.cjs
+          node --check research/nightfall/observatory/gate-c-ryev/metering_core.cjs
+          node --check research/nightfall/observatory/gate-c-ryev/run_metered.cjs
+          node --check research/nightfall/observatory/gate-c-ryev/test_metering.cjs
+          node research/nightfall/observatory/gate-c-ryev/test_metering.cjs
           node --check research/nightfall/evidence-bridge/scope_faultline.cjs
           node research/nightfall/observatory/gate-c-ryev/parity_runner.cjs --selftest
           node research/nightfall/observatory/gate-c-ryev/parity_runner.cjs --freeze /tmp/ryev-original-gate-c
