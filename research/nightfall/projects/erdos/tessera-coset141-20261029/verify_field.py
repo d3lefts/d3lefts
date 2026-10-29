@@ -27,7 +27,7 @@ for e in range(v):
     trace=tuple((x+y+z)%5 for x,y,z in zip(state,a,b))
     if trace==(0,0,0,0,0,0):D.append(e)
     state=multiply(state,alpha)
-assert state[1:]==(0,0,0,0,0)
+assert power(state,24)==one  # alpha^651 belongs to F_25* (not necessarily F_5*)
 EXPECTED=(21,72,81,86,88,105,197,217,247,278,316,334,357,
 360,368,405,430,434,440,462,483,498,525,537,538,584)
 assert tuple(D)==EXPECTED
