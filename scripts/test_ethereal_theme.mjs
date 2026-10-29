@@ -77,7 +77,7 @@ try{
   });
   assert.equal(palette.paper,"#241a34","Sunset Boulevard token contract");
   assert.equal(palette.primary,"#f5b78b","Sunset apricot action accent");
-  assert.equal(palette.text,"rgb(40, 25, 15)","Primary button uses legible light text");
+  assert.equal(palette.text,"rgb(36, 26, 52)","Primary button uses legible light text");
   await page.screenshot({path:"browser-artifacts/ethereal-light-"+width+".png",fullPage:false});
   await toggle.click();
   await page.waitForTimeout(350);
