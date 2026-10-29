@@ -5,9 +5,9 @@
 <meta name="description" content="Follow a NIGHTFALL result, understand its evidence, then work on an explicitly unsolved research question in a single guided workspace.">
 <link rel="canonical" href="https://d3lefts.github.io/d3lefts/join.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="site.css"><link rel="stylesheet" href="join.css">
+<link rel="stylesheet" href="site.css"><link rel="stylesheet" href="join.css"><link rel="stylesheet" href="claim-journey.css">
 <title>Join an Open Problem — NIGHTFALL</title>
-<script src="site.js" defer></script><script src="frontier-core.js" defer></script><script src="join-evidence-core.js" defer></script><script src="join.js" defer></script>
+<script src="site.js" defer></script><script src="research-registry.js" defer></script><script src="claim-journey-core.js" defer></script><script src="claim-journey.js" defer></script><script src="frontier-core.js" defer></script><script src="join-evidence-core.js" defer></script><script src="join.js" defer></script>
 </head><body>
 <a class="skip" href="#main">Skip to the research path</a><div class="topline"></div>
 <header class="header"><div class="wrap header-inner">
@@ -32,8 +32,38 @@
 <div class="join-heading"><span>02 / THE PROCESS</span><div><h2 id="join-method-title">A result is a claim<br><em>with a route to criticism.</em></h2><p>We keep an explicit question attached to its sources, mechanism, attempted experiments, checker, limitations, and reviewer decision. You enter through a problem, then the relevant instrument is selected for you.</p></div></div>
 <div class="join-method-steps"><div><b>FRAME</b><strong>Freeze the exact question.</strong><p>Positive and negative outcomes have distinct certificates.</p></div><div><b>EXPLORE</b><strong>Test a decisive idea.</strong><p>Record predictions, operators, and failures rather than only successes.</p></div><div><b>CHALLENGE</b><strong>Try to break the claim.</strong><p>Search for missing assumptions and independently replay finite checks.</p></div><div><b>RECORD</b><strong>Submit for independent review.</strong><p>No local result automatically becomes a theorem or publication claim.</p></div></div>
 </div></section>
+
+<section class="join-section cj-section" id="claim-investigation" aria-labelledby="cj-title">
+<div class="wrap">
+<div class="join-heading"><span>03 / CONTINUE A SPECIFIC RESEARCH THREAD</span><div><h2 id="cj-title">Keep the problem.<br><em>Carry the evidence.</em></h2><p>Choose a documented, unresolved obligation from the canonical claim record. The same scope, working notes, primary sources, and route to independent review stay together in this browser. A review task is separate from the two finite Frontier assignments below.</p></div></div>
+<div class="cj-pickers"><label>Research claim <select id="cj-claim" aria-label="Research claim"><option value="">Choose a source-bound result…</option></select></label>
+<label>Exact open obligation <select id="cj-obligation" aria-label="Exact unresolved research obligation" disabled><option value="">Choose a claim first</option></select></label></div>
+<p class="cj-warning" id="cj-invalid" hidden role="status"></p>
+<div id="cj-empty" class="join-empty">Select a result and one unresolved obligation. You will receive its original scope, official sources, a relevant next instrument, and a draft contribution route. <a href="passport.html">View all Proof Passports ↗</a></div>
+<div class="cj-workspace" id="cj-workspace" hidden>
+<div class="cj-contract">
+<div><span class="cj-kicker">YOUR FROZEN RESEARCH QUESTION / REGISTRY-BOUNDED</span><h3 id="cj-claim-name"></h3><p id="cj-statement"></p><p class="cj-condition" id="cj-condition"></p></div>
+<div class="cj-obligation"><span>THE OPEN OBLIGATION</span><strong id="cj-duty"></strong><small id="cj-snapshot"></small></div>
+</div>
+<div class="cj-columns">
+<section class="cj-work" aria-labelledby="cj-work-title"><span class="cj-kicker">01 / RECORD A FALSIFIABLE STEP</span><h3 id="cj-work-title">Start from the unresolved claim.</h3><p>Describe the source version, what evidence you will calculate, what would disprove your claim, and how a separate reviewer can reproduce it. Notes never change the site's scientific status.</p>
+<label for="cj-notes">Your investigation notes · unreviewed</label><textarea id="cj-notes" rows="7" maxlength="4000" placeholder="Hypothesis, exact input identity, planned falsifier, independent replay, result…"></textarea>
+<div class="cj-actions"><button id="cj-save" type="button">Preserve local note</button><button id="cj-export" type="button">Export scoped research brief ↓</button></div>
+<p id="cj-save-status" class="cj-status" role="status" aria-live="polite">No local research note preserved.</p>
+</section>
+<aside class="cj-next" aria-labelledby="cj-next-title"><span class="cj-kicker">02 / FOLLOW THE SAME CLAIM</span><h3 id="cj-next-title">One question.<br>Three next moves.</h3>
+<a id="cj-primary" class="cj-primary" href="passport.html">Open the relevant verification tool ↗</a>
+<a id="cj-passport" href="passport.html">Inspect the canonical Proof Passport ↗</a>
+<a id="cj-return" href="passport.html">Return to this result and its evidence ↗</a>
+<a id="cj-submit" href="https://github.com/d3lefts/d3lefts/issues" target="_blank" rel="noopener">Open a prefilled GitHub review proposal ↗</a>
+<p>This opens a GitHub draft for your review. You choose whether to submit it. Local checks remain unreviewed until independently assessed.</p>
+<details open><summary>Primary sources and evidence</summary><div id="cj-sources"></div></details>
+<div class="cj-context"><span>LOCAL INVESTIGATION LINK</span><a id="cj-permalink" href="join.html#claim-investigation">Link to this exact obligation ↗</a><p id="cj-context-status">This browser stores only a claim ID, obligation selection and draft notes.</p></div>
+</aside>
+</div></div>
+</div></section>
 <section class="join-section join-assignment wrap" id="assignment" aria-labelledby="join-assignment-title">
-<div class="join-heading"><span>03 / JOIN THE WORK</span><div><h2 id="join-assignment-title">Take the next<br><em>unsolved piece.</em></h2><p>Choose the kind of attack you want to make. The matching pool is currently two frozen mathematical problems with explicit source references and closure conditions. Other review opportunities remain in the <a href="desk.html">Research Desk</a>.</p></div></div>
+<div class="join-heading"><span>03 / JOIN THE WORK</span><div><h2 id="join-assignment-title">Take the next<br><em>unsolved piece.</em></h2><p>Choose the kind of attack you want to make. The separate Frontier pool contains two frozen mathematical problems with explicit source references and closure conditions. For a claim you were just reading, <a href="#claim-investigation">continue its exact open obligation above</a>; additional review opportunities appear in the <a href="desk.html">Research Desk</a>.</p></div></div>
 <div class="join-match"><label for="join-interest">I want to work on</label><select id="join-interest"><option value="proof">Structural proofs and mathematical arguments</option><option value="compute">Exact computation and search</option><option value="audit">Adversarial review and independent verification</option></select><p id="join-match-reason" aria-live="polite"></p></div>
 <div class="join-choices" id="join-choices" aria-label="Available source-linked assignments"><p>Loading open problem contracts…</p></div>
 <section class="join-workspace" id="workspace" aria-labelledby="join-workspace-title">
