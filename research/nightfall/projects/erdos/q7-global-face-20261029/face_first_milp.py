@@ -75,7 +75,7 @@ def run(seconds=20.0):
         checked=audit(trial,geo)
         if len(trial)>=305:
             winning_edges=sorted((geo[0][e][0],geo[0][e][1]) for e in trial)
-            text="".join("%d %d\\n"%(u,v) for u,v in winning_edges)
+            text="".join("%d %d\n"%(u,v) for u,v in winning_edges)
             winner={"edges":len(trial),"sha256":hashlib.sha256(text.encode()).hexdigest(),
                    "edgeList":winning_edges,
                    "independentSquareAudit":"PASS"}
