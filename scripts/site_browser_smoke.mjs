@@ -93,6 +93,23 @@ try{
    assert.match(await page.locator("#claim-text").inputValue(),/smallest selected mark in \[1, 184\]/,"exact scope transferred");
    assert.match(await page.locator("#orch-message").innerText(),/editable fields/,"user-reviewed handoff");
    assert.equal(await page.locator("#orch-export").isDisabled(),true,"no autonomous dispatch or proof promotion");
+   // Exact Frontier source-to-Claim-Lab user journey, with explicit approval.
+   await page.goto(origin+"frontier.html",{waitUntil:"load"});
+   assert.match(await page.locator("#nf-progress").innerText(),/2 unresolved leaf obligations/,"split leaf progress survives reload");
+   assert.equal(await page.locator("#nf-import").isVisible(),true,"audited backup restore is available");
+   const packet=await page.evaluate(()=>window.NFFrontier.packet(window.NFFrontier.split(window.NFFrontier.rootTask(window.NFFrontier.ITEMS[0]))[0]));
+   assert.equal(packet.scope,"smallest selected mark in [1, 92]");
+   const forged=await page.evaluate(p=>{
+     try{window.NFFrontier.validatePacket({...p,hi:p.hi+1});return "accepted"}catch(e){return e.message}
+   },packet);
+   assert.match(forged,/altered/,"Frontier rejects a forged branch interval");
+   page.once("dialog",dialog=>dialog.accept());
+   await page.locator('#nf-tool-links a[href="claim-lab.html"]').click();
+   await page.waitForURL(/claim-lab\.html/);
+   assert.match(await page.locator(".claimCard").first().innerText(),/Frontier/,"Claim Lab received explicit Frontier transfer");
+   assert.match(await page.locator(".claimCard").first().innerText(),/Conjecture/,"import cannot promote proof tier");
+   assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem("nightfall_claim_lab_v1")).claims.some(c=>c.frontierId==="NF-156-184-9"&&c.status===0)),true,"Frontier provenance preserved");
+   assert.equal(await page.evaluate(()=>sessionStorage.getItem("nightfall.frontier.claimlab.v1")),null,"one-shot handoff consumed");
 
   }
   await page.goto(origin+"discovery.html",{waitUntil:"load"});
