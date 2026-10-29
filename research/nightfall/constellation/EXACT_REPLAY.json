@@ -54,6 +54,14 @@
         "conflict_hyperedges": 0,
         "maximal_sets": 1
       },
+      "10": {
+        "conflict_hyperedges": 70,
+        "maximal_sets": 64
+      },
+      "11": {
+        "conflict_hyperedges": 95,
+        "maximal_sets": 110
+      },
       "2": {
         "conflict_hyperedges": 0,
         "maximal_sets": 1
@@ -85,14 +93,6 @@
       "9": {
         "conflict_hyperedges": 50,
         "maximal_sets": 36
-      },
-      "10": {
-        "conflict_hyperedges": 70,
-        "maximal_sets": 64
-      },
-      "11": {
-        "conflict_hyperedges": 95,
-        "maximal_sets": 110
       }
     },
     "subsets_checked": 4094
