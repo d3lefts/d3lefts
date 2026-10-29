@@ -24,6 +24,7 @@ try{
   await page.goto(origin+"referee.html?domain=sidon",{waitUntil:"load"});
   await page.locator("#run-sidon").click();
   await page.locator("#send-claim-lab").waitFor({state:"visible"});
+  await page.waitForFunction(()=>!document.querySelector("#send-claim-lab").disabled);
   assert.equal(await page.locator("#send-claim-lab").isDisabled(),false,"Actual finite Referee receipt must be available");
   const originalReceipt=await page.evaluate(()=>JSON.stringify(window.latest??null)); // optional; actual transport checked below
   await Promise.all([page.waitForURL("**/claim-lab.html**"),page.locator("#send-claim-lab").click()]);
@@ -38,6 +39,7 @@ try{
   // Actual Referee transfer once more, then approve explicit backup.
   await page.goto(origin+"referee.html?domain=sidon");
   await page.locator("#run-sidon").click();
+  await page.waitForFunction(()=>!document.querySelector("#send-claim-lab").disabled);
   await page.locator("#send-claim-lab").click();
   await page.locator("#bridgeMask").waitFor({state:"visible"});
   const [backup]=await Promise.all([page.waitForEvent("download"),page.locator("#bridgeApprove").click()]);
