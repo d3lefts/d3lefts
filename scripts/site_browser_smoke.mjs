@@ -395,7 +395,15 @@ try{
     await page.locator("#claimTitle").fill("Owner storage-preservation fixture");
     await page.locator("#claimStatus").selectOption("3");
     await page.locator("#claimForm button[type=submit]").click();
+    await page.evaluate(()=>{
+      window.__claimNavEvents=[];
+      document.querySelector(".sidebar")?.addEventListener("click",e=>{
+        window.__claimNavEvents.push({target:e.target.tagName,tab:e.target.closest("[data-tab]")?.dataset.tab});
+      },true);
+    });
     await page.locator('[data-tab="audit"]').click();
+    console.log("CLAIM NAV 1",await page.evaluate(()=>({events:window.__claimNavEvents,crumb:document.querySelector("#sectionCrumb")?.textContent,go:typeof window.go,active:[...document.querySelectorAll("[data-tab].active")].map(x=>x.dataset.tab)})));
+    console.log("CLAIM NAV 2",await page.evaluate(()=>{try{window.go("audit");return {crumb:document.querySelector("#sectionCrumb")?.textContent,active:[...document.querySelectorAll("[data-tab].active")].map(x=>x.dataset.tab)}}catch(e){return {error:String(e),stack:e.stack?.slice(0,1000)}}}));
     await page.waitForFunction(()=>document.querySelector("#sectionCrumb")?.textContent==="Audit queue");
     const auditText=await page.locator("#content").innerText();
     assert.match(auditText,/Missing artifact reference/,"manual label cannot bypass missing artifact");
