@@ -3,7 +3,7 @@
 Static, dependency-free site for NIGHTFALL’s **original, inspectable research contributions**. The broader public GitHub repository is retained as the attributed historical research archive.
 
 - `index.html` — three flagship research programs with explicit evidence tiers, plus the three approved original findings and open reviews.
-- `research.html` / `research.js` — 23 source-linked September–October research lines with discipline filters, search, and explicit scope boundaries; broader than the Original Findings whitelist.
+- `research.html` / `research.js` — 30 curated, source-linked September–October research lines with discipline filters, search, and explicit scope boundaries; broader than the Original Findings whitelist.
 - `agenda.html` and `agenda.js` — separate five-discipline research agenda with ten untested proposals.
 - Discovery Engine: discovery.html, discovery-core.js, discovery-app.js, discovery.css — executable bounded proxy lab and portable evidence workspace.
 - `review.html` — three review assignments for the approved original contributions.
@@ -35,6 +35,12 @@ The design takes inspiration from editorial research portfolios, while its layou
 The [Exact Research Tools](exact-research.html) workbench complements Claim Lab's manual records and the owner's exact overlap/Sidon [Referee](referee.html). It supports a bounded four-qutrit integer rank-two witness verifier and exhaustive F25 fourth-power phase-ambiguity enumeration. JSON receipts are local finite calculations, never independent theorem certificates. All arithmetic uses BigInt or exact field operations, with independently expanded physical partial traces and browser adversarial tests.
 
 Run `node scripts/test_research_tools.cjs` for the independent 180-entry tensor/trace comparison and full finite-field controls. Web smoke covers mobile, desktop, exact rank, negative-rank-three input warnings, F25 phase orbits, and receipt export.
+
+## Guided visitor research journey
+
+The [Research Tools](exact-research.html#guided-replay) hub includes a source-backed four-stage walkthrough of the finite 30-point Sidon construction: statement → live Referee run → deliberate adversarial controls → independent Python receipt replay. The domain-specific URL `referee.html?domain=sidon#workbench` opens the finite verifier with its original source fixture; unrecognized `domain` strings have no effect. All steps retain their own evidence limits. This is navigation and transparency, **not** a proof-status promotion or automated cross-tool import.
+
+The [research instrument handoff contract](../research/nightfall/RESEARCH_INSTRUMENT_HANDOFF_20261028.md) identifies existing receipt formats and defines the release boundary required before a common bridge can link evidence to claims.
 
 ## Maintenance
 

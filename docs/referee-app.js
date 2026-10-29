@@ -67,5 +67,8 @@ $("pin-overlap").addEventListener("click",()=>{try{$("overlap-claimed").value=C.
 $("sidon-source").addEventListener("click",()=>window.open(repo,"_blank","noopener,noreferrer"));
 $("export-receipt").addEventListener("click",exportReceipt);
 $("overlap-heights").value=C.OVERLAP_DEMO.heights.join(", ");$("sidon-points").value=C.SIDON_WITNESS.join(", ");$("sidon-subset").value=C.SIDON_SUBSET.join(", ");
+// Explicit, allowlisted deep-link for an inspectable source-to-verifier journey.
+const requestedDomain = new URLSearchParams(window.location.search).get("domain");
+if (requestedDomain === "sidon") setTab("sidon");
 $("app-version").textContent="ENGINE V"+C.VERSION+" · BROWSER-LOCAL";
 })();
