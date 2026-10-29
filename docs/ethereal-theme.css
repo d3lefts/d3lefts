@@ -245,15 +245,15 @@ html[data-nf-theme="dusk"] .nf-observatory-disclosure{color:#bdc5dd}
 .nf-process-thread a{flex:0 1 180px;min-width:105px;position:relative;text-align:center;padding:6px 8px;color:var(--muted);font:600 10px/1.5 var(--mono);letter-spacing:.025em;white-space:nowrap}
 .nf-process-thread a:before{content:"";display:block;position:relative;z-index:1;width:8px;height:8px;border:1px solid #414564;border-radius:50%;background:var(--paper);margin:0 auto 9px}
 .nf-process-thread a:not(:first-child):after{content:"";position:absolute;top:9px;right:50%;width:100%;border-top:1px solid var(--thread-line);pointer-events:none}
-.nf-process-thread a[aria-current="step"]{font-weight:700;color:#1b263b}
-.nf-process-thread a[aria-current="step"]:before{background:#414564;box-shadow:0 0 0 4px #d8c38a}
+.nf-process-thread a[aria-current="page"]{font-weight:700;color:#1b263b}
+.nf-process-thread a[aria-current="page"]:before{background:#414564;box-shadow:0 0 0 4px #d8c38a}
 .nf-process-thread a:hover{text-decoration:underline;text-underline-offset:4px}
 .nf-process-thread:focus-within{scrollbar-color:auto}
 html[data-nf-theme="dusk"] .nf-process-thread{--thread-line:#697092;background:#171f34;border-color:#404d68}
 html[data-nf-theme="dusk"] .nf-process-thread a{color:#aebed9}
 html[data-nf-theme="dusk"] .nf-process-thread a:before{background:#222c45;border-color:#b4a6df;box-shadow:0 0 10px #b4a6df22}
-html[data-nf-theme="dusk"] .nf-process-thread a[aria-current="step"]{color:#f2e6ff;text-shadow:0 0 10px #a68ed788}
-html[data-nf-theme="dusk"] .nf-process-thread a[aria-current="step"]:before{background:#e9d9ff;box-shadow:0 0 0 4px #7c67934d,0 0 22px #cab5f8a8}
+html[data-nf-theme="dusk"] .nf-process-thread a[aria-current="page"]{color:#f2e6ff;text-shadow:0 0 10px #a68ed788}
+html[data-nf-theme="dusk"] .nf-process-thread a[aria-current="page"]:before{background:#e9d9ff;box-shadow:0 0 0 4px #7c67934d,0 0 22px #cab5f8a8}
 
 /* Calm surfaces under dense mathematical content: no stars behind equations. */
 html[data-nf-theme="dusk"] body:has(.lp-page){background-image:none!important;background-color:#111a2b!important}
@@ -636,8 +636,8 @@ html[data-nf-theme="dusk"] .nf-observatory-edge.edge-method{stroke:#b4abe6}
 html[data-nf-theme="dusk"] .nf-observatory-edge.edge-open-premise{stroke:#e2afa1}
 html[data-nf-theme="dusk"] .nf-observatory-edge.edge-analogy{stroke:#9bafcb}
 /* Process progress marks location only, not scientific completeness. */
-html[data-nf-theme="dusk"] .nf-process-thread a[aria-current="step"]{color:#f0dcad;text-shadow:none}
-html[data-nf-theme="dusk"] .nf-process-thread a[aria-current="step"]:before{
+html[data-nf-theme="dusk"] .nf-process-thread a[aria-current="page"]{color:#f0dcad;text-shadow:none}
+html[data-nf-theme="dusk"] .nf-process-thread a[aria-current="page"]:before{
  background:var(--nf-champagne);border-color:var(--nf-champagne-hover);
  box-shadow:0 0 0 4px #b8a07940,0 0 20px #d8c38a55;
 }
@@ -805,3 +805,8 @@ html[data-nf-theme="dusk"] :is(.lab-feature,.rs-insight,.pp-metric,.ma-canvas,.s
 html[data-nf-theme="dusk"] :is(.co-page,.desk-page,.rs-intro-aside){--green:var(--nf-moon-violet);--lime:var(--nf-lightray-gold)}
 
 html[data-nf-theme="dusk"]{--nf-inline-foreground:#edf0fb}
+
+/* Product destinations are locations, never a claim-completion timeline. */
+.nf-process-thread a:not(:first-child):after{display:none}
+.nf-process-thread a{flex:1 1 220px;max-width:330px}
+@media(max-width:600px){.nf-process-thread a{flex:1 0 auto;min-width:155px}}
