@@ -143,8 +143,8 @@ def run():
         21771,4920,0,0,583,8,23,26)
     assert sorted(R)==[6,8,9,11,13,14,18,23]
     assert len(final)*(len(final)+1)//2==276
-    source_hash=sha256(('\\n'.join(map(str,Q))+'\\n').encode()).hexdigest()
-    witness_hash=sha256(('\\n'.join(map(str,final))+'\\n').encode()).hexdigest()
+    source_hash=sha256(('\n'.join(map(str,Q))+'\n').encode()).hexdigest()
+    witness_hash=sha256(('\n'.join(map(str,final))+'\n').encode()).hexdigest()
     assert source_hash=='2867af0c52dde5eda18654f69ac00f55cc3e241d7abba9f4cdf123f5b922f74c'
     assert witness_hash=='feb60c46538147823f59d57f0cc868c40a1b7deab3256ede8a9e2f02c57980dd'
     assert not integer_sidon(list(A)+[T+x for x in Q])
