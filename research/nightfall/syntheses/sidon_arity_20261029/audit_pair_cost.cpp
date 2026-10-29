@@ -13,6 +13,7 @@ using namespace std;
 constexpr int V=91;
 const array<int,10> d={0,1,3,9,27,49,56,61,77,81};
 int md(int x){return (x%V+V)%V;}
+int pc(unsigned m){int r=0;while(m){r+=(m&1u);m>>=1;}return r;}
 int main(){
  vector<int> ext;
  for(int a=0;a<V;a++) if(find(d.begin(),d.end(),a)==d.end()) ext.push_back(a);
@@ -33,7 +34,7 @@ int main(){
    int c=0;for(int x:deg)if(x>=3)c++;
    int best_retained=-1;
    for(int mask=0;mask<(1<<10);mask++){
-     if(__builtin_popcount((unsigned)mask)<=best_retained)continue;
+     if(pc((unsigned)mask)<=best_retained)continue;
      int used[91]={};
      vector<int> X={a,b};
      for(int i=0;i<10;i++)if(mask>>i&1)X.push_back(d[i]);
@@ -43,7 +44,7 @@ int main(){
        if(used[s]){ok=false;break;}
        used[s]=1;
      }
-     if(ok)best_retained=__builtin_popcount((unsigned)mask);
+     if(ok)best_retained=pc((unsigned)mask);
    }
    assert(best_retained>=0);
    int cost=10-best_retained;
