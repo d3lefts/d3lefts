@@ -253,8 +253,8 @@ const REGISTRY={
       },
       "reproducibility": {
         "level": "finite",
-        "label": "53,478 exact finite inputs pass",
-        "detail": "Independent standalone prime-base-field checker passes 53,478 exact input vectors across extensions of degrees 2–4 and 1,500 constructive collisions for nonadaptive frames; mathematical theorem covers all prime-power base fields."
+        "label": "332,086 exact finite inputs pass",
+        "detail": "Two independent checkers pass 332,086 exact input vectors across q=2,3,4,5 and extension degrees 2–4, with 3,000 constructive collisions (including characteristic two). The theorem covers all prime-power base fields."
       },
       "originality": {
         "level": "open",
@@ -285,7 +285,7 @@ const REGISTRY={
           "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/EXTENSION_DEGREE_PACKING_20261029.md"
         },
         {
-          "label": "Independent 53,478-vector and 1,500-collision verifier",
+          "label": "Prime-base exact decoder and nonadaptive collision checker",
           "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/verify_extension_packing.py"
         },
         {
@@ -317,7 +317,7 @@ const REGISTRY={
           "date": "2026-10-29",
           "kind": "proof-candidate",
           "label": "Extension-degree packing improves adaptive measurement count",
-          "detail": "General two-round bound k+ceil((k−1)/(r−1)), exact k+1 optimality when 2≤k≤r and q>2, and a same-model nonadaptive complement-property lower bound. Verified by 53,478 reconstructions and 1,500 collision certificates; external review pending.",
+          "detail": "General two-round bound k+ceil((k−1)/(r−1)), exact k+1 optimality when 2≤k≤r and q>2, and a same-model nonadaptive complement-property lower bound. Verified by 332,086 reconstructions and 3,000 collision certificates; external review pending.",
           "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/EXTENSION_DEGREE_PACKING_20261029.md"
         }
       ]
