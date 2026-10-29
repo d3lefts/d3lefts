@@ -83,7 +83,7 @@ try{
     const diagram=await page.evaluate(()=>{
       const svg=document.querySelector(".hero-aside .diagram");
       return {signal:getComputedStyle(svg.querySelector('circle[fill="#d8c38a"]')).fill,
-        curve:getComputedStyle(svg.querySelector('path[stroke="#1b100b"]')).stroke,
+        curve:getComputedStyle(svg.querySelector('path[stroke="#4a1f24"]')).stroke,
         toolbar:document.querySelector('meta[name="theme-color"]')?.content};
     });
     assert.equal(diagram.signal,"rgb(216, 195, 138)","Mathematical hero signal uses muted blackcherry");
