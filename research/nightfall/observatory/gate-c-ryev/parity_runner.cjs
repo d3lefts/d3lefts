@@ -5,6 +5,10 @@ const fs=require("node:fs"),path=require("node:path"),cp=require("node:child_pro
 const root=__dirname+"/frozen-vesper",tasks=require(root+"/GATE_C_TASK_SET_v1.json"),locks=require(root+"/SOURCE_BLOB_LOCK_v1.json"),graph=require(root+"/claims-v1.json");
 const sha=x=>crypto.createHash("sha256").update(x).digest("hex");
 const randomSeed=1729,tokenCap=2000,toolCap=20;
+// A secret per-study key masks condition IDs. Public seed alone cannot blind an evaluator.
+const key=process.env.GATE_C_BLIND_KEY||"PREVIEW_ONLY_PUBLIC_NONSECRET_ID";
+const secured=typeof process.env.GATE_C_BLIND_KEY==="string"&&/^[a-f0-9]{64}$/i.test(process.env.GATE_C_BLIND_KEY);
+function needSecret(){assert.ok(secured,"LIVE TRIALS REQUIRE a secret 64-hex GATE_C_BLIND_KEY, saved outside GitHub/graded exports.");}
 const knownEdgeIds={
  "FF-01":["TR-007"],"FF-02":["TR-007"],"WR-01":["TR-005","TR-008"],
  "WR-02":["TR-005","TR-008"],"SP-01":["TR-004","TR-005"],"SP-02":["TR-004"]
@@ -76,7 +80,7 @@ function pairedJobs(){
  for(const t of sorted){
   const view=graphView(t),baseline=retrieval(t,t.prompt);
   for(const arm of shuffle(["G","F"],random)){
-   const id=sha("gate-c-original-v1:"+t.id+":"+arm+":"+randomSeed).slice(0,20);
+   const id=crypto.createHmac("sha256",key).update("gate-c-original-v1:"+t.id+":"+arm+":"+randomSeed).digest("hex").slice(0,20);
    arr.push({blindId:"B-"+id,taskId:t.id,arm,sourceCommit:locks.archive_commit,
     prompt:t.prompt,baselineRetrieval:baseline,
     commonNodeFacts:view.nodes,graphEdges:arm==="G"?view.edges:[],
@@ -106,7 +110,9 @@ function freeze(out){
   originalTaskSha256:sha(fs.readFileSync(root+"/GATE_C_TASK_SET_v1.json")),
   originalLockSha256:sha(fs.readFileSync(root+"/SOURCE_BLOB_LOCK_v1.json")),
   graphSha256:sha(fs.readFileSync(root+"/claims-v1.json")),
-  seed:1729,arms:12,taskCount:6,budget:{tokens:tokenCap,tools:toolCap,wallClockMinutes:30},
+  seed:1729,arms:12,taskCount:6,blinding:secured?"SECRET_HMAC_OPERATOR_ONLY":"PUBLIC_DEVELOPMENT_FIXTURE_NOT_ELIGIBLE_FOR_LIVE_TRIALS",
+  privateJobCommitmentSha256:sha(JSON.stringify(jobs)),keyCommitmentSha256:secured?sha(key):null,
+  budget:{tokens:tokenCap,tools:toolCap,wallClockMinutes:30},
   matching:{sameSourceBytes:true,sameRetrievalIndex:true,samePrompt:true,sameNodeFacts:true,typedRelationshipsOnlyInGraph:true},
   caveat:"No model trial or blind adjudicator exists in this freeze."};
  write(path.join(out,"freeze.json"),meta);
@@ -120,6 +126,7 @@ function cliRetrieve(taskId,query){
  console.log(JSON.stringify(retrieval(t,query),null,2));
 }
 function validateOutputs(out){
+ needSecret();
  const jobs=pairedJobs(),raw=JSON.parse(fs.readFileSync(path.join(out,"raw-outputs.json")));
  assert.ok(Array.isArray(raw)&&raw.length===12,"Exactly 12 actual model responses required");
  const map=new Map(raw.map(r=>[r.blindId,r]));assert.equal(map.size,12,"Duplicate blind IDs");
