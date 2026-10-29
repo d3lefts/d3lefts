@@ -35,6 +35,7 @@ jobs:
           node --check research/nightfall/evidence-bridge/core.js
           node --check research/nightfall/evidence-bridge/test.cjs
           node --check research/nightfall/evidence-bridge/test_browser.mjs
+          node --check research/nightfall/evidence-bridge/test_owner_handoff.mjs
           cmp docs/evidence-bridge-core.js research/nightfall/evidence-bridge/core.js
       - name: Strict receipt tests and frozen fixture exports
         run: |
@@ -71,6 +72,7 @@ jobs:
         run: |
           npm install --no-save --no-package-lock playwright-core@1.56.1
           BRIDGE_FIXTURE_DIR=/tmp/ryev-bridge-fixtures CHROME_BIN="$(command -v google-chrome)" node research/nightfall/evidence-bridge/test_browser.mjs
+          CHROME_BIN="$(command -v google-chrome)" node research/nightfall/evidence-bridge/test_owner_handoff.mjs
       - name: Archive Invariant Forge and blinded Gate C execution package
         uses: actions/upload-artifact@v4
         with:
