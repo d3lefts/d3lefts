@@ -1,0 +1,2 @@
+PASS: exact constant C_r>1/sqrt(2) for r=1..1000; symbolic margin identity holds
+sample finite cardinality deletion upper bound q1009 delta=1/(20r): 154459162063484903711843/14501978741973897216000 ~ 10.650902529351047
