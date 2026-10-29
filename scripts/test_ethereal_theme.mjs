@@ -88,12 +88,52 @@ try{
   assert.equal(await page.locator(".nf-observatory-edge").count(),13,"Thirteen typed relationships drawn from registry");
   assert.equal(await page.locator(".nf-process-thread a").count(),5,"Five-stage cross-tool research journey");
   assert.equal(await page.locator('.nf-process-thread a[aria-current="step"]').count(),1,"Research journey has one location marker");
+  assert.equal(await page.locator(".nf-observatory-path").count(),2,"Two grounded entry routes are visible before a selection");
+  await page.locator("#observatory").screenshot({path:"browser-artifacts/ethereal-observatory-overview-"+width+".png"});
+  assert.equal(await page.locator('#nf-observatory-lenses [aria-pressed="true"]').count(),1,"One active evidence lens");
+  assert.equal(await page.locator('.nf-observatory-lenses [data-lens="all"]').getAttribute("aria-pressed"),"true","All sources is the default lens");
+  await page.locator('[data-lens="finite-check"]').click();
+  await page.waitForFunction(()=>document.querySelectorAll(".nf-observatory-edge").length===4);
+  assert.equal(await page.locator(".nf-observatory-edge").count(),4,"Finite-check lens filters exact documented relationships");
+  assert.equal(await page.locator('[data-lens="finite-check"]').getAttribute("aria-pressed"),"true");
+  await page.locator('[data-lens="open-premise"]').click();
+  await page.waitForFunction(()=>document.querySelectorAll(".nf-observatory-edge").length===3);
+  assert.equal(await page.locator(".nf-observatory-edge").count(),3,"Open-premise lens shows three explicitly unresolved relationships");
+  assert.match(await page.locator("#nf-observatory-view-status").innerText(),/Unresolved premises/);
+  if(width===390){
+    const rects=await page.evaluate(()=>({
+      inspector:document.querySelector("#nf-observatory-inspector").getBoundingClientRect().top,
+      field:document.querySelector("#nf-observatory-field").getBoundingClientRect().top
+    }));
+    assert.ok(rects.inspector<rects.field,"Mobile inspector precedes catalogue for immediate explanation");
+  }
+  await page.locator('[data-start="phase"]').click();
+  assert.match(page.url(),/\?claim=phase/,"Node selection makes a shareable canonical deep link");
+  await page.waitForFunction(()=>document.querySelectorAll(".nf-observatory-edge").length===1);
+  assert.equal(await page.locator(".nf-observatory-edge").count(),1,"Selected phase claim has one unresolved source edge");
+  await page.reload({waitUntil:"load"});
+  assert.equal(await page.locator('.nf-observatory-node[data-node="phase"]').getAttribute("aria-pressed"),"true","Canonical deep link restores selected node");
+  assert.match(await page.locator("#nf-observatory-inspector").innerText(),/UNRESOLVED PREMISE/);
+  await page.locator('.nf-observatory-node[data-node="phase"]').focus();
+  await page.keyboard.press("Escape");
+  assert.equal(await page.locator('.nf-observatory-node[data-node="phase"]').getAttribute("aria-pressed"),"false","Escape clears selection");
+  assert.ok(!page.url().includes("claim=phase"),"Clearing selection removes stale deep link");
+  await page.locator('[data-lens="all"]').click();
+  await page.waitForFunction(()=>document.querySelectorAll(".nf-observatory-edge").length===13);
+  await page.locator('.nf-observatory-node[data-node="symmetry-reduction"]').click();
+  assert.equal(await page.locator('#nf-observatory-inspector a[href="constellation.html?claim=symmetry-reduction"]').count(),1,"Mechanism opens its selected canonical source map");
+  await page.locator('.nf-observatory-node[data-node="symmetry-reduction"]').click();
+  assert.equal(await page.locator('.nf-observatory-node[data-node="symmetry-reduction"]').getAttribute("aria-pressed"),"false","Clicking selected mechanism clears it");
+  await page.waitForFunction(()=>document.querySelectorAll(".nf-observatory-edge").length===13);
+  assert.equal(await page.locator(".nf-observatory-edge").count(),13,"All typed relationships restored after switching lenses");
+
   await page.locator('.nf-observatory-node[data-node="phase"]').click();
   assert.equal(await page.locator('.nf-observatory-node[data-node="phase"]').getAttribute("aria-pressed"),"true","Selected source node accessible");
   assert.match(await page.locator("#nf-observatory-inspector").innerText(),/span-count|span count/i,"Unresolved prerequisite visible");
   assert.equal(await page.locator('#nf-observatory-inspector a[href="passport.html?claim=phase"]').count(),1,"Proof Passport is source-linked");
   assert.match(await page.locator("#nf-observatory-inspector").innerText(),/UNRESOLVED PREMISE/,"Open premise explicitly classified");
   await page.locator('.nf-observatory-node[data-node="phase"]').click();
+  await page.waitForFunction(()=>document.querySelectorAll(".nf-observatory-edge").length===13);
   await page.locator("#observatory").screenshot({path:"browser-artifacts/ethereal-observatory-"+width+".png"});
   await page.goto(origin+"living-paper.html",{waitUntil:"load"});
   const paperBg=await page.evaluate(()=>getComputedStyle(document.body).backgroundImage);
