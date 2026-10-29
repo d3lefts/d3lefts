@@ -56,10 +56,37 @@
         });
       }
     }
+
+    // Mechanisms and edges are sourced as distinct graph objects. A shared
+    // method or analogy is evidence of a recorded relationship, never a
+    // transfer theorem or independent mathematical referee decision.
+    const graphNodes=Array.isArray(input.mechanisms)?input.mechanisms:[];
+    const graphEdges=Array.isArray(input.edges)?input.edges:[];
+    const nodeIds=new Set();
+    const mechanisms=[];
+    for(const m of graphNodes){
+      const id=text(m?.id), title=text(m?.title);
+      if(!id || !title || nodeIds.has(id)) continue;
+      nodeIds.add(id);
+      const connected=graphEdges.filter(e=>e && e.to===id && ids.has(e.from)
+        && ["finite-check","method","open-premise","analogy"].includes(e.relation))
+        .map(e=>({
+          claimId:e.from,
+          claimTitle:text(claims.find(c=>c.id===e.from)?.title),
+          relation:e.relation,
+          label:text(e.label),note:text(e.note),
+          url:safeUrl(e.source)
+        }));
+      mechanisms.push({
+        id,title,description:text(m.description),kind:text(m.kind),
+        scope:text(m.scope),connections:connected
+      });
+    }
+    mechanisms.sort((a,b)=>b.connections.length-a.connections.length || a.title.localeCompare(b.title));
     claims.sort((a,b)=>b.latest.localeCompare(a.latest)||a.id.localeCompare(b.id));
     changes.sort((a,b)=>b.date.localeCompare(a.date)||a.id.localeCompare(b.id)||a.label.localeCompare(b.label));
     return {ok:true,asOf:validDate(input.asOf),claims,changes:changes.slice(0,8),
-      publicFiniteCount:claims.filter(c=>c.publicFinite).length,trackedCount:claims.length,
+      publicFiniteCount:claims.filter(c=>c.publicFinite).length,trackedCount:claims.length,mechanisms,
       recognizedLevels:LEVELS};
   }
   return Object.freeze({project,safeUrl});

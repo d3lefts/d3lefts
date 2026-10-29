@@ -68,6 +68,16 @@ try{
      "noindex, nofollow, noarchive","Unlisted page should prohibit indexing");
    assert.equal(await page.locator('.pf-ledger-card[data-claim-id="erdos36"]').count(),1,
      "Known finite claim retained in live intake");
+   assert.equal(await page.locator("#approved-findings .pf-five-grid article").count(),5,
+     "Five historically owner-approved bounded findings");
+   const canonicalMechanisms=await page.evaluate(()=>window.NightfallRegistry.mechanisms.length);
+   assert.equal(await page.locator("#pf-mechanism-list .pf-mechanism").count(),canonicalMechanisms,
+     "Every canonical mechanism must be projected from the registry");
+   assert.match(await page.locator("#pf-mechanism-list").innerText(),/analogy/i,
+     "Untested analogy stays explicitly marked");
+   assert.match(await page.locator("#process-evaluation").innerText(),/held-out|Blind natural-web/i,
+     "Portfolio must show decisive external evaluation gap");
+
    await page.goto(origin+"living-paper.html",{waitUntil:"load"});
    assert.equal(await page.locator("#lp-points .lp-point").count(),30,"Living Paper 30 exact coordinates");
    assert.equal(await page.locator("#lp-edge-select option").count(),28,"Living Paper 28 progression constraints");

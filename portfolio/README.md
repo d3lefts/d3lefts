@@ -8,7 +8,7 @@
 
 **Maintenance test:** `node scripts/test_portfolio.cjs` checks new claim intake, status demotion, source URL filtering, and unlisted-site boundaries. This test is run by the main website verification workflow.
 
-Three source-backed case studies from the NIGHTFALL research program retained for our collective reference, with a live registry-backed claim ledger. These case studies can also inform research engineering, applied AI safety, and source-grounded knowledge-system applications when explicitly approved for external presentation. This is a navigation layer over existing work, not a separate claim of scientific novelty, professional deployment, or independent external validation.
+Three source-backed case studies from the NIGHTFALL research program retained for our collective reference, with a live registry-backed claim ledger, a five-item historical editorial approval index, a source-qualified mechanism map, and explicit external audit gates. See [the cross-session research context checkpoint](RESEARCH_CONTEXT_20261029.md) for scope, provenance, and outstanding ingestion gaps. These case studies can also inform research engineering, applied AI safety, and source-grounded knowledge-system applications when explicitly approved for external presentation. This is a navigation layer over existing work, not a separate claim of scientific novelty, professional deployment, or independent external validation.
 
 | Case study | Implemented artifact | Evidence | Scope boundary |
 |---|---|---|---|
