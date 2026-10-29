@@ -28,7 +28,7 @@ function parseInput(target,domain,raw){
   const d=num(raw.denominator,1000000),heights=tokens(raw.heights).map(x=>num(x,1000000));
   if(d<=0||heights.length<2||heights.length>(target==="adversary"?64:256))fail("Destination accepts 2–"+(target==="adversary"?64:256)+" cells and a positive denominator.");
   if(heights.some(x=>x<0||x>d))fail("Cell height outside the allowed range.");
-  if(2*heights.reduce((a,b)=>a+BigInt(b),0n)!==BigInt(heights.length)*BigInt(d))fail("Exact unit-mass invariant failed.");
+  if(2n*heights.reduce((a,b)=>a+BigInt(b),0n)!==BigInt(heights.length)*BigInt(d))fail("Exact unit-mass invariant failed.");
   const upper=String(raw.claimedUpper??"").trim();
   if(upper&&!/^\d{1,22}(?:\/[1-9]\d{0,21})?$/.test(upper))fail("Expected a nonnegative rational p/q upper claim.");
   return{denominator:String(d),heights:heights.map(String),claimedUpper:upper};
