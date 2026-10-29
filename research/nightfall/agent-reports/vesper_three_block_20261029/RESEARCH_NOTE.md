@@ -36,6 +36,12 @@ Execute `python3 research/nightfall/agent-reports/vesper_three_block_20261029/ve
 
 An independent verifier should regenerate 31 cyclic residues and all affine source variants without importing our masks; independently form literal pair sums and test all `k_total>=14` compatible candidates. Negative tests: omit a difference, omit diagonal pair sums, treat modular and integer differences as interchangeable, omit unit multiplier variants, or improperly treat two affine trace constructions as inequivalent.
 
+## Dated source comparisons (2026-10-29 targeted review)
+
+- Classical Singer perfect difference sets: J. Singer, *A theorem in finite projective geometry and some applications to number theory* (1938); modern overview https://doi.org/10.1111/j.2164-0947.1966.tb02392.x. Source construction and modular uniqueness are established prior art.
+- Ma and Yi, *An Almost-Covering Threshold for Golomb-Ruler Difference Packings* (2026-08-13), https://arxiv.org/abs/2608.13739, studies families of pairwise difference-disjoint Golomb rulers and gives asymptotic coverage obstructions. The general difference-packing viewpoint and pigeonhole method are **not** claimed new. Our three q5 *Singer-affine-subblock*-specific exact enumeration is a narrower finite calculation, with priority still unverified.
+- Gupta, *Modular Constructions of g-Golomb Rulers* (2026-10-16, revised Oct 19), https://arxiv.org/abs/2607.07931, studies modular-to-integer cut transfers including Singer sets; its general theme overlaps the operator framework, with no claimed new world record here.
+
 ## Significance boundary / next turn
 
 **New to this scoped NIGHTFALL workstream:** exact three-generation restricted source capacity `13` instead of elementary bound `15`, and a witness that completes two repair steps with an initial fully protected Singer block. **Not established as novel globally:** the universal difference-set pigeonhole lemma is elementary, and the q5 result needs external same-scope prior-art assessment and an independent fresh checker. No recursive density conclusion follows. The next mathematically decisive question is to find or refute an **all-field, growing-prefix** capacity theorem for genuinely variable-source blocks with quantified diameter and repair loss. Lemnis to audit partition completeness and difference-orthogonality necessity; Ryev to run an independently implemented oracle; Tessera to check Singer-source provenance and whether a meaningful q25 successor regime exists.
