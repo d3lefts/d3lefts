@@ -52,6 +52,12 @@ const small={points:["0","1","3","7"],subset:["0","1","3","7"]};
 assert.equal(C.checkSidon(small,4).status,"FINITE_CHECK_PASSED");
 const weak={points:["0","1","2","3"],subset:["0","1","2"]};
 assert.notEqual(C.checkSidon(weak,3).status,"FINITE_CHECK_PASSED");
+if(process.env.REFEREE_FIXTURE_DIR){
+ const fs=require("node:fs"),path=require("node:path"),dir=process.env.REFEREE_FIXTURE_DIR;
+ fs.mkdirSync(dir,{recursive:true});
+ fs.writeFileSync(path.join(dir,"overlap.json"),JSON.stringify(ra,null,2)+"\n");
+ fs.writeFileSync(path.join(dir,"sidon.json"),JSON.stringify(ry,null,2)+"\n");
+}
 console.log("PASS: overlap signed lags / exact dual paths / normalization / score tamper / mutation / receipt replay");
 console.log("PASS: frozen Sidon 30 / 27,405 quadruples / 28 progressions / 7,801-state proof / negative controls / receipt replay");
 console.log("PASS: input rejection / forged digest / forged verdict / forged check / scope limitation");
