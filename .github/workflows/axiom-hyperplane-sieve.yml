@@ -1,0 +1,20 @@
+name: Axiom hyperplane-sieve independent audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/agent-reports/axiom_hyperplane_sieve_20261029/**'
+      - '.github/workflows/axiom-hyperplane-sieve.yml'
+  workflow_dispatch:
+jobs:
+  exact-hyperplane-certificate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify frozen source SHA256
+        run: echo 'bfd44c3fb99bf41550280497b00df33401624c5335af933dce4340f2f03312ef  research/nightfall/agent-reports/axiom_hyperplane_sieve_20261029/hyperplane_audit.py' | sha256sum -c -
+      - name: Run complete hyperplane sieve and adverse controls
+        run: python3 research/nightfall/agent-reports/axiom_hyperplane_sieve_20261029/hyperplane_audit.py
