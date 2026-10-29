@@ -38,14 +38,14 @@
   const path=p.points.map((item,i)=>{const [x,y]=xy(item,i);return (i===0?"M":"L")+x.toFixed(2)+" "+y.toFixed(2)}).join(" ");
   const [sx,sy]=xy(q,lag+core.N-1);
   const maxCircles=p.points.filter(t=>t.raw===p.maxRaw).map(t=>{
-   const [x,y]=xy(t,t.lag+core.N-1);return '<circle cx="'+x.toFixed(2)+'" cy="'+y.toFixed(2)+'" r="6" fill="#274d2c" stroke="#b9dca0" stroke-width="2"/>';
+   const [x,y]=xy(t,t.lag+core.N-1);return '<circle cx="'+x.toFixed(2)+'" cy="'+y.toFixed(2)+'" r="6" fill="#4a1f24" stroke="#d59670" stroke-width="2"/>';
   }).join("");
-  $("ep-curve").innerHTML='<line x1="20" y1="200" x2="704" y2="200" stroke="#a7bba3"/>'+
-   '<line x1="20" y1="40" x2="704" y2="40" stroke="#cbd9c8" stroke-dasharray="4 6"/>'+
-   '<path d="'+path+'" fill="none" stroke="#51795b" stroke-width="3"/>'+
-   '<line x1="'+sx.toFixed(2)+'" x2="'+sx.toFixed(2)+'" y1="36" y2="201" stroke="#829d6b" stroke-dasharray="4 5"/>'+
-   maxCircles+'<circle cx="'+sx.toFixed(2)+'" cy="'+sy.toFixed(2)+'" r="5" fill="#d6ec71" stroke="#1c3f28" stroke-width="2"/>'+
-   '<text x="18" y="218" font-size="11" fill="#48654e">−15</text><text x="352" y="218" font-size="11" fill="#48654e">0</text><text x="678" y="218" font-size="11" fill="#48654e">+15</text>';
+  $("ep-curve").innerHTML='<line x1="20" y1="200" x2="704" y2="200" stroke="#d59670"/>'+
+   '<line x1="20" y1="40" x2="704" y2="40" stroke="#eed1bd" stroke-dasharray="4 6"/>'+
+   '<path d="'+path+'" fill="none" stroke="#6a2d35" stroke-width="3"/>'+
+   '<line x1="'+sx.toFixed(2)+'" x2="'+sx.toFixed(2)+'" y1="36" y2="201" stroke="#a76450" stroke-dasharray="4 5"/>'+
+   maxCircles+'<circle cx="'+sx.toFixed(2)+'" cy="'+sy.toFixed(2)+'" r="5" fill="#d8c38a" stroke="#3a161b" stroke-width="2"/>'+
+   '<text x="18" y="218" font-size="11" fill="#4a1f24">−15</text><text x="352" y="218" font-size="11" fill="#4a1f24">0</text><text x="678" y="218" font-size="11" fill="#4a1f24">+15</text>';
   const rawSum=a.reduce((s,x)=>s+x,0);
   $("ep-message").textContent="Exact mass Σ Aᵢ = "+rawSum+"; integral = 2ΣAᵢ/(16×8) = 1. This 16-cell score is not the full witness bound.";
  }

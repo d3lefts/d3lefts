@@ -75,9 +75,9 @@ try{
     const s=getComputedStyle(document.documentElement),button=getComputedStyle(document.querySelector(".hero-actions .button"));
     return {paper:s.getPropertyValue("--lf-paper").trim(),primary:s.getPropertyValue("--lf-primary").trim(),text:button.color};
   });
-  assert.equal(palette.paper,"#f4eeed","Low-chroma rose parchment replaces peach");
-  assert.equal(palette.primary,"#6a304e","Wine accent replaces orange");
-  assert.equal(palette.text,"rgb(251, 247, 245)","Primary button uses legible light text");
+  assert.equal(palette.paper,"#f4e7df","Sunset parchment contract");
+  assert.equal(palette.primary,"#d97a4a","Sunset orange action accent");
+  assert.equal(palette.text,"rgb(42, 31, 29)","Primary button uses legible light text");
   await page.screenshot({path:"browser-artifacts/ethereal-light-"+width+".png",fullPage:false});
   await toggle.click();
   await page.waitForTimeout(350);

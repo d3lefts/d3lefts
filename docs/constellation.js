@@ -5,7 +5,7 @@
  const R=window.NightfallRegistry,F=window.NFFrontier,$=id=>document.getElementById(id);
  if(!R||!F){$("co-nodes").textContent="The source registry is unavailable. Read the published Mechanism Atlas directly.";return;}
  const kinds={"finite-check":"DOCUMENTED FINITE CHECK","method":"DOCUMENTED RESEARCH METHOD","open-premise":"UNRESOLVED PREMISE","analogy":"UNTESTED ANALOGY"};
- const ink={"finite-check":"#d9ff73","method":"#87ccb0","open-premise":"#e2b475","analogy":"#9abed5"};
+ const ink={"finite-check":"#d8c38a","method":"#d59670","open-premise":"#e2b475","analogy":"#9abed5"};
  const claims=R.claims,methods=R.mechanisms,edges=R.edges;
  const doc=(tag,cls,value)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(value!==undefined)e.textContent=String(value);return e;};
  const safeLink=(href)=>typeof href==="string"&&(/^(https:\/\/github\.com\/|https:\/\/www\.erdosproblems\.com\/|https:\/\/oeis\.org\/)/.test(href)||/^[a-z0-9-]+\.html(?:\?claim=[a-z0-9_-]+)?(?:#[a-z0-9-]+)?$/i.test(href))?href:null;
@@ -78,7 +78,7 @@
    const curve=Math.max(15,Math.abs(x2-x1)*.44);
    const path=document.createElementNS("http://www.w3.org/2000/svg","path");
    path.setAttribute("d","M "+x1+" "+y1+" C "+(x1+curve)+" "+y1+" "+(x2-curve)+" "+y2+" "+x2+" "+y2);
-   path.setAttribute("stroke",ink[e.relation]||"#a9c2ac");path.setAttribute("fill","none");
+   path.setAttribute("stroke",ink[e.relation]||"#d59670");path.setAttribute("fill","none");
    path.setAttribute("stroke-width",selected?"2":"1.4");path.setAttribute("stroke-opacity",selected?".85":".58");
    if(e.relation==="analogy"||e.relation==="open-premise")path.setAttribute("stroke-dasharray",e.relation==="analogy"?"7 7":"2 5");
    svg.append(path);
