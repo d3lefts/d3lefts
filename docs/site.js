@@ -119,28 +119,25 @@ if(menu&&nav){
  if(document.querySelector("#app")||document.querySelector(".app")||main.closest(".app"))return;
  const page=location.pathname.split("/").pop()||"index.html",hash=location.hash;
  const steps=[
-  {id:"results",label:"01 / Results",href:"index.html#flagships"},
-  {id:"process",label:"02 / Process",href:"join.html#method"},
-  {id:"assignment",label:"03 / Assignment",href:"join.html#assignment"},
-  {id:"investigate",label:"04 / Investigation",href:"join.html#claim-investigation"},
-  {id:"review",label:"05 / Review",href:"review.html"}
+ {id:"home",label:"01 / Homepage · Results",href:"index.html#flagships"},
+ {id:"constellation",label:"02 / Constellation · Connections",href:"constellation.html#map"},
+ {id:"review",label:"03 / Independent Review · Challenge",href:"review.html#priority"}
  ];
  const byPage={
-  "index.html":"results","research.html":"results","living-paper.html":"results","erdos-paper.html":"results",
-  "passport.html":"results","findings-20261029.html":"results","atlas.html":"process",
-  "referee.html":"review","adversary.html":"review","review.html":"review","evidence.html":"review","evidence-practice.html":"review",
-  "frontier.html":"investigate","discovery.html":"investigate","orchestrator.html":"investigate",
-  "claim-lab.html":"investigate","exact-research.html":"investigate","constellation.html":"process"
+ "index.html":"home","research.html":"home","living-paper.html":"home","erdos-paper.html":"home",
+ "findings-20261029.html":"home","agenda.html":"home","about.html":"home",
+ "atlas.html":"constellation","constellation.html":"constellation","join.html":"constellation",
+ "frontier.html":"constellation","discovery.html":"constellation","orchestrator.html":"constellation",
+ "claim-lab.html":"constellation","exact-research.html":"constellation","living-investigation.html":"constellation",
+ "referee.html":"review","adversary.html":"review","review.html":"review","evidence.html":"review",
+ "evidence-practice.html":"review","passport.html":"review","judgment-provenance.html":"review"
  };
- const inferred=page==="join.html"?
-   hash==="#method"?"process":hash==="#assignment"?"assignment":
-   hash==="#claim-investigation"||hash==="#workspace"?"investigate":"results":
-   byPage[page]||"process";
+ const inferred=byPage[page]||"constellation";
  const nav=document.createElement("nav");nav.className="nf-process-thread";
- nav.setAttribute("aria-label","Research journey: stages are locations, not completion markers");
+ nav.setAttribute("aria-label","Three NIGHTFALL destinations: results, connected mechanisms, independent challenge");
  for(const step of steps){
   const a=document.createElement("a");a.href=step.href;a.textContent=step.label;
-  if(step.id===inferred)a.setAttribute("aria-current","step");
+  if(step.id===inferred)a.setAttribute("aria-current","page");
   nav.append(a);
  }
  if(page==="join.html"){
