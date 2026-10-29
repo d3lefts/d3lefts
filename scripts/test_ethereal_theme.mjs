@@ -51,6 +51,8 @@ try{
   }
   assert.equal(await page.locator(".nf-process-case").count(),3,"Underbelly has three sourced research gates");
   assert.equal(await page.locator(".nf-process-case").first().isVisible(),true,"Unresolved proof gate is visible");
+  assert.equal(await page.locator(".nf-dual-colophon.nf-experience-underbelly").isVisible(),true,"Night has its own final research handoff");
+  assert.equal(await page.locator(".nf-dual-colophon.nf-experience-archive").isVisible(),false,"Archive colophon hidden at night");
   assert.match(await toggle.getAttribute("aria-label"),/Illusionary Archive.*light mode/i,"Homepage toggle identifies the alternate editorial destination");
   assert.equal(await page.evaluate(()=>localStorage.getItem("nightfall.theme.v1")),null,"Default never overwrites an explicit future preference");
   await page.screenshot({path:"browser-artifacts/ethereal-dusk-"+width+".png",fullPage:false});
@@ -66,6 +68,8 @@ try{
   }
   assert.equal(await page.locator(".nf-archive-accession").count(),3,"Archive provides three specific accession records");
   assert.equal(await page.locator(".nf-archive-accession").first().isVisible(),true,"Archive records are visible");
+  assert.equal(await page.locator(".nf-dual-colophon.nf-experience-archive").isVisible(),true,"Archive preserves its own source-led colophon");
+  assert.equal(await page.locator(".nf-dual-colophon.nf-experience-underbelly").isVisible(),false,"Night shift hidden in Archive mode");
   assert.match(await toggle.getAttribute("aria-label"),/Night Underbelly.*night mode/i,"Archive toggle offers the Underbelly destination");
   const palette=await page.evaluate(()=>{
     const s=getComputedStyle(document.documentElement),button=getComputedStyle(document.querySelector(".hero-actions .button"));

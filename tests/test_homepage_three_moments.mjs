@@ -52,7 +52,8 @@ test('Internal homepage fragment destinations remain navigable',()=>{
   for(const m of html.matchAll(/href="#([a-z0-9_-]+)"/gi))
     assert.ok(ids.has(m[1]),'#'+m[1]);
   assert.ok(count(html,/href="/g)>=95,'Research archive URLs were lost');
-  assert.equal(count(html,/<section\b/g)-count(html,/class="nf-dual-index/g),17,'The original source sections must remain intact');
+  assert.equal(count(html,/<section\b/g)-count(html,/class="nf-dual-index/g)-count(html,/class="nf-experience nf-experience-(?:archive|underbelly) nf-dual-colophon/g),17,'The 17 original source sections remain intact');
+  assert.equal(count(html,/class="nf-experience nf-experience-(?:archive|underbelly) nf-dual-colophon/g),2,'Two distinct concluding editorial handoffs');
   assert.equal(count(html,/class="nf-dual-index/g),2,'Two mutually exclusive editorial entrances are present');
   const dual=readFileSync('docs/home-dual-experience.css','utf8');
   assert.match(dual,/html:not\(\[data-nf-theme="dusk"\]\) \.nf-experience-underbelly/,'The Archive hides the Underbelly');
