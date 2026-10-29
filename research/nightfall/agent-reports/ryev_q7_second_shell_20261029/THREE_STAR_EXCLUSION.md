@@ -31,6 +31,8 @@ Assume T(G)=dE for a triple E incident to one vertex. Then H=G△E has odd occup
 
 Thus every case is impossible.
 
+**Corollary (all graphs strictly above M_n; dependent on SAFE_EDGE_RIGIDITY.md).** In fact the same three-edge exclusion holds for any C4-free G with |G|>M_n. Set s=|G|−M_n≥1; then |H|=M_n+s+3−2k≤M_n implies s≤3. The case s=1 is proved above. For s=2, necessarily k=3 and H has M_n−1 edges, contradicting the separately derived near-optimal **at-most-one-safe-edge** lemma (all three E-edges are absent and safe). For s=3, necessarily k=3 and H is a maximum odd-square graph, contradicting its C4-saturation. Thus there are no remaining cases. This corollary is only as strong as the independently unreviewed safe-edge rigidity lemma; a flaw there would require demoting the generalization even if the s=1 proof remains intact.
+
 ## Q7 exact geometry and scope
 
 For n=7, any three distinct edges incident at a vertex have syndrome weight **3(n−3)=12**: each of their individual edge stars occupies n−1 squares, each of the three pairs shares exactly one square, and there are no triple-shared squares. There are 128·binom(7,3)=**4,480** such choices. Their syndromes are distinct because equal syndromes would make the symmetric difference of two three-edge sets into a nontrivial vertex cut supported on at most six edges; every nontrivial Q7 vertex cut has at least seven. They are distinct from the **100,128** two-edge syndromes by the same cut-size argument (3+2≤5).
