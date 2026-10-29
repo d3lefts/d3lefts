@@ -9,7 +9,7 @@
 - cubing a residue returns the same residue modulo 3;
 - cubing a sum is additive modulo 3.
 
-Both are proved with finite enumeration through Lean's decidable reflection, without imported axioms, sorry, or native_decide. The GitHub Actions workflow [lean-char3-sanity.yml](../../../../.github/workflows/lean-char3-sanity.yml) compiles the file using pinned Lean 4.35.0. The claim may be called **kernel checked only after that run succeeds** and the axiom printouts are inspected.
+Both are proved with finite enumeration through Lean's decidable reflection, without imported axioms, sorry, or native_decide. The GitHub Actions workflow [lean-char3-sanity.yml](../../../../.github/workflows/lean-char3-sanity.yml) compiled the source under **Lean 4.35.0**, and [workflow run 40849066775](https://github.com/d3lefts/d3lefts/actions/runs/40849066775) **PASSED**. Both printed axiom audits explicitly report **does not depend on any axioms**. This certifies only the two listed finite statements.
 
 These two identities are established elementary arithmetic, not original discoveries, and **do not imply** the full F_(3^r) decoder theorem.
 
