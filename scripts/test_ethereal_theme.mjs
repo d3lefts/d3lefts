@@ -71,10 +71,44 @@ try{
    if(["living-paper.html","erdos-paper.html"].includes(file))
     assert.equal(appearance.image,"none",file+": scientific reading deliberately has no starfield");
    else assert.match(appearance.image,/radial-gradient/i,file+": atmospheric starfield loaded");
+   // Color is an action and reading affordance, never a substitute for source-status text.
+   if(["index.html","join.html","constellation.html","living-paper.html"].includes(file)){
+    const tokens=await page.evaluate(()=>{
+      const s=getComputedStyle(document.documentElement);
+      const body=getComputedStyle(document.body);
+      return {gold:s.getPropertyValue("--nf-champagne").trim(),
+        brass:s.getPropertyValue("--nf-brass").trim(),
+        accent:s.getPropertyValue("--accent").trim(),
+        paper:body.backgroundColor};
+    });
+    assert.equal(tokens.gold,"#d8c38a",file+": moon-gold token is shared");
+    assert.equal(tokens.brass,"#8f7a4a",file+": brass is reserved for quiet borders");
+    assert.equal(tokens.accent,"#d8c38a",file+": dusk action accent inherits champagne");
+   }
+   if(file==="index.html"){
+    const activeLens=await page.locator(".nf-observatory-lenses button[aria-pressed=true]").evaluate(el=>({
+      bg:getComputedStyle(el).backgroundColor,fg:getComputedStyle(el).color}));
+    assert.equal(activeLens.bg,"rgb(216, 195, 138)","Evidence lens uses moon-gold action state");
+    assert.equal(activeLens.fg,"rgb(21, 27, 48)","Evidence lens has dark ink");
+    const toolButton=await page.locator(".nf-home-tool-entry .button").evaluate(el=>getComputedStyle(el).backgroundColor);
+    assert.equal(toolButton,"rgb(216, 195, 138)","Research-workflow action is no longer lime green");
+   }
+   if(file==="constellation.html"){
+    const action=await page.locator(".co-primary").first().evaluate(el=>({
+      bg:getComputedStyle(el).backgroundColor,fg:getComputedStyle(el).color}));
+    assert.equal(action.bg,"rgb(216, 195, 138)","Constellation action matches primary champagne");
+    assert.equal(action.fg,"rgb(21, 27, 48)","Constellation action retains navy ink");
+   }
+   if(file==="join.html"){
+    const action=await page.locator(".join-choice button").first().evaluate(el=>getComputedStyle(el).backgroundColor);
+    assert.equal(action,"rgb(216, 195, 138)","Join task action uses champagne");
+    const panel=await page.locator(".join-choice").first().evaluate(el=>getComputedStyle(el).backgroundColor);
+    assert.equal(panel,"rgb(27, 38, 59)","Join cards use navy panels, not faded green");
+   }
    if(file==="index.html"){
     const heroButton=await page.locator(".hero-actions .button").first().evaluate(el=>({bg:getComputedStyle(el).backgroundColor,fg:getComputedStyle(el).color}));
-    assert.equal(heroButton.bg,"rgb(222, 210, 250)","Dusk primary CTA has light background");
-    assert.equal(heroButton.fg,"rgb(20, 25, 45)","Dusk primary CTA has dark text");
+    assert.equal(heroButton.bg,"rgb(216, 195, 138)","Dusk primary CTA uses the new moon-gold accent");
+    assert.equal(heroButton.fg,"rgb(21, 27, 48)","Dusk gold CTA has high-contrast navy ink");
     const railLink=await page.locator(".nf-journey-rail a").first().evaluate(el=>getComputedStyle(el).color);
     assert.equal(railLink,"rgb(224, 214, 255)","Journey-rail links legible in dusk");
    }
@@ -157,6 +191,8 @@ try{
   assert.equal(await toggle.getAttribute("aria-pressed"),"false","Restored light accessible state");
   await page.reload({waitUntil:"load"});
   assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Light preference persists on reload");
+  const lightColor=await page.locator(".hero-actions .button").first().evaluate(el=>getComputedStyle(el).backgroundColor);
+  assert.notEqual(lightColor,"rgb(216, 195, 138)","Opt-out restores the original light-theme accent");
   assert.equal(await page.evaluate(()=>localStorage.getItem("nightfall.theme.v1")),"light","Light stored");
   assert.deepEqual(errors,[],width+"px page errors: "+errors.join("; "));
   await context.close();
