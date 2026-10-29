@@ -40,16 +40,27 @@ try{
   await page.goto(origin+"index.html",{waitUntil:"load"});
   const toggle=page.locator(".nf-theme-toggle");
   assert.equal(await toggle.count(),1,"One toggle in header");
-  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"First visit keeps light theme");
-  assert.equal(await toggle.getAttribute("aria-pressed"),"false","Light mode accessible state");
+  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk","Fresh visitor sees dusk without a light flash");
+  assert.equal(await toggle.getAttribute("aria-pressed"),"true","First-visit dusk accessible state");
+  assert.equal(await page.evaluate(()=>localStorage.getItem("nightfall.theme.v1")),null,"Default never overwrites an explicit future preference");
+  await page.screenshot({path:"browser-artifacts/ethereal-dusk-"+width+".png",fullPage:false});
+  await toggle.click();
+  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Light mode remains selectable");
+  assert.equal(await toggle.getAttribute("aria-pressed"),"false","Chosen light mode accessible");
+  const palette=await page.evaluate(()=>{
+    const s=getComputedStyle(document.documentElement),button=getComputedStyle(document.querySelector(".hero-actions .button"));
+    return {paper:s.getPropertyValue("--lf-paper").trim(),primary:s.getPropertyValue("--lf-primary").trim(),text:button.color};
+  });
+  assert.equal(palette.paper,"#f4eeed","Low-chroma rose parchment replaces peach");
+  assert.equal(palette.primary,"#6a304e","Wine accent replaces orange");
+  assert.equal(palette.text,"rgb(251, 247, 245)","Primary button uses legible light text");
   await page.screenshot({path:"browser-artifacts/ethereal-light-"+width+".png",fullPage:false});
   await toggle.click();
   await page.waitForTimeout(350);
-  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk","Dusk enabled");
+  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk","Dusk re-enabled");
   assert.equal(await toggle.getAttribute("aria-pressed"),"true","Dusk accessible state");
   assert.match(await toggle.getAttribute("aria-label"),/light mode/i);
   assert.equal(await page.evaluate(()=>localStorage.getItem("nightfall.theme.v1")),"dusk","Preference persisted");
-  await page.screenshot({path:"browser-artifacts/ethereal-dusk-"+width+".png",fullPage:false});
   for(const file of pages){
    await page.goto(origin+file,{waitUntil:"load"});
    const control=page.locator(".nf-theme-toggle");
