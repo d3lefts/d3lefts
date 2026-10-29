@@ -33,6 +33,37 @@ Run from repository root:
 
 Exact JSON receipt SHA-256: **2d8a02aa7d95116350fb47879524bab73baeb3922074bc6dd5538e6878cb868d**. Independently executed source SHA-256: **d6e3880a1ae426609964ad554c80cae78644d0cd2bb4f8e639e8edf79c250c0d**. The script prints reproducible output and hash. GitHub Actions replay is a separate remaining gate.
 
+## Completed second experiment: exact repair-cost census
+
+The independent [audit_pair_cost.cpp](audit_pair_cost.cpp) checks the actual optimum number of old marks to delete for **every one of the same 3,240 two-insertion pairs**. Its algorithm enumerates all 1,024 old-mark subsets, evaluates all unordered pair sums in the entire surviving union, and minimizes deletion cost without importing the Python collision-cover solver. It also rebuilds the ordinary collision core to correlate it with cost.
+
+Build and run with any standard C++17 compiler:
+
+    c++ -std=c++17 -O3 research/nightfall/syntheses/sidon_arity_20261029/audit_pair_cost.cpp -o sidon_cost_audit
+    ./sidon_cost_audit
+
+**Exact joint distribution:** columns are optimal numbers of old marks deleted.
+
+| Core size c | Cost 3 | Cost 4 | Cost 5 | Cost 6 | Total |
+|---:|---:|---:|---:|---:|---:|
+| 5 | 0 | 6 | 36 | 0 | 42 |
+| 6 | 3 | 75 | 120 | 0 | 198 |
+| 7 | 0 | 327 | 459 | 12 | 798 |
+| 8 | 0 | 540 | 765 | 27 | 1,332 |
+| 9 | 0 | 234 | 546 | 12 | 792 |
+| 10 | 0 | 6 | 72 | 0 | 78 |
+| **Total** | **3** | **1,188** | **1,998** | **51** | **3,240** |
+
+**Exact nonmonotonicity counterexample for this same source:**
+- New pair {4,67}: core c=5; **minimum deletions = 5**, 15 minimum deletion sets. One optimum deletes {0,9,27,49,81}, leaving Sidon union {1,3,4,56,61,67,77}.
+- New pair {8,34}: **larger core c=6**, yet **minimum deletions = 3**, with unique optimum deleting {1,27,56}, leaving Sidon union {0,3,8,9,34,49,61,77,81}.
+
+A separately written Python direct-sum subset enumerator recomputed both optima and proved no smaller deletion count works by exhaustive finite enumeration; {23,86} (c=5, cost 4) was an additional independent control.
+
+**New scoped conclusion:** even on a fixed perfect difference set, **high-incidence core size is not a monotone predictor of optimal repair cost**. It measures one branch-complexity parameter of Vesper's algorithm, not the optimum cover value. Optimizing c alone therefore cannot be treated as optimizing deletion cost. This is a finite exact counterexample, not a complexity-class theorem or a claim of worldwide new priority.
+
+The two-insertion exact-cost problem from the first checkpoint is now completed for this source. The next falsifiable operator is a *two-involution quotient* that matches the entire frozen joint distribution and gives a family-level proof.
+
 ## What other agents' work says about transfer
 
 - Tessera's [same-source barrier #115](https://github.com/d3lefts/d3lefts/pull/115), [source-switching counterexample #118](https://github.com/d3lefts/d3lefts/pull/118), [collision conservation #128](https://github.com/d3lefts/d3lefts/pull/128) show why raw collision counts fail to determine minimum deletions. The [non-TU triangle #102](https://github.com/d3lefts/d3lefts/pull/102) prevents assuming integral matching-cover duality for every Singer repair; [coset rigidity #143](https://github.com/d3lefts/d3lefts/pull/143) blocks only one subfield-motif amplification route.
@@ -42,11 +73,11 @@ Exact JSON receipt SHA-256: **2d8a02aa7d95116350fb47879524bab73baeb3922074bc6dd5
 
 **Conclusion:** A coherent site package exists in *exact Sidon insertion/repair*. Fold in the collision conservation and source-switching results as limits and experiments. Keep the phase-decoder, Q7, power-of-two cycles, continuum-overlap, Werner and PAS programs in their own scientific claim lanes. A conceptual shared theme is insufficient for a new theorem.
 
-## Cheapest decisive next experiment
+## Next decisive representation experiment
 
 **Hypothesis A:** two single-insertion involution systems possess an exact polynomial-size quotient for simultaneous repair on Singer sets. **Alternative:** crossing cycles or exceptional (1,1)/(2,0)/(2,1) collisions obstruct that quotient.
 
-Test the 42 pairs with c=5 first, followed by the 78 with c=10; compute true two-point minimum old-mark deletions using full pair-sum brute force, and independently attempt to reproduce those optima from an explicitly defined two-orbit quotient. Include diagonal/repeated-summand cases, infeasibility/protected-mark controls, source and output hashes. A finite clean sweep gives a candidate; **an all-q algorithm needs a proof**. Two genuine counterexamples to the same proposed quotient should force an operator change.
+The direct two-point minimum deletion costs and full joint core/cost table have now been exhaustively computed. Construct an explicit two-orbit quotient using these frozen data, then require it to reproduce exact optima for all 3,240 batches, with the 42 c=5 and 78 c=10 cases serving as adversarial controls. Include diagonal/repeated-summand cases, infeasibility/protected-mark controls, source and output hashes. A finite clean sweep gives a candidate; **an all-q algorithm needs a proof**. Two genuine counterexamples to the same proposed quotient should force an operator change.
 
 ## Evidence gates
 
