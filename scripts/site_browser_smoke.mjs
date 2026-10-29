@@ -194,7 +194,7 @@ try{
    await page.locator('[data-stage="frame"]').click();
    await page.waitForURL(/orchestrator\.html\?frontier_handoff=1/);
    assert.match(await page.locator("#claim-text").inputValue(),/smallest selected mark in \[1, 184\]/);
-   assert.match(await page.locator(".nf-journey-rail").innerText(),/Return to Maximal Sidon boundary/);
+   assert.match(await page.locator(".nf-journey-rail").innerText(),/Return to 30-point Sidon \/ exact obligation/,"Last selected explicit claim takes precedence in return rail");
    await page.goto(origin+"join.html#workspace",{waitUntil:"load"});
    assert.match(await page.locator("#join-notes").inputValue(),/independent exact maximality replay/);
    assert.match(await page.locator("#join-yes").innerText(),/Nine distinct integers/);
