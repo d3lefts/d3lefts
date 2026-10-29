@@ -113,7 +113,7 @@ try{
     const tokens=await page.evaluate(()=>{
       const s=getComputedStyle(document.documentElement);
       const body=getComputedStyle(document.body);
-      return {gold:s.getPropertyValue("--nf-moonlight").trim(),
+      return {gold:s.getPropertyValue("--nf-champagne").trim(),
         brass:s.getPropertyValue("--nf-brass").trim(),
         accent:s.getPropertyValue("--accent").trim(),
         paper:body.backgroundColor};
