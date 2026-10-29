@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f6f5f0">
+<title>Margin Species — a local reading organism</title>
+<style>
+
+  /* NIGHTFALL living exhibit portal: deliberately separate from research evidence. */
+  .nf-exhibit-portal{display:flex;align-items:center;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;padding:11px clamp(17px,4vw,42px);background:#172d24;color:#dcead8;font:10px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.085em}
+  .nf-exhibit-portal a{color:#e9f6da;text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+  .nf-exhibit-portal a:hover,.nf-exhibit-portal a:focus-visible{text-decoration:underline;text-underline-offset:4px}
+  .nf-exhibit-portal span{color:#adc7ac}
+  @media(max-width:580px){.nf-exhibit-portal{padding:10px 16px;gap:4px}.nf-exhibit-portal span{font-size:9px}}
+
+  :root{--paper:#f6f5f0;--white:#fffefa;--ink:#252c2c;--mute:#8a8d87;--line:#deded6;--teal:#227e75;--teal-soft:#e2f0e9;--gold:#c38643;--red:#ab5d4b;--shadow:rgba(36,42,39,.09)}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;color:var(--ink);background:var(--paper);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+  button,input,textarea,select{font:inherit}
+  button{cursor:pointer;transition:background .18s,border-color .18s,transform .18s}
+  button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #67b6ab;outline-offset:3px}
+  button:active{transform:translateY(1px)}
+  a{color:#32696b;text-decoration:none}
+  a:hover{text-decoration:underline}
+  .tiny{font:10px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:1.1px;text-transform:uppercase}
+  .topbar{height:69px;position:relative;z-index:20;background:#fffefaeb;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 34px;gap:24px;backdrop-filter:blur(12px)}
+  .brand{display:flex;gap:13px;align-items:center;min-width:220px;color:var(--ink)}
+  .sigil{width:33px;height:33px;border:1.6px solid var(--ink);border-radius:50%;position:relative;display:grid;place-items:center}
+  .sigil:before,.sigil:after{content:"";position:absolute;border:1px solid var(--ink);border-radius:50%;height:13px;width:13px}
+  .sigil:before{left:-5px;top:9px}.sigil:after{right:-5px;top:9px}
+  .sigil i{width:5px;height:5px;background:var(--teal);border-radius:50%}
+  .brand b{font:600 17px/1.15 Georgia,serif;letter-spacing:-.4px;display:block}.brand span{display:block;font-size:9px;color:var(--mute);letter-spacing:1.9px;margin-top:4px}
+  .top-center{color:#747c78;text-align:center;font-size:12px;white-space:nowrap}
+  .status{display:flex;align-items:center;gap:8px;color:#68746d;font-size:11px;white-space:nowrap}
+  .status i{width:6px;height:6px;display:block;border-radius:50%;background:#b4b2a8}.status.live i{background:#49ad86;box-shadow:0 0 0 4px #49ad861d}
+  .layout{display:grid;grid-template-columns:218px minmax(0,810px) 288px;justify-content:center;gap:0;max-width:1460px;margin:auto;min-height:calc(100vh - 70px)}
+  .left{border-right:1px solid var(--line);padding:42px 25px 50px 28px}
+  .left-inner{position:sticky;top:26px}
+  .left small{display:block;color:#a0a19a;margin-bottom:23px}
+  .nav-title{color:#9b9b92;margin:19px 0 10px;font-size:10px;letter-spacing:1.1px;text-transform:uppercase}
+  .nav-item{display:flex;gap:9px;align-items:center;padding:8px 10px 8px 11px;margin:2px -10px;color:#616965;font-size:12px;border-left:2px solid transparent;cursor:pointer}
+  .nav-item.active{color:var(--teal);background:#e9eee9;border-left-color:var(--teal);font-weight:600}
+  .nav-item:hover{background:#edece6;text-decoration:none}
+  .nav-item em{font-style:normal;color:#a4aaa4;font-family:monospace;font-size:10px;width:16px}
+  .sidebar-blurb{margin-top:32px;padding-top:20px;border-top:1px solid var(--line);font:italic 12px/1.8 Georgia,serif;color:#888c85}
+  main{min-width:0;background:var(--white);border-right:1px solid var(--line);padding:46px 57px 90px;position:relative}
+  .breadcrumb{display:flex;align-items:center;gap:9px;color:#949890;font-size:10px;letter-spacing:1.1px;text-transform:uppercase}
+  .breadcrumb b{color:var(--teal);font-weight:500}
+  .intro-kicker{color:var(--teal);font-size:11px;letter-spacing:2px;text-transform:uppercase;margin:40px 0 16px}
+  h1{font:normal clamp(37px,4vw,60px)/1.04 Georgia,'Times New Roman',serif;letter-spacing:-2.35px;margin:0 0 14px;max-width:600px}
+  .lede{color:#7e837e;font:italic 17px/1.6 Georgia,serif;max-width:530px;margin:0 0 27px}
+  .rule{height:1px;background:var(--line);margin:30px 0 19px}
+  .meta-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:11px;color:#868d87}
+  .meta-row span b{color:#42524e;font-weight:500}
+  .section-head{font:normal 23px/1.2 Georgia,serif;letter-spacing:-.35px;margin:48px 0 15px}
+  .article-text{font:15.5px/1.95 Georgia,'Times New Roman',serif;color:#414744}
+  .article-text p{margin:0 0 19px}
+  .article-text .token{border-radius:2px;position:relative;transition:background .35s,color .35s,transform .45s;cursor:crosshair}
+  .article-text .token:hover{background:#d5eee4}
+  .article-text .token.read{background:#d6e9de;color:#22584b}
+  .article-text .token.mutated{display:inline-block;transform:translateY(-2px) rotate(-2deg);color:#aa6d50}
+  .term{border-bottom:1px dotted #81b2a8;color:#246e64}
+  .study-card{display:grid;grid-template-columns:1fr 1fr;margin:33px 0;min-height:205px;border:1px solid #d5ded6;background:#f1f5ed;overflow:hidden}
+  .study-art{position:relative;min-height:203px;border-right:1px solid #dce5da;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 50%,#f8faf3, #e9f0e6)}
+  .study-art svg{width:86%;max-width:240px;overflow:visible;opacity:.85}
+  .study-art .fig-label{position:absolute;left:15px;bottom:13px;color:#89968c}
+  .study-description{padding:25px 22px;display:flex;flex-direction:column;justify-content:center}
+  .study-description h3{font:normal 19px/1.1 Georgia,serif;margin:10px 0 12px}
+  .study-description p{font:12px/1.7 Georgia,serif;color:#66736a;margin:0}
+  .quote{border-left:2px solid #82a59a;padding-left:21px;color:#5f7772;font:italic 19px/1.6 Georgia,serif;margin:32px 0}
+  .generated{padding:23px 26px 26px;border:1px solid #d6e4d8;background:#f0f6ef;min-height:200px;position:relative}
+  .generated:before{content:"";width:7px;height:7px;border:1px solid var(--teal);position:absolute;top:25px;right:25px;transform:rotate(45deg)}
+  .generated .generated-copy{font:15px/1.9 Georgia,serif;color:#485950}
+  .generated .entry{padding:11px 0;border-bottom:1px solid #dde8dc;animation:entry .45s ease}
+  .generated .entry:last-child{border-bottom:0}
+  @keyframes entry{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+  .empty-state{font:italic 14px/1.7 Georgia,serif;color:#9aaca2;padding:15px 0}
+  .small-note{font-size:11px;color:#9a9e96;margin:18px 0}
+  .right{padding:31px 21px 60px 21px}
+  .right-inner{position:sticky;top:24px}
+  .panel{border:1px solid #d8dcd4;background:#fffcf6;box-shadow:0 2px 15px #28372b07;margin-bottom:16px}
+  .panel-title{display:flex;justify-content:space-between;align-items:center;padding:14px 15px;border-bottom:1px solid #e5e5dd}
+  .panel-title strong{font-size:10px;letter-spacing:1.2px;font-weight:600;text-transform:uppercase}
+  .dot{display:inline-block;width:6px;height:6px;background:#a6afa8;border-radius:50%;margin-right:5px}
+  .spec-preview{height:128px;display:grid;place-items:center;position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 60%, #f8f8f2 4%,#edece4 99%)}
+  .spec-preview svg{height:110px;width:200px}
+  .spec-preview .corner{position:absolute;left:11px;bottom:9px;color:#9b9d93}
+  .spec-data{padding:16px}
+  .spec-title{font:normal 22px Georgia,serif;letter-spacing:-.4px;margin-bottom:4px}
+  .spec-sub{color:#89918a;font-size:11px;margin-bottom:16px}
+  .spec-label{font-size:10px;color:#90998f;margin-bottom:6px;display:block;letter-spacing:.5px}
+  .segment{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:16px}
+  .segment button{border:1px solid #dadfd6;background:#f9f8f2;padding:9px 2px;color:#657069;font-size:10px;border-radius:3px}
+  .segment button.selected{background:#283b36;color:white;border-color:#283b36}
+  .action-main{display:block;width:100%;background:#25483e;color:white;border:1px solid #25483e;padding:12px 10px;font-size:12px;letter-spacing:.2px;margin-bottom:8px}
+  .action-main:hover{background:#356354}
+  .action-small{width:100%;background:transparent;border:1px solid #d5dad2;padding:9px 10px;color:#4a5b51;font-size:11px;margin-bottom:8px}
+  .action-small:hover{background:#eef2e9}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+  .slider-row{margin-top:12px}
+  .slider-top{display:flex;justify-content:space-between;margin-bottom:6px;color:#8b958a;font-size:10px}
+  .slider-top output{font-family:monospace;color:#4e6960}
+  input[type=range]{width:100%;accent-color:var(--teal);height:13px}
+  .toggle-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-top:1px solid #e6e7df;font-size:11px;color:#59665b}
+  .switch{width:28px;height:15px;border:0;background:#d7d9d0;border-radius:20px;position:relative;padding:0}
+  .switch:after{content:"";position:absolute;width:11px;height:11px;background:white;border-radius:50%;top:2px;left:2px;transition:transform .2s}
+  .switch.on{background:#3c8d7b}.switch.on:after{transform:translateX(13px)}
+  .metrics{padding:15px;display:grid;grid-template-columns:1fr 1fr;gap:14px 7px}
+  .metric b{font:normal 24px/1 Georgia,serif;display:block;color:#344d40}
+  .metric span{color:#969d91;font-size:9px;text-transform:uppercase;letter-spacing:.8px}
+  .feed{padding:0 14px 12px;max-height:165px;overflow:auto}
+  .feed-line{font-size:10px;border-bottom:1px solid #e9e9e2;padding:8px 0;color:#7b8c81}
+  .feed-line b{color:#326b5a;font-weight:500}
+  .footer{padding:30px 0;border-top:1px solid var(--line);font-size:11px;color:#92978e;line-height:1.9}
+  #organism-layer{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:12}
+  .tag{display:inline-block;padding:4px 7px;border:1px solid #dadfd5;font:10px ui-monospace,monospace;color:#7e9286;letter-spacing:.3px;margin-right:6px;margin-bottom:7px}
+  .toast{position:fixed;bottom:26px;left:50%;transform:translate(-50%,12px);opacity:0;transition:.25s;z-index:60;background:#283f35;color:#f3f7f0;padding:11px 17px;box-shadow:0 7px 22px #21352829;font-size:12px;pointer-events:none;max-width:90vw;text-align:center}
+  .toast.show{transform:translate(-50%,0);opacity:1}
+  .modal-wrap{position:fixed;inset:0;z-index:40;background:#132822aa;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px)}
+  .modal-wrap.open{display:flex}
+  .modal{width:min(570px,100%);background:#fdfcf7;padding:30px;border:1px solid #cedfd4;box-shadow:0 25px 95px #081b1652}
+  .modal h2{font:normal 30px Georgia,serif;margin:8px 0}
+  .modal p{font-size:12px;color:#78857b;max-width:450px}
+  .modal textarea{width:100%;min-height:170px;background:white;border:1px solid #d5ded5;resize:vertical;padding:13px;margin:13px 0;color:#35493e;font:14px/1.6 Georgia,serif}
+  .modal-actions{display:flex;justify-content:flex-end;gap:9px}
+  .modal-actions button{padding:10px 20px;background:#2b5044;border:1px solid #2b5044;color:white;font-size:12px}
+  .modal-actions .cancel{background:transparent;color:#68786e;border-color:#d2dcd3}
+  .kbd{border:1px solid #dce3d9;border-bottom:2px solid #d4ddd2;padding:2px 5px;font:10px monospace;color:#829187;border-radius:2px}
+  .instructions{padding:19px 0 0;color:#8a958a;font-size:11px;line-height:1.8}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+  @media(max-width:1200px){.layout{grid-template-columns:177px minmax(0,1fr) 256px}.left{padding:34px 18px}.right{padding:22px 12px}main{padding:40px 37px}}
+  @media(max-width:930px){.layout{grid-template-columns:minmax(0,1fr) 257px}.left{display:none}.top-center{display:none}.right{padding:20px 12px}main{padding:37px 30px}}
+  @media(max-width:680px){.mobile-only{display:block!important}.topbar{height:60px;padding:0 15px}.brand{min-width:unset}.brand b{font-size:15px}.brand span{font-size:8px}.topbar .status{font-size:10px}.layout{display:flex;flex-direction:column}main{order:2;padding:31px 22px 70px;border-right:0}.right{order:1;padding:13px 14px 0}.right-inner{position:relative;top:0;display:grid;grid-template-columns:1fr;gap:0}.panel{margin-bottom:9px}.right .panel:not(:first-child){display:block}.right .metrics{grid-template-columns:repeat(4,1fr);gap:8px}.right .metric b{font-size:19px}.right .metric span{font-size:8px}.right .feed{display:none}.right .panel:nth-child(2) .panel-title{padding:9px 15px}.spec-preview{height:94px}.spec-preview svg{height:87px}.spec-data{padding:13px}.spec-title{font-size:19px}.spec-sub{margin-bottom:9px}.segment{margin-bottom:10px}.controls-extras{display:none}.controls-extras.mobile-open{display:block;padding-top:12px}.action-main{margin-bottom:0}.intro-kicker{margin-top:20px}h1{font-size:43px}.article-text{font-size:15px;line-height:1.85}.study-card{grid-template-columns:1fr}.study-art{border-right:0;border-bottom:1px solid #dce5da}.study-description{padding:18px}.section-head{margin-top:36px}.modal{padding:20px}}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.article-text .token{transition:none}}
+</style>
+</head>
+<body>
+<div class="nf-exhibit-portal" role="navigation" aria-label="NIGHTFALL living exhibit">
+  <a href="./" aria-label="Return to NIGHTFALL research home">← NIGHTFALL / RESEARCH</a>
+  <span>LIVING EXHIBITS · 001 / INTERACTIVE ART · LOCAL PROCESSING</span>
+</div>
+<header class="topbar">
+  <a class="brand" href="#top" aria-label="Margin Species home"><span class="sigil"><i></i></span><span><b>Margin Species</b><span>A LOCAL LIVING ARCHIVE</span></span></a>
+  <div class="top-center">An ecology of things that read &nbsp; / &nbsp; No. 001—∞</div>
+  <div class="status" id="status"><i></i><span id="status-text">SPECIMEN ASLEEP</span></div>
+</header>
+<div class="layout" id="top">
+  <aside class="left" aria-label="Sections">
+    <div class="left-inner">
+      <small class="tiny">THE FIELD INDEX / 01</small>
+      <div class="nav-title">The archive</div>
+      <a class="nav-item active" href="#overview"><em>01</em> Overview</a>
+      <a class="nav-item" href="#anatomy"><em>02</em> Anatomy</a>
+      <a class="nav-item" href="#behavior"><em>03</em> Behavior</a>
+      <a class="nav-item" href="#emergence"><em>04</em> Emergence</a>
+      <a class="nav-item" href="#generated"><em>05</em> New material</a>
+      <div class="nav-title">Laboratory</div>
+      <button class="nav-item" id="feed-btn" style="width:calc(100% + 20px);border:0;background:transparent;text-align:left;"><em>↗</em> Feed a new text</button>
+      <button class="nav-item" id="export-btn" style="width:calc(100% + 20px);border:0;background:transparent;text-align:left;"><em>↓</em> Export specimen</button>
+      <div class="sidebar-blurb">“A reader changes the page. A page changes the reader.”</div>
+    </div>
+  </aside>
+  <main id="overview">
+    <div class="breadcrumb">OPEN FIELD NOTES <span>/</span> <b>INTERACTIVE BIOLOGY</b></div>
+    <div class="intro-kicker">VOL. I &nbsp; · &nbsp; THE MARGIN IS ALIVE</div>
+    <h1>The creatures<br>between the lines.</h1>
+    <p class="lede">A small living system inhabits this document. It reads what it touches, remembers what it finds, and gradually rewrites its habitat.</p>
+    <div class="meta-row"><span>SPECIMEN <b id="specimen-number">MS—0042</b></span><span>ENVIRONMENT <b>Browser / local</b></span><span>STATUS <b id="article-state">Dormant</b></span></div>
+    <div class="rule"></div>
+    <div class="article-text" id="article">
+      <p class="to-read">In an ordinary archive, a document waits patiently for a reader. Here, the relation is reversed. The reader is a creature of small rules and restless limbs. It moves through sentences as though they were a landscape, and discovers in every word a possible direction.</p>
+      <p class="to-read">The creature has no map of the whole. Its world is local: a nearby phrase, a distant link, a trace of something visited before. Patterns emerge from this limited attention, the same way a path appears in grass after many footsteps.</p>
+      <h2 class="section-head" id="anatomy">01. The anatomy of attention</h2>
+      <p class="to-read">Every specimen is built from a small vocabulary of geometric forms. A circle holds a center. A line suggests a limb. A point remembers a location. Repeated in time, these simple elements acquire the appearance of intention.</p>
+      <div class="study-card">
+        <div class="study-art" aria-label="Geometric study of an articulated organism">
+          <svg viewBox="0 0 270 160" role="img" aria-label="A diagram of a geometric organism"><g fill="none" stroke="#60887d" stroke-width="1.2"><path d="M33 83 Q54 34 79 78 T130 74 T188 78 T240 80" stroke-dasharray="3 5"/><path d="M63 80L43 45 20 40M63 80L40 107 18 112M101 76L88 37 67 23M101 76L87 120 69 141M146 76L161 36 183 22M146 76L163 116 183 131M194 78L214 47 239 47M194 78L220 107 247 105"/><ellipse cx="73" cy="80" rx="17" ry="13" fill="#d5e6d9"/><ellipse cx="107" cy="77" rx="16" ry="12" fill="#d8e7db"/><ellipse cx="143" cy="77" rx="15" ry="11" fill="#d7e8d9"/><ellipse cx="181" cy="79" rx="14" ry="10" fill="#d7e8dc"/><circle cx="219" cy="80" r="20" fill="#e9f1e6"/><circle cx="226" cy="74" r="5" fill="#377d69"/></g><g fill="#4b8173"><rect x="36" y="42" width="6" height="6" transform="rotate(20 36 42)"/><rect x="86" y="31" width="6" height="6"/><rect x="160" y="29" width="6" height="6"/><circle cx="19" cy="110" r="3"/><circle cx="245" cy="105" r="3"/></g></svg>
+          <div class="fig-label tiny">FIG. 01 / FORM STUDY</div>
+        </div>
+        <div class="study-description"><span class="tiny" style="color:#6c9281">AN ORGANISM FROM RULES</span><h3>No image file.<br>Only behavior.</h3><p>Each segment follows the next. Each limb takes a step. A body is what these instructions look like when they agree.</p></div>
+      </div>
+      <p class="to-read">There is no hidden picture moving across the page. The organism is drawn anew on every frame, as a consequence of its seed, its motion, and the words that attract it. Change the seed and you change the body it will become.</p>
+      <h2 class="section-head" id="behavior">02. The logic of wandering</h2>
+      <p class="to-read">A forager seeks unfamiliar words. A weaver links distant locations with threads. A scatterer interrupts stable arrangements. These differences are small at the level of instructions, yet substantial in the shapes they leave behind.</p>
+      <p class="to-read">Tap any word to offer the creature a destination. Allow it to walk without guidance and it will choose its own next fragment. It learns nothing about the truth of a sentence. It remembers only a sequence, a proximity, a rhythm.</p>
+      <div class="quote">The archive is a habitat. Reading is an action upon it.</div>
+      <h2 class="section-head" id="emergence">03. A prediction becomes a passage</h2>
+      <p class="to-read">When enough words have been encountered, the creature starts to write. It uses a small local word-transition table: given a pair of words, it picks a plausible successor from words previously observed together. Its inventions are repetitions with a difference.</p>
+      <p class="to-read">The resulting text is strange, often incomplete, occasionally suggestive. This is an experiment in the mechanics of prediction, not a language model that understands what it says. The distinction is part of the work.</p>
+    </div>
+    <h2 class="section-head" id="generated">04. The growing margin <span style="font-size:13px;color:#87a296;font-family:Arial,sans-serif" id="entry-count">[ 00 ]</span></h2>
+    <div class="generated"><div class="tiny" style="color:#6e9987;margin-bottom:15px">AUTOGENERATED FIELD RECORD / LIVE TRANSCRIPT</div><div class="generated-copy" id="generated-copy" aria-live="polite"><div class="empty-state" id="empty">The margin is blank. Wake the specimen and let it gather language.</div></div></div>
+    <p class="small-note">All generated writing stays in this browser. It uses a tiny local statistical predictor, with no remote AI service.</p>
+    <footer class="footer">MARGIN SPECIES is an independent, original, offline-friendly experiment inspired by the interaction concept of <a href="https://opensea.io/collection/crawlers-by-slava-rybin/overview" target="_blank" rel="noopener noreferrer">Crawlers by Slava Rybin</a>. No original artwork, assets, code, tokens, wallets, or minting functions are used. <br>Made for observation, play, and inquiry.</footer>
+  </main>
+  <aside class="right" aria-label="Specimen controls">
+    <div class="right-inner">
+      <section class="panel">
+        <div class="panel-title"><strong>LIVE SPECIMEN</strong><span class="tiny" style="color:#9da8a0">LOCAL ONLY</span></div>
+        <div class="spec-preview"><svg viewBox="0 0 200 110" aria-hidden="true"><g fill="none" stroke="#365f56" stroke-width="2" stroke-linecap="round"><path d="M47 55L22 24 10 20M47 55L22 80 9 87M75 55L60 20 48 12M75 55L60 88 47 101M105 55L122 19 139 8M105 55L123 90 139 102M137 55L161 29 190 23M137 55L161 82 190 88"/><path d="M42 55Q88 43 145 55" stroke-dasharray="2 6"/></g><g fill="#c9dfd3" stroke="#365f56" stroke-width="1.5"><circle cx="46" cy="55" r="16"/><circle cx="75" cy="55" r="14"/><circle cx="104" cy="55" r="13"/><circle cx="137" cy="55" r="20"/></g><circle cx="145" cy="48" r="4" fill="#2a7667"/><g fill="#c28a4d"><rect x="21" y="22" width="5" height="5" transform="rotate(35 21 22)"/><rect x="160" y="78" width="5" height="5"/><circle cx="189" cy="24" r="3"/></g></svg><span class="corner tiny">GEOMETRY / 01</span></div>
+        <div class="spec-data"><div class="spec-title" id="species-name">Moss strider</div><div class="spec-sub" id="species-desc">An attentive forager of short distances.</div><span class="spec-label">Morphology</span>
+          <div class="segment" aria-label="Morphology selection"><button class="selected" data-type="strider">Strider</button><button data-type="weaver">Weaver</button><button data-type="scatterer">Scatterer</button></div>
+          <button class="action-main" id="wake">↗ &nbsp; Wake the specimen</button><button class="action-small mobile-only" id="mobile-options" style="display:none;margin-top:8px;margin-bottom:0">＋ &nbsp; More controls / Feed text</button>
+          <div class="controls-extras"><div class="split"><button class="action-small" id="new-seed">↻ &nbsp; New seed</button><button class="action-small" id="add-text">＋ &nbsp; Feed text</button></div>
+          <div class="slider-row"><div class="slider-top"><span>Movement rate</span><output id="speed-value">1.0 ×</output></div><input aria-label="Movement rate" id="speed" type="range" min="0.35" max="2.4" step="0.05" value="1"></div>
+          <div class="toggle-row"><span>Trace movement</span><button class="switch on" id="trail-switch" role="switch" aria-checked="true" aria-label="Trace movement"></button></div>
+          <div class="toggle-row"><span>Generative sound</span><button class="switch" id="sound-switch" role="switch" aria-checked="false" aria-label="Generative sound"></button></div>
+          <div class="split" style="margin-top:12px"><button class="action-small" id="image-export">↓ &nbsp; Specimen image</button><button class="action-small" id="notes-export">↓ &nbsp; Field notes</button></div></div>
+        </div>
+      </section>
+      <section class="panel"><div class="panel-title"><strong>FIELD OBSERVATIONS</strong><span class="dot" style="background:#76a991"></span></div><div class="metrics"><div class="metric"><b id="words-count">0</b><span>Words encountered</span></div><div class="metric"><b id="steps-count">0</b><span>Steps taken</span></div><div class="metric"><b id="connections-count">0</b><span>Connections</span></div><div class="metric"><b id="passages-count">0</b><span>New passages</span></div></div><div class="feed" id="feed"><div class="feed-line">Awaiting first contact with the page.</div></div></section>
+      <div class="instructions"><div class="tiny" style="color:#8ca296;margin-bottom:9px">INSTRUCTIONS</div>Click a word to guide the specimen.<br>Scroll to reveal new territories.<br><span class="kbd">Space</span> wake / pause &nbsp; <span class="kbd">N</span> new specimen</div>
+    </div>
+  </aside>
+</div>
+<canvas id="organism-layer" aria-hidden="true"></canvas>
+<div class="modal-wrap" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal"><div class="tiny" style="color:#6d9d87">ADD A NEW TERRITORY</div><h2 id="modal-title">What shall it read next?</h2><p>Paste your own text. It appears in the document, where the specimen can encounter its words. Everything stays on this device.</p><label for="file-upload" class="tiny" style="display:block;color:#6d9d87;margin:12px 0 5px">Or load a local .txt / .md file</label><input id="file-upload" type="file" accept=".txt,.md,text/plain,text/markdown" style="width:100%;font-size:12px;color:#71887a"><textarea id="new-text" placeholder="The forest was a library of wind, and each leaf held a different sentence…"></textarea><div class="modal-actions"><button class="cancel" id="cancel-modal">Cancel</button><button id="insert-text">Add to archive ↗</button></div></div></div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+(() => {
+'use strict';
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const TAU=Math.PI*2;
+function hash(str){let h=2166136261;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+function rng32(seed){let s=seed>>>0;return()=>{s+=0x6D2B79F5;let t=s;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296}}
+function randomSeed(){try{const b=new Uint32Array(1);crypto.getRandomValues(b);return b[0]}catch{return Math.floor(Math.random()*4294967295)}}
+const breeds={strider:{name:'Moss strider',desc:'An attentive forager of short distances.',color:'#2c7566',shell:'#bcd8c7',legs:6,segments:9,agility:1},weaver:{name:'Thread weaver',desc:'A patient architect of distant associations.',color:'#6b6388',shell:'#d3cce4',legs:8,segments:12,agility:.82},scatterer:{name:'Amber scatterer',desc:'A quick disturbance in an orderly archive.',color:'#bb7045',shell:'#ead0ae',legs:10,segments:15,agility:1.35}};
+const canvas=$('organism-layer'),ctx=canvas.getContext('2d');
+let W=innerWidth,H=innerHeight,DPR=1,seed=42042,rand=rng32(seed),type='strider',cfg=breeds.strider,traits={segments:9,legScale:1,bodyScale:1,markings:0};
+let everAwake=false,active=false,trailOn=true,soundOn=false,audio=null,head={x:0,y:0,angle:0},history=[],legsPhase=0,steps=0,words=[],seen=new Set(),collected=[],generated=[],links=[],trail=[],target=null,manualUntil=0,clock=0,emissionCount=0,lastTs=0,frame=0,notesChanged=false;
+let generationModel=new Map(), textCorpus='',toastTimer=0,lastEncounter=null;
+const initialText=Array.from(document.querySelectorAll('.to-read')).map(p=>p.textContent).join(' ');
+function setCanvas(){W=window.innerWidth;H=window.innerHeight;DPR=Math.min(2,devicePixelRatio||1);canvas.width=Math.round(W*DPR);canvas.height=Math.round(H*DPR);canvas.style.width=W+'px';canvas.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);if(!head.x){head.x=W*.51;head.y=Math.min(H*.46,320);history=Array.from({length:160},()=>({...head}))}else{head.x=clamp(head.x,20,W-20);head.y=clamp(head.y,70,H-30)}}
+window.addEventListener('resize',setCanvas,{passive:true});setCanvas();
+function toast(s){const node=$('toast');node.textContent=s;node.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>node.classList.remove('show'),2500)}
+function tokenize(el){const text=el.textContent;el.textContent='';const bits=text.match(/\S+|\s+/g)||[];const frag=document.createDocumentFragment();for(const part of bits){if(!/\S/.test(part)){frag.appendChild(document.createTextNode(part));continue}const s=document.createElement('span');s.className='token';s.textContent=part;s.dataset.word=part.replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu,'').toLowerCase();s.addEventListener('click',()=>{if(!active)wake();target=s;manualUntil=performance.now()+3600;toast('Destination acquired: '+s.dataset.word)});frag.appendChild(s);words.push(s)}el.appendChild(frag)}
+for(const p of document.querySelectorAll('.to-read'))tokenize(p);
+function modelTrain(input){const arr=(input.toLowerCase().match(/[\p{L}][\p{L}\p{N}'-]*|[.!?]/gu)||[]).filter(Boolean);generationModel=new Map();for(let i=0;i<arr.length-2;i++){const key=arr[i]+'|'+arr[i+1];if(!generationModel.has(key))generationModel.set(key,[]);generationModel.get(key).push(arr[i+2])}textCorpus=input}
+// The transition model begins empty, and grows only from words the organism encounters.
+function pick(a){return a[Math.floor(rand()*a.length)]}
+function newSentence(){const pool=collected.filter(w=>w.length>2&&/^[a-z]/i.test(w));const start=pool.length?pick(pool):'the';let candidates=[...generationModel.keys()].filter(k=>k.startsWith(start+'|'));
+let pair=candidates.length?pick(candidates):pick([...generationModel.keys()]);if(!pair)return'The page remains quiet.';
+const output=pair.split('|');let n=12+Math.floor(rand()*9);
+for(let i=0;i<n;i++){const opts=generationModel.get(output.slice(-2).join('|'));if(!opts||!opts.length)break;const next=pick(opts);if(/[.!?]/.test(next)){if(output.length>9)break;continue}output.push(next)}
+if(output.length<7)return'The '+pick(['archive','creature','margin'])+' remembers '+(pick(pool)||'a new path')+'.';
+let s=output.join(' ').replace(/\s+([,.:;!?])/g,'$1');return s.charAt(0).toUpperCase()+s.slice(1)+'.'
+}
+function writeEntry(){if(generated.length>=24){generated.shift();const e=$('generated-copy').querySelector('.entry');e?.remove()}const line=newSentence();generated.push(line);$('empty')?.remove();const p=document.createElement('div');p.className='entry';p.textContent=line;$('generated-copy').appendChild(p);$('entry-count').textContent='[ '+String(generated.length).padStart(2,'0')+' ]';$('passages-count').textContent=String(generated.length);for(const x of generated.slice(-2)){} notesChanged=true;log('Produced a new field passage');}
+function log(s){const div=document.createElement('div');div.className='feed-line';div.textContent=s;$('feed').prepend(div);while($('feed').children.length>6)$('feed').lastElementChild.remove()}
+function refreshStats(){$('words-count').textContent=seen.size;$('steps-count').textContent=steps.toLocaleString();$('connections-count').textContent=links.length;$('passages-count').textContent=generated.length}
+function reset(seedValue=seed){seed=seedValue>>>0;rand=rng32(seed);cfg=breeds[type];everAwake=false;traits={segments:cfg.segments+Math.floor(rand()*5)-2,legScale:.78+rand()*.55,bodyScale:.86+rand()*.35,markings:rand()};active=false;history=[];seen.clear();collected=[];generated=[];links=[];trail=[];steps=0;frame=0;emissionCount=0;lastEncounter=null;generationModel=new Map();target=null;manualUntil=0;clock=0;legsPhase=0;head={x:W*.52,y:Math.min(H*.46,330),angle:rand()*TAU};history=Array.from({length:180},()=>({...head}));for(const w of words)w.classList.remove('read','mutated');$('generated-copy').innerHTML='<div class="empty-state" id="empty">The margin is blank. Wake the specimen and let it gather language.</div>';$('entry-count').textContent='[ 00 ]';$('feed').innerHTML='<div class="feed-line">Awaiting first contact with the page.</div>';$('species-name').textContent=cfg.name;$('species-desc').textContent=cfg.desc;$('specimen-number').textContent='MS—'+String(seed%10000).padStart(4,'0');$('status').classList.remove('live');$('status-text').textContent='SPECIMEN ASLEEP';$('article-state').textContent='Dormant';$('wake').innerHTML='↗ &nbsp; Wake the specimen';refreshStats();}
+function wake(){active=!active;if(active){everAwake=true;if(W<680&&scrollY<130){document.querySelector('#article').scrollIntoView({behavior:'smooth',block:'start'})}}$('status').classList.toggle('live',active);$('status-text').textContent=active?'SPECIMEN EXPLORING':'SPECIMEN RESTING';$('article-state').textContent=active?'Reading':'Dormant';$('wake').innerHTML=active?'Ⅱ &nbsp; Rest the specimen':'↗ &nbsp; Wake the specimen';if(active){log('Specimen stirred in the margins');if(soundOn)resumeAudio()}}
+$('wake').addEventListener('click',wake);$('mobile-options').addEventListener('click',()=>{const c=document.querySelector('.controls-extras');c.classList.toggle('mobile-open');$('mobile-options').textContent=c.classList.contains('mobile-open')?'−   Hide controls':'＋   More controls / Feed text'});
+$('new-seed').addEventListener('click',()=>{reset(randomSeed());wake();toast('New local specimen generated')});
+for(const b of document.querySelectorAll('[data-type]'))b.addEventListener('click',()=>{type=b.dataset.type;for(const b2 of document.querySelectorAll('[data-type]'))b2.classList.toggle('selected',b2===b);reset(seed);wake();toast('Morphology changed: '+cfg.name)});
+$('speed').addEventListener('input',e=>$('speed-value').textContent=Number(e.target.value).toFixed(2)+' ×');
+function toggle(id,flag){const b=$(id);b.classList.toggle('on',flag);b.setAttribute('aria-checked',flag)}
+$('trail-switch').addEventListener('click',()=>{trailOn=!trailOn;toggle('trail-switch',trailOn);if(!trailOn){links=[];trail=[]}});
+$('sound-switch').addEventListener('click',()=>{soundOn=!soundOn;toggle('sound-switch',soundOn);if(soundOn){resumeAudio();tone(440,.1,.02)}else if(audio&&audio.state==='running'){audio.suspend().catch(()=>{})}});
+function resumeAudio(){try{if(!audio){audio=new(window.AudioContext||window.webkitAudioContext)()}audio.resume().catch(()=>{})}catch{soundOn=false;toggle('sound-switch',false);toast('This browser does not support Web Audio')}}
+function tone(freq,duration=.15,gain=.035){if(!soundOn||!audio||audio.state!=='running')return;try{const now=audio.currentTime,o=audio.createOscillator(),g=audio.createGain();o.type=type==='weaver'?'sine':type==='scatterer'?'triangle':'sine';o.frequency.setValueAtTime(freq,now);o.frequency.exponentialRampToValueAtTime(freq*.85,now+duration);g.gain.setValueAtTime(.0001,now);g.gain.exponentialRampToValueAtTime(gain,now+.015);g.gain.exponentialRampToValueAtTime(.0001,now+duration);o.connect(g);g.connect(audio.destination);o.start(now);o.stop(now+duration+.02)}catch{}}
+function findTarget(){const candidates=[];for(const s of words){if(seen.has(s))continue;const r=s.getBoundingClientRect();if(r.width<2||r.right<18||r.left>W-18||r.top<75||r.bottom>H-24)continue;const cx=r.left+r.width/2,cy=r.top+r.height/2,dx=cx-head.x,dy=cy-head.y;let score=Math.hypot(dx,dy)+rand()*240;if(s.dataset.word.length<3)score+=100;candidates.push({s,score})}if(candidates.length){candidates.sort((a,b)=>a.score-b.score);target=candidates[Math.floor(rand()*Math.min(4,candidates.length))].s;return}target=null}
+function collect(s){if(!s||seen.has(s))return;seen.add(s);s.classList.add('read');const word=s.dataset.word||'';if(word.length>1){collected.push(word);if(collected.length>500)collected.shift();modelTrain(collected.join(' '));if(type==='scatterer'&&rand()<.33){s.classList.add('mutated');setTimeout(()=>s.classList.remove('mutated'),2200)}}
+if(type==='weaver'&&lastEncounter&&trailOn){links.push({a:lastEncounter,b:s});if(links.length>90)links.shift()}lastEncounter=s;
+const scale=[0,2,3,5,7,9,10];tone(180*Math.pow(2,scale[(word.length+seen.size)%7]/12),.13,.018);
+if(seen.size%10===0)log('Encountered '+seen.size+' fragments');
+if(seen.size%14===0)writeEntry();refreshStats()}
+function move(dt,t){if(!active)return;clock+=dt;const rate=Number($('speed').value)*cfg.agility;legsPhase+=dt*rate*6;
+if(!target||seen.has(target)||(!manualUntil&&frame%220===0))findTarget();let desired=head.angle;
+if(target){const r=target.getBoundingClientRect();if(r.top<55||r.bottom>H-10||r.left<0||r.right>W)target=null;else{const tx=r.left+r.width/2,ty=r.top+r.height/2;desired=Math.atan2(ty-head.y,tx-head.x);if(Math.hypot(tx-head.x,ty-head.y)<15){collect(target);target=null;manualUntil=0}}}
+if(!target){desired+=Math.sin(clock*.85+seed%11)*.25;if(head.x<38||head.x>W-38||head.y<90||head.y>H-50)desired=Math.atan2(H*.45-head.y,W*.5-head.x)}
+let angleDiff=Math.atan2(Math.sin(desired-head.angle),Math.cos(desired-head.angle));head.angle+=clamp(angleDiff,-dt*2.3,dt*2.3);const velocity=clamp(88*rate,18,235);
+head.x+=Math.cos(head.angle)*velocity*dt;head.y+=Math.sin(head.angle)*velocity*dt;
+head.x=clamp(head.x,12,W-12);head.y=clamp(head.y,70,H-13);
+history.unshift({...head});if(history.length>300)history.pop();if(trailOn&&frame%3===0){trail.push({x:head.x,y:head.y,life:1});if(trail.length>700)trail.shift()}if(frame%13===0){steps++;refreshStats()}
+if(performance.now()>manualUntil)manualUntil=0;
+}
+function segmentAt(i){return history[Math.min(history.length-1,i*6)]||head}
+function drawCreature(x=0,y=0,angle=0,scale=1,poster=false){const segs=traits.segments;ctx.save();if(poster){ctx.translate(x,y);ctx.rotate(angle);ctx.scale(scale,scale)}
+// Draw articulated legs first, then segments from tail to head.
+for(let i=segs-1;i>=0;i--){const p=poster?{x:-i*7.2,y:Math.sin(i*.23)*2,angle:0}:segmentAt(i);const next=poster?{x:-(i+1)*7.2,y:0}:segmentAt(Math.min(i+1,segs-1));const theta=poster?0:Math.atan2(p.y-next.y,p.x-next.x);const length=(type==='scatterer'?17:type==='weaver'?26:19)*traits.legScale;
+if(i%2===0||type==='scatterer'){
+for(let side of [-1,1]){const wag=Math.sin(legsPhase-i*.62+side*.8)*7;const reach=length*(1+(i%3)*.11),ox=Math.cos(theta+Math.PI/2)*side,oy=Math.sin(theta+Math.PI/2)*side;
+const rootX=p.x+ox*5,rootY=p.y+oy*5;const kneeX=rootX+ox*(reach*.65)+Math.cos(theta)*(-4+wag),kneeY=rootY+oy*(reach*.65)+Math.sin(theta)*(-4+wag);
+const footX=kneeX+ox*(reach*.55)+Math.cos(theta)*(10+wag),footY=kneeY+oy*(reach*.55)+Math.sin(theta)*(10+wag);
+ctx.beginPath();ctx.moveTo(rootX,rootY);ctx.lineTo(kneeX,kneeY);ctx.lineTo(footX,footY);ctx.strokeStyle=cfg.color;ctx.lineWidth=i<3?1.8:1.3;ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke();ctx.fillStyle=cfg.color;if(i%3===0){ctx.fillRect(footX-2,footY-2,4,4)}else{ctx.beginPath();ctx.arc(footX,footY,1.8,0,TAU);ctx.fill()}
+}}
+const r=clamp((9-i*.35)*traits.bodyScale,3.4,11);ctx.beginPath();ctx.ellipse(p.x,p.y,r*1.18,r,theta,0,TAU);ctx.fillStyle=cfg.shell;ctx.fill();ctx.strokeStyle=cfg.color;ctx.lineWidth=1.15;ctx.stroke();ctx.beginPath();ctx.arc(p.x,p.y,Math.max(1,2.1-i*.07),0,TAU);ctx.fillStyle=cfg.color;ctx.fill();if(traits.markings>.5&&i%3===0){ctx.fillStyle='#fdfef8';ctx.fillRect(p.x-1,p.y-1,2,2)}}
+const h=poster?{x:0,y:0,angle:0}:head;ctx.beginPath();ctx.ellipse(h.x,h.y,11,9,h.angle,0,TAU);ctx.fillStyle='#e2ecde';ctx.fill();ctx.lineWidth=1.8;ctx.strokeStyle=cfg.color;ctx.stroke();const eyeX=h.x+Math.cos(h.angle)*5,eyeY=h.y+Math.sin(h.angle)*5;ctx.beginPath();ctx.arc(eyeX,eyeY,3,0,TAU);ctx.fillStyle=cfg.color;ctx.fill();ctx.beginPath();ctx.arc(eyeX+1,eyeY-1,1,0,TAU);ctx.fillStyle='#fafff8';ctx.fill();
+ctx.restore()}
+function draw(){ctx.clearRect(0,0,W,H);if(!everAwake)return;if(!trailOn){drawCreature();return}
+ctx.save();for(let i=0;i<trail.length;i+=2){const p=trail[i],alpha=(i/trail.length)**2*.3;ctx.fillStyle=`rgba(38,110,91,${alpha})`;ctx.beginPath();ctx.arc(p.x,p.y,.7,0,TAU);ctx.fill()}
+if(type==='weaver')for(const l of links){if(!l.a.isConnected||!l.b.isConnected)continue;const a=l.a.getBoundingClientRect(),b=l.b.getBoundingClientRect(),ax=a.left+a.width/2,ay=a.top+a.height/2,bx=b.left+b.width/2,by=b.top+b.height/2;if(Math.max(ax,bx)<0||Math.min(ax,bx)>W||Math.max(ay,by)<0||Math.min(ay,by)>H)continue;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.strokeStyle='rgba(99,93,137,.22)';ctx.lineWidth=.8;ctx.stroke()}
+if(target&&active){const r=target.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;ctx.setLineDash([2,6]);ctx.strokeStyle='rgba(60,118,100,.14)';ctx.beginPath();ctx.moveTo(head.x,head.y);ctx.lineTo(cx,cy);ctx.stroke();ctx.setLineDash([]);ctx.beginPath();ctx.arc(cx,cy,9+Math.sin(clock*4)*2,0,TAU);ctx.strokeStyle='rgba(60,118,100,.26)';ctx.stroke()}
+ctx.restore();drawCreature()}
+function tick(ts){const dt=clamp((ts-(lastTs||ts))/1000,0,.036);lastTs=ts;frame++;move(dt,ts);draw();requestAnimationFrame(tick)}
+requestAnimationFrame(tick);
+function openModal(){$('modal').classList.add('open');$('new-text').focus()}
+function closeModal(){$('modal').classList.remove('open')}
+for(const id of ['feed-btn','add-text'])$(id).addEventListener('click',openModal);
+$('cancel-modal').addEventListener('click',closeModal);$('file-upload').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;if(file.size>30000){toast('Choose a text file smaller than 30 KB');e.target.value='';return}try{$('new-text').value=(await file.text()).slice(0,12000);toast('Text loaded locally. Add it to the archive when ready.')}catch{toast('Unable to read this local text file')}e.target.value=''});
+$('modal').addEventListener('click',e=>{if(e.target===$('modal'))closeModal()});
+$('insert-text').addEventListener('click',()=>{const s=$('new-text').value.trim();if(s.length<25){toast('Add at least 25 characters of text');return}if(s.length>12000){toast('Please keep the text below 12,000 characters');return}const el=document.createElement('p');el.className='to-read';el.textContent=s;tokenize(el);$('article').appendChild(el);
+// New territory enters the model only when the crawler reads it.
+$('new-text').value='';closeModal();log('A new textual territory was added');if(!active)wake();toast('The organism has a new territory');});
+$('export-btn').addEventListener('click',exportNotes);
+$('notes-export').addEventListener('click',exportNotes);
+function download(blob,name){const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),5000)}
+function exportNotes(){const data={project:'Margin Species',source:'Original independent local work inspired by Crawlers by Slava Rybin',seed,kind:type,traits,wordsEncountered:seen.size,words:collected,steps,generated,created:new Date().toISOString()};download(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),'margin-species-'+seed+'.json');toast('Field archive exported')}
+$('image-export').addEventListener('click',()=>{const out=document.createElement('canvas');out.width=1400;out.height=980;const cc=out.getContext('2d');cc.fillStyle='#f5f5ee';cc.fillRect(0,0,out.width,out.height);cc.strokeStyle='#b9c7bb';cc.lineWidth=1;cc.strokeRect(58,55,1284,867);cc.fillStyle='#547a6d';cc.font='20px monospace';cc.fillText('MARGIN SPECIES  /  PRIVATE FIELD PLATE',92,105);cc.fillStyle='#263e34';cc.font='76px Georgia';cc.fillText(cfg.name,92,210);cc.font='24px Georgia';cc.fillStyle='#718c78';cc.fillText('SPECIMEN MS—'+String(seed%10000).padStart(4,'0')+'     SEED '+seed,94,251);
+// Static geometry in a standalone specimen plate, not captured page assets.
+cc.save();cc.translate(720,474);cc.rotate(-.22);for(let i=traits.segments-1;i>=0;i--){let px=-i*38,py=Math.sin(i*.35)*9,r=Math.max(9,33-i*1.5);for(const side of [-1,1]){if(i%2===0||type==='scatterer'){cc.beginPath();cc.moveTo(px,py);cc.lineTo(px-18,py+side*60);cc.lineTo(px+21,py+side*95);cc.strokeStyle=cfg.color;cc.lineWidth=4;cc.stroke();cc.fillStyle=cfg.color;cc.fillRect(px+17,py+side*95-4,8,8)}}cc.beginPath();cc.ellipse(px,py,r,r*.9,0,0,TAU);cc.fillStyle=cfg.shell;cc.fill();cc.strokeStyle=cfg.color;cc.lineWidth=3;cc.stroke();cc.beginPath();cc.arc(px,py,4,0,TAU);cc.fillStyle=cfg.color;cc.fill()}cc.beginPath();cc.ellipse(28,0,40,35,0,0,TAU);cc.fillStyle='#dce9dc';cc.fill();cc.strokeStyle=cfg.color;cc.lineWidth=4;cc.stroke();cc.fillStyle=cfg.color;cc.beginPath();cc.arc(47,-11,11,0,TAU);cc.fill();cc.restore();
+cc.strokeStyle='#c1d0c1';cc.beginPath();cc.moveTo(92,745);cc.lineTo(1303,745);cc.stroke();cc.fillStyle='#718c78';cc.font='18px monospace';cc.fillText('WORDS',95,786);cc.fillText('STEPS',420,786);cc.fillText('PASSAGES',720,786);cc.fillText('MORPHOLOGY',1030,786);cc.fillStyle='#294a3d';cc.font='34px Georgia';cc.fillText(String(seen.size),95,838);cc.fillText(String(steps),420,838);cc.fillText(String(generated.length),720,838);cc.fillText(type.toUpperCase(),1030,838);cc.font='18px monospace';cc.fillStyle='#829b89';cc.fillText('GENERATED LOCALLY · NO WALLET · NO NETWORK · NO TOKENS',94,895);out.toBlob(blob=>{if(blob)download(blob,'margin-species-plate-'+seed+'.png')},'image/png');toast('Specimen plate exported')});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('modal').classList.contains('open'))closeModal();if(e.target.matches('textarea,input,button'))return;if(e.code==='Space'){e.preventDefault();wake()}if(e.key.toLowerCase()==='n'){$('new-seed').click()}});
+for(const nav of document.querySelectorAll('.left .nav-item[href]'))nav.addEventListener('click',()=>{for(const b of document.querySelectorAll('.left .nav-item[href]'))b.classList.toggle('active',b===nav)});
+reset(42042);
+})();
+</script>
+</body>
+</html>
