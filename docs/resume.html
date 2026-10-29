@@ -7,6 +7,7 @@
 <meta name="theme-color" content="#f5f4ee">
 <meta name="description" content="Devin J. Wright — concise professional résumé: technology product, program leadership, Army command and independently authored career history.">
 <title>Devin J. Wright | Résumé</title>
+<script src="site.js" defer></script>
 <link rel="canonical" href="https://d3lefts.github.io/d3lefts/resume.html">
 <style>
 :root{color-scheme:light;--ink:#1c232a;--quiet:#52616a;--line:#c7cdd2}
@@ -34,14 +35,21 @@ li{margin-bottom:5px}
 .note{color:var(--quiet);font-size:11px}
 h4{font-size:12px;margin:12px 0 4px}
 footer{font-size:11px;color:var(--quiet);margin-top:25px}
+.resume-nav{max-width:890px;margin:12px auto 0;padding:10px 22px;display:flex;align-items:center;justify-content:space-between;gap:22px;font-size:12px}
+.resume-nav>a{font-size:12px;font-weight:700;letter-spacing:.03em;text-decoration:none}
+.resume-nav #menu-button{background:transparent;color:var(--ink);border:1px solid var(--line);cursor:pointer;font:700 11px Arial,sans-serif;padding:8px 10px;display:none}
+.resume-nav #site-nav{display:flex;gap:16px;align-items:center}
+.resume-nav #site-nav a{font-size:12px}
+@media(max-width:1300px){.resume-nav #menu-button{display:block}.resume-nav #site-nav{display:none;position:absolute;top:56px;right:20px;z-index:10;background:#fff;padding:19px;border:1px solid var(--line);box-shadow:0 10px 28px #1112;flex-direction:column;align-items:flex-start}.resume-nav #site-nav.open{display:flex}}
 @media(max-width:650px){main{padding:32px 23px;box-shadow:none}.back{margin:15px auto}.rolehead{display:block}.when{display:block;margin-bottom:4px}.links{gap:8px 15px}}
-@media print{@page{size:letter;margin:.48in}body{background:#fff}main{max-width:none;margin:0;padding:0;box-shadow:none}.back,.skip{display:none}a{color:#1c232a}h2{margin-top:18px}.role{break-inside:avoid}footer{margin-top:10px}}
+@media print{@page{size:letter;margin:.48in}body{background:#fff}main{max-width:none;margin:0;padding:0;box-shadow:none}.back,.skip,.resume-nav{display:none}a{color:#1c232a}h2{margin-top:18px}.role{break-inside:avoid}footer{margin-top:10px}}
 </style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to résumé</a>
+<div class="resume-nav"><a href="portfolio.html">DEVIN J. WRIGHT</a><button type="button" id="menu-button" class="menu-toggle" aria-label="Toggle navigation" aria-controls="site-nav" aria-expanded="false">MENU +</button><nav class="nav" id="site-nav" aria-label="Primary navigation"><a href="portfolio.html">Portfolio</a><a href="portfolio.html#career">Professional projects</a><a href="about.html">Research method</a><a href="https://www.linkedin.com/in/devin-jarel-wright">LinkedIn</a></nav></div>
 <p class="back"><a href="portfolio.html">← Back to the portfolio</a></p>
-<main id="main">
+<main id="main" class="app">
 <header>
 <h1>DEVIN J. WRIGHT</h1>
 <p>Product &amp; Research Program Leadership</p>
