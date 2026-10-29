@@ -1,0 +1,8 @@
+{
+  "result": "PASS",
+  "field": "F5[v]/(v^2-3)",
+  "signals_decoded": 16250,
+  "nonadaptive_obstruction_phase_classes": 157,
+  "four_phase_separation": "ALL 24 ratios",
+  "bound": "<=2k-1 adaptive fourth powers"
+}

@@ -1,0 +1,22 @@
+{
+  "adaptive": {
+    "k2_signals_checked": 625,
+    "k3_signals_checked": 15625,
+    "max_measurements_k2": 3,
+    "max_measurements_k3": 5,
+    "measurement_bound": "k+support(x)-1 <=2k-1",
+    "one_additional_reading_per_nonzero_coordinate_after_reference": true
+  },
+  "field": "F5[t]/(t^2-2)",
+  "four_phase_separation": "PASS all 24 nonzero ratios",
+  "iid_pair_orbit_divisor": 32,
+  "nonadaptive_five_slopes": {
+    "all_signals_unique_mod_mu4": true,
+    "planted_lift_kernel_dimension": 2,
+    "rows": 5,
+    "unique_measurement_images": 157
+  },
+  "pairwise_iid_collision_count": 97,
+  "result": "PASS",
+  "seven_half_bound_1_to_19k": "PASS"
+}

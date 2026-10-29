@@ -1,0 +1,21 @@
+{
+  "schema": "nightfall.axiom.adaptive-f25.v1",
+  "date": "2026-10-28 America/New_York",
+  "source_file_sha256": {
+    "RESEARCH_NOTE.md": "c98f1fbb93e5d75c93305a74bc1c4fe34b239002c537f33eb58142a8c13db177",
+    "audit_and_adaptive.log": "18b0ab88d69901b7b272f8437c7c165234634c78bd29e955c3b761f18b63b5ad",
+    "audit_and_adaptive.py": "76e58f10d246b0e15fbf227f20e46aa13c042bdf1a22411adb0ce5af7100de87",
+    "verify_adaptive_alt.log": "53fa587d3e2e5e4d99ee987e361c25910d329775845dfe6e00a2fd81978c5d0e",
+    "verify_adaptive_alt.py": "f9f26048662894c5f4783b68f50a0c866189bc44ef273b41fde18157b1a29ca7"
+  },
+  "command": [
+    "python3 audit_and_adaptive.py",
+    "python3 verify_adaptive_alt.py"
+  ],
+  "exit_codes": [
+    0,
+    0
+  ],
+  "checks": "Exhaustive 625 k2 and 15625 k3 signals independently twice; exact 5-row obstruction; 97/625 event and 32-orbit count",
+  "status": "INTERNAL_PASS_EXTERNAL_REVIEW_PENDING"
+}
