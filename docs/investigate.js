@@ -21,7 +21,7 @@ const challenges={
   build:"orchestrator.html",buildTitle:"Freeze a new graph-family claim",experiment:"discovery.html",
   challenge:"orchestrator.html",verification:"https://github.com/d3lefts/d3lefts/pull/57",
   verificationTitle:"Inspect exact cycle checkers and graph inputs"},
- audit:{name:"Finite witness under attack",question:"30-point Sidon · scoped exact replay",issue:"https://github.com/d3lefts/d3lefts/issues/2",
+ audit:{name:"Finite witness under attack",question:"30-point Sidon · scoped exact replay",issue:"review.html#sidon",
   result:"passport.html?claim=sidon30",source:"https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/README.md",
   prior:"The 30-integer finite construction has a verified maximum Sidon subset of 17. The published asymptotic 5/9 baseline belongs to previous researchers.",
   gap:"Independent arithmetic reproduction, a legal mutation, or a full proof attack on the finite 18-point exclusion are meaningful. A passing toy test cannot establish a new asymptotic claim.",
@@ -38,10 +38,10 @@ const steps=[
  {short:"Preserve and hand off",title:"Make the next investigation possible.",detail:c=>"Record the source version, tested claim, failure conditions, exact inputs, verifier, observations and the next open question. Export your local brief and share evidence through the active issue after review.",link:c=>"claim-lab.html",action:"Open Claim Lab's evidence ledger",boundary:"Export and stage navigation are private organizational actions. No submission, independent review or mathematical approval occurs automatically."}
 ];
 let session=get();if(!session||!IDS.includes(session.id)||!ROLES.includes(session.role)||!Number.isInteger(session.step)||session.step<0||session.step>=steps.length){session=null}
-let chosen=session?.id||"sidon";
+let chosen=session?.id||"sidon";let chosenRole=session?.role||"construct";
 function paintChoices(){
  document.querySelectorAll("[data-issue]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.issue===chosen)));
- const role=session?.role||"construct";
+ const role=chosenRole;
  document.querySelectorAll('input[name="iv-role"]').forEach(r=>{r.checked=r.value===role});
 }
 function stamp(t){$("iv-save-status").textContent=t}
@@ -82,8 +82,9 @@ function render(){
  $("iv-note").value=session.note||"";
 }
 document.querySelectorAll("[data-issue]").forEach(b=>b.addEventListener("click",()=>{chosen=b.dataset.issue;session=null;render();paintChoices()}));
+document.querySelectorAll('input[name="iv-role"]').forEach(input=>input.addEventListener("change",()=>{if(input.checked)chosenRole=input.value}));
 $("iv-start-button").addEventListener("click",()=>{
- const role=document.querySelector('input[name="iv-role"]:checked')?.value||"construct";
+ const role=chosenRole;
  session={schema:"nightfall-investigation-v1",id:chosen,role:ROLES.includes(role)?role:"construct",step:0,visited:[],note:""};
  put(session);render();stamp("Session created locally; no submission made.");
  $("iv-workspace").scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth",block:"start"});
@@ -92,7 +93,7 @@ $("iv-note").addEventListener("input",()=>{
  if(!session)return;session.note=$("iv-note").value.slice(0,1200);
  stamp(put(session)?"Working note saved in this browser.":"Local storage unavailable; export your brief.");
 });
-$("iv-reset").addEventListener("click",()=>{session=null;put(null);chosen="sidon";render();stamp("Local investigation reset.");});
+$("iv-reset").addEventListener("click",()=>{session=null;put(null);chosen="sidon";chosenRole="construct";render();stamp("Local investigation reset.");});
 $("iv-export").addEventListener("click",()=>{
  if(!session){stamp("Choose an investigation before exporting.");return}
  const c=challenges[session.id];
