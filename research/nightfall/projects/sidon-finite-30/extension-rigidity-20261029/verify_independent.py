@@ -30,7 +30,10 @@ def sidon(numbers):
 
 
 def weak_four(B):
-    """No four distinct marks support a+b=c+d (two disjoint pairs)."""
+    """Weak Sidon: no four distinct marks support two equal disjoint pair sums.
+
+    This is weaker than the (4,5) condition.
+    """
     for a,b,c,d in combinations(B,4):
         if a+d==b+c or a+c==b+d or a+b==c+d:return False
     return True
@@ -85,6 +88,9 @@ def verify(source=HERE/'witness_30.txt',certificate=HERE/'portfolio_certificate.
     assert hashlib.sha256(raw).hexdigest()==EXPECTED_WITNESS_SHA,'source witness hash mismatch'
     B=tuple(map(int,raw.strip().split(b',')))
     assert len(B)==30 and list(B)==sorted(set(B)) and weak_four(B)
+    assert weak_four((1,2,3,5)),"weak-Sidon counterexample baseline failed"
+    differences={b-a for a,b in combinations((1,2,3,5),2)}
+    assert len(differences)==4,"(4,5) versus weak-Sidon distinction collapsed"
     cert=json.loads(certificate.read_text())
     portfolio=[tuple(x) for x in cert['portfolio']]
     assert len(portfolio)==11 and len(set(portfolio))==11
@@ -120,7 +126,7 @@ def verify(source=HERE/'witness_30.txt',certificate=HERE/'portfolio_certificate.
     observed={'candidate_ap':len(raw_candidates),'admissible_ap':len(V),
               'invalid_ap':len(raw_candidates&forbidden),'portfolio':len(portfolio),'base_ap':28}
 
-    # Case I: both new marks produce an old-old-new 3AP; 305 choose 2 candidates.
+    # Case I: both new marks produce an old-old-new 3AP; 305 choose 2 weak-Sidon candidates.
     i=0; sample=[]
     for x,y in combinations(V,2):
         if not four_compatible_pair(x,y,old,forbidden,old_pair_sums,old_diffs):continue
@@ -177,8 +183,8 @@ def verify(source=HERE/'witness_30.txt',certificate=HERE/'portfolio_certificate.
             'certificate_sha256':hashlib.sha256(certificate.read_bytes()).hexdigest(),
             'counts':observed,'old_max_sidon':17,'new_max_after_one':18,
             'new_max_after_two':19,'old_cover12_reject_states':states,
-            'adversarial_controls':'PASS','external_prior_art_review':'PENDING',
-            'scope':'Every valid 1- or 2-integer superextension of this specific 30-point weak Sidon witness; no global optimum or asymptotic claim.'}
+            'adversarial_controls':'PASS incl. weak-Sidon versus (4,5) distinction','external_prior_art_review':'PENDING',
+            'scope':'Every weak-Sidon-preserving 1- or 2-integer superextension of this specific 30-point witness; (4,5) follows as a corollary; no global optimum or asymptotic claim.'}
 
 
 if __name__=='__main__':
