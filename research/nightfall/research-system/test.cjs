@@ -22,7 +22,12 @@ for(const m of R.mechanisms){assert.ok(m.scope&&m.description,m.id+" missing sco
 for(const e of R.edges){assert.ok(ids.has(e.from)&&mids.has(e.to),"Dangling graph relation");assert.ok(["finite-check","method","open-premise","analogy"].includes(e.relation),"Unsupported relation");assert.ok(e.source&&e.note&&e.label,"Uncited graph relation");assert.ok(R.mechanismById(e.to).witnesses.includes(e.from),"Unlisted mechanism membership")}
 assert.equal(R.claimById("sidon30").measurement,"17 / 30");
 assert.match(R.claimById("phase").validity.label,/Conditional/);
-assert.match(R.claimById("erdos36").reproducibility.detail,/pending/i);
+assert.equal(R.claimById("erdos36").reproducibility.level,"public","Approved finite witness release is public");
+assert.match(R.claimById("erdos36").reproducibility.detail,/131,072-cell heights.*independent finite arithmetic checker/);
+assert.match(R.claimById("erdos36").reproducibility.detail,/not external peer review/i);
+assert.ok(R.claimById("erdos36").open.some(x=>/independent external reproduction/i.test(x)),"External audit remains open");
+assert.ok(R.claimById("erdos36").sources.some(x=>x.url.includes("/releases/tag/nightfall-research-2026-10-28")),"Public evidence release is source-linked");
+assert.equal(R.claimById("erdos36").history.at(-1).kind,"public-evidence-release");
 assert.match(R.claimById("pas").statement,/11\/20/);
 assert.match(R.claimById("adaptive").statement,/k\+1/);
 assert.match(R.claimById("adaptive").short,/r−1/);
