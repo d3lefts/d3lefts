@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-29",
+  "finite_unordered_external_pairs": 6894,
+  "issue": 132,
+  "schema": "axiom-singer-batch-core-v1",
+  "scope": "cyclic-perfect-difference ordinary (1,0) collision supports; internal checker",
+  "source_sha256": {
+    "RESEARCH_NOTE.md": "f0b77e46e8c7e8de3b23dbac977aa8f786c5a7ae659be48104711ef72bfdfb4a",
+    "verify_core_difference.log": "c98a1691a648eb17cbee447fc7acf89d47f6bc9bc5ddfd969a58eda51630628c",
+    "verify_core_difference.py": "1e702ada08e7ed924d54b38b79b40389646dd1dad6bc9c6d192c540df07dfbe0",
+    "verify_core_independent.log": "f82db913559fdde55b52cb109c6cf34265250befdb20416c77c06262105edb41",
+    "verify_core_independent.py": "40e38b8b6ac83283630e94e78f6dcecb8fdf70469c2f36b242fe9a337da38de6"
+  },
+  "theorem": "c >= max(0, ceil((q-5)/2)) for gcd(v,3)=1",
+  "torsion_extension": "c >= max(0, ceil((q-13)/2)) for 3|v"
+}
