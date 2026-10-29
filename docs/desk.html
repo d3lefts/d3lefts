@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#16251e">
+<meta name="description" content="NIGHTFALL Research Desk: a local-first session board linking canonical proof claims, unresolved obligations, independent tests, and source evidence.">
+<meta property="og:title" content="Research Desk — NIGHTFALL PHASESHIFT">
+<meta property="og:description" content="Carry a research question from evidence to the next falsifiable experiment. No automated proof promotion.">
+<link rel="canonical" href="https://d3lefts.github.io/d3lefts/desk.html">
+<title>Research Desk — NIGHTFALL PHASESHIFT</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="site.css"><link rel="stylesheet" href="desk.css">
+<script src="site.js" defer></script><script src="research-registry.js" defer></script><script src="desk.js" defer></script>
+</head>
+<body class="desk-page">
+<a class="skip" href="#main">Skip to Research Desk</a><div class="topline"></div>
+<header class="header"><div class="wrap header-inner">
+<a class="brand" href="./" aria-label="NIGHTFALL home"><span class="mark" aria-hidden="true">N∕F</span><span class="brand-copy">NIGHTFALL <span>PHASESHIFT / RESEARCH SYSTEMS</span></span></a>
+<button class="menu-toggle" id="menu-button" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">MENU +</button>
+<nav class="nav" id="site-nav" aria-label="Primary navigation">
+<a href="./#flagships">Research</a><a href="research.html">Library</a><a href="desk.html" aria-current="page">Desk</a><a href="passport.html">Passports</a><a href="atlas.html">Atlas</a><a href="exact-research.html">Tools</a><a href="evidence.html">Evidence</a>
+<a class="nav-call" href="https://github.com/d3lefts/d3lefts/issues/15" target="_blank" rel="noopener">Research mandate ↗</a>
+</nav></div></header>
+<main id="main">
+<section class="desk-hero wrap" aria-labelledby="desk-title">
+ <div class="desk-kicker">NIGHTFALL / INTERNAL RESEARCH DESK / EDITORIAL SNAPSHOT</div>
+ <div class="desk-hero-grid"><div><h1 id="desk-title">Keep the<br><em>question alive.</em></h1><p>Choose an active research claim, inspect the precise boundary, select its next falsifiable checks, and assemble a portable session brief. This is an internal work surface built on our canonical Proof Passport records.</p>
+ <div class="desk-hero-actions"><a class="desk-hero-link" href="atlas.html">Explore mechanisms ↗</a><a class="desk-hero-link" href="research.html">32-source library ↗</a><a class="desk-hero-link" href="claim-lab.html">Claim Lab ↗</a></div></div>
+ <div class="desk-readout" aria-label="Research Desk capabilities"><div><span>CLAIM-SCOPED</span><strong id="desk-claim-total">05</strong><small>canonical passports</small></div><div><span>LOCAL-FIRST</span><strong id="desk-queued-total">00</strong><small>queued checks</small></div><div><span>STATUS MODEL</span><strong>04</strong><small>independent evidence dimensions</small></div></div></div>
+</section>
+<section class="desk-trust wrap"><strong>Instrument boundary</strong><p>Everything here is a research plan, never a theorem certificate. Claim statements and open premises come from a dated editorial registry. Session choices and notes remain in this browser until you explicitly export them. A completed task is merely a personal workflow flag; it cannot change a scientific proof status.</p><span id="desk-snapshot">Registry snapshot</span></section>
+<section class="desk-main wrap" aria-label="Claim selection and research brief">
+ <aside class="desk-list-pane" aria-labelledby="desk-library-title">
+  <div class="desk-pane-head"><span>01 / SELECT THE FRONTIER</span><h2 id="desk-library-title">Current claims.</h2><p>Five canonical evidence-bearing records; the broader research archive remains in the Library.</p></div>
+  <label class="desk-search-label" for="desk-search">FIND A CLAIM</label>
+  <input type="search" id="desk-search" placeholder="Field, title, premise…" autocomplete="off">
+  <label class="desk-search-label" for="desk-filter">EVIDENCE CLASS</label>
+  <select id="desk-filter"><option value="all">All claim scopes</option><option value="finite">Finite constructions</option><option value="conditional">Conditional / open proof</option><option value="empirical">Bounded empirical evidence</option></select>
+  <div id="desk-claim-list" class="desk-claim-list"><a href="passport.html">Open the canonical Proof Passports ↗</a></div>
+  <p id="desk-list-count" class="desk-list-count" role="status">Loading claim records…</p>
+ </aside>
+ <section class="desk-detail-pane" aria-labelledby="desk-detail-heading">
+   <div class="desk-pane-head"><span>02 / READ THE EVIDENCE</span><h2 id="desk-detail-heading">Inspect the boundary.</h2></div>
+   <div id="desk-detail" class="desk-detail"><p>Claim details load from the canonical research registry.</p></div>
+   <noscript><p>JavaScript is needed to select a claim. The <a href="passport.html">Proof Passports</a> and <a href="research.html">Research Library</a> remain available.</p></noscript>
+ </section>
+</section>
+<section class="desk-session wrap" id="session" aria-labelledby="desk-session-title">
+ <div class="desk-session-header"><div><span>03 / BUILD A SESSION</span><h2 id="desk-session-title">An experiment<br><em>needs a handoff.</em></h2><p>Pin unresolved obligations from multiple claims, record the immediate strategy, and export a reproducible brief for another researcher or AI collaborator.</p></div>
+ <div class="desk-session-actions"><button type="button" id="desk-export-md" disabled>Export Markdown brief ↗</button><button type="button" id="desk-export-json" disabled>Export JSON ↗</button><button type="button" id="desk-clear">Clear local session</button></div></div>
+ <div class="desk-session-grid"><div class="desk-queue"><div class="desk-queue-head"><h3>Selected checks</h3><span id="desk-count" aria-live="polite">0 steps</span></div>
+ <div id="desk-queue-list"><p class="desk-empty">No checks selected. Choose a claim above and add an open research obligation.</p></div></div>
+ <div class="desk-notes"><label for="desk-notes">SESSION STRATEGY / LOCAL NOTES</label><textarea id="desk-notes" rows="9" maxlength="4000" placeholder="What representation, counterexample, or independent proof route should we attempt?"></textarea>
+ <p id="desk-save-state" role="status">Notes stay in this browser until exported.</p>
+ <div class="desk-sources"><a href="https://github.com/d3lefts/d3lefts/issues/15" target="_blank" rel="noopener">Flagship theorem mandate ↗</a><a href="https://github.com/d3lefts/d3lefts/issues/5" target="_blank" rel="noopener">Frozen archive release blocker ↗</a><a href="evidence.html">Evidence access ↗</a></div></div></div>
+</section>
+<section class="desk-footer wrap"><div><span>04 / CONTINUE THE WORK</span><h2>Follow the mechanism.<br><em>Then challenge it.</em></h2></div><div class="desk-steps"><a href="atlas.html"><span>01</span><strong>See the graph</strong><small>Evidence-bearing relationships</small></a><a href="referee.html"><span>02</span><strong>Try a counterexample</strong><small>Exact finite adversarial checks</small></a><a href="exact-research.html"><span>03</span><strong>Reconstruct the calculation</strong><small>Werner and finite-field probes</small></a><a href="discovery.html"><span>04</span><strong>Design an experiment</strong><small>Bounded research investigations</small></a></div></section>
+</main>
+<footer class="footer"><div class="wrap footer-bottom"><span>© 2026 Devin J. Wright · NIGHTFALL PHASESHIFT</span><span>Internal research desk · Browser-local planning · No scientific status promotion</span></div></footer>
+</body>
+</html>
