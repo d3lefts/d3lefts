@@ -21,3 +21,5 @@ jobs:
         run: python3 research/nightfall/agent-reports/ryev_q7_second_shell_20261029/q5_second_shell_exact.py
       - name: "Independent Q7 full one-/two-edge syndrome sector"
         run: python3 research/nightfall/agent-reports/ryev_q7_second_shell_20261029/audit_q7_two_edge_sector.py
+      - name: "Independent Q7 three-/four-/five-edge equality-sector audit"
+        run: python3 research/nightfall/agent-reports/ryev_q7_second_shell_20261029/audit_three_edge_minimum.py
