@@ -1,0 +1,51 @@
+{
+  "exhaustive": [
+    {
+      "connected_support_signals": 625,
+      "disconnected_support_signals": 0,
+      "k": 2,
+      "mode": "complete",
+      "rows": 4,
+      "signals": 625,
+      "signatures": 157
+    },
+    {
+      "connected_support_signals": 15049,
+      "disconnected_support_signals": 576,
+      "k": 3,
+      "mode": "path",
+      "rows": 7,
+      "signals": 15625,
+      "signatures": 3799
+    },
+    {
+      "connected_support_signals": 15625,
+      "disconnected_support_signals": 0,
+      "k": 3,
+      "mode": "complete",
+      "rows": 9,
+      "signals": 15625,
+      "signatures": 3907
+    },
+    {
+      "path_ambiguous": true,
+      "zero_counterexample": [
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          2
+        ]
+      ]
+    }
+  ],
+  "field": "F5[u]/(u\u00b2\u22122)",
+  "graph_robustness": "k=4..14, t=0,1,2 (all deletion subsets)",
+  "pair_ratios_checked": 24,
+  "phase_candidates_checked": 96,
+  "status": "PASS"
+}
