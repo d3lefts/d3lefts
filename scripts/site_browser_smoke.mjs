@@ -87,6 +87,7 @@ try{
    assert.equal(await page.locator("#ep-export").isDisabled(),false);
    await page.locator("#ep-file").setInputFiles({name:"heights_u70.txt",mimeType:"text/plain",buffer:Buffer.from("invalid witness fixture")});
    await page.locator("#ep-hash-button").click();
+   await page.waitForFunction(()=>/BYTE IDENTITY MISMATCH/.test(document.querySelector("#ep-hash-output")?.textContent||""));
    assert.match(await page.locator("#ep-hash-output").innerText(),/BYTE IDENTITY MISMATCH/,"Corrupted full-witness byte identity must fail");
    await page.locator("#ep-reset").click();
    assert.equal(await page.locator("#ep-export").isDisabled(),true);
@@ -94,7 +95,9 @@ try{
    // Carry the original mathematical claim into an exact obligation, preserve local
    // unreviewed notes, and return to the same claim. Do not silently retarget Frontier.
    await page.goto(origin+"erdos-paper.html",{waitUntil:"load"});
-   await page.locator('a[href*="join.html?claim=erdos36"][href*="obligation=0"]').first().click();
+   const investigationLink=page.locator('a[href*="join.html?claim=erdos36"][href*="obligation=0"]').first();
+   if(!(await investigationLink.isVisible())) await page.locator("#menu-button").click();
+   await investigationLink.click();
    assert.match(new URL(page.url()).search,/claim=erdos36/);
    assert.equal(await page.locator("#cj-workspace").isVisible(),true,"Claim-specific workspace active");
    assert.match(await page.locator("#cj-duty").innerText(),/131,072-cell witness/);
@@ -117,7 +120,9 @@ try{
    await page.goto(origin+"erdos-paper.html",{waitUntil:"load"});
    assert.match(await page.locator(".nf-journey-rail a").first().getAttribute("href"),/claim=erdos36&obligation=0/);
    await page.goto(origin+"living-paper.html",{waitUntil:"load"});
-   await page.locator('a[href*="join.html?claim=sidon30"][href*="obligation=0"]').first().click();
+   const sidonInvestigationLink=page.locator('a[href*="join.html?claim=sidon30"][href*="obligation=0"]').first();
+   if(!(await sidonInvestigationLink.isVisible())) await page.locator("#menu-button").click();
+   await sidonInvestigationLink.click();
    assert.equal(await page.locator("#cj-claim").inputValue(),"sidon30");
    assert.match(await page.locator("#cj-duty").innerText(),/Independent external specialist audit/i);
    await page.goto(origin+"join.html?claim=not-a-real-claim&obligation=0#claim-investigation",{waitUntil:"load"});
@@ -341,7 +346,7 @@ try{
    await page.goto(origin+"index.html",{waitUntil:"load"});
    assert.match(await page.locator(".ticker").innerText(),/33/,"homepage current library count");
    assert.equal(await page.locator("#instruments .instrument-workflow span").count(),4,"four instrument workflow stages");
-   assert.equal(await page.locator('#instruments a[href="exact-research.html"]').count(),1,"research tools hub CTA");
+   assert.equal(await page.locator('#instruments a[href="exact-research.html#research-tools-directory"]').count(),1,"research tools hub CTA");
    assert.equal(await page.locator("#work.sf-library-invite").count(),1,"owner-curated full research library invitation");
    assert.equal(await page.locator('#work a[href="research.html"]').count(),1,"full research library entry");
    assert.equal(await page.locator('#work a[href="passport.html"]').count(),1,"separate original proof passport entry");
@@ -382,6 +387,8 @@ try{
   }
   if(width===390){
     await page.goto(origin+"claim-lab.html",{waitUntil:"load"});
+    await page.evaluate(()=>localStorage.removeItem("nightfall_claim_lab_v1"));
+    await page.reload({waitUntil:"load"});
     assert.equal(await page.locator(".demoNotice").count(),1,"Claim Lab demo explicitly labeled");
     assert.equal(await page.locator('[data-tab="claims"]').count(),1,"Claim Lab standalone navigation");
     await page.locator("#newClaimBtn").click();
@@ -389,6 +396,7 @@ try{
     await page.locator("#claimStatus").selectOption("3");
     await page.locator("#claimForm button[type=submit]").click();
     await page.locator('[data-tab="audit"]').click();
+    await page.waitForFunction(()=>document.querySelector("#sectionCrumb")?.textContent==="Audit queue");
     const auditText=await page.locator("#content").innerText();
     assert.match(auditText,/Missing artifact reference/,"manual label cannot bypass missing artifact");
     assert.match(auditText,/Missing \/ invalid SHA-256 digest/,"missing digest remains flagged");

@@ -72,6 +72,8 @@ if(menu&&nav){
 (() => {
  if(location.pathname.endsWith("/join.html")||document.querySelector(".nf-journey-rail"))return;
  const main=document.querySelector("main");if(!main)return;
+ // App-owned grid layouts have their own navigation and must remain untouched.
+ if(main.closest(".app")||document.querySelector("#app"))return;
  let title="";
  try{
    const state=JSON.parse(localStorage.getItem("nightfall.journey.v1")||"null");
