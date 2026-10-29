@@ -58,11 +58,11 @@ This is a finite-field adaptation of the classical **complement-property obstruc
 
 - `verify_extension_packing.py` implements finite-field arithmetic as integer polynomials modulo explicit irreducible polynomials, obtains coordinate representatives from a separately computed exhaustive phase table, and uses basis-coordinate extraction for the batched mixes.
 - It checks all small cases up to \(\mathbb F_{27}^3\), \(\mathbb F_9^4\), and \(\mathbb F_{25}^3\), with seeded larger-field cases over \(\mathbb F_{81}\) and \(\mathbb F_{125}\).
-- **53,478 exact input vectors passed** equivalence and exact-query-count checks, including the \(q=2\) exception.
-- **1,500 separate nonadaptive collision certificates passed**, with fixed random frames and explicit kernel-pair witnesses over \(\mathbb F_{27}\), \(\mathbb F_{81}\), and \(\mathbb F_{125}\).
-- The test scope covers prime base fields \(q\in\{2,3,5\}\). The general prime-power theorem is mathematical, while broader finite computational coverage remains a review item.
+- **53,478 exact input vectors passed** the prime-base-field reconstruction checks, including the \(q=2\) exception. A second, independently written subfield verifier checks **278,608 additional exact reconstructions** over \(\mathbb F_4\)-based extensions \(\mathbb F_{16},\mathbb F_{64},\mathbb F_{256}\), including characteristic-two nontrivial phase ambiguity. **Total: 332,086 exact reconstructions.**
+- **3,000 separate nonadaptive collision certificates passed**: 1,500 over prime-base extensions \(\mathbb F_{27},\mathbb F_{81},\mathbb F_{125}\), and 1,500 more over characteristic-two extensions \(\mathbb F_{16},\mathbb F_{64},\mathbb F_{256}\). All collisions use explicit kernel-pair witnesses.
+- The test scope covers base field orders \(q\in\{2,3,4,5\}\) and extension degrees two through four. The general prime-power theorem is mathematical; additional finite-field representations remain an open test-coverage item.
 
-Run: `python3 verify_extension_packing.py`. No third-party Python packages required. The program's final line should read `PASS 53478 exact inputs and 1500 nonadaptive collision certificates`.
+Run `python3 verify_extension_packing.py` and `python3 verify_characteristic_two_subfield.py`. No third-party Python packages required. The final lines should report `PASS 53478 exact inputs and 1500 nonadaptive collision certificates` and `PASS q=4 characteristic-two subfield: 278608 exact reconstructions and 1500 nonadaptive collisions`.
 
 ## Positioning, limits, and prior art
 
