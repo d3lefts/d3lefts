@@ -48,3 +48,16 @@ The [owner-curated 32-source library](SITE_CURATED_32_20261028.json) is a **rese
 
 **Owner of the research archive:** Devin J. Wright.  
 **Instrument integration and scoped review:** NIGHTFALL research team.
+
+
+## 2026-10-29 addendum — Imaginary Adversary / Referee finite *input* companion
+
+The separate user-triggered `nightfall-companion-input-handoff-v1` adapter stages input in same-origin same-tab `sessionStorage` under `nightfall.companion.input.v1` and consumes/removes it once on navigation. It accepts exact integer-mark sets (up to 30 when the destination is Referee; up to 40 when the destination is Imaginary Adversary), or 2–64 rational equal-width overlap cells for the Adversary and 2–256 for Referee, with exact mass and range checks. It rejects unknown versions, status upgrades, added fields, unsupported domains, and invalid caps.
+
+**Status invariant:** only the source input moves. Scientific verdicts, full Referee receipts, Adversary counterexample conclusions, Claim Lab approval, independent replay grades and publication status remain in their original systems. Imports are visibly labeled `INPUT ONLY · UNREVIEWED` and require the destination's own explicit Run action.
+
+The Sidon bridge carries the **four-point (4,5) predicate** only. Referee additionally requires a classical Sidon subset and claimed maximum size; these are deliberately cleared after an Adversary → Referee transfer. A weak/classical Sidon adversarial predicate cannot be passed as a (4,5) claim. For larger instances, export the original bytes; do not silently truncate a witness.
+
+**Two visitor routes:** the open-problem route uses Frontier → optional Orchestrator → Discovery → Imaginary Adversary/Referee as appropriate → consented record. The already published finite Sidon *replay* route begins at the source dossier, follows Referee and bounded adversarial inputs, inspects the independent Python checker, then requests a separate Claim Lab recording. The two routes share the evidence/status rules, not a fabricated universal automatic transfer.
+
+Regression commands: `node scripts/test_companion_handoff.cjs`, `node scripts/test_adversary.cjs`, `node scripts/site_browser_smoke.mjs` (with local Playwright/Chromium). The website CI calls these through its normal gates.
