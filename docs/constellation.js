@@ -8,7 +8,7 @@
  const ink={"finite-check":"#d9ff73","method":"#87ccb0","open-premise":"#e2b475","analogy":"#9abed5"};
  const claims=R.claims,methods=R.mechanisms,edges=R.edges;
  const doc=(tag,cls,value)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(value!==undefined)e.textContent=String(value);return e;};
- const safeLink=(href)=>typeof href==="string"&&(/^(https:\/\/github\.com\/|https:\/\/www\.erdosproblems\.com\/|https:\/\/oeis\.org\/)/.test(href)||/^[a-z0-9-]+\.html(?:\\?claim=[a-z0-9_-]+)?(?:#[a-z0-9-]+)?$/i.test(href))?href:null;
+ const safeLink=(href)=>typeof href==="string"&&(/^(https:\/\/github\.com\/|https:\/\/www\.erdosproblems\.com\/|https:\/\/oeis\.org\/)/.test(href)||/^[a-z0-9-]+\.html(?:\?claim=[a-z0-9_-]+)?(?:#[a-z0-9-]+)?$/i.test(href))?href:null;
  function link(label,href){const safe=safeLink(href);if(!safe)return null;const a=doc("a","",label);a.href=safe;if(safe.startsWith("https:")){a.target="_blank";a.rel="noopener noreferrer"}return a;}
  const filterButtons=[...document.querySelectorAll("[data-co-filter]")];
  let type="all",selected=null,raf=0;
