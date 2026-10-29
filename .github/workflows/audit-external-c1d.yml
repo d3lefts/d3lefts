@@ -1,0 +1,27 @@
+name: External exact witness replay — C1d 600-cell
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/independent-audits/tao-constants/**'
+      - '.github/workflows/audit-external-c1d.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/independent-audits/tao-constants/**'
+      - '.github/workflows/audit-external-c1d.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  independent-exact-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Independent symmetric-pair integer convolution and negative control
+        run: python3 research/nightfall/independent-audits/tao-constants/c1d_600_exact.py --fetch
