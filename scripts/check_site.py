@@ -153,7 +153,7 @@ def main() -> int:
     for path in link_paths:
         if not (ROOT / "research/nightfall" / path).is_file():
             FAILURES.append("RESEARCH LIBRARY: source dossier missing: " + path)
-    if library.count("Evidence boundary") < len(records) or "Only three entries qualify" not in library:
+    if (library.count("Evidence boundary") < len(records) or "three core indexed findings" not in library or "two separately approved" not in library):
         FAILURES.append("RESEARCH LIBRARY: scoped claim boundaries or original-finding distinction missing")
     if homepage_text.count('class="flagship-card ') != 4 or 'href="research.html"' not in homepage_text:
         FAILURES.append("FLAGSHIPS: four explicitly scoped research programs and library navigation required")

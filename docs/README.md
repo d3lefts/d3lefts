@@ -8,6 +8,7 @@ Static, dependency-free site for NIGHTFALL’s **five evidence-scoped original f
 - `agenda.html` and `agenda.js` — separate five-discipline research agenda with ten untested proposals.
 - Discovery Engine: discovery.html, discovery-core.js, discovery-app.js, discovery.css — executable bounded proxy lab and portable evidence workspace.
 - `review.html` — three foundational reproducibility review tracks and two additional bounded-artifact checking routes; publication and proof status remain separate.
+- `adversary.html` / `adversary-core.js` / `adversary-app.js` / `adversary.css` — Imaginary Adversary (Devil’s Advocate), a bounded counterexample and proof-obligation planner complementary to Referee, tested in `scripts/test_adversary.cjs`.
 - `evidence.html` — two actually published curated ZIPs, hashes, verified public download links and reproduction commands.
 - `sitemap.xml` — direct site page discovery.
 - `site.css` — responsive layout and accessible typography.
@@ -25,7 +26,7 @@ GitHub Actions confirms successful Pages deployments on 2026-10-29. Direct publi
 
 ## Reproducibility for one-human operation
 
-The human research owner can operate the full cycle without a required outside reviewer: [Frontier](frontier.html) defines a bounded question → [Orchestrator](orchestrator.html) separates construction and falsification lanes → [Discovery Engine](discovery.html) explores operators → [Referee](referee.html?domain=sidon#workbench) recomputes exact finite evidence → [Claim Lab](claim-lab.html) stages a consented local evidence record. The recommended entry is the [five-step 30-point Sidon replay](exact-research.html#guided-replay). **An internal agent or independent code path is internal validation, not external peer review**, and no tool autonomously publishes a theorem.
+The human research owner can operate the full cycle without a required outside reviewer: [Frontier](frontier.html) defines a bounded question → [Orchestrator](orchestrator.html) separates construction and falsification lanes → [Discovery Engine](discovery.html) explores operators → [Imaginary Adversary](adversary.html?domain=sidon#workbench) attempts bounded counterexamples → [Referee](referee.html?domain=sidon#workbench) recomputes exact finite evidence → [Claim Lab](claim-lab.html) stages a consented local evidence record. The recommended entry is the [five-step 30-point Sidon replay](exact-research.html#guided-replay). **An internal agent or independent code path is internal validation, not external peer review**, and no tool autonomously publishes a theorem.
 
 External contributions remain welcome but are not a website publication dependency. Existing source-grounded reviewer tasks remain available:
 

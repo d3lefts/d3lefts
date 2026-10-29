@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#12251f">
+<meta name="description" content="NIGHTFALL Imaginary Adversary (Devil's Advocate): challenge proof scope, expose hidden assumptions and generate exact bounded Sidon and minimum-overlap counterexamples.">
+<meta property="og:title" content="Imaginary Adversary — NIGHTFALL CONSTELLATION">
+<meta property="og:description" content="A companion to Referee. Attack the claim before trusting the certificate.">
+<link rel="canonical" href="https://d3lefts.github.io/d3lefts/adversary.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="adversary.css">
+<script src="site.js" defer></script>
+<script src="adversary-core.js" defer></script>
+<script src="adversary-app.js" defer></script>
+<title>Imaginary Adversary · Devil's Advocate — NIGHTFALL</title>
+</head>
+<body>
+<a class="skip" href="#workbench">Skip to attack bench</a>
+<div class="ia-topline"></div>
+<header class="ia-header">
+ <a class="ia-brand" href="./"><span>N∕F</span><strong>NIGHTFALL</strong><small>CONSTELLATION / RESEARCH INSTRUMENTS</small></a>
+ <button type="button" class="menu-toggle" id="menu-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">MENU +</button><nav id="site-nav" class="ia-nav subpage-nav" aria-label="Research tool navigation"><a href="referee.html">Referee</a><a href="exact-research.html">Research Tools</a><a href="discovery.html">Discovery</a><a href="review.html">Review</a><a href="./">Home</a></nav>
+</header>
+<main>
+<section class="ia-hero ia-wrap">
+ <div class="ia-hero-text">
+  <span class="ia-eyebrow">INSTRUMENT / INDEPENDENT ATTACK PLANNING</span>
+  <h1>Imagine<br>the <em>failure.</em></h1>
+  <p>Before a proof is trusted, ask how it could be false. <strong>Imaginary Adversary</strong>—the Devil’s Advocate—maps vulnerable premises, searches bounded counterexamples, and exports the strongest challenge it actually established.</p>
+  <div class="ia-hero-actions"><a class="ia-cta" href="#workbench">Begin the attack <span aria-hidden="true">↘</span></a><a class="ia-inline" href="referee.html">Companion instrument: Referee ↗</a></div>
+ </div>
+ <div class="ia-orbit" aria-hidden="true"><div class="ia-ring r1"></div><div class="ia-ring r2"></div><div class="ia-ring r3"></div><div class="ia-axis horizontal"></div><div class="ia-axis diagonal"></div><span class="ia-node n1"></span><span class="ia-node n2"></span><span class="ia-node n3"></span><strong>?</strong><small>COUNTEREXAMPLE SEARCH<br>IS NOT A PROOF</small></div>
+</section>
+<section class="ia-motto"><div class="ia-wrap"><span>THE COMPLEMENT TO REFEREE</span><p>Referee asks: <em>Does this finite witness check out?</em><br>Devil’s Advocate asks: <em>What would overturn the claim?</em></p></div></section>
+<section id="workbench" class="ia-wrap ia-bench" aria-labelledby="bench-title">
+ <div class="ia-section-heading"><span>01 / ATTACK CONTRACT</span><h2 id="bench-title">Give doubt<br><em>something precise.</em></h2><p>The controls are deterministic. They make exact finite checks when the domain permits one; the remaining objections are explicit review questions, never generated evidence.</p></div>
+ <div class="ia-workspace">
+  <div class="ia-terminal"><span>IMAGINARY ADVERSARY / LOCAL BROWSER</span><span id="engine-version">EXACT BOUNDED ATTACK ENGINE</span></div>
+  <div class="ia-fields">
+   <div class="ia-field"><label for="domain">Attack domain</label><select id="domain"><option value="sidon">Sidon / additive combinatorics</option><option value="overlap">Minimum overlap / step functions</option><option value="general">General claim / proof assumptions</option></select></div>
+   <div class="ia-field"><label for="reach">Claim reach</label><select id="reach"><option value="finite">Finite, supplied instance</option><option value="universal">Universal / asymptotic theorem</option></select></div>
+   <div class="ia-field wide"><label for="statement">Exact assertion <span>state what a failure would refute</span></label><textarea id="statement" rows="2" maxlength="2400">Every four marks in the supplied set have at least five different distances.</textarea></div>
+   <div class="ia-field wide"><label for="assumptions">Assumptions and definitions</label><textarea id="assumptions" rows="2" maxlength="2400">Four distinct integer coordinates; (4,5) requires five or more distinct pairwise absolute differences.</textarea></div>
+   <div class="ia-field"><label for="source">Primary evidence / source reference</label><input id="source" type="text" maxlength="600" placeholder="Immutable source path, commit or SHA-256"></div>
+   <div class="ia-field"><label for="baseline">Closest baseline / source theorem</label><input id="baseline" type="text" maxlength="600" placeholder="Prior work with same definitions"></div>
+  </div>
+  <section id="sidon-fields" class="ia-domain" aria-label="Sidon finite attack">
+   <div class="ia-domain-intro"><span>01 / FINITE COMBINATORICS</span><h3>Try to break the definition.</h3><p>Enumerate four-point distance failures or repeated pair sums. Weak Sidon, classical Sidon, and (4,5) are three distinct properties.</p></div>
+   <div class="ia-fields">
+    <div class="ia-field"><label for="property">Predicate to falsify</label><select id="property"><option value="four-five">(4,5): at least five distances</option><option value="weak-sidon">Weak Sidon: disjoint pair sums</option><option value="strong-sidon">Classical Sidon: unique unordered pair sums</option></select></div>
+    <div class="ia-field wide"><label for="points">Distinct integer marks <span>4–40; comma/space separated</span></label><textarea id="points" rows="3" spellcheck="false">1, 2, 3, 5</textarea></div>
+   </div>
+  </section>
+  <section id="overlap-fields" class="ia-domain" aria-label="Overlap perturbation attack" hidden>
+   <div class="ia-domain-intro"><span>02 / FINITE MINIMAX PROBE</span><h3>Search a legal perturbation.</h3><p>Recompute the exact signed-lag maximum and test up to 256 mass-preserving one-unit transfers. A strict improvement defeats local optimality of the supplied witness; absence of one proves no global optimum.</p></div>
+   <div class="ia-fields">
+    <div class="ia-field"><label for="denominator">Cell denominator</label><input id="denominator" type="text" value="2" inputmode="numeric" spellcheck="false"></div>
+    <div class="ia-field"><label for="claimed-upper">Claimed upper bound <span>optional p/q</span></label><input id="claimed-upper" type="text" placeholder="e.g. 1/2" spellcheck="false"></div>
+    <div class="ia-field wide"><label for="heights">Integer cell heights <span>2–64 equal-width cells; unit mass</span></label><textarea id="heights" rows="3" spellcheck="false">1, 1</textarea></div>
+   </div>
+  </section>
+  <section id="general-fields" class="ia-domain ia-general" aria-label="General proof attack" hidden><p>No arbitrary theorem solver is claimed. This mode generates a structured adversarial brief covering quantifier scope, proof dependencies, reproduction, and closest prior work. Supply a domain-specific finite input to execute a mathematical falsifier.</p></section>
+  <div class="ia-toolbar"><button id="run-attack" class="ia-run" type="button">Run Devil's Advocate <span aria-hidden="true">↗</span></button><button id="load-fixture" type="button" class="ia-alt">Load a deliberate counterexample</button><button id="export-attack" type="button" class="ia-alt" disabled>Export attack JSON ↓</button><button id="copy-brief" type="button" class="ia-alt" disabled>Copy adversarial brief</button></div>
+  <div id="result" class="ia-results" role="status" aria-live="polite"><span>AWAITING PRECISE CLAIM</span><h3>Nothing is established yet.</h3><p>Choose a domain and run an attack to see the exact counterexample or test boundary, plus questions that a reviewer should try to answer.</p></div>
+  <div class="ia-trust">LOCAL INPUT · NO NETWORK UPLOAD · REVIEW QUESTIONS ARE HYPOTHESES · JSON HASH IS AN INPUT FINGERPRINT, NOT A SIGNATURE</div>
+ </div>
+</section>
+<section class="ia-wrap ia-companion" aria-labelledby="companion-title">
+ <div><span>02 / TWO INSTRUMENTS, DIFFERENT JOBS</span><h2 id="companion-title">Oppose first.<br><em>Recompute second.</em></h2><p>An exact counterexample is useful when reproducible. Export the attack, then challenge it independently in Referee. Referee's supported domains and source fixtures are deliberately separate from the Adversary's bounded probes.</p><a id="referee-link" href="referee.html?domain=sidon#workbench" class="ia-cta">Continue to Referee <span aria-hidden="true">↗</span></a></div>
+ <ol><li><strong>State the failure condition.</strong> Keep the original quantifier and assumptions.</li><li><strong>Run a bounded falsifier.</strong> Preserve all tested input bytes and the explicit witness.</li><li><strong>Attack the dependencies.</strong> A finite pass cannot certify an asymptotic theorem.</li><li><strong>Independently rerun.</strong> A different code path plus human scientific review are separate gates.</li></ol>
+</section>
+<footer class="ia-footer"><div class="ia-wrap"><strong>NIGHTFALL / CONSTELLATION</strong><span>SCIENCE ADVANCES WHEN A CLAIM SURVIVES THE BEST AVAILABLE ATTACK.</span><a href="exact-research.html">Return to Research Tools ↗</a></div></footer>
+</main>
+</body></html>
