@@ -1,0 +1,42 @@
+name: RYEV Sidon exact global two-window optimum
+on:
+  push:
+    branches:
+      - ryEV-never-used
+      - ryEV-quiet
+      - ryEV-sidon-exact-two-window-optimum-20261029
+      - ryev/sidon-exact-two-window-optimum-20261029
+  pull_request:
+    paths:
+      - "research/nightfall/projects/erdos/sidon-repair-bridge-2026-10-29/ryev_exact_window_optimum_20261029/**"
+      - ".github/workflows/ryev-sidon-exact-optimum.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-global-optimum:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify polynomial and stationary point proof
+        run: |
+          python3 -m py_compile research/nightfall/projects/erdos/sidon-repair-bridge-2026-10-29/ryev_exact_window_optimum_20261029/check_exact_optimum.py
+          python3 research/nightfall/projects/erdos/sidon-repair-bridge-2026-10-29/ryev_exact_window_optimum_20261029/check_exact_optimum.py | tee /tmp/ryev-exact-optimum.log
+          grep "PASS: exact polynomial identity" /tmp/ryev-exact-optimum.log
+          grep "PASS: analytic global optimum" /tmp/ryev-exact-optimum.log
+          grep "PASS: adverse rational parameter" /tmp/ryev-exact-optimum.log
+      - name: Parent parameter theorem remains valid
+        run: |
+          python3 research/nightfall/projects/erdos/sidon-repair-bridge-2026-10-29/ryev_window_optimization_20261029/check_window.py > /tmp/ryev-parent.log
+          grep "PASS: symbolic polynomial cross-product" /tmp/ryev-parent.log
+      - name: Archive independently replayable exact evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ryEV-sidon-global-optimizer
+          path: |
+            /tmp/ryev-exact-optimum.log
+            /tmp/ryev-parent.log
+          if-no-files-found: warn
+          retention-days: 90
