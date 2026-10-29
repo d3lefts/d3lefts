@@ -4,6 +4,15 @@
 **Research proposal:** Axiom · **Program lead:** Devin J. Wright · **Follow-up proof audit and generalization:** NIGHTFALL review session (29 October 2026)  
 **Evidence tier:** Complete algebraic proof candidate and independently coded exact finite checks. **External mathematical referee and same-model priority review remain open.** Flagship designation is editorial, not a claim of established publication priority.
 
+## Phase-alphabet unification — finite subgroup power oracles (29 October 2026)
+
+A new projective-alphabet criterion subsumes the established extension-degree basis construction and characteristic-three cancellation packing. In the more general oracle Phi_H(z)=z^{|H|}, where H is a specified multiplicative subgroup of F_q, additive shifts of H provide verifiable conditions for recovering **up to r relative phases per second-round measurement** over F_(q^r). Its two-round query count is k+ceil(max(s-1,0)/r) for certified subgroup/shift combinations; for 2<=k<=r+1 this attains the adaptive information lower bound.
+
+The theorem includes cubic-phase examples over F_7, a quartic-phase two-shift cover over F_13, a fifth-power two-shift cover over F_31, and a sufficient existence condition q-1>|H|(|H|-1)^2. A standalone checker passed 11,500 exact signal reconstructions across nine subgroup models, plus exhaustive small-field phase-map classifications. The full-phase original oracle remains z^(q-1): subgroup results for smaller H use **different powers** and cannot be described as same-oracle improvements. Independent refereeing and same-model priority review remain pending.
+
+- [Unified theorem, proofs, and exact collision criterion](PHASE_ALPHABET_PROJECTIVE_PACKING_20261029.md)
+- [Standalone exact verifier](verify_unified.py) — run python3 verify_unified.py
+
 ## New independent result · Characteristic-three cancellation packing (29 October 2026)
 
 For **base field q=3** and extension \(K=\mathbb F_{3^r}\), the earlier bound is strengthened to **\(m=k+\lceil\max(s-1,0)/r\rceil\le k+\lceil(k-1)/r\rceil\)** queries, with the same two-round oracle and exact reconstruction guarantee. A single mixed measurement encodes **r relative signs** by making its basis coordinates vanish exactly when a relative sign disagrees with the anchor. This is optimal for one anchored mixed query: \(r+1\) unknown independent signs force an unpowered linear collision. The new construction is globally query-optimal for \(2\le k\le r+1\), as well as further cases satisfying the exact counting lower bound.
