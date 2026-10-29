@@ -82,3 +82,25 @@ A targeted public literature review on 28 October 2026 included finite-group pha
 What can falsely score well: conflating rank defect with nonlinear ambiguity, inferring uniformity from sampled signals, swapping characteristic-two Frobenius fourth power for characteristic-five nonlinear fourth power, using a fixed signal instead of one shared random design, omitting x=0, silently changing the orbit group, using non-field GF25 arithmetic, and confusing arithmetic checks of the source LLL tail with the missing span-count lemma. The current proof addresses these quantifiers explicitly. A finite experiment alone does not prove the universal probability inequality; that follows from the algebraic argument above.
 
 **Current verdict:** Theorems and exact constants supported by a complete written proof and independent local executable code. **Human expert proof acceptance and historical novelty are open.** The next discovery target is a smaller m coefficient under the **same iid F25 law**, requiring analysis of correlated kernel-failure events rather than improving the sharp single-direction zero fraction.
+
+## 6. Vesper's revised Claim-Lab fixture audit and scoped verdicts
+
+Additional 2026-10-28 mandate from GitHub Issue #12 (Claim Lab integration) was recovered during the required final assignment check. Its **two exact adversarial finite fixtures** are now incorporated into the independent GF25 checker:
+
+- `A=[[1,0],[0,1]]`, planted `x=(1,1)`, observed `y=(1,1)`: precisely **16** x-preimages, split into **4 distinct mu4 phase orbits**. The decoder returns `AMBIGUOUS` because the Frobenius lift has extra kernel directions. This is a genuine information-theoretic ambiguity, not merely a rank defect.
+- Single zero sensing row `A=[[0,0]]`, observed `y=[0]`: all **625** signals are preimages, comprising **157** phase orbits (the zero class plus 624/4 nonzero classes). The decoder returns `AMBIGUOUS`.
+
+These controls demonstrate why the probabilistic good-design event is essential; they are never counted as evidence that a bad design is uniformly invertible. Under the theorem's good event the decoder returns **exactly four phase-equivalent candidates**, and the zero signal is isolated.
+
+| Claim / requirement | Audit verdict | Reason |
+|---|---|---|
+| Frobenius-lift planted kernel identity and zero-polynomial classification | PASS within elementary proof scope | Exact monomial coefficient argument and fixed-field invertible coordinate change |
+| Sharp maximum 121/625 for every nonplanted candidate | PASS within elementary proof scope | Full three-case proof; nonplanted equality instance; 15,624 exact coefficient triples |
+| Uniform all-x failure bound at `ceil(2941k/500)+s` | PASS within elementary proof scope | Finite union count, explicit iid assumptions, integer exponent certificate, zero corner |
+| Constructive decoder and constant-field bit complexity | PASS within stated computation model | Independently constructed RREF, 25-element fourth-root search, validation and ambiguity status |
+| Adversarial ambiguity fixtures | PASS exact finite audit | 16/4 and 625/157 exact preimages/orbits |
+| Full original systematic LLL theorem / 2^-96 source span-count lemma | INCONCLUSIVE | Distinct sensing law and an upstream lemma outside this proof |
+| Originality and same-scope measurement frontier | INCONCLUSIVE | Different law and field regime from the archived 2k design; priority search incomplete |
+| External independent specialist acceptance | INCONCLUSIVE | Reviewer approval pending; independent checker paths are still internal |
+
+**Final proof label:** complete **theorem manuscript** with a passing independently implemented exact checker; no machine-kernel proof certificate and no outside referee acceptance. This report claims an explicit theorem under a sharply specified model, while leaving historical novelty unresolved.
