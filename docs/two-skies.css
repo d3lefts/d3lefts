@@ -424,10 +424,10 @@ html[data-nf-theme="dusk"] :is(.nf-section-index>summary:hover,
   .lp-point.is-edge,.desk-claim-button[aria-pressed="true"]){
   background:#16223c;color:#f1eedc;border-color:#e6deaa;
 }
-html:not([data-nf-theme="dusk"]) :is(.nf-section-index>summary::before,
-  .nf-home-toolbox>summary::before){background:#332116;color:#edc16e;border-color:#75574a}
-html[data-nf-theme="dusk"] :is(.nf-section-index>summary::before,
-  .nf-home-toolbox>summary::before){background:#091120;color:#e6deaa;border-color:#33405d}
+html:not([data-nf-theme="dusk"]) :is(.nf-section-index>summary,
+  .nf-home-toolbox>summary)::before{background:#332116;color:#edc16e;border-color:#75574a}
+html[data-nf-theme="dusk"] :is(.nf-section-index>summary,
+  .nf-home-toolbox>summary)::before{background:#091120;color:#e6deaa;border-color:#33405d}
 html:not([data-nf-theme="dusk"]) :is(.ep-value span,.rs-btn.light,.pp-metric strong,
   .ep-grid-readout strong,.desk-readout strong,.lp-point.is-edge strong){color:#edc16e}
 html[data-nf-theme="dusk"] :is(.ep-value span,.rs-btn.light,.pp-metric strong,
