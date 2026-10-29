@@ -1,0 +1,202 @@
+[
+  {
+    "q": 17,
+    "L": 288,
+    "nonresidue_c": 3,
+    "theta": [
+      1,
+      2
+    ],
+    "block_sha256": "9ef611424d941dcf330a0d62aa3a14c941a9d6511239f472e4758e784cf6a0de",
+    "distinct_nonzero_differences": 272,
+    "forbidden_subgroup_size": 16,
+    "old_difference_values": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      9,
+      11,
+      12
+    ],
+    "zero_mixed_collision_rotations": [],
+    "two_point_prefix_one_free_cut": [
+      260
+    ],
+    "wrap_counts": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "9": 9,
+      "11": 11,
+      "12": 12
+    }
+  },
+  {
+    "q": 19,
+    "L": 360,
+    "nonresidue_c": 2,
+    "theta": [
+      1,
+      9
+    ],
+    "block_sha256": "7a12a4e88d434bdd8d63ec489b191bd9b88576cd1abebf8088b4f75e84adfa5f",
+    "distinct_nonzero_differences": 342,
+    "forbidden_subgroup_size": 18,
+    "old_difference_values": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      9,
+      11,
+      12
+    ],
+    "zero_mixed_collision_rotations": [],
+    "two_point_prefix_one_free_cut": [
+      169
+    ],
+    "wrap_counts": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "9": 9,
+      "11": 11,
+      "12": 12
+    }
+  },
+  {
+    "q": 23,
+    "L": 528,
+    "nonresidue_c": 5,
+    "theta": [
+      1,
+      1
+    ],
+    "block_sha256": "14f3cc3f339798331600bd7aee6c7a4c28dc3fd6de557483e7be0def7a09bc4c",
+    "distinct_nonzero_differences": 506,
+    "forbidden_subgroup_size": 22,
+    "old_difference_values": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      9,
+      11,
+      12
+    ],
+    "zero_mixed_collision_rotations": [],
+    "two_point_prefix_one_free_cut": [
+      227
+    ],
+    "wrap_counts": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "9": 9,
+      "11": 11,
+      "12": 12
+    }
+  },
+  {
+    "q": 29,
+    "L": 840,
+    "nonresidue_c": 2,
+    "theta": [
+      1,
+      4
+    ],
+    "block_sha256": "a71d19456c014ebbd50d8e8eea63923e8a7f9cb63d5d0e5ab2b1cc7e75d9353a",
+    "distinct_nonzero_differences": 812,
+    "forbidden_subgroup_size": 28,
+    "old_difference_values": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      9,
+      11,
+      12
+    ],
+    "zero_mixed_collision_rotations": [],
+    "two_point_prefix_one_free_cut": [
+      134
+    ],
+    "wrap_counts": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "9": 9,
+      "11": 11,
+      "12": 12
+    }
+  },
+  {
+    "q": 31,
+    "L": 960,
+    "nonresidue_c": 3,
+    "theta": [
+      1,
+      6
+    ],
+    "block_sha256": "b14a9d393758fed26c56a596a531a15898b46a138742425f1d05a67864b0702c",
+    "distinct_nonzero_differences": 930,
+    "forbidden_subgroup_size": 30,
+    "old_difference_values": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      9,
+      11,
+      12
+    ],
+    "zero_mixed_collision_rotations": [],
+    "two_point_prefix_one_free_cut": [
+      431
+    ],
+    "wrap_counts": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "9": 9,
+      "11": 11,
+      "12": 12
+    }
+  }
+]
