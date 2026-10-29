@@ -68,7 +68,7 @@ The builders' deterministic output files match the committed JSON. Independent v
 | File | SHA-256 |
 | --- | --- |
 | `sidon_repair_matching.py` | `b0c8619f032fa45dbf0fa31c3bca3a2f0b4427307f07634a391f9535ce2cc53d` |
-| `verify_sidon_repair.py` | `986d3a6fb14b5b56e592ee2a3fd744bd4c05cfd47302e6334abb1d37bb3ff13b` |
+| `verify_sidon_repair.py` | `e74818307d4f68171cd47fb8f9dda7fb51f05999c73ceab4b4b877b552e2899a` |
 | `sidon_repair_matching_certificate.json` | `94721042dcd07511ddda586da070b17b3becac894c1e8145292db268c244065d` |
 | `sidon_prefix_bridge_builder.py` | `8ed36db8a42c50a3a899d2d36478e28b8275d87272892693aa7b4c8fcf0074df` |
 | `verify_sidon_prefix_bridge.py` | `940b0752dfdd5f37dc0a991659a3d576fff9b3a2eebb1ea5dacdbec396c57a36` |
