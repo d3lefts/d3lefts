@@ -31,7 +31,7 @@ assert.equal(receipt.global_problem_solved,false);
 assert.equal(receipt.novelty_established,false);
 assert.equal(E.verify(receipt,F).valid,true);
 assert.equal(E.verify(E.receipt(extendable,packet,"negative candidate",F),F).valid,true);
-for(const tamper of [
+for(const [tamperIndex,tamper] of [
  x=>x.calculation.primary_status="MAXIMAL_FINITE",
  x=>x.attack.status="INDEPENDENT_CERTIFIED",
  x=>x.attack.controls[0].rejected_as_expected=false,
@@ -46,7 +46,7 @@ for(const tamper of [
  x=>x.frontier_snapshot="forged"
 ]){
  const changed=structuredClone(receipt);tamper(changed);
- assert.equal(E.verify(changed,F).valid,false,"Tampered or promoted scope/replay metadata rejected.");
+ assert.equal(E.verify(changed,F).valid,false,"Tampered scientific field #"+tamperIndex+" must be rejected.");
 }
 const branch=F.split(task)[1];
 const bp=F.packet(branch);
