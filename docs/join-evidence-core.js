@@ -100,7 +100,7 @@ function receipt(raw,packet,note,frontier){
  if(!computed.agreement||adversarial.status!=="LOCAL_ATTACK_CONTROLS_PASSED")
   throw Error("Checker disagreement or negative control failure. Evidence preservation refused.");
  return {format:FORMAT,frontier_snapshot:frontier.VERSION,assignment:frontier.packet(s.assignment),
-  input:computed.values,calculation:computed,attack:adversarial,author_note:comment,
+  input:computed.values.slice(),calculation:computed,attack:adversarial,author_note:comment,
   human_action:"PRESERVE_FOR_INDEPENDENT_REVIEW",reviewStatus:"unreviewed",
   global_problem_solved:false,independent_external_review:false,novelty_established:false,
   provenance:"Browser-local dual method; source input and calculations are reproducible but not authenticated."};
