@@ -3,7 +3,7 @@
 Static, dependency-free site for NIGHTFALL’s **three evidence-scoped original findings, four flagship research programs, and a broader 33-document curated research library**. The repository retains the full attributed historical research archive.
 
 - `index.html` — four flagship research programs with explicit evidence tiers, plus the three approved original findings and open reviews.
-- `desk.html` / `desk.css` / `desk.js` — internal, local-first Research Desk: five registry-driven evidence records, open mathematical obligations, session notes, scoped handoff exports and independent verifier routes; never upgrades theorem status.
+- `desk.html` / `desk.css` / `desk.js` — internal, local-first Research Desk: six registry-driven evidence records, open mathematical obligations, session notes, scoped handoff exports and independent verifier routes; never upgrades theorem status.
 - `research.html` / `research.js` — 33 curated, source-linked September–October research lines in Mathematics, Quantum, Safety and Systems, with discipline filters, search, and explicit scope boundaries; broader than the Original Findings whitelist.
 - `agenda.html` and `agenda.js` — separate five-discipline research agenda with ten untested proposals.
 - Discovery Engine: discovery.html, discovery-core.js, discovery-app.js, discovery.css — executable bounded proxy lab and portable evidence workspace.
