@@ -1,0 +1,28 @@
+name: Verify F25 direct pair-collision theorem
+on:
+  push:
+    paths:
+      - 'research/nightfall/projects/f25-pairwise-identifiability-20261028/**'
+      - 'scripts/test_f25_pair_collision.cjs'
+      - 'docs/research-tools-core.js'
+      - '.github/workflows/verify-f25-pair-collision.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/projects/f25-pairwise-identifiability-20261028/**'
+      - 'scripts/test_f25_pair_collision.cjs'
+      - 'docs/research-tools-core.js'
+      - '.github/workflows/verify-f25-pair-collision.yml'
+permissions:
+  contents: read
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exact primary pair-collision count and deterministic full 625-signal control
+        run: python3 research/nightfall/projects/f25-pairwise-identifiability-20261028/verify_pair_collision.py
+      - name: Independent website-field basis and exact arithmetic checks
+        run: |
+          node --check scripts/test_f25_pair_collision.cjs
+          node scripts/test_f25_pair_collision.cjs
