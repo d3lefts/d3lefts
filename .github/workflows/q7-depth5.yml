@@ -1,0 +1,36 @@
+name: RYEV Q7 five-deletion exact catalogue audit
+on:
+  push:
+    branches:
+      - "ryev/q7-depth5-pair-graph-20261029"
+  pull_request:
+    paths:
+      - "research/nightfall/projects/erdos/q7-180-orbit-20261029/**"
+      - ".github/workflows/q7-depth5.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-five-deletion:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python syntax and independent 4-deletion baseline
+        run: |
+          python3 -m py_compile research/nightfall/projects/erdos/q7-180-orbit-20261029/depth5.py
+          python3 research/nightfall/projects/erdos/q7-180-orbit-20261029/check.py > /tmp/q7-depth4-baseline.log
+      - name: Exact five-deletion pair-cover test on 180 supplied representatives
+        run: |
+          python3 research/nightfall/projects/erdos/q7-180-orbit-20261029/depth5.py > /tmp/q7-depth5-result.log
+          tail -n 22 /tmp/q7-depth5-result.log
+      - name: Archive full finite-certificate log even if the bound fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: q7-180-depth5-exact-audit
+          path: |
+            /tmp/q7-depth4-baseline.log
+            /tmp/q7-depth5-result.log
+          if-no-files-found: warn
+          retention-days: 90
