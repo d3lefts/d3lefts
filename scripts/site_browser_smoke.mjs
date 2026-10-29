@@ -95,7 +95,9 @@ try{
    // Carry the original mathematical claim into an exact obligation, preserve local
    // unreviewed notes, and return to the same claim. Do not silently retarget Frontier.
    await page.goto(origin+"erdos-paper.html",{waitUntil:"load"});
-   await page.locator('a[href*="join.html?claim=erdos36"][href*="obligation=0"]').first().click();
+   const investigationLink=page.locator('a[href*="join.html?claim=erdos36"][href*="obligation=0"]').first();
+   if(!(await investigationLink.isVisible())) await page.locator("#menu-button").click();
+   await investigationLink.click();
    assert.match(new URL(page.url()).search,/claim=erdos36/);
    assert.equal(await page.locator("#cj-workspace").isVisible(),true,"Claim-specific workspace active");
    assert.match(await page.locator("#cj-duty").innerText(),/131,072-cell witness/);
