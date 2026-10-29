@@ -54,7 +54,7 @@ try{
   assert.match(await page.locator("#problem-head").innerText(),/Q7/);
   assert.equal(await page.locator("#frontier-witness-section").isHidden(),true,"Checker is domain scoped");
   await page.locator(".fr-rank").nth(2).click();
-  assert.match(await page.locator("#problem-head").innerText(),/dual/);
+  assert.match(await page.locator("#problem-head").innerText(),/lower-bound operator/);
   const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
   assert.ok(overflow<=3,"No horizontal overflow at width "+width+": "+overflow);
   assert.deepEqual(faults,[],"No browser exception or failed local asset");
