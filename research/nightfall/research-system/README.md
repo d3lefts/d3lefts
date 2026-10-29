@@ -4,13 +4,13 @@
 
 NIGHTFALL offers three connected research environments:
 
-- **Reading Room:** source-grounded findings, a case-first homepage and a 30-document research library.
+- **Reading Room:** source-grounded findings, a case-first homepage and a 32-document research library.
 - **Workbench:** Referee, Claim Lab, Discovery Engine, and bounded exact quantum and finite-field calculators.
 - **Observatory:** source-linked Proof Passports, a Mechanism Atlas and dated research evidence history.
 
 ## One source for five curated claims
 
-The source file is docs/research-registry.js. Five claim-level records are defined: sidon30, erdos36, phase, werner, and pas. The five mechanisms and thirteen source-linked relationships also live there. This is a curated claim layer, **not a lossless replacement for all 30 research dossiers**.
+The source file is docs/research-registry.js. Five claim-level records are defined: sidon30, erdos36, phase, werner, and pas. The five mechanisms and thirteen source-linked relationships also live there. This is a curated claim layer, **not a lossless replacement for all 32 research dossiers**.
 
 Each record contains an exact statement, quantified scope, assumptions, source references, open review gates, dated correction events, and **four independent evidence dimensions**:
 
