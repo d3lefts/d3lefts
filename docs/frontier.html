@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#18221e">
+<meta name="description" content="NF Frontier Dispatch: transparently ranked, genuinely unresolved mathematical subproblems with local assignment, exact checking and exhaustive decomposition.">
+<meta property="og:title" content="NF Frontier Dispatch — Take a real research question">
+<meta property="og:description" content="From a real open mathematical problem to a scoped, falsifiable assignment. Claim, test, or split; no proof-status shortcuts.">
+<link rel="canonical" href="https://d3lefts.github.io/d3lefts/frontier.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="site.css">
+<title>NF Frontier Dispatch — NIGHTFALL</title>
+<script src="site.js" defer></script><script src="frontier-core.js" defer></script><script src="frontier.js" defer></script>
+<style>
+.frontier{--fline:#c5c8be;--fg:#18221e;--green:#355545;--lime:#d9ff5e}
+.frontier a:not(.button){text-decoration:underline;text-underline-offset:3px}
+.frontier button,.frontier input,.frontier select,.frontier textarea{font:inherit}
+.frontier button:focus-visible,.frontier a:focus-visible,.frontier :is(input,select,textarea):focus-visible{outline:3px solid #638b21;outline-offset:3px}
+.f-hero{padding:68px 0 49px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:minmax(0,1.35fr) minmax(270px,.65fr);gap:55px}
+.f-hero h1{font:400 clamp(66px,8.7vw,132px)/.88 var(--serif);letter-spacing:-.04em;margin:19px 0 26px}
+.f-hero h1 em{color:#64836c}
+.f-hero p{font-size:clamp(16px,1.5vw,21px);line-height:1.55;color:#47584c;max-width:710px}
+.f-hero .kicker{color:#4c654f}
+.f-hero-facts{align-self:stretch;border-left:1px solid var(--line);padding-left:27px;display:flex;flex-direction:column;gap:25px;justify-content:center}
+.f-fact{border-top:1px solid var(--line);padding-top:17px}
+.f-fact span{font:500 10px/1.55 var(--mono);color:#566658;letter-spacing:.07em;display:block}
+.f-fact strong{font:400 32px/1.08 var(--serif);display:block;margin-top:8px}
+.f-breadcrumbs{font:500 10px var(--mono);letter-spacing:.05em;padding:20px 0;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:13px;flex-wrap:wrap}
+.f-breadcrumbs span{color:#6e786b}
+.f-board{display:grid;grid-template-columns:minmax(260px,.8fr) minmax(0,1.7fr);border-bottom:1px solid var(--line);gap:0}
+.f-side{border-right:1px solid var(--line);padding:37px 26px 45px 0}
+.f-main{padding:38px 0 54px 39px;min-width:0}
+.f-section-id{font:500 10px var(--mono);letter-spacing:.09em;text-transform:uppercase;color:#536c54}
+.f-side h2,.f-main h2,.f-subhead{font:400 clamp(30px,3.2vw,46px)/1.02 var(--serif);margin:13px 0 17px}
+.f-side p,.f-main p{font:13px/1.75 var(--sans);color:#47584b}
+.f-rank-list{display:grid;gap:10px;margin-top:26px}
+.f-rank{border:1px solid #cad0c5;background:#ebeee6;padding:21px 19px;text-align:left;width:100%;color:var(--ink);transition:background .15s}
+.f-rank[aria-pressed="true"]{background:#22372c;color:#f2f6eb;border-color:#22372c}
+.f-rank:hover{box-shadow:0 4px 14px rgba(20,37,24,.1)}
+.f-rank-top{display:flex;justify-content:space-between;gap:15px;font:600 11px var(--mono)}
+.f-rank-tag{display:block;font:500 10px/1.5 var(--mono);margin:13px 0 8px;opacity:.7}
+.f-rank strong{display:block;font:400 28px/1.05 var(--serif);letter-spacing:-.02em}
+.f-rank small{display:block;font:11px/1.6 var(--sans);margin-top:15px;opacity:.77}
+.f-score{font:400 31px var(--serif)}
+.f-weights{margin-top:22px;border-top:1px solid var(--line);padding-top:18px;font:11px/1.7 var(--mono);color:#5a6659}
+.f-weights summary{cursor:pointer;text-decoration:underline}
+.f-weights p{margin-top:10px;font:11px/1.7 var(--mono)}
+.f-case-tag{display:inline-block;background:#dfe9cf;font:600 10px var(--mono);padding:8px 11px;letter-spacing:.05em}
+.f-question{font:400 clamp(36px,4vw,59px)/1.02 var(--serif);letter-spacing:-.025em;margin:16px 0 13px}
+.f-why{max-width:820px}
+.f-briefgrid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin:24px 0}
+.f-briefgrid>div{background:#eef0e9;padding:18px 21px;min-width:0}
+.f-briefgrid strong{display:block;font:600 10px var(--mono);letter-spacing:.05em;margin-bottom:7px}
+.f-briefgrid span{font:13px/1.65 var(--sans);color:#435747}
+.f-scope{padding:18px 20px;background:#e3eccd;border-left:3px solid #63896b;margin:20px 0;font:13px/1.6 var(--sans)}
+.f-scope strong{display:block;font:600 10px var(--mono);margin-bottom:6px}
+.f-actions{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+.f-btn{border:1px solid #253b31;background:#253b31;color:#fff;display:inline-flex;align-items:center;gap:10px;padding:13px 15px;font:600 11px var(--mono);min-height:44px}
+.f-btn.light{background:transparent;color:#253b31}
+.f-btn.lime{background:#d9ff5e;color:#203023}
+.f-btn:disabled{opacity:.42;cursor:not-allowed}
+.f-btn:hover:not(:disabled){filter:brightness(1.09)}
+.f-privacy{font:11px/1.7 var(--mono);color:#637063;margin-top:6px}
+.f-tools{padding:19px 0;border-top:1px solid var(--line);margin-top:23px}
+.f-tools h3{font:400 26px var(--serif);margin-bottom:12px}
+.f-tool-list{display:flex;flex-wrap:wrap;gap:10px}
+.f-tool-list a{font:600 11px var(--mono);border:1px solid #b0bcaf;padding:11px 13px}
+.f-work{padding:65px 0 85px;border-bottom:1px solid var(--line)}
+.f-workhead{display:grid;grid-template-columns:1fr 1.5fr;gap:32px;margin-bottom:29px}
+.f-workhead h2{font:400 clamp(43px,5vw,70px)/.98 var(--serif);margin-top:12px}
+.f-workhead p{font:14px/1.8 var(--sans);color:#4f6051;align-self:end}
+.f-workgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.f-panel{border:1px solid #c8cec3;background:#eef0e8;padding:25px;min-width:0}
+.f-panel h3{font:400 30px/1.05 var(--serif);margin-bottom:12px}
+.f-panel p{font:13px/1.65 var(--sans);color:#4b5d4f}
+.f-panel label{display:block;font:600 10px var(--mono);margin:19px 0 8px;letter-spacing:.04em}
+.f-panel input,.f-panel textarea,.f-panel select{width:100%;padding:13px;border:1px solid #9eae9e;background:#fff;color:var(--ink);border-radius:0}
+.f-panel textarea{min-height:94px;resize:vertical}
+.f-panel .f-btn{margin-top:14px}
+.f-output{white-space:pre-wrap;overflow-wrap:anywhere;padding:14px;margin-top:17px;background:#f9faf6;border:1px solid #cfd7c9;font:12px/1.6 var(--mono);min-height:58px}
+.f-workmark{font:500 10px var(--mono);color:#4c6651;margin-bottom:12px;display:block}
+.f-session{padding:65px 0 100px}
+.f-session-top{display:flex;align-items:end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:22px}
+.f-session h2{font:400 clamp(40px,4.6vw,62px) var(--serif);margin-top:12px}
+.f-session-list{display:grid;gap:10px}
+.f-session-item{border:1px solid #bfc9b8;background:#e7ede1;padding:18px 19px;display:grid;grid-template-columns:1fr auto;gap:15px}
+.f-session-item strong{display:block;font:600 12px var(--mono)}
+.f-session-item p{font:12px/1.7 var(--sans);color:#455a49;margin-top:6px}
+.f-session-item small{font:10px var(--mono);color:#527257}
+.f-session-item button{border:1px solid #45624b;background:transparent;padding:11px 14px;align-self:center;font:600 11px var(--mono)}
+.f-status{font:12px/1.65 var(--mono);margin:12px 0;color:#36513a}
+.f-method{padding:35px 0 60px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:45px}
+.f-method h3{font:400 30px var(--serif)}
+.f-method p{font:13px/1.8 var(--sans);color:#58675b}
+@media(max-width:850px){.f-hero,.f-board,.f-workhead,.f-workgrid,.f-method{grid-template-columns:1fr}.f-hero{padding-top:38px}.f-hero-facts{border-left:0;border-top:1px solid var(--line);padding:12px 0;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.f-side{border-right:0;border-bottom:1px solid var(--line);padding-right:0}.f-main{padding:35px 0}.f-rank-list{grid-template-columns:1fr 1fr}.f-briefgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:550px){.f-rank-list,.f-briefgrid,.f-hero-facts{grid-template-columns:1fr}.f-actions{display:grid}.f-actions .f-btn{justify-content:center}.f-panel{padding:20px}.f-session-item{grid-template-columns:1fr}.f-session-item button{width:max-content}}
+</style>
+</head>
+<body class="frontier"><a class="skip" href="#main">Skip to NF Frontier Dispatch</a><div class="topline"></div>
+<header class="header"><div class="wrap header-inner">
+<a class="brand" href="./" aria-label="NIGHTFALL homepage"><span class="mark" aria-hidden="true">N∕F</span><span class="brand-copy">NIGHTFALL <span>PHASESHIFT / RESEARCH SYSTEMS</span></span></a>
+<button class="menu-toggle" type="button" id="menu-button" aria-expanded="false" aria-controls="site-nav">MENU +</button>
+<nav class="nav" id="site-nav" aria-label="Primary navigation">
+<a href="./">Home</a><a href="research.html">Library</a><a href="desk.html">Desk</a><a href="orchestrator.html">Orchestrator</a><a href="exact-research.html">Tools</a><a href="frontier.html" aria-current="page">Frontier</a></nav></div></header>
+<main id="main">
+<section class="wrap f-hero"><div><span class="kicker">RESEARCH SYSTEMS / AGENT NF / FRONTIER DISPATCH</span><h1>Take the<br><em>missing piece.</em></h1><p>A real open problem has many smaller, decidable questions. Agent NF identifies a high-leverage gap, freezes the exact scope, and offers two honest outcomes: a checkable answer, or a rigorous division into smaller questions.</p></div>
+<aside class="f-hero-facts" aria-label="Demo scope"><div class="f-fact"><span>INPUT</span><strong>Real open problems</strong></div><div class="f-fact"><span>ASSIGNMENT</span><strong>Bounded, falsifiable</strong></div><div class="f-fact"><span>PROOF GATE</span><strong>Independent replay</strong></div></aside></section>
+<div class="wrap f-breadcrumbs"><strong>01 / PRIORITIZE</strong><span>→</span><strong>02 / CLAIM</strong><span>→</span><strong>03 / INVESTIGATE</strong><span>→</span><strong>04 / RESOLVE OR DIVIDE</strong></div>
+<div class="wrap f-board">
+<aside class="f-side"><span class="f-section-id">01 / AGENT NF EDITORIAL PRIORITY</span><h2>Two real frontiers.</h2><p>Ranked using frozen NIGHTFALL evidence, expected decisiveness, mathematical leverage and search cost. The scores are transparent editorial heuristics, not AI probabilities or new discoveries.</p>
+<div id="frontier-ranking" class="f-rank-list"><a href="https://github.com/d3lefts/d3lefts/issues/46">Erdős #156 — nine-mark maximal Sidon decision</a></div>
+<details class="f-weights"><summary>Inspect the ranking rule</summary><p>Score = 3 × decisive outcome + 3 × downstream leverage + 2 × evidence readiness + 2 × urgency − 2 × estimated cost. Each input is a frozen editorial 1–5 assessment. Version: 2026-10-29. No live inference, learning, or competition-wide ranking.</p></details></aside>
+<section class="f-main" aria-labelledby="active-title">
+<span class="f-section-id">02 / LIVE SCOPED ASSIGNMENT</span>
+<div style="margin-top:14px"><span id="active-tag" class="f-case-tag">ERDŐS #156 / DEMO</span></div>
+<h2 id="active-title" class="f-question">Can nine marks settle N = 184?</h2>
+<p id="active-why" class="f-why">The last independently enumerated finite boundary currently ends at N=183. This decision is open in the current NIGHTFALL research ledger.</p>
+<div class="f-scope"><strong>EXACT BRANCH / PRESERVED WHEN SPLITTING</strong><span id="active-predicate">Smallest selected mark in [1,184]</span></div>
+<div class="f-briefgrid">
+<div><strong>POSITIVE CLOSURE</strong><span id="active-yes">Explicit nine-mark witness and exact maximality verification.</span></div>
+<div><strong>NEGATIVE CLOSURE</strong><span id="active-no">Portable complete impossibility proof checked independently.</span></div>
+<div><strong>KNOWN BASELINE</strong><span id="active-parent">Parent: Erdős problem #156. No N=184 decision certified.</span></div>
+<div><strong>STOP / SWITCH</strong><span id="active-stop">A solver timeout does not settle the problem.</span></div>
+</div>
+<div class="f-actions">
+<button id="nf-claim" type="button" class="f-btn lime">Claim in this browser</button>
+<button id="nf-split" type="button" class="f-btn light">Divide into exhaustive parts</button>
+<button id="nf-copy" type="button" class="f-btn light">Copy research brief</button>
+<a id="nf-public" class="f-btn" href="https://github.com/d3lefts/d3lefts/issues/46" target="_blank" rel="noopener">Request public assignment ↗</a>
+</div>
+<div class="f-privacy">Local claim ≠ exclusive reservation. The public request opens a prefilled GitHub issue for human coordination; no server-side assignment is implied.</div>
+<div class="f-tools"><h3>Continue in NIGHTFALL tools</h3><div id="nf-tool-links" class="f-tool-list"><a href="orchestrator.html">Orchestrator</a><a href="claim-lab.html">Claim Lab</a></div><p id="nf-tool-hint" style="margin-top:13px">These tools prepare reproducible research; no button upgrades a proof status.</p></div>
+<div class="f-tools"><span class="f-section-id">PRIMARY SOURCES / VERIFICATION</span><div class="f-tool-list" style="margin-top:12px"><a id="nf-source" href="https://www.erdosproblems.com/156" target="_blank" rel="noopener">Open problem ↗</a><a id="nf-data" href="https://oeis.org/A382397" target="_blank" rel="noopener">Published finite baseline ↗</a><a id="nf-evidence" href="https://github.com/d3lefts/d3lefts/pull/55" target="_blank" rel="noopener">NIGHTFALL evidence ↗</a></div></div>
+<p id="nf-message" class="f-status" role="status" aria-live="polite">Select an assignment to inspect its exact research contract.</p>
+</section>
+</div>
+<section class="wrap f-work" aria-labelledby="f-worktitle"><div class="f-workhead"><div><span class="f-section-id">03 / THE DECISIVE EXPERIMENT</span><h2 id="f-worktitle">Test. Then<br><em>state precisely.</em></h2></div><p>One route can close the selected finite question with a witness. The other submits a bounded claim with evidence for independent review. Both preserve the original problem's unresolved status until the appropriate proof gate is satisfied.</p></div>
+<div class="f-workgrid">
+<article class="f-panel"><span class="f-workmark">A / BUILT-IN EXACT ORACLE</span><h3>Test a nine-mark candidate</h3><p>The browser independently checks all 45 unordered pair sums and all 175 omitted insertions for a candidate in [1,184]. It is an executable positive-witness check, not a full search proving impossibility.</p><label for="nf-values">NINE INTEGERS, COMMA SEPARATED</label><input id="nf-values" type="text" inputmode="numeric" placeholder="e.g. 1, 2, 4, 8, 13, …" maxlength="90"><button id="nf-check" class="f-btn" type="button">Check exact finite witness</button><div id="nf-check-output" class="f-output" role="status" aria-live="polite">No candidate tested. This tool applies only to the N=184 Sidon case.</div></article>
+<article class="f-panel"><span class="f-workmark">B / PROPOSE A SCOPED RESOLUTION</span><h3>Attach your evidence</h3><p>Propose a witness, impossibility proof, or documented negative result. A source link and review remain mandatory. A local submission is marked <strong>unreviewed</strong>; it does not close the public mathematical question.</p><label for="nf-outcome">EVIDENCE CLASS</label><select id="nf-outcome"><option value="positive">Candidate positive witness</option><option value="negative">Candidate exhaustive exclusion</option><option value="obstruction">Documented obstruction / null result</option></select><label for="nf-reference">EVIDENCE URL (HTTPS)</label><input id="nf-reference" type="url" maxlength="700" placeholder="https://github.com/.../certificate"><label for="nf-summary">WHAT EXACTLY DOES IT ESTABLISH?</label><textarea id="nf-summary" maxlength="1800" placeholder="State the quantifiers, input version, independent checker and an exact falsifier."></textarea><button id="nf-submit" type="button" class="f-btn">Record unreviewed proposal</button><div id="nf-submitted" class="f-output" role="status" aria-live="polite">A proposed resolution will be preserved in a local JSON record and can be sent for review through GitHub.</div><a id="nf-review-link" href="https://github.com/d3lefts/d3lefts/issues/new" target="_blank" rel="noopener" hidden style="display:block;margin-top:16px;font:600 12px var(--mono)">Send proposed result for public review ↗</a></article>
+</div></section>
+<section class="wrap f-session" aria-labelledby="f-sessiontitle"><div class="f-session-top"><div><span class="f-section-id">04 / ASSIGNMENT LINEAGE</span><h2 id="f-sessiontitle">Every split<br><em>keeps its parent.</em></h2></div><div class="f-actions"><button type="button" class="f-btn light" id="nf-export">Export local evidence ledger</button><button type="button" class="f-btn light" id="nf-reset">Reset local demo</button></div></div>
+<p style="font-size:13px;color:#536357;line-height:1.75;margin-bottom:23px;max-width:900px">Subquestions divide a finite parameter range into disjoint, exhaustive halves. Neither a child result nor a local split silently resolves its parent. Global coordination requires a separately reviewed GitHub submission.</p>
+<div id="nf-session-list" class="f-session-list"><div class="f-session-item"><div><strong>NO LOCAL ASSIGNMENTS YET</strong><p>Claim a question or divide it into smaller mathematically exhaustive branches.</p></div></div></div>
+<div id="nf-session-state" class="f-status" role="status" aria-live="polite">Browser-local preview; no shared assignment database is connected.</div>
+</section>
+<section class="wrap f-method"><div><span class="f-section-id">WHY THIS IS NIGHTFALL</span><h3>Discovery guided by proof bottlenecks.</h3><p>Agent NF prioritizes the next meaningful missing piece using project-specific dependencies, exact baseline evidence and estimated resolution cost. Claim Lab, Orchestrator and independent source checkers carry the work forward. The emphasis is on turning a consequential mathematical gap into a precise certificate.</p></div><div><span class="f-section-id">DEMO LIMITS</span><h3>A real problem. A bounded interface.</h3><p>This snapshot has no live model inference, cross-user claims, automated execution, verifier-backed impossibility proofs or scientific review service. Local actions persist only in this browser until export. GitHub issue creation requires the contributor's own authorization and reviewer acceptance. No site claim or publication status changes here.</p></div></section>
+</main><footer class="footer"><div class="wrap footer-bottom"><span>© 2026 Devin J. Wright · NIGHTFALL PHASESHIFT</span><span><a href="desk.html">Desk</a> · <a href="orchestrator.html">Orchestrator</a> · <a href="about.html">Collaboration</a></span></div></footer>
+</body></html>
