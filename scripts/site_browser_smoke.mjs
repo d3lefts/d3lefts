@@ -108,7 +108,10 @@ try{
   }
   if(width===390){
     await page.goto(origin+"claim-lab.html",{waitUntil:"load"});
-    assert.equal(await page.locator(".demoNotice").count(),1,"Claim Lab starts with clearly labeled illustrative data");
+    // CI fixtures must start from an explicit empty profile; no user data is touched.
+    await page.evaluate(()=>localStorage.removeItem("nightfall_claim_lab_v1"));
+    await page.reload({waitUntil:"load"});
+    assert.equal(await page.locator(".demoNotice").count(),1,"Claim Lab starts with clearly labeled illustrative data; browser errors: "+faults.join("; "));
     assert.equal(await page.locator('[data-tab="claims"]').count(),1,"Claim Lab independent app navigation available");
     await page.locator("#newClaimBtn").click();
     await page.locator("#claimTitle").fill("Browser-only unverified theorem fixture");
@@ -119,6 +122,8 @@ try{
     assert.match(auditText,/Missing artifact reference/,"Manual Theorem label does not bypass evidence requirements");
     assert.match(auditText,/Missing \/ invalid SHA-256 digest/,"Unverified artifact hash must be flagged");
     assert.match(auditText,/Proof and checker reference missing/,"Unverified theorem proof must be flagged");
+    const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem("nightfall_claim_lab_v1")||"null"));
+    assert.ok(saved?.claims?.some(c=>c.title==="Browser-only unverified theorem fixture"),"Claim Lab wrote local backup before reload");
     await page.reload({waitUntil:"load"});
     await page.locator('[data-tab="claims"]').click();
     assert.match(await page.locator("#content").innerText(),/Browser-only unverified theorem fixture/,"Local-first workspace persists across reload");
