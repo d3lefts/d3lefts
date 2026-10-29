@@ -72,6 +72,7 @@ try{
   assert.equal(palette.paper,"#f4eeed","Low-chroma rose parchment replaces peach");
   assert.equal(palette.primary,"#6a304e","Wine accent replaces orange");
   assert.equal(palette.text,"rgb(251, 247, 245)","Primary button uses legible light text");
+  await page.waitForTimeout(820); // Capture the settled editorial experience, not the switch transition.
   await page.screenshot({path:"browser-artifacts/ethereal-light-"+width+".png",fullPage:false});
   await toggle.click();
   await page.waitForTimeout(350);
