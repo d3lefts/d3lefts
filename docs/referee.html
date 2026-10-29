@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101b18">
+<meta name="description" content="NIGHTFALL Referee: exact finite verification for overlap and Sidon witnesses, dual arithmetic checks, negative controls and SHA-256 evidence receipts.">
+<meta property="og:title" content="Referee — NIGHTFALL PHASESHIFT">
+<meta property="og:description" content="An adversarial finite-mathematics verification workbench with downloadable evidence.">
+<link rel="canonical" href="https://d3lefts.github.io/d3lefts/referee.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="referee.css">
+<script src="referee-core.js" defer></script><script src="referee-app.js" defer></script>
+<title>Referee — NIGHTFALL Verification Instrument</title>
+</head>
+<body>
+<a class="skip" href="#workbench">Skip to verification workbench</a>
+<div class="topline"><div></div></div>
+<header class="masthead"><a class="site-brand" href="./" aria-label="Back to NIGHTFALL homepage"><span class="brand-mark">N∕F</span><span><strong>NIGHTFALL</strong><small>PHASESHIFT / RESEARCH SYSTEMS</small></span></a><div class="mast-links"><a href="claim-lab.html">Claim Lab</a><a href="discovery.html">Discovery Engine</a><a href="research.html">Research library</a><a href="./" class="home-link">← Home</a></div></header>
+<main>
+<section class="intro">
+ <div class="intro-main">
+  <div class="eyebrow"><span class="live-dot"></span> INSTRUMENT 02 / ADVERSARIAL VERIFICATION</div>
+  <h1>Claims need<br><em>an opponent.</em></h1>
+  <p class="lede">Submit a finite witness. Recompute its objective with two arithmetic implementations. Corrupt the claim deliberately. Keep the exact result, the failures, and the evidence together.</p>
+  <div class="hero-links"><a class="primary-link" href="#workbench">Open verification bench <span>↘</span></a><a class="sub-link" href="#protocol">Read the verification contract ↗</a></div>
+ </div>
+ <div class="intro-art" aria-hidden="true">
+  <svg viewBox="0 0 460 345" role="presentation">
+   <defs><radialGradient id="rg"><stop stop-color="#46705b" stop-opacity=".65"/><stop offset="1" stop-color="#17291f" stop-opacity="0"/></radialGradient></defs>
+   <circle cx="230" cy="172" r="165" fill="url(#rg)"/>
+   <g fill="none" stroke="#718778" stroke-opacity=".5"><circle cx="230" cy="172" r="132"/><circle cx="230" cy="172" r="93"/><circle cx="230" cy="172" r="55"/><path d="M42 172H419M230 14V329"/><path d="M67 65L392 280M67 280L392 65" stroke-dasharray="5 7"/></g>
+   <path d="M102 248L183 102 274 187 363 88" stroke="#d9ff5e" stroke-width="3" fill="none"/>
+   <path d="M99 249L189 121 269 215 363 87" stroke="#a7cec1" stroke-width="2" fill="none" stroke-dasharray="4 7"/>
+   <g fill="#d9ff5e"><circle cx="102" cy="248" r="5"/><circle cx="183" cy="102" r="5"/><circle cx="274" cy="187" r="6"/><circle cx="363" cy="88" r="5"/></g><circle cx="269" cy="215" r="7" fill="#172920" stroke="#a7cec1" stroke-width="2"/>
+   <g fill="#d2e4c8" font-family="ui-monospace,monospace" font-size="10"><text x="27" y="25">A / CONSTRUCTION</text><text x="277" y="325">B / REPLAY + ATTACK</text><text x="299" y="159" fill="#d9ff5e">DIFFERENCE →</text></g>
+  </svg>
+  <div class="art-bottom"><span>EXACT INTEGER ENGINE</span><span>NO FLOATING-POINT SCORES</span></div>
+ </div>
+</section>
+<section class="metrics" aria-label="Verification principles">
+ <div><strong>02</strong><span>Separate arithmetic<br>implementations</span></div>
+ <div><strong>02</strong><span>Exact finite<br>test domains</span></div>
+ <div><strong>04</strong><span>Deterministic<br>attack controls</span></div>
+ <div><strong>SHA-256</strong><span>Evidence input<br>fingerprint</span></div>
+</section>
+<section id="workbench" class="workbench" aria-labelledby="bench-title">
+ <div class="section-head"><span class="micro">01 / WORKBENCH</span><div><h2 id="bench-title">Put a witness<br><em>on trial.</em></h2><p>Choose a mathematically defined verification domain. The included samples are demonstrations drawn from explicitly identified NIGHTFALL research scopes. Run the verifier before treating any result as evidence.</p></div></div>
+ <div class="app-shell">
+  <div class="app-top"><div><span class="terminal-dot"></span> REFEREE / FINITE EXACT</div><span id="app-version">ENGINE V1.0.0 · BROWSER-LOCAL</span></div>
+  <div class="domain-tabs" role="tablist" aria-label="Verification domain"><button id="tab-overlap" type="button" role="tab" aria-controls="pane-overlap" aria-selected="true">01 <strong>Minimum overlap</strong><span>signed-shift test</span></button><button id="tab-sidon" type="button" role="tab" aria-controls="pane-sidon" aria-selected="false">02 <strong>Sidon (4,5)</strong><span>finite exclusion proof</span></button></div>
+  <div id="pane-overlap" role="tabpanel" aria-labelledby="tab-overlap">
+   <div class="bench-grid">
+    <div class="editor">
+     <div class="panel-head"><div><span class="micro">INPUT / 01</span><h3>Integer step-function witness</h3></div><button id="reset-overlap" type="button" class="small-action">Reset example ↺</button></div>
+     <p class="instructions">Paste integer cell heights over [0,2], using denominator D. All heights must satisfy 0 ≤ Aᵢ ≤ D and exact unit mass, 2ΣAᵢ = nD. Accepts 2–256 cells.</p>
+     <label for="overlap-den">Height denominator <span>D</span></label><input id="overlap-den" type="text" inputmode="numeric" value="8" spellcheck="false">
+     <label for="overlap-heights">Integer heights <span>comma / whitespace separated</span></label><textarea id="overlap-heights" spellcheck="false" rows="5"></textarea>
+     <label for="overlap-claimed">Claimed maximum <span>exact rational p/q; optional</span></label><input id="overlap-claimed" type="text" placeholder="e.g. 3/8" spellcheck="false">
+     <div class="actions"><button class="run-button" id="run-overlap" type="button">Verify + attack <span>↗</span></button><button id="pin-overlap" class="outline-button" type="button">Use current exact score</button></div>
+    </div>
+    <aside class="runbook"><span class="micro">FINITE MATHEMATICAL SCOPE</span><h3>Exact means<br>exactly specified.</h3><p>For each signed lag k, we calculate Σ Aᵢ(D − Aᵢ₋ₖ), taking only overlapping indices, with zeros outside the support.</p><div class="formula">(2 / nD²) · maxₖ C(k)</div><ul><li>Engine A: signed-lag summation.</li><li>Engine B: pair-difference accumulation.</li><li>All 2n − 1 relevant integer lags.</li><li>Piecewise-linear continuum interpolation.</li><li>Normalization and tampering controls.</li></ul><p class="scope-warning">This does not replay NIGHTFALL’s 131,072-cell archived witness. A small fixture is supplied to test this exact finite method.</p></aside>
+   </div>
+  </div>
+  <div id="pane-sidon" role="tabpanel" aria-labelledby="tab-sidon" hidden>
+   <div class="bench-grid">
+    <div class="editor">
+     <div class="panel-head"><div><span class="micro">INPUT / 02</span><h3>Sidon finite witness</h3></div><button id="reset-sidon" type="button" class="small-action">Reset frozen coordinates ↺</button></div>
+     <p class="instructions">The public 30-point witness is preloaded. We check the weak (4,5) property, an explicit Sidon subset, and the absence of a larger Sidon subset using an exact progression-hitting search.</p>
+     <label for="sidon-points">Sorted distinct integer coordinates <span>4–30 points</span></label><textarea id="sidon-points" rows="5" spellcheck="false"></textarea>
+     <label for="sidon-subset">Proposed Sidon subset <span>coordinates</span></label><textarea id="sidon-subset" rows="4" spellcheck="false"></textarea>
+     <label for="sidon-max">Claimed maximum subset size</label><input id="sidon-max" type="text" inputmode="numeric" value="17">
+     <div class="actions"><button class="run-button" id="run-sidon" type="button">Verify + attack <span>↗</span></button><button id="sidon-source" class="outline-button" type="button">Open source witness ↗</button></div>
+    </div>
+    <aside class="runbook"><span class="micro">FINITE MATHEMATICAL SCOPE</span><h3>Disprove the<br>18th element.</h3><p>Two independent equivalent arithmetic formulations test weak Sidon admissibility. We certify the explicit 17-element Sidon subset and search all possible deletions of at most 12 points.</p><div class="formula">h(B) = 17 / |B| = 30</div><ul><li>All 27,405 four-point subsets.</li><li>153 unique Sidon pair sums.</li><li>Exact three-term progression constraints.</li><li>Memoized transversal branch-and-bound.</li><li>Hard search cap → inconclusive, never pass.</li></ul><p class="scope-warning">This is a finite witness claim, distinct from asymptotic bounds, publication novelty, and external peer review.</p></aside>
+   </div>
+  </div>
+  <div id="result" class="result-area" role="status" aria-live="polite"><div class="idle"><span class="idle-icon">⌁</span><h3>Awaiting a witness.</h3><p>Run an exact verification to see the two arithmetic paths, adversarial controls, and reproducibility receipt.</p></div></div>
+  <div class="app-foot"><div><span class="terminal-dot"></span> LOCAL VERIFICATION / NO UPLOAD</div><button id="export-receipt" type="button" class="export-button" disabled>Export signed-scope JSON receipt ↧</button></div>
+ </div>
+</section>
+<section id="protocol" class="protocol" aria-labelledby="protocol-title">
+ <div class="section-head"><span class="micro">02 / EVIDENCE CONTRACT</span><div><h2 id="protocol-title">A pass has<br><em>a boundary.</em></h2><p>Referee is a computational testing instrument, not an external reviewer. Its reports preserve precisely what was checked and which claims remain open.</p></div></div>
+ <div class="protocol-grid"><article><span>01 / REPRESENT</span><h3>Make the object exact.</h3><p>Integer inputs, denominators, invariants, signed conventions, and explicit scope are prerequisites.</p></article><article><span>02 / CHALLENGE</span><h3>Try to break it.</h3><p>Run a second implementation and deliberately corrupted score or subset claims. A detected failure is an expected success for an attack control.</p></article><article><span>03 / PRESERVE</span><h3>Export the evidence.</h3><p>Download the input, SHA-256 digest, finite verdict, method, test metrics and negative controls in one JSON record.</p></article><article><span>04 / LIMIT</span><h3>Keep the label honest.</h3><p>Passing one finite verifier establishes only that finite test within its assumptions. Novelty, external independence, and global proofs retain separate gates.</p></article></div>
+ <div class="protocol-links"><a href="claim-lab.html">Map proof dependencies in Claim Lab ↗</a><a href="discovery.html">Design the next experiment ↗</a><a href="https://github.com/d3lefts/d3lefts/tree/main/research/nightfall" target="_blank" rel="noopener">Inspect research archive ↗</a></div>
+</section>
+</main>
+<footer class="footer"><span>© 2026 Devin J. Wright · NIGHTFALL PHASESHIFT</span><span>REFEREE / Exact finite verification. No external-referee endorsement implied.</span></footer>
+</body></html>
