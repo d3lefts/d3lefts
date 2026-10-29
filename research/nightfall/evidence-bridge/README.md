@@ -29,7 +29,7 @@ Run in the repository root:
     python3 research/nightfall/referee/independent_verify.py /tmp/ryev-fixtures/overlap.json
     node research/nightfall/evidence-bridge/invariant_forge.cjs
 
-These cover four genuine receipt types and thirteen negative controls, including every required Issue #30 refusal class. The Chromium suite tests save/reload preservation, read-only preview, cancel, downloaded backup, approved local attachment, reload persistence, tampered input rejection, and duplicate blocking at desktop and mobile sizes. CI saves the accepted and rejected input receipts.
+These cover four genuine receipt types and sixteen negative controls, including every required Issue #30 refusal class. The Chromium suite tests save/reload preservation, read-only preview, cancel, downloaded backup, approved local attachment, reload persistence, tampered input rejection, and duplicate blocking at desktop and mobile sizes. CI saves the accepted and rejected input receipts.
 
 ## Original instrument design: Invariant Forge
 
@@ -56,3 +56,11 @@ The runner freezes 12 graph/flat allocations with identical source blobs, genera
 **Incomplete release gate:** A genuine matched-budget 12-arm model execution and blinded adjudication have yet to be performed. No outcome or performance improvement is fabricated. Consequently Observatory Gate C and Gate D remain pending. This PR is not a public Observatory launch.
 
 The owner-approved 32-document research library, three Original Findings, guided Sidon replay and external publication gates remain unchanged.
+
+## Owner integration review / 29 October 2026
+
+The owner subsequently added a direct Referee -> Claim Lab -> Discovery same-tab route to main. The PR now starts from that current owner Claim Lab source and consolidates **both manual file import and one-shot same-tab Referee handoff** behind one `stageRefereeReceipt()` entrypoint using the strict Evidence Bridge parser. Session transfer to Discovery is enabled only **after** explicit backup-and-attach approval. Cancelling cannot create a Discovery replay receipt. Producer-label, source-dossier and source-note authority forgeries are rejected before staging.
+
+`test_owner_handoff.mjs` exercises an actual Referee Sidon calculation in Chromium, the direct transfer, read-only preview, cancellation, approved backup and Claim Lab storage, a Discovery replay, a forged source-dossier attempt and reload preservation at 390px and 1280px. These additions are committed for CI execution; earlier CI green runs refer to older commits, so current head must be checked separately.
+
+The original Vesper Gate C v1 uses `parity_runner.cjs`. `metering_core.cjs` plus `run_metered.cjs` send the exact frozen model input to OpenAI's Responses input-token count endpoint, capture the provider's *raw* response usage and request IDs, and reject zero/self-reported counts, altered source text and mismatched prompts. The operator needs explicit API credentials and a secret frozen pairing key. None is available in this session; the twelve real model trials and independent blind grades remain pending. A captured JSON trace itself lacks cryptographic provider attestation; do not claim otherwise.
