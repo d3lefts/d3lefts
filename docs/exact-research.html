@@ -95,6 +95,37 @@
 .rt-rigidity-note a{font:600 11px/1.5 var(--mono);border-bottom:1px solid}
 @media(max-width:760px){.rt-rigidity-head,.rt-rigidity-panel{grid-template-columns:1fr}.rt-rigidity-form{border-right:0;border-bottom:1px solid #46604b}.rt-rigidity-result output{min-height:230px}}
 
+
+/* One canonical start, then five small steps; the original calculators remain below. */
+.rt-start-actions{display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin-top:30px}
+.rt-advanced-link{margin-top:-12px;margin-bottom:38px}
+.rt-handoff-route{border-top:1px solid #9ab29b;border-bottom:1px solid #9ab29b;padding:22px 0;margin:10px 0 33px;max-width:970px}
+.rt-handoff-route strong{display:block;font:600 11px/1.5 var(--mono);letter-spacing:.06em;color:#355741}
+.rt-handoff-route p{font:500 13px/1.7 var(--mono);margin:12px 0;display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+.rt-handoff-route a{text-decoration:underline;text-underline-offset:4px}
+.rt-handoff-route span{font:12px/1.7 var(--sans);color:#596d5e;display:block}
+.rt-journey-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:0;border-top:1px solid #aebfae;border-bottom:1px solid #aebfae}
+.rt-stage{min-height:290px;background:#f1f3ed;border-right:1px solid #bbccbb;border-top:0;border-bottom:0;border-left:0}
+.rt-stage:first-child{border-left:1px solid #bbccbb}
+.rt-stage:nth-child(3){background:#e5ece3}
+.rt-stage-final{background:#233a2b;color:#eff7e9}
+.rt-stage-final .rt-stage-number,.rt-stage-final .rt-stage-action{color:#d9ff5e}
+.rt-stage-final p{color:#c6d8c8}
+.rt-stage-final:hover,.rt-stage-final:focus-visible{background:#355740}
+.rt-stage h3{font-size:clamp(27px,2.8vw,39px)}
+@media(max-width:1120px){
+  .rt-journey-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .rt-stage{border-bottom:1px solid #bbccbb}
+  .rt-stage:nth-child(4){border-left:1px solid #bbccbb}
+  .rt-stage-final{grid-column:span 2}
+}
+@media(max-width:690px){
+  .rt-start-actions{gap:17px}
+  .rt-journey-grid{grid-template-columns:1fr}
+  .rt-stage,.rt-stage:nth-child(4){grid-column:auto;min-height:168px;border-left:1px solid #bbccbb}
+  .rt-stage h3{font-size:32px}
+  .rt-stage .rt-stage-action{padding-top:15px}
+}
 </style>
 </head>
 <body>
@@ -117,12 +148,18 @@
 <section class="rt-hero wrap" aria-labelledby="tools-heading">
   <span class="section-id">NIGHTFALL / RESEARCH SYSTEMS</span>
   <h1 id="tools-heading">Tools that make<br><em>research testable.</em></h1>
-  <p class="rt-lead">Move from candidate discovery to explicit assumptions, adversarial checks and reproducible finite evidence. Each instrument states exactly what it tests and the boundaries of its conclusions.</p>
+  <p class="rt-lead">One path links the instruments: define a question, design the attacks, explore a mechanism, verify its finite evidence, and preserve the result without upgrading the claim. Start with a working mathematical case, then choose specialized tools as needed.</p>
+  <div class="rt-start-actions"><a class="button" href="#guided-replay">Start the 30-point Sidon replay <span aria-hidden="true">↘</span></a><a class="text-link" href="#research-tools-directory">Browse individual instruments ↘</a></div>
 </section>
-<div class="wrap" style="margin-top:-12px;margin-bottom:42px"><a class="text-link" href="desk.html">Enter the Research Desk — assemble a claim-scoped session brief ↗</a></div>
+<div class="wrap rt-advanced-link"><a class="text-link" href="desk.html">Advanced / Research Desk · prepare a local, claim-scoped session brief ↗</a></div>
 <section class="wrap rt-directory" id="research-tools-directory" aria-labelledby="directory-title">
-  <div class="rt-directory-heading"><span class="section-id">01 / WORKFLOW INSTRUMENTS</span><h2 id="directory-title">Choose a research instrument.</h2><p>Three complementary workspaces, each accessible directly in your browser.</p></div>
-  <div class="rt-handoff-route" style="margin:18px 0 28px;padding:18px 22px;border:1px solid #b9c8b1;background:#eaf0df;max-width:880px;line-height:1.85"><strong style="display:block;font:600 11px var(--mono);letter-spacing:.05em;margin-bottom:8px">TAKE A SCOPED RESEARCH QUESTION THROUGH THE TOOLKIT</strong><a href="frontier.html">Frontier / bounded assignment</a> → <a href="orchestrator.html">Orchestrator / independent lanes</a> → <a href="claim-lab.html">Claim Lab / unreviewed evidence register</a> → <a href="referee.html">Referee / selected finite mathematical checks</a><p style="margin:7px 0 0;font-size:12px;color:#526254">Frontier now transfers exact scoped work through explicit user actions, and its ledger can be audited before restore. Referee supports only its published finite domains; a plan or handoff never certifies a theorem.</p></div><div class="rt-directory-grid">
+  <div class="rt-directory-heading"><span class="section-id">01 / SPECIALIZED WORKSPACES</span><h2 id="directory-title">One process. Distinct instruments.</h2><p>The guided route is the recommended starting point. Each tool below has a separate job and a clear evidence boundary.</p></div>
+  <aside class="rt-handoff-route" aria-label="Research handoff sequence">
+    <strong>ACTIVE OPEN PROBLEM / START WITH FRONTIER</strong>
+    <p><a href="frontier.html">Frontier</a> → <a href="orchestrator.html">Orchestrator</a> → <a href="discovery.html">Discovery</a> → <a href="referee.html">Referee</a> → <a href="claim-lab.html">Claim Lab</a></p>
+    <span>These are separate local workspaces, with explicit handoff and approval. Begin at the guided example below if you want an actual finite result before exploring an unresolved problem.</span>
+  </aside>
+  <div class="rt-directory-grid">
     <a class="rt-launch-card rt-launch-feature" href="referee.html" aria-label="Launch NIGHTFALL Referee exact finite verification instrument">
       <div class="rt-launch-top"><span>01 / ADVERSARIAL VERIFICATION</span><span class="rt-launch-status"><i></i> EXECUTABLE</span></div>
       <div class="rt-launch-art" aria-hidden="true"><svg viewBox="0 0 500 170"><g fill="none" stroke="#557867"><circle cx="247" cy="83" r="62"/><circle cx="247" cy="83" r="34"/><path d="M66 83H434M247 7V163" stroke-dasharray="5 6"/></g><path d="M74 129L169 49 269 98 392 37" fill="none" stroke="#d9ff5e" stroke-width="3"/><path d="M74 129L169 59 269 114 392 37" fill="none" stroke="#a1caba" stroke-width="2" stroke-dasharray="5 5"/><g fill="#d9ff5e"><circle cx="74" cy="129" r="5"/><circle cx="169" cy="49" r="5"/><circle cx="269" cy="98" r="6"/><circle cx="392" cy="37" r="5"/></g><circle cx="269" cy="114" r="6" fill="#10251d" stroke="#a1caba" stroke-width="2"/></svg></div>
@@ -146,7 +183,7 @@
 </section>
 <section class="wrap rt-journey" id="guided-replay" aria-labelledby="guided-replay-title">
   <div class="rt-journey-header">
-    <div><span class="section-id">02 / GUIDED RESEARCH REPLAY</span><h2 id="guided-replay-title">One claim.<br><em>Four inspections.</em></h2><p>Follow one real, narrowly scoped finding from its source record to a bounded arithmetic check. The same workflow applies to larger claims only after the relevant proof obligations are met.</p></div>
+    <div><span class="section-id">02 / BEGIN WITH A FINITE RESULT</span><h2 id="guided-replay-title">One claim.<br><em>Five exact steps.</em></h2><p>A complete, clickable example: source → recomputation → deliberate falsification → a separate Python checker → consented evidence record. No extra account, external reviewer, or hidden backend is needed.</p></div>
     <div class="rt-journey-headline"><strong>THE TEST CASE / 30-POINT SIDON (4,5)</strong>An explicit set of 30 integers has a maximum Sidon subset of 17. This is a finite construction; it does not improve the established asymptotic 5/9 result. The complete claim and its conditional historical dependencies are documented in the source.</div>
   </div>
   <div class="rt-journey-grid">
@@ -159,11 +196,14 @@
     <a class="rt-stage" href="referee.html?domain=sidon#workbench">
       <span class="rt-stage-number">03 / ATTACK</span><h3>Try to break it.</h3><p>Run the built-in negative controls, alter the claimed maximum or corrupt the subset, and inspect which checks reject the claim.</p><span class="rt-stage-action">Challenge the witness ↗</span>
     </a>
-    <a class="rt-stage" href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/referee/README.md" target="_blank" rel="noopener">
-      <span class="rt-stage-number">04 / REPRODUCE</span><h3>Keep the evidence.</h3><p>Export a local JSON receipt and consult the separate Python replay instructions. External referee approval stays a distinct gate.</p><span class="rt-stage-action">Review replay protocol ↗</span>
+    <a class="rt-stage" href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py" target="_blank" rel="noopener">
+      <span class="rt-stage-number">04 / REPLAY</span><h3>Check twice.</h3><p>Inspect the standalone Python verifier that independently reconstructs the 30-point finite proof. It is separate code, still an internal check.</p><span class="rt-stage-action">Inspect Python checker ↗</span>
+    </a>
+    <a class="rt-stage rt-stage-final" href="claim-lab.html">
+      <span class="rt-stage-number">05 / REGISTER</span><h3>Keep its limits.</h3><p>After a passing Referee run, choose <em>Send to Claim Lab</em>, inspect the staged import, approve it, and retain the finite scope.</p><span class="rt-stage-action">Open Claim Lab ↗</span>
     </a>
   </div>
-  <p class="rt-journey-boundary"><strong>Connected workflow:</strong> Run the finite Sidon Referee, then select <em>Send to Claim Lab</em>. Claim Lab checks the source fingerprint and requests your approval before recording test metadata. Select <em>Discovery replay</em> to transfer the exact source into Discovery, which recomputes the finite arithmetic and adversarial checks. Both handoffs stay in your browser. <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/edge_essentiality_certificate.json" target="_blank" rel="noopener">Inspect the newly published complete 28-constraint source certificate ↗</a>. <strong>Scope boundary:</strong> Same-code browser replay and a SHA-256 input digest are neither external peer review nor signatures. The Observatory remains a separate unreleased trust boundary. <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/RESEARCH_INSTRUMENT_HANDOFF_20261028.md" target="_blank" rel="noopener">Read the handoff and evidence contract ↗</a></p>
+  <p class="rt-journey-boundary"><strong>Connected workflow:</strong> Run the finite Sidon Referee, then select <em>Send to Claim Lab</em>. Claim Lab checks the source fingerprint and requests your approval before recording test metadata. Select <em>Discovery replay</em> to transfer the exact source into Discovery, which recomputes the finite arithmetic and adversarial checks. Both handoffs stay in your browser. The last step records metadata, not a theorem approval. <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/edge_essentiality_certificate.json" target="_blank" rel="noopener">Inspect the newly published complete 28-constraint source certificate ↗</a>. <strong>Scope boundary:</strong> Same-code browser replay and a SHA-256 input digest are neither external peer review nor signatures. The Observatory remains a separate unreleased trust boundary. <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/RESEARCH_INSTRUMENT_HANDOFF_20261028.md" target="_blank" rel="noopener">Read the handoff and evidence contract ↗</a></p>
 </section>
 
 <section class="wrap rt-rigidity" id="research-replay" aria-labelledby="rt-rigidity-title">
