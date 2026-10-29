@@ -137,7 +137,8 @@ try{
    await page.goto(origin+"claim-lab.html?frontier_handoff=1",{waitUntil:"load"});
    assert.match(await page.locator("#toast").innerText(),/Frontier handoff refused/);
    assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem("nightfall_claim_lab_v1")).claims.length),countBefore);
-   await page.evaluate(p=>sessionStorage.setItem("nightfall.frontier.claimlab.v1",JSON.stringify(p)),packet);
+   const existingPacket=await page.evaluate(()=>window.NFFrontier.packet(window.NFFrontier.rootTask(window.NFFrontier.ITEMS[0])));
+   await page.evaluate(p=>sessionStorage.setItem("nightfall.frontier.claimlab.v1",JSON.stringify(p)),existingPacket);
    await page.goto(origin+"claim-lab.html?frontier_handoff=1",{waitUntil:"load"});
    assert.match(await page.locator("#toast").innerText(),/already imported/);
    assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem("nightfall_claim_lab_v1")).claims.length),countBefore);
