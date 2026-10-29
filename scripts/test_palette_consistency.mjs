@@ -7,9 +7,15 @@ import {readFile} from "node:fs/promises";
 import {join,resolve,normalize,sep} from "node:path";
 import {chromium} from "playwright-core";
 const root=resolve("docs");
-const paths=["index.html","research.html","review.html","evidence.html","join.html",
-  "constellation.html","living-paper.html","erdos-paper.html","desk.html",
-  "passport.html","referee.html","discovery.html","claim-lab.html"];
+const paths=[
+  "about.html","adversary.html","agenda.html","atlas.html","claim-lab.html",
+  "constellation.html","desk.html","discovery.html","erdos-paper.html",
+  "evidence-practice.html","evidence.html","exact-research.html","findings-20261029.html",
+  "frontier.html","index.html","join.html","judgment-provenance.html",
+  "living-investigation.html","living-paper.html","orchestrator.html",
+  "passport.html","portfolio.html","referee.html","research.html","review.html",
+  "sidon-arity.html"
+];
 const types={".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",
   ".js":"text/javascript; charset=utf-8",".svg":"image/svg+xml"};
 const server=createServer(async(req,res)=>{
@@ -30,6 +36,7 @@ const deprecated=[
 ];
 let browser;
 const allSurfaceLeaks=[];
+const allCanvasLeaks=[];
 try{
  browser=await chromium.launch({
   headless:true,executablePath:process.env.CHROME_BIN||"/usr/bin/chromium",
@@ -73,7 +80,7 @@ try{
        overflow:document.documentElement.scrollWidth-innerWidth};
     },deprecated);
     const expected=mode==="dusk"?"rgb(4, 6, 11)":"rgb(40, 25, 15)";
-    assert.equal(summary.bg,expected,p+" "+mode+" canvas");
+    if(summary.bg!==expected)allCanvasLeaks.push({page:p,mode,width,bg:summary.bg,expected});
     assert.equal(summary.theme,mode,p+" expected mode");
     assert.ok(summary.overflow<=4,p+" "+mode+" "+width+"px overflow "+summary.overflow);
     if(summary.leaks.length)allSurfaceLeaks.push({page:p,mode,width,leaks:summary.leaks});
@@ -86,10 +93,11 @@ try{
    await context.close();
   }
  }
+ assert.deepEqual(allCanvasLeaks,[],"Unexpected theme canvases: "+JSON.stringify(allCanvasLeaks));
  assert.deepEqual(allSurfaceLeaks,[],"Visible obsolete surfaces "+allSurfaceLeaks.length+" pages: "+JSON.stringify(allSurfaceLeaks.slice(0,45)));
  const css=await readFile(join(root,"two-skies.css"),"utf8");
  const matches=[...css.matchAll(/var\(--nf-oxblood-rare\)/g)];
  assert.ok(matches.length<=4,"Oxblood is rare by contract, found "+matches.length+" usage(s)");
  assert.ok(css.includes("--nf-oxblood-rare:#4a1f24"),"Canonical archival oxblood registered in midnight");
- console.log("PASS palette: 13 pages × two themes × two viewports; no parchment surfaces, rare oxblood, intact gold, no overflow");
+ console.log("PASS palette: 26 pages × two themes × two viewports; no parchment surfaces, rare oxblood, intact gold, no overflow");
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve))}
