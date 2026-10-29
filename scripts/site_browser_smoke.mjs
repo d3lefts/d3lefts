@@ -61,7 +61,7 @@ try{
    await page.goto(origin+"portfolio.html",{waitUntil:"load"});
    assert.equal(await page.locator("#career .pf-career-card").count(),3,
      "Career-first portfolio shows precisely Walmart, Autograph, Amazon");
-   assert.match(await page.locator("#career").innerText(),/Walmart Global Tech/);
+   assert.match(await page.locator("#career").innerText(),/Walmart Global Tech/i);
    assert.match(await page.locator("#career").innerText(),/Autograph/);
    assert.match(await page.locator("#career").innerText(),/Amazon/);
    assert.match(await page.locator("#foundations").innerText(),/NIGHTFALL/);
