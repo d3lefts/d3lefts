@@ -37,8 +37,8 @@
     event.preventDefault();search.value="";update();
   }
  });
- // Five curated claim-level passports have a separately maintained, source-linked record.
- // The other 25 documents retain their independent library classification.
+ // Six curated claim-level passports have a separately maintained, source-linked record.
+ // The 33-entry library maintains separate evidence classifications.
  const registry=window.NightfallRegistry;
  if(registry){
   const match=[
@@ -46,7 +46,8 @@
    ["Sidon (4,5): 30-point witness","sidon30"],
    ["Fourth-power finite-field reconstruction","phase"],
    ["Werner finite-copy evidence atlas","werner"],
-   ["Proof After Scarcity","pas"]
+   ["Proof After Scarcity","pas"],
+   ["Deterministic adaptive finite-field decoder","adaptive"]
   ];
   for(const [title,id] of match){
    const card=cards.find(x=>x.querySelector("h3")?.textContent.trim()===title);
