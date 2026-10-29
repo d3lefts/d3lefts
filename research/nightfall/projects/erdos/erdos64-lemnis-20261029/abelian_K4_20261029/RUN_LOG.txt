@@ -1,0 +1,13 @@
+PASS general 16-word collision set = {0,+a,-a,2a}; b outside forbids all repeats
+PASS all 25 residual coefficient pairs over Z, modulus 3..7 with 7 listed exceptions; max label separation 4
+PASS three negative controls rejected
+PASS 21345 independent literal abelian regular K4 covers; shortest certified lengths {4: 1781, 8: 1998, 16: 17566}
+PASS truly independent DFS across 2016 cyclic K4 covers, first cycle histogram {4: 724, 8: 956, 16: 336}
+PASS D8 16 16-state concrete cycles, arbitrary chord c
+PASS D16 48 16-state concrete cycles, arbitrary chord c
+PASS Q8 48 16-state concrete cycles, arbitrary chord c
+PASS C3xS3 276 16-state concrete cycles, arbitrary chord c
+PASS negative control: b in <a> rejected before 16-vertex claim
+PASS exact derivative/envelope, 1..59 unique interior optimizer controls, all-r positive quartic and 99 mutations
+squared rational improvement: (377487360*r**4 + 5603328*r**3 - 30720*r**2 - 320*r - 1)/(1811939328*r**4*(64*r - 1)*(6144*r**2 - 96*r - 1))
+asymptotic boundary objective: 1/2

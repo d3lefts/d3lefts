@@ -1,0 +1,2 @@
+fcc3a3e7998b92f6d51d2c4a27563520a2cf6fce37ee6e97524913d45701b8b0  SIDON_974_FOLLOWUP.md
+cbf90e17df96927d7084984a353bc2ca0477ddbfb5a4b9b7c6614cf0dd8c1c5a  verify_sidon_974_independent.py
