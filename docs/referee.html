@@ -9,7 +9,7 @@
 <link rel="canonical" href="https://d3lefts.github.io/d3lefts/referee.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="referee.css">
-<script src="referee-core.js" defer></script><script src="referee-app.js" defer></script>
+<script src="referee-core.js" defer></script><script src="companion-handoff-core.js" defer></script><script src="referee-app.js" defer></script>
 <title>Referee — NIGHTFALL Verification Instrument</title>
 </head>
 <body>
@@ -47,6 +47,7 @@
  <div class="section-head"><span class="micro">01 / WORKBENCH</span><div><h2 id="bench-title">Put a witness<br><em>on trial.</em></h2><p>Choose a mathematically defined verification domain. The included samples are demonstrations drawn from explicitly identified NIGHTFALL research scopes. Run the verifier before treating any result as evidence.</p></div></div>
  <div class="app-shell">
   <div class="app-top"><div><span class="terminal-dot"></span> REFEREE / FINITE EXACT</div><span id="app-version">ENGINE V1.0.0 · BROWSER-LOCAL</span></div>
+  <div id="companion-handoff-note" class="companion-handoff-note" role="status" aria-live="polite" hidden></div>
   <div class="domain-tabs" role="tablist" aria-label="Verification domain"><button id="tab-overlap" type="button" role="tab" aria-controls="pane-overlap" aria-selected="true">01 <strong>Minimum overlap</strong><span>signed-shift test</span></button><button id="tab-sidon" type="button" role="tab" aria-controls="pane-sidon" aria-selected="false">02 <strong>Sidon (4,5)</strong><span>finite exclusion proof</span></button></div>
   <div id="pane-overlap" role="tabpanel" aria-labelledby="tab-overlap">
    <div class="bench-grid">
@@ -75,7 +76,7 @@
    </div>
   </div>
   <div id="result" class="result-area" role="status" aria-live="polite"><div class="idle"><span class="idle-icon">⌁</span><h3>Awaiting a witness.</h3><p>Run an exact verification to see the two arithmetic paths, adversarial controls, and reproducibility receipt.</p></div></div>
-  <div class="app-foot"><div><span class="terminal-dot"></span> LOCAL VERIFICATION / NO UPLOAD</div><div class="referee-export-actions"><button id="send-claim-lab" type="button" class="export-button" disabled>Send to Claim Lab ↗</button><button id="export-receipt" type="button" class="export-button" disabled>Export scoped JSON receipt ↧</button></div></div>
+  <div class="app-foot"><div><span class="terminal-dot"></span> LOCAL VERIFICATION / NO UPLOAD</div><div class="referee-export-actions"><button id="send-to-adversary" type="button" class="export-button">Challenge current input in Devil’s Advocate ↗</button><button id="send-claim-lab" type="button" class="export-button" disabled>Send to Claim Lab ↗</button><button id="export-receipt" type="button" class="export-button" disabled>Export scoped JSON receipt ↧</button></div></div>
  </div>
 </section>
 <section class="protocol" aria-label="Imaginary Adversary companion"><div class="section-head"><span class="micro">COMPANION / DEVIL’S ADVOCATE</span><div><h2>Ask what would<br><em>break the claim.</em></h2><p>Imaginary Adversary probes alternate definitions, exact bounded counterexamples, scope assumptions and one-step improvements before Referee recomputes the evidence. Its attack record is unreviewed and cannot replace a finite referee receipt.</p><a id="adversary-link" class="primary-link" href="adversary.html?domain=overlap#workbench">Launch Imaginary Adversary ↗</a></div></div></section>
