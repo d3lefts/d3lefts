@@ -53,13 +53,25 @@ Combining with the swap lower bound proves (1).
 
 If L≥M, nonnegativity follows. If L<M, choose local orthogonal basis words e_i (one basis symbol i at every site), and C=|e_1><e_1|−|e_2><e_2|. Its exact value is Q=2(L−M)<0, so the condition is necessary for r≥2 (additional block factors can be zero in the rank≤r class, or arbitrarily small nonzero contributions by continuity).
 
-**Odd n.** Since |Σ z_i|≤Σ A_i and Σ|z_i|²≥0,
+**Odd n.** Bound **only the cross terms**, not the diagonal terms. The identity
 
-    Q≥LΣ A_i² −M[(Σ A_i)²−Σ|z_i|²]
-     ≥(L+M)Σ A_i²−M(Σ A_i)²
-     ≥[L−(r−1)M]Σ A_i²,
+    |Σ_i z_i|²−Σ_i|z_i|² = 2 Re Σ_(i<h) z_i conjugate(z_h)
 
-by Cauchy–Schwarz. If L<(r−1)M, use C=Σ_{i=1}^r |e_i><e_i| with r local-orthogonal product words. The swap bound is then attained termwise, and the cross term is negative, so Q=r[L−(r−1)M]<0. This proves necessity even when all r blocks are nonzero.
+and |z_i|≤A_i imply
+
+    |Σ_i z_i|²−Σ_i|z_i|²
+      ≤ Σ_(i≠h) A_i A_h
+      = (Σ_i A_i)²−Σ_i A_i²
+      ≤ (r−1)Σ_i A_i².
+
+The last inequality is Cauchy–Schwarz. Consequently,
+
+    Q≥LΣ_i A_i²−M(|Σ_i z_i|²−Σ_i|z_i|²)
+     ≥[L−(r−1)M]Σ_i A_i².
+
+If L<(r−1)M, use C=Σ_{i=1}^r |e_i><e_i| with r local-orthogonal product words. The swap bound is then attained termwise, and the cross term is negative, so Q=r[L−(r−1)M]<0. This proves necessity even when all r blocks are nonzero.
+
+**Proof correction (29 October UTC).** The first draft incorrectly inferred the stronger intermediate bound (L+M)ΣA_i²−M(ΣA_i)² solely from |Σz_i|≤ΣA_i and Σ|z_i|²≥0. That implication is invalid: the upper bound on |Σz_i| and the lower bound on Σ|z_i|² cannot be combined as if |z_i|=A_i. The corrected argument bounds the *off-diagonal sum* directly, which proves the same sharp criterion without that missing premise. The faulty line is retained in this correction note for traceability; it is not used in the theorem.
 
 Every step preserves the original rank≤r factorization; a coordinate projection of C need not retain the original rank constraint and is never used as a positivity premise.
 
