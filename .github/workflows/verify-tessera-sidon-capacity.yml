@@ -1,0 +1,25 @@
+name: Verify Tessera source-independent Sidon capacity
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/projects/erdos/tessera-capacity-20261029/**"
+      - ".github/workflows/verify-tessera-sidon-capacity.yml"
+  push:
+    paths:
+      - "research/nightfall/projects/erdos/tessera-capacity-20261029/**"
+      - ".github/workflows/verify-tessera-sidon-capacity.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact:
+    name: Exact source-independent finite Sidon capacity check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 research/nightfall/projects/erdos/tessera-capacity-20261029/verify_capacity.py
+      - run: python3 research/nightfall/projects/erdos/tessera-capacity-20261029/verify_unrestricted.py
