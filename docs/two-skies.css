@@ -348,3 +348,7 @@ html[data-nf-theme="dusk"] body:has(.lp-page){
 html:not([data-nf-theme="dusk"]) .nf-interlude{background:#1b100b;color:#f7e8db;border-color:#75574a}
 html[data-nf-theme="dusk"] .nf-interlude{background:#0a1021;color:#f1eedc;border-color:#33405d}
 html[data-nf-theme="dusk"] body:has(.app) .brandMark{color:#e6deaa}
+
+/* Final input-contract priority: yellow always carries chocolate ink. */
+html:not([data-nf-theme="dusk"]) :is(.hero-actions .button:not(.button-light),.nf-home-tool-entry .button,.join-action,.cj-primary,.co-page .co-primary,.desk-add,.desk-session-shortcut){color:#28190f!important}
+html:not([data-nf-theme="dusk"]) :is(.hero-actions .button:not(.button-light),.nf-home-tool-entry .button,.join-action,.cj-primary,.co-page .co-primary,.desk-add,.desk-session-shortcut):hover{color:#28190f!important}
