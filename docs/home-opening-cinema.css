@@ -656,6 +656,12 @@ html:not([data-nf-theme="dusk"]) .nf-cinema--still .nf-cinema-record a:focus-vis
   .nf-cinema--still .nf-cinema-proof-path li{color:#111}
 }
 
+/* All three raster/vector layers MUST be drawn once. Some legacy cinema
+   shorthands reset background-repeat to repeat, which tiled the lunar overlay. */
+html[data-nf-theme="dusk"] #main>.hero.nf-opening .nf-opening-sky--night,
+html[data-nf-theme="dusk"] .nf-cinema--still .nf-cinema-world--night{
+  background-repeat:no-repeat,no-repeat,no-repeat!important;
+}
 /* Keep the lunar crescent above the record's top edge on narrow screens;
    its texture is an actual transparent image layer, not CSS glyph art. */
 @media(max-width:760px){
