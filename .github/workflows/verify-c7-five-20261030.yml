@@ -1,0 +1,39 @@
+name: Verify C7 fifth-power incumbent and restricted experiment
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/leaderboards/c7-five-20261030/**'
+      - '.github/workflows/verify-c7-five-20261030.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Exact integer witness verification and negative controls
+        run: |
+          python3 -m py_compile research/nightfall/leaderboards/c7-five-20261030/verify_367.py
+          python3 research/nightfall/leaderboards/c7-five-20261030/verify_367.py
+  restricted-mip:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned optimization backend
+        run: python3 -m pip install scipy==1.15.3
+      - name: Reconstruct and solve precisely scoped degree-2 integer program
+        run: |
+          python3 -m py_compile research/nightfall/leaderboards/c7-five-20261030/restricted_milp.py
+          python3 research/nightfall/leaderboards/c7-five-20261030/restricted_milp.py --max-core-conflicts 2
