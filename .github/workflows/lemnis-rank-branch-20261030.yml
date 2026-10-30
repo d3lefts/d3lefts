@@ -1,0 +1,32 @@
+name: Lemnis F9 rank-conditioned decision-tree audit
+on:
+  push:
+    paths:
+      - "research/nightfall/projects/finite-field/lemnis_rank_branch_20261030/**"
+      - ".github/workflows/lemnis-rank-branch-20261030.yml"
+  pull_request:
+    paths:
+      - "research/nightfall/projects/finite-field/lemnis_rank_branch_20261030/**"
+      - ".github/workflows/lemnis-rank-branch-20261030.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  proof-certificate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate certificate syntax
+        run: python3 -m py_compile research/nightfall/projects/finite-field/lemnis_rank_branch_20261030/*.py
+      - name: Independent 9^5 signal oracle test and negative controls
+        run: python3 research/nightfall/projects/finite-field/lemnis_rank_branch_20261030/independent_audit.py
+      - name: Exact rank-conditioned decision-tree lower-bound certificate
+        run: python3 research/nightfall/projects/finite-field/lemnis_rank_branch_20261030/rank_branch_certificate.py
+      - name: Generalized rank-palette lower bounds (GF9 k11 and k13)
+        run: python3 research/nightfall/projects/finite-field/lemnis_rank_branch_20261030/rank_palette_bound.py
+      - name: Fourier 7-sign bound, exact GF9/GF27 controls
+        run: python3 research/nightfall/projects/finite-field/lemnis_rank_branch_20261030/fourier_certificate.py
