@@ -133,8 +133,17 @@ def exhaustive_decoder(p,h):
 
 if __name__=="__main__":
     # A proper-subgroup counter-model is not substituted for a full-phase oracle.
-    for p,h in ((3,2),(5,2),(7,3),(19,3),(31,3),(101,5)):
-        print("PACKING",one_instance(p,h))
+    # Full-output regression oracles fixed before this checker was committed.
+    expected={(3,2):(1,4),(5,2):(1,4),(7,3):(3,9),
+              (19,3):(2,9),(31,3):(2,9),(101,5):(2,25)}
+    for (p,h),(offset,words) in expected.items():
+        result=one_instance(p,h)
+        assert (result["offset"],result["injection_count"])==(offset,words)
+        print("PACKING",result)
+    # Explicit impossibility for THIS shifted-digit operator: with five
+    # phases in F11 there are only (11-1)/5+1=3 powered scalar outputs.
+    assert not any(orbit_injective(11,roots(11,5),t) for t in range(11))
+    print("NEGATIVE: F11 full five-phase offset capacity fails")
     for p,h in ((3,2),(5,2),(7,3)):
         print("FULL_DECODER",exhaustive_decoder(p,h))
     print("PASS: independent exact finite gate; general theorem review pending")
