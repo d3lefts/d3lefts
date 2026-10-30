@@ -1,62 +1,50 @@
 # NIGHTFALL | CONSTELLATION — Two Skies
 
-**29 October 2026 · Active visual contract · No scientific claim changes**
+**29 October 2026 · Active visual contract · Visual styling only; scientific claim statuses unchanged**
 
-The appearance switch exchanges distinct editorial experiences. It does not alter source records, proofs, evidence thresholds, or review status.
+The theme switch offers two different ways to read the *same evidence record*. Both have dark backgrounds but different atmosphere, material and accent vocabulary.
 
-## Archive / golden hour
+## Archive / NULL FIELD (alternate experience)
 
-The reference is Sunset Boulevard at blue hour: plum and violet, rose haze, and apricot sunlight. It replaces the too-brown cocoa archive while retaining luminous type and a starlit atmosphere.
+**Design thesis:** an instrument listening to the space between measurements. Pitch-black carbon and black ceramic panels; a cold mineral-opal spectral trace; porcelain letters and a single soft interference-lavender secondary. No burgundy, oxblood, rose, warm gold, orange, conventional neon cyberpunk, literal glowing planet or sunset.
 
-| Role | Value | Application |
+| Role | Hex | Use |
 |---|---|---|
-| Twilight plum | `#241A34` | Overall background |
-| Night plum | `#191327` | Dark featured panels and navigation |
-| Velvet violet | `#3B2C4B` | Cards, tools and reading surfaces |
-| Rose-violet | `#31233F` | Secondary panels |
-| Pearl cream | `#FFF0E7` | Primary text |
-| Orchid mist | `#DEC9DE` | Metadata and descriptions |
-| Apricot with 24k warmth | `#E7B768` | Selected states, primary actions |
-| Soft gilded peach | `#F0CC8F` | Hover, focus |
-| Violet rule | `#826682` | Dividers |
+| Absolute black | `#020406` | Page canvas |
+| Sensor recess | `#080D12` | Header, negative-space frames |
+| Carbon instrument | `#11181C` | Panels, dossiers, tools |
+| Lifted black glass | `#1B292D` | Chosen / hovered surfaces |
+| Polarized rule | `#3B4C53` | Hairlines, matrix boundaries |
+| Porcelain signal | `#EDF4F1` | Primary reading ink |
+| Fogged mineral | `#AFC4C5` | Body secondary |
+| Opalescent jade | `#B4E3D6` | Primary links, button fills, precise emphasis |
+| Diffraction lavender | `#B1B9DB` | Rare secondary signal |
+| Bright opal | `#D8F4E9` | Hover and focus |
 
-## Underbelly / new moon
+The Archive opening converts the previous decorative sun into a black occlusion ring, surrounded by faint diffraction. The scroll cinema becomes a quiet interference chamber with a measured spectral horizon. Small atmospheric marks remain understated; these are not scientific data or status codes. Original research, quantitative content, links, and source provenance are unchanged.
 
-Absolute-black-near canvas; deep navy and indigo structure; pale jasmine text and cool lunar gold. No crescent on this side, because it represents a new-moon sky.
+## Underbelly / New Moon (preserved exactly)
 
-| Role | Value | Application |
-|---|---|---|
-| New-moon black | `#04060B` | Global canvas |
-| Midnight navy | `#0C1527` | Cards and evidence |
-| Indigo | `#16223C` | Selected and lifted layers |
-| Jasmine | `#F1EEDC` | Primary text |
-| Gilded moonlight | `#E2D28C` | Active controls, trust-navigation cues |
-| Pale-gold hover | `#EEE0A7` | Focused elements |
-| Starlit violet | `#B4B5D9` | Secondary atmosphere |
-| Quiet lavender | `#BEC3D6` | Metadata |
-| Deep divider | `#33405D` | Panels and structure |
+No change to the existing New Moon implementation in this revision.
 
-## Rules
+| Role | Hex |
+|---|---|
+| New-moon black | `#04060B` |
+| Midnight navy | `#0C1527` |
+| Indigo | `#16223C` |
+| Jasmine | `#F1EEDC` |
+| Gilded moonlight | `#E2D28C` |
+| Moonlight hover | `#EEE0A7` |
+| Starlit violet | `#B4B5D9` |
+| Quiet lavender | `#BEC3D6` |
+| Deep divider | `#33405D` |
 
-- The dark Underbelly remains the default first visit; the Archive is selectable and persists as a preference.
-- Source labels and evidentiary classifications remain legible and are never inferred from hue.
-- Living Paper reading surfaces remain free of star textures.
-- Main text and button ink have tested WCAG AA contrast against their intended filled backgrounds.
-- `docs/two-skies.css` is loaded last on every themed page; `scripts/check_palette_contract.mjs` checks palette tokens, neon regressions, and CSS inclusion.
-- Mobile/desktop screenshots, reversible theme switching, source links and reduced-motion checks are covered by the website CI.
+New Moon retains its existing approved editorial accents and the single atmospheric red bloom in the cinematic gradient. NULL FIELD independently has no oxblood visual accents.
 
-## New Moon / blood-colour exception
+## Verification contract
 
-**29 October 2026, visual correction.** The New Moon no longer uses oxblood as a general-purpose accent. Its flagship section divider now runs from muted lavender through moonlight gold; the small opening and constellation nodes are starlit blue; its closing rule is indigo. This prevents the burgundy marks from competing with moonlight actions and improves visible contrast.
-
-The **one exception is the atmospheric wine-red bloom in the large scroll-cinematic gradient** (`.nf-cinema-world--night`). Its original low-opacity radial-gradient stop `rgba(74,31,36,.21)` remains as part of the background artwork, never as text, button, evidence coding, hairline, or selected-state colour. The discontinued `--nf-oxblood-rare` and `--nf-oxblood-lit` palette variables are no longer defined. This is a narrowly scoped design exception; scientific statuses continue to be literal labels.
-
-## Consistency policy
-
-The screenshot-led October 29 revision corrects contrast on the Contributor Path: process panels, status labels, result links, workspace and empty state; it keeps the Night theme navy, replacing only the anomalous wine-red process field.\n\nThe active palettes are determined by `docs/two-skies.css` and `docs/mobile-scroll-cinema.css`, both loaded after the historical stylesheets. Older base declarations remain documented as fallback history, not a license to reintroduce parchment. The computed-style browser audit checks large displayed surfaces in both modes for obsolete background colors and tests mobile overflow. The homepage's three formerly hardcoded instrument colors now use the palette tokens.
-
-## 24k trace refinement — 29 October 2026
-
-The shared metallic reference is `#D4AF37`, a familiar digital approximation of 24k gold (not a literal rendered metal). Both experiences retain distinct matte primary accents: Archive `#E7B768` and New Moon `#E2D28C`. The warmer accent is paired with an apricot hover `#F0CC8F`; the cooler one with `#EEE0A7`. Metallic gold appears only as a short portion of fine navigation rules / selected cinematic strokes, never as normal body text or a proxy for evidence status. The Archive sunrise has less saturated pink and a softer glow; the New Moon retains its navy canvas and quiet lavender text.
-
-Calculated WCAG contrast at designated pairings: Archive primary `#E7B768` on raised plum `#503757` = 5.61:1; Archive button ink `#191327` on `#E7B768` = 9.77:1; New Moon primary `#E2D28C` on canvas `#04060B` = 13.35:1. These token checks do not replace the cross-page computed-style browser tests.
+- Theme default remains New Moon; an explicit switch saves the NULL FIELD Archive choice.
+- `docs/two-skies.css` continues as the shared palette authority; `docs/mobile-scroll-cinema.css` and `docs/home-opening-cinema.css` adapt the Archive-only art after that stylesheet.
+- `scripts/test_ethereal_theme.mjs`, `scripts/test_golden_hour_light.mjs`, `scripts/test_palette_consistency.mjs`, `scripts/test_scroll_cinema.mjs`, `scripts/check_palette_contract.mjs` test reversible selection, computed visible surfaces, browser accessibility, scroll animations, and no evidence-status drift.
+- Living Paper reading surfaces remain free of star textures. Reduced-motion settings remain respected. Distinct evidence statuses continue to be expressed as text, never inferred from hue.
+- Color pairs and browser-computed elements are subject to contrast checks. We avoid using very dim decorative ink for instructional prose.
