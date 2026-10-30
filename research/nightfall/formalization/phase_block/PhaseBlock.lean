@@ -71,6 +71,18 @@ theorem seven_queries_counting_gap :
     6 ^ 7 < 1 + (16 ^ 5 - 1) / 3 := by
   decide
 
+-- A single residual relative phase can be recovered by 1 + z η.
+theorem residual_phase_injective :
+    ∀ i j : Fin 3,
+      cube (Nat.xor 1 (mul 2 (phase i.val))) =
+      cube (Nat.xor 1 (mul 2 (phase j.val))) → i = j := by
+  decide
+
+-- Five 3-valued relative phases cannot fit in three 6-valued outputs.
+theorem three_query_capacity_gap :
+    6 ^ 3 < 3 ^ 5 := by
+  decide
+
 -- This is the computationally decisive certificate, checked by Lean's kernel.
 theorem eighty_one_distinct_outputs :
     (List.ofFn (fun i : Fin 81 => outputs i)).Nodup := by
@@ -81,6 +93,8 @@ theorem block_boolean_certificate :
     decide ((List.ofFn (fun i : Fin 81 => outputs i)).Nodup) = true := by
   rfl
 
+#print axioms Nightfall.PhaseBlock.residual_phase_injective
+#print axioms Nightfall.PhaseBlock.three_query_capacity_gap
 #print axioms Nightfall.PhaseBlock.cube_fibers
 #print axioms Nightfall.PhaseBlock.field_inverses
 #print axioms Nightfall.PhaseBlock.seven_queries_counting_gap
