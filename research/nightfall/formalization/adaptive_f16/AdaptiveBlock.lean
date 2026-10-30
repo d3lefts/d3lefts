@@ -51,14 +51,23 @@ def second (y : Nat) (i : Fin 27) : Nat :=
 def output (i : Fin 27) : Nat × Nat :=
   (first i, second (first i) i)
 
+def inSix (v : Nat) : Bool :=
+  (v == 0) || (v == 1) || (v == 8) ||
+  (v == 10) || (v == 12) || (v == 15)
+
+def noRepeats : List (Nat × Nat) → Bool
+  | [] => true
+  | x :: xs =>
+      (!xs.any (fun y => (x.1 == y.1) && (x.2 == y.2))) &&
+      noRepeats xs
+
+-- Kernel-reduced finite Boolean checks: do not use decide on a Prop.
 theorem first_reading_branch_boolean_certificate :
-    decide (∀ i : Fin 27,
-      first i = 0 ∨ first i = 1 ∨ first i = 8 ∨
-      first i = 10 ∨ first i = 12 ∨ first i = 15) = true := by
+    (List.ofFn (fun i : Fin 27 => inSix (first i))).all (fun b => b) = true := by
   rfl
 
 theorem adaptive_twenty_seven_boolean_certificate :
-    decide ((List.ofFn (fun i : Fin 27 => output i)).Nodup) = true := by
+    noRepeats (List.ofFn (fun i : Fin 27 => output i)) = true := by
   rfl
 
 theorem worst_case_lower_bound_k4 :
