@@ -49,7 +49,7 @@ Let `B:H^4 -> K^3` be the anchored cubing map from the frozen matrix and assume 
 
 ## 30 October extension — adaptive 27-state block, distinct same-oracle replay
 
-Source: verify_adaptive_tower.py (Git blob SHA 6233c192e93d3b888b3351acf320c811f06e9a36). Run:
+Source: verify_adaptive_tower.py (Git blob SHA 6233c192e93d3b888b3351acf320c811f06e9a36; SHA-256 c91dd449cbc32847dfccd16625fb902e77cd94b5339b6627e4b2b3ef5b6c2af5 (measured in passing CI)). Run:
 
     python3 research/nightfall/agent-reports/ryev_f16_tower_20261030/verify_adaptive_tower.py
 
