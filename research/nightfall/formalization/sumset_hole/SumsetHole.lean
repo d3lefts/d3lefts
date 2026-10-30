@@ -44,7 +44,7 @@ theorem translated_square_injective
 -- theorem requires only that sums of DISTINCT T-elements miss hole.
 -- A collision with x=y is allowed and is correctly treated as harmless.
 theorem translated_square_injective_off_diagonal
-    {G : Type u}
+    {G : Type u} [DecidableEq G]
     (T : G → Prop)
     (sum : G → G → G)
     (translate square inverse : G → G)
@@ -63,10 +63,11 @@ theorem translated_square_injective_off_diagonal
   | inl heq =>
       exact translate_inj x y heq
   | inr hneg =>
-      by_contra hxy
-      have hsum : sum x y = hole :=
-        translate_opposite_implies_sum x y hneg
-      exact (no_distinct_pair_sum x y hx hy hxy) hsum
+      by_cases hxy : x = y
+      · exact hxy
+      · have hsum : sum x y = hole :=
+          translate_opposite_implies_sum x y hneg
+        exact False.elim ((no_distinct_pair_sum x y hx hy hxy) hsum)
 
 -- If a binary subset-sum encoding is injective and takes values in T,
 -- the observation square(translate(encode(signs))) is injective.
