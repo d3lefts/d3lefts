@@ -76,11 +76,6 @@ theorem eighty_one_distinct_outputs :
     (List.ofFn (fun i : Fin 81 => outputs i)).Nodup := by
   decide
 
--- Direct injectivity statement, separate from list distinctness.
-theorem block_injective :
-    ∀ i j : Fin 81, outputs i = outputs j → i = j := by
-  decide
-
 -- A Boolean certificate allows an even narrower kernel-computation audit.
 theorem block_boolean_certificate :
     decide ((List.ofFn (fun i : Fin 81 => outputs i)).Nodup) = true := by
@@ -89,7 +84,6 @@ theorem block_boolean_certificate :
 #print axioms Nightfall.PhaseBlock.cube_fibers
 #print axioms Nightfall.PhaseBlock.field_inverses
 #print axioms Nightfall.PhaseBlock.seven_queries_counting_gap
-#print axioms Nightfall.PhaseBlock.block_injective
 #print axioms Nightfall.PhaseBlock.block_boolean_certificate
 #print axioms Nightfall.PhaseBlock.subgroup_cubic_identity
 #print axioms Nightfall.PhaseBlock.eighty_one_distinct_outputs
