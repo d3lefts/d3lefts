@@ -32,8 +32,8 @@ jobs:
           python3 scripts/lean_bridge.py \
             research/nightfall/formalization/adaptive_f16/AdaptiveBlock.lean \
             --strict \
-            --decl Nightfall.AdaptiveF16.first_reading_in_legal_branches \
-            --decl Nightfall.AdaptiveF16.adaptive_twenty_seven_distinct \
+            --decl Nightfall.AdaptiveF16.first_reading_branch_boolean_certificate \
+            --decl Nightfall.AdaptiveF16.adaptive_twenty_seven_boolean_certificate \
             --decl Nightfall.AdaptiveF16.worst_case_lower_bound_k4 \
             --decl Nightfall.AdaptiveF16.worst_case_lower_bound_k7 \
             --decl Nightfall.AdaptiveF16.phase_factorization \
