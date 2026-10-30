@@ -23,6 +23,7 @@ DIAGNOSTIC = re.compile(r"^(.*?):(\d+):(\d+): (error|warning|information): (.*)$
 UNTRUSTED = re.compile(r"\b(sorry|admit|axiom|constant|native_decide|unsafe|partial)\b")
 DECLARATION = re.compile(r"[A-Za-z_][A-Za-z_0-9'.]*\Z")
 NO_AXIOMS = re.compile(r"\bdoes not depend on any axioms\b", re.I)
+FOUNDATIONAL_AXIOMS = frozenset({"propext", "Quot.sound", "Classical.choice"})
 
 
 def without_comments_and_strings(source: str) -> str:
@@ -118,7 +119,11 @@ def invoke(cmd: list[str], cwd: Path, timeout: int) -> dict:
         return {"returncode": None, "stdout": "", "stderr": str(e), "timed_out": False}
 
 
-def check(source: Path, workspace: Path, declarations: list[str], timeout: int, compiler: str | None) -> dict:
+def check(source: Path, workspace: Path, declarations: list[str], timeout: int, compiler: str | None,
+          allowed_axioms: set[str] | None = None) -> dict:
+    allowed_axioms = set() if allowed_axioms is None else set(allowed_axioms)
+    if not allowed_axioms <= FOUNDATIONAL_AXIOMS:
+        raise ValueError("only Lean foundational axioms may be allowlisted: " + ", ".join(sorted(FOUNDATIONAL_AXIOMS)))
     path = source.resolve()
     if path.suffix != ".lean" or not path.is_file():
         raise ValueError("source must be an existing .lean file")
@@ -138,6 +143,7 @@ def check(source: Path, workspace: Path, declarations: list[str], timeout: int, 
         "compiler": None, "compiler_version": None, "version_matches_pin": None,
         "invocation": None, "compiler_exit_code": None,
         "status": "UNAVAILABLE", "proof_scope": "not checked", "axiom_audit": {},
+        "axiom_dependencies": {}, "explicit_allowed_axioms": sorted(allowed_axioms),
         "diagnostics": [], "stdout": "", "stderr": "",
     }
     if not cmd:
@@ -180,11 +186,16 @@ def check(source: Path, workspace: Path, declarations: list[str], timeout: int, 
     else:
         receipt["status"] = "COMPILED"
     for name in declarations:
-        marker = re.compile(r"\b" + re.escape(name) + r"\b[^\n]*?(?:does not depend on any axioms|depends on axioms)", re.I)
+        marker = re.compile(
+            re.escape(name) + r"'?\s+(does not depend on any axioms|depends on axioms:\s*\[([^\]]*)\])", re.I)
         matches = list(marker.finditer(output))
-        found = matches[-1] if matches else None  # #print commands are appended after source text.
+        found = matches[-1] if matches else None  # appended #print commands are last.
+        dependencies = ([a.strip() for a in found.group(2).split(",") if a.strip()]
+                        if found and found.group(2) is not None else [])
+        receipt["axiom_dependencies"][name] = dependencies
         receipt["axiom_audit"][name] = (
-            "none_reported" if found and NO_AXIOMS.search(found[0]) else
+            "none_reported" if found and NO_AXIOMS.search(found.group(1)) else
+            "allowlisted_dependencies" if found and dependencies and set(dependencies) <= allowed_axioms else
             "dependencies_reported" if found else "unresolved"
         )
     if receipt["status"] == "COMPILED":
@@ -192,6 +203,8 @@ def check(source: Path, workspace: Path, declarations: list[str], timeout: int, 
             receipt["proof_scope"] = "compiles; source contains constructs requiring review"
         elif declarations and all(v == "none_reported" for v in receipt["axiom_audit"].values()):
             receipt["proof_scope"] = "named declarations compile; no axioms reported by Lean"
+        elif declarations and all(v in ("none_reported", "allowlisted_dependencies") for v in receipt["axiom_audit"].values()):
+            receipt["proof_scope"] = "named declarations compile; only explicitly allowed axioms reported"
         elif declarations:
             receipt["proof_scope"] = "named declarations compile; axiom dependencies need review"
         else:
@@ -207,6 +220,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--compiler", help="path to the installed Lean executable (for custom environments)")
     parser.add_argument("--timeout", type=int, default=120)
     parser.add_argument("--strict", action="store_true", help="fail on policy tokens and any unverified axiom audit")
+    parser.add_argument("--allow-axiom", action="append", default=[], help="explicitly allow a named Lean axiom (never implied axiom-free)")
     parser.add_argument("--json-out", type=Path, help="write a reproducible JSON receipt")
     args = parser.parse_args(argv)
     if args.timeout < 1:
@@ -214,16 +228,16 @@ def main(argv: list[str] | None = None) -> int:
     if args.strict and not args.decl:
         parser.error("--strict requires at least one --decl")
     try:
-        receipt = check(args.source, args.workspace.resolve(), args.decl, args.timeout, args.compiler)
+        receipt = check(args.source, args.workspace.resolve(), args.decl, args.timeout, args.compiler, set(args.allow_axiom))
     except (ValueError, UnicodeDecodeError, OSError) as e:
         parser.error(str(e))
     if args.json_out:
         args.json_out.parent.mkdir(parents=True, exist_ok=True)
         args.json_out.write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(json.dumps({k: receipt[k] for k in ("status", "proof_scope", "source_sha256", "compiler_version", "axiom_audit", "policy_findings")}, indent=2))
+    print(json.dumps({k: receipt[k] for k in ("status", "proof_scope", "source_sha256", "compiler_version", "axiom_audit", "axiom_dependencies", "policy_findings")}, indent=2))
     if receipt["status"] != "COMPILED":
         return 2
-    if args.strict and (receipt["policy_findings"] or any(v != "none_reported" for v in receipt["axiom_audit"].values())):
+    if args.strict and (receipt["policy_findings"] or any(v not in ("none_reported", "allowlisted_dependencies") for v in receipt["axiom_audit"].values())):
         return 3
     return 0
 
