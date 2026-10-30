@@ -61,7 +61,6 @@ jobs:
             --json-out lean-receipts/adaptive-information.json
           python3 - <<'PY'
           import json
-          import re
           from pathlib import Path
           path = Path("lean-receipts/adaptive-information.json")
           data = json.loads(path.read_text())
@@ -74,11 +73,13 @@ jobs:
           assert not data["policy_findings"], data["policy_findings"]
           checked = {}
           for name in names:
-              matches = re.findall(
-                  r"['\\\"]?" + re.escape(name) + r"['\\\"]? depends on axioms: \\[([^]\\n]*)\\]",
-                  data["stdout"],
-              )
-              assert matches, "Expected explicit Lean axiom dependencies for " + name
+              prefix = "'" + name + "' depends on axioms: ["
+              matches = [
+                  line[len(prefix):-1]
+                  for line in data["stdout"].splitlines()
+                  if line.startswith(prefix) and line.endswith("]")
+              ]
+              assert matches, "Expected Lean axiom dependencies for " + name
               deps = set(x.strip() for x in matches[-1].split(",") if x.strip())
               assert deps <= allowed, (name, deps - allowed)
               checked[name] = sorted(deps)
