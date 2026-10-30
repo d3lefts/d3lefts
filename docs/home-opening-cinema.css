@@ -512,21 +512,25 @@ html[data-nf-theme="dusk"] .nf-cinema-vignette{
   .nf-opening-moon,.nf-cinema-moon{display:none!important}
 }
 
-/* NIGHTFALL / TWO STATIC IMAGE STUDIES — immutable, self-hosted 2560 × 1440 SVG.
+/* NIGHTFALL / TWO STATIC IMAGE STUDIES — high-resolution photography with local 2560 × 1440 vector fallbacks.
    No scroll frame loop, sticky hold, parallax, fake image text, network media
-   dependency, or scripted crossfade. Source-bound records remain semantic HTML.
-   The art is resolution-independent and intentionally decorative. */
+   dependency for basic rendering, or scripted crossfade. Source-bound records stay HTML.
+   Photos: Jordan Steranka / Unsplash (moon), Oleg Moroz / Unsplash (nebula).
+   Their freely reusable original photos are served at 2560px via Unsplash Images;
+   if the external source is unavailable, a self-hosted vector still remains. */
 #main>.hero.nf-opening .nf-opening-sky{
   transform:none!important;inset:-3%;background-color:#020406;
   background-repeat:no-repeat;background-size:cover;background-position:center;
 }
 #main>.hero.nf-opening .nf-opening-sky::before{content:none!important}
 html:not([data-nf-theme="dusk"]) #main>.hero.nf-opening .nf-opening-sky--gold{
-  background-image:url("media/null-field-deep-space.svg");
+  background-image:url("https://images.unsplash.com/photo-1615056906974-f167481eadd0?auto=format&fit=crop&w=2560&q=82"),
+                   url("media/null-field-deep-space.svg");
   background-position:66% center;
 }
 html[data-nf-theme="dusk"] #main>.hero.nf-opening .nf-opening-sky--night{
-  background-image:url("media/new-moon-nightscape.svg");
+  background-image:url("https://images.unsplash.com/photo-1515311320503-6e3d309537b4?auto=format&fit=crop&w=2560&q=82"),
+                   url("media/new-moon-nightscape.svg");
   background-position:64% center;
 }
 #main>.hero.nf-opening .nf-opening-sky::after{
@@ -547,11 +551,13 @@ html[data-nf-theme="dusk"] #main>.hero.nf-opening .nf-opening-sky::after{
 .nf-cinema--still .nf-cinema-world{background-color:#020406;background-size:cover;background-repeat:no-repeat}
 .nf-cinema--still .nf-cinema-world::before{content:none!important}
 html:not([data-nf-theme="dusk"]) .nf-cinema--still .nf-cinema-world--archive{
-  background-image:url("media/null-field-deep-space.svg")!important;
+  background-image:url("https://images.unsplash.com/photo-1615056906974-f167481eadd0?auto=format&fit=crop&w=2560&q=82"),
+                   url("media/null-field-deep-space.svg")!important;
   background-position:68% center;
 }
 html[data-nf-theme="dusk"] .nf-cinema--still .nf-cinema-world--night{
-  background-image:url("media/new-moon-nightscape.svg")!important;
+  background-image:url("https://images.unsplash.com/photo-1515311320503-6e3d309537b4?auto=format&fit=crop&w=2560&q=82"),
+                   url("media/new-moon-nightscape.svg")!important;
   background-position:61% center;
 }
 html:not([data-nf-theme="dusk"]) .nf-cinema--still .nf-cinema-vignette{
