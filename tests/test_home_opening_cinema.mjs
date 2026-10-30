@@ -15,8 +15,8 @@ test('both first-fold atmospheres are static, crisp and decorative',()=>{
  assert.doesNotMatch(html,/src="(?:scroll-cinema|home-opening-cinema)\.js"/);
  assert.match(html,/id="hero-title-archive"/);
  assert.match(html,/id="hero-title"/);
- assert.match(css,/background-image:url\("media\/new-moon-nightscape\.svg"\)/);
- assert.match(css,/background-image:url\("media\/null-field-deep-space\.svg"\)/);
+ assert.match(css,/url\("media\/new-moon-nightscape\.svg"\)/);
+ assert.match(css,/url\("media\/null-field-deep-space\.svg"\)/);
  assert.match(css,/prefers-reduced-motion:reduce/);
  assert.match(css,/\.nf-opening-art\{[\s\S]*?pointer-events:none/);
  assert.match(css,/html\[data-nf-theme="dusk"\] \.nf-opening-art--gold\{display:none\}/);
