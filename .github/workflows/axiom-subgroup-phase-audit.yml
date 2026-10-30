@@ -1,0 +1,29 @@
+name: Axiom prime-subfield orbit-transversal phase audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/agent-reports/axiom_subgroup_uniform_20261030/**'
+      - '.github/workflows/axiom-subgroup-phase-audit.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/agent-reports/axiom_subgroup_uniform_20261030/**'
+      - '.github/workflows/axiom-subgroup-phase-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-finite-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Capture exact source hash
+        run: sha256sum research/nightfall/agent-reports/axiom_subgroup_uniform_20261030/check_offset_packing.py
+      - name: Independently replay prime-field orbits, negative controls and complete K^3 decoder cases
+        run: python3 research/nightfall/agent-reports/axiom_subgroup_uniform_20261030/check_offset_packing.py
