@@ -83,8 +83,15 @@ assert(page.includes('src="research-registry.js"'));
 assert(page.includes('src="portfolio-core.js"'));
 assert(page.includes('src="portfolio.js"'));
 for(const id of ["pf-live-records","pf-live-events","pf-live-summary"])assert(page.includes('id="'+id+'"'));
-for(const file of ["docs/index.html","docs/about.html","docs/sitemap.xml","README.md"]){
-  assert(!read(file).includes("portfolio.html"),file+" must not expose a public-facing link");
+// Owner-approved visitor sprint: two deliberate public discovery links.
+// Keep the portfolio itself noindex and outside the sitemap and README.
+// This changes the earlier unlisted-from-research contract intentionally.
+assert(read("docs/index.html").includes('href="portfolio.html">Professional portfolio &amp; résumé'),
+  "Research homepage footer has the approved professional-background route");
+assert(read("docs/about.html").includes('href="portfolio.html">Professional background &amp; portfolio'),
+  "Research About page has the approved portfolio route");
+for(const file of ["docs/sitemap.xml","README.md"]){
+  assert(!read(file).includes("portfolio.html"),file+" must not expand the public catalogue");
 }
 assert(!read("docs/sitemap.xml").includes("/portfolio"));
 assert(page.includes('id="approved-findings"'));
