@@ -33,6 +33,28 @@ The bound \(K+2\) is **attainable** for every modular Sidon \(D\) with \(K\ge2\)
 
 **Consequences for Singer (v=q²+q+1,K=q+1):** both same-multiplier full sources need at least \(q-1\) total deletions. For q5/q7/q25/q49 the minimum positive-difference overlap is **6/12/156/600**, and minimum deletions are **4/6/24/48**, respectively. If the first block is fully protected, the second can retain **at most two** marks. This does **not** preclude different affine multipliers, and changes of field size also evade the theorem.
 
+## Corollary: exact same-source multiblock capacity
+
+Suppose \(m\ge2\) integer blocks are taken from cyclic cuts of **one fixed modular Sidon source \(D\)**, again with the **same affine multiplier**; block \(i\) retains \(k_i\) labeled source points. If their translated union is Sidon, every original unordered source pair \(\{d,e\}\) can be retained jointly in **at most two** blocks. Its ordinary positive difference can be only \(a\) or \(v-a\), and a repeated orientation would repeat a positive difference in the combined Sidon set. Counting those pair co-occurrences gives
+
+\[
+\boxed{\sum_{i=1}^{m}\binom{k_i}{2}\le2\binom K2=K(K-1).}\tag{4}
+\]
+
+Writing \(S_m=\sum_i k_i\), Cauchy–Schwarz gives the certified **necessary** aggregate bound
+
+\[
+\boxed{S_m\le\frac{m+\sqrt{m^2+8mK(K-1)}}2.}\tag{5}
+\]
+
+The two-block theorem additionally supplies \(k_i+k_j\le K+2\) for every pair \(i\ne j\). If the first block keeps all \(K\) marks, every later same-multiplier cut keeps at most two, so
+
+\[
+\boxed{S_m\le K+2(m-1).}\tag{6}
+\]
+
+These are *necessary* bounds; no feasibility or density record follows. They rule out a proposed self-replicating operator that retains a fixed positive proportion of the **same** \(K\) source points across arbitrarily many blocks while preserving the ordinary Sidon condition. They impose no such restriction on variable-source multipliers or variable widths.
+
 ## Reproduction, independent falsifier and sources
 
 Standard library only:
