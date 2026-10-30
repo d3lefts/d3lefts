@@ -185,3 +185,6 @@ html:not([data-nf-theme="dusk"]) .nf-opening-art--gold .nf-opening-sun{
 html:not([data-nf-theme="dusk"]) .nf-opening-art--gold .nf-opening-arc{
   border-color:rgba(180,227,214,.24);
 }
+
+html:not([data-nf-theme="dusk"]) .nf-opening-constellation path:nth-child(2){stroke:#b4e3d6}
+html:not([data-nf-theme="dusk"]) .nf-opening-constellation .nf-opening-node--gold{fill:#b4e3d6}
