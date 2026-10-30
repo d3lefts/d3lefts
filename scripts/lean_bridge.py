@@ -181,7 +181,8 @@ def check(source: Path, workspace: Path, declarations: list[str], timeout: int, 
         receipt["status"] = "COMPILED"
     for name in declarations:
         marker = re.compile(r"\b" + re.escape(name) + r"\b[^\n]*?(?:does not depend on any axioms|depends on axioms)", re.I)
-        found = marker.search(output)
+        matches = list(marker.finditer(output))
+        found = matches[-1] if matches else None  # #print commands are appended after source text.
         receipt["axiom_audit"][name] = (
             "none_reported" if found and NO_AXIOMS.search(found[0]) else
             "dependencies_reported" if found else "unresolved"
