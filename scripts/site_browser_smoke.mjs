@@ -298,6 +298,8 @@ try{
    const modifiedLedger=structuredClone(cleanLedger);
    modifiedLedger.tasks.find(t=>t.parentId==="NF-156-184-9").lo+=1;
    await page.locator("#nf-import-file").setInputFiles({name:"modified.json",mimeType:"application/json",buffer:Buffer.from(JSON.stringify(modifiedLedger))});
+   // FileReader validation is asynchronous; require the exact fail-closed verdict once ready.
+   await page.waitForFunction(()=>document.querySelector("#nf-message")?.textContent?.includes("Frontier import refused"),null,{timeout:7000});
    assert.match(await page.locator("#nf-message").innerText(),/Frontier import refused/);
    assert.match(await page.locator("#nf-progress").innerText(),/2 unresolved leaf obligations/);
    page.once("dialog",d=>d.accept());
