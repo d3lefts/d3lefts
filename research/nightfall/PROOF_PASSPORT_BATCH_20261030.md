@@ -17,7 +17,7 @@
 From repository root, **after required data are present**:
 
 ```sh
-python3 research/nightfall/projects/involution-shadow-codes/certify_nonabelian_instance.py
+python3 research/nightfall/projects/involution-shadow-codes/certify_nonabelian_instance.py research/nightfall/projects/involution-shadow-codes/S4_nonabelian_certificate.json
 python3 research/nightfall/projects/involution-shadow-codes/verify_nonabelian_erasure_optimum.py
 python3 research/nightfall/projects/sat-network-universal/check_structural_certificate.py research/nightfall/projects/sat-network-universal/example_graph.json
 python3 research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/verify_tail_A.py

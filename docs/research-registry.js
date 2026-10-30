@@ -524,12 +524,6 @@ const REGISTRY={
           "label": "Finite reconstruction audit reported",
           "detail": "The research dossier records 58 finite property checks and a policy-simulator attachment-shape issue; no live-model result follows.",
           "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/agent-safety-under-abstraction/README.md"
-        },
-        {
-          "date": "2026-10-29",
-          "label": "Version-mismatch restraint retained",
-          "detail": "The direct CaMeL collateral comparison was not declared because the available runner and offline task versions differ.",
-          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/agent-safety-under-abstraction/README.md"
         }
       ]
     },
