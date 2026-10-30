@@ -57,6 +57,20 @@ try{
    assert.equal(await page.locator("html").getAttribute("data-nf-theme"),mode==="dusk"?"dusk":null);
    await page.waitForFunction(expected=>getComputedStyle(document.body).backgroundColor===expected,expectedBg);
    assert.equal(await page.locator(visibleArt).isVisible(),true,mode+": matching image layer");
+   // The declared hairline is 0.5 CSS px; Chromium snaps that to one
+   // physical pixel on 1x screens, so inspect both the token and painted width.
+   const hairline=await page.evaluate(()=>({
+     token:getComputedStyle(document.documentElement).getPropertyValue("--nf-tile-rule-width").trim(),
+     ratio:window.devicePixelRatio,
+     feature:getComputedStyle(document.querySelector(".flagship-card")).borderTopWidth,
+     witness:getComputedStyle(document.querySelector(".nf-opening-overlap")).borderTopWidth
+   }));
+   assert.equal(hairline.token,".5px",mode+": signature border design token");
+   for(const tile of ["feature","witness"]){
+     const edge=parseFloat(hairline[tile]);
+     const max=Math.max(.5,1/hairline.ratio);
+     assert.ok(edge>0 && edge<=max,mode+" "+width+"px "+tile+": physically snapped hairline "+edge);
+   }
    assert.equal(await page.locator(mode==="dusk"?".nf-cinema-world--archive":".nf-cinema-world--night").isVisible(),false,mode+": inactive image hidden");
    const still=await scene.evaluate((el,filename)=>{
      const art=el.querySelector(".nf-cinema-world:not([style*='hide'])");
@@ -74,6 +88,10 @@ try{
    },asset);
    assert.ok(still.backdrop.includes(asset),mode+": matching self-hosted cinematic asset");
    assert.ok(still.hero.includes(asset),mode+": matching first-fold still asset");
+   assert.doesNotMatch(still.backdrop,/images\.unsplash\.com/,mode+": interlude uses only self-hosted imagery");
+   assert.doesNotMatch(still.hero,/images\.unsplash\.com/,mode+": hero uses only self-hosted imagery");
+   assert.match(still.backdrop,/linear-gradient/,mode+": interlude retains the tonal wash");
+   assert.match(still.hero,/linear-gradient/,mode+": hero retains the tonal wash");
    assert.ok(still.repeat.split(",").every(x=>x.trim()==="no-repeat"),mode+": no tiled photographic backgrounds or lunar overlays");
    assert.ok(still.heroRepeat.split(",").every(x=>x.trim()==="no-repeat"),mode+": no repeated hero overlays");
    if(mode==="dusk"){

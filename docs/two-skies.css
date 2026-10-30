@@ -1145,3 +1145,41 @@ html .review-priority-card {background:var(--ed-panel);border:1px solid var(--ed
 
 /* Keep existing, accessibility-audited Archive navigation identity. */
 html:not([data-nf-theme="dusk"]) .nav .nav-call{background:#080d12!important}
+
+
+/* NIGHTFALL / SIGNATURE HAIRLINE — material standard.
+   A one-device-pixel visual on high-density screens, with a subtle antialiased
+   fallback at 1×. These are tile/container boundaries only: state markings,
+   mathematical graph edges, form focus rings, and keyboard outlines retain
+   their original weight and semantics. */
+html {
+  --nf-tile-rule-width:.5px;
+}
+html :is(
+  .feature,.flagship-card,.review-card,.review-priority-card,.review-dossier,
+  .research-proposal,.research-row,.sf-system-card,.sf-case-panel,
+  .nf-home-toolbox,.nf-deep-disclosure,.nf-opening-overlap,
+  .nf-cinema-record,.nf-archive-accession,.nf-underbelly-ledger,
+  .nf-process-case,.nf-witness-record,.nf-evidence-tile,
+  .atlas-card,.instrument-workflow a,.join-choice,.join-result-grid article,
+  .co-work-card,.co-map-layout,.co-relations,.co-node,.co-protocol,
+  .desk-card,.desk-panel,.lp-card,.lp-source-card,
+  .review-starter,.review-priority-grid article,.review-summary article
+) {
+  border-width:var(--nf-tile-rule-width)!important;
+}
+/* The outer picture frame and the reference panel obey the same hairline. */
+html #main>.hero.nf-opening,
+html #main>.hero.nf-opening .hero-aside,
+html #main>.hero.nf-opening .nf-opening-overlap,
+html .nf-cinema--still .nf-cinema-record,
+html .nf-focus-result-grid .flagship-card,
+html .nf-secondary-frontiers-grid .flagship-card,
+html .nf-deep-disclosure,
+html .review-priority-card {
+  border-width:var(--nf-tile-rule-width)!important;
+}
+/* Do not create ghost borders on components intentionally drawn without one. */
+html :is(.flagship-card,.feature,.review-card,.co-work-card):focus-visible {
+  outline-width:3px!important;
+}

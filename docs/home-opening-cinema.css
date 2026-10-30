@@ -512,25 +512,23 @@ html[data-nf-theme="dusk"] .nf-cinema-vignette{
   .nf-opening-moon,.nf-cinema-moon{display:none!important}
 }
 
-/* NIGHTFALL / TWO STATIC IMAGE STUDIES — high-resolution photography with local 2560 × 1440 vector fallbacks.
-   No scroll frame loop, sticky hold, parallax, fake image text, network media
-   dependency for basic rendering, or scripted crossfade. Source-bound records stay HTML.
-   Photos: Jordan Steranka / Unsplash (moon), Oleg Moroz / Unsplash (nebula).
-   Their freely reusable original photos are served at 2560px via Unsplash Images;
-   if the external source is unavailable, a self-hosted vector still remains. */
+/* NIGHTFALL / TWO SELF-HOSTED IMAGE STUDIES — a unified 2560 × 1440 vector language.
+   Each theme has one continuous scene between hero and interlude; no external photo
+   layers, scroll animations, scripted crossfades, or text baked into artwork.
+   Source-bound evidence remains accessible HTML and the SVG remains illustrative. */
 #main>.hero.nf-opening .nf-opening-sky{
   transform:none!important;inset:-3%;background-color:#020406;
   background-repeat:no-repeat;background-size:cover;background-position:center;
 }
 #main>.hero.nf-opening .nf-opening-sky::before{content:none!important}
 html:not([data-nf-theme="dusk"]) #main>.hero.nf-opening .nf-opening-sky--gold{
-  background-image:url("https://images.unsplash.com/photo-1615056906974-f167481eadd0?auto=format&fit=crop&w=2560&q=82"),
+  background-image:linear-gradient(180deg,rgba(2,4,6,.24),rgba(2,4,6,.62)),
                    url("media/null-field-deep-space.svg");
   background-position:66% center;
 }
 html[data-nf-theme="dusk"] #main>.hero.nf-opening .nf-opening-sky--night{
   background-image:url("media/new-moon-crescent-overlay.svg"),
-                   url("https://images.unsplash.com/photo-1515311320503-6e3d309537b4?auto=format&fit=crop&w=2560&q=82"),
+                   linear-gradient(180deg,rgba(4,6,11,.14),rgba(4,6,11,.44)),
                    url("media/new-moon-nightscape.svg");
   background-size:clamp(185px,18vw,250px) auto,cover,cover;
   background-position:54% 4%,64% center,64% center;
@@ -553,13 +551,13 @@ html[data-nf-theme="dusk"] #main>.hero.nf-opening .nf-opening-sky::after{
 .nf-cinema--still .nf-cinema-world{background-color:#020406;background-size:cover;background-repeat:no-repeat}
 .nf-cinema--still .nf-cinema-world::before{content:none!important}
 html:not([data-nf-theme="dusk"]) .nf-cinema--still .nf-cinema-world--archive{
-  background-image:url("https://images.unsplash.com/photo-1615056906974-f167481eadd0?auto=format&fit=crop&w=2560&q=82"),
+  background-image:linear-gradient(180deg,rgba(2,4,6,.20),rgba(2,4,6,.58)),
                    url("media/null-field-deep-space.svg")!important;
   background-position:68% center;
 }
 html[data-nf-theme="dusk"] .nf-cinema--still .nf-cinema-world--night{
   background-image:url("media/new-moon-crescent-overlay.svg"),
-                   url("https://images.unsplash.com/photo-1515311320503-6e3d309537b4?auto=format&fit=crop&w=2560&q=82"),
+                   linear-gradient(180deg,rgba(4,6,11,.12),rgba(4,6,11,.40)),
                    url("media/new-moon-nightscape.svg")!important;
   background-size:clamp(195px,18vw,240px) auto,cover,cover;
   background-position:47% 1%,61% center,61% center;
@@ -654,13 +652,13 @@ html:not([data-nf-theme="dusk"]) .nf-cinema--still .nf-cinema-record a:focus-vis
   .nf-cinema--still .nf-cinema-proof-path li{color:#111}
 }
 
-/* The two NULL FIELD photo/fallback layers must never tile either. */
+/* Neither self-hosted illustration nor its tonal gradient may tile. */
 html:not([data-nf-theme="dusk"]) #main>.hero.nf-opening .nf-opening-sky--gold,
 html:not([data-nf-theme="dusk"]) .nf-cinema--still .nf-cinema-world--archive{
   background-repeat:no-repeat,no-repeat!important;
 }
-/* All three raster/vector layers MUST be drawn once. Some legacy cinema
-   shorthands reset background-repeat to repeat, which tiled the lunar overlay. */
+/* Crescent, tonal gradient, and landscape MUST each be drawn once. Some legacy
+   cinema shorthands reset background-repeat and tiled the lunar overlay. */
 html[data-nf-theme="dusk"] #main>.hero.nf-opening .nf-opening-sky--night,
 html[data-nf-theme="dusk"] .nf-cinema--still .nf-cinema-world--night{
   background-repeat:no-repeat,no-repeat,no-repeat!important;
@@ -680,8 +678,8 @@ html[data-nf-theme="dusk"] .nf-cinema--still .nf-cinema-world--night{
 
 
 /* EDITORIAL OBSERVATORY — image-first, with breathing room.
-   Two existing photographs / local vector fallbacks remain unchanged.
-   Decorative images never replace the HTML witness or evidence links. */
+   Cohesive self-hosted vector skies share the same art direction across folds.
+   Illustrations never replace the HTML witness or evidence links. */
 html #main>.hero.nf-opening {
   min-height:clamp(690px,91svh,960px);
   align-content:center;
