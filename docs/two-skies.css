@@ -742,3 +742,84 @@ html:not([data-nf-theme="dusk"]) #main>.flagships>.section-head,
 html:not([data-nf-theme="dusk"]) #main>.nf-observatory .nf-observatory-head{
   border-image:linear-gradient(180deg,#3b4c53 0%,#b4e3d6 72%,#3b4c53 100%) 1;
 }
+
+
+/* NIGHTFALL / ATMOSPHERE SYSTEM v2
+   Shared spatial grammar, distinct illumination. These are presentation
+   variables only: proof status, verification tiers, and source texts are
+   deliberately outside the design token hierarchy. */
+html:not([data-nf-theme="dusk"]){
+  --sky-canvas:#020406;--sky-panel:#11181c;--sky-raised:#1b292d;
+  --sky-line:#3b4c53;--sky-text:#edf4f1;--sky-quiet:#afc4c5;
+  --sky-signal:#b4e3d6;--sky-second:#b1b9db;--sky-glow:rgba(180,227,214,.095);
+}
+html[data-nf-theme="dusk"]{
+  --sky-canvas:#04060b;--sky-panel:#0c1527;--sky-raised:#16223c;
+  --sky-line:#33405d;--sky-text:#f1eedc;--sky-quiet:#bec3d6;
+  --sky-signal:#e2d28c;--sky-second:#b4b5d9;--sky-glow:rgba(226,210,140,.085);
+}
+/* The Archive is astronomic space: many fine points, almost no ambient glow. */
+html:not([data-nf-theme="dusk"]) body:not(:has(.lp-page)){
+  background-color:#020406;
+  background-image:
+    radial-gradient(circle at 13% 17%,rgba(197,235,231,.34) 0 .6px,transparent 1.4px),
+    radial-gradient(circle at 67% 39%,rgba(196,194,230,.29) 0 .55px,transparent 1.3px),
+    radial-gradient(circle at 35% 83%,rgba(158,217,220,.23) 0 .5px,transparent 1.1px),
+    radial-gradient(ellipse at 93% 8%,rgba(73,133,141,.055),transparent 47%),
+    linear-gradient(160deg,#010204,#020406 64%,#050a0e);
+  background-size:307px 293px,437px 389px,587px 521px,100% 100%,100% 100%;
+  background-attachment:fixed;
+}
+/* The warm sky is intimate: the visible moon on the homepage does the work;
+   secondary pages have only a quiet ivory star dust and low amber haze. */
+html[data-nf-theme="dusk"] body:not(:has(.lp-page)){
+  background-color:#04060b;
+  background-image:
+    radial-gradient(circle at 17% 24%,rgba(252,239,205,.29) 0 .7px,transparent 1.3px),
+    radial-gradient(circle at 73% 49%,rgba(201,195,208,.20) 0 .65px,transparent 1.35px),
+    radial-gradient(ellipse at 79% 6%,rgba(153,112,69,.09),transparent 51%),
+    radial-gradient(ellipse at 4% 94%,rgba(77,63,91,.09),transparent 48%),
+    linear-gradient(154deg,#04060b,#090f20 62%,#090b17);
+  background-size:419px 373px,601px 557px,100% 100%,100% 100%,100% 100%;
+  background-attachment:fixed;
+}
+/* A stable shared card shape across both skies, with the illumination
+   expressed through edges and hover rather than a different component system. */
+html :is(.feature,.flagship-card,.review-card,.nf-archive-accession,
+  .nf-home-toolbox,.research-proposal,.sf-system-card,.instrument-workflow a,
+  .join-choice,.nf-process-case) {
+  transition:background-color .2s ease,border-color .2s ease,box-shadow .2s ease;
+}
+html:not([data-nf-theme="dusk"]) :is(.feature,.review-card,.nf-archive-accession,
+  .nf-home-toolbox,.research-proposal,.sf-system-card,.instrument-workflow a):hover{
+  border-color:#7da9a8;box-shadow:0 12px 34px rgba(0,0,0,.22);
+}
+html[data-nf-theme="dusk"] :is(.feature,.review-card,.nf-process-case,
+  .nf-home-toolbox,.research-proposal,.sf-system-card,.instrument-workflow a):hover{
+  border-color:#8f865f;box-shadow:0 12px 34px rgba(0,0,0,.22);
+}
+html :is(.header,.nf-journey-rail,.nf-process-thread){
+  border-color:var(--sky-line);
+}
+html :is(.header .brand,.nf-dual-intro h2,.nf-dual-colophon h2){
+  text-wrap:balance;
+}
+html :is(.nf-archive-id,.nf-hero-guide,.section-id,.nf-cinema-overline){
+  font-variant-numeric:tabular-nums;
+}
+html .nf-theme-toggle{
+  min-height:44px;min-width:88px;
+  border-radius:2px;
+  transition:background-color .2s ease,border-color .2s ease,box-shadow .2s ease;
+}
+html .nf-theme-toggle:focus-visible{
+  outline:3px solid var(--sky-signal);outline-offset:3px;
+}
+html .nf-theme-toggle .nf-theme-symbol{
+  color:var(--sky-signal);
+}
+@media(prefers-reduced-motion:reduce){
+  html :is(.feature,.flagship-card,.review-card,.nf-archive-accession,
+    .nf-home-toolbox,.research-proposal,.sf-system-card,.instrument-workflow a,
+    .join-choice,.nf-process-case,.nf-theme-toggle){transition:none!important}
+}
