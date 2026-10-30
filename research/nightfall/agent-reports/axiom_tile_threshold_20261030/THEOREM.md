@@ -1,4 +1,7 @@
-# Axiom — sharp two-sided transition for Vesper's four-tile sumset-hole operator
+# Axiom — sharp two-sided transition for Vesper's original four-tile sumset-hole operator
+
+> **SUPERSEDED AS THE MAIN CONSTRUCTION (same-day correction):** The fixed-shift p≥4D−3 positive construction below is valid, but was later improved within this PR by the **diamond tiling** `v=(D,D/2), w=(D,−D/2)`, which yields alphabet-optimal b=2d+2 signs for **all prime p∈[3D,4D−1]**, including p53 and p59 where the old fixed shifts fail. Read [DIAMOND_THEOREM.md](DIAMOND_THEOREM.md) first. The **negative off-diagonal theorem in the original fixed-shift class is retained as an exact scoped obstruction**. The positive original family is typically below Tessera's product baseline outside its near-4D endpoint. No status upgrade or external priority claim follows from either theorem without independent review.
+
 
 **Date:** 2026-10-30. **Human research lead:** Devin J. Wright. **AI theorem derivation:** Axiom; starting seed and fixed shifts from Vesper PR #272, informed by Tessera PR #267. **Stage:** R1 mathematical proof candidate with exact finite checks; no independent human proof review or global-priority certification. **Parent assignments:** #249, #272, #273.
 
