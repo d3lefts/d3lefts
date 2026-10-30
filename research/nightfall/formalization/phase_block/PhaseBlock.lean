@@ -53,9 +53,32 @@ theorem subgroup_cubic_identity :
     cube 1 = 1 ∧ cube 6 = 1 ∧ cube 7 = 1 := by
   decide
 
+-- The cube map identifies precisely the H-orbits on F16, including zero.
+theorem cube_fibers :
+    ∀ x y : Fin 16,
+      cube x.val = cube y.val ↔
+      (x.val = mul 1 y.val ∨ x.val = mul 6 y.val ∨ x.val = mul 7 y.val) := by
+  decide
+
+-- The selected quotient polynomial gives every nonzero element an inverse.
+theorem field_inverses :
+    ∀ x : Fin 16, x.val ≠ 0 →
+      ∃ y : Fin 16, mul x.val y.val = 1 := by
+  decide
+
+-- Every 7-query decision tree has too few leaves for the signal classes.
+theorem seven_queries_counting_gap :
+    6 ^ 7 < 1 + (16 ^ 5 - 1) / 3 := by
+  decide
+
 -- This is the computationally decisive certificate, checked by Lean's kernel.
 theorem eighty_one_distinct_outputs :
     (List.ofFn (fun i : Fin 81 => outputs i)).Nodup := by
+  decide
+
+-- Direct injectivity statement, separate from list distinctness.
+theorem block_injective :
+    ∀ i j : Fin 81, outputs i = outputs j → i = j := by
   decide
 
 -- A Boolean certificate allows an even narrower kernel-computation audit.
@@ -63,6 +86,10 @@ theorem block_boolean_certificate :
     decide ((List.ofFn (fun i : Fin 81 => outputs i)).Nodup) = true := by
   rfl
 
+#print axioms Nightfall.PhaseBlock.cube_fibers
+#print axioms Nightfall.PhaseBlock.field_inverses
+#print axioms Nightfall.PhaseBlock.seven_queries_counting_gap
+#print axioms Nightfall.PhaseBlock.block_injective
 #print axioms Nightfall.PhaseBlock.block_boolean_certificate
 #print axioms Nightfall.PhaseBlock.subgroup_cubic_identity
 #print axioms Nightfall.PhaseBlock.eighty_one_distinct_outputs
