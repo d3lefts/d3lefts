@@ -26,7 +26,7 @@ jobs:
         run: |
           set -euo pipefail
           python3 -m py_compile research/nightfall/agent-reports/ryev_odd_square_20261030/verify_trace_basis.py
-          sha256sum research/nightfall/agent-reports/ryev_odd_square_20261030/verify_trace_basis.py
+          echo '2cca53ebce964a7ca136d0813112ae2f2d382f4c564c6d598427959b1bec535a  research/nightfall/agent-reports/ryev_odd_square_20261030/verify_trace_basis.py' | sha256sum -c -
           python3 research/nightfall/agent-reports/ryev_odd_square_20261030/verify_trace_basis.py
   universal-lean-criterion:
     runs-on: ubuntu-latest
