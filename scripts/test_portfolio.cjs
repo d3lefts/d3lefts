@@ -114,4 +114,28 @@ assert(!read("docs/sitemap.xml").includes("resume.html"));
 const about=read("docs/about.html");
 assert(about.includes("AI workflows") || about.includes("AI-assistant role labels"));
 assert(about.includes("not human staff members"));
+// Applicant-facing interview clarity, source distinctions and scoped release.
+assert(page.includes('id="portfolio-questions"'),"Interview context must be discoverable");
+assert(page.indexOf('id="portfolio-questions"')<page.indexOf('id="work"'),"Authorship scope precedes AI research claims");
+for(const phrase of ["Are the research agents people?","What is my own NIGHTFALL contribution?",
+  "What does “Original Findings” mean?","Does SourceBound work on real-world websites?",
+  "What do the commercial metrics show?","Why did PAS change versions?",
+  "Why do Amazon launch dates differ from employment dates?"]){
+ assert(page.includes(phrase),"Missing interview clarification "+phrase);
+}
+assert(page.includes("not my personal sales") && page.includes("not personal revenue"),
+  "Platform outcomes must never read as individual financial achievements");
+assert(!page.includes("not a sabbatical"),"Avoid defensive career framing");
+assert(resume.includes('>Branch Manager</p>'),"HPM role title must match supplied record");
+assert(!resume.includes("Regional Operations Manager"),"Do not introduce an unconfirmed title");
+assert(resume.includes('>2025–August 2026</span>'),"Confirmed HPM end month must remain");
+for(const disputed of ["June 2022–August 2024","April 2021–June 2022","December 2019–April 2021"])
+ assert(!resume.includes(disputed),"Conflicted month-level role dates must be reconciled before publication");
+const pasOverview=read("research/nightfall/projects/pas-overview.md");
+assert(pasOverview.includes(String.raw`\(B\)`),"PAS formula missing correct inline math delimiters");
+assert(pasOverview.includes(String.raw`\[`)&&pasOverview.includes(String.raw`\sum_{k=0}^{n-1}B^k`),
+  "PAS finite-series formula not valid Markdown LaTeX");
+assert(!pasOverview.includes("matrix (B\\)"),"PAS old malformed notation must not reappear");
+const careerLedger=read("portfolio/openai-research-programs/CAREER_EVIDENCE.md");
+assert(careerLedger.includes("Applicant verification ledger") && careerLedger.includes("LinkedIn current role"));
 console.log("Portfolio: approved scoped findings, source-linked mechanism transfers, updates, demotions and unlisted boundaries pass.");
