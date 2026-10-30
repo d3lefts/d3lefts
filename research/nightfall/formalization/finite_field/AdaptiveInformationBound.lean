@@ -15,38 +15,28 @@ is claimed by this file alone.
 
 namespace Nightfall.FiniteField
 
-private theorem square_expansion (u v : Nat) :
-    ((u + 2) * (v + 1) + 1) ^ 2 =
-      (u + 2) * (v + 2) ^ 2 +
-      (u + 1) * ((u + 2) * v ^ 2 + (2 * u + 4) * v + (u + 1)) := by
-  simp only [Nat.pow_two, Nat.add_mul, Nat.mul_add, Nat.mul_assoc,
-    Nat.mul_comm, Nat.mul_left_comm]
-  omega
-
-private theorem square_core (u v : Nat) :
-    (u + 2) * (v + 2) ^ 2 <
-      ((u + 2) * (v + 1) + 1) ^ 2 := by
-  rw [square_expansion]
-  have hp : 0 <
-      (u + 1) * ((u + 2) * v ^ 2 + (2 * u + 4) * v + (u + 1)) := by
-    apply Nat.mul_pos
-    · omega
-    · omega
+private theorem square_add_one (x : Nat) :
+    (x + 1) ^ 2 = x * x + x + x + 1 := by
+  simp only [Nat.pow_two, Nat.add_mul, Nat.mul_add,
+    Nat.mul_one, Nat.one_mul]
   omega
 
 theorem information_square_bound (d r : Nat) (hd : 2 ≤ d) (hr : 1 ≤ r) :
     d * (r + 1) ^ 2 < (d * r + 1) ^ 2 := by
-  cases d with
-  | zero => omega
-  | succ d =>
-    cases d with
-    | zero => omega
-    | succ u =>
-      cases r with
-      | zero => omega
-      | succ v =>
-        simpa [Nat.succ_eq_add_one, Nat.add_assoc, Nat.add_comm,
-          Nat.add_left_comm] using square_core u v
+  have hrr : r ≤ r * r := by
+    simpa using (Nat.mul_le_mul_right r hr)
+  have hr1 : 1 ≤ r * r := by omega
+  have hdr : d ≤ d * (r * r) := by
+    simpa using (Nat.mul_le_mul_left d hr1)
+  have h2 : 2 * (d * (r * r)) ≤ d * (d * (r * r)) :=
+    Nat.mul_le_mul_right (d * (r * r)) hd
+  have hf : (d * r) * (d * r) = d * (d * (r * r)) := by ac_rfl
+  have hprod : d * (r * r) + d ≤ (d * r) * (d * r) := by
+    rw [hf]
+    omega
+  rw [square_add_one (d * r), square_add_one r]
+  simp only [Nat.mul_add, Nat.mul_one]
+  omega
 
 theorem information_power_bound (d r k : Nat)
     (hd : 2 ≤ d) (hr : 1 ≤ r) (hk : 2 ≤ k) :
