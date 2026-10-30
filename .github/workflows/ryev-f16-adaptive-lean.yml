@@ -25,15 +25,18 @@ jobs:
           sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain "$(cat lean-toolchain)"
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
           "$HOME/.elan/bin/lean" --version
-      - name: Kernel-check finite adaptive table and all-k phase factorization
+      - name: Kernel-check finite adaptive table (Lean standard propext dependency disclosed)
+        shell: bash
+        run: |
+          set -euo pipefail
+          lean research/nightfall/formalization/adaptive_f16/AdaptiveBlock.lean
+      - name: Strict no-axiom audit of counting and all-k phase factorization
         shell: bash
         run: |
           set -euo pipefail
           python3 scripts/lean_bridge.py \
             research/nightfall/formalization/adaptive_f16/AdaptiveBlock.lean \
             --strict \
-            --decl Nightfall.AdaptiveF16.first_reading_branch_boolean_certificate \
-            --decl Nightfall.AdaptiveF16.adaptive_twenty_seven_boolean_certificate \
             --decl Nightfall.AdaptiveF16.worst_case_lower_bound_k4 \
             --decl Nightfall.AdaptiveF16.worst_case_lower_bound_k7 \
             --decl Nightfall.AdaptiveF16.phase_factorization \
