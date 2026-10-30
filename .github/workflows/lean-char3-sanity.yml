@@ -60,6 +60,10 @@ jobs:
             --decl Nightfall.PhaseBlock.subgroup_cubic_identity \
             --decl Nightfall.PhaseBlock.eighty_one_distinct_outputs \
             --decl Nightfall.PhaseBlock.block_boolean_certificate \
+            --decl Nightfall.PhaseBlock.cube_fibers \
+            --decl Nightfall.PhaseBlock.field_inverses \
+            --decl Nightfall.PhaseBlock.seven_queries_counting_gap \
+            --decl Nightfall.PhaseBlock.block_injective \
             --allow-axiom propext \
             --timeout 300 \
             --json-out lean-receipts/phase-block.json || { cat lean-receipts/phase-block.json; exit 1; }
