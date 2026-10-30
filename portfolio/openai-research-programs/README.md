@@ -21,7 +21,7 @@ His bachelor’s training in systems engineering includes [a coauthored paper at
 | Coordinate complex external partners | Autograph marketplace, DraftKings, ESPN and Lionsgate product/partnership activity | Public announcements verify the relationships, not his specific actions |
 | Work with researchers, engineering, creative and business teams | Amazon original content/analytics work and product teams; Walmart R&D | Professional history, with title-specific credits requiring firsthand verification |
 | Drive accountability, readiness and risk management | Army artillery battery commander (~100 soldiers); separate logistics leadership | Career history and self-reported team sizes |
-| Frame research questions and adversarial reviews | 2015 systems paper and NIGHTFALL, including published negative and conditional evidence | NIGHTFALL since August 2026 is a short self-directed, AI-assisted endeavor; its agent critiques are internal |
+| Frame research questions and adversarial reviews | 2015 systems paper and NIGHTFALL, with finite technical checks and still-open external validation | NIGHTFALL since August 2026 is a short self-directed, AI-assisted endeavor; its agent critiques are internal |
 
 ## What to lead with
 
@@ -30,6 +30,20 @@ His bachelor’s training in systems engineering includes [a coauthored paper at
 3. **Research habits:** the 2015 conference coauthorship and recent source-scoped verification exploration through NIGHTFALL.
 
 The full public research archive is supplementary. The six-record retrieval sample is a deliberately narrow demonstration, **not** evidence of production Search or ML deployment ability.
+
+## Portfolio questions and documented answers
+
+The public [attribution and evidence FAQ](https://d3lefts.github.io/d3lefts/portfolio.html#portfolio-questions) addresses the questions a technical interviewer may notice. It is opt-in, located after the career case studies, and does not promote any research claim.
+
+**The most important distinction:** public corporate releases establish the existence of company programs, while personal workstream responsibilities and the $20M+/ $50M+ figures are applicant-reported. The Walmart figure denotes annual **investment support**; Autograph's figure denotes **total marketplace transaction volume**, not individually generated revenue.
+
+**Research credits:** Vesper, Axiom, Lemnis, Ryev and Tessera are AI workflow roles. They are not human staff. Devin sets research directions, tests understanding, and decides what to publish; AI models produce much of the technical research and software output. Internal cross-agent checking is not independent human evaluation. “Original Findings” is an internal label for bounded artifacts, not a declaration of five new worldwide theorems.
+
+**Specific boundaries:** SourceBound's 14,000 pages are synthetic, not an independent real-web accuracy sample. PAS v2's exact finite-DAG identities do not demonstrate improved prioritization. The earlier unfavorable retrospective exercise is retained in a historical record. Amazon title launch announcements postdate the described employee tenure and do not independently establish individual production credits.
+
+**Product-to-research-program transition:** The applicant's strongest experience is leading cross-functional programs, executive decisions and military operations. The 2015 coauthored systems research and recent independent AI-assisted exploration explain an interest in scientific verification. The application should target research program management, not imply established independent research-scientist credentials.
+
+**Before submission:** The [career evidence ledger](CAREER_EVIDENCE.md) now lists outstanding employment-month discrepancies. HPM's end in August 2026 and Branch Manager title are established by the applicant. A corrected LinkedIn current-position description and final desktop résumé should be reconciled by the applicant; this repository cannot modify LinkedIn records.
 
 ## Interview preparation checkpoints
 

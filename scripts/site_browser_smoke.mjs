@@ -69,6 +69,15 @@ try{
    assert((await page.locator("#career").boundingBox()).y <
      (await page.locator("#work").boundingBox()).y,
      "Professional work must be discoverable before research prototypes");
+   const clarity=page.locator("#portfolio-questions details");
+   assert.equal(await clarity.count(),1,"Career attribution disclosure is present");
+   assert.equal(await clarity.getAttribute("open"),null,"Attribution detail stays opt-in");
+   await clarity.locator("summary").click();
+   assert.match(await clarity.innerText(),/SourceBound work on real-world websites/i);
+   assert.match(await clarity.innerText(),/AI models|AI assistants/i);
+   assert.match(await clarity.innerText(),/Autograph/i);
+   await clarity.locator("summary").click();
+   assert.equal(await clarity.getAttribute("open"),null,"Attribution detail collapses without changing research claims");
    const canonicalTotal=await page.evaluate(()=>window.NightfallRegistry.claims.length);
    assert.equal(await page.locator("#pf-live-records .pf-ledger-card").count(),canonicalTotal,
      "Portfolio must include every published canonical claim, no manual copy");
