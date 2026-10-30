@@ -46,20 +46,25 @@ def third (x y : F9) : F9 :=
 def readings (x y : F9) : F9 × F9 × F9 :=
   (sq x, sq y, third x y)
 
+def fromIndex (i : Fin 9) : F9 :=
+  (red i.val, red (i.val / 3))
+
 theorem f9_three_readings_identify_global_sign :
-    ∀ x y u v : F9,
-      readings x y = readings u v →
-      (x = u ∧ y = v) ∨ (x = neg u ∧ y = neg v) := by
+    ∀ i j k l : Fin 9,
+      readings (fromIndex i) (fromIndex j) =
+      readings (fromIndex k) (fromIndex l) →
+      (fromIndex i = fromIndex k ∧ fromIndex j = fromIndex l) ∨
+      (fromIndex i = neg (fromIndex k) ∧ fromIndex j = neg (fromIndex l)) := by
   decide
 
 -- For four adaptive singleton tests, follow the all-"nonmember" branch:
 -- four tested directions always leave two projective points indistinguishable.
+def survivingDirections (a b c d : Fin 6) : List Nat :=
+  (List.range 6).filter
+    (fun i => i != a.val && i != b.val && i != c.val && i != d.val)
+
 theorem four_singleton_queries_leave_two_directions :
-    ∀ a b c d : Fin 6,
-      ∃ u v : Fin 6,
-        u ≠ v ∧
-        u ≠ a ∧ u ≠ b ∧ u ≠ c ∧ u ≠ d ∧
-        v ≠ a ∧ v ≠ b ∧ v ≠ c ∧ v ≠ d := by
+    ∀ a b c d : Fin 6, 2 ≤ (survivingDirections a b c d).length := by
   decide
 
 -- Six projective directions are 0..5; signal index 6 is the zero vector.
