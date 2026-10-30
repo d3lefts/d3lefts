@@ -39,7 +39,7 @@
  });
  // Claim identities are explicit in the published library HTML, rather than
  // inferred from headings, which editors may legitimately rename. The Proof
- // Passport registry owns scope and evidence status for these six records.
+ // Passport registry owns scope and evidence status for this curated claim set.
  const registry=window.NightfallRegistry;
  if(registry){
   for(const card of document.querySelectorAll(".atlas-card[data-claim-id]")){

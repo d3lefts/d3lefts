@@ -106,8 +106,8 @@ def main() -> int:
         FAILURES.append("EDITORIAL: homepage names five decisions but exposes four stages")
     if 'id="observatory"' not in homepage_text or 'href="constellation.html#map"' not in homepage_text:
         FAILURES.append("EDITORIAL: source-linked Constellation handoff missing")
-    if "Explore the six Proof Passports" not in library_text or "Explore the five Proof Passports" in library_text:
-        FAILURES.append("EDITORIAL: canonical six-Passport link miscount")
+    if "Explore the eleven Proof Passports" not in library_text or "Explore the six Proof Passports" in library_text:
+        FAILURES.append("EDITORIAL: canonical eleven-Passport link miscount")
     if 'class="instrument-workflow"' in homepage_text or 'nf-home-toolbox' in homepage_text:
         FAILURES.append("JOURNEY: duplicated research tool directory returned to homepage")
     if "Complete archive mirror pending" in registry_text or "Missing public frozen witness release" in registry_text:
