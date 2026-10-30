@@ -10,7 +10,7 @@ const types={".html":"text/html; charset=utf-8",".js":"text/javascript; charset=
 const server=createServer(async(req,res)=>{
  try{
   const name=decodeURIComponent(new URL(req.url,"http://localhost").pathname);
-  const p=resolve(join(root,normalize(name).replace(/^\\/+/, "")||"index.html"));
+  const p=resolve(join(root,normalize(name).replace(new RegExp("^/+"), "")||"index.html"));
   if(p!==root&&!p.startsWith(root+sep)){res.writeHead(403).end();return}
   const bytes=await readFile(p);
   res.writeHead(200,{"Content-Type":types[p.slice(p.lastIndexOf("."))]||"application/octet-stream"}).end(bytes);
