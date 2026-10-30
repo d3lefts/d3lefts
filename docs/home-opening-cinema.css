@@ -223,3 +223,30 @@ html[data-nf-theme="dusk"] .nf-opening-overlap-unit{color:#cdd1e3}
   #main > .hero.nf-opening .nf-opening-overlap{width:100%}
   #main > .hero.nf-opening .aside-footer{width:100%}
 }
+
+/* First-fold numerical label remains visible above the heading on narrow phones. */
+#main > .hero.nf-opening .nf-opening-scoreline{
+  display:flex;align-items:center;gap:13px;flex-wrap:wrap;min-width:0;
+  border-left:2px solid #f5d88f;padding:7px 0 7px 16px;
+  margin:clamp(18px,3vw,28px) 0 8px;color:#fff0e7;
+}
+#main > .hero.nf-opening .nf-opening-scoreline strong{
+  font:500 clamp(17px,2.15vw,29px)/1.25 var(--mono);
+  letter-spacing:-.05em;font-variant-numeric:tabular-nums;
+  overflow-wrap:anywhere;color:#f5d88f;
+}
+#main > .hero.nf-opening .nf-opening-scoreline span{
+  font:600 9px/1.5 var(--mono);letter-spacing:.08em;
+  color:#eddce0;max-width:31ch;
+}
+html[data-nf-theme="dusk"] #main > .hero.nf-opening .nf-opening-scoreline{
+  border-left-color:#e2d28c;
+}
+html[data-nf-theme="dusk"] #main > .hero.nf-opening .nf-opening-scoreline strong{
+  color:#e2d28c;
+}
+@media(max-width:760px){
+  #main > .hero.nf-opening .nf-opening-scoreline{gap:8px;margin-top:16px;padding-left:12px}
+  #main > .hero.nf-opening .nf-opening-scoreline strong{font-size:clamp(18px,5vw,25px)}
+  #main > .hero.nf-opening .nf-opening-scoreline span{font-size:9px;max-width:none}
+}
