@@ -31,12 +31,8 @@ def certificate(p,d):
               ((a*v[1]+b*w[1])+j)%p)
              for a in (0,1,2) for b in (0,1,2)
              for i in range(2*D-1) for j in range(2*D-1)}
-    if p==13:
-        hole=(6,9)
-        assert len(fullsum)==167
-    else:
-        hole=(2*D-2,2*D-1)
-        assert len(fullsum)==p*p-6
+    hole=(2*D-2,2*D+1)
+    assert len(fullsum)==(167 if p==13 else p*p-6)
     assert hole not in fullsum
     if p<=31:
         assert fullsum=={plus(a,b) for a in cube for b in cube}
