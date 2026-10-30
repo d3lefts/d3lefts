@@ -1,5 +1,5 @@
 /* NIGHTFALL / TWO READINGS OF ONE RESEARCH RECORD
-   THE ILLUSIONARY ARCHIVE (light) and THE UNDERBELLY (dusk).
+   NULL FIELD (deep-space Archive) and NEW MOON (warm night).
    Layout is narrative; claim data, source records, and verification tiers stay shared.
    An experience switch is not an evidence-status switch. */
 
@@ -14,10 +14,10 @@ html[data-nf-theme="dusk"] .nf-experience-archive{display:none!important}
 
 /* NULL FIELD Archive: specimen columns, sensor traces, unhurried negative space. */
 html:not([data-nf-theme="dusk"]) #main>.hero{
-  background:radial-gradient(ellipse at 100% 20%,#83c2b516,transparent 52%);
+  background:radial-gradient(ellipse at 100% 20%,#a6365b16,transparent 52%);
 }
 html:not([data-nf-theme="dusk"]) #main>.hero .hero-title em{
-  color:#b4e3d6;font-style:italic;
+  color:#e46a84;font-style:italic;
 }
 html:not([data-nf-theme="dusk"]) #main>.hero .hero-aside{
   box-shadow:8px 8px 0 #2b4247;
@@ -37,7 +37,7 @@ html:not([data-nf-theme="dusk"]) .nf-dual-index{
   max-width:47ch;font:400 14px/1.72 var(--sans);
   color:var(--muted);
 }
-html:not([data-nf-theme="dusk"]) .nf-dual-intro h2 em{color:#b4e3d6}
+html:not([data-nf-theme="dusk"]) .nf-dual-intro h2 em{color:#e46a84}
 .nf-archive-shelf{
   display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
   gap:0;border:1px solid #3b4c53;
@@ -53,11 +53,11 @@ html:not([data-nf-theme="dusk"]) .nf-dual-intro h2 em{color:#b4e3d6}
 .nf-archive-accession:last-child{border-right:0}
 .nf-archive-accession:hover{background:#1b292d}
 .nf-archive-accession:focus-visible{
-  outline:3px solid #b4e3d6;outline-offset:-4px;position:relative;z-index:1;
+  outline:3px solid #e46a84;outline-offset:-4px;position:relative;z-index:1;
 }
 .nf-archive-id{
   display:block;padding:0 0 13px;border-bottom:1px solid #3b4c53;
-  font:600 9px/1.5 var(--mono);letter-spacing:.085em;color:#b4e3d6;
+  font:600 9px/1.5 var(--mono);letter-spacing:.085em;color:#e46a84;
   width:100%;
 }
 .nf-archive-accession strong{
@@ -68,7 +68,7 @@ html:not([data-nf-theme="dusk"]) .nf-dual-intro h2 em{color:#b4e3d6}
   font:400 12px/1.67 var(--sans);color:#afc4c5;
 }
 .nf-archive-accession small{
-  font:600 10px/1.5 var(--mono);color:#b4e3d6;
+  font:600 10px/1.5 var(--mono);color:#e46a84;
   margin-top:auto;padding-top:18px;
   text-decoration:underline;text-underline-offset:4px;
 }
@@ -216,7 +216,7 @@ html:not([data-nf-theme="dusk"]) #main .nf-observatory-head{
 }
 html:not([data-nf-theme="dusk"]) #main :is(#flagship-title,#instruments-heading,#nf-observatory-title,#nf-replay-title,#sf-systems-heading,#review-title,#method-title) em,
 html:not([data-nf-theme="dusk"]) #main #review-title i{
- color:#b4e3d6;
+ color:#e46a84;
 }
 html[data-nf-theme="dusk"] #main .flagships>.section-head{
  position:relative;padding-left:24px;
@@ -255,8 +255,8 @@ html[data-nf-theme="dusk"] #main #evidence-title{
 .nf-dual-colophon-links a:hover{text-decoration:underline;text-underline-offset:5px}
 .nf-dual-colophon-links a:focus-visible{outline:2px solid currentColor;outline-offset:4px}
 html:not([data-nf-theme="dusk"]) .nf-dual-colophon{color:#edf4f1;background:#080e12}
-html:not([data-nf-theme="dusk"]) .nf-dual-colophon h2 em{color:#b4e3d6}
-html:not([data-nf-theme="dusk"]) .nf-dual-colophon-links a{color:#b4e3d6;border-color:#3b4c53}
+html:not([data-nf-theme="dusk"]) .nf-dual-colophon h2 em{color:#e46a84}
+html:not([data-nf-theme="dusk"]) .nf-dual-colophon-links a{color:#e46a84;border-color:#3b4c53}
 html[data-nf-theme="dusk"] .nf-dual-colophon{
  color:#edf0fb;border-color:#4b5672;
  background:radial-gradient(ellipse at 74% 33%,#43375635,transparent 68%)
