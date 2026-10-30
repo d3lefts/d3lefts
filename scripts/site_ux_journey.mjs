@@ -50,57 +50,26 @@ try{
   page.on("response",r=>{if(r.url().startsWith(origin)&&r.status()>=400)report.runtimeFaults.push({url:r.url(),type:"HTTP "+r.status()})});
 
   // 00–10: Enter with no prior NIGHTFALL knowledge. Assess first mental model.
-  await step("00–03","Homepage: identify research thesis, claims, next action",async()=>{
+  await step("00–03","Homepage: evidence without competing directories",async()=>{
     await visit("index.html");
-    assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk","First-time journey enters Night");
-    const hero=await page.locator("#main > .hero h1:visible").innerText();
-    assert.match(hero,/Put the claim.*to the test/s,"Night invites the visitor into a concrete scientific test");
-    assert.equal(await page.locator(".flagship-card").count(),4);
-    assert.match(await page.locator(".ticker").innerText(),/33/);
-    assert.equal(await page.locator(".nf-experience-underbelly .hero-actions a:visible").count(),2,"Night opens two concrete research decisions");
-    assert.equal(await page.locator(".nf-experience-archive .hero-actions a:visible").count(),0,"Archive decisions are excluded from the Night experience");
-    assert.equal(await page.locator(".nf-section-index").evaluate(el=>el.open),false,"Section index is opt-in");
-    assert.equal(await page.locator(".nf-home-toolbox").evaluate(el=>el.open),false,"Specialist directory is opt-in");
-    assert.equal(await page.locator('.nf-home-tool-entry a[href="join.html#claim-investigation"]').count(),1);
+    assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk","Night default");
+    assert.match(await page.locator("#main > .hero h1:visible").innerText(),/Put the claim.*to the test/s);
+    assert.equal(await page.locator(".flagship-card").count(),4,"Candidate proof status is inspectable");
+    assert.equal(await page.locator(".nf-experience-underbelly .hero-actions a:visible").count(),2);
+    assert.equal(await page.locator(".nf-experience-archive .hero-actions a:visible").count(),0);
+    assert.equal(await page.locator(".nf-journey-rail").count(),0);
+    assert.equal(await page.locator(".nf-process-thread").count(),0);
+    assert.equal(await page.locator(".nf-home-toolbox").count(),0);
+    assert.equal(await page.locator(".nf-section-index").count(),0);
+    const frontiers=page.locator(".nf-frontiers-disclosure");
+    assert.equal(await frontiers.evaluate(el=>el.open),false);
+    assert.match(await frontiers.locator("summary").innerText(),/conditional.*imported.*candidate/i);
+    await frontiers.locator("summary").click();
+    assert.equal(await page.locator(".flagship-eyebrow").count(),4);
+    assert.ok((await page.locator("main section").count())<=13);
+    assert.ok((await page.locator("main a").count())<=40);
     await screenshot("01-desktop-home.png");
-    await page.locator(".nf-home-toolbox summary").click();
-    assert.equal(await page.locator(".sf-ecosystem .sf-system-card:visible").count(),4,"All instruments remain discoverable on demand");
-    const frontierDisclosure=page.locator(".nf-frontiers-disclosure");
-    assert.equal(await frontierDisclosure.evaluate(el=>el.open),false,"Secondary flagships should initially be folded");
-    assert.match(await frontierDisclosure.locator("summary").innerText(),/conditional.*imported.*candidate/i,
-      "Proof-status distinctions must be visible before expansion");
-    await frontierDisclosure.locator("summary").click();
-    assert.equal(await frontierDisclosure.evaluate(el=>el.open),true,"Secondary flagships must open on demand");
-    const labels=await page.locator(".flagship-eyebrow").allInnerTexts();
-    assert.equal(labels.length,4);
-    assert.ok(labels.some(x=>/finite/i.test(x)),"Explicit finite scope absent");
-    assert.ok(labels.some(x=>/conditional|candidate|imported|manuscript/i.test(x)),"Conditional status absent");
-    const editorial=await page.evaluate(()=>{
-      const dramatic=document.querySelector(".nf-interlude");
-      const quiet=document.querySelector(".nf-quiet-note");
-      const systems=[...document.querySelectorAll(".sf-ecosystem .sf-system-card")];
-      return {
-        dramaticHeading:dramatic?.querySelector("h2")?.textContent?.trim()||"",
-        dramaticBackground:dramatic?getComputedStyle(dramatic).backgroundColor:"",
-        quietHeading:quiet?.querySelector("h2")?.textContent?.trim()||"",
-        correctSequence:!!(dramatic&&quiet&&
-          (document.querySelector("#live-case").compareDocumentPosition(dramatic)&Node.DOCUMENT_POSITION_FOLLOWING)&&
-          (document.querySelector("#evidence").compareDocumentPosition(quiet)&Node.DOCUMENT_POSITION_FOLLOWING)),
-        cardWidths:systems.map(x=>Math.round(x.getBoundingClientRect().width)),
-        cardRows:systems.map(x=>Math.round(x.getBoundingClientRect().top))
-      };
-    });
-    assert.match(editorial.dramaticHeading,/Let the evidence.*face criticism/s);
-    assert.match(editorial.quietHeading,/Name what.*remains open/s);
-    assert.equal(editorial.dramaticBackground,"rgb(10, 16, 33)","Default new-moon editorial interlude uses deep indigo");
-    assert.equal(editorial.correctSequence,true,"Editorial pacing should preserve claim hierarchy");
-    assert.equal(editorial.cardWidths.length,4);
-    assert.ok(editorial.cardWidths[0]<editorial.cardWidths[1],"Asymmetric cards collapsed on desktop");
-    assert.equal(editorial.cardRows[0],editorial.cardRows[1]);
-    assert.equal(editorial.cardRows[2],editorial.cardRows[3]);
-    assert.ok(editorial.cardRows[2]>editorial.cardRows[0]);
-    note("strength","Immediate research proposition, four evidence-scoped flagships, and explicit evidence tiering are visible.","homepage");
-    await screenshot("01-desktop-expanded-tools.png");
+    note("strength","Three primary findings, visually continuous cinema and one source-bound handoff per destination.","homepage");
   });
   await step("03–06","Homepage: interactive Sidon witness and transparent finite scope",async()=>{
     await visit("index.html#live-case");
@@ -113,16 +82,14 @@ try{
     assert.ok(await link.count()>0,"Missing Sidon evidence action");
     note("strength","The exact 30-point construction is explorable before opening a separate checker.","witness");
   });
-  await step("06–10","Homepage: evidence source and menu orientation",async()=>{
+  await step("06–10","Homepage: find full sources without redundancy",async()=>{
     await visit("index.html");
-    assert.ok(await page.locator('a[href="evidence.html"]').count()>0);
-    assert.ok(await page.locator('a[href="desk.html"]').count()>0);
-    assert.ok(await page.locator('a[href="research.html"]').count()>0);
-    const sections=await page.locator("main section").count();
-    assert.equal(await page.locator("#lab-jump-nav a").count(),7);
-    assert.equal(await page.locator(".nf-section-index").evaluate(el=>el.open),false);
+    assert.equal(await page.locator("#observatory a[href='constellation.html#map']").count(),1);
+    assert.equal(await page.locator("#review a[href='review.html#erdos']").count(),1);
+    assert.equal(await page.locator("#research-systems a[href='evidence.html#public-downloads']").count(),1);
+    assert.equal(await page.locator("#work a[href='research.html']").count(),1);
     assert.equal(await page.locator(".flagship-context").count(),4);
-    note("improvement","The full homepage still contains "+sections+" sections; a section index offers immediate navigation without truncating content.","homepage");
+    note("strength","Research, connections and independent review have distinct destinations.","homepage");
   });
 
   // 10–20: From a bold numerical result to the fine print.
@@ -310,21 +277,12 @@ try{
     assert.equal(await page.locator("#site-nav").isVisible(),true);
     await page.keyboard.press("Escape");
     assert.equal(await page.locator("#site-nav").isVisible(),false);
-    assert.ok(await page.locator(".nf-interlude h2").isVisible());
     assert.ok(await page.locator(".nf-quiet-note h2").isVisible());
-    assert.equal(await page.locator(".nf-home-toolbox").evaluate(el=>el.open),false);
+    assert.equal(await page.locator("#observatory a[href='constellation.html#map']").count(),1);
     await screenshot("08-mobile-home.png");
-    await page.locator(".nf-home-toolbox summary").click();
-    const mobileLayout=await page.evaluate(()=>{
-      const cards=[...document.querySelectorAll(".sf-ecosystem .sf-system-card")];
-      const boxes=cards.map(x=>x.getBoundingClientRect());
-      return {stacked:boxes.every((r,i)=>i===0||r.top>boxes[i-1].top),widths:boxes.map(x=>x.width)};
-    });
-    assert.ok(mobileLayout.stacked,"Instrument cards must stack on narrow phones");
-    assert.ok(mobileLayout.widths.every(x=>x<390));
     const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
     assert.ok(overflow<=3,"Homepage horizontal overflow "+overflow);
-    await screenshot("08-mobile-tools-expanded.png");
+    await screenshot("08-mobile-streamlined.png");
   });
   await step("53–56","Phone: long research library and modal-less claim tasks",async()=>{
     await visit("research.html");
@@ -358,6 +316,9 @@ try{
     await page.setViewportSize({width:1440,height:900});
     await visit("erdos-paper.html");
     await page.locator('a[href*="join.html?claim=erdos36"][href*="obligation=0"]').first().click();
+    await page.waitForURL(/join\.html\?claim=erdos36/);
+    await page.waitForFunction(()=>document.querySelector("#cj-claim")?.value==="erdos36",
+      null,{timeout:5000});
     assert.equal(await page.locator("#cj-claim").inputValue(),"erdos36");
     assert.equal(await page.locator("#cj-obligation").inputValue(),"0");
     assert.match(await page.locator("#cj-condition").innerText(),/zero extension/i);
@@ -379,6 +340,9 @@ try{
     assert.match(await page.locator("#cj-duty").innerText(),/competition input identity/i);
     await visit("living-paper.html");
     await page.locator('a[href*="join.html?claim=sidon30"][href*="obligation=0"]').first().click();
+    await page.waitForURL(/join\.html\?claim=sidon30/);
+    await page.waitForFunction(()=>document.querySelector("#cj-claim")?.value==="sidon30",
+      null,{timeout:5000});
     assert.equal(await page.locator("#cj-claim").inputValue(),"sidon30");
     assert.match(await page.locator("#cj-duty").innerText(),/specialist audit/i);
     note("strength","A sourced Living Paper now preserves the exact open obligation and saved unreviewed notes across a return trip; an unrelated finite assignment is never auto-selected.","claim-continuity");

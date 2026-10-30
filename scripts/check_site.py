@@ -94,9 +94,8 @@ def main() -> int:
         FAILURES.append("DESIGN: shared guided navigation stylesheet missing")
     if ".instrument-workflow a:nth-child(5)" in css or "grid-template-columns:repeat(5,minmax(0,1fr))" in css:
         FAILURES.append("DESIGN: superseded fifth-stage layout was reintroduced")
-    if ('class="compare-table-wrap" role="region" tabindex="0"' not in
-            (DOCS / "index.html").read_text(encoding="utf-8")):
-        FAILURES.append("ACCESSIBILITY: evidence comparison requires keyboard-scrollable region")
+    if 'href="evidence.html#public-downloads"' not in (DOCS / "index.html").read_text(encoding="utf-8"):
+        FAILURES.append("ACCESSIBILITY: homepage must lead to the full, accessible evidence archive")
     # Cross-page editorial and archival consistency is a correctness property,
     # distinct from arithmetic verification and from external mathematical review.
     homepage_text = (DOCS / "index.html").read_text(encoding="utf-8")
@@ -105,13 +104,12 @@ def main() -> int:
     registry_text = (DOCS / "research-registry.js").read_text(encoding="utf-8")
     if "FIVE DISTINCT DECISIONS" in homepage_text or "Five decisions." in homepage_text:
         FAILURES.append("EDITORIAL: homepage names five decisions but exposes four stages")
-    if 'id="instruments-heading"' not in homepage_text or 'class="instrument-workflow"' not in homepage_text:
-        FAILURES.append("EDITORIAL: four-stage workflow section missing")
+    if 'id="observatory"' not in homepage_text or 'href="constellation.html#map"' not in homepage_text:
+        FAILURES.append("EDITORIAL: source-linked Constellation handoff missing")
     if "Explore the six Proof Passports" not in library_text or "Explore the five Proof Passports" in library_text:
         FAILURES.append("EDITORIAL: canonical six-Passport link miscount")
-    stages = re.search(r'<nav class="instrument-workflow"[^>]*>(.*?)</nav>', homepage_text, re.S)
-    if not stages or len(re.findall(r'<a\s', stages.group(1))) != 4:
-        FAILURES.append("JOURNEY: precisely four linked stages required")
+    if 'class="instrument-workflow"' in homepage_text or 'nf-home-toolbox' in homepage_text:
+        FAILURES.append("JOURNEY: duplicated research tool directory returned to homepage")
     if "Complete archive mirror pending" in registry_text or "Missing public frozen witness release" in registry_text:
         FAILURES.append("REPRODUCIBILITY: canonical registry repeats superseded release claim")
     if "remain outside that curated public release" in review_text or "release queue" in library_text:
@@ -189,8 +187,8 @@ def main() -> int:
     ref_js = (DOCS / "referee-app.js").read_text(encoding="utf-8")
     if 'requestedDomain === "sidon"' not in ref_js:
         FAILURES.append("RESEARCH JOURNEY: allowlisted Sidon verifier deep link absent")
-    if '<b>33</b><span>Curated research documents' not in homepage_text:
-        FAILURES.append("EDITORIAL: 33-document curated homepage inventory mismatch")
+    if "all 33 curated dossiers" not in homepage_text:
+        FAILURES.append("EDITORIAL: 33-document curated research library link missing")
     # Separate working-research library: preserve originality whitelist and evidence boundaries.
     library = (DOCS / "research.html").read_text(encoding="utf-8")
     entries = re.findall(r'<article class="atlas-card" data-domain="([^"]+)" data-evidence="([^"]+)"', library)
@@ -256,8 +254,8 @@ def main() -> int:
     for code_num in range(1, 11):
         if "#p" + str(code_num).zfill(2) + "-" not in agenda:
             FAILURES.append("AGENDA GATE: missing numbered proposal anchor")
-    if 'href="agenda.html"' not in homepage_text or 'src="agenda.js"' not in agenda:
-        FAILURES.append("AGENDA GATE: public navigation missing")
+    if 'src="agenda.js"' not in agenda or 'href="agenda.html"' not in library_text:
+        FAILURES.append("AGENDA GATE: library must retain public navigation to untested proposals")
     # Discovery Engine seeded presets are part of the public presentation.
     # Legacy locally saved browser work can survive without being featured.
     core = (DOCS / "discovery-core.js").read_text(encoding="utf-8")

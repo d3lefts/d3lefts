@@ -55,8 +55,7 @@ try{
       nav:pick(".nav-call"),heroAction:pick(".hero-actions .button"),
       coreAction:pick(".co-primary"),joinMethod:pick(".join-method"),
       sidon:pick(".lp-hero-aside"),feature:pick(".feature.lime"),
-      system:pick(".nf-home-tool-entry"),observatory:pick(".nf-observatory-field"),
-      lens:pick('.nf-observatory-lenses button[aria-pressed="true"]'),
+      constellationRoute:!!document.querySelector('#observatory a[href="constellation.html#map"]'),
       discoverySidebar:pick("#app .side"),discoveryMark:pick("#app .brand-mark"),
       claimSidebar:pick(".app .sidebar"),claimMark:pick(".app .brandMark"),
       readout:pick(".desk-readout"),raised:pick(".join-result-grid article"),
@@ -69,8 +68,7 @@ try{
    assert.equal(v.bodyBg,"rgb(36, 26, 52)",name+": light canvas");
    assert.ok(v.overflow<=4,name+": no "+width+"px horizontal overflow ("+v.overflow+")");
    const expectations={
-    "index.html":{nav:"rgb(25, 19, 39)",heroAction:"rgb(231, 183, 104)",
-      system:"rgb(25, 19, 39)",lens:"rgb(231, 183, 104)"},
+    "index.html":{nav:"rgb(25, 19, 39)",heroAction:"rgb(231, 183, 104)"},
     "constellation.html":{coreAction:"rgb(231, 183, 104)"},
     "join.html":{joinMethod:"rgb(84, 49, 76)",raised:"rgb(59, 44, 75)"},
     "living-paper.html":{sidon:"rgb(25, 19, 39)"},
@@ -80,6 +78,7 @@ try{
     "desk.html":{readout:"rgb(25, 19, 39)"}
    };
    if(name==="index.html"){
+    assert.equal(v.constellationRoute,true,"Homepage includes a dedicated Constellation destination without duplicating full graph");
     const diagram=await page.evaluate(()=>{
       const svg=document.querySelector(".hero-aside .diagram");
       return {signal:getComputedStyle(svg.querySelector('circle[fill="#d8c38a"]')).fill,

@@ -190,10 +190,6 @@ try{
    assert.equal(await page.locator("#sidon-witness .sf-point").count(),30,"30 exact finite points on first view");
    assert.equal(await page.locator("#sidon-witness .sf-point.chosen").count(),17,"17-point subset highlighted");
    assert.equal(await page.locator("#sidon-toggle").isDisabled(),false,"interactivity enabled only after the checker loads");
-   assert.equal(await page.locator(".instrument-workflow a").count(),4,"four source-linked research stages");
-   assert.match(await page.locator("#instruments-heading").innerText(),/From open question.*to a checkable test|How a claim.*earns confidence/s,"Four-stage workflow is framed appropriately for the active experience");
-   assert.equal(await page.locator(".nf-replay-steps li").count(),4,"four actionable independent-replay steps");
-   assert.match(await page.locator(".nf-replay-release").innerText(),/public research archives/);
    const portalManifest=await (await page.request.get(origin+"reproduction-manifest.json")).json();
    assert.equal(portalManifest.claims.length,2,"only exact public finite claims in machine manifest");
    assert.equal(portalManifest.releaseAssets.length,2,"two owner-approved releases only");
@@ -203,7 +199,6 @@ try{
    assert.equal(await noScript.locator("#sidon-witness .sf-point").count(),30,"no-JS exact witness");
    assert.equal(await noScript.locator("#sidon-witness .sf-point.chosen").count(),17,"no-JS chosen subset");
    assert.equal(await noScript.locator("#sidon-toggle").isDisabled(),true,"no inert pretend interaction");
-   assert.equal(await noScript.locator(".nf-replay-steps a").count(),4,"no-JS reproduction pathway");
    await noScript.close();
    await page.goto(origin+"passport.html?claim=erdos36",{waitUntil:"load"});
    assert.equal(await page.locator("#passport-picker a").count(),6,"six canonical Proof Passports");
@@ -399,9 +394,6 @@ try{
    assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem("nightfall.discovery.v1")).projects.length),previous,"Duplicate frozen branch cannot create two portfolios");
 
    await page.goto(origin+"index.html",{waitUntil:"load"});
-   assert.match(await page.locator(".ticker").innerText(),/33/,"homepage current library count");
-   assert.equal(await page.locator("#instruments .instrument-workflow span").count(),4,"four instrument workflow stages");
-   assert.equal(await page.locator('#instruments a[href="exact-research.html#research-tools-directory"]').count(),1,"research tools hub CTA");
    assert.equal(await page.locator("#work.sf-library-invite").count(),1,"owner-curated full research library invitation");
    assert.equal(await page.locator('#work a[href="research.html"]').count(),1,"full research library entry");
    assert.equal(await page.locator('#work a[href="passport.html"]').count(),1,"separate original proof passport entry");
@@ -539,20 +531,13 @@ try{
     assert.equal(await page.locator("#passport-unknown").isVisible(),false,"Valid Passport clears warning");
     assert.match(await page.locator(".pp-coverage").innerText(),/Six canonical Proof Passports, 33 research dossiers/,"Passports explain editorial coverage");
     await page.goto(origin+"index.html",{waitUntil:"load"});
-    assert.equal(await page.locator("#lab-jump-nav a").count(),7,"Long laboratory has seven topical jumps");
-    assert.equal(await page.locator(".nf-section-index").evaluate(el=>el.open),false,"Section directory collapsed by default");
-    assert.equal(await page.locator(".nf-home-toolbox").evaluate(el=>el.open),false,"Specialist directory collapsed by default");
     assert.equal(await page.locator(".nf-experience-archive .hero-actions a").count(),2,"Archive offers two source-reading paths");
     assert.equal(await page.locator(".nf-experience-underbelly .hero-actions a").count(),2,"Underbelly offers two investigation paths");
     assert.equal(await page.locator(".nf-experience-underbelly .hero-actions a").first().isVisible(),true,"Dusk entry offers the active process path");
     assert.equal(await page.locator(".nf-experience-archive .hero-actions a").first().isVisible(),false,"Archive entry is hidden in dusk");
-    await page.locator(".nf-section-index summary").click();
-    assert.equal(await page.locator("#lab-jump-nav").isVisible(),true,"Open section index retains all topical links");
 
     assert.equal(await page.locator(".flagship-context").count(),4,"Each flagship explains meaning of headline metric");
     assert.match(await page.locator(".flagship-context").first().innerText(),/maximum overlap/i,"Numerical extremal value interpreted");
-    await page.locator('#lab-jump-nav a[href="#research-systems"]').click();
-    assert.equal(new URL(page.url()).hash,"#research-systems","Section-index jump works");
     await page.goto(origin+"research.html",{waitUntil:"load"});
     assert.match(await page.locator(".archive-coverage").innerText(),/33 research records.*Six detailed claim passports.*Five separately approved finite findings/s,"Library explains record hierarchy");
     await page.goto(origin+"atlas.html",{waitUntil:"load"});

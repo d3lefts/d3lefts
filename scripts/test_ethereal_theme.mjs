@@ -45,12 +45,10 @@ try{
   assert.equal((await toggle.locator(".nf-theme-word").innerText()).trim(),"ARCHIVE","First visit offers the alternate Archive rather than a generic theme label");
   assert.equal(await page.locator(".nf-experience-underbelly").first().isVisible(),true,"Dusk opens the Underbelly narrative");
   assert.equal(await page.locator(".nf-experience-archive").first().isVisible(),false,"Archive narrative is absent from dusk reading order");
-  for(const id of ["flagship-title","instruments-heading","nf-observatory-title","nf-replay-title","sf-systems-heading","evidence-title","review-title","method-title"]){
+  for(const id of ["flagship-title","nf-observatory-title","review-title"]){
    assert.equal(await page.locator("#"+id+" .nf-experience-underbelly").isVisible(),true,id+": Night has its own editorial framing");
    assert.equal(await page.locator("#"+id+" .nf-experience-archive").isVisible(),false,id+": Archive framing is removed from Night reading order");
   }
-  assert.equal(await page.locator(".nf-process-case").count(),3,"Underbelly has three sourced research gates");
-  assert.equal(await page.locator(".nf-process-case").first().isVisible(),true,"Unresolved proof gate is visible");
   assert.equal(await page.locator(".nf-dual-colophon.nf-experience-underbelly").isVisible(),true,"Night has its own final research handoff");
   assert.equal(await page.locator(".nf-dual-colophon.nf-experience-archive").isVisible(),false,"Archive colophon hidden at night");
   assert.match(await toggle.getAttribute("aria-label"),/Illusionary Archive.*light mode/i,"Homepage toggle identifies the alternate editorial destination");
@@ -62,12 +60,10 @@ try{
   assert.equal((await toggle.locator(".nf-theme-word").innerText()).trim(),"NIGHT","Archive offers entry to Night as the alternate homepage");
   assert.equal(await page.locator(".nf-experience-archive").first().isVisible(),true,"Light reveals the Archive narrative");
   assert.equal(await page.locator(".nf-experience-underbelly").first().isVisible(),false,"Underbelly is absent from Archive reading order");
-  for(const id of ["flagship-title","instruments-heading","nf-observatory-title","nf-replay-title","sf-systems-heading","evidence-title","review-title","method-title"]){
+  for(const id of ["flagship-title","nf-observatory-title","review-title"]){
    assert.equal(await page.locator("#"+id+" .nf-experience-archive").isVisible(),true,id+": Archive has its own cataloguing perspective");
    assert.equal(await page.locator("#"+id+" .nf-experience-underbelly").isVisible(),false,id+": Night framing is removed from Archive reading order");
   }
-  assert.equal(await page.locator(".nf-archive-accession").count(),3,"Archive provides three specific accession records");
-  assert.equal(await page.locator(".nf-archive-accession").first().isVisible(),true,"Archive records are visible");
   assert.equal(await page.locator(".nf-dual-colophon.nf-experience-archive").isVisible(),true,"Archive preserves its own source-led colophon");
   assert.equal(await page.locator(".nf-dual-colophon.nf-experience-underbelly").isVisible(),false,"Night shift hidden in Archive mode");
   assert.match(await toggle.getAttribute("aria-label"),/Night Underbelly.*night mode/i,"Archive toggle offers the Underbelly destination");
@@ -123,12 +119,8 @@ try{
     assert.equal(tokens.accent,"#e2d28c",file+": dusk action accent inherits moonlight");
    }
    if(file==="index.html"){
-    const activeLens=await page.locator(".nf-observatory-lenses button[aria-pressed=true]").evaluate(el=>({
-      bg:getComputedStyle(el).backgroundColor,fg:getComputedStyle(el).color}));
-    assert.equal(activeLens.bg,"rgb(226, 210, 140)","Evidence lens uses moonlit gold action state");
-    assert.equal(activeLens.fg,"rgb(11, 20, 37)","Evidence lens has dark ink");
-    const toolButton=await page.locator(".nf-home-tool-entry .button").evaluate(el=>getComputedStyle(el).backgroundColor);
-    assert.equal(toolButton,"rgb(226, 210, 140)","Research-workflow action is no longer lime green");
+    assert.equal(await page.locator("#observatory a[href='constellation.html#map']").count(),1,
+      "Landing page links to the full graph without mounting duplicate controls");
    }
    if(file==="constellation.html"){
     const action=await page.locator(".co-primary").first().evaluate(el=>({
@@ -164,70 +156,17 @@ try{
     const heroButton=await page.locator(".hero-actions .button").first().evaluate(el=>({bg:getComputedStyle(el).backgroundColor,fg:getComputedStyle(el).color}));
     assert.equal(heroButton.bg,"rgb(226, 210, 140)","Dusk primary CTA uses the new moonlit gold accent");
     assert.equal(heroButton.fg,"rgb(11, 20, 37)","Dusk gold CTA has high-contrast navy ink");
-    const railLink=await page.locator(".nf-journey-rail a").first().evaluate(el=>getComputedStyle(el).color);
-    assert.equal(railLink,"rgb(226, 210, 140)","Journey-rail focus links use legible moonlight in dusk");
    }
    assert.ok(appearance.overflow<=4,file+": overflow in dusk at "+width+"px: "+appearance.overflow);
    if(["join.html","discovery.html","claim-lab.html","erdos-paper.html"].includes(file))
     await page.screenshot({path:"browser-artifacts/ethereal-"+file.replace(".html","")+"-"+width+".png",fullPage:false});
   }
-  // The star map is real navigation through canonical source claims, not ornament.
-  await page.goto(origin+"index.html",{waitUntil:"load"});
-  assert.equal(await page.locator("#nf-observatory-field .nf-observatory-node").count(),11,"Canonical graph has six claims and five mechanisms");
-  assert.equal(await page.locator(".nf-observatory-edge").count(),13,"Thirteen typed relationships drawn from registry");
-  assert.equal(await page.locator(".nf-process-thread a").count(),3,"Three research destinations are consistently visible");
-  assert.equal(await page.locator('.nf-process-thread a[aria-current="page"]').count(),1,"Site navigation identifies one current destination");
-  assert.equal(await page.locator(".nf-observatory-path").count(),2,"Two grounded entry routes are visible before a selection");
-  await page.locator("#observatory").screenshot({path:"browser-artifacts/ethereal-observatory-overview-"+width+".png"});
-  assert.equal(await page.locator('#nf-observatory-lenses [aria-pressed="true"]').count(),1,"One active evidence lens");
-  assert.equal(await page.locator('.nf-observatory-lenses [data-lens="all"]').getAttribute("aria-pressed"),"true","All sources is the default lens");
-  await page.locator('[data-lens="finite-check"]').click();
-  await page.waitForFunction(()=>document.querySelectorAll(".nf-observatory-edge").length===4);
-  assert.equal(await page.locator(".nf-observatory-edge").count(),4,"Finite-check lens filters exact documented relationships");
-  assert.equal(await page.locator('[data-lens="finite-check"]').getAttribute("aria-pressed"),"true");
-  await page.locator('[data-lens="open-premise"]').click();
-  await page.waitForFunction(()=>document.querySelectorAll(".nf-observatory-edge").length===3);
-  assert.equal(await page.locator(".nf-observatory-edge").count(),3,"Open-premise lens shows three explicitly unresolved relationships");
-  assert.match(await page.locator("#nf-observatory-view-status").innerText(),/Unresolved premises/);
-  if(width===390){
-    const rects=await page.evaluate(()=>({
-      inspector:document.querySelector("#nf-observatory-inspector").getBoundingClientRect().top,
-      field:document.querySelector("#nf-observatory-field").getBoundingClientRect().top
-    }));
-    assert.ok(rects.inspector<rects.field,"Mobile inspector precedes catalogue for immediate explanation");
-  }
-  await page.locator('[data-start="phase"]').click();
-  assert.match(page.url(),/\?claim=phase/,"Node selection makes a shareable canonical deep link");
-  await page.waitForFunction(()=>document.querySelectorAll(".nf-observatory-edge").length===1);
-  assert.equal(await page.locator(".nf-observatory-edge").count(),1,"Selected phase claim has one unresolved source edge");
-  await page.reload({waitUntil:"load"});
-  assert.equal(await page.locator('.nf-observatory-node[data-node="phase"]').getAttribute("aria-pressed"),"true","Canonical deep link restores selected node");
-  assert.match(await page.locator("#nf-observatory-inspector").innerText(),/UNRESOLVED PREMISE/);
-  await page.locator('.nf-observatory-node[data-node="phase"]').focus();
-  await page.keyboard.press("Escape");
-  assert.equal(await page.locator('.nf-observatory-node[data-node="phase"]').getAttribute("aria-pressed"),"false","Escape clears selection");
-  assert.ok(!page.url().includes("claim=phase"),"Clearing selection removes stale deep link");
-  await page.locator('[data-lens="all"]').click();
-  await page.waitForFunction(()=>document.querySelectorAll(".nf-observatory-edge").length===13);
-  await page.locator('.nf-observatory-node[data-node="symmetry-reduction"]').click();
-  assert.equal(await page.locator('#nf-observatory-inspector a[href="constellation.html?claim=symmetry-reduction"]').count(),1,"Mechanism opens its selected canonical source map");
-  await page.locator('.nf-observatory-node[data-node="symmetry-reduction"]').click();
-  assert.equal(await page.locator('.nf-observatory-node[data-node="symmetry-reduction"]').getAttribute("aria-pressed"),"false","Clicking selected mechanism clears it");
-  await page.waitForFunction(()=>document.querySelectorAll(".nf-observatory-edge").length===13);
-  assert.equal(await page.locator(".nf-observatory-edge").count(),13,"All typed relationships restored after switching lenses");
-
-  await page.locator('.nf-observatory-node[data-node="phase"]').click();
-  assert.equal(await page.locator('.nf-observatory-node[data-node="phase"]').getAttribute("aria-pressed"),"true","Selected source node accessible");
-  assert.match(await page.locator("#nf-observatory-inspector").innerText(),/span-count|span count/i,"Unresolved prerequisite visible");
-  assert.equal(await page.locator('#nf-observatory-inspector a[href="passport.html?claim=phase"]').count(),1,"Proof Passport is source-linked");
-  assert.match(await page.locator("#nf-observatory-inspector").innerText(),/UNRESOLVED PREMISE/,"Open premise explicitly classified");
-  assert.match(await page.locator('#nf-observatory-inspector .nf-observatory-relation[data-relation="open-premise"] .nf-observatory-relation-note').first().innerText(),/cannot be promoted without its foundational lemma/i,"Foundational condition is visible in the compact inspector");
-  await page.locator('.nf-observatory-node[data-node="phase"]').click();
-  await page.locator('.nf-observatory-node[data-node="erdos36"]').click();
-  assert.match(await page.locator("#nf-observatory-inspector").innerText(),/16-cell demonstration is distinct from the 131,072-cell archived witness/i,"Small finite control explicitly distinguished from archival witness");
-  await page.locator('.nf-observatory-node[data-node="erdos36"]').click();
-  await page.waitForFunction(()=>document.querySelectorAll(".nf-observatory-edge").length===13);
-  await page.locator("#observatory").screenshot({path:"browser-artifacts/ethereal-observatory-"+width+".png"});
+   // The complete source-linked map belongs to Constellation.
+   await page.goto(origin+"index.html",{waitUntil:"load"});
+   assert.equal(await page.locator(".nf-observatory-edge").count(),0,"No duplicate homepage graph");
+   assert.equal(await page.locator("#observatory a[href='constellation.html#map']").count(),1);
+   assert.equal(await page.locator(".nf-process-thread").count(),0,"Header owns landing-page navigation");
+   await page.locator("#observatory").screenshot({path:"browser-artifacts/ethereal-constellation-handoff-"+width+".png"});
   await page.goto(origin+"living-paper.html",{waitUntil:"load"});
   const paperBg=await page.evaluate(()=>getComputedStyle(document.body).backgroundImage);
   assert.equal(paperBg,"none","Dusk mathematics reading canvas has no stars behind equations");
