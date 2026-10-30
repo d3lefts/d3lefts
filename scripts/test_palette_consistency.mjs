@@ -105,7 +105,7 @@ try{
         });
         for(const [name,value] of Object.entries(accents))assert.ok(value,"Expected New Moon element: "+name);
         assert.equal(accents.opening.fill,"rgb(167, 173, 215)","Opening node becomes moonlit lavender");
-        assert.match(accents.cinema.background,/rgba\\(74, 31, 36, 0\\.21\\)/,"Keep one admired oxblood cinematic gradient");
+        assert.ok(accents.cinema.background.includes("rgba(74, 31, 36, 0.21)"),"Keep one admired oxblood cinematic gradient");
         assert.doesNotMatch(accents.flagship.borderImage,/74, 31, 36|167, 101, 115/,"Flagship divider is lavender to gold");
         assert.equal(accents.colophon.borderTop,"rgb(75, 86, 114)","Night colophon uses indigo, not oxblood");
       }
@@ -120,8 +120,8 @@ try{
  const css=await readFile(join(root,"two-skies.css"),"utf8");
  assert.ok(!css.includes("--nf-oxblood-rare"),"Remove general-purpose oxblood design token from New Moon");
  assert.ok(!css.includes("--nf-oxblood-lit"),"Remove oxblood edge token from New Moon");
- assert.ok(!/#(?:4a1f24|a76573)\\b/i.test(css),"No wine-red solid accents remain in shared theme");
- assert.equal((css.match(/rgba\\(74,31,36,\\.21\\)/g)||[]).length,1,
+ assert.ok(!css.toLowerCase().includes("#4a1f24")&&!css.toLowerCase().includes("#a76573"),"No wine-red solid accents remain in shared theme");
+ assert.equal(css.split("rgba(74,31,36,.21)").length-1,1,
    "Exactly one atmospheric oxblood gradient survives");
  console.log("PASS palette: 26 pages × two themes × two viewports; one cinematic blood gradient, lunar-gold controls, no overflow");
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve))}
