@@ -210,10 +210,10 @@ try{
    assert.equal(await noScript.locator("#sidon-toggle").isDisabled(),true,"no inert pretend interaction");
    await noScript.close();
    await page.goto(origin+"passport.html?claim=erdos36",{waitUntil:"load"});
-   assert.equal(await page.locator("#passport-picker a").count(),6,"six canonical Proof Passports");
-   assert.match(await page.locator(".pp-coverage").innerText(),/Six canonical Proof Passports/);
+   assert.equal(await page.locator("#passport-picker a").count(),11,"eleven curated Proof Passports");
+   assert.match(await page.locator(".pp-coverage").innerText(),/Eleven curated Proof Passports/);
    await page.goto(origin+"research.html",{waitUntil:"load"});
-   assert.match(await page.locator(".archive-coverage").innerText(),/six Proof Passports/i);
+   assert.match(await page.locator(".archive-coverage").innerText(),/eleven Proof Passports/i);
    // Results -> method -> assignment -> bounded on-site work -> framed tool -> return.
    await page.goto(origin+"join.html",{waitUntil:"load"});
    assert.match(await page.locator("#join-title").innerText(),/See the result/);
@@ -538,7 +538,7 @@ try{
     assert.equal(new URL(page.url()).searchParams.get("claim"),"outdated-claim-id","Stale link remains diagnosable");
     await page.locator("#passport-picker a[href='passport.html?claim=werner']").click();
     assert.equal(await page.locator("#passport-unknown").isVisible(),false,"Valid Passport clears warning");
-    assert.match(await page.locator(".pp-coverage").innerText(),/Six canonical Proof Passports, 33 research dossiers/,"Passports explain editorial coverage");
+    assert.match(await page.locator(".pp-coverage").innerText(),/Eleven curated Proof Passports, 33 research dossiers/,"Passports explain editorial coverage");
     await page.goto(origin+"index.html",{waitUntil:"load"});
     assert.equal(await page.locator(".nf-experience-archive .hero-actions a").count(),2,"Archive offers two source-reading paths");
     assert.equal(await page.locator(".nf-experience-underbelly .hero-actions a").count(),2,"Underbelly offers two investigation paths");
@@ -548,17 +548,17 @@ try{
     assert.equal(await page.locator(".flagship-context").count(),4,"Each flagship explains meaning of headline metric");
     assert.match(await page.locator(".flagship-context").first().innerText(),/maximum overlap/i,"Numerical extremal value interpreted");
     await page.goto(origin+"research.html",{waitUntil:"load"});
-    assert.match(await page.locator(".archive-coverage").innerText(),/33 research records.*Six detailed claim passports.*Five separately approved finite findings/s,"Library explains record hierarchy");
+    assert.match(await page.locator(".archive-coverage").innerText(),/33 research records.*Eleven detailed claim passports.*Five separately approved finite findings/s,"Library explains record hierarchy");
     await page.goto(origin+"atlas.html",{waitUntil:"load"});
-    assert.match(await page.locator(".rs-coverage").innerText(),/six claims represent a library of 33 documents/i,"Atlas explains limited canonical graph");
+    assert.match(await page.locator(".rs-coverage").innerText(),/eleven claims represent a library of 33 documents/i,"Atlas explains limited canonical graph");
   }
   if(width===390 || width===1280){
     await page.goto(origin+"desk.html?claim=phase",{waitUntil:"load"});
-    assert.equal(await page.locator(".desk-claim-button").count(),6,"Six canonical research claims visible");
+    assert.equal(await page.locator(".desk-claim-button").count(),11,"Eleven curated research claims visible");
     assert.match(await page.locator(".desk-detail-heading").innerText(),/finite-field reconstruction/i,"Deep link selects finite-field claim");
     assert.equal(await page.locator(".desk-dimension").count(),4,"Four independently scoped evidence dimensions");
     await page.locator("#desk-filter").selectOption("conditional");
-    assert.equal(await page.locator(".desk-claim-button").count(),2,"Conditional proof claims separated");
+    assert.equal(await page.locator(".desk-claim-button").count(),4,"Conditional claims separated by evidence level");
     await page.locator("#desk-filter").selectOption("all");
     await page.locator("#desk-search").fill("Werner");
     assert.equal(await page.locator(".desk-claim-button").count(),1,"Title search filters");
@@ -739,9 +739,9 @@ try{
   }
   if(width===390 || width===1280){
    await page.goto(origin+"constellation.html",{waitUntil:"load"});
-   assert.equal(await page.locator(".co-node").count(),11,"Exactly six canonical claims and five mechanisms");
-   assert.equal(await page.locator("#co-count-claims").innerText(),"06","Claim count sourced from registry");
-   assert.equal(await page.locator("#co-count-edges").innerText(),"13","Thirteen source-grounded relationships");
+   assert.equal(await page.locator(".co-node").count(),16,"Exactly eleven curated claims and five mechanisms");
+   assert.equal(await page.locator("#co-count-claims").innerText(),"11","Claim count sourced from registry");
+   assert.equal(await page.locator("#co-count-edges").innerText(),"20","Twenty source-grounded relationships");
    assert.equal(await page.locator(".co-relation").count(),6,"Representative relationships by default");
    assert.equal(await page.locator("body").getAttribute("data-theme"),"dark","Constellation opens with global dusk default");
    assert.equal(await page.locator(".nf-theme-toggle").count(),1,"A single global appearance control");
