@@ -1,31 +1,69 @@
-name: NIGHTFALL Lean kernel sanity — finite characteristic three
+name: NIGHTFALL Lean bridge — kernel compilation and receipts
 on:
   pull_request:
     paths:
-      - 'research/nightfall/formalization/characteristic_three/**'
+      - 'research/nightfall/formalization/**'
+      - 'scripts/lean_bridge.py'
+      - 'tests/test_lean_bridge.py'
       - 'lean-toolchain'
       - '.github/workflows/lean-char3-sanity.yml'
   push:
     branches: [main]
     paths:
-      - 'research/nightfall/formalization/characteristic_three/**'
+      - 'research/nightfall/formalization/**'
+      - 'scripts/lean_bridge.py'
+      - 'tests/test_lean_bridge.py'
       - 'lean-toolchain'
       - '.github/workflows/lean-char3-sanity.yml'
   workflow_dispatch:
+    inputs:
+      source:
+        description: 'Additional committed Lean file to compile (relative to repo root)'
+        required: false
+        default: 'research/nightfall/formalization/characteristic_three/Finite3.lean'
+        type: string
 
 permissions:
   contents: read
 
 jobs:
-  lean-kernel-check:
+  lean-bridge:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - name: Install pinned Lean toolchain without Lake package scaffolding
+      - name: Install repo-pinned Lean via elan
+        shell: bash
         run: |
+          set -euo pipefail
           curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
-          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.35.0
-          ~/.elan/bin/lean --version
-      - name: Kernel-elaborate both finite mod-3 lemmas
-        run: ~/.elan/bin/lean research/nightfall/formalization/characteristic_three/Finite3.lean
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain "$(cat lean-toolchain)"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          "$HOME/.elan/bin/lean" --version
+      - name: Test bridge protocol (does not substitute for kernel checking)
+        run: python3 -m unittest discover -s tests -p test_lean_bridge.py -v
+      - name: Compile original two finite-field lemmas and check reported axioms
+        run: |
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/characteristic_three/Finite3.lean \
+            --strict \
+            --decl Nightfall.FiniteField.cubing_is_identity_mod_three \
+            --decl Nightfall.FiniteField.cube_additive_mod_three \
+            --json-out lean-receipts/finite3.json
+      - name: Compile requested committed file (manual dispatch only)
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          SOURCE: ${{ inputs.source }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py "$SOURCE" \
+            --json-out lean-receipts/dispatch.json
+      - name: Upload machine-readable verification receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-lean-receipts
+          path: lean-receipts/*.json
+          if-no-files-found: warn
+          retention-days: 30
