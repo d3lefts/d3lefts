@@ -1,0 +1,19 @@
+name: Verify adaptive-vs-fixed finite-field separation
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/projects/finite-field/adaptive-fixed-separation-20261030/**'
+      - '.github/workflows/verify-adaptive-fixed-separation.yml'
+  workflow_dispatch:
+
+jobs:
+  exact-f9:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile and replay finite F9 regression
+        run: |
+          python3 -m py_compile research/nightfall/projects/finite-field/adaptive-fixed-separation-20261030/verify_f9.py
+          python3 research/nightfall/projects/finite-field/adaptive-fixed-separation-20261030/verify_f9.py
