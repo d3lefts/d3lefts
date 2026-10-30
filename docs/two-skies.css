@@ -726,7 +726,7 @@ html:not([data-nf-theme="dusk"]) :is(.flagship-card,.sf-system-card,.nf-observat
 }
 /* Historical inline SVG uses a burgundy attribute in its source data.
    The Archive's actual rendered path is opal; mathematical numbers unchanged. */
-html:not([data-nf-theme="dusk"]) .hero-aside .diagram path[stroke="#4a1f24"] {stroke:#b4e3d6}
+html:not([data-nf-theme="dusk"]) .hero-aside .diagram path[stroke] {stroke:#b4e3d6}
 html:not([data-nf-theme="dusk"]) .nf-opening-constellation .nf-opening-node--oxblood{fill:#b1b9db}
 html:not([data-nf-theme="dusk"]) :is(.nf-process-case .nf-case-step,
   .nf-process-case small,.nf-replay-steps small,.nf-journey-rail small,
@@ -735,8 +735,8 @@ html:not([data-nf-theme="dusk"]) :is(.nf-process-case .nf-case-step,
 /* The Archive removes every visible wine-red mathematical illustration mark.
    Historical SVG stroke attributes are retained in source to preserve fixtures. */
 html:not([data-nf-theme="dusk"]) .hero-aside .diagram circle[fill="#d8c38a"]{fill:#b4e3d6}
-html:not([data-nf-theme="dusk"]) .hero-aside .diagram :is(path[stroke="#4a1f24"],path[stroke="#6a2934"]){stroke:#b4e3d6}
-html:not([data-nf-theme="dusk"]) .hero-aside .diagram :is(circle[fill="#4a1f24"],circle[fill="#8c4050"]){fill:#b1b9db}
+html:not([data-nf-theme="dusk"]) .hero-aside .diagram path[stroke]{stroke:#b4e3d6}
+html:not([data-nf-theme="dusk"]) .hero-aside .diagram circle[fill]:not([fill="#d8c38a"]){fill:#b1b9db}
 /* Quiet spectral dividing bars are instrument traces, not a data legend. */
 html:not([data-nf-theme="dusk"]) #main>.flagships>.section-head,
 html:not([data-nf-theme="dusk"]) #main>.nf-observatory .nf-observatory-head{
