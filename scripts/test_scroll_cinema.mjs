@@ -57,13 +57,20 @@ try{
    assert.equal(await page.locator("html").getAttribute("data-nf-theme"),mode==="dusk"?"dusk":null);
    await page.waitForFunction(expected=>getComputedStyle(document.body).backgroundColor===expected,expectedBg);
    assert.equal(await page.locator(visibleArt).isVisible(),true,mode+": matching image layer");
-   // NIGHTFALL's signature tile edge is a half-CSS-pixel hairline.
-   const tileEdges=await page.evaluate(()=>({
+   // The declared hairline is 0.5 CSS px; Chromium snaps that to one
+   // physical pixel on 1x screens, so inspect both the token and painted width.
+   const hairline=await page.evaluate(()=>({
+     token:getComputedStyle(document.documentElement).getPropertyValue("--nf-tile-rule-width").trim(),
+     ratio:window.devicePixelRatio,
      feature:getComputedStyle(document.querySelector(".flagship-card")).borderTopWidth,
      witness:getComputedStyle(document.querySelector(".nf-opening-overlap")).borderTopWidth
    }));
-   for(const [tile,edge] of Object.entries(tileEdges))
-    assert.ok(parseFloat(edge)<=.5 && parseFloat(edge)>0,mode+" "+width+"px "+tile+": signature thin hairline "+edge);
+   assert.equal(hairline.token,".5px",mode+": signature border design token");
+   for(const tile of ["feature","witness"]){
+     const edge=parseFloat(hairline[tile]);
+     const max=Math.max(.5,1/hairline.ratio);
+     assert.ok(edge>0 && edge<=max,mode+" "+width+"px "+tile+": physically snapped hairline "+edge);
+   }
    assert.equal(await page.locator(mode==="dusk"?".nf-cinema-world--archive":".nf-cinema-world--night").isVisible(),false,mode+": inactive image hidden");
    const still=await scene.evaluate((el,filename)=>{
      const art=el.querySelector(".nf-cinema-world:not([style*='hide'])");
