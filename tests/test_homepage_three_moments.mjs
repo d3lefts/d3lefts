@@ -11,7 +11,7 @@ const count=(s,re)=>(s.match(re)||[]).length;
 test('The two themed opening skies and Erdős cinematic precede the three detailed research moments',()=>{
  const stages=[
   '<section class="hero wrap',
-  '<section class="nf-cinema"',
+  '<section class="nf-cinema',
   '<section class="section wrap flagships"',
   '<section class="section wrap sf-case"',
   '<section class="section wrap sf-library-invite" id="featured-title"',
@@ -73,7 +73,7 @@ test('Editorial sizing and motion controls retain accessible treatments',()=>{
 
 test('Opening and scroll chapters disclose the exact finite record before other campaigns',()=>{
  const hero=html.indexOf('<section class="hero wrap nf-opening"');
- const movie=html.indexOf('<section class="nf-cinema"');
+ const movie=html.indexOf('<section class="nf-cinema');
  const others=html.indexOf('<section class="section wrap flagships"');
  assert.ok(hero>=0&&movie>hero&&others>movie);
  const front=html.slice(hero,others);

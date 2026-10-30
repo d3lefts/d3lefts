@@ -511,3 +511,169 @@ html[data-nf-theme="dusk"] .nf-cinema-vignette{
 @media print{
   .nf-opening-moon,.nf-cinema-moon{display:none!important}
 }
+
+/* NIGHTFALL / TWO STATIC IMAGE STUDIES — high-resolution photography with local 2560 × 1440 vector fallbacks.
+   No scroll frame loop, sticky hold, parallax, fake image text, network media
+   dependency for basic rendering, or scripted crossfade. Source-bound records stay HTML.
+   Photos: Jordan Steranka / Unsplash (moon), Oleg Moroz / Unsplash (nebula).
+   Their freely reusable original photos are served at 2560px via Unsplash Images;
+   if the external source is unavailable, a self-hosted vector still remains. */
+#main>.hero.nf-opening .nf-opening-sky{
+  transform:none!important;inset:-3%;background-color:#020406;
+  background-repeat:no-repeat;background-size:cover;background-position:center;
+}
+#main>.hero.nf-opening .nf-opening-sky::before{content:none!important}
+html:not([data-nf-theme="dusk"]) #main>.hero.nf-opening .nf-opening-sky--gold{
+  background-image:url("https://images.unsplash.com/photo-1615056906974-f167481eadd0?auto=format&fit=crop&w=2560&q=82"),
+                   url("media/null-field-deep-space.svg");
+  background-position:66% center;
+}
+html[data-nf-theme="dusk"] #main>.hero.nf-opening .nf-opening-sky--night{
+  background-image:url("media/new-moon-crescent-overlay.svg"),
+                   url("https://images.unsplash.com/photo-1515311320503-6e3d309537b4?auto=format&fit=crop&w=2560&q=82"),
+                   url("media/new-moon-nightscape.svg");
+  background-size:clamp(185px,18vw,250px) auto,cover,cover;
+  background-position:54% 4%,64% center,64% center;
+}
+#main>.hero.nf-opening .nf-opening-sky::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,rgba(2,4,6,.91),rgba(2,4,6,.65) 42%,rgba(2,4,6,.06) 94%),
+             linear-gradient(0deg,rgba(2,4,6,.7),transparent 35%);
+}
+html[data-nf-theme="dusk"] #main>.hero.nf-opening .nf-opening-sky::after{
+  background:linear-gradient(90deg,rgba(4,6,11,.86),rgba(4,6,11,.55) 44%,rgba(4,6,11,.04) 94%),
+             linear-gradient(0deg,rgba(4,6,11,.6),transparent 40%);
+}
+.nf-cinema.nf-cinema--still{height:auto!important;min-height:0;overflow:hidden}
+.nf-cinema--still .nf-cinema-stage{
+  position:relative!important;top:auto!important;height:auto!important;
+  min-height:clamp(790px,90svh,1100px);display:flex;flex-direction:column;
+  justify-content:center;align-items:stretch;overflow:hidden;
+}
+.nf-cinema--still .nf-cinema-world{background-color:#020406;background-size:cover;background-repeat:no-repeat}
+.nf-cinema--still .nf-cinema-world::before{content:none!important}
+html:not([data-nf-theme="dusk"]) .nf-cinema--still .nf-cinema-world--archive{
+  background-image:url("https://images.unsplash.com/photo-1615056906974-f167481eadd0?auto=format&fit=crop&w=2560&q=82"),
+                   url("media/null-field-deep-space.svg")!important;
+  background-position:68% center;
+}
+html[data-nf-theme="dusk"] .nf-cinema--still .nf-cinema-world--night{
+  background-image:url("media/new-moon-crescent-overlay.svg"),
+                   url("https://images.unsplash.com/photo-1515311320503-6e3d309537b4?auto=format&fit=crop&w=2560&q=82"),
+                   url("media/new-moon-nightscape.svg")!important;
+  background-size:clamp(195px,18vw,240px) auto,cover,cover;
+  background-position:47% 1%,61% center,61% center;
+}
+html:not([data-nf-theme="dusk"]) .nf-cinema--still .nf-cinema-vignette{
+  background:linear-gradient(90deg,rgba(2,4,6,.96),rgba(2,4,6,.78) 31%,rgba(2,4,6,.29) 74%,rgba(2,4,6,.12)),
+             linear-gradient(0deg,rgba(2,4,6,.88),transparent 37%,rgba(2,4,6,.36));
+}
+html[data-nf-theme="dusk"] .nf-cinema--still .nf-cinema-vignette{
+  background:linear-gradient(90deg,rgba(4,6,11,.94),rgba(4,6,11,.73) 34%,rgba(4,6,11,.19) 86%),
+             linear-gradient(0deg,rgba(4,6,11,.84),transparent 35%,rgba(4,6,11,.36));
+}
+.nf-cinema--still .nf-cinema-content{
+  position:relative;z-index:2;width:min(calc(100% - 84px),1200px);
+  margin:0 auto;padding:clamp(94px,10vw,160px) 0 clamp(28px,4vw,56px);
+  align-self:stretch;min-height:0;
+}
+.nf-cinema--still .nf-cinema-record{transform:none!important}
+.nf-cinema--still .nf-cinema-proof-path{
+  position:relative;z-index:2;width:min(calc(100% - 84px),1200px);
+  margin:0 auto;list-style:none;counter-reset:proof;
+  padding:20px 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(15px,3vw,50px);border-block:1px solid rgba(226,210,140,.35);
+}
+.nf-cinema--still .nf-cinema-proof-path li{
+  counter-increment:proof;min-width:0;display:flex;gap:11px;
+  color:#d4d9e9;font:500 clamp(11px,1.06vw,14px)/1.65 var(--sans);
+}
+.nf-cinema--still .nf-cinema-proof-path li::before{
+  content:"0" counter(proof);flex:none;font:600 10px/1.9 var(--mono);color:#e2d28c;
+}
+html:not([data-nf-theme="dusk"]) .nf-cinema--still .nf-cinema-proof-path{
+  border-color:rgba(228,106,132,.39);
+}
+html:not([data-nf-theme="dusk"]) .nf-cinema--still .nf-cinema-proof-path li{color:#d5dfe8}
+html:not([data-nf-theme="dusk"]) .nf-cinema--still .nf-cinema-proof-path li::before{color:#e46a84}
+.nf-cinema--still .nf-cinema-static-note{
+  position:relative;z-index:2;inset:auto;text-align:left;width:min(calc(100% - 84px),1200px);
+  max-width:none;margin:0 auto;padding:15px 0 50px;
+  color:#aeb8cb;font:400 10px/1.6 var(--mono);
+}
+html:not([data-nf-theme="dusk"]) .nf-cinema--still .nf-cinema-static-note{color:#b6bec9}
+html:not([data-nf-theme="dusk"]) .nf-cinema--still :is(.nf-cinema-overline,.nf-cinema-title em,
+  .nf-cinema-record-kicker,.nf-cinema-record-stats strong,.nf-cinema-record a){color:#e46a84}
+html:not([data-nf-theme="dusk"]) .nf-cinema--still .nf-cinema-record{
+  background:rgba(7,10,16,.9);border-color:rgba(228,106,132,.39);color:#eaf0f5;
+}
+html:not([data-nf-theme="dusk"]) .nf-cinema--still .nf-cinema-record-value{color:#eaf0f5}
+html:not([data-nf-theme="dusk"]) .nf-cinema--still .nf-cinema-record-divider{background:rgba(228,106,132,.29)}
+html:not([data-nf-theme="dusk"]) .nf-cinema--still .nf-cinema-record a:focus-visible{outline-color:#e46a84}
+@media(max-width:900px){
+  .nf-cinema--still .nf-cinema-content{width:min(calc(100% - 42px),1200px)}
+  .nf-cinema--still .nf-cinema-proof-path,
+  .nf-cinema--still .nf-cinema-static-note{width:min(calc(100% - 42px),1200px)}
+}
+@media(max-width:760px){
+  #main>.hero.nf-opening .nf-opening-sky--gold,
+  #main>.hero.nf-opening .nf-opening-sky--night{background-position:67% center}
+  #main>.hero.nf-opening .nf-opening-sky::after{
+    background:linear-gradient(90deg,rgba(2,4,6,.89),rgba(2,4,6,.43) 94%),
+               linear-gradient(0deg,rgba(2,4,6,.7),transparent 48%);
+  }
+  html[data-nf-theme="dusk"] #main>.hero.nf-opening .nf-opening-sky::after{
+    background:linear-gradient(90deg,rgba(4,6,11,.88),rgba(4,6,11,.42) 94%),
+               linear-gradient(0deg,rgba(4,6,11,.62),transparent 48%);
+  }
+  .nf-cinema--still .nf-cinema-stage{min-height:0}
+  .nf-cinema--still .nf-cinema-content{
+    display:flex;flex-direction:column;gap:18px;
+    padding:clamp(60px,11vw,100px) 0 38px;
+  }
+  .nf-cinema--still .nf-cinema-world{background-position:67% center!important}
+  .nf-cinema--still .nf-cinema-title{font-size:clamp(37px,8.5vw,60px)}
+  .nf-cinema--still .nf-cinema-subtitle{display:block;max-width:45ch}
+  .nf-cinema--still .nf-cinema-record{width:100%}
+  .nf-cinema--still .nf-cinema-proof-path{
+    grid-template-columns:1fr;gap:8px;padding:15px 0;
+  }
+  .nf-cinema--still .nf-cinema-static-note{padding:14px 0 32px}
+}
+@media(max-height:620px) and (orientation:landscape){
+  .nf-cinema--still .nf-cinema-content{padding:38px 0 24px}
+}
+@media(prefers-reduced-motion:reduce){
+  .nf-cinema--still .nf-cinema-stage{position:relative!important}
+  .nf-cinema--still .nf-cinema-world,.nf-opening-sky{transform:none!important;animation:none!important}
+}
+@media print{
+  #main>.hero.nf-opening .nf-opening-sky,
+  .nf-cinema--still .nf-cinema-world{background-image:none!important}
+  .nf-cinema--still .nf-cinema-vignette{display:none}
+  .nf-cinema--still .nf-cinema-proof-path li{color:#111}
+}
+
+/* The two NULL FIELD photo/fallback layers must never tile either. */
+html:not([data-nf-theme="dusk"]) #main>.hero.nf-opening .nf-opening-sky--gold,
+html:not([data-nf-theme="dusk"]) .nf-cinema--still .nf-cinema-world--archive{
+  background-repeat:no-repeat,no-repeat!important;
+}
+/* All three raster/vector layers MUST be drawn once. Some legacy cinema
+   shorthands reset background-repeat to repeat, which tiled the lunar overlay. */
+html[data-nf-theme="dusk"] #main>.hero.nf-opening .nf-opening-sky--night,
+html[data-nf-theme="dusk"] .nf-cinema--still .nf-cinema-world--night{
+  background-repeat:no-repeat,no-repeat,no-repeat!important;
+}
+/* Keep the lunar crescent above the record's top edge on narrow screens;
+   its texture is an actual transparent image layer, not CSS glyph art. */
+@media(max-width:760px){
+ html[data-nf-theme="dusk"] #main>.hero.nf-opening .nf-opening-sky--night{
+   background-size:165px auto,cover,cover;
+   background-position:93% 2%,67% center,67% center!important;
+ }
+ html[data-nf-theme="dusk"] .nf-cinema--still .nf-cinema-world--night{
+   background-size:170px auto,cover,cover;
+   background-position:92% 1%,67% center,67% center!important;
+ }
+}

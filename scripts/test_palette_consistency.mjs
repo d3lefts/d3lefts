@@ -97,15 +97,15 @@ try{
               background:css.backgroundImage};
           };
           return {
-            opening:style(".nf-opening-constellation .nf-opening-node--oxblood"),
+            opening:style(".nf-opening-sky--night"),
             cinema:style(".nf-cinema-world--night"),
             flagship:style("#main>.flagships>.section-head"),
             colophon:style(".nf-experience-underbelly.nf-dual-colophon")
           };
         });
         for(const [name,value] of Object.entries(accents))assert.ok(value,"Expected New Moon element: "+name);
-        assert.equal(accents.opening.fill,"rgb(167, 173, 215)","Opening node becomes moonlit lavender");
-        assert.ok(accents.cinema.background.includes("rgba(74, 31, 36, 0.21)"),"Keep one admired oxblood cinematic gradient");
+        assert.ok(accents.opening.background.includes("new-moon-nightscape.svg"),"NEW MOON hero uses its self-hosted gold-toned image");
+        assert.ok(accents.cinema.background.includes("new-moon-nightscape.svg"),"NEW MOON story uses its still nightscape");
         assert.doesNotMatch(accents.flagship.borderImage,/74, 31, 36|167, 101, 115/,"Flagship divider is lavender to gold");
         assert.equal(accents.colophon.borderTop,"rgb(75, 86, 114)","Night colophon uses indigo, not oxblood");
       }
