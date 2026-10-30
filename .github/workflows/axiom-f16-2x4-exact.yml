@@ -1,0 +1,37 @@
+name: AXIOM F16 2x4 exact obstruction and 4x7 negative control
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/agent-reports/axiom_f16_4x7_20261030/**'
+      - '.github/workflows/axiom-f16-2x4-exact.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/agent-reports/axiom_f16_4x7_20261030/**'
+      - '.github/workflows/axiom-f16-2x4-exact.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-finite-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Python no-import GF16 xtime and 351-bit collision masks
+        run: python3 research/nightfall/agent-reports/axiom_f16_4x7_20261030/audit_two_query.py
+      - name: Independent compiled C++ GF16 convolution and 6-word bitsets
+        run: |
+          g++ -std=c++17 -O3 -Wall -Wextra -pedantic -o /tmp/axiom_f16_rows research/nightfall/agent-reports/axiom_f16_4x7_20261030/audit_two_query.cpp
+          /tmp/axiom_f16_rows
+      - name: Independently replay all 81 original and 729 failed trial outputs
+        run: python3 research/nightfall/agent-reports/axiom_f16_4x7_20261030/verify_trial_and_source.py
+      - name: Frozen complete failed trial table SHA256
+        shell: bash
+        run: |
+          echo '472fc358afd0e9477c493dc47c75bbb6aecce79f09df2f7851d625ae22fd8397  research/nightfall/agent-reports/axiom_f16_4x7_20261030/F16_4x7_invalid_163.csv' | sha256sum -c -
