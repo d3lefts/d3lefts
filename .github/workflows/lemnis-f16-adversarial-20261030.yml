@@ -24,3 +24,11 @@ jobs:
         run: |
           python3 -m py_compile research/nightfall/agent-reports/lemnis_f16_audit_20261030/replay_github.py
           python3 research/nightfall/agent-reports/lemnis_f16_audit_20261030/replay_github.py
+      - name: Lemnis independent 27-state adaptive F16, full k4, k7 support sectors, and fixed masks
+        run: |
+          python3 -m py_compile research/nightfall/agent-reports/lemnis_f16_audit_20261030/independent_f16_branch_audit.py
+          python3 research/nightfall/agent-reports/lemnis_f16_audit_20261030/independent_f16_branch_audit.py
+      - name: Lemnis odd-prime powered-linear extension F9 F25 F49 exact audits
+        run: |
+          python3 -m py_compile research/nightfall/agent-reports/lemnis_f16_audit_20261030/independent_odd_field_audit.py
+          python3 research/nightfall/agent-reports/lemnis_f16_audit_20261030/independent_odd_field_audit.py
