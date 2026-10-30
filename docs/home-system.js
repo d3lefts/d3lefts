@@ -1,5 +1,5 @@
 "use strict";
-/* Homepage draws claim data from the same versioned source as Proof Passports. */
+/* Homepage hydrates four scoped programs and the exact Sidon witness from the canonical registry.\n   Removed galleries and history streams live at their dedicated destinations. */
 (() => {
  const R=window.NightfallRegistry,C=window.RefereeCore;
  if(!R)return;
@@ -14,14 +14,6 @@
    if(p)p.textContent=c.short+" "+c.conditions;
    if(a){a.href="passport.html?claim="+encodeURIComponent(c.id);a.removeAttribute("target");a.removeAttribute("rel");a.innerHTML="Inspect Proof Passport <span aria-hidden='true'>↗</span>"}
  });
- const featured=["erdos36","sidon30","pas"];
- [...document.querySelectorAll(".feature-grid > a")].forEach((card,i)=>{
-   const c=R.claimById(featured[i]);if(!c)return;
-   const h=card.querySelector("h3"),p=card.querySelector(".feature-body p"),tag=card.querySelector(".feature-tag span");
-   if(h)h.textContent=c.title;if(p)p.textContent=c.short+" "+c.originality.detail;
-   if(tag)tag.textContent=c.kind.toUpperCase();
-   card.href="passport.html?claim="+encodeURIComponent(c.id);card.removeAttribute("target");card.removeAttribute("rel")
- });
  const c=R.claimById("sidon30");
  const head=$("#sidon-live-title"),scope=$("#sidon-live-scope"),metric=$("#sidon-live-metric");
  if(head)head.textContent=c.title;if(scope)scope.textContent=c.conditions;if(metric)metric.textContent=c.measurement;
@@ -33,6 +25,5 @@
   toggle?.addEventListener("click",()=>{toggle.setAttribute("aria-pressed",String(toggle.getAttribute("aria-pressed")!=="true"));render()});
   render();
  }
- const events=R.events.slice(0,3),target=$("#home-evidence-history");
- if(target)target.innerHTML=events.map(e=>'<a href="passport.html?claim='+encodeURIComponent(e.claimId)+'"><time datetime="'+esc(e.date)+'">'+esc(e.date)+'</time><span>'+esc(e.claimTitle)+' — '+esc(e.label)+'</span><strong>Inspect ↗</strong></a>').join("");
+
 })();
