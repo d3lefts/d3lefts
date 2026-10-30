@@ -1,27 +1,52 @@
-# Proof After Scarcity — causal verification and evidence-grounded graphs
+# Proof After Scarcity — current status and Version 2
 
-**Devin J. Wright · NIGHTFALL research collaboration · public dossier updated 28 October 2026**
+**NIGHTFALL / PHASESHIFT · public research dossier updated 29 October 2026**
 
-## Negative result: 8/20 versus 11/20
+**Primary manuscript:** [Proof After Scarcity, Version 2 — Source-bound dependency models, exact finite sensitivity, and an unvalidated verification-priority hypothesis](pas/PAS_V2_20261029.md)
 
-The 13 October 2026 *retrospective* stress test found that uncalibrated causal triage selected the historically documented weak-link category first in **8 of 20** challenged cases. Upstream-first and reach-per-cost baselines each scored **11 of 20**. Within the first three checks, PAS scored **17/20**, while both baselines scored **19/20**. Cases, coarse labels, and simplified dependency graphs were selected after historical outcomes became known. These scores measure category agreement, not defects discovered, reviewer hours saved, real error rates, or prospective predictive superiority. The negative finding remains the lead result.
+**Scope:** self-directed, AI-assisted research conducted with ChatGPT and Claude under the direction of Devin J. Wright. No independent human referee, world-first theorem, deployed search advantage, or validated predictive prioritization is claimed.
 
-The **24-case inventory** comprises **20 challenged cases** with scored retrospective weak-link categories and **four censored corroboration / formalization controls**: the 2012 Higgs-boson results, 2015 GW150914, the four-colour theorem, and the Kepler conjecture. The four controls have **no known defect-category label** and were excluded from both 20-case score denominators. They serve only as evidence-structure tests (independent sources versus shared dependencies and formal checks).
+## What PAS now studies
 
-## Established mathematical scope
+PAS asks whether a verification system can represent claims with their exact source versions, independent evidence, typed proof dependencies, and uncertainty—and whether that structure *eventually* helps allocate limited verification effort better than simple heuristics.
 
-Within a single finite proof dependency DAG, the strictly triangular transfer matrix is nilpotent, hence spectral radius zero, allowing a finite path-sum exposure model. The publication-reuse graph may be cyclic and is a different object. The October 6 source snapshot reports **722 manuscripts, 597 bibliographic citation edges, and 73 mutual-citation groups**; those connections do not by themselves establish logical dependencies. Cost, origin and transfer parameters require separate calibration.
+The core distinction is between:
 
-The 27 October exact-rational reference model had **216 synthetic DAG exposure comparisons** and **802 exact edge-derivative comparisons**. Here *independent* means an **alternate brute-force path-enumeration implementation** agreeing with the finite-DAG dynamic-programming reference path, with separate AI-written code. It does **not** mean human referee review, independently sampled empirical data, or independently developed assumptions. The code itself remains unpublished in this GitHub tree; the original paper records source SHA-256 values `reference_model.py = 4b9d272c832ceb0cb050dff7284f07f61cbb96462fd678b40844715c4fc3628c` and `independent_checker.py = 17f5321a325a274e2b0830cbeb003699f0273f1120a6b86e6d7ee562fcd2072c`. No fresh code rerun is claimed here.
+1. **Bibliographic citation / reuse graphs**, which may contain cycles and establish only textual references;
+2. **A finite proof's actual logical dependency DAG**, which has a topological order if its steps are well founded;
+3. **Source and verification history**, which records corrections, abstentions, and qualified checks without upgrading an uncertain edge into a certified dependency.
 
-## Public metadata freeze, and distinct graph preregistration
+### Established mathematical part
 
-The **372-family metadata ranking** was locally recorded as frozen **2026-10-06 20:23:39 EDT**. Its complete ordered-family fingerprint `c429732aac46eae9` is reproduced from the source release at commit `adc7f1241b42e322a6451854ab7e4b4c146bf78a`. The **full CSV and SHA-256** are public: [freeze, exact hash and generator](pas/README.md); CSV SHA-256 `3e303b69ef8e530b5c618e61f9cb5c4527ea717b0588c59f2fb75b4afd5924e7`. Its scoring task is prediction of later *substantive manuscript revisions*, with rank-based evaluation against predeclared metadata baselines. Its historical local freeze date has **no externally controlled October 6 timestamp yet**.
+For a strictly upper-triangular edge-weight matrix (B\) of an (n\)-node finite DAG, (B^n=0) and
 
-A **separate manuscript-graph freeze** records `2026-10-07T00:05:14Z` with historical manifest digest `b0b439e0e44a4ea06f87297c9479063ae8aa26f7be731912d39ed6a1870ab697`. Its **H1 prospective test** is whether unit exposure `x₀N` predicts later substantive corrections better than own prior `x₀`, using a **one-sided 10,000-draw permutation test within equal-prior strata**; minimum **20 corrected manuscripts**, support at `p < 0.05`, decisive scoring **2027-04-06**. The original `PREREGISTRATION.md`, `FREEZE.json`, `MANIFEST.sha256`, graph files and source model, as well as an independently held third-party timestamp (e.g. Zenodo/OpenTimestamps), are still **not publicly available**. The digest is recorded rather than freshly matched to the original bytes. This is **historically recorded, publicly incomplete**, hence no claim that the October 7 graph experiment presently meets a third-party preregistration standard.
+[
+(I-B)^{-1} = \sum_{k=0}^{n-1} B^k.
+]
 
-## Research direction and audit criteria
+Version 2 proves the path-sum formula, the exact change in modeled exposure from increasing one forward-edge weight, and conditional entrywise interval bounds for nonnegative dependency weights. These are **elementary finite algebraic identities**, not a new mathematical discovery or a measured real-world error-rate estimate.
 
-The proposed graph system makes claims atomic, typed, versioned, and attached to exact source spans. Bibliography links stay separate from proof-dependency edges; revisions trigger downstream review. Proposed tests compare evidence-complete answers at equal token budgets against flat retrieval, source-grounded retrieval and graph retrieval; separately compare calibrated PAS triage with simple upstream-first and reach/cost baselines. Measure complete support, answer correctness, human review cost, latency, and extraction error under temporally held-out, blinded labels. No deployed search advantage has been measured.
+**Replay:** [integer-exact PAS v2 checker](../../../scripts/test_pas_v2.cjs), covering deterministic DAGs by independent direct-path enumeration and matrix path sums, forward-edge changes, and interval inequalities. The checker is a small implementation sanity check—not independent peer review.
 
-**Credit and limits:** Human-led by Devin J. Wright with AI research collaborators. Mathematical identities, synthetic arithmetic tests, retrospective adverse comparisons, historical freeze records, published metadata ranking and external peer review carry distinct status labels.
+### Empirical status
+
+**Verification-priority advantage is not established.** The historical 13 October retrospective, outcome-aware exercise did not demonstrate superiority to simpler strategies. That experiment is **not part of the new manuscript's supporting evaluation**; its [original figures, controls, caveats and earlier dossier](pas/RETROSPECTIVE_20261013.md) remain preserved as historical audit evidence. Removing it from the main argument does not reverse the unfavorable outcome.
+
+A credible empirical evaluation still requires publicly frozen primary inputs, prospectively collected outcomes, independent source-to-dependency annotation, blinded evaluation, and matched-budget baselines.
+
+## Existing assets and historical limitations
+
+- **October 6 source corpus:** 722 manuscripts, 597 **bibliographic** citation edges and 73 mutual-citation groups. Those numbers are not verified proof-dependency edges.
+- **Reported October 27 synthetic checks:** the earlier dossier reported 216 DAG exposure and 802 edge-derivative comparisons. Its original checker/source files are not publicly available in this repository. These have not been independently rerun here; the new v2 checker is a distinct limited implementation.
+- **Public 372-family metadata ranking:** [CSV, generator, SHA-256 and limitations](pas/README.md), derived from the OpenAI `math` release at commit `adc7f1241b42e322a6451854ab7e4b4c146bf78a`. SHA-256 of the public CSV: `3e303b69ef8e530b5c618e61f9cb5c4527ea717b0588c59f2fb75b4afd5924e7`. Original local October 6 freeze lacks an independently controlled contemporary timestamp.
+- **Separate historical manuscript-graph H1:** scheduled decisive score 2027-04-06, but its primary freeze graph, preregistration and original manifest are not publicly available, and its historical timestamp is not externally validated. There is no claim of publicly checkable October 7 preregistration.
+
+## Read, test, or review
+
+- [PAS Version 2 manuscript](pas/PAS_V2_20261029.md) — definitions, finite propositions and proofs, source-admission rules, evaluation protocol, explicit limitations.
+- [Version 2 exact checker](../../../scripts/test_pas_v2.cjs) — executable `node scripts/test_pas_v2.cjs`.
+- [Public metadata freeze](pas/README.md) — CSV and regeneration code.
+- [Historical retrospective audit](pas/RETROSPECTIVE_20261013.md) — the prior unfavorable evaluation, unchanged in meaning.
+- [Original October 28 dossier at its pinned commit](https://github.com/d3lefts/d3lefts/blob/f8b73066db17a0ae0fd590fb2ec61accb5e38566/research/nightfall/projects/pas-overview.md) — full pre-revision text.
+
+**Research status:** exact finite model and documented open problems, with the first major empirical advantage hypothesis unvalidated. This dossier supersedes the *editorial framing* of October 28; it does not alter past experimental measurements or the dated source record.
