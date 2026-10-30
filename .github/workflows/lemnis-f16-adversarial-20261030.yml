@@ -1,0 +1,26 @@
+name: Lemnis F16 phase oracle independent review
+on:
+  push:
+    paths:
+      - "research/nightfall/agent-reports/lemnis_f16_audit_20261030/**"
+      - ".github/workflows/lemnis-f16-adversarial-20261030.yml"
+  pull_request:
+    paths:
+      - "research/nightfall/agent-reports/lemnis_f16_audit_20261030/**"
+      - ".github/workflows/lemnis-f16-adversarial-20261030.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Python syntax and exact independent oracle verification
+        run: |
+          python3 -m py_compile research/nightfall/agent-reports/lemnis_f16_audit_20261030/replay_github.py
+          python3 research/nightfall/agent-reports/lemnis_f16_audit_20261030/replay_github.py
