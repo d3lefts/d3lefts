@@ -19,7 +19,7 @@ private theorem square_expansion (u v : Nat) :
     ((u + 2) * (v + 1) + 1) ^ 2 =
       (u + 2) * (v + 2) ^ 2 +
       (u + 1) * ((u + 2) * v ^ 2 + (2 * u + 4) * v + (u + 1)) := by
-  simp only [pow_two, Nat.add_mul, Nat.mul_add, Nat.mul_assoc,
+  simp only [Nat.pow_two, Nat.add_mul, Nat.mul_add, Nat.mul_assoc,
     Nat.mul_comm, Nat.mul_left_comm]
   omega
 
@@ -58,7 +58,7 @@ theorem information_power_bound (d r k : Nat)
   have step (j : Nat)
       (hj : d * (r + 1) ^ j < (d * r + 1) ^ j) :
       d * (r + 1) ^ (j + 1) < (d * r + 1) ^ (j + 1) := by
-    rw [pow_succ, pow_succ]
+    rw [Nat.pow_succ, Nat.pow_succ]
     calc
       d * ((r + 1) ^ j * (r + 1)) =
           (d * (r + 1) ^ j) * (r + 1) := by ac_rfl
