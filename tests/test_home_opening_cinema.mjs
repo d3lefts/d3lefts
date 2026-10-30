@@ -17,7 +17,7 @@ test('opening scene is progressive, purely decorative, and both readings remain 
  assert.match(html,/id="hero-title-archive"/);
  assert.match(html,/id="hero-title"/);
  assert.match(html,/href="#flagships"/);
- assert.match(html,/href="join.html#assignment"/);
+ assert.match(html,/href="review.html#priority"/);
  assert.match(html,/id="nf-scroll-cinema"/); // retain the second-act cinema
  assert.match(css,/prefers-reduced-motion:reduce/);
  assert.match(css,/\.nf-opening-art\{[\s\S]*?pointer-events:none/);
