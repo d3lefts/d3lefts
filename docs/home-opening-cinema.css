@@ -532,8 +532,8 @@ html[data-nf-theme="dusk"] #main>.hero.nf-opening .nf-opening-sky--night{
   background-image:url("media/new-moon-crescent-overlay.svg"),
                    url("https://images.unsplash.com/photo-1515311320503-6e3d309537b4?auto=format&fit=crop&w=2560&q=82"),
                    url("media/new-moon-nightscape.svg");
-  background-size:clamp(170px,20vw,285px) auto,cover,cover;
-  background-position:88% 4%,64% center,64% center;
+  background-size:clamp(185px,18vw,250px) auto,cover,cover;
+  background-position:54% 4%,64% center,64% center;
   background-position:64% center;
 }
 #main>.hero.nf-opening .nf-opening-sky::after{
@@ -562,8 +562,8 @@ html[data-nf-theme="dusk"] .nf-cinema--still .nf-cinema-world--night{
   background-image:url("media/new-moon-crescent-overlay.svg"),
                    url("https://images.unsplash.com/photo-1515311320503-6e3d309537b4?auto=format&fit=crop&w=2560&q=82"),
                    url("media/new-moon-nightscape.svg")!important;
-  background-size:clamp(168px,20vw,270px) auto,cover,cover;
-  background-position:86% 1%,61% center,61% center;
+  background-size:clamp(195px,18vw,240px) auto,cover,cover;
+  background-position:47% 1%,61% center,61% center;
   background-position:61% center;
 }
 html:not([data-nf-theme="dusk"]) .nf-cinema--still .nf-cinema-vignette{
