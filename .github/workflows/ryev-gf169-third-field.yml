@@ -1,0 +1,22 @@
+name: Ryev independent GF169 third-field audit
+on:
+  push:
+    branches:
+      - ryev/gf169-third-field-audit-20261030
+  pull_request:
+    paths:
+      - 'research/nightfall/agent-reports/ryev_gf169_independent_20261030/**'
+      - '.github/workflows/ryev-gf169-third-field.yml'
+  workflow_dispatch:
+jobs:
+  independent-exact:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Freeze checksum and replay third-field oracle
+        run: |
+          python3 --version
+          sha256sum research/nightfall/agent-reports/ryev_gf169_independent_20261030/verify_third_field.py
+          python3 research/nightfall/agent-reports/ryev_gf169_independent_20261030/verify_third_field.py
