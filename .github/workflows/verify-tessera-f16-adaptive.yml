@@ -25,3 +25,5 @@ jobs:
         run: python3 research/nightfall/projects/finite-field/tessera-f16-adaptive-20261030/audit.py
       - name: Independent GF4 quadratic-tower arithmetic and collision-minimum audit
         run: python3 research/nightfall/projects/finite-field/tessera-f16-adaptive-20261030/audit_tower.py
+      - name: Compare full-subfield oracle capacities q3 and q5
+        run: python3 research/nightfall/projects/finite-field/tessera-f16-adaptive-20261030/audit_cross_fields.py
