@@ -154,27 +154,30 @@ def main() -> int:
                 FAILURES.append("DISCOVERY: portable manifest link missing from " + page_name)
     if '"level": "public"' not in registry_text or "Curated finite witness public; independent audit open" not in registry_text:
         FAILURES.append("REPRODUCIBILITY: finite witness release absent from canonical Passport")
-    sources = set("https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/" + path
-                  for path in re.findall(r'(?:\bpath|"path")\s*:\s*"([^"]+)"', js))
+    # The homepage has no parallel research-card catalogue. Its originality
+    # gate is the dated owner-curated 33-document source ledger and the dated
+    # originality audit, never a shadow JavaScript data array in shared chrome.
+    import json
+    originals_ledger = json.loads((ROOT / "research/nightfall/SITE_CURATED_33_20261029.json").read_text(encoding="utf-8"))
+    original_ids = {"01", "02", "29"}
+    originals = {item.get("id"): item.get("source")
+                 for item in originals_ledger.get("entries", []) if item.get("id") in original_ids}
+    approved = {
+        "01": "projects/erdos/STATUS_AND_PRIOR_ART_20261028.md",
+        "02": "projects/sidon-finite-30/README.md",
+        "29": "projects/pas-overview.md",
+    }
+    originality_audit = (ROOT / "research/nightfall/SITE_ORIGINALITY_AUDIT_20261028.md").read_text(encoding="utf-8")
     homepage = pages[DOCS.joinpath("index.html").resolve()]
     static = set(homepage.research_rows)
-    # The current editorial layout keeps the verified original-finding catalogue in
-    # site.js and moves the homepage body to a separately curated library invitation.
-    # Preserve the original whitelist even when that gallery is absent from HTML.
     homepage_text = (DOCS / "index.html").read_text(encoding="utf-8")
     new_library_invite = ('id="work"' in homepage_text and 'sf-library-invite' in homepage_text
                           and 'href="research.html"' in homepage_text
                           and 'href="passport.html"' in homepage_text)
-    if static != sources and not (not static and new_library_invite):
-        FAILURES.append(f"Research catalogue mismatch: static-only={sorted(static - sources)}, js-only={sorted(sources - static)}")
-    # Public website originality rule: source archives remain broader than this list.
-    allowed_originals = {
-        PREFIX + "/blob/main/research/nightfall/projects/erdos-overlap-paper.md",
-        PREFIX + "/blob/main/research/nightfall/projects/sidon-finite-30/README.md",
-        PREFIX + "/blob/main/research/nightfall/projects/pas-overview.md",
-    }
-    if sources != allowed_originals or (static and static != allowed_originals) or (not static and not new_library_invite):
-        FAILURES.append("ORIGINALITY GATE: public findings differ from three approved primary artifacts. "
+    if originals != approved or originals_ledger.get("original_findings_whitelist_count") != 3 or \
+            static or not new_library_invite or \
+            any(item not in originality_audit for item in ("Erdős minimum overlap", "Sidon (4,5)", "Proof After Scarcity")):
+        FAILURES.append("ORIGINALITY GATE: three approved finite/bounded primary findings or their dated audit changed. "
                         "Any change requires a new dated prior-art audit and evidence review.")
     homepage_text = (DOCS / "index.html").read_text(encoding="utf-8")
     # A public, guided claim-to-replay walkthrough must use real local verifier routes.
