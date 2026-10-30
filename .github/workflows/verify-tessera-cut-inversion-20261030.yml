@@ -1,0 +1,26 @@
+name: Verify modular Sidon cut inversion and K+2 no-graft
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/projects/erdos/tessera_cut_inversion_20261030/**'
+      - '.github/workflows/verify-tessera-cut-inversion-20261030.yml'
+  push:
+    paths:
+      - 'research/nightfall/projects/erdos/tessera_cut_inversion_20261030/**'
+      - '.github/workflows/verify-tessera-cut-inversion-20261030.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-cuts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Reconstruct GF49 Singer and prove all ordered differences
+        run: python3 research/nightfall/projects/erdos/tessera_cut_inversion_20261030/q49_field.py
+      - name: 15950 cut checks, 4 sharp witnesses, negative controls
+        run: python3 research/nightfall/projects/erdos/tessera_cut_inversion_20261030/verify_cut.py
