@@ -334,8 +334,14 @@ def main() -> int:
             if rel.split("research/nightfall/")[-1] in page.read_text(encoding="utf-8"):
                 FAILURES.append(f"Out-of-program link in {page}: {rel}")
     pas = (ROOT / "research/nightfall/projects/pas-overview.md").read_text(encoding="utf-8")
-    if not all(k in pas for k in ("8 of 20", "11 of 20", "802", "2027-04-06")):
-        FAILURES.append("PAS claims/freeze protocol missing")
+    pas_v2 = (ROOT / "research/nightfall/projects/pas/PAS_V2_20261029.md").read_text(encoding="utf-8")
+    pas_history = (ROOT / "research/nightfall/projects/pas/RETROSPECTIVE_20261013.md").read_text(encoding="utf-8")
+    if not all(k in pas for k in ("PAS_V2_20261029.md", "802", "2027-04-06")):
+        FAILURES.append("PAS current mathematical scope or historical freeze protocol missing")
+    if not all(k in pas_history for k in ("8 of 20", "11 of 20", "17/20", "19/20", "after historical outcomes were known")):
+        FAILURES.append("PAS adverse retrospective comparison erased or misrepresented")
+    if not all(k in pas_v2 for k in ("Proposition 1", "Proposition 2", "Proposition 3", "RETROSPECTIVE_20261013.md", "unvalidated")):
+        FAILURES.append("PAS v2 claim scope, mathematical proofs or historical linkage missing")
     rank = ROOT / "research/nightfall/projects/pas/openai_math_priority_ranking_2026-10-06.csv"
     if len(rank.read_text(encoding="utf-8").splitlines()) != 373:
         FAILURES.append("PAS frozen metadata ranking must have 372 entries")
