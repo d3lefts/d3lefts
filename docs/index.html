@@ -54,12 +54,30 @@
     <div class="nf-opening-art nf-opening-art--gold" aria-hidden="true">
       <div class="nf-opening-sky nf-opening-sky--gold">
         <div class="nf-opening-arc"></div><div class="nf-opening-sun"></div>
-        <div class="nf-opening-horizon"></div><div class="nf-opening-veil"></div>
+        <div class="nf-opening-horizon"></div>
+        <svg class="nf-opening-constellation" viewBox="0 0 1200 720" focusable="false">
+          <g>
+            <path pathLength="1" d="M115 420 L310 268 L480 364 L671 164 L866 248 L1069 104"/>
+            <path pathLength="1" d="M310 268 L403 100 L671 164 L755 531 L1075 610"/>
+            <path pathLength="1" d="M115 420 L329 619 L480 364 L755 531 L866 248"/>
+            <path pathLength="1" d="M329 619 L600 648 L755 531"/>
+          </g>
+          <g>
+            <circle cx="115" cy="420" r="5"/><circle cx="310" cy="268" r="7"/>
+            <circle cx="403" cy="100" r="4"/><circle class="nf-opening-node--gold" cx="480" cy="364" r="8"/>
+            <circle cx="671" cy="164" r="6"/><circle cx="866" cy="248" r="5"/>
+            <circle cx="1069" cy="104" r="4"/><circle class="nf-opening-node--gold" cx="755" cy="531" r="7"/>
+            <circle class="nf-opening-node--oxblood" cx="329" cy="619" r="5"/>
+            <circle cx="600" cy="648" r="4"/><circle cx="1075" cy="610" r="4"/>
+          </g>
+        </svg>
+        <div class="nf-opening-veil"></div>
       </div>
     </div>
     <div class="nf-opening-art nf-opening-art--night" aria-hidden="true">
       <div class="nf-opening-sky nf-opening-sky--night">
         <div class="nf-opening-nightfield"></div><div class="nf-opening-lattice"></div>
+        <div class="nf-opening-moon" aria-hidden="true"></div>
         <svg class="nf-opening-constellation" viewBox="0 0 1200 720" focusable="false">
           <g>
             <path pathLength="1" d="M115 420 L310 268 L480 364 L671 164 L866 248 L1069 104"/>
@@ -121,8 +139,8 @@
       </div>
     </aside>
     <div class="nf-opening-endmark" aria-hidden="true">
-      <span class="nf-opening-reading nf-opening-reading--gold">NULL FIELD / THE RECORD</span>
-      <span class="nf-opening-reading nf-opening-reading--night">NEW MOON / THE INQUIRY</span>
+      <span class="nf-opening-reading nf-opening-reading--gold">NULL FIELD / DEEP SPACE</span>
+      <span class="nf-opening-reading nf-opening-reading--night">NEW MOON / WARM NIGHT</span>
       <span class="nf-opening-track"></span>
       <span>SCROLL TO UNFOLD</span>
       <span class="nf-opening-down">↓</span>
@@ -138,9 +156,33 @@
       <div class="nf-cinema-orbit"></div>
       <div class="nf-cinema-sun"></div>
       <div class="nf-cinema-horizon"></div>
+      <div class="nf-cinema-deep-stars" aria-hidden="true"></div>
+      <svg class="nf-cinema-constellation" viewBox="0 0 1200 760" aria-hidden="true" focusable="false">
+        <g>
+          <path pathLength="1" d="M112 445 L305 225 L511 347 L710 132 L973 244 L1100 104"/>
+          <path pathLength="1" d="M305 225 L437 101 L710 132 L893 493 L1086 631"/>
+          <path pathLength="1" d="M112 445 L379 632 L511 347 L893 493 L973 244"/>
+          <path pathLength="1" d="M379 632 L714 648 L893 493"/>
+          <path pathLength="1" d="M437 101 L511 347 L714 648"/>
+        </g>
+        <g>
+          <circle class="nf-cinema-node nf-cinema-node--jasmine" cx="112" cy="445" r="7"/>
+          <circle class="nf-cinema-node" cx="305" cy="225" r="6"/>
+          <circle class="nf-cinema-node" cx="437" cy="101" r="4"/>
+          <circle class="nf-cinema-node nf-cinema-node--jasmine" cx="511" cy="347" r="8"/>
+          <circle class="nf-cinema-node" cx="710" cy="132" r="7"/>
+          <circle class="nf-cinema-node" cx="973" cy="244" r="5"/>
+          <circle class="nf-cinema-node" cx="1100" cy="104" r="4"/>
+          <circle class="nf-cinema-node" cx="893" cy="493" r="7"/>
+          <circle class="nf-cinema-node nf-cinema-node--jasmine" cx="714" cy="648" r="5"/>
+          <circle class="nf-cinema-node" cx="379" cy="632" r="5"/>
+          <circle class="nf-cinema-node" cx="1086" cy="631" r="4"/>
+        </g>
+      </svg>
     </div>
     <div class="nf-cinema-world nf-cinema-world--night" aria-hidden="true">
       <div class="nf-cinema-night-halo"></div>
+      <div class="nf-cinema-moon" aria-hidden="true"></div>
       <svg class="nf-cinema-constellation" viewBox="0 0 1200 760" aria-hidden="true" focusable="false">
         <g>
           <path pathLength="1" d="M112 445 L305 225 L511 347 L710 132 L973 244 L1100 104"/>
@@ -168,12 +210,12 @@
     <div class="nf-cinema-content">
       <div class="nf-experience nf-experience-archive">
         <p class="nf-cinema-overline">NULL FIELD / ERDŐS MINIMUM OVERLAP</p>
-        <h2 class="nf-cinema-title">The sky moves.<br><em>The bound holds still.</em></h2>
+        <h2 class="nf-cinema-title">Trace the stars.<br><em>Test the bound.</em></h2>
         <p class="nf-cinema-subtitle">An explicit finite construction; each signed shift matters. The animation illustrates investigation, never the certificate.</p>
       </div>
       <div class="nf-experience nf-experience-underbelly">
         <p class="nf-cinema-overline">NEW MOON / ERDŐS MINIMUM OVERLAP</p>
-        <h2 class="nf-cinema-title">Trace the shifts.<br><em>Find the limit.</em></h2>
+        <h2 class="nf-cinema-title">Under one moon.<br><em>Every shift counts.</em></h2>
         <p class="nf-cinema-subtitle">Follow the structure into the dark. Arithmetic replay is a separate question from global optimality and independent review.</p>
       </div>
       <div class="nf-cinema-record" aria-label="Source-bound Erdős finite overlap record">
