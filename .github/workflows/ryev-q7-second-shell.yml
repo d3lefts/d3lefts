@@ -1,0 +1,25 @@
+name: "RYEV exact 12-even-square Q7 gate"
+on:
+  push:
+    branches:
+      - "ryev/q7-second-shell-12-face-20261029"
+  pull_request:
+    paths:
+      - "research/nightfall/agent-reports/ryev_q7_second_shell_20261029/**"
+      - ".github/workflows/ryev-q7-second-shell.yml"
+  workflow_dispatch:
+jobs:
+  second-shell:
+    name: "Exact Q4 Q7 cubical syndrome and Q3 saturation audits"
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Run arithmetic cross-checks"
+        run: python3 research/nightfall/agent-reports/ryev_q7_second_shell_20261029/verify_second_shell.py
+      - name: "Independent Q5 closed-two-cochain exhaustive enumerator"
+        run: python3 research/nightfall/agent-reports/ryev_q7_second_shell_20261029/q5_second_shell_exact.py
+      - name: "Independent Q7 full one-/two-edge syndrome sector"
+        run: python3 research/nightfall/agent-reports/ryev_q7_second_shell_20261029/audit_q7_two_edge_sector.py
+      - name: "Independent Q7 three-/four-/five-edge equality-sector audit"
+        run: python3 research/nightfall/agent-reports/ryev_q7_second_shell_20261029/audit_three_edge_minimum.py
