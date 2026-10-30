@@ -20,3 +20,5 @@ jobs:
         run: |
           python -m py_compile research/nightfall/projects/finite-field/gf169-sumset-hole-20261030/verify_f169.py
           python research/nightfall/projects/finite-field/gf169-sumset-hole-20261030/verify_f169.py
+          python -m py_compile research/nightfall/projects/finite-field/gf169-sumset-hole-20261030/verify_tiled_family.py
+          python research/nightfall/projects/finite-field/gf169-sumset-hole-20261030/verify_tiled_family.py
