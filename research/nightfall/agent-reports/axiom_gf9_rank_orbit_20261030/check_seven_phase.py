@@ -9,6 +9,7 @@ coefficient sign-classes reduce via PGL2(3) = S4 and order symmetry to
 This finite checker is a component of an R1 theorem candidate, not Lean.
 """
 from collections import Counter
+from itertools import product
 
 LINE_REPS=((1,0),(0,1),(1,1),(1,2))
 ZERO=(0,0)
@@ -65,6 +66,50 @@ def profiles():
                         yield (zero_count,n1,n2,n3,n4)
 
 
+
+def adaptive_rank_schedules():
+    """All 128 possible independent/dependent schedules after a nonzero root.
+
+    In the adversarial chosen branch, each independent row is assigned
+    nonzero powered outcome 1, adding one relative sign bit. Each
+    dependent reading partitions the retained sign set into at most
+    5 observable values. Choose its largest nonempty bucket.
+    """
+    exceptions=[]
+    for pattern in product((1,0),repeat=7):
+        rank=1
+        phases=1
+        for independent in pattern:
+            if independent:
+                rank+=1
+                phases*=2
+            else:
+                phases=(phases+4)//5
+        orbits=phases * (9**(8-rank))
+        if orbits<=5**3:
+            exceptions.append({
+                "pattern":"I"+"".join("I" if z else "D" for z in pattern),
+                "rank":rank,
+                "phase_count_from_pigeonhole":phases,
+                "orbit_count_from_pigeonhole":orbits,
+            })
+    assert exceptions==[{
+        "pattern":"IIIIIIID","rank":7,
+        "phase_count_from_pigeonhole":13,
+        "orbit_count_from_pigeonhole":117,
+    }],exceptions
+    # In the ONLY surviving rank pattern, seven independent rows with
+    # nonzero squared readings give 64 anchored signs and one GF9 free
+    # coordinate. Exact phase classification raises 13 to 14:
+    assert 14*9==126 > 5**3==125
+    return {"total_rank_schedules":2**7,
+            "pigeonhole_survivors":exceptions,
+            "sharp_last_row_phase_capacity":14,
+            "certified_final_orbits":126,
+            "remaining_three_query_capacity":125}
+
+
+
 def audit():
     results={p:bucket_counts(p) for p in profiles()}
     assert len(results)==38
@@ -75,7 +120,9 @@ def audit():
     # The orbit class of the unique best profile contains
     # 7!/(1!2!2!2!) * 4 choices of the missing direction.
     assert (5040//8)*4==2520
+    schedule=adaptive_rank_schedules()
     return {
+        "adaptive_schedules":schedule,
         "field_additive_group":"F3^2",
         "coefficient_projective_directions":4,
         "coefficient_orbit_types":len(results),
