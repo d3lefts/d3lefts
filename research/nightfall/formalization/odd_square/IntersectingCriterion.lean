@@ -121,7 +121,41 @@ theorem square_separation_iff_strong_intersection
     · exact Or.inl ((difference_zero x y).1 hd)
     · exact Or.inr ((sum_zero x y).1 hs)
 
+-- The reusable sign-packing operator, quantified over an arbitrary
+-- number r of independent basis digits. It explains how an injective
+-- linear expansion remains injective after squaring, provided the digit
+-- alphabet contains no distinct opposite-sign pair.
+--
+-- In F_(p^r) for odd p, D={0,2}, the rigidity hypothesis is the
+-- elementary 2 != -2 (characteristic not 2). A field-basis map supplies
+-- basis_unique and basis_neg. These instantiations are not claimed here.
+theorem signed_digit_packing_injective
+    {K : Type v} {r : Nat}
+    (square negativeK : K → K) (D : K → Prop)
+    (encode : (Fin r → K) → K)
+    (square_sign : ∀ a b, square a = square b ↔
+      a = b ∨ a = negativeK b)
+    (basis_unique : ∀ a b, encode a = encode b → ∀ i, a i = b i)
+    (basis_neg : ∀ b,
+      encode (fun i => negativeK (b i)) = negativeK (encode b))
+    (digit_rigidity : ∀ a b, D a → D b →
+      a = negativeK b → a = b) :
+    ∀ a b : Fin r → K, (∀ i, D (a i)) → (∀ i, D (b i)) →
+      square (encode a) = square (encode b) →
+      ∀ i, a i = b i := by
+  intro a b ha hb hsq
+  rcases (square_sign (encode a) (encode b)).1 hsq with heq | hneg
+  · exact basis_unique a b heq
+  · have hencoded :
+        encode a = encode (fun i => negativeK (b i)) := by
+      rw [basis_neg]
+      exact hneg
+    have hcoords := basis_unique a (fun i => negativeK (b i)) hencoded
+    intro i
+    exact digit_rigidity (a i) (b i) (ha i) (hb i) (hcoords i)
+
 #print axioms Nightfall.OddSquare.strong_intersecting_iff_full_rank_and_image
 #print axioms Nightfall.OddSquare.square_separation_iff_strong_intersection
+#print axioms Nightfall.OddSquare.signed_digit_packing_injective
 
 end Nightfall.OddSquare
