@@ -118,8 +118,8 @@ if(menu&&nav){
  const main=document.querySelector("main");if(!main||document.querySelector(".nf-process-thread"))return;
  if(document.querySelector("#app")||document.querySelector(".app")||main.closest(".app"))return;
  const page=location.pathname.split("/").pop()||"index.html",hash=location.hash;
- // Homepage already exposes the three canonical destinations in its header.
- if(page==="index.html")return;
+ // The three primary destinations already have accessible, distinct header navigation.
+ if(["index.html","constellation.html","review.html"].includes(page))return;
  const steps=[
  {id:"home",label:"01 / Homepage · Results",href:"index.html#flagships"},
  {id:"constellation",label:"02 / Constellation · Connections",href:"constellation.html#map"},
