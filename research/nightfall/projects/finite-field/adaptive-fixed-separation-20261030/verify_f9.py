@@ -68,7 +68,7 @@ def recover(x):
         row[anchor] = mul(
             total(BASIS[:len(block)]), INVERSES[representatives[anchor]]
         )
-        for i, beta in zip(block, BASIS, strict=True):
+        for i, beta in zip(block, BASIS[:len(block)], strict=True):
             row[i] = mul(beta, INVERSES[representatives[i]])
 
         # Only legal powered observation is used to select the relative phases.
@@ -77,7 +77,7 @@ def recover(x):
         for phases in product(H, repeat=len(block)):
             unpowered = total(
                 mul(beta, (1 + phase) % 3)
-                for beta, phase in zip(BASIS, phases, strict=True)
+                for beta, phase in zip(BASIS[:len(block)], phases, strict=True)
             )
             reading = square(unpowered)
             assert reading not in inverse_code
