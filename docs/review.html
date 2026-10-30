@@ -44,6 +44,20 @@
 .review-priority-note{font-size:12px;line-height:1.65;color:var(--muted);margin-top:18px}
 @media(max-width:850px){.review-priority-head{display:block}.review-priority-head .kicker{display:block;margin-bottom:18px}.review-priority-grid{grid-template-columns:1fr}.review-priority-card{border-right:0;border-bottom:1px solid var(--line)}.review-priority-card:last-child{border-bottom:0}}
 
+
+/* Short, genuinely runnable reviewer on-ramp; specialist review remains below. */
+.review-starter{padding:52px 0 60px;border-bottom:1px solid var(--line)}
+.review-starter-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(24px,5vw,76px)}
+.review-starter h2{font:400 clamp(38px,5vw,62px)/1.06 var(--serif);margin:15px 0 19px;letter-spacing:-.025em}
+.review-starter p,.review-starter li{font-size:14px;line-height:1.75;color:var(--muted)}
+.review-starter ol{padding-left:23px;margin:0}
+.review-starter li{margin:0 0 13px}
+.review-starter li::marker{font:500 11px var(--mono)}
+.review-starter pre{overflow-x:auto;white-space:pre-wrap;overflow-wrap:anywhere;border:1px solid var(--line);padding:15px;margin:17px 0;font:12px/1.7 var(--mono);color:var(--ink);background:var(--paper)}
+.review-starter a{font:600 11px/1.7 var(--mono);text-decoration:underline;text-underline-offset:4px}
+.review-starter-links{display:flex;flex-wrap:wrap;gap:12px 22px;margin-top:22px}
+.review-starter small{display:block;margin-top:15px;color:var(--muted);font:11px/1.7 var(--mono)}
+@media(max-width:800px){.review-starter-grid{grid-template-columns:1fr}.review-starter{padding:42px 0 50px}}
 </style>
 <link rel="stylesheet" href="ethereal-theme.css">
 <script src="ethereal-theme.js" defer></script>
@@ -65,13 +79,37 @@
 <span class="kicker">INDEPENDENT REVIEW / SPECIFIC CHECKS</span>
 <h1>Reproduce it.<br><i>Then challenge it.</i></h1>
 <p>Begin with an exact statement and the original evidence. Reproduce the calculation, test a failure case, and report precisely where the claim holds or fails. Agreement among AI agents does not count as independent mathematical review.</p>
-<div class="hero-actions"><a class="button" href="#priority">Choose a falsifiable claim ↘</a><a class="text-link" href="#submit">Submit a scoped verdict ↓</a><a class="text-link" href="constellation.html#map">Trace its dependencies ↗</a></div>
+<div class="hero-actions"><a class="button" href="#start-here">Start with a finite replay ↘</a><a class="text-link" href="#submit">Submit a scoped verdict ↓</a><a class="text-link" href="constellation.html#map">Trace its dependencies ↗</a></div>
 </section>
 <div class="review-summary wrap">
 <article><span>01 / CHOOSE A CLAIM</span><b>3 current priorities</b><span>Open theorem and transfer candidates, followed by established finite-evidence dossiers.</span></article>
 <article><span>02 / REPRODUCE AND ATTACK</span><b>Separate verdicts</b><span>Finite replay, proof validity, independent review, and novelty are different decisions.</span></article>
 <article><span>03 / REPORT THE RESULT</span><b>PASS · FAIL · INCONCLUSIVE</b><span>Provide the source commit, input hashes, replay commands and precise scope.</span></article>
 </div>
+
+
+<section class="review-starter wrap" id="start-here" aria-labelledby="starter-title">
+  <div class="review-starter-grid">
+    <div>
+      <span class="kicker">START HERE / AN EXACT FINITE CHECK</span>
+      <h2 id="starter-title">One witness.<br><em>One falsifier.</em></h2>
+      <p>A small reproducible first review: test the published 30-integer Sidon example using the independently written, standard-library Python checker. The goal is to verify a <strong>particular finite claim</strong>, not settle the infinite Erdős problem or establish originality.</p>
+      <div class="review-starter-links"><a href="#sidon">Read the complete claim and obligations ↗</a><a href="#priority">Advanced theorem-review queue ↗</a></div>
+    </div>
+    <div>
+      <ol>
+        <li>Get the <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/witness_30.txt" target="_blank" rel="noopener">frozen 30 coordinates</a> and <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py" target="_blank" rel="noopener">standalone checker</a> from the public repository, maintaining their relative paths.</li>
+        <li>From the cloned repository root, run this exact command (Python 3; no third-party packages):</li>
+      </ol>
+      <pre><code>python3 research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py</code></pre>
+      <ol start="3">
+        <li>Confirm <code>"status": "PASS"</code>, <code>"weak_sidon_four_point_tests": 27405</code>, <code>"three_term_arithmetic_progressions": 28</code>, and <code>"exact_sidon_number": 17</code>. Modify a <em>copy</em> of the witness file: the source-hash guard should reject it. A modified-input rejection checks identity; it does not independently prove the mathematics.</li>
+        <li>For an independent review, reimplement one check without copying the supplied algorithm, then <a href="https://github.com/d3lefts/d3lefts/issues/new/choose" target="_blank" rel="noopener">report PASS, FAIL or INCONCLUSIVE</a> with your exact source revision, command, hash and any counterexample.</li>
+      </ol>
+      <small>Scope: internally reproduced fixed finite witness. Novelty, peer review and asymptotic implications remain separate questions.</small>
+    </div>
+  </div>
+</section>
 
 <section class="review-priority wrap" id="priority" aria-labelledby="priority-title">
   <div class="review-priority-head">

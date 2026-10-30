@@ -34,7 +34,7 @@ function apply(value){
       ?"NULL FIELD / Deep Space · constellations"
       :"NEW MOON / Warm Night · moonlight";
     button.querySelector(".nf-theme-symbol").textContent=active?"✧":"☾";
-    button.querySelector(".nf-theme-word").textContent=active?"ARCHIVE":"MOON";
+    button.querySelector(".nf-theme-word").textContent=active?"NULL FIELD":"NEW MOON";
   }
 }
 apply(current);

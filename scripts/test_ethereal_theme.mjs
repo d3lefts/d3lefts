@@ -42,7 +42,7 @@ try{
   assert.equal(await toggle.count(),1,"One toggle in header");
   assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk","Fresh visitor sees dusk without a light flash");
   assert.equal(await toggle.getAttribute("aria-pressed"),"true","First-visit dusk accessible state");
-  assert.equal((await toggle.locator(".nf-theme-word").innerText()).trim(),"ARCHIVE","First visit offers the alternate Archive rather than a generic theme label");
+  assert.equal((await toggle.locator(".nf-theme-word").innerText()).trim(),"NULL FIELD","First visit offers the alternate Archive rather than a generic theme label");
   assert.equal(await page.locator(".nf-experience-underbelly").first().isVisible(),true,"Dusk opens the Underbelly narrative");
   assert.equal(await page.locator(".nf-experience-archive").first().isVisible(),false,"Archive narrative is absent from dusk reading order");
   for(const id of ["flagship-title","nf-observatory-title","review-title"]){
@@ -57,7 +57,7 @@ try{
   await toggle.click();
   assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Light mode remains selectable");
   assert.equal(await toggle.getAttribute("aria-pressed"),"false","Chosen light mode accessible");
-  assert.equal((await toggle.locator(".nf-theme-word").innerText()).trim(),"MOON","Archive offers entry to New Moon as the alternate homepage");
+  assert.equal((await toggle.locator(".nf-theme-word").innerText()).trim(),"NEW MOON","Archive offers entry to New Moon as the alternate homepage");
   assert.equal(await page.locator(".nf-experience-archive").first().isVisible(),true,"Light reveals the Archive narrative");
   assert.equal(await page.locator(".nf-experience-underbelly").first().isVisible(),false,"Underbelly is absent from Archive reading order");
   for(const id of ["flagship-title","nf-observatory-title","review-title"]){
@@ -90,7 +90,7 @@ try{
    assert.equal(await control.isVisible(),true,file+": visible theme control");
    assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk",file+": theme restored before ready");
    assert.equal(await control.getAttribute("aria-pressed"),"true",file+": control state restored");
-   assert.equal((await control.locator(".nf-theme-word").innerText()).trim(),"ARCHIVE",file+": consistent destination label");
+   assert.equal((await control.locator(".nf-theme-word").innerText()).trim(),"NULL FIELD",file+": consistent destination label");
    assert.match(await control.getAttribute("aria-label"),/New Moon is active.*NULL FIELD.*Deep Space/i,file+": consistent accessible destination");
    if(file==="claim-lab.html"){
     assert.equal(await page.locator(".topActions .nf-theme-toggle").count(),1,"Theme toggle is in Claim Lab toolbar");
@@ -163,6 +163,30 @@ try{
    if(["join.html","discovery.html","claim-lab.html","erdos-paper.html"].includes(file))
     await page.screenshot({path:"browser-artifacts/ethereal-"+file.replace(".html","")+"-"+width+".png",fullPage:false});
   }
+   // First-review entry: finite replay before advanced theorem challenges.
+   await page.goto(origin+"review.html",{waitUntil:"load"});
+   assert.equal(await page.locator(".review-hero a[href='#start-here']").count(),1,"Reviewer entry visible");
+   assert.equal(await page.locator("#start-here").isVisible(),true,"Finite review card available");
+   assert.match(await page.locator("#start-here pre").innerText(),/verify_sidon30_standalone\.py/);
+   assert.match(await page.locator("#start-here").innerText(),/27405|27,405/);
+   assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth))<=4,
+     "Review starter does not overflow at "+width+"px");
+   await page.locator("#start-here").screenshot({path:"browser-artifacts/review-starter-moon-"+width+".png"});
+   await page.locator(".nf-theme-toggle").click();
+   assert.equal(await page.locator("#start-here").isVisible(),true,"Review remains readable in NULL FIELD");
+   assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth))<=4,
+     "Archive review starter does not overflow at "+width+"px");
+   await page.locator("#start-here").screenshot({path:"browser-artifacts/review-starter-field-"+width+".png"});
+   await page.locator(".nf-theme-toggle").click();
+   await page.goto(origin+"about.html",{waitUntil:"load"});
+   assert.equal(await page.locator('.about-lead a[href="portfolio.html"]').count(),1,
+     "Research About directly links to attributed professional work");
+   await page.goto(origin+"index.html",{waitUntil:"load"});
+   assert.equal(await page.locator('.footer a[href="portfolio.html"]').count(),1,
+     "Research homepage footer exposes portfolio without changing primary navigation");
+   assert.equal(await page.locator('.footer a[href="review.html#start-here"]').count(),1,
+     "Homepage handoff points to runnable first review");
+
    // The complete source-linked map belongs to Constellation.
    await page.goto(origin+"index.html",{waitUntil:"load"});
    assert.equal(await page.locator(".nf-observatory-edge").count(),0,"No duplicate homepage graph");
