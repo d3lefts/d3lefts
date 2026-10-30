@@ -534,7 +534,6 @@ html[data-nf-theme="dusk"] #main>.hero.nf-opening .nf-opening-sky--night{
                    url("media/new-moon-nightscape.svg");
   background-size:clamp(185px,18vw,250px) auto,cover,cover;
   background-position:54% 4%,64% center,64% center;
-  background-position:64% center;
 }
 #main>.hero.nf-opening .nf-opening-sky::after{
   content:"";position:absolute;inset:0;pointer-events:none;
@@ -564,7 +563,6 @@ html[data-nf-theme="dusk"] .nf-cinema--still .nf-cinema-world--night{
                    url("media/new-moon-nightscape.svg")!important;
   background-size:clamp(195px,18vw,240px) auto,cover,cover;
   background-position:47% 1%,61% center,61% center;
-  background-position:61% center;
 }
 html:not([data-nf-theme="dusk"]) .nf-cinema--still .nf-cinema-vignette{
   background:linear-gradient(90deg,rgba(2,4,6,.96),rgba(2,4,6,.78) 31%,rgba(2,4,6,.29) 74%,rgba(2,4,6,.12)),
