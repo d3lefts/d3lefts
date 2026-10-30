@@ -1,4 +1,4 @@
-/* Accessible theme switch: first visit dusk; explicit light preference persists. */
+/* Named dark atmospheres. Keep historical light/dusk storage values for compatibility. */
 (function(){
 "use strict";
 const KEY="nightfall.theme.v1";
@@ -24,16 +24,17 @@ function apply(value){
   const button=document.querySelector(".nf-theme-toggle");
   if(button){
     const active=current===DUSK;
-    const onHomepage=!!document.querySelector("#main > .hero .nf-experience-archive");
+    // Consistent destinations on every route. aria-pressed continues to
+    // represent the active New Moon atmosphere; accessible copy names both.
     button.setAttribute("aria-pressed",String(active));
-    button.setAttribute("aria-label",onHomepage
-      ?(active?"Enter the Illusionary Archive — deep space with constellations (light mode)":"Enter the Night Underbelly — warm moonlight (night mode)")
-      :(active?"Switch to deep-space Archive mode":"Enter warm New Moon mode"));
-    button.title=onHomepage
-      ?(active?"NULL FIELD / Deep space · constellations":"NEW MOON / Warm night · moonlight")
-      :(active?"Switch to light mode":"Enter Night mode");
+    button.setAttribute("aria-label",active
+      ?"New Moon is active. Switch to NULL FIELD — Deep Space, with constellations."
+      :"NULL FIELD is active. Switch to NEW MOON — Warm Night, with moonlight.");
+    button.title=active
+      ?"NULL FIELD / Deep Space · constellations"
+      :"NEW MOON / Warm Night · moonlight";
     button.querySelector(".nf-theme-symbol").textContent=active?"✧":"☾";
-    button.querySelector(".nf-theme-word").textContent=onHomepage?(active?"ARCHIVE":"NIGHT"):(active?"LIGHT":"NIGHT");
+    button.querySelector(".nf-theme-word").textContent=active?"ARCHIVE":"MOON";
   }
 }
 apply(current);

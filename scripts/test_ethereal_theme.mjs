@@ -51,13 +51,13 @@ try{
   }
   assert.equal(await page.locator(".nf-dual-colophon.nf-experience-underbelly").isVisible(),true,"Night has its own final research handoff");
   assert.equal(await page.locator(".nf-dual-colophon.nf-experience-archive").isVisible(),false,"Archive colophon hidden at night");
-  assert.match(await toggle.getAttribute("aria-label"),/Illusionary Archive.*light mode/i,"Homepage toggle identifies the alternate editorial destination");
+  assert.match(await toggle.getAttribute("aria-label"),/New Moon is active.*NULL FIELD.*Deep Space/i,"Toggle identifies current atmosphere and destination");
   assert.equal(await page.evaluate(()=>localStorage.getItem("nightfall.theme.v1")),null,"Default never overwrites an explicit future preference");
   await page.screenshot({path:"browser-artifacts/ethereal-dusk-"+width+".png",fullPage:false});
   await toggle.click();
   assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Light mode remains selectable");
   assert.equal(await toggle.getAttribute("aria-pressed"),"false","Chosen light mode accessible");
-  assert.equal((await toggle.locator(".nf-theme-word").innerText()).trim(),"NIGHT","Archive offers entry to Night as the alternate homepage");
+  assert.equal((await toggle.locator(".nf-theme-word").innerText()).trim(),"MOON","Archive offers entry to New Moon as the alternate homepage");
   assert.equal(await page.locator(".nf-experience-archive").first().isVisible(),true,"Light reveals the Archive narrative");
   assert.equal(await page.locator(".nf-experience-underbelly").first().isVisible(),false,"Underbelly is absent from Archive reading order");
   for(const id of ["flagship-title","nf-observatory-title","review-title"]){
@@ -66,7 +66,7 @@ try{
   }
   assert.equal(await page.locator(".nf-dual-colophon.nf-experience-archive").isVisible(),true,"Archive preserves its own source-led colophon");
   assert.equal(await page.locator(".nf-dual-colophon.nf-experience-underbelly").isVisible(),false,"Night shift hidden in Archive mode");
-  assert.match(await toggle.getAttribute("aria-label"),/Night Underbelly.*night mode/i,"Archive toggle offers the Underbelly destination");
+  assert.match(await toggle.getAttribute("aria-label"),/NULL FIELD is active.*NEW MOON.*Warm Night/i,"Archive toggle offers the moonlit destination");
   const palette=await page.evaluate(()=>{
     const s=getComputedStyle(document.documentElement),button=getComputedStyle(document.querySelector(".hero-actions .button"));
     return {paper:s.getPropertyValue("--lf-paper").trim(),primary:s.getPropertyValue("--lf-primary").trim(),text:button.color};
@@ -81,7 +81,7 @@ try{
   assert.equal(await page.locator(".nf-experience-underbelly").first().isVisible(),true,"Restoring dusk restores process narrative");
   assert.equal(await page.locator(".nf-experience-archive").first().isVisible(),false,"Archive stays hidden after round-trip");
   assert.equal(await toggle.getAttribute("aria-pressed"),"true","Dusk accessible state");
-  assert.match(await toggle.getAttribute("aria-label"),/light mode/i);
+  assert.match(await toggle.getAttribute("aria-label"),/New Moon is active.*NULL FIELD.*Deep Space/i);
   assert.equal(await page.evaluate(()=>localStorage.getItem("nightfall.theme.v1")),"dusk","Preference persisted");
   for(const file of pages){
    await page.goto(origin+file,{waitUntil:"load"});
@@ -90,6 +90,8 @@ try{
    assert.equal(await control.isVisible(),true,file+": visible theme control");
    assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk",file+": theme restored before ready");
    assert.equal(await control.getAttribute("aria-pressed"),"true",file+": control state restored");
+   assert.equal((await control.locator(".nf-theme-word").innerText()).trim(),"ARCHIVE",file+": consistent destination label");
+   assert.match(await control.getAttribute("aria-label"),/New Moon is active.*NULL FIELD.*Deep Space/i,file+": consistent accessible destination");
    if(file==="claim-lab.html"){
     assert.equal(await page.locator(".topActions .nf-theme-toggle").count(),1,"Theme toggle is in Claim Lab toolbar");
     await page.locator("#newClaimBtn").click();
@@ -191,7 +193,7 @@ try{
   assert.deepEqual(errors,[],width+"px page errors: "+errors.join("; "));
   await context.close();
  }
- console.log("PASS: alternate Archive and Underbelly homepages, dusk-first preference, canonical relationships, shared journey, calm papers, 25 pages, mobile/desktop, accessibility and reduced motion");
+ console.log("PASS: NULL FIELD and New Moon atmospheres, dusk-first preference, canonical relationships, shared journey, calm papers, 25 pages, mobile/desktop, accessibility and reduced motion");
 }finally{
  await browser?.close();
  await new Promise(resolve=>server.close(resolve));
