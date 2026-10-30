@@ -94,7 +94,7 @@ def recover(x):
         j=(anchor,)+tuple(indices)
         pre=0
         for t,a in zip(j,row):
-            pre^=M[a][M[x[t]][inverses[u[t]]]
+            pre^=M[a][M[x[t]][inverses[u[t]]]]
         return C[pre]
     rem=support[1:]
     for offset in range(0,len(rem),3):
