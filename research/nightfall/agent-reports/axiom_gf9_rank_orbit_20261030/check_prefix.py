@@ -78,8 +78,7 @@ def gf9_square(a):
 
 
 def orbit_rep(vector):
-    neg=tuple((-v)%3+3*((-v//3)%3) for v in vector) # overwritten below
-    # Correct pair representation; coordinatewise additive inverse in GF9.
+    # Canonicalize modulo one global sign, not coordinatewise signs.
     def negate(x):
         return ((-x%3)+3*(-(x//3)%3))
     neg=tuple(negate(z) for z in vector)
