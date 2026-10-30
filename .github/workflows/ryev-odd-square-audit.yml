@@ -50,6 +50,7 @@ jobs:
             --strict \
             --decl Nightfall.OddSquare.strong_intersecting_iff_full_rank_and_image \
             --decl Nightfall.OddSquare.square_separation_iff_strong_intersection \
+            --decl Nightfall.OddSquare.signed_digit_packing_injective \
             --timeout 300 \
             --json-out lean-receipts/ryev-odd-square.json || { cat lean-receipts/ryev-odd-square.json; exit 1; }
       - name: Upload kernel receipt
