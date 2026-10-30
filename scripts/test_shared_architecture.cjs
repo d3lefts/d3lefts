@@ -35,7 +35,7 @@ for(const id of claimMatches){
  assert.ok(record&&record.validity?.detail&&record.conditions,
   "Missing canonical evidence-scoped record: "+id);
 }
-assert.equal([...library.matchAll(/<article class="atlas-card"/g)].length,33,"33 selected dossiers remain published");
+assert.equal([...library.matchAll(/<article class="atlas-card"/g)].length,40,"40 source-scoped dossiers remain published");
 
 // Lightweight DOM simulation: test navigation without an additional runtime,
 // network fetch, or coupling to implementation-specific CSS class ordering.
