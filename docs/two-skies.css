@@ -1314,3 +1314,19 @@ html:not([data-nf-theme="dusk"]) :is(.sf-case-links .button,.lab-launch .button)
 
 /* Keep the research instruments, meaningful states, and keyboard outlines
    precise. The existing 0.5px trademark tile border remains unchanged. */
+
+/* Research Library: ordinary descriptions were inheriting a historical
+   wine-red ink against dark cards. Keep rose for the tiny scope marker,
+   not for every sentence in a long two-column reading grid. */
+html:not([data-nf-theme="dusk"]) .atlas-grid .atlas-card>p {
+  color:#c9d2d9!important;
+}
+html[data-nf-theme="dusk"] .atlas-grid .atlas-card>p {
+  color:#d5d9e5!important;
+}
+html:not([data-nf-theme="dusk"]) .atlas-grid .atlas-card .atlas-status-finite {
+  color:#cda6b3!important;
+}
+html:not([data-nf-theme="dusk"]) .atlas-grid .atlas-card .atlas-boundary {
+  border-left-color:#826d80!important;
+}
