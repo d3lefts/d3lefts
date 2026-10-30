@@ -73,6 +73,16 @@ def multiplier_negative_control():
     B=positive_diffs(cut(tuple((2*x)%v for x in D),v,25))
     assert len(A&B)==4
     assert 4<comb(len(D),2)-len(D)**2//4
+    Q0=cut(D,v,23)
+    Q1=cut(tuple(2*x%v for x in D),v,25)
+    assert Q0==(0,4,10,23,24,26) and Q1==(0,11,18,22,25,30)
+    I=(0,18,25,30)
+    assert set(I)<=set(Q1) and not (positive_diffs(Q0)&positive_diffs(I))
+    survivor=tuple(sorted(Q0+tuple(3*v+x for x in I)))
+    assert len(survivor)==10 and max(survivor)==123
+    assert ordinary_sidon(survivor)
+    print("PASS changed multiplier escapes K+2: six protected + four new =10,"
+          "55 unique sums, maximum 123")
     print("PASS multiplier-change negative control: overlap 4 < same-multiplier floor 6")
 
 if __name__=="__main__":
