@@ -50,6 +50,15 @@ jobs:
             --decl Nightfall.FiniteField.cubing_is_identity_mod_three \
             --decl Nightfall.FiniteField.cube_additive_mod_three \
             --json-out lean-receipts/finite3.json
+      - name: Kernel-check F16/F4 phase-block candidate and reported axioms
+        run: |
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/phase_block/PhaseBlock.lean \
+            --strict \
+            --decl Nightfall.PhaseBlock.subgroup_cubic_identity \
+            --decl Nightfall.PhaseBlock.eighty_one_distinct_outputs \
+            --timeout 300 \
+            --json-out lean-receipts/phase-block.json
       - name: Compile requested committed file (manual dispatch only)
         if: github.event_name == 'workflow_dispatch'
         env:
