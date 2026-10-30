@@ -1,6 +1,6 @@
 # Symmetry–information barrier for finite-field power sensing
 
-**Status (2026-10-29):** exact mathematical argument; universal inequality submitted for Lean kernel checking; no independent theorem review and no originality claim. This package is a falsification / corrected lower-bound result, **not** a claim that the general adaptive query optimum is solved.
+**Status (2026-10-29):** exact mathematical argument; the universal arithmetic inequality compiled under pinned Lean 4.35.0 with only standard foundational dependencies (propext, Quot.sound); the orbit/decision-tree theorems are not yet formalized; no independent theorem review or originality claim. This package is a falsification / corrected lower-bound result, **not** a claim that the general adaptive query optimum is solved.
 
 ## Formal model
 Let q be a prime power, k >= 2, n > 0, d=gcd(n,q-1)>1, V=F_q^k, and mu_d be the subgroup of n-th roots of unity. An oracle call chooses a linear functional a_j, potentially depending on all earlier answers, and returns (a_j(x))^n. The unknown x ranges over **all of V, including zero**. The algorithm must identify x modulo the global mu_d action, for every x. Each call counts as one measurement; no additional side information is allowed.
@@ -12,7 +12,7 @@ Write q=1+d*r, A=1+r, where r=(q-1)/d >=1. For k>=2 and d>=2,
     (1+d*r)^k - 1 - d*((1+r)^k-1)
       = sum_{j=2}^k binom(k,j)*(d^j-d)*r^j  > 0.
 
-Therefore N > A^k; m>=k+1. The formal Lean target `information_power_bound` checks the stronger convenient inequality d*A^k < q^k. Only that arithmetic lemma is in Lean at v1; the finite-field orbit count and decision-tree theorem await formalization.
+Therefore N > A^k; m>=k+1. The formal Lean target `information_power_bound` checks the stronger convenient inequality d*A^k < q^k. The pinned Lean 4.35.0 workflow has compiled this proof and audited its dependencies as exactly `propext` and `Quot.sound` (no `sorryAx`). SHA-256 of the checked Lean source: `4c71782cc674e214655b49a6c3d1bf01be8d694107863c64a43b832077cbbcb4`. The strict zero-axiom bridge mode intentionally rejects even these standard foundations; the CI workflow uses a separate explicit foundations-only audit. The finite-field orbit count and decision-tree theorem await formalization.
 
 **Branchwise sharpening.** For every nonzero a and fixed nonzero response y, exactly q^(k-1) mu_d-orbits produce y: there are d scalar roots and q^(k-1) choices of the remaining affine coordinates, then quotient by d. Thus A^(m-1) >= q^(k-1) on that branch. Hence
 
