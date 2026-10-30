@@ -1183,3 +1183,171 @@ html .review-priority-card {
 html :is(.flagship-card,.feature,.review-card,.co-work-card):focus-visible {
   outline-width:3px!important;
 }
+
+
+/* ==============================================================
+   NIGHTFALL / QUIET SIGNAL — palette grading (2026-10-29)
+   Color is evidence hierarchy, not decoration. Keep the founding
+   cherry/gold tokens and semantic status colors. Reduce their
+   *surface area*: charcoal and midnight hold the large fields;
+   warm signals remain in type, controls, data marks and hairlines.
+   ============================================================= */
+html:not([data-nf-theme="dusk"]) {
+  --nf-muted-signal:#c19aa8;
+  --nf-muted-carbon:#0f181d;
+  --nf-muted-plum:#211e28;
+  --nf-muted-edge:rgba(167,181,190,.24);
+}
+html[data-nf-theme="dusk"] {
+  --nf-muted-signal:#dfd2a0;
+  --nf-muted-carbon:#101a2c;
+  --nf-muted-plum:#1b2539;
+  --nf-muted-edge:rgba(182,190,211,.23);
+}
+
+/* A single low-key spectrum replaces the repeated hot-cherry stripe.
+   The verified theme accent token and the archived CTA base RGB stay intact. */
+html:not([data-nf-theme="dusk"]) .topline::after {
+  background:linear-gradient(90deg,#354653 0%,#73536a 47%,#8b7187 74%,#687b92 100%)!important;
+}
+
+/* Where a primary button is already a dark cherry, give it a charcoal
+   glaze: same computed base/contrast contract, less saturated visible fill.
+   Do not recolor the iconography or semantic pass/fail states. */
+html:not([data-nf-theme="dusk"]) :is(
+  .hero-actions .button:not(.button-light),
+  .co-page .co-primary,
+  .rs-btn:not(.light),
+  .lp-btn-primary,
+  .join-action,
+  .join-choices .join-choice button,
+  .join-next button,
+  .desk-session-actions button,
+  .cj-primary
+) {
+  background-image:linear-gradient(120deg,rgba(11,25,31,.28),rgba(10,20,29,.55))!important;
+  background-repeat:no-repeat!important;
+}
+html:not([data-nf-theme="dusk"]) :is(
+  .hero-actions .button:not(.button-light),
+  .co-page .co-primary,
+  .rs-btn:not(.light),
+  .lp-btn-primary,
+  .join-action,
+  .join-choices .join-choice button,
+  .join-next button,
+  .desk-session-actions button,
+  .cj-primary
+):hover {
+  background-image:linear-gradient(120deg,rgba(15,28,36,.18),rgba(12,22,31,.36))!important;
+}
+
+/* The large Sidon numeric plate is a *result*, not an alert. Both
+   atmospheres now give it a quiet instrument-grade field. */
+html:not([data-nf-theme="dusk"]) .sf-case-aside {
+  background:linear-gradient(145deg,#282630 0%,#192229 55%,#11191f 100%)!important;
+  color:#eaf0f5!important;
+  border:var(--nf-tile-rule-width,.5px) solid rgba(196,155,173,.37)!important;
+  box-shadow:none!important;
+}
+html[data-nf-theme="dusk"] .sf-case-aside {
+  background:linear-gradient(145deg,#293247 0%,#172337 56%,#0e1829 100%)!important;
+  color:#f1eedc!important;
+  border:var(--nf-tile-rule-width,.5px) solid rgba(226,210,140,.32)!important;
+  box-shadow:none!important;
+}
+html:not([data-nf-theme="dusk"]) .sf-case-aside :is(.sf-big,.sf-aside-foot strong) {
+  color:#e3bac6!important;
+}
+html[data-nf-theme="dusk"] .sf-case-aside :is(.sf-big,.sf-aside-foot strong) {
+  color:#e2d28c!important;
+}
+html:not([data-nf-theme="dusk"]) .sf-case-aside :is(p,.sf-label,.sf-aside-stats span,.sf-aside-foot span) {
+  color:#c2ced5!important;
+}
+html[data-nf-theme="dusk"] .sf-case-aside :is(p,.sf-label,.sf-aside-stats span,.sf-aside-foot span) {
+  color:#ccd2e1!important;
+}
+html :is(.sf-case-aside .sf-aside-stats,.sf-case-aside .sf-aside-foot) {
+  border-color:var(--nf-muted-edge)!important;
+}
+html .sf-case-aside .sf-aside-stats strong{color:inherit!important}
+
+/* Large demonstration and library panels use neighboring dark materials,
+   with slight temperature variation instead of alternating red slabs. */
+html:not([data-nf-theme="dusk"]) .lab-feature-visual {
+  background:radial-gradient(ellipse at 68% 28%,rgba(146,91,124,.14),transparent 63%),
+    linear-gradient(150deg,#19252c,#101820 67%,#0a1117)!important;
+}
+html[data-nf-theme="dusk"] .lab-feature-visual {
+  background:radial-gradient(ellipse at 68% 28%,rgba(143,137,181,.12),transparent 63%),
+    linear-gradient(150deg,#1d2840,#121d32 67%,#0b1425)!important;
+}
+html:not([data-nf-theme="dusk"]) :is(.atlas-grid .atlas-card,.nf-secondary-frontiers-grid .flagship-card) {
+  background:linear-gradient(155deg,#121d24 0%,#0c141b 100%)!important;
+}
+html[data-nf-theme="dusk"] :is(.atlas-grid .atlas-card,.nf-secondary-frontiers-grid .flagship-card) {
+  background:linear-gradient(155deg,#151f34 0%,#0d1628 100%)!important;
+}
+/* Muted rose restores readability to repeated small evidence-boundary
+   labels while keeping validity and warning status palettes untouched. */
+html:not([data-nf-theme="dusk"]) .atlas-card .atlas-boundary strong {
+  color:#c49fac!important;
+}
+html:not([data-nf-theme="dusk"]) .atlas-card:before {
+  background:#75818b!important;
+}
+html:not([data-nf-theme="dusk"]) .atlas-card:is(:hover,:focus-within):before {
+  background:#af8495!important;
+}
+
+/* Small contextual actions can remain clearly clickable without becoming
+   another large bright-red rectangle. Main hero CTAs remain primary. */
+html:not([data-nf-theme="dusk"]) :is(.sf-case-links .button,.lab-launch .button) {
+  background:#222b32!important;color:#eaf0f5!important;
+  border-color:#846475!important;
+  background-image:none!important;
+}
+html:not([data-nf-theme="dusk"]) :is(.sf-case-links .button,.lab-launch .button):hover {
+  background:#303039!important;border-color:#b58a9c!important;
+}
+
+/* Keep the research instruments, meaningful states, and keyboard outlines
+   precise. The existing 0.5px trademark tile border remains unchanged. */
+
+/* Research Library: ordinary descriptions were inheriting a historical
+   wine-red ink against dark cards. Keep rose for the tiny scope marker,
+   not for every sentence in a long two-column reading grid. */
+html:not([data-nf-theme="dusk"]) .atlas-grid .atlas-card>p {
+  color:#c9d2d9!important;
+}
+html[data-nf-theme="dusk"] .atlas-grid .atlas-card>p {
+  color:#d5d9e5!important;
+}
+html:not([data-nf-theme="dusk"]) .atlas-grid .atlas-card .atlas-status-finite {
+  color:#cda6b3!important;
+}
+html:not([data-nf-theme="dusk"]) .atlas-grid .atlas-card .atlas-boundary {
+  border-left-color:#826d80!important;
+}
+
+/* Editorial size matters: the same cherry that works as a 10px signal
+   feels louder across an 80px serif. Desaturate the *large italic*
+   display passages while leaving witness numbers and status marks vivid. */
+html:not([data-nf-theme="dusk"]) :is(
+  .hero-title em,
+  .section-title em,
+  .co-headline h1 em,
+  .review-hero h1 i,
+  .atlas-hero h1 em,
+  .nf-dual-colophon h2 em,
+  .nf-dual-intro h2 em,
+  .pf-hero h1 em
+),
+html:not([data-nf-theme="dusk"]) body:has(.app) h1 em {
+  color:#c996a6!important;
+}
+/* Supporting overlines must remain legible in dark atmospheric panels. */
+html:not([data-nf-theme="dusk"]) .co-overline {
+  color:#b2bec9!important;
+}
