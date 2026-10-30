@@ -753,7 +753,7 @@ try{
    await page.locator(".nf-theme-toggle").click();
    assert.equal(await page.locator("body").getAttribute("data-theme"),"dark","Return to dusk appearance");
    await page.locator('[data-co-filter="open-premise"]').click();
-   assert.equal(await page.locator(".co-relation").count(),3,"Open premises stay separately classified");
+   assert.equal(await page.locator(".co-relation").count(),6,"Six open-premise edges retain separate classification");
    assert.equal(await page.locator('[data-co-filter="open-premise"]').getAttribute("aria-pressed"),"true");
    await page.locator('[data-node="phase"]').click();
    assert.match(await page.locator("#co-inspector-scope").innerText(),/span-count/i,"Foundational unproved gate visible");
