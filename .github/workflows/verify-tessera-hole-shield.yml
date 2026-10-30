@@ -1,0 +1,23 @@
+name: Verify Tessera all-degree square-oracle hole shield
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/projects/finite-field/tessera-hole-shield-20261030/**'
+      - '.github/workflows/verify-tessera-hole-shield.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-separating-oracle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify all-prime tiled seeds and GF13-cubic literal square oracle
+        run: |
+          python3 -m py_compile research/nightfall/projects/finite-field/tessera-hole-shield-20261030/verify_shield.py
+          python3 research/nightfall/projects/finite-field/tessera-hole-shield-20261030/verify_shield.py
+          python3 research/nightfall/projects/finite-field/tessera-hole-shield-20261030/verify_all_signal.py
