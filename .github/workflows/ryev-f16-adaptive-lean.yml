@@ -1,0 +1,50 @@
+name: Ryev adaptive F16 finite Lean certificate
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/adaptive_f16/**'
+      - '.github/workflows/ryev-f16-adaptive-lean.yml'
+  push:
+    paths:
+      - 'research/nightfall/formalization/adaptive_f16/**'
+      - '.github/workflows/ryev-f16-adaptive-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  lean-kernel-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Lean via elan
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain "$(cat lean-toolchain)"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          "$HOME/.elan/bin/lean" --version
+      - name: Kernel-check finite adaptive table and all-k phase factorization
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/adaptive_f16/AdaptiveBlock.lean \
+            --strict \
+            --decl Nightfall.AdaptiveF16.first_reading_in_legal_branches \
+            --decl Nightfall.AdaptiveF16.adaptive_twenty_seven_distinct \
+            --decl Nightfall.AdaptiveF16.worst_case_lower_bound_k4 \
+            --decl Nightfall.AdaptiveF16.worst_case_lower_bound_k7 \
+            --decl Nightfall.AdaptiveF16.phase_factorization \
+            --allow-axiom propext \
+            --allow-axiom Quot.sound \
+            --timeout 300 \
+            --json-out lean-receipts/ryev-f16-adaptive.json || { cat lean-receipts/ryev-f16-adaptive.json; exit 1; }
+      - name: Upload machine-readable kernel receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ryev-f16-adaptive-lean-receipt
+          path: lean-receipts/ryev-f16-adaptive.json
+          if-no-files-found: warn
