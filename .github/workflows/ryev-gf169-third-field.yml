@@ -20,3 +20,7 @@ jobs:
           python3 --version
           sha256sum research/nightfall/agent-reports/ryev_gf169_independent_20261030/verify_third_field.py
           python3 research/nightfall/agent-reports/ryev_gf169_independent_20261030/verify_third_field.py
+      - name: Prove symbolic six-hole modular rectangle certificate
+        run: |
+          sha256sum research/nightfall/agent-reports/ryev_gf169_independent_20261030/symbolic_six_holes.py
+          python3 research/nightfall/agent-reports/ryev_gf169_independent_20261030/symbolic_six_holes.py
