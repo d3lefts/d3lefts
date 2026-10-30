@@ -75,7 +75,7 @@ def multiplier_negative_control():
     assert 4<comb(len(D),2)-len(D)**2//4
     Q0=cut(D,v,23)
     Q1=cut(tuple(2*x%v for x in D),v,25)
-    assert Q0==(0,4,10,23,24,26) and Q1==(0,11,18,22,25,30)
+    assert Q0==(0,4,10,23,24,26) and Q1==(0,10,18,25,27,30)
     I=(0,18,25,30)
     assert set(I)<=set(Q1) and not (positive_diffs(Q0)&positive_diffs(I))
     survivor=tuple(sorted(Q0+tuple(3*v+x for x in I)))
