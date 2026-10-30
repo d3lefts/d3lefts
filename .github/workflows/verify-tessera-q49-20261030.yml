@@ -1,0 +1,26 @@
+name: Verify Tessera variable-width q25→q49 grafting
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/projects/erdos/tessera_variable_q49_20261030/**'
+      - '.github/workflows/verify-tessera-q49-20261030.yml'
+  push:
+    paths:
+      - 'research/nightfall/projects/erdos/tessera_variable_q49_20261030/**'
+      - '.github/workflows/verify-tessera-q49-20261030.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-witness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Independently construct q49 Singer source by field trace
+        run: python3 research/nightfall/projects/erdos/tessera_variable_q49_20261030/generate_field.py
+      - name: Exact pair sums and 2451-cut averaging audit
+        run: python3 research/nightfall/projects/erdos/tessera_variable_q49_20261030/verify.py
