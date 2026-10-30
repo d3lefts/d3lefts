@@ -35,7 +35,7 @@ for(const file of files.filter(x=>x.endsWith(".html")&&readFileSync(join(root,x)
 }
 const light=readFileSync(join(root,"two-skies.css"),"utf8");
 const dusk=readFileSync(join(root,"two-skies.css"),"utf8");
-for(const token of ["--lf-paper:#020406","--lf-primary:#e46a84","--lf-cherry-fill:#650d27","--lf-oxblood:#080d12"]){
+for(const token of ["--lf-paper:#020406","--lf-ink:#eaf0f5","--lf-primary:#e46a84","--lf-cherry-fill:#650d27","--lf-cherry-fill-hover:#841736","--lf-oxblood:#080d12"]){
  assert.ok(light.toLowerCase().includes(token),"Missing NULL FIELD token: "+token);
 }
 for(const token of ["--nf-champagne:#e2d28c","--nf-lightray-gold:#e2d28c"]){
