@@ -1,0 +1,34 @@
+name: Lemnis F16 phase oracle independent review
+on:
+  push:
+    paths:
+      - "research/nightfall/agent-reports/lemnis_f16_audit_20261030/**"
+      - ".github/workflows/lemnis-f16-adversarial-20261030.yml"
+  pull_request:
+    paths:
+      - "research/nightfall/agent-reports/lemnis_f16_audit_20261030/**"
+      - ".github/workflows/lemnis-f16-adversarial-20261030.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Python syntax and exact independent oracle verification
+        run: |
+          python3 -m py_compile research/nightfall/agent-reports/lemnis_f16_audit_20261030/replay_github.py
+          python3 research/nightfall/agent-reports/lemnis_f16_audit_20261030/replay_github.py
+      - name: Lemnis independent 27-state adaptive F16, full k4, k7 support sectors, and fixed masks
+        run: |
+          python3 -m py_compile research/nightfall/agent-reports/lemnis_f16_audit_20261030/independent_f16_branch_audit.py
+          python3 research/nightfall/agent-reports/lemnis_f16_audit_20261030/independent_f16_branch_audit.py
+      - name: Lemnis odd-prime powered-linear extension F9 F25 F49 exact audits
+        run: |
+          python3 -m py_compile research/nightfall/agent-reports/lemnis_f16_audit_20261030/independent_odd_field_audit.py
+          python3 research/nightfall/agent-reports/lemnis_f16_audit_20261030/independent_odd_field_audit.py
