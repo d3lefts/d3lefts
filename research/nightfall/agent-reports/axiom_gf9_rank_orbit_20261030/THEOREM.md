@@ -1,4 +1,4 @@
-# Adaptive rank–orbit prefix obstruction for finite-field powered measurements
+# Adaptive rank–orbit and signed-projective obstructions for finite-field powered measurements
 
 **Checkpoint:** 2026-10-30. **Research owner:** Devin J. Wright. **Construction and proof draft:** Axiom (AI research role). **Assignment:** Vesper's #257. **Scientific stage:** R1 internally derived mathematical theorem candidate, exact finite regression, and external mathematical review/priority unresolved. Do not claim worldwide originality or independent human refereeing.
 
@@ -47,7 +47,7 @@ Combining with PR #256's all-support, coordinate-first construction giving upper
 
     A_GF9(k=6) = 9;     A_GF9(k=9) = 13.
 
-The upper theorem remains independently reviewable. **k=8** remains OPEN between 11 and 12 with this method. This prefix method generally yields a finite additive improvement over alphabet counting, not a new asymptotic linear lower-bound coefficient.
+The upper theorem remains independently reviewable. **The rank-only prefix lemma does not settle k=8**, whose closure requires the separate seven-phase signed-projective classification below. Neither finite mechanism proves a better asymptotic linear lower-bound coefficient.
 
 ### Exact finite verification and checker contract
 
@@ -58,12 +58,65 @@ The upper theorem remains independently reviewable. **k=8** remains OPEN between
 
 Scripts require only Python 3.12. CI prints their SHA-256 values. These computations certify small exact fibers, **not** a mechanically formalized universal theorem or historical novelty.
 
+## New second-stage theorem — GF9 dimension eight also needs twelve adaptive queries
+
+**Claim (R1 internally checked):** In the same frozen GF9 sign-square oracle, no adaptive protocol can recover every x∈GF9^8 modulo global ± using only 11 measurements, even when it chooses all coefficient rows based on previously observed squares. PR #256's independent upper candidate uses 8+ceil(7/2)=12; if that constructive proof survives review, **A_GF9(8)=12 exactly**. This is stronger than the elementary global output-count lower bound 11. It resolves the target Vesper #257 left open in the earlier version of this note.
+
+### Adaptive phase-palette invariant — every rank history, not just a fixed first round
+
+As above, an identically zero first row is wasted. An alleged 11-query strategy may be strengthened by substituting a nonzero first query, so assume the first query is nonzero. As adversary, select its square output to be 1 and use the global ± quotient to anchor its raw linear reading to 1.
+
+For a path of readings, choose a linearly independent subcollection of its queried rows. Let r be their rank and let S be the set of raw **relative sign vectors** of the r independent readings which are compatible with *all* powered outcomes on that path, normalized at the anchored first row. We choose every independent queried row's square output to be 1, so each independent raw reading is ±1. Each sign vector in S corresponds to exactly **9^(8−r) distinct global sign-orbits**, because the associated full-rank unpowered linear system has 9^(8−r) solutions and the first linear reading is fixed to 1. Thus a node with N=|S| retains exactly N·9^(8−r) candidate global orbits.
+
+- When the next row is **independent**, the linear map extends surjectively, and the adversary chooses square output 1. Every prior sign vector has exactly two compatible raw readings ±1 in the new independent coordinate: N becomes 2N, rank r+1.
+- When the next row is **dependent**, it is an F9-linear combination of preceding independent rows and its square depends only on the current sign vector. This partitions S into at most **five** observable squared outcomes. Choose a largest fiber; N becomes **at least ceil(N/5)** with rank unchanged. The adversary has used only legal observed squares, never revealed signs.
+
+Apply this for the first eight queries. Start at rank 1 and N=1. Enumerating all 2^7 abstract sequences of independent/dependent choices for queries 2 through 8 gives a rigorous **worst-case lower recurrence** for each possible adaptive rank history. Except for ONE history, N·9^(8−r) is already strictly greater than the remaining three-query transcript capacity 5³=125.
+
+The unique exceptional history is **IIIIIIID** (seven independent nonzero readings followed by one dependent row). In it, the simple alphabet pigeonhole gives only ceil(64/5)=13 relative-phase words, hence 13·9=117≤125. No other rank history can evade the obstruction. The independent history of eight rows retains 2^7=128 orbits, already larger than 125.
+
+### Exact finite projective obstruction for the sole exceptional history
+
+For seven independent observations each squared to 1, there are **64** relative sign patterns (seven raw ± signs, quotient one global ±). The dependent eighth row is some F9-linear combination with coefficients (c_1,…,c_7)∈F9^7. Its squared output is
+
+    (c_1 epsilon_1+...+c_7 epsilon_7)^2,  epsilon_i∈{±1},
+
+considered over the 64 global-sign classes. We must show **every** such coefficient row has a squared-output fiber of at least **14** phase patterns. That leaves ≥14·9=126 global orbits, exceeding the 125 remaining transcripts.
+
+**Exact symmetry reduction.** View F9 as the two-dimensional additive F3-vector space. Since each epsilon_i ranges over ±1, flipping a coefficient c_i to −c_i only permutes the input sign patterns. There are five relevant coefficient types: zero and the four one-dimensional projective lines of F3². Permuting the seven coordinate positions changes no output-fiber sizes. Finally GL_2(F3) induces all S4 permutations of the four projective directions (PGL_2(F3)≅S4). Any invertible F3-linear transformation preserves equality of squared outputs, because it preserves ±-equivalence; it merely relabels the four nonzero squared-output classes.
+
+Thus every arbitrary coefficient vector reduces **without loss** to an integer occupancy profile
+
+    (n_0,n_1,n_2,n_3,n_4), sum n_i=7, n_1≥n_2≥n_3≥n_4≥0.
+
+Exactly **38** such profiles exist. On the additive group F3², compute the exact signed-convolution coefficient table
+
+    P = product_i (delta_(c_i)+delta_(-c_i)),
+
+group its 9 raw sums into the zero orbit plus four ± nonzero orbits, and divide every result by 2 to account for the global sign action. The explicit [38-type checker](check_seven_phase.py) proves that **all 38 profiles have maximum fiber ≥14**, with equality **only** for the profile (1,2,2,2,0), whose sorted output-fiber sizes are **(14,14,14,12,10)**.
+
+For extra verification without the S4 reduction, [an independently coded exhaustive checker](independent_seven_phase.py) uses the different field representation F3[v]/(v²+v+2) and evaluates **all 5^7=78,125 coefficient sign-classes** directly. It finds the same minimum maximum fiber **14**, attained for exactly **2,520** coefficient tuples; the latter count follows independently from 7!/(1!2!2!2!) ·4 = 2520. Both calculations are finite, integer-exact, and include the zero coefficient and zero powered-output class.
+
+Combining the online all-rank-history adversary and this sharp finite classification yields **eleven-query impossibility for all adaptive coefficient strategies at k=8**. The candidate exact table, conditional only on independent audit of the constructive upper proof, is now:
+
+| k | global counting lower | stronger adaptive lower (this work) | existing proposed upper | exact candidate |
+|---:|---:|---:|---:|---:|
+| 6 | 8 | **9** | 9 | 9 |
+| 8 | 11 | **12** | 12 | 12 |
+| 9 | 12 | **13** | 13 | 13 |
+
+This does **not** establish a new asymptotic lower-bound coefficient, a universally optimal decoder in every dimension, or worldwide historical priority. It is a sharply scoped **finite-field adaptive decision-tree lower theorem candidate**, subject to a non-author mathematical proof challenge.
+
+### Additional independent attack contract
+
+Lemnis must attack the phase-palette invariant under path-dependent rank choices, the legality of prescribing a nonzero squared output on every independent row, the GL2(3) symmetry normalization, the exact number of canonical profiles, the output label grouping and early-termination padding. Ryev should write a non-importing 38-type or full 78,125-row verifier and attempt a Lean formal proof of the affine-fiber and 2N/ceil(N/5) steps. Vesper should check historical finite-field phase-retrieval and adaptive separating-code literature, *including negative results that already rule out k8=11*, before considering scientific novelty. **Stop after rigorous adversarial review; no unrelated coefficient annealing.**
+
 ## Distinctness, limitations and scientific review
 
 Prior work: [Borello, Schmid and Scotti, The geometry of intersecting codes (2025)](https://arxiv.org/abs/2406.04034) develops fixed linear-code geometry; [Vesper #257](https://github.com/d3lefts/d3lefts/issues/257) provides the GF9 adaptive upper and fixed-code baseline, with [PR #256](https://github.com/d3lefts/d3lefts/pull/256) carrying the pending theorem proof. The complement property and alphabet counting are established background. The present mechanism combines **an adversarial adaptive path and two separate linear-rank orbit-fiber formulas**. Whether this criterion or the exact k6/k9 values appear in old finite-field decision-tree literature remains unresolved. No published originality, improvement over historical source or flagship promotion is asserted.
 
 **Falsifiers:** (i) an eight-query GF9 k6 decoder with a full verified transcript certificate; (ii) a compatible dependent path with fewer than Q^(k−r) orbits despite a nonzero first linear value; (iii) a path of t independent rows whose all-nonzero response is unattainable; (iv) an H orbit output alphabet different from 1+(Q−1)/h; (v) a PR #256 k6/k9 upper proof failure (demotes exactness but not the lower theorem).
 
-**Next audit:** Lemnis attack the adaptive branch quantifiers, premature termination and linear-lift counting; Ryev independently check all GF9 rows with a nonstandard field basis and create a Lean proof dependency graph; Vesper perform a dated exact-oracle priority audit. A sharper adaptive branch invariant, not more random rows, is required for k8 m11. Human owner controls manuscript release, website changes and scientific status.
+**Next audit:** Lemnis attacks the universal prefix proof and the separate seven-phase projective case reduction. Ryev independently replays the 38-type certificate and seeks a Lean proof dependency map. Vesper checks exact-oracle historical priority. A further k8 search is no longer required unless this new R1 obstruction fails independent review. Human owner controls manuscript release, website changes and scientific status.
 
 **Discovery graph:** fixed powered oracle → orbit observation alphabet → adaptive row rank → surviving affine preimage or full independent nonzero fibers → prefix no-go inequality → GF9 k6/k9 exact counts (conditional on upper audit) → k8 open → transfer to finite-field decision-tree complexity.
