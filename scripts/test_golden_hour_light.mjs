@@ -79,15 +79,19 @@ try{
    };
    if(name==="index.html"){
     assert.equal(v.constellationRoute,true,"Homepage includes a dedicated Constellation destination without duplicating full graph");
-    const diagram=await page.evaluate(()=>{
-      const svg=document.querySelector(".hero-aside .diagram");
-      return {signal:getComputedStyle(svg.querySelector('circle[fill="#d8c38a"]')).fill,
-        curve:getComputedStyle(svg.querySelector('path[stroke="#4a1f24"]')).stroke,
+    const readout=await page.evaluate(()=>{
+      const card=document.querySelector(".nf-opening-overlap");
+      const label=card?.querySelector(".nf-opening-overlap-label");
+      const value=card?.querySelector(".nf-opening-overlap-value");
+      return {panel:card&&getComputedStyle(card).backgroundColor,
+        label:label&&getComputedStyle(label).color,
+        value:value&&value.textContent.trim(),
         toolbar:document.querySelector('meta[name="theme-color"]')?.content};
     });
-    assert.equal(diagram.signal,"rgb(180, 227, 214)","Mathematical hero signal uses opal");
-    assert.equal(diagram.curve,"rgb(180, 227, 214)","Hero's forest-green path uses oxblood");
-    assert.equal(diagram.toolbar,"#020406","Browser chrome follows black-field identity");
+    assert.equal(readout.panel,"rgba(6, 13, 16, 0.91)","Exact-witness readout is carbon-glass, not burgundy");
+    assert.equal(readout.label,"rgb(180, 227, 214)","Exact-witness readout uses opal text");
+    assert.match(readout.value,/0\\.380856370118/,"Homepage witness is never modified by a theme");
+    assert.equal(readout.toolbar,"#020406","Browser chrome follows black-field identity");
    }
    for(const [key,target] of Object.entries(expectations[name]||{})){
     assert.equal(v[key],target,name+" "+width+"px "+key+" matches Sunset Boulevard archive");
