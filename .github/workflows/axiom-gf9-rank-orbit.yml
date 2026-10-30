@@ -37,5 +37,13 @@ jobs:
         run: python3 research/nightfall/agent-reports/axiom_gf9_rank_orbit_20261030/check_seven_phase.py
       - name: Independently audit all 78125 normalized seven-coefficient rows
         run: python3 research/nightfall/agent-reports/axiom_gf9_rank_orbit_20261030/independent_seven_phase.py
+      - name: Check independent analytic Fourier eigenvalue and balanced-bucket obstruction
+        run: python3 research/nightfall/agent-reports/axiom_gf9_rank_orbit_20261030/fourier_obstruction.py
+      - name: Cross-dimension rank-phase corollary gate (k6,9,11,13)
+        run: python3 research/nightfall/agent-reports/axiom_gf9_rank_orbit_20261030/check_dimensions.py
+      - name: Hash Fourier and cross-dimension source
+        run: |
+          sha256sum research/nightfall/agent-reports/axiom_gf9_rank_orbit_20261030/fourier_obstruction.py
+          sha256sum research/nightfall/agent-reports/axiom_gf9_rank_orbit_20261030/check_dimensions.py
       - name: Independent GF9 field representation and 531441 full vector enumeration
         run: python3 research/nightfall/agent-reports/axiom_gf9_rank_orbit_20261030/independent_gf9.py
