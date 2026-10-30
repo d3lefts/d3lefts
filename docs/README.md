@@ -2,6 +2,20 @@
 
 Static, dependency-free site for NIGHTFALL’s **five evidence-scoped original finite or bounded findings, four flagship research programs, and a 33-document curated research library**. The core index carries the original three findings; a separately reviewed publication note adds the Singer 975 and bounded graph-gadget exclusions. The repository retains the full attributed historical research archive.
 
+
+## Editorial voice and claim boundaries
+
+NIGHTFALL is a living research investigation, not a catalogue of victories. The public voice begins with the **question worth asking**, explains the **mechanism being tested**, and gives the reader a **way to inspect what survives scrutiny**. The founding line, *Discovery needs witnesses*, is an editorial promise, not a certificate.
+
+- **Headlines carry wonder; body copy carries proof scope.** Short, confident headings can be poetic. Nearby prose must say exactly what was constructed, checked, assumed, contested, or left open.
+- **Evidence before acclaim.** Prefer "source-linked finite witness" to unsourced "breakthrough" or "record" language. Distinguish exact replay, an independently checked construction, a theorem proof, prior-art novelty, and competitive standing.
+- **A visible path through the constellation.** Present results, connections, and independent challenge as parts of one investigation. An edge in a graph is a sourced relation or a question, never a proof by resemblance.
+- **Failure belongs in the record.** Keep counterexamples, abandoned hypotheses, changed estimates, and corrected claims findable; avoid defensive repetition when a single precise scope statement will do.
+- **Human direction, clear attribution.** Devin J. Wright leads questions and publication decisions; ChatGPT/Claude and the named NIGHTFALL agents supply substantial AI-generated analysis, code and internal criticism. Agents are not human employees or independent peer reviewers. Credit source authors separately.
+- **Readers first.** Explain the stakes in ordinary language before internal terms such as gates, receipts, ledgers, or operator families. Preserve exact definitions and technical instructions inside verifiers and scientific dossiers.
+- **Version claims, not style.** The scope, provenance, checksums, source URLs and limitations of an existing result must never change merely to make its presentation more compelling.
+
+
 - `portfolio.html`, `portfolio.js`, `portfolio-core.js` and `portfolio.css` — unlisted collective-reference portfolio with a career-first technical portfolio, tested deterministic evidence retrieval lab, three curated case studies, five historically approved scoped findings, a source-linked mechanism map and live claims from `research-registry.js`. It is not in public navigation or sitemap; the public Pages URL is not access-controlled. [Maintenance contract](../portfolio/README.md).
 - `index.html` — four flagship research programs, five scoped Original Findings, an editorial five-decision research path, and accurate internal-review limits.
 - `desk.html` / `desk.css` / `desk.js` — internal, local-first Research Desk: six registry-driven evidence records, open mathematical obligations, session notes, scoped handoff exports and independent verifier routes; never upgrades theorem status.
