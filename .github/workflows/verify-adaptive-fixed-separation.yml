@@ -17,3 +17,7 @@ jobs:
         run: |
           python3 -m py_compile research/nightfall/projects/finite-field/adaptive-fixed-separation-20261030/verify_f9.py
           python3 research/nightfall/projects/finite-field/adaptive-fixed-separation-20261030/verify_f9.py
+      - name: Exact transfer replay over GF9, GF25 and GF49
+        run: |
+          python3 -m py_compile research/nightfall/projects/finite-field/adaptive-fixed-separation-20261030/verify_odd_q_phase.py
+          python3 research/nightfall/projects/finite-field/adaptive-fixed-separation-20261030/verify_odd_q_phase.py
