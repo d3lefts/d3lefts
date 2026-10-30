@@ -90,7 +90,7 @@ try{
     });
     assert.equal(readout.panel,"rgba(6, 13, 16, 0.91)","Exact-witness readout is carbon-glass, not burgundy");
     assert.equal(readout.label,"rgb(180, 227, 214)","Exact-witness readout uses opal text");
-    assert.match(readout.value,/0\\.380856370118/,"Homepage witness is never modified by a theme");
+    assert.ok(readout.value.startsWith("0.380856370118"),"Homepage witness is unchanged by a theme");
     assert.equal(readout.toolbar,"#020406","Browser chrome follows black-field identity");
    }
    for(const [key,target] of Object.entries(expectations[name]||{})){
