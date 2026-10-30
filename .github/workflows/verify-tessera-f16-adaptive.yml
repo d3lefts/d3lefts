@@ -1,0 +1,27 @@
+name: Verify Tessera adaptive F16 cube phase theorem
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/projects/finite-field/tessera-f16-adaptive-20261030/**'
+      - '.github/workflows/verify-tessera-f16-adaptive.yml'
+  push:
+    paths:
+      - 'research/nightfall/projects/finite-field/tessera-f16-adaptive-20261030/**'
+      - '.github/workflows/verify-tessera-f16-adaptive.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact:
+    name: Two independent field checks and exact all-signal replay
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Exact polynomial F16 phase, static obstruction and all-signal decoder
+        run: python3 research/nightfall/projects/finite-field/tessera-f16-adaptive-20261030/audit.py
+      - name: Independent GF4 quadratic-tower arithmetic and collision-minimum audit
+        run: python3 research/nightfall/projects/finite-field/tessera-f16-adaptive-20261030/audit_tower.py
