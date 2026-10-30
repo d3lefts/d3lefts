@@ -842,7 +842,8 @@ const REGISTRY={
       "scope": "A shared verification practice, not a theorem transported between problems.",
       "witnesses": [
         "sidon30",
-        "erdos36"
+        "erdos36",
+        "factor-network"
       ],
       "kind": "verified-method"
     },
@@ -854,7 +855,9 @@ const REGISTRY={
       "witnesses": [
         "sidon30",
         "erdos36",
-        "pas"
+        "pas",
+        "asua-collateral",
+        "factor-network"
       ],
       "kind": "verified-method"
     },
@@ -877,7 +880,8 @@ const REGISTRY={
       "scope": "Parallel motifs in finite-field and quantum projects; direct mathematical transfer remains untested.",
       "witnesses": [
         "phase",
-        "werner"
+        "werner",
+        "shadow-nonabelian"
       ],
       "kind": "analogy"
     },
@@ -889,7 +893,10 @@ const REGISTRY={
       "witnesses": [
         "phase",
         "werner",
-        "erdos36"
+        "erdos36",
+        "asua-collateral",
+        "erdos-dual-ceiling",
+        "phase-tail"
       ],
       "kind": "verified-method"
     }

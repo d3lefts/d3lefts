@@ -16,6 +16,9 @@ for(const [query,id] of [["Werner","werner"],["Erdos","erdos36"],["Sidon","sidon
  assert(r.results[0].sources.every(x=>x.url.startsWith("https://")||x.url.endsWith(".html")));
  assert(r.results[0].validity&&r.results[0].open);
 }
+assert.equal(search(view,"eight-row dual").results[0].id,"erdos-dual-ceiling","specific derivative should remain retrievable");
+assert.equal(search(view,"nonabelian").results[0].id,"shadow-nonabelian");
+assert.equal(search(view,"collateral").results[0].id,"asua-collateral");
 const w=search(view,"Werner");
 assert(w.results[0].mechanisms.some(x=>x.relation==="open-premise"),"unproved dependency must be visible");
 const no=search(view,"Search engine retrieval benchmark");

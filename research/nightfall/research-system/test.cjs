@@ -5,11 +5,11 @@ const read=x=>fs.readFileSync(x,"utf8"),ctx={};
 vm.runInNewContext(read("docs/research-registry.js"),ctx,{filename:"research-registry.js"});
 const R=ctx.NightfallRegistry;
 assert.equal(R.schema,"nightfall-proof-passports-v1");
-assert.equal(R.asOf,"2026-10-29");
-assert.equal(R.claims.length,6);assert.equal(R.mechanisms.length,5);assert.equal(R.edges.length,13);
+assert.equal(R.asOf,"2026-10-30");
+assert.equal(R.claims.length,11);assert.equal(R.mechanisms.length,5);assert.equal(R.edges.length,20);
 assert.deepEqual(Array.from(R.dimensions),["validity","reproducibility","originality","significance"]);
 const ids=new Set(R.claims.map(c=>c.id)),mids=new Set(R.mechanisms.map(m=>m.id));
-assert.equal(ids.size,6);assert.equal(mids.size,5);
+assert.equal(ids.size,11);assert.equal(mids.size,5);
 for(const c of R.claims){
  for(const k of ["id","title","field","kind","statement","conditions","short","measurement","metric"])assert.ok(typeof c[k]==="string"&&c[k].length>(k==="id"||k==="measurement"?1:4),c.id+" missing "+k);
  for(const dimension of R.dimensions)assert.ok(c[dimension]?.label&&c[dimension]?.detail&&c[dimension]?.level,c.id+" bad "+dimension);
