@@ -35,17 +35,18 @@ for(const file of files.filter(x=>x.endsWith(".html")&&readFileSync(join(root,x)
 }
 const light=readFileSync(join(root,"two-skies.css"),"utf8");
 const dusk=readFileSync(join(root,"two-skies.css"),"utf8");
-for(const token of ["--lf-paper:#241a34","--lf-primary:#e7b768","--lf-oxblood:#191327"]){
- assert.ok(light.toLowerCase().includes(token),"Missing sunset token: "+token);
+for(const token of ["--lf-paper:#020406","--lf-primary:#b4e3d6","--lf-oxblood:#080d12"]){
+ assert.ok(light.toLowerCase().includes(token),"Missing NULL FIELD token: "+token);
 }
 for(const token of ["--nf-champagne:#e2d28c","--nf-lightray-gold:#e2d28c"]){
  assert.ok(dusk.toLowerCase().includes(token),"Missing midnight gold token: "+token);
 }
-assert.ok(contrast("#241a34","#e7b768")>=4.5,"Dark ink on sunset CTA must meet WCAG AA");
-assert.ok(contrast("#fff0e7","#191327")>=4.5,"Cream on oxblood must meet WCAG AA");
+assert.ok(contrast("#020406","#b4e3d6")>=4.5,"Carbon ink on opal CTA must meet WCAG AA");
+assert.ok(contrast("#edf4f1","#080d12")>=4.5,"Porcelain on graphite must meet WCAG AA");
 assert.ok(contrast("#e2d28c","#04060b")>=4.5,"Gilded moonlight on midnight must meet WCAG AA");
-assert.ok(contrast("#e7b768","#503757")>=4.5,"Apricot gold must remain readable on raised plum");
-assert.ok(contrast("#191327","#e7b768")>=4.5,"Dark action ink must remain readable on apricot gold");
+assert.ok(contrast("#b4e3d6","#1b292d")>=4.5,"Opal text must remain readable on raised carbon");
+assert.ok(contrast("#080d12","#b4e3d6")>=4.5,"Dark ink must remain readable on opal CTA");
 assert.ok(contrast("#0b1425","#e2d28c")>=4.5,"Night action ink must remain readable on moonlight");
-assert.equal((light.match(/--nf-24k-gold:#d4af37/g)||[]).length,2,"Each sky declares one shared 24k trace token");
+assert.equal((light.match(/--nf-24k-gold:#d4af37/g)||[]).length,1,"New Moon retains 24k");
+assert.ok(light.includes("--nf-24k-gold:#a4dace"),"Archive uses cold diffraction instead of gold");
 console.log("Palette contract OK: "+files.length+" public assets; no neon lime; text contrast checks pass");
