@@ -41,7 +41,10 @@
         sources:entry.sources.slice(0,2),mechanisms:edges.slice(0,3)
       });
     }
-    scored.sort((a,b)=>b.score-a.score||a.id.localeCompare(b.id));
+    // Stable source-registry order resolves equal-score queries. Curated broad
+    // overview entries precede narrower derivative passports, so a short
+    // search like "Erdos" returns the overview; "dual" selects its subclaim.
+    scored.sort((a,b)=>b.score-a.score);
     return {status:scored.length?"matched":"abstain",query:q,total:scored.length,
       results:scored.slice(0,Math.min(5,Math.max(1,Number(limit)||3)))};
   }

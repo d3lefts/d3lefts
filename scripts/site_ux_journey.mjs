@@ -134,7 +134,7 @@ try{
   await step("20–24","Research Library: browse, intersect filters, reset empty search",async()=>{
     await visit("research.html");
     assert.equal(await page.locator(".atlas-card:visible").count(),33);
-    assert.match(await page.locator(".archive-coverage").innerText(),/33 research records.*Six detailed claim passports.*Five separately approved finite findings/s);
+    assert.match(await page.locator(".archive-coverage").innerText(),/33 research records.*Eleven detailed claim passports.*Five separately approved finite findings/s);
     await page.locator("#atlas-search").fill("SourceBound");
     assert.ok((await page.locator(".atlas-card:visible").count())>=1);
     await page.locator("#atlas-search").fill("");

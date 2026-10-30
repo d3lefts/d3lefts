@@ -35,6 +35,7 @@ jobs:
       - name: Validate static pages, source links, anchors, and fallback catalogue
         run: |
           python3 scripts/check_site.py
+          node scripts/test_proof_passport_batch.cjs
           python3 scripts/test_review_queue.py
           node scripts/test_product_destinations.cjs
           node scripts/test_visitor_clarity_sprint.cjs

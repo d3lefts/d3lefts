@@ -3,8 +3,8 @@
 (function(global){
 const REGISTRY={
   "schema": "nightfall-proof-passports-v1",
-  "asOf": "2026-10-29",
-  "editorialScope": "Curated claim-level source records, not a synchronization of all 33 curated research documents. Evidence classifications describe only the stated scopes.",
+  "asOf": "2026-10-30",
+  "editorialScope": "Eleven curated evidence passports (six existing and five added 2026-10-30), across an unchanged 33-dossier research library. Evidence tiers describe only their exact claims; no additions to the separate originality approval whitelist.",
   "dimensions": [
     "validity",
     "reproducibility",
@@ -461,6 +461,371 @@ const REGISTRY={
           "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/pas-overview.md"
         }
       ]
+    },
+    {
+      "id": "asua-collateral",
+      "title": "Information-limited safety guards",
+      "field": "Agent safety",
+      "kind": "Conditional mathematical model · finite benchmark observation",
+      "short": "Sound enforcement can force collateral denial of legitimate tasks when a guard cannot distinguish harmful and permitted calls.",
+      "statement": "Under a universal soundness requirement and an observation map α, a permitted action sharing the same observed fiber with a forbidden action cannot be permitted by any guard using only α. In the scoped archived AgentDojo analysis, a name-only sound guard is reported to deny 45 of 60 legitimate user tasks.",
+      "conditions": "The impossibility is conditional on the prescribed soundness contract, action partition and guard observation. The 45/60 count applies only to the archived 60-task finite cohort, not deployed CaMeL, general agents or actual completed tasks.",
+      "measurement": "45 / 60",
+      "metric": "Reported name-only collateral floor",
+      "validity": {
+        "level": "conditional",
+        "label": "Formal fiber obstruction; data scope constrained",
+        "detail": "The observation-fiber implication is elementary and written down. The benchmark count is source-reported; no new cross-version benchmark replay was performed for this passport."
+      },
+      "reproducibility": {
+        "level": "partial",
+        "label": "Manuscript accessible by description; public replay incomplete",
+        "detail": "The public dossier records the 58-property reconstruction audit, but the original 43-page manuscript and full independent finite counter still require public mirroring."
+      },
+      "originality": {
+        "level": "open",
+        "label": "General factor criterion is prior art",
+        "detail": "Factorization through observation fibers and set-cover formulations are established. Any new contribution must concern the exact safety contract, bounds or grounded operational measurements."
+      },
+      "significance": {
+        "level": "prospective",
+        "label": "Potential policy collateral benchmark",
+        "detail": "Separates information-theoretic unavoidable denials from implementation errors, provided the benchmark and runner are harmonized."
+      },
+      "assumptions": [
+        "A guard observes α(action) but cannot inspect distinctions inside an α-fiber.",
+        "Soundness requires blocking every forbidden action under the stated action model.",
+        "The reported 60-task set and side-effect interpretation are fixed; task success and guard decisions are different outcomes.",
+        "No comparison is made to an incompatible AgentDojo or CaMeL benchmark revision."
+      ],
+      "open": [
+        "Publish the frozen task/observation sets and standalone exact collision counter.",
+        "Reconcile the shipped CaMeL runner version against the 60-task AgentDojo cohort before empirical comparisons.",
+        "Run a held-out end-to-end guard evaluation distinguishing policy denials from model execution errors.",
+        "Independent specialist audit of the formal model, conventional prior art and operational threat assumptions."
+      ],
+      "sources": [
+        {
+          "label": "ASUA scope, theoretical dependencies and bounded counts",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/agent-safety-under-abstraction/README.md"
+        },
+        {
+          "label": "AI-safety independent review dossier",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/ai-safety-peer-review-2026-10-28/README.md"
+        }
+      ],
+      "tools": [
+        "adversary.html",
+        "review.html"
+      ],
+      "history": [
+        {
+          "date": "2026-09-30",
+          "label": "Finite reconstruction audit reported",
+          "detail": "The research dossier records 58 finite property checks and a policy-simulator attachment-shape issue; no live-model result follows.",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/agent-safety-under-abstraction/README.md"
+        }
+      ]
+    },
+    {
+      "id": "shadow-nonabelian",
+      "title": "Nonabelian involution-shadow codes",
+      "field": "Finite groups and coding",
+      "kind": "Self-contained algebraic theorem candidate · public finite tests",
+      "short": "The full distance spectrum and sharp erasure allocation reduce to coset-label occupancies for any finite group with a nontrivial involution.",
+      "statement": "For finite G with nonidentity involutive automorphism S, H=Fix(S), q=|G|/|H| and m translation measurements, min_(x≠y) d_H(C_T(x),C_T(y)) = m − max_c n_c; its optimal value is m − ceil(m/q). The ordered-pair distance enumerator and every fixed-cardinality erasure ambiguity count also depend only on the occupancy vector.",
+      "conditions": "Orbit symbols [xt]_S under right-translated measurements; twisted labels δ(t)=S(t)t⁻¹ whose fibers are left cosets tH, with no normal-subgroup assumption. The statement concerns message separation, which can be zero.",
+      "measurement": "m − ⌈m/q⌉",
+      "metric": "Sharp balanced distance",
+      "validity": {
+        "level": "working",
+        "label": "Written universal algebraic proof; external referee open",
+        "detail": "The source derives collision equivalence, coset fibers, sharp Hamming separation and erasure minimization. Universal quantifiers have not received kernel-level or human external review."
+      },
+      "reproducibility": {
+        "level": "public",
+        "label": "Public S₄ witness and independent finite checkers",
+        "detail": "An explicit 24-element S₄ certificate, Cayley-table checker and erasure optimality checker are public. Historical broader test-count reports are not a new run here."
+      },
+      "originality": {
+        "level": "open",
+        "label": "Established Cartan-embedding mechanism",
+        "detail": "The coset-label identity and related twisted permutation codes have prior art. Whether the combined distance-spectrum and erasure statement is new remains unresolved."
+      },
+      "significance": {
+        "level": "prospective",
+        "label": "One occupancy invariant controls multiple channels",
+        "detail": "Unifies minimum distance, complete pair spectrum and identically distributed erasure reliability in a specific orbit-code family."
+      },
+      "assumptions": [
+        "G is finite and S is a nonidentity automorphism satisfying S²=id.",
+        "Translation labels are left-coset classes; the fixed subgroup need not be normal.",
+        "The erasure-optimality conclusion assumes common coordinate survival probability; heterogeneous rates require a separate model.",
+        "A positive message-separation bound is needed to claim an injective error-correcting code."
+      ],
+      "open": [
+        "Independent proof review of all ordered-pair multiplicity and erasure formulas.",
+        "Complete same-scope novelty assessment against twisted permutation codes, Cartan embeddings and orbit coding.",
+        "Independently replay the published S₄ witness and the Cayley-table/erasure verifiers.",
+        "Analyze nonuniform reliability without importing the symmetric-balancing conclusion."
+      ],
+      "sources": [
+        {
+          "label": "Universal algebraic proof, corrections and prior art",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/involution-shadow-codes/NONABELIAN_SHADOW_THEOREM.md"
+        },
+        {
+          "label": "Explicit S₄ exact finite witness",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/involution-shadow-codes/S4_nonabelian_certificate.json"
+        },
+        {
+          "label": "Cayley-table independent instance verifier",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/involution-shadow-codes/certify_nonabelian_instance.py"
+        },
+        {
+          "label": "Independent erasure-optimality verifier",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/involution-shadow-codes/verify_nonabelian_erasure_optimum.py"
+        },
+        {
+          "label": "Prior-art correction and review boundary",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/involution-shadow-codes/PRIOR_ART_ASSESSMENT_20261028.md"
+        }
+      ],
+      "tools": [
+        "referee.html",
+        "exact-research.html"
+      ],
+      "history": [
+        {
+          "date": "2026-10-28",
+          "label": "Nonabelian proof and S₄ certificate archived",
+          "detail": "The public note reports a sharp distance formula and direct finite checks, while retaining unresolved external review.",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/involution-shadow-codes/NONABELIAN_SHADOW_THEOREM.md"
+        },
+        {
+          "date": "2026-10-28",
+          "label": "Left-coset and prior-art corrections published",
+          "detail": "A right-coset terminology error was corrected; established Cartan and twisted-code constructions were credited.",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/involution-shadow-codes/PRIOR_ART_ASSESSMENT_20261028.md"
+        }
+      ]
+    },
+    {
+      "id": "factor-network",
+      "title": "Universal factor-network encoding",
+      "field": "Algebraic computation",
+      "kind": "Universal combinatorial proof · finite structural verifier",
+      "short": "An explicit equality-bridge network preserves every finite factor partition function over any commutative semiring.",
+      "statement": "For n q-ary variables, factor scope length L, v active variables and m factors, a trivalent occurrence/equality-bridge network with 3L−2v wires satisfies Z(F)=(q·1_R)^(n−v) Z(G(F)) for every commutative semiring R and every assignment of factor tables.",
+      "conditions": "One occurrence vertex per scope position, right binary equality bridges and faithfully retained ordered factor ports. The edge-count minimality is ONLY within this bridge grammar; the identity includes repeated variables, unused variables and zero-arity factors.",
+      "measurement": "3L − 2v",
+      "metric": "Exact wires in bridge grammar",
+      "validity": {
+        "level": "working",
+        "label": "Explicit universal assignment bijection",
+        "detail": "The public proof constructs an inverse between satisfying wire labels and original active-variable assignments. No faster contraction algorithm or formal kernel proof is claimed."
+      },
+      "reproducibility": {
+        "level": "public",
+        "label": "Public per-instance certificate checker",
+        "detail": "The transparent graph JSON and independent structural-checker source are in the repository; the dossier also reports broader stress tests whose original scripts are not all mirrored."
+      },
+      "originality": {
+        "level": "scoped",
+        "label": "COPY-tensor encoding is established prior art",
+        "detail": "No priority is claimed for standard SAT-to-network reductions. Novelty, if any, is confined to this precise grammar-scoped edge accounting and proof-certificate implementation."
+      },
+      "significance": {
+        "level": "bounded",
+        "label": "Auditable reduction; no complexity collapse",
+        "detail": "Turns a symbolic algebraic equivalence into a structurally inspectable finite certificate without asserting a subexponential SAT algorithm."
+      },
+      "assumptions": [
+        "Alphabet Q is finite, |Q|=q≥2; coefficient operations form a commutative semiring.",
+        "Input factor scopes preserve port order, including repeated variable positions.",
+        "Graph wires connect occurrence indicators through same-variable binary equality bridges.",
+        "The claim is an identity of partition functions, not a bound on contraction runtime."
+      ],
+      "open": [
+        "Re-run the public structural checker on its frozen JSON example.",
+        "Mirror the separately reported direct-contraction and adversarial scripts and outputs.",
+        "Seek external independent proof audit and compare scope with established tensor-network/COPY representations.",
+        "Keep unverified contraction-runtime hypotheses outside this reduction claim."
+      ],
+      "sources": [
+        {
+          "label": "Universal semiring identity, proof and prior work",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sat-network-universal/THEOREM_AND_SCOPE.md"
+        },
+        {
+          "label": "Public structural certificate checker",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sat-network-universal/check_structural_certificate.py"
+        },
+        {
+          "label": "Concrete machine-readable graph witness",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sat-network-universal/example_graph.json"
+        },
+        {
+          "label": "Finite agent audit verdict",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sat-network-universal/AGENT_VERDICT.json"
+        }
+      ],
+      "tools": [
+        "referee.html",
+        "exact-research.html"
+      ],
+      "history": [
+        {
+          "date": "2026-10-28",
+          "label": "Proof and structural checker published",
+          "detail": "The mathematical bijection and grammar-specific 3L−2v edge formula were documented with a public per-instance certificate checker.",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sat-network-universal/THEOREM_AND_SCOPE.md"
+        }
+      ]
+    },
+    {
+      "id": "erdos-dual-ceiling",
+      "title": "Erdős eight-row dual ceiling",
+      "field": "Exact optimization",
+      "kind": "Scoped exact-rational obstruction · upstream premise conditional",
+      "short": "A frozen eight-row rational certificate family has less than 6×10⁻¹⁵ room for further improvement without a new dual geometry.",
+      "statement": "For the eight specifically frozen rational dual rows R_i(m), an explicit rational witness m₀ gives R_i(m₀)<0.380627474626686 for every i. Hence no nonnegative mixture of these unchanged rows can certify a uniform bound reaching 0.380627474626686 through their pointwise returns.",
+      "conditions": "Frozen eight V5+ rows, common negative quadratic coefficient, original normalization, and nonnegative mixing only. The source-conditional lower deduction μ>0.38062747462668 requires Wetch's inherited analytic and interval-arithmetic premises.",
+      "measurement": "< 6×10⁻¹⁵",
+      "metric": "Remaining fixed-family headroom",
+      "validity": {
+        "level": "finite",
+        "label": "Exact scoped rational ceiling reported",
+        "detail": "A single rational evaluation bounds every unchanged row; the statement does not constrain other dual certificates or the true Erdős constant. Original row bytes must be independently checked."
+      },
+      "reproducibility": {
+        "level": "partial",
+        "label": "Checker source public; frozen input archive missing",
+        "detail": "The standalone exact Fraction checker is mirrored. The frozen row files and complete original Arb integrals are not wholly mirrored or freshly recomputed."
+      },
+      "originality": {
+        "level": "scoped",
+        "label": "Internal proof-family saturation diagnosis",
+        "detail": "The ceiling is a distinct restricted-family calculation, not an independent unconditional record or a new global bound."
+      },
+      "significance": {
+        "level": "bounded",
+        "label": "Search-direction certificate",
+        "detail": "Rules out futile fine-tuning of the unchanged eight rows; a ≥10⁻⁸ advance needs a different valid dual direction or premise."
+      },
+      "assumptions": [
+        "The original eight row coefficients and common quadratic term are precisely frozen.",
+        "Only nonnegative combinations of the same valid dual returns are considered.",
+        "The fixed rational evaluation point lies in the original intermediate mean region.",
+        "All universal lower-bound assertions retain the unreplayed central and outer Arb/analytic dependencies."
+      ],
+      "open": [
+        "Publicly mirror exact frozen eight-row input files and digests required by the checker.",
+        "Independently recompute central/outer Arb enclosures and audit the analytic reduction.",
+        "Review the exact fixed-row obstruction, checking convex-combination and endpoint arithmetic.",
+        "Design a new feasible dual geometry; further row retuning is saturated to the stated precision."
+      ],
+      "sources": [
+        {
+          "label": "Exact ceiling derivation and conditional lower audit",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/agent-reports/ea36_lower_20261028/RESEARCH_NOTE.md"
+        },
+        {
+          "label": "Standalone ceiling source (requires historical frozen inputs)",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/agent-reports/ea36_lower_20261028/verify_dual_ceiling.py"
+        },
+        {
+          "label": "Upper/lower record identity and source audit",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/erdos/STATUS_AND_PRIOR_ART_20261028.md"
+        }
+      ],
+      "tools": [
+        "referee.html",
+        "review.html#erdos"
+      ],
+      "history": [
+        {
+          "date": "2026-10-27",
+          "label": "Conditional eight-row lower envelope archived",
+          "detail": "The eight-row dual cover was frozen; the original independent Arb quadrature was retained as an upstream dependency.",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/agent-reports/ea36_lower_20261028/RESEARCH_NOTE.md"
+        },
+        {
+          "date": "2026-10-28",
+          "label": "Exact fixed-family ceiling documented",
+          "detail": "An exact rational point m₀ demonstrates that nonnegative mixing of these rows cannot meet the next target; no new universal record follows.",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/agent-reports/ea36_lower_20261028/RESEARCH_NOTE.md"
+        }
+      ]
+    },
+    {
+      "id": "phase-tail",
+      "title": "Finite-field short-vector tail bound",
+      "field": "Finite-field algorithms",
+      "kind": "Conditional tail lemma · public exact downstream checkers",
+      "short": "A sharper exact-combinatorial tail audit reports a 40-bit improvement in a fourth-power lattice-decoding failure estimate.",
+      "statement": "For prime fields p≡1 (mod 4), parameters (δ,η)=(0.999,0.501) and log₂(p)≥3.69k+9.2, the manuscript derives a conditional P₁₁(p)<2⁻⁹⁶ tail estimate, versus its earlier 2⁻⁵⁶ estimate.",
+      "conditions": "The improved conclusion depends on a Gaussian short-vector span-count lemma in the underlying manuscript. The two public scripts verify downstream exact rational/binomial and symbolic identities, not that crucial geometric lemma or a complete decoder.",
+      "measurement": "2⁻⁹⁶",
+      "metric": "Source-conditional tail estimate",
+      "validity": {
+        "level": "conditional",
+        "label": "Critical span-count lemma unreviewed",
+        "detail": "Algebraic downstream terms pass the archived proof scripts, but the assumption needed to translate the terms into an algorithmic probability bound is unestablished by those checks."
+      },
+      "reproducibility": {
+        "level": "public",
+        "label": "Two distinct public downstream verifiers",
+        "detail": "One script uses exact rational arithmetic; the other independently regenerates symbolic expressions with SymPy. The full original manuscript/archive and decoder replay are still outstanding."
+      },
+      "originality": {
+        "level": "open",
+        "label": "Probability improvement contingent on lemma",
+        "detail": "Prior exact lattice-decoding work and same-model comparisons require review; an arithmetic tightening is not itself a certified global algorithm improvement."
+      },
+      "significance": {
+        "level": "prospective",
+        "label": "Potentially smaller decoding failure tail",
+        "detail": "The 40-bit improvement matters only after the span-count lemma and end-to-end decoding model survive independent audit."
+      },
+      "assumptions": [
+        "Prime p≡1 mod 4 with the displayed log-field-size and parameter bounds.",
+        "Use the unique extreme support term with binomial multiplicity one, as corrected in the certificate.",
+        "Accept the unreviewed short-vector span-count lemma to infer P₁₁(p).",
+        "No inference about unrelated adaptive sensing or different power oracles."
+      ],
+      "open": [
+        "Give a standalone mathematical proof or explicit counterexample for the span-count lemma.",
+        "Independently run both published exact downstream scripts and preserve command outputs.",
+        "Mirror the complete manuscript and reproducibility package with hashes.",
+        "Audit end-to-end decoder correctness and the strongest same-model prior art."
+      ],
+      "sources": [
+        {
+          "label": "Conditional tail theorem and premise boundary",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/README.md"
+        },
+        {
+          "label": "Exact rational checker A",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/verify_tail_A.py"
+        },
+        {
+          "label": "Independent symbolic checker B",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/verify_tail_B.py"
+        }
+      ],
+      "tools": [
+        "referee.html",
+        "discovery.html"
+      ],
+      "history": [
+        {
+          "date": "2026-10-28",
+          "label": "Corrected downstream tail check reported",
+          "detail": "Two independent algebraic checks retained the extreme-support term weight one; the geometric premise and full original archive remain open.",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/README.md"
+        }
+      ]
     }
   ],
   "mechanisms": [
@@ -471,7 +836,8 @@ const REGISTRY={
       "scope": "A shared verification practice, not a theorem transported between problems.",
       "witnesses": [
         "sidon30",
-        "erdos36"
+        "erdos36",
+        "factor-network"
       ],
       "kind": "verified-method"
     },
@@ -483,7 +849,9 @@ const REGISTRY={
       "witnesses": [
         "sidon30",
         "erdos36",
-        "pas"
+        "pas",
+        "asua-collateral",
+        "factor-network"
       ],
       "kind": "verified-method"
     },
@@ -506,7 +874,8 @@ const REGISTRY={
       "scope": "Parallel motifs in finite-field and quantum projects; direct mathematical transfer remains untested.",
       "witnesses": [
         "phase",
-        "werner"
+        "werner",
+        "shadow-nonabelian"
       ],
       "kind": "analogy"
     },
@@ -518,7 +887,10 @@ const REGISTRY={
       "witnesses": [
         "phase",
         "werner",
-        "erdos36"
+        "erdos36",
+        "asua-collateral",
+        "erdos-dual-ceiling",
+        "phase-tail"
       ],
       "kind": "verified-method"
     }
@@ -627,6 +999,62 @@ const REGISTRY={
       "label": "External independent witness review outstanding",
       "note": "The curated witness bytes and arithmetic checker are publicly downloadable; independent mathematical refereeing and the distinct accepted Arena payload remain outstanding.",
       "source": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/erdos/STATUS_AND_PRIOR_ART_20261028.md"
+    },
+    {
+      "from": "asua-collateral",
+      "to": "dependency-gates",
+      "relation": "open-premise",
+      "label": "Availability of guard observations bounds enforceability",
+      "note": "Finite benchmark figures require matched versions and source artifacts.",
+      "source": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/agent-safety-under-abstraction/README.md"
+    },
+    {
+      "from": "asua-collateral",
+      "to": "proof-provenance",
+      "relation": "method",
+      "label": "Observation fibers define necessary information",
+      "note": "Distinguishable provenance is necessary before permitted and forbidden actions can be separated.",
+      "source": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/agent-safety-under-abstraction/README.md"
+    },
+    {
+      "from": "shadow-nonabelian",
+      "to": "symmetry-reduction",
+      "relation": "method",
+      "label": "Twisted coset labels control the distance enumerator",
+      "note": "Source proves the left-coset occupancy reduction; priority review remains open.",
+      "source": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/involution-shadow-codes/NONABELIAN_SHADOW_THEOREM.md"
+    },
+    {
+      "from": "factor-network",
+      "to": "proof-provenance",
+      "relation": "method",
+      "label": "Equality-class structure checks a universal encoding",
+      "note": "Verifier checks one connected equality class per active variable.",
+      "source": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sat-network-universal/THEOREM_AND_SCOPE.md"
+    },
+    {
+      "from": "factor-network",
+      "to": "exact-enumeration",
+      "relation": "finite-check",
+      "label": "Finite structural and contraction checks",
+      "note": "Published local structural verifier exists; broader test scripts remain to mirror.",
+      "source": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sat-network-universal/THEOREM_AND_SCOPE.md"
+    },
+    {
+      "from": "erdos-dual-ceiling",
+      "to": "dependency-gates",
+      "relation": "open-premise",
+      "label": "Fixed-row rational ceiling leaves upstream analytic dependencies",
+      "note": "Rational point obstruction is scoped; continuum integrals need fresh independent replay.",
+      "source": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/agent-reports/ea36_lower_20261028/RESEARCH_NOTE.md"
+    },
+    {
+      "from": "phase-tail",
+      "to": "dependency-gates",
+      "relation": "open-premise",
+      "label": "Gaussian span-count lemma blocks unconditional tail claim",
+      "note": "Independent downstream algebra is insufficient to prove the short-vector counting premise.",
+      "source": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/README.md"
     }
   ]
 };
