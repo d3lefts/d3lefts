@@ -1,4 +1,4 @@
-/* Sunset Boulevard light acceptance: functional color, WCAG contrast, and dusk isolation.
+/* NULL FIELD alternate Archive acceptance: black-ceramic surfaces, opal signal, WCAG and dusk isolation.
    Source/claim evidence is explicitly not part of this decorative test. */
 import assert from "node:assert/strict";
 import {createServer} from "node:http";
@@ -39,7 +39,7 @@ try{
   await page.goto(origin+"index.html",{waitUntil:"load"});
   assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk","Dusk is the fresh-visit default");
   await page.locator(".nf-theme-toggle").click();
-  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Explicit light opt-in activates Sunset Boulevard archive");
+  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Explicit light opt-in activates NULL FIELD Archive");
   assert.equal(await page.evaluate(()=>localStorage.getItem("nightfall.theme.v1")),"light","Explicit light choice is persisted");
   page.on("response",r=>{if(r.url().startsWith(origin)&&r.status()>=400)errors.push(r.url()+": "+r.status())});
   for(const name of pages){
@@ -62,20 +62,20 @@ try{
       epConsole:pick(".ep-console"),overflow:document.documentElement.scrollWidth-innerWidth};
    });
    assert.equal(v.theme,null,name+": saved light choice remains respected");
-   assert.equal(v.paper,"#241a34",name+": Sunset Boulevard archive contract");
-   assert.equal(v.oxblood,"#191327",name+": oxblood identity");
-   assert.equal(v.primary,"#e7b768",name+": sunset action accent");
-   assert.equal(v.bodyBg,"rgb(36, 26, 52)",name+": light canvas");
+   assert.equal(v.paper,"#020406",name+": Sunset Boulevard archive contract");
+   assert.equal(v.oxblood,"#080d12",name+": black negative space identity");
+   assert.equal(v.primary,"#b4e3d6",name+": opal action accent");
+   assert.equal(v.bodyBg,"rgb(2, 4, 6)",name+": light canvas");
    assert.ok(v.overflow<=4,name+": no "+width+"px horizontal overflow ("+v.overflow+")");
    const expectations={
-    "index.html":{nav:"rgb(25, 19, 39)",heroAction:"rgb(231, 183, 104)"},
-    "constellation.html":{coreAction:"rgb(231, 183, 104)"},
-    "join.html":{joinMethod:"rgb(84, 49, 76)",raised:"rgb(59, 44, 75)"},
-    "living-paper.html":{sidon:"rgb(25, 19, 39)"},
-    "erdos-paper.html":{sidon:"rgb(25, 19, 39)",epConsole:"rgb(59, 44, 75)"},
-    "discovery.html":{discoverySidebar:"rgb(49, 35, 63)",discoveryMark:"rgb(231, 183, 104)"},
-    "claim-lab.html":{claimSidebar:"rgb(49, 35, 63)"},
-    "desk.html":{readout:"rgb(25, 19, 39)"}
+    "index.html":{nav:"rgb(8, 13, 18)",heroAction:"rgb(180, 227, 214)"},
+    "constellation.html":{coreAction:"rgb(180, 227, 214)"},
+    "join.html":{joinMethod:"rgb(16, 28, 31)",raised:"rgb(17, 24, 28)"},
+    "living-paper.html":{sidon:"rgb(8, 13, 18)"},
+    "erdos-paper.html":{sidon:"rgb(8, 13, 18)",epConsole:"rgb(17, 24, 28)"},
+    "discovery.html":{discoverySidebar:"rgb(12, 18, 22)",discoveryMark:"rgb(180, 227, 214)"},
+    "claim-lab.html":{claimSidebar:"rgb(12, 18, 22)"},
+    "desk.html":{readout:"rgb(8, 13, 18)"}
    };
    if(name==="index.html"){
     assert.equal(v.constellationRoute,true,"Homepage includes a dedicated Constellation destination without duplicating full graph");
@@ -85,9 +85,9 @@ try{
         curve:getComputedStyle(svg.querySelector('path[stroke="#4a1f24"]')).stroke,
         toolbar:document.querySelector('meta[name="theme-color"]')?.content};
     });
-    assert.equal(diagram.signal,"rgb(216, 195, 138)","Mathematical hero signal uses muted blackcherry");
-    assert.equal(diagram.curve,"rgb(74, 31, 36)","Hero's forest-green path uses oxblood");
-    assert.equal(diagram.toolbar,"#241a34","Browser chrome follows twilight identity");
+    assert.equal(diagram.signal,"rgb(180, 227, 214)","Mathematical hero signal uses opal");
+    assert.equal(diagram.curve,"rgb(180, 227, 214)","Hero's forest-green path uses oxblood");
+    assert.equal(diagram.toolbar,"#020406","Browser chrome follows black-field identity");
    }
    for(const [key,target] of Object.entries(expectations[name]||{})){
     assert.equal(v[key],target,name+" "+width+"px "+key+" matches Sunset Boulevard archive");
@@ -114,7 +114,7 @@ try{
       });
     });
     for(const pair of contrastPairs){
-      const panel=pair.panel==="rgba(0, 0, 0, 0)"?"rgb(36, 26, 52)":pair.panel;
+      const panel=pair.panel==="rgba(0, 0, 0, 0)"?"rgb(2, 4, 6)":pair.panel;
       assert.ok(contrast(pair.ink,panel)>=4.5,
         "Contributor contrast: "+pair.textSel+" "+pair.ink+" / "+panel);
     }
@@ -131,8 +131,8 @@ try{
      body:styles("body")};
   });
   assert.ok(contrast(...comps.nav)>=4.5,"Archive navigation button text meets WCAG AA");
-  assert.ok(contrast(...comps.cta)>=4.5,"Apricot action text meets WCAG AA");
-  assert.ok(contrast(...comps.body)>=7,"Body text on twilight plum comfortably exceeds AA");
+  assert.ok(contrast(...comps.cta)>=4.5,"Opal action text meets WCAG AA");
+  assert.ok(contrast(...comps.body)>=7,"Body text on pitch black comfortably exceeds AA");
   const toggle=page.locator(".nf-theme-toggle");
   await toggle.click();
   await page.waitForFunction(()=>document.documentElement.dataset.nfTheme==="dusk");
@@ -146,12 +146,12 @@ try{
   assert.equal(await page.locator('meta[name="theme-color"]').getAttribute("content"),"#04060b","Dusk browser chrome remains midnight navy");
   await toggle.click();
   assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Switching back restores Sunset Boulevard archive");
-  await page.waitForFunction(()=>getComputedStyle(document.body).backgroundColor==="rgb(36, 26, 52)",null,{timeout:3500});
-  assert.equal(await page.locator('meta[name="theme-color"]').getAttribute("content"),"#241a34","Light browser chrome returns to blackcherry");
+  await page.waitForFunction(()=>getComputedStyle(document.body).backgroundColor==="rgb(2, 4, 6)",null,{timeout:3500});
+  assert.equal(await page.locator('meta[name="theme-color"]').getAttribute("content"),"#020406","Archive browser chrome returns to carbon black");
   assert.equal(await page.locator("body").evaluate(e=>getComputedStyle(e).backgroundColor),
-   "rgb(36, 26, 52)","Sunset Boulevard archive survives reversal");
+   "rgb(2, 4, 6)","Sunset Boulevard archive survives reversal");
   assert.deepEqual(errors,[],"No missing assets or browser JS errors at "+width+"px");
   await context.close();
  }
- console.log("PASS Sunset Boulevard archive light: dusk-first, 10 light pages × mobile/desktop, blackcherry action palette, AA contrast, unchanged dusk and reversible state");
+ console.log("PASS NULL FIELD archive: dusk-first, 10 black Archive pages × mobile/desktop, opal action palette, AA contrast, unchanged dusk and reversible state");
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve))}
