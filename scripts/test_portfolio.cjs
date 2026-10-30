@@ -95,4 +95,23 @@ assert(page.includes("SITE_ORIGINALITY_ADDENDUM_20261029.md"));
 assert(page.includes('id="pf-mechanism-list"'));
 assert(page.includes('id="pf-evaluation-title"'));
 assert(page.includes("No graph edge is a new theorem"));
+// Career evidence must lead without promoting the AI-agent archive to staffed employment.
+const careerPos=page.indexOf('id="career"'), sciencePos=page.indexOf('id="work"');
+assert(careerPos>0 && sciencePos>careerPos,"Career experience must precede the technical archive");
+assert.equal((page.match(/class="pf-career-card"/g)||[]).length,3);
+for(const key of ["id=\"walmart\"","id=\"autograph\"","id=\"amazon\"",
+  "id=\"foundations\"","resume.html","linkedin.com/in/devin-jarel-wright",
+  "2015 General Donald R. Keith","AI assistants","not a staffed laboratory"]){
+ assert(page.includes(key),"Career evidence missing: "+key);
+}
+assert(page.includes("released after my tenure"),"Amazon release dates require a plain boundary");
+const resume=read("docs/resume.html");
+assert(resume.includes('name="robots" content="noindex, nofollow, noarchive"'));
+assert(resume.includes("Walmart Global Tech") && resume.includes("HPM Building Supply"));
+assert(resume.includes("2015") && resume.includes("NIGHTFALL"));
+assert(!read("docs/index.html").includes("resume.html"));
+assert(!read("docs/sitemap.xml").includes("resume.html"));
+const about=read("docs/about.html");
+assert(about.includes("AI workflows") || about.includes("AI-assistant role labels"));
+assert(about.includes("not human staff members"));
 console.log("Portfolio: approved scoped findings, source-linked mechanism transfers, updates, demotions and unlisted boundaries pass.");

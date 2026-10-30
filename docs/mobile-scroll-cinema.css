@@ -107,7 +107,7 @@ html[data-nf-theme="dusk"] .nf-cinema-world--archive{display:none}
   filter:drop-shadow(0 0 8px #9b9ff099);
 }
 .nf-cinema-constellation .nf-cinema-node{
-  fill:#e6deaa;stroke:#858bd5;stroke-width:2;
+  fill:#e2d28c;stroke:#858bd5;stroke-width:2;
   opacity:calc(.15 + var(--nf-trace-opacity) * .85);
   filter:drop-shadow(0 0 13px #ced4f499);
 }
@@ -129,16 +129,16 @@ html:not([data-nf-theme="dusk"]) .nf-cinema-vignette{
 }
 .nf-cinema-overline{
   font:600 11px/1.5 var(--mono);letter-spacing:.13em;
-  color:#e6deaa;text-transform:uppercase;margin:0 0 clamp(15px,2vw,27px);
+  color:#e2d28c;text-transform:uppercase;margin:0 0 clamp(15px,2vw,27px);
 }
-html:not([data-nf-theme="dusk"]) .nf-cinema-overline{color:#edc16e}
+html:not([data-nf-theme="dusk"]) .nf-cinema-overline{color:#e7b768}
 .nf-cinema-title{
   font:400 clamp(54px,8.3vw,132px)/.96 var(--serif);
   letter-spacing:-.065em;max-width:1050px;margin:0;
   text-wrap:balance;
   text-shadow:0 12px 75px #0005;
 }
-.nf-cinema-title em{font-weight:400;color:#e6deaa}
+.nf-cinema-title em{font-weight:400;color:#e2d28c}
 html:not([data-nf-theme="dusk"]) .nf-cinema-title em{color:#f5d88f}
 .nf-cinema-subtitle{
   font:400 clamp(15px,1.5vw,19px)/1.7 var(--sans);
@@ -156,10 +156,10 @@ html:not([data-nf-theme="dusk"]) .nf-cinema-subtitle{color:#eed4bb}
 html:not([data-nf-theme="dusk"]) .nf-cinema-status{color:#edcfad}
 .nf-cinema-meter{height:1px;flex:1;background:#ffffff4b;position:relative;min-width:40px}
 .nf-cinema-meter::before{
-  content:"";display:block;height:2px;background:#e6deaa;
+  content:"";display:block;height:2px;background:#e2d28c;
   width:calc(100% * var(--nf-progress));transform:translateY(-.5px);
 }
-html:not([data-nf-theme="dusk"]) .nf-cinema-meter::before{background:#edc16e}
+html:not([data-nf-theme="dusk"]) .nf-cinema-meter::before{background:#e7b768}
 .nf-cinema-status b{font:inherit;min-width:45px;white-space:nowrap}
 .nf-cinema-steps{
   position:absolute;z-index:2;bottom:clamp(62px,7vw,97px);
@@ -355,13 +355,13 @@ html:not([data-nf-theme="dusk"]) .nf-cinema-vignette{
 html:not([data-nf-theme="dusk"]) .nf-cinema{background:#21172f;color:#fff0e7;border-color:#826682}
 html:not([data-nf-theme="dusk"]) .nf-cinema-world--archive{
   background:
-    radial-gradient(ellipse at 67% 61%,rgba(255,198,153,.34),transparent 39%),
-    radial-gradient(ellipse at 50% 21%,rgba(218,123,171,.25),transparent 63%),
+    radial-gradient(ellipse at 67% 61%,rgba(242,197,128,.27),transparent 39%),
+    radial-gradient(ellipse at 50% 21%,rgba(218,123,171,.18),transparent 63%),
     linear-gradient(175deg,#221a3d 0%,#634068 46%,#c56e82 78%,#352441 100%);
 }
 html:not([data-nf-theme="dusk"]) .nf-cinema-horizon{
   background:linear-gradient(180deg,#834e78 0%,#342442 59%,#1a142a 100%);
-  box-shadow:0 -2px 0 #f5b78baa,0 -40px 110px #f59f9540;
+  box-shadow:0 -2px 0 #e7b768aa,0 -40px 110px #e7b76827;
 }
 html:not([data-nf-theme="dusk"]) .nf-cinema-vignette{
   background:

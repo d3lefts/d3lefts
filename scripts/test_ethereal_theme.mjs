@@ -72,7 +72,7 @@ try{
     return {paper:s.getPropertyValue("--lf-paper").trim(),primary:s.getPropertyValue("--lf-primary").trim(),text:button.color};
   });
   assert.equal(palette.paper,"#241a34","Sunset Boulevard token contract");
-  assert.equal(palette.primary,"#f5b78b","Sunset apricot action accent");
+  assert.equal(palette.primary,"#e7b768","Sunset apricot action accent");
   assert.equal(palette.text,"rgb(36, 26, 52)","Primary button uses legible light text");
   await page.screenshot({path:"browser-artifacts/ethereal-light-"+width+".png",fullPage:false});
   await toggle.click();
@@ -114,35 +114,31 @@ try{
         accent:s.getPropertyValue("--accent").trim(),
         paper:body.backgroundColor};
     });
-    assert.equal(tokens.gold,"#e6deaa",file+": moonlit gold token is shared");
+    assert.equal(tokens.gold,"#e2d28c",file+": moonlit gold token is shared");
     assert.equal(tokens.brass,"#8f865f",file+": brass is reserved for quiet borders");
-    assert.equal(tokens.accent,"#e6deaa",file+": dusk action accent inherits moonlight");
+    assert.equal(tokens.accent,"#e2d28c",file+": dusk action accent inherits moonlight");
    }
    if(file==="index.html"){
-    const activeLens=await page.locator(".nf-observatory-lenses button[aria-pressed=true]").evaluate(el=>({
-      bg:getComputedStyle(el).backgroundColor,fg:getComputedStyle(el).color}));
-    assert.equal(activeLens.bg,"rgb(230, 222, 170)","Evidence lens uses moonlit gold action state");
-    assert.equal(activeLens.fg,"rgb(11, 20, 37)","Evidence lens has dark ink");
-    const toolButton=await page.locator(".nf-home-tool-entry .button").evaluate(el=>getComputedStyle(el).backgroundColor);
-    assert.equal(toolButton,"rgb(230, 222, 170)","Research-workflow action is no longer lime green");
+    assert.equal(await page.locator("#observatory a[href='constellation.html#map']").count(),1,
+      "Landing page links to the full graph without mounting duplicate controls");
    }
    if(file==="constellation.html"){
     const action=await page.locator(".co-primary").first().evaluate(el=>({
       bg:getComputedStyle(el).backgroundColor,fg:getComputedStyle(el).color}));
-    assert.equal(action.bg,"rgb(230, 222, 170)","Constellation action matches primary moonlight");
+    assert.equal(action.bg,"rgb(226, 210, 140)","Constellation action matches primary moonlight");
     assert.equal(action.fg,"rgb(11, 20, 37)","Constellation action retains navy ink");
    }
    if(file==="discovery.html"){
     const nav=await page.locator(".navitem.selected").first().evaluate(el=>getComputedStyle(el).backgroundColor);
     assert.equal(nav,"rgb(48, 44, 66)","Discovery selected navigation is violet-navy, not moss green");
     const appAccent=await page.evaluate(()=>getComputedStyle(document.body).getPropertyValue("--lime").trim());
-    assert.equal(appAccent,"#e6deaa","Discovery's original lime token resolves to moonlight");
+    assert.equal(appAccent,"#e2d28c","Discovery's original lime token resolves to moonlight");
     const sourceStatus=await page.locator(".status").first().evaluate(el=>getComputedStyle(el).backgroundColor);
     assert.equal(sourceStatus,"rgb(12, 21, 39)","Discovery source status is no longer green");
    }
    if(file==="claim-lab.html"){
     const brandColor=await page.locator(".brandMark").first().evaluate(el=>getComputedStyle(el).color);
-    assert.equal(brandColor,"rgb(230, 222, 170)","Claim Lab emblem carries moonlit gold");
+    assert.equal(brandColor,"rgb(226, 210, 140)","Claim Lab emblem carries moonlit gold");
     const toastColor=await page.locator(".toast").first().evaluate(el=>getComputedStyle(el).backgroundColor);
     assert.equal(toastColor,"rgb(40, 46, 68)","Claim Lab toast uses dusk navy, not teal green");
    }
@@ -152,13 +148,13 @@ try{
    }
    if(file==="join.html"){
     const action=await page.locator(".join-choice button").first().evaluate(el=>getComputedStyle(el).backgroundColor);
-    assert.equal(action,"rgb(230, 222, 170)","Join task action uses moonlight");
+    assert.equal(action,"rgb(226, 210, 140)","Join task action uses moonlight");
     const panel=await page.locator(".join-choice").first().evaluate(el=>getComputedStyle(el).backgroundColor);
     assert.equal(panel,"rgb(40, 51, 75)","Recommended Join card has the intentional raised navy focus treatment");
    }
    if(file==="index.html"){
     const heroButton=await page.locator(".hero-actions .button").first().evaluate(el=>({bg:getComputedStyle(el).backgroundColor,fg:getComputedStyle(el).color}));
-    assert.equal(heroButton.bg,"rgb(230, 222, 170)","Dusk primary CTA uses the new moonlit gold accent");
+    assert.equal(heroButton.bg,"rgb(226, 210, 140)","Dusk primary CTA uses the new moonlit gold accent");
     assert.equal(heroButton.fg,"rgb(11, 20, 37)","Dusk gold CTA has high-contrast navy ink");
    }
    assert.ok(appearance.overflow<=4,file+": overflow in dusk at "+width+"px: "+appearance.overflow);
@@ -190,7 +186,7 @@ try{
   await page.reload({waitUntil:"load"});
   assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Light preference persists on reload");
   const lightColor=await page.locator(".hero-actions .button").first().evaluate(el=>getComputedStyle(el).backgroundColor);
-  assert.notEqual(lightColor,"rgb(230, 222, 170)","Opt-out restores the original light-theme accent");
+  assert.notEqual(lightColor,"rgb(226, 210, 140)","Opt-out restores the original light-theme accent");
   assert.equal(await page.evaluate(()=>localStorage.getItem("nightfall.theme.v1")),"light","Light stored");
   assert.deepEqual(errors,[],width+"px page errors: "+errors.join("; "));
   await context.close();

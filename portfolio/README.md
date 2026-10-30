@@ -1,4 +1,10 @@
-# NIGHTFALL — unlisted collective research portfolio
+# NIGHTFALL — unlisted career and research portfolio
+
+**Professional delivery now leads the page:** verified company launch records and candidly labeled individual contributions at Walmart, Autograph and Amazon; Army command and 2015 published conference research; recent NIGHTFALL research follows as a self-directed AI-assisted project.
+
+**Career applications:** [OpenAI research-program packet](openai-research-programs/README.md) and [career attribution ledger](openai-research-programs/CAREER_EVIDENCE.md). [Search/Knowledge Graphs technical packet](openai-search-kg/README.md) remains available as a specialized stretch role work sample.
+
+**Public web résumé:** https://d3lefts.github.io/d3lefts/resume.html (unlisted; noindex; direct URL accessible).
 
 **OpenAI Search / Knowledge Graphs work-sample release:** [submission packet, source-backed research statement and claim audit](openai-search-kg/README.md). Prepared for an application; no submission has been made.
 
@@ -10,7 +16,7 @@
 
 **Maintenance test:** `node scripts/test_portfolio.cjs` checks new claim intake, status demotion, source URL filtering, and unlisted-site boundaries. This test is run by the main website verification workflow.
 
-Three source-backed case studies from the NIGHTFALL research program retained for our collective reference, with a live registry-backed claim ledger, a five-item historical editorial approval index, a source-qualified mechanism map, and explicit external audit gates. See [the cross-session research context checkpoint](RESEARCH_CONTEXT_20261029.md) for scope, provenance, and outstanding ingestion gaps. These case studies can also inform research engineering, applied AI safety, and source-grounded knowledge-system applications when explicitly approved for external presentation. This is a navigation layer over existing work, not a separate claim of scientific novelty, professional deployment, or independent external validation.
+Three source-backed recent AI-assisted case studies from NIGHTFALL retained for technical review, following the career section, with a live registry-backed claim ledger, a five-item historical editorial approval index, a source-qualified mechanism map, and explicit external audit gates. See [the cross-session research context checkpoint](RESEARCH_CONTEXT_20261029.md) for scope, provenance, and outstanding ingestion gaps. These case studies can also inform research engineering, applied AI safety, and source-grounded knowledge-system applications when explicitly approved for external presentation. This is a navigation layer over existing work, not a separate claim of scientific novelty, professional deployment, or independent external validation.
 
 | Case study | Public implementation or result | Reproducible evidence | Honest limit |
 |---|---|---|---|
