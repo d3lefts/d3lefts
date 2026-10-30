@@ -37,26 +37,18 @@
     event.preventDefault();search.value="";update();
   }
  });
- // Six curated claim-level passports have a separately maintained, source-linked record.
- // The 33-entry library maintains separate evidence classifications.
+ // Claim identities are explicit in the published library HTML, rather than
+ // inferred from headings, which editors may legitimately rename. The Proof
+ // Passport registry owns scope and evidence status for these six records.
  const registry=window.NightfallRegistry;
  if(registry){
-  const match=[
-   ["Erdős minimum overlap","erdos36"],
-   ["Sidon (4,5): 30-point witness","sidon30"],
-   ["Fourth-power finite-field reconstruction","phase"],
-   ["Werner finite-copy evidence atlas","werner"],
-   ["Proof After Scarcity","pas"],
-   ["Deterministic adaptive finite-field decoder","adaptive"]
-  ];
-  for(const [title,id] of match){
-   const card=cards.find(x=>x.querySelector("h3")?.textContent.trim()===title);
-   const record=registry.claimById(id);
-   if(!card||!record||card.querySelector(".atlas-passport-link"))continue;
+  for(const card of document.querySelectorAll(".atlas-card[data-claim-id]")){
+   const id=card.dataset.claimId,record=registry.claimById(id);
+   if(!record||card.querySelector(".atlas-passport-link"))continue;
    const boundary=card.querySelector(".atlas-boundary p");
    if(boundary)boundary.textContent=record.conditions+" Current evidence: "+record.validity.detail;
    const a=document.createElement("a");
-   a.href="passport.html?claim="+encodeURIComponent(id);
+   a.href="passport.html?claim="+encodeURIComponent(record.id);
    a.className="atlas-passport-link";
    a.textContent="Inspect four-dimensional Proof Passport ↗";
    card.append(a);
