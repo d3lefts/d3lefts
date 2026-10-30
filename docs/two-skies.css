@@ -359,10 +359,8 @@ html:not([data-nf-theme="dusk"]) :is(.hero-actions .button:not(.button-light),.n
 /* PALETTE CONSISTENCY v2 / OCT 29, 2026
    Third-layer legacy surfaces are recolored here so no pale parchment slips
    through old standalone component styles. Text labels keep their semantics.
-   Ox-blood has a deliberately tiny, decorative role in New Moon only. */
+   Only the night cinematic gradient retains the original wine-red bloom. */
 html[data-nf-theme="dusk"]{
-  --nf-oxblood-rare:#4a1f24;
-  --nf-oxblood-lit:#a76573;
   --rs-paper:#04060b;--rs-ink:#f1eedc;--rs-deep:#0c1527;
   --rs-line:#33405d;--rs-muted:#bec3d6;
   --rs-lime:#e2d28c;--rs-sage:#b4b5d9;
@@ -449,9 +447,11 @@ html[data-nf-theme="dusk"] .nf-dual-colophon-links a{color:#e2d28c}
 html:not([data-nf-theme="dusk"]) .desk-entry[style] :is(.desk-entry-stat strong,.desk-entry-stat a){color:#e7b768!important}
 html[data-nf-theme="dusk"] .desk-entry[style] :is(.desk-entry-stat strong,.desk-entry-stat a){color:#e2d28c!important}
 
-/* NEW MOON OXBLOOD: three atmospheric marks, never status, proof or CTA. */
+/* NEW MOON / ONE BLOOD-HUED ATMOSPHERIC GRADIENT.
+   The cinematic horizon keeps the admired oxblood bloom. Every other
+   feature, active state and small decorative mark remains moonlight/indigo. */
 html[data-nf-theme="dusk"] #main>.flagships>.section-head{
-  border-image:linear-gradient(180deg,var(--nf-oxblood-lit) 0%,var(--nf-oxblood-rare) 42%,#e2d28c 100%) 1;
+  border-image:linear-gradient(180deg,#7379a8 0%,#a7a9d0 52%,#e2d28c 100%) 1;
 }
 html[data-nf-theme="dusk"] .nf-cinema-world--night{
   background-image:
@@ -461,12 +461,12 @@ html[data-nf-theme="dusk"] .nf-cinema-world--night{
     linear-gradient(180deg,#020308 0%,#080e20 63%,#050712 100%);
 }
 html[data-nf-theme="dusk"] .nf-cinema-constellation .nf-cinema-node:nth-child(3){
-  fill:var(--nf-oxblood-rare);stroke:var(--nf-oxblood-lit);
-  filter:drop-shadow(0 0 13px #a7657344);
+  fill:#9ea6d0;stroke:#d2d6ee;
+  filter:drop-shadow(0 0 10px #aeb6e73b);
 }
 html[data-nf-theme="dusk"] .nf-dual-colophon{
-  border-top:1px solid #4a1f24;
-  box-shadow:inset 0 1px 0 #a7657336;
+  border-top:1px solid #4b5672;
+  box-shadow:inset 0 1px 0 #e2d28c18;
 }
 /* Readability and scannability: no color coding without words, every scene
    detail is decorative and never substitutes for evidence annotations. */
