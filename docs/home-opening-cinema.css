@@ -786,3 +786,17 @@ html .nf-cinema--still .nf-cinema-static-note {
   html #main>.hero.nf-opening .nf-opening-sky,
   html .nf-cinema--still .nf-cinema-world {transform:none!important;animation:none!important}
 }
+
+
+/* Screenshot QA: the exact witness number must stay on one line in the
+   desktop evidence tray; a mid-number break obscures numerical identity. */
+html #main>.hero.nf-opening .nf-opening-overlap-value {
+  display:block;white-space:nowrap;overflow-wrap:normal;word-break:normal;
+  font:500 clamp(17px,1.55vw,23px)/1.35 var(--mono)!important;
+  letter-spacing:-.055em;font-variant-numeric:tabular-nums;
+}
+@media(max-width:420px) {
+  html #main>.hero.nf-opening .nf-opening-overlap-value {
+    font-size:clamp(16px,4.45vw,19px)!important;
+  }
+}
