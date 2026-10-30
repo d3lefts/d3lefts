@@ -37,8 +37,6 @@ jobs:
             --decl Nightfall.AdaptiveF16.worst_case_lower_bound_k4 \
             --decl Nightfall.AdaptiveF16.worst_case_lower_bound_k7 \
             --decl Nightfall.AdaptiveF16.phase_factorization \
-            --allow-axiom propext \
-            --allow-axiom Quot.sound \
             --timeout 300 \
             --json-out lean-receipts/ryev-f16-adaptive.json || { cat lean-receipts/ryev-f16-adaptive.json; exit 1; }
       - name: Upload machine-readable kernel receipt
