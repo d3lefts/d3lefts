@@ -1,0 +1,45 @@
+name: Ryev F16 independent quadratic tower
+on:
+  push:
+    paths:
+      - 'research/nightfall/agent-reports/ryev_f16_tower_20261030/**'
+      - '.github/workflows/ryev-f16-tower.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/agent-reports/ryev_f16_tower_20261030/**'
+      - '.github/workflows/ryev-f16-tower.yml'
+  workflow_dispatch:
+jobs:
+  tower-independent-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Frozen source bytes and full exact replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd research/nightfall/agent-reports/ryev_f16_tower_20261030
+          echo '830b00efbaee102f4cf44ba83603022b2ec3e6ffaabb78704a6a14091e2db123  verify_tower_independent.py' | sha256sum -c -
+          echo '9c590a4643a078c0f1ff35c04a1ea73e83a6c9f8052d5c915e9676e71c255ca2  source_81_words.json' | sha256sum -c -
+          python3 verify_tower_independent.py --verify-table source_81_words.json
+      - name: Reject tampered word table
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd research/nightfall/agent-reports/ryev_f16_tower_20261030
+          cp source_81_words.json corrupted.json
+          python3 - <<'PY'
+          import json
+          p='corrupted.json'
+          a=json.load(open(p))
+          a[3]['code']=a[2]['code']
+          with open(p,'w') as f: json.dump(a,f)
+          PY
+          if python3 verify_tower_independent.py --verify-table corrupted.json --skip-full; then
+            echo 'Corrupted table accepted: FAIL'; exit 1
+          fi
+          rm corrupted.json
