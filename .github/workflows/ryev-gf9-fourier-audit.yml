@@ -20,3 +20,7 @@ jobs:
           python3 --version
           sha256sum research/nightfall/agent-reports/ryev_gf9_fourier_audit_20261030/verify.py
           python3 research/nightfall/agent-reports/ryev_gf9_fourier_audit_20261030/verify.py
+      - name: Replay general projective inversion and signed source hash
+        run: |
+          sha256sum research/nightfall/agent-reports/ryev_gf9_fourier_audit_20261030/verify_projective_inversion.py
+          python3 research/nightfall/agent-reports/ryev_gf9_fourier_audit_20261030/verify_projective_inversion.py
