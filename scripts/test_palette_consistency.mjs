@@ -74,7 +74,7 @@ try{
       return {leaks:leaks.slice(0,20),total,
        bg:getComputedStyle(document.body).backgroundColor,
        theme:document.documentElement.dataset.nfTheme||"light",
-       oxblood:html.getPropertyValue("--nf-oxblood-rare").trim(),
+       legacyBloodToken:html.getPropertyValue("--nf-oxblood-rare").trim(),
        moonlight:html.getPropertyValue("--nf-champagne").trim(),
        golden:html.getPropertyValue("--nf-goldenhour").trim(),
        overflow:document.documentElement.scrollWidth-innerWidth};
@@ -85,8 +85,30 @@ try{
     assert.ok(summary.overflow<=4,p+" "+mode+" "+width+"px overflow "+summary.overflow);
     if(summary.leaks.length)allSurfaceLeaks.push({page:p,mode,width,leaks:summary.leaks});
     if(mode==="dusk"){
-      assert.equal(summary.oxblood,"#4a1f24",p+" new-moon oxblood token");
+      assert.equal(summary.legacyBloodToken,"",p+" no generic New Moon oxblood token");
       assert.equal(summary.moonlight,"#e2d28c",p+" moonlight remains primary");
+      if(p==="index.html"){
+        const accents=await page.evaluate(()=>{
+          const style=selector=>{
+            const el=document.querySelector(selector);
+            if(!el)return null;
+            const css=getComputedStyle(el);
+            return {fill:css.fill,borderTop:css.borderTopColor,borderImage:css.borderImageSource,
+              background:css.backgroundImage};
+          };
+          return {
+            opening:style(".nf-opening-constellation .nf-opening-node--oxblood"),
+            cinema:style(".nf-cinema-world--night"),
+            flagship:style("#main>.flagships>.section-head"),
+            colophon:style(".nf-experience-underbelly.nf-dual-colophon")
+          };
+        });
+        for(const [name,value] of Object.entries(accents))assert.ok(value,"Expected New Moon element: "+name);
+        assert.equal(accents.opening.fill,"rgb(167, 173, 215)","Opening node becomes moonlit lavender");
+        assert.ok(accents.cinema.background.includes("rgba(74, 31, 36, 0.21)"),"Keep one admired oxblood cinematic gradient");
+        assert.doesNotMatch(accents.flagship.borderImage,/74, 31, 36|167, 101, 115/,"Flagship divider is lavender to gold");
+        assert.equal(accents.colophon.borderTop,"rgb(75, 86, 114)","Night colophon uses indigo, not oxblood");
+      }
     }else assert.equal(summary.golden,"#e7b768",p+" Golden Hour accent remains primary");
    }
    assert.deepEqual(faults,[],mode+" "+width+"px no browser errors");
@@ -96,8 +118,10 @@ try{
  assert.deepEqual(allCanvasLeaks,[],"Unexpected theme canvases: "+JSON.stringify(allCanvasLeaks));
  assert.deepEqual(allSurfaceLeaks,[],"Visible obsolete surfaces "+allSurfaceLeaks.length+" pages: "+JSON.stringify(allSurfaceLeaks.slice(0,45)));
  const css=await readFile(join(root,"two-skies.css"),"utf8");
- const matches=[...css.matchAll(/var\(--nf-oxblood-rare\)/g)];
- assert.ok(matches.length<=4,"Oxblood is rare by contract, found "+matches.length+" usage(s)");
- assert.ok(css.includes("--nf-oxblood-rare:#4a1f24"),"Canonical archival oxblood registered in midnight");
- console.log("PASS palette: 26 pages × two themes × two viewports; no parchment surfaces, rare oxblood, intact apricot, no overflow");
+ assert.ok(!css.includes("--nf-oxblood-rare"),"Remove general-purpose oxblood design token from New Moon");
+ assert.ok(!css.includes("--nf-oxblood-lit"),"Remove oxblood edge token from New Moon");
+ assert.ok(!css.toLowerCase().includes("#4a1f24")&&!css.toLowerCase().includes("#a76573"),"No wine-red solid accents remain in shared theme");
+ assert.equal(css.split("rgba(74,31,36,.21)").length-1,1,
+   "Exactly one atmospheric oxblood gradient survives");
+ console.log("PASS palette: 26 pages × two themes × two viewports; one cinematic blood gradient, lunar-gold controls, no overflow");
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve))}

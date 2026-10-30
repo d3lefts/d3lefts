@@ -45,9 +45,11 @@ Absolute-black-near canvas; deep navy and indigo structure; pale jasmine text an
 - `docs/two-skies.css` is loaded last on every themed page; `scripts/check_palette_contract.mjs` checks palette tokens, neon regressions, and CSS inclusion.
 - Mobile/desktop screenshots, reversible theme switching, source links and reduced-motion checks are covered by the website CI.
 
-## Rare oxblood accent in New Moon
+## New Moon / blood-colour exception
 
-Oxblood is an **atmospheric punctuation mark**, never a scientific-status legend, focus ring, or main action. The archived blackcherry value `#4A1F24` is now the `--nf-oxblood-rare` variable in the Night skin, with an illuminated `#A76573` companion for visible fine edges. It is limited to the flagship section divider, a low-intensity cinematic glow and one illustrative constellation node, and the final-colophon hairline. Navy, indigo, jasmine and moonlight remain the dominant palette.
+**29 October 2026, visual correction.** The New Moon no longer uses oxblood as a general-purpose accent. Its flagship section divider now runs from muted lavender through moonlight gold; the small opening and constellation nodes are starlit blue; its closing rule is indigo. This prevents the burgundy marks from competing with moonlight actions and improves visible contrast.
+
+The **one exception is the atmospheric wine-red bloom in the large scroll-cinematic gradient** (`.nf-cinema-world--night`). Its original low-opacity radial-gradient stop `rgba(74,31,36,.21)` remains as part of the background artwork, never as text, button, evidence coding, hairline, or selected-state colour. The discontinued `--nf-oxblood-rare` and `--nf-oxblood-lit` palette variables are no longer defined. This is a narrowly scoped design exception; scientific statuses continue to be literal labels.
 
 ## Consistency policy
 
