@@ -57,6 +57,13 @@ try{
    assert.equal(await page.locator("html").getAttribute("data-nf-theme"),mode==="dusk"?"dusk":null);
    await page.waitForFunction(expected=>getComputedStyle(document.body).backgroundColor===expected,expectedBg);
    assert.equal(await page.locator(visibleArt).isVisible(),true,mode+": matching image layer");
+   // NIGHTFALL's signature tile edge is a half-CSS-pixel hairline.
+   const tileEdges=await page.evaluate(()=>({
+     feature:getComputedStyle(document.querySelector(".flagship-card")).borderTopWidth,
+     witness:getComputedStyle(document.querySelector(".nf-opening-overlap")).borderTopWidth
+   }));
+   for(const [tile,edge] of Object.entries(tileEdges))
+    assert.ok(parseFloat(edge)<=.5 && parseFloat(edge)>0,mode+" "+width+"px "+tile+": signature thin hairline "+edge);
    assert.equal(await page.locator(mode==="dusk"?".nf-cinema-world--archive":".nf-cinema-world--night").isVisible(),false,mode+": inactive image hidden");
    const still=await scene.evaluate((el,filename)=>{
      const art=el.querySelector(".nf-cinema-world:not([style*='hide'])");
