@@ -1,0 +1,26 @@
+name: Verify Tessera odd-prime adaptive signed-digit code
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/projects/finite-field/tessera-signed-digit-20261030/**'
+      - '.github/workflows/verify-tessera-signed-digit.yml'
+  push:
+    paths:
+      - 'research/nightfall/projects/finite-field/tessera-signed-digit-20261030/**'
+      - '.github/workflows/verify-tessera-signed-digit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-adaptive-sign:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Independent 56-case projective sign-orbit tests and mutations
+        run: python3 research/nightfall/projects/finite-field/tessera-signed-digit-20261030/check_orbits.py
+      - name: Complete full-vector oracle replay, including zero and sparse support
+        run: python3 research/nightfall/projects/finite-field/tessera-signed-digit-20261030/verify_all.py
