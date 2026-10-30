@@ -64,6 +64,7 @@ try{
      const hero=document.querySelector(filename.includes("new-moon")?".nf-opening-sky--night":".nf-opening-sky--gold");
      return {backdrop:getComputedStyle(world).backgroundImage,hero:getComputedStyle(hero).backgroundImage,
        repeat:getComputedStyle(world).backgroundRepeat,heroRepeat:getComputedStyle(hero).backgroundRepeat,
+       position:getComputedStyle(world).backgroundPosition,heroPosition:getComputedStyle(hero).backgroundPosition,
        stagePosition:getComputedStyle(el.querySelector(".nf-cinema-stage")).position,
        evidence:el.querySelector(".nf-cinema-record-value")?.textContent?.trim(),
        steps:[...el.querySelectorAll(".nf-cinema-proof-path li")].map(n=>n.innerText.trim()),
@@ -75,6 +76,10 @@ try{
    assert.ok(still.hero.includes(asset),mode+": matching first-fold still asset");
    assert.ok(still.repeat.split(",").every(x=>x.trim()==="no-repeat"),mode+": no tiled photographic backgrounds or lunar overlays");
    assert.ok(still.heroRepeat.split(",").every(x=>x.trim()==="no-repeat"),mode+": no repeated hero overlays");
+   if(mode==="dusk"){
+    assert.ok(still.position.startsWith(width<=760?"92% 1%":"47% 1%"),"Lunar crescent stays above record on "+width+"px: "+still.position);
+    assert.ok(still.heroPosition.startsWith(width<=760?"93% 2%":"54% 4%"),"Lunar hero is not overwritten by photo position: "+still.heroPosition);
+   }
    assert.equal(still.stagePosition,"relative",mode+": scene no longer sticky");
    assert.equal(still.progress,"",mode+": no progress variables");
    assert.equal(still.evidence,"0.380856370118…",mode+": source-bound finite overlap unchanged");
