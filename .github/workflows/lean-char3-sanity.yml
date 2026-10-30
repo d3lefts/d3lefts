@@ -59,7 +59,7 @@ jobs:
             --strict \
             --decl Nightfall.FiniteField.information_square_bound \
             --decl Nightfall.FiniteField.information_power_bound \
-            --json-out lean-receipts/adaptive-information.json
+            --json-out lean-receipts/adaptive-information.json || { cat lean-receipts/adaptive-information.json; exit 1; }
       - name: Compile requested committed file (manual dispatch only)
         if: github.event_name == 'workflow_dispatch'
         env:
