@@ -28,8 +28,6 @@
 <link rel="stylesheet" href="two-skies.css">
 <link rel="stylesheet" href="mobile-scroll-cinema.css">
 <link rel="stylesheet" href="home-opening-cinema.css">
-<script src="scroll-cinema.js" defer></script>
-<script src="home-opening-cinema.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -50,52 +48,12 @@
 </header>
 <main id="main">
   <section class="hero wrap nf-opening" aria-label="Erdős minimum overlap: finite witness and review status">
-    <!-- The opening sky is illustrative; all claim text and destinations remain in the foreground. -->
+    <!-- Self-hosted, vector-resolution artwork. All claims and links remain HTML. -->
     <div class="nf-opening-art nf-opening-art--gold" aria-hidden="true">
-      <div class="nf-opening-sky nf-opening-sky--gold">
-        <div class="nf-opening-arc"></div><div class="nf-opening-sun"></div>
-        <div class="nf-opening-horizon"></div>
-        <svg class="nf-opening-constellation" viewBox="0 0 1200 720" focusable="false">
-          <g>
-            <path pathLength="1" d="M115 420 L310 268 L480 364 L671 164 L866 248 L1069 104"/>
-            <path pathLength="1" d="M310 268 L403 100 L671 164 L755 531 L1075 610"/>
-            <path pathLength="1" d="M115 420 L329 619 L480 364 L755 531 L866 248"/>
-            <path pathLength="1" d="M329 619 L600 648 L755 531"/>
-          </g>
-          <g>
-            <circle cx="115" cy="420" r="5"/><circle cx="310" cy="268" r="7"/>
-            <circle cx="403" cy="100" r="4"/><circle class="nf-opening-node--gold" cx="480" cy="364" r="8"/>
-            <circle cx="671" cy="164" r="6"/><circle cx="866" cy="248" r="5"/>
-            <circle cx="1069" cy="104" r="4"/><circle class="nf-opening-node--gold" cx="755" cy="531" r="7"/>
-            <circle class="nf-opening-node--oxblood" cx="329" cy="619" r="5"/>
-            <circle cx="600" cy="648" r="4"/><circle cx="1075" cy="610" r="4"/>
-          </g>
-        </svg>
-        <div class="nf-opening-veil"></div>
-      </div>
+      <div class="nf-opening-sky nf-opening-sky--gold"></div>
     </div>
     <div class="nf-opening-art nf-opening-art--night" aria-hidden="true">
-      <div class="nf-opening-sky nf-opening-sky--night">
-        <div class="nf-opening-nightfield"></div><div class="nf-opening-lattice"></div>
-        <div class="nf-opening-moon" aria-hidden="true"></div>
-        <svg class="nf-opening-constellation" viewBox="0 0 1200 720" focusable="false">
-          <g>
-            <path pathLength="1" d="M115 420 L310 268 L480 364 L671 164 L866 248 L1069 104"/>
-            <path pathLength="1" d="M310 268 L403 100 L671 164 L755 531 L1075 610"/>
-            <path pathLength="1" d="M115 420 L329 619 L480 364 L755 531 L866 248"/>
-            <path pathLength="1" d="M329 619 L600 648 L755 531"/>
-          </g>
-          <g>
-            <circle cx="115" cy="420" r="5"/><circle cx="310" cy="268" r="7"/>
-            <circle cx="403" cy="100" r="4"/><circle class="nf-opening-node--gold" cx="480" cy="364" r="8"/>
-            <circle cx="671" cy="164" r="6"/><circle cx="866" cy="248" r="5"/>
-            <circle cx="1069" cy="104" r="4"/><circle class="nf-opening-node--gold" cx="755" cy="531" r="7"/>
-            <circle class="nf-opening-node--oxblood" cx="329" cy="619" r="5"/>
-            <circle cx="600" cy="648" r="4"/><circle cx="1075" cy="610" r="4"/>
-          </g>
-        </svg>
-        <div class="nf-opening-veil"></div>
-      </div>
+      <div class="nf-opening-sky nf-opening-sky--night"></div>
     </div>
     <div class="hero-main">
       <div class="nf-experience nf-experience-archive">
@@ -147,65 +105,11 @@
     </div>
   </section>
 
-<!-- Opening visual chapter: sourced finite witness in front of two purely illustrative skies. -->
-<!-- The second opening cinematic unfolds immediately behind a sourced Erdős record.
-     The celestial scenes are decorative; figures and review statuses remain literal. -->
-<section class="nf-cinema" id="nf-scroll-cinema" data-chapter="1" data-motion="static" aria-label="Erdős minimum overlap finite witness, with decorative scroll-responsive skies">
+<!-- Two static high-resolution skies. Source-bound numerical record remains semantic HTML. -->
+<section class="nf-cinema nf-cinema--still" id="nf-scroll-cinema" data-motion="static" aria-label="Erdős minimum overlap finite witness with illustrative static skies">
   <div class="nf-cinema-stage">
-    <div class="nf-cinema-world nf-cinema-world--archive" aria-hidden="true">
-      <div class="nf-cinema-orbit"></div>
-      <div class="nf-cinema-sun"></div>
-      <div class="nf-cinema-horizon"></div>
-      <div class="nf-cinema-deep-stars" aria-hidden="true"></div>
-      <svg class="nf-cinema-constellation" viewBox="0 0 1200 760" aria-hidden="true" focusable="false">
-        <g>
-          <path pathLength="1" d="M112 445 L305 225 L511 347 L710 132 L973 244 L1100 104"/>
-          <path pathLength="1" d="M305 225 L437 101 L710 132 L893 493 L1086 631"/>
-          <path pathLength="1" d="M112 445 L379 632 L511 347 L893 493 L973 244"/>
-          <path pathLength="1" d="M379 632 L714 648 L893 493"/>
-          <path pathLength="1" d="M437 101 L511 347 L714 648"/>
-        </g>
-        <g>
-          <circle class="nf-cinema-node nf-cinema-node--jasmine" cx="112" cy="445" r="7"/>
-          <circle class="nf-cinema-node" cx="305" cy="225" r="6"/>
-          <circle class="nf-cinema-node" cx="437" cy="101" r="4"/>
-          <circle class="nf-cinema-node nf-cinema-node--jasmine" cx="511" cy="347" r="8"/>
-          <circle class="nf-cinema-node" cx="710" cy="132" r="7"/>
-          <circle class="nf-cinema-node" cx="973" cy="244" r="5"/>
-          <circle class="nf-cinema-node" cx="1100" cy="104" r="4"/>
-          <circle class="nf-cinema-node" cx="893" cy="493" r="7"/>
-          <circle class="nf-cinema-node nf-cinema-node--jasmine" cx="714" cy="648" r="5"/>
-          <circle class="nf-cinema-node" cx="379" cy="632" r="5"/>
-          <circle class="nf-cinema-node" cx="1086" cy="631" r="4"/>
-        </g>
-      </svg>
-    </div>
-    <div class="nf-cinema-world nf-cinema-world--night" aria-hidden="true">
-      <div class="nf-cinema-night-halo"></div>
-      <div class="nf-cinema-moon" aria-hidden="true"></div>
-      <svg class="nf-cinema-constellation" viewBox="0 0 1200 760" aria-hidden="true" focusable="false">
-        <g>
-          <path pathLength="1" d="M112 445 L305 225 L511 347 L710 132 L973 244 L1100 104"/>
-          <path pathLength="1" d="M305 225 L437 101 L710 132 L893 493 L1086 631"/>
-          <path pathLength="1" d="M112 445 L379 632 L511 347 L893 493 L973 244"/>
-          <path pathLength="1" d="M379 632 L714 648 L893 493"/>
-          <path pathLength="1" d="M437 101 L511 347 L714 648"/>
-        </g>
-        <g>
-          <circle class="nf-cinema-node nf-cinema-node--jasmine" cx="112" cy="445" r="7"/>
-          <circle class="nf-cinema-node" cx="305" cy="225" r="6"/>
-          <circle class="nf-cinema-node" cx="437" cy="101" r="4"/>
-          <circle class="nf-cinema-node nf-cinema-node--jasmine" cx="511" cy="347" r="8"/>
-          <circle class="nf-cinema-node" cx="710" cy="132" r="7"/>
-          <circle class="nf-cinema-node" cx="973" cy="244" r="5"/>
-          <circle class="nf-cinema-node" cx="1100" cy="104" r="4"/>
-          <circle class="nf-cinema-node" cx="893" cy="493" r="7"/>
-          <circle class="nf-cinema-node nf-cinema-node--jasmine" cx="714" cy="648" r="5"/>
-          <circle class="nf-cinema-node" cx="379" cy="632" r="5"/>
-          <circle class="nf-cinema-node" cx="1086" cy="631" r="4"/>
-        </g>
-      </svg>
-    </div>
+    <div class="nf-cinema-world nf-cinema-world--archive" aria-hidden="true"></div>
+    <div class="nf-cinema-world nf-cinema-world--night" aria-hidden="true"></div>
     <div class="nf-cinema-vignette" aria-hidden="true"></div>
     <div class="nf-cinema-content">
       <div class="nf-experience nf-experience-archive">
@@ -232,18 +136,12 @@
         <a href="review.html#erdos">Challenge the finite certificate ↗</a>
       </div>
     </div>
-    <div class="nf-cinema-steps" aria-hidden="true">
-      <span>01 / The explicit rational construction.</span>
-      <span>02 / Continuous signed-shift replay.</span>
-      <span>03 / Independent mathematical scrutiny remains open.</span>
-    </div>
-    <div class="nf-cinema-status" aria-hidden="true">
-      <b class="nf-cinema-step-number">1/03</b>
-      <span class="nf-cinema-meter"></span>
-      <span class="nf-cinema-scrollhint">SCROLL TO TRACE</span>
-      <span class="nf-cinema-stillhint">VISUAL STUDY</span>
-    </div>
-    <div class="nf-cinema-static-note">Illustrative motion · exact evidence is source-linked</div>
+    <ol class="nf-cinema-proof-path" aria-label="Three review steps">
+      <li>The explicit rational construction</li>
+      <li>Continuous signed-shift replay</li>
+      <li>Independent mathematical scrutiny remains open</li>
+    </ol>
+    <p class="nf-cinema-static-note">Illustrative still imagery · exact evidence is source-linked</p>
   </div>
 </section>
 
