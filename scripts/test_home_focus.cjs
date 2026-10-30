@@ -13,7 +13,7 @@ for(const source of ["erdos-paper.html","living-paper.html","passport.html?claim
 assert.ok(html.includes('id="sidon-toggle"')&&html.includes('disabled title='),"Pre-hydration Sidon checker remains safe");
 assert.equal((html.match(/class="flagship-card /g)||[]).length,4,"Four programs retain scoped scientific labels");
 assert.ok(html.includes('class="nf-frontiers-disclosure"')===false||html.includes("nf-frontiers-disclosure"));
-assert.equal((html.match(/<section\b/g)||[]).length<=13,"Homepage should be a selective landing page");
+assert.ok((html.match(/<section\b/g)||[]).length<=13,"Homepage should be a selective landing page");
 assert.ok((html.match(/<a\b/g)||[]).length<=45,"Homepage link density must stay intentionally bounded");
 assert.ok(!html.includes("nf-section-index")&&!html.includes("nf-home-toolbox")&&!html.includes("instrument-workflow"),"No duplicative navigation or tool directory");
 for(const id of ["flagships","live-case","featured-title","nf-scroll-cinema","observatory","review","work","research-systems"])assert.ok(html.includes('id="'+id+'"'),"Missing meaningful destination "+id);
