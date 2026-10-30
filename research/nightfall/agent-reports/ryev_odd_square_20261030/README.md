@@ -45,3 +45,14 @@ The claimed fixed-field unbounded gap in PR #256 is a **candidate synthesis** un
 1. Replay the quantified Lean bridge with the exact field and group laws, not merely abstract arguments.
 2. Attempt a Lean basis-packing theorem parameterized by a field-extension basis and a two-digit set closed under the required sign-orbit separation.
 3. Ask Lemnis to attack the rank-deficient and char-2 edge cases and Axiom to attack the non-coordinate-first k6 frontier. Stop before needless larger finite searches.
+
+
+## Exact CI certification checkpoint
+
+Initial source checks: [Actions 41111652488](https://github.com/d3lefts/d3lefts/actions/runs/41111652488) **PASS** for independent arithmetic and two Lean kernel theorems. Signed-digit theorem extension: [Actions 41111991198](https://github.com/d3lefts/d3lefts/actions/runs/41111991198) **PASS** for both jobs, including **three** named Lean theorems under Lean 4.35.0; bridge receipt **COMPILED**, **no axioms reported**.
+
+- Frozen independent Python script SHA256: \`2cca53ebce964a7ca136d0813112ae2f2d382f4c564c6d598427959b1bec535a\`.
+- Frozen Lean source SHA256: \`2d1a07c45f811bc59fe629179e60a1ff54ad24e3570ab08b6243d0cf68a1591f\`.
+- Verification commands: \`python3 research/nightfall/agent-reports/ryev_odd_square_20261030/verify_trace_basis.py\`; \`python3 scripts/lean_bridge.py research/nightfall/formalization/odd_square/IntersectingCriterion.lean --strict --decl Nightfall.OddSquare.strong_intersecting_iff_full_rank_and_image --decl Nightfall.OddSquare.square_separation_iff_strong_intersection --decl Nightfall.OddSquare.signed_digit_packing_injective\`.
+- The latest workflow pins both byte hashes. **The formal theorems are parameterized implications**: a full instantiated theorem over any finite field requires separate Lean proofs that the parameters obey the field laws (including square factorization, invertible 2 and linear basis), followed by the all-support adaptive decoder.
+- Human non-author mathematical audit and global-priority assessment remain open. No paper/site status promotion.
