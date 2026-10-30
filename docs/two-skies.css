@@ -1330,3 +1330,24 @@ html:not([data-nf-theme="dusk"]) .atlas-grid .atlas-card .atlas-status-finite {
 html:not([data-nf-theme="dusk"]) .atlas-grid .atlas-card .atlas-boundary {
   border-left-color:#826d80!important;
 }
+
+/* Editorial size matters: the same cherry that works as a 10px signal
+   feels louder across an 80px serif. Desaturate the *large italic*
+   display passages while leaving witness numbers and status marks vivid. */
+html:not([data-nf-theme="dusk"]) :is(
+  .hero-title em,
+  .section-title em,
+  .co-headline h1 em,
+  .review-hero h1 i,
+  .atlas-hero h1 em,
+  .nf-dual-colophon h2 em,
+  .nf-dual-intro h2 em,
+  .pf-hero h1 em
+),
+html:not([data-nf-theme="dusk"]) body:has(.app) h1 em {
+  color:#c996a6!important;
+}
+/* Supporting overlines must remain legible in dark atmospheric panels. */
+html:not([data-nf-theme="dusk"]) .co-overline {
+  color:#b2bec9!important;
+}
