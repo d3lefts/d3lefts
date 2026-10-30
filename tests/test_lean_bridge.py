@@ -37,7 +37,7 @@ class BridgeTests(unittest.TestCase):
             root = Path(directory)
             (root / "lean-toolchain").write_text("leanprover/lean4:v4.35.0\n")
             fake = root / "fake-lean"
-            fake.write_text("#!/usr/bin/env python3\nimport sys\nfrom pathlib import Path\nif '--version' in sys.argv: print('Lean (version 4.35.0, mock)')\nelse:\n p=Path(sys.argv[-1]).read_text()\n if 'FAIL' in p:\n  print(sys.argv[-1]+':1:1: error: test failure'); sys.exit(1)\n if '#print axioms Test.t' in p:\n  print('Test.t does not depend on any axioms')\n  if 'SPOOF' in p: print('Test.t depends on axioms: fakeAx')\n")
+            fake.write_text("#!/usr/bin/env python3\nimport sys\nfrom pathlib import Path\nif '--version' in sys.argv: print('Lean (version 4.35.0, mock)')\nelse:\n p=Path(sys.argv[-1]).read_text()\n if 'FAIL' in p:\n  print(sys.argv[-1]+':1:1: error: test failure'); sys.exit(1)\n if '#print axioms Test.t' in p:\n  print('Test.t does not depend on any axioms')\n  if 'SPOOF' in p: print('Test.t depends on axioms: [fakeAx]')\n  if 'ALLOWED' in p: print('Test.t depends on axioms: [propext]')\n")
             fake.chmod(0o755)
             source = root / "Test.lean"
             source.write_text("namespace Test\ntheorem t : True := by trivial\nend Test\n")
@@ -47,6 +47,13 @@ class BridgeTests(unittest.TestCase):
             self.assertFalse(list(root.glob(".lean_bridge_*.lean")), "temporary source must be deleted")
             source.write_text("SPOOF")
             self.assertEqual(bridge.check(source, root, ["Test.t"], 3, str(fake))["axiom_audit"]["Test.t"], "dependencies_reported")
+            # Explicitly allow the standard foundational dependency; preserve it in receipts.
+            source.write_text("ALLOWED")
+            allowed = bridge.check(source, root, ["Test.t"], 3, str(fake), {"propext"})
+            self.assertEqual(allowed["axiom_audit"]["Test.t"], "allowlisted_dependencies")
+            self.assertEqual(allowed["axiom_dependencies"]["Test.t"], ["propext"])
+            forbidden = bridge.check(source, root, ["Test.t"], 3, str(fake))
+            self.assertEqual(forbidden["axiom_audit"]["Test.t"], "dependencies_reported")
             source.write_text("FAIL")
             self.assertEqual(bridge.check(source, root, [], 3, str(fake))["status"], "COMPILATION_FAILED")
 
