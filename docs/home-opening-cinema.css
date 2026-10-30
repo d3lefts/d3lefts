@@ -529,8 +529,11 @@ html:not([data-nf-theme="dusk"]) #main>.hero.nf-opening .nf-opening-sky--gold{
   background-position:66% center;
 }
 html[data-nf-theme="dusk"] #main>.hero.nf-opening .nf-opening-sky--night{
-  background-image:url("https://images.unsplash.com/photo-1515311320503-6e3d309537b4?auto=format&fit=crop&w=2560&q=82"),
+  background-image:url("media/new-moon-crescent-overlay.svg"),
+                   url("https://images.unsplash.com/photo-1515311320503-6e3d309537b4?auto=format&fit=crop&w=2560&q=82"),
                    url("media/new-moon-nightscape.svg");
+  background-size:clamp(170px,20vw,285px) auto,cover,cover;
+  background-position:88% 4%,64% center,64% center;
   background-position:64% center;
 }
 #main>.hero.nf-opening .nf-opening-sky::after{
@@ -556,8 +559,11 @@ html:not([data-nf-theme="dusk"]) .nf-cinema--still .nf-cinema-world--archive{
   background-position:68% center;
 }
 html[data-nf-theme="dusk"] .nf-cinema--still .nf-cinema-world--night{
-  background-image:url("https://images.unsplash.com/photo-1515311320503-6e3d309537b4?auto=format&fit=crop&w=2560&q=82"),
+  background-image:url("media/new-moon-crescent-overlay.svg"),
+                   url("https://images.unsplash.com/photo-1515311320503-6e3d309537b4?auto=format&fit=crop&w=2560&q=82"),
                    url("media/new-moon-nightscape.svg")!important;
+  background-size:clamp(168px,20vw,270px) auto,cover,cover;
+  background-position:86% 1%,61% center,61% center;
   background-position:61% center;
 }
 html:not([data-nf-theme="dusk"]) .nf-cinema--still .nf-cinema-vignette{
@@ -648,4 +654,17 @@ html:not([data-nf-theme="dusk"]) .nf-cinema--still .nf-cinema-record a:focus-vis
   .nf-cinema--still .nf-cinema-world{background-image:none!important}
   .nf-cinema--still .nf-cinema-vignette{display:none}
   .nf-cinema--still .nf-cinema-proof-path li{color:#111}
+}
+
+/* Keep the lunar crescent above the record's top edge on narrow screens;
+   its texture is an actual transparent image layer, not CSS glyph art. */
+@media(max-width:760px){
+ html[data-nf-theme="dusk"] #main>.hero.nf-opening .nf-opening-sky--night{
+   background-size:165px auto,cover,cover;
+   background-position:93% 2%,67% center,67% center!important;
+ }
+ html[data-nf-theme="dusk"] .nf-cinema--still .nf-cinema-world--night{
+   background-size:170px auto,cover,cover;
+   background-position:92% 1%,67% center,67% center!important;
+ }
 }
