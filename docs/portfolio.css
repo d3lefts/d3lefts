@@ -220,3 +220,21 @@ html[data-nf-theme="dusk"] .pf-search-controls button{background:#d4c6ed;color:#
 .pf-career-bottom{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:30px}
 @media(max-width:880px){.pf-career-card{grid-template-columns:165px minmax(0,1fr);gap:24px}.pf-foundation-grid article{padding:22px}}
 @media(max-width:680px){.pf-career,.pf-foundations{padding-top:65px;padding-bottom:68px}.pf-career-card{grid-template-columns:1fr;gap:14px;padding:28px 0}.pf-career-rail{flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:8px 16px}.pf-career-rail small{width:100%}.pf-foundation-grid{grid-template-columns:1fr}.pf-foundation-grid article{padding:23px}.pf-career-body h3{font-size:37px}.pf-intro-note{margin-top:19px}.pf-career-role{font-size:10px}}
+
+/* Interview-readiness clarifications: deliberately opt-in; never dilute career case studies. */
+.pf-clarity{padding:0 0 76px}
+.pf-clarity-disclosure{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:0}
+.pf-clarity-disclosure>summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:25px 2px}
+.pf-clarity-disclosure>summary::-webkit-details-marker{display:none}
+.pf-clarity-disclosure>summary:focus-visible{outline:3px solid var(--pf-detail);outline-offset:5px}
+.pf-clarity-disclosure>summary>span:first-child{display:grid;gap:9px}
+.pf-clarity-disclosure>summary strong{font:400 clamp(21px,2.3vw,31px)/1.14 var(--serif);color:var(--ink)}
+.pf-clarity-cue{white-space:nowrap;font:600 11px/1.5 var(--mono);color:var(--pf-detail)}
+.pf-clarity-disclosure[open] .pf-clarity-cue{font-size:0}
+.pf-clarity-disclosure[open] .pf-clarity-cue::after{content:"Collapse context −";font-size:11px}
+.pf-clarity-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 44px;padding:4px 2px 28px}
+.pf-clarity-grid>div{border-top:1px solid var(--pf-border);padding-top:16px}
+.pf-clarity-grid h3{font:600 12px/1.5 var(--mono);color:var(--ink);margin:0 0 9px}
+.pf-clarity-grid p,.pf-clarity-foot{font-size:12px;line-height:1.85;color:var(--muted);margin:0}
+.pf-clarity-foot{padding:12px 2px 25px;border-top:1px solid var(--pf-border)}
+@media(max-width:680px){.pf-clarity{padding-bottom:48px}.pf-clarity-disclosure>summary{align-items:flex-start;flex-direction:column;gap:10px}.pf-clarity-grid{grid-template-columns:1fr;gap:16px}.pf-clarity-grid>div{padding-top:12px}}
