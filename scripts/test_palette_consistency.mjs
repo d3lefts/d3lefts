@@ -109,7 +109,7 @@ try{
         assert.doesNotMatch(accents.flagship.borderImage,/74, 31, 36|167, 101, 115/,"Flagship divider is lavender to gold");
         assert.equal(accents.colophon.borderTop,"rgb(75, 86, 114)","Night colophon uses indigo, not oxblood");
       }
-    }else assert.equal(summary.golden,"#b4e3d6",p+" NULL FIELD opal signal remains primary");
+    }else assert.equal(summary.golden,"#e46a84",p+" NULL FIELD cherry signal is primary");
    }
    assert.deepEqual(faults,[],mode+" "+width+"px no browser errors");
    await context.close();
@@ -123,5 +123,5 @@ try{
  assert.ok(!css.toLowerCase().includes("#4a1f24")&&!css.toLowerCase().includes("#a76573"),"No wine-red solid accents remain in shared theme");
  assert.equal(css.split("rgba(74,31,36,.21)").length-1,1,
    "Exactly one atmospheric oxblood gradient survives");
- console.log("PASS palette: 26 pages × two themes × two viewports; one cinematic blood gradient, lunar-gold controls, no overflow");
+ console.log("PASS palette: 26 pages × two themes × two viewports; cherry-oxblood Archive, lunar-gold New Moon, no overflow");
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve))}
