@@ -1,0 +1,63 @@
+name: Ryev independent odd-square oracle and Lean criterion
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/agent-reports/ryev_odd_square_20261030/**'
+      - 'research/nightfall/formalization/odd_square/**'
+      - '.github/workflows/ryev-odd-square-audit.yml'
+  push:
+    paths:
+      - 'research/nightfall/agent-reports/ryev_odd_square_20261030/**'
+      - 'research/nightfall/formalization/odd_square/**'
+      - '.github/workflows/ryev-odd-square-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-independent-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Exhaustive shifted-basis GF9 GF25 GF49 and negative controls
+        run: |
+          set -euo pipefail
+          python3 -m py_compile research/nightfall/agent-reports/ryev_odd_square_20261030/verify_trace_basis.py
+          echo '2cca53ebce964a7ca136d0813112ae2f2d382f4c564c6d598427959b1bec535a  research/nightfall/agent-reports/ryev_odd_square_20261030/verify_trace_basis.py' | sha256sum -c -
+          python3 research/nightfall/agent-reports/ryev_odd_square_20261030/verify_trace_basis.py
+  universal-lean-criterion:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Lean
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain "$(cat lean-toolchain)"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          "$HOME/.elan/bin/lean" --version
+      - name: Compile and report kernel axioms for two general theorems
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo '2d1a07c45f811bc59fe629179e60a1ff54ad24e3570ab08b6243d0cf68a1591f  research/nightfall/formalization/odd_square/IntersectingCriterion.lean' | sha256sum -c -
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/odd_square/IntersectingCriterion.lean \
+            --strict \
+            --decl Nightfall.OddSquare.strong_intersecting_iff_full_rank_and_image \
+            --decl Nightfall.OddSquare.square_separation_iff_strong_intersection \
+            --decl Nightfall.OddSquare.signed_digit_packing_injective \
+            --timeout 300 \
+            --json-out lean-receipts/ryev-odd-square.json || { cat lean-receipts/ryev-odd-square.json; exit 1; }
+      - name: Upload kernel receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ryev-odd-square-lean-receipt
+          path: lean-receipts/ryev-odd-square.json
+          if-no-files-found: warn
