@@ -79,15 +79,24 @@ try{
    };
    if(name==="index.html"){
     assert.equal(v.constellationRoute,true,"Homepage includes a dedicated Constellation destination without duplicating full graph");
-    const diagram=await page.evaluate(()=>{
-      const svg=document.querySelector(".hero-aside .diagram");
-      return {signal:getComputedStyle(svg.querySelector('circle[fill="#d8c38a"]')).fill,
-        curve:getComputedStyle(svg.querySelector('path[stroke="#4a1f24"]')).stroke,
-        toolbar:document.querySelector('meta[name="theme-color"]')?.content};
+    const record=await page.evaluate(()=>{
+      const aside=document.querySelector(".hero-aside .nf-opening-overlap");
+      const displayed=document.querySelector(".hero-main .nf-opening-scoreline strong");
+      return {
+        value:aside?.querySelector(".nf-opening-overlap-value")?.textContent.trim(),
+        firstFold:displayed?.textContent.trim(),
+        cells:aside?.querySelector(".nf-opening-overlap-facts strong")?.textContent.trim(),
+        source:!!aside?.querySelector('a[href="erdos-paper.html"]'),
+        ink:aside?getComputedStyle(aside.querySelector(".nf-opening-overlap-value")).color:null,
+        toolbar:document.querySelector('meta[name="theme-color"]')?.content
+      };
     });
-    assert.equal(diagram.signal,"rgb(216, 195, 138)","Mathematical hero signal uses muted blackcherry");
-    assert.equal(diagram.curve,"rgb(74, 31, 36)","Hero's forest-green path uses oxblood");
-    assert.equal(diagram.toolbar,"#241a34","Browser chrome follows twilight identity");
+    assert.equal(record.value,"0.380856370118…","The sourced Erdős bound leads the hero");
+    assert.equal(record.firstFold,record.value,"Finite overlap witness appears immediately in the opening");
+    assert.equal(record.cells,"131,072","The exact finite construction size is disclosed");
+    assert.equal(record.source,true,"The record links to its public witness and checker");
+    assert.equal(record.ink,"rgb(255, 245, 220)","Finite record remains legible over sunset art");
+    assert.equal(record.toolbar,"#241a34","Browser chrome follows twilight identity");
    }
    for(const [key,target] of Object.entries(expectations[name]||{})){
     assert.equal(v[key],target,name+" "+width+"px "+key+" matches Sunset Boulevard archive");
