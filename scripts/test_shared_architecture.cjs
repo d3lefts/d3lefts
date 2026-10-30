@@ -60,7 +60,11 @@ class Element{
 function simulate(page,{saved={},app=false,joinHero=false,twice=false}={}){
  const main=new Element("main"),menu=new Element("button"),nav=new Element("nav"),docListeners={},assets=[];
  const headerLinks=[new Element("a"),new Element("a"),new Element("a")];nav.append(...headerLinks);
- if(joinHero)main.hero=new Element("section");
+ if(joinHero){
+  main.hero=new Element("section");
+  const original=main.hero.insertAdjacentElement.bind(main.hero);
+  main.hero.insertAdjacentElement=(pos,x)=>{if(x.className==="nf-process-thread")thread=x;original(pos,x)};
+ }
  let rail=null,thread=null;
  const document={
   head:{append:x=>assets.push(x)},
