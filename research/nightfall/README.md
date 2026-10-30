@@ -81,7 +81,7 @@ The initial release emphasized the October mathematics campaign. A dated review 
 | Fourth-power finite-field retrieval | A systematic random sensing construction using certified ordinary LLL, with **at most 1,024** candidate checks on a high-probability good-design event, recovers every signal up to fourth-root phase. | Manuscript proof/AI audit and computational tests; external expert review outstanding. Arbitrary-design full-preimage enumeration can be exponential. |
 | Finite Sidon (4,5) structures | Explicit 30-element set with maximum Sidon subset **17**, ratio **17/30**; finite-depth extensions analyzed. | Exact C++ subset audit and independent Python/transfer checks. Asymptotic 5/9 is established background, not claimed as a new record. |
 | Exact SAT tensor network (derived / prior art) | Standard COPY/equality-tensor encoding with **s=3L−2v≤9m**, **#SAT(F)=2^(n−v)Z(G(F))**; a separate explicit mode-count bound. | 1,050 finite CNF cases plus 496 mode-count tests passed. A faster complexity corollary depends on an external published contraction theorem; no new unconditional P=NP proof; COPY/equality tensor construction is established prior art. |
-| Proof After Scarcity | Retrospective adverse result (8/20 versus 11/20 upstream-first); public 372-family metadata ranking with SHA-256; separate graph preregistration pending. | Exact finite identities; original graph bytes and external historical freeze timestamp still absent. |
+| Proof After Scarcity (v2) | Source-bound finite proof-DAG representation, path-sum/single-edge sensitivity identities, conditional interval bounds; public 372-family metadata ranking. | Mathematical identities are elementary; predictive prioritization **unvalidated**. Outcome-aware earlier study [archived](projects/pas/RETROSPECTIVE_20261013.md); original graph bytes and historical third-party freeze receipt absent. |
 | SourceBound (engineering implementation, priority unverified) | Auditable source-assertion publication gate with independent source-to-triple rebinding and browser-visible checks. | Engineering prototype with synthetic and adversarial tests; independently annotated natural-web evaluation remains open. |
 | Research methodology and contests | Human/AI collaboration with cross-verification, basin changes, exact witness audits and dated contest results. | Observational case study. Contest outcome does not establish global optimality. |
 
@@ -112,7 +112,8 @@ The public index excludes the Xi/critical-line and prime-frequency programs. Alr
 - [SIDON finite witness](projects/sidon-finite-30/README.md)
 - [SAT-to-network theorem](projects/sat-network-compression.md)
 - [Universal weighted factor-to-network identity — complete bijection, exact wire accounting and independent machine checker](projects/sat-network-universal/THEOREM_AND_SCOPE.md)
-- [Proof After Scarcity: negative result, graph freeze status, and evidence](projects/pas-overview.md)
+- [Proof After Scarcity v2: finite DAG model, sources, limitations and open evaluation](projects/pas-overview.md)
+- [PAS v2 full manuscript](projects/pas/PAS_V2_20261029.md) · [archived October 13 retrospective](projects/pas/RETROSPECTIVE_20261013.md)
 - [PAS public 372-family ranking, SHA-256 and regeneration code](projects/pas/README.md)
 - [SourceBound source audit](projects/sourcebound/CLAIM_EVIDENCE_LEDGER.md)
 - [Archive verification notes](AUDIT.md)

@@ -21,7 +21,7 @@ test('Three research moments precede the unchanged cinematic transition',()=>{
  ].map(find);
  assert.ok(stages.every((v,i)=>v>=0&&(i===0||v>stages[i-1])),String(stages));
  assert.equal(count(html,/<article class="flagship-card/g),4,"All four scoped frontier research programs remain");
- assert.ok(html.includes("0.380856370118")&&html.includes("17 / 30")&&html.includes("8/20")&&html.includes("11/20"));
+ assert.ok(html.includes("0.380856370118")&&html.includes("17 / 30")&&html.includes("Proof After Scarcity v2")&&html.includes("unvalidated"));
  for(const id of ["main","flagships","live-case","featured-title","nf-scroll-cinema","observatory","review","work","research-systems"])assert.ok(html.includes('id="'+id+'"'),id);
 });
 
@@ -32,7 +32,7 @@ test('Detailed evidence and tools move to dedicated public destinations',()=>{
   'review.html#erdos','review.html#priority','review.html#pas',
   'evidence.html#public-downloads','exact-research.html#research-tools-directory'
  ])assert.ok(html.includes('href="'+path+'"'),path);
- for(const scope of ['131,072-cell','30-point Sidon','4–25','external review','2⁻⁹⁶','8/20'])assert.ok(html.toLowerCase().includes(scope.toLowerCase()),scope);
+ for(const scope of ['131,072-cell','30-point Sidon','4–25','external review','2⁻⁹⁶','Proof After Scarcity v2'])assert.ok(html.toLowerCase().includes(scope.toLowerCase()),scope);
  const secondary=html.indexOf('<details class="nf-deep-disclosure nf-frontiers-disclosure">');
  assert.ok(secondary>=0,"Supplemental research still available");
  assert.ok(!html.slice(secondary,html.indexOf("<summary>",secondary)).includes(" open"));

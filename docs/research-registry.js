@@ -406,9 +406,9 @@ const REGISTRY={
     },
     {
       "id": "pas",
-      "title": "Proof After Scarcity: adverse test",
+      "title": "Proof After Scarcity: archived retrospective check",
       "field": "Research systems",
-      "kind": "Original bounded empirical result",
+      "kind": "Historical bounded empirical record",
       "short": "An archived 20-case prioritization study reported upstream-first 11/20 versus risk-priority 8/20.",
       "statement": "In a bounded 20-case internal experiment, upstream-first selected 11/20 and the risk-priority method selected 8/20 under the reported evaluation rules.",
       "conditions": "One specified 20-case comparison, not a general population or transfer-efficacy theorem.",
@@ -416,22 +416,22 @@ const REGISTRY={
       "metric": "Reported adverse result",
       "validity": {
         "level": "empirical",
-        "label": "Bounded negative experiment",
+        "label": "Archived outcome-aware comparison",
         "detail": "A narrow adverse comparison, not proof that either policy dominates generally."
       },
       "reproducibility": {
         "level": "partial",
         "label": "Experiment record archived",
-        "detail": "The source dossier records protocol and outcomes; independent outside reproduction is a separate gate."
+        "detail": "The historical audit preserves recorded protocol and outcomes; independent reproduction remains open. New PAS v2 does not use this as proof of prospective advantage."
       },
       "originality": {
         "level": "scoped",
-        "label": "Distinct bounded experiment",
+        "label": "Previously approved bounded audit",
         "detail": "The observation is original to this finite evaluation; broad verification-priority methods and related literature predate it."
       },
       "significance": {
         "level": "bounded",
-        "label": "Research-systems correction",
+        "label": "Retained methodological history",
         "detail": "Evidence for retaining failed prioritization tests and measuring verification strategy, not a general efficacy guarantee."
       },
       "assumptions": [
@@ -444,8 +444,8 @@ const REGISTRY={
       ],
       "sources": [
         {
-          "label": "Adverse-test dossier",
-          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/pas-overview.md"
+          "label": "Historical evaluation protocol and limitations",
+          "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/pas/RETROSPECTIVE_20261013.md"
         }
       ],
       "tools": [
@@ -456,7 +456,7 @@ const REGISTRY={
         {
           "date": "2026-10-28",
           "kind": "negative-result",
-          "label": "Adverse baseline comparison preserved",
+          "label": "Retrospective comparison preserved separately from PAS v2",
           "detail": "The published site preserves 8/20 against the stronger 11/20 baseline, without claiming general improvement.",
           "url": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/pas-overview.md"
         }
