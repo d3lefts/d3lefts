@@ -731,3 +731,14 @@ html:not([data-nf-theme="dusk"]) .nf-opening-constellation .nf-opening-node--oxb
 html:not([data-nf-theme="dusk"]) :is(.nf-process-case .nf-case-step,
   .nf-process-case small,.nf-replay-steps small,.nf-journey-rail small,
   .nf-dual-index .section-id){color:#b4e3d6}
+
+/* The Archive removes every visible wine-red mathematical illustration mark.
+   Historical SVG stroke attributes are retained in source to preserve fixtures. */
+html:not([data-nf-theme="dusk"]) .hero-aside .diagram circle[fill="#d8c38a"]{fill:#b4e3d6}
+html:not([data-nf-theme="dusk"]) .hero-aside .diagram :is(path[stroke="#4a1f24"],path[stroke="#6a2934"]){stroke:#b4e3d6}
+html:not([data-nf-theme="dusk"]) .hero-aside .diagram :is(circle[fill="#4a1f24"],circle[fill="#8c4050"]){fill:#b1b9db}
+/* Quiet spectral dividing bars are instrument traces, not a data legend. */
+html:not([data-nf-theme="dusk"]) #main>.flagships>.section-head,
+html:not([data-nf-theme="dusk"]) #main>.nf-observatory .nf-observatory-head{
+  border-image:linear-gradient(180deg,#3b4c53 0%,#b4e3d6 72%,#3b4c53 100%) 1;
+}
