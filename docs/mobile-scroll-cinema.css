@@ -350,31 +350,51 @@ html:not([data-nf-theme="dusk"]) .nf-cinema-vignette{
    near-invisible while a finger is actively scrolling. */
 .nf-cinema-steps span{transition:none!important;transform:none!important}
 
-/* The Archive sunset cinematic scene: plum dusk gives way to a rose/coral horizon.
-   Compositor transforms, sequence and reduced-motion behavior are preserved. */
-html:not([data-nf-theme="dusk"]) .nf-cinema{background:#21172f;color:#fff0e7;border-color:#826682}
+/* NULL FIELD CINEMA — occlusion, interference and spectral black.
+   Scroll transforms and reduced-motion behavior are unchanged. */
+html:not([data-nf-theme="dusk"]) .nf-cinema{
+  background:#010203;color:#edf4f1;border-color:#3b4c53;
+}
 html:not([data-nf-theme="dusk"]) .nf-cinema-world--archive{
   background:
-    radial-gradient(ellipse at 67% 61%,rgba(242,197,128,.27),transparent 39%),
-    radial-gradient(ellipse at 50% 21%,rgba(218,123,171,.18),transparent 63%),
-    linear-gradient(175deg,#221a3d 0%,#634068 46%,#c56e82 78%,#352441 100%);
+    radial-gradient(ellipse at 67% 61%,rgba(144,207,194,.12),transparent 39%),
+    radial-gradient(ellipse at 50% 21%,rgba(168,170,218,.07),transparent 63%),
+    linear-gradient(175deg,#010203 0%,#091316 46%,#142126 78%,#010305 100%);
+}
+html:not([data-nf-theme="dusk"]) .nf-cinema-world--archive .nf-cinema-sun{
+  background:radial-gradient(circle at 48% 49%,#010203 0%,#010203 49%,
+    #27494c 51%,#b4e3d6 52%,#3b6c70 53%,#020406 56%);
+  box-shadow:0 0 0 1px #b4e3d62e,0 0 100px 32px #7ab6b015,0 0 230px 75px #8895c412;
+}
+html:not([data-nf-theme="dusk"]) .nf-cinema-world--archive .nf-cinema-orbit{
+  border-color:#b4e3d64f;
+  box-shadow:0 0 0 36px #b4e3d608,0 0 0 77px #b1b9db07,inset 0 0 35px #b4e3d60c;
+}
+html:not([data-nf-theme="dusk"]) .nf-cinema-world--archive .nf-cinema-orbit::before{border-color:#b1b9db4d}
+html:not([data-nf-theme="dusk"]) .nf-cinema-world--archive .nf-cinema-orbit::after{
+  background:#b4e3d6;box-shadow:0 0 24px #b4e3d664;
 }
 html:not([data-nf-theme="dusk"]) .nf-cinema-horizon{
-  background:linear-gradient(180deg,#834e78 0%,#342442 59%,#1a142a 100%);
-  box-shadow:0 -2px 0 #e7b768aa,0 -40px 110px #e7b76827;
+  background:linear-gradient(180deg,#29474b 0%,#0b171a 59%,#010203 100%);
+  box-shadow:0 -2px 0 #b4e3d699,0 -40px 110px #b4e3d622;
 }
 html:not([data-nf-theme="dusk"]) .nf-cinema-vignette{
   background:
-    linear-gradient(90deg,rgba(23,15,40,.96) 0%,rgba(32,21,47,.90) 32%,
-      rgba(41,26,54,.69) 51%,rgba(43,26,58,.15) 85%),
-    linear-gradient(0deg,#1b142de8 0%,transparent 40%,transparent 72%,#241a34b3 100%);
+    linear-gradient(90deg,rgba(1,3,5,.97) 0%,rgba(1,3,5,.90) 32%,
+      rgba(1,3,5,.65) 51%,rgba(1,3,5,.12) 85%),
+    linear-gradient(0deg,#010305f1 0%,transparent 40%,transparent 72%,#010305c7 100%);
 }
+html:not([data-nf-theme="dusk"]) .nf-cinema-overline{color:#b4e3d6}
+html:not([data-nf-theme="dusk"]) .nf-cinema-title em{color:#b4e3d6}
+html:not([data-nf-theme="dusk"]) .nf-cinema-subtitle{color:#b7c9c9}
+html:not([data-nf-theme="dusk"]) .nf-cinema-status{color:#b1b9db}
+html:not([data-nf-theme="dusk"]) .nf-cinema-steps{color:#edf4f1}
+html:not([data-nf-theme="dusk"]) .nf-cinema-meter::before{background:#b4e3d6}
 @media(max-width:760px){
   html:not([data-nf-theme="dusk"]) .nf-cinema-vignette{
     background:
-      linear-gradient(90deg,rgba(23,15,40,.92) 0%,rgba(32,21,47,.81) 42%,
-        rgba(39,24,52,.13) 96%),
-      linear-gradient(0deg,#1b142ded 0%,transparent 40%,transparent 78%,#241a34b3 100%);
+      linear-gradient(90deg,rgba(1,3,5,.94) 0%,rgba(1,3,5,.82) 42%,rgba(1,3,5,.12) 96%),
+      linear-gradient(0deg,#010305ef 0%,transparent 40%,transparent 78%,#010305bf 100%);
   }
 }
 
@@ -460,3 +480,18 @@ html[data-nf-theme="dusk"] .nf-cinema-record a{color:#e2d28c}
 }
 @media print{.nf-cinema-record{background:#fff;color:#111;box-shadow:none;border-color:#777;
     transform:none}.nf-cinema-record :is(strong,span,p,a){color:#111!important}}
+
+/* NULL FIELD: the real source-linked record reads as cold sensor glass,
+   unlike the New Moon's original gilded card. */
+html:not([data-nf-theme="dusk"]) .nf-cinema-record{
+  background:rgba(7,14,18,.93);border-color:rgba(180,227,214,.39);
+  color:#edf4f1;box-shadow:0 25px 90px rgba(0,0,0,.36);
+}
+html:not([data-nf-theme="dusk"]) :is(.nf-cinema-record-kicker,
+  .nf-cinema-record-stats strong,.nf-cinema-record a){color:#b4e3d6}
+html:not([data-nf-theme="dusk"]) .nf-cinema-record-value{color:#edf4f1}
+html:not([data-nf-theme="dusk"]) :is(.nf-cinema-record p,.nf-cinema-record-stats span,
+  .nf-cinema-record .nf-cinema-record-boundary){color:#afc4c5}
+html:not([data-nf-theme="dusk"]) .nf-cinema-record-divider{background:rgba(180,227,214,.24)}
+html:not([data-nf-theme="dusk"]) .nf-cinema-record a:hover{color:#d8f4e9}
+html:not([data-nf-theme="dusk"]) .nf-cinema-record a:focus-visible{outline-color:#d8f4e9}
