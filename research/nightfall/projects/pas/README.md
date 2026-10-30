@@ -1,5 +1,7 @@
 # PAS public metadata freeze v0.1 — evidence status
 
+**Current PAS manuscript:** [Version 2, 29 October 2026](PAS_V2_20261029.md): finite proof-DAG identities, exact edge sensitivity and unvalidated verification-priority hypothesis. **Earlier retrospective test:** [historical audit](RETROSPECTIVE_20261013.md), separate from v2's claims. Neither this metadata freeze nor the historical test validates prospective predictive gains.
+
 **Historical locally recorded freeze:** 2026-10-06 20:23:39 EDT (2026-10-07 00:23:39 UTC). **First publication in this GitHub repository:** 2026-10-28. The original freeze date has no independently secured timestamp in the available record. Public release today cannot establish that the ranking was sealed on October 6.
 
 Source: [openai/math commit adc7f1241b42e322a6451854ab7e4b4c146bf78a](https://github.com/openai/math/tree/adc7f1241b42e322a6451854ab7e4b4c146bf78a), `CONTENTS.md`. Unit: 372 result families within a 722-manuscript release. This is a **metadata ranking**, separate from the 620-unit manuscript-citation graph. Sort: Lean-formalization absent first, manuscript count descending, description words descending, family ID ascending.
