@@ -1,0 +1,33 @@
+name: AXIOM exact GF9 adaptive rank-orbit lower-bound audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/agent-reports/axiom_gf9_rank_orbit_20261030/**'
+      - '.github/workflows/axiom-gf9-rank-orbit.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/agent-reports/axiom_gf9_rank_orbit_20261030/**'
+      - '.github/workflows/axiom-gf9-rank-orbit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-prefix-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Exact source hashes
+        run: |
+          sha256sum research/nightfall/agent-reports/axiom_gf9_rank_orbit_20261030/check_prefix.py
+          sha256sum research/nightfall/agent-reports/axiom_gf9_rank_orbit_20261030/independent_gf9.py
+      - name: Integer capacity inequality and GF9 polynomial regression
+        run: python3 research/nightfall/agent-reports/axiom_gf9_rank_orbit_20261030/check_prefix.py
+      - name: Independent GF9 field representation and 531441 full vector enumeration
+        run: python3 research/nightfall/agent-reports/axiom_gf9_rank_orbit_20261030/independent_gf9.py
