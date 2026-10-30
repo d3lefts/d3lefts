@@ -18,7 +18,7 @@ function apply(value){
   current=value===DUSK?DUSK:LIGHT;
   if(current===DUSK)doc.setAttribute("data-nf-theme",DUSK);
   else doc.removeAttribute("data-nf-theme");
-  if(meta)meta.content=current===DUSK?"#04060b":"#241a34";
+  if(meta)meta.content=current===DUSK?"#04060b":"#020406";
   if(document.body?.classList.contains("co-page"))document.body.dataset.theme=current===DUSK?"dark":"light";
   window.dispatchEvent(new Event("nightfall-theme-change"));
   const button=document.querySelector(".nf-theme-toggle");
