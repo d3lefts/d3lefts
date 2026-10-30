@@ -823,3 +823,322 @@ html .nf-theme-toggle .nf-theme-symbol{
     .nf-home-toolbox,.research-proposal,.sf-system-card,.instrument-workflow a,
     .join-choice,.nf-process-case,.nf-theme-toggle){transition:none!important}
 }
+
+
+/* ================================================================
+   NIGHTFALL / EDITORIAL OBSERVATORY — VISUAL RESCUE / 2026-10-29
+   A spatial and typographic layer, not a scientific status layer.
+   Keeps both skies, the live source HTML, tools, numbers, and links.
+   Scoped editorial changes; special-purpose application geometry
+   remains owned by the workbench stylesheets.
+   ================================================================ */
+
+/* A single material grammar across the two atmospheres. */
+html:not([data-nf-theme="dusk"]) {
+  --ed-bg:#020406;--ed-panel:#0b1015;--ed-panel-raised:#131b21;
+  --ed-rule:rgba(188,203,215,.22);--ed-ink:#e8eef3;
+  --ed-body:#c3cdd5;--ed-dim:#a5b4c0;--ed-accent:#e87994;
+  --ed-action:#510d23;--ed-action-hover:#76203a;
+  --ed-accentwash:rgba(183,46,84,.10);
+}
+html[data-nf-theme="dusk"] {
+  --ed-bg:#04060b;--ed-panel:#0a1120;--ed-panel-raised:#111b30;
+  --ed-rule:rgba(199,205,231,.23);--ed-ink:#f0eedf;
+  --ed-body:#d5d8e6;--ed-dim:#b9c0d2;--ed-accent:#e4d49d;
+  --ed-action:#e4d49d;--ed-action-hover:#f2e3b4;
+  --ed-accentwash:rgba(226,210,140,.09);
+}
+html body {line-height:1.55;text-rendering:optimizeLegibility}
+html .wrap {width:min(1220px,calc(100% - clamp(36px,7vw,120px)))}
+html :is(h1,h2,h3) {text-wrap:balance}
+html :is(p,li,dd) {overflow-wrap:break-word}
+html :is(.eyebrow,.kicker,.section-id,.flagship-eyebrow,.flagship-top,.co-overline,
+ .co-section-head>span,.review-hero>.kicker,.review-dossier .dossier-number) {
+  letter-spacing:.12em;
+}
+html .section-id,html .kicker,html .eyebrow {line-height:1.8}
+html .topline {height:1px!important;background:var(--ed-rule)!important}
+html .topline:after {height:1px;width:16%;background:var(--ed-accent)!important}
+
+/* A navigation bar, rather than another visual scene. */
+html .header {
+  position:sticky;top:0;z-index:70;
+  background:color-mix(in srgb,var(--ed-bg) 91%,transparent)!important;
+  border-bottom:1px solid var(--ed-rule)!important;
+  -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+}
+html .header-inner {min-height:75px;gap:clamp(12px,2vw,26px)}
+html .brand {gap:13px;min-width:0}
+html .mark {
+  width:42px;height:42px;border:1px solid var(--ed-rule)!important;
+  background:transparent!important;color:var(--ed-ink)!important;
+  font:500 18px/1 var(--mono);letter-spacing:-2.8px;
+}
+html .brand-copy {color:var(--ed-ink);letter-spacing:.12em;font-size:11px}
+html .brand-copy span {letter-spacing:.085em;font-size:9px;color:var(--ed-dim)}
+html .nav {gap:clamp(15px,2.5vw,32px)!important}
+html .nav a:not(.nav-call) {color:var(--ed-body);font:500 12px/1.5 var(--sans)}
+html .nav a[aria-current="page"] {color:var(--ed-ink);text-decoration:underline;text-underline-offset:9px}
+html .nav .nav-call {
+  border:1px solid var(--ed-rule)!important;
+  padding:12px 17px!important;
+  background:var(--ed-panel-raised)!important;
+  color:var(--ed-ink)!important;
+  border-radius:2px;
+  font:500 11px/1.5 var(--mono);
+}
+html .nav .nav-call:hover {border-color:var(--ed-accent)!important}
+html .nf-theme-toggle {
+  font-size:10px!important;letter-spacing:.065em;
+  min-height:42px!important;min-width:100px!important;
+  background:transparent!important;
+  border:1px solid var(--ed-rule)!important;
+  color:var(--ed-body)!important;box-shadow:none!important;
+}
+html .nf-theme-toggle:hover {border-color:var(--ed-accent)!important;color:var(--ed-ink)!important}
+
+/* Global editorial scale and generous reading rhythm. */
+html .section,html .section.wrap {
+  padding-top:clamp(84px,10vw,146px);
+  padding-bottom:clamp(88px,10vw,148px);
+  border-bottom:1px solid var(--ed-rule);
+}
+html .section-head {
+  display:grid;grid-template-columns:minmax(130px,.53fr) minmax(0,1.47fr);
+  align-items:start;gap:clamp(24px,4vw,74px);margin-bottom:clamp(36px,5vw,70px);
+}
+html .section-title {
+  font:400 clamp(48px,6vw,93px)/.98 var(--serif);
+  letter-spacing:-.036em;max-width:14ch;
+}
+html .section-intro {max-width:52ch;color:var(--ed-body);font-size:clamp(15px,1.3vw,18px);line-height:1.8;margin-top:23px}
+html :is(.section-head-link,.text-link) {text-underline-offset:5px}
+html .section-head-link:hover,html .text-link:hover {opacity:1;color:var(--ed-accent)}
+html :is(.section-head,.nf-observatory-head,.review-priority-head) .section-id {
+  padding-top:6px;color:var(--ed-dim);font-weight:600;font-size:10px;
+}
+html :is(.section-title em,.co-section-head h2 em,.co-headline h1 em) {
+  color:var(--ed-accent);font-weight:400;
+}
+
+/* Panels read as collected specimens, never a wall of neon dashboards. */
+html :is(.feature,.review-card,.research-proposal,.sf-system-card,
+  .nf-home-toolbox,.instrument-workflow a,.join-choice,.nf-process-case) {
+  border:1px solid var(--ed-rule)!important;
+  border-radius:3px;background:var(--ed-panel)!important;color:var(--ed-ink);
+  box-shadow:none!important;
+}
+html :is(.feature,.review-card,.research-proposal,.sf-system-card,
+  .nf-home-toolbox,.instrument-workflow a,.join-choice,.nf-process-case):hover {
+  transform:none!important;border-color:var(--ed-accent)!important;
+  background:var(--ed-panel-raised)!important;box-shadow:none!important;
+}
+html :is(.feature,.review-card,.research-proposal,.sf-system-card,
+  .nf-home-toolbox,.join-choice,.nf-process-case) p {line-height:1.75}
+html :is(.review-summary,.review-dossier,.review-priority-card,.co-work-card) {
+  border-color:var(--ed-rule);
+}
+html :is(.review-summary,.review-dossier,.review-priority-card,.co-work-card) p {
+  color:var(--ed-body);line-height:1.75;
+}
+html .feature-grid {gap:14px}
+html .feature {min-height:340px;padding:clamp(24px,2.4vw,37px)}
+html .feature-title {line-height:1.04}
+html .feature-tag {letter-spacing:.06em}
+
+/* Buttons are always real actions, with clear keyboard focus. */
+html :is(.button,.co-primary,.co-secondary) {
+  border-radius:2px;font-size:11px;letter-spacing:.025em;
+  min-height:45px;align-items:center;transition:background-color .18s,border-color .18s,color .18s;
+}
+html :is(.button,.co-primary,.co-secondary):hover {transform:none!important}
+html:not([data-nf-theme="dusk"]) :is(.button:not(.button-light),.co-primary) {
+  background:var(--ed-action)!important;border-color:#9d415c!important;color:#fff0f3!important;
+}
+html[data-nf-theme="dusk"] :is(.button:not(.button-light),.co-primary) {
+  background:var(--ed-action)!important;border-color:var(--ed-action)!important;color:#141727!important;
+}
+html:not([data-nf-theme="dusk"]) :is(.button:not(.button-light),.co-primary):hover {
+  background:var(--ed-action-hover)!important;
+}
+html[data-nf-theme="dusk"] :is(.button:not(.button-light),.co-primary):hover {
+  background:var(--ed-action-hover)!important;
+}
+html :is(a,button,input,textarea,select,summary):focus-visible {
+  outline:3px solid var(--ed-accent)!important;outline-offset:4px!important;
+}
+
+/* Home: one commanding opening, then measured editorial scenes. */
+html #main>.hero.nf-opening {
+  grid-template-columns:minmax(0,1.3fr) minmax(280px,.7fr);
+  gap:clamp(38px,5vw,90px);
+  padding-left:clamp(24px,4vw,56px);padding-right:clamp(24px,4vw,56px);
+  border:1px solid var(--ed-rule);border-top:0;
+  margin-bottom:0;
+}
+html #main>.hero.nf-opening .hero-title {
+  font:400 clamp(70px,8.3vw,128px)/.89 var(--serif);
+  letter-spacing:-.048em;max-width:10ch;
+  margin:clamp(35px,4vw,56px) 0 33px;
+}
+html #main>.hero.nf-opening .hero-description {
+  color:var(--ed-body)!important;
+  font:400 clamp(16px,1.5vw,20px)/1.73 var(--sans);
+  max-width:50ch;
+}
+html #main>.hero.nf-opening .hero-actions {margin-top:clamp(30px,4vw,53px);gap:17px 28px}
+html #main>.hero.nf-opening .kicker {color:var(--ed-accent)}
+html #main>.hero.nf-opening .hero-aside {
+  align-self:center;padding:clamp(22px,3vw,39px);
+  background:color-mix(in srgb,var(--ed-panel) 88%,transparent)!important;
+  border:1px solid var(--ed-rule)!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+}
+html #main>.hero.nf-opening .nf-opening-scoreline strong {
+  font-variant-numeric:tabular-nums;letter-spacing:-.035em;
+}
+html #main>.hero.nf-opening .nf-opening-scoreline span {letter-spacing:.09em}
+html #main>.hero.nf-opening .nf-opening-endmark {
+  left:clamp(24px,4vw,56px);right:clamp(24px,4vw,56px);
+}
+
+/* Feature works as one museum-size plate with the companion studies receding. */
+html #main>.flagships .section-head {border:0}
+html .nf-focus-result-grid .flagship-card {
+  border:1px solid var(--ed-rule)!important;
+  border-radius:3px;padding:clamp(32px,5vw,77px);
+  min-height:clamp(450px,46vw,620px);
+  box-shadow:none!important;
+}
+html .nf-focus-result-grid .flagship-card:hover {box-shadow:none!important}
+html .nf-focus-result-grid .flagship-body h3 {
+  font:400 clamp(49px,5.8vw,90px)/.95 var(--serif);
+  letter-spacing:-.04em;margin:18px 0 22px;max-width:11ch;
+}
+html .nf-focus-result-grid .flagship-body p {font-size:clamp(15px,1.27vw,18px);line-height:1.75}
+html .nf-secondary-frontiers-grid {gap:14px;padding:clamp(12px,1.7vw,22px)}
+html .nf-secondary-frontiers-grid .flagship-card {
+  min-height:380px;border:1px solid var(--ed-rule)!important;
+  padding:clamp(24px,2.4vw,38px);border-radius:2px;
+  background:var(--ed-panel)!important;color:var(--ed-ink)!important;
+}
+html .nf-secondary-frontiers-grid .flagship-body h3 {
+  font:400 clamp(30px,3vw,45px)/1.03 var(--serif);margin:16px 0;
+}
+html .nf-secondary-frontiers-grid .flagship-body p,
+html .nf-secondary-frontiers-grid .flagship-context {color:var(--ed-body)!important;line-height:1.7}
+html .nf-deep-disclosure {
+  border:1px solid var(--ed-rule)!important;background:var(--ed-panel)!important;
+  border-radius:3px;
+}
+html .nf-deep-disclosure>summary {padding-block:27px}
+html .nf-deep-disclosure>summary:hover {background:var(--ed-panel-raised)!important}
+
+/* Distinct supporting chapters; restraint is the connective tissue. */
+html #main>.sf-case {padding-block:clamp(98px,11vw,160px)}
+html .sf-case-panel {border-color:var(--ed-rule);border-radius:3px}
+html .sf-case-panel :is(p,small) {line-height:1.7}
+html #main>.nf-observatory {margin-block:clamp(110px,13vw,185px)}
+html #main>.nf-observatory h2 {font:400 clamp(48px,5.7vw,86px)/1 var(--serif);letter-spacing:-.036em}
+html #main>.nf-observatory p {color:var(--ed-body);line-height:1.8}
+html #main>.review-section {padding-block:clamp(100px,11vw,158px)}
+html #main>.nf-quiet-note {padding-block:clamp(48px,6vw,88px);border-color:var(--ed-rule)}
+html #main>.nf-dual-colophon {padding-block:clamp(95px,10vw,145px);border-color:var(--ed-rule)}
+html #main>.nf-dual-colophon h2 {font:400 clamp(49px,6vw,92px)/.97 var(--serif);letter-spacing:-.04em}
+html .footer {border-top:1px solid var(--ed-rule)!important}
+html .footer-top {padding-block:clamp(60px,7vw,105px)}
+html .footer-top h2 {font:400 clamp(46px,5.7vw,82px)/1 var(--serif)}
+html .footer-bottom {border-top:1px solid var(--ed-rule);color:var(--ed-dim)}
+html .footright {max-width:48ch}
+html .footright p {color:var(--ed-body);line-height:1.8}
+
+/* Constellation: generous introduction, rigorous graph edges. */
+html .co-hero {padding-block:clamp(96px,10vw,155px);gap:clamp(30px,6vw,100px)}
+html .co-headline h1 {font-size:clamp(67px,8vw,126px);max-width:11ch}
+html .co-intro {line-height:1.77;color:var(--ed-body);max-width:51ch}
+html .co-map-section {padding-block:clamp(80px,9vw,130px)}
+html .co-section-head h2 {line-height:1}
+html .co-map-layout {border-color:var(--ed-rule);border-radius:3px;overflow:hidden}
+html .co-sky {border-color:var(--ed-rule);background-color:var(--ed-panel)}
+html .co-node {letter-spacing:0}
+html .co-relations {background:var(--ed-panel)}
+html .co-work-section {padding-block:clamp(95px,10vw,145px)}
+
+/* Review: seriousness and comprehension outrank ornament. */
+html .review-hero {padding-top:clamp(96px,11vw,160px);padding-bottom:clamp(76px,8vw,120px)}
+html .review-hero h1 {font-size:clamp(68px,8.2vw,126px);line-height:.92;max-width:11ch}
+html .review-hero h1 i {color:var(--ed-accent)}
+html .review-hero p {color:var(--ed-body);line-height:1.8;max-width:62ch}
+html .review-summary {gap:0;border-bottom:1px solid var(--ed-rule)}
+html .review-summary article {padding-block:clamp(32px,4vw,58px)}
+html .review-summary b {font-size:clamp(28px,2.8vw,40px)}
+html .review-dossier {padding-block:clamp(65px,7vw,106px);border-bottom:1px solid var(--ed-rule)}
+html .review-dossier h2 {line-height:1.05}
+html .review-dossier :is(ol,ul) li {line-height:1.85;margin-block:.65em}
+html .status-strip {border-color:var(--ed-rule);line-height:1.65}
+html .review-priority-card {background:var(--ed-panel);border:1px solid var(--ed-rule);border-radius:3px}
+
+/* Narrow devices should feel typeset, not like a compressed desktop dashboard. */
+@media(max-width:1050px) {
+  html .section-head {grid-template-columns:1fr;gap:17px}
+  html .section-title {max-width:18ch}
+  html #main>.hero.nf-opening {gap:25px;grid-template-columns:minmax(0,1.2fr) minmax(240px,.8fr)}
+  html #main>.hero.nf-opening .hero-title {font-size:clamp(63px,8vw,99px)}
+}
+@media(max-width:820px) {
+  html .header-inner {min-height:67px}
+  html .nav.open {
+    background:var(--ed-panel)!important;border:1px solid var(--ed-rule)!important;
+    -webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);
+  }
+  html #main>.hero.nf-opening {
+    display:flex;flex-direction:column;align-items:stretch;
+    gap:34px;min-height:0;
+    padding:clamp(80px,10vw,115px) clamp(22px,4vw,38px) 95px;
+  }
+  html #main>.hero.nf-opening .hero-title {font-size:clamp(62px,11.5vw,96px);margin:25px 0}
+  html #main>.hero.nf-opening .hero-aside {align-self:stretch;max-width:620px}
+  html .nf-focus-result-grid .flagship-card {min-height:0;padding:clamp(24px,5vw,42px)}
+  html .nf-focus-result-grid .flagship-body h3 {font-size:clamp(47px,7vw,72px)}
+  html #main>.nf-observatory {margin-block:88px}
+  html .review-summary article {padding:25px 18px}
+}
+@media(max-width:620px) {
+  html .wrap {width:calc(100% - 36px)}
+  html .brand-copy {font-size:10px}
+  html .brand-copy span {font-size:8px;letter-spacing:.02em}
+  html .mark {width:36px;height:36px;font-size:16px}
+  html .nf-theme-toggle {min-width:44px!important;min-height:40px!important}
+  html .section,html .section.wrap {padding-top:76px;padding-bottom:82px}
+  html .section-head {margin-bottom:34px}
+  html .section-title {font-size:clamp(47px,12vw,70px)}
+  html .section-intro {font-size:15px;line-height:1.75}
+  html #main>.hero.nf-opening {padding:82px 22px 92px}
+  html #main>.hero.nf-opening .hero-title {
+    font-size:clamp(57px,13.7vw,78px);letter-spacing:-.042em;max-width:9.5ch;
+  }
+  html #main>.hero.nf-opening .hero-description {font-size:16px;line-height:1.67}
+  html #main>.hero.nf-opening .hero-aside {padding:23px}
+  html .nf-focus-result-grid .flagship-body h3 {font-size:clamp(44px,11vw,63px)}
+  html .nf-secondary-frontiers-grid {grid-template-columns:1fr}
+  html .nf-secondary-frontiers-grid .flagship-card {min-height:0}
+  html .feature-grid {grid-template-columns:1fr}
+  html .feature {min-height:300px}
+  html .review-hero {padding-top:82px}
+  html .review-hero h1 {font-size:clamp(60px,12vw,80px)}
+  html .review-summary {grid-template-columns:1fr}
+  html .review-summary article {border-right:0;border-bottom:1px solid var(--ed-rule);padding:25px 0}
+  html .review-summary article:last-child {border-bottom:0}
+  html .co-headline h1 {font-size:clamp(59px,12vw,85px)}
+  html .footer-top {gap:42px}
+}
+@media(prefers-reduced-motion:reduce) {
+  html :is(.button,.feature,.review-card,.flagship-card,.header,.nf-theme-toggle) {
+    transition:none!important;animation:none!important;
+  }
+}
+@media print {
+  html .header {position:static;background:white!important;backdrop-filter:none}
+  html .topline {display:none}
+}
