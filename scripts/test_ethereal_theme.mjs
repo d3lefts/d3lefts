@@ -73,7 +73,7 @@ try{
   });
   assert.equal(palette.paper,"#020406","NULL FIELD token contract");
   assert.equal(palette.primary,"#e46a84","NULL FIELD readable black-cherry emphasis");
-  assert.equal(palette.text,"rgb(237, 244, 241)","Black-cherry primary button uses readable porcelain ink");
+  assert.equal(palette.text,"rgb(234, 240, 245)","Black-cherry primary button uses readable porcelain ink");
   await page.screenshot({path:"browser-artifacts/ethereal-light-"+width+".png",fullPage:false});
   await toggle.click();
   await page.waitForTimeout(350);

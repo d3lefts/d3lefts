@@ -68,12 +68,12 @@ try{
    assert.equal(v.bodyBg,"rgb(2, 4, 6)",name+": light canvas");
    assert.ok(v.overflow<=4,name+": no "+width+"px horizontal overflow ("+v.overflow+")");
    const expectations={
-    "index.html":{nav:"rgb(8, 13, 18)",heroAction:"rgb(157, 26, 60)"},
-    "constellation.html":{coreAction:"rgb(157, 26, 60)"},
+    "index.html":{nav:"rgb(8, 13, 18)",heroAction:"rgb(101, 13, 39)"},
+    "constellation.html":{coreAction:"rgb(101, 13, 39)"},
     "join.html":{joinMethod:"rgb(16, 28, 31)",raised:"rgb(17, 24, 28)"},
     "living-paper.html":{sidon:"rgb(8, 13, 18)"},
     "erdos-paper.html":{sidon:"rgb(8, 13, 18)",epConsole:"rgb(17, 24, 28)"},
-    "discovery.html":{discoverySidebar:"rgb(12, 18, 22)",discoveryMark:"rgb(157, 26, 60)"},
+    "discovery.html":{discoverySidebar:"rgb(12, 18, 22)",discoveryMark:"rgb(101, 13, 39)"},
     "claim-lab.html":{claimSidebar:"rgb(12, 18, 22)"},
     "desk.html":{readout:"rgb(8, 13, 18)"}
    };
@@ -95,7 +95,7 @@ try{
     assert.equal(record.firstFold,record.value,"Finite overlap witness appears immediately in the opening");
     assert.equal(record.cells,"131,072","The exact finite construction size is disclosed");
     assert.equal(record.source,true,"The record links to its public witness and checker");
-    assert.equal(record.ink,"rgb(237, 244, 241)","Finite record remains legible over black interference art");
+    assert.equal(record.ink,"rgb(234, 240, 245)","Finite record remains legible over black interference art");
     assert.equal(record.toolbar,"#020406","Browser chrome follows carbon-black identity");
    }
    for(const [key,target] of Object.entries(expectations[name]||{})){
