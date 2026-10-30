@@ -11,7 +11,8 @@ const home=read("docs/home-system.js");
 const styles=[...html.matchAll(/<link\s+rel="stylesheet"\s+href="([^"]+)"/g)].map(x=>x[1]);
 const scripts=[...html.matchAll(/<script\s+src="([^"]+)"\s+defer><\/script>/g)].map(x=>x[1]);
 assert.equal(styles.length,7,"Homepage should need seven route-scoped stylesheets, not the retired eighth");
-assert.equal(scripts.length,7,"Canonical registry and both scroll controllers must remain on the page");
+assert.equal(scripts.length,5,"Only source-hydration and shared page controllers remain; parallax scripts are retired");
+for(const obsolete of ["scroll-cinema.js","home-opening-cinema.js"])assert.ok(!scripts.includes(obsolete),"Removed scroll controller returned: "+obsolete);
 assert.equal(new Set(styles).size,styles.length,"Duplicate stylesheet requests");
 assert.equal(new Set(scripts).size,scripts.length,"Duplicate script requests");
 for(const asset of [...styles,...scripts]){
