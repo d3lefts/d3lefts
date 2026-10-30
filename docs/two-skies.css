@@ -845,7 +845,7 @@ html[data-nf-theme="dusk"] {
   --ed-bg:#04060b;--ed-panel:#0a1120;--ed-panel-raised:#111b30;
   --ed-rule:rgba(199,205,231,.23);--ed-ink:#f0eedf;
   --ed-body:#d5d8e6;--ed-dim:#b9c0d2;--ed-accent:#e4d49d;
-  --ed-action:#e4d49d;--ed-action-hover:#f2e3b4;
+  --ed-action:#e2d28c;--ed-action-hover:#eee0a7;
   --ed-accentwash:rgba(226,210,140,.09);
 }
 html body {line-height:1.55;text-rendering:optimizeLegibility}
