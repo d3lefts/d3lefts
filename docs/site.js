@@ -72,7 +72,7 @@ if(menu&&nav){
 
 /* Guided entry / return route. Existing scientific instruments keep their own checkers. */
 (() => {
- if(location.pathname.endsWith("/join.html")||location.pathname.endsWith("/index.html")||location.pathname.endsWith("/")||document.querySelector(".nf-journey-rail"))return;
+ if(["","index.html","constellation.html","review.html","join.html"].includes(location.pathname.split("/").pop())||document.querySelector(".nf-journey-rail"))return;
  const main=document.querySelector("main");if(!main)return;
  // App-owned grid layouts have their own navigation and must remain untouched.
  if(main.closest(".app")||document.querySelector("#app"))return;
