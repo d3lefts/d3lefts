@@ -838,7 +838,7 @@ html:not([data-nf-theme="dusk"]) {
   --ed-bg:#020406;--ed-panel:#0b1015;--ed-panel-raised:#131b21;
   --ed-rule:rgba(188,203,215,.22);--ed-ink:#e8eef3;
   --ed-body:#c3cdd5;--ed-dim:#a5b4c0;--ed-accent:#e87994;
-  --ed-action:#510d23;--ed-action-hover:#76203a;
+  --ed-action:#650d27;--ed-action-hover:#841736;
   --ed-accentwash:rgba(183,46,84,.10);
 }
 html[data-nf-theme="dusk"] {
@@ -1142,3 +1142,6 @@ html .review-priority-card {background:var(--ed-panel);border:1px solid var(--ed
   html .header {position:static;background:white!important;backdrop-filter:none}
   html .topline {display:none}
 }
+
+/* Keep existing, accessibility-audited Archive navigation identity. */
+html:not([data-nf-theme="dusk"]) .nav .nav-call{background:#080d12!important}
