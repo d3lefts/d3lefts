@@ -190,7 +190,7 @@
       "type": "Adaptive finite-field code · draft PR",
       "title": "F16 adaptive three-phase compression",
       "summary": "A branch-dependent two-query F16 cubic phase gadget distinguishes 27 relative-phase states and gives proposed six-query k=4 and eleven-query k=7 adaptive constructions.",
-      "boundary": "Draft PR #255 with internal independent arithmetic replays. The proof applies to the specified powered oracle and counts adaptive branches; kernel-level all-signal theorem and worldwide priority remain open.",
+      "boundary": "Draft PR #255 with internal independent arithmetic replays. The proof applies to the specified powered oracle and counts adaptive branches; kernel-level all-signal theorem, external mathematical review and worldwide priority remain open.",
       "source": "projects/curated-expansion-20261030/35-f16-adaptive-compression.md"
     },
     {
