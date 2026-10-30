@@ -136,3 +136,45 @@ Their Table 1 gives a stronger numerical MRRW-based bound `liminf i(k,9)/k >= ap
 Study `D_{K,H}(k)=F_{K,H}(k)-A_{K,H}(k)` as a function of field extension and multiplicative subgroup. Seek explicit conditions on field/phase alphabet enabling **linear-in-k gap on a fixed field** and prove lower bounds that exceed the elementary 2k−1 complement threshold where possible. Separately compare with the generality and degree cost of static invariant-polynomial interpolation (adaptive decision-tree compilation); do not call interpolation itself a new discovery.
 
 **Research status:** mathematics internally reasoned, finite check independently executed, dedicated GitHub CI and non-author proof review pending; global novelty unverified.
+
+## Independent new checkpoint: phase-calibration ceiling and exact F9 dimensions
+
+For a **coordinate-first** adaptive decoder over K=F9, the k initial coordinate squares leave exactly `2^(s-1)` relative signs for a signal of support size `s`. Every subsequent square query has at most `5` outputs, regardless of adaptive branching; hence after coordinate calibration at least
+
+```
+ceil(log_5(2^(s-1)))
+```
+
+additional observations are needed. This is only a lower bound within the **coordinate-first protocol class**; it does not lower-bound arbitrary adaptive protocols more strongly than the global 5-ary transcript count.
+
+The original basis decoder attains `k+ceil((s-1)/2)`. Direct exact-integer comparison with `ceil(log_5((9^k+1)/2))` gives:
+
+| k | Global information lower bound | Current adaptive upper bound | Status |
+|---:|---:|---:|---|
+| 2 | 3 | 3 | exact adaptive optimum |
+| 3 | 4 | 4 | exact adaptive optimum |
+| 4 | 6 | 6 | exact adaptive optimum |
+| 5 | 7 | 7 | exact adaptive optimum |
+| 6 | 8 | 9 | one-query gap |
+| 7 | 10 | 10 | exact adaptive optimum |
+| 8 | 11 | 12 | one-query gap |
+| 9 | 12 | 13 | one-query gap |
+
+**Structural transition / new Axiom assignment:** For k=6, a hypothetical eight-query protocol performing all six coordinate squares first would have just two further queries, with `5^2=25 < 2^5=32` remaining phases. Hence **every eight-query solution, if it exists, must depart from full coordinate calibration**. Likewise, for k=8, a putative 11-query protocol must depart from all eight coordinate squares because `5^3=125 < 2^7=128`. This is a rigorous *representation-class obstruction*, not a proof that the global adaptive optimum is above the information bound. The cheapest next experiment is a new calibration geometry that simultaneously identifies supports/amplitudes and phases, first in k=6, without granting uncounted side information.
+
+**Imported finite-code consequence:** Borello–Schmid–Scotti (2025), Table 2, give `i(6,9)=12` and `i(7,9) in [14,15]`. Thus `F_9(6)-A_9(6)>=12-9=3` and `F_9(7)-A_9(7)>=14-10=4`. This combines their coding result with the existing adaptive construction; the intersecting-code length is credited to its authors.
+
+## Additional exact transfer experiment: odd-prime square phases
+
+For *any odd prime power* q and extension K=F_(q^r) with r>=2, using the **square** oracle (a·x)^2 and sign ambiguity H={±1}, the same basis argument recovers at most r relative signs per mixed query. Indeed, `1+eta_i in {0,2}`; over an odd-characteristic base field `{0,2} intersection {0,-2} = {0}`. Thus equality of two powered basis sums forces equality of the relative-sign vectors. The query bound is `k+ceil((s-1)/r)`.
+
+This is an **extension of the previously recorded cancellation mechanism**, not a novelty claim. When q>3 the square oracle has phase subgroup H={±1}, which is a **proper subgroup** of F_q*; it is a different measurement model from the q−1 full-subfield-phase oracle. Maintain that distinction.
+
+Independently authored schoolbook quadratic-extension regression `verify_odd_q_phase.py`, pinned into the same draft PR and CI, exhausts:
+- GF9 (p=3, nonsquare 2), k=4: all `6,561` vectors; histogram `{4:33, 5:2432, 6:4096}`.
+- GF25 (p=5, nonsquare 2), k=3: all `15,625` vectors; histogram `{3:73, 4:15552}`.
+- GF49 (p=7, nonsquare 3), k=3: all `117,649` vectors; histogram `{3:145, 4:117504}`.
+
+All tests count the first-round coordinate squares, build legal second-round coefficients solely from the powered readings, include sparse/zero supports, and verify global sign equivalence. This finite experiment corroborates the q-transfer lemma but is **not** an independent mathematical referee or an all-k proof.
+
+**Organizational source:** [new roles / proof-gated assignments #257](https://github.com/d3lefts/d3lefts/issues/257). No globally original finding declared.
