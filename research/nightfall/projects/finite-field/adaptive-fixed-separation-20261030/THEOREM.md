@@ -93,6 +93,44 @@ The standalone GF9 checker uses `F3[t]/(t^2+1)`; exhausts all `9^3=729` signals,
 
 **Originality-sensitive target:** Determine whether this exact all-signals, fixed-field, adaptivity gap for *powered linear forms* is already explicitly established. The complement lemma and characteristic-three sign-cancellation operator alone are elementary/known mechanisms; only the scoped combination and any stronger structural extension are potential novelty candidates. Perform a dated historical search including adaptive real sign-retrieval, finite-field projective search, scalar separating invariants, and disguised linear-decision-tree formulations. External human referee and independent algebra proof audit required.
 
+## Theorem 4: fixed square retrieval is exactly intersecting-code length
+
+Let K be any **finite field of odd characteristic**, and A a fixed `m×k` K-matrix. Assume `rank(A)=k`, and denote `C=im(A) <= K^m`. A linear code C is **intersecting** if every two nonzero codewords have overlapping nonzero coordinate supports.
+
+**Exact equivalence:** The observation map `x -> ((a_i.x)^2)_(i=1..m)` separates all `K^k/{±1}` if and only if C is intersecting.
+
+**Proof, necessity.** If there are nonzero codewords `Au,Av` with disjoint supports, then u,v are linearly independent (since A is injective). The signals `x=u+v` and `y=u-v` are not sign-equivalent, yet each row sees either equal values or negatives, so their squares agree. Thus square recovery implies C intersecting.
+
+**Proof, sufficiency.** If `(Ax)_i^2=(Ay)_i^2` for every i, odd characteristic gives `(Ax)_i=±(Ay)_i`. The two codewords `A(x-y)` and `A(x+y)` have disjoint supports: in each coordinate at least one vanishes. If C is intersecting, one of those two codewords must be zero. As A has full column rank, `x=y` or `x=-y`. QED.
+
+If A is rank-deficient, it cannot distinguish a nonzero kernel vector from zero. Consequently, with Q=|K|, the exact minimum number of **fixed** square-linear queries is
+
+```
+F_K(k) = i(k,Q),
+```
+
+where `i(k,Q)` denotes the shortest length of a Q-ary **linear intersecting code of dimension k**. This extends the classical complement-property interpretation to a precise coding-theoretic equality; it does **not** claim to invent intersecting codes or the complement property.
+
+### Quantitative transfer from published coding theory (not a new coding bound)
+
+Borello, Schmid and Scotti, _The geometry of intersecting codes and applications to additive combinatorics and factorization theory_, JCTA **214** (2025), 106023, [arXiv:2406.04034](https://arxiv.org/html/2406.04034), prove in their Theorem 3.9:
+
+```
+liminf_(k->infinity) i(k,Q)/k >= 2 + 1/(Q-1).
+```
+
+For Q=9, this is exactly `17/8=2.125`, and the existing adaptive F9 upper `A(k,2)/k <= 3/2 + o(1)` gives the **rigorously imported asymptotic gap**
+
+```
+liminf_(k->infinity) [F(k,2)-A(k,2)]/k >= 17/8 - 3/2 = 5/8 = 0.625.
+```
+
+Their Table 1 gives a stronger numerical MRRW-based bound `liminf i(k,9)/k >= approximately 2.2060`, which suggests the improved coefficient approximately `0.7060` (rounded source value; independent high-precision boundary audit recommended).
+
+**Finite dimensions:** The paper's Table 2 for Q=9 yields exact `i(2,9)=3`, `i(3,9)=5`, `i(4,9)=7`, `i(5,9)=9`, `i(6,9)=12`, then `i(7,9) in [14,15]`, `i(8,9) in [16,21]` and `i(9,9) in [18,25]`. These are **published** intersecting-code facts, not NIGHTFALL computational records. For example in dimension 6, the adaptive construction uses at most 9 queries and the nonadaptive minimum is 12: a verified **gap of at least three** in the frozen F9 square oracle.
+
+**Next global research target:** Study the new/old boundary for *adaptive analogues of intersecting codes*: find a geometric characterization of admissible linear-form decision trees, compare its optimal asymptotic rate to i(k,Q), and prove improvements that neither the classical static-code theory nor a single small-field lookup table alone supplies. Require same-oracle priority audit before any claim of originality.
+
 ## Next potentially stronger structural theorem
 
 Study `D_{K,H}(k)=F_{K,H}(k)-A_{K,H}(k)` as a function of field extension and multiplicative subgroup. Seek explicit conditions on field/phase alphabet enabling **linear-in-k gap on a fixed field** and prove lower bounds that exceed the elementary 2k−1 complement threshold where possible. Separately compare with the generality and degree cost of static invariant-polynomial interpolation (adaptive decision-tree compilation); do not call interpolation itself a new discovery.
