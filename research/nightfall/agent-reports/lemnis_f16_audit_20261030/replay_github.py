@@ -13,7 +13,7 @@ def m4(a,b):
 
 # K = F4[t]/(t^2+t+w), with t=z, w=z^2+z.
 def pair(i):
-    a,b,c,d=(i>>j)&1 for j in range(4)
+    a,b,c,d=((i>>j)&1 for j in range(4))
     return a|((c^d)<<1),(b^c^d)|(d<<1)
 enc=[pair(i) for i in range(16)]
 assert len(set(enc))==16
