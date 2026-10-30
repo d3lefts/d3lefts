@@ -1,0 +1,30 @@
+name: Verify F16 adaptive first-query capacity and pencil obstruction
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/projects/f16/tessera-first-row-20261030/**'
+      - '.github/workflows/verify-tessera-f16-first-row.yml'
+  push:
+    paths:
+      - 'research/nightfall/projects/f16/tessera-first-row-20261030/**'
+      - '.github/workflows/verify-tessera-f16-first-row.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-projective:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Exhaust all 20592 first-row signatures
+        run: python3 research/nightfall/projects/f16/tessera-first-row-20261030/first_row.py
+      - name: Independently exhaust 160000 restricted pencil symmetry classes
+        run: python3 research/nightfall/projects/f16/tessera-first-row-20261030/pencil_orbit.py
+      - name: Compile independent field implementation and exhaust 6 x 1048576 second rows
+        run: |
+          g++ -std=c++17 -O3 -Wall -Wextra -pedantic research/nightfall/projects/f16/tessera-first-row-20261030/pencil_full.cpp -o /tmp/tessera_pencil_full
+          /tmp/tessera_pencil_full
