@@ -31,7 +31,7 @@ jobs:
         run: |
           set -euo pipefail
           cd research/nightfall/agent-reports/ryev_f16_tower_20261030
-          sha256sum verify_adaptive_tower.py
+          echo 'c91dd449cbc32847dfccd16625fb902e77cd94b5339b6627e4b2b3ef5b6c2af5  verify_adaptive_tower.py' | sha256sum -c -
           python3 verify_adaptive_tower.py
       - name: Reject tampered word table
         shell: bash
