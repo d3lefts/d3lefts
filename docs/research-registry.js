@@ -467,7 +467,7 @@ const REGISTRY={
       "title": "Information-limited safety guards",
       "field": "Agent safety",
       "kind": "Conditional mathematical model · finite benchmark observation",
-      "short": "Sound enforcement can force legitimate-task denials when a guard cannot distinguish harmful and permitted calls.",
+      "short": "Sound enforcement can force collateral denial of legitimate tasks when a guard cannot distinguish harmful and permitted calls.",
       "statement": "Under a universal soundness requirement and an observation map α, a permitted action sharing the same observed fiber with a forbidden action cannot be permitted by any guard using only α. In the scoped archived AgentDojo analysis, a name-only sound guard is reported to deny 45 of 60 legitimate user tasks.",
       "conditions": "The impossibility is conditional on the prescribed soundness contract, action partition and guard observation. The 45/60 count applies only to the archived 60-task finite cohort, not deployed CaMeL, general agents or actual completed tasks.",
       "measurement": "45 / 60",
