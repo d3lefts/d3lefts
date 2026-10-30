@@ -79,7 +79,8 @@ test('Opening and scroll chapters disclose the exact finite record before other 
  const front=html.slice(hero,others);
  assert.match(front,/Erdős overlap finite witness record/);
  assert.match(front,/Source-bound Erdős finite overlap record/);
- assert.ok((front.match(/0\.380856370118/g)||[]).length===2);
+ assert.ok((front.match(/0\.380856370118/g)||[]).length>=4, "Score appears in both first-fold modes and both record displays");
+ assert.ok((front.match(/class="nf-opening-scoreline"/g)||[]).length===2);
  assert.ok((front.match(/131,072/g)||[]).length>=3);
  for(const disclaimer of ['separate, incompletely recovered artifact','external review open','global optimum'])
   assert.ok(front.toLowerCase().includes(disclaimer.toLowerCase()),disclaimer);

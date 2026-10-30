@@ -12,7 +12,7 @@
 | `home-system.js` | 3,188 | 2,415 | Removed hydration branches for a discontinued findings gallery and evidence-history widget. Exact Sidon witness and four source-linked research programs remain canonical. |
 | Homepage JavaScript requests | 7 | 7 | Preserved registry, finite checker, theme, shared navigation, and the two scroll cinematics rather than inventing an unsafe bundle. |
 
-Figures are static source counts at this dated checkpoint. They **do not** establish faster page load, Core Web Vitals improvements, smaller compressed transfers, or increased research credibility. Claim content and scientific status are outside this maintenance change.
+Figures compare the pre-cleanup checkpoint at commit `526a8984` to its matching maintenance branch. Concurrent cosmetic changes on `main` may change the absolute totals in the final deployed asset set; the difference attributable to this cleanup remains one stylesheet request and 5,196 uncompressed CSS bytes. Figures are static source counts at this dated checkpoint. They **do not** establish faster page load, Core Web Vitals improvements, smaller compressed transfers, or increased research credibility. Claim content and scientific status are outside this maintenance change.
 
 The new `scripts/test_home_maintenance.cjs` is wired into the normal website verification. It checks asset counts and existence, canonical claim hydration, preserved navigation landmarks, and retirement of stale homepage CSS selectors. It supplements rather than replaces real-browser testing.
 
