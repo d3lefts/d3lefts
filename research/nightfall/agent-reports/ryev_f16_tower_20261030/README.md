@@ -45,3 +45,20 @@ Let `B:H^4 -> K^3` be the anchored cubing map from the frozen matrix and assume 
 **Formalization debt:** The existing PR #243 Lean file proves only finite arithmetic/81-word Boolean statements. A general Lean theorem needs (i) a finite-field `K` and `H` interface, (ii) cubing-fiber-to-orbit lemma, (iii) a supported-anchor choice for arbitrary `Fin k` vectors, (iv) a chunked partition with a verified 4-block + 1–3 tail count, and (v) a linear-form observation identity and reconstruction correctness. The local runtime lacks `lean`/`lake` binaries, so no Lean file was compiled or claimed to pass during this audit. Use pinned Lean 4.35.0 via the existing bridge before formal status upgrade.
 
 **Scope/status:** Independent internal arithmetic, all k=5 signals and mutation tests completed. General written lemma is conditional on field facts and the 81-word injectivity, and is **not yet formally kernel-certified**. Publication-priority search, external mathematical review and 4×7 construction remain open. No changes to site publication claims, branch protection, original contributor credit, provider spending, or Gate C status.
+
+
+## 30 October extension — adaptive 27-state block, distinct same-oracle replay
+
+Source: verify_adaptive_tower.py (Git blob SHA 6233c192e93d3b888b3351acf320c811f06e9a36). Run:
+
+    python3 research/nightfall/agent-reports/ryev_f16_tower_20261030/verify_adaptive_tower.py
+
+The dedicated workflow also runs it. This source was separately written from producing PR #255, uses GF4[u]/(u²+u+ω) arithmetic, validates the full 16-element isomorphism, and is independent *internal* arithmetic, not external review.
+
+Frozen same-model candidate: H=F4* and oracle (a·x)^3. First polynomial-coordinate row (1,2,3,4), followed by the six observed-cube-keyed second rows exactly as displayed in Tessera PR #255. The checker reconstructs the whole 27-entry phase/transcript dictionary in the tower field, including the zero fiber, and verifies no duplicate transcripts. The fiber sizes are 1,5,5,5,5,6.
+
+Executed locally with Python 3.13.5: all 65,536 F16^4 signals (query count frequencies 4:61, 5:1350, 6:64125); all 5,461 F16^7 support/global-phase representatives plus the zero signal; and 12,000 reproducibly seeded seven-coordinate arbitrary-amplitude tests. Reconstruction is modulo one common H scalar and counts coordinate readings plus **both** adaptive block queries. Exact information lower bounds show the proposed worst-case counts 6 (k4) and 11 (k7) are tight **conditional on the written all-k transfer argument**. The replay independently checks the finite decoder rather than establishing an all-k Lean theorem.
+
+Negative controls must fail: delete the first-output-zero branch; use a wrong second row for a legal first output; replace the oracle exponent 3 with 5; and attempt to choose the second row from the hidden *unpowered* first sum. Tower representatives 6 and 11 differ while their cube is identical, demonstrating why branch selection cannot legally distinguish them. A changed subgroup/exponent is a different oracle model, never a free decoder improvement.
+
+**Precise remaining formal dependency:** give Lean 4.35.0 a general finite-field/subgroup interface, prove cube fibers are exactly H-cosets, and prove correctness of canonical-root normalization, supported anchor, three-phase block partition and terminal one/two-coordinate cases for arbitrary k. The runtime executing this checker has no Lean/Lake toolchain; therefore **no new Lean kernel theorem is claimed**. Existing PR #243's finite 81-state Lean check does not discharge this parametric proof. External human referee, same-model historical priority, and Vesper/owner promotion gates remain open. No new site claim or public scientific status change.
