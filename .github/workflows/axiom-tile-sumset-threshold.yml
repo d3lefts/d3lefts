@@ -25,5 +25,13 @@ jobs:
           python-version: "3.12"
       - name: Source hash
         run: sha256sum research/nightfall/agent-reports/axiom_tile_threshold_20261030/check_tiles.py
+      - name: Exact diamond prime-family and boundary rectangle replay
+        run: python3 research/nightfall/agent-reports/axiom_tile_threshold_20261030/check_diamond.py
+      - name: Non-importing signed coefficient row and second-field isomorphism
+        run: python3 research/nightfall/agent-reports/axiom_tile_threshold_20261030/audit_diamond_row.py
+      - name: Freeze diamond source hashes
+        run: |
+          sha256sum research/nightfall/agent-reports/axiom_tile_threshold_20261030/check_diamond.py
+          sha256sum research/nightfall/agent-reports/axiom_tile_threshold_20261030/audit_diamond_row.py
       - name: Full pair-sum and actual field-square verifier
         run: python3 research/nightfall/agent-reports/axiom_tile_threshold_20261030/check_tiles.py
