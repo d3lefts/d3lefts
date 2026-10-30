@@ -1,0 +1,6 @@
+seed=1 r=1 tested=10 sidon=10 saturated=0 minholes=2
+seed=1 r=2 tested=7830 sidon=2062 saturated=0 minholes=6
+seed=1 r=3 tested=1806120 sidon=238215 saturated=0 minholes=5
+seed=2 r=1 tested=10 sidon=10 saturated=0 minholes=2
+seed=2 r=2 tested=7830 sidon=2036 saturated=0 minholes=6
+seed=2 r=3 tested=1806120 sidon=234004 saturated=0 minholes=5

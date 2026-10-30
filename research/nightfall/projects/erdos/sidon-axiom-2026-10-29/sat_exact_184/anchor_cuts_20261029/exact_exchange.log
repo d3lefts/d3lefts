@@ -1,0 +1,6 @@
+seed=1 deletions=1 additions=0 examined=10 sidon=10 saturated=0 min_holes=2 tied_best=1 best={49,50,56,78,93,104,125,139,149} sec=2.797e-05
+seed=1 deletions=2 additions=1 examined=7830 sidon=2062 saturated=0 min_holes=6 tied_best=1 best={49,50,56,78,90,93,104,125,149} sec=0.006193
+seed=1 deletions=3 additions=2 examined=1806120 sidon=238215 saturated=0 min_holes=5 tied_best=2 best={38,50,56,78,93,94,104,125,139} sec=0.7314
+seed=2 deletions=1 additions=0 examined=10 sidon=10 saturated=0 min_holes=2 tied_best=1 best={49,50,56,78,93,104,125,139,149} sec=2.611e-05
+seed=2 deletions=2 additions=1 examined=7830 sidon=2036 saturated=0 min_holes=6 tied_best=1 best={49,50,56,78,90,93,104,125,149} sec=0.005528
+seed=2 deletions=3 additions=2 examined=1806120 sidon=234004 saturated=0 min_holes=5 tied_best=2 best={38,50,56,78,93,94,104,125,139} sec=0.6957

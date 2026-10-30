@@ -1,0 +1,47 @@
+{
+  "commands": [
+    "python3 verify_constants.py",
+    "python3 independent_finite_replay.py > replay.json",
+    "python3 verify_n184_ten.py > N184_TEN_MARK_CERTIFICATE.json"
+  ],
+  "date": "2026-10-29",
+  "evidence_limits": "Internal exact validation; independent external mathematical referee and publication priority unresolved",
+  "files": {
+    "N184_TEN_MARK_CERTIFICATE.json": {
+      "bytes": 64473,
+      "sha256": "46341075a762f5ebf30d6f4ca77e2998671506fb455d339f653a61babecd928a"
+    },
+    "N184_TEN_MARK_RESULT.md": {
+      "bytes": 1888,
+      "sha256": "848b869e6204d250549f957f40014785d50573715fa714738bd549034cdfdb60"
+    },
+    "OPTIMIZED_WINDOW_THEOREM.md": {
+      "bytes": 6309,
+      "sha256": "6b605c9e1dbb8d4969796041bcad4523ba30632547cc2127c796a5a58cfa8b05"
+    },
+    "constants.log": {
+      "bytes": 547,
+      "sha256": "5a2653e3e78b27d399b355001205a3bd7203d05ab3aba1cc4ed185ee788781b2"
+    },
+    "independent_finite_replay.py": {
+      "bytes": 4773,
+      "sha256": "e1d9e76d9b6cdb6b705e11fa6eb2af03c9d5b03501fcc0c46de2c473e0cac4bd"
+    },
+    "replay.json": {
+      "bytes": 4448,
+      "sha256": "c832855a18156f8961ae6c9c360c6f5bef484835c237386392e919f672791d88"
+    },
+    "verify_constants.py": {
+      "bytes": 1131,
+      "sha256": "80f05f9d6efec7aa8d3537c49d267b98aa1f63f078d94d27414c53b8b76e5201"
+    },
+    "verify_n184_ten.py": {
+      "bytes": 1862,
+      "sha256": "11143ddb871c02173e6a3d517e68fda2c62be7e5e4dd50b176383e79ab28b19a"
+    }
+  },
+  "primary_assignment": 46,
+  "scope": "two-parameter fixed-prefix coefficient + two explicit N184 ten-mark maximal Sidon sets; no N184 k9 decision, no global Sidon solution",
+  "self_assignment": 83,
+  "status": "INTERNAL_EXACT_PASS"
+}

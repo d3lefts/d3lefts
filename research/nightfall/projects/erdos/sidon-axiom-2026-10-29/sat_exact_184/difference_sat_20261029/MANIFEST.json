@@ -1,0 +1,60 @@
+{
+  "assignment": "#46 #91",
+  "base": "N184 k9, baseline sum CNF",
+  "date": "2026-10-29",
+  "files": {
+    "RESEARCH_NOTE.md": {
+      "bytes": 7473,
+      "sha256": "4d5c3a34a4fba37d1dba0db2008e9c267d90cbdab511331eec264a687e9179af"
+    },
+    "baseline_N184_k9.cnf": {
+      "bytes": 3044286,
+      "sha256": "787d297bf108d1947bdd7eebc610400840322dfb7eff3625caf8886af14a6901"
+    },
+    "baseline_build.log": {
+      "bytes": 185,
+      "sha256": "ae13e6365deb3f34921a359cbc962ae8d24233ff12c6be2063b0a5fcd4a5c88f"
+    },
+    "build.log": {
+      "bytes": 170,
+      "sha256": "ad7539e8cc053b907a43f3a43b75cf5faa4c91fb56c7c6465af2ba0e9852bc8d"
+    },
+    "build_difference_sat.py": {
+      "bytes": 4638,
+      "sha256": "789d94d1e330958d0479683b662c5175eb2427142aed98145730fd605bdeedee"
+    },
+    "difference_N184_k9.cnf": {
+      "bytes": 2863723,
+      "sha256": "224fb414674d778046f91760e046b3cfb076ae19f74f53ea13850438bb9c8b80"
+    },
+    "independent_oracle.py": {
+      "bytes": 1187,
+      "sha256": "0b339181ddfcb34efa5db7f9121668c2f3aa4e517b3bc7d62e2211f491150727"
+    },
+    "mutations.log": {
+      "bytes": 215,
+      "sha256": "879108d2408a8a200ad0d6d4d14d00a6ddc7c362377fd510043976b415091bc7"
+    },
+    "solve.log": {
+      "bytes": 728,
+      "sha256": "4eda1be5da6c1212d4cfd81dee0d410b1a2245370cc61f3227efcf080f8f54ef"
+    },
+    "solve_cnf_milp.py": {
+      "bytes": 1933,
+      "sha256": "5a659b9e799a69fadd17a21be74ec778f953e2212e6be2bc112387cf579c0c70"
+    },
+    "verify.log": {
+      "bytes": 1992,
+      "sha256": "3c39593f820850ac09a70a4f60052533a3726a877e87511026b7582988c6a784"
+    },
+    "verify_cnf.py": {
+      "bytes": 1885,
+      "sha256": "3739c6c97e912a9b2ca0ce15eb6de356893956ff94a81a060a9cd657e01279df"
+    },
+    "verify_mutations.py": {
+      "bytes": 1341,
+      "sha256": "19177e566eda6f0db7a9977a972643dd86696258fc87f2bde7683a142f925c35"
+    }
+  },
+  "verdict": "exact alternate CNF verified; N184 k9 unresolved"
+}

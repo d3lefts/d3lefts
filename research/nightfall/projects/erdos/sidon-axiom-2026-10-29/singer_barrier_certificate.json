@@ -1,0 +1,3201 @@
+{
+  "date": "2026-10-29",
+  "examples": [
+    {
+      "deletions": [
+        {
+          "a": 2,
+          "example_survivors": [
+            0,
+            3
+          ],
+          "minimum_deletions": 1,
+          "ordered_triples": 3
+        },
+        {
+          "a": 4,
+          "example_survivors": [
+            1,
+            3
+          ],
+          "minimum_deletions": 1,
+          "ordered_triples": 3
+        },
+        {
+          "a": 5,
+          "example_survivors": [
+            0,
+            1
+          ],
+          "minimum_deletions": 1,
+          "ordered_triples": 3
+        },
+        {
+          "a": 6,
+          "example_survivors": [
+            0
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 3
+        }
+      ],
+      "difference_set": [
+        0,
+        1,
+        3
+      ],
+      "k": 3,
+      "maximum_deletions_across_a": 2,
+      "minimum_deletions_across_a": 1,
+      "modulus": 7,
+      "theoretical_deletion_lower_bound": 1
+    },
+    {
+      "deletions": [
+        {
+          "a": 2,
+          "example_survivors": [
+            0,
+            3
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 4
+        },
+        {
+          "a": 4,
+          "example_survivors": [
+            0,
+            1
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 4
+        },
+        {
+          "a": 5,
+          "example_survivors": [
+            0,
+            1
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 4
+        },
+        {
+          "a": 6,
+          "example_survivors": [
+            0,
+            1
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 4
+        },
+        {
+          "a": 7,
+          "example_survivors": [
+            0,
+            3
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 4
+        },
+        {
+          "a": 8,
+          "example_survivors": [
+            0,
+            1
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 4
+        },
+        {
+          "a": 10,
+          "example_survivors": [
+            0,
+            1
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 4
+        },
+        {
+          "a": 11,
+          "example_survivors": [
+            0,
+            1
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 4
+        },
+        {
+          "a": 12,
+          "example_survivors": [
+            0,
+            3
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 4
+        }
+      ],
+      "difference_set": [
+        0,
+        1,
+        3,
+        9
+      ],
+      "k": 4,
+      "maximum_deletions_across_a": 2,
+      "minimum_deletions_across_a": 2,
+      "modulus": 13,
+      "theoretical_deletion_lower_bound": 1
+    },
+    {
+      "deletions": [
+        {
+          "a": 2,
+          "example_survivors": [
+            1,
+            4,
+            14
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 5
+        },
+        {
+          "a": 3,
+          "example_survivors": [
+            0,
+            1,
+            14
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 5
+        },
+        {
+          "a": 5,
+          "example_survivors": [
+            0,
+            1,
+            14
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 5
+        },
+        {
+          "a": 6,
+          "example_survivors": [
+            0,
+            1,
+            4
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 5
+        },
+        {
+          "a": 7,
+          "example_survivors": [
+            0,
+            1
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 5
+        },
+        {
+          "a": 8,
+          "example_survivors": [
+            1,
+            4,
+            14
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 5
+        },
+        {
+          "a": 9,
+          "example_survivors": [
+            0,
+            1,
+            4
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 5
+        },
+        {
+          "a": 10,
+          "example_survivors": [
+            0,
+            1,
+            4
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 5
+        },
+        {
+          "a": 11,
+          "example_survivors": [
+            1,
+            4,
+            16
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 5
+        },
+        {
+          "a": 12,
+          "example_survivors": [
+            0,
+            1,
+            4
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 5
+        },
+        {
+          "a": 13,
+          "example_survivors": [
+            0,
+            4,
+            14
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 5
+        },
+        {
+          "a": 15,
+          "example_survivors": [
+            0,
+            1,
+            4
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 5
+        },
+        {
+          "a": 17,
+          "example_survivors": [
+            0,
+            1,
+            14
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 5
+        },
+        {
+          "a": 18,
+          "example_survivors": [
+            0,
+            1,
+            16
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 5
+        },
+        {
+          "a": 19,
+          "example_survivors": [
+            0,
+            1,
+            14
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 5
+        },
+        {
+          "a": 20,
+          "example_survivors": [
+            0,
+            4,
+            14
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 5
+        }
+      ],
+      "difference_set": [
+        0,
+        1,
+        4,
+        14,
+        16
+      ],
+      "k": 5,
+      "maximum_deletions_across_a": 3,
+      "minimum_deletions_across_a": 2,
+      "modulus": 21,
+      "theoretical_deletion_lower_bound": 2
+    },
+    {
+      "deletions": [
+        {
+          "a": 2,
+          "example_survivors": [
+            0,
+            3,
+            8,
+            12
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 6
+        },
+        {
+          "a": 4,
+          "example_survivors": [
+            0,
+            3,
+            12,
+            18
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 6
+        },
+        {
+          "a": 5,
+          "example_survivors": [
+            3,
+            8,
+            12,
+            18
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 6
+        },
+        {
+          "a": 6,
+          "example_survivors": [
+            0,
+            1,
+            8,
+            18
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 6
+        },
+        {
+          "a": 7,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            12
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 6
+        },
+        {
+          "a": 9,
+          "example_survivors": [
+            1,
+            3,
+            8,
+            12
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 6
+        },
+        {
+          "a": 10,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            18
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 6
+        },
+        {
+          "a": 11,
+          "example_survivors": [
+            1,
+            3,
+            8,
+            12
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 6
+        },
+        {
+          "a": 13,
+          "example_survivors": [
+            1,
+            3,
+            12,
+            18
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 6
+        },
+        {
+          "a": 14,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            8
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 6
+        },
+        {
+          "a": 15,
+          "example_survivors": [
+            0,
+            1,
+            3
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 6
+        },
+        {
+          "a": 16,
+          "example_survivors": [
+            1,
+            3,
+            8
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 6
+        },
+        {
+          "a": 17,
+          "example_survivors": [
+            0,
+            1,
+            8,
+            12
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 6
+        },
+        {
+          "a": 19,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            8
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 6
+        },
+        {
+          "a": 20,
+          "example_survivors": [
+            0,
+            3,
+            8,
+            18
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 6
+        },
+        {
+          "a": 21,
+          "example_survivors": [
+            0,
+            1,
+            3
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 6
+        },
+        {
+          "a": 22,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            8
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 6
+        },
+        {
+          "a": 23,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            18
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 6
+        },
+        {
+          "a": 24,
+          "example_survivors": [
+            1,
+            3,
+            8,
+            12
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 6
+        },
+        {
+          "a": 25,
+          "example_survivors": [
+            0,
+            3,
+            8,
+            18
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 6
+        },
+        {
+          "a": 26,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            12
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 6
+        },
+        {
+          "a": 27,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            12
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 6
+        },
+        {
+          "a": 28,
+          "example_survivors": [
+            0,
+            1,
+            12,
+            18
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 6
+        },
+        {
+          "a": 29,
+          "example_survivors": [
+            0,
+            1,
+            8,
+            12
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 6
+        },
+        {
+          "a": 30,
+          "example_survivors": [
+            0,
+            3,
+            8,
+            18
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 6
+        }
+      ],
+      "difference_set": [
+        0,
+        1,
+        3,
+        8,
+        12,
+        18
+      ],
+      "k": 6,
+      "maximum_deletions_across_a": 3,
+      "minimum_deletions_across_a": 2,
+      "modulus": 31,
+      "theoretical_deletion_lower_bound": 2
+    },
+    {
+      "deletions": [
+        {
+          "a": 2,
+          "example_survivors": [
+            0,
+            3,
+            32,
+            36,
+            43
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 4,
+          "example_survivors": [
+            0,
+            1,
+            13,
+            32,
+            43
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 5,
+          "example_survivors": [
+            0,
+            3,
+            13,
+            32,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 6,
+          "example_survivors": [
+            1,
+            3,
+            13,
+            36,
+            52
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 7,
+          "example_survivors": [
+            0,
+            3,
+            13,
+            36,
+            52
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 8,
+          "example_survivors": [
+            0,
+            1,
+            13,
+            32,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 9,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            13,
+            32
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 10,
+          "example_survivors": [
+            0,
+            13,
+            32,
+            36,
+            43,
+            52
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 8
+        },
+        {
+          "a": 11,
+          "example_survivors": [
+            0,
+            1,
+            13,
+            32,
+            52
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 12,
+          "example_survivors": [
+            0,
+            3,
+            13,
+            32,
+            43
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 14,
+          "example_survivors": [
+            0,
+            3,
+            13,
+            32,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 15,
+          "example_survivors": [
+            1,
+            13,
+            32,
+            36,
+            43
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 16,
+          "example_survivors": [
+            1,
+            3,
+            13,
+            32,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 17,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            13,
+            32,
+            52
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 8
+        },
+        {
+          "a": 18,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            13,
+            32
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 19,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            13,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 20,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            13,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 21,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            13,
+            32
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 22,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            13,
+            52
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 23,
+          "example_survivors": [
+            0,
+            1,
+            13,
+            32,
+            43
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 24,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            13,
+            43,
+            52
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 8
+        },
+        {
+          "a": 25,
+          "example_survivors": [
+            0,
+            3,
+            13,
+            36,
+            43
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 26,
+          "example_survivors": [
+            1,
+            13,
+            32,
+            36,
+            43
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 27,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            13,
+            52
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 28,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            13,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 29,
+          "example_survivors": [
+            1,
+            3,
+            13,
+            43,
+            52
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 30,
+          "example_survivors": [
+            0,
+            1,
+            13,
+            32,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 31,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            13,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 33,
+          "example_survivors": [
+            0,
+            1,
+            13,
+            36,
+            43,
+            52
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 8
+        },
+        {
+          "a": 34,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            13,
+            43
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 35,
+          "example_survivors": [
+            1,
+            3,
+            13,
+            32,
+            43
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 37,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            13,
+            32,
+            43
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 8
+        },
+        {
+          "a": 38,
+          "example_survivors": [
+            3,
+            13,
+            32,
+            36,
+            43,
+            52
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 8
+        },
+        {
+          "a": 39,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            32,
+            43,
+            52
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 8
+        },
+        {
+          "a": 40,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            13,
+            32
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 41,
+          "example_survivors": [
+            0,
+            1,
+            13,
+            32,
+            36,
+            43
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 8
+        },
+        {
+          "a": 42,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            13,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 44,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            32,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 45,
+          "example_survivors": [
+            0,
+            3,
+            13,
+            36,
+            43
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 46,
+          "example_survivors": [
+            0,
+            13,
+            32,
+            36,
+            52
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 47,
+          "example_survivors": [
+            1,
+            3,
+            13,
+            32,
+            52
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 48,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            32,
+            43
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 49,
+          "example_survivors": [
+            1,
+            3,
+            13,
+            32,
+            36,
+            52
+          ],
+          "minimum_deletions": 2,
+          "ordered_triples": 8
+        },
+        {
+          "a": 50,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            32,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 51,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            13,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 53,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            13,
+            32
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 54,
+          "example_survivors": [
+            0,
+            1,
+            13,
+            36,
+            43
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 55,
+          "example_survivors": [
+            0,
+            3,
+            13,
+            32,
+            43
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        },
+        {
+          "a": 56,
+          "example_survivors": [
+            1,
+            13,
+            32,
+            36,
+            43
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 8
+        }
+      ],
+      "difference_set": [
+        0,
+        1,
+        3,
+        13,
+        32,
+        36,
+        43,
+        52
+      ],
+      "k": 8,
+      "maximum_deletions_across_a": 3,
+      "minimum_deletions_across_a": 2,
+      "modulus": 57,
+      "theoretical_deletion_lower_bound": 2
+    },
+    {
+      "deletions": [
+        {
+          "a": 2,
+          "example_survivors": [
+            0,
+            3,
+            7,
+            15,
+            31,
+            54
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 4,
+          "example_survivors": [
+            0,
+            3,
+            15,
+            36,
+            54,
+            63
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 5,
+          "example_survivors": [
+            0,
+            1,
+            7,
+            15,
+            36,
+            54
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 6,
+          "example_survivors": [
+            1,
+            3,
+            7,
+            15,
+            36,
+            54
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 8,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            36,
+            54
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 9
+        },
+        {
+          "a": 9,
+          "example_survivors": [
+            0,
+            1,
+            7,
+            31,
+            36,
+            54
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 10,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            15,
+            31,
+            54
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 11,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            15,
+            31,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 12,
+          "example_survivors": [
+            1,
+            3,
+            7,
+            15,
+            31,
+            54
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 13,
+          "example_survivors": [
+            0,
+            3,
+            7,
+            15,
+            31,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 14,
+          "example_survivors": [
+            1,
+            3,
+            7,
+            15,
+            31,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 16,
+          "example_survivors": [
+            0,
+            3,
+            7,
+            15,
+            36,
+            54
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 17,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            7,
+            36
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 9
+        },
+        {
+          "a": 18,
+          "example_survivors": [
+            1,
+            3,
+            7,
+            15,
+            31,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 19,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            15,
+            36,
+            63
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 20,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            7,
+            15,
+            31
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 21,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            7,
+            31,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 22,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            7,
+            31,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 23,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            7,
+            31,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 24,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            7,
+            15,
+            54
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 25,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            7,
+            15,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 26,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            7,
+            15,
+            31
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 27,
+          "example_survivors": [
+            0,
+            1,
+            7,
+            15,
+            31,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 28,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            15,
+            36,
+            54
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 29,
+          "example_survivors": [
+            0,
+            3,
+            15,
+            31,
+            36,
+            54
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 30,
+          "example_survivors": [
+            1,
+            3,
+            15,
+            31,
+            36,
+            54
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 32,
+          "example_survivors": [
+            0,
+            1,
+            7,
+            15,
+            36,
+            54
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 33,
+          "example_survivors": [
+            0,
+            1,
+            7,
+            15,
+            31,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 34,
+          "example_survivors": [
+            0,
+            1,
+            7,
+            15,
+            31,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 35,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            7,
+            15
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 9
+        },
+        {
+          "a": 37,
+          "example_survivors": [
+            0,
+            3,
+            7,
+            15,
+            31,
+            63
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 38,
+          "example_survivors": [
+            1,
+            3,
+            7,
+            31,
+            54,
+            63
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 39,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            7,
+            31,
+            54
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 40,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            15,
+            31
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 9
+        },
+        {
+          "a": 41,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            7,
+            15,
+            31
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 42,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            7,
+            15,
+            63
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 43,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            7,
+            15,
+            54
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 44,
+          "example_survivors": [
+            1,
+            3,
+            7,
+            15,
+            54,
+            63
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 45,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            7,
+            15,
+            54
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 46,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            7,
+            15,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 47,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            15,
+            36,
+            54
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 48,
+          "example_survivors": [
+            0,
+            1,
+            7,
+            15,
+            31,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 49,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            7,
+            15,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 50,
+          "example_survivors": [
+            0,
+            3,
+            7,
+            15,
+            31,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 51,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            7,
+            15,
+            31
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 52,
+          "example_survivors": [
+            0,
+            3,
+            7,
+            15,
+            54,
+            63
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 53,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            7,
+            15,
+            31
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 55,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            15,
+            31,
+            63
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 56,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            7,
+            15
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 9
+        },
+        {
+          "a": 57,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            7,
+            31,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 58,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            7,
+            31,
+            63
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 59,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            7,
+            36,
+            54
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 60,
+          "example_survivors": [
+            0,
+            3,
+            7,
+            15,
+            36,
+            54
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 61,
+          "example_survivors": [
+            1,
+            3,
+            7,
+            15,
+            36,
+            54
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 62,
+          "example_survivors": [
+            1,
+            3,
+            7,
+            31,
+            36,
+            63
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 64,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            7,
+            31
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 9
+        },
+        {
+          "a": 65,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            15,
+            31,
+            36
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 66,
+          "example_survivors": [
+            3,
+            7,
+            15,
+            31,
+            36,
+            63
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 67,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            15,
+            31,
+            54
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 68,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            15,
+            31
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 9
+        },
+        {
+          "a": 69,
+          "example_survivors": [
+            1,
+            3,
+            7,
+            15,
+            31,
+            54
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 9
+        },
+        {
+          "a": 70,
+          "example_survivors": [
+            0,
+            1,
+            7,
+            15,
+            31
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 9
+        },
+        {
+          "a": 71,
+          "example_survivors": [
+            0,
+            1,
+            7,
+            15,
+            31
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 9
+        },
+        {
+          "a": 72,
+          "example_survivors": [
+            1,
+            7,
+            31,
+            36
+          ],
+          "minimum_deletions": 5,
+          "ordered_triples": 9
+        }
+      ],
+      "difference_set": [
+        0,
+        1,
+        3,
+        7,
+        15,
+        31,
+        36,
+        54,
+        63
+      ],
+      "k": 9,
+      "maximum_deletions_across_a": 5,
+      "minimum_deletions_across_a": 3,
+      "modulus": 73,
+      "theoretical_deletion_lower_bound": 3
+    },
+    {
+      "deletions": [
+        {
+          "a": 2,
+          "example_survivors": [
+            0,
+            3,
+            9,
+            27,
+            49,
+            77,
+            81
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 4,
+          "example_survivors": [
+            0,
+            1,
+            9,
+            27,
+            49,
+            56,
+            81
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 5,
+          "example_survivors": [
+            0,
+            3,
+            9,
+            27,
+            56,
+            77
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 6,
+          "example_survivors": [
+            0,
+            9,
+            27,
+            49,
+            56,
+            61,
+            81
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 7,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            27,
+            56,
+            61
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 8,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            27,
+            49,
+            61,
+            81
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 10,
+          "example_survivors": [
+            0,
+            1,
+            27,
+            49,
+            56,
+            61,
+            77
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 11,
+          "example_survivors": [
+            0,
+            1,
+            9,
+            27,
+            49,
+            56,
+            61
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 12,
+          "example_survivors": [
+            0,
+            3,
+            27,
+            56,
+            61,
+            77,
+            81
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 13,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            27,
+            49
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 14,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            49,
+            61
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 15,
+          "example_survivors": [
+            0,
+            1,
+            9,
+            27,
+            49,
+            56
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 16,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            27,
+            56,
+            61
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 17,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            27,
+            49,
+            56,
+            61
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 18,
+          "example_survivors": [
+            0,
+            1,
+            27,
+            56,
+            61,
+            77,
+            81
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 19,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            49,
+            56,
+            77
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 20,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            27,
+            49,
+            61
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 21,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            27,
+            49,
+            61
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 22,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            27,
+            61,
+            77,
+            81
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 23,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            27,
+            56
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 24,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            49,
+            56,
+            61
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 25,
+          "example_survivors": [
+            0,
+            3,
+            9,
+            27,
+            56,
+            61
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 26,
+          "example_survivors": [
+            1,
+            3,
+            9,
+            27,
+            56,
+            61
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 28,
+          "example_survivors": [
+            1,
+            3,
+            9,
+            27,
+            49,
+            56
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 29,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            56,
+            61,
+            77
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 30,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            49,
+            56,
+            77,
+            81
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 31,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            27,
+            56,
+            77
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 32,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            27,
+            49
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 33,
+          "example_survivors": [
+            0,
+            1,
+            9,
+            27,
+            49,
+            56,
+            61
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 34,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            27,
+            56,
+            77
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 35,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            77,
+            81
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 36,
+          "example_survivors": [
+            0,
+            1,
+            9,
+            49,
+            61,
+            77,
+            81
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 37,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            61,
+            77,
+            81
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 38,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            27,
+            61
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 39,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            27,
+            49
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 40,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            27,
+            49,
+            56,
+            61
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 41,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            27,
+            61
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 42,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            27,
+            56
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 43,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            27,
+            56
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 44,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            61,
+            81
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 45,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            27,
+            56,
+            61
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 46,
+          "example_survivors": [
+            0,
+            3,
+            9,
+            27,
+            56,
+            61,
+            77
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 47,
+          "example_survivors": [
+            1,
+            9,
+            27,
+            49,
+            56,
+            61,
+            77
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 48,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            27,
+            77,
+            81
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 50,
+          "example_survivors": [
+            1,
+            3,
+            27,
+            49,
+            56,
+            61,
+            77
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 51,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            56,
+            77,
+            81
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 52,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            27,
+            56
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 53,
+          "example_survivors": [
+            0,
+            3,
+            9,
+            27,
+            49,
+            61,
+            81
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 54,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            49,
+            61,
+            77,
+            81
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 55,
+          "example_survivors": [
+            0,
+            3,
+            9,
+            27,
+            56,
+            77,
+            81
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 57,
+          "example_survivors": [
+            0,
+            3,
+            9,
+            27,
+            49,
+            56,
+            77
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 58,
+          "example_survivors": [
+            3,
+            9,
+            27,
+            49,
+            56,
+            61,
+            77
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 59,
+          "example_survivors": [
+            0,
+            1,
+            9,
+            49,
+            56,
+            61,
+            77
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 60,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            27,
+            56,
+            81
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 62,
+          "example_survivors": [
+            0,
+            3,
+            9,
+            27,
+            49,
+            61,
+            77
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 63,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            27,
+            49
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 64,
+          "example_survivors": [
+            3,
+            9,
+            27,
+            49,
+            56,
+            61,
+            77
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 65,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            49,
+            61
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 66,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            49,
+            61,
+            81
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 67,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            49,
+            56,
+            77
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 68,
+          "example_survivors": [
+            0,
+            1,
+            9,
+            27,
+            56,
+            61,
+            81
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 69,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            27,
+            56
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 70,
+          "example_survivors": [
+            1,
+            3,
+            9,
+            49,
+            56,
+            61
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 71,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            49,
+            56,
+            61
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 72,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            27,
+            56,
+            61
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 73,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            27,
+            56,
+            61,
+            81
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 74,
+          "example_survivors": [
+            0,
+            1,
+            9,
+            49,
+            61,
+            77,
+            81
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 75,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            27,
+            61
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 76,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            49,
+            56,
+            81
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 78,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            27,
+            61
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 79,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            27,
+            49,
+            56
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 80,
+          "example_survivors": [
+            0,
+            1,
+            9,
+            27,
+            49,
+            56,
+            77
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 82,
+          "example_survivors": [
+            1,
+            3,
+            9,
+            49,
+            56,
+            77,
+            81
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 83,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            49,
+            56,
+            61,
+            77
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 84,
+          "example_survivors": [
+            1,
+            3,
+            27,
+            49,
+            56,
+            81
+          ],
+          "minimum_deletions": 4,
+          "ordered_triples": 10
+        },
+        {
+          "a": 85,
+          "example_survivors": [
+            0,
+            1,
+            9,
+            27,
+            49,
+            61,
+            81
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 86,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            27,
+            49,
+            56,
+            77
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 87,
+          "example_survivors": [
+            0,
+            1,
+            3,
+            9,
+            27,
+            49,
+            77
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 88,
+          "example_survivors": [
+            0,
+            1,
+            9,
+            27,
+            49,
+            56,
+            77
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 89,
+          "example_survivors": [
+            0,
+            3,
+            9,
+            27,
+            61,
+            77,
+            81
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        },
+        {
+          "a": 90,
+          "example_survivors": [
+            0,
+            3,
+            9,
+            49,
+            56,
+            61,
+            77
+          ],
+          "minimum_deletions": 3,
+          "ordered_triples": 10
+        }
+      ],
+      "difference_set": [
+        0,
+        1,
+        3,
+        9,
+        27,
+        49,
+        56,
+        61,
+        77,
+        81
+      ],
+      "k": 10,
+      "maximum_deletions_across_a": 4,
+      "minimum_deletions_across_a": 3,
+      "modulus": 91,
+      "theoretical_deletion_lower_bound": 3
+    }
+  ],
+  "schema": "nightfall-singer-deletion-barrier-v1",
+  "scope": "cyclic perfect difference sets only; no solution to Erd\u0151s #44/#329"
+}

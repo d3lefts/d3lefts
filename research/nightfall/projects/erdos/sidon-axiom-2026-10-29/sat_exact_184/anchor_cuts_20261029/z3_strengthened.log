@@ -1,0 +1,2 @@
+INPUT /mnt/data/axiom_exchange/difference_N184_k9_with_local_cuts.cnf variables 62552 clauses 178482 sha256 d4db70f5a363226a49e9549fe9cea09c5cb16128aa9bcef5d4d79df6009b8da8
+Z3_RESULT 'unknown\n' elapsed_sec 13.22

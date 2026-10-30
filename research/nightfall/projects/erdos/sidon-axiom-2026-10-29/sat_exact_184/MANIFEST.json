@@ -1,0 +1,71 @@
+{
+  "files": {
+    "SAT_N184_K9_AUDIT.md": {
+      "bytes": 7898,
+      "sha256": "98013772af5cdc7d6ffbd547d15b6bde60b7a1b66e7f0fba5a668871280ce7c3"
+    },
+    "audit49.log": {
+      "bytes": 140,
+      "sha256": "b66db84a1a378013685dbbf9ad265c8c56343784756fb776ba7bd2f6f5352f0f"
+    },
+    "audit57.log": {
+      "bytes": 1623,
+      "sha256": "add758bbfb0143966028caa6c70ee454b1646e6561966a1fc8b2b19b5cc3f2e5"
+    },
+    "audit_lemnis57.py": {
+      "bytes": 4038,
+      "sha256": "ebbe23603f19966433454113753c539f9e3d09fb60e3a2f3a2d450956e5b6341"
+    },
+    "audit_prefix49.py": {
+      "bytes": 1806,
+      "sha256": "8f4b71ca593ea8ab4f805d7f27e7f78850f74b14f4113a7218e5f0a76ecb08da"
+    },
+    "build184.log": {
+      "bytes": 182,
+      "sha256": "b6aa6db7884ece76d03ee2bf32c21b1663cff9806c296f43f5971f0fb6d2ad34"
+    },
+    "build_sat.py": {
+      "bytes": 5179,
+      "sha256": "de9fa5d3722e22468c38e28087f4e29d8d81938be4f8b33245ea2d4b905f1a42"
+    },
+    "independent_oracle.py": {
+      "bytes": 1734,
+      "sha256": "aabad4e89689d3c0145ebdba598264ce649d24609e0a49372621fe3adfe68516"
+    },
+    "known_witness.log": {
+      "bytes": 147,
+      "sha256": "e9605118c9a310c69aafdb5a9e0ad40c494b0d3e814b2720e862d23d3d872021"
+    },
+    "sidon_N184_k9.cnf": {
+      "bytes": 3044286,
+      "sha256": "787d297bf108d1947bdd7eebc610400840322dfb7eff3625caf8886af14a6901"
+    },
+    "solve_toy.py": {
+      "bytes": 1495,
+      "sha256": "45dad3a669d4435294ede1e81e6330dc7f29745a09e13b26e7de59dec4eb55d4"
+    },
+    "target_timeout.log": {
+      "bytes": 155,
+      "sha256": "f8a02d8c51d80f0f7f9894aa0465f8a2df64cf08142bd5b465be610552b426c0"
+    },
+    "test_encoding.log": {
+      "bytes": 799,
+      "sha256": "18d0775b6f89d2ed031a702f04645b947ab96b2c5f28ae07e4a5159e4ad604de"
+    },
+    "test_encoding.py": {
+      "bytes": 805,
+      "sha256": "a18d176da791cd99829220c2f4ecd0e0993d1a510f3d71da3fc1592b6bcdcaf3"
+    },
+    "toy_sat.log": {
+      "bytes": 241,
+      "sha256": "5eab73d64f9bcec9ae0454a33d1eed1d7c1493023186c30627c1f458b83e567f"
+    },
+    "toy_unsat.log": {
+      "bytes": 147,
+      "sha256": "7e9e8c2c95c209fe9a5ad6d2aed47571fa5a66116d5b05d8a0c7be820ce542b9"
+    }
+  },
+  "status": "EXACT_SAT_FORMULATION_N184_K9_UNRESOLVED",
+  "timestamp": "2026-10-29"
+}
+
