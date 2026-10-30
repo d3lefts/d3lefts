@@ -18,5 +18,5 @@ assert.ok((html.match(/<a\b/g)||[]).length<=45,"Homepage link density must stay 
 assert.ok(!html.includes("nf-section-index")&&!html.includes("nf-home-toolbox")&&!html.includes("instrument-workflow"),"No duplicative navigation or tool directory");
 for(const id of ["flagships","live-case","featured-title","nf-scroll-cinema","observatory","review","work","research-systems"])assert.ok(html.includes('id="'+id+'"'),"Missing meaningful destination "+id);
 assert.ok(!html.includes('src="observatory-home.js"'),"Do not load the full graph engine on the homepage");
-assert.ok(chrome.includes('if(page==="index.html")return;'),"No second rail on the homepage");
+assert.ok(chrome.includes('["index.html","constellation.html","review.html"].includes(page)'),"Three primary destinations have no secondary rails");
 console.log("PASS: selective homepage with three primary evidence moments, cinematic integrity, and source-bound destinations");
