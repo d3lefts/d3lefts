@@ -5,6 +5,7 @@ on:
       - 'research/nightfall/formalization/**'
       - 'scripts/lean_bridge.py'
       - 'tests/test_lean_bridge.py'
+      - 'tests/test_adaptive_information_bound.py'
       - 'lean-toolchain'
       - '.github/workflows/lean-char3-sanity.yml'
   push:
@@ -50,6 +51,15 @@ jobs:
             --decl Nightfall.FiniteField.cubing_is_identity_mod_three \
             --decl Nightfall.FiniteField.cube_additive_mod_three \
             --json-out lean-receipts/finite3.json
+      - name: Kernel-check universal power-information inequality and exact independent cases
+        run: |
+          python3 tests/test_adaptive_information_bound.py
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/finite_field/AdaptiveInformationBound.lean \
+            --strict \
+            --decl Nightfall.FiniteField.information_square_bound \
+            --decl Nightfall.FiniteField.information_power_bound \
+            --json-out lean-receipts/adaptive-information.json
       - name: Compile requested committed file (manual dispatch only)
         if: github.event_name == 'workflow_dispatch'
         env:
