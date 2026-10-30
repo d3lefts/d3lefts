@@ -26,7 +26,7 @@ for(const id of added){
 const html=fs.readFileSync("docs/passport.html","utf8");
 const library=fs.readFileSync("docs/research.html","utf8");
 assert(html.includes("Eleven curated Proof Passports"));
-assert(library.includes("33 → 11 → 5"));
+assert(library.includes("40 → 11 → 5"));
 assert(library.includes("Explore the eleven Proof Passports"));
 const manifest=JSON.parse(fs.readFileSync("research/nightfall/SITE_CURATED_40_20261030.json","utf8"));
 const originalManifest=JSON.parse(fs.readFileSync("research/nightfall/SITE_CURATED_33_20261029.json","utf8"));
