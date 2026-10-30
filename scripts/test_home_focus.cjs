@@ -7,7 +7,10 @@ const nav=html.match(/<nav class="nav" id="site-nav"[^>]*>([\s\S]*?)<\/nav>/)?.[
 assert.equal((nav.match(/<a\b/g)||[]).length,3,"One primary destination per product job");
 for(const href of ['href="./" aria-current="page"','href="constellation.html"','href="review.html"'])assert.ok(nav.includes(href));
 const actions=[...html.matchAll(/<div class="hero-actions"[^>]*>([\s\S]*?)<\/div>/g)].map(m=>[...m[1].matchAll(/<a\b[^>]*href="([^"]+)"/g)].map(x=>x[1]));
-assert.deepEqual(actions,[["#flagships","evidence.html"],["#flagships","review.html#priority"]]);
+assert.deepEqual(actions,[["erdos-paper.html","#flagships"],["review.html#erdos","#flagships"]],
+  "The first screen must lead to the exact Erdős witness and its independent challenge");
+assert.ok(html.indexOf('id="nf-scroll-cinema"')<html.indexOf('id="flagships"'),
+  "Record-backed cinematic must precede deeper findings");
 for(const claim of ["0.380856370118","17 / 30","Proof After Scarcity v2","unvalidated"])assert.ok(html.includes(claim),"Primary evidence not visible: "+claim);
 for(const source of ["erdos-paper.html","living-paper.html","passport.html?claim=sidon30","review.html#pas","reproduction-manifest.json","research.html"])assert.ok(html.includes(source),"Lost evidence route "+source);
 assert.ok(html.includes('id="sidon-toggle"')&&html.includes('disabled title='),"Pre-hydration Sidon checker remains safe");
