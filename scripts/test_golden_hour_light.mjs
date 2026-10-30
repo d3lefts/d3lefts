@@ -64,16 +64,16 @@ try{
    assert.equal(v.theme,null,name+": saved light choice remains respected");
    assert.equal(v.paper,"#020406",name+": Sunset Boulevard archive contract");
    assert.equal(v.oxblood,"#080d12",name+": carbon negative-space identity");
-   assert.equal(v.primary,"#b4e3d6",name+": opal action accent");
+   assert.equal(v.primary,"#e46a84",name+": readable black-cherry display accent");
    assert.equal(v.bodyBg,"rgb(2, 4, 6)",name+": light canvas");
    assert.ok(v.overflow<=4,name+": no "+width+"px horizontal overflow ("+v.overflow+")");
    const expectations={
-    "index.html":{nav:"rgb(8, 13, 18)",heroAction:"rgb(180, 227, 214)"},
-    "constellation.html":{coreAction:"rgb(180, 227, 214)"},
+    "index.html":{nav:"rgb(8, 13, 18)",heroAction:"rgb(157, 26, 60)"},
+    "constellation.html":{coreAction:"rgb(157, 26, 60)"},
     "join.html":{joinMethod:"rgb(16, 28, 31)",raised:"rgb(17, 24, 28)"},
     "living-paper.html":{sidon:"rgb(8, 13, 18)"},
     "erdos-paper.html":{sidon:"rgb(8, 13, 18)",epConsole:"rgb(17, 24, 28)"},
-    "discovery.html":{discoverySidebar:"rgb(12, 18, 22)",discoveryMark:"rgb(180, 227, 214)"},
+    "discovery.html":{discoverySidebar:"rgb(12, 18, 22)",discoveryMark:"rgb(157, 26, 60)"},
     "claim-lab.html":{claimSidebar:"rgb(12, 18, 22)"},
     "desk.html":{readout:"rgb(8, 13, 18)"}
    };
@@ -140,7 +140,7 @@ try{
      body:styles("body")};
   });
   assert.ok(contrast(...comps.nav)>=4.5,"Archive navigation button text meets WCAG AA");
-  assert.ok(contrast(...comps.cta)>=4.5,"Opal action text meets WCAG AA");
+  assert.ok(contrast(...comps.cta)>=4.5,"Black-cherry action text meets WCAG AA");
   assert.ok(contrast(...comps.body)>=7,"Body text on pitch black comfortably exceeds AA");
   const toggle=page.locator(".nf-theme-toggle");
   await toggle.click();
@@ -162,5 +162,5 @@ try{
   assert.deepEqual(errors,[],"No missing assets or browser JS errors at "+width+"px");
   await context.close();
  }
- console.log("PASS NULL FIELD: dusk-first, 10 Archive pages × mobile/desktop, opal action palette, AA contrast, unchanged dusk and reversible state");
+ console.log("PASS NULL FIELD: dusk-first, 10 Archive pages × mobile/desktop, black-cherry action palette, AA contrast, unchanged New Moon and reversible state");
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve))}
