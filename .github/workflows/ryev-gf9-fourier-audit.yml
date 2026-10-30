@@ -1,0 +1,22 @@
+name: Ryev GF9 signed-projection Fourier audit
+on:
+  push:
+    branches:
+      - ryev/gf9-k8-fourier-audit-20261030
+  pull_request:
+    paths:
+      - 'research/nightfall/agent-reports/ryev_gf9_fourier_audit_20261030/**'
+      - '.github/workflows/ryev-gf9-fourier-audit.yml'
+  workflow_dispatch:
+jobs:
+  exact-audit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Replay independent seven-sign check and source hash
+        run: |
+          python3 --version
+          sha256sum research/nightfall/agent-reports/ryev_gf9_fourier_audit_20261030/verify.py
+          python3 research/nightfall/agent-reports/ryev_gf9_fourier_audit_20261030/verify.py
