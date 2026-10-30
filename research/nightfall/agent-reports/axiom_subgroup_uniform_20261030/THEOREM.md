@@ -1,4 +1,4 @@
-# Axiom / prime-subfield orbit-transversal phase packing
+# Axiom / base-subfield orbit-transversal phase packing
 
 **Checkpoint:** 2026-10-30. **Assignment:** Vesper #248, Axiom #249. **Research owner:** Devin J. Wright. **Research derivation and finite checker:** Axiom (AI role). **Scientific status:** R1 proof candidate plus locally executed exact tests; independent non-author proof, same-scope literature priority, and human approval OPEN. This is not a new F16 full-F4* oracle result, not a new k7 static matrix, and not an Original Finding designation.
 
@@ -57,6 +57,27 @@ In particular, for **every fixed h>1**, there are infinitely many primes p≡1 m
 
 **Elementary information limit:** the scalar-power oracle has Q=1+(|K|−1)/h values and there are 1+(|K|^k−1)/h signal orbits. For k≥2, Q^k is strictly less than that orbit count (expand both as polynomials in t=(|K|−1)/h, all j≥2 coefficients differ by h^(j−1)>1). Therefore every adaptive protocol needs ≥k+1 queries. If r≥k−1 and T(c) holds, the constructed k+1 protocol is **counting-optimal for this model**. This is elementary, not a claimed new general information theorem.
 
+## Stronger base-field formulation (supersedes prime-only restriction)
+
+The proof of Lemmas 1–2 and Theorems 3–4 uses only finite-field axioms; **primality of the base field and odd characteristic are unnecessary**. The correct general statement is:
+
+Let **q be any prime power**, r≥1, K=F_(q^r), and H≤F_q* have order h>1. Observe **exactly** (a·x)^h over K, modulo a single global scalar in H. If there is c∈F_q for which eta↦(c+eta)^h is injective on H, then for all k≥2:
+
+    adaptive(k;K,H) ≤ k+ceil((k−1)/r),
+    fixed(k;K,H) ≥ 2k−1.
+
+The shift condition is guaranteed by **q>(h−1)h²**: the forbidden list B={(g v−u)/(1−g):g∈H\{1},u,v∈H} has at most (h−1)h² elements even when q is composite. The tower K/F_q supplies an r-element basis. In the lower-bound proof, λ∈H\{1} is enough; there is no reliance on the distinctness of −1 or on characteristic three.
+
+**Why this improves the generality of the candidate:** it covers nontrivial H of odd order in characteristic two, not only ±1 sign ambiguity in odd characteristic. It also identifies the exact testable obstruction for this *one-row digit-packing operator* at each (q,H), while preserving every observation and global quotient in a fixed ambient field.
+
+**Characteristic-two concrete example (independent exact checker).** Take q=16, K=F256, H=F4*={1,6,7} (a full F4 phase subgroup, inside the F16 base field), and unchanged cubic output z³. Represent F16 as F2[z]/(z⁴+z+1), and F256 as F16[u]/(u²+u+8), with Tr_F16/F2(8)=1. The offset c=2∈F16 separates all **nine H² phase words** by one powered F256-linear form:
+
+    (eta_1,eta_2) ↦ ((2+eta_1)+(2+eta_2)u)^3.
+
+The [tower verifier](check_f256_subfield_escape.py) checks each output and all 16 offsets; successful c are 2,3,4,5,8,9,10,11,12,13,14,15. All c∈F4={0,1,6,7} fail; this is the **full-subfield shift obstruction** in the smaller base field, not an impossibility of escaping it in F16. **Crucial scope:** K is F256 here, not the previously studied F16 ambient field. This does not improve Tessera's F16 adaptive optimum, and is not a two-query F16 result.
+
+For each fixed qualifying K/F_q with r≥2, the same gap lower bound grows as k−1−ceil((k−1)/r). For r≥k−1, the information bound gives exact k+1. The additional F256 test is a **finite phase block**, not a 16-million-signal exhaustive full decoder; that universal transfer is a mathematical claim supported by the written proof, requiring independent review.
+
 ## Frozen finite sanity checks and failure controls
 
 Code: [check_offset_packing.py](check_offset_packing.py), dependency-free Python 3.12. Checks the exact H roots, constructs all forbidden offsets, tests digit orbit powers including zero, independently evaluates full two-phase packers over **F_p[t]/(t²−δ)** with δ a nonsquare, and rejects a deliberately corrupted c=0 shift.
@@ -78,7 +99,7 @@ Cheap falsifier: one forbidden/invalid offset accepted as injective, any collisi
 
 **Closest source checked 2026-10-30:** Vesper's [NIGHTFALL PR #256](https://github.com/d3lefts/d3lefts/pull/256) characteristic-three sign decoder, whose mathematical packing structure is explicitly generalized here. Also [Kemper–Lopatin–Reimers, *Separating invariants over finite fields*, JPAA 226 (2022), article 106904](https://doi.org/10.1016/j.jpaa.2021.106904) considers *unrestricted invariant polynomials*, a strictly broader oracle; Vesper's [#248 literature ledger](https://github.com/d3lefts/d3lefts/issues/248) also covers finite-field hidden-power oracles and general adaptive projective search. None supplies a date-verified priority clearance for this exact restricted powered-linear construction. The complement kernel trick and coset union bound are standard tools individually; **no original global theorem is asserted without human review and exhaustive same-scope comparison**.
 
-**Major non-transfer limitation:** For the F16/F4* model H=F4*, the entire base-subfield shift c+H has at most two H-orbit outputs (zero and nonzero); hence a full three-phase digit transversal cannot exist in F4. Our large-prime/proper-subgroup theorem does **not** deliver a new F16 four-by-seven static block, nor does it improve Tessera's two-query adaptive F16 full-subfield block. It gives a distinct **field-/subgroup-uniform sufficient mechanism** for families with suitable prime-subfield shifts, with the same h-th power oracle as each individual model. No comparison of measurements across **different subgroups of the same field** is advertised as a same-model improvement.
+**Major non-transfer limitation:** In the ORIGINAL F16/F4* sensing model, a shift c restricted to F4 cannot pack all three phases, since c+H is contained in F4 and has at most two H-orbit outputs (zero and nonzero). The new F256 construction permits c∈F16 and therefore uses a DIFFERENT ambient field; it is not an F16 result. Our large-prime/proper-subgroup theorem does **not** deliver a new F16 four-by-seven static block, nor does it improve Tessera's two-query adaptive F16 full-subfield block. It gives a distinct **field-/subgroup-uniform sufficient mechanism** for families with suitable prime-subfield shifts, with the same h-th power oracle as each individual model. No comparison of measurements across **different subgroups of the same field** is advertised as a same-model improvement.
 
 **Independent attack plan:** Lemnis reprove/attack the if-and-only-if digit lemma, dimension count, global-scalar equivalence and fixed lower bound; Ryev independently implement a different extension-field representation and validate complete k=3 prime/h=3 traces; Tessera test whether orbit-transversal criteria can be generalized to full-subfield H=F_q* without secretly changing the oracle; Vesper perform dated priority examination against separating invariants and restricted-powered query literature.
 
