@@ -890,7 +890,7 @@ html .nav .nav-call {
 html .nav .nav-call:hover {border-color:var(--ed-accent)!important}
 html .nf-theme-toggle {
   font-size:10px!important;letter-spacing:.065em;
-  min-height:42px!important;min-width:100px!important;
+  min-height:44px!important;min-width:100px!important;
   background:transparent!important;
   border:1px solid var(--ed-rule)!important;
   color:var(--ed-body)!important;box-shadow:none!important;
@@ -923,18 +923,18 @@ html :is(.section-title em,.co-section-head h2 em,.co-headline h1 em) {
 
 /* Panels read as collected specimens, never a wall of neon dashboards. */
 html :is(.feature,.review-card,.research-proposal,.sf-system-card,
-  .nf-home-toolbox,.instrument-workflow a,.join-choice,.nf-process-case) {
+  .nf-home-toolbox,.instrument-workflow a) {
   border:1px solid var(--ed-rule)!important;
   border-radius:3px;background:var(--ed-panel)!important;color:var(--ed-ink);
   box-shadow:none!important;
 }
 html :is(.feature,.review-card,.research-proposal,.sf-system-card,
-  .nf-home-toolbox,.instrument-workflow a,.join-choice,.nf-process-case):hover {
+  .nf-home-toolbox,.instrument-workflow a):hover {
   transform:none!important;border-color:var(--ed-accent)!important;
   background:var(--ed-panel-raised)!important;box-shadow:none!important;
 }
 html :is(.feature,.review-card,.research-proposal,.sf-system-card,
-  .nf-home-toolbox,.join-choice,.nf-process-case) p {line-height:1.75}
+  .nf-home-toolbox) p {line-height:1.75}
 html :is(.review-summary,.review-dossier,.review-priority-card,.co-work-card) {
   border-color:var(--ed-rule);
 }
@@ -953,10 +953,10 @@ html :is(.button,.co-primary,.co-secondary) {
 }
 html :is(.button,.co-primary,.co-secondary):hover {transform:none!important}
 html:not([data-nf-theme="dusk"]) :is(.button:not(.button-light),.co-primary) {
-  background:var(--ed-action)!important;border-color:#9d415c!important;color:#fff0f3!important;
+  background:var(--ed-action)!important;border-color:#9d415c!important;color:#eaf0f5!important;
 }
 html[data-nf-theme="dusk"] :is(.button:not(.button-light),.co-primary) {
-  background:var(--ed-action)!important;border-color:var(--ed-action)!important;color:#141727!important;
+  background:var(--ed-action)!important;border-color:var(--ed-action)!important;color:#0b1425!important;
 }
 html:not([data-nf-theme="dusk"]) :is(.button:not(.button-light),.co-primary):hover {
   background:var(--ed-action-hover)!important;
@@ -1044,7 +1044,7 @@ html #main>.nf-observatory h2 {font:400 clamp(48px,5.7vw,86px)/1 var(--serif);le
 html #main>.nf-observatory p {color:var(--ed-body);line-height:1.8}
 html #main>.review-section {padding-block:clamp(100px,11vw,158px)}
 html #main>.nf-quiet-note {padding-block:clamp(48px,6vw,88px);border-color:var(--ed-rule)}
-html #main>.nf-dual-colophon {padding-block:clamp(95px,10vw,145px);border-color:var(--ed-rule)}
+html #main>.nf-dual-colophon {padding-block:clamp(95px,10vw,145px)}
 html #main>.nf-dual-colophon h2 {font:400 clamp(49px,6vw,92px)/.97 var(--serif);letter-spacing:-.04em}
 html .footer {border-top:1px solid var(--ed-rule)!important}
 html .footer-top {padding-block:clamp(60px,7vw,105px)}
@@ -1109,7 +1109,7 @@ html .review-priority-card {background:var(--ed-panel);border:1px solid var(--ed
   html .brand-copy {font-size:10px}
   html .brand-copy span {font-size:8px;letter-spacing:.02em}
   html .mark {width:36px;height:36px;font-size:16px}
-  html .nf-theme-toggle {min-width:44px!important;min-height:40px!important}
+  html .nf-theme-toggle {min-width:44px!important;min-height:44px!important}
   html .section,html .section.wrap {padding-top:76px;padding-bottom:82px}
   html .section-head {margin-bottom:34px}
   html .section-title {font-size:clamp(47px,12vw,70px)}
