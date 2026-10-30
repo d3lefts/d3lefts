@@ -35,18 +35,18 @@ for(const file of files.filter(x=>x.endsWith(".html")&&readFileSync(join(root,x)
 }
 const light=readFileSync(join(root,"two-skies.css"),"utf8");
 const dusk=readFileSync(join(root,"two-skies.css"),"utf8");
-for(const token of ["--lf-paper:#020406","--lf-primary:#e46a84","--lf-cherry-fill:#9d1a3c","--lf-oxblood:#080d12"]){
+for(const token of ["--lf-paper:#020406","--lf-primary:#e46a84","--lf-cherry-fill:#650d27","--lf-oxblood:#080d12"]){
  assert.ok(light.toLowerCase().includes(token),"Missing NULL FIELD token: "+token);
 }
 for(const token of ["--nf-champagne:#e2d28c","--nf-lightray-gold:#e2d28c"]){
  assert.ok(dusk.toLowerCase().includes(token),"Missing midnight gold token: "+token);
 }
 assert.ok(contrast("#020406","#e46a84")>=4.5,"Cherry display accent on space black must meet WCAG AA");
-assert.ok(contrast("#edf4f1","#080d12")>=4.5,"Porcelain on graphite must meet WCAG AA");
+assert.ok(contrast("#eaf0f5","#080d12")>=4.5,"Porcelain on graphite must meet WCAG AA");
 assert.ok(contrast("#e2d28c","#04060b")>=4.5,"Gilded moonlight on midnight must meet WCAG AA");
 assert.ok(contrast("#e46a84","#1b292d")>=4.5,"Cherry text must remain readable on raised carbon");
-assert.ok(contrast("#edf4f1","#9d1a3c")>=4.5,"Porcelain text on black-cherry CTA must meet WCAG AA");
-assert.ok(contrast("#fff5f7","#b5274d")>=4.5,"Porcelain text on hovered cherry CTA must meet WCAG AA");
+assert.ok(contrast("#eaf0f5","#650d27")>=4.5,"Porcelain text on black-cherry CTA must meet WCAG AA");
+assert.ok(contrast("#f2f5fa","#841736")>=4.5,"Porcelain text on hovered cherry CTA must meet WCAG AA");
 assert.ok(contrast("#0b1425","#e2d28c")>=4.5,"Night action ink must remain readable on moonlight");
 assert.equal((light.match(/--nf-24k-gold:#d4af37/g)||[]).length,1,"New Moon retains 24k");
 assert.ok(light.includes("--nf-24k-gold:#c53b5f"),"Archive uses cherry diffraction, not gold");
