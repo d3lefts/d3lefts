@@ -656,6 +656,11 @@ html:not([data-nf-theme="dusk"]) .nf-cinema--still .nf-cinema-record a:focus-vis
   .nf-cinema--still .nf-cinema-proof-path li{color:#111}
 }
 
+/* The two NULL FIELD photo/fallback layers must never tile either. */
+html:not([data-nf-theme="dusk"]) #main>.hero.nf-opening .nf-opening-sky--gold,
+html:not([data-nf-theme="dusk"]) .nf-cinema--still .nf-cinema-world--archive{
+  background-repeat:no-repeat,no-repeat!important;
+}
 /* All three raster/vector layers MUST be drawn once. Some legacy cinema
    shorthands reset background-repeat to repeat, which tiled the lunar overlay. */
 html[data-nf-theme="dusk"] #main>.hero.nf-opening .nf-opening-sky--night,
