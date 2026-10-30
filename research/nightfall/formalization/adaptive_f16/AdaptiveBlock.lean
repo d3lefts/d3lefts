@@ -51,15 +51,15 @@ def second (y : Nat) (i : Fin 27) : Nat :=
 def output (i : Fin 27) : Nat × Nat :=
   (first i, second (first i) i)
 
-theorem first_reading_in_legal_branches :
-    ∀ i : Fin 27,
+theorem first_reading_branch_boolean_certificate :
+    decide (∀ i : Fin 27,
       first i = 0 ∨ first i = 1 ∨ first i = 8 ∨
-      first i = 10 ∨ first i = 12 ∨ first i = 15 := by
-  decide
+      first i = 10 ∨ first i = 12 ∨ first i = 15) = true := by
+  rfl
 
-theorem adaptive_twenty_seven_distinct :
-    (List.ofFn (fun i : Fin 27 => output i)).Nodup := by
-  decide
+theorem adaptive_twenty_seven_boolean_certificate :
+    decide ((List.ofFn (fun i : Fin 27 => output i)).Nodup) = true := by
+  rfl
 
 theorem worst_case_lower_bound_k4 :
     6 ^ 5 < 1 + (16 ^ 4 - 1) / 3 := by
@@ -82,8 +82,8 @@ theorem phase_factorization
   intro i
   rw [coord_rel i, phase_rel i, assoc]
 
-#print axioms Nightfall.AdaptiveF16.first_reading_in_legal_branches
-#print axioms Nightfall.AdaptiveF16.adaptive_twenty_seven_distinct
+#print axioms Nightfall.AdaptiveF16.first_reading_branch_boolean_certificate
+#print axioms Nightfall.AdaptiveF16.adaptive_twenty_seven_boolean_certificate
 #print axioms Nightfall.AdaptiveF16.worst_case_lower_bound_k4
 #print axioms Nightfall.AdaptiveF16.worst_case_lower_bound_k7
 #print axioms Nightfall.AdaptiveF16.phase_factorization
