@@ -10,7 +10,7 @@ Let K be a finite field of size Q, H ≤ K* a multiplicative subgroup of order h
 
 **Closest source checked:** Lemnis [PR #264](https://github.com/d3lefts/d3lefts/pull/264) already proves the same k6/k9 rank-prefix facts; those are **prior in-program evidence**, not an Axiom novelty claim. Vesper's #257, PR #256 gives a candidate upper A(k,r)≤k+ceil((k−1)/r) over GF(3^r) under the square oracle, with source-comparison to Borello–Schmid–Scotti (JCTA 214, 2025) on intersecting codes and other phase-retrieval models. BSS addresses fixed measurements, not the present adaptive lower-bound branch construction. Web search on 30 Oct 2026 found related finite-field/phaseless literature without locating this exact prefix argument. A targeted search is not worldwide priority clearance.
 
-**Objective at origin:** independently attack whether eight queries recover every GF9^6 signal modulo sign; Lemnis reached the same answer first. **New decisive objective after attribution reconciliation:** exclude GF9 k8 with eleven adaptive queries by a structural rank-phase argument and exact projective finite audit. Existing candidate upper is nine; output counting only rules out seven. An additional k9 test is included because it costs a single exact inequality. Compute budget: source-independent finite enumeration of the 531,441 six-coordinate field vectors and symbolic integer inequalities; stop before solver/random search. Independent audit: Lemnis mathematics, Ryev distinct verification and Lean dependency map, Vesper historical comparison.
+**Objective at origin:** independently attack whether eight queries recover every GF9^6 signal modulo sign; Lemnis reached the same answer first. **New decisive objective after attribution reconciliation:** exclude GF9 k8 with eleven adaptive queries via an analytic signed-Fourier bottleneck, then derive strictly scoped higher-k corollaries. Existing candidate upper is nine; output counting only rules out seven. An additional k9 test is included because it costs a single exact inequality. Compute budget: source-independent finite enumeration of the 531,441 six-coordinate field vectors and symbolic integer inequalities; stop before solver/random search. Independent audit: Lemnis mathematics, Ryev distinct verification and Lean dependency map, Vesper historical comparison.
 
 ## Universal rank–orbit prefix theorem (R1)
 
@@ -108,6 +108,28 @@ Combining the online all-rank-history adversary and this sharp finite classifica
 | 9 | 12 | **13** | 13 | 13 |
 
 This does **not** establish a new asymptotic lower-bound coefficient, a universally optimal decoder in every dimension, or worldwide historical priority. It is a sharply scoped **finite-field adaptive decision-tree lower theorem candidate**, subject to a non-author mathematical proof challenge.
+
+### A stronger analytic proof replaces the 38-type search
+
+The sharp seven-phase 14-word obstruction is now proved without exhaustive casework in [FOURIER_LEMMA.md](FOURIER_LEMMA.md). Over the additive group GF9≅F3², each signed coefficient has Fourier-character factor 2 if the character annihilates it, and −1 otherwise. For seven signs the four nontrivial character directions have integer Fourier coefficients **λ_i = ±2^(n0+n_i)** (n0 counts zero coefficients; n_i counts coefficients in the orthogonal line). Character inversion gives the five exact powered-output bucket sizes
+
+    b0 = (128+2Σλ_i)/18,
+    b_i = (128−Σλ_i+3λ_i)/9 for i=1,...,4.
+
+These are 64 global-sign classes, including the zero-sum output. If all five buckets had size at most 13, their total 64 forces **exactly four 13's and one 12**. If b0=13, then Σλ=53 and any other bucket of size 13 forces λ=14, impossible for a signed power of two. If b0=12, then Σλ=44 and the four other buckets of size 13 force λ=11, equally impossible. Therefore **max b_i≥14 universally**, with sharp λ=(8,8,8,2), buckets (10,14,14,14,12). This is a complete analytic proof of the coefficient-specific finite bottleneck; the former 38-profile enumeration and 78,125-row separate checker are now falsification/regression checks rather than the primary proof.
+
+**Prior-art boundary:** Fourier factors, finite-character orthogonality, and random signed sums are classical (Tao–Vu, *Additive Combinatorics* 2006, Chapter 7, Littlewood–Offord). See the dated [prior-art ledger](PRIOR_ART_20261030.md) for close overlaps with Kemper 2009 and other relevant sources. Novelty of applying this spectral obstruction to the restricted fully adaptive GF9 phase-orbit query problem remains **unverified**.
+
+### Two further exact GF9 arithmetic corollaries (same Lemnis/Axiom rank-family, not separate originality claims)
+
+Applying the **existing** online rank/phase recurrence to later dimensions yields additional proposed exact query counts under the same frozen F9 oracle. [check_dimensions.py](check_dimensions.py) independently enumerates all possible independent/dependent row rank schedules, using a strict integer lower bound for each:
+
+| k | candidate budget excluded | prefix t | rank histories enumerated | smallest possible surviving orbit fiber | remaining transcript capacity | upper construction (Vesper PR #256) |
+|---:|---:|---:|---:|---:|---:|---:|
+| 11 | 15 | 7 | 64 | 413,343 | 390,625 | 16 |
+| 13 | 18 | 13 | 4,096 | 3,321 | 3,125 | 19 |
+
+Consequently, conditional on independent audit of the established coordinate-first upper construction, **A_GF9(11)=16** and **A_GF9(13)=19**. These are direct finite corollaries of the general phase/rank adversary already recorded by **Lemnis in PR #264**; do not treat a straightforward higher-k numerical evaluation as global novelty. The same technique does **not** currently close k10 with 14, k12 with 17, or k15 with 21 queries. The latter remain explicit next structural targets only if the analytic k8 proof survives independent criticism.
 
 ### Additional independent attack contract
 
