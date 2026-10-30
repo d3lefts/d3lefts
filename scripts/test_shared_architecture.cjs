@@ -66,16 +66,18 @@ function simulate(page,{saved={},app=false,joinHero=false,twice=false}={}){
   head:{append:x=>assets.push(x)},
   getElementById:id=>id==="menu-button"?menu:id==="site-nav"?nav:null,
   querySelector:sel=>sel==="main"?main:sel==="#app"&&app?new Element("div"):sel===".app"&&app?new Element("div"):sel===".nf-journey-rail"?rail:sel===".nf-process-thread"?thread:sel==='link[data-nf-rail-style]'?assets.find(x=>x.dataset?.nfRailStyle!==undefined)||null:null,
-  createElement:tag=>new Element(tag),
+  createElement:tag=>{
+   const el=new Element(tag),insert=el.insertAdjacentElement.bind(el);
+   el.insertAdjacentElement=(pos,x)=>{if(x.className==="nf-process-thread")thread=x;insert(pos,x)};
+   return el;
+  },
   addEventListener:(name,fn)=>{docListeners[name]=fn}
  };
  const originalBefore=main.before.bind(main);
  main.before=x=>{if(x.className==="nf-journey-rail")rail=x;if(x.className==="nf-process-thread")thread=x;originalBefore(x)};
- const oldInsert=main.hero?.insertAdjacentElement?.bind(main.hero);
- if(oldInsert)main.hero.insertAdjacentElement=(pos,x)=>{if(x.className==="nf-process-thread")thread=x;oldInsert(pos,x)};
  const localStorage={getItem:k=>saved[k]??null};
  const global={document,location:{pathname:"/d3lefts/"+page},localStorage};
- function run(){vm.runInNewContext(js,global,{timeout:1000});if(rail){const orig=rail.insertAdjacentElement.bind(rail);rail.insertAdjacentElement=(pos,x)=>{if(x.className==="nf-process-thread")thread=x;orig(pos,x)}}}
+ function run(){vm.runInNewContext(js,global,{timeout:1000});}
  run();if(twice)run();
  return {main,menu,nav,rail,thread,assets,docListeners,headerLinks};
 }
@@ -102,6 +104,11 @@ assert.equal(p.rail.children.find(x=>x.tagName==="a").href,"join.html#results","
 p=simulate("frontier.html",{saved:{"nightfall.journey.v1":"{invalid JSON"}});
 assert.equal(p.rail.children.find(x=>x.tagName==="a").href,"join.html#results","Malformed saved state falls back safely");
 assert.equal(p.thread.children.find(x=>x.attributes["aria-current"]==="page").href,"constellation.html#map");
+p=simulate("passport.html",{twice:true});
+assert.equal((p.main.beforeItems||[]).filter(x=>x.className==="nf-journey-rail").length,1,
+ "Re-execution must not duplicate specialist return rails");
+assert.equal(p.rail.insertions.filter(x=>x.x.className==="nf-process-thread").length,1,
+ "Re-execution must not duplicate the destination thread");
 p=simulate("exact-research.html",{app:true});
 assert.equal(p.rail,null);assert.equal(p.thread,null);
 console.log("PASS shared architecture: agenda owns proposal styles, six explicit claim links; homepage/static menu, join, review, saved claim, malformed state, and app chrome isolated");
