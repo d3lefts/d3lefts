@@ -45,6 +45,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          echo '2d1a07c45f811bc59fe629179e60a1ff54ad24e3570ab08b6243d0cf68a1591f  research/nightfall/formalization/odd_square/IntersectingCriterion.lean' | sha256sum -c -
           python3 scripts/lean_bridge.py \
             research/nightfall/formalization/odd_square/IntersectingCriterion.lean \
             --strict \
