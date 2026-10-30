@@ -1,0 +1,63 @@
+name: Ryev independent GF169 third-field audit
+on:
+  push:
+    branches:
+      - ryev/gf169-third-field-audit-20261030
+  pull_request:
+    paths:
+      - 'research/nightfall/agent-reports/ryev_gf169_independent_20261030/**'
+      - '.github/workflows/ryev-gf169-third-field.yml'
+      - 'research/nightfall/formalization/sumset_hole/**'
+  workflow_dispatch:
+jobs:
+  independent-exact:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Freeze checksum and replay third-field oracle
+        run: |
+          python3 --version
+          sha256sum research/nightfall/agent-reports/ryev_gf169_independent_20261030/verify_third_field.py
+          python3 research/nightfall/agent-reports/ryev_gf169_independent_20261030/verify_third_field.py
+      - name: Prove symbolic six-hole modular rectangle certificate
+        run: |
+          sha256sum research/nightfall/agent-reports/ryev_gf169_independent_20261030/symbolic_six_holes.py
+          python3 research/nightfall/agent-reports/ryev_gf169_independent_20261030/symbolic_six_holes.py
+  universal-lean-hole:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install repository-pinned Lean toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain "$(cat lean-toolchain)"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          "$HOME/.elan/bin/lean" --version
+      - name: Check abstract injection theorem, off-diagonal strengthening and all-k code transfer
+        shell: bash
+        run: |
+          set -euo pipefail
+          sha256sum research/nightfall/formalization/sumset_hole/SumsetHole.lean
+          mkdir -p lean-receipts
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/sumset_hole/SumsetHole.lean \
+            --strict \
+            --decl Nightfall.SumsetHole.translated_square_injective \
+            --decl Nightfall.SumsetHole.translated_square_injective_off_diagonal \
+            --decl Nightfall.SumsetHole.binary_code_injective \
+            --timeout 300 \
+            --json-out lean-receipts/ryev-sumset-hole.json
+      - name: Upload proof receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ryev-sumset-hole-lean-receipt
+          path: lean-receipts/ryev-sumset-hole.json
+          if-no-files-found: warn
