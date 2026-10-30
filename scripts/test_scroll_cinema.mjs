@@ -63,6 +63,7 @@ try{
      const world=el.querySelector(filename.includes("new-moon")?".nf-cinema-world--night":".nf-cinema-world--archive");
      const hero=document.querySelector(filename.includes("new-moon")?".nf-opening-sky--night":".nf-opening-sky--gold");
      return {backdrop:getComputedStyle(world).backgroundImage,hero:getComputedStyle(hero).backgroundImage,
+       repeat:getComputedStyle(world).backgroundRepeat,heroRepeat:getComputedStyle(hero).backgroundRepeat,
        stagePosition:getComputedStyle(el.querySelector(".nf-cinema-stage")).position,
        evidence:el.querySelector(".nf-cinema-record-value")?.textContent?.trim(),
        steps:[...el.querySelectorAll(".nf-cinema-proof-path li")].map(n=>n.innerText.trim()),
@@ -72,6 +73,8 @@ try{
    },asset);
    assert.ok(still.backdrop.includes(asset),mode+": matching self-hosted cinematic asset");
    assert.ok(still.hero.includes(asset),mode+": matching first-fold still asset");
+   assert.ok(still.repeat.split(",").every(x=>x.trim()==="no-repeat"),mode+": no tiled photographic backgrounds or lunar overlays");
+   assert.ok(still.heroRepeat.split(",").every(x=>x.trim()==="no-repeat"),mode+": no repeated hero overlays");
    assert.equal(still.stagePosition,"relative",mode+": scene no longer sticky");
    assert.equal(still.progress,"",mode+": no progress variables");
    assert.equal(still.evidence,"0.380856370118…",mode+": source-bound finite overlap unchanged");
