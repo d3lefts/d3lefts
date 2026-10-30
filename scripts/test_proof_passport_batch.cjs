@@ -26,7 +26,24 @@ for(const id of added){
 const html=fs.readFileSync("docs/passport.html","utf8");
 const library=fs.readFileSync("docs/research.html","utf8");
 assert(html.includes("Eleven curated Proof Passports"));
-assert(library.includes("33 → 11 → 5"));
+assert(library.includes("40 → 11 → 5"));
 assert(library.includes("Explore the eleven Proof Passports"));
+const manifest=JSON.parse(fs.readFileSync("research/nightfall/SITE_CURATED_40_20261030.json","utf8"));
+const originalManifest=JSON.parse(fs.readFileSync("research/nightfall/SITE_CURATED_33_20261029.json","utf8"));
+assert.equal(manifest.entries.length,40);
+assert.equal(new Set(manifest.entries.map(x=>x.id)).size,40);
+assert.equal(originalManifest.entries.length,33);
+for(const entry of originalManifest.entries)assert.deepEqual(manifest.entries.find(x=>x.id===entry.id),entry);
+for(const id of ["34","35","36","37"]){
+ const e=manifest.entries.find(x=>x.id===id);assert.equal(e.evidence,"working");
+ assert(e.boundary.includes("Draft PR")&&e.boundary.includes("review"));
+ const s="research/nightfall/"+e.source;assert(fs.existsSync(s));
+ assert(library.includes('data-doc-id="'+id+'"'));
+}
+assert.equal(manifest.entries.find(x=>x.id==="39").evidence,"proposal");
+assert.equal(manifest.entries.find(x=>x.id==="40").evidence,"software");
+for(const entry of manifest.entries)assert(fs.existsSync("research/nightfall/"+entry.source));
+assert.equal((library.match(/<article class="atlas-card"/g)||[]).length,40);
+assert(library.includes('value="proposal"'));
 for(const e of R.edges){assert(R.claimById(e.from));assert(R.mechanismById(e.to));assert(e.source,"unsourced graph edge");}
 console.log("Proof Passport batch: 11 curated records, five new scoped claims, source paths and graph invariants PASS");

@@ -298,6 +298,8 @@ try{
    const modifiedLedger=structuredClone(cleanLedger);
    modifiedLedger.tasks.find(t=>t.parentId==="NF-156-184-9").lo+=1;
    await page.locator("#nf-import-file").setInputFiles({name:"modified.json",mimeType:"application/json",buffer:Buffer.from(JSON.stringify(modifiedLedger))});
+   // FileReader validation is asynchronous; require the exact fail-closed verdict once ready.
+   await page.waitForFunction(()=>document.querySelector("#nf-message")?.textContent?.includes("Frontier import refused"),null,{timeout:7000});
    assert.match(await page.locator("#nf-message").innerText(),/Frontier import refused/);
    assert.match(await page.locator("#nf-progress").innerText(),/2 unresolved leaf obligations/);
    page.once("dialog",d=>d.accept());
@@ -409,14 +411,14 @@ try{
   }
   if(width===390){
     await page.goto(origin+"research.html",{waitUntil:"load"});
-    assert.equal(await page.locator(".atlas-card:visible").count(),33,"33 curated research entries");
+    assert.equal(await page.locator(".atlas-card:visible").count(),40,"40 curated research entries");
     await page.locator('[data-atlas-filter="quantum"]').click();
     assert.equal(await page.locator(".atlas-card:visible").count(),4,"four distinct quantum source entries");
     await page.locator('[data-atlas-filter="all"]').click();
     await page.locator("#atlas-search").fill("SourceBound evidence prototype");
     assert.equal(await page.locator(".atlas-card:visible").count(),1,"library source search");
     await page.locator("#atlas-search").fill("");
-    assert.equal(await page.locator(".atlas-card:visible").count(),33,"33-entry library filter reset");
+    assert.equal(await page.locator(".atlas-card:visible").count(),40,"40-entry library filter reset");
     await page.locator("#atlas-evidence").selectOption("conditional");
     assert.equal(await page.locator(".atlas-card:visible").count(),6,"conditional evidence-tier filter");
     await page.locator('[data-atlas-filter="quantum"]').click();
@@ -424,14 +426,14 @@ try{
     assert.ok(intersection>0&&intersection<=6,"combined field and evidence filter");
     await page.locator('[data-atlas-filter="all"]').click();
     await page.locator("#atlas-evidence").selectOption("all");
-    assert.equal(await page.locator(".atlas-card:visible").count(),33,"evidence tiers reset");
+    assert.equal(await page.locator(".atlas-card:visible").count(),40,"evidence tiers reset");
     await page.locator("body").click({position:{x:5,y:5}});
     await page.keyboard.press("/");
     assert.equal(await page.locator("#atlas-search").evaluate(el=>document.activeElement===el),true,"keyboard search focus");
     await page.locator("#atlas-search").fill("no-such-entry");
     assert.equal(await page.locator(".atlas-card:visible").count(),0,"library empty search");
     await page.keyboard.press("Escape");
-    assert.equal(await page.locator(".atlas-card:visible").count(),33,"keyboard search reset");
+    assert.equal(await page.locator(".atlas-card:visible").count(),40,"keyboard search reset");
   }
   if(width===390){
     await page.goto(origin+"referee.html",{waitUntil:"load"});
@@ -538,7 +540,7 @@ try{
     assert.equal(new URL(page.url()).searchParams.get("claim"),"outdated-claim-id","Stale link remains diagnosable");
     await page.locator("#passport-picker a[href='passport.html?claim=werner']").click();
     assert.equal(await page.locator("#passport-unknown").isVisible(),false,"Valid Passport clears warning");
-    assert.match(await page.locator(".pp-coverage").innerText(),/Eleven curated Proof Passports, 33 research dossiers/,"Passports explain editorial coverage");
+    assert.match(await page.locator(".pp-coverage").innerText(),/Eleven curated Proof Passports, 40 research dossiers/,"Passports explain editorial coverage");
     await page.goto(origin+"index.html",{waitUntil:"load"});
     assert.equal(await page.locator(".nf-experience-archive .hero-actions a").count(),2,"Archive offers two source-reading paths");
     assert.equal(await page.locator(".nf-experience-underbelly .hero-actions a").count(),2,"Underbelly offers two investigation paths");
@@ -548,9 +550,9 @@ try{
     assert.equal(await page.locator(".flagship-context").count(),4,"Each flagship explains meaning of headline metric");
     assert.match(await page.locator(".flagship-context").first().innerText(),/maximum overlap/i,"Numerical extremal value interpreted");
     await page.goto(origin+"research.html",{waitUntil:"load"});
-    assert.match(await page.locator(".archive-coverage").innerText(),/33 research records.*Eleven detailed claim passports.*Five separately approved finite findings/s,"Library explains record hierarchy");
+    assert.match(await page.locator(".archive-coverage").innerText(),/40 research records.*Eleven detailed claim passports.*Five separately approved finite findings/s,"Library explains record hierarchy");
     await page.goto(origin+"atlas.html",{waitUntil:"load"});
-    assert.match(await page.locator(".rs-coverage").innerText(),/eleven claims represent a library of 33 documents/i,"Atlas explains limited canonical graph");
+    assert.match(await page.locator(".rs-coverage").innerText(),/eleven claims represent a library of 40 documents/i,"Atlas explains limited canonical graph");
   }
   if(width===390 || width===1280){
     await page.goto(origin+"desk.html?claim=phase",{waitUntil:"load"});

@@ -133,8 +133,8 @@ try{
   // 20–30: Discover more work and follow typed relationships.
   await step("20–24","Research Library: browse, intersect filters, reset empty search",async()=>{
     await visit("research.html");
-    assert.equal(await page.locator(".atlas-card:visible").count(),33);
-    assert.match(await page.locator(".archive-coverage").innerText(),/33 research records.*Eleven detailed claim passports.*Five separately approved finite findings/s);
+    assert.equal(await page.locator(".atlas-card:visible").count(),40);
+    assert.match(await page.locator(".archive-coverage").innerText(),/40 research records.*Eleven detailed claim passports.*Five separately approved finite findings/s);
     await page.locator("#atlas-search").fill("SourceBound");
     assert.ok((await page.locator(".atlas-card:visible").count())>=1);
     await page.locator("#atlas-search").fill("");
@@ -150,7 +150,7 @@ try{
     assert.equal(await page.locator(".atlas-card:visible").count(),0);
     assert.ok(await page.locator("#atlas-empty").isVisible());
     await page.locator("#atlas-search").fill("");
-    assert.equal(await page.locator(".atlas-card:visible").count(),33);
+    assert.equal(await page.locator(".atlas-card:visible").count(),40);
     await visit("findings-20261029.html");
     assert.match(await page.locator("#singer975").innerText(),/975 marks/);
     assert.match(await page.locator("#graph-3port").innerText(),/3,221,225,472/);
@@ -160,7 +160,7 @@ try{
     note("scope","Two additional Original Findings are displayed with primary checkers and narrow finite status.","findings");
     await visit("research.html");
     await screenshot("03-research-library.png");
-    note("strength","Thirty-three document cards, evidence-tier filters, and empty-search recovery are operational.","library");
+    note("strength","Forty document cards, evidence-tier filters, and empty-search recovery are operational.","library");
   });
   await step("24–27","Mechanism Atlas: inspect a claim and distinguish analogy from proof",async()=>{
     await visit("atlas.html?claim=werner");
@@ -286,7 +286,7 @@ try{
   });
   await step("53–56","Phone: long research library and modal-less claim tasks",async()=>{
     await visit("research.html");
-    assert.equal(await page.locator(".atlas-card:visible").count(),33);
+    assert.equal(await page.locator(".atlas-card:visible").count(),40);
     await page.locator("#atlas-search").fill("Werner");
     const count=await page.locator(".atlas-card:visible").count();
     assert.ok(count>=1);

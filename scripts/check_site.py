@@ -155,10 +155,10 @@ def main() -> int:
     if '"level": "public"' not in registry_text or "Curated finite witness public; independent audit open" not in registry_text:
         FAILURES.append("REPRODUCIBILITY: finite witness release absent from canonical Passport")
     # The homepage has no parallel research-card catalogue. Its originality
-    # gate is the dated owner-curated 33-document source ledger and the dated
+    # gate is the dated owner-curated 40-document source ledger and the dated
     # originality audit, never a shadow JavaScript data array in shared chrome.
     import json
-    originals_ledger = json.loads((ROOT / "research/nightfall/SITE_CURATED_33_20261029.json").read_text(encoding="utf-8"))
+    originals_ledger = json.loads((ROOT / "research/nightfall/SITE_CURATED_40_20261030.json").read_text(encoding="utf-8"))
     original_ids = {"01", "02", "29"}
     originals = {item.get("id"): item.get("source")
                  for item in originals_ledger.get("entries", []) if item.get("id") in original_ids}
@@ -190,19 +190,30 @@ def main() -> int:
     ref_js = (DOCS / "referee-app.js").read_text(encoding="utf-8")
     if 'requestedDomain === "sidon"' not in ref_js:
         FAILURES.append("RESEARCH JOURNEY: allowlisted Sidon verifier deep link absent")
-    if "all 33 curated dossiers" not in homepage_text:
-        FAILURES.append("EDITORIAL: 33-document curated research library link missing")
+    if "all 40 curated dossiers" not in homepage_text:
+        FAILURES.append("EDITORIAL: 40-document curated research library link missing")
     # Separate working-research library: preserve originality whitelist and evidence boundaries.
     library = (DOCS / "research.html").read_text(encoding="utf-8")
     entries = re.findall(r'<article class="atlas-card" data-domain="([^"]+)" data-evidence="([^"]+)"', library)
-    # Dated 33-entry ledger extends and preserves the 2026-10-28 owner-curated snapshot.
+    # Dated 40-entry ledger extends the preserved 33-entry 2026-10-29 snapshot.
     # Check exact category/status sequence, uniqueness and every promised source.
     import json
-    snapshot = ROOT / "research/nightfall/SITE_CURATED_33_20261029.json"
+    snapshot = ROOT / "research/nightfall/SITE_CURATED_40_20261030.json"
     curated = json.loads(snapshot.read_text(encoding="utf-8"))
     records = curated.get("entries", [])
-    if len(records) < 30 or curated.get("original_findings_whitelist_count") != 3:
-        FAILURES.append("RESEARCH LIBRARY: owner-curated 30+ entry source inventory or originality gate changed")
+    if len(records) != 40 or curated.get("original_findings_whitelist_count") != 3:
+        FAILURES.append("RESEARCH LIBRARY: exact 40-entry source inventory or originality gate changed")
+    # All 33 historical records must remain identical; seven additions cannot silently edit them.
+    baseline = json.loads((ROOT / "research/nightfall/SITE_CURATED_33_20261029.json").read_text(encoding="utf-8"))
+    original_by_id = {row["id"]: row for row in baseline.get("entries", [])}
+    current_by_id = {row["id"]: row for row in records}
+    if len(original_by_id) != 33 or any(current_by_id.get(k) != v for k, v in original_by_id.items()):
+        FAILURES.append("RESEARCH LIBRARY: archived 33 original records were changed or lost")
+    additions = [row for row in records if row.get("id") not in original_by_id]
+    if [row.get("id") for row in additions] != ["34", "35", "36", "37", "38", "39", "40"]:
+        FAILURES.append("RESEARCH LIBRARY: seven curated additions missing or reordered")
+    if any(row.get("evidence") not in ("working", "finite", "proposal", "software") for row in additions):
+        FAILURES.append("RESEARCH LIBRARY: expanded dossiers silently upgraded evidence class")
     expected = [(item.get("category"), item.get("evidence")) for item in records]
     if entries != expected:
         FAILURES.append("RESEARCH LIBRARY: HTML discipline/evidence sequence differs from owner curated ledger")

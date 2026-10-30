@@ -4,7 +4,7 @@
 const REGISTRY={
   "schema": "nightfall-proof-passports-v1",
   "asOf": "2026-10-30",
-  "editorialScope": "Eleven curated evidence passports (six existing and five added 2026-10-30), across an unchanged 33-dossier research library. Evidence tiers describe only their exact claims; no additions to the separate originality approval whitelist.",
+  "editorialScope": "Eleven curated evidence passports (six existing and five added 2026-10-30), across a 40-dossier research library (33 canonical baseline records plus seven new review-scoped additions). Evidence tiers describe only their exact claims; no additions to the separate originality approval whitelist.",
   "dimensions": [
     "validity",
     "reproducibility",
