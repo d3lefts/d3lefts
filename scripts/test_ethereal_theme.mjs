@@ -163,6 +163,30 @@ try{
    if(["join.html","discovery.html","claim-lab.html","erdos-paper.html"].includes(file))
     await page.screenshot({path:"browser-artifacts/ethereal-"+file.replace(".html","")+"-"+width+".png",fullPage:false});
   }
+   // First-review entry: finite replay before advanced theorem challenges.
+   await page.goto(origin+"review.html",{waitUntil:"load"});
+   assert.equal(await page.locator(".review-hero a[href='#start-here']").count(),1,"Reviewer entry visible");
+   assert.equal(await page.locator("#start-here").isVisible(),true,"Finite review card available");
+   assert.match(await page.locator("#start-here pre").innerText(),/verify_sidon30_standalone\.py/);
+   assert.match(await page.locator("#start-here").innerText(),/27405|27,405/);
+   assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth))<=4,
+     "Review starter does not overflow at "+width+"px");
+   await page.locator("#start-here").screenshot({path:"browser-artifacts/review-starter-moon-"+width+".png"});
+   await page.locator(".nf-theme-toggle").click();
+   assert.equal(await page.locator("#start-here").isVisible(),true,"Review remains readable in NULL FIELD");
+   assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth))<=4,
+     "Archive review starter does not overflow at "+width+"px");
+   await page.locator("#start-here").screenshot({path:"browser-artifacts/review-starter-field-"+width+".png"});
+   await page.locator(".nf-theme-toggle").click();
+   await page.goto(origin+"about.html",{waitUntil:"load"});
+   assert.equal(await page.locator('.about-lead a[href="portfolio.html"]').count(),1,
+     "Research About directly links to attributed professional work");
+   await page.goto(origin+"index.html",{waitUntil:"load"});
+   assert.equal(await page.locator('.footer a[href="portfolio.html"]').count(),1,
+     "Research homepage footer exposes portfolio without changing primary navigation");
+   assert.equal(await page.locator('.footer a[href="review.html#start-here"]').count(),1,
+     "Homepage handoff points to runnable first review");
+
    // The complete source-linked map belongs to Constellation.
    await page.goto(origin+"index.html",{waitUntil:"load"});
    assert.equal(await page.locator(".nf-observatory-edge").count(),0,"No duplicate homepage graph");
