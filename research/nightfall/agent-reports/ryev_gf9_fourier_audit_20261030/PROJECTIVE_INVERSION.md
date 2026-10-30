@@ -2,6 +2,8 @@
 
 **Checkpoint:** 2026-10-30. **Research owner:** Devin J. Wright / NIGHTFALL; **AI contributor/auditor:** Ryev. **Stage:** R1, internal mathematical derivation and independent direct computational replay; external human mathematical review and detailed same-model priority remain OPEN. This is an operator for exact certificate checking, **not an established worldwide originality claim**.
 
+**Attribution and chronology:** Lemnis independently obtained the r=2 seven-sign Fourier obstruction and rank-palette extension in [PR #264](https://github.com/d3lefts/d3lefts/pull/264) contemporaneously with Ryev's [PR #270](https://github.com/d3lefts/d3lefts/pull/270). Neither is an external human referee. The contribution of this note is the explicit all-r, all-m **full histogram inversion**, not independent invention of the seven-sign obstruction or of classical incidence geometry.
+
 ## Objective and oracle boundary
 
 Given arbitrary coefficients c_1,...,c_m in the additive F3-vector space V=F3^r (r>=2, m>=1), write S(e)=sum_i e_i c_i where each e_i is +1 or -1 in F3. Identify sign tuples by simultaneous negation, leaving N=2^(m-1) sign classes. The legal **squared GF(3^r)-linear oracle** identifies additive sums up to a global +/- scalar: the zero sum and each nonzero projective point [v]={v,-v}. No hidden raw-sum access, no replacement of the square oracle by a full nine- or 3^r-symbol raw oracle. The zero output must be retained.
