@@ -15,12 +15,16 @@ test('opening scene is progressive, purely decorative, and both readings remain 
  assert.match(html,/href="home-opening-cinema.css"/);
  assert.match(html,/src="home-opening-cinema.js" defer/);
  assert.match(html,/id="hero-title-archive"/);
+ assert.match(html,/class="nf-opening-overlap"/);
+ assert.match(html,/class="nf-cinema-record"/);
+ assert.ok(html.indexOf('id="nf-scroll-cinema"')<html.indexOf('id="flagships"'));
  assert.match(html,/id="hero-title"/);
  assert.match(html,/href="#flagships"/);
  assert.match(html,/href="review.html#priority"/);
  assert.match(html,/id="nf-scroll-cinema"/); // retain the second-act cinema
  assert.match(css,/prefers-reduced-motion:reduce/);
  assert.match(css,/\.nf-opening-art\{[\s\S]*?pointer-events:none/);
+ assert.match(css,/\.nf-opening-overlap a:focus-visible/);
  assert.match(css,/html\[data-nf-theme="dusk"\] \.nf-opening-art--gold\{display:none\}/);
  assert.match(css,/html\[data-nf-theme="dusk"\] \.nf-opening-art--night\{display:block\}/);
  assert.match(js,/IntersectionObserver/);

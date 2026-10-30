@@ -8,13 +8,13 @@ const styles=readFileSync('docs/home-rhythm.css','utf8');
 const find=s=>html.indexOf(s);
 const count=(s,re)=>(s.match(re)||[]).length;
 
-test('Three research moments precede the unchanged cinematic transition',()=>{
+test('The two themed opening skies and Erdős cinematic precede the three detailed research moments',()=>{
  const stages=[
   '<section class="hero wrap',
+  '<section class="nf-cinema"',
   '<section class="section wrap flagships"',
   '<section class="section wrap sf-case"',
   '<section class="section wrap sf-library-invite" id="featured-title"',
-  '<section class="nf-cinema"',
   '<section class="nf-observatory wrap"',
   '<section class="section review-section"',
   '<section class="section wrap sf-library-invite" id="work"'
@@ -56,8 +56,8 @@ test('One entrance with fewer distractions and valid fragment destinations',()=>
 });
 
 test('Scientific qualifiers survive the tighter narrative',()=>{
- assert.ok(html.includes('id="hero-title-archive">Discovery needs<br><em>witnesses.</em>'));
- assert.ok(html.includes('id="hero-title">Put the claim<br><em>to the test.</em>'));
+ assert.ok(html.includes('id="hero-title-archive">A precise number.<br><em>An open record.</em>'));
+ assert.ok(html.includes('id="hero-title">Every shift.<br><em>Every assumption.</em>'));
  for(const q of ['external review','unproved','failed experiment','internal exact replay'])assert.ok(html.toLowerCase().includes(q),q);
  assert.ok(html.includes("no edge certifies a transfer theorem"));
 });
@@ -69,4 +69,20 @@ test('Editorial sizing and motion controls retain accessible treatments',()=>{
   'html[data-nf-theme="dusk"] .nf-deep-disclosure',
   '@media (max-width:820px)','@media (max-width:620px)',
   '@media (prefers-reduced-motion:reduce)'])assert.ok(styles.includes(s),s);
+});
+
+test('Opening and scroll chapters disclose the exact finite record before other campaigns',()=>{
+ const hero=html.indexOf('<section class="hero wrap nf-opening"');
+ const movie=html.indexOf('<section class="nf-cinema"');
+ const others=html.indexOf('<section class="section wrap flagships"');
+ assert.ok(hero>=0&&movie>hero&&others>movie);
+ const front=html.slice(hero,others);
+ assert.match(front,/Erdős overlap finite witness record/);
+ assert.match(front,/Source-bound Erdős finite overlap record/);
+ assert.ok((front.match(/0\.380856370118/g)||[]).length===2);
+ assert.ok((front.match(/131,072/g)||[]).length>=3);
+ for(const disclaimer of ['separate, incompletely recovered artifact','external review open','global optimum'])
+  assert.ok(front.toLowerCase().includes(disclaimer.toLowerCase()),disclaimer);
+ assert.match(front,/href="erdos-paper\.html"/);
+ assert.match(front,/href="review\.html#erdos"/);
 });

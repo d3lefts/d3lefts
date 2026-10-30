@@ -176,3 +176,40 @@ html[data-nf-theme="dusk"] .nf-opening-reading--night{display:inline}
 html[data-nf-theme="dusk"] .nf-opening-constellation .nf-opening-node--oxblood{
   fill:#a7add7;
 }
+
+/* Erdős finite witness is the first screen's scientific focal point.
+   Artwork stays behind this readable, selectable source-linked readout. */
+.nf-opening-overlap{display:grid;gap:clamp(10px,1.4vw,17px);align-content:center;min-width:0;padding:clamp(22px,2.4vw,36px);
+  border:1px solid rgba(247,204,150,.43);background:rgba(24,16,38,.72);
+  box-shadow:0 22px 65px rgba(6,7,17,.2);color:#fff0e7}
+.nf-opening-overlap-label{font:600 10px/1.65 var(--mono);letter-spacing:.12em;color:#f5c98c}
+.nf-opening-overlap-value{font:500 clamp(17px,2.03vw,29px)/1.2 var(--mono);letter-spacing:-.05em;
+  overflow-wrap:anywhere;font-variant-numeric:tabular-nums;color:#fff5dc}
+.nf-opening-overlap-unit{font:12px/1.55 var(--sans);color:#efd6c7}
+.nf-opening-overlap-facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:15px;
+  border-top:1px solid rgba(247,204,150,.35)}
+.nf-opening-overlap-facts>div{display:grid;align-content:start;gap:7px;min-width:0}
+.nf-opening-overlap-facts strong{font:500 clamp(14px,1.35vw,20px)/1.15 var(--mono);letter-spacing:-.025em;color:#f8d796}
+.nf-opening-overlap-facts span{font:10px/1.5 var(--sans);color:#e6d9df}
+.nf-opening-overlap a{justify-self:start;color:#f8d796;font:600 11px/1.5 var(--mono);
+  text-decoration:underline;text-underline-offset:5px}
+.nf-opening-overlap a:focus-visible{outline:3px solid #f8d796;outline-offset:5px}
+html[data-nf-theme="dusk"] .nf-opening-overlap{background:rgba(4,9,24,.83);border-color:rgba(226,210,140,.38)}
+html[data-nf-theme="dusk"] .nf-opening-overlap-label,
+html[data-nf-theme="dusk"] .nf-opening-overlap-facts strong,
+html[data-nf-theme="dusk"] .nf-opening-overlap a{color:#e2d28c}
+html[data-nf-theme="dusk"] .nf-opening-overlap-unit{color:#cdd1e3}
+#main > .hero.nf-opening .hero-aside{gap:16px}
+#main > .hero.nf-opening .aside-footer{padding-top:18px}
+#main > .hero.nf-opening .aside-footer strong{font-size:clamp(23px,2.6vw,36px)}
+@media(max-width:760px){
+  #main > .hero.nf-opening{padding-bottom:80px}
+  .nf-opening-overlap{padding:20px}
+  .nf-opening-overlap-value{font-size:clamp(18px,4.5vw,25px)}
+}
+@media(max-width:390px){
+  .nf-opening-overlap-facts{grid-template-columns:1fr 1fr;gap:12px}
+  .nf-opening-overlap-facts strong{font-size:15px}
+}
+@media print{.nf-opening-overlap{background:#fff;color:#111;border-color:#888}
+  .nf-opening-overlap :is(strong,span,a){color:#111!important}}
