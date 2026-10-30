@@ -38,7 +38,8 @@ def theta : F9 := (0, 1)
 
 -- c=theta if the two coordinate powers coincide; c=1 otherwise.
 def coeff (x y : F9) : F9 :=
-  if sq x = sq y then theta else one
+  if ((sq x).1.val == (sq y).1.val) &&
+     ((sq x).2.val == (sq y).2.val) then theta else one
 
 def third (x y : F9) : F9 :=
   sq (add x (mul (coeff x y) y))
