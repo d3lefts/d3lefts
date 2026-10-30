@@ -1,7 +1,7 @@
 # Subfield escape in adaptive powered sensing: exact two-coordinate query transition
 
 Date: 2026-10-29 (America/New_York)
-Status: INTERNAL ANALYTIC PROOF; FINITE COMPUTATIONAL CHECKS; LEAN KERNEL CHECK PENDING CI; external novelty and mathematical referee OPEN.
+Status: INTERNAL ANALYTIC PROOF; FINITE COMPUTATIONAL CHECKS; LEAN KERNEL COMPILED for F9 with explicitly reported standard `propext` dependency; FOUR SCOPED ZERO-AXIOM LEAN LEMMAS PASS; full general theorem is NOT formalized; external novelty and mathematical referee OPEN.
 Research owner: Devin J. Wright. Derivation and synthesis in this session: GPT-6 (Vesper collaboration). Earlier 2k-1 adaptive subfield construction: Axiom, PR #37. Classical vector-space search baseline: Héger, Patkós, Takáts (2014).
 
 ## Theorem: exact adaptive complexity in two signal coordinates
@@ -54,7 +54,7 @@ Classical baseline / known related source:
 
 ## Reproducibility / scope
 
-- Formal core: `research/nightfall/formalization/subfield_escape/SubfieldEscape9.lean` tests the F9 three-reading map and the F5 geometric finite obstruction/upper bound, plus exact F9/F25 count inequalities.
+- Formal core: `research/nightfall/formalization/subfield_escape/SubfieldEscape9.lean` tests the F9 three-reading map and the F5 geometric finite obstruction/upper bound, plus exact F9/F25 count inequalities. Workflow run [40995405288](https://github.com/d3lefts/d3lefts/actions/runs/40995405288) PASSED on Lean 4.35.0: F9 exhaustive theorem compiled with Lean's standard `propext` axiom disclosed, four smaller incidence/count lemmas passed `--strict` with no axioms reported; five bridge protocol tests and the independent F9/F25 arithmetic checker also passed. No claim that these checks kernel-formalize the general arbitrary-field theorem.
 - Independent Python pair-arithmetic checker (run locally in this session) enumerated F9^2 (81 signals) and F25^2 (625 signals), finding 41 and 157 distinct signatures and zero collisions.
 - Remaining proof gate: a **general finite-field formalization** of the subfield-escape argument (not yet present), independent human review, and a more exhaustive exact-model priority investigation.
 
