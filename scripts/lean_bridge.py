@@ -23,6 +23,7 @@ DIAGNOSTIC = re.compile(r"^(.*?):(\d+):(\d+): (error|warning|information): (.*)$
 UNTRUSTED = re.compile(r"\b(sorry|admit|axiom|constant|native_decide|unsafe|partial)\b")
 DECLARATION = re.compile(r"[A-Za-z_][A-Za-z_0-9'.]*\Z")
 NO_AXIOMS = re.compile(r"\bdoes not depend on any axioms\b", re.I)
+FOUNDATIONAL_AXIOMS = frozenset({"propext", "Quot.sound", "Classical.choice"})
 
 
 def without_comments_and_strings(source: str) -> str:
@@ -121,6 +122,8 @@ def invoke(cmd: list[str], cwd: Path, timeout: int) -> dict:
 def check(source: Path, workspace: Path, declarations: list[str], timeout: int, compiler: str | None,
           allowed_axioms: set[str] | None = None) -> dict:
     allowed_axioms = set() if allowed_axioms is None else set(allowed_axioms)
+    if not allowed_axioms <= FOUNDATIONAL_AXIOMS:
+        raise ValueError("only Lean foundational axioms may be allowlisted: " + ", ".join(sorted(FOUNDATIONAL_AXIOMS)))
     path = source.resolve()
     if path.suffix != ".lean" or not path.is_file():
         raise ValueError("source must be an existing .lean file")
