@@ -184,8 +184,7 @@ def check(source: Path, workspace: Path, declarations: list[str], timeout: int, 
         receipt["status"] = "COMPILED"
     for name in declarations:
         marker = re.compile(
-            r"['\\\"]?" + re.escape(name) +
-            r"['\\\"]?\\s+(does not depend on any axioms|depends on axioms:\\s*\\[([^\\]]*)\\])", re.I)
+            re.escape(name) + r"'?\s+(does not depend on any axioms|depends on axioms:\s*\[([^\]]*)\])", re.I)
         matches = list(marker.finditer(output))
         found = matches[-1] if matches else None  # appended #print commands are last.
         dependencies = ([a.strip() for a in found.group(2).split(",") if a.strip()]
