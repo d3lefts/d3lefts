@@ -1,0 +1,30 @@
+name: Lemnis GF169 six-hole independent proof audit
+on:
+  push:
+    paths:
+      - "research/nightfall/projects/finite-field/lemnis_gf169_audit_20261030/**"
+      - ".github/workflows/lemnis-gf169-six-hole.yml"
+  pull_request:
+    paths:
+      - "research/nightfall/projects/finite-field/lemnis_gf169_audit_20261030/**"
+      - ".github/workflows/lemnis-gf169-six-hole.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  independent-mathematical-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile independent Python verifiers
+        run: python3 -m py_compile research/nightfall/projects/finite-field/lemnis_gf169_audit_20261030/*.py
+      - name: Reconstruct binary tiles and exact pair-sum complements
+        run: python3 research/nightfall/projects/finite-field/lemnis_gf169_audit_20261030/independent_tiles.py
+      - name: Independently replay GF169 powered oracle
+        run: python3 research/nightfall/projects/finite-field/lemnis_gf169_audit_20261030/independent_f169.py
+      - name: Run off-diagonal and D4 falsifiers
+        run: python3 research/nightfall/projects/finite-field/lemnis_gf169_audit_20261030/negative_controls.py
