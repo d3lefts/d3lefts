@@ -71,9 +71,9 @@ try{
     const s=getComputedStyle(document.documentElement),button=getComputedStyle(document.querySelector(".hero-actions .button"));
     return {paper:s.getPropertyValue("--lf-paper").trim(),primary:s.getPropertyValue("--lf-primary").trim(),text:button.color};
   });
-  assert.equal(palette.paper,"#241a34","Sunset Boulevard token contract");
-  assert.equal(palette.primary,"#e7b768","Sunset apricot action accent");
-  assert.equal(palette.text,"rgb(36, 26, 52)","Primary button uses legible light text");
+  assert.equal(palette.paper,"#020406","NULL FIELD token contract");
+  assert.equal(palette.primary,"#b4e3d6","NULL FIELD opal action accent");
+  assert.equal(palette.text,"rgb(2, 4, 6)","Primary button uses legible dark ink");
   await page.screenshot({path:"browser-artifacts/ethereal-light-"+width+".png",fullPage:false});
   await toggle.click();
   await page.waitForTimeout(350);
