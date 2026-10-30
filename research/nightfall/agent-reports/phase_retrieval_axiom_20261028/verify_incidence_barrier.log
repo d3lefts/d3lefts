@@ -1,0 +1,43 @@
+{
+  "all_k_lower_bound": "[k choose 2]_25 >= 25^(2k-4) for every k>=2",
+  "checked_independent_subspace_densities": [
+    {
+      "normal": [
+        "(1, 0)",
+        "(0, 0)",
+        "(0, 0)"
+      ],
+      "total_rows": 15625,
+      "zero_rows": 3025
+    },
+    {
+      "normal": [
+        "(1, 0)",
+        "(0, 0)",
+        "(0, 1)"
+      ],
+      "total_rows": 15625,
+      "zero_rows": 3025
+    },
+    {
+      "normal": [
+        "(1, 0)",
+        "(0, 0)",
+        "(0, 2)"
+      ],
+      "total_rows": 15625,
+      "zero_rows": 3025
+    }
+  ],
+  "exact_source_constant": "2 log25 / log(625/121)",
+  "field": "F5[u]/(u^2-2)",
+  "gaussian_subspace_counts": {
+    "k2": 1,
+    "k3": 651,
+    "k4": 407526
+  },
+  "interpretation": "obstruction to duplicate-event quotient union bounds ONLY; not a lower bound on actual failure probability",
+  "k3_distinct_max_density_events": 651,
+  "sharp_event_probability": "(121/625)^m",
+  "status": "PASS"
+}

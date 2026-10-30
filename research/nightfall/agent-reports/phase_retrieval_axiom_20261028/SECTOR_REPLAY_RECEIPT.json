@@ -1,0 +1,47 @@
+{
+  "base_source_github_blob": "1c157f272e31364381e293a71ad1425964e8410c",
+  "claim": "difference grade resolved coupling certifies rank2 class strictly larger than earlier anisotropic tube",
+  "controls": [
+    "all 6561 matrix units preserve difference grade",
+    "same-grade nonzero mixed term 1/8",
+    "rank-one total matrix can have rank-three grade projection"
+  ],
+  "date": "2026-10-28",
+  "python": "3.13.5",
+  "runs": [
+    {
+      "command": "python3 check_difference_sectors.py",
+      "file": "check_difference_sectors.py",
+      "returncode": 0,
+      "sha256": "bb989b349cb40be7bdfe8b9c013cbf68cda53a837b5e1d7985da606682cfb0b4",
+      "stderr": [],
+      "stdout": [
+        "{'t': '1/2', 'rank': 2, 'Q_exact': '13/8', 'new_lower_bound': '5/8', 'old_anisotropic_pass': False}",
+        "{'t': '1', 'rank': 2, 'Q_exact': '7/2', 'new_lower_bound': '5/2', 'old_anisotropic_pass': True}",
+        "{'t': '1/4', 'rank': 2, 'Q_exact': '37/32', 'new_lower_bound': '5/32', 'old_anisotropic_pass': False}",
+        "PASS: 6561 coordinate basis directions preserve difference grade",
+        "PASS: exact rank-two witness, no cross-sector leakage, strict grade-aware enlargement",
+        "FILE_SHA256: bb989b349cb40be7bdfe8b9c013cbf68cda53a837b5e1d7985da606682cfb0b4"
+      ]
+    },
+    {
+      "command": "python3 check_partial_traces.py",
+      "file": "check_partial_traces.py",
+      "returncode": 0,
+      "sha256": "52f0710458ffb50aa265e608f51674fa96be567ce273424a5d38ad1d9b4053bb",
+      "stderr": [],
+      "stdout": [
+        "PASS independent physical partial traces 1/4 37/32",
+        "PASS independent physical partial traces 1/2 13/8",
+        "PASS independent physical partial traces 1 7/2",
+        "PASS same-sector cross-term negative control: 1/8",
+        "PASS rank-inflation control: rank1 full matrix -> rank3 grade-zero component",
+        "PASS independent 16-partial-trace path",
+        "FILE_SHA256: 52f0710458ffb50aa265e608f51674fa96be567ce273424a5d38ad1d9b4053bb"
+      ]
+    }
+  ],
+  "schema": "nightfall.axiom.graded-werner.audit.v1",
+  "scope": "four-qutrit fixed endpoint, rank-two witnesses; conditional on nine-word positivity premise",
+  "theorem_status": "conditional proof + independent finite arithmetic; peer review and novelty open"
+}

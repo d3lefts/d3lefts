@@ -1,0 +1,20 @@
+{
+  "checker_sha256": "730d8b6b5ed796d8590a0d7224f5cfff0d8a7eb79f15ce195b1df96aa628f6b9",
+  "command": "python3 verify_f25_independent.py",
+  "date": "2026-10-28",
+  "exit_code": 0,
+  "file": "verify_f25_independent.py",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "research_audit_sha256": "edb1575cd06a79de5ef162a48cd274be1d9c2fff48b41a84b18f7a51ffee9f3a",
+  "status": "PASS scoped exact finite proof tests; external proof and global priority open",
+  "stderr": "",
+  "stdout": [
+    "PASS full polynomial coefficient enumeration: 15624 triples; max zero rows=121/625",
+    "PASS max-attainment count: 720 zero-count histogram: {1: 2880, 25: 11424, 49: 600, 121: 720}",
+    "PASS GF25 v\u00b2=3; seed 330417 4x625 full decoder outputs at k2,m13 and 3x25 sampled outputs k3,m19",
+    "PASS coordinate A=I2 yields 16 preimages/4 phase orbits; zero sensing row yields 625/157",
+    "PASS zero input, planted kernel, and bad-design controls; exact 11^5882 < 5^8764",
+    "SOURCE_SHA256 730d8b6b5ed796d8590a0d7224f5cfff0d8a7eb79f15ce195b1df96aa628f6b9"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "claim": "uniform polynomial-time F25 fourth-power recovery from ceil(83k/24)+s iid nonadaptive rows; exact logarithmic threshold also valid",
+  "files": {
+    "PRIME_SUBFIELD_LIST_DECODER_THEOREM.md": "66ecd746c06cc091d73f8e4cf83d80ead72ee1f1c35b43c2d377d94b9e05f962",
+    "verify_sub35_alt.log": "b64bebb058bda59add2905049fe6258852e65b0f3aac15308b57c78f500bba81",
+    "verify_sub35_alt.py": "2230723881e6b86dffd91685619e8faa1cc7b18bbb0b567217026388762a7f07",
+    "verify_sub35_decoder.log": "d68372240bc16b0f20fdbdf088ebc1842d022fdf6fd0d9928322f884b55256a8",
+    "verify_sub35_decoder.py": "772b1bacfd540a7676a1ef1e3a177fb168bf42895d89baaef8a2d16f97473877"
+  },
+  "research_date": "2026-10-29",
+  "runs": [
+    {
+      "command": "python3 verify_sub35_decoder.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 verify_sub35_alt.py",
+      "exit_code": 0
+    }
+  ],
+  "status": "written algebraic proof plus two independently written exact checks, external proof and priority pending"
+}
