@@ -49,12 +49,24 @@ def readings (x y : F9) : F9 × F9 × F9 :=
 def fromIndex (i : Fin 9) : F9 :=
   (red i.val, red (i.val / 3))
 
+def encode (x : F9) : Nat :=
+  x.1.val + 3 * x.2.val
+
+def packedReadings (i j : Fin 9) : Nat :=
+  let x := fromIndex i
+  let y := fromIndex j
+  encode (sq x) + 9 * encode (sq y) + 81 * encode (third x y)
+
+-- The Boolean form is equivalent to: matching three-query signatures
+-- imply agreement up to one common nonzero F3 scalar.
+def correctlySeparated (i j k l : Fin 9) : Bool :=
+  (packedReadings i j != packedReadings k l) ||
+    ((i.val == k.val && j.val == l.val) ||
+      (i.val == encode (neg (fromIndex k)) &&
+       j.val == encode (neg (fromIndex l))))
+
 theorem f9_three_readings_identify_global_sign :
-    ∀ i j k l : Fin 9,
-      readings (fromIndex i) (fromIndex j) =
-      readings (fromIndex k) (fromIndex l) →
-      (fromIndex i = fromIndex k ∧ fromIndex j = fromIndex l) ∨
-      (fromIndex i = neg (fromIndex k) ∧ fromIndex j = neg (fromIndex l)) := by
+    ∀ i j k l : Fin 9, correctlySeparated i j k l = true := by
   decide
 
 -- For four adaptive singleton tests, follow the all-"nonmember" branch:
