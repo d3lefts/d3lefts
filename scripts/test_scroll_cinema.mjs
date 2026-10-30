@@ -74,6 +74,10 @@ try{
    },asset);
    assert.ok(still.backdrop.includes(asset),mode+": matching self-hosted cinematic asset");
    assert.ok(still.hero.includes(asset),mode+": matching first-fold still asset");
+   assert.doesNotMatch(still.backdrop,/images\\.unsplash\\.com/,mode+": interlude uses only self-hosted imagery");
+   assert.doesNotMatch(still.hero,/images\\.unsplash\\.com/,mode+": hero uses only self-hosted imagery");
+   assert.match(still.backdrop,/linear-gradient/,mode+": interlude retains the tonal wash");
+   assert.match(still.hero,/linear-gradient/,mode+": hero retains the tonal wash");
    assert.ok(still.repeat.split(",").every(x=>x.trim()==="no-repeat"),mode+": no tiled photographic backgrounds or lunar overlays");
    assert.ok(still.heroRepeat.split(",").every(x=>x.trim()==="no-repeat"),mode+": no repeated hero overlays");
    if(mode==="dusk"){
