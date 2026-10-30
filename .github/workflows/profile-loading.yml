@@ -1,0 +1,46 @@
+name: Measure NIGHTFALL loading
+on:
+  pull_request:
+    paths:
+      - "docs/**"
+      - "scripts/profile_loading.mjs"
+      - ".github/workflows/profile-loading.yml"
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "scripts/profile_loading.mjs"
+      - ".github/workflows/profile-loading.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nightfall-loading-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  synthetic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Chrome automation dependency
+        run: npm install --no-save --no-package-lock playwright-core@1.56.1
+      - name: Check profiler syntax
+        run: node --check scripts/profile_loading.mjs
+      - name: Measure cold local loading in both themes, desktop and 4x-CPU mobile
+        env:
+          CHROME_BIN: /usr/bin/google-chrome
+          PERF_REPEATS: "2"
+        run: |
+          mkdir -p browser-artifacts
+          CHROME_BIN="$(command -v google-chrome)" node scripts/profile_loading.mjs | tee browser-artifacts/loading-profile.log
+      - name: Archive machine-readable timings, resource waterfall, and animation sample
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-synthetic-loading-${{ github.run_id }}
+          path: |
+            browser-artifacts/loading-profile.json
+            browser-artifacts/loading-profile.log
+          if-no-files-found: ignore
+          retention-days: 90
