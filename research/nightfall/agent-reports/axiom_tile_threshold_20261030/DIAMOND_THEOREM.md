@@ -120,6 +120,35 @@ The set of primes inside [3D,4D−1] is a **positive-width interval of absolute 
 
 so the family contains infinitely many primes with growing d **unconditionally**. This is completely different from conjecturing infinitely many primes of the special forms 4·2^d−1 or 4·2^d−3. PNT is background, not a new result.
 
+## Global synthesis: where the available one-query constructions remain suboptimal
+
+The diamond construction and Tessera's *already established in-program* product sign-digit construction together give a complete **arithmetic classification of their remaining distance to the one-reading alphabet ceiling for every odd prime p≥13**. This is a consequence of the two constructions, **not an upper bound on all unknown alternative constructions**.
+
+For each p choose the unique D=2^d with 3D≤p<6D (the largest power of two no greater than p/3). Let
+
+    C(p)=floor(log2((p²+1)/2)),                 exact alphabet upper bound;
+    B_prod(p)=max(2 floor(log2((p+1)/2)),
+                  floor(log2((p−1)/2))+floor(log2 p));
+    B_diamond(p)=2d+2;
+    B_known(p)=max(B_prod(p),B_diamond(p)).
+
+Then **0≤C(p)−B_known(p)≤1**, with equality to one **if and only if**
+
+    32D² ≤ p²+1    AND    p < 6D.
+
+Equivalently (using exact integer arithmetic),
+
+    ceil(sqrt(32D²−1)) ≤ p ≤ 6D−1.
+
+The proof is immediate by splitting the unique range 3D≤p<6D:
+- For **3D≤p≤4D−1**, diamond has b=2d+2, equal to the information ceiling.
+- For **4D+1≤p** and **p²+1<32D²**, the old product bound is 2d+3, equal to the ceiling. The case p=4D is irrelevant to primes because 4D is even.
+- For **p²+1≥32D²** but p<6D, the information ceiling is 2d+4, whereas B_product=2d+3 and B_diamond=2d+2: **one phase sign remains unresolved** by these constructions.
+
+The narrow final interval has length asymptotic to (6−4√2)D≈0.343D, rather than the entire dyadic scale width 3D. **This identifies the precise next structural target.** Example outstanding primes are p=23,47,191. No claim is made that b=C(p) is impossible there; only the currently verified product and diamond coefficient recipes fall one sign short.
+
+[check_global_gap.py](check_global_gap.py) repeats the classification using **integer bit lengths and exact integer square roots**, checking every prime p∈[13,20,000] without floating-point boundaries and retaining the two distinct construction baselines. This is a reusable capability for prioritizing the rare gap bands, not a new universal impossibility certificate. In particular it prevents falsely interpreting the failed rectangular p47 search as nonexistence.
+
 ## Independent exact arithmetic certificate and falsification
 
 [check_diamond.py](check_diamond.py) independently constructs T, all nine I×I rectangles in (Z/pZ)², and the explicit missing-sum witness, then computes the actual square-output values over K=F_p[t]/(t²−δ) for every T point. These checks include p13,29,31,53,59,61,97,101,103,107,109,113,127,193,197,199,211,223,251,389, plus composite moduli **only for additive geometry**, and independently compare brute pair sums in small edge cases. It also checks the Tessera baseline formulas and the sharp output-alphabet upper bound for p in [3D,4D−1].
