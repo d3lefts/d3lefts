@@ -50,4 +50,25 @@ assert.ok(contrast("#f2f5fa","#841736")>=4.5,"Porcelain text on hovered cherry C
 assert.ok(contrast("#0b1425","#e2d28c")>=4.5,"Night action ink must remain readable on moonlight");
 assert.equal((light.match(/--nf-24k-gold:#d4af37/g)||[]).length,1,"New Moon retains 24k");
 assert.ok(light.includes("--nf-24k-gold:#c53b5f"),"Archive uses cherry diffraction, not gold");
+// Signature surface rule: strong warm hues are reserved for small signals,
+// never the full numeric plate or the repeated research cards.
+for(const token of [
+  "--nf-muted-signal:#c19aa8",
+  "--nf-muted-carbon:#0f181d",
+  "--nf-muted-plum:#211e28",
+  "--nf-muted-signal:#dfd2a0"
+])assert.ok(light.includes(token),"Quiet Signal palette token missing: "+token);
+assert.ok(light.includes("html:not([data-nf-theme=\"dusk\"]) .sf-case-aside"),
+  "NULL FIELD result plate must have a dark neutral treatment");
+assert.ok(light.includes("html[data-nf-theme=\"dusk\"] .sf-case-aside"),
+  "NEW MOON result plate must have a midnight treatment");
+assert.ok(light.includes("background-image:linear-gradient(120deg,rgba(11,25,31,.28),rgba(10,20,29,.55))"),
+  "Cherry CTA requires a desaturating translucent glaze");
+assert.ok(contrast("#eaf0f5","#192229")>=7,
+  "Muted Archive result plate needs comfortably legible body text");
+assert.ok(contrast("#f1eedc","#172337")>=7,
+  "Muted New Moon result plate needs comfortably legible body text");
+assert.ok(contrast("#e2d28c","#172337")>=7,
+  "Moonlight remains visible as the numerical accent on midnight slate");
+
 console.log("Palette contract OK: "+files.length+" public assets; black-cherry and moonlight independently satisfy text contrast");
