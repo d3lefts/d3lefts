@@ -57,5 +57,5 @@ for(const file of ["docs/home-system.js","docs/passport.js","docs/atlas.js","doc
  assert.ok(src,"No JavaScript in "+file);new vm.Script(src,{filename:file});
 }
 console.log("PASS: "+R.claims.length+" claims, "+R.mechanisms.length+" mechanisms, "+R.edges.length+" source-typed edges, "+R.events.length+" provenance events");
-console.log("PASS: homepage, Passport, Atlas, Claim Lab, 33-document library, Referee and sitemap contracts");
+console.log("PASS: homepage, Passport, Atlas, Claim Lab, 40-document library, Referee and sitemap contracts");
 console.log("PASS: browser JavaScript and Claim Lab inline script parse");

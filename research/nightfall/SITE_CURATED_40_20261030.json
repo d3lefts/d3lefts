@@ -1,0 +1,417 @@
+{
+  "version": 4,
+  "snapshot": "2026-10-30",
+  "scope": "40 source-linked research dossiers across Mathematics (21), Quantum (4), Safety (7) and Systems (8). Preserves all 33 entries from the 2026-10-29 canonical ledger unchanged and adds seven separately scoped entries. Four mathematical additions are draft review summaries, not accepted theorems; the Judgment Provenance study has no results; five original-finding approvals, of which three belong to the original ledger whitelist, are unchanged.",
+  "criteria": [
+    "distinct mathematical or engineering contribution",
+    "specific reproducible evidence",
+    "well-defined unresolved premises",
+    "portfolio breadth across four fields",
+    "historical correction and attribution",
+    "separate topic mechanisms from serial project checkpoints",
+    "retain negative results when independent data illuminate failure mechanisms"
+  ],
+  "original_findings_whitelist_count": 3,
+  "entries": [
+    {
+      "id": "01",
+      "category": "mathematics",
+      "evidence": "finite",
+      "type": "Exact finite construction",
+      "title": "Erdős minimum overlap",
+      "summary": "131,072-cell rational upper-bound witness with an internally replayed all-shift score of 0.380856370118029325…; external specialist audit remains open.",
+      "boundary": "An explicit construction and its exact audit; separate from the accepted Arena entry.",
+      "source": "projects/erdos/STATUS_AND_PRIOR_ART_20261028.md"
+    },
+    {
+      "id": "02",
+      "category": "mathematics",
+      "evidence": "finite",
+      "type": "Exact finite construction",
+      "title": "Sidon (4,5): 30-point witness",
+      "summary": "A 30-integer configuration whose largest Sidon subset contains 17 elements, with an exhaustive finite checker.",
+      "boundary": "A distinct finite witness; existing asymptotic results remain credited to prior researchers.",
+      "source": "projects/sidon-finite-30/README.md"
+    },
+    {
+      "id": "03",
+      "category": "mathematics",
+      "evidence": "working",
+      "type": "Automata theorem manuscript",
+      "title": "One-way planar Busy Beaver factorization",
+      "summary": "A proposed fresh-row decomposition relates one-way planar halting steps to the classical Busy Beaver function; its at-most-n phase factor remains unproved.",
+      "boundary": "Proof gap: repeated row-entry control states do not alone imply repeated global configurations. The n-phase upper bound is conjectural pending a valid invariant or proof.",
+      "source": "projects/automata-fresh-layer/README.md"
+    },
+    {
+      "id": "04",
+      "category": "mathematics",
+      "evidence": "conditional",
+      "type": "Exact downstream arithmetic",
+      "title": "Finite-field span-tail reduction",
+      "summary": "Independent exact checkers establish a 2⁻⁹⁶ arithmetic tail envelope for stated large-field parameters under a span-count hypothesis.",
+      "boundary": "The central Gaussian short-vector span-count lemma and end-to-end decoder guarantee are unverified; arithmetic checks remain conditional.",
+      "source": "projects/finite-field-phase-retrieval-2026-10-28/README.md"
+    },
+    {
+      "id": "05",
+      "category": "mathematics",
+      "evidence": "working",
+      "type": "Theorem manuscript · finite tests",
+      "title": "Nonabelian involution-shadow codes",
+      "summary": "Finite-group shadow encodings with exact distance, pair-spectrum and balanced erasure-allocation formulas, including nonabelian test cases.",
+      "boundary": "Algebraic manuscript and finite checks; formal-kernel verification and worldwide novelty audit still open.",
+      "source": "projects/involution-shadow-codes/NONABELIAN_SHADOW_THEOREM.md"
+    },
+    {
+      "id": "06",
+      "category": "mathematics",
+      "evidence": "conditional",
+      "type": "Exact degree-restricted exclusion",
+      "title": "UP25: tight sign-uncertainty exclusion",
+      "summary": "An exact finite-dimensional Laguerre quadrature lower certificate sits within roughly 2.47×10⁻¹¹ of the archived degree-102 upper witness.",
+      "boundary": "The exclusion applies to the specified polynomial family, not the unrestricted uncertainty principle; upstream upper interval evidence is separately archived.",
+      "source": "projects/arena-up25/README.md"
+    },
+    {
+      "id": "07",
+      "category": "mathematics",
+      "evidence": "working",
+      "type": "Manuscript proof · finite tests",
+      "title": "Periodic forest-gauge obstruction",
+      "summary": "A periodic four-dimensional combinatorial defect identity, accompanied by a separate integer checker.",
+      "boundary": "Thirty-two representative finite checks reproduce the identity; universal proof and priority still require outside review.",
+      "source": "projects/expansion-2026-10-28/02-periodic-forest.md"
+    },
+    {
+      "id": "08",
+      "category": "mathematics",
+      "evidence": "working",
+      "type": "Corrected manuscript",
+      "title": "Affine source rigidity",
+      "summary": "September work on affine source collisions, shifted prime-series expansions, and rational dilation fibers.",
+      "boundary": "Analytic assumptions and originality remain under review.",
+      "source": "2026-09-affine-source-rigidity/README.md"
+    },
+    {
+      "id": "09",
+      "category": "mathematics",
+      "evidence": "software",
+      "type": "Exact implementation · established methods",
+      "title": "Factor-network compilation",
+      "summary": "A checked factor-network equality compiler with explicit structural certificates.",
+      "boundary": "Compiler behavior is reproducible; COPY tensors and factor-graph compilation are known constructions.",
+      "source": "projects/sat-network-universal/README.md"
+    },
+    {
+      "id": "10",
+      "category": "mathematics",
+      "evidence": "working",
+      "type": "Conditional mathematical analysis",
+      "title": "ETH Hermite taper and rank barrier",
+      "summary": "An interpolation precision allowance improvement and a lower bound for restricted disjoint middle-layer refinements.",
+      "boundary": "A restricted obstruction result, with no claimed new SAT worst-case exponent.",
+      "source": "projects/expansion-2026-10-28/03-eth-taper-and-obstruction.md"
+    },
+    {
+      "id": "11",
+      "category": "mathematics",
+      "evidence": "conditional",
+      "type": "Conditional derivation",
+      "title": "Selection-aware Gaussian pivoting",
+      "summary": "A selected-row Gaussian spectral-tail analysis that retains triangular elimination loss.",
+      "boundary": "The final matrix-growth-factor improvement remains open.",
+      "source": "projects/expansion-2026-10-28/05-selection-aware-pivoting.md"
+    },
+    {
+      "id": "12",
+      "category": "mathematics",
+      "evidence": "finite",
+      "type": "Exact finite convolution audit",
+      "title": "First-autocorrelation integer certificates",
+      "summary": "Mass-preserving transport, score-invariant grid splitting and three-prime NTT/CRT reproduce a 4,096-cell step-function score.",
+      "boundary": "The certified 1.515612… construction trails the October 20 leaderboard; this is exact finite methodology, not a record.",
+      "source": "projects/arena-c1/README.md"
+    },
+    {
+      "id": "13",
+      "category": "mathematics",
+      "evidence": "empirical",
+      "type": "Provenance-scoped optimization",
+      "title": "Zerothesis: dormant-support activations",
+      "summary": "Five nonzero-support births improved a public-seed 100,000-point convolution score by approximately 2.54×10⁻¹²; two scorers agreed.",
+      "boundary": "A modification of an externally sourced seed; the gain is below the contest improvement threshold and does not establish a global result.",
+      "source": "projects/arena-c2/README.md"
+    },
+    {
+      "id": "14",
+      "category": "mathematics",
+      "evidence": "working",
+      "type": "Automata symbolic reduction",
+      "title": "Five BB(6) arithmetic return maps",
+      "summary": "Five named six-state cryptid systems receive source-dependent macro return formulas, with 172,816 reported rule-level comparisons.",
+      "boundary": "Finite symbolic transitions only; imported machine tables and macro guards require independent replay, with no nonhalting classification.",
+      "source": "projects/automata-bb6-return-maps/README.md"
+    },
+    {
+      "id": "15",
+      "category": "mathematics",
+      "evidence": "conditional",
+      "type": "Exact conditional lower-bound audit",
+      "title": "Minimum overlap: fixed-dual lower audit",
+      "summary": "An eight-row exact rational mean-cover certificate reports a conditional universal lower value of 0.38062747462668, plus a fixed-family saturation limit.",
+      "boundary": "Relies on inherited Wetch kernel/Arb interval premises; its bound is separate from the finite upper witness and needs fresh source-integral replay.",
+      "source": "agent-reports/ea36_lower_20261028/RESEARCH_NOTE.md"
+    },
+    {
+      "id": "33",
+      "category": "mathematics",
+      "evidence": "working",
+      "type": "Algebraic proof candidate · exact finite tests",
+      "title": "Deterministic adaptive finite-field decoder",
+      "summary": "Axiom's two-round extension-degree packed decoder uses at most k+⌈(k−1)/(r−1)⌉ powered measurements (q>2); k+1 is globally optimal for 2≤k≤r. The independent checker passes 332,086 vectors and 3,000 nonadaptive collision certificates.",
+      "boundary": "Noiseless K-linear adaptive sensing, global F_q× equivalence, explicit extension-field representation; q=2 has exact optimum k. External proof and publication-priority reviews open. Classic complement-property precedent is credited.",
+      "source": "projects/adaptive-finite-field-decoder-2026-10-29/README.md"
+    },
+    {
+      "id": "34",
+      "category": "mathematics",
+      "evidence": "working",
+      "type": "Dimension-uniform theorem candidate · draft PR",
+      "title": "Fixed-field adaptive phase separation",
+      "summary": "A proposed all-dimensional separation over the same GF9 square-powered linear sensing oracle: an adaptive upper construction is combined with the classical fixed-design complement obstruction.",
+      "boundary": "Draft PR #256, with dependent refinements #264–266. All-k proofs, model-matched priority and non-author mathematical review remain open; lower-bound refinements do not by themselves establish global novelty.",
+      "source": "projects/curated-expansion-20261030/34-adaptive-fixed-gap.md"
+    },
+    {
+      "id": "35",
+      "category": "mathematics",
+      "evidence": "working",
+      "type": "Adaptive finite-field code · draft PR",
+      "title": "F16 adaptive three-phase compression",
+      "summary": "A branch-dependent two-query F16 cubic phase gadget distinguishes 27 relative-phase states and gives proposed six-query k=4 and eleven-query k=7 adaptive constructions.",
+      "boundary": "Draft PR #255 with internal independent arithmetic replays. The proof applies to the specified powered oracle and counts adaptive branches; kernel-level all-signal theorem and worldwide priority remain open.",
+      "source": "projects/curated-expansion-20261030/35-f16-adaptive-compression.md"
+    },
+    {
+      "id": "36",
+      "category": "mathematics",
+      "evidence": "working",
+      "type": "Affine-incidence rigidity theorem candidate · draft PR",
+      "title": "Intrinsic recovery of glued planar maps",
+      "summary": "A proposed hyperplane and codimension-two incidence reconstruction of two glued quadratic planar-map components over F₃ⁿ, intended to hold uniformly for n≥3.",
+      "boundary": "Draft PR #203: the scalar-fiber bound, full incidence classification and ambient affine recovery need independent proof attack and dated same-hypothesis priority review; this is not a new Sidon extremal bound.",
+      "source": "projects/curated-expansion-20261030/36-affine-gluing-review.md"
+    },
+    {
+      "id": "37",
+      "category": "mathematics",
+      "evidence": "working",
+      "type": "Graph-cover theorem candidate · draft PR",
+      "title": "Uniform cubic graph covers with girth 14",
+      "summary": "A proposed degree-uniform family of connected cubic bipartite covers, constructed through finite-field voltages with a girth-14 and 32-cycle certificate.",
+      "boundary": "Draft PR #204. The cycle-polynomial exhaustion, all-degree primitive-element argument, connectivity and simplicity conditions remain under review; no Erdős–Gyárfás solution or global record is claimed.",
+      "source": "projects/curated-expansion-20261030/37-cubic-graph-covers.md"
+    },
+    {
+      "id": "38",
+      "category": "mathematics",
+      "evidence": "finite",
+      "type": "Exact finite synthesis · general proofs under review",
+      "title": "Sidon insertion arity transition",
+      "summary": "Single-point matching, simultaneous insertion and a growing high-incidence core are connected by a common collision-support hypergraph; a 91-element source has a complete two-point repair census.",
+      "boundary": "The 81 single insertions and 3,240 outside pairs are internally audited finite cases. Component universal algorithms and linear-core claims remain unreviewed; no new asymptotic density or hardness result follows.",
+      "source": "syntheses/sidon_arity_20261029/README.md"
+    },
+    {
+      "id": "16",
+      "category": "quantum",
+      "evidence": "conditional",
+      "type": "Evidence-tiered Werner registry",
+      "title": "Werner finite-copy evidence atlas",
+      "summary": "Separates 4–20 qutrit and all-dimension thresholds, reported 21–24 improvements and symbolic 25–100 continuation.",
+      "boundary": "Historic 6–9 alternatives and imported 4-/5-copy SDP margins remain separate until original source witnesses are independently checked.",
+      "source": "projects/werner-atlas/README.md"
+    },
+    {
+      "id": "17",
+      "category": "quantum",
+      "evidence": "conditional",
+      "type": "Source-dependent certificate",
+      "title": "Werner 24–25-copy rational certificates",
+      "summary": "Exact-rational downstream certificates report qutrit thresholds 0.34636 at 24 copies and 0.34584 at 25 copies under lower-copy theorems.",
+      "boundary": "Distinct from the approved 4–20 registry; original quantitative source inequalities and full scope still require outside replay.",
+      "source": "projects/werner-final-4-25/README.md"
+    },
+    {
+      "id": "18",
+      "category": "quantum",
+      "evidence": "working",
+      "type": "Restricted 27×27 extension",
+      "title": "Complementary-syndrome gluing",
+      "summary": "A syndrome-difference selection rule extends the affine-code theorem to coherent rank-two witnesses on 27×27 supports.",
+      "boundary": "Colliding syndrome differences create cross terms; the original source PDF and checker archive are separate from this curated digest.",
+      "source": "projects/werner-syndrome-gluing/RESEARCH_DIGEST.md"
+    },
+    {
+      "id": "19",
+      "category": "quantum",
+      "evidence": "working",
+      "type": "Combinatorial no-go theorem",
+      "title": "Ternary diagonal rigidity obstruction",
+      "summary": "A Hamming-parity and symplectic argument bounds positive diagonal coordinate supports by 2ᵏ and classifies the binary-cube extremizers.",
+      "boundary": "An ambient diagonal-subspace obstruction, not a claim of unrestricted rank-two positivity; outside novelty review remains open.",
+      "source": "agent-reports/lemnis_diagonal_rigidity_20261028/RESEARCH_NOTE.md"
+    },
+    {
+      "id": "20",
+      "category": "safety",
+      "evidence": "working",
+      "type": "Formal research manuscript",
+      "title": "Agent Safety Under Abstraction",
+      "summary": "A September analysis of observation fibers, collateral-denial effects, provenance composition, and agent-side information limits.",
+      "boundary": "Classical factorization results are identified; stronger authority claims require proof and priority review.",
+      "source": "projects/agent-safety-under-abstraction/README.md"
+    },
+    {
+      "id": "21",
+      "category": "safety",
+      "evidence": "working",
+      "type": "Reviewed research dossier",
+      "title": "AI safety theorem-and-evidence series",
+      "summary": "An integrated September–October account of observation sufficiency, authority, oversight, and adversarial provenance.",
+      "boundary": "Distinguishes finite checks and manuscript dependencies from independently established new guarantees.",
+      "source": "projects/ai-safety-peer-review-2026-10-28/README.md"
+    },
+    {
+      "id": "22",
+      "category": "safety",
+      "evidence": "software",
+      "type": "Prototype · held-out test pending",
+      "title": "SourceBound evidence prototype",
+      "summary": "An implementation track for source admission, claim provenance, and evidence-aware responses.",
+      "boundary": "Natural-web controlled effectiveness remains an open evaluation; overlapping prior products are credited.",
+      "source": "projects/sourcebound/CLAIM_EVIDENCE_LEDGER.md"
+    },
+    {
+      "id": "23",
+      "category": "safety",
+      "evidence": "working",
+      "type": "September manuscript",
+      "title": "Counterfactual authorization gap",
+      "summary": "Formal models of reference-class capability envelopes, audit burden, and composition-induced escape.",
+      "boundary": "The status is a theoretical manuscript requiring external proof and priority review.",
+      "source": "2026-09-counterfactual-authorization/README.md"
+    },
+    {
+      "id": "24",
+      "category": "safety",
+      "evidence": "working",
+      "type": "Finite algebra · prospective evaluation",
+      "title": "Hidden-function interpretability",
+      "summary": "Paired observational and causal residual checks, an exact small-state demonstration, and a blinded evaluation design.",
+      "boundary": "The example is limited in scale; empirical generalization awaits controlled tests.",
+      "source": "projects/expansion-2026-10-28/06-hidden-function-audits.md"
+    },
+    {
+      "id": "25",
+      "category": "safety",
+      "evidence": "working",
+      "type": "Framework · synthetic evidence",
+      "title": "Causal cuts and research selection",
+      "summary": "Directed-cut factorization, evaluation transport, and obstruction-pair reasoning for decision-oriented research.",
+      "boundary": "The finite algebraic examples and synthetic studies carry no general causal discovery theorem.",
+      "source": "projects/expansion-2026-10-28/07-causal-cognition-proof-search.md"
+    },
+    {
+      "id": "39",
+      "category": "safety",
+      "evidence": "proposal",
+      "type": "Preregisterable oversight study · untested",
+      "title": "Judgment Provenance: blinded independent review",
+      "summary": "A proposed randomized three-arm study asks whether freezing a human judgment before agent exposure reduces agent-induced preference movement without sacrificing methodological quality.",
+      "boundary": "Protocol JP-01 only: zero participants, zero experimental outcome estimates, ethics and study preregistration still required. It does not demonstrate that blind review works.",
+      "source": "projects/judgment-provenance-2026-10-29/README.md"
+    },
+    {
+      "id": "26",
+      "category": "systems",
+      "evidence": "empirical",
+      "type": "Research-campaign case study",
+      "title": "From Search to Certificate",
+      "summary": "An observational reconstruction of the October multi-agent mathematical search, agent handoffs, structural transitions and exact-certification controls.",
+      "boundary": "Historical observational study; no randomized causal inference of agent effectiveness, and leaderboard status differs from mathematical validity.",
+      "source": "projects/research-methods-2026-10-20.txt"
+    },
+    {
+      "id": "27",
+      "category": "systems",
+      "evidence": "software",
+      "type": "Independent verification protocol",
+      "title": "Autonomous scientific verification",
+      "summary": "A proof-carrying workflow specifies isolated reproducer, adversarial auditor and formalizer roles with deterministic artifact-based verdict gates.",
+      "boundary": "A working protocol with finite examples; agent agreement cannot certify an unproved theorem or replace independent source verification.",
+      "source": "AGENT_VERIFICATION_PROTOCOL.md"
+    },
+    {
+      "id": "28",
+      "category": "systems",
+      "evidence": "working",
+      "type": "Metadata preregistration checkpoint",
+      "title": "PAS: 372-family priority freeze",
+      "summary": "A reproducible ranking of 372 released theorem families with published manifest checksums and a prospective correction-prediction test.",
+      "boundary": "The historical private freeze lacks third-party timestamping, and prospective predictive efficacy is untested.",
+      "source": "projects/pas/README.md"
+    },
+    {
+      "id": "29",
+      "category": "systems",
+      "evidence": "empirical",
+      "type": "Original adverse experiment",
+      "title": "Proof After Scarcity",
+      "summary": "The archived 20-case ranking study produced 8/20 versus an upstream-first 11/20 baseline.",
+      "boundary": "An informative bounded negative outcome; no claimed general superiority.",
+      "source": "projects/pas-overview.md"
+    },
+    {
+      "id": "30",
+      "category": "systems",
+      "evidence": "software",
+      "type": "Executable research system",
+      "title": "NIGHTFALL Discovery Engine",
+      "summary": "Reproducible search contracts, representation changes, exact replay, falsification controls, and adaptive-resolution experiments.",
+      "boundary": "Prototype and synthetic evidence; domain-wide improvements await held-out, matched-budget evaluation.",
+      "source": "discovery-engine/README.md"
+    },
+    {
+      "id": "31",
+      "category": "systems",
+      "evidence": "empirical",
+      "type": "Controlled proxy experiment",
+      "title": "Adaptive granularity: matched-budget trial",
+      "summary": "A held-out two-domain proxy compares fixed, event-adaptive and trained boundaries; the trained selector favored the atomic baseline.",
+      "boundary": "A corrected synthetic experiment, not an efficiency gain for actual mathematical discovery or natural-web SourceBound.",
+      "source": "discovery-engine/EXPERIMENT_20261028.md"
+    },
+    {
+      "id": "32",
+      "category": "systems",
+      "evidence": "working",
+      "type": "Historical research audit",
+      "title": "Competition and negative-result registry",
+      "summary": "Erdős, C1/C2, UP25, rejected submissions, provenance conflicts, and unsuccessful operators in one evidence-aware chronology.",
+      "boundary": "Leaderboard standing, mathematical validity, and source completeness are tracked separately.",
+      "source": "projects/expansion-2026-10-28/08-arena-and-negative-results.md"
+    },
+    {
+      "id": "40",
+      "category": "systems",
+      "evidence": "software",
+      "type": "Compiler integration · bounded kernel checks",
+      "title": "NIGHTFALL Lean Compiler Bridge",
+      "summary": "A pinned Lean 4 toolchain wrapper, named-declaration axiom inspection and CI receipts provide a reusable path from a source theorem to an inspectable compiler result.",
+      "boundary": "An integration with official Lean, not a new prover. Only specifically compiled declarations are kernel-checked; this does not formalize the draft general theorems, certify originality or replace human proof review.",
+      "source": "formalization/README.md"
+    }
+  ]
+}
