@@ -34,7 +34,7 @@ if(!process.env.PERF_ORIGIN){
 const origin=(process.env.PERF_ORIGIN||"http://127.0.0.1:"+server.address().port+"/").replace(/\/*$/,"/");
 const machine={source:process.env.PERF_ORIGIN?"public-live-host":"local-static-http",protocol:"cold cache each navigation; HTTP RTT and CPU emulation on mobile; content unchanged",chrome:process.env.CHROME_BIN||"/usr/bin/chromium",repeats,dates:new Date().toISOString(),origin:process.env.PERF_ORIGIN?origin:"127.0.0.1 ephemeral port"};
 const round=(x,d=1)=>Number(Number(x??0).toFixed(d));
-const median=xs=>{const s=[...xs].sort((a,b)=>a-b);return round(s.length%2?s[(s.length-1)/2]:(s[s.length/2-1]+s[s.length/2])/2)};
+const median=(xs,d=1)=>{const s=[...xs].sort((a,b)=>a-b);return round(s.length%2?s[(s.length-1)/2]:(s[s.length/2-1]+s[s.length/2])/2,d)};
 const samples=[],grouped={};
 let browser;
 try{
@@ -123,7 +123,7 @@ try{
  const summary=Object.fromEntries(Object.entries(grouped).map(([key,rows])=>[key,{
   runs:rows.length,requests:median(rows.map(x=>x.requests)),encodedBytes:median(rows.map(x=>x.encodedBytes)),
   fcpMs:median(rows.map(x=>x.fcpMs)),lcpMs:median(rows.map(x=>x.lcpMs)),
-  cls:median(rows.map(x=>x.cls)),ttfbMs:median(rows.map(x=>x.ttfbMs)),
+  cls:median(rows.map(x=>x.cls),4),ttfbMs:median(rows.map(x=>x.ttfbMs)),
   loadMs:median(rows.map(x=>x.loadMs)),longTaskBlockingMs:median(rows.map(x=>x.longTaskBlockingMs)),
   types:rows[0].types,topAssets:rows[0].topAssets,scroll:rows[0].scroll
  }]));
