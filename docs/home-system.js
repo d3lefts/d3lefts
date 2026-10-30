@@ -1,5 +1,6 @@
 "use strict";
-/* Homepage hydrates four scoped programs and the exact Sidon witness from the canonical registry.\n   Removed galleries and history streams live at their dedicated destinations. */
+/* Homepage hydrates four scoped programs and the exact Sidon witness from the canonical registry.
+   Removed galleries and history streams live at their dedicated destinations. */
 (() => {
  const R=window.NightfallRegistry,C=window.RefereeCore;
  if(!R)return;
