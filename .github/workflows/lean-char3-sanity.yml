@@ -63,6 +63,8 @@ jobs:
             --decl Nightfall.PhaseBlock.cube_fibers \
             --decl Nightfall.PhaseBlock.field_inverses \
             --decl Nightfall.PhaseBlock.seven_queries_counting_gap \
+            --decl Nightfall.PhaseBlock.residual_phase_injective \
+            --decl Nightfall.PhaseBlock.three_query_capacity_gap \
             --allow-axiom propext \
             --allow-axiom Quot.sound \
             --timeout 300 \
