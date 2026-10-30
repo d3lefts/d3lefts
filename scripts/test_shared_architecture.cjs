@@ -23,7 +23,7 @@ for(const rule of [".research-row{",".index-subhead{",".agenda-teaser{",".agenda
 assert.ok(agenda.includes('href="agenda-catalog.css"'),"Agenda missing its dedicated stylesheet");
 assert.equal([...read("docs/index.html").matchAll(/href="agenda-catalog.css"/g)].length,0,"Homepage should not load agenda stylesheet");
 
-const claimMatches=[...library.matchAll(/<article class="atlas-card" data-claim-id="([^"]+)"[^>]*>/g)].map(x=>x[1]);
+const claimMatches=[...library.matchAll(/<article class="atlas-card" data-domain="[^"]+" data-evidence="[^"]+" data-claim-id="([^"]+)"[^>]*>/g)].map(x=>x[1]);
 assert.deepEqual([...claimMatches].sort(),["adaptive","erdos36","pas","phase","sidon30","werner"].sort(),
  "Exactly six library dossiers must have explicit, unique Proof Passport claim IDs");
 assert.ok(researchJS.includes('card.dataset.claimId')&&researchJS.includes('registry.claimById(id)'));
