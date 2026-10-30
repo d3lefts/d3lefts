@@ -79,7 +79,7 @@ try{
        golden:html.getPropertyValue("--nf-goldenhour").trim(),
        overflow:document.documentElement.scrollWidth-innerWidth};
     },deprecated);
-    const expected=mode==="dusk"?"rgb(4, 6, 11)":"rgb(36, 26, 52)";
+    const expected=mode==="dusk"?"rgb(4, 6, 11)":"rgb(2, 4, 6)";
     if(summary.bg!==expected)allCanvasLeaks.push({page:p,mode,width,bg:summary.bg,expected});
     assert.equal(summary.theme,mode,p+" expected mode");
     assert.ok(summary.overflow<=4,p+" "+mode+" "+width+"px overflow "+summary.overflow);
@@ -109,7 +109,7 @@ try{
         assert.doesNotMatch(accents.flagship.borderImage,/74, 31, 36|167, 101, 115/,"Flagship divider is lavender to gold");
         assert.equal(accents.colophon.borderTop,"rgb(75, 86, 114)","Night colophon uses indigo, not oxblood");
       }
-    }else assert.equal(summary.golden,"#e7b768",p+" Golden Hour accent remains primary");
+    }else assert.equal(summary.golden,"#b4e3d6",p+" NULL FIELD opal signal remains primary");
    }
    assert.deepEqual(faults,[],mode+" "+width+"px no browser errors");
    await context.close();
