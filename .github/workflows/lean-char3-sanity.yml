@@ -58,7 +58,7 @@ jobs:
             --decl Nightfall.PhaseBlock.subgroup_cubic_identity \
             --decl Nightfall.PhaseBlock.eighty_one_distinct_outputs \
             --timeout 300 \
-            --json-out lean-receipts/phase-block.json
+            --json-out lean-receipts/phase-block.json || { cat lean-receipts/phase-block.json; exit 1; }
       - name: Compile requested committed file (manual dispatch only)
         if: github.event_name == 'workflow_dispatch'
         env:
