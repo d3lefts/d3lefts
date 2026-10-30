@@ -4,6 +4,14 @@
 **Research proposal:** Axiom · **Program lead:** Devin J. Wright · **Follow-up proof audit and generalization:** NIGHTFALL review session (29 October 2026)  
 **Evidence tier:** Complete algebraic proof candidate and independently coded exact finite checks. **External mathematical referee and same-model priority review remain open.** Flagship designation is editorial, not a claim of established publication priority.
 
+## New F16/F4 cube-power research candidate — optimal eight queries at k=5 (29 October 2026)
+
+A targeted search found an explicit **three-query block encoding four relative phases** for the original full-phase cubic oracle on F16/F4. The previous decoder required four mixed queries for that block. A support-aware two-round transfer gives the candidate bound `k + ceil(3(s−1)/4)` for nonzero support size s. At k=5 it constructs an eight-query decoder, matching the exact decision-tree counting lower bound; the finite code is certified in Lean and independently replayed in Python. The globally quantified transfer argument remains a written mathematical proof pending external referee. **Same-oracle prior-art novelty and independent mathematical review remain open; no accepted worldwide record or publication claim.**
+
+- [Complete F16 block and exact k=5 optimality argument](F16_THREE_QUERY_PHASE_BLOCK_20261029.md)
+- [Independent exact F16 block and signal-reconstruction checker](verify_f16_phase_block.py)
+- [Finite Lean certificate](../../formalization/phase_block/PhaseBlock.lean)
+
 ## Phase-alphabet unification — finite subgroup power oracles (29 October 2026)
 
 A new projective-alphabet criterion subsumes the established extension-degree basis construction and characteristic-three cancellation packing. In the more general oracle Phi_H(z)=z^{|H|}, where H is a specified multiplicative subgroup of F_q, additive shifts of H provide verifiable conditions for recovering **up to r relative phases per second-round measurement** over F_(q^r). Its two-round query count is k+ceil(max(s-1,0)/r) for certified subgroup/shift combinations; for 2<=k<=r+1 this attains the adaptive information lower bound.
