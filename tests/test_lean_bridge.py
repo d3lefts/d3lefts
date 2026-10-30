@@ -52,6 +52,8 @@ class BridgeTests(unittest.TestCase):
             allowed = bridge.check(source, root, ["Test.t"], 3, str(fake), {"propext"})
             self.assertEqual(allowed["axiom_audit"]["Test.t"], "allowlisted_dependencies")
             self.assertEqual(allowed["axiom_dependencies"]["Test.t"], ["propext"])
+            with self.assertRaisesRegex(ValueError, "foundational axioms"):
+                bridge.check(source, root, ["Test.t"], 3, str(fake), {"fakeAx"})
             forbidden = bridge.check(source, root, ["Test.t"], 3, str(fake))
             self.assertEqual(forbidden["axiom_audit"]["Test.t"], "dependencies_reported")
             source.write_text("FAIL")
