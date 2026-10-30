@@ -18,11 +18,11 @@ The core distinction is between:
 
 ### Established mathematical part
 
-For a strictly upper-triangular edge-weight matrix (B\) of an (n\)-node finite DAG, (B^n=0) and
+For a strictly upper-triangular edge-weight matrix \(B\) on an \(n\)-node finite dependency DAG, \(B^n=0\), hence
 
-[
-(I-B)^{-1} = \sum_{k=0}^{n-1} B^k.
-]
+\[
+(I-B)^{-1}=\sum_{k=0}^{n-1}B^k.
+\]
 
 Version 2 proves the path-sum formula, the exact change in modeled exposure from increasing one forward-edge weight, and conditional entrywise interval bounds for nonnegative dependency weights. These are **elementary finite algebraic identities**, not a new mathematical discovery or a measured real-world error-rate estimate.
 
