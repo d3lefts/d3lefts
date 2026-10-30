@@ -53,7 +53,7 @@ try{
   await step("00–03","Homepage: evidence without competing directories",async()=>{
     await visit("index.html");
     assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk","Night default");
-    assert.match(await page.locator("#main > .hero h1:visible").innerText(),/Put the claim.*to the test/s);
+    assert.match(await page.locator("#main > .hero h1:visible").innerText(),/Every shift.*Every assumption/s);
     assert.equal(await page.locator(".flagship-card").count(),4,"Candidate proof status is inspectable");
     assert.equal(await page.locator(".nf-experience-underbelly .hero-actions a:visible").count(),2);
     assert.equal(await page.locator(".nf-experience-archive .hero-actions a:visible").count(),0);

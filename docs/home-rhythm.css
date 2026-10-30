@@ -146,77 +146,20 @@
   margin-top:24px;
   border-top:1px solid var(--line);
 }
-#main > .instrument-bridge {
-  padding-block:clamp(88px,10vw,148px);
-  border-top:1px solid var(--line);
-  border-bottom:1px solid var(--line);
-}
-#main > .instrument-bridge h2 {
-  font-size:clamp(56px,6.5vw,100px);
-}
-#main > .instrument-bridge .instrument-bridge-body {
-  margin-top:clamp(32px,5vw,66px);
-}
-.nf-bridge-secondary-link {
-  margin-top:29px;
-  text-align:right;
-}
-.nf-bridge-secondary-link .nf-hero-sky-link {
-  display:inline-flex;
-  font:500 11px/1.5 var(--mono);
-  color:var(--muted);
-  border-bottom:1px solid currentColor;
-  padding-bottom:6px;
-}
 #main > .sf-case {
   padding-block:clamp(94px,10vw,144px);
 }
 #main > .nf-observatory {
   margin-block:clamp(65px,8vw,110px);
 }
-#main > .nf-section-index {margin-block:35px 20px}
-#main > .ticker {margin-block:32px 88px}
-.nf-findings-disclosure {margin-top:35px}
-.nf-findings-disclosure .feature-grid {
-  margin:0;
-  padding:clamp(15px,2vw,25px);
-}
-.nf-provenance-disclosure {
-  margin-top:29px;
-  background:transparent;
-}
-.nf-provenance-disclosure > .compare-table-wrap,
-.nf-provenance-disclosure > .evidence-notes,
-.nf-provenance-disclosure > .evidence-sources {
-  margin-inline:clamp(15px,2.7vw,35px);
-}
-.nf-provenance-disclosure > .evidence-sources {
-  margin-bottom:30px;
-}
-.review-section .nf-audits-disclosure {
-  background:transparent;
-  color:inherit;
-  border-color:#657367;
-  margin-top:45px;
-}
-.review-section .nf-audits-disclosure > summary span {
-  color:#b7c3b9;
-}
-.review-section .nf-audits-disclosure > summary:hover {
-  background:rgba(255,255,255,.08);
-}
-.review-section .nf-audits-disclosure .review-cards {
-  margin:0;
-  padding:25px 0;
-}
 html[data-nf-theme="dusk"] .nf-deep-disclosure {
   background:var(--paper);
   border-color:var(--line);
   color:var(--ink);
 }
-html[data-nf-theme="dusk"] .review-section .nf-audits-disclosure {background:transparent}
+
 html[data-nf-theme="dusk"] .nf-deep-disclosure > summary span {color:var(--muted)}
-html[data-nf-theme="dusk"] .review-section .nf-audits-disclosure > summary span {color:#b7c3d4}
+
 @media (max-width:1040px) {
   .nf-secondary-frontiers-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
   .nf-secondary-frontiers-grid .flagship-card:last-child {grid-column:1 / -1}
@@ -243,9 +186,9 @@ html[data-nf-theme="dusk"] .review-section .nf-audits-disclosure > summary span 
   .nf-focus-result-grid .flagship-link {
     grid-column:1;grid-row:4;margin-top:33px;
   }
-  #main > .instrument-bridge {padding-block:80px}
-  #main > .instrument-bridge h2 {font-size:clamp(54px,9vw,76px)}
-  .nf-bridge-secondary-link {text-align:left}
+  
+  
+  
   #main > .sf-case {padding-block:79px}
 }
 @media (max-width:620px) {
@@ -255,11 +198,20 @@ html[data-nf-theme="dusk"] .review-section .nf-audits-disclosure > summary span 
   .nf-deep-disclosure > summary {display:block;padding-right:70px}
   .nf-deep-disclosure > summary strong {display:block}
   .nf-deep-disclosure > summary span {display:block;margin-top:10px}
-  .review-section .nf-audits-disclosure .review-cards {padding:18px 10px}
+  
   #main > .hero.wrap {padding-block:58px 76px}
   #main > .flagships {padding-block:65px 76px}
-  #main > .instrument-bridge {padding-block:70px}
+  
 }
 @media (prefers-reduced-motion:reduce) {
   .nf-deep-disclosure *, .nf-focus-result-grid * {scroll-behavior:auto}
 }
+
+/* Active homepage source affordances moved from retired home-focus.css.
+   Keep the exact Sidon disclosure and both theme hero guides styled without another request. */
+.nf-hero-guide{font:500 11px/1.65 var(--mono);color:#6a2d35;max-width:62ch;margin-top:23px;letter-spacing:.01em}
+.nf-case-more{min-width:0}
+.nf-case-more>summary{cursor:pointer;font:600 11px/1.5 var(--mono);text-decoration:underline;text-underline-offset:4px;color:#eed1bd;list-style:revert}
+.nf-case-more-links{display:flex;flex-wrap:wrap;gap:17px;margin-top:17px}
+.nf-case-more-links .text-link{font:500 11px/1.6 var(--mono)}
+@media(max-width:760px){.nf-case-more{width:100%}}
