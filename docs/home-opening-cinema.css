@@ -229,12 +229,12 @@ html[data-nf-theme="dusk"] .nf-opening-overlap-unit{color:#cdd1e3}
 /* NULL FIELD: exact-witness numbers remain on black glass with cherry highlights. */
 html:not([data-nf-theme="dusk"]) .nf-opening-overlap{
   background:rgba(6,13,16,.91);border-color:rgba(224,107,136,.40);
-  box-shadow:0 22px 65px rgba(0,0,0,.28);color:#edf4f1;
+  box-shadow:0 22px 65px rgba(0,0,0,.28);color:#eaf0f5;
 }
 html:not([data-nf-theme="dusk"]) .nf-opening-overlap-label,
 html:not([data-nf-theme="dusk"]) .nf-opening-overlap-facts strong,
 html:not([data-nf-theme="dusk"]) .nf-opening-overlap a{color:#e46a84}
-html:not([data-nf-theme="dusk"]) .nf-opening-overlap-value{color:#edf4f1}
+html:not([data-nf-theme="dusk"]) .nf-opening-overlap-value{color:#eaf0f5}
 html:not([data-nf-theme="dusk"]) .nf-opening-overlap-unit,
 html:not([data-nf-theme="dusk"]) .nf-opening-overlap-facts span{color:#afc4c5}
 html:not([data-nf-theme="dusk"]) .nf-opening-overlap-facts{border-top-color:rgba(224,107,136,.25)}
@@ -279,7 +279,7 @@ html[data-nf-theme="dusk"] #main > .hero.nf-opening .nf-opening-scoreline strong
 
 /* NULL FIELD only: source-first numeric introduction uses readable cherry light. */
 html:not([data-nf-theme="dusk"]) #main>.hero.nf-opening .nf-opening-scoreline{
-  border-left-color:#e46a84;color:#edf4f1;
+  border-left-color:#e46a84;color:#eaf0f5;
 }
 html:not([data-nf-theme="dusk"]) #main>.hero.nf-opening .nf-opening-scoreline strong{color:#e46a84}
 html:not([data-nf-theme="dusk"]) #main>.hero.nf-opening .nf-opening-scoreline span{color:#afc4c5}
@@ -407,7 +407,7 @@ html[data-nf-theme="dusk"] #main>.hero.nf-opening .hero-title em{color:#e2d28c}
    Archive resolves a star map; moonlight descends over a quiet horizon.
    Existing scroll progress drives transforms and path drawing unchanged. */
 html:not([data-nf-theme="dusk"]) .nf-cinema{
-  background:#020406;color:#edf4f1;border-color:#344750;
+  background:#020406;color:#eaf0f5;border-color:#344750;
 }
 html:not([data-nf-theme="dusk"]) .nf-cinema-world--archive{
   background:
