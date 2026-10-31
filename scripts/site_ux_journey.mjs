@@ -52,11 +52,12 @@ try{
   // 00–10: Enter with no prior NIGHTFALL knowledge. Assess first mental model.
   await step("00–03","Homepage: evidence without competing directories",async()=>{
     await visit("index.html");
-    assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk","Night default");
-    assert.match(await page.locator("#main > .hero h1:visible").innerText(),/Every shift.*Every assumption/s);
-    assert.equal(await page.locator(".flagship-card").count(),4,"Candidate proof status is inspectable");
-    assert.equal(await page.locator(".nf-experience-underbelly .hero-actions a:visible").count(),2);
-    assert.equal(await page.locator(".nf-experience-archive .hero-actions a:visible").count(),0);
+    assert.equal(await page.locator("html").getAttribute("data-nf-experience"),"archive","Public archive is a distinct homepage");
+    assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"NULL FIELD is the archive palette");
+    assert.match(await page.locator("#main > .hero h1:visible").innerText(),/A precise number.*An open record/s);
+    assert.equal(await page.locator(".flagship-card").count(),4,"Archive proof statuses remain inspectable");
+    assert.equal(await page.locator(".nf-experience-underbelly").count(),0,"No duplicate hidden night content");
+    assert.equal(await page.locator(".nf-experience-archive .hero-actions a:visible").count(),2);
     assert.equal(await page.locator(".nf-journey-rail").count(),0);
     assert.equal(await page.locator(".nf-process-thread").count(),0);
     assert.equal(await page.locator(".nf-home-toolbox").count(),0);
@@ -69,7 +70,16 @@ try{
     assert.ok((await page.locator("main section").count())<=13);
     assert.ok((await page.locator("main a").count())<=40);
     await screenshot("01-desktop-home.png");
-    note("strength","Three primary findings, visually continuous cinema and one source-bound handoff per destination.","homepage");
+    await page.locator(".nf-theme-toggle").click();
+    await page.waitForURL("**/new-moon.html");
+    assert.equal(await page.locator("html").getAttribute("data-nf-experience"),"moon","The toggle opens a second HTML document");
+    assert.match(await page.locator(".moon-hero h1").innerText(),/The work begins.*where certainty ends/s);
+    assert.equal(await page.locator("#open-ledger .moon-ledger-row").count(),4,"Independent open investigation ledger");
+    assert.equal(await page.locator(".flagship-card").count(),0,"Archive card structure is absent from the night desk");
+    await screenshot("01b-desktop-new-moon.png");
+    await page.locator(".nf-theme-toggle").click();
+    await page.waitForURL("**/index.html");
+    note("strength","NULL FIELD and NEW MOON are distinct source-linked homepages with no duplicated narrative.","homepage");
   });
   await step("03–06","Homepage: interactive Sidon witness and transparent finite scope",async()=>{
     await visit("index.html#live-case");

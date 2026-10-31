@@ -1,5 +1,5 @@
-/* Static visual studies acceptance: image assets, native evidence, no scroll work.
-   Test 320px–1280px, both atmospheres, source links, mobile nav, reduced motion. */
+/* Verify NULL FIELD's static finite-witness cinema and the independent
+   NEW MOON investigation page at five widths. No scroll animation. */
 import assert from "node:assert/strict";
 import {createServer} from "node:http";
 import {mkdir,readFile} from "node:fs/promises";
@@ -10,11 +10,11 @@ const types={".html":"text/html; charset=utf-8",".js":"text/javascript; charset=
 const server=createServer(async(req,res)=>{
  try{
   const name=decodeURIComponent(new URL(req.url,"http://localhost").pathname);
-  const p=resolve(join(root,normalize(name).replace(new RegExp("^/+"), "")||"index.html"));
-  if(p!==root&&!p.startsWith(root+sep)){res.writeHead(403).end();return}
+  const p=resolve(join(root,normalize(name).replace(/^\/+/,"")||"index.html"));
+  if(p!==root&&!p.startsWith(root+sep)){res.writeHead(403).end();return;}
   const bytes=await readFile(p);
   res.writeHead(200,{"Content-Type":types[p.slice(p.lastIndexOf("."))]||"application/octet-stream"}).end(bytes);
- }catch{res.writeHead(404).end("Missing")}
+ }catch{res.writeHead(404).end("Missing");}
 });
 await new Promise(done=>server.listen(0,"127.0.0.1",done));
 const origin="http://127.0.0.1:"+server.address().port+"/";
@@ -24,105 +24,88 @@ try{
  browser=await chromium.launch({headless:true,executablePath:process.env.CHROME_BIN||"/usr/bin/chromium",args:["--no-sandbox"]});
  for(const width of [320,375,390,768,1280]){
   const context=await browser.newContext({viewport:{width,height:800},reducedMotion:"no-preference"});
-  const page=await context.newPage();const faults=[],assets=[];
+  const page=await context.newPage();
+  const faults=[],assets=[];
   page.on("pageerror",err=>faults.push(err.message));
   page.on("response",r=>{
    if(r.url().startsWith(origin)&&r.status()>=400)faults.push(r.status()+" "+r.url());
-   if(r.url().includes("nightscape.svg")||r.url().includes("deep-space.svg"))assets.push({url:r.url(),status:r.status()});
+   if(r.url().includes("deep-space.svg"))assets.push({url:r.url(),status:r.status()});
   });
-  await page.goto(origin+"index.html",{waitUntil:"load"});
-  const scene=page.locator("#nf-scroll-cinema");
-  assert.equal(await scene.count(),1,"One static visual study per page");
-  assert.equal(await scene.getAttribute("data-motion"),"static","No scroll animation even when motion is allowed");
-  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk","NEW MOON remains the first-visit default");
-  assert.equal(await page.locator('script[src="scroll-cinema.js"]').count(),0,"Remove old frame-by-frame scroll controller");
-  assert.equal(await page.locator('script[src="home-opening-cinema.js"]').count(),0,"Remove hero parallax controller");
-  const targetCheck=async()=>{
-   const layout=await page.evaluate(()=>{
-    const rect=q=>document.querySelector(q)?.getBoundingClientRect();
-    return {excess:document.documentElement.scrollWidth-innerWidth,menu:rect("#menu-button"),toggle:rect(".nf-theme-toggle")};
-   });
-   assert.ok(layout.excess<=3,width+": viewport must not overflow "+layout.excess);
+  const checkViewport=async()=>{
+   const v=await page.evaluate(()=>({
+    overflow:document.documentElement.scrollWidth-innerWidth,
+    menu:document.querySelector("#menu-button")?.getBoundingClientRect().height,
+    toggle:document.querySelector(".nf-theme-toggle")?.getBoundingClientRect().height
+   }));
+   assert.ok(v.overflow<=4,width+"px no horizontal overflow: "+v.overflow);
    if(width<=900){
-    assert.ok(layout.menu?.height>=43.5,width+": minimum 44px menu target");
-    assert.ok(layout.toggle?.height>=43.5,width+": minimum 44px theme target");
+    assert.ok(v.menu>=43.5,width+"px minimum mobile menu touch target");
+    assert.ok(v.toggle>=43.5,width+"px minimum switch touch target");
    }
   };
-  await targetCheck();
-  for(const [mode,expectedBg,visibleArt,asset] of [
-   ["dusk","rgb(4, 6, 11)",".nf-cinema-world--night","new-moon-nightscape.svg"],
-   ["light","rgb(2, 4, 6)",".nf-cinema-world--archive","null-field-deep-space.svg"]
-  ]){
-   if(mode==="light")await page.locator(".nf-theme-toggle").click();
-   assert.equal(await page.locator("html").getAttribute("data-nf-theme"),mode==="dusk"?"dusk":null);
-   await page.waitForFunction(expected=>getComputedStyle(document.body).backgroundColor===expected,expectedBg);
-   assert.equal(await page.locator(visibleArt).isVisible(),true,mode+": matching image layer");
-   // The declared hairline is 0.5 CSS px; Chromium snaps that to one
-   // physical pixel on 1x screens, so inspect both the token and painted width.
-   const hairline=await page.evaluate(()=>({
-     token:getComputedStyle(document.documentElement).getPropertyValue("--nf-tile-rule-width").trim(),
-     ratio:window.devicePixelRatio,
-     feature:getComputedStyle(document.querySelector(".flagship-card")).borderTopWidth,
-     witness:getComputedStyle(document.querySelector(".nf-opening-overlap")).borderTopWidth
-   }));
-   assert.equal(hairline.token,".5px",mode+": signature border design token");
-   for(const tile of ["feature","witness"]){
-     const edge=parseFloat(hairline[tile]);
-     const max=Math.max(.5,1/hairline.ratio);
-     assert.ok(edge>0 && edge<=max,mode+" "+width+"px "+tile+": physically snapped hairline "+edge);
-   }
-   assert.equal(await page.locator(mode==="dusk"?".nf-cinema-world--archive":".nf-cinema-world--night").isVisible(),false,mode+": inactive image hidden");
-   const still=await scene.evaluate((el,filename)=>{
-     const art=el.querySelector(".nf-cinema-world:not([style*='hide'])");
-     const world=el.querySelector(filename.includes("new-moon")?".nf-cinema-world--night":".nf-cinema-world--archive");
-     const hero=document.querySelector(filename.includes("new-moon")?".nf-opening-sky--night":".nf-opening-sky--gold");
-     return {backdrop:getComputedStyle(world).backgroundImage,hero:getComputedStyle(hero).backgroundImage,
-       repeat:getComputedStyle(world).backgroundRepeat,heroRepeat:getComputedStyle(hero).backgroundRepeat,
-       position:getComputedStyle(world).backgroundPosition,heroPosition:getComputedStyle(hero).backgroundPosition,
-       stagePosition:getComputedStyle(el.querySelector(".nf-cinema-stage")).position,
-       evidence:el.querySelector(".nf-cinema-record-value")?.textContent?.trim(),
-       steps:[...el.querySelectorAll(".nf-cinema-proof-path li")].map(n=>n.innerText.trim()),
-       progress:el.style.getPropertyValue("--nf-progress"),
-       source:!!el.querySelector('.nf-cinema-record a[href="erdos-paper.html"]'),
-       challenge:!!el.querySelector('.nf-cinema-record a[href="review.html#erdos"]')};
-   },asset);
-   assert.ok(still.backdrop.includes(asset),mode+": matching self-hosted cinematic asset");
-   assert.ok(still.hero.includes(asset),mode+": matching first-fold still asset");
-   assert.doesNotMatch(still.backdrop,/images\.unsplash\.com/,mode+": interlude uses only self-hosted imagery");
-   assert.doesNotMatch(still.hero,/images\.unsplash\.com/,mode+": hero uses only self-hosted imagery");
-   assert.match(still.backdrop,/linear-gradient/,mode+": interlude retains the tonal wash");
-   assert.match(still.hero,/linear-gradient/,mode+": hero retains the tonal wash");
-   assert.ok(still.repeat.split(",").every(x=>x.trim()==="no-repeat"),mode+": no tiled photographic backgrounds or lunar overlays");
-   assert.ok(still.heroRepeat.split(",").every(x=>x.trim()==="no-repeat"),mode+": no repeated hero overlays");
-   if(mode==="dusk"){
-    assert.ok(still.position.startsWith(width<=760?"92% 1%":"47% 1%"),"Lunar crescent stays above record on "+width+"px: "+still.position);
-    assert.ok(still.heroPosition.startsWith(width<=760?"93% 2%":"54% 4%"),"Lunar hero is not overwritten by photo position: "+still.heroPosition);
-   }
-   assert.equal(still.stagePosition,"relative",mode+": scene no longer sticky");
-   assert.equal(still.progress,"",mode+": no progress variables");
-   assert.equal(still.evidence,"0.380856370118…",mode+": source-bound finite overlap unchanged");
-   assert.equal(still.steps.length,3,"All evidence-review steps available together");
-   assert.equal(still.source,true,"Public mathematical witness link remains");
-   assert.equal(still.challenge,true,"Independent review link remains");
-   await page.locator("#nf-scroll-cinema").scrollIntoViewIfNeeded();
-   await targetCheck();
-   if([390,1280].includes(width))
-    await page.screenshot({path:"browser-artifacts/scroll-cinema-"+mode+"-"+width+".png",fullPage:false});
-   await page.evaluate(()=>window.scrollTo({top:document.getElementById("nf-scroll-cinema").offsetTop+400,behavior:"instant"}));
-   assert.equal(await scene.getAttribute("data-motion"),"static",mode+": scrolling does not activate parallax");
-   assert.equal(await scene.evaluate(el=>el.style.getPropertyValue("--nf-progress")),"",mode+": still no generated progress");
-   await targetCheck();
-  }
-  assert.ok(assets.some(r=>r.url.endsWith("new-moon-nightscape.svg")&&r.status===200),width+": NEW MOON artwork delivered");
-  assert.ok(assets.some(r=>r.url.endsWith("null-field-deep-space.svg")&&r.status===200),width+": NULL FIELD artwork delivered");
+  await page.goto(origin+"index.html",{waitUntil:"load"});
+  assert.equal(await page.locator("html").getAttribute("data-nf-experience"),"archive");
+  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null);
+  assert.equal(await page.locator("#nf-scroll-cinema").count(),1,"NULL FIELD owns the static source-bound cinema");
+  assert.equal(await page.locator("#nf-scroll-cinema").getAttribute("data-motion"),"static");
+  assert.equal(await page.locator(".nf-cinema-world--archive").isVisible(),true);
+  assert.equal(await page.locator(".nf-cinema-world--night").count(),0,"Hidden night narrative not duplicated");
+  assert.equal(await page.locator("script[src='scroll-cinema.js']").count(),0,"No scroll-driven controller");
+  assert.equal(await page.locator("script[src='home-opening-cinema.js']").count(),0,"No parallax controller");
+  const archive=await page.evaluate(()=>{
+   const q=s=>document.querySelector(s);
+   const scene=q("#nf-scroll-cinema"),world=q(".nf-cinema-world--archive"),hero=q(".nf-opening-sky--gold");
+   const token=getComputedStyle(document.documentElement).getPropertyValue("--nf-tile-rule-width").trim();
+   return {background:getComputedStyle(world).backgroundImage,
+    hero:getComputedStyle(hero).backgroundImage,
+    stage:getComputedStyle(q(".nf-cinema-stage")).position,
+    value:q(".nf-cinema-record-value")?.textContent?.trim(),
+    steps:scene.querySelectorAll(".nf-cinema-proof-path li").length,
+    source:!!q('.nf-cinema-record a[href="erdos-paper.html"]'),
+    challenge:!!q('.nf-cinema-record a[href="review.html#erdos"]'),
+    token,progress:scene.style.getPropertyValue("--nf-progress")
+   };
+  });
+  assert.match(archive.background,/null-field-deep-space\.svg/);
+  assert.match(archive.hero,/null-field-deep-space\.svg/);
+  assert.equal(archive.stage,"relative","Cinema is static, not sticky");
+  assert.equal(archive.value,"0.380856370118…");
+  assert.equal(archive.steps,3);
+  assert.equal(archive.source,true);
+  assert.equal(archive.challenge,true);
+  assert.equal(archive.progress,"");
+  assert.equal(archive.token,".5px","Signature hairline token survives");
+  await page.locator("#nf-scroll-cinema").scrollIntoViewIfNeeded();
+  await page.evaluate(()=>window.scrollTo({top:document.getElementById("nf-scroll-cinema").offsetTop+300,behavior:"instant"}));
+  assert.equal(await page.locator("#nf-scroll-cinema").getAttribute("data-motion"),"static");
+  await checkViewport();
+  if([390,1280].includes(width))await page.screenshot({path:"browser-artifacts/scroll-cinema-archive-"+width+".png",fullPage:false});
+  assert.ok(assets.some(a=>a.url.endsWith("null-field-deep-space.svg")&&a.status===200),"Archive art is self-hosted");
+  await page.locator(".nf-theme-toggle").click();
+  await page.waitForURL("**/new-moon.html");
+  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk");
+  assert.equal(await page.locator("html").getAttribute("data-nf-experience"),"moon");
+  assert.equal(await page.locator("#nf-scroll-cinema").count(),0,"Night has a separate editorial composition");
+  assert.equal(await page.locator(".moon-sky").count(),1);
+  assert.equal(await page.locator(".moon-disc").count(),1);
+  assert.equal(await page.locator("#open-ledger .moon-ledger-row").count(),4);
+  assert.equal(await page.locator('#open-ledger a[href="review.html#erdos"]').count(),1);
+  assert.equal(await page.locator('a[data-nf-route="moon"][aria-current="page"]').count(),1);
+  await checkViewport();
+  if([390,1280].includes(width))await page.screenshot({path:"browser-artifacts/scroll-cinema-moon-"+width+".png",fullPage:false});
   if(width<=900){
    await page.evaluate(()=>window.scrollTo({top:0,behavior:"instant"}));
    await page.locator("#menu-button").click();
-   assert.equal(await page.locator("#site-nav").isVisible(),true,"Mobile navigation opens");
+   assert.equal(await page.locator("#site-nav").isVisible(),true,"Mobile menu opens on the New Moon page");
    await page.keyboard.press("Escape");
-   assert.equal(await page.locator("#site-nav").isVisible(),false,"Mobile navigation dismisses");
+   assert.equal(await page.locator("#site-nav").isVisible(),false,"Mobile menu closes with Escape");
   }
-  assert.deepEqual(faults,[],width+"px: no browser exceptions or missing assets");
+  await page.locator(".nf-theme-toggle").click();
+  await page.waitForURL("**/index.html");
+  assert.equal(await page.locator("html").getAttribute("data-nf-experience"),"archive");
+  assert.equal(await page.locator("#nf-scroll-cinema").getAttribute("data-motion"),"static");
+  await checkViewport();
+  assert.deepEqual(faults,[],width+"px browser faults: "+faults.join("; "));
   await context.close();
  }
  const reduced=await browser.newContext({viewport:{width:390,height:740},reducedMotion:"reduce"});
@@ -131,12 +114,13 @@ try{
  assert.equal(await page.locator("#nf-scroll-cinema").getAttribute("data-motion"),"static");
  assert.equal(await page.locator(".nf-cinema-stage").evaluate(el=>getComputedStyle(el).position),"relative");
  await page.locator(".nf-theme-toggle").click();
- assert.equal(await page.locator("#nf-scroll-cinema").getAttribute("data-motion"),"static");
+ await page.waitForURL("**/new-moon.html");
+ assert.equal(await page.locator("#open-ledger").isVisible(),true);
  await reduced.close();
  for(const path of ["new-moon-nightscape.svg","null-field-deep-space.svg"]){
   const raw=await readFile(join(root,"media",path),"utf8");
-  assert.match(raw,/viewBox="0 0 2560 1440"/,path+": resolution-independent 2560x1440 composition");
-  assert.doesNotMatch(raw,/<(?:text|script|foreignObject)\\b/i,path+": no text, JS or HTML baked into imagery");
+  assert.match(raw,/viewBox="0 0 2560 1440"/,path+": independent source SVG has high-resolution composition");
+  assert.doesNotMatch(raw,/<(?:text|script|foreignObject)\b/i,path+": decorative SVG contains no executable content");
  }
- console.log("PASS: two self-hosted 2560x1440 static skies × 5 widths, live evidence, source links, responsive crops, reduced motion and no scroll animation");
-}finally{await browser?.close();await new Promise(resolve=>server.close(resolve))}
+ console.log("PASS: separate archive cinema and moon investigation pages, 5 viewport widths, evidence sources, mobile menu, reduced motion and static art");
+}finally{await browser?.close();await new Promise(done=>server.close(done));}

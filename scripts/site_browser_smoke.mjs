@@ -542,12 +542,20 @@ try{
     assert.equal(await page.locator("#passport-unknown").isVisible(),false,"Valid Passport clears warning");
     assert.match(await page.locator(".pp-coverage").innerText(),/Eleven curated Proof Passports, 40 research dossiers/,"Passports explain editorial coverage");
     await page.goto(origin+"index.html",{waitUntil:"load"});
+    assert.equal(await page.locator("html").getAttribute("data-nf-experience"),"archive","NULL FIELD is its own document");
     assert.equal(await page.locator(".nf-experience-archive .hero-actions a").count(),2,"Archive offers two source-reading paths");
-    assert.equal(await page.locator(".nf-experience-underbelly .hero-actions a").count(),2,"Underbelly offers two investigation paths");
-    assert.equal(await page.locator(".nf-experience-underbelly .hero-actions a").first().isVisible(),true,"Dusk entry offers the active process path");
-    assert.equal(await page.locator(".nf-experience-archive .hero-actions a").first().isVisible(),false,"Archive entry is hidden in dusk");
+    assert.equal(await page.locator(".nf-experience-archive .hero-actions a").first().isVisible(),true,"Archive is visible in its own document");
+    assert.equal(await page.locator(".nf-experience-underbelly").count(),0,"Night article fragments are absent from archive");
+    assert.equal(await page.locator(".flagship-context").count(),4,"Each flagship explains the metric's limited meaning");
+    await page.locator(".nf-theme-toggle").click();
+    await page.waitForURL("**/new-moon.html");
+    assert.equal(await page.locator("html").getAttribute("data-nf-experience"),"moon","Toggle opens a separate New Moon document");
+    assert.equal(await page.locator(".moon-hero-actions a").count(),2,"Night has its own investigation entry paths");
+    assert.equal(await page.locator("#open-ledger .moon-ledger-row").count(),4,"Distinct source-linked verification ledger");
+    assert.equal(await page.locator(".flagship-context").count(),0,"Archive presentation is not duplicated at night");
+    await page.locator(".nf-theme-toggle").click();
+    await page.waitForURL("**/index.html");
 
-    assert.equal(await page.locator(".flagship-context").count(),4,"Each flagship explains meaning of headline metric");
     assert.match(await page.locator(".flagship-context").first().innerText(),/maximum overlap/i,"Numerical extremal value interpreted");
     await page.goto(origin+"research.html",{waitUntil:"load"});
     assert.match(await page.locator(".archive-coverage").innerText(),/40 research records.*Eleven detailed claim passports.*Five separately approved finite findings/s,"Library explains record hierarchy");
@@ -740,12 +748,15 @@ try{
     assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth))<=3,"Living Investigation horizontal overflow at "+width);
   }
   if(width===390 || width===1280){
+   // The previous archive visit deliberately selected NULL FIELD. Select
+   // NEW MOON explicitly before verifying the shared constellation dusk state.
+   await page.goto(origin+"new-moon.html",{waitUntil:"load"});
    await page.goto(origin+"constellation.html",{waitUntil:"load"});
    assert.equal(await page.locator(".co-node").count(),16,"Exactly eleven curated claims and five mechanisms");
    assert.equal(await page.locator("#co-count-claims").innerText(),"11","Claim count sourced from registry");
    assert.equal(await page.locator("#co-count-edges").innerText(),"20","Twenty source-grounded relationships");
    assert.equal(await page.locator(".co-relation").count(),6,"Representative relationships by default");
-   assert.equal(await page.locator("body").getAttribute("data-theme"),"dark","Constellation opens with global dusk default");
+   assert.equal(await page.locator("body").getAttribute("data-theme"),"dark","Constellation honors the explicitly selected New Moon palette");
    assert.equal(await page.locator(".nf-theme-toggle").count(),1,"A single global appearance control");
    await page.locator(".nf-theme-toggle").click();
    assert.equal(await page.locator("body").getAttribute("data-theme"),"light","Constellation allows explicit rose-paper appearance");

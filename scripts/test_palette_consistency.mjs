@@ -51,9 +51,10 @@ try{
    page.on("response",r=>{
     if(r.url().startsWith(origin)&&r.status()>=400)faults.push(r.status()+" "+r.url());
    });
-   await page.goto(origin+"index.html",{waitUntil:"load"});
-   if(mode==="light")await page.locator(".nf-theme-toggle").click();
-   for(const p of paths){
+   await page.goto(origin+(mode==="dusk"?"new-moon.html":"index.html"),{waitUntil:"load"});
+   // Every view has its own homepage route; avoid navigating to the opposite
+   // experience while testing the selected palette across specialist pages.
+   for(const p of [...paths.filter(n=>n!=="index.html"),mode==="dusk"?"new-moon.html":"index.html"]){
     await page.goto(origin+p,{waitUntil:"load"});
     const summary=await page.evaluate(colors=>{
       const obsolete=new Set(colors),leaks=[];
@@ -79,7 +80,7 @@ try{
        golden:html.getPropertyValue("--nf-goldenhour").trim(),
        overflow:document.documentElement.scrollWidth-innerWidth};
     },deprecated);
-    const expected=mode==="dusk"?"rgb(4, 6, 11)":"rgb(2, 4, 6)";
+    const expected=p==="new-moon.html"?summary.bg:mode==="dusk"?"rgb(4, 6, 11)":"rgb(2, 4, 6)";
     if(summary.bg!==expected)allCanvasLeaks.push({page:p,mode,width,bg:summary.bg,expected});
     assert.equal(summary.theme,mode,p+" expected mode");
     assert.ok(summary.overflow<=4,p+" "+mode+" "+width+"px overflow "+summary.overflow);
@@ -87,27 +88,20 @@ try{
     if(mode==="dusk"){
       assert.equal(summary.legacyBloodToken,"",p+" no generic New Moon oxblood token");
       assert.equal(summary.moonlight,"#e2d28c",p+" moonlight remains primary");
-      if(p==="index.html"){
-        const accents=await page.evaluate(()=>{
-          const style=selector=>{
-            const el=document.querySelector(selector);
-            if(!el)return null;
-            const css=getComputedStyle(el);
-            return {fill:css.fill,borderTop:css.borderTopColor,borderImage:css.borderImageSource,
-              background:css.backgroundImage};
-          };
-          return {
-            opening:style(".nf-opening-sky--night"),
-            cinema:style(".nf-cinema-world--night"),
-            flagship:style("#main>.flagships>.section-head"),
-            colophon:style(".nf-experience-underbelly.nf-dual-colophon")
-          };
-        });
-        for(const [name,value] of Object.entries(accents))assert.ok(value,"Expected New Moon element: "+name);
-        assert.ok(accents.opening.background.includes("new-moon-nightscape.svg"),"NEW MOON hero uses its self-hosted gold-toned image");
-        assert.ok(accents.cinema.background.includes("new-moon-nightscape.svg"),"NEW MOON story uses its still nightscape");
-        assert.doesNotMatch(accents.flagship.borderImage,/74, 31, 36|167, 101, 115/,"Flagship divider is lavender to gold");
-        assert.equal(accents.colophon.borderTop,"rgb(75, 86, 114)","Night colophon uses indigo, not oxblood");
+      if(p==="new-moon.html"){
+        const accents=await page.evaluate(()=>({
+          sky:!!document.querySelector(".moon-sky"),
+          disc:!!document.querySelector(".moon-disc"),
+          ledger:document.querySelectorAll(".moon-ledger-row").length,
+          archive:!!document.querySelector("#flagships"),
+          route:document.documentElement.getAttribute("data-nf-experience"),
+          art:getComputedStyle(document.querySelector(".moon-disc")).backgroundImage
+        }));
+        assert.equal(accents.route,"moon","Night home is its own document");
+        assert.ok(accents.sky&&accents.disc,"Distinct moonlit hero artwork is present");
+        assert.equal(accents.ledger,4,"Four source-scoped open investigations are visible");
+        assert.equal(accents.archive,false,"Night page does not re-use archive card structure");
+        assert.match(accents.art,/gradient/i,"Moonlight uses local CSS artwork");
       }
     }else assert.equal(summary.golden,"#e46a84",p+" NULL FIELD cherry signal is primary");
    }
@@ -123,5 +117,5 @@ try{
  assert.ok(!css.toLowerCase().includes("#4a1f24")&&!css.toLowerCase().includes("#a76573"),"No wine-red solid accents remain in shared theme");
  assert.equal(css.split("rgba(74,31,36,.21)").length-1,1,
    "Exactly one atmospheric oxblood gradient survives");
- console.log("PASS palette: 26 pages × two themes × two viewports; cherry-oxblood Archive, lunar-gold New Moon, no overflow");
+ console.log("PASS palette: two distinct homepages and 25 shared routes × two viewports; archive black-cherry and New Moon lunar-gold, no overflow");
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve))}

@@ -6,16 +6,22 @@ const fs=require("node:fs");
 const path=require("node:path");
 const read=f=>fs.readFileSync(f,"utf8");
 const html=read("docs/index.html");
+const moon=read("docs/new-moon.html");
 const css=read("docs/home-rhythm.css");
 const home=read("docs/home-system.js");
 const styles=[...html.matchAll(/<link\s+rel="stylesheet"\s+href="([^"]+)"/g)].map(x=>x[1]);
+const moonStyles=[...moon.matchAll(/<link\s+rel="stylesheet"\s+href="([^"]+)"/g)].map(x=>x[1]);
 const scripts=[...html.matchAll(/<script\s+src="([^"]+)"\s+defer><\/script>/g)].map(x=>x[1]);
-assert.equal(styles.length,7,"Homepage should need seven route-scoped stylesheets, not the retired eighth");
+assert.equal(styles.length,8,"NULL FIELD retains seven established stylesheets plus the scoped two-page experience stylesheet");
+assert.equal(moonStyles.length,4,"NEW MOON loads only core site, its color palette, two skies, and its standalone experience styles");
+assert.ok(styles.includes("experience-pages.css")&&moonStyles.includes("experience-pages.css"),"Both homepage routes require the shared page-selector styles");
+assert.ok(!moonStyles.includes("home-rhythm.css")&&!moonStyles.includes("home-dual-experience.css"),"NEW MOON must not inherit the archived homepage layout");
 assert.equal(scripts.length,5,"Only source-hydration and shared page controllers remain; parallax scripts are retired");
 for(const obsolete of ["scroll-cinema.js","home-opening-cinema.js"])assert.ok(!scripts.includes(obsolete),"Removed scroll controller returned: "+obsolete);
 assert.equal(new Set(styles).size,styles.length,"Duplicate stylesheet requests");
 assert.equal(new Set(scripts).size,scripts.length,"Duplicate script requests");
-for(const asset of [...styles,...scripts]){
+assert.equal(new Set(moonStyles).size,moonStyles.length,"NEW MOON has no duplicate stylesheet requests");
+for(const asset of [...styles,...moonStyles,...scripts]){
   assert.ok(!asset.includes("/")&&!asset.includes(".."),"Asset path must be a local docs file");
   assert.ok(fs.existsSync(path.join("docs",asset)),"Missing local dependency "+asset);
 }
