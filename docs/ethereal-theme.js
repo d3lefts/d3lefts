@@ -13,7 +13,9 @@ function saved(){
 function persist(value){
   try {localStorage.setItem(KEY,value);} catch (_) {}
 }
-let current=saved();
+const experience=doc.getAttribute("data-nf-experience");
+let current=experience==="archive"?LIGHT:experience==="moon"?DUSK:saved();
+if(experience)persist(current);
 function apply(value){
   current=value===DUSK?DUSK:LIGHT;
   if(current===DUSK)doc.setAttribute("data-nf-theme",DUSK);
@@ -56,6 +58,10 @@ function mount(){
   button.addEventListener("click",function(){
     const next=current===DUSK?LIGHT:DUSK;
     persist(next);
+    if(experience==="archive"||experience==="moon"){
+      window.location.assign(next===DUSK?"new-moon.html":"index.html");
+      return;
+    }
     if(!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches){
       doc.classList.add("nf-theme-transit");
       setTimeout(()=>doc.classList.remove("nf-theme-transit"),780);
@@ -63,10 +69,15 @@ function mount(){
     apply(next);
   });
   apply(current);
+  document.querySelectorAll(".nf-home-route-nav [data-nf-route]").forEach(function(link){
+    link.addEventListener("click",function(){
+      persist(link.getAttribute("data-nf-route")==="moon"?DUSK:LIGHT);
+    });
+  });
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",mount,{once:true});
 else mount();
 window.addEventListener("storage",function(event){
-  if(event.key===KEY)apply(event.newValue===LIGHT?LIGHT:DUSK);
+  if(event.key===KEY&&!experience)apply(event.newValue===LIGHT?LIGHT:DUSK);
 });
 })();
