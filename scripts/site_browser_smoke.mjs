@@ -542,12 +542,20 @@ try{
     assert.equal(await page.locator("#passport-unknown").isVisible(),false,"Valid Passport clears warning");
     assert.match(await page.locator(".pp-coverage").innerText(),/Eleven curated Proof Passports, 40 research dossiers/,"Passports explain editorial coverage");
     await page.goto(origin+"index.html",{waitUntil:"load"});
+    assert.equal(await page.locator("html").getAttribute("data-nf-experience"),"archive","NULL FIELD is its own document");
     assert.equal(await page.locator(".nf-experience-archive .hero-actions a").count(),2,"Archive offers two source-reading paths");
-    assert.equal(await page.locator(".nf-experience-underbelly .hero-actions a").count(),2,"Underbelly offers two investigation paths");
-    assert.equal(await page.locator(".nf-experience-underbelly .hero-actions a").first().isVisible(),true,"Dusk entry offers the active process path");
-    assert.equal(await page.locator(".nf-experience-archive .hero-actions a").first().isVisible(),false,"Archive entry is hidden in dusk");
+    assert.equal(await page.locator(".nf-experience-archive .hero-actions a").first().isVisible(),true,"Archive is visible in its own document");
+    assert.equal(await page.locator(".nf-experience-underbelly").count(),0,"Night article fragments are absent from archive");
+    assert.equal(await page.locator(".flagship-context").count(),4,"Each flagship explains the metric's limited meaning");
+    await page.locator(".nf-theme-toggle").click();
+    await page.waitForURL("**/new-moon.html");
+    assert.equal(await page.locator("html").getAttribute("data-nf-experience"),"moon","Toggle opens a separate New Moon document");
+    assert.equal(await page.locator(".moon-hero-actions a").count(),2,"Night has its own investigation entry paths");
+    assert.equal(await page.locator("#open-ledger .moon-ledger-row").count(),4,"Distinct source-linked verification ledger");
+    assert.equal(await page.locator(".flagship-context").count(),0,"Archive presentation is not duplicated at night");
+    await page.locator(".nf-theme-toggle").click();
+    await page.waitForURL("**/index.html");
 
-    assert.equal(await page.locator(".flagship-context").count(),4,"Each flagship explains meaning of headline metric");
     assert.match(await page.locator(".flagship-context").first().innerText(),/maximum overlap/i,"Numerical extremal value interpreted");
     await page.goto(origin+"research.html",{waitUntil:"load"});
     assert.match(await page.locator(".archive-coverage").innerText(),/40 research records.*Eleven detailed claim passports.*Five separately approved finite findings/s,"Library explains record hierarchy");
