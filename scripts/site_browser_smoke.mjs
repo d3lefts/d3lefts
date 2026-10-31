@@ -748,12 +748,15 @@ try{
     assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth))<=3,"Living Investigation horizontal overflow at "+width);
   }
   if(width===390 || width===1280){
+   // The previous archive visit deliberately selected NULL FIELD. Select
+   // NEW MOON explicitly before verifying the shared constellation dusk state.
+   await page.goto(origin+"new-moon.html",{waitUntil:"load"});
    await page.goto(origin+"constellation.html",{waitUntil:"load"});
    assert.equal(await page.locator(".co-node").count(),16,"Exactly eleven curated claims and five mechanisms");
    assert.equal(await page.locator("#co-count-claims").innerText(),"11","Claim count sourced from registry");
    assert.equal(await page.locator("#co-count-edges").innerText(),"20","Twenty source-grounded relationships");
    assert.equal(await page.locator(".co-relation").count(),6,"Representative relationships by default");
-   assert.equal(await page.locator("body").getAttribute("data-theme"),"dark","Constellation opens with global dusk default");
+   assert.equal(await page.locator("body").getAttribute("data-theme"),"dark","Constellation honors the explicitly selected New Moon palette");
    assert.equal(await page.locator(".nf-theme-toggle").count(),1,"A single global appearance control");
    await page.locator(".nf-theme-toggle").click();
    assert.equal(await page.locator("body").getAttribute("data-theme"),"light","Constellation allows explicit rose-paper appearance");
