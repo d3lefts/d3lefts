@@ -35,12 +35,18 @@ try{
   const page=await context.newPage();
   const errors=[];
   page.on("pageerror",e=>errors.push("pageerror: "+e.message));
-  // A fresh visitor sees dusk; this suite then explicitly selects light.
+  // Each homepage is an actual document. The first archive visit establishes
+  // NULL FIELD; verify cross-page toggle persistence in both directions.
   await page.goto(origin+"index.html",{waitUntil:"load"});
-  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk","Dusk is the fresh-visit default");
+  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Direct NULL FIELD loads in its own archive palette");
+  assert.equal(await page.locator("html").getAttribute("data-nf-experience"),"archive","Archive is a separate page");
   await page.locator(".nf-theme-toggle").click();
-  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Explicit light opt-in activates NULL FIELD Archive");
-  assert.equal(await page.evaluate(()=>localStorage.getItem("nightfall.theme.v1")),"light","Explicit light choice is persisted");
+  await page.waitForURL("**/new-moon.html");
+  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk","Toggle opens a separate New Moon document");
+  await page.locator(".nf-theme-toggle").click();
+  await page.waitForURL("**/index.html");
+  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Returning restores NULL FIELD archive");
+  assert.equal(await page.evaluate(()=>localStorage.getItem("nightfall.theme.v1")),"light","Archive selection persists");
   page.on("response",r=>{if(r.url().startsWith(origin)&&r.status()>=400)errors.push(r.url()+": "+r.status())});
   for(const name of pages){
    await page.goto(origin+name,{waitUntil:"load"});
@@ -144,17 +150,21 @@ try{
   assert.ok(contrast(...comps.body)>=7,"Body text on pitch black comfortably exceeds AA");
   const toggle=page.locator(".nf-theme-toggle");
   await toggle.click();
-  await page.waitForFunction(()=>document.documentElement.dataset.nfTheme==="dusk");
-  await page.waitForFunction(()=>getComputedStyle(document.body).backgroundColor==="rgb(4, 6, 11)",null,{timeout:3500});
+  await page.waitForURL("**/new-moon.html");
+  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk","New Moon has its own dark atmosphere");
+  await page.waitForFunction(()=>getComputedStyle(document.body).backgroundColor==="rgb(8, 12, 25)",null,{timeout:3500});
   const dark=await page.evaluate(()=>({
     bg:getComputedStyle(document.body).backgroundColor,
-    primary:getComputedStyle(document.querySelector(".hero-actions .button")).backgroundColor
+    accent:getComputedStyle(document.documentElement).getPropertyValue("--moon-gold").trim(),
+    ledger:document.querySelectorAll(".moon-ledger-row").length
   }));
-  assert.equal(dark.bg,"rgb(4, 6, 11)","Dusk midnight canvas unchanged");
-  assert.equal(dark.primary,"rgb(226, 210, 140)","Dusk champagne CTA unchanged");
-  assert.equal(await page.locator('meta[name="theme-color"]').getAttribute("content"),"#04060b","Dusk browser chrome remains midnight navy");
+  assert.equal(dark.bg,"rgb(8, 12, 25)","New Moon has a distinct midnight canvas");
+  assert.equal(dark.accent,"#e2d28c","New Moon retains its moonlight accent");
+  assert.equal(dark.ledger,4,"The separate investigation ledger is present");
+  assert.equal(await page.locator('meta[name="theme-color"]').getAttribute("content"),"#04060b","New Moon browser chrome remains midnight navy");
   await toggle.click();
-  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Switching back restores Sunset Boulevard archive");
+  await page.waitForURL("**/index.html");
+  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Switching back returns to the separate archive");
   await page.waitForFunction(()=>getComputedStyle(document.body).backgroundColor==="rgb(2, 4, 6)",null,{timeout:3500});
   assert.equal(await page.locator('meta[name="theme-color"]').getAttribute("content"),"#020406","Archive browser chrome returns to carbon-black");
   assert.equal(await page.locator("body").evaluate(e=>getComputedStyle(e).backgroundColor),
@@ -162,5 +172,5 @@ try{
   assert.deepEqual(errors,[],"No missing assets or browser JS errors at "+width+"px");
   await context.close();
  }
- console.log("PASS NULL FIELD: dusk-first, 10 Archive pages × mobile/desktop, black-cherry action palette, AA contrast, unchanged New Moon and reversible state");
+ console.log("PASS NULL FIELD: two separate entry pages, 10 archive/scoped pages × mobile/desktop, black-cherry action palette, AA contrast and reversible selection");
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve))}
