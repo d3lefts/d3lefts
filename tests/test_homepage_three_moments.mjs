@@ -4,11 +4,12 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 const html=readFileSync('docs/index.html','utf8');
+const moon=readFileSync('docs/new-moon.html','utf8');
 const styles=readFileSync('docs/home-rhythm.css','utf8');
 const find=s=>html.indexOf(s);
 const count=(s,re)=>(s.match(re)||[]).length;
 
-test('The two themed opening skies and Erdős cinematic precede the three detailed research moments',()=>{
+test('NULL FIELD opening and Erdős cinematic precede detailed archive records',()=>{
  const stages=[
   '<section class="hero wrap',
   '<section class="nf-cinema',
@@ -47,7 +48,8 @@ test('One entrance with fewer distractions and valid fragment destinations',()=>
  assert.ok(count(html,/<section\b/g)<=13,"Homepage sections exceed editorial budget");
  assert.ok(count(html,/<details\b/g)<=2,"Excessive nested disclosures");
  assert.equal(count(html,/id="nf-scroll-cinema"/g),1);
- assert.equal(count(html,/class="nf-experience nf-experience-(?:archive|underbelly) nf-dual-colophon/g),2);
+ assert.equal(count(html,/class="nf-experience nf-experience-archive nf-dual-colophon/g),1);
+ assert.equal(count(moon,/class="moon-end wrap"/g),1);
  assert.equal(count(html,/class="nf-dual-index/g),0,"No duplicated three-destination entrance");
  const dual=readFileSync('docs/home-dual-experience.css','utf8');
  assert.match(dual,/html:not\(\[data-nf-theme="dusk"\]\) \.nf-experience-underbelly/);
@@ -57,7 +59,9 @@ test('One entrance with fewer distractions and valid fragment destinations',()=>
 
 test('Scientific qualifiers survive the tighter narrative',()=>{
  assert.ok(html.includes('id="hero-title-archive">A precise number.<br><em>An open record.</em>'));
- assert.ok(html.includes('id="hero-title">Every shift.<br><em>Every assumption.</em>'));
+ assert.ok(moon.includes('id="moon-title">The work begins<br><em>where certainty ends.</em>'));
+ assert.ok(moon.includes("INTERNAL EXACT REPLAY · INDEPENDENT REVIEW OPEN"));
+ assert.ok(moon.includes("EMPIRICAL COMPARISON PENDING"));
  for(const q of ['external review','unproved','failed experiment','internal exact replay'])assert.ok(html.toLowerCase().includes(q),q);
  assert.ok(html.includes("no edge certifies a transfer theorem"));
 });
@@ -79,11 +83,24 @@ test('Opening and scroll chapters disclose the exact finite record before other 
  const front=html.slice(hero,others);
  assert.match(front,/Erdős overlap finite witness record/);
  assert.match(front,/Source-bound Erdős finite overlap record/);
- assert.ok((front.match(/0\.380856370118/g)||[]).length>=4, "Score appears in both first-fold modes and both record displays");
- assert.ok((front.match(/class="nf-opening-scoreline"/g)||[]).length===2);
+ assert.ok((front.match(/0\.380856370118/g)||[]).length>=3, "Archive hero, aside and scroll record preserve the exact score");
+ assert.ok(moon.includes("0.380856370118…"),"The night desk preserves the shared witness score");
+ assert.ok((front.match(/class="nf-opening-scoreline"/g)||[]).length===1);
  assert.ok((front.match(/131,072/g)||[]).length>=3);
- for(const disclaimer of ['separate, incompletely recovered artifact','external review open','global optimum'])
+ for(const disclaimer of ['separate, incompletely recovered artifact','external review open','global optimality'])
   assert.ok(front.toLowerCase().includes(disclaimer.toLowerCase()),disclaimer);
  assert.match(front,/href="erdos-paper\.html"/);
  assert.match(front,/href="review\.html#erdos"/);
+});
+
+test('Independent home documents preserve selection, evidence, and review routes',()=>{
+ assert.ok(html.includes('data-nf-experience="archive"')&&moon.includes('data-nf-experience="moon"'));
+ assert.ok(html.includes('id="flagships"')&&!html.includes('id="open-ledger"'));
+ assert.ok(moon.includes('id="open-ledger"')&&!moon.includes('id="flagships"'));
+ for(const page of [html,moon]){
+  assert.ok(page.includes('data-nf-route="archive"')&&page.includes('data-nf-route="moon"'));
+  assert.ok(page.includes('href="review.html'));
+ }
+ assert.ok(moon.includes('global optimality is not established'));
+ assert.ok(moon.includes('candidate is not a theorem'));
 });
