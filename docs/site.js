@@ -29,7 +29,7 @@
  const page=location.pathname.split("/").pop()||"index.html";
  // Static top-level navigation is complete without JavaScript; app-owned
  // workbenches own their own chrome. Do not inject duplicate journeys.
- if(!main||["index.html","constellation.html","review.html"].includes(page)||
+ if(!main||["index.html","new-moon.html","constellation.html","review.html"].includes(page)||
     document.querySelector("#app")||document.querySelector(".app")||main.closest(".app"))return;
 
  // Single source for the specialist-page route taxonomy. A destination means
