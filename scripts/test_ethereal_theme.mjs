@@ -184,6 +184,9 @@ try{
    assert.equal(await page.locator("#observatory a[href='constellation.html#map']").count(),1);
    assert.equal(await page.locator(".nf-process-thread").count(),0,"Header owns landing-page navigation");
    await page.locator("#observatory").screenshot({path:"browser-artifacts/ethereal-constellation-handoff-"+width+".png"});
+  // The archive route is fixed to NULL FIELD and persists that selection.
+  // Restore NEW MOON before testing dusk across the remaining shared pages.
+  await page.goto(origin+"new-moon.html",{waitUntil:"load"});
   await page.goto(origin+"living-paper.html",{waitUntil:"load"});
   const paperBg=await page.evaluate(()=>getComputedStyle(document.body).backgroundImage);
   assert.equal(paperBg,"none","Dusk mathematics reading canvas has no stars behind equations");
