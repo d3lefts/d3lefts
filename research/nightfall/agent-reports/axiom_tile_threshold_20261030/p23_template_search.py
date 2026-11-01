@@ -10,7 +10,9 @@ P=23;Q=P*P
 def add(a,b):
     return ((a%P+b%P)%P)+P*((a//P+b//P)%P)
 def mask(z,points):
-    return sum(1<<add(z,a) for a in points)
+    bits=0
+    for a in points:bits|=1<<add(z,a)
+    return bits
 FULL=(1<<Q)-1
 
 def two_shift(ax,ay):
