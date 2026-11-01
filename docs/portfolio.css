@@ -238,3 +238,9 @@ html[data-nf-theme="dusk"] .pf-search-controls button{background:#d4c6ed;color:#
 .pf-clarity-grid p,.pf-clarity-foot{font-size:12px;line-height:1.85;color:var(--muted);margin:0}
 .pf-clarity-foot{padding:12px 2px 25px;border-top:1px solid var(--pf-border)}
 @media(max-width:680px){.pf-clarity{padding-bottom:48px}.pf-clarity-disclosure>summary{align-items:flex-start;flex-direction:column;gap:10px}.pf-clarity-grid{grid-template-columns:1fr;gap:16px}.pf-clarity-grid>div{padding-top:12px}}
+
+/* Recruiter-first scope summary: observable role domains, no implied third-party attribution. */
+.pf-career-signpost{display:grid;grid-template-columns:minmax(110px,.28fr) minmax(0,.72fr);gap:18px;margin:26px 0 8px;padding:18px 0;border-top:1px solid var(--line,#71525b);border-bottom:1px solid var(--line,#71525b)}
+.pf-career-signpost strong{font:600 10px/1.5 var(--mono);letter-spacing:.09em;text-transform:uppercase}
+.pf-career-signpost span{font:13px/1.65 var(--sans)}
+@media(max-width:680px){.pf-career-signpost{grid-template-columns:minmax(0,1fr);gap:7px}}

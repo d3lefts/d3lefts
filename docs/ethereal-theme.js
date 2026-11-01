@@ -46,6 +46,9 @@ function mount(){
   const button=document.createElement("button");
   button.type="button";
   button.className="nf-theme-toggle";
+  // On shared documents this is a palette control, not the experience
+  // selector; the dedicated destination nav chooses separate homepages.
+  button.dataset.nfControl=experience==="archive"||experience==="moon"?"experience":"palette";
   button.innerHTML='<span class="nf-theme-symbol" aria-hidden="true"></span><span class="nf-theme-word" aria-hidden="true"></span>';
   const header=document.querySelector(".header-inner");
   const menu=header && header.querySelector("#menu-button");
