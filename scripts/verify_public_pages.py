@@ -57,7 +57,7 @@ def main():
     checks = [
         ("index.html", "archive", "flagships", "new-moon.html"),
         ("new-moon.html", "moon", "open-ledger", "index.html"),
-        ("review.html", None, "start-here", "research.html"),
+        ("review.html", None, "start-here", "constellation.html"),
         ("portfolio.html", None, "career", "resume.html"),
     ]
     report = {"base": base, "results": [], "status": "UNVERIFIED"}
@@ -78,9 +78,15 @@ def main():
             if path == "portfolio.html" and "noindex" not in parsed.meta.get("robots", ""):
                 raise ValueError("Unlisted portfolio indexing instruction not present")
             report["results"].append({"url": url, "status": "PASS"})
-        except (HTTPError, URLError, ValueError, UnicodeError, TimeoutError, OSError) as exc:
-            report["results"].append({"url": url, "status": "UNVERIFIED", "error": str(exc)[:350]})
-    report["status"] = "PASS" if all(x["status"] == "PASS" for x in report["results"]) else "UNVERIFIED"
+        except (URLError, TimeoutError, OSError) as exc:
+            report["results"].append({"url": url, "status": "BLOCKED", "error": str(exc)[:350]})
+        except HTTPError as exc:
+            state = "BLOCKED" if exc.code in (403, 429) else "FAIL"
+            report["results"].append({"url": url, "status": state, "error": str(exc)[:350]})
+        except (ValueError, UnicodeError) as exc:
+            report["results"].append({"url": url, "status": "FAIL", "error": str(exc)[:350]})
+    states = {item["status"] for item in report["results"]}
+    report["status"] = "FAIL" if "FAIL" in states else "BLOCKED" if "BLOCKED" in states else "PASS"
     print(json.dumps(report, indent=2, sort_keys=True))
     return 0 if report["status"] == "PASS" else 1
 
