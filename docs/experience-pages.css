@@ -123,3 +123,26 @@ html[data-nf-experience="moon"] .footer h2{font-size:clamp(48px,6vw,86px)}
  .moon-dispatch,.moon-ledger,.moon-workbench,.moon-end{break-inside:auto}
  .moon-ledger-row{break-inside:avoid}
 }
+
+/* Four-part claim passport. Visible evidence scope, not an implied award. */
+.nf-claim-passport{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin:22px 0 0;border-top:1px solid currentColor;border-left:1px solid currentColor}
+.nf-claim-passport>div{padding:14px 13px 16px;border-right:1px solid currentColor;border-bottom:1px solid currentColor;min-width:0}
+.nf-claim-passport dt{font:600 10px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:6px}
+.nf-claim-passport dd{font:400 12px/1.65 var(--sans);margin:0;overflow-wrap:anywhere}
+.moon-first-test{display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);gap:clamp(25px,5vw,100px);padding-top:clamp(65px,8vw,125px);padding-bottom:clamp(65px,8vw,125px);border-bottom:1px solid var(--moon-rule,#4d5466)}
+.moon-first-test-heading h2{font:400 clamp(43px,5.3vw,80px)/1 var(--serif);letter-spacing:-.035em;margin:24px 0}
+.moon-first-test-heading h2 em{font-weight:400;color:var(--moon-gold,#e2d28c)}
+.moon-first-test-heading p{font:15px/1.75 var(--sans);color:#c1cbdc;max-width:48ch}
+.moon-first-test-instructions{border:1px solid var(--moon-rule,#4d5466);padding:clamp(20px,3vw,36px);background:rgba(9,16,31,.8);min-width:0}
+.moon-first-test-instructions ol{padding-left:20px;margin:0;color:#d3d9e5;font:13px/1.8 var(--sans)}
+.moon-first-test-instructions li+li{margin-top:12px}
+.moon-first-test-instructions a{text-decoration:underline;text-underline-offset:3px}
+.moon-first-test-instructions pre{max-width:100%;overflow:auto;padding:16px;margin:17px 0;border:1px solid var(--moon-rule,#4d5466);background:#060b15;color:#f4e5c0;font:12px/1.6 var(--mono);white-space:pre}
+.moon-first-test-instructions code{overflow-wrap:anywhere}
+.moon-first-test-link{display:block;margin-top:24px;font:600 12px/1.5 var(--mono);color:#e2d28c}
+.moon-first-test-link:focus-visible{outline:2px solid currentColor;outline-offset:5px}
+@media(max-width:760px){
+ .nf-claim-passport{grid-template-columns:minmax(0,1fr)}
+ .moon-first-test{grid-template-columns:minmax(0,1fr)}
+ .moon-first-test-instructions{padding:18px}
+}
