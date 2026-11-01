@@ -66,6 +66,26 @@
     </div>
   </section>
 
+  <section class="moon-first-test wrap" id="first-test" aria-labelledby="moon-first-test-title">
+    <div class="moon-first-test-heading">
+      <span class="moon-section-kicker">START HERE / ONE FINITE REPLAY</span>
+      <h2 id="moon-first-test-title">Don't take our word.<br><em>Run the check.</em></h2>
+      <p>Begin with a bounded 30-integer Sidon construction. This verifies a <strong>particular finite statement</strong>, not a new asymptotic theorem or a novelty claim.</p>
+    </div>
+    <div class="moon-first-test-instructions">
+      <ol>
+        <li>Clone the <a href="https://github.com/d3lefts/d3lefts">public repository</a> and keep the original witness file alongside its checker.</li>
+        <li>From the repository root, execute the published Python 3 standard-library replay:</li>
+      </ol>
+      <pre><code>python3 research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py</code></pre>
+      <ol start="3">
+        <li>Expect <code>"status": "PASS"</code> and <code>"exact_sidon_number": 17</code>. A different output is a reason to investigate, not to assume success.</li>
+        <li>For actual independent criticism, reimplement a mathematical check without copying the supplied algorithm. Rejection of a tampered witness hash alone proves only input identity.</li>
+      </ol>
+      <a class="moon-first-test-link" href="review.html#start-here">Complete instructions, source files and review report ↗</a>
+    </div>
+  </section>
+
   <section class="moon-ledger wrap" id="open-ledger" aria-labelledby="ledger-title">
     <div class="moon-ledger-heading"><div><span class="moon-section-kicker">OPEN LEDGER / SOURCE-BOUND INVESTIGATIONS</span><h2 id="ledger-title">The work that<br><em>still needs doing.</em></h2></div><p>These are review targets and research directions—not announcements of newly established theorems. Each points to primary material and a way to examine the claim.</p></div>
     <div class="moon-ledger-rows">
