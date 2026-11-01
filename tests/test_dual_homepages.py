@@ -53,6 +53,26 @@ class DualHomepageTests(unittest.TestCase):
         self.assertIn('index.html#flagships', chrome)
         self.assertIn('nightfall-theme-change', chrome)
 
+    def test_evidence_summary_replay_and_shared_experience_routes(self):
+        archive = (DOCS / "index.html").read_text()
+        moon = (DOCS / "new-moon.html").read_text()
+        chrome = (DOCS / "site.js").read_text()
+        style = (DOCS / "site.css").read_text()
+        self.assertEqual(archive.count('class="nf-claim-passport"'), 4)
+        for term in ("<dt>Claim</dt>", "<dt>Evidence</dt>", "<dt>Limit</dt>", "<dt>Reproduce</dt>"):
+            self.assertEqual(archive.count(term), 4)
+        self.assertIn('id="first-test"', moon)
+        self.assertIn("verify_sidon30_standalone.py", moon)
+        self.assertIn('"exact_sidon_number": 17', moon)
+        self.assertIn("reimplement", moon)
+        self.assertIn('data-nf-route="archive"', chrome)
+        self.assertIn('data-nf-route="moon"', chrome)
+        self.assertIn("nf-global-route-nav", style)
+        self.assertIn('data-nf-control="palette"', style)
+        portfolio = (DOCS / "portfolio.html").read_text()
+        self.assertIn('class="pf-career-signpost"', portfolio)
+        self.assertIn('name="robots" content="noindex, nofollow, noarchive"', portfolio)
+
     def test_toggle_navigates_and_state_is_persisted(self):
         toggle = (DOCS / "ethereal-theme.js").read_text()
         self.assertIn('window.location.assign(next===DUSK?"new-moon.html":"index.html")', toggle)
