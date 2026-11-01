@@ -41,6 +41,18 @@ class DualHomepageTests(unittest.TestCase):
             parser.feed(page)
             self.assertEqual(len(parser.ids), len(set(parser.ids)), "Duplicate HTML IDs")
             self.assertIn("review.html", " ".join(parser.links))
+    def test_direct_source_links_and_return_handoffs(self):
+        archive = (DOCS / "index.html").read_text()
+        moon = (DOCS / "new-moon.html").read_text()
+        chrome = (DOCS / "site.js").read_text()
+        self.assertIn('!location.hash', archive, "Root preference redirect must respect explicit archive anchors")
+        self.assertIn('name="theme-color" content="#020406"', archive)
+        self.assertIn('href="index.html" class="brand"', archive)
+        self.assertIn('href="new-moon.html" class="brand"', moon)
+        self.assertIn('new-moon.html#open-ledger', chrome)
+        self.assertIn('index.html#flagships', chrome)
+        self.assertIn('nightfall-theme-change', chrome)
+
     def test_toggle_navigates_and_state_is_persisted(self):
         toggle = (DOCS / "ethereal-theme.js").read_text()
         self.assertIn('window.location.assign(next===DUSK?"new-moon.html":"index.html")', toggle)
