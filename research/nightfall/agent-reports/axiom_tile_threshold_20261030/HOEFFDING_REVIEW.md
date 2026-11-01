@@ -16,7 +16,7 @@ Exact, exhaustive finite checks:
 - Explicit diamond subset sums: 1,024 distinct, and the proposed missing sum absent from the full T+T.
 - Canonical root normalization and finite-field inverses verified before sampling.
 
-Fixed-seed regression: 12 support strata × 2,000 = 24,000 k=11 signals. Observed decoder errors: **zero**. SHA256 of the s,failures,n transcript: 3b2f6ade646c8c6595b6cfcc0c689648014f7eeabcd143d3580bcaa3b497bfc2.
+Fixed-seed regression: 12 support strata × 2,000 = 24,000 k=11 signals. Observed decoder errors: **zero**. A separate **2,400-case k=23 multiblock regression**, spanning support sizes 12..23 and up to three mixed-query blocks, also passed; it is *not* included in the Hoeffding confidence calculation. SHA256 of the s,failures,n transcript: 3b2f6ade646c8c6595b6cfcc0c689648014f7eeabcd143d3580bcaa3b497bfc2.
 
 ## Concentration statements — conditional on independent uniform draws
 
