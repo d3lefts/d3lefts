@@ -81,3 +81,8 @@ python3 -c 'import json; assert json.load(open("rebuilt.json")) == json.load(ope
 ```
 
 **Logical scope:** the paper's original weak Sidon condition is checked independently on this fixed set; hence within this witness, distinct pair-sum failures reduce to three-term progressions. The calculation proves the finite hypergraph's essentiality, with no statement about optimality among all 30-point constructions. Specialist prior-art review and manuscript-level novelty assessment are still open.
+
+
+## External reproducibility checkpoint — October 31, 2026
+
+A [third-party review packet](EXTERNAL_REVIEW_PACKET_20261031.md) is now public, with an unfilled human-review verdict template. The new [direct pair-sum verifier](verify_sidon30_direct_sums.py) separately searches for 17- and 18-element Sidon subsets *without* importing the existing arithmetic-progression hitting-set code. The two algorithms are both **internal AI-assisted computational checks**; neither is independent human peer review. The exact witness hash, command, known prior art, scope and falsification obligations are in the packet. The site and research CI run both computations.
