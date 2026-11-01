@@ -48,8 +48,12 @@ assert.ok(review.includes("witness_30.txt"));
 assert.ok(review.includes("weak_sidon_four_point_tests"));
 assert.ok(review.includes("three_term_arithmetic_progressions"));
 assert.ok(review.includes("PASS, FAIL or INCONCLUSIVE"));
-assert.ok(review.includes("novelty, peer review and asymptotic implications remain separate") ||
-          review.includes("Novelty, peer review and asymptotic implications remain separate"));
+assert.ok(review.includes("The seed and affine construction come from an earlier anonymous reader submission"),
+  "Review page must explicitly credit earlier seed and map");
+assert.ok(review.includes("5/9 bound is stronger than the finite 17/30 ratio"),
+  "Review page must not suggest the fixed witness improves the current asymptotic bound");
+assert.ok(review.includes("novelty review"),
+  "Endpoint and hypergraph-criticality priority remain open");
 assert.ok(verifier.includes("WITNESS_SHA")&&verifier.includes("27405") &&
           verifier.includes("'exact_sidon_number':17"));
 assert.ok(witness.includes(",")&&witness.trim().split(",").length===30,

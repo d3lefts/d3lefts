@@ -215,6 +215,7 @@ jobs:
         run: |
           python3 research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py
           python3 research/nightfall/projects/sidon-finite-30/verify_sidon30_direct_sums.py
+          python3 research/nightfall/projects/sidon-finite-30/verify_reader_origin.py
       - name: Certify universal factor-network equality quotient
         run: |
           python3 -m py_compile research/nightfall/projects/sat-network-universal/check_structural_certificate.py
