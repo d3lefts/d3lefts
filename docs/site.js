@@ -27,6 +27,19 @@
 
  const main=document.querySelector("main");
  const page=location.pathname.split("/").pop()||"index.html";
+ // The two entrances are distinct documents. Source pages remain shared,
+ // but offer both destination routes independently of the reading palette.
+ const header=document.querySelector(".header");
+ if(header&&main&&page!=="index.html"&&page!=="new-moon.html"&&!document.querySelector(".nf-home-route-nav")){
+  const routes=document.createElement("nav");
+  routes.className="nf-home-route-nav nf-global-route-nav wrap";
+  routes.setAttribute("aria-label","Choose NIGHTFALL experience");
+  routes.innerHTML='<span class="nf-route-caption">TWO ENTRANCES / SHARED RESEARCH RECORD</span>'+
+   '<a href="index.html" data-nf-route="archive"><span>01</span> NULL FIELD <small>Research archive</small></a>'+
+   '<a href="new-moon.html" data-nf-route="moon"><span>02</span> NEW MOON <small>Open investigations</small></a>';
+  header.insertAdjacentElement("afterend",routes);
+ }
+
  // Static top-level navigation is complete without JavaScript; app-owned
  // workbenches own their own chrome. Do not inject duplicate journeys.
  if(!main||["index.html","new-moon.html","constellation.html","review.html"].includes(page)||
