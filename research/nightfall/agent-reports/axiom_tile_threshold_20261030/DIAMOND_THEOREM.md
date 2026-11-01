@@ -56,9 +56,9 @@ Set y*=5D/2−1, an integer as D is even. We inspect all nine rectangles grouped
 
 - n=0 or 4: y shift 0, range I, ending at 2D−2<y*. No modular wrap can make y* appear because p≥3D.
 - n=1 or 3: y shift ±D/2, giving ranges [D/2,5D/2−2] and [−D/2,3D/2−2] modulo p. The positive interval ends **one below y***. The wrapped part of the negative interval begins at p−D/2≥5D/2, **one above y***. Neither contains y*.
-- n=2: (a,b)=(1,1) has y shift0 and misses y*; (2,0) and (0,2) have shifts +D and −D respectively. The +D band [D,3D−2] contains y*. Their common first-coordinate shift is **2D**. Thus the horizontal slice of T+T at y=y* equals
+- n=2: the three cases must be separated. At (a,b)=(1,1), the y shift is 0 and the range I misses y*. At (2,0), the y shift is +D, and [D,3D−2] contains y* for every D≥4. At (0,2), the y shift is −D, whose wrapped interval [p−D,p−1] contains y* **precisely when** 3D≤p≤7D/2−1; for larger p it does not. Crucially, **both (2,0) and (0,2) have the identical x shift (a+b)D=2D**. Each contributing rectangle therefore supplies the very same horizontal interval 2D+I; the extra (0,2) case does not enlarge it. Thus, for EVERY integer p≥3D, the entire horizontal slice of T+T at y=y* is exactly
       {2D,2D+1,...,4D−2} modulo p.
-  Its length is 2D−1<p.
+  Its length is 2D−1<p, including at the composite boundary p=3D. This case analysis resolves the previously omitted rectangle; it is not inferred from finite tests.
 
 Choose x* to be the first residue immediately beyond the wrapped end of that interval on the low-x side:
 
