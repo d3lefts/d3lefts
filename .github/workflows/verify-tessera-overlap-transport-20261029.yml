@@ -1,0 +1,24 @@
+name: Verify Tessera overlap transport guardrails
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/projects/erdos/overlap_transport_20261029/**"
+      - ".github/workflows/verify-tessera-overlap-transport-20261029.yml"
+  push:
+    paths:
+      - "research/nightfall/projects/erdos/overlap_transport_20261029/**"
+      - ".github/workflows/verify-tessera-overlap-transport-20261029.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-counterexamples:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check boundary semantics and finite-to-continuum exact counterexamples
+        run: python3 research/nightfall/projects/erdos/overlap_transport_20261029/check.py
