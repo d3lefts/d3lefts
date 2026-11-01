@@ -102,6 +102,17 @@ for s in range(K+1):
  records.append((s,failures))
  assert failures==0,(s,failures)
 
+# Separate multiblock software regression, outside the confidence calculation.
+multiblock=0
+for support_size in range(12,24):
+ for _ in range(200):
+  x=[0]*23
+  for i in rng.sample(range(23),support_size):
+   x[i]=rng.randrange(1,Q)
+  _,queries=decode(tuple(x))
+  assert queries==23+(support_size-1+9)//10
+  multiblock+=1
+
 alpha=.01;S=K+1
 hoeffding=sqrt(log(S/alpha)/(2*N))
 exact_zero=1-(alpha/S)**(1/N)
@@ -110,6 +121,7 @@ print('MODEL GF(53^2), p=53, k=11, b=10')
 print('EXACT 1024 squared words, 10 shorter block tables, sumset hole: PASS')
 print('SAMPLED 12 support strata x 2000 fixed-seed pseudorandom signals')
 print('FAILURES',sum(f for s,f in records))
+print('MULTIBLOCK_K23_EXACT_REPLAY',multiblock,'PASS')
 print('CONDITIONAL_HOEFFDING_FAMILYWISE_99PCT',format(hoeffding,'.9f'))
 print('CONDITIONAL_EXACT_BINOMIAL_FAMILYWISE_99PCT',format(exact_zero,'.9f'))
 print('TRANSCRIPT_SHA256',sha256(transcript.encode()).hexdigest())
