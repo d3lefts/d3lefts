@@ -1,0 +1,17 @@
+name: NIGHTFALL hole-bridge transfer exact audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/agent-reports/axiom_tile_threshold_20261030/HOLE_BRIDGE_TRANSFER.md'
+      - 'research/nightfall/agent-reports/axiom_tile_threshold_20261030/check_hole_bridge_transfer.py'
+      - '.github/workflows/audit-hole-bridge-transfer.yml'
+  workflow_dispatch:
+jobs:
+  exact-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exact bridge, spectators, and symbolic geometry
+        run: |
+          python3 research/nightfall/agent-reports/axiom_tile_threshold_20261030/check_hole_bridge_transfer.py
