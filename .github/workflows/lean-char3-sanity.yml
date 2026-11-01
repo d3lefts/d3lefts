@@ -58,6 +58,14 @@ jobs:
             --decl Nightfall.OddCycle.p23_capacity_arithmetic \
             --decl Nightfall.OddCycle.p23_numeric_gap \
             --json-out lean-receipts/p23-arithmetic.json
+      - name: Certify symmetry-to-collision reduction
+        run: |
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/odd_cycle/CollisionSymmetry.lean \
+            --strict \
+            --decl Nightfall.OddCycle.opposite_codewords_coincide \
+            --decl Nightfall.OddCycle.translation_collision_implies_fixed \
+            --json-out lean-receipts/collision-symmetry.json
       - name: Compile requested committed file (manual dispatch only)
         if: github.event_name == 'workflow_dispatch'
         env:
