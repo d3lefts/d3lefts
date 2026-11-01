@@ -1,0 +1,23 @@
+name: P23 global odd-cycle and seven-sign certificate
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/agent-reports/axiom_tile_threshold_20261030/check_p23_*'
+      - 'research/nightfall/agent-reports/axiom_tile_threshold_20261030/P23_GLOBAL_OBSTRUCTION.md'
+      - '.github/workflows/audit-p23-global-obstruction.yml'
+  workflow_dispatch:
+
+jobs:
+  exact-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exact finite-field witness and small symmetric groups
+        run: |
+          python3 research/nightfall/agent-reports/axiom_tile_threshold_20261030/check_p23_seven_signs.py
+          python3 research/nightfall/agent-reports/axiom_tile_threshold_20261030/check_p23_small_symmetric.py
+      - name: All 8,388,608 p23-cycle occupancy patterns
+        run: |
+          g++ -O3 -std=c++17 research/nightfall/agent-reports/axiom_tile_threshold_20261030/check_p23_odd_cycles.cpp -o /tmp/check_p23_odd_cycles
+          /tmp/check_p23_odd_cycles
