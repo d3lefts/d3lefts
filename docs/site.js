@@ -34,8 +34,23 @@
 
  // Single source for the specialist-page route taxonomy. A destination means
  // where a task belongs, never that it is mathematically complete.
+ // Research source pages are shared. The first route back respects the
+ // selected reading without duplicating source evidence or mutating claims.
+ const preferredMoon=()=>{
+  try{
+   const v=localStorage.getItem("nightfall.theme.v1");
+   if(v==="dusk"||v==="light")return v==="dusk";
+  }catch(_){}
+  return document.documentElement?.getAttribute?.("data-nf-theme")==="dusk";
+ };
+ const homeDestination={id:"home",label:"",href:""};
+ const updateHome=(moon)=>{
+  homeDestination.href=moon?"new-moon.html#open-ledger":"index.html#flagships";
+  homeDestination.label=moon?"01 / NEW MOON · Open investigations":"01 / NULL FIELD · Research archive";
+ };
+ updateHome(preferredMoon());
  const destinations=[
-  {id:"home",label:"01 / Homepage · Results",href:"index.html#flagships"},
+  homeDestination,
   {id:"constellation",label:"02 / Constellation · Connections",href:"constellation.html#map"},
   {id:"review",label:"03 / Independent Review · Challenge",href:"review.html#priority"}
  ];
@@ -98,6 +113,15 @@
   const a=createLink(destination.href,destination.label);
   if(destination.id===inferred)a.setAttribute("aria-current","page");
   thread.append(a);
+ }
+ // The palette button still changes the atmosphere on specialist pages.
+ // Its corresponding homepage handoff stays synchronized without a reload.
+ if(typeof window!=="undefined"&&typeof window.addEventListener==="function"){
+  window.addEventListener("nightfall-theme-change",()=>{
+   updateHome(document.documentElement?.getAttribute?.("data-nf-theme")==="dusk");
+   const a=thread.querySelector?.("a");
+   if(a){a.href=homeDestination.href;a.textContent=homeDestination.label;}
+  });
  }
  if(page==="join.html"){
   const hero=main.querySelector(".join-hero");
