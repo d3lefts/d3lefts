@@ -1,0 +1,24 @@
+name: Verify GF169 sumset-hole phase code
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/projects/finite-field/gf169-sumset-hole-20261030/**'
+      - '.github/workflows/verify-gf169-sumset-hole.yml'
+  workflow_dispatch:
+
+jobs:
+  exact-certificate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Exact field arithmetic, 64-word code and full-support replay
+        run: |
+          python -m py_compile research/nightfall/projects/finite-field/gf169-sumset-hole-20261030/verify_f169.py
+          python research/nightfall/projects/finite-field/gf169-sumset-hole-20261030/verify_f169.py
+          python -m py_compile research/nightfall/projects/finite-field/gf169-sumset-hole-20261030/verify_tiled_family.py
+          python research/nightfall/projects/finite-field/gf169-sumset-hole-20261030/verify_tiled_family.py
