@@ -56,7 +56,7 @@ Set y*=5D/2−1, an integer as D is even. We inspect all nine rectangles grouped
 
 - n=0 or 4: y shift 0, range I, ending at 2D−2<y*. No modular wrap can make y* appear because p≥3D.
 - n=1 or 3: y shift ±D/2, giving ranges [D/2,5D/2−2] and [−D/2,3D/2−2] modulo p. The positive interval ends **one below y***. The wrapped part of the negative interval begins at p−D/2≥5D/2, **one above y***. Neither contains y*.
-- n=2: (a,b)=(1,1) has y shift0 and misses y*; (2,0) and (0,2) have shifts +D and −D respectively. The +D band [D,3D−2] contains y*. Their common first-coordinate shift is **2D**. Thus the horizontal slice of T+T at y=y* equals
+- n=2: (a,b)=(1,1) has y shift 0 and misses y*. The (2,0) rectangle has y shift +D, so its band [D,3D−2] always contains y*. **Crucial wrapped case:** the (0,2) rectangle has y shift −D, whose wrapped band [p−D,p−1] also contains y* precisely when 3D≤p≤7D/2−1. This rectangle was omitted in the first proof draft. **Both rectangles have identical x shift 2D**, so whether one or both contribute, the horizontal slice of T+T at y=y* is exactly
       {2D,2D+1,...,4D−2} modulo p.
   Its length is 2D−1<p.
 

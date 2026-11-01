@@ -1,0 +1,27 @@
+name: Audit p23 phase-code template obstructions
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/agent-reports/axiom_tile_threshold_20261030/p23_*"
+      - "research/nightfall/agent-reports/axiom_tile_threshold_20261030/P23_OBSTRUCTION.md"
+      - ".github/workflows/audit-p23-phase-templates.yml"
+  workflow_dispatch:
+jobs:
+  exact-p23:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Exact independent Python and C++ checks
+        run: |
+          set -euo pipefail
+          cd research/nightfall/agent-reports/axiom_tile_threshold_20261030
+          python p23_template_search.py
+          python p23_two_shift_offdiag.py
+          g++ -O3 -std=c++17 -Wall -Wextra p23_offdiag.cpp -o /tmp/p23_offdiag
+          /tmp/p23_offdiag
+          g++ -O3 -std=c++17 -Wall -Wextra p23_16x2_three_shift.cpp -o /tmp/p23_16x2
+          /tmp/p23_16x2
