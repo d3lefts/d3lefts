@@ -78,11 +78,11 @@ def main():
             if path == "portfolio.html" and "noindex" not in parsed.meta.get("robots", ""):
                 raise ValueError("Unlisted portfolio indexing instruction not present")
             report["results"].append({"url": url, "status": "PASS"})
-        except (URLError, TimeoutError, OSError) as exc:
-            report["results"].append({"url": url, "status": "BLOCKED", "error": str(exc)[:350]})
         except HTTPError as exc:
             state = "BLOCKED" if exc.code in (403, 429) else "FAIL"
             report["results"].append({"url": url, "status": state, "error": str(exc)[:350]})
+        except (URLError, TimeoutError, OSError) as exc:
+            report["results"].append({"url": url, "status": "BLOCKED", "error": str(exc)[:350]})
         except (ValueError, UnicodeError) as exc:
             report["results"].append({"url": url, "status": "FAIL", "error": str(exc)[:350]})
     states = {item["status"] for item in report["results"]}
