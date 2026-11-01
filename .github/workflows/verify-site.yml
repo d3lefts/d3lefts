@@ -40,6 +40,13 @@ jobs:
           node scripts/test_product_destinations.cjs
           node scripts/test_visitor_clarity_sprint.cjs
           python3 -c 'import xml.etree.ElementTree as ET; ET.parse("docs/sitemap.xml"); print("Sitemap XML valid")'
+      - name: Audit the public page contracts against a local static server
+        run: |
+          python3 -m http.server 8765 --directory docs >/tmp/nightfall_public_pages.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid"' EXIT
+          sleep 1
+          python3 scripts/verify_public_pages.py --base http://127.0.0.1:8765/
       - name: Verify claim graph and report directly affected evidence
         env:
           CLAIM_IMPACT_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
@@ -204,8 +211,10 @@ jobs:
         run: python3 research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/verify_q3_cancellation.py
       - name: Verify projective phase-alphabet criterion and finite-subgroup shift covers
         run: python3 research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/verify_unified.py
-      - name: Machine-certify the exact 30-point Sidon theorem
-        run: python3 research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py
+      - name: Machine-replay frozen Sidon witness with two distinct exact algorithms
+        run: |
+          python3 research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py
+          python3 research/nightfall/projects/sidon-finite-30/verify_sidon30_direct_sums.py
       - name: Certify universal factor-network equality quotient
         run: |
           python3 -m py_compile research/nightfall/projects/sat-network-universal/check_structural_certificate.py
