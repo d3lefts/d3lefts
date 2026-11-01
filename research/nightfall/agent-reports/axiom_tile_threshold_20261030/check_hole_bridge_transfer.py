@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
 """Exact bridge + spectator certificates. No 2^33/2^47/2^61 enumeration."""
 from itertools import product
+from math import isqrt
+
+def is_prime(n):
+    return n>=2 and all(n%d for d in range(2,isqrt(n)+1))
+for p in (3,5,13,23,53,3251,4871,55109):
+    assert is_prime(p),p
+
 
 def diamond(p,D,full=False):
     d=D.bit_length()-1
