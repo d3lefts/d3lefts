@@ -19,8 +19,10 @@ assert.ok(home.includes('href="review.html#start-here">Try an exact finite revie
 
 assert.ok(theme.includes('nightfall.theme.v1'),"Keep existing storage and page theme key");
 assert.ok(theme.includes('active?"NULL FIELD":"NEW MOON"'),"Visible switch names both destinations");
-assert.ok(theme.includes("New Moon is active. Switch to NULL FIELD"));
-assert.ok(theme.includes("NULL FIELD is active. Switch to NEW MOON"));
+assert.ok(theme.includes("New Moon is active. Open NULL FIELD"));
+assert.ok(theme.includes("NULL FIELD is active. Open NEW MOON"));
+assert.ok(theme.includes("New Moon is active. Apply NULL FIELD"));
+assert.ok(theme.includes("NULL FIELD is active. Apply NEW MOON"),"On research subpages the switch changes palette without navigating");
 assert.ok(themeTest.includes('"NULL FIELD"')&&themeTest.includes('"NEW MOON"'),
   "Mobile/desktop route tests use canonical atmosphere names");
 

@@ -108,6 +108,12 @@ assert.equal(p.rail.children.find(x=>x.tagName==="a").href,"join.html#results","
 p=simulate("frontier.html",{saved:{"nightfall.journey.v1":"{invalid JSON"}});
 assert.equal(p.rail.children.find(x=>x.tagName==="a").href,"join.html#results","Malformed saved state falls back safely");
 assert.equal(p.thread.children.find(x=>x.attributes["aria-current"]==="page").href,"constellation.html#map");
+p=simulate("passport.html",{saved:{"nightfall.theme.v1":"dusk"}});
+assert.equal(p.thread.children[0].href,"new-moon.html#open-ledger","New Moon readers return to open investigations");
+assert.match(p.thread.children[0].textContent,/NEW MOON/);
+p=simulate("passport.html",{saved:{"nightfall.theme.v1":"light"}});
+assert.equal(p.thread.children[0].href,"index.html#flagships","NULL FIELD readers return to research archive");
+assert.match(p.thread.children[0].textContent,/NULL FIELD/);
 p=simulate("passport.html",{twice:true});
 assert.equal((p.main.beforeItems||[]).filter(x=>x.className==="nf-journey-rail").length,1,
  "Re-execution must not duplicate specialist return rails");
