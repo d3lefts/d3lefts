@@ -1,6 +1,24 @@
 # External-review packet: frozen 30-integer Sidon witness
 
-**Dossier version:** 2026-10-31, v1. **Review gate:** OPEN — no unaffiliated human has signed a verdict for this packet. **Public source of truth:** [sidon-finite-30](./README.md), including the witness and published verification methods.
+**Dossier version:** 2026-10-31, v2 (provenance and prior-art audit). **Review gate:** OPEN — no unaffiliated human has signed a verdict for this packet. **Public source of truth:** [sidon-finite-30](./README.md), including the witness and published verification methods.
+
+## 0. Dated external priority and exact derivation
+
+**October 31, 2026 targeted source audit.** [Ma and Tang's arXiv v2](https://arxiv.org/html/2602.23282v2) proves the existence of the limit for Erdős's (4,5)-set constant and shows that each finite example gives an upper bound. Their stated result was `9/17 ≤ c* ≤ 4/7`. An [anonymous October 17 reader submission 7bkzb8](https://www.erdosproblemaday.com/submission/7bkzb8) used the seed `O={0,49,75,83,98,101,117,119,121,159,269}` and map `φ(x)=101+18x/269` to propose and computationally support a **stronger** asymptotic `c*≤5/9`; its [October 19 writeup](https://www.erdosproblemaday.com/day/757-reader-five-ninths-refereed) discloses AI-assisted review rather than community-accepted human peer review.
+
+The NIGHTFALL witness is **exactly** the reader's depth-two union `S₂=O∪φ(O)∪φ²(O)`, augmented by `{-269}`, and scaled by `269²=72361`:
+
+```
+A = sorted(269² × (O ∪ φ(O) ∪ φ²(O) ∪ {-269}))
+```
+
+The deterministic standard-library checker [verify_reader_origin.py](./verify_reader_origin.py) independently reconstructs this **identity** with rational fractions and compares every resulting integer to the frozen witness; it is not independent evidence of priority. The original reader family has `|S₂|=29`, `h(S₂)=17`; the added endpoint yields `|A|=30`, `h(A)=17`. The arithmetical ordering is
+
+```
+5/9 < 17/30 < 4/7.
+```
+
+**Attribution:** The 11-point seed, self-similar map and `5/9` mechanism belong to the earlier anonymous submitter. NIGHTFALL's additions comprise the explicit extra endpoint and its finite proof checks, plus a separately described 28-edge criticality calculation. No new global best bound is claimed, and neither the endpoint construction's historical originality nor the hypergraph lemma's novelty has been independently established. The publicly accessible reader submission is a documented prior source, not a claim of independent community acceptance.
 
 ## 1. Review the exact claim, not the publicity
 
@@ -32,6 +50,7 @@ git checkout <full-commit-SHA>
 sha256sum research/nightfall/projects/sidon-finite-30/witness_30.txt
 python3 research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py
 python3 research/nightfall/projects/sidon-finite-30/verify_sidon30_direct_sums.py
+python3 research/nightfall/projects/sidon-finite-30/verify_reader_origin.py
 ```
 
 Both scripts use only Python's standard library. On the initial local Route B replay, the finite input passed all 27,405 four-point tests, a 17-element Sidon subset was constructed, and the size-18 exhaustive direct pair-sum search visited **1,583,759 recursive nodes** without finding a counterexample. These are **local/internal observations**, not a signed external receipt; re-run at the pinned commit and record the returned output and code hash independently.
@@ -64,8 +83,12 @@ The depth-first enumeration visits increasing index sequences. At each candidate
 
 A reproduced program PASS **does not** fill the human-review field. No AI persona or another instance of the same system may be recorded as an unaffiliated human referee.
 
-## 5. Closest established external background
+## 5. Strongest accessible external reference and next review choice
 
-Jie Ma and Quanyu Tang, [*Largest Sidon subsets in weak Sidon sets*](https://arxiv.org/abs/2602.23282), 2026, study Sidon subsets, (4,5)-sets, and the bounds `9/17≤c*≤4/7`. Their theorem, not this finite construction, supplies the published broader context. The NIGHTFALL dossier separately attributes the earlier 5/9 reader construction. **The global originality of this specific 30-point configuration has not been independently established.**
+- **Ma–Tang, arXiv v2, March 6, 2026**: [theorem 1.5](https://arxiv.org/html/2602.23282v2) establishes `c*=inf_n f(n)/n` and theorem 1.6 gives `9/17≤c*≤4/7`.
+- **Anonymous reader submission 7bkzb8, October 17, 2026**: [the source statement](https://www.erdosproblemaday.com/submission/7bkzb8) and [October 19 AI-assisted review](https://www.erdosproblemaday.com/day/757-reader-five-ninths-refereed) report `c*≤5/9` via exactly the seed and affine map used here. Its human mathematical peer-review status is not established by that source.
+- **NIGHTFALL, October 24 onward**: one additional endpoint to depth two, a fixed-size certificate, separately executable algorithms and a 28-edge-critical progression hypergraph. These are **not** claimed to supersede the reader's asymptotic construction.
+
+**Reviewer priority:** Establish validity and independent reproducibility of the frozen finite claim first. If interested in the most distinctive finite structural subclaim, separately audit `τ(H)=13` and `τ(H-e)=12` for all 28 progression edges; see [edge_essentiality.py](./edge_essentiality.py) and [its certificate](./edge_essentiality_certificate.json). Do not conflate correctness of this arithmetic example, its hypergraph-criticality property, and historical novelty.
 
 For questions or counterexamples, open a GitHub issue in [the public repository](https://github.com/d3lefts/d3lefts/issues/new/choose), linking this file and the pinned commit. Invite criticism; do not imply someone has accepted an assignment until they explicitly do.
