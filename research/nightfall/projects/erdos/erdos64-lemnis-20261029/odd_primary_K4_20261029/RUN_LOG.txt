@@ -1,0 +1,15 @@
+H27 connected-eligible=16848 tested=16848 C4=1296 no4_C8=3888 no4no8_C16=11664 no4no8no16=0
+PASS independent unitriangular 3x3 product, ALL 16848 H27 generating triples have literal simple C16
+PASS mutation: collinear chord subgroup fails independent-16-cycle premise
+PASS all 27 C3 triple assignments via independent full literal DFS: {(True, False): 13, (False, True): 8, (True, True): 6}
+Theorem scope: noncyclic exponent-three deck groups with generating voltages have C16; C3 and trivial groups have C4 or C8.
+FREE_CLASS2_EXP3 base K4 cover on 2916 nodes: C 4 ABSENT witness None
+FREE_CLASS2_EXP3 base K4 cover on 2916 nodes: C 8 ABSENT witness None
+FREE_CLASS2_EXP3 base K4 cover on 2916 nodes: C 16 EXISTS witness [0, 1, 2, 0, 1, 2, 0, 1, 2, 3, 0, 2, 3, 0, 2, 3, 0]
+alternate source F101[t]/(t²-2) theta=(1, 8), 5151 unique modular sums
+min rotation 0 low/high 0 0 W 22523/10200
+q101 each of 32 translations independently verified, first outcome (10105, 10, 96, 19958, 4656) exact deletion bound 1874081912275159/183376742400000
+r 1 gain-squared 66350723/103203072000
+r 5 gain-squared 14819228891/118768446720000
+r 20 gain-squared 236777152331/7633373230080000
+PASS independent geometry, mixed collision classes, ceil/floor and strict coefficient comparison

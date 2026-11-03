@@ -1,0 +1,32 @@
+name: Lemnis exact semidirect K33 cycle certificate
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/projects/erdos/erdos64-lemnis-20261029/semidirect_20261029/**"
+      - ".github/workflows/lemnis-semidir-exact.yml"
+  push:
+    paths:
+      - "research/nightfall/projects/erdos/erdos64-lemnis-20261029/semidirect_20261029/**"
+      - ".github/workflows/lemnis-semidir-exact.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  finite-module-cycle-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile exact sources
+        run: python3 -m py_compile research/nightfall/projects/erdos/erdos64-lemnis-20261029/semidirect_20261029/*.py
+      - name: Exhaust 256 and 4096 auxiliary voltage tuples
+        run: python3 research/nightfall/projects/erdos/erdos64-lemnis-20261029/semidirect_20261029/search_girth.py
+      - name: Independent finite-field twisted holonomy
+        run: python3 research/nightfall/projects/erdos/erdos64-lemnis-20261029/semidirect_20261029/verify_symbolic.py
+      - name: Literal cubic graphs and simple-cycle DFS
+        run: python3 research/nightfall/projects/erdos/erdos64-lemnis-20261029/semidirect_20261029/verify_twisted.py
+      - name: Scoped Axiom 53-mark affine-geometry attack
+        run: python3 research/nightfall/projects/erdos/erdos64-lemnis-20261029/semidirect_20261029/audit_axiom.py

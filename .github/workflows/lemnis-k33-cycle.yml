@@ -1,0 +1,29 @@
+name: Lemnis K3,3 first-power-cycle certificate
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/projects/erdos/erdos64-lemnis-20261029/k33_cyclic_20261029/**"
+      - ".github/workflows/lemnis-k33-cycle.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-cycle-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Exhaustive symbolic K3,3 voltage certificate
+        run: python3 research/nightfall/projects/erdos/erdos64-lemnis-20261029/k33_cyclic_20261029/verify_symbolic.py
+      - name: Independent C12 and C32 positive witness check
+        run: python3 research/nightfall/projects/erdos/erdos64-lemnis-20261029/k33_cyclic_20261029/verify_c32.py
+      - name: Compile and check literal graph orbits at three moduli
+        run: |
+          cd research/nightfall/projects/erdos/erdos64-lemnis-20261029/k33_cyclic_20261029
+          g++ -std=c++20 -O2 -Wall -Wextra -pedantic verify_literal.cpp -o /tmp/verify_literal
+          /tmp/verify_literal 501
+          /tmp/verify_literal 502
+          /tmp/verify_literal 503
