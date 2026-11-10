@@ -2336,5 +2336,56 @@ theorem concrete_pair_posterior_is_probability
     (p j) a (hp j a) (pair_first_marginal p hnorm j a)
 
 
+
+/-! ## Degree-free certificate-overlap rigidity (stronger than d-dependent bound) -/
+
+/-- A single coordinate's ANOVA energy cannot exceed total nonconstant
+variance energy. The low-degree assumption is unnecessary for this fact. -/
+theorem anova_coordinate_energy_le_variance
+    {ι : Type} [Fintype ι] [DecidableEq ι]
+    (energy : Finset ι → ℝ) (j : ι)
+    (henergy : ∀ S, 0 ≤ energy S) :
+    (∑ S : Finset ι, if j ∈ S then energy S else 0) ≤
+      ∑ S : Finset ι, if S = ∅ then (0 : ℝ) else energy S := by
+  apply Finset.sum_le_sum
+  intro S _
+  by_cases hj : j ∈ S
+  · have hne : S ≠ ∅ := by
+      intro he
+      subst S
+      simpa using hj
+    simp [hj, hne]
+  · by_cases he : S = ∅
+    · simp [hj, he]
+    · simpa [hj, he] using henergy S
+
+/-- **Dimension- and degree-free overlap rigidity.** Let V=V1*V0>0 and
+S=sum sqrt(P_j Q_j), so S²/V is the squared Bhattacharyya overlap.
+The sharp sampler bound and maximal single-coordinate influence ≤ variance,
+together with bounded certificate cost K, imply B²≥K⁻².
+Unlike `certificate_overlap_necessary`, no degree budget appears.
+
+The hypotheses are kept explicit because the function-to-ANOVA identity
+and the row-cost-to-variance inequality have their own proof obligations. -/
+theorem certificate_overlap_degree_free
+    (V S variance K : ℝ)
+    (hV : 0 < V) (hVar : 0 < variance) (hK : 0 < K)
+    (hsharp : V ^ 2 ≤ S ^ 2 * variance)
+    (hcost : variance ≤ K ^ 2 * V) :
+    1 / K ^ 2 ≤ S ^ 2 / V := by
+  have hK2 : 0 < K ^ 2 := sq_pos_of_pos hK
+  have hchain : V ^ 2 ≤ (K ^ 2 * S ^ 2) * V := by
+    calc
+      V ^ 2 ≤ S ^ 2 * variance := hsharp
+      _ ≤ S ^ 2 * (K ^ 2 * V) :=
+        mul_le_mul_of_nonneg_left hcost (sq_nonneg S)
+      _ = (K ^ 2 * S ^ 2) * V := by ring
+  have hVle : V ≤ K ^ 2 * S ^ 2 := by
+    apply (mul_le_mul_iff_of_pos_right hV).mp
+    nlinarith [hchain]
+  apply (div_le_div_iff₀ hK2 hV).mpr
+  nlinarith [hVle]
+
+
 end Nightfall.ProductSpace.Posterior
 
