@@ -19,6 +19,7 @@ open Finset
 lemma invCost_scaled {n : ℕ} (r : Fin n → ℝ) {m : ℝ} (hm : 0 < m) :
     invCost (fun j => r j / m) = m * invCost r := by
   unfold invCost
+  change (∑ j, r j / m)⁻¹ = m * (∑ j, r j)⁻¹
   rw [Finset.sum_div, inv_div, div_eq_mul_inv]
 
 lemma scaled_pair_sum {α γ : Type*} [Fintype α] [Fintype γ]
@@ -32,7 +33,6 @@ lemma scaled_pair_sum {α γ : Type*} [Fintype α] [Fintype γ]
   apply Finset.sum_congr rfl
   intro j _
   field_simp [(hp x).ne', (hq y).ne']
-  ring
 
 lemma scaled_pair_inv {α γ : Type*} [Fintype α] [Fintype γ]
     {n : ℕ} (lam : α → Fin n → ℝ) (gam : γ → Fin n → ℝ)
@@ -54,7 +54,6 @@ lemma load_scaled {α : Type*} [Fintype α] {n : ℕ}
   rw [invCost_scaled (lam x) (hp x)]
   have hx : p x ≠ 0 := (hp x).ne'
   field_simp [hx]
-  ring
 
 /-- The already-certified unweighted localized weight-removal lemma
 extends exactly to finite strictly-positive masses by row scaling.
