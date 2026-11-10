@@ -279,7 +279,8 @@ theorem weighted_orbit_reciprocal_bound
     simp_rw [cube_zone_sum_eq_crossTerm]
     simp_rw [Finset.mul_sum]
     rw [Finset.sum_comm]
-    exact weighted_sum_all_orientations p (crossTerm g lam w)
+    simpa only [Finset.mul_sum] using
+      (weighted_sum_all_orientations p (crossTerm g lam w))
   rw [hL] at h
   exact h
 
