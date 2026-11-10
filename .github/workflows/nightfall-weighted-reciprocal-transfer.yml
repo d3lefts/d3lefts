@@ -41,7 +41,10 @@ jobs:
             --decl Nightfall.ProductSpace.Transfer.pairMass_flipPair \
             --decl Nightfall.ProductSpace.Transfer.weighted_sum_flipPair \
             --decl Nightfall.ProductSpace.Transfer.weighted_sum_all_orientations \
-            --json-out lean-receipts/weighted-reciprocal-transfer.json
+            --json-out lean-receipts/weighted-reciprocal-transfer.json || {
+              cat lean-receipts/weighted-reciprocal-transfer.json
+              exit 1
+            }
       - name: Axiom policy
         run: |
           python3 research/nightfall/formalization/product_space/check_receipts.py \
