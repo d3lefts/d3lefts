@@ -105,4 +105,39 @@ theorem class_mass_product_le_certificate_cost
     _ = K ^ 2 * (positiveClassValue p g lam * negativeClassValue p g lam) := by
       ring
 
+
+/-- Expected directed crossing mass of the concrete normalized
+certificate-overlap sampler. It is defined even for constant functions,
+though only the nonconstant theorem below asserts positive normalization. -/
+noncomputable def overlapSamplerExpectedInfluence
+    (p : ι → α → ℝ) (g : (ι → α) → Bool)
+    (lam : (ι → α) → ι → ℝ) : ℝ :=
+  ∑ j,
+    (Real.sqrt (positiveLoad p g lam j * negativeLoad p g lam j) /
+      (∑ k, Real.sqrt (positiveLoad p g lam k * negativeLoad p g lam k))) *
+      crossingMass p g j
+
+/-- **Concrete certificate-cost-to-observation inequality.**
+This fully composes the pinned antipodal theorem, finite-product
+localized two-sided inequality, certificate-overlap sampler, and
+cost-to-mass estimate. With normalized coordinate probabilities,
+the left side is Boolean output variance. No ANOVA degree or
+posterior expectation is assumed for this one-step gain theorem. -/
+theorem nonconstant_variance_to_expected_influence
+    (p : ι → α → ℝ) (hp : ∀ i a, 0 < p i a)
+    (g : (ι → α) → Bool) (lam : (ι → α) → ι → ℝ)
+    (hrow : IsProductRow g lam)
+    (htrue : ∃ x, g x = true) (hfalse : ∃ x, g x = false)
+    (K : ℝ) (hK : 0 < K)
+    (hbounded : ∀ x, (∑ j, lam x j) ≤ K) :
+    positiveClassMass p g * negativeClassMass p g ≤
+      K ^ 2 * overlapSamplerExpectedInfluence p g lam := by
+  have hcost := class_mass_product_le_certificate_cost
+    p hp g lam hrow htrue hfalse K hK hbounded
+  have hgain := (nonconstant_finite_product_sampler
+    p hp g lam hrow htrue hfalse).2.2
+  unfold overlapSamplerExpectedInfluence
+  exact le_trans hcost
+    (mul_le_mul_of_nonneg_left hgain (sq_nonneg K))
+
 end Nightfall.ProductSpace.Observation
