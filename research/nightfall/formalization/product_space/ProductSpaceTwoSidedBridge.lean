@@ -1579,7 +1579,7 @@ to the actual positive finite product law, global certificate rows, and
 the proved `localized_two_sided_product` theorem from PR #298.
 All loads and influences are the original product-space definitions. -/
 theorem concrete_product_overlap_sampler
-    {ι α : Type*} [Fintype ι] [DecidableEq ι]
+    {ι α : Type} [Fintype ι] [DecidableEq ι]
     [Fintype α] [DecidableEq α]
     (p : ι → α → ℝ) (hp : ∀ i a, 0 < p i a)
     (g : (ι → α) → Bool) (lam : (ι → α) → ι → ℝ)
@@ -1665,7 +1665,7 @@ The response value `a` is distributed with the original marginal
 `p j a`; normalization of those marginals is assumed for its probabilistic
 reading, but the finite-sum identity itself does not require it. -/
 theorem concrete_product_one_step
-    {ι α : Type*} [Fintype ι] [DecidableEq ι]
+    {ι α : Type} [Fintype ι] [DecidableEq ι]
     [Fintype α] [DecidableEq α]
     (p : ι → α → ℝ) (hp : ∀ i a, 0 < p i a)
     (g : (ι → α) → Bool) (lam : (ι → α) → ι → ℝ)
