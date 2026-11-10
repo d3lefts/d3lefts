@@ -2,7 +2,7 @@ blank_issues_enabled: true
 contact_links:
   - name: Read the independent reviewer guide
     url: https://d3lefts.github.io/d3lefts/review.html
-    about: Four bounded independent validation assignments with source-specific evidence requirements.
+    about: Independent review assignments with source-specific evidence requirements and explicit verification limits.
   - name: Frozen certificate release status
     url: https://github.com/d3lefts/d3lefts/issues/5
-    about: Current public mirror status for the original 214-entry and expanded 226-entry ZIPs.
+    about: Curated public-release status and the distinction from private historical master archives.
