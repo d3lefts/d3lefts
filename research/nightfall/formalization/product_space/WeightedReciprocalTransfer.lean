@@ -325,8 +325,7 @@ theorem cube_bdry_eq_edgeCross_sum (g : (ι → α) → Bool)
     _ = ∑ mask, edgeCross g j (flipPair mask z) := by
           apply Finset.sum_congr rfl
           intro mask _
-          simp only [edgeCross, cubeG]
-          rw [flipPair_flipSet_fst]
+          simp [edgeCross, cubeG, flipPair_flipSet_fst]
 
 /-- Exact identity between expected induced-cube boundary and the ordinary
 product-measure resampling boundary; no assumptions on atom sizes. -/
@@ -382,6 +381,6 @@ theorem weighted_product_reciprocal
   rw [hR] at h
   have hcard : 0 < (Fintype.card (ι → Bool) : ℝ) := by
     exact_mod_cast (Fintype.card_pos : 0 < Fintype.card (ι → Bool))
-  exact (mul_le_mul_left hcard).mp h
+  exact (mul_le_mul_iff_of_pos_left hcard).mp h
 
 end Nightfall.ProductSpace.Transfer
