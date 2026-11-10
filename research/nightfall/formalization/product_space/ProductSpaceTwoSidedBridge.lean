@@ -2299,7 +2299,7 @@ theorem pair_first_marginal
 /-- The posterior influence numerator really is an expectation under the
 explicitly conditioned finite mass, not an arbitrary reciprocal expression. -/
 theorem posterior_edge_is_conditional_expectation
-    {X A J : Type*} [Fintype X] [DecidableEq A] [DecidableEq J]
+    {X A J : Type*} [Fintype X] [Fintype A] [DecidableEq A] [DecidableEq J]
     (m : X → ℝ) (observable : X → A) (p : A → ℝ)
     (edge : J → X → ℝ) (j : J) (a : A) (k : J) :
     posteriorEdge m observable p edge j a k =
