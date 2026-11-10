@@ -383,4 +383,39 @@ theorem weighted_product_reciprocal
     exact_mod_cast (Fintype.card_pos : 0 < Fintype.card (ι → Bool))
   exact (mul_le_mul_iff_of_pos_left hcard).mp h
 
+
+/-- Positive denominator on every crossing pair. This closes the Lean
+zero-inverse loophole: the reciprocal integrand is a genuine positive cost. -/
+theorem cross_pair_cost_pos
+    (g : (ι → α) → Bool) (lam : (ι → α) → ι → ℝ)
+    (hrow : IsProductRow g lam) (w : ι → ℝ) (hw : ∀ j, 0 < w j)
+    (z : PairSample ι α) (hcross : g z.1 = true ∧ g z.2 = false) :
+    0 < ∑ j ∈ disagree z.1 z.2,
+      w j * lam z.1 j * lam z.2 j := by
+  let u : ι → Bool := fun _ => false
+  have hfu : (flipPair u z).1 = z.1 := by
+    funext i
+    simp [u, flipPair]
+  have hsu : (flipPair u z).2 = z.2 := by
+    funext i
+    simp [u, flipPair]
+  have hanti : (flipPair (antipode u) z).1 = z.2 := by
+    rw [flipPair_antipode_fst, hsu]
+  have hzone : u ∈ zone (cubeG g z) := by
+    apply (mem_zone).mpr
+    constructor
+    · change g (flipPair u z).1 = true
+      rw [hfu]
+      exact hcross.1
+    · change g (flipPair (antipode u) z).1 = false
+      rw [hanti]
+      exact hcross.2
+  have h1 := cubeLam_isRow g lam hrow z u
+  have h2 := cubeLam_isRow g lam hrow z (antipode u)
+  have hh : 0 < ∑ j, w j * cubeLam lam z u j *
+      cubeLam lam z (antipode u) j :=
+    Bridge.antipodal_inner_pos hzone hw h1 h2
+  rw [cubeCost_eq lam z u w, hfu, hsu] at hh
+  exact hh
+
 end Nightfall.ProductSpace.Transfer
