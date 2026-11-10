@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/product_space/FiniteSwitchingCore.lean'
+      - 'research/nightfall/formalization/product_space/FiniteSectionSensitivity.lean'
       - '.github/workflows/nightfall-recovery-switch-core-lean.yml'
   workflow_dispatch:
 permissions:
@@ -42,12 +43,32 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/finite-switch-core.json
+      - name: Kernel-check finite sections and positive-atom sensitivity
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/product_space/FiniteSwitchingCore.lean /tmp/mathlib4/FiniteSwitchingCore.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/FiniteSwitchingCore.olean FiniteSwitchingCore.lean)
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/product_space/FiniteSectionSensitivity.lean \
+            --workspace /tmp/mathlib4 --timeout 900 \
+            --decl Nightfall.Recovery.overwrite_agree_on \
+            --decl Nightfall.Recovery.section_term_depends \
+            --decl Nightfall.Recovery.section_preserves_degree \
+            --decl Nightfall.Recovery.atomMass_pos \
+            --decl Nightfall.Recovery.positive_resampling_of_nonconstant \
+            --json-out lean-receipts/finite-section-sensitivity.json || {
+              cat lean-receipts/finite-section-sensitivity.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/finite-section-sensitivity.json
       - name: Save hashes and pinned inputs
         if: always()
         shell: bash
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/product_space/FiniteSwitchingCore.lean > lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/product_space/FiniteSwitchingCore.lean research/nightfall/formalization/product_space/FiniteSectionSensitivity.lean > lean-receipts/SHA256SUMS.txt
           git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt 2>/dev/null || true
       - uses: actions/upload-artifact@v4
         if: always()
