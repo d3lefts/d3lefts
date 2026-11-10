@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/product_space/CertificateObservationBridge.lean'
+      - 'research/nightfall/formalization/product_space/ANOVAPosteriorBridge.lean'
       - 'research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean'
       - '.github/workflows/nightfall-observation-bridge.yml'
   workflow_dispatch:
@@ -52,11 +53,26 @@ jobs:
               exit 1
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/certificate-observation-bridge.json
+      - name: Kernel-check exact ANOVA-support posterior accounting and potential descent
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/product_space/ANOVAPosteriorBridge.lean \
+            --workspace /tmp/aa --timeout 900 \
+            --decl Nightfall.ProductSpace.Observation.anova_component_erase \
+            --decl Nightfall.ProductSpace.Observation.anova_posterior_potential_identity \
+            --decl Nightfall.ProductSpace.Observation.anova_weighted_observation_descent \
+            --json-out lean-receipts/anova-posterior-bridge.json || {
+              cat lean-receipts/anova-posterior-bridge.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/anova-posterior-bridge.json
       - name: Record source hashes and pin
         if: always()
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/product_space/CertificateObservationBridge.lean research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean > lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/product_space/CertificateObservationBridge.lean research/nightfall/formalization/product_space/ANOVAPosteriorBridge.lean research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean > lean-receipts/SHA256SUMS.txt
           echo leanprover/lean4:v4.33.0 > lean-receipts/lean-version.txt
           echo 2a6ceaef872ae993708950f951989134084b851a > lean-receipts/turturean-upstream-commit.txt
       - name: Preserve compiler receipts
