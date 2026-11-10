@@ -30,10 +30,22 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python3 scripts/lean_bridge.py             research/nightfall/formalization/product_space/LocalizedWeightRemoval.lean             --workspace /tmp/mathlib4             --timeout 600             --decl Nightfall.ProductSpace.le_of_forall_reg             --decl Nightfall.ProductSpace.localized_weight_optimization             --decl Nightfall.ProductSpace.cs_reciprocal             --decl Nightfall.ProductSpace.cs_reciprocal₂             --decl Nightfall.ProductSpace.localized_weight_removal             --decl Nightfall.ProductSpace.sum_load_eq             --decl Nightfall.ProductSpace.weight_removal_max             --json-out lean-receipts/localized-weight-removal.json
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/product_space/LocalizedWeightRemoval.lean \
+            --workspace /tmp/mathlib4 \
+            --timeout 600 \
+            --decl Nightfall.ProductSpace.le_of_forall_reg \
+            --decl Nightfall.ProductSpace.localized_weight_optimization \
+            --decl Nightfall.ProductSpace.cs_reciprocal \
+            --decl Nightfall.ProductSpace.cs_reciprocal₂ \
+            --decl Nightfall.ProductSpace.localized_weight_removal \
+            --decl Nightfall.ProductSpace.sum_load_eq \
+            --decl Nightfall.ProductSpace.weight_removal_max \
+            --json-out lean-receipts/localized-weight-removal.json
       - name: Audit only standard Lean axioms
         run: |
-          python3 research/nightfall/formalization/product_space/check_receipts.py             lean-receipts/localized-weight-removal.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/localized-weight-removal.json
       - name: Upload immutable receipt
         if: always()
         uses: actions/upload-artifact@v4
