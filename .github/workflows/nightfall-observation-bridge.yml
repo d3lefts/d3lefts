@@ -4,6 +4,7 @@ on:
     paths:
       - 'research/nightfall/formalization/product_space/CertificateObservationBridge.lean'
       - 'research/nightfall/formalization/product_space/ANOVAPosteriorBridge.lean'
+      - 'research/nightfall/formalization/product_space/ANOVAPosteriorBridge.lean'
       - 'research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean'
       - '.github/workflows/nightfall-observation-bridge.yml'
   workflow_dispatch:
@@ -68,6 +69,21 @@ jobs:
               exit 1
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/anova-posterior-bridge.json
+      - name: Compile finite ANOVA support descent, with explicit posterior boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/product_space/ANOVAPosteriorBridge.lean \
+            --workspace /tmp/aa --timeout 900 \
+            --decl Nightfall.ProductSpace.Observation.anova_component_erase \
+            --decl Nightfall.ProductSpace.Observation.anova_posterior_potential_identity \
+            --decl Nightfall.ProductSpace.Observation.anova_weighted_observation_descent \
+            --json-out lean-receipts/anova-posterior.json || {
+              cat lean-receipts/anova-posterior.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/anova-posterior.json
       - name: Record source hashes and pin
         if: always()
         run: |
