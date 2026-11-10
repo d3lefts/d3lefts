@@ -37,7 +37,6 @@ NIGHTFALL studies mathematical structures and builds reproducible mechanisms for
 | [`research/nightfall/formalization/`](research/nightfall/formalization/) | Lean proof sources with explicitly scoped theorem statements |
 | [`scripts/`](scripts/) and [`tests/`](tests/) | Exact checkers, CI support, website tests, and adversarial controls |
 | [`.github/workflows/`](.github/workflows/) | Automated checks and reproducibility receipts |
-| [`portfolio/`](portfolio/README.md) | Separate, unlisted professional portfolio materials; publication and access boundaries still apply |
 
 ### Reproduce a first check
 
