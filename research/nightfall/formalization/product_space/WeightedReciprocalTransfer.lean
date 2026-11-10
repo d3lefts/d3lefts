@@ -174,12 +174,21 @@ theorem cubeCost_eq (lam : (ι → α) → ι → ℝ)
   rw [Finset.sum_filter]
   apply Finset.sum_congr rfl
   intro j _
-  cases hmask : mask j <;>
-    by_cases heq : z.1 j = z.2 j <;>
-      simp [cubeLam, flipPair, antipode, hmask, heq]
+  have hf : (flipPair (antipode mask) z).1 =
+      (flipPair mask z).2 := flipPair_antipode_fst z mask
+  have hd : ((flipPair mask z).1 j ≠ (flipPair mask z).2 j) ↔
+      (z.1 j ≠ z.2 j) := by
+    cases hm : mask j <;> simp [flipPair, hm, ne_comm]
+  by_cases hz : z.1 j = z.2 j
+  · have hEq : (flipPair mask z).1 j = (flipPair mask z).2 j :=
+      (not_iff_not.mpr hd).mpr (not_ne_iff.mpr hz)
+    simp [cubeLam, hz, hEq]
+  · have hNe : (flipPair mask z).1 j ≠ (flipPair mask z).2 j :=
+      hd.mpr hz
+    simp [cubeLam, hz, hNe, hf]
 
 /-- The product-space reciprocal integrand, zero away from crossing pairs. -/
-def crossTerm (g : (ι → α) → Bool)
+noncomputable def crossTerm (g : (ι → α) → Bool)
     (lam : (ι → α) → ι → ℝ) (w : ι → ℝ)
     (z : PairSample ι α) : ℝ :=
   if g z.1 = true ∧ g z.2 = false then
