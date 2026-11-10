@@ -1,0 +1,56 @@
+name: NIGHTFALL weighted reciprocal transfer - upstream Turturean dependency
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/WeightedReciprocalTransfer.lean'
+      - '.github/workflows/nightfall-weighted-reciprocal-transfer.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  reciprocal-transfer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Lean
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.33.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch pinned independently verified antipodal theorem
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone https://github.com/physical-superintelligence/aaronson-ambainis.git /tmp/aa
+          git -C /tmp/aa checkout 2a6ceaef872ae993708950f951989134084b851a
+          cd /tmp/aa
+          lake exe cache get
+          lake build AaronsonAmbainis.Chain AaronsonAmbainis.Bridge.Positivity
+      - name: Compile transfer and record named axiom dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/product_space/WeightedReciprocalTransfer.lean \
+            --workspace /tmp/aa \
+            --timeout 900 \
+            --decl Nightfall.ProductSpace.Transfer.flipPair_involutive \
+            --decl Nightfall.ProductSpace.Transfer.pairMass_flipPair \
+            --decl Nightfall.ProductSpace.Transfer.weighted_sum_flipPair \
+            --decl Nightfall.ProductSpace.Transfer.weighted_sum_all_orientations \
+            --json-out lean-receipts/weighted-reciprocal-transfer.json
+      - name: Axiom policy
+        run: |
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/weighted-reciprocal-transfer.json
+      - name: Upload compilation receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: weighted-reciprocal-transfer-receipt
+          path: lean-receipts/*.json
+          if-no-files-found: warn
+          retention-days: 30
