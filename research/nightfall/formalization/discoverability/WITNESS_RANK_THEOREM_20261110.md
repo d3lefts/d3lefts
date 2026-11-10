@@ -147,3 +147,24 @@ Taking the worst case, \(\boxed{r\le D(f)}\). Together with the uniform-witness 
 If \(w=1\), this is an **exact characterization** \(D(f)=r\); in general, \(w\) is a multiplicative upper/lower approximation factor. This is the standard block-sensitivity lower-bound principle in a sensor-agnostic formulation, not a new first-discovery theorem. It also explains why bounded witness width *alone* is insufficient: parity has \(w=1\) but \(r=n\), so it necessarily costs \(n\) observations.
 
 No lower-bound theorem for arbitrary noisy or interactive experiments follows without a corresponding indistinguishability model. For nonuniform sensor costs, every correct path must hit each disjoint sensitive block, giving a **minimum-cost hitting-set lower bound**; replacing it with the sum of the cheapest sensor in each sensitive block is valid because disjoint blocks cannot reuse one queried sensor.
+
+
+## 12. High-arity addressing: fixed structural complexity, unbounded adaptivity gain
+
+Let \(N\ge2\). The admissible state is \((K,B_1,\ldots,B_N)\) with one address sensor \(K\in\{1,\ldots,N\}\) and \(N\) binary data sensors \(B_j\in\{0,1\}\). The exact target is \(f=B_K\). Sensor outcomes are independently and noiselessly readable; one query to the N-ary address sensor is counted as **one sensor observation**, not one communication bit.
+
+**Three exact assertions:**
+\[
+\deg_{\rm ES}(f)=2,\qquad
+D_{\rm adaptive}(f)=2,\qquad
+D_{\rm nonadaptive}(f)=N+1.
+\]
+The upper bound is achieved by observing \(K\) then \(B_K\). One query cannot suffice since no individual sensor determines \(f\) for all states. Any nonadaptive set must contain every \(B_j\) (otherwise choose \(K=j\) and flip that missing bit), and must also contain \(K\) (otherwise fix a nonconstant data vector and vary the address).
+
+**Witness geometry:** The uniform revealing width is exactly \(w=2\). If the address is known, \(B_K\) alone is a uniform witness while the target remains unresolved. If the address is unknown and some data bit \(B_j\) is unqueried, the block \(\{K,B_j\}\) lets every current state change its target by setting \(K=j\) and \(B_j\) to the opposite output. If all bits are known and the address remains unknown, \(\{K\}\) suffices whenever the fiber is unresolved. No one-sensor block is uniformly sensitive on the initial full fiber.
+
+The global disjoint sensitive-block rank is exactly \(r=2\): any sensitive block **not containing K** must contain the currently addressed bit \(B_K\), so at most one such disjoint block is possible, and at most one more block can contain K. Both can coexist (e.g. \(\{B_K\}\) and \(\{K,B_j\}\) for \(j\ne K\)), so r=2.
+
+Thus \(w=r=2\) for every \(N\), while the nonadaptive exact observation cost grows as \(N+1\). This is a classical addressing/pointer mechanism, not a worldwide novelty claim. It is a concrete model-matched demonstration that witness geometry can remain bounded when ambient dimension increases. However, charging the address sensor by \(\lceil\log_2N\rceil\) bits makes the bit communication cost grow logarithmically rather than remain two.
+
+**Independent exact falsification:** check_high_arity_address.py enumerates the entire state set and computes optimal deterministic adaptive and nonadaptive query counts for \(N=2,3,4,5\). The checker does not hard-code D=2 as the algorithm: it independently solves the finite minimax decision-tree recursion over observation fibers.
