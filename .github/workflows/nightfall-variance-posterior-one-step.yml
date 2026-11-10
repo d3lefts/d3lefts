@@ -1,0 +1,73 @@
+name: NIGHTFALL finite product posterior observation — Lean 4.33.0
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/VariancePosteriorOneStep.lean'
+      - '.github/workflows/nightfall-variance-posterior-one-step.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  variance-posterior:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Lean 4.33.0
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.33.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Build Turturean pinned Lean source
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone https://github.com/physical-superintelligence/aaronson-ambainis.git /tmp/aa
+          git -C /tmp/aa checkout 2a6ceaef872ae993708950f951989134084b851a
+          (cd /tmp/aa && lake exe cache get && lake build AaronsonAmbainis.DetTheorem AaronsonAmbainis.TwoSided.Antipodal AaronsonAmbainis.Bridge.Positivity)
+      - name: Compile certified certificate and posterior prerequisites
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/aa/.lake/build/lib/lean
+          for module in ProductSpaceTwoSidedBridge CertificateObservationBridge NonconstantSamplerBridge CertificateCostBridge; do
+            cp "research/nightfall/formalization/product_space/${module}.lean" "/tmp/aa/${module}.lean"
+            (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/${module}.olean" "${module}.lean")
+          done
+      - name: Kernel-check actual posterior decrement and K-squared variance gain
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/product_space/VariancePosteriorOneStep.lean \
+            --workspace /tmp/aa --timeout 900 \
+            --decl Nightfall.ProductSpace.Observation.observationProbability_sum_one \
+            --decl Nightfall.ProductSpace.Observation.observationProbability_nonneg \
+            --decl Nightfall.ProductSpace.Observation.posterior_total_at_coordinate \
+            --decl Nightfall.ProductSpace.Observation.exact_certificate_posterior_decrement \
+            --decl Nightfall.ProductSpace.Observation.normalized_one_step_certificate_to_observation \
+            --decl Nightfall.ProductSpace.Observation.normalized_one_step_degree_contraction \
+            --json-out lean-receipts/variance-posterior-one-step.json || {
+              cat lean-receipts/variance-posterior-one-step.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/variance-posterior-one-step.json
+      - name: Preserve exact source chain
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/product_space/VariancePosteriorOneStep.lean research/nightfall/formalization/product_space/CertificateCostBridge.lean research/nightfall/formalization/product_space/NonconstantSamplerBridge.lean research/nightfall/formalization/product_space/CertificateObservationBridge.lean research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean > lean-receipts/SHA256SUMS.txt
+          git -C /tmp/aa rev-parse HEAD > lean-receipts/upstream-commit.txt 2>/dev/null || true
+          echo leanprover/lean4:v4.33.0 > lean-receipts/toolchain.txt
+      - name: Upload axiom and reproducibility receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: variance-posterior-one-step-receipts
+          path: lean-receipts/
+          if-no-files-found: warn
+          retention-days: 30
