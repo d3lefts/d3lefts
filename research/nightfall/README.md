@@ -7,6 +7,19 @@
 
 The research program uses representation changes, independent verification, proof-carrying artifacts, and a strict distinction between finite results and global theorems. Competition rankings, mathematical validity, and publication priority are tracked separately.
 
+## Current navigation — 10 November 2026
+
+The active public [research library](https://d3lefts.github.io/d3lefts/research.html) contains **40 curated records and 11 source-scoped Proof Passports**, distinct from the site's five internally designated finite/bounded findings. The earlier 30/32/33-record sections below are dated historical development notes; their counts and status descriptions should **not** be treated as the present state.
+
+- **New candidate research:** [Certificate Engine v2, PDF, TeX, checks and limitations](2026-11-certificate-engine/README.md) — localized fractional certificates, proposed level-crossing bounds and adaptive observation. The full general influence theorem and its new results remain under independent proof/novelty review.
+- **Lean progress:** [product-space formalization source](formalization/product_space/) — seven kernel-checked, narrowly scoped declarations; upstream transfer and complete weight removal remain open.
+- **Source-of-truth and review:** [public archive status](AUDIT.md), [independent review protocol](REVIEW_PROTOCOL.md), [claim/source scope](PUBLICATION_SCOPE.md), [historical public release inventory](RELEASE.md).
+- **Machine-readable curated selection:** [40-record inventory frozen 30 October](SITE_CURATED_40_20261030.json). Any subsequent candidate is archived separately until accepted through the site's explicit status gates.
+
+**Preservation note:** The remainder of this README records earlier research checkpoints. Older terminology, counts, and pending-action text remain visible as historical evidence and are not silently rewritten into present-day claims.
+
+---
+
 ## Curated 30-document public research library — October 28
 
 The [website research library](https://d3lefts.github.io/d3lefts/research.html) now contains **30** individually linked and claim-qualified source documents: 11 mathematics and algorithms, 8 quantum/spectral, 7 safety/provenance/cognition, and 4 research systems/evaluations. See the [machine-readable selection](SITE_CURATED_30_20261028.json) and [editorial review with inclusion/exclusion decisions](SITE_CURATED_30_EDITORIAL_REVIEW_20261028.md).

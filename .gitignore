@@ -1,0 +1,37 @@
+# Local operating-system and editor files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Python tooling and local virtual environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# JavaScript dependencies and local test output
+node_modules/
+npm-debug.log*
+yarn-error.log*
+/browser-artifacts/
+
+# Lean's local build cache (keep handoff sources and checked receipts)
+/.lake/
+**/.lake/
+
+# Local release downloads and temporary rendering files
+/public-assets/
+*.aux
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.toc
+\n# Do not ignore research PDFs, ZIPs, manifests, exact witness data,
+# proof receipts, or scientific logs, proof receipts or other evidence merely for file size.

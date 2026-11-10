@@ -5,12 +5,20 @@ on:
   push:
     branches: [main]
     paths:
+      - "README.md"
+      - "CONTRIBUTING.md"
+      - ".gitignore"
+      - ".github/pull_request_template.md"
       - "docs/**"
       - "research/nightfall/**"
       - "scripts/**"
       - ".github/workflows/verify-site.yml"
   pull_request:
     paths:
+      - "README.md"
+      - "CONTRIBUTING.md"
+      - ".gitignore"
+      - ".github/pull_request_template.md"
       - "docs/**"
       - "research/nightfall/**"
       - "scripts/**"
@@ -32,6 +40,8 @@ jobs:
       - name: Syntax-check all JavaScript test entrypoints
         run: |
           find scripts -type f \( -name "*.cjs" -o -name "*.mjs" -o -name "*.js" \) -print0 | xargs -0 -r -n1 node --check
+      - name: Validate research repository public docs and provenance boundaries
+        run: python3 scripts/test_repository_docs.py
       - name: Validate static pages, source links, anchors, and fallback catalogue
         run: |
           python3 scripts/check_site.py
