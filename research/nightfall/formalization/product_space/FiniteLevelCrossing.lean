@@ -17,10 +17,10 @@ def IsRealRow (f : (ι → α) → ℝ) (a : (ι → α) → ι → ℝ) : Prop 
   (∀ x j, 0 ≤ a x j) ∧
     (∀ x y, |f x - f y| ≤ ∑ j ∈ disagree x y, a x j)
 
-def thresholdBool (f : (ι → α) → ℝ) (t : ℝ) (x : ι → α) : Bool :=
+noncomputable def thresholdBool (f : (ι → α) → ℝ) (t : ℝ) (x : ι → α) : Bool :=
   decide (t < f x)
 
-def thresholdRow (f : (ι → α) → ℝ)
+noncomputable def thresholdRow (f : (ι → α) → ℝ)
     (a : (ι → α) → ι → ℝ) (t : ℝ) (x : ι → α) (j : ι) : ℝ :=
   a x j / |f x - t|
 
@@ -64,7 +64,7 @@ theorem thresholdRow_isProductRow
     have hbound : |f x - t| ≤ ∑ j ∈ disagree x y, a x j :=
       le_trans hdiff (hr.2 x y)
     change (1 : ℝ) ≤ ∑ j ∈ disagree x y, a x j / |f x - t|
-    rw [Finset.sum_div]
+    rw [← Finset.sum_div]
     exact (one_le_div_iff₀ hgap).2 hbound
 
 theorem thresholdRow_norm_pos
