@@ -72,7 +72,12 @@ theorem energy_controls_resampling
   have hvariance : e ≤ ∑ u, p u * (f u - f base)^2 := by
     have hmul : e * e ≤ (∑ u, p u * (f u - f base)^2) * e := by
       nlinarith [hcs]
-    exact (mul_le_mul_right he).mp hmul
+    by_contra h
+    have hlt : (∑ u, p u * (f u - f base)^2) < e := lt_of_not_ge h
+    have hcontradiction :
+        (∑ u, p u * (f u - f base)^2) * e < e * e :=
+      mul_lt_mul_of_pos_right hlt he
+    exact (not_lt_of_ge hmul) hcontradiction
   have hterm (u : Atom) :
       p u * (f u - f base)^2 ≤
          R2 * (if f u ≠ f base then p u else 0) := by
