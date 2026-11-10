@@ -1261,7 +1261,10 @@ theorem overlap_information_sharp
   have hsum : (∑ j, q j * r) = V := by
     rw [← Finset.sum_mul]
     change S * (V / S) = V
-    field_simp [hS.ne']
+    rw [div_eq_mul_inv]
+    calc
+      S * (V * S⁻¹) = (S * S⁻¹) * V := by ring
+      _ = V := by rw [mul_inv_cancel₀ hS.ne', one_mul]
   refine ⟨fun _ => r ^ 2, ?_, ?_, ?_⟩
   · intro j
     exact sq_nonneg r
