@@ -40,24 +40,10 @@ jobs:
             --decl Nightfall.ProductSpace.localized_weight_optimization_positive \
             --timeout 240 \
             --json-out "$GITHUB_WORKSPACE/lean-receipts/product-space-localized-optimization.json"
-      - name: Audit standard mathematical foundations
-        shell: bash
+      - name: Audit localized optimization against standard Lean axioms
         run: |
-          python3 - <<'PYCODE'
-          import json, re
-          r = json.load(open('lean-receipts/product-space-localized-optimization.json'))
-          assert r['status'] == 'COMPILED', r['status']
-          assert not r['policy_findings'], r['policy_findings']
-          name = 'Nightfall.ProductSpace.localized_weight_optimization_positive'
-          m = re.search(re.escape("'" + name + "'") + r' depends on axioms: \\[([^\\]]*)\\]', r['stdout'], re.S)
-          if m:
-              deps = {a.strip() for a in m.group(1).split(',')}
-          else:
-              assert "'" + name + "' does not depend on any axioms" in r['stdout']
-              deps = set()
-          assert deps <= {'propext', 'Classical.choice', 'Quot.sound'}, deps
-          print(name, 'accepted dependencies:', sorted(deps))
-          PYCODE
+          python3 "$GITHUB_WORKSPACE/research/nightfall/formalization/product_space/check_receipts.py" \
+            "$GITHUB_WORKSPACE/lean-receipts/product-space-localized-optimization.json"
       - name: Preserve source and toolchain provenance
         if: always()
         shell: bash
