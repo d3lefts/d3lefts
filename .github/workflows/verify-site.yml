@@ -131,7 +131,19 @@ jobs:
           mkdir -p browser-artifacts
       - name: Enforce no-lime palette contract and theme contrast
         run: node scripts/check_palette_contract.mjs
-      - name: Verify ethereal theme across 25 pages and capture previews
+      - name: Verify the product-space dossier visual and scientific-scope contract
+        run: |
+          set -o pipefail
+          CHROME_BIN="$(command -v google-chrome)" node scripts/test_product_space_presentation.mjs 2>&1 | tee browser-artifacts/product-space-dossier.log
+      - name: Preserve the product-space page and proof-section previews
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: product-space-dossier-preview-${{ github.run_id }}
+          path: browser-artifacts/product-space-*.png
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Verify ethereal theme across 26 pages and capture previews
         run: |
           set -o pipefail
           CHROME_BIN="$(command -v google-chrome)" node scripts/test_ethereal_theme.mjs 2>&1 | tee browser-artifacts/ethereal-theme.log
