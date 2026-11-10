@@ -551,7 +551,8 @@ try{
     await page.waitForURL("**/new-moon.html");
     assert.equal(await page.locator("html").getAttribute("data-nf-experience"),"moon","Toggle opens a separate New Moon document");
     assert.equal(await page.locator(".moon-hero-actions a").count(),2,"Night has its own investigation entry paths");
-    assert.equal(await page.locator("#open-ledger .moon-ledger-row").count(),4,"Distinct source-linked verification ledger");
+    assert.equal(await page.locator("#open-ledger .moon-ledger-row").count(),5,"Distinct source-linked verification ledger, including product-space Lean scope");
+    assert.equal(await page.locator("#open-ledger a[href='product-space-influence.html']").count(),1,"New research has a precise certification and review dossier");
     assert.equal(await page.locator(".flagship-context").count(),0,"Archive presentation is not duplicated at night");
     await page.locator(".nf-theme-toggle").click();
     await page.waitForURL("**/index.html");
