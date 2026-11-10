@@ -12,11 +12,12 @@
 <link rel="stylesheet" href="site.css">
 <link rel="stylesheet" href="ethereal-theme.css">
 <link rel="stylesheet" href="two-skies.css">
+<link rel="stylesheet" href="product-space.css">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <script src="site.js" defer></script>
 <script src="ethereal-theme.js" defer></script>
 </head>
-<body>
+<body class="ps-page">
 <a class="skip" href="#main">Skip to content</a><div class="topline"></div>
 <header class="header">
   <div class="wrap header-inner">
@@ -27,11 +28,23 @@
     </nav>
   </div>
 </header>
+<nav class="ps-breadcrumb wrap" aria-label="Breadcrumb">
+  <a href="./">Archive</a><span class="ps-sep" aria-hidden="true">/</span>
+  <a href="research.html">Research library</a><span class="ps-sep" aria-hidden="true">/</span>
+  <span aria-current="page">Product-space influence</span>
+</nav>
 <main id="main">
   <section class="atlas-hero wrap" aria-labelledby="product-space-title">
     <div class="atlas-eyebrow">NIGHTFALL / NEW DISCOVERIES / 10 NOVEMBER 2026</div>
     <h1 id="product-space-title">Influence beyond<br><em>the Boolean cube.</em></h1>
     <div class="atlas-hero-bottom"><p>Wright's working manuscripts investigate a law-independent fractional-certificate engine for arbitrary independent product measures. The sharp distinction here is between a proposed general theorem and precisely scoped steps accepted by the Lean kernel.</p><div class="atlas-hero-metrics"><span><strong>07</strong>Compiled declarations</span><span><strong>03</strong>Passing proof workflows</span><span><strong>OPEN</strong>General theorem audit</span></div></div>
+    <nav class="ps-quick-nav" aria-label="On this page">
+      <span class="ps-eyebrow">EXPLORE THE EVIDENCE</span>
+      <a href="#claims-title">Mathematical claims</a>
+      <a href="#formalization">Lean-checked steps</a>
+      <a href="#open-proof-obligations">Proof obligations</a>
+      <a href="#source-credit">Sources &amp; credit</a>
+    </nav>
   </section>
 
   <section class="atlas-integrity wrap" aria-label="Current scientific status">
@@ -42,17 +55,29 @@
   <section class="section wrap sf-library-invite" aria-labelledby="claims-title">
     <div><span class="section-id">01 / PROPOSED MATHEMATICAL CONTRIBUTIONS</span><h2 id="claims-title" class="section-title">A transferable certificate engine.<br><em>Proof still under review.</em></h2>
       <p class="section-intro"><strong>Arbitrary product-space influence.</strong> For a bounded real function <code>|f| ≤ 1</code> of interaction degree <code>d ≥ 1</code>, with <code>V = Var(f) &gt; 0</code>, the manuscript proposes <code>maxᵢ Iᵢ(f) ≥ c<sub>prod</sub> V<sup>5/2</sup> / d<sup>6</sup></code>, with <code>c<sub>prod</sub> ≈ 0.00120125</code>, independent of coordinate count, alphabets and marginal biases. The influence convention is <code>Iᵢ(f) = E[Var(f | X<sub>−i</sub>)]</code>.</p>
+      <div class="ps-formula" role="group" aria-label="Proposed product-space influence inequality">
+        <span class="ps-formula-label">GENERAL INFLUENCE BOUND / PROPOSED</span>
+        <code>max<sub>i</sub> I<sub>i</sub>(f) ≥ c<sub>prod</sub> · Var(f)<sup>5/2</sup> / d<sup>6</sup></code>
+        <small>Unverified general theorem · c<sub>prod</sub> ≈ 0.00120125069 · all independent coordinate laws in the proposed scope</small>
+      </div>
+
       <p class="section-intro"><strong>Localized fractional certificates.</strong> For Boolean <code>g</code>, the Certificate Engine draft proposes <code>V₁V₀ ≤ ∑ⱼ √(Iⱼ(g) PⱼQⱼ)</code>, where <code>V₁,V₀</code> are inverse-certificate-cost masses and <code>P,Q</code> are loads on the two output classes. This strengthens the global maximum-influence statement by identifying coordinates where both certificate families place mass. It is a proposed theorem, not yet a Lean theorem.</p>
+      <div class="ps-formula" role="group" aria-label="Proposed localized two-sided certificate inequality">
+        <span class="ps-formula-label">LOCALIZED TWO-SIDED INEQUALITY / PROPOSED</span>
+        <code>V<sub>1</sub> V<sub>0</sub> ≤ ∑<sub>j</sub> √(I<sub>j</sub>(g) P<sub>j</sub> Q<sub>j</sub>)</code>
+        <small>This is the unverified premise of the separately kernel-checked overlap consequence.</small>
+      </div>
+
       <p class="section-intro"><strong>Consequences under study.</strong> The integrated draft also treats competing-symbol Chebyshev certificates, arbitrary index sets, finite-palette adaptive recovery, and classical whole-symbol prediction of quantum acceptance probabilities. These claims remain dependent on upstream proof obligations.</p>
     </div>
   </section>
 
-  <section class="moon-ledger wrap" id="formalization" aria-labelledby="formalization-title">
-    <div class="moon-ledger-heading"><div><span class="moon-section-kicker">02 / VERIFIED FORMALIZATION SCOPE</span><h2 id="formalization-title">What Lean<br><em>actually checked.</em></h2></div><p>Official Lean 4.35.0. Named-declaration compilation, source hashes and foundational axiom checks are recorded in GitHub Actions. Standard Lean foundations are permitted; no custom proof axioms or placeholders were accepted.</p></div>
-    <div class="moon-ledger-rows">
-      <article class="moon-ledger-row"><div class="moon-ledger-code"><span>CHECKS 01–05</span><strong>5</strong><small>ORIENTATION IDENTITIES</small></div><div class="moon-ledger-main"><span class="moon-ledger-status">KERNEL COMPILED</span><h3>Independent two-draw symmetry.</h3><p>Arbitrary finite lists of coordinate pairs, including heterogeneous marginal weight functions: every orientation has the same product mass. This is the combinatorial symmetry used when conditioning on unordered coordinate pairs. It does <strong>not</strong> formally establish conditional probability distributions or the weighted reciprocal all-pairs inequality.</p><div class="moon-ledger-links"><a href="https://github.com/d3lefts/d3lefts/actions/runs/42859400817" target="_blank" rel="noopener">Compiler logs and receipts ↗</a><a href="https://github.com/d3lefts/d3lefts/tree/main/research/nightfall/formalization/product_space" target="_blank" rel="noopener">Lean source ↗</a></div></div><span class="moon-ledger-arrow" aria-hidden="true">↗</span></article>
-      <article class="moon-ledger-row"><div class="moon-ledger-code"><span>CHECK 06</span><strong>√</strong><small>POSITIVE WEIGHT OPTIMIZATION</small></div><div class="moon-ledger-main"><span class="moon-ledger-status">KERNEL COMPILED · CONDITIONAL PREMISE</span><h3>Remove strictly positive coordinate weights.</h3><p>For positive <code>Aᵢ, βᵢ</code> and nonnegative <code>V</code>, if every positive weight vector satisfies <code>V² ≤ (∑ wᵢAᵢ)(∑ βᵢ/wᵢ)</code>, Lean proves <code>V ≤ ∑ √(βᵢAᵢ)</code>. The reciprocal inequality is explicitly assumed. Zero coefficients remain to be handled.</p><div class="moon-ledger-links"><a href="https://github.com/d3lefts/d3lefts/actions/runs/42859400252" target="_blank" rel="noopener">Compiler logs and receipt ↗</a></div></div><span class="moon-ledger-arrow" aria-hidden="true">↗</span></article>
-      <article class="moon-ledger-row"><div class="moon-ledger-code"><span>CHECK 07</span><strong>BC</strong><small>LOCALIZED OVERLAP</small></div><div class="moon-ledger-main"><span class="moon-ledger-status">KERNEL COMPILED · CONDITIONAL PREMISE</span><h3>Deduce the overlap-controlled bound.</h3><p>Given the proposed localized inequality as a hypothesis and a common upper bound <code>Iᵢ ≤ M</code>, Lean proves <code>(V₁V₀)² ≤ M(∑ √(PᵢQᵢ))²</code>. This is a formal implication, not Lean certification of the localized inequality used as its hypothesis.</p><div class="moon-ledger-links"><a href="https://github.com/d3lefts/d3lefts/actions/runs/42859400412" target="_blank" rel="noopener">Compiler logs and receipt ↗</a></div></div><span class="moon-ledger-arrow" aria-hidden="true">↗</span></article>
+  <section class="ps-ledger wrap" id="formalization" aria-labelledby="formalization-title">
+    <div class="ps-ledger-heading"><div><span class="ps-section-kicker">02 / VERIFIED FORMALIZATION SCOPE</span><h2 id="formalization-title">What Lean<br><em>actually checked.</em></h2></div><p>Official Lean 4.35.0. Named-declaration compilation, source hashes and foundational axiom checks are recorded in GitHub Actions. Standard Lean foundations are permitted; no custom proof axioms or placeholders were accepted.</p></div>
+    <div class="ps-ledger-rows">
+      <article class="ps-ledger-row"><div class="ps-ledger-code"><span>CHECKS 01–05</span><strong>5</strong><small>ORIENTATION IDENTITIES</small></div><div class="ps-ledger-main"><span class="ps-ledger-status">KERNEL COMPILED</span><h3>Independent two-draw symmetry.</h3><p>Arbitrary finite lists of coordinate pairs, including heterogeneous marginal weight functions: every orientation has the same product mass. This is the combinatorial symmetry used when conditioning on unordered coordinate pairs. It does <strong>not</strong> formally establish conditional probability distributions or the weighted reciprocal all-pairs inequality.</p><div class="ps-ledger-links"><a href="https://github.com/d3lefts/d3lefts/actions/runs/42859400817" target="_blank" rel="noopener">Compiler logs and receipts ↗</a><a href="https://github.com/d3lefts/d3lefts/tree/main/research/nightfall/formalization/product_space" target="_blank" rel="noopener">Lean source ↗</a></div></div><span class="ps-ledger-arrow" aria-hidden="true">↗</span></article>
+      <article class="ps-ledger-row"><div class="ps-ledger-code"><span>CHECK 06</span><strong>√</strong><small>POSITIVE WEIGHT OPTIMIZATION</small></div><div class="ps-ledger-main"><span class="ps-ledger-status">KERNEL COMPILED · CONDITIONAL PREMISE</span><h3>Remove strictly positive coordinate weights.</h3><p>For positive <code>Aᵢ, βᵢ</code> and nonnegative <code>V</code>, if every positive weight vector satisfies <code>V² ≤ (∑ wᵢAᵢ)(∑ βᵢ/wᵢ)</code>, Lean proves <code>V ≤ ∑ √(βᵢAᵢ)</code>. The reciprocal inequality is explicitly assumed. Zero coefficients remain to be handled.</p><div class="ps-ledger-links"><a href="https://github.com/d3lefts/d3lefts/actions/runs/42859400252" target="_blank" rel="noopener">Compiler logs and receipt ↗</a></div></div><span class="ps-ledger-arrow" aria-hidden="true">↗</span></article>
+      <article class="ps-ledger-row"><div class="ps-ledger-code"><span>CHECK 07</span><strong>BC</strong><small>LOCALIZED OVERLAP</small></div><div class="ps-ledger-main"><span class="ps-ledger-status">KERNEL COMPILED · CONDITIONAL PREMISE</span><h3>Deduce the overlap-controlled bound.</h3><p>Given the proposed localized inequality as a hypothesis and a common upper bound <code>Iᵢ ≤ M</code>, Lean proves <code>(V₁V₀)² ≤ M(∑ √(PᵢQᵢ))²</code>. This is a formal implication, not Lean certification of the localized inequality used as its hypothesis.</p><div class="ps-ledger-links"><a href="https://github.com/d3lefts/d3lefts/actions/runs/42859400412" target="_blank" rel="noopener">Compiler logs and receipt ↗</a></div></div><span class="ps-ledger-arrow" aria-hidden="true">↗</span></article>
     </div>
   </section>
 
@@ -64,7 +89,7 @@
     <div class="sf-library-actions"><a class="button" href="https://github.com/d3lefts/d3lefts/pull/289" target="_blank" rel="noopener">Inspect the merged proof history ↗</a><a class="text-link" href="new-moon.html#open-ledger">Join an open investigation ↗</a></div>
   </section>
 
-  <section class="atlas-final wrap"><div><span class="section-id">04 / SOURCES AND CREDIT</span><h2>Read the premises.<br><em>Challenge the proof.</em></h2></div><div><p>Research directed by Devin J. Wright in NIGHTFALL Constellation, with substantial AI assistance documented in the underlying working manuscripts. The original Aaronson–Ambainis conjecture and the Boolean-cube proof belong to their respective authors. Turturean's antipodal inequality, established sensitivity bounds, and earlier two-point restrictions are imported inputs, not new claims of this project.</p><div class="atlas-final-links"><a class="text-link" href="https://github.com/physical-superintelligence/aaronson-ambainis" target="_blank" rel="noopener">Turturean source and Lean development ↗</a><a class="text-link" href="https://github.com/d3lefts/d3lefts/tree/main/research/nightfall/formalization/product_space" target="_blank" rel="noopener">NIGHTFALL formal source ↗</a><a class="text-link" href="research.html">Return to library ↗</a></div></div></section>
+  <section class="atlas-final wrap" id="source-credit"><div><span class="section-id">04 / SOURCES AND CREDIT</span><h2>Read the premises.<br><em>Challenge the proof.</em></h2></div><div><p>Research directed by Devin J. Wright in NIGHTFALL Constellation, with substantial AI assistance documented in the underlying working manuscripts. The original Aaronson–Ambainis conjecture and the Boolean-cube proof belong to their respective authors. Turturean's antipodal inequality, established sensitivity bounds, and earlier two-point restrictions are imported inputs, not new claims of this project.</p><div class="atlas-final-links"><a class="text-link" href="https://arxiv.org/abs/2611.09773" target="_blank" rel="noopener">Turturean · A–A paper ↗</a><a class="text-link" href="https://github.com/physical-superintelligence/aaronson-ambainis" target="_blank" rel="noopener">Turturean Lean source ↗</a><a class="text-link" href="https://github.com/d3lefts/d3lefts/tree/main/research/nightfall/formalization/product_space" target="_blank" rel="noopener">NIGHTFALL formal source ↗</a><a class="text-link" href="research.html">Return to library ↗</a></div></div></section>
 </main>
 <footer class="footer"><div class="wrap footer-bottom"><span>© 2026 Devin J. Wright · NIGHTFALL PHASESHIFT</span><span>10 November 2026 · Scoped Lean proofs; full theorem review open</span></div></footer>
 </body></html>
