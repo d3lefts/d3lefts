@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/product_space/WeightedReciprocalTransfer.lean'
+      - 'research/nightfall/formalization/product_space/check_weighted_reciprocal_exact.py'
       - '.github/workflows/nightfall-weighted-reciprocal-transfer.yml'
   workflow_dispatch:
 permissions:
@@ -13,6 +14,8 @@ jobs:
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
+      - name: Independent exact-rational product-space check
+        run: python3 research/nightfall/formalization/product_space/check_weighted_reciprocal_exact.py
       - name: Install Lean
         shell: bash
         run: |
