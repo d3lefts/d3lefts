@@ -139,20 +139,28 @@ theorem normalized_one_step_certificate_to_observation
     (htrue : ∃ x, g x = true) (hfalse : ∃ x, g x = false)
     (K : ℝ) (hK : 0 < K)
     (hbounded : ∀ x, (∑ j, lam x j) ≤ K) :
+    (∀ j a, (∑ z : PairSample ι α,
+      conditionalMass (pairMass p)
+        (fun z : PairSample ι α => z.1 j)
+        (p j) a z) = 1) ∧
     expectedPosteriorPotential p g lam ≤
       totalCrossingPotential p g -
         (positiveClassMass p g * negativeClassMass p g) / K ^ 2 := by
-  have hdelta :=
+  constructor
+  · intro j a
+    exact concrete_pair_posterior_is_probability p hp hprob j a
+  ·
+    have hdelta :=
     exact_certificate_posterior_decrement p hp g lam hrow htrue hfalse
-  have hgain := nonconstant_variance_to_expected_influence
-    p hp g lam hrow htrue hfalse K hK hbounded
-  have hK2 : 0 < K ^ 2 := sq_pos_of_pos hK
-  have hdiv :
-      (positiveClassMass p g * negativeClassMass p g) / K ^ 2 ≤
-        overlapSamplerExpectedInfluence p g lam := by
-    apply (div_le_iff₀ hK2).2
-    simpa [mul_comm] using hgain
-  rw [hdelta]
-  exact sub_le_sub_left hdiv _
+    have hgain := nonconstant_variance_to_expected_influence
+      p hp g lam hrow htrue hfalse K hK hbounded
+    have hK2 : 0 < K ^ 2 := sq_pos_of_pos hK
+    have hdiv :
+        (positiveClassMass p g * negativeClassMass p g) / K ^ 2 ≤
+          overlapSamplerExpectedInfluence p g lam := by
+      apply (div_le_iff₀ hK2).2
+      simpa [mul_comm] using hgain
+    rw [hdelta]
+    exact sub_le_sub_left hdiv _
 
 end Nightfall.ProductSpace.Observation
