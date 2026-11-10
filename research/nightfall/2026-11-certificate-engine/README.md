@@ -1,22 +1,27 @@
 # Certificate Engine v2: fractional certificates, influence, and observation on product spaces
 
-**Status: candidate.** Complete written proofs, finite numerical checks passed. **No independent human review, no formal verification of the new statements, no dated prior-art clearance.** Do not promote any statement here to "original finding" without those gates (see `CONTRIBUTING.md`).
+**Status: candidate principal theorem; formally verified finite-product certificate core.** The complete influence bound and quantum consequence have written arguments but **no end-to-end Lean proof, independent human referee, or dated originality clearance**. See the [10 November certification reconciliation](CERTIFICATION_UPDATE_20261110.md) for exact PR heads, scope, proof receipts, and the quantum-query correction. Do not promote an unreviewed manuscript claim to "original finding" without the gates in `CONTRIBUTING.md`.
 
 - `Wright_Certificate_Engine_v2.pdf` / `.tex`: 18-page manuscript, 10 Nov 2026.
 - `checks/`: finite counterexample searches and exact recomputations (Python 3, NumPy, SciPy).
+- [Certification update](CERTIFICATION_UPDATE_20261110.md): live repository reconciliation including draft PRs #295, #297, #298, #299, #300. **These branches have not been merged into `main`.**
 
 ## Claims and their status
 
 | Statement | Source | Status |
 |---|---|---|
-| All-pairs inequality on every finite product space (Thm 1.2) | two-draw transfer from Wright V6 + Turturean Thm 4.3 | proof written; imported statement matched to Turturean rev. `2a6ceae` |
-| Localized weight removal (Lemma 4.1), localized two-sided inequality + Bhattacharyya form (Thm 1.3) | Claude | proof written; random search: max ratio 1.000 (equality cases) |
+| All-pairs inequality on finite products (Thm 1.2) | two-draw transfer from Wright V6 + Turturean Thm 4.3 | **Lean-verified finite core** in draft #295; strict crossing-pair denominator positivity checked |
+| Localized weight removal (Lemma 4.1), localized two-sided inequality + Bhattacharyya form (Thm 1.3) | Claude, NIGHTFALL transfer | abstract weight removal merged #293; **full finite product composition Lean-verified** in draft #298; Bhattacharyya sampler algebra in draft #300 |
 | Total influence from certificate spread (Cor 4.3) | Claude | one-line corollary |
 | Real-function engine on product spaces, median factor H (Thm 1.4) | Turturean Thms 7.6/8.3 + Wright V6 | proof written |
 | Separated-class transport, three median profiles, projected sampling (Sec 6) | ChatGPT draft "Where Influence Lives" | re-derived and checked; exact witness recomputed independently |
-| Level-crossing theorem, exponents (2, 4) for mean crossings (Thm 1.7) | Claude | proof written; random search max ratio 0.250 (bound ≤ 1) |
-| Adaptivity dichotomy (Thm 1.8), influence-greedy vs information-greedy (Prop 10.2) | Claude, using ChatGPT draft "Adaptive Observation" | proof written; binary pointer tree r=2 checked exhaustively |
-| Aaronson–Ambainis on arbitrary product spaces (Thm 1.5), quantum corollary | Wright V6 constants, reproved | proof written |
+| Level-crossing theorem, exponents (2, 4) for mean crossings (Thm 1.7) | Claude | **finite off-range threshold lemma** Lean-verified in draft #299; general mean crossing at attained thresholds and degree-cost input remain unformalized |
+| Adaptivity dichotomy (Thm 1.8), influence-greedy vs information-greedy (Prop 10.2) | Claude, using ChatGPT draft "Adaptive Observation" | written candidate; generic overlap-sampler and recurrence Lean-verified in draft #300; **posterior policy and total ANOVA-influence identity not jointly formalized** |
+| Aaronson–Ambainis on arbitrary product spaces (Thm 1.5), quantum corollary | Wright V6 constants, reproved | **candidate only:** real-function row cost, median/averaging, arbitrary measurable products and quantum reduction remain outside Lean; original query exponents require reconciliation below |
+
+## Quantum-query correction (10 November)
+
+The v2 manuscript's `T^7 ε^{-3} δ^{-3/2}` corollary is **not certified by the audited total-influence descent argument**. The separate RC2 review develops the conditional `(2T)^7/[2^(3/2)c_prod ε^5 δ^(7/2)]` bound for absolute-error prediction of quantum acceptance probabilities under known product input laws. That derivation uses the exact total ANOVA-influence drop upon revealing one coordinate and a stopped policy; it **requires the full real-function influence theorem**, which remains under proof review. See [the detailed computation and counterexample](CERTIFICATION_UPDATE_20261110.md#quantum-query-bound-reconcile-two-manuscript-versions-before-release). The older formula is preserved in the versioned manuscript for provenance, **not endorsed as a verified result**.
 
 ## Corrections to the companion ChatGPT drafts
 
@@ -38,6 +43,6 @@ pdflatex Wright_Certificate_Engine_v2.tex && pdflatex Wright_Certificate_Engine_
 
 1. Turturean's question: max_j I_j(f) ≥ c Var(f)²/K² for real f. Thm 1.7 gives this for crossing probabilities; Remark 7.1 isolates the missing jump-size lemma.
 2. Localization for the unprojected median profiles of f.
-3. Lean: the zero-weight case of localized weight removal (`LocalizedOptimization.lean` in PR #289 covers strictly positive weights only).
+3. Formalization: the full localized weight-removal step now compiles in #293 and its finite-product composition in #298; the **remaining** gates are the real-function Chebyshev certificate, integrated third-moment/median/averaging chain, the level-tie case, arbitrary measurable products, and the full quantum corollary.
 
 Prepared with Claude (Anthropic); Sections 6 and 10 build on drafts prepared with ChatGPT. The author is responsible for all claims.
