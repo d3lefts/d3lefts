@@ -31,7 +31,7 @@ def hybrid (x y : Coord → Symbol) (blockOf : Coord → Option Query)
     | some j => if mask j then y i else x i
 
 /-- Potentially nonminimal switch support, with a dummy default for unassigned coordinates. -/
-def switchSupport (S : Finset Coord) (blockOf : Coord → Option Query)
+def switchSupport [DecidableEq Query] (S : Finset Coord) (blockOf : Coord → Option Query)
     (defaultQuery : Query) : Finset Query :=
   S.image (fun i => (blockOf i).getD defaultQuery)
 
