@@ -88,6 +88,22 @@ for sizes,laws,count,palette in families:
         else:
             f={x:rng.choice(palette) for x in X}
         max_degree=max(max_degree,check(f,sizes,laws));cases+=1
+# Four-coordinate genuinely quadratic functions with biased independent bits.
+# These force maximal blocks to have nonempty complementary coordinates.
+sizes4=(2,2,2,2)
+laws4=((F(1,2),F(1,2)),(F(1,3),F(2,3)),(F(3,5),F(2,5)),(F(2,7),F(5,7)))
+X4=list(product((0,1),repeat=4))
+for trial in range(200):
+    linear=[F(rng.randrange(-4,5),rng.randrange(1,5)) for _ in range(4)]
+    quadratic={(i,j):F(rng.randrange(-4,5),rng.randrange(1,5))
+               for i in range(4) for j in range(i+1,4)}
+    f4={x:sum((linear[i]*x[i] for i in range(4)),F(0))+
+          sum((quadratic[i,j]*x[i]*x[j] for i in range(4)
+               for j in range(i+1,4)),F(0))
+        for x in X4}
+    degree=check(f4,sizes4,laws4)
+    assert degree<=2
+    max_degree=max(max_degree,degree);cases+=1
 print(json.dumps({"status":"PASS","cases":cases,"maximum_degree_tested":max_degree,
 "method":"finite exact rational ANOVA, reconstruction, centering, all sections, maximal variance and resampling bounds",
 "limitations":"finite exhaustive 3-bit Boolean + seeded ternary/heterogeneous tests only",
