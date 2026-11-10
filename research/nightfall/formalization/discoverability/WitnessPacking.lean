@@ -166,7 +166,7 @@ theorem saturated_packing_hits
       · exact hPairwise C hOldC D hOldD hNe
   have hBound := hRank (insert B P) hSensitiveNew hPairwiseNew
   have hCardNew : (insert B P).card = P.card + 1 :=
-    Finset.card_insert_of_not_mem hNotMem
+    Finset.card_insert_of_notMem hNotMem
   omega
 
 /-- A size-r sensitive packing of width w certifies the target with at
