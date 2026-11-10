@@ -83,7 +83,7 @@ lemma qp_eval_one (m : ℕ) (hm : 0 < m) :
 
 lemma natDegree_Hp_le (m : ℕ) (c : ℝ) : (Hp m c).natDegree ≤ m := by
   have hL : (1 - C c * X : ℝ[X]).natDegree ≤ 1 :=
-    (natDegree_sub_le _ _).trans (max_le (by simp) (natDegree_C_mul_X_le c))
+    (natDegree_sub_le _ _).trans (max_le (by simp) ((natDegree_C_mul_le c X).trans natDegree_X_le))
   have hT : (Chebyshev.T ℝ (m : ℤ)).natDegree = m := by
     rw [Chebyshev.natDegree_T]
     simp
