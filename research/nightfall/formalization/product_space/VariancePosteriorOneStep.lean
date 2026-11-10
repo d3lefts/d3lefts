@@ -151,7 +151,7 @@ theorem normalized_one_step_certificate_to_observation
     exact concrete_pair_posterior_is_probability p hp hprob j a
   ·
     have hdelta :=
-    exact_certificate_posterior_decrement p hp g lam hrow htrue hfalse
+      exact_certificate_posterior_decrement p hp g lam hrow htrue hfalse
     have hgain := nonconstant_variance_to_expected_influence
       p hp g lam hrow htrue hfalse K hK hbounded
     have hK2 : 0 < K ^ 2 := sq_pos_of_pos hK
