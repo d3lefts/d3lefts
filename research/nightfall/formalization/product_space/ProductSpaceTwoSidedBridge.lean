@@ -1894,5 +1894,138 @@ theorem certificate_guided_adaptive_decay
     hν hstep
 
 
+
+/-! ## Certificate inheritance under arbitrary partial observations -/
+
+/-- Pin every coordinate previously observed in the finite assignment `s`. -/
+def pinConfiguration
+    {ι α : Type} (s : ι → Option α) (x : ι → α) : ι → α :=
+  fun i => (s i).getD (x i)
+
+/-- Boolean output after applying the partial observation assignment. -/
+def restrictedOutput
+    {ι α : Type} (s : ι → Option α)
+    (g : (ι → α) → Bool) (x : ι → α) : Bool :=
+  g (pinConfiguration s x)
+
+/-- The original fractional-certificate row restricted to unobserved
+coordinates; all pinned-coordinate loads become exactly zero. -/
+def restrictedRow
+    {ι α : Type} [DecidableEq α]
+    (s : ι → Option α) (lam : (ι → α) → ι → ℝ)
+    (x : ι → α) (j : ι) : ℝ :=
+  if s j = none then lam (pinConfiguration s x) j else 0
+
+/-- Pinning can only remove disagreements. -/
+theorem pin_disagree_subset
+    {ι α : Type} [Fintype ι] [DecidableEq ι] [DecidableEq α]
+    (s : ι → Option α) (x y : ι → α) :
+    Transfer.disagree (pinConfiguration s x) (pinConfiguration s y) ⊆
+      Transfer.disagree x y := by
+  intro j hj
+  have hneq : pinConfiguration s x j ≠ pinConfiguration s y j :=
+    (Finset.mem_filter.mp hj).2
+  apply Finset.mem_filter.mpr
+  refine ⟨Finset.mem_univ j, ?_⟩
+  intro hxy
+  apply hneq
+  unfold pinConfiguration
+  cases h : s j with
+  | none => simp [h, hxy]
+  | some a => simp [h]
+
+/-- Every original product-space fractional certificate remains valid for
+the restricted function, with the observed coordinates deleted. -/
+theorem restricted_row_is_product_row
+    {ι α : Type} [Fintype ι] [DecidableEq ι] [DecidableEq α]
+    (s : ι → Option α)
+    (g : (ι → α) → Bool) (lam : (ι → α) → ι → ℝ)
+    (hrow : Transfer.IsProductRow g lam) :
+    Transfer.IsProductRow (restrictedOutput s g) (restrictedRow s lam) := by
+  constructor
+  · intro x j
+    by_cases hj : s j = none
+    · simpa [restrictedRow, hj] using hrow.1 (pinConfiguration s x) j
+    · simp [restrictedRow, hj]
+  · intro x y hxy
+    have hcontrast :
+        g (pinConfiguration s y) ≠ g (pinConfiguration s x) := hxy
+    have hsub := pin_disagree_subset s x y
+    have hterm : ∀ j ∈
+        Transfer.disagree (pinConfiguration s x) (pinConfiguration s y),
+        restrictedRow s lam x j = lam (pinConfiguration s x) j := by
+      intro j hj
+      have hneq : pinConfiguration s x j ≠ pinConfiguration s y j :=
+        (Finset.mem_filter.mp hj).2
+      cases h : s j with
+      | none => simp [restrictedRow, h]
+      | some a =>
+          have heq : pinConfiguration s x j = pinConfiguration s y j := by
+            simp [pinConfiguration, h]
+          exact False.elim (hneq heq)
+    calc
+      (1 : ℝ) ≤
+        ∑ j ∈ Transfer.disagree (pinConfiguration s x) (pinConfiguration s y),
+          lam (pinConfiguration s x) j :=
+            hrow.2 (pinConfiguration s x) (pinConfiguration s y) hcontrast
+      _ = ∑ j ∈ Transfer.disagree (pinConfiguration s x) (pinConfiguration s y),
+          restrictedRow s lam x j := by
+            apply Finset.sum_congr rfl
+            intro j hj
+            exact (hterm j hj).symm
+      _ ≤ ∑ j ∈ Transfer.disagree x y, restrictedRow s lam x j :=
+          Finset.sum_le_sum_of_subset_of_nonneg hsub
+            (fun j _ _ => by
+              by_cases hj : s j = none
+              · simpa [restrictedRow, hj] using
+                  hrow.1 (pinConfiguration s x) j
+              · simp [restrictedRow, hj])
+
+/-- Observing more coordinates never increases any restricted row's
+ℓ₁ cost, even before optimizing the certificates. -/
+theorem restricted_row_cost_le
+    {ι α : Type} [Fintype ι] [DecidableEq ι] [DecidableEq α]
+    (s : ι → Option α)
+    (lam : (ι → α) → ι → ℝ)
+    (hlam : ∀ x j, 0 ≤ lam x j) (x : ι → α) :
+    (∑ j, restrictedRow s lam x j) ≤
+      ∑ j, lam (pinConfiguration s x) j := by
+  apply Finset.sum_le_sum
+  intro j _
+  by_cases hj : s j = none
+  · simp [restrictedRow, hj]
+  · simpa [restrictedRow, hj] using
+      (hlam (pinConfiguration s x) j)
+
+/-- Update an unobserved coordinate to the revealed symbol. -/
+def observeCoordinate
+    {ι α : Type} [DecidableEq ι]
+    (s : ι → Option α) (j : ι) (a : α) : ι → Option α :=
+  Function.update s j (some a)
+
+/-- For a previously unobserved coordinate, conditioning the restricted
+function is exactly the restriction associated with the updated state. -/
+theorem pin_observe_eq
+    {ι α : Type} [DecidableEq ι]
+    (s : ι → Option α) (j : ι) (a : α) (x : ι → α)
+    (hfree : s j = none) :
+    pinConfiguration (observeCoordinate s j a) x =
+      pinConfiguration s (Function.update x j a) := by
+  funext k
+  by_cases hk : k = j
+  · subst k
+    simp [pinConfiguration, observeCoordinate, hfree]
+  · simp [pinConfiguration, observeCoordinate, Function.update, hk]
+
+theorem restricted_output_observe
+    {ι α : Type} [DecidableEq ι]
+    (s : ι → Option α) (j : ι) (a : α)
+    (g : (ι → α) → Bool) (x : ι → α)
+    (hfree : s j = none) :
+    restrictedOutput (observeCoordinate s j a) g x =
+      restrictedOutput s g (Function.update x j a) := by
+  exact congrArg g (pin_observe_eq s j a x hfree)
+
+
 end Nightfall.ProductSpace.Posterior
 
