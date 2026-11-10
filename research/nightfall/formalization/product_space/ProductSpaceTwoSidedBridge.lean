@@ -1153,7 +1153,7 @@ theorem certificate_overlap_sampler
     have hL : (∑ j, Real.sqrt (P j) * Real.sqrt (Q j)) = S := by
       apply Finset.sum_congr rfl
       intro j _
-      exact (Real.sqrt_mul (hP j)).symm
+      exact (Real.sqrt_mul (hP j) (Q j)).symm
     have hA : (∑ j, (Real.sqrt (P j)) ^ 2) = V1 := by
       calc
         (∑ j, (Real.sqrt (P j)) ^ 2) = ∑ j, P j := by
@@ -1203,11 +1203,15 @@ theorem weighted_potential_descent
   calc
     (∑ j, π j * after j) =
         T * (∑ j, π j) - ∑ j, π j * influence j := by
-          rw [Finset.mul_sum, Finset.sum_sub_distrib]
-          apply Finset.sum_congr rfl
-          intro j _
-          rw [hafter j]
-          ring
+          calc
+            (∑ j, π j * after j) =
+                ∑ j, (T * π j - π j * influence j) := by
+                  apply Finset.sum_congr rfl
+                  intro j _
+                  rw [hafter j]
+                  ring
+            _ = T * (∑ j, π j) - ∑ j, π j * influence j := by
+                  rw [Finset.sum_sub_distrib, Finset.mul_sum]
     _ = T - ∑ j, π j * influence j := by rw [hπ, mul_one]
     _ ≤ T - gain := sub_le_sub_left hgain T
 
