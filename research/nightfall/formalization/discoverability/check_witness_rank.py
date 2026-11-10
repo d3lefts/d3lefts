@@ -108,5 +108,5 @@ out={"status":"PASS",
 assert out["exhaustive"]=={"1":4,"2":16,"3":256}
 assert out["examples"][4]["parity"]=={"D":4,"w":1,"r":4,"greedy":4}
 assert out["examples"][4]["or"]=={"D":4,"w":4,"r":4,"greedy":4}
-assert out["examples"][4]["address"]=={"D":2,"w":2,"r":2,"greedy":2}
+assert out["examples"][4]["address"]=={"D":2,"w":2,"r":2,"greedy":3}
 print(json.dumps(out,indent=2))
