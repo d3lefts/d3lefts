@@ -48,6 +48,19 @@ try{
         overflow:document.documentElement.scrollWidth-innerWidth,
       };
     });
+    const readability=await page.evaluate(()=>{
+      const intro=getComputedStyle(document.querySelector(".atlas-hero-bottom>p")).color;
+      const bodyInk=getComputedStyle(document.body).color;
+      const emphasis=getComputedStyle(document.querySelector(".atlas-hero h1 em")).color;
+      const marker=document.createElement("span");
+      marker.style.color="var(--accent)";
+      document.body.append(marker);
+      const accent=getComputedStyle(marker).color;
+      marker.remove();
+      return {intro,bodyInk,emphasis,accent};
+    });
+    assert.equal(readability.intro,readability.bodyInk,"hero introduction must use readable foreground ink");
+    assert.equal(readability.emphasis,readability.accent,"hero emphasis must follow the active accessible two-skies accent");
     assert.equal(layout.grid,"grid","formalization is styled as a grid, not raw body text");
     assert.equal(layout.ruled,"solid","evidence rows have visual boundaries");
     assert.equal(layout.equationBorder,"solid","proposed formula has a clear evidence boundary");
@@ -75,7 +88,7 @@ try{
     assert.deepEqual(failures,[],"no local network errors or page script faults at "+width);
     await ctx.close();
   }
-  console.log("PASS product-space dossier: 3 widths, 3 proof groups, 2 explicit proposed inequalities, proof-scope disclosures, navigation, visual tokens and no overflow");
+  console.log("PASS product-space dossier: 3 widths, 3 proof groups, 2 explicit proposed inequalities, proof-scope disclosures, navigation, visual tokens, readable text and no overflow");
 } finally {
   if(browser)await browser.close();
   server.close();
