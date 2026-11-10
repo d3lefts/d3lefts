@@ -5,6 +5,7 @@
 - `Wright_Certificate_Engine_v2.pdf` / `.tex`: 18-page manuscript, 10 Nov 2026.
 - `checks/`: finite counterexample searches and exact recomputations (Python 3, NumPy, SciPy).
 - [Certification update](CERTIFICATION_UPDATE_20261110.md): frozen original audit and subsequent merge reconciliation for #295, #297, #298, #299 and #300, all incorporated into `main` on 10 November 2026. The formalized finite core is now directly in the repository.
+- [Cross-session PR/evidence registry](../PR_RECONCILIATION_20261110.md): merged #306, #309, #310 and #312, candidate finite-palette observability #313, witness-rank project #311 and listed uncommitted evidence packages. **The current theorem status is not equivalent to a manuscript publication clearance.**
 
 ## Claims and their status
 
@@ -43,6 +44,6 @@ pdflatex Wright_Certificate_Engine_v2.tex && pdflatex Wright_Certificate_Engine_
 
 1. Turturean's question: max_j I_j(f) ≥ c Var(f)²/K² for real f. Thm 1.7 gives this for crossing probabilities; Remark 7.1 isolates the missing jump-size lemma.
 2. Localization for the unprojected median profiles of f.
-3. Formalization: the full localized weight-removal step now compiles in #293 and its finite-product composition in #298; the **remaining** gates are the real-function Chebyshev certificate, integrated third-moment/median/averaging chain, the level-tie case, arbitrary measurable products, and the full quantum corollary.
+3. Formalization: #293 and #298 certify the finite localized/two-sided core, and **#310 now certifies the finite competing-symbol Chebyshev row bound** in a monomial-support degree representation. The **remaining** gates are the explicit equivalence with Hoeffding/ANOVA degree, integrated third-moment/median/averaging chain, the level-tie case, arbitrary measurable products, and the full quantum corollary.
 
 Prepared with Claude (Anthropic); Sections 6 and 10 build on drafts prepared with ChatGPT. The author is responsible for all claims.
