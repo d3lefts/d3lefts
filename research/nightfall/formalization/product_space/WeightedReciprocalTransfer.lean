@@ -196,4 +196,91 @@ noncomputable def crossTerm (g : (ι → α) → Bool)
     (∑ j ∈ disagree z.1 z.2, w j * lam z.1 j * lam z.2 j)⁻¹
   else 0
 
+
+/-! ## Pinned antipodal inequality on each induced product cube -/
+
+/-- This invokes the fully proved upstream Turturean determinant theorem, not
+a new assumption. Product rows restrict to Boolean rows by cubeLam_isRow. -/
+theorem pinned_antipodal_on_product_cube
+    (g : (ι → α) → Bool) (lam : (ι → α) → ι → ℝ)
+    (hrow : IsProductRow g lam) (z : PairSample ι α)
+    (w : ι → ℝ) (hw : ∀ j, 0 < w j) :
+    (∑ mask ∈ zone (cubeG g z),
+       (∑ j, w j * cubeLam lam z mask j *
+         cubeLam lam z (antipode mask) j)⁻¹) ≤
+      ∑ j, (bdry (cubeG g z) j : ℝ) / w j := by
+  have hanti : AntipodalInequality := antipodal_of_det detInequality
+  exact hanti ι (cubeG g z) w hw (cubeLam lam z)
+    (cubeLam_isRow g lam hrow z)
+
+/-- The antipodal reciprocal inequality survives arbitrary nonnegative
+heterogeneous masses, with no normalisation or atom-size hypothesis. -/
+theorem weighted_antipodal_on_product_cubes
+    (p : ι → α → ℝ) (hp : ∀ i a, 0 ≤ p i a)
+    (g : (ι → α) → Bool) (lam : (ι → α) → ι → ℝ)
+    (hrow : IsProductRow g lam) (w : ι → ℝ) (hw : ∀ j, 0 < w j) :
+    (∑ z, pairMass p z *
+      (∑ mask ∈ zone (cubeG g z),
+        (∑ j, w j * cubeLam lam z mask j *
+          cubeLam lam z (antipode mask) j)⁻¹)) ≤
+    ∑ z, pairMass p z * (∑ j, (bdry (cubeG g z) j : ℝ) / w j) := by
+  apply Finset.sum_le_sum
+  intro z _
+  exact mul_le_mul_of_nonneg_left
+    (pinned_antipodal_on_product_cube g lam hrow z w hw)
+    (pairMass_nonneg p hp z)
+
+/-- Antipodal reciprocal costs are exactly crossing-pair costs after
+orienting both samples. This includes repeated atoms. -/
+theorem cube_zone_sum_eq_crossTerm
+    (g : (ι → α) → Bool) (lam : (ι → α) → ι → ℝ)
+    (w : ι → ℝ) (z : PairSample ι α) :
+    (∑ mask ∈ zone (cubeG g z),
+      (∑ j, w j * cubeLam lam z mask j *
+        cubeLam lam z (antipode mask) j)⁻¹) =
+      ∑ mask, crossTerm g lam w (flipPair mask z) := by
+  unfold zone
+  rw [Finset.sum_filter]
+  apply Finset.sum_congr rfl
+  intro mask _
+  have hcond : (cubeG g z mask = true ∧ cubeG g z (antipode mask) = false) ↔
+      (g (flipPair mask z).1 = true ∧ g (flipPair mask z).2 = false) := by
+    simp [cubeG, flipPair_antipode_fst]
+  by_cases hc : g (flipPair mask z).1 = true ∧ g (flipPair mask z).2 = false
+  · have hz : cubeG g z mask = true ∧ cubeG g z (antipode mask) = false :=
+      hcond.mpr hc
+    rw [if_pos hz]
+    unfold crossTerm
+    rw [if_pos hc]
+    exact congrArg (fun s : ℝ => s⁻¹) (cubeCost_eq lam z mask w)
+  · have hz : ¬ (cubeG g z mask = true ∧ cubeG g z (antipode mask) = false) :=
+      fun h => hc (hcond.mp h)
+    rw [if_neg hz]
+    simp [crossTerm, hc]
+
+/-- Exact reciprocal transfer to the product-pair law.
+The right side still uses the expected restricted-cube boundary; identifying
+it with the resampling boundary is the next, separate lemma. -/
+theorem weighted_orbit_reciprocal_bound
+    (p : ι → α → ℝ) (hp : ∀ i a, 0 ≤ p i a)
+    (g : (ι → α) → Bool) (lam : (ι → α) → ι → ℝ)
+    (hrow : IsProductRow g lam) (w : ι → ℝ) (hw : ∀ j, 0 < w j) :
+    (Fintype.card (ι → Bool) : ℝ) *
+      (∑ z, pairMass p z * crossTerm g lam w z) ≤
+    ∑ z, pairMass p z * (∑ j, (bdry (cubeG g z) j : ℝ) / w j) := by
+  have h := weighted_antipodal_on_product_cubes p hp g lam hrow w hw
+  have hL :
+      (∑ z, pairMass p z *
+        (∑ mask ∈ zone (cubeG g z),
+          (∑ j, w j * cubeLam lam z mask j *
+            cubeLam lam z (antipode mask) j)⁻¹)) =
+        (Fintype.card (ι → Bool) : ℝ) *
+          (∑ z, pairMass p z * crossTerm g lam w z) := by
+    simp_rw [cube_zone_sum_eq_crossTerm]
+    simp_rw [Finset.mul_sum]
+    rw [Finset.sum_comm]
+    exact weighted_sum_all_orientations p (crossTerm g lam w)
+  rw [hL] at h
+  exact h
+
 end Nightfall.ProductSpace.Transfer
