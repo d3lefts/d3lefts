@@ -40,8 +40,8 @@ theorem anova_component_erase (E : Finset ι → ℝ)
     ∑ j ∈ S, E S := by
   by_cases hi : i ∈ S
   · simp only [if_pos hi]
-    exact Finset.sum_erase_add hi
-  · simp [hi, Finset.erase_eq_of_not_mem hi]
+    exact Finset.sum_erase_add S (fun _ : ι => E S) hi
+  · simp [hi, Finset.erase_eq_of_notMem hi]
 
 /-- **ANOVA support identity.** The exact expected influence removed by
 conditioning on i is the weight of components whose support contains i.
