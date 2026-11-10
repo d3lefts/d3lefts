@@ -48,6 +48,7 @@ jobs:
             --decl Nightfall.ProductSpace.Observation.positive_class_mass_le_cost \
             --decl Nightfall.ProductSpace.Observation.negative_class_mass_le_cost \
             --decl Nightfall.ProductSpace.Observation.class_mass_product_le_certificate_cost \
+            --decl Nightfall.ProductSpace.Observation.nonconstant_variance_to_expected_influence \
             --json-out lean-receipts/certificate-cost-bridge.json || {
               cat lean-receipts/certificate-cost-bridge.json || true
               exit 1
