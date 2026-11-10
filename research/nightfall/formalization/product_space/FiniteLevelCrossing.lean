@@ -65,7 +65,8 @@ theorem thresholdRow_isProductRow
       le_trans hdiff (hr.2 x y)
     change (1 : ℝ) ≤ ∑ j ∈ disagree x y, a x j / |f x - t|
     rw [← Finset.sum_div]
-    exact (one_le_div_iff₀ hgap).2 hbound
+    apply (le_div_iff₀ hgap).2
+    simpa using hbound
 
 theorem thresholdRow_norm_pos
     (f : (ι → α) → ℝ) (a : (ι → α) → ι → ℝ)
