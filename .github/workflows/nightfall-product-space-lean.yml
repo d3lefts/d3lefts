@@ -1,0 +1,52 @@
+name: NIGHTFALL product-space — Lean 4.35.0 certification
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/**'
+      - '.github/workflows/nightfall-product-space-lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+jobs:
+  product-space:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned official Lean
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain "$(cat lean-toolchain)"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          "$HOME/.elan/bin/lean" --version
+      - name: Kernel-check two-draw orientation
+        run: |
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/product_space/TwoDrawOrientation.lean \
+            --decl Nightfall.ProductSpace.orientation_mass_independent \
+            --decl Nightfall.ProductSpace.all_orientations_equiprobable \
+            --decl Nightfall.ProductSpace.single_pair_exchangeable \
+            --json-out lean-receipts/product-space-orientation.json
+      - name: Kernel-check heterogeneous orientation
+        run: |
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/product_space/HeterogeneousOrientation.lean \
+            --decl Nightfall.ProductSpace.heterogeneous_orientation_mass \
+            --decl Nightfall.ProductSpace.heterogeneous_all_masks_equal \
+            --json-out lean-receipts/product-space-heterogeneous-orientation.json
+      - name: Audit both orientation proofs against standard Lean axioms
+        run: |
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/product-space-orientation.json \
+            lean-receipts/product-space-heterogeneous-orientation.json
+      - name: Upload receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: product-space-lean-receipts
+          path: lean-receipts/*.json
+          if-no-files-found: warn
+          retention-days: 30
