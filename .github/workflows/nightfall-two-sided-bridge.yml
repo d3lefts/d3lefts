@@ -69,6 +69,10 @@ jobs:
             --decl Nightfall.ProductSpace.Posterior.adaptive_query_contraction \
             --decl Nightfall.ProductSpace.Posterior.concrete_product_overlap_sampler \
             --decl Nightfall.ProductSpace.Posterior.concrete_product_one_step \
+            --decl Nightfall.ProductSpace.Posterior.query_kernel_nonneg \
+            --decl Nightfall.ProductSpace.Posterior.query_kernel_mass_one \
+            --decl Nightfall.ProductSpace.Posterior.query_kernel_expected \
+            --decl Nightfall.ProductSpace.Posterior.certificate_guided_adaptive_decay \
             --json-out lean-receipts/two-sided-bridge.json || {
               cat lean-receipts/two-sided-bridge.json || true
               exit 1
