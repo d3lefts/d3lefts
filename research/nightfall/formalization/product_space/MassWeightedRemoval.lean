@@ -20,7 +20,7 @@ lemma invCost_scaled {n : ℕ} (r : Fin n → ℝ) {m : ℝ} (hm : 0 < m) :
     invCost (fun j => r j / m) = m * invCost r := by
   unfold invCost
   change (∑ j, r j / m)⁻¹ = m * (∑ j, r j)⁻¹
-  rw [Finset.sum_div, inv_div, div_eq_mul_inv]
+  rw [← Finset.sum_div, inv_div, div_eq_mul_inv]
 
 lemma scaled_pair_sum {α γ : Type*} [Fintype α] [Fintype γ]
     {n : ℕ} (lam : α → Fin n → ℝ) (gam : γ → Fin n → ℝ)
