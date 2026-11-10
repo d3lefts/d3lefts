@@ -81,13 +81,30 @@ for n in (4,5):
     examples[n]={name:dict(zip(("D","w","r","greedy"),sample(n,truth)))
                  for name,truth in functions.items()}
 
+# Constrained counterexample calculated independently of the Boolean-cube sample:
+# admissible states differ on both sensors, yet either one distinguishes outputs.
+constrained_states=((1,0),(0,1))
+constrained_labels=(0,1)
+def constrained_sensitive(B,x):
+    return any(constrained_labels[y]!=constrained_labels[x] and
+               all(constrained_states[y][i]==constrained_states[x][i]
+                   for i in range(2) if not (B>>i)&1)
+               for y in range(2))
+constrained_width=min(B.bit_count() for B in range(1,4) if
+                      all(constrained_sensitive(B,x) for x in range(2)))
+constrained_rank=max(1 if any(constrained_sensitive(B,x)
+                for B in range(1,4)) else 0 for x in range(2))
+constrained_D=min(1 for i in range(2) if
+                  constrained_states[0][i]!=constrained_states[1][i])
+assert (constrained_width,constrained_rank,constrained_D)==(2,1,1)
+
 out={"status":"PASS",
      "exhaustive":{str(n):sum(v for (nn,*_),v in stats.items() if nn==n) for n in (1,2,3)},
      "examples":examples,"tight_examples":len(tight),
      "max_D":max(key[1] for key in stats),
      "greedy_saturations":len(greedy_tight),
      "constrained_negative_control":{"states":["10","01"],
-       "labels":[0,1], "w":2, "r":1, "optimal_D":1}}
+       "labels":[0,1], "w":constrained_width, "r":constrained_rank, "optimal_D":constrained_D}}
 assert out["exhaustive"]=={"1":4,"2":16,"3":256}
 assert out["examples"][4]["parity"]=={"D":4,"w":1,"r":4,"greedy":4}
 assert out["examples"][4]["or"]=={"D":4,"w":4,"r":4,"greedy":4}
