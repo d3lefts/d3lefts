@@ -1239,5 +1239,38 @@ theorem geometric_potential_decay
           mul_le_mul_of_nonneg_left ih hρ
         _ = ρ ^ (t + 1) * a 0 := by rw [pow_succ]; ring
 
+
+/-- Sharpness of the certificate-overlap sampler's information-only bound.
+For ANY proposed coordinate-sampling probability law pi (mass one),
+the abstract localized inequality admits a constant influence vector
+saturating V^2 / (sum q)^2. The constructive sampler pi ∝ q obtains
+that lower bound by weighted Cauchy. This does not assert realizability
+of the adversarial vector by a Boolean product-space function. -/
+theorem overlap_information_sharp
+    {κ : Type*} [Fintype κ] (q π : κ → ℝ) (V : ℝ)
+    (hS : 0 < ∑ j, q j) (hV : 0 ≤ V)
+    (hπ : ∑ j, π j = 1) :
+    ∃ c : κ → ℝ, (∀ j, 0 ≤ c j) ∧
+      V = ∑ j, q j * Real.sqrt (c j) ∧
+      (∑ j, π j * c j) = V ^ 2 / (∑ j, q j) ^ 2 := by
+  let S : ℝ := ∑ j, q j
+  let r : ℝ := V / S
+  have hr : 0 ≤ r := div_nonneg hV hS.le
+  have hsqrt : Real.sqrt (r ^ 2) = r := by
+    rw [Real.sqrt_sq_eq_abs, abs_of_nonneg hr]
+  have hsum : (∑ j, q j * r) = V := by
+    rw [← Finset.sum_mul]
+    change S * (V / S) = V
+    field_simp [hS.ne']
+  refine ⟨fun _ => r ^ 2, ?_, ?_, ?_⟩
+  · intro j
+    exact sq_nonneg r
+  · simpa only [hsqrt] using hsum.symm
+  · calc
+      (∑ j, π j * r ^ 2) = (∑ j, π j) * r ^ 2 := by
+        rw [Finset.sum_mul]
+      _ = V ^ 2 / S ^ 2 := by
+        rw [hπ, one_mul, div_pow]
+
 end Nightfall.ProductSpace.Discovery
 
