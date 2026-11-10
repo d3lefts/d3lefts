@@ -30,6 +30,13 @@ jobs:
             --decl Nightfall.ProductSpace.all_orientations_equiprobable \
             --decl Nightfall.ProductSpace.single_pair_exchangeable \
             --json-out lean-receipts/product-space-orientation.json
+      - name: Kernel-check heterogeneous orientation
+        run: |
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/product_space/HeterogeneousOrientation.lean \
+            --decl Nightfall.ProductSpace.heterogeneous_orientation_mass \
+            --decl Nightfall.ProductSpace.heterogeneous_all_masks_equal \
+            --json-out lean-receipts/product-space-heterogeneous-orientation.json
       - name: Verify standard Lean axiom dependencies
         shell: bash
         run: |
@@ -49,6 +56,24 @@ jobs:
                   deps = set()
               assert deps <= standard, (theorem, deps)
               print(theorem, 'accepted dependencies:', sorted(deps))
+          PYCODE
+      - name: Verify heterogeneous orientation foundational axioms
+        shell: bash
+        run: |
+          python3 - <<'PYCODE'
+          import json, re
+          r = json.load(open('lean-receipts/product-space-heterogeneous-orientation.json'))
+          assert r['status'] == 'COMPILED', r['status']
+          assert not r['policy_findings'], r['policy_findings']
+          standard = {'propext', 'Classical.choice', 'Quot.sound'}
+          for theorem in r['declarations_requested']:
+              m = re.search(re.escape("'" + theorem + "'") + r' depends on axioms: \\[([^\\]]*)\\]', r['stdout'], re.S)
+              if m:
+                  deps = {a.strip() for a in m.group(1).split(',')}
+              else:
+                  assert "'" + theorem + "' does not depend on any axioms" in r['stdout'], theorem
+                  deps = set()
+              assert deps <= standard, (theorem, deps)
           PYCODE
       - name: Upload receipts
         if: always()
