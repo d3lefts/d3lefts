@@ -18,7 +18,7 @@ namespace Nightfall.Quartic
 
 /-- Exact expectation of a test function of a finite sum of independent
 fair signs with coefficients in the supplied list. -/
-def rademacherAvg : List ℝ → (ℝ → ℝ) → ℝ
+noncomputable def rademacherAvg : List ℝ → (ℝ → ℝ) → ℝ
   | [], φ => φ 0
   | a :: as, φ =>
       (rademacherAvg as (fun t => φ (t + a)) +
