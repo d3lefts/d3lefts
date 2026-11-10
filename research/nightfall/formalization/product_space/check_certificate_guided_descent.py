@@ -41,7 +41,7 @@ def audit(n, probs, a, b):
         V = mass1 * mass0 / (A * B)
         infl = [
             sum((px[x] * px[y] for x in xs for y in xs
-                 if g[x] and not g[x[:j] + (y[j],) + x[j+1:]), Q(0))
+                 if g[x] and not g[x[:j] + (y[j],) + x[j+1:]]), Q(0))
             for j in range(n)
         ]
         gain = sum((pi[j] * infl[j] for j in range(n)), Q(0))
