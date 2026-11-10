@@ -1742,5 +1742,157 @@ theorem concrete_product_one_step
                   rw [hπsum, mul_one]
     _ ≤ T - V1 * V0 := sub_le_sub_left hsampler.2 T
 
+
+/-! ## Actual adaptive query-transition kernel, not a hypothetical Markov P -/
+
+/-- A query selects `j` by `π`, observes `a` with conditional law `p`,
+and moves from state `s` to `next s j a`. Duplicate successor states are
+combined exactly. -/
+noncomputable def queryKernel
+    {S J A : Type*} [Fintype J] [Fintype A] [DecidableEq S]
+    (next : S → J → A → S) (π : S → J → ℝ)
+    (p : S → J → A → ℝ) (s t : S) : ℝ :=
+  ∑ u : J × A,
+    if next s u.1 u.2 = t then π s u.1 * p s u.1 u.2 else 0
+
+/-- The query-response transition has no negative mass. -/
+theorem query_kernel_nonneg
+    {S J A : Type*} [Fintype J] [Fintype A] [DecidableEq S]
+    (next : S → J → A → S) (π : S → J → ℝ)
+    (p : S → J → A → ℝ)
+    (hπ : ∀ s j, 0 ≤ π s j) (hp : ∀ s j a, 0 ≤ p s j a) :
+    ∀ s t, 0 ≤ queryKernel next π p s t := by
+  intro s t
+  unfold queryKernel
+  exact Finset.sum_nonneg (fun u _ => by
+    by_cases h : next s u.1 u.2 = t
+    · simp [h, mul_nonneg (hπ s u.1) (hp s u.1 u.2)]
+    · simp [h])
+
+/-- Normalization of the *constructed* query kernel. -/
+theorem query_kernel_mass_one
+    {S J A : Type*} [Fintype S] [Fintype J] [Fintype A]
+    [DecidableEq S]
+    (next : S → J → A → S) (π : S → J → ℝ)
+    (p : S → J → A → ℝ)
+    (hπ : ∀ s, ∑ j : J, π s j = 1)
+    (hp : ∀ s j, ∑ a : A, p s j a = 1) :
+    ∀ s, (∑ t : S, queryKernel next π p s t) = 1 := by
+  intro s
+  change (∑ t : S, ∑ u : J × A,
+    if next s u.1 u.2 = t then π s u.1 * p s u.1 u.2 else 0) = 1
+  calc
+    (∑ t : S, ∑ u : J × A,
+      if next s u.1 u.2 = t then π s u.1 * p s u.1 u.2 else 0) =
+        ∑ u : J × A, π s u.1 * p s u.1 u.2 :=
+          finite_observation_partition
+            (fun u : J × A => next s u.1 u.2)
+            (fun u : J × A => π s u.1 * p s u.1 u.2)
+    _ = ∑ j : J, π s j * (∑ a : A, p s j a) := by
+          rw [Fintype.sum_prod_type]
+          apply Finset.sum_congr rfl
+          intro j _
+          rw [Finset.mul_sum]
+    _ = ∑ j : J, π s j := by
+          simp_rw [hp, mul_one]
+    _ = 1 := hπ s
+
+/-- Fubini and pushforward yield the exact expected successor potential
+for the explicit stochastic query-and-response kernel. -/
+theorem query_kernel_expected
+    {S J A : Type*} [Fintype S] [Fintype J] [Fintype A]
+    [DecidableEq S]
+    (next : S → J → A → S) (π : S → J → ℝ)
+    (p : S → J → A → ℝ) (T : S → ℝ) (s : S) :
+    (∑ t : S, queryKernel next π p s t * T t) =
+      ∑ j : J, π s j * (∑ a : A, p s j a * T (next s j a)) := by
+  classical
+  change
+    (∑ t : S, (∑ u : J × A,
+      if next s u.1 u.2 = t then π s u.1 * p s u.1 u.2 else 0) * T t) =
+      ∑ j : J, π s j * (∑ a : A, p s j a * T (next s j a))
+  calc
+    (∑ t : S, (∑ u : J × A,
+      if next s u.1 u.2 = t then π s u.1 * p s u.1 u.2 else 0) * T t) =
+      ∑ t : S, ∑ u : J × A,
+        (if next s u.1 u.2 = t then π s u.1 * p s u.1 u.2 else 0) * T t := by
+          apply Finset.sum_congr rfl
+          intro t _
+          rw [Finset.sum_mul]
+    _ = ∑ u : J × A, ∑ t : S,
+        (if next s u.1 u.2 = t then π s u.1 * p s u.1 u.2 else 0) * T t :=
+          Finset.sum_comm
+    _ = ∑ u : J × A,
+        π s u.1 * p s u.1 u.2 * T (next s u.1 u.2) := by
+          apply Finset.sum_congr rfl
+          intro u _
+          have hh : (∑ t : S,
+              (if next s u.1 u.2 = t then
+                π s u.1 * p s u.1 u.2 else 0) * T t) =
+              ∑ t : S, if next s u.1 u.2 = t then
+                π s u.1 * p s u.1 u.2 * T t else 0 := by
+                  apply Finset.sum_congr rfl
+                  intro t _
+                  split_ifs <;> simp
+          rw [hh]
+          simp
+    _ = ∑ j : J, ∑ a : A,
+        π s j * p s j a * T (next s j a) := by
+          rw [Fintype.sum_prod_type]
+    _ = ∑ j : J, π s j * (∑ a : A, p s j a * T (next s j a)) := by
+          apply Finset.sum_congr rfl
+          intro j _
+          rw [Finset.mul_sum]
+          apply Finset.sum_congr rfl
+          intro a _
+          ring
+
+/-- **Full finite-state adaptive recursion, with the transition kernel
+constructed from coordinate-selection and response probabilities.**
+
+The posterior identity, sampler gain, and uniform budget are supplied
+per state; the theorem *derives* the full time-t expectation, rather
+than assuming a Markov drift or an `evolve` bound.
+
+Product-specific discharge of per-state certificate rows and degree/variance
+budgets is the remaining interface to arbitrary-product probability theory. -/
+theorem certificate_guided_adaptive_decay
+    {S J A : Type*} [Fintype S] [Fintype J] [Fintype A]
+    [DecidableEq S]
+    (next : S → J → A → S)
+    (T : S → ℝ) (π : S → J → ℝ) (p : S → J → A → ℝ)
+    (I : S → J → ℝ) (gap : S → ℝ)
+    (budget : ℝ) (hbudget : 1 ≤ budget)
+    (hπ_nonneg : ∀ s j, 0 ≤ π s j)
+    (hp_nonneg : ∀ s j a, 0 ≤ p s j a)
+    (hπ : ∀ s, ∑ j : J, π s j = 1)
+    (hp : ∀ s j, ∑ a : A, p s j a = 1)
+    (hposterior : ∀ s j,
+      (∑ a : A, p s j a * T (next s j a)) = T s - I s j)
+    (hsampler : ∀ s, gap s ≤ ∑ j : J, π s j * I s j)
+    (hgap : ∀ s, T s / budget ≤ gap s)
+    (ν : S → ℝ) (hν : ∀ s, 0 ≤ ν s) :
+    ∀ n, expectation (evolve (queryKernel next π p) ν n) T ≤
+      (1 - 1 / budget) ^ n * expectation ν T := by
+  have hbudget_pos : 0 < budget := lt_of_lt_of_le (by norm_num) hbudget
+  have hρ : 0 ≤ (1 : ℝ) - 1 / budget := by
+    have hh : (1 : ℝ) / budget ≤ 1 :=
+      (div_le_iff₀ hbudget_pos).mpr (by nlinarith [hbudget])
+    linarith
+  have hstep0 := adaptive_query_contraction T π p
+    (fun s j a => T (next s j a)) I gap budget
+    hbudget_pos hπ hp hposterior hsampler hgap
+  have hstep : ∀ s,
+      (∑ t : S, queryKernel next π p s t * T t) ≤
+        (1 - 1 / budget) * T s := by
+    intro s
+    rw [query_kernel_expected]
+    exact hstep0 s
+  exact adaptive_markov_decay
+    (queryKernel next π p) ν T (1 - 1 / budget)
+    hρ (query_kernel_nonneg next π p hπ_nonneg hp_nonneg)
+    hν hstep
+
+
 end Nightfall.ProductSpace.Posterior
 
