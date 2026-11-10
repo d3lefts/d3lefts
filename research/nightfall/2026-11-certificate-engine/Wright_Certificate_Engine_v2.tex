@@ -1,0 +1,606 @@
+\documentclass[11pt]{article}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}\usepackage{lmodern}\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools,enumitem,booktabs,xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\numberwithin{equation}{section}
+\setlength{\parskip}{2pt}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem*{imported}{Imported result}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\1}{\mathbf 1}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\cprod}{c_{\mathrm{prod}}}
+\newcommand{\cord}{c_{\mathrm{ord}}}
+\newcommand{\nrm}[1]{\lVert #1\rVert_1}
+
+\title{Fractional certificates, influence, and observation on arbitrary product spaces:\\
+localized inequalities, level crossings, and the adaptivity dichotomy}
+\author{Devin J. Wright\thanks{Independent researcher. Drafted with substantial assistance from Claude (Anthropic); see the statement at the end of the paper.}}
+\date{10 November 2026 --- working draft v2}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Turturean's proof of the Aaronson--Ambainis conjecture rests on an engine of inequalities for \emph{rows} (fractional certificates) on the uniform Boolean cube: an antipodal inequality, an all-pairs inequality, a two-sided inequality for Boolean functions, and degree-free bounds on increments and influences for real functions. We show that this whole engine holds on every finite product probability space, with arbitrary alphabets and arbitrary, possibly extremely small, atom masses, and with constants that do not depend on the law. The transfer conditions two independent samples on their unordered coordinate pairs, which turns any product law into a uniform antipodal pair in a random subcube.
+
+We also prove a \emph{localized} form of the two-sided inequality, which is new even on the uniform cube. For a Boolean function $g$ with rows $\lambda^x$,
+\[
+\E\Bigl[\tfrac{\1\{g=1\}}{\nrm{\lambda^X}}\Bigr]\;\E\Bigl[\tfrac{\1\{g=0\}}{\nrm{\lambda^X}}\Bigr]\;\le\;\sum_j\sqrt{I_j(g)\,P_j\,Q_j},
+\]
+where $I_j$ is the directed resampling influence and $P_j,Q_j$ are the loads that the rows of $g^{-1}(1)$ and $g^{-1}(0)$ place on coordinate $j$. It contains Turturean's two-sided inequality, is an equality for every dictator under every law, and shows that an influential coordinate can always be found among the coordinates loaded by both sides, with a gain equal to the inverse square of the Bhattacharyya coefficient of the two load profiles.
+
+For real functions the localization survives at the level of distributions over coordinates: a coordinate drawn from one of at most three explicit certificate-overlap laws has expected influence at least the full Aaronson--Ambainis bound divided by the squared largest overlap.
+
+The \emph{level-crossing theorem} holds with exponents two and four. For $|f|\le1$ of interaction degree $d$ under any product law, some coordinate's resampling carries $f$ across its mean with probability at least $(\E|f-\E f|)^2/(\pi^4d^4)\ge V^2/(4\pi^4d^4)$. These exponents are those asked for in Turturean's open question about influences, attained here for crossings.
+
+As consequences we obtain $\max_iI_i(f)\ge \cprod V^{5/2}/d^6$ with $\cprod\approx1.20\times10^{-3}$ independent of the law, and classical whole-symbol prediction of $T$-query quantum acceptance probabilities on every product distribution with $O(T^7\epsilon^{-3}\delta^{-3/2})$ queries. Finally, an \emph{adaptivity dichotomy} holds. Adaptive observation of a bounded degree-$d$ function costs $\mathrm{poly}(d,1/\eta)$ queries on every product space, and greedy selection by resampling influence (not by one-step information gain) achieves this. Nonadaptive observation costs at least $(1-\eta)2^{d-1}$ queries already for sign-valued functions of fair coins. For exact recovery of Boolean-valued functions of bits it costs $\Theta(2^d)$.
+\end{abstract}
+
+\section{Introduction}
+
+Let $f:\{-1,1\}^n\to[-1,1]$ be a polynomial of degree at most $d$. The Aaronson--Ambainis conjecture~\cite{AA14} asks for a coordinate whose influence is polynomial in $\Var(f)$ and $1/d$. Turturean~\cite{Tur26} proved it with the bound $\Var(f)^{5/2}/d^6$ up to a constant, following the fractional-certificate programme of Lovett and Zhang~\cite{LZ23}, and formalized the argument in Lean.
+
+The degree hypothesis enters Turturean's proof only twice: through a bound on the cost of rows (fractional certificates) and through a bound on the total $L_1$ influence. Everything else is a chain of inequalities that hold for \emph{every} function with rows of bounded cost:
+\[
+\begin{gathered}\text{antipodal} \Rightarrow \text{all-pairs} \Rightarrow \text{two-sided (Boolean)},\\
+\text{all-pairs} \Rightarrow \text{third moment} \Rightarrow \text{increments} \Rightarrow \text{influences}.\end{gathered}
+\]
+These inequalities are stated, proved and formalized only for the \emph{uniform} measure on the cube. The present paper shows that \emph{the entire chain holds on every finite product probability space}, uniformly in the law. The degree-$d$ theorem for product spaces is then a corollary and is not the main point.
+
+\subsection{Setting}
+Let $\Omega=\Omega_1\times\cdots\times\Omega_n$ be a product of finite sets, and $\mu=\mu_1\otimes\cdots\otimes\mu_n$ a product probability measure with $\mu_i(s)>0$ for all $s\in\Omega_i$ (symbols of mass zero can be deleted). No lower bound on the masses is assumed. Let $X,Y\sim\mu$ be independent, and let $X^{(j)}$ denote $X$ with its $j$th coordinate replaced by an independent draw from $\mu_j$. Write $\Delta(x,y)=\{i:x_i\ne y_i\}$ and $a(S)=\sum_{i\in S}a_i$.
+
+\begin{definition}[Rows]
+A \emph{row} of $f:\Omega\to\R$ at $x$ is a vector $a\in[0,\infty)^n$ with $|f(x)-f(y)|\le a(\Delta(x,y))$ for every $y\in\Omega$. Its \emph{cost} is $\nrm a$.
+\end{definition}
+
+For Boolean $g:\Omega\to\{0,1\}$, a vector $\lambda\ge0$ is a row at $x$ if and only if $\lambda(\Delta(x,y))\ge1$ whenever $g(y)\ne g(x)$; these are fractional certificates~\cite{Tal13,GSS16,KT16}. The quantities
+\[
+I_j(f)=\E\Var(f(X)\mid X_{-j})=\tfrac12\E\bigl[(f(X)-f(X^{(j)}))^2\bigr],\qquad L_j(f)=2\,\E|f(X)-f(X^{(j)})|
+\]
+are the influence and the mean absolute increment of coordinate $j$. Put $L(f)=\sum_jL_j(f)$ and $M(f)=\max_jL_j(f)$. For Boolean $g$, exchangeability gives $I_j(g)=\Pr[g(X)=1,\ g(X^{(j)})=0]$, the probability of a \emph{directed} change.
+
+On the uniform cube, resampling a coordinate flips it with probability $1/2$. Hence $I_j$ equals Turturean's $\mathrm{Inf}_j$, $L_j$ equals his mean absolute increment, and for Boolean $g$ our $I_j(g)$ is one quarter of his $I_j(g)=\Pr[g(x)\neq g(x^j)]$ \cite[Section~2]{Tur26}.
+
+\subsection{Results}
+
+\begin{theorem}[All-pairs inequality on product spaces]\label{thm:allpairs}
+Let $g:\Omega\to\{0,1\}$, choose a row $\lambda^x$ of $g$ at every $x$, and let $w\in(0,\infty)^n$. Put $s_\lambda(x,y;w)=\sum_{j\in\Delta(x,y)}w_j\lambda^x_j\lambda^y_j$. Then $s_\lambda(x,y;w)>0$ whenever $g(x)=1$ and $g(y)=0$, and
+\begin{equation}\label{eq:allpairs}
+\E\left[\frac{\1\{g(X)=1,\ g(Y)=0\}}{s_\lambda(X,Y;w)}\right]\ \le\ \sum_{j=1}^n\frac{I_j(g)}{w_j}.
+\end{equation}
+\end{theorem}
+
+For a Boolean $g$ with rows $\lambda^x$ define the \emph{two-sided masses} and the \emph{coordinate loads}
+\[
+V_1=\E\Bigl[\frac{\1\{g(X)=1\}}{\nrm{\lambda^X}}\Bigr],\quad V_0=\E\Bigl[\frac{\1\{g(X)=0\}}{\nrm{\lambda^X}}\Bigr],\]\[
+P_j=\E\Bigl[\frac{\1\{g(X)=1\}\lambda^X_j}{\nrm{\lambda^X}^2}\Bigr],\quad Q_j=\E\Bigl[\frac{\1\{g(X)=0\}\lambda^X_j}{\nrm{\lambda^X}^2}\Bigr].
+\]
+Then $\sum_jP_j=V_1$ and $\sum_jQ_j=V_0$. When $g$ is not constant, every row has positive cost, so these are well defined.
+
+\begin{theorem}[Localized two-sided inequality]\label{thm:local}
+Let $g:\Omega\to\{0,1\}$ be non-constant, with rows $\lambda^x$. Then
+\begin{equation}\label{eq:local}
+V_1V_0\ \le\ \sum_{j=1}^n\sqrt{I_j(g)\,P_j\,Q_j}.
+\end{equation}
+Consequently:
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item \emph{(Two-sided inequality on product spaces.)} $V_1V_0\le\max_jI_j(g)$.
+\item \emph{(Localization.)} Let $p=P/V_1$ and $q=Q/V_0$ be the normalized load profiles, let $J^*=\{j:P_jQ_j>0\}$, and let $\mathrm{BC}=\sum_j\sqrt{p_jq_j}\in(0,1]$ be their Bhattacharyya coefficient. Then
+\[
+\max_{j\in J^*}I_j(g)\ \ge\ \frac{V_1V_0}{\mathrm{BC}^2}\ \ge\ V_1V_0 .
+\]
+\end{enumerate}
+Equality holds in~\eqref{eq:local} and in (a) for every dictator $g=\1\{x_1\in E\}$ with $0<\mu_1(E)<1$ and rows $\lambda^x=e_1$, under every product law.
+\end{theorem}
+
+On the uniform cube, part (a) is exactly Turturean's two-sided inequality \cite[Theorem~1.5]{Tur26} (multiply by $4$ to convert the normalization). The bound~\eqref{eq:local} and part (b) are new there as well. They say that the influential coordinate can be found where the certificates of the two output classes overlap, and that the bound improves when the two classes load different coordinates.
+
+\begin{theorem}[Real functions with rows, on product spaces]\label{thm:real}
+Let $f:\Omega\to\R$ have a row $a^x$ of cost at most $K$ at every point, and $V=\Var f>0$. Put $H=(8/5)^{3/2}=2.0238\ldots$. Then
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item for every $r$ with $\Pr[f>r]\Pr[f\le r]>0$, $\ \E[(f-r)_+^3]\,\Pr[f\le r]\le\frac32K^2M(f)$, together with the localized form~\eqref{eq:localthird} below;
+\item $H\,V^{3/2}\le 6K^2M(f)$; that is, some coordinate has $\E|f(X)-f(X^{(j)})|\ge H\,V^{3/2}/(12K^2)$;
+\item some coordinate has
+\[
+I_j(f)\ \ge\ \frac{H\sqrt{15}}{125}\cdot\frac{V^{5/2}}{L(f)\,K^2}.
+\]
+\end{enumerate}
+\end{theorem}
+
+Parts (a) and (c) without $H$ are Turturean's Theorems~7.6 and~8.3 on the uniform cube. The factor $H$ comes from a two-sided treatment of the median, due to~\cite{Wri26}.
+
+\begin{theorem}[Aaronson--Ambainis on arbitrary product spaces]\label{thm:AA}
+Let $(\Omega_i,\mathcal F_i,\mu_i)_{i\in J}$ be arbitrary probability spaces with $J$ of any cardinality, and let $f\in L^2(\bigotimes_i\mu_i)$ satisfy $|f|\le1$, have interaction degree at most $d\ge1$, and have variance $V>0$. Then $\max_iI_i(f)$ is attained and
+\[
+\max_iI_i(f)\ \ge\ \cprod\frac{V^{5/2}}{d^6},\qquad \cprod=\frac{H\sqrt{15}}{125(4-2\sqrt3)\pi^4}=1.2012\ldots\times10^{-3}.
+\]
+If every coordinate takes two values, the constant may be replaced by $2\cord=1.2875\ldots\times10^{-3}$, where $\cord=H\sqrt{15}/(125\pi^4)$.
+\end{theorem}
+
+\begin{corollary}[Quantum speedups need structure on every product distribution]\label{cor:quantum}
+Let a quantum algorithm make $T$ queries to a string of $n$ independent symbols from finite alphabets, distributed according to an arbitrary known product law. For $0<\epsilon,\delta<1$, there is a deterministic classical decision tree that queries at most
+\[
+\min\Bigl\{n,\ \Bigl\lceil\frac{80}{3\cprod}\cdot\frac{T^7}{\delta^{3/2}\epsilon^3}\Bigr\rceil\Bigr\}
+\]
+whole symbols and outputs the acceptance probability to within $\epsilon$ except on inputs of probability at most $\delta$. The bound depends on neither the alphabet sizes nor the biases.
+\end{corollary}
+
+\begin{theorem}[Level crossings; Section~\ref{sec:crossing}]\label{thm:crossintro}
+Let $f:\Omega\to\R$ have a row $a^x$ at every $x$ and let $t\in\R$. Then some coordinate $j$ satisfies
+\[
+\Pr\bigl[f(X)>t\ge f(X^{(j)})\bigr]\ \ge\ \E\Bigl[\frac{(f(X)-t)_+}{\nrm{a^X}}\Bigr]\E\Bigl[\frac{(t-f(X))_+}{\nrm{a^X}}\Bigr].
+\]
+In particular, if $|f|\le1$ has interaction degree at most $d$, then under any product law some coordinate has
+\[
+\Pr\bigl[f(X)>\E f\ge f(X^{(j)})\bigr]\ \ge\ \frac{(\E|f-\E f|)^2}{\pi^4d^4}\ \ge\ \frac{\Var(f)^2}{4\pi^4d^4}.
+\]
+\end{theorem}
+
+\begin{theorem}[Adaptivity dichotomy; Section~\ref{sec:observe}]\label{thm:dichotomy}
+Let $d\ge1$ and $0<\eta<1$.
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item On every finite product probability space, every $f$ with $|f|\le1$ and interaction degree at most $d$ is predicted with mean-square error at most $\eta$ by an adaptive tree with $\lceil5d^7/(3\cprod\eta^{3/2})\rceil$ whole-coordinate queries. The tree greedily selects the coordinate of largest conditional resampling influence.
+\item There is a $\{-1,1\}$-valued function of $2^d-1$ independent fair bits, of degree exactly $d$, that $d$ adaptive queries determine exactly. For it, every nonadaptive (possibly randomized) set of $q$ queries leaves mean-square error at least $1-q/2^{d-1}$.
+\item For $\{0,1\}$-valued functions of degree $d$ on bits, under any full-support product law, the least size of a fixed query set determining the function exactly lies between $2^d-1$ (attained) and $4.394\cdot2^d$.
+\end{enumerate}
+\end{theorem}
+
+\subsection{What is new, and what is imported}
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item \textbf{Imported.} The antipodal inequality and the overlap lemma of Turturean~\cite[Theorem~4.3, Lemma~4.1]{Tur26} (formalized in Lean as \texttt{AntipodalInequality}); the pointwise sensitivity inequality of Filmus--Hatami--Keller--Lifshitz~\cite[Theorem~3.3]{FHKL16}; the greedy potential argument of Aaronson--Ambainis~\cite{AA14}; the polynomial method~\cite{BBCMW01}; the Efron--Stein inequality~\cite{ES81}.
+\item \textbf{From the earlier product-space draft~\cite{Wri26}.} The two-draw transfer for the weighted antipodal inequality (here Theorem~\ref{thm:allpairs}); the competing-symbol row bound (Lemma~\ref{lem:rowbound}); the sharp resampling constant $4-2\sqrt3$ (Lemma~\ref{lem:rho}); the median factor $H$; and the measurable extension. They are reproved here so that the paper is self-contained.
+\item \textbf{From the companion draft~\cite{WriWIL} (prepared with ChatGPT), verified and reproved here.} Separated-class certificate transport, three-profile median sampling, and the projected real-valued sampling theorem (Section~\ref{sec:wil}).
+\item \textbf{From the companion draft~\cite{WriAO} (prepared with ChatGPT), verified and corrected here.} The address function and the pointer hierarchy (Section~\ref{sec:observe}). There it is stated that the exponential gap is not established for fair coins; in fact the binary pointer hierarchy already gives it.
+\item \textbf{New here.} The localized weight-removal lemma (Lemma~\ref{lem:wr}); the localized two-sided inequality and its Bhattacharyya and total-influence forms (Theorem~\ref{thm:local}, Corollary~\ref{cor:total}), new also on the uniform cube; the localized third-moment inequality~\eqref{eq:localthird}; the level-crossing theorem (Theorem~\ref{thm:crossintro}); the adaptivity dichotomy (Theorem~\ref{thm:dichotomy}) together with the comparison of influence-greedy and information-greedy observation (Proposition~\ref{prop:greedycompare}); and the organization of Turturean's engine as a law-free theory on product spaces, with the degree-$d$ theorem as one specialization.
+\end{itemize}
+The random two-point restriction itself has precedents~\cite{Rei00,KSS11,FYYZ26}; what is transferred here is a family of \emph{weighted reciprocal} inequalities, and the weights must be fixed before averaging over restrictions (Remark~\ref{rem:why}).
+
+\section{Imported inputs}
+
+\begin{imported}[Antipodal inequality {\cite[Theorem~4.3]{Tur26}}]
+Let $G:\{-1,1\}^k\to\{0,1\}$, let $w\in(0,\infty)^k$, and for every $u$ let $\lambda^u$ be a row of $G$ at $u$ (for the uniform cube; the definition of a row does not involve the measure). Put $Z=\{u:G(u)=1,\ G(-u)=0\}$ and $b_j=\#\{u:G(u)=1,\ G(u^j)=0\}$, where $u^j$ is $u$ with coordinate $j$ flipped. Then $\sum_jw_j\lambda^u_j\lambda^{-u}_j>0$ for every $u\in Z$, and
+\[
+\sum_{u\in Z}\Bigl(\sum_{j=1}^kw_j\lambda^u_j\lambda^{-u}_j\Bigr)^{-1}\ \le\ \sum_{j=1}^k\frac{b_j}{w_j}.
+\]
+\end{imported}
+
+\begin{imported}[Pointwise sensitivity {\cite[Theorem~3.3]{FHKL16}}]
+If $G:\{0,1\}^k\to[-1,1]$ is a multilinear polynomial of degree at most $D$, then $\sum_{b=1}^k|G(u)-G(u\oplus e_b)|\le 2D^2$ for every $u$.
+\end{imported}
+(Turturean proves the weaker constant $4D^2$ in~\cite[Lemma~6.3]{Tur26} and records the inequality above in~\cite[Remark~6.9]{Tur26}.)
+
+\section{The all-pairs inequality on product spaces}
+
+\begin{lemma}[Overlap]\label{lem:overlap}
+If $g(x)\ne g(y)$ and $\lambda,\gamma$ are rows of $g$ at $x,y$, then $\sum_{j\in\Delta(x,y)}\min(\lambda_j,\gamma_j)\ge1$. In particular $s_\lambda(x,y;w)>0$ for every $w>0$.
+\end{lemma}
+\begin{proof}
+This is~\cite[Lemma~4.1]{Tur26}; the proof is measure-free. Let $D=\Delta(x,y)$ and $S=\{j\in D:\lambda_j\le\gamma_j\}$. Let $z$ agree with $y$ on $S$ and with $x$ elsewhere. If $g(z)\ne g(x)$, then $\Delta(x,z)=S$ and $\lambda(S)\ge1$. Otherwise $g(z)=g(x)\ne g(y)$ and $\Delta(z,y)=D\setminus S$, so $\gamma(D\setminus S)\ge1$. In both cases $\sum_{j\in D}\min(\lambda_j,\gamma_j)=\lambda(S)+\gamma(D\setminus S)\ge1$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:allpairs}]
+Positivity is Lemma~\ref{lem:overlap}. Fix a total order on each $\Omega_i$. For a pair $(x,y)$ write $\pi(x,y)=(\{x_i,y_i\})_{i}$ for the sequence of unordered coordinate pairs (with repetition). Condition on $\Pi=\pi(X,Y)$. Let $D=\{i:X_i\ne Y_i\}$, which is determined by $\Pi$. For $i\in D$ write $\Pi_i=\{\alpha_i,\beta_i\}$ with $\alpha_i<\beta_i$. For $i\notin D$ let $c_i$ be the common value.
+
+Since $\Pr[(X_i,Y_i)=(\alpha,\beta)]=\mu_i(\alpha)\mu_i(\beta)=\Pr[(X_i,Y_i)=(\beta,\alpha)]$ and the coordinates are independent, conditionally on $\Pi$ the signs $U_i=+1$ if $X_i=\alpha_i$ and $U_i=-1$ otherwise ($i\in D$) are independent and uniform. Define $\varphi:\{-1,1\}^D\to\Omega$ by $\varphi(u)_i=\alpha_i$ if $u_i=1$, $\beta_i$ if $u_i=-1$ $(i\in D)$, and $\varphi(u)_i=c_i$ $(i\notin D)$. Then $X=\varphi(U)$ and $Y=\varphi(-U)$.
+
+Put $G=g\circ\varphi$ and $\hat\lambda^u=(\lambda^{\varphi(u)}_i)_{i\in D}$. For $u,u'$ we have $\Delta(\varphi(u),\varphi(u'))=\{i\in D:u_i\ne u'_i\}$, so $\hat\lambda^u$ is a row of $G$ at $u$. If $D=\emptyset$, both sides of the conditional inequality below vanish. Otherwise the antipodal inequality with weights $(w_i)_{i\in D}$, divided by $2^{|D|}$, reads
+\[
+\E\Bigl[\frac{\1\{G(U)=1,G(-U)=0\}}{\sum_{i\in D}w_i\hat\lambda^U_i\hat\lambda^{-U}_i}\Bigm|\Pi\Bigr]\le\sum_{i\in D}\frac{\Pr[G(U)=1,\,G(U^i)=0\mid\Pi]}{w_i}.
+\]
+On the left, $\Delta(X,Y)=D$, so the denominator is $s_\lambda(X,Y;w)$. On the right, $\varphi(U^i)=(X_{-i},Y_i)$. For $i\notin D$ the point $(X_{-i},Y_i)$ equals $X$, so $\Pr[g(X)=1,g(X_{-i},Y_i)=0\mid\Pi]=0$ and these terms may be added. Taking expectations over $\Pi$ and using that $(X,(X_{-i},Y_i))$ has the law of $(X,X^{(i)})$ gives~\eqref{eq:allpairs}.
+\end{proof}
+
+\begin{example}
+For $g=\1\{x_1\in E\}$ and $\lambda^x=e_1$, both sides of~\eqref{eq:allpairs} equal $\mu_1(E)(1-\mu_1(E))/w_1$, for every law.
+\end{example}
+
+\begin{remark}[Why weights, and why they must be fixed first]\label{rem:why}
+Applying Turturean's \emph{headline} influence theorem on each random subcube $\varphi(\{-1,1\}^D)$ gives a coordinate on each subcube, but possibly a different one on each. An average of maxima does not bound the maximum of averages. Inequality~\eqref{eq:allpairs} avoids this: the weights $w$ are fixed before conditioning, so the boundary terms are averaged first and the weights removed afterwards.
+\end{remark}
+
+\section{Localized weight removal and the two-sided inequality}
+
+The following lemma refines Turturean's weight removal~\cite[Lemma~5.3]{Tur26}. His lemma is the special case $\beta_j\equiv C$, with the conclusion weakened through $\sum_j\sqrt{X_jY_j}\le\sqrt{V_AV_B}$.
+
+\begin{lemma}[Localized weight removal]\label{lem:wr}
+Let $A,B$ be nonempty finite sets, let $\lambda^x\in[0,\infty)^n$ $(x\in A)$ and $\gamma^y\in[0,\infty)^n$ $(y\in B)$, let $J(x,y)\subseteq[n]$, and let $\beta\in[0,\infty)^n$. Suppose that for every $w\in(0,\infty)^n$:
+\begin{enumerate}[label=(\roman*),itemsep=0pt]
+\item $s_{xy}(w):=\sum_{j\in J(x,y)}w_j\lambda^x_j\gamma^y_j>0$ for all $(x,y)\in A\times B$, and
+\item $\sum_{x\in A}\sum_{y\in B}s_{xy}(w)^{-1}\le\sum_{j=1}^n\beta_j/w_j$.
+\end{enumerate}
+Then all $\nrm{\lambda^x}$ and $\nrm{\gamma^y}$ are positive. With $v(x)=1/\nrm{\lambda^x}$, $u(y)=1/\nrm{\gamma^y}$, $V_A=\sum_xv(x)$, $V_B=\sum_yu(y)$, $X_j=\sum_xv(x)^2\lambda^x_j$ and $Y_j=\sum_yu(y)^2\gamma^y_j$, we have $\sum_jX_j=V_A$, $\sum_jY_j=V_B$, and
+\begin{equation}\label{eq:wr}
+V_AV_B\ \le\ \sum_{j=1}^n\sqrt{\beta_jX_jY_j}\ \le\ \Bigl(\max_{j:\,X_jY_j>0}\beta_j\Bigr)^{1/2}\sqrt{V_AV_B}.
+\end{equation}
+In particular $V_AV_B\le\max_{j:X_jY_j>0}\beta_j$.
+\end{lemma}
+
+\begin{proof}
+Given $x\in A$, pick $y\in B$. By (i) with $w=(1,\dots,1)$ some $\lambda^x_j\gamma^y_j>0$, so $\nrm{\lambda^x}>0$; similarly for $\gamma^y$. The identities $\sum_jX_j=V_A$ and $\sum_jY_j=V_B$ follow from $v(x)^2\nrm{\lambda^x}=v(x)$.
+
+Fix $w>0$. Writing $v(x)u(y)=\bigl(v(x)u(y)\sqrt{s_{xy}}\bigr)\cdot s_{xy}^{-1/2}$ and applying Cauchy--Schwarz over $A\times B$,
+\[
+(V_AV_B)^2\le\Bigl(\sum_{x,y}v(x)^2u(y)^2s_{xy}(w)\Bigr)\Bigl(\sum_{x,y}s_{xy}(w)^{-1}\Bigr).
+\]
+Since $s_{xy}(w)\le\sum_{j=1}^nw_j\lambda^x_j\gamma^y_j$, the first factor is at most $\sum_jw_jX_jY_j$, and (ii) bounds the second. Hence
+\begin{equation}\label{eq:wrw}
+(V_AV_B)^2\le\Bigl(\sum_jw_jX_jY_j\Bigr)\Bigl(\sum_j\frac{\beta_j}{w_j}\Bigr)\qquad\text{for all }w\in(0,\infty)^n.
+\end{equation}
+For $\varepsilon>0$ take $w_j=(\sqrt{\beta_j}+\varepsilon)/(\sqrt{X_jY_j}+\varepsilon)$. Then $w_jX_jY_j\le(\sqrt{\beta_j}+\varepsilon)\sqrt{X_jY_j}$ and $\beta_j/w_j\le\sqrt{\beta_j}(\sqrt{X_jY_j}+\varepsilon)$. Letting $\varepsilon\to0$ in~\eqref{eq:wrw} gives $(V_AV_B)^2\le(\sum_j\sqrt{\beta_jX_jY_j})^2$, which is the first inequality in~\eqref{eq:wr}. For the second, only the terms with $X_jY_j>0$ contribute, and Cauchy--Schwarz gives $\sum_j\sqrt{X_jY_j}\le\sqrt{V_AV_B}$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:local}]
+Let $A=g^{-1}(1)$ and $B=g^{-1}(0)$, both nonempty. Apply Lemma~\ref{lem:wr} with the vectors $\tilde\lambda^x=\lambda^x/\mu(x)$ and $\tilde\gamma^y=\lambda^y/\mu(y)$, the sets $J(x,y)=\Delta(x,y)$, and $\beta_j=I_j(g)$. Then $s_{xy}(w)=s_\lambda(x,y;w)/(\mu(x)\mu(y))$. Condition (i) is Lemma~\ref{lem:overlap}. Condition (ii) is
+\[
+\sum_{x\in A,\,y\in B}\frac{\mu(x)\mu(y)}{s_\lambda(x,y;w)}=\E\Bigl[\frac{\1\{g(X)=1,g(Y)=0\}}{s_\lambda(X,Y;w)}\Bigr]\le\sum_j\frac{I_j(g)}{w_j},
+\]
+which is Theorem~\ref{thm:allpairs}. Here $v(x)=\mu(x)/\nrm{\lambda^x}$, so $V_A=V_1$ and $V_B=V_0$; moreover
+\[X_j=\sum_{x\in A}\frac{\mu(x)^2}{\nrm{\lambda^x}^{2}}\cdot\frac{\lambda^x_j}{\mu(x)}=P_j,\qquad Y_j=Q_j.\] Now~\eqref{eq:wr} gives~\eqref{eq:local} and (a).
+
+For (b), divide~\eqref{eq:local} by $\sqrt{V_1V_0}$: $\sqrt{V_1V_0}\le\sum_{j\in J^*}\sqrt{p_jq_j}\sqrt{I_j}\le\mathrm{BC}\cdot\max_{j\in J^*}\sqrt{I_j}$. Moreover $\mathrm{BC}\le1$ by Cauchy--Schwarz, and $\mathrm{BC}>0$ because the left side is positive.
+
+For the dictator, $V_1=P_1=\mu_1(E)$, $V_0=Q_1=1-\mu_1(E)$, all other loads vanish, and $I_1=\mu_1(E)(1-\mu_1(E))$; both sides of~\eqref{eq:local} equal $\mu_1(E)(1-\mu_1(E))$.
+\end{proof}
+
+\begin{corollary}[Certificates on product spaces]\label{cor:cert}
+Let $g:\Omega\to\{0,1\}$ be non-constant.
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item If $g$ has a row of cost at most $K$ at every point, then $\max_jI_j(g)\ge\Var(g)/K^2$.
+\item If every $x\in g^{-1}(b)$ has a certificate (a set $C_x$ such that $g$ is constant on $\{y:y_{C_x}=x_{C_x}\}$) of size at most $c_b$, then, with $\mathrm{BC}$ computed from the indicator rows $\1_{C_x}$,
+\[
+\max_{j\in J^*}I_j(g)\ \ge\ \frac{\Pr[g=1]\Pr[g=0]}{c_1c_0\,\mathrm{BC}^2}.
+\]
+\end{enumerate}
+\end{corollary}
+\begin{proof}
+(a) $V_1\ge\Pr[g=1]/K$ and $V_0\ge\Pr[g=0]/K$. (b) Indicator vectors of certificates are rows, of cost $|C_x|\le c_b$. Apply Theorem~\ref{thm:local}(b).
+\end{proof}
+
+For the uniform cube, the bound $\Pr[g=1]\Pr[g=0]/(c_1c_0)$ in (b) also follows from the inequality of O'Donnell, Saks, Schramm and Servedio together with $D(g)\le c_0c_1$ \cite{OSSS05,Tur26}. Both of these hold on product spaces. The fractional form, the averaged costs $V_1,V_0$, and the localization factor $\mathrm{BC}^{-2}$ do not follow from that route.
+
+\begin{corollary}[Total influence from certificate spread]\label{cor:total}
+In the setting of Theorem~\ref{thm:local},
+\[
+\sum_jI_j(g)\ \ge\ \frac{(V_1V_0)^2}{\sum_jP_jQ_j}\ =\ \frac{V_1V_0}{\sum_jp_jq_j}.
+\]
+\end{corollary}
+\begin{proof}
+By Cauchy--Schwarz, $(\sum_j\sqrt{I_j}\sqrt{P_jQ_j})^2\le(\sum_jI_j)(\sum_jP_jQ_j)$. Combine with~\eqref{eq:local}.
+\end{proof}
+When the normalized loads are spread over about $k$ coordinates on both sides, so that $\sum_jp_jq_j\approx1/k$, the total influence is at least about $k\,V_1V_0$. Theorem~\ref{thm:local}(b) controls the maximum and this corollary controls the sum.
+
+\section{Real functions}
+
+\subsection{The integrated all-pairs inequality}
+\begin{proposition}\label{prop:integrated}
+Let $f:\Omega\to\R$ have a row $a^x$ at every $x$, and let $w>0$. Then $s_a(x,y;w)>0$ whenever $f(x)>f(y)$, and
+\begin{equation}\label{eq:integrated}
+\E\Bigl[\frac{(f(X)-f(Y))_+^3}{s_a(X,Y;w)}\Bigr]\le\frac32\sum_{j=1}^n\frac{L_j(f)}{w_j}.
+\end{equation}
+\end{proposition}
+\begin{proof}
+Let $t$ be a real number that is not a value of $f$, and put $g_t=\1\{f>t\}$. If $g_t(y)\ne g_t(x)$, then $t$ lies between $f(x)$ and $f(y)$, so $a^x(\Delta(x,y))\ge|f(x)-f(y)|\ge|f(x)-t|$. Hence $a^x/|f(x)-t|$ is a row of $g_t$ at $x$ \cite[Lemma~2.4(iii)]{Tur26}. With these rows, $s(x,y;w)=s_a(x,y;w)/(|f(x)-t|\,|f(y)-t|)$. If $f(x)>f(y)$, choosing such a $t$ between them and applying Lemma~\ref{lem:overlap} gives $s_a(x,y;w)>0$. Theorem~\ref{thm:allpairs} for $g_t$ gives
+\[
+\E\Bigl[\frac{(f(X)-t)(t-f(Y))\1\{f(Y)<t<f(X)\}}{s_a(X,Y;w)}\Bigr]\le\sum_j\frac{\Pr[f(X^{(j)})<t<f(X)]}{w_j}.
+\]
+Integrate over $t\in\R$; the finitely many values of $f$ form a null set, and all quantities are non-negative finite sums. Since $\int_v^u(u-t)(t-v)\,dt=(u-v)^3/6$, the left side becomes $\frac16\E[(f(X)-f(Y))_+^3/s_a]$. By exchangeability the right side becomes $\sum_j\E[(f(X)-f(X^{(j)}))_+]/w_j=\sum_jL_j/(4w_j)$.
+\end{proof}
+
+\subsection{Localized third moment}
+For a threshold $r$ with $A_r=\{f>r\}$ and $B_r=\{f\le r\}$ both nonempty, define
+\[
+W_1=\E\Bigl[\frac{(f-r)_+^3}{\nrm{a^X}}\Bigr],\quad W_0=\E\Bigl[\frac{\1\{f\le r\}}{\nrm{a^X}}\Bigr],\quad
+P_j^{(r)}=\E\Bigl[\frac{(f-r)_+^3a^X_j}{\nrm{a^X}^2}\Bigr],\quad Q_j^{(r)}=\E\Bigl[\frac{\1\{f\le r\}a^X_j}{\nrm{a^X}^2}\Bigr].
+\]
+\begin{proposition}\label{prop:third}
+Under these assumptions,
+\begin{equation}\label{eq:localthird}
+W_1W_0\ \le\ \sum_j\sqrt{\tfrac32L_j(f)\,P_j^{(r)}Q_j^{(r)}},
+\end{equation}
+and consequently, if every row has cost at most $K$, $\E[(f-r)_+^3]\Pr[f\le r]\le\frac32K^2M(f)$.
+\end{proposition}
+\begin{proof}
+Apply Lemma~\ref{lem:wr} with $A=A_r$, $B=B_r$, $\tilde\lambda^x=a^x/(\mu(x)(f(x)-r)^3)$, $\tilde\gamma^y=a^y/\mu(y)$, $J=\Delta$ and $\beta_j=\frac32L_j$. Condition (i) holds by Proposition~\ref{prop:integrated}, since $f(x)>r\ge f(y)$. For (ii), $(f(x)-r)^3\le(f(x)-f(y))^3$ on $A_r\times B_r$, so
+\[
+\sum_{x\in A_r,y\in B_r}\frac{\mu(x)\mu(y)(f(x)-r)^3}{s_a(x,y;w)}\le\E\Bigl[\frac{(f(X)-f(Y))_+^3}{s_a(X,Y;w)}\Bigr]\le\frac32\sum_j\frac{L_j}{w_j}.
+\]
+Here $v(x)=\mu(x)(f(x)-r)^3/\nrm{a^x}$ and $u(y)=\mu(y)/\nrm{a^y}$, so $V_A=W_1$, $V_B=W_0$, $X_j=P^{(r)}_j$ and $Y_j=Q_j^{(r)}$. The consequence uses $V_AV_B\le\max\beta=\frac32M$, $W_1\ge\E[(f-r)_+^3]/K$ and $W_0\ge\Pr[f\le r]/K$.
+\end{proof}
+
+\subsection{Increments: the median argument}
+\begin{proof}[Proof of Theorem~\ref{thm:real}(b)]
+Let $m$ be a median of $f$, so $\Pr[f\ge m],\Pr[f\le m]\ge\frac12$ (it exists on a finite space). Put $u=(f-m)_+$, $z=(m-f)_+$, $M=M(f)$ and $C=\frac32K^2M$. Proposition~\ref{prop:third} with $r=m$, applied to $f$ and to $-f$, gives $\E u^3\le2C$ and $\E z^3\le2C$. (If $\{f>m\}$ is empty then $u\equiv0$, and similarly for $z$.)
+
+\emph{Mixed moment.} Suppose $u(x)>0$ and $z(y)>0$. Then $f(x)-f(y)=u(x)+z(y)\ge2\sqrt{u(x)z(y)}$, so $(f(x)-f(y))^3\ge8u(x)^{3/2}z(y)^{3/2}$. Apply Lemma~\ref{lem:wr} with $A=\{u>0\}$, $B=\{z>0\}$, $\tilde\lambda^x=a^x/(\mu(x)u(x)^{3/2})$, $\tilde\gamma^y=a^y/(\mu(y)z(y)^{3/2})$ and $\beta_j\equiv\frac3{16}M$. Proposition~\ref{prop:integrated} gives condition (ii):
+\[
+\sum_{x,y}\frac{\mu(x)\mu(y)u(x)^{3/2}z(y)^{3/2}}{s_a(x,y;w)}\le\frac18\cdot\frac32\sum_j\frac{L_j}{w_j}\le\frac{3M}{16}\sum_j\frac1{w_j}.
+\]
+Since $V_A\ge\E u^{3/2}/K$ and $V_B\ge\E z^{3/2}/K$, we get
+\begin{equation}\label{eq:mixed}
+8\,\E u^{3/2}\,\E z^{3/2}\le C,
+\end{equation}
+which is trivial if either set is empty.
+
+\emph{Doubling.} Since $\Pr[u>0]\le\frac12$, there is a random variable $U\ge0$ whose law gives each positive value of $u$ twice its probability and puts the remaining mass at $0$. Define $W$ from $z$ in the same way. Then $\E U^p=2\E u^p$ and $\E W^p=2\E z^p$ for $p>0$. So $\E U^3,\E W^3\le4C$, and $\E(f-m)^2=\frac12(\E U^2+\E W^2)$.
+
+If $C=0$, then $\E u^3=\E z^3=0$ and $V=0$, which is excluded; so $C>0$. Let $\alpha=\E U^{3/2}/(2\sqrt C)$ and $\beta=\E W^{3/2}/(2\sqrt C)$. Cauchy--Schwarz gives $\E U^{3/2}\le(\E U^3)^{1/2}\le2\sqrt C$, so $\alpha,\beta\le1$, and~\eqref{eq:mixed} gives $\alpha\beta=\E u^{3/2}\E z^{3/2}/C\le\frac18$. By H\"older, $\E U^2\le(\E U^{3/2})^{2/3}(\E U^3)^{1/3}\le(4C)^{2/3}\alpha^{2/3}$, and likewise for $W$. Using $(1-\alpha^{2/3})(1-\beta^{2/3})\ge0$,
+\[
+V\le\E(f-m)^2\le\tfrac12(4C)^{2/3}\bigl(\alpha^{2/3}+\beta^{2/3}\bigr)\le\tfrac12(4C)^{2/3}\bigl(1+(\alpha\beta)^{2/3}\bigr)\le\tfrac58(4C)^{2/3}.
+\]
+Raising to the power $3/2$ gives $HV^{3/2}\le4C=6K^2M$.
+\end{proof}
+
+Without~\eqref{eq:mixed}, the same argument with $\E|f-m|^3\le4C$ gives Turturean's $V^{3/2}\le6K^2M$ \cite[Theorem~7.10]{Tur26}.
+
+\subsection{Influences}
+\begin{proof}[Proof of Theorem~\ref{thm:real}(c)]
+By (b), $M>0$, so $L=L(f)>0$. Let $R=\{i:5L\,I_i(f)<2V\,L_i(f)\}$. Then $\sum_{i\in R}I_i(f)<\frac{2V}{5L}\sum_iL_i\le\frac{2V}5$.
+
+Let $h=\E[f\mid X_{-R}]$. Then $\Var f-\Var h=\E\Var(f\mid X_{-R})\le\sum_{i\in R}I_i(f)$ by the Efron--Stein inequality~\cite{ES81} applied conditionally on $X_{-R}$, so $\Var h\ge\frac35V$.
+
+For rows of $h$, average over a shared completion: let $Z\sim\mu_R$ and set $b^x_i=\E_Z[a^{(x_{-R},Z)}_i]$ for $i\notin R$ and $b^x_i=0$ for $i\in R$. Since $\Delta((x_{-R},Z),(y_{-R},Z))=\Delta(x,y)\setminus R$, we have $|h(x)-h(y)|\le\E_Z|f(x_{-R},Z)-f(y_{-R},Z)|\le b^x(\Delta(x,y))$, and $\nrm{b^x}\le K$. By Jensen, $L_i(h)\le L_i(f)$ for all $i$, and $L_i(h)=0$ for $i\in R$.
+
+By (b) applied to $h$, some $j$ has $L_j(h)\ge H(\frac35V)^{3/2}/(6K^2)>0$, so $j\notin R$. Hence
+\[
+I_j(f)\ \ge\ \frac{2V\,L_j(f)}{5L}\ \ge\ \frac{2V\,L_j(h)}{5L}\ \ge\ \frac{2H(3/5)^{3/2}}{30}\cdot\frac{V^{5/2}}{LK^2}=\frac{H\sqrt{15}}{125}\cdot\frac{V^{5/2}}{LK^2}.\qedhere
+\]
+\end{proof}
+
+This is Turturean's averaging argument~\cite[Theorem~8.3]{Tur26}, with the conditional Efron--Stein inequality replacing orthogonality on the cube.
+
+\section{Where influence lives for real functions}\label{sec:wil}
+
+This section answers, in a projected form, the first open question of the previous version of this paper. The results are from the companion draft~\cite{WriWIL}, prepared with ChatGPT. We checked each step and reprove them in our notation. For a probability vector $\sigma$ on $[n]$ write $\E_{i\sim\sigma}$ for the corresponding average over coordinates.
+
+\begin{theorem}[Separated-class transport {\cite{WriWIL}}]\label{thm:transport}
+Let $f:\Omega\to\R$ have rows $a^x$, let $A,B\subseteq\Omega$ be nonempty with $f(x)>f(y)$ for all $x\in A$, $y\in B$, and let $\alpha:A\to(0,\infty)$, $\gamma:B\to(0,\infty)$ satisfy $\alpha(x)\gamma(y)\le\kappa(f(x)-f(y))^3$ on $A\times B$. Put
+\[
+W_A=\E\Bigl[\frac{\1_A\alpha}{\nrm{a^X}}\Bigr],\ W_B=\E\Bigl[\frac{\1_B\gamma}{\nrm{a^X}}\Bigr],\ P_i=\E\Bigl[\frac{\1_A\alpha\,a^X_i}{\nrm{a^X}^2}\Bigr],\ Q_i=\E\Bigl[\frac{\1_B\gamma\,a^X_i}{\nrm{a^X}^2}\Bigr],
+\]
+$p=P/W_A$, $q=Q/W_B$, $b=\sum_i\sqrt{p_iq_i}$ and $\sigma_i=\sqrt{p_iq_i}/b$. Then $b>0$ and
+\[
+W_AW_B\le\sum_i\sqrt{\tfrac32\kappa L_iP_iQ_i},\qquad \E_{i\sim\sigma}L_i(f)\ge\frac{2W_AW_B}{3\kappa b^2},\qquad \E_{i\sim\sigma}I_i(f)\ge\frac{(W_AW_B)^2}{18\kappa^2b^4}.
+\]
+\end{theorem}
+\begin{proof}
+Apply Lemma~\ref{lem:wr} with $\tilde\lambda^x=a^x/(\mu(x)\alpha(x))$, $\tilde\gamma^y=a^y/(\mu(y)\gamma(y))$, $J=\Delta$ and $\beta_i=\frac32\kappa L_i$. Condition (i) holds by Proposition~\ref{prop:integrated}. For (ii),
+\[
+\sum_{A\times B}\frac{\mu(x)\mu(y)\alpha(x)\gamma(y)}{s_a(x,y;w)}\le\kappa\,\E\Bigl[\frac{(f(X)-f(Y))_+^3}{s_a(X,Y;w)}\Bigr]\le\frac32\kappa\sum_i\frac{L_i}{w_i}.
+\]
+The lemma gives the first inequality, with $V_A=W_A$, $V_B=W_B$, $X_i=P_i$ and $Y_i=Q_i$. Dividing by $\sqrt{W_AW_B}$ gives $\E_\sigma\sqrt{L_i}\ge\sqrt{2W_AW_B/(3\kappa b^2)}$, so $b>0$, and Jensen gives the second inequality. For the third, $L_i^2=4(\E|f(X)-f(X^{(i)})|)^2\le8I_i$, and Jensen gives $\E_\sigma I_i\ge\frac18(\E_\sigma\sqrt{L_i})^4$.
+\end{proof}
+
+\begin{lemma}[Three median profiles {\cite{WriWIL}}]\label{lem:three}
+Let $g:\Omega\to\R$ be non-constant with rows $b^x$ of cost at most $K$, let $m$ be a median of $g$, $u=(g-m)_+$ and $z=(m-g)_+$. Consider the profile pairs
+\[
+(+)\ \ A=\{g>m\},\ \alpha=u^3;\ B=\{g\le m\},\ \gamma=1;\ \kappa=1,\qquad (-)\ \ \text{the same for }-g,
+\]
+\[
+(\times)\ \ A=\{g>m\},\ \alpha=u^{3/2};\ B=\{g<m\},\ \gamma=z^{3/2};\ \kappa=\tfrac18,
+\]
+keeping those with $A,B$ nonempty (at least one remains). Let $\sigma^t$ and $b_t$ be the laws and overlaps of Theorem~\ref{thm:transport} for the active types $t$, and put $\mathsf B^2=\max_tb_t^2$ and $\mathsf M=\max_t\E_{i\sim\sigma^t}L_i(g)$. Then $H\Var(g)^{3/2}\le6K^2\mathsf B^2\mathsf M$.
+\end{lemma}
+\begin{proof}
+By AM--GM, $u(x)^{3/2}z(y)^{3/2}\le(g(x)-g(y))^3/8$, which justifies $\kappa=\frac18$ for $(\times)$. Put $C=\frac32K^2\mathsf B^2\mathsf M$. For $(+)$, $W_A\ge\E u^3/K$ and $W_B\ge\Pr[g\le m]/K$. Theorem~\ref{thm:transport} gives $W_AW_B\le\frac32b_+^2\E_{\sigma^+}L_i$, so $\E u^3\Pr[g\le m]\le C$ and $\E u^3\le2C$. Symmetrically $\E z^3\le2C$. For $(\times)$ the same steps give $8\E u^{3/2}\E z^{3/2}\le8K^2\cdot\frac32\cdot\frac18b_\times^2\E_{\sigma^\times}L_i\le C$. Inactive profiles give these bounds trivially. The doubling argument in the proof of Theorem~\ref{thm:real}(b) now applies verbatim and gives $HV^{3/2}\le4C$.
+\end{proof}
+
+Since $b_t^2\E_{\sigma^t}L_i=b_t\sum_i\sqrt{p_iq_i}L_i\le b_t^2\max_iL_i\le\max_iL_i$, Lemma~\ref{lem:three} strengthens Theorem~\ref{thm:real}(b).
+
+\begin{theorem}[Projected influence sampling {\cite{WriWIL}}]\label{thm:sample}
+Let $f:\Omega\to\R$ have rows $a^x$ of cost at most $K$ and $V=\Var f>0$. Let $R$, $h=\E[f\mid X_{-R}]$ and the rows $b^x$ of $h$ be as in the proof of Theorem~\ref{thm:real}(c). Let $\sigma^t$ and $\mathsf B$ be the profiles and overlap of Lemma~\ref{lem:three} for $h$, $b^x$ and a median of $h$. Then
+\[
+\max_t\E_{i\sim\sigma^t}I_i(f)\ \ge\ \frac{H\sqrt{15}}{125}\cdot\frac{V^{5/2}}{L(f)\,K^2\,\mathsf B^2}.
+\]
+Consequently, for $|f|\le1$ of interaction degree $d$ (rows from Lemma~\ref{lem:rowbound}), $\max_t\E_{i\sim\sigma^t}I_i(f)\ge\cprod V^{5/2}/(d^6\mathsf B^2)$.
+\end{theorem}
+\begin{proof}
+The rows $b^x$ vanish on $R$, so every $\sigma^t$ is supported off $R$. There, $I_i(f)\ge\frac{2V}{5L}L_i(f)\ge\frac{2V}{5L}L_i(h)$. Lemma~\ref{lem:three} for $h$, with $\Var h\ge\frac35V$, gives $\max_t\E_{\sigma^t}L_i(h)\ge H(\frac35V)^{3/2}/(6K^2\mathsf B^2)$. Multiplying as in Theorem~\ref{thm:real}(c) gives the claim. The degree-$d$ form uses Lemma~\ref{lem:rowbound} and Proposition~\ref{prop:L}.
+\end{proof}
+
+\begin{remark}[Scope]
+The overlap $\mathsf B$ is computed from the \emph{projected} rows $b^x$ of $h$, not from the rows of $f$. Whether the full bound holds for the median profiles of $f$ itself is open. Theorem~\ref{thm:transport} applied to $f$ directly localizes with the weaker power $(W_AW_B)^2$. In the exact example of~\cite{WriWIL} ($f=x_1(1+x_2)/2$ on bits with biases $1/4$ and $15/16$, with the rows listed there), $R=\emptyset$ and $\mathsf B^2=(\sqrt{10013}+\sqrt{163})^2/15552=0.81861\ldots$. We recomputed this independently in exact arithmetic. The gain $\mathsf B^{-2}\approx1.22$ refers to those rows.
+\end{remark}
+
+\section{Level crossings}\label{sec:crossing}
+
+The two-sided inequality uses \emph{averaged} inverse costs. This matters when it is applied to level sets of a real function: the natural rows of $\1\{f>t\}$ have cost $\nrm{a^x}/|f(x)-t|$, which is unbounded near the level, yet their inverse averages are controlled.
+
+\begin{proof}[Proof of Theorem~\ref{thm:crossintro}]
+Suppose first that $t$ is not a value of $f$, and that $f$ takes values on both sides of $t$ (otherwise the right side vanishes). For $g_t=\1\{f>t\}$ the vectors $\lambda^x=a^x/|f(x)-t|$ are rows (proof of Proposition~\ref{prop:integrated}), with $1/\nrm{\lambda^x}=|f(x)-t|/\nrm{a^x}$. Theorem~\ref{thm:local}(a) gives the first inequality, since $I_j(g_t)=\Pr[f(X)>t\ge f(X^{(j)})]$.
+
+If $t$ is a value of $f$, let $t_k\downarrow t$ through non-values. The right side is continuous in $t$. On the left, $\1\{f(X)>t_k\}\1\{f(X^{(j)})\le t_k\}\to\1\{f(X)>t\}\1\{f(X^{(j)})\le t\}$ pointwise, and there are finitely many $j$; pass to the limit.
+
+For the second statement take $t=\E f$. Then $\E(f-t)_+=\E(t-f)_+=\frac12\E|f-\E f|$. By Lemma~\ref{lem:rowbound}, $\nrm{a^x}\le\pi^2d^2/2$, so the product of averages is at least $(\E|f-\E f|)^2/(\pi^4d^4)$. Finally $|f-\E f|\le2$ gives $\Var f\le2\E|f-\E f|$.
+\end{proof}
+
+\begin{remark}[Why this does not yet answer Turturean's question]\label{rem:crossing}
+Turturean asks~\cite[Section~9.5]{Tur26} whether $\max_jI_j(f)\ge c\Var(f)^2/K^2$ for real $f$ with rows of cost at most $K$, which would give the exponents $(2,4)$ in the Aaronson--Ambainis theorem. Theorem~\ref{thm:crossintro} gives exactly these exponents for the probability of \emph{crossing the mean}. The gap is the size of the jump. If $f$ takes values in a set with minimal gap $\theta$, then $I_j(f)\ge\theta^2\Pr[f(X)>t\ge f(X^{(j)})]$, and Theorem~\ref{thm:crossintro} yields $\max_jI_j(f)\ge\theta^2\Var(f)^2/(4\pi^4d^4)$ for $|f|\le1$ of degree $d$. For general $f$ the crossing may be made by small jumps. If a coordinate $j$ attaining the crossing bound also had conditional mean squared jump $\E[(f(X)-f(X^{(j)}))^2\mid f(X)>t\ge f(X^{(j)})]\ge\theta_{\mathrm{eff}}^2$, the same argument would give $\max_jI_j(f)\ge\theta_{\mathrm{eff}}^2\Var(f)^2/(4\pi^4d^4)$. The open problem is whether such a jump, bounded below independently of $f$ (or by a constant power of $\Var f$ that does not destroy the exponent $2$), can always be found at a suitable level $t$.
+\end{remark}
+
+\section{Low degree: the Aaronson--Ambainis theorem on product spaces}
+
+$f$ has \emph{interaction degree at most $d$} if $f=\sum_{|S|\le d}f_S$ with each $f_S$ depending only on $x_S$. On finite products with positive masses this is equivalent to the vanishing of the Efron--Stein components above order $d$.
+
+\subsection{Rows with competing replacements}
+\begin{lemma}[Row bound]\label{lem:rowbound}
+If $f:\Omega\to[-1,1]$ has interaction degree at most $d$, then $f$ has a row of cost at most $\pi^2d^2/2$ at every point.
+\end{lemma}
+\begin{proof}
+Fix $x$. The minimal cost of a row at $x$ is the value of the linear program $\min\sum_ia_i$ subject to $a\ge0$ and $a(\Delta(x,y))\ge|f(x)-f(y)|$ for all $y\ne x$. It is feasible ($a\equiv2$) and bounded below by $0$. By LP duality, its value is the maximum of $\sum_{y\ne x}\kappa_y|f(x)-f(y)|$ over packings $\kappa\ge0$ with $\sum_{y:\,i\in\Delta(x,y)}\kappa_y\le1$ for every $i$. Fix such a $\kappa$.
+
+For an integer $N\ge1$, make $\lfloor N\kappa_y\rfloor$ labelled copies of each $y\ne x$; write $y^{(b)}$ for copy $b$. Each coordinate lies in $\Delta(x,y^{(b)})$ for at most $N$ copies. For a selector $u\in\{0,1\}^{\mathrm{copies}}$, let $t_{i,s}(u)$ count the active copies $b$ with $y^{(b)}_i=s\ne x_i$, and let $t_i=\sum_{s\ne x_i}t_{i,s}\le N$. These counts are linear in $u$.
+
+Let $m=\lceil\pi\sqrt N/2\rceil$, $c=1-\cos(\pi/m)$, $T_m$ the Chebyshev polynomial, $H_m(t)=\frac12(1-T_m(1-ct))$ and $q(t)=H_m(t)/t$, a polynomial of degree $m-1$ because $H_m(0)=0$. Since $c\le\pi^2/(2m^2)\le2/N$, the argument $1-ct$ lies in $[-1,1]$ for $t\in[0,N]$. So $0\le H_m\le1$ there, and $H_m(1)=\frac12(1-\cos\pi)=1$. Define, for each $i$,
+\[
+P_i(x_i)=1-H_m(t_i),\qquad P_i(s)=t_{i,s}\,q(t_i)\quad(s\ne x_i).
+\]
+For every $u$ this is a probability vector on $\Omega_i$. If $t_i=0$ it is the point mass at $x_i$. If $t_i>0$ the masses off $x_i$ are non-negative and sum to $H_m(t_i)$, shared in proportion to the competing proposals. Each entry is a polynomial of degree at most $m$ in $u$.
+
+Let $G(u)=\sum_\sigma f(\sigma)\prod_iP_i(\sigma_i)$, the mean of $f$ under the product of these laws. Then $|G|\le1$. Writing $f=\sum_{|S|\le d}f_S$, each $f_S$ contributes a product of at most $d$ polynomials of degree at most $m$. After multilinearization on $\{0,1\}$, $G$ has degree at most $dm$. Moreover $G(0)=f(x)$ and $G(e_b)=f(y^{(b)})$, because with one active copy $t_i\in\{0,1\}$ and $q(1)=H_m(1)=1$. The pointwise sensitivity inequality at $u=0$ gives
+\[
+\sum_{y\ne x}\frac{\lfloor N\kappa_y\rfloor}{N}|f(x)-f(y)|=\frac1N\sum_b|G(e_b)-G(0)|\le\frac{2d^2m^2}{N}\xrightarrow[N\to\infty]{}\frac{\pi^2d^2}{2},
+\]
+while the left side tends to $\sum_y\kappa_y|f(x)-f(y)|$.
+\end{proof}
+
+The replication-and-Chebyshev method is from~\cite[Section~6]{Tur26} and~\cite{ABD24}. The masses $t_{i,s}q(t_i)$, which allow different copies to propose different symbols at the same coordinate, are from~\cite{Wri26}.
+
+\subsection{Total increment}
+\begin{lemma}[One-dimensional resampling {\cite{Wri26}}]\label{lem:rho}
+For i.i.d.\ $Z,Z'$ with values in $[\alpha,\beta]$ and $D(Z)=\max(Z-\alpha,\beta-Z)$, $\E|Z-Z'|\le\rho\,\E D(Z)$ with $\rho=4-2\sqrt3$. The constant is sharp.
+\end{lemma}
+\begin{proof}
+Rescale to $[0,1]$ and let $F$ be the distribution function; set $\upsilon(t)=F(t)$ for $t<\frac12$ and $\upsilon(t)=1-F(t)$ for $t\ge\frac12$. Then $z:=\E|Z-\frac12|=\int_0^1\upsilon$, $\E D=\frac12+z$, and $\E|Z-Z'|=2\int_0^1F(1-F)=2\int_0^1\upsilon(1-\upsilon)\le2z(1-z)$ by concavity. With $z_*=(\sqrt3-1)/2$, one checks $\rho(\frac12+z)-2z(1-z)=2(z-z_*)^2\ge0$. Equality holds for masses $z_*,1-2z_*,z_*$ at $0,\frac12,1$.
+\end{proof}
+
+\begin{proposition}\label{prop:L}
+If $f:\Omega\to[-1,1]$ has interaction degree at most $d$, then $L(f)\le4\rho d^2$. If all $|\Omega_i|=2$, then $L(f)\le2d^2$.
+\end{proposition}
+\begin{proof}
+Fix $x$. For each $i$ choose $s_i$ maximizing $|f(x)-f(x_{-i},s)|$ and let $D_i(x)$ be the maximum. Allowing each coordinate to be $x_i$ or $s_i$ gives a Boolean restriction of degree at most $d$ with values in $[-1,1]$. The pointwise sensitivity inequality at $x$ gives $\sum_iD_i(x)\le2d^2$. Conditionally on $X_{-i}$, the values $f(X)$ and $f(X^{(i)})$ are i.i.d., with range $[\min_sf(X_{-i},s),\max_sf(X_{-i},s)]$, and $D_i(X)$ is the larger distance from $f(X)$ to its endpoints. Lemma~\ref{lem:rho} gives $L_i\le2\rho\E D_i$, hence $L\le4\rho d^2$. For a binary coordinate, $\E|f(X)-f(X^{(i)})|=2p(1-p)\E D_i\le\frac12\E D_i$, so $L\le2d^2$.
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:AA}}
+\emph{Finite products.} Theorem~\ref{thm:real}(c) with $K=\pi^2d^2/2$ (Lemma~\ref{lem:rowbound}) and $L\le4\rho d^2$ (Proposition~\ref{prop:L}) gives $\max_iI_i\ge\frac{H\sqrt{15}}{125}\cdot\frac{V^{5/2}}{4\rho d^2\cdot\pi^4d^4/4}=\cprod V^{5/2}/d^6$. With $L\le2d^2$ the constant is $2\cord$.
+
+\emph{Finitely many general coordinates.} Let $\mathcal P$ be a finite product partition and $Pf=\E[f\mid\mathcal P]$. Then $|Pf|\le1$, and $Pf$ has interaction degree at most $d$: by independence, $P$ maps functions of $x_S$ to functions of the cells in $S$, and it is continuous on $L^2$. Also $P$ commutes with the operator $E_i$ that integrates out coordinate $i$, so $I_i(Pf)=\|P(f-E_if)\|_2^2\le I_i(f)$. Finite partitions refining the coordinate events of a rectangle-simple approximant give $\|Pf-f\|_2$ arbitrarily small, hence $\Var Pf\to V$. The finite-alphabet bound for $Pf$ (whose cells of positive mass form a finite product space) gives the claim.
+
+\emph{Arbitrary index sets.} For finite $F\subseteq J$ the conditional expectations $f_F=\E[f\mid X_F]$ are bounded and have degree at most $d$. They satisfy $I_i(f_F)\le I_i(f)$ by commutation, and they converge to $f$ in $L^2$ along the net of finite sets, because cylinder functions are dense. This gives the bound with $\sup_i$. For attainment: for finite $S\subseteq J$, $\sum_{i\in S}I_i(f)\le d\,V$ by orthogonality of the Efron--Stein components (pass to the limit from $f_F$). Hence $\{i:I_i(f)>s/2\}$, with $s=\sup_iI_i(f)>0$, is finite and nonempty, and its maximum is $s$. \qed
+
+\section{Classical prediction of quantum acceptance probabilities}
+
+\begin{proposition}[Greedy approximation]\label{prop:greedy}
+Let $|f|\le1$ have interaction degree at most $d\ge1$ on a finite product space with any law, and let $\eta>0$. The deterministic tree that, at each node, queries an unqueried coordinate of maximal conditional influence (and stops when the restricted function is constant) and outputs the conditional mean after
+\[
+N=\Bigl\lceil\frac{5d^7}{3\cprod\eta^{3/2}}\Bigr\rceil
+\]
+queries has mean-square error at most $\eta$.
+\end{proposition}
+\begin{proof}
+At a node $\sigma$ let $g_\sigma$ be the restriction of $f$ to the transcript. It is a function of the unqueried coordinates under their product law, bounded by one and of degree at most $d$. Put $v_\sigma=\Var g_\sigma$ and $p_\sigma=\sum_{i\text{ unqueried}}I_i(g_\sigma)$. Then $v_\sigma\le p_\sigma\le dv_\sigma$, since $p_\sigma=\sum_{T}|T|\|(g_\sigma)_T\|^2$.
+
+If coordinate $j$ is queried at $\sigma$, then for $i\ne j$ the average over $X_j$ of $I_i(g_{\sigma,X_j})$ equals $I_i(g_\sigma)$, so the expected decrease of $p$ is exactly $I_j(g_\sigma)=\max_iI_i(g_\sigma)\ge b\,v_\sigma^{5/2}$ with $b=\cprod/d^6$ (Theorem~\ref{thm:AA}).
+
+Let $p_t,v_t$ be the expectations after $t$ steps, with stopped nodes frozen. Then $v_t$ is non-increasing, $p_t\le dv_t$, and by Jensen $p_t-p_{t+1}\ge b\,v_t^{5/2}$. Let $\Phi(p)=b^{-1}\int_0^p\max(\eta,s/d)^{-5/2}ds$. While $v_t>\eta$, every $s\in[p_{t+1},p_t]$ has $\max(\eta,s/d)\le v_t$, so $\Phi(p_t)-\Phi(p_{t+1})\ge1$. Since $\Phi(p_0)<\Phi(\infty)=b^{-1}(d\eta^{-3/2}+\frac{2d}3\eta^{-3/2})=\frac{5d^7}{3\cprod\eta^{3/2}}\le N$, we get $v_t\le\eta$ for some $t<N$. The mean-square error of the conditional mean after $N$ steps is $v_N\le\eta$.
+\end{proof}
+
+The greedy strategy and potential argument are those of Aaronson and Ambainis~\cite{AA14}.
+
+\begin{proof}[Proof of Corollary~\ref{cor:quantum}]
+A coherent query has the form $A_0+\sum_{i,s}\1\{X_i=s\}A_{i,s}$. After $T$ queries, every amplitude is a sum of products of at most $T$ functions, each depending on a single coordinate. So the acceptance probability $g\in[0,1]$ has interaction degree at most $2T$~\cite{BBCMW01}.
+
+Apply Proposition~\ref{prop:greedy} to $f=2g-1$ with $\eta=4\delta\epsilon^2$ and $d=2T$. The number of queries is $\lceil5(2T)^7/(3\cprod\cdot8\delta^{3/2}\epsilon^3)\rceil=\lceil80T^7/(3\cprod\delta^{3/2}\epsilon^3)\rceil$. The resulting predictor of $g$ has mean-square error at most $\delta\epsilon^2$, and Markov's inequality bounds the probability of error larger than $\epsilon$ by $\delta$. Reading all $n$ symbols always suffices.
+\end{proof}
+
+Numerically, $80/(3\cprod)=22\,199.09\ldots$. For binary inputs with any biases it is $20\,712.03\ldots$, using $2\cord$ (sections of binary-coordinate functions have binary coordinates). For the uniform cube, polynomial bounds of this type, with other exponents, are in~\cite{Tur26,HMP26}. The point here is that the bound holds for every product law, uniformly. Girish, Mittal, Nehoran and Raz~\cite{GMNR26} showed that biased and slice variants of the conjecture are equivalent to the uniform one, with a quantitative loss depending on the bias.
+
+\section{Adaptive versus nonadaptive observation}\label{sec:observe}
+
+Here a predictor knows $f$ and the law, observes whole coordinates one at a time, and outputs the conditional mean. Its cost is the number of observations.
+
+\paragraph{Fixed observation sets.} For a fixed set $S$, the explained variance is $F_f(S)=\Var\E[f\mid X_S]=\sum_{\emptyset\ne T\subseteq S}\|f_T\|_2^2$, where $f=\sum_Tf_T$ is the Efron--Stein decomposition. Hence $F_f$ is monotone and supermodular, and $f$ has degree at most $d$ exactly when all $(d+1)$-fold mixed differences of $F_f$ vanish. This is classical ANOVA/Sobol calculus~\cite{Hoe48,ES81,Sob93}, recorded in this form in~\cite{WriAO}. Influence and predictive gain are different quantities: $I_j(f)=\sum_{T\ni j}\|f_T\|^2$, whereas the one-step gain of observing $j$ is $\|f_{\{j\}}\|^2$.
+
+\subsection{The pointer hierarchy on fair coins}
+Let $r\ge1$. Take the complete binary tree of depth $r$, with a fair bit $A_v$ at each of its $2^r-1$ internal nodes and a fair bit $Z_\ell\in\{-1,1\}$ at each of its $2^r$ leaves, all independent. Starting at the root, move to the child indexed by $A_v$ until a leaf $L$ is reached, and set $h_r=Z_L$. With $P(\ell)$ the internal nodes on the path to $\ell$ and $b(v,\ell)$ the required child bit,
+\begin{equation}\label{eq:pointer}
+h_r=\sum_{\ell}Z_\ell\prod_{v\in P(\ell)}\1\{A_v=b(v,\ell)\}.
+\end{equation}
+
+\begin{proposition}[{\cite{WriAO}}, binary form]\label{prop:pointer}
+$h_r$ has degree exactly $r+1$ on $2^{r+1}-1$ fair bits, is determined by $r+1$ adaptive queries, and every fixed set $S$ of $q$ coordinates has $\Var\E[h_r\mid X_S]\le q/2^r$. The same holds for randomized nonadaptive designs.
+\end{proposition}
+\begin{proof}
+Each summand of~\eqref{eq:pointer} depends on $r+1$ bits, so the degree is at most $r+1$. The Efron--Stein component on $P(\ell)\cup\{\ell\}$ is $Z_\ell\prod_{v\in P(\ell)}(\1\{A_v=b(v,\ell)\}-\frac12)$: other summands contain an unobserved centered $Z_{\ell'}$, and the component of a product of single-coordinate factors is the product of their centered parts. Its squared norm is $4^{-r}>0$, so the degree is exactly $r+1$. Adaptively, read the $r$ selectors on the realized path and then $Z_L$.
+
+Let $S$ observe leaves $B$ and selectors with information $\mathcal H$. Leaf signs are independent of the selectors and centered, so $\E[h_r\mid X_S]=\sum_{\ell\in B}a_\ell Z_\ell$ with $a_\ell=\Pr[L=\ell\mid\mathcal H]\in[0,1]$, and the cross terms have mean zero. Hence $\Var\E[h_r\mid X_S]=\sum_{\ell\in B}\E a_\ell^2\le\sum_{\ell\in B}\E a_\ell=|B|2^{-r}\le q2^{-r}$. A randomized design is a mixture of fixed designs.
+\end{proof}
+
+The draft~\cite{WriAO} uses $\mathrm{Unif}[0,1]$ coordinates with $n$-ary selectors and remarks that the gap is not established for fair coins. The case $n=2$ above uses one bit per coordinate, so the gap holds on fair coins. We verified the case $r=2$ (seven bits) exhaustively in exact arithmetic: the Fourier degree is $3$, and the bound $q/4$ holds for all $128$ subsets.
+
+\subsection{Influence-greedy versus information-greedy}
+For $n\ge2$ let $J$ be uniform on $[n]$ (one whole coordinate) and let $Z_1,\dots,Z_n$ be independent fair signs, so that $f_n=Z_J$. This is the address function of~\cite{WriAO}; the case $n=\infty$ is the selector example of~\cite{Wri26}.
+
+\begin{proposition}\label{prop:greedycompare}
+For $n\ge3$: $I_J(f_n)=1-\frac1n$ and $I_{Z_i}(f_n)=\frac1n$, while the one-step gains are $0$ for $J$ and $n^{-2}$ for each $Z_i$. The policy that always queries a coordinate of largest conditional resampling influence (the tree of Proposition~\ref{prop:greedy}) determines $f_n$ exactly with two queries. The policy that always queries a coordinate of largest one-step gain explains only $1/n$ of the variance after two queries. The best nonadaptive set of $q\ge2$ queries explains $(q-1)/n$~\cite{WriAO}.
+\end{proposition}
+\begin{proof}
+The expansion $f_n=\sum_i\frac1nZ_i+\sum_i(\1\{J=i\}-\frac1n)Z_i$ gives $\|f_{\{i\}}\|^2=n^{-2}$, $\|f_{\{J\}}\|^2=0$ and $\|f_{\{J,i\}}\|^2=\frac1n(1-\frac1n)$. Summing these gives the influences and the gains. Since $1-\frac1n>\frac1n$ for $n\ge3$, influence-greedy first queries $J$; the restriction is then the single sign $Z_J$, whose coordinate it queries next. Information-greedy first queries some $Z_i$. Given $Z_i$, querying $J$ gives posterior mean $Z_i\1\{J=i\}$, of explained variance $\frac1n$, while another sign gives $\frac2{n^2}\le\frac1n$. The nonadaptive count is in~\cite{WriAO}.
+\end{proof}
+
+The Aaronson--Ambainis potential argument explains this difference. Influence-greedy decreases $\sum_iI_i$ by the maximal influence at every step, and the product-space influence theorem bounds that decrease from below by a power of the residual variance. One-step gain enjoys no such bound: here the most influential coordinate has zero gain.
+
+\subsection{Proof of Theorem~\ref{thm:dichotomy}}
+(a) is Proposition~\ref{prop:greedy}. (b) is Proposition~\ref{prop:pointer} with $r=d-1$: a set of $q$ queries explains at most $q/2^{d-1}$ of a unit variance. For (c), the lower bound $2^d-1$ comes from $h_{d-1}$, all of whose $2^d-1$ variables are relevant, by induction on the tree. Under a full-support law, exact determination by a fixed set $S$ requires $S$ to contain every relevant variable. Conversely, a $\{0,1\}$-valued function of degree $d$ on bits has at most $4.394\cdot2^d$ relevant variables (Wellens~\cite{Wel22}; Chiarelli, Hatami and Saks~\cite{CHS20} for the order $O(2^d)$), and relevance does not depend on the full-support law. \qed
+
+\begin{remark}
+Without a bound on alphabet sizes, no finite fixed set suffices even for degree two: in the selector example with countably many leaf values, every finite set leaves positive error~\cite{Wri26,WriAO}. With alphabets of size at most $m$ and $q$ output values, fixed sets of size $C_qk2^{k-1}$ with $k=(q-1)d\lceil\log_2m\rceil$ suffice~\cite{Wri26}. On the adaptive side, exact recovery of a function with $q$ output values takes at most $(q-1)^2d^3$ observations~\cite{Wri26}.
+\end{remark}
+
+\section{Discussion and open problems}
+
+\paragraph{Where the influential coordinate lives.}
+Theorem~\ref{thm:local}(b) is a structural statement absent from the uniform-cube theory: an influential coordinate exists among coordinates carrying certificate weight for \emph{both} output classes, and the bound improves by the factor $\mathrm{BC}^{-2}$ when the two classes load different coordinates. The overlap lemma already forces $\mathrm{BC}>0$. Inequality~\eqref{eq:local} can be read as a fractional-certificate analogue of OSSS-type inequalities, with revealment replaced by the certificate loads $\sqrt{P_jQ_j}$.
+
+\paragraph{Open problems.}
+\begin{enumerate}[leftmargin=*,itemsep=1pt]
+\item \emph{Turturean's $V^2/K^2$ question.} Theorem~\ref{thm:crossintro} gives the exponents $(2,4)$ for mean crossings. Remark~\ref{rem:crossing} isolates the missing step, a lower bound on the size of the jump along a crossing coordinate. A positive answer would improve the Aaronson--Ambainis exponents from $(5/2,6)$ to $(2,4)$ on every product space.
+\item \emph{Unprojected localization.} Theorem~\ref{thm:sample} localizes to the profiles of the projection $h$. Does the full bound hold for the median profiles of $f$ itself?
+\item \emph{Exponents.} The exponents $5/2$ and $6$ are inherited from~\cite{Tur26}. Can localization, applied to low-degree functions whose certificate loads are spread out, improve them on structured subclasses?
+\item \emph{Beyond product laws.} The two-draw transfer uses exchangeability of each coordinate pair. Does an analogue of Theorem~\ref{thm:allpairs} hold on slices, or for negatively associated laws? Some restriction is necessary, since independence is essential even for degree-one functions.
+\item \emph{Formalization.} The proof of Theorem~\ref{thm:allpairs} uses Turturean's \texttt{AntipodalInequality} as a black box, and Lemma~\ref{lem:wr} modifies \texttt{abstract\_cs}. Both are natural targets for extending his Lean development.
+\end{enumerate}
+
+\paragraph{Verification performed for this draft.}
+These checks are finite and do not substitute for proof or for review.
+\begin{itemize}[leftmargin=*,itemsep=0pt]
+\item The imported antipodal inequality, as stated in Section~2, was stress-tested on all Boolean functions on the $2$- and $3$-cubes and $300$ random functions on the $4$-cube, with randomly chosen extreme-point rows and random weights. The maximal ratio of the two sides was exactly $1$.
+\item The pointwise sensitivity inequality was tested by linear programming for $D\le3$ and $n\le9$. No violation of $2D^2$ was found.
+\item Theorems~\ref{thm:local}(a) and~\eqref{eq:local}, and~\eqref{eq:localthird}, were tested on $1500$ random finite product spaces (up to three coordinates, alphabets of size $2$--$3$, Dirichlet$(0.4)$ masses) with LP extreme-point rows. Maximal ratios: $1.000$ for (a) and for~\eqref{eq:local}, both attained, and $0.408$ for~\eqref{eq:localthird}.
+\item The level-crossing inequality was tested at $t=\E f$ on $1200$ random product spaces with Gaussian values and LP extreme-point rows. The maximal ratio was $0.250$; the bound must be $\le1$.
+\item The exact witness of~\cite{WriWIL} was recomputed independently in rational arithmetic ($V$, $I$, $L$, $R=\emptyset$, $p$, $q$, $\mathsf B^2$), and the bundled checkers of~\cite{WriWIL,WriAO} were rerun with no reported failures. The checker \texttt{check\_constants.py} needs SymPy, which was not available.
+\item The binary pointer hierarchy with $r=2$ was checked exhaustively in exact arithmetic (Fourier degree $3$; bound $q/4$ for all $128$ subsets).
+\item All constants were recomputed in double precision.
+\end{itemize}
+
+\paragraph{Use of AI systems.} This draft was written with substantial assistance from Claude (Anthropic): the localized form of weight removal, the level-crossing theorem, the adaptivity dichotomy, drafting of proofs, and the numerical checks above. Section~\ref{sec:wil} and the address and pointer constructions come from companion drafts prepared with ChatGPT~\cite{WriWIL,WriAO}, verified here. The paper builds on an earlier product-space draft~\cite{Wri26} prepared with several AI systems. The author is responsible for its content. None of the new statements has been reviewed by an independent expert or formalized.
+
+\begin{thebibliography}{99}\small
+\bibitem{AA14} S.~Aaronson and A.~Ambainis, The need for structure in quantum speedups, \emph{Theory of Computing} 10 (2014), 133--166. arXiv:0911.0996.
+\bibitem{ABD24} A.~Agarwal and S.~Ben-David, Oracle separations for the quantum-classical polynomial hierarchy, arXiv:2410.19062.
+\bibitem{BBCMW01} R.~Beals, H.~Buhrman, R.~Cleve, M.~Mosca and R.~de~Wolf, Quantum lower bounds by polynomials, \emph{J.~ACM} 48 (2001), 778--797.
+\bibitem{ES81} B.~Efron and C.~Stein, The jackknife estimate of variance, \emph{Ann.\ Statist.} 9 (1981), 586--596.
+\bibitem{FHKL16} Y.~Filmus, H.~Hatami, N.~Keller and N.~Lifshitz, On the sum of the $L_1$ influences of bounded functions, \emph{Israel J.\ Math.} 214 (2016), 167--192. arXiv:1404.3396.
+\bibitem{FYYZ26} W.~Feng, X.~Yang, Y.~Yu and Y.~Zhang, Learning $\mathsf{AC}^0$ under locally sampleable graphical models, arXiv:2607.08303 (2026).
+\bibitem{GMNR26} U.~Girish, K.~Mittal, B.~Nehoran and R.~Raz, Distributional variants of the Aaronson--Ambainis conjecture, arXiv:2609.35327 (2026).
+\bibitem{GSS16} J.~Gilmer, M.~Saks and S.~Srinivasan, Composition limits and separating examples for some Boolean function complexity measures, \emph{Combinatorica} 36 (2016).
+\bibitem{HMP26} T.~Huffstutler, D.~Miloschewsky and S.~Podder, A short proof of the Aaronson--Ambainis conjecture via the completion framework, arXiv:2611.12795 (2026).
+\bibitem{KSS11} J.~Kahn, M.~Saks and C.~Smyth, The dual BKR inequality and Rudich's conjecture, \emph{Combin.\ Probab.\ Comput.} 20 (2011).
+\bibitem{KT16} R.~Kulkarni and A.~Tal, On fractional block sensitivity, \emph{Chicago J.\ Theoret.\ Comput.\ Sci.} (2016).
+\bibitem{LZ23} S.~Lovett and J.~Zhang, Fractional certificates for bounded functions, ITCS 2023.
+\bibitem{OSSS05} R.~O'Donnell, M.~Saks, O.~Schramm and R.~Servedio, Every decision tree has an influential variable, FOCS 2005.
+\bibitem{Rei00} D.~Reimer, Proof of the van den Berg--Kesten conjecture, \emph{Combin.\ Probab.\ Comput.} 9 (2000), 27--32.
+\bibitem{Tal13} A.~Tal, Properties and applications of Boolean function composition, ITCS 2013.
+\bibitem{Tur26} D.~Turturean, A proof of the Aaronson--Ambainis conjecture, with a Lean~4 formalization, 6 November 2026. \url{https://github.com/physical-superintelligence/aaronson-ambainis}, revision \texttt{2a6ceae}.
+\bibitem{CHS20} J.~Chiarelli, P.~Hatami and M.~Saks, An asymptotically tight bound on the number of relevant variables in a bounded degree Boolean function, \emph{Combinatorica} 40 (2020), 237--244.
+\bibitem{Hoe48} W.~Hoeffding, A class of statistics with asymptotically normal distribution, \emph{Ann.\ Math.\ Statist.} 19 (1948), 293--325.
+\bibitem{Sob93} I.~M.~Sobol', Sensitivity analysis for nonlinear mathematical models, \emph{Math.\ Modeling Comput.\ Experiment} 1 (1993), 407--414.
+\bibitem{Wel22} J.~Wellens, Relationships between the number of inputs and other complexity measures of Boolean functions, \emph{Discrete Analysis} 2022:20.
+\bibitem{WriWIL} D.~J.~Wright, Where influence lives: certificate-overlap sampling for real-valued functions on product spaces, research draft rev.~1, 10 November 2026 (unpublished; prepared with ChatGPT).
+\bibitem{WriAO} D.~J.~Wright, Adaptive observation and interaction activation: exact influence calculus and low-degree separation on product spaces, referee discussion draft v0.1, 10 November 2026 (unpublished; prepared with ChatGPT).
+\bibitem{Wri26} D.~J.~Wright, Bias-independent influence and adaptive recovery on arbitrary product spaces, referee draft V6, 10 November 2026 (unpublished).
+\end{thebibliography}
+\end{document}
