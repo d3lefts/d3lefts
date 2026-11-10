@@ -1,6 +1,6 @@
 # NIGHTFALL — finite-palette certificate-to-observation theorem (proof candidate v0.3)
 
-Date: 2026-11-10. Research lead: Devin J. Wright. This is a **draft claim**, not a formally certified combined theorem, external referee report, novelty clearance, or publication authorization.
+Date: 2026-11-10. Research lead: Devin J. Wright. **Status: archived mathematical proof candidate; NOT a certified combined theorem, externally refereed result, novelty clearance, or publication authorization.** Merging this note is repository preservation only. The referenced PDF/LaTeX/checker ZIP is not present in this PR and has not been independently replayed as part of this archive.
 
 ## Main finite-product result
 
@@ -54,10 +54,10 @@ For exact stopping, a highest-order nonzero Hoeffding component f_S forces sensi
 - Component Lean receipts: finite localized product inequality, overlap sampler, concrete sampler and finite posterior/Markov algebra in merged PRs #298, #300, #303, #304, #308 and #309. The finite maximal-interaction switching core is in merged #301.
 - Full heterogeneous probability-space instantiation, combined adaptive policy and threshold-to-real squared-influence lemma remain to be formalized in one pinned toolchain.
 - Independent exact-rational / square-root-interval falsification: 280 finite functions (exhaustive biased two-bit ternary; heterogeneous biased 3/4-bit; deliberately low-degree 4/5-bit), 634 visited states, 167 sampler states. All checks passed. Finite tests do not prove a general result.
-- Local proof package: `NIGHTFALL_Finite_Palette_Observability_v03_20261110.zip` (PDF, LaTeX, Python checker, claim ledger, hashes) is supplied in the research conversation. This public draft PR does not contain the packaged file bytes; it preserves the claim and the next formalization obligations.
+- Local proof package: `NIGHTFALL_Finite_Palette_Observability_v03_20261110.zip` (PDF, LaTeX, Python checker, claim ledger, hashes) is supplied in the research conversation. This repository note does not contain the packaged file bytes; it preserves the claim and the next formalization obligations. The reported local numerical checks are not independently verified from committed inputs.
 - The arbitrary/uncountable completed-product exact recovery bound remains a **separate** almost-sure written proof candidate requiring specialist verification of countable support, sections, measurable choices, simultaneous valid hybrids and positive-measure sensitivity (never arbitrary null-set replacement witnesses).
 - Historical novelty and priority: unresolved. OSSS, Nisan–Szegedy, Tal, FHKL, Midrijanis, Turturean and Soltani Moakhar et al. are relevant prior art. No efficiency bound on computing the policy. Not an unrestricted (2,4) squared-influence result.
-- **Do not merge or publish this claim solely from the internal derivation.** Obtain independent mathematical review and a pinned end-to-end formal proof.
+- **Do not promote this archived candidate as a verified theorem or publish it as established solely from the internal derivation.** Obtain independent mathematical review and a pinned end-to-end formal proof.
 
 ## Cheapest decisive next proof
 
