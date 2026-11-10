@@ -180,7 +180,7 @@ theorem cubeCost_eq (lam : (ι → α) → ι → ℝ)
       (z.1 j ≠ z.2 j) := by
     cases hm : mask j <;> simp [flipPair, hm, ne_comm]
   by_cases hz : z.1 j = z.2 j
-  · have hEq : (flipPair mask z).1 j = (flipPair mask z).2 j :=
+  · have hEq : (flipPair mask z).1 j = (flipPair mask z).2 j := by
       by_contra hne
       exact hz (hd.mp hne)
     simp [cubeLam, hz, hEq]
