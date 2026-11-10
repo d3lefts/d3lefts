@@ -111,8 +111,10 @@ try{
     assert.equal(tokens.accent,"#e2d28c",file+": dusk action accent inherits moonlight");
    }
    if(file==="new-moon.html"){
-    assert.equal(await page.locator("#open-ledger .moon-ledger-row").count(),4,
-      "Investigation page presents four source-bound review cases");
+    assert.equal(await page.locator("#open-ledger .moon-ledger-row").count(),5,
+      "Investigation page presents five source-bound review cases");
+    assert.equal(await page.locator("#open-ledger a[href='product-space-influence.html']").count(),1,
+      "New product-space proof obligations have a bounded, source-linked dossier");
     assert.equal(await page.locator("#workbench a[href='constellation.html#map']").count(),1,
       "Night desk links to the full graph without duplicating it");
    }

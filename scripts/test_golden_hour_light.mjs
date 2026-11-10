@@ -161,7 +161,7 @@ try{
   }));
   assert.notEqual(dark.bg,"rgb(2, 4, 6)","NEW MOON has a distinct dark canvas from the archive");
   assert.equal(dark.accent,"#e2d28c","New Moon retains its moonlight accent");
-  assert.equal(dark.ledger,4,"The separate investigation ledger is present");
+  assert.equal(dark.ledger,5,"The five-case investigation ledger is preserved");
   assert.equal(await page.locator('meta[name="theme-color"]').getAttribute("content"),"#04060b","New Moon browser chrome remains midnight navy");
   await toggle.click();
   await page.waitForURL("**/index.html");

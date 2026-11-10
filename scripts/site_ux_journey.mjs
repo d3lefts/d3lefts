@@ -74,7 +74,8 @@ try{
     await page.waitForURL("**/new-moon.html");
     assert.equal(await page.locator("html").getAttribute("data-nf-experience"),"moon","The toggle opens a second HTML document");
     assert.match(await page.locator(".moon-hero h1").innerText(),/The work begins.*where certainty ends/s);
-    assert.equal(await page.locator("#open-ledger .moon-ledger-row").count(),4,"Independent open investigation ledger");
+    assert.equal(await page.locator("#open-ledger .moon-ledger-row").count(),5,"Independent open investigation ledger with November product-space certification");
+    assert.equal(await page.locator("#open-ledger a[href='product-space-influence.html']").count(),1,"Source-linked fifth investigation is reachable");
     assert.equal(await page.locator(".flagship-card").count(),0,"Archive card structure is absent from the night desk");
     await screenshot("01b-desktop-new-moon.png");
     await page.locator(".nf-theme-toggle").click();
