@@ -1553,10 +1553,17 @@ theorem adaptive_query_contraction
           intro j _
           rw [hposterior s j]
     _ = T s - ∑ j : J, π s j * I s j := by
-          rw [Finset.sum_sub_distrib]
-          rw [← Finset.sum_mul]
-          rw [hπ s]
-          ring
+          calc
+            (∑ j : J, π s j * (T s - I s j)) =
+                ∑ j : J, (T s * π s j - π s j * I s j) := by
+                  apply Finset.sum_congr rfl
+                  intro j _
+                  ring
+            _ = T s * (∑ j : J, π s j) -
+                ∑ j : J, π s j * I s j := by
+                  rw [Finset.sum_sub_distrib, Finset.mul_sum]
+            _ = T s - ∑ j : J, π s j * I s j := by
+                  rw [hπ s, mul_one]
     _ ≤ T s - gap s := sub_le_sub_left (hsampler s) (T s)
     _ ≤ (1 - 1 / budget) * T s := by
           have h := hgap s
