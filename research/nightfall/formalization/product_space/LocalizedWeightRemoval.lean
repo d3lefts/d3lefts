@@ -11,7 +11,7 @@ index types and *nonnegative* (possibly zero) coefficients:
 3. `localized_weight_optimization`: if `V² ≤ (∑ wᵢAᵢ)(∑ βᵢ/wᵢ)` for every positive `w`,
    then `V ≤ ∑ √βᵢ √Aᵢ`. This removes the strict-positivity hypotheses of
    `localized_weight_optimization_positive` (PR #289).
-4. `cs_reciprocal`, `cs_reciprocal₂`: Cauchy–Schwarz with reciprocal weights.
+4. `cs_reciprocal`, `cs_reciprocal2`: Cauchy–Schwarz with reciprocal weights.
 5. `localized_weight_removal`: the full lemma. If for every positive `w` the pair sums
    `s_xy(w) = ∑_{j ∈ J x y} wⱼ λₓⱼ γᵧⱼ` are positive and `∑ₓ ∑ᵧ s_xy(w)⁻¹ ≤ ∑ⱼ cⱼ / wⱼ`, then
    `(∑ₓ ‖λₓ‖⁻¹)(∑ᵧ ‖γᵧ‖⁻¹) ≤ ∑ⱼ √cⱼ · √(Xⱼ Yⱼ)`.
@@ -152,7 +152,7 @@ lemma cs_reciprocal {κ : Type*} [Fintype κ] (a s : κ → ℝ) (hs : ∀ k, 0 
   simp only [e1, e2, e3] at h
   exact h
 
-lemma cs_reciprocal₂ {α γ : Type*} [Fintype α] [Fintype γ] (a s : α → γ → ℝ)
+lemma cs_reciprocal2 {α γ : Type*} [Fintype α] [Fintype γ] (a s : α → γ → ℝ)
     (hs : ∀ x y, 0 < s x y) :
     (∑ x, ∑ y, a x y) ^ 2 ≤
       (∑ x, ∑ y, a x y ^ 2 * s x y) * (∑ x, ∑ y, (s x y)⁻¹) := by
@@ -192,7 +192,7 @@ theorem localized_weight_removal {α γ : Type*} [Fintype α] [Fintype γ] {n : 
   intro w hw'
   have hw : ∀ j, 0 < w j := fun j => hw' j (Finset.mem_univ j)
   -- Cauchy–Schwarz over pairs
-  have cs := cs_reciprocal₂ (fun x y => invCost (lam x) * invCost (gam y))
+  have cs := cs_reciprocal2 (fun x y => invCost (lam x) * invCost (gam y))
     (fun x y => ∑ j ∈ J x y, w j * lam x j * gam y j) (fun x y => hpos w hw x y)
   beta_reduce at cs
   have hV : (∑ x, invCost (lam x)) * (∑ y, invCost (gam y)) =
