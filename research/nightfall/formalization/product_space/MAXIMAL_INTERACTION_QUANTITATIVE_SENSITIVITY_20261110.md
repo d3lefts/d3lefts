@@ -58,7 +58,7 @@ Reproduce from the repo root:
 
 The independent standard-library checker constructs finite Hoeffding terms by weighted conditional averages and signed subset inversion, verifies centering/reconstruction and all prefix-section degrees, then checks Var_U f(z,U)>=e_S and R² P_U(change)>=e_S at every base point for each maximal nonzero S.
 
-Result of local run (Python 3, fractions.Fraction): **PASS, 752 cases**: all 256 Boolean 3-bit functions at fair masses, all 256 at unequal positive masses, plus 240 seeded heterogeneous 2×3×2 ternary-palette functions. Exact rational, no floating-point tolerance. This finite check cannot certify the general theorem.
+Result of local run (Python 3, fractions.Fraction): **PASS, 952 cases**: all 256 Boolean 3-bit functions at fair masses, all 256 at unequal positive masses, plus 240 seeded heterogeneous 2×3×2 ternary-palette functions and 200 targeted quadratic four-bit functions under unequal biases. Exact rational, no floating-point tolerance. This finite check cannot certify the general theorem.
 
 ## Further formalization boundary
 
