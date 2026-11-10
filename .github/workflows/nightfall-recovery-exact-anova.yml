@@ -1,0 +1,38 @@
+name: NIGHTFALL exact finite ANOVA recovery audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/check_finite_anova_recovery.py'
+      - '.github/workflows/nightfall-recovery-exact-anova.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-anova:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Independent finite positive-atom ANOVA replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p replay
+          python3 -V | tee replay/python.txt
+          python3 research/nightfall/formalization/product_space/check_finite_anova_recovery.py | tee replay/finite-anova.json
+          python3 - <<'PY'
+          import json
+          with open("replay/finite-anova.json") as f:
+              r=json.load(f)
+          assert r["status"]=="PASS"
+          assert r["cases"]==952
+          PY
+          sha256sum research/nightfall/formalization/product_space/check_finite_anova_recovery.py > replay/SHA256SUMS.txt
+          git rev-parse HEAD > replay/commit.txt
+      - name: Save frozen replay receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: exact-finite-anova-replay
+          path: replay/
+          if-no-files-found: warn
