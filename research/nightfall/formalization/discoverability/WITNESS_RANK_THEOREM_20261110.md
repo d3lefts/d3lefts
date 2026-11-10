@@ -134,3 +134,16 @@ The adaptive theorem of §3 does **not** require \(I\) to be finite, provided th
 This is a set-theoretic existence statement under the full universal witness hypothesis, and may invoke choice to select blocks from all possible histories. It does **not** establish algorithmic computability of the selector, its measurability under a product probability law, any finite bound for arbitrary systems (which may have infinite width/rank), or arbitrary dynamic/interactive actuation. The current Lean module proves only the **finite-sensor static certificate core**; a separately audited formal proof of the infinite-index adaptive protocol remains open.
 
 This distinction allows the abstract principle to cover infinite ambient complexity *conditionally* without pretending that countable-product adaptive recovery has already passed its measurable-selection review.
+
+
+## 11. Two-sided characterization: rank is also an unavoidable lower bound
+
+Every correct deterministic decision tree must query at least one sensor from each sensitive block at the actual state \(x\). Otherwise a witness state \(y\) changing only the readings in an unqueried block would follow the identical observation transcript but require a different target output. For \(r(x)\) pairwise disjoint sensitive blocks, the actual path must therefore contain at least \(r(x)\) distinct sensor observations.
+
+Taking the worst case, \(\boxed{r\le D(f)}\). Together with the uniform-witness upper bound of §3:
+\[
+  \boxed{r\le D(f)\le w r.}
+\]
+If \(w=1\), this is an **exact characterization** \(D(f)=r\); in general, \(w\) is a multiplicative upper/lower approximation factor. This is the standard block-sensitivity lower-bound principle in a sensor-agnostic formulation, not a new first-discovery theorem. It also explains why bounded witness width *alone* is insufficient: parity has \(w=1\) but \(r=n\), so it necessarily costs \(n\) observations.
+
+No lower-bound theorem for arbitrary noisy or interactive experiments follows without a corresponding indistinguishability model. For nonuniform sensor costs, every correct path must hit each disjoint sensitive block, giving a **minimum-cost hitting-set lower bound**; replacing it with the sum of the cheapest sensor in each sensitive block is valid because disjoint blocks cannot reuse one queried sensor.
