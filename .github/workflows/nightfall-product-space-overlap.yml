@@ -27,7 +27,7 @@ jobs:
           python3 "$GITHUB_WORKSPACE/scripts/lean_bridge.py"             "$GITHUB_WORKSPACE/research/nightfall/formalization/product_space/LocalizedOverlapConsequence.lean"             --workspace /tmp/mathlib4             --decl Nightfall.ProductSpace.localized_overlap_consequence             --json-out "$GITHUB_WORKSPACE/lean-receipts/overlap.json"
       - name: Audit standard axioms
         run: |
-          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/overlap.json
+          python3 "$GITHUB_WORKSPACE/research/nightfall/formalization/product_space/check_receipts.py" "$GITHUB_WORKSPACE/lean-receipts/overlap.json"
       - name: Save receipts
         if: always()
         uses: actions/upload-artifact@v4
