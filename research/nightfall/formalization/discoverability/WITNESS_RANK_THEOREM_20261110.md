@@ -168,3 +168,51 @@ The global disjoint sensitive-block rank is exactly \(r=2\): any sensitive block
 Thus \(w=r=2\) for every \(N\), while the nonadaptive exact observation cost grows as \(N+1\). This is a classical addressing/pointer mechanism, not a worldwide novelty claim. It is a concrete model-matched demonstration that witness geometry can remain bounded when ambient dimension increases. However, charging the address sensor by \(\lceil\log_2N\rceil\) bits makes the bit communication cost grow logarithmically rather than remain two.
 
 **Independent exact falsification:** check_high_arity_address.py enumerates the entire state set and computes optimal deterministic adaptive and nonadaptive query counts for \(N=2,3,4,5\). The checker does not hard-code D=2 as the algorithm: it independently solves the finite minimax decision-tree recursion over observation fibers.
+
+
+## 13. Conflict hypergraphs: exact nonadaptive discovery on constrained state spaces
+
+Define the **conflict hyperedge** for every pair of admissible states with different targets:
+\[
+  E_{x,y}=\{i\in I:\rho_i(x)\ne\rho_i(y)\},\qquad f(x)\ne f(y).
+\]
+For a finite sensor set \(I\), a fixed nonadaptive query set \(Q\) exactly determines \(f\) on all admissible states **if and only if** it intersects every such \(E_{x,y}\). Thus the minimum nonadaptive query cost is exactly the transversal (hitting-set) number of this explicitly defined conflict hypergraph. If one conflict edge is empty, exact discovery is impossible.
+
+**Proof.** If \(Q\) misses an edge \(E_{x,y}\), then states x,y have identical readings on Q but different targets, so Q cannot determine the output. Conversely, if Q hits every conflicting edge, two states agreeing on all Q readings cannot have different targets. QED.
+
+This equivalence is finite and deterministic, requires no product law, and is a classical information-separation principle. The source is now formalized in Lean as global_certificate_iff_conflict_separation, separates_iff_hits_conflict_edges, and nonadaptive_certificate_iff_conflict_transversal. Their present CI status must be checked independently from the earlier witness-packing declarations.
+
+**Adversarial negative control for overly strong witness-width claims.** Let only two states be admissible: bit strings 101 and 110, with opposite target labels, and let each bit be a sensor. The two states differ on sensor positions 0 and 1. Thus the initial uniform *resampling* witness must contain both sensors and w=2, whereas querying either one sensor identifies the state and target exactly: D=1. The conflict hypergraph has one edge {0,1}, with transversal number 1. Hence **w≤D is false for constrained state spaces**; witness width is only a sufficient-cost invariant. This is why the conflict-hypergraph representation must accompany the witness-rank theorem.
+
+The exact adaptive cost generally requires a recursive conflict-fiber splitting strategy; global hitting sets can be much larger than optimal adaptive protocols (the N-ary address family above). Future research should derive new, structural guarantees on cheap recursive fiber splitting, rather than equating an input-sensitive block size with observation complexity.
+
+## 14. The shared exact/approximate discovery potential: posterior pairwise disagreement
+
+Let \(Y=f(X)\) have a finite real output palette with minimum gap \(\Delta>0\). Conditional on any observation history \(H\), let \(\hat Y(H)\) be a maximum-posterior-probability (MAP) output label and \(V_H=\operatorname{Var}(Y\mid H)\).
+
+**Sharp palette conversion lemma:**
+\[
+\boxed{\Pr(\hat Y(H)\ne Y\mid H)\le \frac{2V_H}{\Delta^2}.}
+\]
+
+Proof: write \(p_a=\Pr(Y=a\mid H)\). Two independent draws \(Y,Y'\) from the posterior satisfy
+\[
+2V_H=\sum_{a,b}p_ap_b(a-b)^2
+\ge\Delta^2\bigl(1-\sum_a p_a^2\bigr).
+\]
+Since \(\sum_a p_a^2\le\max_a p_a\), the conditional MAP error \(1-\max_a p_a\) is at most \(1-\sum_a p_a^2\le2V_H/\Delta^2\). The factor **2 is sharp** when two equally likely values differ by exactly \(\Delta\). QED.
+
+Consequently, **whenever** a separately proved adaptive observation rule establishes a posterior variance contraction
+\[
+\mathbb E V_t\le V_0(1-1/B)^t\quad(B\ge1),
+\]
+the classification error of the MAP predictor obeys
+\[
+\boxed{\Pr(\hat Y_t\ne Y)\le
+\min\{1,(2V_0/\Delta^2)(1-1/B)^t\}.}
+\]
+Thus sufficient observations for error \(\eta>0\) are \(t\ge B\log(2V_0/(\eta\Delta^2))\) when the logarithm is positive, using \(1-1/B\le e^{-1/B}\).
+
+This is a **classical conditional-variance-to-error reduction**, not a claim that arbitrary systems automatically satisfy geometric contraction. NIGHTFALL PR #303 studies the separate posterior/Markov contraction ingredients; their concrete product-space normalization, sampler hypotheses and end-to-end composition remain subject to the repository's original proof gates. The lemma supplies connective tissue between the exact-recovery fiber criterion (zero unresolved conflict) and approximate discovery (small weighted pairwise disagreement).
+
+**Independent exact check:** check_posterior_palette.py, using fractions.Fraction, exhausts 7,792 rational discrete posterior distributions with 2–5 output levels and arithmetic/uneven palettes. It checks the exact inequality and records sharp equality cases. The checker is finite evidence, not proof of the general lemma.
