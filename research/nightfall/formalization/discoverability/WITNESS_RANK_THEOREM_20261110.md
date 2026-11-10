@@ -101,3 +101,27 @@ Finite checks cannot prove general claims or establish historical priority.
 4. Once end-to-end finite results are certified, tackle countable measurable selection and completed-product subtleties in a separate module. Obtain independent mathematical review.
 
 **Stop rule:** If the universal result collapses to a textbook D<=degree*bs derivation without an original extension or a new certified structural bound, archive as a useful reusable lemma and transfer instrument, not an original mathematical flagship.
+
+
+## 9. A self-contained finite-palette rank bound by polynomial Markov inequality
+
+**Proposition (independent derivation, classical ingredients).** Suppose \(f\) on a finite full-support independent product has Hoeffding degree at most \(d\ge1\), essential output range \(R>0\), and finite-palette spacing \(\Delta>0\). Then its native-coordinate disjoint-block rank satisfies
+\[
+  \mathrm{bs}(f)\le 2d^2 R/\Delta,
+\]
+and the preceding uniform-witness theorem gives the entirely dimension-independent elementary bound
+\[
+  D(f)\le 2d^3 R/\Delta.
+\]
+
+**Proof of the rank bound.** Fix any state \(x\) and \(t\) pairwise disjoint sensitive blocks \(B_1,\ldots,B_t\), with alternative configurations \(y_j\) changing the output by at least \(\Delta\) inside only \(B_j\). Introduce a binary switch \(z_j\) selecting the original values on \(B_j\) when \(z_j=0\), or the replacement values when \(z_j=1\); all other original coordinates remain fixed. The resulting \(g:\{0,1\}^t\to\mathbb R\) has degree at most \(d\), by the finite degree-preserving disjoint-block switching lemma, and takes values inside the same interval of length \(R\).
+
+Partition the switched coordinates into \(J_+=\{j:g(e_j)>g(0)\}\) and \(J_-=\{j:g(e_j)<g(0)\}\). For the positive group, let \(q_+(s)=\mathbb E[g(Z)]\) where \(Z_j\sim\mathrm{Bernoulli}(s)\) independently for \(j\in J_+\) and all other switches are zero. The function \(q_+\) is a real univariate polynomial of degree \(\le d\), and its range on \([0,1]\) lies in an interval of width \(R\). Direct differentiation at zero gives
+\[
+q_+'(0)=\sum_{j\in J_+}(g(e_j)-g(0))\ge |J_+|\Delta.
+\]
+The classical Markov derivative inequality, rescaled from \([-1,1]\), bounds the derivative of any degree-\(d\) polynomial whose range has width \(R\) on \([0,1]\) by \(d^2R\). Thus \(|J_+|\le d^2R/\Delta\). Apply the identical argument to \(-g\) over \(J_-\); the two counts sum to \(t\le2d^2R/\Delta\). Since \(x\) and the disjoint blocks were arbitrary, the rank bound follows. QED.
+
+The sharper FHKL/Tal machinery used in the v0.2 exact-recovery research can improve constants under its applicable normalization; this section establishes a **separate elementary conservative bound** and is not a kernel formalization of Markov's inequality. For equally spaced \(q\)-level outputs this gives \(2(q-1)d^3\), while the v0.2 manuscript proposes \((q-1)d^3\) via a sharper imported derivative inequality. Neither factor is claimed as a new historical record.
+
+**Critical scope:** This rank bound requires an actual finite palette with positive \(\Delta\). For unrestricted real outputs \(\Delta\) may vanish; the degree-one binary-encoding example above demonstrates why no degree-only exact query bound follows.
