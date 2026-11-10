@@ -4,6 +4,7 @@ on:
     paths:
       - 'research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean'
       - 'research/nightfall/formalization/product_space/check_certificate_guided_descent.py'
+      - 'research/nightfall/formalization/product_space/check_posterior_adaptive_exact.py'
       - '.github/workflows/nightfall-two-sided-bridge.yml'
   workflow_dispatch:
 permissions:
@@ -16,6 +17,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Independent exact-rational sampler and posterior check
         run: python3 research/nightfall/formalization/product_space/check_certificate_guided_descent.py
+      - name: Exhaustive conditional-product and adaptive Markov audit
+        run: python3 research/nightfall/formalization/product_space/check_posterior_adaptive_exact.py
       - name: Install Lean 4.33.0 (Turturean pin)
         shell: bash
         run: |
