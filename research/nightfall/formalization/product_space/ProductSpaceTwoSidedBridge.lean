@@ -2027,5 +2027,82 @@ theorem restricted_output_observe
   exact congrArg g (pin_observe_eq s j a x hfree)
 
 
+
+/-! ## Interaction-degree invariance of partial evaluation -/
+
+/-- A finite-coordinate function depends only on `S` if agreement on `S`
+forces its outputs to agree. -/
+def DependsOnlyOn
+    {ι α : Type} (f : (ι → α) → ℝ) (S : Finset ι) : Prop :=
+  ∀ x y, (∀ j, j ∈ S → x j = y j) → f x = f y
+
+/-- Finite interaction degree is represented by a sum of terms supported on
+at most `d` coordinates. For finite products with full support, this agrees
+with the vanishing of high-order Hoeffding components. -/
+def HasInteractionDegreeAtMost
+    {ι α : Type} [Fintype ι] [DecidableEq ι]
+    (f : (ι → α) → ℝ) (d : ℕ) : Prop :=
+  ∃ terms : Finset ι → (ι → α) → ℝ,
+    (∀ x, f x = ∑ S : Finset ι, terms S x) ∧
+    (∀ S, d < S.card → ∀ x, terms S x = 0) ∧
+    (∀ S, DependsOnlyOn (terms S) S)
+
+/-- Partial observation never creates interactions of higher degree,
+regardless of atom weights or alphabet cardinality. -/
+theorem interaction_degree_under_pinning
+    {ι α : Type} [Fintype ι] [DecidableEq ι]
+    (f : (ι → α) → ℝ) (d : ℕ)
+    (hdegree : HasInteractionDegreeAtMost f d)
+    (s : ι → Option α) :
+    HasInteractionDegreeAtMost
+      (fun x => f (pinConfiguration s x)) d := by
+  rcases hdegree with ⟨terms, hsum, hhigh, hdepends⟩
+  refine ⟨(fun S x => terms S (pinConfiguration s x)), ?_, ?_, ?_⟩
+  · intro x
+    exact hsum (pinConfiguration s x)
+  · intro S hcard x
+    exact hhigh S hcard (pinConfiguration s x)
+  · intro S x y hxy
+    apply hdepends S (pinConfiguration s x) (pinConfiguration s y)
+    intro j hj
+    cases hs : s j with
+    | none =>
+        simpa [pinConfiguration, hs] using hxy j hj
+    | some a =>
+        simp [pinConfiguration, hs]
+
+/-- The degree/variance ANOVA budget, abstracted to nonnegative component
+energies. To use it for a specific product law, additionally establish the
+Hoeffding energy identity for that function and measure. -/
+theorem anova_degree_energy_budget
+    {ι : Type} [Fintype ι] [DecidableEq ι]
+    (energy : Finset ι → ℝ) (d : ℕ)
+    (henergy : ∀ S, 0 ≤ energy S)
+    (hdegree : ∀ S, d < S.card → energy S = 0) :
+    (∑ S : Finset ι, (S.card : ℝ) * energy S) ≤
+      (d : ℝ) * (∑ S : Finset ι,
+        if S = ∅ then (0 : ℝ) else energy S) := by
+  calc
+    (∑ S : Finset ι, (S.card : ℝ) * energy S) ≤
+        ∑ S : Finset ι,
+          (d : ℝ) * (if S = ∅ then (0 : ℝ) else energy S) := by
+            apply Finset.sum_le_sum
+            intro S _
+            by_cases he : S = ∅
+            · subst S
+              simp
+            · by_cases hc : S.card ≤ d
+              · have hle : (S.card : ℝ) ≤ (d : ℝ) := by
+                  exact_mod_cast hc
+                simpa [he] using
+                  mul_le_mul_of_nonneg_right hle (henergy S)
+              · have hz : energy S = 0 :=
+                  hdegree S (Nat.lt_of_not_ge hc)
+                simp [he, hz]
+    _ = (d : ℝ) * (∑ S : Finset ι,
+          if S = ∅ then (0 : ℝ) else energy S) := by
+            rw [Finset.mul_sum]
+
+
 end Nightfall.ProductSpace.Posterior
 
