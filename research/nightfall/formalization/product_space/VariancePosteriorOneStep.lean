@@ -69,6 +69,19 @@ theorem observationProbability_sum_one
   rw [← Finset.sum_div]
   exact div_self hSpos.ne'
 
+/-- Nonnegative weights complement the sum-one result, certifying
+a genuine finite coordinate-sampling distribution. -/
+theorem observationProbability_nonneg
+    (p : ι → α → ℝ) (hp : ∀ i a, 0 < p i a)
+    (g : (ι → α) → Bool) (lam : (ι → α) → ι → ℝ)
+    (hrow : IsProductRow g lam)
+    (htrue : ∃ x, g x = true) (hfalse : ∃ x, g x = false)
+    (j : ι) : 0 ≤ observationProbability p g lam j := by
+  have hSpos := (nonconstant_finite_product_sampler
+    p hp g lam hrow htrue hfalse).1
+  unfold observationProbability
+  exact div_nonneg (Real.sqrt_nonneg _) hSpos.le
+
 /-- For every queried coordinate j, posterior total influence averages
 to the old total minus that coordinate's directed crossing mass. The
 identity is genuine finite posterior arithmetic, not an ANOVA premise. -/
@@ -162,5 +175,62 @@ theorem normalized_one_step_certificate_to_observation
       simpa [mul_comm] using hgain
     rw [hdelta]
     exact sub_le_sub_left hdiv _
+
+
+/-- **Degree-dependent one-query contraction** in a normalized finite
+product. The ANOVA interaction-energy table is required to reproduce the
+actual total resampling potential and Boolean variance; the table itself
+and its degree support restriction are explicit assumptions.
+
+The proof uses the now-certified concrete posterior descent and the
+separately kernel-checked ANOVA degree-energy budget. No artificial
+Markov-step or sampler gain premise is assumed. -/
+theorem normalized_one_step_degree_contraction
+    (p : ι → α → ℝ) (hp : ∀ i a, 0 < p i a)
+    (hprob : ∀ i, (∑ a, p i a) = 1)
+    (g : (ι → α) → Bool) (lam : (ι → α) → ι → ℝ)
+    (hrow : IsProductRow g lam)
+    (htrue : ∃ x, g x = true) (hfalse : ∃ x, g x = false)
+    (K : ℝ) (hK : 0 < K)
+    (hbounded : ∀ x, (∑ j, lam x j) ≤ K)
+    (d : ℕ) (hd : 0 < d) (energy : Finset ι → ℝ)
+    (henergy : ∀ S, 0 ≤ energy S)
+    (hdegree : ∀ S, d < S.card → energy S = 0)
+    (hT : totalCrossingPotential p g =
+      ∑ S : Finset ι, (S.card : ℝ) * energy S)
+    (hVar : positiveClassMass p g * negativeClassMass p g =
+      ∑ S : Finset ι, if S = ∅ then (0 : ℝ) else energy S) :
+    expectedPosteriorPotential p g lam ≤
+      (1 - 1 / ((d : ℝ) * K ^ 2)) * totalCrossingPotential p g := by
+  have hafter := (normalized_one_step_certificate_to_observation
+    p hp hprob g lam hrow htrue hfalse K hK hbounded).2
+  have hbudget :
+      totalCrossingPotential p g ≤
+        (d : ℝ) * (positiveClassMass p g * negativeClassMass p g) := by
+    rw [hT, hVar]
+    exact anova_degree_energy_budget energy d henergy hdegree
+  have hdR : (0 : ℝ) < (d : ℝ) := by
+    exact_mod_cast hd
+  have hK2 : 0 < K ^ 2 := sq_pos_of_pos hK
+  have hDK : 0 < (d : ℝ) * K ^ 2 := mul_pos hdR hK2
+  have hfrac :
+      totalCrossingPotential p g / ((d : ℝ) * K ^ 2) ≤
+        (positiveClassMass p g * negativeClassMass p g) / K ^ 2 := by
+    apply (div_le_div_iff₀ hDK hK2).2
+    calc
+      totalCrossingPotential p g * K ^ 2 ≤
+          ((d : ℝ) * (positiveClassMass p g * negativeClassMass p g)) *
+            K ^ 2 := mul_le_mul_of_nonneg_right hbudget hK2.le
+      _ = (positiveClassMass p g * negativeClassMass p g) *
+            ((d : ℝ) * K ^ 2) := by ring
+  calc
+    expectedPosteriorPotential p g lam ≤
+        totalCrossingPotential p g -
+          (positiveClassMass p g * negativeClassMass p g) / K ^ 2 := hafter
+    _ ≤ totalCrossingPotential p g -
+        totalCrossingPotential p g / ((d : ℝ) * K ^ 2) :=
+          sub_le_sub_left hfrac _
+    _ = (1 - 1 / ((d : ℝ) * K ^ 2)) * totalCrossingPotential p g := by
+          ring
 
 end Nightfall.ProductSpace.Observation
