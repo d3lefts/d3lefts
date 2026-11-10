@@ -52,8 +52,8 @@ theorem pairMass_nonneg (p : ι → α → ℝ)
     (hp : ∀ i a, 0 ≤ p i a) (z : PairSample ι α) :
     0 ≤ pairMass p z := by
   unfold pairMass
-  exact Finset.prod_nonneg_iff.mpr (Or.inl (fun i hi =>
-    mul_nonneg (hp i (z.1 i)) (hp i (z.2 i))))
+  exact Finset.prod_nonneg (fun i hi =>
+    mul_nonneg (hp i (z.1 i)) (hp i (z.2 i)))
 
 /-- Crucial orientation identity: every mask has exactly the same mass. -/
 theorem pairMass_flipPair (p : ι → α → ℝ)
@@ -81,6 +81,5 @@ theorem weighted_sum_all_orientations (p : ι → α → ℝ)
       (Fintype.card (ι → Bool) : ℝ) * (∑ z, pairMass p z * F z) := by
   simp_rw [weighted_sum_flipPair p F]
   rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
-  norm_cast
 
 end Nightfall.ProductSpace.Transfer
