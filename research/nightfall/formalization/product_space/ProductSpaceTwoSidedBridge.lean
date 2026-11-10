@@ -1277,3 +1277,292 @@ theorem overlap_information_sharp
 
 end Nightfall.ProductSpace.Discovery
 
+
+/-! ## Exact finite Bayesian posterior and adaptive Markov bridge
+
+The Bayesian posterior acts on an arbitrary finite sample space. For a product
+law the sample can be a pair of independent configurations, and `edge k x`
+its coordinate-resampling crossing indicator. The posterior excludes the
+already observed coordinate `j`. There is no ANOVA hypothesis in the
+posterior decrement identity. -/
+
+namespace Nightfall.ProductSpace.Posterior
+
+open Finset
+
+/-- Observable-class partition: the conditional numerator sums recover the
+unconditional expectation. This identity has no measure normalization
+assumption and is exact even for zero-mass states. -/
+theorem finite_observation_partition
+    {X A : Type*} [Fintype X] [Fintype A] [DecidableEq A]
+    (observable : X → A) (F : X → ℝ) :
+    (∑ a : A, ∑ x : X, if observable x = a then F x else 0) =
+      ∑ x : X, F x := by
+  classical
+  calc
+    (∑ a : A, ∑ x : X, if observable x = a then F x else 0) =
+        ∑ x : X, ∑ a : A, if observable x = a then F x else 0 :=
+          Finset.sum_comm
+    _ = ∑ x : X, F x := by
+          apply Finset.sum_congr rfl
+          intro x _
+          simp
+
+/-- Posterior influence of a remaining coordinate under observation
+`observable x=a`. The observed coordinate `j` is removed explicitly.
+For normalized masses m with marginal p, the numerator/p a is the
+ordinary conditional expectation of `edge k`. -/
+noncomputable def posteriorEdge
+    {X A J : Type*} [Fintype X] [Fintype A] [DecidableEq A]
+    [DecidableEq J]
+    (m : X → ℝ) (observable : X → A) (p : A → ℝ)
+    (edge : J → X → ℝ) (j : J) (a : A) (k : J) : ℝ :=
+  if k = j then 0 else
+    (∑ x : X, if observable x = a then m x * edge k x else 0) / p a
+
+/-- Exact posterior expectation of each remaining influence. -/
+theorem posterior_edge_mean
+    {X A J : Type*} [Fintype X] [Fintype A] [DecidableEq A]
+    [DecidableEq J]
+    (m : X → ℝ) (observable : X → A) (p : A → ℝ)
+    (hp : ∀ a, 0 < p a) (edge : J → X → ℝ)
+    (j k : J) :
+    (∑ a : A, p a * posteriorEdge m observable p edge j a k) =
+      if k = j then 0 else ∑ x : X, m x * edge k x := by
+  classical
+  by_cases hkj : k = j
+  · simp [posteriorEdge, hkj]
+  · simp only [posteriorEdge, if_neg hkj]
+    calc
+      (∑ a : A, p a *
+        ((∑ x : X, if observable x = a then m x * edge k x else 0) / p a)) =
+          ∑ a : A, ∑ x : X,
+            if observable x = a then m x * edge k x else 0 := by
+              apply Finset.sum_congr rfl
+              intro a _
+              field_simp [(hp a).ne']
+      _ = ∑ x : X, m x * edge k x :=
+        finite_observation_partition observable (fun x => m x * edge k x)
+
+/-- Exact finite Bayesian decrement of *total* resampling influence.
+No product structure or interaction-degree hypothesis is needed for this
+identity. The sampler later chooses j using a certificate profile. -/
+theorem posterior_total_mean
+    {X A J : Type*} [Fintype X] [Fintype A] [Fintype J]
+    [DecidableEq A] [DecidableEq J]
+    (m : X → ℝ) (observable : X → A) (p : A → ℝ)
+    (hp : ∀ a, 0 < p a) (edge : J → X → ℝ)
+    (j : J) :
+    (∑ a : A, p a * (∑ k : J, posteriorEdge m observable p edge j a k)) =
+      (∑ k : J, ∑ x : X, m x * edge k x) -
+        (∑ x : X, m x * edge j x) := by
+  classical
+  let c : J → ℝ := fun k => ∑ x : X, m x * edge k x
+  calc
+    (∑ a : A, p a * (∑ k : J, posteriorEdge m observable p edge j a k)) =
+        ∑ k : J, ∑ a : A, p a * posteriorEdge m observable p edge j a k := by
+          simp_rw [Finset.mul_sum]
+          rw [Finset.sum_comm]
+    _ = ∑ k : J, if k = j then 0 else c k := by
+          apply Finset.sum_congr rfl
+          intro k _
+          exact posterior_edge_mean m observable p hp edge j k
+    _ = (∑ k : J, c k) - c j := by
+          have hh : ∀ k : J, (if k = j then (0 : ℝ) else c k) =
+              c k - (if k = j then c k else 0) := by
+                intro k
+                by_cases h : k = j <;> simp [h]
+          simp_rw [hh, Finset.sum_sub_distrib]
+          simp
+    _ = (∑ k : J, ∑ x : X, m x * edge k x) -
+        (∑ x : X, m x * edge j x) := rfl
+
+/-- Exact conditional mass on the event observable=a. -/
+noncomputable def conditionalMass
+    {X A : Type*} [DecidableEq A]
+    (m : X → ℝ) (observable : X → A) (p : A → ℝ)
+    (a : A) (x : X) : ℝ :=
+  if observable x = a then m x / p a else 0
+
+/-- Normalization of the actual posterior from a finite marginal. -/
+theorem conditional_mass_one
+    {X A : Type*} [Fintype X] [DecidableEq A]
+    (m : X → ℝ) (observable : X → A) (p : A → ℝ)
+    (a : A) (hp : 0 < p a)
+    (hmargin : (∑ x : X, if observable x = a then m x else 0) = p a) :
+    (∑ x : X, conditionalMass m observable p a x) = 1 := by
+  classical
+  have hdiv : (∑ x : X, conditionalMass m observable p a x) =
+      (∑ x : X, if observable x = a then m x else 0) / p a := by
+    rw [Finset.sum_div]
+    apply Finset.sum_congr rfl
+    intro x _
+    by_cases h : observable x = a <;>
+      simp [conditionalMass, h]
+  rw [hdiv, hmargin]
+  exact div_self (hp.ne')
+
+/-! ## A finite Markov kernel and adaptive expected-potential decay -/
+
+/-- Push a finite distribution through a transition kernel. -/
+noncomputable def push
+    {S : Type*} [Fintype S]
+    (P : S → S → ℝ) (ν : S → ℝ) (b : S) : ℝ :=
+  ∑ a : S, ν a * P a b
+
+/-- Expected state potential under a finite distribution. -/
+def expectation
+    {S : Type*} [Fintype S]
+    (ν T : S → ℝ) : ℝ :=
+  ∑ s : S, ν s * T s
+
+/-- Exact Fubini identity for a randomized adaptive transition. -/
+theorem push_expectation
+    {S : Type*} [Fintype S]
+    (P : S → S → ℝ) (ν T : S → ℝ) :
+    expectation (push P ν) T =
+      ∑ a : S, ν a * (∑ b : S, P a b * T b) := by
+  calc
+    expectation (push P ν) T =
+        ∑ b : S, ∑ a : S, ν a * P a b * T b := by
+          unfold expectation push
+          apply Finset.sum_congr rfl
+          intro b _
+          rw [Finset.sum_mul]
+    _ = ∑ a : S, ∑ b : S, ν a * P a b * T b := Finset.sum_comm
+    _ = ∑ a : S, ν a * (∑ b : S, P a b * T b) := by
+          apply Finset.sum_congr rfl
+          intro a _
+          rw [Finset.mul_sum]
+          apply Finset.sum_congr rfl
+          intro b _
+          ring
+
+theorem push_nonneg
+    {S : Type*} [Fintype S]
+    (P : S → S → ℝ) (ν : S → ℝ)
+    (hP : ∀ a b, 0 ≤ P a b)
+    (hν : ∀ a, 0 ≤ ν a) :
+    ∀ b, 0 ≤ push P ν b := by
+  intro b
+  unfold push
+  exact Finset.sum_nonneg (fun a _ => mul_nonneg (hν a) (hP a b))
+
+theorem push_mass_one
+    {S : Type*} [Fintype S]
+    (P : S → S → ℝ) (ν : S → ℝ)
+    (hP : ∀ a, ∑ b : S, P a b = 1)
+    (hν : ∑ a : S, ν a = 1) :
+    (∑ b : S, push P ν b) = 1 := by
+  calc
+    (∑ b : S, push P ν b) =
+        ∑ a : S, ν a * (∑ b : S, P a b) := by
+          simpa only [expectation, mul_one] using
+            (push_expectation P ν (fun _ => (1 : ℝ)))
+    _ = ∑ a : S, ν a := by simp_rw [hP, mul_one]
+    _ = 1 := hν
+
+theorem push_potential_bound
+    {S : Type*} [Fintype S]
+    (P : S → S → ℝ) (ν T : S → ℝ) (ρ : ℝ)
+    (hν : ∀ a, 0 ≤ ν a)
+    (hstep : ∀ a, (∑ b : S, P a b * T b) ≤ ρ * T a) :
+    expectation (push P ν) T ≤ ρ * expectation ν T := by
+  calc
+    expectation (push P ν) T =
+        ∑ a : S, ν a * (∑ b : S, P a b * T b) :=
+          push_expectation P ν T
+    _ ≤ ∑ a : S, ν a * (ρ * T a) := by
+          apply Finset.sum_le_sum
+          intro a _
+          exact mul_le_mul_of_nonneg_left (hstep a) (hν a)
+    _ = ρ * expectation ν T := by
+          unfold expectation
+          rw [Finset.mul_sum]
+          apply Finset.sum_congr rfl
+          intro a _
+          ring
+
+/-- Recursive application of the same finite adaptive Markov kernel. -/
+noncomputable def evolve
+    {S : Type*} [Fintype S] (P : S → S → ℝ)
+    (ν : S → ℝ) : ℕ → S → ℝ
+  | 0 => ν
+  | n + 1 => push P (evolve P ν n)
+
+theorem evolve_nonneg
+    {S : Type*} [Fintype S]
+    (P : S → S → ℝ) (ν : S → ℝ)
+    (hP : ∀ a b, 0 ≤ P a b)
+    (hν : ∀ a, 0 ≤ ν a) :
+    ∀ n a, 0 ≤ evolve P ν n a := by
+  intro n
+  induction n with
+  | zero =>
+      intro a
+      exact hν a
+  | succ n ih =>
+      intro a
+      exact push_nonneg P (evolve P ν n) hP ih a
+
+/-- Fully generic finite-state adaptive process:
+one-step drift plus nonnegative transition probabilities imply the complete
+geometric expected-potential guarantee for every time horizon. -/
+theorem adaptive_markov_decay
+    {S : Type*} [Fintype S]
+    (P : S → S → ℝ) (ν T : S → ℝ) (ρ : ℝ)
+    (hρ : 0 ≤ ρ)
+    (hP : ∀ a b, 0 ≤ P a b)
+    (hν : ∀ a, 0 ≤ ν a)
+    (hstep : ∀ a, (∑ b : S, P a b * T b) ≤ ρ * T a) :
+    ∀ n, expectation (evolve P ν n) T ≤
+      ρ ^ n * expectation ν T := by
+  have hdec : ∀ n,
+      expectation (evolve P ν (n + 1)) T ≤
+      ρ * expectation (evolve P ν n) T := by
+    intro n
+    change expectation (push P (evolve P ν n)) T ≤
+      ρ * expectation (evolve P ν n) T
+    exact push_potential_bound P (evolve P ν n) T ρ
+      (evolve_nonneg P ν hP hν n) hstep
+  simpa only [evolve] using
+    (Nightfall.ProductSpace.Discovery.geometric_potential_decay
+      (fun n => expectation (evolve P ν n) T) ρ hρ hdec)
+
+/-- General dimension-free posterior-to-adaptive drift theorem for a finite
+query-response process. Premises separate the exact posterior identity,
+the sampler gain, and the variance-vs-potential information budget. -/
+theorem adaptive_query_contraction
+    {S J A : Type*} [Fintype S] [Fintype J] [Fintype A]
+    (T : S → ℝ) (π : S → J → ℝ) (p : S → J → A → ℝ)
+    (after : S → J → A → ℝ) (I : S → J → ℝ)
+    (gap : S → ℝ) (budget : ℝ)
+    (hbudget : 0 < budget)
+    (hπ : ∀ s, ∑ j : J, π s j = 1)
+    (hp : ∀ s j, ∑ a : A, p s j a = 1)
+    (hposterior : ∀ s j, (∑ a : A, p s j a * after s j a) = T s - I s j)
+    (hsampler : ∀ s, gap s ≤ ∑ j : J, π s j * I s j)
+    (hgap : ∀ s, T s / budget ≤ gap s) :
+    ∀ s, (∑ j : J, π s j * (∑ a : A, p s j a * after s j a)) ≤
+      (1 - 1 / budget) * T s := by
+  intro s
+  calc
+    (∑ j : J, π s j * (∑ a : A, p s j a * after s j a)) =
+        ∑ j : J, π s j * (T s - I s j) := by
+          apply Finset.sum_congr rfl
+          intro j _
+          rw [hposterior s j]
+    _ = T s - ∑ j : J, π s j * I s j := by
+          rw [Finset.sum_sub_distrib]
+          rw [← Finset.sum_mul]
+          rw [hπ s]
+          ring
+    _ ≤ T s - gap s := sub_le_sub_left (hsampler s) (T s)
+    _ ≤ (1 - 1 / budget) * T s := by
+          have h := hgap s
+          apply le_trans (sub_le_sub_left h (T s))
+          ring_nf
+          rfl
+
+end Nightfall.ProductSpace.Posterior
+
