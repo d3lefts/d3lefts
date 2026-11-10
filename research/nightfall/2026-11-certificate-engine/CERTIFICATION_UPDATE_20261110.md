@@ -19,6 +19,14 @@
 
 ---
 
+## Subsequent finite observation-bridge merge
+
+- [PR #304](https://github.com/d3lefts/d3lefts/pull/304) **merged** as `1a0220441d6cc60763f57292993c0ef83cd2ac88`. Its same-toolchain [Lean receipt](https://github.com/d3lefts/d3lefts/actions/runs/42919601473) covers the concrete finite-product certificate-to-overlap sampler and **finite ANOVA support-erasure** lemmas. Compilation initially failed for the newly added ANOVA lemma; the corrected source then passed and the axiom-policy check reported only standard Lean axioms. The concrete sampler theorem still explicitly assumes the product of positive inverse-row class masses is strictly positive; it is not a complete adaptive decision-tree theorem.
+- [PR #305](https://github.com/d3lefts/d3lefts/pull/305) **merged** as `ee37fb638c402d514789e5b8bd880a0e9b014c25`; its replay on the combined #298/#299/#300 files [passed the two-sided check](https://github.com/d3lefts/d3lefts/actions/runs/42918839062) and [finite level crossing check](https://github.com/d3lefts/d3lefts/actions/runs/42918839072).
+- **Not promoted:** [PR #303](https://github.com/d3lefts/d3lefts/pull/303) is a moving draft with additional posterior, Markov, product normalization and degree-budget code; [PR #306](https://github.com/d3lefts/d3lefts/pull/306) is a separate finite-section recovery draft. [PR #307](https://github.com/d3lefts/d3lefts/pull/307) freezes a previously Lean-checked prefix of #303 for fresh combined-repository CI. None of these is an independently refereed infinite-product, quantum, or full adaptive recovery theorem. Their latest live CI and merge status must be checked separately; this entry is a dated source-control checkpoint.
+
+---
+
 ## Historical pre-merge certification audit (frozen snapshot)
 
 
