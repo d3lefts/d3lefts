@@ -1,25 +1,62 @@
-# NIGHTFALL contributing and release policy
+# Contributing to NIGHTFALL
 
-Keep main as the published state. Every parallel AI instance should use a distinct topic branch, batch coherent changes, and open a pull request. Verify the pull request against fresh main before merging. Run the static gate, browser smoke, and the CI verify job. A failed gate needs a reproduced cause and a narrow repair.
+NIGHTFALL welcomes exact reproductions, proof criticism, source corrections, research tools, and clear documentation. **Evidence quality matters more than the volume of changes.** We retain failed attempts and prior versions when they explain a claim's limitations.
 
-Original findings require distinct primary artifacts, independently reproduced verification, and dated prior-art comparison. The Research Agenda contains ten explicitly untested proposals on a separate page. The originality whitelist remains exactly three entries unless a dated audit and human sign-off justify a change.
+Research is directed by Devin J. Wright and is substantially AI-assisted. Internal model agreement is not independent external peer review. A passing test certifies only its stated scope.
 
-## Scientific review queue
+## Choose the right contribution
 
-The dated [product-owner triage](research/nightfall/REVIEW_TRIAGE_20261029.md) names the current three independent-review priorities, their falsifiers, and their unresolved proof/novelty gates. Public [review navigation](https://d3lefts.github.io/d3lefts/review.html#priority) must link to each primary PR and present its status as *candidate* unless a supported publication decision has been recorded. A green software job certifies only the checks it ran.
+| Contribution | What to provide |
+| --- | --- |
+| **Correction / counterexample** | Claim and source version, smallest decisive failure, assumptions, reproducible steps, affected downstream claims |
+| **Exact finite construction** | Input object, arithmetic conventions, independently replayable checker, hashes, admissibility/precision limits |
+| **Theorem manuscript** | Full statement with quantified hypotheses, proof dependencies, primary source attribution, open proof and priority questions |
+| **Lean formalization** | Exact declaration, pinned Lean/Mathlib versions, compiler receipts, standard-axiom audit, proof statement and remaining assumptions |
+| **Site or tooling improvement** | Narrow scope, behavior before/after, keyboard/mobile/accessibility effects, relevant static and browser results |
+| **Public binary release** | Confirmed disclosure authorization, complete manifest and source custody, independent byte-level replay and exact scope |
 
-Consolidate overlapping draft branches before merging. Do not promote a theorem, novelty claim, or competitive result in a presentation-only PR. When a test or proof fails, keep its smallest counterexample and repair the original claim's dependencies.
+New manuscripts belong in the research archive as **candidates** until their particular review gates are met. Do not promote a manuscript or numerical experiment into the site's internally approved finding catalogue through a copy, layout, or CI-only change. The currently designated set is five *bounded/finite findings* (three core, two additionally scoped), not an assertion of five globally original peer-reviewed theorems.
 
-## GitHub administrator action
+## Branch and pull-request workflow
 
-The documented branch policy cannot block direct pushes on its own. Enable Settings > Rules > Rulesets > New branch ruleset for main, require pull requests, require the Verify research website / verify check to pass, and restrict bypass if supported. Confirm the rule is active. GitHub Pages should deploy main /docs.
+1. Create a topic branch from the current `main`. Keep one coherent concern per PR and avoid editing another instance's active branch.
+2. Link a source issue or primary research file where relevant. Prefer additive, reversible changes to frozen evidence, certificates, and research history; never silently overwrite an immutable witness.
+3. Use [the pull-request template](.github/pull_request_template.md). State what changed, what did not change, tests actually run, source hashes, limitations, and outstanding review.
+4. Run the narrowest deterministic check first, then the relevant website, checker, or proof-assistant workflow. The [website CI](.github/workflows/verify-site.yml) checks presentation and selected program invariants; it does **not** independently prove new mathematical theorems.
+5. Inspect the final diff, reconcile newer `main`, and merge only when the relevant checks and source scope are sound. Verify the merged state and, for public pages, deployment independently.
 
-After a green merge, check the main workflow and Pages deployment. Cancelled superseded runs reflect rapid commits, not necessarily broken live pages.
+A branch protection/ruleset must be enabled by a repository administrator to enforce PR-only changes and required checks. Documentation alone cannot enforce it; check **Settings → Rules → Rulesets** and the applicable status-check names.
 
-## Completed public evidence release
+### Quick checks
 
-Issue #5's approved binaries are available at [the curated release](https://github.com/d3lefts/d3lefts/releases/tag/nightfall-research-2026-10-28). Do not restart disclosure approval or request the private master archives. Use `python3 scripts/download_nightfall_curated_assets.py public-assets` and the receipt linked from `docs/evidence.html`. Keep issue #6 separate: accepted Arena input identity remains unresolved.
+From the repository root:
 
-## Efficient CI
+```bash
+python3 scripts/test_repository_docs.py
+python3 scripts/check_site.py
+node scripts/test_proof_passport_batch.cjs
+```
 
-Batch coherent changes on a topic branch. Relevant PR checks run before merge; main pushes verify the published state. Superseded runs on the same ref are cancelled. Evidence Bridge now checks main instead of a retired feature branch. The release workflow downloads only the two public curated assets, checks all manifests, and replays exact GMP arithmetic without a private source or download credential. Never mark an old failed run successful; follow the new run on the corrected commit.
+For browser behavior use [the pinned website CI workflow](.github/workflows/verify-site.yml); for mathematical claims use the explicit source-specific commands, not a generic green build. A Lean result is certified **only to the named statement and its declared premises**. Keep receipts, source versions and axiom dependencies together.
+
+## Scientific review and claims
+
+A complete mathematical review distinguishes the following independent questions:
+
+- **Validity:** Are the assumptions satisfied, and does the proof or computation establish precisely what is claimed?
+- **Reproducibility:** Can an independent process rebuild the result from frozen inputs, checker version, commands and hashes?
+- **Originality:** Does a dated, source-to-source comparison show the result is absent from relevant earlier work under equivalent hypotheses?
+- **Significance:** Is the gain material beyond tolerance, restricted subclasses, or earlier mechanisms?
+- **Eligibility/publication:** Is distribution authorized, and does any competition or journal impose additional requirements?
+
+For formal review formats see [the external-review protocol](research/nightfall/REVIEW_PROTOCOL.md), [verification protocol](research/nightfall/AGENT_VERIFICATION_PROTOCOL.md), [dated review priorities](research/nightfall/REVIEW_TRIAGE_20261029.md) and [release scope](research/nightfall/PUBLICATION_SCOPE.md). Source-specific primary records override broad editorial summaries.
+
+Preserve negative controls, failed counterexample searches, withdrawn claims, and historical versions with reasons. Do not confuse *no counterexample found* with *theorem proved*. Do not claim an old red CI run is green; cite the actual successful rerun and commit.
+
+## Attribution, licensing and responsible disclosure
+
+Credit original mathematicians, human research directors, contributors, review authors, and substantial AI-generated work accurately. The project does not use AI persona names to imply independent human collaborators. A reviewer should specify whether their check is author-internal, independently implemented, formal-kernel, or external.
+
+No repository-wide `LICENSE` has been supplied. GitHub visibility is not blanket permission to reuse source code, manuscripts, figures or third-party material. Check each artifact's rights and request permission where needed. [`CITATION.cff`](CITATION.cff) supports citation; it does not grant reuse rights.
+
+Use the [issue templates](https://github.com/d3lefts/d3lefts/issues/new/choose) for mathematical challenges and source corrections. Do **not** put credentials, private datasets, or unpublished sensitive material in public Issues or PRs. For a security-sensitive problem, use a private reporting channel if the repository has one enabled, rather than posting an exploitable disclosure publicly.
