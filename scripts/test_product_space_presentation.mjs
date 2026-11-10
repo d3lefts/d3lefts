@@ -62,7 +62,7 @@ try{
     assert.equal(readability.intro,readability.bodyInk,"hero introduction must use readable foreground ink");
     // Both skies intentionally permit different serif highlight colors.
     // Check readability instead of forcing an identical palette token.
-    const rgb=str=>str.match(/\\d+/g).slice(0,3).map(Number);
+    const rgb=str=>str.match(/\d+/g).slice(0,3).map(Number);
     const luminance=vals=>vals.map(v=>{v/=255;return v<=0.04045?v/12.92:((v+0.055)/1.055)**2.4;})
       .reduce((s,v,i)=>s+[.2126,.7152,.0722][i]*v,0);
     const contrast=(a,b)=>{
