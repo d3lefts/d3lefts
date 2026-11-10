@@ -83,6 +83,8 @@ jobs:
             --decl Nightfall.ProductSpace.Posterior.certificate_overlap_necessary \
             --decl Nightfall.ProductSpace.Posterior.product_mass_normalized \
             --decl Nightfall.ProductSpace.Posterior.pair_mass_normalized \
+            --decl Nightfall.ProductSpace.Posterior.single_product_marginal \
+            --decl Nightfall.ProductSpace.Posterior.pair_first_marginal \
             --json-out lean-receipts/two-sided-bridge.json || {
               cat lean-receipts/two-sided-bridge.json || true
               exit 1
