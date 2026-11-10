@@ -1119,6 +1119,10 @@ theorem certificate_overlap_sampler
     (hloc : V1 * V0 ≤
       ∑ j, Real.sqrt (c j) * Real.sqrt (P j * Q j)) :
     0 < ∑ j, Real.sqrt (P j * Q j) ∧
+      (V1 * V0) ^ 2 ≤
+        (∑ j, Real.sqrt (P j * Q j)) ^ 2 *
+          (∑ j, (Real.sqrt (P j * Q j) /
+            (∑ k, Real.sqrt (P k * Q k))) * c j) ∧
       V1 * V0 ≤
         ∑ j, (Real.sqrt (P j * Q j) /
           (∑ k, Real.sqrt (P k * Q k))) * c j := by
@@ -1188,7 +1192,11 @@ theorem certificate_overlap_sampler
   have hA : V ≤ A := by
     have hs : 0 < S ^ 2 := sq_pos_of_pos hSpos
     exact (mul_le_mul_iff_of_pos_left hs).mp (by nlinarith [hVA])
-  exact ⟨hSpos, hA⟩
+  have hsharp : V ^ 2 ≤ S ^ 2 * A := by
+    calc
+      V ^ 2 ≤ S * C := hbound
+      _ = S ^ 2 * A := by rw [← hSC]; ring
+  exact ⟨hSpos, hsharp, hA⟩
 
 /-- Formal potential descent for an influence-guided randomized query.
 The analytic information is entirely in the gain premise; the one-step
