@@ -68,17 +68,29 @@ Hence `Var(g_s)≤T_s≤d Var(g_s)`. Lean declaration `anova_degree_energy_budge
 
 The transition kernel is `P(s,s')=Σ_{j,a:next(s,j,a)=s'} π_s(j)p_j(a)`, with absorbing terminal states. The proof of `query_kernel_mass_one` verifies normalization, `query_kernel_expected` verifies Fubini, and `certificate_guided_adaptive_decay` derives expected-potential contraction for all times from the per-state hypotheses. Since `Var(g_s)≤T_s`, the stated prediction-error bound follows.
 
-## Novel structural corollary to check independently
+## Sharper structural corollary: degree-free certificate-overlap rigidity
 
-Define `B_s=S_s/sqrt(V_1(s)V_0(s))`. Since the sampler's expected influence is no larger than total influence,
+The earlier provisional `B_s²≥1/(dK²)` bound is **strictly superseded**; it did not use the strongest available inequality. For every Boolean `g_s`, independent product resampling satisfies
 
-`Var(g_s)/(K² B_s²) ≤ E_{π_s}I_i(s) ≤ T_s ≤ d Var(g_s)`.
+`I_j(g_s)=E[Var(g_s|X_{-j})]≤Var(g_s)`,
 
-For any nonconstant state, canceling its positive variance gives the **certificate-overlap necessity**
+by total variance. Consequently, the localized certificate inequality yields
 
-`B_s² ≥ 1/(dK²)`.
+`V_1(s)V_0(s)≤sqrt(Var(g_s)) S_s`.
 
-Thus low interaction degree plus inexpensive certificates prevents the two output classes' normalized certificate loads from becoming arbitrarily disjoint. This is an algebraic consequence of the verified localized inequality and classical degree-energy relation. Its mathematical correctness and relevance are testable; its worldwide historical originality has not been established.
+For `V=V_1V_0>0`, it follows that
+
+`B_s²=S_s²/V≥V/Var(g_s)≥1/K²`,
+
+**with no interaction-degree assumption** and no dependence on coordinate count, alphabet size or marginal bias. It also bounds the maximum improvement from the sampler's overlap factor by `B_s^{-2}≤K²`.
+
+**Exact sharpness at degree one.** Take three independent unbiased bits, let `g(x)=x_1`, and choose rows with total cost exactly `K≥1`:
+- when `g(x)=1`: `λ^x=(1,K−1,0)`;
+- when `g(x)=0`: `λ^x=(1,0,K−1)`.
+
+They are valid fractional certificates because any opposite pair differs in the first coordinate and each row assigns weight one to that coordinate. Their loads satisfy `P_1=Q_1=1/(2K²)`, `P_2=(K−1)/(2K²)`, `Q_3=(K−1)/(2K²)`, with all other class-load components zero. Hence `V_1=V_0=1/(2K)`, `S=1/(2K²)`, and **`B²=1/K²` exactly**, while `I_1=Var(g)=1/4`. Exact rational arithmetic reproduced equality for `K∈{1,2,3,7,100}`. The example uses deliberately nonminimal rows; optimizing row cost reduces K and changes the profiles. Thus sharpness concerns *arbitrary valid rows of maximum cost K*, not an optimal-certificate uniqueness claim.
+
+The Lean declarations `anova_coordinate_energy_le_variance` and `certificate_overlap_degree_free` address the pure finite-energy and numerical implications, conditional on the actual product probability identities. **Dated historical originality and expert review are outstanding.** The degree-dependent lemma is retained as a superseded, weaker predecessor with its exact hypotheses and proof receipts.
 
 ## Independent adversarial checks and remaining formal gates
 
