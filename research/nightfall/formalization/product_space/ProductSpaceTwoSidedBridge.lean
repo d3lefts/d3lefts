@@ -2187,5 +2187,113 @@ theorem pair_mass_normalized
           simp [product_mass_normalized p hnorm]
 
 
+
+/-- The observed coordinate's marginal of a normalized finite product law
+is *exactly* its given symbol weight. This supplies the Bayesian normalization
+premise rather than merely assuming it. -/
+theorem single_product_marginal
+    {ι α : Type} [Fintype ι] [DecidableEq ι]
+    [Fintype α] [DecidableEq α]
+    (p : ι → α → ℝ)
+    (hnorm : ∀ i, (∑ b : α, p i b) = 1)
+    (j : ι) (a : α) :
+    (∑ x : ι → α,
+      if x j = a then Transfer.prodMass p x else 0) = p j a := by
+  classical
+  let q : ι → α → ℝ := fun i b =>
+    if i = j then (if b = a then p i b else 0) else p i b
+  have hterm : ∀ x : ι → α, Transfer.prodMass q x =
+      if x j = a then Transfer.prodMass p x else 0 := by
+    intro x
+    by_cases hx : x j = a
+    · have heq : ∀ i, q i (x i) = p i (x i) := by
+        intro i
+        by_cases hij : i = j
+        · subst i
+          simp [q, hx]
+        · simp [q, hij]
+      change (∏ i, q i (x i)) =
+        if x j = a then (∏ i, p i (x i)) else 0
+      rw [if_pos hx]
+      exact Finset.prod_congr rfl (fun i _ => heq i)
+    · have hz : q j (x j) = 0 := by
+        simp [q, hx]
+      have hprod : (∏ i, q i (x i)) = 0 :=
+        Finset.prod_eq_zero (Finset.mem_univ j) hz
+      change (∏ i, q i (x i)) =
+        if x j = a then (∏ i, p i (x i)) else 0
+      rw [if_neg hx]
+      exact hprod
+  have hqsum : ∀ i, (∑ b : α, q i b) =
+      if i = j then p j a else 1 := by
+    intro i
+    by_cases hij : i = j
+    · subst i
+      simp [q]
+    · simp [q, hij, hnorm i]
+  have hprod : (∏ i, ∑ b : α, q i b) = p j a := by
+    calc
+      (∏ i, ∑ b : α, q i b) =
+          ∏ i, if i = j then p j a else (1 : ℝ) := by
+            apply Finset.prod_congr rfl
+            intro i _
+            exact hqsum i
+      _ = p j a := by simp
+  calc
+    (∑ x : ι → α,
+      if x j = a then Transfer.prodMass p x else 0) =
+        ∑ x : ι → α, Transfer.prodMass q x := by
+          apply Finset.sum_congr rfl
+          intro x _
+          exact (hterm x).symm
+    _ = ∏ i, ∑ b : α, q i b := by
+          simpa [Transfer.prodMass] using
+            (Finset.sum_prod_piFinset
+              (s := (Finset.univ : Finset α)) (g := q))
+    _ = p j a := hprod
+
+/-- The observed first-coordinate value of an independent pair has exactly
+its specified marginal. The pair posterior numerator therefore normalizes
+to one using `conditional_mass_one` with no extra assumption. -/
+theorem pair_first_marginal
+    {ι α : Type} [Fintype ι] [DecidableEq ι]
+    [Fintype α] [DecidableEq α]
+    (p : ι → α → ℝ)
+    (hnorm : ∀ i, (∑ b : α, p i b) = 1)
+    (j : ι) (a : α) :
+    (∑ z : Transfer.PairSample ι α,
+      if z.1 j = a then Transfer.pairMass p z else 0) = p j a := by
+  classical
+  calc
+    (∑ z : Transfer.PairSample ι α,
+      if z.1 j = a then Transfer.pairMass p z else 0) =
+      ∑ x : ι → α, ∑ y : ι → α,
+        if x j = a then
+          Transfer.prodMass p x * Transfer.prodMass p y else 0 := by
+          rw [Fintype.sum_prod_type]
+          apply Finset.sum_congr rfl
+          intro x _
+          apply Finset.sum_congr rfl
+          intro y _
+          by_cases hx : x j = a
+          · simp [hx, Transfer.pairMass_eq_prodMass]
+          · simp [hx]
+    _ = ∑ x : ι → α,
+          (if x j = a then Transfer.prodMass p x else 0) *
+          (∑ y : ι → α, Transfer.prodMass p y) := by
+          apply Finset.sum_congr rfl
+          intro x _
+          by_cases hx : x j = a
+          · simp [hx, Finset.mul_sum]
+          · simp [hx]
+    _ = (∑ x : ι → α, if x j = a then Transfer.prodMass p x else 0) *
+          (∑ y : ι → α, Transfer.prodMass p y) := by
+          rw [Finset.sum_mul]
+    _ = p j a := by
+          rw [single_product_marginal p hnorm j a,
+            product_mass_normalized p hnorm]
+          ring
+
+
 end Nightfall.ProductSpace.Posterior
 
