@@ -116,7 +116,7 @@ theorem explainedEnergy_supermodular (energy : Finset α → ℝ)
       ⟨hs.1, Finset.Subset.trans hs.2 hsub⟩
     simp [hs, hu]
   · by_cases hu : i ∈ T ∧ T.erase i ⊆ U
-    · simpa [hs, hu] using hnonneg T
+    · simpa only [if_neg hs, if_pos hu] using hnonneg T
     · simp [hs, hu]
 
 end Nightfall.Adaptive
