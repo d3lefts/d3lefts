@@ -103,6 +103,91 @@ theorem witness_packing_certificate
   exact ⟨hitting_implies_certificate read f x P hHits,
     bounded_union_cost P w r hWidth hRank⟩
 
+/-- A family of blocks is pairwise disjoint in the classical packing sense. -/
+def DisjointPacking (P : Finset (Finset Sensor)) : Prop :=
+  ∀ B ∈ P, ∀ C ∈ P, B ≠ C → Disjoint B C
+
+/-- Identifiability rules out an empty sensitive block. -/
+theorem sensitive_nonempty_of_identifiable
+    (read : State → Sensor → Answer) (f : State → Output)
+    (hIdent : Identifiable read f) (x : State) (B : Finset Sensor)
+    (hSensitive : SensitiveAt read f x B) : B.Nonempty := by
+  by_contra hEmpty
+  have hBempty : B = ∅ := Finset.not_nonempty_iff_eq_empty.mp hEmpty
+  obtain ⟨y, hChange, hOut⟩ := hSensitive
+  have hAll : ∀ i, read x i = read y i := by
+    intro i
+    apply hOut i
+    simp [hBempty]
+  exact hChange (hIdent x y hAll).symm
+
+/-- A disjoint sensitive packing saturating a valid rank upper bound must
+hit every sensitive block. Thus its union yields a pointwise certificate. -/
+theorem saturated_packing_hits
+    (read : State → Sensor → Answer) (f : State → Output)
+    (hIdent : Identifiable read f) (x : State)
+    (P : Finset (Finset Sensor)) (r : ℕ)
+    (hSensitive : ∀ B ∈ P, SensitiveAt read f x B)
+    (hPairwise : DisjointPacking P)
+    (hCard : P.card = r)
+    (hRank : ∀ Q : Finset (Finset Sensor),
+      (∀ B ∈ Q, SensitiveAt read f x B) →
+      DisjointPacking Q → Q.card ≤ r) :
+    HitsSensitive read f x P := by
+  intro B hB
+  by_contra hNoHit
+  have hBdisj : ∀ C ∈ P, Disjoint B C := by
+    intro C hC
+    by_contra hNotDisjoint
+    apply hNoHit
+    exact ⟨C, hC, hNotDisjoint⟩
+  have hBnonempty : B.Nonempty :=
+    sensitive_nonempty_of_identifiable read f hIdent x B hB
+  have hNotMem : B ∉ P := by
+    intro hMem
+    have hSelf : Disjoint B B := hBdisj B hMem
+    have hEmpty : B = ∅ := disjoint_self.mp hSelf
+    exact hBnonempty.ne_empty hEmpty
+  have hSensitiveNew : ∀ C ∈ insert B P, SensitiveAt read f x C := by
+    intro C hC
+    rcases Finset.mem_insert.mp hC with rfl | hOld
+    · exact hB
+    · exact hSensitive C hOld
+  have hPairwiseNew : DisjointPacking (insert B P) := by
+    intro C hC D hD hNe
+    rcases Finset.mem_insert.mp hC with hEqC | hOldC
+    · subst C
+      rcases Finset.mem_insert.mp hD with hEqD | hOldD
+      · exact False.elim (hNe hEqD.symm)
+      · exact hBdisj D hOldD
+    · rcases Finset.mem_insert.mp hD with hEqD | hOldD
+      · subst D
+        exact (hBdisj C hOldC).symm
+      · exact hPairwise C hOldC D hOldD hNe
+  have hBound := hRank (insert B P) hSensitiveNew hPairwiseNew
+  have hCardNew : (insert B P).card = P.card + 1 :=
+    Finset.card_insert_of_not_mem hNotMem
+  omega
+
+/-- A size-r sensitive packing of width w certifies the target with at
+most w*r sensors, provided r is the actual upper bound on all packings. -/
+theorem saturated_packing_certificate
+    (read : State → Sensor → Answer) (f : State → Output)
+    (hIdent : Identifiable read f) (x : State)
+    (P : Finset (Finset Sensor)) (w r : ℕ)
+    (hSensitive : ∀ B ∈ P, SensitiveAt read f x B)
+    (hPairwise : DisjointPacking P)
+    (hCard : P.card = r)
+    (hRank : ∀ Q : Finset (Finset Sensor),
+      (∀ B ∈ Q, SensitiveAt read f x B) →
+      DisjointPacking Q → Q.card ≤ r)
+    (hWidth : ∀ B ∈ P, B.card ≤ w) :
+    CertificateAt read f x (observedUnion P) ∧
+      (observedUnion P).card ≤ w * r :=
+  witness_packing_certificate read f x P w r
+    (saturated_packing_hits read f hIdent x P r
+      hSensitive hPairwise hCard hRank) hWidth hCard.le
+
 /-- A conflicting pair with identical complete sensor records rules out any certificate. -/
 theorem conflicting_twins_block_all_certificates
     (read : State → Sensor → Answer) (f : State → Output)
