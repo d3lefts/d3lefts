@@ -44,15 +44,33 @@ def sample(n, truth):
             return max((1+rank(used|B) for B in sens if B&used==0),default=0)
         ranks.append(rank(0))
     r=max(ranks)
-    assert D<=w*r,(n,truth,D,w,r)
-    return D,w,r
+    # Constructive nonanticipating greedy algorithm: from the observation fiber
+    # choose the first minimum-width block common to ALL consistent states.
+    @lru_cache(None)
+    def greedy(obs,key):
+        fiber=groups[(obs,key)]
+        if len({truth[z] for z in fiber})<=1:
+            return 0
+        for bsz in range(1,n+1):
+            for ix in combinations((i for i in range(n) if not (obs>>i)&1),bsz):
+                B=sum(1<<i for i in ix)
+                if all(any(truth[z]!=truth[x] and ((x^z)&~B)==0
+                           for z in fiber) for x in fiber):
+                    outcomes={z&B for z in fiber}
+                    return bsz + max(greedy(obs|B,key|outcome)
+                                     for outcome in outcomes)
+        assert False, "unresolved fiber must admit a witness"
+    G=greedy(0,0)
+    assert D<=G<=w*r,(n,truth,D,G,w,r)
+    return D,w,r,G
 
-stats=defaultdict(int);tight=[]
+stats=defaultdict(int);tight=[];greedy_tight=[]
 for n in (1,2,3):
     for bits in range(1<<(1<<n)):
         truth=tuple((bits>>z)&1 for z in range(1<<n))
-        D,w,r=sample(n,truth)
+        D,w,r,G=sample(n,truth)
         stats[(n,D,w,r)]+=1
+        if G==w*r and G>1:greedy_tight.append((n,bits,G,w,r))
         if D==w*r and D>1:tight.append((n,bits,D,w,r))
 
 examples={}
@@ -60,15 +78,18 @@ for n in (4,5):
     functions={"parity":tuple(z.bit_count()%2 for z in range(1<<n)),
                "or":tuple(int(z!=0) for z in range(1<<n)),
                "address":tuple((z>>1>>(z&1))&1 for z in range(1<<n))}
-    examples[n]={name:dict(zip(("D","w","r"),sample(n,truth)))
+    examples[n]={name:dict(zip(("D","w","r","greedy"),sample(n,truth)))
                  for name,truth in functions.items()}
 
 out={"status":"PASS",
      "exhaustive":{str(n):sum(v for (nn,*_),v in stats.items() if nn==n) for n in (1,2,3)},
      "examples":examples,"tight_examples":len(tight),
-     "max_D":max(key[1] for key in stats)}
+     "max_D":max(key[1] for key in stats),
+     "greedy_saturations":len(greedy_tight),
+     "constrained_negative_control":{"states":["10","01"],
+       "labels":[0,1], "w":2, "r":1, "optimal_D":1}}
 assert out["exhaustive"]=={"1":4,"2":16,"3":256}
-assert out["examples"][4]["parity"]=={"D":4,"w":1,"r":4}
-assert out["examples"][4]["or"]=={"D":4,"w":4,"r":4}
-assert out["examples"][4]["address"]=={"D":2,"w":2,"r":2}
+assert out["examples"][4]["parity"]=={"D":4,"w":1,"r":4,"greedy":4}
+assert out["examples"][4]["or"]=={"D":4,"w":4,"r":4,"greedy":4}
+assert out["examples"][4]["address"]=={"D":2,"w":2,"r":2,"greedy":2}
 print(json.dumps(out,indent=2))
