@@ -41,6 +41,9 @@ jobs:
             --decl Nightfall.ProductSpace.Transfer.pairMass_flipPair \
             --decl Nightfall.ProductSpace.Transfer.weighted_sum_flipPair \
             --decl Nightfall.ProductSpace.Transfer.weighted_sum_all_orientations \
+            --decl Nightfall.ProductSpace.Transfer.cubeLam_isRow \
+            --decl Nightfall.ProductSpace.Transfer.flipPair_antipode_fst \
+            --decl Nightfall.ProductSpace.Transfer.cubeCost_eq \
             --json-out lean-receipts/weighted-reciprocal-transfer.json || {
               cat lean-receipts/weighted-reciprocal-transfer.json
               exit 1
