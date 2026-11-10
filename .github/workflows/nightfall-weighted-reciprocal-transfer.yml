@@ -28,7 +28,7 @@ jobs:
           git -C /tmp/aa checkout 2a6ceaef872ae993708950f951989134084b851a
           cd /tmp/aa
           lake exe cache get
-          lake build AaronsonAmbainis.Chain AaronsonAmbainis.Bridge.Positivity
+          lake build AaronsonAmbainis.DetTheorem AaronsonAmbainis.TwoSided.Antipodal AaronsonAmbainis.Bridge.Positivity
       - name: Compile transfer and record named axiom dependencies
         shell: bash
         run: |
