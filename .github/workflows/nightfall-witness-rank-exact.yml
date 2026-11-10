@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/discoverability/check_witness_rank.py'
+      - 'research/nightfall/formalization/discoverability/check_high_arity_address.py'
       - '.github/workflows/nightfall-witness-rank-exact.yml'
   workflow_dispatch:
 permissions:
@@ -26,7 +27,14 @@ jobs:
           assert v["exhaustive"]=={"1":4,"2":16,"3":256}
           assert v["examples"]["4"]["address"]=={"D":2,"w":2,"r":2}
           PY
-          sha256sum research/nightfall/formalization/discoverability/check_witness_rank.py > evidence/SHA256SUMS.txt
+          python3 research/nightfall/formalization/discoverability/check_high_arity_address.py | tee evidence/address.json
+          python3 - <<'PY'
+          import json
+          with open("evidence/address.json") as f: v=json.load(f)
+          assert v["status"]=="PASS"
+          assert all(d["adaptive"]==2 and d["nonadaptive"]==int(n)+1 for n,d in v["cases"].items())
+          PY
+          sha256sum research/nightfall/formalization/discoverability/check_witness_rank.py research/nightfall/formalization/discoverability/check_high_arity_address.py > evidence/SHA256SUMS.txt
           git rev-parse HEAD > evidence/commit.txt
           python3 --version > evidence/python.txt
       - name: Upload exact replay
