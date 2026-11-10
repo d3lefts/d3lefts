@@ -230,7 +230,10 @@ theorem global_certificate_iff_conflict_separation
     exact hDiff (hCert x y hAgree).symm
   · intro hSep x y hAgree
     by_contra hDiff
-    obtain ⟨i, hiQ, hNe⟩ := hSep x y hDiff.symm
+    have hDiff' : f x ≠ f y := by
+      intro he
+      exact hDiff he.symm
+    obtain ⟨i, hiQ, hNe⟩ := hSep x y hDiff'
     exact hNe (hAgree i hiQ)
 
 /-- The edge of the conflict hypergraph for a given pair of states. -/
