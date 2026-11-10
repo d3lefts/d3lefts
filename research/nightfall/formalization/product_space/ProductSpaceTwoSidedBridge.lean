@@ -1068,3 +1068,212 @@ theorem two_sided_product
     (localized_two_sided_product p hp g lam hrow)
 
 end Nightfall.ProductSpace.Transfer
+
+/-! ## Certificate-guided randomized observation -/
+
+namespace Nightfall.ProductSpace.Discovery
+
+open Finset
+
+/-- A weighted Cauchy--Schwarz inequality with nonnegative weights.
+This is the quantitative link between certificate overlap and expected
+squared influence of a coordinate sampled from those weights. -/
+theorem weighted_sqrt_cauchy
+    {κ : Type*} [Fintype κ]
+    (c q : κ → ℝ) (hc : ∀ j, 0 ≤ c j) (hq : ∀ j, 0 ≤ q j) :
+    (∑ j, q j * Real.sqrt (c j)) ^ 2 ≤
+      (∑ j, q j) * (∑ j, q j * c j) := by
+  have h := Finset.sum_mul_sq_le_sq_mul_sq (Finset.univ : Finset κ)
+    (fun j => Real.sqrt (q j))
+    (fun j => Real.sqrt (q j) * Real.sqrt (c j))
+  have hL : (∑ j, Real.sqrt (q j) *
+      (Real.sqrt (q j) * Real.sqrt (c j))) =
+      ∑ j, q j * Real.sqrt (c j) := by
+    apply Finset.sum_congr rfl
+    intro j _
+    rw [← mul_assoc, Real.mul_self_sqrt (hq j)]
+  have hA : (∑ j, (Real.sqrt (q j)) ^ 2) = ∑ j, q j := by
+    apply Finset.sum_congr rfl
+    intro j _
+    exact Real.sq_sqrt (hq j)
+  have hB : (∑ j, (Real.sqrt (q j) * Real.sqrt (c j)) ^ 2) =
+      ∑ j, q j * c j := by
+    apply Finset.sum_congr rfl
+    intro j _
+    rw [mul_pow, Real.sq_sqrt (hq j), Real.sq_sqrt (hc j)]
+  rw [hL, hA, hB] at h
+  exact h
+
+/-- Certificate-overlap sampling turns the localized two-sided
+inequality into a guaranteed *expected* coordinate influence.
+There is no search for the maximum-influence coordinate.
+
+The sampling probabilities are proportional to sqrt(P_j Q_j);
+their normalization is positive because V1*V0 > 0. -/
+theorem certificate_overlap_sampler
+    {κ : Type*} [Fintype κ] (c P Q : κ → ℝ) (V1 V0 : ℝ)
+    (hc : ∀ j, 0 ≤ c j) (hP : ∀ j, 0 ≤ P j)
+    (hQ : ∀ j, 0 ≤ Q j)
+    (hPsum : ∑ j, P j = V1) (hQsum : ∑ j, Q j = V0)
+    (hV : 0 < V1 * V0)
+    (hloc : V1 * V0 ≤
+      ∑ j, Real.sqrt (c j) * Real.sqrt (P j * Q j)) :
+    0 < ∑ j, Real.sqrt (P j * Q j) ∧
+      (V1 * V0) ^ 2 ≤
+        (∑ j, Real.sqrt (P j * Q j)) ^ 2 *
+          (∑ j, (Real.sqrt (P j * Q j) /
+            (∑ k, Real.sqrt (P k * Q k))) * c j) ∧
+      V1 * V0 ≤
+        ∑ j, (Real.sqrt (P j * Q j) /
+          (∑ k, Real.sqrt (P k * Q k))) * c j := by
+  let V : ℝ := V1 * V0
+  let q : κ → ℝ := fun j => Real.sqrt (P j * Q j)
+  let S : ℝ := ∑ j, q j
+  let C : ℝ := ∑ j, q j * c j
+  have hq : ∀ j, 0 ≤ q j := fun j => Real.sqrt_nonneg _
+  have hqsum : 0 ≤ S := Finset.sum_nonneg (fun j _ => hq j)
+  have hterm : 0 ≤ ∑ j, q j * Real.sqrt (c j) :=
+    Finset.sum_nonneg (fun j _ => mul_nonneg (hq j) (Real.sqrt_nonneg _))
+  have hlocal : V ≤ ∑ j, q j * Real.sqrt (c j) := by
+    calc
+      V ≤ ∑ j, Real.sqrt (c j) * Real.sqrt (P j * Q j) := hloc
+      _ = ∑ j, q j * Real.sqrt (c j) := by
+        apply Finset.sum_congr rfl
+        intro j _
+        exact mul_comm _ _
+  have hsq : V ^ 2 ≤ (∑ j, q j * Real.sqrt (c j)) ^ 2 := by
+    nlinarith [hlocal, hterm, hV]
+  have hbound : V ^ 2 ≤ S * C := by
+    exact le_trans hsq (weighted_sqrt_cauchy c q hc hq)
+  have hSpos : 0 < S := by
+    by_contra hn
+    have hz : S = 0 := le_antisymm (le_of_not_gt hn) hqsum
+    rw [hz] at hbound
+    dsimp [V] at hbound
+    nlinarith [sq_pos_of_pos hV]
+  have hS2 : S ^ 2 ≤ V := by
+    have h := Finset.sum_mul_sq_le_sq_mul_sq (Finset.univ : Finset κ)
+      (fun j => Real.sqrt (P j)) (fun j => Real.sqrt (Q j))
+    have hL : (∑ j, Real.sqrt (P j) * Real.sqrt (Q j)) = S := by
+      apply Finset.sum_congr rfl
+      intro j _
+      exact (Real.sqrt_mul (hP j) (Q j)).symm
+    have hA : (∑ j, (Real.sqrt (P j)) ^ 2) = V1 := by
+      calc
+        (∑ j, (Real.sqrt (P j)) ^ 2) = ∑ j, P j := by
+          apply Finset.sum_congr rfl
+          intro j _
+          exact Real.sq_sqrt (hP j)
+        _ = V1 := hPsum
+    have hB : (∑ j, (Real.sqrt (Q j)) ^ 2) = V0 := by
+      calc
+        (∑ j, (Real.sqrt (Q j)) ^ 2) = ∑ j, Q j := by
+          apply Finset.sum_congr rfl
+          intro j _
+          exact Real.sq_sqrt (hQ j)
+        _ = V0 := hQsum
+    rw [hL, hA, hB] at h
+    exact h
+  let A : ℝ := ∑ j, (q j / S) * c j
+  have hSC : S * A = C := by
+    dsimp [A, C]
+    rw [Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro j _
+    field_simp [hSpos.ne']
+  have hV2 : V * S ^ 2 ≤ V ^ 2 := by
+    have h := mul_le_mul_of_nonneg_left hS2 hV.le
+    nlinarith
+  have hVA : V * S ^ 2 ≤ A * S ^ 2 := by
+    calc
+      V * S ^ 2 ≤ V ^ 2 := hV2
+      _ ≤ S * C := hbound
+      _ = A * S ^ 2 := by rw [← hSC]; ring
+  have hA : V ≤ A := by
+    have hs : 0 < S ^ 2 := sq_pos_of_pos hSpos
+    exact (mul_le_mul_iff_of_pos_left hs).mp (by nlinarith [hVA])
+  have hsharp : V ^ 2 ≤ S ^ 2 * A := by
+    calc
+      V ^ 2 ≤ S * C := hbound
+      _ = S ^ 2 * A := by rw [← hSC]; ring
+  exact ⟨hSpos, hsharp, hA⟩
+
+/-- Formal potential descent for an influence-guided randomized query.
+The analytic information is entirely in the gain premise; the one-step
+descent identity itself is exact. -/
+theorem weighted_potential_descent
+    {κ : Type*} [Fintype κ]
+    (π influence after : κ → ℝ) (T gain : ℝ)
+    (hπ : ∑ j, π j = 1)
+    (hgain : gain ≤ ∑ j, π j * influence j)
+    (hafter : ∀ j, after j = T - influence j) :
+    (∑ j, π j * after j) ≤ T - gain := by
+  calc
+    (∑ j, π j * after j) =
+        T * (∑ j, π j) - ∑ j, π j * influence j := by
+          calc
+            (∑ j, π j * after j) =
+                ∑ j, (T * π j - π j * influence j) := by
+                  apply Finset.sum_congr rfl
+                  intro j _
+                  rw [hafter j]
+                  ring
+            _ = T * (∑ j, π j) - ∑ j, π j * influence j := by
+                  rw [Finset.sum_sub_distrib, Finset.mul_sum]
+    _ = T - ∑ j, π j * influence j := by rw [hπ, mul_one]
+    _ ≤ T - gain := sub_le_sub_left hgain T
+
+/-- Iteration of a one-step contraction; suitable for unconditional
+expectations of adaptive query-tree potentials. -/
+theorem geometric_potential_decay
+    (a : ℕ → ℝ) (ρ : ℝ) (hρ : 0 ≤ ρ)
+    (hstep : ∀ t, a (t + 1) ≤ ρ * a t) :
+    ∀ t, a t ≤ ρ ^ t * a 0 := by
+  intro t
+  induction t with
+  | zero => simp
+  | succ t ih =>
+      calc
+        a (t + 1) ≤ ρ * a t := hstep t
+        _ ≤ ρ * (ρ ^ t * a 0) :=
+          mul_le_mul_of_nonneg_left ih hρ
+        _ = ρ ^ (t + 1) * a 0 := by rw [pow_succ]; ring
+
+
+/-- Sharpness of the certificate-overlap sampler's information-only bound.
+For ANY proposed coordinate-sampling probability law pi (mass one),
+the abstract localized inequality admits a constant influence vector
+saturating V^2 / (sum q)^2. The constructive sampler pi ∝ q obtains
+that lower bound by weighted Cauchy. This does not assert realizability
+of the adversarial vector by a Boolean product-space function. -/
+theorem overlap_information_sharp
+    {κ : Type*} [Fintype κ] (q π : κ → ℝ) (V : ℝ)
+    (hS : 0 < ∑ j, q j) (hV : 0 ≤ V)
+    (hπ : ∑ j, π j = 1) :
+    ∃ c : κ → ℝ, (∀ j, 0 ≤ c j) ∧
+      V = ∑ j, q j * Real.sqrt (c j) ∧
+      (∑ j, π j * c j) = V ^ 2 / (∑ j, q j) ^ 2 := by
+  let S : ℝ := ∑ j, q j
+  let r : ℝ := V / S
+  have hr : 0 ≤ r := div_nonneg hV hS.le
+  have hsqrt : Real.sqrt (r ^ 2) = r := by
+    rw [Real.sqrt_sq_eq_abs, abs_of_nonneg hr]
+  have hsum : (∑ j, q j * r) = V := by
+    rw [← Finset.sum_mul]
+    change S * (V / S) = V
+    rw [div_eq_mul_inv]
+    calc
+      S * (V * S⁻¹) = (S * S⁻¹) * V := by ring
+      _ = V := by rw [mul_inv_cancel₀ hS.ne', one_mul]
+  refine ⟨fun _ => r ^ 2, ?_, ?_, ?_⟩
+  · intro j
+    exact sq_nonneg r
+  · simpa only [hsqrt] using hsum.symm
+  · calc
+      (∑ j, π j * r ^ 2) = (∑ j, π j) * r ^ 2 := by
+        rw [Finset.sum_mul]
+      _ = V ^ 2 / S ^ 2 := by
+        rw [hπ, one_mul, div_pow]
+
+end Nightfall.ProductSpace.Discovery
+

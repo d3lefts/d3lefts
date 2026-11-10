@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean'
+      - 'research/nightfall/formalization/product_space/check_certificate_guided_descent.py'
       - '.github/workflows/nightfall-two-sided-bridge.yml'
   workflow_dispatch:
 permissions:
@@ -13,6 +14,8 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+      - name: Independent exact-rational sampler and posterior check
+        run: python3 research/nightfall/formalization/product_space/check_certificate_guided_descent.py
       - name: Install Lean 4.33.0 (Turturean pin)
         shell: bash
         run: |
@@ -45,6 +48,11 @@ jobs:
             --decl Nightfall.ProductSpace.Transfer.localized_two_sided_product \
             --decl Nightfall.ProductSpace.Transfer.two_sided_of_localized \
             --decl Nightfall.ProductSpace.Transfer.two_sided_product \
+            --decl Nightfall.ProductSpace.Discovery.weighted_sqrt_cauchy \
+            --decl Nightfall.ProductSpace.Discovery.certificate_overlap_sampler \
+            --decl Nightfall.ProductSpace.Discovery.weighted_potential_descent \
+            --decl Nightfall.ProductSpace.Discovery.geometric_potential_decay \
+            --decl Nightfall.ProductSpace.Discovery.overlap_information_sharp \
             --json-out lean-receipts/two-sided-bridge.json || {
               cat lean-receipts/two-sided-bridge.json || true
               exit 1
