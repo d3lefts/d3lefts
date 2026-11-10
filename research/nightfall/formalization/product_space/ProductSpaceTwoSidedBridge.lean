@@ -2295,5 +2295,46 @@ theorem pair_first_marginal
           ring
 
 
+
+/-- The posterior influence numerator really is an expectation under the
+explicitly conditioned finite mass, not an arbitrary reciprocal expression. -/
+theorem posterior_edge_is_conditional_expectation
+    {X A J : Type*} [Fintype X] [DecidableEq A] [DecidableEq J]
+    (m : X → ℝ) (observable : X → A) (p : A → ℝ)
+    (edge : J → X → ℝ) (j : J) (a : A) (k : J) :
+    posteriorEdge m observable p edge j a k =
+      if k = j then 0 else
+        ∑ x : X, conditionalMass m observable p a x * edge k x := by
+  classical
+  by_cases hk : k = j
+  · simp [posteriorEdge, hk]
+  · simp only [posteriorEdge, if_neg hk]
+    rw [Finset.sum_div]
+    apply Finset.sum_congr rfl
+    intro x _
+    by_cases hx : observable x = a
+    · simp [conditionalMass, hx, div_eq_mul_inv]
+      ring
+    · simp [conditionalMass, hx]
+
+/-- For independent normalized draws, conditioning on the observed symbol
+of the first draw produces a bona fide probability measure on the pair. -/
+theorem concrete_pair_posterior_is_probability
+    {ι α : Type} [Fintype ι] [DecidableEq ι]
+    [Fintype α] [DecidableEq α]
+    (p : ι → α → ℝ)
+    (hp : ∀ i a, 0 < p i a)
+    (hnorm : ∀ i, (∑ b : α, p i b) = 1)
+    (j : ι) (a : α) :
+    (∑ z : Transfer.PairSample ι α,
+      conditionalMass (Transfer.pairMass p)
+        (fun z : Transfer.PairSample ι α => z.1 j)
+        (p j) a z) = 1 := by
+  exact conditional_mass_one
+    (Transfer.pairMass p)
+    (fun z : Transfer.PairSample ι α => z.1 j)
+    (p j) a (hp j a) (pair_first_marginal p hnorm j a)
+
+
 end Nightfall.ProductSpace.Posterior
 
