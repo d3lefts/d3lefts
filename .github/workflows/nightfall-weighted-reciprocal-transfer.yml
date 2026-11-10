@@ -48,6 +48,10 @@ jobs:
             --decl Nightfall.ProductSpace.Transfer.weighted_antipodal_on_product_cubes \
             --decl Nightfall.ProductSpace.Transfer.cube_zone_sum_eq_crossTerm \
             --decl Nightfall.ProductSpace.Transfer.weighted_orbit_reciprocal_bound \
+            --decl Nightfall.ProductSpace.Transfer.flipPair_flipSet_fst \
+            --decl Nightfall.ProductSpace.Transfer.cube_bdry_eq_edgeCross_sum \
+            --decl Nightfall.ProductSpace.Transfer.weighted_bdry_eq_resampling \
+            --decl Nightfall.ProductSpace.Transfer.weighted_product_reciprocal \
             --json-out lean-receipts/weighted-reciprocal-transfer.json || {
               cat lean-receipts/weighted-reciprocal-transfer.json
               exit 1
