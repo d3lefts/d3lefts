@@ -2148,7 +2148,7 @@ theorem product_mass_normalized
   classical
   have hsum : (∑ x : ι → α, Transfer.prodMass p x) =
       ∏ i, ∑ a : α, p i a := by
-    simpa only [Transfer.prodMass] using
+    simpa [Transfer.prodMass] using
       (Finset.sum_prod_piFinset (s := (Finset.univ : Finset α)) (g := p))
   calc
     (∑ x : ι → α, Transfer.prodMass p x) =
@@ -2184,9 +2184,7 @@ theorem pair_mass_normalized
           (∑ y : ι → α, Transfer.prodMass p y) := by
             rw [Finset.sum_mul]
     _ = 1 := by
-          rw [product_mass_normalized p hnorm]
-          rw [product_mass_normalized p hnorm]
-          norm_num
+          simp [product_mass_normalized p hnorm]
 
 
 end Nightfall.ProductSpace.Posterior
