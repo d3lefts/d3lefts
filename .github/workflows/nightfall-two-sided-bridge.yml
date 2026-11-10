@@ -53,6 +53,17 @@ jobs:
             --decl Nightfall.ProductSpace.Discovery.weighted_potential_descent \
             --decl Nightfall.ProductSpace.Discovery.geometric_potential_decay \
             --decl Nightfall.ProductSpace.Discovery.overlap_information_sharp \
+            --decl Nightfall.ProductSpace.Posterior.finite_observation_partition \
+            --decl Nightfall.ProductSpace.Posterior.posterior_edge_mean \
+            --decl Nightfall.ProductSpace.Posterior.posterior_total_mean \
+            --decl Nightfall.ProductSpace.Posterior.conditional_mass_one \
+            --decl Nightfall.ProductSpace.Posterior.push_expectation \
+            --decl Nightfall.ProductSpace.Posterior.push_nonneg \
+            --decl Nightfall.ProductSpace.Posterior.push_mass_one \
+            --decl Nightfall.ProductSpace.Posterior.push_potential_bound \
+            --decl Nightfall.ProductSpace.Posterior.evolve_nonneg \
+            --decl Nightfall.ProductSpace.Posterior.adaptive_markov_decay \
+            --decl Nightfall.ProductSpace.Posterior.adaptive_query_contraction \
             --json-out lean-receipts/two-sided-bridge.json || {
               cat lean-receipts/two-sided-bridge.json || true
               exit 1
