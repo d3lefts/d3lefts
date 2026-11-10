@@ -26,11 +26,30 @@ jobs:
         run: |
           python3 scripts/lean_bridge.py \
             research/nightfall/formalization/product_space/TwoDrawOrientation.lean \
-            --strict \
             --decl Nightfall.ProductSpace.orientation_mass_independent \
             --decl Nightfall.ProductSpace.all_orientations_equiprobable \
             --decl Nightfall.ProductSpace.single_pair_exchangeable \
             --json-out lean-receipts/product-space-orientation.json
+      - name: Verify standard Lean axiom dependencies
+        shell: bash
+        run: |
+          python3 - <<'PYCODE'
+          import json, re
+          r = json.load(open('lean-receipts/product-space-orientation.json'))
+          assert r['status'] == 'COMPILED', r['status']
+          assert not r['policy_findings'], r['policy_findings']
+          standard = {'propext', 'Classical.choice', 'Quot.sound'}
+          for theorem in r['declarations_requested']:
+              pattern = re.escape("'" + theorem + "'") + r' depends on axioms: \\[([^\\]]*)\\]'
+              m = re.search(pattern, r['stdout'])
+              if m:
+                  deps = {a.strip() for a in m.group(1).split(',')}
+              else:
+                  assert "'" + theorem + "' does not depend on any axioms" in r['stdout'], theorem
+                  deps = set()
+              assert deps <= standard, (theorem, deps)
+              print(theorem, 'accepted dependencies:', sorted(deps))
+          PYCODE
       - name: Upload receipts
         if: always()
         uses: actions/upload-artifact@v4
