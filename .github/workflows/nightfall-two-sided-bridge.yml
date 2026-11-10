@@ -45,6 +45,10 @@ jobs:
             --decl Nightfall.ProductSpace.Transfer.localized_two_sided_product \
             --decl Nightfall.ProductSpace.Transfer.two_sided_of_localized \
             --decl Nightfall.ProductSpace.Transfer.two_sided_product \
+            --decl Nightfall.ProductSpace.Discovery.weighted_sqrt_cauchy \
+            --decl Nightfall.ProductSpace.Discovery.certificate_overlap_sampler \
+            --decl Nightfall.ProductSpace.Discovery.weighted_potential_descent \
+            --decl Nightfall.ProductSpace.Discovery.geometric_potential_decay \
             --json-out lean-receipts/two-sided-bridge.json || {
               cat lean-receipts/two-sided-bridge.json || true
               exit 1
