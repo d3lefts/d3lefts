@@ -5,6 +5,7 @@ on:
       - 'research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean'
       - 'research/nightfall/2026-11-certificate-engine/CERTIFICATION_UPDATE_20261110.md'
       - 'research/nightfall/formalization/product_space/check_certificate_guided_descent.py'
+      - 'research/nightfall/formalization/product_space/check_posterior_adaptive_exact.py'
       - '.github/workflows/nightfall-two-sided-bridge.yml'
   workflow_dispatch:
 permissions:
@@ -17,6 +18,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Independent exact-rational sampler and posterior check
         run: python3 research/nightfall/formalization/product_space/check_certificate_guided_descent.py
+      - name: Exhaustive conditional-product and adaptive Markov audit
+        run: python3 research/nightfall/formalization/product_space/check_posterior_adaptive_exact.py
       - name: Install Lean 4.33.0 (Turturean pin)
         shell: bash
         run: |
@@ -54,6 +57,39 @@ jobs:
             --decl Nightfall.ProductSpace.Discovery.weighted_potential_descent \
             --decl Nightfall.ProductSpace.Discovery.geometric_potential_decay \
             --decl Nightfall.ProductSpace.Discovery.overlap_information_sharp \
+            --decl Nightfall.ProductSpace.Posterior.finite_observation_partition \
+            --decl Nightfall.ProductSpace.Posterior.posterior_edge_mean \
+            --decl Nightfall.ProductSpace.Posterior.posterior_total_mean \
+            --decl Nightfall.ProductSpace.Posterior.conditional_mass_one \
+            --decl Nightfall.ProductSpace.Posterior.push_expectation \
+            --decl Nightfall.ProductSpace.Posterior.push_nonneg \
+            --decl Nightfall.ProductSpace.Posterior.push_mass_one \
+            --decl Nightfall.ProductSpace.Posterior.push_potential_bound \
+            --decl Nightfall.ProductSpace.Posterior.evolve_nonneg \
+            --decl Nightfall.ProductSpace.Posterior.adaptive_markov_decay \
+            --decl Nightfall.ProductSpace.Posterior.adaptive_query_contraction \
+            --decl Nightfall.ProductSpace.Posterior.concrete_product_overlap_sampler \
+            --decl Nightfall.ProductSpace.Posterior.concrete_product_one_step \
+            --decl Nightfall.ProductSpace.Posterior.query_kernel_nonneg \
+            --decl Nightfall.ProductSpace.Posterior.query_kernel_mass_one \
+            --decl Nightfall.ProductSpace.Posterior.query_kernel_expected \
+            --decl Nightfall.ProductSpace.Posterior.certificate_guided_adaptive_decay \
+            --decl Nightfall.ProductSpace.Posterior.pin_disagree_subset \
+            --decl Nightfall.ProductSpace.Posterior.restricted_row_is_product_row \
+            --decl Nightfall.ProductSpace.Posterior.restricted_row_cost_le \
+            --decl Nightfall.ProductSpace.Posterior.pin_observe_eq \
+            --decl Nightfall.ProductSpace.Posterior.restricted_output_observe \
+            --decl Nightfall.ProductSpace.Posterior.interaction_degree_under_pinning \
+            --decl Nightfall.ProductSpace.Posterior.anova_degree_energy_budget \
+            --decl Nightfall.ProductSpace.Posterior.certificate_overlap_necessary \
+            --decl Nightfall.ProductSpace.Posterior.product_mass_normalized \
+            --decl Nightfall.ProductSpace.Posterior.pair_mass_normalized \
+            --decl Nightfall.ProductSpace.Posterior.single_product_marginal \
+            --decl Nightfall.ProductSpace.Posterior.pair_first_marginal \
+            --decl Nightfall.ProductSpace.Posterior.posterior_edge_is_conditional_expectation \
+            --decl Nightfall.ProductSpace.Posterior.concrete_pair_posterior_is_probability \
+            --decl Nightfall.ProductSpace.Posterior.anova_coordinate_energy_le_variance \
+            --decl Nightfall.ProductSpace.Posterior.certificate_overlap_degree_free \
             --json-out lean-receipts/two-sided-bridge.json || {
               cat lean-receipts/two-sided-bridge.json || true
               exit 1

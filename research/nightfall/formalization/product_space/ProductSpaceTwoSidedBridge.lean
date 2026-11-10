@@ -1277,3 +1277,1115 @@ theorem overlap_information_sharp
 
 end Nightfall.ProductSpace.Discovery
 
+
+/-! ## Exact finite Bayesian posterior and adaptive Markov bridge
+
+The Bayesian posterior acts on an arbitrary finite sample space. For a product
+law the sample can be a pair of independent configurations, and `edge k x`
+its coordinate-resampling crossing indicator. The posterior excludes the
+already observed coordinate `j`. There is no ANOVA hypothesis in the
+posterior decrement identity. -/
+
+namespace Nightfall.ProductSpace.Posterior
+
+open Finset
+
+/-- Observable-class partition: the conditional numerator sums recover the
+unconditional expectation. This identity has no measure normalization
+assumption and is exact even for zero-mass states. -/
+theorem finite_observation_partition
+    {X A : Type*} [Fintype X] [Fintype A] [DecidableEq A]
+    (observable : X → A) (F : X → ℝ) :
+    (∑ a : A, ∑ x : X, if observable x = a then F x else 0) =
+      ∑ x : X, F x := by
+  classical
+  calc
+    (∑ a : A, ∑ x : X, if observable x = a then F x else 0) =
+        ∑ x : X, ∑ a : A, if observable x = a then F x else 0 :=
+          Finset.sum_comm
+    _ = ∑ x : X, F x := by
+          apply Finset.sum_congr rfl
+          intro x _
+          simp
+
+/-- Posterior influence of a remaining coordinate under observation
+`observable x=a`. The observed coordinate `j` is removed explicitly.
+For normalized masses m with marginal p, the numerator/p a is the
+ordinary conditional expectation of `edge k`. -/
+noncomputable def posteriorEdge
+    {X A J : Type*} [Fintype X] [Fintype A] [DecidableEq A]
+    [DecidableEq J]
+    (m : X → ℝ) (observable : X → A) (p : A → ℝ)
+    (edge : J → X → ℝ) (j : J) (a : A) (k : J) : ℝ :=
+  if k = j then 0 else
+    (∑ x : X, if observable x = a then m x * edge k x else 0) / p a
+
+/-- Exact posterior expectation of each remaining influence. -/
+theorem posterior_edge_mean
+    {X A J : Type*} [Fintype X] [Fintype A] [DecidableEq A]
+    [DecidableEq J]
+    (m : X → ℝ) (observable : X → A) (p : A → ℝ)
+    (hp : ∀ a, 0 < p a) (edge : J → X → ℝ)
+    (j k : J) :
+    (∑ a : A, p a * posteriorEdge m observable p edge j a k) =
+      if k = j then 0 else ∑ x : X, m x * edge k x := by
+  classical
+  by_cases hkj : k = j
+  · simp [posteriorEdge, hkj]
+  · simp only [posteriorEdge, if_neg hkj]
+    calc
+      (∑ a : A, p a *
+        ((∑ x : X, if observable x = a then m x * edge k x else 0) / p a)) =
+          ∑ a : A, ∑ x : X,
+            if observable x = a then m x * edge k x else 0 := by
+              apply Finset.sum_congr rfl
+              intro a _
+              field_simp [(hp a).ne']
+      _ = ∑ x : X, m x * edge k x :=
+        finite_observation_partition observable (fun x => m x * edge k x)
+
+/-- Exact finite Bayesian decrement of *total* resampling influence.
+No product structure or interaction-degree hypothesis is needed for this
+identity. The sampler later chooses j using a certificate profile. -/
+theorem posterior_total_mean
+    {X A J : Type*} [Fintype X] [Fintype A] [Fintype J]
+    [DecidableEq A] [DecidableEq J]
+    (m : X → ℝ) (observable : X → A) (p : A → ℝ)
+    (hp : ∀ a, 0 < p a) (edge : J → X → ℝ)
+    (j : J) :
+    (∑ a : A, p a * (∑ k : J, posteriorEdge m observable p edge j a k)) =
+      (∑ k : J, ∑ x : X, m x * edge k x) -
+        (∑ x : X, m x * edge j x) := by
+  classical
+  let c : J → ℝ := fun k => ∑ x : X, m x * edge k x
+  calc
+    (∑ a : A, p a * (∑ k : J, posteriorEdge m observable p edge j a k)) =
+        ∑ k : J, ∑ a : A, p a * posteriorEdge m observable p edge j a k := by
+          simp_rw [Finset.mul_sum]
+          rw [Finset.sum_comm]
+    _ = ∑ k : J, if k = j then 0 else c k := by
+          apply Finset.sum_congr rfl
+          intro k _
+          exact posterior_edge_mean m observable p hp edge j k
+    _ = (∑ k : J, c k) - c j := by
+          have hh : ∀ k : J, (if k = j then (0 : ℝ) else c k) =
+              c k - (if k = j then c k else 0) := by
+                intro k
+                by_cases h : k = j <;> simp [h]
+          simp_rw [hh, Finset.sum_sub_distrib]
+          simp
+    _ = (∑ k : J, ∑ x : X, m x * edge k x) -
+        (∑ x : X, m x * edge j x) := rfl
+
+/-- Exact conditional mass on the event observable=a. -/
+noncomputable def conditionalMass
+    {X A : Type*} [DecidableEq A]
+    (m : X → ℝ) (observable : X → A) (p : A → ℝ)
+    (a : A) (x : X) : ℝ :=
+  if observable x = a then m x / p a else 0
+
+/-- Normalization of the actual posterior from a finite marginal. -/
+theorem conditional_mass_one
+    {X A : Type*} [Fintype X] [DecidableEq A]
+    (m : X → ℝ) (observable : X → A) (p : A → ℝ)
+    (a : A) (hp : 0 < p a)
+    (hmargin : (∑ x : X, if observable x = a then m x else 0) = p a) :
+    (∑ x : X, conditionalMass m observable p a x) = 1 := by
+  classical
+  have hdiv : (∑ x : X, conditionalMass m observable p a x) =
+      (∑ x : X, if observable x = a then m x else 0) / p a := by
+    rw [Finset.sum_div]
+    apply Finset.sum_congr rfl
+    intro x _
+    by_cases h : observable x = a <;>
+      simp [conditionalMass, h]
+  rw [hdiv, hmargin]
+  exact div_self (hp.ne')
+
+/-! ## A finite Markov kernel and adaptive expected-potential decay -/
+
+/-- Push a finite distribution through a transition kernel. -/
+noncomputable def push
+    {S : Type*} [Fintype S]
+    (P : S → S → ℝ) (ν : S → ℝ) (b : S) : ℝ :=
+  ∑ a : S, ν a * P a b
+
+/-- Expected state potential under a finite distribution. -/
+def expectation
+    {S : Type*} [Fintype S]
+    (ν T : S → ℝ) : ℝ :=
+  ∑ s : S, ν s * T s
+
+/-- Exact Fubini identity for a randomized adaptive transition. -/
+theorem push_expectation
+    {S : Type*} [Fintype S]
+    (P : S → S → ℝ) (ν T : S → ℝ) :
+    expectation (push P ν) T =
+      ∑ a : S, ν a * (∑ b : S, P a b * T b) := by
+  calc
+    expectation (push P ν) T =
+        ∑ b : S, ∑ a : S, ν a * P a b * T b := by
+          unfold expectation push
+          apply Finset.sum_congr rfl
+          intro b _
+          rw [Finset.sum_mul]
+    _ = ∑ a : S, ∑ b : S, ν a * P a b * T b := Finset.sum_comm
+    _ = ∑ a : S, ν a * (∑ b : S, P a b * T b) := by
+          apply Finset.sum_congr rfl
+          intro a _
+          rw [Finset.mul_sum]
+          apply Finset.sum_congr rfl
+          intro b _
+          ring
+
+theorem push_nonneg
+    {S : Type*} [Fintype S]
+    (P : S → S → ℝ) (ν : S → ℝ)
+    (hP : ∀ a b, 0 ≤ P a b)
+    (hν : ∀ a, 0 ≤ ν a) :
+    ∀ b, 0 ≤ push P ν b := by
+  intro b
+  unfold push
+  exact Finset.sum_nonneg (fun a _ => mul_nonneg (hν a) (hP a b))
+
+theorem push_mass_one
+    {S : Type*} [Fintype S]
+    (P : S → S → ℝ) (ν : S → ℝ)
+    (hP : ∀ a, ∑ b : S, P a b = 1)
+    (hν : ∑ a : S, ν a = 1) :
+    (∑ b : S, push P ν b) = 1 := by
+  calc
+    (∑ b : S, push P ν b) =
+        ∑ a : S, ν a * (∑ b : S, P a b) := by
+          simpa only [expectation, mul_one] using
+            (push_expectation P ν (fun _ => (1 : ℝ)))
+    _ = ∑ a : S, ν a := by simp_rw [hP, mul_one]
+    _ = 1 := hν
+
+theorem push_potential_bound
+    {S : Type*} [Fintype S]
+    (P : S → S → ℝ) (ν T : S → ℝ) (ρ : ℝ)
+    (hν : ∀ a, 0 ≤ ν a)
+    (hstep : ∀ a, (∑ b : S, P a b * T b) ≤ ρ * T a) :
+    expectation (push P ν) T ≤ ρ * expectation ν T := by
+  calc
+    expectation (push P ν) T =
+        ∑ a : S, ν a * (∑ b : S, P a b * T b) :=
+          push_expectation P ν T
+    _ ≤ ∑ a : S, ν a * (ρ * T a) := by
+          apply Finset.sum_le_sum
+          intro a _
+          exact mul_le_mul_of_nonneg_left (hstep a) (hν a)
+    _ = ρ * expectation ν T := by
+          unfold expectation
+          rw [Finset.mul_sum]
+          apply Finset.sum_congr rfl
+          intro a _
+          ring
+
+/-- Recursive application of the same finite adaptive Markov kernel. -/
+noncomputable def evolve
+    {S : Type*} [Fintype S] (P : S → S → ℝ)
+    (ν : S → ℝ) : ℕ → S → ℝ
+  | 0 => ν
+  | n + 1 => push P (evolve P ν n)
+
+theorem evolve_nonneg
+    {S : Type*} [Fintype S]
+    (P : S → S → ℝ) (ν : S → ℝ)
+    (hP : ∀ a b, 0 ≤ P a b)
+    (hν : ∀ a, 0 ≤ ν a) :
+    ∀ n a, 0 ≤ evolve P ν n a := by
+  intro n
+  induction n with
+  | zero =>
+      intro a
+      exact hν a
+  | succ n ih =>
+      intro a
+      exact push_nonneg P (evolve P ν n) hP ih a
+
+/-- Fully generic finite-state adaptive process:
+one-step drift plus nonnegative transition probabilities imply the complete
+geometric expected-potential guarantee for every time horizon. -/
+theorem adaptive_markov_decay
+    {S : Type*} [Fintype S]
+    (P : S → S → ℝ) (ν T : S → ℝ) (ρ : ℝ)
+    (hρ : 0 ≤ ρ)
+    (hP : ∀ a b, 0 ≤ P a b)
+    (hν : ∀ a, 0 ≤ ν a)
+    (hstep : ∀ a, (∑ b : S, P a b * T b) ≤ ρ * T a) :
+    ∀ n, expectation (evolve P ν n) T ≤
+      ρ ^ n * expectation ν T := by
+  have hdec : ∀ n,
+      expectation (evolve P ν (n + 1)) T ≤
+      ρ * expectation (evolve P ν n) T := by
+    intro n
+    change expectation (push P (evolve P ν n)) T ≤
+      ρ * expectation (evolve P ν n) T
+    exact push_potential_bound P (evolve P ν n) T ρ
+      (evolve_nonneg P ν hP hν n) hstep
+  simpa only [evolve] using
+    (Nightfall.ProductSpace.Discovery.geometric_potential_decay
+      (fun n => expectation (evolve P ν n) T) ρ hρ hdec)
+
+/-- General dimension-free posterior-to-adaptive drift theorem for a finite
+query-response process. Premises separate the exact posterior identity,
+the sampler gain, and the variance-vs-potential information budget. -/
+theorem adaptive_query_contraction
+    {S J A : Type*} [Fintype S] [Fintype J] [Fintype A]
+    (T : S → ℝ) (π : S → J → ℝ) (p : S → J → A → ℝ)
+    (after : S → J → A → ℝ) (I : S → J → ℝ)
+    (gap : S → ℝ) (budget : ℝ)
+    (hbudget : 0 < budget)
+    (hπ : ∀ s, ∑ j : J, π s j = 1)
+    (hp : ∀ s j, ∑ a : A, p s j a = 1)
+    (hposterior : ∀ s j, (∑ a : A, p s j a * after s j a) = T s - I s j)
+    (hsampler : ∀ s, gap s ≤ ∑ j : J, π s j * I s j)
+    (hgap : ∀ s, T s / budget ≤ gap s) :
+    ∀ s, (∑ j : J, π s j * (∑ a : A, p s j a * after s j a)) ≤
+      (1 - 1 / budget) * T s := by
+  intro s
+  calc
+    (∑ j : J, π s j * (∑ a : A, p s j a * after s j a)) =
+        ∑ j : J, π s j * (T s - I s j) := by
+          apply Finset.sum_congr rfl
+          intro j _
+          rw [hposterior s j]
+    _ = T s - ∑ j : J, π s j * I s j := by
+          calc
+            (∑ j : J, π s j * (T s - I s j)) =
+                ∑ j : J, (T s * π s j - π s j * I s j) := by
+                  apply Finset.sum_congr rfl
+                  intro j _
+                  ring
+            _ = T s * (∑ j : J, π s j) -
+                ∑ j : J, π s j * I s j := by
+                  rw [Finset.sum_sub_distrib, Finset.mul_sum]
+            _ = T s - ∑ j : J, π s j * I s j := by
+                  rw [hπ s, mul_one]
+    _ ≤ T s - gap s := sub_le_sub_left (hsampler s) (T s)
+    _ ≤ (1 - 1 / budget) * T s := by
+          have h := hgap s
+          apply le_trans (sub_le_sub_left h (T s))
+          ring_nf
+          rfl
+
+
+/-! ## Concrete product-space instantiation of the certificate sampler -/
+
+/-- The generic sampler has no unproved localization premise once specialized
+to the actual positive finite product law, global certificate rows, and
+the proved `localized_two_sided_product` theorem from PR #298.
+All loads and influences are the original product-space definitions. -/
+theorem concrete_product_overlap_sampler
+    {ι α : Type} [Fintype ι] [DecidableEq ι]
+    [Fintype α] [DecidableEq α]
+    (p : ι → α → ℝ) (hp : ∀ i a, 0 < p i a)
+    (g : (ι → α) → Bool) (lam : (ι → α) → ι → ℝ)
+    (hrow : Transfer.IsProductRow g lam)
+    (hnorm : ∀ x, 0 < ∑ j, lam x j)
+    (hV : 0 <
+      (∑ x : {x : ι → α // g x = true},
+        Transfer.prodMass p x.1 * invCost (lam x.1)) *
+      (∑ y : {y : ι → α // g y = false},
+        Transfer.prodMass p y.1 * invCost (lam y.1))) :
+    let V1 : ℝ := ∑ x : {x : ι → α // g x = true},
+      Transfer.prodMass p x.1 * invCost (lam x.1)
+    let V0 : ℝ := ∑ y : {y : ι → α // g y = false},
+      Transfer.prodMass p y.1 * invCost (lam y.1)
+    let P : ι → ℝ := fun j =>
+      ∑ x : {x : ι → α // g x = true},
+        Transfer.prodMass p x.1 * invCost (lam x.1) ^ 2 * lam x.1 j
+    let Q : ι → ℝ := fun j =>
+      ∑ y : {y : ι → α // g y = false},
+        Transfer.prodMass p y.1 * invCost (lam y.1) ^ 2 * lam y.1 j
+    let c : ι → ℝ := fun j =>
+      ∑ z, Transfer.pairMass p z * Transfer.edgeCross g j z
+    let S : ℝ := ∑ j, Real.sqrt (P j * Q j)
+    0 < S ∧ V1 * V0 ≤
+      ∑ j, (Real.sqrt (P j * Q j) / S) * c j := by
+  classical
+  intro V1 V0 P Q c S
+  have hpm : ∀ x, 0 ≤ Transfer.prodMass p x :=
+    fun x => (Transfer.prodMass_pos p hp x).le
+  have hc : ∀ j, 0 ≤ c j := by
+    intro j
+    change 0 ≤ ∑ z, Transfer.pairMass p z * Transfer.edgeCross g j z
+    exact Finset.sum_nonneg fun z _ =>
+      mul_nonneg
+        (Transfer.pairMass_nonneg p (fun i a => (hp i a).le) z)
+        (Transfer.edgeCross_nonneg g j z)
+  have hP : ∀ j, 0 ≤ P j := by
+    intro j
+    change 0 ≤ ∑ x : {x : ι → α // g x = true},
+      Transfer.prodMass p x.1 * invCost (lam x.1) ^ 2 * lam x.1 j
+    exact Finset.sum_nonneg fun x _ =>
+      mul_nonneg
+        (mul_nonneg (hpm x.1) (sq_nonneg _)) (hrow.1 x.1 j)
+  have hQ : ∀ j, 0 ≤ Q j := by
+    intro j
+    change 0 ≤ ∑ y : {y : ι → α // g y = false},
+      Transfer.prodMass p y.1 * invCost (lam y.1) ^ 2 * lam y.1 j
+    exact Finset.sum_nonneg fun y _ =>
+      mul_nonneg
+        (mul_nonneg (hpm y.1) (sq_nonneg _)) (hrow.1 y.1 j)
+  have hPsum : (∑ j, P j) = V1 := by
+    change
+      (∑ j, ∑ x : {x : ι → α // g x = true},
+        Transfer.prodMass p x.1 * invCost (lam x.1) ^ 2 * lam x.1 j) =
+      ∑ x : {x : ι → α // g x = true},
+        Transfer.prodMass p x.1 * invCost (lam x.1)
+    exact Transfer.mass_load_sum
+      (fun x : {x : ι → α // g x = true} => Transfer.prodMass p x.1)
+      (fun x j => lam x.1 j) (fun x => hnorm x.1)
+  have hQsum : (∑ j, Q j) = V0 := by
+    change
+      (∑ j, ∑ y : {y : ι → α // g y = false},
+        Transfer.prodMass p y.1 * invCost (lam y.1) ^ 2 * lam y.1 j) =
+      ∑ y : {y : ι → α // g y = false},
+        Transfer.prodMass p y.1 * invCost (lam y.1)
+    exact Transfer.mass_load_sum
+      (fun y : {y : ι → α // g y = false} => Transfer.prodMass p y.1)
+      (fun y j => lam y.1 j) (fun y => hnorm y.1)
+  have hloc : V1 * V0 ≤
+      ∑ j, Real.sqrt (c j) * Real.sqrt (P j * Q j) :=
+    Transfer.localized_two_sided_product p hp g lam hrow
+  have hV' : 0 < V1 * V0 := hV
+  have hs := Discovery.certificate_overlap_sampler
+    c P Q V1 V0 hc hP hQ hPsum hQsum hV' hloc
+  exact ⟨hs.1, hs.2.2⟩
+
+/-- The first genuinely *product-specific* posterior-to-selection bridge.
+It uses the verified certificate sampler with no manual hloc input, and
+the exact finite Bayesian posterior identity with the physical observable
+`z ↦ z.1 j` and edge crossing `edgeCross g k z`.
+
+The response value `a` is distributed with the original marginal
+`p j a`; normalization of those marginals is assumed for its probabilistic
+reading, but the finite-sum identity itself does not require it. -/
+theorem concrete_product_one_step
+    {ι α : Type} [Fintype ι] [DecidableEq ι]
+    [Fintype α] [DecidableEq α]
+    (p : ι → α → ℝ) (hp : ∀ i a, 0 < p i a)
+    (g : (ι → α) → Bool) (lam : (ι → α) → ι → ℝ)
+    (hrow : Transfer.IsProductRow g lam)
+    (hnorm : ∀ x, 0 < ∑ j, lam x j)
+    (hV : 0 <
+      (∑ x : {x : ι → α // g x = true},
+        Transfer.prodMass p x.1 * invCost (lam x.1)) *
+      (∑ y : {y : ι → α // g y = false},
+        Transfer.prodMass p y.1 * invCost (lam y.1))) :
+    let V1 : ℝ := ∑ x : {x : ι → α // g x = true},
+      Transfer.prodMass p x.1 * invCost (lam x.1)
+    let V0 : ℝ := ∑ y : {y : ι → α // g y = false},
+      Transfer.prodMass p y.1 * invCost (lam y.1)
+    let P : ι → ℝ := fun j =>
+      ∑ x : {x : ι → α // g x = true},
+        Transfer.prodMass p x.1 * invCost (lam x.1) ^ 2 * lam x.1 j
+    let Q : ι → ℝ := fun j =>
+      ∑ y : {y : ι → α // g y = false},
+        Transfer.prodMass p y.1 * invCost (lam y.1) ^ 2 * lam y.1 j
+    let S : ℝ := ∑ j, Real.sqrt (P j * Q j)
+    let π : ι → ℝ := fun j => Real.sqrt (P j * Q j) / S
+    let T : ℝ := ∑ k, ∑ z,
+      Transfer.pairMass p z * Transfer.edgeCross g k z
+    (∑ j, π j *
+      (∑ a : α, p j a *
+        (∑ k, posteriorEdge
+          (Transfer.pairMass p)
+          (fun z : Transfer.PairSample ι α => z.1 j)
+          (p j) (Transfer.edgeCross g) j a k))) ≤
+      T - V1 * V0 := by
+  classical
+  intro V1 V0 P Q S π T
+  let c : ι → ℝ := fun j =>
+    ∑ z, Transfer.pairMass p z * Transfer.edgeCross g j z
+  have hsampler : 0 < S ∧ V1 * V0 ≤ ∑ j, π j * c j :=
+    concrete_product_overlap_sampler p hp g lam hrow hnorm hV
+  have hπsum : (∑ j, π j) = 1 := by
+    change (∑ j, Real.sqrt (P j * Q j) / S) = 1
+    rw [← Finset.sum_div]
+    exact div_self hsampler.1.ne'
+  have hpost : ∀ j, (∑ a : α, p j a *
+      (∑ k, posteriorEdge
+        (Transfer.pairMass p)
+        (fun z : Transfer.PairSample ι α => z.1 j)
+        (p j) (Transfer.edgeCross g) j a k)) =
+        T - c j := by
+    intro j
+    exact posterior_total_mean
+      (Transfer.pairMass p)
+      (fun z : Transfer.PairSample ι α => z.1 j)
+      (p j) (hp j) (Transfer.edgeCross g) j
+  calc
+    (∑ j, π j *
+      (∑ a : α, p j a *
+        (∑ k, posteriorEdge
+          (Transfer.pairMass p)
+          (fun z : Transfer.PairSample ι α => z.1 j)
+          (p j) (Transfer.edgeCross g) j a k))) =
+      ∑ j, π j * (T - c j) := by
+        apply Finset.sum_congr rfl
+        intro j _
+        rw [hpost j]
+    _ = T - ∑ j, π j * c j := by
+          calc
+            (∑ j, π j * (T - c j)) =
+              ∑ j, (T * π j - π j * c j) := by
+                apply Finset.sum_congr rfl
+                intro j _
+                ring
+            _ = T * (∑ j, π j) - ∑ j, π j * c j := by
+                  rw [Finset.sum_sub_distrib, Finset.mul_sum]
+            _ = T - ∑ j, π j * c j := by
+                  rw [hπsum, mul_one]
+    _ ≤ T - V1 * V0 := sub_le_sub_left hsampler.2 T
+
+
+/-! ## Actual adaptive query-transition kernel, not a hypothetical Markov P -/
+
+/-- A query selects `j` by `π`, observes `a` with conditional law `p`,
+and moves from state `s` to `next s j a`. Duplicate successor states are
+combined exactly. -/
+noncomputable def queryKernel
+    {S J A : Type*} [Fintype J] [Fintype A] [DecidableEq S]
+    (next : S → J → A → S) (π : S → J → ℝ)
+    (p : S → J → A → ℝ) (s t : S) : ℝ :=
+  ∑ u : J × A,
+    if next s u.1 u.2 = t then π s u.1 * p s u.1 u.2 else 0
+
+/-- The query-response transition has no negative mass. -/
+theorem query_kernel_nonneg
+    {S J A : Type*} [Fintype J] [Fintype A] [DecidableEq S]
+    (next : S → J → A → S) (π : S → J → ℝ)
+    (p : S → J → A → ℝ)
+    (hπ : ∀ s j, 0 ≤ π s j) (hp : ∀ s j a, 0 ≤ p s j a) :
+    ∀ s t, 0 ≤ queryKernel next π p s t := by
+  intro s t
+  unfold queryKernel
+  exact Finset.sum_nonneg (fun u _ => by
+    by_cases h : next s u.1 u.2 = t
+    · simp [h, mul_nonneg (hπ s u.1) (hp s u.1 u.2)]
+    · simp [h])
+
+/-- Normalization of the *constructed* query kernel. -/
+theorem query_kernel_mass_one
+    {S J A : Type*} [Fintype S] [Fintype J] [Fintype A]
+    [DecidableEq S]
+    (next : S → J → A → S) (π : S → J → ℝ)
+    (p : S → J → A → ℝ)
+    (hπ : ∀ s, ∑ j : J, π s j = 1)
+    (hp : ∀ s j, ∑ a : A, p s j a = 1) :
+    ∀ s, (∑ t : S, queryKernel next π p s t) = 1 := by
+  intro s
+  change (∑ t : S, ∑ u : J × A,
+    if next s u.1 u.2 = t then π s u.1 * p s u.1 u.2 else 0) = 1
+  calc
+    (∑ t : S, ∑ u : J × A,
+      if next s u.1 u.2 = t then π s u.1 * p s u.1 u.2 else 0) =
+        ∑ u : J × A, π s u.1 * p s u.1 u.2 :=
+          finite_observation_partition
+            (fun u : J × A => next s u.1 u.2)
+            (fun u : J × A => π s u.1 * p s u.1 u.2)
+    _ = ∑ j : J, π s j * (∑ a : A, p s j a) := by
+          rw [Fintype.sum_prod_type]
+          apply Finset.sum_congr rfl
+          intro j _
+          rw [Finset.mul_sum]
+    _ = ∑ j : J, π s j := by
+          simp_rw [hp, mul_one]
+    _ = 1 := hπ s
+
+/-- Fubini and pushforward yield the exact expected successor potential
+for the explicit stochastic query-and-response kernel. -/
+theorem query_kernel_expected
+    {S J A : Type*} [Fintype S] [Fintype J] [Fintype A]
+    [DecidableEq S]
+    (next : S → J → A → S) (π : S → J → ℝ)
+    (p : S → J → A → ℝ) (T : S → ℝ) (s : S) :
+    (∑ t : S, queryKernel next π p s t * T t) =
+      ∑ j : J, π s j * (∑ a : A, p s j a * T (next s j a)) := by
+  classical
+  change
+    (∑ t : S, (∑ u : J × A,
+      if next s u.1 u.2 = t then π s u.1 * p s u.1 u.2 else 0) * T t) =
+      ∑ j : J, π s j * (∑ a : A, p s j a * T (next s j a))
+  calc
+    (∑ t : S, (∑ u : J × A,
+      if next s u.1 u.2 = t then π s u.1 * p s u.1 u.2 else 0) * T t) =
+      ∑ t : S, ∑ u : J × A,
+        (if next s u.1 u.2 = t then π s u.1 * p s u.1 u.2 else 0) * T t := by
+          apply Finset.sum_congr rfl
+          intro t _
+          rw [Finset.sum_mul]
+    _ = ∑ u : J × A, ∑ t : S,
+        (if next s u.1 u.2 = t then π s u.1 * p s u.1 u.2 else 0) * T t :=
+          Finset.sum_comm
+    _ = ∑ u : J × A,
+        π s u.1 * p s u.1 u.2 * T (next s u.1 u.2) := by
+          apply Finset.sum_congr rfl
+          intro u _
+          have hh : (∑ t : S,
+              (if next s u.1 u.2 = t then
+                π s u.1 * p s u.1 u.2 else 0) * T t) =
+              ∑ t : S, if next s u.1 u.2 = t then
+                π s u.1 * p s u.1 u.2 * T t else 0 := by
+                  apply Finset.sum_congr rfl
+                  intro t _
+                  split_ifs <;> simp
+          rw [hh]
+          simp
+    _ = ∑ j : J, ∑ a : A,
+        π s j * p s j a * T (next s j a) := by
+          rw [Fintype.sum_prod_type]
+    _ = ∑ j : J, π s j * (∑ a : A, p s j a * T (next s j a)) := by
+          apply Finset.sum_congr rfl
+          intro j _
+          rw [Finset.mul_sum]
+          apply Finset.sum_congr rfl
+          intro a _
+          ring
+
+/-- **Full finite-state adaptive recursion, with the transition kernel
+constructed from coordinate-selection and response probabilities.**
+
+The posterior identity, sampler gain, and uniform budget are supplied
+per state; the theorem *derives* the full time-t expectation, rather
+than assuming a Markov drift or an `evolve` bound.
+
+Product-specific discharge of per-state certificate rows and degree/variance
+budgets is the remaining interface to arbitrary-product probability theory. -/
+theorem certificate_guided_adaptive_decay
+    {S J A : Type*} [Fintype S] [Fintype J] [Fintype A]
+    [DecidableEq S]
+    (next : S → J → A → S)
+    (T : S → ℝ) (π : S → J → ℝ) (p : S → J → A → ℝ)
+    (I : S → J → ℝ) (gap : S → ℝ)
+    (budget : ℝ) (hbudget : 1 ≤ budget)
+    (hπ_nonneg : ∀ s j, 0 ≤ π s j)
+    (hp_nonneg : ∀ s j a, 0 ≤ p s j a)
+    (hπ : ∀ s, ∑ j : J, π s j = 1)
+    (hp : ∀ s j, ∑ a : A, p s j a = 1)
+    (hposterior : ∀ s j,
+      (∑ a : A, p s j a * T (next s j a)) = T s - I s j)
+    (hsampler : ∀ s, gap s ≤ ∑ j : J, π s j * I s j)
+    (hgap : ∀ s, T s / budget ≤ gap s)
+    (ν : S → ℝ) (hν : ∀ s, 0 ≤ ν s) :
+    ∀ n, expectation (evolve (queryKernel next π p) ν n) T ≤
+      (1 - 1 / budget) ^ n * expectation ν T := by
+  have hbudget_pos : 0 < budget := lt_of_lt_of_le (by norm_num) hbudget
+  have hρ : 0 ≤ (1 : ℝ) - 1 / budget := by
+    have hh : (1 : ℝ) / budget ≤ 1 :=
+      (div_le_iff₀ hbudget_pos).mpr (by nlinarith [hbudget])
+    linarith
+  have hstep0 := adaptive_query_contraction T π p
+    (fun s j a => T (next s j a)) I gap budget
+    hbudget_pos hπ hp hposterior hsampler hgap
+  have hstep : ∀ s,
+      (∑ t : S, queryKernel next π p s t * T t) ≤
+        (1 - 1 / budget) * T s := by
+    intro s
+    rw [query_kernel_expected]
+    exact hstep0 s
+  exact adaptive_markov_decay
+    (queryKernel next π p) ν T (1 - 1 / budget)
+    hρ (query_kernel_nonneg next π p hπ_nonneg hp_nonneg)
+    hν hstep
+
+
+
+/-! ## Certificate inheritance under arbitrary partial observations -/
+
+/-- Pin every coordinate previously observed in the finite assignment `s`. -/
+def pinConfiguration
+    {ι α : Type} (s : ι → Option α) (x : ι → α) : ι → α :=
+  fun i => (s i).getD (x i)
+
+/-- Boolean output after applying the partial observation assignment. -/
+def restrictedOutput
+    {ι α : Type} (s : ι → Option α)
+    (g : (ι → α) → Bool) (x : ι → α) : Bool :=
+  g (pinConfiguration s x)
+
+/-- The original fractional-certificate row restricted to unobserved
+coordinates; all pinned-coordinate loads become exactly zero. -/
+def restrictedRow
+    {ι α : Type} [DecidableEq α]
+    (s : ι → Option α) (lam : (ι → α) → ι → ℝ)
+    (x : ι → α) (j : ι) : ℝ :=
+  if s j = none then lam (pinConfiguration s x) j else 0
+
+/-- Pinning can only remove disagreements. -/
+theorem pin_disagree_subset
+    {ι α : Type} [Fintype ι] [DecidableEq ι] [DecidableEq α]
+    (s : ι → Option α) (x y : ι → α) :
+    Transfer.disagree (pinConfiguration s x) (pinConfiguration s y) ⊆
+      Transfer.disagree x y := by
+  intro j hj
+  have hneq : pinConfiguration s x j ≠ pinConfiguration s y j :=
+    (Finset.mem_filter.mp hj).2
+  apply Finset.mem_filter.mpr
+  refine ⟨Finset.mem_univ j, ?_⟩
+  intro hxy
+  apply hneq
+  unfold pinConfiguration
+  cases h : s j with
+  | none => simp [h, hxy]
+  | some a => simp [h]
+
+/-- Every original product-space fractional certificate remains valid for
+the restricted function, with the observed coordinates deleted. -/
+theorem restricted_row_is_product_row
+    {ι α : Type} [Fintype ι] [DecidableEq ι] [DecidableEq α]
+    (s : ι → Option α)
+    (g : (ι → α) → Bool) (lam : (ι → α) → ι → ℝ)
+    (hrow : Transfer.IsProductRow g lam) :
+    Transfer.IsProductRow (restrictedOutput s g) (restrictedRow s lam) := by
+  constructor
+  · intro x j
+    by_cases hj : s j = none
+    · simpa [restrictedRow, hj] using hrow.1 (pinConfiguration s x) j
+    · simp [restrictedRow, hj]
+  · intro x y hxy
+    have hcontrast :
+        g (pinConfiguration s y) ≠ g (pinConfiguration s x) := hxy
+    have hsub := pin_disagree_subset s x y
+    have hterm : ∀ j ∈
+        Transfer.disagree (pinConfiguration s x) (pinConfiguration s y),
+        restrictedRow s lam x j = lam (pinConfiguration s x) j := by
+      intro j hj
+      have hneq : pinConfiguration s x j ≠ pinConfiguration s y j :=
+        (Finset.mem_filter.mp hj).2
+      cases h : s j with
+      | none => simp [restrictedRow, h]
+      | some a =>
+          have heq : pinConfiguration s x j = pinConfiguration s y j := by
+            simp [pinConfiguration, h]
+          exact False.elim (hneq heq)
+    calc
+      (1 : ℝ) ≤
+        ∑ j ∈ Transfer.disagree (pinConfiguration s x) (pinConfiguration s y),
+          lam (pinConfiguration s x) j :=
+            hrow.2 (pinConfiguration s x) (pinConfiguration s y) hcontrast
+      _ = ∑ j ∈ Transfer.disagree (pinConfiguration s x) (pinConfiguration s y),
+          restrictedRow s lam x j := by
+            apply Finset.sum_congr rfl
+            intro j hj
+            exact (hterm j hj).symm
+      _ ≤ ∑ j ∈ Transfer.disagree x y, restrictedRow s lam x j :=
+          Finset.sum_le_sum_of_subset_of_nonneg hsub
+            (fun j _ _ => by
+              by_cases hj : s j = none
+              · simpa [restrictedRow, hj] using
+                  hrow.1 (pinConfiguration s x) j
+              · simp [restrictedRow, hj])
+
+/-- Observing more coordinates never increases any restricted row's
+ℓ₁ cost, even before optimizing the certificates. -/
+theorem restricted_row_cost_le
+    {ι α : Type} [Fintype ι] [DecidableEq ι] [DecidableEq α]
+    (s : ι → Option α)
+    (lam : (ι → α) → ι → ℝ)
+    (hlam : ∀ x j, 0 ≤ lam x j) (x : ι → α) :
+    (∑ j, restrictedRow s lam x j) ≤
+      ∑ j, lam (pinConfiguration s x) j := by
+  apply Finset.sum_le_sum
+  intro j _
+  by_cases hj : s j = none
+  · simp [restrictedRow, hj]
+  · simpa [restrictedRow, hj] using
+      (hlam (pinConfiguration s x) j)
+
+/-- Update an unobserved coordinate to the revealed symbol. -/
+def observeCoordinate
+    {ι α : Type} [DecidableEq ι]
+    (s : ι → Option α) (j : ι) (a : α) : ι → Option α :=
+  Function.update s j (some a)
+
+/-- For a previously unobserved coordinate, conditioning the restricted
+function is exactly the restriction associated with the updated state. -/
+theorem pin_observe_eq
+    {ι α : Type} [DecidableEq ι]
+    (s : ι → Option α) (j : ι) (a : α) (x : ι → α)
+    (hfree : s j = none) :
+    pinConfiguration (observeCoordinate s j a) x =
+      pinConfiguration s (Function.update x j a) := by
+  funext k
+  by_cases hk : k = j
+  · subst k
+    simp [pinConfiguration, observeCoordinate, hfree]
+  · simp [pinConfiguration, observeCoordinate, Function.update, hk]
+
+theorem restricted_output_observe
+    {ι α : Type} [DecidableEq ι]
+    (s : ι → Option α) (j : ι) (a : α)
+    (g : (ι → α) → Bool) (x : ι → α)
+    (hfree : s j = none) :
+    restrictedOutput (observeCoordinate s j a) g x =
+      restrictedOutput s g (Function.update x j a) := by
+  exact congrArg g (pin_observe_eq s j a x hfree)
+
+
+
+/-! ## Interaction-degree invariance of partial evaluation -/
+
+/-- A finite-coordinate function depends only on `S` if agreement on `S`
+forces its outputs to agree. -/
+def DependsOnlyOn
+    {ι α : Type} (f : (ι → α) → ℝ) (S : Finset ι) : Prop :=
+  ∀ x y, (∀ j, j ∈ S → x j = y j) → f x = f y
+
+/-- Finite interaction degree is represented by a sum of terms supported on
+at most `d` coordinates. For finite products with full support, this agrees
+with the vanishing of high-order Hoeffding components. -/
+def HasInteractionDegreeAtMost
+    {ι α : Type} [Fintype ι] [DecidableEq ι]
+    (f : (ι → α) → ℝ) (d : ℕ) : Prop :=
+  ∃ terms : Finset ι → (ι → α) → ℝ,
+    (∀ x, f x = ∑ S : Finset ι, terms S x) ∧
+    (∀ S, d < S.card → ∀ x, terms S x = 0) ∧
+    (∀ S, DependsOnlyOn (terms S) S)
+
+/-- Partial observation never creates interactions of higher degree,
+regardless of atom weights or alphabet cardinality. -/
+theorem interaction_degree_under_pinning
+    {ι α : Type} [Fintype ι] [DecidableEq ι]
+    (f : (ι → α) → ℝ) (d : ℕ)
+    (hdegree : HasInteractionDegreeAtMost f d)
+    (s : ι → Option α) :
+    HasInteractionDegreeAtMost
+      (fun x => f (pinConfiguration s x)) d := by
+  rcases hdegree with ⟨terms, hsum, hhigh, hdepends⟩
+  refine ⟨(fun S x => terms S (pinConfiguration s x)), ?_, ?_, ?_⟩
+  · intro x
+    exact hsum (pinConfiguration s x)
+  · intro S hcard x
+    exact hhigh S hcard (pinConfiguration s x)
+  · intro S x y hxy
+    apply hdepends S (pinConfiguration s x) (pinConfiguration s y)
+    intro j hj
+    cases hs : s j with
+    | none =>
+        simpa [pinConfiguration, hs] using hxy j hj
+    | some a =>
+        simp [pinConfiguration, hs]
+
+/-- The degree/variance ANOVA budget, abstracted to nonnegative component
+energies. To use it for a specific product law, additionally establish the
+Hoeffding energy identity for that function and measure. -/
+theorem anova_degree_energy_budget
+    {ι : Type} [Fintype ι] [DecidableEq ι]
+    (energy : Finset ι → ℝ) (d : ℕ)
+    (henergy : ∀ S, 0 ≤ energy S)
+    (hdegree : ∀ S, d < S.card → energy S = 0) :
+    (∑ S : Finset ι, (S.card : ℝ) * energy S) ≤
+      (d : ℝ) * (∑ S : Finset ι,
+        if S = ∅ then (0 : ℝ) else energy S) := by
+  calc
+    (∑ S : Finset ι, (S.card : ℝ) * energy S) ≤
+        ∑ S : Finset ι,
+          (d : ℝ) * (if S = ∅ then (0 : ℝ) else energy S) := by
+            apply Finset.sum_le_sum
+            intro S _
+            by_cases he : S = ∅
+            · subst S
+              simp
+            · by_cases hc : S.card ≤ d
+              · have hle : (S.card : ℝ) ≤ (d : ℝ) := by
+                  exact_mod_cast hc
+                simpa [he] using
+                  mul_le_mul_of_nonneg_right hle (henergy S)
+              · have hz : energy S = 0 :=
+                  hdegree S (Nat.lt_of_not_ge hc)
+                simp [he, hz]
+    _ = (d : ℝ) * (∑ S : Finset ι,
+          if S = ∅ then (0 : ℝ) else energy S) := by
+            rw [Finset.mul_sum]
+
+
+
+/-- An exact "uncertainty principle" for opposing certificate profiles.
+The sharp sampling inequality, certificate-cost domination, and a degree
+energy bound force a nontrivial overlap, independent of dimension.
+Here `S²/V` is the squared Bhattacharyya overlap of the two load laws.
+All three inputs are explicit so mathematical scope travels with the claim. -/
+theorem certificate_overlap_necessary
+    (V S T variance K degree : ℝ)
+    (hV : 0 < V) (hK : 0 < K) (hd : 0 < degree)
+    (hsharp : V ^ 2 ≤ S ^ 2 * T)
+    (hcost : variance ≤ K ^ 2 * V)
+    (hdegree : T ≤ degree * variance) :
+    1 / (degree * K ^ 2) ≤ S ^ 2 / V := by
+  have hDK : 0 < degree * K ^ 2 :=
+    mul_pos hd (sq_pos_of_pos hK)
+  have hchain : V ^ 2 ≤ (degree * K ^ 2 * S ^ 2) * V := by
+    calc
+      V ^ 2 ≤ S ^ 2 * T := hsharp
+      _ ≤ S ^ 2 * (degree * variance) :=
+        mul_le_mul_of_nonneg_left hdegree (sq_nonneg S)
+      _ ≤ S ^ 2 * (degree * (K ^ 2 * V)) := by
+        exact mul_le_mul_of_nonneg_left
+          (mul_le_mul_of_nonneg_left hcost hd.le) (sq_nonneg S)
+      _ = (degree * K ^ 2 * S ^ 2) * V := by ring
+  have hVle : V ≤ degree * K ^ 2 * S ^ 2 := by
+    apply (mul_le_mul_iff_of_pos_right hV).mp
+    nlinarith [hchain]
+  apply (div_le_div_iff₀ hDK hV).mpr
+  nlinarith [hVle]
+
+
+
+/-! ## Product-law normalization for the posterior probabilistic reading -/
+
+/-- A finite product of normalized coordinate masses has total mass one. -/
+theorem product_mass_normalized
+    {ι α : Type} [Fintype ι] [DecidableEq ι]
+    [Fintype α] [DecidableEq α]
+    (p : ι → α → ℝ)
+    (hnorm : ∀ i, (∑ a : α, p i a) = 1) :
+    (∑ x : ι → α, Transfer.prodMass p x) = 1 := by
+  classical
+  have hsum : (∑ x : ι → α, Transfer.prodMass p x) =
+      ∏ i, ∑ a : α, p i a := by
+    simpa [Transfer.prodMass] using
+      (Finset.sum_prod_piFinset (s := (Finset.univ : Finset α)) (g := p))
+  calc
+    (∑ x : ι → α, Transfer.prodMass p x) =
+      ∏ i, ∑ a : α, p i a := hsum
+    _ = 1 := by simp [hnorm]
+
+/-- Two independent draws have total joint product mass one, an explicit
+normalization obligation for regarding `posteriorEdge` as a conditional
+probability rather than merely a ratio of finite sums. -/
+theorem pair_mass_normalized
+    {ι α : Type} [Fintype ι] [DecidableEq ι]
+    [Fintype α] [DecidableEq α]
+    (p : ι → α → ℝ)
+    (hnorm : ∀ i, (∑ a : α, p i a) = 1) :
+    (∑ z : Transfer.PairSample ι α, Transfer.pairMass p z) = 1 := by
+  classical
+  calc
+    (∑ z : Transfer.PairSample ι α, Transfer.pairMass p z) =
+        ∑ x : ι → α, ∑ y : ι → α,
+          Transfer.prodMass p x * Transfer.prodMass p y := by
+            rw [Fintype.sum_prod_type]
+            apply Finset.sum_congr rfl
+            intro x _
+            apply Finset.sum_congr rfl
+            intro y _
+            exact Transfer.pairMass_eq_prodMass p (x, y)
+    _ = ∑ x : ι → α, Transfer.prodMass p x *
+          (∑ y : ι → α, Transfer.prodMass p y) := by
+            apply Finset.sum_congr rfl
+            intro x _
+            rw [Finset.mul_sum]
+    _ = (∑ x : ι → α, Transfer.prodMass p x) *
+          (∑ y : ι → α, Transfer.prodMass p y) := by
+            rw [Finset.sum_mul]
+    _ = 1 := by
+          simp [product_mass_normalized p hnorm]
+
+
+
+/-- The observed coordinate's marginal of a normalized finite product law
+is *exactly* its given symbol weight. This supplies the Bayesian normalization
+premise rather than merely assuming it. -/
+theorem single_product_marginal
+    {ι α : Type} [Fintype ι] [DecidableEq ι]
+    [Fintype α] [DecidableEq α]
+    (p : ι → α → ℝ)
+    (hnorm : ∀ i, (∑ b : α, p i b) = 1)
+    (j : ι) (a : α) :
+    (∑ x : ι → α,
+      if x j = a then Transfer.prodMass p x else 0) = p j a := by
+  classical
+  let q : ι → α → ℝ := fun i b =>
+    if i = j then (if b = a then p i b else 0) else p i b
+  have hterm : ∀ x : ι → α, Transfer.prodMass q x =
+      if x j = a then Transfer.prodMass p x else 0 := by
+    intro x
+    by_cases hx : x j = a
+    · have heq : ∀ i, q i (x i) = p i (x i) := by
+        intro i
+        by_cases hij : i = j
+        · subst i
+          simp [q, hx]
+        · simp [q, hij]
+      change (∏ i, q i (x i)) =
+        if x j = a then (∏ i, p i (x i)) else 0
+      rw [if_pos hx]
+      exact Finset.prod_congr rfl (fun i _ => heq i)
+    · have hz : q j (x j) = 0 := by
+        simp [q, hx]
+      have hprod : (∏ i, q i (x i)) = 0 :=
+        Finset.prod_eq_zero (Finset.mem_univ j) hz
+      change (∏ i, q i (x i)) =
+        if x j = a then (∏ i, p i (x i)) else 0
+      rw [if_neg hx]
+      exact hprod
+  have hqsum : ∀ i, (∑ b : α, q i b) =
+      if i = j then p j a else 1 := by
+    intro i
+    by_cases hij : i = j
+    · subst i
+      simp [q]
+    · simp [q, hij, hnorm i]
+  have hprod : (∏ i, ∑ b : α, q i b) = p j a := by
+    calc
+      (∏ i, ∑ b : α, q i b) =
+          ∏ i, if i = j then p j a else (1 : ℝ) := by
+            apply Finset.prod_congr rfl
+            intro i _
+            exact hqsum i
+      _ = p j a := by simp
+  calc
+    (∑ x : ι → α,
+      if x j = a then Transfer.prodMass p x else 0) =
+        ∑ x : ι → α, Transfer.prodMass q x := by
+          apply Finset.sum_congr rfl
+          intro x _
+          exact (hterm x).symm
+    _ = ∏ i, ∑ b : α, q i b := by
+          simpa [Transfer.prodMass] using
+            (Finset.sum_prod_piFinset
+              (s := (Finset.univ : Finset α)) (g := q))
+    _ = p j a := hprod
+
+/-- The observed first-coordinate value of an independent pair has exactly
+its specified marginal. The pair posterior numerator therefore normalizes
+to one using `conditional_mass_one` with no extra assumption. -/
+theorem pair_first_marginal
+    {ι α : Type} [Fintype ι] [DecidableEq ι]
+    [Fintype α] [DecidableEq α]
+    (p : ι → α → ℝ)
+    (hnorm : ∀ i, (∑ b : α, p i b) = 1)
+    (j : ι) (a : α) :
+    (∑ z : Transfer.PairSample ι α,
+      if z.1 j = a then Transfer.pairMass p z else 0) = p j a := by
+  classical
+  calc
+    (∑ z : Transfer.PairSample ι α,
+      if z.1 j = a then Transfer.pairMass p z else 0) =
+      ∑ x : ι → α, ∑ y : ι → α,
+        if x j = a then
+          Transfer.prodMass p x * Transfer.prodMass p y else 0 := by
+          rw [Fintype.sum_prod_type]
+          apply Finset.sum_congr rfl
+          intro x _
+          apply Finset.sum_congr rfl
+          intro y _
+          by_cases hx : x j = a
+          · simp [hx, Transfer.pairMass_eq_prodMass]
+          · simp [hx]
+    _ = ∑ x : ι → α,
+          (if x j = a then Transfer.prodMass p x else 0) *
+          (∑ y : ι → α, Transfer.prodMass p y) := by
+          apply Finset.sum_congr rfl
+          intro x _
+          by_cases hx : x j = a
+          · simp [hx, Finset.mul_sum]
+          · simp [hx]
+    _ = (∑ x : ι → α, if x j = a then Transfer.prodMass p x else 0) *
+          (∑ y : ι → α, Transfer.prodMass p y) := by
+          rw [Finset.sum_mul]
+    _ = p j a := by
+          rw [single_product_marginal p hnorm j a,
+            product_mass_normalized p hnorm]
+          ring
+
+
+
+/-- The posterior influence numerator really is an expectation under the
+explicitly conditioned finite mass, not an arbitrary reciprocal expression. -/
+theorem posterior_edge_is_conditional_expectation
+    {X A J : Type*} [Fintype X] [Fintype A] [DecidableEq A] [DecidableEq J]
+    (m : X → ℝ) (observable : X → A) (p : A → ℝ)
+    (edge : J → X → ℝ) (j : J) (a : A) (k : J) :
+    posteriorEdge m observable p edge j a k =
+      if k = j then 0 else
+        ∑ x : X, conditionalMass m observable p a x * edge k x := by
+  classical
+  by_cases hk : k = j
+  · simp [posteriorEdge, hk]
+  · simp only [posteriorEdge, if_neg hk]
+    rw [Finset.sum_div]
+    apply Finset.sum_congr rfl
+    intro x _
+    by_cases hx : observable x = a
+    · simp [conditionalMass, hx, div_eq_mul_inv]
+      ring
+    · simp [conditionalMass, hx]
+
+/-- For independent normalized draws, conditioning on the observed symbol
+of the first draw produces a bona fide probability measure on the pair. -/
+theorem concrete_pair_posterior_is_probability
+    {ι α : Type} [Fintype ι] [DecidableEq ι]
+    [Fintype α] [DecidableEq α]
+    (p : ι → α → ℝ)
+    (hp : ∀ i a, 0 < p i a)
+    (hnorm : ∀ i, (∑ b : α, p i b) = 1)
+    (j : ι) (a : α) :
+    (∑ z : Transfer.PairSample ι α,
+      conditionalMass (Transfer.pairMass p)
+        (fun z : Transfer.PairSample ι α => z.1 j)
+        (p j) a z) = 1 := by
+  exact conditional_mass_one
+    (Transfer.pairMass p)
+    (fun z : Transfer.PairSample ι α => z.1 j)
+    (p j) a (hp j a) (pair_first_marginal p hnorm j a)
+
+
+
+/-! ## Degree-free certificate-overlap rigidity (stronger than d-dependent bound) -/
+
+/-- A single coordinate's ANOVA energy cannot exceed total nonconstant
+variance energy. The low-degree assumption is unnecessary for this fact. -/
+theorem anova_coordinate_energy_le_variance
+    {ι : Type} [Fintype ι] [DecidableEq ι]
+    (energy : Finset ι → ℝ) (j : ι)
+    (henergy : ∀ S, 0 ≤ energy S) :
+    (∑ S : Finset ι, if j ∈ S then energy S else 0) ≤
+      ∑ S : Finset ι, if S = ∅ then (0 : ℝ) else energy S := by
+  apply Finset.sum_le_sum
+  intro S _
+  by_cases hj : j ∈ S
+  · have hne : S ≠ ∅ := by
+      intro he
+      subst S
+      simpa using hj
+    simp [hj, hne]
+  · by_cases he : S = ∅
+    · simp [hj, he]
+    · simpa [hj, he] using henergy S
+
+/-- **Dimension- and degree-free overlap rigidity.** Let V=V1*V0>0 and
+S=sum sqrt(P_j Q_j), so S²/V is the squared Bhattacharyya overlap.
+The sharp sampler bound and maximal single-coordinate influence ≤ variance,
+together with bounded certificate cost K, imply B²≥K⁻².
+Unlike `certificate_overlap_necessary`, no degree budget appears.
+
+The hypotheses are kept explicit because the function-to-ANOVA identity
+and the row-cost-to-variance inequality have their own proof obligations. -/
+theorem certificate_overlap_degree_free
+    (V S variance K : ℝ)
+    (hV : 0 < V) (hVar : 0 < variance) (hK : 0 < K)
+    (hsharp : V ^ 2 ≤ S ^ 2 * variance)
+    (hcost : variance ≤ K ^ 2 * V) :
+    1 / K ^ 2 ≤ S ^ 2 / V := by
+  have hK2 : 0 < K ^ 2 := sq_pos_of_pos hK
+  have hchain : V ^ 2 ≤ (K ^ 2 * S ^ 2) * V := by
+    calc
+      V ^ 2 ≤ S ^ 2 * variance := hsharp
+      _ ≤ S ^ 2 * (K ^ 2 * V) :=
+        mul_le_mul_of_nonneg_left hcost (sq_nonneg S)
+      _ = (K ^ 2 * S ^ 2) * V := by ring
+  have hVle : V ≤ K ^ 2 * S ^ 2 := by
+    apply (mul_le_mul_iff_of_pos_right hV).mp
+    nlinarith [hchain]
+  apply (div_le_div_iff₀ hK2 hV).mpr
+  nlinarith [hVle]
+
+
+end Nightfall.ProductSpace.Posterior
+
