@@ -99,7 +99,7 @@ try{
         }));
         assert.equal(accents.route,"moon","Night home is its own document");
         assert.ok(accents.sky&&accents.disc,"Distinct moonlit hero artwork is present");
-        assert.equal(accents.ledger,4,"Four source-scoped open investigations are visible");
+        assert.equal(accents.ledger,5,"Five source-scoped open investigations, including product-space review, are visible");
         assert.equal(accents.archive,false,"Night page does not re-use archive card structure");
         assert.match(accents.art,/gradient/i,"Moonlight uses local CSS artwork");
       }
