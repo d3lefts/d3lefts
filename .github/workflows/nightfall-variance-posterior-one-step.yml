@@ -45,9 +45,11 @@ jobs:
             research/nightfall/formalization/product_space/VariancePosteriorOneStep.lean \
             --workspace /tmp/aa --timeout 900 \
             --decl Nightfall.ProductSpace.Observation.observationProbability_sum_one \
+            --decl Nightfall.ProductSpace.Observation.observationProbability_nonneg \
             --decl Nightfall.ProductSpace.Observation.posterior_total_at_coordinate \
             --decl Nightfall.ProductSpace.Observation.exact_certificate_posterior_decrement \
             --decl Nightfall.ProductSpace.Observation.normalized_one_step_certificate_to_observation \
+            --decl Nightfall.ProductSpace.Observation.normalized_one_step_degree_contraction \
             --json-out lean-receipts/variance-posterior-one-step.json || {
               cat lean-receipts/variance-posterior-one-step.json || true
               exit 1
