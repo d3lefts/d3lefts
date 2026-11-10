@@ -39,7 +39,6 @@ theorem localized_weight_optimization_positive
             rw [Real.sq_sqrt (le_of_lt (hA i))]
       _ = Real.sqrt (β i) * Real.sqrt (A i) := by
             field_simp [hs]
-            ring
   have hright : (∑ i, β i / w i) =
       ∑ i, Real.sqrt (β i) * Real.sqrt (A i) := by
     apply Finset.sum_congr rfl
@@ -53,7 +52,6 @@ theorem localized_weight_optimization_positive
             rw [Real.sq_sqrt (le_of_lt (hβ i))]
       _ = Real.sqrt (β i) * Real.sqrt (A i) := by
             field_simp [hs, ht]
-            ring
   have hsnonneg : 0 ≤ ∑ i, Real.sqrt (β i) * Real.sqrt (A i) := by
     apply Finset.sum_nonneg
     intro i _
