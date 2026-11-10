@@ -1,0 +1,57 @@
+name: NIGHTFALL universal discoverability finite certificate
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/discoverability/**'
+      - '.github/workflows/nightfall-witness-packing-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  certificate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Lean 4.35.0 and Mathlib
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.35.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          git clone --depth 1 --branch v4.35.0 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4
+          (cd /tmp/mathlib4 && "$HOME/.elan/bin/lake" exe cache get)
+      - name: Kernel-check scoped witness packing declarations
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/discoverability/WitnessPacking.lean \
+            --workspace /tmp/mathlib4 --timeout 900 \
+            --decl Nightfall.Discoverability.hitting_implies_certificate \
+            --decl Nightfall.Discoverability.bounded_union_cost \
+            --decl Nightfall.Discoverability.witness_packing_certificate \
+            --decl Nightfall.Discoverability.conflicting_twins_block_all_certificates \
+            --decl Nightfall.Discoverability.full_transcript_certifies \
+            --json-out lean-receipts/discoverability-witness-packing.json || {
+              cat lean-receipts/discoverability-witness-packing.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/discoverability-witness-packing.json
+      - name: Save verification fingerprints
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/discoverability/WitnessPacking.lean > lean-receipts/SHA256SUMS.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt 2>/dev/null || true
+          git rev-parse HEAD > lean-receipts/repo-head.txt
+      - name: Upload machine-checker receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: discoverability-finite-certificate-receipt
+          path: lean-receipts/
+          if-no-files-found: warn
