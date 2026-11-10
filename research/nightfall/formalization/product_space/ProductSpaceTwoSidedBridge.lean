@@ -1571,5 +1571,176 @@ theorem adaptive_query_contraction
           ring_nf
           rfl
 
+
+/-! ## Concrete product-space instantiation of the certificate sampler -/
+
+/-- The generic sampler has no unproved localization premise once specialized
+to the actual positive finite product law, global certificate rows, and
+the proved `localized_two_sided_product` theorem from PR #298.
+All loads and influences are the original product-space definitions. -/
+theorem concrete_product_overlap_sampler
+    {ι α : Type*} [Fintype ι] [DecidableEq ι]
+    [Fintype α] [DecidableEq α]
+    (p : ι → α → ℝ) (hp : ∀ i a, 0 < p i a)
+    (g : (ι → α) → Bool) (lam : (ι → α) → ι → ℝ)
+    (hrow : Transfer.IsProductRow g lam)
+    (hnorm : ∀ x, 0 < ∑ j, lam x j)
+    (hV : 0 <
+      (∑ x : {x : ι → α // g x = true},
+        Transfer.prodMass p x.1 * invCost (lam x.1)) *
+      (∑ y : {y : ι → α // g y = false},
+        Transfer.prodMass p y.1 * invCost (lam y.1))) :
+    let V1 : ℝ := ∑ x : {x : ι → α // g x = true},
+      Transfer.prodMass p x.1 * invCost (lam x.1)
+    let V0 : ℝ := ∑ y : {y : ι → α // g y = false},
+      Transfer.prodMass p y.1 * invCost (lam y.1)
+    let P : ι → ℝ := fun j =>
+      ∑ x : {x : ι → α // g x = true},
+        Transfer.prodMass p x.1 * invCost (lam x.1) ^ 2 * lam x.1 j
+    let Q : ι → ℝ := fun j =>
+      ∑ y : {y : ι → α // g y = false},
+        Transfer.prodMass p y.1 * invCost (lam y.1) ^ 2 * lam y.1 j
+    let c : ι → ℝ := fun j =>
+      ∑ z, Transfer.pairMass p z * Transfer.edgeCross g j z
+    let S : ℝ := ∑ j, Real.sqrt (P j * Q j)
+    0 < S ∧ V1 * V0 ≤
+      ∑ j, (Real.sqrt (P j * Q j) / S) * c j := by
+  classical
+  intro V1 V0 P Q c S
+  have hpm : ∀ x, 0 ≤ Transfer.prodMass p x :=
+    fun x => (Transfer.prodMass_pos p hp x).le
+  have hc : ∀ j, 0 ≤ c j := by
+    intro j
+    change 0 ≤ ∑ z, Transfer.pairMass p z * Transfer.edgeCross g j z
+    exact Finset.sum_nonneg fun z _ =>
+      mul_nonneg
+        (Transfer.pairMass_nonneg p (fun i a => (hp i a).le) z)
+        (Transfer.edgeCross_nonneg g j z)
+  have hP : ∀ j, 0 ≤ P j := by
+    intro j
+    change 0 ≤ ∑ x : {x : ι → α // g x = true},
+      Transfer.prodMass p x.1 * invCost (lam x.1) ^ 2 * lam x.1 j
+    exact Finset.sum_nonneg fun x _ =>
+      mul_nonneg
+        (mul_nonneg (hpm x.1) (sq_nonneg _)) (hrow.1 x.1 j)
+  have hQ : ∀ j, 0 ≤ Q j := by
+    intro j
+    change 0 ≤ ∑ y : {y : ι → α // g y = false},
+      Transfer.prodMass p y.1 * invCost (lam y.1) ^ 2 * lam y.1 j
+    exact Finset.sum_nonneg fun y _ =>
+      mul_nonneg
+        (mul_nonneg (hpm y.1) (sq_nonneg _)) (hrow.1 y.1 j)
+  have hPsum : (∑ j, P j) = V1 := by
+    change
+      (∑ j, ∑ x : {x : ι → α // g x = true},
+        Transfer.prodMass p x.1 * invCost (lam x.1) ^ 2 * lam x.1 j) =
+      ∑ x : {x : ι → α // g x = true},
+        Transfer.prodMass p x.1 * invCost (lam x.1)
+    exact Transfer.mass_load_sum
+      (fun x : {x : ι → α // g x = true} => Transfer.prodMass p x.1)
+      (fun x j => lam x.1 j) (fun x => hnorm x.1)
+  have hQsum : (∑ j, Q j) = V0 := by
+    change
+      (∑ j, ∑ y : {y : ι → α // g y = false},
+        Transfer.prodMass p y.1 * invCost (lam y.1) ^ 2 * lam y.1 j) =
+      ∑ y : {y : ι → α // g y = false},
+        Transfer.prodMass p y.1 * invCost (lam y.1)
+    exact Transfer.mass_load_sum
+      (fun y : {y : ι → α // g y = false} => Transfer.prodMass p y.1)
+      (fun y j => lam y.1 j) (fun y => hnorm y.1)
+  have hloc : V1 * V0 ≤
+      ∑ j, Real.sqrt (c j) * Real.sqrt (P j * Q j) :=
+    Transfer.localized_two_sided_product p hp g lam hrow
+  have hV' : 0 < V1 * V0 := hV
+  have hs := Discovery.certificate_overlap_sampler
+    c P Q V1 V0 hc hP hQ hPsum hQsum hV' hloc
+  exact ⟨hs.1, hs.2.2⟩
+
+/-- The first genuinely *product-specific* posterior-to-selection bridge.
+It uses the verified certificate sampler with no manual hloc input, and
+the exact finite Bayesian posterior identity with the physical observable
+`z ↦ z.1 j` and edge crossing `edgeCross g k z`.
+
+The response value `a` is distributed with the original marginal
+`p j a`; normalization of those marginals is assumed for its probabilistic
+reading, but the finite-sum identity itself does not require it. -/
+theorem concrete_product_one_step
+    {ι α : Type*} [Fintype ι] [DecidableEq ι]
+    [Fintype α] [DecidableEq α]
+    (p : ι → α → ℝ) (hp : ∀ i a, 0 < p i a)
+    (g : (ι → α) → Bool) (lam : (ι → α) → ι → ℝ)
+    (hrow : Transfer.IsProductRow g lam)
+    (hnorm : ∀ x, 0 < ∑ j, lam x j)
+    (hV : 0 <
+      (∑ x : {x : ι → α // g x = true},
+        Transfer.prodMass p x.1 * invCost (lam x.1)) *
+      (∑ y : {y : ι → α // g y = false},
+        Transfer.prodMass p y.1 * invCost (lam y.1))) :
+    let V1 : ℝ := ∑ x : {x : ι → α // g x = true},
+      Transfer.prodMass p x.1 * invCost (lam x.1)
+    let V0 : ℝ := ∑ y : {y : ι → α // g y = false},
+      Transfer.prodMass p y.1 * invCost (lam y.1)
+    let P : ι → ℝ := fun j =>
+      ∑ x : {x : ι → α // g x = true},
+        Transfer.prodMass p x.1 * invCost (lam x.1) ^ 2 * lam x.1 j
+    let Q : ι → ℝ := fun j =>
+      ∑ y : {y : ι → α // g y = false},
+        Transfer.prodMass p y.1 * invCost (lam y.1) ^ 2 * lam y.1 j
+    let S : ℝ := ∑ j, Real.sqrt (P j * Q j)
+    let π : ι → ℝ := fun j => Real.sqrt (P j * Q j) / S
+    let T : ℝ := ∑ k, ∑ z,
+      Transfer.pairMass p z * Transfer.edgeCross g k z
+    (∑ j, π j *
+      (∑ a : α, p j a *
+        (∑ k, posteriorEdge
+          (Transfer.pairMass p)
+          (fun z : Transfer.PairSample ι α => z.1 j)
+          (p j) (Transfer.edgeCross g) j a k))) ≤
+      T - V1 * V0 := by
+  classical
+  intro V1 V0 P Q S π T
+  let c : ι → ℝ := fun j =>
+    ∑ z, Transfer.pairMass p z * Transfer.edgeCross g j z
+  have hsampler : 0 < S ∧ V1 * V0 ≤ ∑ j, π j * c j :=
+    concrete_product_overlap_sampler p hp g lam hrow hnorm hV
+  have hπsum : (∑ j, π j) = 1 := by
+    change (∑ j, Real.sqrt (P j * Q j) / S) = 1
+    rw [← Finset.sum_div]
+    exact div_self hsampler.1.ne'
+  have hpost : ∀ j, (∑ a : α, p j a *
+      (∑ k, posteriorEdge
+        (Transfer.pairMass p)
+        (fun z : Transfer.PairSample ι α => z.1 j)
+        (p j) (Transfer.edgeCross g) j a k)) =
+        T - c j := by
+    intro j
+    exact posterior_total_mean
+      (Transfer.pairMass p)
+      (fun z : Transfer.PairSample ι α => z.1 j)
+      (p j) (hp j) (Transfer.edgeCross g) j
+  calc
+    (∑ j, π j *
+      (∑ a : α, p j a *
+        (∑ k, posteriorEdge
+          (Transfer.pairMass p)
+          (fun z : Transfer.PairSample ι α => z.1 j)
+          (p j) (Transfer.edgeCross g) j a k))) =
+      ∑ j, π j * (T - c j) := by
+        apply Finset.sum_congr rfl
+        intro j _
+        rw [hpost j]
+    _ = T - ∑ j, π j * c j := by
+          calc
+            (∑ j, π j * (T - c j)) =
+              ∑ j, (T * π j - π j * c j) := by
+                apply Finset.sum_congr rfl
+                intro j _
+                ring
+            _ = T * (∑ j, π j) - ∑ j, π j * c j := by
+                  rw [Finset.sum_sub_distrib, Finset.mul_sum]
+            _ = T - ∑ j, π j * c j := by
+                  rw [hπsum, mul_one]
+    _ ≤ T - V1 * V0 := sub_le_sub_left hsampler.2 T
+
 end Nightfall.ProductSpace.Posterior
 
