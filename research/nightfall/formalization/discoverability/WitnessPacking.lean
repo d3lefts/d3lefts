@@ -88,7 +88,7 @@ theorem bounded_union_cost
     (observedUnion P).card ≤ ∑ B ∈ P, B.card := Finset.card_biUnion_le
     _ ≤ ∑ _B ∈ P, w := Finset.sum_le_sum (fun B hB => hWidth B hB)
     _ = P.card * w := by simp
-    _ = w * P.card := by omega
+    _ = w * P.card := by simp [Nat.mul_comm]
     _ ≤ w * r := Nat.mul_le_mul_left w hRank
 
 /-- An exact finite certificate with independently checkable hitting and width. -/
