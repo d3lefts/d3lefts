@@ -36,6 +36,11 @@ try{
     assert.equal(await page.locator("h1").count(),1,"one document heading");
     assert.equal(await page.locator(".ps-ledger-row").count(),3,"all three formal proof groups remain");
     assert.equal(await page.locator(".ps-formula").count(),2,"both proposed mathematical claims remain explicitly labeled");
+    assert.equal(await page.locator('#candidate-manuscript').count(),1,"Claude v2 candidate reading section exists");
+    assert.equal(await page.locator('#candidate-manuscript a[href$="Wright_Certificate_Engine_v2.pdf"]').count(),1,"merged candidate PDF is directly available");
+    assert.equal(await page.locator('#candidate-manuscript a[href$="Wright_Certificate_Engine_v2.tex"]').count(),1,"source manuscript is independently inspectable");
+    assert.equal(await page.locator('#candidate-manuscript a[href$="/checks"]').count(),1,"finite checks are inspectable");
+    assert.equal(await page.locator('#candidate-manuscript a[href$="README.md"]').count(),1,"candidate status ledger is accessible");
     assert.equal(await page.locator('link[href="product-space.css"]').count(),1,"scoped stylesheet must load");
     const layout=await page.evaluate(()=>{
       const el=document.querySelector(".ps-ledger-row");
@@ -79,10 +84,10 @@ try{
     assert.ok(layout.overflow<=3,"no horizontal overflow at "+width+"px: "+JSON.stringify(layout));
     if(width===390)assert.equal(layout.columns,1,"mobile formalization stacks");
     const text=await page.locator("main").innerText();
-    for(const value of ["not a certified general theorem","not yet a Lean theorem","reciprocal all-pairs","Global novelty","source hashes"]){
+    for(const value of ["not a certified general theorem","not yet a Lean theorem","reciprocal all-pairs","Global novelty","source hashes","(2, 4) exponents apply to crossings","missing jump-size","candidate research"]){
       assert.ok(text.toLowerCase().includes(value.toLowerCase()),"publication boundary missing: "+value);
     }
-    for(const anchor of ["claims-title","formalization","open-proof-obligations","source-credit"]){
+    for(const anchor of ["claims-title","candidate-manuscript","formalization","open-proof-obligations","source-credit"]){
       const link=page.locator('.ps-quick-nav a[href="#'+anchor+'"]');
       assert.equal(await link.count(),1,"quick navigation "+anchor);
       assert.equal(await page.locator("#"+anchor).count(),1,"anchor destination "+anchor);
