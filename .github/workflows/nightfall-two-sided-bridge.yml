@@ -52,6 +52,7 @@ jobs:
             --decl Nightfall.ProductSpace.Discovery.certificate_overlap_sampler \
             --decl Nightfall.ProductSpace.Discovery.weighted_potential_descent \
             --decl Nightfall.ProductSpace.Discovery.geometric_potential_decay \
+            --decl Nightfall.ProductSpace.Discovery.overlap_information_sharp \
             --json-out lean-receipts/two-sided-bridge.json || {
               cat lean-receipts/two-sided-bridge.json || true
               exit 1
