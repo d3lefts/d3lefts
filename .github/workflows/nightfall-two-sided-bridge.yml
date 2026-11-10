@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean'
+      - 'research/nightfall/2026-11-certificate-engine/CERTIFICATION_UPDATE_20261110.md'
       - 'research/nightfall/formalization/product_space/check_certificate_guided_descent.py'
       - '.github/workflows/nightfall-two-sided-bridge.yml'
   workflow_dispatch:

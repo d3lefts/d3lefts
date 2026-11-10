@@ -1,5 +1,27 @@
 # Product-space Aaronson–Ambainis: formalization and publication reconciliation
 
+## Post-merge reconciliation — 10 November 2026
+
+**Current repository status:** The six product-space/adjacent exact-recovery draft PRs audited below have now been **merged into `main`** with explicit owner authorization. The original audit snapshot remains below as immutable provenance, including its historical references to draft branches. The merge is a source-control event, **not** a promotion to a globally original theorem or external referee acceptance.
+
+| Merged PR | Merge commit | Scoped verified contribution |
+|---|---|---|
+| [#295](https://github.com/d3lefts/d3lefts/pull/295) | `0d1c074364569c692be1bbca35a269e10cfebefa` | finite heterogeneous weighted reciprocal/positivity transfer, mass-removal proof |
+| [#298](https://github.com/d3lefts/d3lefts/pull/298) | `13c274e693ff8c5efc5f0df04bb566ca4123a0b1` | jointly compiled finite localized and two-sided certificate theorem |
+| [#299](https://github.com/d3lefts/d3lefts/pull/299) | `248915c28bb0c208b1ec54cf0aac72c2f3aa5cb1` | finite threshold level crossing, threshold outside attained range |
+| [#300](https://github.com/d3lefts/d3lefts/pull/300) | `a1e92a2ca2af7c1475921a2180b33817e92e9cfc` | overlap sampler and generic potential descent, not adaptive policy formalization |
+| [#297](https://github.com/d3lefts/d3lefts/pull/297) | `b09fdc0bf8ba5a840c6136b6ca5a1203c7b94a54` | scoped ANOVA activation, restricted-degree and quartic Rademacher lemmas |
+| [#301](https://github.com/d3lefts/d3lefts/pull/301) | `17b32ac186683394b7225f28b29a02dab81c1719` | finite switching theorem and adversarial review of null-set and overlapping-switch pitfalls |
+
+**Verification:** All six PR heads passed their respective compiler, axiom-policy and repository CI checks before merging, including the updated #301 head `3168be8434ea397109404eb8612ada2564c4b277`. They form **distinct formal proof artifacts** in two pinned Lean toolchains, not a single end-to-end proof of the research programme. The #298 module was inherited by #299 and #300; the #300 extension is now merged into the same file. A post-merge integration replay is triggered by the coupled bridge/level-crossing workflow and must receive its own green receipt before claiming a fresh unified CI success.
+
+**Mathematical limit preserved:** no end-to-end kernel certification for `max_i I_i(f) ≥ c_prod Var(f)^(5/2)/d^6` on arbitrary measurable/infinite products; no unconditional T-query quantum simulator theorem; no posterior adaptive tree proof in Lean; no general `(2,4)` squared-influence result; no exact infinite-product recovery theorem; no external human peer review or accepted priority.
+
+---
+
+## Historical pre-merge certification audit (frozen snapshot)
+
+
 **Research status:** 10 November 2026; reviewed against repository `main` at `4cb56d3386051f083e2bad69810c3e2996b22a58` and open draft PR heads listed below. **This is an evidence ledger, not a referee report or public priority claim.** The source and exact Lean theorem statements, rather than a prose title or a green badge, govern what is certified.
 
 ## What has actually changed
