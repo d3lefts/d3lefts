@@ -35,7 +35,7 @@ theorem inverse_cost_at_least_inverse_budget
     (hbound : (∑ j, r j) ≤ K) :
     K⁻¹ ≤ invCost r := by
   unfold invCost
-  exact (inv_le_inv₀ hK.ne' hpos.ne').2 hbound
+  exact (inv_le_inv₀ hK hpos).2 hbound
 
 /-- Weighted positive-class mass is at most K times its classwise
 mass-weighted inverse certificate cost. -/
@@ -88,9 +88,9 @@ theorem class_mass_product_le_certificate_cost
   have h1 := positive_class_mass_le_cost p hp g lam K hK hnorm hbounded
   have h0 := negative_class_mass_le_cost p hp g lam K hK hnorm hbounded
   have h1' : positiveClassMass p g ≤ K * positiveClassValue p g lam := by
-    exact (div_le_iff₀ hK).mp h1
+    simpa only [mul_comm] using (div_le_iff₀ hK).mp h1
   have h0' : negativeClassMass p g ≤ K * negativeClassValue p g lam := by
-    exact (div_le_iff₀ hK).mp h0
+    simpa only [mul_comm] using (div_le_iff₀ hK).mp h0
   have hm0 : 0 ≤ negativeClassMass p g := by
     unfold negativeClassMass
     exact Finset.sum_nonneg (fun y _ => (prodMass_pos p hp y.1).le)
