@@ -4,6 +4,7 @@ on:
     paths:
       - 'research/nightfall/formalization/product_space/ANOVAActivation.lean'
       - 'research/nightfall/formalization/product_space/RestrictedInfluence.lean'
+      - 'research/nightfall/formalization/product_space/QuarticRademacher.lean'
       - '.github/workflows/nightfall-attached-manuscript-lean.yml'
   workflow_dispatch:
 
@@ -60,12 +61,36 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/restricted-influence.json
+      - name: Compile exact independent-sign fourth moments for the quartic paper
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/product_space/QuarticRademacher.lean \
+            --workspace /tmp/mathlib4 \
+            --timeout 300 \
+            --decl Nightfall.Quartic.rademacherAvg_add \
+            --decl Nightfall.Quartic.rademacherAvg_smul \
+            --decl Nightfall.Quartic.rademacherAvg_const \
+            --decl Nightfall.Quartic.rademacherAvg_ext \
+            --decl Nightfall.Quartic.rademacherAvg_cons \
+            --decl Nightfall.Quartic.rademacher_second_moment \
+            --decl Nightfall.Quartic.rademacher_fourth_rec \
+            --decl Nightfall.Quartic.rademacher_fourth_moment \
+            --decl Nightfall.Quartic.quarticEnergy_nonneg \
+            --decl Nightfall.Quartic.rademacher_fourth_upper \
+            --json-out lean-receipts/quartic-rademacher.json || {
+              cat lean-receipts/quartic-rademacher.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/quartic-rademacher.json
       - name: Capture pinned inputs and hashes
         if: always()
         shell: bash
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/product_space/ANOVAActivation.lean research/nightfall/formalization/product_space/RestrictedInfluence.lean > lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/product_space/ANOVAActivation.lean research/nightfall/formalization/product_space/RestrictedInfluence.lean research/nightfall/formalization/product_space/QuarticRademacher.lean > lean-receipts/SHA256SUMS.txt
           git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt 2>/dev/null || true
           cat lean-toolchain > lean-receipts/lean-toolchain.txt
       - name: Upload independent-review receipt
