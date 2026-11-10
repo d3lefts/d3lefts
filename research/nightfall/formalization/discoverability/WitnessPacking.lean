@@ -206,6 +206,72 @@ theorem certificate_hits_sensitive
     exact hOut i hiNotB
   exact hDiff (hCert y hAgree)
 
+/-- A sensor set separates all admissible state pairs with conflicting
+target values. This is the exact nonadaptive information condition. -/
+def SeparatesConflicts (read : State → Sensor → Answer)
+    (f : State → Output) (Q : Finset Sensor) : Prop :=
+  ∀ x y : State, f x ≠ f y →
+    ∃ i ∈ Q, read x i ≠ read y i
+
+/-- A fixed sensor set computes f exactly on all admissible states
+if and only if it separates every conflicting pair. -/
+theorem global_certificate_iff_conflict_separation
+    (read : State → Sensor → Answer) (f : State → Output)
+    (Q : Finset Sensor) :
+    (∀ x, CertificateAt read f x Q) ↔
+      SeparatesConflicts read f Q := by
+  constructor
+  · intro hCert x y hDiff
+    by_contra hNoSep
+    have hAgree : AgreeOn read Q x y := by
+      intro i hi
+      by_contra hNe
+      exact hNoSep ⟨i, hi, hNe⟩
+    exact hDiff (hCert x y hAgree).symm
+  · intro hSep x y hAgree
+    by_contra hDiff
+    obtain ⟨i, hiQ, hNe⟩ := hSep x y hDiff.symm
+    exact hNe (hAgree i hiQ)
+
+/-- The edge of the conflict hypergraph for a given pair of states. -/
+def conflictEdge [DecidableEq Answer]
+    (read : State → Sensor → Answer) (x y : State) : Finset Sensor :=
+  Finset.univ.filter (fun i => read x i ≠ read y i)
+
+/-- Separating every conflicting pair is exactly the hypergraph
+transversal condition for the explicit difference edges. -/
+theorem separates_iff_hits_conflict_edges [DecidableEq Answer]
+    (read : State → Sensor → Answer) (f : State → Output)
+    (Q : Finset Sensor) :
+    SeparatesConflicts read f Q ↔
+      ∀ x y : State, f x ≠ f y →
+        ¬ Disjoint Q (conflictEdge read x y) := by
+  constructor
+  · intro h x y hDiff hDisj
+    obtain ⟨i, hiQ, hNe⟩ := h x y hDiff
+    have hiE : i ∈ conflictEdge read x y :=
+      Finset.mem_filter.mpr ⟨Finset.mem_univ _, hNe⟩
+    exact (Finset.disjoint_left.mp hDisj) hiQ hiE
+  · intro h x y hDiff
+    by_contra hNoSep
+    have hDisj : Disjoint Q (conflictEdge read x y) := by
+      apply Finset.disjoint_left.mpr
+      intro i hiQ hiE
+      have hNe : read x i ≠ read y i := (Finset.mem_filter.mp hiE).2
+      exact hNoSep ⟨i, hiQ, hNe⟩
+    exact h x y hDiff hDisj
+
+/-- Exact equivalence: global nonadaptive observation certificates are
+precisely the transversals of the conflict hypergraph. -/
+theorem nonadaptive_certificate_iff_conflict_transversal [DecidableEq Answer]
+    (read : State → Sensor → Answer) (f : State → Output)
+    (Q : Finset Sensor) :
+    (∀ x, CertificateAt read f x Q) ↔
+      ∀ x y : State, f x ≠ f y →
+        ¬ Disjoint Q (conflictEdge read x y) :=
+  (global_certificate_iff_conflict_separation read f Q).trans
+    (separates_iff_hits_conflict_edges read f Q)
+
 /-- A conflicting pair with identical complete sensor records rules out any certificate. -/
 theorem conflicting_twins_block_all_certificates
     (read : State → Sensor → Answer) (f : State → Output)
