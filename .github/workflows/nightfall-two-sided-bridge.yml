@@ -85,6 +85,8 @@ jobs:
             --decl Nightfall.ProductSpace.Posterior.pair_mass_normalized \
             --decl Nightfall.ProductSpace.Posterior.single_product_marginal \
             --decl Nightfall.ProductSpace.Posterior.pair_first_marginal \
+            --decl Nightfall.ProductSpace.Posterior.posterior_edge_is_conditional_expectation \
+            --decl Nightfall.ProductSpace.Posterior.concrete_pair_posterior_is_probability \
             --json-out lean-receipts/two-sided-bridge.json || {
               cat lean-receipts/two-sided-bridge.json || true
               exit 1
