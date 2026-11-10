@@ -37,7 +37,7 @@ jobs:
             --decl Nightfall.ProductSpace.le_of_forall_reg \
             --decl Nightfall.ProductSpace.localized_weight_optimization \
             --decl Nightfall.ProductSpace.cs_reciprocal \
-            --decl Nightfall.ProductSpace.cs_reciprocal₂ \
+            --decl Nightfall.ProductSpace.cs_reciprocal2 \
             --decl Nightfall.ProductSpace.localized_weight_removal \
             --decl Nightfall.ProductSpace.sum_load_eq \
             --decl Nightfall.ProductSpace.weight_removal_max \
