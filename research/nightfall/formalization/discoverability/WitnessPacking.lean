@@ -188,6 +188,24 @@ theorem saturated_packing_certificate
     (saturated_packing_hits read f hIdent x P r
       hSensitive hPairwise hCard hRank) hWidth hCard.le
 
+/-- Every exact certificate must intersect each block that can change the
+target at that input. This is the lower-bound dual of the hitting theorem. -/
+theorem certificate_hits_sensitive
+    (read : State → Sensor → Answer) (f : State → Output)
+    (x : State) (Q B : Finset Sensor)
+    (hCert : CertificateAt read f x Q)
+    (hSensitive : SensitiveAt read f x B) :
+    ¬ Disjoint Q B := by
+  intro hDisj
+  obtain ⟨y, hDiff, hOut⟩ := hSensitive
+  have hAgree : AgreeOn read Q x y := by
+    intro i hiQ
+    have hiNotB : i ∉ B := by
+      intro hiB
+      exact (Finset.disjoint_left.mp hDisj) hiQ hiB
+    exact hOut i hiNotB
+  exact hDiff (hCert y hAgree)
+
 /-- A conflicting pair with identical complete sensor records rules out any certificate. -/
 theorem conflicting_twins_block_all_certificates
     (read : State → Sensor → Answer) (f : State → Output)
