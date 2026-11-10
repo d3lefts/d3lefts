@@ -73,14 +73,15 @@ theorem observationProbability_sum_one
 to the old total minus that coordinate's directed crossing mass. The
 identity is genuine finite posterior arithmetic, not an ANOVA premise. -/
 theorem posterior_total_at_coordinate
-    (p : ι → α → ℝ) (g : (ι → α) → Bool) (j : ι) :
+    (p : ι → α → ℝ) (hp : ∀ i a, 0 < p i a)
+    (g : (ι → α) → Bool) (j : ι) :
     (∑ a, p j a * remainingAt p g j a) =
       totalCrossingPotential p g - crossingMass p g j := by
   unfold remainingAt totalCrossingPotential crossingMass
   exact posterior_total_mean
     (pairMass p)
     (fun z : PairSample ι α => z.1 j)
-    (p j) (by intro a; exact (by assumption : 0 < p j a))
+    (p j) (fun a => hp j a)
     (edgeCross g) j
 
 /-- Purely exact finite-product identity: certificate-overlap observation
@@ -108,12 +109,15 @@ theorem exact_certificate_posterior_decrement
           apply Finset.sum_congr rfl
           intro j _
           rw [hpost j]
+    _ = ∑ j, (totalCrossingPotential p g * observationProbability p g lam j -
+          observationProbability p g lam j * crossingMass p g j) := by
+          apply Finset.sum_congr rfl
+          intro j _
+          ring
     _ = totalCrossingPotential p g *
           (∑ j, observationProbability p g lam j) -
         ∑ j, observationProbability p g lam j * crossingMass p g j := by
-          rw [Finset.sum_sub_distrib, ← Finset.mul_sum]
-          apply congrArg
-          sorry
+          rw [Finset.sum_sub_distrib, Finset.mul_sum]
     _ = totalCrossingPotential p g -
         overlapSamplerExpectedInfluence p g lam := by
           rw [hsum]
