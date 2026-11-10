@@ -80,6 +80,7 @@ jobs:
             --decl Nightfall.ProductSpace.Posterior.restricted_output_observe \
             --decl Nightfall.ProductSpace.Posterior.interaction_degree_under_pinning \
             --decl Nightfall.ProductSpace.Posterior.anova_degree_energy_budget \
+            --decl Nightfall.ProductSpace.Posterior.certificate_overlap_necessary \
             --json-out lean-receipts/two-sided-bridge.json || {
               cat lean-receipts/two-sided-bridge.json || true
               exit 1
