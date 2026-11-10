@@ -36,6 +36,9 @@ jobs:
             --decl Nightfall.Discoverability.saturated_packing_hits \
             --decl Nightfall.Discoverability.saturated_packing_certificate \
             --decl Nightfall.Discoverability.certificate_hits_sensitive \
+            --decl Nightfall.Discoverability.global_certificate_iff_conflict_separation \
+            --decl Nightfall.Discoverability.separates_iff_hits_conflict_edges \
+            --decl Nightfall.Discoverability.nonadaptive_certificate_iff_conflict_transversal \
             --decl Nightfall.Discoverability.conflicting_twins_block_all_certificates \
             --decl Nightfall.Discoverability.full_transcript_certifies \
             --json-out lean-receipts/discoverability-witness-packing.json || {
