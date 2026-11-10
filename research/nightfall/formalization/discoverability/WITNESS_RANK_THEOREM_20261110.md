@@ -125,3 +125,12 @@ The classical Markov derivative inequality, rescaled from \([-1,1]\), bounds the
 The sharper FHKL/Tal machinery used in the v0.2 exact-recovery research can improve constants under its applicable normalization; this section establishes a **separate elementary conservative bound** and is not a kernel formalization of Markov's inequality. For equally spaced \(q\)-level outputs this gives \(2(q-1)d^3\), while the v0.2 manuscript proposes \((q-1)d^3\) via a sharper imported derivative inequality. Neither factor is claimed as a new historical record.
 
 **Critical scope:** This rank bound requires an actual finite palette with positive \(\Delta\). For unrestricted real outputs \(\Delta\) may vanish; the degree-one binary-encoding example above demonstrates why no degree-only exact query bound follows.
+
+
+## 10. Infinite sensor sets: an abstract set-theoretic extension
+
+The adaptive theorem of §3 does **not** require \(I\) to be finite, provided the uniformly revealing blocks are finite and \(w,r<\infty\). Let \(I\) be any set of exact sensors, and allow arbitrary state and answer sets. Every history still consists of **finitely many** observed sensor labels; the same proof selects at most \(r\) pairwise disjoint finite sensitive blocks and terminates after at most \(wr\) observations.
+
+This is a set-theoretic existence statement under the full universal witness hypothesis, and may invoke choice to select blocks from all possible histories. It does **not** establish algorithmic computability of the selector, its measurability under a product probability law, any finite bound for arbitrary systems (which may have infinite width/rank), or arbitrary dynamic/interactive actuation. The current Lean module proves only the **finite-sensor static certificate core**; a separately audited formal proof of the infinite-index adaptive protocol remains open.
+
+This distinction allows the abstract principle to cover infinite ambient complexity *conditionally* without pretending that countable-product adaptive recovery has already passed its measurable-selection review.
