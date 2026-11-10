@@ -73,6 +73,11 @@ jobs:
             --decl Nightfall.ProductSpace.Posterior.query_kernel_mass_one \
             --decl Nightfall.ProductSpace.Posterior.query_kernel_expected \
             --decl Nightfall.ProductSpace.Posterior.certificate_guided_adaptive_decay \
+            --decl Nightfall.ProductSpace.Posterior.pin_disagree_subset \
+            --decl Nightfall.ProductSpace.Posterior.restricted_row_is_product_row \
+            --decl Nightfall.ProductSpace.Posterior.restricted_row_cost_le \
+            --decl Nightfall.ProductSpace.Posterior.pin_observe_eq \
+            --decl Nightfall.ProductSpace.Posterior.restricted_output_observe \
             --json-out lean-receipts/two-sided-bridge.json || {
               cat lean-receipts/two-sided-bridge.json || true
               exit 1
