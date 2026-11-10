@@ -1,5 +1,26 @@
 # Product-space Aaronson–Ambainis: formalization and publication reconciliation
 
+## Late 10 November verified integration — append-only correction
+
+The [full open-PR snapshot](../PR_RECONCILIATION_20261110.md) supplies a dated cross-project inventory and merge gates. All records below are **source-control + scoped proof certificates**, not proof of the full Aaronson–Ambainis theorem, broad discoverability or novelty.
+
+| PR | Exact merge SHA | What was actually checked |
+|---|---|---|
+| [#303](https://github.com/d3lefts/d3lefts/pull/303) | `fec1b9f207eda2f0fb9262ba7a4c373e1ebc79f9` | finite posterior resampling, normalized product masses, conditional influence identities, abstract adaptive Markov contraction and overlap rigidity; eight current-head CI successes |
+| [#307](https://github.com/d3lefts/d3lefts/pull/307) | `fb530815f3c4bb3adaca4c13c3c842c74526e594` | exact previously kernel-checked posterior checkpoint |
+| [#308](https://github.com/d3lefts/d3lefts/pull/308) | `49ce4a3ed6e51c7f4e88ab450c5694026d5c0274` | concrete nonconstant finite-product sampler normalization bridge |
+| [#309](https://github.com/d3lefts/d3lefts/pull/309) | `51b1961f14e81a93cbb3bba664bfa9d83e256d29` | certificate cost to Boolean class variance: five Lean source-specific declarations |
+| [#312](https://github.com/d3lefts/d3lefts/pull/312) | `b731dbf6a9dfc5812ece28960c875ae37737dd19` | concrete finite-product **one-step** posterior influence-gain bound |
+| [#310](https://github.com/d3lefts/d3lefts/pull/310) | `512f9f20dc21fb09310e6dc76eb9934be750aa1c` | **competing-symbol finite row-cost inequality** `K ≤ π²d²`, 14 Lean declarations, pinned upstream Turturean; the finite combinatorial interaction-degree interface must still be linked to the probabilistic Hoeffding version |
+| [#306](https://github.com/d3lefts/d3lefts/pull/306) | `b46149638894642a085e1f3447cfbf87866ebbc3` | finite-section maximal sensitivity, 13 scoped Lean declarations, 952-case exact audit, separate from measurable infinite recovery |
+
+The PR #310 row-cost theorem is a substantive formal improvement over the earlier snapshot, which listed that step as missing. **Remaining gates:** derive and certify the integrated real-output median/averaging chain; handle threshold ties and symbol-type heterogeneity; prove the arbitrary measurable/infinite-product lift; instantiate the full adaptive policy with honest query and computational costs; obtain non-author prior-art and proof review.
+
+**Open at this snapshot:** [#311](https://github.com/d3lefts/d3lefts/pull/311) is a growing discoverability research branch with finite Lean and exact tests, but broad claims require independent review. [#313](https://github.com/d3lefts/d3lefts/pull/313) is a finite-palette proof candidate with missing bundled bytes and no end-to-end Lean theorem. Other historical PRs remain as inventoried, and are not automatically cleared by their branch titles or passage of website CI.
+
+---
+
+
 ## Post-merge reconciliation — 10 November 2026
 
 **Current repository status:** The six product-space/adjacent exact-recovery draft PRs audited below have now been **merged into `main`** with explicit owner authorization. The original audit snapshot remains below as immutable provenance, including its historical references to draft branches. The merge is a source-control event, **not** a promotion to a globally original theorem or external referee acceptance.
