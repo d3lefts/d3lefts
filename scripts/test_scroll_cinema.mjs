@@ -88,7 +88,7 @@ try{
   assert.equal(await page.locator("#nf-scroll-cinema").count(),0,"Night has a separate editorial composition");
   assert.equal(await page.locator(".moon-sky").count(),1);
   assert.equal(await page.locator(".moon-disc").count(),1);
-  assert.equal(await page.locator("#open-ledger .moon-ledger-row").count(),4);
+  assert.equal(await page.locator("#open-ledger .moon-ledger-row").count(),5);
   assert.equal(await page.locator('#open-ledger a[href="review.html#erdos"]').count(),1);
   assert.equal(await page.locator('a[data-nf-route="moon"][aria-current="page"]').count(),1);
   await checkViewport();
