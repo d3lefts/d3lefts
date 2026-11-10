@@ -284,4 +284,104 @@ theorem weighted_orbit_reciprocal_bound
   rw [hL] at h
   exact h
 
+
+/-! ## Boundary normalization: the dimension-free resampling coefficient -/
+
+/-- Replace precisely coordinate j of the first draw with the second draw. -/
+def replaceFromSecond (z : PairSample ι α) (j : ι) : ι → α :=
+  fun i => if i = j then z.2 i else z.1 i
+
+/-- The directed crossing indicator for a fresh resampling at coordinate j. -/
+def edgeCross (g : (ι → α) → Bool) (j : ι) (z : PairSample ι α) : ℝ :=
+  if g z.1 = true ∧ g (replaceFromSecond z j) = false then 1 else 0
+
+/-- Flipping a single orientation bit is exactly one-coordinate resampling. -/
+theorem flipPair_flipSet_fst (z : PairSample ι α)
+    (mask : ι → Bool) (j : ι) :
+    (flipPair (flipSet mask {j}) z).1 =
+      replaceFromSecond (flipPair mask z) j := by
+  funext i
+  by_cases hi : i = j
+  · subst i
+    cases hm : mask j <;> simp [replaceFromSecond, flipPair, flipSet, hm]
+  · simp [replaceFromSecond, flipPair, flipSet, hi]
+
+/-- Restricted-cube boundary counts are sums of directed resampling edges. -/
+theorem cube_bdry_eq_edgeCross_sum (g : (ι → α) → Bool)
+    (z : PairSample ι α) (j : ι) :
+    (bdry (cubeG g z) j : ℝ) =
+      ∑ mask, edgeCross g j (flipPair mask z) := by
+  classical
+  calc
+    (bdry (cubeG g z) j : ℝ) =
+        ∑ mask ∈ (Finset.univ.filter
+          (fun mask : ι → Bool =>
+            cubeG g z mask = true ∧ cubeG g z (flipSet mask {j}) = false)),
+          (1 : ℝ) := by
+            simp [bdry]
+    _ = ∑ mask, if cubeG g z mask = true ∧
+          cubeG g z (flipSet mask {j}) = false then (1 : ℝ) else 0 := by
+            rw [Finset.sum_filter]
+    _ = ∑ mask, edgeCross g j (flipPair mask z) := by
+          apply Finset.sum_congr rfl
+          intro mask _
+          simp only [edgeCross, cubeG]
+          rw [flipPair_flipSet_fst]
+
+/-- Exact identity between expected induced-cube boundary and the ordinary
+product-measure resampling boundary; no assumptions on atom sizes. -/
+theorem weighted_bdry_eq_resampling
+    (p : ι → α → ℝ) (g : (ι → α) → Bool) (j : ι) :
+    (∑ z, pairMass p z * (bdry (cubeG g z) j : ℝ)) =
+      (Fintype.card (ι → Bool) : ℝ) *
+        (∑ z, pairMass p z * edgeCross g j z) := by
+  simp_rw [cube_bdry_eq_edgeCross_sum]
+  simp_rw [Finset.mul_sum]
+  rw [Finset.sum_comm]
+  simpa only [Finset.mul_sum] using
+    (weighted_sum_all_orientations p (edgeCross g j))
+
+/-- Dimension-free product-space reciprocal inequality, with precisely the
+directed resampling boundary on the right. This theorem is about finite
+product spaces and global nonnegative fractional-certificate rows. -/
+theorem weighted_product_reciprocal
+    (p : ι → α → ℝ) (hp : ∀ i a, 0 ≤ p i a)
+    (g : (ι → α) → Bool) (lam : (ι → α) → ι → ℝ)
+    (hrow : IsProductRow g lam) (w : ι → ℝ) (hw : ∀ j, 0 < w j) :
+    (∑ z, pairMass p z * crossTerm g lam w z) ≤
+      ∑ j, (∑ z, pairMass p z * edgeCross g j z) / w j := by
+  have h := weighted_orbit_reciprocal_bound p hp g lam hrow w hw
+  have hR :
+      (∑ z, pairMass p z *
+        (∑ j, (bdry (cubeG g z) j : ℝ) / w j)) =
+        (Fintype.card (ι → Bool) : ℝ) *
+          (∑ j, (∑ z, pairMass p z * edgeCross g j z) / w j) := by
+    calc
+      (∑ z, pairMass p z *
+        (∑ j, (bdry (cubeG g z) j : ℝ) / w j)) =
+          ∑ j, (∑ z, pairMass p z * (bdry (cubeG g z) j : ℝ)) / w j := by
+            simp_rw [Finset.mul_sum]
+            rw [Finset.sum_comm]
+            apply Finset.sum_congr rfl
+            intro j _
+            rw [Finset.sum_div]
+            apply Finset.sum_congr rfl
+            intro z _
+            ring
+      _ = ∑ j, ((Fintype.card (ι → Bool) : ℝ) *
+            (∑ z, pairMass p z * edgeCross g j z)) / w j := by
+            apply Finset.sum_congr rfl
+            intro j _
+            rw [weighted_bdry_eq_resampling]
+      _ = (Fintype.card (ι → Bool) : ℝ) *
+          (∑ j, (∑ z, pairMass p z * edgeCross g j z) / w j) := by
+            rw [Finset.mul_sum]
+            apply Finset.sum_congr rfl
+            intro j _
+            ring
+  rw [hR] at h
+  have hcard : 0 < (Fintype.card (ι → Bool) : ℝ) := by
+    exact_mod_cast (Fintype.card_pos : 0 < Fintype.card (ι → Bool))
+  exact (mul_le_mul_left hcard).mp h
+
 end Nightfall.ProductSpace.Transfer
