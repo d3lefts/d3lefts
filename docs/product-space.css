@@ -74,3 +74,16 @@
  .ps-formula,.ps-ledger-row { break-inside:avoid; }
  .ps-page a { text-decoration:underline; }
 }
+
+/* Claude v2 is a readable candidate manuscript, not a formal proof passport. */
+.ps-page .ps-candidate { scroll-margin-top:112px; border-top:1px solid var(--ps-rule); }
+.ps-page .ps-candidate .section-title { max-width:980px; }
+.ps-page .ps-candidate .section-intro { max-width:875px; }
+.ps-page .ps-candidate .section-intro a { text-decoration:underline; text-underline-offset:3px; }
+.ps-page .ps-candidate .sf-library-actions { min-width:0; align-items:stretch; max-width:360px; }
+.ps-page .ps-candidate .sf-library-actions a { white-space:normal; overflow-wrap:anywhere; text-wrap:pretty; }
+.ps-candidate-scope { font:500 12px/1.75 var(--mono); color:var(--ps-muted); max-width:850px; border-left:2px solid var(--ps-highlight); padding-left:15px; margin-top:24px; }
+@media(max-width:1100px) {
+ .ps-page .ps-candidate { grid-template-columns:1fr; gap:24px; }
+ .ps-page .ps-candidate .sf-library-actions { max-width:100%; }
+}
