@@ -37,44 +37,11 @@ jobs:
             --decl Nightfall.ProductSpace.heterogeneous_orientation_mass \
             --decl Nightfall.ProductSpace.heterogeneous_all_masks_equal \
             --json-out lean-receipts/product-space-heterogeneous-orientation.json
-      - name: Verify standard Lean axiom dependencies
-        shell: bash
+      - name: Audit both orientation proofs against standard Lean axioms
         run: |
-          python3 - <<'PYCODE'
-          import json, re
-          r = json.load(open('lean-receipts/product-space-orientation.json'))
-          assert r['status'] == 'COMPILED', r['status']
-          assert not r['policy_findings'], r['policy_findings']
-          standard = {'propext', 'Classical.choice', 'Quot.sound'}
-          for theorem in r['declarations_requested']:
-              pattern = re.escape("'" + theorem + "'") + r' depends on axioms: \\[([^\\]]*)\\]'
-              m = re.search(pattern, r['stdout'])
-              if m:
-                  deps = {a.strip() for a in m.group(1).split(',')}
-              else:
-                  assert "'" + theorem + "' does not depend on any axioms" in r['stdout'], theorem
-                  deps = set()
-              assert deps <= standard, (theorem, deps)
-              print(theorem, 'accepted dependencies:', sorted(deps))
-          PYCODE
-      - name: Verify heterogeneous orientation foundational axioms
-        shell: bash
-        run: |
-          python3 - <<'PYCODE'
-          import json, re
-          r = json.load(open('lean-receipts/product-space-heterogeneous-orientation.json'))
-          assert r['status'] == 'COMPILED', r['status']
-          assert not r['policy_findings'], r['policy_findings']
-          standard = {'propext', 'Classical.choice', 'Quot.sound'}
-          for theorem in r['declarations_requested']:
-              m = re.search(re.escape("'" + theorem + "'") + r' depends on axioms: \\[([^\\]]*)\\]', r['stdout'], re.S)
-              if m:
-                  deps = {a.strip() for a in m.group(1).split(',')}
-              else:
-                  assert "'" + theorem + "' does not depend on any axioms" in r['stdout'], theorem
-                  deps = set()
-              assert deps <= standard, (theorem, deps)
-          PYCODE
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/product-space-orientation.json \
+            lean-receipts/product-space-heterogeneous-orientation.json
       - name: Upload receipts
         if: always()
         uses: actions/upload-artifact@v4
