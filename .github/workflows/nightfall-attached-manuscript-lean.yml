@@ -43,12 +43,29 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/anova-activation.json
+      - name: Compile the sharp degree-one quantitative implication
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/product_space/RestrictedInfluence.lean \
+            --workspace /tmp/mathlib4 \
+            --timeout 300 \
+            --decl Nightfall.Restricted.root_influence_budget \
+            --decl Nightfall.Restricted.sharp_additive_variance_bound \
+            --decl Nightfall.Restricted.sharp_degree_one_consequence \
+            --json-out lean-receipts/restricted-influence.json || {
+              cat lean-receipts/restricted-influence.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/restricted-influence.json
       - name: Capture pinned inputs and hashes
         if: always()
         shell: bash
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/product_space/ANOVAActivation.lean > lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/product_space/ANOVAActivation.lean research/nightfall/formalization/product_space/RestrictedInfluence.lean > lean-receipts/SHA256SUMS.txt
           git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt 2>/dev/null || true
           cat lean-toolchain > lean-receipts/lean-toolchain.txt
       - name: Upload independent-review receipt
