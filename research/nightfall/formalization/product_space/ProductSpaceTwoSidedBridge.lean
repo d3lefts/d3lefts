@@ -2104,5 +2104,36 @@ theorem anova_degree_energy_budget
             rw [Finset.mul_sum]
 
 
+
+/-- An exact "uncertainty principle" for opposing certificate profiles.
+The sharp sampling inequality, certificate-cost domination, and a degree
+energy bound force a nontrivial overlap, independent of dimension.
+Here `S²/V` is the squared Bhattacharyya overlap of the two load laws.
+All three inputs are explicit so mathematical scope travels with the claim. -/
+theorem certificate_overlap_necessary
+    (V S T variance K degree : ℝ)
+    (hV : 0 < V) (hK : 0 < K) (hd : 0 < degree)
+    (hsharp : V ^ 2 ≤ S ^ 2 * T)
+    (hcost : variance ≤ K ^ 2 * V)
+    (hdegree : T ≤ degree * variance) :
+    1 / (degree * K ^ 2) ≤ S ^ 2 / V := by
+  have hDK : 0 < degree * K ^ 2 :=
+    mul_pos hd (sq_pos_of_pos hK)
+  have hchain : V ^ 2 ≤ (degree * K ^ 2 * S ^ 2) * V := by
+    calc
+      V ^ 2 ≤ S ^ 2 * T := hsharp
+      _ ≤ S ^ 2 * (degree * variance) :=
+        mul_le_mul_of_nonneg_left hdegree (sq_nonneg S)
+      _ ≤ S ^ 2 * (degree * (K ^ 2 * V)) := by
+        exact mul_le_mul_of_nonneg_left
+          (mul_le_mul_of_nonneg_left hcost hd.le) (sq_nonneg S)
+      _ = (degree * K ^ 2 * S ^ 2) * V := by ring
+  have hVle : V ≤ degree * K ^ 2 * S ^ 2 := by
+    apply (mul_le_mul_iff_of_pos_right hV).mp
+    nlinarith [hchain]
+  apply (div_le_div_iff₀ hDK hV).mpr
+  nlinarith [hVle]
+
+
 end Nightfall.ProductSpace.Posterior
 
