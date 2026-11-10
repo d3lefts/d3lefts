@@ -2135,5 +2135,59 @@ theorem certificate_overlap_necessary
   nlinarith [hVle]
 
 
+
+/-! ## Product-law normalization for the posterior probabilistic reading -/
+
+/-- A finite product of normalized coordinate masses has total mass one. -/
+theorem product_mass_normalized
+    {ι α : Type} [Fintype ι] [DecidableEq ι]
+    [Fintype α] [DecidableEq α]
+    (p : ι → α → ℝ)
+    (hnorm : ∀ i, (∑ a : α, p i a) = 1) :
+    (∑ x : ι → α, Transfer.prodMass p x) = 1 := by
+  classical
+  have hsum : (∑ x : ι → α, Transfer.prodMass p x) =
+      ∏ i, ∑ a : α, p i a := by
+    simpa only [Transfer.prodMass] using
+      (Finset.sum_prod_piFinset (s := (Finset.univ : Finset α)) (g := p))
+  calc
+    (∑ x : ι → α, Transfer.prodMass p x) =
+      ∏ i, ∑ a : α, p i a := hsum
+    _ = 1 := by simp [hnorm]
+
+/-- Two independent draws have total joint product mass one, an explicit
+normalization obligation for regarding `posteriorEdge` as a conditional
+probability rather than merely a ratio of finite sums. -/
+theorem pair_mass_normalized
+    {ι α : Type} [Fintype ι] [DecidableEq ι]
+    [Fintype α] [DecidableEq α]
+    (p : ι → α → ℝ)
+    (hnorm : ∀ i, (∑ a : α, p i a) = 1) :
+    (∑ z : Transfer.PairSample ι α, Transfer.pairMass p z) = 1 := by
+  classical
+  calc
+    (∑ z : Transfer.PairSample ι α, Transfer.pairMass p z) =
+        ∑ x : ι → α, ∑ y : ι → α,
+          Transfer.prodMass p x * Transfer.prodMass p y := by
+            rw [Fintype.sum_prod_type]
+            apply Finset.sum_congr rfl
+            intro x _
+            apply Finset.sum_congr rfl
+            intro y _
+            exact Transfer.pairMass_eq_prodMass p (x, y)
+    _ = ∑ x : ι → α, Transfer.prodMass p x *
+          (∑ y : ι → α, Transfer.prodMass p y) := by
+            apply Finset.sum_congr rfl
+            intro x _
+            rw [Finset.mul_sum]
+    _ = (∑ x : ι → α, Transfer.prodMass p x) *
+          (∑ y : ι → α, Transfer.prodMass p y) := by
+            rw [Finset.sum_mul]
+    _ = 1 := by
+          rw [product_mass_normalized p hnorm]
+          rw [product_mass_normalized p hnorm]
+          norm_num
+
+
 end Nightfall.ProductSpace.Posterior
 
