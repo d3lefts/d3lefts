@@ -1,0 +1,38 @@
+name: NIGHTFALL witness-rank exact finite falsification
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/discoverability/check_witness_rank.py'
+      - '.github/workflows/nightfall-witness-rank-exact.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exhaustive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exact exhaustive and adversarial witness-rank replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence
+          python3 research/nightfall/formalization/discoverability/check_witness_rank.py | tee evidence/results.json
+          python3 - <<'PY'
+          import json
+          with open("evidence/results.json") as f: v=json.load(f)
+          assert v["status"]=="PASS"
+          assert v["exhaustive"]=={"1":4,"2":16,"3":256}
+          assert v["examples"]["4"]["address"]=={"D":2,"w":2,"r":2}
+          PY
+          sha256sum research/nightfall/formalization/discoverability/check_witness_rank.py > evidence/SHA256SUMS.txt
+          git rev-parse HEAD > evidence/commit.txt
+          python3 --version > evidence/python.txt
+      - name: Upload exact replay
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: witness-rank-finite-exact
+          path: evidence/
+          if-no-files-found: warn
