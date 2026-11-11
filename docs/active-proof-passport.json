@@ -1,11 +1,11 @@
 {
   "schema": "nightfall-active-proof-passports-v1",
-  "version": 10,
+  "version": 11,
   "as_of": "2026-11-11",
-  "updated_by": "2026-11-11 quadratic source bridge rev14: 63 source-hash-classified Lean modules, 62 scoped strict receipts, one pending; existing main theorem status unchanged",
+  "updated_by": "2026-11-11 rev15: 63 exact-current-source scoped CI receipts, expanded actual row three-declaration PASS; retain no E2E quadratic or novelty promotion",
   "frozen_historical_registry_unchanged": true,
   "lifecycle": "active",
-  "scientific_status": "Twelve active research claims; 63 current branch Lean modules classified (52 originality-quarantined, 10 derived transfers, 1 finite construction). 62 current source blobs matched successful scoped Lean receipts; one expanded row source awaits its strict third-declaration gate. No end-to-end exponent-two influence certificate.",
+  "scientific_status": "Twelve active research claims; all 63 current-branch Lean source blobs scope-classified and matched to successful historical scoped compiler receipts (52 originality-quarantined, 10 derived transfers, one finite construction). Real centered-section row and pair rectangle bridges verified. Actual-f exponent-two influence theorem remains analytically proved but not end-to-end kernel certified.",
   "source_checkpoint": {
     "repository": "d3lefts/d3lefts",
     "commit": "5bda769c2484ea2f6ea9a02c428928361c07666f",

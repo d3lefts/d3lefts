@@ -217,9 +217,10 @@ one actual-independent-increment interpolation.
   *explicitly supplied* L1/L2/L4 interpolation hypothesis and Hilbert
   moment bound to endpoint energy (Lean 4.35, PASS
   [run 43119753547](https://github.com/d3lefts/d3lefts/actions/runs/43119753547)).
-  The newer centered-section extension in the row source has a
-  **separate outstanding strict gate** and is not included in the older
-  successful receipt.
+  The newer centered-section extension has now independently passed strict
+  Lean 4.33 [run 43120669405](https://github.com/d3lefts/d3lefts/actions/runs/43120669405),
+  together with the two original row statements in the same exact source. The
+  old two-declaration receipt remains archival, not superseding the new gate.
 - **Still missing in Lean:** Efron–Stein component centering and exact
   component/section representation; actual-f matching coupling that
   produces `∀ matching,Σb≤4B`; the true additive `Σ||h_i||≤7B`

@@ -73,3 +73,8 @@ The formerly pending `QuadraticUnifiedFinite.actual_degree_two_baseline_and_all_
 ## Rev14: staged 63-source registry for new quadratic source-function bridges
 
 At branch source checkpoint `8a247cface5ce57a8da340bc277c81e792a04c40`, all 63 Lean files are classified (52 no-originality claims, ten dependent transfers and one finite construction). New `CenteredRectangle.lean` passed strict Lean 4.35 [run 43118938773](https://github.com/d3lefts/d3lefts/actions/runs/43118938773); `QuadraticEndpointInterpolation.lean` passed strict Lean 4.35 [run 43119753547](https://github.com/d3lefts/d3lefts/actions/runs/43119753547). The expanded `QuadraticActualRowOscillation.lean` has an earlier successful **two-declaration** check [43118938808](https://github.com/d3lefts/d3lefts/actions/runs/43118938808), but its newly added centered-section theorem is **not** included in that receipt and remains provisional pending a strict current-source rerun. The full arbitrary-law variance-squared theorem has no Lean e2e certificate; none of these status changes promote an originality finding.
+
+
+## Rev15: all three current source-function row declarations strictly compiled
+
+[Run 43120669405](https://github.com/d3lefts/d3lefts/actions/runs/43120669405) PASSED with pinned Lean 4.33 and only foundational axioms for `actual_degree_two_row_controls_all_sections`, `actual_degree_two_total_section_budget`, and `actual_degree_two_centered_sections_from_rows`. Exact current Git blob `1c9d73ac90c54167851dfc956ca192b5249cbbac` is identical to the run head. All **63/63** current source modules now have successful historical scoped CI source matches; the actual all-law quadratic **variance-squared** influence theorem is still NOT a full end-to-end Lean declaration.
