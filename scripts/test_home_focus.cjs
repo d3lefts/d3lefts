@@ -9,8 +9,8 @@ assert.equal((nav.match(/<a\b/g)||[]).length,3,"Keep the three primary research 
 for(const href of ['href="./" aria-current="page"','href="constellation.html"','href="review.html"'])assert.ok(nav.includes(href));
 const actions=[...field.matchAll(/<div class="hero-actions"[^>]*>([\s\S]*?)<\/div>/g)]
  .map(m=>[...m[1].matchAll(/<a\b[^>]*href="([^"]+)"/g)].map(x=>x[1]));
-assert.deepEqual(actions,[["observability.html","product-space-influence.html"]],
- "NULL FIELD first screen must lead to active observability and influence");
+assert.deepEqual(actions,[["mathematical-results.html","product-space-influence.html"]],
+ "NULL FIELD first screen must lead to principal mathematical results and influence status");
 assert.ok(moon.includes('href="evidence.html#public-downloads"')&&moon.includes('href="review.html#erdos"'),
  "NEW MOON must expose public frozen evidence and independent Erdős audit");
 assert.ok(field.indexOf('id="nf-scroll-cinema"')<field.indexOf('id="flagships"'),"Research cinema before proof catalogue");
