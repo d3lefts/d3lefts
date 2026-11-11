@@ -120,4 +120,85 @@ theorem logarithmic_trace_from_moment
       (div_le_iff₀ (by positivity : 0 < 4 * m)).mp hlog
     _ = (4 * m) * Real.log (1 + a * (∑ i : ι, s i) / m) := by ring
 
+
+/-- The normalized exponential chord inequality; unlike the Gaussian
+moment bound, this is entirely elementary convexity and is proved here. -/
+theorem exp_chord (t x : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
+    Real.exp (t * x) - 1 ≤ t * (Real.exp x - 1) := by
+  have hconv : Real.exp (t * x + (1 - t) * 0) ≤
+      t * Real.exp x + (1 - t) * Real.exp 0 :=
+    Real.convexOn_exp.2 (Set.mem_univ _) (Set.mem_univ _)
+      ht0 (by linarith) (by ring)
+  simp only [mul_zero, add_zero, Real.exp_zero] at hconv
+  nlinarith
+
+/-- Convert the normalized PSD sign-moment bound at the trace scale into
+the precise m-scale hypothesis needed by logarithmic_trace_from_moment.
+The only specialized input is hnormalized; the convex chord is proved. -/
+theorem scaled_moment_of_normalized
+    (w : σ → ℝ) (hw : ∀ e, 0 ≤ w e)
+    (Q : ι → σ → ℝ) (s : ι → ℝ)
+    (m a : ℝ) (hm : 0 < m)
+    (hs : ∀ i, 0 ≤ s i) (hsm : ∀ i, s i ≤ m)
+    (htrace_zero : ∀ i, s i = 0 → ∀ e, Q i e = 0)
+    (hnormalized : ∀ i, 0 < s i →
+      (∑ e : σ, w e * (Real.exp (Q i e / (4 * s i)) - 1)) ≤ a) :
+    ∀ i : ι,
+      (∑ e : σ, w e * (Real.exp (Q i e / (4 * m)) - 1)) ≤
+      a * s i / m := by
+  classical
+  intro i
+  by_cases hi0 : s i = 0
+  · have hQ0 : ∀ e : σ, Q i e = 0 := htrace_zero i hi0
+    simp [hi0, hQ0]
+  · have hi : 0 < s i := lt_of_le_of_ne (hs i) (Ne.symm hi0)
+    have ht0 : 0 ≤ s i / m := div_nonneg (hs i) (le_of_lt hm)
+    have ht1 : s i / m ≤ 1 := (div_le_iff₀ hm).mpr (by simpa using hsm i)
+    have hfactor (e : σ) :
+        Q i e / (4 * m) =
+          (s i / m) * (Q i e / (4 * s i)) := by
+      field_simp
+    have hchord (e : σ) :
+        Real.exp (Q i e / (4 * m)) - 1 ≤
+          (s i / m) * (Real.exp (Q i e / (4 * s i)) - 1) := by
+      rw [hfactor e]
+      exact exp_chord (s i / m) (Q i e / (4 * s i)) ht0 ht1
+    calc
+      (∑ e : σ, w e * (Real.exp (Q i e / (4 * m)) - 1)) ≤
+          ∑ e : σ, w e * ((s i / m) *
+            (Real.exp (Q i e / (4 * s i)) - 1)) := by
+        apply Finset.sum_le_sum
+        intro e _
+        exact mul_le_mul_of_nonneg_left (hchord e) (hw e)
+      _ = (s i / m) * (∑ e : σ, w e *
+            (Real.exp (Q i e / (4 * s i)) - 1)) := by
+        rw [Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro e _
+        ring
+      _ ≤ (s i / m) * a := by
+        exact mul_le_mul_of_nonneg_left (hnormalized i hi) ht0
+      _ = a * s i / m := by ring
+
+/-- Entire rank-log implication from a normalized PSD sign-moment
+estimate, with the chord scaling and exponential union kernel-checked.
+The Gaussian PSD estimate itself is an explicit imported hypothesis. -/
+theorem log_from_normalized_psd_moment
+    (w : σ → ℝ) (hw : ∀ e, 0 ≤ w e)
+    (hw1 : (∑ e : σ, w e) = 1)
+    (Q : ι → σ → ℝ) (hQ : ∀ i e, 0 ≤ Q i e)
+    (s : ι → ℝ) (m a L : ℝ) (hm : 0 < m)
+    (hs : ∀ i, 0 ≤ s i) (hsm : ∀ i, s i ≤ m)
+    (ha : 0 ≤ a)
+    (htrace_zero : ∀ i, s i = 0 → ∀ e, Q i e = 0)
+    (hscalar : ∀ e : σ, ∃ i : ι, L ≤ Q i e)
+    (hnormalized : ∀ i, 0 < s i →
+      (∑ e : σ, w e * (Real.exp (Q i e / (4 * s i)) - 1)) ≤ a) :
+    L ≤ (4 * m) * Real.log (1 + a * (∑ i : ι, s i) / m) := by
+  classical
+  have hp : 0 ≤ ∑ i : ι, s i := Finset.sum_nonneg (fun i _ => hs i)
+  apply logarithmic_trace_from_moment w hw hw1 Q hQ s m a L hm hp ha hscalar
+  exact scaled_moment_of_normalized w hw Q s m a hm hs hsm
+    htrace_zero hnormalized
+
 end Nightfall.Observability.SignMoment
