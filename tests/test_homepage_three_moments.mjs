@@ -43,7 +43,7 @@ test("Cross-entrance navigation is explicit and in both directions",()=>{
   assert.ok(page.includes('data-nf-route="archive"'));
   assert.ok(page.includes('data-nf-route="moon"'));
   assert.ok(page.includes('NULL FIELD <small>Active research</small>'));
-  assert.ok(page.includes('NEW MOON <small>Archived research</small>'));
+  assert.ok(page.includes('NEW MOON <small>Archived breakthroughs</small>'));
   const ids=new Set([...page.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]));
   for(const m of page.matchAll(/href="#([a-z0-9_-]+)"/gi))
    assert.ok(ids.has(m[1]),"Broken within-page anchor #"+m[1]);
