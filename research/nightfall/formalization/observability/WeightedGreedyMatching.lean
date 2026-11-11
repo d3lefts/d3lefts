@@ -42,7 +42,7 @@ theorem exists_weighted_dominating_matching
   by_cases hne : T.Nonempty
   · obtain ⟨a, haT, hmax⟩ := Finset.exists_max_image T w hne
     let R := T.filter (fun e => separated u v e a)
-    have hsub : R ⊆ T := Finset.filter_subset T _
+    have hsub : R ⊆ T := Finset.filter_subset _ T
     have haNotR : a ∉ R := by
       simp only [R, Finset.mem_filter]
       intro h
@@ -77,7 +77,7 @@ theorem exists_weighted_dominating_matching
       · exact ⟨a, by simp, hsep, hmax e he⟩
   · refine ⟨∅, by simp, ?_, ?_⟩
     · intro e he
-      exact (Finset.not_mem_empty e he).elim
+      simp at he
     · intro e he
       exact (hne ⟨e, he⟩).elim
 
