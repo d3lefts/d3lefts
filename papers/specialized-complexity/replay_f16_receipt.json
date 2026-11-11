@@ -1,16 +1,16 @@
 {
   "adaptive_27_distinct": 27,
   "canonical_fixed_rows": 4369,
-  "certificate_sha256": "776cace954b043b1a87893b5c60eab8c250f72ef08c8bd87184596ca7f486bf4",
+  "certificate_sha256": "efbda56c8f074ed386ba6a6c253f7a577153813a7c9d28efc867afddd6349119",
   "distinct_collision_masks": 439,
   "exhaustive_k4_signals": 65536,
   "first_fibers": {
     "0": 1,
     "1": 5,
-    "8": 5,
     "10": 6,
     "12": 5,
-    "15": 5
+    "15": 5,
+    "8": 5
   },
   "fixed_81_distinct": 81,
   "fixed_block_min_output_Hamming_distance": 1,
