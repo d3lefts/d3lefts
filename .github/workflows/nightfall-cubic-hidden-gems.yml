@@ -1,0 +1,33 @@
+name: NIGHTFALL cubic hidden-gems exact replay
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-cubic-hidden-gems/**'
+      - '.github/workflows/nightfall-cubic-hidden-gems.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exact categorical projection and cubic transversal tests
+        run: python3 -I research/nightfall/2026-11-cubic-hidden-gems/check_exact.py
+      - name: Exact quadratic selector stress tests
+        run: python3 -I research/nightfall/2026-11-cubic-hidden-gems/verify_l1_quadratic.py
+      - name: Heterogeneous bounded-control stress tests
+        run: python3 -I research/nightfall/2026-11-cubic-hidden-gems/verify_bounded_controls.py
+      - name: Preserve replay hashes
+        run: |
+          mkdir -p replay
+          sha256sum research/nightfall/2026-11-cubic-hidden-gems/{PROOF_NOTE.md,README.md,check_exact.py,verify_l1_quadratic.py,verify_bounded_controls.py} > replay/SHA256SUMS
+          cp research/nightfall/2026-11-cubic-hidden-gems/PROOF_NOTE.md replay/PROOF_NOTE.md
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cubic-hidden-gems-exact-replay
+          path: replay/
+          if-no-files-found: warn
+          retention-days: 45
