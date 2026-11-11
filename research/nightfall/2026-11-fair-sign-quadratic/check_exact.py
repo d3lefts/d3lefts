@@ -33,7 +33,7 @@ def table_stats(table, states):
     J = []
     for i in range(n):
         t = sum(
-            sum((table[r][a] - table[loc[x[:i]+(-x[i],)+x[i+1:]][a])**2
+            sum((table[r][a] - table[loc[x[:i]+(-x[i],)+x[i+1:]]][a])**2
                 for a in range(k))
             for r, x in enumerate(states)
         )
