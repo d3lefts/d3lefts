@@ -31,7 +31,7 @@ assert.ok(review.includes('href="#priority">Advanced theorem-review queue'));
 assert.ok(review.includes('https://github.com/d3lefts/d3lefts/issues/new/choose'));
 assert.ok(review.includes('two curated v2 evidence ZIPs are public'));
 const shared=read("docs/site.js");
-for(const name of ["01 / NULL FIELD · Active research","01 / NEW MOON · Archived breakthroughs","02 / Constellation · Connections","03 / Independent Review · Challenge"])assert.ok(shared.includes(name));
+for(const name of ["01 / NULL FIELD · Active research","01 / NEW MOON · Archived research","02 / Constellation · Connections","03 / Independent Review · Challenge"])assert.ok(shared.includes(name));
 assert.ok(shared.includes("new-moon.html#archived-records")&&shared.includes("index.html#flagships"),"The home destination follows the chosen experience");
 assert.ok(shared.includes('aria-current","page"'));
 console.log("PASS: product journeys are separated without sacrificing evidence retrieval");

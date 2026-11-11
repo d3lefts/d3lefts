@@ -36,7 +36,7 @@
   routes.setAttribute("aria-label","Choose NIGHTFALL experience");
   routes.innerHTML='<span class="nf-route-caption">TWO ENTRANCES / SHARED RESEARCH RECORD</span>'+
    '<a href="index.html" data-nf-route="archive"><span>01</span> NULL FIELD <small>Active research</small></a>'+
-   '<a href="new-moon.html" data-nf-route="moon"><span>02</span> NEW MOON <small>Archived breakthroughs</small></a>';
+   '<a href="new-moon.html" data-nf-route="moon"><span>02</span> NEW MOON <small>Archived research</small></a>';
   header.insertAdjacentElement("afterend",routes);
  }
 
@@ -64,7 +64,7 @@
  const updateHome=(moon)=>{
   const historical=historicalPages.has(page)?true:activePages.has(page)?false:moon;
   homeDestination.href=historical?"new-moon.html#archived-records":"index.html#flagships";
-  homeDestination.label=historical?"01 / NEW MOON · Archived breakthroughs":"01 / NULL FIELD · Active research";
+  homeDestination.label=historical?"01 / NEW MOON · Archived research":"01 / NULL FIELD · Active research";
  };
  updateHome(preferredMoon());
  const destinations=[
