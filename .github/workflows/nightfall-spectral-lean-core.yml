@@ -70,12 +70,26 @@ jobs:
               exit 1
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/quadratic-endpoint-markov.json
+      - name: Lean certifies sharp sorted-tail nonadaptive observation calculus
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/SortedInfluenceTail.lean \
+            --workspace /tmp/mathlib4 --timeout 480 \
+            --decl Nightfall.Observability.SortedTail.tail_sq_four_card_bound \
+            --decl Nightfall.Observability.SortedTail.tail_sq_bound \
+            --json-out lean-receipts/sorted-influence-tail.json || {
+              cat lean-receipts/sorted-influence-tail.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/sorted-influence-tail.json
       - name: Preserve exact sources and Mathlib commit
         if: always()
         shell: bash
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/observability/CategoricalSignedProxy.lean research/nightfall/formalization/observability/TopInteractionCover.lean research/nightfall/formalization/observability/QuadraticEndpointMarkov.lean > lean-receipts/SHA256SUMS
+          sha256sum research/nightfall/formalization/observability/CategoricalSignedProxy.lean research/nightfall/formalization/observability/TopInteractionCover.lean research/nightfall/formalization/observability/QuadraticEndpointMarkov.lean research/nightfall/formalization/observability/SortedInfluenceTail.lean > lean-receipts/SHA256SUMS
           git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt 2>/dev/null || true
           echo leanprover/lean4:v4.35.0 > lean-receipts/lean-version.txt
       - name: Archive formal-claim receipts
