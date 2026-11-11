@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/product_space/VariancePosteriorOneStep.lean'
+      - 'research/nightfall/formalization/product_space/RealSquaredPosteriorOneStep.lean'
       - '.github/workflows/nightfall-variance-posterior-one-step.yml'
   workflow_dispatch:
 permissions:
@@ -55,12 +56,29 @@ jobs:
               exit 1
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/variance-posterior-one-step.json
+      - name: Kernel-check actual scalar and Hilbert squared-resampling posterior
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/product_space/VariancePosteriorOneStep.lean /tmp/aa/VariancePosteriorOneStep.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/VariancePosteriorOneStep.olean VariancePosteriorOneStep.lean)
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/product_space/RealSquaredPosteriorOneStep.lean \
+            --workspace /tmp/aa --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl Nightfall.ProductSpace.RealPosterior.scalar_actual_posterior_total_mean \
+            --decl Nightfall.ProductSpace.RealPosterior.vector_actual_posterior_total_mean \
+            --json-out lean-receipts/real-squared-posterior.json || {
+              cat lean-receipts/real-squared-posterior.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/real-squared-posterior.json
       - name: Preserve exact source chain
         if: always()
         shell: bash
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/product_space/VariancePosteriorOneStep.lean research/nightfall/formalization/product_space/CertificateCostBridge.lean research/nightfall/formalization/product_space/NonconstantSamplerBridge.lean research/nightfall/formalization/product_space/CertificateObservationBridge.lean research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean > lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/product_space/RealSquaredPosteriorOneStep.lean research/nightfall/formalization/product_space/VariancePosteriorOneStep.lean research/nightfall/formalization/product_space/CertificateCostBridge.lean research/nightfall/formalization/product_space/NonconstantSamplerBridge.lean research/nightfall/formalization/product_space/CertificateObservationBridge.lean research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean > lean-receipts/SHA256SUMS.txt
           git -C /tmp/aa rev-parse HEAD > lean-receipts/upstream-commit.txt 2>/dev/null || true
           echo leanprover/lean4:v4.33.0 > lean-receipts/toolchain.txt
       - name: Upload axiom and reproducibility receipts
