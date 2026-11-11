@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/observability/PosteriorEnergyDrift.lean'
+      - 'research/nightfall/formalization/observability/ParityBlockCancellation.lean'
       - '.github/workflows/nightfall-quadratic-posterior-energy.yml'
   workflow_dispatch:
 permissions:
@@ -43,7 +44,21 @@ jobs:
               exit 1
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/posterior-energy.json
-          sha256sum research/nightfall/formalization/observability/PosteriorEnergyDrift.lean > lean-receipts/SHA256SUMS
+          python3 scripts/lean_bridge.py research/nightfall/formalization/observability/ParityBlockCancellation.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl Nightfall.Observability.ParityBlocks.flip_self \
+            --decl Nightfall.Observability.ParityBlocks.flip_other \
+            --decl Nightfall.Observability.ParityBlocks.flip_flip \
+            --decl Nightfall.Observability.ParityBlocks.sum_flip \
+            --decl Nightfall.Observability.ParityBlocks.cross_block_left_right \
+            --decl Nightfall.Observability.ParityBlocks.right_marginal \
+            --json-out lean-receipts/parity-blocks.json || {
+              cat lean-receipts/parity-blocks.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/parity-blocks.json
+          sha256sum research/nightfall/formalization/observability/{PosteriorEnergyDrift,ParityBlockCancellation}.lean > lean-receipts/SHA256SUMS
       - name: Archive receipts
         if: always()
         uses: actions/upload-artifact@v4
