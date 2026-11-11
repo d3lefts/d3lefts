@@ -7,6 +7,8 @@
 
 The research program uses representation changes, independent verification, proof-carrying artifacts, and a strict distinction between finite results and global theorems. Competition rankings, mathematical validity, and publication priority are tracked separately.
 
+> **11 November 2026 scholarly entrypoint:** For the current mathematical corpus use the [paper shelf](../../papers/README.md), [machine-readable claim catalogue](../catalogue/CLAIMS.json), [dependency map](../catalogue/DEPENDENCIES.md), and [independent referee desk](../referee/README.md). These editorial indexes do **not** revise the primary source statements below, certify complete proofs, or increase the frozen 40-record/11-passport historical collection. The dated narrative that follows retains source-version context.
+
 ## Current navigation — 10 November 2026
 
 - **Principal research claim (11 November):** [Universal Product-Space Observability — full statement, analytic proof, pinned finite Lean certificate and exact boundaries](2026-11-principal-observability/PRINCIPAL_THEOREM.md). Covers **every fixed interaction degree**, arbitrary independent product alphabets and Hilbert-valued spectral outputs, with a dimension-free adaptive query bound. The finite scalar foundation is kernel-checked; the full measurable-product/Hilbert/adaptive chain has a written proof but no non-author referee or end-to-end Lean certificate. The unrestricted cubic exponent-two inequality remains OPEN.

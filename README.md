@@ -10,6 +10,14 @@ Research directed by **Devin J. Wright** · Human-led, AI-assisted · 2026
 
 NIGHTFALL studies mathematical structures and builds reproducible mechanisms for discovering, checking, and explaining results. Every claim should travel with its **statement, assumptions, source, verification method, and limitations**. A computation, a formal proof, an originality assessment, and a competition result are different kinds of evidence.
 
+## Scholarly research archive — start here
+
+For a mathematician or referee, begin with the [**paper shelf**](papers/README.md), then the [**canonical claim catalogue**](research/catalogue/README.md) and its [machine-readable status/dependency registry](research/catalogue/CLAIMS.json). Each paper entry directs you to the **original source**, exact evidence, and specific missing proof gates; it does not copy or promote its theorem.
+
+[Independent referee desk](research/referee/README.md) · [Historical finite evidence and errata](research/archive/README.md) · [Publication/reuse rights](research/REUSE_AND_RIGHTS.md) · [Full research map](research/README.md).
+
+This is a **non-destructive index migration**: the original `research/nightfall/` files, Lean declarations, witness hashes, cited URLs and frozen 40-record/11-passport historical catalogues remain in place. The 13 selected claims in the new catalogue are **not** 13 refereed results or additions to the approved finding list. Their validity, source completeness, independent review and originality remain separately labeled.
+
 ## Start here
 
 | Area | What is available | Where to inspect it |
@@ -34,7 +42,11 @@ NIGHTFALL studies mathematical structures and builds reproducible mechanisms for
 | Path | Purpose |
 | --- | --- |
 | [`docs/`](docs/README.md) | Static research website, accessible interactions, and its development guide |
-| [`research/nightfall/`](research/nightfall/README.md) | Manuscripts, candidate proofs, certificate packages, research histories, and independent audits |
+| [`papers/`](papers/README.md) | Theorem-first scholarly reading room; one primary-source link per principal mathematical manuscript |
+| [`research/catalogue/`](research/catalogue/README.md) | Selected claim statuses and dependency DAG with automatic editorial validation |
+| [`research/referee/`](research/referee/README.md) | Explicit external proof-review assignments and failure-report format |
+| [`research/archive/`](research/archive/README.md) | Historical finite objects, releases, source custody, errors and adverse experiments |
+| [`research/nightfall/`](research/nightfall/README.md) | **Unmoved original** manuscripts, candidate proofs, certificate packages, research histories, and audits |
 | [`research/nightfall/formalization/`](research/nightfall/formalization/) | Lean proof sources with explicitly scoped theorem statements |
 | [`scripts/`](scripts/) and [`tests/`](tests/) | Exact checkers, CI support, website tests, and adversarial controls |
 | [`.github/workflows/`](.github/workflows/) | Automated checks and reproducibility receipts |
@@ -46,6 +58,7 @@ From the repository root with Python 3 and Node.js:
 ```bash
 python3 scripts/check_site.py
 python3 scripts/test_repository_docs.py
+python3 scripts/check_research_archive.py --self-test
 node scripts/test_proof_passport_batch.cjs
 ```
 
