@@ -34,8 +34,12 @@ theorem energy_of_interpolated_hilbert_moment
       s * (z ^ 2 * (c ^ 2 + 3 * s)) := by ring
   have hcube : s ^ 3 = s * s ^ 2 := by ring
   rw [hfactor, hcube] at hinter
-  have hsq : s ^ 2 ≤ z ^ 2 * (c ^ 2 + 3 * s) :=
-    (mul_le_mul_left hspos).mp hinter
+  have hsq : s ^ 2 ≤ z ^ 2 * (c ^ 2 + 3 * s) := by
+    by_contra hnot
+    have hlt : z ^ 2 * (c ^ 2 + 3 * s) < s ^ 2 :=
+      lt_of_not_ge hnot
+    have hprod := mul_lt_mul_of_pos_left hlt hspos
+    exact (not_lt_of_ge hinter) hprod
   have hupper : c ^ 2 + 3 * s ≤
       (c + Real.sqrt (3 * M)) ^ 2 := by
     nlinarith [hroot, mul_nonneg hc hroot0, hM]
