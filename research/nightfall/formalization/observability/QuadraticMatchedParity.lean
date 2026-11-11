@@ -242,7 +242,14 @@ theorem full_matched_rectangles_le_four
       (Fintype.card (ι → Bool) : ℝ) * (∑ i : ι, rectangle P i) ≤
       (Fintype.card (ι → Bool) : ℝ) * (4 * B) := by
     nlinarith [global_parity_identity P]
-  exact (mul_le_mul_left hnr).mp hmul
+  by_contra hnot
+  have hstrict : 4 * B < ∑ i : ι, rectangle P i :=
+    lt_of_not_ge hnot
+  have hc : (0 : ℝ) <
+      (Fintype.card (ι → Bool) : ℝ) *
+      ((∑ i : ι, rectangle P i) - 4 * B) :=
+    mul_pos hnr (sub_pos.mpr hstrict)
+  nlinarith [hc]
 
 /-- Orienting each matched rectangle positively converts the preceding
 signed bound into a bound on total absolute matched amplitude. -/
