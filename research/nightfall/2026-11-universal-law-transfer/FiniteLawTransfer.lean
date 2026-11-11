@@ -61,4 +61,18 @@ theorem exact_support_transfer {Ω V : Type*}
   intro x hx
   exact hcorrect x (hdom x hx)
 
+open MeasureTheory
+
+/-- Full arbitrary-measurable-space zero-error transport from reference law
+to ANY absolutely continuous target law. This theorem imports the classical
+mathlib absolute-continuity AE implication; it does NOT assume or prove the
+existence of a low-degree source observer. -/
+theorem exact_observer_under_dominated_measure
+    {Ω V : Type*} [MeasurableSpace Ω]
+    (μ ν : MeasureTheory.Measure Ω) (f predicted : Ω → V)
+    (hνμ : ν ≪ μ)
+    (hμ : f =ᵐ[μ] predicted) :
+    f =ᵐ[ν] predicted := by
+  exact hνμ.ae_eq hμ
+
 end Nightfall.UniversalLawTransfer
