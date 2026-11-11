@@ -12,7 +12,7 @@ const site=read("docs/site.js");
 const core=read("docs/erdos-paper-core.js");
 const art=read("docs/media/overlap-16cell-fixture.svg");
 assert.equal(data.schema,"nightfall-active-proof-passports-v1");
-assert.equal(data.version,6);
+assert.equal(data.version,7);
 assert.match(data.as_of,/^2026-11-\d\d$/);
 assert.equal(data.lifecycle,"active");
 assert.equal(data.frozen_historical_registry_unchanged,true);
@@ -118,7 +118,7 @@ assert.ok(cubic.status==="exact-proof-attacks-cubic-open"&&cubic.claim.includes(
 assert.ok(cubic.evidence.includes("#347")&&cubic.evidence.includes("#349"));
 assert.ok(data.claims.find(c=>c.id==="fair-sign-cubic").status.includes("draft-pr"));
 assert.ok(data.claims.find(c=>c.id==="universal-spectral").status.includes("conditional"));
-assert.ok(html.includes("<strong>12</strong>Active claim records")&&html.includes("<strong>v6</strong>"));
+assert.ok(html.includes("<strong>12</strong>Active claim records")&&html.includes("<strong>v7</strong>"));
 assert.ok(read("docs/discovery-system.html").includes("<dt>12</dt><dd>separate active claim passports</dd>"));
 // Finite F16 witness is a new active record but never a globally approved Original Finding.
 const phase=data.claims.find(c=>c.id==="phase-block");
