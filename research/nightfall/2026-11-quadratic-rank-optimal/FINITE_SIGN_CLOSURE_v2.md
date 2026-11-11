@@ -14,7 +14,7 @@ Then
 \[
 \boxed{V\le15(1+\sqrt3)\sqrt{3r}\,B\sqrt M,\qquad V^2\le675(1+\sqrt3)^2rB^2M\le5043rB^2M.}\tag{1}
 \]
-(The second comparison is non-strict to cover \(M=0\).)
+(The second comparison is non-strict to cover \(M=0\). If \(B=0\), the output is constant and the conclusion is trivial; the posterior proof assumes \(B>0\).)
 
 For any strongly measurable Hilbert output \(F\) bounded by \(B\), of Hoeffding degree at most two, let \(\tau_r\) denote its covariance variance beyond the leading \(r\) real output directions. A deterministic measurable adaptive whole-coordinate policy of hard depth
 \[
