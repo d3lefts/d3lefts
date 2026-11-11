@@ -258,4 +258,38 @@ theorem matched_block_mixed_difference
     _ = (Fintype.card (ι → Bool) : ℝ) * delta := hsum
     _ = _ := rfl
 
+
+/-- All selected matching-edge rectangles contribute the sum of their
+four-corner mixed differences, with exact full-selector normalization.
+The same coordinate may never occur in two selected edges: it is indexed
+by one independent matching block in this abstract representation. -/
+theorem matched_family_delta_identity
+    (H : ι → Bool → Bool → ℝ) :
+    2 * (∑ σ : ι → Bool, ∑ i : ι,
+      (H i (σ i) (σ i) - H i (σ i) (!(σ i)))) =
+        (Fintype.card (ι → Bool) : ℝ) *
+          (∑ i : ι, H i false false - H i false true -
+            H i true false + H i true true) := by
+  calc
+    2 * (∑ σ : ι → Bool, ∑ i : ι,
+      (H i (σ i) (σ i) - H i (σ i) (!(σ i)))) =
+        2 * (∑ i : ι, ∑ σ : ι → Bool,
+          (H i (σ i) (σ i) - H i (σ i) (!(σ i)))) := by
+        rw [Finset.sum_comm]
+    _ = ∑ i : ι, 2 * (∑ σ : ι → Bool,
+          (H i (σ i) (σ i) - H i (σ i) (!(σ i)))) := by
+        rw [Finset.mul_sum]
+    _ = ∑ i : ι, (Fintype.card (ι → Bool) : ℝ) *
+        (H i false false - H i false true -
+          H i true false + H i true true) := by
+        apply Finset.sum_congr rfl
+        intro i _
+        exact matched_block_mixed_difference
+          (fun b : Bool => b) (fun b : Bool => b)
+          (fun a b => H i a b) i
+    _ = (Fintype.card (ι → Bool) : ℝ) *
+        (∑ i : ι, H i false false - H i false true -
+            H i true false + H i true true) := by
+        rw [Finset.mul_sum]
+
 end Nightfall.Observability.ParityBlocks
