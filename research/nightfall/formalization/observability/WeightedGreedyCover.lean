@@ -19,8 +19,8 @@ variable {ι E : Type*} [Fintype ι] [Fintype E]
 noncomputable def cost (u v : E → ι) (w : E → ℝ)
     (S : Finset E) (i : ι) : ℝ :=
   ∑ e ∈ S,
-    (if u e = i then w e else 0) +
-    (if v e = i then w e else 0)
+    ((if u e = i then w e else 0) +
+     (if v e = i then w e else 0))
 
 theorem cost_nonneg (u v : E → ι) (w : E → ℝ) (S : Finset E)
     (hw : ∀ e ∈ S, 0 ≤ w e) (i : ι) :
@@ -62,13 +62,11 @@ theorem cost_ge_incident (u v : E → ι) (w : E → ℝ) (S : Finset E)
     (hinc : u f = i ∨ v f = i) :
     w f ≤ cost u v w S i := by
   classical
-  have hterm (e : E) :
+  have hterm (e : E) (he : e ∈ S) :
       0 ≤ (if u e = i then w e else 0) +
           (if v e = i then w e else 0) := by
-    by_cases he : e ∈ S
-    · have hwe := hw e he
-      split_ifs <;> positivity
-    · split_ifs <;> simp
+    have hwe := hw e he
+    split_ifs <;> positivity
   have hself :
       w f ≤ (if u f = i then w f else 0) +
               (if v f = i then w f else 0) := by
@@ -79,7 +77,7 @@ theorem cost_ge_incident (u v : E → ι) (w : E → ℝ) (S : Finset E)
               (if v f = i then w f else 0) := hself
     _ ≤ ∑ e ∈ S, ((if u e = i then w e else 0) +
                    (if v e = i then w e else 0)) :=
-      Finset.single_le_sum (fun e _ => hterm e) hf
+      Finset.single_le_sum (fun e he => hterm e he) hf
     _ = cost u v w S i := rfl
 
 /-- Every finite nonnegative weighted graph has a matching-generated
