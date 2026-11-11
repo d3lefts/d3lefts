@@ -184,3 +184,18 @@ These items were recovered from parallel NIGHTFALL research discussions. **This 
 
 **Interpretation:** A clean GitHub open-PR queue is not a completed scientific-research queue. After closure, continue discovery through this frozen exact-head inventory, closed PR searches, source branches, failed CI receipts and the separately archived manuscript packages. Reopen a closed PR or create a scoped successor only after its hypotheses, source, checker and latest evidence have been independently reconciled. No global originality, quantum-query or EinsteinArena competitive-record status is promoted by this administrative event.
 
+## Selected research PR reactivations after the administrative closeout (11 November 2026 UTC)
+
+The zero-open count reported earlier is a **dated snapshot**, not a permanent state. Subsequent owner-side review activity reopened several selected branches instead of accepting the bulk closure as scientific completion. This check found four open branches; GitHub states can change again.
+
+| PR | Exact head at check | Verified scope / current gate |
+|---|---|---|
+| [#317](https://github.com/d3lefts/d3lefts/pull/317) | `e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb` | Full proposed **finite-product** bias-independent `(5/2,6)` influence port. Previous pinned [Lean failure](https://github.com/d3lefts/d3lefts/actions/runs/42928872042) had unresolved goals / timeout / `sorryAx`. New [pinned run](https://github.com/d3lefts/d3lefts/actions/runs/42929857470) was **still in progress** at this snapshot. Not certified or merged. |
+| [#316](https://github.com/d3lefts/d3lefts/pull/316) | `3a2e44873d5167055cfb338c44b17766a930d8c9` | Adaptive rank-decrement candidate, no current-head kernel receipt; merge conflict against `main`. |
+| [#279](https://github.com/d3lefts/d3lefts/pull/279) | `5e5851ec1584dc1728d6318bd56a6e9049a6c603` | Finite-field diamond phase-code construction, older exact check success; merge conflict and independent proof/priority review open. |
+| [#133](https://github.com/d3lefts/d3lefts/pull/133) | `53761254ffe08994a94b37b2f5c6150eb4306de4` | PAS audit-shield minimum-cut verifier, older CI success; conflicting site/charter history needs preservation and current-head integration replay. |
+
+Additional owner-side merges after the bulk closure: [#175](https://github.com/d3lefts/d3lefts/pull/175) (CG:SHOP baseline tooling, **not** proof of an official 250/250 current-run score) and [#256](https://github.com/d3lefts/d3lefts/pull/256) (same-oracle finite-field adaptive/fixed phase separation, source-scoped candidate, novelty pending). Their provenance is recorded in GitHub; neither constitutes an authorized competition submission or worldwide priority claim.
+
+**Next proof gate:** inspect #317's exact new CI receipt before any merge, and if failing preserve the error log and repair only the specific missing dependencies. Do not interpret the repository's administrative open-PR count as a count of unresolved mathematical obligations.
+
