@@ -32,7 +32,7 @@ function apply(value){
     const onHome=experience==="archive"||experience==="moon";
     button.setAttribute("aria-label",active
       ?onHome?"NEW MOON is active. Open NULL FIELD — Active research homepage.":"Warm Night palette is active. Switch to Deep Space palette on this page."
-      :onHome?"NULL FIELD is active. Open NEW MOON — Archived breakthroughs homepage.":"Deep Space palette is active. Switch to Warm Night palette on this page.");
+      :onHome?"NULL FIELD is active. Open NEW MOON — Archived research homepage.":"Deep Space palette is active. Switch to Warm Night palette on this page.");
     button.title=active
       ?onHome?"Open NULL FIELD / Active research":"Use Deep Space palette · stay on this page"
       :onHome?"Open NEW MOON / Archived research":"Use Warm Night palette · stay on this page";

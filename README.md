@@ -4,7 +4,7 @@
 
 Research directed by **Devin J. Wright** · Human-led, AI-assisted · 2026
 
-[Research website](https://d3lefts.github.io/d3lefts/) · [Browse research](https://d3lefts.github.io/d3lefts/research.html) · [Independent review](https://d3lefts.github.io/d3lefts/review.html) · [Source and evidence](https://d3lefts.github.io/d3lefts/evidence.html)
+[Principal mathematical results](https://d3lefts.github.io/d3lefts/mathematical-results.html) · [Research website](https://d3lefts.github.io/d3lefts/) · [Browse research](https://d3lefts.github.io/d3lefts/research.html) · [Independent review](https://d3lefts.github.io/d3lefts/review.html) · [Source and evidence](https://d3lefts.github.io/d3lefts/evidence.html)
 
 [![Verify research website](https://github.com/d3lefts/d3lefts/actions/workflows/verify-site.yml/badge.svg)](https://github.com/d3lefts/d3lefts/actions/workflows/verify-site.yml)
 

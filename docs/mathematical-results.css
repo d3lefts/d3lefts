@@ -1,0 +1,17 @@
+.math-hero,.math-priority,.math-statement,.math-comparison,.math-sources,.math-end{padding-top:clamp(48px,7vw,90px);padding-bottom:clamp(44px,6vw,80px);border-bottom:1px solid var(--line)}
+.math-hero{padding-top:clamp(64px,10vw,136px)}.math-kicker{display:block;font:500 10px/1.7 var(--mono);text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
+.math-hero h1{font:400 clamp(48px,8.1vw,115px)/.99 var(--serif);letter-spacing:-.03em;margin:24px 0 28px;max-width:1100px}.math-hero em,.math-end em{font-weight:400}
+.math-lead{font:16px/1.8 var(--sans);max-width:840px;color:var(--muted)}.math-shortcuts,.math-links{display:flex;flex-wrap:wrap;gap:12px 24px;margin-top:27px}
+.math-shortcuts a,.math-links a,.math-priority a,.math-citations a{font:600 12px/1.7 var(--mono);text-decoration:underline;text-underline-offset:4px}
+.math-priority h2,.math-statement h2,.math-comparison h2,.math-sources h2,.math-end h2{font:400 clamp(34px,4.8vw,65px)/1.08 var(--serif);letter-spacing:-.025em;max-width:900px;margin:20px 0 24px}
+.math-priority-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:36px}
+.math-priority-grid article{padding:27px 22px;border-right:1px solid var(--line)}.math-priority-grid article:first-child{padding-left:0}.math-priority-grid article:last-child{border:0}
+.math-priority-grid article>span{font:500 10px/1.7 var(--mono);color:var(--muted)}.math-priority-grid h3{font:400 clamp(25px,2.6vw,35px)/1.14 var(--serif);margin:17px 0}
+.math-priority-grid p,.math-statement p,.math-comparison p,.math-sources p,.math-end p{font:15px/1.76 var(--sans);color:var(--muted);max-width:960px;margin:0 0 19px}.math-priority-grid p{font-size:13px}
+.math-formula{font:500 clamp(18px,2.8vw,34px)/1.45 var(--mono);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:26px 0;margin:28px 0;overflow-wrap:anywhere}
+.math-table-scroll{overflow-x:auto;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:29px 0}
+.math-table-scroll table{width:100%;min-width:780px;text-align:left;border-collapse:collapse}.math-table-scroll th,.math-table-scroll td{font:13px/1.55 var(--sans);padding:16px;border-bottom:1px solid var(--line);vertical-align:top}.math-table-scroll th{font-weight:600}.math-table-scroll thead th{font:600 11px/1.5 var(--mono)}
+.math-citations{padding-top:13px}.math-citations a{font-size:11px}.math-end{padding-bottom:110px}
+@media(max-width:830px){.math-priority-grid{grid-template-columns:1fr}.math-priority-grid article,.math-priority-grid article:first-child{padding:23px 0;border-right:0;border-bottom:1px solid var(--line)}.math-priority-grid article:last-child{border:0}}
+@media(max-width:550px){.math-hero h1{font-size:clamp(45px,12vw,70px)}.math-formula{font-size:17px}}
+@media(prefers-reduced-motion:reduce){.math-hero,.math-priority,.math-statement{scroll-behavior:auto}}

@@ -34,7 +34,7 @@ class DualHomepageTests(unittest.TestCase):
         self.assertIn('id="archived-records"', self.archive)
         self.assertIn('id="live-case"', self.archive)
         self.assertIn('id="sidon-witness"', self.archive)
-        self.assertIn('NEW MOON <small>Archived breakthroughs</small>', self.archive)
+        self.assertIn('NEW MOON <small>Archived research</small>', self.archive)
         self.assertIn('NULL FIELD <small>Active research</small>', self.active)
         self.assertIn("observability.html", self.active)
         self.assertIn("product-space-influence.html", self.active)
@@ -82,7 +82,7 @@ class DualHomepageTests(unittest.TestCase):
         toggle = (DOCS / "ethereal-theme.js").read_text()
         self.assertIn('window.location.assign(next===DUSK?"new-moon.html":"index.html")', toggle)
         self.assertIn('if(experience)persist(current)', toggle)
-        self.assertIn("Archived breakthroughs homepage", toggle)
+        self.assertIn("Archived research homepage", toggle)
         self.assertIn("Active research homepage", toggle)
 
     def test_cross_page_publication_paths(self):

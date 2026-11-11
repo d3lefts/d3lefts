@@ -47,7 +47,7 @@ try{
   assert.equal(await page.locator(".nf-experience-archive").first().isVisible(),true,"Active research copy is visible");
   assert.equal(await page.locator(".nf-experience-underbelly").count(),0,"Hidden New Moon article fragments were removed from archive");
   assert.equal(await page.locator(".nf-dual-colophon.nf-experience-archive").isVisible(),true,"Active research has its own colophon");
-  assert.match(await toggle.getAttribute("aria-label"),/NULL FIELD is active.*NEW MOON.*Archived breakthroughs/i);
+  assert.match(await toggle.getAttribute("aria-label"),/NULL FIELD is active.*NEW MOON.*Archived research/i);
   await page.screenshot({path:"browser-artifacts/ethereal-light-"+width+".png",fullPage:false});
   await toggle.click();
   await page.waitForURL("**/new-moon.html");
