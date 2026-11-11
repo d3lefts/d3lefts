@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/observability/QuadraticDiscoveryCore.lean'
+      - 'research/nightfall/formalization/observability/ArbitraryLawFourthMoment.lean'
       - 'research/nightfall/formalization/observability/QUADRATIC_DISCOVERY_PROOF_PASSPORT.md'
       - '.github/workflows/nightfall-quadratic-discovery-lean.yml'
   workflow_dispatch:
@@ -46,12 +47,33 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/quadratic-discovery-core.json
+      - name: Kernel-compile actual arbitrary-law independent moments
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ArbitraryLawFourthMoment.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl Nightfall.Observability.QuadraticMoments.tensor_sum_factor \
+            --decl Nightfall.Observability.QuadraticMoments.jointAvg_add \
+            --decl Nightfall.Observability.QuadraticMoments.jointAvg_smul \
+            --decl Nightfall.Observability.QuadraticMoments.jointAvg_factor \
+            --decl Nightfall.Observability.QuadraticMoments.independent_centered_two_fourth \
+            --decl Nightfall.Observability.QuadraticMoments.weighted_hilbert_fourth_self \
+            --json-out lean-receipts/arbitrary-law-fourth-moment.json || {
+              cat lean-receipts/arbitrary-law-fourth-moment.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/arbitrary-law-fourth-moment.json
       - name: Preserve pins and source checksums
         if: always()
         shell: bash
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/observability/QuadraticDiscoveryCore.lean > lean-receipts/SHA256SUMS
+          sha256sum research/nightfall/formalization/observability/QuadraticDiscoveryCore.lean research/nightfall/formalization/observability/ArbitraryLawFourthMoment.lean > lean-receipts/SHA256SUMS
           git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt 2>/dev/null || true
           echo leanprover/lean4:v4.35.0 > lean-receipts/lean-version.txt
           git rev-parse HEAD > lean-receipts/repository-commit.txt
