@@ -43,7 +43,7 @@ Sum; sum_b B_b<=B. Thus *even arbitrarily many disconnected repeated-pair sunflo
 
 ## Exact categorical witness and sharp exponent
 
-For m>=2 let A,B be independent uniform addresses in [m], and let D_(a,b) be independent leaves, each on any even alphabet of cardinality L>=2. Choose a balanced sign-valued function phi on that alphabet and define
+For m>=2 let A,B be independent uniform addresses in [m], and let D_(a,b) be independent **uniformly distributed** leaves, each on any even alphabet of cardinality L>=2. Choose phi to take +1 on exactly half of its alphabet and -1 on the other half, so E[phi(D_ab)]=0 and E[phi(D_ab)^2]=1 and define
 
     h(A,B,D)=phi(D_(A,B)).
 
