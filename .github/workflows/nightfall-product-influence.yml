@@ -75,7 +75,7 @@ jobs:
             --decl $N.influence_cost \
             --decl $N.product_influence \
             --json-out lean-receipts/product-influence.json || {
-              python3 -c "import json;r=json.load(open('lean-receipts/product-influence.json'));[print(d) for d in r.get('diagnostics',[]) if d.get('severity')=='error']" || true
+              python3 -c "import json;r=json.load(open('lean-receipts/product-influence.json'));print(r.get('status'));print((r.get('stdout') or '')[:60000]);print((r.get('stderr') or '')[:5000])" || true
               exit 1
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
