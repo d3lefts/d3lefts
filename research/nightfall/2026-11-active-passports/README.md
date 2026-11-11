@@ -1,7 +1,7 @@
 # Active mathematical Proof Passport expansion — 11 November 2026
 
 **NIGHTFALL Constellation / research lead Devin J. Wright.**
-These seven claim-specific dossiers comprise **two upgrades to existing active records** and **five new active records**. The live registry is `docs/active-proof-passport.json` (v4, eleven active claims). The historically frozen eleven Proof Passports in `docs/research-registry.js`, the 40 curated research entries and the five approved findings remain unchanged. Coincidentally the active and historical collections both now number eleven; they are not the same records.
+These seven original claim-specific dossiers comprise **two upgrades to existing active records** and **five new active records**. The live registry is `docs/active-proof-passport.json` (v5, twelve active claims). The historically frozen eleven Proof Passports in `docs/research-registry.js`, the 40 curated research entries and the five approved findings remain unchanged. Coincidentally the active and historical collections both now number eleven; they are not the same records.
 
 | Detailed dossier | Evidence tier | Primary dependency |
 | --- | --- | --- |
@@ -12,6 +12,12 @@ These seven claim-specific dossiers comprise **two upgrades to existing active r
 | [Fair-sign cubic](fair-sign-cubic.md) | Draft analytic subclass, no outside referee | Unmerged PR #354 |
 | [Universal spectral observability](universal-spectral.md) | Conditional Hilbert manuscript; partial Lean | Draft #332/#339/#340, finite input #317 |
 | [Certificate-guided acquisition](certificate-acquisition.md) | Conditional adaptive construction; component Lean receipts | PR #298 and posterior bridge |
+
+## Additional source-specific finite construction and novelty quarantine
+
+- [F16 three-query phase block](../formalization/phase_block/PROOF_PASSPORT_20261111.md): exact 81-state Lean certificate, no global novelty or arbitrary-dimensional claim. Detailed site route `docs/phase-block-proof-passport.html`.
+- [Full 39-module originality quarantine](../formalization/LEAN_CERTIFICATE_PROVENANCE_20261111.md): routine or inherited Lean statements are retained as compiled dependencies, **not** promoted as discoveries. The machine-readable classification is `docs/lean-certificate-provenance.json`.
+- The original seven detailed research dossiers remain separate; their historical v4 source state is preserved in Git history.
 
 ## Reproduction and maintenance
 

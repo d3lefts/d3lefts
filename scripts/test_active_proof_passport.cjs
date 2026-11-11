@@ -12,17 +12,17 @@ const site=read("docs/site.js");
 const core=read("docs/erdos-paper-core.js");
 const art=read("docs/media/overlap-16cell-fixture.svg");
 assert.equal(data.schema,"nightfall-active-proof-passports-v1");
-assert.equal(data.version,4);
+assert.equal(data.version,5);
 assert.match(data.as_of,/^2026-11-\d\d$/);
 assert.equal(data.lifecycle,"active");
 assert.equal(data.frozen_historical_registry_unchanged,true);
-assert.equal(data.claims.length,11);
-assert.deepEqual(data.claims.map(x=>x.id),["q2-influence","q2-observation","finite-certificate","cubic-obstruction","kaczmarz-logfree","four-shuffle","nested-address-separation","finite-palette-recovery","fair-sign-cubic","universal-spectral","certificate-acquisition"]);
+assert.equal(data.claims.length,12);
+assert.deepEqual(data.claims.map(x=>x.id),["q2-influence","q2-observation","finite-certificate","cubic-obstruction","kaczmarz-logfree","four-shuffle","nested-address-separation","finite-palette-recovery","fair-sign-cubic","universal-spectral","certificate-acquisition","phase-block"]);
 assert.equal(new Set(data.claims.map(x=>x.id)).size,data.claims.length);
 const statuses=new Set(["paper-proof-internal-audit","lean-kernel-checked-finite-product-scope",
  "exact-proof-attacks-cubic-open","written-proof-exact-check-replay-priority-open","computer-assisted-exact-finite-priority-open",
  "exact-finite-construction-priority-open","analytic-candidate-finite-lean-core","draft-pr-fair-sign-subclass",
- "analytic-conditional-universal-observability","conditional-certificate-adaptive-theorem"]);
+ "analytic-conditional-universal-observability","conditional-certificate-adaptive-theorem","lean-checked-finite-construction-priority-open"]);
 for(const c of data.claims){
  assert.ok(statuses.has(c.status),c.id+" wrong status");
  for(const key of ["title","claim","mechanism","evidence","audit","source","source_detail"])
@@ -114,8 +114,16 @@ assert.ok(cubic.status==="exact-proof-attacks-cubic-open"&&cubic.claim.includes(
 assert.ok(cubic.evidence.includes("#347")&&cubic.evidence.includes("#349"));
 assert.ok(data.claims.find(c=>c.id==="fair-sign-cubic").status.includes("draft-pr"));
 assert.ok(data.claims.find(c=>c.id==="universal-spectral").status.includes("conditional"));
-assert.ok(html.includes("<strong>11</strong>Active claim records")&&html.includes("<strong>v4</strong>"));
-assert.ok(read("docs/discovery-system.html").includes("<dt>11</dt><dd>separate active claim passports</dd>"));
+assert.ok(html.includes("<strong>12</strong>Active claim records")&&html.includes("<strong>v5</strong>"));
+assert.ok(read("docs/discovery-system.html").includes("<dt>12</dt><dd>separate active claim passports</dd>"));
+// Finite F16 witness is a new active record but never a globally approved Original Finding.
+const phase=data.claims.find(c=>c.id==="phase-block");
+assert.ok(phase&&phase.status.includes("priority-open"));
+assert.ok(phase.evidence.includes("40995299592")&&phase.claim.includes("81"));
+assert.ok(read("docs/phase-block-proof-passport.html").includes("eighty_one_distinct_outputs"));
+assert.ok(html.includes('href="phase-block-proof-passport.html"'));
+assert.ok(read("docs/sitemap.xml").includes("/phase-block-proof-passport.html"));
+assert.ok(read("docs/lean-certificate-provenance.json").includes('"classification": "quarantine"'));
 // Preserve the frozen historical registry's exact 11-record purpose.
 const historical=read("docs/research-registry.js");
 assert.ok(historical.includes('"nightfall-proof-passports-v1"'));
@@ -137,4 +145,4 @@ assert.ok(art.includes("unrelated to the separate published 131072-cell witness"
 assert.ok(!/<script\b|<foreignObject\b/i.test(art),"Svg must remain static and inert");
 assert.ok(moon.includes('src="media/overlap-16cell-fixture.svg"'),"Archive diagram not visible");
 assert.ok(moon.includes("16-cell educational")&&moon.includes("different 131,072-cell witness"),"Fixture must not masquerade as full research result");
-console.log("PASS: 11 manual active claim passports, seven detailed dossiers, Kaczmarz source/replay, no historical promotion, 5 provenance-complete archives, exact 16-cell operator fixture");
+console.log("PASS: 12 manual active claim passports, seven detailed dossiers, Kaczmarz source/replay, no historical promotion, 5 provenance-complete archives, exact 16-cell operator fixture");

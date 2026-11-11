@@ -1,0 +1,359 @@
+{
+  "schema": "nightfall-lean-provenance-v1",
+  "as_of": "2026-11-11",
+  "revision": 1,
+  "scope": "39 .lean files on main at f005704b50c35819ff32c703e1ce5f2f72106fd5; historical source inventory. If source count changes, regenerate and review this manifest.",
+  "source_commit": "f005704b50c35819ff32c703e1ce5f2f72106fd5",
+  "policy": "Kernel compilation is validity evidence only. Quarantine means do not claim novelty; it does not invalidate a correctly compiled theorem. Derived transfers are scoped program-specific compositions with open worldwide priority. A distinct finite construction has an exact certificate but still needs prior-art review.",
+  "prior_art": [
+    {
+      "author": "W. Hoeffding",
+      "year": 1948,
+      "topic": "Hoeffding/ANOVA decomposition",
+      "url": "https://encyclopediaofmath.org/index.php?title=Hoeffding_decomposition"
+    },
+    {
+      "author": "B. Efron and C. Stein",
+      "year": 1981,
+      "topic": "Independent inputs and ANOVA variance decomposition",
+      "url": "https://doi.org/10.1214/aos/1176345462"
+    },
+    {
+      "author": "N. Nisan and earlier decision-tree work",
+      "year": 1991,
+      "topic": "Block sensitivity and certificate complexity",
+      "url": "https://www.sciencedirect.com/science/article/pii/S030439750100144X"
+    },
+    {
+      "author": "R. Chugh, S. Podder, S. Sanyal",
+      "year": 2023,
+      "topic": "Decision-tree and block-sensitivity bounds",
+      "url": "https://drops.dagstuhl.de/doi/10.4230/LIPIcs.FSTTCS.2023.27"
+    },
+    {
+      "author": "David Turturean",
+      "year": 2026,
+      "topic": "Aaronson-Ambainis theorem and pinned Lean formalization",
+      "url": "https://arxiv.org/abs/2611.09773"
+    }
+  ],
+  "counts": {
+    "quarantine": 28,
+    "derived_transfer": 10,
+    "finite_construction": 1
+  },
+  "modules": [
+    {
+      "path": "research/nightfall/2026-11-universal-spectral-observability/AdaptiveBudget.lean",
+      "classification": "quarantine",
+      "note": "Abstract ANOVA energy and unit-drift algebra; main universal theorem unproved",
+      "passport": "universal-spectral-proof-passport.html",
+      "ci_run": 42964206760,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/characteristic_three/Finite3.lean",
+      "classification": "quarantine",
+      "note": "Elementary characteristic-three identities on Fin 3",
+      "passport": null,
+      "ci_run": 40995299592,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/discoverability/AdaptiveRankDrop.lean",
+      "classification": "quarantine",
+      "note": "Conditional block-sensitivity rank decrement; classical decision-tree mechanism",
+      "passport": null,
+      "ci_run": 42930165294,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/discoverability/WitnessPacking.lean",
+      "classification": "quarantine",
+      "note": "Finite hitting-set/certificate equivalences and classical block-sensitivity packing",
+      "passport": null,
+      "ci_run": 42930165294,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualPosteriorInfluence.lean",
+      "classification": "quarantine",
+      "note": "Finite posterior-product normalization and elementary scalar/vector Cauchy inequality",
+      "passport": "universal-spectral-proof-passport.html",
+      "ci_run": 42973878336,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/CategoricalSignedProxy.lean",
+      "classification": "quarantine",
+      "note": "Finite signed-proxy normalization and Cauchy norm bound; no nonadaptive theorem",
+      "passport": "universal-spectral-proof-passport.html",
+      "ci_run": 42959881782,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/DiagonalSignCoherence.lean",
+      "classification": "quarantine",
+      "note": "Pointwise signed-variance identity conditional on diagonal covariance and supplied influence bound",
+      "passport": "universal-spectral-proof-passport.html",
+      "ci_run": 42972554673,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/PosteriorRankBudget.lean",
+      "classification": "quarantine",
+      "note": "Generic finite-kernel flow and weighted telescoping, conditional local drift",
+      "passport": "universal-spectral-proof-passport.html",
+      "ci_run": 42972560393,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/QuadraticEndpointMarkov.lean",
+      "classification": "quarantine",
+      "note": "Elementary three-point quadratic derivative identity and Markov bound",
+      "passport": "universal-spectral-proof-passport.html",
+      "ci_run": 42959881782,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/RademacherOrthogonality.lean",
+      "classification": "quarantine",
+      "note": "Classical finite signed-ensemble orthogonality and trace isometry",
+      "passport": "universal-spectral-proof-passport.html",
+      "ci_run": 42965524565,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/SortedInfluenceTail.lean",
+      "classification": "quarantine",
+      "note": "Elementary sorted-weight tail bound",
+      "passport": "universal-spectral-proof-passport.html",
+      "ci_run": 42959881782,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/TopInteractionCover.lean",
+      "classification": "quarantine",
+      "note": "ANOVA energy charged to support transversal under a supplied degree-two premise",
+      "passport": "universal-spectral-proof-passport.html",
+      "ci_run": 42959881782,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/odd_cycle/CollisionSymmetry.lean",
+      "classification": "quarantine",
+      "note": "Elementary injectivity and collision symmetry implications; no full code theorem",
+      "passport": null,
+      "ci_run": 40995299592,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/odd_cycle/P23Arithmetic.lean",
+      "classification": "quarantine",
+      "note": "Numerical consequences conditional on underlying unproved odd-cycle estimate",
+      "passport": null,
+      "ci_run": 40995299592,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/phase_block/PhaseBlock.lean",
+      "classification": "finite-construction",
+      "note": "Concrete 3-by-5 coefficient block separates 81 four-relative-phase inputs by 3 powered outputs",
+      "passport": "phase-block-proof-passport.html",
+      "ci_run": 40995299592,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/ANOVAActivation.lean",
+      "classification": "quarantine",
+      "note": "Standard finite ANOVA energy activation bookkeeping",
+      "passport": "certificate-acquisition-proof-passport.html",
+      "ci_run": 42884789858,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/ANOVAPosteriorBridge.lean",
+      "classification": "quarantine",
+      "note": "Finite interaction-support deletion identity, not a complete Bayesian observer",
+      "passport": "certificate-acquisition-proof-passport.html",
+      "ci_run": null,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/CertificateCostBridge.lean",
+      "classification": "derived-transfer",
+      "note": "Program-specific finite certificate-cost-to-influence composition; priority unreviewed",
+      "passport": "certificate-acquisition-proof-passport.html",
+      "ci_run": 42925787438,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/CertificateObservationBridge.lean",
+      "classification": "derived-transfer",
+      "note": "Concrete finite-product certificate sampler composition of inherited antipodal input",
+      "passport": "certificate-acquisition-proof-passport.html",
+      "ci_run": 42925787438,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/EfronSteinDegree.lean",
+      "classification": "quarantine",
+      "note": "Classical Hoeffding-Efron-Stein degree decomposition formalized for finite tables",
+      "passport": "finite-product-influence-proof-passport.html",
+      "ci_run": 42932085109,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/FiniteEnergyCauchy.lean",
+      "classification": "quarantine",
+      "note": "Standard weighted Cauchy-Schwarz finite energy-to-resampling implication",
+      "passport": "finite-palette-recovery-proof-passport.html",
+      "ci_run": 42921631024,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/FiniteLevelCrossing.lean",
+      "classification": "derived-transfer",
+      "note": "Finite level-crossing certificate composition of inherited two-sided input",
+      "passport": "certificate-acquisition-proof-passport.html",
+      "ci_run": null,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/FiniteSectionSensitivity.lean",
+      "classification": "quarantine",
+      "note": "Finite section preservation and positive-atom resampling supporting lemmas",
+      "passport": "finite-palette-recovery-proof-passport.html",
+      "ci_run": 42921631024,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/FiniteSwitchingCore.lean",
+      "classification": "quarantine",
+      "note": "Classical finite hybrid/degree preservation and switching lemmas",
+      "passport": "finite-palette-recovery-proof-passport.html",
+      "ci_run": 42921631024,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/HeterogeneousAlphabets.lean",
+      "classification": "derived-transfer",
+      "note": "Finite product influence for dependent alphabets and zero-mass atoms via explicit lift; priority open",
+      "passport": "finite-product-influence-proof-passport.html",
+      "ci_run": 42932085109,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/HeterogeneousOrientation.lean",
+      "classification": "quarantine",
+      "note": "Exchangeability of independent two-draw coordinate orientations",
+      "passport": "finite-product-influence-proof-passport.html",
+      "ci_run": null,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/LocalizedOptimization.lean",
+      "classification": "quarantine",
+      "note": "General weighted reciprocal/Cauchy variational step",
+      "passport": "finite-product-influence-proof-passport.html",
+      "ci_run": 42929857436,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/LocalizedOverlapConsequence.lean",
+      "classification": "quarantine",
+      "note": "Conditional algebraic overlap consequence assuming the localized bound",
+      "passport": "finite-product-influence-proof-passport.html",
+      "ci_run": null,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/LocalizedWeightRemoval.lean",
+      "classification": "quarantine",
+      "note": "Weighted Cauchy-Schwarz optimization; standalone novelty not established",
+      "passport": "finite-product-influence-proof-passport.html",
+      "ci_run": null,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/MassWeightedRemoval.lean",
+      "classification": "quarantine",
+      "note": "Mass scaling of a conditional certificate inequality",
+      "passport": "finite-product-influence-proof-passport.html",
+      "ci_run": null,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/NonconstantSamplerBridge.lean",
+      "classification": "derived-transfer",
+      "note": "Concrete finite nonconstant class positivity and normalized sampler composition",
+      "passport": "certificate-acquisition-proof-passport.html",
+      "ci_run": 42925787438,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/ProductInfluence.lean",
+      "classification": "derived-transfer",
+      "note": "Finite arbitrary-marginal influence theorem composition importing Turturean's level-set machinery",
+      "passport": "finite-product-influence-proof-passport.html",
+      "ci_run": 42929857470,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/ProductRowBound.lean",
+      "classification": "derived-transfer",
+      "note": "Competing-symbol finite-product row bound built on Turturean's pack/dual apparatus",
+      "passport": "finite-product-influence-proof-passport.html",
+      "ci_run": 42924358449,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean",
+      "classification": "derived-transfer",
+      "note": "Finite-product oriented two-sided transfer and posterior bridge with upstream imports",
+      "passport": "finite-product-influence-proof-passport.html",
+      "ci_run": 42903333354,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuarticRademacher.lean",
+      "classification": "quarantine",
+      "note": "Classical exact independent-sign fourth-moment identity",
+      "passport": null,
+      "ci_run": 42884789858,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/RestrictedInfluence.lean",
+      "classification": "quarantine",
+      "note": "Elementary degree-one variance-to-influence quantitative implication",
+      "passport": null,
+      "ci_run": 42884789858,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/TwoDrawOrientation.lean",
+      "classification": "quarantine",
+      "note": "Classical two-independent-draw exchangeability/mask-mass equalities",
+      "passport": "finite-product-influence-proof-passport.html",
+      "ci_run": null,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/VariancePosteriorOneStep.lean",
+      "classification": "derived-transfer",
+      "note": "Concrete finite product certificate posterior decrement and conditional degree-d contraction",
+      "passport": "certificate-acquisition-proof-passport.html",
+      "ci_run": 42925787438,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/WeightedReciprocalTransfer.lean",
+      "classification": "derived-transfer",
+      "note": "Law-weighted transfer of pinned Turturean antipodal machinery",
+      "passport": "finite-product-influence-proof-passport.html",
+      "ci_run": 42903333354,
+      "global_priority": "unverified"
+    }
+  ]
+}

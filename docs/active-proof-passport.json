@@ -1,11 +1,11 @@
 {
   "schema": "nightfall-active-proof-passports-v1",
-  "version": 4,
+  "version": 5,
   "as_of": "2026-11-11",
-  "updated_by": "NIGHTFALL two-passport evidence upgrade + five new source-bound research Proof Passports; no automatic novelty or external-referee promotion",
+  "updated_by": "2026-11-11 Lean provenance quarantine and finite phase-block certificate reconciliation",
   "frozen_historical_registry_unchanged": true,
   "lifecycle": "active",
-  "scientific_status": "Eleven active claim checkpoints (two upgraded, five new) spanning pinned Lean finite proofs, exact finite constructions, written analytic candidates, draft proof attacks and conditional adaptive transfers. Historical eleven, 40 curated records, five approved findings are unchanged.",
+  "scientific_status": "Twelve active claim checkpoints; 39 Lean modules assigned an independent originality classification (28 quarantined inherited/routine, 10 dependent transfer, one source-specific finite construction). Frozen historical eleven and approved findings unchanged.",
   "source_checkpoint": {
     "repository": "d3lefts/d3lefts",
     "commit": "5bda769c2484ea2f6ea9a02c428928361c07666f",
@@ -64,17 +64,17 @@
       "id": "finite-certificate",
       "title": "Finite-product certificate transfer — kernel-checked influence",
       "status": "lean-kernel-checked-finite-product-scope",
-      "claim": "The pinned Lean declaration Nightfall.ProductSpace.Influence.product_influence proves for bounded finite-product f of indicator-monomial product degree ≤d and V>0 that some coordinate j satisfies 3V^5 ≤ 12500(π²d²)^6 I_j(f)^2. Heterogeneous coordinate laws, including zero-mass atoms, are allowed; the common alphabet is one finite Lean type.",
+      "claim": "The pinned finite-product theorem proves 3V^5 ≤ 12500(π²d²)^6 I_j(f)^2. Merged PR #325 certifies equivalence of indicator-monomial and finite Efron–Stein degrees and extends the result to genuinely coordinate-dependent finite alphabets (including zero-mass atoms), with support-only boundedness.",
       "assumptions": [
-        "Finite coordinate type and one finite alphabet type with arbitrary normalized coordinate-dependent marginal tables, including zero atoms",
-        "Pointwise |f|≤1, positive product variance, RowBound.HasProdDegreeLE f d",
-        "Independent-resampling influence I_j=(1/2)E[(f(X)-f(X^(j)))²], pinned Lean 4.33.0"
+        "Finite coordinate type, a separate finite alphabet for each coordinate, arbitrary normalized marginal laws including zero-mass atoms",
+        "Bound |f|≤1 on the positive-mass support, positive product variance V and bounded Efron–Stein degree ≤d",
+        "Independent-resampling influence I_j; exact pinned coefficient and Turturean imported machinery"
       ],
       "mechanism": "The competing-symbol product-row construction and law-free two-draw orientation compose localized two-sided certificates, weighted influence extraction, and imported Turturean median/level-set proof steps.",
-      "evidence": "PR #317 at head e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb passed pinned Lean 4.33.0 build run #42929857470: 19 named declarations, standard axioms Classical.choice/Quot.sound/propext only, no sorryAx/custom axioms. This verifies the exact finite theorem only.",
+      "evidence": "PR #317 at head e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb passed pinned Lean 4.33.0 build run #42929857470: 19 named declarations, standard axioms Classical.choice/Quot.sound/propext only, no sorryAx/custom axioms. This verifies the exact finite theorem only. Merged PR #325 (head 2e13f445894ea357c3e6a5d3920b81877a5a3a9f) has passing pinned Actions 42932085109 verifying EfronSteinDegree.prodDegree_iff_esDegree and Heterogeneous.heterogeneous_influence. The classical Efron–Stein equivalence is novelty-quarantined, not an original theorem claim.",
       "source": "research/nightfall/2026-11-active-passports/finite-product-influence.md",
-      "source_detail": "Dedicated public Proof Passport and existing complete finite-product formalization receipt FINITE_PRODUCT_INFLUENCE_PROOF_PASSPORT_20261110.md; checked Lean source ProductInfluence.lean at immutable PR #317 head.",
-      "audit": "Independently rebuild exact pinned Lean source/upstream, inspect theorem type and product-degree assumptions, then separately prove measurable/Hoeffding degree lifting and any stronger constants.",
+      "source_detail": "Dedicated public Proof Passport and existing complete finite-product formalization receipt FINITE_PRODUCT_INFLUENCE_PROOF_PASSPORT_20261110.md; checked Lean source ProductInfluence.lean at immutable PR #317 head. Subsequent PR #325 is the stronger merged finite certificate, with a separate CI receipt and public source file links.",
+      "audit": "Rebuild PRs #317/#325 against exact upstream; verify support-only bound, dependent-coordinate alphabets and pointwise degree, then independently evaluate measure-theoretic passage and priority.",
       "limitations": [
         "No general measurable/infinite-product Lean theorem or end-to-end Hilbert/adaptive policy follows",
         "Does not certify the separate degree-two variance-squared manuscript or its stronger numerical constant",
@@ -182,7 +182,7 @@
         "Almost-sure measurable decision rule, not pointwise recoverability or efficient runtime"
       ],
       "mechanism": "Countable effective support, measurable maximal-order interaction selection, positive-measure block sensitivity and Fubini-safe hybrid cube yield finitely many disjoint sensitive blocks.",
-      "evidence": "Finite switching and section/energy modules have a reported 13-declaration scoped Lean receipt and 952 exact ANOVA tests. The infinite-selection/Markov and common null-set argument remains a written candidate, not a compiled theorem.",
+      "evidence": "Finite switching and section/energy modules have a reported 13-declaration scoped Lean receipt and 952 exact ANOVA tests. The infinite-selection/Markov and common null-set argument remains a written candidate, not a compiled theorem. FiniteSwitchingCore, FiniteSectionSensitivity and FiniteEnergyCauchy are supporting inherited/routine steps in the 39-module Lean provenance quarantine; their Lean compilation is not evidence of new finite mathematical laws.",
       "source": "research/nightfall/2026-11-active-passports/finite-palette-recovery.md",
       "source_detail": "Adversarial measure-theory audit, finite Lean receipt and merged v1.1 five-closure argument; different R/Δ constants explicitly flagged.",
       "audit": "Independently prove completed-product countable support and common-good-set measurable selection; test exact hybrid-degree under positive-measure replacements; reconcile constants.",
@@ -224,10 +224,10 @@
         "Uncompiled arbitrary-product scalar bridge and measurable adaptive selection / Hilbert PSD estimate"
       ],
       "mechanism": "Finite scalar Lean input, product measure approximation, signed Hilbert scalar compression, PSD rank influence, exact ANOVA posterior potential descent, spectral-tail output projection.",
-      "evidence": "Finite scalar PR #317 is Lean-checked; universal manuscript PR #332 remains draft and PRs #339/#340 only address partial Lean bridges. The v6 full source is not publicly reconciled on main.",
+      "evidence": "Finite scalar PR #317 is Lean-checked; universal manuscript PR #332 remains draft and PRs #339/#340 only address partial Lean bridges. The v6 full source is not publicly reconciled on main. Further source-specific successes: 13 spectral core declarations (42959881782); finite signed isometry (42965524565); pointwise diagonal-coherence transfer with explicitly supplied premises (42972554673); conditional finite-kernel weighted budget (42972560393); and actual posterior law and rank-factor influence (42973878336). These are quarantined supporting lemmas, not the end-to-end observer theorem.",
       "source": "research/nightfall/2026-11-active-passports/universal-spectral.md",
       "source_detail": "Draft PR #332 and partial Lean PRs #339/#340 are principal sources; main's spectral REVIEW_GATES.md is a critical review note.",
-      "audit": "Independently rederive product measurable lift, PSD moment step and deterministic policy; stress-test posterior coherence at every state; deposit full source and exact hashes.",
+      "audit": "Independently prove actual posterior ANOVA drift, scalar product influence composition, conditional coherence, measurable policy and spectral risk; seek prior art before any novelty claim.",
       "limitations": [
         "No complete Lean proof of universal Hilbert observer or measured-space extension",
         "Initial-only coherence does not suffice for v6 log-free claim",
@@ -245,17 +245,38 @@
         "Whole-coordinate posterior query and potentially costly calculation of π"
       ],
       "mechanism": "Localized two-sided certificate overlap and weighted Cauchy imply a posterior selection gain. The identity E[T(g|X_j)]=T−I_j and ANOVA V≤T≤dV imply expected geometric potential descent.",
-      "evidence": "Merged #298 localized inequality and selected #300/#303 sublemmas have scoped Lean receipts; no one compiled declaration proves the full adaptive MSE bound. Exact finite posterior checks are recorded.",
+      "evidence": "Merged #298 localized inequality and selected #300/#303 sublemmas have scoped Lean receipts; no one compiled declaration proves the full adaptive MSE bound. Exact finite posterior checks are recorded. Merged PR #312, passing pinned Lean 4.33.0 CI 42925787438, verifies VariancePosteriorOneStep.normalized_one_step_degree_contraction for concrete finite Boolean product rows with an explicitly assumed ANOVA energy representation; it does not certify a complete adaptive MSE bound.",
       "source": "research/nightfall/2026-11-active-passports/certificate-acquisition.md",
       "source_detail": "Original POSTERIOR_ADAPTIVE_BRIDGE_20261110.md and CERTIFICATE_GUIDED_ADAPTIVE_RECOVERY_20261110.md, with exact checker.",
-      "audit": "Kernel-compile finite posterior rows, concrete overlap sampler, actual ANOVA drift and transition kernel in one pinned toolchain; separately review predecessor OSSS/Lovett–Zhang.",
+      "audit": "Check the exact PR #312 finite row/energy assumptions, separately establish real posterior ANOVA identification and full policy/stopping rule; compare OSSS and Lovett–Zhang priority.",
       "limitations": [
         "Does not produce an unconditional dimension-free certificate cost K or general real-valued exponent-two theorem",
         "No computational runtime guarantee for evaluating the sampling law",
         "No end-to-end arbitrary measurable-product or full Lean theorem"
       ]
+    },
+    {
+      "id": "phase-block",
+      "title": "Three-query F16 finite phase block",
+      "status": "lean-checked-finite-construction-priority-open",
+      "claim": "For the exact F16 multiplication/cube map in PhaseBlock.lean, three fixed mixed linear forms map all 81 four-relative-phase assignments injectively to three powered outputs. Lean proves eighty_one_distinct_outputs; global novelty and the general adaptive decoder are not certified.",
+      "assumptions": [
+        "Finite field F2[z]/(z^4+z+1) and F4× phases represented by {1,6,7}",
+        "Four independent relative phases, exactly the three five-element coefficient rows specified in the Lean source",
+        "Noiseless cube-power outputs; the general transfer to arbitrary support size is not part of the finite Lean theorem"
+      ],
+      "mechanism": "An explicit 3-by-5 coefficient matrix and 81-state exact injectivity certificate; common finite-field arithmetic is supporting prior-art algebra.",
+      "evidence": "Merged PR #243 head d3a3717e846390461c7cf2ec41553189d78267a1; successful Lean 4.35.0 Actions 40995299592 and named axiom audit for the source-specific 81-input proof.",
+      "source": "research/nightfall/formalization/phase_block/PROOF_PASSPORT_20261111.md",
+      "source_detail": "Detailed public source-specific passport phase-block-proof-passport.html. New explicit finite construction does not establish global originality.",
+      "source_checkpoint": "PR243/d3a3717e846390461c7cf2ec41553189d78267a1; Actions 40995299592",
+      "audit": "Independently implement GF16, reproduce the 81-output matrix, attempt smaller blocks in the same powered-query model, and perform dated original-source priority comparison.",
+      "limitations": [
+        "No global originality/priority determination or independent human referee",
+        "81-state injectivity does not establish an end-to-end adaptive decoder or universal measurement optimality"
+      ]
     }
   ],
   "attribution": "Research led by Devin J. Wright through NIGHTFALL with substantial AI-assisted drafting and proof attempts. Imported foundations include Efron–Stein/Hoeffding decomposition and Turturean's Aaronson–Ambainis cube theorem and antipodal inequality.",
-  "publication_rule": "Do not promote any record to externally certified, global novelty or published theorem status without a dated prior-art audit and independent mathematical verification."
+  "publication_rule": "Do not promote any record to externally certified, global novelty or published theorem status without a dated prior-art audit and independent mathematical verification. The 39-module Lean attribution and quarantine ledger lives in docs/lean-certificate-provenance.json."
 }

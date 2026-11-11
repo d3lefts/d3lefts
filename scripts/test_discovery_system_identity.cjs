@@ -72,4 +72,4 @@ assert.ok(moon.includes("THE PRESERVATION HALF OF THE DISCOVERY SYSTEM"),"Archiv
 assert.ok(moon.includes("preserve negative tests")||moon.includes("Preserve negative tests"),"Failures must remain visible");
 assert.ok(read("docs/sitemap.xml").includes("/discovery-system.html"),"Discovery-system canonical URL absent from sitemap");
 assert.ok(read("docs/README.md").includes("[Discovery System](discovery-system.html)"),"Maintenance charter missing");
-console.log("PASS: source-matched discovery identity; 11 historical, 11 active, 5 mechanisms, 20 typed links; gated claims and typed transfers");
+console.log("PASS: source-matched discovery identity; 11 historical, 12 active, 5 mechanisms, 20 typed links; gated claims and typed transfers");
