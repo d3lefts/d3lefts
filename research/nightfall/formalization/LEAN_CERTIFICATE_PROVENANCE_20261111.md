@@ -58,3 +58,8 @@ Of the **59** Lean modules on the frozen source checkpoint, **58** exact current
 ## Revision 11 (11 Nov): direct actual-function certificates, distinct Lean pins
 
 `QuadraticANOVA.quadratic_actual_product_influence_e2e` is an unconditional actual finite product law, degree-two result at the known exponent **5/2** (not exponent two), strictly compiled in pinned Lean 4.33 [run 43113339892](https://github.com/d3lefts/d3lefts/actions/runs/43113339892), blob `a936845286a74fbf5f0ee70fc5feca6b08108694`. `QuadraticSwitching.quadratic_actual_all_section_ranges_le_sixteen` constructs actual coordinatewise extrema and proves the full 16B range budget, strictly compiled in Lean 4.35 [run 43114064344](https://github.com/d3lefts/d3lefts/actions/runs/43114064344), blob `bc3ec344bb47426a9db0508893f8588e7a5d8ea2`. **No combined universal variance-squared influence theorem is certified**; compiler pins and missing source-function matching/Hilbert-energy links remain separate.
+
+
+## Census revision 12 (pending joint actual-function declaration)
+
+The branch adds `QuadraticUnifiedFinite.lean` as the 60th source. It combines the previously **kernel-certified** finite arbitrary-law degree-two exponent-5/2 baseline and constructed 16B range for the *same actual function*, under an explicit quadratic representation. **Compilation is pending** in [PR #391](https://github.com/d3lefts/d3lefts/pull/391); do not count this module as a successful certificate until its strict named check passes. The proposed variance-squared exponent-two theorem remains *uncompiled*, and a direct-source representation derivation and energy/matching moment bridges remain open. This is not a novelty finding.
