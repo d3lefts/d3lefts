@@ -7,6 +7,7 @@ on:
       - 'research/nightfall/formalization/observability/GlobalQuadraticParity.lean'
       - '.github/workflows/nightfall-quadratic-posterior-energy.yml'
       - 'research/nightfall/2026-11-quadratic-law-free-audit/check_posterior_drift_exact.py'
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/check_global_matching_parity.py'
   workflow_dispatch:
 permissions:
   contents: read
@@ -89,6 +90,7 @@ jobs:
       - name: Exact real-posterior drift, all transcript branches
         run: |
           set -euo pipefail
+          python3 research/nightfall/2026-11-quadratic-law-free-audit/check_global_matching_parity.py
           python3 research/nightfall/2026-11-quadratic-law-free-audit/check_posterior_drift_exact.py
           python3 research/nightfall/2026-11-quadratic-law-free-audit/check_exact_quadratic.py
       - name: Archive receipts
