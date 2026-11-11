@@ -307,7 +307,7 @@ theorem cross_eval (f : (ι → α) → ℝ) (a : (ι → α) → ι → ℝ) (w
     rw [abs_of_neg (show f y - t < 0 by linarith)]
     ring
   unfold pairCost
-  rw [Finset.sum_div]
+  rw [← div_div, Finset.sum_div, Finset.sum_div]
   apply Finset.sum_congr rfl
   intro j _
   simp only [levRow, if_neg hx', if_neg hy', hax, hay]
@@ -407,6 +407,7 @@ theorem level_sum (p : ι → α → ℝ) (hp : ∀ i a, 0 ≤ p i a) (hp1 : ∀
         dsimp only
         ring
 
+set_option maxHeartbeats 1000000 in
 theorem integrated (p : ι → α → ℝ) (hp : ∀ i a, 0 ≤ p i a) (hp1 : ∀ i, ∑ a, p i a = 1)
     (f : (ι → α) → ℝ) (a : (ι → α) → ι → ℝ) (hr : RealRow f a) (w : ι → ℝ)
     (hw : ∀ j, 0 < w j) :
@@ -416,11 +417,13 @@ theorem integrated (p : ι → α → ℝ) (hp : ∀ i a, 0 ≤ p i a) (hp1 : �
       ∑ k ∈ (univ : Finset (ι × (ι → α) × α)),
         prodMass p k.2.1 * p k.1 k.2.2 / w k.1 *
           max (f k.2.1 - f (Function.update k.2.1 k.1 k.2.2)) 0 :=
-  AaronsonAmbainis.Level.level_integration univ univ
-    (fun z => prodMass p z.1 * prodMass p z.2 / pairCost w a z.1 z.2)
-    (fun z => f z.1) (fun z => f z.2)
-    (fun k => prodMass p k.2.1 * p k.1 k.2.2 / w k.1)
-    (fun k => f (Function.update k.2.1 k.1 k.2.2)) (fun k => f k.2.1)
+  AaronsonAmbainis.Level.level_integration (univ : Finset (PairSample ι α))
+    (univ : Finset (ι × (ι → α) × α))
+    (fun z : PairSample ι α => prodMass p z.1 * prodMass p z.2 / pairCost w a z.1 z.2)
+    (fun z : PairSample ι α => f z.1) (fun z : PairSample ι α => f z.2)
+    (fun k : ι × (ι → α) × α => prodMass p k.2.1 * p k.1 k.2.2 / w k.1)
+    (fun k : ι × (ι → α) × α => f (Function.update k.2.1 k.1 k.2.2))
+    (fun k : ι × (ι → α) × α => f k.2.1)
     (fun t => level_sum p hp hp1 f a hr w hw t)
 
 theorem posPart_incr (p : ι → α → ℝ) (j : ι) (f : (ι → α) → ℝ) :
@@ -506,7 +509,7 @@ theorem weighted_cs {β γ κ : Type*} [Fintype κ] (O : Finset β) (N : Finset 
       ∑ x ∈ O, ∑ y ∈ N, m x * n y * (∑ j ∈ D x y, w j * A x j * B y j)⁻¹ ≤
         C * ∑ j, (w j)⁻¹) :
     (∑ x ∈ O, m x * (∑ j, A x j)⁻¹) * (∑ y ∈ N, n y * (∑ j, B y j)⁻¹) ≤ C := by
-  have he : ∀ x y w, ∑ j ∈ D x y, w j * (A x j / m x) * (B y j / n y) =
+  have he : ∀ (x : β) (y : γ) (w : κ → ℝ), ∑ j ∈ D x y, w j * (A x j / m x) * (B y j / n y) =
       (∑ j ∈ D x y, w j * A x j * B y j) / (m x * n y) := by
     intro x y w
     rw [Finset.sum_div]
@@ -1223,27 +1226,30 @@ theorem influence_bound (p : ι → α → ℝ) (hp : ∀ i a, 0 ≤ p i a) (hp1
     · exact h
   have hLpos : 0 < ∑ k, pincr p f k :=
     lt_of_lt_of_le hj0pos (Finset.single_le_sum (fun k _ => hL0 k) (mem_univ j0))
+  obtain ⟨L, hLdef⟩ : ∃ L, L = ∑ k, pincr p f k := ⟨_, rfl⟩
+  rw [← hLdef] at hLpos ⊢
   obtain ⟨g, b, hgb, hbK, hvar, hinf, hinc, hzero⟩ := exists_avg_set p hp hp1 f a hr K hK
-    (univ.filter (fun j => 5 * (∑ k, pincr p f k) * pinfl p f j < 2 * pvar p f * pincr p f j))
-  have hRsum : 5 * (∑ k, pincr p f k) *
-      ∑ j ∈ univ.filter (fun j => 5 * (∑ k, pincr p f k) * pinfl p f j <
-        2 * pvar p f * pincr p f j), pinfl p f j ≤ 2 * pvar p f * ∑ k, pincr p f k := by
+    (univ.filter (fun j => 5 * L * pinfl p f j < 2 * pvar p f * pincr p f j))
+  have hRsum : 5 * L *
+      ∑ j ∈ univ.filter (fun j => 5 * L * pinfl p f j <
+        2 * pvar p f * pincr p f j), pinfl p f j ≤ 2 * pvar p f * L := by
     rw [Finset.mul_sum]
-    calc ∑ j ∈ univ.filter (fun j => 5 * (∑ k, pincr p f k) * pinfl p f j <
-            2 * pvar p f * pincr p f j), 5 * (∑ k, pincr p f k) * pinfl p f j
-        ≤ ∑ j ∈ univ.filter (fun j => 5 * (∑ k, pincr p f k) * pinfl p f j <
+    calc ∑ j ∈ univ.filter (fun j => 5 * L * pinfl p f j <
+            2 * pvar p f * pincr p f j), 5 * L * pinfl p f j
+        ≤ ∑ j ∈ univ.filter (fun j => 5 * L * pinfl p f j <
             2 * pvar p f * pincr p f j), 2 * pvar p f * pincr p f j :=
           Finset.sum_le_sum (fun j hj => le_of_lt (Finset.mem_filter.mp hj).2)
-      _ = 2 * pvar p f * ∑ j ∈ univ.filter (fun j => 5 * (∑ k, pincr p f k) * pinfl p f j <
+      _ = 2 * pvar p f * ∑ j ∈ univ.filter (fun j => 5 * L * pinfl p f j <
             2 * pvar p f * pincr p f j), pincr p f j := by rw [Finset.mul_sum]
-      _ ≤ 2 * pvar p f * ∑ k, pincr p f k :=
-          mul_le_mul_of_nonneg_left (Finset.sum_le_sum_of_subset_of_nonneg
+      _ ≤ 2 * pvar p f * L := by
+          rw [hLdef]
+          exact mul_le_mul_of_nonneg_left (Finset.sum_le_sum_of_subset_of_nonneg
             (Finset.subset_univ _) (fun k _ _ => hL0 k)) (by linarith)
-  have hS : ∑ j ∈ univ.filter (fun j => 5 * (∑ k, pincr p f k) * pinfl p f j <
+  have hS : ∑ j ∈ univ.filter (fun j => 5 * L * pinfl p f j <
       2 * pvar p f * pincr p f j), pinfl p f j ≤ 2 / 5 * pvar p f := by
     by_contra hcon
     push_neg at hcon
-    have h1 := mul_lt_mul_of_pos_left hcon (show 0 < 5 * (∑ k, pincr p f k) by linarith)
+    have h1 := mul_lt_mul_of_pos_left hcon (show 0 < 5 * L by linarith)
     linarith
   have hVg : 3 / 5 * pvar p f ≤ pvar p g := by linarith
   have hVgpos : 0 < pvar p g := by linarith
@@ -1254,7 +1260,7 @@ theorem influence_bound (p : ι → α → ℝ) (hp : ∀ i a, 0 ≤ p i a) (hp1
       have h3 : 0 < pvar p g ^ 3 := pow_pos hVgpos 3
       linarith
     · exact h
-  have hjle : 2 * pvar p f * pincr p f j ≤ 5 * (∑ k, pincr p f k) * pinfl p f j := by
+  have hjle : 2 * pvar p f * pincr p f j ≤ 5 * L * pinfl p f j := by
     by_contra hcon
     push_neg at hcon
     have hmem := hzero j (Finset.mem_filter.mpr ⟨mem_univ j, hcon⟩)
@@ -1262,7 +1268,7 @@ theorem influence_bound (p : ι → α → ℝ) (hp : ∀ i a, 0 ≤ p i a) (hp1
   refine ⟨j, ?_⟩
   have h1 : (3 / 5 * pvar p f) ^ 3 ≤ pvar p g ^ 3 := pow_le_pow_left₀ (by linarith) hVg 3
   have h3 : pincr p g j ^ 2 ≤ pincr p f j ^ 2 := pow_le_pow_left₀ (pincr_nonneg p hp g j) (hinc j) 2
-  have h4 : (2 * pvar p f * pincr p f j) ^ 2 ≤ (5 * (∑ k, pincr p f k) * pinfl p f j) ^ 2 :=
+  have h4 : (2 * pvar p f * pincr p f j) ^ 2 ≤ (5 * L * pinfl p f j) ^ 2 :=
     pow_le_pow_left₀ (mul_nonneg (by linarith) (hL0 j)) hjle 2
   have hK4 : (0 : ℝ) ≤ 144 * K ^ 4 := by positivity
   have h5 : (3 / 5 * pvar p f) ^ 3 ≤ 144 * K ^ 4 * pincr p f j ^ 2 :=
@@ -1273,8 +1279,8 @@ theorem influence_bound (p : ι → α → ℝ) (hp : ∀ i a, 0 ≤ p i a) (hp1
   calc 3 * pvar p f ^ 5 = 125 / 36 * (4 * pvar p f ^ 2 * (3 / 5 * pvar p f) ^ 3) := by ring
     _ ≤ 125 / 36 * (4 * pvar p f ^ 2 * (144 * K ^ 4 * pincr p f j ^ 2)) := by linarith
     _ = 125 / 36 * (144 * K ^ 4 * (2 * pvar p f * pincr p f j) ^ 2) := by ring
-    _ ≤ 125 / 36 * (144 * K ^ 4 * (5 * (∑ k, pincr p f k) * pinfl p f j) ^ 2) := by linarith
-    _ = 12500 * K ^ 4 * (∑ k, pincr p f k) ^ 2 * pinfl p f j ^ 2 := by ring
+    _ ≤ 125 / 36 * (144 * K ^ 4 * (5 * L * pinfl p f j) ^ 2) := by linarith
+    _ = 12500 * K ^ 4 * L ^ 2 * pinfl p f j ^ 2 := by ring
 
 theorem disagree_update_single (x : ι → α) (k : ι) (b : α) :
     disagree x (Function.update x k b) ⊆ {k} := by
