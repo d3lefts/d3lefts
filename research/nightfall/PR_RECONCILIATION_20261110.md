@@ -199,3 +199,19 @@ Additional owner-side merges after the bulk closure: [#175](https://github.com/d
 
 **Next proof gate:** inspect #317's exact new CI receipt before any merge, and if failing preserve the error log and repair only the specific missing dependencies. Do not interpret the repository's administrative open-PR count as a count of unresolved mathematical obligations.
 
+## Final source-control reconciliation — 11 November 2026 UTC
+
+**Live verification at this checkpoint:** `main` at `836c7c77da2b84720807ba9204d350becc111c8a`; GitHub returned **0 open PRs**. The old 93-open snapshot, 101-resolution ledger, and temporary 4-PR reactivation table above remain dated historical records, not live queue counts. A zero-open queue does **not** mean all research was merged or independently refereed; 95 older PRs were closed without merge in the bulk resolution (see [PR resolution ledger](PR_RESOLUTION_LEDGER_20261111.md) for exact source SHA recovery).
+
+**Proved and merged after the earlier pending status:**
+
+- [#317](https://github.com/d3lefts/d3lefts/pull/317) merged as `a626832fe99a4622db8334c74c488a40a8f17227`, exact checked head `e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb`; [pinned Lean run #42929857470](https://github.com/d3lefts/d3lefts/actions/runs/42929857470) **PASSED** all 19 named declarations with standard axioms only. This is the **full finite-product** bias-independent influence inequality `3 V^5 ≤ 12500(π²d²)^6 I_j²`, for bounded functions with explicit indicator-monomial product degree on heterogeneous nonnegative normalized finite laws (zero atoms allowed). Read the [exact proof passport](formalization/product_space/FINITE_PRODUCT_INFLUENCE_PROOF_PASSPORT_20261110.md). Its constant is `sqrt(3/12500)/π^6 ≈1.611411225e-5`, **not** the earlier manuscript's unverified stronger `c_prod≈0.00120125`. Arbitrary measurable/infinite products, Efron–Stein degree equivalence, quantum consequence, expert referee and dated originality remain separate gates.
+- [#243](https://github.com/d3lefts/d3lefts/pull/243) merged as `bf17b0e38916bea1d9e4534138f43269249958d1`; exact F16 three-query finite phase gadget with kernel and independent 10,000-signal replay receipts.
+- [#322](https://github.com/d3lefts/d3lefts/pull/322) merged as `4d92445c0f324a292accdfa5a204348e99c10ff5`; isolated salvage of #279's diamond phase-code theorem notes and exact checkers, without clobbering the shared Lean workflow.
+- [#323](https://github.com/d3lefts/d3lefts/pull/323) merged as `b71257b06b841351139b2b1ee90d60eb67f4e841`; isolated PAS independent audit-shield solver and checker from #133, preserving the newer team-role charter.
+- [#324](https://github.com/d3lefts/d3lefts/pull/324) merged as `836c7c77da2b84720807ba9204d350becc111c8a`; conservative integration of four finite p23/collision Lean declarations into the existing bridge workflow; [pinned Lean run #42930904120](https://github.com/d3lefts/d3lefts/actions/runs/42930904120) **PASSED**. This does not formally prove the full diamond phase-code family.
+
+**Still not integrated as verified theorems:** original #279/#133 conflicts were handled by scoped backports rather than the conflicting original PRs. The nonanticipating rank-decrement candidate #316 was closed without a current-head Lean receipt. None of those closures certifies a negative theorem. Nor do manuscript package filenames recorded above establish committed source bytes. Treat the older source and checker hashes as recovery points, not completed mathematical certification.
+
+**Stop rule:** the GitHub open-PR inventory is administratively clear *at this timestamp*. For further mathematical progress, prioritize the exact finite-to-arbitrary-product lift of #317 with independent measure-theoretic scrutiny and a direct prior-art audit, then re-evaluate the stronger constant and quantum consequences. Do not convert source-control completion into publication or novelty approval.
+
