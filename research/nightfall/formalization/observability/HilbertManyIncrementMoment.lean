@@ -148,19 +148,20 @@ theorem sumVector_center (p : ℕ → α → ℝ)
     (Y : ℕ → α → K → ℝ)
     (hp1 : ∀ n, (∑ a : α, p n a) = 1)
     (hY : ∀ n k, (∑ a : α, p n a * Y n a k) = 0)
-    (n : ℕ) (k : K) :
+    (n : ℕ) : ∀ k : K,
     (∑ w : Samples α n, mass p n w * sumVector Y n w k) = 0 := by
   induction n with
-  | zero => simp [Samples, mass, sumVector]
+  | zero =>
+      intro k
+      simp [Samples, mass, sumVector]
   | succ n ih =>
+      intro k
       rw [expectation_succ]
       change jointAvg (mass p n) (p n)
         (fun s a => sumVector Y n s k + Y n a k) = 0
       exact joint_center_add (mass p n) (p n)
         (sumVector Y n) (Y n)
-        (mass_one p hp1 n) (hp1 n) (fun j => by
-          exact ih j)
-        (hY n) k
+        (mass_one p hp1 n) (hp1 n) ih (hY n) k
 
 /-- Second and fourth moments for the actual n-fold product table. -/
 noncomputable def moment2 (p : ℕ → α → ℝ) (Y : ℕ → α → K → ℝ)
