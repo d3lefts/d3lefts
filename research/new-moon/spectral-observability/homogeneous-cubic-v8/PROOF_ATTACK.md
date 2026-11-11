@@ -58,3 +58,26 @@ The script checks the rational inequalities for three concrete instances, with n
 - Next decisive test: develop a link-covariance / bounded-cubic polynomial certificate not expressible solely through \(w_e\) and vertex sums, and test it on complete hypergraphs with explicitly normalized bounded degree-three functions.
 
 No unrestricted cubic exponent-two theorem, novelty certification or independent formal audit follows from this note.
+
+## A separate sharp-constant counterexample: five fair bits
+
+Let \(Y_1,\dots,Y_5\) be independent fair signs, and enumerate the ten triples in lexicographic order. Give their monomials coefficients
+
+\[
+(-1,-1,-1,-1,-1,+1,-1,+1,-1,+1).
+\]
+
+Define \(f(Y)=\frac18\sum_{|S|=3}a_S\prod_{i\in S}Y_i\). An exhaustive **exact 32-input enumeration** finds that the unscaled polynomial takes values in \(\{-4,0,4\}\). Every coordinate belongs to six triples. Consequently
+
+\[
+\|f\|_\infty=\tfrac12,\qquad
+\operatorname{Var}(f)=\tfrac5{32},\qquad
+\max_i I_i(f)=\tfrac3{32},
+\]
+and
+\[
+\boxed{\frac{\operatorname{Var}(f)^2}{\|f\|_\infty^2\max_i I_i(f)}=\frac{25}{24}>1.}
+\]
+
+Therefore the tempting *constant-one* inequality \(V\le B\sqrt M\), which is sharp for degree one, is **false for pure degree-three functions even on unbiased binary inputs**. Any universal constant in that normalization must satisfy \(C\ge5/\sqrt{24}\). This says nothing against exponent two with a larger constant. Reproduce using \`python3 checks/five_bit_cubic_witness.py\`.
+
