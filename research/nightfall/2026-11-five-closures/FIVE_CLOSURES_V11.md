@@ -1,4 +1,4 @@
-# NIGHTFALL — Five-priority mathematical closure audit v1.1 (11 November 2026 UTC)
+# NIGHTFALL — Five-priority mathematical closure audit v1.1 (11 November 2026 UTC)\n\n**Later integrity correction (v1.2):** The distributed v1.1 ZIP failed fresh manifest replay due to six missing rendered-page PNGs. See [integrity erratum](INTEGRITY_ERRATUM_20261111.md); the v1.2 archive preserves the original mathematical source and PDF bytes. The exact nested-address fixed-budget formula and general-degree fractional LP sandwich are proved in [the addendum](EXACT_BUDGET_AND_GENERAL_LP_20261111.md).
 
 **Research lead:** Devin J. Wright / NIGHTFALL Constellation. **Status:** written derived theorems, exact finite audits, and open conjecture gates. **Not** an independent human referee report, global originality clearance, or end-to-end Lean certificate. This record is designed for adversarial review; do not merge it as a declaration that all five open problems are solved.
 

@@ -1,5 +1,5 @@
 {
-  "schema": "nightfall-five-closures-v1",
+  "schema": "nightfall-five-closures-v1.2",
   "as_of_utc": "2026-11-11",
   "research_lead": "Devin J. Wright",
   "external_referee": false,
@@ -25,7 +25,7 @@
     {
       "id": "P2",
       "status": "restricted-analytic-with-obstruction",
-      "claim": "V<=D B sqrt(M)+min(tM,B²) and for homogeneous cubic tau*_I=V exactly",
+      "claim": "V<=D B sqrt(M)+min(tM,B²) and for homogeneous cubic tau*_I=V exactly; for all degree<=d, V<=tau*_I<=T<=dV, equality if homogeneous",
       "assumptions": [
         "bounded top cubic hitting set",
         "quadratic arbitrary-product influence imported"
@@ -46,7 +46,7 @@
     {
       "id": "P4",
       "status": "elementary-derived-and-finite-tested",
-      "claim": "MSE=1/k-(1/(r k²))sum q_jt/m^(2(d-1)-h_jt)",
+      "claim": "MSE=1/k-(1/(r k²))sum q_jt/m^(2(d-1)-h_jt); optimal replica gain g(c)=m^(c-1-2s) (c<=s+1), min(1,(c-s)/m^s) thereafter",
       "assumptions": [
         "nested-address uniform independent construction",
         "fixed nonadaptive query set"
@@ -56,11 +56,24 @@
     {
       "id": "P5",
       "status": "reproducibility-evidence",
-      "claim": "source-complete local package and exact checker; GitHub draft contains source note and checker only",
+      "claim": "v1.1 ZIP has stale unverified render claims; v1.2 ZIP SHA 28e61af... has passing manifest; GitHub holds notes and checkers, not local binary",
       "assumptions": [
-        "artifact SHA manifest validated"
+        "original v1.1 ZIP incomplete manifest (six missing PNGs)",
+        "repaired v1.2 ZIP verified with 21 actual included files"
       ],
       "gate": "replay independently; upload PDF/LaTeX to canonical repository after approval"
+    }
+  ],
+  "artifacts": [
+    {
+      "version": "v1.1",
+      "sha256": "0d9f2b9bc6c4183394173987c30b225ca1c4675f7307efa05c563e531a096bd4",
+      "manifest_status": "FAIL (six missing render PNGs)"
+    },
+    {
+      "version": "v1.2",
+      "sha256": "28e61af840605eb3b652cdb52bfeaa3a154f9d966b43ce69128c616b6ba30123",
+      "manifest_status": "PASS (21 included files)"
     }
   ]
 }
