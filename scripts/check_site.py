@@ -135,8 +135,8 @@ def main() -> int:
     # Role ownership describes research lifecycle, not proof strength.
     moon_text = (DOCS / "new-moon.html").read_text(encoding="utf-8")
     if ('NULL FIELD <small>Active research</small>' not in homepage_text or
-        'NEW MOON <small>Archived breakthroughs</small>' not in homepage_text or
-        'NEW MOON <small>Archived breakthroughs</small>' not in moon_text or
+        'NEW MOON <small>Archived research</small>' not in homepage_text or
+        'NEW MOON <small>Archived research</small>' not in moon_text or
         'id="archived-records"' not in moon_text):
         FAILURES.append("ROLE ROUTING: NULL FIELD must be active and NEW MOON archival")
     if ('id="live-case"' in homepage_text or 'id="live-case"' not in moon_text or
