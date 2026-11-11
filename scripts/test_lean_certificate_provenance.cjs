@@ -7,7 +7,7 @@ const real=walk("research/nightfall").sort(),got=m.modules.map(x=>x.path).sort()
 assert.equal(m.schema,"nightfall-lean-provenance-v1");
 assert.deepEqual(got,real,"Unclassified Lean file (must not silently inherit originality)");
 assert.equal(new Set(got).size,got.length);
-assert.equal(m.modules.length,47,"Frozen source count changed: refresh manifest against exact main tree");
+assert.equal(m.modules.length,48,"Frozen source count changed: refresh manifest against exact main tree");
 const valid=new Set(["quarantine","derived-transfer","finite-construction"]);
 for(const r of m.modules){
  assert.ok(valid.has(r.classification),r.path);
@@ -25,10 +25,11 @@ for(const key of ["quarantine","derived-transfer","finite-construction"]){
 }
 const law=m.modules.find(x=>x.path.endsWith("/FiniteLawTransfer.lean"));assert.ok(law&&law.classification==="quarantine"&&law.ci_run===43059618451,"Law-transfer proof scope must remain novelty-quarantined");
 const sign=m.modules.find(x=>x.path.endsWith("/SignMomentLogTransfer.lean"));assert.ok(sign&&sign.classification==="quarantine"&&sign.note.includes("premise"),"Conditional sign-moment source must be priority-quarantined");
+const spectral=m.modules.find(x=>x.path.endsWith("/SpectralProductHalf.lean"));assert.ok(spectral&&spectral.classification==="quarantine","PSD spectral core may not inherit originality");
 const phases=m.modules.filter(x=>x.classification==="finite-construction");
 assert.deepEqual(phases.map(x=>x.path),["research/nightfall/formalization/phase_block/PhaseBlock.lean"]);
 const page=fs.readFileSync("docs/lean-certificate-provenance.html","utf8");
-assert.equal((page.match(/<tr><td>\d\d<\/td>/g)||[]).length,47,"Missing static site entries");
+assert.equal((page.match(/<tr><td>\d\d<\/td>/g)||[]).length,48,"Missing static site entries");
 assert.ok(page.includes("Quarantine does not retract kernel compilation"));
 assert.ok(page.includes('href="lean-certificate-provenance.json"'));
 const source=fs.readFileSync("docs/phase-block-proof-passport.html","utf8");
@@ -69,4 +70,4 @@ for(const token of ["CLOSED AND UNMERGED","27","41110673165","k=7","not all form
 assert.ok(page.includes('id="nonmain"')&&page.includes(a.passport),"Not visible in provenance");
 const siteSitemap=fs.readFileSync("docs/sitemap.xml","utf8");
 assert.ok(siteSitemap.includes("/"+a.passport),"Off-main passport missing sitemap");
-console.log("PASS: 47 main Lean sources classified, one separate closed-branch finite certificate explicitly scoped; no novelty promotion.");
+console.log("PASS: 48 main Lean sources classified, one separate closed-branch finite certificate explicitly scoped; no novelty promotion.");
