@@ -1,7 +1,7 @@
 /* Dated active research passports; intentionally separate from frozen historical Passport registry. */
 .nf-passport-intro{max-width:900px;margin-top:20px}
 .nf-passport-intro p{color:var(--muted);line-height:1.8;max-width:75ch}
-.nf-passport-index{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:24px 0 36px}
+.nf-passport-index{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin:24px 0 36px}
 .nf-passport-index a{border:1px solid var(--line);border-radius:2px;padding:17px 14px;display:flex;flex-direction:column;gap:9px;min-width:0}
 .nf-passport-index a span{font:600 10px var(--mono);color:var(--muted);letter-spacing:.08em}
 .nf-passport-index a strong{font:400 18px/1.3 var(--sans)}

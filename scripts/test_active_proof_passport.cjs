@@ -12,15 +12,15 @@ const site=read("docs/site.js");
 const core=read("docs/erdos-paper-core.js");
 const art=read("docs/media/overlap-16cell-fixture.svg");
 assert.equal(data.schema,"nightfall-active-proof-passports-v1");
-assert.equal(data.version,1);
+assert.equal(data.version,2);
 assert.match(data.as_of,/^2026-11-\d\d$/);
 assert.equal(data.lifecycle,"active");
 assert.equal(data.frozen_historical_registry_unchanged,true);
-assert.equal(data.claims.length,4);
-assert.deepEqual(data.claims.map(x=>x.id),["q2-influence","q2-observation","finite-certificate","cubic-obstruction"]);
+assert.equal(data.claims.length,5);
+assert.deepEqual(data.claims.map(x=>x.id),["q2-influence","q2-observation","finite-certificate","cubic-obstruction","kaczmarz-logfree"]);
 assert.equal(new Set(data.claims.map(x=>x.id)).size,data.claims.length);
 const statuses=new Set(["paper-proof-internal-audit","reported-lean-checkpoint-replay-pending",
- "explicit-paper-proofs-not-external-refereed"]);
+ "explicit-paper-proofs-not-external-refereed","written-proof-exact-check-replay-priority-open"]);
 for(const c of data.claims){
  assert.ok(statuses.has(c.status),c.id+" wrong status");
  for(const key of ["title","claim","mechanism","evidence","audit","source","source_detail"])
@@ -40,6 +40,26 @@ assert.ok(home.includes('href="active-proof-passport.html"'),"Active homepage ha
 assert.ok(research.includes('href="active-proof-passport.html"'),"Research library lacks active registry handoff");
 assert.ok(site.includes('"active-proof-passport.html"'),"Breadcrumb lifecycle classification missing");
 assert.ok(read("docs/sitemap.xml").includes("/active-proof-passport.html"),"Sitemap missing active ledger");
+// Protect the new active Kaczmarz passport and its source chain.
+const kPage=read("docs/kaczmarz-proof-passport.html");
+const kProof=read("research/nightfall/2026-11-kaczmarz-logfree/PROOF.md");
+const kPassport=read("research/nightfall/2026-11-kaczmarz-logfree/PROOF_PASSPORT.md");
+const kChecker=read("research/nightfall/2026-11-kaczmarz-logfree/exact_audit.py");
+const kClaim=data.claims.find(c=>c.id==="kaczmarz-logfree");
+assert.ok(kClaim&&kClaim.source_checkpoint==="c3e4806e4c0e266785a19f99bc0a4748d533d439");
+assert.ok(kClaim.status.includes("priority-open"));
+assert.ok(kPage.includes("K−1")||kPage.includes("K-1"));
+assert.ok(kPage.includes("Independent")&&kPage.includes("Originality")&&kPage.includes("2,880"));
+assert.ok(kPage.includes('href="active-proof-passport.html#kaczmarz-logfree"'));
+assert.ok(kPage.includes('role="math"'));
+assert.ok(kProof.includes("consistent")&&kProof.includes("first-hitting")&&kProof.includes("global priority unverified"));
+assert.ok(kPassport.includes("Originality")&&kPassport.includes("Stop rule"));
+assert.ok(kChecker.includes("Fraction")&&kChecker.includes("weighted-max")&&kChecker.includes("best-iterate"));
+assert.ok(home.includes('href="kaczmarz-proof-passport.html"'));
+assert.ok(research.includes('href="kaczmarz-proof-passport.html"'));
+assert.ok(html.includes('href="kaczmarz-proof-passport.html"'));
+assert.ok(site.includes('"kaczmarz-proof-passport.html"'));
+assert.ok(read("docs/sitemap.xml").includes("/kaczmarz-proof-passport.html"));
 // Preserve the frozen historical registry's exact 11-record purpose.
 const historical=read("docs/research-registry.js");
 assert.ok(historical.includes('"nightfall-proof-passports-v1"'));
@@ -61,4 +81,4 @@ assert.ok(art.includes("unrelated to the separate published 131072-cell witness"
 assert.ok(!/<script\b|<foreignObject\b/i.test(art),"Svg must remain static and inert");
 assert.ok(moon.includes('src="media/overlap-16cell-fixture.svg"'),"Archive diagram not visible");
 assert.ok(moon.includes("16-cell educational")&&moon.includes("different 131,072-cell witness"),"Fixture must not masquerade as full research result");
-console.log("PASS: 4 manual active claim passports, no historical promotion, 5 provenance-complete archives, exact 16-cell operator fixture");
+console.log("PASS: 5 manual active claim passports, Kaczmarz source/replay, no historical promotion, 5 provenance-complete archives, exact 16-cell operator fixture");
