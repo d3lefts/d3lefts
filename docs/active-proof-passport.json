@@ -1,15 +1,15 @@
 {
   "schema": "nightfall-active-proof-passports-v1",
-  "version": 2,
+  "version": 3,
   "as_of": "2026-11-11",
-  "updated_by": "NIGHTFALL active Proof Passport addition; mathematical derivation and exact-rational checker, not an external referee or novelty clearance",
+  "updated_by": "NIGHTFALL exact-four-shuffle finite proof and reviewed active-passport content update; mathematical claims retain independent review gates",
   "frozen_historical_registry_unchanged": true,
   "lifecycle": "active",
-  "scientific_status": "four existing claim checkpoints and one elementary Kaczmarz best-iterate proof; global priority, originality and independent mathematical review remain open",
+  "scientific_status": "Six active claim checkpoints including an exact finite computer-assisted four-shuffle theorem candidate; frozen historical 11 passports, 40 curated records and five Original Findings unchanged. None gain automatic external priority.",
   "source_checkpoint": {
     "repository": "d3lefts/d3lefts",
     "commit": "5bda769c2484ea2f6ea9a02c428928361c07666f",
-    "notes": "This commit fixes the four 10 Nov observability sources. The 11 Nov Kaczmarz claim has its own explicitly dated source checkpoint and is not included in the earlier source commit."
+    "notes": "This commit fixes the four 10 Nov observability sources. The 11 Nov Kaczmarz claim has its own explicitly dated source checkpoint and is not included in the earlier source commit. The sixth four-shuffle candidate has standalone source and a source-ZIP checksum; original binary ZIP/PDF are chat artifacts, not GitHub releases."
   },
   "definitions": {
     "influence": "I_i(F)=E[||F−E_i F||²] with E_i averaging input coordinate i",
@@ -121,6 +121,31 @@
         "No fixed-final-iterate high-probability guarantee or end-to-end row-selection runtime claim",
         "No independent human referee or Lean formalization, and no historical Original Finding promotion"
       ]
+    },
+    {
+      "id": "four-shuffle",
+      "title": "Exact consecutive 4-shuffle forcing threshold (N4 = 20)",
+      "status": "computer-assisted-exact-finite-priority-open",
+      "claim": "Every permutation of length 20 has a consecutive factor of length 8 or 12 partitionable into four equal-size subsequences with a common relative-order pattern. A concrete length-19 permutation avoids every eligible factor (length 8, 12, 16), so N4=20.",
+      "assumptions": [
+        "distinct permutation entries and standardization of consecutive factors",
+        "four disjoint increasing-index subsequences of identical pattern and size at least two",
+        "ordinary k=4 shuffle definition, not the conjecture for all k"
+      ],
+      "mechanism": "Perfect-matching classification of 8-patterns; 5040-state avoidance factor graph with 2632 edges; all 302 twenty-position bad-eight paths force a 12-entry common-triple exact cover using only local comparisons; independently checked 19-term witness.",
+      "evidence": "Clean source ZIP re-extracted; eight hashes verified; original independent finite checker re-run successfully. Public standalone Python checker reconstructs all 302 upper paths and 24 lower factors without JSON. No external non-author referee or Lean formalization.",
+      "source": "research/nightfall/2026-11-four-shuffle/PROOF_PASSPORT.md",
+      "source_detail": "Companion complete mathematical proof in README.md and standalone verifier verify_four_shuffle.py. Original full PDF/ZIP and 302-row data JSON supplied in chat but not yet publicly deposited as GitHub binary assets.",
+      "source_checkpoint": "71e836af72ef0a5b4480f1aac7c704a80eb544f9dac3bfade4a1f4b9014ad759 (source ZIP SHA-256, not Git commit)",
+      "audit": "Independently reconstruct all 2632 edges, enumerate all 302 bad-eight paths, verify forced 12-pattern partitions under partial comparison information and every lower-witness factor. Compare all post-2024 literature before claiming originality.",
+      "limitations": [
+        "Only k=4 is covered; the general k-shuffle conjecture remains open",
+        "Inherited factor-graph and matching method credited to Bevan, Elvey Price and Felsner",
+        "Exact finite checker and internally independent replay are not external human mathematical review or global priority clearance"
+      ],
+      "attribution": "Problem: Mathilde Bouvel. Factor graph and matching: Bevan–Elvey Price–Felsner, 2024 Oberwolfach. Research-directed exact threshold candidate: NIGHTFALL / Devin J. Wright.",
+      "original_source_zip_sha256": "71e836af72ef0a5b4480f1aac7c704a80eb544f9dac3bfade4a1f4b9014ad759",
+      "original_pdf_sha256": "1abd05d18f40bd83350f1a634b95efdf61912163b2ed3e2748f2a7641c1d55c1"
     }
   ],
   "attribution": "Research led by Devin J. Wright through NIGHTFALL with substantial AI-assisted drafting and proof attempts. Imported foundations include Efron–Stein/Hoeffding decomposition and Turturean's Aaronson–Ambainis cube theorem and antipodal inequality.",

@@ -17,7 +17,7 @@ assert.equal(active.as_of,"2026-11-11");
 assert.equal(historic.claims.length,11);
 assert.equal(historic.mechanisms.length,5);
 assert.equal(historic.edges.length,20);
-assert.equal(active.claims.length,5);
+assert.equal(active.claims.length,6);
 const historicalIDs=new Set(historic.claims.map(c=>c.id));
 assert.ok(active.claims.every(c=>!historicalIDs.has(c.id)),"Current claims must not shadow historical claim identity");
 const edgeTypes=new Set(historic.edges.map(e=>e.relation));
@@ -72,4 +72,4 @@ assert.ok(moon.includes("THE PRESERVATION HALF OF THE DISCOVERY SYSTEM"),"Archiv
 assert.ok(moon.includes("preserve negative tests")||moon.includes("Preserve negative tests"),"Failures must remain visible");
 assert.ok(read("docs/sitemap.xml").includes("/discovery-system.html"),"Discovery-system canonical URL absent from sitemap");
 assert.ok(read("docs/README.md").includes("[Discovery System](discovery-system.html)"),"Maintenance charter missing");
-console.log("PASS: source-matched discovery identity; 11 historical, 5 active, 5 mechanisms, 20 typed links; gated claims and typed transfers");
+console.log("PASS: source-matched discovery identity; 11 historical, 6 active, 5 mechanisms, 20 typed links; gated claims and typed transfers");
