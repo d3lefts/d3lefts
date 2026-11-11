@@ -1,8 +1,8 @@
 {
   "schema": "nightfall-lean-provenance-v1",
   "as_of": "2026-11-11",
-  "revision": 3,
-  "scope": "43 .lean files on main at c00924b8dc942ae5828df8c5d38a5e2fcd29bdfa (four additional scoped quadratic modules merged 11 November); off-main recovery is separate. Audit the exact theorem types and source whenever the tree changes.",
+  "revision": 4,
+  "scope": "44 .lean modules in the active repository tree, including concurrently merged finite signed-projection Cauchy–Schwarz source quarantined as classical; historical 39-source baseline preserved in Git history.",
   "source_commit": "c00924b8dc942ae5828df8c5d38a5e2fcd29bdfa",
   "policy": "Kernel compilation is validity evidence only. Quarantine means do not claim novelty; it does not invalidate a correctly compiled theorem. Derived transfers are scoped program-specific compositions with open worldwide priority. A distinct finite construction has an exact certificate but still needs prior-art review.",
   "prior_art": [
@@ -38,7 +38,7 @@
     }
   ],
   "counts": {
-    "quarantine": 32,
+    "quarantine": 33,
     "derived_transfer": 10,
     "finite_construction": 1
   },
@@ -161,6 +161,14 @@
       "note": "ANOVA energy charged to support transversal under a supplied degree-two premise",
       "passport": "universal-spectral-proof-passport.html",
       "ci_run": 42959881782,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/UniversalScalarToTrace.lean",
+      "classification": "quarantine",
+      "note": "Classical finite signed-projection Cauchy-Schwarz energy ≤ output rank × trace energy, conditional scalar influence premise; no universal Hilbert observability proof or novelty",
+      "passport": null,
+      "ci_run": null,
       "global_priority": "unverified"
     },
     {
