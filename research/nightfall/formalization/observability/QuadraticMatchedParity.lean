@@ -205,4 +205,60 @@ theorem global_parity_identity (P : BlockPolynomial ι) :
   rw [he, ho, ← hre, ← hce]
   nlinarith [hme]
 
+/-- The actual 4B matching rectangle bound. The cancellation equality is
+proved by global_parity_identity rather than supplied as a hypothesis.
+The two experiment evaluations are separately bounded pointwise. -/
+theorem full_matched_rectangles_le_four
+    (P : BlockPolynomial ι) (B : ℝ)
+    (he : ∀ σ : ι → Bool, |evaluate P false σ| ≤ B)
+    (ho : ∀ σ : ι → Bool, |evaluate P true σ| ≤ B) :
+    (∑ i : ι, rectangle P i) ≤ 4 * B := by
+  classical
+  have hn : 0 < Fintype.card (ι → Bool) :=
+    Fintype.card_pos_iff.mpr ⟨fun _ => false⟩
+  have hnr : (0 : ℝ) < (Fintype.card (ι → Bool) : ℝ) := by
+    exact_mod_cast hn
+  have heupper :
+      (∑ σ : ι → Bool, evaluate P false σ) ≤
+      (Fintype.card (ι → Bool) : ℝ) * B := by
+    calc
+      (∑ σ : ι → Bool, evaluate P false σ) ≤
+          ∑ _σ : ι → Bool, B := by
+            apply Finset.sum_le_sum
+            intro σ _
+            exact (abs_le.mp (he σ)).2
+      _ = _ := by simp
+  have holower :
+      -((Fintype.card (ι → Bool) : ℝ) * B) ≤
+      (∑ σ : ι → Bool, evaluate P true σ) := by
+    calc
+      -((Fintype.card (ι → Bool) : ℝ) * B) =
+          ∑ _σ : ι → Bool, -B := by simp [mul_neg]
+      _ ≤ ∑ σ : ι → Bool, evaluate P true σ := by
+            apply Finset.sum_le_sum
+            intro σ _
+            exact (abs_le.mp (ho σ)).1
+  have hmul :
+      (Fintype.card (ι → Bool) : ℝ) * (∑ i : ι, rectangle P i) ≤
+      (Fintype.card (ι → Bool) : ℝ) * (4 * B) := by
+    nlinarith [global_parity_identity P]
+  exact (mul_le_mul_left hnr).mp hmul
+
+/-- Orienting each matched rectangle positively converts the preceding
+signed bound into a bound on total absolute matched amplitude. -/
+theorem full_oriented_matching_le_four
+    (P : BlockPolynomial ι) (B : ℝ)
+    (he : ∀ σ : ι → Bool, |evaluate P false σ| ≤ B)
+    (ho : ∀ σ : ι → Bool, |evaluate P true σ| ≤ B)
+    (hpos : ∀ i : ι, 0 ≤ rectangle P i) :
+    (∑ i : ι, |rectangle P i|) ≤ 4 * B := by
+  calc
+    (∑ i : ι, |rectangle P i|) =
+        ∑ i : ι, rectangle P i := by
+          apply Finset.sum_congr rfl
+          intro i _
+          exact abs_of_nonneg (hpos i)
+    _ ≤ 4 * B := full_matched_rectangles_le_four P B he ho
+
+
 end Nightfall.Observability.QuadraticMatching
