@@ -1,0 +1,66 @@
+name: NIGHTFALL v7 source custody and manuscript compilation
+on:
+  pull_request:
+    paths:
+      - 'papers/finite-product-influence/**'
+      - 'research/catalogue/**'
+      - 'scripts/check_research_archive.py'
+      - '.github/workflows/nightfall-manuscript-v7.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'papers/finite-product-influence/**'
+      - 'research/catalogue/**'
+      - '.github/workflows/nightfall-manuscript-v7.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-and-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify immutable source identities before build
+        shell: bash
+        run: |
+          set -euo pipefail
+          sha256sum -c papers/finite-product-influence/SOURCE_SHA256SUMS_v7
+      - name: Revalidate scholarly claim catalogue
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/check_research_archive.py --self-test
+      - name: Exact independent posterior identity and rank lower-bound replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 papers/finite-product-influence/check_rank_posterior_exact.py | tee /tmp/rank-posterior-audit.log
+          grep -q 'PASS exact_heterogeneous_posterior_reveal_cases=1638' /tmp/rank-posterior-audit.log
+          grep -q 'PASS exact_rank_lower_bound_cases=384' /tmp/rank-posterior-audit.log
+          grep -q 'audit_sha256=5fc2d5221f4a27ad606beb948c27f278b4645761ac6b3bbeac4df0850703454b' /tmp/rank-posterior-audit.log
+      - name: Install LaTeX and PDF inspection utilities
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq latexmk texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended poppler-utils
+      - name: Compile the exact v7 source twice
+        shell: bash
+        working-directory: papers/finite-product-influence
+        run: |
+          set -euo pipefail
+          latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error Bias_Free_Aaronson_Ambainis_All_Product_Spaces_v7.tex
+          pdfinfo Bias_Free_Aaronson_Ambainis_All_Product_Spaces_v7.pdf | grep -q 'Pages:'
+          pdftotext Bias_Free_Aaronson_Ambainis_All_Product_Spaces_v7.pdf /tmp/nightfall-v7-text.txt
+          grep -q 'Rank-optimal adaptive observation' /tmp/nightfall-v7-text.txt
+          grep -q 'Turturean' /tmp/nightfall-v7-text.txt
+          if grep -E 'LaTeX Warning: (There were undefined references|Citation .* undefined|Reference .* undefined)' Bias_Free_Aaronson_Ambainis_All_Product_Spaces_v7.log; then
+            echo 'Unresolved LaTeX references'; exit 1
+          fi
+      - name: Preserve build artifact (not a mathematical certificate)
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-v7-compiled-pdf
+          path: papers/finite-product-influence/Bias_Free_Aaronson_Ambainis_All_Product_Spaces_v7.pdf
+          retention-days: 30

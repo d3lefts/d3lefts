@@ -1,9 +1,24 @@
-# Finite Heterogeneous-Product Influence: Formal Source
+# Product-Space Influence: Analytic Manuscript and Formal Source
 
 **Status:** Scoped Lean kernel-compiled theorem **at a pinned commit**, not an end-to-end universal-product or quantum theorem. Non-author human mathematical review and originality audit are unrecorded.
 
 **Canonical proof source:** [ProductInfluence.lean](../../research/nightfall/formalization/product_space/ProductInfluence.lean)  
 **Full named proof passport:** [FINITE_PRODUCT_INFLUENCE_PROOF_PASSPORT_20261110.md](../../research/nightfall/formalization/product_space/FINITE_PRODUCT_INFLUENCE_PROOF_PASSPORT_20261110.md).
+
+
+## Consolidated analytic manuscript (v7, not an end-to-end formal certificate)
+
+The current **specialist-review manuscript source** is [Bias-Free Aaronson--Ambainis v7](Bias_Free_Aaronson_Ambainis_All_Product_Spaces_v7.tex). It inherits the full 26-page v6 all-degree proof, the scalar quadratic matching--fourth-moment proof and one-query consequence, and adds the separate [rank-optimal theorem statement](Rank_Optimal_Observation_Introduction_v7.tex) and [full Hilbert/posterior proof](Rank_Optimal_Observation_Section_v7.tex). The separate v6 source in PR #382 remains the direct historical baseline; v5 in PR #379 is superseded for publication drafting.
+
+Compile from this directory with `latexmk -pdf -interaction=nonstopmode -halt-on-error Bias_Free_Aaronson_Ambainis_All_Product_Spaces_v7.tex`. The resulting PDF is a generated artifact, not a proof checker; source content is authoritative. A CI build may certify LaTeX compilability, not mathematical validity.
+
+**Scope:** The all-degree product-law bound has variance exponent 5/2 and degree exponent 6. The stronger scalar quadratic estimate is `Var(f)^2 <= 225(1+sqrt(3))^2 B^2 max_i I_i`. For rank-r Hilbert output the separate analytic bound is `Var(F)^2 <= 675(1+sqrt(3))^2 r B^2 max_i I_i`, giving a finite-product adaptive hard cap `ceil(2700(1+sqrt(3))^2 r B^2 / eta)` to the covariance tail plus eta, with matching order. None of these sharper analytic statements is certified by the finite Lean theorem below.
+
+**Release gates:** Specialist non-author verification of the all-degree transfer, quadratic matching and rank/posterior chains; scope-matched global prior-art review; current archive/site CI; and explicit author approval to submit to arXiv. Archival staging is not publication.
+
+**Related restricted work:** The cubic top-degree-cover mechanism already appears in merged PR #335; PR #381 shares that core-averaging proof idea and offers a distinct sharp top-layer projection formula. PR #380 invalidates the direct independent-increment fourth-moment extension to general cubic overlaps. Do not count these as independent unrestricted-cubic solutions.
+
+---
 
 ## Exact scope
 
