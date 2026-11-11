@@ -1,0 +1,52 @@
+name: NIGHTFALL quadratic weighted greedy Lean gate
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/WeightedGreedyMatching.lean'
+      - '.github/workflows/nightfall-weighted-greedy-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  greedy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Lean 4.35.0 and Mathlib v4.35.0
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.35.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          git clone --depth 1 --branch v4.35.0 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4
+          (cd /tmp/mathlib4 && "$HOME/.elan/bin/lake" exe cache get)
+      - name: Verify real graph greedy theorem and standard axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.WeightedGreedy
+          python3 scripts/lean_bridge.py research/nightfall/formalization/observability/WeightedGreedyMatching.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.separated_symm \
+            --decl $N.not_separated_self \
+            --decl $N.exists_weighted_dominating_matching \
+            --json-out lean-receipts/weighted-greedy.json || {
+              cat lean-receipts/weighted-greedy.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/weighted-greedy.json
+          sha256sum research/nightfall/formalization/observability/WeightedGreedyMatching.lean > lean-receipts/SHA256SUMS
+          git rev-parse HEAD > lean-receipts/repository-commit.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt
+      - name: Archive pinned certificates
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quadratic-weighted-greedy-lean
+          path: lean-receipts/
+          if-no-files-found: warn
+          retention-days: 45
