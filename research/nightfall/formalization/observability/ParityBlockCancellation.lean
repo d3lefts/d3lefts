@@ -268,8 +268,8 @@ theorem matched_family_delta_identity
     2 * (∑ σ : ι → Bool, ∑ i : ι,
       (H i (σ i) (σ i) - H i (σ i) (!(σ i)))) =
         (Fintype.card (ι → Bool) : ℝ) *
-          (∑ i : ι, H i false false - H i false true -
-            H i true false + H i true true) := by
+          (∑ i : ι, (H i false false - H i false true -
+            H i true false + H i true true)) := by
   calc
     2 * (∑ σ : ι → Bool, ∑ i : ι,
       (H i (σ i) (σ i) - H i (σ i) (!(σ i)))) =
@@ -288,8 +288,8 @@ theorem matched_family_delta_identity
           (fun b : Bool => b) (fun b : Bool => b)
           (fun a b => H i a b) i
     _ = (Fintype.card (ι → Bool) : ℝ) *
-        (∑ i : ι, H i false false - H i false true -
-            H i true false + H i true true) := by
+        (∑ i : ι, (H i false false - H i false true -
+            H i true false + H i true true)) := by
         rw [← Finset.mul_sum]
 
 end Nightfall.Observability.ParityBlocks
