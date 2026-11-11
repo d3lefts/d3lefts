@@ -39,7 +39,7 @@ assert.ok(system.includes('href="active-proof-passport.json"'),"Live active regi
 assert.ok(system.includes("not yet integrated into the frozen historical graph"),"Active research must not be silently added to historical graph");
 assert.ok(system.includes("not counts of proved theorems"),"System statistics need explicit count scope");
 assert.ok(system.includes("not a theorem that every complex system is discoverable"),"Scientific overclaim must be disallowed");
-assert.ok(system.includes("not a live feed"),"Dated graph must not imply automatic updating");
+assert.ok(system.includes("neither a live feed"),"Dated graph must not imply automatic updating");
 assert.ok(system.includes("Kernel compilation certifies only the exact formal declaration"),"Lean certification scope must be explicit");
 assert.ok(system.includes("Internal cross-model criticism is not an independent human referee"),"Internal reviews are not external");
 assert.ok(system.includes("Novelty requires a dated"),"Novelty gate absent");
