@@ -39,6 +39,8 @@ jobs:
             --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
             --decl $N.selector_pair_four \
             --decl $N.selector_one_two \
+            --decl $N.sum_linear_switch_algebra \
+            --decl $N.sum_pair_switch_algebra \
             --decl $N.quadratic_first_switch_identity \
             --json-out lean-receipts/quadratic-switching.json || {
               cat lean-receipts/quadratic-switching.json || true
