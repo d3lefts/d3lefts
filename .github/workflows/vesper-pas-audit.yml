@@ -1,0 +1,33 @@
+name: NIGHTFALL Vesper PAS independent audit shield
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/agent-reports/vesper_pas_audit_20261029/**'
+      - '.github/workflows/vesper-pas-audit.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/agent-reports/vesper_pas_audit_20261029/**'
+      - '.github/workflows/vesper-pas-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pas-audit-cut:
+    name: Directed min-cut vs independent exhaustive deletion oracle
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify original exact source bytes
+        run: echo 'a8ff3191bd5c351238156f9012af24ae4136fad416a3ea0a78f0a4cc46a3d9b9  research/nightfall/agent-reports/vesper_pas_audit_20261029/audit_cut.py' | sha256sum --check
+      - name: Compile exact solver
+        run: python3 -m py_compile research/nightfall/agent-reports/vesper_pas_audit_20261029/audit_cut.py
+      - name: Full 15,288-case independent audit
+        run: python3 research/nightfall/agent-reports/vesper_pas_audit_20261029/audit_cut.py
