@@ -227,3 +227,50 @@ one actual-independent-increment interpolation.
 - **Stop rule:** if a bridge does not compile with only foundational
   axioms, retain its exact failing obligation; do not upgrade the
   public passport's status or replace a proof by numeric tests.
+
+
+## Further simplification: eliminate the 7B additive interpolation entirely
+
+The same certified row cost also controls the **actual** additive
+Hoeffding functions without a separate quadratic Markov/7B proof.
+Indeed, each `h_i(s)=E_{X_{-i}}f(X_{-i},s)-Ef` is centered. For any
+symbols s,t, the row statement of §3 gives
+
+```
+|h_i(s)-h_i(t)|
+  ≤ E_X |f(X_{-i},s)-f(X_{-i},t)|
+  ≤ 2B E_X a_i(X).
+```
+
+Hence `range(h_i)≤2B E a_i(X)`. The elementary scalar
+variance/range inequality yields
+`||h_i||₂≤B E a_i(X)`, and summing gives
+
+`Σ_i ||h_i||₂≤KB`,
+
+**entirely from the same source-function row**. Thus the 7B additive
+projection step in §4 is optional for a weaker—but fully
+variance-squared—target. The two budgets now agree:
+
+```
+Σ_i E||U_i||≤KB,
+Σ_i||h_i||₂≤KB,
+Σ_i z_i≤2KB,
+Σ_i c_i≤8B.
+```
+
+The same independent-Hilbert fourth moment and interpolation give
+
+```
+V ≤ [8+(1+2√3)K] B √M
+  = [8+4π²(1+2√3)] B √M,
+V² ≤ [8+4π²(1+2√3)]² B² M.
+```
+
+The coefficient is `184.23566779069478...`, deliberately weaker
+than §1's `95.50298...`, but it **eliminates the actual additive
+projection formalization gate**. For finite-product end-to-end Lean
+formalization, this is currently the cheapest legitimate target.
+It still requires a genuine actual-function matching mass proof and
+actual assigned-increment orthogonality/Jensen/fourth-moment
+instantiation; it is not a proof-by-assumption of those interfaces.
