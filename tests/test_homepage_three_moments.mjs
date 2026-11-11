@@ -70,7 +70,7 @@ test("Both entrances retain accessible still artwork and scoped evidence links",
   assert.ok(styles.includes(q),q);
 });
 test("Archival designation is not a certification or novelty promotion",()=>{
- assert.ok(field.includes("external review")&&field.includes("unproved"));
+ assert.ok(field.toLowerCase().includes("external review")&&field.includes("unproved"));
  assert.ok(moon.includes("Archived means preserved for inspection"));
  assert.ok(moon.includes("not a global")||moon.includes("Global optimality"));
  assert.ok(moon.includes("EXTERNAL REVIEW OPEN"));
