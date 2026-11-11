@@ -42,9 +42,11 @@ theorem actual_degree_two_row_controls_all_sections
   obtain ⟨a, ha0, hsum, hcov⟩ :=
     RowBound.product_row_bound 2 f hf
       ((prodDegree_iff_esDegree p hp1 f 2).mpr hdegree) x
-  have hfour : Real.pi ^ 2 * (2 : ℝ) ^ 2 = 4 * Real.pi ^ 2 := by ring
-  rw [hfour] at hsum
-  refine ⟨a, ha0, hsum, ?_⟩
+  have hsum' : (∑ i : ι, a i) ≤ 4 * Real.pi ^ 2 := by
+    calc
+      (∑ i : ι, a i) ≤ Real.pi ^ 2 * ((2 : ℕ) : ℝ) ^ 2 := hsum
+      _ = 4 * Real.pi ^ 2 := by norm_num; ring
+  refine ⟨a, ha0, hsum', ?_⟩
   have hsingle (i : ι) (s : α) :
       |f x - f (Function.update x i s)| ≤ a i := by
     calc
