@@ -14,6 +14,8 @@ Research lead: Devin J. Wright / NIGHTFALL Constellation. Date: 11 November 2026
 
 5. **Bounded shared-control theorem:** for additive leaves with t controls and no leaf-rank/moment restriction, V <= B sqrt(M)+t M. In the two-control cubic case, M >= V^2/(9B^2); full proof is in [Operator D](PROOF_NOTE.md#operator-d-bounded-shared-controls-arbitrary-high-rank-leaf-sections-exact-strengthening).
 
+6. **Rank-sensitive adaptive observation:** after reading t shared controls, the projected Hilbert-valued leaf system is additive. The sharp additive budget gives error <= tau_r+eta after at most t+max(1,ceil(B^2/(4 a_r^2 eta))) queries, with a_r=Gamma(r/2)/(sqrt(pi)Gamma((r+1)/2)). This remains a compositional analytic theorem under review.
+
 **Not claimed:** universal cubic exponent two, leaf-Hilbert sections of unrestricted rank, global priority, or complete machine checking.
 
 ## Exact finite replay
