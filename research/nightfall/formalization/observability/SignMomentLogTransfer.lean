@@ -93,7 +93,9 @@ theorem logarithmic_trace_from_moment
   have hsum := exp_union w hw hw1 Q hQ s m a L hm hscalar hmoment
   have hsum_eq :
       (∑ i : ι, a * s i / m) = a * (∑ i : ι, s i) / m := by
-    simp only [← mul_div_assoc, ← Finset.mul_sum]
+    calc
+      (∑ i : ι, a * s i / m) = (∑ i : ι, a * s i) / m := by rw [Finset.sum_div]
+      _ = a * (∑ i : ι, s i) / m := by rw [Finset.mul_sum]
   rw [hsum_eq] at hsum
   have hpos : 0 < 1 + a * (∑ i : ι, s i) / m := by
     have hnn : 0 ≤ a * (∑ i : ι, s i) / m :=
@@ -106,6 +108,7 @@ theorem logarithmic_trace_from_moment
   have hlog : L / (4 * m) ≤
       Real.log (1 + a * (∑ i : ι, s i) / m) :=
     Real.exp_le_exp.mp hexp
-  exact (div_le_iff₀ (by positivity : 0 < 4 * m)).mp hlog
+  simpa only [mul_comm] using
+    (div_le_iff₀ (by positivity : 0 < 4 * m)).mp hlog
 
 end Nightfall.Observability.SignMoment
