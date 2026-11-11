@@ -76,6 +76,6 @@ theorem actual_degree_two_baseline_and_all_sections
       simpa only [hpoly] using hy i a
     · intro i a
       simpa only [hpoly] using hz i a
-    · simpa only [hpoly] using hrange
+    · simpa only [hpoly, mul_one] using hrange
 
 end Nightfall.Observability.QuadraticUnifiedFinite
