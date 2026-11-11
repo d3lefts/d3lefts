@@ -19,3 +19,5 @@ Optimize over **bounded homogeneous cubic observables** on biased small product 
 - Imported: Q2/Lk in v5, PR #335; no new formal proof of those sources here.
 - Open: unrestricted homogeneous cubic bound, full infinitary review, independent expert proof review, originality.
 9. **Tripartite reduction:** independently check the ANOVA projector `∏(I-E_A)`, its factor-eight L∞ norm, the exact 2/9 expected energy retention and the factor-36 transfer; distinguish ordinary bounded forms from completely bounded forms and cite O'Donnell–Zhao (2016), Bansal–Sinha–de Wolf (2022).
+
+10. **Block-l1 link operator:** rederive the finite-product range-width budget `sum_a ||Q_a||_L2 <= B` pointwise from independent A coordinates; verify the exact B/C influence sum, and separately seek a counterexample to the *unproved* LE(C) sufficient inequality. Do not assert its equivalence in arbitrary Hilbert families.
