@@ -1,8 +1,8 @@
 {
   "schema": "nightfall-lean-provenance-v1",
   "as_of": "2026-11-11",
-  "revision": 4,
-  "scope": "44 .lean files at 2026-11-11 quadratic review checkpoint, including the all-n Hilbert moment subtheorem. No end-to-end quadratic influence theorem is kernel certified. Recheck module census against future main merges.",
+  "revision": 5,
+  "scope": "45 .lean files at 11 November 2026 research checkout, including newly merged UniversalScalarToTrace.lean and HilbertManyIncrementMoment.lean. Full quadratic influence and universal Hilbert observability remain not end-to-end Lean checked.",
   "source_commit": "30e7695b91687901e0eb506b304dd56c7ee63ae9 (merged main with PR #364; certification specific to source and CI receipt)",
   "policy": "Kernel compilation is validity evidence only. Quarantine means do not claim novelty; it does not invalidate a correctly compiled theorem. Derived transfers are scoped program-specific compositions with open worldwide priority. A distinct finite construction has an exact certificate but still needs prior-art review.",
   "prior_art": [
@@ -38,7 +38,7 @@
     }
   ],
   "counts": {
-    "quarantine": 33,
+    "quarantine": 34,
     "derived_transfer": 10,
     "finite_construction": 1
   },
@@ -393,6 +393,14 @@
       "note": "Arbitrary-length finite independent Hilbert fourth-moment estimate from actual nonnegative normalized product laws and centered increment tables; classical moment mechanism, not unrestricted quadratic influence and not globally original by itself",
       "passport": "active-proof-passport.html",
       "ci_run": 43062171542,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/UniversalScalarToTrace.lean",
+      "classification": "quarantine",
+      "note": "Finite-dimensional scalar-to-trace energy bound derived from elementary weighted Euclidean geometry; conditional scalar lower bound is separate. Does not certify universal spectral adaptive observability, novelty or posterior/measurable transfer",
+      "passport": "universal-spectral-proof-passport.html",
+      "ci_run": 42962205054,
       "global_priority": "unverified"
     }
   ],
