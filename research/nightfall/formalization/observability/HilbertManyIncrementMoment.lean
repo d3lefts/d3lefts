@@ -176,4 +176,103 @@ noncomputable def budget (p : ℕ → α → ℝ) (Y : ℕ → α → K → ℝ)
     (n : ℕ) : ℝ :=
   ∑ j ∈ Finset.range n, ∑ a : α, p j a * vecNormSq (Y j a)
 
+/-- Nonnegative quadratic Euclidean energy on any finite output alphabet. -/
+theorem vecNormSq_nonneg (v : K → ℝ) : 0 ≤ vecNormSq v := by
+  unfold vecNormSq
+  exact Finset.sum_nonneg (fun k _ => sq_nonneg (v k))
+
+theorem budget_succ (p : ℕ → α → ℝ) (Y : ℕ → α → K → ℝ) (n : ℕ) :
+    budget p Y (n+1) =
+      budget p Y n + (∑ a : α, p n a * vecNormSq (Y n a)) := by
+  simp only [budget, Finset.sum_range_succ]
+
+/-- The second moment on an actual product equals the sum of all independent
+coordinate energies, with no fair-sign or atom-floor assumptions. -/
+theorem moment2_eq_budget
+    (p : ℕ → α → ℝ) (Y : ℕ → α → K → ℝ)
+    (hp1 : ∀ n, (∑ a : α, p n a) = 1)
+    (hY : ∀ n k, (∑ a : α, p n a * Y n a k) = 0) :
+    ∀ n, moment2 p Y n = budget p Y n := by
+  intro n
+  induction n with
+  | zero =>
+      simp [moment2, budget, mass, sumVector, vecNormSq, Samples]
+  | succ n ih =>
+      have ht := independent_two_second
+        (mass p n) (p n) (sumVector Y n) (Y n)
+        (mass_one p hp1 n) (hp1 n)
+        (sumVector_center p Y hp1 hY n) (hY n)
+      have hs : moment2 p Y (n+1) =
+          moment2 p Y n + ∑ a : α, p n a * vecNormSq (Y n a) := by
+        calc
+          moment2 p Y (n+1) =
+              jointAvg (mass p n) (p n)
+                (fun w a => vecNormSq
+                  (fun k => sumVector Y n w k + Y n a k)) := by
+                  unfold moment2
+                  rw [expectation_succ]
+                  rfl
+          _ = _ := ht
+      rw [hs, budget_succ, ih]
+
+theorem moment4_succ_bound
+    (p : ℕ → α → ℝ) (Y : ℕ → α → K → ℝ)
+    (hp : ∀ n a, 0 ≤ p n a)
+    (hp1 : ∀ n, (∑ a : α, p n a) = 1)
+    (hY : ∀ n k, (∑ a : α, p n a * Y n a k) = 0)
+    (n : ℕ) :
+    moment4 p Y (n+1) ≤ moment4 p Y n +
+      (∑ a : α, p n a * vecNormSq (Y n a) ^ 2) +
+      6 * moment2 p Y n *
+        (∑ a : α, p n a * vecNormSq (Y n a)) := by
+  have ht := independent_centered_two_hilbert_fourth
+    (mass p n) (p n) (sumVector Y n) (Y n)
+    (mass_nonneg p hp n) (hp n) (mass_one p hp1 n) (hp1 n)
+    (sumVector_center p Y hp1 hY n) (hY n)
+  calc
+    moment4 p Y (n+1) =
+        jointAvg (mass p n) (p n)
+          (fun w a => (vecNormSq
+            (fun k => sumVector Y n w k + Y n a k)) ^ 2) := by
+              unfold moment4
+              rw [expectation_succ]
+              rfl
+    _ ≤ _ := ht
+    _ = _ := rfl
+
+/-- The genuine many-increment Hilbert fourth-moment inequality, quantified
+over **every number of independent inputs**, every finite alphabet,
+coordinate-dependent normalized nonnegative masses, and arbitrary finite
+Hilbert output dimension. Only centering and individual pointwise norm bounds
+are required. No fourth-moment assumption is passed to this theorem. -/
+theorem arbitrary_law_many_hilbert_fourth
+    (p : ℕ → α → ℝ) (Y : ℕ → α → K → ℝ) (c : ℝ)
+    (hp : ∀ n a, 0 ≤ p n a)
+    (hp1 : ∀ n, (∑ a : α, p n a) = 1)
+    (hY : ∀ n k, (∑ a : α, p n a * Y n a k) = 0)
+    (hbound : ∀ n a, vecNormSq (Y n a) ≤ c ^ 2)
+    (n : ℕ) :
+    moment4 p Y n ≤ c ^ 2 * budget p Y n +
+      3 * (budget p Y n) ^ 2 := by
+  induction n with
+  | zero =>
+      simp [moment4, budget, mass, sumVector, vecNormSq, Samples]
+  | succ n ih =>
+      let v : ℝ := ∑ a : α, p n a * vecNormSq (Y n a)
+      have hv : 0 ≤ v := by
+        dsimp [v]
+        apply Finset.sum_nonneg
+        intro a _
+        exact mul_nonneg (hp n a) (vecNormSq_nonneg (Y n a))
+      have hfour : (∑ a : α, p n a * vecNormSq (Y n a) ^ 2) ≤ c ^ 2 * v := by
+        simpa only [vecNormSq, v] using
+          (weighted_hilbert_fourth_self (p n) (Y n) c
+            (hp n) (fun a => hbound n a))
+      have htwo := moment2_eq_budget p Y hp1 hY n
+      have hstep := moment4_succ_bound p Y hp hp1 hY n
+      rw [budget_succ]
+      dsimp [v] at *
+      nlinarith [sq_nonneg v]
+
 end Nightfall.Observability.QuadraticHilbertMany
+
