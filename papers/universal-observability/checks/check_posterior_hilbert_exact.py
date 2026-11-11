@@ -39,7 +39,7 @@ def sample_function(probs,r):
     vals={}
     for x in product(*(range(len(q)) for q in probs)):
         base=sum(a[i][x[i]] for i in range(n))
-        pair=sum(b[i,j][x[i]][x[j] for i in range(n) for j in range(i+1,n))
+        pair=sum(b[i,j][x[i]][x[j]] for i in range(n) for j in range(i+1,n))
         vals[x]=tuple(F((k+1)*base+(r-k)*pair+shift[k],20) for k in range(r))
     return vals
 
