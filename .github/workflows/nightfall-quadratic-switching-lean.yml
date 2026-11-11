@@ -1,0 +1,86 @@
+name: NIGHTFALL actual quadratic switching identity — pinned Lean 4.35
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/QuadraticSwitchingIdentity.lean'
+      - 'research/nightfall/formalization/observability/QuadraticSingleReplacement.lean'
+      - 'research/nightfall/formalization/observability/QuadraticOscillationBound.lean'
+      - '.github/workflows/nightfall-quadratic-switching-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  switching:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Lean / Mathlib
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.35.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          git clone --depth 1 --branch v4.35.0 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4
+          (cd /tmp/mathlib4 && "$HOME/.elan/bin/lake" exe cache get)
+      - name: Compile concrete parity dependencies
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts /tmp/mathlib4/.lake/build/lib/lean
+          cp research/nightfall/formalization/observability/{ParityBlockCancellation,QuadraticMatchedParity}.lean /tmp/mathlib4/
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ParityBlockCancellation.olean ParityBlockCancellation.lean)
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/QuadraticMatchedParity.olean QuadraticMatchedParity.lean)
+      - name: Fail-closed kernel proof audit
+        run: |
+          set -euo pipefail
+          N=Nightfall.Observability.QuadraticSwitching
+          python3 scripts/lean_bridge.py research/nightfall/formalization/observability/QuadraticSwitchingIdentity.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.selector_pair_four \
+            --decl $N.selector_one_two \
+            --decl $N.sum_linear_switch_algebra \
+            --decl $N.sum_pair_switch_algebra \
+            --decl $N.quadratic_first_switch_identity \
+            --json-out lean-receipts/quadratic-switching.json || {
+              cat lean-receipts/quadratic-switching.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/quadratic-switching.json
+          cp research/nightfall/formalization/observability/QuadraticSwitchingIdentity.lean /tmp/mathlib4/QuadraticSwitchingIdentity.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/QuadraticSwitchingIdentity.olean QuadraticSwitchingIdentity.lean)
+          python3 scripts/lean_bridge.py research/nightfall/formalization/observability/QuadraticSingleReplacement.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.single_term_replace_sum \
+            --decl $N.pair_term_one_replace \
+            --decl $N.pair_term_replace_sum \
+            --decl $N.quadratic_one_replace_diff \
+            --decl $N.quadratic_actual_switch_sum \
+            --json-out lean-receipts/quadratic-replacement.json || {
+              cat lean-receipts/quadratic-replacement.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/quadratic-replacement.json
+          cp research/nightfall/formalization/observability/QuadraticSingleReplacement.lean /tmp/mathlib4/QuadraticSingleReplacement.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/QuadraticSingleReplacement.olean QuadraticSingleReplacement.lean)
+          python3 scripts/lean_bridge.py research/nightfall/formalization/observability/QuadraticOscillationBound.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.quadratic_switch_sum_abs_le_eight \
+            --decl $N.quadratic_total_range_sixteen \
+            --json-out lean-receipts/quadratic-oscillation.json || {
+              cat lean-receipts/quadratic-oscillation.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/quadratic-oscillation.json
+          sha256sum research/nightfall/formalization/observability/{ParityBlockCancellation,QuadraticMatchedParity,QuadraticSwitchingIdentity,QuadraticSingleReplacement,QuadraticOscillationBound}.lean > lean-receipts/SHA256SUMS
+          git rev-parse HEAD > lean-receipts/repository-commit.txt
+      - name: Upload receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quadratic-switching-kernel-receipts
+          path: lean-receipts/
+          if-no-files-found: warn
