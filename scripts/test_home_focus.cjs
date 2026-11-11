@@ -14,7 +14,7 @@ assert.deepEqual(actions,[["observability.html","product-space-influence.html"]]
 assert.ok(moon.includes('href="evidence.html#public-downloads"')&&moon.includes('href="review.html#erdos"'),
  "NEW MOON must expose public frozen evidence and independent Erdős audit");
 assert.ok(field.indexOf('id="nf-scroll-cinema"')<field.indexOf('id="flagships"'),"Research cinema before proof catalogue");
-for(const claim of ["DEGREE TWO","Product-space certificate engine","The cubic frontier","Proof After Scarcity v2"])
+for(const claim of ["DEGREE TWO","Product-space certificate engine","The cubic frontier","A bound is not a proof"])
  assert.ok(field.includes(claim),"Active research boundary lost: "+claim);
 for(const claim of ["0.380856370118","17 / 30","131,072","global optimality","INTERNAL REPLAY"])
  assert.ok(moon.includes(claim),"Archived finite evidence lost: "+claim);
