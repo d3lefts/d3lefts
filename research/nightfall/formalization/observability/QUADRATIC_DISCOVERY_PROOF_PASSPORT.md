@@ -40,6 +40,23 @@ All declarations use only Mathlib and standard Lean foundational axioms.
 Only a successful GitHub CI receipt with matching SHA, toolchain, names and
 #print axioms can establish that the checked statements compiled.
 
+## Genuine arbitrary-law moment extension (separate file)
+
+`ArbitraryLawFourthMoment.lean` formalizes an actual product of two arbitrary
+finite weight tables, its factorization, and the centered real-valued
+two-increment fourth-moment identity
+
+    E[(Y+Z)^4] = E[Y^4] + 6 E[Y²]E[Z²] + E[Z^4].
+
+It also proves the finite Hilbert self-moment estimate
+`E||Y||^4 <= c² E||Y||²` under an explicit pointwise `||Y||²<=c²`
+bound and arbitrary nonnegative state weights. Unlike the abstract
+certificate closure, these statements quantify over the actual sample
+tables without fairness or atom lower bounds.
+
+They still do **not** establish the many-increment Hilbert fourth-moment
+inequality used by the unrestricted quadratic theorem.
+
 ## No hidden claims / missing load-bearing formal steps
 
 - Define finite-product degree-two Hoeffding projections and actual scalar
