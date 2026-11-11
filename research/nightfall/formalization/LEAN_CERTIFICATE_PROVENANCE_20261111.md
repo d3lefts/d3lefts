@@ -1,9 +1,12 @@
 # NIGHTFALL Lean certificate provenance / quarantine — 2026-11-11
 
 ## Decision
-The repo contains 39 Lean source files at main commit `f005704b50c35819ff32c703e1ce5f2f72106fd5`. Classification: **28 quarantine**, **10 scoped dependent transfers**, **1 distinct finite construction**. Frozen historical eleven are unchanged. Site inventory is `docs/lean-certificate-provenance.json`; the accompanying static HTML renders all 39.
+The repo contains 43 Lean source files after scoped PR #359 (main reconciliation base `c00924b8dc942ae5828df8c5d38a5e2fcd29bdfa`). Historical baseline: 39 sources at `f005704b50c35819ff32c703e1ce5f2f72106fd5`. Classification: **32 quarantine**, **10 scoped dependent transfers**, **1 distinct finite construction**. The archived F16 adaptive source from closed PR #252 is **off-main** and excluded from these counts. Frozen historical eleven unchanged; `docs/lean-certificate-provenance.json` and its static HTML describe all current main sources.
 
 **Quarantine preserves valid proof code.** A known identity or an explicit-premise reformulation can be correctly kernel-compiled without being a new mathematical result. The cost is mistaken novelty attribution, not Lean soundness. We therefore remove *originality claims*, not source, logs, or checks.
+
+## Four new quadratic dependency modules — deliberately quarantined
+PR #359 merged the kernel-checked but scoped `QuadraticDiscoveryCore.lean`, `ArbitraryLawFourthMoment.lean`, `HilbertTwoIncrementMoment.lean` and `QuadraticHoeffdingBridge.lean`. The compilation receipts verify the local statements, **not** the unrestricted quadratic influence theorem nor the `Theta(r/eta)` adaptive theorem. Their novelty stays unverified. Separately, the closed-branch F16 adaptive proof archive recovered at `phase-adaptive-branch-proof-passport.html` is **not** counted among main Lean modules.
 
 ## Category boundaries
 - Quarantine: Hoeffding/Efron–Stein decomposition and finite conditional expectation; independent-sign moments; Cauchy and sorted tails; Nisan-style packing and certificate complexity; simple phase/odd-cycle arithmetic; abstract posterior drift. Dependencies remain available for proof replay but cannot be counted as independent discoveries.
