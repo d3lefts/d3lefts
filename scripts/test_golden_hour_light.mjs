@@ -92,7 +92,7 @@ try{
         value:aside?.querySelector(".nf-opening-overlap-value")?.textContent.trim(),
         firstFold:displayed?.textContent.trim(),
         cells:aside?.querySelector(".nf-opening-overlap-facts strong")?.textContent.trim(),
-        source:!!aside?.querySelector('a[href="erdos-paper.html"]'),
+        source:!!aside?.querySelector('a[href="observability.html#quadratic"]'),
         ink:aside?getComputedStyle(aside.querySelector(".nf-opening-overlap-value")).color:null,
         toolbar:document.querySelector('meta[name="theme-color"]')?.content
       };
@@ -100,7 +100,7 @@ try{
     assert.equal(record.value,"Var(F)² / B²","Current product-space research leads the active hero");
     assert.equal(record.firstFold,"DEGREE TWO","Active quadratic influence is visible immediately");
     assert.equal(record.cells,"2","Degree-two scope is disclosed in the hero");
-    assert.equal(record.source,false,"Archive witness is not misrepresented as an active source");
+    assert.equal(record.source,true,"The hero links directly to the qualified current research source");
     assert.equal(record.ink,"rgb(234, 240, 245)","Current bound remains legible over black illustration");
     assert.equal(record.toolbar,"#020406","Browser chrome follows carbon-black identity");
    }
