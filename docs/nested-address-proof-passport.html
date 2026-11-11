@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#020406">
+<meta name="description" content="Exact adaptive–nonadaptive separation. Evidence, hypotheses, source receipts, and independent proof-review gates at NIGHTFALL.">
+<meta property="og:title" content="Exact adaptive–nonadaptive separation — NIGHTFALL Proof Passport">
+<meta property="og:description" content="A complete finite Bayes-risk calculation for nested-address systems: fixed-query information gain has a sharp geometric-to-linear transition, and the global optimum concentrates observations into complete replicas.">
+<title>Exact adaptive–nonadaptive separation · Proof Passport — NIGHTFALL</title>
+<link rel="canonical" href="https://d3lefts.github.io/d3lefts/nested-address-proof-passport.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="site.css"><link rel="stylesheet" href="ethereal-theme.css"><link rel="stylesheet" href="two-skies.css">
+<link rel="stylesheet" href="active-proof-passport.css"><link rel="stylesheet" href="kaczmarz-proof-passport.css">
+<script src="site.js" defer></script><script src="ethereal-theme.js" defer></script>
+</head><body class="ps-page">
+<a class="skip" href="#main">Skip to proof passport</a><div class="topline"></div>
+<header class="header"><div class="wrap header-inner">
+<a class="brand" href="index.html" aria-label="NULL FIELD homepage"><span class="mark" aria-hidden="true">N∕F</span><span class="brand-copy">NIGHTFALL <span>PHASESHIFT / NULL FIELD</span></span></a>
+<button type="button" class="menu-toggle" id="menu-button" aria-label="Toggle navigation" aria-controls="site-nav" aria-expanded="false">MENU +</button>
+<nav id="site-nav" class="nav" aria-label="Primary navigation"><a href="index.html#flagships">Active research</a><a href="active-proof-passport.html">Living passports</a><a href="mathematical-results.html">Principal results</a><a class="nav-call" href="review.html">Independent review ↗</a></nav>
+</div></header>
+<main id="main">
+<section class="atlas-hero wrap nf-k-hero" aria-labelledby="pp-title">
+<div class="atlas-eyebrow">NULL FIELD / EXACT CONSTRUCTION / QUERY COMPLEXITY / PROOF PASSPORT v1.0</div>
+<h1 id="pp-title">Address first.<br><em>Predict precisely.</em></h1>
+<div class="atlas-hero-bottom"><p>A complete finite Bayes-risk calculation for nested-address systems: fixed-query information gain has a sharp geometric-to-linear transition, and the global optimum concentrates observations into complete replicas.</p>
+<div class="atlas-hero-metrics"><span><strong>1,945</strong>global allocation checks</span><span><strong>88</strong>conditional table checks</span><span><strong>EXACT</strong>fixed-query Bayes risk</span></div>
+</div></section>
+<section class="wrap nf-k-status" aria-label="Scientific certification status"><strong>Proof Passport · NF-NESTED-ADDRESS-SEPARATION-20261111</strong>
+<p><b>Scope:</b> EXACT CONSTRUCTION; finite checked; general upper theorem separate. Every mechanism and independent reviewer obligation is explicitly identified. Publishing this page does not certify global novelty, external mathematical refereeing, or unstated generalizations. The frozen historical eleven Proof Passports and five approved findings are unchanged.</p>
+</section>
+<div class="wrap nf-k-nav"><a href="#statement">01 · Exact claim</a><a href="#mechanism">02 · Mechanism</a><a href="#evidence">03 · Evidence</a><a href="#limits">04 · Limits</a><a href="#review">05 · Independent audit</a></div>
+<div class="wrap">
+<article id="statement" class="nf-active-claim" aria-labelledby="statement-title"><div class="nf-active-claim-header"><h2 id="statement-title">01 · Statement and hypotheses</h2><span class="nf-claim-status">EXACT CONSTRUCTION; finite checked; general upper theorem separate</span></div>
+<div class="nf-k-formula" role="math" aria-label="R*Q = 1/k − (a + g(b))/(r k²)">R*Q = 1/k − (a + g(b))/(r k²)</div>
+<p>For one replica with s independent uniform m-ary addresses and K=m^s independent fair-sign leaves, the maximum explained variance from c fixed whole-coordinate queries is g(c)=0 at c=0; m^(c−1−2s) for 1≤c≤s+1; min{1,(c−s)/m^s} thereafter. For r outputs with k replicas each, L=s+m^s, Q'=min(Q,rkL), a=floor(Q'/L), b=Q' mod L, the exact optimal nonadaptive Bayes risk is 1/k−(a+g(b))/(rk²).</p>
+<dl class="nf-claim-grid"><div><dt>Premise 1</dt><dd>Inputs are s independent uniform m-ary address symbols plus K=m^s independent fair-sign leaf variables per replica.</dd></div><div><dt>Premise 2</dt><dd>Whole-coordinate queries are fixed in advance; squared-loss risk uses optimal conditional-mean prediction.</dd></div><div><dt>Premise 3</dt><dd>All r·k replicas are mutually independent and scaled by 1/(k√r).</dd></div></dl>
+</article>
+<article id="mechanism" class="nf-active-claim" aria-labelledby="mechanism-title"><div class="nf-active-claim-header"><h2 id="mechanism-title">02 · Mechanism and dependency chain</h2><span class="nf-claim-status">IMPORTS SEPARATED FROM NEW DEDUCTIONS</span></div>
+<div class="nf-k-steps"><div><span>01 / PROOF OPERATOR</span><strong>Representation</strong><p>With h observed addresses and q leaf bits, exact explained variance is q/m^(2s−h).</p></div><div><span>02 / PROOF OPERATOR</span><strong>Information gain</strong><p>The optimum per-replica gain g(c) has nondecreasing discrete differences; exchanging budget between partially observed replicas cannot reduce total gain when it concentrates queries.</p></div><div><span>03 / PROOF OPERATOR</span><strong>Composition</strong><p>An optimal fixed set completes a=floor(Q'/L) replicas, then partially observes at most one more. Adaptive reading can follow each address to the selected leaf at cost s+1 per replica.</p></div></div>
+<p><strong>Attribution:</strong> Classical conditional variance and Bayes estimators; NIGHTFALL merged five-closure audit. Claims are limited to the explicit address family.</p></article>
+<article id="evidence" class="nf-active-claim" aria-labelledby="evidence-title"><div class="nf-active-claim-header"><h2 id="evidence-title">03 · Receipts and reproduction</h2><span class="nf-claim-status">SOURCE-BOUND, NOT STATUS-PROMOTED</span></div>
+<dl class="nf-claim-grid"><div><dt>Verified scope</dt><dd>Written conditional-expectation and discrete-convexity proofs are merged on main via PR #338.</dd></div><div><dt>Reproducibility</dt><dd>Exact checker reports 1,945 global dynamic-program comparisons; 645 local budget optima and 88 independent conditional-table enumerations are recorded in the supporting audit.</dd></div><div><dt>Unverified dependency</dt><dd>The finite lower family establishes Ω(r m^(d−1)/η) fixed-observation requirements in the specified parameter regime, while a construction-specific adaptive procedure costs O(dr/η).</dd></div></dl>
+<div class="nf-claim-links"><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-five-closures/EXACT_GLOBAL_QUERY_ALLOCATION.md" target="_blank" rel="noopener">Global optimality proof ↗</a>
+<a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-five-closures/EXACT_BUDGET_AND_GENERAL_LP_20261111.md" target="_blank" rel="noopener">Single-replica phase transition ↗</a>
+<a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-five-closures/checks/check_global_fixed_allocation.py" target="_blank" rel="noopener">Exact finite verifier ↗</a>
+<a href="https://github.com/d3lefts/d3lefts/pull/338" target="_blank" rel="noopener">Merged audit PR ↗</a></div></article>
+<article id="limits" class="nf-active-claim" aria-labelledby="limits-title"><div class="nf-active-claim-header"><h2 id="limits-title">04 · What this proof does not establish</h2><span class="nf-claim-status">CLAIM BOUNDARY</span></div>
+<dl class="nf-claim-grid"><div><dt>Boundary 1</dt><dd>The formula does not prove a general upper bound for all degree-d observables or universal minimax equality.</dd></div><div><dt>Boundary 2</dt><dd>Different address laws, dependent replicas, partial-symbol queries or adaptive nonuniform observation costs are outside the exact calculation.</dd></div><div><dt>Boundary 3</dt><dd>External publication priority and non-author mathematical review remain open.</dd></div></dl>
+</article>
+<article id="review" class="nf-active-claim" aria-labelledby="review-title"><div class="nf-active-claim-header"><h2 id="review-title">05 · Cheapest decisive independent audit</h2><span class="nf-claim-status">OPEN EXTERNAL REFEREE / PRIORITY</span></div>
+<p>Independently derive posterior conditional means for each address fiber, verify the convex increments including boundary s=0, m=2 and c=s+1, and compare the global closed form against a separately implemented exhaustive budget-allocation DP.</p>
+<p><b>Source-custody:</b> The main source cited here is <code>research/nightfall/2026-11-five-closures/EXACT_GLOBAL_QUERY_ALLOCATION.md</code>. For draft-PR results, links point explicitly to the draft PR; no manuscript or binary package is claimed to exist on <code>main</code> unless a main-branch link is provided.</p>
+<div class="nf-claim-links"><a href="active-proof-passport.html#nested-address-separation">Active claim entry ↗</a><a href="review.html">Review protocol ↗</a><a href="discovery-system.html">NIGHTFALL discovery system ↗</a></div></article>
+</div></main><footer class="footer"><div class="wrap footer-bottom"><span>© 2026 Devin J. Wright · NIGHTFALL PHASESHIFT</span><span>PROOF PASSPORT v1.0 · 11 NOV 2026 · ACTIVE</span></div></footer>
+</body></html>

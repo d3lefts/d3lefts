@@ -1,0 +1,33 @@
+name: NIGHTFALL eleven active Proof Passport scopes
+on:
+  pull_request:
+    paths:
+      - 'docs/active-proof-passport.*'
+      - 'docs/*proof-passport.html'
+      - 'docs/discovery-system.html'
+      - 'docs/research.html'
+      - 'docs/mathematical-results.html'
+      - 'docs/site.js'
+      - 'docs/sitemap.xml'
+      - 'research/nightfall/2026-11-active-passports/**'
+      - 'scripts/test_active_proof_passport.cjs'
+      - 'scripts/test_discovery_system_identity.cjs'
+      - '.github/workflows/nightfall-active-passports.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  active-passport-scopes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify active claims, exact Lean provenance and frozen historical boundary
+        run: |
+          node scripts/test_active_proof_passport.cjs
+          node scripts/test_discovery_system_identity.cjs
+      - name: Check public source links, page anchors and site metadata
+        run: python3 scripts/check_site.py
