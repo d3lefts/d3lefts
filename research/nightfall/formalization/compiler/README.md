@@ -33,3 +33,7 @@ The finite scalar theorem remains pinned in a different upstream Lean 4.33.0 pro
 NIGHTFALL's current full Hilbert/measurable/adaptive theorem is still **analytic, not end-to-end Lean checked**. The claim graph may change status only after such a checked declaration, line-by-line contract audit, and separate prior-art assessment. This infrastructure changes no mathematical result and makes no new novelty claim.
 
 Additional boundary: the upstream elan installer is fetched at build time, although the installed Lean and Mathlib commits are checked. This is not a fully hermetic supply-chain provenance guarantee. Full compiler binary attestation and dependency closure would be a future security enhancement.
+
+## Proof-source change invalidation
+
+The manifest records the exact Git blob SHA-1 of each previously checked scoped core. `check_proof_graph.py` recomputes these hashes from the checkout and fails closed if the source changed without refreshing its certificate. This tracks *source custody*, not the full semantic Lean import dependency graph; imported module and external theorem changes still require explicit rechecking and an updated theorem contract. Never refresh a pinned blob merely to quiet a CI failure without inspecting its new proof and kernel receipt.
