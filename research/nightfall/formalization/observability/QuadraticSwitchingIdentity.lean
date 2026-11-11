@@ -63,8 +63,7 @@ theorem selector_pair_four
           exact hp σ
     _ = (Fintype.card (ι → Bool) : ℝ) *
         (F false false + F false true + F true false + F true true) := by
-          simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
-          ring
+          simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul] <;> ring
 
 /-- Switching average on a single coordinate, without assuming any
 input distribution. -/
@@ -73,6 +72,52 @@ theorem selector_one_two
     (2:ℝ) * (∑ σ : ι → Bool, G (σ i)) =
       (Fintype.card (ι → Bool) : ℝ) * (G false + G true) :=
   selector_double_sum i G
+
+
+/-- Pointwise first-order algebra commutes with arbitrary finite sums. -/
+theorem sum_linear_switch_algebra {T : Type*} [Fintype T]
+    (a b : T → ℝ) (N : ℝ) :
+    N * (∑ t : T, b t - a t) =
+      -3 * N * (∑ t : T, a t) +
+        N * (∑ t : T, 2 * (a t + b t)) -
+        N * (∑ t : T, b t) := by
+  calc
+    N * (∑ t : T, b t - a t) =
+        ∑ t : T, N * (b t - a t) := by rw [Finset.mul_sum]
+    _ = ∑ t : T,
+        (-3 * N * a t + N * (2 * (a t + b t)) - N * b t) := by
+          apply Finset.sum_congr rfl
+          intro t _
+          ring
+    _ = -3 * N * (∑ t : T, a t) +
+        N * (∑ t : T, 2 * (a t + b t)) -
+        N * (∑ t : T, b t) := by
+          simp only [Finset.sum_add_distrib, Finset.sum_sub_distrib,
+            Finset.mul_sum]
+          ring
+
+/-- The corresponding exact finite-sum quadratic algebra. -/
+theorem sum_pair_switch_algebra {T : Type*} [Fintype T]
+    (a b c d : T → ℝ) (N : ℝ) :
+    N * (∑ t : T, c t + b t - 2 * a t) =
+      -3 * N * (∑ t : T, a t) +
+        N * (∑ t : T, a t + b t + c t + d t) -
+        N * (∑ t : T, d t) := by
+  calc
+    N * (∑ t : T, c t + b t - 2 * a t) =
+        ∑ t : T, N * (c t + b t - 2 * a t) := by
+          rw [Finset.mul_sum]
+    _ = ∑ t : T,
+        (-3 * N * a t + N * (a t + b t + c t + d t) - N * d t) := by
+          apply Finset.sum_congr rfl
+          intro t _
+          ring
+    _ = -3 * N * (∑ t : T, a t) +
+        N * (∑ t : T, a t + b t + c t + d t) -
+        N * (∑ t : T, d t) := by
+          simp only [Finset.sum_add_distrib, Finset.sum_sub_distrib,
+            Finset.mul_sum]
+          ring
 
 /-- Actual degree-two pointwise representation on an arbitrary
 finite product alphabet with an arbitrary oriented edge family. -/
@@ -200,9 +245,14 @@ theorem quadratic_first_switch_identity
             simp only [quadratic, Finset.sum_add_distrib]
             ring
       _ = _ := by rw [hc, hsing, hpair]
+  have ha := sum_linear_switch_algebra
+    (fun i : ι => h i (x i)) (fun i : ι => h i (y i)) N
+  have hb := sum_pair_switch_algebra
+    (fun e : E => k e (x (u e)) (x (v e)))
+    (fun e : E => k e (x (u e)) (y (v e)))
+    (fun e : E => k e (y (u e)) (x (v e)))
+    (fun e : E => k e (y (u e)) (y (v e))) N
   rw [hmean]
   dsimp [quadratic, firstSwitch]
-  simp only [mul_add, Finset.mul_sum, Finset.sum_add_distrib,
-    Finset.sum_sub_distrib]
-  ring
+  linear_combination ha + hb
 end Nightfall.Observability.QuadraticSwitching
