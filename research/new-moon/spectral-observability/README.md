@@ -6,6 +6,8 @@ The [v8 theorem and proof note](homogeneous-cubic-v8/THEOREM.md) derives the uni
 
 A further [three-block projection](homogeneous-cubic-v8/TRIPARTITE_REDUCTION.md) shows that the pure-cubic exponent-two question is equivalent, up to a factor 36, to the 3-partite trilinear question. The mechanism is elementary and related to published polynomial decoupling, not priority-certified. Its [243-color exact checker](homogeneous-cubic-v8/checks/tripartite_projection_exact.py) is included.
 
+The [tripartite link representation](homogeneous-cubic-v8/TRIPARTITE_LINK_OPERATOR.md) isolates an explicit **unproved** block-l1 quadratic link-energy inequality that would close the tripartite case if established; this is a proposed next operator, not an accomplished general theorem.
+
 The independent [proof attack](homogeneous-cubic-v8/PROOF_ATTACK.md) constructs exact weighted complete 3-hypergraphs showing that vertex influence-energy budgets and disjoint matching square-root weights **alone** cannot guarantee a small low-residual cubic cover. This is **not** a bounded-cubic function counterexample. [Exact ANOVA/cover checker](homogeneous-cubic-v8/checks/exact_bridge.py), [no-go checker](homogeneous-cubic-v8/checks/weighted_hypergraph_no_go.py) and [review obligations](homogeneous-cubic-v8/REVIEW_GATES.md) accompany the result. All results remain internal; no independent referee, global novelty clearance or unrestricted cubic (2,4) theorem.
 
 
