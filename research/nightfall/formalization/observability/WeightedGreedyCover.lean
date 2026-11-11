@@ -18,7 +18,7 @@ variable {ι E : Type*} [Fintype ι] [Fintype E]
 /-- Each selected edge pays its full weight to both endpoints. -/
 noncomputable def cost (u v : E → ι) (w : E → ℝ)
     (S : Finset E) (i : ι) : ℝ :=
-  ∑ e ∈ S,
+  ∑ e in S,
     ((if u e = i then w e else 0) +
      (if v e = i then w e else 0))
 
@@ -36,21 +36,21 @@ theorem cost_nonneg (u v : E → ι) (w : E → ℝ) (S : Finset E)
 /-- Exact total endpoint cost: twice the selected edge mass, even with
 self-loops, heterogeneous weights and nonzero collisions. -/
 theorem sum_cost_twice (u v : E → ι) (w : E → ℝ) (S : Finset E) :
-    (∑ i : ι, cost u v w S i) = 2 * (∑ e ∈ S, w e) := by
+    (∑ i : ι, cost u v w S i) = 2 * (∑ e in S, w e) := by
   classical
   calc
     (∑ i : ι, cost u v w S i) =
-        ∑ e ∈ S, ∑ i : ι,
+        ∑ e in S, ∑ i : ι,
           ((if u e = i then w e else 0) +
            (if v e = i then w e else 0)) := by
           unfold cost
           exact Finset.sum_comm
-    _ = ∑ e ∈ S, (w e + w e) := by
+    _ = ∑ e in S, (w e + w e) := by
           apply Finset.sum_congr rfl
           intro e _
           rw [Finset.sum_add_distrib]
           simp
-    _ = 2 * (∑ e ∈ S, w e) := by
+    _ = 2 * (∑ e in S, w e) := by
           rw [Finset.mul_sum]
           apply Finset.sum_congr rfl
           intro e _
@@ -75,10 +75,10 @@ theorem cost_ge_incident (u v : E → ι) (w : E → ℝ) (S : Finset E)
   calc
     w f ≤ (if u f = i then w f else 0) +
               (if v f = i then w f else 0) := hself
-    _ ≤ ∑ e ∈ S, ((if u e = i then w e else 0) +
+    _ ≤ ∑ e in S, ((if u e = i then w e else 0) +
                    (if v e = i then w e else 0)) :=
       Finset.single_le_sum (fun e he => hterm e he) hf
-    _ = cost u v w S i := rfl
+    _ = cost u v w S i := by rfl
 
 /-- Every finite nonnegative weighted graph has a matching-generated
 nonnegative endpoint cover costing exactly twice its matched edge mass. -/
@@ -88,7 +88,7 @@ theorem matching_endpoint_cover
     ∃ (S : Finset E) (c : ι → ℝ),
       S ⊆ T ∧ IsMatching u v S ∧
       (∀ i, 0 ≤ c i) ∧
-      (∑ i : ι, c i) = 2 * (∑ e ∈ S, w e) ∧
+      (∑ i : ι, c i) = 2 * (∑ e in S, w e) ∧
       (∀ e ∈ T, w e ≤ max (c (u e)) (c (v e))) := by
   classical
   obtain ⟨S, hSsub, hmatch, hdom⟩ :=
@@ -135,7 +135,7 @@ theorem matching_budget_to_endpoint_budget
     (u v : E → ι) (w : E → ℝ) (T : Finset E)
     (B : ℝ) (hw : ∀ e ∈ T, 0 ≤ w e)
     (hmass : ∀ S : Finset E, S ⊆ T → IsMatching u v S →
-      (∑ e ∈ S, w e) ≤ 4 * B) :
+      (∑ e in S, w e) ≤ 4 * B) :
     ∃ c : ι → ℝ,
       (∀ i, 0 ≤ c i) ∧
       (∑ i : ι, c i) ≤ 8 * B ∧
