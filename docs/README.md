@@ -2,7 +2,7 @@
 
 A static research website built from checked-in HTML, CSS, JavaScript, and source-linked research records. The public site is served from [`main/docs`](./) at [d3lefts.github.io/d3lefts](https://d3lefts.github.io/d3lefts/).
 
-**Current editorial snapshot: 10 November 2026.** The archive presents 40 curated research records and 11 scoped Proof Passports. Its separately designated five finite/bounded findings are **not** claims of worldwide mathematical novelty. New product-space influence and Certificate Engine v2 manuscripts remain candidate research with seven separately scoped Lean-compiled declarations.
+**Current editorial snapshot: 10 November 2026.** The archive presents 40 curated research records and 11 scoped Proof Passports. Its separately designated five finite/bounded findings are **not** claims of worldwide mathematical novelty. The November observability publication drafts add a proposed quadratic influence theorem, adaptive/nonadaptive query separation and a cubic proof-obstruction note, outside the frozen catalogue. The earlier Certificate Engine v2 page preserves its seven-declaration Lean checkpoint; later finite-product receipts have distinct proof scope. External mathematical and originality reviews remain open.
 
 ## Two distinct site experiences
 
@@ -19,6 +19,7 @@ Both experiences share common tokens and navigation logic but have distinct page
 | --- | --- |
 | [`research.html`](research.html) | Curated library, source distinctions, scope-qualified records and filters |
 | [`product-space-influence.html`](product-space-influence.html) | Candidate influence/fractional-certificate manuscript, formalization evidence and outstanding proof obligations |
+| [`observability.html`](observability.html) | Current quadratic observability principal manuscript, query separation, companion certificate bridge, explicit cubic obstruction and publication gates |
 | [`review.html`](review.html) | Independent reviewer paths and bounded validation tasks |
 | [`passport.html`](passport.html) | Claim-scoped proof passports and their dependencies |
 | [`evidence.html`](evidence.html) | Public evidence release and reproducibility access |
