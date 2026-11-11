@@ -94,7 +94,8 @@ theorem odd_vector_cross_zero_left
           intro a _
           apply Finset.sum_congr rfl
           intro b _
-          rw [hpoint]
+          simpa only using
+            congrArg (fun t : ℝ => p a * q b * t) (hpoint a b)
     _ = ∑ k : K, jointAvg p q
         (fun a b => (vecNormSq (U a) * U a k) * V b k) :=
           jointAvg_finset_sum p q _
@@ -128,7 +129,8 @@ theorem odd_vector_cross_zero_right
           intro a _
           apply Finset.sum_congr rfl
           intro b _
-          rw [hpoint]
+          simpa only using
+            congrArg (fun t : ℝ => p a * q b * t) (hpoint a b)
     _ = ∑ k : K, jointAvg p q
         (fun a b => U a k * (vecNormSq (V b) * V b k)) :=
           jointAvg_finset_sum p q _
