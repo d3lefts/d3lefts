@@ -135,3 +135,36 @@ These have **not been independently re-reviewed in this reconciliation**. Severa
 The full law-independent Aaronson–Ambainis `(5/2,6)` product-space influence theorem, the unrestricted `(2,4)` improvement, the end-to-end adaptive quantum query bound, universal cheap discoverability, and the infinite-product almost-sure exact-recovery program are **not** automatically proved by the finite sublemmas, experimental checks or administrative PR merges. Preserve their existing conditional status and source credits.
 
 **Reconciliation stop rule:** every open branch must have a concrete current-head verdict (merged / verification failed / conflict / superseded / missing evidence / not yet audited). In absence of proof review, list as **not yet audited** rather than asserting safety or failure.
+
+## Cross-session package-byte audit and late merges (added after original inventory)
+
+The frozen PR list above precedes subsequent merges #310, #306, #313 and #311 and may include then-open entries. **This addendum supersedes only their status labels; the original list is retained as a dated audit snapshot.**
+
+**Artifacts named in parallel research sessions but not established as committed GitHub bytes:**
+
+| Parallel-session package | Research content | Status / missing gate |
+|---|---|---|
+| `Wright_Product_Space_V6_Integrated_Preprint.pdf/.tex` plus referee ZIP | Proposed arbitrary-product bias-independent influence and adaptive recovery | No verified repo copy of the latest full publication package; measure-theoretic proof and dated originality still require review |
+| `Wright_Where_Influence_Lives` PDF / TeX / research and audit package | Projected real-function certificate profile mechanism and finite numerical witness | Projected scope only; package bytes and hashes have not been independently reconciled |
+| `Wright_Exact_Adaptive_Recovery_Referee_20261110.pdf` plus source ZIP | Almost-sure finite-palette adaptive exact recovery for arbitrary independent products | Countable support, Fubini, measurable selection and positive-measure replacement witnesses remain unreviewed |
+| `NIGHTFALL_Arbitrary_Product_Recovery_v02*` | Finite switching and proposed infinite-product lift | The finite core is merged; full infinite result remains candidate; complete source/package bytes not reconciled |
+| `NIGHTFALL_Finite_Palette_Observability_v03_20261110.zip` | Full PDF/LaTeX/finite checker for merged written candidate #313 | **ZIP absent from repo**; exact test counts from prior sessions are reported, not independently replayed from committed source |
+| `NIGHTFALL_Product_Space_AA_Referee_Packet_RC2_20261110.zip` | Principal candidate influence preprint, proof passport and corrected total-influence quantum simulation argument | Not publication cleared; package bytes not established in GitHub; no independent human referee |
+
+**Exact falsification repair on #311:** The four-bit addressing toy has optimal decision-tree depth `D=2`, but the specified nonanticipating greedy uniform-block policy uses `3` queries. An assertion expecting `greedy=2` failed the CI replay, was corrected to `greedy=3`, and the new head passed. Do not describe the greedy witness policy as always optimal.
+
+**Mathematical proof boundaries:** The pinned #310 Chebyshev selector bound `Σ a_i≤π²d²` is kernel-checked in its explicit `HasProdDegreeLE` representation; correspondence with Hoeffding degree, the median and third-moment chain, and arbitrary completed/infinite products are still separate proof obligations. #313 is a conditional finite-palette **written** theorem candidate; its merge is archiving, not proof approval.
+
+## Cross-problem outstanding artifacts and proof attacks (research-session reports, not verified repo receipts)
+
+These items were recovered from parallel NIGHTFALL research discussions. **This reconciliation has not located their complete committed source/checker hashes.** Treat numerical claims and manuscript arguments as *reported*, not independently certified from the repository.
+
+| Workstream | Reported finding or negative control | Required before promotion |
+|---|---|---|
+| Restricted quadratic influence | On heterogeneous biased bits, a degree-2 bound \(I_{max}\ge V^2/[16(1+\sqrt2)^2]\); separate fair-bit/homogeneous improvements were reported | Commit the complete assumptions, proof and exact checker; compare directly with established degree-2 methods |
+| Quartic obstruction | General \((2,4)\) influence still open; higher-order quartic inequality \(Q(C)\) unresolved. Mean-crossing jumps and an addressing-based square-root influence shortcut generated counterexamples | Preserve explicit counterexamples, proof dependencies and a reproducible failing test; avoid promoting heuristic arguments |
+| EA36 minimum overlap | A November 10 remeshing/contact-transition experiment reported **no submission-threshold improvement** against the leading witness | Archive reproducible experiment and valid exact witness, independent checker receipts and same-day leaderboard threshold before any record claim |
+| Infinite-product adaptive recovery | Finite switching and finite-section modules have passed scoped checks, while null-set hybrid witnesses, measurable selection and completed-product lifting remain separate analytic proof gates | External measure-theoretic review and a source-to-source proof against those counterexamples |
+
+**Scientific status:** no globally original theorem or new competition record is established by this inventory update. Retain all superseded proofs and failed experiments as evidence, not as merged scientific endorsements.
+
