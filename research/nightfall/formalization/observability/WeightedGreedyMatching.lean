@@ -37,9 +37,9 @@ theorem exists_weighted_dominating_matching
       ∀ e ∈ T, ∃ f ∈ S,
         ¬ separated u v e f ∧ w e ≤ w f := by
   classical
-  induction T using Finset.strongInductionOn with
-  | H T ih =>
-    by_cases hne : T.Nonempty
+  refine Finset.strongInductionOn T ?_
+  intro T ih
+  by_cases hne : T.Nonempty
     · obtain ⟨a, haT, hmax⟩ := Finset.exists_max_image T w hne
       let R := T.filter (fun e => separated u v e a)
       have hsub : R ⊆ T := Finset.filter_subset T _
