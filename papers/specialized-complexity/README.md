@@ -15,6 +15,13 @@ Paper A treats exact finite-palette whole-coordinate recovery. Paper B treats ge
 - **F16 cubic-power oracle:** explicit fixed 81-state and adaptive 27-state phase codes; k=4,5,7 exact query optima in the source's strictly defined powered-query model. The 27-state Lean certificate lives in **closed, unmerged** PR #252; original adaptive construction from closed PR #255. Do not represent either as a merged main-branch Lean declaration.
 - **Quadratic exponent-two:** an *unrefereed conditional strengthening*, not a prerequisite for the first three mechanisms.
 
+## Repository integration and exact claim identity
+
+- [Selected claim record](../../research/catalogue/CLAIMS.json): `NF-OBS-SPECIALIZED-20261111`, with finite-computational, analytic, inherited and conditional components distinguished explicitly.
+- [Series dependency graph](../../research/catalogue/DEPENDENCIES.md): Paper C imports Paper B's scalar bound for disjoint-group allocation, while the F16 oracle and certificate-guided Boolean sampler are distinct mechanisms.
+- [Principal mathematics entry point](../../docs/mathematical-results.html): Papers A/B/C are linked together without changing the frozen historical 40 records.
+- [Independent referee assignment](../../research/referee/README.md): tests the exact query model, conditional posterity and historical source scope.
+
 ## Artifacts
 
 - [Markdown manuscript](MANUSCRIPT.md) is the canonical reviewed text.

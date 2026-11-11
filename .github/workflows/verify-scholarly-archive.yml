@@ -33,6 +33,7 @@ jobs:
         run: |
           python3 scripts/check_research_archive.py --self-test
           python3 scripts/test_repository_docs.py
+          python3 scripts/check_paper_c_bundle.py
       - name: State exact scope of this job
         run: |
           echo "This job verifies editorial metadata, source links and mutation resistance."

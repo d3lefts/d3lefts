@@ -7,6 +7,12 @@ Turturean Boolean-cube theorem (external credit)
    └── NF-PS-FINITE-20261110 [scoped Lean theorem]
          └── NF-OBS-UNIVERSAL-20261111 [analytic bridge + rank + posterior OPEN]
 
+NF-FINITE-PALETTE-RECOVERY-20261111 [Paper A exact finite-palette recovery, analytic]
+NF-OBS-UNIVERSAL-20261111 [Paper B general Hilbert spectral prediction, analytic]
+   └── NF-OBS-SPECIALIZED-20261111 [Paper C disjoint-rank corollary;
+         certificate-overlap finite/analytic branch; GF16 DIFFERENT ORACLE;
+         quadratic acceleration only if independent premise holds]
+
 NF-PS-QUADRATIC-20261110 [matching/fourth moment OPEN]
    ├── NF-OBS-QUADRATIC-20261110 [adaptive/nonadaptive minimax OPEN]
    └── NF-PS-CUBIC-COVER-20261111 [restricted cubic, CONDITIONAL]
@@ -19,6 +25,12 @@ NF-WERNER25-20261028 [imported source theorem dependency: UNRESOLVED]
 NF-KACZMARZ-20261111 [best-iterate proof; priority OPEN]
 NF-DISCOVERY-GRANULARITY-20261028, NF-PAS-RETROSPECTIVE-20261013 [adverse controls]
 ```
+
+## Paper A/B/C are different promise classes, not competing discovery certificates
+
+- **Paper A** gives exact recovery for bounded-degree finite-range observables by whole-coordinate reads. It does not require Paper B's approximate risk argument.
+- **Paper B** supplies general bounded Hilbert prediction at a spectral tail plus tolerance, assuming the written finite-to-measurable lift and posterior potential; its kernel foundation is the finite scalar theorem, not the unproved exponent-two quadratic route.
+- **Paper C** is a *model-indexed synthesis*: certificate geometry sharpens Boolean whole-coordinate selection; disjoint-output structure sharpens Paper B's rank accounting; the F16 cube-power sensing oracle changes what a query measures. Its fixed and adaptive finite phase codes have exact replay, but the 27-state adaptive Lean declaration is on a **closed, unmerged** source branch. The quadratic exponent-two rate remains conditional. These are distinct evidence tracks, not a newly certified fourth universal theorem.
 
 ## Three mathematical stop rules
 

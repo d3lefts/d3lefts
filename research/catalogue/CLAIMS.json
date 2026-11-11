@@ -102,6 +102,74 @@
       ]
     },
     {
+      "id": "NF-OBS-SPECIALIZED-20261111",
+      "title": "Specialized adaptive observation complexity (Paper C: certificate, rank and F16 powered oracle)",
+      "area": "observability",
+      "lifecycle": "active",
+      "validity": "analytic-manuscript-unrefereed",
+      "source_status": "public-analytic-manuscript",
+      "review": "none-recorded",
+      "priority": "unresolved",
+      "primary": "papers/specialized-complexity/MANUSCRIPT.md",
+      "evidence": [
+        "papers/specialized-complexity/README.md",
+        "papers/specialized-complexity/Specialized_Complexity_Manuscript.tex",
+        "papers/specialized-complexity/Specialized_Complexity_Manuscript.pdf",
+        "papers/specialized-complexity/Specialized_Complexity_Source_and_Audit.zip",
+        "papers/specialized-complexity/SOURCE_SHA256SUMS",
+        "papers/specialized-complexity/replay_f16_specialized.py",
+        "papers/specialized-complexity/replay_f16_receipt.json",
+        "research/nightfall/formalization/product_space/VariancePosteriorOneStep.lean",
+        "research/nightfall/formalization/phase_block/PhaseBlock.lean",
+        "docs/phase-adaptive-branch-proof-passport.html",
+        ".github/workflows/publish-paper-c.yml"
+      ],
+      "dependencies": [
+        {
+          "id": "NF-OBS-UNIVERSAL-20261111",
+          "type": "uses-as-premise"
+        }
+      ],
+      "claim_scope": "Three explicitly different submodels: Boolean whole-coordinate finite-product certificate-overlap exponential posterior risk under valid cost-K rows and degree-d; Hilbert disjoint-output-group rank-linear adaptive allocation derived from Paper B; GF16 cubic-powered linear measurements with exact fixed 81-state and adaptive 27-state finite oracles, and k=4/5/7 matching counting upper/lower bounds from source-specific written decoders. Stronger quadratic exponent-two discussion is conditional, not a fourth certified theorem.",
+      "component_scopes": [
+        {
+          "component": "certificate-overlap posterior contraction",
+          "model": "Boolean whole-coordinate, valid bounded K rows on every posterior, degree at most d",
+          "status": "analytic-composition-with-scoped-finite-Lean-premises",
+          "source": "research/nightfall/formalization/product_space/VariancePosteriorOneStep.lean"
+        },
+        {
+          "component": "disjoint-output rank-linear allocation",
+          "model": "bounded rank-r Hilbert output with disjoint independent input groups",
+          "status": "analytic-corollary-of-paper-b",
+          "source": "papers/spectral-adaptive-prediction/MANUSCRIPT.md"
+        },
+        {
+          "component": "F16 phase-block constructions",
+          "model": "K=F16, H=F4*, cube-powered linear measurements, phase up to global H",
+          "status": "exact-finite-replay-and-scoped-Lean-branch",
+          "source": "papers/specialized-complexity/replay_f16_specialized.py"
+        },
+        {
+          "component": "quadratic exponent-two acceleration",
+          "model": "arbitrary-law degree-two whole-coordinate resampling influence",
+          "status": "conditional-inherited-proposal-not-certified",
+          "source": "research/nightfall/formalization/observability/QUADRATIC_DISCOVERY_PROOF_PASSPORT.md"
+        }
+      ],
+      "open_gates": [
+        "Independent non-author review of analytic certificate-to-multistep risk and rank-linear allocations, including posterior-row restrictions and finite-to-infinite scope",
+        "Finite F16 source models must remain separate from whole-coordinate queries; 27-state Lean certificate belongs to closed unmerged PR #252, original code to closed PR #255",
+        "Quadratic exponent-two strengthening is not established by the current full-model Lean declarations or by the prior scalar 5/2 exponent",
+        "Same-oracle dated priority comparison, reproducible source ZIP/checker/PDF hashes, and explicit owner publication decision"
+      ],
+      "inherited": [
+        "Paper B general Hilbert scalar influence and disjoint-output allocation",
+        "Turturean's finite Boolean-cube antipodal influence mechanism, classical ANOVA and certificate bounds",
+        "Tessera PR #255 and Ryev PR #252 original archived F16 adaptive construction; fixed F16 phase block in merged PR #243"
+      ]
+    },
+    {
       "id": "NF-PS-QUADRATIC-20261110",
       "title": "Quadratic bias-independent variance-squared influence bound",
       "area": "product-space",

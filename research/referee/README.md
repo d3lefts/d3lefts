@@ -36,6 +36,14 @@
 - [Werner conditional certificates](../nightfall/projects/werner-final-4-25/README.md): check imported two-/three-copy inequalities and the isotropic-twirling correction, not just rational multiplication.
 - [Kaczmarz best iterate](../nightfall/2026-11-kaczmarz-logfree/PROOF.md): reconstruct the greedy telescope and conduct a dated historical search for existing best-iterate corollaries.
 
+### E. Paper C model-indexed specialized complexity — completed source package, independent models
+
+**Primary manuscript:** [Paper C](../../papers/specialized-complexity/MANUSCRIPT.md) and [source+audit package](../../papers/specialized-complexity/README.md), catalogue ID `NF-OBS-SPECIALIZED-20261111`. The authoritative finite tables are the original merged PR #243 and **closed, unmerged** PRs #252/#255. The new repository's exact checker and SHA-256 manifest reproduce finite arithmetic, not mathematical priority or every analytic implication.
+
+**Review targets:** independently derive the certificate-overlap sampler's posterior gain from valid rows *after every revealed symbol*; check the conditional ANOVA potential telescope, including zero-mass and adaptive-conditioning cases; verify disjoint-output scalar risk allocation without importing a general rank-linear theorem; replay every 27- and 81-state phase code, the 4,369 canonical rows, full k4 input space, support handling, and k4/k5/k7 counting lower bounds. The cubic-power field query reveals a powered **linear form**; do not treat it as one whole-coordinate observation.
+
+**Stop rules:** do not claim the conditional quadratic exponent-two program is already implied by Paper C, do not count Ryev's off-main compiled Lean source as a main-branch declaration, and do not certify global originality without a dated, same-model literature comparison.
+
 ## Reviewer deliverable
 
 A report should contain (1) claim ID from [registry](../catalogue/CLAIMS.json); (2) immutable source commit and exact files; (3) independent reviewer identity/credit subject to consent; (4) scope and quantifiers; (5) PASS, FAIL or INCONCLUSIVE with the specific statement checked; (6) exact reproduction commands and inputs/hashes; (7) explicit imported external premises; (8) minimal counterexample, if any; (9) valid/novel/significant/reproducible verdicts **separately**; (10) affected dependent claims and the next decisive experiment.

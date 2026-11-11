@@ -7,7 +7,7 @@ This directory is the **canonical scholarly claim index** for selected principal
 ## Read the evidence
 
 - [Machine-readable claim registry](CLAIMS.json): exact status, dependencies, source access, evidence files, and unresolved review/priority gates. This registry is intentionally selective, not a count of globally original theorems.
-- [Paper shelf](../../papers/README.md): referee-first narratives, each pointing to one source of truth.
+- [Paper shelf](../../papers/README.md): referee-first narratives, including [Paper A](../../papers/exact-recovery/MANUSCRIPT.md), [Paper B](../../papers/spectral-adaptive-prediction/MANUSCRIPT.md), and [Paper C](../../papers/specialized-complexity/MANUSCRIPT.md), each pointing to a source of truth.
 - [Dependency and certification protocol](DEPENDENCIES.md): what may be inferred, and what cannot.
 - [Independent referee desk](../referee/README.md): decisive mathematical review briefs and how to submit a reproducible objection.
 - [Historical preservation guide](../archive/README.md): source custody, superseded claims and release access.
@@ -25,6 +25,10 @@ This directory is the **canonical scholarly claim index** for selected principal
 **Kernel-checked scoped:** only the exact named Lean declaration with its source commit, axioms and imported premises. **Finite-exact replayed:** exact finite evidence, not a universal theorem. **Conditional:** result depends on a separately unresolved premise. **Analytic manuscript:** a written argument awaits a non-author proof audit. **Conjecture:** not established. **Retrospective/adverse:** preservation of a failed or scope-limited evaluation.
 
 A public folder, paper title, PR, or successful website CI is not an independent referee report. Never promote a downstream result without closing every load-bearing premise and recording independent scope-matched review.
+
+## Paper-series custody
+
+The selected `NF-OBS-SPECIALIZED-20261111` catalogue entry points to Paper C's canonical Markdown, generated PDF/LaTeX, exact F16 checker and JSON receipt, checksum manifest and archive. Its status records all four component scopes separately. This is **not** an addition to the frozen 40 historical site records or 11 historical Proof Passports. The scholarly checker also validates the published Paper C bundle byte-for-byte without treating its finite replay as an external referee decision.
 
 ## Maintenance
 

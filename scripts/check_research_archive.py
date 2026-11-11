@@ -40,6 +40,9 @@ SELECTED_GUIDES = [
     "papers/quadratic-observability/README.md",
     "papers/finite-product-influence/README.md",
     "papers/cubic-structures/README.md",
+    "papers/exact-recovery/README.md",
+    "papers/spectral-adaptive-prediction/README.md",
+    "papers/specialized-complexity/README.md",
     "papers/kaczmarz/README.md",
 ]
 REQUIRED = {
@@ -144,6 +147,31 @@ def validate_catalogue(doc: dict) -> None:
 
     for v in ids:
         visit(v)
+
+    # Paper C synthesizes source-specific regimes: no promotion to a global
+    # Lean theorem, and no illicit transfer between whole-coordinate and
+    # powered-linear-form oracles.
+    paper_c = by_id.get("NF-OBS-SPECIALIZED-20261111")
+    guard(paper_c is not None, "Paper C missing from scholarly claim registry")
+    guard(paper_c["primary"] == "papers/specialized-complexity/MANUSCRIPT.md",
+          "Paper C primary source drift")
+    guard(paper_c["validity"] == "analytic-manuscript-unrefereed"
+          and paper_c["review"] == "none-recorded"
+          and paper_c["priority"] == "unresolved",
+          "Paper C promoted without independent mathematical review")
+    guard(paper_c["dependencies"] == [
+        {"id": "NF-OBS-UNIVERSAL-20261111", "type": "uses-as-premise"}],
+          "Paper B rank-linear premise missing or an unproven quadratic premise silently added")
+    scopes = paper_c.get("component_scopes", [])
+    guard(len(scopes) == 4, "Paper C model separation incomplete")
+    guard({item.get("status") for item in scopes} == {
+        "analytic-composition-with-scoped-finite-Lean-premises",
+        "analytic-corollary-of-paper-b",
+        "exact-finite-replay-and-scoped-Lean-branch",
+        "conditional-inherited-proposal-not-certified"},
+        "Paper C theorem-status categories conflated")
+    guard(all("source" in item and "model" in item and "component" in item
+              for item in scopes), "Paper C model/source provenance omitted")
 
     for r in entries:
         # Recorded formal review is never inferred from a formal *premise*.
