@@ -2,7 +2,7 @@
   "schema": "nightfall-active-proof-passports-v1",
   "version": 5,
   "as_of": "2026-11-11",
-  "updated_by": "2026-11-11 Lean provenance quarantine and finite phase-block certificate reconciliation",
+  "updated_by": "2026-11-11 source recovery: main 39-file audit plus one separately scoped closed/unmerged adaptive F16 certificate; no claim-count or novelty upgrade",
   "frozen_historical_registry_unchanged": true,
   "lifecycle": "active",
   "scientific_status": "Twelve active claim checkpoints; 39 Lean modules assigned an independent originality classification (28 quarantined inherited/routine, 10 dependent transfer, one source-specific finite construction). Frozen historical eleven and approved findings unchanged.",
@@ -266,14 +266,15 @@
         "Noiseless cube-power outputs; the general transfer to arbitrary support size is not part of the finite Lean theorem"
       ],
       "mechanism": "An explicit 3-by-5 coefficient matrix and 81-state exact injectivity certificate; common finite-field arithmetic is supporting prior-art algebra.",
-      "evidence": "Merged PR #243 head d3a3717e846390461c7cf2ec41553189d78267a1; successful Lean 4.35.0 Actions 40995299592 and named axiom audit for the source-specific 81-input proof.",
+      "evidence": "Merged PR #243 head d3a3717e846390461c7cf2ec41553189d78267a1; successful Lean 4.35.0 Actions 40995299592 and named axiom audit for the source-specific 81-input proof. Archived external-branch finite Lean checks: Ryev PR 252 run 41110673165 succeeded (27-state Boolean certificate, conditional factorization, counting), but is NOT among 39 main Lean files; original Tessera PR 255 exact Python CI 41104093748 succeeded. Not a full Lean-checked adaptive decoder.",
       "source": "research/nightfall/formalization/phase_block/PROOF_PASSPORT_20261111.md",
-      "source_detail": "Detailed public source-specific passport phase-block-proof-passport.html. New explicit finite construction does not establish global originality.",
+      "source_detail": "Detailed public source-specific passport phase-block-proof-passport.html. New explicit finite construction does not establish global originality. Main-branch fixed block and its 29 Oct k5 exact bound predate this audit. The stronger 30 Oct two-query adaptive candidate resides on closed PR 255 with finite Lean certificate on closed PR 252; its sidecar passport is not an additional active claim or global originality certification.",
       "source_checkpoint": "PR243/d3a3717e846390461c7cf2ec41553189d78267a1; Actions 40995299592",
-      "audit": "Independently implement GF16, reproduce the 81-output matrix, attempt smaller blocks in the same powered-query model, and perform dated original-source priority comparison.",
+      "audit": "Inspect both older original source notes rather than rediscovering; independently review closed PR 252 / PR 255 branch decision legality and all-support decoder, and search identical cube-power field oracle prior art before any promotion.",
       "limitations": [
         "No global originality/priority determination or independent human referee",
-        "81-state injectivity does not establish an end-to-end adaptive decoder or universal measurement optimality"
+        "81-state injectivity does not establish an end-to-end adaptive decoder or universal measurement optimality",
+        "Closed PR 252/255 adaptive evidence is not merged into main; its finite Lean scope and broader written transfer must not be conflated"
       ]
     }
   ],

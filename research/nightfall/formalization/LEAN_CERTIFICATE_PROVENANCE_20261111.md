@@ -24,3 +24,7 @@ Fail closed if any `.lean` file on main has no ledger row, if source routes do n
 
 ## Further independent review
 Request an author-unrelated mathematical prior-art review for both the heterogeneous finite influence transfer and the F16 block, particularly identical query model and categorical law assumptions. Do not promote either to global novelty before review.
+
+## Off-main recovery after the 39-file census
+
+The 39 files are **main only**; this is not a census of closed historical PRs. One source-matched archived candidate recovered in this review is [Ryev PR 252](https://github.com/d3lefts/d3lefts/pull/252) `AdaptiveBlock.lean`, compiled in [run 41110673165](https://github.com/d3lefts/d3lefts/actions/runs/41110673165) with a scoped 27-state adaptive F16 Boolean certificate, numeric k4/k7 bounds, and *conditional* phase-factorization lemma. The original [Tessera PR 255](https://github.com/d3lefts/d3lefts/pull/255) supplies the different adaptive mechanism and exact Python audits. Neither branch merged to main; the full adaptive protocol was not one Lean theorem and outside priority remains unreviewed. The [companion evidence docket](phase_block/ADAPTIVE_BRANCH_EVIDENCE_20261111.md) and `docs/lean-certificate-provenance.json.off_main_certificates` keep this evidence inspectable without corrupting the main-branch 39-file classification.

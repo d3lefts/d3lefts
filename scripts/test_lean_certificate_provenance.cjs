@@ -37,4 +37,23 @@ const site=fs.readFileSync("docs/site.js","utf8");
 for(const n of ["phase-block-proof-passport.html","lean-certificate-provenance.html"])assert.ok(site.includes('"'+n+'"'));
 const sitemap=fs.readFileSync("docs/sitemap.xml","utf8");
 for(const n of ["phase-block-proof-passport.html","lean-certificate-provenance.html"])assert.ok(sitemap.includes("/"+n));
-console.log("PASS: 39 Lean files classified; quarantines prevent originality promotion; separate finite construction has full passport.");
+
+const closed=m.off_main_certificates;
+assert.ok(m.off_main_review_scope.includes("NOT an exhaustive census"));
+assert.ok(Array.isArray(closed)&&closed.length===1,"Separate off-main proof custody required");
+const a=closed[0];
+assert.equal(a.merged_to_main,false);
+assert.equal(a.id,"f16-adaptive-27-branch");
+assert.equal(a.source_ci,41110673165);
+assert.equal(a.candidate_ci,41104093748);
+assert.equal(a.full_adaptive_decoder_lean_checked,false);
+assert.ok(!real.includes(a.path),"Unmerged source must not masquerade as a main Lean file");
+assert.ok(fs.existsSync("docs/"+a.passport),"No scoped companion passport");
+assert.ok(fs.existsSync(a.audit_note),"No off-main audit note");
+const sidecar=fs.readFileSync("docs/"+a.passport,"utf8");
+for(const token of ["CLOSED AND UNMERGED","27","41110673165","k=7","not all formalized","phase-block-proof-passport.html"])
+ assert.ok(sidecar.includes(token),"Missing conditional branch custody: "+token);
+assert.ok(page.includes('id="nonmain"')&&page.includes(a.passport),"Not visible in provenance");
+const siteSitemap=fs.readFileSync("docs/sitemap.xml","utf8");
+assert.ok(siteSitemap.includes("/"+a.passport),"Off-main passport missing sitemap");
+console.log("PASS: 39 main Lean sources classified, one separate closed-branch finite certificate explicitly scoped; no novelty promotion.");
