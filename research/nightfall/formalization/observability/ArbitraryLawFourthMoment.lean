@@ -119,14 +119,17 @@ theorem independent_centered_two_fourth
     intro a _
     apply Finset.sum_congr rfl
     intro b _
-    rw [hpoint]
+    simpa only using congrArg (fun t : ℝ => p a * q b * t) (hpoint a b)
   rw [heq]
+  have hlast :
+      jointAvg p q (fun _ b => (Z b) ^ 4) =
+        (∑ a : A, p a) * (∑ b : B, q b * (Z b) ^ 4) := by
+    simpa only [one_mul, mul_one] using
+      (jointAvg_factor p q (fun _ : A => (1 : ℝ)) (fun b : B => (Z b) ^ 4))
   simp only [jointAvg_add, jointAvg_smul]
   rw [jointAvg_factor, jointAvg_factor, jointAvg_factor,
-    jointAvg_factor, jointAvg_factor]
-  simp only [mul_one, one_mul, Finset.sum_const_zero]
+    jointAvg_factor, hlast]
   -- Normalize the two mass-one factors and kill the odd centered cross terms.
-  simp only [Finset.sum_const_zero]
   have honesA : (∑ a : A, p a * (1 : ℝ)) = 1 := by simpa using hp1
   have honesB : (∑ b : B, q b * (1 : ℝ)) = 1 := by simpa using hq1
   rw [honesA, honesB, hY0, hZ0]
