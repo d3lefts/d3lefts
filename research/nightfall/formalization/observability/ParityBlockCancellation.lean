@@ -149,4 +149,59 @@ theorem cross_block_all_sides
   · simpa using
       (cross_block_right_right rightA rightB F i j hij)
 
+
+/-- One global coupling identity simultaneously cancels every off-matching
+pair term.  The interaction family E, its two distinct matching blocks, the
+two endpoint orientations, and its arbitrary kernels are all quantified.
+Terms may share blocks densely; no coloring or atom-floor assumption. -/
+theorem off_matching_pair_family_cancel
+    {E A B : Type*} [Fintype E]
+    (first second : E → ι)
+    (hne : ∀ e, first e ≠ second e)
+    (sideFirst sideSecond : E → Bool)
+    (leftA rightA : ι → Bool → A)
+    (leftB rightB : ι → Bool → B)
+    (K : E → A → B → ℝ) :
+    (∑ σ : ι → Bool, ∑ e : E,
+        K e
+          (if sideFirst e then rightA (first e) (σ (first e))
+            else leftA (first e) (σ (first e)))
+          (if sideSecond e then rightB (second e) (σ (second e))
+            else leftB (second e) (σ (second e)))) =
+    (∑ σ : ι → Bool, ∑ e : E,
+        K e
+          (if sideFirst e then rightA (first e) (!(σ (first e)))
+            else leftA (first e) (σ (first e)))
+          (if sideSecond e then rightB (second e) (!(σ (second e)))
+            else leftB (second e) (σ (second e)))) := by
+  calc
+    (∑ σ : ι → Bool, ∑ e : E,
+        K e
+          (if sideFirst e then rightA (first e) (σ (first e))
+            else leftA (first e) (σ (first e)))
+          (if sideSecond e then rightB (second e) (σ (second e))
+            else leftB (second e) (σ (second e)))) =
+        ∑ e : E, ∑ σ : ι → Bool,
+          K e
+            (if sideFirst e then rightA (first e) (σ (first e))
+              else leftA (first e) (σ (first e)))
+            (if sideSecond e then rightB (second e) (σ (second e))
+              else leftB (second e) (σ (second e))) := Finset.sum_comm
+    _ = ∑ e : E, ∑ σ : ι → Bool,
+          K e
+            (if sideFirst e then rightA (first e) (!(σ (first e)))
+              else leftA (first e) (σ (first e)))
+            (if sideSecond e then rightB (second e) (!(σ (second e)))
+              else leftB (second e) (σ (second e))) := by
+          apply Finset.sum_congr rfl
+          intro e _
+          exact cross_block_all_sides leftA rightA leftB rightB (K e)
+            (first e) (second e) (hne e) (sideFirst e) (sideSecond e)
+    _ = ∑ σ : ι → Bool, ∑ e : E,
+          K e
+            (if sideFirst e then rightA (first e) (!(σ (first e)))
+              else leftA (first e) (σ (first e)))
+            (if sideSecond e then rightB (second e) (!(σ (second e)))
+              else leftB (second e) (σ (second e))) := Finset.sum_comm
+
 end Nightfall.Observability.ParityBlocks
