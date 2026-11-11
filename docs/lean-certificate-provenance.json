@@ -50,7 +50,8 @@
       "passport": "active-proof-passport.html",
       "ci_run": 43059618451,
       "global_priority": "unverified",
-      "source_blob_sha": "a39e197405c1411ecf69dd87f6356321dc520130"
+      "source_blob_sha": "a39e197405c1411ecf69dd87f6356321dc520130",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/2026-11-universal-spectral-observability/AdaptiveBudget.lean",
@@ -59,7 +60,8 @@
       "passport": "universal-spectral-proof-passport.html",
       "ci_run": 42964206760,
       "global_priority": "unverified",
-      "source_blob_sha": "a668028281bfed7a56ecbdbd46daf7cc5562e1af"
+      "source_blob_sha": "a668028281bfed7a56ecbdbd46daf7cc5562e1af",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/characteristic_three/Finite3.lean",
@@ -68,7 +70,8 @@
       "passport": null,
       "ci_run": 40995299592,
       "global_priority": "unverified",
-      "source_blob_sha": "b86264194dd2d9afe8e930384b043d231d0cc5dc"
+      "source_blob_sha": "b86264194dd2d9afe8e930384b043d231d0cc5dc",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/compiler/ContractSmoke.lean",
@@ -77,7 +80,8 @@
       "passport": null,
       "ci_run": null,
       "global_priority": "unverified",
-      "source_blob_sha": "92d36cbb77acee2ab3d1545a381d50150d6ba617"
+      "source_blob_sha": "92d36cbb77acee2ab3d1545a381d50150d6ba617",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/discoverability/AdaptiveRankDrop.lean",
@@ -86,7 +90,8 @@
       "passport": null,
       "ci_run": 42930165294,
       "global_priority": "unverified",
-      "source_blob_sha": "694329173a005864e01e8a50a97dfafb86069eb3"
+      "source_blob_sha": "694329173a005864e01e8a50a97dfafb86069eb3",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/discoverability/WitnessPacking.lean",
@@ -95,7 +100,8 @@
       "passport": null,
       "ci_run": 42930165294,
       "global_priority": "unverified",
-      "source_blob_sha": "c36c32d9240e34f1a182d767008de8f1b0d8b992"
+      "source_blob_sha": "c36c32d9240e34f1a182d767008de8f1b0d8b992",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/observability/ActualPosteriorInfluence.lean",
@@ -104,7 +110,8 @@
       "passport": "universal-spectral-proof-passport.html",
       "ci_run": 42973878336,
       "global_priority": "unverified",
-      "source_blob_sha": "f6d89d4fd73246bbe8d5e2cc7de9cedc9ac393a7"
+      "source_blob_sha": "f6d89d4fd73246bbe8d5e2cc7de9cedc9ac393a7",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/observability/ArbitraryLawFourthMoment.lean",
@@ -113,7 +120,8 @@
       "passport": null,
       "ci_run": 43058772711,
       "global_priority": "unverified",
-      "source_blob_sha": "e73d1d8d12b7743a99175382ef293367ad237ee3"
+      "source_blob_sha": "e73d1d8d12b7743a99175382ef293367ad237ee3",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/observability/CategoricalSignedProxy.lean",
@@ -122,7 +130,8 @@
       "passport": "universal-spectral-proof-passport.html",
       "ci_run": 42959881782,
       "global_priority": "unverified",
-      "source_blob_sha": "1bacc35dd934cfc9a978615a17c36a63b1dd4c82"
+      "source_blob_sha": "1bacc35dd934cfc9a978615a17c36a63b1dd4c82",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/observability/DiagonalSignCoherence.lean",
@@ -131,7 +140,8 @@
       "passport": "universal-spectral-proof-passport.html",
       "ci_run": 42972554673,
       "global_priority": "unverified",
-      "source_blob_sha": "bc91a52e8002a49953f3077de395ecaa1ad05c07"
+      "source_blob_sha": "bc91a52e8002a49953f3077de395ecaa1ad05c07",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/observability/HilbertManyIncrementMoment.lean",
@@ -140,7 +150,8 @@
       "passport": "active-proof-passport.html",
       "ci_run": 43062171542,
       "global_priority": "unverified",
-      "source_blob_sha": "2f4b957c0358c026b01cc7161e4f85b634393214"
+      "source_blob_sha": "2f4b957c0358c026b01cc7161e4f85b634393214",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/observability/HilbertTwoIncrementMoment.lean",
@@ -149,29 +160,34 @@
       "passport": null,
       "ci_run": 43058085067,
       "global_priority": "unverified",
-      "source_blob_sha": "b2930db79589a9e257e3b151b4d4ae174c4adb1e"
+      "source_blob_sha": "b2930db79589a9e257e3b151b4d4ae174c4adb1e",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/observability/ParityBlockCancellation.lean",
       "classification": "quarantine",
-      "ci_run": null,
+      "ci_run": 43082375547,
       "passport": "active-proof-passport.html",
       "global_priority": "unverified",
       "note": "Full finite selector-flip and cross-block parity cancellation for all endpoint orientations, at the block-table level; does not prove function-level all-law influence or global novelty.",
       "source_blob_sha": "a96ca7887eaca3f2b3caa5a4d104b143524c1769",
       "source_recovery_pr": 373,
-      "ci_receipt_scope": "historical named-declaration receipt; exact current-source match not independently replayed"
+      "ci_receipt_scope": "Verified successful historical named-declaration CI run and exact source Git blob match; no new all-file compilation or cross-pin theorem certification.",
+      "ci_run_head_sha": "f858cf246a05f7e88f01a413e3334ed2ff1ba885",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head"
     },
     {
       "path": "research/nightfall/formalization/observability/PosteriorEnergyDrift.lean",
       "classification": "quarantine",
-      "ci_run": null,
+      "ci_run": 43082375547,
       "passport": "certificate-acquisition-proof-passport.html",
       "global_priority": "unverified",
       "note": "Finite ANOVA interaction-support deletion and posterior total-influence drift identity for supplied component energies; not an arbitrary real-function or measurable posterior theorem.",
       "source_blob_sha": "cbe7fd2a08490b9121b141bcd17b3f752a637207",
       "source_recovery_pr": 373,
-      "ci_receipt_scope": "historical named-declaration receipt; exact current-source match not independently replayed"
+      "ci_receipt_scope": "Verified successful historical named-declaration CI run and exact source Git blob match; no new all-file compilation or cross-pin theorem certification.",
+      "ci_run_head_sha": "f858cf246a05f7e88f01a413e3334ed2ff1ba885",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head"
     },
     {
       "path": "research/nightfall/formalization/observability/PosteriorRankBudget.lean",
@@ -180,7 +196,8 @@
       "passport": "universal-spectral-proof-passport.html",
       "ci_run": 42972560393,
       "global_priority": "unverified",
-      "source_blob_sha": "dc4b75e81363acb4462756922dd4e39c86573079"
+      "source_blob_sha": "dc4b75e81363acb4462756922dd4e39c86573079",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/observability/QuadraticDiscoveryCore.lean",
@@ -189,7 +206,8 @@
       "passport": null,
       "ci_run": 43058772711,
       "global_priority": "unverified",
-      "source_blob_sha": "6209a536e0544d9ad8f23a8c41c20000c4e12de0"
+      "source_blob_sha": "6209a536e0544d9ad8f23a8c41c20000c4e12de0",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/observability/QuadraticEndpointMarkov.lean",
@@ -198,7 +216,8 @@
       "passport": "universal-spectral-proof-passport.html",
       "ci_run": 42959881782,
       "global_priority": "unverified",
-      "source_blob_sha": "ceed8ff343add0745eb6c1691412f3917e9a4e8e"
+      "source_blob_sha": "ceed8ff343add0745eb6c1691412f3917e9a4e8e",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/observability/QuadraticMatchedParity.lean",
@@ -209,7 +228,9 @@
       "note": "Full finite matching-block polynomial even/odd selector identity and 4B rectangle mass under explicit bounded block polynomial premises; not a general arbitrary-law function-level theorem.",
       "source_blob_sha": "13ab8937bf14274eacce25caaf35f4c9fb9f55a3",
       "source_recovery_pr": 376,
-      "ci_receipt_scope": "historical named-declaration receipt; exact current-source match not independently replayed"
+      "ci_receipt_scope": "Verified successful historical named-declaration CI run and exact source Git blob match; no new all-file compilation or cross-pin theorem certification.",
+      "ci_run_head_sha": "4f93009e871297bc99e7931a770488d7ad2f77ad",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head"
     },
     {
       "path": "research/nightfall/formalization/observability/QuadraticOscillationBound.lean",
@@ -220,7 +241,9 @@
       "note": "Finite arbitrary-alphabet actual bounded quadratic polynomial 8B single-replacement switching and 16B range inequality; does not certify the entire influence theorem.",
       "source_blob_sha": "fcc1231c67810989ebf55a819ddf53951194766c",
       "source_recovery_pr": 378,
-      "ci_receipt_scope": "historical named-declaration receipt; exact current-source match not independently replayed"
+      "ci_receipt_scope": "Verified successful historical named-declaration CI run and exact source Git blob match; no new all-file compilation or cross-pin theorem certification.",
+      "ci_run_head_sha": "1c81566bd2df899c08a958117549178f07879e77",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head"
     },
     {
       "path": "research/nightfall/formalization/observability/QuadraticRealizedRangeBudget.lean",
@@ -231,7 +254,8 @@
       "note": "Realized coordinatewise range-budget corollary of the finite 16B switching inequality; source-level scope, separate strict pinned receipt not yet bound to exact current blob.",
       "source_blob_sha": "ae9ca8a8b871a3de1a746d43ffc193af18b9f483",
       "source_recovery_pr": null,
-      "ci_receipt_scope": "historical named-declaration receipt; exact current-source match not independently replayed"
+      "ci_receipt_scope": "historical named-declaration receipt; exact current-source match not independently replayed",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/observability/QuadraticSingleReplacement.lean",
@@ -242,7 +266,9 @@
       "note": "Actual coordinate single-replacement algebra for arbitrary finite alphabets and dense oriented quadratic interactions; dependent scoped source proof only.",
       "source_blob_sha": "c03cdf4e3024917d110f2bf8bae741575675aa33",
       "source_recovery_pr": 378,
-      "ci_receipt_scope": "historical named-declaration receipt; exact current-source match not independently replayed"
+      "ci_receipt_scope": "Verified successful historical named-declaration CI run and exact source Git blob match; no new all-file compilation or cross-pin theorem certification.",
+      "ci_run_head_sha": "1c81566bd2df899c08a958117549178f07879e77",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head"
     },
     {
       "path": "research/nightfall/formalization/observability/QuadraticSwitchingIdentity.lean",
@@ -253,7 +279,9 @@
       "note": "Independent-selector average and exact first-switch identity for finite quadratic polynomials on arbitrary categorical alphabets; no actual ANOVA influence theorem.",
       "source_blob_sha": "9bcbbf495bce4b39ffccc190d41556bac54ef85c",
       "source_recovery_pr": 378,
-      "ci_receipt_scope": "historical named-declaration receipt; exact current-source match not independently replayed"
+      "ci_receipt_scope": "Verified successful historical named-declaration CI run and exact source Git blob match; no new all-file compilation or cross-pin theorem certification.",
+      "ci_run_head_sha": "1c81566bd2df899c08a958117549178f07879e77",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head"
     },
     {
       "path": "research/nightfall/formalization/observability/RademacherOrthogonality.lean",
@@ -262,7 +290,8 @@
       "passport": "universal-spectral-proof-passport.html",
       "ci_run": 42965524565,
       "global_priority": "unverified",
-      "source_blob_sha": "3c02e3e6d567807041964cbf32389b6f27692b78"
+      "source_blob_sha": "3c02e3e6d567807041964cbf32389b6f27692b78",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/observability/SignMomentLogTransfer.lean",
@@ -273,7 +302,9 @@
       "note": "Finite exponential-union and logarithmic trace implication conditional on a separately assumed normalized PSD moment inequality; the Gaussian moment hypothesis remains open here.",
       "source_blob_sha": "34a5b80494f18c0faa429fba56e1f7e49d4952f6",
       "source_recovery_pr": 371,
-      "ci_receipt_scope": "historical named-declaration receipt; exact current-source match not independently replayed"
+      "ci_receipt_scope": "Verified successful historical named-declaration CI run and exact source Git blob match; no new all-file compilation or cross-pin theorem certification.",
+      "ci_run_head_sha": "03d10a2652154e586c82024dfd3730b5f8d58e15",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head"
     },
     {
       "path": "research/nightfall/formalization/observability/SortedInfluenceTail.lean",
@@ -282,7 +313,8 @@
       "passport": "universal-spectral-proof-passport.html",
       "ci_run": 42959881782,
       "global_priority": "unverified",
-      "source_blob_sha": "f8ad2e02785feeed0742131b6282b8b7c91400f0"
+      "source_blob_sha": "f8ad2e02785feeed0742131b6282b8b7c91400f0",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/observability/SpectralProductHalf.lean",
@@ -293,7 +325,9 @@
       "note": "Finite eigenvalue product lower bound under nonnegative spectrum, without formalizing Gaussian integration or general PSD moment concentration.",
       "source_blob_sha": "369a5b47b9cc0b2c707120490741faa4e072d446",
       "source_recovery_pr": 371,
-      "ci_receipt_scope": "historical named-declaration receipt; exact current-source match not independently replayed"
+      "ci_receipt_scope": "Verified successful historical named-declaration CI run and exact source Git blob match; no new all-file compilation or cross-pin theorem certification.",
+      "ci_run_head_sha": "03d10a2652154e586c82024dfd3730b5f8d58e15",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head"
     },
     {
       "path": "research/nightfall/formalization/observability/TopInteractionCover.lean",
@@ -302,7 +336,8 @@
       "passport": "universal-spectral-proof-passport.html",
       "ci_run": 42959881782,
       "global_priority": "unverified",
-      "source_blob_sha": "4676eb3feee9c700cc510a456c0ac2d928051cc8"
+      "source_blob_sha": "4676eb3feee9c700cc510a456c0ac2d928051cc8",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/observability/UniversalScalarToTrace.lean",
@@ -311,7 +346,8 @@
       "passport": "universal-spectral-proof-passport.html",
       "ci_run": 42962205054,
       "global_priority": "unverified",
-      "source_blob_sha": "7cd782e8f31aab9190346c5d5301cc201f406326"
+      "source_blob_sha": "7cd782e8f31aab9190346c5d5301cc201f406326",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/observability/WeightedGreedyCover.lean",
@@ -322,7 +358,9 @@
       "note": "Constructed weighted greedy matching endpoint cover and 8B cover budget conditional on matching mass; does not produce the actual function's matching certificate.",
       "source_blob_sha": "418c3dfc6f107970006252925954da2c4e372f7f",
       "source_recovery_pr": 376,
-      "ci_receipt_scope": "historical named-declaration receipt; exact current-source match not independently replayed"
+      "ci_receipt_scope": "Verified successful historical named-declaration CI run and exact source Git blob match; no new all-file compilation or cross-pin theorem certification.",
+      "ci_run_head_sha": "7840e535e7c8d8cf8e3bff1e46fff59515539f29",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head"
     },
     {
       "path": "research/nightfall/formalization/observability/WeightedGreedyMatching.lean",
@@ -333,7 +371,9 @@
       "note": "Classical maximal-weight greedy matching existence and domination for finite weighted graphs; not a novel matching algorithm.",
       "source_blob_sha": "c77ae49d4f28e4fe5ab3a131825ef386e123e26c",
       "source_recovery_pr": 376,
-      "ci_receipt_scope": "historical named-declaration receipt; exact current-source match not independently replayed"
+      "ci_receipt_scope": "Verified successful historical named-declaration CI run and exact source Git blob match; no new all-file compilation or cross-pin theorem certification.",
+      "ci_run_head_sha": "8a852965b8b9ebedeab284698493413710e0a86c",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head"
     },
     {
       "path": "research/nightfall/formalization/odd_cycle/CollisionSymmetry.lean",
@@ -342,7 +382,8 @@
       "passport": null,
       "ci_run": 40995299592,
       "global_priority": "unverified",
-      "source_blob_sha": "8f2952ce74370e8247d189b338754a318b0507b6"
+      "source_blob_sha": "8f2952ce74370e8247d189b338754a318b0507b6",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/odd_cycle/P23Arithmetic.lean",
@@ -351,7 +392,8 @@
       "passport": null,
       "ci_run": 40995299592,
       "global_priority": "unverified",
-      "source_blob_sha": "208114a5ef97a34bffcfe33ac37c273fd4eb9f2f"
+      "source_blob_sha": "208114a5ef97a34bffcfe33ac37c273fd4eb9f2f",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/phase_block/PhaseBlock.lean",
@@ -360,7 +402,8 @@
       "passport": "phase-block-proof-passport.html",
       "ci_run": 40995299592,
       "global_priority": "unverified",
-      "source_blob_sha": "b148d2ab4c673e1f67337e6985b88b45a87b09e8"
+      "source_blob_sha": "b148d2ab4c673e1f67337e6985b88b45a87b09e8",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/product_space/ANOVAActivation.lean",
@@ -369,7 +412,8 @@
       "passport": "certificate-acquisition-proof-passport.html",
       "ci_run": 42884789858,
       "global_priority": "unverified",
-      "source_blob_sha": "e0e6503990f730f7982c88acd0ce1735729aee46"
+      "source_blob_sha": "e0e6503990f730f7982c88acd0ce1735729aee46",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/product_space/ANOVAPosteriorBridge.lean",
@@ -378,7 +422,8 @@
       "passport": "certificate-acquisition-proof-passport.html",
       "ci_run": null,
       "global_priority": "unverified",
-      "source_blob_sha": "1568424ba292dfcf18ccd8b1307eb3baf466be63"
+      "source_blob_sha": "1568424ba292dfcf18ccd8b1307eb3baf466be63",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/product_space/CertificateCostBridge.lean",
@@ -387,7 +432,8 @@
       "passport": "certificate-acquisition-proof-passport.html",
       "ci_run": 42925787438,
       "global_priority": "unverified",
-      "source_blob_sha": "1bd7f4d0d2d6008d54b5d4ddf3b97316299360e1"
+      "source_blob_sha": "1bd7f4d0d2d6008d54b5d4ddf3b97316299360e1",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/product_space/CertificateObservationBridge.lean",
@@ -396,7 +442,8 @@
       "passport": "certificate-acquisition-proof-passport.html",
       "ci_run": 42925787438,
       "global_priority": "unverified",
-      "source_blob_sha": "be81759fe68365b70e7e50bf782a28242f722cbf"
+      "source_blob_sha": "be81759fe68365b70e7e50bf782a28242f722cbf",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/product_space/EfronSteinDegree.lean",
@@ -405,7 +452,8 @@
       "passport": "finite-product-influence-proof-passport.html",
       "ci_run": 42932085109,
       "global_priority": "unverified",
-      "source_blob_sha": "7aae47034bced0f095059a16ff6d7280c28f3cf5"
+      "source_blob_sha": "7aae47034bced0f095059a16ff6d7280c28f3cf5",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/product_space/FiniteEnergyCauchy.lean",
@@ -414,7 +462,8 @@
       "passport": "finite-palette-recovery-proof-passport.html",
       "ci_run": 42921631024,
       "global_priority": "unverified",
-      "source_blob_sha": "f4b7618523c9b6f54cb1c26b369b716bf0e79668"
+      "source_blob_sha": "f4b7618523c9b6f54cb1c26b369b716bf0e79668",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/product_space/FiniteLevelCrossing.lean",
@@ -423,7 +472,8 @@
       "passport": "certificate-acquisition-proof-passport.html",
       "ci_run": null,
       "global_priority": "unverified",
-      "source_blob_sha": "d034390352fe5674ca584fcf0ba581e2e79e7a39"
+      "source_blob_sha": "d034390352fe5674ca584fcf0ba581e2e79e7a39",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/product_space/FiniteSectionSensitivity.lean",
@@ -432,7 +482,8 @@
       "passport": "finite-palette-recovery-proof-passport.html",
       "ci_run": 42921631024,
       "global_priority": "unverified",
-      "source_blob_sha": "db615272fd18722919f61788d8404375e27c88b6"
+      "source_blob_sha": "db615272fd18722919f61788d8404375e27c88b6",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/product_space/FiniteSwitchingCore.lean",
@@ -441,7 +492,8 @@
       "passport": "finite-palette-recovery-proof-passport.html",
       "ci_run": 42921631024,
       "global_priority": "unverified",
-      "source_blob_sha": "bc34651e9b34bd211fe5eb5435b07c7bf00e4ced"
+      "source_blob_sha": "bc34651e9b34bd211fe5eb5435b07c7bf00e4ced",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/product_space/HeterogeneousAlphabets.lean",
@@ -450,7 +502,8 @@
       "passport": "finite-product-influence-proof-passport.html",
       "ci_run": 42932085109,
       "global_priority": "unverified",
-      "source_blob_sha": "1e365ebb4c718f86807d7b37f2050c4b1011f1ec"
+      "source_blob_sha": "1e365ebb4c718f86807d7b37f2050c4b1011f1ec",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/product_space/HeterogeneousOrientation.lean",
@@ -459,7 +512,8 @@
       "passport": "finite-product-influence-proof-passport.html",
       "ci_run": null,
       "global_priority": "unverified",
-      "source_blob_sha": "79766f90af166d3e5d664a66866f8b75db714339"
+      "source_blob_sha": "79766f90af166d3e5d664a66866f8b75db714339",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/product_space/LocalizedOptimization.lean",
@@ -468,7 +522,8 @@
       "passport": "finite-product-influence-proof-passport.html",
       "ci_run": 42929857436,
       "global_priority": "unverified",
-      "source_blob_sha": "bf6896d3331fb012ad518dec0ec18066cee44af3"
+      "source_blob_sha": "bf6896d3331fb012ad518dec0ec18066cee44af3",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/product_space/LocalizedOverlapConsequence.lean",
@@ -477,7 +532,8 @@
       "passport": "finite-product-influence-proof-passport.html",
       "ci_run": null,
       "global_priority": "unverified",
-      "source_blob_sha": "1cd8c4efb074579bf960e6d3a74b2cca9c6ba35a"
+      "source_blob_sha": "1cd8c4efb074579bf960e6d3a74b2cca9c6ba35a",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/product_space/LocalizedWeightRemoval.lean",
@@ -486,7 +542,8 @@
       "passport": "finite-product-influence-proof-passport.html",
       "ci_run": null,
       "global_priority": "unverified",
-      "source_blob_sha": "8f1d4189a3ed3af21b4f888588f107608a72cd9c"
+      "source_blob_sha": "8f1d4189a3ed3af21b4f888588f107608a72cd9c",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/product_space/MassWeightedRemoval.lean",
@@ -495,7 +552,8 @@
       "passport": "finite-product-influence-proof-passport.html",
       "ci_run": null,
       "global_priority": "unverified",
-      "source_blob_sha": "b8391c3105e42ed3f5384c497591e70e4e4c6048"
+      "source_blob_sha": "b8391c3105e42ed3f5384c497591e70e4e4c6048",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/product_space/NonconstantSamplerBridge.lean",
@@ -504,7 +562,8 @@
       "passport": "certificate-acquisition-proof-passport.html",
       "ci_run": 42925787438,
       "global_priority": "unverified",
-      "source_blob_sha": "50e9c80200439bc27445a11d59761c401f46b1b1"
+      "source_blob_sha": "50e9c80200439bc27445a11d59761c401f46b1b1",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/product_space/ProductInfluence.lean",
@@ -513,7 +572,8 @@
       "passport": "finite-product-influence-proof-passport.html",
       "ci_run": 42929857470,
       "global_priority": "unverified",
-      "source_blob_sha": "70f69d8caebfaef40efdf16bab63f223753c190f"
+      "source_blob_sha": "70f69d8caebfaef40efdf16bab63f223753c190f",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/product_space/ProductRowBound.lean",
@@ -522,7 +582,8 @@
       "passport": "finite-product-influence-proof-passport.html",
       "ci_run": 42924358449,
       "global_priority": "unverified",
-      "source_blob_sha": "511779569e34820f7945c345001cbccf04ba4bd1"
+      "source_blob_sha": "511779569e34820f7945c345001cbccf04ba4bd1",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean",
@@ -531,7 +592,8 @@
       "passport": "finite-product-influence-proof-passport.html",
       "ci_run": 42903333354,
       "global_priority": "unverified",
-      "source_blob_sha": "01eaeec087624885167b44d4230f5ec872e59e4e"
+      "source_blob_sha": "01eaeec087624885167b44d4230f5ec872e59e4e",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/product_space/QuadraticHoeffdingBridge.lean",
@@ -540,7 +602,8 @@
       "passport": null,
       "ci_run": 43057281341,
       "global_priority": "unverified",
-      "source_blob_sha": "2d393b726368528952e285abd31a28850156a5b9"
+      "source_blob_sha": "2d393b726368528952e285abd31a28850156a5b9",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/product_space/QuarticRademacher.lean",
@@ -549,7 +612,8 @@
       "passport": null,
       "ci_run": 42884789858,
       "global_priority": "unverified",
-      "source_blob_sha": "840b127921714548057b6fedfa4ea3ff8eb42ff0"
+      "source_blob_sha": "840b127921714548057b6fedfa4ea3ff8eb42ff0",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/product_space/RealSquaredPosteriorOneStep.lean",
@@ -560,7 +624,9 @@
       "note": "Actual scalar and finite-Hilbert squared-resampling one-step posterior total-influence mean for normalized positive finite laws; historical Lean 4.33 receipt, not full adaptive policy or joint 4.35 compilation.",
       "source_blob_sha": "53446675a5210e96baceedcb25f3a1a1c894acf4",
       "source_recovery_pr": 377,
-      "ci_receipt_scope": "historical named-declaration receipt; exact current-source match not independently replayed"
+      "ci_receipt_scope": "Verified successful historical named-declaration CI run and exact source Git blob match; no new all-file compilation or cross-pin theorem certification.",
+      "ci_run_head_sha": "217fb068c5d9e460b2d9c314b4b334fb8d0f7d1b",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head"
     },
     {
       "path": "research/nightfall/formalization/product_space/RestrictedInfluence.lean",
@@ -569,7 +635,8 @@
       "passport": null,
       "ci_run": 42884789858,
       "global_priority": "unverified",
-      "source_blob_sha": "c920d4ab77ea92ba6810650f15437fecac13735e"
+      "source_blob_sha": "c920d4ab77ea92ba6810650f15437fecac13735e",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/product_space/TwoDrawOrientation.lean",
@@ -578,7 +645,8 @@
       "passport": "finite-product-influence-proof-passport.html",
       "ci_run": null,
       "global_priority": "unverified",
-      "source_blob_sha": "c2819d1e06d5e0783b2f8dcba48dcf65beafa9e3"
+      "source_blob_sha": "c2819d1e06d5e0783b2f8dcba48dcf65beafa9e3",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/product_space/VariancePosteriorOneStep.lean",
@@ -587,7 +655,8 @@
       "passport": "certificate-acquisition-proof-passport.html",
       "ci_run": 42925787438,
       "global_priority": "unverified",
-      "source_blob_sha": "0f37d886d06d12fa9884ec5428355d39e5afdd0c"
+      "source_blob_sha": "0f37d886d06d12fa9884ec5428355d39e5afdd0c",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     },
     {
       "path": "research/nightfall/formalization/product_space/WeightedReciprocalTransfer.lean",
@@ -596,7 +665,8 @@
       "passport": "finite-product-influence-proof-passport.html",
       "ci_run": 42903333354,
       "global_priority": "unverified",
-      "source_blob_sha": "880b5d187cb57294dfb10edf8569e9b0f0b3a2ce"
+      "source_blob_sha": "880b5d187cb57294dfb10edf8569e9b0f0b3a2ce",
+      "ci_source_match_status": "not-source-matched-in-this-census"
     }
   ],
   "off_main_review_scope": "Selected recovered closed PR 252 Lean certificate only. NOT an exhaustive census of all prior or external branch sources. The 39-module counts apply exclusively to the frozen main-branch source inventory.",
@@ -632,5 +702,5 @@
   "source_tree_sha": "f0007f6baea9ea53dfbde809bb243c017c17dbc6",
   "pinned_lean_toolchain": "leanprover/lean4:v4.35.0",
   "historical_compiler_environment_note": "Some existing source-family receipts and the actual scalar/Hilbert posterior one-step source used pinned Lean 4.33.0. Current repository pin is Lean 4.35.0. Source-matched universal recompilation, exact theorem contract, and cross-pin imports require separate gates.",
-  "compilation_receipt_policy": "ci_run is a historical scoped GitHub Actions reference, not a fresh result for this main-tree snapshot; source_blob_sha binds every current source file exactly. Null means no exact scoped CI receipt assigned in this census. The presence of a file or a passing adjacent module is not kernel certification."
+  "compilation_receipt_policy": "ci_run is a historical scoped GitHub Actions reference, not a fresh result for this main-tree snapshot; source_blob_sha binds every current source file exactly. Null means no exact scoped CI receipt assigned in this census. The presence of a file or a passing adjacent module is not kernel certification. Eleven recovered module sources were checked against successful GitHub Actions run heads and matched byte-for-byte as Git blobs. The other 48 remain historical-reference/unverified-source-match, including one newly recovered module without a current scoped receipt."
 }
