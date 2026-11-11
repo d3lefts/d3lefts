@@ -80,12 +80,16 @@ theorem cross_sum_cancellation
   by_cases hij : i = j
   · simp [hij]
   · simp only [if_neg hij]
-    cases s <;> cases t <;>
-      simpa using
-      (cross_block_all_sides
+    have allcases :=
+      cross_block_all_sides
         (fun (_ : ι) (b : Bool) => b) (fun (_ : ι) (b : Bool) => b)
         (fun (_ : ι) (b : Bool) => b) (fun (_ : ι) (b : Bool) => b)
-        (h i j) i j hij s t)
+        (h i j) i j hij
+    cases s <;> cases t
+    · simpa using allcases false false
+    · simpa using allcases false true
+    · simpa using allcases true false
+    · simpa using allcases true true
 
 /-- Match-paired polynomial; the four off-block orientations are separate. -/
 structure BlockPolynomial (ι : Type*) where
