@@ -8,7 +8,7 @@ UPPER certificate for bounded-loss transport across an arbitrary change of law.
 The fully general measure-theoretic Radon–Nikodym/Lebesgue decomposition,
 threshold optimality, and the import of the existing adaptive observer
 are separate written analytic arguments, NOT compiled by this file.
--/-
+-/
 
 namespace Nightfall.UniversalLawTransfer
 
@@ -48,7 +48,8 @@ theorem finite_loss_dual {Ω : Type*} [Fintype Ω]
           ∑ i, max (q i - a * p i) 0 := by
       rw [Finset.sum_add_distrib, Finset.mul_sum]
     _ ≤ a * t + ∑ i, max (q i - a * p i) 0 := by
-      exact add_le_add_right (mul_le_mul_of_nonneg_left hbudget ha) _
+      have h := mul_le_mul_of_nonneg_left hbudget ha
+      linarith
 
 /-- Zero-error transport on the support of *any* target law dominated
 by the reference support; an exact-observation policy need not change. -/
