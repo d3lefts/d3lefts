@@ -1,0 +1,23 @@
+name: NIGHTFALL cubic shared-core fourth-moment falsifier
+on:
+  push:
+    paths:
+      - 'research/new-moon/spectral-observability/homogeneous-cubic-v8/shared-core-fourth-moment/**'
+      - '.github/workflows/nightfall-cubic-shared-core.yml'
+  pull_request:
+    paths:
+      - 'research/new-moon/spectral-observability/homogeneous-cubic-v8/shared-core-fourth-moment/**'
+      - '.github/workflows/nightfall-cubic-shared-core.yml'
+jobs:
+  exact-rational-counterexample:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify file hashes
+        run: |
+          cd research/new-moon/spectral-observability/homogeneous-cubic-v8/shared-core-fourth-moment
+          sha256sum -c SOURCE_SHA256SUMS
+      - name: Reproduce exact rational failure and asymptotic family
+        run: |
+          python3 research/new-moon/spectral-observability/homogeneous-cubic-v8/shared-core-fourth-moment/check_cubic_shared_core.py
