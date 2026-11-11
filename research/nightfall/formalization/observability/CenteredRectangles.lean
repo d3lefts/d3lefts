@@ -214,7 +214,6 @@ theorem exists_oriented_rectangle_dominating_abs
         (fun a b => -h a b) hr hc x y
     refine ⟨u, x, y, v, ?_⟩
     rw [abs_of_nonpos hsign']
-    dsimp at hrect
     linarith [hrect]
 
 end Nightfall.Observability.CenteredRectangles
