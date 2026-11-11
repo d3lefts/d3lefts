@@ -1,0 +1,32 @@
+{
+  "adaptive_27_distinct": 27,
+  "canonical_fixed_rows": 4369,
+  "certificate_sha256": "776cace954b043b1a87893b5c60eab8c250f72ef08c8bd87184596ca7f486bf4",
+  "distinct_collision_masks": 439,
+  "exhaustive_k4_signals": 65536,
+  "first_fibers": {
+    "0": 1,
+    "1": 5,
+    "8": 5,
+    "10": 6,
+    "12": 5,
+    "15": 5
+  },
+  "fixed_81_distinct": 81,
+  "fixed_block_min_output_Hamming_distance": 1,
+  "k4_query_distribution": {
+    "4": 61,
+    "5": 1350,
+    "6": 64125
+  },
+  "k7_support_phase_classes": 5461,
+  "limitations": "Finite exact arithmetic and decoder replay; no peer-review or global novelty clearance",
+  "minimal_fixed_pair_collision_pairs": 4,
+  "model": "F16 cubic-power oracle; global F4* equivalence",
+  "sharp_worst_case_queries": {
+    "4": 6,
+    "5": 8,
+    "7": 11
+  },
+  "status": "PASS"
+}
