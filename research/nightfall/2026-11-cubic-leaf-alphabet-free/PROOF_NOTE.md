@@ -82,6 +82,30 @@ For Hilbert outputs with rank r and a **single global top-degree cover H**, impo
 
 where a_r=Gamma(r/2)/(sqrt(pi) Gamma((r+1)/2)), and leading-r covariance projection adds tail error tau_r. Fixed t implies O(r/eta) observation order. This last vector assertion requires the Hilbert quadratic premise; it is **not** automatically asserted for the independent-block variant.
 
+## New Hilbert extension for arbitrarily many independent covered blocks
+
+Let F be a bounded B, real Hilbert-valued observable, decomposable into independent disjoint degree-three blocks, each with a top-degree cover of at most t inputs. Set C=D+t. For any r>=1 and eta>0, **even when the number of blocks and all leaf alphabets are unbounded**, there exists a deterministic measurable adaptive observer with
+
+    E||F-E[F|transcript]||^2 <= tau_r + eta,
+
+after at most
+
+    N=ceil[48 C^2 B^2 r / eta * log(1+12 C^2 B^2 r/eta)]
+
+whole-coordinate queries. This gives rank-sensitive O_t((r/eta)log(2+r/eta)) observation without alphabet factors; the remaining logarithm is not claimed optimal.
+
+**Proof:** Project to the first r covariance directions. On every posterior, choose a covariance eigenbasis for the proof, and for each fair-sign vector eps define scalar h_eps=<eps,G>. It has |h_eps|<=sqrt(r)B, preserves the independent-block/top-cover premise, and has Var(h_eps)=v=Var(G). The scalar theorem gives
+
+    max_i eps^T A_i eps >= k v^2,   k=1/(C^2 r B^2),
+
+where A_i are PSD influence matrices and p=sum_i tr A_i. Gaussian linearization and cosh(x)<=exp(x^2/2) imply E exp(eps^T A_i eps/(4 tr A_i))<=sqrt(2). Convexity and Jensen give
+
+    kv^2 <= 4m log(1+(sqrt(2)-1)p/m),
+
+for m=max_i tr A_i, and inversion yields m>=kv^2/[8 log(1+4p/(kv^2))]. The perspective function (m,p)->m log(1+a p/m) is concave, so the same inequality survives averaging posterior transcripts. Since v<=p<=3v, choose the coordinate of maximum trace influence and use the exact ANOVA potential decrement p_next=p-m. For U=3/(k eta), H=log(1+4U), the capped integral Phi(z)=(8H/k)integral_0^z max(eta,s/3)^(-2)ds loses >=1 per query while v>eta, and its supremum is 16UH. This gives the displayed N. The orthogonal output tail adds tau_r. The eigenbasis is only a mathematical witness; the decision policy does not require a measurably chosen eigenbasis.
+
+This is an analytic reuse of the v4/v1 random-sign transfer. It is NOT separately Lean-compiled or externally refereed, and does not prove O(r/eta) for general independent covered-block Hilbert outputs.
+
 ## Verification, source boundary, and next gate
 
 The local independent standard-library exact checker ran 212 checks: 128 random heterogeneous finite cubic-star product laws, 60 address/leaf alphabet families, 24 disjoint network formulas. It checks ANOVA variance split and influence contraction via *direct conditional expectations*, not the analytic proof mechanism. No violations; numerical testing does NOT certify global mathematical validity.
