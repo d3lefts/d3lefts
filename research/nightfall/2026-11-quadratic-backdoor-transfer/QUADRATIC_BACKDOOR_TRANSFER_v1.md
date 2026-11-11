@@ -67,20 +67,20 @@ Writing \(g=\mathbb E_C f\) and \(H=\sum_{|S|=3,S\cap C=\varnothing}f_S\), the q
 
 \[H=\tfrac{16}{3}\big[-P_0g+2P_{1/4}g-2P_{3/4}g+P_1g\big],\quad |H|\le32B.\]
 
-Thus \(|q|\le33B\). Using the variance identity from part A yields the quantitative *defect-sensitive* consequence
+A sharper combined filter gives \(q=(16P_0g-32P_{1/4}g+32P_{3/4}g-13P_1g)/3\), and hence \(|q|\le31B\). The constant 31 is sharp (see `SHARP_TOP_LAYER_REMOVAL_v1.md`). Using the variance identity from part A yields the quantitative *defect-sensitive* consequence
 
-\[\boxed{(V-\delta_C)^2\le (1089K+2k)B^2M=(5{,}491{,}827+2k)B^2M.}\tag{6}\]
+\[\boxed{(V-\delta_C)^2\le (961K+2k)B^2M=(4{,}846{,}323+2k)B^2M.}\tag{6}\]
 
-The constant is not optimized. The exact-backdoor theorem has the much stronger coefficient \(K+2k\). After querying \(C\), one may approximate the quadratic part of the residual slice (bounded by \(33B\)) in \(\lceil20172\cdot1089B^2/\eta\rceil\) additional queries. By Minkowski, the resulting expected square error on the original \(f\) is at most \((\sqrt{\delta_C}+\sqrt\eta)^2\). In particular, approximate backdoors still give an alphabet-independent number of queries whenever their uncovered cubic \(L^2\) energy is small.
+The constant is not optimized. The exact-backdoor theorem has the much stronger coefficient \(K+2k\). After querying \(C\), one may approximate the quadratic part of the residual slice (bounded by \(31B\)) in \(\lceil20172\cdot961B^2/\eta\rceil\) additional queries. By Minkowski, the resulting expected square error on the original \(f\) is at most \((\sqrt{\delta_C}+\sqrt\eta)^2\). In particular, approximate backdoors still give an alphabet-independent number of queries whenever their uncovered cubic \(L^2\) energy is small.
 
-**Proof detail for (6).** \(A=\operatorname{Var}(q)\), \(D=\mathbb E(f-\mathbb E_C f)^2\le kM\), so \(V-\delta_C=A+D\le V\le B^2\). Apply (Q) with \(\|q\|_\infty\le33B\), expand \((A+D)^2\), and use \(D(2A+D)\le2B^2D\).
+**Proof detail for (6).** \(A=\operatorname{Var}(q)\), \(D=\mathbb E(f-\mathbb E_C f)^2\le kM\), so \(V-\delta_C=A+D\le V\le B^2\). Apply (Q) with \(\|q\|_\infty\le31B\), expand \((A+D)^2\), and use \(D(2A+D)\le2B^2D\).
 
 ## D. Proof passport and independent audit boundary
 
 - **Mechanism:** remove a small structural backdoor; apply strong degree-two theorem; use Efron–Stein orthogonality to transfer its estimate. A separate exact polynomial interpolation bounds the cost of approximate removal.
 - **Scope:** finite independent heterogeneous probability spaces, arbitrary alphabets and biases, bounded scalar outputs; vector extension inherits rank and tail assumptions from #375. Measurability in non-finite products inherits the relevant Hoeffding/conditional-selection prerequisites from that proof.
 - **Certificate:** source proof above; `check_backdoor_transfer.py` validates 340 exact-backdoor and 108 approximate-backdoor seeded examples, plus 392 exact posterior-risk masks with exact rational product enumeration and an independent coefficient calculation, plus a deliberately invalid support case. This does not prove (Q), Theorems 1–3, or global novelty.
-- **Prior art compared (public abstracts, 11 Nov 2026):** Turturean's unrestricted cube influence theorem (arXiv:2611.09773); Blanc–Docter–Strassle–Tan exposition (arXiv:2611.11626); Huffstutler–Miloschewsky–Podder completion proof (arXiv:2611.12795); and NIGHTFALL #375. Prior-art search did not establish a globally novel structural special case. The transfer principle is a new, explicit *research-program deduction* from the repository's stated quadratic result, not yet a priority-certified contribution.
+- **Prior art compared (public abstracts, 11 Nov 2026):** Turturean's unrestricted cube influence theorem (arXiv:2611.09773); Blanc–Docter–Strassle–Tan exposition (arXiv:2611.11626); Huffstutler–Miloschewsky–Podder completion proof (arXiv:2611.12795); and NIGHTFALL #375. Prior-art search did not establish a globally novel structural special case. The transfer principle is an explicit *research-program deduction* from the repository's stated quadratic result, not yet a priority-certified contribution.
 - **Dependency:** If the quadratic estimate (Q) or #375 adaptive theorem fails independent review, quantitative claims here must be withdrawn or restated using another proven base theorem. No Lean final theorem is claimed.
 - **Most valuable next attack:** generalize the quadratic-backdoor parameter to a fractionally covered cubic hypergraph without paying cover number \(k\), while respecting the shared-neighbor fourth-moment counterexample; alternatively prove the quadratic base theorem end-to-end independently and promote the present exact transfer.
 
