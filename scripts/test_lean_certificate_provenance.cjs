@@ -7,7 +7,7 @@ const real=walk("research/nightfall").sort(),got=m.modules.map(x=>x.path).sort()
 assert.equal(m.schema,"nightfall-lean-provenance-v1");
 assert.deepEqual(got,real,"Unclassified Lean file (must not silently inherit originality)");
 assert.equal(new Set(got).size,got.length);
-assert.equal(m.modules.length,43,"Frozen source count changed: refresh manifest against exact main tree");
+assert.equal(m.modules.length,44,"Frozen source count changed: refresh manifest against exact main tree");
 const valid=new Set(["quarantine","derived-transfer","finite-construction"]);
 for(const r of m.modules){
  assert.ok(valid.has(r.classification),r.path);
@@ -26,7 +26,7 @@ for(const key of ["quarantine","derived-transfer","finite-construction"]){
 const phases=m.modules.filter(x=>x.classification==="finite-construction");
 assert.deepEqual(phases.map(x=>x.path),["research/nightfall/formalization/phase_block/PhaseBlock.lean"]);
 const page=fs.readFileSync("docs/lean-certificate-provenance.html","utf8");
-assert.equal((page.match(/<tr><td>\d\d<\/td>/g)||[]).length,43,"Missing static site entries");
+assert.equal((page.match(/<tr><td>\d\d<\/td>/g)||[]).length,44,"Missing static site entries");
 assert.ok(page.includes("Quarantine does not retract kernel compilation"));
 assert.ok(page.includes('href="lean-certificate-provenance.json"'));
 const source=fs.readFileSync("docs/phase-block-proof-passport.html","utf8");
@@ -39,7 +39,7 @@ const sitemap=fs.readFileSync("docs/sitemap.xml","utf8");
 for(const n of ["phase-block-proof-passport.html","lean-certificate-provenance.html"])assert.ok(sitemap.includes("/"+n));
 
 // New quadratic modules are certified only at their exact theorem scopes.
-const newQuadratic=["ArbitraryLawFourthMoment.lean","HilbertTwoIncrementMoment.lean","QuadraticDiscoveryCore.lean","QuadraticHoeffdingBridge.lean"];
+const newQuadratic=["HilbertManyIncrementMoment.lean","ArbitraryLawFourthMoment.lean","HilbertTwoIncrementMoment.lean","QuadraticDiscoveryCore.lean","QuadraticHoeffdingBridge.lean"];
 for(const name of newQuadratic){
  const found=m.modules.find(x=>x.path.endsWith("/"+name));
  assert.ok(found,"Unclassified quadratic module "+name);
@@ -67,4 +67,4 @@ for(const token of ["CLOSED AND UNMERGED","27","41110673165","k=7","not all form
 assert.ok(page.includes('id="nonmain"')&&page.includes(a.passport),"Not visible in provenance");
 const siteSitemap=fs.readFileSync("docs/sitemap.xml","utf8");
 assert.ok(siteSitemap.includes("/"+a.passport),"Off-main passport missing sitemap");
-console.log("PASS: 43 main Lean sources classified, one separate closed-branch finite certificate explicitly scoped; no novelty promotion.");
+console.log("PASS: 44 main Lean sources classified, one separate closed-branch finite certificate explicitly scoped; no novelty promotion.");
