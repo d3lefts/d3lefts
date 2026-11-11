@@ -149,3 +149,20 @@ No posterior eigenbasis is selected by the policy. This proves the stated theore
 - **General operator:** if finite bounded scalar degree-d functions have max influence >= a_d A^(2-2q) Var^q for q>1, the same completed-product lemma and PSD bridge give Hilbert rank-r adaptive bound ceil([8q/(q-1)] U_q log(1+4U_q)), U_q=d r^(q-1) B^(2q-2)/(a_d eta^(q-1)). No proof of such an exponent-q base is manufactured here.
 - **Credit and prior art:** David Turturean (2026), Hoeffding/Efron-Stein, Grimmett–Janson–Norris (2016) general product influences, Gaussian/Rademacher quadratic forms, classical martingale conditional expectation. A dated source search here does not certify worldwide originality.
 - **Remaining gate:** an external non-author line-by-line proof review and a separate actual end-to-end Lean/measure-theory formalization are necessary for upgraded certificates. Exact computational replay is not that review.
+
+
+## Adversarial control: expectation and maximum cannot be exchanged
+
+A concrete two-dimensional PSD pair is
+
+    A_+ = (1/2) [[1,1],[1,1]],   A_- = (1/2) [[1,-1],[-1,1]].
+
+Both have trace 1. For every eps in {-1,+1}^2,
+
+    max(eps^T A_+ eps, eps^T A_- eps) = 2,
+
+but
+
+    max(E_eps eps^T A_+ eps, E_eps eps^T A_- eps) = 1.
+
+Thus E max_i Q_i = 2 > 1 = max_i E Q_i, an exact counterexample to the tempting swapped-max shortcut. The Gaussian-moment union estimate in Lemma E is genuinely required. This control was separately replayed by exact Fraction enumeration; it is an elementary matrix identity, not a novel research theorem.
