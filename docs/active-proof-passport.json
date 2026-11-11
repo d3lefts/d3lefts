@@ -1,15 +1,15 @@
 {
   "schema": "nightfall-active-proof-passports-v1",
-  "version": 1,
-  "as_of": "2026-11-10",
-  "updated_by": "NIGHTFALL public website editorial pass; not an external proof audit",
+  "version": 2,
+  "as_of": "2026-11-11",
+  "updated_by": "NIGHTFALL active Proof Passport addition; mathematical derivation and exact-rational checker, not an external referee or novelty clearance",
   "frozen_historical_registry_unchanged": true,
   "lifecycle": "active",
-  "scientific_status": "research candidates and scoped technical evidence; no globally original externally refereed theorem certified by this registry",
+  "scientific_status": "four existing claim checkpoints and one elementary Kaczmarz best-iterate proof; global priority, originality and independent mathematical review remain open",
   "source_checkpoint": {
     "repository": "d3lefts/d3lefts",
     "commit": "5bda769c2484ea2f6ea9a02c428928361c07666f",
-    "notes": "Links below resolve on main; dated source checkpoint fixes the set of research claims reviewed for this registry."
+    "notes": "This commit fixes the four 10 Nov observability sources. The 11 Nov Kaczmarz claim has its own explicitly dated source checkpoint and is not included in the earlier source commit."
   },
   "definitions": {
     "influence": "I_i(F)=E[||F−E_i F||²] with E_i averaging input coordinate i",
@@ -98,6 +98,28 @@
       "limitations": [
         "Refutes a proposed proof operator, not the degree-three influence conjecture",
         "Global originality and referee review open"
+      ]
+    },
+    {
+      "id": "kaczmarz-logfree",
+      "title": "Log-free Kaczmarz best-iterate projection bound",
+      "status": "written-proof-exact-check-replay-priority-open",
+      "claim": "For every consistent real Ax*=b and K>=1, max-normalized-residual greedy Kaczmarz satisfies min_{0<=t<K} ||Ay_t-b|| <= ||A||_F ||y_0-x*||/sqrt(K); consequently K<=ceil(n/epsilon^2) for delta=epsilon||A||op. This is a successful-prefix-iterate existence result.",
+      "assumptions": [
+        "consistent real linear system with A nonzero, zero rows skipped",
+        "each iteration chooses a row with maximal squared normalized residual",
+        "orthogonal projections; one selected iterate among the first K, not necessarily the final iterate"
+      ],
+      "mechanism": "Projection Pythagoras gives a per-step decrease; max normalized residual dominates its row-norm weighted average; telescoping bounds the sum of squared residuals, so one prefix iterate meets the threshold.",
+      "evidence": "Written complete elementary argument; 240 exact-rational consistent systems with 12 greedy steps each (2,880 total steps), 1D sharpness control; finite checker CI and site checks track reproducibility, not global proof certification.",
+      "source": "research/nightfall/2026-11-kaczmarz-logfree/PROOF_PASSPORT.md",
+      "source_detail": "Proof, scope and provenance in same folder PROOF.md; exact checker exact_audit.py. Chat proof packet SHA-256 0245feee6e886cbfff2eb717d33ecbf8dd1d8bc8efc055713bd4ba64325a5587.",
+      "source_checkpoint": "c3e4806e4c0e266785a19f99bc0a4748d533d439",
+      "audit": "Independent mathematical proof review and exhaustive dated priority search in earlier greedy-Kaczmarz work; ask problem author to confirm interpretation and novelty before any publication.",
+      "limitations": [
+        "Classical maximum-distance Kaczmarz selection and energy identity are credited; global novelty is unverified",
+        "No fixed-final-iterate high-probability guarantee or end-to-end row-selection runtime claim",
+        "No independent human referee or Lean formalization, and no historical Original Finding promotion"
       ]
     }
   ],
