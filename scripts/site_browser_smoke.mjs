@@ -187,6 +187,8 @@ try{
    const sidonInvestigationLink=page.locator('a[href*="join.html?claim=sidon30"][href*="obligation=0"]').first();
    if(!(await sidonInvestigationLink.isVisible())) await page.locator("#menu-button").click();
    await sidonInvestigationLink.click();
+   await page.waitForURL(url=>url.pathname.endsWith("/join.html")&&url.searchParams.get("claim")==="sidon30");
+   await page.waitForFunction(()=>document.querySelector("#cj-claim")?.value==="sidon30",{timeout:10000});
    assert.equal(await page.locator("#cj-claim").inputValue(),"sidon30");
    assert.match(await page.locator("#cj-duty").innerText(),/Independent external specialist audit/i);
    await page.goto(origin+"join.html?claim=not-a-real-claim&obligation=0#claim-investigation",{waitUntil:"load"});

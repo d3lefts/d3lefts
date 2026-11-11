@@ -11,7 +11,7 @@ A static research website built from checked-in HTML, CSS, JavaScript, and sourc
 | **NULL FIELD** | [`index.html`](index.html) | **Active research**: Wright product-space influence, quadratic observability, candidate proofs, formalization gaps, adversarial tests, and open next steps |
 | **NEW MOON** | [`new-moon.html`](new-moon.html) | **Archived breakthrough research**: Erdős finite overlap witnesses, Sidon constructions, earlier campaign records, exact checkers and provenance |
 
-Both experiences share source records and review standards, but divide by research lifecycle, not proof strength. An archived candidate is not automatically a certified theorem, and an active theorem can have checked sublemmas. The historical CSS token `data-nf-experience="archive"` still denotes the NULL FIELD light palette for compatibility; the public semantics are now active work. Each landing page has a distinct layout. Keep the theme switch functional, keyboard-accessible, and honest about destination.
+Both experiences share source records and review standards, but divide by research lifecycle, not proof strength. An archived candidate is not automatically a certified theorem, and an active theorem can have checked sublemmas. The historical CSS token `data-nf-experience="archive"` denotes the NULL FIELD light palette for compatibility; it is **not** a scientific archive classification. Do not rename this implementation token until linked CSS and browser tests migrate together. Each landing page has a distinct layout. Keep the theme switch functional, keyboard-accessible, and honest about destination.
 
 ## Research and verification pages
 
@@ -20,6 +20,7 @@ Both experiences share source records and review standards, but divide by resear
 | [`research.html`](research.html) | Curated library, source distinctions, scope-qualified records and filters |
 | [`product-space-influence.html`](product-space-influence.html) | Candidate influence/fractional-certificate manuscript, formalization evidence and outstanding proof obligations |
 | [`observability.html`](observability.html) | Current quadratic observability principal manuscript, query separation, companion certificate bridge, explicit cubic obstruction and publication gates |
+| [`active-proof-passport.html`](active-proof-passport.html) · [`JSON`](active-proof-passport.json) | Manually versioned active claim registry (four scoped records, proof dependencies, limits and next audit), distinct from the frozen 11 historical Passports |
 | [`review.html`](review.html) | Independent reviewer paths and bounded validation tasks |
 | [`passport.html`](passport.html) | Claim-scoped proof passports and their dependencies |
 | [`evidence.html`](evidence.html) | Public evidence release and reproducibility access |

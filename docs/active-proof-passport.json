@@ -1,0 +1,106 @@
+{
+  "schema": "nightfall-active-proof-passports-v1",
+  "version": 1,
+  "as_of": "2026-11-10",
+  "updated_by": "NIGHTFALL public website editorial pass; not an external proof audit",
+  "frozen_historical_registry_unchanged": true,
+  "lifecycle": "active",
+  "scientific_status": "research candidates and scoped technical evidence; no globally original externally refereed theorem certified by this registry",
+  "source_checkpoint": {
+    "repository": "d3lefts/d3lefts",
+    "commit": "5bda769c2484ea2f6ea9a02c428928361c07666f",
+    "notes": "Links below resolve on main; dated source checkpoint fixes the set of research claims reviewed for this registry."
+  },
+  "definitions": {
+    "influence": "I_i(F)=E[||F−E_i F||²] with E_i averaging input coordinate i",
+    "variance": "V=E[||F−E F||²]",
+    "query": "one query reveals one whole input coordinate",
+    "degree": "largest nonzero Hoeffding/Efron–Stein interaction support"
+  },
+  "claims": [
+    {
+      "id": "q2-influence",
+      "title": "Bias-independent quadratic influence",
+      "status": "paper-proof-internal-audit",
+      "claim": "For bounded real Hoeffding degree ≤2 functions on independent product inputs, max_i I_i(F) ≥ V²/[256(1+√3)² B²].",
+      "assumptions": [
+        "independent input coordinate laws",
+        "real-valued |F|≤B with B>0",
+        "degree ≤2; V=Var(F)>0"
+      ],
+      "mechanism": "Pair-interaction matching, mixed differences and bounded signed sums, retaining off-matching terms.",
+      "evidence": "Written proof and internal checks in the supplied quadratic source package; no external human referee or end-to-end Lean receipt for this full statement.",
+      "source": "research/nightfall/observability-publication/PRINCIPAL_PAPER.md",
+      "source_detail": "Consolidated editorial paper; original full LaTeX archive is named in README but not reproduced in this checked-in markdown.",
+      "audit": "Independently reproduce the full matching-core argument with original source files and attack the treatment of off-matching interactions.",
+      "limitations": [
+        "No general degree-three or all-degree exponent-two theorem",
+        "No priority or external-referee clearance"
+      ]
+    },
+    {
+      "id": "q2-observation",
+      "title": "Adaptive versus fixed whole-coordinate queries",
+      "status": "paper-proof-internal-audit",
+      "claim": "For the paper's unit-ball rank-≤r minimax regime at 0<η≤1/4, degree-two adaptive query complexity is proposed Θ(r/η); for alphabets of size ≤m, the fixed-query order is proposed Θ(rm/η).",
+      "assumptions": [
+        "squared-error Bayes-risk objective",
+        "covariance rank ≤r",
+        "degree ≤2",
+        "whole-coordinate queries",
+        "specified finite alphabet cap m for fixed-query comparison"
+      ],
+      "mechanism": "Posterior variance descent, conditional influence selection, replicated address-variable lower constructions.",
+      "evidence": "Supplied paper proof and internal checks; full quantitative and Hilbert-valued dependencies require independent reproduction.",
+      "source": "research/nightfall/observability-publication/PRINCIPAL_PAPER.md",
+      "source_detail": "Section 3; original queries.tex and matching-core.tex named but not imported here as complete derivations.",
+      "audit": "Verify deterministic policy, stopping rule, all constants and Hilbert-rank lift against a separate checker; reconstruct lower families.",
+      "limitations": [
+        "Minimax rates do not describe every single function",
+        "No universal adaptive Θ(r/η) theorem at arbitrary degree"
+      ]
+    },
+    {
+      "id": "finite-certificate",
+      "title": "Two-draw certificate transfer on finite products",
+      "status": "reported-lean-checkpoint-replay-pending",
+      "claim": "The companion reports a finite heterogeneous-product general-degree influence bound of order V^(5/2)/d^6 and a localized certificate-overlap theorem, using imported cube inequalities.",
+      "assumptions": [
+        "finite heterogeneous product alphabets; deg≤d",
+        "bounded outputs and explicitly scoped certificate rows",
+        "Turturean's imported cube and weighted antipodal theorems"
+      ],
+      "mechanism": "Condition two independent product draws on unordered coordinate pairs to obtain independent fair orientations; import antipodal bounds; optimize certificate weights.",
+      "evidence": "Companion reports kernel-compiled finite statements in source checkpoint. The separate seven-declaration early formalization establishes only sublemmas and conditional implications. Full later receipts have not been independently replayed in this site pass.",
+      "source": "research/nightfall/observability-publication/COMPANION_PAPER.md",
+      "source_detail": "Reported receipt in supplied frontier ZIP; page does not assert that the full original Lean bundle is present in this repository.",
+      "audit": "Import original Lean files and pinned toolchain, compare theorem statements and hypotheses, reproduce full kernel receipts and imported dependencies.",
+      "limitations": [
+        "No independent Lean replay recorded here",
+        "Measurable infinite-product and quantum-query extensions are separate written claims",
+        "The quadratic manuscript is not implied by this finite theorem"
+      ]
+    },
+    {
+      "id": "cubic-obstruction",
+      "title": "Higher-order matching and a cubic moment obstruction",
+      "status": "explicit-paper-proofs-not-external-refereed",
+      "claim": "A matching-support amplitude budget and section-oscillation bound are proved in the note. The rare-gate construction Z=(U−p)Σ_j B_j refutes a distribution-independent fourth-moment bound for overlapping degree-two increments.",
+      "assumptions": [
+        "finite product and bounded degree for structural lemmas",
+        "U∼Bernoulli(p), independent fair signs B_j for counterexample"
+      ],
+      "mechanism": "Independent disjoint supports preserve parity-coupled cancellations; a shared rare coordinate invalidates a naive overlapping-increment moment estimate.",
+      "evidence": "Elementary mathematical arguments and explicit counterexample in the checked-in note; no independent human referee or claimed Lean theorem.",
+      "source": "research/nightfall/observability-publication/CUBIC_OBSTRUCTION_NOTE.md",
+      "source_detail": "Explicit exact moment formulas and two elementary structural lemmas.",
+      "audit": "Independently check parity-coupling assumptions, section-oscillation constants and exact fourth moments; test codegree-sensitive replacements against rare-gate stars.",
+      "limitations": [
+        "Refutes a proposed proof operator, not the degree-three influence conjecture",
+        "Global originality and referee review open"
+      ]
+    }
+  ],
+  "attribution": "Research led by Devin J. Wright through NIGHTFALL with substantial AI-assisted drafting and proof attempts. Imported foundations include Efron–Stein/Hoeffding decomposition and Turturean's Aaronson–Ambainis cube theorem and antipodal inequality.",
+  "publication_rule": "Do not promote any record to externally certified, global novelty or published theorem status without a dated prior-art audit and independent mathematical verification."
+}

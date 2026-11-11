@@ -57,6 +57,7 @@ def main():
     checks = [
         ("index.html", "archive", "flagships", "new-moon.html"),
         ("new-moon.html", "moon", "archived-records", "index.html"),
+        ("active-proof-passport.html", None, "q2-influence", "index.html"),
         ("review.html", None, "start-here", "constellation.html"),
         ("portfolio.html", None, "career", "resume.html"),
     ]
@@ -75,6 +76,8 @@ def main():
                 raise ValueError("Active proof-status summary missing in NULL FIELD")
             if path == "new-moon.html" and ("verify_sidon30_standalone.py" not in html or "0.380856370118" not in html):
                 raise ValueError("Archived Erdős or Sidon evidence missing from deployed NEW MOON")
+            if path == "active-proof-passport.html" and ("cubic-obstruction" not in parsed.ids or "active-proof-passport.json" not in parsed.links):
+                raise ValueError("Active Proof Passport or machine-readable companion missing")
             if path == "portfolio.html" and "noindex" not in parsed.meta.get("robots", ""):
                 raise ValueError("Unlisted portfolio indexing instruction not present")
             report["results"].append({"url": url, "status": "PASS"})

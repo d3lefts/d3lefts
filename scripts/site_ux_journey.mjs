@@ -54,7 +54,7 @@ try{
     await visit("index.html");
     assert.equal(await page.locator("html").getAttribute("data-nf-experience"),"archive","NULL FIELD is a distinct active research homepage");
     assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"NULL FIELD keeps its independent Deep Space palette");
-    assert.match(await page.locator("#main > .hero h1:visible").innerText(),/What matters.*before we look/s);
+    assert.match(await page.locator("#main > .hero h1:visible").innerText(),/Low interaction.*Detectable influence/s);
     assert.equal(await page.locator(".flagship-card").count(),4,"Active proof-status dossiers remain inspectable");
     assert.equal(await page.locator(".nf-experience-underbelly").count(),0,"No duplicate hidden night content");
     assert.equal(await page.locator(".nf-experience-archive .hero-actions a:visible").count(),2);
