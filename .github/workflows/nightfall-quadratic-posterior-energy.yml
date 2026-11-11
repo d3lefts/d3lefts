@@ -54,6 +54,9 @@ jobs:
             --decl Nightfall.Observability.ParityBlocks.sum_flip \
             --decl Nightfall.Observability.ParityBlocks.cross_block_left_right \
             --decl Nightfall.Observability.ParityBlocks.right_marginal \
+            --decl Nightfall.Observability.ParityBlocks.cross_block_right_left \
+            --decl Nightfall.Observability.ParityBlocks.cross_block_right_right \
+            --decl Nightfall.Observability.ParityBlocks.cross_block_all_sides \
             --json-out lean-receipts/parity-blocks.json || {
               cat lean-receipts/parity-blocks.json || true
               exit 1
