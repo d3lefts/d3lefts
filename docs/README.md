@@ -4,6 +4,15 @@ A static research website built from checked-in HTML, CSS, JavaScript, and sourc
 
 **Current editorial snapshot: 10 November 2026.** The archive presents 40 curated research records and 11 scoped Proof Passports. Its separately designated five finite/bounded findings are **not** claims of worldwide mathematical novelty. The November observability publication drafts add a proposed quadratic influence theorem, adaptive/nonadaptive query separation and a cubic proof-obstruction note, outside the frozen catalogue. The earlier Certificate Engine v2 page preserves its seven-declaration Lean checkpoint; later finite-product receipts have distinct proof scope. External mathematical and originality reviews remain open.
 
+## Identity: evidence-bearing discoveries that compound
+
+The public identity is **“Discovery should compound. Evidence should travel.”** The [Discovery System](discovery-system.html) is the scientific architecture: represent the problem, invent a mechanism, attach a claim-specific Proof Passport, submit the evidence to independent criticism, preserve corrections, and investigate typed transfers.
+
+- **Proof Passports** record validity, reproducibility, originality and significance separately. The dated historical registry has 11 claims; the separate manually maintained active ledger has 4. These are not fifteen proved theorems.
+- **Constellation / Mechanism Atlas** uses the historical registry's five mechanism categories and twenty typed claim–method edges. Finite checks, shared methods, open premises and analogies are not equivalent; active passports are not yet integrated into those frozen graph counts.
+- **Independent Review** supplies bounded falsification and audit routes. **NEW MOON** preserves past witnesses and corrected/negative evidence; **NULL FIELD** tracks the still-open frontier.
+- No homepage, graph visualization, green CI run, typed relationship or internal model review promotes a mathematical claim into a certified theorem, novel contribution or externally refereed result.
+
 ## Two distinct site experiences
 
 | Experience | Entry point | Purpose |
@@ -18,6 +27,7 @@ Both experiences share source records and review standards, but divide by resear
 | Entry | Meaning |
 | --- | --- |
 | [`research.html`](research.html) | Curated library, source distinctions, scope-qualified records and filters |
+| [`discovery-system.html`](discovery-system.html) | Six-stage scientific identity, typed mechanism graph coverage, linked Proof Passports and explicit publication stop rules |
 | [`product-space-influence.html`](product-space-influence.html) | Candidate influence/fractional-certificate manuscript, formalization evidence and outstanding proof obligations |
 | [`observability.html`](observability.html) | Current quadratic observability principal manuscript, query separation, companion certificate bridge, explicit cubic obstruction and publication gates |
 | [`active-proof-passport.html`](active-proof-passport.html) · [`JSON`](active-proof-passport.json) | Manually versioned active claim registry (four scoped records, proof dependencies, limits and next audit), distinct from the frozen 11 historical Passports |
