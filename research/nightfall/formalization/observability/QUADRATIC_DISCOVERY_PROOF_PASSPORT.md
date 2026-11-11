@@ -57,6 +57,72 @@ tables without fairness or atom lower bounds.
 They still do **not** establish the many-increment Hilbert fourth-moment
 inequality used by the unrestricted quadratic theorem.
 
+## Recovery audit and new verified bridges (2026-11-11)
+
+**Hoeffding representation — finite-product gate CLOSED.**
+Existing merged `EfronSteinDegree.lean` (PR #325) proves the actual
+Möbius decomposition `es_decomp` and `prodDegree_iff_esDegree`.
+New `QuadraticHoeffdingBridge.lean` imports it and kernel-proves
+`quadratic_hoeffding_decomposition` and
+`quadratic_hoeffding_filter`, with all higher-order terms removed
+pointwise for a genuinely assumed `ESDegreeLE p f 2`. Pinned upstream:
+Turturean commit `2a6ceaef872ae993708950f951989134084b851a`;
+Lean 4.33.0. Reproducible success:
+https://github.com/d3lefts/d3lefts/actions/runs/43057281341
+(actual imported proof, strict accepted standard axioms).
+
+**Global matching — analytic mechanism recovered, kernel gap OPEN.**
+Merged PR #327's `CUBIC_OBSTRUCTION_NOTE.md` proves the general
+disjoint top-support parity comparison
+`sum_{S in matching} ||h_S||∞ <= 2^d B`; at `d=2`
+this yields `<=4B`. Draft PR #356 `PROOF.md` supplies a separate
+finite-graph proof with exact rational checks. The v4
+`source/matching-core.tex` constructs the greedy endpoint assignment
+`sum_i c_i<=8B` and `||h_ij||∞<=max(c_i,c_j)`. No Lean declaration
+constructs the **global even/odd product distributions with cancellation
+of all off-matching interactions**, or the greedy assignment from
+actual graph weights. The checked `matching_amplitude_from_coupled_expectations`
+still assumes the conservation equality.
+
+**Fourth moments — actual two-Hilbert-increment gate CLOSED;
+arbitrary-family gate OPEN.** New `HilbertTwoIncrementMoment.lean`
+imports `ArbitraryLawFourthMoment.lean` and proves genuinely from
+arbitrary independent finite categorical laws and coordinatewise
+centering that
+
+    E||U+V||⁴ <= E||U||⁴ + E||V||⁴
+                   + 6 E||U||² E||V||².
+
+No fair-sign or atom-floor assumptions and no dimension factor.
+Pseudonorm is the exact Euclidean squared norm of a finitely indexed
+real vector. Pinned Lean 4.35.0/Mathlib v4.35.0 succeeded with standard
+axioms only:
+https://github.com/d3lefts/d3lefts/actions/runs/43058085067
+(source `HilbertTwoIncrementMoment.lean` SHA-256
+`e8958e46baa6afa0be946f75848555177d12dcc23fc227e036f7f7238c1c36a7`).
+The theorem is not yet an `n`-increment theorem and does not
+identify actual assigned Hoeffding terms as independent increments.
+The separate source-exact analytic finite-`n` proof is in the
+v4 `source/matching-core.tex`: `E||ΣY||⁴<=c²s+3s²`.
+
+**Independent numerical attack.** The deterministic
+`check_hilbert_many_exact.py` executes 1,050 exact-rational
+heterogeneous/categorical Hilbert examples, checking the independent
+covariance-trace fourth-moment formula and the bound, with a second
+brute-force tensor enumeration for up to four increments. This is
+falsification testing only, not a theorem certificate.
+
+**Overall target still NOT closed**: remaining finite-product links are
+(A) actual ANOVA centering/orthogonality/energy decomposition and
+resampling influence instantiation; (B) global parity-coupled matching
+construction and greedy endpoint cover; (C) arbitrary finite-family
+Hilbert fourth-moment induction and mapping assigned interactions
+into its independent increment inputs. Then the checked
+`quadratic_certificate_closure` can conclude
+`Var(f) <= 15(1+sqrt(3)) B sqrt(M)` without *extra* hypotheses.
+The Hilbert rank-r/adaptive posterior and measurable infinite-product
+claims require separate full bridges after scalar finite closure.
+
 ## No hidden claims / missing load-bearing formal steps
 
 - Define finite-product degree-two Hoeffding projections and actual scalar
