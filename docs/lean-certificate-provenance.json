@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-provenance-v1",
   "as_of": "2026-11-11",
-  "revision": 1,
-  "scope": "39 .lean files on main at f005704b50c35819ff32c703e1ce5f2f72106fd5; historical source inventory. If source count changes, regenerate and review this manifest.",
-  "source_commit": "f005704b50c35819ff32c703e1ce5f2f72106fd5",
+  "revision": 2,
+  "scope": "40 classified .lean files in the live research tree, including one law-transfer module explicitly quarantined as inherited classical bounded-loss mathematics. Historical 39-file main-tree snapshot at f005704b50c35819ff32c703e1ce5f2f72106fd5 retained in revision 1.",
+  "source_commit": "869648657ef0fef3a8b0d042de7c412602117e45",
   "policy": "Kernel compilation is validity evidence only. Quarantine means do not claim novelty; it does not invalidate a correctly compiled theorem. Derived transfers are scoped program-specific compositions with open worldwide priority. A distinct finite construction has an exact certificate but still needs prior-art review.",
   "prior_art": [
     {
@@ -38,11 +38,19 @@
     }
   ],
   "counts": {
-    "quarantine": 28,
+    "quarantine": 29,
     "derived_transfer": 10,
     "finite_construction": 1
   },
   "modules": [
+    {
+      "path": "research/nightfall/2026-11-universal-law-transfer/FiniteLawTransfer.lean",
+      "classification": "quarantine",
+      "note": "Classical Neyman–Pearson bounded-loss upper dual and support domination, NOT complete adaptive/Hilbert theorem or original discovery",
+      "passport": null,
+      "ci_run": null,
+      "global_priority": "unverified"
+    },
     {
       "path": "research/nightfall/2026-11-universal-spectral-observability/AdaptiveBudget.lean",
       "classification": "quarantine",
