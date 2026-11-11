@@ -132,6 +132,22 @@ def main() -> int:
     if "Loading the exact 30-point diagram" in homepage_text or "disabled title=" not in homepage_text:
         FAILURES.append("ACCESSIBILITY: stuck loading fallback or unsafe pre-hydration toggle")
 
+    # Latest research dispatch is deliberately separate from the frozen curated set.
+    obs = DOCS / "observability.html"
+    if not obs.is_file():
+        FAILURES.append("RESEARCH: missing source-linked observability dossier")
+    else:
+        obs_text = obs.read_text(encoding="utf-8")
+        for label in ("PROPOSED DEGREE-TWO INFLUENCE THEOREM", "Θ(r/η)",
+                      "Θ(rm/η)", "CUBIC_OBSTRUCTION_NOTE.md",
+                      "general degree-three", "external human"):
+            if label.lower() not in obs_text.lower():
+                FAILURES.append("RESEARCH: observability status or source missing: " + label)
+        if 'href="observability.html"' not in homepage_text or 'href="observability.html"' not in library_text:
+            FAILURES.append("RESEARCH: current observability dossier not discoverable from home/library")
+        if "not independently" not in obs_text.lower() and "not independent" not in obs_text.lower():
+            FAILURES.append("RESEARCH: independent audit boundary missing")
+
     # The portable JSON manifest is checked against the immutable public byte receipt.
     import json as _json
     public_manifest = DOCS / "reproduction-manifest.json"
