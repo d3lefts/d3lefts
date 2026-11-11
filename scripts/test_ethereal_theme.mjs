@@ -81,7 +81,9 @@ try{
    assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk",file+": theme restored before ready");
    assert.equal(await control.getAttribute("aria-pressed"),"true",file+": control state restored");
    assert.equal((await control.locator(".nf-theme-word").innerText()).trim(),"NULL FIELD",file+": consistent destination label");
-   assert.match(await control.getAttribute("aria-label"),/New Moon is active.*NULL FIELD.*Deep Space/i,file+": consistent accessible destination");
+   assert.match(await control.getAttribute("aria-label"),
+    file==="new-moon.html" ? /NEW MOON is active.*NULL FIELD.*Active research/i : /Warm Night palette is active.*Deep Space/i,
+    file+": home destination or shared-page palette label is accurate");
    if(file==="claim-lab.html"){
     assert.equal(await page.locator(".topActions .nf-theme-toggle").count(),1,"Theme toggle is in Claim Lab toolbar");
     await page.locator("#newClaimBtn").click();
