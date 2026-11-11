@@ -254,3 +254,48 @@ for mean squared risk at most \(\eta\) on finite products. This extends Theorem 
 **Transfer frontier identified:** the still-open case is quadratic interaction between **two arbitrary-law control coordinates**, or leaf sections with unrestricted feature rank. The law-free additive lemma (7) is not sufficient by itself to tensorize two arbitrary-law blocks: the required \(L^1\to L^2\) promotion fails on rare symbols, and #347's two-draw occupancy example refutes a naive expected-maximum interchange. A valid next theorem needs a new joint-energy certificate that accounts for this failure.
 
 **Additional prior art:** the additive \(\ell_1\)-vector estimate (7) and mixed-slice argument are consequences of classical range/Popoviciu and Khintchine principles. Their specific composition and constants require originality comparison; no worldwide novelty or independent non-author referee status is asserted.
+
+
+## Theorem 6 — approximate leaf rank via Markov coarse-graining (unconditional tail+eta)
+
+**A new nonredundant transfer:** Theorem 4/5's exact-rank hypothesis can be relaxed to an **approximation guarantee** if the rank reduction is a genuine conditional expectation onto finite partitions, rather than an arbitrary \(L^2\)-orthogonal spectral projector. The crucial mechanism is \(L^\infty\)-contractivity *and* preservation of the queried information sigma-field.
+
+Assume the finite-product mixed-control model of Theorem 5:
+\[
+f(X,Z,Y)=h(X,Z)+\sum_kG_k(X,Z)(Y_k),\qquad |f|\le B,
+\]
+where every control section has bi-degree at most (1,1), the arbitrary-law \(X_i\) controls, fair-sign \(Z_j\) controls and arbitrary-alphabet independent \(Y_k\) leaves are mutually independent.
+
+For every leaf choose **a deterministic finite measurable partition** \(\pi_k:Y_k\to C_k\), with at most \(t+1\) nonempty cells of positive probability, and let \(C=(\pi_k(Y_k))_k\). Define the coarse target
+\[
+f^\pi=\mathbb E[f\mid X,Z,C]
+=h(X,Z)+\sum_k\mathbb E[G_k(X,Z)(Y_k)\mid X,Z,C_k].
+\]
+Let the exact approximation tail be
+\[
+\tau_\pi=\mathbb E(f-f^\pi)^2
+=\sum_k\mathbb E_{X,Z}\|G_k(X,Z)-\mathbb E[G_k(X,Z)\mid C_k]\|_{L^2(Y_k)}^2.
+\]
+Then **without requiring the original leaf sections to have finite rank** and without any initial-to-posterior tail assumption,
+\[
+\boxed{\exists\text{ deterministic adaptive whole-coordinate observer with }
+ \mathbb E(f-\widehat f)^2\le\tau_\pi+\eta,\quad
+ N\le\left\lceil\frac{9[1+(2+2\sqrt2)(1+\sqrt t)]^2B^2}{\eta}\right\rceil.}\tag{11}
+\]
+The observer queries an original leaf \(Y_k\) once, but discards its fine value and retains only \(C_k=\pi_k(Y_k)\) for subsequent decisions and prediction. Other queries return \(X_i\) or \(Z_j\) normally. The query cap, not computational cost, is controlled.
+
+**Proof.** Conditional expectation onto \(\sigma(X,Z,C)\) is a positive Markov contraction, so \(\|f^\pi\|_\infty\le B\). It preserves the control bi-degree-(1,1) representation because coarsening affects only leaf variables. Each centered coarse leaf \(C_k\) has at most \(t+1\) atoms, so \(L^2_0(C_k)\) has dimension at most \(t\). Hence \(f^\pi\) lies in the **exact posterior-stable rank-\(t\)** mixed-control class of Theorem 5, with the same \(B\). Apply (10) to \(f^\pi\), generating a deterministic policy and a predictor \(\widehat f=\mathbb E[f^\pi\mid T]\) based on a coarse transcript \(T\subseteq\sigma(X,Z,C)\).
+
+Put \(r=f-f^\pi\). By the defining conditional expectation, \(\mathbb E[r\mid X,Z,C]=0\); therefore \(r\) is orthogonal in \(L^2\) to **every** random variable measurable with respect to \(\sigma(X,Z,C)\), including \(f^\pi-\widehat f\). Consequently,
+\[
+\mathbb E(f-\widehat f)^2
+=\mathbb Er^2+\mathbb E(f^\pi-\widehat f)^2
+\le\tau_\pi+\eta.
+\]
+Since the true full-output conditional mean using all actually observed values cannot have larger risk than this predictor, the same bound holds for the optimal predictor. This is a fully finite-product analytic deduction: no unverified general-product quadratic matching or posterior-rank promotion is imported.
+
+**Warning about spectral truncation.** For a general orthogonal \(L^2(Y_k)\) projection onto eigenfunctions, \(\|f^\pi\|_\infty\le B\) is not guaranteed. Rare high-amplitude eigenfunctions can make projected posterior sections arbitrarily large even if the initial \(\|f\|_\infty\le B\). Equation (11) is a theorem for **finite Markov/conditional-expectation coarsenings**, not for every rank-\(t\) spectral projection, and \(\tau_\pi\) need not equal the optimal covariance eigenvalue tail. This distinction is the point of the construction.
+
+**Information interpretation.** The output-relevant dimension is now an **operational effective alphabet**: the number of cells in a measurable quantization of each leaf sufficient to approximate \(f\) in \(L^2\), rather than the raw cardinality of that leaf. The whole-coordinate query budget is independent of the original alphabet sizes and atom masses. This is an intrinsic rate–distortion/conditional-expectation bridge, not a claim that all systems have small such quantizations.
+
+**New decisive audit:** independently enumerate skew finite leaves with a nonzero within-cell residual, confirm \(\mathbb E[(f-\mathbb E[f\mid X,Z,C])g(X,Z,C)]=0\) for all coarse cells and test the conditional risk decomposition for every partial coarse transcript. Also test a *nonpositive* spectral projection on a rare-symbol leaf to demonstrate that boundedness of projected functions must not be silently assumed.
