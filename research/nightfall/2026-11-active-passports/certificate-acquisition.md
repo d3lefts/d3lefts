@@ -23,7 +23,7 @@ For Boolean g on a finite full-support independent product, degree≤d and globa
 
 ## Provenance and certification
 
-1. PR #298 contains the scoped localized two-sided finite-product inequality with Lean receipt; PRs #300/#303 and later finite bridge notes contain additional compiled sublemmas.
+1. PR #298 kernel-checks the localized two-sided finite inequality, and merged PR #312 kernel-checks concrete finite one-step posterior degree-d contraction (Actions #42925787438) under explicitly supplied actual/abstract ANOVA-energy identification hypotheses. Full adaptive MSE remains uncompiled.
 2. Standalone exact checker records 268 nonconstant biased Boolean functions with partial posterior states; the mathematical proof still depends on product-specific instantiation of the abstract Lean statements.
 3. The overlap rigidity 1/K²≤B_s²≤1 is derived in the posterior bridge note and has an exact three-bit example attaining equality for deliberately nonminimal certificate rows.
 
@@ -48,3 +48,7 @@ For Boolean g on a finite full-support independent product, degree≤d and globa
 Kernel-compile product-specific posterior row restriction and total-influence identity in one pinned toolchain, then check the per-state sampler gain and transition kernel; separately analyze cost K and historical relationship to OSSS and certificate complexity.
 
 **Gate:** Preserve this certificate and every failed or superseded result, but do not promote to published novel theorem without independent proof review and dated prior-art comparison. No frozen historical Proof Passport or five approved Original Findings are being changed.
+
+## Revision v2 — precise PR #312 receipt and routine-lemma quarantine
+
+The verified Lean 4.33.0 module [VariancePosteriorOneStep.lean](../formalization/product_space/VariancePosteriorOneStep.lean) proves `normalized_one_step_degree_contraction` for finite full-support Boolean-product rows after a specific ANOVA energy table is supplied. [CI #42925787438](https://github.com/d3lefts/d3lefts/actions/runs/42925787438) is green. Neither a concrete dynamic query policy over all posterior states nor a uniform full adaptive-risk bound is the compiled declaration. The generic posterior telescoping/ANOVA identities are credited as classical supporting steps and novelty-quarantined in the [39-file ledger](../../../docs/lean-certificate-provenance.json).

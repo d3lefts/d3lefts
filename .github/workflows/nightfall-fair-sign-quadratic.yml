@@ -1,0 +1,34 @@
+name: NIGHTFALL fair-sign quadratic and spectral selector exact audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-fair-sign-quadratic/**'
+      - '.github/workflows/nightfall-fair-sign-quadratic.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-finite-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Replay finite exact Fractions (not proof of universal theorem)
+        run: python3 -I research/nightfall/2026-11-fair-sign-quadratic/check_exact.py
+      - name: Exact heterogeneous mixed-control and posterior audit
+        run: python3 -I research/nightfall/2026-11-fair-sign-quadratic/check_heterogeneous_mixed.py
+      - name: Exact Markov coarsening and non-Markov spectral projection audit
+        run: python3 -I research/nightfall/2026-11-fair-sign-quadratic/check_markov_coarsening.py
+      - name: Record checked-source hashes
+        if: always()
+        run: |
+          sha256sum research/nightfall/2026-11-fair-sign-quadratic/PROOF_NOTE.md research/nightfall/2026-11-fair-sign-quadratic/check_exact.py research/nightfall/2026-11-fair-sign-quadratic/check_heterogeneous_mixed.py research/nightfall/2026-11-fair-sign-quadratic/check_markov_coarsening.py > fair-sign-source-sha256.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fair-sign-exact-audit
+          path: fair-sign-source-sha256.txt
+          if-no-files-found: warn

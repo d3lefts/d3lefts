@@ -1,5 +1,5 @@
 # NIGHTFALL universal spectral observability — handoff checkpoint
-**Date:** 2026-11-11 UTC. **Status:** scoped formal results merged, concrete posterior composition in draft. NOT a complete Lean-certified universal theorem. Do not present it as independently refereed or as a proved global novelty claim.
+**Date:** 2026-11-11 UTC. **Status as of original handoff:** scoped formal results merged, concrete posterior composition was in draft. Later 11 Nov CI supersedes the draft-only status below. NOT a complete Lean-certified universal theorem. Do not present it as independently refereed or as a proved global novelty claim.
 
 ## Exact immutable repository trail
 
@@ -40,3 +40,7 @@ The merged PR #345 formally telescopes finite transition-kernel drift under an e
 **Verifier:** run `python3 scripts/lean_bridge.py <source>.lean --workspace /tmp/mathlib4 --timeout 480 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl <each fully qualified name>` against pinned Lean 4.35.0/Mathlib v4.35.0, then `research/nightfall/formalization/product_space/check_receipts.py`. Preserve full sources, hashes, run ID, and axiom audit; no self-certification.
 
 **Next decisive experiment:** inspect PR #346 repaired compiler receipt. If green, merge the finite posterior law/influence identities; otherwise keep draft and patch exact reported goals. Then formalize the equality to `pinfl`, rather than adding another abstract stopping theorem.
+
+## Post-handoff correction — green actual-posterior certificate (11 November 2026)
+
+The opening list is an immutable timeline, **not the current state** of PR #346. It later merged after repair; [CI #42973878336](https://github.com/d3lefts/d3lefts/actions/runs/42973878336) confirms six scoped finite posterior declarations. The initial failed CI remains a valid negative history, not the final result. The required full matching to `ProductInfluence.pinfl` and risk theorem remain separate. Do not quote the prior `Draft PR #346` line without this supersession. Routine normalized-posterior, sign isometry, generic weighted drift and block-sensitivity lemmas are in the [quarantined Lean inventory](../../../docs/lean-certificate-provenance.json), **not** additional original discoveries.

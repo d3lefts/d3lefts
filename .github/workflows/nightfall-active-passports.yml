@@ -1,9 +1,12 @@
-name: NIGHTFALL eleven active Proof Passport scopes
+name: NIGHTFALL twelve active Proof Passport scopes and Lean provenance
 on:
   pull_request:
     paths:
       - 'docs/active-proof-passport.*'
       - 'docs/*proof-passport.html'
+      - 'docs/lean-certificate-provenance.*'
+      - 'research/nightfall/formalization/**'
+      - 'scripts/test_lean_certificate_provenance.cjs'
       - 'docs/discovery-system.html'
       - 'docs/research.html'
       - 'docs/mathematical-results.html'
@@ -28,6 +31,7 @@ jobs:
       - name: Verify active claims, exact Lean provenance and frozen historical boundary
         run: |
           node scripts/test_active_proof_passport.cjs
+          node scripts/test_lean_certificate_provenance.cjs
           node scripts/test_discovery_system_identity.cjs
       - name: Check public source links, page anchors and site metadata
         run: python3 scripts/check_site.py
