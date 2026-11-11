@@ -28,5 +28,7 @@ jobs:
         run: python3 research/new-moon/spectral-observability/homogeneous-cubic-v8/checks/tripartite_projection_exact.py
       - name: Check exact tripartite block-l1 link bookkeeping
         run: python3 research/new-moon/spectral-observability/homogeneous-cubic-v8/checks/tripartite_link_exact.py
+      - name: Verify Hadamard dense-overlap cubic and exact topology
+        run: python3 research/new-moon/spectral-observability/homogeneous-cubic-v8/checks/hadamard_cubic_links.py
       - name: Replay weighted-hypergraph no-go
         run: python3 research/new-moon/spectral-observability/homogeneous-cubic-v8/checks/weighted_hypergraph_no_go.py
