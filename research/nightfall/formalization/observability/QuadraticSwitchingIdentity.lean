@@ -77,46 +77,48 @@ theorem selector_one_two
 /-- Pointwise first-order algebra commutes with arbitrary finite sums. -/
 theorem sum_linear_switch_algebra
     (a b : ι → ℝ) (N : ℝ) :
-    N * (∑ t : ι, b t - a t) =
-      -3 * N * (∑ t : ι, a t) +
-        N * (∑ t : ι, 2 * (a t + b t)) -
-        N * (∑ t : ι, b t) := by
+    N * (Finset.univ.sum (fun i : ι => b i - a i)) =
+      -3 * N * (Finset.univ.sum a) +
+        N * (Finset.univ.sum (fun i : ι => 2 * (a i + b i))) -
+        N * (Finset.univ.sum b) := by
   calc
-    N * (∑ t : ι, b t - a t) =
-        ∑ t : ι, N * (b t - a t) := by rw [Finset.mul_sum]
-    _ = ∑ t : ι,
-        (-3 * N * a t + N * (2 * (a t + b t)) - N * b t) := by
+    N * (Finset.univ.sum (fun i : ι => b i - a i)) =
+        Finset.univ.sum (fun i : ι => N * (b i - a i)) := by
+          rw [Finset.mul_sum]
+    _ = Finset.univ.sum (fun i : ι =>
+        -3 * N * a i + N * (2 * (a i + b i)) - N * b i) := by
           apply Finset.sum_congr rfl
-          intro t _
+          intro i _
           ring
-    _ = -3 * N * (∑ t : ι, a t) +
-        N * (∑ t : ι, 2 * (a t + b t)) -
-        N * (∑ t : ι, b t) := by
+    _ = -3 * N * (Finset.univ.sum a) +
+        N * (Finset.univ.sum (fun i : ι => 2 * (a i + b i))) -
+        N * (Finset.univ.sum b) := by
           simp only [Finset.sum_add_distrib, Finset.sum_sub_distrib,
-            Finset.mul_sum]
+            ← Finset.mul_sum]
           ring
 
-/-- The corresponding exact finite-sum quadratic algebra. -/
+/-- Corresponding finite pairwise switching coefficient algebra. -/
 theorem sum_pair_switch_algebra
     (a b c d : E → ℝ) (N : ℝ) :
-    N * (∑ t : E, c t + b t - 2 * a t) =
-      -3 * N * (∑ t : E, a t) +
-        N * (∑ t : E, a t + b t + c t + d t) -
-        N * (∑ t : E, d t) := by
+    N * (Finset.univ.sum (fun e : E => c e + b e - 2 * a e)) =
+      -3 * N * (Finset.univ.sum a) +
+        N * (Finset.univ.sum (fun e : E => a e + b e + c e + d e)) -
+        N * (Finset.univ.sum d) := by
   calc
-    N * (∑ t : E, c t + b t - 2 * a t) =
-        ∑ t : E, N * (c t + b t - 2 * a t) := by
-          rw [Finset.mul_sum]
-    _ = ∑ t : E,
-        (-3 * N * a t + N * (a t + b t + c t + d t) - N * d t) := by
+    N * (Finset.univ.sum (fun e : E => c e + b e - 2 * a e)) =
+        Finset.univ.sum (fun e : E =>
+          N * (c e + b e - 2 * a e)) := by
+            rw [Finset.mul_sum]
+    _ = Finset.univ.sum (fun e : E =>
+        -3 * N * a e + N * (a e + b e + c e + d e) - N * d e) := by
           apply Finset.sum_congr rfl
-          intro t _
+          intro e _
           ring
-    _ = -3 * N * (∑ t : E, a t) +
-        N * (∑ t : E, a t + b t + c t + d t) -
-        N * (∑ t : E, d t) := by
+    _ = -3 * N * (Finset.univ.sum a) +
+        N * (Finset.univ.sum (fun e : E => a e + b e + c e + d e)) -
+        N * (Finset.univ.sum d) := by
           simp only [Finset.sum_add_distrib, Finset.sum_sub_distrib,
-            Finset.mul_sum]
+            ← Finset.mul_sum]
           ring
 
 /-- Actual degree-two pointwise representation on an arbitrary
