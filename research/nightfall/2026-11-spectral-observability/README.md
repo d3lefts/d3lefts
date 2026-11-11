@@ -16,7 +16,7 @@ Status: technical research synthesis; internal exact replay only; external proof
 
 [SELECTOR_LIFT_V4.md](SELECTOR_LIFT_V4.md) proves a reusable exponent-alpha selector-lifting lemma and tightens the selector logarithm from log(e+3 B^2/M) to log(e+2 B^2/M) by using the true degree-two selector influence budget.
 
-[selector_pair_symbolic.py](selector_pair_symbolic.py) independently establishes the exact polynomial identity for the four-bit degree-three obstruction for every 0<p<1, beyond three sampled rational p-values.
+[selector_pair_symbolic.py](selector_pair_symbolic.py) independently checks the exact four-bit degree-three ANOVA polynomial identities and finds a scope error in v3: pair-matching mass is 8(1-p)max(p,1-p)^2 for every 0<p<1, whereas v3's 8(1-p)^3 formula applies only for 0<p<=1/2.
 
 [REVIEW_GATES.md](REVIEW_GATES.md) records the updated November 2026 literature, review limits, and decisive next step.
 
