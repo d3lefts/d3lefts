@@ -14,8 +14,8 @@ test("NULL FIELD leads with current product-space research, not an Erdős archiv
                .map(t=>field.indexOf(t));
  assert.ok(stages.every((v,i)=>v>=0&&(i===0||v>stages[i-1])),String(stages));
  assert.ok(field.includes("ACTIVE RESEARCH")&&field.includes("Wright"));
- assert.ok(field.includes('id="hero-title-archive">What matters<br><em>before we look?</em>'));
- assert.ok(field.includes("observability.html")&&field.includes("product-space-influence.html"));
+ assert.ok(field.includes('id="hero-title-archive">Low interaction.<br><em>Detectable influence.</em>'));
+ assert.ok(field.includes("observability.html")&&field.includes("product-space-influence.html")&&field.includes("active-proof-passport.html"));
  assert.ok(field.includes("CUBIC_OBSTRUCTION_NOTE.md"));
  assert.ok(!field.includes('id="live-case"'),"Finite Sidon exhibit belongs to NEW MOON");
  assert.ok(!field.includes("ERDŐS #36 / FEATURED FINITE WITNESS"));
@@ -34,6 +34,8 @@ test("NEW MOON archives exact finite witnesses and preserves original proof boun
  assert.equal(count(widget,/class="sf-point(?: chosen)?"/g),30,"All 30 integer positions are visible");
  assert.equal(count(widget,/class="sf-point chosen"/g),17,"17 chosen Sidon points remain");
  assert.ok(moon.includes("verify_sidon30_standalone.py"));
+ assert.ok(moon.includes("overlap-16cell-fixture.svg"));
+ assert.equal(count(moon,/class="moon-evidence-grid"/g),5,"All archived records have result, evidence, significance and limits");
  assert.ok(!moon.includes('CASE 005 / NOVEMBER 2026'),"Current Wright frontier is not an archival result");
 });
 test("Cross-entrance navigation is explicit and in both directions",()=>{
