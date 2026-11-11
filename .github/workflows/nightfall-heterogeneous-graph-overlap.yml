@@ -1,0 +1,30 @@
+name: NIGHTFALL arbitrary-law quadratic graph-overlap exact audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-heterogeneous-graph-overlap/**'
+      - '.github/workflows/nightfall-heterogeneous-graph-overlap.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-rational-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify exact heterogeneous product ANOVA, matching and posterior drift
+        run: python3 -I research/nightfall/2026-11-heterogeneous-graph-overlap/check_exact.py
+      - name: Hash complete mathematical sources and checker
+        if: always()
+        run: |
+          sha256sum research/nightfall/2026-11-heterogeneous-graph-overlap/PROOF.md research/nightfall/2026-11-heterogeneous-graph-overlap/check_exact.py > overlap-sha256.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: heterogeneous-graph-overlap-audit
+          path: overlap-sha256.txt
+          if-no-files-found: warn
