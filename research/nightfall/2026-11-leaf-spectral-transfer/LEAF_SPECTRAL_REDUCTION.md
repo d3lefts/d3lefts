@@ -111,3 +111,41 @@ p_n\le\frac{9 C_t^2 B^2}{n}\quad(n\ge1).
 Thus the conditional-mean predictor has mean squared risk at most \`eta\` after \`ceil(9 C_t^2 B^2 / eta)\` whole-coordinate queries, independent of input dimension and leaf alphabet sizes. This is a **conditional finite-product query-count corollary only**: it does not control computational cost, prove posterior spectral stability for general cubic inputs, or fill the measurable infinite-product bridge.
 
 **Decisive follow-up test:** seek a natural structural condition under which leaf-spectrum defect bounds are inherited by every posterior, or construct a finite rational counterexample showing posterior instability. This is an actual information-structure gate, not a request to optimize numerical constants.
+
+
+## Theorem D — posterior-stable finite-feature selectors (conditional, log-free adaptive law)
+
+The spectral-defect hypothesis of Corollary C is **automatically posterior-stable** for the following concrete subclass; no global one-leaf-color spectral assumption is required.
+
+Let controls \`X\` and leaves \`Y_1,...,Y_K\` be independent *finite full-support* random variables, and let
+\[
+f(X,Y)=h(X)+\sum_{k=1}^K G_k(X)(Y_k),\qquad |f|\le B.
+\]
+Assume (i) \`h\` has control Hoeffding degree at most two; (ii) each \`G_k(X)(Y_k)\` is centered in \`Y_k\` for each \`X\`, and has control Hoeffding degree at most two; (iii) there is a **fixed, control-independent** linear subspace \`E_k\subset L^2_0(Y_k)\` of dimension at most \`t\`, with \`G_k(X)\in E_k\` for every control state. There may be arbitrarily many leaves and control coordinates; their alphabet sizes and atom masses are unrestricted.
+
+Under the explicit imported Q2(\`C_Q\`) premise and the scalar quadratic product-space bound
+\[
+\operatorname{Var}(h)\le D\|h\|_\infty
+ \sqrt{\sup_i I_i(h)},\qquad D=16(1+\sqrt3),
+\]
+we obtain
+\[
+\boxed{\operatorname{Var}(f)\le C_t B\sqrt{M},\qquad C_t=D+1+C_Q\sqrt t.}\tag{D1}
+\]
+Here \`M\` is the maximum resampling influence across **both controls and leaves**.
+
+**Proof.** \`h=E[f|X]\`, so \`|h|\le B\`, \`I_i(h)\le I_i(f)\`, and the scalar quadratic premise bounds \`Var(h)\le DB\sqrt M\`. For the leaf part, the bounded range in each fiber \`X=x\` gives \`sum_k ||G_k(x)||_{L2(Y_k)}<=B\`. Expand each \`G_k\` in an orthonormal basis of its fixed at-most-\`t\)-dimensional subspace. The total scalar coefficient l1 norm is at most \`sqrt(t) B\`; Q2 bounds the **centered** control coefficient energy by \`C_Q sqrt(t) B sqrt(M)\`. The squared coefficient means sum to at most \`B sqrt(M)\` by leaf influences and the same pointwise norm budget, as in Theorem A. Orthogonality between \`h-Eh\` and the centered leaf terms gives (D1).
+
+**Posterior closure.** A revealed control coordinate merely restricts each coefficient to a control section and preserves control degree <=2 and its fixed leaf subspace. A revealed leaf \`Y_k=y\` converts \`G_k(X)(y)\` into an additional control-only degree-<=2 summand of \`h\`, and deletes that leaf from the sum. Every positive-probability transcript therefore remains in this class with the **same** \`t\`, \`D\`, \`C_Q\`, and uniform bound \`B\`. The representation need not use a single canonical \`h\` across transcripts. Crucially, this closure does not assume control-only Hilbert influence.
+
+At every posterior, \`Var<=C_t B sqrt(M)\`. The exact degree-three ANOVA potential identity then yields, by greedy largest-influence observation,
+\[
+\boxed{E\operatorname{Var}(f\mid\text{transcript after }N\text{ queries})
+ \le\eta\quad\text{if}\quad
+ N\ge \left\lceil \frac{9 C_t^2 B^2}{\eta}\right\rceil.}\tag{D2}
+\]
+This is a **log-free**, leaf-alphabet-free, dimension-free *finite-product* adaptive query guarantee for a concrete posterior-stable class, **conditional** on Q2 and the scalar quadratic influence theorem. If PR #347's suggested \`C_Q=D sqrt(2)\` is validated, \`C_t=D+1+D sqrt(2t)\` and the cost scales \`O(t B^2/eta)\` for fixed numerical quadratic constants. No efficient coordinate-selection algorithm is asserted.
+
+**What differs from PR #347:** that note explicitly treats *rank-one* leaf features for its alphabet-free logarithm-free bound; (D1)-(D2) extend the mechanism to fixed but arbitrary per-leaf section rank \`t\`, including a control-only degree-two summand that is essential for closure after adaptive leaf observations. No unrestricted rank claim follows, and no end-to-end formal or independent outside referee certificate exists.
+
+**Next audit:** independently test the exact posterior structural closure on all finite transcripts for small control/leaf systems; directly prove the Q2 matching step in a standalone proof that does not cite an analogous result as its conclusion. Prior-art comparison must distinguish this bounded per-leaf-section-rank subclass from one-block decoupling and classical Hilbert-valued U-statistic inequalities.
