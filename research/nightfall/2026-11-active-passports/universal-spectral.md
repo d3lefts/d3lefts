@@ -24,7 +24,7 @@ For a Hilbert-valued bounded degree-d observable, PR #332 proposes a determinist
 ## Provenance and certification
 
 1. PR #317 is a pinned finite scalar Lean theorem; PR #332 is a DRAFT written all-degree Hilbert argument, not the same theorem.
-2. PRs #339 and #340 contain partial/scoped Lean work only. The v6 rank/coherence-sensitive strengthening exists in a supplied source package but is not fully deposited and independently reviewed in the main source archive.
+2. PRs #339/#340 contain partial Lean. Further merged source-specific Lean successes include 13 categorical/cover/tail declarations (CI #42959881782), signed-ensemble orthogonality (#42965524565), diagonal sign coherence (#42972554673), finite transition-kernel budget (#42972560393), and actual posterior resampling influence (#42973878336). They are classical/routine supporting certificates; the general Hilbert theorem remains uncompiled.
 3. Source REVIEW_GATES.md records a corrected formula for a four-bit cubic selector example when p>1/2; future manuscripts should use the corrected all-p equality.
 
 **Primary analytic manuscript:** draft GitHub PR #332 (unmerged), with an additional supplied v6 package outside the public source tree. The `REVIEW_GATES.md` on main is a critical review ledger, not the complete universal proof. The present page is a source-bound summary and does not supersede the primary original proof.
@@ -49,3 +49,7 @@ For a Hilbert-valued bounded degree-d observable, PR #332 proposes a determinist
 Rederive finite-to-infinite approximation with null-set and degree controls; independently prove the PSD rank-trace inequality and posterior budget; test the v6 coherence condition after every observation; deposit full source and distinct checksums before publishing a universal theorem.
 
 **Gate:** Preserve this certificate and every failed or superseded result, but do not promote to published novel theorem without independent proof review and dated prior-art comparison. No frozen historical Proof Passport or five approved Original Findings are being changed.
+
+## Revision v2 — corrected merged finite-core status
+
+The merged **ActualPosteriorInfluence.lean** passes [CI #42973878336](https://github.com/d3lefts/d3lefts/actions/runs/42973878336); the prior draft/failure state was superseded. The module proves posterior product normalization, a signed resampling identity and a rank-factor bound. The more delicate scalar-to-trace application with actual posterior covariance, analytic PSD compression, measured-space policy and end-to-end spectral risk remain outside Lean. Quarantine of routine finite identities, with full source enumeration, is in [the 39-module ledger](../../../docs/lean-certificate-provenance.json). The dated PR #332 analytic candidate remains a separate originality and validity review.

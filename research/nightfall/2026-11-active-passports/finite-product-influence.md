@@ -11,7 +11,7 @@ For bounded real f with product indicator degree at most d on a finite product, 
 
 ## Premises
 
-1. Finite coordinate type and common finite alphabet type; arbitrary coordinate-dependent probability tables, including zero masses.
+1. The checked PR #317 used a common finite alphabet; merged PR #325 extends to a separate finite alphabet at each coordinate with normalized marginal tables including zero masses.
 2. Pointwise |f|≤1, positive product variance V, indicator-monomial product-degree bound ≤d.
 3. Independent-resampling influence I_j = E[(f−E_j f)²], and the exact pinned statement rather than a stronger manuscript constant.
 
@@ -36,7 +36,7 @@ For bounded real f with product indicator degree at most d on a finite product, 
 
 ## Failure conditions, limits, and priority
 
-1. No kernel-checked measurable/infinite-product extension; no bridge to arbitrary Hoeffding degree in all spaces.
+1. No kernel-checked measurable/infinite-product extension. The FINITE Hoeffding/Efron–Stein support-degree equivalence and heterogeneous-alphabet lift are now kernel-checked in PR #325.
 2. No full quadratic (2,4) theorem, adaptive Hilbert observer, runtime bound or quantum consequence follows automatically.
 3. Independent human proof review and dated priority audit still open. The core cube method is due to David Turturean.
 
@@ -44,6 +44,10 @@ For bounded real f with product indicator degree at most d on a finite product, 
 
 ## Independent adversarial audit
 
-Rebuild the pinned PR #317 with the exact upstream Turturean commit; inspect product-degree and zero-atom hypotheses and the precise theorem type; separately formalize the finite-law ANOVA support-degree equivalence and measurable-product bridge.
+Rebuild the pinned PR #317 with the exact upstream Turturean commit; inspect product-degree and zero-atom hypotheses and the precise theorem type; inspect the already compiled PR #325 finite-law ANOVA support-degree equivalence and separately prove the arbitrary measurable-product bridge.
 
 **Gate:** Preserve this certificate and every failed or superseded result, but do not promote to published novel theorem without independent proof review and dated prior-art comparison. No frozen historical Proof Passport or five approved Original Findings are being changed.
+
+## Revision v2 — 11 November 2026, superseding finite-alphabet scope
+
+Merged PR [#325](https://github.com/d3lefts/d3lefts/pull/325) with passing Lean 4.33.0 [run #42932085109](https://github.com/d3lefts/d3lefts/actions/runs/42932085109) certifies `EfronSteinDegree.prodDegree_iff_esDegree` and `Heterogeneous.heterogeneous_influence` over coordinate-dependent finite alphabet types with support-only boundedness, zero atoms permitted. The elementary Efron–Stein identity is prior art and novelty-quarantined. The **source-specific finite transfer** is a dependent construction with global priority unverified; the arbitrary measurable extension is still separate. See [full provenance quarantine](../../../docs/lean-certificate-provenance.json).
