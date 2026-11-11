@@ -7,7 +7,7 @@ const real=walk("research/nightfall").sort(),got=m.modules.map(x=>x.path).sort()
 assert.equal(m.schema,"nightfall-lean-provenance-v1");
 assert.deepEqual(got,real,"Unclassified Lean file (must not silently inherit originality)");
 assert.equal(new Set(got).size,got.length);
-assert.equal(m.modules.length,41,"Every active Lean source must have provenance classification");
+assert.equal(m.modules.length,46,"Frozen source count changed: refresh manifest against exact main tree");
 const valid=new Set(["quarantine","derived-transfer","finite-construction"]);
 for(const r of m.modules){
  assert.ok(valid.has(r.classification),r.path);
@@ -23,10 +23,11 @@ for(const key of ["quarantine","derived-transfer","finite-construction"]){
  const expected={quarantine:m.counts.quarantine,"derived-transfer":m.counts.derived_transfer,"finite-construction":m.counts.finite_construction}[key];
  assert.equal(n,expected,key+" count drift");
 }
+const law=m.modules.find(x=>x.path.endsWith("/FiniteLawTransfer.lean"));assert.ok(law&&law.classification==="quarantine"&&law.ci_run===43059618451,"Law-transfer proof scope must remain novelty-quarantined");
 const phases=m.modules.filter(x=>x.classification==="finite-construction");
 assert.deepEqual(phases.map(x=>x.path),["research/nightfall/formalization/phase_block/PhaseBlock.lean"]);
 const page=fs.readFileSync("docs/lean-certificate-provenance.html","utf8");
-assert.equal((page.match(/<tr><td>\d\d<\/td>/g)||[]).length,41,"Missing static site entries");
+assert.equal((page.match(/<tr><td>\d\d<\/td>/g)||[]).length,46,"Missing static site entries");
 assert.ok(page.includes("Quarantine does not retract kernel compilation"));
 assert.ok(page.includes('href="lean-certificate-provenance.json"'));
 const source=fs.readFileSync("docs/phase-block-proof-passport.html","utf8");
@@ -37,4 +38,34 @@ const site=fs.readFileSync("docs/site.js","utf8");
 for(const n of ["phase-block-proof-passport.html","lean-certificate-provenance.html"])assert.ok(site.includes('"'+n+'"'));
 const sitemap=fs.readFileSync("docs/sitemap.xml","utf8");
 for(const n of ["phase-block-proof-passport.html","lean-certificate-provenance.html"])assert.ok(sitemap.includes("/"+n));
-console.log("PASS: 39 Lean files classified; quarantines prevent originality promotion; separate finite construction has full passport.");
+
+// New quadratic modules are certified only at their exact theorem scopes.
+const newQuadratic=["HilbertManyIncrementMoment.lean","ArbitraryLawFourthMoment.lean","HilbertTwoIncrementMoment.lean","QuadraticDiscoveryCore.lean","QuadraticHoeffdingBridge.lean"];
+for(const name of newQuadratic){
+ const found=m.modules.find(x=>x.path.endsWith("/"+name));
+ assert.ok(found,"Unclassified quadratic module "+name);
+ assert.equal(found.classification,"quarantine","Incomplete quadratic proof promoted as originality: "+name);
+ assert.ok(found.note.length>75,"Insufficient limitation scope: "+name);
+ assert.ok(Number.isInteger(found.ci_run),"Missing scoped kernel receipt "+name);
+}
+const activeClaims=JSON.parse(fs.readFileSync("docs/active-proof-passport.json","utf8"));
+assert.equal(activeClaims.claims.find(x=>x.id==="q2-influence").status,"paper-proof-internal-audit");
+const closed=m.off_main_certificates;
+assert.ok(m.off_main_review_scope.includes("NOT an exhaustive census"));
+assert.ok(Array.isArray(closed)&&closed.length===1,"Separate off-main proof custody required");
+const a=closed[0];
+assert.equal(a.merged_to_main,false);
+assert.equal(a.id,"f16-adaptive-27-branch");
+assert.equal(a.source_ci,41110673165);
+assert.equal(a.candidate_ci,41104093748);
+assert.equal(a.full_adaptive_decoder_lean_checked,false);
+assert.ok(!real.includes(a.path),"Unmerged source must not masquerade as a main Lean file");
+assert.ok(fs.existsSync("docs/"+a.passport),"No scoped companion passport");
+assert.ok(fs.existsSync(a.audit_note),"No off-main audit note");
+const sidecar=fs.readFileSync("docs/"+a.passport,"utf8");
+for(const token of ["CLOSED AND UNMERGED","27","41110673165","k=7","not all formalized","phase-block-proof-passport.html"])
+ assert.ok(sidecar.includes(token),"Missing conditional branch custody: "+token);
+assert.ok(page.includes('id="nonmain"')&&page.includes(a.passport),"Not visible in provenance");
+const siteSitemap=fs.readFileSync("docs/sitemap.xml","utf8");
+assert.ok(siteSitemap.includes("/"+a.passport),"Off-main passport missing sitemap");
+console.log("PASS: 46 main Lean sources classified, one separate closed-branch finite certificate explicitly scoped; no novelty promotion.");

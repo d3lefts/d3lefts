@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-provenance-v1",
   "as_of": "2026-11-11",
-  "revision": 3,
-  "scope": "41 classified Lean files in the PR merge tree: 39 historical frozen modules, one separately committed two-increment fourth-moment module on main (classical), and one law-transfer kernel (classical). Includes parallel contribution to avoid unclassified source.",
-  "source_commit": "869648657ef0fef3a8b0d042de7c412602117e45",
+  "revision": 6,
+  "scope": "46 .lean files in reconciled main+PR #366 source inventory, including one explicitly novelty-quarantined law-transfer module. All full-spectrum theorems remain gated by their own proof obligations.",
+  "source_commit": "30e7695b91687901e0eb506b304dd56c7ee63ae9 (merged main with PR #364; certification specific to source and CI receipt)",
   "policy": "Kernel compilation is validity evidence only. Quarantine means do not claim novelty; it does not invalidate a correctly compiled theorem. Derived transfers are scoped program-specific compositions with open worldwide priority. A distinct finite construction has an exact certificate but still needs prior-art review.",
   "prior_art": [
     {
@@ -38,19 +38,11 @@
     }
   ],
   "counts": {
-    "quarantine": 30,
+    "quarantine": 35,
     "derived_transfer": 10,
     "finite_construction": 1
   },
   "modules": [
-    {
-      "path": "research/nightfall/2026-11-universal-law-transfer/FiniteLawTransfer.lean",
-      "classification": "quarantine",
-      "note": "Five Lean kernel-compiled transfer lemmas: classical hockey-stick finite dual, finite support, arbitrary measurable dominated-law zero error, and exact policy-budget invariance under equivalent laws; not source adaptive observer or global originality",
-      "passport": null,
-      "ci_run": 43059618451,
-      "global_priority": "unverified"
-    },
     {
       "path": "research/nightfall/2026-11-universal-spectral-observability/AdaptiveBudget.lean",
       "classification": "quarantine",
@@ -94,9 +86,9 @@
     {
       "path": "research/nightfall/formalization/observability/ArbitraryLawFourthMoment.lean",
       "classification": "quarantine",
-      "note": "Classical exact fourth-moment expansion for two centered independent finite-law scalar increments plus weighted Hilbert squared-norm self-bound; not a matching theorem, full arbitrary-law quadratic influence theorem, or globally original discovery",
+      "note": "Classical centered two-independent-increment fourth moment and elementary finite weighted sums; does not prove any full quadratic influence inequality",
       "passport": null,
-      "ci_run": null,
+      "ci_run": 43058772711,
       "global_priority": "unverified"
     },
     {
@@ -116,11 +108,27 @@
       "global_priority": "unverified"
     },
     {
+      "path": "research/nightfall/formalization/observability/HilbertTwoIncrementMoment.lean",
+      "classification": "quarantine",
+      "note": "Standard finite-dimensional Hilbert fourth-moment bound for TWO centered independent increments; no arbitrary-family induction or interaction matching",
+      "passport": null,
+      "ci_run": 43058085067,
+      "global_priority": "unverified"
+    },
+    {
       "path": "research/nightfall/formalization/observability/PosteriorRankBudget.lean",
       "classification": "quarantine",
       "note": "Generic finite-kernel flow and weighted telescoping, conditional local drift",
       "passport": "universal-spectral-proof-passport.html",
       "ci_run": 42972560393,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/QuadraticDiscoveryCore.lean",
+      "classification": "quarantine",
+      "note": "Sharp three-point degree-two interpolation, parity identity and conditional 15(1+sqrt(3)) certificate composition; global matching premises NOT constructed",
+      "passport": null,
+      "ci_run": 43058772711,
       "global_priority": "unverified"
     },
     {
@@ -332,6 +340,14 @@
       "global_priority": "unverified"
     },
     {
+      "path": "research/nightfall/formalization/product_space/QuadraticHoeffdingBridge.lean",
+      "classification": "quarantine",
+      "note": "Direct corollary of established and imported finite Hoeffding/Efron-Stein decomposition under actual degree-two hypothesis; not a new influence theorem",
+      "passport": null,
+      "ci_run": 43057281341,
+      "global_priority": "unverified"
+    },
+    {
       "path": "research/nightfall/formalization/product_space/QuarticRademacher.lean",
       "classification": "quarantine",
       "note": "Classical exact independent-sign fourth-moment identity",
@@ -370,6 +386,60 @@
       "passport": "finite-product-influence-proof-passport.html",
       "ci_run": 42903333354,
       "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/HilbertManyIncrementMoment.lean",
+      "classification": "quarantine",
+      "note": "Arbitrary-length finite independent Hilbert fourth-moment estimate from actual nonnegative normalized product laws and centered increment tables; classical moment mechanism, not unrestricted quadratic influence and not globally original by itself",
+      "passport": "active-proof-passport.html",
+      "ci_run": 43062171542,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/UniversalScalarToTrace.lean",
+      "classification": "quarantine",
+      "note": "Finite-dimensional scalar-to-trace energy bound derived from elementary weighted Euclidean geometry; conditional scalar lower bound is separate. Does not certify universal spectral adaptive observability, novelty or posterior/measurable transfer",
+      "passport": "universal-spectral-proof-passport.html",
+      "ci_run": 42962205054,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/2026-11-universal-law-transfer/FiniteLawTransfer.lean",
+      "classification": "quarantine",
+      "note": "Five scoped Lean declarations for classical absolute-continuity/equivalent-law exact observability and associated loss-envelope algebra. Neyman–Pearson/hockey-stick prior art is credited; does not certify unrestricted original universal theorem or worldwide priority",
+      "passport": "active-proof-passport.html",
+      "ci_run": 43059618451,
+      "global_priority": "unverified"
     }
-  ]
+  ],
+  "off_main_review_scope": "Selected recovered closed PR 252 Lean certificate only. NOT an exhaustive census of all prior or external branch sources. The 39-module counts apply exclusively to the frozen main-branch source inventory.",
+  "off_main_certificates": [
+    {
+      "id": "f16-adaptive-27-branch",
+      "path": "research/nightfall/formalization/adaptive_f16/AdaptiveBlock.lean",
+      "source_commit": "d720d8ef4bc91e3d22fcb3bba24e3b73bc2209f7",
+      "source_pr": 252,
+      "merged_to_main": false,
+      "source_ci": 41110673165,
+      "source_ci_status": "success",
+      "strict_axiom_scope": [
+        "Nightfall.AdaptiveF16.worst_case_lower_bound_k4",
+        "Nightfall.AdaptiveF16.worst_case_lower_bound_k7",
+        "Nightfall.AdaptiveF16.phase_factorization"
+      ],
+      "finite_kernel_scope": [
+        "Nightfall.AdaptiveF16.first_reading_branch_boolean_certificate",
+        "Nightfall.AdaptiveF16.adaptive_twenty_seven_boolean_certificate"
+      ],
+      "full_adaptive_decoder_lean_checked": false,
+      "artifact_status": "closed-unmerged finite Lean component; exact coding analysis in closed PR 255",
+      "status": "under review; not an Original Finding; global mathematical priority unverified",
+      "candidate_pr": 255,
+      "candidate_commit": "6ac911cd74baebb95092793efe1a57ecbe365126",
+      "candidate_ci": 41104093748,
+      "passport": "phase-adaptive-branch-proof-passport.html",
+      "audit_note": "research/nightfall/formalization/phase_block/ADAPTIVE_BRANCH_EVIDENCE_20261111.md"
+    }
+  ],
+  "newly_quarantined_source": "PR 359 / merged at 008ccdc5: 4 Lean modules compile scoped routine/implied identities; does not kernel-certify full quadratic arbitrary-law influence or adaptive Hilbert theorem. Runs 43058772711, 43058085067, 43057281341 support named declarations only. PR 364 adds the finite arbitrary-length Hilbert moment lemma (CI 43062171542); full matching/ANOVA influence bridge remains unverified in Lean. PR 366 adds the classical law-transfer Lean module with scoped five-theorem receipt 43059618451; full Paper A/B novelty and Lean certification are separate."
 }
