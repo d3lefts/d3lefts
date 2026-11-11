@@ -47,12 +47,30 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/discoverability-witness-packing.json
+      - name: Kernel-check uniform adaptive rank decrement
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/discoverability/WitnessPacking.lean /tmp/mathlib4/WitnessPacking.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/WitnessPacking.olean WitnessPacking.lean)
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/discoverability/AdaptiveRankDrop.lean \
+            --workspace /tmp/mathlib4 --timeout 900 \
+            --decl Nightfall.Discoverability.remaining_rank_drop \
+            --decl Nightfall.Discoverability.uniform_query_decreases_rank \
+            --decl Nightfall.Discoverability.remaining_rank_zero_certifies \
+            --json-out lean-receipts/discoverability-rank-drop.json || {
+              cat lean-receipts/discoverability-rank-drop.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/discoverability-rank-drop.json
       - name: Save verification fingerprints
         if: always()
         shell: bash
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/discoverability/WitnessPacking.lean > lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/discoverability/WitnessPacking.lean research/nightfall/formalization/discoverability/AdaptiveRankDrop.lean > lean-receipts/SHA256SUMS.txt
           git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt 2>/dev/null || true
           git rev-parse HEAD > lean-receipts/repo-head.txt
       - name: Upload machine-checker receipt
