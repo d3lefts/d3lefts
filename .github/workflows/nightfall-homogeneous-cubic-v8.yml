@@ -1,0 +1,26 @@
+name: NIGHTFALL homogeneous cubic v8 exact checks
+
+on:
+  pull_request:
+    paths:
+      - "research/new-moon/spectral-observability/homogeneous-cubic-v8/**"
+      - ".github/workflows/nightfall-homogeneous-cubic-v8.yml"
+  push:
+    paths:
+      - "research/new-moon/spectral-observability/homogeneous-cubic-v8/**"
+      - ".github/workflows/nightfall-homogeneous-cubic-v8.yml"
+  workflow_dispatch:
+
+jobs:
+  exact-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Replay exact v8 ANOVA and cover controls
+        run: python3 research/new-moon/spectral-observability/homogeneous-cubic-v8/checks/exact_bridge.py
+      - name: Replay weighted-hypergraph no-go
+        run: python3 research/new-moon/spectral-observability/homogeneous-cubic-v8/checks/weighted_hypergraph_no_go.py
