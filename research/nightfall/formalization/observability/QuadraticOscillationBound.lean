@@ -85,10 +85,18 @@ theorem quadratic_switch_sum_abs_le_eight
          4 * (∑ σ : ι → Bool, f (switched x y σ)) -
          N * f y := hq
     nlinarith [heq, hsumLower, hxhi, hyhi]
-  have hu : firstSwitch u v h k x y ≤ 8 * B :=
-    (mul_le_mul_left hN).mp hupper
-  have hl : -(8 * B) ≤ firstSwitch u v h k x y :=
-    (mul_le_mul_left hN).mp hlower
+  have hu : firstSwitch u v h k x y ≤ 8 * B := by
+    by_contra hbad
+    have hd : 0 < firstSwitch u v h k x y - 8 * B :=
+      sub_pos.mpr (lt_of_not_ge hbad)
+    have hprod := mul_pos hN hd
+    nlinarith [hupper, hprod]
+  have hl : -(8 * B) ≤ firstSwitch u v h k x y := by
+    by_contra hbad
+    have hd : 0 < -(8 * B) - firstSwitch u v h k x y :=
+      sub_pos.mpr (lt_of_not_ge hbad)
+    have hprod := mul_pos hN hd
+    nlinarith [hlower, hprod]
   rw [quadratic_actual_switch_sum u v hne c h k x y]
   exact abs_le.mpr ⟨hl, hu⟩
 
