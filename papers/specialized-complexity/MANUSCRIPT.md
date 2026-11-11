@@ -1,0 +1,359 @@
+---
+title: 'Specialized Complexity of Adaptive Observation'
+subtitle: 'Certificate Geometry, Rank Structure, and Finite-Field Phase Codes'
+author: 'Devin J. Wright · NIGHTFALL Research Program'
+date: '11 November 2026 · research manuscript v1.0'
+abstract: |
+  General low-interaction observability does not classify the query cost of systems with additional structure. This paper develops a model-aware synthesis of three complementary refinements. First, bounded fractional certificate cost yields a coordinate sampler with an influence gain and a geometric posterior contraction, giving an exponential squared-error bound for Boolean observables of bounded Hoeffding degree. Second, disjoint output-input groups permit rank-linear allocation of scalar adaptive predictors, in contrast to the general logarithmic spectral regime. Third, cubic-power measurements over the finite extension F16/F4 permit explicit phase coding: three fixed measurements separate four relative phases, while a closed-branch adaptive two-measurement construction separates three, producing sharp worst-case query counts at dimensions four, five, and seven under the specified oracle. An unconditional quadratic influence improvement is discussed separately as an internal analytic candidate. Every statement specifies its sensing model and evidentiary status; formal compilation of a lemma is not treated as a certificate of originality or of a larger theorem.
+keywords: 'adaptive query complexity; product probability spaces; fractional certificates; Efron–Stein influence; Hilbert prediction; finite-field phase retrieval; formal verification'
+---
+
+# Introduction
+
+Two general observability results form the background of this work. *Exact Recovery of Finite-Range Functions on Arbitrary Product Domains* (Paper A) gives dimension-free, almost-sure adaptive identification of finite-valued degree-$d$ observables, including a $d^3$ whole-coordinate bound for Boolean outputs [A]. *Spectral Adaptive Prediction on Heterogeneous Product Spaces* (Paper B) gives an author-side analytic dimension-free prediction bound for bounded Hilbert-valued functions of any finite interaction degree, with output covariance tail $\tau_r$ and error tolerance $\eta$ [B]. Both papers go beyond the original uniform Boolean-cube setting; their full arbitrary-measurable-product claims are analytic manuscripts awaiting non-author proof review. The finite categorical scalar influence ingredient used by Paper B has a separate pinned Lean compilation [N1].
+
+These general results do **not** determine the best query complexity when a system also has bounded certificates, disjoint output channels, quadratic interactions, or a finite measurement alphabet with adaptive phase codes. Those features make different structural resources available. The purpose here is to identify the resulting bounds without confusing different oracle models or silently promoting conditional proofs.
+
+The central organizing principle is **structure-conditioned observation cost**. Conditional progress is measured in the correct potential: fractional certificate overlap controls a Boolean resampling potential, mutually independent output groups permit componentwise risk allocation, and a finite-field powered oracle is governed by exact transcript capacity. These are not competing proofs of a single unqualified universal theorem.
+
+Our source boundary is November 11, 2026. A closed research branch containing a stronger adaptive F16 code is included with its original October 30 attribution, but its Lean source is not part of the merged main-branch inventory. The quadratic degree-two exponent-two claim is treated as a separate proposed strengthening, not an input to any unconditional implication of the other sections.
+
+# Models, normalizations, and claim levels
+
+## Whole-coordinate product observation
+
+Let $X=(X_i)_{i\in I}$ have independent coordinates on finite product spaces, with marginal laws $\mu_i$. A **whole-coordinate query** reveals $X_i$ exactly. For $g:\prod_i\Omega_i\to\{0,1\}$, write
+
+$$
+V(g)=\operatorname{Var}(g(X)),\qquad
+I_i(g)=\mathbb E\big[\operatorname{Var}(g(X)\mid X_{-i})\big]. \tag{1}
+$$
+
+Equivalently $I_i(g)=\Pr\{g(X)=1,\,g(X^{i\leftarrow Y_i})=0\}$, where $Y_i$ is an independent marginal resample. The probability of *either direction* of disagreement is $2I_i(g)$; keeping this normalization matters. With the Hoeffding--Efron--Stein expansion $g=\sum_S g_S$, put $e_S=\mathbb E g_S^2$ and
+
+$$
+T(g)=\sum_i I_i(g)=\sum_{S\ne\varnothing}|S|e_S,
+\qquad V(g)\le T(g)\le dV(g) \tag{2}
+$$
+
+when interaction degree is at most $d$. Prediction means the conditional mean after the observed transcript, and squared-error risk is its expected conditional variance.
+
+For a bounded Hilbert-valued observable $F$, replace absolute values by Hilbert norms and define the output covariance tail $\tau_r=\operatorname{tr}(C_F)-\sum_{j=1}^{r}\lambda_j(C_F)$. Whole-coordinate query counts **do not** measure computation time or bits communicated.
+
+## Powered finite-field observation
+
+A separate model fixes $K=\mathbb F_{16}=\mathbb F_2[z]/(z^4+z+1)$ and $H=\mathbb F_4^\times=\{1,6,7\}$ under the source's four-bit encoding. One query selects $a\in K^k$ and observes
+
+$$
+\mathcal O_a(x)=(a\cdot x)^3\in K. \tag{3}
+$$
+
+An adaptive coefficient vector may depend only on previous **powered** outputs. The target is $x$ modulo one global multiplier in $H$. Equation (3) is **not** a coordinate-reveal oracle and **not** a complex magnitude-squared oracle. Their query counts cannot be compared numerically without a reduction.
+
+## Evidentiary categories
+
+We use four noninterchangeable labels throughout: **kernel-checked finite statement**, **written analytic derivation from stated inputs**, **exact finite computational certificate**, and **proposed/unrefereed theorem**. A successful Lean build proves the exact declaration under its imported hypotheses; it does not establish historical originality, a measure-theoretic limit, or an unstated multistep algorithm. The finite F16 certificates, the finite categorical influence theorem, and scoped product-posterior sublemmas have identifiable CI receipts. External mathematical refereeing and worldwide priority clearance are not asserted for the combined results.
+
+# Certificate overlap yields exponential risk reduction
+
+## Fractional rows and the overlap invariant
+
+For Boolean $g$ on a finite product with strictly positive marginal atoms, a **fractional certificate row** at $x$ is a nonnegative vector $\lambda^x=(\lambda_i^x)$ satisfying
+
+$$
+\sum_{i:x_i\ne y_i}\lambda_i^x\ge1
+\quad\text{whenever}\quad g(y)\ne g(x),
+\qquad \sum_i\lambda_i^x\le K. \tag{4}
+$$
+
+Assume $g$ is nonconstant and $K\ge1$. Set $L(x)=\sum_i\lambda_i^x$, and define class masses and loads
+
+$$
+V_b=\mathbb E\!\left[\frac{\mathbf1_{\{g=b\}}}{L(X)}\right],\quad
+P_i=\mathbb E\!\left[\frac{\mathbf1_{\{g=1\}}\lambda_i^X}{L(X)^2}\right],\quad
+Q_i=\mathbb E\!\left[\frac{\mathbf1_{\{g=0\}}\lambda_i^X}{L(X)^2}\right]. \tag{5}
+$$
+
+Then $\sum_iP_i=V_1$, $\sum_iQ_i=V_0$ and $V_1V_0\ge V(g)/K^2$. Introduce
+
+$$
+S=\sum_i\sqrt{P_iQ_i},\qquad
+\beta=\frac{S}{\sqrt{V_1V_0}}\in(0,1],\qquad
+\pi_i=\frac{\sqrt{P_iQ_i}}{S}. \tag{6}
+$$
+
+The coefficient $\beta$ is a Bhattacharyya-type overlap of the two normalized class-load profiles. Small overlap means that the two output classes rely on different coordinates for certification; this *strengthens* the influence guarantee, rather than imposing a cost in alphabet size.
+
+**Theorem 1 (certificate-overlap influence selection; finite input).** Suppose the product-law localized two-sided certificate inequality
+
+$$
+V_1V_0\le\sum_i\sqrt{I_i(g)P_iQ_i} \tag{7}
+$$
+
+holds for the rows in (4). Then the explicit distribution $\pi$ in (6) obeys
+
+$$
+\boxed{\mathbb E_{i\sim\pi}I_i(g)\ge\frac{V(g)}{K^2\beta^2}\ge\frac{V(g)}{K^2}.} \tag{8}
+$$
+
+In particular, there is a single deterministic coordinate $j$ with $I_j(g)\ge V(g)/K^2$.
+
+*Proof.* Put $q_i=\sqrt{P_iQ_i}$, so $\sum_iq_i=S$. Weighted Cauchy--Schwarz and (7) give
+
+$$
+(V_1V_0)^2\le\Big(\sum_iq_i\Big)\Big(\sum_iq_i I_i(g)\Big)
+=S^2\,\mathbb E_{\pi}I_i(g).
+$$
+
+Divide by $S^2=\beta^2V_1V_0$, then use $V_1V_0\ge V(g)/K^2$. A maximum coordinate influence dominates its $\pi$-average. $\square$
+
+The source of inequality (7) is NIGHTFALL's finite-product adaptation of Turturean's all-pairs certificate mechanism; the inherited inequality and its historical antecedents must be credited [N2, LZ, T]. Theorem 1 is the explicit geometric consequence and is not claimed to be a globally first use of weighted Cauchy--Schwarz.
+
+## An adaptive posterior potential
+
+**Theorem 2 (specialized Boolean observation rate).** Let $g$ be a Boolean function of Hoeffding degree at most $d\ge1$ on a **finite, full-support independent product**. Suppose all points have valid fractional certificate rows of total cost at most $K\ge1$, as in (4). Using the finite localized inequality (7), a deterministic adaptive whole-coordinate policy can achieve
+
+$$
+\boxed{\operatorname{MSE}(t)\le dV(g)\exp\!\left(-\frac{t}{dK^2}\right).} \tag{9}
+$$
+
+Consequently, for $0<\eta<dV(g)$, a sufficient number of observations is
+
+$$
+\boxed{N_{\mathrm{cert}}(\eta)=\left\lceil dK^2\log\frac{dV(g)}{\eta}\right\rceil,} \tag{10}
+$$
+
+or fewer if the observer has already read every available coordinate. If $\eta\ge dV(g)$, zero queries already suffice for this displayed guarantee.
+
+*Proof.* After a finite transcript, conditioning on the observed values leaves a product law on the unobserved coordinates, and its posterior section retains interaction degree at most $d$. Restricting each original fractional row to unqueried coordinates preserves (4), since two states in the same fiber agree on every observed coordinate; its cost remains at most $K$. At any unresolved posterior state choose a remaining coordinate with influence at least $V_{\mathrm{post}}/K^2$ by Theorem 1, using a fixed-order rule for ties.
+
+For an unqueried $j$ the exact posterior ANOVA identity is
+
+$$
+\mathbb E_{X_j}\big[T(g\mid X_j)\big]=T(g)-I_j(g). \tag{11}
+$$
+
+Indeed, each Hoeffding component indexed by $S\ni j$ retains its energy in expectation but loses one unit of the cardinality weight $|S|$ after conditioning; cross terms vanish after the average. Since $V_{\mathrm{post}}\ge T_{\mathrm{post}}/d$, the chosen coordinate gives
+
+$$
+\mathbb E[T_{t+1}\mid\mathcal T_t]\le
+\left(1-\frac{1}{dK^2}\right)T_t.
+$$
+
+Iteration yields $\mathbb ET_t\le dV(g)(1-1/(dK^2))^t\le dV(g)e^{-t/(dK^2)}$. The conditional-mean squared error is $\mathbb E V_{\mathrm{post}}\le\mathbb ET_t$. $\square$
+
+This derivation is written at the level of the complete finite posterior argument, with named Lean checks for the localized finite inequality and an actual one-step product posterior decrement. The **entire iterated policy is not a single Lean theorem** [N2]. The cost $K$ is an independent structural hypothesis; the paper does not assume $K=O(d^2)$ for all Boolean functions or unrestricted output alphabets.
+
+**Corollary 2.1 (competing exact and approximate policies).** On the Boolean finite-range subclass where Paper A's analytic $d^3$ exact-recovery theorem applies, one may choose the cheaper of the exact-recovery policy and Theorem 2:
+
+$$
+N_{\mathrm{Boolean}}(\eta)\le
+\min\left\{d^3,\ \left\lceil dK^2\log_+\!\frac{dV(g)}{\eta}\right\rceil\right\}, \tag{12}
+$$
+
+where $\log_+u=\max\{0,\log u\}$. The first policy has zero error, while the second can be preferable at coarse tolerance. This minimum is a selection between established *author-side analytic constructions*, not a new independent optimality theorem.
+
+# Disjoint output groups and linear-rank allocation
+
+The generic Hilbert spectral bound in Paper B pays roughly $r^{3/2}\eta^{-3/2}$ times a logarithm for arbitrary overlapping output components. Additional independence permits a stronger allocation principle without the unresolved quadratic theorem.
+
+Let $F=(g_1(X_{J_1}),\ldots,g_r(X_{J_r}))$ with pairwise disjoint input groups $J_j$, independent product law and degree at most $d$. Assume $\|F\|\le B$ almost surely and $b_j=\operatorname{ess\,sup}|g_j|$. A simple near-supremum independence argument shows
+
+$$
+\sum_{j=1}^r b_j^2\le B^2. \tag{13}
+$$
+
+Let $c_*=\sqrt{3/12500}/\pi^6$ be the precise coefficient of the pinned finite-product scalar influence theorem [N1], and suppose the arbitrary-product scalar observation corollary of Paper B is accepted at its stated analytic level:
+
+$$
+N_{\mathrm{scal}}(b,\eta')\le
+\left\lceil \frac{5d^7b^3}{3c_*(\eta')^{3/2}}\right\rceil. \tag{14}
+$$
+
+**Theorem 3 (rank-linear specialized allocation; analytic from (14)).** Under these assumptions there exists an adaptive policy with risk at most $\eta$ and at most
+
+$$
+\boxed{N_{\mathrm{disjoint}}(\eta)\le
+r+\frac{5d^7B^3}{3c_*\eta^{3/2}}\,r.} \tag{15}
+$$
+
+*Proof.* Omit zero components. Set $S=\sum_j b_j^{6/5}$ and assign target risk $\eta_j=\eta b_j^{6/5}/S$. Run an independent scalar policy for each disjoint group. Ignoring integer ceilings, the total is
+
+$$
+\frac{5d^7}{3c_*}\sum_j\frac{b_j^3}{\eta_j^{3/2}}
+=\frac{5d^7}{3c_*\eta^{3/2}}S^{5/2}.
+$$
+
+Hölder's inequality gives $S^{5/2}\le r(\sum_jb_j^2)^{3/2}\le rB^3$. The ceilings contribute at most $r$ and the errors sum to $\eta$. $\square$
+
+This bound is *linear in rank* because inputs are partitioned into genuinely disjoint output groups. Orthogonal covariance eigenvectors by themselves do not imply such a partition. A fixed orthogonal residual output contributes its covariance trace $\tau_r$ to the prediction error. Theorem 3 is not an independent general-rank improvement over Paper B: it records the already available specialized regime as an explicit component of the complexity classification.
+
+# The quadratic exponent-two frontier: a conditional acceleration
+
+The more ambitious degree-two source manuscript proposes, for $|f|\le B$ and Efron--Stein degree at most two under arbitrary independent input laws,
+
+$$
+\boxed{\operatorname{Var}(f)\le C_2B\sqrt{\sup_i I_i(f)},
+\quad C_2=16(1+\sqrt3).} \tag{16}
+$$
+
+This is **not** a consequence of the currently pinned general-degree $(5/2,6)$ Lean theorem. The later conditional algebraic closure has coefficient $15(1+\sqrt3)$ under additional unproved matching and fourth-moment hypotheses; it must not be substituted for $C_2$ in an unconditional theorem. The complete product-to-matching construction remains an internal analytic candidate awaiting independent specialist review and an end-to-end formal certificate [N3].
+
+**Proposition 4 (what exponent two would buy).** *Assume* (16) holds uniformly for every posterior section of a bounded degree-two scalar observable, with the indicated influence normalization. A greedy largest-influence coordinate observer satisfies
+
+$$
+\mathbb E V_{t+1}\le\mathbb EV_t
+-\frac{(\mathbb EV_t)^2}{C_2^2B^2},
+\qquad
+\boxed{\mathbb EV_t\le\frac{C_2^2B^2}{t+C_2^2B^2/V_0}}. \tag{17}
+$$
+
+*Proof.* By (16), at any posterior state some unqueried coordinate has influence at least $V_{\mathrm{post}}^2/(C_2^2B^2)$. The expected reduction of conditional variance upon revealing $j$ equals its influence. Taking expectations and applying Jensen gives the first inequality; reciprocating the standard quadratic-decay recursion gives the second. $\square$
+
+Thus a *verified* exponent-two inequality would improve scalar $\eta^{-3/2}$ dependence to $\eta^{-1}$, and the principal quadratic manuscript further proposes a rank-$r$ bound of order $r/\eta$ through a separate vector lifting argument and an additive lower-bound family [N3]. That rank-sensitive lifting does **not** follow by simply replacing the scalar coefficient in Paper B, and its $\Theta(r/\eta)$ classification is retained as an **unrefereed candidate**, not promoted into Theorem 3.
+
+# Exact finite-field phase coding and adaptive capacity
+
+This section concerns the distinct oracle (3), not the product-coordinate model. Its strength is that the key claims reduce to finite arithmetic plus a standard global-phase normalization argument.
+
+## Transcript capacity
+
+The cube map on $K$ has exactly
+
+$$M=1+\frac{16-1}{3}=6$$
+
+outputs. The number of vectors in $K^k$ modulo a global $H$ multiplier is
+
+$$S_k=1+\frac{16^k-1}{3}. \tag{18}$$
+
+Any adaptive decision tree of worst-case depth $m$ has at most $6^m$ transcripts. Therefore
+
+$$
+\boxed{m\ge\left\lceil\log_6 S_k\right\rceil.} \tag{19}
+$$
+
+The argument counts *powered* outputs only; an unpowered intermediate sum cannot be used to choose a future query.
+
+## Three fixed rows for four relative phases
+
+The merged original finite Lean certificate uses the following $3\times5$ coefficient matrix, with the first column an anchor:
+
+$$
+A=\begin{pmatrix}
+14&12&15&3&7\\
+15&4&9&6&8\\
+5&5&3&14&6
+\end{pmatrix}. \tag{20}
+$$
+
+For $\eta\in H^4$ the map $\eta\mapsto((A(1,\eta))_1^3,(A(1,\eta))_2^3,(A(1,\eta))_3^3)$ is injective on all $3^4=81$ relative-phase states. This exact 81-state statement is compiled in the merged `PhaseBlock.lean` source and separately checked with a different finite-field multiplication implementation [N4]. Two queries could distinguish at most $6^2=36$ states, so three are optimal **for this anchored four-phase subtask**.
+
+For a signal with $s\ge1$ nonzero coordinates, first take all $k$ coordinate cubes, choose canonical roots and an anchor, then group the $s-1$ remaining unknown relative phases into blocks of four. Three fixed mixed rows recover each full block; at most one query per remainder phase suffices. The resulting written all-signal cost is
+
+$$
+N_{\mathrm{fixed}}(k,s)=k+3\left\lfloor\frac{s-1}{4}\right\rfloor+((s-1)\bmod4). \tag{21}
+$$
+
+This general transfer is recorded analytically in the original October 29 source; its finite core, not the entire decoder, is Lean-compiled.
+
+## The stronger recovered adaptive block
+
+A **pre-existing October 30 closed research branch** contains a different, stronger adaptive gadget [N5]. The first anchored coefficient row is $(1,2,3,4)$. For each $\eta\in H^3$, observe $y=(1+2\eta_1+3\eta_2+4\eta_3)^3$ and choose a second row according to the following *measured-output* table:
+
+| First cube $y$ | Second coefficient row | States in first fiber |
+|:---:|:---:|---:|
+| $0$ | $(0,0,0,1)$ | 1 |
+| $1$ | $(1,0,2,8)$ | 5 |
+| $8$ | $(0,1,4,8)$ | 5 |
+| $10$ | $(0,1,2,4)$ | 6 |
+| $12$ | $(0,1,8,4)$ | 5 |
+| $15$ | $(0,1,2,4)$ | 5 |
+
+The $27$ ordered pairs of first and second powered outputs are distinct. This finite Boolean certificate appears in an **unmerged, closed** Lean source at PR #252, with a passing scope-specific CI receipt; the original construction and its exact Python checker are in PR #255. No claim is made that either branch is merged to the main source inventory [N5].
+
+**Theorem 5 (adaptive cubic phase-code transfer; written algebraic proof from the finite table).** Accept the 27-state injectivity certificate in the table above. Every $x\in K^k$ with support size $s\ge1$ can be reconstructed up to a single global phase using at most
+
+$$
+\boxed{N_{\mathrm{adapt}}(k,s)=
+k+2\left\lfloor\frac{s-1}{3}\right\rfloor+((s-1)\bmod3)} \tag{22}
+$$
+
+powered measurements. The zero signal is recognized by its $k$ coordinate cubes. The adaptive protocol requires only legally observed cube-power outputs.
+
+*Proof.* Obtain $y_j=x_j^3$ for every coordinate. Since the kernel of cubing on $K^\times$ is $H$, choose a canonical root $u_j$ of each nonzero $y_j$, with $x_j=\lambda_j u_j$ for an unknown $\lambda_j\in H$. Choose a supported anchor $t$ and put $\eta_j=\lambda_j/\lambda_t$. For every triple of other supported indices $(j_1,j_2,j_3)$, evaluate the row $(a_0,a_1,a_2,a_3)$ using physical coefficients $a_0/u_t,a_1/u_{j_1},a_2/u_{j_2},a_3/u_{j_3}$ on those signal coordinates, zero elsewhere. Its unpowered sum is $\lambda_t(a_0+\sum_{h=1}^3a_h\eta_{j_h})$. Since $\lambda_t^3=1$, cubing exactly returns the table's anchored observation, independent of the unknown anchor phase. The first powered observation selects the second row; the second powered observation completes the unique transcript and recovers the triple of relative phases. A leftover phase is recovered by the single mixed form $1+z\eta$, whose cubes are distinct as $\eta$ varies in $H$: equality of cubes gives equality up to a multiplier $h\in H$, and linear independence of $1,z$ over $\mathbb F_4$ forces $h=1$ and $\eta=\eta'$. Recover all coordinates up to the common factor $\lambda_t$. Each complete triple uses two new queries, each remainder coordinate one. $\square$
+
+The proof above is a universal mathematical *deduction from a finite certificate*. The archived Lean file does **not** compile this entire support-selection and observation transcript construction as one theorem.
+
+**Corollary 5.1 (exact worst-case powered-query counts).** Under this exact oracle and the verified finite table, the minimum worst-case numbers of adaptive queries are
+
+$$
+\boxed{D(4)=6,\qquad D(5)=8,\qquad D(7)=11.} \tag{23}
+$$
+
+*Proof.* The upper bounds are (22), maximized at full support. The lower bounds are (19), since
+
+$$
+6^5=7776<S_4=21846,\quad
+6^7=279936<S_5=349526,\quad
+6^{10}=60466176<S_7=89478486.
+$$
+
+Thus no decision tree uses fewer than $6,8,11$ queries, respectively. $\square$
+
+A distinct finite computational audit enumerates all $4,369$ normalized nonzero fixed four-coefficient rows and shows that every pair of fixed rows has at least four colliding pairs among the $27$ anchored three-phase states; four is attained. Therefore two **fixed** powered queries cannot do what the two **adaptive** queries in the table do. This fixed-row noninjectivity is a source-specific exhaustive arithmetic result supported by independent finite-field checker implementations, **not** a claim of a global impossibility theorem for arbitrary fixed larger codes.
+
+# A model-indexed complexity hierarchy
+
+The preceding results are best read as a table of *different promises and different objectives*, not as one rate claimed for all systems.
+
+| Observation class and structural promise | Query guarantee | Evidence scope |
+|:---|:---|:---|
+| Finite-palette degree-$d$ whole-coordinate, arbitrary independent product | Exact: $d\lfloor d^2\min\{(q-1)^2,2R/\Delta\}\rfloor$ | Paper A analytic, externally unrefereed |
+| Boolean finite product, degree $d$, uniform fractional certificate cost $K$ | MSE $\le dV_0e^{-t/(dK^2)}$ | Finite inequality + posterior composition; full policy analytic |
+| General bounded rank-$r$ Hilbert whole-coordinate | Risk $\le\tau_r+\eta$ at Paper B logarithmic budget | Paper B analytic; finite scalar Lean basis |
+| Hilbert output with disjoint independent groups | $r+\tfrac{5d^7B^3}{3c_*\eta^{3/2}}r$ | Derived analytic allocation from Paper B |
+| Scalar arbitrary-law quadratic, *if* exponent-two influence holds | $O(C_2^2B^2/\eta)$ | Conditional proposal; not end-to-end Lean |
+| Finite-field cube oracle, $K=\mathbb F_{16}$, $k=4,5,7$ | Exact minimax $6,8,11$ | Finite exact certificates + written all-signal reduction |
+
+If two *whole-coordinate* policies apply to the same function and accuracy objective, their query bounds can be minimized. This includes the Boolean exact-versus-certificate selection (12). Conversely, the powered finite-field rows of (3) interrogate linear combinations and are not whole-coordinate reads; including their query counts in a cross-model minimum would be invalid.
+
+The qualitative lesson is that **exponent, rank, certificate geometry and alphabet capacity form separate complexity axes**. Degree alone predicts neither exact real-output query complexity nor the benefit of adaptive phase-coded measurements. The repeated scalar-to-vector, finite-to-measurable and certificate-to-stopping steps should be recorded once with the relevant proof scope and reused, not re-proved as unrelated local lemmas.
+
+# Certification, prior art, and reproducibility
+
+The statements above carry distinct evidence:
+
+1. **Finite product certificate transport.** The localized product-law all-pairs inequality and its actual one-step posterior consequence have named Lean receipts in the NIGHTFALL repository; the multistep stopping policy follows from (11) and a finite contraction argument, but has not been deposited as one end-to-end Lean theorem [N2]. Turturean, Lovett--Zhang, and earlier OSSS influence theory are essential antecedents [T,LZ,OSSS].
+2. **General Hilbert specialization.** The scalar product-law theorem uses the pinned Lean coefficient $c_*$; the arbitrary-measurable scalar extension and scalar query bound (14) are analytic components of Paper B, not a separately checked full Hilbert Lean theorem [B,N1]. The rank-linear disjoint regime is therefore **analytic**, not more strongly certified than the ingredient it imports.
+3. **Quadratic acceleration.** The source includes genuinely compiled Hoeffding decomposition, interpolation, and two-increment fourth-moment identities, but the actual global quadratic matching/assignment and many-increment transfer required for (16) are not compiled end-to-end. The numerical or arithmetic closure of those sublemmas does not establish the proposed exponent-two theorem [N3].
+4. **F16 exact code.** The 81-state merged finite block has Lean and separately coded arithmetic checks [N4]. The stronger adaptive 27-state block has a scoped Lean certificate and independent arithmetic on closed PR branches, not on main; the written field-normalization proof above is separate [N5]. The exact model must be preserved in every lower-bound statement.
+
+**Independent audit plan.** First rerun the 81- and 27-state finite checks using polynomial and quadratic-tower representations and mutate every branch row and the power exponent. Next verify the fixed-row $4,369$-normal-form exhaustion and the k4/k5/k7 counting inequalities. Independently attack the Boolean posterior reduction by checking the directed-influence factor, row validity under restriction, and conservation of $T$; then review the Holder allocation in (15), including disjointness and near-supremum events. An external proof reviewer must attack the unreduced analytic bridges and run a dated same-oracle priority search before any worldwide originality assertion. The cheapest decisive falsifiers are a legal branch collision among 27 states, a counterexample to (11), or a product-degree-two function contradicting the proposed (16). Numerical failure-to-find is not a proof.
+
+This manuscript is a synthesis and refinement of prior NIGHTFALL research checkpoints, *not* an announcement of newly established global research priority. The research direction and authorship are attributed to Devin J. Wright; the source records explicitly credit internal AI-assisted contributions (including Tessera and Ryev for the archived adaptive code) and the external literature. The original source SHAs and formal certificates remain the authoritative provenance for the machine-checked claims.
+
+# References and source passports
+
+**[A]** D. J. Wright, *Exact Recovery of Finite-Range Functions on Arbitrary Product Domains*, NIGHTFALL Paper A, manuscript (11 November 2026). [Source](https://github.com/d3lefts/d3lefts/blob/main/papers/exact-recovery/MANUSCRIPT.md).
+
+**[B]** D. J. Wright, *Spectral Adaptive Prediction on Heterogeneous Product Spaces*, NIGHTFALL Paper B, manuscript (11 November 2026). [Source](https://github.com/d3lefts/d3lefts/blob/main/papers/spectral-adaptive-prediction/MANUSCRIPT.md).
+
+**[N1]** NIGHTFALL, finite arbitrary-law product influence, pinned Lean 4.33.0 source and CI receipt [42929857470](https://github.com/d3lefts/d3lefts/actions/runs/42929857470); subsequent heterogeneous finite alphabets and Efron--Stein degree bridge, PR #325, [CI 42932085109](https://github.com/d3lefts/d3lefts/actions/runs/42932085109).
+
+**[N2]** NIGHTFALL, *Certificate-guided adaptive observation* (10 November 2026), [source](https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/formalization/product_space/CERTIFICATE_GUIDED_ADAPTIVE_RECOVERY_20261110.md), with pinned one-step posterior Lean [CI 42925787438](https://github.com/d3lefts/d3lefts/actions/runs/42925787438).
+
+**[N3]** NIGHTFALL, *Adaptive Observability of Low-Interaction Product Systems*, quadratic candidate [source](https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/observability-publication/PRINCIPAL_PAPER.md); [scoped quadratic Lean proof passport](https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/formalization/observability/QUADRATIC_DISCOVERY_PROOF_PASSPORT.md).
+
+**[N4]** NIGHTFALL, *Three-query phase compression in F16* (29 October 2026), [source](https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/F16_THREE_QUERY_PHASE_BLOCK_20261029.md), [finite Lean source](https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/formalization/phase_block/PhaseBlock.lean), [CI 40995299592](https://github.com/d3lefts/d3lefts/actions/runs/40995299592).
+
+**[N5]** Tessera/Ryev, *Adaptive F16 phase compression* (30 October 2026), archived [Tessera PR #255](https://github.com/d3lefts/d3lefts/pull/255), [Ryev PR #252](https://github.com/d3lefts/d3lefts/pull/252), [finite Lean CI 41110673165](https://github.com/d3lefts/d3lefts/actions/runs/41110673165), [independent exact audit CI 41104093748](https://github.com/d3lefts/d3lefts/actions/runs/41104093748). These branches are closed and unmerged.
+
+**[T]** D. Turturean, *A proof of the Aaronson--Ambainis conjecture* (2026), [arXiv:2611.09773](https://arxiv.org/abs/2611.09773).
+
+**[LZ]** S. Lovett and J. Zhang, *Fractional Certificates for Bounded Functions*, ITCS 2023, [published version](https://drops.dagstuhl.de/doi/10.4230/LIPIcs.ITCS.2023.84).
+
+**[OSSS]** R. O'Donnell, M. Saks, O. Schramm and R. Servedio, *Every Decision Tree Has an Influential Variable*, FOCS 2005, [abstract](https://www.cs.columbia.edu/~rocco/papers/focs05osss.html).
+
+**[GJN]** G. Grimmett, S. Janson and J. Norris, *Influence in Product Spaces*, *Advances in Applied Probability* 48 (2016), [DOI](https://doi.org/10.1017/apr.2016.46).
+
+**[CWY]** M. Charikar, X. Wu and Y. Ye, *Adaptive Discrete Phase Retrieval*, SOSA 2020, [DOI](https://doi.org/10.1137/1.9781611976014.9). This uses complex intensity measurements, not the finite cube-power oracle (3).
