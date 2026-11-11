@@ -175,4 +175,46 @@ theorem exists_rectangle_dominating_value
       (h x y - h x v - h u y + h u v)) := hu
     _ ≤ h x y - h x v - h u y + h u v := hv
 
+
+/-- For either sign of h(x,y), actual canonical centering produces a
+four-corner rectangle oriented so that its positive mixed difference
+dominates |h(x,y)|. The negative case applies the same weighted argument
+to -h and swaps the first coordinate's corner orientation. -/
+theorem exists_oriented_rectangle_dominating_abs
+    [Nonempty A] [Nonempty B]
+    (p : A → ℝ) (q : B → ℝ)
+    (hp : ∀ u, 0 ≤ p u) (hq : ∀ v, 0 ≤ q v)
+    (hp1 : (∑ u : A, p u) = 1)
+    (hq1 : (∑ v : B, q v) = 1)
+    (h : A → B → ℝ)
+    (hrow : ∀ x : A, (∑ v : B, q v * h x v) = 0)
+    (hcol : ∀ y : B, (∑ u : A, p u * h u y) = 0)
+    (x : A) (y : B) :
+    ∃ x0 x1 : A, ∃ y0 y1 : B,
+      |h x y| ≤
+        h x0 y0 - h x0 y1 - h x1 y0 + h x1 y1 := by
+  by_cases hsign : 0 ≤ h x y
+  · obtain ⟨u, v, hrect⟩ :=
+      exists_rectangle_dominating_value p q hp hq hp1 hq1
+        h hrow hcol x y
+    refine ⟨x, u, y, v, ?_⟩
+    rw [abs_of_nonneg hsign]
+    exact hrect
+  · have hsign' : h x y ≤ 0 := le_of_lt (lt_of_not_ge hsign)
+    have hr : ∀ a : A, (∑ b : B, q b * (-h a b)) = 0 := by
+      intro a
+      simp_rw [mul_neg]
+      rw [Finset.sum_neg_distrib, hrow a, neg_zero]
+    have hc : ∀ b : B, (∑ a : A, p a * (-h a b)) = 0 := by
+      intro b
+      simp_rw [mul_neg]
+      rw [Finset.sum_neg_distrib, hcol b, neg_zero]
+    obtain ⟨u, v, hrect⟩ :=
+      exists_rectangle_dominating_value p q hp hq hp1 hq1
+        (fun a b => -h a b) hr hc x y
+    refine ⟨u, x, y, v, ?_⟩
+    rw [abs_of_nonpos hsign']
+    dsimp at hrect
+    linarith [hrect]
+
 end Nightfall.Observability.CenteredRectangles
