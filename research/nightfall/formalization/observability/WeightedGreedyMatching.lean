@@ -40,45 +40,45 @@ theorem exists_weighted_dominating_matching
   refine Finset.strongInductionOn T ?_
   intro T ih
   by_cases hne : T.Nonempty
-    · obtain ⟨a, haT, hmax⟩ := Finset.exists_max_image T w hne
-      let R := T.filter (fun e => separated u v e a)
-      have hsub : R ⊆ T := Finset.filter_subset T _
-      have haNotR : a ∉ R := by
-        simp only [R, Finset.mem_filter]
-        intro h
-        exact not_separated_self u v a h.2
-      have hstrict : R ⊂ T := by
-        apply Finset.ssubset_iff_subset_ne.mpr
-        refine ⟨hsub, ?_⟩
-        intro hEq
-        exact haNotR (hEq ▸ haT)
-      obtain ⟨M, hMsub, hmatch, hdom⟩ := ih R hstrict
-      refine ⟨insert a M, ?_, ?_, ?_⟩
-      · intro e he
-        rcases Finset.mem_insert.mp he with heq | heM
-        · exact heq ▸ haT
-        · exact hsub (hMsub heM)
-      · intro e he f hf hef
-        rcases Finset.mem_insert.mp he with heq | heM
-        · rcases Finset.mem_insert.mp hf with hfEq | hfM
-          · exact False.elim (hef (heq.trans hfEq.symm))
-          · subst e
-            exact separated_symm u v f a
-              (Finset.mem_filter.mp (hMsub hfM)).2
-        · rcases Finset.mem_insert.mp hf with hfEq | hfM
-          · subst f
-            exact (Finset.mem_filter.mp (hMsub heM)).2
-          · exact hmatch e heM f hfM hef
-      · intro e he
-        by_cases hsep : separated u v e a
-        · have heR : e ∈ R := Finset.mem_filter.mpr ⟨he, hsep⟩
-          obtain ⟨f, hf, htouch, hweight⟩ := hdom e heR
-          exact ⟨f, Finset.mem_insert.mpr (Or.inr hf), htouch, hweight⟩
-        · exact ⟨a, by simp, hsep, hmax e he⟩
-    · refine ⟨∅, by simp, ?_, ?_⟩
-      · intro e he
-        exact (Finset.not_mem_empty e he).elim
-      · intro e he
-        exact (hne ⟨e, he⟩).elim
+  · obtain ⟨a, haT, hmax⟩ := Finset.exists_max_image T w hne
+    let R := T.filter (fun e => separated u v e a)
+    have hsub : R ⊆ T := Finset.filter_subset T _
+    have haNotR : a ∉ R := by
+      simp only [R, Finset.mem_filter]
+      intro h
+      exact not_separated_self u v a h.2
+    have hstrict : R ⊂ T := by
+      apply Finset.ssubset_iff_subset_ne.mpr
+      refine ⟨hsub, ?_⟩
+      intro hEq
+      exact haNotR (hEq ▸ haT)
+    obtain ⟨M, hMsub, hmatch, hdom⟩ := ih R hstrict
+    refine ⟨insert a M, ?_, ?_, ?_⟩
+    · intro e he
+      rcases Finset.mem_insert.mp he with heq | heM
+      · exact heq ▸ haT
+      · exact hsub (hMsub heM)
+    · intro e he f hf hef
+      rcases Finset.mem_insert.mp he with heq | heM
+      · rcases Finset.mem_insert.mp hf with hfEq | hfM
+        · exact False.elim (hef (heq.trans hfEq.symm))
+        · subst e
+          exact separated_symm u v f a
+            (Finset.mem_filter.mp (hMsub hfM)).2
+      · rcases Finset.mem_insert.mp hf with hfEq | hfM
+        · subst f
+          exact (Finset.mem_filter.mp (hMsub heM)).2
+        · exact hmatch e heM f hfM hef
+    · intro e he
+      by_cases hsep : separated u v e a
+      · have heR : e ∈ R := Finset.mem_filter.mpr ⟨he, hsep⟩
+        obtain ⟨f, hf, htouch, hweight⟩ := hdom e heR
+        exact ⟨f, Finset.mem_insert.mpr (Or.inr hf), htouch, hweight⟩
+      · exact ⟨a, by simp, hsep, hmax e he⟩
+  · refine ⟨∅, by simp, ?_, ?_⟩
+    · intro e he
+      exact (Finset.not_mem_empty e he).elim
+    · intro e he
+      exact (hne ⟨e, he⟩).elim
 
 end Nightfall.Observability.WeightedGreedy
