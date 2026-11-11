@@ -1,0 +1,79 @@
+{
+  "schema": "nightfall-five-closures-v1.2",
+  "as_of_utc": "2026-11-11",
+  "research_lead": "Devin J. Wright",
+  "external_referee": false,
+  "novelty_cleared": false,
+  "full_end_to_end_lean": false,
+  "main_imported_lean": {
+    "pr": 317,
+    "head": "e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb",
+    "scope": "finite-product scalar only",
+    "toolchain": "Lean 4.33.0"
+  },
+  "claims": [
+    {
+      "id": "P1",
+      "status": "conditional-analytic",
+      "claim": "N<=r+5d^7B^3r/(3 c_* eta^(3/2))",
+      "assumptions": [
+        "disjoint independent output input groups",
+        "arbitrary-product scalar influence and posterior lemma"
+      ],
+      "gate": "independent measurable scalar observer review"
+    },
+    {
+      "id": "P2",
+      "status": "restricted-analytic-with-obstruction",
+      "claim": "V<=D B sqrt(M)+min(tM,B²) and for homogeneous cubic tau*_I=V exactly; for all degree<=d, V<=tau*_I<=T<=dV, equality if homogeneous",
+      "assumptions": [
+        "bounded top cubic hitting set",
+        "quadratic arbitrary-product influence imported"
+      ],
+      "gate": "new dense-core operator; general cubic still open"
+    },
+    {
+      "id": "P3",
+      "status": "analytic-proof-candidate",
+      "claim": "D_mu<=d floor(d² min((q-1)²,2R/Delta)) almost surely",
+      "assumptions": [
+        "finite output palette",
+        "independent completed product",
+        "finite Hoeffding degree"
+      ],
+      "gate": "independent measurable selection/referee and formalization"
+    },
+    {
+      "id": "P4",
+      "status": "elementary-derived-and-finite-tested",
+      "claim": "MSE=1/k-(1/(r k²))sum q_jt/m^(2(d-1)-h_jt); optimal replica gain g(c)=m^(c-1-2s) (c<=s+1), min(1,(c-s)/m^s) thereafter; globally optimal fixed-Q allocation fills complete replicas, with R*_Q=1/k-(a+g(b))/(r k²)",
+      "assumptions": [
+        "nested-address uniform independent construction",
+        "fixed nonadaptive query set"
+      ],
+      "gate": "prior-art check; universal upper bound remains separate; exact global result is construction-specific, not novel-priority cleared"
+    },
+    {
+      "id": "P5",
+      "status": "reproducibility-evidence",
+      "claim": "v1.1 ZIP has stale unverified render claims; v1.2 ZIP SHA 28e61af... has passing manifest; GitHub holds notes and checkers, not local binary",
+      "assumptions": [
+        "original v1.1 ZIP incomplete manifest (six missing PNGs)",
+        "repaired v1.2 ZIP verified with 21 actual included files"
+      ],
+      "gate": "replay independently; upload PDF/LaTeX to canonical repository after approval"
+    }
+  ],
+  "artifacts": [
+    {
+      "version": "v1.1",
+      "sha256": "0d9f2b9bc6c4183394173987c30b225ca1c4675f7307efa05c563e531a096bd4",
+      "manifest_status": "FAIL (six missing render PNGs)"
+    },
+    {
+      "version": "v1.2",
+      "sha256": "28e61af840605eb3b652cdb52bfeaa3a154f9d966b43ce69128c616b6ba30123",
+      "manifest_status": "PASS (21 included files)"
+    }
+  ]
+}
