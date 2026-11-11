@@ -75,46 +75,46 @@ theorem selector_one_two
 
 
 /-- Pointwise first-order algebra commutes with arbitrary finite sums. -/
-theorem sum_linear_switch_algebra {T : Type*} [Fintype T]
-    (a b : T → ℝ) (N : ℝ) :
-    N * (∑ t : T, b t - a t) =
-      -3 * N * (∑ t : T, a t) +
-        N * (∑ t : T, 2 * (a t + b t)) -
-        N * (∑ t : T, b t) := by
+theorem sum_linear_switch_algebra
+    (a b : ι → ℝ) (N : ℝ) :
+    N * (∑ t : ι, b t - a t) =
+      -3 * N * (∑ t : ι, a t) +
+        N * (∑ t : ι, 2 * (a t + b t)) -
+        N * (∑ t : ι, b t) := by
   calc
-    N * (∑ t : T, b t - a t) =
-        ∑ t : T, N * (b t - a t) := by rw [Finset.mul_sum]
-    _ = ∑ t : T,
+    N * (∑ t : ι, b t - a t) =
+        ∑ t : ι, N * (b t - a t) := by rw [Finset.mul_sum]
+    _ = ∑ t : ι,
         (-3 * N * a t + N * (2 * (a t + b t)) - N * b t) := by
           apply Finset.sum_congr rfl
           intro t _
           ring
-    _ = -3 * N * (∑ t : T, a t) +
-        N * (∑ t : T, 2 * (a t + b t)) -
-        N * (∑ t : T, b t) := by
+    _ = -3 * N * (∑ t : ι, a t) +
+        N * (∑ t : ι, 2 * (a t + b t)) -
+        N * (∑ t : ι, b t) := by
           simp only [Finset.sum_add_distrib, Finset.sum_sub_distrib,
             Finset.mul_sum]
           ring
 
 /-- The corresponding exact finite-sum quadratic algebra. -/
-theorem sum_pair_switch_algebra {T : Type*} [Fintype T]
-    (a b c d : T → ℝ) (N : ℝ) :
-    N * (∑ t : T, c t + b t - 2 * a t) =
-      -3 * N * (∑ t : T, a t) +
-        N * (∑ t : T, a t + b t + c t + d t) -
-        N * (∑ t : T, d t) := by
+theorem sum_pair_switch_algebra
+    (a b c d : E → ℝ) (N : ℝ) :
+    N * (∑ t : E, c t + b t - 2 * a t) =
+      -3 * N * (∑ t : E, a t) +
+        N * (∑ t : E, a t + b t + c t + d t) -
+        N * (∑ t : E, d t) := by
   calc
-    N * (∑ t : T, c t + b t - 2 * a t) =
-        ∑ t : T, N * (c t + b t - 2 * a t) := by
+    N * (∑ t : E, c t + b t - 2 * a t) =
+        ∑ t : E, N * (c t + b t - 2 * a t) := by
           rw [Finset.mul_sum]
-    _ = ∑ t : T,
+    _ = ∑ t : E,
         (-3 * N * a t + N * (a t + b t + c t + d t) - N * d t) := by
           apply Finset.sum_congr rfl
           intro t _
           ring
-    _ = -3 * N * (∑ t : T, a t) +
-        N * (∑ t : T, a t + b t + c t + d t) -
-        N * (∑ t : T, d t) := by
+    _ = -3 * N * (∑ t : E, a t) +
+        N * (∑ t : E, a t + b t + c t + d t) -
+        N * (∑ t : E, d t) := by
           simp only [Finset.sum_add_distrib, Finset.sum_sub_distrib,
             Finset.mul_sum]
           ring
