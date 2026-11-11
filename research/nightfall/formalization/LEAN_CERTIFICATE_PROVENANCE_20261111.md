@@ -63,3 +63,8 @@ Of the **59** Lean modules on the frozen source checkpoint, **58** exact current
 ## Census revision 12 (pending joint actual-function declaration)
 
 The branch adds `QuadraticUnifiedFinite.lean` as the 60th source. It combines the previously **kernel-certified** finite arbitrary-law degree-two exponent-5/2 baseline and constructed 16B range for the *same actual function*, under an explicit quadratic representation. **Compilation is pending** in [PR #391](https://github.com/d3lefts/d3lefts/pull/391); do not count this module as a successful certificate until its strict named check passes. The proposed variance-squared exponent-two theorem remains *uncompiled*, and a direct-source representation derivation and energy/matching moment bridges remain open. This is not a novelty finding.
+
+
+## Rev13: joint same-kernel declaration PASS
+
+The formerly pending `QuadraticUnifiedFinite.actual_degree_two_baseline_and_all_sections` has **strict Lean 4.33 successful** source-matched [run 43115838586](https://github.com/d3lefts/d3lefts/actions/runs/43115838586) at Git blob `6ca3d371ed2006e1cafc04bf3fba036afc1eefb3`. The theorem links the classical exponent-5/2 arbitrary-law influence bound and the constructed 16B full section-range on the **same** actual f with ESDegreeLE and explicit quadratic representation. This rev13 result supersedes the earlier pending rev12 status. All 60 main-compatible blobs now have successful historical scoped CI source matches. **The arbitrary-law variance-squared endpoint remains uncompiled.**

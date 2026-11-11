@@ -1,8 +1,8 @@
 {
   "schema": "nightfall-active-proof-passports-v1",
-  "version": 8,
+  "version": 9,
   "as_of": "2026-11-11",
-  "updated_by": "2026-11-11 source-hash reconciliation rev12: 60 modules incl pending same-pin joint actual-f declaration, no headline or originality promotion",
+  "updated_by": "2026-11-11 rev13 60-source exact Lean compiler inventory: all 60 source blobs linked to green scoped CI, joint f+16B and inherited 5/2 compiled; original exponent-two target remains uncompiled",
   "frozen_historical_registry_unchanged": true,
   "lifecycle": "active",
   "scientific_status": "Twelve active research claims; 60 main Lean source files classified (49 originality-quarantined, 10 derived transfers, one finite construction). The current-source hashes are exact, historical scoped CI receipts and cross-pin compilation are distinct gates; frozen eleven unchanged.",
