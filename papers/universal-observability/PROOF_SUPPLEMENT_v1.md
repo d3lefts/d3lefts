@@ -4,7 +4,7 @@
 
 **Scope:** A self-contained *analytic proof reconstruction*, conditional only on the **specified finite-product scalar theorem**. It is **not** a new Lean formalization, independent non-author refereeing, global novelty certification, or a replacement for the original research manuscript. Exact finite and numerical falsifiers accompany this supplement; they do not prove the infinite theorem.
 
-**Research provenance:** Devin J. Wright / NIGHTFALL; mathematical source [PRINCIPAL_THEOREM.md](../research/nightfall/2026-11-principal-observability/PRINCIPAL_THEOREM.md). The finite scalar input is the Lean declaration \`Nightfall.ProductSpace.Influence.product_influence\` at source commit \`e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb\`, Lean 4.33.0; successful [named-theorem CI receipt](https://github.com/d3lefts/d3lefts/actions/runs/42929857470). The inherited antipodal/level-set/certificate approach and original Boolean-cube result are credited to **David Turturean**, arXiv:2611.09773 (2026-11-06). The classical Hoeffding–Efron–Stein decomposition, Gaussian quadratic moment formula, and martingale conditional expectation results are not claimed as original here.
+**Research provenance:** Devin J. Wright / NIGHTFALL; mathematical source [PRINCIPAL_THEOREM.md](../../research/nightfall/2026-11-principal-observability/PRINCIPAL_THEOREM.md). The finite scalar input is the Lean declaration `Nightfall.ProductSpace.Influence.product_influence` at source commit `e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb`, Lean 4.33.0; successful [named-theorem CI receipt](https://github.com/d3lefts/d3lefts/actions/runs/42929857470). The inherited antipodal/level-set/certificate approach and original Boolean-cube result are credited to **David Turturean**, arXiv:2611.09773 (2026-11-06). The classical Hoeffding–Efron–Stein decomposition, Gaussian quadratic moment formula, and martingale conditional expectation results are not claimed as original here.
 
 ## 0. Theorem and exact assumptions
 
@@ -211,7 +211,28 @@ Orthogonal ranges imply *exactly*
 \]
 This completes the **analytic proof reconstruction** from the scoped finite scalar theorem. \(\square\)
 
-## 7. Independent proof attack and evidence limits
+## 7. Reusable exponent-transfer principle
+
+The argument is not tied to the specific exponent \(5/2\). Suppose an externally established **finite categorical law-free scalar theorem**, with degree cap \(d\), provides for some \(q>1\) and \(a_d>0\)
+\[
+\sup_i I_i(h)\ge a_d A^{2-2q}\operatorname{Var}(h)^q
+\]
+whenever \(|h|\le A\), with the same indicator-product hypotheses as Lemma 1. Lemmas 1 and 2 lift it to arbitrary independent product laws, without changes to the coefficient. With \(k_0=a_d B^{2-2q}\), the scalar greedy posterior policy achieves risk \(\le\eta\) within
+\[
+N_{\rm scalar}\le\left\lceil \frac{q}{q-1}\frac{d}{k_0\eta^{q-1}}\right\rceil.
+\]
+For Hilbert output projected to \(r\) dimensions, take \(k=a_d B^{2-2q}r^{1-q}\) by the same sign-variance argument. Lemmas 5–7 remain valid for every \(q>1\), and the expected influence calculation uses convexity of \(v^q\). Therefore the Hilbert spectral-tail target follows in at most
+\[
+N_{\rm Hilbert}\le \left\lceil
+\frac{8q}{q-1}\frac{d}{k\eta^{q-1}}
+\log\left(1+\frac{4d}{k\eta^{q-1}}\right)
+\right\rceil .
+\]
+This is an **operator that transfers any such independently proved finite scalar influence power law** to arbitrary-product adaptive observability. Taking \(q=5/2\) and \(a_d=c_*d^{-6}\) recovers the displayed NIGHTFALL constants exactly.
+
+**Scope:** this is a logical transfer theorem, not an improvement of Turturean's base exponent or a certificate that such a finite scalar premise exists for \(q=2\). Novelty of the abstract operator itself is unreviewed.
+
+## 8. Independent proof attack and evidence limits
 
 **A priori attack targets:** (A) null-atom partition cells spuriously introducing degree; (B) false interchange of expectation and coordinate maximum; (C) conditional covariance eigenbasis measurability; (D) assuming a stochastic drift inequality instead of deriving it; (E) missing finite-horizon stopping strictness. The proof addresses (A) by positive-atom restriction, (B) by a sign exponential-moment bound, (C) by basing the actual policy on trace rather than eigenvectors, (D) via exact Fubini identity (2.2), and (E) via the bounded concave potential (5.2). These are internal proof repairs, **not independent non-author referee approval**.
 
