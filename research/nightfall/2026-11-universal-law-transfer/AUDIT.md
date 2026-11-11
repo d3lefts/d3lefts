@@ -39,7 +39,7 @@ The adversarial family concentrates target mass on one source atom of probabilit
 - An external reviewer should independently check that the same source observer and its default extension are measurable under each target law; one must assume the output remains pointwise bounded on the singular component for squared-loss transfer.
 - Verify that the (T4) modulus is sharp for **all bounded losses**, not automatically for the much smaller set of observability residuals.
 - Challenge necessity/sufficiency of uniform integrability only for the **universal loss-transfer property**, not for one fixed function.
-- Search Neyman–Pearson, distribution shift and active observation literature; do not award priority for the classical dual or UI lemma.
+- Search Neyman–Pearson, distribution shift and active observation literature; do not award priority for the classical dual or UI lemma. Mullhaupt–Peng (2025), arXiv:2505.08899, already characterize the sharp boundary by hockey-stick divergences. The added complexity-invariance lemma is a direct consequence of the classical null-set equivalence; kernel checking does not make it globally original.
 
 ## Stop rule and status
 
