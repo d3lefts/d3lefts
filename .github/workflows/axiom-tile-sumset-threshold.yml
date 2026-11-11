@@ -1,0 +1,41 @@
+name: AXIOM sharp tiled-sumset phase transition
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/agent-reports/axiom_tile_threshold_20261030/**"
+      - ".github/workflows/axiom-tile-sumset-threshold.yml"
+  push:
+    branches: [main]
+    paths:
+      - "research/nightfall/agent-reports/axiom_tile_threshold_20261030/**"
+      - ".github/workflows/axiom-tile-sumset-threshold.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-integer-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Source hash
+        run: sha256sum research/nightfall/agent-reports/axiom_tile_threshold_20261030/check_tiles.py
+      - name: Exact diamond prime-family and boundary rectangle replay
+        run: python3 research/nightfall/agent-reports/axiom_tile_threshold_20261030/check_diamond.py
+      - name: Non-importing signed coefficient row and second-field isomorphism
+        run: python3 research/nightfall/agent-reports/axiom_tile_threshold_20261030/audit_diamond_row.py
+      - name: Freeze diamond source hashes
+        run: |
+          sha256sum research/nightfall/agent-reports/axiom_tile_threshold_20261030/check_diamond.py
+          sha256sum research/nightfall/agent-reports/axiom_tile_threshold_20261030/audit_diamond_row.py
+      - name: Exact combined-product/diamond capacity gap audit on every prime through 20000
+        run: python3 research/nightfall/agent-reports/axiom_tile_threshold_20261030/check_global_gap.py
+      - name: Capture global gap checker hash
+        run: sha256sum research/nightfall/agent-reports/axiom_tile_threshold_20261030/check_global_gap.py
+      - name: Full pair-sum and actual field-square verifier
+        run: python3 research/nightfall/agent-reports/axiom_tile_threshold_20261030/check_tiles.py
