@@ -1,0 +1,65 @@
+name: NIGHTFALL quadratic discovery — scoped Lean kernel audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/QuadraticDiscoveryCore.lean'
+      - 'research/nightfall/formalization/observability/QUADRATIC_DISCOVERY_PROOF_PASSPORT.md'
+      - '.github/workflows/nightfall-quadratic-discovery-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  quadratic-core:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Lean 4.35.0 and Mathlib 4.35.0
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.35.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          git clone --depth 1 --branch v4.35.0 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4
+          (cd /tmp/mathlib4 && "$HOME/.elan/bin/lake" exe cache get)
+      - name: Kernel-compile exact scoped theorems and reject untrusted axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/QuadraticDiscoveryCore.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl Nightfall.Observability.QuadraticV3.additive_projection_identity \
+            --decl Nightfall.Observability.QuadraticV3.additive_projection_seven \
+            --decl Nightfall.Observability.QuadraticV3.additive_projection_seven_sharp \
+            --decl Nightfall.Observability.QuadraticV3.parity_coupling_difference \
+            --decl Nightfall.Observability.QuadraticV3.mixed_difference_four \
+            --decl Nightfall.Observability.QuadraticV3.matching_amplitude_from_coupled_expectations \
+            --decl Nightfall.Observability.QuadraticV3.quadratic_certificate_closure \
+            --decl Nightfall.Observability.QuadraticV3.squared_influence_of_quadratic_bound \
+            --json-out lean-receipts/quadratic-discovery-core.json || {
+              cat lean-receipts/quadratic-discovery-core.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/quadratic-discovery-core.json
+      - name: Preserve pins and source checksums
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/observability/QuadraticDiscoveryCore.lean > lean-receipts/SHA256SUMS
+          git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt 2>/dev/null || true
+          echo leanprover/lean4:v4.35.0 > lean-receipts/lean-version.txt
+          git rev-parse HEAD > lean-receipts/repository-commit.txt
+      - name: Archive verification receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quadratic-discovery-core-lean-receipts
+          path: lean-receipts/
+          if-no-files-found: warn
+          retention-days: 45
