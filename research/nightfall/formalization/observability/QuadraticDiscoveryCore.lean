@@ -41,7 +41,7 @@ theorem additive_projection_seven
   obtain ⟨h0l, h0u⟩ := abs_le.mp h0
   obtain ⟨hhl, hhu⟩ := abs_le.mp hh
   obtain ⟨h1l, h1u⟩ := abs_le.mp h1
-  rw [additive_projection_identity]
+  rw [additive_projection_identity a b c]
   apply abs_le.mpr
   constructor <;> linarith
 
@@ -173,10 +173,18 @@ theorem squared_influence_of_quadratic_bound
     (hV : 0 ≤ V) (hB : 0 ≤ B) (hM : 0 ≤ M) (hC : 0 ≤ C)
     (hbound : V ≤ C * B * Real.sqrt M) :
     V ^ 2 ≤ C ^ 2 * B ^ 2 * M := by
-  have hq : 0 ≤ C * B * Real.sqrt M :=
-    mul_nonneg (mul_nonneg hC hB) (Real.sqrt_nonneg M)
-  have hp := mul_nonneg (sub_nonneg.mpr hbound) (add_nonneg hq hV)
-  have hs : (Real.sqrt M) ^ 2 = M := Real.sq_sqrt hM
-  nlinarith [hp]
+  let Q : ℝ := C * B * Real.sqrt M
+  have hq : 0 ≤ Q := by
+    dsimp [Q]
+    exact mul_nonneg (mul_nonneg hC hB) (Real.sqrt_nonneg M)
+  have hsub : 0 ≤ Q - V := by
+    dsimp [Q]
+    linarith
+  have hp := mul_nonneg hsub (add_nonneg hq hV)
+  have hsq : V ^ 2 ≤ Q ^ 2 := by nlinarith [hp]
+  calc
+    V ^ 2 ≤ Q ^ 2 := hsq
+    _ = C ^ 2 * B ^ 2 * (Real.sqrt M) ^ 2 := by dsimp [Q]; ring
+    _ = C ^ 2 * B ^ 2 * M := by rw [Real.sq_sqrt hM]
 
 end Nightfall.Observability.QuadraticV3
