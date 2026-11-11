@@ -1,0 +1,22 @@
+name: NIGHTFALL v5 categorical-rate exact proxy audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-spectral-observability/CATEGORICAL_RATE_CORRECTION_V5.md'
+      - 'research/nightfall/2026-11-spectral-observability/check_categorical_proxy_v5.py'
+      - '.github/workflows/nightfall-categorical-v5-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-proxy-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exact independent categorical proxy and sorted-tail audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I research/nightfall/2026-11-spectral-observability/check_categorical_proxy_v5.py
+          sha256sum research/nightfall/2026-11-spectral-observability/check_categorical_proxy_v5.py research/nightfall/2026-11-spectral-observability/CATEGORICAL_RATE_CORRECTION_V5.md
