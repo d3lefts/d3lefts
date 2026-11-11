@@ -25,43 +25,50 @@
   });
  }
 
- const main=document.querySelector("main");
- const page=location.pathname.split("/").pop()||"index.html";
- // The two entrances are distinct documents. Source pages remain shared,
- // but offer both destination routes independently of the reading palette.
- const header=document.querySelector(".header");
- if(header&&main&&page!=="index.html"&&page!=="new-moon.html"&&!document.querySelector(".nf-home-route-nav")){
-  const routes=document.createElement("nav");
-  routes.className="nf-home-route-nav nf-global-route-nav wrap";
-  routes.setAttribute("aria-label","Choose NIGHTFALL experience");
-  routes.innerHTML='<span class="nf-route-caption">TWO ENTRANCES / SHARED RESEARCH RECORD</span>'+
-   '<a href="index.html" data-nf-route="archive"><span>01</span> NULL FIELD <small>Research archive</small></a>'+
-   '<a href="new-moon.html" data-nf-route="moon"><span>02</span> NEW MOON <small>Open investigations</small></a>';
-  header.insertAdjacentElement("afterend",routes);
- }
+  const main=document.querySelector("main");
+  const page=location.pathname.split("/").pop()||"index.html";
+  // Content phase is a property of a research page, not its saved color palette.
+  const activePages=new Set([
+    "new-moon.html","product-space-influence.html","observability.html",
+    "agenda.html","desk.html","frontier.html","join.html","constellation.html",
+    "orchestrator.html","discovery.html","claim-lab.html","living-investigation.html",
+    "exact-research.html","judgment-provenance.html","atlas.html","adversary.html"
+  ]);
+  const archivedPages=new Set([
+    "index.html","research.html","erdos-paper.html","living-paper.html",
+    "findings-20261029.html","sidon-arity.html","evidence.html",
+    "passport.html","referee.html"
+  ]);
+  const researchPhase=activePages.has(page)?"moon":archivedPages.has(page)?"archive":"shared";
+  document.documentElement.setAttribute("data-nf-research-phase",researchPhase);
+  const header=document.querySelector(".header");
+  if(header&&main&&page!=="index.html"&&page!=="new-moon.html"&&!document.querySelector(".nf-home-route-nav")){
+    const routes=document.createElement("nav");
+    routes.className="nf-home-route-nav nf-global-route-nav wrap";
+    routes.setAttribute("aria-label","Choose archived research or active investigations");
+    const context=researchPhase==="moon"?"ACTIVE RESEARCH / NEW MOON":
+      researchPhase==="archive"?"ARCHIVED RECORD / NULL FIELD":"SHARED RESEARCH CONTEXT";
+    routes.innerHTML='<span class="nf-route-caption">'+context+'</span>'+
+      '<a href="index.html" data-nf-route="archive"><span>01</span> NULL FIELD <small>Archived findings</small></a>'+
+      '<a href="new-moon.html" data-nf-route="moon"><span>02</span> NEW MOON <small>Active investigations</small></a>';
+    if(researchPhase!=="shared"){
+      routes.querySelector('[data-nf-route="'+researchPhase+'"]')?.setAttribute("aria-current","location");
+    }
+    header.insertAdjacentElement("afterend",routes);
+  }
 
  // Static top-level navigation is complete without JavaScript; app-owned
  // workbenches own their own chrome. Do not inject duplicate journeys.
  if(!main||["index.html","new-moon.html","constellation.html","review.html"].includes(page)||
     document.querySelector("#app")||document.querySelector(".app")||main.closest(".app"))return;
 
- // Single source for the specialist-page route taxonomy. A destination means
- // where a task belongs, never that it is mathematically complete.
- // Research source pages are shared. The first route back respects the
- // selected reading without duplicating source evidence or mutating claims.
- const preferredMoon=()=>{
-  try{
-   const v=localStorage.getItem("nightfall.theme.v1");
-   if(v==="dusk"||v==="light")return v==="dusk";
-  }catch(_){}
-  return document.documentElement?.getAttribute?.("data-nf-theme")==="dusk";
- };
- const homeDestination={id:"home",label:"",href:""};
- const updateHome=(moon)=>{
-  homeDestination.href=moon?"new-moon.html#open-ledger":"index.html#flagships";
-  homeDestination.label=moon?"01 / NEW MOON · Open investigations":"01 / NULL FIELD · Research archive";
- };
- updateHome(preferredMoon());
+  // Return destinations never change just because the palette changes.
+  const homeDestination={
+    id:"home",
+    href:researchPhase==="moon"?"new-moon.html#open-ledger":"index.html#flagships",
+    label:researchPhase==="moon"?"01 / NEW MOON · Active investigations":
+      "01 / NULL FIELD · Archived research"
+  };
  const destinations=[
   homeDestination,
   {id:"constellation",label:"02 / Constellation · Connections",href:"constellation.html#map"},
@@ -127,15 +134,7 @@
   if(destination.id===inferred)a.setAttribute("aria-current","page");
   thread.append(a);
  }
- // The palette button still changes the atmosphere on specialist pages.
- // Its corresponding homepage handoff stays synchronized without a reload.
- if(typeof window!=="undefined"&&typeof window.addEventListener==="function"){
-  window.addEventListener("nightfall-theme-change",()=>{
-   updateHome(document.documentElement?.getAttribute?.("data-nf-theme")==="dusk");
-   const a=thread.querySelector?.("a");
-   if(a){a.href=homeDestination.href;a.textContent=homeDestination.label;}
-  });
- }
+  // The reading palette does not rewrite the scientific record's destination.
  if(page==="join.html"){
   const hero=main.querySelector(".join-hero");
   if(hero)hero.insertAdjacentElement("afterend",thread);
