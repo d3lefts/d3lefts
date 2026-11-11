@@ -54,7 +54,10 @@ const roles={
  "docs/passport.html":'class="pp-coverage"',
  "docs/active-proof-passport.html":'href="active-proof-passport.json"',
  "docs/atlas.html":'id="atlas-explore"',
- "docs/research.html":'class="wrap archive-coverage"'
+ "docs/research.html":'class="wrap archive-coverage"',
+ "docs/review.html":'id="start-here"',
+ "docs/evidence.html":'class="wrap evidence-page"',
+ "docs/observability.html":'id="quadratic"'
 };
 for(const [file,anchor] of Object.entries(roles)){
  const body=read(file);
