@@ -42,4 +42,6 @@ NF-DISCOVERY-GRANULARITY-20261028, NF-PAS-RETROSPECTIVE-20261013 [adverse contro
 
 For each edge record: source declaration/proof section, assumptions transferred, exact coefficient and scaling, transformation/equality used, known counterexamples, reviewer identity (if authorized), and a pinned source revision. A failure in an imported premise must demote downstream status until repaired. Do not infer peer review from workflow color; preserve non-author review as a separate field.
 
-**Canonical November 11 revision:** [v7 analytic manuscript](../../papers/finite-product-influence/Bias_Free_Aaronson_Ambainis_All_Product_Spaces_v7.tex), [rank-sensitive proof](../../papers/finite-product-influence/Rank_Optimal_Observation_Section_v7.tex), and [deduplication/review note](NOV11_RECONCILIATION.md). These are not end-to-end Lean receipts.\n\n**Next decisive tasks:** [Referee desk](../referee/README.md).
+**Canonical November 11 revision:** [v7 analytic manuscript](../../papers/finite-product-influence/Bias_Free_Aaronson_Ambainis_All_Product_Spaces_v7.tex), [rank-sensitive proof](../../papers/finite-product-influence/Rank_Optimal_Observation_Section_v7.tex), and [deduplication/review note](NOV11_RECONCILIATION.md). These are not end-to-end Lean receipts.
+
+**Next decisive tasks:** [Referee desk](../referee/README.md).
