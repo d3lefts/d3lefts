@@ -8,6 +8,7 @@ on:
       - 'research/nightfall/formalization/product_space/HeterogeneousAlphabets.lean'
       - 'research/nightfall/formalization/product_space/EfronSteinDegree.lean'
       - 'research/nightfall/formalization/product_space/QuadraticHoeffdingBridge.lean'
+      - 'research/nightfall/formalization/product_space/QuadraticActualRowOscillation.lean'
       - 'research/nightfall/formalization/observability/QuadraticUnifiedFinite.lean'
       - '.github/workflows/nightfall-product-influence.yml'
   workflow_dispatch:
@@ -157,6 +158,22 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/quadratic-unified-actual-f.json
           sha256sum "$O/QuadraticUnifiedFinite.lean" "$P/QuadraticHoeffdingBridge.lean" "$O/QuadraticRealizedRangeBudget.lean" > lean-receipts/quadratic-joint-source-SHA256SUMS.txt
+      - name: Strict kernel-check actual degree-two all-coordinate row oscillation
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space
+          N=Nightfall.Observability.QuadraticActualRows
+          python3 scripts/lean_bridge.py "$P/QuadraticActualRowOscillation.lean" \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.actual_degree_two_row_controls_all_sections \
+            --decl $N.actual_degree_two_total_section_budget \
+            --json-out lean-receipts/quadratic-actual-row-oscillation.json || {
+              python3 -c "import json;r=json.load(open('lean-receipts/quadratic-actual-row-oscillation.json'));print(r.get('status'));print((r.get('stdout') or '')[-40000:]);print((r.get('stderr') or '')[-9000:])" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/quadratic-actual-row-oscillation.json
       - name: Kernel-check heterogeneous alphabets and zero-mass atoms
         shell: bash
         run: |
