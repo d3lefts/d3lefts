@@ -4,6 +4,7 @@ on:
     paths:
       - 'research/nightfall/formalization/observability/QuadraticMatchedParity.lean'
       - 'research/nightfall/formalization/observability/ParityBlockCancellation.lean'
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/check_global_matching_parity.py'
       - '.github/workflows/nightfall-matching-global-lean.yml'
   workflow_dispatch:
 permissions:
@@ -49,6 +50,11 @@ jobs:
           sha256sum research/nightfall/formalization/observability/{ParityBlockCancellation,QuadraticMatchedParity}.lean > lean-receipts/SHA256SUMS
           git rev-parse HEAD > lean-receipts/repository-commit.txt
           git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt
+      - name: Independently exhaust full quadratic parity configurations
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/2026-11-quadratic-law-free-audit/check_global_matching_parity.py
       - name: Persist all receipts
         if: always()
         uses: actions/upload-artifact@v4
