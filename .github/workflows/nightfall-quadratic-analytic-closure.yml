@@ -1,0 +1,51 @@
+name: NIGHTFALL quadratic analytic closure — exact finite sign and full-model replay
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-quadratic-rank-optimal/**'
+      - '.github/workflows/nightfall-quadratic-analytic-closure.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/2026-11-quadratic-rank-optimal/**'
+      - '.github/workflows/nightfall-quadratic-analytic-closure.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-exact-analytic-audits:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify prior independent full quadratic rational models
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/2026-11-quadratic-rank-optimal/check_rank_linear_exact.py | tee /tmp/quadratic-models.txt
+          grep -q 'PASS exact_product_models=220' /tmp/quadratic-models.txt
+          grep -q 'receipt_sha256 96738835f7333a475559f39d9c5913906efde0a25d7c5492556e2e179b902add' /tmp/quadratic-models.txt
+      - name: Independently verify 1032 signed Hilbert moment and directed sqrt cases
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/2026-11-quadratic-rank-optimal/check_quadratic_finite_sign_lift.py | tee /tmp/sign-lift.txt
+          grep -q 'PASS exact_sign_hilbert_cases=1032' /tmp/sign-lift.txt
+          grep -q 'receipt_sha256 7e2ed2bff098f7912df3580294cfdc6b66bf66fb2d106f2a75b800b5a766793e' /tmp/sign-lift.txt
+      - name: Record immutable source and declared certification scope
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p proof-receipts
+          sha256sum research/nightfall/2026-11-quadratic-rank-optimal/FINITE_SIGN_CLOSURE_v2.md \
+            research/nightfall/2026-11-quadratic-rank-optimal/check_rank_linear_exact.py \
+            research/nightfall/2026-11-quadratic-rank-optimal/check_quadratic_finite_sign_lift.py > proof-receipts/SHA256SUMS
+          git rev-parse HEAD > proof-receipts/COMMIT
+          echo 'Analytic source + finite exact arithmetic. No full quadratic theorem Lean compilation claimed.' > proof-receipts/SCOPE
+          cp /tmp/quadratic-models.txt /tmp/sign-lift.txt proof-receipts/
+      - name: Preserve exact evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-quadratic-sign-analytic-audit
+          path: proof-receipts/
+          retention-days: 90
