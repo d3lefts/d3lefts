@@ -18,7 +18,7 @@ namespace Nightfall.Observability.Rademacher
 
 open Finset
 
-variable {ξ κ ι : Type*} [Fintype ξ] [Fintype κ] [Fintype ι]
+variable {ξ κ ι : Type*} [Fintype ξ] [Fintype κ] [DecidableEq κ] [Fintype ι]
 
 /-- Every rank-coordinate signed product can be expanded as a double sum. -/
 theorem signed_square_expand (σ : ξ → κ → ℝ) (v : κ → ℝ) (x : ξ) :
@@ -55,9 +55,6 @@ theorem signed_orthogonal_isometry
       apply Finset.sum_congr rfl
       intro j _
       rw [Finset.mul_sum]
-      apply Finset.sum_congr rfl
-      intro k _
-      ring
     _ = ∑ j : κ, ∑ k : κ, (∑ x : ξ,
           μ x * (σ x j * σ x k)) * (v j * v k) := by
       calc
@@ -107,13 +104,24 @@ theorem signed_energy_trace_identity
         ρ i * (∑ j : κ, σ x j * w i j) ^ 2) =
         ∑ i : ι, ρ i * (∑ x : ξ,
           μ x * (∑ j : κ, σ x j * w i j) ^ 2) := by
-      rw [Finset.sum_comm]
-      apply Finset.sum_congr rfl
-      intro i _
-      rw [Finset.mul_sum]
-      apply Finset.sum_congr rfl
-      intro x _
-      ring
+      calc
+        (∑ x : ξ, μ x * ∑ i : ι,
+            ρ i * (∑ j : κ, σ x j * w i j) ^ 2) =
+          ∑ x : ξ, ∑ i : ι,
+            μ x * (ρ i * (∑ j : κ, σ x j * w i j) ^ 2) := by
+            apply Finset.sum_congr rfl
+            intro x _
+            rw [Finset.mul_sum]
+        _ = ∑ i : ι, ∑ x : ξ,
+            μ x * (ρ i * (∑ j : κ, σ x j * w i j) ^ 2) := Finset.sum_comm
+        _ = ∑ i : ι, ρ i * (∑ x : ξ,
+            μ x * (∑ j : κ, σ x j * w i j) ^ 2) := by
+            apply Finset.sum_congr rfl
+            intro i _
+            rw [Finset.mul_sum]
+            apply Finset.sum_congr rfl
+            intro x _
+            ring
     _ = ∑ i : ι, ρ i * ∑ j : κ, (w i j) ^ 2 := by
       apply Finset.sum_congr rfl
       intro i _
