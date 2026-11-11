@@ -99,16 +99,12 @@ theorem global_matching_quadratic_parity_identity
       quadraticModel c leftOne rightOne matched
           first second sideFirst sideSecond off
           (evenConfig left right σ) = a σ + b σ + m σ + k σ := by
-    dsimp [quadraticModel, evenConfig, a, b, m, k]
-    simp only [ite_false, ite_true]
-    ring
+    dsimp [quadraticModel, evenConfig, a, b, m, k] <;> ring
   have hodd (σ : ι → Bool) :
       quadraticModel c leftOne rightOne matched
           first second sideFirst sideSecond off
           (oddConfig left right σ) = a σ + b' σ + m' σ + k' σ := by
-    dsimp [quadraticModel, oddConfig, a, b', m', k']
-    simp only [ite_false, ite_true]
-    ring
+    dsimp [quadraticModel, oddConfig, a, b', m', k'] <;> ring
   have hb : (∑ σ : ι → Bool, b σ) =
       ∑ σ : ι → Bool, b' σ := by
     dsimp [b, b']
@@ -134,6 +130,19 @@ theorem global_matching_quadratic_parity_identity
           matched i (left i false) (right i true) -
           matched i (left i true) (right i false) +
           matched i (left i true) (right i true))) := by
+    have hs (σ : ι → Bool) :
+        m σ - m' σ =
+        ∑ i : ι, (matched i (left i (σ i)) (right i (σ i)) -
+          matched i (left i (σ i)) (right i (!(σ i)))) := by
+      dsimp [m, m']
+      rw [Finset.sum_sub_distrib]
+    have hsum :
+        (∑ σ : ι → Bool, (m σ - m' σ)) =
+        ∑ σ : ι → Bool, ∑ i : ι,
+          (matched i (left i (σ i)) (right i (σ i)) -
+          matched i (left i (σ i)) (right i (!(σ i)))) :=
+      Finset.sum_congr rfl (fun σ _ => hs σ)
+    rw [hsum]
     exact matched_family_delta_identity
       (fun i v w => matched i (left i v) (right i w))
   have hcancel :
@@ -228,6 +237,10 @@ theorem global_matching_delta_budget
       _ = (Fintype.card (ι → Bool) : ℝ) * (2 * B) := by simp
   have hmul : n * D ≤ n * (4 * B) := by
     nlinarith [hq, hidentity]
-  exact (mul_le_mul_left hn).mp hmul
+  change D ≤ 4 * B
+  by_contra h
+  have hd : 0 < D - 4 * B := sub_pos.mpr (lt_of_not_ge h)
+  have hpositive : 0 < n * (D - 4 * B) := mul_pos hn hd
+  nlinarith [hmul, hpositive]
 
 end Nightfall.Observability.GlobalQuadraticParity
