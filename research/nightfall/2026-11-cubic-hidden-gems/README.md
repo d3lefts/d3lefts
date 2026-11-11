@@ -12,6 +12,8 @@ Research lead: Devin J. Wright / NIGHTFALL Constellation. Date: 11 November 2026
 
 4. [Two-draw scalarization obstruction](AUDIT_TWO_DRAW_MAX.md): an exact bounded degree-two family saturates exponent two, yet the expected maximum control influence after leaf-pair scalarization is unbounded relative to the original maximum. This falsifies a natural expectation/max interchange, not the cubic conjecture.
 
+5. **Bounded shared-control theorem:** for additive leaves with t controls and no leaf-rank/moment restriction, V <= B sqrt(M)+t M. In the two-control cubic case, M >= V^2/(9B^2); full proof is in [Operator D](PROOF_NOTE.md#operator-d-bounded-shared-controls-arbitrary-high-rank-leaf-sections-exact-strengthening).
+
 **Not claimed:** universal cubic exponent two, leaf-Hilbert sections of unrestricted rank, global priority, or complete machine checking.
 
 ## Exact finite replay
