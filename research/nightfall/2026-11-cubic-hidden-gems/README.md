@@ -10,6 +10,8 @@ Research lead: Devin J. Wright / NIGHTFALL Constellation. Date: 11 November 2026
 2. Influence-weighted and exact-energy cubic hitting-set certificates. Allows growing cover cardinality when covered influence is small. The connected cyclic example has repeated pairs and cover number >=k, while total cover influence is B sqrt(M)/sqrt(2).
 3. Dimension-free l1-valued quadratic influence and **log-free fair-sign/rank-one-leaf cubic selector** inequalities, conditional on the original quadratic matching proof. This covers dense control interaction patterns, including arbitrarily biased leaf features, without an alphabet-size factor.
 
+4. [Two-draw scalarization obstruction](AUDIT_TWO_DRAW_MAX.md): an exact bounded degree-two family saturates exponent two, yet the expected maximum control influence after leaf-pair scalarization is unbounded relative to the original maximum. This falsifies a natural expectation/max interchange, not the cubic conjecture.
+
 **Not claimed:** universal cubic exponent two, leaf-Hilbert sections of unrestricted rank, global priority, or complete machine checking.
 
 ## Exact finite replay
@@ -20,6 +22,7 @@ From the repository root:
 python3 -I research/nightfall/2026-11-cubic-hidden-gems/check_exact.py
 python3 -I research/nightfall/2026-11-cubic-hidden-gems/verify_l1_quadratic.py
 python3 -I research/nightfall/2026-11-cubic-hidden-gems/verify_bounded_controls.py
+python3 -I research/nightfall/2026-11-cubic-hidden-gems/attack_two_draw_max.py
 ```
 
 CI: [NIGHTFALL cubic hidden-gems exact replay](../../../.github/workflows/nightfall-cubic-hidden-gems.yml). It records SHA-256 hashes of checked branch files in an Actions artifact. The source research archive `NIGHTFALL_Cubic_Hidden_Gems_v1.zip` had SHA-256 `5d7c8dd0870dfdbe83f3fcdd7fe627f7b15f87d6c4eb29fb4c6c95a28451ecf5`. The scripts committed here preserve the tests but condense comments, so their hashes need not match that archive's individual manifest.
