@@ -6,6 +6,8 @@ Each entry below is a **reading guide to one canonical source**, not a second co
 
 | Manuscript / contribution | Exact result level | Primary source and review entry |
 | --- | --- | --- |
+| [**Paper A — Exact Recovery of Finite-Range Functions on Arbitrary Product Domains**](exact-recovery/MANUSCRIPT.md) | Distribution-free almost-sure recovery; real/vector palette; separate completed-product analytic proof, **not externally refereed** | [Read and audit](exact-recovery/README.md) |
+| [**Paper B — Spectral Adaptive Prediction on Heterogeneous Product Spaces**](spectral-adaptive-prediction/MANUSCRIPT.md) | General Hilbert logarithmic rank bound and disjoint-output rank-linear bound; **finite scalar Lean foundation only** | [Read and audit](spectral-adaptive-prediction/README.md) |
 | [Universal Product-Space Observability](universal-observability/README.md) | Full analytic manuscript, **not externally refereed**; finite scalar foundation kernel-checked separately | General-degree Hilbert/adaptive all-law claim |
 | [Quadratic Product-Space Influence and Adaptive Queries](quadratic-observability/README.md) | Candidate / conditional; **full public LaTeX archive missing** | Stronger exponent-two and rank-aware complexity |
 | [Finite Product Influence: Formal Source](finite-product-influence/README.md) | **Scoped Lean kernel theorem**, inherited cube mechanics, priority pending | Exact coefficient and legal hypotheses |
