@@ -1,0 +1,55 @@
+name: NIGHTFALL witness-rank exact finite falsification
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/discoverability/check_witness_rank.py'
+      - 'research/nightfall/formalization/discoverability/check_high_arity_address.py'
+      - 'research/nightfall/formalization/discoverability/check_posterior_palette.py'
+      - '.github/workflows/nightfall-witness-rank-exact.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exhaustive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exact exhaustive and adversarial witness-rank replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence
+          python3 research/nightfall/formalization/discoverability/check_witness_rank.py | tee evidence/results.json
+          python3 - <<'PY'
+          import json
+          with open("evidence/results.json") as f: v=json.load(f)
+          assert v["status"]=="PASS"
+          assert v["exhaustive"]=={"1":4,"2":16,"3":256}
+          assert v["examples"]["4"]["address"]=={"D":2,"w":2,"r":2,"greedy":3}
+          assert v["greedy_saturations"]>=1
+          assert v["constrained_negative_control"]=={"states":["10","01"],"labels":[0,1],"w":2,"r":1,"optimal_D":1}
+          PY
+          python3 research/nightfall/formalization/discoverability/check_high_arity_address.py | tee evidence/address.json
+          python3 - <<'PY'
+          import json
+          with open("evidence/address.json") as f: v=json.load(f)
+          assert v["status"]=="PASS"
+          assert all(d["adaptive"]==2 and d["nonadaptive"]==int(n)+1 for n,d in v["cases"].items())
+          PY
+          python3 research/nightfall/formalization/discoverability/check_posterior_palette.py | tee evidence/palette.json
+          python3 - <<'PY'
+          import json
+          with open("evidence/palette.json") as f: v=json.load(f)
+          assert v["status"]=="PASS" and v["cases"]==7792 and v["worst_ratio"]=="1"
+          PY
+          sha256sum research/nightfall/formalization/discoverability/check_witness_rank.py research/nightfall/formalization/discoverability/check_high_arity_address.py research/nightfall/formalization/discoverability/check_posterior_palette.py > evidence/SHA256SUMS.txt
+          git rev-parse HEAD > evidence/commit.txt
+          python3 --version > evidence/python.txt
+      - name: Upload exact replay
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: witness-rank-finite-exact
+          path: evidence/
+          if-no-files-found: warn
