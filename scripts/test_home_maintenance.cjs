@@ -13,10 +13,10 @@ const styles=[...html.matchAll(/<link\s+rel="stylesheet"\s+href="([^"]+)"/g)].ma
 const moonStyles=[...moon.matchAll(/<link\s+rel="stylesheet"\s+href="([^"]+)"/g)].map(x=>x[1]);
 const scripts=[...html.matchAll(/<script\s+src="([^"]+)"\s+defer><\/script>/g)].map(x=>x[1]);
 assert.equal(styles.length,8,"NULL FIELD retains seven established stylesheets plus the scoped two-page experience stylesheet");
-assert.equal(moonStyles.length,4,"NEW MOON loads only core site, its color palette, two skies, and its standalone experience styles");
+assert.equal(moonStyles.length,5,"NEW MOON includes its archived finite witness styles");
 assert.ok(styles.includes("experience-pages.css")&&moonStyles.includes("experience-pages.css"),"Both homepage routes require the shared page-selector styles");
-assert.ok(!moonStyles.includes("home-rhythm.css")&&!moonStyles.includes("home-dual-experience.css"),"NEW MOON must not inherit the archived homepage layout");
-assert.equal(scripts.length,5,"Only source-hydration and shared page controllers remain; parallax scripts are retired");
+assert.ok(moonStyles.includes("home-rhythm.css")&&!moonStyles.includes("home-dual-experience.css"),"NEW MOON owns the exact Sidon witness, not the active homepage cinema");
+assert.equal(scripts.length,4,"Active home does not run the archived-card hydration script");
 for(const obsolete of ["scroll-cinema.js","home-opening-cinema.js"])assert.ok(!scripts.includes(obsolete),"Removed scroll controller returned: "+obsolete);
 assert.equal(new Set(styles).size,styles.length,"Duplicate stylesheet requests");
 assert.equal(new Set(scripts).size,scripts.length,"Duplicate script requests");
@@ -39,9 +39,10 @@ for(const removed of ['.feature-grid > a',"home-evidence-history"]){
 for(const live of ["SIDON_WITNESS","SIDON_SUBSET","aria-pressed","NightfallRegistry","erdos36","phase","werner","adaptive"]){
   assert.ok(home.includes(live),"Canonical exact source hydration lost: "+live);
 }
-for(const id of ["flagships","live-case","nf-scroll-cinema","observatory","review","work"]){
+for(const id of ["flagships","nf-scroll-cinema","observatory","review","work"]){
   assert.ok(html.includes('id="'+id+'"'),"Homepage journey anchor lost: "+id);
 }
+assert.ok(moon.includes('id="live-case"')&&moon.includes('src="home-system.js"'),"NEW MOON carries the exact Sidon widget and its source-based hydration");
 assert.ok(css.length<=7500&&home.length<=3000,"Homepage-only CSS/JS debt exceeded the documented budget");
 const total=styles.map(f=>fs.statSync(path.join("docs",f)).size).reduce((a,b)=>a+b,0);
 console.log("PASS homepage maintenance: "+styles.length+" CSS, "+scripts.length+" JS; "+total+" stylesheet bytes (uncompressed), "+css.length+" active rhythm CSS bytes, "+home.length+" source-hydration JS bytes");

@@ -1,0 +1,66 @@
+name: NIGHTFALL actual posterior influence Lean kernel
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/ActualPosteriorInfluence.lean'
+      - '.github/workflows/nightfall-actual-posterior-influence.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/observability/ActualPosteriorInfluence.lean'
+      - '.github/workflows/nightfall-actual-posterior-influence.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  posterior-influence-kernel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Lean 4.35.0 and Mathlib v4.35.0
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.35.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          git clone --depth 1 --branch v4.35.0 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4
+          (cd /tmp/mathlib4 && "$HOME/.elan/bin/lake" exe cache get)
+      - name: Compile new posterior declarations and audit axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.V7Actual
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualPosteriorInfluence.lean \
+            --workspace /tmp/mathlib4 --timeout 480 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.posteriorLaw_nonneg \
+            --decl $N.posteriorLaw_sum \
+            --decl $N.posteriorMass_nonneg \
+            --decl $N.posteriorMass_sum \
+            --decl $N.signed_scalar_resampling_exact \
+            --decl $N.signed_scalar_le_rank_vector \
+            --json-out lean-receipts/actual-posterior-influence.json || {
+              cat lean-receipts/actual-posterior-influence.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/actual-posterior-influence.json
+      - name: Preserve source hashes
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/observability/ActualPosteriorInfluence.lean > lean-receipts/SHA256SUMS
+          git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt 2>/dev/null || true
+          echo leanprover/lean4:v4.35.0 > lean-receipts/toolchain.txt
+      - name: Upload compiler and axiom receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: actual-posterior-influence-lean
+          path: lean-receipts/
+          retention-days: 45
+          if-no-files-found: warn

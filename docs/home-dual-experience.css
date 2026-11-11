@@ -1,5 +1,5 @@
 /* NIGHTFALL / TWO READINGS OF ONE RESEARCH RECORD
-   NULL FIELD (deep-space Archive) and NEW MOON (warm night).
+   NULL FIELD (deep-space active research) and NEW MOON (warm-night archived breakthroughs).
    Layout is narrative; claim data, source records, and verification tiers stay shared.
    An experience switch is not an evidence-status switch. */
 
@@ -12,7 +12,7 @@ html[data-nf-theme="dusk"] .nf-experience-archive{display:none!important}
 #main>.hero .hero-title{letter-spacing:-.043em}
 .hero-aside .nf-experience{max-width:100%}
 
-/* NULL FIELD Archive: specimen columns, sensor traces, unhurried negative space. */
+/* NULL FIELD active research: specimen columns and unhurried negative space. */
 html:not([data-nf-theme="dusk"]) #main>.hero{
   background:radial-gradient(ellipse at 100% 20%,#a6365b16,transparent 52%);
 }
@@ -73,7 +73,7 @@ html:not([data-nf-theme="dusk"]) .nf-dual-intro h2 em{color:#e46a84}
   text-decoration:underline;text-underline-offset:4px;
 }
 
-/* The underbelly: visible stage gates, adversarial ledger and incomplete work. */
+/* Legacy dusk palette selectors; NEW MOON now houses historical evidence records. */
 html[data-nf-theme="dusk"] #main>.hero .hero-title em{
   color:#b4e3d6;text-shadow:0 0 30px #b4e3d625;
 }
@@ -240,7 +240,7 @@ html[data-nf-theme="dusk"] #main #evidence-title{
  html[data-nf-theme="dusk"] #main .flagships>.section-head:before{left:16px}
 }
 
-/* The archival colophon and night-shift dispatch replace generic footers with
+/* The active colophon and archived-record dispatch replace generic footers with
    competing conclusions. Existing source links and evidence tiering stay shared. */
 .nf-dual-colophon{padding-block:clamp(55px,7vw,110px);border-top:1px solid var(--line);
  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(235px,.65fr);gap:clamp(30px,7vw,100px)}

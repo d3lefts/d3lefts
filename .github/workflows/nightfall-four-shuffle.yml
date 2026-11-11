@@ -1,0 +1,22 @@
+name: NIGHTFALL four-shuffle exact finite theorem check
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-four-shuffle/**'
+      - '.github/workflows/nightfall-four-shuffle.yml'
+      - 'docs/four-shuffle-proof-passport.html'
+      - 'docs/active-proof-passport.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  proof-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Reconstruct 302 upper and 24 lower certificates without external data
+        run: python3 -I research/nightfall/2026-11-four-shuffle/verify_four_shuffle.py

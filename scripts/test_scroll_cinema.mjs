@@ -1,5 +1,5 @@
-/* Verify NULL FIELD's static finite-witness cinema and the independent
-   NEW MOON investigation page at five widths. No scroll animation. */
+/* Verify NULL FIELD's static active-observability cinema and the independent
+   NEW MOON historical archive at five widths. No scroll animation. */
 import assert from "node:assert/strict";
 import {createServer} from "node:http";
 import {mkdir,readFile} from "node:fs/promises";
@@ -61,15 +61,15 @@ try{
     stage:getComputedStyle(q(".nf-cinema-stage")).position,
     value:q(".nf-cinema-record-value")?.textContent?.trim(),
     steps:scene.querySelectorAll(".nf-cinema-proof-path li").length,
-    source:!!q('.nf-cinema-record a[href="erdos-paper.html"]'),
-    challenge:!!q('.nf-cinema-record a[href="review.html#erdos"]'),
+    source:!!q('.nf-cinema-record a[href="observability.html#separation"]'),
+    challenge:!!q('.nf-cinema-record a[href="observability.html#cubic"]'),
     token,progress:scene.style.getPropertyValue("--nf-progress")
    };
   });
   assert.match(archive.background,/null-field-deep-space\.svg/);
   assert.match(archive.hero,/null-field-deep-space\.svg/);
   assert.equal(archive.stage,"relative","Cinema is static, not sticky");
-  assert.equal(archive.value,"0.380856370118…");
+  assert.equal(archive.value,"d ≤ 2","Current quadratic influence is the active cinematic focus");
   assert.equal(archive.steps,3);
   assert.equal(archive.source,true);
   assert.equal(archive.challenge,true);
@@ -88,8 +88,8 @@ try{
   assert.equal(await page.locator("#nf-scroll-cinema").count(),0,"Night has a separate editorial composition");
   assert.equal(await page.locator(".moon-sky").count(),1);
   assert.equal(await page.locator(".moon-disc").count(),1);
-  assert.equal(await page.locator("#open-ledger .moon-ledger-row").count(),5);
-  assert.equal(await page.locator('#open-ledger a[href="review.html#erdos"]').count(),1);
+  assert.equal(await page.locator("#archived-records .moon-ledger-row").count(),5);
+  assert.equal(await page.locator('#archived-records a[href="review.html#erdos"]').count(),1);
   assert.equal(await page.locator('a[data-nf-route="moon"][aria-current="page"]').count(),1);
   await checkViewport();
   if([390,1280].includes(width))await page.screenshot({path:"browser-artifacts/scroll-cinema-moon-"+width+".png",fullPage:false});
@@ -115,12 +115,12 @@ try{
  assert.equal(await page.locator(".nf-cinema-stage").evaluate(el=>getComputedStyle(el).position),"relative");
  await page.locator(".nf-theme-toggle").click();
  await page.waitForURL("**/new-moon.html");
- assert.equal(await page.locator("#open-ledger").isVisible(),true);
+ assert.equal(await page.locator("#archived-records").isVisible(),true);
  await reduced.close();
  for(const path of ["new-moon-nightscape.svg","null-field-deep-space.svg"]){
   const raw=await readFile(join(root,"media",path),"utf8");
   assert.match(raw,/viewBox="0 0 2560 1440"/,path+": independent source SVG has high-resolution composition");
   assert.doesNotMatch(raw,/<(?:text|script|foreignObject)\b/i,path+": decorative SVG contains no executable content");
  }
- console.log("PASS: separate archive cinema and moon investigation pages, 5 viewport widths, evidence sources, mobile menu, reduced motion and static art");
+ console.log("PASS: active NULL FIELD cinema, archived NEW MOON evidence, 5 viewport widths, mobile menu, reduced motion and static art");
 }finally{await browser?.close();await new Promise(done=>server.close(done));}

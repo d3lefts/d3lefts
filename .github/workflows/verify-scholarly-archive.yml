@@ -1,0 +1,39 @@
+name: Verify scholarly research archive
+on:
+  pull_request:
+    paths:
+      - 'README.md'
+      - 'CONTRIBUTING.md'
+      - '.github/pull_request_template.md'
+      - 'papers/**'
+      - 'research/**'
+      - 'scripts/check_research_archive.py'
+      - '.github/workflows/verify-scholarly-archive.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'README.md'
+      - 'CONTRIBUTING.md'
+      - '.github/pull_request_template.md'
+      - 'papers/**'
+      - 'research/**'
+      - 'scripts/check_research_archive.py'
+      - '.github/workflows/verify-scholarly-archive.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  catalogue:
+    name: Provenance, sources, and dependency contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate canonical claims, local sources and academic reading routes
+        run: |
+          python3 scripts/check_research_archive.py --self-test
+          python3 scripts/test_repository_docs.py
+      - name: State exact scope of this job
+        run: |
+          echo "This job verifies editorial metadata, source links and mutation resistance."
+          echo "It does NOT certify theorem validity, source originality or external peer review."

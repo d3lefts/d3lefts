@@ -1,0 +1,58 @@
+name: NIGHTFALL universal spectral transfer - scoped Lean kernel receipt
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/UniversalScalarToTrace.lean'
+      - '.github/workflows/nightfall-universal-spectral-kernel.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  universal-transfer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Lean 4.35.0 / Mathlib v4.35.0
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.35.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          git clone --depth 1 --branch v4.35.0 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4
+          (cd /tmp/mathlib4 && "$HOME/.elan/bin/lake" exe cache get)
+      - name: Kernel-check concrete finite-dimensional trace transfer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          P=research/nightfall/formalization/observability/UniversalScalarToTrace.lean
+          N=Nightfall.Observability.Universal
+          python3 scripts/lean_bridge.py "$P" --workspace /tmp/mathlib4 --timeout 480 \
+            --decl $N.signed_increment_sq_le_rank \
+            --decl $N.signed_energy_le_rank_trace \
+            --decl $N.exists_trace_coordinate_of_signed_scalar \
+            --json-out lean-receipts/universal-scalar-to-trace.json || {
+              cat lean-receipts/universal-scalar-to-trace.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/universal-scalar-to-trace.json
+      - name: Capture immutable exact source and toolchain
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/observability/UniversalScalarToTrace.lean > lean-receipts/SHA256SUMS
+          git rev-parse HEAD > lean-receipts/repo-head.txt
+          (git -C /tmp/mathlib4 rev-parse HEAD || true) > lean-receipts/mathlib-head.txt
+          echo leanprover/lean4:v4.35.0 > lean-receipts/toolchain.txt
+      - name: Archive formal-claim receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: universal-scalar-to-trace-lean
+          path: lean-receipts/
+          if-no-files-found: warn
+          retention-days: 45

@@ -1,0 +1,80 @@
+name: Audit universal observability analytic proof supplement
+on:
+  pull_request:
+    paths:
+      - 'papers/universal-observability/**'
+      - 'research/catalogue/CLAIMS.json'
+      - 'research/nightfall/2026-11-principal-observability/PRINCIPAL_THEOREM.md'
+      - '.github/workflows/nightfall-universal-chain-audit.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'papers/universal-observability/**'
+      - 'research/catalogue/CLAIMS.json'
+      - 'research/nightfall/2026-11-principal-observability/PRINCIPAL_THEOREM.md'
+      - '.github/workflows/nightfall-universal-chain-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-falsification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exact independent finite posterior and Hilbert resampling identities
+        run: |
+          set -euo pipefail
+          python3 -m py_compile papers/universal-observability/checks/*.py
+          python3 papers/universal-observability/checks/check_posterior_hilbert_exact.py > /tmp/posterior.json
+          cat /tmp/posterior.json
+          python3 - <<'PY'
+          import json
+          d=json.load(open("/tmp/posterior.json"))
+          assert d["status"]=="PASS" and d["exact_trials"]==72
+          assert d["exact_posterior_total_influence_drift_identities"]==3011
+          assert d["exact_signed_hilbert_influence_identities"]==13580
+          print("Exact independent finite identities match frozen deterministic totals")
+          PY
+      - name: Integer Gram PSD moment and logarithm falsification (floating stress only)
+        run: |
+          set -euo pipefail
+          python3 papers/universal-observability/checks/check_psd_log_stress.py > /tmp/psd.json
+          cat /tmp/psd.json
+          python3 - <<'PY'
+          import json
+          d=json.load(open("/tmp/psd.json"))
+          assert d["status"]=="PASS" and d["integer_Gram_matrices"]==919
+          assert d["log_inversions"]==196
+          print("PSD stress passed; numerical test is not proof of an analytic theorem")
+          PY
+      - name: Validate claim dependencies and prevent status promotion
+        run: |
+          set -euo pipefail
+          python3 scripts/check_research_archive.py --self-test
+          python3 - <<'PY'
+          import json
+          d=json.load(open('research/catalogue/CLAIMS.json'))
+          c=next(x for x in d['claims'] if x['id']=='NF-OBS-UNIVERSAL-20261111')
+          assert c['validity']=='analytic-manuscript-unrefereed'
+          assert c['review']=='none-recorded'
+          assert c['priority']=='unresolved'
+          print('No automatic promotion to a kernel proof, external review or novelty')
+          PY
+      - name: Hash exact proof sources and capture test results
+        run: |
+          mkdir -p chain-audit-receipt
+          sha256sum \
+            papers/universal-observability/PROOF_SUPPLEMENT_v1.md \
+            papers/universal-observability/CHAIN_AUDIT_v1.md \
+            papers/universal-observability/checks/check_posterior_hilbert_exact.py \
+            papers/universal-observability/checks/check_psd_log_stress.py \
+            > chain-audit-receipt/SHA256SUMS.txt
+          cp /tmp/posterior.json /tmp/psd.json chain-audit-receipt/
+          printf '%s\n' "$GITHUB_SHA" > chain-audit-receipt/COMMIT.txt
+          printf '%s\n' 'Analytic source and finite checker, NOT an end-to-end Lean or external referee certificate' > chain-audit-receipt/SCOPE.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: universal-observability-proof-chain-audit
+          path: chain-audit-receipt/
+          if-no-files-found: error
