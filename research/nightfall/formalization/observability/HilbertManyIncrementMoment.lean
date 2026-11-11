@@ -72,13 +72,20 @@ theorem mass_one (p : ℕ → α → ℝ)
     (hp1 : ∀ n, (∑ a : α, p n a) = 1) (n : ℕ) :
     (∑ w : Samples α n, mass p n w) = 1 := by
   induction n with
-  | zero => simp [mass, Samples]
+  | zero =>
+      change (∑ _ : PUnit, (1 : ℝ)) = 1
+      simp
   | succ n ih =>
-      change (∑ w : Samples α n × α, mass p (n + 1) w) = 1
-      rw [Fintype.sum_prod_type]
-      change (∑ s : Samples α n, ∑ a : α, mass p n s * p n a) = 1
-      rw [tensor_sum_factor, ih, hp1 n]
-      ring
+      calc
+        (∑ w : Samples α (n + 1), mass p (n + 1) w) =
+            jointAvg (mass p n) (p n) (fun _ _ => (1 : ℝ)) := by
+              simpa only [mul_one] using (expectation_succ p n (fun _ => (1 : ℝ)))
+        _ = (∑ w : Samples α n, mass p n w) *
+              (∑ a : α, p n a) := by
+              simpa only [mul_one] using
+                (jointAvg_factor (mass p n) (p n)
+                  (fun _ : Samples α n => (1 : ℝ)) (fun _ : α => (1 : ℝ)))
+        _ = 1 := by rw [ih, hp1 n]; ring
 
 /-- The mean of a sum of independent centered vectors is zero, on actual
 product tables rather than abstract assumed moment identities. -/
