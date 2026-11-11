@@ -1,0 +1,57 @@
+name: NIGHTFALL quadratic endpoint cover strict Lean gate
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/WeightedGreedyCover.lean'
+      - 'research/nightfall/formalization/observability/WeightedGreedyMatching.lean'
+      - '.github/workflows/nightfall-weighted-greedy-cover-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  cover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Lean 4.35.0 and Mathlib v4.35.0
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.35.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          git clone --depth 1 --branch v4.35.0 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4
+          (cd /tmp/mathlib4 && "$HOME/.elan/bin/lake" exe cache get)
+      - name: Compile exact finite greedy matching and kernel-check endpoint cover
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts /tmp/mathlib4/.lake/build/lib/lean
+          cp research/nightfall/formalization/observability/WeightedGreedyMatching.lean /tmp/mathlib4/WeightedGreedyMatching.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/WeightedGreedyMatching.olean WeightedGreedyMatching.lean)
+          N=Nightfall.Observability.WeightedGreedyCover
+          python3 scripts/lean_bridge.py research/nightfall/formalization/observability/WeightedGreedyCover.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.cost_nonneg \
+            --decl $N.sum_cost_twice \
+            --decl $N.cost_ge_incident \
+            --decl $N.matching_endpoint_cover \
+            --decl $N.matching_budget_to_endpoint_budget \
+            --json-out lean-receipts/weighted-cover.json || {
+              cat lean-receipts/weighted-cover.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/weighted-cover.json
+          sha256sum research/nightfall/formalization/observability/{WeightedGreedyMatching,WeightedGreedyCover}.lean > lean-receipts/SHA256SUMS
+          git rev-parse HEAD > lean-receipts/repository-commit.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt
+      - name: Archive pinned receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quadratic-weighted-endpoint-cover-lean
+          path: lean-receipts/
+          if-no-files-found: warn
+          retention-days: 45
