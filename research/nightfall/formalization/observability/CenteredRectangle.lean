@@ -54,9 +54,14 @@ theorem centered_pair_rectangle_average
         = ∑ s : α, p s * (h a b - h s b) := by
             apply Finset.sum_congr rfl
             intro s _
-            rw [← Finset.mul_sum]
-            congr 1
-            exact hin s
+            calc
+              (∑ t : β, p s * q t * delta h a s b t) =
+                  p s * (∑ t : β, q t * delta h a s b t) := by
+                    rw [Finset.mul_sum]
+                    apply Finset.sum_congr rfl
+                    intro t _
+                    ring
+              _ = p s * (h a b - h s b) := by rw [hin s]
     _ = ∑ s : α, (p s * h a b - p s * h s b) := by
           apply Finset.sum_congr rfl
           intro s _
