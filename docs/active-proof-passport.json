@@ -1,15 +1,15 @@
 {
   "schema": "nightfall-active-proof-passports-v1",
-  "version": 3,
+  "version": 4,
   "as_of": "2026-11-11",
-  "updated_by": "NIGHTFALL exact-four-shuffle finite proof and reviewed active-passport content update; mathematical claims retain independent review gates",
+  "updated_by": "NIGHTFALL two-passport evidence upgrade + five new source-bound research Proof Passports; no automatic novelty or external-referee promotion",
   "frozen_historical_registry_unchanged": true,
   "lifecycle": "active",
-  "scientific_status": "Six active claim checkpoints including an exact finite computer-assisted four-shuffle theorem candidate; frozen historical 11 passports, 40 curated records and five Original Findings unchanged. None gain automatic external priority.",
+  "scientific_status": "Eleven active claim checkpoints (two upgraded, five new) spanning pinned Lean finite proofs, exact finite constructions, written analytic candidates, draft proof attacks and conditional adaptive transfers. Historical eleven, 40 curated records, five approved findings are unchanged.",
   "source_checkpoint": {
     "repository": "d3lefts/d3lefts",
     "commit": "5bda769c2484ea2f6ea9a02c428928361c07666f",
-    "notes": "This commit fixes the four 10 Nov observability sources. The 11 Nov Kaczmarz claim has its own explicitly dated source checkpoint and is not included in the earlier source commit. The sixth four-shuffle candidate has standalone source and a source-ZIP checksum; original binary ZIP/PDF are chat artifacts, not GitHub releases."
+    "notes": "This commit fixes the four 10 Nov observability sources. The 11 Nov Kaczmarz claim has its own explicitly dated source checkpoint and is not included in the earlier source commit. The sixth four-shuffle candidate has standalone source and a source-ZIP checksum; original binary ZIP/PDF are chat artifacts, not GitHub releases. The seven expanded or newly added detailed passports are versioned 2026-11-11. The finite product theorem is now linked to its immutable PR #317 Lean receipt; the cubic and universal manuscript additions retain explicit draft/analytical gates."
   },
   "definitions": {
     "influence": "I_i(F)=E[||F−E_i F||²] with E_i averaging input coordinate i",
@@ -62,42 +62,45 @@
     },
     {
       "id": "finite-certificate",
-      "title": "Two-draw certificate transfer on finite products",
-      "status": "reported-lean-checkpoint-replay-pending",
-      "claim": "The companion reports a finite heterogeneous-product general-degree influence bound of order V^(5/2)/d^6 and a localized certificate-overlap theorem, using imported cube inequalities.",
+      "title": "Finite-product certificate transfer — kernel-checked influence",
+      "status": "lean-kernel-checked-finite-product-scope",
+      "claim": "The pinned Lean declaration Nightfall.ProductSpace.Influence.product_influence proves for bounded finite-product f of indicator-monomial product degree ≤d and V>0 that some coordinate j satisfies 3V^5 ≤ 12500(π²d²)^6 I_j(f)^2. Heterogeneous coordinate laws, including zero-mass atoms, are allowed; the common alphabet is one finite Lean type.",
       "assumptions": [
-        "finite heterogeneous product alphabets; deg≤d",
-        "bounded outputs and explicitly scoped certificate rows",
-        "Turturean's imported cube and weighted antipodal theorems"
+        "Finite coordinate type and one finite alphabet type with arbitrary normalized coordinate-dependent marginal tables, including zero atoms",
+        "Pointwise |f|≤1, positive product variance, RowBound.HasProdDegreeLE f d",
+        "Independent-resampling influence I_j=(1/2)E[(f(X)-f(X^(j)))²], pinned Lean 4.33.0"
       ],
-      "mechanism": "Condition two independent product draws on unordered coordinate pairs to obtain independent fair orientations; import antipodal bounds; optimize certificate weights.",
-      "evidence": "Companion reports kernel-compiled finite statements in source checkpoint. The separate seven-declaration early formalization establishes only sublemmas and conditional implications. Full later receipts have not been independently replayed in this site pass.",
-      "source": "research/nightfall/observability-publication/COMPANION_PAPER.md",
-      "source_detail": "Reported receipt in supplied frontier ZIP; page does not assert that the full original Lean bundle is present in this repository.",
-      "audit": "Import original Lean files and pinned toolchain, compare theorem statements and hypotheses, reproduce full kernel receipts and imported dependencies.",
+      "mechanism": "The competing-symbol product-row construction and law-free two-draw orientation compose localized two-sided certificates, weighted influence extraction, and imported Turturean median/level-set proof steps.",
+      "evidence": "PR #317 at head e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb passed pinned Lean 4.33.0 build run #42929857470: 19 named declarations, standard axioms Classical.choice/Quot.sound/propext only, no sorryAx/custom axioms. This verifies the exact finite theorem only.",
+      "source": "research/nightfall/2026-11-active-passports/finite-product-influence.md",
+      "source_detail": "Dedicated public Proof Passport and existing complete finite-product formalization receipt FINITE_PRODUCT_INFLUENCE_PROOF_PASSPORT_20261110.md; checked Lean source ProductInfluence.lean at immutable PR #317 head.",
+      "audit": "Independently rebuild exact pinned Lean source/upstream, inspect theorem type and product-degree assumptions, then separately prove measurable/Hoeffding degree lifting and any stronger constants.",
       "limitations": [
-        "No independent Lean replay recorded here",
-        "Measurable infinite-product and quantum-query extensions are separate written claims",
-        "The quadratic manuscript is not implied by this finite theorem"
-      ]
+        "No general measurable/infinite-product Lean theorem or end-to-end Hilbert/adaptive policy follows",
+        "Does not certify the separate degree-two variance-squared manuscript or its stronger numerical constant",
+        "No external human referee or novelty/priority clearance"
+      ],
+      "source_checkpoint": "PR317/e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb; GitHub Actions 42929857470"
     },
     {
       "id": "cubic-obstruction",
-      "title": "Higher-order matching and a cubic moment obstruction",
-      "status": "explicit-paper-proofs-not-external-refereed",
-      "claim": "A matching-support amplitude budget and section-oscillation bound are proved in the note. The rare-gate construction Z=(U−p)Σ_j B_j refutes a distribution-independent fourth-moment bound for overlapping degree-two increments.",
+      "title": "Cubic exponent-two frontier — structural obstructions",
+      "status": "exact-proof-attacks-cubic-open",
+      "claim": "The unrestricted degree-three squared-variance influence law remains OPEN. Exact rare-gate fourth moments refute an unconditioned L4/L2 shortcut. For homogeneous Hoeffding functions the influence-weighted fractional-cover optimum equals Var(f), so that proposed LP reduction alone does not simplify the target. Dense Hadamard and two-draw occupancy stress tests remain draft review material.",
       "assumptions": [
-        "finite product and bounded degree for structural lemmas",
-        "U∼Bernoulli(p), independent fair signs B_j for counterexample"
+        "Finite product, bounded degree and canonical Hoeffding components for the structural lemmas",
+        "Rare-gate family U~Bernoulli(p), independent fair signs B_j, Z=(U-p)ΣB_j",
+        "Draft PR #349 and #347 hard-family examples are not yet externally audited or merged"
       ],
-      "mechanism": "Independent disjoint supports preserve parity-coupled cancellations; a shared rare coordinate invalidates a naive overlapping-increment moment estimate.",
-      "evidence": "Elementary mathematical arguments and explicit counterexample in the checked-in note; no independent human referee or claimed Lean theorem.",
-      "source": "research/nightfall/observability-publication/CUBIC_OBSTRUCTION_NOTE.md",
-      "source_detail": "Explicit exact moment formulas and two elementary structural lemmas.",
-      "audit": "Independently check parity-coupling assumptions, section-oscillation constants and exact fourth moments; test codegree-sensitive replacements against rare-gate stars.",
+      "mechanism": "Shared rare gates produce divergent normalized fourth moments; the fractional LP has matching energy-based primal and dual certificates. Dense links and two-draw expected maxima demonstrate additional operator failures without refuting exponent two.",
+      "evidence": "CUBIC_OBSTRUCTION_NOTE.md contains exact moment formulas and elementary amplitude/oscillation proofs. Merged five-closure audit proves τ_I*=Var for homogeneous components, and Var≤τ_I*≤dVar generally. PRs #347 and #349 add unmerged exact stress tests.",
+      "source": "research/nightfall/2026-11-active-passports/cubic-obstruction-ledger.md",
+      "source_detail": "New detailed proof-attack ledger links the merged rare-gate note, merged LP sandwich and independent draft hard-case reviews without counting draft results as refereed.",
+      "audit": "Replay rare-gate fourth moments and LP primal-dual identity independently; attack link/covariance proposals on dense Hadamard, rare-address and interlocking tripartite families.",
       "limitations": [
-        "Refutes a proposed proof operator, not the degree-three influence conjecture",
-        "Global originality and referee review open"
+        "No counterexample to unrestricted cubic variance-squared influence was found",
+        "Not an established arbitrary-law cubic theorem; bounded-cover consequences depend on the unrefereed quadratic paper",
+        "Open draft hard cases and numerical checks do not establish novelty or universal conclusions"
       ]
     },
     {
@@ -146,6 +149,111 @@
       "attribution": "Problem: Mathilde Bouvel. Factor graph and matching: Bevan–Elvey Price–Felsner, 2024 Oberwolfach. Research-directed exact threshold candidate: NIGHTFALL / Devin J. Wright.",
       "original_source_zip_sha256": "71e836af72ef0a5b4480f1aac7c704a80eb544f9dac3bfade4a1f4b9014ad759",
       "original_pdf_sha256": "1abd05d18f40bd83350f1a634b95efdf61912163b2ed3e2748f2a7641c1d55c1"
+    },
+    {
+      "id": "nested-address-separation",
+      "title": "Exact nested-address adaptive–nonadaptive separation",
+      "status": "exact-finite-construction-priority-open",
+      "claim": "For an s-address m-ary replica with m^s fair-sign leaves, fixed c-query explained variance is g(c)=0 at c=0, m^(c−1−2s) for 1≤c≤s+1, then min{1,(c−s)/m^s}. For r outputs with k replicas, L=s+m^s and Q'=min(Q,rkL), a=floor(Q'/L), b=Q' mod L, the exact optimal fixed-query Bayes risk equals 1/k−(a+g(b))/(rk²).",
+      "assumptions": [
+        "Uniform independent m-ary address symbols and independent fair-sign leaves",
+        "Whole-coordinate fixed nonadaptive query sets, conditional-mean squared-loss risk",
+        "Independent scaled replicas and outputs"
+      ],
+      "mechanism": "Conditional fiber averaging gives gain q/m^(2s−h). The discrete-convex single-replica gain makes complete-replica concentration optimal by budget exchange; adaptive reading follows each address.",
+      "evidence": "Merged PR #338: exact construction-specific proof, 645 local budget checks, 88 conditional-table checks and 1,945 independent global allocation checks. CI receipts apply to finite algebra only.",
+      "source": "research/nightfall/2026-11-active-passports/nested-address-separation.md",
+      "source_detail": "Detailed merged EXACT_GLOBAL_QUERY_ALLOCATION.md and EXACT_BUDGET_AND_GENERAL_LP_20261111.md with standard-library checkers.",
+      "audit": "Independently derive the exact posterior variance, all cost boundaries and discrete convexity; replay optimal allocations without using the proposed formula.",
+      "limitations": [
+        "Exact for the constructed nested-address family, not a universal degree-d upper bound",
+        "Changing address laws, replica dependence or query granularity changes the model",
+        "No comprehensive novelty search or independent human referee"
+      ]
+    },
+    {
+      "id": "finite-palette-recovery",
+      "title": "Almost-sure finite-palette exact adaptive recovery",
+      "status": "analytic-candidate-finite-lean-core",
+      "claim": "The v1.1 written analytic candidate states D_mu(f)≤d floor(d² min{(q−1)²,2R/Δ}) for finite real output palette size q, range R, gap Δ>0, degree≤d on an independent completed product, with exactness almost surely and whole-coordinate queries. Older records assert a stronger R/Δ version that is not reconciled.",
+      "assumptions": [
+        "Independent possibly infinite completed product and finite output palette",
+        "Positive minimum gap and finite interaction degree",
+        "Almost-sure measurable decision rule, not pointwise recoverability or efficient runtime"
+      ],
+      "mechanism": "Countable effective support, measurable maximal-order interaction selection, positive-measure block sensitivity and Fubini-safe hybrid cube yield finitely many disjoint sensitive blocks.",
+      "evidence": "Finite switching and section/energy modules have a reported 13-declaration scoped Lean receipt and 952 exact ANOVA tests. The infinite-selection/Markov and common null-set argument remains a written candidate, not a compiled theorem.",
+      "source": "research/nightfall/2026-11-active-passports/finite-palette-recovery.md",
+      "source_detail": "Adversarial measure-theory audit, finite Lean receipt and merged v1.1 five-closure argument; different R/Δ constants explicitly flagged.",
+      "audit": "Independently prove completed-product countable support and common-good-set measurable selection; test exact hybrid-degree under positive-measure replacements; reconcile constants.",
+      "limitations": [
+        "No outside mathematical referee or end-to-end Lean proof for the infinitary theorem",
+        "An arbitrary null-set witness can destroy the hybrid-degree argument",
+        "No all-output-alphabet or algorithmic runtime generalization"
+      ]
+    },
+    {
+      "id": "fair-sign-cubic",
+      "title": "Fair-sign quadratic-vector and cubic-selector subclasses",
+      "status": "draft-pr-fair-sign-subclass",
+      "claim": "Unmerged PR #354 proposes W≤4A√M for degree-two ℓ1-valued G on independent fair controls, and cubic rank-one/finite-rank leaf selector consequences Var(f)≤5B√M and Var(f)≤(5+4√t)B√M respectively under precise fixed-feature-rank assumptions.",
+      "assumptions": [
+        "Independent unbiased sign controls, arbitrary independent finite-alphabet leaves",
+        "Uniform ℓ1 bound A and degree-two control Fourier expansion",
+        "Posterior-stable fixed t-dimensional leaf feature subspaces for the adaptive corollary"
+      ],
+      "mechanism": "Classical Khintchine/Littlewood mixed-norm projector and random coloring isolate a degree-two control contribution; fixed-rank leaf conditioning moves coefficients into the control-only term.",
+      "evidence": "Proof note and rational checkers currently live in open draft PR #354, not on main. Earlier PRs #347 and #350 provide conditional reductions and adversarial checks.",
+      "source": "research/nightfall/2026-11-active-passports/fair-sign-cubic.md",
+      "source_detail": "Source-bound editorial passport on main; principal mathematical manuscript is explicitly draft PR #354.",
+      "audit": "Independent proof of mixed ℓ1/ℓ2 coefficient and normalization; check leaf feature rank and closure after arbitrary posterior observations; priority comparison with classical mixed Littlewood.",
+      "limitations": [
+        "Not established for arbitrary biased control laws",
+        "Unrestricted cubic exponent-two conjecture and high-rank leaf case remain open",
+        "Draft review/finite examples are not Lean certification, human referee or global novelty"
+      ]
+    },
+    {
+      "id": "universal-spectral",
+      "title": "Universal Hilbert spectral observability",
+      "status": "analytic-conditional-universal-observability",
+      "claim": "Draft PR #332 proposes dimension-independent Hilbert squared-risk ≤τ_r+η with N=ceil((40/3)U log(1+4U)) whole-coordinate queries, U=d^7B^3r^(3/2)/(c_*η^(3/2)), c_*=sqrt(3/12500)/π^6. A supplied v6 manuscript proposes further rank/coherence improvement, conditional on coherence at every posterior.",
+      "assumptions": [
+        "Independent arbitrary product, Hilbert output |F|≤B and interaction degree≤d",
+        "Rank-r covariance projection with spectral tail τ_r",
+        "Uncompiled arbitrary-product scalar bridge and measurable adaptive selection / Hilbert PSD estimate"
+      ],
+      "mechanism": "Finite scalar Lean input, product measure approximation, signed Hilbert scalar compression, PSD rank influence, exact ANOVA posterior potential descent, spectral-tail output projection.",
+      "evidence": "Finite scalar PR #317 is Lean-checked; universal manuscript PR #332 remains draft and PRs #339/#340 only address partial Lean bridges. The v6 full source is not publicly reconciled on main.",
+      "source": "research/nightfall/2026-11-active-passports/universal-spectral.md",
+      "source_detail": "Draft PR #332 and partial Lean PRs #339/#340 are principal sources; main's spectral REVIEW_GATES.md is a critical review note.",
+      "audit": "Independently rederive product measurable lift, PSD moment step and deterministic policy; stress-test posterior coherence at every state; deposit full source and exact hashes.",
+      "limitations": [
+        "No complete Lean proof of universal Hilbert observer or measured-space extension",
+        "Initial-only coherence does not suffice for v6 log-free claim",
+        "Neither efficient runtime nor unrestricted degree-three exponent-two is established"
+      ]
+    },
+    {
+      "id": "certificate-acquisition",
+      "title": "Certificate-guided adaptive information acquisition",
+      "status": "conditional-certificate-adaptive-theorem",
+      "claim": "For finite full-support Boolean product functions of degree≤d with valid fractional certificate rows of cost≤K, the source derives π_i∝√(P_iQ_i), E_π I_i≥Var(g)/K², and MSE_t≤d Var(g)e^(−t/(dK²)), conditional on full product-specific posterior and sampler instantiation.",
+      "assumptions": [
+        "Finite independent positive-mass Boolean-output product with degree≤d≥1",
+        "Valid nonnegative opposite-class fractional rows at every input, total cost≤K",
+        "Whole-coordinate posterior query and potentially costly calculation of π"
+      ],
+      "mechanism": "Localized two-sided certificate overlap and weighted Cauchy imply a posterior selection gain. The identity E[T(g|X_j)]=T−I_j and ANOVA V≤T≤dV imply expected geometric potential descent.",
+      "evidence": "Merged #298 localized inequality and selected #300/#303 sublemmas have scoped Lean receipts; no one compiled declaration proves the full adaptive MSE bound. Exact finite posterior checks are recorded.",
+      "source": "research/nightfall/2026-11-active-passports/certificate-acquisition.md",
+      "source_detail": "Original POSTERIOR_ADAPTIVE_BRIDGE_20261110.md and CERTIFICATE_GUIDED_ADAPTIVE_RECOVERY_20261110.md, with exact checker.",
+      "audit": "Kernel-compile finite posterior rows, concrete overlap sampler, actual ANOVA drift and transition kernel in one pinned toolchain; separately review predecessor OSSS/Lovett–Zhang.",
+      "limitations": [
+        "Does not produce an unconditional dimension-free certificate cost K or general real-valued exponent-two theorem",
+        "No computational runtime guarantee for evaluating the sampling law",
+        "No end-to-end arbitrary measurable-product or full Lean theorem"
+      ]
     }
   ],
   "attribution": "Research led by Devin J. Wright through NIGHTFALL with substantial AI-assisted drafting and proof attempts. Imported foundations include Efron–Stein/Hoeffding decomposition and Turturean's Aaronson–Ambainis cube theorem and antipodal inequality.",

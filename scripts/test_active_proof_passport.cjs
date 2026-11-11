@@ -12,15 +12,17 @@ const site=read("docs/site.js");
 const core=read("docs/erdos-paper-core.js");
 const art=read("docs/media/overlap-16cell-fixture.svg");
 assert.equal(data.schema,"nightfall-active-proof-passports-v1");
-assert.equal(data.version,3);
+assert.equal(data.version,4);
 assert.match(data.as_of,/^2026-11-\d\d$/);
 assert.equal(data.lifecycle,"active");
 assert.equal(data.frozen_historical_registry_unchanged,true);
-assert.equal(data.claims.length,6);
-assert.deepEqual(data.claims.map(x=>x.id),["q2-influence","q2-observation","finite-certificate","cubic-obstruction","kaczmarz-logfree","four-shuffle"]);
+assert.equal(data.claims.length,11);
+assert.deepEqual(data.claims.map(x=>x.id),["q2-influence","q2-observation","finite-certificate","cubic-obstruction","kaczmarz-logfree","four-shuffle","nested-address-separation","finite-palette-recovery","fair-sign-cubic","universal-spectral","certificate-acquisition"]);
 assert.equal(new Set(data.claims.map(x=>x.id)).size,data.claims.length);
-const statuses=new Set(["paper-proof-internal-audit","reported-lean-checkpoint-replay-pending",
- "explicit-paper-proofs-not-external-refereed","written-proof-exact-check-replay-priority-open","computer-assisted-exact-finite-priority-open"]);
+const statuses=new Set(["paper-proof-internal-audit","lean-kernel-checked-finite-product-scope",
+ "exact-proof-attacks-cubic-open","written-proof-exact-check-replay-priority-open","computer-assisted-exact-finite-priority-open",
+ "exact-finite-construction-priority-open","analytic-candidate-finite-lean-core","draft-pr-fair-sign-subclass",
+ "analytic-conditional-universal-observability","conditional-certificate-adaptive-theorem"]);
 for(const c of data.claims){
  assert.ok(statuses.has(c.status),c.id+" wrong status");
  for(const key of ["title","claim","mechanism","evidence","audit","source","source_detail"])
@@ -76,6 +78,44 @@ assert.ok(home.includes('href="four-shuffle-proof-passport.html"'));
 assert.ok(research.includes('href="four-shuffle-proof-passport.html"'));
 assert.ok(site.includes('"four-shuffle-proof-passport.html"'));
 assert.ok(read("docs/sitemap.xml").includes("/four-shuffle-proof-passport.html"));
+// Seven detailed source-bound research passports: two upgrades and five new.
+const expanded=[
+ ["finite-certificate","finite-product-influence-proof-passport.html","finite-product-influence.md","LEAN","19"],
+ ["cubic-obstruction","cubic-obstruction-proof-passport.html","cubic-obstruction-ledger.md","OPEN","rare"],
+ ["nested-address-separation","nested-address-proof-passport.html","nested-address-separation.md","EXACT","1,945"],
+ ["finite-palette-recovery","finite-palette-recovery-proof-passport.html","finite-palette-recovery.md","OPEN","Δ"],
+ ["fair-sign-cubic","fair-sign-cubic-proof-passport.html","fair-sign-cubic.md","DRAFT","354"],
+ ["universal-spectral","universal-spectral-proof-passport.html","universal-spectral.md","OPEN","332"],
+ ["certificate-acquisition","certificate-acquisition-proof-passport.html","certificate-acquisition.md","OPEN","K"]
+];
+for(const [id,page,md,status,signal] of expanded){
+ const claim=data.claims.find(c=>c.id===id);
+ assert.ok(claim,"missing claim "+id);
+ const body=read("docs/"+page);
+ const source=read("research/nightfall/2026-11-active-passports/"+md);
+ assert.ok(body.includes('href="active-proof-passport.html#'+id+'"'),id+" reverse ledger link missing");
+ assert.ok(body.includes('id="statement"')&&body.includes('id="mechanism"')&&body.includes('id="evidence"')&&body.includes('id="limits"')&&body.includes('id="review"'),id+" incomplete passport sections");
+ assert.ok(body.includes("OPEN")||body.includes("open"),id+" no open review gate");
+ assert.ok(body.includes(signal),id+" missing differentiating evidence signal");
+ assert.ok(body.includes("Original Finding")||body.includes("historical"),id+" missing frozen archive boundary");
+ assert.ok(source.includes("Independent adversarial audit")&&source.includes("Provenance"),id+" source note lacks proof/audit chain");
+ assert.ok(research.includes('href="'+page+'"'),id+" missing library navigation");
+ assert.ok(site.includes('"'+page+'"'),id+" missing lifecycle routing");
+ assert.ok(html.includes('href="'+page+'"'),id+" missing active dossier link");
+ assert.ok(read("docs/sitemap.xml").includes("/"+page),id+" sitemap missing");
+ assert.ok(claim.source.startsWith("research/nightfall/2026-11-active-passports/"),id+" current source not self-contained");
+}
+const finite=data.claims.find(c=>c.id==="finite-certificate");
+assert.ok(finite.status==="lean-kernel-checked-finite-product-scope");
+assert.ok(finite.evidence.includes("42929857470")&&finite.evidence.includes("19 named declarations"));
+assert.ok(!finite.limitations.every(s=>!s.includes("measurable")),"Missing Lean finite-to-measurable scope gate");
+const cubic=data.claims.find(c=>c.id==="cubic-obstruction");
+assert.ok(cubic.status==="exact-proof-attacks-cubic-open"&&cubic.claim.includes("OPEN"));
+assert.ok(cubic.evidence.includes("#347")&&cubic.evidence.includes("#349"));
+assert.ok(data.claims.find(c=>c.id==="fair-sign-cubic").status.includes("draft-pr"));
+assert.ok(data.claims.find(c=>c.id==="universal-spectral").status.includes("conditional"));
+assert.ok(html.includes("<strong>11</strong>Active claim records")&&html.includes("<strong>v4</strong>"));
+assert.ok(read("docs/discovery-system.html").includes("<dt>11</dt><dd>separate active claim passports</dd>"));
 // Preserve the frozen historical registry's exact 11-record purpose.
 const historical=read("docs/research-registry.js");
 assert.ok(historical.includes('"nightfall-proof-passports-v1"'));
@@ -97,4 +137,4 @@ assert.ok(art.includes("unrelated to the separate published 131072-cell witness"
 assert.ok(!/<script\b|<foreignObject\b/i.test(art),"Svg must remain static and inert");
 assert.ok(moon.includes('src="media/overlap-16cell-fixture.svg"'),"Archive diagram not visible");
 assert.ok(moon.includes("16-cell educational")&&moon.includes("different 131,072-cell witness"),"Fixture must not masquerade as full research result");
-console.log("PASS: 6 manual active claim passports, Kaczmarz source/replay, no historical promotion, 5 provenance-complete archives, exact 16-cell operator fixture");
+console.log("PASS: 11 manual active claim passports, seven detailed dossiers, Kaczmarz source/replay, no historical promotion, 5 provenance-complete archives, exact 16-cell operator fixture");

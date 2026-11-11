@@ -58,7 +58,7 @@
  };
  // Canonical page ownership is independent of a reader's color palette.
  // The "archive" token in data-nf-route remains a legacy LIGHT palette ID.
- const activePages=new Set(["product-space-influence.html","observability.html","active-proof-passport.html","kaczmarz-proof-passport.html","four-shuffle-proof-passport.html","frontier.html","desk.html","discovery.html","orchestrator.html","agenda.html"]);
+ const activePages=new Set(["product-space-influence.html","observability.html","active-proof-passport.html","kaczmarz-proof-passport.html","four-shuffle-proof-passport.html","finite-product-influence-proof-passport.html","cubic-obstruction-proof-passport.html","nested-address-proof-passport.html","finite-palette-recovery-proof-passport.html","fair-sign-cubic-proof-passport.html","universal-spectral-proof-passport.html","certificate-acquisition-proof-passport.html","frontier.html","desk.html","discovery.html","orchestrator.html","agenda.html"]);
  const historicalPages=new Set(["erdos-paper.html","living-paper.html","findings-20261029.html","sidon-arity.html"]);
  const homeDestination={id:"home",label:"",href:""};
  const updateHome=(moon)=>{
@@ -74,7 +74,7 @@
  ];
  const routes={
   "research.html":"home","living-paper.html":"home","erdos-paper.html":"home",
-  "observability.html":"home","product-space-influence.html":"home","active-proof-passport.html":"home","kaczmarz-proof-passport.html":"home","four-shuffle-proof-passport.html":"home","sidon-arity.html":"home",
+  "observability.html":"home","product-space-influence.html":"home","active-proof-passport.html":"home","kaczmarz-proof-passport.html":"home","four-shuffle-proof-passport.html":"home","finite-product-influence-proof-passport.html":"home","cubic-obstruction-proof-passport.html":"home","nested-address-proof-passport.html":"home","finite-palette-recovery-proof-passport.html":"home","fair-sign-cubic-proof-passport.html":"home","universal-spectral-proof-passport.html":"home","certificate-acquisition-proof-passport.html":"home","sidon-arity.html":"home",
   "findings-20261029.html":"home","agenda.html":"home","about.html":"home",
   "atlas.html":"constellation","join.html":"constellation",
   "frontier.html":"constellation","discovery.html":"constellation","orchestrator.html":"constellation",
