@@ -39,8 +39,8 @@ theorem signedProxy_mass_one (w eps : α → ℝ)
     (∑ a, signedProxy w eps a) = 1 := by
   have hrewrite :
       (∑ a, signedProxy w eps a) =
-      (∑ a, w a ^ 2 + w a * eps a -
-        signedSum w eps * w a ^ 2) := by
+      (∑ a, (w a ^ 2 + w a * eps a -
+        signedSum w eps * w a ^ 2)) := by
     apply Finset.sum_congr rfl
     intro a _
     simp only [signedProxy, signedLift]
