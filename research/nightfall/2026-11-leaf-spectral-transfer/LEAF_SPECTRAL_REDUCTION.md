@@ -97,3 +97,17 @@ The exact rational checker `check_leaf_spectral.py` independently enumerates thi
 - NIGHTFALL [PR #347](https://github.com/d3lefts/d3lefts/pull/347) — optimized coloring and conditional \(\ell_1\)-quadratic source; [PR #335](https://github.com/d3lefts/d3lefts/pull/335) — independent top-cover transfer; [PR #332](https://github.com/d3lefts/d3lefts/pull/332) — general-degree adaptive spectral observer candidate.
 
 **Independent proof-attack plan:** (1) Referee or formalize the exact Q2 matching-to-fourth-moment step, including the \(\ell_1\) coefficient budget; (2) attack (A) on rare-symbol heterogeneous leaves with dimension \(t=1,2,3\), directly computing all resampling influences; (3) test the sharpness of \(\sqrt t\), e.g. random orthogonal and one-hot leaf bases; (4) check if projected covariance-tail estimates survive arbitrary posterior conditioning; (5) only then infer an adaptive query budget. No global novelty, publication, or full cubic closure is asserted.
+
+
+## Corollary C — posterior-stable leaf spectrum implies adaptive O(1/eta) observation (conditional)
+
+Under Theorem B, put C_t=18(1+C_Q sqrt(t))/(alpha(1-theta)). Assume that **every positive-probability finite-product posterior after any possible coordinate transcript** satisfies the same aggregated one-leaf spectral-defect hypothesis \`bar_tau_t <= theta*alpha*Var(f_posterior)\`, with fixed t and theta<1. This posterior-stability assumption is essential: a spectral condition verified only at the initial law is **not enough** for adaptive prediction.
+
+For each posterior, Theorem B supplies \`Var(f_posterior)<=C_t B sqrt(M_posterior)\`, with a bound B inherited under conditioning. Let \`T=sum_i I_i(f_posterior)\`; ANOVA gives \`Var<=T<=3 Var\`, and for the coordinate of maximum posterior influence the exact one-step identity is \`E[T_after | transcript]=T-M\`. Hence \`M>=T^2/(9 C_t^2 B^2)\` at every nonconstant posterior. The expected potential \`p_n=E T_n\` therefore obeys
+\[
+p_{n+1}\le p_n-\frac{p_n^2}{9C_t^2 B^2},\qquad
+p_n\le\frac{9 C_t^2 B^2}{n}\quad(n\ge1).
+\]
+Thus the conditional-mean predictor has mean squared risk at most \`eta\` after \`ceil(9 C_t^2 B^2 / eta)\` whole-coordinate queries, independent of input dimension and leaf alphabet sizes. This is a **conditional finite-product query-count corollary only**: it does not control computational cost, prove posterior spectral stability for general cubic inputs, or fill the measurable infinite-product bridge.
+
+**Decisive follow-up test:** seek a natural structural condition under which leaf-spectrum defect bounds are inherited by every posterior, or construct a finite rational counterexample showing posterior instability. This is an actual information-structure gate, not a request to optimize numerical constants.
