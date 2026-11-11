@@ -177,3 +177,80 @@ Audit independently: (i) verify the signed-flip projector is exactly one-leaf at
 - This paper has no global-priority clearance. Its main contribution to this program is removing the previously conditional quadratic matching dependency from the fair-sign-control branch of #350. Heterogeneous/biased **controls**, unrestricted leaf Hilbert rank, arbitrary measurable products, full cubic (2,4), and end-to-end Lean proofs remain open.
 
 **Next cheapest decisive experiment:** port the two-step mixed Littlewood certificate to *biased two-point controls* with a carefully tracked distortion parameter; compare against the #347 distributed-address occupancy no-go. Reject any assertion of a law-free bound until the distortion has been eliminated by a genuine proof rather than an invalid expectation/max swap.
+
+
+## Theorem 5 — heterogeneous controls on one side, fair signs on the other (unconditional)
+
+A second representation change removes **all atom-mass dependence in one entire control block** while preserving a dimension-free squared-variance bound.
+
+**Law-free additive vector lemma.** Let \(U=(U_a)_{a=1}^K\) be additive in independent arbitrary finite-alphabet coordinates \(X_i\), with \(\sup_x\|U(x)\|_1\le A\), and \(J_i(U)=\mathbb E\|U-\mathbb E_iU\|_2^2\). Then
+\[
+\boxed{\sum_i\sqrt{J_i(U)}\le\sqrt2\,A,\qquad
+\operatorname{Var}_{\ell_2}(U)\le\sqrt2 A\sqrt{\max_iJ_i(U)}.}\tag{7}
+\]
+**Proof independent of biases.** For every output sign vector \(\sigma\in\{\pm1\}^K\), the scalar \(\langle\sigma,U(x)\rangle\) is additive, bounded in \([-A,A]\), and has independent coordinate-section ranges \(R_i(\sigma)\) satisfying \(\sum_iR_i(\sigma)\le2A\). Popoviciu implies \(\sqrt{\operatorname{Var}\langle\sigma,U_i\rangle}\le R_i(\sigma)/2\), hence the sum of these scalar standard deviations is at most \(A\). Writing the covariance matrix of centered \(U_i\) as \(\Sigma_i\succeq0\), Hilbert Khintchine gives
+\[
+\mathbb E_\sigma\sqrt{\sigma^\top\Sigma_i\sigma}
+\ge\frac1{\sqrt2}\sqrt{\operatorname{tr}\Sigma_i}
+=\frac1{\sqrt2}\sqrt{J_i(U)}.
+\]
+Average over \(\sigma\), sum over \(i\), and use independence/ANOVA. No fair-control or minimum-mass assumption appears in (7); only **additivity** is essential.
+
+Now let \(X=(X_i)\) be arbitrary independent finite-alphabet controls with any normalized positive laws, \(Z=(Z_j)\) be independent fair-sign controls, independent of \(X\), and let
+\[
+G(X,Z)=g_0+\sum_i u_i(X_i)+\sum_j v_j Z_j+
+             \sum_{i,j} w_{ij}(X_i) Z_j\in\mathbb R^K,
+\]
+where \(u_i,w_{ij}\) are centered in \(X_i\), \(\|G(X,Z)\|_1\le A\) pointwise, and all sums are finite. Thus **every component has Hoeffding degree at most one in each of the two blocks**, with no quadratic interaction contained wholly inside \(X\) or \(Z\). Put \(W=\mathbb E\|G-\mathbb EG\|_2^2\) and \(M=\max_iI_i(G)\) over \(X\) and \(Z\). Then
+\[
+\boxed{W\le(2+2\sqrt2)A\sqrt M.}\tag{8}
+\]
+
+**Proof.** Flip all \(Z\)-signs to form the norm-one odd and even projections:
+\[
+G_{\mathrm{odd}}=(G(X,Z)-G(X,-Z))/2,\quad
+G_{\mathrm{even}}=(G(X,Z)+G(X,-Z))/2.
+\]
+Both have \(\ell_1\)-norm at most \(A\). The even part is additive in the arbitrary \(X_i\), so by (7) its centered energy is at most \(\sqrt2 A\sqrt M\). The \(X\)-mean of the odd part is additive in the fair \(Z_j\), bounded by \(A\), so its variance is likewise at most \(\sqrt2 A\sqrt M\).
+
+For each fixed sign pattern \(Z=z\), the odd function of \(X\) is additive and \(\ell_1\)-bounded by \(A\). Therefore (7) gives
+\(\sum_i\sqrt{I_{X_i}(G_{\mathrm{odd}}(\cdot,z))}\le\sqrt2 A\).
+For each \(i\), the centered \(X_i\)-section of the odd part is a Hilbert-valued Rademacher sum \(\sum_j z_j w_{ij}(X_i)\) in \(H_i=L_0^2(X_i;\mathbb R^K)\). The sharp Hilbert Khintchine inequality yields
+\[
+\mathbb E_Z\sqrt{I_{X_i}(G_{\mathrm{odd}}(\cdot,Z))}
+\ge\frac1{\sqrt2}\sqrt{I_{X_i}(G_{\mathrm{odd}})}.
+\]
+Average the previous additive bound over \(Z\). It follows that
+\(\sum_i\sqrt{I_{X_i}(G_{\mathrm{odd}})}\le2A\).
+By exact bi-degree-(1,1) ANOVA, the **cross** variance equals
+\(\sum_i I_{X_i}(G_{\mathrm{odd}})\), so it is at most \(2A\sqrt M\).
+The three centered parts (even \(X\)-only, odd \(Z\)-only, and \(X\)-\(Z\) cross) are pairwise orthogonal; their total variance is bounded by
+\((\sqrt2+\sqrt2+2)A\sqrt M\). QED.
+
+This result is **unconditional even when the \(X_i\) alphabets are arbitrarily large or their atom probabilities arbitrarily small**. It requires at least the second block \(Z\) to consist of fair signs and excludes same-side higher interactions among the arbitrary controls. It does not prove the full law-free \(Q2\) conjecture in #347.
+
+### Posterior-stable mixed-control leaf-rank corollary
+
+Let \(Y_k\) be independent arbitrary finite-alphabet leaves, and
+\[
+f(X,Z,Y)=h(X,Z)+\sum_k G_k(X,Z)(Y_k),\quad |f|\le B,
+\]
+where \(h\) and every scalar section of \(G_k\) have the **bi-degree-(1,1)** representation of (8), and each \(G_k(X,Z)\) belongs to a fixed centered leaf-feature subspace of dimension at most \(t\ge1\).
+
+Write \(C_{\mathrm{mix}}=2+2\sqrt2\). The same range/Popoviciu, fixed-basis \(\ell_1\), mean-square leaf energy, and ANOVA arguments as Theorem 4 give
+\[
+\boxed{\operatorname{Var}(f)\le[1+C_{\mathrm{mix}}(1+\sqrt t)]B\sqrt M.}\tag{9}
+\]
+Every positive-probability posterior obtained by querying any control or leaf preserves the bi-degree-(1,1) structure, the centered leaf subspaces and the bound \(B\): observing \(X_i\) or \(Z_j\) drops interaction order within its own block; observing a leaf transfers its now-known feature section into \(h\). Consequently the greedy influence observer satisfies
+\[
+\boxed{
+N\le\left\lceil
+\frac{9[1+(2+2\sqrt2)(1+\sqrt t)]^2B^2}{\eta}
+\right\rceil
+}\tag{10}
+\]
+for mean squared risk at most \(\eta\) on finite products. This extends Theorem 4 from all-fair controls to an **entire arbitrary-product block** and an independent fair-sign block, at the price of forbidding within-block degree-two interactions.
+
+**Transfer frontier identified:** the still-open case is quadratic interaction between **two arbitrary-law control coordinates**, or leaf sections with unrestricted feature rank. The law-free additive lemma (7) is not sufficient by itself to tensorize two arbitrary-law blocks: the required \(L^1\to L^2\) promotion fails on rare symbols, and #347's two-draw occupancy example refutes a naive expected-maximum interchange. A valid next theorem needs a new joint-energy certificate that accounts for this failure.
+
+**Additional prior art:** the additive \(\ell_1\)-vector estimate (7) and mixed-slice argument are consequences of classical range/Popoviciu and Khintchine principles. Their specific composition and constants require originality comparison; no worldwide novelty or independent non-author referee status is asserted.
