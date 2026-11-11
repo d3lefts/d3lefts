@@ -26,12 +26,12 @@ The adversarial family concentrates target mass on one source atom of probabilit
 
 ## Lean scope
 
-\`FiniteLawTransfer.lean\` has three named theorems, independent of any observer algorithm:
+\`FiniteLawTransfer.lean\` has four named theorems, independent of any observer algorithm:
 - \`Nightfall.UniversalLawTransfer.loss_dual_pointwise\`: an elementary bounded-loss likelihood-ratio upper certificate.
 - \`Nightfall.UniversalLawTransfer.finite_loss_dual\`: finite-sum upper certificate for arbitrary finite real masses and any budget.
 - \`Nightfall.UniversalLawTransfer.exact_support_transfer\`: zero-error transfer under support dominance.
 
-**Not compiled or claimed:** Radon–Nikodym theorem, Lebesgue decomposition, Neyman–Pearson sharp dual equality, uniform integrability, product-space influence, completion, infinite adaptive sections, or Hilbert conditional expectation. The \`THEOREM.md\` full-law transfer remains an analytic theorem *conditional on the source Paper A/B observer claims*.
+**Not compiled or claimed:** the SOURCE adaptive observer construction, Radon–Nikodym theorem, Lebesgue decomposition, Neyman–Pearson sharp dual equality, uniform integrability, product-space influence, completion, infinite adaptive sections, or Hilbert conditional expectation. The \`THEOREM.md\` full-law transfer remains an analytic theorem *conditional on the source Paper A/B observer claims*.
 
 ## Audit B independence
 
