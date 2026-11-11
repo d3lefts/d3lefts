@@ -12,7 +12,8 @@
       "depends_on": [],
       "open_obligations": [
         "Port and recompile along with downstream theorem under one 4.35 toolchain"
-      ]
+      ],
+      "source_git_blob_sha": "70f69d8caebfaef40efdf16bab63f223753c190f"
     },
     {
       "id": "signed_covariance",
@@ -20,7 +21,8 @@
       "source": "research/nightfall/formalization/observability/DiagonalSignCoherence.lean",
       "depends_on": [],
       "kernel_receipt": "https://github.com/d3lefts/d3lefts/actions/runs/42972021272",
-      "toolchain": "4.35.0"
+      "toolchain": "4.35.0",
+      "source_git_blob_sha": "bc91a52e8002a49953f3077de395ecaa1ad05c07"
     },
     {
       "id": "actual_finite_posterior",
@@ -28,7 +30,8 @@
       "source": "research/nightfall/formalization/observability/ActualPosteriorInfluence.lean",
       "depends_on": [],
       "kernel_receipt": "https://github.com/d3lefts/d3lefts/actions/runs/42973878336",
-      "toolchain": "4.35.0"
+      "toolchain": "4.35.0",
+      "source_git_blob_sha": "f6d89d4fd73246bbe8d5e2cc7de9cedc9ac393a7"
     },
     {
       "id": "psd_sign_moment",
