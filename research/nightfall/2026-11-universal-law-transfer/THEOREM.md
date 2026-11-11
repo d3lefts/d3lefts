@@ -98,6 +98,28 @@ Thus 1 forces the tails uniformly to zero, giving 2. Conditions 2 and 3 are the 
 
 **Failure without uniformity.** On \([0,1]\) with reference Lebesgue \(\mu\), let \(\nu_n\) be \(\mu\) conditioned on \([0,1/n]\) and \(L_n=1_{[0,1/n]}\). Each \(\nu_n\ll\mu\), yet \(\mathbb E_\mu L_n=1/n\to0\) and \(\mathbb E_{\nu_n}L_n=1\). There is no uniform rate over all dominated target laws. This is a **classical change-of-measure obstruction**, not a counterexample to Paper B.
 
+## Theorem 3. Universal invariance of exact adaptive and fixed observation complexity under equivalent laws
+
+Let \(\mathcal P\) be **any** specified class of measurable exact-observation policies—adaptive decision trees, fixed coordinate sets, or another precisely defined observation model—and let \(c:\mathcal P\to\mathbb N\) assign a worst-case whole-coordinate query cost to each policy. Let \(f\) be a fixed measurable target. For a law \(\rho\), set
+\[
+D_{\mathcal P,\rho}(f)=\inf\{c(\pi):\pi\in\mathcal P,\;\Pr_\rho[\pi(X)=f(X)]=1\},
+\]
+with infimum of an empty set equal to \(+\infty\).
+
+**If \(\nu\sim\mu\) (mutual absolute continuity), then**
+\[
+\boxed{D_{\mathcal P,\nu}(f)=D_{\mathcal P,\mu}(f)
+\quad\text{for every fixed policy family }\mathcal P.}\tag{T5}
+\]
+
+In particular, **both** exact deterministic adaptive depth and exact fixed-nonadaptive coordinate-query complexity, and hence their separation, are invariant under any equivalent law change. Neither law need be product: one reference may be a product, while the other has arbitrarily strong correlations. No bounded likelihood ratio is required. Under one-way domination \(\nu\ll\mu\) only the inequality \(D_{\mathcal P,\nu}(f)\le D_{\mathcal P,\mu}(f)\) holds generally.
+
+**Proof.** For each fixed \(\pi\), its measurable error event \(E_\pi=\{x:\pi(x)\ne f(x)\}\) is \(\mu\)-null if and only if it is \(\nu\)-null when the laws are equivalent. Thus the feasible policies at **every** integer budget are identical. Their achievable cost sets and infima coincide. Apply separately to adaptive and nonadaptive policy classes. \(\square\)
+
+**Infinite-gap corollary.** Under the product reference law of the degree-two address function \(f(K,(Z_j))=Z_K\), where \(K\) ranges over all positive integers with strictly positive probabilities and \((Z_j)\) are nondegenerate independent bits, exact adaptive depth is \(2\), whereas no finite fixed coordinate set determines \(f\) almost surely. For **every** correlated target \(\nu\sim\mu\), both complexities are *unchanged*. For instance the positive, bounded likelihood tilt \(d\nu_\lambda/d\mu\propto\exp(\lambda\,1_{\{Z_K=1\}})\) makes the address and indicated bit statistically dependent for arbitrarily large finite \(\lambda\), yet the exact adaptive/fixed gap persists.
+
+**Lean formal scope.** The named declaration \`Nightfall.UniversalLawTransfer.every_policy_budget_invariant_under_equivalence\` quantifies over arbitrary measurable spaces, arbitrary abstract policy types, arbitrary prediction functions, an arbitrary cost map to natural numbers and every query budget; it proves the equivalence of feasible-budget existential statements under two mutual absolute-continuity premises. Only **this classical measure-transfer implication** is kernel certified if the pinned CI succeeds. The declaration does not formalize degree-two address lower bounds, a general query oracle, or the Paper A construction.
+
 ## Practical corollaries
 
 - If \(w\le K\) \(\mu\)-a.s., then \(\Psi_w(t)\le Kt\). The stronger theorem does not *require* this restrictive assumption.
