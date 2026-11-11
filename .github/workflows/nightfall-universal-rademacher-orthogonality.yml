@@ -1,0 +1,63 @@
+name: NIGHTFALL finite Rademacher orthogonality - Lean kernel
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/RademacherOrthogonality.lean'
+      - '.github/workflows/nightfall-universal-rademacher-orthogonality.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/observability/RademacherOrthogonality.lean'
+      - '.github/workflows/nightfall-universal-rademacher-orthogonality.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  signed-orthogonality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Lean 4.35.0 and Mathlib 4.35.0
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.35.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          git clone --depth 1 --branch v4.35.0 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4
+          (cd /tmp/mathlib4 && "$HOME/.elan/bin/lake" exe cache get)
+      - name: Kernel-check signed-squared-energy trace identities and axiom receipts
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.Rademacher
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/RademacherOrthogonality.lean \
+            --workspace /tmp/mathlib4 --timeout 480 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.signed_square_expand \
+            --decl $N.signed_orthogonal_isometry \
+            --decl $N.signed_energy_trace_identity \
+            --json-out lean-receipts/universal-rademacher-orthogonality.json || {
+              cat lean-receipts/universal-rademacher-orthogonality.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/universal-rademacher-orthogonality.json
+      - name: Preserve exact source hashes
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/observability/RademacherOrthogonality.lean > lean-receipts/SHA256SUMS
+          git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt 2>/dev/null || true
+          echo leanprover/lean4:v4.35.0 > lean-receipts/toolchain.txt
+      - name: Upload verification receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: universal-rademacher-orthogonality-lean
+          path: lean-receipts/
+          if-no-files-found: warn
+          retention-days: 45
