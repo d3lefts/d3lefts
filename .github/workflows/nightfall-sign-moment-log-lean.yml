@@ -41,6 +41,9 @@ jobs:
             --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
             --decl Nightfall.Observability.SignMoment.exp_union \
             --decl Nightfall.Observability.SignMoment.logarithmic_trace_from_moment \
+            --decl Nightfall.Observability.SignMoment.exp_chord \
+            --decl Nightfall.Observability.SignMoment.scaled_moment_of_normalized \
+            --decl Nightfall.Observability.SignMoment.log_from_normalized_psd_moment \
             --json-out lean-receipts/sign-moment-log.json || {
               cat lean-receipts/sign-moment-log.json
               exit 1
