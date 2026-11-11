@@ -51,7 +51,9 @@
         "papers/universal-observability/PROOF_SUPPLEMENT_v1.md",
         "papers/universal-observability/CHAIN_AUDIT_v1.md",
         "papers/universal-observability/checks/check_posterior_hilbert_exact.py",
-        "papers/universal-observability/checks/check_psd_log_stress.py"
+        "papers/universal-observability/checks/check_psd_log_stress.py",
+        "papers/spectral-adaptive-prediction/MANUSCRIPT.md",
+        "papers/spectral-adaptive-prediction/README.md"
       ],
       "dependencies": [
         {
@@ -68,6 +70,35 @@
       ],
       "inherited": [
         "Finite product scalar influence theorem and classical ANOVA"
+      ]
+    },
+    {
+      "id": "NF-FINITE-PALETTE-RECOVERY-20261111",
+      "title": "Finite-range exact recovery on arbitrary independent products (Paper A)",
+      "area": "observability",
+      "lifecycle": "active",
+      "validity": "analytic-manuscript-unrefereed",
+      "source_status": "public-analytic-manuscript",
+      "review": "none-recorded",
+      "priority": "unresolved",
+      "primary": "papers/exact-recovery/MANUSCRIPT.md",
+      "evidence": [
+        "papers/exact-recovery/README.md",
+        "research/nightfall/2026-11-five-closures/FIVE_CLOSURES_V11.md",
+        "research/nightfall/formalization/product_space/EXACT_RECOVERY_ADVERSARIAL_AUDIT_20261110.md",
+        "research/nightfall/formalization/product_space/RECOVERY_CERTIFICATE_RECEIPT_20261110.md"
+      ],
+      "dependencies": [],
+      "claim_scope": "Almost-sure deterministic adaptive recovery of q-valued degree-d real observables on arbitrary independent completed products; conservative d floor(d² min((q-1)²,2R/Delta)) whole-coordinate bound, finite vector-palette reduction, nonalgorithmic known-law policy; earlier R/Delta strengthening not promoted.",
+      "open_gates": [
+        "Independent non-author completed-product measurable-selection and simultaneous Fubini/hybrid proof review",
+        "End-to-end Lean not completed; finite switching and sections only",
+        "Reconcile older R/Delta strengthening, verify all finite source/checker receipts, compare Midrijanis/Tal and other priority"
+      ],
+      "inherited": [
+        "Gatis Midrijanis degree-block-sensitivity decision-tree framework",
+        "Tal Boolean block-sensitivity-degree relation",
+        "Classical Hoeffding/Efron–Stein and endpoint Markov estimates"
       ]
     },
     {
