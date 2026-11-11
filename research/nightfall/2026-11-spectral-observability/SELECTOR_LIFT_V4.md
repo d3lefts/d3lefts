@@ -43,6 +43,8 @@ Its trace s_j = sum_k I_j(g_k) = I_j(f) <= M. The degree-s Hoeffding decompositi
 
 In the degree-three signed-selector specialization s=2; the v3 manuscript used the weaker P<=3W from the degree of f. This correction improves a quantitative constant without changing the mathematical assumptions.
 
+The coefficient s in P<=sW is optimal even among one-leaf examples: take g(X)=product_{j=1}^s (X_j-E X_j) with independent nondegenerate bounded inputs and f=Yg rescaled to |f|<=B. Its pure degree-s ANOVA component has I_j(g)=Var(g) on each of the s coordinates; hence P=sW exactly. This establishes sharpness of the *influence-budget factor*, not of the final logarithmic prediction constant.
+
 (3) For independent auxiliary fair signs eps_k, set h_eps(X)=sum_k eps_k g_k(X). Then |h_eps|<=B and deg(h_eps)<=s, so by the scalar premise
 
     Var(h_eps)
