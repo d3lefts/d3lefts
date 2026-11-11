@@ -37,6 +37,11 @@ assert.equal((page.match(/<tr><td>\d\d<\/td>/g)||[]).length,59,"Missing static s
 for(const r of m.modules){
  assert.ok(page.includes(r.source_blob_sha),"Missing source hash in static passport: "+r.path);
  assert.ok(page.includes(r.path.split("/").at(-1)),"Source not visible on site: "+r.path);
+ if(r.ci_source_match_status==="same-git-blob-as-successful-ci-head"){
+  assert.ok(Number.isSafeInteger(r.ci_run),"Verified source match requires a valid run id");
+  assert.match(r.ci_run_head_sha,/^[0-9a-f]{40}$/);
+  assert.ok(page.includes(`https://github.com/d3lefts/d3lefts/actions/runs/${r.ci_run}`),"Source-matched receipt not shown: "+r.path);
+ }
 }
 assert.ok(page.includes("Quarantine does not retract kernel compilation"));
 assert.ok(page.includes('href="lean-certificate-provenance.json"'));
