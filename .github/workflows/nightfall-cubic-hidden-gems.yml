@@ -19,10 +19,12 @@ jobs:
         run: python3 -I research/nightfall/2026-11-cubic-hidden-gems/verify_l1_quadratic.py
       - name: Heterogeneous bounded-control stress tests
         run: python3 -I research/nightfall/2026-11-cubic-hidden-gems/verify_bounded_controls.py
+      - name: Exact two-draw scalarization occupancy obstruction
+        run: python3 -I research/nightfall/2026-11-cubic-hidden-gems/attack_two_draw_max.py
       - name: Preserve replay hashes
         run: |
           mkdir -p replay
-          sha256sum research/nightfall/2026-11-cubic-hidden-gems/{PROOF_NOTE.md,README.md,check_exact.py,verify_l1_quadratic.py,verify_bounded_controls.py} > replay/SHA256SUMS
+          sha256sum research/nightfall/2026-11-cubic-hidden-gems/{PROOF_NOTE.md,README.md,check_exact.py,verify_l1_quadratic.py,verify_bounded_controls.py,attack_two_draw_max.py,AUDIT_TWO_DRAW_MAX.md} > replay/SHA256SUMS
           cp research/nightfall/2026-11-cubic-hidden-gems/PROOF_NOTE.md replay/PROOF_NOTE.md
       - uses: actions/upload-artifact@v4
         if: always()
