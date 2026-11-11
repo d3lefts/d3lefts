@@ -97,11 +97,11 @@ try{
         toolbar:document.querySelector('meta[name="theme-color"]')?.content
       };
     });
-    assert.equal(record.value,"0.380856370118…","The sourced Erdős bound leads the hero");
-    assert.equal(record.firstFold,record.value,"Finite overlap witness appears immediately in the opening");
-    assert.equal(record.cells,"131,072","The exact finite construction size is disclosed");
-    assert.equal(record.source,true,"The record links to its public witness and checker");
-    assert.equal(record.ink,"rgb(234, 240, 245)","Finite record remains legible over black interference art");
+    assert.equal(record.value,"Var(F)² / B²","Current product-space research leads the active hero");
+    assert.equal(record.firstFold,"DEGREE TWO","Active quadratic influence is visible immediately");
+    assert.equal(record.cells,"2","Degree-two scope is disclosed in the hero");
+    assert.equal(record.source,false,"Archive witness is not misrepresented as an active source");
+    assert.equal(record.ink,"rgb(234, 240, 245)","Current bound remains legible over black illustration");
     assert.equal(record.toolbar,"#020406","Browser chrome follows carbon-black identity");
    }
    for(const [key,target] of Object.entries(expectations[name]||{})){
