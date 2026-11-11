@@ -30,10 +30,15 @@ theorem selector_pair_four
       (Fintype.card (ι → Bool) : ℝ) *
         (F false false + F false true + F true false + F true true) := by
   let a : ι → Bool → Bool := fun _ b => b
-  have h10 := cross_block_all_sides a a a a F i j hij true false
-  have h01 := cross_block_all_sides a a a a F i j hij false true
-  have h11 := cross_block_all_sides a a a a F i j hij true true
-  simp only [ite_true, ite_false] at h10 h01 h11
+  have h10 : (∑ σ : ι → Bool, F (σ i) (σ j)) =
+      (∑ σ : ι → Bool, F (!(σ i)) (σ j)) := by
+    simpa [a] using (cross_block_all_sides a a a a F i j hij true false)
+  have h01 : (∑ σ : ι → Bool, F (σ i) (σ j)) =
+      (∑ σ : ι → Bool, F (σ i) (!(σ j))) := by
+    simpa [a] using (cross_block_all_sides a a a a F i j hij false true)
+  have h11 : (∑ σ : ι → Bool, F (σ i) (σ j)) =
+      (∑ σ : ι → Bool, F (!(σ i)) (!(σ j))) := by
+    simpa [a] using (cross_block_all_sides a a a a F i j hij true true)
   have hp (σ : ι → Bool) :
       F (σ i) (σ j) + F (!(σ i)) (σ j) +
         F (σ i) (!(σ j)) + F (!(σ i)) (!(σ j)) =
@@ -57,7 +62,9 @@ theorem selector_pair_four
           intro σ _
           exact hp σ
     _ = (Fintype.card (ι → Bool) : ℝ) *
-        (F false false + F false true + F true false + F true true) := by simp
+        (F false false + F false true + F true false + F true true) := by
+          simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
+          ring
 
 /-- Switching average on a single coordinate, without assuming any
 input distribution. -/
@@ -102,8 +109,18 @@ theorem quadratic_first_switch_identity
   have hs (i : ι) :
       2 * (∑ σ : ι → Bool, h i ((switched x y σ) i)) =
          N * (h i (x i) + h i (y i)) := by
-    simpa [switched, N] using
-      (selector_one_two (fun b => if b then h i (y i) else h i (x i)) i)
+    calc
+      2 * (∑ σ : ι → Bool, h i ((switched x y σ) i)) =
+          2 * (∑ σ : ι → Bool,
+            if σ i then h i (y i) else h i (x i)) := by
+            apply congrArg (fun t : ℝ => 2 * t)
+            apply Finset.sum_congr rfl
+            intro σ _
+            dsimp [switched]
+            cases σ i <;> rfl
+      _ = N * (h i (x i) + h i (y i)) := by
+            simpa [N] using
+              (selector_one_two (fun b => if b then h i (y i) else h i (x i)) i)
   have hp (e : E) :
       4 * (∑ σ : ι → Bool,
         k e ((switched x y σ) (u e)) ((switched x y σ) (v e))) =
@@ -171,13 +188,20 @@ theorem quadratic_first_switch_identity
            k e (x (u e)) (y (v e)) +
            k e (y (u e)) (x (v e)) +
            k e (y (u e)) (y (v e)))) := by
-    simp only [quadratic, Finset.sum_add_distrib]
-    rw [Finset.mul_sum]
-    simp only [Finset.sum_add_distrib]
-    rw [hc]
-    convert add_add (show 4 * (N * c) = 4 * (N * c) from rfl) hsing hpair using 1 <;> ring
-  dsimp [quadratic, firstSwitch]
+    calc
+      4 * (∑ σ : ι → Bool,
+        quadratic u v c h k (switched x y σ)) =
+          4 * (∑ _σ : ι → Bool, c) +
+          4 * (∑ σ : ι → Bool, ∑ i : ι,
+            h i ((switched x y σ) i)) +
+          4 * (∑ σ : ι → Bool, ∑ e : E,
+            k e ((switched x y σ) (u e))
+              ((switched x y σ) (v e))) := by
+            simp only [quadratic, Finset.sum_add_distrib]
+            ring
+      _ = _ := by rw [hc, hsing, hpair]
   rw [hmean]
+  dsimp [quadratic, firstSwitch]
   simp only [mul_add, Finset.mul_sum, Finset.sum_add_distrib,
     Finset.sum_sub_distrib]
   ring
