@@ -146,3 +146,10 @@ html[data-nf-experience="moon"] .footer h2{font-size:clamp(48px,6vw,86px)}
  .moon-first-test{grid-template-columns:minmax(0,1fr)}
  .moon-first-test-instructions{padding:18px}
 }
+
+/* NEW MOON first-fold archival figure with its verification boundary. */
+.moon-featured-record{display:grid;gap:7px;padding:19px 23px;border:1px solid var(--moon-rule);background:#141b2c;margin:26px 0 0;max-width:630px}
+.moon-featured-record strong{font:600 10px/1.5 var(--mono);letter-spacing:.09em;color:var(--moon-gold)}
+.moon-featured-record span{font:400 clamp(19px,2vw,29px)/1.35 var(--mono);color:#f0edf8;overflow-wrap:anywhere}
+.moon-featured-record small{font:400 12px/1.65 var(--sans);color:#bfc9da}
+@media(max-width:620px){.moon-featured-record{padding:16px;margin-top:22px}.moon-featured-record span{font-size:17px}}
