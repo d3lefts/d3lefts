@@ -7,7 +7,7 @@ const real=walk("research/nightfall").sort(),got=m.modules.map(x=>x.path).sort()
 assert.equal(m.schema,"nightfall-lean-provenance-v1");
 assert.deepEqual(got,real,"Unclassified Lean file (must not silently inherit originality)");
 assert.equal(new Set(got).size,got.length);
-assert.equal(m.modules.length,39,"Frozen source count changed: refresh manifest against exact main tree");
+assert.equal(m.modules.length,43,"Current 43-source manifest expected; reconcile later main changes explicitly");
 const valid=new Set(["quarantine","derived-transfer","finite-construction"]);
 for(const r of m.modules){
  assert.ok(valid.has(r.classification),r.path);
@@ -26,7 +26,8 @@ for(const key of ["quarantine","derived-transfer","finite-construction"]){
 const phases=m.modules.filter(x=>x.classification==="finite-construction");
 assert.deepEqual(phases.map(x=>x.path),["research/nightfall/formalization/phase_block/PhaseBlock.lean"]);
 const page=fs.readFileSync("docs/lean-certificate-provenance.html","utf8");
-assert.equal((page.match(/<tr><td>\d\d<\/td>/g)||[]).length,39,"Missing static site entries");
+assert.equal((page.match(/<tr><td>\d\d<\/td>/g)||[]).length,m.modules.length,"Missing static site entries");
+for(const row of m.modules)assert.ok(page.includes("https://github.com/d3lefts/d3lefts/blob/main/"+row.path),"Missing site source link "+row.path);
 assert.ok(page.includes("Quarantine does not retract kernel compilation"));
 assert.ok(page.includes('href="lean-certificate-provenance.json"'));
 const source=fs.readFileSync("docs/phase-block-proof-passport.html","utf8");
@@ -56,4 +57,4 @@ for(const token of ["CLOSED AND UNMERGED","27","41110673165","k=7","not all form
 assert.ok(page.includes('id="nonmain"')&&page.includes(a.passport),"Not visible in provenance");
 const siteSitemap=fs.readFileSync("docs/sitemap.xml","utf8");
 assert.ok(siteSitemap.includes("/"+a.passport),"Off-main passport missing sitemap");
-console.log("PASS: 39 main Lean sources classified, one separate closed-branch finite certificate explicitly scoped; no novelty promotion.");
+console.log("PASS: 43 main Lean sources classified, one separate closed-branch finite certificate explicitly scoped; no novelty promotion.");
