@@ -113,6 +113,14 @@ class BridgeV2Test(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "contents differ"):
             check_receipts.audit(path)
 
+    def test_forged_compiler_pin_rejected(self):
+        r = self.run_bridge()
+        r["compiler_version"] = r["compiler_version"].replace("4.35.0", "4.33.0")
+        path = self.folder / "receipt.json"
+        path.write_text(json.dumps(r))
+        with self.assertRaisesRegex(ValueError, "claimed pin disagrees"):
+            check_receipts.audit(path)
+
     def test_unauthorized_axiom_rejected(self):
         r = self.run_bridge()
         r["stdout"] = r["stdout"].replace("Quot.sound", "sorryAx")
