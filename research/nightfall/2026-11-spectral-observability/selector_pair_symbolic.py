@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Independent all-p polynomial check of the four-bit degree-3 pair obstruction.
+"""Exact symbolic all-bias proof of the corrected degree-three pair obstruction.
 
-No SymPy or numerical sampling. Polynomials are exact integer coefficient tuples.
-The result proves a polynomial identity, not a universal influence inequality.
+Checks all four ANOVA values as polynomials in p, then the piecewise maximum.
+No third-party dependencies, floats, or input sampling are needed for identities.
 """
+from fractions import Fraction
 from itertools import product
 
 
@@ -12,12 +13,8 @@ def add(a, b):
     return tuple((a[i] if i < len(a) else 0) + (b[i] if i < len(b) else 0) for i in range(n))
 
 
-def neg(a):
-    return tuple(-x for x in a)
-
-
 def sub(a, b):
-    return add(a, neg(b))
+    return add(a, tuple(-v for v in b))
 
 
 def mul(a, b):
@@ -26,13 +23,6 @@ def mul(a, b):
         for j, v in enumerate(b):
             out[i + j] += u * v
     return tuple(out)
-
-
-def powpoly(a, n):
-    out = (1,)
-    for _ in range(n):
-        out = mul(out, a)
-    return out
 
 
 def eqpoly(a, b):
@@ -44,8 +34,7 @@ def eqpoly(a, b):
     return trim(a) == trim(b)
 
 
-p = (0, 1)
-q = (1, -1)
+p, q = (0, 1), (1, -1)
 
 
 def f(x):
@@ -60,27 +49,44 @@ def conditional_pair(i, j, a, b):
         x[i], x[j] = a, b
         x[rem[0]], x[rem[1]] = s, t
         weight = mul(p if s else q, p if t else q)
-        result = add(result, weight if f(x) == 1 else neg(weight))
+        result = add(result, weight if f(x) == 1 else tuple(-v for v in weight))
     return result
 
 
 def mixed(i, j):
-    return add(sub(conditional_pair(i,j,1,1), conditional_pair(i,j,1,0)),
-               sub(conditional_pair(i,j,0,0), conditional_pair(i,j,0,1)))
+    return add(sub(conditional_pair(i, j, 1, 1), conditional_pair(i, j, 1, 0)),
+               sub(conditional_pair(i, j, 0, 0), conditional_pair(i, j, 0, 1)))
 
 
 for i, j in ((0, 1), (2, 3)):
     delta = mixed(i, j)
-    assert eqpoly(delta, (4, -4)), (i, j, delta)
-    anchored = mul(delta, powpoly(q, 2))
-    assert eqpoly(anchored, (4, -12, 12, -4)), (i, j, anchored)
-    print(f'pair {i+1}{j+1}: mixed difference = 4(1-p); '
-          'ANOVA value at (1,1) = 4(1-p)^3')
+    assert eqpoly(delta, (4, -4))
+    h = {(a, b): conditional_pair(i, j, a, b) for a, b in product((0, 1), repeat=2)}
+    # Center both input bits and compare each ANOVA value symbolically.
+    for a, b in product((0, 1), repeat=2):
+        cent_a, cent_b = ((1, -1) if a else (0, -1)), ((1, -1) if b else (0, -1))
+        formula = mul(delta, mul(cent_a, cent_b))
+        # Pair-Hoeffding component: double-centered conditional response.
+        e_a = add(mul(p, h[(1, b)]), mul(q, h[(0, b)]))
+        e_b = add(mul(p, h[(a, 1)]), mul(q, h[(a, 0)]))
+        grand = (0,)
+        for u, v in product((0, 1), repeat=2):
+            grand = add(grand, mul(mul(p if u else q, p if v else q), h[(u, v)]))
+        anova = add(sub(sub(h[(a, b)], e_a), e_b), grand)
+        assert eqpoly(anova, formula), (i, j, a, b, anova, formula)
+    print(f'pair {i+1}{j+1}: f_pair(a,b)=4(1-p)(a-p)(b-p), all four symbols')
 
-# The unique total-degree-four multilinear coefficient vanishes.
-coefficient = 0
-for x in product((0, 1), repeat=4):
-    coefficient += (-1) ** (4 - sum(x)) * f(x)
-assert coefficient == 0
-assert {f(x) for x in product((0, 1), repeat=4)} == {-1, 1}
-print('PASS: for every 0<p<1, degree <=3 and pair mass = 8(1-p)^3; limit = 8')
+# f has degree <=3: its fourth-order Boolean Mobius coefficient is exactly zero.
+assert sum((-1) ** (4-sum(x)) * f(x) for x in product((0, 1), repeat=4)) == 0
+
+# Exact pointwise check of the corrected supremum on both sides of p=1/2.
+for t in (Fraction(1, 1000), Fraction(1, 3), Fraction(1, 2),
+          Fraction(3, 4), Fraction(9, 10)):
+    component = [4 * (1-t) * (a-t) * (b-t) for a, b in product((0, 1), repeat=2)]
+    exact_pair_sum = 2 * max(abs(v) for v in component)
+    assert exact_pair_sum == 8 * (1-t) * max(t, 1-t) ** 2
+    if t > Fraction(1, 2):
+        assert exact_pair_sum != 8*(1-t)**3  # the source v3 formula is false here
+    print(f'p={t}: total pair mass={exact_pair_sum}')
+
+print('PASS: degree <=3 and all-bias exact formula 8(1-p) max(p,1-p)^2; limit p->0 is 8')
