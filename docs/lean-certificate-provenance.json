@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-provenance-v1",
   "as_of": "2026-11-11",
-  "revision": 1,
-  "scope": "39 .lean files on main at f005704b50c35819ff32c703e1ce5f2f72106fd5; historical source inventory. If source count changes, regenerate and review this manifest.",
-  "source_commit": "f005704b50c35819ff32c703e1ce5f2f72106fd5",
+  "revision": 2,
+  "scope": "43 Lean files on main after PR #359 at 008ccdc5e38aadcf39aaf1fd384bb796248606e0; historical first 39 preserved with 4 explicitly quarantined scoped proof files. CI does not certify the unrestricted quadratic theorem.",
+  "source_commit": "008ccdc5e38aadcf39aaf1fd384bb796248606e0",
   "policy": "Kernel compilation is validity evidence only. Quarantine means do not claim novelty; it does not invalidate a correctly compiled theorem. Derived transfers are scoped program-specific compositions with open worldwide priority. A distinct finite construction has an exact certificate but still needs prior-art review.",
   "prior_art": [
     {
@@ -38,7 +38,7 @@
     }
   ],
   "counts": {
-    "quarantine": 28,
+    "quarantine": 32,
     "derived_transfer": 10,
     "finite_construction": 1
   },
@@ -84,6 +84,14 @@
       "global_priority": "unverified"
     },
     {
+      "path": "research/nightfall/formalization/observability/ArbitraryLawFourthMoment.lean",
+      "classification": "quarantine",
+      "note": "Classical exact two-increment fourth moment for actual arbitrary finite product laws; the general quadratic influence theorem is NOT established",
+      "passport": "universal-spectral-proof-passport.html",
+      "ci_run": 43058772711,
+      "global_priority": "unverified"
+    },
+    {
       "path": "research/nightfall/formalization/observability/CategoricalSignedProxy.lean",
       "classification": "quarantine",
       "note": "Finite signed-proxy normalization and Cauchy norm bound; no nonadaptive theorem",
@@ -100,11 +108,27 @@
       "global_priority": "unverified"
     },
     {
+      "path": "research/nightfall/formalization/observability/HilbertTwoIncrementMoment.lean",
+      "classification": "quarantine",
+      "note": "Dimension-free two-increment Hilbert fourth-moment inequality under arbitrary finite independent laws, not an arbitrary finite-family or universal quadratic proof",
+      "passport": "universal-spectral-proof-passport.html",
+      "ci_run": 43058772711,
+      "global_priority": "unverified"
+    },
+    {
       "path": "research/nightfall/formalization/observability/PosteriorRankBudget.lean",
       "classification": "quarantine",
       "note": "Generic finite-kernel flow and weighted telescoping, conditional local drift",
       "passport": "universal-spectral-proof-passport.html",
       "ci_run": 42972560393,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/QuadraticDiscoveryCore.lean",
+      "classification": "quarantine",
+      "note": "Classical quadratic interpolation, conditional matching and certificate-closing algebra; matching and moment premises not established for every product function",
+      "passport": "universal-spectral-proof-passport.html",
+      "ci_run": 43058772711,
       "global_priority": "unverified"
     },
     {
@@ -313,6 +337,14 @@
       "note": "Finite-product oriented two-sided transfer and posterior bridge with upstream imports",
       "passport": "finite-product-influence-proof-passport.html",
       "ci_run": 42903333354,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticHoeffdingBridge.lean",
+      "classification": "quarantine",
+      "note": "Actual finite-product degree-two Hoeffding truncation specialized from the known Efron-Stein decomposition, not a new influence theorem",
+      "passport": "finite-product-influence-proof-passport.html",
+      "ci_run": 43057281341,
       "global_priority": "unverified"
     },
     {
