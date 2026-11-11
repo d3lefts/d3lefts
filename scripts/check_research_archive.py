@@ -156,11 +156,11 @@ def validate_catalogue(doc: dict) -> None:
 
 
 def strip_fences(body: str) -> str:
-    return re.sub(r"(?ms)^\\s*`{3}.*?^\\s*`{3}\\s*$", "", body)
+    return re.sub(r"(?ms)^\s*`{3}.*?^\s*`{3}\s*$", "", body)
 
 
 def validate_guides() -> None:
-    pattern = re.compile(r"(?<!!)\\[[^\\n\\]]+\\]\\(([^\\s)]+)(?:\\s+[^)]*)?\\)")
+    pattern = re.compile(r"(?<!!)\[[^\n\]]+\]\(([^\s)]+)(?:\s+[^)]*)?\)")
     for rel in SELECTED_GUIDES:
         source = repo_file(rel)
         body = strip_fences(source.read_text(encoding="utf-8"))
