@@ -58,6 +58,7 @@ jobs:
             --decl Nightfall.Observability.ParityBlocks.cross_block_right_right \
             --decl Nightfall.Observability.ParityBlocks.cross_block_all_sides \
             --decl Nightfall.Observability.ParityBlocks.off_matching_pair_family_cancel \
+            --decl Nightfall.Observability.ParityBlocks.matched_block_mixed_difference \
             --json-out lean-receipts/parity-blocks.json || {
               cat lean-receipts/parity-blocks.json || true
               exit 1
