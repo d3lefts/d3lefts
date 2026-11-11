@@ -1,123 +1,129 @@
-# NIGHTFALL v5 — Exact repair of the categorical nonadaptive minimax exponent
+# Spectral observability v5 — repair of the categorical nonadaptive rate
 
-**Research checkpoint:** 2026-11-10 America/New_York (2026-11-11 UTC)  
-**Source under review:** `NIGHTFALL_Spectral_Observability_Synthesis_v5.pdf`, pages 2 and 5–7; user-supplied Library copy dated 2026-11-11 UTC. Original v5 PDF/source are **not** silently copied into this repository.  
-**Status:** Self-contained analytic quantitative correction and independently replayed exact finite identities; full spectral theorem remains **unrefereed, not Lean-certified, and not globally priority-cleared**.
+**Checkpoint:** 10 November 2026 US/Eastern (11 November UTC)  
+**Source under review:** NIGHTFALL_Spectral_Observability_Synthesis_v5.pdf, pages 2 and 5–7 (user research Library, not included in this Git tree)  
+**Scientific status:** Analytic quantitative repair with independent exact finite tests; *not* a Lean formalization, independent human referee review, or global-priority determination
 
-## 1. The exponent mismatch in the printed v5 statement
+## 1. Identified exponent mismatch
 
-The printed Theorem 1.2 / 4.1 takes
+The printed v5 Theorem 1.2 / Theorem 4.1 chooses
 
-[
-L_{mathrm{old}}=m+1,qquad
-C_{d,L}=2d^2,3^{d-1},T_{d-1}(L),
-]
+$$
+L_{\mathrm{old}}=m+1,\qquad
+C_{d,L}=2d^2 3^{d-1}T_{d-1}(L)
+$$
 
-and proves a fixed-set residual squared-error upper bound
+and states the nonadaptive conditional-mean squared-risk estimate
 
-[
-R_q leq 	au_r+rac{C_{d,L}^{,2}B^2}{4a_r^2 q},
-quad a_r=rac{Gamma(r/2)}{sqrtpi,Gamma((r+1)/2)}.
-]
+$$
+R_q\le \tau_r+\frac{C_{d,L}^{\,2}B^2}{4a_r^2q},
+\qquad
+a_r=\frac{\Gamma(r/2)}{\sqrt\pi\,\Gamma((r+1)/2)}.
+$$
 
-For fixed degree `d` and large `m`, `T_{d-1}(m+1)=\Theta_d(m^{d-1})`. **Squaring the constant leads only to the weaker upper bound `O_d(r m^{2d-2} B²/η)`**, whereas v5 advertises a matching `Theta_d(r m^{d-1}/η)` bound. The argument as printed therefore does not justify the claimed exponent of `m`.
+With the *printed choice* of L, the Chebyshev factor is of order $m^{d-1}$, so the resulting upper bound on the number of observations is only $O_d(rm^{2d-2}B^2/\eta)$. That formula does **not** establish the printed matching rate $\Theta_d(rm^{d-1}/\eta)$.
 
-## 2. Repair with the stronger bound already implicit in v5
+## 2. An exact stronger proxy norm bound repairs the exponent
 
-For a categorical law `p=(p_s)` on `m` positive-mass atoms with `Σ_s p_s=1`, take independent fair signs `ε_s` and put
+Take a strictly positive finite categorical law $p=(p_s)_{s=1}^m$ with $\sum_s p_s=1$ and independent fair signs $\varepsilon_s$. Define
 
-[
-S=sum_ssqrt{p_s},arepsilon_s,qquad
-Z_s=p_s+sqrt{p_s},arepsilon_s-p_sS.
-]
+$$
+S=\sum_s\sqrt{p_s}\,\varepsilon_s,\qquad
+Z_s=p_s+\sqrt{p_s}\,\varepsilon_s-p_sS.
+$$
 
-Then `Σ_s Z_s=1`, `E Z_s=p_s`, and `E[Z_s Z_t]=p_s 1_{s=t}`. These are **exact** identities, not approximations.
+Direct expansion gives the mass and moment identities
 
-More importantly, direct expansion gives
+$$
+\sum_s Z_s=1,\qquad
+\mathbb E Z_s=p_s,\qquad
+\mathbb E[Z_sZ_t]=p_s\mathbf1_{\{s=t\}}.
+$$
 
-[
-sum_srac{Z_s^2}{p_s}
-  =1+sum_s(arepsilon_s-sqrt{p_s}S)^2
-  =1+m-S^2.
-]
+The stronger **pointwise** norm identity is
 
-Weighted Cauchy–Schwarz yields the **pointwise** improvement
+$$
+\sum_s \frac{Z_s^2}{p_s}
+ =1+\sum_s(\varepsilon_s-\sqrt{p_s}S)^2
+ =1+m-S^2.
+$$
 
-[
-oxed{|Z|_1^2
-       leqBigl(sum_sp_sBigr)
-             Bigl(sum_s Z_s^2/p_sBigr)
-       =m+1-S^2le m+1.}
-]
+Weighted Cauchy–Schwarz therefore proves
 
-Thus choose
+$$
+\boxed{\|Z\|_1^2
+\le\left(\sum_sp_s\right)\!
+   \left(\sum_s\frac{Z_s^2}{p_s}\right)
+=m+1-S^2\le m+1.}
+$$
 
-[
-oxed{L_{mathrm{corrected}}=sqrt{m+1}.}
-]
+Hence the same signed proxy satisfies the corrected common extrapolation parameter
 
-The signed-to-probability Jordan decomposition and common Chebyshev extrapolation line in v5 use **only** `ΣZ_s=1` and a common upper bound `||Z||_1≤L`. This replacement is therefore admissible *without altering that argument*, subject to independent review of the extrapolation itself.
+$$
+\boxed{L_{\mathrm{new}}=\sqrt{m+1}.}
+$$
 
-For `x≥1`, `T_k(x)=\cosh(k\operatorname{arcosh}x)≤(2x)^k`; hence
+### Why the Jordan/Chebyshev step permits this substitution
 
-[
-C_{d,mathrm{corrected}}
- =2d^2,3^{d-1}T_{d-1}(sqrt{m+1})
- le 2d^2,6^{d-1}(m+1)^{(d-1)/2}.
-]
+For any real signed vector $Z$ with total mass $1$, let $u=\|Z\|_1\le L$, $L>1$, and write its Jordan decomposition $Z=Z^+-Z^-$, with positive-part mass $(u+1)/2$ and negative-part mass $(u-1)/2$. Add to each part the **same** nonnegative vector $R$ of mass $(L-u)/2$. Normalizing the enlarged parts gives probability vectors $q^+,q^-$ satisfying
 
-Substituting into the printed squared-risk inequality gives
+$$
+Z=\frac{1+L}{2}\,q^+-\frac{L-1}{2}\,q^-.
+$$
 
-[
-oxed{
-R_qleq	au_r+
-rac{d^4,36^{d-1}(m+1)^{d-1}B^2}{a_r^2q}.
+Thus $q(t)=(1+t)q^+/2+(1-t)q^-/2$ is a genuine probability vector for every $t\in[-1,1]$, while $q(L)=Z$. This construction works blockwise with the **same** bound $L$ for all input coordinates.
+
+The v5 Chebyshev step only uses these probability lines, their common endpoint $L$, the degree-at-most-$(d-1)$ of the interpolated section polynomial, and the bound $2d^2B$ for the sum of genuine section norms. It therefore remains valid after replacing $m+1$ by $\sqrt{m+1}$, provided the remaining vector-valued interpolation and scalar moment inequalities hold.
+
+For $x\ge1$ and integer $k\ge0$, $T_k(x)=\cosh(k\,\operatorname{arcosh}x)\le(2x)^k$. Consequently,
+
+$$
+C_{d,\mathrm{new}}
+=2d^2 3^{d-1}T_{d-1}(\sqrt{m+1})
+\le2d^2 6^{d-1}(m+1)^{(d-1)/2}.
+$$
+
+The printed squared-risk estimate now implies the explicit corrected bound
+
+$$
+\boxed{
+R_q\le \tau_r+
+\frac{d^4 36^{d-1}(m+1)^{d-1}B^2}{a_r^2q}.
 }
-]
+$$
 
-As `a_r^{-2}=\Theta(r)`, this proves the **claimed order of the nonadaptive upper bound** `O_d(r m^{d-1} B²/η)` *conditional on the remaining v5 analytic argument*. The matching lower construction is independent of this correction and was not re-certified in this PR.
+Since $a_r^{-2}=\Theta(r)$, this **repairs the categorical upper-bound exponent** to $O_d(rm^{d-1}B^2/\eta)$, conditional on the remainder of v5's proof. The matching lower construction from v5 does not use $L$ and was not independently certified by this note.
 
-**Numerical significance:** At `d=3, m=16`, the old extrapolation factor is `T_2(17)=577`, whereas the corrected factor is `T_2(√17)=33`. The squared query-budget constant improves by exactly `(577/33)^2≈305.72`.
+**Numerical impact:** At $d=3,m=16$, $T_2(m+1)=577$ and $T_2(\sqrt{m+1})=33$. The squared query-budget coefficient decreases by exactly $332929/1089\approx305.72$.
 
-## 3. Correct countable-alphabet Rényi-effective-support bound
+## 3. Countable-alphabet Rényi effective support: a second correction
 
-For a countable alphabet, define
+If $p_s$ has countable positive support and $h=(\sum_s\sqrt{p_s})^2<\infty$, all signed-proxy sums converge absolutely. For every sign realization,
 
-[
-h=left(sum_ssqrt{p_s}ight)^2<infty.
-]
+$$
+\|Z\|_1
+\le\sum_sp_s+\sum_s\sqrt{p_s}+|S|\sum_sp_s
+\le1+2\sum_s\sqrt{p_s}
+=\boxed{1+2\sqrt h}.
+$$
 
-For absolutely summable `√p_s`, the same proxy is well-defined and
+Thus choose **$L_{\mathrm{new}}=1+2\sqrt h$**, not the printed $1+2h$. For $h\ge1$, $T_{d-1}(1+2\sqrt h)^2=O_d(h^{d-1})$. Subject to the countable proxy and product-measure limiting argument, this also repairs the stated upper order $O_d(rh^{d-1}B^2/\eta)$. The uniform $m$-ary lower construction provides the corresponding order when $h\ge2$ and $m=\lfloor h\rfloor$.
 
-[
-|Z|_1
-leqsum_sp_s+sum_ssqrt{p_s}+|S|sum_sp_s
-leq 1+2sum_ssqrt{p_s}
-=oxed{1+2sqrt h}.
-]
+## 4. Exact independent replay
 
-**Not** `1+2h` as printed. The corrected `L=1+2√h` gives `C_{d,L}^2=O_d(h^{d-1})` for `h≥1`; combined with the conditional v5 sampling argument, this restores the stated `O_d(r h^{d-1} B²/η)` upper-bound order. For `h≥2`, the lower construction with a uniform alphabet of size `⌊h⌋` has the matching order. The countably infinite proxy and its moment identities require the indicated absolute summability; the original manuscript's remaining infinite-product proof steps still need independent analytic review.
+Run:
 
-## 4. Independent replay
-
-Run
-
-```bash
+~~~bash
 python3 -I research/nightfall/2026-11-spectral-observability/check_categorical_proxy_v5.py
-```
+~~~
 
-The exact `fractions.Fraction` checker:
-- Uses independently generated positive **rational unit-sphere** weights, hence rational `√p_s`, and exhaustively tests all sign patterns for `2≤m≤8` (508 patterns).
-- Checks the mass-one identity, weighted quadratic identity, improved `L_1` bound and countable-surrogate bound **exactly**.
-- Independently checks `E Z_s=p_s` and `E[Z_sZ_t]=p_s1_{s=t}` with exact fractions.
-- Tests an independent three-coordinate categorical multilinear conditional-variance proxy identity for `2≤m≤4`, including all sign patterns of the other two coordinate blocks.
-- Tests the sharp elementary `A^2/(4q)` sorted-tail bound with exact fractions and an equality witness on `2q` equal weights.
+The standard-library Fraction checker independently constructs rational positive unit-sphere weights, so every square root of an atom probability is rational. It exhausts **508 sign patterns** over $2\le m\le8$, verifying mass, first and second moments, the quadratic identity, and both stronger norm bounds with exact rational arithmetic. It independently reproduces the original categorical section-influence/second-moment identity in **336** proxy configurations using three-coordinate multilinear test functions. It also checks **231** sorted-influence tail cases and **20** sharp equality cases, including the exact $577/33$ Chebyshev factor ratio. CI records the input hashes and actual checker output.
 
-**Checker outputs falsification evidence for finite instances; the all-law inequalities above follow from the displayed symbolic argument.** A reviewer must independently verify the Chebyshev common-line/Jordan decomposition, vector norm interpolation, spectral projection, and finite-to-measurable-product passage before treating the full categorical observability statement as certified.
+These finite tests are independent falsification screens, not the proof of the all-law inequality. The proof of the proxy bound is the symbolic expansion and Cauchy–Schwarz argument above.
 
-## 5. Claim and priority gates
+## 5. Research status and remaining reviewer gates
 
-- **Proved as algebraic statements:** the finite signed-proxy identities, corrected pointwise `√(m+1)` bound, and the corrected Rényi parameter `1+2√h`.
-- **Conditional analytic upgrade:** the original v5 nonadaptive squared-risk theorem, with corrected constants and exponents, *assuming* all its independent Chebyshev/interpolation and measure-theoretic steps are valid.
-- **Not established here:** globally original minimax theorem, Lean-compiled all-degree categorical result, efficient predictor, general-alphabet nonadaptive bound, unrestricted degree-three squared-influence bound, or any publication precedence.
-- **Attribution:** Source derivation by the NIGHTFALL research team under Devin J. Wright, with antecedents in classical Chebyshev extrapolation, Bonami hypercontractivity, Hoeffding decomposition and categorical moment matching. This is a quantitative audit/repair, not a claim of independent origination of those tools.
+- **Proved algebraically in this note:** exact signed-proxy identities; improved $\sqrt{m+1}$ and $1+2\sqrt h$ bounds; validity of the Jordan probability-line representation for every allowed signed block.
+- **Conditional conclusion:** the source v5 categorical risk argument achieves its claimed matching $m^{d-1}$ and $h^{d-1}$ upper-order exponents with these corrections, **if** the remaining Hilbert norm interpolation, Chebyshev section estimate, approximation, and risk-to-minimax claims pass independent review.
+- **Uncertified:** global originality, kernel-checked all-degree categorical theorem, complete uncountable-product extension, computational efficiency, unrestricted degree-three squared-influence theorem, and any publication/competition claim.
+- **Attribution:** NIGHTFALL research under Devin J. Wright, with classical hypercontractivity, Chebyshev extrapolation, Hoeffding orthogonality, signed categorical moment matching, and the prior source manuscript as explicit antecedents. No human peer review is invented.
