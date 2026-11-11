@@ -58,17 +58,17 @@ theorem pair_term_replace_sum
     (k : α → α → ℝ) (u v : ι) (hne : u ≠ v)
     (x y : ι → α) :
     (∑ j : ι,
-      k ((singleSwitched x y j) u) ((singleSwitched x y j) v) -
-        k (x u) (x v)) =
+      (k ((singleSwitched x y j) u) ((singleSwitched x y j) v) -
+        k (x u) (x v))) =
       k (y u) (x v) + k (x u) (y v) -
         2 * k (x u) (x v) := by
   calc
     (∑ j : ι,
-      k ((singleSwitched x y j) u) ((singleSwitched x y j) v) -
-        k (x u) (x v)) =
+      (k ((singleSwitched x y j) u) ((singleSwitched x y j) v) -
+        k (x u) (x v))) =
       ∑ j : ι,
-        (if u = j then k (y u) (x v) - k (x u) (x v) else 0) +
-        (if v = j then k (x u) (y v) - k (x u) (x v) else 0) := by
+        ((if u = j then k (y u) (x v) - k (x u) (x v) else 0) +
+         (if v = j then k (x u) (y v) - k (x u) (x v) else 0)) := by
           apply Finset.sum_congr rfl
           intro j _
           exact pair_term_one_replace k u v hne x y j
@@ -112,24 +112,24 @@ theorem quadratic_actual_switch_sum
       ∑ j : ι,
         ((h j (y j) - h j (x j)) +
          (∑ e : E,
-           k e ((singleSwitched x y j) (u e))
+           (k e ((singleSwitched x y j) (u e))
              ((singleSwitched x y j) (v e)) -
-           k e (x (u e)) (x (v e)))) := by
+           k e (x (u e)) (x (v e))))) := by
            apply Finset.sum_congr rfl
            intro j _
            exact quadratic_one_replace_diff u v c h k x y j
-    _ = (∑ j : ι, h j (y j) - h j (x j)) +
+    _ = (∑ j : ι, (h j (y j) - h j (x j))) +
         (∑ e : E, ∑ j : ι,
-          k e ((singleSwitched x y j) (u e))
+          (k e ((singleSwitched x y j) (u e))
               ((singleSwitched x y j) (v e)) -
-          k e (x (u e)) (x (v e))) := by
+          k e (x (u e)) (x (v e)))) := by
            rw [Finset.sum_add_distrib, Finset.sum_comm]
-    _ = (∑ j : ι, h j (y j) - h j (x j)) +
+    _ = (∑ j : ι, (h j (y j) - h j (x j))) +
         (∑ e : E, (k e (y (u e)) (x (v e)) +
           k e (x (u e)) (y (v e)) -
           2 * k e (x (u e)) (x (v e)))) := by
            apply congrArg (fun t : ℝ =>
-             (∑ j : ι, h j (y j) - h j (x j)) + t)
+             (∑ j : ι, (h j (y j) - h j (x j))) + t)
            apply Finset.sum_congr rfl
            intro e _
            exact pair_term_replace_sum (k e) (u e) (v e) (hne e) x y
