@@ -94,8 +94,7 @@ theorem sum_linear_switch_algebra
         N * (Finset.univ.sum (fun i : ι => 2 * (a i + b i))) -
         N * (Finset.univ.sum b) := by
           simp only [Finset.sum_add_distrib, Finset.sum_sub_distrib,
-            ← Finset.mul_sum]
-          ring
+            ← Finset.mul_sum] <;> ring
 
 /-- Corresponding finite pairwise switching coefficient algebra. -/
 theorem sum_pair_switch_algebra
@@ -118,8 +117,7 @@ theorem sum_pair_switch_algebra
         N * (Finset.univ.sum (fun e : E => a e + b e + c e + d e)) -
         N * (Finset.univ.sum d) := by
           simp only [Finset.sum_add_distrib, Finset.sum_sub_distrib,
-            ← Finset.mul_sum]
-          ring
+            ← Finset.mul_sum] <;> ring
 
 /-- Actual degree-two pointwise representation on an arbitrary
 finite product alphabet with an arbitrary oriented edge family. -/
