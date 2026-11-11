@@ -7,7 +7,7 @@ const real=walk("research/nightfall").sort(),got=m.modules.map(x=>x.path).sort()
 assert.equal(m.schema,"nightfall-lean-provenance-v1");
 assert.deepEqual(got,real,"Unclassified Lean file (must not silently inherit originality)");
 assert.equal(new Set(got).size,got.length);
-assert.equal(m.modules.length,40,"Every active Lean source must have provenance classification");
+assert.equal(m.modules.length,41,"Every active Lean source must have provenance classification");
 const valid=new Set(["quarantine","derived-transfer","finite-construction"]);
 for(const r of m.modules){
  assert.ok(valid.has(r.classification),r.path);
@@ -26,7 +26,7 @@ for(const key of ["quarantine","derived-transfer","finite-construction"]){
 const phases=m.modules.filter(x=>x.classification==="finite-construction");
 assert.deepEqual(phases.map(x=>x.path),["research/nightfall/formalization/phase_block/PhaseBlock.lean"]);
 const page=fs.readFileSync("docs/lean-certificate-provenance.html","utf8");
-assert.equal((page.match(/<tr><td>\d\d<\/td>/g)||[]).length,40,"Missing static site entries");
+assert.equal((page.match(/<tr><td>\d\d<\/td>/g)||[]).length,41,"Missing static site entries");
 assert.ok(page.includes("Quarantine does not retract kernel compilation"));
 assert.ok(page.includes('href="lean-certificate-provenance.json"'));
 const source=fs.readFileSync("docs/phase-block-proof-passport.html","utf8");
