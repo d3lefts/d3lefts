@@ -109,7 +109,7 @@ theorem signedProxy_l1_sq_bound (w eps : α → ℝ)
   have hcs := Finset.sum_mul_sq_le_sq_mul_sq
       (Finset.univ : Finset α)
       w (fun a => |signedLift w eps a|)
-  rw [habs, hw, hsqabs, signedLift_square_sum w eps hw heps] at hcs
+  rw [← habs, hw, hsqabs, signedLift_square_sum w eps hw heps] at hcs
   nlinarith [sq_nonneg (signedSum w eps)]
 
 /-- Under the usual nonnegative radius, the nonsquared form of the
