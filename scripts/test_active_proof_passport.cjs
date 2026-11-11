@@ -12,15 +12,15 @@ const site=read("docs/site.js");
 const core=read("docs/erdos-paper-core.js");
 const art=read("docs/media/overlap-16cell-fixture.svg");
 assert.equal(data.schema,"nightfall-active-proof-passports-v1");
-assert.equal(data.version,2);
+assert.equal(data.version,3);
 assert.match(data.as_of,/^2026-11-\d\d$/);
 assert.equal(data.lifecycle,"active");
 assert.equal(data.frozen_historical_registry_unchanged,true);
-assert.equal(data.claims.length,5);
-assert.deepEqual(data.claims.map(x=>x.id),["q2-influence","q2-observation","finite-certificate","cubic-obstruction","kaczmarz-logfree"]);
+assert.equal(data.claims.length,6);
+assert.deepEqual(data.claims.map(x=>x.id),["q2-influence","q2-observation","finite-certificate","cubic-obstruction","kaczmarz-logfree","four-shuffle"]);
 assert.equal(new Set(data.claims.map(x=>x.id)).size,data.claims.length);
 const statuses=new Set(["paper-proof-internal-audit","reported-lean-checkpoint-replay-pending",
- "explicit-paper-proofs-not-external-refereed","written-proof-exact-check-replay-priority-open"]);
+ "explicit-paper-proofs-not-external-refereed","written-proof-exact-check-replay-priority-open","computer-assisted-exact-finite-priority-open"]);
 for(const c of data.claims){
  assert.ok(statuses.has(c.status),c.id+" wrong status");
  for(const key of ["title","claim","mechanism","evidence","audit","source","source_detail"])
@@ -60,6 +60,22 @@ assert.ok(research.includes('href="kaczmarz-proof-passport.html"'));
 assert.ok(html.includes('href="kaczmarz-proof-passport.html"'));
 assert.ok(site.includes('"kaczmarz-proof-passport.html"'));
 assert.ok(read("docs/sitemap.xml").includes("/kaczmarz-proof-passport.html"));
+// New exact four-shuffle proof is a sixth ACTIVE claim, not a historical or
+// internally approved Original Finding. Reproducibility is a separate gate.
+const fClaim=data.claims.find(c=>c.id==="four-shuffle");
+const fPage=read("docs/four-shuffle-proof-passport.html");
+const fSource=read("research/nightfall/2026-11-four-shuffle/PROOF_PASSPORT.md");
+const fChecker=read("research/nightfall/2026-11-four-shuffle/verify_four_shuffle.py");
+assert.ok(fClaim&&fClaim.status.includes("priority-open"));
+assert.ok(fClaim.claim.includes("20")&&fClaim.claim.includes("19"));
+assert.ok(fPage.includes("302")&&fPage.includes("24")&&fPage.includes("external mathematical review"));
+assert.ok(fPage.includes('href="active-proof-passport.html#four-shuffle"'));
+assert.ok(fSource.includes("Bevan")&&fSource.includes("Bouvel"));
+assert.ok(fChecker.includes("WITNESS")&&fChecker.includes("assert count==302")&&fChecker.includes("assert tested==24"));
+assert.ok(home.includes('href="four-shuffle-proof-passport.html"'));
+assert.ok(research.includes('href="four-shuffle-proof-passport.html"'));
+assert.ok(site.includes('"four-shuffle-proof-passport.html"'));
+assert.ok(read("docs/sitemap.xml").includes("/four-shuffle-proof-passport.html"));
 // Preserve the frozen historical registry's exact 11-record purpose.
 const historical=read("docs/research-registry.js");
 assert.ok(historical.includes('"nightfall-proof-passports-v1"'));
@@ -81,4 +97,4 @@ assert.ok(art.includes("unrelated to the separate published 131072-cell witness"
 assert.ok(!/<script\b|<foreignObject\b/i.test(art),"Svg must remain static and inert");
 assert.ok(moon.includes('src="media/overlap-16cell-fixture.svg"'),"Archive diagram not visible");
 assert.ok(moon.includes("16-cell educational")&&moon.includes("different 131,072-cell witness"),"Fixture must not masquerade as full research result");
-console.log("PASS: 5 manual active claim passports, Kaczmarz source/replay, no historical promotion, 5 provenance-complete archives, exact 16-cell operator fixture");
+console.log("PASS: 6 manual active claim passports, Kaczmarz source/replay, no historical promotion, 5 provenance-complete archives, exact 16-cell operator fixture");

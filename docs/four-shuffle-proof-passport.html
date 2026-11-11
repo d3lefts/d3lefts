@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#020406">
+<meta name="description" content="NIGHTFALL four-shuffle Proof Passport: exact k=4 threshold 20, 19-element obstruction, 302 finite upper certificates, source checker and unresolved external review.">
+<meta property="og:title" content="Four-Shuffle Threshold 20 · Proof Passport — NIGHTFALL">
+<meta property="og:description" content="One finite combinatorial result. Two exact certificates. Every proof obligation and review gate.">
+<title>Four-Shuffle Threshold 20 · Proof Passport — NIGHTFALL</title>
+<link rel="canonical" href="https://d3lefts.github.io/d3lefts/four-shuffle-proof-passport.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="ethereal-theme.css">
+<link rel="stylesheet" href="two-skies.css">
+<link rel="stylesheet" href="active-proof-passport.css">
+<link rel="stylesheet" href="kaczmarz-proof-passport.css">
+<script src="site.js" defer></script>
+<script src="ethereal-theme.js" defer></script>
+</head>
+<body class="ps-page">
+<a class="skip" href="#main">Skip to proof passport</a><div class="topline"></div>
+<header class="header"><div class="wrap header-inner">
+<a href="index.html" class="brand" aria-label="NULL FIELD active research"><span class="mark" aria-hidden="true">N∕F</span><span class="brand-copy">NIGHTFALL <span>PHASESHIFT / NULL FIELD</span></span></a>
+<button type="button" class="menu-toggle" id="menu-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">MENU +</button>
+<nav id="site-nav" class="nav" aria-label="Primary navigation"><a href="index.html#flagships">Active research</a><a href="mathematical-results.html">Principal results</a><a href="active-proof-passport.html">Living passports</a><a href="research.html">Shared library</a><a class="nav-call" href="review.html">Independent review ↗</a></nav>
+</div></header>
+<main id="main">
+<section class="atlas-hero wrap nf-k-hero" aria-labelledby="shuffle-title">
+<div class="atlas-eyebrow">NULL FIELD / COMBINATORICS / LIVING PROOF PASSPORT · 11 NOVEMBER 2026</div>
+<h1 id="shuffle-title">Twenty is forced.<br><em>Nineteen escapes.</em></h1>
+<div class="atlas-hero-bottom"><p>A computer-assisted finite result for Mathilde Bouvel's four-shuffle problem: every length-20 permutation contains a consecutive factor that splits into four subsequences of the same relative order. A concrete length-19 permutation avoids all such factors. The source is independently replayable; global originality and external mathematical review remain open.</p>
+<div class="atlas-hero-metrics"><span><strong>20</strong>Least guaranteed length</span><span><strong>302 / 302</strong>Upper paths verified</span><span><strong>OPEN</strong>External referee / priority</span></div></div>
+</section>
+<section class="wrap nf-k-status" aria-label="Mathematical evidence status">
+<strong>Proof Passport · NF-BOUVEL-4SHUFFLE-20261111 · v1.0</strong>
+<p><b>Mathematics:</b> exact finite exhaustive proof with independently replayable source and a 19-element obstruction. <b>Scope:</b> k=4 only, not the general k-shuffle conjecture. <b>Certification:</b> internally reproduced; not peer-reviewed, Lean-compiled or originality-cleared. The frozen 40 research records, eleven historical passports and five approved findings are unchanged.</p>
+</section>
+<nav class="wrap nf-k-nav" aria-label="On this Proof Passport"><a href="#statement">01 · Statement</a><a href="#upper">02 · Upper certificate</a><a href="#lower">03 · Lower witness</a><a href="#sources">04 · Source and replay</a><a href="#review-gates">05 · Prior art and review</a></nav>
+<div class="wrap">
+<article class="nf-active-claim" id="statement" aria-labelledby="statement-title">
+<div class="nf-active-claim-header"><h2 id="statement-title">01 · Exact theorem statement</h2><span class="nf-claim-status">FINITE COMPUTATIONAL PROOF · k=4 ONLY</span></div>
+<p>A permutation is a <b>4-shuffle</b> if its positions can be partitioned into four disjoint increasing-index subsequences, all of the same size <i>t ≥ 2</i> and all order-isomorphic. A <b>factor</b> is a consecutive block, considered up to relative order. Let N<sub>4</sub> be the smallest N such that every permutation of N distinct entries contains a 4-shuffle factor.</p>
+<div class="nf-k-formula" role="math" aria-label="N sub four equals twenty">N<sub>4</sub> = 20</div>
+<p><strong>Stronger upper claim:</strong> every 20-entry permutation has a qualifying factor of length <b>8 or 12</b>. The length-19 witness below avoids all eligible 8-, 12-, and 16-entry factors. The conclusion concerns consecutive factors—not arbitrary selections of a larger permutation—and does not resolve the conjecture for unrestricted k.</p>
+</article>
+<article class="nf-active-claim" id="upper" aria-labelledby="upper-title">
+<div class="nf-active-claim-header"><h2 id="upper-title">02 · Why every 20-permutation contains one</h2><span class="nf-claim-status">COMPLETE FINITE GRAPH / EXACT COVER</span></div>
+<div class="nf-k-steps" aria-label="Finite proof mechanism">
+<div><span>01 / INHERITED</span><strong>Classify eight-entry patterns</strong><p>Enumerate all 105 perfect pairings. A four-shuffle of four pairs exists exactly when either the inversion or noninversion graph admits a perfect matching.</p></div>
+<div><span>02 / GRAPH</span><strong>5,040 states and 2,632 edges</strong><p>States are standardized length-seven permutations. The edges are precisely the length-eight patterns that fail both pairing tests.</p></div>
+<div><span>03 / COMPLETE SEARCH</span><strong>302 possible bad-eight paths</strong><p>Acyclicity and longest-path computation enumerate every 13-edge walk corresponding to a length-20 permutation with no eight-entry shuffle.</p></div>
+<div><span>04 / FORCED CERTIFICATE</span><strong>All 302 contain a twelve-shuffle</strong><p>Exact cover finds four triples with a common relative order within a consecutive 12-window; their comparisons are forced by local eight-windows.</p></div>
+</div>
+<p>The upper computation does not arbitrarily fill in unknown comparisons between distant positions. Each twelve-entry certificate uses only comparisons established by overlapping length-eight windows, so it applies to every permutation that realizes the corresponding path.</p>
+</article>
+<article class="nf-active-claim" id="lower" aria-labelledby="lower-title">
+<div class="nf-active-claim-header"><h2 id="lower-title">03 · Explicit 19-entry obstruction</h2><span class="nf-claim-status">24 / 24 ELIGIBLE FACTORS EXCLUDED</span></div>
+<p>The following 19 distinct entries form the lower-bound witness. No consecutive factor of length 8, 12, or 16 can be partitioned into four equal-pattern subsequences.</p>
+<pre class="nf-k-command"><code>1, 17, 2, 4, 16, 15, 14, 8, 9, 10,
+11, 12, 7, 6, 5, 13, 18, 3, 19</code></pre>
+<dl class="nf-claim-grid">
+<div><dt>Length 8</dt><dd>12 possible consecutive factors; all fail the four-pair matching test.</dd></div>
+<div><dt>Length 12</dt><dd>8 possible consecutive factors; all fail the four-common-triples exact cover.</dd></div>
+<div><dt>Length 16</dt><dd>4 possible consecutive factors; all fail the four-common-quadruples exact cover.</dd></div>
+<div><dt>Result</dt><dd>All 24 eligible consecutive factors are excluded. This certifies N<sub>4</sub> ≥ 20.</dd></div>
+</dl>
+</article>
+<article class="nf-active-claim" id="sources" aria-labelledby="sources-title">
+<div class="nf-active-claim-header"><h2 id="sources-title">04 · Reproduction and source custody</h2><span class="nf-claim-status">INDEPENDENT EXACT FINITE CHECK</span></div>
+<p>A public standalone Python verifier reconstructs the factor graph, checks all 302 upper paths, and excludes the 24 lower factors. It uses standard-library integer and combinatorial operations, no floating point, no precomputed JSON and no external data service.</p>
+<pre class="nf-k-command"><code>python3 -I research/nightfall/2026-11-four-shuffle/verify_four_shuffle.py</code></pre>
+<p>The original source archive additionally contains a separate builder, a distinct independent verifier and the full 302-row upper-certificate JSON. The clean ZIP passed its eight-item SHA-256 manifest and the independent verifier replayed successfully. The original PDF and ZIP remain separate conversation artifacts; this website does not falsely link to absent GitHub binary assets.</p>
+<div class="nf-claim-links">
+<a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-four-shuffle/README.md" target="_blank" rel="noopener">Complete proof and certificate specification ↗</a>
+<a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-four-shuffle/verify_four_shuffle.py" target="_blank" rel="noopener">Inspect standalone Python checker ↗</a>
+<a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-four-shuffle/PROOF_PASSPORT.md" target="_blank" rel="noopener">Source Proof Passport ↗</a>
+</div>
+</article>
+<article class="nf-active-claim" id="review-gates" aria-labelledby="review-gates-title">
+<div class="nf-active-claim-header"><h2 id="review-gates-title">05 · Attribution, limits and next referee test</h2><span class="nf-claim-status">NOVELTY AND NON-AUTHOR REVIEW OPEN</span></div>
+<p>Mathilde Bouvel posed the shuffle-consecutivity conjecture. David Bevan, Andrew Elvey Price and Stefan Felsner developed the factor-graph and perfect-matching approach, reporting an upper bound of 26 in the <a href="https://ems.press/content/serial-article-files/48646" target="_blank" rel="noopener">2024 Oberwolfach workshop report</a>. NIGHTFALL does <strong>not</strong> claim that established graph method as its own. The candidate improvement is the exact value 20.</p>
+<p>The cheapest independent audit is to recompute the 2,632 admissible transitions and enumerate all 302 bad-eight paths without using the included checker, then verify forced triples under an independently written exact-cover implementation. The original 19-term witness should be checked separately. Search dated post-2024 publications for precedence before any novelty or submission claim.</p>
+<p><b>Publication rule:</b> a passing GitHub workflow certifies reproducibility of this finite computation, not external human refereeing, priority, or the full k-shuffle conjecture. The result remains in <b>NULL FIELD · active research</b> until those gates close.</p>
+<div class="nf-claim-links"><a href="active-proof-passport.html#four-shuffle">Living Proof Passport index ↗</a><a href="review.html">Independent review protocol ↗</a><a href="index.html#flagships">Return to NULL FIELD ↗</a></div>
+</article>
+</div>
+</main>
+<footer class="footer"><div class="wrap footer-bottom"><span>© 2026 Devin J. Wright · NIGHTFALL PHASESHIFT</span><span>PROOF PASSPORT v1.0 / 11 NOV 2026 / ACTIVE</span></div></footer>
+</body>
+</html>
