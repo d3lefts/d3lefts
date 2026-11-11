@@ -46,6 +46,8 @@ test('all scientific content remains separate from still art',()=>{
  assert.match(css,/position:relative!important/);
  assert.match(css,/\.nf-cinema--still \.nf-cinema-record\{transform:none!important\}/);
  assert.match(css,/\.nf-opening-overlap a:focus-visible/);
- for(const phrase of ['0.380856370118','131,072','separate, incompletely recovered artifact','global optimality remains unproved'])
-  assert.ok(html.includes(phrase),phrase);
+ for(const phrase of ['ACTIVE RESEARCH','observability.html','product-space-influence.html','external review open'])
+  assert.ok(html.toLowerCase().includes(phrase.toLowerCase()),phrase);
+ for(const phrase of ['0.380856370118','131,072','global optimality'])
+  assert.ok(nightHtml.toLowerCase().includes(phrase.toLowerCase()),'NEW MOON archive missing '+phrase);
 });
