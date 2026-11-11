@@ -46,6 +46,9 @@ jobs:
             --decl $N.joint_center_add \
             --decl $N.independent_two_second \
             --decl $N.sumVector_center \
+            --decl $N.moment2_eq_budget \
+            --decl $N.moment4_succ_bound \
+            --decl $N.arbitrary_law_many_hilbert_fourth \
             --json-out lean-receipts/hilbert-many.json
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/hilbert-many.json
           sha256sum research/nightfall/formalization/observability/HilbertManyIncrementMoment.lean > lean-receipts/SHA256SUMS
