@@ -1,16 +1,35 @@
-# Review packet — three reusable cubic proof operators
+# Cubic hidden gems — reviewed research checkpoint
 
-Read `PROOF_NOTE.md`. Reproduce the tests with:
+**Status:** working draft; internally checked finite examples, not independently refereed, not fully Lean-formalized, and not certified novel. The unrestricted cubic variance-squared influence inequality remains OPEN.
 
+Research lead: Devin J. Wright / NIGHTFALL Constellation. Date: 11 November 2026 UTC.
+
+[Complete proof note](PROOF_NOTE.md) documents:
+
+1. Optimal independent one-leaf coloring for every degree d: alpha_d = 1 - d^(-1/(d-1)). For d=3, alpha_3 = 1-1/sqrt(3), improving the previous 3/8 and reducing the selector transfer factor from 48 to 27+9sqrt(3).
+2. Influence-weighted and exact-energy cubic hitting-set certificates. Allows growing cover cardinality when covered influence is small. The connected cyclic example has repeated pairs and cover number >=k, while total cover influence is B sqrt(M)/sqrt(2).
+3. Dimension-free l1-valued quadratic influence and **log-free fair-sign/rank-one-leaf cubic selector** inequalities, conditional on the original quadratic matching proof. This covers dense control interaction patterns, including arbitrarily biased leaf features, without an alphabet-size factor.
+
+**Not claimed:** universal cubic exponent two, leaf-Hilbert sections of unrestricted rank, global priority, or complete machine checking.
+
+## Exact finite replay
+
+From the repository root:
+
+```bash
+python3 -I research/nightfall/2026-11-cubic-hidden-gems/check_exact.py
+python3 -I research/nightfall/2026-11-cubic-hidden-gems/verify_l1_quadratic.py
+python3 -I research/nightfall/2026-11-cubic-hidden-gems/verify_bounded_controls.py
 ```
-python3 -I check_exact.py
-python3 -I verify_l1_quadratic.py
-python3 -I verify_bounded_controls.py
-sha256sum -c SHA256SUMS
-```
 
-The first checker independently tests mixed-alphabet ANOVA and the optimized partition, as well as exact cyclic hypergraph identities. The two further checkers are source-preserving replays from the user's prior cubic research package, included for cross-session provenance and confirmation.
+CI: [NIGHTFALL cubic hidden-gems exact replay](../../../.github/workflows/nightfall-cubic-hidden-gems.yml). It records SHA-256 hashes of checked branch files in an Actions artifact. The source research archive `NIGHTFALL_Cubic_Hidden_Gems_v1.zip` had SHA-256 `5d7c8dd0870dfdbe83f3fcdd7fe627f7b15f87d6c4eb29fb4c6c95a28451ecf5`. The scripts committed here preserve the tests but condense comments, so their hashes need not match that archive's individual manifest.
 
-This is a **proposed repository addition**; no GitHub change was made. It is not a claim of globally original priority, external refereeing, or a proof of unrestricted degree-three exponent two.
+## Related proofs and precedent
 
-Direct precedent for one-block decoupling: O'Donnell and Zhao, CCC 2016, https://arxiv.org/abs/1512.01603. The existing NIGHTFALL quadratic theorem and its proof are imported dependencies.
+- [Quadratic spectral observability and cubic frontier](../2026-11-spectral-observability/README.md) — imported quadratic theorem, not kernel-complete.
+- [PR #335](https://github.com/d3lefts/d3lefts/pull/335) — cubic top-degree covers and disjoint sunflowers; complementary to dense-control selector families.
+- [PR #336](https://github.com/d3lefts/d3lefts/pull/336) — Lean-checked **sublemmas only**, not end-to-end cubic influence.
+- O'Donnell and Zhao, *Polynomial Bounds for Decoupling, with Applications*, CCC 2016: https://doi.org/10.4230/LIPIcs.CCC.2016.24. Earlier one-block decoupling must receive priority credit.
+- Turturean, *A proof of the Aaronson–Ambainis conjecture*, submitted 6 Nov 2026: https://arxiv.org/abs/2611.09773.
+
+**Next decisive theorem:** an alphabet-independent bound for generalized degree-two selectors with arbitrary Hilbert-valued leaf sections, or an explicit counterexample to that assertion.
