@@ -204,4 +204,58 @@ theorem off_matching_pair_family_cancel
             (if sideSecond e then rightB (second e) (!(σ (second e)))
               else leftB (second e) (σ (second e))) := Finset.sum_comm
 
+
+/-- Within one matched block, the two parity couplings isolate exactly
+the four-corner mixed difference.  The identity is over the entire
+independent-selector product, without a fairness assumption on the original
+alphabet measures or a two-coordinate limit. -/
+theorem matched_block_mixed_difference
+    {A B : Type*} (left : Bool → A) (right : Bool → B)
+    (K : A → B → ℝ) (i : ι) :
+    2 * (∑ σ : ι → Bool,
+      (K (left (σ i)) (right (σ i)) -
+        K (left (σ i)) (right (!(σ i))))) =
+      (Fintype.card (ι → Bool) : ℝ) *
+       (K (left false) (right false) -
+        K (left false) (right true) -
+        K (left true) (right false) +
+        K (left true) (right true)) := by
+  let D : (ι → Bool) → ℝ :=
+    fun σ => K (left (σ i)) (right (σ i)) -
+      K (left (σ i)) (right (!(σ i)))
+  let delta : ℝ :=
+      K (left false) (right false) -
+        K (left false) (right true) -
+        K (left true) (right false) +
+        K (left true) (right true)
+  have hpoint (σ : ι → Bool) : D σ + D (flip i σ) = delta := by
+    cases h : σ i <;> simp [D, delta, flip_self, h] <;> ring
+  have hsum :
+      (∑ σ : ι → Bool, D σ) +
+        (∑ σ : ι → Bool, D (flip i σ)) =
+        (Fintype.card (ι → Bool) : ℝ) * delta := by
+    calc
+      (∑ σ : ι → Bool, D σ) +
+          (∑ σ : ι → Bool, D (flip i σ)) =
+        ∑ σ : ι → Bool, (D σ + D (flip i σ)) := by
+          rw [Finset.sum_add_distrib]
+      _ = ∑ _σ : ι → Bool, delta := by
+          apply Finset.sum_congr rfl
+          intro σ _
+          exact hpoint σ
+      _ = (Fintype.card (ι → Bool) : ℝ) * delta := by simp
+  have hflip := sum_flip i D
+  calc
+    2 * (∑ σ : ι → Bool,
+      (K (left (σ i)) (right (σ i)) -
+        K (left (σ i)) (right (!(σ i))))) =
+        (∑ σ : ι → Bool, D σ) +
+        (∑ σ : ι → Bool, D (flip i σ)) := by
+          rw [hflip]
+          change 2 * (∑ σ : ι → Bool, D σ) =
+            (∑ σ : ι → Bool, D σ) + (∑ σ : ι → Bool, D σ)
+          ring
+    _ = (Fintype.card (ι → Bool) : ℝ) * delta := hsum
+    _ = _ := rfl
+
 end Nightfall.Observability.ParityBlocks
