@@ -20,16 +20,19 @@ open Nightfall.Observability.QuadraticHilbertMoments
 
 variable {α K : Type*} [Fintype α] [Fintype K]
 
-/-- The first n independent coordinates, represented without a Fin-index cast. -/
 universe u
 
+/-- The first n independent coordinates, represented without a Fin-index cast. -/
 def Samples (α : Type u) : ℕ → Type u
   | 0 => PUnit
   | n + 1 => Samples α n × α
 
-instance : (n : ℕ) → Fintype (Samples α n)
+instance instSamplesFintype (n : ℕ) : Fintype (Samples α n) :=
+  match n with
   | 0 => inferInstanceAs (Fintype PUnit)
-  | n + 1 => inferInstanceAs (Fintype (Samples α n × α))
+  | n + 1 => by
+      letI : Fintype (Samples α n) := instSamplesFintype n
+      exact inferInstanceAs (Fintype (Samples α n × α))
 
 /-- Coordinate-wise product mass. -/
 noncomputable def mass (p : ℕ → α → ℝ) :
