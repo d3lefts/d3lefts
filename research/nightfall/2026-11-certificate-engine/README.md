@@ -42,7 +42,7 @@ pdflatex Wright_Certificate_Engine_v2.tex && pdflatex Wright_Certificate_Engine_
 
 ## Open targets
 
-1. Turturean's question: max_j I_j(f) ≥ c Var(f)²/K² for real f. Thm 1.7 gives this for crossing probabilities; Remark 7.1 isolates the missing jump-size lemma.
+1. Turturean's question: max_j I_j(f) ≥ c Var(f)²/K² for real f. Thm 1.7 gives this for crossing probabilities; Remark 7.1 isolates the missing jump-size lemma. The [quartic antipodal audit](QUARTIC_ANTIPODAL_AUDIT_20261110.md) records a sharper proposed route, exact additive constant-3 lower bound, a corrected pair-versus-antipodal calculation, and a [replayable small-cube checker](checks/check_quartic_antipodal_exact.py). The unrestricted conjecture remains open.
 2. Localization for the unprojected median profiles of f.
 3. Formalization: weighted reciprocal transfer and localized removal compile on the main branch (#295, #298). The **finite common-alphabet competing-symbol row-cost bound** now compiles in #310. The **remaining** gates are the ANOVA-degree equivalence across representations, integrated third-moment/median/averaging chain, the level-tie case, arbitrary measurable products, and the complete quantum corollary.
 

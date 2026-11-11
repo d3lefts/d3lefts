@@ -1,0 +1,21 @@
+name: NIGHTFALL quartic antipodal exact finite audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-certificate-engine/QUARTIC_ANTIPODAL_AUDIT_20261110.md'
+      - 'research/nightfall/2026-11-certificate-engine/checks/check_quartic_antipodal_exact.py'
+      - '.github/workflows/nightfall-quartic-antipodal.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-falsification:
+    name: Exact rational identities and small-cube falsification (NOT a general proof)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run exact rational quartic checks
+        run: python3 research/nightfall/2026-11-certificate-engine/checks/check_quartic_antipodal_exact.py
