@@ -58,7 +58,7 @@ assert.ok(fs.existsSync("research/nightfall/2026-11-kaczmarz-logfree/independent
 assert.ok(kPage.includes("Independent")&&kPage.includes("Originality")&&kPage.includes("2,880"));
 assert.ok(kPage.includes('href="active-proof-passport.html#kaczmarz-logfree"'));
 assert.ok(kPage.includes('role="math"'));
-assert.ok(kProof.includes("consistent")&&kProof.includes("first-hitting")&&kProof.includes("global priority unverified"));
+assert.ok(kProof.includes("consistent")&&kProof.includes("first-hitting")&&kProof.toLowerCase().includes("priority for the log-free corollary is unverified"));
 assert.ok(kPassport.includes("Originality")&&kPassport.includes("Stop rule"));
 assert.ok(kChecker.includes("Fraction")&&kChecker.includes("weighted-max")&&kChecker.includes("best-iterate"));
 assert.ok(home.includes('href="kaczmarz-proof-passport.html"'));
