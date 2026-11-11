@@ -1,0 +1,118 @@
+name: NIGHTFALL quadratic discovery — scoped Lean kernel audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/QuadraticDiscoveryCore.lean'
+      - 'research/nightfall/formalization/observability/ArbitraryLawFourthMoment.lean'
+      - 'research/nightfall/formalization/observability/HilbertTwoIncrementMoment.lean'
+      - 'research/nightfall/formalization/observability/check_hilbert_many_exact.py'
+      - 'research/nightfall/formalization/observability/QUADRATIC_DISCOVERY_PROOF_PASSPORT.md'
+      - '.github/workflows/nightfall-quadratic-discovery-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  quadratic-core:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Lean 4.35.0 and Mathlib 4.35.0
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.35.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          git clone --depth 1 --branch v4.35.0 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4
+          (cd /tmp/mathlib4 && "$HOME/.elan/bin/lake" exe cache get)
+      - name: Kernel-compile exact scoped theorems and reject untrusted axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/QuadraticDiscoveryCore.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl Nightfall.Observability.QuadraticV3.additive_projection_identity \
+            --decl Nightfall.Observability.QuadraticV3.additive_projection_seven \
+            --decl Nightfall.Observability.QuadraticV3.additive_projection_seven_sharp \
+            --decl Nightfall.Observability.QuadraticV3.parity_coupling_difference \
+            --decl Nightfall.Observability.QuadraticV3.mixed_difference_four \
+            --decl Nightfall.Observability.QuadraticV3.matching_amplitude_from_coupled_expectations \
+            --decl Nightfall.Observability.QuadraticV3.quadratic_certificate_closure \
+            --decl Nightfall.Observability.QuadraticV3.squared_influence_of_quadratic_bound \
+            --json-out lean-receipts/quadratic-discovery-core.json || {
+              cat lean-receipts/quadratic-discovery-core.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/quadratic-discovery-core.json
+      - name: Kernel-compile actual arbitrary-law independent moments
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ArbitraryLawFourthMoment.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl Nightfall.Observability.QuadraticMoments.tensor_sum_factor \
+            --decl Nightfall.Observability.QuadraticMoments.jointAvg_add \
+            --decl Nightfall.Observability.QuadraticMoments.jointAvg_smul \
+            --decl Nightfall.Observability.QuadraticMoments.jointAvg_factor \
+            --decl Nightfall.Observability.QuadraticMoments.independent_centered_two_fourth \
+            --decl Nightfall.Observability.QuadraticMoments.weighted_hilbert_fourth_self \
+            --json-out lean-receipts/arbitrary-law-fourth-moment.json || {
+              cat lean-receipts/arbitrary-law-fourth-moment.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/arbitrary-law-fourth-moment.json
+      - name: Kernel-compile genuine two-increment Hilbert fourth moments
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/mathlib4/.lake/build/lib/lean lean-receipts
+          cp research/nightfall/formalization/observability/ArbitraryLawFourthMoment.lean /tmp/mathlib4/ArbitraryLawFourthMoment.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ArbitraryLawFourthMoment.olean ArbitraryLawFourthMoment.lean)
+          N=Nightfall.Observability.QuadraticHilbertMoments
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/HilbertTwoIncrementMoment.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.vec_normSq_add \
+            --decl $N.jointAvg_finset_sum \
+            --decl $N.vec_dot_sq_le \
+            --decl $N.odd_vector_cross_zero_left \
+            --decl $N.odd_vector_cross_zero_right \
+            --decl $N.independent_centered_two_hilbert_fourth \
+            --json-out lean-receipts/hilbert-two-increment.json || {
+              python3 -c "import json;r=json.load(open('lean-receipts/hilbert-two-increment.json'));print(r.get('status'));print((r.get('stdout') or '')[:50000])" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/hilbert-two-increment.json
+      - name: Independent exact rational many-increment Hilbert falsification audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/formalization/observability/check_hilbert_many_exact.py | tee lean-receipts/hilbert-many-exact-check.log
+      - name: Preserve pins and source checksums
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/observability/QuadraticDiscoveryCore.lean research/nightfall/formalization/observability/ArbitraryLawFourthMoment.lean research/nightfall/formalization/observability/HilbertTwoIncrementMoment.lean research/nightfall/formalization/observability/check_hilbert_many_exact.py > lean-receipts/SHA256SUMS
+          git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt 2>/dev/null || true
+          echo leanprover/lean4:v4.35.0 > lean-receipts/lean-version.txt
+          git rev-parse HEAD > lean-receipts/repository-commit.txt
+      - name: Archive verification receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quadratic-discovery-core-lean-receipts
+          path: lean-receipts/
+          if-no-files-found: warn
+          retention-days: 45
