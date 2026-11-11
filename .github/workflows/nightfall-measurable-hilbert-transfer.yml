@@ -1,0 +1,29 @@
+name: NIGHTFALL measurable Hilbert transfer finite audit
+
+on:
+  push:
+    paths:
+      - 'research/nightfall/2026-11-measurable-hilbert-transfer/**'
+      - '.github/workflows/nightfall-measurable-hilbert-transfer.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-measurable-hilbert-transfer/**'
+      - '.github/workflows/nightfall-measurable-hilbert-transfer.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-falsifiers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exact independent posterior and PSD tests
+        run: |
+          python3 research/nightfall/2026-11-measurable-hilbert-transfer/verify_transfer.py
+      - name: Preserve source identity
+        run: |
+          sha256sum research/nightfall/2026-11-measurable-hilbert-transfer/ANALYTIC_CLOSURE_AUDIT.md
+          sha256sum research/nightfall/2026-11-measurable-hilbert-transfer/verify_transfer.py
