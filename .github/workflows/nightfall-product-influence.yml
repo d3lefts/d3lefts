@@ -80,11 +80,68 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/product-influence.json
+      - name: Compile influence chain and Efron–Stein module as imported modules
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space
+          cp "$P/ProductInfluence.lean" /tmp/aa/ProductInfluence.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ProductInfluence.olean ProductInfluence.lean)
+      - name: Kernel-check indicator-monomial degree = Efron–Stein degree
+        shell: bash
+        run: |
+          set -euo pipefail
+          N=Nightfall.ProductSpace.EfronStein
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/product_space/EfronSteinDegree.lean \
+            --workspace /tmp/aa --timeout 2400 \
+            --decl $N.condExp_univ \
+            --decl $N.esComp_dependsOn \
+            --decl $N.esComp_lin \
+            --decl $N.esComp_indep \
+            --decl $N.inner_mobius \
+            --decl $N.es_decomp \
+            --decl $N.junta_expand \
+            --decl $N.esDegree_of_prodDegree \
+            --decl $N.prodDegree_of_esDegree \
+            --decl $N.prodDegree_iff_esDegree \
+            --json-out lean-receipts/efron-stein-degree.json || {
+              python3 -c "import json;r=json.load(open('lean-receipts/efron-stein-degree.json'));print(r.get('status'));print((r.get('stdout') or '')[:60000]);print((r.get('stderr') or '')[:5000])" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/efron-stein-degree.json
+          cp research/nightfall/formalization/product_space/EfronSteinDegree.lean /tmp/aa/EfronSteinDegree.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/EfronSteinDegree.olean EfronSteinDegree.lean)
+      - name: Kernel-check heterogeneous alphabets and zero-mass atoms
+        shell: bash
+        run: |
+          set -euo pipefail
+          N=Nightfall.ProductSpace.Heterogeneous
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/product_space/HeterogeneousAlphabets.lean \
+            --workspace /tmp/aa --timeout 2400 \
+            --decl $N.liftMass_sum \
+            --decl $N.fiber_sum \
+            --decl $N.push_sum \
+            --decl $N.push_coord \
+            --decl $N.pvar_lift \
+            --decl $N.pinfl_lift \
+            --decl $N.lift_degree \
+            --decl $N.heterogeneous_influence \
+            --json-out lean-receipts/heterogeneous-alphabets.json || {
+              python3 -c "import json;r=json.load(open('lean-receipts/heterogeneous-alphabets.json'));print(r.get('status'));print((r.get('stdout') or '')[:60000]);print((r.get('stderr') or '')[:5000])" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/heterogeneous-alphabets.json
       - name: Capture source hashes and upstream pin
         if: always()
         run: |
           mkdir -p lean-receipts
           sha256sum research/nightfall/formalization/product_space/ProductInfluence.lean \
+            research/nightfall/formalization/product_space/EfronSteinDegree.lean \
+            research/nightfall/formalization/product_space/HeterogeneousAlphabets.lean \
             research/nightfall/formalization/product_space/ProductRowBound.lean \
             research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean \
             > lean-receipts/SHA256SUMS.txt
