@@ -21,3 +21,5 @@ Optimize over **bounded homogeneous cubic observables** on biased small product 
 9. **Tripartite reduction:** independently check the ANOVA projector `∏(I-E_A)`, its factor-eight L∞ norm, the exact 2/9 expected energy retention and the factor-36 transfer; distinguish ordinary bounded forms from completely bounded forms and cite O'Donnell–Zhao (2016), Bansal–Sinha–de Wolf (2022).
 
 10. **Block-l1 link operator:** rederive the finite-product range-width budget `sum_a ||Q_a||_L2 <= B` pointwise from independent A coordinates; verify the exact B/C influence sum, and separately seek a counterexample to the *unproved* LE(C) sufficient inequality. Do not assert its equivalence in arbitrary Hilbert families.
+
+11. **Hadamard stress test:** independently check norm-one via Cauchy and bent-Walsh equality, exact 1/n variance and 1/n^2 influences, min vertex cover n, min linearization deletion n-1, and diverging sqrt(n) sum of l1-valued link amplitudes. Do not treat this as a counterexample to LE(C); it attains equality in the normalized squared-variance scaling.
