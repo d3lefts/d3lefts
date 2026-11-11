@@ -5,13 +5,15 @@ This is an editorial/provenance gate, not a replacement for the Lean kernel.
 """
 import argparse
 import json
+import re
+import subprocess
 from pathlib import Path
 
 KINDS = {"kernel_scoped", "analytic_only", "conditional", "conjecture", "kernel_closed"}
 SCHEMA = "nightfall-proof-graph/v1"
 
 
-def check(graph):
+def check(graph, verify_hashes=True):
     if graph.get("schema") != SCHEMA:
         raise ValueError("invalid proof graph schema")
     nodes = graph.get("claims")
@@ -22,6 +24,19 @@ def check(graph):
         raise ValueError("duplicate/missing claim id")
     lookup = {n["id"]: n for n in nodes}
     for n in nodes:
+        if verify_hashes and n.get("status") == "kernel_scoped":
+            blob = n.get("source_git_blob_sha")
+            source = n.get("source")
+            if not isinstance(blob, str) or re.fullmatch(r"[0-9a-f]{40}", blob) is None or not isinstance(source, str):
+                raise ValueError("kernel claim missing pinned source blob: " + n["id"])
+            root = Path(__file__).resolve().parents[1]
+            path = (root / source).resolve()
+            if not path.is_relative_to(root) or not path.is_file():
+                raise ValueError("kernel claim source missing or outside repo: " + n["id"])
+            actual = subprocess.run(["git", "hash-object", str(path)], cwd=root,
+                                    text=True, capture_output=True, check=True).stdout.strip()
+            if actual != blob:
+                raise ValueError("kernel receipt source changed; invalidate/review: " + n["id"])
         kind = n.get("status")
         if kind not in KINDS:
             raise ValueError("unrecognized status for " + n["id"])
@@ -72,7 +87,7 @@ def self_test():
              "open_obligations": ["integration"], "promoted_full": False},
         ]
     }
-    assert check(g)["full_certified"] == []
+    assert check(g, verify_hashes=False)["full_certified"] == []
     for mutation, expected in [
         (lambda d: d["claims"][1].update(promoted_full=True), "premature"),
         (lambda d: d["claims"][0].update(depends_on=["target"]), "cyclic"),
@@ -81,7 +96,7 @@ def self_test():
         altered = json.loads(json.dumps(g))
         mutation(altered)
         try:
-            check(altered)
+            check(altered, verify_hashes=False)
         except ValueError as e:
             if expected not in str(e):
                 raise
