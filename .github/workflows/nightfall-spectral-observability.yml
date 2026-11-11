@@ -1,0 +1,22 @@
+name: NIGHTFALL spectral observability - exact pair obstruction
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-spectral-observability/**'
+      - '.github/workflows/nightfall-spectral-observability.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/2026-11-spectral-observability/**'
+      - '.github/workflows/nightfall-spectral-observability.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-pair-obstruction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check exact degree-three pair ANOVA formula on all biases
+        run: python3 -I research/nightfall/2026-11-spectral-observability/selector_pair_symbolic.py
