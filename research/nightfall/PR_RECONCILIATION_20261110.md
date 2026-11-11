@@ -168,3 +168,19 @@ These items were recovered from parallel NIGHTFALL research discussions. **This 
 
 **Scientific status:** no globally original theorem or new competition record is established by this inventory update. Retain all superseded proofs and failed experiments as evidence, not as merged scientific endorsements.
 
+
+## Post-snapshot mass-closure reconciliation — 11 November 2026 UTC
+
+**Observed GitHub API state:** At approximately 00:11 UTC, the open PR collection returned **zero** open PRs. The 100 most recently closed PRs included **96 closures since 00:07 UTC**, of which **95 were closed without merging**; the one confirmed merge in that set was [#243](https://github.com/d3lefts/d3lefts/pull/243). This is a dated observation, **not** proof that the 95 closed drafts were audited, superseded, or scientifically invalid. Their GitHub branches/commits and this inventory remain provenance sources. The snapshot table earlier in this document records how many were open *before* the closure event; it must not be misread as the current queue.
+
+**Confirmed positive merge:** [#243](https://github.com/d3lefts/d3lefts/pull/243), merged as `bf17b0e38916bea1d9e4534138f43269249958d1`, contains the scoped F16/F4 three-query code gadget. [CI #40995299592](https://github.com/d3lefts/d3lefts/actions/runs/40995299592) reports kernel compilation and foundational-axiom audit for the named finite declarations, with an independent 10,000-signal exact Python replay. This does **not** settle the general two-round decoder or novelty.
+
+**Critical unmerged research that must remain discoverable:**
+
+- [#317](https://github.com/d3lefts/d3lefts/pull/317) proposes the full finite-product `(5/2,6)` influence bridge (Turturean Level/Average transfer). **Failed pinned Lean compilation** at [run #42928872042](https://github.com/d3lefts/d3lefts/actions/runs/42928872042), with unresolved goals, timeout, missing declaration and `sorryAx` in the attempted output. The theorem is **not** kernel-certified and was **closed without merge**. Preserve this branch as an explicit proof-repair target, not as an achieved theorem.
+- [#316](https://github.com/d3lefts/d3lefts/pull/316) proposes nonanticipating adaptive rank decrement. It has **no verified head-specific CI receipt in this audit** and was closed without merge. Its finite static antecedent [#311](https://github.com/d3lefts/d3lefts/pull/311) is separately merged.
+- [#175](https://github.com/d3lefts/d3lefts/pull/175) proposed CG:SHOP 2027 250-instance coverage. No successful **current-head official 250/250 verifier replay** was established in this audit; it was closed without merge, not submitted.
+- The overlapping reconciliation branches [#315](https://github.com/d3lefts/d3lefts/pull/315), [#318](https://github.com/d3lefts/d3lefts/pull/318) and [#319](https://github.com/d3lefts/d3lefts/pull/319) were closed without merge. Their unique cross-session artifact-gap and proof-attack information was incorporated into this `main` ledger in dated documentation commits; source branches retain any extra edits not reproduced here.
+
+**Interpretation:** A clean GitHub open-PR queue is not a completed scientific-research queue. After closure, continue discovery through this frozen exact-head inventory, closed PR searches, source branches, failed CI receipts and the separately archived manuscript packages. Reopen a closed PR or create a scoped successor only after its hypotheses, source, checker and latest evidence have been independently reconciled. No global originality, quantum-query or EinsteinArena competitive-record status is promoted by this administrative event.
+
