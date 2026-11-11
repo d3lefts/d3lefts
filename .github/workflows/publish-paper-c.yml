@@ -17,6 +17,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: true
+          fetch-depth: 0  # needed for a safe rebase when parallel contributors advance main
       - name: Install open-source typesetting toolchain
         run: |
           sudo apt-get update -qq
@@ -49,6 +50,7 @@ jobs:
           zip -q -9 -j Specialized_Complexity_Source_and_Audit.zip MANUSCRIPT.md Specialized_Complexity_Manuscript.tex Specialized_Complexity_Manuscript.pdf replay_f16_specialized.py replay_f16_receipt.json ARTIFACT_README.md SOURCE_SHA256SUMS
           sha256sum -c SOURCE_SHA256SUMS
           unzip -t Specialized_Complexity_Source_and_Audit.zip | tail -1
+          python3 ../../scripts/check_paper_c_bundle.py
       - name: Upload reproducible build even if branch push is protected
         uses: actions/upload-artifact@v4
         with:
@@ -70,5 +72,33 @@ jobs:
           git add papers/specialized-complexity/{Specialized_Complexity_Manuscript.tex,Specialized_Complexity_Manuscript.pdf,Specialized_Complexity_Source_and_Audit.zip,replay_f16_receipt.json,SOURCE_SHA256SUMS,ARTIFACT_README.md}
           if ! git diff --cached --quiet; then
             git commit -m 'Build Paper C PDF, LaTeX and self-contained SHA-256 audit archive'
-            git push origin HEAD:main
+            # Another research instance may merge during a lengthy TeX build.
+            # Rebase ONLY when the two canonical source inputs are unchanged
+            # on origin/main; never force-push or publish a stale build.
+            source_path=papers/specialized-complexity/MANUSCRIPT.md
+            checker_path=papers/specialized-complexity/replay_f16_specialized.py
+            source_hash="$(sha256sum "$source_path" | cut -d ' ' -f 1)"
+            checker_hash="$(sha256sum "$checker_path" | cut -d ' ' -f 1)"
+            for attempt in 1 2 3 4 5; do
+              git fetch origin main
+              remote_source_hash="$(git show "origin/main:$source_path" | sha256sum | cut -d ' ' -f 1)"
+              remote_checker_hash="$(git show "origin/main:$checker_path" | sha256sum | cut -d ' ' -f 1)"
+              if [[ "$remote_source_hash" != "$source_hash" || "$remote_checker_hash" != "$checker_hash" ]]; then
+                echo "Canonical Paper C source changed after this build; refuse stale artifact publication"
+                exit 1
+              fi
+              if ! git rebase origin/main; then
+                git rebase --abort || true
+                echo "Cannot safely replay generated artifacts onto concurrent branch; manual review required"
+                exit 1
+              fi
+              if git push origin HEAD:main; then
+                echo "Paper C sources and generated outputs published to latest main"
+                exit 0
+              fi
+              echo "Concurrent push on attempt $attempt; fetching and retrying"
+              sleep 2
+            done
+            echo "Safe optimistic push exhausted; no force push attempted"
+            exit 1
           fi

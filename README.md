@@ -16,7 +16,7 @@ For a mathematician or referee, begin with the [**paper shelf**](papers/README.m
 
 [Independent referee desk](research/referee/README.md) · [Historical finite evidence and errata](research/archive/README.md) · [Publication/reuse rights](research/REUSE_AND_RIGHTS.md) · [Full research map](research/README.md).
 
-This is a **non-destructive index migration**: the original `research/nightfall/` files, Lean declarations, witness hashes, cited URLs and frozen 40-record/11-passport historical catalogues remain in place. The 13 selected claims in the new catalogue are **not** 13 refereed results or additions to the approved finding list. Their validity, source completeness, independent review and originality remain separately labeled.
+This is a **non-destructive index migration**: the original `research/nightfall/` files, Lean declarations, witness hashes, cited URLs and frozen 40-record/11-passport historical catalogues remain in place. The 15 selected claims in the current catalogue are **not** 15 refereed results or additions to the approved finding list. The [Paper A](papers/exact-recovery/MANUSCRIPT.md), [Paper B](papers/spectral-adaptive-prediction/MANUSCRIPT.md), and [Paper C](papers/specialized-complexity/MANUSCRIPT.md) manuscripts have distinct query models and certification scopes. Their validity, source completeness, independent review and originality remain separately labeled.
 
 ## Start here
 
