@@ -116,6 +116,8 @@ assert.ok(!finite.limitations.every(s=>!s.includes("measurable")),"Missing Lean 
 const cubic=data.claims.find(c=>c.id==="cubic-obstruction");
 assert.ok(cubic.status==="exact-proof-attacks-cubic-open"&&cubic.claim.includes("OPEN"));
 assert.ok(cubic.evidence.includes("#347")&&cubic.evidence.includes("#349"));
+assert.ok(cubic.claim.includes("179722/6993")&&cubic.claim.includes("Var(Q)"),"v6.1 cubic scope and exact witness absent");
+assert.ok(data.claims.find(c=>c.id==="q2-influence").claim.includes("225(1+√3)²"),"Correct scalar coefficient missing");
 assert.ok(data.claims.find(c=>c.id==="fair-sign-cubic").status.includes("draft-pr"));
 assert.ok(data.claims.find(c=>c.id==="universal-spectral").status.includes("conditional"));
 assert.ok(html.includes("<strong>12</strong>Active claim records")&&html.includes("<strong>v9</strong>"));
