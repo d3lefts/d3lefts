@@ -4,8 +4,12 @@ on:
     paths:
       - 'research/nightfall/formalization/observability/PosteriorEnergyDrift.lean'
       - 'research/nightfall/formalization/observability/ParityBlockCancellation.lean'
+      - 'research/nightfall/formalization/observability/GlobalQuadraticParity.lean'
+      - 'research/nightfall/formalization/observability/CenteredRectangles.lean'
+      - 'research/nightfall/formalization/observability/GlobalCenteredMatchingAmplitude.lean'
       - '.github/workflows/nightfall-quadratic-posterior-energy.yml'
       - 'research/nightfall/2026-11-quadratic-law-free-audit/check_posterior_drift_exact.py'
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/check_global_matching_parity.py'
   workflow_dispatch:
 permissions:
   contents: read
@@ -66,9 +70,69 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/parity-blocks.json
           sha256sum research/nightfall/formalization/observability/{PosteriorEnergyDrift,ParityBlockCancellation}.lean > lean-receipts/SHA256SUMS
+      - name: Kernel-compile actual global quadratic matching parity comparison
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/observability/ParityBlockCancellation.lean /tmp/mathlib4/ParityBlockCancellation.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ParityBlockCancellation.olean ParityBlockCancellation.lean)
+          N=Nightfall.Observability.GlobalQuadraticParity
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/GlobalQuadraticParity.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.global_matching_quadratic_parity_identity \
+            --decl $N.global_matching_delta_budget \
+            --json-out lean-receipts/global-quadratic-parity.json || {
+              python3 -c "import json; x=json.load(open('lean-receipts/global-quadratic-parity.json')); print(x.get('status')); print((x.get('stdout') or '')[:45000])" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/global-quadratic-parity.json
+          sha256sum research/nightfall/formalization/observability/GlobalQuadraticParity.lean >> lean-receipts/SHA256SUMS
+      - name: Kernel-check actual weighted centered rectangle averaging and selection
+        shell: bash
+        run: |
+          set -euo pipefail
+          N=Nightfall.Observability.CenteredRectangles
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/CenteredRectangles.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.weighted_average_below_some_value \
+            --decl $N.centered_rectangle_average \
+            --decl $N.exists_rectangle_dominating_value \
+            --decl $N.exists_oriented_rectangle_dominating_abs \
+            --json-out lean-receipts/centered-rectangles.json || {
+              python3 -c "import json; x=json.load(open('lean-receipts/centered-rectangles.json')); print(x.get('status')); print((x.get('stdout') or '')[:60000])" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/centered-rectangles.json
+          sha256sum research/nightfall/formalization/observability/CenteredRectangles.lean >> lean-receipts/SHA256SUMS
+      - name: Kernel-check actual law-free centered global matching amplitude
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/observability/CenteredRectangles.lean /tmp/mathlib4/CenteredRectangles.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/CenteredRectangles.olean CenteredRectangles.lean)
+          cp research/nightfall/formalization/observability/GlobalQuadraticParity.lean /tmp/mathlib4/GlobalQuadraticParity.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/GlobalQuadraticParity.olean GlobalQuadraticParity.lean)
+          N=Nightfall.Observability.GlobalCenteredMatching
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/GlobalCenteredMatchingAmplitude.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.centered_matching_amplitude_at_points \
+            --decl $N.centered_matching_maximal_amplitude \
+            --json-out lean-receipts/centered-global-matching.json || {
+              python3 -c "import json; x=json.load(open('lean-receipts/centered-global-matching.json')); print(x.get('status')); print((x.get('stdout') or '')[:60000])" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/centered-global-matching.json
+          sha256sum research/nightfall/formalization/observability/GlobalCenteredMatchingAmplitude.lean >> lean-receipts/SHA256SUMS
       - name: Exact real-posterior drift, all transcript branches
         run: |
           set -euo pipefail
+          python3 research/nightfall/2026-11-quadratic-law-free-audit/check_global_matching_parity.py
           python3 research/nightfall/2026-11-quadratic-law-free-audit/check_posterior_drift_exact.py
           python3 research/nightfall/2026-11-quadratic-law-free-audit/check_exact_quadratic.py
       - name: Archive receipts
