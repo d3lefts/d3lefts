@@ -85,4 +85,53 @@ theorem centered_matching_amplitude_at_points
       c leftOne rightOne matched
       first second sideFirst sideSecond hne off left right B hbounded)
 
+
+/-- Finite coordinate alphabets admit simultaneous maximum-modulus
+pair-kernel witnesses. Composed with the actual centered matching theorem,
+their *total true sup-norm amplitude* is at most four times the full
+quadratic bound. This is not a supplied matching-mass premise. -/
+theorem centered_matching_maximal_amplitude
+    (c : ℝ)
+    (leftOne rightOne : ι → α → ℝ)
+    (matched : ι → α → α → ℝ)
+    (first second : E → ι)
+    (sideFirst sideSecond : E → Bool)
+    (hne : ∀ e, first e ≠ second e)
+    (off : E → α → α → ℝ)
+    (p q : ι → α → ℝ)
+    (hp : ∀ i a, 0 ≤ p i a)
+    (hq : ∀ i a, 0 ≤ q i a)
+    (hp1 : ∀ i, (∑ a : α, p i a) = 1)
+    (hq1 : ∀ i, (∑ a : α, q i a) = 1)
+    (hrow : ∀ i x, (∑ b : α, q i b * matched i x b) = 0)
+    (hcol : ∀ i y, (∑ a : α, p i a * matched i a y) = 0)
+    (B : ℝ)
+    (hbounded : ∀ z : ι → Bool → α,
+      |quadraticModel c leftOne rightOne matched
+        first second sideFirst sideSecond off z| ≤ B) :
+    ∃ x y : ι → α,
+      (∀ i a b, |matched i a b| ≤ |matched i (x i) (y i)|) ∧
+      (∑ i : ι, |matched i (x i) (y i)|) ≤ 4 * B := by
+  classical
+  have hmaximal (i : ι) :
+      ∃ x y : α, ∀ a b : α,
+        |matched i a b| ≤ |matched i x y| := by
+    have hne : (Finset.univ : Finset (α × α)).Nonempty :=
+      ⟨(Classical.choice ‹Nonempty α›, Classical.choice ‹Nonempty α›),
+        Finset.mem_univ _⟩
+    obtain ⟨t, _, hmax⟩ :=
+      Finset.exists_max_image (Finset.univ : Finset (α × α))
+        (fun t : α × α => |matched i t.1 t.2|) hne
+    refine ⟨t.1, t.2, ?_⟩
+    intro a b
+    exact hmax (a, b) (Finset.mem_univ _)
+  choose x y hmax using hmaximal
+  refine ⟨x, y, ?_, ?_⟩
+  · intro i a b
+    exact hmax i a b
+  · exact centered_matching_amplitude_at_points
+      c leftOne rightOne matched first second
+      sideFirst sideSecond hne off p q hp hq hp1 hq1
+      hrow hcol B hbounded x y
+
 end Nightfall.Observability.GlobalCenteredMatching
