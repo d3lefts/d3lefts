@@ -75,4 +75,25 @@ theorem exact_observer_under_dominated_measure
     f =ᵐ[ν] predicted := by
   exact hνμ.ae_eq hμ
 
+
+/-- Exact-budget feasibility is invariant under *equivalent* measures for
+EVERY abstract policy space, every prediction rule and any integer cost
+function. In particular apply this once to adaptive coordinate policies
+and once to fixed nonadaptive policies. No product-law or density cap is
+assumed on the target. The mathematical mechanism is classical mutual
+absolute continuity; no worldwide priority is claimed. -/
+theorem every_policy_budget_invariant_under_equivalence
+    {Ω V Policy : Type*} [MeasurableSpace Ω]
+    (μ ν : MeasureTheory.Measure Ω)
+    (f : Ω → V) (predict : Policy → Ω → V)
+    (cost : Policy → ℕ) (budget : ℕ)
+    (hνμ : ν ≪ μ) (hμν : μ ≪ ν) :
+    (∃ π, cost π ≤ budget ∧ f =ᵐ[μ] predict π) ↔
+    (∃ π, cost π ≤ budget ∧ f =ᵐ[ν] predict π) := by
+  constructor
+  · rintro ⟨π, hcost, hgood⟩
+    exact ⟨π, hcost, hνμ.ae_eq hgood⟩
+  · rintro ⟨π, hcost, hgood⟩
+    exact ⟨π, hcost, hμν.ae_eq hgood⟩
+
 end Nightfall.UniversalLawTransfer
