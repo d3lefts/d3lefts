@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-provenance-v1",
   "as_of": "2026-11-11",
-  "revision": 10,
-  "scope": "Complete main-tree 59-module Git blob inventory at commit f0007f6baea9ea53dfbde809bb243c017c17dbc6: 59 exact-current-source blobs found in successful historical CI run heads; the final ANOVA module received its own strict named-declaration check. Counts: 48 originality-quarantined, 10 derived transfers, 1 finite construction. Source-match is not fresh same-pin end-to-end proof certification.",
-  "source_commit": "f0007f6baea9ea53dfbde809bb243c017c17dbc6",
+  "revision": 11,
+  "scope": "Source-complete 59-module main-compatible snapshot at branch 1305e854fcb87eda28cc8135862bd4131a036a88; two direct finite actual-function modules freshly kernel checked on pinned 4.33 and 4.35 separately. No end-to-end exponent-two quadratic influence certificate.",
+  "source_commit": "1305e854fcb87eda28cc8135862bd4131a036a88",
   "policy": "Kernel compilation is validity evidence only. Quarantine means do not claim novelty; it does not invalidate a correctly compiled theorem. Derived transfers are scoped program-specific compositions with open worldwide priority. A distinct finite construction has an exact certificate but still needs prior-art review.",
   "prior_art": [
     {
@@ -278,15 +278,15 @@
     {
       "path": "research/nightfall/formalization/observability/QuadraticRealizedRangeBudget.lean",
       "classification": "quarantine",
-      "ci_run": 43098858989,
+      "ci_run": 43114064344,
       "passport": "active-proof-passport.html",
       "global_priority": "unverified",
-      "note": "Realized coordinatewise range-budget corollary of the finite 16B switching inequality; source-level scope, separate strict pinned receipt not yet bound to exact current blob.",
-      "source_blob_sha": "ae9ca8a8b871a3de1a746d43ffc193af18b9f483",
+      "note": "Constructed true coordinate maxima/minima and universal all-section 16B budget for any bounded finite-alphabet quadratic polynomial; not a law-averaged L2 or influence theorem.",
+      "source_blob_sha": "bc3ec344bb47426a9db0508893f8588e7a5d8ea2",
       "source_recovery_pr": null,
-      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification.",
+      "ci_receipt_scope": "Strict Lean 4.35 named-declaration PASS: actual full coordinate section extrema, no supplied range witness; endpoint exponent-two remains open.",
       "ci_source_match_status": "same-git-blob-as-successful-ci-head",
-      "ci_run_head_sha": "6637d32f89396dba3470c8b2eb406d149e20daf2"
+      "ci_run_head_sha": "1305e854fcb87eda28cc8135862bd4131a036a88"
     },
     {
       "path": "research/nightfall/formalization/observability/QuadraticSingleReplacement.lean",
@@ -681,14 +681,14 @@
     {
       "path": "research/nightfall/formalization/product_space/QuadraticHoeffdingBridge.lean",
       "classification": "quarantine",
-      "note": "Direct corollary of established and imported finite Hoeffding/Efron-Stein decomposition under actual degree-two hypothesis; not a new influence theorem",
+      "note": "Actual arbitrary finite product law Hoeffding-degree-two normalized function E2E exponent-5/2 baseline (classical/Turturean-derived); exponent-two not established.",
       "passport": null,
-      "ci_run": 43057281341,
+      "ci_run": 43113339892,
       "global_priority": "unverified",
-      "source_blob_sha": "2d393b726368528952e285abd31a28850156a5b9",
+      "source_blob_sha": "a936845286a74fbf5f0ee70fc5feca6b08108694",
       "ci_source_match_status": "same-git-blob-as-successful-ci-head",
-      "ci_run_head_sha": "2384d1b964d6b248a64309de692abe6867abe484",
-      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+      "ci_run_head_sha": "75dab4d279d3ca3a5bf6360304040a6605c8690d",
+      "ci_receipt_scope": "Strict Lean 4.33 named-declaration PASS; no assumed intermediate matching/moment certificates; proven exponent-5/2 only."
     },
     {
       "path": "research/nightfall/formalization/product_space/QuarticRademacher.lean",
@@ -793,11 +793,11 @@
       "audit_note": "research/nightfall/formalization/phase_block/ADAPTIVE_BRANCH_EVIDENCE_20261111.md"
     }
   ],
-  "newly_quarantined_source": "PR 359 / merged at 008ccdc5: 4 Lean modules compile scoped routine/implied identities; does not kernel-certify full quadratic arbitrary-law influence or adaptive Hilbert theorem. Runs 43058772711, 43058085067, 43057281341 support named declarations only. PR 364 adds the finite arbitrary-length Hilbert moment lemma (CI 43062171542); full matching/ANOVA influence bridge remains unverified in Lean. PR 366 adds the classical law-transfer Lean module with scoped five-theorem receipt 43059618451; full Paper A/B novelty and Lean certification are separate. PR #374 stages a routine ContractSmoke.lean solely to test the exact-type compiler contract; no new mathematical novelty is asserted. 2026-11-11 v8: reconciled 12 additional main .lean modules with exact Git blob SHAs and historical scoped PR/CI references; 59 main modules total. Successful individual CI is not an end-to-end, cross-toolchain formal proof. 2026-11-11 rev9: audited 58 successful run-head source blob matches; ANOVAPosteriorBridge source-only/no independent theorem receipt. Rev10 closes missing ANOVAPosteriorBridge direct named Lean proof gate via successful pinned run 43110333296; source blob matches main. All 59 source blobs linked to scoped successful receipts; no end-to-end theorem promotion.",
-  "source_tree_sha": "f0007f6baea9ea53dfbde809bb243c017c17dbc6",
+  "newly_quarantined_source": "PR 359 / merged at 008ccdc5: 4 Lean modules compile scoped routine/implied identities; does not kernel-certify full quadratic arbitrary-law influence or adaptive Hilbert theorem. Runs 43058772711, 43058085067, 43057281341 support named declarations only. PR 364 adds the finite arbitrary-length Hilbert moment lemma (CI 43062171542); full matching/ANOVA influence bridge remains unverified in Lean. PR 366 adds the classical law-transfer Lean module with scoped five-theorem receipt 43059618451; full Paper A/B novelty and Lean certification are separate. PR #374 stages a routine ContractSmoke.lean solely to test the exact-type compiler contract; no new mathematical novelty is asserted. 2026-11-11 v8: reconciled 12 additional main .lean modules with exact Git blob SHAs and historical scoped PR/CI references; 59 main modules total. Successful individual CI is not an end-to-end, cross-toolchain formal proof. 2026-11-11 rev9: audited 58 successful run-head source blob matches; ANOVAPosteriorBridge source-only/no independent theorem receipt. Rev10 closes missing ANOVAPosteriorBridge direct named Lean proof gate via successful pinned run 43110333296; source blob matches main. All 59 source blobs linked to scoped successful receipts; no end-to-end theorem promotion. Revision 11: runs 43113339892 and 43114064344 PASS for respective direct finite function modules; target variance-squared theorem remains uncertified.",
+  "source_tree_sha": "1305e854fcb87eda28cc8135862bd4131a036a88",
   "pinned_lean_toolchain": "leanprover/lean4:v4.35.0",
   "historical_compiler_environment_note": "Some existing source-family receipts and the actual scalar/Hilbert posterior one-step source used pinned Lean 4.33.0. Current repository pin is Lean 4.35.0. Source-matched universal recompilation, exact theorem contract, and cross-pin imports require separate gates.",
-  "compilation_receipt_policy": "All 59 current main-tree Lean Git source blobs matched successful historical GitHub Actions run-head trees. ANOVAPosteriorBridge.lean has a dedicated strict Lean 4.33.0 three-declaration receipt in run 43110333296. Exact source identity and successful named theorem checks remain scoped to each workflow; they do not certify combined all-product quadratic influence, cross-pin integration, measurable transfer, global originality, or unlisted declarations. Current repository Lean pin is 4.35.0, and some earlier individual proofs are 4.33.0.",
+  "compilation_receipt_policy": "All 59 current main-tree Lean Git source blobs matched successful historical GitHub Actions run-head trees. ANOVAPosteriorBridge.lean has a dedicated strict Lean 4.33.0 three-declaration receipt in run 43110333296. Exact source identity and successful named theorem checks remain scoped to each workflow; they do not certify combined all-product quadratic influence, cross-pin integration, measurable transfer, global originality, or unlisted declarations. Current repository Lean pin is 4.35.0, and some earlier individual proofs are 4.33.0. Revision 11: actual quadratic degree-two exponent-5/2 product-law declaration passed strict 4.33, and constructed 16B section-range passed strict 4.35; no mixed-pin integrated endpoint proof.",
   "ci_source_match_counts": {
     "matched_successful_ci_head": 59,
     "no_direct_receipt_identified": 0
