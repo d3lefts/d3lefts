@@ -39,7 +39,7 @@ test('all scientific content remains separate from still art',()=>{
  assert.match(html,/id="nf-scroll-cinema"/);
  assert.match(html,/data-motion="static"/);
  assert.match(html,/class="nf-cinema-proof-path"/);
- assert.match(html,/href="#flagships"/);
+ assert.match(html,/href="observability.html"/);
  assert.match(html,/href="review.html#priority"/);
  assert.ok(html.indexOf('id="nf-scroll-cinema"')<html.indexOf('id="flagships"'));
  assert.match(css,/\.nf-cinema--still \.nf-cinema-stage/);
