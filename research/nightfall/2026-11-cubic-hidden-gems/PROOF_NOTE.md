@@ -98,3 +98,41 @@ The local exact checkers `verify_l1_quadratic.py` and `verify_bounded_controls.p
 - Test scripts check arithmetic and finite identities; they do not establish global originality or the unrestricted cubic conjecture.
 - Remaining hard problem: prove a uniform generalized-selector bound for arbitrary leaf L2 spaces without leaf moment assumptions, equivalently universal cubic exponent two; the earlier direct random-evaluation approach fails on rare-atom leaf functions.
 - Do not publish these as an independently certified breakthrough. Integrate in an explicit **working-draft/under-review** section if authorized.
+
+## Operator D. Bounded shared controls, arbitrary high-rank leaf sections (exact strengthening)
+
+**Imported from the parallel bounded-control research note, reproduced here with a shorter variance proof.** Suppose A=(X_1,...,X_t) are independent controls and Y_k are independent leaves, independent of A, with
+
+    f(A,Y)=h(A)+sum_k g_k(A,Y_k),  E_{Y_k} g_k(A,Y_k)=0,
+
+and |f|<=B. There is no degree bound on the control function h or on the dependence of g_k on A. Let V=Var(f) and M=sup_j I_j(f) over *all* control and leaf coordinates. Then
+
+    V <= B sqrt(M) + t M <= (t+1) B sqrt(M),
+    M >= V^2/[(t+1)^2 B^2].
+
+For t=2 this covers degree-at-most-three functions with two shared controls and arbitrary leaf-section rank, skewness, continuous alphabets, and an arbitrary number of leaves, with coefficient 3 (squared-influence denominator 9), substantially improving the D+t constant for this narrower class.
+
+**Proof.** By the law of total variance relative to the entire leaf family,
+
+    V = E_Y Var_A(f(A,Y)) + Var_Y(E_A f(A,Y)).
+
+For each fixed Y, the Efron–Stein inequality on the t independent controls gives
+
+    E_Y Var_A(f) <= sum_{j=1}^t I_{X_j}(f) <= t M.
+
+Set F(Y)=E_A f(A,Y)=E_A h(A)+sum_k \bar g_k(Y_k), where \bar g_k=E_A g_k(A,Y_k). Then F is bounded by B and additive in independent leaves, each \bar g_k centered. For every finite leaf set, the essential range width of its sum equals the sum of the individual essential widths (independence). Since F lies in [-B,B], those widths sum to at most 2B. Popoviciu gives
+
+    sum_k ||\bar g_k||_{L2(Y_k)} <= B.
+
+Furthermore Jensen and the leaf influence identity imply
+
+    ||\bar g_k||_2^2 <= E_A ||g_k(A,.)||_2^2 = I_{Y_k}(f) <= M.
+
+Therefore
+
+    Var_Y(F)=sum_k ||\bar g_k||_2^2
+      <= (sup_k ||\bar g_k||_2)(sum_k ||\bar g_k||_2) <= B sqrt(M).
+
+Combine the two estimates. Approximation by finite leaf sets and conditional expectations handles countably many active inputs; strong measurability reduces arbitrary index families to countable support. The leading coefficient 1 is sharp for f=(Y_1+...+Y_n)/n with fair leaves and unused controls, since V=1/n and M=1/n^2.
+
+**Distinction:** This theorem handles arbitrary high-dimensional leaf sections but requires a *fixed finite control family* outside which all leaf interactions are additive. Operator C permits arbitrarily many dense controls but requires rank-one leaf features. The unrestricted generalized selector case contains neither restriction and remains open.
