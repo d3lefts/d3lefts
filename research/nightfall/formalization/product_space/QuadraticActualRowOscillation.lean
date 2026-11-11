@@ -140,10 +140,7 @@ theorem actual_degree_two_centered_sections_from_rows
           ring
       _ = ∑ t : α, p i t *
         (f (Function.update x i s) - f (Function.update x i t)) := by
-          rw [Finset.sum_sub_distrib, Finset.sum_mul]
-          apply Finset.sum_congr rfl
-          intro t _
-          ring
+          simp only [mul_sub, Finset.sum_sub_distrib, Finset.sum_mul]
   rw [heq]
   calc
     |∑ t : α, p i t *
