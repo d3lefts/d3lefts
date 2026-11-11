@@ -27,7 +27,7 @@
 
  const main=document.querySelector("main");
  const page=location.pathname.split("/").pop()||"index.html";
- // The two entrances are distinct documents. Source pages remain shared,
+ // The two entrances are distinct documents: NULL FIELD is active, NEW MOON is archival. Source pages remain shared,
  // but offer both destination routes independently of the reading palette.
  const header=document.querySelector(".header");
  if(header&&main&&page!=="index.html"&&page!=="new-moon.html"&&!document.querySelector(".nf-home-route-nav")){
@@ -35,8 +35,8 @@
   routes.className="nf-home-route-nav nf-global-route-nav wrap";
   routes.setAttribute("aria-label","Choose NIGHTFALL experience");
   routes.innerHTML='<span class="nf-route-caption">TWO ENTRANCES / SHARED RESEARCH RECORD</span>'+
-   '<a href="index.html" data-nf-route="archive"><span>01</span> NULL FIELD <small>Research archive</small></a>'+
-   '<a href="new-moon.html" data-nf-route="moon"><span>02</span> NEW MOON <small>Open investigations</small></a>';
+   '<a href="index.html" data-nf-route="archive"><span>01</span> NULL FIELD <small>Active research</small></a>'+
+   '<a href="new-moon.html" data-nf-route="moon"><span>02</span> NEW MOON <small>Archived research</small></a>';
   header.insertAdjacentElement("afterend",routes);
  }
 
@@ -47,8 +47,8 @@
 
  // Single source for the specialist-page route taxonomy. A destination means
  // where a task belongs, never that it is mathematically complete.
- // Research source pages are shared. The first route back respects the
- // selected reading without duplicating source evidence or mutating claims.
+ // Research source pages are shared. Named active and historical pages use
+ // their editorial lifecycle regardless of the reader-selected palette.
  const preferredMoon=()=>{
   try{
    const v=localStorage.getItem("nightfall.theme.v1");
@@ -56,10 +56,15 @@
   }catch(_){}
   return document.documentElement?.getAttribute?.("data-nf-theme")==="dusk";
  };
+ // Canonical page ownership is independent of a reader's color palette.
+ // The "archive" token in data-nf-route remains a legacy LIGHT palette ID.
+ const activePages=new Set(["product-space-influence.html","observability.html","active-proof-passport.html","kaczmarz-proof-passport.html","four-shuffle-proof-passport.html","finite-product-influence-proof-passport.html","cubic-obstruction-proof-passport.html","nested-address-proof-passport.html","finite-palette-recovery-proof-passport.html","fair-sign-cubic-proof-passport.html","universal-spectral-proof-passport.html","certificate-acquisition-proof-passport.html","phase-block-proof-passport.html","phase-adaptive-branch-proof-passport.html","lean-certificate-provenance.html","frontier.html","desk.html","discovery.html","orchestrator.html","agenda.html"]);
+ const historicalPages=new Set(["erdos-paper.html","living-paper.html","findings-20261029.html","sidon-arity.html"]);
  const homeDestination={id:"home",label:"",href:""};
  const updateHome=(moon)=>{
-  homeDestination.href=moon?"new-moon.html#open-ledger":"index.html#flagships";
-  homeDestination.label=moon?"01 / NEW MOON · Open investigations":"01 / NULL FIELD · Research archive";
+  const historical=historicalPages.has(page)?true:activePages.has(page)?false:moon;
+  homeDestination.href=historical?"new-moon.html#archived-records":"index.html#flagships";
+  homeDestination.label=historical?"01 / NEW MOON · Archived research":"01 / NULL FIELD · Active research";
  };
  updateHome(preferredMoon());
  const destinations=[
@@ -69,6 +74,7 @@
  ];
  const routes={
   "research.html":"home","living-paper.html":"home","erdos-paper.html":"home",
+  "observability.html":"home","product-space-influence.html":"home","active-proof-passport.html":"home","kaczmarz-proof-passport.html":"home","four-shuffle-proof-passport.html":"home","finite-product-influence-proof-passport.html":"home","cubic-obstruction-proof-passport.html":"home","nested-address-proof-passport.html":"home","finite-palette-recovery-proof-passport.html":"home","fair-sign-cubic-proof-passport.html":"home","universal-spectral-proof-passport.html":"home","certificate-acquisition-proof-passport.html":"home","phase-block-proof-passport.html":"home","phase-adaptive-branch-proof-passport.html":"home","lean-certificate-provenance.html":"home","sidon-arity.html":"home",
   "findings-20261029.html":"home","agenda.html":"home","about.html":"home",
   "atlas.html":"constellation","join.html":"constellation",
   "frontier.html":"constellation","discovery.html":"constellation","orchestrator.html":"constellation",

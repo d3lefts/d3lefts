@@ -47,3 +47,7 @@ Cubic hypergraph matching plus pair/link fourth moments -> OPEN universal degree
 Unreviewed scalar arbitrary-product general-degree premise -> CONDITIONAL higher-degree Hilbert observation.
 
 Do not promote this material into the externally certified or globally original category without separate review.
+
+## Subsequent cubic research operators (11 November, under review)
+
+The [cubic hidden-gems proof checkpoint](../2026-11-cubic-hidden-gems/README.md) establishes an optimized one-leaf projection reduction, influence-weighted top-degree covers, and a log-free bound for fair-sign/rank-one-leaf quadratic selector families, all as **analytic deductions under review**. These do not discharge the unrestricted cubic arbitrary-alphabet exponent-two theorem. The earlier logarithmic-loss selector theorem remains the statement documented in the original v4 source; it is superseded only for the narrower verified selector hypotheses. The exact-check CI validates finite instances, not the general proofs.

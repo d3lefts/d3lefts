@@ -40,6 +40,10 @@ python3 checks/pointwise_lp.py
 pdflatex Wright_Certificate_Engine_v2.tex && pdflatex Wright_Certificate_Engine_v2.tex
 ```
 
+## Pointwise sensitivity checkpoint (11 November)
+
+The [PSI audit](POINTWISE_SENSITIVITY_AUDIT_20261111.md) records the sharp **conjectural** inequality `Var(f)^2 <= R(f)^2 max_i Inf_i(f)/4`, where `R(f)=max_x sum_i |f(x)-f(x^i)|`, together with an unconditional degree-dependent hypercontractive bound, the sharp additive-product case, and an explicit family separating local sensitivity from fractional-certificate row cost. Its [C++17 integer checker](checks/check_pointwise_sensitivity_exact.cpp) exhausts nonconstant Boolean 4-bit (65,534), ternary-output 3-bit (6,558), and monotone Boolean 6-bit (7,828,352) functions, with no violations; it also audits the separation for m=1,2,3. **This finite evidence does not prove PSI or the universal (2,4) bound.**
+
 ## Open targets
 
 1. Turturean's question: max_j I_j(f) ≥ c Var(f)²/K² for real f. Thm 1.7 gives this for crossing probabilities; Remark 7.1 isolates the missing jump-size lemma. The [quartic antipodal audit](QUARTIC_ANTIPODAL_AUDIT_20261110.md) records a sharper proposed route, exact additive constant-3 lower bound, a corrected pair-versus-antipodal calculation, and a [replayable small-cube checker](checks/check_quartic_antipodal_exact.py). The unrestricted conjecture remains open.

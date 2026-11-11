@@ -5,6 +5,7 @@ const assert=require("node:assert/strict");
 const fs=require("node:fs");
 const read=path=>fs.readFileSync(path,"utf8");
 const home=read("docs/index.html");
+const moon=read("docs/new-moon.html");
 const about=read("docs/about.html");
 const review=read("docs/review.html");
 const theme=read("docs/ethereal-theme.js");
@@ -19,24 +20,24 @@ assert.ok(home.includes('href="review.html#start-here">Try an exact finite revie
 
 assert.ok(theme.includes('nightfall.theme.v1'),"Keep existing storage and page theme key");
 assert.ok(theme.includes('active?"NULL FIELD":"NEW MOON"'),"Visible switch names both destinations");
-assert.ok(theme.includes("New Moon is active. Open NULL FIELD"));
+assert.ok(theme.includes("NEW MOON is active. Open NULL FIELD"));
 assert.ok(theme.includes("NULL FIELD is active. Open NEW MOON"));
-assert.ok(theme.includes("New Moon is active. Apply NULL FIELD"));
-assert.ok(theme.includes("NULL FIELD is active. Apply NEW MOON"),"On research subpages the switch changes palette without navigating");
+assert.ok(theme.includes("Warm Night palette is active. Switch to Deep Space palette"));
+assert.ok(theme.includes("Deep Space palette is active. Switch to Warm Night palette"),"On shared pages the toggle changes appearance, not the research lifecycle");
 assert.ok(themeTest.includes('"NULL FIELD"')&&themeTest.includes('"NEW MOON"'),
   "Mobile/desktop route tests use canonical atmosphere names");
 
-// The two cinematic chapters and the exact scientific record are retained.
+// The active cinematic remains source-bound; historical exact objects live in NEW MOON.
 for(const id of ['id="nf-scroll-cinema"','id="flagships"','class="nf-opening-overlap"',
                  'class="nf-cinema-record"','class="nf-cinema-record-value"'])
   assert.ok(home.includes(id),"Lost opening or scientific element: "+id);
-assert.ok((home.match(/0\.380856370118/g)||[]).length>=3,
-  "Opening score must remain visible in the animated and static records");
-assert.ok(home.includes("131,072")&&home.includes("external review open"),
-  "Opening witness identity and external audit gate survive");
-assert.ok(home.includes("Review path: obtain the integer heights"),
-  "Second cinematic chapter should guide investigation, not repeat the intro");
-assert.ok(home.includes("global optimality remains unproved"),
+assert.ok((moon.match(/0\.380856370118/g)||[]).length>=1,
+  "Archived Erdős witness value must remain visible in NEW MOON");
+assert.ok(moon.includes("131,072")&&moon.includes("EXTERNAL REVIEW OPEN"),
+  "Archived witness identity and external review limit survive");
+assert.ok(moon.includes("erdos-paper.html")&&moon.includes("evidence.html#public-downloads"),
+  "Historical record must link exact source and frozen release");
+assert.ok(moon.includes("Global optimality"),
   "Preserve the distinction between a finite witness and the global problem");
 
 // New beginner route is runnable, bounded, and never confuses authorship or
@@ -60,4 +61,4 @@ assert.ok(witness.includes(",")&&witness.trim().split(",").length===30,
   "Guided review points to real frozen coordinates");
 assert.ok(review.includes('id="priority"')&&review.includes('id="submit"')&&
           review.includes('id="sidon"'),"Existing advanced review routes preserved");
-console.log("PASS: named atmospheric controls, researcher portfolio handoff, evidence-first opening, and reproducible novice reviewer path");
+console.log("PASS: active NULL FIELD, archival NEW MOON, accessible controls and exact novice reviewer path");

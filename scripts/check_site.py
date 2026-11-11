@@ -118,7 +118,7 @@ def main() -> int:
     core_text = (DOCS / "referee-core.js").read_text(encoding="utf-8")
     match = re.search(r'const SIDON_WITNESS=\[([^\]]+)\];', core_text)
     subset_match = re.search(r'const SIDON_SUBSET=\[([^\]]+)\];', core_text)
-    chart_match = re.search(r'<div class="sf-witness"[^>]*>(.*?)</div>', homepage_text, re.S)
+    chart_match = re.search(r'<div class="sf-witness"[^>]*>(.*?)</div>', (DOCS / "new-moon.html").read_text(encoding="utf-8"), re.S)
     if not (match and subset_match and chart_match):
         FAILURES.append("ACCESSIBILITY: static Sidon witness coordinates or source missing")
     else:
@@ -129,8 +129,25 @@ def main() -> int:
             FAILURES.append("ACCESSIBILITY: no-JS witness mismatches canonical exact arithmetic")
         if len(coords) != 30 or len(subset) != 17:
             FAILURES.append("ACCESSIBILITY: exact finite witness dimensions mismatch")
-    if "Loading the exact 30-point diagram" in homepage_text or "disabled title=" not in homepage_text:
+    if "Loading the exact 30-point diagram" in (DOCS / "new-moon.html").read_text(encoding="utf-8") or "disabled title=" not in (DOCS / "new-moon.html").read_text(encoding="utf-8"):
         FAILURES.append("ACCESSIBILITY: stuck loading fallback or unsafe pre-hydration toggle")
+
+    # Role ownership describes research lifecycle, not proof strength.
+    moon_text = (DOCS / "new-moon.html").read_text(encoding="utf-8")
+    if ('NULL FIELD <small>Active research</small>' not in homepage_text or
+        'NEW MOON <small>Archived research</small>' not in homepage_text or
+        'NEW MOON <small>Archived research</small>' not in moon_text or
+        'id="archived-records"' not in moon_text):
+        FAILURES.append("ROLE ROUTING: NULL FIELD must be active and NEW MOON archival")
+    if ('id="live-case"' in homepage_text or 'id="live-case"' not in moon_text or
+        'id="sidon-witness"' not in moon_text):
+        FAILURES.append("ARCHIVE: Sidon finite witness must live in NEW MOON, not NULL FIELD")
+    if (not all(x in homepage_text for x in ("observability.html", "product-space-influence.html", "CUBIC_OBSTRUCTION_NOTE.md")) or
+        "0.380856370118" not in moon_text or "131,072" not in moon_text or
+        "global optimality" not in moon_text.lower()):
+        FAILURES.append("ROLE EVIDENCE: active theorem sources or archived Erdős limits missing")
+    if not all(x in js for x in ("new-moon.html#archived-records", "index.html#flagships", "historicalPages", "activePages")):
+        FAILURES.append("ROLE ROUTING: shared source pages can return to the wrong entrance")
 
     # Latest research dispatch is deliberately separate from the frozen curated set.
     obs = DOCS / "observability.html"
@@ -206,7 +223,7 @@ def main() -> int:
     ref_js = (DOCS / "referee-app.js").read_text(encoding="utf-8")
     if 'requestedDomain === "sidon"' not in ref_js:
         FAILURES.append("RESEARCH JOURNEY: allowlisted Sidon verifier deep link absent")
-    if "all 40 curated dossiers" not in homepage_text:
+    if "40-record research library" not in homepage_text:
         FAILURES.append("EDITORIAL: 40-document curated research library link missing")
     # Separate working-research library: preserve originality whitelist and evidence boundaries.
     library = (DOCS / "research.html").read_text(encoding="utf-8")
@@ -255,8 +272,8 @@ def main() -> int:
         FAILURES.append("RESEARCH LIBRARY: scoped claim boundaries or original-finding distinction missing")
     if homepage_text.count('class="flagship-card ') != 4 or 'href="research.html"' not in homepage_text:
         FAILURES.append("FLAGSHIPS: four explicitly scoped research programs and library navigation required")
-    if "conditional tail target" not in homepage_text or "IMPORTED THEOREMS" not in homepage_text:
-        FAILURES.append("FLAGSHIPS: source-conditional theorem boundaries absent")
+    if "DEGREE-TWO THEOREM" not in homepage_text or "EXTERNAL REVIEW OPEN" not in homepage_text or "CUBIC_OBSTRUCTION_NOTE.md" not in homepage_text:
+        FAILURES.append("FLAGSHIPS: active research hypotheses or audit boundaries absent")
     if "SITE_ORIGINALITY_AUDIT_20261028.md" not in homepage_text:
         FAILURES.append("Homepage missing original-results inclusion policy")
     for removed in ("ai-safety.html", "werner.html"):

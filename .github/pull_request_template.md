@@ -22,6 +22,8 @@
 
 - [ ] Branch reconciled with current `main`, and full diff reviewed.
 - [ ] Static source links and documentation: `python3 scripts/test_repository_docs.py`.
+- [ ] Scholarly catalogue / paper navigation (if affected): `python3 scripts/check_research_archive.py --self-test`; claim IDs, exact source paths and dependency gates reconciled.
+- [ ] No new `LICENSE` or external reuse rights implied without owner approval.
 - [ ] Website integrity (if affected): `python3 scripts/check_site.py`, relevant browser/contrast tests, and CI.
 - [ ] Exact witness/checker (if affected): source inputs, SHA-256, commands, independent checks and negative controls attached.
 - [ ] Lean (if affected): named declarations, version, axiom report, source hash and **remaining theorem premises** documented.

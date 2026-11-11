@@ -7,6 +7,7 @@ on:
       - 'research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean'
       - 'research/nightfall/formalization/product_space/HeterogeneousAlphabets.lean'
       - 'research/nightfall/formalization/product_space/EfronSteinDegree.lean'
+      - 'research/nightfall/formalization/product_space/QuadraticHoeffdingBridge.lean'
       - '.github/workflows/nightfall-product-influence.yml'
   workflow_dispatch:
 permissions:
@@ -113,6 +114,23 @@ jobs:
             lean-receipts/efron-stein-degree.json
           cp research/nightfall/formalization/product_space/EfronSteinDegree.lean /tmp/aa/EfronSteinDegree.lean
           (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/EfronSteinDegree.olean EfronSteinDegree.lean)
+      - name: Kernel-check actual finite-product quadratic Hoeffding truncation
+        shell: bash
+        run: |
+          set -euo pipefail
+          N=Nightfall.Observability.QuadraticANOVA
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/product_space/QuadraticHoeffdingBridge.lean \
+            --workspace /tmp/aa --timeout 2400 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.quadratic_hoeffding_decomposition \
+            --decl $N.quadratic_hoeffding_filter \
+            --json-out lean-receipts/quadratic-hoeffding-bridge.json || {
+              python3 -c "import json;r=json.load(open('lean-receipts/quadratic-hoeffding-bridge.json'));print(r.get('status'));print((r.get('stdout') or '')[:35000]);print((r.get('stderr') or '')[:4000])" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/quadratic-hoeffding-bridge.json
       - name: Kernel-check heterogeneous alphabets and zero-mass atoms
         shell: bash
         run: |
@@ -141,6 +159,7 @@ jobs:
           mkdir -p lean-receipts
           sha256sum research/nightfall/formalization/product_space/ProductInfluence.lean \
             research/nightfall/formalization/product_space/EfronSteinDegree.lean \
+            research/nightfall/formalization/product_space/QuadraticHoeffdingBridge.lean \
             research/nightfall/formalization/product_space/HeterogeneousAlphabets.lean \
             research/nightfall/formalization/product_space/ProductRowBound.lean \
             research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean \

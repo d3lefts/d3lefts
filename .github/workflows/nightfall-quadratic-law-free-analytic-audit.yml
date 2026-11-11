@@ -1,0 +1,20 @@
+name: Verify NIGHTFALL quadratic law-free analytic audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/**'
+      - '.github/workflows/nightfall-quadratic-law-free-analytic-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  finite-exact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify Python source compiles
+        run: python3 -m py_compile research/nightfall/2026-11-quadratic-law-free-audit/check_exact_quadratic.py
+      - name: Independent exhaustive rational replay
+        run: python3 research/nightfall/2026-11-quadratic-law-free-audit/check_exact_quadratic.py
+

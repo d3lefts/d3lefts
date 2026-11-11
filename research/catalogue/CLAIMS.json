@@ -1,0 +1,383 @@
+{
+  "schema_version": "1.0",
+  "as_of": "2026-11-11",
+  "editorial_scope": "Selected principal claims, reproducible finite cases, and adverse controls; not a complete enumeration of the site's frozen 40 records or 11 historical passports. Original primary files remain at their paths.",
+  "status_policy": "For every claim, validity, public-source completeness, external review, priority, and release eligibility are independent fields. Evidence does not upgrade dependencies.",
+  "claims": [
+    {
+      "id": "NF-PS-FINITE-20261110",
+      "title": "Finite heterogeneous-product influence theorem",
+      "area": "product-space",
+      "lifecycle": "active",
+      "validity": "kernel-checked-scoped",
+      "source_status": "public-primary-source",
+      "review": "none-recorded",
+      "priority": "unresolved",
+      "primary": "research/nightfall/formalization/product_space/ProductInfluence.lean",
+      "evidence": [
+        "research/nightfall/formalization/product_space/FINITE_PRODUCT_INFLUENCE_PROOF_PASSPORT_20261110.md",
+        ".github/workflows/nightfall-product-influence.yml"
+      ],
+      "dependencies": [],
+      "formal": {
+        "declaration": "Nightfall.ProductSpace.Influence.product_influence",
+        "head": "e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb",
+        "compiler": "Lean 4.33.0",
+        "upstream": "Turturean formalization at 2a6ceaef872ae993708950f951989134084b851a",
+        "receipt": "https://github.com/d3lefts/d3lefts/actions/runs/42929857470"
+      },
+      "claim_scope": "Finite coordinate type; common finite alphabet type, heterogeneous probability tables (including zero mass); bounded indicator-product degree d. Inherited exponent (5/2,6), explicitly weaker numerical coefficient.",
+      "open_gates": [
+        "Non-author theorem and priority review",
+        "General measurable-product lift not covered by this declaration"
+      ],
+      "inherited": [
+        "David Turturean: Boolean-cube Aaronson–Ambainis proof and imported level/antipodal lemmas"
+      ]
+    },
+    {
+      "id": "NF-OBS-UNIVERSAL-20261111",
+      "title": "Universal product-space spectral observability",
+      "area": "observability",
+      "lifecycle": "active",
+      "validity": "analytic-manuscript-unrefereed",
+      "source_status": "public-analytic-manuscript",
+      "review": "none-recorded",
+      "priority": "unresolved",
+      "primary": "research/nightfall/2026-11-principal-observability/PRINCIPAL_THEOREM.md",
+      "evidence": [
+        "research/nightfall/formalization/observability/UNIVERSAL_SPECTRAL_CHECKPOINT_2026-11-11.md",
+        "research/nightfall/2026-11-spectral-observability/REVIEW_GATES.md",
+        "papers/universal-observability/PROOF_SUPPLEMENT_v1.md",
+        "papers/universal-observability/CHAIN_AUDIT_v1.md",
+        "papers/universal-observability/checks/check_posterior_hilbert_exact.py",
+        "papers/universal-observability/checks/check_psd_log_stress.py",
+        "papers/spectral-adaptive-prediction/MANUSCRIPT.md",
+        "papers/spectral-adaptive-prediction/README.md"
+      ],
+      "dependencies": [
+        {
+          "id": "NF-PS-FINITE-20261110",
+          "type": "uses-as-premise"
+        }
+      ],
+      "claim_scope": "Bounded strongly measurable Hilbert outputs, any fixed Hoeffding degree on arbitrary independent products; dimension-independent adaptive whole-coordinate risk to spectral tail plus eta, known laws; no runtime bound.",
+      "open_gates": [
+        "Independent non-author review of full analytic supplement, including arbitrary completed product spaces and posterior null-set handling",
+        "Independent mathematical audit of PSD sign-moment, Jensen log inversion, measurable greedy selection and hard stopping budget",
+        "End-to-end Lean compilation not completed; only finite scalar theorem has kernel receipt",
+        "Dated source-to-source originality study and author publication authorization"
+      ],
+      "inherited": [
+        "Finite product scalar influence theorem and classical ANOVA"
+      ]
+    },
+    {
+      "id": "NF-FINITE-PALETTE-RECOVERY-20261111",
+      "title": "Finite-range exact recovery on arbitrary independent products (Paper A)",
+      "area": "observability",
+      "lifecycle": "active",
+      "validity": "analytic-manuscript-unrefereed",
+      "source_status": "public-analytic-manuscript",
+      "review": "none-recorded",
+      "priority": "unresolved",
+      "primary": "papers/exact-recovery/MANUSCRIPT.md",
+      "evidence": [
+        "papers/exact-recovery/README.md",
+        "research/nightfall/2026-11-five-closures/FIVE_CLOSURES_V11.md",
+        "research/nightfall/formalization/product_space/EXACT_RECOVERY_ADVERSARIAL_AUDIT_20261110.md",
+        "research/nightfall/formalization/product_space/RECOVERY_CERTIFICATE_RECEIPT_20261110.md"
+      ],
+      "dependencies": [],
+      "claim_scope": "Almost-sure deterministic adaptive recovery of q-valued degree-d real observables on arbitrary independent completed products; conservative d floor(d² min((q-1)²,2R/Delta)) whole-coordinate bound, finite vector-palette reduction, nonalgorithmic known-law policy; earlier R/Delta strengthening not promoted.",
+      "open_gates": [
+        "Independent non-author completed-product measurable-selection and simultaneous Fubini/hybrid proof review",
+        "End-to-end Lean not completed; finite switching and sections only",
+        "Reconcile older R/Delta strengthening, verify all finite source/checker receipts, compare Midrijanis/Tal and other priority"
+      ],
+      "inherited": [
+        "Gatis Midrijanis degree-block-sensitivity decision-tree framework",
+        "Tal Boolean block-sensitivity-degree relation",
+        "Classical Hoeffding/Efron–Stein and endpoint Markov estimates"
+      ]
+    },
+    {
+      "id": "NF-PS-QUADRATIC-20261110",
+      "title": "Quadratic bias-independent variance-squared influence bound",
+      "area": "product-space",
+      "lifecycle": "active",
+      "validity": "analytic-manuscript-unrefereed",
+      "source_status": "public-synopsis-source-missing",
+      "review": "none-recorded",
+      "priority": "unresolved",
+      "primary": "research/nightfall/observability-publication/PRINCIPAL_PAPER.md",
+      "evidence": [
+        "research/nightfall/observability-publication/SOURCE_ACCESS.md",
+        "research/nightfall/formalization/observability/README.md"
+      ],
+      "dependencies": [],
+      "claim_scope": "Bounded real Hoeffding degree at most two over independent heterogeneous arbitrary alphabets: max resampling influence at least V² / [256(1+sqrt(3))² B²].",
+      "open_gates": [
+        "Publish original full matching/main/queries/categorical LaTeX and checksum manifest",
+        "Non-author audit matching-to-fourth-moment and pointwise cost",
+        "Check equivalence of influence normalizations and dated novelty"
+      ],
+      "inherited": [
+        "Hoeffding–Efron–Stein framework and prior product influences"
+      ]
+    },
+    {
+      "id": "NF-OBS-QUADRATIC-20261110",
+      "title": "Quadratic adaptive and nonadaptive query separation",
+      "area": "observability",
+      "lifecycle": "active",
+      "validity": "conditional-on-open-premise",
+      "source_status": "public-synopsis-source-missing",
+      "review": "none-recorded",
+      "priority": "unresolved",
+      "primary": "research/nightfall/observability-publication/PRINCIPAL_PAPER.md",
+      "evidence": [
+        "research/nightfall/observability-publication/SOURCE_ACCESS.md",
+        "research/nightfall/2026-11-spectral-observability/README.md"
+      ],
+      "dependencies": [
+        {
+          "id": "NF-PS-QUADRATIC-20261110",
+          "type": "uses-as-premise"
+        }
+      ],
+      "claim_scope": "Specified degree-two minimax whole-coordinate model: proposed adaptive Theta(r/eta) and fixed Theta(rm/eta) under accuracy and alphabet restrictions. Not per-function or general-degree adaptive complexity.",
+      "open_gates": [
+        "Validate scalar influence premise",
+        "Review posterior descent, rank lift and lower constructions",
+        "Publish full queries.tex and categorical.tex",
+        "External priority review"
+      ],
+      "inherited": [
+        "Classical Efron–Stein and decision-tree/active observation techniques"
+      ]
+    },
+    {
+      "id": "NF-OBS-CATEGORICAL-20261110",
+      "title": "Fixed-degree categorical nonadaptive observation law",
+      "area": "observability",
+      "lifecycle": "active",
+      "validity": "analytic-manuscript-unrefereed",
+      "source_status": "public-synopsis-source-missing",
+      "review": "none-recorded",
+      "priority": "unresolved",
+      "primary": "research/nightfall/observability-publication/PRINCIPAL_PAPER.md",
+      "evidence": [
+        "research/nightfall/formalization/observability/README.md",
+        "research/nightfall/observability-publication/SOURCE_ACCESS.md"
+      ],
+      "dependencies": [],
+      "claim_scope": "Proposed worst-case fixed whole-coordinate query rate Theta_d(r m^(d−1)/eta) for finite alphabets size ≤m and rank-r Hilbert output under stated degree and accuracy hypotheses.",
+      "open_gates": [
+        "Prove signed-proxy expectation/moment matching, not only pointwise bound",
+        "Recheck categorical lower construction and all model quantifiers",
+        "Publish complete source and external priority comparison"
+      ],
+      "inherited": [
+        "Boolean Fourier and hypercontractive tools"
+      ]
+    },
+    {
+      "id": "NF-PS-CUBIC-COVER-20261111",
+      "title": "Restricted cubic top-degree-cover transfer",
+      "area": "product-space",
+      "lifecycle": "active",
+      "validity": "conditional-on-open-premise",
+      "source_status": "public-analytic-manuscript",
+      "review": "none-recorded",
+      "priority": "unresolved",
+      "primary": "research/nightfall/2026-11-cubic-leaf-alphabet-free/PROOF_NOTE.md",
+      "evidence": [
+        "research/nightfall/2026-11-cubic-leaf-alphabet-free/check_leaf_free_exact.py",
+        "research/nightfall/formalization/observability/README.md"
+      ],
+      "dependencies": [
+        {
+          "id": "NF-PS-QUADRATIC-20261110",
+          "type": "uses-as-premise"
+        }
+      ],
+      "claim_scope": "Degree-three product functions whose cubic supports admit bounded top-degree vertex cover, or independent covered blocks; no unrestricted cubic theorem.",
+      "open_gates": [
+        "Prove/improve quadratic base",
+        "Independently audit posterior and block transfer",
+        "Formalize nontrivial concrete boundedness lifts"
+      ],
+      "inherited": [
+        "ANOVA decomposition and elementary cover-charge argument"
+      ]
+    },
+    {
+      "id": "NF-PS-CUBIC-OPEN-20261111",
+      "title": "Unrestricted cubic exponent-two influence conjecture",
+      "area": "product-space",
+      "lifecycle": "active",
+      "validity": "conjecture-open",
+      "source_status": "public-conjecture-note",
+      "review": "none-recorded",
+      "priority": "unresolved",
+      "primary": "research/nightfall/observability-publication/CUBIC_OBSTRUCTION_NOTE.md",
+      "evidence": [
+        "research/nightfall/2026-11-spectral-observability/REVIEW_GATES.md"
+      ],
+      "dependencies": [],
+      "claim_scope": "General cubic variance-squared influence over arbitrary alphabets; currently open. Finite counterexamples target proof shortcuts, not the theorem.",
+      "open_gates": [
+        "Derive unrestricted overlapping-core/conditional-link certificate",
+        "Attack precise quartic and pointwise cost formulations",
+        "Non-author mathematical review"
+      ],
+      "inherited": [
+        "David Turturean: general-degree exponent-(5/2,6) Boolean-cube theorem"
+      ]
+    },
+    {
+      "id": "NF-SIDON30-20261028",
+      "title": "Thirty-point weak Sidon set with Sidon number 17",
+      "area": "combinatorics",
+      "lifecycle": "archive",
+      "validity": "finite-exact-replayed",
+      "source_status": "public-finite-source-checker",
+      "review": "none-recorded",
+      "priority": "source-derived-priority-unresolved",
+      "primary": "research/nightfall/projects/sidon-finite-30/README.md",
+      "evidence": [
+        "research/nightfall/projects/sidon-finite-30/witness_30.txt",
+        "research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py",
+        "research/nightfall/projects/sidon-finite-30/verify_reader_origin.py"
+      ],
+      "dependencies": [],
+      "claim_scope": "Exact finite 30-integer (4,5) configuration with maximum Sidon subset 17. Not a new asymptotic 5/9 bound.",
+      "open_gates": [
+        "Non-author independent referee and historical finite-priority audit"
+      ],
+      "inherited": [
+        "Anonymous 7bkzb8 seed/source construction and Ma–Tang context"
+      ]
+    },
+    {
+      "id": "NF-EA36-UPPER-20261028",
+      "title": "Erdős minimum-overlap exact upper witness",
+      "area": "combinatorics",
+      "lifecycle": "archive",
+      "validity": "finite-exact-internal",
+      "source_status": "public-release-and-ledger",
+      "review": "none-recorded",
+      "priority": "unresolved",
+      "primary": "research/nightfall/projects/erdos/STATUS_AND_PRIOR_ART_20261028.md",
+      "evidence": [
+        "research/nightfall/projects/erdos/EXTERNAL_REFEREE_PACKET_20261029.md",
+        "research/nightfall/agent-reports/ea36_131072/replay_erdos_gmp.py"
+      ],
+      "dependencies": [],
+      "claim_scope": "131,072-cell exact rational witness, upper bound only; separate from official competition record and conditional lower bounds.",
+      "open_gates": [
+        "Outside referee replay of full witness and continuum shift reduction",
+        "Reconcile current external baseline and competition accepted bytes"
+      ],
+      "inherited": [
+        "Prior witnesses and Blob/Together construction lineages as documented in project notes"
+      ],
+      "release": "https://github.com/d3lefts/d3lefts/releases/tag/nightfall-research-2026-10-28"
+    },
+    {
+      "id": "NF-WERNER25-20261028",
+      "title": "Finite-copy Werner qutrit threshold certificates",
+      "area": "quantum-information",
+      "lifecycle": "archive",
+      "validity": "source-premise-conditional",
+      "source_status": "public-conditional-checker",
+      "review": "none-recorded",
+      "priority": "unresolved",
+      "primary": "research/nightfall/projects/werner-final-4-25/README.md",
+      "evidence": [
+        "research/nightfall/projects/werner-final-4-25/construct_A.py",
+        "research/nightfall/projects/werner-final-4-25/verify_independent.py"
+      ],
+      "dependencies": [],
+      "claim_scope": "Source-theorem-conditional exact rational 24/25-copy thresholds; isotropic twirling notation correction unresolved in original PDF.",
+      "open_gates": [
+        "Independent audit imported two-/three-copy source theorems and separability step",
+        "Republish corrected manuscript without rewriting provenance"
+      ],
+      "inherited": [
+        "Published sharp two-/three-copy Werner arguments; Tomar source comparison"
+      ]
+    },
+    {
+      "id": "NF-KACZMARZ-20261111",
+      "title": "Greedy log-free Kaczmarz best-iterate argument",
+      "area": "numerical-analysis",
+      "lifecycle": "active",
+      "validity": "analytic-manuscript-unrefereed",
+      "source_status": "public-analytic-manuscript",
+      "review": "none-recorded",
+      "priority": "unresolved",
+      "primary": "research/nightfall/2026-11-kaczmarz-logfree/PROOF.md",
+      "evidence": [
+        "research/nightfall/2026-11-kaczmarz-logfree/PROOF_PASSPORT.md",
+        "research/nightfall/2026-11-kaczmarz-logfree/exact_audit.py"
+      ],
+      "dependencies": [],
+      "claim_scope": "Existential best iterate ≤ceil(n/epsilon²)−1 projections for consistent square linear systems under greedy max-normalized-residual rule; not last-iterate runtime.",
+      "open_gates": [
+        "Check prior greedy Kaczmarz literature for known corollary",
+        "Independent non-author proof and quantifier audit",
+        "Author confirmation if warranted"
+      ],
+      "inherited": [
+        "Classical projection Pythagoras; Steinerberger published open-problem formulation; earlier greedy Kaczmarz work"
+      ]
+    },
+    {
+      "id": "NF-DISCOVERY-GRANULARITY-20261028",
+      "title": "Adaptive granularity: corrected negative baseline comparison",
+      "area": "research-methods",
+      "lifecycle": "archive",
+      "validity": "reproduced-synthetic-experiment",
+      "source_status": "public-experiment-code-and-log",
+      "review": "none-recorded",
+      "priority": "not-applicable",
+      "primary": "research/nightfall/discovery-engine/EXPERIMENT_20261028.md",
+      "evidence": [
+        "research/nightfall/discovery-engine/granularity_study.py",
+        "research/nightfall/discovery-engine/test_granularity_study.py"
+      ],
+      "dependencies": [],
+      "claim_scope": "Synthetic held-out paired result; trained selector chooses atomic baseline after leakage repair; does not establish discovery-speedup or natural-world transfer.",
+      "open_gates": [
+        "Independent external held-out evaluation and total wall-time comparison"
+      ],
+      "inherited": [
+        "Cartesia adaptive abstraction as motivational prior work, not a NIGHTFALL compute result"
+      ]
+    },
+    {
+      "id": "NF-PAS-RETROSPECTIVE-20261013",
+      "title": "Proof After Scarcity retrospective adverse evaluation",
+      "area": "research-methods",
+      "lifecycle": "archive",
+      "validity": "adverse-retrospective",
+      "source_status": "public-retrospective",
+      "review": "none-recorded",
+      "priority": "not-applicable",
+      "primary": "research/nightfall/projects/pas/RETROSPECTIVE_20261013.md",
+      "evidence": [
+        "research/nightfall/projects/pas/PAS_V2_20261029.md"
+      ],
+      "dependencies": [],
+      "claim_scope": "Retrospective 20 challenged cases: PAS priority 8/20 versus simple baselines 11/20; outcome-selected labels, no prospective claim.",
+      "open_gates": [
+        "Preregister blinded matched-budget prospective trial before predictive-efficacy claims"
+      ],
+      "inherited": [
+        "Classical DAG/proof-dependency and review-prioritization approaches"
+      ]
+    }
+  ]
+}

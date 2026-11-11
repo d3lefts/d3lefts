@@ -39,13 +39,15 @@ test('all scientific content remains separate from still art',()=>{
  assert.match(html,/id="nf-scroll-cinema"/);
  assert.match(html,/data-motion="static"/);
  assert.match(html,/class="nf-cinema-proof-path"/);
- assert.match(html,/href="#flagships"/);
+ assert.match(html,/href="observability.html"/);
  assert.match(html,/href="review.html#priority"/);
  assert.ok(html.indexOf('id="nf-scroll-cinema"')<html.indexOf('id="flagships"'));
  assert.match(css,/\.nf-cinema--still \.nf-cinema-stage/);
  assert.match(css,/position:relative!important/);
  assert.match(css,/\.nf-cinema--still \.nf-cinema-record\{transform:none!important\}/);
  assert.match(css,/\.nf-opening-overlap a:focus-visible/);
- for(const phrase of ['0.380856370118','131,072','separate, incompletely recovered artifact','global optimality remains unproved'])
-  assert.ok(html.includes(phrase),phrase);
+ for(const phrase of ['ACTIVE RESEARCH','observability.html','product-space-influence.html','external review open'])
+  assert.ok(html.toLowerCase().includes(phrase.toLowerCase()),phrase);
+ for(const phrase of ['0.380856370118','131,072','global optimality'])
+  assert.ok(nightHtml.toLowerCase().includes(phrase.toLowerCase()),'NEW MOON archive missing '+phrase);
 });

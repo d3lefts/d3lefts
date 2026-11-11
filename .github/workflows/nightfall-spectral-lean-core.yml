@@ -1,0 +1,102 @@
+name: NIGHTFALL spectral observability new Lean core
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/*.lean'
+      - '.github/workflows/nightfall-spectral-lean-core.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  kernel-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Lean 4.35.0 / Mathlib v4.35.0
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.35.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          git clone --depth 1 --branch v4.35.0 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4
+          (cd /tmp/mathlib4 && "$HOME/.elan/bin/lake" exe cache get)
+      - name: Lean certifies signed-proxy identities for all finite categorical alphabets
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/CategoricalSignedProxy.lean \
+            --workspace /tmp/mathlib4 --timeout 480 \
+            --decl Nightfall.Observability.Categorical.signedProxy_mass_one \
+            --decl Nightfall.Observability.Categorical.signedLift_square_sum \
+            --decl Nightfall.Observability.Categorical.signedProxy_l1_sq_bound \
+            --decl Nightfall.Observability.Categorical.signedProxy_l1_bound \
+            --json-out lean-receipts/categorical-signed-proxy.json || {
+              cat lean-receipts/categorical-signed-proxy.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/categorical-signed-proxy.json
+      - name: Lean certifies top-interaction transversal energy transfer
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/TopInteractionCover.lean \
+            --workspace /tmp/mathlib4 --timeout 480 \
+            --decl Nightfall.Observability.TopCover.totalEnergy_split \
+            --decl Nightfall.Observability.TopCover.coverInfluence_eq_sum_coordinates \
+            --decl Nightfall.Observability.TopCover.highEnergy_le_coverInfluence \
+            --decl Nightfall.Observability.TopCover.highEnergy_le_card_mul_max \
+            --decl Nightfall.Observability.TopCover.cubic_top_cover_variance_bound \
+            --json-out lean-receipts/top-interaction-cover.json || {
+              cat lean-receipts/top-interaction-cover.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/top-interaction-cover.json
+      - name: Lean certifies quadratic switching endpoint derivative
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/QuadraticEndpointMarkov.lean \
+            --workspace /tmp/mathlib4 --timeout 480 \
+            --decl Nightfall.Observability.Switching.quadratic_three_point_endpoint \
+            --decl Nightfall.Observability.Switching.quadratic_endpoint_markov \
+            --json-out lean-receipts/quadratic-endpoint-markov.json || {
+              cat lean-receipts/quadratic-endpoint-markov.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/quadratic-endpoint-markov.json
+      - name: Lean certifies sharp sorted-tail nonadaptive observation calculus
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/SortedInfluenceTail.lean \
+            --workspace /tmp/mathlib4 --timeout 480 \
+            --decl Nightfall.Observability.SortedTail.tail_sq_four_card_bound \
+            --decl Nightfall.Observability.SortedTail.tail_sq_bound \
+            --json-out lean-receipts/sorted-influence-tail.json || {
+              cat lean-receipts/sorted-influence-tail.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/sorted-influence-tail.json
+      - name: Preserve exact sources and Mathlib commit
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/observability/CategoricalSignedProxy.lean research/nightfall/formalization/observability/TopInteractionCover.lean research/nightfall/formalization/observability/QuadraticEndpointMarkov.lean research/nightfall/formalization/observability/SortedInfluenceTail.lean > lean-receipts/SHA256SUMS
+          git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt 2>/dev/null || true
+          echo leanprover/lean4:v4.35.0 > lean-receipts/lean-version.txt
+      - name: Archive formal-claim receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: spectral-observability-new-lean-core
+          path: lean-receipts/
+          if-no-files-found: warn
+          retention-days: 45

@@ -1,0 +1,65 @@
+name: NIGHTFALL universal adaptive budget Lean kernel check
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-universal-spectral-observability/AdaptiveBudget.lean'
+      - '.github/workflows/nightfall-universal-budget-kernel.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/2026-11-universal-spectral-observability/AdaptiveBudget.lean'
+      - '.github/workflows/nightfall-universal-budget-kernel.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  adaptive-budget-kernel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Lean and Mathlib 4.35.0
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.35.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          git clone --depth 1 --branch v4.35.0 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4
+          (cd /tmp/mathlib4 && "$HOME/.elan/bin/lake" exe cache get)
+      - name: Compile all five universal budget lemmas with pinned toolchain and axiom receipts
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.Universal
+          python3 scripts/lean_bridge.py \
+            research/nightfall/2026-11-universal-spectral-observability/AdaptiveBudget.lean \
+            --workspace /tmp/mathlib4 --timeout 480 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.energy_le_potential \
+            --decl $N.potential_le_degree_variance \
+            --decl $N.energy_sandwich \
+            --decl $N.unit_drift_telescopes \
+            --decl $N.budget_forces_target \
+            --json-out lean-receipts/universal-adaptive-budget.json || {
+              cat lean-receipts/universal-adaptive-budget.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/universal-adaptive-budget.json
+      - name: Preserve hashes and Mathlib commit
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/2026-11-universal-spectral-observability/AdaptiveBudget.lean > lean-receipts/SHA256SUMS
+          echo leanprover/lean4:v4.35.0 > lean-receipts/lean-version.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt 2>/dev/null || true
+      - name: Upload compiler and axiom receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: universal-adaptive-budget-lean-receipts
+          path: lean-receipts/
+          if-no-files-found: warn
+          retention-days: 45

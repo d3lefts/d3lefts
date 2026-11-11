@@ -26,16 +26,16 @@ function apply(value){
   const button=document.querySelector(".nf-theme-toggle");
   if(button){
     const active=current===DUSK;
-    // Consistent destinations on every route. aria-pressed continues to
-    // represent the active New Moon atmosphere; accessible copy names both.
+    // On the two entrances this navigates between research roles. On shared
+    // pages it only changes palette; evidence status never changes.
     button.setAttribute("aria-pressed",String(active));
     const onHome=experience==="archive"||experience==="moon";
     button.setAttribute("aria-label",active
-      ?onHome?"New Moon is active. Open NULL FIELD — Deep Space archive homepage.":"New Moon is active. Apply NULL FIELD — Deep Space palette to this research page."
-      :onHome?"NULL FIELD is active. Open NEW MOON — Warm Night investigations homepage.":"NULL FIELD is active. Apply NEW MOON — Warm Night palette to this research page.");
+      ?onHome?"NEW MOON is active. Open NULL FIELD — Active research homepage.":"Warm Night palette is active. Switch to Deep Space palette on this page."
+      :onHome?"NULL FIELD is active. Open NEW MOON — Archived research homepage.":"Deep Space palette is active. Switch to Warm Night palette on this page.");
     button.title=active
-      ?onHome?"Open NULL FIELD / Research archive":"Use NULL FIELD palette · stay on this page"
-      :onHome?"Open NEW MOON / Investigations":"Use NEW MOON palette · stay on this page";
+      ?onHome?"Open NULL FIELD / Active research":"Use Deep Space palette · stay on this page"
+      :onHome?"Open NEW MOON / Archived research":"Use Warm Night palette · stay on this page";
     button.querySelector(".nf-theme-symbol").textContent=active?"✧":"☾";
     button.querySelector(".nf-theme-word").textContent=active?"NULL FIELD":"NEW MOON";
   }

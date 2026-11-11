@@ -4,6 +4,14 @@ NIGHTFALL welcomes exact reproductions, proof criticism, source corrections, res
 
 Research is directed by Devin J. Wright and is substantially AI-assisted. Internal model agreement is not independent external peer review. A passing test certifies only its stated scope.
 
+## Scholarly source-of-truth protocol
+
+Use the [paper shelf](papers/README.md) and [canonical claim catalogue](research/catalogue/CLAIMS.json) before introducing a new named mathematical result. A paper entry is an editorial **pointer to the original theorem**; do not copy formal declarations or replace historical source files in order to improve navigation.
+
+For a new scholarly claim, supply a unique stable ID; quantified primary source; explicit imported premises; local source and checker paths; separate validity, source completeness, external-review and originality fields; and concrete proof/priority stop rules. Register dependencies in the catalogue without promoting a conditional deduction merely because its supporting checker passed. A material counterexample or source correction must demote dependent claims and preserve the earlier version with its reason.
+
+Run `python3 scripts/check_research_archive.py --self-test` in addition to source-specific mathematical checks. The new workflow tests **archive metadata and dependency integrity only**; it is not a proof assistant. Changes to the journal release status, licensing, or public frozen evidence require explicit owner review.
+
 ## Choose the right contribution
 
 | Contribution | What to provide |
@@ -33,6 +41,7 @@ From the repository root:
 
 ```bash
 python3 scripts/test_repository_docs.py
+python3 scripts/check_research_archive.py --self-test
 python3 scripts/check_site.py
 node scripts/test_proof_passport_batch.cjs
 ```
