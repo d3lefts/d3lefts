@@ -21,7 +21,9 @@ open Nightfall.Observability.QuadraticHilbertMoments
 variable {α K : Type*} [Fintype α] [Fintype K]
 
 /-- The first n independent coordinates, represented without a Fin-index cast. -/
-def Samples (α : Type*) : ℕ → Type*
+universe u
+
+def Samples (α : Type u) : ℕ → Type u
   | 0 => PUnit
   | n + 1 => Samples α n × α
 
@@ -54,7 +56,7 @@ theorem expectation_succ (p : ℕ → α → ℝ) (n : ℕ)
 theorem mass_nonneg (p : ℕ → α → ℝ)
     (hp : ∀ n a, 0 ≤ p n a) (n : ℕ) (w : Samples α n) :
     0 ≤ mass p n w := by
-  induction n generalizing w with
+  induction n with
   | zero =>
       cases w
       norm_num [mass]
@@ -87,16 +89,17 @@ theorem joint_center_add
     (hV : ∀ k, (∑ b : B, q b * V b k) = 0)
     (k : K) :
     jointAvg p q (fun a b => U a k + V b k) = 0 := by
-  have hh :
-      jointAvg p q (fun a b => U a k + V b k) =
-        jointAvg p q (fun a b => U a k * 1) +
-          jointAvg p q (fun a b => 1 * V b k) := by
-    rw [jointAvg_add]
-    congr 1 <;> (unfold jointAvg; apply Finset.sum_congr rfl;
-      intro a _; apply Finset.sum_congr rfl; intro b _; ring)
-  rw [hh, jointAvg_factor, jointAvg_factor]
-  simp only [mul_one, one_mul]
-  rw [hU k, hV k, hp1, hq1]
+  have hleft :
+      jointAvg p q (fun a b => U a k) =
+        (∑ a : A, p a * U a k) * (∑ b : B, q b) := by
+    simpa only [mul_one] using
+      (jointAvg_factor p q (fun a => U a k) (fun _ : B => 1))
+  have hright :
+      jointAvg p q (fun a b => V b k) =
+        (∑ a : A, p a) * (∑ b : B, q b * V b k) := by
+    simpa only [one_mul, mul_one] using
+      (jointAvg_factor p q (fun _ : A => 1) (fun b => V b k))
+  rw [jointAvg_add, hleft, hright, hU k, hV k, hp1, hq1]
   ring
 
 /-- The exact second moment of the sum of two independent centered
@@ -129,7 +132,7 @@ theorem independent_two_second
   have hb : jointAvg p q (fun _ b => vecNormSq (V b)) =
       ∑ b : B, q b * vecNormSq (V b) := by
     have h := jointAvg_factor p q (fun _ : A => 1) (fun b => vecNormSq (V b))
-    simpa only [one_mul, hp1] using h
+    simpa only [one_mul, mul_one, hp1] using h
   have heq :
       jointAvg p q (fun a b => vecNormSq (fun k => U a k + V b k)) =
         jointAvg p q (fun a b =>
@@ -140,7 +143,8 @@ theorem independent_two_second
     intro a _
     apply Finset.sum_congr rfl
     intro b _
-    rw [vec_normSq_add]
+    simpa only using congrArg (fun t : ℝ => p a * q b * t)
+      (vec_normSq_add (U a) (V b))
   rw [heq, jointAvg_add, jointAvg_add, jointAvg_smul, ha, hb, hx]
   ring
 
