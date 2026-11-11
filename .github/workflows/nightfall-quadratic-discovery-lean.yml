@@ -5,6 +5,7 @@ on:
       - 'research/nightfall/formalization/observability/QuadraticDiscoveryCore.lean'
       - 'research/nightfall/formalization/observability/ArbitraryLawFourthMoment.lean'
       - 'research/nightfall/formalization/observability/HilbertTwoIncrementMoment.lean'
+      - 'research/nightfall/formalization/observability/check_hilbert_many_exact.py'
       - 'research/nightfall/formalization/observability/QUADRATIC_DISCOVERY_PROOF_PASSPORT.md'
       - '.github/workflows/nightfall-quadratic-discovery-lean.yml'
   workflow_dispatch:
@@ -93,12 +94,17 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/hilbert-two-increment.json
+      - name: Independent exact rational many-increment Hilbert falsification audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/formalization/observability/check_hilbert_many_exact.py | tee lean-receipts/hilbert-many-exact-check.log
       - name: Preserve pins and source checksums
         if: always()
         shell: bash
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/observability/QuadraticDiscoveryCore.lean research/nightfall/formalization/observability/ArbitraryLawFourthMoment.lean research/nightfall/formalization/observability/HilbertTwoIncrementMoment.lean > lean-receipts/SHA256SUMS
+          sha256sum research/nightfall/formalization/observability/QuadraticDiscoveryCore.lean research/nightfall/formalization/observability/ArbitraryLawFourthMoment.lean research/nightfall/formalization/observability/HilbertTwoIncrementMoment.lean research/nightfall/formalization/observability/check_hilbert_many_exact.py > lean-receipts/SHA256SUMS
           git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt 2>/dev/null || true
           echo leanprover/lean4:v4.35.0 > lean-receipts/lean-version.txt
           git rev-parse HEAD > lean-receipts/repository-commit.txt
