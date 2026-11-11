@@ -28,7 +28,7 @@ variable {ι α : Type} [Fintype ι] [DecidableEq ι]
 
 /-- Genuine squared scalar replacement difference on two product draws.
 The one-half factor makes the expectation equal E|f-E_j f|². -/
-def scalarEdgeSq (f : (ι → α) → ℝ)
+noncomputable def scalarEdgeSq (f : (ι → α) → ℝ)
     (j : ι) (z : PairSample ι α) : ℝ :=
   (f z.1 - f (replaceFromSecond z j)) ^ 2 / 2
 
@@ -63,7 +63,7 @@ theorem scalar_actual_posterior_total_mean
 
 /-- The actual squared Euclidean replacement norm for arbitrary output rank.
 Finite-dimensional real Hilbert outputs are represented by their components. -/
-def vectorEdgeSq {κ : Type} [Fintype κ]
+noncomputable def vectorEdgeSq {κ : Type} [Fintype κ]
     (F : (ι → α) → κ → ℝ) (j : ι) (z : PairSample ι α) : ℝ :=
   (∑ t : κ, (F z.1 t - F (replaceFromSecond z j) t) ^ 2) / 2
 
