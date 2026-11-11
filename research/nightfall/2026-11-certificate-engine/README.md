@@ -4,8 +4,8 @@
 
 - `Wright_Certificate_Engine_v2.pdf` / `.tex`: 18-page manuscript, 10 Nov 2026.
 - `checks/`: finite counterexample searches and exact recomputations (Python 3, NumPy, SciPy).
-- [Certification update](CERTIFICATION_UPDATE_20261110.md): frozen original audit and subsequent merge reconciliation for #295, #297, #298, #299 and #300, all incorporated into `main` on 10 November 2026. The formalized finite core is now directly in the repository.
-- [Cross-session PR/evidence registry](../PR_RECONCILIATION_20261110.md): merged #306, #309, #310 and #312, candidate finite-palette observability #313, witness-rank project #311 and listed uncommitted evidence packages. **The current theorem status is not equivalent to a manuscript publication clearance.**
+- [Certification update](CERTIFICATION_UPDATE_20261110.md): original proof ledger, dated merge updates, current finite-proof scope and quantum caveat.
+- [Full PR snapshot](../PR_RECONCILIATION_20261110.md): open research branches, explicit verification limitations and missing artifacts, frozen on 10 November 2026.
 
 ## Claims and their status
 
@@ -14,10 +14,10 @@
 | All-pairs inequality on finite products (Thm 1.2) | two-draw transfer from Wright V6 + Turturean Thm 4.3 | **Lean-verified finite core** merged as #295; strict crossing-pair denominator positivity checked |
 | Localized weight removal (Lemma 4.1), localized two-sided inequality + Bhattacharyya form (Thm 1.3) | Claude, NIGHTFALL transfer | abstract weight removal merged #293; **full finite product composition Lean-verified** and merged as #298; overlap-sampler algebra merged as #300 |
 | Total influence from certificate spread (Cor 4.3) | Claude | one-line corollary |
-| Real-function engine on product spaces, median factor H (Thm 1.4) | Turturean Thms 7.6/8.3 + Wright V6 | proof written |
+| Real-function engine on product spaces, median factor H (Thm 1.4) | Turturean Thms 7.6/8.3 + Wright V6 | finite competing-symbol **row-bound input** Lean-checked in merged #310; median/averaging composition still a manuscript-level candidate |
 | Separated-class transport, three median profiles, projected sampling (Sec 6) | ChatGPT draft "Where Influence Lives" | re-derived and checked; exact witness recomputed independently |
 | Level-crossing theorem, exponents (2, 4) for mean crossings (Thm 1.7) | Claude | **finite off-range threshold lemma** Lean-verified and merged as #299; general mean crossing at attained thresholds and degree-cost input remain unformalized |
-| Adaptivity dichotomy (Thm 1.8), influence-greedy vs information-greedy (Prop 10.2) | Claude, using ChatGPT draft "Adaptive Observation" | written candidate; generic overlap-sampler and recurrence Lean-verified and merged as #300; **posterior policy and total ANOVA-influence identity not jointly formalized** |
+| Adaptivity dichotomy (Thm 1.8), influence-greedy vs information-greedy (Prop 10.2) | Claude, using ChatGPT draft "Adaptive Observation" | finite posterior and Markov lemmas merged #303, #307; concrete sampler/one-step gain merged #304, #308, #309, #312; **full state-to-policy MSE theorem remains unformalized** |
 | Aaronson–Ambainis on arbitrary product spaces (Thm 1.5), quantum corollary | Wright V6 constants, reproved | **candidate only:** real-function row cost, median/averaging, arbitrary measurable products and quantum reduction remain outside Lean; original query exponents require reconciliation below |
 
 ## Quantum-query correction (10 November)
@@ -44,6 +44,6 @@ pdflatex Wright_Certificate_Engine_v2.tex && pdflatex Wright_Certificate_Engine_
 
 1. Turturean's question: max_j I_j(f) ≥ c Var(f)²/K² for real f. Thm 1.7 gives this for crossing probabilities; Remark 7.1 isolates the missing jump-size lemma.
 2. Localization for the unprojected median profiles of f.
-3. Formalization: #293 and #298 certify the finite localized/two-sided core, and **#310 now certifies the finite competing-symbol Chebyshev row bound** in a monomial-support degree representation. The **remaining** gates are the explicit equivalence with Hoeffding/ANOVA degree, integrated third-moment/median/averaging chain, the level-tie case, arbitrary measurable products, and the full quantum corollary.
+3. Formalization: weighted reciprocal transfer and localized removal compile on the main branch (#295, #298). The **finite common-alphabet competing-symbol row-cost bound** now compiles in #310. The **remaining** gates are the ANOVA-degree equivalence across representations, integrated third-moment/median/averaging chain, the level-tie case, arbitrary measurable products, and the complete quantum corollary.
 
 Prepared with Claude (Anthropic); Sections 6 and 10 build on drafts prepared with ChatGPT. The author is responsible for all claims.
