@@ -41,12 +41,19 @@ theorem card_remaining_insert (S Q : Finset ι) (i : ι) :
   rw [heq]
   by_cases h : i ∈ S \ Q
   · simp only [if_pos h]
+    have hpos : 0 < (S \ Q).card := Finset.card_pos.mpr ⟨i, h⟩
     have hc : ((S \ Q).erase i).card + 1 = (S \ Q).card := by
       rw [Finset.card_erase_of_mem h]
       omega
     exact_mod_cast hc
   · simp only [if_neg h]
-    rw [Finset.erase_eq_of_not_mem h]
+    have heq0 : (S \ Q).erase i = S \ Q := by
+      ext j
+      by_cases hj : j = i
+      · subst j
+        simp [h]
+      · simp [hj]
+    rw [heq0]
     simp
 
 /-- Exact expected posterior total-influence descent in ANOVA energies.
