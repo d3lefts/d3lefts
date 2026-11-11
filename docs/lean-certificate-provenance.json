@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-provenance-v1",
   "as_of": "2026-11-11",
-  "revision": 2,
-  "scope": "39 .lean files on main at f005704b50c35819ff32c703e1ce5f2f72106fd5; historical source inventory. If source count changes, regenerate and review this manifest.",
-  "source_commit": "f005704b50c35819ff32c703e1ce5f2f72106fd5",
+  "revision": 3,
+  "scope": "43 .lean files on main at c00924b8dc942ae5828df8c5d38a5e2fcd29bdfa (four additional scoped quadratic modules merged 11 November); off-main recovery is separate. Audit the exact theorem types and source whenever the tree changes.",
+  "source_commit": "c00924b8dc942ae5828df8c5d38a5e2fcd29bdfa",
   "policy": "Kernel compilation is validity evidence only. Quarantine means do not claim novelty; it does not invalidate a correctly compiled theorem. Derived transfers are scoped program-specific compositions with open worldwide priority. A distinct finite construction has an exact certificate but still needs prior-art review.",
   "prior_art": [
     {
@@ -38,7 +38,7 @@
     }
   ],
   "counts": {
-    "quarantine": 28,
+    "quarantine": 32,
     "derived_transfer": 10,
     "finite_construction": 1
   },
@@ -84,6 +84,14 @@
       "global_priority": "unverified"
     },
     {
+      "path": "research/nightfall/formalization/observability/ArbitraryLawFourthMoment.lean",
+      "classification": "quarantine",
+      "note": "Classical centered two-independent-increment fourth moment and elementary finite weighted sums; does not prove any full quadratic influence inequality",
+      "passport": null,
+      "ci_run": 43058772711,
+      "global_priority": "unverified"
+    },
+    {
       "path": "research/nightfall/formalization/observability/CategoricalSignedProxy.lean",
       "classification": "quarantine",
       "note": "Finite signed-proxy normalization and Cauchy norm bound; no nonadaptive theorem",
@@ -100,11 +108,27 @@
       "global_priority": "unverified"
     },
     {
+      "path": "research/nightfall/formalization/observability/HilbertTwoIncrementMoment.lean",
+      "classification": "quarantine",
+      "note": "Standard finite-dimensional Hilbert fourth-moment bound for TWO centered independent increments; no arbitrary-family induction or interaction matching",
+      "passport": null,
+      "ci_run": 43058085067,
+      "global_priority": "unverified"
+    },
+    {
       "path": "research/nightfall/formalization/observability/PosteriorRankBudget.lean",
       "classification": "quarantine",
       "note": "Generic finite-kernel flow and weighted telescoping, conditional local drift",
       "passport": "universal-spectral-proof-passport.html",
       "ci_run": 42972560393,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/QuadraticDiscoveryCore.lean",
+      "classification": "quarantine",
+      "note": "Sharp three-point degree-two interpolation, parity identity and conditional 15(1+sqrt(3)) certificate composition; global matching premises NOT constructed",
+      "passport": null,
+      "ci_run": 43058772711,
       "global_priority": "unverified"
     },
     {
@@ -316,6 +340,14 @@
       "global_priority": "unverified"
     },
     {
+      "path": "research/nightfall/formalization/product_space/QuadraticHoeffdingBridge.lean",
+      "classification": "quarantine",
+      "note": "Direct corollary of established and imported finite Hoeffding/Efron-Stein decomposition under actual degree-two hypothesis; not a new influence theorem",
+      "passport": null,
+      "ci_run": 43057281341,
+      "global_priority": "unverified"
+    },
+    {
       "path": "research/nightfall/formalization/product_space/QuarticRademacher.lean",
       "classification": "quarantine",
       "note": "Classical exact independent-sign fourth-moment identity",
@@ -384,5 +416,6 @@
       "passport": "phase-adaptive-branch-proof-passport.html",
       "audit_note": "research/nightfall/formalization/phase_block/ADAPTIVE_BRANCH_EVIDENCE_20261111.md"
     }
-  ]
+  ],
+  "newly_quarantined_source": "PR 359 / merged at 008ccdc5: 4 Lean modules compile scoped routine/implied identities; does not kernel-certify full quadratic arbitrary-law influence or adaptive Hilbert theorem. Runs 43058772711, 43058085067, 43057281341 support named declarations only."
 }

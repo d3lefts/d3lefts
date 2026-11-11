@@ -29,13 +29,14 @@
         "degree ≤2; V=Var(F)>0"
       ],
       "mechanism": "Pair-interaction matching, mixed differences and bounded signed sums, retaining off-matching terms.",
-      "evidence": "Written proof and internal checks in the supplied quadratic source package; no external human referee or end-to-end Lean receipt for this full statement.",
+      "evidence": "Written proof and internal checks in the supplied quadratic source package; no external human referee or end-to-end Lean receipt for this full statement. Merged PR 359 adds scoped kernel-checked finite ANOVA degree-two projection, sharp three-point 7B interpolation, actual two-independent-increment scalar/Hilbert fourth moments and conditional coefficient closure (CI 43058772711, 43058085067 and 43057281341). These identities are classical/elementary supporting lemmas under the formal hypotheses, novelty-quarantined; they do NOT prove the matching construction or full quadratic influence bound.",
       "source": "research/nightfall/observability-publication/PRINCIPAL_PAPER.md",
       "source_detail": "Consolidated editorial paper; original full LaTeX archive is named in README but not reproduced in this checked-in markdown.",
-      "audit": "Independently reproduce the full matching-core argument with original source files and attack the treatment of off-matching interactions.",
+      "audit": "Close global matching parity coupling, actual ANOVA energies and arbitrary finite-family Hilbert fourth-moment induction, then prove the unconditional quadratic theorem in the kernel; independently compare classical matching/Markov/Rosenthal prior art.",
       "limitations": [
         "No general degree-three or all-degree exponent-two theorem",
-        "No priority or external-referee clearance"
+        "No priority or external-referee clearance",
+        "New scoped quadratic Lean modules are valid supporting formalizations, not a Lean certification of the full arbitrary-law quadratic theorem"
       ]
     },
     {
