@@ -127,7 +127,7 @@ theorem exp_chord (t x : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
     Real.exp (t * x) - 1 ≤ t * (Real.exp x - 1) := by
   have hconv : Real.exp (t * x + (1 - t) * 0) ≤
       t * Real.exp x + (1 - t) * Real.exp 0 :=
-    Real.convexOn_exp.2 (Set.mem_univ _) (Set.mem_univ _)
+    convexOn_exp.2 (Set.mem_univ _) (Set.mem_univ _)
       ht0 (by linarith) (by ring)
   simp only [mul_zero, add_zero, Real.exp_zero] at hconv
   nlinarith
