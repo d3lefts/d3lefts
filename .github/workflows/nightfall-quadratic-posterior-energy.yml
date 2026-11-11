@@ -100,6 +100,7 @@ jobs:
             --decl $N.weighted_average_below_some_value \
             --decl $N.centered_rectangle_average \
             --decl $N.exists_rectangle_dominating_value \
+            --decl $N.exists_oriented_rectangle_dominating_abs \
             --json-out lean-receipts/centered-rectangles.json || {
               python3 -c "import json; x=json.load(open('lean-receipts/centered-rectangles.json')); print(x.get('status')); print((x.get('stdout') or '')[:60000])" || true
               exit 1
