@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean'
+      - 'research/nightfall/formalization/product_space/ANOVAPosteriorBridge.lean'
       - 'research/nightfall/2026-11-certificate-engine/CERTIFICATION_UPDATE_20261110.md'
       - 'research/nightfall/formalization/product_space/check_certificate_guided_descent.py'
       - 'research/nightfall/formalization/product_space/check_posterior_adaptive_exact.py'
@@ -98,6 +99,28 @@ jobs:
         run: |
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/two-sided-bridge.json
+      - name: Compile and strictly certify finite ANOVA posterior bridge
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/aa/.lake/build/lib/lean lean-receipts
+          cp research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean /tmp/aa/ProductSpaceTwoSidedBridge.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ProductSpaceTwoSidedBridge.olean ProductSpaceTwoSidedBridge.lean)
+          N=Nightfall.ProductSpace.Observation
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/product_space/ANOVAPosteriorBridge.lean \
+            --workspace /tmp/aa --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.anova_component_erase \
+            --decl $N.anova_posterior_potential_identity \
+            --decl $N.anova_weighted_observation_descent \
+            --json-out lean-receipts/anova-posterior.json || {
+              cat lean-receipts/anova-posterior.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/anova-posterior.json
+          sha256sum research/nightfall/formalization/product_space/{ProductSpaceTwoSidedBridge,ANOVAPosteriorBridge}.lean > lean-receipts/anova-source-sha256.txt
+          git -C /tmp/aa rev-parse HEAD > lean-receipts/anova-upstream-commit.txt
       - name: Upload receipts
         if: always()
         uses: actions/upload-artifact@v4
