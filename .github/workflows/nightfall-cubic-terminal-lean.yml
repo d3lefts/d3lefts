@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/observability/CubicRankOneTerminal.lean'
+      - 'research/nightfall/formalization/observability/RankOneLeafMoment.lean'
       - '.github/workflows/nightfall-cubic-terminal-lean.yml'
   workflow_dispatch:
 permissions:
@@ -39,11 +40,29 @@ jobs:
               exit 1
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/cubic-terminal.json
+      - name: Compile exact finite independent-leaf prerequisite and check named theorem
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/observability/{ArbitraryLawFourthMoment,HilbertTwoIncrementMoment,HilbertManyIncrementMoment}.lean /tmp/mathlib4/
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ArbitraryLawFourthMoment.olean ArbitraryLawFourthMoment.lean)
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/HilbertTwoIncrementMoment.olean HilbertTwoIncrementMoment.lean)
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/HilbertManyIncrementMoment.olean HilbertManyIncrementMoment.lean)
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/RankOneLeafMoment.lean \
+            --workspace /tmp/mathlib4 --timeout 480 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Observability.RankOneLeafMoment.rank_one_leaf_second_moment \
+            --json-out lean-receipts/rank-one-leaf-moment.json || {
+              cat lean-receipts/rank-one-leaf-moment.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/rank-one-leaf-moment.json
       - name: Pin source
         if: always()
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/observability/CubicRankOneTerminal.lean > lean-receipts/SHA256SUMS
+          sha256sum research/nightfall/formalization/observability/{CubicRankOneTerminal,RankOneLeafMoment}.lean > lean-receipts/SHA256SUMS
           echo leanprover/lean4:v4.35.0 > lean-receipts/lean-toolchain.txt
           git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-sha.txt 2>/dev/null || true
           git rev-parse HEAD > lean-receipts/repository-commit.txt
