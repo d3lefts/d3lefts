@@ -1,0 +1,69 @@
+name: NIGHTFALL v8 source custody, exact audit and LaTeX
+on:
+  pull_request:
+    paths:
+      - 'papers/finite-product-influence/**'
+      - 'research/catalogue/**'
+      - '.github/workflows/nightfall-manuscript-v8.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'papers/finite-product-influence/**'
+      - 'research/catalogue/**'
+      - '.github/workflows/nightfall-manuscript-v8.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-source-and-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fail closed on source hash changes
+        run: |
+          set -euo pipefail
+          sha256sum -c papers/finite-product-influence/SOURCE_SHA256SUMS_v8
+      - name: Revalidate claims and provenance archive
+        run: |
+          set -euo pipefail
+          python3 scripts/check_research_archive.py --self-test
+      - name: Exact standalone v8 algebra and model audits
+        run: |
+          set -euo pipefail
+          python3 papers/finite-product-influence/check_v8_exact.py | tee /tmp/v8-exact.log
+          grep -q '^PASS v8_exact_models=225$' /tmp/v8-exact.log
+          grep -q '^PASS fixed_budget_spectral_regime=225$' /tmp/v8-exact.log
+          grep -q '^PASS binary_Grothendieck_polarization=1620$' /tmp/v8-exact.log
+          grep -q '^PASS integer_interval_optimized_constants$' /tmp/v8-exact.log
+          grep -q '^audit_sha256=a3f067713ce7f87beb67accd506bbf610adeca2db1a84645f4a8806c4473cd5e$' /tmp/v8-exact.log
+      - name: Exact inherited posterior and rank lower-bound audits
+        run: |
+          set -euo pipefail
+          python3 papers/finite-product-influence/check_rank_posterior_exact.py | tee /tmp/v7-posterior.log
+          grep -q '^PASS exact_heterogeneous_posterior_reveal_cases=1638$' /tmp/v7-posterior.log
+          grep -q '^PASS exact_rank_lower_bound_cases=384$' /tmp/v7-posterior.log
+          grep -q '^audit_sha256=5fc2d5221f4a27ad606beb948c27f278b4645761ac6b3bbeac4df0850703454b$' /tmp/v7-posterior.log
+      - name: Install TeXLive and PDF utilities
+        run: |
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq latexmk texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended poppler-utils
+      - name: Compile full v8 manuscript, check citations and page text
+        working-directory: papers/finite-product-influence
+        run: |
+          set -euo pipefail
+          latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error Bias_Free_Aaronson_Ambainis_All_Product_Spaces_v8.tex
+          pdfinfo Bias_Free_Aaronson_Ambainis_All_Product_Spaces_v8.pdf | grep -q 'Pages:'
+          pdftotext Bias_Free_Aaronson_Ambainis_All_Product_Spaces_v8.pdf /tmp/v8-readback.txt
+          grep -q 'Rank-optimal adaptive observation' /tmp/v8-readback.txt
+          grep -q 'Grothendieck' /tmp/v8-readback.txt
+          grep -q 'Turturean' /tmp/v8-readback.txt
+          if grep -E 'LaTeX Warning: (There were undefined references|Citation .* undefined|Reference .* undefined)' Bias_Free_Aaronson_Ambainis_All_Product_Spaces_v8.log; then
+            echo 'Unresolved references'; exit 1
+          fi
+      - name: Upload manuscript (not a theorem certificate)
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-v8-referee-manuscript
+          path: papers/finite-product-influence/Bias_Free_Aaronson_Ambainis_All_Product_Spaces_v8.pdf
+          retention-days: 30
