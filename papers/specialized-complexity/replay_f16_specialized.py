@@ -120,7 +120,7 @@ receipt={
 receipt["certificate_sha256"]=hashlib.sha256(json.dumps(receipt,sort_keys=True,separators=(',',':')).encode()).hexdigest()
 with open("replay_f16_receipt.json","w") as f:
     json.dump(receipt,f,indent=2,sort_keys=True)
-    f.write("\\n")
+    f.write(chr(10))
 with open("replay_f16_receipt.json",encoding="utf-8") as f:
     saved=json.load(f)
 saved_hash=saved.pop("certificate_sha256")
