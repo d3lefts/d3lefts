@@ -1,8 +1,8 @@
 {
   "schema": "nightfall-active-proof-passports-v1",
-  "version": 5,
+  "version": 6,
   "as_of": "2026-11-11",
-  "updated_by": "2026-11-11 source recovery: main 39-file audit plus one separately scoped closed/unmerged adaptive F16 certificate; no claim-count or novelty upgrade",
+  "updated_by": "2026-11-11 source-matched Kaczmarz theorem audit: unscaled ||A||_F^2/epsilon^2 comparator, classical-method attribution and separately replayable exhaustive exact check; no originality promotion",
   "frozen_historical_registry_unchanged": true,
   "lifecycle": "active",
   "scientific_status": "Twelve active claim checkpoints; 39 Lean modules assigned an independent originality classification (28 quarantined inherited/routine, 10 dependent transfer, one source-specific finite construction). Frozen historical eleven and approved findings unchanged.",
@@ -108,22 +108,22 @@
       "id": "kaczmarz-logfree",
       "title": "Log-free Kaczmarz best-iterate projection bound",
       "status": "written-proof-exact-check-replay-priority-open",
-      "claim": "For every consistent real Ax*=b and K>=1, max-normalized-residual greedy Kaczmarz satisfies min_{0<=t<K} ||Ay_t-b|| <= ||A||_F ||y_0-x*||/sqrt(K); consequently K<=ceil(n/epsilon^2) for delta=epsilon||A||op. This is a successful-prefix-iterate existence result.",
+      "claim": "For consistent real Ax=b and epsilon>0, max-normalized-residual greedy row projections produce an iterate in k<=ceil(||A||_F^2/epsilon^2)-1 steps satisfying ||Ay_k-b||<=epsilon||y0-x|| and ||y_k-x||<=||y0-x||; unscaled source-matched theorem to Steinerberger Theorem 1. General best-prefix inequality min_{t<K}||Ay_t-b||<=||A||_F||y0-x||/sqrt(K). Abstract scaled case yields k<=ceil(n/epsilon^2)-1.",
       "assumptions": [
         "consistent real linear system with A nonzero, zero rows skipped",
         "each iteration chooses a row with maximal squared normalized residual",
         "orthogonal projections; one selected iterate among the first K, not necessarily the final iterate"
       ],
       "mechanism": "Projection Pythagoras gives a per-step decrease; max normalized residual dominates its row-norm weighted average; telescoping bounds the sum of squared residuals, so one prefix iterate meets the threshold.",
-      "evidence": "Written complete elementary argument; 240 exact-rational consistent systems with 12 greedy steps each (2,880 total steps), 1D sharpness control; finite checker CI and site checks track reproducibility, not global proof certification.",
+      "evidence": "Elementary complete analytical Pythagorean/weighted-maximum/telescoping proof, exact seeded checker 240 systems x12=2,880 updates, plus independent exhaustive 6,552 small systems x8=52,416 exact-rational updates; tests do not prove novelty.",
       "source": "research/nightfall/2026-11-kaczmarz-logfree/PROOF_PASSPORT.md",
-      "source_detail": "Proof, scope and provenance in same folder PROOF.md; exact checker exact_audit.py. Chat proof packet SHA-256 0245feee6e886cbfff2eb717d33ecbf8dd1d8bc8efc055713bd4ba64325a5587.",
+      "source_detail": "Revision 1.1 source-matched unscaled Theorem 1 proof PROOF.md; exact_audit.py plus independent_exhaustive_audit.py. Historical checkpoint c3e4806e remains original provenance, newer revision is traceable in Git history.",
       "source_checkpoint": "c3e4806e4c0e266785a19f99bc0a4748d533d439",
-      "audit": "Independent mathematical proof review and exhaustive dated priority search in earlier greedy-Kaczmarz work; ask problem author to confirm interpretation and novelty before any publication.",
+      "audit": "Independent non-author proof review and dated source-to-source priority study, especially 1954 relaxation, Strohmer-Vershynin, Nutini 2016 and Steinerberger 2022/2023; no author correspondence is planned.",
       "limitations": [
-        "Classical maximum-distance Kaczmarz selection and energy identity are credited; global novelty is unverified",
-        "No fixed-final-iterate high-probability guarantee or end-to-end row-selection runtime claim",
-        "No independent human referee or Lean formalization, and no historical Original Finding promotion"
+        "Classical greedy maximum-distance projection and energy identity are credited; log-free corollary may be implicit in earlier literature and global originality is unverified",
+        "No high-probability fixed-time unstopped randomized iterate or end-to-end row-selection runtime claim",
+        "No independent human referee or Lean formalization and no historical Original Finding promotion"
       ]
     },
     {

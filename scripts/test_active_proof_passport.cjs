@@ -12,7 +12,7 @@ const site=read("docs/site.js");
 const core=read("docs/erdos-paper-core.js");
 const art=read("docs/media/overlap-16cell-fixture.svg");
 assert.equal(data.schema,"nightfall-active-proof-passports-v1");
-assert.equal(data.version,5);
+assert.equal(data.version,6);
 assert.match(data.as_of,/^2026-11-\d\d$/);
 assert.equal(data.lifecycle,"active");
 assert.equal(data.frozen_historical_registry_unchanged,true);
@@ -51,6 +51,10 @@ const kClaim=data.claims.find(c=>c.id==="kaczmarz-logfree");
 assert.ok(kClaim&&kClaim.source_checkpoint==="c3e4806e4c0e266785a19f99bc0a4748d533d439");
 assert.ok(kClaim.status.includes("priority-open"));
 assert.ok(kPage.includes("K−1")||kPage.includes("K-1"));
+assert.ok(kPage.includes("unscaled Theorem 1")&&kPage.includes("52,416"),"Source-matched theorem and independent replay must be visible");
+assert.ok(kProof.includes("Theorem A")&&kProof.includes("ceil(W / epsilon^2) - 1"),"Unscaled quantified first-hitting proof missing");
+assert.ok(kClaim.claim.includes("ceil(||A||_F^2/epsilon^2)-1")&&kClaim.audit.includes("no author correspondence"),"Source-matched bound or no-contact instruction missing");
+assert.ok(fs.existsSync("research/nightfall/2026-11-kaczmarz-logfree/independent_exhaustive_audit.py"),"Independent checker missing");
 assert.ok(kPage.includes("Independent")&&kPage.includes("Originality")&&kPage.includes("2,880"));
 assert.ok(kPage.includes('href="active-proof-passport.html#kaczmarz-logfree"'));
 assert.ok(kPage.includes('role="math"'));
@@ -114,7 +118,7 @@ assert.ok(cubic.status==="exact-proof-attacks-cubic-open"&&cubic.claim.includes(
 assert.ok(cubic.evidence.includes("#347")&&cubic.evidence.includes("#349"));
 assert.ok(data.claims.find(c=>c.id==="fair-sign-cubic").status.includes("draft-pr"));
 assert.ok(data.claims.find(c=>c.id==="universal-spectral").status.includes("conditional"));
-assert.ok(html.includes("<strong>12</strong>Active claim records")&&html.includes("<strong>v5</strong>"));
+assert.ok(html.includes("<strong>12</strong>Active claim records")&&html.includes("<strong>v6</strong>"));
 assert.ok(read("docs/discovery-system.html").includes("<dt>12</dt><dd>separate active claim passports</dd>"));
 // Finite F16 witness is a new active record but never a globally approved Original Finding.
 const phase=data.claims.find(c=>c.id==="phase-block");

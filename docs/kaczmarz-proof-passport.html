@@ -27,11 +27,11 @@
 </div></header>
 <main id="main">
 <section class="atlas-hero wrap nf-k-hero" aria-labelledby="nf-k-title">
-<div class="atlas-eyebrow">NULL FIELD / LIVING PROOF PASSPORT / 11 NOVEMBER 2026 / v1.0</div>
+<div class="atlas-eyebrow">NULL FIELD / LIVING PROOF PASSPORT / 11 NOVEMBER 2026 / v1.1</div>
 <h1 id="nf-k-title">One logarithm.<br><em>One exact telescope.</em></h1>
 <div class="atlas-hero-bottom">
-<p>A log-free upper bound on the number of orthogonal row-hyperplane projections needed to find <em>some</em> sufficiently accurate iterate. The written proof is elementary. The choice rule is classical. Originality and independent mathematical review remain open.</p>
-<div class="atlas-hero-metrics"><span><strong>O(n/ε²)</strong>Existential projection count</span><span><strong>2,880</strong>Exact-rational checked steps</span><span><strong>OPEN</strong>External proof / priority gates</span></div>
+<p>An elementary, source-matched log-free bound for the original unscaled residual criterion in Steinerberger's Theorem 1: the number of orthogonal row-hyperplane projections needed to find <em>some</em> sufficiently accurate iterate. The written proof is elementary. The choice rule is classical. Originality and independent mathematical review remain open.</p>
+<div class="atlas-hero-metrics"><span><strong>⌈‖A‖²F/ε²⌉−1</strong>Source-matched projection count</span><span><strong>2,880</strong>Exact-rational checked steps</span><span><strong>OPEN</strong>External proof / priority gates</span></div>
 </div>
 </section>
 <section class="wrap nf-k-status" aria-label="Scientific status">
@@ -44,9 +44,9 @@
 <div class="nf-active-claim-header"><h2 id="statement-title">01 · Exact statement</h2><span class="nf-claim-status">BEST ITERATE / CONSISTENT LINEAR SYSTEM</span></div>
 <p>For a consistent real system <code>Ax* = b</code>, start from <code>y₀</code>. At each step project onto the row hyperplane whose normalized residual <code>|⟨aᵢ,yₜ⟩−bᵢ|² / ||aᵢ||²</code> is largest. Ignoring zero rows, after constructing <code>K ≥ 1</code> iterates including <code>y₀</code>, the following holds:</p>
 <div class="nf-k-formula" role="math" aria-label="Minimum residual over zero through K minus one at most Frobenius norm times initial error divided by square root of K">min<sub>0 ≤ t &lt; K</sub> ‖Ay<sub>t</sub> − b‖₂ ≤ (‖A‖<sub>F</sub> / √K) ‖y₀ − x*‖₂</div>
-<p>Taking <code>K = ⌈‖A‖²F / δ²⌉</code> yields an iterate with residual at most <code>δ‖y₀−x*‖</code>, using at most <code>K−1</code> projections. For <code>δ = ε‖A‖op</code> and <code>n</code> columns:</p>
+<p><strong>Steinerberger's unscaled Theorem 1 target:</strong> Set <code>K = ⌈‖A‖²F / ε²⌉</code>. A qualifying iterate appears with <strong>at most K−1 projections</strong> and satisfies <code>‖Ay−b‖₂ ≤ ε‖y₀−x*‖₂</code> and <code>‖y−x*‖₂ ≤ ‖y₀−x*‖₂</code>. This matches Theorem 1, not merely its abstract. For the abstract's scaled target <code>ε‖A‖op‖x*‖</code> from <code>y₀=0</code>, use <code>‖A‖²F ≤ n‖A‖²op</code>:</p>
 <div class="nf-k-formula" role="math" aria-label="Number of candidate iterates K at most ceiling n over epsilon squared">K ≤ ⌈n / ε²⌉</div>
-<p>In the original square invertible setting with <code>y₀=0</code>, this removes the logarithm from the published existential projection-count estimate; <code>‖y‖≤2‖x*‖</code> follows from projection stability. The original question is in Steinerberger's <a href="https://faculty.washington.edu/steinerb/openproblems.pdf" target="_blank" rel="noopener">March 2026 problem list</a>, under “Approximate Solutions of Linear Systems.”</p>
+<p>For the source-matched, unscaled residual threshold, Steinerberger's published Theorem 1 states <code>k ≤ 2 log(‖A‖op/ε) ‖A‖²F / ε²</code>. The displayed bound removes that logarithm in the same existential projection-count model. For the square invertible case with <code>y₀=0</code>, <code>‖y‖≤2‖x*‖</code> follows from stability. The original question is in Steinerberger's <a href="https://faculty.washington.edu/steinerb/openproblems.pdf" target="_blank" rel="noopener">March 2026 problem list</a>, under “Approximate Solutions of Linear Systems.”</p>
 </article>
 <article id="mechanism" class="nf-active-claim" aria-labelledby="mechanism-title">
 <div class="nf-active-claim-header"><h2 id="mechanism-title">02 · The proof mechanism</h2><span class="nf-claim-status">ANALYTIC / NO APPROXIMATIONS</span></div>
@@ -55,14 +55,15 @@
 = max<sub>i</sub> |(r<sub>t</sub>)<sub>i</sub>|² / ‖a<sub>i</sub>‖²
 ≥ ‖r<sub>t</sub>‖² / W</div>
 <p>Sum over <code>t=0,…,K−1</code>. The left side telescopes and is bounded by <code>‖e₀‖²</code>. Consequently <code>Σₜ‖rₜ‖² ≤ W‖e₀‖²</code>; one of the <code>K</code> terms is no larger than their average. No condition number, unobserved solution, or minimum singular value enters row selection.</p>
+<p><strong>First-hit certificate:</strong> If all of the first <code>K</code> iterates had residual greater than <code>ε‖e₀‖</code>, the summed drops would exceed <code>Kε²‖e₀‖²/W ≥ ‖e₀‖²</code>, contradicting nonnegative squared error. Stopping at the first qualifying iterate makes it the final iterate of the stopped, adaptive sequence. This does not give a fixed-time guarantee for an <em>unstopped randomized</em> run.</p>
 <p>The companion stopping-time argument obtains <code>Eτ ≤ ‖A‖²F / δ²</code> for the original randomized row-norm sampling when <code>τ</code> is the <em>first successful residual</em>. It is not a fixed-time tail bound.</p>
 </article>
 <article id="evidence" class="nf-active-claim" aria-labelledby="evidence-title">
 <div class="nf-active-claim-header"><h2 id="evidence-title">03 · Evidence dimensions</h2><span class="nf-claim-status">SEPARATE GATES / NO AUTOMATIC PROMOTION</span></div>
 <dl class="nf-claim-grid">
 <div><dt>Validity</dt><dd>Exact written proof via Pythagoras, weighted maximum and telescoping; zero-row, consistency and initial-error edge cases stated. Independent human mathematical referee review is not complete.</dd></div>
-<div><dt>Reproducibility</dt><dd>Python 3 standard-library rational checker; 240 systems and 12 greedy steps each (2,880 updates), plus a coefficient-sharpness negative control. Finite tests are not a proof of generality.</dd></div>
-<div><dt>Originality</dt><dd>Open. Maximum-distance Kaczmarz and the energy decrement are classical. The March 2026 problem list is evidence of a listed question, <em>not</em> proof that this corollary was previously unknown.</dd></div>
+<div><dt>Reproducibility</dt><dd>Python 3 exact-rational checks: 240 seeded systems × 12 steps (2,880 updates), plus a distinct exhaustive 6,552-case, 52,416-step two-column checker. Finite checks test algebra, not novelty or universal truth.</dd></div>
+<div><dt>Originality</dt><dd>Not established. Maximal-violation relaxation goes back to Agmon and Motzkin–Schoenberg (1954); maximum-distance Kaczmarz and energy descent are classical. This exact corollary may be implicit in earlier analyses. A listed question is not proof of historical novelty.</dd></div>
 <div><dt>Significance</dt><dd>Log-free existential number of projections for a best-prefix iterate. No claim about number of arithmetic operations, free row selection, the final iterate of a fixed randomized run, or the inconsistent-system model.</dd></div>
 </dl>
 <div class="nf-claim-links"><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-kaczmarz-logfree/PROOF.md" target="_blank" rel="noopener">Full proof ↗</a><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-kaczmarz-logfree/PROOF_PASSPORT.md" target="_blank" rel="noopener">Machine-auditable proof passport source ↗</a></div>
@@ -73,7 +74,7 @@
 <div><span>01</span><strong>Published projection method</strong><p>Orthogonal row projections and the randomized Kaczmarz energy identity.</p></div>
 <div><span>02</span><strong>Classical greedy rule</strong><p>Select the largest normalized row discrepancy; weighted averaging makes its energy decrement explicit.</p></div>
 <div><span>03</span><strong>Log-free prefix certificate</strong><p>Telescope squared error and bound the average residual over the prefix.</p></div>
-<div><span>04</span><strong>External gates still open</strong><p>Independent mathematical referee; complete dated priority study; optional confirmation by problem author.</p></div>
+<div><span>04</span><strong>External gates still open</strong><p>Independent mathematical referee and complete dated historical-priority study. No correspondence planned.</p></div>
 </div>
 <p><a href="https://arxiv.org/abs/2207.03388" target="_blank" rel="noopener">Steinerberger, SIAM J. Matrix Anal. Appl. 2023 ↗</a> · <a href="https://www.cs.ubc.ca/~schmidtm/Documents/2016_UAI_greedyKaczmarz.pdf" target="_blank" rel="noopener">Nutini et al., UAI 2016 ↗</a>. These are upstream dependencies, not NIGHTFALL findings.</p>
 </article>
@@ -81,12 +82,12 @@
 <div class="nf-active-claim-header"><h2 id="review-title">05 · Replay and independent criticism</h2><span class="nf-claim-status">OPEN REVIEW OBLIGATIONS</span></div>
 <p>Run the exact rational checker directly from the repository root:</p>
 <pre class="nf-k-command"><code>python3 research/nightfall/2026-11-kaczmarz-logfree/exact_audit.py</code></pre>
-<p>The decisive next step is not another numerical optimization. It is an independent mathematical rederivation and priority search of earlier greedy-Kaczmarz literature. A published precedent would demote the novelty claim, without invalidating the mathematical argument.</p>
+<p>For an independent exhaustive replay, also run <code>python3 research/nightfall/2026-11-kaczmarz-logfree/independent_exhaustive_audit.py</code>. The decisive next step is not another numerical optimization. It is an independent mathematical rederivation and priority search of earlier greedy-Kaczmarz literature. A published precedent would demote the novelty claim, without invalidating the mathematical argument.</p>
 <p>The claim remains in <b>NULL FIELD · active research</b>. No new archive-class Original Finding or publication clearance is implied.</p>
 <div class="nf-claim-links"><a href="active-proof-passport.html#kaczmarz-logfree">Active passport index ↗</a><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-kaczmarz-logfree/exact_audit.py" target="_blank" rel="noopener">Inspect the checker source ↗</a><a href="review.html">Review standards ↗</a></div>
 </article>
 </div>
 </main>
-<footer class="footer"><div class="wrap footer-bottom"><span>© 2026 Devin J. Wright · NIGHTFALL PHASESHIFT</span><span>PROOF PASSPORT v1.0 / 11 NOV 2026 / ACTIVE</span></div></footer>
+<footer class="footer"><div class="wrap footer-bottom"><span>© 2026 Devin J. Wright · NIGHTFALL PHASESHIFT</span><span>PROOF PASSPORT v1.1 / 11 NOV 2026 / ACTIVE</span></div></footer>
 </body>
 </html>
