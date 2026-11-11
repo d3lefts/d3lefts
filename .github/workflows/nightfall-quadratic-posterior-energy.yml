@@ -122,6 +122,7 @@ jobs:
             --workspace /tmp/mathlib4 --timeout 900 --strict \
             --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
             --decl $N.centered_matching_amplitude_at_points \
+            --decl $N.centered_matching_maximal_amplitude \
             --json-out lean-receipts/centered-global-matching.json || {
               python3 -c "import json; x=json.load(open('lean-receipts/centered-global-matching.json')); print(x.get('status')); print((x.get('stdout') or '')[:60000])" || true
               exit 1
