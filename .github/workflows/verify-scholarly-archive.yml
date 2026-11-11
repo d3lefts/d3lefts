@@ -8,6 +8,7 @@ on:
       - 'papers/**'
       - 'research/**'
       - 'scripts/check_research_archive.py'
+      - 'scripts/check_paper_c_bundle.py'
       - '.github/workflows/verify-scholarly-archive.yml'
   push:
     branches: [main]
@@ -18,12 +19,20 @@ on:
       - 'papers/**'
       - 'research/**'
       - 'scripts/check_research_archive.py'
+      - 'scripts/check_paper_c_bundle.py'
       - '.github/workflows/verify-scholarly-archive.yml'
+  # GitHub Actions bot commits of regenerated Paper C artifacts do not fire push
+  # workflows. Recheck the default-branch outputs whenever the publisher finishes.
+  workflow_run:
+    workflows: ['Build Paper C typeset manuscript and exact archive']
+    types: [completed]
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
   catalogue:
+    # A failed publisher may leave old artifacts; do not certify that run.
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     name: Provenance, sources, and dependency contract
     runs-on: ubuntu-latest
     timeout-minutes: 10
