@@ -10,6 +10,8 @@
 - Locally generated PDF SHA-256: `884a3f59a6108559897e808516b2a87d6c9441403cf35f25f6a69df487aee4f6` (29 pages; no PDF binary committed by this PR).
 - Earlier sources must remain immutable: PR #379/v5 and PR #382/v6. The v6 .tex was reconstructed byte-for-byte from its archived v5 baseline before v7 edits and independently matched the pinned v6 Git blob `0f8c173fe0b5d723d5a65cde972f259e043cf97c`.
 
+**Independent exact finite replay:** `papers/finite-product-influence/check_rank_posterior_exact.py` (Git blob `2321cbeef3a97efb8b1c1df8579ed1d047a1573e`, SHA-256 `710c5c74110889c611a2bd5a7bb1ed3df450038cb4a02a7f41604cd092373428`) checked 1,638 actual heterogeneous-product conditional posterior energy transitions and 384 rank-dependent lower-bound cases using exact rational arithmetic. Digest `5fc2d5221f4a27ad606beb948c27f278b4645761ac6b3bbeac4df0850703454b`. This is a finite falsifier, not an end-to-end proof.
+
 ## One mechanism, not two discoveries
 
 - **PR #335 (merged):** cubic top-degree vertex-cover transfer using averaging over a core and charging removed ANOVA variance to the core influences; dependent on the scalar quadratic theorem.
