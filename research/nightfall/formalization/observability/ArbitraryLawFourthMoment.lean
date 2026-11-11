@@ -130,9 +130,8 @@ theorem independent_centered_two_fourth
   rw [jointAvg_factor, jointAvg_factor, jointAvg_factor,
     jointAvg_factor, hlast]
   -- Normalize the two mass-one factors and kill the odd centered cross terms.
-  have honesA : (∑ a : A, p a * (1 : ℝ)) = 1 := by simpa using hp1
-  have honesB : (∑ b : B, q b * (1 : ℝ)) = 1 := by simpa using hq1
-  rw [honesA, honesB, hY0, hZ0]
+  simp only [mul_one, one_mul]
+  rw [hp1, hq1, hY0, hZ0]
   ring
 
 /-- A fourth-moment self term is controlled by the squared essential
