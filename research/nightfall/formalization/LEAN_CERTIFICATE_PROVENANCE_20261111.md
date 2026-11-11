@@ -1,9 +1,12 @@
 # NIGHTFALL Lean certificate provenance / quarantine — 2026-11-11
 
 ## Decision
-The repo contains 39 Lean source files at main commit `f005704b50c35819ff32c703e1ce5f2f72106fd5`. Classification: **28 quarantine**, **10 scoped dependent transfers**, **1 distinct finite construction**. Frozen historical eleven are unchanged. Site inventory is `docs/lean-certificate-provenance.json`; the accompanying static HTML renders all 39.
+The repo now contains 43 Lean source files after merge commit `008ccdc5e38aadcf39aaf1fd384bb796248606e0` (the original 39-file inventory remains a historical checkpoint). Classification: **32 quarantine**, **10 scoped dependent transfers**, **1 distinct finite construction**. Frozen historical eleven are unchanged. Site inventory is `docs/lean-certificate-provenance.json`; the accompanying static HTML renders all 43.
 
 **Quarantine preserves valid proof code.** A known identity or an explicit-premise reformulation can be correctly kernel-compiled without being a new mathematical result. The cost is mistaken novelty attribution, not Lean soundness. We therefore remove *originality claims*, not source, logs, or checks.
+
+## Scoped quadratic additions (PR #359, 2026-11-11)
+The four added modules are explicitly quarantined from standalone novelty claims: `QuadraticDiscoveryCore.lean` (sharp interpolation and certificate algebra with explicit matching/moment hypotheses), `ArbitraryLawFourthMoment.lean` (genuine two-increment scalar identities), `HilbertTwoIncrementMoment.lean` (genuine two-increment vector inequality), and `QuadraticHoeffdingBridge.lean` (specialization of existing actual-product ANOVA). Their kernel receipts are linked, but **none proves the complete arbitrary-law quadratic influence theorem or rank-sensitive prediction theorem**. The main claim remains open to end-to-end formalization and nonauthor review.
 
 ## Category boundaries
 - Quarantine: Hoeffding/Efron–Stein decomposition and finite conditional expectation; independent-sign moments; Cauchy and sorted tails; Nisan-style packing and certificate complexity; simple phase/odd-cycle arithmetic; abstract posterior drift. Dependencies remain available for proof replay but cannot be counted as independent discoveries.
