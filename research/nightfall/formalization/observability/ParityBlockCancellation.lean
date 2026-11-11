@@ -142,11 +142,11 @@ theorem cross_block_all_sides
           (if sj then rightB j (!(σ j)) else leftB j (σ j))) := by
   cases si <;> cases sj
   · rfl
-  · simpa only [Bool.false_eq_true, Bool.true_eq_true, if_false, if_true] using
+  · simpa using
       (cross_block_left_right leftA rightB F i j hij)
-  · simpa only [Bool.false_eq_true, Bool.true_eq_true, if_false, if_true] using
+  · simpa using
       (cross_block_right_left rightA leftB F i j hij)
-  · simpa only [Bool.false_eq_true, Bool.true_eq_true, if_false, if_true] using
+  · simpa using
       (cross_block_right_right rightA rightB F i j hij)
 
 end Nightfall.Observability.ParityBlocks
