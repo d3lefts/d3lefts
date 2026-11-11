@@ -175,23 +175,27 @@
       "area": "product-space",
       "lifecycle": "active",
       "validity": "analytic-manuscript-unrefereed",
-      "source_status": "public-synopsis-source-missing",
+      "source_status": "public-analytic-manuscript",
       "review": "none-recorded",
       "priority": "unresolved",
-      "primary": "research/nightfall/observability-publication/PRINCIPAL_PAPER.md",
+      "primary": "papers/finite-product-influence/Bias_Free_Aaronson_Ambainis_All_Product_Spaces_v7.tex",
       "evidence": [
+        "papers/finite-product-influence/Rank_Optimal_Observation_Section_v7.tex",
+        "research/nightfall/2026-11-quadratic-rank-optimal/FINITE_SIGN_CLOSURE_v2.md",
         "research/nightfall/observability-publication/SOURCE_ACCESS.md",
         "research/nightfall/formalization/observability/README.md"
       ],
       "dependencies": [],
-      "claim_scope": "Bounded real Hoeffding degree at most two over independent heterogeneous arbitrary alphabets: max resampling influence at least V² / [256(1+sqrt(3))² B²].",
+      "claim_scope": "Analytic (not end-to-end Lean) scalar degree-at-most-two theorem on arbitrary independent product laws: Var(f)^2 <= 225(1+sqrt(3))^2 B^2 sup_i I_i(f), with |f|<=B, and exponent two sharp by disjoint fair-sign pairs. No minimum atom or alphabet size assumptions; original release/priority audit open.",
       "open_gates": [
-        "Publish original full matching/main/queries/categorical LaTeX and checksum manifest",
-        "Non-author audit matching-to-fourth-moment and pointwise cost",
-        "Check equivalence of influence normalizations and dated novelty"
+        "Independent non-author check of actual matching coupling, oscillation budgets, greedy Hilbert fourth moment and finite-to-infinite lift",
+        "Full-chain Lean certification still absent: named 4B/8B/16B and moment declarations are only sublemmas",
+        "Dated scope-matched worldwide prior-art comparison, especially classical bilinear and completely bounded inequalities",
+        "Author sign-off for arXiv submission; manuscript source staging is not publication"
       ],
       "inherited": [
-        "Hoeffding–Efron–Stein framework and prior product influences"
+        "David Turturean: 2026 Boolean cube result (independent all-degree theorem)",
+        "Classical Hoeffding–Efron–Stein, Markov interpolation and Khintchine fourth-moment tools"
       ]
     },
     {
@@ -200,12 +204,14 @@
       "area": "observability",
       "lifecycle": "active",
       "validity": "conditional-on-open-premise",
-      "source_status": "public-synopsis-source-missing",
+      "source_status": "public-analytic-manuscript",
       "review": "none-recorded",
       "priority": "unresolved",
-      "primary": "research/nightfall/observability-publication/PRINCIPAL_PAPER.md",
+      "primary": "papers/finite-product-influence/Bias_Free_Aaronson_Ambainis_All_Product_Spaces_v7.tex",
       "evidence": [
-        "research/nightfall/observability-publication/SOURCE_ACCESS.md",
+        "papers/finite-product-influence/Rank_Optimal_Observation_Introduction_v7.tex",
+        "papers/finite-product-influence/Rank_Optimal_Observation_Section_v7.tex",
+        "research/nightfall/2026-11-quadratic-rank-optimal/FINITE_SIGN_CLOSURE_v2.md",
         "research/nightfall/2026-11-spectral-observability/README.md"
       ],
       "dependencies": [
@@ -214,12 +220,12 @@
           "type": "uses-as-premise"
         }
       ],
-      "claim_scope": "Specified degree-two minimax whole-coordinate model: proposed adaptive Theta(r/eta) and fixed Theta(rm/eta) under accuracy and alphabet restrictions. Not per-function or general-degree adaptive complexity.",
+      "claim_scope": "Conditional on analytic arbitrary-law quadratic influence proof: for bounded real Hilbert degree-two F on finite independent products, rank-r adaptive whole-coordinate Bayes risk <= tau_r+eta within min(n,ceil(2700(1+sqrt(3))^2 r B^2/eta)); bounded degree-one family requires r/(4eta) for eta=1/(2k), B=1; categorical address prevents alphabet-uniform nonadaptive budget. Observation depth only, not runtime.",
       "open_gates": [
-        "Validate scalar influence premise",
-        "Review posterior descent, rank lift and lower constructions",
-        "Publish full queries.tex and categorical.tex",
-        "External priority review"
+        "Independent specialist check of finite-sign rank lift, actual conditional posterior energy drift and lower-bound construction",
+        "Premise quadratic analytic theorem not end-to-end Lean certified",
+        "Audit measurable-product scope before extending finite-policy statements beyond their printed hypotheses",
+        "Author publication and external priority review"
       ],
       "inherited": [
         "Classical Efron–Stein and decision-tree/active observation techniques"
@@ -272,12 +278,13 @@
       ],
       "claim_scope": "Degree-three product functions whose cubic supports admit bounded top-degree vertex cover, or independent covered blocks; no unrestricted cubic theorem.",
       "open_gates": [
-        "Prove/improve quadratic base",
-        "Independently audit posterior and block transfer",
-        "Formalize nontrivial concrete boundedness lifts"
+        "Inherited quadratic analytic theorem remains unrefereed and not end-to-end Lean checked",
+        "PR #335 already proves top-cubic-vertex-cover transfer; PR #381 revisits same backdoor mechanism and adds higher-degree scope plus a separate sharp projection norm. Treat mechanism as one lineage, not two independent discoveries",
+        "Audit overlapping-core and block transfer; unrestricted cubic degree-three exponent-two remains conjectural"
       ],
       "inherited": [
-        "ANOVA decomposition and elementary cover-charge argument"
+        "Hoeffding ANOVA and Efron–Stein core-charge from the quadratic theorem",
+        "Quadratic-backdoor overlap in PR #381; sharp Chebyshev projection is separate"
       ]
     },
     {
