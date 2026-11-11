@@ -22,5 +22,7 @@ jobs:
           python-version: "3.12"
       - name: Replay exact v8 ANOVA and cover controls
         run: python3 research/new-moon/spectral-observability/homogeneous-cubic-v8/checks/exact_bridge.py
+      - name: Exact 5-bit homogeneous cubic negative control
+        run: python3 research/new-moon/spectral-observability/homogeneous-cubic-v8/checks/five_bit_cubic_witness.py
       - name: Replay weighted-hypergraph no-go
         run: python3 research/new-moon/spectral-observability/homogeneous-cubic-v8/checks/weighted_hypergraph_no_go.py
