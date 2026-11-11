@@ -257,7 +257,11 @@ theorem dInd_dependsOn (q : ∀ i, β i → ℝ) (s0 : ∀ i, β i) (T : Finset 
   unfold dIndMono
   apply Finset.prod_congr rfl
   intro i hi
-  rw [hxx i hi]
+  have hproj : proj q s0 i (x i) = proj q s0 i (x' i) :=
+    congrArg (proj q s0 i) (hxx i hi)
+  change (if proj q s0 i (x i) = τ i then (1 : ℝ) else 0) =
+    (if proj q s0 i (x' i) = τ i then (1 : ℝ) else 0)
+  rw [hproj]
 
 theorem lift_degree (q : ∀ i, β i → ℝ) (hq1 : ∀ i, ∑ b, q i b = 1) (s0 : ∀ i, β i)
     (F : (∀ i, β i) → ℝ) (d : ℕ) (hd : DepDegreeLE F d) :
