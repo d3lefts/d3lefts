@@ -6,6 +6,7 @@ on:
       - 'research/nightfall/formalization/observability/ParityBlockCancellation.lean'
       - 'research/nightfall/formalization/observability/GlobalQuadraticParity.lean'
       - 'research/nightfall/formalization/observability/CenteredRectangles.lean'
+      - 'research/nightfall/formalization/observability/GlobalCenteredMatchingAmplitude.lean'
       - '.github/workflows/nightfall-quadratic-posterior-energy.yml'
       - 'research/nightfall/2026-11-quadratic-law-free-audit/check_posterior_drift_exact.py'
       - 'research/nightfall/2026-11-quadratic-law-free-audit/check_global_matching_parity.py'
@@ -107,6 +108,26 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/centered-rectangles.json
           sha256sum research/nightfall/formalization/observability/CenteredRectangles.lean >> lean-receipts/SHA256SUMS
+      - name: Kernel-check actual law-free centered global matching amplitude
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/observability/CenteredRectangles.lean /tmp/mathlib4/CenteredRectangles.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/CenteredRectangles.olean CenteredRectangles.lean)
+          cp research/nightfall/formalization/observability/GlobalQuadraticParity.lean /tmp/mathlib4/GlobalQuadraticParity.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/GlobalQuadraticParity.olean GlobalQuadraticParity.lean)
+          N=Nightfall.Observability.GlobalCenteredMatching
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/GlobalCenteredMatchingAmplitude.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.centered_matching_amplitude_at_points \
+            --json-out lean-receipts/centered-global-matching.json || {
+              python3 -c "import json; x=json.load(open('lean-receipts/centered-global-matching.json')); print(x.get('status')); print((x.get('stdout') or '')[:60000])" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/centered-global-matching.json
+          sha256sum research/nightfall/formalization/observability/GlobalCenteredMatchingAmplitude.lean >> lean-receipts/SHA256SUMS
       - name: Exact real-posterior drift, all transcript branches
         run: |
           set -euo pipefail
