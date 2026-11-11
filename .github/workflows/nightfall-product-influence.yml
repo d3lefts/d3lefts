@@ -1,0 +1,99 @@
+name: NIGHTFALL product-space influence theorem (Level/Average port, pinned Turturean toolchain)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/ProductInfluence.lean'
+      - 'research/nightfall/formalization/product_space/ProductRowBound.lean'
+      - 'research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean'
+      - 'research/nightfall/formalization/product_space/HeterogeneousAlphabets.lean'
+      - 'research/nightfall/formalization/product_space/EfronSteinDegree.lean'
+      - '.github/workflows/nightfall-product-influence.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  product-influence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Lean 4.33.0 (Turturean pin)
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.33.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch pinned Turturean formalization
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone https://github.com/physical-superintelligence/aaronson-ambainis.git /tmp/aa
+          git -C /tmp/aa checkout 2a6ceaef872ae993708950f951989134084b851a
+          cd /tmp/aa
+          lake exe cache get
+          lake build AaronsonAmbainis.DetTheorem AaronsonAmbainis.TwoSided.Antipodal \
+            AaronsonAmbainis.Bridge.Positivity AaronsonAmbainis.Row.Main AaronsonAmbainis.Pack.Main \
+            AaronsonAmbainis.Dual.Main AaronsonAmbainis.Level.Integral \
+            AaronsonAmbainis.TwoSided.CauchySchwarz
+      - name: Compile merged two-sided bridge (#298) and Lemma B (#310) as imported modules
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space
+          mkdir -p /tmp/aa/.lake/build/lib/lean
+          for m in ProductSpaceTwoSidedBridge ProductRowBound; do
+            cp "$P/$m.lean" "/tmp/aa/$m.lean"
+            (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean")
+          done
+      - name: Kernel-check the product-space influence chain
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.ProductSpace.Influence
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/product_space/ProductInfluence.lean \
+            --workspace /tmp/aa --timeout 2400 \
+            --decl $N.swap_sum \
+            --decl $N.resample_sum \
+            --decl $N.integrated_incr \
+            --decl $N.weighted_cs \
+            --decl $N.pairCost_pos \
+            --decl $N.third_moment \
+            --decl $N.exists_median \
+            --decl $N.weighted_sq_cube \
+            --decl $N.variance_cube_le \
+            --decl $N.mean_increment \
+            --decl $N.pvar_avg \
+            --decl $N.pinfl_avg_le \
+            --decl $N.pincr_avg_le \
+            --decl $N.rows_avg \
+            --decl $N.exists_avg_set \
+            --decl $N.influence_bound \
+            --decl $N.sum_pincr_le \
+            --decl $N.influence_cost \
+            --decl $N.product_influence \
+            --json-out lean-receipts/product-influence.json || {
+              python3 -c "import json;r=json.load(open('lean-receipts/product-influence.json'));[print(d) for d in r.get('diagnostics',[]) if d.get('severity')=='error']" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/product-influence.json
+      - name: Capture source hashes and upstream pin
+        if: always()
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/product_space/ProductInfluence.lean \
+            research/nightfall/formalization/product_space/ProductRowBound.lean \
+            research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean \
+            > lean-receipts/SHA256SUMS.txt
+          echo 2a6ceaef872ae993708950f951989134084b851a > lean-receipts/turturean-upstream-commit.txt
+          echo leanprover/lean4:v4.33.0 > lean-receipts/lean-toolchain.txt
+      - name: Upload receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: product-influence-receipt
+          path: lean-receipts/
+          if-no-files-found: warn
