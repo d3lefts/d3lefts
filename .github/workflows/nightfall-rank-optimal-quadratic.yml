@@ -1,0 +1,41 @@
+name: NIGHTFALL rank-optimal quadratic Hilbert theorem — exact independent audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-quadratic-rank-optimal/**'
+      - '.github/workflows/nightfall-rank-optimal-quadratic.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/2026-11-quadratic-rank-optimal/**'
+      - '.github/workflows/nightfall-rank-optimal-quadratic.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-rank-optimal-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Independent exact-rational quadratic, moments and Bayes lower checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/2026-11-quadratic-rank-optimal/check_rank_linear_exact.py | tee /tmp/rank-audit.log
+          grep -q 'PASS exact_product_models=220' /tmp/rank-audit.log
+          grep -q 'lower_cases=36 address_cases=36 seed=20261111' /tmp/rank-audit.log
+          grep -q '96738835f7333a475559f39d9c5913906efde0a25d7c5492556e2e179b902add' /tmp/rank-audit.log
+      - name: Preserve source hash and restrict scientific status
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p rank-receipt
+          sha256sum research/nightfall/2026-11-quadratic-rank-optimal/UNIVERSAL_THEOREM.md             research/nightfall/2026-11-quadratic-rank-optimal/check_rank_linear_exact.py > rank-receipt/SHA256SUMS.txt
+          cp /tmp/rank-audit.log rank-receipt/EXACT_AUDIT.txt
+          printf '%s\n' '220 finite models and 72 lower cases only. Analytic general theorem NOT end-to-end Lean checked; worldwide originality unresolved.' > rank-receipt/SCOPE.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rank-optimal-quadratic-exact-audit
+          path: rank-receipt/
+          if-no-files-found: error
