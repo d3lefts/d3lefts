@@ -72,7 +72,9 @@ theorem highEnergy_le_coverInfluence
   have hrhs : 0 ≤ ∑ i ∈ H, if i ∈ S then E S else 0 := by
     apply Finset.sum_nonneg
     intro i _
-    split_ifs <;> exact (hE S)
+    by_cases hi : i ∈ S
+    · simpa [hi] using hE S
+    · simp [hi]
   by_cases h3 : 3 ≤ S.card
   · by_cases hz : E S = 0
     · simp [h3, hz]
@@ -82,7 +84,9 @@ theorem highEnergy_le_coverInfluence
           if j ∈ S then E S else 0 := by
         apply Finset.sum_nonneg
         intro j _
-        split_ifs <;> exact (hE S)
+        by_cases hj : j ∈ S
+        · simpa [hj] using hE S
+        · simp [hj]
       have heq : (∑ j ∈ H, if j ∈ S then E S else 0) =
           (∑ j ∈ H.erase i, if j ∈ S then E S else 0) + E S := by
         have hh := Finset.sum_erase_add H
