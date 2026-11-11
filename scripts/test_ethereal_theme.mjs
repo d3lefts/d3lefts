@@ -13,7 +13,7 @@ const pages=[
   "desk.html","discovery.html","erdos-paper.html","evidence-practice.html","evidence.html",
   "exact-research.html","findings-20261029.html","frontier.html",
   "join.html","living-investigation.html","living-paper.html","orchestrator.html",
-  "new-moon.html","passport.html","product-space-influence.html","observability.html","active-proof-passport.html","referee.html","research.html","review.html","sidon-arity.html"
+  "new-moon.html","passport.html","product-space-influence.html","observability.html","active-proof-passport.html","discovery-system.html","referee.html","research.html","review.html","sidon-arity.html"
 ];
 const types={".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".svg":"image/svg+xml"};
 const server=createServer(async(req,res)=>{
