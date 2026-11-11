@@ -97,7 +97,7 @@ try{
         toolbar:document.querySelector('meta[name="theme-color"]')?.content
       };
     });
-    assert.equal(record.value,"Var(F)² / B²","Current product-space research leads the active hero");
+    assert.equal(record.value,"V² / [256(1+√3)² B²]","Full qualified constant leads the proposed quadratic hero");
     assert.equal(record.firstFold,"DEGREE TWO","Active quadratic influence is visible immediately");
     assert.equal(record.cells,"2","Degree-two scope is disclosed in the hero");
     assert.equal(record.source,true,"The hero links directly to the qualified current research source");
