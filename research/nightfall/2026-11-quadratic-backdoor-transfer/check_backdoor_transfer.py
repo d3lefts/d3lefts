@@ -111,8 +111,9 @@ def verify_defect_instance(n,p,C,coeff):
         assert h==Q(16,3)*(-g(x,Q(0))+2*g(x,Q(1,4))
                               -2*g(x,Q(3,4))+g(x,Q(1)))
         assert abs(h)<=32*B
-        assert abs(g(x,Q(1))-h)<=33*B
-    assert (V-delt)**2 <= (1089*K+2*len(C))*B*B*M
+        assert abs(g(x,Q(1))-h)<=31*B
+        assert abs(vals[x]-h)<=31*B
+    assert (V-delt)**2 <= (961*K+2*len(C))*B*B*M
     return delt
 
 
