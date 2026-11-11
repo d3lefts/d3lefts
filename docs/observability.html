@@ -29,7 +29,7 @@
 <div class="atlas-eyebrow">NIGHTFALL / LOW-INTERACTION PRODUCT SYSTEMS / 10 NOVEMBER 2026</div>
 <h1 id="observability-title">Observe less.<br><em>Infer more.</em></h1>
 <div class="atlas-hero-bottom"><p>How many input coordinates must an observer inspect to predict a bounded system? The current research package links low interaction degree to coordinate influence and sharp adaptive-versus-fixed observation costs. Its principal degree-two results have written proofs and internal checks, not reviewed by an external human referee or certified end-to-end in Lean.</p><div class="atlas-hero-metrics"><span><strong>02</strong>Quadratic degree</span><span><strong>r / η</strong>Proposed adaptive scale</span><span><strong>OPEN</strong>External proof audit</span></div></div>
-<nav class="ps-quick-nav" aria-label="On this page"><span class="ps-eyebrow">RESEARCH / EVIDENCE / GAPS</span><a href="#quadratic">Quadratic bound</a><a href="#separation">Observation gap</a><a href="#certificate">Certificate engine</a><a href="#cubic">Cubic obstruction</a><a href="#audit">Proof and priority</a><a href="active-proof-passport.html">Living Proof Passport</a></nav>
+<nav class="ps-quick-nav" aria-label="On this page"><span class="ps-eyebrow">RESEARCH / EVIDENCE / GAPS</span><a href="#quadratic">Quadratic bound</a><a href="#separation">Observation gap</a><a href="#spectral-v5">Spectral v5</a><a href="#certificate">Certificate engine</a><a href="#cubic">Cubic obstruction</a><a href="#audit">Proof and priority</a><a href="active-proof-passport.html">Living Proof Passport</a></nav>
 </section>
 
 <section class="atlas-integrity wrap" aria-label="Publication-status boundary">
@@ -52,6 +52,13 @@
 <article class="ps-ledger-row"><div class="ps-ledger-code"><span>DEGREE ≤ 2</span><strong>m</strong><small>NONADAPTIVE</small></div><div class="ps-ledger-main"><span class="ps-ledger-status">PAPER PROOF · EXTERNAL AUDIT OPEN</span><h3>Fixed: Θ(rm/η) queries.</h3><p>Queries must be selected without seeing their answers. An address coordinate can direct adaptive attention to one of <code>m</code> signs; a fixed set must cover alternatives. The extra alphabet factor is a minimax separation, not a lower bound for every function.</p></div></article>
 <article class="ps-ledger-row"><div class="ps-ledger-code"><span>FIXED d</span><strong>d</strong><small>NONADAPTIVE</small></div><div class="ps-ledger-main"><span class="ps-ledger-status">PAPER PROOF · EXTERNAL AUDIT OPEN</span><h3>General fixed degree: Θ<sub>d</sub>(rm<sup>d−1</sup>/η), nonadaptive.</h3><p>The source claims this categorical scaling for fixed degree <code>d</code>. It does <strong>not</strong> prove an adaptive Θ(r/η) guarantee at every degree. The latter remains a research target.</p></div></article>
 </div></section>
+
+<section class="section wrap sf-library-invite" id="spectral-v5" aria-labelledby="spectral-v5-title"><div>
+<span class="section-id">LATEST SYNTHESIS / V5 · SPECTRAL CERTIFICATE-TO-OBSERVATION</span>
+<h2 id="spectral-v5-title" class="section-title">Rank changes the query cost.<br><em>Interaction structure changes the proof.</em></h2>
+<p class="section-intro">The v5 research synthesis adds a candidate <strong>all-degree exponent-two influence theorem on linear interaction-support hypergraphs</strong>: distinct nonsingleton Hoeffding supports intersect in at most one coordinate. It proposes <code>Θ<sub>d</sub>(r/η)</code> adaptive prediction in that structured class, and retains the broader quadratic <code>Θ(r/η)</code> claim without an alphabet penalty. These are analytical manuscript proofs, <strong>not</strong> kernel-certified spectral theorems.</p>
+<p class="section-intro">The finite-product certificate-to-posterior chain is a separate Lean-certified input, not a certificate of the complete Hilbert result. The unrestricted cubic variance-squared bound remains open. A general-degree spectral-tail draft using the weaker exponent-(5/2, 6) scalar theorem is under review.</p>
+</div><div class="sf-library-actions"><a class="button" href="spectral-observability.html">Spectral frontier and ranked theorems ↗</a><a class="text-link" href="https://github.com/d3lefts/d3lefts/pull/332" target="_blank" rel="noopener">General-degree analytic proof review ↗</a></div></section>
 
 <section class="section wrap sf-library-invite" id="certificate" aria-labelledby="certificate-title"><div>
 <span class="section-id">03 / GENERAL-DEGREE COMPANION · DISTINCT CERTIFICATION SCOPE</span>
