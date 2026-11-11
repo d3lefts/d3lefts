@@ -102,4 +102,61 @@ theorem actual_degree_two_total_section_budget
       mul_le_mul_of_nonneg_left hcost (by norm_num)
     _ = 8 * Real.pi ^ 2 := by ring
 
+
+/-- Stronger actual-function bridge: each whole-coordinate centered
+resampling section is pointwise bounded by the SAME low-cost row
+certificate. Uses arbitrary nonnegative normalized coordinate laws,
+not fair-sign symmetry. This L-infinity control is a conservative
+precursor to the Hilbert L2 section budget. -/
+theorem actual_degree_two_centered_sections_from_rows
+    (p : ι → α → ℝ)
+    (hp : ∀ i a, 0 ≤ p i a)
+    (hp1 : ∀ i, ∑ a, p i a = 1)
+    (f : (ι → α) → ℝ)
+    (hf : ∀ x, |f x| ≤ 1)
+    (hdegree : ESDegreeLE p f 2)
+    (x : ι → α) :
+    ∃ a : ι → ℝ,
+      (∀ i, 0 ≤ a i) ∧
+      (∑ i : ι, a i) ≤ 4 * Real.pi ^ 2 ∧
+      (∀ i s,
+        |f (Function.update x i s) -
+          (∑ t : α, p i t * f (Function.update x i t))| ≤
+          2 * a i) := by
+  classical
+  obtain ⟨a, ha0, hcost, hsection⟩ :=
+    actual_degree_two_row_controls_all_sections p hp1 f hf hdegree x
+  refine ⟨a, ha0, hcost, ?_⟩
+  intro i s
+  have heq :
+      f (Function.update x i s) -
+        (∑ t : α, p i t * f (Function.update x i t)) =
+      ∑ t : α, p i t *
+        (f (Function.update x i s) - f (Function.update x i t)) := by
+    calc
+      _ = (∑ t : α, p i t) * f (Function.update x i s) -
+        (∑ t : α, p i t * f (Function.update x i t)) := by
+          rw [hp1 i]
+          ring
+      _ = ∑ t : α, p i t *
+        (f (Function.update x i s) - f (Function.update x i t)) := by
+          rw [Finset.sum_sub_distrib, Finset.sum_mul]
+          apply Finset.sum_congr rfl
+          intro t _
+          ring
+  rw [heq]
+  calc
+    |∑ t : α, p i t *
+        (f (Function.update x i s) - f (Function.update x i t))| ≤
+      ∑ t : α, |p i t *
+        (f (Function.update x i s) - f (Function.update x i t))| :=
+          Finset.abs_sum_le_sum_abs _ _
+    _ ≤ ∑ t : α, p i t * (2 * a i) := by
+          apply Finset.sum_le_sum
+          intro t _
+          rw [abs_mul, abs_of_nonneg (hp i t)]
+          exact mul_le_mul_of_nonneg_left (hsection i s t) (hp i t)
+    _ = 2 * a i := by
+          rw [← Finset.sum_mul, hp1 i, one_mul]
+
 end Nightfall.Observability.QuadraticActualRows
