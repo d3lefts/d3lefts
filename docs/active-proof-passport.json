@@ -1,11 +1,11 @@
 {
   "schema": "nightfall-active-proof-passports-v1",
-  "version": 9,
+  "version": 10,
   "as_of": "2026-11-11",
-  "updated_by": "2026-11-11 v6.1 preserved plus Lean rev13: 60 sources with scoped receipts; actual function 5/2 and 16B proof, no variance-squared e2e certificate",
+  "updated_by": "2026-11-11 quadratic source bridge rev14: 63 source-hash-classified Lean modules, 62 scoped strict receipts, one pending; existing main theorem status unchanged",
   "frozen_historical_registry_unchanged": true,
   "lifecycle": "active",
-  "scientific_status": "Twelve active research claims; 60 main Lean source files classified (49 novelty-quarantined, 10 derived transfers, one finite construction). All 60 source blobs matched scoped successful CI heads; the exponent-two quadratic variance-squared statement remains without end-to-end Lean certification.",
+  "scientific_status": "Twelve active research claims; 63 current branch Lean modules classified (52 originality-quarantined, 10 derived transfers, 1 finite construction). 62 current source blobs matched successful scoped Lean receipts; one expanded row source awaits its strict third-declaration gate. No end-to-end exponent-two influence certificate.",
   "source_checkpoint": {
     "repository": "d3lefts/d3lefts",
     "commit": "5bda769c2484ea2f6ea9a02c428928361c07666f",
