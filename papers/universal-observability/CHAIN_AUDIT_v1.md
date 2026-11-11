@@ -32,6 +32,8 @@ From repository root:
 
 The posterior script uses only Python Fraction and exhaustive finite categorical products; the PSD script enumerates signs on integer Gram matrices but uses floating exp/log. Both contain deterministic seeds, print input scope and counts and fail closed on an inconsistent assertion. The checked objects are **finite falsification families**, not the infinite theorem.
 
+**Targeted 11 November literature comparison:** [prior-art audit](PRIOR_ART_CHECK_20261111.md), including Turturean's cube theorem, general-product influence precedent and 2026 completion-framework query results. Priority still unresolved.
+
 ## Independent reviewer challenge
 
 1. Construct a nonstandard measurable product or zero-atom example violating the reduction in Lemma 2, especially the degree-preserving conditional projection.
