@@ -1,0 +1,75 @@
+name: NIGHTFALL finite universal law-transfer kernel and exact audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-universal-law-transfer/**'
+      - '.github/workflows/nightfall-universal-law-transfer.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/2026-11-universal-law-transfer/**'
+      - '.github/workflows/nightfall-universal-law-transfer.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  law-transfer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exact independent rational primal/dual/vertex audit
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/2026-11-universal-law-transfer/check_sharp_transport.py | tee /tmp/law-transfer-check.log
+          grep -q 'status=PASS exact_cases=2760' /tmp/law-transfer-check.log
+          grep -q 'ca5282b3b74ba4ad2bfb676cd7d00fee2220b2a8613ff07358288324a516422a' /tmp/law-transfer-check.log
+      - name: Install pinned Lean 4.33
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.33.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch pinned mathlib workspace used by finite product theorem
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone https://github.com/physical-superintelligence/aaronson-ambainis.git /tmp/aa
+          git -C /tmp/aa checkout 2a6ceaef872ae993708950f951989134084b851a
+          cd /tmp/aa
+          lake exe cache get
+      - name: Compile source and verify EXACT named kernel declarations
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          P=research/nightfall/2026-11-universal-law-transfer/FiniteLawTransfer.lean
+          python3 scripts/lean_bridge.py "$P" --workspace /tmp/aa --timeout 1800 \
+            --decl Nightfall.UniversalLawTransfer.loss_dual_pointwise \
+            --decl Nightfall.UniversalLawTransfer.finite_loss_dual \
+            --decl Nightfall.UniversalLawTransfer.exact_support_transfer \
+            --decl Nightfall.UniversalLawTransfer.exact_observer_under_dominated_measure \
+            --decl Nightfall.UniversalLawTransfer.every_policy_budget_invariant_under_equivalence \
+            --json-out lean-receipts/universal-law-transfer.json || {
+              python3 -c "import json;r=json.load(open('lean-receipts/universal-law-transfer.json'));print((r.get('stdout') or '')[:60000]);print((r.get('stderr') or '')[:30000])" || true
+              exit 1
+            }
+      - name: Capture sources and restrict status
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts
+          sha256sum \
+            research/nightfall/2026-11-universal-law-transfer/FiniteLawTransfer.lean \
+            research/nightfall/2026-11-universal-law-transfer/check_sharp_transport.py \
+            research/nightfall/2026-11-universal-law-transfer/THEOREM.md \
+            > lean-receipts/SHA256SUMS.txt
+          echo "Finite dual upper inequality and finite support only; no full adaptive measure proof compiled." > lean-receipts/SCOPE.txt
+      - name: Upload source receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: universal-law-transfer-scoped-kernel
+          path: lean-receipts/
+          if-no-files-found: warn
