@@ -27,7 +27,7 @@
 
  const main=document.querySelector("main");
  const page=location.pathname.split("/").pop()||"index.html";
- // The two entrances are distinct documents. Source pages remain shared,
+ // The two entrances are distinct documents: NULL FIELD is active, NEW MOON is archival. Source pages remain shared,
  // but offer both destination routes independently of the reading palette.
  const header=document.querySelector(".header");
  if(header&&main&&page!=="index.html"&&page!=="new-moon.html"&&!document.querySelector(".nf-home-route-nav")){
@@ -35,8 +35,8 @@
   routes.className="nf-home-route-nav nf-global-route-nav wrap";
   routes.setAttribute("aria-label","Choose NIGHTFALL experience");
   routes.innerHTML='<span class="nf-route-caption">TWO ENTRANCES / SHARED RESEARCH RECORD</span>'+
-   '<a href="index.html" data-nf-route="archive"><span>01</span> NULL FIELD <small>Research archive</small></a>'+
-   '<a href="new-moon.html" data-nf-route="moon"><span>02</span> NEW MOON <small>Open investigations</small></a>';
+   '<a href="index.html" data-nf-route="archive"><span>01</span> NULL FIELD <small>Active research</small></a>'+
+   '<a href="new-moon.html" data-nf-route="moon"><span>02</span> NEW MOON <small>Archived breakthroughs</small></a>';
   header.insertAdjacentElement("afterend",routes);
  }
 
@@ -56,10 +56,15 @@
   }catch(_){}
   return document.documentElement?.getAttribute?.("data-nf-theme")==="dusk";
  };
+ // Canonical page ownership is independent of a reader's color palette.
+ // The "archive" token in data-nf-route remains a legacy LIGHT palette ID.
+ const activePages=new Set(["product-space-influence.html","observability.html","frontier.html","desk.html","discovery.html","orchestrator.html","agenda.html"]);
+ const historicalPages=new Set(["erdos-paper.html","living-paper.html","findings-20261029.html","sidon-arity.html"]);
  const homeDestination={id:"home",label:"",href:""};
  const updateHome=(moon)=>{
-  homeDestination.href=moon?"new-moon.html#open-ledger":"index.html#flagships";
-  homeDestination.label=moon?"01 / NEW MOON · Open investigations":"01 / NULL FIELD · Research archive";
+  const historical=historicalPages.has(page)?true:activePages.has(page)?false:moon;
+  homeDestination.href=historical?"new-moon.html#archived-records":"index.html#flagships";
+  homeDestination.label=historical?"01 / NEW MOON · Archived breakthroughs":"01 / NULL FIELD · Active research";
  };
  updateHome(preferredMoon());
  const destinations=[
