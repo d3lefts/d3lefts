@@ -1,0 +1,65 @@
+name: NIGHTFALL actual matching-block global parity Lean gate
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/QuadraticMatchedParity.lean'
+      - 'research/nightfall/formalization/observability/ParityBlockCancellation.lean'
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/check_global_matching_parity.py'
+      - '.github/workflows/nightfall-matching-global-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  matching-parity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Lean 4.35.0 and Mathlib v4.35.0
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.35.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          git clone --depth 1 --branch v4.35.0 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4
+          (cd /tmp/mathlib4 && "$HOME/.elan/bin/lake" exe cache get)
+      - name: Strict compile with exact imported local theorem
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts /tmp/mathlib4/.lake/build/lib/lean
+          cp research/nightfall/formalization/observability/ParityBlockCancellation.lean /tmp/mathlib4/ParityBlockCancellation.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ParityBlockCancellation.olean ParityBlockCancellation.lean)
+          N=Nightfall.Observability.QuadraticMatching
+          python3 scripts/lean_bridge.py research/nightfall/formalization/observability/QuadraticMatchedParity.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.selector_double_sum \
+            --decl $N.rectangle_identity \
+            --decl $N.double_swap \
+            --decl $N.cross_sum_cancellation \
+            --decl $N.global_parity_identity \
+            --decl $N.full_matched_rectangles_le_four \
+            --decl $N.full_oriented_matching_le_four \
+            --json-out lean-receipts/global-matching-parity.json || {
+              cat lean-receipts/global-matching-parity.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/global-matching-parity.json
+          sha256sum research/nightfall/formalization/observability/{ParityBlockCancellation,QuadraticMatchedParity}.lean > lean-receipts/SHA256SUMS
+          git rev-parse HEAD > lean-receipts/repository-commit.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt
+      - name: Independently exhaust full quadratic parity configurations
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/2026-11-quadratic-law-free-audit/check_global_matching_parity.py
+      - name: Persist all receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quadratic-matching-parity-lean-receipts
+          path: lean-receipts/
+          if-no-files-found: warn
+          retention-days: 45
