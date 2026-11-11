@@ -5,7 +5,7 @@ import {join,normalize,resolve,sep} from "node:path";
 import {chromium} from "playwright-core";
 
 const root=resolve("docs");
-const pages=["index.html","living-paper.html","erdos-paper.html","join.html","constellation.html","review.html","evidence.html","agenda.html","research.html","exact-research.html","desk.html","frontier.html","portfolio.html","product-space-influence.html"];
+const pages=["index.html","living-paper.html","erdos-paper.html","join.html","constellation.html","review.html","evidence.html","agenda.html","research.html","exact-research.html","desk.html","frontier.html","portfolio.html","product-space-influence.html","observability.html","active-proof-passport.html"];
 const types={".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".svg":"image/svg+xml"};
 const server=createServer(async (req,res)=>{
  try{
