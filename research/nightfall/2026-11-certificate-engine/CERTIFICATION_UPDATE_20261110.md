@@ -21,6 +21,22 @@ The PR #310 row-cost theorem is a substantive formal improvement over the earlie
 ---
 
 
+## NEW: Fully compiled finite-product influence bound — 11 November 2026 UTC
+
+[PR #317](https://github.com/d3lefts/d3lefts/pull/317) merged at `a626832fe99a4622db8334c74c488a40a8f17227`, exact checked head `e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb`. Pinned [Lean run #42929857470](https://github.com/d3lefts/d3lefts/actions/runs/42929857470) compiled **19 named product-influence declarations**, including `Nightfall.ProductSpace.Influence.product_influence`, with only `Classical.choice`, `Quot.sound`, `propext`, and no `sorryAx`. All seven current-head workflows passed. [Exact proof passport](../formalization/product_space/FINITE_PRODUCT_INFLUENCE_PROOF_PASSPORT_20261110.md).
+
+**Kernel theorem:** for finite `ι` and common finite alphabet `α`, normalized nonnegative (not necessarily identical) coordinate masses `p_i`, bounded `|f|≤1` of indicator-monomial degree ≤`d`, and `V=Var_p(f)>0`, some coordinate satisfies
+
+```text
+3 V^5 ≤ 12500 (π² d²)^6 I_j(f)^2
+I_j(f) ≥ [sqrt(3/12500)/π^6] V^(5/2)/d^6
+c_finite ≈ 1.611411225376563e-5 .
+```
+
+This is a **strict status upgrade** from finite certificate lemmas to a complete *finite-product* influence inequality with the universal exponents `(5/2,6)`. **It is not the stronger manuscript coefficient** `c_prod≈0.001201250694`, and it does not kernel-certify arbitrary measurable/infinite index products or an end-to-end quantum query theorem. The latter claims remain manuscript candidates. The independent prior-art novelty and non-author review gates remain open. Earlier historical snapshots in this document retain their original statuses for traceability; read this newer checkpoint first.
+
+---
+
 ## Post-merge reconciliation — 10 November 2026
 
 **Current repository status:** The six product-space/adjacent exact-recovery draft PRs audited below have now been **merged into `main`** with explicit owner authorization. The original audit snapshot remains below as immutable provenance, including its historical references to draft branches. The merge is a source-control event, **not** a promotion to a globally original theorem or external referee acceptance.
