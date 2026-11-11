@@ -1,8 +1,8 @@
 {
   "schema": "nightfall-lean-provenance-v1",
   "as_of": "2026-11-11",
-  "revision": 8,
-  "scope": "All 59 .lean source files at main commit f0007f6baea9ea53dfbde809bb243c017c17dbc6 (exact Git blob identities recorded per module), 48 novelty-quarantined scopes, 10 derived transfers, one finite construction; one separately scoped off-main candidate. Historical CI receipts do NOT automatically certify current file bytes or cross-pin end-to-end closure.",
+  "revision": 9,
+  "scope": "Complete main-tree 59-module Git blob inventory at commit f0007f6baea9ea53dfbde809bb243c017c17dbc6: 58 exact-current-source blobs found in successful historical CI run heads, one source without direct scoped CI receipt. Counts: 48 originality-quarantined, 10 derived transfers, 1 finite construction. Source-match is not fresh same-pin end-to-end proof certification.",
   "source_commit": "f0007f6baea9ea53dfbde809bb243c017c17dbc6",
   "policy": "Kernel compilation is validity evidence only. Quarantine means do not claim novelty; it does not invalidate a correctly compiled theorem. Derived transfers are scoped program-specific compositions with open worldwide priority. A distinct finite construction has an exact certificate but still needs prior-art review.",
   "prior_art": [
@@ -51,7 +51,9 @@
       "ci_run": 43059618451,
       "global_priority": "unverified",
       "source_blob_sha": "a39e197405c1411ecf69dd87f6356321dc520130",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "93a1901043b0ed5ee837ba11f7b17e1406223c40",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/2026-11-universal-spectral-observability/AdaptiveBudget.lean",
@@ -61,7 +63,9 @@
       "ci_run": 42964206760,
       "global_priority": "unverified",
       "source_blob_sha": "a668028281bfed7a56ecbdbd46daf7cc5562e1af",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "02b04f9fbebfcfd2906d71548e36a42e03437e35",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/characteristic_three/Finite3.lean",
@@ -71,17 +75,21 @@
       "ci_run": 40995299592,
       "global_priority": "unverified",
       "source_blob_sha": "b86264194dd2d9afe8e930384b043d231d0cc5dc",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "d3a3717e846390461c7cf2ec41553189d78267a1",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/compiler/ContractSmoke.lean",
       "classification": "quarantine",
       "note": "Lean Bridge v2 exact-type contract smoke test of ordinary natural-number addition commutativity. This is infrastructure validation, not a new mathematical theorem or a complete observability certificate.",
       "passport": null,
-      "ci_run": null,
+      "ci_run": 43075592704,
       "global_priority": "unverified",
       "source_blob_sha": "92d36cbb77acee2ab3d1545a381d50150d6ba617",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "6630dd39f0cca7c398a8bd7d61432e51e70006bd",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/discoverability/AdaptiveRankDrop.lean",
@@ -91,7 +99,9 @@
       "ci_run": 42930165294,
       "global_priority": "unverified",
       "source_blob_sha": "694329173a005864e01e8a50a97dfafb86069eb3",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "3b34759afc298a9e739c47bc08ca634ffdbb42e8",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/discoverability/WitnessPacking.lean",
@@ -101,7 +111,9 @@
       "ci_run": 42930165294,
       "global_priority": "unverified",
       "source_blob_sha": "c36c32d9240e34f1a182d767008de8f1b0d8b992",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "3b34759afc298a9e739c47bc08ca634ffdbb42e8",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/observability/ActualPosteriorInfluence.lean",
@@ -111,7 +123,9 @@
       "ci_run": 42973878336,
       "global_priority": "unverified",
       "source_blob_sha": "f6d89d4fd73246bbe8d5e2cc7de9cedc9ac393a7",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "1d4c38c80074f75b430e841121c36fd6e3698a4e",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/observability/ArbitraryLawFourthMoment.lean",
@@ -121,7 +135,9 @@
       "ci_run": 43058772711,
       "global_priority": "unverified",
       "source_blob_sha": "e73d1d8d12b7743a99175382ef293367ad237ee3",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "428ca5334fcd00574539994f479181d6d74fa586",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/observability/CategoricalSignedProxy.lean",
@@ -131,7 +147,9 @@
       "ci_run": 42959881782,
       "global_priority": "unverified",
       "source_blob_sha": "1bacc35dd934cfc9a978615a17c36a63b1dd4c82",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "16f57381c036c9670e9ba478be511bd957584de4",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/observability/DiagonalSignCoherence.lean",
@@ -141,7 +159,9 @@
       "ci_run": 42972554673,
       "global_priority": "unverified",
       "source_blob_sha": "bc91a52e8002a49953f3077de395ecaa1ad05c07",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "689fda260df6f9724237c648893f3b329673d644",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/observability/HilbertManyIncrementMoment.lean",
@@ -151,7 +171,9 @@
       "ci_run": 43062171542,
       "global_priority": "unverified",
       "source_blob_sha": "2f4b957c0358c026b01cc7161e4f85b634393214",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "1952573960a4784f1bda87dcf049c5d07354cff6",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/observability/HilbertTwoIncrementMoment.lean",
@@ -161,7 +183,9 @@
       "ci_run": 43058085067,
       "global_priority": "unverified",
       "source_blob_sha": "b2930db79589a9e257e3b151b4d4ae174c4adb1e",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "1b25898217b839c7e6b311ca8213da12c1813c17",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/observability/ParityBlockCancellation.lean",
@@ -172,7 +196,7 @@
       "note": "Full finite selector-flip and cross-block parity cancellation for all endpoint orientations, at the block-table level; does not prove function-level all-law influence or global novelty.",
       "source_blob_sha": "a96ca7887eaca3f2b3caa5a4d104b143524c1769",
       "source_recovery_pr": 373,
-      "ci_receipt_scope": "Verified successful historical named-declaration CI run and exact source Git blob match; no new all-file compilation or cross-pin theorem certification.",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification.",
       "ci_run_head_sha": "f858cf246a05f7e88f01a413e3334ed2ff1ba885",
       "ci_source_match_status": "same-git-blob-as-successful-ci-head"
     },
@@ -185,7 +209,7 @@
       "note": "Finite ANOVA interaction-support deletion and posterior total-influence drift identity for supplied component energies; not an arbitrary real-function or measurable posterior theorem.",
       "source_blob_sha": "cbe7fd2a08490b9121b141bcd17b3f752a637207",
       "source_recovery_pr": 373,
-      "ci_receipt_scope": "Verified successful historical named-declaration CI run and exact source Git blob match; no new all-file compilation or cross-pin theorem certification.",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification.",
       "ci_run_head_sha": "f858cf246a05f7e88f01a413e3334ed2ff1ba885",
       "ci_source_match_status": "same-git-blob-as-successful-ci-head"
     },
@@ -197,7 +221,9 @@
       "ci_run": 42972560393,
       "global_priority": "unverified",
       "source_blob_sha": "dc4b75e81363acb4462756922dd4e39c86573079",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "5fcb65817e62a89dbf5e9964141bf40f4f01146e",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/observability/QuadraticDiscoveryCore.lean",
@@ -207,7 +233,9 @@
       "ci_run": 43058772711,
       "global_priority": "unverified",
       "source_blob_sha": "6209a536e0544d9ad8f23a8c41c20000c4e12de0",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "428ca5334fcd00574539994f479181d6d74fa586",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/observability/QuadraticEndpointMarkov.lean",
@@ -217,7 +245,9 @@
       "ci_run": 42959881782,
       "global_priority": "unverified",
       "source_blob_sha": "ceed8ff343add0745eb6c1691412f3917e9a4e8e",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "16f57381c036c9670e9ba478be511bd957584de4",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/observability/QuadraticMatchedParity.lean",
@@ -228,7 +258,7 @@
       "note": "Full finite matching-block polynomial even/odd selector identity and 4B rectangle mass under explicit bounded block polynomial premises; not a general arbitrary-law function-level theorem.",
       "source_blob_sha": "13ab8937bf14274eacce25caaf35f4c9fb9f55a3",
       "source_recovery_pr": 376,
-      "ci_receipt_scope": "Verified successful historical named-declaration CI run and exact source Git blob match; no new all-file compilation or cross-pin theorem certification.",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification.",
       "ci_run_head_sha": "4f93009e871297bc99e7931a770488d7ad2f77ad",
       "ci_source_match_status": "same-git-blob-as-successful-ci-head"
     },
@@ -241,21 +271,22 @@
       "note": "Finite arbitrary-alphabet actual bounded quadratic polynomial 8B single-replacement switching and 16B range inequality; does not certify the entire influence theorem.",
       "source_blob_sha": "fcc1231c67810989ebf55a819ddf53951194766c",
       "source_recovery_pr": 378,
-      "ci_receipt_scope": "Verified successful historical named-declaration CI run and exact source Git blob match; no new all-file compilation or cross-pin theorem certification.",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification.",
       "ci_run_head_sha": "1c81566bd2df899c08a958117549178f07879e77",
       "ci_source_match_status": "same-git-blob-as-successful-ci-head"
     },
     {
       "path": "research/nightfall/formalization/observability/QuadraticRealizedRangeBudget.lean",
       "classification": "quarantine",
-      "ci_run": null,
+      "ci_run": 43098858989,
       "passport": "active-proof-passport.html",
       "global_priority": "unverified",
       "note": "Realized coordinatewise range-budget corollary of the finite 16B switching inequality; source-level scope, separate strict pinned receipt not yet bound to exact current blob.",
       "source_blob_sha": "ae9ca8a8b871a3de1a746d43ffc193af18b9f483",
       "source_recovery_pr": null,
-      "ci_receipt_scope": "historical named-declaration receipt; exact current-source match not independently replayed",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification.",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "6637d32f89396dba3470c8b2eb406d149e20daf2"
     },
     {
       "path": "research/nightfall/formalization/observability/QuadraticSingleReplacement.lean",
@@ -266,7 +297,7 @@
       "note": "Actual coordinate single-replacement algebra for arbitrary finite alphabets and dense oriented quadratic interactions; dependent scoped source proof only.",
       "source_blob_sha": "c03cdf4e3024917d110f2bf8bae741575675aa33",
       "source_recovery_pr": 378,
-      "ci_receipt_scope": "Verified successful historical named-declaration CI run and exact source Git blob match; no new all-file compilation or cross-pin theorem certification.",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification.",
       "ci_run_head_sha": "1c81566bd2df899c08a958117549178f07879e77",
       "ci_source_match_status": "same-git-blob-as-successful-ci-head"
     },
@@ -279,7 +310,7 @@
       "note": "Independent-selector average and exact first-switch identity for finite quadratic polynomials on arbitrary categorical alphabets; no actual ANOVA influence theorem.",
       "source_blob_sha": "9bcbbf495bce4b39ffccc190d41556bac54ef85c",
       "source_recovery_pr": 378,
-      "ci_receipt_scope": "Verified successful historical named-declaration CI run and exact source Git blob match; no new all-file compilation or cross-pin theorem certification.",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification.",
       "ci_run_head_sha": "1c81566bd2df899c08a958117549178f07879e77",
       "ci_source_match_status": "same-git-blob-as-successful-ci-head"
     },
@@ -291,7 +322,9 @@
       "ci_run": 42965524565,
       "global_priority": "unverified",
       "source_blob_sha": "3c02e3e6d567807041964cbf32389b6f27692b78",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "5774e8475a7c3629931efd407724f0c281305fa5",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/observability/SignMomentLogTransfer.lean",
@@ -302,7 +335,7 @@
       "note": "Finite exponential-union and logarithmic trace implication conditional on a separately assumed normalized PSD moment inequality; the Gaussian moment hypothesis remains open here.",
       "source_blob_sha": "34a5b80494f18c0faa429fba56e1f7e49d4952f6",
       "source_recovery_pr": 371,
-      "ci_receipt_scope": "Verified successful historical named-declaration CI run and exact source Git blob match; no new all-file compilation or cross-pin theorem certification.",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification.",
       "ci_run_head_sha": "03d10a2652154e586c82024dfd3730b5f8d58e15",
       "ci_source_match_status": "same-git-blob-as-successful-ci-head"
     },
@@ -314,7 +347,9 @@
       "ci_run": 42959881782,
       "global_priority": "unverified",
       "source_blob_sha": "f8ad2e02785feeed0742131b6282b8b7c91400f0",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "16f57381c036c9670e9ba478be511bd957584de4",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/observability/SpectralProductHalf.lean",
@@ -325,7 +360,7 @@
       "note": "Finite eigenvalue product lower bound under nonnegative spectrum, without formalizing Gaussian integration or general PSD moment concentration.",
       "source_blob_sha": "369a5b47b9cc0b2c707120490741faa4e072d446",
       "source_recovery_pr": 371,
-      "ci_receipt_scope": "Verified successful historical named-declaration CI run and exact source Git blob match; no new all-file compilation or cross-pin theorem certification.",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification.",
       "ci_run_head_sha": "03d10a2652154e586c82024dfd3730b5f8d58e15",
       "ci_source_match_status": "same-git-blob-as-successful-ci-head"
     },
@@ -337,7 +372,9 @@
       "ci_run": 42959881782,
       "global_priority": "unverified",
       "source_blob_sha": "4676eb3feee9c700cc510a456c0ac2d928051cc8",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "16f57381c036c9670e9ba478be511bd957584de4",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/observability/UniversalScalarToTrace.lean",
@@ -347,7 +384,9 @@
       "ci_run": 42962205054,
       "global_priority": "unverified",
       "source_blob_sha": "7cd782e8f31aab9190346c5d5301cc201f406326",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "b1fed923b910b9f1b6d144a571d6a045e50a868a",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/observability/WeightedGreedyCover.lean",
@@ -358,7 +397,7 @@
       "note": "Constructed weighted greedy matching endpoint cover and 8B cover budget conditional on matching mass; does not produce the actual function's matching certificate.",
       "source_blob_sha": "418c3dfc6f107970006252925954da2c4e372f7f",
       "source_recovery_pr": 376,
-      "ci_receipt_scope": "Verified successful historical named-declaration CI run and exact source Git blob match; no new all-file compilation or cross-pin theorem certification.",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification.",
       "ci_run_head_sha": "7840e535e7c8d8cf8e3bff1e46fff59515539f29",
       "ci_source_match_status": "same-git-blob-as-successful-ci-head"
     },
@@ -371,7 +410,7 @@
       "note": "Classical maximal-weight greedy matching existence and domination for finite weighted graphs; not a novel matching algorithm.",
       "source_blob_sha": "c77ae49d4f28e4fe5ab3a131825ef386e123e26c",
       "source_recovery_pr": 376,
-      "ci_receipt_scope": "Verified successful historical named-declaration CI run and exact source Git blob match; no new all-file compilation or cross-pin theorem certification.",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification.",
       "ci_run_head_sha": "8a852965b8b9ebedeab284698493413710e0a86c",
       "ci_source_match_status": "same-git-blob-as-successful-ci-head"
     },
@@ -380,20 +419,24 @@
       "classification": "quarantine",
       "note": "Elementary injectivity and collision symmetry implications; no full code theorem",
       "passport": null,
-      "ci_run": 40995299592,
+      "ci_run": 42930668671,
       "global_priority": "unverified",
       "source_blob_sha": "8f2952ce74370e8247d189b338754a318b0507b6",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "4d92445c0f324a292accdfa5a204348e99c10ff5",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/odd_cycle/P23Arithmetic.lean",
       "classification": "quarantine",
       "note": "Numerical consequences conditional on underlying unproved odd-cycle estimate",
       "passport": null,
-      "ci_run": 40995299592,
+      "ci_run": 42930668671,
       "global_priority": "unverified",
       "source_blob_sha": "208114a5ef97a34bffcfe33ac37c273fd4eb9f2f",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "4d92445c0f324a292accdfa5a204348e99c10ff5",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/phase_block/PhaseBlock.lean",
@@ -403,7 +446,9 @@
       "ci_run": 40995299592,
       "global_priority": "unverified",
       "source_blob_sha": "b148d2ab4c673e1f67337e6985b88b45a87b09e8",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "d3a3717e846390461c7cf2ec41553189d78267a1",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/ANOVAActivation.lean",
@@ -413,7 +458,9 @@
       "ci_run": 42884789858,
       "global_priority": "unverified",
       "source_blob_sha": "e0e6503990f730f7982c88acd0ce1735729aee46",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "a5b601b53e8d7f3abc6c84cbc8d0514368d2c4bd",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/ANOVAPosteriorBridge.lean",
@@ -423,7 +470,9 @@
       "ci_run": null,
       "global_priority": "unverified",
       "source_blob_sha": "1568424ba292dfcf18ccd8b1307eb3baf466be63",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "no-named-source-matched-receipt-identified",
+      "ci_run_head_sha": null,
+      "ci_receipt_scope": "No successful directly relevant named-declaration CI run established for this source. Do not infer kernel certification from a nearby source-family success."
     },
     {
       "path": "research/nightfall/formalization/product_space/CertificateCostBridge.lean",
@@ -433,7 +482,9 @@
       "ci_run": 42925787438,
       "global_priority": "unverified",
       "source_blob_sha": "1bd7f4d0d2d6008d54b5d4ddf3b97316299360e1",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "aca819806786a549ec1cbdbe8fd1ac1359fc5c51",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/CertificateObservationBridge.lean",
@@ -443,7 +494,9 @@
       "ci_run": 42925787438,
       "global_priority": "unverified",
       "source_blob_sha": "be81759fe68365b70e7e50bf782a28242f722cbf",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "aca819806786a549ec1cbdbe8fd1ac1359fc5c51",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/EfronSteinDegree.lean",
@@ -453,7 +506,9 @@
       "ci_run": 42932085109,
       "global_priority": "unverified",
       "source_blob_sha": "7aae47034bced0f095059a16ff6d7280c28f3cf5",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "2e13f445894ea357c3e6a5d3920b81877a5a3a9f",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/FiniteEnergyCauchy.lean",
@@ -463,17 +518,21 @@
       "ci_run": 42921631024,
       "global_priority": "unverified",
       "source_blob_sha": "f4b7618523c9b6f54cb1c26b369b716bf0e79668",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "1d8c8b85bdb50c9f2b18c804fc344198aa5dbbd6",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/FiniteLevelCrossing.lean",
       "classification": "derived-transfer",
       "note": "Finite level-crossing certificate composition of inherited two-sided input",
       "passport": "certificate-acquisition-proof-passport.html",
-      "ci_run": null,
+      "ci_run": 42906796793,
       "global_priority": "unverified",
       "source_blob_sha": "d034390352fe5674ca584fcf0ba581e2e79e7a39",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "8371a5d06360ad48e8b5e4e2c1c0b73313816b1e",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/FiniteSectionSensitivity.lean",
@@ -483,7 +542,9 @@
       "ci_run": 42921631024,
       "global_priority": "unverified",
       "source_blob_sha": "db615272fd18722919f61788d8404375e27c88b6",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "1d8c8b85bdb50c9f2b18c804fc344198aa5dbbd6",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/FiniteSwitchingCore.lean",
@@ -493,7 +554,9 @@
       "ci_run": 42921631024,
       "global_priority": "unverified",
       "source_blob_sha": "bc34651e9b34bd211fe5eb5435b07c7bf00e4ced",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "1d8c8b85bdb50c9f2b18c804fc344198aa5dbbd6",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/HeterogeneousAlphabets.lean",
@@ -503,17 +566,21 @@
       "ci_run": 42932085109,
       "global_priority": "unverified",
       "source_blob_sha": "1e365ebb4c718f86807d7b37f2050c4b1011f1ec",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "2e13f445894ea357c3e6a5d3920b81877a5a3a9f",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/HeterogeneousOrientation.lean",
       "classification": "quarantine",
       "note": "Exchangeability of independent two-draw coordinate orientations",
       "passport": "finite-product-influence-proof-passport.html",
-      "ci_run": null,
+      "ci_run": 43078066988,
       "global_priority": "unverified",
       "source_blob_sha": "79766f90af166d3e5d664a66866f8b75db714339",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "a6208d2761c6a9376d2a14829d273b80f028581a",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/LocalizedOptimization.lean",
@@ -523,37 +590,45 @@
       "ci_run": 42929857436,
       "global_priority": "unverified",
       "source_blob_sha": "bf6896d3331fb012ad518dec0ec18066cee44af3",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/LocalizedOverlapConsequence.lean",
       "classification": "quarantine",
       "note": "Conditional algebraic overlap consequence assuming the localized bound",
       "passport": "finite-product-influence-proof-passport.html",
-      "ci_run": null,
+      "ci_run": 43078067086,
       "global_priority": "unverified",
       "source_blob_sha": "1cd8c4efb074579bf960e6d3a74b2cca9c6ba35a",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "a6208d2761c6a9376d2a14829d273b80f028581a",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/LocalizedWeightRemoval.lean",
       "classification": "quarantine",
       "note": "Weighted Cauchy-Schwarz optimization; standalone novelty not established",
       "passport": "finite-product-influence-proof-passport.html",
-      "ci_run": null,
+      "ci_run": 42868198742,
       "global_priority": "unverified",
       "source_blob_sha": "8f1d4189a3ed3af21b4f888588f107608a72cd9c",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "8b8896049d9308dbc7180f2e9096cca15d344623",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/MassWeightedRemoval.lean",
       "classification": "quarantine",
       "note": "Mass scaling of a conditional certificate inequality",
       "passport": "finite-product-influence-proof-passport.html",
-      "ci_run": null,
+      "ci_run": 42873981203,
       "global_priority": "unverified",
       "source_blob_sha": "b8391c3105e42ed3f5384c497591e70e4e4c6048",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "cef6dd91e8ada7475b55dc8fb3473fa520922521",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/NonconstantSamplerBridge.lean",
@@ -563,7 +638,9 @@
       "ci_run": 42925787438,
       "global_priority": "unverified",
       "source_blob_sha": "50e9c80200439bc27445a11d59761c401f46b1b1",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "aca819806786a549ec1cbdbe8fd1ac1359fc5c51",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/ProductInfluence.lean",
@@ -573,7 +650,9 @@
       "ci_run": 42929857470,
       "global_priority": "unverified",
       "source_blob_sha": "70f69d8caebfaef40efdf16bab63f223753c190f",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/ProductRowBound.lean",
@@ -583,17 +662,21 @@
       "ci_run": 42924358449,
       "global_priority": "unverified",
       "source_blob_sha": "511779569e34820f7945c345001cbccf04ba4bd1",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "0cacd241e22c99eafa399cba86be796323c5ceb4",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean",
       "classification": "derived-transfer",
       "note": "Finite-product oriented two-sided transfer and posterior bridge with upstream imports",
       "passport": "finite-product-influence-proof-passport.html",
-      "ci_run": 42903333354,
+      "ci_run": 42920987974,
       "global_priority": "unverified",
       "source_blob_sha": "01eaeec087624885167b44d4230f5ec872e59e4e",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "65b3222c1db67d3aa1505cad562683b6c02cc605",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/QuadraticHoeffdingBridge.lean",
@@ -603,7 +686,9 @@
       "ci_run": 43057281341,
       "global_priority": "unverified",
       "source_blob_sha": "2d393b726368528952e285abd31a28850156a5b9",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "2384d1b964d6b248a64309de692abe6867abe484",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/QuarticRademacher.lean",
@@ -613,7 +698,9 @@
       "ci_run": 42884789858,
       "global_priority": "unverified",
       "source_blob_sha": "840b127921714548057b6fedfa4ea3ff8eb42ff0",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "a5b601b53e8d7f3abc6c84cbc8d0514368d2c4bd",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/RealSquaredPosteriorOneStep.lean",
@@ -624,7 +711,7 @@
       "note": "Actual scalar and finite-Hilbert squared-resampling one-step posterior total-influence mean for normalized positive finite laws; historical Lean 4.33 receipt, not full adaptive policy or joint 4.35 compilation.",
       "source_blob_sha": "53446675a5210e96baceedcb25f3a1a1c894acf4",
       "source_recovery_pr": 377,
-      "ci_receipt_scope": "Verified successful historical named-declaration CI run and exact source Git blob match; no new all-file compilation or cross-pin theorem certification.",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification.",
       "ci_run_head_sha": "217fb068c5d9e460b2d9c314b4b334fb8d0f7d1b",
       "ci_source_match_status": "same-git-blob-as-successful-ci-head"
     },
@@ -636,17 +723,21 @@
       "ci_run": 42884789858,
       "global_priority": "unverified",
       "source_blob_sha": "c920d4ab77ea92ba6810650f15437fecac13735e",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "a5b601b53e8d7f3abc6c84cbc8d0514368d2c4bd",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/TwoDrawOrientation.lean",
       "classification": "quarantine",
       "note": "Classical two-independent-draw exchangeability/mask-mass equalities",
       "passport": "finite-product-influence-proof-passport.html",
-      "ci_run": null,
+      "ci_run": 43078066988,
       "global_priority": "unverified",
       "source_blob_sha": "c2819d1e06d5e0783b2f8dcba48dcf65beafa9e3",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "a6208d2761c6a9376d2a14829d273b80f028581a",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/VariancePosteriorOneStep.lean",
@@ -656,17 +747,21 @@
       "ci_run": 42925787438,
       "global_priority": "unverified",
       "source_blob_sha": "0f37d886d06d12fa9884ec5428355d39e5afdd0c",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "aca819806786a549ec1cbdbe8fd1ac1359fc5c51",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/WeightedReciprocalTransfer.lean",
       "classification": "derived-transfer",
       "note": "Law-weighted transfer of pinned Turturean antipodal machinery",
       "passport": "finite-product-influence-proof-passport.html",
-      "ci_run": 42903333354,
+      "ci_run": 42883827837,
       "global_priority": "unverified",
       "source_blob_sha": "880b5d187cb57294dfb10edf8569e9b0f0b3a2ce",
-      "ci_source_match_status": "not-source-matched-in-this-census"
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "59128e11c388c651bfd4ce0d3857d73c305b823d",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     }
   ],
   "off_main_review_scope": "Selected recovered closed PR 252 Lean certificate only. NOT an exhaustive census of all prior or external branch sources. The 39-module counts apply exclusively to the frozen main-branch source inventory.",
@@ -698,9 +793,13 @@
       "audit_note": "research/nightfall/formalization/phase_block/ADAPTIVE_BRANCH_EVIDENCE_20261111.md"
     }
   ],
-  "newly_quarantined_source": "PR 359 / merged at 008ccdc5: 4 Lean modules compile scoped routine/implied identities; does not kernel-certify full quadratic arbitrary-law influence or adaptive Hilbert theorem. Runs 43058772711, 43058085067, 43057281341 support named declarations only. PR 364 adds the finite arbitrary-length Hilbert moment lemma (CI 43062171542); full matching/ANOVA influence bridge remains unverified in Lean. PR 366 adds the classical law-transfer Lean module with scoped five-theorem receipt 43059618451; full Paper A/B novelty and Lean certification are separate. PR #374 stages a routine ContractSmoke.lean solely to test the exact-type compiler contract; no new mathematical novelty is asserted. 2026-11-11 v8: reconciled 12 additional main .lean modules with exact Git blob SHAs and historical scoped PR/CI references; 59 main modules total. Successful individual CI is not an end-to-end, cross-toolchain formal proof.",
+  "newly_quarantined_source": "PR 359 / merged at 008ccdc5: 4 Lean modules compile scoped routine/implied identities; does not kernel-certify full quadratic arbitrary-law influence or adaptive Hilbert theorem. Runs 43058772711, 43058085067, 43057281341 support named declarations only. PR 364 adds the finite arbitrary-length Hilbert moment lemma (CI 43062171542); full matching/ANOVA influence bridge remains unverified in Lean. PR 366 adds the classical law-transfer Lean module with scoped five-theorem receipt 43059618451; full Paper A/B novelty and Lean certification are separate. PR #374 stages a routine ContractSmoke.lean solely to test the exact-type compiler contract; no new mathematical novelty is asserted. 2026-11-11 v8: reconciled 12 additional main .lean modules with exact Git blob SHAs and historical scoped PR/CI references; 59 main modules total. Successful individual CI is not an end-to-end, cross-toolchain formal proof. 2026-11-11 rev9: audited 58 successful run-head source blob matches; ANOVAPosteriorBridge source-only/no independent theorem receipt.",
   "source_tree_sha": "f0007f6baea9ea53dfbde809bb243c017c17dbc6",
   "pinned_lean_toolchain": "leanprover/lean4:v4.35.0",
   "historical_compiler_environment_note": "Some existing source-family receipts and the actual scalar/Hilbert posterior one-step source used pinned Lean 4.33.0. Current repository pin is Lean 4.35.0. Source-matched universal recompilation, exact theorem contract, and cross-pin imports require separate gates.",
-  "compilation_receipt_policy": "ci_run is a historical scoped GitHub Actions reference, not a fresh result for this main-tree snapshot; source_blob_sha binds every current source file exactly. Null means no exact scoped CI receipt assigned in this census. The presence of a file or a passing adjacent module is not kernel certification. Eleven recovered module sources were checked against successful GitHub Actions run heads and matched byte-for-byte as Git blobs. The other 48 remain historical-reference/unverified-source-match, including one newly recovered module without a current scoped receipt."
+  "compilation_receipt_policy": "58 current source Git blobs were compared with successful GitHub Actions run-head trees and matched exactly (including run 43098858989 attempt 2). A blob match proves identical source presence in that run, not that every named declaration was audited. Actual named theorem types/axiom scopes are defined by workflow receipts and may use distinct pinned Lean 4.33/4.35 environments. ANOVAPosteriorBridge.lean has no directly identified named-declaration kernel receipt; do not infer it from upstream dependency compilation. None of this establishes a full arbitrary-law quadratic influence/adaptive theorem in a single Lean kernel.",
+  "ci_source_match_counts": {
+    "matched_successful_ci_head": 58,
+    "no_direct_receipt_identified": 1
+  }
 }
