@@ -50,6 +50,25 @@ jobs:
             --decl Nightfall.FiniteField.cubing_is_identity_mod_three \
             --decl Nightfall.FiniteField.cube_additive_mod_three \
             --json-out lean-receipts/finite3.json
+      - name: Independently replay finite phase decoder (10,000 deterministic signals)
+        run: python3 research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/verify_f16_phase_block.py
+      - name: Kernel-check F16/F4 phase-block candidate and reported axioms
+        run: |
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/phase_block/PhaseBlock.lean \
+            --strict \
+            --decl Nightfall.PhaseBlock.subgroup_cubic_identity \
+            --decl Nightfall.PhaseBlock.eighty_one_distinct_outputs \
+            --decl Nightfall.PhaseBlock.block_boolean_certificate \
+            --decl Nightfall.PhaseBlock.cube_fibers \
+            --decl Nightfall.PhaseBlock.field_inverses \
+            --decl Nightfall.PhaseBlock.seven_queries_counting_gap \
+            --decl Nightfall.PhaseBlock.residual_phase_injective \
+            --decl Nightfall.PhaseBlock.three_query_capacity_gap \
+            --allow-axiom propext \
+            --allow-axiom Quot.sound \
+            --timeout 300 \
+            --json-out lean-receipts/phase-block.json || { cat lean-receipts/phase-block.json; exit 1; }
       - name: Compile requested committed file (manual dispatch only)
         if: github.event_name == 'workflow_dispatch'
         env:
