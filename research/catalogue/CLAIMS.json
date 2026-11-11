@@ -180,7 +180,7 @@
       "priority": "unresolved",
       "primary": "papers/finite-product-influence/Bias_Free_Aaronson_Ambainis_All_Product_Spaces_v8.tex",
       "evidence": [
-        "papers/finite-product-influence/Rank_Optimal_Observation_Section_v7.tex",
+        "papers/finite-product-influence/Rank_Optimal_Observation_Section_v8.tex",
         "research/nightfall/2026-11-quadratic-rank-optimal/FINITE_SIGN_CLOSURE_v2.md",
         "research/nightfall/observability-publication/SOURCE_ACCESS.md",
         "research/nightfall/formalization/observability/README.md"
@@ -209,8 +209,8 @@
       "priority": "unresolved",
       "primary": "papers/finite-product-influence/Bias_Free_Aaronson_Ambainis_All_Product_Spaces_v8.tex",
       "evidence": [
-        "papers/finite-product-influence/Rank_Optimal_Observation_Introduction_v7.tex",
-        "papers/finite-product-influence/Rank_Optimal_Observation_Section_v7.tex",
+        "papers/finite-product-influence/Rank_Optimal_Observation_Introduction_v8.tex",
+        "papers/finite-product-influence/Rank_Optimal_Observation_Section_v8.tex",
         "research/nightfall/2026-11-quadratic-rank-optimal/FINITE_SIGN_CLOSURE_v2.md",
         "research/nightfall/2026-11-spectral-observability/README.md"
       ],
