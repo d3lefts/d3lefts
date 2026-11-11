@@ -94,9 +94,9 @@ The mixed difference h(1,1)-h(1,0)-h(0,1)+h(0,0) equals 4(1-p). For binary Berno
 
     f_{12}(x1,x2) = 4(1-p)(x1-p)(x2-p).
 
-Its sup norm is 4(1-p)^3; symmetry gives the identical f_{34} result. Thus two disjoint pair components have total sup norm 8(1-p)^3, approaching 8. Any universal degree-three disjoint-pair bound of the form sum ||f_pair||_inf <= K B therefore requires K>=8. The bounded quadratic matching argument permits K=4 only at degree <=2.
+Its sup norm is 4(1-p)max(p,1-p)^2 (because |x_i-p| is either p or 1-p); symmetry gives the identical f_{34} result. Thus two disjoint pair components have total sup norm 8(1-p)max(p,1-p)^2. The original v3 identity 8(1-p)^3 holds only for p <= 1/2, and is FALSE for p > 1/2. The corrected formula still tends to 8 as p approaches 0. Any universal degree-three disjoint-pair bound of the form sum ||f_pair||_inf <= K B therefore requires K>=8. The bounded quadratic matching argument permits K=4 only at degree <=2.
 
-The independent script selector_pair_symbolic.py checks these as integer polynomial identities for all p; no floating tolerance or third-party dependency.
+The independent script selector_pair_symbolic.py checks all four pair-ANOVA values as integer polynomial identities in p and uses exact rational counterchecks on both sides of 1/2; the piecewise supremum follows analytically by maximizing the elementary factors |x_i-p|. No floating tolerance or third-party dependency.
 
 ## Next decisive experiment
 
