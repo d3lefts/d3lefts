@@ -62,7 +62,7 @@ global 16B bound is not conditional on supplied range witnesses.
 No input mass, atom floor, random sampling or posterior certificate is
 assumed; this is the finite all-alphabet switching-to-section interface. -/
 theorem quadratic_actual_all_section_ranges_le_sixteen
-    [Nonempty α]
+    [Fintype α] [Nonempty α]
     (u v : E → ι) (hne : ∀ e, u e ≠ v e)
     (c : ℝ) (h : ι → α → ℝ)
     (k : E → α → α → ℝ) (B : ℝ)
