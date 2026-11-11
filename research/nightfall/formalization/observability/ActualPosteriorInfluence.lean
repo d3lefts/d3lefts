@@ -45,7 +45,10 @@ theorem posteriorLaw_nonneg
   classical
   cases h : s i with
   | none => simpa [posteriorLaw, h] using hp i a
-  | some b => simp [posteriorLaw, h, le_refl]
+  | some b =>
+      by_cases hab : a = b
+      · simp [posteriorLaw, h, hab]
+      · simp [posteriorLaw, h, hab]
 
 theorem posteriorLaw_sum
     (p : ι → α → ℝ) (hp1 : ∀ i, ∑ a : α, p i a = 1)
