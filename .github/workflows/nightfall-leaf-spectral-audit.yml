@@ -18,10 +18,12 @@ jobs:
           python-version: '3.11'
       - name: Exact finite Hilbert obstruction and selector resampling checks
         run: python3 -I research/nightfall/2026-11-leaf-spectral-transfer/check_leaf_spectral.py
+      - name: Exact rank-two posterior-closure and ANOVA drift checks
+        run: python3 -I research/nightfall/2026-11-leaf-spectral-transfer/check_posterior_closure.py
       - name: Record source hashes
         if: always()
         run: |
-          sha256sum research/nightfall/2026-11-leaf-spectral-transfer/LEAF_SPECTRAL_REDUCTION.md research/nightfall/2026-11-leaf-spectral-transfer/check_leaf_spectral.py > leaf-spectral-sha256.txt
+          sha256sum research/nightfall/2026-11-leaf-spectral-transfer/LEAF_SPECTRAL_REDUCTION.md research/nightfall/2026-11-leaf-spectral-transfer/check_leaf_spectral.py research/nightfall/2026-11-leaf-spectral-transfer/check_posterior_closure.py > leaf-spectral-sha256.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with:
