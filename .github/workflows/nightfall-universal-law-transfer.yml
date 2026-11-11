@@ -50,6 +50,7 @@ jobs:
             --decl Nightfall.UniversalLawTransfer.finite_loss_dual \
             --decl Nightfall.UniversalLawTransfer.exact_support_transfer \
             --decl Nightfall.UniversalLawTransfer.exact_observer_under_dominated_measure \
+            --decl Nightfall.UniversalLawTransfer.every_policy_budget_invariant_under_equivalence \
             --json-out lean-receipts/universal-law-transfer.json || {
               python3 -c "import json;r=json.load(open('lean-receipts/universal-law-transfer.json'));print((r.get('stdout') or '')[:60000]);print((r.get('stderr') or '')[:30000])" || true
               exit 1
