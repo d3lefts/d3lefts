@@ -31,6 +31,14 @@ jobs:
         run: |
           set -euo pipefail
           python3 scripts/check_research_archive.py --self-test
+      - name: Exact independent posterior identity and rank lower-bound replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 papers/finite-product-influence/check_rank_posterior_exact.py | tee /tmp/rank-posterior-audit.log
+          grep -q 'PASS exact_heterogeneous_posterior_reveal_cases=1638' /tmp/rank-posterior-audit.log
+          grep -q 'PASS exact_rank_lower_bound_cases=384' /tmp/rank-posterior-audit.log
+          grep -q 'audit_sha256=5fc2d5221f4a27ad606beb948c27f278b4645761ac6b3bbeac4df0850703454b' /tmp/rank-posterior-audit.log
       - name: Install LaTeX and PDF inspection utilities
         shell: bash
         run: |
