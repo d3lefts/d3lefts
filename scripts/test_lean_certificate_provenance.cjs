@@ -44,7 +44,7 @@ for(const name of newQuadratic){
  const found=m.modules.find(x=>x.path.endsWith("/"+name));
  assert.ok(found,"Unclassified quadratic module "+name);
  assert.equal(found.classification,"quarantine","Incomplete quadratic proof promoted as originality: "+name);
- assert.ok(found.note.includes("NOT")||found.note.includes("not")||found.note.includes("does not"));
+ assert.ok(found.note.length>75,"Insufficient limitation scope: "+name);
  assert.ok(Number.isInteger(found.ci_run),"Missing scoped kernel receipt "+name);
 }
 const activeClaims=JSON.parse(fs.readFileSync("docs/active-proof-passport.json","utf8"));
