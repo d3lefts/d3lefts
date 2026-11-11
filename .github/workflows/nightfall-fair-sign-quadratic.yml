@@ -18,10 +18,12 @@ jobs:
           python-version: '3.11'
       - name: Replay finite exact Fractions (not proof of universal theorem)
         run: python3 -I research/nightfall/2026-11-fair-sign-quadratic/check_exact.py
+      - name: Exact heterogeneous mixed-control and posterior audit
+        run: python3 -I research/nightfall/2026-11-fair-sign-quadratic/check_heterogeneous_mixed.py
       - name: Record checked-source hashes
         if: always()
         run: |
-          sha256sum research/nightfall/2026-11-fair-sign-quadratic/PROOF_NOTE.md research/nightfall/2026-11-fair-sign-quadratic/check_exact.py > fair-sign-source-sha256.txt
+          sha256sum research/nightfall/2026-11-fair-sign-quadratic/PROOF_NOTE.md research/nightfall/2026-11-fair-sign-quadratic/check_exact.py research/nightfall/2026-11-fair-sign-quadratic/check_heterogeneous_mixed.py > fair-sign-source-sha256.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with:
