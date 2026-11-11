@@ -46,12 +46,12 @@
     {
       "id": "P4",
       "status": "elementary-derived-and-finite-tested",
-      "claim": "MSE=1/k-(1/(r k²))sum q_jt/m^(2(d-1)-h_jt); optimal replica gain g(c)=m^(c-1-2s) (c<=s+1), min(1,(c-s)/m^s) thereafter",
+      "claim": "MSE=1/k-(1/(r k²))sum q_jt/m^(2(d-1)-h_jt); optimal replica gain g(c)=m^(c-1-2s) (c<=s+1), min(1,(c-s)/m^s) thereafter; globally optimal fixed-Q allocation fills complete replicas, with R*_Q=1/k-(a+g(b))/(r k²)",
       "assumptions": [
         "nested-address uniform independent construction",
         "fixed nonadaptive query set"
       ],
-      "gate": "prior-art check; universal upper bound remains separate"
+      "gate": "prior-art check; universal upper bound remains separate; exact global result is construction-specific, not novel-priority cleared"
     },
     {
       "id": "P5",

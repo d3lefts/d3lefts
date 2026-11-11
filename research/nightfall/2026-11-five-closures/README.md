@@ -2,7 +2,7 @@
 
 Research lead: Devin J. Wright / NIGHTFALL Constellation. **Scope:** research checkpoint; no externally reviewed novelty and no publication clearance.
 
-- [Exact nested-address budget optimum and universal-degree LP sandwich](EXACT_BUDGET_AND_GENERAL_LP_20261111.md), with standalone proofs.\n- [Manifest repair and reproducibility erratum](INTEGRITY_ERRATUM_20261111.md).\n- [Full analytic claim/source note](FIVE_CLOSURES_V11.md), with precise conditionality and original reference attributions.
+- [Exact global nonadaptive allocation and its closed-form risk curve](EXACT_GLOBAL_QUERY_ALLOCATION.md).\n- [Exact nested-address budget optimum and universal-degree LP sandwich](EXACT_BUDGET_AND_GENERAL_LP_20261111.md), with standalone proofs.\n- [Manifest repair and reproducibility erratum](INTEGRITY_ERRATUM_20261111.md).\n- [Full analytic claim/source note](FIVE_CLOSURES_V11.md), with precise conditionality and original reference attributions.
 - [Independent exact finite checker](checks/independent_five_audit.py), run with `python3 -I research/nightfall/2026-11-five-closures/checks/independent_five_audit.py`.
 - [CI workflow](../../../.github/workflows/nightfall-five-closures.yml). A green run verifies the stated finite cases only.
 - [Claim registry](PROOF_PASSPORTS.json) preserving dependencies, certification status, limitations and next independent gate.
