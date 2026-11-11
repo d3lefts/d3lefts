@@ -18,3 +18,4 @@ Optimize over **bounded homogeneous cubic observables** on biased small product 
 - New deductions: analytic proof text, finite exact falsification checks in `checks/exact_bridge.py`.
 - Imported: Q2/Lk in v5, PR #335; no new formal proof of those sources here.
 - Open: unrestricted homogeneous cubic bound, full infinitary review, independent expert proof review, originality.
+9. **Tripartite reduction:** independently check the ANOVA projector `∏(I-E_A)`, its factor-eight L∞ norm, the exact 2/9 expected energy retention and the factor-36 transfer; distinguish ordinary bounded forms from completely bounded forms and cite O'Donnell–Zhao (2016), Bansal–Sinha–de Wolf (2022).
