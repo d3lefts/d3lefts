@@ -1,0 +1,53 @@
+name: NIGHTFALL quadratic posterior energy Lean gate
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/PosteriorEnergyDrift.lean'
+      - '.github/workflows/nightfall-quadratic-posterior-energy.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  posterior:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Lean and Mathlib
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.35.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          git clone --depth 1 --branch v4.35.0 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4
+          (cd /tmp/mathlib4 && "$HOME/.elan/bin/lake" exe cache get)
+      - name: Kernel-compile the exact ANOVA energy drift
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.PosteriorEnergy
+          python3 scripts/lean_bridge.py research/nightfall/formalization/observability/PosteriorEnergyDrift.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.card_remaining_insert \
+            --decl $N.remainingTotal_insert_add_influence \
+            --decl $N.remainingTotal_insert_eq_sub \
+            --decl $N.remainingInf_nonneg \
+            --decl $N.remainingTotal_nonneg \
+            --decl $N.remainingTotal_empty \
+            --decl $N.remainingInf_revealed \
+            --json-out lean-receipts/posterior-energy.json || {
+              cat lean-receipts/posterior-energy.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/posterior-energy.json
+          sha256sum research/nightfall/formalization/observability/PosteriorEnergyDrift.lean > lean-receipts/SHA256SUMS
+      - name: Archive receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quadratic-posterior-energy-lean
+          path: lean-receipts/
+          if-no-files-found: warn
