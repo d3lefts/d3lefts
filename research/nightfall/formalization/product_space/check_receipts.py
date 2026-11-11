@@ -11,8 +11,8 @@ import sys
 from pathlib import Path
 
 STANDARD = {'propext', 'Classical.choice', 'Quot.sound'}
-HEX = re.compile(r'[0-9a-f]{64}\\Z')
-SCOPED = re.compile(r"^'([^']+)' (does not depend on any axioms|depends on axioms: \\[([^\\]]*)\\])", re.M)
+HEX = re.compile(r'[0-9a-f]{64}\Z')
+SCOPED = re.compile(r"^'([^']+)' (does not depend on any axioms|depends on axioms: \[([^\]]*)\])", re.M)
 
 
 def require(condition, message):
