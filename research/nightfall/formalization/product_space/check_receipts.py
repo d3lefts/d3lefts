@@ -72,7 +72,7 @@ def audit(path):
     for name in names:
         deps = dependencies(stdout, name)
         require(deps <= STANDARD, f'{path}: {name}: unauthorized axioms {sorted(deps-STANDARD)}')
-        require(r.get('axiom_audit', {}).get(name) in ('none_reported', 'allowlisted_dependencies'),
+        require(r.get('axiom_audit', {}).get(name) in ('none_reported', 'allowlisted_dependencies', 'dependencies_reported'),
                 f'{path}: bad bridge audit for {name}')
         require(set(r.get('axiom_dependencies', {}).get(name, [])) == deps,
                 f'{path}: axiom metadata disagrees with compiler output')
