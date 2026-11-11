@@ -78,7 +78,6 @@ theorem highEnergy_le_coverInfluence
   by_cases h3 : 3 ≤ S.card
   · by_cases hz : E S = 0
     · simp [h3, hz]
-      exact hrhs
     · obtain ⟨i, hiH, hiS⟩ := hcover S h3 hz
       have he : 0 ≤ ∑ j ∈ H.erase i,
           if j ∈ S then E S else 0 := by
@@ -96,8 +95,7 @@ theorem highEnergy_le_coverInfluence
       simp only [if_pos h3]
       rw [heq]
       linarith
-  · simp [h3]
-    exact hrhs
+  · simpa only [if_neg h3] using hrhs
 
 /-- With a coordinate-wise upper bound M, charging all high-order
 components to a t-vertex cover costs at most t*M, independent of the
