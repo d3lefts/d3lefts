@@ -136,3 +136,29 @@ Therefore
 Combine the two estimates. Approximation by finite leaf sets and conditional expectations handles countably many active inputs; strong measurability reduces arbitrary index families to countable support. The leading coefficient 1 is sharp for f=(Y_1+...+Y_n)/n with fair leaves and unused controls, since V=1/n and M=1/n^2.
 
 **Distinction:** This theorem handles arbitrary high-dimensional leaf sections but requires a *fixed finite control family* outside which all leaf interactions are additive. Operator C permits arbitrarily many dense controls but requires rank-one leaf features. The unrestricted generalized selector case contains neither restriction and remains open.
+
+## Operator E. Sharply priced adaptive observation after shared controls (Hilbert outputs)
+
+**Compositional deduction** from Operator D's conditional-additive representation and NIGHTFALL's separate sharp Hilbert-valued additive influence budget (Spectral Adaptive Observability, Theorem 2.3). The imported Hilbert theorem remains an analytic, non-refereed dependency; no new end-to-end Lean certification is claimed.
+
+Let F take values in a real Hilbert space with ||F||<=B. Suppose there are t independent shared control coordinates A=(X_1,...,X_t), such that conditioning on A=a makes F(a,Y) an additive function of an arbitrary number of independent leaves Y_k. No restriction on t-way interactions among controls, leaf alphabets, minimum atom masses, leaf-section ranks, or number of leaves. Let P_r be the fixed leading rank-r covariance projection and tau_r the covariance trace tail beyond rank r. Put
+
+    a_r=Gamma(r/2)/(sqrt(pi)*Gamma((r+1)/2)).
+
+For every eta>0, a deterministic measurable adaptive policy achieves
+
+    E||F-E[F|transcript]||^2 <= tau_r+eta
+
+with at most
+
+    N = t + max(1,ceil(B^2/(4*a_r^2*eta)))
+
+whole-coordinate observations. For fixed t and unit-ball rank-r outputs, this is O(t+r/eta), independent of every input alphabet. The order Omega(r/eta) is necessary already for additive fair-sign outputs, so fixed-t query scaling is sharp up to the additive t and the already sharp additive constant. This claim counts *queries*, not computation of conditional means or coordinate rankings.
+
+**Proof.** Observe the t control coordinates first. For almost every resulting control value a, the projected function G_a(Y)=P_r F(a,Y) has ||G_a||<=B, lives in an r-dimensional output space, and is additive in independent leaves. The Hilbert additive influence-budget theorem yields
+
+    sum_k sqrt(I_{Y_k}(G_a)) <= B/a_r.
+
+For any q>=1, query the q leaves having the largest conditional influences for that a. By the elementary sharp sorted-tail inequality, their unobserved additive variance is at most B^2/(4*a_r^2*q). Hence the projected mean-square error after t+q queries is at most eta with the displayed q, pointwise for almost every a. The optimal full-output conditional mean adds no more than tau_r of orthogonal residual risk, by covariance projection and conditional-expectation contraction. Strong measurability supplies countably many active leaves, jointly measurable conditional influences, and fixed-order measurable tie-breaking. For arbitrary index sets, use countable-support reduction. The standard rank-r additive independent-fair-sign lower example gives the stated Omega(r/eta) necessity.
+
+**Implication:** for t=2 this gives a rank-sensitive, alphabet-free sharp-order adaptive observability theorem for the full bounded-control cubic class even with *high-rank* leaf sections, improving the general quadratic-purpose constant drastically. It does not apply to arbitrary cubic systems without a finite shared-control core, and it does not prove the universal cubic influence bound.
