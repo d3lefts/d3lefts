@@ -1,0 +1,32 @@
+name: NIGHTFALL Kaczmarz proof passport audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-kaczmarz-logfree/**'
+      - 'docs/kaczmarz-proof-passport.*'
+      - 'docs/active-proof-passport.*'
+      - 'docs/index.html'
+      - 'docs/research.html'
+      - 'docs/passport.html'
+      - 'docs/site.js'
+      - 'docs/sitemap.xml'
+      - 'scripts/test_active_proof_passport.cjs'
+      - '.github/workflows/nightfall-kaczmarz-passport.yml'
+  push:
+    paths:
+      - 'research/nightfall/2026-11-kaczmarz-logfree/**'
+      - 'docs/kaczmarz-proof-passport.*'
+      - 'docs/active-proof-passport.*'
+      - 'scripts/test_active_proof_passport.cjs'
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exact-rational projection replay
+        run: python3 research/nightfall/2026-11-kaczmarz-logfree/exact_audit.py
+      - name: Active passport schema and no-promotion checks
+        run: node scripts/test_active_proof_passport.cjs
+      - name: Site links and editorial gates
+        run: python3 scripts/check_site.py
