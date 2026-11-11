@@ -24,6 +24,9 @@ const exceptions=[];
 for(const f of files){
  const source=readFileSync(join(root,f),"utf8");
  for(const match of source.matchAll(/#(?:[0-9a-f]{8}|[0-9a-f]{6}|[0-9a-f]{3})\b/gi)){
+  // A textual GitHub issue/PR reference (e.g. "PR #298") is not a CSS hue.
+  // Keep scanning all actual CSS hex literals, including inline color attributes.
+  if (/(?:\bPR|\bissue|\bpull request)\s*$/i.test(source.slice(Math.max(0,match.index-24),match.index))) continue;
   const hex=match[0],{h,s,l}=hueSat(hex);
   if(h>=55&&h<=175&&s>=.60&&l>=.30&&l<=.92)exceptions.push(f+": "+hex);
  }
