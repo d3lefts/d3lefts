@@ -4,6 +4,7 @@ on:
     paths:
       - 'research/nightfall/formalization/observability/PosteriorEnergyDrift.lean'
       - 'research/nightfall/formalization/observability/ParityBlockCancellation.lean'
+      - 'research/nightfall/formalization/observability/GlobalQuadraticParity.lean'
       - '.github/workflows/nightfall-quadratic-posterior-energy.yml'
       - 'research/nightfall/2026-11-quadratic-law-free-audit/check_posterior_drift_exact.py'
   workflow_dispatch:
@@ -66,6 +67,25 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/parity-blocks.json
           sha256sum research/nightfall/formalization/observability/{PosteriorEnergyDrift,ParityBlockCancellation}.lean > lean-receipts/SHA256SUMS
+      - name: Kernel-compile actual global quadratic matching parity comparison
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/observability/ParityBlockCancellation.lean /tmp/mathlib4/ParityBlockCancellation.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ParityBlockCancellation.olean ParityBlockCancellation.lean)
+          N=Nightfall.Observability.GlobalQuadraticParity
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/GlobalQuadraticParity.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.global_matching_quadratic_parity_identity \
+            --decl $N.global_matching_delta_budget \
+            --json-out lean-receipts/global-quadratic-parity.json || {
+              python3 -c "import json; x=json.load(open('lean-receipts/global-quadratic-parity.json')); print(x.get('status')); print((x.get('stdout') or '')[:45000])" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/global-quadratic-parity.json
+          sha256sum research/nightfall/formalization/observability/GlobalQuadraticParity.lean >> lean-receipts/SHA256SUMS
       - name: Exact real-posterior drift, all transcript branches
         run: |
           set -euo pipefail
