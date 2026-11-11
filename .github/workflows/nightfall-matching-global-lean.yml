@@ -39,6 +39,8 @@ jobs:
             --decl $N.double_swap \
             --decl $N.cross_sum_cancellation \
             --decl $N.global_parity_identity \
+            --decl $N.full_matched_rectangles_le_four \
+            --decl $N.full_oriented_matching_le_four \
             --json-out lean-receipts/global-matching-parity.json || {
               cat lean-receipts/global-matching-parity.json || true
               exit 1
