@@ -45,7 +45,7 @@ for arbitrary input alphabets and product laws. For Hilbert-valued outputs, with
 N_{\rm quad}\le\left\lceil\frac{4D^2 B^2}{a_r^2\eta}\right\rceil
 \]
 for projected risk at most \(\eta\), plus the spectral tail \(\tau_r\).
-For unit-ball rank-\(r\) quadratic observables the worst-case order is \(\Theta(r/\eta)\): the lower bound is already attained by rank-\(r\) additive fair-sign sums. This is an optimal query-scaling classification, not an efficient runtime statement.
+For unit-ball rank-\(r\) quadratic observables and \(0<\eta\le1/4\), the worst-case order is \(\Theta(r/\eta)\): the lower bound is already attained by rank-\(r\) additive fair-sign sums. This is an optimal query-scaling classification, not an efficient runtime statement.
 
 ### Proof I: finite bias-free scalar theorem and transfer
 
