@@ -4,6 +4,8 @@
 
 The [v8 theorem and proof note](homogeneous-cubic-v8/THEOREM.md) derives the uniform cubic-level bound \(\|f^{[3]}\|_\infty\le32\|f\|_\infty\), reducing unrestricted degree-three squared-variance influence, up to constants, to bounded homogeneous cubics. Conditional on the unrefereed v5 Q2/Lk arguments, it establishes top-cubic-linearity, layerwise-linearity, and *given* soft-cover spectral prediction statements.
 
+A further [three-block projection](homogeneous-cubic-v8/TRIPARTITE_REDUCTION.md) shows that the pure-cubic exponent-two question is equivalent, up to a factor 36, to the 3-partite trilinear question. The mechanism is elementary and related to published polynomial decoupling, not priority-certified. Its [243-color exact checker](homogeneous-cubic-v8/checks/tripartite_projection_exact.py) is included.
+
 The independent [proof attack](homogeneous-cubic-v8/PROOF_ATTACK.md) constructs exact weighted complete 3-hypergraphs showing that vertex influence-energy budgets and disjoint matching square-root weights **alone** cannot guarantee a small low-residual cubic cover. This is **not** a bounded-cubic function counterexample. [Exact ANOVA/cover checker](homogeneous-cubic-v8/checks/exact_bridge.py), [no-go checker](homogeneous-cubic-v8/checks/weighted_hypergraph_no_go.py) and [review obligations](homogeneous-cubic-v8/REVIEW_GATES.md) accompany the result. All results remain internal; no independent referee, global novelty clearance or unrestricted cubic (2,4) theorem.
 
 
