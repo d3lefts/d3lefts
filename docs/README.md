@@ -20,6 +20,7 @@ Both experiences share source records and review standards, but divide by resear
 | [`research.html`](research.html) | Curated library, source distinctions, scope-qualified records and filters |
 | [`product-space-influence.html`](product-space-influence.html) | Candidate influence/fractional-certificate manuscript, formalization evidence and outstanding proof obligations |
 | [`observability.html`](observability.html) | Current quadratic observability principal manuscript, query separation, companion certificate bridge, explicit cubic obstruction and publication gates |
+| [`spectral-observability.html`](spectral-observability.html) | Latest Spectral Certificate-to-Observation synthesis and ranked frontier theorem candidates, with finite-product Lean receipts distinguished from unrefereed Hilbert/minimax statements |
 | [`active-proof-passport.html`](active-proof-passport.html) · [`JSON`](active-proof-passport.json) | Manually versioned active claim registry (four scoped records, proof dependencies, limits and next audit), distinct from the frozen 11 historical Passports |
 | [`review.html`](review.html) | Independent reviewer paths and bounded validation tasks |
 | [`passport.html`](passport.html) | Claim-scoped proof passports and their dependencies |
