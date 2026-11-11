@@ -1,0 +1,29 @@
+name: NIGHTFALL sharp projection and quadratic-backdoor exact audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-quadratic-backdoor-transfer/**'
+      - '.github/workflows/nightfall-quadratic-backdoor-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-rational:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Execute independent exact rational checkers
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/2026-11-quadratic-backdoor-transfer/check_sharp_projection.py | tee /tmp/sharp.log
+          python3 research/nightfall/2026-11-quadratic-backdoor-transfer/check_backdoor_transfer.py | tee /tmp/backdoor.log
+          grep -q 'PASS exact_projection_models=288' /tmp/sharp.log
+          grep -q 'PASS exact_sharpness_degrees=8' /tmp/sharp.log
+          grep -q 'PASS exact_product_models=340' /tmp/backdoor.log
+          grep -q 'PASS exact_defect_models=108' /tmp/backdoor.log
+          grep -q 'PASS exact_lower_bound_posterior_masks=392' /tmp/backdoor.log
+          grep -q 'audit_digest_sha256 4321349be4edf8e2b00165c01b3d418c3fe088058bbd182a0c0221b77cc44d76' /tmp/sharp.log
+          grep -q 'audit_digest_sha256 0c04dbcc9c5bb39141b9f780afa1ffb0996400d9ac07c38ede84690ca797c1da' /tmp/backdoor.log
+          sha256sum research/nightfall/2026-11-quadratic-backdoor-transfer/{SHARP_TOP_LAYER_REMOVAL_v1.md,QUADRATIC_BACKDOOR_TRANSFER_v1.md,check_sharp_projection.py,check_backdoor_transfer.py}
