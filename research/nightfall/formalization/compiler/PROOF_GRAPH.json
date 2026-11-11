@@ -1,0 +1,79 @@
+{
+  "schema": "nightfall-proof-graph/v1",
+  "updated": "2026-11-11",
+  "scope": "Universal spectral observability: do not auto-promote from scoped kernel modules",
+  "claims": [
+    {
+      "id": "finite_scalar",
+      "status": "kernel_scoped",
+      "source": "research/nightfall/formalization/product_space/ProductInfluence.lean",
+      "kernel_receipt": "https://github.com/d3lefts/d3lefts/actions/runs/42929857470",
+      "toolchain": "4.33.0",
+      "depends_on": [],
+      "open_obligations": [
+        "Port and recompile along with downstream theorem under one 4.35 toolchain"
+      ]
+    },
+    {
+      "id": "signed_covariance",
+      "status": "kernel_scoped",
+      "source": "research/nightfall/formalization/observability/DiagonalSignCoherence.lean",
+      "depends_on": [],
+      "kernel_receipt": "https://github.com/d3lefts/d3lefts/actions/runs/42972021272",
+      "toolchain": "4.35.0"
+    },
+    {
+      "id": "actual_finite_posterior",
+      "status": "kernel_scoped",
+      "source": "research/nightfall/formalization/observability/ActualPosteriorInfluence.lean",
+      "depends_on": [],
+      "kernel_receipt": "https://github.com/d3lefts/d3lefts/actions/runs/42973878336",
+      "toolchain": "4.35.0"
+    },
+    {
+      "id": "psd_sign_moment",
+      "status": "analytic_only",
+      "depends_on": [
+        "signed_covariance"
+      ],
+      "open_obligations": [
+        "Gaussian integration and composition with normalized sign-moment inequality"
+      ]
+    },
+    {
+      "id": "completed_product",
+      "status": "analytic_only",
+      "depends_on": [
+        "finite_scalar"
+      ],
+      "open_obligations": [
+        "Countable reduction, finite rectangular limit, null sections"
+      ]
+    },
+    {
+      "id": "hilbert_adaptive",
+      "status": "analytic_only",
+      "depends_on": [
+        "psd_sign_moment",
+        "completed_product",
+        "actual_finite_posterior"
+      ],
+      "open_obligations": [
+        "Formal proof of posterior trace influence descent and hard-cap Hilbert risk"
+      ]
+    },
+    {
+      "id": "universal_spectral_observability",
+      "status": "analytic_only",
+      "depends_on": [
+        "hilbert_adaptive",
+        "finite_scalar"
+      ],
+      "promoted_full": false,
+      "open_obligations": [
+        "No end-to-end Lean declaration of B1/B2"
+      ],
+      "note": "Existential analytic manuscript, no full Lean certification"
+    }
+  ]
+}
