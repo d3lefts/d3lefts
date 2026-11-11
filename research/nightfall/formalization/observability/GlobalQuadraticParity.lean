@@ -67,11 +67,10 @@ theorem global_matching_quadratic_parity_identity
             first second sideFirst sideSecond off
             (oddConfig left right σ))) =
     (Fintype.card (ι → Bool) : ℝ) *
-      (∑ i : ι,
-        matched i (left i false) (right i false) -
+      (∑ i : ι, (matched i (left i false) (right i false) -
         matched i (left i false) (right i true) -
         matched i (left i true) (right i false) +
-        matched i (left i true) (right i true)) := by
+        matched i (left i true) (right i true))) := by
   let a : (ι → Bool) → ℝ :=
     fun σ => c + (∑ i : ι, leftOne i (left i (σ i)))
   let b : (ι → Bool) → ℝ :=
@@ -131,11 +130,10 @@ theorem global_matching_quadratic_parity_identity
   have hm :
       2 * (∑ σ : ι → Bool, (m σ - m' σ)) =
       (Fintype.card (ι → Bool) : ℝ) *
-        (∑ i : ι,
-          matched i (left i false) (right i false) -
+        (∑ i : ι, (matched i (left i false) (right i false) -
           matched i (left i false) (right i true) -
           matched i (left i true) (right i false) +
-          matched i (left i true) (right i true)) := by
+          matched i (left i true) (right i true))) := by
     exact matched_family_delta_identity
       (fun i v w => matched i (left i v) (right i w))
   have hcancel :
@@ -182,20 +180,18 @@ theorem global_matching_delta_budget
     (hbounded : ∀ x : ι → Bool → α,
       |quadraticModel c leftOne rightOne matched
           first second sideFirst sideSecond off x| ≤ B) :
-    (∑ i : ι,
-        matched i (left i false) (right i false) -
+    (∑ i : ι, (matched i (left i false) (right i false) -
         matched i (left i false) (right i true) -
         matched i (left i true) (right i false) +
-        matched i (left i true) (right i true)) ≤ 4 * B := by
+        matched i (left i true) (right i true))) ≤ 4 * B := by
   let n : ℝ := Fintype.card (ι → Bool)
   have hn : 0 < n := by
     dsimp [n]
     exact_mod_cast Fintype.card_pos_iff.mpr ⟨fun _ => false⟩
-  let D : ℝ := ∑ i : ι,
-        matched i (left i false) (right i false) -
+  let D : ℝ := ∑ i : ι, (matched i (left i false) (right i false) -
         matched i (left i false) (right i true) -
         matched i (left i true) (right i false) +
-        matched i (left i true) (right i true)
+        matched i (left i true) (right i true))
   let Q : ℝ := ∑ σ : ι → Bool,
         (quadraticModel c leftOne rightOne matched
             first second sideFirst sideSecond off
