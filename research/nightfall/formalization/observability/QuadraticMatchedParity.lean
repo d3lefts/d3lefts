@@ -36,8 +36,8 @@ theorem selector_double_sum (i : ι) (g : Bool → ℝ) :
     _ = ∑ _σ : ι → Bool, (g false + g true) := by
       apply Finset.sum_congr rfl
       intro σ _
-      cases σ i <;> simp
-    _ = _ := by simp
+      cases σ i <;> simp [add_comm]
+    _ = _ := by simp [mul_add]
 
 /-- Exact within-block mixed rectangle, no probabilistic approximation. -/
 theorem rectangle_identity (i : ι) (w : Bool → Bool → ℝ) :
@@ -80,7 +80,8 @@ theorem cross_sum_cancellation
   by_cases hij : i = j
   · simp [hij]
   · simp only [if_neg hij]
-    simpa only using
+    cases s <;> cases t <;>
+      simpa using
       (cross_block_all_sides
         (fun (_ : ι) (b : Bool) => b) (fun (_ : ι) (b : Bool) => b)
         (fun (_ : ι) (b : Bool) => b) (fun (_ : ι) (b : Bool) => b)
@@ -88,7 +89,7 @@ theorem cross_sum_cancellation
 
 /-- Match-paired polynomial; the four off-block orientations are separate. -/
 structure BlockPolynomial (ι : Type*) where
-  constant : ℝ
+  offset : ℝ
   left : ι → Bool → ℝ
   right : ι → Bool → ℝ
   inside : ι → Bool → Bool → ℝ
@@ -96,7 +97,7 @@ structure BlockPolynomial (ι : Type*) where
 
 noncomputable def evaluate (P : BlockPolynomial ι)
     (odd : Bool) (σ : ι → Bool) : ℝ :=
-  P.constant +
+  P.offset +
     (∑ i : ι, P.left i (σ i)) +
     (∑ i : ι, P.right i (if odd then !(σ i) else σ i)) +
     (∑ i : ι, P.inside i (σ i) (if odd then !(σ i) else σ i)) +
@@ -148,7 +149,7 @@ theorem global_parity_identity (P : BlockPolynomial ι) :
         exact Finset.sum_comm
   have he :
       (∑ σ : ι → Bool, evaluate P false σ) =
-      (∑ σ : ι → Bool, P.constant) +
+      (∑ σ : ι → Bool, P.offset) +
       (∑ i : ι, ∑ σ : ι → Bool, P.left i (σ i)) +
       (∑ i : ι, ∑ σ : ι → Bool, P.right i (σ i)) +
       (∑ i : ι, ∑ σ : ι → Bool, P.inside i (σ i) (σ i)) +
@@ -159,7 +160,7 @@ theorem global_parity_identity (P : BlockPolynomial ι) :
     rw [hcomm1, hcomm1, hcomm1, hcomm2]
   have ho :
       (∑ σ : ι → Bool, evaluate P true σ) =
-      (∑ σ : ι → Bool, P.constant) +
+      (∑ σ : ι → Bool, P.offset) +
       (∑ i : ι, ∑ σ : ι → Bool, P.left i (σ i)) +
       (∑ i : ι, ∑ σ : ι → Bool, P.right i (!(σ i))) +
       (∑ i : ι, ∑ σ : ι → Bool, P.inside i (σ i) (!(σ i))) +
@@ -167,7 +168,7 @@ theorem global_parity_identity (P : BlockPolynomial ι) :
         if i = j then 0 else P.outside s t i j
           (if s then !(σ i) else σ i)
           (if t then !(σ j) else σ j)) := by
-    simp only [evaluate, Bool.true_and, Bool.true_eq_true, ite_true,
+    simp only [evaluate, Bool.true_and, ite_true,
       Finset.sum_add_distrib]
     rw [hcomm1, hcomm1, hcomm1, hcomm2]
   have hre :
@@ -192,7 +193,8 @@ theorem global_parity_identity (P : BlockPolynomial ι) :
       (2:ℝ) * ((∑ i : ι, ∑ σ : ι → Bool, P.inside i (σ i) (σ i)) -
         (∑ i : ι, ∑ σ : ι → Bool, P.inside i (σ i) (!(σ i)))) =
       (Fintype.card (ι → Bool):ℝ) * ∑ i : ι, rectangle P i := by
-    rw [← Finset.sum_sub_distrib, Finset.mul_sum]
+    rw [← Finset.sum_sub_distrib]
+    simp only [Finset.mul_sum]
     apply Finset.sum_congr rfl
     intro i _
     exact hinside i
