@@ -105,16 +105,24 @@ receipt={
  "fixed_81_distinct":81,
  "fixed_block_min_output_Hamming_distance":distance,
  "adaptive_27_distinct":27,
- "first_fibers":dict(sorted(fibers.items())),
+ "first_fibers":{str(k):v for k,v in sorted(fibers.items())},
  "canonical_fixed_rows":4369,
  "distinct_collision_masks":439,
  "minimal_fixed_pair_collision_pairs":mincoll,
  "exhaustive_k4_signals":sum(dist.values()),
- "k4_query_distribution":dict(sorted(dist.items())),
+ "k4_query_distribution":{str(k):v for k,v in sorted(dist.items())},
  "k7_support_phase_classes":sectors,
  "sharp_worst_case_queries":{"4":6,"5":8,"7":11},
  "limitations":"Finite exact arithmetic and decoder replay; no peer-review or global novelty clearance",
 }
+# Canonicalize numeric dictionary keys before hashing. Otherwise JSON reload
+# turns them into strings, changing sorted-key serialization and the digest.
 receipt["certificate_sha256"]=hashlib.sha256(json.dumps(receipt,sort_keys=True,separators=(',',':')).encode()).hexdigest()
-with open("replay_f16_receipt.json","w") as f:json.dump(receipt,f,indent=2,sort_keys=True);f.write("\n")
+with open("replay_f16_receipt.json","w") as f:
+    json.dump(receipt,f,indent=2,sort_keys=True)
+    f.write("\\n")
+with open("replay_f16_receipt.json",encoding="utf-8") as f:
+    saved=json.load(f)
+saved_hash=saved.pop("certificate_sha256")
+assert saved_hash==hashlib.sha256(json.dumps(saved,sort_keys=True,separators=(',',':')).encode()).hexdigest(), "Unverifiable serialized receipt"
 print(json.dumps(receipt,indent=2))
