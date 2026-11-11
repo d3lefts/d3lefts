@@ -52,10 +52,10 @@ try{
   // 00–10: Enter with no prior NIGHTFALL knowledge. Assess first mental model.
   await step("00–03","Homepage: evidence without competing directories",async()=>{
     await visit("index.html");
-    assert.equal(await page.locator("html").getAttribute("data-nf-experience"),"archive","Public archive is a distinct homepage");
-    assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"NULL FIELD is the archive palette");
-    assert.match(await page.locator("#main > .hero h1:visible").innerText(),/A precise number.*An open record/s);
-    assert.equal(await page.locator(".flagship-card").count(),4,"Archive proof statuses remain inspectable");
+    assert.equal(await page.locator("html").getAttribute("data-nf-experience"),"archive","NULL FIELD is a distinct active research homepage");
+    assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"NULL FIELD keeps its independent Deep Space palette");
+    assert.match(await page.locator("#main > .hero h1:visible").innerText(),/What matters.*before we look/s);
+    assert.equal(await page.locator(".flagship-card").count(),4,"Active proof-status dossiers remain inspectable");
     assert.equal(await page.locator(".nf-experience-underbelly").count(),0,"No duplicate hidden night content");
     assert.equal(await page.locator(".nf-experience-archive .hero-actions a:visible").count(),2);
     assert.equal(await page.locator(".nf-journey-rail").count(),0);
@@ -64,7 +64,7 @@ try{
     assert.equal(await page.locator(".nf-section-index").count(),0);
     const frontiers=page.locator(".nf-frontiers-disclosure");
     assert.equal(await frontiers.evaluate(el=>el.open),false);
-    assert.match(await frontiers.locator("summary").innerText(),/conditional.*imported.*candidate/i);
+    assert.match(await frontiers.locator("summary").innerText(),/Certificate transfer.*finite-palette.*cubic obstruction/i);
     await frontiers.locator("summary").click();
     assert.equal(await page.locator(".flagship-eyebrow").count(),4);
     assert.ok((await page.locator("main section").count())<=13);
@@ -73,17 +73,17 @@ try{
     await page.locator(".nf-theme-toggle").click();
     await page.waitForURL("**/new-moon.html");
     assert.equal(await page.locator("html").getAttribute("data-nf-experience"),"moon","The toggle opens a second HTML document");
-    assert.match(await page.locator(".moon-hero h1").innerText(),/The work begins.*where certainty ends/s);
-    assert.equal(await page.locator("#open-ledger .moon-ledger-row").count(),5,"Independent open investigation ledger with November product-space certification");
-    assert.equal(await page.locator("#open-ledger a[href='product-space-influence.html']").count(),1,"Source-linked fifth investigation is reachable");
-    assert.equal(await page.locator(".flagship-card").count(),0,"Archive card structure is absent from the night desk");
+    assert.match(await page.locator(".moon-hero h1").innerText(),/What survives.*becomes the record/s);
+    assert.equal(await page.locator("#archived-records .moon-ledger-row").count(),5,"Five archival records with explicit evidence tiers");
+    assert.equal(await page.locator("#archived-records a[href='erdos-paper.html']").count(),1,"Historical Erdős certificate is reachable");
+    assert.equal(await page.locator(".flagship-card").count(),0,"Current-work cards are absent from archived Moon");
     await screenshot("01b-desktop-new-moon.png");
     await page.locator(".nf-theme-toggle").click();
     await page.waitForURL("**/index.html");
     note("strength","NULL FIELD and NEW MOON are distinct source-linked homepages with no duplicated narrative.","homepage");
   });
   await step("03–06","Homepage: interactive Sidon witness and transparent finite scope",async()=>{
-    await visit("index.html#live-case");
+    await visit("new-moon.html#live-case");
     assert.equal(await page.locator("#sidon-witness [role=listitem]").count(),30);
     const t=page.locator("#sidon-toggle");
     await t.click();
@@ -96,7 +96,7 @@ try{
   await step("06–10","Homepage: find full sources without redundancy",async()=>{
     await visit("index.html");
     assert.equal(await page.locator("#observatory a[href='constellation.html#map']").count(),1);
-    assert.equal(await page.locator("#review a[href='review.html#erdos']").count(),1);
+    assert.equal(await page.locator("#review a[href='observability.html#audit']").count(),1);
     assert.equal(await page.locator("#research-systems a[href='evidence.html#public-downloads']").count(),1);
     assert.equal(await page.locator("#work a[href='research.html']").count(),1);
     assert.equal(await page.locator(".flagship-context").count(),4);
