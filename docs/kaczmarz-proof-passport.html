@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#020406">
+<meta name="description" content="NIGHTFALL Kaczmarz Proof Passport: an exact log-free best-iterate projection bound, classical dependencies, reproducible rational checker, and unresolved novelty/referee gates.">
+<meta property="og:title" content="Log-free Kaczmarz · Proof Passport — NIGHTFALL">
+<meta property="og:description" content="The proof, the projection-count certificate, the source, the checker, and the limits.">
+<title>Log-free Kaczmarz · Proof Passport — NIGHTFALL</title>
+<link rel="canonical" href="https://d3lefts.github.io/d3lefts/kaczmarz-proof-passport.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="ethereal-theme.css">
+<link rel="stylesheet" href="two-skies.css">
+<link rel="stylesheet" href="active-proof-passport.css">
+<link rel="stylesheet" href="kaczmarz-proof-passport.css">
+<script src="site.js" defer></script>
+<script src="ethereal-theme.js" defer></script>
+</head>
+<body class="ps-page">
+<a class="skip" href="#main">Skip to proof passport</a><div class="topline"></div>
+<header class="header"><div class="wrap header-inner">
+<a href="index.html" class="brand" aria-label="NIGHTFALL home"><span class="mark" aria-hidden="true">N∕F</span><span class="brand-copy">NIGHTFALL <span>PHASESHIFT / NULL FIELD</span></span></a>
+<button type="button" class="menu-toggle" id="menu-button" aria-label="Toggle navigation" aria-controls="site-nav" aria-expanded="false">MENU +</button>
+<nav id="site-nav" class="nav" aria-label="Primary navigation"><a href="index.html#flagships">Active research</a><a href="active-proof-passport.html">Living passports</a><a href="research.html">Research library</a><a href="passport.html">Historical passports</a><a class="nav-call" href="review.html">Independent review ↗</a></nav>
+</div></header>
+<main id="main">
+<section class="atlas-hero wrap nf-k-hero" aria-labelledby="nf-k-title">
+<div class="atlas-eyebrow">NULL FIELD / LIVING PROOF PASSPORT / 11 NOVEMBER 2026 / v1.0</div>
+<h1 id="nf-k-title">One logarithm.<br><em>One exact telescope.</em></h1>
+<div class="atlas-hero-bottom">
+<p>A log-free upper bound on the number of orthogonal row-hyperplane projections needed to find <em>some</em> sufficiently accurate iterate. The written proof is elementary. The choice rule is classical. Originality and independent mathematical review remain open.</p>
+<div class="atlas-hero-metrics"><span><strong>O(n/ε²)</strong>Existential projection count</span><span><strong>2,880</strong>Exact-rational checked steps</span><span><strong>OPEN</strong>External proof / priority gates</span></div>
+</div>
+</section>
+<section class="wrap nf-k-status" aria-label="Scientific status">
+<strong>Proof Passport · NF-KACZMARZ-LOGFREE-20261111</strong>
+<p><b>Mathematical status:</b> a complete written best-iterate argument with finite exact replay. <b>Publication status:</b> provisional internal research, not a globally original or externally refereed solved-problem announcement. The historical 11-passport collection and five approved finite findings remain unchanged.</p>
+</section>
+<div class="wrap nf-k-nav"><a href="#statement">01 · Statement</a><a href="#mechanism">02 · Proof</a><a href="#evidence">03 · Evidence</a><a href="#dependencies">04 · Dependencies</a><a href="#next-test">05 · Review</a></div>
+<div class="wrap">
+<article id="statement" class="nf-active-claim" aria-labelledby="statement-title">
+<div class="nf-active-claim-header"><h2 id="statement-title">01 · Exact statement</h2><span class="nf-claim-status">BEST ITERATE / CONSISTENT LINEAR SYSTEM</span></div>
+<p>For a consistent real system <code>Ax* = b</code>, start from <code>y₀</code>. At each step project onto the row hyperplane whose normalized residual <code>|⟨aᵢ,yₜ⟩−bᵢ|² / ||aᵢ||²</code> is largest. Ignoring zero rows, after constructing <code>K ≥ 1</code> iterates including <code>y₀</code>, the following holds:</p>
+<div class="nf-k-formula" role="math" aria-label="Minimum residual over zero through K minus one at most Frobenius norm times initial error divided by square root of K">min<sub>0 ≤ t &lt; K</sub> ‖Ay<sub>t</sub> − b‖₂ ≤ (‖A‖<sub>F</sub> / √K) ‖y₀ − x*‖₂</div>
+<p>Taking <code>K = ⌈‖A‖²F / δ²⌉</code> yields an iterate with residual at most <code>δ‖y₀−x*‖</code>, using at most <code>K−1</code> projections. For <code>δ = ε‖A‖op</code> and <code>n</code> columns:</p>
+<div class="nf-k-formula" role="math" aria-label="Number of candidate iterates K at most ceiling n over epsilon squared">K ≤ ⌈n / ε²⌉</div>
+<p>In the original square invertible setting with <code>y₀=0</code>, this removes the logarithm from the published existential projection-count estimate; <code>‖y‖≤2‖x*‖</code> follows from projection stability. The original question is in Steinerberger's <a href="https://faculty.washington.edu/steinerb/openproblems.pdf" target="_blank" rel="noopener">March 2026 problem list</a>, under “Approximate Solutions of Linear Systems.”</p>
+</article>
+<article id="mechanism" class="nf-active-claim" aria-labelledby="mechanism-title">
+<div class="nf-active-claim-header"><h2 id="mechanism-title">02 · The proof mechanism</h2><span class="nf-claim-status">ANALYTIC / NO APPROXIMATIONS</span></div>
+<p>Write <code>eₜ=yₜ−x*</code>, <code>rₜ=Aeₜ</code>, and <code>W=‖A‖²F</code>. Orthogonal projection loses exactly the squared normalized selected residual. The largest row contribution dominates its row-norm-weighted average:</p>
+<div class="nf-k-formula nf-k-multiline" role="math" aria-label="Squared error descent equals maximum normalized residual and is at least squared total residual divided by Frobenius norm squared">‖e<sub>t</sub>‖² − ‖e<sub>t+1</sub>‖²
+= max<sub>i</sub> |(r<sub>t</sub>)<sub>i</sub>|² / ‖a<sub>i</sub>‖²
+≥ ‖r<sub>t</sub>‖² / W</div>
+<p>Sum over <code>t=0,…,K−1</code>. The left side telescopes and is bounded by <code>‖e₀‖²</code>. Consequently <code>Σₜ‖rₜ‖² ≤ W‖e₀‖²</code>; one of the <code>K</code> terms is no larger than their average. No condition number, unobserved solution, or minimum singular value enters row selection.</p>
+<p>The companion stopping-time argument obtains <code>Eτ ≤ ‖A‖²F / δ²</code> for the original randomized row-norm sampling when <code>τ</code> is the <em>first successful residual</em>. It is not a fixed-time tail bound.</p>
+</article>
+<article id="evidence" class="nf-active-claim" aria-labelledby="evidence-title">
+<div class="nf-active-claim-header"><h2 id="evidence-title">03 · Evidence dimensions</h2><span class="nf-claim-status">SEPARATE GATES / NO AUTOMATIC PROMOTION</span></div>
+<dl class="nf-claim-grid">
+<div><dt>Validity</dt><dd>Exact written proof via Pythagoras, weighted maximum and telescoping; zero-row, consistency and initial-error edge cases stated. Independent human mathematical referee review is not complete.</dd></div>
+<div><dt>Reproducibility</dt><dd>Python 3 standard-library rational checker; 240 systems and 12 greedy steps each (2,880 updates), plus a coefficient-sharpness negative control. Finite tests are not a proof of generality.</dd></div>
+<div><dt>Originality</dt><dd>Open. Maximum-distance Kaczmarz and the energy decrement are classical. The March 2026 problem list is evidence of a listed question, <em>not</em> proof that this corollary was previously unknown.</dd></div>
+<div><dt>Significance</dt><dd>Log-free existential number of projections for a best-prefix iterate. No claim about number of arithmetic operations, free row selection, the final iterate of a fixed randomized run, or the inconsistent-system model.</dd></div>
+</dl>
+<div class="nf-claim-links"><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-kaczmarz-logfree/PROOF.md" target="_blank" rel="noopener">Full proof ↗</a><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-kaczmarz-logfree/PROOF_PASSPORT.md" target="_blank" rel="noopener">Machine-auditable proof passport source ↗</a></div>
+</article>
+<article id="dependencies" class="nf-active-claim" aria-labelledby="dependencies-title">
+<div class="nf-active-claim-header"><h2 id="dependencies-title">04 · Mechanism and provenance</h2><span class="nf-claim-status">CREDIT THE EXISTING OPERATORS</span></div>
+<div class="nf-k-steps" aria-label="Proof dependency chain">
+<div><span>01</span><strong>Published projection method</strong><p>Orthogonal row projections and the randomized Kaczmarz energy identity.</p></div>
+<div><span>02</span><strong>Classical greedy rule</strong><p>Select the largest normalized row discrepancy; weighted averaging makes its energy decrement explicit.</p></div>
+<div><span>03</span><strong>Log-free prefix certificate</strong><p>Telescope squared error and bound the average residual over the prefix.</p></div>
+<div><span>04</span><strong>External gates still open</strong><p>Independent mathematical referee; complete dated priority study; optional confirmation by problem author.</p></div>
+</div>
+<p><a href="https://arxiv.org/abs/2207.03388" target="_blank" rel="noopener">Steinerberger, SIAM J. Matrix Anal. Appl. 2023 ↗</a> · <a href="https://www.cs.ubc.ca/~schmidtm/Documents/2016_UAI_greedyKaczmarz.pdf" target="_blank" rel="noopener">Nutini et al., UAI 2016 ↗</a>. These are upstream dependencies, not NIGHTFALL findings.</p>
+</article>
+<article id="next-test" class="nf-active-claim" aria-labelledby="review-title">
+<div class="nf-active-claim-header"><h2 id="review-title">05 · Replay and independent criticism</h2><span class="nf-claim-status">OPEN REVIEW OBLIGATIONS</span></div>
+<p>Run the exact rational checker directly from the repository root:</p>
+<pre class="nf-k-command"><code>python3 research/nightfall/2026-11-kaczmarz-logfree/exact_audit.py</code></pre>
+<p>The decisive next step is not another numerical optimization. It is an independent mathematical rederivation and priority search of earlier greedy-Kaczmarz literature. A published precedent would demote the novelty claim, without invalidating the mathematical argument.</p>
+<p>The claim remains in <b>NULL FIELD · active research</b>. No new archive-class Original Finding or publication clearance is implied.</p>
+<div class="nf-claim-links"><a href="active-proof-passport.html#kaczmarz-logfree">Active passport index ↗</a><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-kaczmarz-logfree/exact_audit.py" target="_blank" rel="noopener">Inspect the checker source ↗</a><a href="review.html">Review standards ↗</a></div>
+</article>
+</div>
+</main>
+<footer class="footer"><div class="wrap footer-bottom"><span>© 2026 Devin J. Wright · NIGHTFALL PHASESHIFT</span><span>PROOF PASSPORT v1.0 / 11 NOV 2026 / ACTIVE</span></div></footer>
+</body>
+</html>
