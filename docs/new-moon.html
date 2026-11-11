@@ -4,19 +4,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#04060b">
-  <meta name="description" content="NEW MOON is NIGHTFALL’s open-investigation workspace: current proof obligations, verification challenges, and research tools. Follow the unresolved questions without confusing candidates with established results.">
-  <meta property="og:title" content="NEW MOON — NIGHTFALL Open Investigations">
-  <meta property="og:description" content="Enter the unfinished side of NIGHTFALL: proof obligations, independent review, and source-bound research tools.">
+  <meta name="description" content="NEW MOON is NIGHTFALL’s archive of earlier mathematical breakthroughs, exact finite witnesses and completed research records, with source files, replay checks, attribution and review limits.">
+  <meta property="og:title" content="NEW MOON — NIGHTFALL Research Archive">
+  <meta property="og:description" content="Explore preserved Erdős and Sidon constructions, finite certificates, source archives and historical research with explicit validity and review status.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://d3lefts.github.io/d3lefts/new-moon.html">
   <link rel="canonical" href="https://d3lefts.github.io/d3lefts/new-moon.html">
-  <title>NEW MOON — NIGHTFALL Open Investigations</title>
+  <title>NEW MOON — NIGHTFALL Research Archive</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site.css">
   <link rel="stylesheet" href="ethereal-theme.css">
   <link rel="stylesheet" href="two-skies.css">
   <link rel="stylesheet" href="experience-pages.css">
+  <link rel="stylesheet" href="home-rhythm.css">
   <script src="site.js" defer></script>
+  <script src="research-registry.js" defer></script>
+  <script src="referee-core.js" defer></script>
+  <script src="home-system.js" defer></script>
   <script src="ethereal-theme.js" defer></script>
 </head>
 <body>
@@ -24,9 +28,9 @@
 <div class="topline"></div>
 <header class="header">
   <div class="wrap header-inner">
-    <a href="new-moon.html" class="brand" aria-label="NEW MOON open investigations homepage">
+    <a href="new-moon.html" class="brand" aria-label="NEW MOON archived research homepage">
       <span class="mark" aria-hidden="true">N∕F</span>
-      <span class="brand-copy">NIGHTFALL <span>PHASESHIFT / OPEN INVESTIGATIONS</span></span>
+      <span class="brand-copy">NIGHTFALL <span>PHASESHIFT / RESEARCH ARCHIVE</span></span>
     </a>
     <button type="button" class="menu-toggle" id="menu-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">MENU +</button>
     <nav class="nav" id="site-nav" aria-label="Primary navigation">
@@ -39,32 +43,50 @@
 </header>
 <nav class="nf-home-route-nav wrap" aria-label="Choose NIGHTFALL experience">
   <span class="nf-route-caption">TWO DOORS / ONE RESEARCH PROGRAM</span>
-  <a href="index.html" data-nf-route="archive"><span>01</span> NULL FIELD <small>Research archive</small></a>
-  <a href="new-moon.html" data-nf-route="moon" aria-current="page"><span>02</span> NEW MOON <small>Open investigations</small></a>
+  <a href="index.html" data-nf-route="archive"><span>01</span> NULL FIELD <small>Active research</small></a>
+  <a href="new-moon.html" data-nf-route="moon" aria-current="page"><span>02</span> NEW MOON <small>Archived breakthroughs</small></a>
 </nav>
 <main id="main">
   <section class="moon-hero wrap" aria-labelledby="moon-title">
-    <div class="moon-hero-overline"><span>NIGHTFALL / AFTER THE RESULT</span><span>RESEARCH IS AN UNFINISHED PROCESS</span></div>
+    <div class="moon-hero-overline"><span>NIGHTFALL / RECORDS AFTER DISCOVERY</span><span>CONSTRUCTIONS · CERTIFICATES · PRIOR ART</span></div>
     <div class="moon-hero-copy">
-      <p class="moon-index-label">02 / NEW MOON — OPEN INVESTIGATIONS</p>
-      <h1 id="moon-title">The work begins<br><em>where certainty ends.</em></h1>
-      <p class="moon-lead">A different entrance to NIGHTFALL. Here the focus is on fragile premises, reproducible tests, and the work still needed before any claim deserves greater confidence.</p>
-      <div class="moon-hero-actions"><a class="button" href="#open-ledger">Read the open ledger <span aria-hidden="true">↘</span></a><a class="text-link" href="review.html#priority">Take an independent review task ↗</a></div>
-      <p class="moon-understatement">Internal exact checks are not external proof review. A candidate is not a theorem. A beautiful connection is not yet a transfer.</p>
+      <p class="moon-index-label">02 / NEW MOON — ARCHIVED BREAKTHROUGH RESEARCH</p>
+      <h1 id="moon-title">What survives<br><em>becomes the record.</em></h1>
+      <p class="moon-lead">The historical vault of NIGHTFALL: explicit Erdős overlap witnesses, finite Sidon constructions, and dated research campaigns. Archival status preserves an object; it never claims a global optimality proof, outside review or worldwide priority.</p>
+      <p class="moon-featured-record"><strong>FEATURED ARCHIVE · ERDŐS #36</strong><span>0.380856370118… · 131,072 exact rational cells</span><small>Finite signed-shift upper-bound witness · internal replay; independent review open</small></p>
+      <div class="moon-hero-actions"><a class="button" href="#archived-records">Browse archived records <span aria-hidden="true">↘</span></a><a class="text-link" href="evidence.html#public-downloads">Reproduce a public witness ↗</a></div>
+      <p class="moon-understatement">Preserved is not necessarily peer reviewed. Exact finite replay, source-dependent results and competition submissions carry different certificates.</p>
     </div>
-    <div class="moon-sky" aria-hidden="true"><div class="moon-disc"></div><div class="moon-horizon-line"></div><span class="moon-coordinate moon-coordinate-top">FIELD STUDY / 02</span><span class="moon-coordinate moon-coordinate-bottom">THE UNRESOLVED / THE TESTABLE</span></div>
-    <div class="moon-hero-bottom"><span>ONE RECORD · TWO READINGS</span><span>THE PUBLIC ARCHIVE IS AVAILABLE IN NULL FIELD</span><a href="index.html">Read the archive ↗</a></div>
+    <div class="moon-sky" aria-hidden="true"><div class="moon-disc"></div><div class="moon-horizon-line"></div><span class="moon-coordinate moon-coordinate-top">ARCHIVE / 02</span><span class="moon-coordinate moon-coordinate-bottom">HISTORICAL RECORD / PROOF STATUS</span></div>
+    <div class="moon-hero-bottom"><span>ONE RECORD · TWO READINGS</span><span>ACTIVE PRODUCT-SPACE RESEARCH IS IN NULL FIELD</span><a href="index.html">Visit active research ↗</a></div>
   </section>
 
   <section class="moon-dispatch wrap" aria-labelledby="dispatch-title">
-    <div class="moon-section-kicker">THE NIGHT DESK / THREE RULES</div>
-    <div class="moon-dispatch-heading"><h2 id="dispatch-title">A research program<br><em>measured by its checks.</em></h2><p>Each investigation moves through a claim, a mechanism, a falsifiable test, and a precise limit. The aim is transferable understanding, not an impressive-looking number.</p></div>
+    <div class="moon-section-kicker">THE ARCHIVE / THREE EVIDENCE GATES</div>
+    <div class="moon-dispatch-heading"><h2 id="dispatch-title">A preserved result.<br><em>A visible certificate.</em></h2><p>Each archived object retains its original construction, exact replay procedure, historical dependencies and explicit limitations. The archive does not upgrade a manuscript candidate into a settled theorem.</p></div>
     <div class="moon-dispatch-grid">
-      <article><span>01 / REPRESENT</span><h3>What is the object?</h3><p>Make the domain, assumptions, and computational witness explicit before optimizing.</p></article>
-      <article><span>02 / ATTACK</span><h3>What could be wrong?</h3><p>Design an independent counterexample search or proof-dependency audit before claiming success.</p></article>
-      <article><span>03 / CERTIFY</span><h3>What actually survives?</h3><p>Separate numerical replay, formal proof, human review, and historical novelty.</p></article>
+      <article><span>01 / PRESERVE</span><h3>What was constructed?</h3><p>Keep the original witness, assumptions, source and immutable provenance.</p></article>
+      <article><span>02 / REPLAY</span><h3>What can be checked?</h3><p>Keep the exact checker and its limitations separate from an independent proof review.</p></article>
+      <article><span>03 / ATTRIBUTE</span><h3>Who proved what?</h3><p>Credit earlier authors and distinguish finite validity, global novelty and competition eligibility.</p></article>
     </div>
   </section>
+
+  <section class="section wrap sf-case" id="live-case" aria-labelledby="sidon-case-heading">
+  <div class="section-head"><span class="section-id">A FINITE EXAMPLE / REPRODUCE IT</span><div><h2 class="section-title" id="sidon-case-heading">Thirty integers.<br><em>One exact question.</em></h2><p class="section-intro">This finite Sidon construction specifies 30 integers. Inspect the coordinates, reproduce the maximum 17-point Sidon subset, and test the checker with altered inputs.</p></div></div>
+  <div class="sf-case-panel">
+   <div class="sf-case-main">
+    <div class="sf-case-top"><span>CASE FILE 001 / ADDITIVE COMBINATORICS</span><span>EXACT FINITE CLAIM</span></div>
+    <h3 id="sidon-live-title">30-point Sidon construction</h3>
+    <p id="sidon-live-scope">An explicit finite witness; no claim of a new asymptotic bound.</p>
+    <div class="sf-witness-header"><span>WITNESS / 30 ORDERED POINTS</span><span>17-POINT SIDON SUBSET</span></div>
+    <div class="sf-witness" id="sidon-witness" role="list" aria-label="Thirty ordered witness points; exact integers available in each point's accessible label"><span class="sf-point" role="listitem" title="Integer coordinate -19465109" aria-label="Point 1, -19465109">01</span><span class="sf-point chosen" role="listitem" title="Integer coordinate 0" aria-label="Point 2, 0, in the explicit 17-point Sidon subset">02</span><span class="sf-point" role="listitem" title="Integer coordinate 3545689" aria-label="Point 3, 3545689">03</span><span class="sf-point" role="listitem" title="Integer coordinate 5427075" aria-label="Point 4, 5427075">04</span><span class="sf-point" role="listitem" title="Integer coordinate 6005963" aria-label="Point 5, 6005963">05</span><span class="sf-point chosen" role="listitem" title="Integer coordinate 7091378" aria-label="Point 6, 7091378, in the explicit 17-point Sidon subset">06</span><span class="sf-point chosen" role="listitem" title="Integer coordinate 7308461" aria-label="Point 7, 7308461, in the explicit 17-point Sidon subset">07</span><span class="sf-point" role="listitem" title="Integer coordinate 7545719" aria-label="Point 8, 7545719">08</span><span class="sf-point" role="listitem" title="Integer coordinate 7671611" aria-label="Point 9, 7671611">09</span><span class="sf-point" role="listitem" title="Integer coordinate 7710347" aria-label="Point 10, 7710347">10</span><span class="sf-point chosen" role="listitem" title="Integer coordinate 7782977" aria-label="Point 11, 7782977, in the explicit 17-point Sidon subset">11</span><span class="sf-point chosen" role="listitem" title="Integer coordinate 7797503" aria-label="Point 12, 7797503, in the explicit 17-point Sidon subset">12</span><span class="sf-point" role="listitem" title="Integer coordinate 7813379" aria-label="Point 13, 7813379">13</span><span class="sf-point" role="listitem" title="Integer coordinate 7821803" aria-label="Point 14, 7821803">14</span><span class="sf-point" role="listitem" title="Integer coordinate 7824395" aria-label="Point 15, 7824395">15</span><span class="sf-point chosen" role="listitem" title="Integer coordinate 7829255" aria-label="Point 16, 7829255, in the explicit 17-point Sidon subset">16</span><span class="sf-point chosen" role="listitem" title="Integer coordinate 7830227" aria-label="Point 17, 7830227, in the explicit 17-point Sidon subset">17</span><span class="sf-point chosen" role="listitem" title="Integer coordinate 7835411" aria-label="Point 18, 7835411, in the explicit 17-point Sidon subset">18</span><span class="sf-point chosen" role="listitem" title="Integer coordinate 7836059" aria-label="Point 19, 7836059, in the explicit 17-point Sidon subset">19</span><span class="sf-point" role="listitem" title="Integer coordinate 7836707" aria-label="Point 20, 7836707">20</span><span class="sf-point chosen" role="listitem" title="Integer coordinate 7849019" aria-label="Point 21, 7849019, in the explicit 17-point Sidon subset">21</span><span class="sf-point chosen" role="listitem" title="Integer coordinate 7874975" aria-label="Point 22, 7874975, in the explicit 17-point Sidon subset">22</span><span class="sf-point chosen" role="listitem" title="Integer coordinate 7884659" aria-label="Point 23, 7884659, in the explicit 17-point Sidon subset">23</span><span class="sf-point" role="listitem" title="Integer coordinate 7894343" aria-label="Point 24, 7894343">24</span><span class="sf-point chosen" role="listitem" title="Integer coordinate 8078339" aria-label="Point 25, 8078339, in the explicit 17-point Sidon subset">25</span><span class="sf-point chosen" role="listitem" title="Integer coordinate 8466237" aria-label="Point 26, 8466237, in the explicit 17-point Sidon subset">26</span><span class="sf-point chosen" role="listitem" title="Integer coordinate 8610959" aria-label="Point 27, 8610959, in the explicit 17-point Sidon subset">27</span><span class="sf-point" role="listitem" title="Integer coordinate 8755681" aria-label="Point 28, 8755681">28</span><span class="sf-point chosen" role="listitem" title="Integer coordinate 11505399" aria-label="Point 29, 11505399, in the explicit 17-point Sidon subset">29</span><span class="sf-point chosen" role="listitem" title="Integer coordinate 19465109" aria-label="Point 30, 19465109, in the explicit 17-point Sidon subset">30</span></div><noscript><p class="sf-case-boundary">JavaScript is needed to highlight the witness diagram. The <a href="passport.html?claim=sidon30">finite source dossier and checking references</a> remain available.</p></noscript>
+    <div class="sf-case-interact"><button id="sidon-toggle" type="button" aria-pressed="false" disabled title="Available when the exact witness checker finishes loading">Highlight 17-point subset ↗</button><span>Rank positions are displayed; exact integer coordinates are in the linked dossier.</span></div>
+    <div class="sf-case-links"><a class="button" href="living-paper.html">Inspect the finite construction ↗</a><details class="nf-case-more"><summary>Evidence &amp; verification routes</summary><div class="nf-case-more-links"><a class="text-link" href="passport.html?claim=sidon30">Inspect Proof Passport ↗</a><a class="text-link" href="referee.html?domain=sidon">Run exact finite check ↗</a><a class="text-link" href="join.html?claim=sidon30&amp;obligation=0#claim-investigation">Continue the independent audit ↗</a></div></details></div>
+   </div>
+   <aside class="sf-case-aside"><div><span class="sf-label">FINITE SUBSET MAXIMUM</span><strong class="sf-big" id="sidon-live-metric">17 / 30</strong><p>This bound concerns a specific 30-point weak Sidon (4,5) set.</p></div><div class="sf-aside-stats"><div><span>FOUR-POINT CHECKS</span><strong>27,405</strong></div><div><span>PROOF DAG STATES</span><strong>7,801</strong></div></div><div class="sf-aside-foot"><span>EXTERNAL REVIEW</span><strong>OPEN</strong></div></aside>
+  </div>
+  <p class="sf-case-boundary"><strong>Scientific boundary.</strong> The check concerns a particular finite construction, with a public witness and standalone verifier. Existing 5/9 asymptotics belong to prior researchers. <a href="passport.html?claim=sidon30">See the claim and sources ↗</a></p>
+</section>
 
   <section class="moon-first-test wrap" id="first-test" aria-labelledby="moon-first-test-title">
     <div class="moon-first-test-heading">
@@ -86,62 +108,42 @@
     </div>
   </section>
 
-  <section class="moon-ledger wrap" id="open-ledger" aria-labelledby="ledger-title">
-    <div class="moon-ledger-heading"><div><span class="moon-section-kicker">OPEN LEDGER / SOURCE-BOUND INVESTIGATIONS</span><h2 id="ledger-title">The work that<br><em>still needs doing.</em></h2></div><p>These are review targets and research directions—not announcements of newly established theorems. Each points to primary material and a way to examine the claim.</p></div>
+<section class="moon-ledger wrap" id="archived-records" aria-labelledby="ledger-title">
+    <span id="open-ledger" hidden></span><!-- Legacy inbound anchor to historical ledger, not an active-work route. -->
+    <div class="moon-ledger-heading"><div><span class="moon-section-kicker">ARCHIVED RECORDS / EXACT EVIDENCE AND HISTORICAL SCOPE</span><h2 id="ledger-title">The results we keep.<br><em>The limits we preserve.</em></h2></div><p>Archived means preserved for inspection—not endorsed as a novel worldwide theorem. Each record retains its exact object, provenance and outstanding mathematical review.</p></div>
     <div class="moon-ledger-rows">
-      <article class="moon-ledger-row">
-        <div class="moon-ledger-code"><span>CASE 001</span><strong>0.380856370118…</strong><small>ERDŐS #36 / FINITE UPPER-BOUND WITNESS</small></div>
-        <div class="moon-ledger-main"><span class="moon-ledger-status">INTERNAL EXACT REPLAY · INDEPENDENT REVIEW OPEN</span><h3>Recompute every signed shift.</h3><p>The public 131,072-cell rational construction supports a finite upper-bound claim. The accepted competition submission is a separate artifact; global optimality is not established.</p><div class="moon-ledger-links"><a href="erdos-paper.html">Source and checker ↗</a><a href="review.html#erdos">Audit assignment ↗</a></div></div>
-        <span class="moon-ledger-arrow" aria-hidden="true">↗</span>
-      </article>
-      <article class="moon-ledger-row">
-        <div class="moon-ledger-code"><span>CASE 002</span><strong>F₍qʳ₎</strong><small>ADAPTIVE FINITE-FIELD DECODING</small></div>
-        <div class="moon-ledger-main"><span class="moon-ledger-status">PROOF CANDIDATE · EXACT FINITE TESTS</span><h3>Challenge the adaptive guarantee.</h3><p>A two-round decoder has explicit measurement counts and internally checked finite cases. External proof scrutiny and prior-art review remain outstanding.</p><div class="moon-ledger-links"><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/README.md">Proof dependencies ↗</a><a href="review.html#priority">Review priorities ↗</a></div></div>
-        <span class="moon-ledger-arrow" aria-hidden="true">↗</span>
-      </article>
-      <article class="moon-ledger-row">
-        <div class="moon-ledger-code"><span>CASE 003</span><strong>ASUA</strong><small>AGENT SAFETY / OVERSIGHT</small></div>
-        <div class="moon-ledger-main"><span class="moon-ledger-status">THEORETICAL FLOOR · EMPIRICAL COMPARISON PENDING</span><h3>What can a guard know?</h3><p>Information available to a guard constrains how selectively it can reject malicious actions. The proposed benchmark must distinguish policy collateral from ordinary agent failures; mismatched benchmark versions cannot establish that result.</p><div class="moon-ledger-links"><a href="evidence-practice.html">Oversight evidence ↗</a><a href="review.html#priority">Independent critique ↗</a></div></div>
-        <span class="moon-ledger-arrow" aria-hidden="true">↗</span>
-      </article>
-      <article class="moon-ledger-row">
-        <div class="moon-ledger-code"><span>CASE 004</span><strong>4–25</strong><small>WERNER STATES / COPY COUNTS</small></div>
-        <div class="moon-ledger-main"><span class="moon-ledger-status">EXACT IDENTITIES · SOURCE THEOREMS REQUIRED</span><h3>Find the missing analytic margin.</h3><p>Finite-copy qutrit and all-dimension certificate work depends on specified imported inequalities. The independent task is to verify source assumptions and each claimed threshold in its proper parameter regime.</p><div class="moon-ledger-links"><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/werner-final-4-25/README.md">Certificate dossier ↗</a><a href="research.html">Research library ↗</a></div></div>
-        <span class="moon-ledger-arrow" aria-hidden="true">↗</span>
-      </article>
-      <article class="moon-ledger-row">
-        <div class="moon-ledger-code"><span>CASE 005 / NOVEMBER 2026</span><strong>7 / Lean</strong><small>WRIGHT PRODUCT-SPACE INFLUENCE</small></div>
-        <div class="moon-ledger-main"><span class="moon-ledger-status">SEVEN KERNEL-COMPILED SUBLEMMAS · FULL THEOREM OPEN</span><h3>Complete the weighted certificate transfer.</h3><p>The two-draw orientation symmetry, positive-support weight optimization and conditional overlap bound have scoped Lean 4.35.0 receipts. The weighted reciprocal all-pairs theorem, zero-coefficient cases, general product-space influence theorem, adaptive recovery and quantum consequences still need formal or independent review. Worldwide originality is not certified.</p><div class="moon-ledger-links"><a href="product-space-influence.html">Proof-status dossier ↗</a><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-certificate-engine/Wright_Certificate_Engine_v2.pdf" target="_blank" rel="noopener">Claude v2 candidate manuscript ↗</a><a href="https://github.com/d3lefts/d3lefts/pull/289" target="_blank" rel="noopener">Lean source and receipts ↗</a></div></div>
-        <span class="moon-ledger-arrow" aria-hidden="true">↗</span>
-      </article>
+      <article class="moon-ledger-row"><div class="moon-ledger-code"><span>RECORD 001 · ERDŐS #36</span><strong>0.380856370118…</strong><small>131,072-CELL RATIONAL OVERLAP WITNESS</small></div><div class="moon-ledger-main"><span class="moon-ledger-status">EXACT FINITE CONSTRUCTION · INTERNAL REPLAY · EXTERNAL REVIEW OPEN</span><h3>One number. Every signed shift.</h3><p>The archived 131,072-cell construction has an internally replayed exact signed-shift upper bound. It is distinct from the accepted Arena entry, which has a separate and incompletely recovered submission artifact. Global optimality and independent mathematical endorsement are not claimed.</p><div class="moon-ledger-links"><a href="erdos-paper.html">Read the exact witness ↗</a><a href="evidence.html#public-downloads">Public frozen evidence ↗</a><a href="review.html#erdos">Audit the certificate ↗</a></div></div><span class="moon-ledger-arrow" aria-hidden="true">↗</span></article>
+      <article class="moon-ledger-row"><div class="moon-ledger-code"><span>RECORD 002 · SIDON (4,5)</span><strong>17 / 30</strong><small>FINITE WEAK SIDON SUBSET WITNESS</small></div><div class="moon-ledger-main"><span class="moon-ledger-status">EXACT FINITE CONSTRUCTION · NOT AN ASYMPTOTIC THEOREM</span><h3>Thirty integers. One finite optimum.</h3><p>The public 30-integer configuration has largest Sidon subset of size 17, established by exact finite checks. Earlier asymptotic results and their authors remain credited; this witness is not a global asymptotic breakthrough claim.</p><div class="moon-ledger-links"><a href="#live-case">Inspect the preserved configuration ↗</a><a href="living-paper.html">Read the evidence narrative ↗</a><a href="passport.html?claim=sidon30">Claim Passport ↗</a></div></div><span class="moon-ledger-arrow" aria-hidden="true">↗</span></article>
+      <article class="moon-ledger-row"><div class="moon-ledger-code"><span>RECORD 003 · PAS</span><strong>v2</strong><small>PROOF AFTER SCARCITY</small></div><div class="moon-ledger-main"><span class="moon-ledger-status">EXACT FINITE IDENTITIES · HISTORICAL RETROSPECTIVE</span><h3>A proof dependency has a history.</h3><p>The archived proof-dependency DAG contains exact path-sum and edge-sensitivity identities, together with a retrospective where improved prospective verification performance was not demonstrated. Finite graph results must not be advertised as an evaluated AI-verification advance.</p><div class="moon-ledger-links"><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/pas/PAS_V2_20261029.md">Inspect PAS v2 ↗</a><a href="review.html#pas">Read the critical review ↗</a></div></div><span class="moon-ledger-arrow" aria-hidden="true">↗</span></article>
+      <article class="moon-ledger-row"><div class="moon-ledger-code"><span>RECORD 004 · QUANTUM</span><strong>4–25</strong><small>WERNER FINITE-COPY RECORDS</small></div><div class="moon-ledger-main"><span class="moon-ledger-status">EXACT RATIONAL CERTIFICATES · IMPORTED THEOREM DEPENDENCIES</span><h3>Copy-count bounds, with assumptions attached.</h3><p>Preserved finite-copy certificate calculations for Werner states. The candidate thresholds depend on specified source inequalities, dimension and tensor count; they are not unconditional all-dimension results.</p><div class="moon-ledger-links"><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/werner-final-4-25/README.md">Read the historical certificate registry ↗</a><a href="research.html">Browse all source records ↗</a></div></div><span class="moon-ledger-arrow" aria-hidden="true">↗</span></article>
+      <article class="moon-ledger-row"><div class="moon-ledger-code"><span>RECORD 005 · FINITE FIELDS</span><strong>F₍q₎</strong><small>PHASE RETRIEVAL ARCHIVE</small></div><div class="moon-ledger-main"><span class="moon-ledger-status">FINITE CHECKS · UNVERIFIED COUNTING PREMISE</span><h3>Store the proof obligations with the construction.</h3><p>Earlier fourth-power phase-retrieval and characteristic-three decoding campaigns include exact finite checkers and proposed algebraic extensions. The Gaussian span-count premise and some universal decoding claims remain unproved; archive status does not close them.</p><div class="moon-ledger-links"><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/finite-field-phase-retrieval-2026-10-28/README.md">Earlier phase-retrieval record ↗</a><a href="research.html">See the scoped catalogue ↗</a></div></div><span class="moon-ledger-arrow" aria-hidden="true">↗</span></article>
     </div>
   </section>
-
   <section class="moon-workbench" id="workbench" aria-labelledby="workbench-title">
     <div class="wrap moon-workbench-inner">
-      <div class="moon-workbench-intro"><span class="moon-section-kicker">THE WORKBENCH / INSPECTABLE TOOLS</span><h2 id="workbench-title">No black boxes.<br><em>Bring the witness.</em></h2><p>These instruments help explore source material, dependencies, counterexamples, and exact finite checks. They do not certify the research by themselves.</p></div>
+      <div class="moon-workbench-intro"><span class="moon-section-kicker">THE REPRODUCTION ROOM / ARCHIVED EVIDENCE</span><h2 id="workbench-title">Preserve the object.<br><em>Replay the evidence.</em></h2><p>Read archived construction files, reproduce exact finite scores, inspect their source dependencies, and report discrepancies. Source preservation is not a substitute for independent refereeing.</p></div>
       <div class="moon-tool-grid">
-        <a href="exact-research.html#research-tools-directory"><span>01 / INSTRUMENTS</span><strong>Research tools</strong><small>Specialist checkers and workflows</small><b aria-hidden="true">↗</b></a>
-        <a href="constellation.html#map"><span>02 / STRUCTURE</span><strong>Constellation</strong><small>Mechanism links, labeled by evidence</small><b aria-hidden="true">↗</b></a>
-        <a href="frontier.html"><span>03 / INVESTIGATION</span><strong>Frontier</strong><small>Explore a falsifiable research direction</small><b aria-hidden="true">↗</b></a>
-        <a href="review.html#priority"><span>04 / EXTERNAL AUDIT</span><strong>Independent Review</strong><small>Bounded claims and source-linked tasks</small><b aria-hidden="true">↗</b></a>
+        <a href="erdos-paper.html"><span>01 / ARCHIVED WITNESS</span><strong>Erdős #36</strong><small>Continuous signed-shift construction</small><b aria-hidden="true">↗</b></a>
+        <a href="living-paper.html"><span>02 / FINITE CHECKER</span><strong>Sidon 17/30</strong><small>Explicit integer configuration and replay</small><b aria-hidden="true">↗</b></a>
+        <a href="evidence.html#public-downloads"><span>03 / FROZEN RELEASE</span><strong>Evidence</strong><small>Public verified byte receipts and sources</small><b aria-hidden="true">↗</b></a>
+        <a href="passport.html"><span>04 / HISTORICAL STATUS</span><strong>Passports</strong><small>Explicit validity, dependencies and limits</small><b aria-hidden="true">↗</b></a>
       </div>
     </div>
   </section>
 
   <section class="moon-end wrap" aria-labelledby="moon-end-title">
-    <span class="moon-section-kicker">THE NEXT TEST / OPEN TO CRITICISM</span>
-    <h2 id="moon-end-title">An answer worth keeping<br><em>can survive another mind.</em></h2>
-    <p>Read the source, try to break the premise, and record the result—even when the test fails. The archive preserves the evidence; the night desk keeps the questions visible.</p>
-    <div class="moon-end-links"><a class="button" href="review.html">Enter independent review ↗</a><a class="text-link" href="index.html">Return to NULL FIELD / archive ↗</a></div>
+    <span class="moon-section-kicker">THE HISTORICAL RECORD / OPEN TO CRITICISM</span>
+    <h2 id="moon-end-title">A result worth keeping<br><em>keeps its evidence.</em></h2>
+    <p>Explore the original witness, source file and exact verifier. Archived scientific objects remain open to correction; ongoing discovery and unresolved theorem work live in NULL FIELD.</p>
+    <div class="moon-end-links"><a class="button" href="review.html">Challenge an archived certificate ↗</a><a class="text-link" href="index.html">Go to NULL FIELD / active research ↗</a></div>
   </section>
 </main>
 <footer class="footer">
   <div class="wrap footer-top">
-    <div><div class="kicker">NIGHTFALL / OPEN SCIENCE</div><h2>Keep the questions visible.</h2></div>
+    <div><div class="kicker">NIGHTFALL / OPEN SCIENCE</div><h2>Keep the record inspectable.</h2></div>
     <div class="footright"><span class="eyebrow">RESEARCH LED BY</span><strong>Devin J. Wright</strong><p>Human-led, AI-assisted research. External authors and collaborators retain credit; original sources and status boundaries are linked in the archive.</p><a class="text-link" href="about.html">Leadership &amp; collaboration ↗</a><a class="text-link" href="research.html">Full research library ↗</a><a class="text-link" href="evidence.html">Public certificates and sources ↗</a><a class="text-link" href="portfolio.html">Professional portfolio ↗</a></div>
   </div>
-  <div class="wrap footer-bottom"><span>© 2026 Devin J. Wright · NIGHTFALL PHASESHIFT</span><span>NEW MOON / Research directions are not verified discoveries</span></div>
+  <div class="wrap footer-bottom"><span>© 2026 Devin J. Wright · NIGHTFALL PHASESHIFT</span><span>NEW MOON / Archived objects retain their original evidence status</span></div>
 </footer>
 </body>
 </html>

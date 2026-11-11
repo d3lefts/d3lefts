@@ -40,30 +40,30 @@ try{
   await page.goto(origin+"index.html",{waitUntil:"load"});
   const toggle=page.locator(".nf-theme-toggle");
   assert.equal(await toggle.count(),1,"NULL FIELD has one switch in its header");
-  assert.equal(await page.locator("html").getAttribute("data-nf-experience"),"archive","Direct archive route chooses NULL FIELD");
-  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Archive is immediately rendered in its dark NULL FIELD palette");
+  assert.equal(await page.locator("html").getAttribute("data-nf-experience"),"archive","Direct active-research route chooses NULL FIELD");
+  assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Active research immediately renders in Deep Space palette");
   assert.equal(await toggle.getAttribute("aria-pressed"),"false","Archive switch is accessible");
-  assert.equal((await toggle.locator(".nf-theme-word").innerText()).trim(),"NEW MOON","Archive offers the other destination");
-  assert.equal(await page.locator(".nf-experience-archive").first().isVisible(),true,"Archive's evidence-led copy is visible");
+  assert.equal((await toggle.locator(".nf-theme-word").innerText()).trim(),"NEW MOON","NULL FIELD offers the archived research destination");
+  assert.equal(await page.locator(".nf-experience-archive").first().isVisible(),true,"Active research copy is visible");
   assert.equal(await page.locator(".nf-experience-underbelly").count(),0,"Hidden New Moon article fragments were removed from archive");
-  assert.equal(await page.locator(".nf-dual-colophon.nf-experience-archive").isVisible(),true,"Archive has its own colophon");
-  assert.match(await toggle.getAttribute("aria-label"),/NULL FIELD is active.*NEW MOON.*Warm Night/i);
+  assert.equal(await page.locator(".nf-dual-colophon.nf-experience-archive").isVisible(),true,"Active research has its own colophon");
+  assert.match(await toggle.getAttribute("aria-label"),/NULL FIELD is active.*NEW MOON.*Archived breakthroughs/i);
   await page.screenshot({path:"browser-artifacts/ethereal-light-"+width+".png",fullPage:false});
   await toggle.click();
   await page.waitForURL("**/new-moon.html");
   assert.equal(await page.locator("html").getAttribute("data-nf-experience"),"moon","Switch navigates to a different HTML document");
   assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk","New Moon page loads its own atmosphere without a flash");
   assert.equal(await toggle.getAttribute("aria-pressed"),"true","New Moon accessible state");
-  assert.equal((await toggle.locator(".nf-theme-word").innerText()).trim(),"NULL FIELD","Moon offers a return to the archive");
-  assert.equal(await page.locator("#open-ledger").isVisible(),true,"Distinct active-investigation ledger exists");
-  assert.equal(await page.locator("#flagships").count(),0,"Archive-only layout is absent from the night desk");
-  assert.match(await toggle.getAttribute("aria-label"),/New Moon is active.*NULL FIELD.*Deep Space/i);
+  assert.equal((await toggle.locator(".nf-theme-word").innerText()).trim(),"NULL FIELD","NEW MOON offers a return to active research");
+  assert.equal(await page.locator("#archived-records").isVisible(),true,"Historical results ledger exists");
+  assert.equal(await page.locator("#flagships").count(),0,"Active theorem-card layout is absent from historical archive");
+  assert.match(await toggle.getAttribute("aria-label"),/NEW MOON is active.*NULL FIELD.*Active research/i);
   assert.equal(await page.evaluate(()=>localStorage.getItem("nightfall.theme.v1")),"dusk","Selection persisted after navigation");
   await page.screenshot({path:"browser-artifacts/ethereal-dusk-"+width+".png",fullPage:false});
   await toggle.click();
   await page.waitForURL("**/index.html");
   assert.equal(await page.locator("html").getAttribute("data-nf-theme"),null,"Switch back loads NULL FIELD");
-  assert.equal(await toggle.getAttribute("aria-pressed"),"false","Archive restored");
+  assert.equal(await toggle.getAttribute("aria-pressed"),"false","Active NULL FIELD restored");
   const palette=await page.evaluate(()=>{
     const css=getComputedStyle(document.documentElement);
     return {paper:css.getPropertyValue("--lf-paper").trim(),primary:css.getPropertyValue("--lf-primary").trim()};
@@ -81,7 +81,9 @@ try{
    assert.equal(await page.locator("html").getAttribute("data-nf-theme"),"dusk",file+": theme restored before ready");
    assert.equal(await control.getAttribute("aria-pressed"),"true",file+": control state restored");
    assert.equal((await control.locator(".nf-theme-word").innerText()).trim(),"NULL FIELD",file+": consistent destination label");
-   assert.match(await control.getAttribute("aria-label"),/New Moon is active.*NULL FIELD.*Deep Space/i,file+": consistent accessible destination");
+   assert.match(await control.getAttribute("aria-label"),
+    file==="new-moon.html" ? /NEW MOON is active.*NULL FIELD.*Active research/i : /Warm Night palette is active.*Deep Space/i,
+    file+": home destination or shared-page palette label is accurate");
    if(file==="claim-lab.html"){
     assert.equal(await page.locator(".topActions .nf-theme-toggle").count(),1,"Theme toggle is in Claim Lab toolbar");
     await page.locator("#newClaimBtn").click();
@@ -111,12 +113,12 @@ try{
     assert.equal(tokens.accent,"#e2d28c",file+": dusk action accent inherits moonlight");
    }
    if(file==="new-moon.html"){
-    assert.equal(await page.locator("#open-ledger .moon-ledger-row").count(),5,
-      "Investigation page presents five source-bound review cases");
-    assert.equal(await page.locator("#open-ledger a[href='product-space-influence.html']").count(),1,
-      "New product-space proof obligations have a bounded, source-linked dossier");
-    assert.equal(await page.locator("#workbench a[href='constellation.html#map']").count(),1,
-      "Night desk links to the full graph without duplicating it");
+    assert.equal(await page.locator("#archived-records .moon-ledger-row").count(),5,
+      "Archive presents five source-bound historical records");
+    assert.equal(await page.locator("#archived-records a[href='erdos-paper.html']").count(),1,
+      "Erdős archive has a source-linked mathematical record");
+    assert.equal(await page.locator("#workbench a[href='evidence.html#public-downloads']").count(),1,
+      "Archive links directly to the public frozen evidence");
    }
    if(file==="constellation.html"){
     const action=await page.locator(".co-primary").first().evaluate(el=>({
@@ -150,7 +152,7 @@ try{
    }
    if(file==="new-moon.html"){
     assert.equal(await page.locator(".moon-hero-actions .button").count(),1,
-      "Distinct night desk has a primary bounded-investigation call to action");
+      "Archive has a primary browse-records call to action");
    }
    assert.ok(appearance.overflow<=4,file+": overflow in dusk at "+width+"px: "+appearance.overflow);
    if(["join.html","discovery.html","claim-lab.html","erdos-paper.html"].includes(file))

@@ -1,106 +1,77 @@
-// Homepage editorial contract: the record is deep, the public entrance is selective.
-import {readFileSync} from 'node:fs';
-import assert from 'node:assert/strict';
-import test from 'node:test';
-
-const html=readFileSync('docs/index.html','utf8');
-const moon=readFileSync('docs/new-moon.html','utf8');
-const styles=readFileSync('docs/home-rhythm.css','utf8');
-const find=s=>html.indexOf(s);
+// Research lifecycle contract: NULL FIELD is active; NEW MOON preserves historical results.
+import {readFileSync} from "node:fs";
+import assert from "node:assert/strict";
+import test from "node:test";
+const field=readFileSync("docs/index.html","utf8");
+const moon=readFileSync("docs/new-moon.html","utf8");
+const styles=readFileSync("docs/home-rhythm.css","utf8");
 const count=(s,re)=>(s.match(re)||[]).length;
 
-test('NULL FIELD opening and Erdős cinematic precede detailed archive records',()=>{
- const stages=[
-  '<section class="hero wrap',
-  '<section class="nf-cinema',
-  '<section class="section wrap flagships"',
-  '<section class="section wrap sf-case"',
-  '<section class="section wrap sf-library-invite" id="featured-title"',
-  '<section class="nf-observatory wrap"',
-  '<section class="section review-section"',
-  '<section class="section wrap sf-library-invite" id="work"'
- ].map(find);
+test("NULL FIELD leads with current product-space research, not an Erdős archival headline",()=>{
+ const stages=['<section class="hero wrap nf-opening"','<section class="nf-cinema',
+               '<section class="section wrap flagships"','id="featured-title"',
+               'id="new-discoveries"','id="observatory"','id="review"','id="work"']
+               .map(t=>field.indexOf(t));
  assert.ok(stages.every((v,i)=>v>=0&&(i===0||v>stages[i-1])),String(stages));
- assert.equal(count(html,/<article class="flagship-card/g),4,"All four scoped frontier research programs remain");
- assert.ok(html.includes("0.380856370118")&&html.includes("17 / 30")&&html.includes("Proof After Scarcity v2")&&html.includes("unvalidated"));
- for(const id of ["main","flagships","live-case","featured-title","nf-scroll-cinema","observatory","review","work","research-systems"])assert.ok(html.includes('id="'+id+'"'),id);
+ assert.ok(field.includes("ACTIVE RESEARCH")&&field.includes("Wright"));
+ assert.ok(field.includes('id="hero-title-archive">What matters<br><em>before we look?</em>'));
+ assert.ok(field.includes("observability.html")&&field.includes("product-space-influence.html"));
+ assert.ok(field.includes("CUBIC_OBSTRUCTION_NOTE.md"));
+ assert.ok(!field.includes('id="live-case"'),"Finite Sidon exhibit belongs to NEW MOON");
+ assert.ok(!field.includes("ERDŐS #36 / FEATURED FINITE WITNESS"));
+ assert.equal(count(field,/<article class="flagship-card /g),4,"Four separately scoped active program views");
+ assert.equal(count(field,/class="nf-claim-passport"/g),4,"Each active program has a claim-status ledger");
 });
-
-test('Detailed evidence and tools move to dedicated public destinations',()=>{
- for(const path of [
-  'erdos-paper.html','research.html','living-paper.html','constellation.html#map',
-  'passport.html?claim=sidon30','referee.html?domain=sidon',
-  'review.html#erdos','review.html#priority','review.html#pas',
-  'evidence.html#public-downloads','exact-research.html#research-tools-directory'
- ])assert.ok(html.includes('href="'+path+'"'),path);
- for(const scope of ['131,072-cell','30-point Sidon','4–25','external review','2⁻⁹⁶','Proof After Scarcity v2'])assert.ok(html.toLowerCase().includes(scope.toLowerCase()),scope);
- const secondary=html.indexOf('<details class="nf-deep-disclosure nf-frontiers-disclosure">');
- assert.ok(secondary>=0,"Supplemental research still available");
- assert.ok(!html.slice(secondary,html.indexOf("<summary>",secondary)).includes(" open"));
- assert.ok(!html.includes("nf-home-toolbox")&&!html.includes("instrument-workflow"));
- assert.ok(!html.includes("nf-section-index")&&!html.includes('src="observatory-home.js"'));
+test("NEW MOON archives exact finite witnesses and preserves original proof boundaries",()=>{
+ assert.ok(moon.includes('id="moon-title">What survives<br><em>becomes the record.</em>'));
+ for(const id of ["archived-records","live-case","sidon-witness","first-test","workbench"])
+  assert.ok(moon.includes('id="'+id+'"'),id);
+ for(const value of ["0.380856370118","131,072","17 / 30","global optimality",
+                     "separate","INTERNAL REPLAY","Erdős","Sidon","PAS"])
+  assert.ok(moon.toLowerCase().includes(value.toLowerCase()),"Archive lost scoped evidence: "+value);
+ const widget=moon.match(/<div class="sf-witness"[^>]*>([\s\S]*?)<\/div>/)?.[1];
+ assert.ok(widget,"No-JS archived Sidon witness missing");
+ assert.equal(count(widget,/class="sf-point(?: chosen)?"/g),30,"All 30 integer positions are visible");
+ assert.equal(count(widget,/class="sf-point chosen"/g),17,"17 chosen Sidon points remain");
+ assert.ok(moon.includes("verify_sidon30_standalone.py"));
+ assert.ok(!moon.includes('CASE 005 / NOVEMBER 2026'),"Current Wright frontier is not an archival result");
 });
-
-test('One entrance with fewer distractions and valid fragment destinations',()=>{
- const ids=new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]));
- for(const m of html.matchAll(/href="#([a-z0-9_-]+)"/gi))assert.ok(ids.has(m[1]),'#'+m[1]);
- assert.ok(count(html,/<a\b/g)<=45,"Homepage link density exceeds editorial budget");
- assert.ok(count(html,/<section\b/g)<=13,"Homepage sections exceed editorial budget");
- assert.ok(count(html,/<details\b/g)<=2,"Excessive nested disclosures");
- assert.equal(count(html,/id="nf-scroll-cinema"/g),1);
- assert.equal(count(html,/class="nf-experience nf-experience-archive nf-dual-colophon/g),1);
- assert.equal(count(moon,/class="moon-end wrap"/g),1);
- assert.equal(count(html,/class="nf-dual-index/g),0,"No duplicated three-destination entrance");
- const dual=readFileSync('docs/home-dual-experience.css','utf8');
- assert.match(dual,/html:not\(\[data-nf-theme="dusk"\]\) \.nf-experience-underbelly/);
- assert.match(dual,/html\[data-nf-theme="dusk"\] \.nf-experience-archive/);
- assert.ok(html.includes('href="home-dual-experience.css"'));
-});
-
-test('Scientific qualifiers survive the tighter narrative',()=>{
- assert.ok(html.includes('id="hero-title-archive">A precise number.<br><em>An open record.</em>'));
- assert.ok(moon.includes('id="moon-title">The work begins<br><em>where certainty ends.</em>'));
- assert.ok(moon.includes("INTERNAL EXACT REPLAY · INDEPENDENT REVIEW OPEN"));
- assert.ok(moon.includes("EMPIRICAL COMPARISON PENDING"));
- for(const q of ['external review','unproved','failed experiment','internal exact replay'])assert.ok(html.toLowerCase().includes(q),q);
- assert.ok(html.includes("no edge certifies a transfer theorem"));
-});
-
-test('Editorial sizing and motion controls retain accessible treatments',()=>{
- assert.ok(html.includes('href="home-rhythm.css"'));
- for(const s of ['.nf-focus-result-grid','.nf-secondary-frontiers-grid',
-  '.nf-deep-disclosure > summary:focus-visible',
-  'html[data-nf-theme="dusk"] .nf-deep-disclosure',
-  '@media (max-width:820px)','@media (max-width:620px)',
-  '@media (prefers-reduced-motion:reduce)'])assert.ok(styles.includes(s),s);
-});
-
-test('Opening and scroll chapters disclose the exact finite record before other campaigns',()=>{
- const hero=html.indexOf('<section class="hero wrap nf-opening"');
- const movie=html.indexOf('<section class="nf-cinema');
- const others=html.indexOf('<section class="section wrap flagships"');
- assert.ok(hero>=0&&movie>hero&&others>movie);
- const front=html.slice(hero,others);
- assert.match(front,/Erdős overlap finite witness record/);
- assert.match(front,/Source-bound Erdős finite overlap record/);
- assert.ok((front.match(/0\.380856370118/g)||[]).length>=3, "Archive hero, aside and scroll record preserve the exact score");
- assert.ok(moon.includes("0.380856370118…"),"The night desk preserves the shared witness score");
- assert.ok((front.match(/class="nf-opening-scoreline"/g)||[]).length===1);
- assert.ok((front.match(/131,072/g)||[]).length>=3);
- for(const disclaimer of ['separate, incompletely recovered artifact','external review open','global optimality'])
-  assert.ok(front.toLowerCase().includes(disclaimer.toLowerCase()),disclaimer);
- assert.match(front,/href="erdos-paper\.html"/);
- assert.match(front,/href="review\.html#erdos"/);
-});
-
-test('Independent home documents preserve selection, evidence, and review routes',()=>{
- assert.ok(html.includes('data-nf-experience="archive"')&&moon.includes('data-nf-experience="moon"'));
- assert.ok(html.includes('id="flagships"')&&!html.includes('id="open-ledger"'));
- assert.ok(moon.includes('id="open-ledger"')&&!moon.includes('id="flagships"'));
- for(const page of [html,moon]){
-  assert.ok(page.includes('data-nf-route="archive"')&&page.includes('data-nf-route="moon"'));
-  assert.ok(page.includes('href="review.html'));
+test("Cross-entrance navigation is explicit and in both directions",()=>{
+ for(const page of [field,moon]){
+  assert.ok(page.includes('data-nf-route="archive"'));
+  assert.ok(page.includes('data-nf-route="moon"'));
+  assert.ok(page.includes('NULL FIELD <small>Active research</small>'));
+  assert.ok(page.includes('NEW MOON <small>Archived breakthroughs</small>'));
+  const ids=new Set([...page.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]));
+  for(const m of page.matchAll(/href="#([a-z0-9_-]+)"/gi))
+   assert.ok(ids.has(m[1]),"Broken within-page anchor #"+m[1]);
  }
- assert.ok(moon.includes('global optimality is not established'));
- assert.ok(moon.includes('candidate is not a theorem'));
+ assert.ok(field.includes('href="new-moon.html#archived-records"'));
+ assert.ok(moon.includes('href="index.html"'));
+ assert.equal(count(field,/<a\b/g)<=45,true,"Active homepage link budget");
+ assert.ok(count(field,/<section\b/g)<=13,"Active homepage section budget");
+ assert.ok(count(field,/<details\b/g)<=2,"Avoid nested disclosures");
+});
+test("Both entrances retain accessible still artwork and scoped evidence links",()=>{
+ assert.ok(field.includes('id="nf-scroll-cinema"'));
+ assert.ok(field.indexOf('id="nf-scroll-cinema"')<field.indexOf('id="flagships"'));
+ assert.ok(field.includes('href="home-rhythm.css"'));
+ assert.ok(field.includes('href="home-dual-experience.css"'));
+ assert.ok(moon.includes('class="moon-end wrap"'));
+ assert.ok(field.includes('href="evidence.html#public-downloads"'));
+ assert.ok(field.includes('href="constellation.html#map"'));
+ assert.ok(moon.includes('href="evidence.html#public-downloads"'));
+ for(const q of [".nf-focus-result-grid",".nf-secondary-frontiers-grid",
+                 ".nf-deep-disclosure > summary:focus-visible",
+                 "@media (max-width:820px)","@media (max-width:620px)",
+                 "@media (prefers-reduced-motion:reduce)"])
+  assert.ok(styles.includes(q),q);
+});
+test("Archival designation is not a certification or novelty promotion",()=>{
+ assert.ok(field.includes("external review")&&field.includes("unproved"));
+ assert.ok(moon.includes("Archived means preserved for inspection"));
+ assert.ok(moon.includes("not a global")||moon.includes("Global optimality"));
+ assert.ok(moon.includes("EXTERNAL REVIEW OPEN"));
+ assert.ok(moon.includes("IMPORTED THEOREM DEPENDENCIES"));
+ assert.ok(field.includes("no edge certifies a transfer theorem"));
 });

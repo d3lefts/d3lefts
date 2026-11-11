@@ -8,10 +8,10 @@ A static research website built from checked-in HTML, CSS, JavaScript, and sourc
 
 | Experience | Entry point | Purpose |
 | --- | --- | --- |
-| **NULL FIELD** | [`index.html`](index.html) | Evidence-first research homepage, selected finite findings, current discoveries, and direct independent-review routes |
-| **NEW MOON** | [`new-moon.html`](new-moon.html) | Open research ledger, unresolved mathematical work, and inspectable instruments |
+| **NULL FIELD** | [`index.html`](index.html) | **Active research**: Wright product-space influence, quadratic observability, candidate proofs, formalization gaps, adversarial tests, and open next steps |
+| **NEW MOON** | [`new-moon.html`](new-moon.html) | **Archived breakthrough research**: Erdős finite overlap witnesses, Sidon constructions, earlier campaign records, exact checkers and provenance |
 
-Both experiences share common tokens and navigation logic but have distinct page layouts. Keep the theme switch functional, keyboard-accessible, and honest about destination.
+Both experiences share source records and review standards, but divide by research lifecycle, not proof strength. An archived candidate is not automatically a certified theorem, and an active theorem can have checked sublemmas. The historical CSS token `data-nf-experience="archive"` still denotes the NULL FIELD light palette for compatibility; the public semantics are now active work. Each landing page has a distinct layout. Keep the theme switch functional, keyboard-accessible, and honest about destination.
 
 ## Research and verification pages
 

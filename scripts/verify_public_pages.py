@@ -56,7 +56,7 @@ def main():
     base = args.base if args.base.endswith("/") else args.base + "/"
     checks = [
         ("index.html", "archive", "flagships", "new-moon.html"),
-        ("new-moon.html", "moon", "open-ledger", "index.html"),
+        ("new-moon.html", "moon", "archived-records", "index.html"),
         ("review.html", None, "start-here", "constellation.html"),
         ("portfolio.html", None, "career", "resume.html"),
     ]
@@ -72,9 +72,9 @@ def main():
             if destination not in parsed.links:
                 raise ValueError("Missing direct destination link " + destination)
             if path == "index.html" and "class=\"nf-claim-passport\"" not in html:
-                raise ValueError("Evidence summary not present in deployed archive")
-            if path == "new-moon.html" and "verify_sidon30_standalone.py" not in html:
-                raise ValueError("Finite review command missing from deployed New Moon")
+                raise ValueError("Active proof-status summary missing in NULL FIELD")
+            if path == "new-moon.html" and ("verify_sidon30_standalone.py" not in html or "0.380856370118" not in html):
+                raise ValueError("Archived Erdős or Sidon evidence missing from deployed NEW MOON")
             if path == "portfolio.html" and "noindex" not in parsed.meta.get("robots", ""):
                 raise ValueError("Unlisted portfolio indexing instruction not present")
             report["results"].append({"url": url, "status": "PASS"})

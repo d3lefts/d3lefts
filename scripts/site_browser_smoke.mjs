@@ -195,7 +195,7 @@ try{
    assert.equal(await page.locator("#join-active").isVisible(),false,"No fallback to unrelated assignment");
    // Progressive enhancement is an evidence guarantee: identical finite witness
    // coordinates remain visible without JavaScript, not a perpetual loader.
-   await page.goto(origin+"index.html",{waitUntil:"load"});
+   await page.goto(origin+"new-moon.html",{waitUntil:"load"});
    assert.equal(await page.locator("#sidon-witness .sf-point").count(),30,"30 exact finite points on first view");
    assert.equal(await page.locator("#sidon-witness .sf-point.chosen").count(),17,"17-point subset highlighted");
    assert.equal(await page.locator("#sidon-toggle").isDisabled(),false,"interactivity enabled only after the checker loads");
@@ -204,7 +204,7 @@ try{
    assert.equal(portalManifest.releaseAssets.length,2,"two owner-approved releases only");
    assert.equal(await page.evaluate(()=>window.NightfallRegistry.claimById("erdos36").reproducibility.level),"public","canonical public archive status");
    const noScript=await browser.newPage({javaScriptEnabled:false,viewport:{width:390,height:850}});
-   await noScript.goto(origin+"index.html",{waitUntil:"load"});
+   await noScript.goto(origin+"new-moon.html",{waitUntil:"load"});
    assert.equal(await noScript.locator("#sidon-witness .sf-point").count(),30,"no-JS exact witness");
    assert.equal(await noScript.locator("#sidon-witness .sf-point.chosen").count(),17,"no-JS chosen subset");
    assert.equal(await noScript.locator("#sidon-toggle").isDisabled(),true,"no inert pretend interaction");
@@ -543,21 +543,21 @@ try{
     assert.match(await page.locator(".pp-coverage").innerText(),/Eleven curated Proof Passports, 40 research dossiers/,"Passports explain editorial coverage");
     await page.goto(origin+"index.html",{waitUntil:"load"});
     assert.equal(await page.locator("html").getAttribute("data-nf-experience"),"archive","NULL FIELD is its own document");
-    assert.equal(await page.locator(".nf-experience-archive .hero-actions a").count(),2,"Archive offers two source-reading paths");
-    assert.equal(await page.locator(".nf-experience-archive .hero-actions a").first().isVisible(),true,"Archive is visible in its own document");
-    assert.equal(await page.locator(".nf-experience-underbelly").count(),0,"Night article fragments are absent from archive");
+    assert.equal(await page.locator(".nf-experience-archive .hero-actions a").count(),2,"Active research offers direct theorem sources");
+    assert.equal(await page.locator(".nf-experience-archive .hero-actions a").first().isVisible(),true,"Active research is visible in its own document");
+    assert.equal(await page.locator(".nf-experience-underbelly").count(),0,"No duplicate theme fragments in NULL FIELD");
     assert.equal(await page.locator(".flagship-context").count(),4,"Each flagship explains the metric's limited meaning");
     await page.locator(".nf-theme-toggle").click();
     await page.waitForURL("**/new-moon.html");
     assert.equal(await page.locator("html").getAttribute("data-nf-experience"),"moon","Toggle opens a separate New Moon document");
-    assert.equal(await page.locator(".moon-hero-actions a").count(),2,"Night has its own investigation entry paths");
-    assert.equal(await page.locator("#open-ledger .moon-ledger-row").count(),5,"Distinct source-linked verification ledger, including product-space Lean scope");
-    assert.equal(await page.locator("#open-ledger a[href='product-space-influence.html']").count(),1,"New research has a precise certification and review dossier");
-    assert.equal(await page.locator(".flagship-context").count(),0,"Archive presentation is not duplicated at night");
+    assert.equal(await page.locator(".moon-hero-actions a").count(),2,"NEW MOON has archival and evidence paths");
+    assert.equal(await page.locator("#archived-records .moon-ledger-row").count(),5,"Five historically scoped archived research records");
+    assert.equal(await page.locator("#archived-records a[href='erdos-paper.html']").count(),1,"Archived Erdős record links to its exact witness");
+    assert.equal(await page.locator(".flagship-context").count(),0,"Current-work card layout is absent from NEW MOON");
     await page.locator(".nf-theme-toggle").click();
     await page.waitForURL("**/index.html");
 
-    assert.match(await page.locator(".flagship-context").first().innerText(),/maximum overlap/i,"Numerical extremal value interpreted");
+    assert.match(await page.locator(".flagship-context").first().innerText(),/lower bound|dimension|influence/i,"Active influence evidence interpreted");
     await page.goto(origin+"research.html",{waitUntil:"load"});
     assert.match(await page.locator(".archive-coverage").innerText(),/40 research records.*Eleven detailed claim passports.*Five separately approved finite findings/s,"Library explains record hierarchy");
     await page.goto(origin+"atlas.html",{waitUntil:"load"});

@@ -174,7 +174,7 @@ body:has(.modalMask.show) .nf-theme-floating{visibility:hidden;pointer-events:no
 
 
 /* OBSERVATORY EXPERIENCE / 2026-10-29
-   Stable scientific content. Light reads as archive; dusk as a working observatory. */
+   Stable scientific content. Light serves active research (NULL FIELD); dusk serves historical records (NEW MOON). */
 .nf-observatory{margin-block:clamp(65px,8vw,118px);border-top:1px solid var(--line);padding-top:clamp(30px,4vw,60px)}
 .nf-observatory-head{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(250px,.7fr);align-items:end;gap:clamp(25px,5vw,75px);margin-bottom:36px}
 .nf-observatory-head h2{font:400 clamp(43px,5vw,80px)/1.03 var(--serif);letter-spacing:-.035em;margin-top:18px}
