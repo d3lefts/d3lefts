@@ -47,8 +47,8 @@
 
  // Single source for the specialist-page route taxonomy. A destination means
  // where a task belongs, never that it is mathematically complete.
- // Research source pages are shared. The first route back respects the
- // selected reading without duplicating source evidence or mutating claims.
+ // Research source pages are shared. Named active and historical pages use
+ // their editorial lifecycle regardless of the reader-selected palette.
  const preferredMoon=()=>{
   try{
    const v=localStorage.getItem("nightfall.theme.v1");
@@ -58,7 +58,7 @@
  };
  // Canonical page ownership is independent of a reader's color palette.
  // The "archive" token in data-nf-route remains a legacy LIGHT palette ID.
- const activePages=new Set(["product-space-influence.html","observability.html","frontier.html","desk.html","discovery.html","orchestrator.html","agenda.html"]);
+ const activePages=new Set(["product-space-influence.html","observability.html","active-proof-passport.html","frontier.html","desk.html","discovery.html","orchestrator.html","agenda.html"]);
  const historicalPages=new Set(["erdos-paper.html","living-paper.html","findings-20261029.html","sidon-arity.html"]);
  const homeDestination={id:"home",label:"",href:""};
  const updateHome=(moon)=>{
@@ -74,6 +74,7 @@
  ];
  const routes={
   "research.html":"home","living-paper.html":"home","erdos-paper.html":"home",
+  "observability.html":"home","product-space-influence.html":"home","active-proof-passport.html":"home","sidon-arity.html":"home",
   "findings-20261029.html":"home","agenda.html":"home","about.html":"home",
   "atlas.html":"constellation","join.html":"constellation",
   "frontier.html":"constellation","discovery.html":"constellation","orchestrator.html":"constellation",
