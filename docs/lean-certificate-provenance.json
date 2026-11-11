@@ -46,9 +46,9 @@
     {
       "path": "research/nightfall/2026-11-universal-law-transfer/FiniteLawTransfer.lean",
       "classification": "quarantine",
-      "note": "Classical Neyman–Pearson bounded-loss upper dual and support domination, NOT complete adaptive/Hilbert theorem or original discovery",
+      "note": "Five Lean kernel-compiled transfer lemmas: classical hockey-stick finite dual, finite support, arbitrary measurable dominated-law zero error, and exact policy-budget invariance under equivalent laws; not source adaptive observer or global originality",
       "passport": null,
-      "ci_run": null,
+      "ci_run": 43059618451,
       "global_priority": "unverified"
     },
     {
