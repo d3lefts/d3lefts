@@ -1,8 +1,8 @@
 {
   "schema": "nightfall-lean-provenance-v1",
   "as_of": "2026-11-11",
-  "revision": 2,
-  "scope": "40 classified .lean files in the live research tree, including one law-transfer module explicitly quarantined as inherited classical bounded-loss mathematics. Historical 39-file main-tree snapshot at f005704b50c35819ff32c703e1ce5f2f72106fd5 retained in revision 1.",
+  "revision": 3,
+  "scope": "41 classified Lean files in the PR merge tree: 39 historical frozen modules, one separately committed two-increment fourth-moment module on main (classical), and one law-transfer kernel (classical). Includes parallel contribution to avoid unclassified source.",
   "source_commit": "869648657ef0fef3a8b0d042de7c412602117e45",
   "policy": "Kernel compilation is validity evidence only. Quarantine means do not claim novelty; it does not invalidate a correctly compiled theorem. Derived transfers are scoped program-specific compositions with open worldwide priority. A distinct finite construction has an exact certificate but still needs prior-art review.",
   "prior_art": [
@@ -38,7 +38,7 @@
     }
   ],
   "counts": {
-    "quarantine": 29,
+    "quarantine": 30,
     "derived_transfer": 10,
     "finite_construction": 1
   },
@@ -89,6 +89,14 @@
       "note": "Finite posterior-product normalization and elementary scalar/vector Cauchy inequality",
       "passport": "universal-spectral-proof-passport.html",
       "ci_run": 42973878336,
+      "global_priority": "unverified"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ArbitraryLawFourthMoment.lean",
+      "classification": "quarantine",
+      "note": "Classical exact fourth-moment expansion for two centered independent finite-law scalar increments plus weighted Hilbert squared-norm self-bound; not a matching theorem, full arbitrary-law quadratic influence theorem, or globally original discovery",
+      "passport": null,
+      "ci_run": null,
       "global_priority": "unverified"
     },
     {
