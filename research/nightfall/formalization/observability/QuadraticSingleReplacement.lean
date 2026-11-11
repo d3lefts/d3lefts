@@ -32,8 +32,7 @@ theorem single_term_replace_sum
           by_cases hij : i = j
           · subst i
             dsimp [singleSwitched]
-            simp
-            ring
+            simp <;> ring
           · simp [singleSwitched, hij]
     _ = (∑ i : ι, h i (x i)) + (h j (y j) - h j (x j)) := by
           rw [Finset.sum_add_distrib]
@@ -50,11 +49,9 @@ theorem pair_term_one_replace
   · have hv : v ≠ j := by
       intro h
       exact hne (hu.trans h.symm)
-    simp [singleSwitched, hu, hv]
-    ring
+    simp [singleSwitched, hu, hv] <;> ring
   · by_cases hv : v = j
-    · simp [singleSwitched, hu, hv]
-      ring
+    · simp [singleSwitched, hu, hv] <;> ring
     · simp [singleSwitched, hu, hv]
 
 theorem pair_term_replace_sum
