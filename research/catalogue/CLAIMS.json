@@ -186,7 +186,7 @@
         "research/nightfall/formalization/observability/README.md"
       ],
       "dependencies": [],
-      "claim_scope": "Analytic (not end-to-end Lean) scalar degree-at-most-two theorem on arbitrary independent product laws: Var(f)^2 <= 225(1+sqrt(3))^2 B^2 sup_i I_i(f), with |f|<=B, and exponent two sharp by disjoint fair-sign pairs. No minimum atom or alphabet size assumptions; original release/priority audit open.",
+      "claim_scope": "Analytic, not end-to-end Lean: for bounded scalar Hoeffding degree at most two on arbitrary independent products, Var(f)^2 <= K B^2 sup_i I_i(f), K=(10+2sqrt(2))^2(1+sqrt(3))^2=1228.356323837..., improving v7's K=225(1+sqrt(3))^2. A sharper additive-projection range bound is composed with the existing matching/fourth-moment proof. Variance exponent two is optimal. For binary products, classical Grothendieck methods give a stronger coefficient <51; categorical originality review remains open.",
       "open_gates": [
         "Independent non-author check of actual matching coupling, oscillation budgets, greedy Hilbert fourth moment and finite-to-infinite lift",
         "Full-chain Lean certification still absent: named 4B/8B/16B and moment declarations are only sublemmas",
@@ -220,7 +220,7 @@
           "type": "uses-as-premise"
         }
       ],
-      "claim_scope": "Conditional on analytic arbitrary-law quadratic influence proof: for bounded real Hilbert degree-two F on finite independent products, rank-r adaptive whole-coordinate Bayes risk <= tau_r+eta within min(n,ceil(2700(1+sqrt(3))^2 r B^2/eta)); bounded degree-one family requires r/(4eta) for eta=1/(2k), B=1; categorical address prevents alphabet-uniform nonadaptive budget. Observation depth only, not runtime.",
+      "claim_scope": "Conditional on the v8 analytic scalar/Hilbert quadratic premise: bounded degree-two rank-r Hilbert observables on finite independent products have adaptive hard-depth <=min(n,ceil(12 K r B^2/eta)) to Bayes risk tau_r+eta, K=(10+2sqrt(2))^2(1+sqrt(3))^2, with matching-order lower family r/(4eta) at eta=1/(2k), B=1. Binary product case has classical Grothendieck bound <610 r B^2/eta. Fixed nonadaptive scalar guarantee <=ceil((3+2sqrt(2))B^2/(eta-delta2)) holds only when eta exceeds quadratic energy delta2. No computational runtime bound or full-chain Lean certification.",
       "open_gates": [
         "Independent specialist check of finite-sign rank lift, actual conditional posterior energy drift and lower-bound construction",
         "Premise quadratic analytic theorem not end-to-end Lean certified",
