@@ -26,6 +26,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Exact-rational projection replay
         run: python3 research/nightfall/2026-11-kaczmarz-logfree/exact_audit.py
+      - name: Independent exhaustive exact-rational projection replay
+        run: python3 research/nightfall/2026-11-kaczmarz-logfree/independent_exhaustive_audit.py
       - name: Active passport schema and no-promotion checks
         run: node scripts/test_active_proof_passport.cjs
       - name: Site links and editorial gates
