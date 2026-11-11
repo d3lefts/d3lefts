@@ -1,0 +1,25 @@
+name: NIGHTFALL pointwise sensitivity finite audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-certificate-engine/checks/check_pointwise_sensitivity_exact.cpp'
+      - 'research/nightfall/2026-11-certificate-engine/POINTWISE_SENSITIVITY_AUDIT_20261111.md'
+      - '.github/workflows/nightfall-pointwise-sensitivity.yml'
+  push:
+    paths:
+      - 'research/nightfall/2026-11-certificate-engine/checks/check_pointwise_sensitivity_exact.cpp'
+      - 'research/nightfall/2026-11-certificate-engine/POINTWISE_SENSITIVITY_AUDIT_20261111.md'
+      - '.github/workflows/nightfall-pointwise-sensitivity.yml'
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile exact independent checker
+        run: |
+          g++ -O3 -std=c++17 -Wall -Wextra -pedantic \
+            research/nightfall/2026-11-certificate-engine/checks/check_pointwise_sensitivity_exact.cpp \
+            -o /tmp/nightfall_check_psi
+      - name: Exhaust finite families and adversarial sensitivity tests
+        run: /tmp/nightfall_check_psi
