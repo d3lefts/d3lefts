@@ -12,7 +12,7 @@
 | [#310](https://github.com/d3lefts/d3lefts/pull/310) | **Competing-symbol product-row bound** `Σa_i≤π²d²` using Chebyshev-selector, degree and cover duality; actual arbitrary alphabet selectors | **Merged in this sweep**, pinned Lean 4.33.0 [14-declaration receipt](https://github.com/d3lefts/d3lefts/actions/runs/42924358449). Its `HasProdDegreeLE` monomial-support premise is not yet a formalized ANOVA/Hoeffding equivalence |
 | [#306](https://github.com/d3lefts/d3lefts/pull/306) | Maximal Hoeffding-component finite-section sensitivity, explicit energy assumptions, exact rational negative controls | **Merged in this sweep**; 13 scoped finite Lean declarations and committed 952-case checker with [successful workflow](https://github.com/d3lefts/d3lefts/actions/runs/42921631045). No infinite-product selection theorem |
 | [#311](https://github.com/d3lefts/d3lefts/pull/311) | Universal witness packing/finite-sensor discoverability; counterexamples to unqualified universal cheap recovery | **Draft under active development at snapshot**. Finite Lean/static certificate and exact finite checks are different gates from the unformalized adaptive `D≤wr` protocol and historical novelty |
-| [#313](https://github.com/d3lefts/d3lefts/pull/313) | Finite-palette threshold-to-real squared-influence sampler and block-first adaptive exact/MSE policy (v0.3) | **Written proof candidate**, not end-to-end Lean; full PDF/TeX/ZIP checker bytes have NOT been committed by this PR, reported local checks are not independently replayed from repository source |
+| [#313](https://github.com/d3lefts/d3lefts/pull/313) | Finite-palette threshold-to-real squared-influence sampler and block-first adaptive exact/MSE policy (v0.3) | **Merged as explicitly unrefereed archive candidate**, commit `86b126d65b7a642f4735300f3a8e3756d39cebed`; not end-to-end Lean; full PDF/TeX/ZIP checker bytes are NOT committed, reported local checks are not independently replayed from repository source |
 
 The principal real-output proposed influence theorem remains:
 ```text
@@ -44,7 +44,7 @@ Separate parallel research conversations have produced additional PDFs and sourc
 
 ## Repository-wide open PR inventory — frozen live API snapshot
 
-The live GitHub `state=open` endpoint returned **93 open pull requests**, of which **91** belong to earlier/non-current November campaigns by this filter. Many are old stacked drafts with unmerged dependency branches, non-independent audits, and potential conflicting base branches. **Owner instruction to merge does not substitute for verifying each head's proof receipts, source constraints and compatibility.** No blind batch merge of earlier mathematical submissions was performed.
+The live GitHub `state=open` endpoint returned **93 open pull requests** at the frozen snapshot, of which **91** belong to earlier/non-current November campaigns by this filter. Subsequent merges (including #313) change the live count; this is an intentionally dated inventory. Many are old stacked drafts with unmerged dependency branches, non-independent audits, and potential conflicting base branches. **Owner instruction to merge does not substitute for verifying each head's proof receipts, source constraints and compatibility.** No blind batch merge of earlier mathematical submissions was performed.
 
 The following is a discoverability index, **not a blanket success/merge eligibility assessment**:
 
@@ -141,6 +141,10 @@ The following is a discoverability index, **not a blanket success/merge eligibil
 | [#20](https://github.com/d3lefts/d3lefts/pull/20) | [AXIOM × LEMNIS / DRAFT] Exact all-copy Werner coupled-sector positivity and sharp 8^n coordinate capacity | `main` |
 | [#19](https://github.com/d3lefts/d3lefts/pull/19) | [DRAFT / GATED] Observatory v2: preserve owner's flagship site, carry forward science instrument | `main` |
 | [#17](https://github.com/d3lefts/d3lefts/pull/17) | [DRAFT / EXACT PROOF] Werner 4209 maximality and all 72 sharp syndrome coupling norms | `main` |
+
+## Checker correction retained
+
+The four-bit addressing example has optimal decision-tree complexity `D=2`, but the **defined greedy common-witness-block algorithm** uses `3` sensor queries, not `2`. A previously failing #311 exact checker assumed greedy=2; its corrected expectation is greedy=3, and that repair must be included in every merged version. This is not a failure of the `D≤wr` inequality and does not imply that this particular greedy algorithm achieves optimal D.
 
 ## Continuation and release gates
 
