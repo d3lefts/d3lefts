@@ -1,15 +1,15 @@
 {
   "schema": "nightfall-active-proof-passports-v1",
-  "version": 6,
+  "version": 7,
   "as_of": "2026-11-11",
-  "updated_by": "2026-11-11 source-matched Kaczmarz theorem audit: unscaled ||A||_F^2/epsilon^2 comparator, classical-method attribution and separately replayable exhaustive exact check; no originality promotion",
+  "updated_by": "2026-11-11 source-hash reconciliation: full 59-main-Lean-file scope census and 12 additional quarantined sources; no automatic kernel or originality promotion",
   "frozen_historical_registry_unchanged": true,
   "lifecycle": "active",
-  "scientific_status": "Twelve active claim checkpoints; 39 Lean modules assigned an independent originality classification (28 quarantined inherited/routine, 10 dependent transfer, one source-specific finite construction). Frozen historical eleven and approved findings unchanged.",
+  "scientific_status": "Twelve active research claims; 59 main Lean source files classified (48 originality-quarantined, 10 derived transfers, one finite construction). The current-source hashes are exact, historical scoped CI receipts and cross-pin compilation are distinct gates; frozen eleven unchanged.",
   "source_checkpoint": {
     "repository": "d3lefts/d3lefts",
     "commit": "5bda769c2484ea2f6ea9a02c428928361c07666f",
-    "notes": "This commit fixes the four 10 Nov observability sources. The 11 Nov Kaczmarz claim has its own explicitly dated source checkpoint and is not included in the earlier source commit. The sixth four-shuffle candidate has standalone source and a source-ZIP checksum; original binary ZIP/PDF are chat artifacts, not GitHub releases. The seven expanded or newly added detailed passports are versioned 2026-11-11. The finite product theorem is now linked to its immutable PR #317 Lean receipt; the cubic and universal manuscript additions retain explicit draft/analytical gates."
+    "notes": "This commit fixes the four 10 Nov observability sources. The 11 Nov Kaczmarz claim has its own explicitly dated source checkpoint and is not included in the earlier source commit. The sixth four-shuffle candidate has standalone source and a source-ZIP checksum; original binary ZIP/PDF are chat artifacts, not GitHub releases. The seven expanded or newly added detailed passports are versioned 2026-11-11. The finite product theorem is now linked to its immutable PR #317 Lean receipt; the cubic and universal manuscript additions retain explicit draft/analytical gates. Lean provenance inventory separately reconciled at main commit f0007f6baea9ea53dfbde809bb243c017c17dbc6; no changes to principal mathematical claim status."
   },
   "definitions": {
     "influence": "I_i(F)=E[||F−E_i F||²] with E_i averaging input coordinate i",

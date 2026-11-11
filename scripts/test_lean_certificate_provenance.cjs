@@ -1,17 +1,23 @@
 "use strict";
 // Editorial provenance check, NOT a substitute for Lean or a novelty determination.
-const fs=require("node:fs"),assert=require("node:assert/strict"),path=require("node:path");
+const fs=require("node:fs"),assert=require("node:assert/strict"),path=require("node:path"),crypto=require("node:crypto");
 const m=JSON.parse(fs.readFileSync("docs/lean-certificate-provenance.json","utf8"));
 const walk=d=>fs.readdirSync(d,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(d,e.name)):e.name.endsWith(".lean")?[path.join(d,e.name).replaceAll("\\","/")]:[]);
 const real=walk("research/nightfall").sort(),got=m.modules.map(x=>x.path).sort();
 assert.equal(m.schema,"nightfall-lean-provenance-v1");
 assert.deepEqual(got,real,"Unclassified Lean file (must not silently inherit originality)");
 assert.equal(new Set(got).size,got.length);
-assert.equal(m.modules.length,47,"Frozen source count changed: refresh manifest against exact main tree");
+assert.equal(m.modules.length,59,"Main Lean source count changed: update manifest and exact hashes");
+assert.equal(m.counts.quarantine+m.counts.derived_transfer+m.counts.finite_construction,59);
+assert.match(m.source_commit,/^[0-9a-f]{40}$/);
+assert.match(m.source_tree_sha,/^[0-9a-f]{40}$/);
 const valid=new Set(["quarantine","derived-transfer","finite-construction"]);
 for(const r of m.modules){
  assert.ok(valid.has(r.classification),r.path);
  assert.ok(fs.existsSync(r.path),"Missing module "+r.path);
+ const bytes=fs.readFileSync(r.path);
+ const blob=crypto.createHash("sha1").update(Buffer.from(`blob ${bytes.length}\0`)).update(bytes).digest("hex");
+ assert.equal(r.source_blob_sha,blob,"Stale certificate source blob: "+r.path);
  assert.equal(r.global_priority,"unverified",r.path);
  assert.ok(r.note.length>20,r.path);
  if(r.classification!=="quarantine") assert.ok(r.passport&&fs.existsSync("docs/"+r.passport),"Unpassported derived or constructed certificate "+r.path);
@@ -27,7 +33,11 @@ const law=m.modules.find(x=>x.path.endsWith("/FiniteLawTransfer.lean"));assert.o
 const phases=m.modules.filter(x=>x.classification==="finite-construction");
 assert.deepEqual(phases.map(x=>x.path),["research/nightfall/formalization/phase_block/PhaseBlock.lean"]);
 const page=fs.readFileSync("docs/lean-certificate-provenance.html","utf8");
-assert.equal((page.match(/<tr><td>\d\d<\/td>/g)||[]).length,47,"Missing static site entries");
+assert.equal((page.match(/<tr><td>\d\d<\/td>/g)||[]).length,59,"Missing static site entries");
+for(const r of m.modules){
+ assert.ok(page.includes(r.source_blob_sha),"Missing source hash in static passport: "+r.path);
+ assert.ok(page.includes(r.path.split("/").at(-1)),"Source not visible on site: "+r.path);
+}
 assert.ok(page.includes("Quarantine does not retract kernel compilation"));
 assert.ok(page.includes('href="lean-certificate-provenance.json"'));
 const source=fs.readFileSync("docs/phase-block-proof-passport.html","utf8");
@@ -68,4 +78,4 @@ for(const token of ["CLOSED AND UNMERGED","27","41110673165","k=7","not all form
 assert.ok(page.includes('id="nonmain"')&&page.includes(a.passport),"Not visible in provenance");
 const siteSitemap=fs.readFileSync("docs/sitemap.xml","utf8");
 assert.ok(siteSitemap.includes("/"+a.passport),"Off-main passport missing sitemap");
-console.log("PASS: 47 main Lean sources classified, one separate closed-branch finite certificate explicitly scoped; no novelty promotion.");
+console.log("PASS: 59 main Lean sources source-hash-checked and classified, 12 recovered modules, one separate closed-branch certificate scoped; no novelty promotion.");
