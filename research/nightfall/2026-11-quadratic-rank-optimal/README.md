@@ -4,6 +4,7 @@
 
 - [Full quantified theorem and independent analytic proof](UNIVERSAL_THEOREM.md): law-free quadratic variance-squared influence, sphere rank compression, actual posterior deterministic hard cap, spectral tail, rank-minimax lower bound and alphabet-unbounded nonadaptive gap.
 - [Independent standard-library exact-rational checker](check_rank_linear_exact.py): 220 heterogeneous finite Hilbert products (ANOVA and conditional variance from independent calculations); assigned increment fourth moments, exact greedy matching, 36 rank profiles and 36 exhaustive Bayes address patterns.
+- [Dated prior-art and adversarial referee protocol](PRIORITY_AND_REFEREE.md): precise comparator scopes, independent proof-attack gates and originality restrictions.
 - [Pinned CI checker](../../../.github/workflows/nightfall-rank-optimal-quadratic.yml): exact arithmetic and SHA-256 receipt. This is not a universal proof by testing.
 
 The full analytic conclusion is
