@@ -4,6 +4,14 @@
 
 **Primary mathematical source:** [PRINCIPAL_THEOREM.md](../../research/nightfall/2026-11-principal-observability/PRINCIPAL_THEOREM.md). Its exact quantified theorem statement, constants, proof steps, and boundaries govern this entry. Do not cite this page as an independent theorem.
 
+## Full analytic proof supplement (internal reconstruction)
+
+[Analytic proof supplement v1](PROOF_SUPPLEMENT_v1.md) · [chain audit and referee attacks](CHAIN_AUDIT_v1.md).
+
+This is a **complete author-side analytic argument and finite falsification source**, not an independent non-author mathematical review or end-to-end Lean compilation. The proof fixes the algebraic and measurable-selection interfaces and derives the original stated constants. Run the [exact posterior/Hilbert checker](checks/check_posterior_hilbert_exact.py) and [PSD/log numeric stress](checks/check_psd_log_stress.py) from a fresh checkout; the dedicated CI records input SHA-256 checksums.
+
+**Status unchanged:** analytic manuscript, no external referee, originality unresolved, stronger quadratic and general cubic exponent-two results still open.
+
 ## Mathematical question
 
 Can a bounded, strongly measurable Hilbert observable of fixed Hoeffding interaction degree be predicted, to spectral-truncation error plus `eta`, by a dimension-independent number of adaptively selected **whole input-coordinate** observations over an arbitrary independent product law? The manuscript proposes a bound of the form `N=ceil((40/3) U log(1+4U))`, with `U=d^7 B^3 r^(3/2)/(c_* eta^(3/2))` and `c_*=sqrt(3/12500)/pi^6`.

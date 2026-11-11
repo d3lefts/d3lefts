@@ -5,6 +5,8 @@
 **Date:** 11 November 2026 (UTC).  
 **Status:** Public technical research claim, with analytic proof and an exactly pinned Lean-checked **finite scalar** foundation. The full measurable-product Hilbert adaptive composition is not yet independently refereed or machine checked end-to-end. No global novelty or priority certification is asserted.
 
+**Additional analytic proof source (11 November 2026):** [full-chain proof supplement v1](../../../papers/universal-observability/PROOF_SUPPLEMENT_v1.md) supplies detailed finite-to-measurable, PSD sign, actual posterior drift, measurable coordinate selection and capped-potential arguments; the [chain audit](../../../papers/universal-observability/CHAIN_AUDIT_v1.md) records independent exact finite falsifiers and open specialist review gates. **This does not constitute external referee acceptance or end-to-end Lean certification.**
+
 ### Main theorem (analytic)
 
 Let \(F\) be a strongly measurable, real Hilbert-valued observable on an arbitrary independent product probability space, with \(\|F\|\le B\) almost surely and Hoeffding interaction degree at most \(d\ge1\). Let \(\tau_r\) denote the covariance variance beyond the first \(r\) output directions. Put

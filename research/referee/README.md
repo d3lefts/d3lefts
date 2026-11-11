@@ -8,6 +8,8 @@
 
 **Claim:** [principal paper](../nightfall/2026-11-principal-observability/PRINCIPAL_THEOREM.md).  
 **Foundation:** [finite kernel proof passport](../nightfall/formalization/product_space/FINITE_PRODUCT_INFLUENCE_PROOF_PASSPORT_20261110.md).  
+**Full argument to attack:** [analytic proof supplement v1](../../papers/universal-observability/PROOF_SUPPLEMENT_v1.md), [exact posterior/Hilbert tester](../../papers/universal-observability/checks/check_posterior_hilbert_exact.py), [PSD sign-mgf stress](../../papers/universal-observability/checks/check_psd_log_stress.py). These are internal analytic and computational artifacts, not outside refereeing.
+
 **Review target:** Confirm exact finite indicator-product degree assumptions; reconstruct finite-to-arbitrary measurable product approximation, with countable active support and null-set handling. Independently audit the PSD Gaussian mgf and sign scalarization. Then justify the *actual* posterior ANOVA total-influence identity, measurable greedy choice, stopped-potential bound, and spectral-tail projection. Examine `d=0`, variance `0`, zero-mass atoms, infinite coordinate sets, and nonattainment of influence maxima.
 
 **Reject any reasoning** that imports an abstract stopping theorem while assuming the very posterior progress relation it is meant to derive.  

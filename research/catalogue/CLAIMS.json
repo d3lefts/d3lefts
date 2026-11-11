@@ -47,7 +47,11 @@
       "primary": "research/nightfall/2026-11-principal-observability/PRINCIPAL_THEOREM.md",
       "evidence": [
         "research/nightfall/formalization/observability/UNIVERSAL_SPECTRAL_CHECKPOINT_2026-11-11.md",
-        "research/nightfall/2026-11-spectral-observability/REVIEW_GATES.md"
+        "research/nightfall/2026-11-spectral-observability/REVIEW_GATES.md",
+        "papers/universal-observability/PROOF_SUPPLEMENT_v1.md",
+        "papers/universal-observability/CHAIN_AUDIT_v1.md",
+        "papers/universal-observability/checks/check_posterior_hilbert_exact.py",
+        "papers/universal-observability/checks/check_psd_log_stress.py"
       ],
       "dependencies": [
         {
@@ -57,10 +61,10 @@
       ],
       "claim_scope": "Bounded strongly measurable Hilbert outputs, any fixed Hoeffding degree on arbitrary independent products; dimension-independent adaptive whole-coordinate risk to spectral tail plus eta, known laws; no runtime bound.",
       "open_gates": [
-        "Independently audit measurable-product approximation and null sets",
-        "Independently audit PSD/rank moment transfer",
-        "Independently audit posterior-policy/measurable selection and capped potential",
-        "End-to-end formalization and dated comparative prior art"
+        "Independent non-author review of full analytic supplement, including arbitrary completed product spaces and posterior null-set handling",
+        "Independent mathematical audit of PSD sign-moment, Jensen log inversion, measurable greedy selection and hard stopping budget",
+        "End-to-end Lean compilation not completed; only finite scalar theorem has kernel receipt",
+        "Dated source-to-source originality study and author publication authorization"
       ],
       "inherited": [
         "Finite product scalar influence theorem and classical ANOVA"
