@@ -1,0 +1,32 @@
+name: Setup NIGHTFALL pinned Lean/Mathlib
+description: Verify Lean 4.35.0 and immutable Mathlib v4.35.0 commit, then reuse its cache
+runs:
+  using: composite
+  steps:
+    - name: Install pinned Lean via elan
+      shell: bash
+      run: |
+        set -euo pipefail
+        curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/nightfall-elan-init.sh
+        sh /tmp/nightfall-elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.35.0
+        echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+        "$HOME/.elan/bin/lean" --version | tee /tmp/nightfall-lean-version.txt
+        grep -F 'version 4.35.0' /tmp/nightfall-lean-version.txt
+        grep -F 'eb6cafb7290e8bd5f2937522d8d804f58f02bafc' /tmp/nightfall-lean-version.txt
+    - name: Clone exact pinned Mathlib
+      shell: bash
+      run: |
+        set -euo pipefail
+        git clone --depth 1 --branch v4.35.0 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4
+        test "$(git -C /tmp/mathlib4 rev-parse HEAD)" = 56a005855ea17e0b0958f73ec801ae140b0a1679
+        test "$(cat /tmp/mathlib4/lean-toolchain)" = leanprover/lean4:v4.35.0
+    - uses: actions/cache@v4
+      with:
+        path: /tmp/mathlib4/.lake
+        key: nightfall-lean-v4350-mathlib-56a005855ea17e0b0958f73ec801ae140b0a1679
+    - name: Restore verified Mathlib artifacts
+      shell: bash
+      run: |
+        set -euo pipefail
+        (cd /tmp/mathlib4 && "$HOME/.elan/bin/lake" exe cache get)
+        test "$(git -C /tmp/mathlib4 rev-parse HEAD)" = 56a005855ea17e0b0958f73ec801ae140b0a1679

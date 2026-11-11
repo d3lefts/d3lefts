@@ -1,0 +1,13 @@
+{
+  "schema": "nightfall-theorem-contract/v1",
+  "source": "research/nightfall/formalization/compiler/ContractSmoke.lean",
+  "workspace_commit": "56a005855ea17e0b0958f73ec801ae140b0a1679",
+  "targets": [
+    {
+      "declaration": "Nightfall.Certification.additive_symmetry",
+      "expected_type": "∀ (m n : Nat), m + n = n + m"
+    }
+  ],
+  "claim_scope": "routine infrastructure; exact-type example check only",
+  "promoted_full": false
+}

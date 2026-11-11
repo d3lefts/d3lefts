@@ -18,7 +18,7 @@ import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 
-PROTOCOL = "nightfall-lean-bridge/v1"
+PROTOCOL = "nightfall-lean-bridge/v2"
 DIAGNOSTIC = re.compile(r"^(.*?):(\d+):(\d+): (error|warning|information): (.*)$")
 UNTRUSTED = re.compile(r"\b(sorry|admit|axiom|constant|native_decide|unsafe|partial)\b")
 DECLARATION = re.compile(r"[A-Za-z_][A-Za-z_0-9'.]*\Z")
@@ -119,8 +119,49 @@ def invoke(cmd: list[str], cwd: Path, timeout: int) -> dict:
         return {"returncode": None, "stdout": "", "stderr": str(e), "timed_out": False}
 
 
+def load_contract(path: Path, source: Path, declarations: list[str]) -> dict:
+    """Validate a reviewed theorem contract before any compilation occurs.
+
+    Exact-type entries are compiled as Lean examples. This checks that the
+    requested declaration inhabits the prescribed proposition, without
+    trusting theorem names or a prose description alone.
+    """
+    obj = json.loads(path.read_text(encoding="utf-8"))
+    if obj.get("schema") != "nightfall-theorem-contract/v1":
+        raise ValueError("unknown theorem contract schema")
+    repo = Path(__file__).resolve().parents[1]
+    relative = source.resolve().relative_to(repo).as_posix()
+    if obj.get("source") != relative:
+        raise ValueError("theorem contract source path mismatch")
+    targets = obj.get("targets")
+    if not isinstance(targets, list) or not targets:
+        raise ValueError("theorem contract has no targets")
+    names = [x.get("declaration") for x in targets if isinstance(x, dict)]
+    if len(names) != len(targets) or names != declarations or len(set(names)) != len(names):
+        raise ValueError("contract target declarations must equal --decl in order")
+    for item in targets:
+        statement = item.get("expected_type")
+        if not isinstance(statement, str) or not statement.strip():
+            raise ValueError("contract expected_type missing")
+        if policy_findings(statement) or "#eval" in statement or "#check" in statement:
+            raise ValueError("untrusted construct in contracted statement")
+        if not DECLARATION.fullmatch(item["declaration"]):
+            raise ValueError("invalid target declaration")
+    if "workspace_commit" in obj and not re.fullmatch(r"[0-9a-f]{40}", obj["workspace_commit"]):
+        raise ValueError("invalid workspace_commit in contract")
+    return obj
+
+
+def workspace_head(workspace: Path) -> str | None:
+    r = invoke(["git", "-C", str(workspace), "rev-parse", "HEAD"], workspace, 10)
+    if r["returncode"] != 0:
+        return None
+    value = r["stdout"].strip()
+    return value if re.fullmatch(r"[0-9a-f]{40}", value) else None
+
+
 def check(source: Path, workspace: Path, declarations: list[str], timeout: int, compiler: str | None,
-          allowed_axioms: set[str] | None = None) -> dict:
+          allowed_axioms: set[str] | None = None, contract_path: Path | None = None) -> dict:
     allowed_axioms = set() if allowed_axioms is None else set(allowed_axioms)
     if not allowed_axioms <= FOUNDATIONAL_AXIOMS:
         raise ValueError("only Lean foundational axioms may be allowlisted: " + ", ".join(sorted(FOUNDATIONAL_AXIOMS)))
@@ -131,6 +172,14 @@ def check(source: Path, workspace: Path, declarations: list[str], timeout: int, 
         raise ValueError("--decl requires an ASCII Lean qualified identifier")
     content = path.read_bytes()
     source_text = content.decode("utf-8")
+    repo = Path(__file__).resolve().parents[1]
+    try:
+        source_relpath = path.relative_to(repo).as_posix()
+    except ValueError:
+        source_relpath = None
+    contract = load_contract(contract_path.resolve(), path, declarations) if contract_path else None
+    contract_digest = hashlib.sha256(contract_path.read_bytes()).hexdigest() if contract_path else None
+    git_head = workspace_head(workspace) if contract else None
     expected = (workspace / "lean-toolchain").read_text().strip() if (workspace / "lean-toolchain").exists() else None
     cmd = choose_compiler(compiler, workspace)
     receipt = {
@@ -138,6 +187,11 @@ def check(source: Path, workspace: Path, declarations: list[str], timeout: int, 
         "time_utc": datetime.now(timezone.utc).isoformat(),
         "source": str(path), "source_sha256": hashlib.sha256(content).hexdigest(),
         "workspace": str(workspace), "expected_toolchain": expected,
+        "workspace_commit": git_head, "source_relpath": source_relpath,
+        "contract_relpath": contract_path.resolve().relative_to(repo).as_posix() if contract_path else None,
+        "contract_sha256": contract_digest,
+        "contract_targets": [t["declaration"] for t in contract["targets"]] if contract else [],
+        "contract_workspace_commit": contract.get("workspace_commit") if contract else None,
         "declarations_requested": declarations,
         "policy_findings": policy_findings(source_text),
         "compiler": None, "compiler_version": None, "version_matches_pin": None,
@@ -153,8 +207,10 @@ def check(source: Path, workspace: Path, declarations: list[str], timeout: int, 
     receipt["compiler"] = cmd
     receipt["compiler_version"] = (version["stdout"] + version["stderr"]).strip()
     match = re.search(r"\bversion\s+([0-9]+\.[0-9]+\.[0-9]+)", receipt["compiler_version"], re.I)
-    if expected:
-        receipt["version_matches_pin"] = bool(match and expected.endswith("v" + match[1]))
+    receipt["version_matches_pin"] = bool(
+        expected and expected.startswith("leanprover/lean4:v")
+        and match and expected == "leanprover/lean4:v" + match[1]
+    )
     temp_path = None
     try:
         run_path = path
@@ -162,6 +218,10 @@ def check(source: Path, workspace: Path, declarations: list[str], timeout: int, 
             with tempfile.NamedTemporaryFile(mode="w", suffix=".lean", prefix=".lean_bridge_", dir=path.parent,
                                              encoding="utf-8", delete=False) as out:
                 out.write(source_text)
+                if contract:
+                    for target in contract["targets"]:
+                        out.write("\n\nexample : " + target["expected_type"] +
+                                  " := by\n  exact " + target["declaration"] + "\n")
                 out.write("\n\n" + "\n".join(f"#print axioms {n}" for n in declarations) + "\n")
                 temp_path = Path(out.name)
             run_path = temp_path
@@ -181,8 +241,10 @@ def check(source: Path, workspace: Path, declarations: list[str], timeout: int, 
         receipt["status"] = "UNAVAILABLE"
     elif result["returncode"] != 0:
         receipt["status"] = "COMPILATION_FAILED"
-    elif receipt["version_matches_pin"] is False:
+    elif receipt["version_matches_pin"] is not True:
         receipt["status"] = "TOOLCHAIN_MISMATCH"
+    elif contract and contract.get("workspace_commit") and git_head != contract["workspace_commit"]:
+        receipt["status"] = "WORKSPACE_PIN_MISMATCH"
     else:
         receipt["status"] = "COMPILED"
     for name in declarations:
@@ -222,14 +284,16 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--strict", action="store_true", help="fail on policy tokens and any unverified axiom audit")
     parser.add_argument("--allow-axiom", action="append", default=[], help="explicitly allow a named Lean axiom (never implied axiom-free)")
     parser.add_argument("--json-out", type=Path, help="write a reproducible JSON receipt")
+    parser.add_argument("--contract", type=Path,
+                        help="reviewed exact-type contract; compiles every target proposition")
     args = parser.parse_args(argv)
     if args.timeout < 1:
         parser.error("--timeout must be positive")
     if args.strict and not args.decl:
         parser.error("--strict requires at least one --decl")
     try:
-        receipt = check(args.source, args.workspace.resolve(), args.decl, args.timeout, args.compiler, set(args.allow_axiom))
-    except (ValueError, UnicodeDecodeError, OSError) as e:
+        receipt = check(args.source, args.workspace.resolve(), args.decl, args.timeout, args.compiler, set(args.allow_axiom), args.contract)
+    except (ValueError, UnicodeDecodeError, OSError, KeyError) as e:
         parser.error(str(e))
     if args.json_out:
         args.json_out.parent.mkdir(parents=True, exist_ok=True)
