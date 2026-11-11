@@ -5,6 +5,7 @@ on:
       - 'research/nightfall/formalization/observability/PosteriorEnergyDrift.lean'
       - 'research/nightfall/formalization/observability/ParityBlockCancellation.lean'
       - '.github/workflows/nightfall-quadratic-posterior-energy.yml'
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/check_posterior_drift_exact.py'
   workflow_dispatch:
 permissions:
   contents: read
@@ -59,6 +60,11 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/parity-blocks.json
           sha256sum research/nightfall/formalization/observability/{PosteriorEnergyDrift,ParityBlockCancellation}.lean > lean-receipts/SHA256SUMS
+      - name: Exact real-posterior drift, all transcript branches
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/2026-11-quadratic-law-free-audit/check_posterior_drift_exact.py
+          python3 research/nightfall/2026-11-quadratic-law-free-audit/check_exact_quadratic.py
       - name: Archive receipts
         if: always()
         uses: actions/upload-artifact@v4
