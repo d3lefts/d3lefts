@@ -206,11 +206,20 @@ one actual-independent-increment interpolation.
   given a matching-mass theorem, and
   `arbitrary_law_many_hilbert_fourth` for concrete centered independent
   vectors. Distinct current theorem types must not be conflated.
-- **New source-level bridge (pending its own strict receipt):**
-  `QuadraticActualRowOscillation.lean` directly proves the genuine
-  all-section `8π²` comparison under actual `ESDegreeLE`.
+- **Strict verified (separate scoped Lean gates):**
+  `QuadraticActualRowOscillation.lean` proves the genuine all-section
+  `8π²` comparison under actual `ESDegreeLE` (Lean 4.33, PASS
+  [run 43118938808](https://github.com/d3lefts/d3lefts/actions/runs/43118938808)).
   `CenteredRectangle.lean` proves the exact weighted pair rectangle
-  identity for separately centered pair kernels.
+  average for separately centered pair kernels (Lean 4.35, PASS
+  [run 43118938773](https://github.com/d3lefts/d3lefts/actions/runs/43118938773)).
+  `QuadraticEndpointInterpolation.lean` proves the scalar step from an
+  *explicitly supplied* L1/L2/L4 interpolation hypothesis and Hilbert
+  moment bound to endpoint energy (Lean 4.35, PASS
+  [run 43119753547](https://github.com/d3lefts/d3lefts/actions/runs/43119753547)).
+  The newer centered-section extension in the row source has a
+  **separate outstanding strict gate** and is not included in the older
+  successful receipt.
 - **Still missing in Lean:** Efron–Stein component centering and exact
   component/section representation; actual-f matching coupling that
   produces `∀ matching,Σb≤4B`; the true additive `Σ||h_i||≤7B`
