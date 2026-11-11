@@ -96,6 +96,49 @@ Since $a_r^{-2}=\Theta(r)$, this **repairs the categorical upper-bound exponent*
 
 **Numerical impact:** At $d=3,m=16$, $T_2(m+1)=577$ and $T_2(\sqrt{m+1})=33$. The squared query-budget coefficient decreases by exactly $332929/1089\approx305.72$.
 
+### Independent reconstruction of the finite-product mixed-influence bound
+
+The sharpened parameter is not just a heuristic substitution. The finite-alphabet part of the source proof can be reconstructed from two standard external inequalities, **Bonami hypercontractivity on fair signs** and **Markov's derivative inequality for bounded polynomials**:
+
+1. **Moment transport.** Extend $f$ to products of signed coordinate mass vectors by multilinearity. Let $H_i(z_{-i})\in L^2(p_i)$ be its centered section in coordinate $i$. Because $\deg f\le d$, the section has block-degree at most $d-1$. Independence and $\mathbb E[Z_sZ_t]=p_s\mathbf1_{\{s=t\}}$ imply the *exact* identity
+   $
+   I_i(f)=\mathbb E_Z\|H_i(Z_{-i})\|_{L^2(p_i)}^2.
+   $
+   Indeed, each term after squaring uses at most the second moment of every proxy block.
+
+2. **Vector-valued hypercontractivity.** For any finite-dimensional real Hilbert-valued fair-sign polynomial $P$ of degree at most $k$, scalar Bonami applied to each component and Cauchy–Schwarz across component pairs give $\|P\|_{L^4(H)}\le3^{k/2}\|P\|_{L^2(H)}$. Interpolation yields
+   $
+   \|P\|_{L^2(H)}\le3^k\|P\|_{L^1(H)}.
+   $
+   Consequently $\sqrt{I_i(f)}\le3^{d-1}\mathbb E_Z\|H_i(Z_{-i})\|$.
+
+3. **Pointwise section-oscillation budget.** Fix any product tuple of genuine coordinate probability vectors $q_i$. In the $i$th coordinate, choose a symbol maximizing the section and independently move every $q_i$ toward its maximizer by a common parameter $t\in[0,1]$. The resulting expectation is a polynomial of degree at most $d$ bounded by $B$. Its derivative at $t=0$ sums all increases, so endpoint Markov bounds that sum by $2d^2B$. Repeating with minimizers bounds the total sum of section ranges by $4d^2B$. Each $L^2(p_i)$ centered section norm is at most half its range. Thus
+   $
+   \sum_i\|H_i(q_{-i})\|_{L^2(p_i)}\le2d^2B.
+   $
+
+4. **Common Chebyshev extrapolation.** Fix a proxy realization $(Z_i)$ and construct each probability line $q_i(t)$ as above, with all $q_i(L)=Z_i$ for the same $L=\sqrt{m+1}$. Select a unit functional $u_i$ that norms $H_i(Z_{-i})$. The scalar polynomial
+   $
+   P(t)=\sum_i\langle u_i,H_i(q_{-i}(t))\rangle
+   $
+   has degree at most $d-1$ and magnitude at most $2d^2B$ on $[-1,1]$. Chebyshev extremality gives
+   $
+   \sum_i\|H_i(Z_{-i})\|\le2d^2B\,T_{d-1}(\sqrt{m+1}).
+   $
+   Combining with step 2 gives the finite scalar theorem
+   $
+   \boxed{\sum_i\sqrt{I_i(f)}
+   \le2d^2 3^{d-1}B\,T_{d-1}(\sqrt{m+1}).}
+   $
+
+5. **Rank lift and optimal tail selection.** For covariance rank $r$, apply the scalar result to $\langle u,F\rangle$ over uniform unit output directions $u$. The elementary spherical inequality $\mathbb E_u\sqrt{u^\top A_i u}\ge a_r\sqrt{\operatorname{tr}A_i}$ yields $\sum_i\sqrt{I_i(F)}\le C_{d,\mathrm{new}}B/a_r$. For the $q$ largest numbers $b_i=\sqrt{I_i(F)}$, write $A=\sum_i b_i$ and $u=b_{q+1}$. The residual Hoeffding variance after observing those coordinates is bounded by
+   $
+   \sum_{i>q}b_i^2\le u(A-qu)\le\frac{A^2}{4q}.
+   $
+   A projection onto the top $r$ output-covariance directions adds at most $\tau_r$.
+
+**Audit classification:** This is a complete finite-product proof reconstruction using named classical analytic inputs and explicit algebraic identities. It has independent exact finite replay, but **no external nonauthor referee or Lean kernel certification**. Infinite/countable-product limiting arguments are further claims, not part of this finite proof.
+
 ## 3. Countable-alphabet Rényi effective support: a second correction
 
 If $p_s$ has countable positive support and $h=(\sum_s\sqrt{p_s})^2<\infty$, all signed-proxy sums converge absolutely. For every sign realization,
