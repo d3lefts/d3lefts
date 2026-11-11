@@ -24,7 +24,7 @@ Status: technical research synthesis; internal exact replay only; external proof
 
 Supplied v3 PDF SHA-256: 6b4a7420f15ff9d9b72d16b2f9d8362d2f41f35fa537030496606ad0cc22c5a6
 Supplied v3 source ZIP SHA-256: 09a980b8f2a39b54352c94211822538ff9943b4163ef80d793049164c3921742
-v4 exact checker SHA-256: e3197a74719e8c9e643e21b37cb8da95938e73f815f2202e027157f2bd944b87
+v4 exact checker SHA-256: b96e59d54cc6f425e7676d3d94dac61c52220eea8c81f837268cc3507eb4be7a
 
 Original ZIP contains main.tex, matching-core.tex, categorical.tex, degree3.tex, measure.tex, queries.tex, accompanying checks, and SHA256SUMS. The original source ZIP and PDF are user-supplied inputs; they are NOT mirrored by these curated GitHub text files.
 
