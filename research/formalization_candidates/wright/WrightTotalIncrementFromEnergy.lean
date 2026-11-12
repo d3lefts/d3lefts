@@ -114,3 +114,98 @@ theorem total_increment_of_pointwise_sensitivity
     (radius_energy_of_pointwise_budget p hp hp1 f lo hi d hpoint)
 
 end Nightfall.Wright.TotalIncrement
+
+
+/-!
+## Canonical endpoint construction (finite alphabets)
+
+This removes the assumed endpoint functions from the total increment theorem.
+It does not remove the still-open pointwise sensitivity estimate required of
+the original bounded Hoeffding-degree-d input.
+-/
+namespace Nightfall.Wright.CanonicalFiber
+open Finset
+open Nightfall.ProductSpace.Transfer
+open Nightfall.ProductSpace.Influence
+open Nightfall.Wright.ProductFiber
+open Nightfall.Wright.ActualIncrement
+open Nightfall.Wright.TotalIncrement
+
+variable {ι α : Type} [Fintype ι] [DecidableEq ι]
+  [Fintype α] [DecidableEq α] [Nonempty α]
+
+noncomputable def fiberLo (f : (ι → α) → ℝ)
+    (x : ι → α) (j : ι) : ℝ :=
+  (Finset.univ : Finset α).inf' Finset.univ_nonempty
+    (fun b => f (Function.update x j b))
+
+noncomputable def fiberHi (f : (ι → α) → ℝ)
+    (x : ι → α) (j : ι) : ℝ :=
+  (Finset.univ : Finset α).sup' Finset.univ_nonempty
+    (fun b => f (Function.update x j b))
+
+theorem fiberLo_le (f : (ι → α) → ℝ)
+    (x : ι → α) (j : ι) (b : α) :
+    fiberLo f x j ≤ f (Function.update x j b) := by
+  unfold fiberLo
+  exact Finset.inf'_le _ (Finset.mem_univ b)
+
+theorem le_fiberHi (f : (ι → α) → ℝ)
+    (x : ι → α) (j : ι) (b : α) :
+    f (Function.update x j b) ≤ fiberHi f x j := by
+  unfold fiberHi
+  exact Finset.le_sup' _ (Finset.mem_univ b)
+
+theorem fiberLo_update (f : (ι → α) → ℝ)
+    (x : ι → α) (j : ι) (b : α) :
+    fiberLo f (Function.update x j b) j = fiberLo f x j := by
+  unfold fiberLo
+  have hfun :
+      (fun c : α => f (Function.update (Function.update x j b) j c)) =
+      (fun c : α => f (Function.update x j c)) := by
+    funext c
+    rw [update_twice]
+  exact congrArg
+    (fun g : α → ℝ => (Finset.univ : Finset α).inf' Finset.univ_nonempty g) hfun
+
+theorem fiberHi_update (f : (ι → α) → ℝ)
+    (x : ι → α) (j : ι) (b : α) :
+    fiberHi f (Function.update x j b) j = fiberHi f x j := by
+  unfold fiberHi
+  have hfun :
+      (fun c : α => f (Function.update (Function.update x j b) j c)) =
+      (fun c : α => f (Function.update x j c)) := by
+    funext c
+    rw [update_twice]
+  exact congrArg
+    (fun g : α → ℝ => (Finset.univ : Finset α).sup' Finset.univ_nonempty g) hfun
+
+/-- Total actual resampling from the canonical fiber extrema, with no
+extra supplied endpoint data. The only remaining functional premise is
+the explicit FHKL pointwise sensitivity budget for this same f. -/
+theorem total_increment_of_canonical_sensitivity
+    (p : ι → α → ℝ) (hp : ∀ i b, 0 ≤ p i b)
+    (hp1 : ∀ i, ∑ b, p i b = 1)
+    (f : (ι → α) → ℝ) (d : ℕ)
+    (hpoint : ∀ x : ι → α,
+      ∑ j, radius f (fiberLo f) (fiberHi f) x j ≤
+        2 * (d : ℝ) ^ 2) :
+    2 * (∑ j, pincr p f j) ≤
+      4 * (4 - 2 * Real.sqrt 3) * (d : ℝ) ^ 2 := by
+  apply total_increment_of_pointwise_sensitivity p hp hp1 f
+    (fiberLo f) (fiberHi f)
+  · intro x j
+    let b : α := Classical.choice (inferInstance : Nonempty α)
+    exact (fiberLo_le f x j b).trans (le_fiberHi f x j b)
+  · intro x j b
+    exact fiberLo_le f x j b
+  · intro x j b
+    exact le_fiberHi f x j b
+  · intro x j b
+    exact fiberLo_update f x j b
+  · intro x j b
+    exact fiberHi_update f x j b
+  · exact d
+  · exact hpoint
+
+end Nightfall.Wright.CanonicalFiber
