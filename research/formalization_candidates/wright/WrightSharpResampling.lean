@@ -64,4 +64,102 @@ theorem pair_sum_factor (p u v : α → ℝ) :
     _ = (∑ i, p i * u i) * (∑ j, p j * v j) := by
           rw [Finset.sum_mul]
 
+/-- Convenient product-law form of pair-sum factorization. -/
+theorem pair_sum_law (p u v : α → ℝ) :
+    (∑ i, ∑ j, p i * p j * (u i * v j)) =
+      (∑ i, p i * u i) * (∑ j, p j * v j) := by
+  calc
+    (∑ i, ∑ j, p i * p j * (u i * v j)) =
+        (∑ i, ∑ j, (p i * u i) * (p j * v j)) := by
+          apply Finset.sum_congr rfl
+          intro i _
+          apply Finset.sum_congr rfl
+          intro j _
+          ring
+    _ = _ := pair_sum_factor p u v
+
+theorem pair_sum_left (p u : α → ℝ)
+    (hp1 : ∑ i, p i = 1) :
+    (∑ i, ∑ j, p i * p j * u i) = ∑ i, p i * u i := by
+  have h := pair_sum_law p u (fun _ => 1)
+  simp only [mul_one] at h
+  rw [hp1, mul_one] at h
+  exact h
+
+theorem pair_sum_right (p u : α → ℝ)
+    (hp1 : ∑ i, p i = 1) :
+    (∑ i, ∑ j, p i * p j * u j) = ∑ j, p j * u j := by
+  have h := pair_sum_law p (fun _ => 1) u
+  simp only [one_mul, mul_one] at h
+  rw [hp1, one_mul] at h
+  exact h
+
+/-- Weighted version of the pointwise operator; zero masses are permitted. -/
+theorem finite_weighted_pairwise
+    (p : α → ℝ) (hp : ∀ i, 0 ≤ p i)
+    (a : α → ℝ) (ha0 : ∀ i, -(1 / 2 : ℝ) ≤ a i)
+    (ha1 : ∀ i, a i ≤ 1 / 2) :
+    (∑ i, ∑ j, p i * p j *
+      (|a i - a j| + 2 * (|a i| * |a j| + a i * a j))) ≤
+    (∑ i, ∑ j, p i * p j * (|a i| + |a j|)) := by
+  apply Finset.sum_le_sum
+  intro i _
+  apply Finset.sum_le_sum
+  intro j _
+  exact mul_le_mul_of_nonneg_left
+    (pointwise_two_sample (a i) (a j) (ha0 i) (ha1 i) (ha0 j) (ha1 j))
+    (mul_nonneg (hp i) (hp j))
+
+/-- The actual iid absolute-difference inequality, obtained by factoring
+independent double sums. The negative mean-squared correction is retained. -/
+theorem iid_absolute_difference_bound
+    (p : α → ℝ) (hp : ∀ i, 0 ≤ p i)
+    (hp1 : ∑ i, p i = 1)
+    (a : α → ℝ) (ha0 : ∀ i, -(1 / 2 : ℝ) ≤ a i)
+    (ha1 : ∀ i, a i ≤ 1 / 2) :
+    (∑ i, ∑ j, p i * p j * |a i - a j|)
+       + 2 * (∑ i, p i * |a i|) ^ 2
+       + 2 * (∑ i, p i * a i) ^ 2
+       ≤ 2 * (∑ i, p i * |a i|) := by
+  have h := finite_weighted_pairwise p hp a ha0 ha1
+  have hL : (∑ i, ∑ j, p i * p j *
+        (|a i - a j| + 2 * (|a i| * |a j| + a i * a j))) =
+      (∑ i, ∑ j, p i * p j * |a i - a j|)
+        + 2 * (∑ i, p i * |a i|) ^ 2
+        + 2 * (∑ i, p i * a i) ^ 2 := by
+    have hterm (i j : α) :
+        p i * p j * (|a i - a j| + 2 * (|a i| * |a j| + a i * a j)) =
+          p i * p j * |a i - a j| +
+          2 * (p i * p j * (|a i| * |a j|)) +
+          2 * (p i * p j * (a i * a j)) := by ring
+    simp_rw [hterm, Finset.sum_add_distrib]
+    rw [pair_sum_law p (fun i => |a i|) (fun i => |a i|)]
+    rw [pair_sum_law p a a]
+    ring
+  have hR : (∑ i, ∑ j, p i * p j * (|a i| + |a j|)) =
+      2 * (∑ i, p i * |a i|) := by
+    have hterm (i j : α) :
+        p i * p j * (|a i| + |a j|) =
+          p i * p j * |a i| + p i * p j * |a j| := by ring
+    simp_rw [hterm, Finset.sum_add_distrib]
+    rw [pair_sum_left p (fun i => |a i|) hp1]
+    rw [pair_sum_right p (fun i => |a i|) hp1]
+    ring
+  rw [hL, hR] at h
+  exact h
+
+/-- Dropping the nonnegative mean-square term yields the exact scalar
+bound E|X-X'| <= 2z(1-z), with z=E|X-1/2|. -/
+theorem iid_absolute_difference_z
+    (p : α → ℝ) (hp : ∀ i, 0 ≤ p i)
+    (hp1 : ∑ i, p i = 1)
+    (a : α → ℝ) (ha0 : ∀ i, -(1 / 2 : ℝ) ≤ a i)
+    (ha1 : ∀ i, a i ≤ 1 / 2) :
+    (∑ i, ∑ j, p i * p j * |a i - a j|)
+       ≤ 2 * (∑ i, p i * |a i|) *
+            (1 - (∑ i, p i * |a i|)) := by
+  have h := iid_absolute_difference_bound p hp hp1 a ha0 ha1
+  nlinarith [sq_nonneg (∑ i, p i * a i)]
+
+
 end Nightfall.Wright.SharpResampling
