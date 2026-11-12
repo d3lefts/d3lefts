@@ -61,4 +61,17 @@ assert.ok(witness.includes(",")&&witness.trim().split(",").length===30,
   "Guided review points to real frozen coordinates");
 assert.ok(review.includes('id="priority"')&&review.includes('id="submit"')&&
           review.includes('id="sidon"'),"Existing advanced review routes preserved");
-console.log("PASS: active NULL FIELD, archival NEW MOON, accessible controls and exact novice reviewer path");
+
+// First-impression editorial budget: supporting evidence remains, repetition does not.
+const editorial=read("docs/index.html").replace(/<[^>]+>/g," ").replace(/\s+/g," ");
+const openingCss=read("docs/home-opening-cinema.css");
+assert.ok(editorial.length<=12000,"Homepage exceeded its signature-first editorial copy budget");
+assert.ok(home.includes('href="#flagships"'),"First-fold route to the three signature results is missing");
+for(const id of ["signature-wright","signature-erdos","signature-safety"])
+ assert.ok(home.includes('id="'+id+'"'),"Signature research priority was displaced: "+id);
+assert.ok(home.indexOf('id="signature-wright"')<home.indexOf('id="signature-erdos"')&&home.indexOf('id="signature-erdos"')<home.indexOf('id="signature-safety"'),"Principal results should lead in stated order");
+for(const selector of ["#main>.hero.nf-opening","#nf-scroll-cinema.nf-cinema--still .nf-cinema-stage","#flagships .nf-signature-card"])
+ assert.ok(openingCss.includes(selector),"Compact evidence-first layout regression: "+selector);
+assert.equal((home.match(/<a\b/g)||[]).length<=45,true,"Avoid recreating competing navigation directories");
+
+console.log("PASS: active NULL FIELD, signature-first evidence and copy budget, archival NEW MOON, exact novice reviewer path");
