@@ -39,3 +39,7 @@ An independent proof checker should begin with **the quadratic matching-to-fourt
 For categorical nonadaptive observation, next formalize **moment matching for the proxy**; no amount of additional finite sign-table testing can replace a quantified theorem.
 
 **Review gates:** source-exact statement matching; replayable Lean receipt and hashes; independent non-author proof review; dated prior-art comparison; and human publication authorization. Never promote candidate -> complete theorem -> novel discovery automatically.
+
+## 12 November 2026 delta — scope, not a theorem promotion
+
+The opening 13-declaration count is an **11 November selected batch**, not the full current registry. The [canonical source inventory](../../../../docs/lean-certificate-provenance.json) has 67 separately scoped Lean source files through #408. The new [actual Efron–Stein pair matching ledger](../product_space/ACTUAL_ES_PAIR_MATCHING_LEDGER_20261112.md) records eight strictly compiled true-source pair/rectangle declarations (Lean 4.33.0, receipt #43167542367); #407 adds genuine finite quadratic row/section proofs. Source-level global matching parity, unconditional arbitrary-law exponent-two, Hilbert rank/adaptive risk and arbitrary measurable lift are **still not complete end-to-end Lean theorems**. See the [active quadratic/rank passport](../../2026-11-active-passports/quadratic-rank-observability.md). The original dated 11 November record is preserved above.
