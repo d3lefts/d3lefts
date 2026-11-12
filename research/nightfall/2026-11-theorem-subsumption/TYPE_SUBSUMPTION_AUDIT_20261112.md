@@ -6,7 +6,7 @@
 
 **Objective.** Decide which externally compiled theorems can be inherited, which require a proved change of representation, and which do not imply the NIGHTFALL target at their actual types. Test the source theorem rather than title or thematic analogy.
 
-**Finite feasible scope.** Fourteen selected theorem comparisons covering: product influence and Efron–Stein degree, low-degree moments, conditional-section selection, model/state Bayes risk, sufficiency, interpolation, passive support, entropy/quantum observability, and Sidon/decision quotient. This is *not* an exhaustive audit of every named theorem in the 67-source NIGHTFALL registry or the five declarations in the paper-local PR #418.
+**Finite feasible scope.** Fifteen selected theorem comparisons covering: product influence and Efron–Stein degree, low-degree moments, conditional-section selection, model/state Bayes risk, sufficiency, interpolation, passive support, entropy/quantum observability, and Sidon/decision quotient, including Cramér–Wold measure identification. This is *not* an exhaustive audit of every named theorem in the 67-source NIGHTFALL registry or the five declarations in the paper-local PR #418.
 
 **Source rules.** A subsumption verdict requires checking domains, law supports, boundedness, degree, rank, loss, oracle, quantifiers, dependence on constants, and compiler/toolchain. “Direct” means an already linked application in compiled NIGHTFALL source or a signature compatible by definitional simplification. A “representation bridge” is a mathematically explicit but **not necessarily compiled** map between types/definitions. “Not subsumed” means a missing essential premise or conclusion, even if the source is a powerful theorem. A date/priority verdict requires more than this audit.
 
@@ -36,6 +36,7 @@
 | T12 | Quantum SLD local visibility and tensor sharpness | Lean-Quantum sandwiched Rényi DPI/SSA; Physlib quantum operations | **GEOMETRIC BRIDGE NEEDED** | Data processing for Rényi entropy is not the SLD inverse Jordan quadratic form Q_b(H)=Tr(H J_b⁻¹H); no verified Hessian/metric identification or tensor constant from this audit |
 | T13 | Sidon (4,5) finite witness/forcing | Singer’s theorem formalized in Erdos30/SingerTheorem.lean | **INCOMPARABLE PREDICATES; NO SUBSUMPTION** | Modular Sidon pair-sum uniqueness is a construction theorem; NIGHTFALL (4,5) asks a separate finite largest Sidon subset / progression pattern predicate |
 | T14 | Task-relative exact decision quotient / certification | Simas optimizer quotient and complexity programme | **PRIORITY COMPARATOR; EXACT LEAN TYPE UNREAD** | Published Lean artifact is in Zenodo bundles; exact source theorem not inspected here. The optimizer-quotient decision relation is not automatically the four oracle/loss tasks of NIGHTFALL |
+| T15 | Identification of a probability law from halfspace measurements | EPFL Cramér–Wold cramerWold and cramerWold_parametric | **INHERIT ONLY FOR FULL HALFSPACE MEASUREMENT MODEL** | Equality on all closed halfspaces of a positive-dimensional real Euclidean space implies equality of probability measures; this does not give finite-coordinate oracle query complexity |
 
 ### T01–T03: the precise influence boundary
 
@@ -82,7 +83,7 @@ Our note's exact chosen-model-value oracle dimension is D_d=Σ_(|S|≤d)∏_(i�
 
 The equality-testing support claim P(h≠0)≥α^d (nonzero h on the product support, degree≤d, every supported atom≥α) is related to Reed–Muller distance and polynomial identity testing. But [Mathlib.schwartz_zippel_sup_sum](https://leanprover-community.github.io/mathlib4_docs/Mathlib/Algebra/MvPolynomial/SchwartzZippel.html) is an *upper bound on the zero set* in terms of multivariate polynomial degrees and grid sizes. It does not directly provide this sharp α^d lower mass on arbitrary finite categorical product laws. Prove a categorical interpolation/section-difference bridge or the short direct induction. The violation indicator of a thresholded degree-one score can have full interaction degree n; one may not replace a degree promise on the **violation function** with a promise on the numerical score.
 
-### T11–T14: genuine type nonimplications and priority threats
+### T11–T15: genuine type nonimplications and priority threats
 
 [General Courtade–Kumar](https://github.com/dpwoodru/general-courtade-kumar-lean/blob/68cd46b433a1003f06a5c3ee39df2af1a4a314e1/GeneralCK/Statement.lean#L12-L41) asserts, for every Boolean f on a uniform n-cube and binary-symmetric crossover p∈[0,1], I(f(X);Y)≤1−h₂(p). Its [final audit](https://github.com/dpwoodru/general-courtade-kumar-lean/blob/68cd46b433a1003f06a5c3ee39df2af1a4a314e1/FinalCheck.lean) checks the final statement and axioms. This is a complete result for *noisy Boolean mutual information*, not a statement about arbitrary product laws, conditional squared error or adaptive query budgets. No subsumption without a channel-to-observation/loss model theorem.
 
@@ -91,6 +92,8 @@ The equality-testing support claim P(h≠0)≥α^d (nonzero h on the product sup
 [Singer's modular Sidon theorem](https://github.com/d0d1/singer-theorem-lean/blob/0c890589afc58e8955a5d7c3a609daff6447da31/Erdos30/SingerTheorem.lean) proves existence of a modular Sidon set of size p+1 modulo p²+p+1 for prime p; it does not answer NIGHTFALL's finite (4,5) largest-subset predicate. Keep the construction as context, not a reproduced certificate of our finite objective.
 
 [Simas's decision-quotient work](https://arxiv.org/abs/2603.14689) is a potentially **direct novelty and conceptual comparator**: exact decision-preserving equivalence and static/stochastic/sequential certification. However, the current research session accessed the manuscript metadata and Zenodo source-bundle description, **not the individual Lean declaration types in that ZIP** (the archive was inaccessible via available source fetch). Accordingly, no Lean-level subsumption judgment is made. A true audit must retrieve the dated source artifact, identify the exact quotient/factorization declaration and compare the optimizer-set quantifiers with our four task/oracle models. Treat the conceptual uniqueness claim as **priority at risk**, not as established original.
+
+[EPFL Cramér–Wold cramerWold](https://github.com/epfl-lara/AutoformalizedProjects/blob/6f4606c1b9d51a158c8768613a65816b1f0a6eb0/CramerWoldTheorem/CramerWoldTheorem/MainTheorem.lean#L26-L45) is a complete Lean theorem on probability measures over nonzero-dimensional RealEuclideanSpace n: agreement on every closed halfspace entails μ=ν. The companion [cramerWold_parametric](https://github.com/epfl-lara/AutoformalizedProjects/blob/6f4606c1b9d51a158c8768613a65816b1f0a6eb0/CramerWoldTheorem/CramerWoldTheorem/MainTheorem.lean#L56-L69) converts normal/threshold measurements to the same conclusion. This is a **genuine measurement-identification comparator**, but observing all halfspace probabilities is not the finite selected-coordinate/value oracle model. Neither a q-query bound nor Efron–Stein interaction degree is present in its statement. The relevant next bridge would be an explicitly restricted finite measurement family with a quantitative error metric; do not infer it from the complete infinite-family theorem.
 
 ## Compiler compatibility and custody
 
@@ -105,6 +108,7 @@ The equality-testing support claim P(h≠0)≥α^d (nonzero h on the product sup
 | General Courtade–Kumar | 68cd46b433a1003f06a5c3ee39df2af1a4a314e1; Lean 4.33.1 | Complete proof, different objective and very large build; avoid unnecessary rebuild |
 | Lean-Quantum | a1256b75b8df99c8b2112a771f5a470d5e06648e; Lean 4.29.0-rc6 | Check challenge/solution boundary; metrics require fresh bridge |
 | Singer theorem | 0c890589afc58e8955a5d7c3a609daff6447da31; Lean 4.29.0 | Different extremal predicate |
+| EPFL Cramér–Wold | 6f4606c1b9d51a158c8768613a65816b1f0a6eb0; Lean pin not independently retrieved in this audit | Exact Euclidean-probability measure theorem, different measurement oracle |
 
 Source file blob SHA-1s and exact names are available in each immutable linked file. Checked compiler pins are **read from repository toolchain declarations**, not inferred from theorem titles. Links are documentary verification; this session did not launch a cross-library build.
 
