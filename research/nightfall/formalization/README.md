@@ -36,3 +36,10 @@ Receipt fields include source SHA-256, pinned and actual toolchain, command, com
 - **Unit tests:** protocol logic and simulated compiler responses are runnable with Python alone; they do **not** establish Lean compilation.
 - **Compiler check:** the workflow runs the real Lean toolchain; its logs and artifacts are the only CI-backed confirmation for that run.
 - **Known limitation:** no Lean binary is guaranteed in ChatGPT's ephemeral sandbox, and this bridge does not install tools persistently across unrelated sessions. GitHub Actions provides the reusable remote executor.
+
+## Unified certificate provenance and reconciliation
+
+The [consolidated certificate index](CERTIFICATE_INDEX.md) provides one source-exact,
+fail-closed command for the entire NIGHTFALL Lean registry, including historical
+successful-run links and separate off-main custody. It does **not** replace
+strict named-declaration Lean receipts or claim a same-pin universal proof.
