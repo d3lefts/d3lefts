@@ -64,7 +64,7 @@ This is a **universal-over-ensembles** characterization; supermodularity of one 
 
 ## 3. New quantitative link: terminal quantum gain from scalar influence
 
-**Proposition (v8 quadratic influence to local quantum visibility; analytic deduction).** Let \(n\ge1\). Suppose \(X_i\) are independent finite-alphabet inputs with positive atom probabilities, and \(\rho_x=\bigotimes_i\rho_{i,x_i}\) are finite-dimensional local quantum preparations. Assume each local average \(b_i=\mathbb E\rho_{i,X_i}\succ0\). For a real \(|f|\le B_0\), \(B_0>0\), of classical Hoeffding degree at most two, let \(V=\operatorname{Var}(f)\).
+**Proposition (v8 quadratic influence to local quantum visibility; analytic deduction).** Let \(n\ge1\). Suppose \(X_i\) are independent finite-alphabet inputs with at least two positive-probability symbols per coordinate (discard deterministic coordinates), and \(\rho_x=\bigotimes_i\rho_{i,x_i}\) are finite-dimensional local quantum preparations. Assume each local average \(b_i=\mathbb E\rho_{i,X_i}\succ0\). For a real \(|f|\le B_0\), \(B_0>0\), of classical Hoeffding degree at most two, let \(V=\operatorname{Var}(f)\).
 
 For the real centered local input space \(\mathcal V_i=L^2_0(p_i)\), define
 \[
