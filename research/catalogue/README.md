@@ -4,6 +4,9 @@
 
 This directory is the **canonical scholarly claim index** for selected principal results, supporting constructions and adverse experiments. The actual theorem texts, Lean sources, checkers, and historical evidence remain at their original paths: this migration is a *linking/metadata reorganization*, not a source rewrite. The historical [40-record selection](../nightfall/SITE_CURATED_40_20261030.json) and its 11 historical Proof Passports are preserved and not silently reclassified.
 
+
+**November 11 publication-preflight revision:** [four-paper research and referee queue](../../papers/publication-preflight-20261111/README.md), [source-custody map](../../papers/publication-preflight-20261111/SOURCE_MAP.md), and [independent mathematical review gates](../../papers/publication-preflight-20261111/REFEREE_GATES.md). The selected machine registry now includes individually scoped SLD sharpness, Werner inverse-k continuation and exact 4/5-shuffle entries. These entries do not certify novelty or convert package-only N5 bytes into GitHub reproducibility; they remain active unrefereed research claims.
+
 ## Read the evidence
 
 - [Machine-readable claim registry](CLAIMS.json): exact status, dependencies, source access, evidence files, and unresolved review/priority gates. This registry is intentionally selective, not a count of globally original theorems.
