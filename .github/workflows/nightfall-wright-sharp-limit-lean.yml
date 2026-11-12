@@ -185,6 +185,11 @@ jobs:
             --decl Nightfall.Wright.TotalIncrement.radius_energy_of_pointwise_budget \
             --decl Nightfall.Wright.TotalIncrement.total_increment_of_radius_energy \
             --decl Nightfall.Wright.TotalIncrement.total_increment_of_pointwise_sensitivity \
+            --decl Nightfall.Wright.CanonicalFiber.fiberLo_le \
+            --decl Nightfall.Wright.CanonicalFiber.le_fiberHi \
+            --decl Nightfall.Wright.CanonicalFiber.fiberLo_update \
+            --decl Nightfall.Wright.CanonicalFiber.fiberHi_update \
+            --decl Nightfall.Wright.CanonicalFiber.total_increment_of_canonical_sensitivity \
             --json-out lean-receipts/wright-total-increment.json || {
               python3 -c "import json;r=json.load(open('lean-receipts/wright-total-increment.json'));print(r.get('status'));print((r.get('stdout') or '')[-35000:]);print((r.get('stderr') or '')[-10000:])" || true
               exit 1
