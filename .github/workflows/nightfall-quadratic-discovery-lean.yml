@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/observability/QuadraticDiscoveryCore.lean'
+      - 'research/nightfall/formalization/observability/QuadraticEndpointInterpolation.lean'
       - 'research/nightfall/formalization/observability/ArbitraryLawFourthMoment.lean'
       - 'research/nightfall/formalization/observability/HilbertTwoIncrementMoment.lean'
       - 'research/nightfall/formalization/observability/check_hilbert_many_exact.py'
@@ -99,6 +100,21 @@ jobs:
         run: |
           set -euo pipefail
           python3 research/nightfall/formalization/observability/check_hilbert_many_exact.py | tee lean-receipts/hilbert-many-exact-check.log
+      - name: Strict scalar Hilbert L1-L2-L4 moment interpolation endpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          N=Nightfall.Observability.QuadraticEndpointInterpolation
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/QuadraticEndpointInterpolation.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.energy_of_interpolated_hilbert_moment \
+            --json-out lean-receipts/quadratic-endpoint-interpolation.json || {
+              python3 -c "import json;r=json.load(open('lean-receipts/quadratic-endpoint-interpolation.json'));print(r.get('status'));print((r.get('stdout') or '')[-22000:]);print((r.get('stderr') or '')[-3000:])" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/quadratic-endpoint-interpolation.json
       - name: Preserve pins and source checksums
         if: always()
         shell: bash

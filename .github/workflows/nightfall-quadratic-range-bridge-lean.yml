@@ -41,6 +41,7 @@ jobs:
             --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
             --decl $N.quadratic_realized_range_budget \
             --decl $N.quadratic_realized_half_range_budget \
+            --decl $N.quadratic_actual_all_section_ranges_le_sixteen \
             --json-out lean-receipts/range-bridge.json
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/range-bridge.json
           sha256sum research/nightfall/formalization/observability/{QuadraticOscillationBound,QuadraticRealizedRangeBudget}.lean > lean-receipts/SHA256SUMS

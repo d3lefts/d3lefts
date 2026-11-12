@@ -53,3 +53,28 @@ Of the **59** Lean modules on the frozen source checkpoint, **58** exact current
 ### Final direct ANOVA gate and source-count closure (revision 10)
 
 [Workflow 43110333296](https://github.com/d3lefts/d3lefts/actions/runs/43110333296) **succeeded**, including pinned Lean **4.33.0** strict axiom checks of all three `ANOVAPosteriorBridge.lean` named declarations: `anova_component_erase`, `anova_posterior_potential_identity`, `anova_weighted_observation_descent`. The module's exact Git blob `1568424ba292dfcf18ccd8b1307eb3baf466be63` at the successful head is identical to the 59-file main-source checkpoint. All **59/59 source blobs** are now associated with successful scoped historical CI heads, while each named-declaration receipt remains limited to its own theorem assumptions and compiler pin. The earlier 58/59 status is superseded by this dated verified outcome; retain it as an audit-history record, not the current result. No simultaneous all-file 4.35.0 certificate or universal all-law quadratic/adaptive Lean theorem is claimed.
+
+
+## Revision 11 (11 Nov): direct actual-function certificates, distinct Lean pins
+
+`QuadraticANOVA.quadratic_actual_product_influence_e2e` is an unconditional actual finite product law, degree-two result at the known exponent **5/2** (not exponent two), strictly compiled in pinned Lean 4.33 [run 43113339892](https://github.com/d3lefts/d3lefts/actions/runs/43113339892), blob `a936845286a74fbf5f0ee70fc5feca6b08108694`. `QuadraticSwitching.quadratic_actual_all_section_ranges_le_sixteen` constructs actual coordinatewise extrema and proves the full 16B range budget, strictly compiled in Lean 4.35 [run 43114064344](https://github.com/d3lefts/d3lefts/actions/runs/43114064344), blob `bc3ec344bb47426a9db0508893f8588e7a5d8ea2`. **No combined universal variance-squared influence theorem is certified**; compiler pins and missing source-function matching/Hilbert-energy links remain separate.
+
+
+## Census revision 12 (pending joint actual-function declaration)
+
+The branch adds `QuadraticUnifiedFinite.lean` as the 60th source. It combines the previously **kernel-certified** finite arbitrary-law degree-two exponent-5/2 baseline and constructed 16B range for the *same actual function*, under an explicit quadratic representation. **Compilation is pending** in [PR #391](https://github.com/d3lefts/d3lefts/pull/391); do not count this module as a successful certificate until its strict named check passes. The proposed variance-squared exponent-two theorem remains *uncompiled*, and a direct-source representation derivation and energy/matching moment bridges remain open. This is not a novelty finding.
+
+
+## Rev13: joint same-kernel declaration PASS
+
+The formerly pending `QuadraticUnifiedFinite.actual_degree_two_baseline_and_all_sections` has **strict Lean 4.33 successful** source-matched [run 43115838586](https://github.com/d3lefts/d3lefts/actions/runs/43115838586) at Git blob `6ca3d371ed2006e1cafc04bf3fba036afc1eefb3`. The theorem links the classical exponent-5/2 arbitrary-law influence bound and the constructed 16B full section-range on the **same** actual f with ESDegreeLE and explicit quadratic representation. This rev13 result supersedes the earlier pending rev12 status. All 60 main-compatible blobs now have successful historical scoped CI source matches. **The arbitrary-law variance-squared endpoint remains uncompiled.**
+
+
+## Rev14: staged 63-source registry for new quadratic source-function bridges
+
+At branch source checkpoint `8a247cface5ce57a8da340bc277c81e792a04c40`, all 63 Lean files are classified (52 no-originality claims, ten dependent transfers and one finite construction). New `CenteredRectangle.lean` passed strict Lean 4.35 [run 43118938773](https://github.com/d3lefts/d3lefts/actions/runs/43118938773); `QuadraticEndpointInterpolation.lean` passed strict Lean 4.35 [run 43119753547](https://github.com/d3lefts/d3lefts/actions/runs/43119753547). The expanded `QuadraticActualRowOscillation.lean` has an earlier successful **two-declaration** check [43118938808](https://github.com/d3lefts/d3lefts/actions/runs/43118938808), but its newly added centered-section theorem is **not** included in that receipt and remains provisional pending a strict current-source rerun. The full arbitrary-law variance-squared theorem has no Lean e2e certificate; none of these status changes promote an originality finding.
+
+
+## Rev15: all three current source-function row declarations strictly compiled
+
+[Run 43120669405](https://github.com/d3lefts/d3lefts/actions/runs/43120669405) PASSED with pinned Lean 4.33 and only foundational axioms for `actual_degree_two_row_controls_all_sections`, `actual_degree_two_total_section_budget`, and `actual_degree_two_centered_sections_from_rows`. Exact current Git blob `1c9d73ac90c54167851dfc956ca192b5249cbbac` is identical to the run head. All **63/63** current source modules now have successful historical scoped CI source matches; the actual all-law quadratic **variance-squared** influence theorem is still NOT a full end-to-end Lean declaration.
