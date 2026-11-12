@@ -107,3 +107,17 @@ Independent reviewer should verify normalizations (resampling versus flip), degr
 **Not certified:** full analytic sharp finite theorem, arbitrary measurable product theorem, dimension-free quantum corollaries, or international originality.  
 
 No publication, submission, or main-branch merger is authorized by these certificates alone.
+
+## Continuation: actual product-increment bridge (2026-11-11 evening, US Eastern)
+
+The original 23-declaration strict receipt (run 43149018301) remains intact and is a **passed historical checkpoint**. Additional sources were staged without modifying those exact proof blobs:
+
+- `WrightFiniteIntervalRho.lean`: interval scaling; `sharp_rho_finite_interval` and `radius_abs_eq_max` passed strict Lean in run 43150495662, although that full workflow later failed on the product-fiber identity. `sharp_rho_finite_closed_interval` now includes degenerate fibers; its separate named receipt is checked by the updated workflow.
+- `WrightProductFiberIdentity.lean`: `pincr_eq_fiber_pair_average` uses the **actual imported** product-space increment and the exact iid coordinate resampling identity. The fixed-universe and double-update corrections are in the branch. **Pending a successful named declaration receipt.**
+- `WrightActualIncrementRho.lean`: `actual_pincr_le_rho_radius` consumes the two prior results with coordinatewise invariant fiber endpoints. **Pending strict compiler receipt.**
+- `WrightTotalIncrementFromEnergy.lean`: `total_increment_of_pointwise_sensitivity` derives `2∑ pincr_j ≤ 4ρ d²` from an explicitly stated pointwise radius sensitivity bound and fiber endpoints. **Pending strict compiler receipt.** This does *not* prove the FHKL pointwise bound or construct canonical extremal fiber endpoints.
+- Pin and same-source workflow: `.github/workflows/nightfall-wright-sharp-limit-lean.yml`. Most recent run to inspect: https://github.com/d3lefts/d3lefts/actions/runs/43153099818 (status must be checked, never inferred from this note).
+
+**Formalization objective unchanged:** the full Wright manuscript theorem requires, in addition, a proof of the improved finite row cost `π²d²/2`, the strengthened median/certificate-to-influence bound for actual product functions, and the exact finite-to-measurable conditional-expectation passage on arbitrary completed product spaces. No combination of successful sharp-rho sublemmas is itself that theorem. Rejected intermediate compiler attempts are preserved in GitHub Actions; their `sorryAx` receipts are explicitly invalid and superseded by the passing versions, where applicable.
+
+**Stop rule:** Do not claim the all-measurable theorem is end-to-end kernel-certified until a single declaration states only the original boundedness/product-law/degree hypotheses and the manuscript constant, with the exact source-checked Lean 4.33.0 receipt. Do not merge into main as a full theorem based on conditional bridge proofs.
