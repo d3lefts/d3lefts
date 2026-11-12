@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/formalization_candidates/wright/WrightSharpLimitBridge.lean'
+      - 'research/formalization_candidates/wright/WrightSharpResampling.lean'
       - '.github/workflows/nightfall-wright-sharp-limit-lean.yml'
   workflow_dispatch:
 
@@ -54,11 +55,28 @@ jobs:
               exit 1
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/wright-sharp-limit.json
+      - name: Strictly kernel-check sharp resampling pointwise and pair-sum operator
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py \
+            research/formalization_candidates/wright/WrightSharpResampling.lean \
+            --workspace /tmp/aa --timeout 1800 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl Nightfall.Wright.SharpResampling.pointwise_two_sample \
+            --decl Nightfall.Wright.SharpResampling.pair_sum_factor \
+            --json-out lean-receipts/wright-sharp-resampling.json || {
+              python3 -c "import json;r=json.load(open('lean-receipts/wright-sharp-resampling.json'));print(r.get('status'));print((r.get('stdout') or '')[-35000:]);print((r.get('stderr') or '')[-10000:])" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/wright-sharp-resampling.json
       - name: Capture provenance
         if: always()
         run: |
           mkdir -p lean-receipts
-          sha256sum research/formalization_candidates/wright/WrightSharpLimitBridge.lean > lean-receipts/SHA256SUMS.txt
+          sha256sum research/formalization_candidates/wright/WrightSharpLimitBridge.lean \
+            research/formalization_candidates/wright/WrightSharpResampling.lean \
+            > lean-receipts/SHA256SUMS.txt
           echo leanprover/lean4:v4.33.0 > lean-receipts/lean-toolchain.txt
           echo 2a6ceaef872ae993708950f951989134084b851a > lean-receipts/upstream.txt
       - name: Upload receipts
