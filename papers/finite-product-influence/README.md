@@ -6,6 +6,10 @@
 **Full named proof passport:** [FINITE_PRODUCT_INFLUENCE_PROOF_PASSPORT_20261110.md](../../research/nightfall/formalization/product_space/FINITE_PRODUCT_INFLUENCE_PROOF_PASSPORT_20261110.md).
 
 
+### November 12 source recovery and independent successor
+
+The [v9.2 degree-two-first LaTeX](NIGHTFALL_Beyond_Boolean_Cube_v9_2.tex) has been recovered from its source-exact bundle, alongside its existing [PDF](NIGHTFALL_Beyond_Boolean_Cube_v9_2.pdf), [editorial changelog](CHANGELOG_NIGHTFALL_v9_2.md) and [original manifest](SHA256SUMS_NIGHTFALL_v9_2.txt). A later [independent standalone influence/structured-cubic/backdoor v2 manuscript](../sharp-influence-backdoors/README.md) includes complete source, proof passport and exact checkers. Its degree-two proof does not import Turturean's all-degree method. The historic v9.2 all-degree branch does, and stays properly credited. These are author-side analytic manuscripts, **not** Lean E2E proof receipts or externally refereed publications.
+
 ## Consolidated analytic manuscript (v8; original v7 preserved)
 
 The **current specialist-review manuscript** is [Bias-Free Aaronson--Ambainis v8](Bias_Free_Aaronson_Ambainis_All_Product_Spaces_v8.tex), with source-exact [rank theorem](Rank_Optimal_Observation_Introduction_v8.tex), [Hilbert/posterior proof](Rank_Optimal_Observation_Section_v8.tex), [review passport](V8_PROOF_PASSPORT.md), [source manifest](SOURCE_SHA256SUMS_v8), and [exact-rational checker](check_v8_exact.py). Its [referee guide](V8_REFEREE_README.md) spells out prior art, exact formulas and open proof gates. The previous [v7 source](Bias_Free_Aaronson_Ambainis_All_Product_Spaces_v7.tex) and v6/v5 historical branches are preserved unchanged.
