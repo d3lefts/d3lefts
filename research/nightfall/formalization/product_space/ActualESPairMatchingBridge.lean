@@ -1,4 +1,5 @@
 import QuadraticHoeffdingBridge
+import CenteredRectangles
 
 /-!
 # Actual Efron–Stein pair kernels: source-to-matching bridge
@@ -201,5 +202,30 @@ theorem actual_pair_kernel_right_centered
         (Function.update x j b)) = 0 :=
       actual_esComp_centered p hp1 f {i,j} j (by simp) x
   exact hs
+
+/-- An actual source Efron–Stein interaction admits a positively oriented
+four-corner rectangle dominating its absolute magnitude. This combines
+the genuine conditional-expectation centering proved above with the
+independently formalized finite weighted rectangle-extraction theorem.
+No externally supplied centered kernel or rectangle witness is assumed. -/
+theorem actual_pair_kernel_oriented_rectangle
+    [Nonempty α]
+    (p : ι → α → ℝ) (hp : ∀ i a, 0 ≤ p i a)
+    (hp1 : ∀ i, ∑ a, p i a = 1)
+    (f : (ι → α) → ℝ) (base : ι → α)
+    (i j : ι) (hij : i ≠ j) (a b : α) :
+    ∃ a0 a1 : α, ∃ b0 b1 : α,
+      |actualPairKernel p f base i j a b| ≤
+        actualPairKernel p f base i j a0 b0 -
+        actualPairKernel p f base i j a0 b1 -
+        actualPairKernel p f base i j a1 b0 +
+        actualPairKernel p f base i j a1 b1 := by
+  exact Nightfall.Observability.CenteredRectangles.exists_oriented_rectangle_dominating_abs
+    (p i) (p j) (hp i) (hp j) (hp1 i) (hp1 j)
+    (actualPairKernel p f base i j)
+    (actual_pair_kernel_right_centered p hp1 f base i j hij)
+    (actual_pair_kernel_left_centered p hp1 f base i j hij)
+    a b
+
 
 end Nightfall.Observability.ActualESPairMatching
