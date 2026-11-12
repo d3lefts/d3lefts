@@ -38,3 +38,7 @@ The selected `NF-OBS-SPECIALIZED-20261111` catalogue entry points to Paper C's c
 Use `python3 scripts/check_research_archive.py` before submitting a change. The checker validates file paths, IDs, dependency acyclicity, status schemas, formal-proof provenance fields, and external-review stop rules. It **does not prove mathematics** or inspect external literature. Add a new claim only when a stable primary source and its distinct evidence gates exist. Preserve superseded evidence and reasons. Avoid adding the same result as a new claim merely because an agent or manuscript version changed.
 
 Rights and citation: [Reuse and rights notice](../REUSE_AND_RIGHTS.md) · [CONTRIBUTING.md](../../CONTRIBUTING.md) · [CITATION.cff](../../CITATION.cff).
+
+## November 12 dissertation synthesis (informational, not claim promotion)
+
+[Identify / observe / certify — v0.4 research checkpoint](../nightfall/2026-11-information-cost-dissertation/README.md) includes the source-checked Turturean comparison, actual scoped Lean coverage through #408, a self-contained four-cost addressed-family proof with an exact checker, and explicit dissertation gates. This is a **synthesis and audit record**, not an additional kernel-certified or externally reviewed theorem; no `CLAIMS.json` statuses are promoted.
