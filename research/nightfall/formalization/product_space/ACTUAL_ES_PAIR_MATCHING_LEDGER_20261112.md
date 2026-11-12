@@ -1,6 +1,6 @@
 # Actual Efron–Stein pairs → global matching: proof ledger v1
 
-**Date:** 2026-11-12. **Scope:** finite independent categorical products with coordinate-specific normalized laws; zero-mass symbols permitted. **Status:** exact analytic proof of global matching inequality; source-level Lean bridge submitted in draft PR #408, strict terminal matching mass theorem **not yet kernel-certified**.
+**Date:** 2026-11-12. **Scope:** finite independent categorical products with coordinate-specific normalized laws; zero-mass symbols permitted. **Status:** exact analytic proof of global matching inequality; source-level Lean bridge submitted in draft PR #408, **Eight new actual-source bridge declarations strict-kernel-certified**; terminal matching mass theorem **not yet kernel-certified**.
 
 ## Formal goal
 
@@ -15,7 +15,7 @@ Here \(\max\) ranges over the entire alphabet, including zero-mass symbols; cons
 ## Certified components and current proof attempt
 
 1. Main-tree \`EfronSteinDegree.lean\` defines actual \`condExp\`, \`esComp\`, proves support dependence, Mobius inversion, and degree equivalence; main-tree \`QuadraticHoeffdingBridge.lean\` proves actual source-level degree-two truncation.
-2. Draft \`ActualESPairMatchingBridge.lean\` proves \(\sum_a p_i(a)h_S(x_{-i},a)=0\) for every \(i\in S\), using resampling invariance and the **actual finite Mobius toggle**, rather than an externally assumed centeredness table. The sliced \`actualPairKernel\` recovers genuine \`esComp p {i,j} f\` for every input, independently of unmatched coordinates.
+2. **Strict Lean PASS** \`ActualESPairMatchingBridge.lean\` proves \(\sum_a p_i(a)h_S(x_{-i},a)=0\) for every \(i\in S\), using resampling invariance and the **actual finite Mobius toggle**, rather than an externally assumed centeredness table. The sliced \`actualPairKernel\` recovers genuine \`esComp p {i,j} f\` for every input, independently of unmatched coordinates.
 3. The recovered independently developed \`CenteredRectangles.lean\` provides exact weighted rectangle extraction. The new draft instantiates it for actual pair kernels and simultaneously chooses positively oriented rectangles for **every edge** in an arbitrary finite graph, including unmatched and densely interacting sites.
 4. Main-tree \`QuadraticMatchedParity.lean\` proves the full even/odd selector cancellation and four-times-\(B\) matching budget for an *explicit complete block polynomial*, including all cross-block pair terms. Main-tree \`WeightedGreedyCover.lean\` proves the endpoint cover \(8B\), conditional only on a global matching-mass bound for the graph weights.
 5. **Still missing in Lean:** a source-level parity identity that expands an arbitrary actual \`ESDegreeLE p f 2\` function over an arbitrary disjoint matching, with unmatched coordinates padded, and identifies the actual selected four-point terms from \`esComp\`. The existing global parity theorem's explicit \`BlockPolynomial\` is **not** yet constructed from that same actual \(f\). The global matching-mass inequality, exponent-two variance theorem, and arbitrary measurable/infinite-product extension therefore have no terminal Lean certificate.
@@ -44,3 +44,14 @@ Implement a new declaration whose only mathematical hypotheses are \`hp\`, \`hp1
 ## Provenance and certification
 
 Strict compiler is Lean 4.33.0 with Turturean upstream commit \`2a6ceaef872ae993708950f951989134084b851a\`. Permitted axioms: \`propext\`, \`Classical.choice\`, \`Quot.sound\`. Each successful named declaration requires \`COMPILED\`, source SHA-256, and named axiom receipt with no \`sorryAx\`. A green unrelated job is not a matching theorem certificate. Worldwide priority and independent non-author review are separate gates.
+
+
+## Strict compilation receipt — 2026-11-12
+
+- Exact run: https://github.com/d3lefts/d3lefts/actions/runs/43167542367
+- Artifact: https://github.com/d3lefts/d3lefts/actions/runs/43167542367/artifacts/13920149952
+- Source SHA-256: \`4d59e9bf872f89a3310b6c3a5203d9256e4b85bfab65cfc60c0a065bca0bffea\`.
+- Lean 4.33.0, pinned Turturean upstream 2a6ceaef872ae993708950f951989134084b851a, compiler exit code 0.
+- Independent audit of the downloaded receipt JSON found status COMPILED and **eight** named declarations all reported \`allowlisted_dependencies\`: \`average_condExp_update_mem\`, \`average_condExp_update\`, \`actual_esComp_centered\`, \`actual_pair_component_is_kernel\`, \`actual_pair_kernel_left_centered\`, \`actual_pair_kernel_right_centered\`, \`actual_pair_kernel_oriented_rectangle\`, \`actual_all_edges_oriented_rectangles\`.
+- No missing declarations, no policy findings. Allowed axioms restricted to propext, Classical.choice, Quot.sound.
+- **Do not promote** the arbitrary-source global 4B parity/matching mass inequality or squared-variance influence theorem: neither appears as a terminal compiled declaration in this receipt.
