@@ -1,15 +1,16 @@
 {
   "schema": "nightfall-active-proof-passports-v1",
-  "version": 11,
-  "as_of": "2026-11-11",
-  "updated_by": "2026-11-11 rev15: 63 exact-current-source scoped CI receipts, expanded actual row three-declaration PASS; retain no E2E quadratic or novelty promotion",
+  "version": 12,
+  "as_of": "2026-11-12",
+  "updated_by": "2026-11-12 v12: v9.2 quadratic constant and Theorem D conditional observation scope, Turturean and categorical prior-art comparison, #407/#408 actual Efron–Stein Lean bridges, separate four-cost/conditional-section dossiers; no theorem or novelty promotion",
   "frozen_historical_registry_unchanged": true,
   "lifecycle": "active",
-  "scientific_status": "Twelve active research claims; all 63 current-branch Lean source blobs scope-classified and matched to successful historical scoped compiler receipts (52 originality-quarantined, 10 derived transfers, one finite construction). Real centered-section row and pair rectangle bridges verified. Actual-f exponent-two influence theorem remains analytically proved but not end-to-end kernel certified.",
+  "scientific_status": "Twelve active research claims (unchanged claim identities and statuses), a 67-current-source scoped Lean provenance census through #408, and three source-bound 12 Nov supplementary proof dossiers. Scalar v9.2 degree-two and Hilbert rank/adaptive observation remain analytic internal-audit claims, not complete Lean theorems. No external non-author mathematical review or worldwide priority clearance is recorded.",
   "source_checkpoint": {
     "repository": "d3lefts/d3lefts",
     "commit": "5bda769c2484ea2f6ea9a02c428928361c07666f",
-    "notes": "This commit fixes the four 10 Nov observability sources. The 11 Nov Kaczmarz claim has its own explicitly dated source checkpoint and is not included in the earlier source commit. The sixth four-shuffle candidate has standalone source and a source-ZIP checksum; original binary ZIP/PDF are chat artifacts, not GitHub releases. The seven expanded or newly added detailed passports are versioned 2026-11-11. The finite product theorem is now linked to its immutable PR #317 Lean receipt; the cubic and universal manuscript additions retain explicit draft/analytical gates. Lean provenance inventory separately reconciled at main commit f0007f6baea9ea53dfbde809bb243c017c17dbc6; no changes to principal mathematical claim status."
+    "notes": "This commit fixes the four 10 Nov observability sources. The 11 Nov Kaczmarz claim has its own explicitly dated source checkpoint and is not included in the earlier source commit. The sixth four-shuffle candidate has standalone source and a source-ZIP checksum; original binary ZIP/PDF are chat artifacts, not GitHub releases. The seven expanded or newly added detailed passports are versioned 2026-11-11. The finite product theorem is now linked to its immutable PR #317 Lean receipt; the cubic and universal manuscript additions retain explicit draft/analytical gates. Lean provenance inventory separately reconciled at main commit f0007f6baea9ea53dfbde809bb243c017c17dbc6; no changes to principal mathematical claim status. November 12 v12 passport refresh is based on main commit c8aae7b51c5618ead535b0f0651f63926a240a7e (dissertation PR #411) and source-specific #407/#408; the original source_checkpoint.commit remains an unchanged frozen historic proof checkpoint.",
+    "latest_review_commit": "c8aae7b51c5618ead535b0f0651f63926a240a7e"
   },
   "definitions": {
     "influence": "I_i(F)=E[||F−E_i F||²] with E_i averaging input coordinate i",
@@ -22,28 +23,29 @@
       "id": "q2-influence",
       "title": "Bias-independent quadratic influence",
       "status": "paper-proof-internal-audit",
-      "claim": "For bounded real Hoeffding degree ≤2 on independent arbitrary product laws, max_i I_i(F) ≥ V²/[225(1+√3)² B²], where |F|≤B and V=Var(F).",
+      "claim": "For |f|≤B and real Hoeffding degree ≤2 on arbitrary independent product laws, v9.2 analytically proposes Var(f)²≤C₂ B² sup_i I_i(f), C₂=(10+2√2)²(1+√3)²≈1228.356. Earlier v7 bound 225(1+√3)² is retained as historical. Not a full Lean-certified theorem.",
       "assumptions": [
         "independent input coordinate laws",
         "real-valued |F|≤B with B>0",
         "degree ≤2; V=Var(F)>0"
       ],
-      "mechanism": "Actual-function matching parity, weighted endpoint allocation, 4B/8B/16B switching budgets and genuinely independent Hilbert fourth moments; no minimum atom probabilities.",
-      "evidence": "Complete analytic proof in public v6 and separate v7 source, with exact finite checks and scoped Lean results (#362/#375/#378/#385). The 33-page v6.1 synthesis is a separately retained source/audit packet not yet bitwise deposited in GitHub. No full end-to-end quadratic Lean theorem and no independent non-author review.",
-      "source": "research/nightfall/observability-publication/PRINCIPAL_PAPER.md",
-      "source_detail": "Primary public v6 manuscript: papers/finite-product-influence/Bias_Free_Aaronson_Ambainis_All_Product_Spaces_v6.tex; v7 specialist consolidation: papers/finite-product-influence/Bias_Free_Aaronson_Ambainis_All_Product_Spaces_v7.tex; editorial v6.1 map: research/catalogue/NOV11_V61_DISCOVERY_SYNTHESIS.md.",
-      "audit": "Independently reconstruct actual quadratic matching/section charge, interpolation constant 15(1+√3), and ANOVA orthogonality on arbitrary categorical laws; compare classical Grothendieck, completely bounded and Turturean/GMNR results before novelty claims.",
+      "mechanism": "Actual source Hoeffding pair kernels, matched even/odd parity cancellation and 4B matching mass, weighted greedy ownership, sharper v8/v9.2 additive projection, actual section oscillation, independent Hilbert fourth moments; finite-product to measurable transfer requires a separate analytic limit.",
+      "evidence": "Complete written v8 analytic TeX, deposited v9.2 PDF and AI-assisted 12 Nov internal proof check (Cor. 6.2 citation/constant issue), plus exact finite regressions. Scoped named Lean includes actual finite Hilbert sections (#407) and eight true Efron–Stein pair/rectangle declarations (#408, strict receipt 43167542367). No source-derived terminal global parity or full quadratic theorem is kernel-certified; no external referee.",
+      "source": "research/nightfall/2026-11-active-passports/quadratic-rank-observability.md",
+      "source_detail": "Latest scoped dossier research/nightfall/2026-11-active-passports/quadratic-rank-observability.md; source papers/finite-product-influence/Bias_Free_Aaronson_Ambainis_All_Product_Spaces_v8.tex; v9.2 PDF and V9_2_INTERNAL_REVIEW_20261112.md; 2026-11-information-cost-dissertation/CHAPTER2_TURTUREAN_SCOPE_AUDIT_20261112.md.",
+      "audit": "Complete source-derived global matching parity and actual fourth-moment ownership; fix v9.2 Cor. 6.2 and deposit its exact TeX. Compare degree-two exponent-two binary Grothendieck/categorical Littlewood, DFKO/completely bounded, Turturean 5/2 on fair cube and fixed-common-bias GMNR with exact normalization. Require non-author referee.",
       "limitations": [
-        "No general degree-three or all-degree exponent-two theorem",
-        "No priority or external-referee clearance",
-        "New scoped quadratic Lean modules are valid supporting formalizations, not a Lean certification of the full arbitrary-law quadratic theorem"
+        "No arbitrary-degree (2,4) or unrestricted cubic exponent-two claim",
+        "v9.2 terminal quadratic theorem, measurable lift and Hilbert/posterior application are not end-to-end Lean certified",
+        "Exact v9.2 TeX not deposited; Corollary 6.2 citation/constant mismatch remains",
+        "Global novelty and external mathematical referee remain open"
       ]
     },
     {
       "id": "q2-observation",
       "title": "Adaptive versus fixed whole-coordinate queries",
       "status": "paper-proof-internal-audit",
-      "claim": "For the paper's unit-ball rank-≤r minimax regime at 0<η≤1/4, degree-two adaptive query complexity is proposed Θ(r/η); for alphabets of size ≤m, the fixed-query order is proposed Θ(rm/η). The analytic finite-product rank-r construction further reports V(F)²≤675(1+√3)²rB²M and a hard query cap ceil(2700(1+√3)²rB²/η) for risk at most τ_r+η.",
+      "claim": "For a known bounded Hilbert-valued degree-two product observable F with covariance spectral tail τ_r, v9.2 analytically proposes risk ≤τ_r+η after ≤ceil(12 C₂ r B²/η) adaptive whole-coordinate observations, C₂≈1228.356, with an Ω(r/η) additive-sign lower family. The address family separates two-read adaptive from Ω(m) fixed queries. General Θ(rm/η) fixed-query claims remain separately scoped and source-gated.",
       "assumptions": [
         "squared-error Bayes-risk objective",
         "covariance rank ≤r",
@@ -51,14 +53,16 @@
         "whole-coordinate queries",
         "specified finite alphabet cap m for fixed-query comparison"
       ],
-      "mechanism": "Finite-sign Hilbert compression and actual posterior total-influence decrement E(P_next|history)=P−I_j, not an automatic one-query variance decrement; address families supply the model-specific lower scaling.",
-      "evidence": "Analytic finite-product proof in public rank-optimal v7 sections and source PRs #368/#375/#387, with scoped finite exact checkers; the full chain is neither e2e Lean certified nor independently externally refereed.",
-      "source": "research/nightfall/observability-publication/PRINCIPAL_PAPER.md",
-      "source_detail": "papers/finite-product-influence/Rank_Optimal_Observation_Section_v7.tex and research/catalogue/NOV11_V61_DISCOVERY_SYNTHESIS.md; earlier source inventory naming missing queries.tex no longer describes available v6/v7 manuscript files.",
-      "audit": "Independently audit finite-sign rank lifting, actual posterior conditional laws/null states, tail projection, hard query cap and minimax quantifiers.",
+      "mechanism": "Bounded quadratic scalar influence → rank-r Hilbert scalarization → actual posterior ANOVA total-influence descent and hard budget → spectral-tail truncation; additive independent-sign and address constructions provide separate exact lower examples. It is known-model state observation, not model identification or quantum measurement.",
+      "evidence": "Theorem D and v8/v9.2 analytic manuscripts plus separately exact finite lower checkers; recent scoped Lean row/ES-pair components (#407/#408) and older moment declarations. Source-derived matching parity, rank transfer and realized posterior hard-stopping are not one terminal Lean theorem. Supporting four-cost identification/test analysis recorded in the dissertation PR #411, not treated as proof of this upper bound.",
+      "source": "research/nightfall/2026-11-active-passports/quadratic-rank-observability.md",
+      "source_detail": "Theorem D research/nightfall/2026-11-quadratic-rank-optimal/UNIVERSAL_THEOREM.md; papers/finite-product-influence/Rank_Optimal_Observation_Section_v8.tex and V9_2_INTERNAL_REVIEW_20261112.md; supplementary information-costs-identification.md and conditional-section-duality.md.",
+      "audit": "Independently check scalar v9.2 matching premise, spherical/finite-sign rank lift, actual posterior law and hard stopping, measured-product null sets and tail risk; check separately the fixed-query minimax model and missing categorical nonadaptive source.",
       "limitations": [
-        "Minimax rates do not describe every single function",
-        "No universal adaptive Θ(r/η) theorem at arbitrary degree"
+        "Rank-linear upper bound depends on the unrefereed v9.2 scalar influence premise",
+        "No full-chain Lean or external non-author review; query budget not runtime",
+        "No same-model blanket equivalence between quantum, model value, and state coordinate queries",
+        "Alphabet-uniform fixed observation upper bound is false for addressed degree-two families"
       ]
     },
     {
@@ -72,7 +76,7 @@
         "Independent-resampling influence I_j; exact pinned coefficient and Turturean imported machinery"
       ],
       "mechanism": "The competing-symbol product-row construction and law-free two-draw orientation compose localized two-sided certificates, weighted influence extraction, and imported Turturean median/level-set proof steps.",
-      "evidence": "PR #317 at head e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb passed pinned Lean 4.33.0 build run #42929857470: 19 named declarations, standard axioms Classical.choice/Quot.sound/propext only, no sorryAx/custom axioms. This verifies the exact finite theorem only. Merged PR #325 (head 2e13f445894ea357c3e6a5d3920b81877a5a3a9f) has passing pinned Actions 42932085109 verifying EfronSteinDegree.prodDegree_iff_esDegree and Heterogeneous.heterogeneous_influence. The classical Efron–Stein equivalence is novelty-quarantined, not an original theorem claim.",
+      "evidence": "PR #317 at head e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb passed pinned Lean 4.33.0 build run #42929857470: 19 named declarations, standard axioms Classical.choice/Quot.sound/propext only, no sorryAx/custom axioms. This verifies the exact finite theorem only. Merged PR #325 (head 2e13f445894ea357c3e6a5d3920b81877a5a3a9f) has passing pinned Actions 42932085109 verifying EfronSteinDegree.prodDegree_iff_esDegree and Heterogeneous.heterogeneous_influence. The classical Efron–Stein equivalence is novelty-quarantined, not an original theorem claim. 12 Nov scope check: Turturean's common-uniform-cube theorem is all-degree exponent 5/2; this dependent finite all-law transfer does not yield the proposed degree-two exponent 2.",
       "source": "research/nightfall/2026-11-active-passports/finite-product-influence.md",
       "source_detail": "Dedicated public Proof Passport and existing complete finite-product formalization receipt FINITE_PRODUCT_INFLUENCE_PROOF_PASSPORT_20261110.md; checked Lean source ProductInfluence.lean at immutable PR #317 head. Subsequent PR #325 is the stronger merged finite certificate, with a separate CI receipt and public source file links.",
       "audit": "Rebuild PRs #317/#325 against exact upstream; verify support-only bound, dependent-coordinate alphabets and pointwise degree, then independently evaluate measure-theoretic passage and priority.",
@@ -162,9 +166,9 @@
         "Independent scaled replicas and outputs"
       ],
       "mechanism": "Conditional fiber averaging gives gain q/m^(2s−h). The discrete-convex single-replica gain makes complete-replica concentration optimal by budget exchange; adaptive reading follows each address.",
-      "evidence": "Merged PR #338: exact construction-specific proof, 645 local budget checks, 88 conditional-table checks and 1,945 independent global allocation checks. CI receipts apply to finite algebra only.",
+      "evidence": "Merged PR #338: exact construction-specific proof, 645 local budget checks, 88 conditional-table checks and 1,945 independent global allocation checks. CI receipts apply to finite algebra only. A separate two-read addressed-sign family in dissertation PR #411 has exact identification Bayes risk 1−min(q,n)/n and independent n=2 trivalent test replay; it is an additional model, not the nested-address theorem.",
       "source": "research/nightfall/2026-11-active-passports/nested-address-separation.md",
-      "source_detail": "Detailed merged EXACT_GLOBAL_QUERY_ALLOCATION.md and EXACT_BUDGET_AND_GENERAL_LP_20261111.md with standard-library checkers.",
+      "source_detail": "Detailed merged EXACT_GLOBAL_QUERY_ALLOCATION.md and EXACT_BUDGET_AND_GENERAL_LP_20261111.md with standard-library checkers. For the distinct signed-pointer class and 4-cost game see research/nightfall/2026-11-active-passports/information-costs-identification.md.",
       "audit": "Independently derive the exact posterior variance, all cost boundaries and discrete convexity; replay optimal allocations without using the proposed formula.",
       "limitations": [
         "Exact for the constructed nested-address family, not a universal degree-d upper bound",
@@ -225,9 +229,9 @@
         "Uncompiled arbitrary-product scalar bridge and measurable adaptive selection / Hilbert PSD estimate"
       ],
       "mechanism": "Finite scalar Lean input, product measure approximation, signed Hilbert scalar compression, PSD rank influence, exact ANOVA posterior potential descent, spectral-tail output projection.",
-      "evidence": "Finite scalar PR #317 is Lean-checked; universal manuscript PR #332 remains draft and PRs #339/#340 only address partial Lean bridges. The v6 full source is not publicly reconciled on main. Further source-specific successes: 13 spectral core declarations (42959881782); finite signed isometry (42965524565); pointwise diagonal-coherence transfer with explicitly supplied premises (42972554673); conditional finite-kernel weighted budget (42972560393); and actual posterior law and rank-factor influence (42973878336). These are quarantined supporting lemmas, not the end-to-end observer theorem.",
+      "evidence": "Finite scalar PR #317 is Lean-checked; universal manuscript PR #332 remains draft and PRs #339/#340 only address partial Lean bridges. The v6 full source is not publicly reconciled on main. Further source-specific successes: 13 spectral core declarations (42959881782); finite signed isometry (42965524565); pointwise diagonal-coherence transfer with explicitly supplied premises (42972554673); conditional finite-kernel weighted budget (42972560393); and actual posterior law and rank-factor influence (42973878336). These are quarantined supporting lemmas, not the end-to-end observer theorem. On 12 Nov #407/#408 add true source-derived quadratic row/ES-pair scoped Lean receipts, but these do not close its all-degree PSD/posterior universal theorem or the separate v9.2 rank-linear degree-two proof.",
       "source": "research/nightfall/2026-11-active-passports/universal-spectral.md",
-      "source_detail": "Draft PR #332 and partial Lean PRs #339/#340 are principal sources; main's spectral REVIEW_GATES.md is a critical review note. Later rank-linear degree-two result is separately dependent on the stronger Q2 analytic theorem; see papers/finite-product-influence/Rank_Optimal_Observation_Section_v7.tex and the v6.1 synthesis ledger.",
+      "source_detail": "Draft PR #332 and partial Lean PRs #339/#340 are principal sources; main's spectral REVIEW_GATES.md is a critical review note. Later rank-linear degree-two result is separately dependent on the stronger Q2 analytic theorem; see papers/finite-product-influence/Rank_Optimal_Observation_Section_v7.tex and the v6.1 synthesis ledger. See the distinct degree-two passport research/nightfall/2026-11-active-passports/quadratic-rank-observability.md and Turturean scope audit in 2026-11-information-cost-dissertation.",
       "audit": "Independently prove actual posterior ANOVA drift, scalar product influence composition, conditional coherence, measurable policy and spectral risk; seek prior art before any novelty claim.",
       "limitations": [
         "No complete Lean proof of universal Hilbert observer or measured-space extension",
