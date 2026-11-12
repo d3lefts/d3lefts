@@ -65,6 +65,12 @@ jobs:
             --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
             --decl Nightfall.Wright.SharpResampling.pointwise_two_sample \
             --decl Nightfall.Wright.SharpResampling.pair_sum_factor \
+            --decl Nightfall.Wright.SharpResampling.pair_sum_law \
+            --decl Nightfall.Wright.SharpResampling.pair_sum_left \
+            --decl Nightfall.Wright.SharpResampling.pair_sum_right \
+            --decl Nightfall.Wright.SharpResampling.finite_weighted_pairwise \
+            --decl Nightfall.Wright.SharpResampling.iid_absolute_difference_bound \
+            --decl Nightfall.Wright.SharpResampling.iid_absolute_difference_z \
             --json-out lean-receipts/wright-sharp-resampling.json || {
               python3 -c "import json;r=json.load(open('lean-receipts/wright-sharp-resampling.json'));print(r.get('status'));print((r.get('stdout') or '')[-35000:]);print((r.get('stderr') or '')[-10000:])" || true
               exit 1
