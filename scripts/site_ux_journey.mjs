@@ -99,7 +99,7 @@ try{
     assert.equal(await page.locator("#review a[href='observability.html#audit']").count(),1);
     assert.equal(await page.locator("#research-systems a[href='evidence.html#public-downloads']").count(),1);
     assert.equal(await page.locator("#work a[href='research.html']").count(),1);
-    assert.equal(await page.locator(".flagship-context").count(),4);
+    assert.equal(await page.locator(".flagship-context").count(),5,"One visible Wright evidence statement plus four scoped supporting research contexts");
     note("strength","Research, connections and independent review have distinct destinations.","homepage");
   });
 
