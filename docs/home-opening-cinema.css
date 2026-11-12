@@ -798,3 +798,63 @@ html #main>.hero.nf-opening .nf-opening-overlap-value {
     font-size:clamp(16px,4.45vw,19px)!important;
   }
 }
+
+
+/* Signature-first editorial compaction, 11 Nov 2026.
+   Preserve still astronomical art and source-linked proof status; remove dead
+   scroll before the three principal contributions. Scoped to NULL FIELD. */
+#main>.hero.nf-opening{min-height:clamp(540px,72svh,780px);padding-block:clamp(46px,6vw,86px) clamp(52px,6vw,88px)}
+#main>.hero.nf-opening .hero-title{margin-block:clamp(16px,2vw,25px) 15px}
+#main>.hero.nf-opening .hero-description{max-width:62ch;font-size:clamp(14px,1.15vw,17px);line-height:1.57}
+#main>.hero.nf-opening .hero-actions{margin-top:clamp(19px,2.2vw,29px)}
+#main>.hero.nf-opening .nf-hero-guide{margin-top:18px;font-size:11px;color:#c1cbd1;line-height:1.7;letter-spacing:.03em}
+#main>.hero.nf-opening .nf-opening-scoreline span{font-size:11px;letter-spacing:.05em}
+#main>.hero.nf-opening .nf-opening-overlap-label{font-size:11px;letter-spacing:.065em}
+#main>.hero.nf-opening .nf-opening-overlap-facts span{font-size:11px}
+#nf-scroll-cinema.nf-cinema--still .nf-cinema-stage{height:auto;min-height:clamp(435px,63svh,650px)}
+#nf-scroll-cinema.nf-cinema--still .nf-cinema-content{padding-block:clamp(30px,4vw,58px)}
+#nf-scroll-cinema.nf-cinema--still .nf-cinema-title{font-size:clamp(41px,5.3vw,76px)}
+#nf-scroll-cinema.nf-cinema--still .nf-cinema-overline{font-size:11px;letter-spacing:.08em}
+#nf-scroll-cinema.nf-cinema--still .nf-cinema-record-kicker{font-size:11px}
+#nf-scroll-cinema.nf-cinema--still .nf-cinema-record p{font-size:12px}
+#main>.flagships{padding-block:clamp(48px,6vw,82px) clamp(45px,5vw,74px)}
+#main>.flagships .section-head{margin-bottom:clamp(22px,3vw,37px)}
+#flagships .nf-signature-card{padding:clamp(22px,2.4vw,32px)}
+#flagships .nf-signature-card h3{font-size:clamp(30px,2.8vw,44px);margin:23px 0 12px}
+#flagships .nf-signature-measure{font-size:clamp(21px,2.3vw,30px);margin-bottom:17px}
+#flagships .nf-signature-lead{min-height:0;margin-bottom:17px;font-size:14px;line-height:1.65}
+#flagships .nf-signature-card dl{margin-bottom:16px;padding-top:13px}
+#flagships .nf-signature-card dl>div{margin-bottom:8px;gap:12px}
+#flagships .nf-signature-card dd{font-size:13px;line-height:1.55}
+#flagships .nf-signature-card dt,#flagships .nf-signature-top,#flagships .nf-signature-adjacent article>span{font-size:11px;line-height:1.6;color:#b7c4cf}
+#flagships .nf-signature-link{font-size:13px;padding-top:14px}
+#flagships .nf-signature-adjacent article{padding-block:23px}
+#flagships .nf-signature-adjacent p{font-size:14px;line-height:1.6}
+#main>.flagships .flagship-after{margin-top:15px;padding-top:15px}
+#main>.flagships .flagship-after p{max-width:90ch;line-height:1.6}
+#main>.sf-library-invite:not(.nf-discovery-section),#main>.review-section{padding-block:clamp(41px,5vw,74px)}
+#main>.nf-observatory{margin-block:clamp(42px,5vw,73px)}
+#main>.nf-discovery-section{margin-block:30px;padding:clamp(24px,3vw,38px)}
+#main>.nf-quiet-note{padding-block:clamp(36px,4.5vw,66px)}
+@media(min-width:901px) and (max-height:830px){#main>.hero.nf-opening{min-height:600px}}
+@media(max-width:900px){
+ #main>.hero.nf-opening{min-height:0;padding-block:34px 48px}
+ #main>.hero.nf-opening .nf-hero-guide{font-size:11px;line-height:1.6}
+ #nf-scroll-cinema.nf-cinema--still .nf-cinema-stage{min-height:0;height:auto}
+}
+@media(max-width:700px){
+ #main>.hero.nf-opening{padding-block:21px 32px;gap:18px}
+ #main>.hero.nf-opening .hero-title{font-size:clamp(40px,10.6vw,53px);margin:12px 0}
+ #main>.hero.nf-opening .hero-description{font-size:14.5px;line-height:1.5}
+ #main>.hero.nf-opening .hero-actions{margin-top:17px;gap:11px}
+ #main>.hero.nf-opening .nf-hero-guide{margin-top:12px;font-size:11px}
+ #main>.hero.nf-opening .hero-aside{gap:10px}
+ #main>.hero.nf-opening .aside-footer{padding-top:5px}
+ #main>.hero.nf-opening .aside-footer strong{font-size:clamp(20px,5vw,26px)}
+ #nf-scroll-cinema.nf-cinema--still .nf-cinema-content{padding-block:25px 64px;gap:12px}
+ #nf-scroll-cinema.nf-cinema--still .nf-cinema-title{font-size:clamp(37px,8vw,49px)}
+ #nf-scroll-cinema.nf-cinema--still .nf-cinema-record p{font-size:12px}
+ #main>.flagships{padding-block:43px 52px}
+ #flagships .nf-signature-card{padding:22px 2px 24px}
+ #flagships .nf-signature-card h3{margin-top:16px}
+}
