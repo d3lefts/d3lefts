@@ -111,9 +111,9 @@ Finally apply the v8 analytic scalar quadratic theorem \(V^2\le K_8 B_0^2\max_i 
 
 Run from repository root:
 
-\`\`\`sh
+```sh
 python3 papers/finite-product-influence/check_quantum_anova_bridge_exact.py
-\`\`\`
+```
 
 The new standard-library-only checker directly computes the diagonal Personick gain
 \(\sum_z A_Q(z)^2/B_Q(z)\) from exact rational partial traces in two cases:
