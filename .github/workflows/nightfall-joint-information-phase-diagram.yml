@@ -1,0 +1,37 @@
+name: NIGHTFALL joint information-costs exact finite checks
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-information-cost-dissertation/JOINT_RISK_AND_SAFETY_PHASE_DIAGRAM_20261112.md'
+      - 'research/nightfall/2026-11-information-cost-dissertation/check_joint_information_phase_diagram.py'
+      - '.github/workflows/nightfall-joint-information-phase-diagram.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  rational-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exact finite rational falsification
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -B research/nightfall/2026-11-information-cost-dissertation/check_joint_information_phase_diagram.py | tee /tmp/phase-diagram.txt
+          grep -q '^PASS boolean=929 heterogeneous=534 posterior=18 rare=12 sharp=35$' /tmp/phase-diagram.txt
+      - name: Record inputs and limits
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts
+          sha256sum research/nightfall/2026-11-information-cost-dissertation/{JOINT_RISK_AND_SAFETY_PHASE_DIAGRAM_20261112.md,check_joint_information_phase_diagram.py} > receipts/SHA256SUMS
+          git rev-parse HEAD > receipts/COMMIT
+          printf '%s\n' 'Exact finite checks only; source proofs analytic and prior art not closed.' > receipts/SCOPE
+          cp /tmp/phase-diagram.txt receipts/output.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: joint-information-costs-rational-falsifier
+          path: receipts/
+          retention-days: 60
+          if-no-files-found: error
