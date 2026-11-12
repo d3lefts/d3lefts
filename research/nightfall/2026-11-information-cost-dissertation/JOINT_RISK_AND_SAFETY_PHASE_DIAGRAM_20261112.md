@@ -58,6 +58,8 @@ It has no false rejection when \(f=g\). Acceptance is a bounded-error assurance,
 
 **Scope.** The atom floor is essential for a uniform rate. For a one-coordinate rare-atom indicator \(h=1_{\{X_1=a\}}\), degree \(1\) but support can have arbitrarily small mass. For continuous factors no distribution-free positive atom floor exists. The degree promise must hold for **the violation function** \(h\) or the *difference* \(f-g\), not merely for an unrelated numerical safety score.
 
+**Sharp contrast with bias-independent state observation.** Let \(X_1\) be Bernoulli with \(\Pr(X_1=1)=\alpha\ll1\), and put \(h(X)=1_{\{X_1=1\}}\). This is bounded and degree one. Predicting zero with **no fresh-state queries** incurs squared error \(\alpha\) (or \(\alpha(1-\alpha)\) using the optimal constant predictor), which tends to zero. But a **passive** independent-sample inspector distinguishing \(h\equiv0\) from this h with probability \(1-\delta\) needs \(q\ge \ln\delta/\ln(1-\alpha)\sim\alpha^{-1}\ln(1/\delta)\). A **chosen full-input query** at \(X_1=1\) finds the exception immediately if that coordinate/symbol is known. Thus any purported transfer from bias-free *state-prediction* budgets to bias-free *passive exact-safety* budgets is false, even for degree one. The distinction is one of loss, predicate, and access model rather than a contradiction.
+
 ## Theorem C — a finite-product exact-query phase diagram
 
 Let every \(A_i\) be finite with full support, \(|A_i|=a_i\), and \(\mathcal H_d\) the real functions of Hoeffding degree \(\le d\). The dimension is
