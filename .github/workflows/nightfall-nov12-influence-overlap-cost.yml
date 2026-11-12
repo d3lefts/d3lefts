@@ -1,0 +1,64 @@
+name: NIGHTFALL Nov 12 research source and finite exact checks
+
+on:
+  push:
+    paths:
+      - 'papers/sharp-influence-backdoors/**'
+      - 'research/nightfall/2026-11-12-cubic-overlap/**'
+      - 'papers/finite-product-influence/NIGHTFALL_Beyond_Boolean_Cube_v9_2.tex'
+      - 'papers/quantum-operational-anova/COST_III_Observability_Recovery_Complexity.md'
+      - 'papers/quantum-operational-anova/COST_IV_Noise_Robust_Interaction_Visibility_Addendum.md'
+      - 'papers/quantum-operational-anova/checks/cost_master_exact_audit.py'
+      - '.github/workflows/nightfall-nov12-influence-overlap-cost.yml'
+  pull_request:
+    paths:
+      - 'papers/sharp-influence-backdoors/**'
+      - 'research/nightfall/2026-11-12-cubic-overlap/**'
+      - 'papers/finite-product-influence/NIGHTFALL_Beyond_Boolean_Cube_v9_2.tex'
+      - 'papers/quantum-operational-anova/COST_III_Observability_Recovery_Complexity.md'
+      - 'papers/quantum-operational-anova/COST_IV_Noise_Robust_Interaction_Visibility_Addendum.md'
+      - 'papers/quantum-operational-anova/checks/cost_master_exact_audit.py'
+      - '.github/workflows/nightfall-nov12-influence-overlap-cost.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  finite-replay:
+    name: Source custody and exact finite-model falsification
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify source-exact manuscript and audit snapshots
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat <<'EOF' | sha256sum -c -
+          dba4d747f454959417dde5ae12ea552566220e329ff67ef37318350b980f8f88  papers/sharp-influence-backdoors/Sharp_Influence_Quadratic_Backdoors_and_Cubic_Observation.tex
+          1361b98010892c82c069e30fa427bb9bc55e16c5d3b557f2f8159dbcabc5d0ad  papers/finite-product-influence/NIGHTFALL_Beyond_Boolean_Cube_v9_2.tex
+          89d2bbd74577a435680f7047dac573d33272e77082866929615106c4955bf0d6  papers/sharp-influence-backdoors/archive/Quadratic_Influence_and_Rank_Optimal_Observation_v1.tex
+          d1550c60312bfd23ca2b22ade4e3a5bff77d9803a7af7fa99b11ffc65ef6ee4e  papers/sharp-influence-backdoors/checks/check_quadratic_models.py
+          6440347076d5da1bbe4b4aefe9f854fd5f514c4efd96e7002524211d868dca4b  papers/sharp-influence-backdoors/checks/check_structured_backdoors.py
+          9cafb0e9275ac04faa9e2525b14586ada19a4c5efdab778e463fbde92f68d8fb  research/nightfall/2026-11-12-cubic-overlap/AGGREGATE_LINK_OVERLAP_LEMMA.md
+          7b76bb89099fcaba227b8814b3f12a6e480035494e2e218a31c64d8533ec63dc  research/nightfall/2026-11-12-cubic-overlap/check_aggregate_link_overlap.py
+          9362bbaaa4d26d006dfb57f29be328cd7d10232365b344006b130aceda3147f1  research/nightfall/2026-11-12-cubic-overlap/search_spike_tail.py
+          fa35434c4cc82e9a13ddbb8d64248b501c7eaa0800eabf293855b84d8d25aa36  papers/quantum-operational-anova/COST_III_Observability_Recovery_Complexity.md
+          c6063134619b5e27090518c789a8ceca3d1525aa7da2531492691bb97c81592f  papers/quantum-operational-anova/checks/cost_master_exact_audit.py
+          e88bbfc61894eb68ce3fdb25a65efe799de158947feaf6483ef60d9ab87c6f45  papers/quantum-operational-anova/COST_IV_Noise_Robust_Interaction_Visibility_Addendum.md
+          EOF
+      - name: Run finite exact checkers (not universal theorem verification)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I papers/sharp-influence-backdoors/checks/check_quadratic_models.py
+          python3 -I papers/sharp-influence-backdoors/checks/check_structured_backdoors.py
+          python3 -I research/nightfall/2026-11-12-cubic-overlap/check_aggregate_link_overlap.py
+          python3 -I research/nightfall/2026-11-12-cubic-overlap/search_spike_tail.py
+          python3 -I papers/quantum-operational-anova/checks/cost_master_exact_audit.py
+
+# GREEN only means source custody and the enumerated finite tests passed.
+# It is NOT an end-to-end Lean theorem, independent referee review, or originality proof.
