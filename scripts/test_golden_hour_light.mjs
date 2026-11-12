@@ -90,6 +90,7 @@ try{
       const displayed=document.querySelector(".hero-main .nf-opening-scoreline strong");
       return {
         value:aside?.querySelector(".nf-opening-overlap-value")?.textContent.trim(),
+        qualified:aside?.querySelector(".nf-opening-overlap-unit")?.textContent.trim(),
         firstFold:displayed?.textContent.trim(),
         cells:aside?.querySelector(".nf-opening-overlap-facts strong")?.textContent.trim(),
         source:!!aside?.querySelector('a[href="observability.html#quadratic"]'),
@@ -97,7 +98,8 @@ try{
         toolbar:document.querySelector('meta[name="theme-color"]')?.content
       };
     });
-    assert.equal(record.value,"V² / [225(1+√3)² B²]","Full qualified constant leads the proposed quadratic hero");
+    assert.equal(record.value,"V² / [K₈ B²]","The current v8 quadratic denominator leads the hero");
+    assert.ok(record.qualified.includes("K₈=(10+2√2)²(1+√3)²≈1228.36"),"The exact v8 coefficient is displayed, not merely a decimal approximation");
     assert.equal(record.firstFold,"DEGREE TWO","Active quadratic influence is visible immediately");
     assert.equal(record.cells,"2","Degree-two scope is disclosed in the hero");
     assert.equal(record.source,true,"The hero links directly to the qualified current research source");
