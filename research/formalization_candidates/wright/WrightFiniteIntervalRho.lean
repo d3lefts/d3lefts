@@ -115,4 +115,21 @@ theorem sharp_rho_finite_interval
           dsimp [r, m]
           rw [radius_abs_eq_max]
 
+/-- The sharp fiber inequality includes degenerate intervals (constant
+fiber functions) without any artificial positive range assumption. -/
+theorem sharp_rho_finite_closed_interval
+    (p : α → ℝ) (hp : ∀ i, 0 ≤ p i)
+    (hp1 : ∑ i, p i = 1)
+    (u : α → ℝ) (lo hi : ℝ) (hlohi : lo ≤ hi)
+    (hlo : ∀ i, lo ≤ u i) (hhi : ∀ i, u i ≤ hi) :
+    (∑ i, ∑ j, p i * p j * |u i - u j|) ≤
+      (4 - 2 * Real.sqrt 3) *
+        (∑ i, p i * max (u i - lo) (hi - u i)) := by
+  rcases eq_or_lt_of_le hlohi with heq | hlt
+  · subst hi
+    have hu : ∀ i, u i = lo := fun i => le_antisymm (hhi i) (hlo i)
+    simp [hu]
+  · exact sharp_rho_finite_interval p hp hp1 u lo hi hlt hlo hhi
+
+
 end Nightfall.Wright.FiniteInterval
