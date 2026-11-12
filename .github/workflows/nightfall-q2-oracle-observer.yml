@@ -1,0 +1,27 @@
+name: NIGHTFALL Q2 conditional oracle-observer finite audit
+on:
+  pull_request:
+    paths:
+      - 'papers/sharp-influence-backdoors/ORACLE_IMPLEMENTABLE_OBSERVER_20261112.md'
+      - 'papers/sharp-influence-backdoors/checks/check_oracle_implementation_exact.py'
+      - '.github/workflows/nightfall-q2-oracle-observer.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-posterior-drift:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Independent finite product identity replay
+        run: |
+          python3 -I papers/sharp-influence-backdoors/checks/check_oracle_implementation_exact.py | tee q2-oracle-check.log
+          grep -Fx 'PASS 6768 exact finite ANOVA and posterior-influence-drift assertions' q2-oracle-check.log
+          grep -Fx 'SCOPE: finite rational tests; concentration and general theorem are analytic' q2-oracle-check.log
+      - name: Preserve exact finite receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: q2-oracle-scope-limited-finite-check
+          path: q2-oracle-check.log
+          if-no-files-found: ignore
