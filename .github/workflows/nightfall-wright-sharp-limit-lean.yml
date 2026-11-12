@@ -73,6 +73,7 @@ jobs:
             --decl Nightfall.Wright.SharpResampling.pair_sum_scaled \
             --decl Nightfall.Wright.SharpResampling.iid_absolute_difference_bound \
             --decl Nightfall.Wright.SharpResampling.iid_absolute_difference_z \
+            --decl Nightfall.Wright.SharpResampling.sharp_rho_all_finite_laws \
             --json-out lean-receipts/wright-sharp-resampling.json || {
               python3 -c "import json;r=json.load(open('lean-receipts/wright-sharp-resampling.json'));print(r.get('status'));print((r.get('stdout') or '')[-35000:]);print((r.get('stderr') or '')[-10000:])" || true
               exit 1
