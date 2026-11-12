@@ -78,6 +78,9 @@ This differs from **randomized high-confidence equality testing**: by (B), testi
 On \(X\in\{-1,+1\}^n\) uniform, consider bounded affine \(f(x)=c+\sum_i a_ix_i\), \(\|f\|_\infty\le B\).
 
 1. **TEST degree one:** The two-group four-corner difference tester has one-sided \(\epsilon\)-far detection probability at least \(\epsilon/(8B^2)\) per trial (squared \(L^2\) distance). Four full-input evaluations per trial; query complexity \(O(B^2\epsilon^{-1}\ln(1/\delta))\), independent of \(n\).
+   **Derivation:** Color coordinates independently with two equiprobable colors and evaluate the alternating four-corner difference from two independent product inputs. ANOVA orthogonality yields
+   \(\mathbb E[\Delta_2f]^2=4\sum_{|S|\ge2}(1-2^{1-|S|})\|f_S\|_2^2\ge 2W_2(f)\),
+   where \(W_2(f)=\mathrm{dist}_{L^2}(f,\mathcal H_1)^2\). Since \(|\Delta_2f|\le4B\), a nonzero difference occurs with probability \(\ge W_2(f)/(8B^2)\). This is a one-sided proximity test, not exact-class-membership proof.
 2. **IDENTIFY exactly:** \(n+1\) chosen model evaluations, necessary and sufficient by (C).
 3. **OBSERVE state approximately:** because \(\sum_i|a_i|\le B\), reveal the \(q\) coordinates with largest \(|a_i|\). The conditional-mean squared error is \(\sum_{\rm unrevealed}a_i^2\le B^2/(4q)\). Hence \(O(B^2/\eta)\) fixed-coordinate reads suffice, independent of \(n\). The order is tight for the family \(f=n^{-1}\sum_i X_i\) at \(\eta=1/(2n)\).
 4. **CHECK exact equality \(f\equiv0\) with high confidence:** any nonzero affine function is nonzero on at least half the cube, so \(q=\lceil\log_2(1/\delta)\rceil\) passive samples suffice.
