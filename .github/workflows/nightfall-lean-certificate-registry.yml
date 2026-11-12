@@ -1,0 +1,51 @@
+name: NIGHTFALL unified Lean source certificate audit (not a kernel build)
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/**/*.lean'
+      - 'research/nightfall/formalization/CERTIFICATE_INDEX.md'
+      - 'research/nightfall/formalization/README.md'
+      - 'docs/lean-certificate-provenance.json'
+      - 'scripts/lean_certificate_registry.py'
+      - 'scripts/test_lean_certificate_provenance.cjs'
+      - 'tests/test_lean_certificate_registry.py'
+      - '.github/workflows/nightfall-lean-certificate-registry.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/**/*.lean'
+      - 'docs/lean-certificate-provenance.json'
+      - 'scripts/lean_certificate_registry.py'
+      - 'scripts/test_lean_certificate_provenance.cjs'
+      - 'tests/test_lean_certificate_registry.py'
+      - '.github/workflows/nightfall-lean-certificate-registry.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-ledger:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Adversarial mutation tests of source identity and receipt custody
+        run: python3 tests/test_lean_certificate_registry.py
+      - name: Reconcile all current Lean source hashes with one canonical registry
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_certificate_registry.py --audit \
+            --json-out lean-receipts/consolidated-source-index.json
+      - name: Preserve scope-labeled inventory for inspection
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-consolidated-lean-source-index
+          path: lean-receipts/consolidated-source-index.json
+          retention-days: 45
+          if-no-files-found: warn

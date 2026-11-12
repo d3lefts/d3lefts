@@ -1,0 +1,9 @@
+% Rank-sensitive theorem, introduced after the scalar quadratic lower-bound example.
+\begin{theorem}[Rank-optimal adaptive observation of quadratic systems]\label{thm:rankadaptive}
+Let $F$ be a known, bounded, real-Hilbert-valued observable of Hoeffding degree at most two on a finite independent product with $n$ coordinates and arbitrary coordinate laws, and assume $\norm{F}\le B$ almost surely. Let $\tau_r(F)$ denote the covariance variance outside the top $r\ge1$ output directions. For every $\eta>0$ there is a deterministic adaptive policy reading no more than
+\begin{equation}\label{eq:rankcap}
+ N\le\min\left\{n,\left\lceil\frac{12\Kquad r B^2}{\eta}\right\rceil\right\}
+ \le\min\left\{n,\left\lceil\frac{14741\,rB^2}{\eta}\right\rceil\right\}
+\end{equation}
+whole coordinates with squared Bayes risk at most $\tau_r(F)+\eta$. Conversely, for every $r,k\ge1$, a bounded degree-one $\mathbb R^r$-valued example with $B=1$, $\tau_r=0$ and target $\eta=1/(2k)$ requires at least $r/(4\eta)$ observations, even adaptively. This is a statement about observation depth, not the computational cost of finding or evaluating the policy. A vector influence inequality and a complete posterior-energy argument are proved in Section~\ref{sec:rank-observation}.
+\end{theorem}

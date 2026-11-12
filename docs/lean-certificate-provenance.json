@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-provenance-v1",
   "as_of": "2026-11-11",
-  "revision": 7,
-  "scope": "47 .lean files in reconciled main+PR #366 source inventory, including one explicitly novelty-quarantined law-transfer module. All full-spectrum theorems remain gated by their own proof obligations.",
-  "source_commit": "30e7695b91687901e0eb506b304dd56c7ee63ae9 (merged main with PR #364; certification specific to source and CI receipt)",
+  "revision": 16,
+  "scope": "65 current Lean source files: 63 exact-blob historical source receipts frozen at baseline main 8a247cface5ce57a8da340bc277c81e792a04c40, plus two rank-one scoped strict compiler receipts from PR #386 at head 7b7f0b7f4f99edc8dc31ba903d97986d5de5f1a2. This composite source index is not an end-to-end cubic theorem; each source is bound by its individual Git blob and CI run.",
+  "source_commit": "8a247cface5ce57a8da340bc277c81e792a04c40",
   "policy": "Kernel compilation is validity evidence only. Quarantine means do not claim novelty; it does not invalidate a correctly compiled theorem. Derived transfers are scoped program-specific compositions with open worldwide priority. A distinct finite construction has an exact certificate but still needs prior-art review.",
   "prior_art": [
     {
@@ -38,18 +38,34 @@
     }
   ],
   "counts": {
-    "quarantine": 36,
+    "quarantine": 54,
     "derived_transfer": 10,
     "finite_construction": 1
   },
   "modules": [
+    {
+      "path": "research/nightfall/2026-11-universal-law-transfer/FiniteLawTransfer.lean",
+      "classification": "quarantine",
+      "note": "Five scoped Lean declarations for classical absolute-continuity/equivalent-law exact observability and associated loss-envelope algebra. Neyman–Pearson/hockey-stick prior art is credited; does not certify unrestricted original universal theorem or worldwide priority",
+      "passport": "active-proof-passport.html",
+      "ci_run": 43059618451,
+      "global_priority": "unverified",
+      "source_blob_sha": "a39e197405c1411ecf69dd87f6356321dc520130",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "93a1901043b0ed5ee837ba11f7b17e1406223c40",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
     {
       "path": "research/nightfall/2026-11-universal-spectral-observability/AdaptiveBudget.lean",
       "classification": "quarantine",
       "note": "Abstract ANOVA energy and unit-drift algebra; main universal theorem unproved",
       "passport": "universal-spectral-proof-passport.html",
       "ci_run": 42964206760,
-      "global_priority": "unverified"
+      "global_priority": "unverified",
+      "source_blob_sha": "a668028281bfed7a56ecbdbd46daf7cc5562e1af",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "02b04f9fbebfcfd2906d71548e36a42e03437e35",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/characteristic_three/Finite3.lean",
@@ -57,7 +73,23 @@
       "note": "Elementary characteristic-three identities on Fin 3",
       "passport": null,
       "ci_run": 40995299592,
-      "global_priority": "unverified"
+      "global_priority": "unverified",
+      "source_blob_sha": "b86264194dd2d9afe8e930384b043d231d0cc5dc",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "d3a3717e846390461c7cf2ec41553189d78267a1",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/compiler/ContractSmoke.lean",
+      "classification": "quarantine",
+      "note": "Lean Bridge v2 exact-type contract smoke test of ordinary natural-number addition commutativity. This is infrastructure validation, not a new mathematical theorem or a complete observability certificate.",
+      "passport": null,
+      "ci_run": 43075592704,
+      "global_priority": "unverified",
+      "source_blob_sha": "92d36cbb77acee2ab3d1545a381d50150d6ba617",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "6630dd39f0cca7c398a8bd7d61432e51e70006bd",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/discoverability/AdaptiveRankDrop.lean",
@@ -65,7 +97,11 @@
       "note": "Conditional block-sensitivity rank decrement; classical decision-tree mechanism",
       "passport": null,
       "ci_run": 42930165294,
-      "global_priority": "unverified"
+      "global_priority": "unverified",
+      "source_blob_sha": "694329173a005864e01e8a50a97dfafb86069eb3",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "3b34759afc298a9e739c47bc08ca634ffdbb42e8",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/discoverability/WitnessPacking.lean",
@@ -73,7 +109,11 @@
       "note": "Finite hitting-set/certificate equivalences and classical block-sensitivity packing",
       "passport": null,
       "ci_run": 42930165294,
-      "global_priority": "unverified"
+      "global_priority": "unverified",
+      "source_blob_sha": "c36c32d9240e34f1a182d767008de8f1b0d8b992",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "3b34759afc298a9e739c47bc08ca634ffdbb42e8",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/observability/ActualPosteriorInfluence.lean",
@@ -81,7 +121,11 @@
       "note": "Finite posterior-product normalization and elementary scalar/vector Cauchy inequality",
       "passport": "universal-spectral-proof-passport.html",
       "ci_run": 42973878336,
-      "global_priority": "unverified"
+      "global_priority": "unverified",
+      "source_blob_sha": "f6d89d4fd73246bbe8d5e2cc7de9cedc9ac393a7",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "1d4c38c80074f75b430e841121c36fd6e3698a4e",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/observability/ArbitraryLawFourthMoment.lean",
@@ -89,7 +133,11 @@
       "note": "Classical centered two-independent-increment fourth moment and elementary finite weighted sums; does not prove any full quadratic influence inequality",
       "passport": null,
       "ci_run": 43058772711,
-      "global_priority": "unverified"
+      "global_priority": "unverified",
+      "source_blob_sha": "e73d1d8d12b7743a99175382ef293367ad237ee3",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "428ca5334fcd00574539994f479181d6d74fa586",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/observability/CategoricalSignedProxy.lean",
@@ -97,7 +145,35 @@
       "note": "Finite signed-proxy normalization and Cauchy norm bound; no nonadaptive theorem",
       "passport": "universal-spectral-proof-passport.html",
       "ci_run": 42959881782,
-      "global_priority": "unverified"
+      "global_priority": "unverified",
+      "source_blob_sha": "1bacc35dd934cfc9a978615a17c36a63b1dd4c82",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "16f57381c036c9670e9ba478be511bd957584de4",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/CenteredRectangle.lean",
+      "classification": "quarantine",
+      "note": "Actual finite categorical independently centered pair kernel is exactly a weighted average of four-corner mixed differences for arbitrary normalized weights. This is the local pair identity only; global coupling and original-f canonical component link remain open.",
+      "passport": "active-proof-passport.html",
+      "ci_run": 43118938773,
+      "ci_run_head_sha": "bdb0f84de984c180263302be362cee278662782f",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_receipt_scope": "Strict Lean 4.35 named-declaration PASS, exact current blob present at successful run head; foundational axioms only.",
+      "global_priority": "unverified",
+      "source_blob_sha": "5025acca7073024dca45920b7993fcf493b95839"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/CubicRankOneTerminal.lean",
+      "classification": "quarantine",
+      "note": "Finite-array mean-energy inequality and conditional 5B rank-one cubic terminal implication. Vector influence, leaf variance, and amplitude premises are explicit and remain unproved end-to-end.",
+      "passport": "active-proof-passport.html",
+      "ci_run": 43100116278,
+      "ci_run_head_sha": "7b7f0b7f4f99edc8dc31ba903d97986d5de5f1a2",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_receipt_scope": "Exact current Git blob contained in successful Lean 4.35 scoped rank-one-terminal CI. Only the named, explicitly-premised finite declarations are certified; no universal cubic endpoint.",
+      "global_priority": "unverified",
+      "source_blob_sha": "f3bc105d44891ff002a0d116780cbb53441764d9"
     },
     {
       "path": "research/nightfall/formalization/observability/DiagonalSignCoherence.lean",
@@ -105,287 +181,11 @@
       "note": "Pointwise signed-variance identity conditional on diagonal covariance and supplied influence bound",
       "passport": "universal-spectral-proof-passport.html",
       "ci_run": 42972554673,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/observability/HilbertTwoIncrementMoment.lean",
-      "classification": "quarantine",
-      "note": "Standard finite-dimensional Hilbert fourth-moment bound for TWO centered independent increments; no arbitrary-family induction or interaction matching",
-      "passport": null,
-      "ci_run": 43058085067,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/observability/PosteriorRankBudget.lean",
-      "classification": "quarantine",
-      "note": "Generic finite-kernel flow and weighted telescoping, conditional local drift",
-      "passport": "universal-spectral-proof-passport.html",
-      "ci_run": 42972560393,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/observability/QuadraticDiscoveryCore.lean",
-      "classification": "quarantine",
-      "note": "Sharp three-point degree-two interpolation, parity identity and conditional 15(1+sqrt(3)) certificate composition; global matching premises NOT constructed",
-      "passport": null,
-      "ci_run": 43058772711,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/observability/QuadraticEndpointMarkov.lean",
-      "classification": "quarantine",
-      "note": "Elementary three-point quadratic derivative identity and Markov bound",
-      "passport": "universal-spectral-proof-passport.html",
-      "ci_run": 42959881782,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/observability/RademacherOrthogonality.lean",
-      "classification": "quarantine",
-      "note": "Classical finite signed-ensemble orthogonality and trace isometry",
-      "passport": "universal-spectral-proof-passport.html",
-      "ci_run": 42965524565,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/observability/SortedInfluenceTail.lean",
-      "classification": "quarantine",
-      "note": "Elementary sorted-weight tail bound",
-      "passport": "universal-spectral-proof-passport.html",
-      "ci_run": 42959881782,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/observability/TopInteractionCover.lean",
-      "classification": "quarantine",
-      "note": "ANOVA energy charged to support transversal under a supplied degree-two premise",
-      "passport": "universal-spectral-proof-passport.html",
-      "ci_run": 42959881782,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/odd_cycle/CollisionSymmetry.lean",
-      "classification": "quarantine",
-      "note": "Elementary injectivity and collision symmetry implications; no full code theorem",
-      "passport": null,
-      "ci_run": 40995299592,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/odd_cycle/P23Arithmetic.lean",
-      "classification": "quarantine",
-      "note": "Numerical consequences conditional on underlying unproved odd-cycle estimate",
-      "passport": null,
-      "ci_run": 40995299592,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/phase_block/PhaseBlock.lean",
-      "classification": "finite-construction",
-      "note": "Concrete 3-by-5 coefficient block separates 81 four-relative-phase inputs by 3 powered outputs",
-      "passport": "phase-block-proof-passport.html",
-      "ci_run": 40995299592,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/ANOVAActivation.lean",
-      "classification": "quarantine",
-      "note": "Standard finite ANOVA energy activation bookkeeping",
-      "passport": "certificate-acquisition-proof-passport.html",
-      "ci_run": 42884789858,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/ANOVAPosteriorBridge.lean",
-      "classification": "quarantine",
-      "note": "Finite interaction-support deletion identity, not a complete Bayesian observer",
-      "passport": "certificate-acquisition-proof-passport.html",
-      "ci_run": null,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/CertificateCostBridge.lean",
-      "classification": "derived-transfer",
-      "note": "Program-specific finite certificate-cost-to-influence composition; priority unreviewed",
-      "passport": "certificate-acquisition-proof-passport.html",
-      "ci_run": 42925787438,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/CertificateObservationBridge.lean",
-      "classification": "derived-transfer",
-      "note": "Concrete finite-product certificate sampler composition of inherited antipodal input",
-      "passport": "certificate-acquisition-proof-passport.html",
-      "ci_run": 42925787438,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/EfronSteinDegree.lean",
-      "classification": "quarantine",
-      "note": "Classical Hoeffding-Efron-Stein degree decomposition formalized for finite tables",
-      "passport": "finite-product-influence-proof-passport.html",
-      "ci_run": 42932085109,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/FiniteEnergyCauchy.lean",
-      "classification": "quarantine",
-      "note": "Standard weighted Cauchy-Schwarz finite energy-to-resampling implication",
-      "passport": "finite-palette-recovery-proof-passport.html",
-      "ci_run": 42921631024,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/FiniteLevelCrossing.lean",
-      "classification": "derived-transfer",
-      "note": "Finite level-crossing certificate composition of inherited two-sided input",
-      "passport": "certificate-acquisition-proof-passport.html",
-      "ci_run": null,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/FiniteSectionSensitivity.lean",
-      "classification": "quarantine",
-      "note": "Finite section preservation and positive-atom resampling supporting lemmas",
-      "passport": "finite-palette-recovery-proof-passport.html",
-      "ci_run": 42921631024,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/FiniteSwitchingCore.lean",
-      "classification": "quarantine",
-      "note": "Classical finite hybrid/degree preservation and switching lemmas",
-      "passport": "finite-palette-recovery-proof-passport.html",
-      "ci_run": 42921631024,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/HeterogeneousAlphabets.lean",
-      "classification": "derived-transfer",
-      "note": "Finite product influence for dependent alphabets and zero-mass atoms via explicit lift; priority open",
-      "passport": "finite-product-influence-proof-passport.html",
-      "ci_run": 42932085109,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/HeterogeneousOrientation.lean",
-      "classification": "quarantine",
-      "note": "Exchangeability of independent two-draw coordinate orientations",
-      "passport": "finite-product-influence-proof-passport.html",
-      "ci_run": null,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/LocalizedOptimization.lean",
-      "classification": "quarantine",
-      "note": "General weighted reciprocal/Cauchy variational step",
-      "passport": "finite-product-influence-proof-passport.html",
-      "ci_run": 42929857436,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/LocalizedOverlapConsequence.lean",
-      "classification": "quarantine",
-      "note": "Conditional algebraic overlap consequence assuming the localized bound",
-      "passport": "finite-product-influence-proof-passport.html",
-      "ci_run": null,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/LocalizedWeightRemoval.lean",
-      "classification": "quarantine",
-      "note": "Weighted Cauchy-Schwarz optimization; standalone novelty not established",
-      "passport": "finite-product-influence-proof-passport.html",
-      "ci_run": null,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/MassWeightedRemoval.lean",
-      "classification": "quarantine",
-      "note": "Mass scaling of a conditional certificate inequality",
-      "passport": "finite-product-influence-proof-passport.html",
-      "ci_run": null,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/NonconstantSamplerBridge.lean",
-      "classification": "derived-transfer",
-      "note": "Concrete finite nonconstant class positivity and normalized sampler composition",
-      "passport": "certificate-acquisition-proof-passport.html",
-      "ci_run": 42925787438,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/ProductInfluence.lean",
-      "classification": "derived-transfer",
-      "note": "Finite arbitrary-marginal influence theorem composition importing Turturean's level-set machinery",
-      "passport": "finite-product-influence-proof-passport.html",
-      "ci_run": 42929857470,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/ProductRowBound.lean",
-      "classification": "derived-transfer",
-      "note": "Competing-symbol finite-product row bound built on Turturean's pack/dual apparatus",
-      "passport": "finite-product-influence-proof-passport.html",
-      "ci_run": 42924358449,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean",
-      "classification": "derived-transfer",
-      "note": "Finite-product oriented two-sided transfer and posterior bridge with upstream imports",
-      "passport": "finite-product-influence-proof-passport.html",
-      "ci_run": 42903333354,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/QuadraticHoeffdingBridge.lean",
-      "classification": "quarantine",
-      "note": "Direct corollary of established and imported finite Hoeffding/Efron-Stein decomposition under actual degree-two hypothesis; not a new influence theorem",
-      "passport": null,
-      "ci_run": 43057281341,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/QuarticRademacher.lean",
-      "classification": "quarantine",
-      "note": "Classical exact independent-sign fourth-moment identity",
-      "passport": null,
-      "ci_run": 42884789858,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/RestrictedInfluence.lean",
-      "classification": "quarantine",
-      "note": "Elementary degree-one variance-to-influence quantitative implication",
-      "passport": null,
-      "ci_run": 42884789858,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/TwoDrawOrientation.lean",
-      "classification": "quarantine",
-      "note": "Classical two-independent-draw exchangeability/mask-mass equalities",
-      "passport": "finite-product-influence-proof-passport.html",
-      "ci_run": null,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/VariancePosteriorOneStep.lean",
-      "classification": "derived-transfer",
-      "note": "Concrete finite product certificate posterior decrement and conditional degree-d contraction",
-      "passport": "certificate-acquisition-proof-passport.html",
-      "ci_run": 42925787438,
-      "global_priority": "unverified"
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/WeightedReciprocalTransfer.lean",
-      "classification": "derived-transfer",
-      "note": "Law-weighted transfer of pinned Turturean antipodal machinery",
-      "passport": "finite-product-influence-proof-passport.html",
-      "ci_run": 42903333354,
-      "global_priority": "unverified"
+      "global_priority": "unverified",
+      "source_blob_sha": "bc91a52e8002a49953f3077de395ecaa1ad05c07",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "689fda260df6f9724237c648893f3b329673d644",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/observability/HilbertManyIncrementMoment.lean",
@@ -393,7 +193,248 @@
       "note": "Arbitrary-length finite independent Hilbert fourth-moment estimate from actual nonnegative normalized product laws and centered increment tables; classical moment mechanism, not unrestricted quadratic influence and not globally original by itself",
       "passport": "active-proof-passport.html",
       "ci_run": 43062171542,
-      "global_priority": "unverified"
+      "global_priority": "unverified",
+      "source_blob_sha": "2f4b957c0358c026b01cc7161e4f85b634393214",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "1952573960a4784f1bda87dcf049c5d07354cff6",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/HilbertTwoIncrementMoment.lean",
+      "classification": "quarantine",
+      "note": "Standard finite-dimensional Hilbert fourth-moment bound for TWO centered independent increments; no arbitrary-family induction or interaction matching",
+      "passport": null,
+      "ci_run": 43058085067,
+      "global_priority": "unverified",
+      "source_blob_sha": "b2930db79589a9e257e3b151b4d4ae174c4adb1e",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "1b25898217b839c7e6b311ca8213da12c1813c17",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ParityBlockCancellation.lean",
+      "classification": "quarantine",
+      "ci_run": 43082375547,
+      "passport": "active-proof-passport.html",
+      "global_priority": "unverified",
+      "note": "Full finite selector-flip and cross-block parity cancellation for all endpoint orientations, at the block-table level; does not prove function-level all-law influence or global novelty.",
+      "source_blob_sha": "a96ca7887eaca3f2b3caa5a4d104b143524c1769",
+      "source_recovery_pr": 373,
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification.",
+      "ci_run_head_sha": "f858cf246a05f7e88f01a413e3334ed2ff1ba885",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/PosteriorEnergyDrift.lean",
+      "classification": "quarantine",
+      "ci_run": 43082375547,
+      "passport": "certificate-acquisition-proof-passport.html",
+      "global_priority": "unverified",
+      "note": "Finite ANOVA interaction-support deletion and posterior total-influence drift identity for supplied component energies; not an arbitrary real-function or measurable posterior theorem.",
+      "source_blob_sha": "cbe7fd2a08490b9121b141bcd17b3f752a637207",
+      "source_recovery_pr": 373,
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification.",
+      "ci_run_head_sha": "f858cf246a05f7e88f01a413e3334ed2ff1ba885",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/PosteriorRankBudget.lean",
+      "classification": "quarantine",
+      "note": "Generic finite-kernel flow and weighted telescoping, conditional local drift",
+      "passport": "universal-spectral-proof-passport.html",
+      "ci_run": 42972560393,
+      "global_priority": "unverified",
+      "source_blob_sha": "dc4b75e81363acb4462756922dd4e39c86573079",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "5fcb65817e62a89dbf5e9964141bf40f4f01146e",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/QuadraticDiscoveryCore.lean",
+      "classification": "quarantine",
+      "note": "Sharp three-point degree-two interpolation, parity identity and conditional 15(1+sqrt(3)) certificate composition; global matching premises NOT constructed",
+      "passport": null,
+      "ci_run": 43058772711,
+      "global_priority": "unverified",
+      "source_blob_sha": "6209a536e0544d9ad8f23a8c41c20000c4e12de0",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "428ca5334fcd00574539994f479181d6d74fa586",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/QuadraticEndpointInterpolation.lean",
+      "classification": "quarantine",
+      "note": "Scalar endpoint energy bound from an explicitly assumed L1-L2-L4 interpolation inequality and the fourth-moment upper bound. This does NOT instantiate actual source-function independent Hilbert increments.",
+      "passport": "active-proof-passport.html",
+      "ci_run": 43119753547,
+      "ci_run_head_sha": "9577cfa86b7adf920acc68cc83c1504c436c92ac",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_receipt_scope": "Strict Lean 4.35 named-declaration PASS; assumed scalar interpolation is visible and is not a source-f proof.",
+      "global_priority": "unverified",
+      "source_blob_sha": "610fbfbe1c785d795051b8c27f93cbab719c3457"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/QuadraticEndpointMarkov.lean",
+      "classification": "quarantine",
+      "note": "Elementary three-point quadratic derivative identity and Markov bound",
+      "passport": "universal-spectral-proof-passport.html",
+      "ci_run": 42959881782,
+      "global_priority": "unverified",
+      "source_blob_sha": "ceed8ff343add0745eb6c1691412f3917e9a4e8e",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "16f57381c036c9670e9ba478be511bd957584de4",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/QuadraticMatchedParity.lean",
+      "classification": "quarantine",
+      "ci_run": 43078601966,
+      "passport": "active-proof-passport.html",
+      "global_priority": "unverified",
+      "note": "Full finite matching-block polynomial even/odd selector identity and 4B rectangle mass under explicit bounded block polynomial premises; not a general arbitrary-law function-level theorem.",
+      "source_blob_sha": "13ab8937bf14274eacce25caaf35f4c9fb9f55a3",
+      "source_recovery_pr": 376,
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification.",
+      "ci_run_head_sha": "4f93009e871297bc99e7931a770488d7ad2f77ad",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/QuadraticOscillationBound.lean",
+      "classification": "quarantine",
+      "ci_run": 43085877545,
+      "passport": "active-proof-passport.html",
+      "global_priority": "unverified",
+      "note": "Finite arbitrary-alphabet actual bounded quadratic polynomial 8B single-replacement switching and 16B range inequality; does not certify the entire influence theorem.",
+      "source_blob_sha": "fcc1231c67810989ebf55a819ddf53951194766c",
+      "source_recovery_pr": 378,
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification.",
+      "ci_run_head_sha": "1c81566bd2df899c08a958117549178f07879e77",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/QuadraticRealizedRangeBudget.lean",
+      "classification": "quarantine",
+      "ci_run": 43114064344,
+      "passport": "active-proof-passport.html",
+      "global_priority": "unverified",
+      "note": "Constructed true coordinate maxima/minima and universal all-section 16B budget for any bounded finite-alphabet quadratic polynomial; not a law-averaged L2 or influence theorem.",
+      "source_blob_sha": "bc3ec344bb47426a9db0508893f8588e7a5d8ea2",
+      "source_recovery_pr": null,
+      "ci_receipt_scope": "Strict Lean 4.35 named-declaration PASS: actual full coordinate section extrema, no supplied range witness; endpoint exponent-two remains open.",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "1305e854fcb87eda28cc8135862bd4131a036a88"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/QuadraticSingleReplacement.lean",
+      "classification": "quarantine",
+      "ci_run": 43085877545,
+      "passport": "active-proof-passport.html",
+      "global_priority": "unverified",
+      "note": "Actual coordinate single-replacement algebra for arbitrary finite alphabets and dense oriented quadratic interactions; dependent scoped source proof only.",
+      "source_blob_sha": "c03cdf4e3024917d110f2bf8bae741575675aa33",
+      "source_recovery_pr": 378,
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification.",
+      "ci_run_head_sha": "1c81566bd2df899c08a958117549178f07879e77",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/QuadraticSwitchingIdentity.lean",
+      "classification": "quarantine",
+      "ci_run": 43085877545,
+      "passport": "active-proof-passport.html",
+      "global_priority": "unverified",
+      "note": "Independent-selector average and exact first-switch identity for finite quadratic polynomials on arbitrary categorical alphabets; no actual ANOVA influence theorem.",
+      "source_blob_sha": "9bcbbf495bce4b39ffccc190d41556bac54ef85c",
+      "source_recovery_pr": 378,
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification.",
+      "ci_run_head_sha": "1c81566bd2df899c08a958117549178f07879e77",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/QuadraticUnifiedFinite.lean",
+      "classification": "quarantine",
+      "note": "Complete single-pin proof for actual bounded degree-two finite product f AND an explicit quadratic representation hpoly: inherited exponent-5/2 influence baseline and genuine constructed 16B coordinate section maxima/minima. Not the exponent-two variance-squared result; hpoly is structural and not derived here from ESDegreeLE.",
+      "passport": "active-proof-passport.html",
+      "ci_run": 43115838586,
+      "ci_run_head_sha": "3549b5f5f28d67ae0dff1d5191acce23c568c449",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_receipt_scope": "Strict named theorem Lean 4.33 pinned Turturean-project PASS at run 43115838586, 3 standard axioms only; joins same-actual-f exponent-(5/2) arbitrary-law influence and 16B full section-range from a supplied structural explicit quadratic representation; NOT an exponent-two endpoint.",
+      "global_priority": "unverified",
+      "source_blob_sha": "6ca3d371ed2006e1cafc04bf3fba036afc1eefb3"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/RademacherOrthogonality.lean",
+      "classification": "quarantine",
+      "note": "Classical finite signed-ensemble orthogonality and trace isometry",
+      "passport": "universal-spectral-proof-passport.html",
+      "ci_run": 42965524565,
+      "global_priority": "unverified",
+      "source_blob_sha": "3c02e3e6d567807041964cbf32389b6f27692b78",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "5774e8475a7c3629931efd407724f0c281305fa5",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/RankOneLeafMoment.lean",
+      "classification": "quarantine",
+      "note": "Actual finite independent centered rank-one leaf second-moment identity using separately compiled Hilbert many-increment moment theorem; arbitrary-controls averaging and selector closure not compiled.",
+      "passport": "active-proof-passport.html",
+      "ci_run": 43100116278,
+      "ci_run_head_sha": "7b7f0b7f4f99edc8dc31ba903d97986d5de5f1a2",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_receipt_scope": "Exact current Git blob contained in successful Lean 4.35 scoped rank-one-terminal CI. Only the named, explicitly-premised finite declarations are certified; no universal cubic endpoint.",
+      "global_priority": "unverified",
+      "source_blob_sha": "6c4ce364f8bfb30e028191dc454c214a5e170e2d"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/SignMomentLogTransfer.lean",
+      "classification": "quarantine",
+      "ci_run": 43070144432,
+      "passport": "universal-spectral-proof-passport.html",
+      "global_priority": "unverified",
+      "note": "Finite exponential-union and logarithmic trace implication conditional on a separately assumed normalized PSD moment inequality; the Gaussian moment hypothesis remains open here.",
+      "source_blob_sha": "34a5b80494f18c0faa429fba56e1f7e49d4952f6",
+      "source_recovery_pr": 371,
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification.",
+      "ci_run_head_sha": "03d10a2652154e586c82024dfd3730b5f8d58e15",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/SortedInfluenceTail.lean",
+      "classification": "quarantine",
+      "note": "Elementary sorted-weight tail bound",
+      "passport": "universal-spectral-proof-passport.html",
+      "ci_run": 42959881782,
+      "global_priority": "unverified",
+      "source_blob_sha": "f8ad2e02785feeed0742131b6282b8b7c91400f0",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "16f57381c036c9670e9ba478be511bd957584de4",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/SpectralProductHalf.lean",
+      "classification": "quarantine",
+      "ci_run": 43070145168,
+      "passport": "universal-spectral-proof-passport.html",
+      "global_priority": "unverified",
+      "note": "Finite eigenvalue product lower bound under nonnegative spectrum, without formalizing Gaussian integration or general PSD moment concentration.",
+      "source_blob_sha": "369a5b47b9cc0b2c707120490741faa4e072d446",
+      "source_recovery_pr": 371,
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification.",
+      "ci_run_head_sha": "03d10a2652154e586c82024dfd3730b5f8d58e15",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/TopInteractionCover.lean",
+      "classification": "quarantine",
+      "note": "ANOVA energy charged to support transversal under a supplied degree-two premise",
+      "passport": "universal-spectral-proof-passport.html",
+      "ci_run": 42959881782,
+      "global_priority": "unverified",
+      "source_blob_sha": "4676eb3feee9c700cc510a456c0ac2d928051cc8",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "16f57381c036c9670e9ba478be511bd957584de4",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
       "path": "research/nightfall/formalization/observability/UniversalScalarToTrace.lean",
@@ -401,23 +442,398 @@
       "note": "Finite-dimensional scalar-to-trace energy bound derived from elementary weighted Euclidean geometry; conditional scalar lower bound is separate. Does not certify universal spectral adaptive observability, novelty or posterior/measurable transfer",
       "passport": "universal-spectral-proof-passport.html",
       "ci_run": 42962205054,
-      "global_priority": "unverified"
+      "global_priority": "unverified",
+      "source_blob_sha": "7cd782e8f31aab9190346c5d5301cc201f406326",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "b1fed923b910b9f1b6d144a571d6a045e50a868a",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     },
     {
-      "path": "research/nightfall/2026-11-universal-law-transfer/FiniteLawTransfer.lean",
+      "path": "research/nightfall/formalization/observability/WeightedGreedyCover.lean",
       "classification": "quarantine",
-      "note": "Five scoped Lean declarations for classical absolute-continuity/equivalent-law exact observability and associated loss-envelope algebra. Neyman–Pearson/hockey-stick prior art is credited; does not certify unrestricted original universal theorem or worldwide priority",
+      "ci_run": 43080368002,
       "passport": "active-proof-passport.html",
-      "ci_run": 43059618451,
-      "global_priority": "unverified"
+      "global_priority": "unverified",
+      "note": "Constructed weighted greedy matching endpoint cover and 8B cover budget conditional on matching mass; does not produce the actual function's matching certificate.",
+      "source_blob_sha": "418c3dfc6f107970006252925954da2c4e372f7f",
+      "source_recovery_pr": 376,
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification.",
+      "ci_run_head_sha": "7840e535e7c8d8cf8e3bff1e46fff59515539f29",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head"
     },
     {
-      "path": "research/nightfall/formalization/compiler/ContractSmoke.lean",
+      "path": "research/nightfall/formalization/observability/WeightedGreedyMatching.lean",
       "classification": "quarantine",
-      "note": "Lean Bridge v2 exact-type contract smoke test of ordinary natural-number addition commutativity. This is infrastructure validation, not a new mathematical theorem or a complete observability certificate.",
+      "ci_run": 43079392649,
+      "passport": "active-proof-passport.html",
+      "global_priority": "unverified",
+      "note": "Classical maximal-weight greedy matching existence and domination for finite weighted graphs; not a novel matching algorithm.",
+      "source_blob_sha": "c77ae49d4f28e4fe5ab3a131825ef386e123e26c",
+      "source_recovery_pr": 376,
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification.",
+      "ci_run_head_sha": "8a852965b8b9ebedeab284698493413710e0a86c",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head"
+    },
+    {
+      "path": "research/nightfall/formalization/odd_cycle/CollisionSymmetry.lean",
+      "classification": "quarantine",
+      "note": "Elementary injectivity and collision symmetry implications; no full code theorem",
       "passport": null,
-      "ci_run": null,
-      "global_priority": "unverified"
+      "ci_run": 42930668671,
+      "global_priority": "unverified",
+      "source_blob_sha": "8f2952ce74370e8247d189b338754a318b0507b6",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "4d92445c0f324a292accdfa5a204348e99c10ff5",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/odd_cycle/P23Arithmetic.lean",
+      "classification": "quarantine",
+      "note": "Numerical consequences conditional on underlying unproved odd-cycle estimate",
+      "passport": null,
+      "ci_run": 42930668671,
+      "global_priority": "unverified",
+      "source_blob_sha": "208114a5ef97a34bffcfe33ac37c273fd4eb9f2f",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "4d92445c0f324a292accdfa5a204348e99c10ff5",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/phase_block/PhaseBlock.lean",
+      "classification": "finite-construction",
+      "note": "Concrete 3-by-5 coefficient block separates 81 four-relative-phase inputs by 3 powered outputs",
+      "passport": "phase-block-proof-passport.html",
+      "ci_run": 40995299592,
+      "global_priority": "unverified",
+      "source_blob_sha": "b148d2ab4c673e1f67337e6985b88b45a87b09e8",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "d3a3717e846390461c7cf2ec41553189d78267a1",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/ANOVAActivation.lean",
+      "classification": "quarantine",
+      "note": "Standard finite ANOVA energy activation bookkeeping",
+      "passport": "certificate-acquisition-proof-passport.html",
+      "ci_run": 42884789858,
+      "global_priority": "unverified",
+      "source_blob_sha": "e0e6503990f730f7982c88acd0ce1735729aee46",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "a5b601b53e8d7f3abc6c84cbc8d0514368d2c4bd",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/ANOVAPosteriorBridge.lean",
+      "classification": "quarantine",
+      "note": "Finite interaction-support deletion identity, not a complete Bayesian observer",
+      "passport": "certificate-acquisition-proof-passport.html",
+      "ci_run": 43110333296,
+      "global_priority": "unverified",
+      "source_blob_sha": "1568424ba292dfcf18ccd8b1307eb3baf466be63",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "7552fb3d09251c58f34c2f37438ea417d30b5d79",
+      "ci_receipt_scope": "Direct strict named-declaration Lean 4.33.0 audit PASS on CI 43110333296: anova_component_erase, anova_posterior_potential_identity, anova_weighted_observation_descent. Foundational axioms only; exact source blob equals run head. Does not prove arbitrary-law actual posterior process or adaptive theorem."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/CertificateCostBridge.lean",
+      "classification": "derived-transfer",
+      "note": "Program-specific finite certificate-cost-to-influence composition; priority unreviewed",
+      "passport": "certificate-acquisition-proof-passport.html",
+      "ci_run": 42925787438,
+      "global_priority": "unverified",
+      "source_blob_sha": "1bd7f4d0d2d6008d54b5d4ddf3b97316299360e1",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "aca819806786a549ec1cbdbe8fd1ac1359fc5c51",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/CertificateObservationBridge.lean",
+      "classification": "derived-transfer",
+      "note": "Concrete finite-product certificate sampler composition of inherited antipodal input",
+      "passport": "certificate-acquisition-proof-passport.html",
+      "ci_run": 42925787438,
+      "global_priority": "unverified",
+      "source_blob_sha": "be81759fe68365b70e7e50bf782a28242f722cbf",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "aca819806786a549ec1cbdbe8fd1ac1359fc5c51",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/EfronSteinDegree.lean",
+      "classification": "quarantine",
+      "note": "Classical Hoeffding-Efron-Stein degree decomposition formalized for finite tables",
+      "passport": "finite-product-influence-proof-passport.html",
+      "ci_run": 42932085109,
+      "global_priority": "unverified",
+      "source_blob_sha": "7aae47034bced0f095059a16ff6d7280c28f3cf5",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "2e13f445894ea357c3e6a5d3920b81877a5a3a9f",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/FiniteEnergyCauchy.lean",
+      "classification": "quarantine",
+      "note": "Standard weighted Cauchy-Schwarz finite energy-to-resampling implication",
+      "passport": "finite-palette-recovery-proof-passport.html",
+      "ci_run": 42921631024,
+      "global_priority": "unverified",
+      "source_blob_sha": "f4b7618523c9b6f54cb1c26b369b716bf0e79668",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "1d8c8b85bdb50c9f2b18c804fc344198aa5dbbd6",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/FiniteLevelCrossing.lean",
+      "classification": "derived-transfer",
+      "note": "Finite level-crossing certificate composition of inherited two-sided input",
+      "passport": "certificate-acquisition-proof-passport.html",
+      "ci_run": 42906796793,
+      "global_priority": "unverified",
+      "source_blob_sha": "d034390352fe5674ca584fcf0ba581e2e79e7a39",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "8371a5d06360ad48e8b5e4e2c1c0b73313816b1e",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/FiniteSectionSensitivity.lean",
+      "classification": "quarantine",
+      "note": "Finite section preservation and positive-atom resampling supporting lemmas",
+      "passport": "finite-palette-recovery-proof-passport.html",
+      "ci_run": 42921631024,
+      "global_priority": "unverified",
+      "source_blob_sha": "db615272fd18722919f61788d8404375e27c88b6",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "1d8c8b85bdb50c9f2b18c804fc344198aa5dbbd6",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/FiniteSwitchingCore.lean",
+      "classification": "quarantine",
+      "note": "Classical finite hybrid/degree preservation and switching lemmas",
+      "passport": "finite-palette-recovery-proof-passport.html",
+      "ci_run": 42921631024,
+      "global_priority": "unverified",
+      "source_blob_sha": "bc34651e9b34bd211fe5eb5435b07c7bf00e4ced",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "1d8c8b85bdb50c9f2b18c804fc344198aa5dbbd6",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/HeterogeneousAlphabets.lean",
+      "classification": "derived-transfer",
+      "note": "Finite product influence for dependent alphabets and zero-mass atoms via explicit lift; priority open",
+      "passport": "finite-product-influence-proof-passport.html",
+      "ci_run": 42932085109,
+      "global_priority": "unverified",
+      "source_blob_sha": "1e365ebb4c718f86807d7b37f2050c4b1011f1ec",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "2e13f445894ea357c3e6a5d3920b81877a5a3a9f",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/HeterogeneousOrientation.lean",
+      "classification": "quarantine",
+      "note": "Exchangeability of independent two-draw coordinate orientations",
+      "passport": "finite-product-influence-proof-passport.html",
+      "ci_run": 43078066988,
+      "global_priority": "unverified",
+      "source_blob_sha": "79766f90af166d3e5d664a66866f8b75db714339",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "a6208d2761c6a9376d2a14829d273b80f028581a",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/LocalizedOptimization.lean",
+      "classification": "quarantine",
+      "note": "General weighted reciprocal/Cauchy variational step",
+      "passport": "finite-product-influence-proof-passport.html",
+      "ci_run": 42929857436,
+      "global_priority": "unverified",
+      "source_blob_sha": "bf6896d3331fb012ad518dec0ec18066cee44af3",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/LocalizedOverlapConsequence.lean",
+      "classification": "quarantine",
+      "note": "Conditional algebraic overlap consequence assuming the localized bound",
+      "passport": "finite-product-influence-proof-passport.html",
+      "ci_run": 43078067086,
+      "global_priority": "unverified",
+      "source_blob_sha": "1cd8c4efb074579bf960e6d3a74b2cca9c6ba35a",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "a6208d2761c6a9376d2a14829d273b80f028581a",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/LocalizedWeightRemoval.lean",
+      "classification": "quarantine",
+      "note": "Weighted Cauchy-Schwarz optimization; standalone novelty not established",
+      "passport": "finite-product-influence-proof-passport.html",
+      "ci_run": 42868198742,
+      "global_priority": "unverified",
+      "source_blob_sha": "8f1d4189a3ed3af21b4f888588f107608a72cd9c",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "8b8896049d9308dbc7180f2e9096cca15d344623",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/MassWeightedRemoval.lean",
+      "classification": "quarantine",
+      "note": "Mass scaling of a conditional certificate inequality",
+      "passport": "finite-product-influence-proof-passport.html",
+      "ci_run": 42873981203,
+      "global_priority": "unverified",
+      "source_blob_sha": "b8391c3105e42ed3f5384c497591e70e4e4c6048",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "cef6dd91e8ada7475b55dc8fb3473fa520922521",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/NonconstantSamplerBridge.lean",
+      "classification": "derived-transfer",
+      "note": "Concrete finite nonconstant class positivity and normalized sampler composition",
+      "passport": "certificate-acquisition-proof-passport.html",
+      "ci_run": 42925787438,
+      "global_priority": "unverified",
+      "source_blob_sha": "50e9c80200439bc27445a11d59761c401f46b1b1",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "aca819806786a549ec1cbdbe8fd1ac1359fc5c51",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/ProductInfluence.lean",
+      "classification": "derived-transfer",
+      "note": "Finite arbitrary-marginal influence theorem composition importing Turturean's level-set machinery",
+      "passport": "finite-product-influence-proof-passport.html",
+      "ci_run": 42929857470,
+      "global_priority": "unverified",
+      "source_blob_sha": "70f69d8caebfaef40efdf16bab63f223753c190f",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/ProductRowBound.lean",
+      "classification": "derived-transfer",
+      "note": "Competing-symbol finite-product row bound built on Turturean's pack/dual apparatus",
+      "passport": "finite-product-influence-proof-passport.html",
+      "ci_run": 42924358449,
+      "global_priority": "unverified",
+      "source_blob_sha": "511779569e34820f7945c345001cbccf04ba4bd1",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "0cacd241e22c99eafa399cba86be796323c5ceb4",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean",
+      "classification": "derived-transfer",
+      "note": "Finite-product oriented two-sided transfer and posterior bridge with upstream imports",
+      "passport": "finite-product-influence-proof-passport.html",
+      "ci_run": 42920987974,
+      "global_priority": "unverified",
+      "source_blob_sha": "01eaeec087624885167b44d4230f5ec872e59e4e",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "65b3222c1db67d3aa1505cad562683b6c02cc605",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticActualRowOscillation.lean",
+      "classification": "quarantine",
+      "note": "Actual arbitrary finite-product Hoeffding-degree-two f, arbitrary normalized laws and zero-mass atoms: source-level row controls all pairwise coordinate replacements with cost 4π², total 8π² oscillation, and real centered resampling sections bounded by the same row, all strict kernel checked. Not the full exponent-two theorem.",
+      "passport": "active-proof-passport.html",
+      "ci_run": 43120669405,
+      "ci_run_head_sha": "ec2b0356812cd9dbef5fe3da00d09e44ecca2edf",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_receipt_scope": "Strict named Lean 4.33 Turturean-pinned PASS run 43120669405: row_controls_all_sections, total_section_budget, centered_sections_from_rows. All three source-hash-matched and only foundational axioms. This does not prove the entire exponent-two influence theorem.",
+      "global_priority": "unverified",
+      "source_blob_sha": "1c9d73ac90c54167851dfc956ca192b5249cbbac"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticHoeffdingBridge.lean",
+      "classification": "quarantine",
+      "note": "Actual arbitrary finite product law Hoeffding-degree-two normalized function E2E exponent-5/2 baseline (classical/Turturean-derived); exponent-two not established.",
+      "passport": null,
+      "ci_run": 43113339892,
+      "global_priority": "unverified",
+      "source_blob_sha": "a936845286a74fbf5f0ee70fc5feca6b08108694",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "75dab4d279d3ca3a5bf6360304040a6605c8690d",
+      "ci_receipt_scope": "Strict Lean 4.33 named-declaration PASS; no assumed intermediate matching/moment certificates; proven exponent-5/2 only."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuarticRademacher.lean",
+      "classification": "quarantine",
+      "note": "Classical exact independent-sign fourth-moment identity",
+      "passport": null,
+      "ci_run": 42884789858,
+      "global_priority": "unverified",
+      "source_blob_sha": "840b127921714548057b6fedfa4ea3ff8eb42ff0",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "a5b601b53e8d7f3abc6c84cbc8d0514368d2c4bd",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/RealSquaredPosteriorOneStep.lean",
+      "classification": "quarantine",
+      "ci_run": 43078715778,
+      "passport": "certificate-acquisition-proof-passport.html",
+      "global_priority": "unverified",
+      "note": "Actual scalar and finite-Hilbert squared-resampling one-step posterior total-influence mean for normalized positive finite laws; historical Lean 4.33 receipt, not full adaptive policy or joint 4.35 compilation.",
+      "source_blob_sha": "53446675a5210e96baceedcb25f3a1a1c894acf4",
+      "source_recovery_pr": 377,
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification.",
+      "ci_run_head_sha": "217fb068c5d9e460b2d9c314b4b334fb8d0f7d1b",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/RestrictedInfluence.lean",
+      "classification": "quarantine",
+      "note": "Elementary degree-one variance-to-influence quantitative implication",
+      "passport": null,
+      "ci_run": 42884789858,
+      "global_priority": "unverified",
+      "source_blob_sha": "c920d4ab77ea92ba6810650f15437fecac13735e",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "a5b601b53e8d7f3abc6c84cbc8d0514368d2c4bd",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/TwoDrawOrientation.lean",
+      "classification": "quarantine",
+      "note": "Classical two-independent-draw exchangeability/mask-mass equalities",
+      "passport": "finite-product-influence-proof-passport.html",
+      "ci_run": 43078066988,
+      "global_priority": "unverified",
+      "source_blob_sha": "c2819d1e06d5e0783b2f8dcba48dcf65beafa9e3",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "a6208d2761c6a9376d2a14829d273b80f028581a",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/VariancePosteriorOneStep.lean",
+      "classification": "derived-transfer",
+      "note": "Concrete finite product certificate posterior decrement and conditional degree-d contraction",
+      "passport": "certificate-acquisition-proof-passport.html",
+      "ci_run": 42925787438,
+      "global_priority": "unverified",
+      "source_blob_sha": "0f37d886d06d12fa9884ec5428355d39e5afdd0c",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "aca819806786a549ec1cbdbe8fd1ac1359fc5c51",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/WeightedReciprocalTransfer.lean",
+      "classification": "derived-transfer",
+      "note": "Law-weighted transfer of pinned Turturean antipodal machinery",
+      "passport": "finite-product-influence-proof-passport.html",
+      "ci_run": 42883827837,
+      "global_priority": "unverified",
+      "source_blob_sha": "880b5d187cb57294dfb10edf8569e9b0f0b3a2ce",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_run_head_sha": "59128e11c388c651bfd4ce0d3857d73c305b823d",
+      "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
     }
   ],
   "off_main_review_scope": "Selected recovered closed PR 252 Lean certificate only. NOT an exhaustive census of all prior or external branch sources. The 39-module counts apply exclusively to the frozen main-branch source inventory.",
@@ -449,5 +865,15 @@
       "audit_note": "research/nightfall/formalization/phase_block/ADAPTIVE_BRANCH_EVIDENCE_20261111.md"
     }
   ],
-  "newly_quarantined_source": "PR 359 / merged at 008ccdc5: 4 Lean modules compile scoped routine/implied identities; does not kernel-certify full quadratic arbitrary-law influence or adaptive Hilbert theorem. Runs 43058772711, 43058085067, 43057281341 support named declarations only. PR 364 adds the finite arbitrary-length Hilbert moment lemma (CI 43062171542); full matching/ANOVA influence bridge remains unverified in Lean. PR 366 adds the classical law-transfer Lean module with scoped five-theorem receipt 43059618451; full Paper A/B novelty and Lean certification are separate. PR #374 stages a routine ContractSmoke.lean solely to test the exact-type compiler contract; no new mathematical novelty is asserted."
+  "newly_quarantined_source": "PR 359 / merged at 008ccdc5: 4 Lean modules compile scoped routine/implied identities; does not kernel-certify full quadratic arbitrary-law influence or adaptive Hilbert theorem. Runs 43058772711, 43058085067, 43057281341 support named declarations only. PR 364 adds the finite arbitrary-length Hilbert moment lemma (CI 43062171542); full matching/ANOVA influence bridge remains unverified in Lean. PR 366 adds the classical law-transfer Lean module with scoped five-theorem receipt 43059618451; full Paper A/B novelty and Lean certification are separate. PR #374 stages a routine ContractSmoke.lean solely to test the exact-type compiler contract; no new mathematical novelty is asserted. 2026-11-11 v8: reconciled 12 additional main .lean modules with exact Git blob SHAs and historical scoped PR/CI references; 59 main modules total. Successful individual CI is not an end-to-end, cross-toolchain formal proof. 2026-11-11 rev9: audited 58 successful run-head source blob matches; ANOVAPosteriorBridge source-only/no independent theorem receipt. Rev10 closes missing ANOVAPosteriorBridge direct named Lean proof gate via successful pinned run 43110333296; source blob matches main. All 59 source blobs linked to scoped successful receipts; no end-to-end theorem promotion. Revision 11: runs 43113339892 and 43114064344 PASS for respective direct finite function modules; target variance-squared theorem remains uncertified. Rev13 direct joint source PASS: 43115838586, 4.33; source model includes hpoly, original exponent-two target uncompiled. Rev14: 63 source entries; all three new modules originality quarantined, two fully current-source passes and one explicitly pending. Rev15: newly appended genuine centered resampling row bound verified strict Lean 4.33 run 43120669405, exact current source matched; exponent-two full theorem remains uncompiled.",
+  "source_tree_sha": "8a247cface5ce57a8da340bc277c81e792a04c40",
+  "pinned_lean_toolchain": "leanprover/lean4:v4.35.0",
+  "historical_compiler_environment_note": "Some existing source-family receipts and the actual scalar/Hilbert posterior one-step source used pinned Lean 4.33.0. Current repository pin is Lean 4.35.0. Source-matched universal recompilation, exact theorem contract, and cross-pin imports require separate gates.",
+  "compilation_receipt_policy": "All 59 current main-tree Lean Git source blobs matched successful historical GitHub Actions run-head trees. ANOVAPosteriorBridge.lean has a dedicated strict Lean 4.33.0 three-declaration receipt in run 43110333296. Exact source identity and successful named theorem checks remain scoped to each workflow; they do not certify combined all-product quadratic influence, cross-pin integration, measurable transfer, global originality, or unlisted declarations. Current repository Lean pin is 4.35.0, and some earlier individual proofs are 4.33.0. Revision 11: actual quadratic degree-two exponent-5/2 product-law declaration passed strict 4.33, and constructed 16B section-range passed strict 4.35; no mixed-pin integrated endpoint proof. Rev12: newly added QuadraticUnifiedFinite.lean has NO certificate until final direct Lean 4.33 compilation passes. It assumes explicit quadratic representation and proves only the existing 5/2 baseline plus an actual 16B range. Rev13: the pending direct joint proof passed strict Lean 4.33 named theorem audit in run 43115838586 for exact Git blob 6ca3d371; still no all-law variance-squared e2e certificate. Rev14: three new scoped finite quadratic modules: centered rectangle and scalar endpoint interpolation strict-pass exact-source receipts; the expanded current actual row source awaits third-declaration strict verification, notwithstanding its earlier two-declaration success. The exponent-two theorem remains analytic. Rev15: all 63 exact source blobs have successful scoped CI-head matches; expanded actual row source strict named trio passed run 43120669405. The fully quantified actual-f variance-squared theorem still has NO end-to-end kernel certificate.",
+  "ci_source_match_counts": {
+    "matched_successful_ci_head": 65,
+    "no_direct_receipt_identified": 0
+  },
+  "extension_source_commit": "7b7f0b7f4f99edc8dc31ba903d97986d5de5f1a2",
+  "extension_ci_run": 43100116278
 }

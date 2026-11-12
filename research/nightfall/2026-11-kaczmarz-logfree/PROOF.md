@@ -1,18 +1,42 @@
-# Universal log-free Kaczmarz projection count — theorem checkpoint
+# Log-free existential row-projection bound — source-matched theorem and classical-method audit
 
 **NIGHTFALL / 2026-11-11 / research lead: Devin J. Wright**
 
-**Claim status:** elementary mathematical proof; exact-rational finite replay; independent mathematical referee and originality review **open**. This is a conditional publication candidate, not an externally established novel theorem, a competition record, or a result about *fixed-time* randomized Kaczmarz.
+**Claim status (revision 1.1):** complete elementary written proof with exact-rational falsification checks; **historical priority and independent human review open**. The underlying maximal-distance/greedy projection rule and energy mechanism are classical. This is a carefully scoped comparison with a published existential theorem, **not** a claim of a new algorithm, a globally original result, or a fixed-time randomized concentration theorem.
 
 ## Original question and reference checked
 
 Stefan Steinerberger's [Some Open Problems](https://faculty.washington.edu/steinerb/openproblems.pdf), updated 2026-03-31, asks whether the `log(1/epsilon)` factor in the existential bound for compositions of orthogonal row projections can be eliminated. The table of contents calls it item 52; the rendered March 2026 PDF's section heading calls it 53. To avoid numbering ambiguity, identify it by the heading **Approximate Solutions of Linear Systems**.
 
-Original: S. Steinerberger, *Approximate Solutions of Linear Systems at a Universal Rate*, SIAM Journal on Matrix Analysis and Applications **44** (2023), 1436–1446, [doi:10.1137/22M1517196](https://doi.org/10.1137/22M1517196), [arXiv:2207.03388](https://arxiv.org/abs/2207.03388). Existing bound for invertible square A: at most `2 n epsilon^(-2) log(1/epsilon)` row projections, residual `||Ay-b|| <= epsilon ||A||op ||x*||`, with `b=A x*`.
+Original: S. Steinerberger, *Approximate Solutions of Linear Systems at a Universal Rate*, SIAM Journal on Matrix Analysis and Applications **44** (2023), 1436–1446, [doi:10.1137/22M1517196](https://doi.org/10.1137/22M1517196), [arXiv:2207.03388](https://arxiv.org/pdf/2207.03388), Theorem 1, PDF p. 2. For full-column-rank `A` with `Ax=b` and any starting vector `x0`, the published existential projection count is `k <= 2 log(||A||op / epsilon) ||A||_F^2 / epsilon^2` with `||Ax_k-b|| <= epsilon ||x0-x||` and `||x_k-x|| <= ||x0-x||` (the logarithmic display is meaningful in the regime `0<epsilon<||A||op`). Its **abstract**, specializing to `x0=0` and target `epsilon||A||op||x||`, states `k <= 2 n epsilon^-2 log(1/epsilon)`. These are two normalizations of the same published result; the source-matched theorem below uses the **unscaled** threshold.
 
-Greedy maximum-distance Kaczmarz and its Pythagorean decrease were studied well before this checkpoint; for example, J. Nutini et al., *Convergence Rates for Greedy Kaczmarz Algorithms, and Faster Randomized Kaczmarz Rules Using the Orthogonality Graph*, UAI (2016), [paper](https://www.cs.ubc.ca/~schmidtm/Documents/2016_UAI_greedyKaczmarz.pdf). The result below is a short consequence of that classical mechanism; **global priority unverified**.
+Maximal-violation/relaxation methods go back at least to the 1954 literature of Shmuel Agmon and Theodore Motzkin–Isaac Schoenberg; the **maximum-distance (normalized residual)** Kaczmarz variants and their convergence are analyzed by J. Nutini et al., *Convergence Rates for Greedy Kaczmarz Algorithms, and Faster Randomized Kaczmarz Rules Using the Orthogonality Graph*, UAI (2016), [paper](https://www.cs.ubc.ca/~schmidtm/Documents/2016_UAI_greedyKaczmarz.pdf). We do **not** assert that every normalized-row choice here is literally identical to the original historical formulations. The weighted projection identity is already implicit in the classical Strohmer–Vershynin randomized Kaczmarz analysis and in Steinerberger's own paper. **Global priority for the log-free corollary is unverified.**
 
-## Theorem — log-free best-iterate guarantee
+## Theorem A — source-matched log-free existential bound (primary result)
+
+Let `A in R^(m x n)` be nonzero and `Ax=b` consistent. Fix any starting vector `y0`, any solution `x`, and any absolute residual parameter `epsilon>0`. Choose at each step a nonzero row maximizing `|<a_i,y_t>-b_i|^2/||a_i||^2`, and project onto that row's exact equation. Then for `W=||A||_F^2` there exists an index
+
+    0 <= k <= ceil(W / epsilon^2) - 1
+
+such that
+
+    ||Ay_k-b||_2 <= epsilon ||y0-x||_2,
+    ||y_k-x||_2 <= ||y0-x||_2.
+
+Equivalently, the algorithm can **stop at the first qualifying iterate** after at most `ceil(W/epsilon^2)-1` projections. When `y0=x`, zero projections suffice. **No rank or invertibility assumption is needed for this stronger statement**, although Steinerberger's published Theorem 1 assumes full column rank. The row choice uses `y_t`, `A`, and `b`, **not the unknown solution** `x`.
+
+**Certificate:** If `||e0||>0` and all `t=0,...,K-1` with `K=ceil(W/epsilon^2)` violated the target, the exact projection identity below would give
+
+    ||e0||^2 - ||e_K||^2
+       >= sum_(t=0)^(K-1) ||Ay_t-b||^2 / W
+       > K epsilon^2 ||e0||^2 / W
+       >= ||e0||^2,
+
+contradicting `||e_K||^2>=0`. Thus a qualifying iterate exists in the indicated range. For `y0=0`, contraction and the triangle inequality yield `||y_k||<=2||x||`. The result is exactly in the **residual normalization of Steinerberger's Theorem 1**, rather than only its `n/epsilon^2` abstract specialization.
+
+**Comparison:** Published Theorem 1 has `2 log(||A||op/epsilon) W/epsilon^2` projections; the source-matched corollary above has `ceil(W/epsilon^2)-1` (independent of condition number). It removes the displayed logarithmic factor as a **valid inequality comparison**, not as an established novel discovery. Count projections, **not row-selection arithmetic**.
+
+## Theorem B — global best-prefix inequality (stronger structural statement)
 
 Let `A in R^(m x n)` be a nonzero real matrix and `A x*=b` be consistent. Ignore zero rows, for which consistency forces `b_i=0`. Start from `y_0` and repeatedly choose a row `i_t` maximizing the squared *normalized* residual `|<a_i,y_t>-b_i|^2/||a_i||^2`, then project orthogonally onto `<a_i,y>=b_i`. For every integer `K>=1`,
 
@@ -25,7 +49,7 @@ Specializing to `delta=epsilon ||A||op`, and using `||A||_F^2<=rank(A)||A||op^2<
 
 **No** full-column-rank assumption is required for the best-iterate theorem, only consistency.
 
-## Proof — deterministic projection energy telescope
+## Proof of the best-prefix inequality — deterministic projection energy telescope
 
 Write `e_t=y_t-x*`, `r_t=A e_t`, and `W=||A||_F^2>0`. Orthogonal projection gives the exact identity
 
@@ -64,8 +88,8 @@ Earlier source packet supplied in chat (not the same byte sequence as this edite
 
 - **Validity:** written derivation is elementary and covers arbitrary consistent real systems; formal Lean proof and independent human referee review not conducted. Review the quantified best-iterate interpretation and exact count, especially `K=ceil(W/delta^2)` and `y_0=0`.
 - **Reproducibility:** finite exact checker is available and rerunnable in repository CI. It verifies implications but is not a non-author proof review.
-- **Originality:** the key greedy selection/Pythagorean method is classical; no comprehensive negative prior-art search or author response. The problem is labeled open in the author's March 2026 list but a listed open question does not itself certify a novel solution.
+- **Originality:** the key greedy selection/Pythagorean method is classical; no exhaustive historical-priority clearance. The displayed log-free statement may be an implicit classical corollary. Being listed in an open-problem collection does not prove novelty.
 - **Significance:** log-factor removal for *existence of a successful projection sequence*, within the original question's quantifiers. **Not** a faster end-to-end arithmetic runtime or a constant-cost row-selection theorem.
-- **Independent challenge:** try published greedy-Kaczmarz analyses, reconstruct a direct earliest-priority citation for this corollary, test variants requiring a fixed schedule or last iterate, and request an external referee/author assessment before any publication or "solved problem" claim.
+- **Independent challenge:** compare 1954 relaxation, Strohmer–Vershynin, Nutini et al., and Steinerberger's own randomized energy lemma source-to-source; test the distinct fixed-time and high-probability randomized questions; seek independent non-author mathematical review before any publication or "solved problem" claim. No correspondence is planned.
 
 **Attribution:** original open question and 2023 bound — Steinerberger; classical randomized/greedy Kaczmarz framework — earlier numerical-analysis literature including Nutini et al.; NIGHTFALL derivation and source packaging — research led by Devin J. Wright, AI-assisted, with no independent external mathematical certification.

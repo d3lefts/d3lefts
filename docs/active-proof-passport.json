@@ -1,15 +1,15 @@
 {
   "schema": "nightfall-active-proof-passports-v1",
-  "version": 5,
+  "version": 11,
   "as_of": "2026-11-11",
-  "updated_by": "2026-11-11 source recovery: main 39-file audit plus one separately scoped closed/unmerged adaptive F16 certificate; no claim-count or novelty upgrade",
+  "updated_by": "2026-11-11 rev15: 63 exact-current-source scoped CI receipts, expanded actual row three-declaration PASS; retain no E2E quadratic or novelty promotion",
   "frozen_historical_registry_unchanged": true,
   "lifecycle": "active",
-  "scientific_status": "Twelve active claim checkpoints; 39 Lean modules assigned an independent originality classification (28 quarantined inherited/routine, 10 dependent transfer, one source-specific finite construction). Frozen historical eleven and approved findings unchanged.",
+  "scientific_status": "Twelve active research claims; all 63 current-branch Lean source blobs scope-classified and matched to successful historical scoped compiler receipts (52 originality-quarantined, 10 derived transfers, one finite construction). Real centered-section row and pair rectangle bridges verified. Actual-f exponent-two influence theorem remains analytically proved but not end-to-end kernel certified.",
   "source_checkpoint": {
     "repository": "d3lefts/d3lefts",
     "commit": "5bda769c2484ea2f6ea9a02c428928361c07666f",
-    "notes": "This commit fixes the four 10 Nov observability sources. The 11 Nov Kaczmarz claim has its own explicitly dated source checkpoint and is not included in the earlier source commit. The sixth four-shuffle candidate has standalone source and a source-ZIP checksum; original binary ZIP/PDF are chat artifacts, not GitHub releases. The seven expanded or newly added detailed passports are versioned 2026-11-11. The finite product theorem is now linked to its immutable PR #317 Lean receipt; the cubic and universal manuscript additions retain explicit draft/analytical gates."
+    "notes": "This commit fixes the four 10 Nov observability sources. The 11 Nov Kaczmarz claim has its own explicitly dated source checkpoint and is not included in the earlier source commit. The sixth four-shuffle candidate has standalone source and a source-ZIP checksum; original binary ZIP/PDF are chat artifacts, not GitHub releases. The seven expanded or newly added detailed passports are versioned 2026-11-11. The finite product theorem is now linked to its immutable PR #317 Lean receipt; the cubic and universal manuscript additions retain explicit draft/analytical gates. Lean provenance inventory separately reconciled at main commit f0007f6baea9ea53dfbde809bb243c017c17dbc6; no changes to principal mathematical claim status."
   },
   "definitions": {
     "influence": "I_i(F)=E[||F−E_i F||²] with E_i averaging input coordinate i",
@@ -22,17 +22,17 @@
       "id": "q2-influence",
       "title": "Bias-independent quadratic influence",
       "status": "paper-proof-internal-audit",
-      "claim": "For bounded real Hoeffding degree ≤2 functions on independent product inputs, max_i I_i(F) ≥ V²/[256(1+√3)² B²].",
+      "claim": "For bounded real Hoeffding degree ≤2 on independent arbitrary product laws, max_i I_i(F) ≥ V²/[225(1+√3)² B²], where |F|≤B and V=Var(F).",
       "assumptions": [
         "independent input coordinate laws",
         "real-valued |F|≤B with B>0",
         "degree ≤2; V=Var(F)>0"
       ],
-      "mechanism": "Pair-interaction matching, mixed differences and bounded signed sums, retaining off-matching terms.",
-      "evidence": "Written proof and internal checks in the supplied quadratic source package; no external human referee or end-to-end Lean receipt for this full statement. Merged PR 359 adds scoped kernel-checked finite ANOVA degree-two projection, sharp three-point 7B interpolation, actual two-independent-increment scalar/Hilbert fourth moments and conditional coefficient closure (CI 43058772711, 43058085067 and 43057281341). These identities are classical/elementary supporting lemmas under the formal hypotheses, novelty-quarantined; they do NOT prove the matching construction or full quadratic influence bound.",
+      "mechanism": "Actual-function matching parity, weighted endpoint allocation, 4B/8B/16B switching budgets and genuinely independent Hilbert fourth moments; no minimum atom probabilities.",
+      "evidence": "Complete analytic proof in public v6 and separate v7 source, with exact finite checks and scoped Lean results (#362/#375/#378/#385). The 33-page v6.1 synthesis is a separately retained source/audit packet not yet bitwise deposited in GitHub. No full end-to-end quadratic Lean theorem and no independent non-author review.",
       "source": "research/nightfall/observability-publication/PRINCIPAL_PAPER.md",
-      "source_detail": "Consolidated editorial paper; original full LaTeX archive is named in README but not reproduced in this checked-in markdown.",
-      "audit": "Close global matching parity coupling, actual ANOVA energies and arbitrary finite-family Hilbert fourth-moment induction, then prove the unconditional quadratic theorem in the kernel; independently compare classical matching/Markov/Rosenthal prior art.",
+      "source_detail": "Primary public v6 manuscript: papers/finite-product-influence/Bias_Free_Aaronson_Ambainis_All_Product_Spaces_v6.tex; v7 specialist consolidation: papers/finite-product-influence/Bias_Free_Aaronson_Ambainis_All_Product_Spaces_v7.tex; editorial v6.1 map: research/catalogue/NOV11_V61_DISCOVERY_SYNTHESIS.md.",
+      "audit": "Independently reconstruct actual quadratic matching/section charge, interpolation constant 15(1+√3), and ANOVA orthogonality on arbitrary categorical laws; compare classical Grothendieck, completely bounded and Turturean/GMNR results before novelty claims.",
       "limitations": [
         "No general degree-three or all-degree exponent-two theorem",
         "No priority or external-referee clearance",
@@ -43,7 +43,7 @@
       "id": "q2-observation",
       "title": "Adaptive versus fixed whole-coordinate queries",
       "status": "paper-proof-internal-audit",
-      "claim": "For the paper's unit-ball rank-≤r minimax regime at 0<η≤1/4, degree-two adaptive query complexity is proposed Θ(r/η); for alphabets of size ≤m, the fixed-query order is proposed Θ(rm/η).",
+      "claim": "For the paper's unit-ball rank-≤r minimax regime at 0<η≤1/4, degree-two adaptive query complexity is proposed Θ(r/η); for alphabets of size ≤m, the fixed-query order is proposed Θ(rm/η). The analytic finite-product rank-r construction further reports V(F)²≤675(1+√3)²rB²M and a hard query cap ceil(2700(1+√3)²rB²/η) for risk at most τ_r+η.",
       "assumptions": [
         "squared-error Bayes-risk objective",
         "covariance rank ≤r",
@@ -51,11 +51,11 @@
         "whole-coordinate queries",
         "specified finite alphabet cap m for fixed-query comparison"
       ],
-      "mechanism": "Posterior variance descent, conditional influence selection, replicated address-variable lower constructions.",
-      "evidence": "Supplied paper proof and internal checks; full quantitative and Hilbert-valued dependencies require independent reproduction.",
+      "mechanism": "Finite-sign Hilbert compression and actual posterior total-influence decrement E(P_next|history)=P−I_j, not an automatic one-query variance decrement; address families supply the model-specific lower scaling.",
+      "evidence": "Analytic finite-product proof in public rank-optimal v7 sections and source PRs #368/#375/#387, with scoped finite exact checkers; the full chain is neither e2e Lean certified nor independently externally refereed.",
       "source": "research/nightfall/observability-publication/PRINCIPAL_PAPER.md",
-      "source_detail": "Section 3; original queries.tex and matching-core.tex named but not imported here as complete derivations.",
-      "audit": "Verify deterministic policy, stopping rule, all constants and Hilbert-rank lift against a separate checker; reconstruct lower families.",
+      "source_detail": "papers/finite-product-influence/Rank_Optimal_Observation_Section_v7.tex and research/catalogue/NOV11_V61_DISCOVERY_SYNTHESIS.md; earlier source inventory naming missing queries.tex no longer describes available v6/v7 manuscript files.",
+      "audit": "Independently audit finite-sign rank lifting, actual posterior conditional laws/null states, tail projection, hard query cap and minimax quantifiers.",
       "limitations": [
         "Minimax rates do not describe every single function",
         "No universal adaptive Θ(r/η) theorem at arbitrary degree"
@@ -87,17 +87,17 @@
       "id": "cubic-obstruction",
       "title": "Cubic exponent-two frontier — structural obstructions",
       "status": "exact-proof-attacks-cubic-open",
-      "claim": "The unrestricted degree-three squared-variance influence law remains OPEN. Exact rare-gate fourth moments refute an unconditioned L4/L2 shortcut. For homogeneous Hoeffding functions the influence-weighted fractional-cover optimum equals Var(f), so that proposed LP reduction alone does not simplify the target. Dense Hadamard and two-draw occupancy stress tests remain draft review material.",
+      "claim": "The unrestricted degree-three squared-variance influence law remains OPEN. Exact rare-gate fourth moments refute an unconditioned L4/L2 shortcut. For homogeneous Hoeffding functions the influence-weighted fractional-cover optimum equals Var(f), so that proposed LP reduction alone does not simplify the target. Dense Hadamard and two-draw occupancy stress tests remain draft review material. New pure-degree-three shared-core witness violates the naive independent-increment fourth moment bound by the exact ratio 179722/6993 at m=16,p=1/64 and unboundedly along p=m^-2; v6.1 supplies a conditional-independence repair E||ΣY_j||⁴≤c²s+3s²+3Var(Q), with Q conditional total second-moment energy.",
       "assumptions": [
         "Finite product, bounded degree and canonical Hoeffding components for the structural lemmas",
         "Rare-gate family U~Bernoulli(p), independent fair signs B_j, Z=(U-p)ΣB_j",
         "Draft PR #349 and #347 hard-family examples are not yet externally audited or merged"
       ],
       "mechanism": "Shared rare gates produce divergent normalized fourth moments; the fractional LP has matching energy-based primal and dual certificates. Dense links and two-draw expected maxima demonstrate additional operator failures without refuting exponent two.",
-      "evidence": "CUBIC_OBSTRUCTION_NOTE.md contains exact moment formulas and elementary amplitude/oscillation proofs. Merged five-closure audit proves τ_I*=Var for homogeneous components, and Var≤τ_I*≤dVar generally. PRs #347 and #349 add unmerged exact stress tests.",
+      "evidence": "CUBIC_OBSTRUCTION_NOTE.md contains exact moment formulas and elementary amplitude/oscillation proofs. Merged five-closure audit proves τ_I*=Var for homogeneous components, and Var≤τ_I*≤dVar generally. PRs #347 and #349 add unmerged exact stress tests. Merged PR #380 adds a pure-cubic exact analytic counterexample, Fraction checker, pinned hashes and passing CI. The conditional energy-dispersion correction is an analytic v6.1 deduction, not a universal influence proof.",
       "source": "research/nightfall/2026-11-active-passports/cubic-obstruction-ledger.md",
-      "source_detail": "New detailed proof-attack ledger links the merged rare-gate note, merged LP sandwich and independent draft hard-case reviews without counting draft results as refereed.",
-      "audit": "Replay rare-gate fourth moments and LP primal-dual identity independently; attack link/covariance proposals on dense Hadamard, rare-address and interlocking tripartite families.",
+      "source_detail": "New detailed proof-attack ledger links the merged rare-gate note, merged LP sandwich and independent draft hard-case reviews without counting draft results as refereed. Exact primary counterexample: research/new-moon/spectral-observability/homogeneous-cubic-v8/shared-core-fourth-moment/SHARED_RARE_CORE_FOURTH_MOMENT_NO_GO.md. Website synthesis: research/catalogue/NOV11_V61_DISCOVERY_SYNTHESIS.md.",
+      "audit": "Recompute 179722/6993 exactly; verify the conditional-fourth-moment lemma under conditional independence and common increment bound; seek a valid influence charge of Var(Q) against rare stars and Hadamard links.",
       "limitations": [
         "No counterexample to unrestricted cubic variance-squared influence was found",
         "Not an established arbitrary-law cubic theorem; bounded-cover consequences depend on the unrefereed quadratic paper",
@@ -108,22 +108,22 @@
       "id": "kaczmarz-logfree",
       "title": "Log-free Kaczmarz best-iterate projection bound",
       "status": "written-proof-exact-check-replay-priority-open",
-      "claim": "For every consistent real Ax*=b and K>=1, max-normalized-residual greedy Kaczmarz satisfies min_{0<=t<K} ||Ay_t-b|| <= ||A||_F ||y_0-x*||/sqrt(K); consequently K<=ceil(n/epsilon^2) for delta=epsilon||A||op. This is a successful-prefix-iterate existence result.",
+      "claim": "For consistent real Ax=b and epsilon>0, max-normalized-residual greedy row projections produce an iterate in k<=ceil(||A||_F^2/epsilon^2)-1 steps satisfying ||Ay_k-b||<=epsilon||y0-x|| and ||y_k-x||<=||y0-x||; unscaled source-matched theorem to Steinerberger Theorem 1. General best-prefix inequality min_{t<K}||Ay_t-b||<=||A||_F||y0-x||/sqrt(K). Abstract scaled case yields k<=ceil(n/epsilon^2)-1.",
       "assumptions": [
         "consistent real linear system with A nonzero, zero rows skipped",
         "each iteration chooses a row with maximal squared normalized residual",
         "orthogonal projections; one selected iterate among the first K, not necessarily the final iterate"
       ],
       "mechanism": "Projection Pythagoras gives a per-step decrease; max normalized residual dominates its row-norm weighted average; telescoping bounds the sum of squared residuals, so one prefix iterate meets the threshold.",
-      "evidence": "Written complete elementary argument; 240 exact-rational consistent systems with 12 greedy steps each (2,880 total steps), 1D sharpness control; finite checker CI and site checks track reproducibility, not global proof certification.",
+      "evidence": "Elementary complete analytical Pythagorean/weighted-maximum/telescoping proof, exact seeded checker 240 systems x12=2,880 updates, plus independent exhaustive 6,552 small systems x8=52,416 exact-rational updates; tests do not prove novelty.",
       "source": "research/nightfall/2026-11-kaczmarz-logfree/PROOF_PASSPORT.md",
-      "source_detail": "Proof, scope and provenance in same folder PROOF.md; exact checker exact_audit.py. Chat proof packet SHA-256 0245feee6e886cbfff2eb717d33ecbf8dd1d8bc8efc055713bd4ba64325a5587.",
+      "source_detail": "Revision 1.1 source-matched unscaled Theorem 1 proof PROOF.md; exact_audit.py plus independent_exhaustive_audit.py. Historical checkpoint c3e4806e remains original provenance, newer revision is traceable in Git history.",
       "source_checkpoint": "c3e4806e4c0e266785a19f99bc0a4748d533d439",
-      "audit": "Independent mathematical proof review and exhaustive dated priority search in earlier greedy-Kaczmarz work; ask problem author to confirm interpretation and novelty before any publication.",
+      "audit": "Independent non-author proof review and dated source-to-source priority study, especially 1954 relaxation, Strohmer-Vershynin, Nutini 2016 and Steinerberger 2022/2023; no author correspondence is planned.",
       "limitations": [
-        "Classical maximum-distance Kaczmarz selection and energy identity are credited; global novelty is unverified",
-        "No fixed-final-iterate high-probability guarantee or end-to-end row-selection runtime claim",
-        "No independent human referee or Lean formalization, and no historical Original Finding promotion"
+        "Classical greedy maximum-distance projection and energy identity are credited; log-free corollary may be implicit in earlier literature and global originality is unverified",
+        "No high-probability fixed-time unstopped randomized iterate or end-to-end row-selection runtime claim",
+        "No independent human referee or Lean formalization and no historical Original Finding promotion"
       ]
     },
     {
@@ -227,12 +227,13 @@
       "mechanism": "Finite scalar Lean input, product measure approximation, signed Hilbert scalar compression, PSD rank influence, exact ANOVA posterior potential descent, spectral-tail output projection.",
       "evidence": "Finite scalar PR #317 is Lean-checked; universal manuscript PR #332 remains draft and PRs #339/#340 only address partial Lean bridges. The v6 full source is not publicly reconciled on main. Further source-specific successes: 13 spectral core declarations (42959881782); finite signed isometry (42965524565); pointwise diagonal-coherence transfer with explicitly supplied premises (42972554673); conditional finite-kernel weighted budget (42972560393); and actual posterior law and rank-factor influence (42973878336). These are quarantined supporting lemmas, not the end-to-end observer theorem.",
       "source": "research/nightfall/2026-11-active-passports/universal-spectral.md",
-      "source_detail": "Draft PR #332 and partial Lean PRs #339/#340 are principal sources; main's spectral REVIEW_GATES.md is a critical review note.",
+      "source_detail": "Draft PR #332 and partial Lean PRs #339/#340 are principal sources; main's spectral REVIEW_GATES.md is a critical review note. Later rank-linear degree-two result is separately dependent on the stronger Q2 analytic theorem; see papers/finite-product-influence/Rank_Optimal_Observation_Section_v7.tex and the v6.1 synthesis ledger.",
       "audit": "Independently prove actual posterior ANOVA drift, scalar product influence composition, conditional coherence, measurable policy and spectral risk; seek prior art before any novelty claim.",
       "limitations": [
         "No complete Lean proof of universal Hilbert observer or measured-space extension",
         "Initial-only coherence does not suffice for v6 log-free claim",
-        "Neither efficient runtime nor unrestricted degree-three exponent-two is established"
+        "Neither efficient runtime nor unrestricted degree-three exponent-two is established",
+        "The rank-r O(r/η) degree-two manuscript does not automatically improve the all-degree PSD theorem without its independent hypotheses."
       ]
     },
     {

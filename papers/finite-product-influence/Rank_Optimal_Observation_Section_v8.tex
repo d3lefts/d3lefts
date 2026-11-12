@@ -1,0 +1,138 @@
+\section{Rank-optimal adaptive observation and Hilbert compression}\label{sec:rank-observation}
+The preceding scalar matching proof has a dimension-sensitive extension that gives an optimal rate for prediction, as opposed to merely finding an influential coordinate. The policy observes entire input symbols, not arbitrary linear measurements or individual output coordinates. Its dependence on output dimension is through the leading covariance rank. The proof here is complete relative to the preceding analytic quadratic proof; it does not rely on a claimed end-to-end Lean certificate.
+
+\begin{lemma}[Finite-sign Hilbert compression]\label{lem:signhilbert}
+For any $w_1,\ldots,w_r$ in a real Hilbert space $\mathcal K$, with independent fair signs $\varepsilon_1,\ldots,\varepsilon_r$ and $s=\sum_{j=1}^r\norm{w_j}^2$, one has
+\[
+ \E_\varepsilon\Big\|\sum_{j=1}^r\varepsilon_jw_j\Big\|\ge\sqrt{s/3}.
+\]
+\end{lemma}
+\begin{proof}
+Write $W=\sum_j\varepsilon_jw_j$. Orthogonality of the sign monomials gives $\E\norm W^2=s$ and
+\[
+ \E\norm W^4
+ =\sum_j\norm{w_j}^4+2\sum_{j<k}\norm{w_j}^2\norm{w_k}^2
+   +4\sum_{j<k}\langle w_j,w_k\rangle^2\le3s^2.
+\]
+The $L^1$--$L^2$--$L^4$ interpolation inequality gives
+$s^{3/2}\le(\E\norm W)(\E\norm W^4)^{1/2}\le\sqrt3s\E\norm W$, including the $s=0$ case by continuity.
+\end{proof}
+
+\begin{theorem}[Rank-linear quadratic influence]\label{thm:rank-influence}
+Let $G$ be a real-Hilbert-valued observable of Hoeffding degree at most two with $\norm{G}\le B$ almost surely, whose essential values lie in a subspace of dimension at most $r$. For any independent product law, including completed products with arbitrary index set, put
+\[
+ V(G)=\E\norm{G-\E G}^2,\qquad
+ M(G)=\sup_i\E\norm{G-E_iG}^2.
+\]
+Then
+\begin{equation}\label{eq:vectorinfluence}
+ V(G)\le\Dquad\sqrt{3r}\,B\sqrt{M(G)},\qquad
+ V(G)^2\le3\Kquad rB^2M(G).
+\end{equation}
+\end{theorem}
+\begin{proof}
+First consider a finite product with positive-mass finite coordinate alphabets. Identify the effective output subspace with $\mathbb R^r$. Expand
+$G=m+\sum_i h_i(X_i)+\sum_{i<j}h_{ij}(X_i,X_j)$
+into $\mathbb R^r$-valued Hoeffding components, and define $U_i(\cdot;X_{-i})$, $b_{ij}=\max\norm{h_{ij}}$, and $I_i$ as in the scalar proof of Theorem~\ref{thm:quadall}, with Hilbert norms throughout. For each $\varepsilon\in\{-1,1\}^r$ the scalar projection
+$g_\varepsilon=\langle\varepsilon,G\rangle/\sqrt r$ satisfies $|g_\varepsilon|\le B$.
+
+Apply the scalar matching, additive and section budgets \eqref{eq:qmatching}, \eqref{eq:qadd}, \eqref{eq:qosc} to $g_\varepsilon$, keeping any matching fixed before averaging over $\varepsilon$. The finite-sign lemma applies both pointwise to each vector-valued interaction and to the $L^2(\mu_i)$ sections. Because the scalar bounds hold for every sign choice, we obtain
+\begin{equation}\label{eq:vectorbudgets}
+ \sum_{(i,j)\in P}b_{ij}\le4B\sqrt{3r},\quad
+ \sum_i\norm{h_i}_2\le\Aquad B\sqrt{3r},\quad
+ \sum_i\E\norm{U_i(\cdot;X_{-i})}_2\le8B\sqrt{3r}.
+\end{equation}
+For clarity, the first inequality follows by fixing for each $(i,j)\in P$ an input point attaining $b_{ij}$, applying Lemma~\ref{lem:signhilbert} to its $r$ scalar output components, and then using the scalar matching budget on the same $P$; the two remaining inequalities follow with the same sign average in the Hilbert spaces $L^2(\mu_i)$ and $L^2(\mu_i;\mathbb R)$.
+
+Greedy descending-weight matching and endpoint assignment, exactly as in the scalar proof, give costs $c_i$ with $\sum_i c_i\le8B\sqrt{3r}$ and assign each pair interaction once to an endpoint of cost at least $b_{ij}$. Set
+$Z_i=\sum_{j\in S_i}h_{ij}(\cdot,X_j)$ in $\mathcal H_i=L^2(\mu_i;\mathbb R^r)$, and
+$s_i=\E\norm{Z_i}_{\mathcal H_i}^2\le I_i\le M(G)$.
+The summands are independent centered Hilbert variables, bounded in norm by $c_i$; no independence of their scalar components is assumed. Thus the actual fourth-moment expansion gives
+\[
+ \E\norm{Z_i}_{\mathcal H_i}^4\le c_i^2s_i+3s_i^2,
+ \qquad s_i\le(c_i+\sqrt{3M(G)})\E\norm{Z_i}_{\mathcal H_i}.
+\]
+Conditional Jensen and \eqref{eq:vectorbudgets} imply
+$\sum_i\E\norm{Z_i}_{\mathcal H_i}\le(8+\Aquad)B\sqrt{3r}$,
+while $\E\norm{Z_i}\le\sqrt{M(G)}$. Summing the assigned pair energies and then adding the first-order energies yields
+\[
+ \begin{aligned}
+ \sum_{i<j}\norm{h_{ij}}_2^2
+ &\le[8+(8+\Aquad)\sqrt3]B\sqrt{3r M(G)},\\
+ \sum_i\norm{h_i}_2^2
+ &\le\Aquad B\sqrt{3r M(G)}.
+ \end{aligned}
+\]
+Orthogonality proves the first bound in \eqref{eq:vectorinfluence}, and squaring proves the second.
+Bounded finite-rectangular conditional projections, as in Proposition~\ref{prop:approx}, extend the scalarized and vector-valued inequalities to arbitrary product measures: each projection preserves the output subspace, the supremum norm and degree, contracts individual influences, and converges in $L^2$. The conclusion follows by taking the limit.
+\end{proof}
+
+\begin{corollary}[Binary rank-$r$ Grothendieck influence and observation]\label{cor:binaryrank}
+Under the hypotheses of Theorem~\ref{thm:rank-influence}, suppose additionally that each input is binary. Then
+\[
+ V(G)^2\le48(K_G^{\mathbb R})^2rB^2M(G).
+\]
+In Theorem~\ref{thm:rankadaptive} the adaptive depth bound may consequently be replaced by
+\[
+ N\le\min\left\{n,\left\lceil\frac{192(K_G^{\mathbb R})^2rB^2}{\eta}\right\rceil\right\}
+ \le\min\left\{n,\left\lceil\frac{610rB^2}{\eta}\right\rceil\right\}.
+\]
+These are quantitatively stronger binary-only consequences of classical Grothendieck theory, with no new originality claim. Correlated binary inputs require a posterior-uniform Poincar\'e assumption before any analogous adaptive statement.
+\end{corollary}
+\begin{proof}
+For a fixed sign vector $\varepsilon\in\{-1,1\}^r$, $\langle\varepsilon,G\rangle/\sqrt r$ is a bounded scalar quadratic on the binary cube, so Proposition~\ref{prop:groth} gives a root-influence budget $4K_G^{\mathbb R}B$. The sign-to-Hilbert inequality, proved in Lemma~\ref{lem:signhilbert}, transfers the bound with at most $\sqrt{3r}$ loss: $\sum_i\sqrt{I_i(G)}\le4K_G^{\mathbb R}\sqrt{3r}B$. Apply $V(G)\le\sum_iI_i(G)\le\sqrt{M(G)}\sum_i\sqrt{I_i(G)}$. The squared influence coefficient is $48(K_G^{\mathbb R})^2rB^2$. Every reachable posterior is again a bounded binary quadratic product problem, so the exact posterior drift argument below applies with this improved coefficient, multiplied by four in its reciprocal-energy telescope.
+\end{proof}
+
+\begin{lemma}[Actual posterior degree-weighted energy identity]\label{lem:posterdelta}
+On a finite product, let $Q$ be a set of already observed coordinates and let $G_Q$ be the conditional residual output under the corresponding transcript. Write $w_S=\norm{(G_Q)_S}_2^2$ for its positive-degree Hoeffding energies on the unobserved coordinates. Define $v_Q=\sum_{S\ne\varnothing}w_S$ and $p_Q=\sum_{S\ne\varnothing}|S|w_S=\sum_{i\notin Q}I_i(G_Q)$. For degree at most two, $v_Q\le p_Q\le2v_Q$. If an unobserved coordinate $i$ is revealed, then, conditional on the current transcript,
+\begin{equation}\label{eq:posterior-drift-exact}
+ p_Q-\E[p_{Q\cup\{i\}}\mid\text{current transcript}]=I_i(G_Q).
+\end{equation}
+\end{lemma}
+\begin{proof}
+Conditional independence of the unobserved product coordinates allows Hoeffding decomposition under the residual law. An interaction not involving $i$ retains its degree-weighted energy on average. An interaction $S$ involving $i$ loses exactly one degree-weight unit when $i$ is disclosed: its remaining (possibly constant) part has average squared energy $w_S$ and weight $|S|-1$. By orthogonality over the remaining inputs and expectation over the revealed value, the total reduction is $\sum_{S\ni i}w_S=I_i(G_Q)$. The variance--energy sandwich follows from $1\le|S|\le2$ for nonconstant interactions.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:rankadaptive}]
+Project $F$ onto a fixed span of its leading $r$ covariance directions and write $G=P_rF$. Orthogonal projection preserves degree at most two and $\norm G\le B$. At every reachable transcript, the unobserved coordinates remain independent and the residual section of $G$ remains bounded by $B$. Let $v$ and $p$ be its conditional variance and degree-weighted influence energy, and $m$ its largest conditional influence. Theorem~\ref{thm:rank-influence}, with $K_r=3\Kquad rB^2$, gives $m\ge v^2/K_r\ge p^2/(4K_r)$.
+
+The policy chooses a coordinate attaining $m$ at each nonterminal transcript. For finite alphabets the policy is deterministic after a fixed tie-breaking rule; every finite input has a finite decision tree. Write $P_t$ for the expected posterior energy after $t$ observations, and let $P_t=0$ after all coordinates have been read. Lemma~\ref{lem:posterdelta} and Jensen give
+\[
+ P_t-P_{t+1}=\E m_t\ge\frac{\E p_t^2}{4K_r}\ge\frac{P_t^2}{4K_r}.
+\]
+For $P_t>0$, reciprocal telescoping yields $P_t\le4K_r/t$ for $t\ge1$; the zero case is terminal. Because the squared conditional-mean risk of $G$ is at most $P_t$, taking $t\ge4K_r/\eta$ gives projected risk at most $\eta$. The $F-G$ component lies in the fixed orthogonal output subspace, and its conditional risk cannot exceed its unconditional covariance mass $\tau_r(F)$. The total squared risk is their sum. This proves \eqref{eq:rankcap} with the trivial cap $n$.
+
+For the lower bound, let $Z_{jt}$ ($1\le j\le r$, $1\le t\le k$) be independent fair signs and put
+\[
+ F(Z)=\frac1{k\sqrt r}\left(\sum_{t=1}^kZ_{1t},\ldots,\sum_{t=1}^kZ_{rt}\right).
+\]
+Then $\norm F\le1$, $F$ has degree one and $\Var(F)=1/k$. Every sign query removes exactly $1/(rk^2)$ from the squared posterior risk, irrespective of previous observations. Thus achieving $\eta=1/(2k)$ requires at least $rk/2=r/(4\eta)$ observations. This completes the proof.
+\end{proof}
+
+\begin{corollary}[One-query quantum outcome distributions]\label{cor:outcomedistribution}
+For a quantum algorithm making at most one coherent whole-symbol query to independent finite-alphabet inputs, let $P(x)=(P_1(x),\ldots,P_r(x))$ be its probability vector for $r$ measurement outcomes. For any $\eta>0$, a deterministic adaptive classical policy reads at most
+$\min\{n,\lceil12\Kquad r/\eta\rceil\}$ whole input symbols and returns a probability-vector predictor with $\E\norm{P(X)-\widehat P(X)}_2^2\le\eta$.
+\end{corollary}
+\begin{proof}
+Every output probability $P_j$ has product interaction degree at most two by the polynomial method, and $\norm{P(x)}_2\le\sum_jP_j(x)=1$. Apply Theorem~\ref{thm:rankadaptive} to $F=P$, with $B=1$ and output rank at most $r$. The optimal posterior predictor $\widehat P=\E[P\mid\text{observations}]$ is itself a probability vector by convexity.
+\end{proof}
+
+\begin{proposition}[Predetermined observation above the quadratic energy floor]\label{prop:fixedbudget}
+Let $f$ be scalar, $|f|\le B$, of Hoeffding degree at most two on a finite independent product. Write $\delta_2=\sum_{|S|=2}\|f_S\|_2^2$. For every $\eta>\delta_2$ there is a \emph{fixed}, nonadaptive coordinate set $Q$ of size
+\begin{equation}\label{eq:fixedbudget}
+ |Q|\le\min\left\{n,\left\lceil\frac{(3+2\sqrt2)B^2}{\eta-\delta_2}\right\rceil\right\}
+\end{equation}
+with mean-squared conditional-mean risk at most $\eta$. No analogous alphabet-free bound below $\delta_2$ is implied.
+\end{proposition}
+\begin{proof}
+Set $w_i=\|f_{\{i\}}\|_2^2$, $b_i=\sqrt{w_i}$, and $L=\sum_i b_i\le\Aquad B$ by \eqref{eq:qadd}. Order $b_i$ decreasingly and query the largest $q$ of them. If $q<n$, write $t=b_{q+1}$. Then
+\[
+ \sum_{i>q}w_i\le t\sum_{i>q}b_i\le t(L-qt)
+ \le\frac{L^2}{4q}\le\frac{(3+2\sqrt2)B^2}{q}.
+\]
+The unrevealed quadratic energy is at most $\delta_2$, so the conditional risk is at most $\delta_2+(3+2\sqrt2)B^2/q$. Take the stated ceiling, with the all-coordinate fallback when it exceeds $n$. This is a deterministic fixed-set guarantee only in the regime $\eta>\delta_2$.
+\end{proof}
+
+\begin{remark}[Scope and provenance]
+The sign-moment identity is classical, and the input-independent quadratic scalar budgets were derived in Section~\ref{sec:lowdegree}. The dimension-sensitive composition, actual posterior policy and matching lower bound are presented here as analytic deductions, not as additional Lean-certified statements. The fixed-query addressing example in Remark~\ref{rem:address} shows that the same dimension- and alphabet-uniform observation rate cannot hold for nonadaptive observation sets. The unrestricted cubic analogue remains open, and the shared-rare-core construction discussed in Section~\ref{sec:open} forbids a direct replacement of independent pair increments by merely pairwise-orthogonal cubic increments.
+\end{remark}

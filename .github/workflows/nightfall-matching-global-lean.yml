@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/observability/QuadraticMatchedParity.lean'
+      - 'research/nightfall/formalization/observability/CenteredRectangle.lean'
       - 'research/nightfall/formalization/observability/ParityBlockCancellation.lean'
       - 'research/nightfall/2026-11-quadratic-law-free-audit/check_global_matching_parity.py'
       - '.github/workflows/nightfall-matching-global-lean.yml'
@@ -50,6 +51,21 @@ jobs:
           sha256sum research/nightfall/formalization/observability/{ParityBlockCancellation,QuadraticMatchedParity}.lean > lean-receipts/SHA256SUMS
           git rev-parse HEAD > lean-receipts/repository-commit.txt
           git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt
+      - name: Kernel-check exact centered arbitrary-law pair-to-rectangle identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          N=Nightfall.Observability.CenteredRectangle
+          python3 scripts/lean_bridge.py research/nightfall/formalization/observability/CenteredRectangle.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.centered_pair_rectangle_average \
+            --json-out lean-receipts/centered-rectangle.json || {
+              python3 -c "import json;r=json.load(open('lean-receipts/centered-rectangle.json'));print(r.get('status'));print((r.get('stdout') or '')[-22000:]);print((r.get('stderr') or '')[-4000:])" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/centered-rectangle.json
+          sha256sum research/nightfall/formalization/observability/CenteredRectangle.lean >> lean-receipts/SHA256SUMS
       - name: Independently exhaust full quadratic parity configurations
         shell: bash
         run: |
