@@ -12,6 +12,10 @@ This is a **complete author-side analytic argument and finite falsification sour
 
 **Status unchanged:** analytic manuscript, no external referee, originality unresolved, stronger quadratic and general cubic exponent-two results still open.
 
+## New quantum geometry companion (different proof scope)
+
+[Sharp SLD tensorization and physically attained ternary extremizers](../quantum-sld-tensorization/README.md) gives an author-side exact optimal constant and a finite physical no-go construction for polynomial-in-degree SLD interaction transfer. Its independent rational checkers are **not** Lean certification of the operator theorem, and this result does not upgrade the adaptive classical observation theorem below.
+
 ## Mathematical question
 
 Can a bounded, strongly measurable Hilbert observable of fixed Hoeffding interaction degree be predicted, to spectral-truncation error plus `eta`, by a dimension-independent number of adaptively selected **whole input-coordinate** observations over an arbitrary independent product law? The manuscript proposes a bound of the form `N=ceil((40/3) U log(1+4U))`, with `U=d^7 B^3 r^(3/2)/(c_* eta^(3/2))` and `c_*=sqrt(3/12500)/pi^6`.
