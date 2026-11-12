@@ -82,7 +82,9 @@
     "One same-pin PR #416 workflow compiles selected quadratic lemmas but declares full terminal theorem missing.",
     "The dissertation Appendix B calls PR #417 draft and references an old branch: it was merged; its phase-diagram job is a finite-rational checker, not Lean.",
     "1,414 exact convolution assertions are reported in PDF Appendix B without a verified source script/CI receipt in inspected repository paths. Do not promote that numerical count as independently reproduced.",
-    "Zero source-level universal claims are promoted from subtheorem or finite checker by this ledger. This is an accounting artifact, not an end-to-end proof."
+    "Zero source-level universal claims are promoted from subtheorem or finite checker by this ledger. This is an accounting artifact, not an end-to-end proof.",
+    "The PDF reports 123 adaptive-policy, 161 live-query and six evaluation-span tests from check_joint_frontier_exact.py, which is not in the current repository. The similarly named check_addressed_family_exact.py checks 6561 n=2 two-sample trivalent tester instances only; it is NOT a certificate of the frontier.",
+    "The exact finite phase-diagram CI script covers 18 posterior cases and other finite enumerations. Do not imply that this substitutes for the absent multi-query frontier checker."
   ],
   "claims": [
     {
@@ -1016,7 +1018,7 @@
       "finite_evidence": [
         {
           "path": null,
-          "verification": "the manuscript reports 1414 exact convolution assertions; exact script and run output not located in inspected repository paths or code search"
+          "verification": "manuscript Appendix B reports 1414 exact convolution assertions; exact source checker and its run receipt not located in inspected repository paths or code search"
         }
       ],
       "missing_for_exact_endpoint": "Hankel-Prony exact 2k ideal population-moment reconstruction is analytic; manuscript reports exact tests but checker receipt not matched.",
@@ -1035,7 +1037,7 @@
       "finite_evidence": [
         {
           "path": null,
-          "verification": "the manuscript reports 1414 exact convolution assertions; exact script and run output not located in inspected repository paths or code search"
+          "verification": "manuscript Appendix B reports 1414 exact convolution assertions; exact source checker and its run receipt not located in inspected repository paths or code search"
         }
       ],
       "missing_for_exact_endpoint": "Exact support separation and precision inequality in manuscript; no Lean terminal; 1,414-assertion checker not source verified.",
@@ -1054,7 +1056,7 @@
       "finite_evidence": [
         {
           "path": null,
-          "verification": "the manuscript reports 1414 exact convolution assertions; exact script and run output not located in inspected repository paths or code search"
+          "verification": "manuscript Appendix B reports 1414 exact convolution assertions; exact source checker and its run receipt not located in inspected repository paths or code search"
         }
       ],
       "missing_for_exact_endpoint": "Classical binary splitting with stronger ideal gain oracle; manuscript-reported exact checks not matched to a repository run.",
@@ -1073,7 +1075,7 @@
       "finite_evidence": [
         {
           "path": null,
-          "verification": "the manuscript reports 1414 exact convolution assertions; exact script and run output not located in inspected repository paths or code search"
+          "verification": "manuscript Appendix B reports 1414 exact convolution assertions; exact source checker and its run receipt not located in inspected repository paths or code search"
         }
       ],
       "missing_for_exact_endpoint": "Explicit one-coordinate three-symbol counterexample in manuscript; no Lean theorem; associated checker not verified.",
@@ -1153,9 +1155,14 @@
       "kind": "Theorem",
       "title": "Three-group interaction test",
       "pdf_page": 44,
-      "machine_status": "ANALYTIC_ONLY",
+      "machine_status": "FINITE_CHECK_ONLY",
       "source_certificates": [],
-      "finite_evidence": [],
+      "finite_evidence": [
+        {
+          "path": "research/nightfall/2026-11-information-cost-dissertation/check_addressed_family_exact.py",
+          "verification": "repository checker only: 6561 small n=2 two-sample trivalent property-testing functions; does NOT test posterior/adaptive/live query frontier"
+        }
+      ],
       "missing_for_exact_endpoint": "Property-testing theorem uses bounded difference/independence; no matched end-to-end Lean declaration.",
       "full_end_to_end_lean": false,
       "non_author_review": false,
@@ -1172,7 +1179,11 @@
       "finite_evidence": [
         {
           "path": "research/nightfall/2026-11-information-cost-dissertation/check_addressed_family_exact.py",
-          "verification": "source_present; exact manuscript-count result not independently run in this session"
+          "verification": "repository checker only: 6561 small n=2 two-sample trivalent property-testing functions; does NOT test posterior/adaptive/live query frontier"
+        },
+        {
+          "path": null,
+          "verification": "manuscript Appendix B reports check_joint_frontier_exact.py with 123 adaptive, 161 live-query and six rank examples; exact script and corresponding run receipt not located in current GitHub repository"
         }
       ],
       "missing_for_exact_endpoint": "Addressed model/state costs analytic and tested on exact finite examples; not universal Lean.",
@@ -1190,13 +1201,13 @@
       "source_certificates": [],
       "finite_evidence": [
         {
-          "path": "research/nightfall/2026-11-information-cost-dissertation/check_addressed_family_exact.py",
-          "verification": "source_present; exact manuscript-count result not independently run in this session"
+          "path": "research/nightfall/2026-11-information-cost-dissertation/check_joint_information_phase_diagram.py",
+          "verification": "historical exact finite CI PASS (929 Boolean, 534 heterogeneous, 18 posterior, 12 rare, 35 sharp, 12 threshold cases)",
+          "ci_run": 43281921897
         },
         {
-          "path": "research/nightfall/2026-11-information-cost-dissertation/check_joint_information_phase_diagram.py",
-          "verification": "historical exact finite CI PASS",
-          "ci_run": 43281921897
+          "path": null,
+          "verification": "manuscript Appendix B reports check_joint_frontier_exact.py with 123 adaptive, 161 live-query and six rank examples; exact script and corresponding run receipt not located in current GitHub repository"
         }
       ],
       "missing_for_exact_endpoint": "Posterior orthogonal Bayes-risk split analytic with finite checker; source-specific L2 filtration not compiled.",
@@ -1214,13 +1225,13 @@
       "source_certificates": [],
       "finite_evidence": [
         {
-          "path": "research/nightfall/2026-11-information-cost-dissertation/check_addressed_family_exact.py",
-          "verification": "source_present; exact manuscript-count result not independently run in this session"
+          "path": "research/nightfall/2026-11-information-cost-dissertation/check_joint_information_phase_diagram.py",
+          "verification": "historical exact finite CI PASS (929 Boolean, 534 heterogeneous, 18 posterior, 12 rare, 35 sharp, 12 threshold cases)",
+          "ci_run": 43281921897
         },
         {
-          "path": "research/nightfall/2026-11-information-cost-dissertation/check_joint_information_phase_diagram.py",
-          "verification": "historical exact finite CI PASS",
-          "ci_run": 43281921897
+          "path": null,
+          "verification": "manuscript Appendix B reports check_joint_frontier_exact.py with 123 adaptive, 161 live-query and six rank examples; exact script and corresponding run receipt not located in current GitHub repository"
         }
       ],
       "missing_for_exact_endpoint": "Conditional risk formula analytic and finite rational checks; no exact Lean theorem.",
@@ -1238,8 +1249,8 @@
       "source_certificates": [],
       "finite_evidence": [
         {
-          "path": "research/nightfall/2026-11-information-cost-dissertation/check_addressed_family_exact.py",
-          "verification": "source_present; exact manuscript-count result not independently run in this session"
+          "path": null,
+          "verification": "manuscript Appendix B reports check_joint_frontier_exact.py with 123 adaptive, 161 live-query and six rank examples; exact script and corresponding run receipt not located in current GitHub repository"
         }
       ],
       "missing_for_exact_endpoint": "Offline frontier conditional on linear information from chosen coefficient queries; finite checker only.",
@@ -1257,8 +1268,8 @@
       "source_certificates": [],
       "finite_evidence": [
         {
-          "path": "research/nightfall/2026-11-information-cost-dissertation/check_addressed_family_exact.py",
-          "verification": "source_present; exact manuscript-count result not independently run in this session"
+          "path": null,
+          "verification": "manuscript Appendix B reports check_joint_frontier_exact.py with 123 adaptive, 161 live-query and six rank examples; exact script and corresponding run receipt not located in current GitHub repository"
         }
       ],
       "missing_for_exact_endpoint": "Live queried coefficient depends on observed address; timing oracle formalization and tradeoff only checked on finite examples.",
@@ -1276,8 +1287,8 @@
       "source_certificates": [],
       "finite_evidence": [
         {
-          "path": "research/nightfall/2026-11-information-cost-dissertation/check_addressed_family_exact.py",
-          "verification": "source_present; exact manuscript-count result not independently run in this session"
+          "path": null,
+          "verification": "manuscript Appendix B reports check_joint_frontier_exact.py with 123 adaptive, 161 live-query and six rank examples; exact script and corresponding run receipt not located in current GitHub repository"
         }
       ],
       "missing_for_exact_endpoint": "Annihilator/linear-span argument analytic; rational matrix rank checks are not a general Lean theorem.",
@@ -1295,8 +1306,8 @@
       "source_certificates": [],
       "finite_evidence": [
         {
-          "path": "research/nightfall/2026-11-information-cost-dissertation/check_addressed_family_exact.py",
-          "verification": "source_present; exact manuscript-count result not independently run in this session"
+          "path": null,
+          "verification": "manuscript Appendix B reports check_joint_frontier_exact.py with 123 adaptive, 161 live-query and six rank examples; exact script and corresponding run receipt not located in current GitHub repository"
         }
       ],
       "missing_for_exact_endpoint": "Generic bias exceptional-set argument analytic; finite rational rank cases do not quantify almost every law.",
@@ -1403,12 +1414,16 @@
       "finite_evidence": [
         {
           "path": "research/nightfall/2026-11-information-cost-dissertation/check_addressed_family_exact.py",
-          "verification": "source_present; exact manuscript-count result not independently run in this session"
+          "verification": "repository checker only: 6561 small n=2 two-sample trivalent property-testing functions; does NOT test posterior/adaptive/live query frontier"
         },
         {
           "path": "research/nightfall/2026-11-information-cost-dissertation/check_joint_information_phase_diagram.py",
-          "verification": "historical exact finite CI PASS",
+          "verification": "historical exact finite CI PASS (929 Boolean, 534 heterogeneous, 18 posterior, 12 rare, 35 sharp, 12 threshold cases)",
           "ci_run": 43281921897
+        },
+        {
+          "path": null,
+          "verification": "manuscript Appendix B reports check_joint_frontier_exact.py with 123 adaptive, 161 live-query and six rank examples; exact script and corresponding run receipt not located in current GitHub repository"
         }
       ],
       "missing_for_exact_endpoint": "Composite addressed-family costs; finite checkers apply but 6.1/6.2/6.7 and safety predicates not jointly compiled.",
@@ -1422,14 +1437,9 @@
       "kind": "Proposition",
       "title": "Exact high-order interaction energy of a single deletion",
       "pdf_page": 57,
-      "machine_status": "FINITE_CHECK_ONLY",
+      "machine_status": "ANALYTIC_ONLY",
       "source_certificates": [],
-      "finite_evidence": [
-        {
-          "path": null,
-          "verification": "the manuscript reports 1414 exact convolution assertions; exact script and run output not located in inspected repository paths or code search"
-        }
-      ],
+      "finite_evidence": [],
       "missing_for_exact_endpoint": "Explicit high-order Fourier energy of a needle; analytic combinatorial identity and manuscript-reported checks only.",
       "full_end_to_end_lean": false,
       "non_author_review": false,
