@@ -72,6 +72,10 @@ or coefficient `sqrt(3/12500)/pi^6`, **not** the stronger earlier manuscript coe
 
 **First extension gate:** formal proof of Hoeffding-support degree ↔ indicator-product degree and independently reviewed finite-partition lift, then compose actual posterior rather than adding more abstract stopping inequalities.
 
+## Simpler standalone exponent-two analytic reconstruction (11 November 2026)
+
+A [source-function proof with all mathematical dependencies derived](../../research/nightfall/2026-11-quadratic-law-free-audit/UNIVERSAL_QUADRATIC_INFLUENCE_E2E_ANALYTIC_v1.md) recovers the **older v7** constant \(225(1+\sqrt3)^2\) for arbitrary independent product probability spaces and measurable Hoeffding-degree-two functions. Its principal simplifying operator is direct independent coordinate switching: bounded degree-two interpolation supplies pointwise \(\sum_i\mathrm{osc}_i\le16B\), eliminating reliance on the separately compiled product-row theorem. The proof then uses actual Hoeffding components, global parity matching, greedily assigned independent Hilbert increments, and an \(L^1/L^2/L^4\) interpolation. [Exact rational finite regression](../../research/nightfall/2026-11-quadratic-law-free-audit/q2_e2e_exact_audit.py) and [SHA-256 manifest](../../research/nightfall/2026-11-quadratic-law-free-audit/SHA256SUMS_E2E_ANALYTIC_v1) are archived. This is an **author-side complete written proof**, **not a compiled end-to-end Lean theorem, outside referee result, new claim of originality, or stronger bound than v8**. The canonical v8 frozen source and all earlier proof passports are unchanged.
+
 
 ## Operational SLD tensor sharpness — physical ternary obstruction and binary no-loss (11 Nov 2026)
 
