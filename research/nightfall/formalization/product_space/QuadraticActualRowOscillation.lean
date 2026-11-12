@@ -156,4 +156,79 @@ theorem actual_degree_two_centered_sections_from_rows
     _ = 2 * a i := by
           rw [← Finset.sum_mul, hp1 i, one_mul]
 
+/-- A genuinely source-derived Hilbert L2 section budget for every bounded,
+degree-two finite-product observable, without a positive-atom assumption.
+
+For each fixed configuration x, the square-root quantities are the
+L2(p_i) norms of the actual centered coordinate resampling sections.
+Unlike the earlier pointwise row estimate, this theorem carries the
+coordinate probability weights and the Hilbert norm into the conclusion.
+
+This remains a SECTION estimate, not the variance-squared influence
+theorem; the matching/ownership and independent moment synthesis remain
+necessary. -/
+theorem actual_degree_two_hilbert_section_budget
+    (p : ι → α → ℝ)
+    (hp : ∀ i s, 0 ≤ p i s)
+    (hp1 : ∀ i, ∑ s, p i s = 1)
+    (f : (ι → α) → ℝ)
+    (hf : ∀ x, |f x| ≤ 1)
+    (hdegree : ESDegreeLE p f 2)
+    (x : ι → α) :
+    (∑ i : ι,
+      Real.sqrt (∑ s : α, p i s *
+        (f (Function.update x i s) -
+         (∑ t : α, p i t * f (Function.update x i t))) ^ 2)) ≤
+      8 * Real.pi ^ 2 := by
+  classical
+  obtain ⟨a, ha0, hcost, hcenter⟩ :=
+    actual_degree_two_centered_sections_from_rows
+      p hp hp1 f hf hdegree x
+  let D : ι → α → ℝ := fun i s =>
+    f (Function.update x i s) -
+      (∑ t : α, p i t * f (Function.update x i t))
+  let E : ι → ℝ := fun i =>
+    ∑ s : α, p i s * (D i s) ^ 2
+  change (∑ i : ι, Real.sqrt (E i)) ≤ 8 * Real.pi ^ 2
+  have hD (i : ι) (s : α) : |D i s| ≤ 2 * a i :=
+    hcenter i s
+  have hDsq (i : ι) (s : α) : (D i s) ^ 2 ≤ (2 * a i) ^ 2 := by
+    obtain ⟨hl, hu⟩ := abs_le.mp (hD i s)
+    have hminus : 0 ≤ 2 * a i - D i s := sub_nonneg.mpr hu
+    have hplus : 0 ≤ 2 * a i + D i s := by linarith
+    nlinarith [mul_nonneg hminus hplus]
+  have hEnonneg (i : ι) : 0 ≤ E i := by
+    dsimp [E]
+    apply Finset.sum_nonneg
+    intro s _
+    exact mul_nonneg (hp i s) (sq_nonneg _)
+  have hEle (i : ι) : E i ≤ (2 * a i) ^ 2 := by
+    dsimp [E]
+    calc
+      (∑ s : α, p i s * (D i s) ^ 2) ≤
+        ∑ s : α, p i s * (2 * a i) ^ 2 := by
+          apply Finset.sum_le_sum
+          intro s _
+          exact mul_le_mul_of_nonneg_left (hDsq i s) (hp i s)
+      _ = (2 * a i) ^ 2 := by
+        rw [← Finset.sum_mul, hp1 i, one_mul]
+  have hroot (i : ι) : Real.sqrt (E i) ≤ 2 * a i := by
+    have hsq := hEle i
+    have hsqr : (Real.sqrt (E i)) ^ 2 = E i :=
+      Real.sq_sqrt (hEnonneg i)
+    have hrl : 0 ≤ Real.sqrt (E i) := Real.sqrt_nonneg _
+    have har : 0 ≤ 2 * a i := by nlinarith [ha0 i]
+    nlinarith
+  calc
+    (∑ i : ι, Real.sqrt (E i)) ≤
+        ∑ i : ι, 2 * a i := by
+          apply Finset.sum_le_sum
+          intro i _
+          exact hroot i
+    _ = 2 * (∑ i : ι, a i) := by rw [Finset.mul_sum]
+    _ ≤ 2 * (4 * Real.pi ^ 2) :=
+      mul_le_mul_of_nonneg_left hcost (by norm_num)
+    _ = 8 * Real.pi ^ 2 := by ring
+
+
 end Nightfall.Observability.QuadraticActualRows

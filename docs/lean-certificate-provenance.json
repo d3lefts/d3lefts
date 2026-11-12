@@ -741,14 +741,14 @@
     {
       "path": "research/nightfall/formalization/product_space/QuadraticActualRowOscillation.lean",
       "classification": "quarantine",
-      "note": "Actual arbitrary finite-product Hoeffding-degree-two f, arbitrary normalized laws and zero-mass atoms: source-level row controls all pairwise coordinate replacements with cost 4π², total 8π² oscillation, and real centered resampling sections bounded by the same row, all strict kernel checked. Not the full exponent-two theorem.",
+      "note": "Actual bounded Efron–Stein degree-two f on arbitrary finite product laws: canonical Hilbert L2 resampling sections satisfy the pointwise 8π² budget without positive atom floor, supported by strict named Lean receipts. This is not the full variance-squared exponent-two influence theorem.",
       "passport": "active-proof-passport.html",
-      "ci_run": 43120669405,
-      "ci_run_head_sha": "ec2b0356812cd9dbef5fe3da00d09e44ecca2edf",
+      "ci_run": 43161559862,
+      "ci_run_head_sha": "db21c0a1d33ce3b333cb3256c2e05dde08f5eda5",
       "ci_source_match_status": "same-git-blob-as-successful-ci-head",
-      "ci_receipt_scope": "Strict named Lean 4.33 Turturean-pinned PASS run 43120669405: row_controls_all_sections, total_section_budget, centered_sections_from_rows. All three source-hash-matched and only foundational axioms. This does not prove the entire exponent-two influence theorem.",
+      "ci_receipt_scope": "Strict pinned Lean 4.33 Turturean PASS run 43161559862: actual_degree_two_hilbert_section_budget, with real source function, normalized product law and ESDegreeLE hypothesis, standard axioms only. Does not prove the terminal quadratic influence inequality.",
       "global_priority": "unverified",
-      "source_blob_sha": "1c9d73ac90c54167851dfc956ca192b5249cbbac"
+      "source_blob_sha": "b21fdc112c9294c40485cc1bd5955e915aca27d9"
     },
     {
       "path": "research/nightfall/formalization/product_space/QuadraticHoeffdingBridge.lean",
