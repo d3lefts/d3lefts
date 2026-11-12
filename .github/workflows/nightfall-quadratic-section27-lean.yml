@@ -25,6 +25,7 @@ jobs:
           git clone https://github.com/physical-superintelligence/aaronson-ambainis.git /tmp/aa
           git -C /tmp/aa checkout 2a6ceaef872ae993708950f951989134084b851a
           (cd /tmp/aa && lake exe cache get)
+          (cd /tmp/aa && lake build AaronsonAmbainis.DetTheorem AaronsonAmbainis.TwoSided.Antipodal AaronsonAmbainis.Bridge.Positivity AaronsonAmbainis.Row.Main AaronsonAmbainis.Pack.Main AaronsonAmbainis.Dual.Main AaronsonAmbainis.Level.Integral AaronsonAmbainis.TwoSided.CauchySchwarz)
       - name: Compile genuine source-function and supporting components in one project
         shell: bash
         run: |
