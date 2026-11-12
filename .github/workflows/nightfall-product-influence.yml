@@ -170,6 +170,7 @@ jobs:
             --decl $N.actual_degree_two_row_controls_all_sections \
             --decl $N.actual_degree_two_total_section_budget \
             --decl $N.actual_degree_two_centered_sections_from_rows \
+            --decl $N.actual_degree_two_hilbert_section_budget \
             --json-out lean-receipts/quadratic-actual-row-oscillation.json || {
               python3 -c "import json;r=json.load(open('lean-receipts/quadratic-actual-row-oscillation.json'));print(r.get('status'));print((r.get('stdout') or '')[-40000:]);print((r.get('stderr') or '')[-9000:])" || true
               exit 1
