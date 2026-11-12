@@ -1,0 +1,135 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1.02in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs,hyperref,microtype}
+\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\id}{\mathbf 1}
+\newcommand{\HH}{\mathsf H}
+\title{\bf Sharpness of the Operational SLD Tensor Transfer:\\ Ternary Exponential Hiding and Binary No-Loss}
+\author{Devin J. Wright\\\small NIGHTFALL research program; AI-assisted construction and audit}
+\date{11 November 2026 \quad\small Research addendum / no external referee or priority certification}
+\begin{document}
+\maketitle
+\begin{abstract}
+We resolve the quantitative sharpness question for the $2^{1-d}$ factor in the operational symmetric logarithmic derivative (SLD) transfer of \emph{Universal Observability}. The coefficient is exactly optimal even after restricting to legitimate independent classical inputs and locally prepared pure qubit states with strictly positive local contrast Gram operators. A uniform ternary $d$-coordinate source, a bounded real pure degree-$d$ target with variance $1/2$, and a faithful local qubit average yield a closed-form terminal Bayes gain. At a fixed local visibility $a=3/8$, its ratio to $a^d$ times classical influence decays as $2(2/3)^d$, excluding every polynomial-degree improvement of the generic transfer. A complementary Jensen argument proves a factor-one SLD comparison for simple tensor products of Hermitian local contrasts, implying that all binary-input Hoeffding interactions \emph{avoid} the additional $2^{1-d}$ penalty. A separate commuting binary example shows that the remaining factor $a^d$ cannot generally be removed. These are mathematical derivations with an independently represented finite-matrix checker, not claims of historical originality or independent human review.
+\end{abstract}
+
+\section{Operational setting}
+For a faithful state $b$, let $J_b(H)=(bH+Hb)/2$ and
+\[
+ Q_b(H):=\Tr\bigl[H J_b^{-1}(H)\bigr]=\sum_{u,v}\frac{2|H_{uv}|^2}{\lambda_u+\lambda_v}
+\]
+in an eigenbasis of $b$, where $H=H^*$ and $\lambda_u>0$. For independent finite classical sources $X_i\sim\mu_i$ and locally prepared states $\rho_x=\bigotimes_i\rho_{i,x_i}$, put $b_i=\E\rho_{i,X_i}\succ0$, and define on the centered real source space
+\[
+ T_i g=\E[g(X_i)\rho_{i,X_i}],\qquad K_i=T_i^*J_{b_i}^{-1}T_i,\qquad a_i=\lambda_{\min}(K_i).
+\]
+For a real target $f$ with centered Hoeffding component $f_S$, let $A_S=(\bigotimes_{i\in S}T_i)f_S$ and $\gamma_S=Q_{b_S}(A_S)$. Operational quantum ANOVA from the companion manuscript identifies $\gamma_S$ as the nonnegative interaction gain, with terminal gain $\Delta_i=\sum_{S\ni i}\gamma_S$.
+The preceding manuscript established
+\begin{equation}\label{eq:envelope}
+\gamma_S\ge 2^{1-|S|}\langle f_S,(\otimes_{i\in S}K_i)f_S\rangle,
+\qquad \Delta_i\ge 2^{1-d}a^d I_i(f)
+\end{equation}
+when $f$ has degree at most $d$ and $a_i\ge a\in(0,1]$.
+
+\section{Physical sharpness and fixed-visibility separation}
+\begin{theorem}[Ternary coherent-phase obstruction]\label{thm:ternary}
+Let $d\ge1$, and let $X_1,\dots,X_d$ be independent, uniform on $\{0,1,2\}$. Put $\omega=e^{2\pi i/3}$, choose any $p\in(1/2,1)$, write $q=1-p$, $u=\sqrt{pq}$, and encode each symbol $x$ by the pure qubit
+\[
+ \rho_x=\begin{pmatrix}p&u\omega^{-x}\\u\omega^x&q\end{pmatrix}
+ =\bigl(\sqrt p\,|0\rangle+\sqrt q\,\omega^x|1\rangle\bigr)
+ \bigl(\sqrt p\,\langle0|+\sqrt q\,\omega^{-x}\langle1|\bigr).
+\]
+Define $f_d(x)=\Re\omega^{x_1+\cdots+x_d}$. Then $|f_d|\le1$, its Hoeffding degree is exactly $d$, and
+\begin{equation}\label{eq:exact}
+ \mathrm{Var}(f_d)=I_i(f_d)=\frac12,\qquad
+ K_i=2pq\,\id_{L_0^2(\mu_i)},\quad a_i=a=2pq,
+ \qquad\Delta_i=\frac{(pq)^d}{p^d+q^d}.
+\end{equation}
+Every proper register subset has zero Bayes gain, whereas joint observation of all $d$ registers achieves the stated $\Delta_i$. In particular,
+\begin{equation}\label{eq:ratio}
+ \boxed{\frac{\Delta_i}{a^d I_i(f_d)}=\frac{2^{1-d}}{p^d+q^d}.}
+\end{equation}
+For fixed $p=3/4$, $a=3/8$ and
+\begin{equation}\label{eq:fixed}
+ \boxed{\Delta_i=\frac{3^d}{4^d(3^d+1)},\qquad
+ \frac{\Delta_i}{a^dI_i(f_d)}=\frac{2^{d+1}}{3^d+1}\sim2(2/3)^d.}
+\end{equation}
+Consequently no universal polynomial $P$ and positive constant $c$ give $\Delta_i\ge c a^d I_i(f)/P(d)$ for this class of sources and encodings. Moreover, at each fixed $d$, the coefficient $2^{1-d}$ in the first inequality of \eqref{eq:envelope} is the largest possible uniformly across locally prepared finite-alphabet quantum models with $K_i\succ0$.
+\end{theorem}
+\begin{proof}
+The root-of-unity identities $\E\omega^{X_i}=\E\omega^{2X_i}=0$ imply $\E[f_d\mid X_S]=0$ for every proper $S\subsetneq[d]$. Thus $f_d$ is its sole order-$d$ Hoeffding component. Also $\E f_d=0$ and $\E f_d^2=1/2$, so $I_i(f_d)=1/2$.
+
+The local average is $b=\operatorname{diag}(p,q)\succ0$. An orthonormal basis of the real centered ternary source space consists of $g_c(x)=\sqrt2\cos(2\pi x/3)$ and $g_s(x)=\sqrt2\sin(2\pi x/3)$. The contrast map sends them to $u\sigma_x/\sqrt2$ and $u\sigma_y/\sqrt2$, respectively. Since $J_b^{-1}$ multiplies off-diagonal matrix entries by $2/(p+q)=2$, these images are SLD-orthogonal and have squared SLD energy $2u^2$ each. Hence $K=2pq\,\id$, proving the local claim.
+
+Write $B=b^{\otimes d}$. Expand $\rho_x=b+u(\omega^{-x}|0\rangle\langle1|+\omega^x|1\rangle\langle0|)$. Orthogonality of the ternary characters shows that the target-weighted density matrix has exactly two nonzero entries:
+\[
+ A=\E\bigl[f_d(X)\rho_{X_1}\otimes\cdots\otimes\rho_{X_d}\bigr]
+ =\frac{u^d}{2}\bigl(|0^d\rangle\langle1^d|+|1^d\rangle\langle0^d|\bigr).
+\]
+These extreme off-diagonal matrix units have zero partial trace over any nonempty factor, hence every proper register subset has zero score and zero Bayes gain. The corresponding $B$-eigenvalues are $p^d$ and $q^d$, so Personick's operational SLD formula yields
+\[
+ G^*([d])=Q_B(A)=2\cdot\frac{u^{2d}}4\cdot\frac{2}{p^d+q^d}=\frac{u^{2d}}{p^d+q^d}.
+\]
+Therefore all terminal gains equal $G^*([d])$, and \eqref{eq:ratio}--\eqref{eq:fixed} follow by exact algebra. The fixed-$p$ ratio decreases exponentially, ruling out every polynomial replacement. Finally, for fixed $d$, $p\uparrow1$ makes $p^d+q^d\to1$ while each $K_i=2pq\,\id$ remains positive before the limit. Therefore the universal best constant relative to $\otimes_iK_i$ cannot exceed $2^{1-d}$. Combined with \eqref{eq:envelope}, the coefficient is exact. The limiting visibility tends to zero; this does not undermine the fixed-$a=3/8$ exponential separation.
+\end{proof}
+
+\section{No extra quantum penalty for simple Hermitian contrasts}
+\begin{lemma}[Factor-one SLD supermultiplicativity on Hermitian simple tensors]\label{lem:product}
+For faithful finite-dimensional states $b_i$ and arbitrary Hermitian matrices $H_i$,
+\begin{equation}\label{eq:simple}
+ \boxed{Q_{\otimes_{i=1}^d b_i}\bigl(\otimes_{i=1}^d H_i\bigr)
+ \ge\prod_{i=1}^d Q_{b_i}(H_i).}
+\end{equation}
+The coefficient $1$ is sharp, even for nonzero Hermitian contrasts.
+\end{lemma}
+\begin{proof}
+Choose eigenbases $b_i=\sum_j\lambda_{ij}|j\rangle\langle j|$. Expand both sides using $Q_b(H)=\sum_{j,k}2|H_{jk}|^2/(\lambda_j+\lambda_k)$. For a fixed tuple of \emph{unordered} eigen-index pairs $\{j_i,k_i\}$, Hermiticity ensures that the absolute-squared matrix-element weight is invariant under independently swapping $j_i$ and $k_i$. If $j_i=k_i$, regard the two orientations as identical. Let $\varepsilon_i$ be independent fair swaps and define
+\[
+ D(\varepsilon)=\prod_{i=1}^d \lambda_{i,j_i(\varepsilon_i)}
+ +\prod_{i=1}^d \lambda_{i,k_i(\varepsilon_i)}.
+\]
+The relevant global-to-local kernel ratio averaged over orientations is
+\[
+ \E_{\varepsilon}\left[
+ \frac{2^{1-d}\prod_i(\lambda_{ij_i}+\lambda_{ik_i})}{D(\varepsilon)}\right].
+\]
+Now $\E D(\varepsilon)=2^{1-d}\prod_i(\lambda_{ij_i}+\lambda_{ik_i})$. Jensen's inequality for the convex function $1/t$ implies the displayed mean is at least $1$. Sum over unordered pairs with their common nonnegative weights to get \eqref{eq:simple}. Equality occurs when each $b_i$ is maximally mixed (or for diagonal inputs), so the constant is sharp.
+\end{proof}
+
+\begin{corollary}[Binary local alphabets incur no extra SLD tensor loss]\label{cor:binary}
+Suppose all nontrivial classical input alphabets are binary, with arbitrary nondegenerate biases and arbitrary (possibly noncommuting) faithful-average local quantum encoders. Then for every classical Hoeffding component $f_S$,
+\[
+ \boxed{\gamma_S\ge\langle f_S,(\otimes_{i\in S}K_i)f_S\rangle
+ \ge\bigl(\prod_{i\in S}a_i\bigr)\|f_S\|_{L^2}^2.}
+\]
+Consequently, if $\deg(f)\le d$ and $a_i\ge a$, then $\Delta_i\ge a^d I_i(f)$ for every $i$.
+\end{corollary}
+\begin{proof}
+Every centered real $L^2$ space on a binary alphabet is one-dimensional. Thus a pure Hoeffding component is a real multiple of the tensor product of its normalized centered single-coordinate functions. Its encoded contrast is a real multiple of a simple tensor of Hermitian matrices. Apply Lemma~\ref{lem:product}, then the scalar local Gram bound. Summing nonnegative interaction gains over $S\ni i$ proves the terminal statement.
+\end{proof}
+
+\begin{corollary}[The factor $a^d$ remains necessary for commuting binary encoders]
+For each fixed $0<a<1$ there is a family of independent uniform signs, commuting local qubit encoders with $K_i=a$, and the bounded parity target $f(x)=\prod_i x_i$, such that $\mathrm{Var}(f)=I_i(f)=1$ but $\Delta_i=a^d$ for all $i$.
+\end{corollary}
+\begin{proof}
+For sign input $x\in\{-1,1\}$, take $\rho_x=(I+x\sqrt a\,\sigma_z)/2$, with $b=I/2$. The centered local contrast $T(x)=\sqrt a\,\sigma_z/2$ has SLD energy $a$. The full target-weighted density is $T(x)^{\otimes d}$, and the SLD inverse at $b^{\otimes d}$ is scalar multiplication by $2^d$. Thus its SLD energy equals $a^d$. All proper conditional target scores vanish.
+\end{proof}
+
+\section{Interpretation, provenance and next questions}
+The full SLD-tensor coefficient $2^{1-d}$ is sharp even for \emph{physical} local preparations; the ternary example supplies a positive-visibility, constant-variance, all-degree obstruction to polynomial replacement. The binary result locates a structural boundary: independent local Hermitian tensor contrasts themselves incur no extra quantum penalty; destructive interference among multiple local contrast directions is essential to the ternary loss. Neither result is an unconditional quantum Aaronson--Ambainis inequality with only polynomial degree dependence: the commuting parity example already makes $a^d$ unavoidable at fixed $a<1$.
+
+The quantum gain here is optimal \emph{single-copy scalar Bayes mean-square gain under unrestricted joint measurements} on the designated registers. The theorem does not concern quantum computational query complexity, many-copy asymptotics, or a restriction to local/separable POVMs. The local source/encoder setup is finite and uses faithful average states; the pure conditional qubits in Theorem~\ref{thm:ternary} cause no singularity because the average is faithful.
+
+The proof uses the operational SLD estimator from Personick and the interaction formalism of the accompanying NIGHTFALL manuscript. Relevant prior art in quantum $\chi^2$ divergence and strong-data-processing tensorization includes Cao--Lu (2019) and Hirche--Rouz\'e--Fran\c ca (2022). This dated topical check has not established historical priority of either the explicit trine-phase separation or the simple-tensor Jensen lemma. Independent specialist review is required before a publishability claim. The accompanying code has two independently represented checks (root-of-unity exact arithmetic and density-matrix computation), plus sampled stress tests; it does not prove the universally quantified Jensen result by enumeration.
+
+\begin{thebibliography}{9}\small
+\bibitem{personick} S. Personick, Application of quantum estimation theory to analog communication over quantum channels, \emph{IEEE Trans. Inf. Theory} \textbf{17} (1971), 240--246.
+\bibitem{cao} Y. Cao and J. Lu, Tensorization of the strong data processing inequality for quantum chi-square divergences, \emph{Quantum} \textbf{3} (2019), 199. \url{https://arxiv.org/abs/1904.06562}.
+\bibitem{hirche} C. Hirche, C. Rouz\'e and D. Stilck Fran\c ca, On contraction coefficients, partial orders and approximation of capacities for quantum channels, \emph{Quantum} \textbf{6} (2022), 862.
+\bibitem{wright} D. J. Wright, \emph{Universal Observability: Distribution-Free Classical Prediction and Quantum Information Geometry}, NIGHTFALL pre-referee manuscript (11 November 2026), Section 5.
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,32 @@
+name: NIGHTFALL SLD transfer sharpness — exact replay and proof-source lint
+
+on:
+  push:
+    paths:
+      - "research/nightfall/2026-11-sld-transfer-sharpness/**"
+      - ".github/workflows/nightfall-sld-transfer-sharpness.yml"
+  pull_request:
+    paths:
+      - "research/nightfall/2026-11-sld-transfer-sharpness/**"
+      - ".github/workflows/nightfall-sld-transfer-sharpness.yml"
+
+jobs:
+  sld-sharpness:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install pinned numerical dependency
+        run: python -m pip install numpy==2.2.6
+      - name: Replay exact character and noncommuting matrix tests
+        run: python research/nightfall/2026-11-sld-transfer-sharpness/check_sld_separation.py
+      - name: Check manuscript source and source digests
+        run: |
+          test -s research/nightfall/2026-11-sld-transfer-sharpness/SLD_Exponential_Separation.tex
+          grep -F "Ternary coherent-phase obstruction" research/nightfall/2026-11-sld-transfer-sharpness/SLD_Exponential_Separation.tex
+          grep -F "Factor-one SLD supermultiplicativity" research/nightfall/2026-11-sld-transfer-sharpness/SLD_Exponential_Separation.tex
+          sha256sum research/nightfall/2026-11-sld-transfer-sharpness/SLD_Exponential_Separation.tex research/nightfall/2026-11-sld-transfer-sharpness/check_sld_separation.py
