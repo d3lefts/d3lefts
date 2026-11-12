@@ -66,7 +66,6 @@ theorem sharp_rho_finite_interval
       rw [abs_div, abs_of_pos hr]
     rw [hA]
     field_simp
-    ring
   have hdist (i j : α) :
       r * |a i - a j| = |u i - u j| := by
     have hA : a i - a j = (u i - u j) / r := by
