@@ -1,0 +1,10 @@
+PASS direct independent rational density-matrix gain = quantum hypergraph spectrum: 64 cases
+PASS collective-vs-product readout squared-error gain ratio = 81/80
+PASS Bell-ensemble entangled conditional states, product average and full t^4 operational gain: 4 rational cases
+PASS direct qubit-matrix graph gadget on all 16 subsets
+PASS graph->quantum gain, complete finite clique correspondence: graphs=1098 subsets=33864 instances=4306
+PASS bounded-pathwidth exact DP versus independent exhaustive search: 136 instances
+PASS trine exact moments and sharp factor-two complex sensing compatibility at c=1/2
+PASS algebraic noise-selection phase change at t^2=1/2
+AUDIT_SUMMARY={"c1": "1/9", "c2": "1/80", "c3": "11/7776", "complex_trine_gains": ["1/16", "1/16", "1/16"], "entangled_ensemble_cases": 4, "finite_graph_counts": [1098, 33864, 4306], "pathwidth_dp_cases": 136, "rational_density_cases": 64}
+AUDIT_SUMMARY_SHA256=bb4526fc1a867206cb0609859fa2d325f55ee9d222e6d70cd792566334e32f56

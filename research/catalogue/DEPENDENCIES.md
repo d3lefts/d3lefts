@@ -45,3 +45,37 @@ For each edge record: source declaration/proof section, assumptions transferred,
 **Canonical November 11 revision:** [v7 analytic manuscript](../../papers/finite-product-influence/Bias_Free_Aaronson_Ambainis_All_Product_Spaces_v7.tex), [rank-sensitive proof](../../papers/finite-product-influence/Rank_Optimal_Observation_Section_v7.tex), and [deduplication/review note](NOV11_RECONCILIATION.md). These are not end-to-end Lean receipts.
 
 **Next decisive tasks:** [Referee desk](../referee/README.md).
+
+
+## November 12 source checkpoint — independent quadratic / cubic overlap / quantum COST
+
+The following labels document dependency **scope**, not a promotion of the existing \`CLAIMS.json\` records or evidence status.
+
+\`\`\`text
+NF-Q2-20261112 [full author-side source; matching + section budget + Hilbert fourth moment]
+  ├── NF-H2-20261112 [rank-linear Hilbert influence; written proof; referee OPEN]
+  │     └── NF-QOBS-20261112 [adaptive whole-coordinate reads and covariance tail;
+  │                            author-side analytic, not runtime, not Lean E2E]
+  ├── NF-WEAK-BACKDOOR-20261112 [any-degree averaging transversal, quadratic base]
+  ├── NF-STRONG-BACKDOOR-20261112 [sectional quadratic reduction; additive t queries]
+  └── NF-CUBIC-BLOCKS-20261112 [independent covered cubic blocks; unrestricted OPEN]
+
+NF-TRIPARTITE-LINK-20261111 [product-average link representation / LE(C) OPEN]
+  └── NF-OVERLAP-KURT-20261112 [Hölder conditional inequality + exact stress]
+       └── NF-SPIKE-TAIL-OPEN-20261112 [uniform spike absorption UNPROVED]
+            └── NF-UNRESTRICTED-CUBIC-OPEN [would follow with other reduction gates]
+
+NF-COST-III-20261111 [one-copy quantum subset hypergraph; exact finite graph/POVM tests]
+  └── NF-COST-IV-20261112 [noisy quadratic terminal visibility;
+                           imports author-side Q2 + SLD transfer]
+       └── NF-COST-V-20261112 [sharp all-qubit visibility conjecture OPEN;
+                               separately merged PR #406]
+\`\`\`
+
+**Independent-of-Turturean scope:** [standalone v2 source](../../papers/sharp-influence-backdoors/README.md), [historical independent degree-two v1](../../papers/sharp-influence-backdoors/archive/Quadratic_Influence_and_Rank_Optimal_Observation_v1.tex), and [v9.2 editorial predecessor](../../papers/finite-product-influence/NIGHTFALL_Beyond_Boolean_Cube_v9_2.tex). The independent quadratic theorem is not a consequence *used from* Turturean. The separate imported general-degree v9.2 branch **does** credit Turturean and is not part of the independent theorem chain.
+
+**Cubic proof boundary:** a top-degree averaging transversal \(H\) yields a weak *influence* reduction but need not leave quadratic sections on observing \(H\). The *stronger* sectional condition \(|S\setminus H|\le2\) permits an additive observation budget. The [aggregate-link moment criterion](../../research/nightfall/2026-11-12-cubic-overlap/README.md) handles dense overlap with bounded row kurtosis, but does not control the unbounded-kurtosis tail.
+
+**Quantum scope boundary:** [COST III–V status map](../../papers/quantum-operational-anova/COST_INTEGRATION_20261112.md). A fixed-subset one-copy optimal collective quantum gain is not a quantum adaptive or local-measurement guarantee. Qubit trine extremality remains conjectural. None is an end-to-end Lean kernel proof or external referee verdict.
+
+**Prior-art, certification and originality:** unchanged open gates. Source snapshots in the above paths are now inspectable; checks run on enumerated finite instances and cannot promote universal results. The exact original manuscript/checker SHA-256 receipts are archived with the relevant source folders.

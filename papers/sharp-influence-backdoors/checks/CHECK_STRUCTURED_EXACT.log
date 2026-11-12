@@ -1,0 +1,5 @@
+PASS 20 exact heterogeneous-support models (17 strong-backdoor, 3 weak-only)
+PASS exact ANOVA splitting and influence charges for all tested models
+PASS cubic address influence, block sharpness, and fixed-set risks: m=2,3,4,7,17
+PASS high-degree weak-vs-strong distinction and parity observation obstruction
+SCOPE: finite exact consequences only; not a universal proof, independent referee, or Lean certificate

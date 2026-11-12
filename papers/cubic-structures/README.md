@@ -8,6 +8,17 @@ A bounded transversal of the size-three Hoeffding supports allows averaging out 
 
 The nonadaptive address-family obstruction rules out certain universal alphabet-free fixed observation budgets. It **does not** refute the unrestricted cubic variance-squared influence conjecture. Exact examples refute some naive expected-max or fourth-moment proof operators; they are not global counterexamples to the target.
 
-Current research PRs on tripartite reduction, link energy, and leaf-spectral conditions remain **draft review work**, not part of the established theorem collection; inspect current PR statuses at the time of reading.
+The tripartite reduction was merged in [PR #349](https://github.com/d3lefts/d3lefts/pull/349) as a *research checkpoint*; the link-energy conjecture remains open and other conditional cubic work may remain in draft PRs. Inspect each PR's current status before asserting certification.
 
 **High-value next theorem:** a dimension/alphabet-independent overlap certificate for interlocking cubic links, with precise conditional-core or codegree hypotheses and independently audited constants. Work is anchored to [the referee desk](../../research/referee/README.md).
+
+
+## November 12 — dense overlapping cubic links: new conditional checkpoint
+
+The [aggregate-link overlap lemma](../../research/nightfall/2026-11-12-cubic-overlap/AGGREGATE_LINK_OVERLAP_LEMMA.md) first groups all cubic interactions incident to an A-coordinate into one Hilbert-valued B×C link, preserving intra-row cancellations that invalidate naive edgewise matching. For row energy \(v_a\), fourth-moment ratio \(\kappa_a\), maximum influence \(M\), and \(W_{\mathrm{spike}}(K)=\sum_{a:\kappa_a>K}v_a\), the author-side proof establishes
+
+\[
+V\le B\sqrt{KM}+W_{\mathrm{spike}}(K).
+\]
+
+It works without a bounded support cover or codegree bound **conditional on moment regularity**. The exact [Hadamard stress test and checker](../../research/nightfall/2026-11-12-cubic-overlap/README.md) includes \(n=4,16,64,256\) and \(\kappa=3-2/n\). Rare categorical addresses have unbounded \(\kappa\), so a uniform \(K\) cannot be assumed. **The bound \(W_{\mathrm{spike}}(K_0)\le C_0B\sqrt M\), unrestricted \`LE(C)\`, and unrestricted cubic exponent-two influence remain unproved.** Linked tripartite reduction was merged in [PR #349](https://github.com/d3lefts/d3lefts/pull/349). Standalone [influence/backdoor paper v2](../sharp-influence-backdoors/README.md) is a separate author-side analytic checkpoint, not a global cubic theorem.
