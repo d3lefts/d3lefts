@@ -1,0 +1,70 @@
+name: NIGHTFALL Wright sharp constant and arbitrary-index limit — pinned Lean
+on:
+  pull_request:
+    paths:
+      - 'research/formalization_candidates/wright/WrightSharpLimitBridge.lean'
+      - '.github/workflows/nightfall-wright-sharp-limit-lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  wright-sharp-limit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install exact Lean 4.33.0 upstream pin
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.33.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch pinned Mathlib via Turturean workspace
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone https://github.com/physical-superintelligence/aaronson-ambainis.git /tmp/aa
+          git -C /tmp/aa checkout 2a6ceaef872ae993708950f951989134084b851a
+          cd /tmp/aa
+          lake exe cache get
+      - name: Strictly kernel-check every newly proved declaration
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Wright.SharpLimit
+          python3 scripts/lean_bridge.py \
+            research/formalization_candidates/wright/WrightSharpLimitBridge.lean \
+            --workspace /tmp/aa --timeout 1800 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.rho_square_identity \
+            --decl $N.rho_scalar_nonnegative \
+            --decl $N.extremal_mass_nonnegative \
+            --decl $N.extremal_center_positive \
+            --decl $N.rho_three_atom_equality \
+            --decl $N.mixed_median_bound \
+            --decl $N.sharp_denominator_identity \
+            --decl $N.finite_bounds_pass_to_limit \
+            --decl $N.finite_witnesses_pass_to_limit \
+            --json-out lean-receipts/wright-sharp-limit.json || {
+              python3 -c "import json;r=json.load(open('lean-receipts/wright-sharp-limit.json'));print(r.get('status'));print((r.get('stdout') or '')[-45000:]);print((r.get('stderr') or '')[-10000:])" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/wright-sharp-limit.json
+      - name: Capture provenance
+        if: always()
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/formalization_candidates/wright/WrightSharpLimitBridge.lean > lean-receipts/SHA256SUMS.txt
+          echo leanprover/lean4:v4.33.0 > lean-receipts/lean-toolchain.txt
+          echo 2a6ceaef872ae993708950f951989134084b851a > lean-receipts/upstream.txt
+      - name: Upload receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wright-sharp-limit-kernel-receipt
+          path: lean-receipts/
+          if-no-files-found: warn
