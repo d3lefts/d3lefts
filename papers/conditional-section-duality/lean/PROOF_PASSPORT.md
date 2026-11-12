@@ -10,6 +10,8 @@
 - Source SHA-256: `d3ddb18999cdc0e87e2ef5c131eac821c74a4141cc9a722b10581de5858cdb35`
 - GitHub Actions: [run 43284555054](https://github.com/d3lefts/d3lefts/actions/runs/43284555054), successful strict kernel/axiom job.
 - Pin: `leanprover/lean4:v4.35.0`, binary commit `eb6cafb7290e8bd5f2937522d8d804f58f02bafc`; Mathlib `v4.35.0` commit `56a005855ea17e0b0958f73ec801ae140b0a1679`.
+- Exact statement contract: [contract.json](contract.json), SHA-256 `7e2023941300f285f6895c07445e45a71c848759f1c2cded8a63fb2a58f3ab9f`, all five theorem types compiled as separate `example : expected_type := by exact ...` witnesses, same pinned Mathlib commit.
+- Stronger subsequent contract-locked [CI run 43285738660](https://github.com/d3lefts/d3lefts/actions/runs/43285738660) **PASS**: official Lean compiler exit 0, all five `allowlisted_dependencies`, source hash unchanged, actual Mathlib workspace SHA verified and exact contract compiled. The earlier run below is retained as an immutable first certificate.
 - Compiler receipt: [nightfall-conditional-section-selector-lean-receipts](https://github.com/d3lefts/d3lefts/actions/runs/43284555054/artifacts/13974282940), JSON protocol `nightfall-lean-bridge/v2`, strict.
 - Audit: all five have `COMPILED` and `allowlisted_dependencies`; only `propext`, `Classical.choice`, `Quot.sound`, no `sorryAx`, no unapproved axiom.
 - Independent finite falsification: existing [check_conditional_sections.py](../../../research/nightfall/2026-11-conditional-section-duality/check_conditional_sections.py) reran with 180 product models and 352 address-query subsets, passed. This test cannot certify universality.
