@@ -1,0 +1,82 @@
+name: NIGHTFALL Wright product influence — focused finite Efron–Stein e2e kernel
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/nightfall-wright-product-es-e2e.yml'
+      - 'research/formalization_candidates/wright/HeterogeneousESDegreeEndpoint.lean'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  finite-product-es-e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install exact upstream Lean 4.33.0 pin
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.33.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Build exact Turturean dependency
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone https://github.com/physical-superintelligence/aaronson-ambainis.git /tmp/aa
+          git -C /tmp/aa checkout 2a6ceaef872ae993708950f951989134084b851a
+          cd /tmp/aa
+          lake exe cache get
+          lake build AaronsonAmbainis.DetTheorem AaronsonAmbainis.TwoSided.Antipodal \
+            AaronsonAmbainis.Bridge.Positivity AaronsonAmbainis.Row.Main \
+            AaronsonAmbainis.Pack.Main AaronsonAmbainis.Dual.Main \
+            AaronsonAmbainis.Level.Integral AaronsonAmbainis.TwoSided.CauchySchwarz
+      - name: Compile complete imported finite-law theorem chain
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space
+          mkdir -p /tmp/aa/.lake/build/lib/lean
+          for module in ProductSpaceTwoSidedBridge ProductRowBound ProductInfluence EfronSteinDegree HeterogeneousAlphabets; do
+            cp "$P/$module.lean" "/tmp/aa/$module.lean"
+            (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/$module.olean" "$module.lean")
+          done
+      - name: Strict kernel-check direct Efron–Stein influence endpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          python3 scripts/lean_bridge.py \
+            research/formalization_candidates/wright/HeterogeneousESDegreeEndpoint.lean \
+            --workspace /tmp/aa --timeout 2400 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl Nightfall.ProductSpace.Heterogeneous.depDegree_implies_depESDegree \
+            --decl Nightfall.ProductSpace.Heterogeneous.heterogeneous_es_influence \
+            --json-out lean-receipts/wright-product-e2e.json || {
+              python3 -c "import json;r=json.load(open('lean-receipts/wright-product-e2e.json'));print(r.get('status'));print((r.get('stdout') or '')[-45000:]);print((r.get('stderr') or '')[-10000:])" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/wright-product-e2e.json
+      - name: Record pinned inputs and exact source hashes
+        if: always()
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean \
+            research/nightfall/formalization/product_space/ProductRowBound.lean \
+            research/nightfall/formalization/product_space/ProductInfluence.lean \
+            research/nightfall/formalization/product_space/EfronSteinDegree.lean \
+            research/nightfall/formalization/product_space/HeterogeneousAlphabets.lean \
+            research/formalization_candidates/wright/HeterogeneousESDegreeEndpoint.lean \
+            > lean-receipts/SHA256SUMS.txt
+          echo 2a6ceaef872ae993708950f951989134084b851a > lean-receipts/upstream.txt
+          echo leanprover/lean4:v4.33.0 > lean-receipts/lean-toolchain.txt
+      - name: Upload receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wright-product-es-e2e-kernel-receipt
+          path: lean-receipts/
+          if-no-files-found: warn
