@@ -24,6 +24,19 @@ The **current specialist-review manuscript** is [Bias-Free Aaronson--Ambainis v8
 
 **Related restricted work:** PR #335 already established cubic top-degree-core transfer; PR #381 shares that backdoor mechanism and separately provides the sharp top-layer projection norm. PR #380 invalidates naive independent-increment fourth-moment transfer to unrestricted cubic overlap. No unrestricted cubic theorem is promoted.
 
+
+## Quantum ANOVA connection — separate, scoped analytic addendum
+
+[Quantum ANOVA / classical quadratic bridge (11 Nov 2026)](QUANTUM_ANOVA_BRIDGE_20261111.md) records the shared Hilbert-projection mechanism, the finite-dimensional **product-average iff universal supermodularity** characterization, and a new conditional terminal-gain inequality for local quantum encoders:
+\[
+\max_i\{G^*([n])-G^*([n]\setminus\{i\})\}\ \ge\
+\frac{\delta_2\operatorname{Var}(f)^2}{K_8 B^2},\qquad
+K_8=(10+2\sqrt2)^2(1+\sqrt3)^2.
+\]
+Here \(\delta_2>0\) is an explicit local Gram/condition-number visibility floor; independence of the classical inputs, local product preparations, faithful local averages, and degree at most two are all required **for this quantitative transfer**. The product-average quantum ANOVA theorem itself allows arbitrary joint conditional states, but the transfer does not. This **terminal leave-one-register-out** result is *not* a single-register-start gain bound or an adaptive quantum measurement/query theorem.
+
+Run `python3 papers/finite-product-influence/check_quantum_anova_bridge_exact.py` for two dependency-free exact rational examples (joint parity gain \(1/9\) and correlated-average supermodularity violation \(1/16\)). These spot-checks do not certify the general noncommuting theorem, v8's analytic proof, or originality. The quantum v3 source and full audit package have not yet been imported into this repository; preserve the frozen v8 TeX and checksum manifest, and do not promote the synthesis to a refereed or Lean-certified result.
+
 ---
 
 ## Exact scope

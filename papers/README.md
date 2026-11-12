@@ -15,6 +15,8 @@ Each entry below is a **reading guide to one canonical source**, not a second co
 | [Cubic Structural Transfers](cubic-structures/README.md) | Restricted deduction conditional on quadratic theorem; unrestricted cubic OPEN | Top-degree cover, selectors and obstructions |
 | [Log-free Greedy Kaczmarz](kaczmarz/README.md) | Elementary written argument, exact rational falsifier; external originality review pending | Best-iterate, not final-iterate runtime |
 
+**Cross-paper synthesis under review:** [Quantum ANOVA and quadratic observability](finite-product-influence/QUANTUM_ANOVA_BRIDGE_20261111.md) gives a proposed classical–quantum manuscript section and a conditional v8-strengthened terminal-gain bound, with [exact rational examples](finite-product-influence/check_quantum_anova_bridge_exact.py). It is not an additional referee-cleared manuscript, a Lean-certified quantum theorem, or an adaptive quantum-query result.
+
 Further mathematical evidence lives in [the finite and historical evidence archive](../research/archive/README.md). For a reviewer assignment begin at [the referee desk](../research/referee/README.md), not the website's decorative scorecard.
 
 ## Reader rules
