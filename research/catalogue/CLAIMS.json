@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "as_of": "2026-11-11",
-  "editorial_scope": "Selected principal claims, reproducible finite cases, and adverse controls; not a complete enumeration of the site's frozen 40 records or 11 historical passports. Original primary files remain at their paths.",
+  "editorial_scope": "Selected principal claims, reproducible finite cases and adverse controls, with 11 November publication preflight entries; not the site's complete frozen historical archive.",
   "status_policy": "For every claim, validity, public-source completeness, external review, priority, and release eligibility are independent fields. Evidence does not upgrade dependencies.",
   "claims": [
     {
@@ -452,6 +452,93 @@
       ],
       "inherited": [
         "Classical DAG/proof-dependency and review-prioritization approaches"
+      ]
+    },
+    {
+      "id": "NF-QUANTUM-SLD-SHARP-20261111",
+      "title": "Sharp condition-number SLD tensor inequality and physical ternary saturation",
+      "area": "quantum-information",
+      "lifecycle": "active",
+      "validity": "analytic-manuscript-unrefereed",
+      "source_status": "public-analytic-proof-and-exact-checkers",
+      "review": "none-recorded",
+      "priority": "unresolved",
+      "primary": "papers/quantum-sld-tensorization/THEOREM_AND_AUDIT.md",
+      "evidence": [
+        "papers/quantum-sld-tensorization/checks/check_trine_score_exact.py",
+        "papers/quantum-sld-tensorization/checks/check_spectral_constant_exact.py",
+        "research/nightfall/2026-11-sld-transfer-sharpness/SLD_Exponential_Separation.tex",
+        "research/nightfall/2026-11-sld-transfer-sharpness/PROOF_PASSPORT.md",
+        "papers/publication-preflight-20261111/REFEREE_GATES.md"
+      ],
+      "dependencies": [],
+      "claim_scope": "Exact optimal inverse-SLD tensor Loewner coefficient for faithful finite-dimensional product average states with specified local condition numbers; physically locally prepared ternary classical-qubit scalar Bayes construction attaining it; fixed-gap exponential normalized interaction hiding. Separate Hermitian simple-tensor factor-one/binary no-extra-loss theorem. Neither quantum adaptive query result nor full universal influence theorem.",
+      "open_gates": [
+        "Non-author review of spectral minimization and operational Bayesian estimation",
+        "Compare exact cosh-ratio inequality and physical saturation with quantum metric/operator prior art",
+        "No end-to-end Lean theorem or worldwide priority finding"
+      ],
+      "inherited": [
+        "Personick Bayesian quantum estimation",
+        "Standard Jordan/SLD metric and spectral decomposition",
+        "NIGHTFALL operational quantum ANOVA as an analytic imported structural input"
+      ]
+    },
+    {
+      "id": "NF-WERNER-INVERSEK-20261111",
+      "title": "Qutrit Werner unrestricted rank-two inverse-copy-number NPT undistillability window",
+      "area": "quantum-entanglement",
+      "lifecycle": "active",
+      "validity": "source-premise-conditional",
+      "source_status": "public-analytic-note-and-downstream-exact-checker",
+      "review": "none-recorded",
+      "priority": "unresolved",
+      "primary": "research/nightfall/projects/werner-atlas/ANALYTIC_CONTINUATION.md",
+      "evidence": [
+        "research/nightfall/projects/werner-atlas/verify_three_block_uniform.py",
+        "research/nightfall/projects/werner-atlas/README.md",
+        "papers/publication-preflight-20261111/REFEREE_GATES.md"
+      ],
+      "dependencies": [],
+      "claim_scope": "Under published sharp two- and three-copy rank-two endpoint inequalities and valid separable-spectator contraction, for every finite integer k>=3, arbitrary complex rank<=2 tensor witness has Q_k(1/3+(7760249/25000000)/k,C)>0. The parameter depends on k; no fixed NPT state established undistillable for all k.",
+      "open_gates": [
+        "Independently check exact published endpoint inequalities J2 and J3 on unrestricted complex rank-two matrices",
+        "Independently prove or break U tensor conjugate U spectator separability/lifting and D_k<=3kB_k",
+        "Specialist novelty review against Costa Rico and Tomar, same parameter/model",
+        "No non-author proof or general Lean certificate"
+      ],
+      "inherited": [
+        "Published two-/three-copy Werner endpoint rank-two estimates",
+        "Separable isotropic U tensor conjugate(U) twirling",
+        "Original October 28 NIGHTFALL three-block construction; Nov 11 refined coefficient is same mechanism"
+      ]
+    },
+    {
+      "id": "NF-BOUVEL-SHUFFLE45-20261111",
+      "title": "Exact finite forcing lengths for consecutive four- and five-shuffles",
+      "area": "permutation-patterns",
+      "lifecycle": "active",
+      "validity": "finite-exact-author-replayed",
+      "source_status": "four-shuffle-public-checker;five-shuffle-source-in-conversation-package-only",
+      "review": "none-recorded",
+      "priority": "unresolved",
+      "primary": "research/nightfall/2026-11-four-shuffle/README.md",
+      "evidence": [
+        "research/nightfall/2026-11-four-shuffle/verify_four_shuffle.py",
+        "research/nightfall/2026-11-four-shuffle/PROOF_PASSPORT.md",
+        "papers/publication-preflight-20261111/SHUFFLE_N5_CERTIFICATE_STATUS.md",
+        "papers/publication-preflight-20261111/SOURCE_MAP.md"
+      ],
+      "dependencies": [],
+      "claim_scope": "Finite computer-assisted N4=20 (fully repository-replayable) and N5=31 (full original C++/Python package replayed outside GitHub, source not yet mirrored). N5 upper: 107480 walks, 107472 forced triple partitions, eight forced quadruple partitions; 30-permutation lower witness tested across all 55 eligible windows. Not the all-k conjecture.",
+      "open_gates": [
+        "Mirror exact N5 source and eight exception certificates to GitHub with pinned GitHub CI",
+        "Independent completeness/code verification and separate lower-witness solver",
+        "Post-2024 precise same-definition priority search and non-author combinatorics review"
+      ],
+      "inherited": [
+        "Mathilde Bouvel conjecture and definition",
+        "Bevan–Elvey Price–Felsner 2024 factor graph and two-pattern perfect matching characterization"
       ]
     }
   ]
