@@ -119,5 +119,5 @@ For \(N=2^n\) and uniform Boolean inputs, let \(g=0\) and \(h_z=1_{\{x=z\}}\). T
 - Prashanth Amireddy, Amik Raj Behera, Srikanth Srinivasan and Madhu Sudan (2025), [A Near-Optimal Polynomial Distance Lemma over Boolean Slices](https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.ICALP.2025.11), discussion of classical cube distance \(\ge2^{-d}\).
 - David Turturean (2026), [A proof of the Aaronson–Ambainis conjecture](https://arxiv.org/abs/2611.09773), all-degree influence (external).
 - Uma Girish, Kunal Mittal, Barak Nehoran and Ran Raz (2026), [Distributional Variants of the Aaronson–Ambainis Conjecture](https://arxiv.org/abs/2609.35327), equivalence under fixed bias and slices.
-- [NIGHTFALL quadratic degree-two manuscript and certificate scope](../../formalization/observability/QUADRATIC_E2E_CERTIFICATION_STATUS.md).
+- [NIGHTFALL quadratic degree-two manuscript and certificate scope](../formalization/observability/QUADRATIC_E2E_CERTIFICATION_STATUS.md).
 - [NIGHTFALL addressed-family exact separation](CHAPTER5_FOUR_COSTS_v1.md).
