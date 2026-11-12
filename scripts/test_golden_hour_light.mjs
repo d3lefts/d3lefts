@@ -98,8 +98,8 @@ try{
         toolbar:document.querySelector('meta[name="theme-color"]')?.content
       };
     });
-    assert.equal(record.value,"V² / [K₈ B²]","The current v8 quadratic denominator leads the hero");
-    assert.ok(record.qualified.includes("K₈=(10+2√2)²(1+√3)²≈1228.36"),"The exact v8 coefficient is displayed, not merely a decimal approximation");
+    assert.equal(record.value,"V² / [C₂ B²]","The current analytic quadratic denominator leads the hero");
+    assert.ok(record.qualified.includes("C₂=(10+2√2)²(1+√3)²≈1228.36"),"The exact current coefficient is displayed, not merely a decimal approximation");
     assert.equal(record.firstFold,"DEGREE TWO","Active quadratic influence is visible immediately");
     assert.equal(record.cells,"2","Degree-two scope is disclosed in the hero");
     assert.equal(record.source,true,"The hero links directly to the qualified current research source");
