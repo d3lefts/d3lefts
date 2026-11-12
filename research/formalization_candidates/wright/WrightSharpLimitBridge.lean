@@ -120,4 +120,64 @@ theorem finite_witnesses_pass_to_limit
     nlinarith
   exact le_trans hi (mul_le_mul_of_nonneg_left hi2 hD)
 
+/-- Nonnegativity of the sharp resampling coefficient follows from the
+already-certified global scalar inequality. -/
+theorem rho_nonnegative : 0 ≤ rho := by
+  have h := rho_scalar_nonnegative (1 / 2 : ℝ)
+  norm_num at h ⊢
+  linarith
+
+/-- Exact coefficient arithmetic for the full Wright sharp theorem.
+
+The three *analytic* hypotheses correspond to the real proof obligations:
+(1) the strengthened certificate-to-influence principle (hprinciple),
+(2) the improved row cost K ≤ π²d²/2 (hK), and
+(3) the total increment L ≤ 4ρd² (hL).
+The result eliminates the auxiliary K,L and yields the exact squared
+Wright manuscript coefficient. It is conditional on these premises,
+not a compiled proof of the full manuscript. -/
+theorem sharp_constant_endpoint_of_analytic_inputs
+    (V M L K d : ℝ)
+    (hM : 0 ≤ M) (hL0 : 0 ≤ L) (hK0 : 0 ≤ K) (hd : 0 ≤ d)
+    (hrow : K ≤ Real.pi ^ 2 * d ^ 2 / 2)
+    (hincr : L ≤ 4 * rho * d ^ 2)
+    (hprinciple :
+      15 * ((8 : ℝ) / 5) ^ 3 * V ^ 5 ≤
+        (125 * L * K ^ 2 * M) ^ 2) :
+    15 * ((8 : ℝ) / 5) ^ 3 * V ^ 5 ≤
+      (125 * rho * Real.pi ^ 4 * d ^ 6 * M) ^ 2 := by
+  have hrho : 0 ≤ rho := rho_nonnegative
+  let T : ℝ := Real.pi ^ 2 * d ^ 2 / 2
+  have hT : 0 ≤ T := by dsimp [T]; positivity
+  have hK2 : K ^ 2 ≤ T ^ 2 := by
+    have hdiff : 0 ≤ (T - K) * (T + K) :=
+      mul_nonneg (sub_nonneg.mpr (show K ≤ T from hrow))
+        (add_nonneg hT hK0)
+    nlinarith
+  have hL2 : L * K ^ 2 ≤ rho * Real.pi ^ 4 * d ^ 6 := by
+    calc
+      L * K ^ 2 ≤ (4 * rho * d ^ 2) * K ^ 2 :=
+        mul_le_mul_of_nonneg_right hincr (sq_nonneg K)
+      _ ≤ (4 * rho * d ^ 2) * T ^ 2 :=
+        mul_le_mul_of_nonneg_left hK2 (by positivity)
+      _ = rho * Real.pi ^ 4 * d ^ 6 := by
+        dsimp [T]
+        ring
+  have hQ : 125 * L * K ^ 2 * M ≤
+      125 * rho * Real.pi ^ 4 * d ^ 6 * M := by
+    calc
+      125 * L * K ^ 2 * M = (125 * M) * (L * K ^ 2) := by ring
+      _ ≤ (125 * M) * (rho * Real.pi ^ 4 * d ^ 6) :=
+        mul_le_mul_of_nonneg_left hL2 (by positivity)
+      _ = 125 * rho * Real.pi ^ 4 * d ^ 6 * M := by ring
+  have hQ0 : 0 ≤ 125 * L * K ^ 2 * M := by positivity
+  have hP0 : 0 ≤ 125 * rho * Real.pi ^ 4 * d ^ 6 * M := by positivity
+  have hSquare :
+      (125 * L * K ^ 2 * M) ^ 2 ≤
+        (125 * rho * Real.pi ^ 4 * d ^ 6 * M) ^ 2 := by
+    have hdiff := mul_nonneg (sub_nonneg.mpr hQ) (add_nonneg hQ0 hP0)
+    nlinarith
+  exact le_trans hprinciple hSquare
+
+
 end Nightfall.Wright.SharpLimit
