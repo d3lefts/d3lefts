@@ -8,7 +8,7 @@ A bounded transversal of the size-three Hoeffding supports allows averaging out 
 
 The nonadaptive address-family obstruction rules out certain universal alphabet-free fixed observation budgets. It **does not** refute the unrestricted cubic variance-squared influence conjecture. Exact examples refute some naive expected-max or fourth-moment proof operators; they are not global counterexamples to the target.
 
-Current research PRs on tripartite reduction, link energy, and leaf-spectral conditions remain **draft review work**, not part of the established theorem collection; inspect current PR statuses at the time of reading.
+The tripartite reduction was merged in [PR #349](https://github.com/d3lefts/d3lefts/pull/349) as a *research checkpoint*; the link-energy conjecture remains open and other conditional cubic work may remain in draft PRs. Inspect each PR's current status before asserting certification.
 
 **High-value next theorem:** a dimension/alphabet-independent overlap certificate for interlocking cubic links, with precise conditional-core or codegree hypotheses and independently audited constants. Work is anchored to [the referee desk](../../research/referee/README.md).
 
