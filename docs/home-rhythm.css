@@ -222,3 +222,44 @@ html[data-nf-theme="dusk"] .nf-deep-disclosure > summary span {color:var(--muted
 #main>.nf-discovery-section .section-intro{line-height:1.73}
 @media(max-width:980px){#main>.nf-discovery-section{grid-template-columns:1fr}}
 @media(max-width:620px){#main>.nf-discovery-section{padding:24px;margin-block:38px}}
+
+/* Signature research: three equal evidence-bearing programs, deliberately quiet. */
+.nf-signature-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:6px}
+.nf-signature-card{min-width:0;display:flex;flex-direction:column;gap:0;padding:clamp(23px,2.8vw,42px);border-right:1px solid var(--line)}
+.nf-signature-card:last-child{border-right:0}
+.nf-signature-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16px;font:600 10px/1.6 var(--mono);letter-spacing:.055em;color:var(--muted)}
+.nf-signature-card h3{font:400 clamp(33px,3.15vw,50px)/1.04 var(--serif);margin:39px 0 18px;max-width:13ch;text-wrap:balance}
+.nf-signature-measure{font:500 clamp(22px,2.55vw,34px)/1.3 var(--mono);letter-spacing:-.055em;overflow-wrap:anywhere;margin:0 0 28px}
+.nf-signature-lead{font-size:14px;line-height:1.79;color:var(--muted);min-height:9.5em;margin:0 0 29px}
+.nf-signature-card dl{margin:0 0 31px;padding-top:17px;border-top:1px solid var(--line)}
+.nf-signature-card dl>div{display:grid;grid-template-columns:55px minmax(0,1fr);gap:16px;margin-bottom:15px}
+.nf-signature-card dt{font:600 10px/1.6 var(--mono);letter-spacing:.02em;color:var(--muted)}
+.nf-signature-card dd{font-size:12px;line-height:1.65;margin:0;color:var(--ink)}
+.nf-signature-link{display:block;padding:19px 0 5px;border-top:1px solid var(--line);font:600 12px/1.6 var(--mono);margin-top:auto;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
+.nf-signature-adjacent{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border-bottom:1px solid var(--line)}
+.nf-signature-adjacent article{padding:31px clamp(22px,3vw,45px) 34px 0;min-width:0}
+.nf-signature-adjacent article+article{border-left:1px solid var(--line);padding-left:clamp(22px,3vw,45px)}
+.nf-signature-adjacent article>span{font:600 10px/1.6 var(--mono);color:var(--muted);letter-spacing:.065em}
+.nf-signature-adjacent h3{font:400 clamp(29px,3vw,40px)/1.1 var(--serif);margin:15px 0}
+.nf-signature-adjacent p{font-size:13px;line-height:1.75;color:var(--muted);margin-bottom:19px}
+.nf-signature-adjacent a{font:600 12px/1.65 var(--mono);text-decoration:underline;text-underline-offset:4px}
+@media(max-width:1100px){
+.nf-signature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.nf-signature-card:nth-child(2){border-right:0}
+.nf-signature-card:nth-child(3){grid-column:1/-1;border-top:1px solid var(--line);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 40px}
+.nf-signature-card:nth-child(3) .nf-signature-top{grid-column:1/-1}
+.nf-signature-card:nth-child(3) h3,.nf-signature-card:nth-child(3) .nf-signature-measure,.nf-signature-card:nth-child(3) .nf-signature-lead{grid-column:1}
+.nf-signature-card:nth-child(3) dl{grid-column:2;grid-row:2/span 3;align-self:center}
+.nf-signature-card:nth-child(3) .nf-signature-link{grid-column:1/-1}
+}
+@media(max-width:700px){
+.nf-signature-grid{grid-template-columns:1fr}
+.nf-signature-card,.nf-signature-card:nth-child(2){border-right:0;border-bottom:1px solid var(--line)}
+.nf-signature-card:last-child{border-bottom:0}
+.nf-signature-card:nth-child(3){grid-column:1;display:flex;border-top:0}
+.nf-signature-card h3{margin-top:26px;max-width:18ch}
+.nf-signature-lead{min-height:0}
+.nf-signature-adjacent{grid-template-columns:1fr}
+.nf-signature-adjacent article{padding-right:0}
+.nf-signature-adjacent article+article{border-left:0;border-top:1px solid var(--line);padding-left:0}
+}
