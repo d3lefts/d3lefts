@@ -72,6 +72,6 @@ for(const id of ["signature-wright","signature-erdos","signature-safety"])
 assert.ok(home.indexOf('id="signature-wright"')<home.indexOf('id="signature-erdos"')&&home.indexOf('id="signature-erdos"')<home.indexOf('id="signature-safety"'),"Principal results should lead in stated order");
 for(const selector of ["#main>.hero.nf-opening","#nf-scroll-cinema.nf-cinema--still .nf-cinema-stage","#flagships .nf-signature-card"])
  assert.ok(openingCss.includes(selector),"Compact evidence-first layout regression: "+selector);
-assert.equal((home.match(/<a\\b/g)||[]).length<=45,true,"Avoid recreating competing navigation directories");
+assert.equal((home.match(/<a\b/g)||[]).length<=45,true,"Avoid recreating competing navigation directories");
 
 console.log("PASS: active NULL FIELD, signature-first evidence and copy budget, archival NEW MOON, exact novice reviewer path");
