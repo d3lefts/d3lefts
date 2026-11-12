@@ -142,6 +142,7 @@ jobs:
             research/formalization_candidates/wright/WrightProductFiberIdentity.lean \
             --workspace /tmp/aa --timeout 1200 --strict \
             --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl Nightfall.Wright.ProductFiber.update_twice \
             --decl Nightfall.Wright.ProductFiber.pincr_eq_fiber_pair_average \
             --json-out lean-receipts/wright-product-fiber-identity.json || {
               python3 -c "import json;r=json.load(open('lean-receipts/wright-product-fiber-identity.json'));print(r.get('status'));print((r.get('stdout') or '')[-35000:]);print((r.get('stderr') or '')[-10000:])" || true
