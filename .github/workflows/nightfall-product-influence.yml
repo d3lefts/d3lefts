@@ -6,6 +6,7 @@ on:
       - 'research/nightfall/formalization/product_space/ProductRowBound.lean'
       - 'research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean'
       - 'research/nightfall/formalization/product_space/HeterogeneousAlphabets.lean'
+      - 'research/formalization_candidates/wright/HeterogeneousESDegreeEndpoint.lean'
       - 'research/nightfall/formalization/product_space/EfronSteinDegree.lean'
       - 'research/nightfall/formalization/product_space/QuadraticHoeffdingBridge.lean'
       - 'research/nightfall/formalization/product_space/QuadraticActualRowOscillation.lean'
@@ -197,6 +198,26 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/heterogeneous-alphabets.json
+      - name: Kernel-check same-source heterogeneous Efron–Stein endpoint (separate imported module)
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space
+          mkdir -p /tmp/aa/.lake/build/lib/lean lean-receipts
+          cp "$P/HeterogeneousAlphabets.lean" /tmp/aa/HeterogeneousAlphabets.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/HeterogeneousAlphabets.olean HeterogeneousAlphabets.lean)
+          N=Nightfall.ProductSpace.Heterogeneous
+          python3 scripts/lean_bridge.py "research/formalization_candidates/wright/HeterogeneousESDegreeEndpoint.lean" \
+            --workspace /tmp/aa --timeout 2400 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.depDegree_implies_depESDegree \
+            --decl $N.heterogeneous_es_influence \
+            --json-out lean-receipts/heterogeneous-es-endpoint.json || {
+              python3 -c "import json;r=json.load(open('lean-receipts/heterogeneous-es-endpoint.json'));print(r.get('status'));print((r.get('stdout') or '')[-45000:]);print((r.get('stderr') or '')[-10000:])" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/heterogeneous-es-endpoint.json
+          sha256sum "research/formalization_candidates/wright/HeterogeneousESDegreeEndpoint.lean" > lean-receipts/heterogeneous-es-source-SHA256SUMS.txt
       - name: Capture source hashes and upstream pin
         if: always()
         run: |
