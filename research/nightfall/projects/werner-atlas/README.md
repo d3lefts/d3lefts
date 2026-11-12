@@ -4,6 +4,20 @@
 
 [Public research home](../../README.md) · [Copy-by-copy CSV](bounds_1_to_24.csv) · [Analytic finite-copy continuation](ANALYTIC_CONTINUATION.md) · [Review and asset manifest](REVIEW_AND_ASSETS.md) · [Independent review assignment](../../../../docs/review.html#werner)
 
+## November 11 theorem revision — unrestricted qutrit finite-copy NPT window
+
+The canonical [finite-copy theorem and proof ledger](ANALYTIC_CONTINUATION.md) now include the original October 28 **three-block construction**, revised to the exact rational uniform coefficient
+
+```text
+c = 7,760,249 / 25,000,000 = 0.31040996
+t_k = 1/3 + c/k, for every finite integer k ≥ 3.
+Q_k(t_k,C) > 0 for every nonzero complex rank(C) ≤ 2.
+```
+
+This is a **published-theorem-dependent, exact downstream proof**, assuming the sharp two- and three-copy Werner inequalities; it does *not* need the separate unaudited 4/5-copy quantitative SDP margins. The sharp three-site response is `D₃≤9B₃`, its separable-spectator lift gives `D_k≤3kB_k`, and a finite exact rational sum plus a controlled odd factorial tail gives the positive all-k margin. The exact arithmetic checker is [verify_three_block_uniform.py](verify_three_block_uniform.py). The coefficient supersedes the October 28 `0.31/k` and November 11 `0.3104/k` uniform versions; the crossing of this **particular certificate** is bracketed by `0.31040996<c_*<0.31040997`.
+
+Specialized theorem-only certificates within this method give `t_24=0.346368` and `t_25=0.345842`. Both are NPT, since `t>1/3`; these quantitative values do **not** supersede the stronger 4–23-copy conditional registry where available. The older B24-seeded double-exponential extension and archived tables remain visible for provenance, but are not the strongest **uniform qutrit** theorem. This update does **not** establish a fixed parameter `t>1/3` undistillable for all copies. Non-author mathematical audit, upstream theorem scope verification and novelty review are outstanding.
+
 ## Read this first: evidence boundaries
 
 1. **Published sharp input:** in the convention below, one-, two-, and three-copy threshold `t=1/2` is established in the cited literature. Further published lower-copy inequalities are imported by the constructions.
