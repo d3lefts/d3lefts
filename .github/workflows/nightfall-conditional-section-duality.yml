@@ -1,0 +1,22 @@
+name: NIGHTFALL conditional-section duality finite audit
+on:
+  push:
+    paths:
+      - "research/nightfall/2026-11-conditional-section-duality/**"
+      - ".github/workflows/nightfall-conditional-section-duality.yml"
+  pull_request:
+    paths:
+      - "research/nightfall/2026-11-conditional-section-duality/**"
+      - ".github/workflows/nightfall-conditional-section-duality.yml"
+  workflow_dispatch:
+jobs:
+  finite-checker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check conditional sections, fixed Bayes risk, and address lower bounds
+        run: python3 research/nightfall/2026-11-conditional-section-duality/check_conditional_sections.py
