@@ -1,0 +1,218 @@
+name: NIGHTFALL Wright sharp constant and arbitrary-index limit — pinned Lean
+on:
+  pull_request:
+    paths:
+      - 'research/formalization_candidates/wright/WrightSharpLimitBridge.lean'
+      - 'research/formalization_candidates/wright/WrightSharpResampling.lean'
+      - 'research/formalization_candidates/wright/WrightArbitraryIndexAttainment.lean'
+      - 'research/formalization_candidates/wright/WrightFiniteIntervalRho.lean'
+      - 'research/formalization_candidates/wright/WrightProductFiberIdentity.lean'
+      - 'research/formalization_candidates/wright/WrightActualIncrementRho.lean'
+      - 'research/formalization_candidates/wright/WrightTotalIncrementFromEnergy.lean'
+      - '.github/workflows/nightfall-wright-sharp-limit-lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  wright-sharp-limit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install exact Lean 4.33.0 upstream pin
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.33.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch pinned Mathlib via Turturean workspace
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone https://github.com/physical-superintelligence/aaronson-ambainis.git /tmp/aa
+          git -C /tmp/aa checkout 2a6ceaef872ae993708950f951989134084b851a
+          cd /tmp/aa
+          lake exe cache get
+      - name: Strictly kernel-check every newly proved declaration
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Wright.SharpLimit
+          python3 scripts/lean_bridge.py \
+            research/formalization_candidates/wright/WrightSharpLimitBridge.lean \
+            --workspace /tmp/aa --timeout 1800 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.rho_square_identity \
+            --decl $N.rho_scalar_nonnegative \
+            --decl $N.extremal_mass_nonnegative \
+            --decl $N.extremal_center_positive \
+            --decl $N.rho_three_atom_equality \
+            --decl $N.mixed_median_bound \
+            --decl $N.sharp_denominator_identity \
+            --decl $N.finite_bounds_pass_to_limit \
+            --decl $N.finite_witnesses_pass_to_limit \
+            --decl $N.rho_nonnegative \
+            --decl $N.sharp_constant_endpoint_of_analytic_inputs \
+            --json-out lean-receipts/wright-sharp-limit.json || {
+              python3 -c "import json;r=json.load(open('lean-receipts/wright-sharp-limit.json'));print(r.get('status'));print((r.get('stdout') or '')[-45000:]);print((r.get('stderr') or '')[-10000:])" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/wright-sharp-limit.json
+      - name: Strictly kernel-check sharp resampling pointwise and pair-sum operator
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py \
+            research/formalization_candidates/wright/WrightSharpResampling.lean \
+            --workspace /tmp/aa --timeout 1800 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl Nightfall.Wright.SharpResampling.pointwise_two_sample \
+            --decl Nightfall.Wright.SharpResampling.pair_sum_factor \
+            --decl Nightfall.Wright.SharpResampling.pair_sum_law \
+            --decl Nightfall.Wright.SharpResampling.pair_sum_left \
+            --decl Nightfall.Wright.SharpResampling.pair_sum_right \
+            --decl Nightfall.Wright.SharpResampling.finite_weighted_pairwise \
+            --decl Nightfall.Wright.SharpResampling.pair_sum_scaled \
+            --decl Nightfall.Wright.SharpResampling.iid_absolute_difference_bound \
+            --decl Nightfall.Wright.SharpResampling.iid_absolute_difference_z \
+            --decl Nightfall.Wright.SharpResampling.sharp_rho_all_finite_laws \
+            --json-out lean-receipts/wright-sharp-resampling.json || {
+              python3 -c "import json;r=json.load(open('lean-receipts/wright-sharp-resampling.json'));print(r.get('status'));print((r.get('stdout') or '')[-35000:]);print((r.get('stderr') or '')[-10000:])" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/wright-sharp-resampling.json
+      - name: Strictly kernel-check arbitrary-index attainment
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py \
+            research/formalization_candidates/wright/WrightArbitraryIndexAttainment.lean \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl Nightfall.Wright.ArbitraryIndex.finite_positive_superlevel \
+            --decl Nightfall.Wright.ArbitraryIndex.arbitrary_index_maximum_attained \
+            --json-out lean-receipts/wright-arbitrary-index-attainment.json || {
+              python3 -c "import json;r=json.load(open('lean-receipts/wright-arbitrary-index-attainment.json'));print(r.get('status'));print((r.get('stdout') or '')[-35000:]);print((r.get('stderr') or '')[-10000:])" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/wright-arbitrary-index-attainment.json
+      - name: Strictly check sharp rho for actual finite interval fibers
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/formalization_candidates/wright
+          mkdir -p /tmp/aa/.lake/build/lib/lean
+          cp "$P/WrightSharpResampling.lean" /tmp/aa/WrightSharpResampling.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/WrightSharpResampling.olean WrightSharpResampling.lean)
+          python3 scripts/lean_bridge.py "$P/WrightFiniteIntervalRho.lean" \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl Nightfall.Wright.FiniteInterval.radius_abs_eq_max \
+            --decl Nightfall.Wright.FiniteInterval.sharp_rho_finite_interval \
+            --decl Nightfall.Wright.FiniteInterval.sharp_rho_finite_closed_interval \
+            --json-out lean-receipts/wright-finite-fiber-rho.json || {
+              python3 -c "import json;r=json.load(open('lean-receipts/wright-finite-fiber-rho.json'));print(r.get('status'));print((r.get('stdout') or '')[-35000:]);print((r.get('stderr') or '')[-10000:])" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/wright-finite-fiber-rho.json
+      - name: Compile actual pinned finite-product resampling dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd /tmp/aa
+          lake build AaronsonAmbainis.DetTheorem AaronsonAmbainis.TwoSided.Antipodal \
+            AaronsonAmbainis.Bridge.Positivity AaronsonAmbainis.Row.Main \
+            AaronsonAmbainis.Pack.Main AaronsonAmbainis.Dual.Main \
+            AaronsonAmbainis.Level.Integral AaronsonAmbainis.TwoSided.CauchySchwarz
+          cd "$GITHUB_WORKSPACE"
+          P=research/nightfall/formalization/product_space
+          mkdir -p /tmp/aa/.lake/build/lib/lean
+          for name in ProductSpaceTwoSidedBridge ProductRowBound ProductInfluence; do
+            cp "$P/$name.lean" "/tmp/aa/$name.lean"
+            (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/$name.olean" "$name.lean")
+          done
+      - name: Strictly kernel-check actual product-space iid-fiber increment identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py \
+            research/formalization_candidates/wright/WrightProductFiberIdentity.lean \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl Nightfall.Wright.ProductFiber.update_twice \
+            --decl Nightfall.Wright.ProductFiber.pincr_eq_fiber_pair_average \
+            --json-out lean-receipts/wright-product-fiber-identity.json || {
+              python3 -c "import json;r=json.load(open('lean-receipts/wright-product-fiber-identity.json'));print(r.get('status'));print((r.get('stdout') or '')[-35000:]);print((r.get('stderr') or '')[-10000:])" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/wright-product-fiber-identity.json
+      - name: Kernel-check sharp rho on actual finite product increments
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/formalization_candidates/wright
+          mkdir -p /tmp/aa/.lake/build/lib/lean
+          for name in WrightFiniteIntervalRho WrightProductFiberIdentity; do
+            cp "$P/$name.lean" "/tmp/aa/$name.lean"
+            (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/$name.olean" "$name.lean")
+          done
+          python3 scripts/lean_bridge.py "$P/WrightActualIncrementRho.lean" \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl Nightfall.Wright.ActualIncrement.actual_pincr_le_rho_radius \
+            --json-out lean-receipts/wright-actual-increment-rho.json || {
+              python3 -c "import json;r=json.load(open('lean-receipts/wright-actual-increment-rho.json'));print(r.get('status'));print((r.get('stdout') or '')[-35000:]);print((r.get('stderr') or '')[-10000:])" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/wright-actual-increment-rho.json
+      - name: Strictly kernel-check total L under actual fiber/FHKL prerequisites
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/formalization_candidates/wright
+          mkdir -p /tmp/aa/.lake/build/lib/lean
+          cp "$P/WrightSharpLimitBridge.lean" "/tmp/aa/WrightSharpLimitBridge.lean"
+          (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/WrightSharpLimitBridge.olean" WrightSharpLimitBridge.lean)
+          cp "$P/WrightActualIncrementRho.lean" "/tmp/aa/WrightActualIncrementRho.lean"
+          (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/WrightActualIncrementRho.olean" WrightActualIncrementRho.lean)
+          python3 scripts/lean_bridge.py "$P/WrightTotalIncrementFromEnergy.lean" \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl Nightfall.Wright.TotalIncrement.radius_energy_of_pointwise_budget \
+            --decl Nightfall.Wright.TotalIncrement.total_increment_of_radius_energy \
+            --decl Nightfall.Wright.TotalIncrement.total_increment_of_pointwise_sensitivity \
+            --decl Nightfall.Wright.CanonicalFiber.fiberLo_le \
+            --decl Nightfall.Wright.CanonicalFiber.le_fiberHi \
+            --decl Nightfall.Wright.CanonicalFiber.fiberLo_update \
+            --decl Nightfall.Wright.CanonicalFiber.fiberHi_update \
+            --decl Nightfall.Wright.CanonicalFiber.total_increment_of_canonical_sensitivity \
+            --json-out lean-receipts/wright-total-increment.json || {
+              python3 -c "import json;r=json.load(open('lean-receipts/wright-total-increment.json'));print(r.get('status'));print((r.get('stdout') or '')[-35000:]);print((r.get('stderr') or '')[-10000:])" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/wright-total-increment.json
+      - name: Capture provenance
+        if: always()
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/formalization_candidates/wright/WrightSharpLimitBridge.lean \
+            research/formalization_candidates/wright/WrightSharpResampling.lean \
+            research/formalization_candidates/wright/WrightArbitraryIndexAttainment.lean \
+            research/formalization_candidates/wright/WrightFiniteIntervalRho.lean \
+            research/formalization_candidates/wright/WrightProductFiberIdentity.lean \
+            research/formalization_candidates/wright/WrightActualIncrementRho.lean \
+            research/formalization_candidates/wright/WrightTotalIncrementFromEnergy.lean \
+            > lean-receipts/SHA256SUMS.txt
+          echo leanprover/lean4:v4.33.0 > lean-receipts/lean-toolchain.txt
+          echo 2a6ceaef872ae993708950f951989134084b851a > lean-receipts/upstream.txt
+      - name: Upload receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wright-sharp-limit-kernel-receipt
+          path: lean-receipts/
+          if-no-files-found: warn
