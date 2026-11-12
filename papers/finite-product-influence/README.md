@@ -86,3 +86,7 @@ For independent uniform ternary inputs, pure local qubit encodings with a fixed 
 Complement: for Hermitian **simple tensor** contrasts the quantum SLD energy is supermultiplicative with factor one, and therefore binary-input Hoeffding components incur no additional 2^(1-d) factor. A commuting binary parity example nevertheless attains a^d, so a truly polynomial-in-degree operational quantum transfer requires restrictions beyond positive fixed local visibility.
 
 This is an **author-side analytic and numerical proof package**, not end-to-end Lean certification, a polynomial-loss quantum AA theorem, a claim of worldwide novelty, or a quantum adaptive-query result. The SLD local Gram K=T*J_b^{-1}T differs from the geometric K=T*Omega_b^{-1}T used in the earlier quadratic quantum bridge; never substitute one constant for the other.
+
+## 12 November 2026 proof-passport custody update
+
+The [frozen v8 Proof Passport](V8_PROOF_PASSPORT.md) is protected by `SOURCE_SHA256SUMS_v8` and must not be edited for later discoveries. A separate [v9.2 dated Proof Passport supplement](V9_2_PASSPORT_SUPPLEMENT_20261112.md) records the 12 November Turturean/categorical comparison, actual finite source Lean receipts through #408, and the remaining scalar/rank proof and priority gates. The supplement is not part of the v8 immutable source snapshot, and does not upgrade either complete theorem to kernel-certified status.
