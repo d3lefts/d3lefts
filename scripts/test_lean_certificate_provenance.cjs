@@ -44,7 +44,7 @@ const law=m.modules.find(x=>x.path.endsWith("/FiniteLawTransfer.lean"));assert.o
 const phases=m.modules.filter(x=>x.classification==="finite-construction");
 assert.deepEqual(phases.map(x=>x.path),["research/nightfall/formalization/phase_block/PhaseBlock.lean"]);
 const page=fs.readFileSync("docs/lean-certificate-provenance.html","utf8");
-assert.equal((page.match(/<tr><td>\d\d<\/td>/g)||[] ).length,65,"Missing static site entries");
+assert.equal((page.match(/<tr><td>\d\d<\/td>/g)||[] ).length,67,"Missing static site entries");
 for(const r of m.modules){
  assert.ok(page.includes(r.source_blob_sha),"Missing source hash in static passport: "+r.path);
  assert.ok(page.includes(r.path.split("/").at(-1)),"Source not visible on site: "+r.path);
