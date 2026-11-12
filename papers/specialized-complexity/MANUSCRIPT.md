@@ -190,6 +190,8 @@ This bound is *linear in rank* because inputs are partitioned into genuinely dis
 
 # The quadratic exponent-two frontier: a conditional acceleration
 
+> **Dated note (12 November 2026).** Equation (16) below records the earlier coefficient \(16(1+\sqrt3)\), and the paragraph after it the v7 value \(15(1+\sqrt3)\). The current written proof is [v9.2](../finite-product-influence/NIGHTFALL_Beyond_Boolean_Cube_v9_2.pdf) (same constant as v8): \(\mathrm{Var}(f)\le D_2B\sqrt{\sup_iI_i(f)}\) with \(D_2=(10+2\sqrt2)(1+\sqrt3)\approx35.05\). It contains the full matching, oscillation and fourth-moment argument and the rank-\(r\) lift (v9.2 Theorem 1.3). Proposition 4 holds with \(C_2\) replaced by \(D_2\) **conditional on that premise**. The premise is a complete analytic proof but has not been externally refereed, so this section's conditional status and the catalogue entries are deliberately unchanged. See [the internal review](../finite-product-influence/V9_2_INTERNAL_REVIEW_20261112.md). The finite-field claims of the next section were independently replayed by [check_f16_independent_20261112.py](check_f16_independent_20261112.py).
+
 The more ambitious degree-two source manuscript proposes, for $|f|\le B$ and Efron--Stein degree at most two under arbitrary independent input laws,
 
 $$

@@ -122,7 +122,8 @@
         "research/nightfall/formalization/product_space/VariancePosteriorOneStep.lean",
         "research/nightfall/formalization/phase_block/PhaseBlock.lean",
         "docs/phase-adaptive-branch-proof-passport.html",
-        ".github/workflows/publish-paper-c.yml"
+        ".github/workflows/publish-paper-c.yml",
+        "papers/specialized-complexity/check_f16_independent_20261112.py"
       ],
       "dependencies": [
         {
@@ -183,7 +184,9 @@
         "papers/finite-product-influence/Rank_Optimal_Observation_Section_v8.tex",
         "research/nightfall/2026-11-quadratic-rank-optimal/FINITE_SIGN_CLOSURE_v2.md",
         "research/nightfall/observability-publication/SOURCE_ACCESS.md",
-        "research/nightfall/formalization/observability/README.md"
+        "research/nightfall/formalization/observability/README.md",
+        "papers/finite-product-influence/NIGHTFALL_Beyond_Boolean_Cube_v9_2.pdf",
+        "papers/finite-product-influence/V9_2_INTERNAL_REVIEW_20261112.md"
       ],
       "dependencies": [],
       "claim_scope": "Analytic, not end-to-end Lean: for bounded scalar Hoeffding degree at most two on arbitrary independent products, Var(f)^2 <= K B^2 sup_i I_i(f), K=(10+2sqrt(2))^2(1+sqrt(3))^2=1228.356323837..., improving v7's K=225(1+sqrt(3))^2. A sharper additive-projection range bound is composed with the existing matching/fourth-moment proof. Variance exponent two is optimal. For binary products, classical Grothendieck methods give a stronger coefficient <51; categorical originality review remains open.",
@@ -212,7 +215,8 @@
         "papers/finite-product-influence/Rank_Optimal_Observation_Introduction_v8.tex",
         "papers/finite-product-influence/Rank_Optimal_Observation_Section_v8.tex",
         "research/nightfall/2026-11-quadratic-rank-optimal/FINITE_SIGN_CLOSURE_v2.md",
-        "research/nightfall/2026-11-spectral-observability/README.md"
+        "research/nightfall/2026-11-spectral-observability/README.md",
+        "papers/finite-product-influence/NIGHTFALL_Beyond_Boolean_Cube_v9_2.pdf"
       ],
       "dependencies": [
         {
@@ -347,7 +351,8 @@
       "primary": "research/nightfall/projects/erdos/STATUS_AND_PRIOR_ART_20261028.md",
       "evidence": [
         "research/nightfall/projects/erdos/EXTERNAL_REFEREE_PACKET_20261029.md",
-        "research/nightfall/agent-reports/ea36_131072/replay_erdos_gmp.py"
+        "research/nightfall/agent-reports/ea36_131072/replay_erdos_gmp.py",
+        "research/catalogue/NOV12_REPOSITORY_AUDIT.md"
       ],
       "dependencies": [],
       "claim_scope": "131,072-cell exact rational witness, upper bound only; separate from official competition record and conditional lower bounds.",

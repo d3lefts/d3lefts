@@ -4,6 +4,8 @@
 
 **Canonical scope:** [principal manuscript synopsis](../../research/nightfall/observability-publication/PRINCIPAL_PAPER.md). [Exact missing-file inventory](../../research/nightfall/observability-publication/SOURCE_ACCESS.md).
 
+**Update (12 November 2026).** The scalar constant below, \(256(1+\sqrt3)^2\), is from the 10 November synopsis and is superseded. A full written proof of the scalar theorem, the rank-\(r\) Hilbert bound and the adaptive \(\lceil12C_2rB^2/\eta\rceil\) policy is deposited as [`NIGHTFALL_Beyond_Boolean_Cube_v9_2.pdf`](../finite-product-influence/NIGHTFALL_Beyond_Boolean_Cube_v9_2.pdf), with \(C_2=(10+2\sqrt2)^2(1+\sqrt3)^2\approx1228.36\) (same constant as v8; SHA-256 in `SOURCE_SHA256SUMS_v9_2`). Its LaTeX source is **not** yet in the tree. An internal (non-external) proof check is recorded in [V9_2_INTERNAL_REVIEW_20261112.md](../finite-product-influence/V9_2_INTERNAL_REVIEW_20261112.md). The categorical nonadaptive package listed under *Required publication package* is still missing. External review status is unchanged.
+
 ## Two claims that must not be conflated
 
 **Scalar degree two:** For independent heterogeneous product coordinates, bounded real `|F|<=B`, and Hoeffding degree at most two, the manuscript proposes
