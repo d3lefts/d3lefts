@@ -38,3 +38,14 @@ For a fresh named proof, run its original exact toolchain and `python3 research/
 - [Closed, unmerged F16 adaptive evidence](phase_block/ADAPTIVE_BRANCH_EVIDENCE_20261111.md)
 
 **Fail-closed limits:** No added `.lean` file can escape inventory; changed source bytes, missing CI evidence, invalid classification, promoted worldwide novelty, or mixing off-main files with current modules fails the audit. Success proves **only** current-source integrity and registered scoped provenance; it is not a fresh full-program kernel compilation, universal mathematical theorem, or independent novelty review.
+
+## 12 November 2026 source-bridge checkpoint (not a universal Lean certificate)
+
+The canonical [current-source ledger](../../../docs/lean-certificate-provenance.json) now enumerates **67 individual scoped Lean source records** through #407/#408; the historic 59, 63 and 65 counts above remain dated checkpoints. Source custody and individual receipts do **not** establish one same-pin end-to-end proof.
+
+- PR #407: finite actual quadratic row/section bridge with source-specific Lean receipt.
+- PR #408: genuine finite Efron–Stein pair centering/kernel and oriented-rectangle declarations, eight named strict compiled declarations, [run #43167542367](https://github.com/d3lefts/d3lefts/actions/runs/43167542367); terminal source-level global matching parity is still absent. [Proof ledger](product_space/ACTUAL_ES_PAIR_MATCHING_LEDGER_20261112.md).
+- Separate finite all-n fourth-moment lemma: pinned Lean 4.35 [run #43062171542](https://github.com/d3lefts/d3lefts/actions/runs/43062171542), not yet composed into the source function theorem.
+- The full scalar exponent-two and rank-r adaptive upper bound remain analytic manuscript claims, not kernel-certified. [Updated q2/rank passport](../2026-11-active-passports/quadratic-rank-observability.md).
+
+Do not mix Lean 4.33/Turturean-pinned and Lean 4.35/Mathlib-pinned receipts into a fictional common compilation. The frozen earlier provenance is unchanged.
