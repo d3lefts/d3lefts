@@ -175,6 +175,8 @@ jobs:
           set -euo pipefail
           P=research/formalization_candidates/wright
           mkdir -p /tmp/aa/.lake/build/lib/lean
+          cp "$P/WrightSharpLimitBridge.lean" "/tmp/aa/WrightSharpLimitBridge.lean"
+          (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/WrightSharpLimitBridge.olean" WrightSharpLimitBridge.lean)
           cp "$P/WrightActualIncrementRho.lean" "/tmp/aa/WrightActualIncrementRho.lean"
           (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/WrightActualIncrementRho.olean" WrightActualIncrementRho.lean)
           python3 scripts/lean_bridge.py "$P/WrightTotalIncrementFromEnergy.lean" \
