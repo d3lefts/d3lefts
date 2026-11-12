@@ -71,3 +71,14 @@ or coefficient `sqrt(3/12500)/pi^6`, **not** the stronger earlier manuscript coe
 - Historical global originality, journal acceptance or external referee endorsement.
 
 **First extension gate:** formal proof of Hoeffding-support degree ↔ indicator-product degree and independently reviewed finite-partition lift, then compose actual posterior rather than adding more abstract stopping inequalities.
+
+
+## Operational SLD tensor sharpness — physical ternary obstruction and binary no-loss (11 Nov 2026)
+
+[Proof, physical construction, checker and scoped passport](../../research/nightfall/2026-11-sld-transfer-sharpness/PROOF_PASSPORT.md) are archived separately from the frozen v8 manuscript and the [earlier geometric-metric quantum ANOVA bridge](QUANTUM_ANOVA_BRIDGE_20261111.md).
+
+For independent uniform ternary inputs, pure local qubit encodings with a fixed **SLD** local Gram gap a=3/8, and f_d(x)=Re omega^(sum x_i), all classical resampling influences are 1/2 but each optimal quantum terminal gain satisfies Delta_i=3^d/[4^d(3^d+1)]. Thus Delta_i/(a^d I_i)=2^(d+1)/(3^d+1), exponentially small in degree. As the local spectral weight p approaches 1 at fixed d, the ratio tends to 2^(1-d), making the generic SLD tensor coefficient sharp (with visibility tending to zero in that limiting argument).
+
+Complement: for Hermitian **simple tensor** contrasts the quantum SLD energy is supermultiplicative with factor one, and therefore binary-input Hoeffding components incur no additional 2^(1-d) factor. A commuting binary parity example nevertheless attains a^d, so a truly polynomial-in-degree operational quantum transfer requires restrictions beyond positive fixed local visibility.
+
+This is an **author-side analytic and numerical proof package**, not end-to-end Lean certification, a polynomial-loss quantum AA theorem, a claim of worldwide novelty, or a quantum adaptive-query result. The SLD local Gram K=T*J_b^{-1}T differs from the geometric K=T*Omega_b^{-1}T used in the earlier quadratic quantum bridge; never substitute one constant for the other.
