@@ -196,6 +196,7 @@ jobs:
             --decl $N.actual_pair_kernel_left_centered \
             --decl $N.actual_pair_kernel_right_centered \
             --decl $N.actual_pair_kernel_oriented_rectangle \
+            --decl $N.actual_all_edges_oriented_rectangles \
             --json-out lean-receipts/actual-es-pair-matching-bridge.json || {
               python3 -c "import json;r=json.load(open('lean-receipts/actual-es-pair-matching-bridge.json'));print(r.get('status'));print((r.get('stdout') or '')[-40000:]);print((r.get('stderr') or '')[-9000:])" || true
               exit 1
