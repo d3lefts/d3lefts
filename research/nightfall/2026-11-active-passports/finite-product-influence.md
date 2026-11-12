@@ -51,3 +51,10 @@ Rebuild the pinned PR #317 with the exact upstream Turturean commit; inspect pro
 ## Revision v2 — 11 November 2026, superseding finite-alphabet scope
 
 Merged PR [#325](https://github.com/d3lefts/d3lefts/pull/325) with passing Lean 4.33.0 [run #42932085109](https://github.com/d3lefts/d3lefts/actions/runs/42932085109) certifies `EfronSteinDegree.prodDegree_iff_esDegree` and `Heterogeneous.heterogeneous_influence` over coordinate-dependent finite alphabet types with support-only boundedness, zero atoms permitted. The elementary Efron–Stein identity is prior art and novelty-quarantined. The **source-specific finite transfer** is a dependent construction with global priority unverified; the arbitrary measurable extension is still separate. See [full provenance quarantine](../../../docs/lean-certificate-provenance.json).
+
+
+## Revision v3 — 12 November 2026, exact comparator and nonpromotion
+
+The pinned PR #317/PR #325 product theorem is an actual **finite** Lean compilation with **inherited variance exponent 5/2 and degree exponent 6**, importing Turturean's uniform-cube result. Its support-degree/heterogeneous-alphabet scope is not an end-to-end proof of the distinct **degree-two exponent-two** claim. For the direct Turturean and Girish–Mittal–Nehoran–Raz comparison see the [Chapter 2 audit](../2026-11-information-cost-dissertation/CHAPTER2_TURTUREAN_SCOPE_AUDIT_20261112.md) and the [new quadratic claim passport](quadratic-rank-observability.md). This supplement **does not alter** the original PR #317 checked theorem statement, compiler hash or coefficient.
+
+The later PR #407/#408 scoped quadratic Lean receipts, including eight real source-derived Efron–Stein pair/rectangle declarations, belong to the separate quadratic proof chain, not to a promotion of the inherited finite 5/2 theorem. Non-author review and all-product measurable lift remain open.

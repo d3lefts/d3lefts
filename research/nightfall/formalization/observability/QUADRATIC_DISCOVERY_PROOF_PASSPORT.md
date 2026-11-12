@@ -163,3 +163,13 @@ checks all eight theorem declarations and their reported axioms with
 `check_receipts.py`, and retains pinned source hashes and logs.
 Do not merge/promote until the CI run passes; do not represent that
 green status as a proof of the full arbitrary-law theorem.
+
+## Addendum 2026-11-12 — actual source ES bridge through PR #408 (not terminal Q2)
+
+The 11 November historical proof sections above describe their contemporaneous proof state. Merged PR #407 added an actual finite quadratic row/section bridge. PR [#408](https://github.com/d3lefts/d3lefts/pull/408) added genuine Efron–Stein pair-kernel centering and all-edge rectangle-orientation statements. **Eight named declarations** have strict compiled [Lean 4.33.0 receipt #43167542367](https://github.com/d3lefts/d3lefts/actions/runs/43167542367) under the pinned Turturean upstream and permitted standard axioms. Source SHA-256: 4d59e9bf872f89a3310b6c3a5203d9256e4b85bfab65cfc60c0a065bca0bffea; see the [actual matching ledger](../product_space/ACTUAL_ES_PAIR_MATCHING_LEDGER_20261112.md).
+
+**Now certified scoped:** source-derived pair components, conditional centering and arbitrary-graph oriented rectangles. **Still missing terminal Lean:** global even/odd parity-from-the-same-source-f with unmatched-coordinate padding proving matching mass ≤4B; composition with actual greedy ownership, genuine independent assigned increments, and resampling influences; unconditional scalar exponent-two theorem; Hilbert rank and posterior risk; arbitrary measurable-product lift. The independent many-increment Lean 4.35 [receipt #43062171542](https://github.com/d3lefts/d3lefts/actions/runs/43062171542) is a distinct theorem and cannot be treated as a same-pin merged proof.
+
+**Current stronger analytic coefficient:** v8/v9.2 C₂=(10+2√2)²(1+√3)²≈1228.356, versus this historical v4/v7 value 225(1+√3)². The [v9.2 internal review](../../../../papers/finite-product-influence/V9_2_INTERNAL_REVIEW_20261112.md) flags a Corollary 6.2 citation/constant problem, unavailable exact v9.2 TeX, and pending non-author proof/priority review. This addendum cannot elevate the analytic bound to a kernel theorem.
+
+**Next decisive compiler experiment:** formulate a declaration with only normalized finite laws, actual bounded source function f, actual degree-two Efron–Stein assumption, and disjoint matching; construct both global selector distributions and conclude the true 4B mass directly, with no assumed matching equality. Other proof gates remain open. See the [updated q2 passport](../../2026-11-active-passports/quadratic-rank-observability.md).

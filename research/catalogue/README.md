@@ -42,3 +42,9 @@ Rights and citation: [Reuse and rights notice](../REUSE_AND_RIGHTS.md) · [CONTR
 ## November 12 dissertation synthesis (informational, not claim promotion)
 
 [Identify / observe / certify — v0.4 research checkpoint](../nightfall/2026-11-information-cost-dissertation/README.md) includes the source-checked Turturean comparison, actual scoped Lean coverage through #408, a self-contained four-cost addressed-family proof with an exact checker, and explicit dissertation gates. This is a **synthesis and audit record**, not an additional kernel-certified or externally reviewed theorem; no `CLAIMS.json` statuses are promoted.
+
+## Proof Passport v12 reconciliation — 12 November 2026
+
+The [active registry](../../docs/active-proof-passport.json) and [visible overview](../../docs/active-proof-passport.html) now use the stronger **proposed** v9.2 scalar constant C₂≈1228.356, separate Theorem D's rank-r adaptive upper bound from its explicit lower examples, and list the exact compiled scopes of #407/#408. **Twelve claim IDs and their evidence statuses remain unchanged.** Neither the frozen historical eleven-passport collection nor approved original findings were altered.
+
+Supporting source-bound dossiers: [quadratic/rank observability](../nightfall/2026-11-active-passports/quadratic-rank-observability.md), [four information costs](../nightfall/2026-11-active-passports/information-costs-identification.md) and [β-conditioned fixed observation](../nightfall/2026-11-active-passports/conditional-section-duality.md). The new independent finite checker is wired into active-passport CI; this is not universal formal certification, an external referee or a novelty verdict.
