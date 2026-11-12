@@ -28,3 +28,19 @@ python3 -I papers/quantum-sld-tensorization/checks/check_spectral_constant_exact
 Both tools rely exclusively on Python's standard-library exact fractions. Passing them establishes the listed finite cases, **not** the proof of the general theorem. See .github/workflows/nightfall-quantum-sharp-sld.yml for CI.
 
 **No Lean custody promotion:** The 65-source Lean provenance registry is unchanged. This project has no named kernel-certified final declaration. Novelty, specialist review and theorem-level Lean formalization remain independent gates. Do not claim quantum query speedups, adaptive measurement depth, or resolution of the general Aaronson–Ambainis question from this theorem.
+
+## COST V: visibility-only qubit frontier (CONJECTURE)
+
+[Trine visibility conjecture and conditional COST integration](COST_V_TRINE_VISIBILITY_FRONTIER.md) is a source-pinned working note, **not** a theorem upgrade. The proposed sharp coefficient is
+`Phi_s(a_S)=2 prod_i(a_i)/(prod_i(1+u_i)+prod_i(1-u_i))`, with `u_i=sqrt(1-2 min(a_i,1/2))`.
+Its unrestricted qubit lower bound remains **unproved**. Only the pure-trine equality family, the source-proved one-site/binary/commuting cases, and the existing general SLD comparison are available analytically.
+
+The conditional degree-two noisy terminal-gain corollary improves the source `a^2/2` transfer to `a^2/[2(1-a)]` for `0<a<=1/2`; this is **conditional on the conjecture and the separate unrefereed quadratic influence manuscript**. Binary sources have a stronger already-known simple-tensor transfer without this conjecture. The source-reported qutrit/qubit violation is numerical and awaits an independently accessible checker.
+
+Independent exact pure-trine saturation replay (not a conjecture proof):
+
+```sh
+python3 -I papers/quantum-sld-tensorization/checks/check_trine_visibility_exact.py
+```
+
+Do not add this to the kernel-verified claims catalogue, approved findings, or submission-ready headlines until its proof and referee gates close.
