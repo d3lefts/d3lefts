@@ -51,6 +51,8 @@ jobs:
             --decl $N.sharp_denominator_identity \
             --decl $N.finite_bounds_pass_to_limit \
             --decl $N.finite_witnesses_pass_to_limit \
+            --decl $N.rho_nonnegative \
+            --decl $N.sharp_constant_endpoint_of_analytic_inputs \
             --json-out lean-receipts/wright-sharp-limit.json || {
               python3 -c "import json;r=json.load(open('lean-receipts/wright-sharp-limit.json'));print(r.get('status'));print((r.get('stdout') or '')[-45000:]);print((r.get('stderr') or '')[-10000:])" || true
               exit 1
