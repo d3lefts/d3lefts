@@ -205,7 +205,6 @@ theorem total_increment_of_canonical_sensitivity
     exact fiberLo_update f x j b
   · intro x j b
     exact fiberHi_update f x j b
-  · exact d
   · exact hpoint
 
 end Nightfall.Wright.CanonicalFiber
