@@ -877,3 +877,10 @@ html #main>.hero.nf-opening .nf-opening-overlap-value {
  #main>.hero.nf-opening .nf-hero-guide span{display:block;margin-top:7px;font-size:11px}
  #main>.hero.nf-opening .nf-hero-jump{margin:0}
 }
+
+
+/* Source-status label contrast: the hero is dark in both palettes even when
+   the common site token resolves to light-page ink. */
+#main>.hero.nf-opening .hero-aside-head,
+#main>.hero.nf-opening .hero-aside-head .nf-experience{color:#dce8ef}
+#main>.hero.nf-opening .hero-aside-head .pulse{color:#f2d6cf}
