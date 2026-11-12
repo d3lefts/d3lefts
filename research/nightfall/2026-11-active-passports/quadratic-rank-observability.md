@@ -44,3 +44,7 @@ The [dated detailed comparison](../2026-11-information-cost-dissertation/CHAPTER
 **Next cheapest decisive work:** deposit v9.2 source, fix Cor. 6.2, and have a non-author audit the actual matching parity-to-fourth-moment proof under zero-mass and nonuniform coordinates while a separate reviewer searches categorical Grothendieck prior art. Publishing or elevating status requires explicit owner authorization.
 
 **Source graph:** [Theorem D](../2026-11-quadratic-rank-optimal/UNIVERSAL_THEOREM.md) → [v9.2 internal review](../../../papers/finite-product-influence/V9_2_INTERNAL_REVIEW_20261112.md) → [PR #408 ledger](../formalization/product_space/ACTUAL_ES_PAIR_MATCHING_LEDGER_20261112.md) → [main claim registry](../../catalogue/CLAIMS.json). Imported classical machinery receives full credit.
+
+## Source-custody note — immutable v8 Proof Passport
+
+The historical [v8 Proof Passport](../../../papers/finite-product-influence/V8_PROOF_PASSPORT.md) is hash-pinned inside the v8 source manifest and remains byte-for-byte unchanged. The later v9.2 narrative is in a separate [dated supplementary passport](../../../papers/finite-product-influence/V9_2_PASSPORT_SUPPLEMENT_20261112.md). Neither file itself constitutes new Lean or external referee certification.
