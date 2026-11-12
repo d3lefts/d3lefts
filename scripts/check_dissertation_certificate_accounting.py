@@ -87,7 +87,7 @@ def audit(pdf=None):
         assert len(document) == 69
         found = {}
         for i, page in enumerate(document, 1):
-            for m in re.finditer(r"(?m)^\\s*(Theorem|Proposition|Lemma|Corollary)\\s+(\\d+\\.\\d+)\\s*\\(", page.get_text(sort=True)):
+            for m in re.finditer(r"(?m)^\s*(Theorem|Proposition|Lemma|Corollary)\s+(\d+\.\d+)\s*\(", page.get_text(sort=True)):
                 found.setdefault(m.group(2), (m.group(1), i))
         assert len(found) == 54, sorted(set(found) ^ {r["number"] for r in claims})
         for claim in claims:
@@ -115,4 +115,4 @@ if __name__ == "__main__":
     result = audit(pdf=args.pdf)
     if args.json_out:
         args.json_out.parent.mkdir(parents=True, exist_ok=True)
-        args.json_out.write_text(json.dumps(result, indent=2, sort_keys=True)+"\\n", encoding="utf-8")
+        args.json_out.write_text(json.dumps(result, indent=2, sort_keys=True)+"\n", encoding="utf-8")
