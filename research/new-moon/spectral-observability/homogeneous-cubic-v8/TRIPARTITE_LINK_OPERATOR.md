@@ -69,3 +69,14 @@ First test LE(C) for small, fully independent product laws with one B-coordinate
 The [exact link sanity checker](checks/tripartite_link_exact.py) verifies the displayed necessary \(\ell_1\) and influence accounting identities for a six-bit 3-partite example with two fair A coordinates and biased B/C coordinates. It does **not** test the conjecture universally.
 
 **Status:** representation and identities analytically proved; LE(C) OPEN; no independent human proof review; no publication/novelty claim.
+
+
+## November 12 conditional refinement — aggregate-link fourth moments
+
+The [NIGHTFALL overlap checkpoint](../../../nightfall/2026-11-12-cubic-overlap/AGGREGATE_LINK_OVERLAP_LEMMA.md) is now an explicit **partial sufficient criterion** for this open \`LE(C)\` program. Apply the pointwise block-\(\ell_1\) constraint above to *aggregate rows* \(Q_a\), not individual cubic coefficients. If \(v_a=\mathbb E\|Q_a\|^2\), \(M\ge\max_a v_a\), and \(\kappa_a=\mathbb E\|Q_a\|^4/v_a^2\), the author-side Hölder proof gives, for all \(K\ge1\),
+
+\[
+\mathcal V \le B_0\sqrt{K\mathcal M}+\sum_{\kappa_a>K}v_a.
+\]
+
+Uniformly bounded row kurtosis therefore suffices for the desired variance exponent two, even with overlapping links and unbounded pair-codegree. The interlocking Hadamard family satisfies \(\kappa=3-2/n\); rare categorical address models have unbounded \(\kappa\). A uniform bound on the **spike tail** has not been proved. **Do not mark the unconditional link-energy conjecture \`LE(C)\` solved.** The [exact tests and falsification plan](../../../nightfall/2026-11-12-cubic-overlap/README.md) are independently replayable finite arithmetic, not a universal certificate.
