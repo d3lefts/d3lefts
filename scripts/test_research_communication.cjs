@@ -44,7 +44,7 @@ const quantum=read("docs/quantum-observability.html");
 assert.ok(mathematics.includes("v9.2 PDF")&&mathematics.includes("Corollary 6.2"),"Latest source-custody risk missing");
 assert.ok(mathematics.includes("225(1+√3)")&&mathematics.includes("historical"),"Older constant must be retained with scope");
 assert.ok(review.includes("C₂=(10+2√2)²(1+√3)²")&&review.includes("global matched parity"),"Current referee task drift");
-assert.ok(observability.includes("conditional on the scalar quadratic influence theorem")&&observability.includes("lower construction alone"),"Conditional upper/lower separation absent");
+assert.ok(observability.includes("conditional on the scalar quadratic influence theorem")&&observability.includes("lower example alone"),"Conditional upper/lower separation absent");
 assert.ok(quantum.includes("Conditional on quadratic C₂"),"Quantum implication lost scalar dependency");
 assert.ok(dispatch.includes("Sixty-seven scoped Lean source modules"),"Current provenance census drift");
 const registry=JSON.parse(read("docs/active-proof-passport.json"));
