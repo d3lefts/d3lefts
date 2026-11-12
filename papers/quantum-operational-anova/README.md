@@ -8,14 +8,14 @@
 
 ## Replay
 
-Requires Python with \`sympy\` and \`numpy\` installed. From the repository root:
+Requires Python with `sympy` and `numpy` installed. From the repository root:
 
-\`\`\`sh
+```sh
 python3 papers/quantum-operational-anova/checks/exact_audit.py
 python3 papers/quantum-operational-anova/checks/near_degenerate_audit.py
 python3 papers/quantum-operational-anova/checks/metric_family_audit.py
-\`\`\`
+```
 
-All three scripts were replayed from the uploaded v2 archive on November 11, 2026, with exact checks passing for biased noncommuting qubits, near-singular \`κ_Q=133302015\`, and 200 deterministic-seed noncommuting complex cases over four metrics. Numeric tests are falsification evidence, **not** proofs of the universal theorem. No external submission or claim registry promotion is implied.
+All three scripts were replayed from the uploaded v2 archive on November 11, 2026, with exact checks passing for biased noncommuting qubits, near-singular `κ_Q=133302015`, and 200 deterministic-seed noncommuting complex cases over four metrics. Numeric tests are falsification evidence, **not** proofs of the universal theorem. No external submission or claim registry promotion is implied.
 
-The original v2 source bundle SHA-256 was \`5a5917aaf0b7f1feb950fc61cb7fd0fddb12353106f41fab4c078c8445524688\`. The contents are checked in here as human-readable source instead of a binary archive; any later edit changes the Git version, rather than silently overwriting the historical source.
+The original v2 source bundle SHA-256 was `5a5917aaf0b7f1feb950fc61cb7fd0fddb12353106f41fab4c078c8445524688`. The contents are checked in here as human-readable source instead of a binary archive; any later edit changes the Git version, rather than silently overwriting the historical source.
