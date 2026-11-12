@@ -88,7 +88,7 @@ theorem average_condExp_update
       have hki : k ≠ i := by
         intro hki
         exact hi (hki ▸ hk)
-      exact Function.update_of_ne hki
+      exact Function.update_of_ne hki a x
     calc
       (∑ a : α, p i a * condExp p U f (Function.update x i a)) =
           ∑ a : α, p i a * condExp p U f x := by
