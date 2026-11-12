@@ -191,6 +191,8 @@ jobs:
             --decl $N.pinfl_lift \
             --decl $N.lift_degree \
             --decl $N.heterogeneous_influence \
+            --decl $N.depDegree_implies_depESDegree \
+            --decl $N.heterogeneous_es_influence \
             --json-out lean-receipts/heterogeneous-alphabets.json || {
               python3 -c "import json;r=json.load(open('lean-receipts/heterogeneous-alphabets.json'));print(r.get('status'));print((r.get('stdout') or '')[:60000]);print((r.get('stderr') or '')[:5000])" || true
               exit 1
