@@ -22,6 +22,15 @@ open Nightfall.ProductSpace.Influence
 variable {ι α : Type} [Fintype ι] [DecidableEq ι]
   [Fintype α] [DecidableEq α]
 
+/-- Updating the same coordinate twice leaves only the final value. -/
+theorem update_twice (x : ι → α) (j : ι) (b c : α) :
+    Function.update (Function.update x j b) j c = Function.update x j c := by
+  funext i
+  by_cases h : i = j
+  · subst h
+    simp
+  · simp [Function.update_of_ne h]
+
 /-- Double-resampling identity for the *actual* product-space increment. -/
 theorem pincr_eq_fiber_pair_average
     (p : ι → α → ℝ) (hp1 : ∀ i, ∑ a, p i a = 1)
@@ -56,7 +65,7 @@ theorem pincr_eq_fiber_pair_average
       rw [Finset.mul_sum]
       apply Finset.sum_congr rfl
       intro c _
-      simp only [Function.update_update]
+      rw [update_twice x j b c]
       ring
 
 end Nightfall.Wright.ProductFiber
