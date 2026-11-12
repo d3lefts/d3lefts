@@ -10,10 +10,10 @@
 
 ## Analytic claims and boundaries
 
-Let independent input coordinates have arbitrary product distributions, and write (V=\operatorname{Var}(f)), (M=\sup_i I_i(f)), (|f|\le B), and (C_2=(10+2\sqrt2)^2(1+\sqrt3)^2\approx1228.356).
+Let independent input coordinates have arbitrary product distributions, and write \(V=\operatorname{Var}(f)\), \(M=\sup_i I_i(f)\), \(|f|\le B\), and \(C_2=(10+2\sqrt2)^2(1+\sqrt3)^2\approx1228.356\).
 
-1. **Quadratic degree-two:** (V^2\le C_2 B^2M) by a written matching/section-budget/fourth-moment proof. The exponent two is sharp in a disjoint-block family.
-2. **Rank-(r) Hilbert outputs:** (V(F)^2\le3C_2rB^2M(F)), with a complete source-side analytic proof but no end-to-end Lean certificate.
+1. **Quadratic degree-two:** \(V^2\le C_2 B^2M\) by a written matching/section-budget/fourth-moment proof. The exponent two is sharp in a disjoint-block family.
+2. **Rank-\(r\) Hilbert outputs:** \(V(F)^2\le3C_2rB^2M(F)\), with a complete source-side analytic proof but no end-to-end Lean certificate.
 3. **Quadratic adaptive whole-symbol reading:** risk (≤\tau_r(F)+\eta) using at most (\min\{n,\lceil12C_2rB^2/\eta\rceil\}) reads; matching order lower families exist. This is an *information/query* bound, not an efficient running-time statement.
 4. **Weak averaging transversal:** if (H), (|H|=t), meets every active Hoeffding support of size (≥3), then (V\le\sqrt{C_2} B\sqrt M+tM). This also applies to arbitrary original interaction degree but **does not** ensure the posterior is quadratic after observing (H).
 5. **Strong sectional backdoor:** if every support (S) satisfies (|S\setminus H|\le2), observe (H) first, then apply the rank-(r) quadratic observer. Query budget (t+\lceil12C_2rB^2/\eta\rceil), capped by (n), with risk (≤\tau_r+\eta); a different, strictly stronger hypothesis than point 4.
