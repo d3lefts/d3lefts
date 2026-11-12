@@ -1,0 +1,52 @@
+name: NIGHTFALL conditional-section fixed-query selector — pinned Lean 4.35
+on:
+  pull_request:
+    paths:
+      - 'papers/conditional-section-duality/lean/**'
+      - 'research/nightfall/2026-11-conditional-section-duality/**'
+      - '.github/workflows/nightfall-conditional-section-selector-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  strict-selector:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Strict five-declaration kernel and axiom gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          python3 scripts/lean_bridge.py papers/conditional-section-duality/lean/FixedObservationSelector.lean \
+            --workspace /tmp/mathlib4 --timeout 700 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.ConditionalSection.scalar_fixed_observation_selector \
+            --decl Nightfall.ConditionalSection.beta_conditioned_fixed_observation \
+            --decl Nightfall.ConditionalSection.finite_selector_tail_energy \
+            --decl Nightfall.ConditionalSection.finite_beta_fixed_observation \
+            --decl Nightfall.ConditionalSection.selector_factor_four_sharp \
+            --json-out lean-receipts/conditional-section-selector.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/conditional-section-selector.json
+      - name: Independent finite conditional section falsifier
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -B research/nightfall/2026-11-conditional-section-duality/check_conditional_sections.py | tee lean-receipts/finite-audit.txt
+      - name: Record source custody and precise limits
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts
+          sha256sum papers/conditional-section-duality/lean/FixedObservationSelector.lean > lean-receipts/SHA256SUMS
+          git rev-parse HEAD > lean-receipts/COMMIT
+          printf '%s\n' 'Certifies finite selector arithmetic and beta budget under explicit inputs. Does NOT certify L1 source section budget, ANOVA identification, selector existence, measurability, full observability theorem, or novelty.' > lean-receipts/SCOPE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nightfall-conditional-section-selector-lean-receipts
+          path: lean-receipts/
+          retention-days: 60
+          if-no-files-found: warn
