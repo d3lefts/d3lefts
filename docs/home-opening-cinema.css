@@ -864,3 +864,16 @@ html #main>.hero.nf-opening .nf-opening-overlap-value {
 #main>.hero.nf-opening .nf-hero-jump{display:inline-block;margin-left:12px;color:#f5d88f;font-weight:700;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
 #main>.hero.nf-opening .nf-hero-jump:focus-visible{outline:2px solid #f5d88f;outline-offset:4px}
 @media(max-width:700px){#main>.hero.nf-opening .nf-hero-jump{display:block;width:max-content;max-width:100%;margin:8px 0 0}}
+
+
+/* Above-the-fold signature handoff: preserve both theorem-source actions below. */
+#main>.hero.nf-opening{align-content:start;padding-block:clamp(31px,4vw,58px) 50px}
+#main>.hero.nf-opening .nf-hero-guide{display:flex;align-items:center;flex-wrap:wrap;gap:8px 16px;margin:11px 0 0;max-width:none}
+#main>.hero.nf-opening .nf-hero-guide span{font:600 11px/1.6 var(--mono);letter-spacing:.035em;color:#b7c8d0}
+#main>.hero.nf-opening .nf-hero-jump{margin:0;color:#f5d88f}
+@media(max-width:700px){
+ #main>.hero.nf-opening{padding-block:18px 30px}
+ #main>.hero.nf-opening .nf-hero-guide{display:block;margin-top:7px}
+ #main>.hero.nf-opening .nf-hero-guide span{display:block;margin-top:7px;font-size:11px}
+ #main>.hero.nf-opening .nf-hero-jump{margin:0}
+}
