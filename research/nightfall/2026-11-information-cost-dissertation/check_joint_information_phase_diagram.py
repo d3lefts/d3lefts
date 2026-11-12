@@ -117,5 +117,16 @@ for n in range(1, 8):
         assert Q(count, len(X)) == Q(1, 2 ** d)
         sharp_cases += 1
 
+# Full-order Fourier coefficient of the rare threshold safety indicator.
+# Exact alternating-binomial sum: a degree-one score has degree-n violation event.
+threshold_cases = 0
+for n in range(2, 14):
+    t = (n - 1) // 4
+    direct = sum(((-1) ** (n-k)) * comb(n,k) for k in range(t+1))
+    closed = (-1) ** (n+t) * comb(n-1,t)
+    assert direct == closed and direct != 0, (n,direct,closed)
+    threshold_cases += 1
+
 print(f"PASS boolean={bool_cases} heterogeneous={hetero_cases} "
-      f"posterior={posterior_cases} rare={rare_cases} sharp={sharp_cases}")
+      f"posterior={posterior_cases} rare={rare_cases} sharp={sharp_cases} "
+      f"threshold={threshold_cases}")
