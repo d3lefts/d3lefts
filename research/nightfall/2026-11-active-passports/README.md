@@ -1,7 +1,7 @@
-# Active mathematical Proof Passport expansion — 11 November 2026
+# Active mathematical Proof Passport expansion — updated 12 November 2026
 
 **NIGHTFALL Constellation / research lead Devin J. Wright.**
-These seven original claim-specific dossiers comprise **two upgrades to existing active records** and **five new active records**. The live registry is `docs/active-proof-passport.json` (v5, twelve active claims). The historically frozen eleven Proof Passports in `docs/research-registry.js`, the 40 curated research entries and the five approved findings remain unchanged. Coincidentally the active and historical collections both now number eleven; they are not the same records.
+These seven original claim-specific dossiers comprise **two upgrades to existing active records** and **five new active records**. The live registry is `docs/active-proof-passport.json` (v12, twelve active claims). The historically frozen eleven Proof Passports in `docs/research-registry.js`, the 40 curated research entries and the five approved findings remain unchanged. The active collection has twelve claims; the separate frozen historical collection has eleven claims. They are not the same records.
 
 | Detailed dossier | Evidence tier | Primary dependency |
 | --- | --- | --- |
@@ -26,3 +26,16 @@ Every dossier gives the exact quantifiers, imported operators, currently availab
 **Source custody:** draft-PR manuscripts are linked as drafts; their theorem source is not represented as merged. Original locally supplied PDF/ZIP archives are not represented as downloadable GitHub binaries unless explicitly deposited and hash-verified. No reviewer or novelty review is invented.
 
 **Status rule:** an exact finite construction, a Lean kernel declaration, a written analytic proof candidate and an externally accepted theorem are distinct gates. Correct any contradicted claim in the registry and associated full page and preserve prior versions. Nothing here is a permission to promote a claim to NEW MOON or to submit research externally.
+
+
+## 12 November 2026 — v12 active-passport reconciliation
+
+The public live registry is now **v12 with twelve active claims** (not eleven). The earlier seven detailed source-bound dossiers remain historical source records; no new active claim ID, frozen historical Passport or approved Original Finding is created. This revision adds three **supplementary** dossiers:
+
+- [Quadratic influence and rank-observation passport](quadratic-rank-observability.md), referencing existing active IDs q2-influence and q2-observation; v9.2 scalar constant C₂≈1228.356, conditional rank-linear adaptive bound, source-bound #407/#408 finite Lean bridges and missing full Lean theorem.
+- [Four information costs and exact identification/test separation](information-costs-identification.md); the signed-address model and small exact two-implementation replay are a restricted model, not an original classification theorem.
+- [Conditional-section duality](conditional-section-duality.md); a β-gated fixed-query analytic theorem and rare-address lower family, with classical-prior-art and finite-replay limitations.
+
+The [machine-readable live registry](../../../docs/active-proof-passport.json) and [visible active overview](../../../docs/active-proof-passport.html) reflect the updated latest **proposed** coefficient but retain manuscript-level evidence statuses. The certificate provenance [current-source ledger](../../../docs/lean-certificate-provenance.json) enumerates **67** scoped source records as of #408; the original 13-declaration 11 November spectral batch remains a dated subset, not the total current source count. The [independent integer checker](check_addressed_family_independent.cjs) and [Python direct checker](../2026-11-information-cost-dissertation/check_addressed_family_exact.py) are wired into the active-passport workflow. This integration must pass on the PR head before describing those scripts as replayed under CI.
+
+Publication stop rule: no complete source-level global matching parity, arbitrary-product exponent-two, Hilbert adaptive observer or new all-four-cost structural classification theorem has an end-to-end Lean receipt or non-author mathematical review. The original borrowed all-degree Turturean theorem is credited, not relabeled.
