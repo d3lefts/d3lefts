@@ -175,4 +175,36 @@ theorem iid_absolute_difference_z
   nlinarith [sq_nonneg (∑ i, p i * a i)]
 
 
+/-- Wright's sharp one-coordinate iid resampling inequality, directly for
+every finite alphabet with arbitrary (possibly zero) atom masses. The range
+condition is [-1/2,1/2], i.e. a translated unit interval. The optimum
+coefficient 4 - 2*sqrt(3) is proved without CDF integration. -/
+theorem sharp_rho_all_finite_laws
+    (p : α → ℝ) (hp : ∀ i, 0 ≤ p i)
+    (hp1 : ∑ i, p i = 1)
+    (a : α → ℝ) (ha0 : ∀ i, -(1 / 2 : ℝ) ≤ a i)
+    (ha1 : ∀ i, a i ≤ 1 / 2) :
+    (∑ i, ∑ j, p i * p j * |a i - a j|) ≤
+      (4 - 2 * Real.sqrt 3) *
+        (∑ i, p i * (1 / 2 + |a i|)) := by
+  let z : ℝ := ∑ i, p i * |a i|
+  have hD : (∑ i, p i * (1 / 2 + |a i|)) = 1 / 2 + z := by
+    calc
+      (∑ i, p i * (1 / 2 + |a i|)) =
+          (∑ i, p i * (1 / 2 : ℝ)) + (∑ i, p i * |a i|) := by
+            simp_rw [mul_add, Finset.sum_add_distrib]
+      _ = 1 / 2 + z := by
+            rw [← Finset.sum_mul, hp1]
+            simp [z]
+  have hs : (Real.sqrt (3 : ℝ)) ^ 2 = 3 :=
+    Real.sq_sqrt (by norm_num)
+  have hsq : 0 ≤ (z - (Real.sqrt 3 - 1) / 2) ^ 2 := sq_nonneg _
+  calc
+    (∑ i, ∑ j, p i * p j * |a i - a j|) ≤
+        2 * z * (1 - z) := iid_absolute_difference_z p hp hp1 a ha0 ha1
+    _ ≤ (4 - 2 * Real.sqrt 3) * (1 / 2 + z) := by nlinarith
+    _ = (4 - 2 * Real.sqrt 3) * (∑ i, p i * (1 / 2 + |a i|)) := by
+          rw [hD]
+
+
 end Nightfall.Wright.SharpResampling
