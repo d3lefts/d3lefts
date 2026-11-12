@@ -35,7 +35,7 @@ K_8=(10+2\sqrt2)^2(1+\sqrt3)^2.
 \]
 Here \(\delta_2>0\) is an explicit local Gram/condition-number visibility floor; independence of the classical inputs, local product preparations, faithful local averages, and degree at most two are all required **for this quantitative transfer**. The product-average quantum ANOVA theorem itself allows arbitrary joint conditional states, but the transfer does not. This **terminal leave-one-register-out** result is *not* a single-register-start gain bound or an adaptive quantum measurement/query theorem.
 
-Run \`python3 papers/finite-product-influence/check_quantum_anova_bridge_exact.py\` for two dependency-free exact rational examples (joint parity gain \(1/9\) and correlated-average supermodularity violation \(1/16\)). These spot-checks do not certify the general noncommuting theorem, v8's analytic proof, or originality. The quantum v3 source and full audit package have not yet been imported into this repository; preserve the frozen v8 TeX and checksum manifest, and do not promote the synthesis to a refereed or Lean-certified result.
+Run `python3 papers/finite-product-influence/check_quantum_anova_bridge_exact.py` for two dependency-free exact rational examples (joint parity gain \(1/9\) and correlated-average supermodularity violation \(1/16\)). These spot-checks do not certify the general noncommuting theorem, v8's analytic proof, or originality. The quantum v3 source and full audit package have not yet been imported into this repository; preserve the frozen v8 TeX and checksum manifest, and do not promote the synthesis to a refereed or Lean-certified result.
 
 ---
 
