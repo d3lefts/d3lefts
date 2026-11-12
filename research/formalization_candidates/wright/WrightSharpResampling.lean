@@ -121,7 +121,7 @@ theorem pair_sum_scaled (p u v : α → ℝ) (k : ℝ) :
           apply Finset.sum_congr rfl
           intro i _
           rw [Finset.mul_sum]
-    _ = _ := by rw [pair_sum_law]
+    _ = _ := by rw [pair_sum_law]; ring
 
 /-- The actual iid absolute-difference inequality, obtained by factoring
 independent double sums. The negative mean-squared correction is retained. -/
