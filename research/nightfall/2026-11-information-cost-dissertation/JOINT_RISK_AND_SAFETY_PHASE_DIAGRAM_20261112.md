@@ -87,6 +87,14 @@ On \(X\in\{-1,+1\}^n\) uniform, consider bounded affine \(f(x)=c+\sum_i a_ix_i\)
 
 **Important:** The low-degree *score* \(f_n\) does not imply a low-degree violation indicator \(1_{\{f_n<0\}}\). The safety predicate changes the relevant structural degree.
 
+**Exact threshold degree blow-up.** The claim can be made algebraically sharp. Write \(K(x)=|\{i:x_i=+1\}|\), \(t=\lfloor(n-1)/4\rfloor\), and \(u_n(x)=1_{\{f_n(x)<0\}}=1_{\{K(x)\le t\}}\). Its full-order Fourier/Hoeffding coefficient on the uniform cube is
+\[
+\widehat u_n([n])
+=2^{-n}\sum_{k=0}^{t}(-1)^{n-k}{n\choose k}
+=(-1)^{n+t}2^{-n}{n-1\choose t}\ne0.
+\]
+The second equality is the exact alternating-binomial partial-sum identity. Hence \(\deg_{\rm ES}(u_n)=n\) **although \(\deg_{\rm ES}(f_n)=1\), \(\|f_n\|_\infty\le1\), and \(f_n(-1,\ldots,-1)=-1/3\)**. This is a dimension-growing, mathematically exact obstruction to inferring low violation-event complexity from low numerical-score interaction degree. It is a standard symmetric-threshold/Fourier mechanism, not a priority claim.
+
 ### Approximate structure is not an exact certificate
 
 For \(N=2^n\) and uniform Boolean inputs, let \(g=0\) and \(h_z=1_{\{x=z\}}\). The squared \(L^2\) distance to \(\mathcal H_d\), for any \(d\ge0\), is at most \(1/N\) because \(g\in\mathcal H_d\). However \(h_z\not\equiv0\). Under an unknown uniformly hidden \(z\), \(q\) adaptive classical full-input queries detect the violation with probability at most \(q/N\). The trusted **exact** low-degree promise in (B) cannot be replaced by an \(\epsilon\)-closeness statement. Coherent quantum search changes the \(N\)-dependence to \(\Theta(\sqrt N)\) under its separate access model.
