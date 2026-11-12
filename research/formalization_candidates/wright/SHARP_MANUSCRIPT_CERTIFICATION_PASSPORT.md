@@ -159,3 +159,24 @@ New named theorem receipts:
 5. Compile one genuine no-extra-assumptions named theorem with the precise manuscript constant and scope.
 
 **No novelty, peer-review, manuscript-complete Lean, or external publication promotion is authorized.** The frozen repository certificate registry is untouched. These sources remain isolated under `research/formalization_candidates/wright/` in draft PR #404.
+
+
+## Canonical finite fiber endpoints — strict receipt (2026-11-12 UTC)
+
+**New exact checkpoint:** [Actions run 43156633571](https://github.com/d3lefts/d3lefts/actions/runs/43156633571), [immutable receipt 13915978479](https://github.com/d3lefts/d3lefts/actions/runs/43156633571/artifacts/13915978479), tested pull-request head `7ebc5989bac9116a60906773be2d9ab76460afa8`. The complete pinned workflow **PASSED**, now requesting 37 named declarations (32 historical plus five canonical-fiber declarations). Lean **4.33.0**, upstream `2a6ceaef872ae993708950f951989134084b851a`. The final module receipt reports source SHA-256 `859b924e70c1a24bff4b6ec89607346a13d91946bcfcde89d729d2e37c4492c7`; `check_receipts.py` accepted only `Classical.choice`, `Quot.sound`, `propext`, with no `sorryAx`.
+
+**New five kernel-checked named declarations:**
+- `Nightfall.Wright.CanonicalFiber.fiberLo_le`
+- `Nightfall.Wright.CanonicalFiber.le_fiberHi`
+- `Nightfall.Wright.CanonicalFiber.fiberLo_update`
+- `Nightfall.Wright.CanonicalFiber.fiberHi_update`
+- `Nightfall.Wright.CanonicalFiber.total_increment_of_canonical_sensitivity`
+
+**Precisely certified mathematical advance:** for any finite common alphabet `α` with `Nonempty α`, and any actual finite-product `f : (ι → α) → ℝ`, canonical finite fiber minima/maxima are defined as finite infima/suprema of `f` on the coordinate fiber. Their bound and resampling-invariance hypotheses are proved outright. Consequently, the actual `pincr` satisfies
+`2 ∑_j pincr p f j ≤ 4(4−2√3)d²`, assuming **only the still-open pointwise condition**
+`∀x, ∑_j max(f(x)−min_b f(x[j←b]), max_b f(x[j←b])−f(x)) ≤ 2d²`
+on the function side. No external endpoint data are assumed.
+
+**Important remaining scientific scope:** This new declaration does **not** derive the pointwise FHKL sensitivity inequality from bounded Hoeffding degree `≤ d`. It is a genuine functional-premise theorem, not the full Wright theorem. Its canonical inf/sup range includes zero-mass alphabet symbols; for merely a.e.-bounded functions, support-restricted representatives or a proof of support reduction are still required. Also missing are the sharp `π²d²/2` actual row-cost inequality, the stronger mixed-median/certificate functional estimate, the construction/convergence of finite rectangular conditional expectations on arbitrary (including completed, uncountably indexed) measurable products, and single-declaration end-to-end composition.
+
+**Certification classification:** a strict kernel-certified **conditional finite-product construction**; full arbitrary-measurable theorem **UNCERTIFIED**. Initial failed source attempts (a Lean type-inference error with detected `sorryAx`) are rejected and superseded by the passed exact-source receipt above. No novelty or external referee claim, and do not merge or announce a complete Wright certificate.
