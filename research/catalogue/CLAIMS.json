@@ -123,7 +123,7 @@
         "research/nightfall/formalization/phase_block/PhaseBlock.lean",
         "docs/phase-adaptive-branch-proof-passport.html",
         ".github/workflows/publish-paper-c.yml",
-        "papers/specialized-complexity/check_f16_independent_20261112.py"
+        "research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/check_f16_independent_20261112.py"
       ],
       "dependencies": [
         {

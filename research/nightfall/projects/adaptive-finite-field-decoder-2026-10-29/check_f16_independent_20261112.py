@@ -5,7 +5,7 @@ Checks for papers/specialized-complexity/MANUSCRIPT.md: H=F4^x, 6-element cube i
 fixed block (20), the 27-state adaptive table, the 1+z*eta remainder code, exhaustive minimum of 4
 colliding state-pairs over all pairs of the 4369 normalized fixed rows, and the k=4,5,7 counting
 bounds. Finite arithmetic only; it does not certify the all-signal reduction or priority.
-Requires numpy. Run: python3 -I papers/specialized-complexity/check_f16_independent_20261112.py
+Requires numpy. Run: python3 -I research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/check_f16_independent_20261112.py
 """
 import itertools, numpy as np
 def mul(a,b):
