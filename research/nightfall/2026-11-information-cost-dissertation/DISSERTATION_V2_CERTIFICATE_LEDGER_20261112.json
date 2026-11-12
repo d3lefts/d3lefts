@@ -1,0 +1,1449 @@
+{
+  "schema": "nightfall-dissertation-machine-certificates/v1",
+  "as_of": "2026-11-12",
+  "source_manuscript": {
+    "title": "Convolution and the Cost of Knowing",
+    "subtitle": "Product-Space Influence, Adaptive Observation, and Certification Limits",
+    "version": "2.0",
+    "physical_pages": 69,
+    "file": "Convolution_and_the_Cost_of_Knowing(1).pdf",
+    "sha256": "a65cc94daa4392dc8a79ca8ebbf5d5f63744db6465107a24f9ba397aca6c51fc",
+    "dissertation_ref": "user-provided exact PDF, 2026-11-12",
+    "warning": "This PDF is not copied into GitHub. SHA identifies the exact uploaded file."
+  },
+  "inventory": {
+    "numbered_claims": 54,
+    "numbered_by_kind": {
+      "Theorem": 28,
+      "Proposition": 15,
+      "Lemma": 7,
+      "Corollary": 4
+    },
+    "statuses": {
+      "LOCAL_KERNEL_SCOPE": 1,
+      "EXTERNAL_KERNEL_SCOPE": 1,
+      "SCOPED_COMPONENTS": 22,
+      "FINITE_CHECK_ONLY": 19,
+      "ANALYTIC_ONLY": 11
+    },
+    "grade_definitions": {
+      "LOCAL_KERNEL_SCOPE": "Local Lean-compiled mathematical core, but the dissertation's displayed normalization or scope is not a separate exact-type terminal declaration.",
+      "EXTERNAL_KERNEL_SCOPE": "Previously published third-party Lean theorem is imported/cited; dissertation presentation has an uncompiled translation of conventions.",
+      "SCOPED_COMPONENTS": "One or more named Lean subtheorems are compiled; essential hypothesis/representation/composition bridge remains uncompiled.",
+      "FINITE_CHECK_ONLY": "Mathematical argument is written and finite examples may be checked; no universal Lean theorem for the claim.",
+      "ANALYTIC_ONLY": "Mathematical argument/proof is written or classical, with no identified claim-specific Lean compiler receipt."
+    },
+    "canonical_registry": "docs/lean-certificate-provenance.json",
+    "canonical_registry_revision": 17,
+    "canonical_registry_modules": 67,
+    "canonical_registry_counts": {
+      "quarantine": 56,
+      "derived_transfer": 10,
+      "finite_construction": 1
+    },
+    "distinct_paper_local_modules_counted_outside_registry": 1,
+    "paper_local": [
+      "papers/conditional-section-duality/lean/FixedObservationSelector.lean"
+    ],
+    "paper_local_compiled_declarations": 5,
+    "non_author_review_verified": 0,
+    "fully_end_to_end_lean_certified_claims": 0,
+    "scope_note": "Conservatively literal exact-dissertation statement and all chapter hypotheses. One local theorem core and one external Boolean theorem are compiled, but those printed B-/oracle translations are not new exact-type declarations. Unnumbered assumptions and supporting lemmas also need scope passport."
+  },
+  "external_dependencies": [
+    {
+      "repo": "physical-superintelligence/aaronson-ambainis",
+      "commit": "2a6ceaef872ae993708950f951989134084b851a",
+      "toolchain": "Lean 4.33.0",
+      "role": "actual imported Lean Boolean-cube proof, product influence theorem"
+    },
+    {
+      "repo": "leanprover-community/mathlib4",
+      "commit": "56a005855ea17e0b0958f73ec801ae140b0a1679",
+      "toolchain": "Lean 4.35.0",
+      "role": "standard library and analytic foundations"
+    },
+    {
+      "repo": "Polarnova/FABL",
+      "commit": "164f830312946ccac6e7fdc7bb9493f0149e820d",
+      "toolchain": "Lean 4.32.0",
+      "role": "external comparative Boolean analysis; not imported here"
+    },
+    {
+      "repo": "serhatemrecoban/LeanInfoTheory",
+      "commit": "2eb80d0e746688511618aaefc2624ffa4ae88f6e",
+      "toolchain": "Lean 4.33.1",
+      "role": "potential information/PMF representation bridge; not imported here"
+    }
+  ],
+  "critical_warnings": [
+    "Historical source-hash-matched successful CI is not a fresh rerun, nor by itself a theorem-type contract.",
+    "Lean 4.33.0 has a historical kernel soundness patch in Lean 4.33.1; all critical 4.33.0 receipts should be replayed on a corrected compatible compiler, without presuming invalidity.",
+    "One same-pin PR #416 workflow compiles selected quadratic lemmas but declares full terminal theorem missing.",
+    "The dissertation Appendix B calls PR #417 draft and references an old branch: it was merged; its phase-diagram job is a finite-rational checker, not Lean.",
+    "1,414 exact convolution assertions are reported in PDF Appendix B without a verified source script/CI receipt in inspected repository paths. Do not promote that numerical count as independently reproduced.",
+    "Zero source-level universal claims are promoted from subtheorem or finite checker by this ledger. This is an accounting artifact, not an end-to-end proof.",
+    "The PDF reports 123 adaptive-policy, 161 live-query and six evaluation-span tests from check_joint_frontier_exact.py, which is not in the current repository. The similarly named check_addressed_family_exact.py checks 6561 n=2 two-sample trivalent tester instances only; it is NOT a certificate of the frontier.",
+    "The exact finite phase-diagram CI script covers 18 posterior cases and other finite enumerations. Do not imply that this substitutes for the absent multi-query frontier checker."
+  ],
+  "claims": [
+    {
+      "id": "D2-1.1",
+      "number": "1.1",
+      "kind": "Theorem",
+      "title": "Law-uniform quadratic influence",
+      "pdf_page": 10,
+      "machine_status": "SCOPED_COMPONENTS",
+      "source_certificates": [
+        {
+          "path": "research/nightfall/formalization/product_space/ActualESPairMatchingBridge.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "e3b9bef9db83cfa70bebad4ed895d860dc5db71e",
+          "ci_run": 43167542367,
+          "ci_head_sha": "66dc5a6bce2f9d5c16c66c67e6ea3d6bb98e12d5",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Eight named declarations checked in strict pinned Lean 4.33/Turturean workflow 43167542367, exact source SHA-256 4d59e9bf872f89a3310b6c3a5203d9256e4b85bfab65cfc60c0a065bca0bffea, standard axioms only."
+        },
+        {
+          "path": "research/nightfall/formalization/product_space/QuadraticActualRowOscillation.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "b21fdc112c9294c40485cc1bd5955e915aca27d9",
+          "ci_run": 43161559862,
+          "ci_head_sha": "db21c0a1d33ce3b333cb3256c2e05dde08f5eda5",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Strict pinned Lean 4.33 Turturean PASS run 43161559862: actual_degree_two_hilbert_section_budget, with real source function, normalized product law and ESDegreeLE hypothesis, standard axioms only. Does not prove the terminal quadratic influence inequality."
+        },
+        {
+          "path": "research/nightfall/formalization/observability/HilbertManyIncrementMoment.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "2f4b957c0358c026b01cc7161e4f85b634393214",
+          "ci_run": 43062171542,
+          "ci_head_sha": "1952573960a4784f1bda87dcf049c5d07354cff6",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        },
+        {
+          "path": "research/nightfall/formalization/observability/WeightedGreedyCover.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "418c3dfc6f107970006252925954da2c4e372f7f",
+          "ci_run": 43080368002,
+          "ci_head_sha": "7840e535e7c8d8cf8e3bff1e46fff59515539f29",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        }
+      ],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Missing same-source global matching-to-amplitude inequality and final scalar variance-squared closure.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-1.2",
+      "number": "1.2",
+      "kind": "Proposition",
+      "title": "Optimal variance exponent",
+      "pdf_page": 11,
+      "machine_status": "ANALYTIC_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Exact disjoint-pair example is proved in manuscript; no theorem-level Lean declaration located.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-1.3",
+      "number": "1.3",
+      "kind": "Theorem",
+      "title": "Rank-linear quadratic influence",
+      "pdf_page": 11,
+      "machine_status": "SCOPED_COMPONENTS",
+      "source_certificates": [
+        {
+          "path": "research/nightfall/formalization/observability/RademacherOrthogonality.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "3c02e3e6d567807041964cbf32389b6f27692b78",
+          "ci_run": 42965524565,
+          "ci_head_sha": "5774e8475a7c3629931efd407724f0c281305fa5",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        },
+        {
+          "path": "research/nightfall/formalization/observability/UniversalScalarToTrace.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "7cd782e8f31aab9190346c5d5301cc201f406326",
+          "ci_run": 42962205054,
+          "ci_head_sha": "b1fed923b910b9f1b6d144a571d6a045e50a868a",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        }
+      ],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Conditional on 1.1; full rank-r norm/sign lift and pointwise boundedness not jointly compiled.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-1.4",
+      "number": "1.4",
+      "kind": "Theorem",
+      "title": "Rank-optimal adaptive observation",
+      "pdf_page": 11,
+      "machine_status": "SCOPED_COMPONENTS",
+      "source_certificates": [
+        {
+          "path": "research/nightfall/formalization/product_space/RealSquaredPosteriorOneStep.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "53446675a5210e96baceedcb25f3a1a1c894acf4",
+          "ci_run": 43078715778,
+          "ci_head_sha": "217fb068c5d9e460b2d9c314b4b334fb8d0f7d1b",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        },
+        {
+          "path": "research/nightfall/formalization/observability/PosteriorEnergyDrift.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "cbe7fd2a08490b9121b141bcd17b3f752a637207",
+          "ci_run": 43082375547,
+          "ci_head_sha": "f858cf246a05f7e88f01a413e3334ed2ff1ba885",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        },
+        {
+          "path": "research/nightfall/formalization/observability/RademacherOrthogonality.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "3c02e3e6d567807041964cbf32389b6f27692b78",
+          "ci_run": 42965524565,
+          "ci_head_sha": "5774e8475a7c3629931efd407724f0c281305fa5",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        }
+      ],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Depends on 1.1/1.3; certified one-step drift does not implement actual adaptive policy or hard stopping cap.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-2.1",
+      "number": "2.1",
+      "kind": "Theorem",
+      "title": "Kernel-compiled all-degree finite-product influence",
+      "pdf_page": 12,
+      "machine_status": "LOCAL_KERNEL_SCOPE",
+      "source_certificates": [
+        {
+          "path": "research/nightfall/formalization/product_space/ProductInfluence.lean",
+          "registry_class": "derived-transfer",
+          "source_blob_sha": "70f69d8caebfaef40efdf16bab63f223753c190f",
+          "ci_run": 42929857470,
+          "ci_head_sha": "e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        },
+        {
+          "path": "research/nightfall/formalization/product_space/HeterogeneousAlphabets.lean",
+          "registry_class": "derived-transfer",
+          "source_blob_sha": "1e365ebb4c718f86807d7b37f2050c4b1011f1ec",
+          "ci_run": 42932085109,
+          "ci_head_sha": "2e13f445894ea357c3e6a5d3920b81877a5a3a9f",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        },
+        {
+          "path": "research/nightfall/formalization/product_space/EfronSteinDegree.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "7aae47034bced0f095059a16ff6d7280c28f3cf5",
+          "ci_run": 42932085109,
+          "ci_head_sha": "2e13f445894ea357c3e6a5d3920b81877a5a3a9f",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        }
+      ],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Core unit-bounded finite theorem compiled; displayed general B scaling and exact zero-atom degree interface must be distinguished from literal Lean target.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-2.2",
+      "number": "2.2",
+      "kind": "Theorem",
+      "title": "Analytic finite-partition transfer of the certified coefficient",
+      "pdf_page": 13,
+      "machine_status": "SCOPED_COMPONENTS",
+      "source_certificates": [
+        {
+          "path": "research/nightfall/formalization/product_space/HeterogeneousAlphabets.lean",
+          "registry_class": "derived-transfer",
+          "source_blob_sha": "1e365ebb4c718f86807d7b37f2050c4b1011f1ec",
+          "ci_run": 42932085109,
+          "ci_head_sha": "2e13f445894ea357c3e6a5d3920b81877a5a3a9f",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        },
+        {
+          "path": "research/nightfall/formalization/product_space/EfronSteinDegree.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "7aae47034bced0f095059a16ff6d7280c28f3cf5",
+          "ci_run": 42932085109,
+          "ci_head_sha": "2e13f445894ea357c3e6a5d3920b81877a5a3a9f",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        }
+      ],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Infinite-index product L2 cylinder-density net, commuting projections and maximal influence attainment not compiled.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-2.3",
+      "number": "2.3",
+      "kind": "Theorem",
+      "title": "Finite-product all-degree spectral observation",
+      "pdf_page": 14,
+      "machine_status": "SCOPED_COMPONENTS",
+      "source_certificates": [
+        {
+          "path": "research/nightfall/formalization/product_space/ProductInfluence.lean",
+          "registry_class": "derived-transfer",
+          "source_blob_sha": "70f69d8caebfaef40efdf16bab63f223753c190f",
+          "ci_run": 42929857470,
+          "ci_head_sha": "e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        },
+        {
+          "path": "research/nightfall/formalization/product_space/RealSquaredPosteriorOneStep.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "53446675a5210e96baceedcb25f3a1a1c894acf4",
+          "ci_run": 43078715778,
+          "ci_head_sha": "217fb068c5d9e460b2d9c314b4b334fb8d0f7d1b",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        },
+        {
+          "path": "research/nightfall/formalization/observability/PosteriorEnergyDrift.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "cbe7fd2a08490b9121b141bcd17b3f752a637207",
+          "ci_run": 43082375547,
+          "ci_head_sha": "f858cf246a05f7e88f01a413e3334ed2ff1ba885",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        }
+      ],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "All-degree scalar kernel inherited, but rank reduction, posterior recurrence and fixed finite stopping are analytic.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-2.4",
+      "number": "2.4",
+      "kind": "Theorem",
+      "title": "Turturean, in the present normalization",
+      "pdf_page": 15,
+      "machine_status": "EXTERNAL_KERNEL_SCOPE",
+      "source_certificates": [],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "External Boolean-cube theorem reported compiled; rescaling to dissertation's signed B and resampling normalization is not a local exact-type certificate.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-2.5",
+      "number": "2.5",
+      "kind": "Proposition",
+      "title": "Sharp degree-one endpoint on arbitrary products",
+      "pdf_page": 15,
+      "machine_status": "SCOPED_COMPONENTS",
+      "source_certificates": [
+        {
+          "path": "research/nightfall/formalization/product_space/RestrictedInfluence.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "c920d4ab77ea92ba6810650f15437fecac13735e",
+          "ci_run": 42884789858,
+          "ci_head_sha": "a5b601b53e8d7f3abc6c84cbc8d0514368d2c4bd",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        }
+      ],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Finite signed scalar implication compiled; arbitrary product support oscillation and measurable passage are not literal terminal Lean declarations.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-2.6",
+      "number": "2.6",
+      "kind": "Theorem",
+      "title": "Scope-separated influence synthesis",
+      "pdf_page": 17,
+      "machine_status": "SCOPED_COMPONENTS",
+      "source_certificates": [
+        {
+          "path": "research/nightfall/formalization/product_space/ProductInfluence.lean",
+          "registry_class": "derived-transfer",
+          "source_blob_sha": "70f69d8caebfaef40efdf16bab63f223753c190f",
+          "ci_run": 42929857470,
+          "ci_head_sha": "e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        },
+        {
+          "path": "research/nightfall/formalization/product_space/RestrictedInfluence.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "c920d4ab77ea92ba6810650f15437fecac13735e",
+          "ci_run": 42884789858,
+          "ci_head_sha": "a5b601b53e8d7f3abc6c84cbc8d0514368d2c4bd",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        }
+      ],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Composite includes 1.1 and backdoor/cubic assertions not end-to-end compiled; inherited components do not certify stronger cases.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-2.7",
+      "number": "2.7",
+      "kind": "Lemma",
+      "title": "Support of a low-degree Boolean polynomial",
+      "pdf_page": 18,
+      "machine_status": "FINITE_CHECK_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [
+        {
+          "path": "research/nightfall/2026-11-information-cost-dissertation/check_joint_information_phase_diagram.py",
+          "verification": "historical exact finite CI PASS",
+          "ci_run": 43281921897
+        }
+      ],
+      "missing_for_exact_endpoint": "Inductive real multilinear support proof written; related finite support tests exist but no universal Lean terminal declaration.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-2.8",
+      "number": "2.8",
+      "kind": "Proposition",
+      "title": "Exact maximum/expectation obstruction",
+      "pdf_page": 19,
+      "machine_status": "ANALYTIC_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Explicit Bernoulli formula in manuscript; no source-matched separate kernel theorem.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-2.9",
+      "number": "2.9",
+      "kind": "Lemma",
+      "title": "Matching mass",
+      "pdf_page": 19,
+      "machine_status": "SCOPED_COMPONENTS",
+      "source_certificates": [
+        {
+          "path": "research/nightfall/formalization/product_space/ActualESPairMatchingBridge.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "e3b9bef9db83cfa70bebad4ed895d860dc5db71e",
+          "ci_run": 43167542367,
+          "ci_head_sha": "66dc5a6bce2f9d5c16c66c67e6ea3d6bb98e12d5",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Eight named declarations checked in strict pinned Lean 4.33/Turturean workflow 43167542367, exact source SHA-256 4d59e9bf872f89a3310b6c3a5203d9256e4b85bfab65cfc60c0a065bca0bffea, standard axioms only."
+        },
+        {
+          "path": "research/nightfall/formalization/observability/CenteredRectangles.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "4c34adc87197f920a51cf127b83aa654394b26d5",
+          "ci_run": 43167542367,
+          "ci_head_sha": "66dc5a6bce2f9d5c16c66c67e6ea3d6bb98e12d5",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob compiled as CenteredRectangles.olean under pinned Lean 4.33/Turturean in successful PR 408 workflow 43167542367. No independent direct named declaration receipt is claimed for this module."
+        },
+        {
+          "path": "research/nightfall/formalization/observability/QuadraticMatchedParity.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "13ab8937bf14274eacce25caaf35f4c9fb9f55a3",
+          "ci_run": 43078601966,
+          "ci_head_sha": "4f93009e871297bc99e7931a770488d7ad2f77ad",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        }
+      ],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "True centered pairs/oriented rectangles compiled; global even-odd same-source coupled matching cancellation remains missing.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-2.10",
+      "number": "2.10",
+      "kind": "Lemma",
+      "title": "Additive oscillation and coordinate-section budgets",
+      "pdf_page": 20,
+      "machine_status": "SCOPED_COMPONENTS",
+      "source_certificates": [
+        {
+          "path": "research/nightfall/formalization/product_space/QuadraticActualRowOscillation.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "b21fdc112c9294c40485cc1bd5955e915aca27d9",
+          "ci_run": 43161559862,
+          "ci_head_sha": "db21c0a1d33ce3b333cb3256c2e05dde08f5eda5",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Strict pinned Lean 4.33 Turturean PASS run 43161559862: actual_degree_two_hilbert_section_budget, with real source function, normalized product law and ESDegreeLE hypothesis, standard axioms only. Does not prove the terminal quadratic influence inequality."
+        },
+        {
+          "path": "research/nightfall/formalization/observability/QuadraticRealizedRangeBudget.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "bc3ec344bb47426a9db0508893f8588e7a5d8ea2",
+          "ci_run": 43114064344,
+          "ci_head_sha": "1305e854fcb87eda28cc8135862bd4131a036a88",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Strict Lean 4.35 named-declaration PASS: actual full coordinate section extrema, no supplied range witness; endpoint exponent-two remains open."
+        },
+        {
+          "path": "research/nightfall/formalization/observability/QuadraticEndpointMarkov.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "ceed8ff343add0745eb6c1691412f3917e9a4e8e",
+          "ci_run": 42959881782,
+          "ci_head_sha": "16f57381c036c9670e9ba478be511bd957584de4",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        }
+      ],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Actual finite section range/8B budget compiled in narrow types; full additive projection plus arbitrary source Hilbert section composition not one theorem.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-2.11",
+      "number": "2.11",
+      "kind": "Lemma",
+      "title": "Quadratic energy bound",
+      "pdf_page": 20,
+      "machine_status": "SCOPED_COMPONENTS",
+      "source_certificates": [
+        {
+          "path": "research/nightfall/formalization/observability/WeightedGreedyMatching.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "c77ae49d4f28e4fe5ab3a131825ef386e123e26c",
+          "ci_run": 43079392649,
+          "ci_head_sha": "8a852965b8b9ebedeab284698493413710e0a86c",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        },
+        {
+          "path": "research/nightfall/formalization/observability/WeightedGreedyCover.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "418c3dfc6f107970006252925954da2c4e372f7f",
+          "ci_run": 43080368002,
+          "ci_head_sha": "7840e535e7c8d8cf8e3bff1e46fff59515539f29",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        },
+        {
+          "path": "research/nightfall/formalization/observability/HilbertManyIncrementMoment.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "2f4b957c0358c026b01cc7161e4f85b634393214",
+          "ci_run": 43062171542,
+          "ci_head_sha": "1952573960a4784f1bda87dcf049c5d07354cff6",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        },
+        {
+          "path": "research/nightfall/formalization/observability/QuadraticDiscoveryCore.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "6209a536e0544d9ad8f23a8c41c20000c4e12de0",
+          "ci_run": 43058772711,
+          "ci_head_sha": "428ca5334fcd00574539994f479181d6d74fa586",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        }
+      ],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Actual-f matching ownership to independent Hilbert increments, interpolation and aggregate energy closure absent.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-2.12",
+      "number": "2.12",
+      "kind": "Lemma",
+      "title": "Bounded product approximation and influence contraction",
+      "pdf_page": 21,
+      "machine_status": "ANALYTIC_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Measurable arbitrary-index L2-cylinder approximation with conditioning and supremum attainment not Lean compiled.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-3.1",
+      "number": "3.1",
+      "kind": "Lemma",
+      "title": "Finite-sign Hilbert compression",
+      "pdf_page": 23,
+      "machine_status": "SCOPED_COMPONENTS",
+      "source_certificates": [
+        {
+          "path": "research/nightfall/formalization/observability/RademacherOrthogonality.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "3c02e3e6d567807041964cbf32389b6f27692b78",
+          "ci_run": 42965524565,
+          "ci_head_sha": "5774e8475a7c3629931efd407724f0c281305fa5",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        }
+      ],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Orthogonality/finite sign identities compiled; dissertation's full r-dimensional compression constant and quantifiers not separately compiled.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-3.4",
+      "number": "3.4",
+      "kind": "Theorem",
+      "title": "Influence-to-observation transfer",
+      "pdf_page": 24,
+      "machine_status": "SCOPED_COMPONENTS",
+      "source_certificates": [
+        {
+          "path": "research/nightfall/formalization/product_space/RealSquaredPosteriorOneStep.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "53446675a5210e96baceedcb25f3a1a1c894acf4",
+          "ci_run": 43078715778,
+          "ci_head_sha": "217fb068c5d9e460b2d9c314b4b334fb8d0f7d1b",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        },
+        {
+          "path": "research/nightfall/formalization/observability/PosteriorEnergyDrift.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "cbe7fd2a08490b9121b141bcd17b3f752a637207",
+          "ci_run": 43082375547,
+          "ci_head_sha": "f858cf246a05f7e88f01a413e3334ed2ff1ba885",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        }
+      ],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Source-function influence modulus, conditional-product preservation, transcript averaging and deterministic cap not jointly compiled.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-3.5",
+      "number": "3.5",
+      "kind": "Corollary",
+      "title": "Three exact instantiations",
+      "pdf_page": 25,
+      "machine_status": "SCOPED_COMPONENTS",
+      "source_certificates": [
+        {
+          "path": "research/nightfall/formalization/product_space/ProductInfluence.lean",
+          "registry_class": "derived-transfer",
+          "source_blob_sha": "70f69d8caebfaef40efdf16bab63f223753c190f",
+          "ci_run": 42929857470,
+          "ci_head_sha": "e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        },
+        {
+          "path": "research/nightfall/formalization/observability/PosteriorEnergyDrift.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "cbe7fd2a08490b9121b141bcd17b3f752a637207",
+          "ci_run": 43082375547,
+          "ci_head_sha": "f858cf246a05f7e88f01a413e3334ed2ff1ba885",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        }
+      ],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "One instantiation inherits finite scalar theorem, quadratic/rank instantiations depend on uncompiled 1.1/1.3 and policy bridge.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-3.7",
+      "number": "3.7",
+      "kind": "Lemma",
+      "title": "Actual degree-weighted posterior drift",
+      "pdf_page": 25,
+      "machine_status": "SCOPED_COMPONENTS",
+      "source_certificates": [
+        {
+          "path": "research/nightfall/formalization/product_space/RealSquaredPosteriorOneStep.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "53446675a5210e96baceedcb25f3a1a1c894acf4",
+          "ci_run": 43078715778,
+          "ci_head_sha": "217fb068c5d9e460b2d9c314b4b334fb8d0f7d1b",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        },
+        {
+          "path": "research/nightfall/formalization/observability/PosteriorEnergyDrift.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "cbe7fd2a08490b9121b141bcd17b3f752a637207",
+          "ci_run": 43082375547,
+          "ci_head_sha": "f858cf246a05f7e88f01a413e3334ed2ff1ba885",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        },
+        {
+          "path": "research/nightfall/formalization/product_space/ANOVAPosteriorBridge.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "1568424ba292dfcf18ccd8b1307eb3baf466be63",
+          "ci_run": 43110333296,
+          "ci_head_sha": "7552fb3d09251c58f34c2f37438ea417d30b5d79",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Direct strict named-declaration Lean 4.33.0 audit PASS on CI 43110333296: anova_component_erase, anova_posterior_potential_identity, anova_weighted_observation_descent. Foundational axioms only; exact source blob equals run head. Does not prove arbitrary-law actual posterior process or adaptive theorem."
+        }
+      ],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Literal finite one-step squared-resampling and abstract ANOVA energy bookkeeping compiled in separate types/pins; full weighted-source identity not one declaration.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-3.9",
+      "number": "3.9",
+      "kind": "Theorem",
+      "title": "Averaging-transversal influence theorem",
+      "pdf_page": 27,
+      "machine_status": "SCOPED_COMPONENTS",
+      "source_certificates": [
+        {
+          "path": "research/nightfall/formalization/observability/TopInteractionCover.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "4676eb3feee9c700cc510a456c0ac2d928051cc8",
+          "ci_run": 42959881782,
+          "ci_head_sha": "16f57381c036c9670e9ba478be511bd957584de4",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        },
+        {
+          "path": "research/nightfall/formalization/product_space/ANOVAPosteriorBridge.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "1568424ba292dfcf18ccd8b1307eb3baf466be63",
+          "ci_run": 43110333296,
+          "ci_head_sha": "7552fb3d09251c58f34c2f37438ea417d30b5d79",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Direct strict named-declaration Lean 4.33.0 audit PASS on CI 43110333296: anova_component_erase, anova_posterior_potential_identity, anova_weighted_observation_descent. Foundational axioms only; exact source blob equals run head. Does not prove arbitrary-law actual posterior process or adaptive theorem."
+        }
+      ],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Structural support cover compiled only conditionally; core quadratic inequality 1.1 remains uncompiled.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-3.10",
+      "number": "3.10",
+      "kind": "Theorem",
+      "title": "Observation after a sectional quadratic backdoor",
+      "pdf_page": 27,
+      "machine_status": "SCOPED_COMPONENTS",
+      "source_certificates": [
+        {
+          "path": "research/nightfall/formalization/observability/TopInteractionCover.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "4676eb3feee9c700cc510a456c0ac2d928051cc8",
+          "ci_run": 42959881782,
+          "ci_head_sha": "16f57381c036c9670e9ba478be511bd957584de4",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        },
+        {
+          "path": "research/nightfall/formalization/product_space/RealSquaredPosteriorOneStep.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "53446675a5210e96baceedcb25f3a1a1c894acf4",
+          "ci_run": 43078715778,
+          "ci_head_sha": "217fb068c5d9e460b2d9c314b4b334fb8d0f7d1b",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        }
+      ],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Requires uniform sectional promises and full posterior policy with 1.1; no terminal declaration.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-3.11",
+      "number": "3.11",
+      "kind": "Proposition",
+      "title": "Why the two backdoor notions differ",
+      "pdf_page": 28,
+      "machine_status": "ANALYTIC_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Explicit family distinguishes averaging and sectional backdoors; no matching Lean declaration.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-3.12",
+      "number": "3.12",
+      "kind": "Theorem",
+      "title": "Independent-block covered cubic influence",
+      "pdf_page": 28,
+      "machine_status": "SCOPED_COMPONENTS",
+      "source_certificates": [
+        {
+          "path": "research/nightfall/formalization/observability/CubicRankOneTerminal.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "f3bc105d44891ff002a0d116780cbb53441764d9",
+          "ci_run": 43100116278,
+          "ci_head_sha": "7b7f0b7f4f99edc8dc31ba903d97986d5de5f1a2",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob contained in successful Lean 4.35 scoped rank-one-terminal CI. Only the named, explicitly-premised finite declarations are certified; no universal cubic endpoint."
+        },
+        {
+          "path": "research/nightfall/formalization/observability/RankOneLeafMoment.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "6c4ce364f8bfb30e028191dc454c214a5e170e2d",
+          "ci_run": 43100116278,
+          "ci_head_sha": "7b7f0b7f4f99edc8dc31ba903d97986d5de5f1a2",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob contained in successful Lean 4.35 scoped rank-one-terminal CI. Only the named, explicitly-premised finite declarations are certified; no universal cubic endpoint."
+        }
+      ],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Finite rank-one cubic terminal inequality is conditional; full independent-block/vector influence premises not discharged.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-3.13",
+      "number": "3.13",
+      "kind": "Theorem",
+      "title": "Adaptive observation of covered cubic networks",
+      "pdf_page": 29,
+      "machine_status": "SCOPED_COMPONENTS",
+      "source_certificates": [
+        {
+          "path": "research/nightfall/formalization/observability/CubicRankOneTerminal.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "f3bc105d44891ff002a0d116780cbb53441764d9",
+          "ci_run": 43100116278,
+          "ci_head_sha": "7b7f0b7f4f99edc8dc31ba903d97986d5de5f1a2",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob contained in successful Lean 4.35 scoped rank-one-terminal CI. Only the named, explicitly-premised finite declarations are certified; no universal cubic endpoint."
+        },
+        {
+          "path": "research/nightfall/formalization/observability/PosteriorEnergyDrift.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "cbe7fd2a08490b9121b141bcd17b3f752a637207",
+          "ci_run": 43082375547,
+          "ci_head_sha": "f858cf246a05f7e88f01a413e3334ed2ff1ba885",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        }
+      ],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Depends on uncompiled 3.12 and a transcript-stable adaptive hard cap.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-3.14",
+      "number": "3.14",
+      "kind": "Proposition",
+      "title": "Exact degree-three address example",
+      "pdf_page": 29,
+      "machine_status": "ANALYTIC_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Explicit cubic-address witness in manuscript; no claim-specific kernel receipt.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-3.15",
+      "number": "3.15",
+      "kind": "Proposition",
+      "title": "Unbounded adaptivity advantage for cubic addresses",
+      "pdf_page": 30,
+      "machine_status": "ANALYTIC_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Address-model oracle comparison analytic; fixed-set lower bound and adaptive identification not compiled.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-3.17",
+      "number": "3.17",
+      "kind": "Proposition",
+      "title": "A fixed-set guarantee above the quadratic energy floor",
+      "pdf_page": 31,
+      "machine_status": "SCOPED_COMPONENTS",
+      "source_certificates": [
+        {
+          "path": "research/nightfall/formalization/observability/SortedInfluenceTail.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "f8ad2e02785feeed0742131b6282b8b7c91400f0",
+          "ci_run": 42959881782,
+          "ci_head_sha": "16f57381c036c9670e9ba478be511bd957584de4",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        }
+      ],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Sorted tail algebra compiled; source-dependent L1 section budget and risk identification not connected.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-3.18",
+      "number": "3.18",
+      "kind": "Proposition",
+      "title": "A fixed-query observation bound",
+      "pdf_page": 31,
+      "machine_status": "SCOPED_COMPONENTS",
+      "source_certificates": [
+        {
+          "path": "research/nightfall/formalization/observability/SortedInfluenceTail.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "f8ad2e02785feeed0742131b6282b8b7c91400f0",
+          "ci_run": 42959881782,
+          "ci_head_sha": "16f57381c036c9670e9ba478be511bd957584de4",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        },
+        {
+          "path": "papers/conditional-section-duality/lean/FixedObservationSelector.lean",
+          "scope": "paper_local_not_in_67_module_registry",
+          "ci_run": 43285738660,
+          "toolchain": "Lean 4.35.0/Mathlib 4.35.0",
+          "decl_count": 5
+        }
+      ],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Paper-local 4.35 finite selector/beta bound compiled; beta(f), top-q choice, L1 section budget and ANOVA risk not compiled.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-4.1",
+      "number": "4.1",
+      "kind": "Theorem",
+      "title": "Convolution homomorphism and diagonalization",
+      "pdf_page": 33,
+      "machine_status": "SCOPED_COMPONENTS",
+      "source_certificates": [
+        {
+          "path": "research/nightfall/formalization/product_space/ANOVAActivation.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "e0e6503990f730f7982c88acd0ce1735729aee46",
+          "ci_run": 42884789858,
+          "ci_head_sha": "a5b601b53e8d7f3abc6c84cbc8d0514368d2c4bd",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        }
+      ],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Abstract ANOVA energy identity compiled; no exact refresh union-semigroup operator homomorphism/diagonalization declaration found.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-4.2",
+      "number": "4.2",
+      "kind": "Theorem",
+      "title": "Exact complementarity and interaction-energy inversion",
+      "pdf_page": 34,
+      "machine_status": "SCOPED_COMPONENTS",
+      "source_certificates": [
+        {
+          "path": "research/nightfall/formalization/product_space/ANOVAActivation.lean",
+          "registry_class": "quarantine",
+          "source_blob_sha": "e0e6503990f730f7982c88acd0ce1735729aee46",
+          "ci_run": 42884789858,
+          "ci_head_sha": "a5b601b53e8d7f3abc6c84cbc8d0514368d2c4bd",
+          "source_match": "same-git-blob-as-successful-ci-head",
+          "scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+        }
+      ],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Supplied-energy supermodularity compiled; inversion of actual Hoeffding interaction energies via refresh observations not compiled.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-4.3",
+      "number": "4.3",
+      "kind": "Theorem",
+      "title": "Sparse interaction-spectrum tomography",
+      "pdf_page": 36,
+      "machine_status": "FINITE_CHECK_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [
+        {
+          "path": null,
+          "verification": "manuscript Appendix B reports 1414 exact convolution assertions; exact source checker and its run receipt not located in inspected repository paths or code search"
+        }
+      ],
+      "missing_for_exact_endpoint": "Hankel-Prony exact 2k ideal population-moment reconstruction is analytic; manuscript reports exact tests but checker receipt not matched.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-4.4",
+      "number": "4.4",
+      "kind": "Theorem",
+      "title": "Finite-precision separation of sparse supports",
+      "pdf_page": 36,
+      "machine_status": "FINITE_CHECK_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [
+        {
+          "path": null,
+          "verification": "manuscript Appendix B reports 1414 exact convolution assertions; exact source checker and its run receipt not located in inspected repository paths or code search"
+        }
+      ],
+      "missing_for_exact_endpoint": "Exact support separation and precision inequality in manuscript; no Lean terminal; 1,414-assertion checker not source verified.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-4.5",
+      "number": "4.5",
+      "kind": "Proposition",
+      "title": "Single-support gain recovery",
+      "pdf_page": 38,
+      "machine_status": "FINITE_CHECK_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [
+        {
+          "path": null,
+          "verification": "manuscript Appendix B reports 1414 exact convolution assertions; exact source checker and its run receipt not located in inspected repository paths or code search"
+        }
+      ],
+      "missing_for_exact_endpoint": "Classical binary splitting with stronger ideal gain oracle; manuscript-reported exact checks not matched to a repository run.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-4.6",
+      "number": "4.6",
+      "kind": "Proposition",
+      "title": "Quadratic convolution data do not certify pointwise positivity",
+      "pdf_page": 38,
+      "machine_status": "FINITE_CHECK_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [
+        {
+          "path": null,
+          "verification": "manuscript Appendix B reports 1414 exact convolution assertions; exact source checker and its run receipt not located in inspected repository paths or code search"
+        }
+      ],
+      "missing_for_exact_endpoint": "Explicit one-coordinate three-symbol counterexample in manuscript; no Lean theorem; associated checker not verified.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-5.1",
+      "number": "5.1",
+      "kind": "Corollary",
+      "title": "Prediction of one-query quantum outcomes",
+      "pdf_page": 40,
+      "machine_status": "ANALYTIC_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Classical probability-vector/quantum one-copy observation interpretation is analytic; no scoped Lean declaration.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-5.2",
+      "number": "5.2",
+      "kind": "Corollary",
+      "title": "Scalar one-query prediction with an error probability",
+      "pdf_page": 40,
+      "machine_status": "ANALYTIC_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "One-copy Born-probability prediction from scalar observable is analytic; no terminal Lean result.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-5.4",
+      "number": "5.4",
+      "kind": "Theorem",
+      "title": "Operational interaction-order decomposition",
+      "pdf_page": 41,
+      "machine_status": "FINITE_CHECK_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [
+        {
+          "path": "papers/quantum-operational-anova/checks/exact_audit.py",
+          "verification": "source present, finite check only; no matched kernel receipt"
+        }
+      ],
+      "missing_for_exact_endpoint": "Quantum ANOVA and Personick/SLD operator proof remains analytic; finite script exists, not a Lean proof.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-5.5",
+      "number": "5.5",
+      "kind": "Proposition",
+      "title": "Sharp SLD tensor envelope",
+      "pdf_page": 42,
+      "machine_status": "FINITE_CHECK_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [
+        {
+          "path": "papers/quantum-sld-tensorization/checks/check_trine_visibility_exact.py",
+          "verification": "source present, finite check only; no matched kernel receipt"
+        }
+      ],
+      "missing_for_exact_endpoint": "Operator spectral SLD tensor comparison and physical witness analytic; exact spectral/trine checks exist, not kernel proof.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-6.1",
+      "number": "6.1",
+      "kind": "Theorem",
+      "title": "Three-group interaction test",
+      "pdf_page": 44,
+      "machine_status": "FINITE_CHECK_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [
+        {
+          "path": "research/nightfall/2026-11-information-cost-dissertation/check_addressed_family_exact.py",
+          "verification": "repository checker only: 6561 small n=2 two-sample trivalent property-testing functions; does NOT test posterior/adaptive/live query frontier"
+        }
+      ],
+      "missing_for_exact_endpoint": "Property-testing theorem uses bounded difference/independence; no matched end-to-end Lean declaration.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-6.2",
+      "number": "6.2",
+      "kind": "Theorem",
+      "title": "Three distinct information costs in one quadratic family",
+      "pdf_page": 45,
+      "machine_status": "FINITE_CHECK_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [
+        {
+          "path": "research/nightfall/2026-11-information-cost-dissertation/check_addressed_family_exact.py",
+          "verification": "repository checker only: 6561 small n=2 two-sample trivalent property-testing functions; does NOT test posterior/adaptive/live query frontier"
+        },
+        {
+          "path": null,
+          "verification": "manuscript Appendix B reports check_joint_frontier_exact.py with 123 adaptive, 161 live-query and six rank examples; exact script and corresponding run receipt not located in current GitHub repository"
+        }
+      ],
+      "missing_for_exact_endpoint": "Addressed model/state costs analytic and tested on exact finite examples; not universal Lean.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-6.4",
+      "number": "6.4",
+      "kind": "Theorem",
+      "title": "Exact decomposition of model and state uncertainty",
+      "pdf_page": 47,
+      "machine_status": "FINITE_CHECK_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [
+        {
+          "path": "research/nightfall/2026-11-information-cost-dissertation/check_joint_information_phase_diagram.py",
+          "verification": "historical exact finite CI PASS (929 Boolean, 534 heterogeneous, 18 posterior, 12 rare, 35 sharp, 12 threshold cases)",
+          "ci_run": 43281921897
+        },
+        {
+          "path": null,
+          "verification": "manuscript Appendix B reports check_joint_frontier_exact.py with 123 adaptive, 161 live-query and six rank examples; exact script and corresponding run receipt not located in current GitHub repository"
+        }
+      ],
+      "missing_for_exact_endpoint": "Posterior orthogonal Bayes-risk split analytic with finite checker; source-specific L2 filtration not compiled.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-6.5",
+      "number": "6.5",
+      "kind": "Theorem",
+      "title": "Exact Bayesian frontier for addressed observation",
+      "pdf_page": 48,
+      "machine_status": "FINITE_CHECK_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [
+        {
+          "path": "research/nightfall/2026-11-information-cost-dissertation/check_joint_information_phase_diagram.py",
+          "verification": "historical exact finite CI PASS (929 Boolean, 534 heterogeneous, 18 posterior, 12 rare, 35 sharp, 12 threshold cases)",
+          "ci_run": 43281921897
+        },
+        {
+          "path": null,
+          "verification": "manuscript Appendix B reports check_joint_frontier_exact.py with 123 adaptive, 161 live-query and six rank examples; exact script and corresponding run receipt not located in current GitHub repository"
+        }
+      ],
+      "missing_for_exact_endpoint": "Conditional risk formula analytic and finite rational checks; no exact Lean theorem.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-6.6",
+      "number": "6.6",
+      "kind": "Corollary",
+      "title": "Sharp offline model-query and state-read tradeoff",
+      "pdf_page": 48,
+      "machine_status": "FINITE_CHECK_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [
+        {
+          "path": null,
+          "verification": "manuscript Appendix B reports check_joint_frontier_exact.py with 123 adaptive, 161 live-query and six rank examples; exact script and corresponding run receipt not located in current GitHub repository"
+        }
+      ],
+      "missing_for_exact_endpoint": "Offline frontier conditional on linear information from chosen coefficient queries; finite checker only.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-6.7",
+      "number": "6.7",
+      "kind": "Theorem",
+      "title": "Access-order phase transition and exact live-query frontier",
+      "pdf_page": 49,
+      "machine_status": "FINITE_CHECK_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [
+        {
+          "path": null,
+          "verification": "manuscript Appendix B reports check_joint_frontier_exact.py with 123 adaptive, 161 live-query and six rank examples; exact script and corresponding run receipt not located in current GitHub repository"
+        }
+      ],
+      "missing_for_exact_endpoint": "Live queried coefficient depends on observed address; timing oracle formalization and tradeoff only checked on finite examples.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-6.8",
+      "number": "6.8",
+      "kind": "Theorem",
+      "title": "Exact task-specific evaluation duality",
+      "pdf_page": 50,
+      "machine_status": "FINITE_CHECK_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [
+        {
+          "path": null,
+          "verification": "manuscript Appendix B reports check_joint_frontier_exact.py with 123 adaptive, 161 live-query and six rank examples; exact script and corresponding run receipt not located in current GitHub repository"
+        }
+      ],
+      "missing_for_exact_endpoint": "Annihilator/linear-span argument analytic; rational matrix rank checks are not a general Lean theorem.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-6.9",
+      "number": "6.9",
+      "kind": "Theorem",
+      "title": "Exact integration complexity: two fair-cube queries versus n + 1 generic biased queries",
+      "pdf_page": 50,
+      "machine_status": "FINITE_CHECK_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [
+        {
+          "path": null,
+          "verification": "manuscript Appendix B reports check_joint_frontier_exact.py with 123 adaptive, 161 live-query and six rank examples; exact script and corresponding run receipt not located in current GitHub repository"
+        }
+      ],
+      "missing_for_exact_endpoint": "Generic bias exceptional-set argument analytic; finite rational rank cases do not quantify almost every law.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-6.11",
+      "number": "6.11",
+      "kind": "Theorem",
+      "title": "Finite-product interpolation and exact decision cost",
+      "pdf_page": 51,
+      "machine_status": "FINITE_CHECK_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [
+        {
+          "path": "research/nightfall/2026-11-information-cost-dissertation/check_joint_information_phase_diagram.py",
+          "verification": "historical exact finite CI PASS",
+          "ci_run": 43281921897
+        }
+      ],
+      "missing_for_exact_endpoint": "Finite-product D_d interpolation dimension, oracle ID/safety argument analytic; exact phase-diagram checker does not certify universal theorem.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-7.1",
+      "number": "7.1",
+      "kind": "Proposition",
+      "title": "Safety from a positive separation radius",
+      "pdf_page": 53,
+      "machine_status": "ANALYTIC_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Elementary separation-from-unsafe-set argument in prose; no exact certificate.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-7.2",
+      "number": "7.2",
+      "kind": "Theorem",
+      "title": "Minimum support of a nonzero low-interaction function",
+      "pdf_page": 53,
+      "machine_status": "FINITE_CHECK_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [
+        {
+          "path": "research/nightfall/2026-11-information-cost-dissertation/check_joint_information_phase_diagram.py",
+          "verification": "historical exact finite CI PASS",
+          "ci_run": 43281921897
+        }
+      ],
+      "missing_for_exact_endpoint": "Alpha^d support induction analytic; finite rational heterogeneous falsifier is not universal Lean proof.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-7.3",
+      "number": "7.3",
+      "kind": "Proposition",
+      "title": "Threshold-induced degree blow-up and rare violations",
+      "pdf_page": 54,
+      "machine_status": "FINITE_CHECK_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [
+        {
+          "path": "research/nightfall/2026-11-information-cost-dissertation/check_joint_information_phase_diagram.py",
+          "verification": "historical exact finite CI PASS",
+          "ci_run": 43281921897
+        }
+      ],
+      "missing_for_exact_endpoint": "Threshold counterexample Fourier coefficient analytic; exact finite tests cover instances only.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-7.4",
+      "number": "7.4",
+      "kind": "Proposition",
+      "title": "Unstructured exact-safety gap",
+      "pdf_page": 56,
+      "machine_status": "ANALYTIC_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Classical indistinguishability and quantum BBBV/Grover literature; no dissertation-specific Lean source.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-7.5",
+      "number": "7.5",
+      "kind": "Theorem",
+      "title": "A common-family test–identify–observe–certify separation",
+      "pdf_page": 57,
+      "machine_status": "FINITE_CHECK_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [
+        {
+          "path": "research/nightfall/2026-11-information-cost-dissertation/check_addressed_family_exact.py",
+          "verification": "repository checker only: 6561 small n=2 two-sample trivalent property-testing functions; does NOT test posterior/adaptive/live query frontier"
+        },
+        {
+          "path": "research/nightfall/2026-11-information-cost-dissertation/check_joint_information_phase_diagram.py",
+          "verification": "historical exact finite CI PASS (929 Boolean, 534 heterogeneous, 18 posterior, 12 rare, 35 sharp, 12 threshold cases)",
+          "ci_run": 43281921897
+        },
+        {
+          "path": null,
+          "verification": "manuscript Appendix B reports check_joint_frontier_exact.py with 123 adaptive, 161 live-query and six rank examples; exact script and corresponding run receipt not located in current GitHub repository"
+        }
+      ],
+      "missing_for_exact_endpoint": "Composite addressed-family costs; finite checkers apply but 6.1/6.2/6.7 and safety predicates not jointly compiled.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    },
+    {
+      "id": "D2-7.6",
+      "number": "7.6",
+      "kind": "Proposition",
+      "title": "Exact high-order interaction energy of a single deletion",
+      "pdf_page": 57,
+      "machine_status": "ANALYTIC_ONLY",
+      "source_certificates": [],
+      "finite_evidence": [],
+      "missing_for_exact_endpoint": "Explicit high-order Fourier energy of a needle; analytic combinatorial identity and manuscript-reported checks only.",
+      "full_end_to_end_lean": false,
+      "non_author_review": false,
+      "novelty_verified": false
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+name: NIGHTFALL dissertation v2 all-claims certificate accounting (NOT Lean kernel)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-information-cost-dissertation/DISSERTATION_V2_CERTIFICATE_*'
+      - 'scripts/check_dissertation_certificate_accounting.py'
+      - 'docs/lean-certificate-provenance.json'
+      - '.github/workflows/nightfall-dissertation-v2-certificate-accounting.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/2026-11-information-cost-dissertation/DISSERTATION_V2_CERTIFICATE_*'
+      - 'scripts/check_dissertation_certificate_accounting.py'
+      - 'docs/lean-certificate-provenance.json'
+      - '.github/workflows/nightfall-dissertation-v2-certificate-accounting.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-accounting:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify all 54 dissertation statements against registry and exact source Git blobs
+        run: |
+          set -euo pipefail
+          python3 scripts/check_dissertation_certificate_accounting.py \
+            --json-out certificate-receipts/dissertation-v2-claim-audit.json
+      - name: Verify existing 67-source canonical custody independently
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_certificate_registry.py --audit \
+            --json-out certificate-receipts/registered-current-source-audit.json
+      - name: Freeze commit, hashes and certification limits
+        if: always()
+        run: |
+          set -euo pipefail
+          mkdir -p certificate-receipts
+          git rev-parse HEAD > certificate-receipts/HEAD
+          sha256sum \
+            research/nightfall/2026-11-information-cost-dissertation/DISSERTATION_V2_CERTIFICATE_LEDGER_20261112.json \
+            research/nightfall/2026-11-information-cost-dissertation/DISSERTATION_V2_CERTIFICATE_ACCOUNTING_20261112.md \
+            scripts/check_dissertation_certificate_accounting.py \
+            docs/lean-certificate-provenance.json \
+            > certificate-receipts/SHA256SUMS
+          printf '%s\n' 'Source-integrity and coverage audit only: NOT a fresh Lean build, NOT end-to-end proof for 54 claims, NOT peer review, NOT priority adjudication.' > certificate-receipts/PROOF_SCOPE
+      - name: Upload complete inspectable accounting receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-dissertation-v2-all-claims-certificate-accounting
+          path: certificate-receipts/
+          if-no-files-found: warn
+          retention-days: 60
