@@ -263,3 +263,8 @@ html[data-nf-theme="dusk"] .nf-deep-disclosure > summary span {color:var(--muted
 .nf-signature-adjacent article{padding-right:0}
 .nf-signature-adjacent article+article{border-left:0;border-top:1px solid var(--line);padding-left:0}
 }
+
+/* Four transparent supporting research dossiers remain collapsible and evenly paired. */
+.nf-secondary-frontiers-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:1040px){.nf-secondary-frontiers-grid .flagship-card:last-child{grid-column:auto}}
+@media(max-width:620px){.nf-secondary-frontiers-grid{grid-template-columns:minmax(0,1fr)}}
