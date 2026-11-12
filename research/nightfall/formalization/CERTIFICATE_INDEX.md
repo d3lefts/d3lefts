@@ -13,7 +13,7 @@ python3 scripts/lean_certificate_registry.py --audit --json-out lean-receipts/co
 
 The first command mutation-tests the integrity gate without pretending to execute Lean. The second enumerates every `.lean` file under `research/nightfall/`, verifies its exact Git blob SHA-1, checks every classification and recorded successful-CI-head pointer, preserves separate custody of off-main historical files, and runs the existing provenance/passport tests. The JSON output records every module, source hash, historical CI run, and **receipt scope**. The new consolidated-registry workflow uploads it as an inspectable artifact.
 
-The original 11 November `main` registry had **59 modules** (48 originality-quarantined, 10 derived transfers, 1 finite construction). Open [PR #391](https://github.com/d3lefts/d3lefts/pull/391) has **63** exact source records and additional genuine quadratic intermediates. The audit reads the current authoritative manifest; it has no fixed source count, so a later merge does not require duplicating the source registry.
+The earlier 11 November checkpoint had **59 modules** (48 originality-quarantined, 10 derived transfers, 1 finite construction). [PR #391](https://github.com/d3lefts/d3lefts/pull/391) **merged on 11 November (Eastern)**, expanding current `main` to **63** exact source records (52 originality-quarantined, 10 derived transfers, 1 finite construction) with additional genuine quadratic intermediates. The audit uses dynamic manifest counts rather than duplicating a frozen 59-versus-63 ledger.
 
 ## Certification gates
 
