@@ -15,6 +15,8 @@ Paper A treats exact finite-palette whole-coordinate recovery. Paper B treats ge
 - **F16 cubic-power oracle:** explicit fixed 81-state and adaptive 27-state phase codes; k=4,5,7 exact query optima in the source's strictly defined powered-query model. The 27-state Lean certificate lives in **closed, unmerged** PR #252; original adaptive construction from closed PR #255. Do not represent either as a merged main-branch Lean declaration.
 - **Quadratic exponent-two:** an *unrefereed conditional strengthening*, not a prerequisite for the first three mechanisms.
 
+**Dated note (12 November 2026).** `MANUSCRIPT.md` is hash-pinned and is not edited. Its equation (16) quotes the earlier coefficient \(16(1+\sqrt3)\), and the following paragraph quotes v7's \(15(1+\sqrt3)\). The current written proof is [v9.2](../finite-product-influence/NIGHTFALL_Beyond_Boolean_Cube_v9_2.pdf) (same constant as v8): \(\mathrm{Var}(f)\le D_2B\sqrt{\sup_iI_i(f)}\) with \(D_2=(10+2\sqrt2)(1+\sqrt3)\approx35.05\), including the rank-\(r\) lift. Proposition 4 then holds with \(C_2\) replaced by \(D_2\), **still conditional** because the premise has not been externally refereed. See [the internal review](../finite-product-influence/V9_2_INTERNAL_REVIEW_20261112.md). The finite-field claims were independently replayed by [check_f16_independent_20261112.py](../../research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/check_f16_independent_20261112.py).
+
 ## Repository integration and exact claim identity
 
 - [Selected claim record](../../research/catalogue/CLAIMS.json): `NF-OBS-SPECIALIZED-20261111`, with finite-computational, analytic, inherited and conditional components distinguished explicitly.
