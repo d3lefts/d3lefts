@@ -2,7 +2,7 @@
 
 A static research website built from checked-in HTML, CSS, JavaScript, and source-linked research records. The public site is served from [`main/docs`](./) at [d3lefts.github.io/d3lefts](https://d3lefts.github.io/d3lefts/).
 
-**Current editorial snapshot: 10 November 2026.** The archive presents 40 curated research records and 11 scoped Proof Passports. Its separately designated five finite/bounded findings are **not** claims of worldwide mathematical novelty. The November observability publication drafts add a proposed quadratic influence theorem, adaptive/nonadaptive query separation and a cubic proof-obstruction note, outside the frozen catalogue. The earlier Certificate Engine v2 page preserves its seven-declaration Lean checkpoint; later finite-product receipts have distinct proof scope. External mathematical and originality reviews remain open.
+**Current editorial snapshot: 11 November 2026.** The archive presents 40 curated research records and 11 scoped Proof Passports. Its separately designated five finite/bounded findings are **not** claims of worldwide mathematical novelty. The November dispatch adds a proposed v8 quadratic influence theorem, adaptive/nonadaptive query separation, exact operational quantum ANOVA, a sharp SLD ternary construction, and a cubic proof-obstruction note, outside the frozen catalogue. See [quantum evidence page](quantum-observability.html) and [November digest](november-2026.html). The earlier Certificate Engine v2 page preserves its seven-declaration Lean checkpoint; later finite-product receipts have distinct proof scope. External mathematical and originality reviews remain open.
 
 ## Identity: evidence-bearing discoveries that compound
 
