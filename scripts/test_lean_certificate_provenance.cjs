@@ -7,10 +7,10 @@ const real=walk("research/nightfall").sort(),got=m.modules.map(x=>x.path).sort()
 assert.equal(m.schema,"nightfall-lean-provenance-v1");
 assert.deepEqual(got,real,"Unclassified Lean file (must not silently inherit originality)");
 assert.equal(new Set(got).size,got.length);
-assert.equal(m.modules.length,65,"Main Lean source count changed: update manifest and exact hashes");
-assert.equal(m.ci_source_match_counts.matched_successful_ci_head,65);
+assert.equal(m.modules.length,67,"Main Lean source count changed: update manifest and exact hashes");
+assert.equal(m.ci_source_match_counts.matched_successful_ci_head,67);
 assert.equal(m.ci_source_match_counts.no_direct_receipt_identified,0);
-assert.equal(m.modules.filter(x=>x.ci_source_match_status==="same-git-blob-as-successful-ci-head").length,65);
+assert.equal(m.modules.filter(x=>x.ci_source_match_status==="same-git-blob-as-successful-ci-head").length,67);
 assert.equal(m.modules.filter(x=>x.ci_run===null).length,0);
 const joint=m.modules.find(x=>x.path.endsWith('/QuadraticUnifiedFinite.lean'));
 assert.equal(joint.ci_run,43115838586,"Direct joint kernel receipt missing");
@@ -19,7 +19,7 @@ assert.ok(joint.note.includes("Not the exponent-two variance-squared"),"Overstat
 const anova=m.modules.find(x=>x.path.endsWith("/ANOVAPosteriorBridge.lean"));
 assert.equal(anova.ci_run,43110333296,"ANOVA named-declaration kernel receipt missing");
 assert.equal(anova.ci_run_head_sha,"7552fb3d09251c58f34c2f37438ea417d30b5d79");
-assert.equal(m.counts.quarantine+m.counts.derived_transfer+m.counts.finite_construction,65);
+assert.equal(m.counts.quarantine+m.counts.derived_transfer+m.counts.finite_construction,67);
 assert.match(m.source_commit,/^[0-9a-f]{40}$/);
 assert.match(m.source_tree_sha,/^[0-9a-f]{40}$/);
 const valid=new Set(["quarantine","derived-transfer","finite-construction"]);
@@ -44,7 +44,7 @@ const law=m.modules.find(x=>x.path.endsWith("/FiniteLawTransfer.lean"));assert.o
 const phases=m.modules.filter(x=>x.classification==="finite-construction");
 assert.deepEqual(phases.map(x=>x.path),["research/nightfall/formalization/phase_block/PhaseBlock.lean"]);
 const page=fs.readFileSync("docs/lean-certificate-provenance.html","utf8");
-assert.equal((page.match(/<tr><td>\d\d<\/td>/g)||[] ).length,65,"Missing static site entries");
+assert.equal((page.match(/<tr><td>\d\d<\/td>/g)||[] ).length,67,"Missing static site entries");
 for(const r of m.modules){
  assert.ok(page.includes(r.source_blob_sha),"Missing source hash in static passport: "+r.path);
  assert.ok(page.includes(r.path.split("/").at(-1)),"Source not visible on site: "+r.path);
@@ -94,4 +94,4 @@ for(const token of ["CLOSED AND UNMERGED","27","41110673165","k=7","not all form
 assert.ok(page.includes('id="nonmain"')&&page.includes(a.passport),"Not visible in provenance");
 const siteSitemap=fs.readFileSync("docs/sitemap.xml","utf8");
 assert.ok(siteSitemap.includes("/"+a.passport),"Off-main passport missing sitemap");
-console.log("PASS: 65 branch Lean sources source-hash-checked and classified, 12 recovered modules, one separate closed-branch certificate scoped; no novelty promotion.");
+console.log("PASS: 67 branch Lean sources source-hash-checked and classified, 12 recovered modules, one separate closed-branch certificate scoped; no novelty promotion.");
