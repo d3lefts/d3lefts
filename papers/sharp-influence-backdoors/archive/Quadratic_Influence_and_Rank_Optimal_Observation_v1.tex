@@ -1,0 +1,931 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[margin=0.99in,headheight=15pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools,mathrsfs}
+\usepackage{enumitem,booktabs,array,tabularx,longtable,multicol}
+\usepackage{xcolor,fancyhdr,needspace}
+\usepackage[final]{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!42!black,citecolor=blue!42!black,urlcolor=blue!42!black,
+ pdfauthor={Devin J. Wright},pdftitle={Quadratic Influence and Rank-Optimal Observation on Arbitrary Product Spaces},pdfsubject={Self-contained mathematical research manuscript, degree-two observability}}
+\usepackage{cleveref}
+\usepackage{setspace}
+\setstretch{1.105}
+\setlist{leftmargin=*,topsep=3pt,itemsep=2pt}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\osc}{\operatorname{osc}}
+\newcommand{\Inf}{\operatorname{I}}
+\newcommand{\cH}{\mathcal H}
+\newcommand{\cK}{\mathcal K}
+\newcommand{\Ctwo}{C_2}
+\newcommand{\Tnoise}{T_t}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\abs}[1]{\lvert #1\rvert}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\tr}{\operatorname{Tr}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\op}{\operatorname{op}}
+\pagestyle{fancy}\fancyhf{}\lhead{Wright \;\textbar\; Quadratic influence and observation}\rhead{Independent proof draft}\cfoot{\thepage}
+\begin{document}
+\begin{center}
+{\Large\bfseries Quadratic Influence and Rank-Optimal Observation\\[2pt] on Arbitrary Product Spaces\par}
+\vspace{7pt}
+{\large Sharp variance exponents, effective-rank recovery,\\ and a quantum visibility application\par}
+\vspace{12pt}
+{Devin J. Wright}\\[3pt]
+{NIGHTFALL Research Program \quad\textbar\quad AI-assisted mathematical research}\\[5pt]
+{12 November 2026 \quad\textbar\quad Independent manuscript, version 1.0}
+\end{center}
+\begin{abstract}
+We prove a dimension-free influence inequality for bounded real observables of
+Hoeffding interaction degree at most two on arbitrary independent product
+probability spaces. If $|f|\le B$, $V=\Var(f)>0$, and
+$\Inf_i(f)=\E\Var(f\mid X_{-i})$, then
+\[\max_i\Inf_i(f)\ge \frac{V^2}{C_2B^2},\qquad
+ C_2=(10+2\sqrt2)^2(1+\sqrt3)^2<1229.\]
+The exponent of $V$ is optimal. The proof is self-contained and uses a
+matching-based coupling budget, boundedness-derived coordinate oscillation
+budgets, and fourth-moment interpolation for independent Hilbert-valued
+interaction increments; in particular, it does not invoke Turturean's theorem
+or any result derived from it. For an output of effective covariance rank $r$
+we establish $V(F)^2\le3C_2rB^2\max_i\Inf_i(F)$ and an adaptive whole-coordinate
+observation procedure achieving risk at most $\tau_r(F)+\eta$ in at most
+$\min\{n,\lceil12C_2rB^2/\eta\rceil\}$ observations, where $\tau_r$ is the
+covariance spectral tail. This gives a spectrum-adaptive bound with matching
+worst-case order in rank and accuracy; an addressing construction separates
+adaptive from nonadaptive observation by an unbounded factor. We include
+conditional operational consequences for one-query quantum probability
+vectors and for Bayesian measurement of locally encoded registers, explicitly
+distinguishing classical whole-symbol reads from quantum measurements.
+The written arguments are analytic proofs, not Lean-checked declarations;
+independent referee review and worldwide originality adjudication are open.
+\end{abstract}
+\noindent\textbf{Keywords:} Hoeffding decomposition; Efron--Stein influence;
+bounded quadratic functions; arbitrary product laws; Hilbert-valued prediction;
+posterior energy; adaptive query complexity; covariance spectrum; quantum Bayesian gain.\\
+\textbf{Mathematics classification (provisional):} 60E15, 68Q17, 60G15, 81P45.\\
+\textbf{Research status:} self-contained analytic draft; proof and novelty review outstanding; no claim of kernel certification or external submission.
+
+\section{Introduction and the main phenomenon}\label{sec:intro}
+A bounded observable may depend on thousands of independent inputs while changing
+very little when any one input is resampled. A quantitative influence theorem
+asks how small the largest coordinate influence can be relative to the total
+variance and the interaction order. If $f$ is a polynomial of degree two on
+fair binary signs, the Fourier representation makes the interaction structure
+apparent. The same mathematical question on a product of categorical, biased,
+or nonatomic probability spaces is more delicate: local contrast spaces can
+have arbitrarily large dimension, and the smallest atom mass can be arbitrarily
+close to zero.
+
+This article develops a direct degree-two theory in that general setting.
+A four-corner comparison controls the total strength of \emph{disjoint} pair
+interactions; a descending matching then distributes all pair interactions
+to endpoints whose accumulated costs remain bounded. Independence among the
+assigned neighboring coordinates makes a fourth-moment argument work in
+Hilbert space. Crucially, no fair-bit encoding, threshold certificate, or
+Boolean-cube influence theorem enters the proof.
+
+The same inequality has a second consequence. If the output is a vector or
+Hilbert-space element and its covariance energy concentrates in a few
+principal directions, an adaptive observer need not read all input coordinates.
+The observer repeatedly chooses an influential remaining coordinate and
+predicts from its conditional mean. A degree-weighted posterior potential
+allows the resulting risk to telescope; a rank-sensitive version of the
+influence inequality produces a near-minimax query budget.
+
+\paragraph{Relationship to previous work.}
+Hoeffding decompositions and coordinate-resampling influences on general
+products are classical; product-space learning was studied by
+Blais--O'Donnell--Wimmer \cite{BOW2008}, while O'Donnell--Saks--Schramm--Servedio
+\cite{OSSS2005} established influential-coordinate inequalities for decision
+trees on arbitrary products, including non-Boolean outputs. The bounded
+polynomial influence question originated with Aaronson--Ambainis
+\cite{AA2014}; Turturean \cite{Turturean2026} recently proved an all-degree
+uniform-Boolean-cube theorem. Distributional variants for fixed Bernoulli bias
+and slices were analyzed by Girish--Mittal--Nehoran--Raz \cite{GMNR2026}.
+Those works provide context and deserve explicit credit; \emph{none is an
+input to the proofs in this article}. The degree-two result is a more
+specialized but quantitatively stronger statement over a broader family of
+product input laws. Earlier completely bounded quadratic and Grothendieck
+methods provide additional, often sharper, results under different norms;
+a scope-matched priority search remains necessary.
+
+\paragraph{Contributions and limits.}
+Our mathematical outputs are organized by a single dependency chain:
+\[\begin{gathered}
+\text{bounded quadratic interactions}\Longrightarrow\text{variance-squared influence}\\
+\Downarrow\\
+\text{rank-linear Hilbert influence}\Longrightarrow\text{adaptive spectral recovery}.
+\end{gathered}\]
+The main results are existential over known distributions and known targets.
+They do not assert an efficient algorithm for computing conditional
+expectations, influences, or optimal query decisions; nor do they extend to
+arbitrary correlated input distributions. The quantum consequences use two
+explicitly different access models, with their own assumptions.
+
+\section{Product-space notation and theorem statements}\label{sec:setup}
+Let $J$ be an arbitrary index set and $(\Omega_i,\mu_i)_{i\in J}$ a family
+of probability spaces. We use the usual product sigma algebra, or its
+completion, with joint law $\mu=\bigotimes_{i\in J}\mu_i$. The real Hilbert
+space $L^2(\mu)$ contains the orthogonal Hoeffding subspaces indexed by
+finite subsets $S\subseteq J$. On each coordinate, $E_i$ denotes conditional
+integration against $\mu_i$, and $D_i=\operatorname{Id}-E_i$.
+
+\begin{definition}[Interaction degree and influence]
+A real or real-Hilbert-valued $F\in L^2(\mu;\cH)$ has Hoeffding interaction
+degree at most $d$ if it lies in the closed linear span of the Hoeffding
+subspaces supported on finite $S$ with $|S|\le d$. Its coordinate resampling
+influence and variance are
+\begin{equation}\label{eq:infdef}
+\Inf_i(F)=\norm{D_iF}_{L^2}^2
+ =\tfrac12\E\norm{F(X)-F(X^{(i)})}_{\cH}^2,\quad
+V(F)=\E\norm{F-\E F}_{\cH}^2.
+\end{equation}
+Here $X^{(i)}$ is obtained from $X$ by resampling the $i$-th coordinate
+independently. For a real $F$, $V(F)=\Var(F)$.
+\end{definition}
+On finite products the unique Hoeffding expansion $F=\sum_S F_S$ satisfies
+\begin{equation}\label{eq:anova}
+V(F)=\sum_{S\ne\varnothing}\norm{F_S}_2^2,\qquad
+\Inf_i(F)=\sum_{S\ni i}\norm{F_S}_2^2,\qquad
+V(F)\le\sum_i\Inf_i(F)\le dV(F).
+\end{equation}
+The last inequality extends to arbitrary index sets by applying it on
+finite subsets. For $d=2$, the nonconstant components consist of $h_i(X_i)$
+and separately centered kernels $h_{ij}(X_i,X_j)$. We will write
+\begin{equation}\label{eq:constants}
+D_2=(10+2\sqrt2)(1+\sqrt3),\qquad C_2=D_2^2
+=432+160\sqrt2+216\sqrt3+80\sqrt6.
+\end{equation}
+Numerically $C_2=1228.356\ldots$. The exact expression governs every
+quantitative assertion in this paper.
+
+\begin{theorem}[Distribution-free quadratic influence]\label{thm:q}
+Let $f$ be real, $|f|\le B$ almost surely and of Hoeffding degree at most
+two on any independent product probability space. If $B>0$ and
+$V=\Var(f)>0$, then the maximum coordinate influence is attained and
+\begin{equation}\label{eq:Q}
+\boxed{\max_{i\in J}\Inf_i(f)\ge\frac{V^2}{C_2B^2}.}
+\end{equation}
+The coefficient has no dependence on the index-set cardinality, coordinate
+biases, alphabet sizes, or minimum atom probabilities.
+\end{theorem}
+\begin{proposition}[Sharpness of the variance exponent]\label{prop:sharp}
+For each integer $m\ge1$, a bounded exact-degree-two function on
+$2m$ independent fair signs has $V=1/m$ and $\max_i\Inf_i=1/m^2$.
+Consequently the exponent two in \eqref{eq:Q} cannot be replaced uniformly
+by any smaller exponent.
+\end{proposition}
+\begin{theorem}[Rank-linear Hilbert influence]\label{thm:r}
+Let $G$ take values in a real Hilbert space and assume its essential range
+lies in an affine subspace of dimension at most $r$, with $r\ge1$.
+If $\norm{G}\le B$ almost surely and the input degree is at most two, then
+\begin{equation}\label{eq:R}
+\boxed{V(G)^2\le 3C_2rB^2\max_i\Inf_i(G).}
+\end{equation}
+For finite input index sets the maximum exists; for arbitrary index sets
+with $V(G)>0$ it is attained by the same finite-superlevel argument as in
+Theorem~\ref{thm:q}.
+\end{theorem}
+\begin{theorem}[Rank-sensitive adaptive observation]\label{thm:obs}
+Let $F$ be known, bounded by $B$ in a real Hilbert space, of input degree
+at most two, on a product of $n<\infty$ independent coordinates. Let
+$\lambda_1\ge\lambda_2\ge\cdots\ge0$ be its covariance eigenvalues and
+$\tau_r(F)=\sum_{j>r}\lambda_j$. For every $r\ge1$ and $\eta>0$ there
+exists a deterministic adaptive whole-symbol querying policy of depth at most
+\begin{equation}\label{eq:depth}
+N\le\min\left\{n,\left\lceil\frac{12C_2rB^2}{\eta}\right\rceil\right\}
+\end{equation}
+with a conditional-mean prediction $\widehat F$ satisfying
+$\E\norm{F-\widehat F}^2\le\tau_r(F)+\eta$.
+For each $r,k\ge1$ there exists a degree-one $\norm F\le1$ example
+with $\tau_r=0$ and target risk $\eta=1/(2k)$ requiring at least
+$r/(4\eta)$ coordinate observations even for adaptive policies.
+\end{theorem}
+\noindent All four statements have proofs below using only independent-input
+conditioning and standard Hilbert-space inequalities. Theorem~\ref{thm:obs}
+is a query-count theorem, not a runtime guarantee.
+
+\section{Proof of the degree-two influence theorem}\label{sec:quad}
+We first work with finite full-support product laws. Section~\ref{sec:lift} supplies the approximation argument for arbitrary product probability spaces. Write
+\begin{equation}\label{eq:dec}
+f=\E f+\sum_i h_i(X_i)+\sum_{i<j}h_{ij}(X_i,X_j),\quad
+E_i h_i=0,\quad E_i h_{ij}=E_jh_{ij}=0.
+\end{equation}
+For each $i$, put $H_i=L^2(\mu_i;\mathbb R)$ and
+\begin{equation}\label{eq:ui}
+U_i(\cdot;X_{-i})=h_i(\cdot)+\sum_{j\ne i}h_{ij}(\cdot,X_j),\quad
+\Inf_i(f)=\norm{h_i}_2^2+\sum_{j\ne i}\norm{h_{ij}}_2^2.
+\end{equation}
+For a pair $(i,j)$ set $b_{ij}=\max_{x_i,x_j}\abs{h_{ij}(x_i,x_j)}$.
+
+\subsection{The disjoint-edge coupling budget}
+\begin{lemma}[Matching mass]\label{lem:matching}
+For any matching $\mathsf P$ in the graph of nonzero quadratic interactions,
+$\sum_{(i,j)\in\mathsf P}b_{ij}\le4B$.
+\end{lemma}
+\begin{proof}
+Fix one edge $(i,j)$ and a pair $(a,b)$ realizing $\abs{h_{ij}(a,b)}=b_{ij}$. Since $h_{ij}$ is centered separately in both inputs, the average of
+$\Delta_{ij}=h_{ij}(a,b)-h_{ij}(a',b)-h_{ij}(a,b')+h_{ij}(a',b')$
+over independent $a'\sim\mu_i$, $b'\sim\mu_j$ equals $h_{ij}(a,b)$. Choose $a',b'$ so that $\abs{\Delta_{ij}}\ge b_{ij}$.
+For the chosen edge compare the \emph{even} two-point coupling, uniform on $(a,b),(a',b')$, to the \emph{odd} coupling, uniform on $(a,b'),(a',b)$. They share the same one-coordinate marginals and their $h_{ij}$ expectations differ by $\Delta_{ij}/2$. Independently make this comparison on every edge of the matching, orienting each difference positively; give all unmatched coordinates the same law in both experiments. All additive terms and all interactions between distinct blocks have identical expectations because the marginals agree and blocks are independent. Hence the difference of the two expectations of $f$ is $\frac12\sum_{e\in\mathsf P}\abs{\Delta_e}$. Both expectations lie in $[-B,B]$, so this difference is at most $2B$, proving the lemma.
+\end{proof}
+
+\subsection{Two norm budgets from pointwise boundedness}
+\begin{lemma}[Additive oscillation and coordinate-section budgets]\label{lem:budgets}
+For the decomposition \eqref{eq:dec},
+\begin{equation}\label{eq:budgets}
+\sum_i\norm{h_i}_2\le 2(1+\sqrt2)B,\qquad
+\sum_i\E\norm{U_i(\cdot;X_{-i})}_{H_i}\le8B.
+\end{equation}
+\end{lemma}
+\begin{proof}
+For the first inequality consider the product noise operator $T_t=\prod_i(E_i+tD_i)$, $0\le t\le1$. It is a positive Markov contraction, and
+$T_t f(x)=\E f+t\sum_i h_i(x_i)+t^2\sum_{i<j}h_{ij}(x_i,x_j)$ lies in $[-B,B]$.
+For two inputs $x,y$, the difference $r(t)=T_tf(x)-T_tf(y)=ut+vt^2$ satisfies $r(0)=0$, $\abs{r(t)}\le2B$, and $u=\sum_i[h_i(x_i)-h_i(y_i)]$. At $s=\sqrt2-1$, exact interpolation gives
+$u=[r(s)-s^2r(1)]/[s(1-s)]$, whence $\abs u\le2B(1+s^2)/[s(1-s)]=4(1+\sqrt2)B$.
+The oscillation of the additive sum is the sum of its coordinate oscillations on the Cartesian support. Since every centered scalar random variable in an interval of width $w$ has standard deviation at most $w/2$, $\sum_i\norm{h_i}_2\le\frac12\osc(\sum h_i)\le2(1+\sqrt2)B$.
+
+For the second inequality, fix $x$ and in each fiber choose a symbol maximizing $f(x_{-i},\cdot)-f(x)$, with gain $a_i^+\ge0$, and one minimizing it, with loss $a_i^-\ge0$. Independently switch each coordinate from its current symbol to its selected replacement with probability $t$. The resulting expected value $q_\pm(t)$ is a quadratic polynomial bounded by $B$ for $0\le t\le1$, and $q_+'(0)=\sum_i a_i^+$, $q_-'(0)=-\sum_i a_i^-$. The identity $q'(0)=-3q(0)+4q(1/2)-q(1)$ yields $\sum_i a_i^\pm\le8B$. Thus the sum of fiber oscillations at every $x$ is at most $16B$. Conditional on $X_{-i}$, the centered section $U_i$ is the fiber value minus its mean, so its $H_i$-norm is at most half its range. Integrating and summing proves the second inequality.
+\end{proof}
+
+\subsection{Greedy edge assignment and a fourth-moment inequality}
+\begin{lemma}[Quadratic energy bound]\label{lem:energy}
+Under \eqref{eq:dec}, with $M=\max_i\Inf_i(f)$,
+\begin{equation}\label{eq:energy}
+\sum_{i<j}\norm{h_{ij}}_2^2\le
+\left[8+\sqrt3\bigl(8+2(1+\sqrt2)\bigr)\right]B\sqrt M.
+\end{equation}
+\end{lemma}
+\begin{proof}
+Process edges in nonincreasing order of $b_{ij}$, retaining an edge if disjoint from previously retained edges. The retained edges form a matching. Give both endpoints of a retained edge the cost $c_i=b_{ij}$ and give every unused vertex cost zero. Each original edge $(i,j)$ can be assigned to an endpoint with $c_i\ge b_{ij}$: if not retained, it was blocked by an earlier retained edge of at least that weight. The matching lemma implies $\sum_i c_i\le8B$.
+
+Let $S_i$ consist of the neighbors of edges assigned to $i$ and put, in the Hilbert space $H_i$,
+$Y_{ij}=h_{ij}(\cdot,X_j)$, $Z_i=\sum_{j\in S_i}Y_{ij}$, and
+$s_i=\E\norm{Z_i}_{H_i}^2=\sum_{j\in S_i}\norm{h_{ij}}_2^2\le\Inf_i(f)\le M$.
+For a fixed $i$ these $H_i$-valued random variables are independent and centered, with $\norm{Y_{ij}}_{H_i}\le b_{ij}\le c_i$. Expanding the fourth moment and using Cauchy--Schwarz,
+\begin{equation}\label{eq:4moment}
+\E\norm{Z_i}_{H_i}^4\le c_i^2s_i+3s_i^2.
+\end{equation}
+Indeed the diagonal terms satisfy $\E\norm{Y_{ij}}^4\le c_i^2\E\norm{Y_{ij}}^2$, while the pairwise inner-product terms are at most products of their second moments. The interpolation $\norm W_{L^2}^3\le\norm W_{L^1}\norm W_{L^4}^2$ applied to $W=\norm{Z_i}$ gives
+\begin{equation}\label{eq:interpolate}
+s_i\le\sqrt{c_i^2+3s_i}\,\E\norm{Z_i}_{H_i}
+\le(c_i+\sqrt{3M})\E\norm{Z_i}_{H_i}.
+\end{equation}
+Since $Z_i$ is the conditional expectation of $U_i-h_i$ over the assigned neighbor coordinates, Jensen and the triangle inequality show
+$\E\norm{Z_i}\le\E\norm{U_i}+\norm{h_i}_2$.
+Therefore Lemma~\ref{lem:budgets} gives
+\begin{equation}\label{eq:Zbudget}
+\sum_i\E\norm{Z_i}\le\bigl[8+2(1+\sqrt2)\bigr]B,
+\qquad \E\norm{Z_i}\le\sqrt{s_i}\le\sqrt M.
+\end{equation}
+Every edge is assigned exactly once, so $\sum_{i<j}\norm{h_{ij}}_2^2=\sum_i s_i$. Sum \eqref{eq:interpolate}, use $\sum c_i\le8B$ and \eqref{eq:Zbudget}, and obtain \eqref{eq:energy}.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:q} for finite full-support products]
+The additive energy satisfies
+\[\sum_i\norm{h_i}_2^2\le\sqrt M\sum_i\norm{h_i}_2\le2(1+\sqrt2)B\sqrt M.\]
+By Hoeffding orthogonality and Lemma~\ref{lem:energy},
+\[
+\begin{aligned}
+V&=\sum_i\norm{h_i}_2^2+\sum_{i<j}\norm{h_{ij}}_2^2\\
+&\le\bigl[2(1+\sqrt2)+8+\sqrt3(8+2(1+\sqrt2))\bigr]B\sqrt M\\
+&=D_2B\sqrt M.
+\end{aligned}
+\]
+Squaring proves $M\ge V^2/(\Ctwo B^2)$.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:sharp}]
+Let $Z_1,\ldots,Z_{2m}$ be independent fair signs and $f_m=m^{-1}\sum_{k=1}^m Z_{2k-1}Z_{2k}$. The products are independent fair signs, so $\abs{f_m}\le1$ and $\Var(f_m)=1/m$. Every coordinate occurs in one quadratic monomial of coefficient $1/m$, so its resampling influence is exactly $1/m^2$. A nonzero degree-two Fourier coefficient witnesses exact degree two.
+\end{proof}
+
+\section{Proof of the rank-linear degree-two theorem}\label{sec:rank}
+The scalar proof is stable under Hilbert-valued interaction increments because it uses independent fourth moments rather than independent scalar coordinates of the output.
+
+\begin{lemma}[Finite-sign Hilbert compression]\label{lem:sign}
+For $w_1,\ldots,w_r$ in any real Hilbert space $\cK$ and independent fair signs $\varepsilon_j$,
+\begin{equation}\label{eq:sign}
+\E_\varepsilon\norm{\sum_{j=1}^r\varepsilon_jw_j}_{\cK}
+\ge\frac{1}{\sqrt3}\left(\sum_{j=1}^r\norm{w_j}_{\cK}^2\right)^{1/2}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+Let $W=\sum_j\varepsilon_jw_j$ and $s=\sum_j\norm{w_j}^2$. Independence gives $\E\norm W^2=s$ and
+\[\begin{aligned}
+\E\norm W^4&=\sum_j\norm{w_j}^4+2\sum_{j<k}\norm{w_j}^2\norm{w_k}^2\\
+&\quad+4\sum_{j<k}\langle w_j,w_k\rangle^2\le3s^2.
+\end{aligned}\]
+Interpolation yields $s^{3/2}\le(\E\norm W)(\E\norm W^4)^{1/2}\le\sqrt3\,s\E\norm W$. Divide by $s$, with $s=0$ trivial.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:r} on finite full-support products]
+If the essential range lies in an affine $r$-plane, orthogonally project $G$ onto the associated direction subspace. Such a projection preserves its variance and all influences while not increasing its pointwise norm. Thus identify the effective linear output subspace with $\mathbb R^r$ and decompose $G$ into vector-valued $h_i,h_{ij}$. For every sign vector $\varepsilon\in\{-1,1\}^r$ the scalar $g_\varepsilon=\langle\varepsilon,G\rangle/\sqrt r$ satisfies $\abs{g_\varepsilon}\le B$. Apply Lemmas~\ref{lem:matching} and \ref{lem:budgets} to every such scalar function and average in $\varepsilon$.
+
+For the matching bound, fix one point attaining $b_{ij}=\max\norm{h_{ij}}$ on each edge of a prescribed matching before choosing $\varepsilon$. Lemma~\ref{lem:sign}, first in $\mathbb R^r$, gives
+\begin{equation}\label{eq:vectorbudgets}
+\sum_{(i,j)\in\mathsf P}b_{ij}\le4B\sqrt{3r}.
+\end{equation}
+For the additive and coordinate-section budgets apply the same sign lemma in the spaces $L^2(\mu_i)$ (to the $r$ scalar components of $h_i$) and $L^2(\mu_i)$ (to each fiber of $U_i$), then integrate. The result is
+\begin{equation}\label{eq:vectorbudget2}
+\sum_i\norm{h_i}_2\le2(1+\sqrt2)B\sqrt{3r},\qquad
+\sum_i\E\norm{U_i(\cdot;X_{-i})}_{L^2(\mu_i;\mathbb R^r)}\le8B\sqrt{3r}.
+\end{equation}
+Run the identical descending-matching assignment with vector-valued $b_{ij}$. It yields $\sum_i c_i\le8B\sqrt{3r}$. The assigned increments $Y_{ij}=h_{ij}(\cdot,X_j)$ are independent centered random elements of $L^2(\mu_i;\mathbb R^r)$, with $\norm{Y_{ij}}\le c_i$. Thus the exact same fourth-moment and interpolation argument \eqref{eq:4moment}--\eqref{eq:interpolate} applies, and
+\[
+\sum_{i<j}\norm{h_{ij}}_2^2\le
+\left[8+\sqrt3\bigl(8+2(1+\sqrt2)\bigr)\right]B\sqrt{3rM(G)}.
+\]
+The additive energy is at most $2(1+\sqrt2)B\sqrt{3rM(G)}$. Orthogonality gives $V(G)\le D_2 B\sqrt{3rM(G)}$, hence \eqref{eq:R}.
+\end{proof}
+
+\begin{remark}[Why the rank factor is structurally meaningful]
+The argument does not assert that the individual components of $G$ are independent. The $\sqrt r$ loss comes only from compressing bounded Hilbert outputs to bounded random scalar projections, while the assigned neighbor increments are independent because their \emph{input coordinates} are independent. The lower bound in Section~\ref{sec:policy} shows that the induced linear $r$ dependence in observation depth cannot generally be eliminated, although the constant is not claimed optimal.
+\end{remark}
+
+\section{Proof of rank-optimal adaptive quadratic observation}\label{sec:policy}
+The key fact for adaptive observation is not merely that each posterior has an influential coordinate. It is that a \emph{degree-weighted residual energy} drops by exactly that coordinate's influence in conditional expectation.
+
+\begin{lemma}[Actual degree-weighted posterior drift]\label{lem:drift}
+Let $G$ be Hilbert-valued of input degree at most two on a finite product. At a transcript revealing coordinates $Q$, decompose the remaining-input section into orthogonal Hoeffding components $G_S$ and write
+\[
+v_Q=\sum_{S\ne\varnothing}\norm{G_S}_2^2,\qquad
+p_Q=\sum_{S\ne\varnothing}|S|\norm{G_S}_2^2=\sum_{i\notin Q}\Inf_i(G\mid Q).
+\]
+Then $v_Q\le p_Q\le2v_Q$. If an unobserved coordinate $i$ is revealed, conditional on the current transcript,
+\begin{equation}\label{eq:drift}
+p_Q-\E[p_{Q\cup\{i\}}\mid\text{current transcript}]=\Inf_i(G\mid Q).
+\end{equation}
+\end{lemma}
+\begin{proof}
+For each nonempty residual support $S$ not containing $i$, the contribution $G_S$ persists. A term $G_{S\cup\{i\}}$ that contains $i$ becomes, after observation of $X_i$, a random coefficient on $S$, decreasing its degree weight by one. Terms now sharing a residual support $S$ have cross-inner-product expectation zero over the newly revealed $X_i$, because $E_i G_{S\cup\{i\}}=0$. Hence the expected new weighted energy is
+$\sum_{S:\,i\notin S}|S|\norm{G_S}_2^2 +\sum_{S:\,i\in S}(|S|-1)\norm{G_S}_2^2$,
+where the term with $S=\{i\}$ has new weight zero. Subtract from the old energy to get $\sum_{S\ni i}\norm{G_S}_2^2=\Inf_i(G\mid Q)$. The sandwich follows because each positive-degree term has degree one or two.
+\end{proof}
+
+\begin{proof}[Proof of the upper bound in Theorem~\ref{thm:obs}]
+Let $P_r$ project onto $r$ leading covariance eigenvectors of $F$ and set $G=P_rF$, so $\norm G\le B$, degree at most two, and effective output dimension at most $r$. At every possible transcript the unrevealed coordinates retain their original independent laws and the section of $G$ is still bounded and quadratic. Theorem~\ref{thm:r} therefore gives, with $K_r=3\Ctwo rB^2$,
+\[
+m_Q:=\max_{i\notin Q}\Inf_i(G\mid Q)\ge\frac{v_Q^2}{K_r}\ge\frac{p_Q^2}{4K_r}.
+\]
+Choose at each transcript a coordinate attaining $m_Q$, breaking ties in a fixed way. Freeze branches after all coordinates are queried. Let $P_t=\E[p_Q]$ at observation depth $t$. By Lemma~\ref{lem:drift} and Jensen,
+\begin{equation}\label{eq:recurrence}
+P_t-P_{t+1}=\E[m_Q]\ge\frac{\E[p_Q^2]}{4K_r}\ge\frac{P_t^2}{4K_r}.
+\end{equation}
+Until $P_t=0$, reciprocal telescoping gives $P_t\le4K_r/t$ for $t\ge1$. The conditional-mean predictor of $G$ has squared risk $\E v_Q\le P_t$. Thus $t\ge4K_r/\eta=12\Ctwo rB^2/\eta$ suffices. Reading all $n$ coordinates gives zero error for $G$, producing the cap in \eqref{eq:depth}.
+
+The component $F-G$ is pointwise orthogonal to $G$ in the fixed output decomposition. Its posterior conditional variance is at most its unconditional variance $\tau_r(F)$ by the law of total variance, and the cross term in conditional squared norm vanishes by the output-space orthogonality. The total risk is at most $\tau_r(F)+\eta$.
+\end{proof}
+
+\begin{proof}[Proof of the lower bound in Theorem~\ref{thm:obs}]
+Let $Z_{jt}$ ($1\le j\le r$, $1\le t\le k$) be independent fair signs and define
+\begin{equation}\label{eq:lower}
+F(Z)=\frac1{k\sqrt r}\left(\sum_{t=1}^kZ_{1t},\ldots,\sum_{t=1}^kZ_{rt}\right)\in\mathbb R^r.
+\end{equation}
+Every input satisfies $\norm F\le1$, the function has degree one, its covariance rank is $r$ and its total variance is $1/k$. Each observed sign reduces the conditional squared variance by exactly $1/(rk^2)$, regardless of other observations or adaptivity. To reduce the risk to $1/(2k)$ requires at least $rk/2=r/(4\eta)$ observations.
+\end{proof}
+
+
+\begin{corollary}[Sharper scalar adaptive observation]\label{cor:scalarobs}
+For a real scalar degree-two target $|f|\le B$ on a finite
+product, and every $\eta>0$, there is a deterministic adaptive policy
+with expected squared error at most $\eta$ after at most
+$\min\{n,\lceil 4C_2 B^2/\eta\rceil\}$ whole-coordinate observations.
+\end{corollary}
+\begin{proof}
+Use the posterior potential $p_Q$ of Lemma~\ref{lem:drift}.
+The scalar Theorem~\ref{thm:q} has $K=C_2B^2$, rather than the
+Hilbert rank bound $K_r=3C_2rB^2$.
+Therefore at each transcript $m_Q\ge v_Q^2/K\ge p_Q^2/(4K)$.
+The exact drift and reciprocal telescoping from Theorem~\ref{thm:obs}
+give $\E p_Q\le4K/t$, and $\E v_Q\le\E p_Q$.
+\end{proof}
+
+\section{Spectrum-adaptive prediction and query allocation}\label{sec:spectral}
+The fixed-rank theorem is strongest when the output genuinely lives in a
+low-dimensional space, but the same calculation automatically adapts to
+approximately low-rank outputs. This is relevant when the output is a
+function, a probability vector, or a vector of correlated target statistics.
+
+\begin{theorem}[Covariance-tail oracle inequality]\label{thm:spectral}
+Under the hypotheses of Theorem~\ref{thm:obs}, let $\mathcal R_q(F)$
+denote the least expected squared error among deterministic policies using
+at most $q\ge1$ coordinate observations. Then
+\begin{equation}\label{eq:oracle}
+\boxed{\mathcal R_q(F)\le
+\inf_{r\ge1}\left\{\tau_r(F)+\frac{12C_2rB^2}{q}\right\}.}
+\end{equation}
+If $q\ge n$ the optimal risk is exactly zero. If $\operatorname{rank}(\operatorname{Cov}F)\le r_0$,
+then $\mathcal R_q(F)\le12C_2r_0B^2/q$.
+\end{theorem}
+\begin{proof}
+Fix an integer $r\ge1$. Choose $\eta=12C_2rB^2/q$ in
+Theorem~\ref{thm:obs}. The resulting query cap is
+$\min\{n,\lceil q\rceil\}$ and the risk is at most
+$\tau_r+\eta$. Take the infimum over $r$. Reading all inputs gives the
+separate assertion when $q\ge n$.
+\end{proof}
+\begin{corollary}[Polynomial spectral tails]\label{cor:power}
+Suppose $\tau_r(F)\le Ar^{-\alpha}$ for constants $A>0$, $\alpha>0$.
+For any $q\ge1$, with $H=12C_2B^2/q$, one has
+\begin{equation}\label{eq:powerrate}
+\mathcal R_q(F)\le \inf_{r\in\mathbb N,\,r\ge1}\{Ar^{-\alpha}+Hr\}
+\ \lesssim_\alpha\ A^{1/(\alpha+1)}H^{\alpha/(\alpha+1)}+H.
+\end{equation}
+The implicit constant is explicit, depending only on $\alpha$.
+\end{corollary}
+\begin{proof}
+The real optimizer is $x_*=(\alpha A/H)^{1/(\alpha+1)}$.
+If $x_*\ge1$, choose $r=\lceil x_*\rceil\le x_*+1$.
+Then $Ar^{-\alpha}\le A x_*^{-\alpha}$ and
+$Hr\le Hx_*+H$, yielding the stated order with coefficient
+$\alpha^{-\alpha/(\alpha+1)}+\alpha^{1/(\alpha+1)}$
+before the additive $H$. When $x_*<1$ choose $r=1$ and absorb the result
+in the displayed right side.
+\end{proof}
+\begin{corollary}[Exponential spectral tails]\label{cor:exp}
+If $\tau_r(F)\le A e^{-\beta r}$ for $\beta>0$, then
+$\mathcal R_q(F)\le O_{A,\beta,B,C_2}((1+\log q)/q)$ for $q\ge2$.
+\end{corollary}
+\begin{proof}
+Choose $r=\max\{1,\lceil\beta^{-1}\log(q)\rceil\}$ in
+\eqref{eq:oracle}; the first term is at most $A/q$ and the second
+is $O((1+\log q)/q)$.
+\end{proof}
+\paragraph{What effective rank means here.}
+The covariance spectrum is taken in the output Hilbert space, not the
+input space. If $F=(F_1,\ldots,F_s)$ is a collection of observables whose
+outputs are almost collinear as random vectors, a large ambient $s$ need
+not lead to a large query budget. Conversely, a small input interaction
+degree does not imply a small covariance rank: the lower-bound example
+in Theorem~\ref{thm:obs} has degree one and rank $r$ as large as desired.
+
+\paragraph{Policy description.}
+For a chosen $r$, compute a rank-$r$ covariance projection $P_r$ and set
+$G=P_rF$. At a transcript $h=(Q,x_Q)$, form the posterior functions of
+$G$ on the unrevealed independent coordinates, calculate
+$\Inf_i(G\mid h)$ for each $i\notin Q$, choose an index attaining the
+maximum, and reveal the entire symbol $X_i$. At termination, report
+$\E[F\mid h]$ (or $\E[G\mid h]$ plus the posterior mean of the
+orthogonal residual). This is a deterministic rule after fixed
+tie-breaking; its definition may demand expensive integration and
+optimization. It is not an efficiently executable sampler without
+additional structure in $F$ or the source.
+
+\section{An unbounded adaptive--nonadaptive separation}\label{sec:address}
+The preceding theorems concern adaptive selection of whole coordinates.
+They do not automatically imply a small predetermined observation set,
+even when every coordinate has a finite alphabet and the target has
+interaction degree exactly two. The following elementary example isolates
+the obstruction.
+
+\begin{theorem}[Quadratic addressing separation]\label{thm:address}
+For every integer $m\ge3$ there is a bounded, mean-zero, degree-two
+observable $f$ of variance one on $m+1$ independent finite-alphabet
+coordinates such that two adaptive whole-symbol queries determine $f$
+exactly, whereas every nonadaptive fixed-set observation policy achieving
+expected squared error strictly less than $1/2$ queries more than $m/2$
+coordinates.
+\end{theorem}
+\begin{proof}
+Let $A$ be uniform on $[m]$, let $Z_1,\ldots,Z_m$ be independent fair
+signs, independent of $A$, and define $f(A,Z)=Z_A$. Its expansion
+\begin{equation}\label{eq:address}
+f(A,Z)=\sum_{j=1}^m{\bf1}_{\{A=j\}}Z_j
+=\frac1m\sum_{j=1}^mZ_j+\sum_{j=1}^m
+\left({\bf1}_{\{A=j\}}-\frac1m\right)Z_j
+\end{equation}
+contains only order-one and order-two Hoeffding terms. It has mean zero,
+$|f|=1$, and variance one. Querying $A$ first identifies the required
+second coordinate $Z_A$, so two adaptive queries recover $f$ with zero
+error.
+
+For a fixed observation set, suppose first that it contains $A$ and a
+set $S\subseteq[m]$ of $s$ sign coordinates. The conditional predictor
+is $Z_A{\bf1}_{\{A\in S\}}$; the conditional mean-square risk averaged
+over $A$ is $1-s/m$. To obtain risk below $1/2$ requires $s>m/2$.
+If the observation set does not contain $A$, its conditional predictor
+is $m^{-1}\sum_{j\in S}Z_j$. Its squared $L^2$ norm is $s/m^2$, hence its
+Bayes risk is $1-s/m^2\ge1-1/m>1/2$. Randomizing a fixed query set before
+seeing any input is a convex combination of such risks and cannot improve
+this threshold. The same conclusion holds for arbitrary randomized
+prediction given a fixed set, because the conditional expectation already
+minimizes squared loss.
+\end{proof}
+
+\begin{remark}[Not a quantum separation]
+The addressing example is classical. It distinguishes adaptive from fixed
+coordinate selection in a product prior; it does not establish a quantum
+advantage or a gap between collective and local quantum measurements. Its
+role is to delimit the observable notion to which the query upper bound
+applies. The construction is standard and no originality is claimed for it.
+\end{remark}
+
+\section{A predetermined-set result above the quadratic interaction floor}\label{sec:fixed}
+A limited nonadaptive companion is possible when the target error is
+allowed to exceed the total pair-interaction energy.
+
+\begin{proposition}[Fixed-set observation above the quadratic floor]\label{prop:fixed}
+Let $f=\E f+\sum_i h_i+\sum_{i<j}h_{ij}$ be real, bounded by $B$,
+and of degree at most two on a finite product. Put
+$\delta_2=\sum_{i<j}\norm{h_{ij}}_2^2$. For each $\eta>\delta_2$
+there exists a fixed set of at most
+\begin{equation}\label{eq:fixed}
+\min\left\{n,\left\lceil
+\frac{(3+2\sqrt2)B^2}{\eta-\delta_2}\right\rceil\right\}
+\end{equation}
+coordinates whose conditional-mean predictor has risk at most $\eta$.
+\end{proposition}
+\begin{proof}
+Set $b_i=\norm{h_i}_2$ and $L=\sum_i b_i$. Lemma~\ref{lem:budgets}
+yields $L\le2(1+\sqrt2)B$. Read the $q$ largest $b_i$. If
+$t=b_{q+1}$ then
+\[
+\sum_{i>q}b_i^2\le t\sum_{i>q}b_i\le t(L-qt)\le\frac{L^2}{4q}
+\le\frac{(3+2\sqrt2)B^2}{q}.
+\]
+All unrevealed pair energy is at most $\delta_2$, and the risk is
+at most the sum of these two terms. Choose the displayed $q$, or read
+all coordinates if $q\ge n$.
+\end{proof}
+\paragraph{A structural obstruction.}
+For the addressing function in \eqref{eq:address}, pair interactions
+carry most of its variance. Below the pair-interaction error floor,
+additive-importance rankings cannot guarantee a small fixed set. The
+adaptive policy instead uses the answer to one coordinate query to
+identify the next relevant interaction.
+
+\section{Quantum output probabilities and encoded-register visibility}\label{sec:quantum}
+We give two distinct applications. The first queries the classical
+input symbols of a quantum circuit's output probability. The second
+actually measures physical encoded quantum registers. These observation
+contracts cannot be interchanged.
+
+\subsection{Predicting one-query quantum probability vectors}
+Let $P(X)=(P_1(X),\ldots,P_s(X))$ be the output probability vector of a
+quantum algorithm that makes one coherent whole-symbol query to a
+finite-alphabet oracle. Under the standard oracle polynomial method,
+each final amplitude is a sum of terms depending on at most one
+classical coordinate, and therefore each outcome probability has
+Hoeffding interaction degree at most two \cite{BBCMW2001}.
+\begin{corollary}[One-query output probability prediction]\label{cor:oneq}
+For any known product distribution on the classical input symbols,
+any $\eta>0$, and such a quantum algorithm with $s$ labeled outcomes,
+there is a deterministic adaptive classical policy querying at most
+\[\min\left\{n,\left\lceil\frac{12C_2s}{\eta}\right\rceil\right\}
+\]
+whole input symbols and returning a probability vector $\widehat P$
+with $\E\norm{P(X)-\widehat P(X)}_2^2\le\eta$.
+\end{corollary}
+\begin{proof}
+Each $P_j$ has interaction degree at most two and
+$\norm{P(x)}_2\le\norm{P(x)}_1=1$. Apply Theorem~\ref{thm:obs} with
+$B=1$, $r=s$, and $\tau_s=0$. The conditional expectation of a
+probability vector remains in the probability simplex.
+\end{proof}
+\begin{corollary}[Scalar one-query acceptance probability]\label{cor:oneqscalar}
+If $g(X)\in[0,1]$ is a one-query acceptance probability, then for
+$0<\epsilon,\delta<1$ there is a deterministic classical
+$\widehat g$ with
+\begin{equation}\label{eq:markov}
+\Pr\{|g(X)-\widehat g(X)|>\epsilon\}\le\delta,
+\qquad N\le\min\left\{n,\left\lceil\frac{C_2}{\delta\epsilon^2}\right\rceil\right\}.
+\end{equation}
+\end{corollary}
+\begin{proof}
+Apply the sharper scalar Corollary~\ref{cor:scalarobs} to $f=2g-1$
+with $B=1$ and target $4\delta\epsilon^2$. Rescale the resulting posterior mean
+to $\widehat g$ and use Markov's inequality.
+\end{proof}
+\paragraph{Oracle-scope warning.}
+The prediction policy is not a procedure for making optimal physical
+measurements of unknown quantum states. It presumes a known classical
+oracle input sampled from a known independent prior and access to the
+entire value of a selected input symbol, as opposed to a noisy
+quantum encoding of that symbol.
+
+\subsection{Quantum Bayesian terminal gain under local encodings}
+Let $X_1,\ldots,X_n$ be finite independent classical variables with
+arbitrary positive-probability local laws. At site $i$, the symbol
+$x_i$ is encoded into a density operator $\rho_{i,x_i}$ on a
+finite-dimensional quantum register. The whole conditional state is
+$\rho_x=\bigotimes_i\rho_{i,x_i}$, and the faithful average on its
+support is $b_i=\E\rho_{i,X_i}$. For a real target $f$, let
+$G_t^*(Q)$ denote the optimal reduction in squared-error Bayes risk
+from a collective POVM on registers $Q$ after each encoder is
+mixed with its mean state:
+\[\rho_{i,x}(t)=t\rho_{i,x}+(1-t)b_i,\qquad 0\le t\le1.\]
+The target and prior are assumed known to the measurement designer.
+Define $J_b(W)=(bW+Wb)/2$ and the local contrast map on centered
+classical functions
+\[
+T_i g=\E[g(X_i)\rho_{i,X_i}],\qquad
+K_i=T_i^*J_{b_i}^{-1}T_i.
+\]
+Assume $K_i\succeq a I$ on the \emph{full centered local contrast space} at every coordinate on which $f$ depends, for some $a>0$. In particular, $0<a\le1$. This excludes a physically invisible contrast direction, even if other directions are visible.
+
+\begin{proposition}[Conditional quantum visibility transfer]\label{prop:qterminal}
+For a bounded degree-two real target $f$ with $V=\Var(f)>0$,
+the terminal marginal value
+$\Delta_i(t)=G_t^*([n])-G_t^*([n]\setminus\{i\})$ satisfies
+\begin{equation}\label{eq:quantumvis}
+\boxed{\max_i\Delta_i(t)\ \ge\
+\frac{t^4a^2V^2}{2C_2B^2}.}
+\end{equation}
+For binary source alphabets the factor $2$ in the denominator may be
+omitted. The result concerns a register's marginal value \emph{when
+other registers are available}, not its one-register-from-scratch value.
+\end{proposition}
+\begin{proof}
+For product-prepared sources, the centered signal decomposes into
+orthogonal quantum ANOVA support components. The Personick--Sylvester
+operator for scalar quadratic loss identifies nonnegative optimal gains
+$\gamma_S$ with
+\[G_t^*(Q)=\sum_{\varnothing\ne S\subseteq Q}t^{2|S|}\gamma_S,
+\quad \Delta_i(t)=t^2\gamma_{\{i\}}+
+ t^4\sum_{j\ne i}\gamma_{\{i,j\}}.\]
+The support decomposition follows by extending each local Sylvester
+solution by an identity on unused product-average registers;
+cross terms vanish by Hoeffding orthogonality. The one-site
+quadratic form equals $\langle f_i,K_if_i\rangle$ and hence
+$\gamma_{\{i\}}\ge a\norm{f_i}_2^2$.
+For two sites, diagonalize $b_i,b_j$ and compare the entrywise inverse
+Jordan multipliers. For positive eigenvalues $p,q,u,v$,
+\[\frac{2}{pu+qv}\ \ge\
+\frac12\frac{2}{p+q}\frac{2}{u+v},\]
+because $(p+q)(u+v)\ge pu+qv$. Thus
+$J_{b_i\otimes b_j}^{-1}\succeq\tfrac12
+(J_{b_i}^{-1}\otimes J_{b_j}^{-1})$, so
+$\gamma_{\{i,j\}}\ge\tfrac12a^2\norm{f_{ij}}_2^2$.
+As $a\le1$ and $t^2\ge t^4$,
+\[\Delta_i(t)\ge \frac12t^4a^2
+\bigl(\norm{f_i}_2^2+\sum_{j\ne i}\norm{f_{ij}}_2^2\bigr)
+=\frac12t^4a^2\Inf_i(f).\]
+Apply Theorem~\ref{thm:q}. If each nonconstant classical contrast
+space is one-dimensional (binary sources), the pair signal is a simple
+Hermitian tensor, for which the independent orientation-averaging
+inequality in Appendix~\ref{sec:hermitian} improves the comparison
+factor $1/2$ to $1$. This proves the stated binary refinement.
+\end{proof}
+\begin{remark}[Do not conflate this with the trine conjecture]
+The visibility-only qubit extremality conjecture in Wright's companion
+note predicts a sharper transfer constant at fixed visibility. Its
+unrestricted qubit inequality has not been proved. Neither its
+conditional improvement nor a numerical qutrit counterexample is
+included as a theorem here. Similarly, the quantum proposition is
+analytic and not end-to-end Lean-certified.
+\end{remark}
+
+\section{Finite-to-general transfer and independent proof scope}\label{sec:lift}
+The matching argument was proved for finite products with finite
+alphabet support. The following approximation supplies the otherwise
+missing step for general products; it is particularly useful for
+non-atomic coordinates and uncountable index sets.
+
+\begin{lemma}[Bounded finite-partition approximation]\label{lem:lift}
+Let $J$ be any index set and $F\in L^2(\mu;\cH)$ be essentially bounded
+and of Hoeffding degree at most $d$, where $\cH$ is a fixed finite
+dimensional real Hilbert space. There is a directed net of finite-product
+conditional expectations $P_\alpha F$ such that each is bounded by
+$B$, retains degree at most $d$, and converges to $F$ in $L^2$.
+For each coordinate $i$, $\Inf_i(P_\alpha F)\le\Inf_i(F)$; moreover
+\[\sum_{i\in S}\Inf_i(F)\le dV(F)\]
+for every finite $S\subseteq J$.
+\end{lemma}
+\begin{proof}
+Let $\mathcal A_\alpha$ be the sigma algebra generated by a finite
+subset of coordinates together with finite measurable partitions of
+each chosen coordinate. Order these algebras by refinement. Finite
+rectangle indicators span a dense subspace of the product $L^2$; this
+is a monotone-class consequence of the fact that finite cylinders
+generate the product sigma algebra. The same statement holds after
+completion because completed-measurable $L^2$ functions have
+product-measurable representatives. Hence $P_\alpha F
+=\E[F\mid\mathcal A_\alpha]$ converges in $L^2$.
+Conditional expectation is contractive in $L^\infty$ and $L^2$.
+For a coordinate included in $\mathcal A_\alpha$, its averaging
+projection commutes with $P_\alpha$ because all operations integrate
+independent coordinates; for an excluded coordinate $D_iP_\alpha=0$.
+Consequently $\Inf_i(P_\alpha F)\le\Inf_i(F)$ in either case.
+Applying $P_\alpha$ to a Hoeffding component supported on $S$ either
+annihilates it (if an active coordinate is excluded) or preserves the
+same support with the single-coordinate functions replaced by
+conditional averages. Thus it preserves the closed degree-$d$
+subspace. Finally, expand each finite projected function into its
+Hoeffding components and sum the influences over any finite coordinate
+set. Passing to the $L^2$ limit yields the final inequality.
+\end{proof}
+\begin{proof}[Completion of Theorems~\ref{thm:q} and \ref{thm:r}]
+Apply the finite theorem to every bounded finite-partition projection;
+the projected variance tends to the true variance and the maximum
+influence is at most $M=\sup_{i\in J}\Inf_i(F)$. Passage to the
+limit proves the quantitative inequality with $M$ in place of the
+maximum. If $V(F)>0$, the lower bound implies $M>0$. The set
+$\{i:\Inf_i(F)\ge M/2\}$ is finite: if it contained arbitrarily
+many indices, the finite-subset influence bound would exceed $2V(F)$.
+Every coordinate outside this finite set has influence less than
+$M/2$, so the supremum is attained inside the set. If $V(F)=0$ the
+inequality is immediate. The rank-$r$ case follows after identifying
+its effective output subspace with $\mathbb R^r$.
+\end{proof}
+\paragraph{Assumptions that cannot be dropped.}
+Product independence is essential to the independent fourth-moment
+step. It is also essential to the posterior preservation of the
+unobserved law used in Section~\ref{sec:policy}. A correlated law can
+have a large variance but vanish under single-coordinate conditional
+resampling when the other coordinates nearly determine the coordinate.
+In particular, the theorem is \emph{not} asserted for arbitrary
+correlated inputs. The degree-two condition also cannot be replaced
+by unrestricted degree without proving an additional independent
+influence theorem; we do not import the all-degree Turturean route.
+
+\section{Prior art, original contribution, and evidence level}\label{sec:prior}
+\subsection{Scope-matched prior work}
+\begin{enumerate}[label=\textnormal{(\roman*)}]
+\item \textbf{Hoeffding decomposition on arbitrary products.}
+The decomposition, noise projection, and resampling identities are
+established background. In particular Blais--O'Donnell--Wimmer
+\cite{BOW2008} explicitly develop orthogonal expansion techniques
+for arbitrary categorical product distributions. The present
+claim is quantitative, not the existence of ANOVA itself.
+\item \textbf{Decision-tree influence.}
+O'Donnell--Saks--Schramm--Servedio \cite{OSSS2005} prove an inequality
+for decision trees and discuss arbitrary product input and
+non-Boolean output extensions. We do not claim the observation
+drifts or influence comparisons as a first use of decision-tree
+methods, nor an efficient implementation beyond the stated existence.
+\item \textbf{Uniform Boolean cube and distributional variants.}
+The conjecture of Aaronson--Ambainis \cite{AA2014} was resolved in
+its all-degree Boolean-cube form by Turturean
+\cite{Turturean2026}. Girish--Mittal--Nehoran--Raz \cite{GMNR2026}
+prove equivalences with fixed-bias Boolean products and slices. These
+results are not used as black boxes here. A fixed-bias equivalence
+alone does not assert the identical numerical constant for
+arbitrarily small biases and arbitrary alphabet cardinalities.
+\item \textbf{Quadratic Grothendieck and completely bounded norms.}
+Classical quadratic Boolean inequalities can give substantially
+better constants in their own settings; Grothendieck principles and
+completely bounded polynomial estimates \cite{EG2023,EGSP2026}
+operate in different input/norm regimes. A direct categorical tensor
+norm implication has not been excluded by this limited prior-art
+search; the novelty of the sharp-scope quadratic inequality is
+therefore not treated as fully adjudicated.
+\end{enumerate}
+
+\subsection{What was proved without importing Turturean}
+The four mathematical steps are (1) the disjoint-matching even/odd
+coupling, (2) dimension-free boundedness budgets obtained from
+quadratic interpolation and fiber perturbations, (3) a vertex
+assignment plus Hilbert fourth-moment inequality, and (4) an exact
+weighted posterior energy identity followed by a rank-compressed
+maximal influence inequality. Each step appears in this article
+with proof; the finite-to-general passage is included. No theorem
+from \cite{Turturean2026}, no source code from his Lean proof, and
+no auxiliary cube certificate inequality enters any derivation.
+
+\subsection{Evidence status and necessary independent attack}
+The theorem proofs above are analytic. An exact-arithmetic checker
+shipped with this draft verifies a finite collection of independent
+falsification examples: input masses, variance, influences,
+matching budgets, and posterior drift. Such tests are evidence
+against elementary mistakes in those instances, not certificates
+of universal claims. The finished manuscript has \emph{not}
+been checked by the Lean kernel and has not been reviewed by an
+independent specialist.
+
+The highest-value next audit would independently rederive the
+matching budget with arbitrary categorical alphabets, check that
+every unretained edge admits the required endpoint assignment,
+verify the $3s_i^2$ Hilbert fourth-moment coefficient, and test the
+posterior weighted drift on mixed first- and second-order examples.
+A separate prior-art audit should examine categorical bilinear
+operator norms and vector-valued Rademacher/Grothendieck inequalities
+before any worldwide-first claim. If an older theorem implies the
+quadratic bound without changed hypotheses, the appropriate novelty
+classification must be lowered.
+
+\section{Conclusion}\label{sec:conclusion}
+The principal result is a quantitative quadratic interaction law:
+pointwise boundedness and product independence force some coordinate
+to carry at least $V^2/(C_2B^2)$ of the resampling energy. Its proof
+requires neither a Boolean encoding nor an imported arbitrary-degree
+influence theorem; matching geometry and independent Hilbert increments
+provide the relevant structure. Random-sign compression transfers the
+bound to rank-$r$ Hilbert outputs, and the degree-weighted posterior
+identity converts it to a spectrum-sensitive adaptive observation
+rule with sharp worst-case order in rank and accuracy. The same
+principle can be applied, with separately stated measurement models,
+to one-query quantum outcomes and to terminal Bayesian information
+gain in locally encoded registers.
+
+The next significant mathematical question is whether comparable
+rank-sensitive estimates survive beyond degree two without a
+large visibility penalty or a loss dependent on input alphabet size.
+The present paper does not claim that generalization. Its scope is
+instead a self-contained, independently auditable quadratic theory.
+
+\appendix
+\section{A Hermitian tensor inequality for binary quantum contrasts}\label{sec:hermitian}
+We supply the simple-tensor step used only for the binary-source
+refinement of Proposition~\ref{prop:qterminal}. Let $b_i$ be faithful
+density matrices and $H_i$ arbitrary Hermitian matrices. Define
+$Q_b(H)=\tr(H J_b^{-1}(H))$. Then
+\begin{equation}\label{eq:hermitian}
+Q_{b_1\otimes b_2}(H_1\otimes H_2)\ge Q_{b_1}(H_1)Q_{b_2}(H_2).
+\end{equation}
+\begin{proof}
+Diagonalize $b_1,b_2$. Expand in ordered matrix-unit entries
+$H_i[p,q]$. For a Hermitian $H_i$, the squared magnitude
+$|H_i[p,q]|^2$ is unchanged by reversing the order of $p$ and $q$.
+Give each unordered pair of indices probability proportional to its
+squared matrix-entry mass. Conditional on those unordered pairs,
+independently reverse each ordered pair with probability $1/2$.
+The global inverse-Sylvester coefficient is
+$2/(\lambda_{1,p}\lambda_{2,u}+\lambda_{1,q}\lambda_{2,v})$.
+Its expected denominator under independent reversals is
+$\frac12(\lambda_{1,p}+\lambda_{1,q})
+(\lambda_{2,u}+\lambda_{2,v})$.
+Jensen's inequality for the convex function $x\mapsto1/x$ implies
+that the averaged global coefficient is at least
+$4/[(\lambda_{1,p}+\lambda_{1,q})(\lambda_{2,u}+\lambda_{2,v})]$,
+which is the product of the two local inverse-Sylvester
+coefficients. Summing with the nonnegative squared-entry weights
+gives \eqref{eq:hermitian}. The argument is an orientation average,
+not a claim that the Sylvester map tensorizes as an operator identity.
+\end{proof}
+Every centered classical contrast space for a nontrivial binary site
+has real dimension one. Therefore a pure pair interaction is a
+scalar multiple of a simple tensor of centered contrasts. Its
+encoded signal is a Hermitian simple tensor, so the inequality
+applies. For three-symbol or larger sites, a generic interaction
+is a \emph{sum} of simple tensors and the stronger operator
+inequality does not follow; this is exactly the source of the
+possible extra transfer penalty.
+
+\section{Independent finite-model checker protocol}\label{sec:checker}
+The bundled script \texttt{check\_quadratic\_models.py} uses rational
+probability masses for small heterogeneous product spaces, explicit
+Hoeffding component tables, and exact fraction arithmetic wherever
+possible. It tests the variance identity, each resampling influence,
+and the one-step posterior degree-weighted potential identity.
+It separately enumerates matchings for the interaction sup-norm
+bound and checks the output sharpness and addressing examples.
+Any success flag is expressly scoped to these finite instances.
+A failed assertion is a mathematical counterexample candidate or
+an implementation defect requiring investigation before use of
+the associated theorem. This paper makes no claim of a universal
+machine certificate.
+
+\begin{thebibliography}{99}\setlength{\itemsep}{4pt}
+\bibitem{Hoeffding1948} W. Hoeffding,
+\emph{A class of statistics with asymptotically normal distribution},
+Annals of Mathematical Statistics \textbf{19} (1948), 293--325.
+\bibitem{ES1981} B. Efron and C. Stein,
+\emph{The jackknife estimate of variance},
+Annals of Statistics \textbf{9} (1981), 586--596.
+\bibitem{OSSS2005} R. O'Donnell, M. Saks, O. Schramm and R. Servedio,
+\emph{Every decision tree has an influential variable},
+FOCS (2005), 31--39.
+\url{https://arxiv.org/abs/cs/0508071}.
+\bibitem{BOW2008} E. Blais, R. O'Donnell and K. Wimmer,
+\emph{Polynomial regression under arbitrary product distributions},
+COLT (2008), 193--204.
+\url{https://mlanthology.org/colt/2008/blais2008colt-polynomial/}.
+\bibitem{AA2014} S. Aaronson and A. Ambainis,
+\emph{The need for structure in quantum speedups},
+Theory of Computing \textbf{10} (2014), 133--166.
+\bibitem{BBCMW2001} R. Beals, H. Buhrman, R. Cleve, M. Mosca and R. de Wolf,
+\emph{Quantum lower bounds by polynomials}, Journal of the ACM
+\textbf{48} (2001), 778--797.
+\bibitem{GMNR2026} U. Girish, K. Mittal, B. Nehoran and R. Raz,
+\emph{Distributional Variants of the Aaronson--Ambainis Conjecture},
+arXiv:2609.35327 (2026).
+\url{https://arxiv.org/abs/2609.35327}.
+\bibitem{Turturean2026} D. Turturean,
+\emph{A proof of the Aaronson--Ambainis conjecture},
+arXiv:2611.09773 (6 Nov. 2026).
+\url{https://arxiv.org/abs/2611.09773}.
+\bibitem{EG2023} F. Escudero Guti\'errez,
+\emph{Influences of Fourier completely bounded polynomials and classical simulation of quantum algorithms},
+arXiv:2304.06713 (2023).
+\bibitem{EGSP2026} F. Escudero Guti\'errez, M. Saucedo and C. Palazuelos,
+\emph{Optimal inequalities for completely bounded polynomials and the limitations of quantum query algorithms},
+arXiv:2609.05201 (2026).
+\bibitem{Personick1971} S. D. Personick,
+\emph{Application of quantum estimation theory to analog communication over quantum channels},
+IEEE Transactions on Information Theory \textbf{17} (1971), 240--246.
+\bibitem{Wright2026} D. J. Wright,
+\emph{Beyond the Boolean Cube: Degree-Two Influence and Rank-Optimal Observation},
+NIGHTFALL mathematical manuscript, v9.2 (12 Nov. 2026); source provenance,
+not a required theorem in this paper.
+\end{thebibliography}
+\end{document}
