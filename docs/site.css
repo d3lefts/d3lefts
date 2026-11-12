@@ -796,3 +796,46 @@ html{scroll-padding-top:24px}
 .nf-signature-adjacent article+article{border-left:0;border-top:1px solid var(--line);padding-left:0}
 }
 
+/* Research communication system, 12 November 2026.
+   A statement, its evidence, and the unresolved dependency share one quiet
+   visual grammar. Neutral surfaces, legible labels, no celebratory status UI. */
+.nf-hero-proof-key{
+  margin:14px 0 10px;padding:4px 0 4px 13px;
+  border-left:2px solid var(--accent);
+  font:600 clamp(11px,1vw,12px)/1.65 var(--mono);
+  letter-spacing:.035em;color:var(--muted);max-width:670px
+}
+.nf-evidence-rail{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  margin-top:22px;margin-bottom:clamp(26px,4vw,55px);
+  padding:0;background:transparent;gap:0
+}
+.nf-evidence-rail>div{margin:0;padding:19px clamp(16px,2vw,30px) 21px 0;min-width:0}
+.nf-evidence-rail>div+div{border-left:1px solid var(--line);padding-left:clamp(16px,2vw,30px)}
+.nf-evidence-rail dt{
+  margin:0 0 7px;font:600 11px/1.5 var(--mono);
+  color:var(--muted);letter-spacing:.075em;text-transform:uppercase
+}
+.nf-evidence-rail dd{
+  margin:0;max-width:48ch;font:400 clamp(13px,1.1vw,15px)/1.65 var(--sans);
+  color:var(--ink);overflow-wrap:anywhere
+}
+.nf-evidence-rail dd strong{font-weight:650;color:var(--ink)}
+.nf-evidence-rail a{text-decoration:underline;text-underline-offset:3px}
+.nf-evidence-rail a:hover{opacity:.8}
+.nf-reader-context{font-size:clamp(14px,1.15vw,16px);line-height:1.7;max-width:78ch}
+.nf-editorial-note{border-left:2px solid var(--line);padding-left:15px;color:var(--muted);font-size:clamp(13px,1.05vw,15px);line-height:1.75}
+.nav a[aria-current="page"]{text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:1px}
+@media(max-width:900px){.nav{gap:18px}.nf-evidence-rail>div{padding-right:16px}.nf-evidence-rail>div+div{padding-left:16px}}
+@media(max-width:680px){
+ .nf-evidence-rail{grid-template-columns:1fr;margin-top:16px;margin-bottom:28px}
+ .nf-evidence-rail>div{padding:14px 0}
+ .nf-evidence-rail>div+div{border-left:0;border-top:1px solid var(--line);padding-left:0}
+ .nf-evidence-rail dt{font-size:11px}
+ .nf-evidence-rail dd{font-size:14px;line-height:1.65}
+ .nf-hero-proof-key{font-size:11px;margin:11px 0 12px}
+ .hero .hero-actions{margin-top:22px;gap:13px}
+ .hero .hero-description{font-size:16px;line-height:1.57}
+}
+@media(prefers-reduced-motion:reduce){.nf-evidence-rail a{transition:none}}
