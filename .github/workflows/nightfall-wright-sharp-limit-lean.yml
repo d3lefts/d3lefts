@@ -69,6 +69,7 @@ jobs:
             --decl Nightfall.Wright.SharpResampling.pair_sum_left \
             --decl Nightfall.Wright.SharpResampling.pair_sum_right \
             --decl Nightfall.Wright.SharpResampling.finite_weighted_pairwise \
+            --decl Nightfall.Wright.SharpResampling.pair_sum_scaled \
             --decl Nightfall.Wright.SharpResampling.iid_absolute_difference_bound \
             --decl Nightfall.Wright.SharpResampling.iid_absolute_difference_z \
             --json-out lean-receipts/wright-sharp-resampling.json || {
