@@ -47,7 +47,7 @@ For independent uniform sign inputs, f(x)=product x_i and commuting qubit encodi
 
 Finite independent classical sources; locally prepared finite-dimensional states; faithful *average* local states; positive local Gram visibility; optimal single-copy scalar Bayesian mean-square gain under unrestricted joint POVMs. The conditional pure qubit states need not themselves be full rank. **Not** an adaptive quantum observation protocol, a single-register-from-scratch gain, an unconditional quantum AA theorem, or a statement about entangled local-input preparation.
 
-The existing repository [quantum ANOVA bridge](../../papers/finite-product-influence/QUANTUM_ANOVA_BRIDGE_20261111.md) uses a **geometric** local visibility Gram (Omega_b^{-1}) and condition-number floor for its quadratic result. This dossier instead uses **SLD** K=T*J_b^{-1}T. These local parameters are **not interchangeable**. The v8 squared-variance influence inequality is neither assumed nor reproved here.
+The existing repository [quantum ANOVA bridge](../../../papers/finite-product-influence/QUANTUM_ANOVA_BRIDGE_20261111.md) uses a **geometric** local visibility Gram (Omega_b^{-1}) and condition-number floor for its quadratic result. This dossier instead uses **SLD** K=T*J_b^{-1}T. These local parameters are **not interchangeable**. The v8 squared-variance influence inequality is neither assumed nor reproved here.
 
 ## Reproduction and provenance
 
