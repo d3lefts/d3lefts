@@ -110,6 +110,19 @@ theorem finite_weighted_pairwise
     (pointwise_two_sample (a i) (a j) (ha0 i) (ha1 i) (ha0 j) (ha1 j))
     (mul_nonneg (hp i) (hp j))
 
+/-- Pull a common scalar through both levels of the finite independent sum. -/
+theorem pair_sum_scaled (p u v : α → ℝ) (k : ℝ) :
+    (∑ i, ∑ j, k * (p i * p j * (u i * v j))) =
+      k * (∑ i, p i * u i) * (∑ j, p j * v j) := by
+  calc
+    (∑ i, ∑ j, k * (p i * p j * (u i * v j))) =
+        k * (∑ i, ∑ j, p i * p j * (u i * v j)) := by
+          rw [Finset.mul_sum]
+          apply Finset.sum_congr rfl
+          intro i _
+          rw [Finset.mul_sum]
+    _ = _ := by rw [pair_sum_law]
+
 /-- The actual iid absolute-difference inequality, obtained by factoring
 independent double sums. The negative mean-squared correction is retained. -/
 theorem iid_absolute_difference_bound
@@ -133,8 +146,8 @@ theorem iid_absolute_difference_bound
           2 * (p i * p j * (|a i| * |a j|)) +
           2 * (p i * p j * (a i * a j)) := by ring
     simp_rw [hterm, Finset.sum_add_distrib]
-    rw [pair_sum_law p (fun i => |a i|) (fun i => |a i|)]
-    rw [pair_sum_law p a a]
+    rw [pair_sum_scaled p (fun i => |a i|) (fun i => |a i|) 2]
+    rw [pair_sum_scaled p a a 2]
     ring
   have hR : (∑ i, ∑ j, p i * p j * (|a i| + |a j|)) =
       2 * (∑ i, p i * |a i|) := by
