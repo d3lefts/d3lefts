@@ -49,6 +49,7 @@ jobs:
           node scripts/test_active_proof_passport.cjs
           node scripts/test_lean_certificate_provenance.cjs
           node scripts/test_mathematical_entrypoint.cjs
+          node scripts/test_research_communication.cjs
           node scripts/test_discovery_system_identity.cjs
           python3 scripts/test_review_queue.py
           node scripts/test_product_destinations.cjs
