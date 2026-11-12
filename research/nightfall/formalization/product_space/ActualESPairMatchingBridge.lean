@@ -228,4 +228,59 @@ theorem actual_pair_kernel_oriented_rectangle
     a b
 
 
+/-- Simultaneously select global amplitude witnesses and positively oriented
+four-corner rectangles for every edge of ANY finite graph, with the
+coefficients taken from the actual Efron–Stein components of f.
+
+Unlike abstract matching input data, neither the kernels, their
+centering, nor the orientations are assumed. Unmatched coordinates
+are harmless by actual_pair_component_is_kernel.
+
+This is exactly the source-to-rectangle interface for a subsequent
+global parity bound; the 4B matching inequality still requires the
+function-level parity/cancellation construction. -/
+theorem actual_all_edges_oriented_rectangles
+    {E : Type} [Fintype E] [Nonempty α]
+    (p : ι → α → ℝ) (hp : ∀ i a, 0 ≤ p i a)
+    (hp1 : ∀ i, ∑ a, p i a = 1)
+    (f : (ι → α) → ℝ) (base : ι → α)
+    (u v : E → ι) (hne : ∀ e, u e ≠ v e) :
+    ∃ a0 a1 b0 b1 : E → α,
+      ∀ e : E, ∀ s t : α,
+        |actualPairKernel p f base (u e) (v e) s t| ≤
+          actualPairKernel p f base (u e) (v e) (a0 e) (b0 e) -
+          actualPairKernel p f base (u e) (v e) (a0 e) (b1 e) -
+          actualPairKernel p f base (u e) (v e) (a1 e) (b0 e) +
+          actualPairKernel p f base (u e) (v e) (a1 e) (b1 e) := by
+  classical
+  have hmax (e : E) :
+      ∃ a b : α, ∀ s t : α,
+        |actualPairKernel p f base (u e) (v e) s t| ≤
+        |actualPairKernel p f base (u e) (v e) a b| := by
+    have hneα : (Finset.univ : Finset (α × α)).Nonempty :=
+      ⟨(Classical.choice inferInstance, Classical.choice inferInstance),
+        Finset.mem_univ _⟩
+    obtain ⟨t, _, ht⟩ :=
+      Finset.exists_max_image (Finset.univ : Finset (α × α))
+        (fun t : α × α =>
+          |actualPairKernel p f base (u e) (v e) t.1 t.2|) hneα
+    refine ⟨t.1, t.2, ?_⟩
+    intro s t'
+    exact ht (s,t') (Finset.mem_univ _)
+  choose ma mb hmajor using hmax
+  have hrect (e : E) :
+      ∃ a0 a1 : α, ∃ b0 b1 : α,
+        |actualPairKernel p f base (u e) (v e) (ma e) (mb e)| ≤
+          actualPairKernel p f base (u e) (v e) a0 b0 -
+          actualPairKernel p f base (u e) (v e) a0 b1 -
+          actualPairKernel p f base (u e) (v e) a1 b0 +
+          actualPairKernel p f base (u e) (v e) a1 b1 :=
+    actual_pair_kernel_oriented_rectangle
+      p hp hp1 f base (u e) (v e) (hne e) (ma e) (mb e)
+  choose a0 a1 b0 b1 hrects using hrect
+  refine ⟨a0, a1, b0, b1, ?_⟩
+  intro e s t
+  exact (hmajor e s t).trans (hrects e)
+
+
 end Nightfall.Observability.ActualESPairMatching
