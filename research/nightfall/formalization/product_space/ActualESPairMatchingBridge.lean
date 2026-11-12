@@ -85,10 +85,10 @@ theorem average_condExp_update
         condExp p U f (Function.update x i a) = condExp p U f x := by
       apply condExp_dependsOn p U f
       intro k hk
-      exact Function.update_of_ne (by
+      have hki : k ≠ i := by
         intro hki
-        subst k
-        exact hi hk)
+        exact hi (hki ▸ hk)
+      exact Function.update_of_ne hki
     calc
       (∑ a : α, p i a * condExp p U f (Function.update x i a)) =
           ∑ a : α, p i a * condExp p U f x := by
@@ -125,7 +125,6 @@ theorem actual_esComp_centered
     rw [Finset.sum_comm]
     apply Finset.sum_congr rfl
     intro U hU
-    rw [Finset.mul_sum]
     apply Finset.sum_congr rfl
     intro a _
     ring
@@ -168,7 +167,7 @@ theorem actual_pair_component_is_kernel
   intro k hk
   have hk' : k = i ∨ k = j := by simpa using hk
   rcases hk' with rfl | rfl
-  · simp [Function.update_of_ne hij.symm]
+  · simp [hij, hij.symm]
   · simp
 
 /-- Source-derived pair kernel centered in its first argument. -/
