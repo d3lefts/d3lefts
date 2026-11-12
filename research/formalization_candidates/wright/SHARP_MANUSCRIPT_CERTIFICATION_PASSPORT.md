@@ -121,3 +121,16 @@ The original 23-declaration strict receipt (run 43149018301) remains intact and 
 **Formalization objective unchanged:** the full Wright manuscript theorem requires, in addition, a proof of the improved finite row cost `π²d²/2`, the strengthened median/certificate-to-influence bound for actual product functions, and the exact finite-to-measurable conditional-expectation passage on arbitrary completed product spaces. No combination of successful sharp-rho sublemmas is itself that theorem. Rejected intermediate compiler attempts are preserved in GitHub Actions; their `sorryAx` receipts are explicitly invalid and superseded by the passing versions, where applicable.
 
 **Stop rule:** Do not claim the all-measurable theorem is end-to-end kernel-certified until a single declaration states only the original boundedness/product-law/degree hypotheses and the manuscript constant, with the exact source-checked Lean 4.33.0 receipt. Do not merge into main as a full theorem based on conditional bridge proofs.
+
+### Verified continuation checkpoint
+
+**Successful strictly checked run:** https://github.com/d3lefts/d3lefts/actions/runs/43152951697  
+**Immutable receipt artifact:** https://github.com/d3lefts/d3lefts/actions/runs/43152951697/artifacts/13914677463
+
+This run additionally compiled, with standard axiom allowlist only:
+- `Nightfall.Wright.ProductFiber.update_twice`
+- `Nightfall.Wright.ProductFiber.pincr_eq_fiber_pair_average`
+- `Nightfall.Wright.ActualIncrement.actual_pincr_le_rho_radius`
+- `Nightfall.Wright.FiniteInterval.sharp_rho_finite_closed_interval`
+
+It constructed the direct `pincr` operator path from the pinned product source and sharp finite-marginal rho bound. The total increment `L(f)` with the pointwise sensitivity budget remains a **separate, later CI gate**, and neither the FHKL budget itself nor the stronger median/row inequalities nor the completed-measurable transfer are proved by these receipts. Earlier lines describing these direct `pincr` declarations as pending are superseded by this checkpoint.
