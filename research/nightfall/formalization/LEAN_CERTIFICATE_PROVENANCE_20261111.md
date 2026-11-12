@@ -78,3 +78,13 @@ At branch source checkpoint `8a247cface5ce57a8da340bc277c81e792a04c40`, all 63 L
 ## Rev15: all three current source-function row declarations strictly compiled
 
 [Run 43120669405](https://github.com/d3lefts/d3lefts/actions/runs/43120669405) PASSED with pinned Lean 4.33 and only foundational axioms for `actual_degree_two_row_controls_all_sections`, `actual_degree_two_total_section_budget`, and `actual_degree_two_centered_sections_from_rows`. Exact current Git blob `1c9d73ac90c54167851dfc956ca192b5249cbbac` is identical to the run head. All **63/63** current source modules now have successful historical scoped CI source matches; the actual all-law quadratic **variance-squared** influence theorem is still NOT a full end-to-end Lean declaration.
+
+
+## Addendum: PR #386 rank-one sources (2026-11-11, source-scope only)
+
+Registered two exact Lean blobs at successful CI [43100116278](https://github.com/d3lefts/d3lefts/actions/runs/43100116278) from branch head `7b7f0b7f4f99edc8dc31ba903d97986d5de5f1a2`:
+
+- `research/nightfall/formalization/observability/CubicRankOneTerminal.lean`, blob `f3bc105d44891ff002a0d116780cbb53441764d9` — Finite-array mean-energy inequality and conditional 5B rank-one cubic terminal implication. Vector influence, leaf variance, and amplitude premises are explicit and remain unproved end-to-end.
+- `research/nightfall/formalization/observability/RankOneLeafMoment.lean`, blob `6c4ce364f8bfb30e028191dc454c214a5e170e2d` — Actual finite independent centered rank-one leaf second-moment identity using separately compiled Hilbert many-increment moment theorem; arbitrary-controls averaging and selector closure not compiled.
+
+The 63-source snapshot on earlier main remains the historical baseline; the composite manifest now enumerates 65 source files with 65 explicitly scoped successful source receipts. This does not certify the full cubic bound, the vector influence premise, novel mathematics, or global priority. The original PR #386 failing inventory checks were due to missing entries for these two new modules, not failed named Lean compilation. Existing main and its other certificate records were preserved.

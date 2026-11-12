@@ -1,8 +1,8 @@
 {
   "schema": "nightfall-lean-provenance-v1",
   "as_of": "2026-11-11",
-  "revision": 15,
-  "scope": "All 63 current branch Lean source files inventoried and frozen at 8a247cface5ce57a8da340bc277c81e792a04c40; 63 exact current blobs matched to successful scoped historical CI; the expanded actual row-centered-section source has a full strict three-declaration receipt. No exponent-two actual-f end-to-end kernel theorem.",
+  "revision": 16,
+  "scope": "65 current Lean source files: 63 exact-blob historical source receipts frozen at baseline main 8a247cface5ce57a8da340bc277c81e792a04c40, plus two rank-one scoped strict compiler receipts from PR #386 at head 7b7f0b7f4f99edc8dc31ba903d97986d5de5f1a2. This composite source index is not an end-to-end cubic theorem; each source is bound by its individual Git blob and CI run.",
   "source_commit": "8a247cface5ce57a8da340bc277c81e792a04c40",
   "policy": "Kernel compilation is validity evidence only. Quarantine means do not claim novelty; it does not invalidate a correctly compiled theorem. Derived transfers are scoped program-specific compositions with open worldwide priority. A distinct finite construction has an exact certificate but still needs prior-art review.",
   "prior_art": [
@@ -38,7 +38,7 @@
     }
   ],
   "counts": {
-    "quarantine": 52,
+    "quarantine": 54,
     "derived_transfer": 10,
     "finite_construction": 1
   },
@@ -162,6 +162,18 @@
       "ci_receipt_scope": "Strict Lean 4.35 named-declaration PASS, exact current blob present at successful run head; foundational axioms only.",
       "global_priority": "unverified",
       "source_blob_sha": "5025acca7073024dca45920b7993fcf493b95839"
+    },
+    {
+      "path": "research/nightfall/formalization/observability/CubicRankOneTerminal.lean",
+      "classification": "quarantine",
+      "note": "Finite-array mean-energy inequality and conditional 5B rank-one cubic terminal implication. Vector influence, leaf variance, and amplitude premises are explicit and remain unproved end-to-end.",
+      "passport": "active-proof-passport.html",
+      "ci_run": 43100116278,
+      "ci_run_head_sha": "7b7f0b7f4f99edc8dc31ba903d97986d5de5f1a2",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_receipt_scope": "Exact current Git blob contained in successful Lean 4.35 scoped rank-one-terminal CI. Only the named, explicitly-premised finite declarations are certified; no universal cubic endpoint.",
+      "global_priority": "unverified",
+      "source_blob_sha": "f3bc105d44891ff002a0d116780cbb53441764d9"
     },
     {
       "path": "research/nightfall/formalization/observability/DiagonalSignCoherence.lean",
@@ -361,6 +373,18 @@
       "ci_source_match_status": "same-git-blob-as-successful-ci-head",
       "ci_run_head_sha": "5774e8475a7c3629931efd407724f0c281305fa5",
       "ci_receipt_scope": "Exact current Git blob found in a successful historical GitHub Actions run; verify the linked named-declaration scope separately. This is not cross-pin end-to-end certification."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/RankOneLeafMoment.lean",
+      "classification": "quarantine",
+      "note": "Actual finite independent centered rank-one leaf second-moment identity using separately compiled Hilbert many-increment moment theorem; arbitrary-controls averaging and selector closure not compiled.",
+      "passport": "active-proof-passport.html",
+      "ci_run": 43100116278,
+      "ci_run_head_sha": "7b7f0b7f4f99edc8dc31ba903d97986d5de5f1a2",
+      "ci_source_match_status": "same-git-blob-as-successful-ci-head",
+      "ci_receipt_scope": "Exact current Git blob contained in successful Lean 4.35 scoped rank-one-terminal CI. Only the named, explicitly-premised finite declarations are certified; no universal cubic endpoint.",
+      "global_priority": "unverified",
+      "source_blob_sha": "6c4ce364f8bfb30e028191dc454c214a5e170e2d"
     },
     {
       "path": "research/nightfall/formalization/observability/SignMomentLogTransfer.lean",
@@ -847,7 +871,9 @@
   "historical_compiler_environment_note": "Some existing source-family receipts and the actual scalar/Hilbert posterior one-step source used pinned Lean 4.33.0. Current repository pin is Lean 4.35.0. Source-matched universal recompilation, exact theorem contract, and cross-pin imports require separate gates.",
   "compilation_receipt_policy": "All 59 current main-tree Lean Git source blobs matched successful historical GitHub Actions run-head trees. ANOVAPosteriorBridge.lean has a dedicated strict Lean 4.33.0 three-declaration receipt in run 43110333296. Exact source identity and successful named theorem checks remain scoped to each workflow; they do not certify combined all-product quadratic influence, cross-pin integration, measurable transfer, global originality, or unlisted declarations. Current repository Lean pin is 4.35.0, and some earlier individual proofs are 4.33.0. Revision 11: actual quadratic degree-two exponent-5/2 product-law declaration passed strict 4.33, and constructed 16B section-range passed strict 4.35; no mixed-pin integrated endpoint proof. Rev12: newly added QuadraticUnifiedFinite.lean has NO certificate until final direct Lean 4.33 compilation passes. It assumes explicit quadratic representation and proves only the existing 5/2 baseline plus an actual 16B range. Rev13: the pending direct joint proof passed strict Lean 4.33 named theorem audit in run 43115838586 for exact Git blob 6ca3d371; still no all-law variance-squared e2e certificate. Rev14: three new scoped finite quadratic modules: centered rectangle and scalar endpoint interpolation strict-pass exact-source receipts; the expanded current actual row source awaits third-declaration strict verification, notwithstanding its earlier two-declaration success. The exponent-two theorem remains analytic. Rev15: all 63 exact source blobs have successful scoped CI-head matches; expanded actual row source strict named trio passed run 43120669405. The fully quantified actual-f variance-squared theorem still has NO end-to-end kernel certificate.",
   "ci_source_match_counts": {
-    "matched_successful_ci_head": 63,
+    "matched_successful_ci_head": 65,
     "no_direct_receipt_identified": 0
-  }
+  },
+  "extension_source_commit": "7b7f0b7f4f99edc8dc31ba903d97986d5de5f1a2",
+  "extension_ci_run": 43100116278
 }
