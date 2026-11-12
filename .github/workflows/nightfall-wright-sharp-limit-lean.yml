@@ -103,6 +103,7 @@ jobs:
         run: |
           set -euo pipefail
           P=research/formalization_candidates/wright
+          mkdir -p /tmp/aa/.lake/build/lib/lean
           cp "$P/WrightSharpResampling.lean" /tmp/aa/WrightSharpResampling.lean
           (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/WrightSharpResampling.olean WrightSharpResampling.lean)
           python3 scripts/lean_bridge.py "$P/WrightFiniteIntervalRho.lean" \
@@ -126,6 +127,7 @@ jobs:
             AaronsonAmbainis.Level.Integral AaronsonAmbainis.TwoSided.CauchySchwarz
           cd "$GITHUB_WORKSPACE"
           P=research/nightfall/formalization/product_space
+          mkdir -p /tmp/aa/.lake/build/lib/lean
           for name in ProductSpaceTwoSidedBridge ProductRowBound ProductInfluence; do
             cp "$P/$name.lean" "/tmp/aa/$name.lean"
             (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/$name.olean" "$name.lean")
