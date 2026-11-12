@@ -858,3 +858,9 @@ html #main>.hero.nf-opening .nf-opening-overlap-value {
  #flagships .nf-signature-card{padding:22px 2px 24px}
  #flagships .nf-signature-card h3{margin-top:16px}
 }
+
+/* Signature jump retained independently of two theorem-source actions. */
+
+#main>.hero.nf-opening .nf-hero-jump{display:inline-block;margin-left:12px;color:#f5d88f;font-weight:700;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
+#main>.hero.nf-opening .nf-hero-jump:focus-visible{outline:2px solid #f5d88f;outline-offset:4px}
+@media(max-width:700px){#main>.hero.nf-opening .nf-hero-jump{display:block;width:max-content;max-width:100%;margin:8px 0 0}}
