@@ -1,0 +1,23 @@
+name: NIGHTFALL quantum SLD sharpness exact checks
+on:
+  pull_request:
+    paths:
+      - 'papers/quantum-sld-tensorization/**'
+      - '.github/workflows/nightfall-quantum-sharp-sld.yml'
+      - 'papers/universal-observability/README.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-independent-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Exact ternary quantum scores and physical gains
+        run: python3 -I papers/quantum-sld-tensorization/checks/check_trine_score_exact.py
+      - name: Independent exact spectral minima and heterogeneous realization
+        run: python3 -I papers/quantum-sld-tensorization/checks/check_spectral_constant_exact.py
