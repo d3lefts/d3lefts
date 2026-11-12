@@ -7,6 +7,7 @@ on:
       - 'research/formalization_candidates/wright/WrightArbitraryIndexAttainment.lean'
       - 'research/formalization_candidates/wright/WrightFiniteIntervalRho.lean'
       - 'research/formalization_candidates/wright/WrightProductFiberIdentity.lean'
+      - 'research/formalization_candidates/wright/WrightActualIncrementRho.lean'
       - '.github/workflows/nightfall-wright-sharp-limit-lean.yml'
   workflow_dispatch:
 
@@ -111,6 +112,7 @@ jobs:
             --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
             --decl Nightfall.Wright.FiniteInterval.radius_abs_eq_max \
             --decl Nightfall.Wright.FiniteInterval.sharp_rho_finite_interval \
+            --decl Nightfall.Wright.FiniteInterval.sharp_rho_finite_closed_interval \
             --json-out lean-receipts/wright-finite-fiber-rho.json || {
               python3 -c "import json;r=json.load(open('lean-receipts/wright-finite-fiber-rho.json'));print(r.get('status'));print((r.get('stdout') or '')[-35000:]);print((r.get('stderr') or '')[-10000:])" || true
               exit 1
@@ -146,6 +148,25 @@ jobs:
               exit 1
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/wright-product-fiber-identity.json
+      - name: Kernel-check sharp rho on actual finite product increments
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/formalization_candidates/wright
+          mkdir -p /tmp/aa/.lake/build/lib/lean
+          for name in WrightFiniteIntervalRho WrightProductFiberIdentity; do
+            cp "$P/$name.lean" "/tmp/aa/$name.lean"
+            (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/$name.olean" "$name.lean")
+          done
+          python3 scripts/lean_bridge.py "$P/WrightActualIncrementRho.lean" \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl Nightfall.Wright.ActualIncrement.actual_pincr_le_rho_radius \
+            --json-out lean-receipts/wright-actual-increment-rho.json || {
+              python3 -c "import json;r=json.load(open('lean-receipts/wright-actual-increment-rho.json'));print(r.get('status'));print((r.get('stdout') or '')[-35000:]);print((r.get('stderr') or '')[-10000:])" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/wright-actual-increment-rho.json
       - name: Capture provenance
         if: always()
         run: |
@@ -155,6 +176,7 @@ jobs:
             research/formalization_candidates/wright/WrightArbitraryIndexAttainment.lean \
             research/formalization_candidates/wright/WrightFiniteIntervalRho.lean \
             research/formalization_candidates/wright/WrightProductFiberIdentity.lean \
+            research/formalization_candidates/wright/WrightActualIncrementRho.lean \
             > lean-receipts/SHA256SUMS.txt
           echo leanprover/lean4:v4.33.0 > lean-receipts/lean-toolchain.txt
           echo 2a6ceaef872ae993708950f951989134084b851a > lean-receipts/upstream.txt
