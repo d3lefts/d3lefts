@@ -1,0 +1,26 @@
+name: NIGHTFALL operational quantum ANOVA independent audits
+on:
+  pull_request:
+    paths:
+      - 'papers/quantum-operational-anova/**'
+      - '.github/workflows/nightfall-operational-quantum-anova.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  noncommuting-operational-anova:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install test-only scientific dependencies
+        run: python3 -m pip install 'sympy==1.13.3' 'numpy==2.3.4'
+      - name: Exact rational SLD and interaction Möbius reconstruction
+        run: python3 -I papers/quantum-operational-anova/checks/exact_audit.py
+      - name: Exact near-degenerate noncommuting audit
+        run: python3 -I papers/quantum-operational-anova/checks/near_degenerate_audit.py
+      - name: Independent complex metrics reconstruction
+        run: python3 -I papers/quantum-operational-anova/checks/metric_family_audit.py
