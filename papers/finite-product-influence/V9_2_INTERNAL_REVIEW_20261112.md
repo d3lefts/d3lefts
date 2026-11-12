@@ -2,7 +2,7 @@
 
 **Reviewer type:** author-internal, AI-assisted (Claude, Anthropic), requested by Devin J. Wright. This is **not** independent external peer review, a Lean certificate, or a priority determination. Claim statuses in `research/catalogue/CLAIMS.json` are unchanged by this record.
 
-**Source:** [`NIGHTFALL_Beyond_Boolean_Cube_v9_2.pdf`](NIGHTFALL_Beyond_Boolean_Cube_v9_2.pdf), SHA-256 in [`SOURCE_SHA256SUMS_v9_2`](SOURCE_SHA256SUMS_v9_2). The LaTeX source of v9.2 was **not** supplied and is not in this tree; this PDF is a custody deposit, not a rebuildable source.
+**Source:** [`NIGHTFALL_Beyond_Boolean_Cube_v9_2.pdf`](NIGHTFALL_Beyond_Boolean_Cube_v9_2.pdf), SHA-256 in [`SOURCE_SHA256SUMS_v9_2`](SOURCE_SHA256SUMS_v9_2). At the time of this internal review, the LaTeX source had **not** yet been supplied; this was a PDF-only custody deposit. On 12 November 2026 the source-exact [v9.2 LaTeX](NIGHTFALL_Beyond_Boolean_Cube_v9_2.tex), [original source checksum manifest](SHA256SUMS_NIGHTFALL_v9_2.txt), and [changelog](CHANGELOG_NIGHTFALL_v9_2.md) were added. This source recovery is not a new independent review.
 
 ## Scope checked step by step
 
@@ -32,3 +32,8 @@
 2. **Main originality risk:** a short categorical Grothendieck / one-hot bilinear argument could subsume Theorem 1.1 with a better constant; the binary case already has `16K_G²`. Dated scope-matched literature search required (v9.2 gate v).
 3. Deposit the v9.2 LaTeX source and rebuild before referee circulation.
 4. Theorem 8.1 (`c_prod`) remains dependent on the v8 chain and should not be cited as established.
+
+
+### Source availability update (12 November 2026)
+
+The original *author-generated* v9.2 LaTeX source is now checked into the repo, and the source Git blob matches the extracted source capsule. The earlier review's main correctness/novelty gates remain outstanding; its documented scalar one-query citation issue is not retroactively repaired in the preserved historical v9.2. Consult the [separate v2 source](../sharp-influence-backdoors/README.md) for the newer presentation and scalar-query clarification. The original PDF/certificate roles remain separate.
