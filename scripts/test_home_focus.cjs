@@ -9,7 +9,7 @@ assert.equal((nav.match(/<a\b/g)||[]).length,3,"Keep the three primary research 
 for(const href of ['href="./" aria-current="page"','href="constellation.html"','href="review.html"'])assert.ok(nav.includes(href));
 const actions=[...field.matchAll(/<div class="hero-actions"[^>]*>([\s\S]*?)<\/div>/g)]
  .map(m=>[...m[1].matchAll(/<a\b[^>]*href="([^"]+)"/g)].map(x=>x[1]));
-assert.deepEqual(actions,[["active-proof-passport.html#q2-influence","mathematical-results.html"]],
+assert.deepEqual(actions,[["#flagships","mathematical-results.html"]],
  "NULL FIELD first screen must lead to the current claim evidence passport and mathematical explanation");
 assert.ok(moon.includes('href="evidence.html#public-downloads"')&&moon.includes('href="review.html#erdos"'),
  "NEW MOON must expose public frozen evidence and independent Erdős audit");
@@ -31,5 +31,6 @@ for(const id of ["flagships","featured-title","nf-scroll-cinema","observatory","
 assert.ok(moon.includes('id="live-case"')&&moon.includes('id="archived-records"'));
 assert.ok(!field.includes('src="home-system.js"'),"Do not hydrate active cards using historical registry data");
 assert.ok(chrome.includes('["index.html","new-moon.html","constellation.html","review.html"].includes(page)'),"No duplicate home rails");
+assert.ok(field.includes('class="nf-hero-jump">READ THE CURRENT CLAIM &amp; EVIDENCE'),"Current evidence is visible before the long hero copy");
 assert.ok(field.includes("C₂=(10+2√2)²(1+√3)²")&&field.includes("not end-to-end Lean-certified"),"Homepage must show current analytic scalar constant without implying full Lean closure");
 console.log("PASS: active NULL FIELD and historical NEW MOON with current theorem passport first");
