@@ -21,7 +21,8 @@ Audit checklist: rerun Python source; adversarially check equality and missing-c
 Certification status:
 - Finite exact/numerical falsification: PASS (180 generated models, 352 address-query subsets).
 - Universal finite-product proof: self-contained ANALYTIC ARGUMENT; not independently non-author reviewed.
-- End-to-end Lean: NOT DONE.
+- Scoped Lean selector and beta transfer: FIVE named declarations compiled with pinned Lean 4.35.0 / Mathlib 4.35.0 and foundational-axiom audit ([CI run 43284555054](https://github.com/d3lefts/d3lefts/actions/runs/43284555054); [source and precise proof passport](../../../papers/conditional-section-duality/lean/PROOF_PASSPORT.md)). Exact source SHA-256 d3ddb18999cdc0e87e2ef5c131eac821c74a4141cc9a722b10581de5858cdb35. The source-function section L1 and ANOVA bridges are not compiled.
+- End-to-end Lean for the complete bounded-product fixed-coordinate theorem: NOT DONE.
 - Arbitrary measurable finite-input factors: written L2-approximation argument; not independently audited.
 - Arbitrary-index product generalization: NOT CLAIMED here.
 - Worldwide priority: OPEN.

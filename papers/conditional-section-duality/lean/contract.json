@@ -1,0 +1,29 @@
+{
+  "schema": "nightfall-theorem-contract/v1",
+  "source": "papers/conditional-section-duality/lean/FixedObservationSelector.lean",
+  "workspace_commit": "56a005855ea17e0b0958f73ec801ae140b0a1679",
+  "targets": [
+    {
+      "declaration": "Nightfall.ConditionalSection.scalar_fixed_observation_selector",
+      "expected_type": "∀ (q t head tail total risk : ℝ), 0 < q → 0 ≤ t → 0 ≤ tail → q * t ≤ head → head + tail ≤ total → risk ≤ t * tail → 4 * q * risk ≤ total ^ 2"
+    },
+    {
+      "declaration": "Nightfall.ConditionalSection.beta_conditioned_fixed_observation",
+      "expected_type": "∀ (d B beta q t head tail total risk : ℝ), 0 ≤ d → 0 ≤ B → 0 < beta → 0 < q → 0 ≤ t → 0 ≤ tail → q * t ≤ head → head + tail ≤ total → risk ≤ t * tail → beta * total ≤ 2 * d ^ 2 * B → beta ^ 2 * q * risk ≤ d ^ 4 * B ^ 2"
+    },
+    {
+      "declaration": "Nightfall.ConditionalSection.finite_selector_tail_energy",
+      "expected_type": "∀ {ι : Type*} [DecidableEq ι] (S T : Finset ι) (a : ι → ℝ) (t : ℝ), Disjoint S T → S.Nonempty → 0 ≤ t → (∀ i ∈ S, t ≤ a i) → (∀ i ∈ T, 0 ≤ a i) → (∀ i ∈ T, a i ≤ t) → 4 * (S.card : ℝ) * (T.sum fun i => (a i) ^ 2) ≤ ((S ∪ T).sum a) ^ 2"
+    },
+    {
+      "declaration": "Nightfall.ConditionalSection.finite_beta_fixed_observation",
+      "expected_type": "∀ {ι : Type*} [DecidableEq ι] (S T : Finset ι) (a : ι → ℝ) (d B beta t : ℝ), Disjoint S T → S.Nonempty → 0 ≤ d → 0 ≤ B → 0 < beta → 0 ≤ t → (∀ i ∈ S, t ≤ a i) → (∀ i ∈ T, 0 ≤ a i) → (∀ i ∈ T, a i ≤ t) → beta * ((S ∪ T).sum a) ≤ 2 * d ^ 2 * B → beta ^ 2 * (S.card : ℝ) * (T.sum fun i => (a i) ^ 2) ≤ d ^ 4 * B ^ 2"
+    },
+    {
+      "declaration": "Nightfall.ConditionalSection.selector_factor_four_sharp",
+      "expected_type": "∀ (q t : ℝ), 4 * q * (q * t ^ 2) = (q * t + q * t) ^ 2"
+    }
+  ],
+  "claim_scope": "Five scalar and finite-index selector/beta-transfer declarations with all hypotheses explicit; NOT the originating bounded-source fixed-observation theorem or novelty.",
+  "promoted_full": false
+}

@@ -49,3 +49,11 @@ The canonical [current-source ledger](../../../docs/lean-certificate-provenance.
 - The full scalar exponent-two and rank-r adaptive upper bound remain analytic manuscript claims, not kernel-certified. [Updated q2/rank passport](../2026-11-active-passports/quadratic-rank-observability.md).
 
 Do not mix Lean 4.33/Turturean-pinned and Lean 4.35/Mathlib-pinned receipts into a fictional common compilation. The frozen earlier provenance is unchanged.
+
+## 12 November 2026 paper-local conditional-section selector certificate
+
+The previously uncertified finite selector step in the beta-conditioned fixed-observation research programme now has **five strict Lean 4.35.0 named-declaration receipts** in [GitHub Actions run 43284555054](https://github.com/d3lefts/d3lefts/actions/runs/43284555054), source SHA-256 `d3ddb18999cdc0e87e2ef5c131eac821c74a4141cc9a722b10581de5858cdb35`. [Exact source](../../../papers/conditional-section-duality/lean/FixedObservationSelector.lean) and [scope passport](../../../papers/conditional-section-duality/lean/PROOF_PASSPORT.md).
+
+They establish the sharp disjoint-block finite selector inequality and its `beta^2 q R <= d^4 B^2` budget transfer **given an L1 section-budget premise**. The compiler checked the five explicit theorem types under foundational axioms only; an independent finite product checker also passed. The original source's low-degree section L1 bound, ANOVA source-risk identity, largest-`q` selector existence, measurable lift and non-author priority review **remain open**.
+
+**Registry separation:** this new proof is paper-local under `papers/conditional-section-duality/lean/`, not among the existing 67 `research/nightfall/` source modules. Do not inflate the main provenance count or conflate this 4.35 certificate with the separate 4.33 quadratic receipts. Subsequent source-registry import requires explicit SHA and source-head reconciliation.
