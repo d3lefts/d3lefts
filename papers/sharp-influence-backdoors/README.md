@@ -4,7 +4,7 @@
 
 - [Complete LaTeX source](Sharp_Influence_Quadratic_Backdoors_and_Cubic_Observation.tex) (SHA-256 `dba4d747f454959417dde5ae12ea552566220e329ff67ef37318350b980f8f88`).
 - [Proof passport with theorem-by-theorem evidence gates](PROOF_PASSPORT.md).
-- [Original deliverable README](SOURCE_README_v2.md), [original custody checksum manifest](SOURCE_SHA256SUMS_v2.txt); the PDF from that original snapshot has SHA-256 `4372758b9c4cc4cf02366035aa5bd406d2949cf5db42df2d886de1f2b379b7c6` and **is not imported to this folder**. Build the committed LaTeX locally to generate a fresh PDF (not byte-identical to the original unless the environment reproduces it).
+- [Original deliverable README](SOURCE_README_v2.md), [original custody checksum manifest](SOURCE_SHA256SUMS_v2.txt); the PDF from that original snapshot has SHA-256 `4372758b9c4cc4cf02366035aa5bd406d2949cf5db42df2d886de1f2b379b7c6` and is now included **byte-for-byte** as [the 22-page flagship PDF](Sharp_Influence_Quadratic_Backdoors_and_Cubic_Observation.pdf) (Git blob `1895d1cde66940e3a49d1eec731e7858479b1994`). The editable LaTeX builds a fresh PDF; reproducible rebuild bytes may differ with environment.
 - [Independent 17-page degree-two v1 source](archive/Quadratic_Influence_and_Rank_Optimal_Observation_v1.tex) and [v1 proof passport](archive/PROOF_PASSPORT_v1.md), retained as a historical checkpoint.
 - [v9.2 degree-two-first predecessor](../finite-product-influence/NIGHTFALL_Beyond_Boolean_Cube_v9_2.tex), with the already checked-in [v9.2 PDF](../finite-product-influence/NIGHTFALL_Beyond_Boolean_Cube_v9_2.pdf).
 
