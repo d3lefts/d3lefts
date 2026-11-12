@@ -1,0 +1,8 @@
+PASS n=2: seven heterogeneous rational models
+PASS n=3: seven heterogeneous rational models
+PASS n=4: seven heterogeneous rational models
+PASS five exact quadratic sharpness examples
+PASS five exact addressing risk curves
+PASS 1477 exact posterior drift identities across models
+PASS all tested matching, Hoeffding, fourth-moment, and influence identities
+SCOPE: finite falsification only; no general proof or Lean kernel certification
