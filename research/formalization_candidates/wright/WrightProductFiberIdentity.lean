@@ -27,14 +27,14 @@ theorem pincr_eq_fiber_pair_average
     (p : ι → α → ℝ) (hp1 : ∀ i, ∑ a, p i a = 1)
     (f : (ι → α) → ℝ) (j : ι) :
     pincr p f j =
-      ∑ x, ∑ b, ∑ c, prodMass p x * p j b * p j c *
+      ∑ x : ι → α, ∑ b, ∑ c, prodMass p x * p j b * p j c *
         |f (Function.update x j b) -
           f (Function.update x j c)| := by
   let g : (ι → α) → ℝ :=
     fun y => ∑ c, p j c * |f y - f (Function.update y j c)|
   have hres := resample_sum p hp1 j g
   calc
-    pincr p f j = ∑ x, prodMass p x * g x := by
+    pincr p f j = ∑ x : ι → α, prodMass p x * g x := by
       unfold pincr
       apply Finset.sum_congr rfl
       intro x _
@@ -43,9 +43,9 @@ theorem pincr_eq_fiber_pair_average
       apply Finset.sum_congr rfl
       intro c _
       ring
-    _ = ∑ x, ∑ b, prodMass p x * p j b *
+    _ = ∑ x : ι → α, ∑ b, prodMass p x * p j b *
           g (Function.update x j b) := hres.symm
-    _ = ∑ x, ∑ b, ∑ c, prodMass p x * p j b * p j c *
+    _ = ∑ x : ι → α, ∑ b, ∑ c, prodMass p x * p j b * p j c *
           |f (Function.update x j b) -
             f (Function.update x j c)| := by
       apply Finset.sum_congr rfl
