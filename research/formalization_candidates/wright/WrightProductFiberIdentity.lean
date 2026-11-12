@@ -19,7 +19,7 @@ open Finset
 open Nightfall.ProductSpace.Transfer
 open Nightfall.ProductSpace.Influence
 
-variable {ι α : Type*} [Fintype ι] [DecidableEq ι]
+variable {ι α : Type} [Fintype ι] [DecidableEq ι]
   [Fintype α] [DecidableEq α]
 
 /-- Double-resampling identity for the *actual* product-space increment. -/
