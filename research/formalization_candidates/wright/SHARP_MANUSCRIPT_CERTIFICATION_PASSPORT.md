@@ -134,3 +134,28 @@ This run additionally compiled, with standard axiom allowlist only:
 - `Nightfall.Wright.FiniteInterval.sharp_rho_finite_closed_interval`
 
 It constructed the direct `pincr` operator path from the pinned product source and sharp finite-marginal rho bound. The total increment `L(f)` with the pointwise sensitivity budget remains a **separate, later CI gate**, and neither the FHKL budget itself nor the stronger median/row inequalities nor the completed-measurable transfer are proved by these receipts. Earlier lines describing these direct `pincr` declarations as pending are superseded by this checkpoint.
+
+## Final continuation receipt: sharp total increment composition (PASS)
+
+**Run:** https://github.com/d3lefts/d3lefts/actions/runs/43153099818  
+**Artifact:** https://github.com/d3lefts/d3lefts/actions/runs/43153099818/artifacts/13915325295  
+**Compiler:** pinned Lean 4.33.0 and Turturean upstream `2a6ceaef872ae993708950f951989134084b851a`.  
+**Status:** every strict step succeeded, including full imported Turturean finite-product chain and **32 named declarations** across the five scoped Lean modules plus the arithmetic/limit companion. All newly checked declarations had exactly standard axioms `Classical.choice`, `Quot.sound`, `propext`; no `sorryAx` survived.
+
+New named theorem receipts:
+- `Nightfall.Wright.ProductFiber.pincr_eq_fiber_pair_average` — actual product resampling equals conditional independent-fiber pair expectation.
+- `Nightfall.Wright.ActualIncrement.actual_pincr_le_rho_radius` — the exact `pincr` is bounded by `rho=4-2 sqrt(3)` times product-average maximal fiber distance under explicit finite fiber endpoint hypotheses.
+- `Nightfall.Wright.TotalIncrement.radius_energy_of_pointwise_budget` — from a pointwise `sum_j D_j(x)≤2d²` premise to the correct product-law average radius budget.
+- `Nightfall.Wright.TotalIncrement.total_increment_of_radius_energy` and `total_increment_of_pointwise_sensitivity` — conditional Wright total increment bound, in manuscript's `L(f)=2 ∑_j pincr_j` normalization:
+  `2 ∑_j pincr_j ≤ 4 (4-2 sqrt(3)) d²`.
+
+**Proof-strength distinction:** The global increment theorem is **conditioned** on actual invariant bounding fiber endpoints and the crucial pointwise `2d²` sensitivity inequality. The original manuscript derives this via FHKL on binary restrictions, but that step and automatic construction of the optimal endpoints have **NOT** been kernel-certified. A conditionally valid Lean declaration is not the full unconditioned degree-d theorem.
+
+**Remaining material work** before the manuscript's main theorem can be declared fully certified:
+1. Formalize unrestricted finite-product sensitivity `∑D_i(x)≤2d²` from the actual bounded degree-d function, including zero-atom support reduction and the optimal fiber endpoint construction.
+2. Formalize the stronger competing-symbol row cost `K≤π² d²/2` (prior pinned proof has `π²d²`).
+3. Formalize the two-sided median / mixed third moment certificate bound needed for the stronger numerator `(8/5)^{3/2}` for actual f.
+4. Formalize finite-to-arbitrary-completed-measurable-product approximation with actual commuting conditional expectations, degree preservation, influence contraction and maximal-coordinate attainment; abstract limit and attainment endpoints alone are insufficient.
+5. Compile one genuine no-extra-assumptions named theorem with the precise manuscript constant and scope.
+
+**No novelty, peer-review, manuscript-complete Lean, or external publication promotion is authorized.** The frozen repository certificate registry is untouched. These sources remain isolated under `research/formalization_candidates/wright/` in draft PR #404.
