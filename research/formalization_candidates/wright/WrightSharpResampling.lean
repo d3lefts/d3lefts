@@ -27,22 +27,26 @@ theorem pointwise_two_sample (a b : ℝ)
       have h2 : 0 ≤ (-a) * (1 + 2 * b) :=
         mul_nonneg (by linarith) (by linarith)
       rw [abs_of_nonpos ha, abs_of_nonpos hb]
-      apply abs_le.mpr
-      constructor <;> nlinarith
+      have hdiff : |a - b| ≤ -a + -b - 2 * ((-a) * (-b) + a * b) := by
+        apply abs_le.mpr
+        constructor <;> nlinarith
+      nlinarith
     · have hsub : a - b ≤ 0 := by linarith
       rw [abs_of_nonpos ha, abs_of_nonneg hb, abs_of_nonpos hsub]
-      ring
+      nlinarith
   · rcases le_total b 0 with hb | hb
     · have hsub : 0 ≤ a - b := by linarith
       rw [abs_of_nonneg ha, abs_of_nonpos hb, abs_of_nonneg hsub]
-      ring
+      nlinarith
     · have h1 : 0 ≤ b * (1 - 2 * a) :=
         mul_nonneg (by linarith) (by linarith)
       have h2 : 0 ≤ a * (1 - 2 * b) :=
         mul_nonneg (by linarith) (by linarith)
       rw [abs_of_nonneg ha, abs_of_nonneg hb]
-      apply abs_le.mpr
-      constructor <;> nlinarith
+      have hdiff : |a - b| ≤ a + b - 2 * (a * b + a * b) := by
+        apply abs_le.mpr
+        constructor <;> nlinarith
+      nlinarith
 
 variable {α : Type*} [Fintype α]
 
