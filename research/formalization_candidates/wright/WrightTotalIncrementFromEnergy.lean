@@ -154,7 +154,7 @@ theorem le_fiberHi (f : (ι → α) → ℝ)
     (x : ι → α) (j : ι) (b : α) :
     f (Function.update x j b) ≤ fiberHi f x j := by
   unfold fiberHi
-  exact Finset.le_sup' _ (Finset.mem_univ b)
+  exact Finset.le_sup' (fun c : α => f (Function.update x j c)) (Finset.mem_univ b)
 
 theorem fiberLo_update (f : (ι → α) → ℝ)
     (x : ι → α) (j : ι) (b : α) :
