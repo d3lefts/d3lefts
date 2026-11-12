@@ -45,3 +45,9 @@ These are separate formal proof obligations, not implicit imports. Green CI for 
 - This proof development: [PR #364](https://github.com/d3lefts/d3lefts/pull/364).
 
 **Status:** finite all-n Hilbert fourth-moment subtheorem: kernel-checked. Full arbitrary-law quadratic exponent-two influence theorem: **NOT end-to-end kernel-checked**.
+
+## Analytic closure recorded separately (11 November 2026; DOES NOT close this Lean gate)
+
+The new [standalone source-function proof](../../2026-11-quadratic-law-free-audit/UNIVERSAL_QUADRATIC_INFLUENCE_E2E_ANALYTIC_v1.md) proves on paper the finite quadratic variance-squared inequality with the existing v7 coefficient \(15(1+\sqrt3)\), followed by finite-cylinder approximation for arbitrary independent measurable-product inputs. It contains a direct \(8B\) section-norm budget from a quadratic switch-polynomial derivative, independent of the row certificate; actual matching parity, endpoint ownership, Hilbert-valued conditional Jensen, moment expansion, and Hölder are also derived in the written proof. [Finite exact checker](../../2026-11-quadratic-law-free-audit/q2_e2e_exact_audit.py) verifies 52 sampled finite heterogeneous models and [source manifest](../../2026-11-quadratic-law-free-audit/SHA256SUMS_E2E_ANALYTIC_v1) fixes input bytes.
+
+**Status remains unchanged: universal source-function end-to-end theorem NOT kernel-compiled in one Lean declaration.** Remaining formalization must establish actual function-level switching and matching, canonical ANOVA/conditional sections, greedy ownership, Hilbert moment instantiation, and final bound without assuming the desired conclusion. The measurable-product passage is analytic only, not formalized. The existing scoped Lean receipts and stronger analytic v8 coefficient are not replaced by this checkpoint.

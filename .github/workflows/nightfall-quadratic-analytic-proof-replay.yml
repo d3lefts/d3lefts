@@ -1,0 +1,25 @@
+name: NIGHTFALL quadratic analytic proof source and exact replay (not Lean certification)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/**'
+      - '.github/workflows/nightfall-quadratic-analytic-proof-replay.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/**'
+      - '.github/workflows/nightfall-quadratic-analytic-proof-replay.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-source-and-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify source-exact SHA-256 manifest
+        working-directory: research/nightfall/2026-11-quadratic-law-free-audit
+        run: sha256sum -c SHA256SUMS_E2E_ANALYTIC_v1
+      - name: Exact rational finite regression (not mathematical theorem or Lean proof)
+        run: python3 -B research/nightfall/2026-11-quadratic-law-free-audit/q2_e2e_exact_audit.py
