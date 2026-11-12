@@ -548,7 +548,7 @@ try{
     assert.equal(await page.locator(".nf-experience-archive .hero-actions a").count(),2,"Active research offers direct theorem sources");
     assert.equal(await page.locator(".nf-experience-archive .hero-actions a").first().isVisible(),true,"Active research is visible in its own document");
     assert.equal(await page.locator(".nf-experience-underbelly").count(),0,"No duplicate theme fragments in NULL FIELD");
-    assert.equal(await page.locator(".flagship-context").count(),4,"Each flagship explains the metric's limited meaning");
+    assert.equal(await page.locator(".flagship-context").count(),5,"Visible principal influence summary plus four scoped supporting research explanations");
     await page.locator(".nf-theme-toggle").click();
     await page.waitForURL("**/new-moon.html");
     assert.equal(await page.locator("html").getAttribute("data-nf-experience"),"moon","Toggle opens a separate New Moon document");

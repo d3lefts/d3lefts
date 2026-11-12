@@ -1,7 +1,7 @@
 # AI Safety: Theorem-and-Evidence Series — public peer-review dossier
 
 **Research lead:** Devin J. Wright · **Freeze:** 2026-10-28 · **Status:** Peer-review candidate; external review requested.  
-**Public landing:** https://d3lefts.github.io/d3lefts/ai-safety.html
+**Public landing:** https://d3lefts.github.io/d3lefts/agent-safety-under-abstraction.html
 
 ## Scope and separation
 

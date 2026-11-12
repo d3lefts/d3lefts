@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" data-nf-experience="archive">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#020406">
+<meta name="description" content="Agent Safety Under Abstraction: exact observation limits on sound guards, provenance and capability composition, scoped AgentDojo evidence, and source-level independent review tasks.">
+<meta property="og:title" content="Agent Safety Under Abstraction — NIGHTFALL">
+<meta property="og:description" content="Which safety decisions can an agent make with only its available observations? Source-backed theorem boundaries and finite tests.">
+<link rel="canonical" href="https://d3lefts.github.io/d3lefts/agent-safety-under-abstraction.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>Agent Safety Under Abstraction — NIGHTFALL Research</title>
+<link rel="stylesheet" href="site.css"><link rel="stylesheet" href="ethereal-theme.css"><link rel="stylesheet" href="two-skies.css"><link rel="stylesheet" href="product-space.css">
+<script src="site.js" defer></script><script src="ethereal-theme.js" defer></script>
+<style>
+.nf-asua-lead{max-width:860px;font-size:clamp(18px,2vw,22px);line-height:1.65;color:var(--muted);padding:42px 0}
+.nf-asua-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-block:1px solid var(--line);margin-bottom:56px}
+.nf-asua-stats>div{padding:28px 25px;border-right:1px solid var(--line)}
+.nf-asua-stats>div:last-child{border-right:0}
+.nf-asua-stats strong{display:block;font:400 clamp(30px,4vw,48px) var(--serif);margin:9px 0}
+.nf-asua-stats span{font:500 11px/1.7 var(--mono);color:var(--muted)}
+.nf-asua-row{display:grid;grid-template-columns:minmax(120px,.26fr) minmax(0,1fr);gap:clamp(25px,5vw,72px);padding:36px 0;border-top:1px solid var(--line)}
+.nf-asua-row:last-child{border-bottom:1px solid var(--line)}
+.nf-asua-row>span{font:600 11px/1.65 var(--mono);color:var(--muted);letter-spacing:.055em}
+.nf-asua-row h2{font:400 clamp(31px,4vw,48px)/1.09 var(--serif);margin:0 0 17px}
+.nf-asua-row p{font-size:15px;line-height:1.85;color:var(--muted);max-width:860px;margin:0 0 15px}
+.nf-asua-row strong{color:var(--ink)}.nf-asua-eq{font:500 clamp(16px,2.1vw,21px)/1.5 var(--mono);padding:8px 0 22px;overflow-wrap:anywhere}
+.nf-asua-links{display:flex;flex-wrap:wrap;gap:12px 25px;font-size:13px;line-height:1.65}
+.nf-asua-links a{text-decoration:underline;text-underline-offset:4px;overflow-wrap:anywhere}
+.nf-asua-final{padding:65px 0 105px}.nf-asua-final h2{font:400 clamp(33px,4vw,52px)/1.12 var(--serif);margin:0 0 18px}
+.nf-asua-final p{max-width:870px;line-height:1.85;color:var(--muted)}
+@media(max-width:760px){.nf-asua-stats{grid-template-columns:1fr}.nf-asua-stats>div{border-right:0;border-bottom:1px solid var(--line)}.nf-asua-row{grid-template-columns:1fr;gap:11px}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to research</a><div class="topline"></div>
+<header class="header"><div class="wrap header-inner"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">N∕F</span><span class="brand-copy">NIGHTFALL <span>AGENT SAFETY / OBSERVATION LIMITS</span></span></a>
+<button class="menu-toggle" type="button" id="menu-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">MENU +</button>
+<nav class="nav" id="site-nav" aria-label="Primary navigation"><a href="index.html">NULL FIELD</a><a href="mathematical-results.html">Mathematics</a><a href="erdos-paper.html">Erdős #36</a><a href="quantum-observability.html">Quantum</a><a class="nav-call" href="review.html#theorem-audit">Referee desk ↗</a></nav></div></header>
+<main id="main">
+<section class="atlas-hero wrap">
+<div class="atlas-eyebrow">SIGNATURE RESEARCH / AGENT SAFETY UNDER ABSTRACTION / SEPT–OCT 2026</div>
+<h1>What the guard cannot see<br><em>it cannot reliably decide.</em></h1>
+<div class="atlas-hero-bottom"><p>Safety enforcement is constrained by the information available to the decision-maker. This research separates mathematical observability, computational feasibility, authenticated provenance and actual actuation authority rather than treating them as interchangeable.</p><div class="atlas-hero-metrics"><span><strong>43 pages</strong>ASUA manuscript</span><span><strong>27,740</strong>Finite checks</span><span><strong>OPEN</strong>External referee</span></div></div>
+</section>
+<section class="wrap" aria-label="Evidence summary">
+<p class="nf-asua-lead">The program studies safety predicates over executions, observers that see only abstractions of those executions, and sound authorization decisions made with incomplete evidence. The principal mathematical tools are classical; the agent-specific contribution proposed is the <strong>scoped composition of information limits, provenance, memory and authorization</strong>, supported by a frozen reviewer package.</p>
+<div class="nf-asua-stats"><div><span>SCOPED AGENTDOJO COLLISIONS</span><strong>23 / 25</strong><span>Injection tasks whose side-effecting tool name overlaps legitimate use</span></div><div><span>SCOPED NAME-ONLY GUARD</span><strong>45 / 60</strong><span>Legitimate tasks necessarily denied under the stated universal-soundness rule</span></div><div><span>PUBLIC FINITE CHECKS</span><strong>27,740</strong><span>Independent finite source tests, not a live-agent defense evaluation</span></div></div>
+</section>
+<section class="wrap" aria-label="Research theorem and evidence">
+<article class="nf-asua-row" id="descent"><span>01 / INFORMATION</span><div><h2>Observation fibers determine what is decidable</h2>
+<div class="nf-asua-eq">F = d ∘ R &nbsp; ⇔ &nbsp; F constant on fibers of R</div>
+<p>Let F be the required safety predicate and R the observable execution record. Exact decision from R is possible precisely when F agrees on indistinguishable executions. This factorization criterion is established mathematics, not a newly discovered theorem. A restricted protocol family additionally needs the induced decoder to be implementable within that family; the unrestricted converse was corrected after a counterexample.</p>
+<div class="nf-asua-links"><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/ai-safety-peer-review-2026-10-28/THEOREM_SERIES.md">Theorem series T01–T02 ↗</a><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/ai-safety-peer-review-2026-10-28/EVIDENCE_AND_LIMITATIONS.md">Correction ledger ↗</a></div></div></article>
+<article class="nf-asua-row" id="guard"><span>02 / ENFORCEMENT</span><div><h2>Maximal sound guards must deny ambiguous cases</h2>
+<div class="nf-asua-eq">g(v)=1 &nbsp; ⇔ &nbsp; every x in R⁻¹(v) is safe</div>
+<p>Under universal one-shot soundness over the declared execution universe, no guard using only v can admit a fiber containing an unsafe execution. Randomizing the decision does not evade zero-unsound-admission. The practical cost is collateral denial when benign and harmful executions collapse to the same abstraction.</p>
+<p>On a fixed 60-task AgentDojo analysis with 25 injection cases, 23/25 injected side-effecting tool calls share their tool name with a legitimate action; the specified <em>name-only</em> sound guard has a 45/60 legitimate-task denial floor. These are historical ground-truth counts for a particular view, not measured production false-positive rates or an evaluated end-to-end protection claim.</p>
+<div class="nf-asua-links"><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/agent-safety-under-abstraction/README.md">ASUA scope and data ↗</a><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/ai-safety-peer-review-2026-10-28/EVIDENCE_AND_LIMITATIONS.md">Benchmark evidence E03 ↗</a><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/evaluations/agentdojo_asua_20261029/PREREGISTRATION.md">Follow-on evaluation preregistration ↗</a></div></div></article>
+<article class="nf-asua-row" id="repair"><span>03 / REPAIR</span><div><h2>Additional evidence has a price</h2>
+<p>Given a finite catalogue of candidate trusted observations, selecting the cheapest set that separates every unsafe/safe indistinguishable pair is weighted set cover. Provenance summaries need policy-specific congruence classes; unordered taint sets are sufficient only under suitable algebraic restrictions. Finite-window monitors, controllable actions and decentralized vetoes require different notions of sufficiency.</p>
+<p>Weighted set cover, classical automata and supervisory control are imported foundations. The proposed contribution is the agent authorization model and the scope-controlled interface between them, not an originality claim for those ingredients.</p>
+<div class="nf-asua-links"><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/ai-safety-peer-review-2026-10-28/THEOREM_SERIES.md">T05–T13 mechanisms ↗</a><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/ai-safety-peer-review-2026-10-28/REVIEWER_GUIDE.md">Independent proof attacks ↗</a></div></div></article>
+<article class="nf-asua-row" id="sourcebound"><span>04 / IMPLEMENTATION</span><div><h2>SourceBound: provenance is not world truth</h2>
+<p>SourceBound admits restricted source assertions with version, field-binding, rendered-evidence and temporal checks. The bug-fixed historical evaluation reports 27/27 unit tests and 14,000 synthetic pages yielding 6,000 fixture-labeled retained triples with zero extra fixture emissions. Previously seen adversarial paraphrases are regression cases, not held-out evaluation.</p>
+<p>A source can consistently assert something false. Source provenance alone cannot establish external truth, and a blind, domain-held-out natural-web performance study remains outstanding. The earlier counterfactual resource-frontier claim was refuted and explicitly excluded.</p>
+<div class="nf-asua-links"><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/ai-safety-peer-review-2026-10-28/SOURCEBOUND_EVALUATION.md">Methods and prospective blind study ↗</a><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/ai-safety-peer-review-2026-10-28/EVIDENCE_AND_LIMITATIONS.md">Corrections and exclusions ↗</a></div></div></article>
+<article class="nf-asua-row" id="sources"><span>05 / REPRODUCTION</span><div><h2>Frozen 116-file independent-review package</h2>
+<p>The public October 28 research release contains the primary September manuscripts, revised theorem series, LaTeX, source code, logs, finite checkers, and a reviewer guide. Its verified archive SHA-256 is <code>c2cd8db71f7116a90d6ba0d0ddfaf6a08b6d710328c0c7d463fa1d1af5f74618</code>. The public GitHub reviewer index is a map to that archive and is not itself all 116 source files.</p>
+<div class="nf-asua-links"><a href="https://github.com/d3lefts/d3lefts/releases/tag/ai-safety-review-2026-10-28">Frozen research release ↗</a><a href="https://github.com/d3lefts/d3lefts/releases/download/ai-safety-review-2026-10-28/NIGHTFALL_AI_Safety_Peer_Review_Package_2026-10-28.zip">Download source/replay archive ↗</a><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/ai-safety-peer-review-2026-10-28/REVIEWER_GUIDE.md">Reviewer tasks ↗</a></div></div></article>
+</section>
+<section class="wrap nf-asua-final" id="status"><div class="section-id">CLAIM / EVIDENCE / LIMITATION</div><h2>A usable constraint.<br><em>Not an automatic guarantee.</em></h2>
+<p><strong>Status:</strong> substantial author-side mathematical manuscript, testable finite evidence, reproducible frozen release and externally unrefereed novelty. AgentDojo ground-truth collisions are not full live-model evaluations; CaMeL reference-reader sensitivity does not establish realized attacks; synthetic SourceBound precision is not natural-web performance. No claim is made that the classical fiber theorem, total-variation testing, Myhill–Nerode, or weighted set cover were invented by NIGHTFALL.</p>
+<p><strong>Attribution:</strong> research directed by Devin J. Wright, with AI-assisted proofs, construction, audit and synthesis. External authors and mathematical antecedents retain credit. Invite adversarial review of every premise and counterexample—particularly the decoder scope, non-recombined counterfactual closures, provenance trust assumptions and end-to-end empirical transfer.</p>
+<div class="nf-asua-links"><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/ai-safety-peer-review-2026-10-28/README.md">Full research map ↗</a><a href="review.html#theorem-audit">Referee desk ↗</a><a href="index.html#flagships">Other signature research ↗</a></div></section>
+</main>
+<footer class="footer"><div class="wrap footer-bottom"><span>© 2026 Devin J. Wright · NIGHTFALL PHASESHIFT</span><span>Agent safety peer-review candidate / 11 NOV 2026</span></div></footer>
+</body></html>
