@@ -28,6 +28,7 @@ jobs:
             --decl Nightfall.ConditionalSection.finite_selector_tail_energy \
             --decl Nightfall.ConditionalSection.finite_beta_fixed_observation \
             --decl Nightfall.ConditionalSection.selector_factor_four_sharp \
+            --contract papers/conditional-section-duality/lean/contract.json \
             --json-out lean-receipts/conditional-section-selector.json
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/conditional-section-selector.json
       - name: Independent finite conditional section falsifier
@@ -40,7 +41,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p lean-receipts
-          sha256sum papers/conditional-section-duality/lean/FixedObservationSelector.lean > lean-receipts/SHA256SUMS
+          sha256sum papers/conditional-section-duality/lean/{FixedObservationSelector.lean,contract.json} > lean-receipts/SHA256SUMS
           git rev-parse HEAD > lean-receipts/COMMIT
           printf '%s\n' 'Certifies finite selector arithmetic and beta budget under explicit inputs. Does NOT certify L1 source section budget, ANOVA identification, selector existence, measurability, full observability theorem, or novelty.' > lean-receipts/SCOPE
       - uses: actions/upload-artifact@v4
