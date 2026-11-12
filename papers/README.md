@@ -31,3 +31,7 @@ Each entry below is a **reading guide to one canonical source**, not a second co
 5. This shelf does not modify the frozen historical 40-record research catalogue or 11 historical proof passports.
 
 **Submission readiness:** None of these paper entries is represented as externally peer reviewed or worldwide priority-certified. The papers with incomplete primary source are expressly blocked from referee-ready submission until source custody is repaired.
+
+## Dissertation synthesis — 12 November 2026
+
+[Identify, Observe, Certify: Information Limits of Oversight for Structured Systems — research checkpoint v0.4](../research/nightfall/2026-11-information-cost-dissertation/README.md) organizes the scalar influence foundation, rank-optimal adaptive observation, explicit test/identify separation, exact-certification boundaries, and formal-proof custody. Chapter 2's [dated Turturean comparison](../research/nightfall/2026-11-information-cost-dissertation/CHAPTER2_TURTUREAN_SCOPE_AUDIT_20261112.md) retains unresolved classical quadratic priority and end-to-end Lean gates. This is an editorial research map, not a new publication or promotion of manuscript-level claims.
