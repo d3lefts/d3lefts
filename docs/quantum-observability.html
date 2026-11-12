@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#020406">
-<meta name="description" content="Quantum observability through exact operational ANOVA, supermodular Bayesian gain, sharp SLD tensorization, physical ternary extremizers and v8 classical transfer, with source-linked evidence and limits.">
+<meta name="description" content="Quantum observability through exact operational ANOVA, supermodular Bayesian gain, sharp SLD tensorization, physical ternary extremizers and a conditional classical quadratic transfer, with source-linked evidence and limits.">
 <meta property="og:title" content="Quantum Observability — NIGHTFALL">
 <meta property="og:description" content="The precise theorem statements, proofs, finite checks, limitations and independent review gates for quantum information observability.">
 <link rel="canonical" href="https://d3lefts.github.io/d3lefts/quantum-observability.html">
@@ -90,14 +90,14 @@
 <article class="nf-q-section" id="binary"><div class="nf-q-index">05 / STRUCTURAL EXCEPTION</div><div class="nf-q-body">
 <h2>Binary contrast removes the extra SLD penalty</h2><div class="nf-q-status">SEPARATELY SCOPED HERMITIAN TENSOR LEMMA · NOT AN UNRESTRICTED QUANTUM QUERY THEOREM</div>
 <p>For Hermitian simple tensors, a sign-pairing/Jensen argument establishes a coefficient-one lower comparison for inverse SLD quadratic forms. Binary local classical inputs have one-dimensional centered contrast spaces, so every pure Hoeffding component falls into that class. The additional 2<sup>1−d</sup> SLD comparison loss is therefore unnecessary in this binary setting, although the fundamental product of local visibility gaps a<sup>d</sup> remains necessary in general.</p>
-<p><strong>Metric caveat:</strong> this lemma uses local <em>SLD</em> Gram visibility. The v8 bridge below uses a <em>geometric</em> visibility Gram and cannot silently replace it.</p>
+<p><strong>Metric caveat:</strong> this lemma uses local <em>SLD</em> Gram visibility. The quadratic bridge below uses a <em>geometric</em> visibility Gram and cannot silently replace it.</p>
 <div class="nf-q-links"><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-sld-transfer-sharpness/PROOF_PASSPORT.md">Binary lemma and counterbalance ↗</a></div>
 </div></article>
 <article class="nf-q-section" id="bridge"><div class="nf-q-index">06 / CLASSICAL–QUANTUM LINK</div><div class="nf-q-body">
-<h2>Quadratic influence transfers to terminal quantum gain</h2><div class="nf-q-status">CONDITIONAL ON ANALYTIC v8 + QUANTUM BRIDGE · NOT END-TO-END LEAN</div>
-<div class="nf-q-eq">max<sub>i</sub> Δ<sub>i</sub> ≥ δ₂ max<sub>i</sub>I<sub>i</sub>(f) ≥ δ₂ V² / (K₈ B²)</div>
-<p>Here Δ<sub>i</sub> = G*([n]) − G*([n]∖{i}); K₈ = (10+2√2)²(1+√3)² ≈ 1228.36. This needs an independent classical product prior, <em>locally</em> prepared quantum states, classical Hoeffding degree at most two, bounded scalar f, and a positive finite-dimensional local geometric Gram visibility floor δ₂. The result concerns <em>leave-one-register-out terminal gain</em>—not the marginal gain of the first queried register and not an adaptive quantum protocol.</p>
-<div class="nf-q-links"><a href="https://github.com/d3lefts/d3lefts/blob/main/papers/finite-product-influence/QUANTUM_ANOVA_BRIDGE_20261111.md">Theorem and proof dependencies ↗</a><a href="https://github.com/d3lefts/d3lefts/blob/main/papers/finite-product-influence/V8_PROOF_PASSPORT.md">v8 mathematical proof passport ↗</a><a href="november-2026.html#quadratic">Classical v8 results ↗</a></div>
+<h2>Quadratic influence transfers to terminal quantum gain</h2><div class="nf-q-status">CONDITIONAL ON UNREFEREED CLASSICAL C₂ + QUANTUM BRIDGE · NOT END-TO-END LEAN</div>
+<div class="nf-q-eq">max<sub>i</sub> Δ<sub>i</sub> ≥ δ₂ max<sub>i</sub>I<sub>i</sub>(f) ≥ δ₂ V² / (C₂ B²)</div>
+<p>Here Δ<sub>i</sub> = G*([n]) − G*([n]∖{i}); C₂ = (10+2√2)²(1+√3)² ≈ 1228.36. This needs an independent classical product prior, <em>locally</em> prepared quantum states, classical Hoeffding degree at most two, bounded scalar f, and a positive finite-dimensional local geometric Gram visibility floor δ₂. The result concerns <em>leave-one-register-out terminal gain</em>—not the marginal gain of the first queried register and not an adaptive quantum protocol.</p>
+<div class="nf-q-links"><a href="https://github.com/d3lefts/d3lefts/blob/main/papers/finite-product-influence/QUANTUM_ANOVA_BRIDGE_20261111.md">Theorem and proof dependencies ↗</a><a href="https://github.com/d3lefts/d3lefts/blob/main/papers/finite-product-influence/V8_PROOF_PASSPORT.md">v8 mathematical proof passport ↗</a><a href="november-2026.html#quadratic">Current classical quadratic claim ↗</a></div>
 </div></article>
 </section>
 <section class="wrap nf-q-finish" id="status"><div class="section-id">PUBLICATION GATES / SOURCE-LEVEL REVIEW</div><h2>The theorem is a statement.<br><em>The certificate has a scope.</em></h2>
