@@ -125,6 +125,7 @@ jobs:
             --workspace /tmp/aa --timeout 900 --strict \
             --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
             --decl $N.centered_distinct_coordinate_cross_zero \
+            --decl $N.centered_source_owned_second_moment \
             --json-out lean-receipts/actual-owned-neighbor-cross-zero.json || {
               cat lean-receipts/actual-owned-neighbor-cross-zero.json
               exit 1
