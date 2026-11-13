@@ -13,6 +13,7 @@ on:
       - 'research/nightfall/formalization/product_space/ActualESPairMatchingBridge.lean'
       - 'research/nightfall/formalization/product_space/Q2SharpSections.lean'
       - 'research/nightfall/formalization/product_space/Q2SourceRepresentation.lean'
+      - 'research/nightfall/formalization/product_space/Q2AllDimensions.lean'
       - 'research/nightfall/formalization/observability/CenteredRectangles.lean'
       - 'research/nightfall/formalization/observability/QuadraticUnifiedFinite.lean'
       - '.github/workflows/nightfall-product-influence.yml'
@@ -291,6 +292,24 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-source-representation.json
           sha256sum "$P/Q2SourceRepresentation.lean" > lean-receipts/q2-source-representation-SHA256SUMS.txt
+      - name: Strict kernel-check Swansea Q2 all finite dimension section bound
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space
+          cp "$P/Q2SourceRepresentation.lean" /tmp/aa/Q2SourceRepresentation.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/Q2SourceRepresentation.olean Q2SourceRepresentation.lean)
+          N=Nightfall.Observability.Q2AllDimensions
+          python3 scripts/lean_bridge.py "$P/Q2AllDimensions.lean" \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.actual_degree_two_source_section_budget_eight_all \
+            --json-out lean-receipts/q2-all-dimensions.json || {
+              python3 -c "import json;r=json.load(open('lean-receipts/q2-all-dimensions.json'));print(r.get('status'));print((r.get('stdout') or '')[-50000:]);print((r.get('stderr') or '')[-10000:])" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-all-dimensions.json
+          sha256sum "$P/Q2AllDimensions.lean" > lean-receipts/q2-all-dimensions-SHA256SUMS.txt
       - name: Capture source hashes and upstream pin
         if: always()
         run: |
