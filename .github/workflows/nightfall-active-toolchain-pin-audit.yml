@@ -1,0 +1,33 @@
+name: NIGHTFALL active Lean pin audit (no dependency builds)
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/**'
+      - '.github/actions/setup-nightfall-lean/**'
+      - 'lean-toolchain'
+      - 'scripts/check_active_lean_compiler.py'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/**'
+      - '.github/actions/setup-nightfall-lean/**'
+      - 'lean-toolchain'
+      - 'scripts/check_active_lean_compiler.py'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  immutable-active-pins:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reject obsolete active CI dependencies and pin drift
+        run: python3 scripts/check_active_lean_compiler.py --self-test
