@@ -125,7 +125,7 @@ theorem centered_source_owned_second_moment
       ring
     · intro k hk hne
       exact centered_distinct_coordinate_cross_zero
-        p hp1 j k hne (g j) (g k) (hcenter j hj)
+        p hp1 j k hne.symm (g j) (g k) (hcenter j hj)
     · intro hnot
       exact (hnot hj).elim
   calc
