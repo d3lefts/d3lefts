@@ -11,6 +11,7 @@ on:
       - 'research/nightfall/formalization/product_space/QuadraticHoeffdingBridge.lean'
       - 'research/nightfall/formalization/product_space/QuadraticActualRowOscillation.lean'
       - 'research/nightfall/formalization/product_space/ActualESPairMatchingBridge.lean'
+      - 'research/nightfall/formalization/product_space/Q2SharpSections.lean'
       - 'research/nightfall/formalization/observability/CenteredRectangles.lean'
       - 'research/nightfall/formalization/observability/QuadraticUnifiedFinite.lean'
       - '.github/workflows/nightfall-product-influence.yml'
@@ -248,6 +249,27 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/heterogeneous-es-endpoint.json
           sha256sum "research/formalization_candidates/wright/HeterogeneousESDegreeEndpoint.lean" > lean-receipts/heterogeneous-es-source-SHA256SUMS.txt
+      - name: Strict kernel-check Swansea Q2 sharp source-level section budget
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space
+          O=research/nightfall/formalization/observability
+          cp "$O/QuadraticUnifiedFinite.lean" /tmp/aa/QuadraticUnifiedFinite.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/QuadraticUnifiedFinite.olean QuadraticUnifiedFinite.lean)
+          N=Nightfall.Observability.Q2SharpSections
+          python3 scripts/lean_bridge.py "$P/Q2SharpSections.lean" \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.weighted_variance_le_quarter_range \
+            --decl $N.weighted_std_le_half_range \
+            --decl $N.actual_quadratic_centered_sections_le_eight \
+            --json-out lean-receipts/q2-sharp-sections.json || {
+              python3 -c "import json;r=json.load(open('lean-receipts/q2-sharp-sections.json'));print(r.get('status'));print((r.get('stdout') or '')[-50000:]);print((r.get('stderr') or '')[-10000:])" || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-sharp-sections.json
+          sha256sum "$P/Q2SharpSections.lean" > lean-receipts/q2-sharp-sections-SHA256SUMS.txt
       - name: Capture source hashes and upstream pin
         if: always()
         run: |
