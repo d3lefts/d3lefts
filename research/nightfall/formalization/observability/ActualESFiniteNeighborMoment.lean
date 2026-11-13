@@ -23,6 +23,7 @@ open Finset
 open Nightfall.Observability.ActualESPairMatching
 open Nightfall.Observability.ActualESPairHilbertMoment
 open Nightfall.Observability.QuadraticHilbertMany
+open Nightfall.Observability.QuadraticHilbertMoments
 open Nightfall.Observability.QuadraticActualMomentEndpoint
 
 variable {ι α : Type}
