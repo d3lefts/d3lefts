@@ -12,6 +12,7 @@ on:
       - 'research/nightfall/formalization/observability/ActualESOwnedEnergy.lean'
       - 'research/nightfall/formalization/observability/ActualESCanonicalPairGraph.lean'
       - 'research/nightfall/formalization/observability/ActualESFiniteNeighborMoment.lean'
+      - 'research/nightfall/formalization/observability/ActualESOwnedNeighborEnumeration.lean'
       - 'research/nightfall/formalization/product_space/ActualESConditionalSection.lean'
       - 'research/nightfall/formalization/product_space/ActualESConditionalProjection.lean'
       - 'research/nightfall/formalization/product_space/ActualESOwnedConditional.lean'
@@ -329,6 +330,29 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/actual-source-pair-hilbert-moment.json
+      - name: Strict injective finite enumeration of actual greedy-owned source neighbors
+        shell: bash
+        run: |
+          set -euo pipefail
+          O=research/nightfall/formalization/observability
+          cp "$O/ActualESCanonicalPairGraph.lean" /tmp/aa/ActualESCanonicalPairGraph.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESCanonicalPairGraph.olean ActualESCanonicalPairGraph.lean)
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualESOwnedNeighborEnumeration
+          python3 scripts/lean_bridge.py \
+            "$O/ActualESOwnedNeighborEnumeration.lean" \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.ownedNeighbor_ne_owner \
+            --decl $N.ownedNeighbor_injective \
+            --decl $N.ownedNeighborIndex_ne_owner \
+            --decl $N.ownedNeighborIndex_injective_on_range \
+            --json-out lean-receipts/actual-owned-neighbor-index.json || {
+              cat lean-receipts/actual-owned-neighbor-index.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/actual-owned-neighbor-index.json
       - name: Strict finite actual owned-neighbor fourth-moment endpoint
         shell: bash
         run: |
@@ -592,6 +616,7 @@ jobs:
           sha256sum research/nightfall/formalization/observability/ActualESOwnedEnergy.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/observability/ActualESCanonicalPairGraph.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/observability/ActualESFiniteNeighborMoment.lean >> lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/observability/ActualESOwnedNeighborEnumeration.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/product_space/ActualESConditionalSection.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/product_space/ActualESConditionalProjection.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/product_space/ActualESOwnedConditional.lean >> lean-receipts/SHA256SUMS.txt
