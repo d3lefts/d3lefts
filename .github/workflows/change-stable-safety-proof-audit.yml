@@ -31,3 +31,6 @@ jobs:
       - name: Bounded evidence sparsification exact audit
         working-directory: research/nightfall/projects/change-stable-safety
         run: python3 audit_sparsification.py
+      - name: Deterministic trusted leaf-check lower bound
+        working-directory: research/nightfall/projects/change-stable-safety
+        run: python3 audit_trusted_queries.py
