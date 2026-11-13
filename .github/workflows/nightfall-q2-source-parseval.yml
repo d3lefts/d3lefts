@@ -5,6 +5,7 @@ on:
       - 'research/nightfall/formalization/product_space/ActualESVarianceEnergy.lean'
       - 'research/nightfall/formalization/product_space/ActualESTwoCoordinateMarginal.lean'
       - 'research/nightfall/formalization/product_space/ActualESInfluenceEnergy.lean'
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/check_exact_source_energy_20261113.py'
       - '.github/workflows/nightfall-q2-source-parseval.yml'
   workflow_dispatch:
 permissions:
@@ -15,6 +16,10 @@ jobs:
     timeout-minutes: 80
     steps:
       - uses: actions/checkout@v4
+      - name: Independent exact source variance and owner-energy regression
+        run: |
+          set -euo pipefail
+          python3 -I research/nightfall/2026-11-quadratic-law-free-audit/check_exact_source_energy_20261113.py
       - name: Install historical source-compatible Lean pin
         shell: bash
         run: |
@@ -123,6 +128,7 @@ jobs:
         run: |
           mkdir -p lean-receipts
           sha256sum research/nightfall/formalization/product_space/{ActualESVarianceEnergy,ActualESOrthogonality,ActualESTwoCoordinateMarginal,ActualESInfluenceEnergy}.lean > lean-receipts/SHA256SUMS
+          sha256sum research/nightfall/2026-11-quadratic-law-free-audit/check_exact_source_energy_20261113.py >> lean-receipts/SHA256SUMS
           git rev-parse HEAD > lean-receipts/repo-commit
           printf 'Source-compatible historical Lean 4.33.0; active repository default is Lean 4.35.0\n' > lean-receipts/scope.txt
       - name: Upload strict kernel receipts
