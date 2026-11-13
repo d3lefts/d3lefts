@@ -158,4 +158,48 @@ theorem actual_quadratic_rectangle_eq_es_pair
     _ = sourceRectangle (esComp p ({i,j} : Finset ι) f)
        x i j a0 a1 b0 b1 := hsum
 
+
+/-- The rectangle of any function depending only on i,j is independent of
+all background coordinates. -/
+theorem pair_dependent_rectangle_base_independent
+    (g : (ι → α) → ℝ) (i j : ι) (hij : i ≠ j)
+    (hdep : DependsOn ({i,j} : Finset ι) g)
+    (x y : ι → α) (a0 a1 b0 b1 : α) :
+    sourceRectangle g x i j a0 a1 b0 b1 =
+      sourceRectangle g y i j a0 a1 b0 b1 := by
+  have hcorner (a b : α) :
+      g (Function.update (Function.update x i a) j b) =
+        g (Function.update (Function.update y i a) j b) := by
+    apply hdep
+    intro k hk
+    have hk' : k = i ∨ k = j := by simpa using hk
+    rcases hk' with rfl | rfl
+    · simp [hij.symm]
+    · simp
+  unfold sourceRectangle
+  rw [hcorner a0 b0, hcorner a0 b1,
+      hcorner a1 b0, hcorner a1 b1]
+
+/-- Consequently a mixed rectangle of the genuine degree-two source
+does not depend on any unmatched coordinates. This supplies the
+pointwise invariance premise for telescoping the parity matching laws. -/
+theorem actual_quadratic_rectangle_base_independent
+    (p : ι → α → ℝ)
+    (hp1 : ∀ k, (∑ a : α, p k a) = 1)
+    (f : (ι → α) → ℝ)
+    (hdegree : ESDegreeLE p f 2)
+    (i j : ι) (hij : i ≠ j)
+    (x y : ι → α) (a0 a1 b0 b1 : α) :
+    sourceRectangle f x i j a0 a1 b0 b1 =
+      sourceRectangle f y i j a0 a1 b0 b1 := by
+  rw [actual_quadratic_rectangle_eq_es_pair p hp1 f hdegree i j hij
+        x a0 a1 b0 b1,
+      actual_quadratic_rectangle_eq_es_pair p hp1 f hdegree i j hij
+        y a0 a1 b0 b1]
+  exact pair_dependent_rectangle_base_independent
+    (esComp p ({i,j} : Finset ι) f) i j hij
+    (esComp_dependsOn p ({i,j} : Finset ι) f)
+    x y a0 a1 b0 b1
+
+
 end Nightfall.Observability.ActualESQuadraticRectangles
