@@ -62,6 +62,31 @@ def check_case(sizes, trial):
     def section(i,y,a):
         return f(updated(y,i,a))-sum((p[i][b]*f(updated(y,i,b))
                                      for b in range(sizes[i])), Q(0))
+    # Independently check exact source section L2 energy = resampling influence.
+    for i in range(n):
+        source_energy=sum((weights[x]*sum(
+            (p[i][a]*section(i,x,a)**2 for a in range(sizes[i])),Q(0))
+            for x in space),Q(0))
+        influence=sum((weights[x]*sum(
+            (p[i][b]*(f(x)-f(updated(x,i,b)))**2/2
+             for b in range(sizes[i])),Q(0))
+            for x in space),Q(0))
+        assert source_energy==influence,(sizes,trial,i,"source energy",source_energy,influence)
+        C['source_section_energy_equals_influence']+=1
+    # Disjoint canonical Efron-Stein components are orthogonal in the
+    # source product measure, including zero-weight coordinates.
+    supports=[(i,) for i in range(n)]+list(combinations(range(n),2))
+    def component(T,x):
+        if len(T)==1:return u[T[0],x[T[0]]]
+        i,j=T
+        return h[i,j,x[i],x[j]]
+    for t in range(len(supports)):
+        for r in range(t):
+            TT,RR=supports[t],supports[r]
+            inner=sum((weights[x]*component(TT,x)*component(RR,x)
+                       for x in space),Q(0))
+            assert inner==0,(sizes,trial,TT,RR,"orthogonality",inner)
+            C['canonical_source_orthogonality']+=1
     sample_x=space if n<4 else [space[0],space[-1],R.choice(space),R.choice(space)]
     for i in range(n):
         other=[j for j in range(n) if j!=i]
