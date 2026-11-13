@@ -1,0 +1,30 @@
+name: NIGHTFALL posterior actionable influence exact falsifier
+on:
+  push:
+    branches:
+      - nightfall-actionable-influence-operational-q2-20261113
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-convoluted-costs-knowing/**'
+      - '.github/workflows/nightfall-posterior-actionable-exact.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-falsifier:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run exact cross-influence and binary-oracle audit
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/2026-11-convoluted-costs-knowing/check_posterior_actionable_20261113.py
+      - name: Provenance and conditional-status receipt
+        run: |
+          git rev-parse HEAD
+          sha256sum research/nightfall/2026-11-convoluted-costs-knowing/{check_posterior_actionable_20261113.py,POSTERIOR_ACTIONABLE_INFLUENCE_A1.md}
+          echo 'POSTERIOR_IDENTITIES=EXACT_ANALYTIC_PLUS_FINITE_REPLAY'
+          echo 'Q2_OBSERVER=CONDITIONAL_ANALYTIC'
+          echo 'Q2_UNRESTRICTED_NOVELTY=OPEN'
+          echo 'EVALUATION_ONLY_ADDRESS=CLASSICAL_BINARY_TESTING_SCOPE'
