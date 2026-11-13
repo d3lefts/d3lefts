@@ -16,6 +16,7 @@ on:
       - 'research/nightfall/formalization/product_space/ActualESPairOrientation.lean'
       - 'research/nightfall/formalization/observability/ActualESOwnedMomentEnergy.lean'
       - 'research/nightfall/formalization/observability/ActualESSourceHilbertEndpoint.lean'
+      - 'research/nightfall/formalization/observability/ActualESFirstMoment.lean'
       - 'research/nightfall/formalization/product_space/ActualESConditionalSection.lean'
       - 'research/nightfall/formalization/product_space/ActualESConditionalProjection.lean'
       - 'research/nightfall/formalization/product_space/ActualESOwnedConditional.lean'
@@ -707,6 +708,24 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/actual-source-all-fourth-endpoints.json
+      - name: Strict actual product Hilbert first moment from actual second moment
+        shell: bash
+        run: |
+          set -euo pipefail
+          O=research/nightfall/formalization/observability
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualESFirstMoment
+          python3 scripts/lean_bridge.py \
+            "$O/ActualESFirstMoment.lean" \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.actual_product_first_moment_le_sqrt_second \
+            --json-out lean-receipts/actual-source-first-second-moment.json || {
+              cat lean-receipts/actual-source-first-second-moment.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/actual-source-first-second-moment.json
       - name: Record exact source hashes and compiler pin
         if: always()
         shell: bash
@@ -726,6 +745,7 @@ jobs:
           sha256sum research/nightfall/formalization/product_space/ActualESPairOrientation.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/observability/ActualESOwnedMomentEnergy.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/observability/ActualESSourceHilbertEndpoint.lean >> lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/observability/ActualESFirstMoment.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/product_space/ActualESConditionalSection.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/product_space/ActualESConditionalProjection.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/product_space/ActualESOwnedConditional.lean >> lean-receipts/SHA256SUMS.txt
