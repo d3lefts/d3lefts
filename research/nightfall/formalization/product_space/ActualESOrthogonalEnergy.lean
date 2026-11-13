@@ -193,4 +193,54 @@ theorem sourceInner_parseval_of_orthogonal
           · intro hj
             exact (hj (Finset.mem_univ j)).elim
 
+/-- Exact Parseval expansion of the genuine finite degree-two source.
+No abstract family of orthogonal kernels or variance decomposition is
+passed to this theorem: the family is extracted from f by the
+canonical product-law Efron–Stein decomposition. -/
+theorem quadratic_actual_source_parseval
+    (p : ι → α → ℝ)
+    (hp1 : ∀ i, (∑ a : α, p i a) = 1)
+    (f : (ι → α) → ℝ)
+    (hdegree : ESDegreeLE p f 2) :
+    sourceInner p f f =
+      ∑ S : Finset ι,
+        if S.card ≤ 2 then
+          sourceInner p (esComp p S f) (esComp p S f)
+        else 0 := by
+  classical
+  let G : Finset ι → (ι → α) → ℝ := fun S x =>
+    if S.card ≤ 2 then esComp p S f x else 0
+  have hdec (x : ι → α) :
+      f x = ∑ S : Finset ι, G S x := by
+    simpa only [G] using
+      quadratic_hoeffding_decomposition p hp1 f hdegree x
+  have hortho : ∀ S T : Finset ι, S ≠ T →
+      sourceInner p (G S) (G T) = 0 := by
+    intro S T hne
+    by_cases hs : S.card ≤ 2
+    · by_cases ht : T.card ≤ 2
+      · simpa only [G, if_pos hs, if_pos ht] using
+          (actual_esComp_orthogonal_distinct p hp1 f S T hne)
+      · simp [sourceInner, G, hs, ht]
+    · simp [sourceInner, G, hs]
+  calc
+    sourceInner p f f =
+      sourceInner p (fun x => ∑ S : Finset ι, G S x)
+        (fun x => ∑ S : Finset ι, G S x) := by
+          unfold sourceInner
+          apply Finset.sum_congr rfl
+          intro x _
+          rw [← hdec x]
+    _ = ∑ S : Finset ι, sourceInner p (G S) (G S) :=
+          sourceInner_parseval_of_orthogonal p G hortho
+    _ = ∑ S : Finset ι,
+        if S.card ≤ 2 then
+          sourceInner p (esComp p S f) (esComp p S f)
+        else 0 := by
+          apply Finset.sum_congr rfl
+          intro S _
+          by_cases hs : S.card ≤ 2
+          · simp [G, hs]
+          · simp [sourceInner, G, hs]
+
 end Nightfall.Observability.ActualESOrthogonalEnergy
