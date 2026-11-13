@@ -7,6 +7,7 @@ on:
     paths:
       - 'research/nightfall/formalization/observability/ActualESDistinctNeighborSections.lean'
       - '.github/workflows/nightfall-q2-distinct-neighbors.yml'
+      - 'research/nightfall/formalization/observability/ActualESMatchingFromGreedy.lean'
   workflow_dispatch:
 permissions:
   contents: read
@@ -52,6 +53,38 @@ jobs:
             esac
             (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/$module.olean" "$module.lean")
           done
+      - name: Build embedded arbitrary-matching and weighted-greedy dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space
+          O=research/nightfall/formalization/observability
+          for m in ActualESQuadraticRectangles; do
+            cp "$P/$m.lean" "/tmp/aa/$m.lean"
+            (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean")
+          done
+          for m in ParityBlockCancellation QuadraticHybridTelescoping ActualESPackedParity ActualESGeneralMatching WeightedGreedyMatching; do
+            cp "$O/$m.lean" "/tmp/aa/$m.lean"
+            (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean")
+          done
+      - name: Strict source matching-to-greedy endpoint lift
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualESMatchingFromGreedy
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualESMatchingFromGreedy.lean \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.selected_matchingCoord_injective \
+            --decl $N.actual_matching_witness_from_graph \
+            --json-out lean-receipts/actual-matching-greedy.json || {
+              cat lean-receipts/actual-matching-greedy.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/actual-matching-greedy.json
       - name: Strict distinct actual owned-neighbor projection
         shell: bash
         run: |
@@ -77,7 +110,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/observability/ActualESDistinctNeighborSections.lean > lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/observability/{ActualESDistinctNeighborSections,ActualESMatchingFromGreedy}.lean > lean-receipts/SHA256SUMS.txt
           echo leanprover/lean4:v4.33.0 > lean-receipts/lean-toolchain.txt
           echo 2a6ceaef872ae993708950f951989134084b851a > lean-receipts/upstream.txt
           git rev-parse HEAD > lean-receipts/repo-commit.txt
