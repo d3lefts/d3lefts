@@ -158,6 +158,9 @@ theorem actual_source_observed_hilbert_first_moment
     ∑ w : Samples α n, mass (fun k => p (j k)) n w *
        Real.sqrt (Nightfall.Observability.QuadraticHilbertMoments.vecNormSq
          (sumVector Y n w)) := by
-  exact actual_source_observedSample_law p hp1 j n hInj _
+  exact actual_source_observedSample_law p hp1 j n hInj
+    (fun w : Samples α n =>
+      Real.sqrt (Nightfall.Observability.QuadraticHilbertMoments.vecNormSq
+        (sumVector Y n w)))
 
 end Nightfall.Observability.ActualESFiniteSampleLaw
