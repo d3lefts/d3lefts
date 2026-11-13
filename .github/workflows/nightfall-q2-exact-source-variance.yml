@@ -9,6 +9,7 @@ on:
       - 'research/nightfall/formalization/product_space/ActualESInfluenceEnergy.lean'
       - 'research/nightfall/formalization/observability/ActualESOwnedConditional.lean'
       - 'research/nightfall/formalization/observability/ActualESOwnedSecondMoment.lean'
+      - 'research/nightfall/formalization/observability/ActualESOwnedInfluenceBound.lean'
       - '.github/workflows/nightfall-q2-exact-source-variance.yml'
   workflow_dispatch:
 permissions:
@@ -161,11 +162,35 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/actual-source-influence-energy.json
+      - name: Strict derive owned pair second moment <= original influence
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space
+          O=research/nightfall/formalization/observability
+          cp "$O/ActualESOwnedSecondMoment.lean" /tmp/aa/ActualESOwnedSecondMoment.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESOwnedSecondMoment.olean ActualESOwnedSecondMoment.lean)
+          cp "$P/ActualESInfluenceEnergy.lean" /tmp/aa/ActualESInfluenceEnergy.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESInfluenceEnergy.olean ActualESInfluenceEnergy.lean)
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualESOwnedInfluenceBound
+          python3 scripts/lean_bridge.py \
+            "$O/ActualESOwnedInfluenceBound.lean" \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.source_owned_pair_energy_le_influence \
+            --decl $N.actual_owned_second_moment_le_influence \
+            --json-out lean-receipts/actual-owned-influence-cap.json || {
+              cat lean-receipts/actual-owned-influence-cap.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/actual-owned-influence-cap.json
       - name: Source hashes and pin
         if: always()
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/product_space/{ActualESGlobalVariance,ActualESInfluenceEnergy,ActualESOrthogonality,ActualESPairMatchingBridge}.lean research/nightfall/formalization/observability/{ActualESOwnedConditional,ActualESOwnedSecondMoment}.lean > lean-receipts/SHA256SUMS
+          sha256sum research/nightfall/formalization/product_space/{ActualESGlobalVariance,ActualESInfluenceEnergy,ActualESOrthogonality,ActualESPairMatchingBridge}.lean research/nightfall/formalization/observability/{ActualESOwnedConditional,ActualESOwnedSecondMoment,ActualESOwnedInfluenceBound}.lean > lean-receipts/SHA256SUMS
           echo leanprover/lean4:v4.33.0 > lean-receipts/lean-toolchain.txt
           git rev-parse HEAD > lean-receipts/commit.txt
       - name: Upload strict variance receipts
