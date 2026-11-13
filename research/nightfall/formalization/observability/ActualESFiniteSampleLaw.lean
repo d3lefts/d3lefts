@@ -1,4 +1,5 @@
-import ActualESFiniteNeighborMoment
+import HilbertManyIncrementMoment
+import ProductInfluence
 
 /-!
 # Genuine finite-source law of a distinct observed sample prefix
