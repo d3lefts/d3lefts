@@ -2,7 +2,13 @@ name: NIGHTFALL spectral observability new Lean core
 on:
   pull_request:
     paths:
-      - 'research/nightfall/formalization/observability/*.lean'
+      - 'research/nightfall/formalization/observability/CategoricalSignedProxy.lean'
+      - 'research/nightfall/formalization/observability/TopInteractionCover.lean'
+      - 'research/nightfall/formalization/observability/QuadraticEndpointMarkov.lean'
+      - 'research/nightfall/formalization/observability/SortedInfluenceTail.lean'
+      - 'scripts/lean_bridge.py'
+      - 'research/nightfall/formalization/product_space/check_receipts.py'
+      - '.github/actions/setup-nightfall-lean/**'
       - '.github/workflows/nightfall-spectral-lean-core.yml'
   workflow_dispatch:
 permissions:
@@ -13,15 +19,7 @@ jobs:
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
-      - name: Install pinned Lean 4.35.0 / Mathlib v4.35.0
-        shell: bash
-        run: |
-          set -euo pipefail
-          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
-          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.35.0
-          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-          git clone --depth 1 --branch v4.35.0 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4
-          (cd /tmp/mathlib4 && "$HOME/.elan/bin/lake" exe cache get)
+      - uses: ./.github/actions/setup-nightfall-lean
       - name: Lean certifies signed-proxy identities for all finite categorical alphabets
         shell: bash
         run: |
@@ -107,15 +105,7 @@ jobs:
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
-      - name: Install pinned Lean 4.35.0 / Mathlib v4.35.0
-        shell: bash
-        run: |
-          set -euo pipefail
-          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
-          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.35.0
-          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-          git clone --depth 1 --branch v4.35.0 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4
-          (cd /tmp/mathlib4 && "$HOME/.elan/bin/lake" exe cache get)
+      - uses: ./.github/actions/setup-nightfall-lean
       - name: Compile all five universal adaptive budget declarations and audit axioms
         shell: bash
         run: |

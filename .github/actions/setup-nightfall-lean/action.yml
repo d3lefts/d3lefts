@@ -21,12 +21,20 @@ runs:
         test "$(git -C /tmp/mathlib4 rev-parse HEAD)" = 56a005855ea17e0b0958f73ec801ae140b0a1679
         test "$(cat /tmp/mathlib4/lean-toolchain)" = leanprover/lean4:v4.35.0
     - uses: actions/cache@v4
+      id: mathlib-cache
       with:
         path: /tmp/mathlib4/.lake
-        key: nightfall-lean-v4350-mathlib-56a005855ea17e0b0958f73ec801ae140b0a1679
-    - name: Restore verified Mathlib artifacts
+        key: ${{ runner.os }}-nightfall-lean-v4350-mathlib-56a005855ea17e0b0958f73ec801ae140b0a1679-v2
+    - name: Fetch pinned Mathlib artifacts on cache miss
+      if: steps.mathlib-cache.outputs.cache-hit != 'true'
       shell: bash
       run: |
         set -euo pipefail
         (cd /tmp/mathlib4 && "$HOME/.elan/bin/lake" exe cache get)
+    - name: Verify Mathlib dependency pin and restored artifacts
+      shell: bash
+      run: |
+        set -euo pipefail
         test "$(git -C /tmp/mathlib4 rev-parse HEAD)" = 56a005855ea17e0b0958f73ec801ae140b0a1679
+        test "$(cat /tmp/mathlib4/lean-toolchain)" = leanprover/lean4:v4.35.0
+        test -f /tmp/mathlib4/.lake/build/lib/lean/Mathlib.olean

@@ -2,7 +2,11 @@ name: NIGHTFALL product-space — Lean 4.35.0 certification
 on:
   pull_request:
     paths:
-      - 'research/nightfall/formalization/product_space/**'
+      - 'research/nightfall/formalization/product_space/TwoDrawOrientation.lean'
+      - 'research/nightfall/formalization/product_space/HeterogeneousOrientation.lean'
+      - 'research/nightfall/formalization/product_space/check_receipts.py'
+      - 'scripts/lean_bridge.py'
+      - 'lean-toolchain'
       - '.github/workflows/nightfall-product-space-lean.yml'
   workflow_dispatch:
 

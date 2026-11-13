@@ -2,9 +2,49 @@ name: NIGHTFALL quadratic Section 2.7 same-pin Lean gate (scoped, not E2E)
 on:
   pull_request:
     paths:
+      - 'research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean'
+      - 'research/nightfall/formalization/product_space/ProductRowBound.lean'
+      - 'research/nightfall/formalization/product_space/ProductInfluence.lean'
+      - 'research/nightfall/formalization/product_space/EfronSteinDegree.lean'
+      - 'research/nightfall/formalization/product_space/QuadraticHoeffdingBridge.lean'
+      - 'research/nightfall/formalization/observability/ParityBlockCancellation.lean'
+      - 'research/nightfall/formalization/observability/QuadraticMatchedParity.lean'
+      - 'research/nightfall/formalization/observability/QuadraticSwitchingIdentity.lean'
+      - 'research/nightfall/formalization/observability/QuadraticSingleReplacement.lean'
+      - 'research/nightfall/formalization/observability/QuadraticOscillationBound.lean'
+      - 'research/nightfall/formalization/observability/QuadraticRealizedRangeBudget.lean'
+      - 'research/nightfall/formalization/observability/ArbitraryLawFourthMoment.lean'
+      - 'research/nightfall/formalization/observability/HilbertTwoIncrementMoment.lean'
+      - 'research/nightfall/formalization/observability/HilbertManyIncrementMoment.lean'
+      - 'research/nightfall/formalization/observability/WeightedGreedyMatching.lean'
+      - 'research/nightfall/formalization/observability/WeightedGreedyCover.lean'
+      - 'research/nightfall/formalization/observability/QuadraticUnifiedFinite.lean'
+      - 'scripts/lean_bridge.py'
+      - 'research/nightfall/formalization/product_space/check_receipts.py'
       - '.github/workflows/nightfall-quadratic-section27-lean.yml'
-      - 'research/nightfall/formalization/observability/**'
-      - 'research/nightfall/formalization/product_space/**'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/product_space/ProductSpaceTwoSidedBridge.lean'
+      - 'research/nightfall/formalization/product_space/ProductRowBound.lean'
+      - 'research/nightfall/formalization/product_space/ProductInfluence.lean'
+      - 'research/nightfall/formalization/product_space/EfronSteinDegree.lean'
+      - 'research/nightfall/formalization/product_space/QuadraticHoeffdingBridge.lean'
+      - 'research/nightfall/formalization/observability/ParityBlockCancellation.lean'
+      - 'research/nightfall/formalization/observability/QuadraticMatchedParity.lean'
+      - 'research/nightfall/formalization/observability/QuadraticSwitchingIdentity.lean'
+      - 'research/nightfall/formalization/observability/QuadraticSingleReplacement.lean'
+      - 'research/nightfall/formalization/observability/QuadraticOscillationBound.lean'
+      - 'research/nightfall/formalization/observability/QuadraticRealizedRangeBudget.lean'
+      - 'research/nightfall/formalization/observability/ArbitraryLawFourthMoment.lean'
+      - 'research/nightfall/formalization/observability/HilbertTwoIncrementMoment.lean'
+      - 'research/nightfall/formalization/observability/HilbertManyIncrementMoment.lean'
+      - 'research/nightfall/formalization/observability/WeightedGreedyMatching.lean'
+      - 'research/nightfall/formalization/observability/WeightedGreedyCover.lean'
+      - 'research/nightfall/formalization/observability/QuadraticUnifiedFinite.lean'
+      - 'scripts/lean_bridge.py'
+      - 'research/nightfall/formalization/product_space/check_receipts.py'
+      - '.github/workflows/nightfall-quadratic-section27-lean.yml'
   workflow_dispatch:
 permissions:
   contents: read
@@ -14,18 +54,42 @@ jobs:
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
-      - name: Install exact Turturean Lean 4.33 project and caches
+      - name: Install exact Turturean Lean 4.33 project
         shell: bash
         run: |
           set -euo pipefail
           curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
           sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.33.0
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-          export PATH="$HOME/.elan/bin:$PATH"
+          "$HOME/.elan/bin/lean" --version
           git clone https://github.com/physical-superintelligence/aaronson-ambainis.git /tmp/aa
           git -C /tmp/aa checkout 2a6ceaef872ae993708950f951989134084b851a
+          test "$(git -C /tmp/aa rev-parse HEAD)" = 2a6ceaef872ae993708950f951989134084b851a
+      - name: Restore compiled dependencies for immutable Turturean pin
+        id: aa-deps-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: /tmp/aa/.lake
+          key: ${{ runner.os }}-nightfall-aa-lean4330-2a6ceaef872ae993708950f951989134084b851a-deps-v1
+      - name: Build upstream dependencies only on cache miss
+        if: steps.aa-deps-cache.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
           (cd /tmp/aa && lake exe cache get)
           (cd /tmp/aa && lake build AaronsonAmbainis.DetTheorem AaronsonAmbainis.TwoSided.Antipodal AaronsonAmbainis.Bridge.Positivity AaronsonAmbainis.Row.Main AaronsonAmbainis.Pack.Main AaronsonAmbainis.Dual.Main AaronsonAmbainis.Level.Integral AaronsonAmbainis.TwoSided.CauchySchwarz)
+      - name: Save compiled dependency cache before proof checks
+        if: steps.aa-deps-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: /tmp/aa/.lake
+          key: ${{ runner.os }}-nightfall-aa-lean4330-2a6ceaef872ae993708950f951989134084b851a-deps-v1
+      - name: Verify cached Lean project and pin
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git -C /tmp/aa rev-parse HEAD)" = 2a6ceaef872ae993708950f951989134084b851a
+          test -f /tmp/aa/.lake/build/lib/lean/AaronsonAmbainis/DetTheorem.olean
       - name: Compile genuine source-function and supporting components in one project
         shell: bash
         run: |
