@@ -1,5 +1,5 @@
 name: Setup NIGHTFALL pinned Lean/Mathlib
-description: Verify Lean 4.35.0 and immutable Mathlib v4.35.0 commit, then reuse its cache
+description: Verify Lean 4.36.0-rc2 and immutable Mathlib v4.36.0-rc2 commit, then reuse its cache
 runs:
   using: composite
   steps:
@@ -8,23 +8,23 @@ runs:
       run: |
         set -euo pipefail
         curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/nightfall-elan-init.sh
-        sh /tmp/nightfall-elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.35.0
+        sh /tmp/nightfall-elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.36.0-rc2
         echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
         "$HOME/.elan/bin/lean" --version | tee /tmp/nightfall-lean-version.txt
-        grep -F 'version 4.35.0' /tmp/nightfall-lean-version.txt
-        grep -F 'eb6cafb7290e8bd5f2937522d8d804f58f02bafc' /tmp/nightfall-lean-version.txt
+        grep -F 'version 4.36.0-rc2' /tmp/nightfall-lean-version.txt
+        grep -F 'b35cb10cf2ced51a2fd1880cfdbf75c71ab7a35a' /tmp/nightfall-lean-version.txt
     - name: Clone exact pinned Mathlib
       shell: bash
       run: |
         set -euo pipefail
-        git clone --depth 1 --branch v4.35.0 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4
-        test "$(git -C /tmp/mathlib4 rev-parse HEAD)" = 56a005855ea17e0b0958f73ec801ae140b0a1679
-        test "$(cat /tmp/mathlib4/lean-toolchain)" = leanprover/lean4:v4.35.0
+        git clone --depth 1 --branch v4.36.0-rc2 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4
+        test "$(git -C /tmp/mathlib4 rev-parse HEAD)" = 9d581dfff2e41de989072ea63abf3daf69311520
+        test "$(cat /tmp/mathlib4/lean-toolchain)" = leanprover/lean4:v4.36.0-rc2
     - uses: actions/cache@v4
       id: mathlib-cache
       with:
         path: /tmp/mathlib4/.lake
-        key: ${{ runner.os }}-nightfall-lean-v4350-mathlib-56a005855ea17e0b0958f73ec801ae140b0a1679-v2
+        key: ${{ runner.os }}-nightfall-lean-v4360rc2-mathlib-9d581dfff2e41de989072ea63abf3daf69311520-v2
     - name: Fetch pinned Mathlib artifacts on cache miss
       if: steps.mathlib-cache.outputs.cache-hit != 'true'
       shell: bash
@@ -35,6 +35,6 @@ runs:
       shell: bash
       run: |
         set -euo pipefail
-        test "$(git -C /tmp/mathlib4 rev-parse HEAD)" = 56a005855ea17e0b0958f73ec801ae140b0a1679
-        test "$(cat /tmp/mathlib4/lean-toolchain)" = leanprover/lean4:v4.35.0
+        test "$(git -C /tmp/mathlib4 rev-parse HEAD)" = 9d581dfff2e41de989072ea63abf3daf69311520
+        test "$(cat /tmp/mathlib4/lean-toolchain)" = leanprover/lean4:v4.36.0-rc2
         test -f /tmp/mathlib4/.lake/build/lib/lean/Mathlib.olean
