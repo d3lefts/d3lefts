@@ -1,6 +1,8 @@
 # Constellation handoff — The Convoluted Costs of Knowing
 **Version 0.1, 13 November 2026.** **Human research lead:** Devin J. Wright. **Canonical writing surface:** [MANUSCRIPT.md](MANUSCRIPT.md). **Truth-status contract:** [CLAIM_LEDGER.md](CLAIM_LEDGER.md).
 
+**Meta-thesis supersession (13 Nov):** Read [META_THESIS_20261113.md](META_THESIS_20261113.md) **before** rewriting any chapter. The strongest archived 41-page `The_Convoluted_Costs_of_Knowing_Main_Manuscript.pdf` already has sharp Chebyshev/addressed/full-spectrum precision separation claims and offline/live-access risk formulas. Preserve their exact hypothesis/priority status. The deeper dissertation must analyze how the observer, the choice and order of questions, and the verifying research process **co-evolve**. The `*` in the title now denotes typed cost-path convolution under justified composition, not a cosmetic pun. The central second-order amortized discovery theorem remains open; do not promote it by prose alone.
+
 This is a **written coordination surface**, not a live cross-session messenger or an assertion that other AI instances have received, accepted or completed these assignments. Each instance must independently open this branch/PR or be given the URL, and commit or comment with its result.
 
 ## Immutable starting point
