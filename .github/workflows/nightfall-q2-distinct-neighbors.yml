@@ -9,6 +9,7 @@ on:
       - '.github/workflows/nightfall-q2-distinct-neighbors.yml'
       - 'research/nightfall/formalization/observability/ActualESMatchingFromGreedy.lean'
       - 'research/nightfall/formalization/observability/ActualESDistinctNeighborEnergy.lean'
+      - 'research/nightfall/formalization/observability/ActualESOrthogonality.lean'
   workflow_dispatch:
 permissions:
   contents: read
@@ -132,12 +133,29 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/actual-owned-neighbor-cross-zero.json
+      - name: Strict actual source Efron-Stein cross-support orthogonality
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualESOrthogonality
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualESOrthogonality.lean \
+            --workspace /tmp/aa --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.actual_es_components_cross_zero_of_missing \
+            --json-out lean-receipts/actual-es-orthogonality.json || {
+              cat lean-receipts/actual-es-orthogonality.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/actual-es-orthogonality.json
       - name: Record exact source hashes and compiler pin
         if: always()
         shell: bash
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/observability/{ActualESDistinctNeighborSections,ActualESMatchingFromGreedy,ActualESDistinctNeighborEnergy}.lean > lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/observability/{ActualESDistinctNeighborSections,ActualESMatchingFromGreedy,ActualESDistinctNeighborEnergy,ActualESOrthogonality}.lean > lean-receipts/SHA256SUMS.txt
           echo leanprover/lean4:v4.33.0 > lean-receipts/lean-toolchain.txt
           echo 2a6ceaef872ae993708950f951989134084b851a > lean-receipts/upstream.txt
           git rev-parse HEAD > lean-receipts/repo-commit.txt
