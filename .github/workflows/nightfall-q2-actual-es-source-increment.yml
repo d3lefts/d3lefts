@@ -20,6 +20,7 @@ on:
       - 'research/nightfall/formalization/product_space/ActualESPairEnergyFubini.lean'
       - 'research/nightfall/formalization/product_space/ActualESOwnedInfluenceBound.lean'
       - 'research/nightfall/formalization/product_space/ActualESPairSectionEnergy.lean'
+      - 'research/nightfall/formalization/product_space/ActualESOwnedSectionEnergy.lean'
       - 'research/nightfall/formalization/product_space/ActualESConditionalJensen.lean'
       - 'research/nightfall/formalization/observability/QuadraticHybridTelescoping.lean'
       - 'research/nightfall/formalization/product_space/ActualESQuadraticRectangles.lean'
@@ -474,6 +475,33 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/actual-es-pair-section-energy.json
+      - name: Strict real owned conditional Hilbert section energy equals assigned pair sum
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space
+          O=research/nightfall/formalization/observability
+          cp "$P/ActualESPairEnergyFubini.lean" /tmp/aa/ActualESPairEnergyFubini.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESPairEnergyFubini.olean ActualESPairEnergyFubini.lean)
+          cp "$O/ActualESCanonicalPairGraph.lean" /tmp/aa/ActualESCanonicalPairGraph.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESCanonicalPairGraph.olean ActualESCanonicalPairGraph.lean)
+          cp "$P/ActualESOrthogonalEnergy.lean" /tmp/aa/ActualESOrthogonalEnergy.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESOrthogonalEnergy.olean ActualESOrthogonalEnergy.lean)
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualESOwnedSectionEnergy
+          python3 scripts/lean_bridge.py \
+            "$P/ActualESOwnedSectionEnergy.lean" \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.source_conditional_resampling_square \
+            --decl $N.owned_canonical_components_parseval \
+            --decl $N.actual_owned_section_energy_eq_source_pair_energy \
+            --json-out lean-receipts/actual-owned-source-section-energy.json || {
+              cat lean-receipts/actual-owned-source-section-energy.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/actual-owned-source-section-energy.json
       - name: Strict generated owned interaction energy cap by actual pinfl
         shell: bash
         run: |
@@ -549,6 +577,7 @@ jobs:
           sha256sum research/nightfall/formalization/product_space/ActualESPairEnergyFubini.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/product_space/ActualESOwnedInfluenceBound.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/product_space/ActualESPairSectionEnergy.lean >> lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/product_space/ActualESOwnedSectionEnergy.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/product_space/ActualESConditionalJensen.lean >> lean-receipts/SHA256SUMS.txt
           echo leanprover/lean4:v4.33.0 > lean-receipts/lean-toolchain.txt
           echo 2a6ceaef872ae993708950f951989134084b851a > lean-receipts/upstream.txt
