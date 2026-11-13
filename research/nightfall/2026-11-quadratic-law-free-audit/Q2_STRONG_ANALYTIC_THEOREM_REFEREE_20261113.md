@@ -1,5 +1,5 @@
 # Q2 — strongest finite original-source analytic theorem and independent falsification ledger
-**Version:** 2026-11-13 / A1 (analytical review pivot). **Status:** complete author-side analytic proof reconstructed; internal adversarial/falsification audit performed. Not an external non-author referee review, formal end-to-end Lean proof, historical priority proof, or publication approval.
+**Version:** 2026-11-13 / A2 (analytical review pivot). **Status:** complete author-side analytic proof reconstructed; internal adversarial/falsification audit performed. Not an external non-author referee review, formal end-to-end Lean proof, historical priority proof, or publication approval.
 
 ## Objective and scope
 
@@ -81,9 +81,19 @@ An independently implemented pure standard-library Fraction test on 36 determini
 - 70-digit comparisons for additive/8B/Jensen/final coefficient;
 - 20 exact exponent-sharp disjoint-pair identities.
 
+## A concrete finite TCS consequence (conditional on the analytic theorem)
+
+For any bounded degree-two g:Π_i A_i→[0,1], there is a deterministic adaptive whole-coordinate query policy which, for any δ,ε∈(0,1), predicts g to absolute error ε except with probability ≤δ after at most
+
+    min(|I|, ceil(K₂/(δ ε²)))
+
+queried source coordinates. This is not a new quantum-computing paradigm; it is the explicit whole-symbol consequence of the *strongest* analytic Q2 constant, and was already anticipated in v8. A one-query quantum acceptance-probability function is such a degree-two g under the usual whole-symbol oracle indicator-polynomial model.
+
+Proof: For the bounded residual f=2g−1 at each observation node, let v=Var(f|node), P=Σ remaining I_i(f|node). Exact quadratic Hoeffding energies give P≤2v. The candidate Q2 theorem gives max_i I_i≥v²/K₂. Greedily query such i. Expected total remaining influence decreases by exactly its true resampling influence, so mean potential p_t satisfies p_t−p_{t+1}≥E(v²)/K₂≥p_t²/(4K₂). Reciprocal telescoping yields p_t≤4K₂/t; the squared conditional-mean prediction error for g is E(v)/4≤p_t/4≤K₂/t. Markov and the all-coordinates exact-recovery fallback prove the claim. Computational running time and policy size are not bounded. This implication is a genuine significance pathway, not a novelty certificate.
+
 Local artifacts generated in the conversation working container:
-- seven-page PDF **Q2_Law_Uniform_Quadratic_Influence_Analytic_Draft_20261113.pdf**; SHA-256 `d5866a975878c77b92d3bdf5467d08c464fd3207681fcc7fa4127db581d5ec05`.
-- its LaTeX source SHA-256 `ac379cf8feeda2b94777be682b3c121e0a0d22f00d38a12d2b196f42fc11d5f7`.
+- seven-page PDF **Q2_Law_Uniform_Quadratic_Influence_Analytic_Draft_20261113.pdf** (revised A2 with observation consequence); SHA-256 `aa4e11910c859d49df316009ca585a403a302c72da231578ec7caf93dea65260`. The A1 predecessor PDF hash was `d5866a975878c77b92d3bdf5467d08c464fd3207681fcc7fa4127db581d5ec05`.
+- its revised LaTeX source SHA-256 `e942de03bec7822b50a36c16a8f72112f9ba0a49c55e6452d695b06ab2985ef4`; the A1 predecessor was `ac379cf8feeda2b94777be682b3c121e0a0d22f00d38a12d2b196f42fc11d5f7`.
 - checker `q2_analytic_audit_20261113.py`, SHA-256 `558a6fa99521a8162214d87459d44ce1892917a38d10c6b108d4b16fa21cd131`.
 Hashes describe generated session files; they **do not** imply those bytes are attached to this GitHub commit or persisted to GitHub. Reproduce using the conversation PDF/checker attachment or source code separately.
 
