@@ -62,7 +62,13 @@ w=[F(1),F(2),F(1),F(3)]
 early=sum((pi[t]*sum(w[i] for i in s) for t,s in enumerate(sets)),F(0))
 late=sum(w,F(0))
 assert late>=early>0
-assert F(3)==F(3)/sum((F(1,3) for _ in range(3)),F(0))
+disjoint=[{0},{1},{2}]
+prior=[F(1,3)]*3
+single_early=sum((prior[t]*len(s) for t,s in enumerate(disjoint)),F(0))
+single_late=len(set().union(*disjoint))
+assert single_late/single_early==3
+shared=[{0,1} for _ in range(3)]
+assert sum((prior[t]*len(s) for t,s in enumerate(shared)),F(0))==len(set().union(*shared))
 print('PASS',tests,'independent absorbing chain solves,',atoms,
       'adaptive posterior-factorization atoms, weighted-overlap order')
 print('This is a finite exact checker, not a theorem proof or novelty review.')
