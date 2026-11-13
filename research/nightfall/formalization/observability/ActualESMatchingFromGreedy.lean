@@ -34,16 +34,26 @@ theorem selected_matchingCoord_injective
   have hef : e = f := by
     by_contra hneq
     obtain ⟨h00, h01, h10, h11⟩ := hm e he f hf hneq
-    cases s <;> cases t <;> simp only [ite_true, ite_false] at hab
-    all_goals first
-      | exact h00 hab
-      | exact h01 hab
-      | exact h10 hab
-      | exact h11 hab
+    cases s with
+    | false =>
+      cases t with
+      | false => exact h00 hab
+      | true => exact h01 hab
+    | true =>
+      cases t with
+      | false => exact h10 hab
+      | true => exact h11 hab
   subst f
   have hst : s = t := by
-    cases s <;> cases t <;>
-      simp [hloop e he] at hab ⊢
+    cases s with
+    | false =>
+      cases t with
+      | false => rfl
+      | true => exact False.elim ((hloop e he) hab)
+    | true =>
+      cases t with
+      | false => exact False.elim ((hloop e he) hab.symm)
+      | true => rfl
   apply Prod.ext
   · exact Subtype.ext rfl
   · exact hst
