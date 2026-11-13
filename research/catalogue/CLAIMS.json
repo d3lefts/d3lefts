@@ -16,7 +16,7 @@
       "primary": "research/nightfall/formalization/product_space/ProductInfluence.lean",
       "evidence": [
         "research/nightfall/formalization/product_space/FINITE_PRODUCT_INFLUENCE_PROOF_PASSPORT_20261110.md",
-        ".github/workflows/nightfall-product-influence.yml"
+        "docs/lean-certificate-provenance.json"
       ],
       "dependencies": [],
       "formal": {
@@ -29,7 +29,8 @@
       "claim_scope": "Finite coordinate type; common finite alphabet type, heterogeneous probability tables (including zero mass); bounded indicator-product degree d. Inherited exponent (5/2,6), explicitly weaker numerical coefficient.",
       "open_gates": [
         "Non-author theorem and priority review",
-        "General measurable-product lift not covered by this declaration"
+        "General measurable-product lift not covered by this declaration",
+        "The source-matched Lean certificate is historical; the retired dependency-bound CI workflow is no longer active. Recompile and audit the exact declaration under the new Lean 4.36.0-rc2 toolchain before asserting migrated kernel certification."
       ],
       "inherited": [
         "David Turturean: Boolean-cube Aaronson–Ambainis proof and imported level/antipodal lemmas"
