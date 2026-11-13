@@ -25,7 +25,6 @@ open Finset
 open Nightfall.ProductSpace.Transfer
 open Nightfall.ProductSpace.Influence
 open Nightfall.Observability.ActualESFiniteSampleLaw
-open Nightfall.Observability.ActualESFiniteNeighborMoment
 open Nightfall.Observability.ActualESGreedyOwnership
 open Nightfall.Observability.ActualESCanonicalPairGraph
 open Nightfall.Observability.QuadraticHilbertMany
@@ -91,6 +90,53 @@ theorem actual_greedy_owned_product_law
     (fun k l hk hl hkl =>
       indexedNeighbors_injective_on_prefix i J k l hk hl hkl) F
 
+/-- Original canonical pair increment indexed by a DISTINCT source neighbor.
+Only the first J.card terms are nonzero, so the arbitrary stream tail
+cannot introduce repeated copies of the owner. -/
+noncomputable def ownedIncrement
+    (p : ι → α → ℝ) (f : (ι → α) → ℝ)
+    (base : ι → α) (i : ι) (J : Finset ι) :
+    ℕ → α → α → ℝ :=
+  fun k b a => if k < J.card then
+    Real.sqrt (p i a) *
+      Nightfall.Observability.ActualESPairMatching.actualPairKernel
+        p f base i (indexedNeighbors i J k) a b
+  else 0
+
+/-- The recursive independent-sample vector is pointwise the actual
+sum of source pair-kernel increments at DISTINCT observed coordinates.
+This is not merely an equality of second moments. -/
+theorem owned_sumVector_eq_source_prefix
+    (p : ι → α → ℝ) (f : (ι → α) → ℝ)
+    (base : ι → α) (i : ι) (J : Finset ι)
+    (x : ι → α) (a : α) :
+    ∀ m : ℕ, m ≤ J.card →
+      sumVector (ownedIncrement p f base i J) m
+        (observedSample (indexedNeighbors i J) m x) a =
+      ∑ k ∈ Finset.range m,
+        Real.sqrt (p i a) *
+          Nightfall.Observability.ActualESPairMatching.actualPairKernel
+            p f base i (indexedNeighbors i J k) a
+              (x (indexedNeighbors i J k)) := by
+  intro m hm
+  induction m with
+  | zero =>
+      simp [sumVector, observedSample]
+  | succ m ih =>
+      have hk : m < J.card := Nat.lt_of_lt_of_le (Nat.lt_succ_self m) hm
+      have hm' : m ≤ J.card := Nat.le_of_lt hk
+      change
+        (sumVector (ownedIncrement p f base i J) m
+          (observedSample (indexedNeighbors i J) m x) a +
+            ownedIncrement p f base i J m (x (indexedNeighbors i J m)) a) =
+          ∑ k ∈ Finset.range (m+1),
+            Real.sqrt (p i a) *
+              Nightfall.Observability.ActualESPairMatching.actualPairKernel
+                p f base i (indexedNeighbors i J k) a
+                  (x (indexedNeighbors i J k))
+      rw [Finset.sum_range_succ, ih hm']
+      simp [ownedIncrement, hk]
+
 /-- Original source first norm moment = recursive genuine independent
 neighbor first moment. The increment vectors are built directly from
 the actual canonical source pair kernel, not supplied arbitrary Y. -/
@@ -101,7 +147,7 @@ theorem actual_greedy_owned_first_norm_law
     (c : ι → ℝ) (i : ι) :
     let J := greedyOwnedNeighbors c i
     let j := indexedNeighbors i J
-    let Y := finitePairIncrement p f base i j J.card
+    let Y := ownedIncrement p f base i J
     (∑ x : ι → α, prodMass p x *
       Real.sqrt (Nightfall.Observability.QuadraticHilbertMoments.vecNormSq
         (sumVector Y J.card (observedSample j J.card x)))) =
@@ -116,9 +162,7 @@ theorem actual_greedy_owned_first_norm_law
     (fun k l hk hl hkl =>
       indexedNeighbors_injective_on_prefix i
         (greedyOwnedNeighbors c i) k l hk hl hkl)
-    (finitePairIncrement p f base i
-      (indexedNeighbors i (greedyOwnedNeighbors c i))
-      (greedyOwnedNeighbors c i).card)
+    (ownedIncrement p f base i (greedyOwnedNeighbors c i))
 
 /-- Choose the greedy cover directly from the degree-two source.
 The generated costs have total mass <=8B and the exact original-law
@@ -136,7 +180,7 @@ theorem exists_actual_source_greedy_first_norm_law
        (∑ i : ι, c i) ≤ 8 * B ∧
        (∀ i, let J := greedyOwnedNeighbors c i
          let j := indexedNeighbors i J
-         let Y := finitePairIncrement p f base i j J.card
+         let Y := ownedIncrement p f base i J
          (∑ x : ι → α, prodMass p x *
            Real.sqrt (Nightfall.Observability.QuadraticHilbertMoments.vecNormSq
              (sumVector Y J.card (observedSample j J.card x)))) =
