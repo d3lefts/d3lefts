@@ -330,6 +330,9 @@ jobs:
             --decl $N.sourceInner_sum_right \
             --decl $N.sourceInner_parseval_of_orthogonal \
             --decl $N.quadratic_actual_source_parseval \
+            --decl $N.actual_esComp_empty_eq_source_mean \
+            --decl $N.actual_source_empty_energy_eq_mean_sq \
+            --decl $N.actual_quadratic_source_variance_parseval \
             --json-out lean-receipts/actual-es-orthogonal-source.json || {
               cat lean-receipts/actual-es-orthogonal-source.json
               exit 1
