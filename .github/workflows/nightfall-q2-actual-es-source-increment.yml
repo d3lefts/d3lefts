@@ -1,5 +1,8 @@
 name: NIGHTFALL Q2 actual ES source-to-Hilbert-moment single-pin bridge
 on:
+  push:
+    branches:
+      - nightfall-q2-e2e-kernel-20261113
   pull_request:
     paths:
       - 'research/nightfall/formalization/observability/ActualESPairHilbertMoment.lean'
@@ -12,6 +15,7 @@ on:
       - 'research/nightfall/formalization/observability/ActualESOwnedEnergy.lean'
       - 'research/nightfall/formalization/observability/ActualESCanonicalPairGraph.lean'
       - 'research/nightfall/formalization/observability/ActualESFiniteNeighborMoment.lean'
+      - 'research/nightfall/formalization/observability/ActualESFiniteSampleLaw.lean'
       - 'research/nightfall/formalization/product_space/ActualESConditionalSection.lean'
       - 'research/nightfall/formalization/product_space/ActualESConditionalProjection.lean'
       - 'research/nightfall/formalization/product_space/ActualESOwnedConditional.lean'
