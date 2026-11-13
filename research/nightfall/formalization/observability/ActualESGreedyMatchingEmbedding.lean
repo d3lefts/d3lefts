@@ -175,4 +175,124 @@ theorem exists_greedy_source_endpoint_cover
     nlinarith
   exact ⟨S, hsub, hmatch, hdom, htotal⟩
 
+
+/-- Existence of a pair of finite-alphabet symbols at which the
+actual Efron-Stein interaction kernel reaches its global absolute
+maximum. The witness is obtained from the source values themselves;
+no amplitude oracle is assumed. -/
+theorem exists_actual_source_pair_maximum
+    [Nonempty α]
+    (p : ι → α → ℝ) (f : (ι → α) → ℝ)
+    (base : ι → α) (u v : E → ι) (e : E) :
+    ∃ ab : α × α, ∀ cd : α × α,
+      |actualPairKernel p f base (u e) (v e) cd.1 cd.2| ≤
+      |actualPairKernel p f base (u e) (v e) ab.1 ab.2| := by
+  classical
+  let weight : α × α → ℝ := fun ab =>
+    |actualPairKernel p f base (u e) (v e) ab.1 ab.2|
+  obtain ⟨ab, _, hmax⟩ :=
+    Finset.exists_max_image (Finset.univ : Finset (α × α))
+      weight (by simp : (Finset.univ : Finset (α × α)).Nonempty)
+  exact ⟨ab, fun cd => hmax cd (Finset.mem_univ cd)⟩
+
+/-- The finite attained maximizer for a genuine source pair-kernel. -/
+noncomputable def actualSourceMaxPair
+    [Nonempty α]
+    (p : ι → α → ℝ) (f : (ι → α) → ℝ)
+    (base : ι → α) (u v : E → ι) (e : E) : α × α :=
+  Classical.choose (exists_actual_source_pair_maximum p f base u v e)
+
+/-- A source-derived (not supplied) finite sup-amplitude on every edge. -/
+noncomputable def actualSourceEdgeWeight
+    [Nonempty α]
+    (p : ι → α → ℝ) (f : (ι → α) → ℝ)
+    (base : ι → α) (u v : E → ι) (e : E) : ℝ :=
+  |actualPairKernel p f base (u e) (v e)
+    (actualSourceMaxPair p f base u v e).1
+    (actualSourceMaxPair p f base u v e).2|
+
+theorem actual_source_edge_weight_nonneg
+    [Nonempty α]
+    (p : ι → α → ℝ) (f : (ι → α) → ℝ)
+    (base : ι → α) (u v : E → ι) (e : E) :
+    0 ≤ actualSourceEdgeWeight p f base u v e :=
+  abs_nonneg _
+
+theorem actual_source_edge_weight_dominates_kernel
+    [Nonempty α]
+    (p : ι → α → ℝ) (f : (ι → α) → ℝ)
+    (base : ι → α) (u v : E → ι) (e : E)
+    (a b : α) :
+    |actualPairKernel p f base (u e) (v e) a b| ≤
+      actualSourceEdgeWeight p f base u v e := by
+  unfold actualSourceEdgeWeight actualSourceMaxPair
+  exact (Classical.choose_spec
+    (exists_actual_source_pair_maximum p f base u v e)) (a,b)
+
+/-- All finite matching weights are now canonically constructed from
+the ORIGINAL source function, and the 4B source-matching budget is
+derived from source degree two and pointwise boundedness. No
+matching, corner selection, or amplitude comparison is assumed. -/
+theorem actual_source_matching_weight_budget
+    [Nonempty α]
+    (p : ι → α → ℝ)
+    (hp : ∀ i a, 0 ≤ p i a)
+    (hp1 : ∀ i, (∑ a : α, p i a) = 1)
+    (f : (ι → α) → ℝ)
+    (hdegree : ESDegreeLE p f 2)
+    (base : ι → α)
+    (u v : E → ι) (T : Finset E)
+    (hne : ∀ e ∈ T, u e ≠ v e)
+    (B : ℝ) (hf : ∀ x, |f x| ≤ B)
+    (S : Finset E) (hsub : S ⊆ T)
+    (hmatch : IsMatching u v S) :
+    (S.sum (actualSourceEdgeWeight p f base u v)) ≤ 4 * B := by
+  apply selected_matching_weight_sum_le_four
+    p hp hp1 f hdegree base u v
+    (actualSourceEdgeWeight p f base u v) S
+    (fun e he => hne e (hsub he)) hmatch
+    (fun e he =>
+      ⟨(actualSourceMaxPair p f base u v e).1,
+       (actualSourceMaxPair p f base u v e).2, le_refl _⟩)
+    B hf
+
+/-- NO SUPPLIED MATCHING OR AMPLITUDE CERTIFICATE.
+
+For the true finite degree-two Efron-Stein source, every finite
+simple-edge family admits an explicitly source-derived nonnegative
+endpoint cover with total mass at most 8B. Each original pair
+interaction amplitude is covered by one of its endpoints.
+
+This fully composes the independently certified source matching 4B
+bound, finite max attainment, weighted greedy domination and exact
+double-counting. Further source neighbor ownership and conditional
+energy identity are required to conclude Q2. -/
+theorem actual_source_greedy_endpoint_cover
+    [Nonempty α]
+    (p : ι → α → ℝ)
+    (hp : ∀ i a, 0 ≤ p i a)
+    (hp1 : ∀ i, (∑ a : α, p i a) = 1)
+    (f : (ι → α) → ℝ)
+    (hdegree : ESDegreeLE p f 2)
+    (base : ι → α)
+    (u v : E → ι) (T : Finset E)
+    (hne : ∀ e ∈ T, u e ≠ v e)
+    (B : ℝ) (hf : ∀ x, |f x| ≤ B) :
+    ∃ c : ι → ℝ,
+      (∀ i, 0 ≤ c i) ∧
+      (∑ i : ι, c i) ≤ 8 * B ∧
+      (∀ e ∈ T,
+        actualSourceEdgeWeight p f base u v e ≤
+        max (c (u e)) (c (v e))) := by
+  let w : E → ℝ := actualSourceEdgeWeight p f base u v
+  have hw : ∀ e ∈ T, 0 ≤ w e := by
+    intro e _
+    exact actual_source_edge_weight_nonneg p f base u v e
+  have hmass : ∀ S : Finset E, S ⊆ T →
+      IsMatching u v S → (S.sum w) ≤ 4 * B := by
+    intro S hs hmatch
+    exact actual_source_matching_weight_budget
+      p hp hp1 f hdegree base u v T hne B hf S hs hmatch
+  exact matching_budget_to_endpoint_budget u v w T B hw hmass
+
 end Nightfall.Observability.ActualESGreedyMatchingEmbedding
