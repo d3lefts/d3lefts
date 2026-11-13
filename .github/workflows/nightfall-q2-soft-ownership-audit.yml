@@ -1,0 +1,31 @@
+name: NIGHTFALL Q2 source-preserving soft-ownership exact audit
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/Q2_SOFT_OWNERSHIP_SOURCE_NOISE_BRIDGE_20261113.md'
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/check_q2_soft_ownership_independent.py'
+      - '.github/workflows/nightfall-q2-soft-ownership-audit.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/Q2_SOFT_OWNERSHIP_SOURCE_NOISE_BRIDGE_20261113.md'
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/check_q2_soft_ownership_independent.py'
+      - '.github/workflows/nightfall-q2-soft-ownership-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-finite-source-control:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - name: Replay independent exact quadratic-radical source model
+        run: python3 research/nightfall/2026-11-quadratic-law-free-audit/check_q2_soft_ownership_independent.py
+      - name: Assert this test does not claim terminal Q2 certificate
+        run: |
+          grep -F 'NOT a new sharp numerical constant' research/nightfall/2026-11-quadratic-law-free-audit/Q2_SOFT_OWNERSHIP_SOURCE_NOISE_BRIDGE_20261113.md
+          grep -F 'No synthetic fresh-neighbor table' research/nightfall/2026-11-quadratic-law-free-audit/Q2_SOFT_OWNERSHIP_SOURCE_NOISE_BRIDGE_20261113.md
