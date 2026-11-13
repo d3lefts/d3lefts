@@ -149,4 +149,68 @@ theorem centered_source_owned_second_moment
           exact sum_prodMass_coord p hp1 j
             (fun b => (g j b) ^ 2)
 
+
+/-- Exact weighted Hilbert-section second moment in the original source
+law. The output coordinate a is weighted by the genuine marginal p i,
+and every owned neighbor j is a distinct actual input coordinate.
+No artificial repeated samples and no supplied energy bound. -/
+theorem centered_source_owned_hilbert_second_moment
+    (p : ι → α → ℝ)
+    (hp1 : ∀ i, (∑ a : α, p i a) = 1)
+    (i : ι) (J : Finset ι) (h : ι → α → α → ℝ)
+    (hcenter : ∀ j ∈ J, ∀ a : α,
+      (∑ b : α, p j b * h j a b) = 0) :
+    (∑ x : ι → α, prodMass p x *
+      (∑ a : α, p i a *
+        (∑ j ∈ J, h j a (x j)) ^ 2)) =
+      ∑ j ∈ J, ∑ a : α, p i a *
+        (∑ b : α, p j b * (h j a b) ^ 2) := by
+  classical
+  have hswitch :
+      (∑ x : ι → α, prodMass p x *
+        (∑ a : α, p i a *
+          (∑ j ∈ J, h j a (x j)) ^ 2)) =
+      ∑ a : α, p i a *
+        (∑ x : ι → α, prodMass p x *
+          (∑ j ∈ J, h j a (x j)) ^ 2) := by
+    calc
+      _ = ∑ x : ι → α, ∑ a : α,
+        prodMass p x * (p i a *
+          (∑ j ∈ J, h j a (x j)) ^ 2) := by
+            apply Finset.sum_congr rfl
+            intro x _
+            rw [Finset.mul_sum]
+      _ = ∑ a : α, ∑ x : ι → α,
+        prodMass p x * (p i a *
+          (∑ j ∈ J, h j a (x j)) ^ 2) := Finset.sum_comm
+      _ = ∑ a : α, p i a *
+        (∑ x : ι → α, prodMass p x *
+          (∑ j ∈ J, h j a (x j)) ^ 2) := by
+            apply Finset.sum_congr rfl
+            intro a _
+            rw [Finset.mul_sum]
+            apply Finset.sum_congr rfl
+            intro x _
+            ring
+  calc
+    (∑ x : ι → α, prodMass p x *
+      (∑ a : α, p i a *
+        (∑ j ∈ J, h j a (x j)) ^ 2)) =
+      ∑ a : α, p i a *
+        (∑ x : ι → α, prodMass p x *
+          (∑ j ∈ J, h j a (x j)) ^ 2) := hswitch
+    _ = ∑ a : α, p i a *
+        (∑ j ∈ J, ∑ b : α, p j b * (h j a b) ^ 2) := by
+          apply Finset.sum_congr rfl
+          intro a _
+          rw [centered_source_owned_second_moment p hp1 J
+            (fun j b => h j a b) (fun j hj => hcenter j hj a)]
+    _ = ∑ a : α, ∑ j ∈ J,
+          p i a * (∑ b : α, p j b * (h j a b) ^ 2) := by
+          apply Finset.sum_congr rfl
+          intro a _
+          rw [Finset.mul_sum]
+    _ = ∑ j ∈ J, ∑ a : α, p i a *
+          (∑ b : α, p j b * (h j a b) ^ 2) := Finset.sum_comm
+
 end Nightfall.Observability.ActualESDistinctNeighborEnergy
