@@ -1,4 +1,4 @@
-name: NIGHTFALL product-space — Lean 4.35.0 certification
+name: NIGHTFALL product-space — Lean 4.36.0-rc2 certification
 on:
   pull_request:
     paths:

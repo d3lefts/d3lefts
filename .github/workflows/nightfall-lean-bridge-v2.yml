@@ -31,6 +31,26 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+      - name: Reject retired compiler or external dependencies in active CI
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          root = Path("lean-toolchain").read_text().strip()
+          assert root == "leanprover/lean4:v4.36.0-rc2", root
+          for workflow in Path(".github/workflows").glob("*.yml"):
+              source = workflow.read_text()
+              assert "leanprover/lean4:v4.33.0" not in source, workflow
+              assert "leanprover/lean4:v4.35.0" not in source, workflow
+              assert "physical-superintelligence/aaronson-ambainis" not in source, workflow
+              assert "/tmp/aa/" not in source, workflow
+              assert "--branch v4.35.0" not in source, workflow
+          mathlib_setup = Path(".github/actions/setup-nightfall-lean/action.yml").read_text()
+          for pin in ["b35cb10cf2ced51a2fd1880cfdbf75c71ab7a35a",
+                      "9d581dfff2e41de989072ea63abf3daf69311520",
+                      "leanprover/lean4:v4.36.0-rc2"]:
+              assert pin in mathlib_setup, pin
+          print("PASS: active CI pins and exact Mathlib release-candidate custody")
+          PY
       - name: Fail-closed bridge and graph mutation controls
         run: |
           set -euo pipefail

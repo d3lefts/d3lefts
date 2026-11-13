@@ -1,4 +1,4 @@
-name: NIGHTFALL conditional-section fixed-query selector — pinned Lean 4.35
+name: NIGHTFALL conditional-section fixed-query selector — pinned Lean 4.36-rc2
 on:
   pull_request:
     paths:

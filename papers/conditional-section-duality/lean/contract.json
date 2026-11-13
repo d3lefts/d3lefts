@@ -1,7 +1,7 @@
 {
   "schema": "nightfall-theorem-contract/v1",
   "source": "papers/conditional-section-duality/lean/FixedObservationSelector.lean",
-  "workspace_commit": "56a005855ea17e0b0958f73ec801ae140b0a1679",
+  "workspace_commit": "9d581dfff2e41de989072ea63abf3daf69311520",
   "targets": [
     {
       "declaration": "Nightfall.ConditionalSection.scalar_fixed_observation_selector",
@@ -24,6 +24,6 @@
       "expected_type": "∀ (q t : ℝ), 4 * q * (q * t ^ 2) = (q * t + q * t) ^ 2"
     }
   ],
-  "claim_scope": "Five scalar and finite-index selector/beta-transfer declarations with all hypotheses explicit; NOT the originating bounded-source fixed-observation theorem or novelty.",
+  "claim_scope": "Five scalar and finite-index selector/beta-transfer declarations with all hypotheses explicit; NOT the originating bounded-source fixed-observation theorem or novelty. Compiler migration to Lean v4.36.0-rc2 is not a passing kernel receipt until rerun.",
   "promoted_full": false
 }
