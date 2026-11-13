@@ -188,4 +188,52 @@ theorem hybrid_global_parity_telescope
       nlinarith [ih, step]
   simpa using hgeneral (Finset.univ : Finset β)
 
+/-- Finite selector-coupling expectations imply the 4B global rectangle
+budget. The sole structural hypothesis is background-invariance of
+rectangles, independently discharged for actual degree-two sources. -/
+theorem hybrid_rectangles_le_four
+    (f : (β × Bool → α) → ℝ)
+    (left right : β → Bool → α)
+    (d : β → ℝ)
+    (hrect : ∀ e x,
+      blockRectangle f x e
+        (left e false) (left e true)
+        (right e false) (right e true) = d e)
+    (B : ℝ)
+    (hf : ∀ x, |f x| ≤ B) :
+    (∑ e : β, d e) ≤ 4 * B := by
+  classical
+  let N : ℝ := Fintype.card (β → Bool)
+  have hN : 0 < N := by
+    dsimp [N]
+    exact_mod_cast
+      (Fintype.card_pos_iff.mpr
+        ⟨fun (_ : β) => false⟩ : 0 < Fintype.card (β → Bool))
+  have he : hybridTotal f left right ∅ ≤ N * B := by
+    calc
+      hybridTotal f left right ∅ =
+          ∑ σ : β → Bool, f (hybridState left right ∅ σ) := rfl
+      _ ≤ ∑ _σ : β → Bool, B := by
+        apply Finset.sum_le_sum
+        intro σ _
+        exact (abs_le.mp (hf _)).2
+      _ = N * B := by simp [N]
+  have ho : -(N * B) ≤ hybridTotal f left right univ := by
+    calc
+      -(N * B) = ∑ _σ : β → Bool, -B := by simp [N, mul_neg]
+      _ ≤ ∑ σ : β → Bool, f (hybridState left right univ σ) := by
+        apply Finset.sum_le_sum
+        intro σ _
+        exact (abs_le.mp (hf _)).1
+      _ = hybridTotal f left right univ := rfl
+  have hpar := hybrid_global_parity_telescope f left right d hrect
+  have hmul : N * (∑ e : β, d e) ≤ N * (4 * B) := by
+    dsimp [N] at *
+    nlinarith [hpar, he, ho]
+  by_contra hn
+  have hs : 4 * B < ∑ e : β, d e := lt_of_not_ge hn
+  have hp : 0 < N * ((∑ e : β, d e) - 4 * B) :=
+    mul_pos hN (sub_pos.mpr hs)
+  nlinarith [hmul, hp]
+
 end Nightfall.Observability.QuadraticHybridTelescoping
