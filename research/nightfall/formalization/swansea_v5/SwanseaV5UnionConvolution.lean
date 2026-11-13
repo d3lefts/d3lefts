@@ -73,7 +73,7 @@ theorem unionConvolution_total_mass
       apply Finset.sum_congr rfl
       intro A _
       rw [Finset.mul_sum]
-    _ = _ := (Finset.sum_mul).symm
+    _ = _ := by rw [Finset.sum_mul]
 
 /-- Nonnegative refresh weights remain nonnegative after union convolution. -/
 theorem unionConvolution_nonneg
