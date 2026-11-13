@@ -56,20 +56,19 @@ theorem weighted_centered_eq_pair
               rw [Finset.sum_add_distrib, Finset.sum_sub_distrib]
       _ = s - (2*m)*m + m^2*1 := by
             rw [← Finset.mul_sum, ← Finset.mul_sum, hq1]
-            rfl
       _ = s - m^2 := by ring
   have hpair1 :
       (∑ a : A, ∑ b : A, (q a * (g a)^2) * q b) = s := by
     calc
       _ = (∑ a : A, q a * (g a)^2) *
             (∑ b : A, q b) := tensor_sum_factor _ _
-      _ = s := by rw [hq1, mul_one]; rfl
+      _ = s := by rw [hq1, mul_one]
   have hpair2 :
       (∑ a : A, ∑ b : A, q a * (q b * (g b)^2)) = s := by
     calc
       _ = (∑ a : A, q a) *
             (∑ b : A, q b * (g b)^2) := tensor_sum_factor _ _
-      _ = s := by rw [hq1, one_mul]; rfl
+      _ = s := by rw [hq1, one_mul]
   have hpair3 :
       (∑ a : A, ∑ b : A, (q a * g a) * (q b * g b)) = m^2 := by
     calc
@@ -94,7 +93,7 @@ theorem weighted_centered_eq_pair
           (∑ a : A, ∑ b : A, (q a * g a) * (q b * g b)) := by
             simp only [sub_div, add_div, Finset.sum_add_distrib,
               Finset.sum_sub_distrib, Finset.sum_div]
-            ring
+            ring_nf
       _ = s - m^2 := by rw [hpair1, hpair2, hpair3]; ring
   change (∑ a : A, q a * (g a - m)^2) =
     ∑ a : A, ∑ b : A, q a * q b * ((g a - g b)^2 / 2)
@@ -154,7 +153,7 @@ theorem actual_source_section_energy_eq_influence
           apply Finset.sum_congr rfl
           intro a _
           rw [hG x a]
-          rw [Finset.mul_sum]
+          simp only [Finset.mul_sum]
           apply Finset.sum_congr rfl
           intro b _
           ring
