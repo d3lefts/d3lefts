@@ -18,15 +18,7 @@ jobs:
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
-      - name: Install pinned Lean and Mathlib 4.35.0
-        shell: bash
-        run: |
-          set -euo pipefail
-          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
-          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.35.0
-          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-          git clone --depth 1 --branch v4.35.0 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4
-          (cd /tmp/mathlib4 && "$HOME/.elan/bin/lake" exe cache get)
+      - uses: ./.github/actions/setup-nightfall-lean
       - name: Compile declarations and strict standard-axiom receipts
         shell: bash
         run: |
@@ -49,7 +41,7 @@ jobs:
         run: |
           mkdir -p lean-receipts
           sha256sum research/nightfall/formalization/observability/DiagonalSignCoherence.lean > lean-receipts/SHA256SUMS
-          echo leanprover/lean4:v4.35.0 > lean-receipts/lean-version.txt
+          echo leanprover/lean4:v4.36.0-rc2 > lean-receipts/lean-version.txt
           git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt 2>/dev/null || true
       - name: Upload compiler and axiom receipts
         if: always()
