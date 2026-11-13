@@ -1,0 +1,63 @@
+name: NIGHTFALL Q2 hybrid-coupling telescope — strict finite operator
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/QuadraticHybridTelescoping.lean'
+      - '.github/workflows/nightfall-q2-hybrid-telescope.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+
+jobs:
+  hybrid-telescope:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Lean 4.35 and mathlib v4.35
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.35.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          git clone --depth 1 --branch v4.35.0 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4
+          (cd /tmp/mathlib4 && "$HOME/.elan/bin/lake" exe cache get)
+      - name: Compile fair-selector flip dependency
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/observability/ParityBlockCancellation.lean /tmp/mathlib4/ParityBlockCancellation.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ParityBlockCancellation.olean ParityBlockCancellation.lean)
+      - name: Strict compile single-block and global telescopes
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.QuadraticHybridTelescoping
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/QuadraticHybridTelescoping.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.hybrid_single_block_difference \
+            --decl $N.hybrid_global_parity_telescope \
+            --json-out lean-receipts/q2-hybrid-global-telescope.json || {
+              cat lean-receipts/q2-hybrid-global-telescope.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-hybrid-global-telescope.json
+      - name: Source pin and SHA256
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/observability/{QuadraticHybridTelescoping,ParityBlockCancellation}.lean > lean-receipts/SHA256SUMS.txt
+          git rev-parse HEAD > lean-receipts/repo-commit.txt
+          cat lean-toolchain > lean-receipts/lean-toolchain.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: q2-hybrid-global-parity-telescope-receipts
+          path: lean-receipts/
+          retention-days: 45
