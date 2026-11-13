@@ -82,7 +82,10 @@ theorem esComp_empty_eq_source_mean
     (p : ι → α → ℝ) (f : (ι → α) → ℝ)
     (x : ι → α) :
     esComp p ∅ f x = pexp p f := by
-  simp [esComp, condExp, pexp, merge]
+  have hmerge (y : ι → α) : merge (∅ : Finset ι) x y = y := by
+    funext k
+    simp [merge]
+  simp [esComp, condExp, pexp, hmerge]
 
 /-- Center the ACTUAL source function using its entire canonical
 Efron-Stein decomposition. -/
@@ -151,7 +154,6 @@ theorem actual_source_variance_es_energy
         apply Finset.sum_congr rfl
         intro x _
         rw [source_centered_es_sum p hp1 f x]
-        rfl
     _ = ∑ T : Finset ι, ∑ x : ι → α,
       prodMass p x * (Y T x)^2 := hparseval
     _ = ∑ T : Finset ι,
