@@ -62,6 +62,39 @@ class RegistryTests(unittest.TestCase):
         self.assertFalse(result["fresh_compiler_replay"])
         self.assertFalse(result["universal_theorem_certified"])
 
+    def test_explicit_pending_custody_hash_is_enforced(self):
+        new_path = "research/nightfall/formalization/Pending.lean"
+        new_file = self.root / new_path
+        new_file.write_text("theorem pending : True := by trivial\\n")
+        record = {
+            "path": new_path,
+            "source_blob_sha": registry.git_blob_hash(new_file.read_bytes()),
+            "classification": "unreviewed-source",
+            "ci_source_match_status": "no-verified-receipt",
+            "historical_run": None,
+            "historical_head": None,
+            "global_priority": "unverified",
+        }
+        custody_path = self.root / "docs/lean-pending-source-custody.json"
+        custody_path.write_text(json.dumps({
+            "schema": "nightfall-lean-pending-source-custody-v1",
+            "sources": [record]
+        }))
+        result = registry.inspect(self.root)
+        self.assertEqual(result["historical_source_match_count"], 1)
+        self.assertEqual(result["unreviewed_source_count"], 1)
+        self.assertTrue(result["current_checkout_source_integrity"])
+        self.assertFalse(result["all_checkout_sources_source_matched"])
+        new_file.write_text("theorem altered : True := by trivial\\n")
+        self.assert_rejected("Pending source blob changed")
+        new_file.write_text("theorem pending : True := by trivial\\n")
+        record["ci_source_match_status"] = registry.CI_MATCH
+        custody_path.write_text(json.dumps({
+            "schema": "nightfall-lean-pending-source-custody-v1",
+            "sources": [record]
+        }))
+        self.assert_rejected("Pending Lean source falsely certified")
+
     def test_source_mutation_fails(self):
         (self.root / self.path).write_text("theorem changed : True := by trivial\n")
         self.assert_rejected("Source blob changed")
