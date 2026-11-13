@@ -1,5 +1,5 @@
 # NIGHTFALL active research / integration queue
-**Snapshot:** 2026-11-13, after main `718752e829727d7b5107cea1c6be49fc28f08a88`. **Purpose:** prevent overlapping parallel-instance work from being mistaken for independent theorems or blindly squash-merged. This is an editorial integration ledger; PR state is live and may change. Use the GitHub PR page as the authoritative current state.
+**Snapshot:** 2026-11-13, after main `8981a26477f07c864604121a7d0dce6dda3ae8bf`. **Purpose:** prevent overlapping parallel-instance work from being mistaken for independent theorems or blindly squash-merged. This is an editorial snapshot, not a live queue. Use the [GitHub open pull requests](https://github.com/d3lefts/d3lefts/pulls?q=is%3Apr+is%3Aopen) for authoritative present status.
 
 
 ## Already merged into main (do not describe as open drafts)
@@ -14,18 +14,18 @@
 | [#452 soft-ownership source-noise operator](https://github.com/d3lefts/d3lefts/pull/452) | Merged analytic alternative using original-source Markov refresh; two checked exact scripts; not an independently reviewed terminal Q2 theorem |
 | [#449 posterior actionable influence](https://github.com/d3lefts/d3lefts/pull/449) | Posterior identity and conditionally Q2-based sampled observer; a conditional theorem, not an unconditional Q2 certificate |
 | [#446 dissertation source](https://github.com/d3lefts/d3lefts/pull/446) | Working dissertation manuscript and claim ledger; not a doctoral submission or a novel universal conversion law |
+| [#450 oracle-matched task revelation](https://github.com/d3lefts/d3lefts/pull/450) | Author-analytic KL information-cover / task-revelation complexity law and exact tests, with classical sequential-design and originality review still outstanding |
 
 The previously merged [source merge/tower checkpoint](https://github.com/d3lefts/d3lefts/commit/2dbfdf7a8f09190d5b4f4dafb942c14b9be94590) certifies narrow genuine-source operators, not the terminal variance-exponent-two claim.
 
-## Still open — nine research PRs at this snapshot
+## Still open — eight research PRs at this snapshot
 
-- [#450](https://github.com/d3lefts/d3lefts/pull/450): fixed-oracle KL information-cover / task-revelation complexity theorem. Author-analytic and exactly tested; strongest current sequential-experiment prior-art target.
 - [#443](https://github.com/d3lefts/d3lefts/pull/443): orientation-specific observed-section candidate. Before further work, compare directly to merged soft-ownership #452.
 - Historical stacked source/energy/formalization drafts: [#434](https://github.com/d3lefts/d3lefts/pull/434), [#433](https://github.com/d3lefts/d3lefts/pull/433), [#430](https://github.com/d3lefts/d3lefts/pull/430), [#428](https://github.com/d3lefts/d3lefts/pull/428), [#426](https://github.com/d3lefts/d3lefts/pull/426), [#425](https://github.com/d3lefts/d3lefts/pull/425), [#424](https://github.com/d3lefts/d3lefts/pull/424).
 
 The seven stacked drafts are deliberately **not** a safe merge queue. They overlap old branches and already extracted mainline modules. Preserve each until exact blob SHAs, active compiler receipts, unique unmerged proof steps, and a named superseding source are accounted for. Do not silently close or delete other instances' work.
 
-**Separate CI repair:** The historical Lean registry freezes 67 sources. Two newer mainline modules, ActualProductMergeTower.lean and ActualProductHilbertJensen.lean, need pending custody even though scoped current-pin Lean receipts exist. [Hotfix #454](https://github.com/d3lefts/d3lefts/pull/454) records their exact blobs without modifying the 67 certified entries or claiming terminal Q2.
+**Separate CI repair:** The historical Lean registry freezes 67 sources. Two newer mainline modules, ActualProductMergeTower.lean and ActualProductHilbertJensen.lean, are now recorded by [merged hotfix #454](https://github.com/d3lefts/d3lefts/pull/454) in the 27-entry pending-source custody manifest, without modifying the immutable 67 historical entries or claiming terminal Q2.
 
 ## Source and certification policy
 
