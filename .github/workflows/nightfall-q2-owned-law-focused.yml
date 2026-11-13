@@ -7,6 +7,7 @@ on:
     paths:
       - 'research/nightfall/formalization/observability/ActualESFiniteSampleLaw.lean'
       - 'research/nightfall/formalization/observability/ActualESOwnedSampleLaw.lean'
+      - 'research/nightfall/formalization/observability/ActualESObservedSection.lean'
       - '.github/workflows/nightfall-q2-owned-law-focused.yml'
   workflow_dispatch:
 permissions:
@@ -271,6 +272,35 @@ jobs:
             lean-receipts/source-recursive-sample-law.json
           cp "$O/ActualESFiniteSampleLaw.lean" /tmp/aa/ActualESFiniteSampleLaw.lean
           (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESFiniteSampleLaw.olean ActualESFiniteSampleLaw.lean)
+      - name: Build actual conditional-section Hilbert norm and observed prefix
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space
+          for module in ActualESConditionalSection ActualESConditionalJensen; do
+            cp "$P/$module.lean" "/tmp/aa/$module.lean"
+            (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/$module.olean" "$module.lean")
+          done
+      - name: Strict observed original-source Hilbert vector equals conditional section
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualESObservedSection
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualESObservedSection.lean \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.observedSample_sumVector_eq_range \
+            --decl $N.finitePairIncrement_observed_eq_source_sum \
+            --decl $N.finitePair_observed_sqNorm_eq_source_section \
+            --decl $N.finitePair_observed_norm_eq_source_section \
+            --json-out lean-receipts/actual-observed-section.json || {
+              cat lean-receipts/actual-observed-section.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/actual-observed-section.json
       - name: Strict true-source greedy first norm distribution
         shell: bash
         run: |
@@ -296,7 +326,7 @@ jobs:
         if: always()
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/observability/{ActualESFiniteSampleLaw,ActualESOwnedSampleLaw}.lean > lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/observability/{ActualESFiniteSampleLaw,ActualESOwnedSampleLaw,ActualESObservedSection}.lean > lean-receipts/SHA256SUMS.txt
           echo leanprover/lean4:v4.33.0 > lean-receipts/lean-toolchain.txt
           echo 2a6ceaef872ae993708950f951989134084b851a > lean-receipts/upstream.txt
           git rev-parse HEAD > lean-receipts/commit.txt
