@@ -25,7 +25,7 @@ open Nightfall.Observability.ActualESGreedyOwnership
 open Nightfall.Observability.ActualESConditionalSection
 open Nightfall.Observability.ActualESConditionalJensen
 
-variable {E ι α : Type*}
+variable {E ι α : Type}
     [Fintype E] [DecidableEq E]
     [Fintype ι] [DecidableEq ι]
     [Fintype α] [DecidableEq α]
