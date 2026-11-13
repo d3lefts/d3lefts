@@ -1,0 +1,181 @@
+name: NIGHTFALL Q2 actual distinct-neighbor conditional section bridge
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/ActualESConditionalSection.lean'
+      - 'research/nightfall/formalization/product_space/ActualESConditionalJensen.lean'
+      - 'research/nightfall/formalization/product_space/ActualESConditionalProjection.lean'
+      - 'research/nightfall/formalization/product_space/ActualESSourceEnergy.lean'
+      - 'research/nightfall/formalization/product_space/ActualESOrthogonality.lean'
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/check_actual_conditional_sections.py'
+      - '.github/workflows/nightfall-q2-actual-conditional-sections.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-conditional-sections:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+      - name: Finite exact source-data adversarial regression
+        run: |
+          set -euo pipefail
+          python3 -I research/nightfall/2026-11-quadratic-law-free-audit/check_actual_conditional_sections.py
+      - name: Install exact pinned Lean 4.33 upstream Efron-Stein project
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.33.0
+          export PATH="$HOME/.elan/bin:$PATH"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          git clone https://github.com/physical-superintelligence/aaronson-ambainis.git /tmp/aa
+          git -C /tmp/aa checkout 2a6ceaef872ae993708950f951989134084b851a
+          (cd /tmp/aa && lake exe cache get)
+          (cd /tmp/aa && lake build AaronsonAmbainis.DetTheorem AaronsonAmbainis.TwoSided.Antipodal \
+             AaronsonAmbainis.Bridge.Positivity AaronsonAmbainis.Row.Main \
+             AaronsonAmbainis.Pack.Main AaronsonAmbainis.Dual.Main \
+             AaronsonAmbainis.Level.Integral AaronsonAmbainis.TwoSided.CauchySchwarz)
+      - name: Build Efron-Stein source dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space
+          mkdir -p /tmp/aa/.lake/build/lib/lean
+          for module in ProductSpaceTwoSidedBridge ProductRowBound ProductInfluence EfronSteinDegree; do
+            cp "$P/$module.lean" "/tmp/aa/$module.lean"
+            (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/$module.olean" "$module.lean")
+          done
+      - name: Strict check exact source conditional expectation and Jensen
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualESConditionalSection
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/product_space/ActualESConditionalSection.lean \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.merge_update_free \
+            --decl $N.merge_insert_update_free \
+            --decl $N.average_source_section_eq_condExp_difference \
+            --decl $N.finite_weighted_jensen_square \
+            --decl $N.actual_condExp_jensen_square \
+            --decl $N.actual_section_conditional_jensen_square \
+            --json-out lean-receipts/actual-conditional-sections.json || {
+              cat lean-receipts/actual-conditional-sections.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/actual-conditional-sections.json
+      - name: Strict canonical interaction projection of actual source sections
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space
+          O=research/nightfall/formalization/observability
+          cp "$P/ActualESConditionalSection.lean" /tmp/aa/ActualESConditionalSection.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESConditionalSection.olean ActualESConditionalSection.lean)
+          cp "$O/CenteredRectangles.lean" /tmp/aa/CenteredRectangles.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/CenteredRectangles.olean CenteredRectangles.lean)
+          cp "$P/QuadraticHoeffdingBridge.lean" /tmp/aa/QuadraticHoeffdingBridge.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/QuadraticHoeffdingBridge.olean QuadraticHoeffdingBridge.lean)
+          cp "$P/ActualESPairMatchingBridge.lean" /tmp/aa/ActualESPairMatchingBridge.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESPairMatchingBridge.olean ActualESPairMatchingBridge.lean)
+          N=Nightfall.Observability.ActualESConditionalProjection
+          python3 scripts/lean_bridge.py \
+            "$P/ActualESConditionalProjection.lean" \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.condExp_esComp_of_not_subset \
+            --decl $N.condExp_esComp_eq_ite \
+            --decl $N.actual_condExp_es_expansion \
+            --decl $N.actual_source_section_es_projection \
+            --decl $N.actual_degree_two_section_es_projection \
+            --json-out lean-receipts/actual-es-conditional-projection.json || {
+              cat lean-receipts/actual-es-conditional-projection.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/actual-es-conditional-projection.json
+      - name: Strict original-source Hoeffding component orthogonality
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space
+          N=Nightfall.Observability.ActualESOrthogonality
+          python3 scripts/lean_bridge.py \
+            "$P/ActualESOrthogonality.lean" \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.centered_orthogonal_to_dependsOn \
+            --decl $N.actual_esComp_orthogonal \
+            --json-out lean-receipts/actual-es-orthogonality.json || {
+              cat lean-receipts/actual-es-orthogonality.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/actual-es-orthogonality.json
+      - name: Strict equality of source section energy and resampling influence
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space
+          O=research/nightfall/formalization/observability
+          cp "$O/ArbitraryLawFourthMoment.lean" /tmp/aa/ArbitraryLawFourthMoment.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ArbitraryLawFourthMoment.olean ArbitraryLawFourthMoment.lean)
+          N=Nightfall.Observability.ActualESSourceEnergy
+          python3 scripts/lean_bridge.py \
+            "$P/ActualESSourceEnergy.lean" \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.weighted_centered_eq_pair \
+            --decl $N.actual_source_section_energy_eq_influence \
+            --json-out lean-receipts/actual-source-section-energy.json || {
+              cat lean-receipts/actual-source-section-energy.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/actual-source-section-energy.json
+      - name: Strict Hilbert norm Jensen on actual source neighbor sections
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space
+          cp "$P/ActualESConditionalSection.lean" /tmp/aa/ActualESConditionalSection.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESConditionalSection.olean ActualESConditionalSection.lean)
+          N=Nightfall.Observability.ActualESConditionalJensen
+          python3 scripts/lean_bridge.py \
+            "$P/ActualESConditionalJensen.lean" \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.weighted_dot_le_norm_mul \
+            --decl $N.weighted_hilbert_jensen \
+            --decl $N.actual_source_section_hilbert_jensen \
+            --json-out lean-receipts/actual-hilbert-jensen.json || {
+              cat lean-receipts/actual-hilbert-jensen.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/actual-hilbert-jensen.json
+      - name: Record immutable source and pin
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/product_space/{ActualESConditionalSection,ActualESConditionalJensen,ActualESConditionalProjection,ActualESSourceEnergy,ActualESOrthogonality}.lean > lean-receipts/SHA256SUMS
+          sha256sum research/nightfall/2026-11-quadratic-law-free-audit/check_actual_conditional_sections.py >> lean-receipts/SHA256SUMS
+          echo leanprover/lean4:v4.33.0 > lean-receipts/lean-toolchain.txt
+          echo 2a6ceaef872ae993708950f951989134084b851a > lean-receipts/upstream.txt
+          git rev-parse HEAD > lean-receipts/repository-commit.txt
+      - name: Upload strict receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: q2-actual-conditional-section-bridge-receipts
+          path: lean-receipts/
+          retention-days: 45
