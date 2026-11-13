@@ -13,6 +13,7 @@ on:
       - 'research/nightfall/formalization/product_space/ActualESConditionalSection.lean'
       - 'research/nightfall/formalization/product_space/ActualESConditionalProjection.lean'
       - 'research/nightfall/formalization/product_space/ActualESOwnedConditional.lean'
+      - 'research/nightfall/formalization/product_space/ActualESOrthogonalEnergy.lean'
       - 'research/nightfall/formalization/observability/QuadraticHybridTelescoping.lean'
       - 'research/nightfall/formalization/product_space/ActualESQuadraticRectangles.lean'
       - 'research/nightfall/formalization/observability/QuadraticActualMomentEndpoint.lean'
@@ -311,6 +312,24 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/actual-es-owned-conditional.json
+      - name: Strict source pair orthogonality from resampling
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualESOrthogonalEnergy
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/product_space/ActualESOrthogonalEnergy.lean \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.source_inner_zero_of_centered_hidden \
+            --decl $N.actual_esComp_orthogonal_missing \
+            --json-out lean-receipts/actual-es-orthogonal-source.json || {
+              cat lean-receipts/actual-es-orthogonal-source.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/actual-es-orthogonal-source.json
       - name: Strict source-derived increment and endpoint theorem audit
         shell: bash
         run: |
@@ -346,6 +365,7 @@ jobs:
           sha256sum research/nightfall/formalization/product_space/ActualESConditionalSection.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/product_space/ActualESConditionalProjection.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/product_space/ActualESOwnedConditional.lean >> lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/product_space/ActualESOrthogonalEnergy.lean >> lean-receipts/SHA256SUMS.txt
           echo leanprover/lean4:v4.33.0 > lean-receipts/lean-toolchain.txt
           echo 2a6ceaef872ae993708950f951989134084b851a > lean-receipts/upstream.txt
           git rev-parse HEAD > lean-receipts/repo-commit.txt
