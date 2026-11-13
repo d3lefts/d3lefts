@@ -5,6 +5,7 @@ on:
     paths:
       - 'research/nightfall/formalization/product_space/ActualESConditionalSection.lean'
       - 'research/nightfall/formalization/product_space/ActualESConditionalJensen.lean'
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/check_actual_conditional_sections.py'
       - '.github/workflows/nightfall-q2-actual-conditional-sections.yml'
   workflow_dispatch:
 
@@ -17,6 +18,10 @@ jobs:
     timeout-minutes: 75
     steps:
       - uses: actions/checkout@v4
+      - name: Finite exact source-data adversarial regression
+        run: |
+          set -euo pipefail
+          python3 -I research/nightfall/2026-11-quadratic-law-free-audit/check_actual_conditional_sections.py
       - name: Install exact pinned Lean 4.33 upstream Efron-Stein project
         shell: bash
         run: |
@@ -91,6 +96,7 @@ jobs:
         run: |
           mkdir -p lean-receipts
           sha256sum research/nightfall/formalization/product_space/{ActualESConditionalSection,ActualESConditionalJensen}.lean > lean-receipts/SHA256SUMS
+          sha256sum research/nightfall/2026-11-quadratic-law-free-audit/check_actual_conditional_sections.py >> lean-receipts/SHA256SUMS
           echo leanprover/lean4:v4.33.0 > lean-receipts/lean-toolchain.txt
           echo 2a6ceaef872ae993708950f951989134084b851a > lean-receipts/upstream.txt
           git rev-parse HEAD > lean-receipts/repository-commit.txt
