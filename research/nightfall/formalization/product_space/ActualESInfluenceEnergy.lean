@@ -188,8 +188,8 @@ theorem actual_degree_two_influence_es_energy
   · by_cases hc : T.card ≤ 2
     · simp [hi, hc]
     · have hz (x : ι → α) :
-        esComp p T f x = 0 :=
-      hdegree T (by omega) x
+          esComp p T f x = 0 := by
+        exact hdegree T (by omega) x
       simp [hi, hc, hz]
   · simp [hi]
 
