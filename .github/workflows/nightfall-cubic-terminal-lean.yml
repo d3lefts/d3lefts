@@ -1,4 +1,4 @@
-name: NIGHTFALL cubic rank-one terminal Lean 4.35 (scoped)
+name: NIGHTFALL cubic rank-one terminal Lean 4.36.0-rc2 (scoped)
 on:
   pull_request:
     paths:
