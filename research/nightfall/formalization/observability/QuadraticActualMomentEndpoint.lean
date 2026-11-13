@@ -77,11 +77,9 @@ theorem weighted_l1_l2_l4
       (fun w _ => by ring)
     simpa [s, t, q] using h
   by_cases hs0 : s = 0
-  · simp [s] at hs0
-    rw [← hs0]
-    have hn : 0 ≤ z^2 * q := mul_nonneg (sq_nonneg _) hq
-    norm_num at *
-    exact hn
+  · change s^3 ≤ z^2 * q
+    rw [hs0]
+    simpa using (mul_nonneg (sq_nonneg z) hq)
   have hspos : 0 < s := lt_of_le_of_ne hs (Ne.symm hs0)
   have hmul : s^4 ≤ z^2 * t^2 := by
     have hdiff := mul_nonneg (sub_nonneg.mpr hzs)
@@ -91,8 +89,11 @@ theorem weighted_l1_l2_l4
     mul_le_mul_of_nonneg_left htq (sq_nonneg z)
   have hbig : s * s^3 ≤ s * (z^2 * q) := by
     nlinarith [hmul, hmul2]
-  have hsmall : s^3 ≤ z^2 * q :=
-    (mul_le_mul_left hspos).mp hbig
+  have hsmall : s^3 ≤ z^2 * q := by
+    by_contra hnot
+    have hstrict : 0 < s^3 - z^2 * q := sub_pos.mpr (lt_of_not_ge hnot)
+    have hprod : 0 < s * (s^3 - z^2 * q) := mul_pos hspos hstrict
+    nlinarith [hbig, hprod]
   simpa only [z, s, q] using hsmall
 
 /-- Exact weighted norm interpolation on the recursive product space
