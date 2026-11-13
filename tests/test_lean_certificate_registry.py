@@ -70,7 +70,8 @@ class RegistryTests(unittest.TestCase):
         new_path = "research/nightfall/formalization/New.lean"
         (self.root / new_path).write_text(
             "theorem new : True := by trivial\n")
-        result = registry.inspect(self.root)
+        self.assert_rejected("Unregistered Lean sources in protected checkout")
+        result = registry.inspect(self.root, allow_pending=True)
         self.assertEqual(result["inventory_count"], 1)
         self.assertEqual(result["current_checkout_lean_source_count"], 2)
         self.assertEqual(result["unreviewed_source_count"], 1)
