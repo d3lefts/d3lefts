@@ -102,12 +102,21 @@ theorem weighted_hilbert_jensen
     unfold sqNorm
     calc
       (∑ a : α, q a * (w a)^2) =
-          ∑ a : α, ∑ y : Ω,
-            μ y * (q a * w a * Y y a) := by
+          ∑ a : α, (q a * w a) *
+            (∑ y : Ω, μ y * Y y a) := by
           apply Finset.sum_congr rfl
           intro a _
           dsimp [w]
+          ring
+      _ = ∑ a : α, ∑ y : Ω,
+            (q a * w a) * (μ y * Y y a) := by
+          apply Finset.sum_congr rfl
+          intro a _
           rw [Finset.mul_sum]
+      _ = ∑ a : α, ∑ y : Ω,
+            μ y * (q a * w a * Y y a) := by
+          apply Finset.sum_congr rfl
+          intro a _
           apply Finset.sum_congr rfl
           intro y _
           ring
