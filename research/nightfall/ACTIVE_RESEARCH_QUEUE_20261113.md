@@ -1,22 +1,31 @@
 # NIGHTFALL active research / integration queue
-**Snapshot:** 2026-11-13, after main `0dc1fb75cdec6fcb279690b201af474bc8c29014`. **Purpose:** prevent overlapping parallel-instance work from being mistaken for independent theorems or blindly squash-merged. This is an editorial integration ledger; PR state is live and may change. Use the GitHub PR page as the authoritative current state.
+**Snapshot:** 2026-11-13, after main `718752e829727d7b5107cea1c6be49fc28f08a88`. **Purpose:** prevent overlapping parallel-instance work from being mistaken for independent theorems or blindly squash-merged. This is an editorial integration ledger; PR state is live and may change. Use the GitHub PR page as the authoritative current state.
 
-## Entry points and truthful status
 
-| Track | Leading active work | Current mathematical status | Integration decision |
-| --- | --- | --- | --- |
-| Q2 original-law source proof | [#448](https://github.com/d3lefts/d3lefts/pull/448) — explicit finite categorical `K₂≈1228.36` argument | Author-side analytic proof, exact finite stress tests; universal terminal Lean + independent historical priority review **open** | **Retain as candidate**, inspect source-to-source; do not promote the coefficient as kernel-certified |
-| Q2 independent new operator | [#452](https://github.com/d3lefts/d3lefts/pull/452) — fractional/soft ownership using actual product noise | Analytic alternate route and independently implemented exact tests; **not** a current-pin Lean terminal theorem | **Highest leverage comparison:** determine whether it replaces owned-neighbor transport, or only proves a conditional sublemma |
-| Q2 adversarial earlier reductions | [#447](https://github.com/d3lefts/d3lefts/pull/447) — Grothendieck normalization, categorical counterexamples | Validated local exact counterexamples; no categorical Grothendieck subsumption theorem | Retain separately from positive proof; do not retry false root-influence sum or expected-maximum interchange |
-| Q2 scoped kernel receipts | [#445](https://github.com/d3lefts/d3lefts/pull/445) current-pin Hilbert Jensen; [#444](https://github.com/d3lefts/d3lefts/pull/444) historical actual neighbor sample law | #445 reports strict Lean 4.36.0-rc2; #444 historical 4.33.0 receipts. No single end-to-end 4.36 source declaration | Replay **exact statements** under active pin before integration; preserve historic run IDs and source hashes |
-| Q2 source-owned bridge | [#443](https://github.com/d3lefts/d3lefts/pull/443) observed-section orientation | Candidate identity and exact tests, not terminal kernel | Review against #452's softer actual-source operator before extending old transport architecture |
-| Q2 overlapping historical branches | [#424](https://github.com/d3lefts/d3lefts/pull/424), [#425](https://github.com/d3lefts/d3lefts/pull/425), [#426](https://github.com/d3lefts/d3lefts/pull/426), [#428](https://github.com/d3lefts/d3lefts/pull/428), [#430](https://github.com/d3lefts/d3lefts/pull/430), [#433](https://github.com/d3lefts/d3lefts/pull/433), [#434](https://github.com/d3lefts/d3lefts/pull/434) | Shared file additions and stacked dependencies; some verified subsets were already extracted to main in #431, #438 and later merges | **Not bulk-mergeable.** Reconcile source-identical blob SHAs, pinned workflows and theorem contracts before cherry-picking any unmerged residue |
-| Dissertation mathematically targeted theorem | [#450](https://github.com/d3lefts/d3lefts/pull/450) — oracle-matched group-information cover / task revelation | Author-analytic `η→0` matched-access upper/lower complexity law and exact finite checker. Review against classical sequential experiment design, KL information complexity and LP cover duality **open** | Strong candidate for novelty audit, not for editorial-only merge or universal oracle claim |
-| Dissertation posterior observer | [#449](https://github.com/d3lefts/d3lefts/pull/449) — posterior actionable influence | Exact identities, conditional Q2-based policy and finite checker; no unrestricted computational-time claim | Integrate only with explicit dependence on unproved source Q2 and separately priced oracle calls |
-| Dissertation editorial source | [#446](https://github.com/d3lefts/d3lefts/pull/446) — working canonical manuscript and meta-thesis | Draft narrative and claim ledger; not a submitted dissertation and not a global theorem | Preserve original 41-/47-page manuscripts; reconcile content and proof custody before replacing canonical sources |
-| Replica restriction | [#451 merged](https://github.com/d3lefts/d3lefts/pull/451) — sharp weighted-replica no-go | Complete written finite-product proof, independent Fraction checkers with successful CI [43515837487](https://github.com/d3lefts/d3lefts/actions/runs/43515837487); no Lean terminal or outside priority review | **Already on main**. Keep as a scoped audit result, not a public novelty promotion |
+## Already merged into main (do not describe as open drafts)
 
-**Count at this snapshot:** sixteen open PRs (#452, #450, #449, #448, #447, #446, #445, #444, #443, #434, #433, #430, #428, #426, #425, #424). Some are intentionally unmergeable against main; that is evidence of overlapping historical work, not permission to drop it.
+| Work | Exact certification boundary |
+| --- | --- |
+| [#451 sharp replica restriction](https://github.com/d3lefts/d3lefts/pull/451) | Full written finite-source theorem and two independent exact rational checkers; no terminal Lean or external priority certification |
+| [#444 source-observed first-moment bridge](https://github.com/d3lefts/d3lefts/pull/444) | Historical strict Lean 4.33 receipts; not automatically active-compiler 4.36 certificates |
+| [#445 integrated Hilbert Jensen](https://github.com/d3lefts/d3lefts/pull/445) | Strict Lean 4.36.0-rc2 scoped operator declarations; not terminal Q2 |
+| [#447 categorical Grothendieck/decoupling audit](https://github.com/d3lefts/d3lefts/pull/447) | Exact counterexamples to failed reductions; no proof of Q2 subsumption |
+| [#448 source-only Q2 analytic proof](https://github.com/d3lefts/d3lefts/pull/448) | Author-side heterogeneous-product bound K2≈1228.3563; exact finite models; independent proof, priority and end-to-end Lean remain open |
+| [#452 soft-ownership source-noise operator](https://github.com/d3lefts/d3lefts/pull/452) | Merged analytic alternative using original-source Markov refresh; two checked exact scripts; not an independently reviewed terminal Q2 theorem |
+| [#449 posterior actionable influence](https://github.com/d3lefts/d3lefts/pull/449) | Posterior identity and conditionally Q2-based sampled observer; a conditional theorem, not an unconditional Q2 certificate |
+| [#446 dissertation source](https://github.com/d3lefts/d3lefts/pull/446) | Working dissertation manuscript and claim ledger; not a doctoral submission or a novel universal conversion law |
+
+The previously merged [source merge/tower checkpoint](https://github.com/d3lefts/d3lefts/commit/2dbfdf7a8f09190d5b4f4dafb942c14b9be94590) certifies narrow genuine-source operators, not the terminal variance-exponent-two claim.
+
+## Still open — nine research PRs at this snapshot
+
+- [#450](https://github.com/d3lefts/d3lefts/pull/450): fixed-oracle KL information-cover / task-revelation complexity theorem. Author-analytic and exactly tested; strongest current sequential-experiment prior-art target.
+- [#443](https://github.com/d3lefts/d3lefts/pull/443): orientation-specific observed-section candidate. Before further work, compare directly to merged soft-ownership #452.
+- Historical stacked source/energy/formalization drafts: [#434](https://github.com/d3lefts/d3lefts/pull/434), [#433](https://github.com/d3lefts/d3lefts/pull/433), [#430](https://github.com/d3lefts/d3lefts/pull/430), [#428](https://github.com/d3lefts/d3lefts/pull/428), [#426](https://github.com/d3lefts/d3lefts/pull/426), [#425](https://github.com/d3lefts/d3lefts/pull/425), [#424](https://github.com/d3lefts/d3lefts/pull/424).
+
+The seven stacked drafts are deliberately **not** a safe merge queue. They overlap old branches and already extracted mainline modules. Preserve each until exact blob SHAs, active compiler receipts, unique unmerged proof steps, and a named superseding source are accounted for. Do not silently close or delete other instances' work.
+
+**Separate CI repair:** The historical Lean registry freezes 67 sources. Two newer mainline modules, ActualProductMergeTower.lean and ActualProductHilbertJensen.lean, need pending custody even though scoped current-pin Lean receipts exist. [Hotfix #454](https://github.com/d3lefts/d3lefts/pull/454) records their exact blobs without modifying the 67 certified entries or claiming terminal Q2.
 
 ## Source and certification policy
 
@@ -29,7 +38,7 @@
 
 ## Cheapest decisive follow-up
 
-- **Construction:** Compare the new actual-source soft-ownership projection from #452 with the hard ownership/moment derivation in #448 under precisely the same zero-mass and finite-heterogeneous hypotheses. Identify the first proof step in which a soft coefficient or local independent sum is unlicensed.
+- **Construction:** Compare the now-merged actual-source soft-ownership projection from #452 with the hard ownership/moment derivation in #448 under precisely the same zero-mass and finite-heterogeneous hypotheses. Identify the first proof step in which a soft coefficient or local independent sum is unlicensed.
 - **Adversary:** Derive a counterexample if the soft operator incorrectly changes total pair energy; otherwise write the exact conditional projection and four-moment proof without importing an owner-neighbor distribution oracle.
-- **Verifier:** Reproduce both exact checkers, then try to compile the new *specific* operator lemma under Lean 4.36.0-rc2. Do **not** report a terminal Q2 certificate before source-level assembly.
+- **Verifier:** Reproduce both exact soft-ownership checkers, then try to compile the *specific* operator lemma under Lean 4.36.0-rc2. Do **not** report a terminal Q2 certificate before source-level assembly.
 - **Prior art:** Test #450's KL-cover dual asymptotic against sequential experiment design / information-theoretic lower bounds and test Q2's source-preserving matching against categorical bilinear decoupling with explicit constants.
