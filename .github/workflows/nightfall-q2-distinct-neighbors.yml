@@ -99,6 +99,7 @@ jobs:
             --decl $N.condExp_single_inside \
             --decl $N.condExp_single_outside \
             --decl $N.actual_owned_section_is_conditional_projection \
+            --decl $N.finite_weighted_vector_jensen \
             --json-out lean-receipts/actual-owned-neighbor-projection.json || {
               cat lean-receipts/actual-owned-neighbor-projection.json
               exit 1
