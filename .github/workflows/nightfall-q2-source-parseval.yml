@@ -4,6 +4,7 @@ on:
     paths:
       - 'research/nightfall/formalization/product_space/ActualESVarianceEnergy.lean'
       - 'research/nightfall/formalization/product_space/ActualESTwoCoordinateMarginal.lean'
+      - 'research/nightfall/formalization/product_space/ActualESInfluenceEnergy.lean'
       - '.github/workflows/nightfall-q2-source-parseval.yml'
   workflow_dispatch:
 permissions:
@@ -85,11 +86,43 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/q2-source-parseval.json
+      - name: Strict source influence ANOVA and owned pair subset energy cap
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space
+          O=research/nightfall/formalization/observability
+          cp "$P/ActualESConditionalSection.lean" /tmp/aa/ActualESConditionalSection.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESConditionalSection.olean ActualESConditionalSection.lean)
+          cp "$P/ActualESConditionalProjection.lean" /tmp/aa/ActualESConditionalProjection.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESConditionalProjection.olean ActualESConditionalProjection.lean)
+          cp "$O/ArbitraryLawFourthMoment.lean" /tmp/aa/ArbitraryLawFourthMoment.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ArbitraryLawFourthMoment.olean ArbitraryLawFourthMoment.lean)
+          cp "$P/ActualESSourceEnergy.lean" /tmp/aa/ActualESSourceEnergy.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESSourceEnergy.olean ActualESSourceEnergy.lean)
+          cp "$P/ActualESVarianceEnergy.lean" /tmp/aa/ActualESVarianceEnergy.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESVarianceEnergy.olean ActualESVarianceEnergy.lean)
+          N=Nightfall.Observability.ActualESInfluenceEnergy
+          python3 scripts/lean_bridge.py \
+            "$P/ActualESInfluenceEnergy.lean" \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.source_section_full_neighbor_average \
+            --decl $N.source_section_eq_canonical_containing \
+            --decl $N.actual_source_influence_es_energy \
+            --decl $N.actual_degree_two_influence_es_energy \
+            --decl $N.actual_owned_pair_subset_energy_le_influence \
+            --json-out lean-receipts/q2-source-influence-energy.json || {
+              cat lean-receipts/q2-source-influence-energy.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-source-influence-energy.json
       - name: Hash theorem and compiler inputs
         if: always()
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/product_space/{ActualESVarianceEnergy,ActualESOrthogonality,ActualESTwoCoordinateMarginal}.lean > lean-receipts/SHA256SUMS
+          sha256sum research/nightfall/formalization/product_space/{ActualESVarianceEnergy,ActualESOrthogonality,ActualESTwoCoordinateMarginal,ActualESInfluenceEnergy}.lean > lean-receipts/SHA256SUMS
           git rev-parse HEAD > lean-receipts/repo-commit
           printf 'Source-compatible historical Lean 4.33.0; active repository default is Lean 4.35.0\n' > lean-receipts/scope.txt
       - name: Upload strict kernel receipts
