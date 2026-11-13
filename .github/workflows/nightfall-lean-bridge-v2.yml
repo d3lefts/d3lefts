@@ -37,13 +37,19 @@ jobs:
           from pathlib import Path
           root = Path("lean-toolchain").read_text().strip()
           assert root == "leanprover/lean4:v4.36.0-rc2", root
+          # Construct retired signatures in pieces so the guard also checks
+          # its own workflow without self-matching its literal test patterns.
+          old_compilers = ("4." + "33.0", "4." + "35.0")
+          old_dependency = "/".join(("physical-superintelligence", "aaronson-ambainis"))
+          old_workspace = "/tmp/" + "aa/"
+          old_checkout = "--branch v" + "4.35.0"
           for workflow in Path(".github/workflows").glob("*.yml"):
               source = workflow.read_text()
-              assert "leanprover/lean4:v4.33.0" not in source, workflow
-              assert "leanprover/lean4:v4.35.0" not in source, workflow
-              assert "physical-superintelligence/aaronson-ambainis" not in source, workflow
-              assert "/tmp/aa/" not in source, workflow
-              assert "--branch v4.35.0" not in source, workflow
+              for version in old_compilers:
+                  assert "leanprover/lean4:v" + version not in source, workflow
+              assert old_dependency not in source, workflow
+              assert old_workspace not in source, workflow
+              assert old_checkout not in source, workflow
           mathlib_setup = Path(".github/actions/setup-nightfall-lean/action.yml").read_text()
           for pin in ["b35cb10cf2ced51a2fd1880cfdbf75c71ab7a35a",
                       "9d581dfff2e41de989072ea63abf3daf69311520",
