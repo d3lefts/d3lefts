@@ -8,6 +8,7 @@ on:
       - 'research/nightfall/formalization/observability/ActualESMatchingMass.lean'
       - 'research/nightfall/formalization/observability/ActualESGreedyCover.lean'
       - 'research/nightfall/formalization/observability/ActualESGreedyOwnership.lean'
+      - 'research/nightfall/formalization/observability/ActualESOwnedSourceCover.lean'
       - 'research/nightfall/formalization/observability/QuadraticHybridTelescoping.lean'
       - 'research/nightfall/formalization/product_space/ActualESQuadraticRectangles.lean'
       - 'research/nightfall/formalization/observability/QuadraticActualMomentEndpoint.lean'
@@ -199,6 +200,29 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/actual-es-greedy-cover.json
+      - name: Strict exact source maxima to owned distinct-neighbor graph
+        shell: bash
+        run: |
+          set -euo pipefail
+          O=research/nightfall/formalization/observability
+          cp "$O/ActualESGreedyOwnership.lean" /tmp/aa/ActualESGreedyOwnership.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESGreedyOwnership.olean ActualESGreedyOwnership.lean)
+          cp "$O/ActualESGreedyCover.lean" /tmp/aa/ActualESGreedyCover.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESGreedyCover.olean ActualESGreedyCover.lean)
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualESOwnedSourceCover
+          python3 scripts/lean_bridge.py \
+            "$O/ActualESOwnedSourceCover.lean" \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.exists_actual_pair_amplitude_weights \
+            --decl $N.actual_source_owned_distinct_neighbors \
+            --json-out lean-receipts/actual-es-owned-source-cover.json || {
+              cat lean-receipts/actual-es-owned-source-cover.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/actual-es-owned-source-cover.json
       - name: Strict source-derived increment and endpoint theorem audit
         shell: bash
         run: |
@@ -229,6 +253,7 @@ jobs:
           sha256sum research/nightfall/formalization/observability/{ActualESMatchingMass,WeightedGreedyMatching}.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/observability/{ActualESGreedyCover,WeightedGreedyCover}.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/observability/ActualESGreedyOwnership.lean >> lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/observability/ActualESOwnedSourceCover.lean >> lean-receipts/SHA256SUMS.txt
           echo leanprover/lean4:v4.33.0 > lean-receipts/lean-toolchain.txt
           echo 2a6ceaef872ae993708950f951989134084b851a > lean-receipts/upstream.txt
           git rev-parse HEAD > lean-receipts/repo-commit.txt
