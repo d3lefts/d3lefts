@@ -23,10 +23,9 @@ namespace Nightfall.Observability.ActualESFiniteSampleLaw
 open Finset
 open Nightfall.ProductSpace.Influence
 open Nightfall.ProductSpace.Transfer
-open Nightfall.ProductSpace.EfronStein
 open Nightfall.Observability.QuadraticHilbertMany
 
-variable {ι α : Type*} [Fintype ι] [DecidableEq ι]
+variable {ι α : Type} [Fintype ι] [DecidableEq ι]
   [Fintype α] [DecidableEq α]
 
 /-- The actual source symbols at the first n coordinates selected
