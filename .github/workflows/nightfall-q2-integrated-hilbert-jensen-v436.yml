@@ -1,0 +1,63 @@
+name: NIGHTFALL Q2 genuine product Hilbert Jensen Lean 4.36
+on:
+  push:
+    branches:
+      - nightfall-q2-integrated-hilbert-jensen-v436-20261113
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/ActualProductHilbertJensen.lean'
+      - '.github/workflows/nightfall-q2-integrated-hilbert-jensen-v436.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  integrated-hilbert-jensen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Recompile exact existing source merge tower on active pin
+        shell: bash
+        run: |
+          set -euo pipefail
+          M=research/nightfall/formalization/observability/ActualProductMergeTower.lean
+          cp "$M" /tmp/mathlib4/ActualProductMergeTower.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ActualProductMergeTower.olean ActualProductMergeTower.lean)
+      - name: Strict source Hilbert Jensen declarations and standard-axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualProductHilbertJensen
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualProductHilbertJensen.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.actual_product_conditional_vector_norm_jensen \
+            --decl $N.integrated_source_hilbert_jensen \
+            --json-out lean-receipts/q2-integrated-hilbert-jensen.json || {
+              cat lean-receipts/q2-integrated-hilbert-jensen.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-integrated-hilbert-jensen.json
+      - name: Exact proof dependencies and source hashes
+        if: always()
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          sha256sum \
+            research/nightfall/formalization/observability/ActualProductMergeTower.lean \
+            research/nightfall/formalization/observability/ActualProductHilbertJensen.lean \
+            > lean-receipts/SHA256SUMS.txt
+          git rev-parse HEAD > lean-receipts/commit.txt
+          cat lean-toolchain > lean-receipts/toolchain.txt
+          if test -d /tmp/mathlib4/.git; then git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: q2-integrated-source-hilbert-jensen-v436
+          path: lean-receipts/
+          if-no-files-found: warn
+          retention-days: 45
