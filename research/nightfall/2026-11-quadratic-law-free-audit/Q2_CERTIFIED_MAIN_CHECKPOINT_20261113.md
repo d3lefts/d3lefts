@@ -94,3 +94,20 @@ constant ~1679.42 or the v8 constant ~1228.356 is claimed.**
 No external referee endorsement or novelty priority is inferred.
 
 This record is a reproducible merge boundary, not a publication claim.
+
+## Addendum: source variance Parseval certificate (13 November 2026)
+
+A new source-identical Lean module `ActualESVarianceEnergy.lean` is
+integrated from exact source commit `d1be06494611576e8a17ae45da3f17828bb2fc68`.
+Strict run https://github.com/d3lefts/d3lefts/actions/runs/43492524791
+certified `weighted_orthogonal_sum_sq`, `esComp_empty_eq_source_mean`,
+`source_centered_es_sum`, `actual_source_variance_es_energy`, and
+`actual_degree_two_source_variance_energy`. The receipt lists the
+source SHA-256 `6d261478f468340e006809c3a210c04d23c6536898b558b23492cd9ffeae79c9`,
+Lean 4.33.0 historical source pin, and only the standard axioms
+`Classical.choice`, `Quot.sound`, `propext`.
+
+This supersedes the earlier exclusion of this single module above.
+No current-4.35.0 portability or terminal finite Q2 theorem is implied;
+the owned-neighbor moment pushforward and source influence composition
+remain separately pending.
