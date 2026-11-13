@@ -80,22 +80,6 @@ theorem actual_esComp_orthogonal_missing
     V (esComp_dependsOn p V f) k hkV
     (fun x => actual_esComp_centered p hp1 f U k hkU x)
 
-/-- The genuine actual-source pair energy is the self-inner-product
-of the canonical component (under the true global product law). -/
-theorem actual_source_pair_energy_as_inner
-    (p : ι → α → ℝ)
-    (hp1 : ∀ i, (∑ a : α, p i a) = 1)
-    (f : (ι → α) → ℝ) (base : ι → α)
-    (i j : ι) (hij : i ≠ j) :
-    sourceInner p
-      (esComp p ({i,j} : Finset ι) f)
-      (esComp p ({i,j} : Finset ι) f) =
-      (∑ a : α, ∑ b : α,
-        p i a * p j b *
-          (actualPairKernel p f base i j a b)^2) := by
-  -- The pair component depends only on (i,j). First remove every
-  -- unmatched coordinate by literal source-product resampling.
-  -- The final two-coordinate reduction is an exact finite Fubini identity.
-  sorry
+/-! Further pair-energy Fubini reduction is intentionally omitted until proven. -/
 
 end Nightfall.Observability.ActualESOrthogonalEnergy
