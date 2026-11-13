@@ -1,0 +1,51 @@
+name: NIGHTFALL Q2 original product merge tower Lean 4.36 kernel
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/ActualProductMergeTower.lean'
+      - '.github/workflows/nightfall-q2-source-merge-tower-v436.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-merge-tower:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Strict original-law merge tower, integrated Jensen and axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualProductMergeTower
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualProductMergeTower.lean \
+            --workspace /tmp/mathlib4 --timeout 600 --strict \
+            --allow-axiom Classical.choice \
+            --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.exchangeOutside_preserves_pair_mass \
+            --decl $N.exchangeOutside_double_expectation \
+            --decl $N.originalMass_total_one \
+            --decl $N.actual_product_merge_tower \
+            --decl $N.integrated_source_jensen \
+            --json-out lean-receipts/q2-source-merge-tower.json || {
+              cat lean-receipts/q2-source-merge-tower.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-source-merge-tower.json
+          sha256sum research/nightfall/formalization/observability/ActualProductMergeTower.lean \
+            > lean-receipts/SHA256SUMS.txt
+          git rev-parse HEAD > lean-receipts/repo-commit.txt
+      - name: Upload strict source, toolchain, axiom receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: q2-original-source-merge-tower-v436
+          path: lean-receipts/
+          if-no-files-found: warn
+          retention-days: 45
