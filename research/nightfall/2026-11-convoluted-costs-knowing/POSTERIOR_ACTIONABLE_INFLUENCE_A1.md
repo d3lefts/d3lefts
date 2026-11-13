@@ -17,6 +17,14 @@ The first term is *actionable influence* (sensitivity of the current Bayes predi
 
 Example: f_Theta(x)=Theta*x_i with a uniform unknown posterior sign has each individual-model influence 1, but actionable influence 0: observing x_i cannot improve the Bayes prediction 0.
 
+**Additional degree-two epistemic-energy law.** Let R_model(D)=E_{X}Var_{Theta|D}(f_Theta(X)). If every f_Theta has Hoeffding degree ≤2, then each residual r_Theta=f_Theta-m_D also has degree ≤2 and therefore
+
+    sum_i E_{Theta|D} I_i(r_Theta)
+      ≤ 2 E_{Theta|D} Var_X(r_Theta)
+      ≤ 2 R_model(D).
+
+Consequently the **total coordinate epistemic sensitivity** is itself quantitatively bounded by twice the irreducible model-prediction risk. This bound does not imply any particular coordinate's epistemic contribution is actionable. It is a simple exact ANOVA corollary, not an independent novelty claim.
+
 ## II. Valid four-evaluation estimator
 
 Suppose each call U(x) independently draws an inaccessible posterior model and returns f_Theta(x), with |f_Theta|≤B. On a synthetic independent product pair x,x^(i), four independent calls yield
