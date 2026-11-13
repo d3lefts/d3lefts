@@ -17,6 +17,7 @@ on:
       - 'research/nightfall/formalization/product_space/ActualESOwnedConditional.lean'
       - 'research/nightfall/formalization/product_space/ActualESOrthogonalEnergy.lean'
       - 'research/nightfall/formalization/product_space/ActualESInfluenceIdentity.lean'
+      - 'research/nightfall/formalization/product_space/ActualESPairEnergyFubini.lean'
       - 'research/nightfall/formalization/product_space/ActualESConditionalJensen.lean'
       - 'research/nightfall/formalization/observability/QuadraticHybridTelescoping.lean'
       - 'research/nightfall/formalization/product_space/ActualESQuadraticRectangles.lean'
@@ -403,6 +404,28 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/actual-es-condexp-projection.json
+      - name: Strict actual full-product pair energy equals two-coordinate table
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space
+          O=research/nightfall/formalization/observability
+          cp "$P/ActualESOrthogonalEnergy.lean" /tmp/aa/ActualESOrthogonalEnergy.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESOrthogonalEnergy.olean ActualESOrthogonalEnergy.lean)
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualESPairEnergyFubini
+          python3 scripts/lean_bridge.py \
+            "$P/ActualESPairEnergyFubini.lean" \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.actual_source_two_coordinate_fubini \
+            --decl $N.actual_source_pair_energy_eq_canonical_inner \
+            --json-out lean-receipts/actual-es-pair-energy-fubini.json || {
+              cat lean-receipts/actual-es-pair-energy-fubini.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/actual-es-pair-energy-fubini.json
       - name: Strict actual source influence as true ANOVA energy
         shell: bash
         run: |
@@ -472,6 +495,7 @@ jobs:
           sha256sum research/nightfall/formalization/product_space/ActualESOwnedConditional.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/product_space/ActualESOrthogonalEnergy.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/product_space/ActualESInfluenceIdentity.lean >> lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/product_space/ActualESPairEnergyFubini.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/product_space/ActualESConditionalJensen.lean >> lean-receipts/SHA256SUMS.txt
           echo leanprover/lean4:v4.33.0 > lean-receipts/lean-toolchain.txt
           echo 2a6ceaef872ae993708950f951989134084b851a > lean-receipts/upstream.txt
