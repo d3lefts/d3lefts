@@ -108,13 +108,10 @@ theorem esComp_empty_eq_pexp
     (p : ι → α → ℝ) (f : (ι → α) → ℝ)
     (x : ι → α) :
     esComp p (∅ : Finset ι) f x = pexp p f := by
-  simp [esComp, condExp, pexp]
-  apply Finset.sum_congr rfl
-  intro y _
-  have hmerge : merge (∅ : Finset ι) x y = y := by
+  have hmerge (y : ι → α) : merge (∅ : Finset ι) x y = y := by
     funext k
     simp [merge]
-  rw [hmerge]
+  simp [esComp, condExp, pexp, hmerge]
 
 theorem actual_source_centered_eq_sum_nonconstant
     (p : ι → α → ℝ)
