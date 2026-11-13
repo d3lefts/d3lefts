@@ -209,13 +209,13 @@ def check(source: Path, workspace: Path, declarations: list[str], timeout: int, 
     # Accept stable and prerelease tags exactly as printed by Lean.  Avoid
     # version-boundary heuristics that silently turn valid rc receipts into
     # TOOLCHAIN_MISMATCH.  Record both sides for independent diagnosis.
-    match = re.search(r"\\bversion\\s+([^\\s,)]+)", receipt["compiler_version"], re.I)
+    match = re.search(r"\bversion\s+([^\s,)]+)", receipt["compiler_version"], re.I)
     parsed_version = match.group(1) if match else None
     parsed_tag = "leanprover/lean4:v" + parsed_version if parsed_version else None
     receipt["parsed_compiler_toolchain"] = parsed_tag
     receipt["version_matches_pin"] = bool(
         expected and parsed_tag and expected == parsed_tag
-        and re.fullmatch(r"[0-9]+\\.[0-9]+\\.[0-9]+(?:-(?:rc|beta|alpha)[0-9]+)?", parsed_version, re.I)
+        and re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+(?:-(?:rc|beta|alpha)[0-9]+)?", parsed_version, re.I)
     )
     temp_path = None
     try:
