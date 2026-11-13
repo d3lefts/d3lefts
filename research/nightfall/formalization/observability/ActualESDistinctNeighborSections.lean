@@ -49,7 +49,7 @@ theorem product_expect_single
     _ = ∑ b : α, p j b * g b := by
             apply Finset.sum_congr rfl
             intro b _
-            rw [Nightfall.ProductSpace.single_product_marginal p hp1 j b]
+            rw [Nightfall.ProductSpace.Posterior.single_product_marginal p hp1 j b]
 
 theorem condExp_single_inside
     (p : ι → α → ℝ)
