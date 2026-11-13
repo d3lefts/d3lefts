@@ -13,15 +13,7 @@ jobs:
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
-      - name: Install pinned Lean 4.35.0 and Mathlib
-        shell: bash
-        run: |
-          set -euo pipefail
-          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
-          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.35.0
-          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-          git clone --depth 1 --branch v4.35.0 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4
-          (cd /tmp/mathlib4 && "$HOME/.elan/bin/lake" exe cache get)
+      - uses: ./.github/actions/setup-nightfall-lean
       - name: Kernel-check scoped witness packing declarations
         shell: bash
         run: |
