@@ -68,6 +68,9 @@ theorem source_owned_pair_energy_le_influence
     obtain ⟨e, he, rfl⟩ := Finset.mem_image.mp hS
     have heowner : owner u v c e = i :=
       (Finset.mem_filter.mp he).2
+    apply Finset.mem_filter.mpr
+    constructor
+    · exact Finset.mem_univ _
     change i ∈ q e
     dsimp [q]
     rw [endpoints_eq_owner_other u v c e, heowner]
