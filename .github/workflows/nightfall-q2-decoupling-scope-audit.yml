@@ -1,0 +1,31 @@
+name: NIGHTFALL Q2 decoupling/Grothendieck exact prior-art attack
+on:
+  push:
+    branches:
+      - nightfall-q2-grothendieck-decoupling-scope-audit-20261113
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/check_q2_decoupling_scope_exact.py'
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/Q2_GROTHENDIECK_DECOUPLING_SCOPE_AUDIT_20261113.md'
+      - '.github/workflows/nightfall-q2-decoupling-scope-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-scope-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reproduce exact finite bilinear and counterexample tests
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/2026-11-quadratic-law-free-audit/check_q2_decoupling_scope_exact.py
+      - name: Record non-Lean provenance and preserve priority gap
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD
+          sha256sum research/nightfall/2026-11-quadratic-law-free-audit/{check_q2_decoupling_scope_exact.py,Q2_GROTHENDIECK_DECOUPLING_SCOPE_AUDIT_20261113.md}
+          echo 'CLAIM_STATUS=FINITE_EXACT_AUDIT_AND_ANALYTIC_IDENTITIES_ONLY'
+          echo 'GROTHENDIECK_CATEGORICAL_SUBSUMPTION=OPEN'
+          echo 'Q2_TERMINAL_LEAN_CERTIFICATE=NONE'
