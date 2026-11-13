@@ -18,6 +18,13 @@ on:
       - 'scripts/test_discovery_system_identity.cjs'
       - '.github/workflows/nightfall-active-passports.yml'
   workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+env:
+  # Only PR checkouts may have experimental Lean sources with no historical receipt.
+  # Main stays fail-closed via the provenance scripts.
+  NIGHTFALL_ALLOW_UNREVIEWED: ${{ github.event_name == 'pull_request' && '1' || '0' }}
 permissions:
   contents: read
 jobs:
