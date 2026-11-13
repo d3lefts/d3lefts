@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 2,
+  "revision": 3,
   "as_of": "2026-11-13",
-  "source_commit": "6f26df0fc630dd051bfe54ad444e862c04767899",
-  "scope": "Exact Git blob custody for 25 post-67 historical-source-checkpoint Lean additions. Entries are unreviewed by the active 4.36 mainline certificate registry. Three additional source-identical Q2 modules have historical scope-limited Lean 4.33 proof receipts in run 43501778239 and its dependencies, but no active 4.36 replay. No terminal Q2 certification or priority claim.",
+  "source_commit": "718752e829727d7b5107cea1c6be49fc28f08a88",
+  "scope": "Exact Git-blob custody for 27 Lean sources added after the frozen 67-entry historical registry. These are pending classification in that immutable registry: pending here does not negate separate source-matched scoped Lean 4.36.0-rc2 receipts for ActualProductMergeTower / ActualProductHilbertJensen or historical 4.33.0 receipts for the owned-sample modules. No active-pin end-to-end Q2 certification or priority finding follows from their presence. The protected checker validates paths and Git blobs fail-closed.",
   "sources": [
     {
       "path": "research/nightfall/formalization/observability/ActualESCanonicalPairGraph.lean",
@@ -114,6 +114,26 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualProductHilbertJensen.lean",
+      "source_blob_sha": "bdd68ff7f876092f1f4755ca0e0129280c571f17",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Two scoped active Lean 4.36.0-rc2 Hilbert norm/source Jensen declarations reported strictly compiled; remains outside immutable 67 historical-source registry. Not a terminal source Q2 theorem. Source-matched scoped CI: https://github.com/d3lefts/d3lefts/actions/runs/43503541740; not enrolled in this manifest's 67 historical full-source receipt classification."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualProductMergeTower.lean",
+      "source_blob_sha": "6d82e5865a9b7cd4a78c2ef0d55003e681dd462f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Five scoped active Lean 4.36.0-rc2 original-product merge/tower and Jensen declarations reported strictly compiled; remains outside immutable 67 historical-source registry. Not a terminal source Q2 theorem. Source-matched scoped CI: https://github.com/d3lefts/d3lefts/actions/runs/43502226556; not enrolled in this manifest's 67 historical full-source receipt classification."
     },
     {
       "path": "research/nightfall/formalization/observability/QuadraticActualMomentEndpoint.lean",
