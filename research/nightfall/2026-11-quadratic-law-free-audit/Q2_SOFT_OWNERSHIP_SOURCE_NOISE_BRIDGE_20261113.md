@@ -141,6 +141,53 @@ Hence the **author-analytic finite-product candidate**
 \]
 This is not a distinct improvement in the constant or exponent over PR #448. Its significance is that it **eliminates the hardest owner-specific representation bridges from one complete source-level analytic proof route**. The matching mass gate remains as a known ingredient. Universal validity and priority are not promoted to kernel or external certification by this new derivation.
 
+### Self-contained source budget and moment derivations
+
+For completeness, the two input budgets in the corollary follow directly from the **bounded genuine source** rather than from auxiliary certificate hypotheses.
+
+**(i) Section \(8B\).** Fix a supported input \(x\). For each coordinate \(i\), choose a supported replacement \(a_i^+\) maximizing \(f(x_{-i},a)\). Independently switch every coordinate to its designated replacement with probability \(t\). Because \(f\) has source Hoeffding degree \(\le2\), the averaged value \(q_+(t)\) is a polynomial of degree at most two. Its derivative at zero is exactly
+\(q_+'(0)=\sum_i[f(x_{-i},a_i^+)-f(x)]\ge0\).
+For any quadratic \(q\),
+\[
+q'(0)=-3q(0)+4q(1/2)-q(1).
+\]
+Since \(q_+(t)\) is an average of original values in \([-B,B]\) for \(t\in[0,1]\), \(q_+'(0)\le8B\). Apply the same construction to individually minimizing replacements \(a_i^-\) to get total losses \(\le8B\), hence
+\(\sum_i\operatorname{osc}_a f(x_{-i},a)\le16B\).
+Weighted Popoviciu applied to the genuine one-coordinate section \(U_i\) gives
+\(\|U_i(\cdot;x_{-i})\|_{L^2(p_i)}\le\operatorname{osc}_a f(x_{-i},a)/2\).
+Average over genuine source \(x\) to obtain \(\sum_i u_i\le8B\). Zero-mass symbols were removed before choosing extrema; no minimum-atom assumption is made.
+
+**(ii) Additive \(\alpha B\).** Let the actual product-refresh operator
+\(T_t=\prod_i[\mathbb E_i+t(\mathrm{Id}-\mathbb E_i)]\).
+It preserves the source law, contracts the sup norm and acts as \(t^{|S|}\) on the genuine Hoeffding component \(h_S\). For supported \(x,y\),
+\[
+r(t)=T_t f(x)-T_t f(y)=u t+v t^2,\quad
+u=\sum_i(h_i(x_i)-h_i(y_i)),\quad |r(t)|\le2B.
+\]
+At \(t_0=\sqrt2-1\), solve
+\(u=[r(t_0)-t_0^2r(1)]/[t_0(1-t_0)]\);
+the triangle inequality gives \(|u|\le4(1+\sqrt2)B\).
+The underlying product is the *full Cartesian product of positive supports*, so independent choices of maximizing/minimizing inputs imply
+\(\operatorname{osc}(\sum_i h_i)=\sum_i\operatorname{osc}(h_i)\le4(1+\sqrt2)B\).
+Weighted Popoviciu yields \(\sum_i a_i\le2(1+\sqrt2)B=\alpha B\).
+
+**(iii) Hilbert moment algebra.** For independent centered Hilbert \(Y_j\) with \(\|Y_j\|\le c_i\), write \(v_j=\mathbb E\|Y_j\|^2\), \(s=\sum v_j\). Exact expansion (with all odd/one-off cross terms vanishing by independence) gives
+\[
+\mathbb E\|\sum_jY_j\|^4
+=\sum_j\mathbb E\|Y_j\|^4+
+  2\sum_{j<k}v_jv_k+
+  4\sum_{j<k}\mathbb E\langle Y_j,Y_k\rangle^2.
+\]
+Here \(\mathbb E\|Y_j\|^4\le c_i^2v_j\) and
+\(\mathbb E\langle Y_j,Y_k\rangle^2\le v_jv_k\), proving
+\(\mathbb E\|H_i\|^4\le c_i^2s_i+3s_i^2\).
+Log-convexity of \(L^p\) norms or direct Hölder gives
+\((\mathbb E\|H_i\|^2)^{3/2}\le
+(\mathbb E\|H_i\|)(\mathbb E\|H_i\|^4)^{1/2}\),
+so (E2) follows after \(s_i\le M\).
+These derivations are algebraic, not a claim of a source-identical Lean kernel certificate.
+
+
 ## Failure attacks and exact validation
 
 A separate exact-rational *source enumeration* program was executed locally in this session on 36 random heterogeneous finite quadratic models and two categorical address models, including zero-mass atoms, using only positive-support pointwise bounds. It checked:
