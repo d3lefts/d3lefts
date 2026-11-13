@@ -5,6 +5,7 @@ on:
       - 'research/nightfall/formalization/observability/ActualESPairHilbertMoment.lean'
       - 'research/nightfall/formalization/observability/ActualESPackedParity.lean'
       - 'research/nightfall/formalization/observability/ActualESGeneralMatching.lean'
+      - 'research/nightfall/formalization/observability/ActualESGreedyMatchingEmbedding.lean'
       - 'research/nightfall/formalization/observability/ActualESMatchingMass.lean'
       - 'research/nightfall/formalization/observability/ActualESGreedyCover.lean'
       - 'research/nightfall/formalization/observability/ActualESGreedyOwnership.lean'
@@ -304,6 +305,31 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/actual-es-canonical-pair-graph.json
+      - name: Strict actual-source greedy graph matching -> endpoint cover
+        shell: bash
+        run: |
+          set -euo pipefail
+          O=research/nightfall/formalization/observability
+          for module in ActualESGeneralMatching WeightedGreedyMatching WeightedGreedyCover; do
+            cp "$O/$module.lean" "/tmp/aa/$module.lean"
+            (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/$module.olean" "$module.lean")
+          done
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualESGreedyMatchingEmbedding
+          python3 scripts/lean_bridge.py \
+            "$O/ActualESGreedyMatchingEmbedding.lean" \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.selected_matchingCoord_injective \
+            --decl $N.selected_matching_source_amplitude_witness \
+            --decl $N.selected_matching_weight_sum_le_four \
+            --decl $N.exists_greedy_source_endpoint_cover \
+            --json-out lean-receipts/actual-es-greedy-embedding.json || {
+              cat lean-receipts/actual-es-greedy-embedding.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/actual-es-greedy-embedding.json
       - name: Strict source-derived increment and endpoint theorem audit
         shell: bash
         run: |
@@ -433,7 +459,7 @@ jobs:
           mkdir -p lean-receipts
           sha256sum research/nightfall/formalization/observability/{ActualESPairHilbertMoment,QuadraticActualMomentEndpoint,HilbertManyIncrementMoment}.lean research/nightfall/formalization/product_space/{ActualESPairMatchingBridge,ActualESQuadraticRectangles}.lean > lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/observability/{ActualESPackedParity,QuadraticHybridTelescoping}.lean >> lean-receipts/SHA256SUMS.txt
-          sha256sum research/nightfall/formalization/observability/ActualESGeneralMatching.lean >> lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/observability/{ActualESGeneralMatching,ActualESGreedyMatchingEmbedding,WeightedGreedyMatching,WeightedGreedyCover}.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/observability/{ActualESMatchingMass,WeightedGreedyMatching}.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/observability/{ActualESGreedyCover,WeightedGreedyCover}.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/observability/ActualESGreedyOwnership.lean >> lean-receipts/SHA256SUMS.txt
