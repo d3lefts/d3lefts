@@ -44,7 +44,7 @@ def group_for(path: str) -> str:
     return "/".join(parts[2:-1]) or "other"
 
 
-def inspect(root: Path) -> dict:
+def inspect(root: Path, *, allow_pending: bool = False) -> dict:
     """Audit current checkout bytes, authoritative ledger and custody boundaries."""
     manifest = json.loads((root / MANIFEST).read_text(encoding="utf-8"))
     require(manifest.get("schema") == "nightfall-lean-provenance-v1",
@@ -66,6 +66,8 @@ def inspect(root: Path) -> dict:
             "Missing registered Lean source(s): " +
             str(sorted(set(listed) - set(actual))))
     pending = sorted(set(actual) - set(listed))
+    require(allow_pending or not pending,
+            "Unregistered Lean sources in protected checkout: " + str(pending))
     pending_entries = [{
         "path": p,
         "git_blob_sha1": git_blob_hash((root / p).read_bytes()),
@@ -159,14 +161,20 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--audit", action="store_true",
                         help="also run the existing site/passport provenance assertions")
+    parser.add_argument("--allow-pending", action="store_true",
+                        help="PR-only: record extra checkout files as explicitly unreviewed; protected main must not use")
     parser.add_argument("--json-out", type=Path,
                         help="write a machine-readable, explicit-scope certificate index")
     args = parser.parse_args()
     try:
-        result = inspect(ROOT)
+        result = inspect(ROOT, allow_pending=args.allow_pending)
         if args.audit:
+            import os
+            env = dict(os.environ)
+            if args.allow_pending:
+                env["NIGHTFALL_ALLOW_UNREVIEWED"] = "1"
             subprocess.run(["node", "scripts/test_lean_certificate_provenance.cjs"],
-                           cwd=ROOT, check=True)
+                           cwd=ROOT, env=env, check=True)
     except (ValueError, OSError, subprocess.CalledProcessError) as exc:
         parser.exit(1, f"FAIL: {exc}\n")
     if args.json_out:
