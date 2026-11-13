@@ -8,6 +8,7 @@ on:
       - 'research/nightfall/formalization/product_space/ActualESConditionalProjection.lean'
       - 'research/nightfall/formalization/product_space/ActualESSourceEnergy.lean'
       - 'research/nightfall/formalization/product_space/ActualESOrthogonality.lean'
+      - 'research/nightfall/formalization/product_space/ActualESVarianceEnergy.lean'
       - 'research/nightfall/2026-11-quadratic-law-free-audit/check_actual_conditional_sections.py'
       - '.github/workflows/nightfall-q2-actual-conditional-sections.yml'
   workflow_dispatch:
@@ -120,6 +121,29 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/actual-es-orthogonality.json
+      - name: Strict source Parseval and degree-two variance energy without supplied energy
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space
+          cp "$P/ActualESOrthogonality.lean" /tmp/aa/ActualESOrthogonality.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESOrthogonality.olean ActualESOrthogonality.lean)
+          N=Nightfall.Observability.ActualESVarianceEnergy
+          python3 scripts/lean_bridge.py \
+            "$P/ActualESVarianceEnergy.lean" \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.weighted_orthogonal_sum_sq \
+            --decl $N.esComp_empty_eq_source_mean \
+            --decl $N.source_centered_es_sum \
+            --decl $N.actual_source_variance_es_energy \
+            --decl $N.actual_degree_two_source_variance_energy \
+            --json-out lean-receipts/actual-es-source-variance.json || {
+              cat lean-receipts/actual-es-source-variance.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/actual-es-source-variance.json
       - name: Strict equality of source section energy and resampling influence
         shell: bash
         run: |
@@ -167,7 +191,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/product_space/{ActualESConditionalSection,ActualESConditionalJensen,ActualESConditionalProjection,ActualESSourceEnergy,ActualESOrthogonality}.lean > lean-receipts/SHA256SUMS
+          sha256sum research/nightfall/formalization/product_space/{ActualESConditionalSection,ActualESConditionalJensen,ActualESConditionalProjection,ActualESSourceEnergy,ActualESOrthogonality,ActualESVarianceEnergy}.lean > lean-receipts/SHA256SUMS
           sha256sum research/nightfall/2026-11-quadratic-law-free-audit/check_actual_conditional_sections.py >> lean-receipts/SHA256SUMS
           echo leanprover/lean4:v4.33.0 > lean-receipts/lean-toolchain.txt
           echo 2a6ceaef872ae993708950f951989134084b851a > lean-receipts/upstream.txt
