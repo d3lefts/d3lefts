@@ -154,4 +154,53 @@ theorem finitePairIncrement_fourth_endpoint
         p hp hp1 f base i j n c hkernel k a)
     hM
 
+/-- The SECOND MOMENT of the actual finite-neighbor Hilbert increment
+table equals the sum of the literal original source-pair L2 energies.
+This derives the numerical energy object used in the fourth-moment
+endpoint; it does not assume a moment-to-energy identification. -/
+theorem finitePairIncrement_moment2_eq_source_pair_energies
+    (p : ι → α → ℝ)
+    (hp : ∀ k a, 0 ≤ p k a)
+    (hp1 : ∀ k, (∑ a : α, p k a) = 1)
+    (f : (ι → α) → ℝ) (base : ι → α)
+    (i : ι) (j : ℕ → ι) (n : ℕ)
+    (hne : ∀ k, k < n → i ≠ j k) :
+    moment2 (fun k => p (j k))
+      (finitePairIncrement p f base i j n) n =
+    (∑ k ∈ Finset.range n,
+      Nightfall.Observability.ActualESOwnedEnergy.sourcePairEnergy
+        p f base i (j k)) := by
+  classical
+  rw [finitePairIncrement_moment2_eq_budget p hp1 f base i j n hne]
+  unfold budget
+  apply Finset.sum_congr rfl
+  intro k hk
+  have hklt : k < n := Finset.mem_range.mp hk
+  unfold Nightfall.Observability.ActualESOwnedEnergy.sourcePairEnergy
+  unfold vecNormSq
+  calc
+    (∑ b : α, p (j k) b *
+      (∑ a : α, (finitePairIncrement p f base i j n k b a)^2)) =
+      ∑ b : α, ∑ a : α,
+        p (j k) b *
+          (finitePairIncrement p f base i j n k b a)^2 := by
+            apply Finset.sum_congr rfl
+            intro b _
+            rw [Finset.mul_sum]
+    _ = ∑ a : α, ∑ b : α,
+        p (j k) b *
+          (finitePairIncrement p f base i j n k b a)^2 :=
+            Finset.sum_comm
+    _ = ∑ a : α, ∑ b : α,
+        p i a * p (j k) b *
+          (actualPairKernel p f base i (j k) a b)^2 := by
+            apply Finset.sum_congr rfl
+            intro a _
+            apply Finset.sum_congr rfl
+            intro b _
+            simp only [finitePairIncrement, if_pos hklt,
+              actualPairIncrement, mul_pow,
+              Real.sq_sqrt (hp i a)]
+            ring
+
 end Nightfall.Observability.ActualESFiniteNeighborMoment
