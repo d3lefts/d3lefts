@@ -26,7 +26,7 @@ open Nightfall.ProductSpace.Influence
 open Nightfall.ProductSpace.Transfer
 open Nightfall.Observability.ActualESConditionalSection
 
-variable {Ω α : Type*} [Fintype Ω] [Fintype α]
+variable {Ω α : Type} [Fintype Ω] [Fintype α]
 
 noncomputable def sqNorm (q : α → ℝ) (v : α → ℝ) : ℝ :=
   ∑ a : α, q a * (v a)^2
