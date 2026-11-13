@@ -1,4 +1,4 @@
-name: NIGHTFALL finite Hilbert sign-moment log transfer (Lean 4.35)
+name: NIGHTFALL finite Hilbert sign-moment log transfer (Lean 4.36.0-rc2)
 
 on:
   pull_request:
