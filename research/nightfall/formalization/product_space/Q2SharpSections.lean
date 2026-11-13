@@ -24,7 +24,7 @@ open Nightfall.ProductSpace.EfronStein
 open Nightfall.Observability.QuadraticUnifiedFinite
 open Nightfall.Observability.QuadraticSwitching
 
-variable {α : Type*} [Fintype α]
+variable {α : Type} [Fintype α]
 
 /-- Finite-law Popoviciu inequality, with no positive-atom floor. -/
 theorem weighted_variance_le_quarter_range
@@ -50,7 +50,7 @@ theorem weighted_variance_le_quarter_range
               ring
       _ = sqsum - 2 * v * μ + v ^ 2 := by
         simp only [Finset.sum_sub_distrib, Finset.sum_add_distrib,
-          ← Finset.mul_sum, ← Finset.sum_mul]
+          ← Finset.mul_sum]
         rw [hp1]
         dsimp [sqsum, μ]
         ring
@@ -107,7 +107,7 @@ theorem weighted_std_le_half_range
     mul_pos (by linarith) (by linarith)
   nlinarith [hprod]
 
-variable {ι E : Type*}
+variable {ι E : Type}
   [Fintype ι] [DecidableEq ι]
   [DecidableEq α] [Nonempty α] [Fintype E]
 
