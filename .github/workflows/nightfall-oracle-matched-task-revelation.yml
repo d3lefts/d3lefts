@@ -1,0 +1,31 @@
+name: NIGHTFALL oracle-matched task revelation exact falsifier
+on:
+  push:
+    branches:
+      - nightfall-oracle-matched-task-revelation-20261113
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-convoluted-costs-knowing/ORACLE_MATCHED_TASK_REVELATION_A1.md'
+      - 'research/nightfall/2026-11-convoluted-costs-knowing/check_task_revelation_exact_ci.py'
+      - '.github/workflows/nightfall-oracle-matched-task-revelation.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check rational sequential tests and task support laws
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/2026-11-convoluted-costs-knowing/check_task_revelation_exact_ci.py
+      - name: Record exact source and scope
+        run: |
+          git rev-parse HEAD
+          sha256sum research/nightfall/2026-11-convoluted-costs-knowing/{ORACLE_MATCHED_TASK_REVELATION_A1.md,check_task_revelation_exact_ci.py}
+          echo 'ORACLE_MATCHED_TASK_REVELATION=AUTHOR_ANALYTIC_THEOREM'
+          echo 'CI=FINITE_EXACT_FALSIFIER_ONLY'
+          echo 'GENERAL_NONSEPARABLE_MATCHED_UPPER=OPEN'
+          echo 'WORLDWIDE_NOVELTY=UNREVIEWED'
