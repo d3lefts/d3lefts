@@ -16,6 +16,7 @@ on:
       - 'research/nightfall/formalization/observability/ActualESCanonicalPairGraph.lean'
       - 'research/nightfall/formalization/observability/ActualESFiniteNeighborMoment.lean'
       - 'research/nightfall/formalization/observability/ActualESFiniteSampleLaw.lean'
+      - 'research/nightfall/formalization/observability/ActualESOwnedSampleLaw.lean'
       - 'research/nightfall/formalization/product_space/ActualESConditionalSection.lean'
       - 'research/nightfall/formalization/product_space/ActualESConditionalProjection.lean'
       - 'research/nightfall/formalization/product_space/ActualESOwnedConditional.lean'
@@ -375,6 +376,32 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/actual-es-law-preserving-observed-prefix.json
+      - name: Strict generated greedy ownership to original-source first-moment distribution
+        shell: bash
+        run: |
+          set -euo pipefail
+          O=research/nightfall/formalization/observability
+          for m in ActualESCanonicalPairGraph ActualESFiniteSampleLaw; do
+            cp "$O/$m.lean" "/tmp/aa/$m.lean"
+            (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean")
+          done
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualESOwnedSampleLaw
+          python3 scripts/lean_bridge.py \
+            "$O/ActualESOwnedSampleLaw.lean" \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.indexedNeighbors_mem \
+            --decl $N.indexedNeighbors_injective_on_prefix \
+            --decl $N.actual_greedy_owned_product_law \
+            --decl $N.actual_greedy_owned_first_norm_law \
+            --decl $N.exists_actual_source_greedy_first_norm_law \
+            --json-out lean-receipts/actual-es-greedy-owned-first-law.json || {
+              cat lean-receipts/actual-es-greedy-owned-first-law.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/actual-es-greedy-owned-first-law.json
       - name: Strict genuine source conditional Hilbert Jensen contraction
         shell: bash
         run: |
@@ -517,6 +544,7 @@ jobs:
           sha256sum research/nightfall/formalization/observability/ActualESCanonicalPairGraph.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/observability/ActualESFiniteNeighborMoment.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/observability/ActualESFiniteSampleLaw.lean >> lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/observability/ActualESOwnedSampleLaw.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/product_space/ActualESConditionalSection.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/product_space/ActualESConditionalProjection.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/product_space/ActualESOwnedConditional.lean >> lean-receipts/SHA256SUMS.txt
