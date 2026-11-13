@@ -10,11 +10,12 @@ the increment centering and L2(output-law) norm bound from the source law.
 Consequently it invokes a previously derived (not assumed) finite
 fourth-moment/interpolation endpoint.
 
-Scope: the neighbor coordinates are sampled independently by a *new*
-finite product table, with each row law taken from source p. An injectivity
-condition is included to make them distinct coordinates of the original
-source; identifying these new-product moments with a conditional section
-of the original source still needs a separate source-measurability bridge.
+Scope: the neighbor symbols are sampled independently by a *new*
+finite product table, with each row law taken from source p. The neighbor
+map j is not required to be injective and repeated source coordinates
+become artificially independent copies. Application to a genuine
+conditional section of the original source requires a separate
+distinct-neighbor and joint-distribution identification theorem.
 The amplitude bound |h_ij| ≤ c and the energy cap ≤ M are explicit
 hypotheses. Neither is the desired global Q2 conclusion: the first must
 be supplied by a matching cover and the second by source ANOVA.
@@ -29,7 +30,7 @@ open Nightfall.Observability.QuadraticHilbertMany
 open Nightfall.Observability.QuadraticHilbertMoments
 open Nightfall.Observability.QuadraticActualMomentEndpoint
 
-variable {ι α : Type*} [Fintype ι] [DecidableEq ι]
+variable {ι α : Type} [Fintype ι] [DecidableEq ι]
   [Fintype α] [DecidableEq α]
 
 /-- Source-derived increments: sampled neighbor symbol b is the input,
