@@ -9,6 +9,8 @@ on:
       - 'research/nightfall/2026-11-convoluted-costs-knowing/check_task_revelation_exact_ci.py'
       - 'research/nightfall/2026-11-convoluted-costs-knowing/ORACLE_MATCHED_GROUP_INFORMATION_COVER_A2.md'
       - 'research/nightfall/2026-11-convoluted-costs-knowing/check_group_information_cover_exact_ci.py'
+      - 'research/nightfall/2026-11-convoluted-costs-knowing/check_group_cover_exact.py'
+      - 'research/nightfall/2026-11-convoluted-costs-knowing/ORACLE_MATCHED_A2_PROVENANCE.md'
       - '.github/workflows/nightfall-oracle-matched-task-revelation.yml'
   workflow_dispatch:
 permissions:
@@ -27,6 +29,10 @@ jobs:
         run: |
           set -euo pipefail
           python3 research/nightfall/2026-11-convoluted-costs-knowing/check_group_information_cover_exact_ci.py
+      - name: Replay original full independently authored group-oracle checker
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/2026-11-convoluted-costs-knowing/check_group_cover_exact.py
       - name: Record exact source and scope
         run: |
           git rev-parse HEAD
@@ -35,5 +41,6 @@ jobs:
           echo 'CI=FINITE_EXACT_FALSIFIER_ONLY'
           sha256sum research/nightfall/2026-11-convoluted-costs-knowing/{ORACLE_MATCHED_GROUP_INFORMATION_COVER_A2.md,check_group_information_cover_exact_ci.py}
           echo 'GROUPED_INDEPENDENT_OUTPUT_COVER=AUTHOR_ANALYTIC_THEOREM'
+          sha256sum research/nightfall/2026-11-convoluted-costs-knowing/check_group_cover_exact.py
           echo 'GENERAL_NONSEPARABLE_MATCHED_UPPER=OPEN'
           echo 'WORLDWIDE_NOVELTY=UNREVIEWED'
