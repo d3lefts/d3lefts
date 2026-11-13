@@ -117,7 +117,7 @@ theorem source_matching_mass_le_four
     exact hdom e s t
   have hsubtype : (∑ e ∈ S, w e) =
       (∑ e : {e // e ∈ S}, w e.1) := by
-    simp
+    simpa using (Finset.sum_attach S w).symm
   rw [hsubtype]
   exact hsum.trans hbudget
 
