@@ -22,7 +22,7 @@ assert.equal(new Set(custodyPaths).size,custodyPaths.length,"Duplicate pending c
 for(const r of custody.sources){
  assert.ok(pending.includes(r.path),"Pending custody path absent or already verified: "+r.path);
  const bytes=fs.readFileSync(r.path);
- const sha=crypto.createHash("sha1").update(Buffer.from(`blob ${bytes.length}\\0`)).update(bytes).digest("hex");
+ const sha=crypto.createHash("sha1").update(Buffer.from(`blob ${bytes.length}\0`)).update(bytes).digest("hex");
  assert.equal(r.source_blob_sha,sha,"Pending Lean source mutated: "+r.path);
  assert.equal(r.classification,"unreviewed-source");
  assert.equal(r.ci_source_match_status,"no-verified-receipt");
