@@ -1,0 +1,32 @@
+name: NIGHTFALL Q2 owned observed source exact audit (not Lean)
+on:
+  push:
+    branches:
+      - nightfall-q2-owned-observed-source-bridge-20261113
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/check_q2_owned_observed_source_exact.py'
+      - 'research/nightfall/formalization/observability/ActualESOwnedObservedSource.lean'
+      - '.github/workflows/nightfall-q2-owned-observed-exact-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  independent-exact-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exact-rational pointwise ownership, product law and source energy
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/2026-11-quadratic-law-free-audit/check_q2_owned_observed_source_exact.py
+      - name: Immutable source and test inventory; not a Lean certificate
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD
+          sha256sum \
+            research/nightfall/formalization/observability/ActualESOwnedObservedSource.lean \
+            research/nightfall/2026-11-quadratic-law-free-audit/check_q2_owned_observed_source_exact.py
+          echo 'CLAIM_STATUS=EXACT_FINITE_AUDIT_ONLY'
+          echo 'LEAN_KERNEL_CERTIFICATE=NONE'
