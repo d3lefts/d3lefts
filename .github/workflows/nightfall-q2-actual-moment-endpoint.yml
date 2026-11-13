@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/observability/QuadraticActualMomentEndpoint.lean'
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/check_actual_source_matching_v2.py'
       - '.github/workflows/nightfall-q2-actual-moment-endpoint.yml'
   workflow_dispatch:
 
@@ -16,6 +17,11 @@ jobs:
     timeout-minutes: 50
     steps:
       - uses: actions/checkout@v4
+      - name: Independently audit actual-source matching on finite rare-atom graphs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I research/nightfall/2026-11-quadratic-law-free-audit/check_actual_source_matching_v2.py
       - name: Install pinned Lean 4.35.0 and Mathlib v4.35.0
         shell: bash
         run: |
@@ -60,6 +66,7 @@ jobs:
         run: |
           mkdir -p lean-receipts
           sha256sum research/nightfall/formalization/observability/{ArbitraryLawFourthMoment,HilbertTwoIncrementMoment,HilbertManyIncrementMoment,QuadraticEndpointInterpolation,QuadraticActualMomentEndpoint}.lean > lean-receipts/SHA256SUMS
+          sha256sum research/nightfall/2026-11-quadratic-law-free-audit/check_actual_source_matching_v2.py >> lean-receipts/SHA256SUMS
           cat lean-toolchain > lean-receipts/lean-toolchain.txt
           git rev-parse HEAD > lean-receipts/source-commit.txt
           (git -C /tmp/mathlib4 rev-parse HEAD || true) > lean-receipts/mathlib-commit.txt
