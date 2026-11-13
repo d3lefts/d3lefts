@@ -1,4 +1,4 @@
-name: NIGHTFALL quadratic realized range bridge — pinned Lean 4.35
+name: NIGHTFALL quadratic realized range bridge — pinned Lean 4.36.0-rc2
 on:
   pull_request:
     paths:
