@@ -1,0 +1,63 @@
+name: NIGHTFALL Q2 same-source finite arithmetic closure Lean 4.35
+on:
+  push:
+    branches:
+      - nightfall-q2-e2e-kernel-20261113
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/Q2FiniteArithmeticClosure.lean'
+      - '.github/workflows/nightfall-q2-e2e-mathlib435.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  finite-energy-closure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Lean pinned by repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain "$(cat lean-toolchain)"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch Mathlib v4.35.0 and compiled cache
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --depth 1 --branch v4.35.0 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4
+          (cd /tmp/mathlib4 && lake exe cache get)
+      - name: Strict machine-check numerical Q2 energy closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.Q2FiniteArithmeticClosure
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/Q2FiniteArithmeticClosure.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.energy_variance_bound \
+            --decl $N.energy_variance_squared_bound \
+            --json-out lean-receipts/q2-numeric-closure.json || {
+              cat lean-receipts/q2-numeric-closure.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-numeric-closure.json
+      - name: Source and toolchain receipt
+        if: always()
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/observability/Q2FiniteArithmeticClosure.lean > lean-receipts/SHA256SUMS.txt
+          cat lean-toolchain > lean-receipts/toolchain.txt
+          git rev-parse HEAD > lean-receipts/source-commit.txt
+          if test -d /tmp/mathlib4/.git; then git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: q2-finite-closure-standard-axioms
+          path: lean-receipts/
+          retention-days: 30
