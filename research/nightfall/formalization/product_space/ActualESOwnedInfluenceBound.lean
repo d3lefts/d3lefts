@@ -48,7 +48,8 @@ theorem canonical_component_energy_nonneg
   apply Finset.sum_nonneg
   intro x _
   have hm := prodMass_nonneg' p hp x
-  nlinarith [sq_nonneg (esComp p S f x), hm]
+  simpa only [pow_two] using
+    (mul_nonneg hm (sq_nonneg (esComp p S f x)))
 
 /-- The exact source L2 energy of an owned unordered source edge,
 regardless of which endpoint was chosen as the first orientation. -/
