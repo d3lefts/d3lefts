@@ -206,7 +206,7 @@ def check(source: Path, workspace: Path, declarations: list[str], timeout: int, 
     version = invoke(cmd + ["--version"], workspace, min(timeout, 15))
     receipt["compiler"] = cmd
     receipt["compiler_version"] = (version["stdout"] + version["stderr"]).strip()
-    match = re.search(r"\bversion\s+([0-9]+\.[0-9]+\.[0-9]+)", receipt["compiler_version"], re.I)
+    match = re.search(r"\bversion\s+([0-9]+\.[0-9]+\.[0-9]+(?:-(?:rc|beta|alpha)[0-9]+)?)\b(?=[,\s)])", receipt["compiler_version"], re.I)
     receipt["version_matches_pin"] = bool(
         expected and expected.startswith("leanprover/lean4:v")
         and match and expected == "leanprover/lean4:v" + match[1]
