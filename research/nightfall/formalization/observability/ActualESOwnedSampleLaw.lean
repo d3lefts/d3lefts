@@ -30,7 +30,7 @@ open Nightfall.Observability.ActualESGreedyOwnership
 open Nightfall.Observability.ActualESCanonicalPairGraph
 open Nightfall.Observability.QuadraticHilbertMany
 
-variable {ι α : Type*} [Fintype ι] [DecidableEq ι]
+variable {ι α : Type} [Fintype ι] [DecidableEq ι]
   [Fintype α] [DecidableEq α] [Nonempty α]
 
 /-- The generated, genuinely distinct source neighbors owned by i. -/
