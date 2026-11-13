@@ -47,7 +47,7 @@ theorem ownedNeighbors_avoid_owner
   intro hi
   obtain ⟨e, he, hother⟩ := Finset.mem_image.mp hi
   have hne := owned_neighbor_ne_owner u v c T hends i e he
-  exact hne hother
+  exact hne hother.symm
 
 /-- Greedy-generated source projection is an exact difference of true
 Efron–Stein conditional expectations. No section equality is assumed. -/
