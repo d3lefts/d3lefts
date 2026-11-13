@@ -4,6 +4,7 @@ on:
     paths:
       - 'research/nightfall/formalization/observability/ActualESPairHilbertMoment.lean'
       - 'research/nightfall/formalization/observability/ActualESPackedParity.lean'
+      - 'research/nightfall/formalization/observability/ActualESGeneralMatching.lean'
       - 'research/nightfall/formalization/observability/QuadraticHybridTelescoping.lean'
       - 'research/nightfall/formalization/product_space/ActualESQuadraticRectangles.lean'
       - 'research/nightfall/formalization/observability/QuadraticActualMomentEndpoint.lean'
@@ -102,6 +103,31 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/actual-source-packed-parity.json
+      - name: Strict arbitrary embedded matching and actual source 4B amplitude
+        shell: bash
+        run: |
+          set -euo pipefail
+          O=research/nightfall/formalization/observability
+          cp "$O/ActualESPackedParity.lean" /tmp/aa/ActualESPackedParity.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESPackedParity.olean ActualESPackedParity.lean)
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualESGeneralMatching
+          python3 scripts/lean_bridge.py \
+            "$O/ActualESGeneralMatching.lean" \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.liftMatching_update \
+            --decl $N.liftMatching_blockReplace \
+            --decl $N.blockRectangle_liftMatching \
+            --decl $N.actual_source_general_matching_rectangles_le_four \
+            --decl $N.sourceRectangle_eq_actualPairKernel_rectangle \
+            --decl $N.actual_source_general_matching_amplitude_witness \
+            --json-out lean-receipts/actual-es-general-matching.json || {
+              cat lean-receipts/actual-es-general-matching.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/actual-es-general-matching.json
       - name: Strict source-derived increment and endpoint theorem audit
         shell: bash
         run: |
@@ -128,6 +154,7 @@ jobs:
           mkdir -p lean-receipts
           sha256sum research/nightfall/formalization/observability/{ActualESPairHilbertMoment,QuadraticActualMomentEndpoint,HilbertManyIncrementMoment}.lean research/nightfall/formalization/product_space/{ActualESPairMatchingBridge,ActualESQuadraticRectangles}.lean > lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/observability/{ActualESPackedParity,QuadraticHybridTelescoping}.lean >> lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/observability/ActualESGeneralMatching.lean >> lean-receipts/SHA256SUMS.txt
           echo leanprover/lean4:v4.33.0 > lean-receipts/lean-toolchain.txt
           echo 2a6ceaef872ae993708950f951989134084b851a > lean-receipts/upstream.txt
           git rev-parse HEAD > lean-receipts/repo-commit.txt
