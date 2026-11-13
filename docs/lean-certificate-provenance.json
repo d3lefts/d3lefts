@@ -1,8 +1,8 @@
 {
   "schema": "nightfall-lean-provenance-v1",
   "as_of": "2026-11-12",
-  "revision": 17,
-  "scope": "67 current Lean source files: original 65-source historical registry retained at revision 16 in git history, plus two PR #408 finite-product source/rectangle bridge modules with source-matched successful CI. This is not an end-to-end exponent-two or general matching-mass theorem; novelty is unverified.",
+  "revision": 18,
+  "scope": "Dated ledger of 67 source-matched historical Lean files (checkpoint November 12, 2026); extra Lean files in later checkouts are unreviewed and are NOT included in successful-source counts, named-declaration certification, cross-pin end-to-end claims, or novelty assertions. Existing source blobs and historical CI pointers remain immutable and audited. This is not an end-to-end exponent-two or general matching-mass theorem; novelty unverified.",
   "source_commit": "8a247cface5ce57a8da340bc277c81e792a04c40",
   "policy": "Kernel compilation is validity evidence only. Quarantine means do not claim novelty; it does not invalidate a correctly compiled theorem. Derived transfers are scoped program-specific compositions with open worldwide priority. A distinct finite construction has an exact certificate but still needs prior-art review.",
   "prior_art": [
