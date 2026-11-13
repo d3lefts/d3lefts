@@ -24,6 +24,7 @@ open Nightfall.ProductSpace.EfronStein
 open Nightfall.ProductSpace.Influence
 open Nightfall.Observability.QuadraticANOVA
 open Nightfall.Observability.ActualESQuadraticRectangles
+open Nightfall.Observability.ActualESPairMatching
 
 variable {ι α : Type}
   [Fintype ι] [DecidableEq ι]
