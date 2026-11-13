@@ -1,0 +1,33 @@
+name: Verify change-stable safety certificates
+
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/projects/change-stable-safety/**"
+      - ".github/workflows/change-stable-safety-proof-audit.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "research/nightfall/projects/change-stable-safety/**"
+      - ".github/workflows/change-stable-safety-proof-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-enumeration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout research source
+        uses: actions/checkout@v4
+      - name: Python version
+        run: python3 --version
+      - name: Tree-convex and exceptional-support exact audit
+        working-directory: research/nightfall/projects/change-stable-safety
+        run: python3 audit.py
+      - name: Bounded evidence sparsification exact audit
+        working-directory: research/nightfall/projects/change-stable-safety
+        run: python3 audit_sparsification.py
