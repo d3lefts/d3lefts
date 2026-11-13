@@ -326,6 +326,9 @@ jobs:
             --decl $N.actual_esComp_orthogonal_missing \
             --decl $N.sourceInner_comm \
             --decl $N.actual_esComp_orthogonal_distinct \
+            --decl $N.sourceInner_sum_left \
+            --decl $N.sourceInner_sum_right \
+            --decl $N.sourceInner_parseval_of_orthogonal \
             --json-out lean-receipts/actual-es-orthogonal-source.json || {
               cat lean-receipts/actual-es-orthogonal-source.json
               exit 1
