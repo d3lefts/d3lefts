@@ -84,8 +84,8 @@ private theorem hybrid_even_flip_as_block
   funext ⟨k,s⟩
   by_cases hk : k = e
   · subst k
-    cases s <;> simp [hybridState, blockReplace, flip, he]
-  · cases s <;> simp [hybridState, blockReplace, flip, hk]
+    cases s <;> simp [hybridState, blockReplace, ParityBlocks.flip, he]
+  · cases s <;> simp [hybridState, blockReplace, ParityBlocks.flip, hk]
 
 private theorem hybrid_odd_flip_as_block
     (left right : β → Bool → α) (T : Finset β)
@@ -96,8 +96,8 @@ private theorem hybrid_odd_flip_as_block
   funext ⟨k,s⟩
   by_cases hk : k = e
   · subst k
-    cases s <;> simp [hybridState, blockReplace, flip, he]
-  · cases s <;> simp [hybridState, blockReplace, flip, hk]
+    cases s <;> simp [hybridState, blockReplace, ParityBlocks.flip, he]
+  · cases s <;> simp [hybridState, blockReplace, ParityBlocks.flip, hk]
 
 /-- Exactly one matching-block parity switch has half the oriented
 four-corner rectangle as its expectation change, provided the
@@ -186,6 +186,6 @@ theorem hybrid_global_parity_telescope
       have step := hybrid_single_block_difference f left right d hrect T e he
       simp only [Finset.sum_insert he]
       nlinarith [ih, step]
-  simpa only [Finset.sum_univ] using hgeneral univ
+  simpa using hgeneral (Finset.univ : Finset β)
 
 end Nightfall.Observability.QuadraticHybridTelescoping
