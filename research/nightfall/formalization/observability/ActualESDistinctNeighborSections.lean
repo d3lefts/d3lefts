@@ -148,4 +148,23 @@ theorem actual_owned_section_is_conditional_projection
           rw [← Finset.sum_filter, hfilter]
     _ = ownedPairSection p f base i a J x := rfl
 
+
+/-- Finite conditional Jensen for any real normed vector space. This
+operator is used on the actual finite weighted L2 section fibers, not
+on independent copies of repeated source coordinates. -/
+theorem finite_weighted_vector_jensen
+    {Ω V : Type*} [Fintype Ω]
+    [NormedAddCommGroup V] [NormedSpace ℝ V]
+    (μ : Ω → ℝ) (hμ : ∀ w, 0 ≤ μ w) (g : Ω → V) :
+    ‖∑ w : Ω, μ w • g w‖ ≤
+      ∑ w : Ω, μ w * ‖g w‖ := by
+  classical
+  calc
+    ‖∑ w : Ω, μ w • g w‖ ≤
+        ∑ w : Ω, ‖μ w • g w‖ := norm_sum_le _ _
+    _ = ∑ w : Ω, μ w * ‖g w‖ := by
+          apply Finset.sum_congr rfl
+          intro w _
+          rw [norm_smul, Real.norm_eq_abs, abs_of_nonneg (hμ w)]
+
 end Nightfall.Observability.ActualESDistinctNeighborSections
