@@ -62,6 +62,8 @@ jobs:
             --workspace /tmp/aa --timeout 900 --strict \
             --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
             --decl Nightfall.Observability.ActualESQuadraticRectangles.actual_quadratic_rectangle_eq_es_pair \
+            --decl Nightfall.Observability.ActualESQuadraticRectangles.pair_dependent_rectangle_base_independent \
+            --decl Nightfall.Observability.ActualESQuadraticRectangles.actual_quadratic_rectangle_base_independent \
             --json-out lean-receipts/actual-es-quadratic-rectangle.json || {
               cat lean-receipts/actual-es-quadratic-rectangle.json
               exit 1
