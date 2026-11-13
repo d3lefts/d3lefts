@@ -1,4 +1,4 @@
-import ActualESConditionalSection
+import ActualESSectionResampling
 
 /-!
 # Source-conditioned Hilbert L1 Jensen (arbitrary finite categorical laws)

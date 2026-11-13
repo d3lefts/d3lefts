@@ -3,9 +3,9 @@ name: NIGHTFALL Q2 actual distinct-neighbor conditional section bridge
 on:
   pull_request:
     paths:
-      - 'research/nightfall/formalization/product_space/ActualESConditionalSection.lean'
-      - 'research/nightfall/formalization/product_space/ActualESConditionalJensen.lean'
-      - 'research/nightfall/formalization/product_space/ActualESConditionalProjection.lean'
+      - 'research/nightfall/formalization/product_space/ActualESSectionResampling.lean'
+      - 'research/nightfall/formalization/product_space/ActualESWeightedSectionJensen.lean'
+      - 'research/nightfall/formalization/product_space/ActualESProjectionResampling.lean'
       - 'research/nightfall/formalization/product_space/ActualESSourceEnergy.lean'
       - 'research/nightfall/formalization/product_space/ActualESOrthogonality.lean'
       - 'research/nightfall/formalization/product_space/ActualESVarianceEnergy.lean'
@@ -58,7 +58,7 @@ jobs:
           mkdir -p lean-receipts
           N=Nightfall.Observability.ActualESConditionalSection
           python3 scripts/lean_bridge.py \
-            research/nightfall/formalization/product_space/ActualESConditionalSection.lean \
+            research/nightfall/formalization/product_space/ActualESSectionResampling.lean \
             --workspace /tmp/aa --timeout 1200 --strict \
             --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
             --decl $N.merge_update_free \
@@ -79,8 +79,8 @@ jobs:
           set -euo pipefail
           P=research/nightfall/formalization/product_space
           O=research/nightfall/formalization/observability
-          cp "$P/ActualESConditionalSection.lean" /tmp/aa/ActualESConditionalSection.lean
-          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESConditionalSection.olean ActualESConditionalSection.lean)
+          cp "$P/ActualESSectionResampling.lean" /tmp/aa/ActualESSectionResampling.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESSectionResampling.olean ActualESSectionResampling.lean)
           cp "$O/CenteredRectangles.lean" /tmp/aa/CenteredRectangles.lean
           (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/CenteredRectangles.olean CenteredRectangles.lean)
           cp "$P/QuadraticHoeffdingBridge.lean" /tmp/aa/QuadraticHoeffdingBridge.lean
@@ -89,7 +89,7 @@ jobs:
           (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESPairMatchingBridge.olean ActualESPairMatchingBridge.lean)
           N=Nightfall.Observability.ActualESConditionalProjection
           python3 scripts/lean_bridge.py \
-            "$P/ActualESConditionalProjection.lean" \
+            "$P/ActualESProjectionResampling.lean" \
             --workspace /tmp/aa --timeout 1200 --strict \
             --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
             --decl $N.condExp_esComp_of_not_subset \
@@ -170,11 +170,11 @@ jobs:
         run: |
           set -euo pipefail
           P=research/nightfall/formalization/product_space
-          cp "$P/ActualESConditionalSection.lean" /tmp/aa/ActualESConditionalSection.lean
-          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESConditionalSection.olean ActualESConditionalSection.lean)
+          cp "$P/ActualESSectionResampling.lean" /tmp/aa/ActualESSectionResampling.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESSectionResampling.olean ActualESSectionResampling.lean)
           N=Nightfall.Observability.ActualESConditionalJensen
           python3 scripts/lean_bridge.py \
-            "$P/ActualESConditionalJensen.lean" \
+            "$P/ActualESWeightedSectionJensen.lean" \
             --workspace /tmp/aa --timeout 1200 --strict \
             --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
             --decl $N.weighted_dot_le_norm_mul \
@@ -191,7 +191,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/product_space/{ActualESConditionalSection,ActualESConditionalJensen,ActualESConditionalProjection,ActualESSourceEnergy,ActualESOrthogonality,ActualESVarianceEnergy}.lean > lean-receipts/SHA256SUMS
+          sha256sum research/nightfall/formalization/product_space/{ActualESSectionResampling,ActualESWeightedSectionJensen,ActualESProjectionResampling,ActualESSourceEnergy,ActualESOrthogonality,ActualESVarianceEnergy}.lean > lean-receipts/SHA256SUMS
           sha256sum research/nightfall/2026-11-quadratic-law-free-audit/check_actual_conditional_sections.py >> lean-receipts/SHA256SUMS
           echo leanprover/lean4:v4.33.0 > lean-receipts/lean-toolchain.txt
           echo 2a6ceaef872ae993708950f951989134084b851a > lean-receipts/upstream.txt
