@@ -24,6 +24,7 @@ namespace Nightfall.Observability.ActualESConditionalJensen
 open Finset
 open Nightfall.ProductSpace.Influence
 open Nightfall.ProductSpace.Transfer
+open Nightfall.ProductSpace.EfronStein
 open Nightfall.Observability.ActualESConditionalSection
 
 variable {Ω α : Type} [Fintype Ω] [Fintype α]
