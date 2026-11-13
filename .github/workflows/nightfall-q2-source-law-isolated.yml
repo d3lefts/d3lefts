@@ -1,0 +1,80 @@
+name: NIGHTFALL Q2 isolated source sample law Lean 4.33
+on:
+  push:
+    branches:
+      - nightfall-q2-e2e-kernel-20261113
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/ActualESFiniteSampleLaw.lean'
+      - '.github/workflows/nightfall-q2-source-law-isolated.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-source-law:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install exact Turturean Lean 4.33.0 source dependency pin
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.33.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          export PATH="$HOME/.elan/bin:$PATH"
+          git clone https://github.com/physical-superintelligence/aaronson-ambainis.git /tmp/aa
+          git -C /tmp/aa checkout 2a6ceaef872ae993708950f951989134084b851a
+          (cd /tmp/aa && lake exe cache get)
+          (cd /tmp/aa && lake build AaronsonAmbainis.DetTheorem AaronsonAmbainis.TwoSided.Antipodal \
+            AaronsonAmbainis.Bridge.Positivity AaronsonAmbainis.Row.Main \
+            AaronsonAmbainis.Pack.Main AaronsonAmbainis.Dual.Main \
+            AaronsonAmbainis.Level.Integral AaronsonAmbainis.TwoSided.CauchySchwarz)
+      - name: Build only product-law and recursive Hilbert sample dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space
+          O=research/nightfall/formalization/observability
+          mkdir -p /tmp/aa/.lake/build/lib/lean
+          for m in ProductSpaceTwoSidedBridge ProductRowBound ProductInfluence; do
+            cp "$P/$m.lean" "/tmp/aa/$m.lean"
+            (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean")
+          done
+          for m in ArbitraryLawFourthMoment HilbertTwoIncrementMoment HilbertManyIncrementMoment; do
+            cp "$O/$m.lean" "/tmp/aa/$m.lean"
+            (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean")
+          done
+      - name: Strict true-source observation law including first norm moment
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualESFiniteSampleLaw
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualESFiniteSampleLaw.lean \
+            --workspace /tmp/aa --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.observedSample_update_outside \
+            --decl $N.actual_source_observedSample_law \
+            --decl $N.actual_source_observed_hilbert_first_moment \
+            --json-out lean-receipts/q2-source-sample-law.json || {
+              cat lean-receipts/q2-source-sample-law.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-source-sample-law.json
+      - name: Source provenance
+        if: always()
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/observability/ActualESFiniteSampleLaw.lean > lean-receipts/SHA256SUMS.txt
+          echo leanprover/lean4:v4.33.0 > lean-receipts/toolchain.txt
+          git rev-parse HEAD > lean-receipts/commit.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: q2-source-law-strict-receipts
+          path: lean-receipts/
+          retention-days: 45
