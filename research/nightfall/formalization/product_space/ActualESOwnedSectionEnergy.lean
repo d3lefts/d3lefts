@@ -101,7 +101,7 @@ theorem owned_canonical_components_parseval
       (∑ e ∈ S, esComp p e.1 f x) =
       ∑ e : {e : Edge ι // e ∈ S}, H e x := by
     simpa only [H] using
-      (Finset.sum_attach S (fun e : Edge ι => esComp p e.1 f x))
+      (Finset.sum_attach S (fun e : Edge ι => esComp p e.1 f x)).symm
   have hortho (e d : {e : Edge ι // e ∈ S}) (hne : e ≠ d) :
       sourceInner p (H e) (H d) = 0 := by
     have hsupport : e.1.1 ≠ d.1.1 := by
@@ -129,7 +129,7 @@ theorem owned_canonical_components_parseval
           simpa only [H] using
             (Finset.sum_attach S
               (fun e : Edge ι =>
-                sourceInner p (esComp p e.1 f) (esComp p e.1 f))).symm
+                sourceInner p (esComp p e.1 f) (esComp p e.1 f)))
 
 /-- MAIN SOURCE ENERGY IDENTITY:
 E_{X_{-i}} [ ||sum_{edges owned by i} h_edge(.,X_{-i})||_{L²(p_i)}² ]
