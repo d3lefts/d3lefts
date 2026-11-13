@@ -67,4 +67,86 @@ theorem centered_distinct_coordinate_cross_zero
           rw [hreplace]
     _ = 0 := by simp [hx]
 
+
+/-- The exact second-moment isometry for a finite set of DISTINCT centered
+source coordinate functions. This is the source-law energy interface:
+no synthetic copies, no rank, dimension, or minimum-atom restriction. -/
+theorem centered_source_owned_second_moment
+    (p : ι → α → ℝ)
+    (hp1 : ∀ i, (∑ a : α, p i a) = 1)
+    (J : Finset ι) (g : ι → α → ℝ)
+    (hcenter : ∀ j ∈ J, (∑ b : α, p j b * g j b) = 0) :
+    (∑ x : ι → α,
+      prodMass p x * (∑ j ∈ J, g j (x j)) ^ 2) =
+      ∑ j ∈ J, ∑ b : α, p j b * (g j b) ^ 2 := by
+  classical
+  have hexpand (x : ι → α) :
+      (∑ j ∈ J, g j (x j)) ^ 2 =
+        ∑ j ∈ J, ∑ k ∈ J, g j (x j) * g k (x k) := by
+    calc
+      (∑ j ∈ J, g j (x j)) ^ 2 =
+          (∑ j ∈ J, g j (x j)) *
+            (∑ k ∈ J, g k (x k)) := by ring
+      _ = ∑ j ∈ J, ∑ k ∈ J, g j (x j) * g k (x k) := by
+            rw [Finset.sum_mul]
+            apply Finset.sum_congr rfl
+            intro j _
+            rw [Finset.mul_sum]
+  have hswap :
+      (∑ x : ι → α, prodMass p x *
+        (∑ j ∈ J, ∑ k ∈ J, g j (x j) * g k (x k))) =
+      ∑ j ∈ J, ∑ k ∈ J, ∑ x : ι → α,
+        prodMass p x * (g j (x j) * g k (x k)) := by
+    calc
+      (∑ x : ι → α, prodMass p x *
+        (∑ j ∈ J, ∑ k ∈ J, g j (x j) * g k (x k))) =
+        ∑ x : ι → α, ∑ j ∈ J, ∑ k ∈ J,
+          prodMass p x * (g j (x j) * g k (x k)) := by
+            apply Finset.sum_congr rfl
+            intro x _
+            rw [Finset.mul_sum]
+            apply Finset.sum_congr rfl
+            intro j _
+            rw [Finset.mul_sum]
+      _ = ∑ j ∈ J, ∑ x : ι → α, ∑ k ∈ J,
+          prodMass p x * (g j (x j) * g k (x k)) := Finset.sum_comm
+      _ = ∑ j ∈ J, ∑ k ∈ J, ∑ x : ι → α,
+          prodMass p x * (g j (x j) * g k (x k)) := by
+            apply Finset.sum_congr rfl
+            intro j _
+            exact Finset.sum_comm
+  have hdiag (j : ι) (hj : j ∈ J) :
+      (∑ k ∈ J, ∑ x : ι → α,
+        prodMass p x * (g j (x j) * g k (x k))) =
+      ∑ x : ι → α, prodMass p x * (g j (x j)) ^ 2 := by
+    rw [Finset.sum_eq_single j]
+    · apply Finset.sum_congr rfl
+      intro x _
+      ring
+    · intro k hk hne
+      exact centered_distinct_coordinate_cross_zero
+        p hp1 j k hne (g j) (g k) (hcenter j hj)
+    · intro hnot
+      exact (hnot hj).elim
+  calc
+    (∑ x : ι → α,
+      prodMass p x * (∑ j ∈ J, g j (x j)) ^ 2) =
+      ∑ x : ι → α, prodMass p x *
+        (∑ j ∈ J, ∑ k ∈ J, g j (x j) * g k (x k)) := by
+          apply Finset.sum_congr rfl
+          intro x _
+          rw [hexpand]
+    _ = ∑ j ∈ J, ∑ k ∈ J, ∑ x : ι → α,
+        prodMass p x * (g j (x j) * g k (x k)) := hswap
+    _ = ∑ j ∈ J, ∑ x : ι → α,
+        prodMass p x * (g j (x j)) ^ 2 := by
+          apply Finset.sum_congr rfl
+          intro j hj
+          exact hdiag j hj
+    _ = ∑ j ∈ J, ∑ b : α, p j b * (g j b) ^ 2 := by
+          apply Finset.sum_congr rfl
+          intro j _
+          exact sum_prodMass_coord p hp1 j
+            (fun b => (g j b) ^ 2)
+
 end Nightfall.Observability.ActualESDistinctNeighborEnergy
