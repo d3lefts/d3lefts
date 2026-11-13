@@ -89,7 +89,7 @@ jobs:
           mkdir -p lean-receipts
           sha256sum research/nightfall/formalization/observability/CategoricalSignedProxy.lean research/nightfall/formalization/observability/TopInteractionCover.lean research/nightfall/formalization/observability/QuadraticEndpointMarkov.lean research/nightfall/formalization/observability/SortedInfluenceTail.lean > lean-receipts/SHA256SUMS
           git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt 2>/dev/null || true
-          echo leanprover/lean4:v4.35.0 > lean-receipts/lean-version.txt
+          echo leanprover/lean4:v4.36.0-rc2 > lean-receipts/lean-version.txt
       - name: Archive formal-claim receipts
         if: always()
         uses: actions/upload-artifact@v4
@@ -132,7 +132,7 @@ jobs:
           mkdir -p lean-receipts
           sha256sum research/nightfall/2026-11-universal-spectral-observability/AdaptiveBudget.lean > lean-receipts/SHA256SUMS
           git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt 2>/dev/null || true
-          echo leanprover/lean4:v4.35.0 > lean-receipts/lean-version.txt
+          echo leanprover/lean4:v4.36.0-rc2 > lean-receipts/lean-version.txt
       - name: Archive source hashes, compiler and axiom receipts
         if: always()
         uses: actions/upload-artifact@v4
