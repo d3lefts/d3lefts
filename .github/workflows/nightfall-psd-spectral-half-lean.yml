@@ -1,4 +1,4 @@
-name: NIGHTFALL PSD determinant spectral product (Lean 4.35)
+name: NIGHTFALL PSD determinant spectral product (Lean 4.36.0-rc2)
 
 on:
   pull_request:
