@@ -324,6 +324,10 @@ jobs:
             --decl $N.selected_matching_source_amplitude_witness \
             --decl $N.selected_matching_weight_sum_le_four \
             --decl $N.exists_greedy_source_endpoint_cover \
+            --decl $N.exists_actual_source_pair_maximum \
+            --decl $N.actual_source_edge_weight_dominates_kernel \
+            --decl $N.actual_source_matching_weight_budget \
+            --decl $N.actual_source_greedy_endpoint_cover \
             --json-out lean-receipts/actual-es-greedy-embedding.json || {
               cat lean-receipts/actual-es-greedy-embedding.json
               exit 1
