@@ -35,8 +35,11 @@ the underlying unordered set and its exact cardinality. -/
 noncomputable def endpoints (e : Edge ι) :
     {ab : ι × ι // ab.1 ≠ ab.2 ∧ e.1 = {ab.1, ab.2}} := by
   classical
-  obtain ⟨i, j, hij, hpair⟩ := Finset.card_eq_two.mp e.2
-  exact ⟨(i,j), hij, hpair⟩
+  have h : Nonempty
+      {ab : ι × ι // ab.1 ≠ ab.2 ∧ e.1 = {ab.1, ab.2}} := by
+    obtain ⟨i, j, hij, hpair⟩ := Finset.card_eq_two.mp e.2
+    exact ⟨⟨(i,j), hij, hpair⟩⟩
+  exact Classical.choice h
 
 noncomputable def first (e : Edge ι) : ι := (endpoints e).1.1
 noncomputable def second (e : Edge ι) : ι := (endpoints e).1.2
