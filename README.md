@@ -18,6 +18,16 @@ For a mathematician or referee, begin with the [**paper shelf**](papers/README.m
 
 This is a **non-destructive index migration**: the original `research/nightfall/` files, Lean declarations, witness hashes, cited URLs and frozen 40-record/11-passport historical catalogues remain in place. The 15 selected claims in the current catalogue are **not** 15 refereed results or additions to the approved finding list. The [Paper A](papers/exact-recovery/MANUSCRIPT.md), [Paper B](papers/spectral-adaptive-prediction/MANUSCRIPT.md), and [Paper C](papers/specialized-complexity/MANUSCRIPT.md) manuscripts have distinct query models and certification scopes. Their validity, source completeness, independent review and originality remain separately labeled.
 
+## Current research checkpoint — 13 November 2026
+
+The permanent archive and dated finite-evidence catalogues are preserved; recent author-side theorem work has **not** silently upgraded their originality or formalization status. For the full live overlap map, see [active research / integration queue](research/nightfall/ACTIVE_RESEARCH_QUEUE_20261113.md).
+
+- **Quadratic influence (Q2):** the current strongest *analytic* original-law finite-product bound is (\operatorname{Var}(f)^2\le K_2 B^2\max_i I_i(f)), (K_2=(10+2\sqrt2)^2(1+\sqrt3)^2\approx1228.3563), in draft [PR #448](https://github.com/d3lefts/d3lefts/pull/448). The independent fractional/soft ownership route in [PR #452](https://github.com/d3lefts/d3lefts/pull/452) is under review. The matching, Jensen and original-source Lean receipts on `main` have narrower scopes; **no terminal source-only Q2 declaration** is compiled on the active Lean 4.36.0-rc2 pin, and priority against categorical Grothendieck/decoupling is unresolved.
+- **Sharp restriction obstruction:** [weighted finite-replica transfer](research/nightfall/2026-11-replica-restriction/README.md) proves on paper a sharp joint variance-retention/maximum-influence tradeoff, with two independent exact-rational checkers and a passing [scoped replay](https://github.com/d3lefts/d3lefts/actions/runs/43515837487). It rules out a particular Boolean-to-categorical proof transfer, **not Q2 itself**. Worldwide historical novelty and external review remain open.
+- **The Convoluted Costs of Knowing:** author-side candidate [oracle-matched task-revelation theorem, PR #450](https://github.com/d3lefts/d3lefts/pull/450), [posterior influence bridge, PR #449](https://github.com/d3lefts/d3lefts/pull/449), and [editorial dissertation, PR #446](https://github.com/d3lefts/d3lefts/pull/446) are distinct draft tracks. Keep their models and conditional premises explicit; do not merge the dissertation as a finished doctoral submission.
+
+**Integration discipline:** multiple open Q2 PRs are stacked or overlap source files already merged into `main`. Never bulk-merge them by PR number. Match exact theorem types, source hashes, compiler pins, and proof dependencies; preserve counterexamples and abandoned routes.
+
 ## Start here
 
 | Area | What is available | Where to inspect it |
@@ -29,7 +39,7 @@ This is a **non-destructive index migration**: the original `research/nightfall/
 | **Werner-state bounds** | Conditional finite-copy certificate registry and documented source-inequality dependencies. | [Werner atlas](research/nightfall/projects/werner-atlas/README.md) |
 | **AI safety and verification** | SourceBound/authorization research and a publicly available review release; theoretical claims and measured experiments are distinguished. | [Review dossier](research/nightfall/projects/ai-safety-peer-review-2026-10-28/README.md) |
 
-**Editorial scope (10 November 2026, with 11 November UTC research updates).** The website includes 40 curated research records, 11 evidence-specific Proof Passports, and five internally approved finite or bounded findings (three in the core index and two in a separately scoped publication note). These are *catalogue and evidence classifications*, **not** a claim that five globally original theorems have received independent peer review. New candidate manuscripts remain outside that approved finding set.
+**Historical curated editorial scope (10–11 November 2026; later active status recorded above).** The website includes 40 curated research records, 11 evidence-specific Proof Passports, and five internally approved finite or bounded findings (three in the core index and two in a separately scoped publication note). These are *catalogue and evidence classifications*, **not** a claim that five globally original theorems have received independent peer review. New candidate manuscripts remain outside that approved finding set.
 
 ## Read and verify the evidence
 
