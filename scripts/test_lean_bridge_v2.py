@@ -39,6 +39,7 @@ class BridgeV2Test(unittest.TestCase):
             "targets": [{"declaration": self.name, "expected_type": self.statement}]
         }))
         self.lean_text = ""
+        self.reported_version = "4.35.0"
 
     def mock_invoke(self, cmd, cwd, timeout):
         def result(out="", err="", code=0):
@@ -46,7 +47,7 @@ class BridgeV2Test(unittest.TestCase):
         if cmd[0] == "git":
             return result("a" * 40 + "\n")
         if "--version" in cmd:
-            return result("Lean (version 4.35.0, fake, commit " + "b" * 40 + ")\n")
+            return result("Lean (version " + self.reported_version + ", fake, commit " + "b" * 40 + ")\n")
         self.lean_text = Path(cmd[-1]).read_text()
         return result("'" + self.name + "' depends on axioms: [propext, Classical.choice, Quot.sound]\n")
 
@@ -68,6 +69,42 @@ class BridgeV2Test(unittest.TestCase):
         path = self.folder / "receipt.json"
         path.write_text(json.dumps(receipt))
         check_receipts.audit(path)
+
+    def test_release_candidate_exact_version_compiles_and_audits(self):
+        (self.workspace / "lean-toolchain").write_text("leanprover/lean4:v4.36.0-rc2\n")
+        self.reported_version = "4.36.0-rc2"
+        receipt = self.run_bridge()
+        self.assertEqual(receipt["compiler_exit_code"], 0)
+        self.assertEqual(receipt["status"], "COMPILED")
+        self.assertTrue(receipt["version_matches_pin"])
+        path = self.folder / "receipt-rc.json"
+        path.write_text(json.dumps(receipt))
+        check_receipts.audit(path)
+
+    def test_release_candidate_suffix_mismatch_rejected(self):
+        (self.workspace / "lean-toolchain").write_text("leanprover/lean4:v4.36.0-rc2\n")
+        self.reported_version = "4.36.0-rc3"
+        receipt = self.run_bridge()
+        self.assertEqual(receipt["compiler_exit_code"], 0)
+        self.assertEqual(receipt["status"], "TOOLCHAIN_MISMATCH")
+        self.assertFalse(receipt["version_matches_pin"])
+
+    def test_release_candidate_stable_prefix_rejected(self):
+        (self.workspace / "lean-toolchain").write_text("leanprover/lean4:v4.36.0\n")
+        self.reported_version = "4.36.0-rc2"
+        receipt = self.run_bridge()
+        self.assertEqual(receipt["compiler_exit_code"], 0)
+        self.assertEqual(receipt["status"], "TOOLCHAIN_MISMATCH")
+
+    def test_forged_release_candidate_receipt_rejected(self):
+        (self.workspace / "lean-toolchain").write_text("leanprover/lean4:v4.36.0-rc2\n")
+        self.reported_version = "4.36.0-rc2"
+        receipt = self.run_bridge()
+        receipt["compiler_version"] = receipt["compiler_version"].replace("rc2", "rc3")
+        path = self.folder / "forged-rc.json"
+        path.write_text(json.dumps(receipt))
+        with self.assertRaisesRegex(ValueError, "claimed pin disagrees"):
+            check_receipts.audit(path)
 
     def test_missing_workspace_pin_rejected(self):
         (self.workspace / "lean-toolchain").unlink()
