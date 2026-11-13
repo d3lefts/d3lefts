@@ -143,7 +143,7 @@ def inspect(root: Path) -> dict:
         "families": {k: dict(sorted(v.items())) for k, v in sorted(families.items())},
         "off_main_count": len(off_main),
         "historical_source_match_count": len(records),
-        "current_checkout_source_integrity": True,
+        "current_checkout_source_integrity": not pending_entries,
         "registered_source_integrity": True,
         "all_checkout_sources_source_matched": not pending_entries,
         "fresh_compiler_replay": False,
