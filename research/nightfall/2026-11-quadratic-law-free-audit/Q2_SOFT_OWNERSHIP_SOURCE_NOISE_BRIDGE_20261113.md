@@ -208,7 +208,7 @@ These tests are finite falsification, not an independently refereed proof of the
 - \`check_q2_soft_ownership_exact.py\` — Python stdlib + \`fractions.Fraction\` only; SHA-256 \`26c867d2b23d056638ea6c40eba6f7f3fe1e0ad8dc04e3736052359fe25aef75\`.
 - \`check_q2_soft_ownership_independent.py\` — separate exact \(\mathbb Q(\sqrt2)\) arithmetic; SHA-256 \`e929586841e5b488c82ef67ecef9fdbc4abc700ad7e07eee9220e8e689755d9d\`.
 
-These are sandbox artifacts until actually committed: **do not claim a GitHub CI run or repo copy without explicit source upload**.
+**Repository custody update (13 November 2026):** Both scripts have now been committed under `research/nightfall/2026-11-quadratic-law-free-audit/` on draft [PR #452](https://github.com/d3lefts/d3lefts/pull/452). The full `Fraction` enumerator was uploaded from the original conversation file **byte-for-byte**, including the trailing newline, preserving SHA-256 `26c867d2b23d056638ea6c40eba6f7f3fe1e0ad8dc04e3736052359fe25aef75`. Its GitHub upload commits were `466fa5e7f06f` and newline-preserving correction `fa8c814d42d6`. The independently written quadratic-radical checker remains SHA-256 `e929586841e5b488c82ef67ecef9fdbc4abc700ad7e07eee9220e8e689755d9d`. A dedicated workflow pins and reruns **both** exact source files. CI completion must be checked against the latest branch commit; a prior successful run for only one checker does not certify both-checker replay. Even a green two-checker run is finite falsification evidence, **not** Lean certification or independent external review.
 
 ## Novelty and strongest historical reference checked
 
