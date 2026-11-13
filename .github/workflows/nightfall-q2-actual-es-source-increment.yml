@@ -1,0 +1,84 @@
+name: NIGHTFALL Q2 actual ES source-to-Hilbert-moment single-pin bridge
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/ActualESPairHilbertMoment.lean'
+      - 'research/nightfall/formalization/observability/QuadraticActualMomentEndpoint.lean'
+      - '.github/workflows/nightfall-q2-actual-es-source-increment.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  actual-source-moment-bridge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install exact Turturean Lean 4.33.0 source dependency pin
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.33.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          export PATH="$HOME/.elan/bin:$PATH"
+          git clone https://github.com/physical-superintelligence/aaronson-ambainis.git /tmp/aa
+          git -C /tmp/aa checkout 2a6ceaef872ae993708950f951989134084b851a
+          (cd /tmp/aa && lake exe cache get)
+      - name: Build Efron-Stein actual source and independent Hilbert dependencies on one pin
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/aa/.lake/build/lib/lean
+          P=research/nightfall/formalization/product_space
+          O=research/nightfall/formalization/observability
+          for module in ProductSpaceTwoSidedBridge ProductRowBound ProductInfluence EfronSteinDegree; do
+            cp "$P/$module.lean" "/tmp/aa/$module.lean"
+            (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/$module.olean" "$module.lean")
+          done
+          cp "$P/QuadraticHoeffdingBridge.lean" /tmp/aa/QuadraticHoeffdingBridge.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/QuadraticHoeffdingBridge.olean QuadraticHoeffdingBridge.lean)
+          for module in CenteredRectangles ActualESPairMatchingBridge ArbitraryLawFourthMoment HilbertTwoIncrementMoment HilbertManyIncrementMoment QuadraticEndpointInterpolation QuadraticActualMomentEndpoint; do
+            case "$module" in
+              ActualESPairMatchingBridge) cp "$P/$module.lean" "/tmp/aa/$module.lean";;
+              *) cp "$O/$module.lean" "/tmp/aa/$module.lean";;
+            esac
+            (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/$module.olean" "$module.lean")
+          done
+      - name: Strict source-derived increment and endpoint theorem audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualESPairHilbertMoment
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualESPairHilbertMoment.lean \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.actualPairIncrement_centered \
+            --decl $N.actualPairIncrement_norm_bounded \
+            --decl $N.actual_source_pair_fourth_endpoint \
+            --json-out lean-receipts/actual-source-pair-hilbert-moment.json || {
+              cat lean-receipts/actual-source-pair-hilbert-moment.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/actual-source-pair-hilbert-moment.json
+      - name: Record exact source hashes and compiler pin
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/observability/{ActualESPairHilbertMoment,QuadraticActualMomentEndpoint,HilbertManyIncrementMoment}.lean research/nightfall/formalization/product_space/ActualESPairMatchingBridge.lean > lean-receipts/SHA256SUMS.txt
+          echo leanprover/lean4:v4.33.0 > lean-receipts/lean-toolchain.txt
+          echo 2a6ceaef872ae993708950f951989134084b851a > lean-receipts/upstream.txt
+          git rev-parse HEAD > lean-receipts/repo-commit.txt
+      - name: Upload exact source-to-moment receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: q2-actual-es-source-increment-receipts
+          path: lean-receipts/
+          retention-days: 45
