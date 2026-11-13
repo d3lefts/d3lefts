@@ -124,6 +124,9 @@ theorem symmetric_section_squared_closure
   have hsq : V^2 ≤
       ((16 * (1 + Real.sqrt 3)) * B * Real.sqrt M)^2 := by
     nlinarith [hV, hbound, hprod]
-  nlinarith [hsq, hroot]
+  calc
+    V^2 ≤ ((16 * (1 + Real.sqrt 3)) * B * Real.sqrt M)^2 := hsq
+    _ = (256 * (1 + Real.sqrt 3)^2) * B^2 * (Real.sqrt M)^2 := by ring
+    _ = (256 * (1 + Real.sqrt 3)^2) * B^2 * M := by rw [hroot]
 
 end Nightfall.Observability.QuadraticSectionOnlyClosure
