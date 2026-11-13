@@ -8,6 +8,9 @@ on:
       - 'research/nightfall/2026-11-quadratic-law-free-audit/check_exact_source_energy_20261113.py'
       - '.github/workflows/nightfall-q2-source-parseval.yml'
   workflow_dispatch:
+concurrency:
+  group: q2-source-parseval-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
