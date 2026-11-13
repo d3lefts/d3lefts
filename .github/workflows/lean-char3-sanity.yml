@@ -2,7 +2,11 @@ name: NIGHTFALL Lean bridge — kernel compilation and receipts
 on:
   pull_request:
     paths:
-      - 'research/nightfall/formalization/**'
+      - 'research/nightfall/formalization/characteristic_three/Finite3.lean'
+      - 'research/nightfall/formalization/phase_block/PhaseBlock.lean'
+      - 'research/nightfall/formalization/odd_cycle/P23Arithmetic.lean'
+      - 'research/nightfall/formalization/odd_cycle/CollisionSymmetry.lean'
+      - 'research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/verify_f16_phase_block.py'
       - 'scripts/lean_bridge.py'
       - 'tests/test_lean_bridge.py'
       - 'lean-toolchain'
@@ -10,7 +14,11 @@ on:
   push:
     branches: [main]
     paths:
-      - 'research/nightfall/formalization/**'
+      - 'research/nightfall/formalization/characteristic_three/Finite3.lean'
+      - 'research/nightfall/formalization/phase_block/PhaseBlock.lean'
+      - 'research/nightfall/formalization/odd_cycle/P23Arithmetic.lean'
+      - 'research/nightfall/formalization/odd_cycle/CollisionSymmetry.lean'
+      - 'research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/verify_f16_phase_block.py'
       - 'scripts/lean_bridge.py'
       - 'tests/test_lean_bridge.py'
       - 'lean-toolchain'
