@@ -15,6 +15,7 @@ on:
       - 'research/nightfall/formalization/observability/ActualESOwnedNeighborEnumeration.lean'
       - 'research/nightfall/formalization/product_space/ActualESPairOrientation.lean'
       - 'research/nightfall/formalization/observability/ActualESOwnedMomentEnergy.lean'
+      - 'research/nightfall/formalization/observability/ActualESSourceHilbertEndpoint.lean'
       - 'research/nightfall/formalization/product_space/ActualESConditionalSection.lean'
       - 'research/nightfall/formalization/product_space/ActualESConditionalProjection.lean'
       - 'research/nightfall/formalization/product_space/ActualESOwnedConditional.lean'
@@ -685,6 +686,27 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/actual-es-owned-neighbor-moment2.json
+      - name: Strict source-generated all Hilbert fourth endpoints with derived energy cap
+        shell: bash
+        run: |
+          set -euo pipefail
+          O=research/nightfall/formalization/observability
+          cp "$O/ActualESOwnedMomentEnergy.lean" /tmp/aa/ActualESOwnedMomentEnergy.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESOwnedMomentEnergy.olean ActualESOwnedMomentEnergy.lean)
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualESSourceHilbertEndpoint
+          python3 scripts/lean_bridge.py \
+            "$O/ActualESSourceHilbertEndpoint.lean" \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.actual_owned_owner_fourth_endpoint \
+            --decl $N.actual_source_generated_all_fourth_endpoints \
+            --json-out lean-receipts/actual-source-all-fourth-endpoints.json || {
+              cat lean-receipts/actual-source-all-fourth-endpoints.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/actual-source-all-fourth-endpoints.json
       - name: Record exact source hashes and compiler pin
         if: always()
         shell: bash
@@ -703,6 +725,7 @@ jobs:
           sha256sum research/nightfall/formalization/observability/ActualESOwnedNeighborEnumeration.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/product_space/ActualESPairOrientation.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/observability/ActualESOwnedMomentEnergy.lean >> lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/observability/ActualESSourceHilbertEndpoint.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/product_space/ActualESConditionalSection.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/product_space/ActualESConditionalProjection.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/product_space/ActualESOwnedConditional.lean >> lean-receipts/SHA256SUMS.txt
