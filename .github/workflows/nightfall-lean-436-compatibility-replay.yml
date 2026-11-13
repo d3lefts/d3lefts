@@ -1,0 +1,125 @@
+name: NIGHTFALL Lean 4.36 release-candidate kernel compatibility replay
+
+on:
+  pull_request:
+    paths:
+      - 'lean-toolchain'
+      - '.github/actions/setup-nightfall-lean/**'
+      - 'scripts/lean_bridge.py'
+      - 'scripts/test_lean_bridge_v2.py'
+      - 'research/nightfall/formalization/product_space/check_receipts.py'
+      - 'research/nightfall/formalization/compiler/ContractSmoke.lean'
+      - 'research/nightfall/formalization/compiler/contract-smoke.json'
+      - 'research/nightfall/formalization/observability/RademacherOrthogonality.lean'
+      - 'research/nightfall/formalization/observability/ActualPosteriorInfluence.lean'
+      - 'research/nightfall/formalization/observability/PosteriorRankBudget.lean'
+      - '.github/workflows/nightfall-lean-436-compatibility-replay.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'lean-toolchain'
+      - '.github/actions/setup-nightfall-lean/**'
+      - 'scripts/lean_bridge.py'
+      - 'scripts/test_lean_bridge_v2.py'
+      - 'research/nightfall/formalization/product_space/check_receipts.py'
+      - 'research/nightfall/formalization/compiler/ContractSmoke.lean'
+      - 'research/nightfall/formalization/compiler/contract-smoke.json'
+      - 'research/nightfall/formalization/observability/RademacherOrthogonality.lean'
+      - 'research/nightfall/formalization/observability/ActualPosteriorInfluence.lean'
+      - 'research/nightfall/formalization/observability/PosteriorRankBudget.lean'
+      - '.github/workflows/nightfall-lean-436-compatibility-replay.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  exact-kernel-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Independently test prerelease version and receipt tamper detection
+        run: python3 scripts/test_lean_bridge_v2.py
+      - name: Replay exact theorem-type compiler contract
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          python3 scripts/lean_bridge.py research/nightfall/formalization/compiler/ContractSmoke.lean \
+            --workspace /tmp/mathlib4 --timeout 720 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl Nightfall.Certification.additive_symmetry \
+            --contract research/nightfall/formalization/compiler/contract-smoke.json \
+            --json-out lean-receipts/contract-smoke.json
+      - name: Recompile signed orthogonality under actual Lean 4.36.0-rc2
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py research/nightfall/formalization/observability/RademacherOrthogonality.lean \
+            --workspace /tmp/mathlib4 --timeout 720 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl Nightfall.Observability.Rademacher.signed_square_expand \
+            --decl Nightfall.Observability.Rademacher.signed_orthogonal_isometry \
+            --decl Nightfall.Observability.Rademacher.signed_energy_trace_identity \
+            --json-out lean-receipts/signed-orthogonality.json
+      - name: Recompile actual finite posterior law and resampling
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py research/nightfall/formalization/observability/ActualPosteriorInfluence.lean \
+            --workspace /tmp/mathlib4 --timeout 720 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl Nightfall.Observability.V7Actual.posteriorLaw_nonneg \
+            --decl Nightfall.Observability.V7Actual.posteriorLaw_sum \
+            --decl Nightfall.Observability.V7Actual.posteriorMass_nonneg \
+            --decl Nightfall.Observability.V7Actual.posteriorMass_sum \
+            --decl Nightfall.Observability.V7Actual.signed_scalar_resampling_exact \
+            --decl Nightfall.Observability.V7Actual.signed_scalar_le_rank_vector \
+            --json-out lean-receipts/actual-posterior.json
+      - name: Recompile finite posterior rank and energy budget
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py research/nightfall/formalization/observability/PosteriorRankBudget.lean \
+            --workspace /tmp/mathlib4 --timeout 720 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl Nightfall.Observability.V7.potential_flow_identity \
+            --decl Nightfall.Observability.V7.expected_kernel_drift \
+            --decl Nightfall.Observability.V7.posterior_weighted_budget \
+            --json-out lean-receipts/posterior-budget.json
+      - name: Independently audit all 13 named declarations and exact pins
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/*.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          expected = 'leanprover/lean4:v4.36.0-rc2'
+          mathlib = '9d581dfff2e41de989072ea63abf3daf69311520'
+          files = sorted(Path('lean-receipts').glob('*.json'))
+          assert len(files) == 4, files
+          count = 0
+          for f in files:
+              r = json.loads(f.read_text())
+              assert r['status'] == 'COMPILED', f
+              assert r['compiler_exit_code'] == 0, f
+              assert r['version_matches_pin'] is True, f
+              assert r['expected_toolchain'] == expected, f
+              assert '4.36.0-rc2' in r['compiler_version'], f
+              assert r['axiom_dependencies'], f
+              count += len(r['declarations_requested'])
+          contract = json.loads(Path('lean-receipts/contract-smoke.json').read_text())
+          assert contract['workspace_commit'] == mathlib
+          assert count == 13, count
+          print(f'PASS: {count} named Lean 4.36.0-rc2 declarations; pinned Mathlib; scoped standard-axiom and source-byte audits')
+          PY
+      - name: Archive fresh replay receipts (no automatic historical promotion)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-lean-436rc2-compatibility-replay
+          path: lean-receipts/*.json
+          if-no-files-found: warn
+          retention-days: 90
