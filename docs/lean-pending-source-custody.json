@@ -1,0 +1,229 @@
+{
+  "schema": "nightfall-lean-pending-source-custody-v1",
+  "revision": 1,
+  "as_of": "2026-11-13",
+  "source_commit": "6f26df0fc630dd051bfe54ad444e862c04767899",
+  "scope": "Exact Git blob custody for post-67 historical-source-checkpoint Lean additions. Pending does not mean compiled. No run or declaration receipt is invented; no Q2 terminal proof or novelty is claimed.",
+  "sources": [
+    {
+      "path": "research/nightfall/formalization/observability/ActualESGeneralMatching.lean",
+      "source_blob_sha": "73e603191999fe513e9ae89204d789265267c7cc",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualESGreedyCover.lean",
+      "source_blob_sha": "c495cff5937c719633cc6c141785620451d1f152",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualESGreedyOwnership.lean",
+      "source_blob_sha": "78747fd3a6a8d150d78ba16fd60f4eaf76a7b851",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualESMatchingMass.lean",
+      "source_blob_sha": "d15319cffc9036cd08faa75172523053dafb6720",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualESOwnedEnergy.lean",
+      "source_blob_sha": "4e39f86c8e0fb9a7f9e0141926aacdc6da7fd412",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualESOwnedSourceCover.lean",
+      "source_blob_sha": "7988d67c97a14148f0141704e8b06d46fa6e0860",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualESPackedParity.lean",
+      "source_blob_sha": "9c905bc75737a6e92f6fcaa16ebe0a41ba08e5c1",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualESPairHilbertMoment.lean",
+      "source_blob_sha": "02e5fb2a5a9c23d06836b53087bc3073aba8355c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/QuadraticActualMomentEndpoint.lean",
+      "source_blob_sha": "8c082afa9a9bb518eeafab7d86fa85709757b5c2",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/QuadraticHybridTelescoping.lean",
+      "source_blob_sha": "8ff2638bb508a557c3bdb8f9dc09c42a6cb77d55",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/ActualESConditionalJensen.lean",
+      "source_blob_sha": "501c47c54d65222b1a035f4937d271b95fbb2c1b",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/ActualESConditionalProjection.lean",
+      "source_blob_sha": "1221f3b222f0f0c6187ad27b1f08777a6762b78c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/ActualESConditionalSection.lean",
+      "source_blob_sha": "39911863f450dd93ae76a4fcae9d8f14623decce",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/ActualESInfluenceParseval.lean",
+      "source_blob_sha": "bd4f80a6b530d40bb0878de061e92437344b6dea",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/ActualESOrthogonality.lean",
+      "source_blob_sha": "4d6bbfec837a3b7746b90c402fb4c545dd6721dc",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/ActualESQuadraticRectangles.lean",
+      "source_blob_sha": "8da866951f0bf709d9699083294bfbc9dac1e1a3",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/ActualESSourceEnergy.lean",
+      "source_blob_sha": "13580429b25d09d400d0b679dad197e7a6e0f1f8",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/ActualESVarianceEnergy.lean",
+      "source_blob_sha": "8ee05bba0d6646e9c7987f59e8648e5a6751f01f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Q2AllDimensions.lean",
+      "source_blob_sha": "16e4a28103817917f057820a53e47f25702812bb",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Q2SharpSections.lean",
+      "source_blob_sha": "e60ae8968a71efef31e64b5d3e47ac7badbfb0d1",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Q2SourceRepresentation.lean",
+      "source_blob_sha": "baf345b2964246d2ad13550a7dec4b8ee9871986",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/swansea_v5/SwanseaV5UnionConvolution.lean",
+      "source_blob_sha": "84b51f629d4814a771487cbac98e5b5cd8782da8",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
+    }
+  ]
+}

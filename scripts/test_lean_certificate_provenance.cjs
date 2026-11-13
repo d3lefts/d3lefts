@@ -13,8 +13,26 @@ const missing=got.filter(p=>!realSet.has(p));
 assert.deepEqual(missing,[],"Registered Lean source missing from checkout");
 const pending=real.filter(p=>!gotSet.has(p));
 const allowPending=process.env.NIGHTFALL_ALLOW_UNREVIEWED==="1";
-assert.ok(allowPending||pending.length===0,
- "Unregistered Lean sources in protected checkout: "+pending.join(", "));
+const custodyFile="docs/lean-pending-source-custody.json";
+const custody=fs.existsSync(custodyFile)?JSON.parse(fs.readFileSync(custodyFile,"utf8")):{sources:[]};
+if(fs.existsSync(custodyFile))assert.equal(custody.schema,"nightfall-lean-pending-source-custody-v1");
+assert.ok(Array.isArray(custody.sources));
+const custodyPaths=custody.sources.map(r=>r.path);
+assert.equal(new Set(custodyPaths).size,custodyPaths.length,"Duplicate pending custody path");
+for(const r of custody.sources){
+ assert.ok(pending.includes(r.path),"Pending custody path absent or already verified: "+r.path);
+ const bytes=fs.readFileSync(r.path);
+ const sha=crypto.createHash("sha1").update(Buffer.from(`blob ${bytes.length}\0`)).update(bytes).digest("hex");
+ assert.equal(r.source_blob_sha,sha,"Pending Lean source mutated: "+r.path);
+ assert.equal(r.classification,"unreviewed-source");
+ assert.equal(r.ci_source_match_status,"no-verified-receipt");
+ assert.equal(r.historical_run,null);
+ assert.equal(r.historical_head,null);
+ assert.equal(r.global_priority,"unverified");
+}
+const untracked=pending.filter(p=>!custodyPaths.includes(p));
+assert.ok(allowPending||untracked.length===0,
+ "Unregistered Lean sources in protected checkout: "+untracked.join(", "));
 for(const p of pending){
  assert.ok(fs.existsSync(p),"Unreviewed Lean source disappeared: "+p);
  assert.ok(!m.modules.some(r=>r.path===p),"Pending source silently promoted: "+p);
