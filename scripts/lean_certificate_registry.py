@@ -66,8 +66,38 @@ def inspect(root: Path, *, allow_pending: bool = False) -> dict:
             "Missing registered Lean source(s): " +
             str(sorted(set(listed) - set(actual))))
     pending = sorted(set(actual) - set(listed))
-    require(allow_pending or not pending,
-            "Unregistered Lean sources in protected checkout: " + str(pending))
+    # Keep the 67 historical successful-head claims *immutable*.
+    # New, uncompiled source files are not silently promoted to that
+    # historical register. Instead, require a separately hashed, explicit
+    # custody ledger on protected main. PR-only unknown additions may be
+    # investigated using --allow-pending.
+    custody_file = root / "docs/lean-pending-source-custody.json"
+    custody = (json.loads(custody_file.read_text(encoding="utf-8"))
+               if custody_file.is_file() else {"sources": []})
+    if custody_file.is_file():
+        require(custody.get("schema") == "nightfall-lean-pending-source-custody-v1",
+                "Unknown pending-source custody schema")
+    custody_rows = custody.get("sources", [])
+    require(isinstance(custody_rows, list), "Malformed pending-source custody")
+    custody_paths = [rec.get("path") for rec in custody_rows]
+    require(len(custody_paths) == len(set(custody_paths)),
+            "Duplicate pending-source custody path")
+    require(set(custody_paths).issubset(set(pending)),
+            "Pending source custody missing/moved a source or duplicates historical register")
+    for rec in custody_rows:
+        p = rec["path"]
+        require(rec.get("classification") == "unreviewed-source" and
+                rec.get("ci_source_match_status") == "no-verified-receipt" and
+                rec.get("historical_run") is None and
+                rec.get("historical_head") is None and
+                rec.get("global_priority") == "unverified",
+                "Pending Lean source falsely certified: " + p)
+        require(rec.get("source_blob_sha") ==
+                git_blob_hash((root / p).read_bytes()),
+                "Pending source blob changed: " + p)
+    untracked = sorted(set(pending) - set(custody_paths))
+    require(allow_pending or not untracked,
+            "Unregistered Lean sources in protected checkout: " + str(untracked))
     pending_entries = [{
         "path": p,
         "git_blob_sha1": git_blob_hash((root / p).read_bytes()),
@@ -75,7 +105,7 @@ def inspect(root: Path, *, allow_pending: bool = False) -> dict:
         "ci_source_match_status": "no-verified-receipt",
         "historical_run": None,
         "historical_head": None,
-        "receipt_scope": "Unregistered in the historical certificate ledger; no Lean declaration or source-matched CI receipt is claimed.",
+        "receipt_scope": "Post-checkpoint pending source; no exact named-declaration or kernel receipt claimed.",
         "global_priority": "unverified",
     } for p in pending]
     classification = Counter()
@@ -145,7 +175,7 @@ def inspect(root: Path, *, allow_pending: bool = False) -> dict:
         "families": {k: dict(sorted(v.items())) for k, v in sorted(families.items())},
         "off_main_count": len(off_main),
         "historical_source_match_count": len(records),
-        "current_checkout_source_integrity": not pending_entries,
+        "current_checkout_source_integrity": not untracked,
         "registered_source_integrity": True,
         "all_checkout_sources_source_matched": not pending_entries,
         "fresh_compiler_replay": False,
