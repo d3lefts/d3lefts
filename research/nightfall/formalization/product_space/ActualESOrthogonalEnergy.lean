@@ -243,4 +243,77 @@ theorem quadratic_actual_source_parseval
           · simp [G, hs]
           · simp [sourceInner, G, hs]
 
+/-- The empty-support canonical component is the literal source
+expectation, with no positivity or normalization premise. -/
+theorem actual_esComp_empty_eq_source_mean
+    (p : ι → α → ℝ)
+    (f : (ι → α) → ℝ) (x : ι → α) :
+    esComp p (∅ : Finset ι) f x = pexp p f := by
+  classical
+  simp [esComp, condExp, merge, pexp]
+
+/-- The empty-support ANOVA energy is exactly the square of the
+actual source expectation under normalized product marginals. -/
+theorem actual_source_empty_energy_eq_mean_sq
+    (p : ι → α → ℝ)
+    (hp1 : ∀ i, (∑ a : α, p i a) = 1)
+    (f : (ι → α) → ℝ) :
+    sourceInner p
+      (esComp p (∅ : Finset ι) f)
+      (esComp p (∅ : Finset ι) f) =
+      (pexp p f)^2 := by
+  unfold sourceInner
+  simp_rw [actual_esComp_empty_eq_source_mean p f]
+  rw [← Finset.sum_mul, sum_prodMass' p hp1]
+  ring
+
+/-- The genuine finite degree-two VARIANCE is the sum of source
+component L2 energies over all nonempty supports of size at most two.
+No artificial energy list, Hoeffding orthogonality premise, or
+variance decomposition is supplied to this theorem. -/
+theorem actual_quadratic_source_variance_parseval
+    (p : ι → α → ℝ)
+    (hp1 : ∀ i, (∑ a : α, p i a) = 1)
+    (f : (ι → α) → ℝ)
+    (hdegree : ESDegreeLE p f 2) :
+    pvar p f =
+      ((Finset.univ : Finset (Finset ι)).erase ∅).sum
+        (fun S => if S.card ≤ 2 then
+          sourceInner p (esComp p S f) (esComp p S f)
+        else 0) := by
+  classical
+  let A : Finset ι → ℝ := fun S =>
+    if S.card ≤ 2 then
+      sourceInner p (esComp p S f) (esComp p S f)
+    else 0
+  have hpar :
+      sourceInner p f f =
+        (Finset.univ : Finset (Finset ι)).sum A := by
+    simpa only [A] using
+      (quadratic_actual_source_parseval p hp1 f hdegree)
+  have hconst : A (∅ : Finset ι) = (pexp p f)^2 := by
+    simpa [A] using actual_source_empty_energy_eq_mean_sq p hp1 f
+  have hsplit :
+      ((Finset.univ : Finset (Finset ι)).erase ∅).sum A +
+        A (∅ : Finset ι) =
+      (Finset.univ : Finset (Finset ι)).sum A :=
+    Finset.sum_erase_add _ _ (Finset.mem_univ _)
+  have hvar : pvar p f = sourceInner p f f - (pexp p f)^2 := by
+    rw [pvar_eq p hp1 f]
+    unfold sourceInner
+    congr 1
+    apply Finset.sum_congr rfl
+    intro x _
+    ring
+  calc
+    pvar p f = sourceInner p f f - (pexp p f)^2 := hvar
+    _ = (Finset.univ : Finset (Finset ι)).sum A -
+      A (∅ : Finset ι) := by rw [hpar, hconst]
+    _ = ((Finset.univ : Finset (Finset ι)).erase ∅).sum A := by
+          linarith [hsplit]
+    _ = ((Finset.univ : Finset (Finset ι)).erase ∅).sum
+        (fun S => if S.card ≤ 2 then
+          sourceInner p (esComp p S f) (esComp p S f)
+        else 0) := rfl
+
 end Nightfall.Observability.ActualESOrthogonalEnergy
