@@ -21,15 +21,7 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
-      - name: Install pinned Lean 4.35.0 and Mathlib v4.35.0
-        shell: bash
-        run: |
-          set -euo pipefail
-          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
-          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.35.0
-          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-          git clone --depth 1 --branch v4.35.0 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4
-          (cd /tmp/mathlib4 && "$HOME/.elan/bin/lake" exe cache get)
+      - uses: ./.github/actions/setup-nightfall-lean
       - name: Strict named-declaration kernel and axiom receipts
         shell: bash
         run: |
@@ -51,7 +43,7 @@ jobs:
         run: |
           mkdir -p lean-receipts
           sha256sum research/nightfall/formalization/observability/SpectralProductHalf.lean > lean-receipts/SHA256SUMS
-          echo leanprover/lean4:v4.35.0 > lean-receipts/lean-toolchain.txt
+          echo leanprover/lean4:v4.36.0-rc2 > lean-receipts/lean-toolchain.txt
           git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-sha.txt 2>/dev/null || true
       - name: Archive receipts
         if: always()
