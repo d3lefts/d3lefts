@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/product_space/ActualESConditionalSection.lean'
+      - 'research/nightfall/formalization/product_space/ActualESConditionalJensen.lean'
       - '.github/workflows/nightfall-q2-actual-conditional-sections.yml'
   workflow_dispatch:
 
@@ -62,12 +63,33 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/actual-conditional-sections.json
+      - name: Strict Hilbert norm Jensen on actual source neighbor sections
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space
+          cp "$P/ActualESConditionalSection.lean" /tmp/aa/ActualESConditionalSection.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESConditionalSection.olean ActualESConditionalSection.lean)
+          N=Nightfall.Observability.ActualESConditionalJensen
+          python3 scripts/lean_bridge.py \
+            "$P/ActualESConditionalJensen.lean" \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.weighted_dot_le_norm_mul \
+            --decl $N.weighted_hilbert_jensen \
+            --decl $N.actual_source_section_hilbert_jensen \
+            --json-out lean-receipts/actual-hilbert-jensen.json || {
+              cat lean-receipts/actual-hilbert-jensen.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/actual-hilbert-jensen.json
       - name: Record immutable source and pin
         if: always()
         shell: bash
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/product_space/ActualESConditionalSection.lean > lean-receipts/SHA256SUMS
+          sha256sum research/nightfall/formalization/product_space/{ActualESConditionalSection,ActualESConditionalJensen}.lean > lean-receipts/SHA256SUMS
           echo leanprover/lean4:v4.33.0 > lean-receipts/lean-toolchain.txt
           echo 2a6ceaef872ae993708950f951989134084b851a > lean-receipts/upstream.txt
           git rev-parse HEAD > lean-receipts/repository-commit.txt
