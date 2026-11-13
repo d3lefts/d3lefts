@@ -82,4 +82,46 @@ theorem actual_esComp_orthogonal_missing
 
 /-! Further pair-energy Fubini reduction is intentionally omitted until proven. -/
 
+/-- Commutativity of the actual weighted source inner product. -/
+theorem sourceInner_comm
+    (p : ι → α → ℝ)
+    (g h : (ι → α) → ℝ) :
+    sourceInner p g h = sourceInner p h g := by
+  unfold sourceInner
+  apply Finset.sum_congr rfl
+  intro x _
+  ring
+
+/-- ANY two distinct canonical Efron–Stein support components of the
+same genuine source function are orthogonal under the true product
+mass. No independent orthogonality certificate is given. -/
+theorem actual_esComp_orthogonal_distinct
+    (p : ι → α → ℝ)
+    (hp1 : ∀ i, (∑ a : α, p i a) = 1)
+    (f : (ι → α) → ℝ)
+    (U V : Finset ι) (hne : U ≠ V) :
+    sourceInner p (esComp p U f) (esComp p V f) = 0 := by
+  classical
+  by_cases hsub : U ⊆ V
+  · have hnsub : ¬ V ⊆ U := by
+      intro hVU
+      exact hne (Finset.Subset.antisymm hsub hVU)
+    have hmiss : ∃ k : ι, k ∈ V ∧ k ∉ U := by
+      by_contra hnot
+      apply hnsub
+      intro k hkV
+      by_contra hkU
+      exact hnot ⟨k, hkV, hkU⟩
+    obtain ⟨k, hkV, hkU⟩ := hmiss
+    rw [sourceInner_comm]
+    exact actual_esComp_orthogonal_missing p hp1 f V U k hkV hkU
+  · have hmiss : ∃ k : ι, k ∈ U ∧ k ∉ V := by
+      by_contra hnot
+      apply hsub
+      intro k hkU
+      by_contra hkV
+      exact hnot ⟨k, hkU, hkV⟩
+    obtain ⟨k, hkU, hkV⟩ := hmiss
+    exact actual_esComp_orthogonal_missing p hp1 f U V k hkU hkV
+
 end Nightfall.Observability.ActualESOrthogonalEnergy
