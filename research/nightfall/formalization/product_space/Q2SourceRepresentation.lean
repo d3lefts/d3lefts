@@ -42,7 +42,8 @@ theorem small_support_embeds_in_pair
       simp [hSij]
     · have hone : S.card = 1 := by omega
       obtain ⟨i, hi⟩ := Finset.card_eq_one.mp hone
-      obtain ⟨j, hij⟩ : ∃ j : ι, i ≠ j := exists_ne i
+      obtain ⟨j, hji⟩ : ∃ j : ι, j ≠ i := exists_ne i
+      have hij : i ≠ j := Ne.symm hji
       refine ⟨i, j, hij, ?_⟩
       simp [hi]
 
@@ -89,7 +90,7 @@ theorem exists_actual_quadratic_representation
     have hior : i = u S ∨ i = v S := by simpa using hipair
     rcases hior with hiu | hiv
     · subst i
-      simp [huv S, (huv S).symm]
+      simp [huv S]
     · subst i
       simp
   calc
