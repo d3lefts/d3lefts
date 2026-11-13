@@ -1,5 +1,24 @@
 # NIGHTFALL quadratic law-free analytic proof audit
 
+## Current checkpoint — November 13, 2026 (read before the historical v7 notes)
+
+The historical material below is not the strongest current author-analytic proof. The leading original-source finite categorical claim is
+\[
+\operatorname{Var}(f)^2 \le
+K_2 B^2\max_i I_i(f),\quad
+K_2=(10+2\sqrt2)^2(1+\sqrt3)^2\approx1228.356324.
+\]
+It uses full finite heterogeneous Cartesian alphabets, normalized source marginals permitting zero masses, a pointwise bound \(|f|\le B\), and *genuine* Hoeffding degree at most two, with **no pre-supplied** matching/section/amplitude/energy witnesses.
+
+- [PR #448](https://github.com/d3lefts/d3lefts/pull/448): complete *author-side* source-level proof, rational finite-model falsification and exact scope. External non-author proof review and worldwide priority remain unresolved.
+- [PR #452](https://github.com/d3lefts/d3lefts/pull/452): **new proposed source-preserving soft ownership** using coordinate refresh/Markov operators instead of discrete owner-neighbor distribution transport. Its two local rational checkers and analytic derivation are a candidate **alternative**, not a supersession or kernel-checked terminal theorem.
+- [PR #447](https://github.com/d3lefts/d3lefts/pull/447): adversarial normalization, categorical Grothendieck and false-martingale controls. Do not repeat the disproven root-influence summability or expected-max-interchange transfer.
+- [PR #445](https://github.com/d3lefts/d3lefts/pull/445): active Lean **4.36.0-rc2** strict integrated Hilbert Jensen receipt, scoped to its declarations; [PR #444](https://github.com/d3lefts/d3lefts/pull/444): historical 4.33 original-law first-moment/owned-neighbor receipts. Historical compilation does not establish an active-pin composite.
+- Main [source merge/tower and scalar integrated Jensen](https://github.com/d3lefts/d3lefts/commit/2dbfdf7a8f09190d5b4f4dafb942c14b9be94590) are a narrower **compiled** original-source operator layer; the full terminal Q2 theorem remains **uncompiled**.
+
+The earlier 11-November \(225(1+\sqrt3)^2\) and related \(15(1+\sqrt3)\) coefficients below remain archived, not overwritten. A result that is *new to this archive*, an author-side analytic proof, a machine proof of a named sublemma, and a historically new theorem are distinct statuses. For integration order and overlapping branches, consult [the dated PR queue](../ACTIVE_RESEARCH_QUEUE_20261113.md).
+
+
 New independently reconstructed **analytic proof** from Wright's 11 November 2026 v4 synthesis. In scope: all heterogeneous finite-product scalar functions of ANOVA degree ≤2, including arbitrarily small atoms and dense interaction graphs; extension to arbitrary measurable product probability spaces by finite rectangular conditional expectation.
 
 - `QUADRATIC_LAW_FREE_ANALYTIC_AUDIT.md`: full mathematical proof; precise formula, complete matching coupling and four-moment arguments, finite-to-infinite transfer, prior-art review and certification limits.
