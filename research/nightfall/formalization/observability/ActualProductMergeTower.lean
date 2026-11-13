@@ -183,9 +183,7 @@ theorem integrated_source_jensen
   classical
   have hm (x : ι → α) : 0 ≤ originalMass p x := by
     unfold originalMass
-    exact Finset.prod_nonneg_iff.mpr (by
-      intro i _
-      exact hp i (x i))
+    exact Finset.prod_nonneg (fun i _ => hp i (x i))
   calc
     (∑ x : ι → α, originalMass p x * G x) ≤
       ∑ x : ι → α, originalMass p x *
