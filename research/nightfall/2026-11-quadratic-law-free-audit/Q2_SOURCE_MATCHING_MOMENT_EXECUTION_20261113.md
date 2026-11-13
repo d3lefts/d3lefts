@@ -94,6 +94,44 @@ source conditional sections** is still unproved. Its historical upstream
 4.33.0 strict compilation has a separate receipt and must not be treated
 as the repository's 4.35.0 pin without a matching replay.
 
+
+## Improved global proof operator: hybrid-coupling telescoping
+
+The direct source rectangle theorem is now certified under the historical
+4.33.0 pin: `actual_quadratic_rectangle_eq_es_pair`. Therefore introduce
+one new *all-background* theorem
+`actual_quadratic_rectangle_base_independent`, using the canonical
+`esComp_dependsOn` lemma. This is distinct from the all-matching result.
+
+An economical universal parity proof then avoids building an arbitrary
+`BlockPolynomial` altogether:
+
+1. For a matching `F`, fix all positive-support oriented four-point
+   corner witnesses. For every subset `T ⊆ F`, let `μ_T` be the product
+   of **odd** two-point couplings for blocks in `T`, **even** couplings
+   for other blocks, with unmatched symbols fixed.
+2. For `e∉T`, condition on the other independently sampled blocks.
+   Switching e from even to odd changes the mean by exactly
+   `Δ_e(f; x_other)/2`, a four-corner source rectangle. Source
+   rectangle base-independence ensures it is the constant `Δ_e/2`,
+   regardless of other block states or their parity.
+3. Telescope along an enumeration `e₁,…,e_m` of `F`:
+   `E_{μ_empty} f - E_{μ_F} f = (1/2) Σ_e Δ_e`.
+   No cross-block second-order cancellation lemma has to be separately
+   assembled: it is embedded in the rectangle-invariance theorem.
+4. Because `|f|≤B` at every point in both coupling supports,
+   `Σ_e b_e ≤ Σ_e Δ_e ≤4B`.
+
+The exact Lean obligation is a theorem about the hybrid product measures
+and their single-block update, with `Finset` induction. It **must not**
+assume a global parity equality or matching budget. A boundedness
+assumption may be pointwise on the positive support; a.s. bounds must
+be transferred to that support before constructing corners.
+
+This telescoping route is a proof-design improvement, **not** itself
+a new compiled global matching certificate until its terminal same-pin
+Lean declaration and axiom receipt pass.
+
 ## Still missing for true Q2
 
 1. One typed Lean theorem deriving global `Σ matching b_e ≤ 4B`
