@@ -12,6 +12,9 @@ const realSet=new Set(real),gotSet=new Set(got);
 const missing=got.filter(p=>!realSet.has(p));
 assert.deepEqual(missing,[],"Registered Lean source missing from checkout");
 const pending=real.filter(p=>!gotSet.has(p));
+const allowPending=process.env.NIGHTFALL_ALLOW_UNREVIEWED==="1";
+assert.ok(allowPending||pending.length===0,
+ "Unregistered Lean sources in protected checkout: "+pending.join(", "));
 for(const p of pending){
  assert.ok(fs.existsSync(p),"Unreviewed Lean source disappeared: "+p);
  assert.ok(!m.modules.some(r=>r.path===p),"Pending source silently promoted: "+p);
