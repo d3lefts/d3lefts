@@ -176,6 +176,12 @@ Before asserting any discovery of a global product influence inequality, compare
 
 A cursory web query found no identical named "soft ownership" statement, which is **not** a claim of novelty. A specialist needs to compare the weighted partition plus Markov contraction with established factorization/decoupling theorems in exactly this source model.
 
+
+
+## Precise degree-three non-transfer control
+
+Do **not** transfer the pair-norm-preserving weights to cubic interactions merely by using the same independent coordinate refresh multipliers. If all three pairwise retention weights equal \(1/\sqrt2\), the pair energy is exactly partitioned because \(2(1/\sqrt2)^2=1\). But a cubic \(h_{123}(X_1,X_2,X_3)=X_1X_2X_3\) is multiplied in the \(i\)th section by the *product* of two neighbor retentions, \(1/2\); hence the squared energy assigned to the three owners is only \(3(1/2)^2=3/4\), **not one**. This is an exact obstruction to a *naive degree-independent reuse of these weights*, not an impossibility theorem for all cubic fractional constructions. The previously certified rare-shared-core counterexample supplies a separate obstruction to assuming independent owner increments for degree three. Together they explain why Q2 has a structurally special source-preserving factorization and why a higher-degree transfer needs a genuinely new operator.
+
 ## Revised dependency graph and cheapest decisive next steps
 
 **Historical hard-owner path:** source matching \(\to\) greedy 8B costs \(\to\) exact-once edge assignment \(\to\) owner orientation \(\to\) injected neighbor enumeration \(\to\) independent-sample law transfer \(\to\) owner-conditioned Jensen \(\to\) fourth moment \(\to\) Q2.
