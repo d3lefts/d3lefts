@@ -75,6 +75,8 @@ class RegistryTests(unittest.TestCase):
         self.assertEqual(result["current_checkout_lean_source_count"], 2)
         self.assertEqual(result["unreviewed_source_count"], 1)
         self.assertFalse(result["all_checkout_sources_source_matched"])
+        self.assertFalse(result["current_checkout_source_integrity"])
+        self.assertTrue(result["registered_source_integrity"])
         self.assertEqual(len(result["entries"]), 1)
         pending = result["unreviewed_sources"][0]
         self.assertEqual(pending["path"], new_path)
