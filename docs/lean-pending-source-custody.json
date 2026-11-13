@@ -1,10 +1,30 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 1,
+  "revision": 2,
   "as_of": "2026-11-13",
   "source_commit": "6f26df0fc630dd051bfe54ad444e862c04767899",
-  "scope": "Exact Git blob custody for post-67 historical-source-checkpoint Lean additions. Pending does not mean compiled. No run or declaration receipt is invented; no Q2 terminal proof or novelty is claimed.",
+  "scope": "Exact Git blob custody for 25 post-67 historical-source-checkpoint Lean additions. Entries are unreviewed by the active 4.36 mainline certificate registry. Three additional source-identical Q2 modules have historical scope-limited Lean 4.33 proof receipts in run 43501778239 and its dependencies, but no active 4.36 replay. No terminal Q2 certification or priority claim.",
   "sources": [
+    {
+      "path": "research/nightfall/formalization/observability/ActualESCanonicalPairGraph.lean",
+      "source_blob_sha": "7ba07f6aebe13db631d44d463ed0e069b58c3bd7",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Unreviewed against active 4.36 compiler/persistent 67-file historical registry; strict scoped Lean 4.33 archived source-matched receipts at 43501778239, not active compiler or terminal theorem certification."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualESFiniteSampleLaw.lean",
+      "source_blob_sha": "47e112bdd32dea19429ecb4741ecc4f793535793",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Unreviewed against active 4.36 compiler/persistent 67-file historical registry; strict scoped Lean 4.33 archived source-matched receipts at 43501778239, not active compiler or terminal theorem certification."
+    },
     {
       "path": "research/nightfall/formalization/observability/ActualESGeneralMatching.lean",
       "source_blob_sha": "73e603191999fe513e9ae89204d789265267c7cc",
@@ -54,6 +74,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualESOwnedSampleLaw.lean",
+      "source_blob_sha": "f32d215782905863f55336304ea2f859ed949e2f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Unreviewed against active 4.36 compiler/persistent 67-file historical registry; strict scoped Lean 4.33 archived source-matched receipts at 43501778239, not active compiler or terminal theorem certification."
     },
     {
       "path": "research/nightfall/formalization/observability/ActualESOwnedSourceCover.lean",
