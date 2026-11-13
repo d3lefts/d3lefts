@@ -58,9 +58,24 @@ def inspect(root: Path) -> dict:
     require(len(set(listed)) == len(listed), "Duplicate certificate source path")
     actual = sorted(p.relative_to(root).as_posix()
                     for p in (root / "research/nightfall").rglob("*.lean"))
-    require(sorted(listed) == actual,
-            "Source census drift; missing=" + str(sorted(set(actual) - set(listed))) +
-            " extra=" + str(sorted(set(listed) - set(actual))))
+    # The published ledger is a *historical source-matched checkpoint*, not an
+    # automatic certification service for files added after that checkpoint.
+    # Missing/changed registered sources still fail closed. Fresh sources are
+    # recorded as pending, without invented CI runs, theorem checks or priority.
+    require(set(listed).issubset(actual),
+            "Missing registered Lean source(s): " +
+            str(sorted(set(listed) - set(actual))))
+    pending = sorted(set(actual) - set(listed))
+    pending_entries = [{
+        "path": p,
+        "git_blob_sha1": git_blob_hash((root / p).read_bytes()),
+        "classification": "unreviewed-source",
+        "ci_source_match_status": "no-verified-receipt",
+        "historical_run": None,
+        "historical_head": None,
+        "receipt_scope": "Unregistered in the historical certificate ledger; no Lean declaration or source-matched CI receipt is claimed.",
+        "global_priority": "unverified",
+    } for p in pending]
     classification = Counter()
     families = defaultdict(Counter)
     entries = []
@@ -121,11 +136,16 @@ def inspect(root: Path) -> dict:
         "registry_revision": manifest.get("revision"),
         "frozen_source_checkpoint": manifest.get("source_commit"),
         "inventory_count": len(records),
+        "current_checkout_lean_source_count": len(actual),
+        "unreviewed_source_count": len(pending_entries),
+        "unreviewed_sources": pending_entries,
         "classification_counts": dict(sorted(classification.items())),
         "families": {k: dict(sorted(v.items())) for k, v in sorted(families.items())},
         "off_main_count": len(off_main),
         "historical_source_match_count": len(records),
         "current_checkout_source_integrity": True,
+        "registered_source_integrity": True,
+        "all_checkout_sources_source_matched": not pending_entries,
         "fresh_compiler_replay": False,
         "named_declaration_coverage_reevaluated": False,
         "same_pin_all_modules_compiled": False,
@@ -153,13 +173,18 @@ def main() -> None:
         args.json_out.parent.mkdir(parents=True, exist_ok=True)
         args.json_out.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n",
                                  encoding="utf-8")
-    print(f"PASS: {result['inventory_count']} / {result['inventory_count']} current Lean "
-          "source blobs checked against the authoritative registry")
+    print(f"PASS: {result['inventory_count']} registered historical Lean source blobs "
+          "checked against the authoritative registry")
+    print(f"PENDING, NOT CERTIFIED: {result['unreviewed_source_count']} "
+          "new checkout Lean source(s) without a registered source-matched receipt")
+    for pending in result["unreviewed_sources"]:
+        print(f"  PENDING: {pending['path']} sha1={pending['git_blob_sha1']}")
     for family, kinds in result["families"].items():
         print(f"  {family:26} {sum(kinds.values()):2d}  " +
               ", ".join(f"{k}={v}" for k, v in kinds.items()))
     print(f"Off-main historical custody records: {result['off_main_count']}")
-    print("SCOPE: source integrity + historical successful-head pointers only.")
+    print("SCOPE: registered source integrity + historical successful-head pointers only.")
+    print("UNREVIEWED SOURCES: no successful CI, declaration, or originality claim inferred.")
     print("NOT CHECKED HERE: fresh Lean kernel, declared theorem types/axioms, "
           "single-pin integration, universal theorem, novelty.")
 
