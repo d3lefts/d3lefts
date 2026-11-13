@@ -55,7 +55,7 @@ def audit(path):
     require(r.get('version_matches_pin') is True, f'{path}: unverified compiler version')
     require(r.get('expected_toolchain', '').startswith('leanprover/lean4:v'), f'{path}: no pin')
     compiler_version = r.get('compiler_version', '')
-    match = re.search(r'\bversion\s+([0-9]+\.[0-9]+\.[0-9]+)', compiler_version, re.I)
+    match = re.search(r'\bversion\s+([0-9]+\.[0-9]+\.[0-9]+(?:-(?:rc|beta|alpha)[0-9]+)?)\b(?=[,\s)])', compiler_version, re.I)
     require(bool(match) and r['expected_toolchain'] == 'leanprover/lean4:v' + match.group(1),
             f'{path}: claimed pin disagrees with compiler --version')
     require(not r.get('policy_findings'), f"{path}: prohibited source constructs")
