@@ -73,7 +73,7 @@ theorem weighted_orthogonal_sum_sq
             intro x _
             ring
           · intro d _ hd
-            exact horth e d hd
+            exact horth e d (Ne.symm hd)
           · intro hfalse
             exact (hfalse (Finset.mem_univ e)).elim
 
