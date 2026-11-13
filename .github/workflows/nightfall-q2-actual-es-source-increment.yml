@@ -7,6 +7,7 @@ on:
       - 'research/nightfall/formalization/observability/ActualESGeneralMatching.lean'
       - 'research/nightfall/formalization/observability/ActualESMatchingMass.lean'
       - 'research/nightfall/formalization/observability/ActualESGreedyCover.lean'
+      - 'research/nightfall/formalization/observability/ActualESGreedyOwnership.lean'
       - 'research/nightfall/formalization/observability/QuadraticHybridTelescoping.lean'
       - 'research/nightfall/formalization/product_space/ActualESQuadraticRectangles.lean'
       - 'research/nightfall/formalization/observability/QuadraticActualMomentEndpoint.lean'
@@ -154,6 +155,28 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/actual-es-graph-matching-mass.json
+      - name: Strict finite greedy ownership and distinct-neighbor partition
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualESGreedyOwnership
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualESGreedyOwnership.lean \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.owner_cost_dominates \
+            --decl $N.owned_energy_partition \
+            --decl $N.endpoints_eq_owner_other \
+            --decl $N.other_injective_at_owner \
+            --decl $N.owned_neighbor_ne_owner \
+            --decl $N.owned_source_amplitude \
+            --json-out lean-receipts/actual-es-greedy-ownership.json || {
+              cat lean-receipts/actual-es-greedy-ownership.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/actual-es-greedy-ownership.json
       - name: Strict derived 8B actual-source greedy endpoint cover
         shell: bash
         run: |
@@ -205,6 +228,7 @@ jobs:
           sha256sum research/nightfall/formalization/observability/ActualESGeneralMatching.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/observability/{ActualESMatchingMass,WeightedGreedyMatching}.lean >> lean-receipts/SHA256SUMS.txt
           sha256sum research/nightfall/formalization/observability/{ActualESGreedyCover,WeightedGreedyCover}.lean >> lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/observability/ActualESGreedyOwnership.lean >> lean-receipts/SHA256SUMS.txt
           echo leanprover/lean4:v4.33.0 > lean-receipts/lean-toolchain.txt
           echo 2a6ceaef872ae993708950f951989134084b851a > lean-receipts/upstream.txt
           git rev-parse HEAD > lean-receipts/repo-commit.txt
