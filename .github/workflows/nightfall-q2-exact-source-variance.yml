@@ -6,6 +6,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/product_space/ActualESGlobalVariance.lean'
+      - 'research/nightfall/formalization/observability/ActualESOwnedConditional.lean'
       - '.github/workflows/nightfall-q2-exact-source-variance.yml'
   workflow_dispatch:
 permissions:
@@ -48,6 +49,38 @@ jobs:
             cp "$P/$m.lean" "/tmp/aa/$m.lean"
             (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean")
           done
+      - name: Build owned-neighbor source-conditional dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space
+          O=research/nightfall/formalization/observability
+          for m in ActualESConditionalSection ActualESConditionalProjection ActualESConditionalJensen; do
+            cp "$P/$m.lean" /tmp/aa/"$m".lean
+            (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean")
+          done
+          cp "$O/ActualESGreedyOwnership.lean" /tmp/aa/ActualESGreedyOwnership.lean
+          (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/ActualESGreedyOwnership.olean" ActualESGreedyOwnership.lean)
+      - name: Strict original-source greedy-owned conditional energy bridge
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualESOwnedConditional
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualESOwnedConditional.lean \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.ownedNeighbors_avoid_owner \
+            --decl $N.actual_greedy_owned_section_eq_condExp \
+            --decl $N.actual_greedy_owned_section_jensen \
+            --decl $N.actual_owned_pair_energy_partition \
+            --json-out lean-receipts/q2-actual-owned-conditional.json || {
+              cat lean-receipts/q2-actual-owned-conditional.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-actual-owned-conditional.json
       - name: Strict actual-source variance and orthogonal energy equality
         shell: bash
         run: |
@@ -72,7 +105,7 @@ jobs:
         if: always()
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/product_space/{ActualESGlobalVariance,ActualESOrthogonality,ActualESPairMatchingBridge}.lean > lean-receipts/SHA256SUMS
+          sha256sum research/nightfall/formalization/product_space/{ActualESGlobalVariance,ActualESOrthogonality,ActualESPairMatchingBridge}.lean research/nightfall/formalization/observability/ActualESOwnedConditional.lean > lean-receipts/SHA256SUMS
           echo leanprover/lean4:v4.33.0 > lean-receipts/lean-toolchain.txt
           git rev-parse HEAD > lean-receipts/commit.txt
       - name: Upload strict variance receipts
