@@ -1,7 +1,7 @@
 # The Convoluted Costs of Knowing — V2 technical/review handoff
 
 **Version:** 2.0 working dissertation, 13 November 2026  
-**Manuscript:** 47-page standalone LaTeX/PDF, authored and rendered in the current ChatGPT research session. Exact generated-file SHA-256: PDF \`e6e9a1d5cf235964a0f73cc16ce6230082337d2cefce2815692e1a6976e6aeff\` (**superseded by final typography revision**); final compiled PDF, editable \`.tex\` and exact checker are shared in the same session. Do not treat those container artifacts as present in this GitHub tree until explicitly uploaded.  
+**Manuscript:** 47-page standalone LaTeX/PDF, authored and rendered in the current ChatGPT research session. Exact generated-file SHA-256: PDF \`e6e9a1d5cf235964a0f73cc16ce6230082337d2cefce2815692e1a6976e6aeff\` (final rendered manuscript, 47 pages); final compiled PDF, editable \`.tex\` and exact checker are shared in the same session. Do not treat those container artifacts as present in this GitHub tree until explicitly uploaded.  
 **Repository position:** This is a companion to PR #446, not a merger of the 47-page source, a final dissertation submission or an approved original contribution.
 
 ## Governing revision
