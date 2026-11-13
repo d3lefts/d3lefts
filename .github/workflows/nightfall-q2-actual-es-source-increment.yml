@@ -400,6 +400,7 @@ jobs:
             --decl $N.finitePairIncrement_norm_bounded \
             --decl $N.finitePairIncrement_moment2_eq_budget \
             --decl $N.finitePairIncrement_fourth_endpoint \
+            --decl $N.finitePairIncrement_moment2_eq_source_pair_energies \
             --json-out lean-receipts/actual-es-finite-neighbor-moment.json || {
               cat lean-receipts/actual-es-finite-neighbor-moment.json
               exit 1
