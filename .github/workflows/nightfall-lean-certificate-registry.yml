@@ -22,6 +22,13 @@ on:
       - '.github/workflows/nightfall-lean-certificate-registry.yml'
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+env:
+  # Only PR checkouts may have experimental Lean sources with no historical receipt.
+  # Main stays fail-closed via the provenance scripts.
+  NIGHTFALL_ALLOW_UNREVIEWED: ${{ github.event_name == 'pull_request' && '1' || '0' }}
 permissions:
   contents: read
 
@@ -39,7 +46,9 @@ jobs:
       - name: Reconcile all current Lean source hashes with one canonical registry
         run: |
           set -euo pipefail
-          python3 scripts/lean_certificate_registry.py --audit \
+          pending=()
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request" ]]; then pending+=(--allow-pending); fi
+          python3 scripts/lean_certificate_registry.py --audit "${pending[@]}" \
             --json-out lean-receipts/consolidated-source-index.json
       - name: Preserve scope-labeled inventory for inspection
         if: always()

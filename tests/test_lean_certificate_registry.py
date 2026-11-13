@@ -66,10 +66,40 @@ class RegistryTests(unittest.TestCase):
         (self.root / self.path).write_text("theorem changed : True := by trivial\n")
         self.assert_rejected("Source blob changed")
 
-    def test_new_unregistered_module_fails(self):
-        (self.root / "research/nightfall/formalization/New.lean").write_text(
+    def test_new_unregistered_module_is_pending_not_certified(self):
+        new_path = "research/nightfall/formalization/New.lean"
+        (self.root / new_path).write_text(
             "theorem new : True := by trivial\n")
-        self.assert_rejected("Source census drift")
+        self.assert_rejected("Unregistered Lean sources in protected checkout")
+        result = registry.inspect(self.root, allow_pending=True)
+        self.assertEqual(result["inventory_count"], 1)
+        self.assertEqual(result["current_checkout_lean_source_count"], 2)
+        self.assertEqual(result["unreviewed_source_count"], 1)
+        self.assertFalse(result["all_checkout_sources_source_matched"])
+        self.assertFalse(result["current_checkout_source_integrity"])
+        self.assertTrue(result["registered_source_integrity"])
+        self.assertEqual(len(result["entries"]), 1)
+        pending = result["unreviewed_sources"][0]
+        self.assertEqual(pending["path"], new_path)
+        self.assertEqual(pending["classification"], "unreviewed-source")
+        self.assertEqual(pending["ci_source_match_status"], "no-verified-receipt")
+        self.assertEqual(pending["historical_run"], None)
+        self.assertEqual(pending["historical_head"], None)
+        self.assertEqual(pending["global_priority"], "unverified")
+
+    def test_removing_registered_module_fails_closed(self):
+        (self.root / self.path).unlink()
+        self.assert_rejected("Missing registered Lean source")
+
+    def test_unreviewed_file_cannot_be_promoted_without_a_receipt(self):
+        new_path = "research/nightfall/formalization/New.lean"
+        data = b"theorem new : True := by trivial\\n"
+        (self.root / new_path).write_bytes(data)
+        rec = dict(self.row, path=new_path, source_blob_sha=registry.git_blob_hash(data))
+        rec["ci_run"] = None
+        self.manifest["modules"].append(rec)
+        self.save()
+        self.assert_rejected("Missing historical CI run")
 
     def test_missing_ci_head_fails(self):
         self.row["ci_run_head_sha"] = ""
