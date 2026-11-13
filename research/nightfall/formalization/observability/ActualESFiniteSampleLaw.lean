@@ -83,7 +83,7 @@ theorem actual_source_observedSample_law
         (∑ _ : PUnit, (1 : ℝ) * F PUnit.unit)
       simp only [Finset.sum_const, Finset.card_univ, Fintype.card_punit,
         Nat.cast_one, one_smul]
-      rw [← Finset.sum_mul, sum_prodMass' p hp1, one_mul]
+      rw [← Finset.sum_mul, sum_prodMass p hp1, one_mul]
   | succ n ih =>
       intro hdist F
       have hprefix :
