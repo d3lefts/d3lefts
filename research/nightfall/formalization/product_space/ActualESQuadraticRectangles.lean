@@ -174,7 +174,7 @@ theorem pair_dependent_rectangle_base_independent
     intro k hk
     have hk' : k = i ∨ k = j := by simpa using hk
     rcases hk' with rfl | rfl
-    · simp [hij.symm]
+    · simp [Function.update, hij.symm]
     · simp
   unfold sourceRectangle
   rw [hcorner a0 b0, hcorner a0 b1,
