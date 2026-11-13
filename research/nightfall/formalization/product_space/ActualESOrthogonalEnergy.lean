@@ -124,4 +124,73 @@ theorem actual_esComp_orthogonal_distinct
     obtain ⟨k, hkU, hkV⟩ := hmiss
     exact actual_esComp_orthogonal_missing p hp1 f U V k hkU hkV
 
+/-- Genuine source-inner-product finite linearity in its first slot. -/
+theorem sourceInner_sum_left
+    {J : Type} [Fintype J]
+    (p : ι → α → ℝ)
+    (G : J → (ι → α) → ℝ)
+    (h : (ι → α) → ℝ) :
+    sourceInner p (fun x => ∑ j : J, G j x) h =
+      ∑ j : J, sourceInner p (G j) h := by
+  unfold sourceInner
+  calc
+    (∑ x : ι → α, prodMass p x *
+      ((∑ j : J, G j x) * h x)) =
+      ∑ x : ι → α, ∑ j : J,
+        prodMass p x * (G j x * h x) := by
+          apply Finset.sum_congr rfl
+          intro x _
+          rw [Finset.sum_mul, Finset.mul_sum]
+    _ = ∑ j : J, ∑ x : ι → α,
+        prodMass p x * (G j x * h x) := Finset.sum_comm
+
+/-- Genuine source-inner-product finite linearity in its second slot. -/
+theorem sourceInner_sum_right
+    {J : Type} [Fintype J]
+    (p : ι → α → ℝ)
+    (g : (ι → α) → ℝ)
+    (G : J → (ι → α) → ℝ) :
+    sourceInner p g (fun x => ∑ j : J, G j x) =
+      ∑ j : J, sourceInner p g (G j) := by
+  calc
+    sourceInner p g (fun x => ∑ j : J, G j x) =
+      sourceInner p (fun x => ∑ j : J, G j x) g :=
+        sourceInner_comm p _ _
+    _ = ∑ j : J, sourceInner p (G j) g :=
+        sourceInner_sum_left p G g
+    _ = ∑ j : J, sourceInner p g (G j) := by
+      apply Finset.sum_congr rfl
+      intro j _
+      exact sourceInner_comm p _ _
+
+/-- Finite exact Parseval identity for any already orthogonal family
+under the *actual* product-source inner product. -/
+theorem sourceInner_parseval_of_orthogonal
+    {J : Type} [Fintype J] [DecidableEq J]
+    (p : ι → α → ℝ)
+    (G : J → (ι → α) → ℝ)
+    (hortho : ∀ j k : J, j ≠ k →
+      sourceInner p (G j) (G k) = 0) :
+    sourceInner p (fun x => ∑ j : J, G j x)
+      (fun x => ∑ j : J, G j x) =
+      ∑ j : J, sourceInner p (G j) (G j) := by
+  calc
+    sourceInner p (fun x => ∑ j : J, G j x)
+      (fun x => ∑ j : J, G j x) =
+      ∑ j : J, sourceInner p (G j)
+        (fun x => ∑ k : J, G k x) :=
+          sourceInner_sum_left p G _
+    _ = ∑ j : J, ∑ k : J, sourceInner p (G j) (G k) := by
+          apply Finset.sum_congr rfl
+          intro j _
+          exact sourceInner_sum_right p (G j) G
+    _ = ∑ j : J, sourceInner p (G j) (G j) := by
+          apply Finset.sum_congr rfl
+          intro j _
+          rw [Finset.sum_eq_single j]
+          · intro k _ hkj
+            exact hortho j k hkj.symm
+          · intro hj
+            exact (hj (Finset.mem_univ j)).elim
+
 end Nightfall.Observability.ActualESOrthogonalEnergy
