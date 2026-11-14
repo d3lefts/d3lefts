@@ -1,0 +1,28 @@
+name: NIGHTFALL SCIF full actual-source exact independent audit
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - "research/nightfall/2026-11-quadratic-law-free-audit/check_scif_full_source_exact.py"
+      - "research/nightfall/2026-11-quadratic-law-free-audit/check_littlewood_categorical_obstruction.py"
+      - ".github/workflows/nightfall-scif-full-source-exact.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nightfall-scif-finite-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  independent-exact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Full source-law ANOVA and influence exact falsifier
+        run: python3 research/nightfall/2026-11-quadratic-law-free-audit/check_scif_full_source_exact.py
+      - name: Categorical Littlewood transport counterexample
+        run: python3 research/nightfall/2026-11-quadratic-law-free-audit/check_littlewood_categorical_obstruction.py
+      - name: Source custody
+        run: sha256sum research/nightfall/2026-11-quadratic-law-free-audit/check_*exact.py research/nightfall/2026-11-quadratic-law-free-audit/check_littlewood_categorical_obstruction.py
