@@ -1,5 +1,18 @@
 # NIGHTFALL — Current Lean and Exact-Evidence Proof Passport (14 November 2026)
 
+## 14 November 2026 — v2.0 source-level certification reconciliation
+
+**Current merged result:** [#498](https://github.com/d3lefts/d3lefts/pull/498) improves finite common-alphabet Q2 to strictly kernel-certified `C₂=[257/20+(9/4)√2+5√3+√6]²≈736.673198` (run [43633180605](https://github.com/d3lefts/d3lefts/actions/runs/43633180605)). The previous 1064.958 certificate remains valid but weaker; 620/589 candidates are not promoted from unmerged or failing current heads.
+
+**New merged exact-source receipts:** [#500](https://github.com/d3lefts/d3lefts/pull/500) finite all-degree influence-change identities; [#501](https://github.com/d3lefts/d3lefts/pull/501) actual arbitrary-index `Measure.infinitePi` finite marginals; [#506](https://github.com/d3lefts/d3lefts/pull/506) finite common-alphabet Efron–Stein without degree bound; [#512](https://github.com/d3lefts/d3lefts/pull/512) strict source-exact arbitrary-index finite-cylinder variance (run [43635195844](https://github.com/d3lefts/d3lefts/actions/runs/43635195844)); and [#514](https://github.com/d3lefts/d3lefts/pull/514) strict finite changed-law variance-risk terminal at every interaction degree (run [43635955108](https://github.com/d3lefts/d3lefts/actions/runs/43635955108)). These proofs are individually source-matched and scoped; they do **not** imply the arbitrary-index all-`L²` Lean endpoint or a globally source-generated SCOF ownership/cost guarantee.
+
+**New exact claim passport:** [Unrestricted Efron–Stein analytic proof](UNRESTRICTED_EFRON_STEIN_PROOF_PASSPORT_20261114.md), with proof of the classical arbitrary-index all-`L²` variance inequality and five specifically missing Lean gates. Status: **mathematical analytic proof complete; one unconditional `Measure.infinitePi` kernel certificate OPEN**. No independent human review or novel mathematics claim. External 2026 Lean prior art: [YuanheZ/lean-stat-learning-theory](https://github.com/YuanheZ/lean-stat-learning-theory), finite-product `efronStein`.
+
+The previously dated v1.0 table below is retained for provenance and must not be mistaken for current strongest finite bounds.
+
+---
+
+
 **Version:** 1.0 · **Owner/research direction:** Devin J. Wright · **Construction:** AI-assisted.
 **Scientific status:** strict named-declaration kernel receipts for explicitly scoped statements; mathematical novelty and non-author review unresolved.
 
