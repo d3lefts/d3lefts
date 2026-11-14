@@ -79,7 +79,13 @@ theorem actual_conditional_empty_eq_source_mean
       ∑ y : ι → α, originalMass p y * f y := by
   classical
   unfold sourceConditional
-  simp [keepSource, smul_eq_mul]
+  simp only [smul_eq_mul]
+  apply Finset.sum_congr rfl
+  intro y _
+  have h : keepSource (∅ : Finset ι) x y = y := by
+    funext t
+    simp [keepSource]
+  rw [h]
 
 /-- The fully derived pair term equals the **canonical degree-two
 Möbius inclusion-exclusion projector** of the original finite source.
@@ -90,10 +96,10 @@ theorem actual_pair_is_canonical_mobius_four_term
     (hp1 : ∀ t, (∑ a : α, p t a) = 1)
     (f : (ι → α) → ℝ) (j k : ι) (hjk : j ≠ k)
     (x : ι → α) :
-    (condExp p ({j,k} : Finset ι) f x -
-      condExp p ({j} : Finset ι) f x -
-      condExp p ({k} : Finset ι) f x +
-      condExp p (∅ : Finset ι) f x) =
+    (ActualSourceANOVA.condExp p ({j,k} : Finset ι) f x -
+      ActualSourceANOVA.condExp p ({j} : Finset ι) f x -
+      ActualSourceANOVA.condExp p ({k} : Finset ι) f x +
+      ActualSourceANOVA.condExp p (∅ : Finset ι) f x) =
       sourceDoubleCenteredPair p f j k (x j) (x k) := by
   classical
   simp only [canonical_condExp_eq_sourceConditional]
