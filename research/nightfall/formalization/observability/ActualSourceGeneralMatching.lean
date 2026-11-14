@@ -65,14 +65,15 @@ theorem liftMatching_update
 corresponding coordinates of the actual source function. -/
 theorem blockReplace_eq_source_updates
     (x : E × Bool → α) (e : E) (a b : α) :
-    blockReplace x e a b =
+    QuadraticHybridTelescoping.blockReplace (β := E) x e a b =
       Function.update (Function.update x (e, false) a) (e, true) b := by
+  classical
   funext k
   rcases k with ⟨k, s⟩
   by_cases hk : k = e
   · subst k
-    cases s <;> simp [blockReplace, Function.update]
-  · cases s <;> simp [blockReplace, Function.update, hk]
+    cases s <;> simp [QuadraticHybridTelescoping.blockReplace, Function.update]
+  · cases s <;> simp [QuadraticHybridTelescoping.blockReplace, Function.update, hk]
 
 
 theorem liftMatching_blockReplace
