@@ -5,6 +5,7 @@ on:
     paths:
       - 'research/nightfall/formalization/observability/ActualSourceAmplitudeRectangles.lean'
       - 'research/nightfall/formalization/observability/ActualSourceMatchingCover.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceDeterministicOwner.lean'
       - 'research/nightfall/formalization/observability/ActualSourceQ2GenuineInterface.lean'
       - 'research/nightfall/formalization/observability/ActualProductSourceDerivedStar.lean'
       - '.github/workflows/nightfall-q2-attained-matching-cover-v436.yml'
@@ -12,6 +13,7 @@ on:
     paths:
       - 'research/nightfall/formalization/observability/ActualSourceAmplitudeRectangles.lean'
       - 'research/nightfall/formalization/observability/ActualSourceMatchingCover.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceDeterministicOwner.lean'
       - 'research/nightfall/formalization/observability/ActualSourceQ2GenuineInterface.lean'
       - '.github/workflows/nightfall-q2-attained-matching-cover-v436.yml'
   workflow_dispatch:
@@ -103,6 +105,28 @@ jobs:
               exit 1
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-source-energy-and-pair-cover.json
+      - name: Build validated source matching cover for owner operator
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/observability/ActualSourceMatchingCover.lean /tmp/mathlib4/ActualSourceMatchingCover.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ActualSourceMatchingCover.olean ActualSourceMatchingCover.lean)
+      - name: Strict source-derived dominant-endpoint owner and pair partition
+        run: |
+          set -euo pipefail
+          N=Nightfall.Observability.ActualSourceDeterministicOwner
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualSourceDeterministicOwner.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.dominantOwner_symm \
+            --decl $N.dominantOwner_cost_eq_max \
+            --decl $N.ownedWeight_square_partition \
+            --decl $N.original_source_dominant_owner_certificate \
+            --json-out lean-receipts/q2-source-deterministic-owner.json || {
+              cat lean-receipts/q2-source-deterministic-owner.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-source-deterministic-owner.json
       - name: Source fingerprint, active toolchain
         if: always()
         run: |
