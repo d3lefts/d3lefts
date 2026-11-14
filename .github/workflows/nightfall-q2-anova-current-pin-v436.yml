@@ -129,6 +129,7 @@ jobs:
             --decl $N.actual_conditional_pair_eq_source_table \
             --decl $N.actual_conditional_empty_eq_source_mean \
             --decl $N.actual_pair_is_canonical_mobius_four_term \
+            --decl $N.actual_source_esComp_pair_eq_derived \
             --json-out lean-receipts/q2-actual-source-canonical-pair-identification.json || {
               cat lean-receipts/q2-actual-source-canonical-pair-identification.json
               exit 1
