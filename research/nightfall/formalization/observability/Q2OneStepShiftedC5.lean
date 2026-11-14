@@ -72,4 +72,67 @@ theorem one_increment_sos_identity
         (2/5)*(r-5/3)*u*c := by ring
     _ = _ := by rw [hr]; ring
 
+
+/-- Optimal additive one-increment coefficient for this support–Jensen
+mechanism; numerically 0.158918622597891. This DOES NOT tensorize
+automatically to sums of independently bounded increments. -/
+noncomputable def sharpK : ℝ :=
+  (Real.sqrt 3 - Real.sqrt 2)/2
+
+theorem sharpK_nonneg : 0 ≤ sharpK := by
+  unfold sharpK
+  have hr := Real.sqrt_le_sqrt (by norm_num : (2:ℝ) ≤ 3)
+  linarith
+
+theorem sharpK_le_fifth : sharpK ≤ (1:ℝ)/5 := by
+  let r : ℝ := Real.sqrt 3
+  let s : ℝ := Real.sqrt 2
+  have hr0 : 0 ≤ r := Real.sqrt_nonneg _
+  have hs0 : 0 ≤ s := Real.sqrt_nonneg _
+  have hr2 : r^2 = 3 := Real.sq_sqrt (by norm_num)
+  have hs2 : s^2 = 2 := Real.sq_sqrt (by norm_num)
+  have hru : r ≤ (7:ℝ)/4 := by nlinarith
+  have hsl : (7:ℝ)/5 ≤ s := by nlinarith
+  dsimp [sharpK, r, s]
+  linarith
+
+theorem single_increment_shifted_sharp
+    (t a u c : ℝ)
+    (ht : 0 ≤ t) (hu : 0 ≤ u) (hc : 0 ≤ c)
+    (hsecond : t^2 ≤ (a+c)*u)
+    (hjensen : a ≤ u) :
+    t ≤ Real.sqrt 3*u + sharpK*c := by
+  let r : ℝ := Real.sqrt 3
+  let s : ℝ := Real.sqrt 2
+  let k : ℝ := sharpK
+  have hr0 : 0 ≤ r := Real.sqrt_nonneg _
+  have hr2 : r^2 = 3 := Real.sq_sqrt (by norm_num)
+  have hs2 : s^2 = 2 := Real.sq_sqrt (by norm_num)
+  have hk0 : 0 ≤ k := sharpK_nonneg
+  have hlink : 2*(r+s)*k=1 := by
+    dsimp [k, sharpK]
+    nlinarith [hr2, hs2]
+  have hsos :
+      (r*u+k*c)^2-(u+c)*u =
+        2*(u-s*k*c/2)^2 := by
+    calc
+      (r*u+k*c)^2-(u+c)*u =
+        2*(u-s*k*c/2)^2 +
+          (r^2-3)*u^2 +
+          (2*(r+s)*k-1)*u*c +
+          (1-s^2/2)*k^2*c^2 := by ring
+      _ = 2*(u-s*k*c/2)^2 := by
+        rw [hr2, hs2, hlink]
+        ring
+  have hsum : t^2 ≤ (u+c)*u := by
+    calc
+      t^2 ≤ (a+c)*u := hsecond
+      _ ≤ (u+c)*u :=
+        mul_le_mul_of_nonneg_right (by linarith [hjensen] : a+c ≤ u+c) hu
+  have hv : 0 ≤ r*u+k*c := by positivity
+  have hsq : t^2 ≤ (r*u+k*c)^2 := by
+    nlinarith [sq_nonneg (u-s*k*c/2), hsos, hsum]
+  have hfinal : t ≤ r*u+k*c := by nlinarith
+  exact hfinal
+
 end Nightfall.Q2OneStep
