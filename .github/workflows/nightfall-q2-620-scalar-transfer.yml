@@ -98,8 +98,8 @@ jobs:
             --workspace /tmp/mathlib4 --timeout 900 --strict \
             --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
             --decl $N.golden_polynomial_envelope \
-            --json-out lean-receipts/q2-620-transfer/golden.json
-          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-620-transfer/golden.json
+            --json-out lean-receipts/q2-620-transfer/golden-envelope.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-620-transfer/golden-envelope.json
       - name: Strict arbitrary-index limit (conditional on actual-cylinder interface)
         run: |
           set -euo pipefail
@@ -118,7 +118,7 @@ jobs:
         if: always()
         run: |
           mkdir -p lean-receipts/q2-620-transfer
-          sha256sum research/nightfall/formalization/observability/Q2625ScalarEnvelope.lean research/nightfall/formalization/observability/Q2625Golden.lean research/nightfall/formalization/observability/Q2625GoldenTrade.lean research/nightfall/formalization/observability/Q2620ScalarSite.lean research/nightfall/formalization/universal/Q2UniversalTransfer.lean > lean-receipts/q2-620-transfer/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/observability/Q2625ScalarEnvelope.lean research/nightfall/formalization/observability/Q2625Golden.lean research/nightfall/formalization/observability/Q2625GoldenTrade.lean research/nightfall/formalization/observability/Q2625GoldenEnvelope.lean research/nightfall/formalization/observability/Q2620ScalarSite.lean research/nightfall/formalization/universal/Q2UniversalTransfer.lean > lean-receipts/q2-620-transfer/SHA256SUMS.txt
           git rev-parse HEAD > lean-receipts/q2-620-transfer/source-head.txt
       - name: Upload scoped receipts
         if: always()
