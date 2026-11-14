@@ -92,4 +92,75 @@ theorem actual_product_two_site_event
         rw [Finset.prod_mul_distrib]
     _ = p j a * p k b := by simp
 
+
+/-- Exact two-coordinate marginal for an arbitrary source pair kernel.
+This is derived from the point-event theorem rather than supplied
+as an independence oracle or as a positive-mass conditional law. -/
+theorem actual_product_two_site_marginal
+    (p : ι → α → ℝ)
+    (hp1 : ∀ i, (∑ a : α, p i a) = 1)
+    (j k : ι) (hjk : j ≠ k)
+    (H : α → α → ℝ) :
+    (∑ x : ι → α, originalMass p x * H (x j) (x k)) =
+      ∑ a : α, ∑ b : α, p j a * p k b * H a b := by
+  classical
+  have hcollapse (x : ι → α) :
+      (∑ a : α, ∑ b : α,
+        if x j = a ∧ x k = b then H a b else 0) =
+      H (x j) (x k) := by
+    have hinner (a : α) :
+        (∑ b : α,
+          if x j = a ∧ x k = b then H a b else 0) =
+        if x j = a then H a (x k) else 0 := by
+      by_cases h : x j = a <;> simp [h]
+    calc
+      (∑ a : α, ∑ b : α,
+        if x j = a ∧ x k = b then H a b else 0) =
+          ∑ a : α, if x j = a then H a (x k) else 0 := by
+          apply Finset.sum_congr rfl
+          intro a _
+          exact hinner a
+      _ = H (x j) (x k) := by simp
+  calc
+    (∑ x : ι → α, originalMass p x * H (x j) (x k)) =
+      ∑ x : ι → α, ∑ a : α, ∑ b : α,
+        originalMass p x *
+          (if x j = a ∧ x k = b then H a b else 0) := by
+        apply Finset.sum_congr rfl
+        intro x _
+        calc
+          originalMass p x * H (x j) (x k) =
+            originalMass p x *
+              (∑ a : α, ∑ b : α,
+                if x j = a ∧ x k = b then H a b else 0) := by
+                rw [hcollapse x]
+          _ = ∑ a : α, ∑ b : α,
+                originalMass p x *
+                  (if x j = a ∧ x k = b then H a b else 0) := by
+                simp only [Finset.mul_sum]
+    _ = ∑ a : α, ∑ b : α, ∑ x : ι → α,
+          originalMass p x *
+            (if x j = a ∧ x k = b then H a b else 0) := by
+        rw [Finset.sum_comm]
+        apply Finset.sum_congr rfl
+        intro a _
+        rw [Finset.sum_comm]
+    _ = ∑ a : α, ∑ b : α, p j a * p k b * H a b := by
+        apply Finset.sum_congr rfl
+        intro a _
+        apply Finset.sum_congr rfl
+        intro d _
+        calc
+          (∑ x : ι → α, originalMass p x *
+            (if x j = a ∧ x k = d then H a d else 0)) =
+          (∑ x : ι → α, originalMass p x *
+            (if x j = a ∧ x k = d then (1 : ℝ) else 0)) *
+              H a d := by
+                rw [Finset.sum_mul]
+                apply Finset.sum_congr rfl
+                intro x _
+                by_cases h : x j = a ∧ x k = d <;> simp [h]
+          _ = p j a * p k d * H a d := by
+                rw [actual_product_two_site_event p hp1 j k hjk a d]
+
 end Nightfall.Observability.ActualProductPairSector
