@@ -1,0 +1,61 @@
+name: NIGHTFALL Q2 mean-field floor four exact algebra
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/floor_four/**'
+      - '.github/workflows/nightfall-q2-four-floor-algebra.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: nightfall-q2-floor-four-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  exact-floor-algebra:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - name: Checkout exact source revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Setup exact pinned Lean and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Strict lower-four algebra (source witness bridge not asserted)
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/floor_four/Q2MeanFieldFourAlgebra.lean
+          OUT=lean-receipts/q2-floor-four
+          mkdir -p "$OUT"
+          cp "$SRC" /tmp/mathlib4/Q2MeanFieldFourAlgebra.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Q2MeanFieldFourAlgebra.olean Q2MeanFieldFourAlgebra.lean)
+          N=Nightfall.Observability.Q2MeanFieldFourAlgebra
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.exact_moment_ratio_identity \
+            --decl $N.exact_four_deficit \
+            --decl $N.approaches_four_from_below \
+            --json-out "$OUT/algebra.json"
+          python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT/algebra.json"
+      - name: Immutable receipt provenance
+        if: always()
+        run: |
+          mkdir -p lean-receipts/q2-floor-four
+          git rev-parse HEAD > lean-receipts/q2-floor-four/source-sha.txt
+          cat lean-toolchain > lean-receipts/q2-floor-four/toolchain.txt
+          sha256sum research/nightfall/formalization/floor_four/Q2MeanFieldFourAlgebra.lean > lean-receipts/q2-floor-four/SHA256SUMS.txt
+      - name: Upload named receipts
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: q2-floor-four-algebra-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/q2-floor-four
+          retention-days: 60
