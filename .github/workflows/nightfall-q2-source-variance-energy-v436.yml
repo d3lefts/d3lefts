@@ -1,7 +1,7 @@
 name: NIGHTFALL Q2 actual-source ANOVA energy Lean 4.36
 on:
   push:
-    branches: [nightfall-q2-source-anova-global-v436-20261113]
+    branches: [nightfall-q2-source-anova-global-v436-20261113, nightfall-q2-consolidated-terminal-20261114]
     paths:
       - 'research/nightfall/formalization/observability/ActualSourceCentered.lean'
       - 'research/nightfall/formalization/observability/ActualSourceOrthogonality.lean'
@@ -10,6 +10,7 @@ on:
       - '.github/workflows/nightfall-q2-source-variance-energy-v436.yml'
   pull_request:
     paths:
+      - 'research/nightfall/formalization/observability/ActualSourceInfluenceEnergy.lean'
       - 'research/nightfall/formalization/observability/ActualSourceCentered.lean'
       - 'research/nightfall/formalization/observability/ActualSourceOrthogonality.lean'
       - 'research/nightfall/formalization/observability/ActualSourceVarianceEnergy.lean'
