@@ -1,0 +1,37 @@
+{
+  "contract_version": "illustrative-tep-contracts-v02",
+  "scope": "synthetic process-inspired evidence contracts; no measured Tennessee Eastman data or verified safety predicates",
+  "change_impact_graph": {
+    "reactor_controller": ["reactor_pressure_state", "recycle_flow_state"],
+    "valve_controller": ["valve_state"],
+    "quality_sensor": ["quality_measurement", "quality_calibration_state"],
+    "product_stripper": ["product_state", "quality_measurement"],
+    "reactor_pressure_state": [],
+    "recycle_flow_state": [],
+    "valve_state": [],
+    "quality_measurement": [],
+    "quality_calibration_state": [],
+    "product_state": []
+  },
+  "evidence": [
+    {"id":"attest","new_cost":2,"reuse_check_cost":1,"depends_on":[],"available":true,"new_authenticated":true,"digest":"digest-attest-v1","prior":{"authenticated":true,"contract_version":"illustrative-tep-contracts-v02","valid_through_step":10,"digest":"digest-attest-v1"}},
+    {"id":"reactor_pressure","new_cost":5,"reuse_check_cost":1,"depends_on":["reactor_pressure_state"],"available":true,"new_authenticated":true,"digest":"digest-reactor-v1","prior":{"authenticated":true,"contract_version":"illustrative-tep-contracts-v02","valid_through_step":10,"digest":"digest-reactor-v1"}},
+    {"id":"pressure_calibration","new_cost":3,"reuse_check_cost":1,"depends_on":[],"available":true,"new_authenticated":true,"digest":"digest-press-cal-v1","prior":{"authenticated":true,"contract_version":"illustrative-tep-contracts-v02","valid_through_step":10,"digest":"digest-press-cal-v1"}},
+    {"id":"recycle_flow","new_cost":4,"reuse_check_cost":1,"depends_on":["recycle_flow_state"],"available":true,"new_authenticated":true,"digest":"digest-recycle-v1","prior":{"authenticated":true,"contract_version":"illustrative-tep-contracts-v02","valid_through_step":10,"digest":"digest-recycle-v1"}},
+    {"id":"model_validation","new_cost":6,"reuse_check_cost":1,"depends_on":["reactor_pressure_state", "recycle_flow_state"],"available":true,"new_authenticated":true,"digest":"digest-model-v1","prior":{"authenticated":true,"contract_version":"illustrative-tep-contracts-v02","valid_through_step":10,"digest":"digest-model-v1"}},
+    {"id":"product_quality","new_cost":7,"reuse_check_cost":1,"depends_on":["quality_measurement"],"available":true,"new_authenticated":true,"digest":"digest-quality-v1","prior":{"authenticated":true,"contract_version":"illustrative-tep-contracts-v02","valid_through_step":10,"digest":"digest-quality-v1"}},
+    {"id":"quality_calibration","new_cost":2,"reuse_check_cost":1,"depends_on":["quality_calibration_state"],"available":true,"new_authenticated":true,"digest":"digest-qual-cal-v1","prior":{"authenticated":true,"contract_version":"illustrative-tep-contracts-v02","valid_through_step":10,"digest":"digest-qual-cal-v1"}},
+    {"id":"valve_state","new_cost":2,"reuse_check_cost":1,"depends_on":["valve_state"],"available":true,"new_authenticated":true,"digest":"digest-valve-v1","prior":{"authenticated":true,"contract_version":"illustrative-tep-contracts-v02","valid_through_step":10,"digest":"digest-valve-v1"}},
+    {"id":"valve_dynamics","new_cost":3,"reuse_check_cost":1,"depends_on":[],"available":true,"new_authenticated":true,"digest":"digest-valve-model-v1","prior":{"authenticated":true,"contract_version":"illustrative-tep-contracts-v02","valid_through_step":10,"digest":"digest-valve-model-v1"}}
+  ],
+  "obligations": [
+    {"id":"pressure_envelope","missions":["containment","quality"],"alternatives":[["attest","reactor_pressure","pressure_calibration"],["attest","recycle_flow","model_validation"]]},
+    {"id":"product_composition","missions":["quality"],"alternatives":[["attest","product_quality","quality_calibration"]]},
+    {"id":"valve_command_integrity","missions":["containment"],"alternatives":[["attest","valve_state","valve_dynamics"]]}
+  ],
+  "scenarios": [
+    {"id":"controller_change","mission":"containment","changes":["reactor_controller","valve_controller"],"step":5},
+    {"id":"quality_change","mission":"quality","changes":["quality_sensor","product_stripper"],"step":5},
+    {"id":"no_change","mission":"containment","changes":[],"step":5}
+  ]
+}
