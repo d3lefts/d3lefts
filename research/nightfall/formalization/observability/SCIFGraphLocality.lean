@@ -75,7 +75,7 @@ theorem residual_ignores_k_if_mixed_rectangles_vanish
     rw [restore_unchanged_second_coordinate x k j hkj a,
         h3, h4] at hr
     linarith
-  unfold residual
+  unfold Nightfall.Observability.SCIFActualInfluence.residual
   calc
     f (Function.update x k a) -
       (∑ b : α, p j b * f (Function.update (Function.update x k a) j b)) =
