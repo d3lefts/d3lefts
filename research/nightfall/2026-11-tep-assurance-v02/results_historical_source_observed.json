@@ -1,0 +1,26 @@
+{
+  "status": "source_backed_provisional_descriptive_not_independent_python_replay",
+  "observed_via": "GitHub connector read, twice with independent JS aggregation and explicit commit pin",
+  "source": "jkitchin/tennessee-eastman-profbraatz",
+  "source_commit": "9a6c8e5fcef4a2850778704e7793c87b0a187005",
+  "distinct_from": ["DTU 2021 Reinartz ETEP benchmark", "COSTEP 2026 Simulink implementation"],
+  "source_blobs": {
+    "d00.dat": "ffcb9a1b4f34412bc3ef9a91ff19862e720f3c42",
+    "d00_te.dat": "a64b904657520e922bc5480031b52824e020d7c5",
+    "d01_te.dat": "fc149090376bc4f1a33dd8c324b9a031a9972458"
+  },
+  "shapes_before_transposition": {"d00.dat": [52,500], "d00_te.dat": [960,52], "d01_te.dat": [960,52]},
+  "protocol": "fixed five sensors, train mean and sample SD on transposed d00.dat; count values outside mu ± 3 SD in d00_te.dat and d01_te.dat from assumed index 160 onward; no paired seed, no safety predicate",
+  "onset_index": 160,
+  "onset_index_status": "assumed, not confirmed from this exact source's native run metadata",
+  "post_samples_per_trace": 800,
+  "sensors": [
+    {"channel": "XMEAS(4)", "description": "A/C feed flow", "training_mean":9.344306000000003,"training_sd":0.07651388208883805,"pre_fault_difference_sd":-0.029316575486270334,"post_fault_difference_sd":-7.098388360028521,"normal_post_exceedances":4,"fault1_post_exceedances":743},
+    {"channel": "XMEAS(5)", "description": "Recycle flow", "training_mean":26.907786,"training_sd":0.2086639246993641,"pre_fault_difference_sd":0.021296206358531633,"post_fault_difference_sd":-0.03253437320225386,"normal_post_exceedances":0,"fault1_post_exceedances":2},
+    {"channel": "XMEAS(7)", "description": "Reactor pressure", "training_mean":2705.3974000000026,"training_sd":5.263384812015809,"pre_fault_difference_sd":0.012230722681147162,"post_fault_difference_sd":0.9424781157319975,"normal_post_exceedances":12,"fault1_post_exceedances":268},
+    {"channel": "XMEAS(9)", "description": "Reactor temperature", "training_mean":120.39944000000024,"training_sd":0.018654285425324546,"pre_fault_difference_sd":0.030153929097081852,"post_fault_difference_sd":0.0013401746214582973,"normal_post_exceedances":5,"fault1_post_exceedances":2},
+    {"channel": "XMEAS(40)", "description": "Product G concentration", "training_mean":53.64725999999993,"training_sd":0.5356971488355526,"pre_fault_difference_sd":0.040834639586206596,"post_fault_difference_sd":-0.0263558430927259,"normal_post_exceedances":0,"fault1_post_exceedances":0}
+  ],
+  "negative_controls": "onset shifts to 150 and 170 preserve order-of-magnitude separation of XMEAS(4) and weak observability of XMEAS(40); see SOURCE_PROBE.md",
+  "limit": "Sample counts are serially dependent, may be affected by source-specific operating settings and onset conventions, and are not mission certificates or statistically calibrated fault probabilities."
+}

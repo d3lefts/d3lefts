@@ -1,0 +1,24 @@
+{
+  "version": "toy-contracts-0.1",
+  "warning": "TEP-inspired illustrative assurance contracts only: NOT physical model calibration, deployment, or plant safety certification.",
+  "evidence": [
+    {"id":"attest", "cost":2, "available":true, "type":"source_authentication"},
+    {"id":"reactor_pressure", "cost":5, "available":true, "type":"measurement"},
+    {"id":"pressure_calibration", "cost":3, "available":true, "type":"calibration"},
+    {"id":"recycle_flow", "cost":4, "available":true, "type":"measurement"},
+    {"id":"model_validation", "cost":6, "available":true, "type":"model_check"},
+    {"id":"product_quality", "cost":7, "available":true, "type":"measurement"},
+    {"id":"quality_calibration", "cost":2, "available":true, "type":"calibration"},
+    {"id":"valve_state", "cost":2, "available":true, "type":"measurement"},
+    {"id":"valve_dynamics", "cost":3, "available":true, "type":"model_check"}
+  ],
+  "obligations": [
+    {"id":"pressure_envelope", "missions":["containment","quality"], "alternatives":[["attest","reactor_pressure","pressure_calibration"],["attest","recycle_flow","model_validation"]]},
+    {"id":"product_composition", "missions":["quality"], "alternatives":[["attest","product_quality","quality_calibration"]]},
+    {"id":"valve_command_integrity", "missions":["containment"], "alternatives":[["attest","valve_state","valve_dynamics"]]}
+  ],
+  "scenarios": [
+    {"id":"pressure_and_valve_change", "mission":"containment", "changed":["reactor_controller","valve_controller"], "note":"Toy example: two jointly required assurance obligations"},
+    {"id":"product_quality_change", "mission":"quality", "changed":["product_stripper","quality_sensor"], "note":"Toy example: pressure and quality evidence obligations"}
+  ]
+}

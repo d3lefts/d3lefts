@@ -1,0 +1,149 @@
+[
+  {
+    "status": "synthetic_contract_satisfied_not_plant_safety",
+    "contract_version": "illustrative-tep-contracts-v02",
+    "scenario": {
+      "id": "controller_change",
+      "mission": "containment",
+      "changes": [
+        "reactor_controller",
+        "valve_controller"
+      ],
+      "step": 5
+    },
+    "closure": [
+      "reactor_controller",
+      "reactor_pressure_state",
+      "recycle_flow_state",
+      "valve_controller",
+      "valve_state"
+    ],
+    "obligations": [
+      "pressure_envelope",
+      "valve_command_integrity"
+    ],
+    "actions": [
+      {
+        "source": "attest",
+        "action": "reuse",
+        "cost": 1
+      },
+      {
+        "source": "reactor_pressure",
+        "action": "reacquire",
+        "cost": 5
+      },
+      {
+        "source": "pressure_calibration",
+        "action": "reuse",
+        "cost": 1
+      },
+      {
+        "source": "valve_state",
+        "action": "reacquire",
+        "cost": 2
+      },
+      {
+        "source": "valve_dynamics",
+        "action": "reuse",
+        "cost": 1
+      }
+    ],
+    "total_abstract_cost": 10
+  },
+  {
+    "status": "synthetic_contract_satisfied_not_plant_safety",
+    "contract_version": "illustrative-tep-contracts-v02",
+    "scenario": {
+      "id": "quality_change",
+      "mission": "quality",
+      "changes": [
+        "quality_sensor",
+        "product_stripper"
+      ],
+      "step": 5
+    },
+    "closure": [
+      "product_state",
+      "product_stripper",
+      "quality_calibration_state",
+      "quality_measurement",
+      "quality_sensor"
+    ],
+    "obligations": [
+      "pressure_envelope",
+      "product_composition"
+    ],
+    "actions": [
+      {
+        "source": "attest",
+        "action": "reuse",
+        "cost": 1
+      },
+      {
+        "source": "reactor_pressure",
+        "action": "reuse",
+        "cost": 1
+      },
+      {
+        "source": "pressure_calibration",
+        "action": "reuse",
+        "cost": 1
+      },
+      {
+        "source": "product_quality",
+        "action": "reacquire",
+        "cost": 7
+      },
+      {
+        "source": "quality_calibration",
+        "action": "reacquire",
+        "cost": 2
+      }
+    ],
+    "total_abstract_cost": 12
+  },
+  {
+    "status": "synthetic_contract_satisfied_not_plant_safety",
+    "contract_version": "illustrative-tep-contracts-v02",
+    "scenario": {
+      "id": "no_change",
+      "mission": "containment",
+      "changes": [],
+      "step": 5
+    },
+    "closure": [],
+    "obligations": [
+      "pressure_envelope",
+      "valve_command_integrity"
+    ],
+    "actions": [
+      {
+        "source": "attest",
+        "action": "reuse",
+        "cost": 1
+      },
+      {
+        "source": "reactor_pressure",
+        "action": "reuse",
+        "cost": 1
+      },
+      {
+        "source": "pressure_calibration",
+        "action": "reuse",
+        "cost": 1
+      },
+      {
+        "source": "valve_state",
+        "action": "reuse",
+        "cost": 1
+      },
+      {
+        "source": "valve_dynamics",
+        "action": "reuse",
+        "cost": 1
+      }
+    ],
+    "total_abstract_cost": 5
+  }
+]

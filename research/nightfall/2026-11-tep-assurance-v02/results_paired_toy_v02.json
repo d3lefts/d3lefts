@@ -1,0 +1,21 @@
+{
+  "status": "descriptive_only_no_safety_claim",
+  "fault_time_s": 12.0,
+  "normal_n": 6,
+  "pre_n": 4,
+  "post_n": 2,
+  "signals": {
+    "reactor_pressure": {
+      "pre_fault_pair_rms": 0.0,
+      "post_fault_pair_rms": 3.5355339059327378,
+      "post_fault_relative_rms_pct": 3.5355339059327378,
+      "normal_post_mean_abs_scale": 100.0
+    },
+    "product_quality": {
+      "pre_fault_pair_rms": 0.0,
+      "post_fault_pair_rms": 0.7071067811865476,
+      "post_fault_relative_rms_pct": 0.7856742013183862,
+      "normal_post_mean_abs_scale": 90.0
+    }
+  }
+}

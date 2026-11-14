@@ -1,0 +1,26 @@
+{
+  "files_sha256": {
+    "README.md": "e286df7824b3ce937320e13436a89a25064544279fe32b24caae5bfc28abbf5d",
+    "SOURCE_PROBE.md": "80c63fdcdca1514aebcf4f23d09fab22608fba7de3b1052172057a27f1918df2",
+    "UPSTREAM_AUDIT.md": "c84b122b94e9ee3fb929b7819b55a2cd968f1b95e8158fb506cdced9dba88088",
+    "audit.py": "707a8418401b03043606c2a340f76e8bc14e16b875a13d45fd954ffe8415ec12",
+    "cases.json": "e4ea1af41d1d1be1c90ed5cdf7cf608f3590c6e90ee884299883c5a876bc1a1b",
+    "examples/fault_toy.csv": "bb04cd4000b8c488a44498076140041291fe67769b2128e476bc077e2c3585fe",
+    "examples/normal_toy.csv": "f2850ce357251299a10ef76bf41883e89345038725dc993a456674f6629dec3b",
+    "export_costep_arrays.m": "a07892f808c8bfcd268abd9ccf6b2b7ed6752b31082b6e4c46b83867a6574c64",
+    "independent_lifecycle_audit.py": "ba04f9bbb60ba2b6a2f72d5d75642441e30a87e7a9989ed9fa6680713dd1d086",
+    "lifecycle.py": "10dd8ddc7171663e74e2a788ac7d6f28d5b29eeace3c970beed8e03d768d0efe",
+    "lifecycle_cases.json": "cb7387f28061999100cb74b8af05c9b82198bfb0d4ecba71cca720366e39568b",
+    "original_tep_probe.py": "2f7e1bb423e62356796760110e58dbb682d1153d0a4f16332b2e5890e8070caa",
+    "paired_seed_diagnostic.py": "a47957d456a22e6f03a954956dc3653094833ef43ac63f88c3a491e0c823d3ac",
+    "results_historical_source_observed.json": "5e09fb7f6cb32a201a90c7fde5799f2034d81ca0196dfb0b7c13db21a3d6681d",
+    "results_lifecycle_v02.json": "51d80001dea7139bd643312ce2db57a32fedef11daa284a5f6dd5da7fb3cd44e",
+    "results_paired_toy_v02.json": "ab05732152c584854d3b5f4bb1828d4762d55152ff3f613c93329f660ddc56fe",
+    "solver.py": "e18d44ae169133e25736af466775a1f9198e126d157b855476c34fc50309aa19",
+    "test_v02.py": "9280a3d4db9602e7675d555bb1a1c9fd32800ab7c57bb653042bb295d4c5d2da",
+    "validate_normalized_pair.py": "43c967454e62fed3388df543238699f95629ac65f8d9d4ec0dae31537b400fd1"
+  },
+  "python_runtime": "3.13.5",
+  "research_version": "0.2",
+  "status": "synthetic exact contract checker + provisional source-based historical TEP probe, NOT DTU/COSTEP physical safety"
+}
