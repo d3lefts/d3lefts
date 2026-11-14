@@ -5,13 +5,13 @@ on:
     paths:
       - 'research/nightfall/formalization/observability/ActualSourceIntegratedSections.lean'
       - 'research/nightfall/formalization/observability/ActualSourceMeanSectionJensen.lean'
-      - 'research/nightfall/formalization/observability/ActualESConditionalJensen.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceANOVA.lean'
       - '.github/workflows/nightfall-q2-terminal-owner-v436.yml'
   pull_request:
     paths:
       - 'research/nightfall/formalization/observability/ActualSourceIntegratedSections.lean'
       - 'research/nightfall/formalization/observability/ActualSourceMeanSectionJensen.lean'
-      - 'research/nightfall/formalization/observability/ActualESConditionalJensen.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceANOVA.lean'
       - '.github/workflows/nightfall-q2-terminal-owner-v436.yml'
   workflow_dispatch:
 permissions:
@@ -83,7 +83,7 @@ jobs:
         if: always()
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/observability/ActualSourceMeanSectionJensen.lean research/nightfall/formalization/observability/ActualSourceIntegratedSections.lean research/nightfall/formalization/observability/ActualESConditionalJensen.lean > lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/observability/ActualSourceMeanSectionJensen.lean research/nightfall/formalization/observability/ActualSourceIntegratedSections.lean research/nightfall/formalization/observability/ActualSourceANOVA.lean > lean-receipts/SHA256SUMS.txt
           git rev-parse HEAD > lean-receipts/repo-commit.txt
           cat lean-toolchain > lean-receipts/lean-toolchain.txt
       - uses: actions/upload-artifact@v4
