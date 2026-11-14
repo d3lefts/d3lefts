@@ -1,3 +1,4 @@
+from pathlib import Path
 #!/usr/bin/env python3
 """Independent finite audit of NIGHTFALL coupled mission-change observability.
 
@@ -173,7 +174,7 @@ def main():
                                    'human experiments','research novelty']}
     s = json.dumps(result,indent=2,sort_keys=True)
     print(s)
-    with open('/mnt/data/nightfall_usa/checker_results.json','w') as f: f.write(s+'\n')
+    with open(Path(__file__).with_name('checker_results_v02.json'),'w') as f: f.write(s+'\n')
     with open(__file__,'rb') as f: source_hash = hashlib.sha256(f.read()).hexdigest()
     print('SOURCE_SHA256',source_hash)
 
