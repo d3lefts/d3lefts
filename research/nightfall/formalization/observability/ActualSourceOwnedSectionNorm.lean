@@ -85,7 +85,6 @@ theorem original_source_finitePair_observed_sqNorm
   intro a _
   rw [original_source_finitePair_observed_sum p f i j n x a,
     mul_pow, Real.sq_sqrt (hp i a)]
-  ring
 
 /-- The recursive Hilbert first norm is literally the original-law
 expected L2 norm of the source-owned pair kernel sum. -/
