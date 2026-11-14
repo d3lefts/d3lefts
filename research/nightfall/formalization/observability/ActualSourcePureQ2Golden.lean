@@ -28,6 +28,7 @@ open Nightfall.Observability.ActualSourceOwnedGraph
 open Nightfall.Observability.ActualSourceFinitePairMoment
 open Nightfall.Observability.ActualSourceMeanSectionJensen
 open Nightfall.Observability.ActualSourceIntegratedFive
+open Nightfall.Observability.ActualSourceIntegratedSections
 open Nightfall.Observability.ActualSourceQ2589Terminal
 open Nightfall.Observability.ActualSourceSingletonEnergyBridge
 open Nightfall.Observability.QuadraticHilbertMany
