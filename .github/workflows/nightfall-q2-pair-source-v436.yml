@@ -38,6 +38,9 @@ jobs:
             --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
             --decl $N.actual_product_two_site_event \
             --decl $N.actual_product_two_site_marginal \
+            --decl $N.actual_centered_pair_source_projection \
+            --decl $N.actual_mask_two_site_probability \
+            --decl $N.actual_soft_noise_centered_pair_eigen \
             --json-out lean-receipts/q2-actual-two-site-event.json || {
               cat lean-receipts/q2-actual-two-site-event.json
               exit 1
