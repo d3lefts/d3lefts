@@ -1,0 +1,61 @@
+name: NIGHTFALL Q2 shifted-owner scalar Lean certificate
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/q2_shifted/**'
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/check_shifted_owner_moment_107.py'
+      - '.github/workflows/nightfall-q2-shifted-scalar.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nightfall-q2-shifted-scalar-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  shifted-scalar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Independent exact rational c/4 interpolation checker
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/2026-11-quadratic-law-free-audit/check_shifted_owner_moment_107.py
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Strict pinned Lean compilation and named declaration audit
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/q2_shifted/Q2ShiftedScalar.lean
+          cp "$SRC" /tmp/mathlib4/Q2ShiftedScalar.lean
+          mkdir -p /tmp/mathlib4/.lake/build/lib/lean lean-receipts/q2-shifted
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Q2ShiftedScalar.olean Q2ShiftedScalar.lean)
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Q2Shifted.shifted_interpolation_third \
+            --decl Nightfall.Q2Shifted.shifted_fourth_moment_scalar \
+            --json-out lean-receipts/q2-shifted/scalar.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-shifted/scalar.json
+      - name: Source/commit manifest
+        if: always()
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-shifted
+          sha256sum research/nightfall/formalization/q2_shifted/Q2ShiftedScalar.lean \
+            research/nightfall/2026-11-quadratic-law-free-audit/check_shifted_owner_moment_107.py \
+            > lean-receipts/q2-shifted/SHA256SUMS
+          git rev-parse HEAD > lean-receipts/q2-shifted/commit.txt
+          echo leanprover/lean4:v4.36.0-rc2 > lean-receipts/q2-shifted/lean-toolchain.txt
+      - name: Preserve scoped receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-q2-shifted-scalar-lean-receipts
+          path: lean-receipts/q2-shifted/
+          retention-days: 45
