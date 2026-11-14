@@ -47,6 +47,12 @@ jobs:
         run: |
           zip -qr second-oracle-input.zip promotion-results
           python second_oracle.py second-oracle-input.zip | tee promotion-results/second_oracle_audit.json
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          r=json.loads(Path('promotion-results/second_oracle_audit.json').read_text())
+          assert r['run']=='github:d3lefts/d3lefts:'+os.environ['GITHUB_RUN_ID'], 'stale or forged run provenance'
+          PY
       - name: Upload exact source-matched evidence and receipts
         if: always()
         uses: actions/upload-artifact@v4
