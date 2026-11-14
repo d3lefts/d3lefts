@@ -1,6 +1,6 @@
 # Q2 source-law soft-noise compiler checkpoint · November 13, 2026
 
-**Status: SEVEN SCOPED LEAN THEOREMS CERTIFIED. FULL SOURCE-LEVEL Q2 NOT CERTIFIED.**
+**Status: ELEVEN SCOPED LEAN THEOREMS CERTIFIED. FULL SOURCE-LEVEL Q2 NOT CERTIFIED.**
 
 Research led by Devin J. Wright; AI-assisted proof construction. This record is the certificate passport for the active-pin real-source refresh operator, not a terminal Q2 or novelty claim.
 
@@ -13,7 +13,7 @@ Research led by Devin J. Wright; AI-assisted proof construction. This record is 
 - Strict allowed axioms only: **Classical.choice, Quot.sound, propext**. No sorryAx or added Q2 assumption.
 - Exact original-source prerequisites recompiled in the same workspace: [merge tower](../formalization/observability/ActualProductMergeTower.lean), [Hilbert Jensen](../formalization/observability/ActualProductHilbertJensen.lean). The CI artifact includes pin/source hash/declaration reports.
 
-## Seven exact new Lean declarations
+## Seven original source-noise declarations
 
 1. **actual_source_conditional_mixture_L1** — any finite normalized nonnegative mixture of real-product conditional refreshes is an expected norm contraction for arbitrary real normed vector-valued source functions, with zero-mass states permitted.
 2. **maskWeight_nonneg** — valid coordinatewise retention rates give nonnegative Boolean-mask probabilities.
@@ -24,6 +24,18 @@ Research led by Devin J. Wright; AI-assisted proof construction. This record is 
 7. **actual_soft_source_noise_stationary** — full coordinatewise soft noise is stationary under the *original* product law.
 
 The last three make the operator genuinely source-preserving instead of merely an auxiliary probability-space estimate.
+
+## Four additional certified source-marginal and eigenaction declarations
+
+Pinned strict run [43545192749](https://github.com/d3lefts/d3lefts/actions/runs/43545192749) compiled **all 11 declarations**. New source [ActualProductSourceMarginal.lean](../formalization/observability/ActualProductSourceMarginal.lean), SHA-256 **c580e8b4555a3af52fb609fd9d4e638ba88d26b1057181ea522919bae7efacad**. The four additional named declarations depend only on Classical.choice, Quot.sound and propext:
+
+8. **actual_product_coordinate_marginal** — the actual original-product expectation of a one-coordinate observable equals its stated coordinate marginal (without a positive-mass floor).
+9. **actual_centered_singleton_source_projection** — a centered singleton source component survives exact source conditioning when retained and disappears otherwise.
+10. **actual_mask_one_site_probability** — a Boolean source-retention mask retains any given original site with its declared weight, derived by applying the *same* product-marginal theorem with Bool alphabet.
+11. **actual_soft_noise_centered_singleton_eigen** — exact singleton-sector eigenrelation Q_r[g(X_j)] = r_j g(X_j), derived from genuine source conditioning and Boolean-mask normalization.
+
+Earlier [43545016799](https://github.com/d3lefts/d3lefts/actions/runs/43545016799) failed because a restricted simplifier did not reduce the false Boolean branch. The exact source claim was unchanged; after the simp repair the strict compiler accepted it with no sorryAx. This is **not** a two-coordinate interaction-sector certificate or terminal Q2.
+
 
 ## Terminal target and missing gates
 
@@ -38,7 +50,7 @@ All alphabet types and zero-probability masses must be handled without a lower a
 
 The next necessary source-dependent bridges, which this certificate does **not** establish, are:
 
-1. Show that soft noise acts on a genuine centered Efron–Stein singleton or pair sector by its correct retention factor *derived from actual source marginalization*, not by assuming the eigenrelation.
+1. **Singleton step certified on the current pin.** Still prove the corresponding *two-coordinate* identity on a genuine separately centered Efron–Stein pair sector, directly from actual source marginalization, not as an assumed eigenrelation.
 2. Derive per-owner soft rates from the **actual source's** greedy matching amplitude cover; prove the soft second-moment exact energy partition, maximum-influence control, and genuine Hilbert fourth-moment bound.
 3. Recompile the original-source section 8B estimate, the additive budget, Parseval and influence identities and the matching cover together under the active 4.36 pin.
 4. Assemble a terminal all-source theorem with only normalization, nonnegativity, boundedness and degree-two source hypotheses, print axiom dependencies and run strict source-hashed verification.
