@@ -86,3 +86,31 @@ Do not mark compiler-certified until exact-head GitHub Actions
 and axiom receipts pass. Do not promote unrestricted (C_{99});
 that additionally needs a c/5 result *with arbitrary nonzero h*
 and the sharp original-source section budget.
+
+
+## Exact lower witness for any **general shifted** correction
+
+Normalize c=1. Put a=(√6−2)/4, and use the asymmetric two-point
+centered increment
+
+  P(Y=−a)=1/(1+a),   P(Y=1)=a/(1+a).
+
+Then EY=0, |Y|≤1, E Y²=a and E Y³=a(1−a)>0. Choose deterministic
+shift h=a. Thus h+Y is 0 with probability 1/(1+a) and 1+a with
+probability a/(1+a), so E|h+Y|=a.
+
+The relation a²+a=1/8 implies sqrt(E|h+Y|²)=sqrt(2)/4.
+Consequently the exact correction required by this *actual
+asymmetric product law* is
+
+  sqrt(2)/4−sqrt(3)*a=(sqrt(3)−sqrt(2))/2
+    =0.158918622597891...
+
+Therefore every universal shifted inequality
+sqrt(e)≤sqrt(3)*u+βc requires β≥(sqrt(3)−sqrt(2))/2.
+This is an analytic lower witness, not an upper proof and not a
+claim of worldwide novelty. In particular β=1/7 is impossible,
+while β=1/5 is not contradicted.
+
+The witness is exact, unlike the finite search: it uses only
+the specified two-point distribution and radical identities.
