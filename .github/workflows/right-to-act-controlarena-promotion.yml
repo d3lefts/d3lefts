@@ -1,0 +1,59 @@
+name: Right to Act — independent ControlArena IaC Fast promotion check
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/right-to-act-controlarena-promotion.yml"
+      - "research/nightfall/right-to-act-promotion/**"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: right-to-act-promotion-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  real-source-promotion:
+    name: Three-event source-matched CloudFormation promotion
+    runs-on: ubuntu-latest
+    environment: controlarena-python
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: research/nightfall/right-to-act-promotion
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install exact CDK and ControlArena source dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install 'control-arena==20.1.1' 'aws-cdk-lib==2.260.0' 'jsii==1.137.0' 'constructs==10.4.2' 'pytest==8.4.2'
+          python -m pip freeze > installed-versions.txt
+          node --version
+      - name: Independently validate resource-effect verifier negative controls
+        run: python -m pytest -q test_effect_verifier.py
+      - name: Three-event real-source promotion experiment
+        env:
+          JSII_SILENCE_WARNING_UNTESTED_NODE_VERSION: "1"
+        run: |
+          python promotion_runner.py --out promotion-results
+      - name: Separate independent replay of synthesized authorized artifact and benchmark scores
+        if: success()
+        run: python audit_receipt.py --dir promotion-results
+      - name: Upload exact source-matched evidence and receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: right-to-act-iac-fast-promotion
+          path: |
+            research/nightfall/right-to-act-promotion/promotion-results/receipt.json
+            research/nightfall/right-to-act-promotion/promotion-results/independent_audit.json
+            research/nightfall/right-to-act-promotion/promotion-results/baseline.template.json
+            research/nightfall/right-to-act-promotion/promotion-results/legitimate.template.json
+            research/nightfall/right-to-act-promotion/promotion-results/harmful.template.json
+            research/nightfall/right-to-act-promotion/promotion-results/promoted/OrganisationStack.template.json
+            research/nightfall/right-to-act-promotion/installed-versions.txt
+          if-no-files-found: warn
+          retention-days: 14
