@@ -1,0 +1,74 @@
+name: NIGHTFALL SCIF complete original-source kernel certificate
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/observability/SCIF*.lean'
+      - '.github/workflows/nightfall-scif-complete-original-source.yml'
+  workflow_dispatch:
+concurrency:
+  group: nightfall-scif-complete-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  certified-source-terminal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile complete actual-source import DAG once
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import shutil, subprocess
+          from scripts.nightfall_q2_certify import local_sources, closure
+          files = local_sources()
+          workspace = Path("/tmp/mathlib4")
+          for name in closure("SCIFCompleteOriginalSource", files):
+              shutil.copyfile(files[name],workspace/(name+".lean"))
+              print("BUILD",name,flush=True)
+              subprocess.run(["lake","env","lean","-o",
+                str(workspace/".lake/build/lib/lean"/(name+".olean")),
+                name+".lean"],cwd=workspace,check=True,timeout=1200)
+          PY
+      - name: Strict pinned terminal and no-extra-axiom proof audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/SCIFCompleteOriginalSource.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.SCIFCompleteOriginalSource.scif_complete_finite_original_source_terminal \
+            --json-out lean-receipts/scif-complete-original-source.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/scif-complete-original-source.json
+      - name: Freeze exact source/compiler provenance
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/observability/SCIFCanonicalSourceBridge.lean \
+            research/nightfall/formalization/observability/SCIFExactTableTransport.lean \
+            research/nightfall/formalization/observability/SCIFFullCanonicalOwner.lean \
+            research/nightfall/formalization/observability/SCIFLocalSourceInfluence.lean \
+            research/nightfall/formalization/observability/SCIFGraphLocality.lean \
+            research/nightfall/formalization/observability/SCIFCompleteOriginalSource.lean \
+            > lean-receipts/SHA256SUMS
+          git rev-parse HEAD > lean-receipts/HEAD
+          cat lean-toolchain > lean-receipts/LEAN_PIN
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: nightfall-scif-complete-original-source-receipts
+          path: lean-receipts/
+          retention-days: 90
