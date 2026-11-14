@@ -37,6 +37,7 @@ jobs:
             --workspace /tmp/mathlib4 --timeout 900 --strict \
             --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
             --decl $N.actual_product_two_site_event \
+            --decl $N.actual_product_two_site_marginal \
             --json-out lean-receipts/q2-actual-two-site-event.json || {
               cat lean-receipts/q2-actual-two-site-event.json
               exit 1
