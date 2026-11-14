@@ -1019,7 +1019,7 @@
       "current_named_declaration_certificate": {
         "certificate": "docs/current-lean-proof-receipts-20261114.json",
         "source_commit": "784efa11d8c8e46afb50a454bf2ec4bcd7a8d7eb",
-        "named_declaration": "Nightfall.FiniteSourceRiskGate",
+        "named_declaration": "Nightfall.FiniteSourceRiskGate.exact_source_threshold_gate_conditional_risk",
         "run": 43630294034
       }
     },
@@ -1035,7 +1035,7 @@
       "current_named_declaration_certificate": {
         "certificate": "docs/current-lean-proof-receipts-20261114.json",
         "source_commit": "784efa11d8c8e46afb50a454bf2ec4bcd7a8d7eb",
-        "named_declaration": "Nightfall.InfiniteEfronSteinTransfer",
+        "named_declaration": "Nightfall.InfiniteEfronSteinTransfer.positive_coordinate_if_positive_variance",
         "run": 43630294034
       }
     },
@@ -1051,7 +1051,7 @@
       "current_named_declaration_certificate": {
         "certificate": "docs/current-lean-proof-receipts-20261114.json",
         "source_commit": "784efa11d8c8e46afb50a454bf2ec4bcd7a8d7eb",
-        "named_declaration": "Nightfall.UniversalAuthorityFrontier",
+        "named_declaration": "Nightfall.UniversalAuthorityFrontier.exact_authorization_iff_conflict_separation",
         "run": 43630294034
       }
     }
