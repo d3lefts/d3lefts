@@ -72,7 +72,8 @@ theorem condExp_zero_of_centered_missing
     (∑ y : ι → α, originalMass p y * g (merge U x y)) =
        ∑ y : ι → α, ∑ a : α,
          originalMass p y * p i a * g (merge U x (Function.update y i a)) := by
-           exact (actual_source_resample_sum p hp1 i (fun y => g (merge U x y))).symm
+           simpa only [Finset.mul_sum, mul_assoc] using
+             (actual_source_resample_sum p hp1 i (fun y => g (merge U x y))).symm
     _ = ∑ y : ι → α, originalMass p y *
         (∑ a : α, p i a * g (Function.update (merge U x y) i a)) := by
           apply Finset.sum_congr rfl
