@@ -1,0 +1,129 @@
+name: NIGHTFALL SCIF exact canonical graph locality of true influence
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'research/nightfall/formalization/observability/SCIFExactTableTransport.lean'
+      - 'research/nightfall/formalization/observability/SCIFFullCanonicalOwner.lean'
+      - 'research/nightfall/formalization/observability/SCIFLocalSourceInfluence.lean'
+      - 'research/nightfall/formalization/observability/SCIFGraphLocality.lean'
+      - '.github/workflows/nightfall-scif-graph-locality-lean.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: nightfall-scif-canonical-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  source-bridge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact source import closure without duplicating modules
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import importlib.util, pathlib, shutil, subprocess
+          root=pathlib.Path.cwd()
+          spec=importlib.util.spec_from_file_location("q2dag",root/"scripts/nightfall_q2_certify.py")
+          mod=importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(mod)
+          files=mod.local_sources()
+          modules=mod.closure("SCIFGraphLocality",files)
+          ws=pathlib.Path("/tmp/mathlib4")
+          out=ws/".lake/build/lib/lean"
+          out.mkdir(parents=True,exist_ok=True)
+          for name in modules:
+              src=files[name]; dst=ws/(name+".lean")
+              shutil.copyfile(src,dst)
+              print("LEAN_BUILD",name,flush=True)
+              subprocess.run(["lake","env","lean","-o",str(out/(name+".olean")),name+".lean"],
+                             cwd=ws,check=True,timeout=1200)
+          print("ALL_IMPORTS_COMPILED",len(modules))
+          PY
+      - name: Strict source bridge declaration and standard-axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.SCIFExactTableTransport
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/SCIFExactTableTransport.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.swap_source_weight \
+            --decl $N.source_law_swap_integral \
+            --decl $N.source_integral_invariant_if_ignores_k \
+            --decl $N.source_two_site_table_invariant_under_first_law_edit \
+            --decl $N.source_canonical_pair_recenter_unconditional \
+            --json-out lean-receipts/scif-exact-table-transport.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/scif-exact-table-transport.json
+      - name: Strict genuine new-canonical pair and owner-cost certificate
+        shell: bash
+        run: |
+          set -euo pipefail
+          N=Nightfall.SCIFFullCanonicalOwner
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/SCIFFullCanonicalOwner.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.source_canonical_derived_pair_recenter_exact \
+            --decl $N.actual_new_source_pair_fixed_owner_cover \
+            --decl $N.canonical_owner_full_cost_repair \
+            --json-out lean-receipts/scif-new-canonical-owner.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/scif-new-canonical-owner.json
+      - name: Strict actual source neighbor influence transport
+        shell: bash
+        run: |
+          set -euo pipefail
+          N=Nightfall.SCIFLocalSourceInfluence
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/SCIFLocalSourceInfluence.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.source_integral_after_one_law_edit \
+            --decl $N.actual_influence_change_as_single_coordinate_integral \
+            --decl $N.unchanged_influence_of_residual_independence \
+            --json-out lean-receipts/scif-local-source-influence.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/scif-local-source-influence.json
+      - name: Strict source-derived graph locality
+        shell: bash
+        run: |
+          set -euo pipefail
+          N=Nightfall.SCIFGraphLocality
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/SCIFGraphLocality.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.residual_ignores_k_if_mixed_rectangles_vanish \
+            --decl $N.residual_ignores_k_if_canonical_pair_zero \
+            --decl $N.actual_influence_unchanged_outside_canonical_neighborhood \
+            --json-out lean-receipts/scif-canonical-graph-locality.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/scif-canonical-graph-locality.json
+      - name: Preserve exact build provenance
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/observability/SCIFExactTableTransport.lean research/nightfall/formalization/observability/SCIFFullCanonicalOwner.lean research/nightfall/formalization/observability/SCIFLocalSourceInfluence.lean research/nightfall/formalization/observability/SCIFGraphLocality.lean > lean-receipts/SHA256SUMS
+          git rev-parse HEAD > lean-receipts/HEAD
+          cat lean-toolchain > lean-receipts/PIN
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: scif-source-graph-locality-receipts
+          path: lean-receipts/
+          if-no-files-found: warn
+          retention-days: 90
