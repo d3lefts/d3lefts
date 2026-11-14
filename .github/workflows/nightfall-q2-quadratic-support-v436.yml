@@ -1,0 +1,96 @@
+name: NIGHTFALL Q2 exact quadratic incident source support Lean 4.36
+on:
+  push:
+    branches: [nightfall-q2-terminal-v436-20261114]
+    paths:
+      - 'research/nightfall/formalization/observability/ActualSourceCanonicalIdentification.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceQuadraticSupportSum.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceSingletonProjection.lean'
+      - '.github/workflows/nightfall-q2-terminal-owner-v436.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/ActualSourceCanonicalIdentification.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceQuadraticSupportSum.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceSingletonProjection.lean'
+      - '.github/workflows/nightfall-q2-terminal-owner-v436.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  strict-source-quadratic-support:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile complete transitive current-source graph on pinned compiler
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re, shutil, subprocess
+          root = Path.cwd()
+          sources = list((root / "research/nightfall/formalization").rglob("*.lean"))
+          modules = {}
+          for path in sources:
+              if path.stem in modules and modules[path.stem] != path:
+                  raise SystemExit(f"ambiguous Lean basename: {path.stem}")
+              modules[path.stem] = path
+          ordered = []
+          state = {}
+          def visit(module):
+              if module not in modules:
+                  return
+              st = state.get(module, 0)
+              if st == 2:
+                  return
+              if st == 1:
+                  raise RuntimeError(f"Lean import cycle at {module}")
+              state[module] = 1
+              source = modules[module].read_text()
+              for name in re.findall(r"(?m)^import\s+([A-Za-z][A-Za-z0-9_'.]*)\s*$", source):
+                  visit(name)
+              state[module] = 2
+              ordered.append(module)
+          visit("ActualSourceQuadraticSupportSum")
+          workspace = Path("/tmp/mathlib4")
+          out = workspace / ".lake/build/lib/lean"
+          out.mkdir(parents=True, exist_ok=True)
+          print(f"Compiling {len(ordered)} source modules", flush=True)
+          for mod in ordered:
+              shutil.copyfile(modules[mod], workspace / (mod + ".lean"))
+              print("BUILD", mod, flush=True)
+              subprocess.run(["lake","env","lean","-o",str(out / (mod + ".olean")),mod + ".lean"], check=True, cwd=workspace, timeout=1200)
+          PY
+      - name: Strict original source degree-two conditional projection and axiom audit
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualSourceQuadraticSupportSum
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualSourceQuadraticSupportSum.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.incident_degree_two_supports \
+            --decl $N.incident_degree_two_sum \
+            --decl $N.original_es_singleton_eq_source_singleton \
+            --decl $N.source_degree_two_projected_section_eq_singleton_add_pairs \
+            --json-out lean-receipts/q2-source-quadratic-support.json || {
+              cat lean-receipts/q2-source-quadratic-support.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-source-quadratic-support.json
+      - name: Preserve immutable source and compiler provenance
+        if: always()
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/observability/ActualSourceQuadraticSupportSum.lean research/nightfall/formalization/observability/ActualSourceCanonicalIdentification.lean research/nightfall/formalization/observability/ActualSourceSingletonProjection.lean > lean-receipts/SHA256SUMS.txt
+          git rev-parse HEAD > lean-receipts/repo-commit.txt
+          cat lean-toolchain > lean-receipts/lean-toolchain.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: q2-source-quadratic-support
+          path: lean-receipts/
+          retention-days: 45
