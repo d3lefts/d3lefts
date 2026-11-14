@@ -1,0 +1,61 @@
+name: NIGHTFALL SCIF canonical source-degree bridge (Lean 4.36)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/observability/SCIFSourceDegree.lean'
+      - '.github/workflows/nightfall-scif-source-degree-lean.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: nightfall-scif-source-degree-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+
+jobs:
+  strict-original-product-degree:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile original-product ANOVA dependency DAG once
+        run: |
+          set -euo pipefail
+          cd /tmp/mathlib4
+          SRC="$GITHUB_WORKSPACE/research/nightfall/formalization/observability"
+          for f in ActualProductMergeTower ActualProductHilbertJensen ActualProductSoftNoise ActualSourceANOVA; do
+            cp "$SRC/$f.lean" .
+            lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean"
+          done
+      - name: Strict source degree preservation at all orders
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/SCIFSourceDegree.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.SCIF.SourceDegree.high_order_of_old_component_zero \
+            --decl Nightfall.SCIF.SourceDegree.source_degree_invariant_under_new_law \
+            --decl Nightfall.SCIF.SourceDegree.degree_two_source_repair \
+            --json-out lean-receipts/scif-original-product-degree.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/scif-original-product-degree.json
+      - name: Preserve source and compiler
+        if: always()
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/observability/SCIFSourceDegree.lean > lean-receipts/SHA256SUMS
+          cat lean-toolchain > lean-receipts/LEAN_PIN
+          git rev-parse HEAD > lean-receipts/HEAD
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: nightfall-scif-original-product-degree-receipts
+          path: lean-receipts/
+          retention-days: 90
