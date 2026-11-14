@@ -1,0 +1,71 @@
+name: NIGHTFALL Q2 original-source distinct sample law Lean 4.36
+on:
+  push:
+    branches: [nightfall-q2-source-anova-global-v436-20261113]
+    paths:
+      - 'research/nightfall/formalization/observability/ActualSourceFiniteSampleLaw.lean'
+      - '.github/workflows/nightfall-q2-source-sample-law-v436.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/ActualSourceFiniteSampleLaw.lean'
+      - '.github/workflows/nightfall-q2-source-sample-law-v436.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  original-law-sample:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile active original-product operators and resampling bridge
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd /tmp/mathlib4
+          for f in ActualProductMergeTower ActualProductHilbertJensen ActualProductSoftNoise ActualProductSourceMarginal ActualSourceANOVA ActualProductResampleBridge; do
+            cp "$GITHUB_WORKSPACE/research/nightfall/formalization/observability/$f.lean" .
+            lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean"
+          done
+      - name: Compile original Hilbert recursive moment representation
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd /tmp/mathlib4
+          for f in ArbitraryLawFourthMoment HilbertTwoIncrementMoment HilbertManyIncrementMoment; do
+            cp "$GITHUB_WORKSPACE/research/nightfall/formalization/observability/$f.lean" .
+            lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean"
+          done
+      - name: Strict original-source distinct-label law and first Hilbert moment
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualSourceFiniteSampleLaw
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualSourceFiniteSampleLaw.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.observedActualSample_update_outside \
+            --decl $N.original_source_distinct_prefix_law \
+            --decl $N.original_source_distinct_prefix_first_norm \
+            --json-out lean-receipts/q2-original-source-distinct-sample-law.json || {
+              cat lean-receipts/q2-original-source-distinct-sample-law.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-original-source-distinct-sample-law.json
+      - name: Record exact source and pin
+        if: always()
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/observability/ActualSourceFiniteSampleLaw.lean > lean-receipts/SHA256SUMS.txt
+          git rev-parse HEAD > lean-receipts/repo-commit.txt
+          cat lean-toolchain > lean-receipts/lean-toolchain.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: q2-genuine-neighbor-sample-law
+          path: lean-receipts/
+          retention-days: 45
