@@ -16,6 +16,7 @@ open Finset
 open Nightfall.Observability.ActualSourceANOVA
 open Nightfall.Observability.ActualESGreedyOwnership
 open Nightfall.Observability.ActualProductSourcePairCentering
+open Nightfall.Observability.ActualSourceOwnerOrientation
 open Nightfall.Observability.ActualSourceOwnedGraph
 open Nightfall.Observability.ActualSourceOwnedFourthClosure
 open Nightfall.Observability.ActualSourceFinitePairMoment
