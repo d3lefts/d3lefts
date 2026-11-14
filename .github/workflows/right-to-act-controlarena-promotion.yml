@@ -42,6 +42,11 @@ jobs:
       - name: Separate independent replay of synthesized authorized artifact and benchmark scores
         if: success()
         run: python audit_receipt.py --dir promotion-results
+      - name: Second independent artifact-only effect oracle
+        if: success()
+        run: |
+          zip -qr second-oracle-input.zip promotion-results
+          python second_oracle.py second-oracle-input.zip | tee promotion-results/second_oracle_audit.json
       - name: Upload exact source-matched evidence and receipts
         if: always()
         uses: actions/upload-artifact@v4
@@ -50,6 +55,7 @@ jobs:
           path: |
             research/nightfall/right-to-act-promotion/promotion-results/receipt.json
             research/nightfall/right-to-act-promotion/promotion-results/independent_audit.json
+            research/nightfall/right-to-act-promotion/promotion-results/second_oracle_audit.json
             research/nightfall/right-to-act-promotion/promotion-results/baseline.template.json
             research/nightfall/right-to-act-promotion/promotion-results/legitimate.template.json
             research/nightfall/right-to-act-promotion/promotion-results/harmful.template.json
