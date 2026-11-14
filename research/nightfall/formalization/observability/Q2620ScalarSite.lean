@@ -48,7 +48,7 @@ theorem coupled_joint_site_620
       have htwo : (2:ℝ) = r+q := by linarith [hqsum]
       rw [htwo]
       ring
-    exact (htotal.trans_eq hsplit).trans_eq (by rfl)
+    exact htotal.trans (le_of_eq hsplit)
   · have hlarge : q*T ≤ a := le_of_lt (lt_of_not_ge hsmall)
     have hcoef : 0 ≤ 2*r+q := by nlinarith [hr, hq]
     have hlargeprod : 0 ≤ (2*r+q)*T*(a-q*T) :=
