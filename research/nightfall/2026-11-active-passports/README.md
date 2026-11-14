@@ -1,5 +1,12 @@
 # Active mathematical Proof Passport expansion — updated 12 November 2026
 
+## 14 November 2026 v14 evidence supplement (12 claim IDs preserved)
+
+The [unrestricted Efron–Stein proof passport](UNRESTRICTED_EFRON_STEIN_PROOF_PASSPORT_20261114.md) records a complete **standard analytic proof** for any index set and any real `L²` observable under the actual independent product law, including the directed-net and extended-sum arguments. **No unconditional arbitrary-index all-`L²` Lean theorem has passed**: finite-cylinder density, actual conditional projection commutation, and the general finite-coordinate source projection theorem remain to be compiled together. Source-specific pinned strict successes: #501, #506, #512 and #514; finite changed-law variance-risk theorem at all degrees #514. Finite Q2 latest verified bound #498: `C₂≈736.673` (older 1064.958 and 1228.356 are historical). Twelve claim IDs and frozen 67-source register remain unchanged. For exact receipts and limits see [Current Lean Proof Passport](CURRENT_LEAN_PASSPORT_20261114.md).
+
+---
+
+
 ## 14 November 2026 certificate reconciliation (v13)
 
 The original historical eleven Proof Passports and the twelve active claim identities remain frozen as identity sets. The active JSON registry is now **v13**, reflecting the strictly certified finite common-alphabet unconditional Q2 coefficient **1064.958449**. The older 12 November v12 language below is retained only as a dated historical description.
