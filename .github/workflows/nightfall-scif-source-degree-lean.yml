@@ -7,6 +7,7 @@ on:
       - 'research/nightfall/formalization/observability/SCIFSourceDegree.lean'
       - 'research/nightfall/formalization/observability/SCIFSourceEnergy.lean'
       - 'research/nightfall/formalization/observability/SCIFRectUnique.lean'
+      - 'research/nightfall/formalization/observability/SCIFCanonicalPairTransport.lean'
       - 'research/nightfall/2026-11-compositional-recertification/check_scif_canonical_full_source.py'
       - 'research/nightfall/2026-11-quadratic-law-free-audit/check_q2_subsumption_boundary.py'
       - '.github/workflows/nightfall-scif-source-degree-lean.yml'
@@ -86,6 +87,8 @@ jobs:
       - name: Strict bi-centered rectangle uniqueness
         run: |
           set -euo pipefail
+          cp research/nightfall/formalization/observability/SCIFRectUnique.lean /tmp/mathlib4/SCIFRectUnique.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/SCIFRectUnique.olean SCIFRectUnique.lean)
           python3 scripts/lean_bridge.py \
             research/nightfall/formalization/observability/SCIFRectUnique.lean \
             --workspace /tmp/mathlib4 --timeout 900 --strict \
