@@ -2,7 +2,7 @@ name: NIGHTFALL Q2 shifted-owner scalar Lean certificate
 on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
-    branches: [main]
+    branches: [main, nightfall-q2-shifted-owned-sum-20261114]
     paths:
       - 'research/nightfall/formalization/q2_shifted/**'
       - 'research/nightfall/2026-11-quadratic-law-free-audit/check_shifted_owner_moment_107.py'
