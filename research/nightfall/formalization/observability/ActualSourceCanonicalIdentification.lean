@@ -19,7 +19,7 @@ open Nightfall.Observability.ActualProductSourceDerivedStar
 open Nightfall.Observability.ActualSourceANOVA
 open Nightfall.Observability.ActualSourceCanonicalPair
 
-variable {ι α : Type*} [Fintype ι] [DecidableEq ι]
+variable {ι α : Type} [Fintype ι] [DecidableEq ι]
   [Fintype α] [DecidableEq α]
 
 /-- The actual product conditioning on one coordinate is exactly
