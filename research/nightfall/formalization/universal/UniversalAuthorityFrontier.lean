@@ -155,8 +155,8 @@ theorem invariant_preserved_under_enforced_guard
 separating every unsafe/safe conflict, regardless of sensor cardinality. -/
 theorem evidence_budget_iff_conflict_cover
     (O : (j : Sensor) → World → Reading j)
-    (Safe : World → Action → Prop) (price : Set Sensor → ℝ≥0∞)
-    (budget : ℝ≥0∞) :
+    (Safe : World → Action → Prop) (price : Set Sensor → ENNReal)
+    (budget : ENNReal) :
     (∃ F : Set Sensor,
       (∀ x a, Authorize O Safe F x a ↔ Safe x a) ∧
         price F ≤ budget) ↔
@@ -175,10 +175,10 @@ conflict-hitting cost infimum, including unattained and infinite costs.
 No price separability, finite-world bound or finite sensor set is assumed. -/
 theorem exact_authorization_cost_eq_conflict_hitting_cost
     (O : (j : Sensor) → World → Reading j)
-    (Safe : World → Action → Prop) (price : Set Sensor → ℝ≥0∞) :
-    sInf {c : ℝ≥0∞ | ∃ F : Set Sensor,
+    (Safe : World → Action → Prop) (price : Set Sensor → ENNReal) :
+    sInf {c : ENNReal | ∃ F : Set Sensor,
       (∀ x a, Authorize O Safe F x a ↔ Safe x a) ∧ price F = c} =
-    sInf {c : ℝ≥0∞ | ∃ F : Set Sensor,
+    sInf {c : ENNReal | ∃ F : Set Sensor,
       SeparatesConflicts O Safe F ∧ price F = c} := by
   congr 1
   ext c
