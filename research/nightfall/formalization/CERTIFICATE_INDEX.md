@@ -1,5 +1,15 @@
 # NIGHTFALL Lean certificates — consolidated audit
 
+## Current source-level certificates: 14 November 2026
+
+The 67 historical provenance records remain immutable. Merged PRs #494, #495, #496 and #497 add **14 more exact source-blob custody records**, giving a current pending file count of **91** (historical 67 separate). New current named-declaration evidence lives in [the dated receipt index](../../../docs/current-lean-proof-receipts-20261114.json), with source Git blob IDs, actual pinned runs and immutable artifact digests.
+
+**Strict scope:** Q2 common-alphabet 1064.958 source theorem (run 43627249467); SCIF 18 scoped local and canonical graph declarations (run 43630623548); universal authority exact logic and **conditional** infinite-index transfer (run 43630294034); Bellman model recurrence, not arbitrary adaptive policies (run 43629420558). Exact hybrid assurance cuts PR #493 are **not Lean**: finite-rational replay run 43626344870. Full source SCIF, infinite-product L², actual enforcement and priority remain open.
+
+Run the registry audit below on this exact integration tree to confirm new SHA custody; it is a **source integrity audit**, not a fresh common Lean kernel compilation. Full audit context: [current Proof Passport](../2026-11-active-passports/CURRENT_LEAN_PASSPORT_20261114.md).
+
+---
+
 **Canonical registry:** [`docs/lean-certificate-provenance.json`](../../../docs/lean-certificate-provenance.json) is the **only manually maintained module inventory**. The individual Lean proofs and historical CI receipts are preserved in place. The audit generates a machine-readable view at runtime rather than another static, conflicting registry.
 
 ## One reproducible command
