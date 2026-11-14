@@ -1,0 +1,61 @@
+name: NIGHTFALL arbitrary-agent safety invariant Lean
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/agent_safety/**'
+      - '.github/workflows/nightfall-arbitrary-agent-safety-lean.yml'
+      - '.github/actions/setup-nightfall-lean/**'
+      - 'scripts/lean_bridge.py'
+  workflow_dispatch:
+
+concurrency:
+  group: nightfall-agent-safety-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  adversarial-safety-lean:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - name: Checkout exact revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Setup pinned Lean and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+
+      - name: Compile actual source and strict-check named declarations
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/agent_safety/ArbitraryAgentSafety.lean
+          mkdir -p lean-receipts/agent-safety
+          cp "$SRC" /tmp/mathlib4/ArbitraryAgentSafety.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ArbitraryAgentSafety.olean ArbitraryAgentSafety.lean)
+          N=Nightfall.AgentSafety
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.admissible_sound \
+            --decl $N.bad_successor_forbids_authorization \
+            --decl $N.admissible_maximal \
+            --decl $N.mediated_step_preserves \
+            --decl $N.arbitrary_agent_all_horizons_safe \
+            --decl $N.no_declared_bad_state \
+            --json-out lean-receipts/agent-safety/strict.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/agent-safety/strict.json
+
+      - name: Archive exact theorem receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: adversarial-safety-lean-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/agent-safety
+          if-no-files-found: warn
