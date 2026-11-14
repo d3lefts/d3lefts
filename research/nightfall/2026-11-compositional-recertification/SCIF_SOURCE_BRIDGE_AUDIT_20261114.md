@@ -6,10 +6,13 @@ pointwise function `f` of canonical Efron–Stein degree <=2, and one
 marginal update `p_k -> q_k`. Source metadata/authenticity are **external
 premises**. The mathematical proof below is analytic and finite; the
 separate exact Fraction checker confirms 20 fully expanded source
-instances. **The explicit low-order component transport is not yet
-kernel-certified in Lean.** Its degree-preservation and new-law true
-energy identities are compiled in `SCIFSourceDegree.lean` and
-`SCIFSourceEnergy.lean`, while the table algebra/owner repair is in #496.
+instances. **The incident and nonincident canonical pair-component transports are now
+kernel-certified in Lean**, by `SCIFCanonicalPairTransport.lean` and
+`SCIFCanonicalUnchangedPair.lean`. The **singleton and mean transport,
+full actual influence-difference composition, and source-constructed
+owner certificate** are not yet kernel-certified. Source degree and true
+new-law energy identities are compiled in `SCIFSourceDegree.lean` and
+`SCIFSourceEnergy.lean`, and table algebra/owner repair in #496.
 
 ## 1. Explicit old and new canonical components
 
@@ -131,21 +134,21 @@ Lean identification or independent outside review.
 |---|---|
 | Canonical old->new Efron–Stein degree bound, arbitrary d | Strict Lean #503 (current source) |
 | Exact new-source degree-two variance and influence = new component energies | Strict Lean #503 |
-| Exact old/new canonical component formula | Analytic + Fraction checker; Lean bridge open |
+| Incident canonical pair recenter identity | Strict Lean (run 43634667628) |
+| Nonincident canonical pair unchanged | Strict Lean (run 43635117189) |
+| Singleton and mean component formulas | Analytic + Fraction checker; Lean bridge open |
 | Exact local old/new influence difference | Analytic + Fraction checker + generic table Lean #496; canonical composition open |
 | Fixed-owner clipped amplitude and total cost | Generic table Lean #496; source owner instantiation open |
 | Real-world change capture and effect-time authorization | Not established here |
 | Novelty relative to dynamic Hoeffding decompositions or incremental verification | Not established |
 
-The next decisive Lean lemma should directly identify
-`esComp p' {k,j} f` with
-`esComp p {k,j} f - E_{q_k}[esComp p {k,j} f]`
-under the single-source edit; its singleton counterparts can then
-be obtained by the source decomposition and centering identities.
-After that, compose the source energies into the exact I_i difference
-and instantiate the #496 fixed-owner cover with the source-produced
-greedy certificate in one terminal type.
+The canonical incident pair identity and unchanged-pair identity now pass
+strict pinned Lean replay. The next decisive Lean task is **singleton
+and mean transport** under one source edit, followed by composition
+with the true-source influence energy into both exact `I_i` differences
+and instantiation of the #496 fixed-owner cover with the actual
+source-produced greedy certificate in one terminal theorem.
 
 This is a mathematical proof sketch plus a separately checked
 finite experiment, **not** a published result or certified
-end-to-end SCIF theorem.
+end-to-end SCIF singleton/influence/owner theorem.
