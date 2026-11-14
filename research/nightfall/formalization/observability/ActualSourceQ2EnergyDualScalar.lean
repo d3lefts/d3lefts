@@ -38,7 +38,6 @@ theorem energy_dual_site
     add_nonneg hc (mul_nonneg hρ hT)
   have hsrough : s ≤ W*(c+ρ*T) := by
     have h := mul_le_mul_of_nonneg_right hzu hmult
-    dsimp [W]
     linarith
   by_cases htzero : T = 0
   · subst T
@@ -189,7 +188,10 @@ theorem energy_dual_scalar_endpoint
     dsimp [K,p,q,A,ρ]
     have hroot :
         Real.sqrt 6 = Real.sqrt 2 * Real.sqrt 3 := by
-      rw [Real.sqrt_mul (by norm_num : (0:ℝ) ≤ 2) (3:ℝ)]
+      calc
+        Real.sqrt 6 = Real.sqrt ((2:ℝ)*3) := by norm_num
+        _ = Real.sqrt 2 * Real.sqrt 3 :=
+          Real.sqrt_mul (by norm_num : (0:ℝ) ≤ 2) (3:ℝ)
     rw [hroot]
     ring
   calc
