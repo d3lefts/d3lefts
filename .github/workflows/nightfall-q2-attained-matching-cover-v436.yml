@@ -5,6 +5,7 @@ on:
     paths:
       - 'research/nightfall/formalization/observability/ActualSourceAmplitudeRectangles.lean'
       - 'research/nightfall/formalization/observability/ActualSourceMatchingCover.lean'
+      - 'research/nightfall/formalization/observability/ActualProductSourceDerivedStar.lean'
       - '.github/workflows/nightfall-q2-attained-matching-cover-v436.yml'
   pull_request:
     paths:
@@ -25,7 +26,7 @@ jobs:
         run: |
           set -euo pipefail
           cd /tmp/mathlib4
-          for f in ActualProductMergeTower ActualProductHilbertJensen ActualProductSoftNoise ActualProductSourceMarginal ActualProductPairSector ActualProductSoftStar ActualProductSoftStarEnergy ActualProductSoftStarParseval ActualProductSourcePairCentering ActualSourceANOVA ActualProductResampleBridge ActualSourceCanonicalPair ActualSourceCanonicalIdentification ActualSourceQuadraticRectangles ActualSourcePairAmplitudes CenteredRectangles; do
+          for f in ActualProductMergeTower ActualProductHilbertJensen ActualProductSoftNoise ActualProductSourceMarginal ActualProductPairSector ActualProductSoftStar ActualProductSoftStarEnergy ActualProductSoftStarParseval ActualProductSourcePairCentering ActualProductSourceDerivedStar ActualSourceANOVA ActualProductResampleBridge ActualSourceCanonicalPair ActualSourceCanonicalIdentification ActualSourceQuadraticRectangles ActualSourcePairAmplitudes CenteredRectangles; do
             cp "$GITHUB_WORKSPACE/research/nightfall/formalization/observability/$f.lean" .
             lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean"
           done

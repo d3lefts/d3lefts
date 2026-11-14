@@ -80,7 +80,7 @@ theorem actual_source_section_eq_interaction_sum
       (∑ b : α, p i b *
         (∑ S : Finset ι,
           esComp p S f (Function.update x i b))) := by
-            unfold sourceSection
+            unfold sourceCenteredSection
             rw [hdecomp a]
             apply congrArg
               (fun t : ℝ => (∑ S : Finset ι,
