@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/observability/ActualProductSoftNoise.lean'
+      - 'research/nightfall/formalization/observability/ActualProductSourceMarginal.lean'
       - '.github/workflows/nightfall-q2-soft-source-noise-v436.yml'
       - 'research/nightfall/formalization/observability/ActualProductMergeTower.lean'
       - 'research/nightfall/formalization/observability/ActualProductHilbertJensen.lean'
@@ -50,6 +51,28 @@ jobs:
               exit 1
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-soft-source-noise.json
+      - name: Compile soft-noise dependency as a pinned source module
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/observability/ActualProductSoftNoise.lean /tmp/mathlib4/ActualProductSoftNoise.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ActualProductSoftNoise.olean ActualProductSoftNoise.lean)
+      - name: Strict real coordinate marginal and centered source-sector projection
+        shell: bash
+        run: |
+          set -euo pipefail
+          N=Nightfall.Observability.ActualProductSourceMarginal
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualProductSourceMarginal.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.actual_product_coordinate_marginal \
+            --decl $N.actual_centered_singleton_source_projection \
+            --json-out lean-receipts/q2-source-marginal.json || {
+              cat lean-receipts/q2-source-marginal.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-source-marginal.json
       - name: Exact source and pin receipt
         if: always()
         run: |
@@ -59,6 +82,7 @@ jobs:
             research/nightfall/formalization/observability/ActualProductMergeTower.lean \
             research/nightfall/formalization/observability/ActualProductHilbertJensen.lean \
             research/nightfall/formalization/observability/ActualProductSoftNoise.lean \
+            research/nightfall/formalization/observability/ActualProductSourceMarginal.lean \
             > lean-receipts/SHA256SUMS.txt
           git rev-parse HEAD > lean-receipts/repo-commit.txt
           cat lean-toolchain > lean-receipts/lean-toolchain.txt
