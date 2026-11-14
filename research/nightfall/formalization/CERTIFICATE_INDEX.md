@@ -2,7 +2,7 @@
 
 ## Current source-level certificates: 14 November 2026
 
-The 67 historical provenance records remain immutable. Merged PRs #494, #495, #496 and #497 add **14 more exact source-blob custody records**, giving a current pending file count of **91** (historical 67 separate). New current named-declaration evidence lives in [the dated receipt index](../../../docs/current-lean-proof-receipts-20261114.json), with source Git blob IDs, actual pinned runs and immutable artifact digests.
+The 67 historical provenance records remain immutable. Merged PRs #494, #495, #496 and #497 add **14 more exact source-blob custody records**, plus seven previously merged Q2 sharp-source files reconciled at this checkpoint, giving a current pending file count of **98** (historical 67 separate). New current named-declaration evidence lives in [the dated receipt index](../../../docs/current-lean-proof-receipts-20261114.json), with source Git blob IDs, actual pinned runs and immutable artifact digests.
 
 **Strict scope:** Q2 common-alphabet 1064.958 source theorem (run 43627249467); SCIF 18 scoped local and canonical graph declarations (run 43630623548); universal authority exact logic and **conditional** infinite-index transfer (run 43630294034); Bellman model recurrence, not arbitrary adaptive policies (run 43629420558). Exact hybrid assurance cuts PR #493 are **not Lean**: finite-rational replay run 43626344870. Full source SCIF, infinite-product L², actual enforcement and priority remain open.
 
