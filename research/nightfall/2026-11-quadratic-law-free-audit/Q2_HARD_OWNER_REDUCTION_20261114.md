@@ -15,7 +15,7 @@ soft-refresh conditional projection.
 
 Let a finite simple graph have symmetric edge amplitudes
 $w_{ij}=w_{ji}\ge0$, nonnegative endpoint costs $c_i\ge0$,
-and suppose $w_{ij}\le\max$c_i,c_j$$ for every edge.
+and suppose $w_{ij}\le\max(c_i,c_j)$ for every edge.
 Fix an arbitrary total order on vertex labels.
 
 Define $o(i,j)=1$ if $c_i>c_j$, or if $c_i=c_j$ and
@@ -32,10 +32,10 @@ For all distinct vertices:
 2. Owned amplitude:
    `o(i,j) * w(i,j) <= c(i)`.
    If `o(i,j)=0` this follows from $c_i\ge0$; otherwise
-   $c_i\ge c_j$ and (w_{ij}\le \max$c_i,c_j$=c_i).
+   $c_i\ge c_j$ and $w_{ij}\le\max(c_i,c_j)=c_i$.
 
 Let $h_i,h_{ij}$ be the **actual** centered Hoeffding tables of the
-same function (f), and $e_{ij}=\mathbb E h_{ij}^2$.
+same function $f$, and $e_{ij}=\mathbb E h_{ij}^2$.
 Set
 $
 H_i(a,X_{-i})=\sum_{j\ne i}o(i,j)h_{ij}(a,X_j),\qquad
@@ -46,8 +46,8 @@ $s_i=\sum_{j\ne i}o(i,j)e_{ij}\le I_i$, and summing over
 owners gives exactly $\sum_i s_i=\sum_{\{i,j\}}e_{ij}$.
 No independence across owners is asserted.
 
-For each owner (i), choose source coordinate-retention
-$r^{(i)}_i=1$, $r^{(i)}_j=o(i,j)$ for (j\ne i).
+For each owner $i$, choose source coordinate-retention
+$r^{(i)}_i=1$, $r^{(i)}_j=o(i,j)$ for $j\ne i$.
 This is now a **deterministic source conditional expectation**:
 retain owned neighbors and refresh the rest from the true product law.
 The existing centered source-star eigenaction gives
