@@ -61,6 +61,22 @@ jobs:
             --json-out lean-receipts/q2-shifted/conditional-107-99.json
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/q2-shifted/conditional-107-99.json
+      - name: Strict zero-odd-moment c/5 and pure centered owner-sum lemma
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/q2_shifted/Q2ShiftedPureC5.lean
+          cp "$SRC" /tmp/mathlib4/Q2ShiftedPureC5.lean
+          (cd /tmp/mathlib4 && lake env lean -o \
+            .lake/build/lib/lean/Q2ShiftedPureC5.olean Q2ShiftedPureC5.lean)
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Q2Shifted.PureC5.fifth_interpolation_of_fourth \
+            --decl Nightfall.Q2Shifted.PureC5.fifth_of_zero_odd_term_moments \
+            --decl Nightfall.Q2Shifted.PureC5.fifth_for_pure_centered_sum \
+            --json-out lean-receipts/q2-shifted/pure-c5.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-shifted/pure-c5.json
       - name: Source/commit manifest
         if: always()
         run: |
@@ -68,6 +84,7 @@ jobs:
           mkdir -p lean-receipts/q2-shifted
           sha256sum research/nightfall/formalization/q2_shifted/Q2ShiftedScalar.lean \
             research/nightfall/formalization/q2_shifted/Q2ShiftedConditionalTargets.lean \
+            research/nightfall/formalization/q2_shifted/Q2ShiftedPureC5.lean \
             research/nightfall/2026-11-quadratic-law-free-audit/check_shifted_owner_moment_107.py \
             > lean-receipts/q2-shifted/SHA256SUMS
           git rev-parse HEAD > lean-receipts/q2-shifted/commit.txt
