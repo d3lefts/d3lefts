@@ -50,6 +50,10 @@ A standard weighted tree-knapsack dynamic program with node-selected bit, vertex
 
 **Do not confuse this with unrestricted physical Bayes risk.** On a three-site binary path whose independent edge signs have mean 1/2, put f=(U1+U2)/2. Reading nonadjacent endpoints 0 and 2 reveals path product U1U2, reconstructing no single edge. The restricted risk remains 3/8, but unrestricted Bayes risk improves to 9/40. Our independent exact checker confirms this counterexample. Thus the DP is exact only for the DECLARED reconstruction-only observation operator.
 
+## Theorem E: exact unrestricted nonadaptive physical Bayes optimum on an Ising path
+
+The original three-site nonadjacent-observation counterexample is now resolved **on the binary zero-field path subclass** by an exact global physical-site optimization theorem. For any fixed observed-site set S={i1<...<ir}, full Bayes risk equals V - sum_l W(i_l,i_(l+1)), with V=sum_e a_e²(1-t_e²) and each interval gain W(i,j) computed from two scalar recurrences for interval parity mean and additive-target covariance. The strongest nonadaptive read set of size at most r is found by a longest-weight increasing vertex path dynamic program in O(r n²) arithmetic, including all degenerate edge transitions. This is *unrestricted Bayes optimality for fixed site sets*, unlike the earlier reconstruction-only tree knapsack. It makes no adaptive-optimality assertion. [Read the full theorem and proof](EXACT_PHYSICAL_PATH_FRONTIER_20261113.md) and run check_path_full.py. The independently audited source bundle records 90 exact rational models, 5,900 original physical posterior comparisons and 517 optimized budgets; the separately normalized CI checker replays 40 cases.
+
 ## General degree-D lift and exact posterior source algebra
 
 For the more general target
@@ -104,4 +108,4 @@ Tree edge-noise parametrization is classical: Evans–Kenyon–Peres–Schulman,
 
 The sharp innovation-plus-physical-observation package is an **original internal construction, fully proved on paper**, not a certified worldwide first or refereed contribution. It does not cover cycles with dependent edge constraints, noisy state reads, arbitrary magnetic fields, missing model provenance, or unbounded intrinsic path degree. An adversarial historical subsumption review and independent proof reconstruction are required before submission.
 
-**Next structural transition:** characterize the full optimal physical vertex observation frontier, including information in path products, rather than stopping at reconstruction-only budgets. Preserve the three-vertex counterexample as a first required fixture.
+**Next structural transition:** extend the now-proved **nonadaptive binary-path full Bayes optimum** to arbitrary tree topologies or adaptive site choice, while preserving same-oracle semantics; establish whether the exact interval formula is subsumed by classical HMM/Markov bridge sensor-selection results. Preserve the three-vertex counterexample as the control fixture.
