@@ -117,7 +117,8 @@ theorem average_source_section_eq_condExp_difference
           rw [merge_update_free S i hi x y b]
           ring
       _ = ∑ y : ι → α, originalMass p y * f (merge S x y) := by
-          exact actual_source_resample_sum p hp1 i (fun y => f (merge S x y))
+          simpa only [Finset.mul_sum, mul_assoc] using
+            (actual_source_resample_sum p hp1 i (fun y => f (merge S x y)))
       _ = condExp p S f x := rfl
   unfold averageSourceSection sourceSection
   simp only [mul_sub, Finset.sum_sub_distrib]
