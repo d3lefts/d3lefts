@@ -20,6 +20,8 @@ open Nightfall.Observability.ActualSourceInfluenceEnergy
 variable {ι α : Type} [Fintype ι] [DecidableEq ι]
     [Fintype α] [DecidableEq α] [Nonempty α]
 
+variable {Ω : Type} [Fintype Ω]
+
 noncomputable def sqNorm (q : α → ℝ) (v : α → ℝ) : ℝ :=
   ∑ a : α, q a * (v a)^2
 
