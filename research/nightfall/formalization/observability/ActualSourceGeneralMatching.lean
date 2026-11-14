@@ -64,7 +64,7 @@ theorem liftMatching_update
 /-- Updating a single packed block updates exactly the two
 corresponding coordinates of the actual source function. -/
 theorem blockReplace_eq_source_updates
-    (x : β × Bool → α) (e : β) (a b : α) :
+    (x : E × Bool → α) (e : E) (a b : α) :
     blockReplace x e a b =
       Function.update (Function.update x (e, false) a) (e, true) b := by
   funext k
