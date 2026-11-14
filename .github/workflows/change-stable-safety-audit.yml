@@ -1,0 +1,36 @@
+name: Verify NIGHTFALL change-stable safety certificates
+
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/2026-11-task-distinction-engineering/change-stable-safety/**"
+      - ".github/workflows/change-stable-safety-audit.yml"
+  push:
+    branches: [main]
+    paths:
+      - "research/nightfall/2026-11-task-distinction-engineering/change-stable-safety/**"
+      - ".github/workflows/change-stable-safety-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  finite-transversals-and-fail-closed-passport:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compare direct update enumeration with independent transversal criterion
+        run: python3 -I research/nightfall/2026-11-task-distinction-engineering/change-stable-safety/checker.py
+      - name: Audit frozen exact finite outcomes
+        run: git diff --exit-code -- research/nightfall/2026-11-task-distinction-engineering/change-stable-safety/audit_results.json
+      - name: Test accepted and rejected synthetic change manifests
+        working-directory: research/nightfall/2026-11-task-distinction-engineering/change-stable-safety
+        run: |
+          python3 -I verify_passport.py --update A
+          python3 -I verify_passport.py --update B
+          python3 -I verify_passport.py --update C
+          ! python3 -I verify_passport.py --update A B
+          ! python3 -I verify_passport.py --new-hazard h4
+          ! python3 -I verify_passport.py --incomplete
