@@ -1,28 +1,6 @@
 name: NIGHTFALL Q2 composed actual-source moments Lean 4.36
 on:
-  push:
-    branches: [nightfall-q2-owned-source-composition-20261113]
-    paths:
-      - 'research/nightfall/formalization/observability/ActualSourceQ2CompositionGate.lean'
-      - 'research/nightfall/formalization/observability/ActualSourcePairEnergyBridge.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceOwnedGraph.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceOwnerOrientation.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceIntegratedSections.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceFinitePairMoment.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceInfluenceEnergy.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceMatchingCover.lean'
-      - '.github/workflows/nightfall-q2-owned-source-composition-v436.yml'
-  pull_request:
-    paths:
-      - 'research/nightfall/formalization/observability/ActualSourceQ2CompositionGate.lean'
-      - 'research/nightfall/formalization/observability/ActualSourcePairEnergyBridge.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceOwnedGraph.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceOwnerOrientation.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceIntegratedSections.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceFinitePairMoment.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceInfluenceEnergy.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceMatchingCover.lean'
-      - '.github/workflows/nightfall-q2-owned-source-composition-v436.yml'
+  # Retained as manual diagnostic; Q2 pinned CI is consolidated.
   workflow_dispatch:
 permissions:
   contents: read

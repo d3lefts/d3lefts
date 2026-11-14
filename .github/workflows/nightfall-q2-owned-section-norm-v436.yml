@@ -1,18 +1,6 @@
 name: NIGHTFALL Q2 source-observed Hilbert section Lean 4.36
 on:
-  push:
-    branches: [nightfall-q2-terminal-v436-20261114]
-    paths:
-      - 'research/nightfall/formalization/observability/ActualSourceOwnedInfluence.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceOwnedSectionNorm.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceFinitePairMoment.lean'
-      - '.github/workflows/nightfall-q2-terminal-owner-v436.yml'
-  pull_request:
-    paths:
-      - 'research/nightfall/formalization/observability/ActualSourceOwnedInfluence.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceOwnedSectionNorm.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceFinitePairMoment.lean'
-      - '.github/workflows/nightfall-q2-terminal-owner-v436.yml'
+  # Retained as manual diagnostic; Q2 pinned CI is consolidated.
   workflow_dispatch:
 permissions:
   contents: read

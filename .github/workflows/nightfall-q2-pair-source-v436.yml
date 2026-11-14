@@ -1,18 +1,6 @@
 name: NIGHTFALL Q2 genuine two-site source bridge Lean 4.36
 on:
-  pull_request:
-    paths:
-      - 'research/nightfall/formalization/observability/ActualProductPairSector.lean'
-      - 'research/nightfall/formalization/observability/ActualProductSoftStar.lean'
-      - 'research/nightfall/formalization/observability/ActualProductSoftStarEnergy.lean'
-      - 'research/nightfall/formalization/observability/ActualProductSoftStarParseval.lean'
-      - 'research/nightfall/formalization/observability/ActualProductSourcePairCentering.lean'
-      - 'research/nightfall/formalization/observability/ActualProductSourceDerivedStar.lean'
-      - 'research/nightfall/formalization/observability/ActualProductQ2ScalarClosure.lean'
-      - '.github/workflows/nightfall-q2-pair-source-v436.yml'
-  push:
-    branches:
-      - nightfall-q2-pair-sector-v436-20261113
+  # Retained as manual diagnostic; Q2 pinned CI is consolidated.
   workflow_dispatch:
 permissions:
   contents: read

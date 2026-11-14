@@ -1,14 +1,6 @@
 name: NIGHTFALL Q2 attained pair amplitudes Lean 4.36
 on:
-  push:
-    branches: [nightfall-q2-source-anova-global-v436-20261113]
-    paths:
-      - 'research/nightfall/formalization/observability/ActualSourcePairAmplitudes.lean'
-      - '.github/workflows/nightfall-q2-pair-amplitudes-v436.yml'
-  pull_request:
-    paths:
-      - 'research/nightfall/formalization/observability/ActualSourcePairAmplitudes.lean'
-      - '.github/workflows/nightfall-q2-pair-amplitudes-v436.yml'
+  # Retained as manual diagnostic; Q2 pinned CI is consolidated.
   workflow_dispatch:
 permissions:
   contents: read
