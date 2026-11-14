@@ -21,5 +21,7 @@ jobs:
         run: python3 research/nightfall/2026-11-dependent-observability/check_approx_separator_exact.py
       - name: Reproduce exact adaptive Bellman optimality checks
         run: python3 research/nightfall/2026-11-dependent-observability/check_adaptive_weak_star_exact.py
+      - name: Reproduce hereditary conditional influence checks
+        run: python3 research/nightfall/2026-11-dependent-observability/check_hereditary_q2_exact.py
       - name: Record source identities
         run: sha256sum research/nightfall/2026-11-dependent-observability/check_*_exact.py
