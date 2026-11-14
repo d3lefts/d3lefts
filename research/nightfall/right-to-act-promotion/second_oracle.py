@@ -4,7 +4,7 @@
 Does not import or execute the experimental promotion runner or its first verifier.
 This is a separate implementation, not an external human referee report.
 """
-import hashlib, json, sys, zipfile
+import hashlib, json, os, sys, zipfile
 from pathlib import Path
 
 def sha(blob):return hashlib.sha256(blob).hexdigest()
@@ -62,7 +62,7 @@ def audit(artifact):
     assert a['published_template_sha256']==sha(canon(p))
     assert a['independent_audit']=='passed' and r['real_aws_deployment'] is False
     result={'second_oracle_status':'passed',
-            'run':'github:d3lefts/d3lefts:43631132390',
+            'run':'github:d3lefts/d3lefts:'+os.environ.get('GITHUB_RUN_ID','local-unattributed'),
             'fixture':'ControlArena IaC Fast 20.1.1',
             'deployment_boundary':'offline local CloudFormation artifact only',
             'official_tests':{k:{m:v['exit_code'] for m,v in row.items()} for k,row in r['official_tests'].items()},
