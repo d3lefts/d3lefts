@@ -2,10 +2,10 @@
   "schema": "nightfall-active-proof-passports-v1",
   "version": 13,
   "as_of": "2026-11-14",
-  "updated_by": "2026-11-14 v13.1 source-exact reconciliation: #498 finite Q2 736.673, #500/#501/#506 source identities, #512 actual infinitePi cylinder variance, #514 finite all-degree changed-law variance. Complete classical analytic arbitrary-index Efron–Stein proof is recorded separately; full arbitrary-index L2 Lean terminal OPEN. Twelve identities and historical frozen 67-source register unchanged.",
+  "updated_by": "2026-11-14 v13.1 source-exact reconciliation: #498 finite Q2 736.673, #500/#501/#506 source identities, #512 actual infinitePi cylinder variance, #514 finite all-degree changed-law variance. Complete classical analytic arbitrary-index Efron–Stein proof is recorded separately; full arbitrary-index L2 Lean terminal OPEN. Twelve identities and historical frozen 67-source register unchanged. #520 strict pinned arbitrary product countable-coordinate support now certified; all-L2 Efron–Stein Lean terminal still open.",
   "frozen_historical_registry_unchanged": true,
   "lifecycle": "active",
-  "scientific_status": "Verified finite common-alphabet Q2 coefficient 736.673197758287 (#498); exact finite source law-change variance at all degrees (#514); infinitePi cylinder integration/variance (#501/#512). Analytic arbitrary-index real L2 Efron–Stein proof complete in a dedicated passport; unconditional Measure.infinitePi Lean kernel endpoint remains OPEN. SCIF globally generated owner/cost package, external review and historical priority OPEN.",
+  "scientific_status": "Verified finite common-alphabet Q2 coefficient 736.673197758287 (#498); exact finite source law-change variance at all degrees (#514); infinitePi cylinder integration/variance (#501/#512). Analytic arbitrary-index real L2 Efron–Stein proof complete in a dedicated passport; unconditional Measure.infinitePi Lean kernel endpoint remains OPEN. SCIF globally generated owner/cost package, external review and historical priority OPEN. Additional structural #520 Lean countable-coordinate support is certified, not all-L2 density.",
   "source_checkpoint": {
     "repository": "d3lefts/d3lefts",
     "commit": "5bda769c2484ea2f6ea9a02c428928361c07666f",
@@ -75,10 +75,10 @@
         "Independent-resampling influence I_j; exact pinned coefficient and Turturean imported machinery"
       ],
       "mechanism": "The competing-symbol product-row construction and law-free two-draw orientation compose localized two-sided certificates, weighted influence extraction, and imported Turturean median/level-set proof steps.",
-      "evidence": "PR #317 at head e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb passed pinned Lean 4.33.0 build run #42929857470: 19 named declarations, standard axioms Classical.choice/Quot.sound/propext only, no sorryAx/custom axioms. This verifies the exact finite theorem only. Merged PR #325 (head 2e13f445894ea357c3e6a5d3920b81877a5a3a9f) has passing pinned Actions 42932085109 verifying EfronSteinDegree.prodDegree_iff_esDegree and Heterogeneous.heterogeneous_influence. The classical Efron–Stein equivalence is novelty-quarantined, not an original theorem claim. 12 Nov scope check: Turturean's common-uniform-cube theorem is all-degree exponent 5/2; this dependent finite all-law transfer does not yield the proposed degree-two exponent 2. Separate exact-source finite all-degree classical Efron–Stein certificate #506 run 43632637271 and arbitrary-index finite-cylinder source variance #512 run 43635195844 (NOT all-L2 universal).",
+      "evidence": "PR #317 at head e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb passed pinned Lean 4.33.0 build run #42929857470: 19 named declarations, standard axioms Classical.choice/Quot.sound/propext only, no sorryAx/custom axioms. This verifies the exact finite theorem only. Merged PR #325 (head 2e13f445894ea357c3e6a5d3920b81877a5a3a9f) has passing pinned Actions 42932085109 verifying EfronSteinDegree.prodDegree_iff_esDegree and Heterogeneous.heterogeneous_influence. The classical Efron–Stein equivalence is novelty-quarantined, not an original theorem claim. 12 Nov scope check: Turturean's common-uniform-cube theorem is all-degree exponent 5/2; this dependent finite all-law transfer does not yield the proposed degree-two exponent 2. Separate exact-source finite all-degree classical Efron–Stein certificate #506 run 43632637271 and arbitrary-index finite-cylinder source variance #512 run 43635195844 (NOT all-L2 universal). Countable-coordinate arbitrary-product measurable real theorem #520 pinned strict run 43637631337. This does not prove measure-theoretic cylinder density, general finite measurable Efron–Stein, nor unconditional infinite-product kernel Efron–Stein.",
       "source": "research/nightfall/2026-11-active-passports/finite-product-influence.md",
       "source_detail": "Dedicated public Proof Passport and existing complete finite-product formalization receipt FINITE_PRODUCT_INFLUENCE_PROOF_PASSPORT_20261110.md; checked Lean source ProductInfluence.lean at immutable PR #317 head. Subsequent PR #325 is the stronger merged finite certificate, with a separate CI receipt and public source file links. For the classical unrestricted-index analytic bound and exact missing Lean proof steps see research/nightfall/2026-11-active-passports/UNRESTRICTED_EFRON_STEIN_PROOF_PASSPORT_20261114.md.",
-      "audit": "Rebuild PRs #317/#325 against exact upstream; verify support-only bound, dependent-coordinate alphabets and pointwise degree, then independently evaluate measure-theoretic passage and priority.",
+      "audit": "Rebuild PRs #317/#325 against exact upstream; verify support-only bound, dependent-coordinate alphabets and pointwise degree, then independently evaluate measure-theoretic passage and priority. Compose countable-coordinate support with genuine L2 finite-cylinder density and conditional-source commuting-square using pinned Mathlib.",
       "limitations": [
         "No general measurable/infinite-product Lean theorem or end-to-end Hilbert/adaptive policy follows",
         "Does not certify the separate degree-two variance-squared manuscript or its stronger numerical constant",
@@ -353,7 +353,14 @@
         "one strict unconditional single-lemma terminal"
       ],
       "independent_human_review": false,
-      "originality": "classical theorem; finite Lean antecedent YuanheZ/lean-stat-learning-theory 2026"
+      "originality": "classical theorem; finite Lean antecedent YuanheZ/lean-stat-learning-theory 2026",
+      "measurable_real_countable_support": {
+        "pr": 520,
+        "run": 43637631337,
+        "source": "research/nightfall/formalization/universal/InfinitePiRealCountableSupport.lean",
+        "kernel": true,
+        "full_l2": false
+      }
     }
   }
 }

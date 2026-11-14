@@ -1,5 +1,7 @@
 # NIGHTFALL — Current Lean and Exact-Evidence Proof Passport (14 November 2026)
 
+**Countable-coordinate structural bridge now Lean certified:** [#520](https://github.com/d3lefts/d3lefts/pull/520), pinned run [43637631337](https://github.com/d3lefts/d3lefts/actions/runs/43637631337), proves any measurable real observable of an arbitrary product depends on only countably many coordinates (Mathlib cylinder algebra and event countability plus rational superlevel reconstruction). This does not yet produce an arbitrary all-L² Efron–Stein Lean terminal; actual L² density and conditional projection commutation remain open. [Exact proof passport](UNRESTRICTED_EFRON_STEIN_PROOF_PASSPORT_20261114.md).
+
 ## 14 November 2026 — v2.0 source-level certification reconciliation
 
 **Current merged result:** [#498](https://github.com/d3lefts/d3lefts/pull/498) improves finite common-alphabet Q2 to strictly kernel-certified `C₂=[257/20+(9/4)√2+5√3+√6]²≈736.673198` (run [43633180605](https://github.com/d3lefts/d3lefts/actions/runs/43633180605)). The previous 1064.958 certificate remains valid but weaker; 620/589 candidates are not promoted from unmerged or failing current heads.
