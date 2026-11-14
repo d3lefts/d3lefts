@@ -21,12 +21,12 @@ disprove K=529 for the actual probabilistic Q2 problem.
 
 namespace Nightfall.Q2529ScalarObstruction
 
-private def w : Fin 3 → ℝ := ![2, 4, 18]
-private def a : Fin 3 → ℝ := ![0, 0, 4/15]
-private def u : Fin 3 → ℝ := ![7/12, 8/21, 7/24]
-private def z : Fin 3 → ℝ := ![7/12, 8/21, 67/120]
-private def s : Fin 3 → ℝ := ![1, 1, 209/225]
-private def c : Fin 3 → ℝ := ![0, 2, 0]
+private noncomputable def w : Fin 3 → ℝ := ![2, 4, 18]
+private noncomputable def a : Fin 3 → ℝ := ![0, 0, 4/15]
+private noncomputable def u : Fin 3 → ℝ := ![7/12, 8/21, 7/24]
+private noncomputable def z : Fin 3 → ℝ := ![7/12, 8/21, 67/120]
+private noncomputable def s : Fin 3 → ℝ := ![1, 1, 209/225]
+private noncomputable def c : Fin 3 → ℝ := ![0, 2, 0]
 
 theorem every_scalar_site_valid :
     ∀ i : Fin 3,
