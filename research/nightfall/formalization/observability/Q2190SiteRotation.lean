@@ -69,10 +69,9 @@ theorem tangent_unit_when_nonzero
         intro x _
         simp only [tangent, if_neg ha, div_pow, mul_pow]
         rw [Real.sq_sqrt (hp x)]
-        ring
     _ = (siteEnergy p h) / (siteNorm p h)^2 := by
+      unfold siteEnergy
       rw [Finset.sum_div]
-      rfl
     _ = 1 := by rw [← hnorm]; exact div_self hnonzero
 
 theorem tangent_orthogonal
@@ -87,8 +86,11 @@ theorem tangent_orthogonal
           apply Finset.sum_congr rfl
           intro x _
           simp only [tangent, if_neg ha]
-          rw [← mul_div_assoc]
-          rw [← mul_assoc, Real.sq_sqrt (hp x)]
+          calc
+            Real.sqrt (p x) *
+                (Real.sqrt (p x) * h x / siteNorm p h) =
+              ((Real.sqrt (p x))^2) * h x / siteNorm p h := by ring
+            _ = p x * h x / siteNorm p h := by rw [Real.sq_sqrt (hp x)]
       _ = (∑ x : α, p x*h x) / siteNorm p h := by
         rw [Finset.sum_div]
       _ = 0 := by rw [hcenter]; simp
@@ -100,7 +102,7 @@ theorem signedTangent_centered
   by_cases ha : siteNorm p h = 0
   · simp [signedTangent, ha]
   · simp_rw [signedTangent, if_neg ha]
-    rw [Finset.sum_div, hcenter]
+    rw [← Finset.sum_div, hcenter]
     simp
 
 /-- The signed tangent is exactly dual to its genuine L² norm. -/
@@ -120,8 +122,8 @@ theorem signedTangent_pairs_to_norm
           simp only [signedTangent, if_neg ha]
           ring
       _ = siteEnergy p h / siteNorm p h := by
+        unfold siteEnergy
         rw [Finset.sum_div]
-        rfl
       _ = siteNorm p h := by
         rw [← hnorm]
         field_simp
@@ -153,7 +155,7 @@ theorem siteRotation_normalized
     (∑ x : α, siteRotation p h u v sign x) = 1 := by
   by_cases ha : siteNorm p h = 0
   · simpa [siteRotation, ha] using hp1
-  · change (∑ x : α, (u*Real.sqrt (p x)+sign*v*tangent p h x)^2) = 1
+  · simp only [siteRotation, if_neg ha]
     exact rotated_mass_normalized
       (fun x => Real.sqrt (p x)) (tangent p h) u v sign
       (sitePsi_unit p hp hp1)
@@ -175,7 +177,19 @@ theorem siteRotation_plus_sub_minus
     have hh : Real.sqrt (p x)*tangent p h x =
         signedTangent p h x := by
       simp only [tangent, signedTangent, if_neg ha]
-      rw [← mul_div_assoc, ← mul_assoc, Real.sq_sqrt (hp x)]
-    nlinarith [hh]
+      calc
+        Real.sqrt (p x) *
+            (Real.sqrt (p x) * h x / siteNorm p h) =
+          ((Real.sqrt (p x))^2) * h x / siteNorm p h := by ring
+        _ = p x * h x / siteNorm p h := by
+          rw [Real.sq_sqrt (hp x)]
+    change (u*Real.sqrt (p x)+1*v*tangent p h x)^2 -
+      (u*Real.sqrt (p x)+(-1)*v*tangent p h x)^2 =
+      4*u*v*signedTangent p h x
+    calc
+      (u*Real.sqrt (p x)+1*v*tangent p h x)^2 -
+          (u*Real.sqrt (p x)+(-1)*v*tangent p h x)^2 =
+        4*u*v*(Real.sqrt (p x)*tangent p h x) := by ring
+      _ = 4*u*v*signedTangent p h x := by rw [hh]
 
 end Nightfall.Q2190
