@@ -26,7 +26,7 @@ open Nightfall.Observability.ActualSourceCanonicalIdentification
 open Nightfall.Observability.ActualSourceInfluenceEnergy
 open Nightfall.Observability.ActualProductPairSector
 
-variable {α : Type*} [Fintype α] [DecidableEq α]
+variable {α : Type} [Fintype α] [DecidableEq α]
 
 /-- The actual bivariate double-centering is a first-site recentering
 of the second-site centered table. All sums are over actual finite
@@ -55,6 +55,7 @@ theorem pairRecenter_retarget
     unfold firstMean pairRecenter
     simp only [mul_sub, Finset.sum_sub_distrib]
     rw [← Finset.sum_mul, hq]
+    simp only [firstMean]
     ring
   change H a b - firstMean p H b -
       firstMean q (pairRecenter p H) b =
@@ -78,7 +79,7 @@ theorem doubleCenter_retarget_first
   exact (pairRecenter_retarget p q hq
     (fun u v => F u v - ∑ z : α, r z * F u z) a b).symm
 
-variable {ι : Type*} [Fintype ι] [DecidableEq ι]
+variable {ι : Type} [Fintype ι] [DecidableEq ι]
 
 /-- Editing only one coordinate of the original product source. -/
 def editLaw (p : ι → α → ℝ) (k : ι) (q : α → ℝ) : ι → α → ℝ :=
