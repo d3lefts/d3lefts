@@ -6,7 +6,7 @@ The canonical proof is compiled by [the consolidated Q2 certification workflow](
 
 Their former paths under `.github/workflows/` were archived because they were absent from `main`, not required as repository status checks, and individually run the same modules as the eight-stage dependency-ordered certificate. All YAML blobs in this directory are unchanged from their source branch; no proofs, source-code modules, or receipt files were deleted.
 
-The strict terminal proof receipt remains [run #43611982294](https://github.com/d3lefts/d3lefts/actions/runs/43611982294), with the exact source hash/certificate in [Q2 source certificate](../../../Q2_SOURCE_LEAN_CERTIFICATION_20261114.md). Archival is an infrastructure action, not independent proof review or a novelty claim.
+The strict terminal proof receipt remains [run #43611982294](https://github.com/d3lefts/d3lefts/actions/runs/43611982294), with the exact source hash/certificate in [Q2 source certificate](../../Q2_SOURCE_LEAN_CERTIFICATION_20261114.md). Archival is an infrastructure action, not independent proof review or a novelty claim.
 
 Archived workflow files:
 
