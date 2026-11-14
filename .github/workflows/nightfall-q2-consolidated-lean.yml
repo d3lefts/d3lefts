@@ -433,6 +433,32 @@ jobs:
           python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT/02-source-unconditional.json"
           echo "PASS source-only Q2 589.97569 theorem and standard axioms"
 
+      - name: Strict source-only pure-Q2 c/5 terminal (105), conditional sharp 99
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/observability
+          Q2=research/nightfall/formalization/q2_shifted
+          OUT=lean-receipts/q2-consolidated/pure-q2-c5
+          mkdir -p "$OUT"
+          for name in Q2ShiftedConditionalTargets Q2ShiftedPureC5; do
+            cp "$Q2/$name.lean" "/tmp/mathlib4/$name.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$name.olean" "$name.lean")
+          done
+          # IntegratedFive belongs to merged PR #525; recompile at current checkout.
+          cp "$SRC/ActualSourceIntegratedFive.lean" /tmp/mathlib4/ActualSourceIntegratedFive.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ActualSourceIntegratedFive.olean ActualSourceIntegratedFive.lean)
+          cp "$SRC/ActualSourcePureQ2Fifth.lean" /tmp/mathlib4/ActualSourcePureQ2Fifth.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ActualSourcePureQ2Fifth.olean ActualSourcePureQ2Fifth.lean)
+          N=Nightfall.Observability.ActualSourcePureQ2Fifth
+          python3 scripts/lean_bridge.py "$SRC/ActualSourcePureQ2Fifth.lean" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.actual_source_pure_q2_given_section_budget \
+            --decl $N.actual_source_pure_q2_105_unconditional \
+            --decl $N.actual_source_pure_q2_99_given_sharp_section \
+            --json-out "$OUT/source-pure-105-and-99.json"
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            "$OUT/source-pure-105-and-99.json"
       - name: Immutable input and toolchain provenance
         if: always()
         shell: bash
