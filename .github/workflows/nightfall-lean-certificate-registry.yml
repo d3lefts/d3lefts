@@ -7,6 +7,7 @@ on:
       - 'research/nightfall/formalization/CERTIFICATE_INDEX.md'
       - 'research/nightfall/formalization/README.md'
       - 'docs/lean-certificate-provenance.json'
+      - 'docs/lean-pending-source-custody.json'
       - 'scripts/lean_certificate_registry.py'
       - 'scripts/test_lean_certificate_provenance.cjs'
       - 'tests/test_lean_certificate_registry.py'
@@ -16,6 +17,7 @@ on:
     paths:
       - 'research/nightfall/**/*.lean'
       - 'docs/lean-certificate-provenance.json'
+      - 'docs/lean-pending-source-custody.json'
       - 'scripts/lean_certificate_registry.py'
       - 'scripts/test_lean_certificate_provenance.cjs'
       - 'tests/test_lean_certificate_registry.py'
