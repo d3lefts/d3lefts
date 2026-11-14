@@ -16,6 +16,8 @@ Sources: [current university catalog](https://bulletin.southalabama.edu/programs
 - [THESIS_PROSPECTUS.md](THESIS_PROSPECTUS.md): proposed MSc thesis, engineering use case, formal model, pilot theorem, literature threats, review gates, and research products.
 - [COMPETENCY_LEDGER.md](COMPETENCY_LEDGER.md): eight-course-aligned **ungraded** evidence mapping, what the repository actually demonstrates, deficiencies and authentic evaluation steps.
 - [QUALIFYING_EXERCISES.md](QUALIFYING_EXERCISES.md): graduate-readiness practice assessment specification; no claimed grades or completion.
+- [INTEGRATED_CAPSTONE.md](INTEGRATED_CAPSTONE.md): requirements-to-risk 3-component synthetic systems case, exact sensing and fault analysis.
+- [capstone_exact.py](capstone_exact.py): second exact decision-tree and failure-injection benchmark; `python3 research/nightfall/2026-11-msse-readiness/capstone_exact.py`.
 - [pilot_checker.py](pilot_checker.py): executable exact finite benchmark; `python3 research/nightfall/2026-11-msse-readiness/pilot_checker.py`.
 - [RESEARCH_STATUS.md](RESEARCH_STATUS.md): cited repo source and strict proof/novelty/verification accounting.
 
