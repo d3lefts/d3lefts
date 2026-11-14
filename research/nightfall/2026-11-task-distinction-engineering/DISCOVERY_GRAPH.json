@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "2026-11-13_v0.1",
+  "version": "2026-11-13_v0.2",
   "owner": "Devin J. Wright / NIGHTFALL",
   "research_status": "portfolio synthesis; no world-original general law certified",
   "claims": [
@@ -123,6 +123,24 @@
       "source": "The_Convoluted_Costs_of_Knowing(3).pdf",
       "certificate": "Proof passports and manuscripts",
       "limit": "Joint dimension-uniform upper/lower theorem with maintenance budget remains open"
+    },
+    {
+      "id": "quotient_observability_finite",
+      "domain": "task_relevant_observability",
+      "claim": "For uniform finite-field latent X and correlated exogenous additive noise, the exact task posterior is a quotient-noise coset law; matching adaptive-read frontier and versioned delta transport under restricted oracle",
+      "status": "analytic_elementary_verified_finite",
+      "source": "research/nightfall/2026-11-task-distinction-engineering/quotient-observability/Task_Relevant_Quotient_Observability.tex",
+      "certificate": "exact_audit.py with 41706 posterior probability cells; 5400 deterministic policies; 4000 deltas; 66064 row-column subsets",
+      "limit": "No independently refereed proof, Lean terminal theorem, validated noise law, realistic sensor attestation, or novel general-law claim"
+    },
+    {
+      "id": "change_stable_safety_transversal",
+      "domain": "lifecycle_assurance",
+      "claim": "Finite dependency-cover safety evidence survives all cumulative k-component changes iff each hazardous witness has dependency transversal > k; exact additive trusted-atom cost frontier",
+      "status": "analytic_elementary_verified_finite",
+      "source": "research/nightfall/2026-11-task-distinction-engineering/change-stable-safety/change_stable_safety.tex",
+      "certificate": "checker.py exact direct-update vs hitting-transversal audit (53608 parameter cases) and versioned synthetic passport fail-closed checker",
+      "limit": "Sound hazard envelope, full dependency provenance and complete authenticated updates assumed; trusted cost excludes finding optimum and hazard construction; novelty not certified"
     }
   ],
   "transfers": [
@@ -209,6 +227,27 @@
       "operator": "dependency_slice_assurance",
       "relation": "case_study_not_logical_implication",
       "test": "Re-check only assumptions and certificates affected by authenticated changes"
+    },
+    {
+      "from": "quotient_observability_finite",
+      "to": "thesis",
+      "operator": "task_quotient_and_joint_noise_cost_decomposition",
+      "relation": "case_study_not_logical_implication",
+      "test": "Exact finite posterior derivation and noise-law non-identifiability distinguish structural observation from unverified model assurance"
+    },
+    {
+      "from": "change_stable_safety_transversal",
+      "to": "thesis",
+      "operator": "dependency_transversal_certificate_transport",
+      "relation": "case_study_not_logical_implication",
+      "test": "Independently check all k-edit survivals and show finite trusted-evidence cost Pareto frontier"
+    },
+    {
+      "from": "quotient_observability_finite",
+      "to": "change_stable_safety_transversal",
+      "operator": "model_version_attestation_boundary",
+      "relation": "case_study_not_logical_implication",
+      "test": "Two models with same full sensor law have incompatible Bayes reliability; require separate trusted observation-law certificate before evidence reuse"
     }
   ],
   "novelty_gates": [
