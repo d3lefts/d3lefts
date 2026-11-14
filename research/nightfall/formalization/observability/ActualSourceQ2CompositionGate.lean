@@ -1,4 +1,4 @@
-import ActualSourceOwnedGraph
+import ActualSourceOwnerOrientation
 import ActualSourcePairEnergyBridge
 import ActualSourceDegreeTwoAllDimensions
 import ActualSourceVarianceEnergy
@@ -33,6 +33,7 @@ open Nightfall.Observability.ActualSourceVarianceEnergy
 open Nightfall.Observability.ActualSourceInfluenceEnergy
 open Nightfall.Observability.ActualSourcePairEnergyBridge
 open Nightfall.Observability.ActualSourceOwnedGraph
+open Nightfall.Observability.ActualSourceOwnerOrientation
 open Nightfall.Observability.ActualESGreedyOwnership
 open Nightfall.Observability.ActualSourceFinitePairMoment
 open Nightfall.Observability.ActualProductSourcePairCentering
@@ -83,6 +84,11 @@ theorem actual_source_q2_structural_moment_package
       sourcePairEnergy p f i j =
         ∑ x : ι → α, originalMass p x *
           (esComp p ({i,j} : Finset ι) f x)^2) ∧
+    (∀ c : ι → ℝ, ∀ e : Edge ι,
+      sourcePairEnergy p f (edgeFirst e) (edgeSecond e) =
+      sourcePairEnergy p f
+        (owner edgeFirst edgeSecond c e)
+        (other edgeFirst edgeSecond c e)) ∧
     (∃ c : ι → ℝ,
       (∀ i, 0 ≤ c i) ∧
       (∑ i : ι, c i) ≤ 8 * B ∧
@@ -115,7 +121,7 @@ theorem actual_source_q2_structural_moment_package
            ∑ k ∈ Finset.range J.card,
              sourcePairEnergy p f i (j k))))) := by
   classical
-  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro x
     exact actual_degree_two_source_section_budget_eight_all_current
       p hp hp1 f B hB hf hdegree x
@@ -127,6 +133,8 @@ theorem actual_source_q2_structural_moment_package
   · intro i j hij
     exact original_pair_finite_moment_energy_eq_canonical
       p hp1 f i j hij
+  · intro c e
+    exact owned_original_pair_energy_orientation p hp1 f c e
   · exact actual_source_greedy_graph_hilbert_package
       p hp hp1 f hdegree base B hf
 
