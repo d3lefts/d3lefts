@@ -1,5 +1,14 @@
 # NIGHTFALL Lean certificates — consolidated audit
 
+## 14 November 2026 supplemental current-source certification
+
+Verified after the prior 98-file custody checkpoint (without changing frozen historical 67-file registry): strict named-source Lean #500 / #501 / #506 and new #512 actual `Measure.infinitePi` centered finite-cylinder variance (run 43635195844, SHA artifact 14130006709); #514 finite changed-law all-degree source-variance terminal (run 43635955108, artifact 14130003076). Strongest merged finite common-alphabet degree-two source bound #498 (run 43633180605) has `C₂≈736.673`, supplanting the previously displayed 1064.958. Separate active PR #507 intends a broader historical source-custody reconciliation; do not infer that this supplemental note is the completed custody migration.
+
+**Analytic arbitrary-index theorem is valid as a standard mathematical proof, but the unconditional kernel endpoint is still OPEN.** Full proof and five named Lean obligations: [Unrestricted Efron–Stein Proof Passport](../2026-11-active-passports/UNRESTRICTED_EFRON_STEIN_PROOF_PASSPORT_20261114.md). This index records successful PR-head receipts, not a global all-`L²` kernel build or new mathematical priority.
+
+---
+
+
 ## Current source-level certificates: 14 November 2026
 
 The 67 historical provenance records remain immutable. Merged PRs #494, #495, #496 and #497 add **14 more exact source-blob custody records**, plus seven previously merged Q2 sharp-source files reconciled at this checkpoint, giving a current pending file count of **98** (historical 67 separate). New current named-declaration evidence lives in [the dated receipt index](../../../docs/current-lean-proof-receipts-20261114.json), with source Git blob IDs, actual pinned runs and immutable artifact digests.

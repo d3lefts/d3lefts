@@ -2,10 +2,10 @@
   "schema": "nightfall-active-proof-passports-v1",
   "version": 13,
   "as_of": "2026-11-14",
-  "updated_by": "2026-11-14 v13: merge-scope reconciliation of strict finite Q2 1064.958, SCIF source graph/finite-table repair, universal authority/conditional infinite-index transfer, and Bellman horizon declarations. Retain the 67-file historical registry, twelve claim identities, non-author review and priority gates.",
+  "updated_by": "2026-11-14 v13.1 source-exact reconciliation: #498 finite Q2 736.673, #500/#501/#506 source identities, #512 actual infinitePi cylinder variance, #514 finite all-degree changed-law variance. Complete classical analytic arbitrary-index Efron–Stein proof is recorded separately; full arbitrary-index L2 Lean terminal OPEN. Twelve identities and historical frozen 67-source register unchanged.",
   "frozen_historical_registry_unchanged": true,
   "lifecycle": "active",
-  "scientific_status": "Twelve active claims with unchanged identities; current finite common-alphabet source Q2 is kernel-certified at coefficient 1064.958449. New SCIF and authority/horizon Lean declarations have separately verified finite/table and conditional scopes. Full Hilbert adaptive query composition, infinitely indexed L² product theorem, SCIF end-to-end source influence update, actual enforcement, global novelty and human referee remain OPEN.",
+  "scientific_status": "Verified finite common-alphabet Q2 coefficient 736.673197758287 (#498); exact finite source law-change variance at all degrees (#514); infinitePi cylinder integration/variance (#501/#512). Analytic arbitrary-index real L2 Efron–Stein proof complete in a dedicated passport; unconditional Measure.infinitePi Lean kernel endpoint remains OPEN. SCIF globally generated owner/cost package, external review and historical priority OPEN.",
   "source_checkpoint": {
     "repository": "d3lefts/d3lefts",
     "commit": "5bda769c2484ea2f6ea9a02c428928361c07666f",
@@ -23,17 +23,17 @@
       "id": "q2-influence",
       "title": "Bias-independent quadratic influence",
       "status": "lean-kernel-checked-finite-product-scope",
-      "claim": "For real |f(x)|≤B, pointwise Hoeffding/Efron–Stein degree ≤2, and independent finite coordinates with a COMMON finite alphabet (heterogeneous nonnegative normalized marginals, zero-mass atoms permitted), strict Lean now proves Var(f)^2≤C₂ B² max_i I_i(f), C₂=407+138√2+188√3+56√6≈1064.958449. The broader heterogeneous-type and measurable/infinite-space extension remains an analytic, not kernel-certified, claim.",
+      "claim": "Strongest merged finite common-alphabet degree-two theorem: Var(f)^2 ≤ [257/20+(9/4)√2+5√3+√6]^2 B² max_i I_i(f), C₂≈736.673198, pinned kernel #498. Earlier valid but weaker C₂=407+138√2+188√3+56√6≈1064.958449 (#494), and v9.2 1228.356, remain dated prior checkpoints. The arbitrary-index product Efron–Stein variance upper bound has a complete classical analytic proof, but its all-L2 original-measure Lean certificate remains open. No scalar degree-two exponent-two assertion for arbitrary measurable coordinate alphabets is promoted.",
       "assumptions": [
         "finite coordinate type and common nonempty finite alphabet; original nonnegative normalized per-site marginals, including zeros",
         "pointwise |f(x)|≤B for every configuration, B≥0; genuine ESDegreeLE p f 2",
         "I_i(f)=E[(f−E_i f)^2] under the actual original product law; M bounds every I_i"
       ],
       "mechanism": "Same-source canonical Hoeffding pair kernels, matching/greedy ownership and Hilbert moments, fourth-moment endpoint, source section budget and optimized coupled singleton-owner scalar closure. Related SCIF result separately proves source graph invariance under law change.",
-      "evidence": "Strict original finite Q2 terminal #479, run 43611982294 (8 named stages) was sharpened by fully unconditional source Q2 #494, run 43627249467, strict Lean 4.36.0-rc2 and only foundational axioms; the SCIF finite-table and source-graph declarations #496 passed run 43630623548 but are not the complete source-matched SCIF update theorem. Scopes/immutable blobs: docs/current-lean-proof-receipts-20261114.json.",
+      "evidence": "Strict original finite Q2 terminal #479, run 43611982294 (8 named stages) was sharpened by fully unconditional source Q2 #494, run 43627249467, strict Lean 4.36.0-rc2 and only foundational axioms; the SCIF finite-table and source-graph declarations #496 passed run 43630623548 but are not the complete source-matched SCIF update theorem. Scopes/immutable blobs: docs/current-lean-proof-receipts-20261114.json. New source exact all-degree finite original-law Efron–Stein #506 run 43632637271; cylinder centered-square variance #512 run 43635195844; all-degree finite law-change variance #514 run 43635955108; latest source-only finite Q2 736.673 #498 run 43633180605. Exact analytical infinite-product theorem and its Lean gap: research/nightfall/2026-11-active-passports/UNRESTRICTED_EFRON_STEIN_PROOF_PASSPORT_20261114.md.",
       "source": "research/nightfall/2026-11-active-passports/quadratic-rank-observability.md",
-      "source_detail": "Source-based scope note research/nightfall/Q2_SOURCE_LEAN_CERTIFICATION_20261114.md; current Lean receipt index docs/current-lean-proof-receipts-20261114.json; previous v9.2 PDF and internal review retained as historical manuscript evidence. Independent human and prior-art review open.",
-      "audit": "Verify the actual same-source theorem statement and declared axioms at PR #494, independently audit optimality, reduction to categorical decoupling/Grothendieck and recent 2026 completely bounded results; formalize heterogeneous coordinate alphabets and infinite-product L² bridge separately, and source-match full SCIF recertification.",
+      "source_detail": "Source-based scope note research/nightfall/Q2_SOURCE_LEAN_CERTIFICATION_20261114.md; current Lean receipt index docs/current-lean-proof-receipts-20261114.json; previous v9.2 PDF and internal review retained as historical manuscript evidence. Independent human and prior-art review open. New source-exact unrestricted Efron–Stein proof passport: research/nightfall/2026-11-active-passports/UNRESTRICTED_EFRON_STEIN_PROOF_PASSPORT_20261114.md; standard theorem, no novelty.",
+      "audit": "Verify the actual same-source theorem statement and declared axioms at PR #494, independently audit optimality, reduction to categorical decoupling/Grothendieck and recent 2026 completely bounded results; formalize heterogeneous coordinate alphabets and infinite-product L² bridge separately, and source-match full SCIF recertification. Formalize genuine Measure.infinitePi all-L2 cylinder density, conditional projection commuting square and general-measurable-alphabet finite Efron–Stein. Check externally established StatLean/SLT finite Efron–Stein statements, do not infer arbitrary-index closure.",
       "limitations": [
         "Strict theorem covers finite products with common alphabet; no heterogeneous coordinate types or infinite-index L² Lean theorem",
         "Downstream Hilbert/adaptive observation promises do not become kernel-certified automatically",
@@ -75,9 +75,9 @@
         "Independent-resampling influence I_j; exact pinned coefficient and Turturean imported machinery"
       ],
       "mechanism": "The competing-symbol product-row construction and law-free two-draw orientation compose localized two-sided certificates, weighted influence extraction, and imported Turturean median/level-set proof steps.",
-      "evidence": "PR #317 at head e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb passed pinned Lean 4.33.0 build run #42929857470: 19 named declarations, standard axioms Classical.choice/Quot.sound/propext only, no sorryAx/custom axioms. This verifies the exact finite theorem only. Merged PR #325 (head 2e13f445894ea357c3e6a5d3920b81877a5a3a9f) has passing pinned Actions 42932085109 verifying EfronSteinDegree.prodDegree_iff_esDegree and Heterogeneous.heterogeneous_influence. The classical Efron–Stein equivalence is novelty-quarantined, not an original theorem claim. 12 Nov scope check: Turturean's common-uniform-cube theorem is all-degree exponent 5/2; this dependent finite all-law transfer does not yield the proposed degree-two exponent 2.",
+      "evidence": "PR #317 at head e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb passed pinned Lean 4.33.0 build run #42929857470: 19 named declarations, standard axioms Classical.choice/Quot.sound/propext only, no sorryAx/custom axioms. This verifies the exact finite theorem only. Merged PR #325 (head 2e13f445894ea357c3e6a5d3920b81877a5a3a9f) has passing pinned Actions 42932085109 verifying EfronSteinDegree.prodDegree_iff_esDegree and Heterogeneous.heterogeneous_influence. The classical Efron–Stein equivalence is novelty-quarantined, not an original theorem claim. 12 Nov scope check: Turturean's common-uniform-cube theorem is all-degree exponent 5/2; this dependent finite all-law transfer does not yield the proposed degree-two exponent 2. Separate exact-source finite all-degree classical Efron–Stein certificate #506 run 43632637271 and arbitrary-index finite-cylinder source variance #512 run 43635195844 (NOT all-L2 universal).",
       "source": "research/nightfall/2026-11-active-passports/finite-product-influence.md",
-      "source_detail": "Dedicated public Proof Passport and existing complete finite-product formalization receipt FINITE_PRODUCT_INFLUENCE_PROOF_PASSPORT_20261110.md; checked Lean source ProductInfluence.lean at immutable PR #317 head. Subsequent PR #325 is the stronger merged finite certificate, with a separate CI receipt and public source file links.",
+      "source_detail": "Dedicated public Proof Passport and existing complete finite-product formalization receipt FINITE_PRODUCT_INFLUENCE_PROOF_PASSPORT_20261110.md; checked Lean source ProductInfluence.lean at immutable PR #317 head. Subsequent PR #325 is the stronger merged finite certificate, with a separate CI receipt and public source file links. For the classical unrestricted-index analytic bound and exact missing Lean proof steps see research/nightfall/2026-11-active-passports/UNRESTRICTED_EFRON_STEIN_PROOF_PASSPORT_20261114.md.",
       "audit": "Rebuild PRs #317/#325 against exact upstream; verify support-only bound, dependent-coordinate alphabets and pointwise degree, then independently evaluate measure-theoretic passage and priority.",
       "limitations": [
         "No general measurable/infinite-product Lean theorem or end-to-end Hilbert/adaptive policy follows",
@@ -293,13 +293,26 @@
       "run": 43627249467,
       "coefficient": "407+138sqrt(2)+188sqrt(3)+56sqrt(6)",
       "value_approx": "1064.958449026294",
-      "independent_human_review": false
+      "independent_human_review": false,
+      "strongest_merged": {
+        "pr": 498,
+        "run": 43633180605,
+        "coefficient": "[257/20+(9/4)√2+5√3+√6]^2",
+        "value_approx": "736.673197758287",
+        "scope": "finite common alphabet, genuine source, degree ≤2"
+      }
     },
     "scif": {
       "status": "strict_kernel_checked_scoped_components",
       "pr": 496,
       "run": 43630623548,
-      "full_source_scif_terminal": false
+      "full_source_scif_terminal": false,
+      "finite_all_degree_changed_law_risk": {
+        "pr": 514,
+        "run": 43635955108,
+        "terminal": true,
+        "scope": "finite common alphabet all degrees, original p to normalized q, actual influence shifts; NOT generated-owner certificate"
+      }
     },
     "authority": {
       "status": "strict_kernel_checked_logic_and_conditional_transfer",
@@ -312,6 +325,35 @@
       "pr": 497,
       "run": 43629420558,
       "arbitrary_adaptive_oracle": false
+    },
+    "unrestricted_efron_stein": {
+      "analytic_theorem": "established classical Efron–Stein over arbitrary index sets and arbitrary coordinate probability spaces, real L2",
+      "analytic_proof_passport": "research/nightfall/2026-11-active-passports/UNRESTRICTED_EFRON_STEIN_PROOF_PASSPORT_20261114.md",
+      "infinite_pi_cylinder": {
+        "pr": 501,
+        "run": 43631863039,
+        "full_l2": false
+      },
+      "source_exact_cylinder_variance": {
+        "pr": 512,
+        "run": 43635195844,
+        "full_l2": false
+      },
+      "finite_all_degree": {
+        "pr": 506,
+        "run": 43632637271,
+        "common_finite_alphabet_only": true
+      },
+      "full_original_measure_infinite_pi_l2_lean": false,
+      "missing_kernel_gates": [
+        "all-L2 cylinder density",
+        "actual-source commuting finite/off-coordinate conditional expectations",
+        "finite measurable heterogeneous-alphabet Efron-Stein",
+        "actual projected influence contraction",
+        "one strict unconditional single-lemma terminal"
+      ],
+      "independent_human_review": false,
+      "originality": "classical theorem; finite Lean antecedent YuanheZ/lean-stat-learning-theory 2026"
     }
   }
 }
