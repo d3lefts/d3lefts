@@ -310,6 +310,6 @@ theorem canonical_condExp_eq_sourceConditional
       Nightfall.Observability.ActualProductSoftNoise.sourceConditional p U f x := by
   unfold condExp
     Nightfall.Observability.ActualProductSoftNoise.sourceConditional
-  simp only [smul_eq_mul]
+  simp only [merge, keepSource, smul_eq_mul]
 
 end Nightfall.Observability.ActualSourceANOVA
