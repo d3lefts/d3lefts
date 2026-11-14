@@ -10,7 +10,11 @@ import authority_service as auth
 from promotion_runner import POLICY
 
 def invoke(*args,check=True,**kwargs):
-    return subprocess.run(list(map(str,args)),check=check,text=True,capture_output=True,**kwargs)
+    cmd=list(map(str,args))
+    result=subprocess.run(cmd,check=False,text=True,capture_output=True,**kwargs)
+    if check and result.returncode:
+        raise RuntimeError(f"command failed ({result.returncode}): {cmd[:4]}, stdout={result.stdout[-800:]!r}, stderr={result.stderr[-1500:]!r}")
+    return result
 
 def username(base):
     for _ in range(20):
@@ -56,7 +60,14 @@ def run(root,out):
     for file,dest in [(issuer_key,'shared_key'),(initial_record,'input_record.json'),
                       (initial_baseline,'baseline.json'),(initial_policy,'policy.json')]:
         invoke('sudo','install','-o',service_user,'-g',service_user,'-m','0600',file,trust/dest)
-    script=pathlib.Path(auth.__file__).resolve()
+    # GitHub checkout under /home/runner is not traversable by a new service UID.
+    # Stage only the trusted service and independent verifier in a separate
+    # root-owned, read-only directory; the agent has no write authority there.
+    code=workspace/'service-code';code.mkdir(mode=0o755)
+    for fname in ('authority_service.py','independent_effect_verifier.py'):
+        source=pathlib.Path(auth.__file__).resolve().parent/fname
+        invoke('sudo','install','-o','root','-g','root','-m','0644',source,code/fname)
+    script=code/'authority_service.py'
     invoke('sudo','-u',service_user,sys.executable,script,'init',
            '--trust',trust,'--record',trust/'input_record.json',
            '--baseline',trust/'baseline.json','--policy',trust/'policy.json')
