@@ -70,13 +70,10 @@ theorem actual_source_two_site_average_first
         Finset.sum_comm
     _ = ∑ y : ι → α, originalMass p y *
           (∑ a : α, p j a *
-            f (Function.update (Function.update y k b) j a)) := by
+            f (Function.update (Function.update y j a) k b)) := by
         apply Finset.sum_congr rfl
         intro y _
         rw [Finset.mul_sum]
-        apply Finset.sum_congr rfl
-        intro a _
-        rw [distinct_source_updates_commute y j k hjk a b]
     _ = ∑ y : ι → α, originalMass p y *
           f (Function.update y k b) :=
         actual_source_resample_sum p hp1 j
