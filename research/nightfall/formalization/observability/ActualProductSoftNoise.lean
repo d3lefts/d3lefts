@@ -185,4 +185,78 @@ theorem actual_soft_source_noise_L1
     (maskWeight_total_one retain)
     maskSites G
 
+
+/-- Stationarity of a single genuine-source conditional refresh.
+No artificial independence, hidden source change, or custom axiom. -/
+theorem actual_source_conditional_stationary
+    (p : ι → α → ℝ)
+    (hp1 : ∀ i, (∑ a : α, p i a) = 1)
+    (S : Finset ι) (G : (ι → α) → ℝ) :
+    (∑ x : ι → α, originalMass p x *
+      sourceConditional p S G x) =
+    ∑ x : ι → α, originalMass p x * G x := by
+  simpa only [sourceConditional, smul_eq_mul] using
+    (actual_product_merge_tower p hp1 S G)
+
+/-- Original-product scalar expectation is exactly conserved by any
+finite normalized mixture of source conditionals. This is the source
+stationarity partner of the independently checked L1 contraction. -/
+theorem actual_source_conditional_mixture_stationary
+    {β : Type*} [Fintype β]
+    (p : ι → α → ℝ)
+    (hp1 : ∀ i, (∑ a : α, p i a) = 1)
+    (q : β → ℝ) (hq1 : (∑ b : β, q b) = 1)
+    (S : β → Finset ι) (G : (ι → α) → ℝ) :
+    (∑ x : ι → α, originalMass p x *
+      sourceConditionalMixture p q S G x) =
+    ∑ x : ι → α, originalMass p x * G x := by
+  classical
+  have hcomponent (b : β) :
+      (∑ x : ι → α, originalMass p x *
+        sourceConditional p (S b) G x) =
+      ∑ x : ι → α, originalMass p x * G x :=
+    actual_source_conditional_stationary p hp1 (S b) G
+  calc
+    (∑ x : ι → α, originalMass p x *
+      sourceConditionalMixture p q S G x) =
+      ∑ x : ι → α, ∑ b : β,
+        originalMass p x * (q b * sourceConditional p (S b) G x) := by
+          apply Finset.sum_congr rfl
+          intro x _
+          unfold sourceConditionalMixture
+          simp only [smul_eq_mul, Finset.mul_sum]
+    _ = ∑ b : β, ∑ x : ι → α,
+        originalMass p x * (q b * sourceConditional p (S b) G x) :=
+        Finset.sum_comm
+    _ = ∑ b : β, q b *
+        (∑ x : ι → α, originalMass p x *
+          sourceConditional p (S b) G x) := by
+          apply Finset.sum_congr rfl
+          intro b _
+          rw [Finset.mul_sum]
+          apply Finset.sum_congr rfl
+          intro x _
+          ring
+    _ = ∑ b : β, q b *
+        (∑ x : ι → α, originalMass p x * G x) := by
+          apply Finset.sum_congr rfl
+          intro b _
+          rw [hcomponent b]
+    _ = ∑ x : ι → α, originalMass p x * G x := by
+          rw [← Finset.sum_mul, hq1, one_mul]
+
+/-- Coordinatewise soft noise preserves the exact original source's
+expectation, not the expectation of a synthetic proxy. -/
+theorem actual_soft_source_noise_stationary
+    (p : ι → α → ℝ)
+    (hp1 : ∀ i, (∑ a : α, p i a) = 1)
+    (retain : ι → ℝ)
+    (G : (ι → α) → ℝ) :
+    (∑ x : ι → α, originalMass p x *
+      softSourceNoise p retain G x) =
+    ∑ x : ι → α, originalMass p x * G x := by
+  exact actual_source_conditional_mixture_stationary
+    p hp1 (maskWeight retain) (maskWeight_total_one retain)
+    maskSites G
+
 end Nightfall.Observability.ActualProductSoftNoise
