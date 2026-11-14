@@ -48,6 +48,8 @@ jobs:
             --decl $N.authorize_maximal \
             --decl $N.authorize_more_observations \
             --decl $N.exact_authorization_iff_conflict_separation \
+            --decl $N.evidence_budget_iff_conflict_cover \
+            --decl $N.exact_authorization_cost_eq_conflict_hitting_cost \
             --decl $N.invariant_preserved_under_enforced_guard \
             --json-out lean-receipts/universal/authority.json
           python3 research/nightfall/formalization/product_space/check_receipts.py \
