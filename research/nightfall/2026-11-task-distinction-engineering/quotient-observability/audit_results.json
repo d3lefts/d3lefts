@@ -1,0 +1,74 @@
+{
+  "seed": 20261113,
+  "coset_posterior": {
+    "random_models": 240,
+    "observed_subset_cases": 1860,
+    "exact_posterior_cells": 41706,
+    "multi_component_task_models": 136
+  },
+  "adaptive_frontier": {
+    "random_noise_models": 600,
+    "deterministic_adaptive_policies_evaluated": 5400
+  },
+  "version_delta": {
+    "random_exact_delta_models": 4000
+  },
+  "row_column_revelation": {
+    "exact_grid_subsets": 66064,
+    "cases": {
+      "2": {
+        "frontier": [
+          2,
+          2,
+          1,
+          1,
+          0
+        ],
+        "premeasurement_subsets": 16
+      },
+      "3": {
+        "frontier": [
+          3,
+          3,
+          3,
+          2,
+          2,
+          2,
+          1,
+          1,
+          1,
+          0
+        ],
+        "premeasurement_subsets": 512
+      },
+      "4": {
+        "frontier": [
+          4,
+          4,
+          4,
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          2,
+          2,
+          2,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "premeasurement_subsets": 65536
+      }
+    }
+  },
+  "noise_law_drift_obstruction": {
+    "complete_Y_laws_identical": true,
+    "paired_noise_posterior_MAP": "1",
+    "independent_noise_posterior_MAP": "1/2"
+  },
+  "status": "All exact finite checks passed; this is NOT independent formal proof or prior-art certification."
+}
