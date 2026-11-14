@@ -9,6 +9,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/observability/ActualSourceQ2CompositionGate.lean'
+      - 'research/nightfall/formalization/observability/ActualSourcePairEnergyBridge.lean'
       - '.github/workflows/nightfall-q2-owned-source-composition-v436.yml'
   workflow_dispatch:
 permissions:
@@ -67,16 +68,16 @@ jobs:
           set -euo pipefail
           mkdir -p lean-receipts
           N=Nightfall.Observability.ActualSourcePairEnergyBridge
-          python3 scripts/lean_bridge.py \\
-            research/nightfall/formalization/observability/ActualSourcePairEnergyBridge.lean \\
-            --workspace /tmp/mathlib4 --timeout 900 --strict \\
-            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \\
-            --decl $N.original_pair_finite_moment_energy_eq_canonical \\
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualSourcePairEnergyBridge.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.original_pair_finite_moment_energy_eq_canonical \
             --json-out lean-receipts/q2-source-pair-energy-fubini.json || {
               cat lean-receipts/q2-source-pair-energy-fubini.json
               exit 1
             }
-          python3 research/nightfall/formalization/product_space/check_receipts.py \\
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/q2-source-pair-energy-fubini.json
       - name: Strict source-only structural and genuine owned-neighbor moment receipt
         shell: bash
