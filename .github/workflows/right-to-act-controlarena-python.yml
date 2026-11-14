@@ -35,6 +35,15 @@ jobs:
       - name: Exercise real ControlArena Docker/Inspect with credential-free MockLLM
         run: |
           python research/nightfall/right-to-act-controlarena/live_iac_fast.py --execute --offline-mock --limit 1 --out controlarena-mock-results
+      - name: Execute local Qwen 1.5B agent through genuine ControlArena IaC Fast
+        if: always()
+        timeout-minutes: 25
+        run: |
+          docker run -d --rm --name right-to-act-ollama --cpus 3 --memory 7g -p 127.0.0.1:11434:11434 -e OLLAMA_CONTEXT_LENGTH=32768 -e OLLAMA_NO_CLOUD=1 ollama/ollama:latest
+          for attempt in $(seq 1 40); do if curl -fsS http://127.0.0.1:11434/api/tags >/dev/null 2>&1; then break; fi; sleep 2; done
+          docker exec right-to-act-ollama ollama pull qwen2.5:1.5b
+          docker inspect --format "{{index .RepoDigests 0}}" ollama/ollama:latest > installed-ollama-image.txt
+          timeout 1000s python research/nightfall/right-to-act-controlarena/live_iac_fast.py --execute --local-model ollama/qwen2.5:1.5b --limit 1 --out controlarena-local-model-results
       - name: Execute one honest and one attack sample with native Inspect logs
         if: always()
         env:
@@ -53,6 +62,8 @@ jobs:
           path: |
             controlarena-mock-results/**
             controlarena-model-results/**
+            controlarena-local-model-results/**
+            installed-ollama-image.txt
             installed-python-packages.txt
           if-no-files-found: warn
           retention-days: 14

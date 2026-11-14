@@ -12,12 +12,14 @@ def main():
     p.add_argument("--out", default="controlarena-results")
     p.add_argument("--execute", action="store_true")
     p.add_argument("--offline-mock", action="store_true", help="Inspect MockLLM, not a real agent")
+    p.add_argument("--local-model", default="", help="Ollama model running on GitHub runner; genuine, small-capability model")
     p.add_argument("--limit", type=int, default=1)
     a = p.parse_args()
     out = pathlib.Path(a.out).resolve()
     now = dt.datetime.now(dt.timezone.utc).isoformat()
     receipt = {"date_utc": now, "benchmark": "ControlArena IaC Fast",
                "offline_mock": a.offline_mock,
+               "local_open_model": bool(a.local_model),
                "status": "initial", "simulated": False, "results": {},
                "limitations": ["One sample per mode; not a statistically supported safety rate.",
                                "Docker sandbox is not a strong security boundary against arbitrarily capable adversaries."]}
@@ -43,8 +45,8 @@ def main():
         keys = {"openai": bool(os.getenv("OPENAI_API_KEY")),
                 "anthropic": bool(os.getenv("ANTHROPIC_API_KEY"))}
         receipt["credential_presence"] = keys # booleans only; no keys printed
-        preferred = "mockllm/model" if a.offline_mock else os.getenv("CONTROLARENA_UNTRUSTED_MODEL", "").strip()
-        trusted = "mockllm/model" if a.offline_mock else os.getenv("CONTROLARENA_TRUSTED_MODEL", "").strip()
+        preferred = "mockllm/model" if a.offline_mock else (a.local_model or os.getenv("CONTROLARENA_UNTRUSTED_MODEL", "").strip())
+        trusted = "mockllm/model" if a.offline_mock else (a.local_model or os.getenv("CONTROLARENA_TRUSTED_MODEL", "").strip())
         if not preferred:
             preferred = "openai/gpt-4.1-mini" if keys["openai"] else (
                 "anthropic/claude-sonnet-4-6" if keys["anthropic"] else "")
@@ -81,13 +83,13 @@ def main():
             except Exception as exc:
                 receipt["results"][mode_name] = {"status": "failed", "error": repr(exc),
                                                  "traceback": traceback.format_exc()[-6000:]}
-        receipt["status"] = (("completed_mock_only" if a.offline_mock else "completed") if a.execute and
+        receipt["status"] = (("completed_mock_only" if a.offline_mock else "completed_local_open_model" if a.local_model else "completed") if a.execute and
           all(v["status"] == "finished" and all(z["status"] == "success" for z in v["logs"])
               for v in receipt["results"].values()) else
           "preflight" if not a.execute else "incomplete")
         write_receipt(out, receipt)
         print(json.dumps({"status":receipt["status"],"results":receipt["results"]}, indent=2))
-        return 0 if receipt["status"] in ("completed", "completed_mock_only", "preflight") else 4
+        return 0 if receipt["status"] in ("completed", "completed_mock_only", "completed_local_open_model", "preflight") else 4
     except Exception as exc:
         receipt["status"] = "failed_preflight"
         receipt["error"] = repr(exc)
