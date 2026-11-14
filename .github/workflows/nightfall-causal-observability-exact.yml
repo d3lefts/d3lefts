@@ -20,5 +20,7 @@ jobs:
         run: python3 research/nightfall/2026-11-causal-observability/check_local_innovations_exact.py
       - name: Replay independent physical-read and posterior estimator checks
         run: python3 research/nightfall/2026-11-causal-observability/check_lower_posterior_exact.py
+      - name: Replay sharp physical heatbath-influence obstruction
+        run: python3 research/nightfall/2026-11-causal-observability/check_physical_heatbath_obstruction.py
       - name: Hash exact replay source inputs
         run: sha256sum research/nightfall/2026-11-causal-observability/check_*_exact.py
