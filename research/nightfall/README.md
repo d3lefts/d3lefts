@@ -1,5 +1,9 @@
 # NIGHTFALL / PHASESHIFT — public mathematical research archive
 
+> **Current active directions (November 14, 2026):** [The Right to Act / source-matched assurance](assurance/README.md) · [semantic-fencing exact cost theorem](assurance/semantic-fencing-v0.3/README.md) · [ControlArena experimental implementation](right-to-act-controlarena/live_iac_fast.py) · [Q2/SCIF original-source Lean formalization](formalization/README.md) · [November 14 merge/certification ledger](assurance/RECONCILIATION_20261114.md). The Tennessee Eastman benchmark is superseded, not a current research directive. This long page is a preserved historical chronology; its 10–13 November "current" subsections are dated snapshots.
+
+
+
 **Research lead:** Devin J. Wright  
 **Research window:** 2026, primarily October  
 **Release:** 2026-10-28  
