@@ -4,6 +4,7 @@ on:
     branches: [nightfall-q2-source-anova-global-v436-20261113]
     paths:
       - 'research/nightfall/formalization/observability/ActualSourceDegreeTwoSections.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceDegreeTwoAllDimensions.lean'
       - '.github/workflows/nightfall-q2-source-degree-two-sections-v436.yml'
   pull_request:
     paths:
@@ -56,11 +57,34 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/q2-source-derived-section.json
+      - name: Compile no-hpoly section source as a pinned importable module
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/observability/ActualSourceDegreeTwoSections.lean /tmp/mathlib4/ActualSourceDegreeTwoSections.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ActualSourceDegreeTwoSections.olean ActualSourceDegreeTwoSections.lean)
+      - name: Strict all-finite-dimensions 8B source-section budget
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualSourceDegreeTwoAllDimensions
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualSourceDegreeTwoAllDimensions.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.actual_degree_two_source_section_budget_eight_all_current \
+            --json-out lean-receipts/q2-source-section-all-dim.json || {
+              cat lean-receipts/q2-source-section-all-dim.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-source-section-all-dim.json
       - name: Source identity and exact toolchain
         if: always()
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/observability/ActualSourceDegreeTwoSections.lean > lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/observability/ActualSourceDegreeTwoSections.lean research/nightfall/formalization/observability/ActualSourceDegreeTwoAllDimensions.lean > lean-receipts/SHA256SUMS.txt
           git rev-parse HEAD > lean-receipts/repo-commit.txt
           cat lean-toolchain > lean-receipts/lean-toolchain.txt
       - uses: actions/upload-artifact@v4
