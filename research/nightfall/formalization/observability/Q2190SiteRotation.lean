@@ -172,8 +172,7 @@ theorem siteRotation_plus_sub_minus
       (4*u*v)*signedTangent p h x := by
   by_cases ha : siteNorm p h = 0
   · simp [siteRotation, signedTangent, ha]
-  · simp only [siteRotation, if_neg ha, signedTangent]
-    rw [← mul_div_assoc]
+  · simp only [siteRotation, if_neg ha]
     have hh : Real.sqrt (p x)*tangent p h x =
         signedTangent p h x := by
       simp only [tangent, signedTangent, if_neg ha]
