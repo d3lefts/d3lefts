@@ -6,6 +6,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/observability/ActualSourceInfluenceEnergy.lean'
+      - 'research/nightfall/formalization/observability/check_actual_source_influence_energy.py'
       - '.github/workflows/nightfall-q2-original-influence-v436.yml'
   workflow_dispatch:
 permissions:
@@ -16,6 +17,9 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+      - name: Independent exact-rational source energy regression (480 finite cases)
+        shell: bash
+        run: python3 research/nightfall/formalization/observability/check_actual_source_influence_energy.py
       - uses: ./.github/actions/setup-nightfall-lean
       - name: Recompile original finite product source dependencies under active pin
         shell: bash
