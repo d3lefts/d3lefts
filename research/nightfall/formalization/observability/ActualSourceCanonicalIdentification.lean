@@ -107,8 +107,9 @@ theorem actual_pair_is_canonical_mobius_four_term
     actual_conditional_singleton_eq_source_table p f j x,
     actual_conditional_singleton_eq_source_table p f k x,
     actual_conditional_empty_eq_source_mean p f x]
-  exact (actual_source_doublecenter_eq_mobius_pair
+  have h := (actual_source_doublecenter_eq_mobius_pair
     p hp1 f j k hjk (x j) (x k)).symm
+  convert h using 1 <;> ring
 
 
 /-- Exact source-derived pair equals the canonical order-two
@@ -124,7 +125,13 @@ theorem actual_source_esComp_pair_eq_derived
       sourceDoubleCenteredPair p f j k (x j) (x k) := by
   classical
   have h4 := actual_pair_is_canonical_mobius_four_term p hp1 f j k hjk x
-  simp [ActualSourceANOVA.esComp, Finset.powerset_insert, hjk] at *
-  linarith
+  have hpowerset :
+      (({j,k} : Finset ι).powerset) =
+      ({∅, {j}, {k}, {j,k}} : Finset (Finset ι)) := by
+    simp [Finset.powerset_insert, hjk, Finset.insert_comm]
+  unfold ActualSourceANOVA.esComp
+  rw [hpowerset]
+  simp [Finset.sum_insert, hjk]
+  linarith [h4]
 
 end Nightfall.Observability.ActualSourceCanonicalIdentification
