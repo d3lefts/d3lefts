@@ -91,10 +91,12 @@ jobs:
             }));
             if (denied) core.warning('Some cancellations were rejected; certification may proceed.');
 
-      - name: Checkout exact source commit
+      # Test the actual PR merge tree: it includes the canonical CI script on main
+      # even when a proof branch predates installation of this pipeline.
+      - name: Checkout exact effective PR merge tree
         uses: actions/checkout@v4
         with:
-          ref: ${{ (github.event_name == 'workflow_dispatch' && inputs.target_ref) || github.event.pull_request.head.sha || github.sha }}
+          ref: ${{ (github.event_name == 'workflow_dispatch' && inputs.target_ref) || github.sha }}
           persist-credentials: false
 
       - name: Validate exact dependency DAG before installing Lean
@@ -119,6 +121,7 @@ jobs:
         run: |
           mkdir -p lean-receipts/q2-consolidated
           git rev-parse HEAD > lean-receipts/q2-consolidated/checkout-commit.txt
+          printf '%s\n' '${{ github.event.pull_request.head.sha || github.sha }}' > lean-receipts/q2-consolidated/declared-source-head.txt
           cat lean-toolchain > lean-receipts/q2-consolidated/toolchain.txt
           sha256sum scripts/nightfall_q2_certify.py scripts/lean_bridge.py \
             research/nightfall/formalization/observability/ActualSourceQ2Terminal.lean \
