@@ -147,4 +147,29 @@ theorem old_c5_polynomial_claim_false :
          (1-(1/2:ℝ)^2)*(1:ℝ)^2) := by
   norm_num
 
+
+/-- A genuine two-increment biased-product counterexample to applying
+the symmetric-type FOURTH-MOMENT premise to arbitrary centered
+independent increments. Each Y has P(Y=1)=1/9, P(Y=-1/8)=8/9,
+so E[Y]=0 and |Y|<=1. Take independent Y1,Y2 and h=1/4.
+Then E|h+Y1+Y2|^2=5/16, E|h+Y1+Y2|=1/4,
+but E|h+Y1+Y2|^4=81/128 >
+  3*(5/16)^2 + 1*(5/16).
+This does NOT refute the actual c/5 shifted-norm claim; it refutes
+only a naive symmetric-envelope proof for general biased increments. -/
+theorem biased_two_increment_symmetric_envelope_fails :
+    ((1/9:ℝ)*1 + (8/9:ℝ)*(-1/8) = 0) ∧
+    ((64/81:ℝ)*((1/4:ℝ)-1/8-1/8)^2 +
+      (16/81:ℝ)*((1/4:ℝ)+1-1/8)^2 +
+      (1/81:ℝ)*((1/4:ℝ)+1+1)^2 = 5/16) ∧
+    ((64/81:ℝ)*((1/4:ℝ)-1/8-1/8)^4 +
+      (16/81:ℝ)*((1/4:ℝ)+1-1/8)^4 +
+      (1/81:ℝ)*((1/4:ℝ)+1+1)^4 = 81/128) ∧
+    ((64/81:ℝ)*|((1/4:ℝ)-1/8-1/8)| +
+      (16/81:ℝ)*|((1/4:ℝ)+1-1/8)| +
+      (1/81:ℝ)*|((1/4:ℝ)+1+1)| = 1/4) ∧
+    (3*(5/16:ℝ)^2+(5/16:ℝ) < 81/128) := by
+  norm_num
+
+
 end Nightfall.Q299
