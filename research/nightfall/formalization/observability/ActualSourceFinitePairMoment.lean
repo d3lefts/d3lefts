@@ -126,7 +126,13 @@ theorem finitePairIncrement_norm_bounded
       exact hkernel k hk a d
     have h := sourcePairIncrement_norm_bounded
       p hp hp1 f i jconst c hAll 0 b
-    simpa only [finitePairIncrement, if_pos hk, sourcePairIncrement, jconst] using h
+    have hEq :
+        finitePairIncrement p f i j n k b =
+          sourcePairIncrement p f i jconst 0 b := by
+      funext a
+      simp [finitePairIncrement, sourcePairIncrement, jconst, hk]
+    rw [hEq]
+    exact h
   · have hc2 : 0 ≤ c^2 := sq_nonneg c
     simpa [finitePairIncrement, hk, vecNormSq] using hc2
 
