@@ -119,4 +119,68 @@ theorem actual_centered_singleton_source_projection
           actual_product_coordinate_marginal p hp1 j g
       _ = 0 := hcenter
 
+
+/-- One-site retention probability, derived from the independently
+certified literal product-coordinate marginal (with Bool alphabet).
+This is not an assumed Bernoulli sampling oracle. -/
+theorem actual_mask_one_site_probability
+    (retain : ι → ℝ) (j : ι) :
+    (∑ mask : ι → Bool,
+       maskWeight retain mask *
+         (if mask j then (1 : ℝ) else 0)) = retain j := by
+  classical
+  let q : ι → Bool → ℝ := fun i b =>
+    if b then retain i else (1 - retain i)
+  have hq1 (i : ι) : (∑ b : Bool, q i b) = 1 := by
+    simp [q, Fintype.sum_bool]
+  have hm := actual_product_coordinate_marginal
+    q hq1 j (fun b : Bool => if b then (1 : ℝ) else 0)
+  have hmass (mask : ι → Bool) :
+      originalMass q mask = maskWeight retain mask := by
+    rfl
+  simpa only [hmass, q, Fintype.sum_bool, ite_true, ite_false,
+    mul_zero, mul_one, zero_add, sub_add_cancel] using hm
+
+/-- Correct singleton eigenaction for the actual finite-product noise
+operator. This is a real original-source Hoeffding component, not an
+assumed synthetic neighbor distribution. -/
+theorem actual_soft_noise_centered_singleton_eigen
+    (p : ι → α → ℝ)
+    (hp1 : ∀ i, (∑ a : α, p i a) = 1)
+    (retain : ι → ℝ)
+    (j : ι) (g : α → ℝ)
+    (hcenter : (∑ a : α, p j a * g a) = 0)
+    (x : ι → α) :
+    softSourceNoise p retain (fun z : ι → α => g (z j)) x =
+      retain j * g (x j) := by
+  classical
+  have hterm (mask : ι → Bool) :
+      sourceConditional p (maskSites mask)
+        (fun z : ι → α => g (z j)) x =
+      if mask j then g (x j) else 0 := by
+    simpa [maskSites] using
+      (actual_centered_singleton_source_projection p hp1
+        j g hcenter (maskSites mask) x)
+  unfold softSourceNoise sourceConditionalMixture
+  calc
+    (∑ mask : ι → Bool, (maskWeight retain mask) •
+      sourceConditional p (maskSites mask)
+        (fun z : ι → α => g (z j)) x) =
+      ∑ mask : ι → Bool,
+        maskWeight retain mask *
+          (if mask j then g (x j) else 0) := by
+            apply Finset.sum_congr rfl
+            intro mask _
+            rw [hterm mask]
+            rfl
+    _ = (∑ mask : ι → Bool,
+          maskWeight retain mask *
+            (if mask j then (1 : ℝ) else 0)) * g (x j) := by
+            rw [Finset.sum_mul]
+            apply Finset.sum_congr rfl
+            intro mask _
+            cases h : mask j <;> simp [h]
+    _ = retain j * g (x j) := by
+          rw [actual_mask_one_site_probability retain j]
+
 end Nightfall.Observability.ActualProductSourceMarginal
