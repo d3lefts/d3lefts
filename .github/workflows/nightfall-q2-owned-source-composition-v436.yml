@@ -7,6 +7,10 @@ on:
       - 'research/nightfall/formalization/observability/ActualSourcePairEnergyBridge.lean'
       - 'research/nightfall/formalization/observability/ActualSourceOwnedGraph.lean'
       - 'research/nightfall/formalization/observability/ActualSourceOwnerOrientation.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceIntegratedSections.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceFinitePairMoment.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceInfluenceEnergy.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceMatchingCover.lean'
       - '.github/workflows/nightfall-q2-owned-source-composition-v436.yml'
   pull_request:
     paths:
@@ -14,6 +18,10 @@ on:
       - 'research/nightfall/formalization/observability/ActualSourcePairEnergyBridge.lean'
       - 'research/nightfall/formalization/observability/ActualSourceOwnedGraph.lean'
       - 'research/nightfall/formalization/observability/ActualSourceOwnerOrientation.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceIntegratedSections.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceFinitePairMoment.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceInfluenceEnergy.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceMatchingCover.lean'
       - '.github/workflows/nightfall-q2-owned-source-composition-v436.yml'
   workflow_dispatch:
 permissions:
@@ -122,6 +130,23 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/q2-owner-orientation.json
+      - name: Strict integrated actual-source 8B section budget
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualSourceIntegratedSections
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualSourceIntegratedSections.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.actual_source_integrated_eight_budget \
+            --json-out lean-receipts/q2-source-integrated-eight-budget.json || {
+              cat lean-receipts/q2-source-integrated-eight-budget.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-source-integrated-eight-budget.json
       - name: Strict source-only structural and genuine owned-neighbor moment receipt
         shell: bash
         run: |
@@ -143,7 +168,7 @@ jobs:
         if: always()
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/observability/ActualSourceQ2CompositionGate.lean research/nightfall/formalization/observability/ActualSourceOwnedGraph.lean research/nightfall/formalization/observability/ActualSourcePairEnergyBridge.lean research/nightfall/formalization/observability/ActualSourceOwnerOrientation.lean > lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/observability/ActualSourceQ2CompositionGate.lean research/nightfall/formalization/observability/ActualSourceOwnedGraph.lean research/nightfall/formalization/observability/ActualSourcePairEnergyBridge.lean research/nightfall/formalization/observability/ActualSourceOwnerOrientation.lean research/nightfall/formalization/observability/ActualSourceIntegratedSections.lean research/nightfall/formalization/observability/ActualSourceFinitePairMoment.lean research/nightfall/formalization/observability/ActualSourceInfluenceEnergy.lean research/nightfall/formalization/observability/ActualSourceMatchingCover.lean > lean-receipts/SHA256SUMS.txt
           git rev-parse HEAD > lean-receipts/repo-commit.txt
           cat lean-toolchain > lean-receipts/lean-toolchain.txt
       - uses: actions/upload-artifact@v4
