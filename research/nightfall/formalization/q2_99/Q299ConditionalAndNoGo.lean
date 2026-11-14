@@ -102,10 +102,12 @@ theorem conditional_shifted_c5_budget_99
   calc
     V^2 ≤ (K * B * Real.sqrt M)^2 := hsq
     _ = (2 * Real.sqrt 3 * (1 + Real.sqrt 2) + 8 / 5)^2
-        * B^2 * M := by
+        * B^2 * (Real.sqrt M)^2 := by
       dsimp [K, r]
-      rw [← Real.sq_sqrt hM]
       ring
+    _ = (2 * Real.sqrt 3 * (1 + Real.sqrt 2) + 8 / 5)^2
+        * B^2 * M := by
+      rw [Real.sq_sqrt hM]
 
 /-- Exact no-go: the old fourth-moment/Hölder scalar envelope is
 insufficient to prove the new c/5 shifted-owner estimate.
