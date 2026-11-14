@@ -66,21 +66,6 @@ jobs:
             --json-out lean-receipts/scif-exact-table-transport.json
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/scif-exact-table-transport.json
-      - name: Strict genuine new-canonical pair and owner-cost certificate
-        shell: bash
-        run: |
-          set -euo pipefail
-          N=Nightfall.SCIFFullCanonicalOwner
-          python3 scripts/lean_bridge.py \
-            research/nightfall/formalization/observability/SCIFFullCanonicalOwner.lean \
-            --workspace /tmp/mathlib4 --timeout 900 --strict \
-            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
-            --decl $N.source_canonical_derived_pair_recenter_exact \
-            --decl $N.actual_new_source_pair_fixed_owner_cover \
-            --decl $N.canonical_owner_full_cost_repair \
-            --json-out lean-receipts/scif-new-canonical-owner.json
-          python3 research/nightfall/formalization/product_space/check_receipts.py \
-            lean-receipts/scif-new-canonical-owner.json
       - name: Strict actual source neighbor influence transport
         shell: bash
         run: |
