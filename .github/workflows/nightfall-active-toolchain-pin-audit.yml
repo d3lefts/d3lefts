@@ -7,6 +7,8 @@ on:
       - '.github/actions/setup-nightfall-lean/**'
       - 'lean-toolchain'
       - 'scripts/check_active_lean_compiler.py'
+      - 'scripts/audit_ci_architecture.py'
+      - 'scripts/nightfall_q2_certify.py'
   push:
     branches: [main]
     paths:
@@ -14,6 +16,8 @@ on:
       - '.github/actions/setup-nightfall-lean/**'
       - 'lean-toolchain'
       - 'scripts/check_active_lean_compiler.py'
+      - 'scripts/audit_ci_architecture.py'
+      - 'scripts/nightfall_q2_certify.py'
   workflow_dispatch:
 
 concurrency:
@@ -31,3 +35,5 @@ jobs:
       - uses: actions/checkout@v4
       - name: Reject obsolete active CI dependencies and pin drift
         run: python3 scripts/check_active_lean_compiler.py --self-test
+      - name: Reject duplicate Q2 kernel autostarts and terminal certificate drift
+        run: python3 scripts/audit_ci_architecture.py --self-test

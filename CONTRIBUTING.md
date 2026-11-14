@@ -35,6 +35,14 @@ New manuscripts belong in the research archive as **candidates** until their par
 
 A branch protection/ruleset must be enabled by a repository administrator to enforce PR-only changes and required checks. Documentation alone cannot enforce it; check **Settings → Rules → Rulesets** and the applicable status-check names.
 
+### CI concurrency and formal proof integrity
+
+- For Q2, **do not add another automatically triggered pinned-Lean workflow**. Use the [single source-only certificate pipeline](.github/workflows/nightfall-q2-consolidated-lean.yml) and its [ordered stage driver](scripts/nightfall_q2_certify.py). Historical `nightfall-q2-*-v436.yml` jobs are manual-only diagnostics, not independent required checks.
+- Prefer one CI run per PR head, source-dependency caching, and `concurrency.cancel-in-progress: true` when later runs supersede earlier checks. Non-Q2 research workflows retain separate subject-specific evidence contracts.
+- Run `python3 scripts/audit_ci_architecture.py --self-test` after changing workflow triggers, CI scripts, or the canonical Q2 proof graph. This architectural test does **not** compile Lean.
+- Do not close or merge old Q2 PRs merely because a newer PR reproduces their title. Compare source blobs and preserve unique proofs, failure records, certificates, and analytic manuscripts in an explicit custody ledger.
+- A current-head terminal `ActualSourceQ2Terminal.actual_source_q2_terminal` **strict named-declaration receipt** is required before calling the dimension-free Q2 theorem machine-certified. Green build steps or scoped historical lemmas are insufficient.
+
 ### Quick checks
 
 From the repository root:
