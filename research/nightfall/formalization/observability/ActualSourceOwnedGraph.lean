@@ -39,8 +39,12 @@ abbrev Edge (ι : Type) [DecidableEq ι] :=
 noncomputable def endpoints (e : Edge ι) :
     {ab : ι × ι // ab.1 ≠ ab.2 ∧ e.1 = {ab.1, ab.2}} := by
   classical
-  obtain ⟨i, j, hij, heq⟩ := Finset.card_eq_two.mp e.2
-  exact ⟨(i,j), hij, heq⟩
+  let h := Finset.card_eq_two.mp e.2
+  let i : ι := Classical.choose h
+  let hi := Classical.choose_spec h
+  let j : ι := Classical.choose hi
+  let hij := Classical.choose_spec hi
+  exact ⟨(i,j), hij⟩
 
 noncomputable def edgeFirst (e : Edge ι) : ι :=
   (endpoints e).1.1
@@ -192,7 +196,7 @@ theorem actual_source_greedy_graph_hilbert_package
              Real.sqrt (vecNormSq (sumVector Y J.card w))) ∧
          (moment2 (fun k => p (j k)) Y J.card =
            ∑ k ∈ Finset.range J.card,
-             sourcePairEnergy p f i (j k)))) := by
+             sourcePairEnergy p f i (j k))) := by
   classical
   obtain ⟨c, hc, hcost, hcover⟩ :=
     source_greedy_attained_endpoint_cover
