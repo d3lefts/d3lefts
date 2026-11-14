@@ -14,7 +14,7 @@
 | PR | Main role | Custody state / decision |
 | --- | --- | --- |
 | [#477](https://github.com/d3lefts/d3lefts/pull/477) | Current-pin original-source Hilbert moment, Jensen, fourth & terminal candidates | **Administratively closed as superseded by #479.** All 18 changed Lean files compared by Git blob SHA: 17 identical to #479; the eighteenth is replaced by the explicitly repaired fourth-moment proof. Historical branch retained. |
-| [#476](https://github.com/d3lefts/d3lefts/pull/476) | Earlier source/Hilbert moment integration | Historical stack predecessor. Keep until every unique source and receipt is compared against main and #479. |
+| [#476](https://github.com/d3lefts/d3lefts/pull/476) | Earlier source/Hilbert moment integration | **Administratively closed as superseded** after 50-path custody audit: 35 byte-identical to main/#479, 12 old auto-CI workflows deliberately replaced with manual diagnostics, 3 Lean source changes superseded by repaired/extended versions. Historical head and receipts retained. |
 | [#478](https://github.com/d3lefts/d3lefts/pull/478) | Original-source variance ownership | Distinct `ActualSourceQ2VarianceOwnership.lean` not in #479's changed-file set; **do not close indiscriminately**. |
 | [#480](https://github.com/d3lefts/d3lefts/pull/480) | Actual-source proof-gate repairs, integrated energy | Distinct `ActualSourceIntegratedEnergy.lean` and hard-owner reduction note; review for incorporation. |
 | [#481](https://github.com/d3lefts/d3lefts/pull/481) | Alternate genuine-source endpoint and energy integration | Distinct `ActualSourceQ2GenuineInterface.lean`; review against #479 before promotion. |
