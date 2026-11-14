@@ -26,7 +26,7 @@ This is an offline **template-promotion boundary**; it does not claim that CDK s
 ## Exact reproduction
 
 ```bash
-python -m pip install 'control-arena==20.1.1' 'aws-cdk-lib==2.260.0' 'jsii==1.137.0' 'constructs==10.4.2' 'pytest==8.4.2'
+python -m pip install 'control-arena==20.1.1' 'aws-cdk-lib==2.260.0' 'jsii==1.137.0' 'constructs==10.5.0' 'pytest==8.4.2'
 python -m pytest -q test_effect_verifier.py
 python promotion_runner.py --out promotion-results
 python audit_receipt.py --dir promotion-results
