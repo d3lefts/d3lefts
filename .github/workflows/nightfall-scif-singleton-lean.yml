@@ -52,6 +52,9 @@ jobs:
             --decl $N.esComp_singleton_eq_sub \
             --decl $N.condExp_edited_coordinate_invariant \
             --decl $N.source_mean_and_edited_singleton_recenter \
+            --decl $N.source_mean_after_edit_as_old_conditional \
+            --decl $N.source_mean_shift_eq_old_singleton \
+            --decl $N.source_mean_and_singleton_exact_repair \
             --json-out lean-receipts/scif-original-singleton.json
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/scif-original-singleton.json
