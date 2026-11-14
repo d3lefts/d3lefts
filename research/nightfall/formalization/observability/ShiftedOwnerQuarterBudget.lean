@@ -39,7 +39,9 @@ theorem conditional_shifted_quarter_budget
       (a i)^2+s i ≤ Real.sqrt M*(r*u i+c i/4) := by
     let e : ℝ := (a i)^2+s i
     let t : ℝ := Real.sqrt e
-    have he : 0 ≤ e := by dsimp [e]; positivity
+    have he : 0 ≤ e := by
+      dsimp [e]
+      exact add_nonneg (sq_nonneg _) (hs i)
     have ht : 0 ≤ t := Real.sqrt_nonneg _
     have heq : t^2 = e := Real.sq_sqrt he
     have hholderT : t^6 ≤ (u i)^2*q i := by
