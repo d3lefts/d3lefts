@@ -1,0 +1,39 @@
+name: MSSE readiness finite pilot
+on:
+  push:
+    paths:
+      - "research/nightfall/2026-11-msse-readiness/**"
+      - ".github/workflows/nightfall-msse-readiness.yml"
+  pull_request:
+    paths:
+      - "research/nightfall/2026-11-msse-readiness/**"
+      - ".github/workflows/nightfall-msse-readiness.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-finite-benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run independently reproducible finite benchmark
+        run: |
+          python3 research/nightfall/2026-11-msse-readiness/pilot_checker.py | tee msse-pilot-result.json
+          python3 research/nightfall/2026-11-msse-readiness/capstone_exact.py | tee msse-capstone-result.json
+          python3 - <<'PY'
+          import json
+          with open('msse-pilot-result.json') as f:
+              result = json.load(f)
+          assert result['status'] == 'EXACT_FINITE_BENCHMARK_PASSED'
+          assert result['assertion_groups'] == 238
+          assert result['university_credit_and_grade_awarded'] is False
+          with open('msse-capstone-result.json') as f:
+              capstone = json.load(f)
+          assert capstone['status'] == 'SYNTHETIC_CAPSTONE_EXACT_CHECK_PASSED'
+          assert capstone['assertion_groups'] == 218
+          PY
