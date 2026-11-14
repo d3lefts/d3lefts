@@ -108,7 +108,7 @@ private theorem scaled_difference (n : ℕ) (x y : ℚ) :
       (y + (n : ℚ) * x / 2)) * (2 : ℚ) ^ n =
         ((2 : ℚ) ^ n - (1 / 2 : ℚ) ^ n * (2 : ℚ) ^ n) * x -
           ((1 / 2 : ℚ) ^ n * (2 : ℚ) ^ n) * y := by ring
-    _ = ((2 : ℚ) ^ n - 1) * x - y := by rw [hi]
+    _ = ((2 : ℚ) ^ n - 1) * x - y := by rw [hi]; ring
 
 /-- B first is optimal exactly up to the exponential threshold; equality is a tie. -/
 theorem stable_first_iff (n : ℕ) (x y : ℚ) :
