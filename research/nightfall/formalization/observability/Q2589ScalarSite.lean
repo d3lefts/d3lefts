@@ -49,7 +49,10 @@ theorem joint_energy_cubic_site_589
     nlinarith [htrade, hnoise]
   have hsos : 13*(a^2+t^2)-(a+2*r*t)^2 =
       (2*r*a-t)^2 := by
-    nlinarith [hr2]
+    have hpoly : 13*(a^2+t^2)-(a+2*r*t)^2 =
+        (2*r*a-t)^2+4*(3-r^2)*(a^2+t^2) := by ring
+    rw [hr2] at hpoly
+    nlinarith [hpoly]
   have hnormsq : (a+2*r*t)^2 ≤ (R*T)^2 := by
     have hh : a^2+t^2 ≤ T^2 := by rw [ht2]; exact hjoint
     rw [mul_pow, hR2]
