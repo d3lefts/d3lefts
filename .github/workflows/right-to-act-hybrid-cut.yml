@@ -1,0 +1,53 @@
+name: Right to Act — exact hybrid assurance-cut audit
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/right-to-act-hybrid-cut.yml"
+      - "research/nightfall/right-to-act-hybrid-cut/**"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: right-to-act-hybrid-cut-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  exact-checker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: research/nightfall/right-to-act-hybrid-cut
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install isolated test dependency
+        run: python -m pip install "pytest==8.4.2"
+      - name: Recompute exact rational max-flow and source-state results
+        run: |
+          python hybrid_cut.py example_network.json --output rebuilt_result.json > /dev/null
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          assert json.loads(Path("rebuilt_result.json").read_text()) == json.loads(Path("exact_result.json").read_text())
+          PY
+      - name: Independent exhaustive audit and fixed-cost negative cases
+        run: python independent_checker.py example_network.json rebuilt_result.json --random-cases 500 | tee replay_audit.json
+      - name: Atomic abstract-promotion and laminar DP regression tests
+        run: python -m pytest -q test_promotions.py test_shared.py
+      - name: Frozen source SHA-256 integrity
+        run: sha256sum --check SHA256SUMS.txt
+      - name: Preserve source-matched audit receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: right-to-act-hybrid-cut-exact-receipts
+          path: |
+            research/nightfall/right-to-act-hybrid-cut/rebuilt_result.json
+            research/nightfall/right-to-act-hybrid-cut/replay_audit.json
+            research/nightfall/right-to-act-hybrid-cut/SHA256SUMS.txt
+          if-no-files-found: warn
+          retention-days: 14

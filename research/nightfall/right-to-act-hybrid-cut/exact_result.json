@@ -1,0 +1,128 @@
+{
+  "assumptions": [
+    "Complete typed effect graph",
+    "No unsafe effect can bypass modeled graph",
+    "Independent sound guard or verification at every selected edge",
+    "Atomic source/policy recheck at promotion",
+    "Edge-local additive costs",
+    "Cached evidence bound to exact digest and policy"
+  ],
+  "model": "source-valid-lab-promotion-eight-edge-case",
+  "results": {
+    "full": {
+      "cut_source_side": [
+        "agent",
+        "train"
+      ],
+      "dual_flow_value": "18",
+      "edges": 8,
+      "minimum_cost": "18",
+      "regime": "full",
+      "selected_cut": [
+        {
+          "action": "recheck",
+          "cost": "6",
+          "id": "a",
+          "source_digest": "a1",
+          "u": "agent",
+          "v": "build"
+        },
+        {
+          "action": "recheck",
+          "cost": "7",
+          "id": "b",
+          "source_digest": "b2",
+          "u": "agent",
+          "v": "evaluate"
+        },
+        {
+          "action": "recheck",
+          "cost": "5",
+          "id": "g",
+          "source_digest": "g7",
+          "u": "train",
+          "v": "protected"
+        }
+      ],
+      "source_policy": "mission-access-v1",
+      "vertices": 5
+    },
+    "joint": {
+      "cut_source_side": [
+        "agent",
+        "evaluate",
+        "train"
+      ],
+      "dual_flow_value": "4",
+      "edges": 8,
+      "minimum_cost": "4",
+      "regime": "joint",
+      "selected_cut": [
+        {
+          "action": "reuse",
+          "cost": "0",
+          "id": "a",
+          "source_digest": "a1",
+          "u": "agent",
+          "v": "build"
+        },
+        {
+          "action": "guard",
+          "cost": "2",
+          "id": "f",
+          "source_digest": "f6",
+          "u": "evaluate",
+          "v": "protected"
+        },
+        {
+          "action": "guard",
+          "cost": "2",
+          "id": "g",
+          "source_digest": "g7",
+          "u": "train",
+          "v": "protected"
+        }
+      ],
+      "source_policy": "mission-access-v1",
+      "vertices": 5
+    },
+    "local": {
+      "cut_source_side": [
+        "agent",
+        "train"
+      ],
+      "dual_flow_value": "12",
+      "edges": 8,
+      "minimum_cost": "12",
+      "regime": "local",
+      "selected_cut": [
+        {
+          "action": "reuse",
+          "cost": "0",
+          "id": "a",
+          "source_digest": "a1",
+          "u": "agent",
+          "v": "build"
+        },
+        {
+          "action": "recheck",
+          "cost": "7",
+          "id": "b",
+          "source_digest": "b2",
+          "u": "agent",
+          "v": "evaluate"
+        },
+        {
+          "action": "recheck",
+          "cost": "5",
+          "id": "g",
+          "source_digest": "g7",
+          "u": "train",
+          "v": "protected"
+        }
+      ],
+      "source_policy": "mission-access-v1",
+      "vertices": 5
+    }
+  }
+}
