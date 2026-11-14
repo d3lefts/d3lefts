@@ -72,6 +72,14 @@ jobs:
               exit 1
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-source-real-matching-cover.json
+      - name: Build source-derived quadratic switching and actual 8B section dependencies
+        run: |
+          set -euo pipefail
+          cd /tmp/mathlib4
+          for f in QuadraticMatchedParity QuadraticSwitchingIdentity QuadraticSingleReplacement QuadraticOscillationBound QuadraticRealizedRangeBudget ActualSourceSectionBudgetEight ActualSourceDegreeTwoSections; do
+            cp "$GITHUB_WORKSPACE/research/nightfall/formalization/observability/$f.lean" .
+            lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean"
+          done
       - name: Build same-source variance, influence and attained cover modules
         run: |
           set -euo pipefail
@@ -89,6 +97,7 @@ jobs:
             --workspace /tmp/mathlib4 --timeout 900 --strict \
             --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
             --decl $N.original_source_energy_and_attained_pair_cover \
+            --decl $N.original_source_section_and_attained_pair_cover \
             --json-out lean-receipts/q2-source-energy-and-pair-cover.json || {
               cat lean-receipts/q2-source-energy-and-pair-cover.json
               exit 1
