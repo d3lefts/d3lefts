@@ -1,0 +1,16 @@
+{
+  "name": "source-valid-lab-promotion-eight-edge-case",
+  "source": "agent", "target": "protected",
+  "policy": "mission-access-v1",
+  "assumptions": ["Complete typed effect graph", "No unsafe effect can bypass modeled graph", "Independent sound guard or verification at every selected edge", "Atomic source/policy recheck at promotion", "Edge-local additive costs", "Cached evidence bound to exact digest and policy"],
+  "edges": [
+    {"id":"a","u":"agent","v":"build","instrument":"7","acquire":"4","verify":"2","digest":"a1","cached_digest":"a1","cached_policy":"mission-access-v1"},
+    {"id":"b","u":"agent","v":"evaluate","instrument":"7","acquire":"5","verify":"2","digest":"b2","cached_digest":null,"cached_policy":null},
+    {"id":"c","u":"agent","v":"train","instrument":"4","acquire":"4","verify":"2","digest":"c3","cached_digest":null,"cached_policy":null},
+    {"id":"d","u":"build","v":"evaluate","instrument":"6","acquire":"2","verify":"2","digest":"d4","cached_digest":"d4","cached_policy":"mission-access-v1"},
+    {"id":"e","u":"build","v":"protected","instrument":"3","acquire":"6","verify":"4","digest":"e5","cached_digest":"e0","cached_policy":"mission-access-v1"},
+    {"id":"f","u":"evaluate","v":"protected","instrument":"2","acquire":"5","verify":"4","digest":"f6","cached_digest":"f0","cached_policy":"mission-access-v1"},
+    {"id":"g","u":"train","v":"protected","instrument":"2","acquire":"3","verify":"2","digest":"g7","cached_digest":"g0","cached_policy":"mission-access-v1"},
+    {"id":"h","u":"evaluate","v":"train","instrument":"3","acquire":"3","verify":"2","digest":"h8","cached_digest":null,"cached_policy":null}
+  ]
+}

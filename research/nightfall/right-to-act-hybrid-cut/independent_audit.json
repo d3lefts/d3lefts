@@ -1,0 +1,11 @@
+{
+  "exhaustive_fixed": "pass",
+  "maxflow_dual": "pass",
+  "random_scenarios": 500,
+  "stale_policy": {
+    "before": "12",
+    "after": "18"
+  },
+  "novel_claim": false,
+  "real_controlarena_run": false
+}
