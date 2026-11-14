@@ -1,5 +1,8 @@
 # NIGHTFALL Mathematical Research Archive
 
+**13 November 2026 integration:** [Minimum justified knowing cost / parallel-track map](nightfall/2026-11-convoluted-costs-of-knowing/MINIMUM_JUSTIFIED_KNOWING_COST_20261113.md) is the current source-linked synthesis. It is an explicitly dated *interpretive* ledger, not an amendment to the machine-certified canonical claim list. Public research dispatch: [site](../docs/cost-of-knowing.html). Draft results remain on their individual branches and must not be mass merged.
+
+
 **Archive map · 11 November 2026**  
 **Custodian:** Devin J. Wright / NIGHTFALL PHASESHIFT. **Status:** open research repository, not a journal-accepted collection.
 
