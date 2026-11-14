@@ -1,4 +1,4 @@
-import ActualProductSourceDerivedStar
+import ActualProductSoftNoise
 
 /-!
 # Turturean-free canonical Efron–Stein finite-product decomposition
