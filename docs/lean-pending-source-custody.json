@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 5,
+  "revision": 6,
   "as_of": "2026-11-14",
   "source_commit": "c472505a28ab32097a37bd1803a65d486ce4ba87",
-  "scope": "Immutable 67-source historical provenance is unchanged. Expanded post-checkpoint custody tracks 91 Lean files, including 14 files from merged PRs #494, #495, #496 and #497. Current named kernel receipts are stored separately from the historical no-verified-receipt marker. Full source-level SCIF composition, infinite-product L² transfer, agent guard enforcement, and novelty remain open.",
+  "scope": "Immutable 67-source historical provenance retained. All 98 actual post-checkpoint Lean files now have exact SHA-1 custody: 77 earlier, 14 merged SCIF/Q2/authority/horizon with separately scoped named compiler receipts, and 7 previously merged Q2 sharp-source files recovered in this audit without new certificate attribution. Novelty and fully general product/SCIF conclusions remain open.",
   "sources": [
     {
       "path": "research/nightfall/formalization/authority/AuthorityHorizon.lean",
@@ -435,6 +435,16 @@
       "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
     },
     {
+      "path": "research/nightfall/formalization/observability/ActualSourceNoiseEfronStein.lean",
+      "source_blob_sha": "cc5c01722a5dfd25e2bdbe4c3574eca5fd6ab807",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Previously merged Q2 sharp-source file recovered by same-head source inventory on 2026-11-14; current Git blob hash checked directly. Not entered in immutable historical 67-file register. Any kernel theorem attribution must use a separate exact named current-head Lean receipt; no new such receipt is asserted by this custody row."
+    },
+    {
       "path": "research/nightfall/formalization/observability/ActualSourceOrthogonality.lean",
       "source_blob_sha": "70cb80a9cc4651affbdc5d29f8bb49fc9bb4ee4f",
       "classification": "unreviewed-source",
@@ -649,6 +659,66 @@
         "named_declaration": "Nightfall.Observability.ActualSourceQ2CoupledUnconditional.actual_source_q2_coupled_unconditional",
         "run": 43627249467
       }
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2SharpAdditive.lean",
+      "source_blob_sha": "27041ca837a8982fdd4203b16acce4695945d123",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Previously merged Q2 sharp-source file recovered by same-head source inventory on 2026-11-14; current Git blob hash checked directly. Not entered in immutable historical 67-file register. Any kernel theorem attribution must use a separate exact named current-head Lean receipt; no new such receipt is asserted by this custody row."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2SharpAdditiveFinal.lean",
+      "source_blob_sha": "947cde7b310232e421b92cc987bbe23299be7c0c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Previously merged Q2 sharp-source file recovered by same-head source inventory on 2026-11-14; current Git blob hash checked directly. Not entered in immutable historical 67-file register. Any kernel theorem attribution must use a separate exact named current-head Lean receipt; no new such receipt is asserted by this custody row."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2SharpAdditiveSource.lean",
+      "source_blob_sha": "c5192ac7a0fdf46a1edcafff07ebf79678643f1a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Previously merged Q2 sharp-source file recovered by same-head source inventory on 2026-11-14; current Git blob hash checked directly. Not entered in immutable historical 67-file register. Any kernel theorem attribution must use a separate exact named current-head Lean receipt; no new such receipt is asserted by this custody row."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2SharpScalarClosure.lean",
+      "source_blob_sha": "1aefbdb3221cc888a44c3924b882f085346f7019",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Previously merged Q2 sharp-source file recovered by same-head source inventory on 2026-11-14; current Git blob hash checked directly. Not entered in immutable historical 67-file register. Any kernel theorem attribution must use a separate exact named current-head Lean receipt; no new such receipt is asserted by this custody row."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2SharpTerminalGate.lean",
+      "source_blob_sha": "adca10ebd5e3c0b22de4a30b31d864274aa6110c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Previously merged Q2 sharp-source file recovered by same-head source inventory on 2026-11-14; current Git blob hash checked directly. Not entered in immutable historical 67-file register. Any kernel theorem attribution must use a separate exact named current-head Lean receipt; no new such receipt is asserted by this custody row."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2StrongUnconditional.lean",
+      "source_blob_sha": "7ce141c47933959654d611676a666a1d15883647",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Previously merged Q2 sharp-source file recovered by same-head source inventory on 2026-11-14; current Git blob hash checked directly. Not entered in immutable historical 67-file register. Any kernel theorem attribution must use a separate exact named current-head Lean receipt; no new such receipt is asserted by this custody row."
     },
     {
       "path": "research/nightfall/formalization/observability/ActualSourceQ2Terminal.lean",
