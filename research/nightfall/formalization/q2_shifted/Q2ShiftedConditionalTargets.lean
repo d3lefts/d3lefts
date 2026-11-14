@@ -86,8 +86,11 @@ theorem conditional_shifted_budget
     V^2 ≤ ((r * U + 8 * β) * B * Real.sqrt M)^2 := hvsq
     _ = (Real.sqrt 3 * U + 8 * β)^2 * B^2 * M := by
       dsimp [r]
-      rw [← Real.sq_sqrt hM]
-      ring
+      calc
+        ((Real.sqrt 3 * U + 8 * β) * B * Real.sqrt M)^2 =
+            (Real.sqrt 3 * U + 8 * β)^2 * B^2 * (Real.sqrt M)^2 := by ring
+        _ = (Real.sqrt 3 * U + 8 * β)^2 * B^2 * M := by
+          rw [Real.sq_sqrt hM]
 
 /-- A coefficient-107.393... statement, *conditional* on both
     the per-owner c/4 moment inequality and the sharp original-source
