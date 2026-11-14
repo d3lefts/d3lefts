@@ -1,8 +1,8 @@
 # Pinned genuine-source Q2 pair-star and squared-energy certificate
 
-**NIGHTFALL / 2026-11-13 follow-on checkpoint (runs executed 2026-11-14 UTC).** **Status: 11 additional strictly pinned Lean declarations passed. Terminal source-level Q2 variance–influence theorem is NOT certified.**
+**NIGHTFALL / 2026-11-13 follow-on checkpoint (runs executed 2026-11-14 UTC).** **Status: 19 additional strictly pinned Lean declarations passed (30 including original #460). Terminal source-level Q2 variance–influence theorem is NOT certified.**
 
-Research led by Devin J. Wright; AI-assisted theorem formulation and Lean construction. Sources are committed to [stacked draft PR #462](https://github.com/d3lefts/d3lefts/pull/462), based on the original-law soft-refresh operator [draft #460](https://github.com/d3lefts/d3lefts/pull/460). These are **author-side mathematical steps**; no specialist independent human proof review, international priority certification, or real-system assurance claim.
+Research led by Devin J. Wright; AI-assisted theorem formulation and Lean construction. Sources are committed to [stacked draft PR #462](https://github.com/d3lefts/d3lefts/pull/462), based on the original-law soft-refresh operator [merged PR #460](https://github.com/d3lefts/d3lefts/pull/460). These are **author-side mathematical steps**; no specialist independent human proof review, international priority certification, or real-system assurance claim.
 
 ## Objective and exact source model
 
@@ -16,7 +16,7 @@ The new results apply to any \(H:\alpha\times\alpha\to\mathbb R\) that is separa
 
 **Exact contract:** Every Lean declaration is accepted in Lean 4.36.0-rc2 (compiler commit \`b35cb10cf2ced51a2fd1880cfdbf75c71ab7a35a\`), pinned Mathlib \`9d581dfff2e41de989072ea63abf3daf69311520\`, with allowed axioms **only** \`Classical.choice\`, \`Quot.sound\`, \`propext\`. Strict \`scripts/lean_bridge.py\` emits individual scope/axiom receipts and \`check_receipts.py\` enforces the contract; module compilation is explicit from source-identical original-product dependencies.
 
-## Four strict passed pinned runs
+## Five proof stages with strict pinned runs
 
 | Run (all SUCCESS) | Source module | Certified *named* declarations | Exact mathematical scope |
 | --- | --- | --- | --- |
@@ -24,6 +24,7 @@ The new results apply to any \(H:\alpha\times\alpha\to\mathbb R\) that is separa
 | [43547204578](https://github.com/d3lefts/d3lefts/actions/runs/43547204578) | [ActualProductSoftStar.lean](../formalization/observability/ActualProductSoftStar.lean) | \`actual_soft_noise_add\`; \`actual_soft_noise_sum\`; \`actual_soft_noise_centered_star_eigen\` | Finite linearity and exact centered star section \(Q_r(g(X_i)+\sum_{j\ne i}H_j(X_i,X_j))=r_i g(X_i)+\sum_{j\ne i}r_ir_jH_j(X_i,X_j)\) |
 | [43547483580](https://github.com/d3lefts/d3lefts/actions/runs/43547483580) | [ActualProductSoftStarEnergy.lean](../formalization/observability/ActualProductSoftStarEnergy.lean) | \`actual_source_distinct_pair_neighbors_orthogonal\` | \(\mathbb E_\mu H(X_i,X_j)J(X_i,X_k)=0\) for \(j\ne k\), derived by conditioning and source stationarity, with the first kernel centered in \(X_j\) |
 | [43547645505](https://github.com/d3lefts/d3lefts/actions/runs/43547645505) | [ActualProductSoftStarParseval.lean](../formalization/observability/ActualProductSoftStarParseval.lean) | \`actual_source_pairwise_orthogonal_energy\`; \`actual_source_weighted_centered_star_energy\` | True-source weighted star \(L^2\) energy equals the squared-weight sum of the actual pair-marginal energies, not assumed as a synthetic sampling law |
+| [43549165274](https://github.com/d3lefts/d3lefts/actions/runs/43549165274) | [ActualProductSourcePairCentering.lean](../formalization/observability/ActualProductSourcePairCentering.lean), [ActualProductQ2ScalarClosure.lean](../formalization/observability/ActualProductQ2ScalarClosure.lean) | \`doubleCenter_first_centered\`; \`weighted_two_site_sum_comm\`; \`doubleCenter_second_centered\`; \`actual_source_derived_pair_first_centered\`; \`actual_source_derived_pair_second_centered\`; \`actual_source_derived_pair_soft_eigen\`; \`q2_scalar_endpoint\`; \`q2_scalar_endpoint_squared\` | **Six** source-derived double-centering/eigenaction lemmas and **two conditional scalar closure** lemmas. Scalar theorem explicitly assumes the budgets; it is not the source-only Q2 conclusion |
 
 **Reproduction:** The [pinned CI workflow](https://github.com/d3lefts/d3lefts/blob/nightfall-q2-pair-sector-v436-20261113/.github/workflows/nightfall-q2-pair-source-v436.yml) compiles literal current branch files, prints individual axioms, runs receipt validation, and archives a \`SHA256SUMS.txt\` of all new and prerequisite source modules, repo commit, compiler pin and Mathlib commit. Use the artifacts linked from the four passing runs to inspect the actual hashes; this note does not invent their values.
 
@@ -36,11 +37,15 @@ The new results apply to any \(H:\alpha\times\alpha\to\mathbb R\) that is separa
 
 These are exact **operator and local energy bridges**. They are neither a novel world-priority claim nor a universal Q2 theorem merely because the compiler accepted them.
 
+## Full analytic proof and terminal theorem-type separation
+
+[**Complete author-analytic source-level Q2 proof**](Q2_COMPLETE_ANALYTIC_SOURCE_PROOF_20261113.md) reconstructs the 4B matching parity bound, greedy 8B endpoint cover, source-preserving soft ownership, 8B switching budget, additive αB budget, independent Hilbert fourth moment and exact scalar closure. It is a proof manuscript **not a verified Lean theorem**. The two newest compiled declarations close the scalar implication *conditional on explicit budgets*; they do not establish those budgets from arbitrary bounded source (f).
+
 ## Open source-to-terminal proof obligations
 
-- **[OPEN] Original source function:** starting only from a bounded \(f\) of source Efron–Stein degree \(\le2\), derive its genuine canonical centered singleton/pair components and identify each supplied \(H_j\) with the actual \(\operatorname{esComp}_{\{i,j\}} f\) on the active pin. The current result has a *centered-star representation as hypotheses*, not as a consequence of an arbitrary \(f\).
+- **[PARTIAL] Original source function:** \`sourceDoubleCenteredPair p f j k\` is now *derived directly from the original input f*, with separately centered margins and its exact soft eigenaction compiled at run 43549165274. **Still missing:** a strict current-pin equivalence with the canonical Efron–Stein \(\operatorname{esComp}_{\{i,j\}}f\), and a degree-two decomposition of arbitrary \(f\) into exactly these components. The compiled star theorem itself still takes centered components as arguments.
 - **[OPEN] Genuine source matching/weights:** derive source-supported pair maxima \(w_{ij}\), the \(4B\) disjoint matching theorem, the \(8B\) cover, and \(\lambda_{ij}\) from those costs; prove exact global pair energy partition over both endpoints and \(s_i\le I_i(f)\) with no supplied energy cap.
-- **[OPEN] Quantitative endpoint:** recompile or reconstruct the original-source switching/section \(8B\) budget, additive \(\alpha B\) budget, true-source Hilbert fourth-moment estimate, its \(L^1\)-\(L^2\)-\(L^4\) interpolation and scalar closure under one identical pinned compiler.
+- **[PARTIAL] Quantitative endpoint:** the pure scalar closure from explicitly displayed \(\sum a_i\), \(\sum c_i\), \(\sum z_i\), \(s_i\le z_i(c_i+\rho\sqrt M)\), and variance decomposition assumptions is **strictly compiled** at run 43549165274; the original-source switching/section \(8B\) budget, additive \(\alpha B\) budget, true-source weighted Hilbert fourth-moment estimate and its interpolation **still require current-pin source-to-budget integration**. The scalar certificate does not discharge these assumptions.
 - **[OPEN] Terminal declaration:** a single named \`source_Q2\` whose only mathematical hypotheses are normalized nonnegative \(p_i\), original-source \(|f|\le B\) (with clearly specified support and zero-atom semantics), and source degree \(\le2\); it must print standard axiom dependencies, source hashes and a full strict passing receipt.
 - **[OPEN] Scope beyond finite homogeneous alphabet:** arbitrary heterogeneous alphabets and measurable-space passage require their own exact representation bridge, and non-author proof review/novelty are separate.
 
@@ -53,4 +58,4 @@ Proposed final coefficient is the **author-analytic** \((10+2\sqrt2)^2(1+\sqrt3)
 - Inspect each \`#print axioms\` and compare source SHA and Mathlib pin against the run artifacts. No theorem-promotion based only on green headline status.
 - Cheapest decisive next Lean experiment: define *source-derived* canonical pair kernels of an arbitrary \(f\) using original-law conditional refreshes; prove their separate centering and identify the stars above without supplying centered pair components externally. If this forces unproved source-energy identities as premises, stop and expose the missing bridge rather than assume it.
 
-**Status gate:** Numerically checked examples, author-side algebra and 22 total related pinned declarations (11 in #460 + 11 additional in this PR) remain distinct from the single terminal source-level Q2 proof. No manuscript submission or publication is authorized by this certificate passport.
+**Status gate:** Numerically checked examples, a complete author-analytic source proof, and **30 total related pinned declarations** (11 in #460 + 19 additional in this PR) remain distinct from the single terminal source-level Q2 proof. No manuscript submission or publication is authorized by this certificate passport.
