@@ -1,0 +1,25 @@
+name: NIGHTFALL approximate separator exact source audits
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-dependent-observability/**'
+      - '.github/workflows/nightfall-approx-separator-exact.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/2026-11-dependent-observability/**'
+      - '.github/workflows/nightfall-approx-separator-exact.yml'
+  workflow_dispatch:
+
+jobs:
+  verify-approx-separator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reproduce exact ratio-TV and fixed-subset risk checks
+        run: python3 research/nightfall/2026-11-dependent-observability/check_approx_separator_exact.py
+      - name: Reproduce exact adaptive Bellman optimality checks
+        run: python3 research/nightfall/2026-11-dependent-observability/check_adaptive_weak_star_exact.py
+      - name: Record source identities
+        run: sha256sum research/nightfall/2026-11-dependent-observability/check_*_exact.py
