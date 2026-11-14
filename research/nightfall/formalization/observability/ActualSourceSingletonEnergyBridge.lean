@@ -130,7 +130,13 @@ theorem actual_singleton_energy_le_source_influence
   have htotal : F.sum en = sourceInfluence p f i := by
     simpa only [F, en, Finset.sum_filter] using
       (original_source_influence_eq_interaction_energy p hp1 f i).symm
-  simpa only [Finset.sum_singleton, en] using hle.trans_eq htotal
+  calc
+    (∑ x : ι → α, originalMass p x *
+      (esComp p ({i} : Finset ι) f x)^2) =
+      (({({i} : Finset ι)} : Finset (Finset ι)).sum en) := by
+        simp only [Finset.sum_singleton, en]
+    _ ≤ F.sum en := hle
+    _ = sourceInfluence p f i := htotal
 
 /-- Actual original-singleton norm is <= sqrt of any valid
 genuine coordinate influence cap, no bias or dimension factor. -/
