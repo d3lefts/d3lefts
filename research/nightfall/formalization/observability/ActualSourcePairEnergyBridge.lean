@@ -55,4 +55,48 @@ theorem original_pair_finite_moment_energy_eq_canonical
       intro x _
       rw [actual_source_esComp_pair_eq_derived p hp1 f i j hij x]
 
+
+/-- The actual two-site Möbius projector removes any arbitrary
+orientation of a genuine unordered pair. This is pointwise, including
+zero-mass symbols, rather than only an equality after integration. -/
+theorem original_source_pair_kernel_swap
+    (p : ι → α → ℝ)
+    (hp1 : ∀ k, (∑ a : α, p k a) = 1)
+    (f : (ι → α) → ℝ)
+    (i j : ι) (hij : i ≠ j) (a b : α) :
+    sourceDoubleCenteredPair p f i j a b =
+      sourceDoubleCenteredPair p f j i b a := by
+  classical
+  let x : ι → α :=
+    Function.update (Function.update
+      (fun _ : ι => a) i a) j b
+  have hi : x i = a := by simp [x, hij]
+  have hj : x j = b := by simp [x]
+  have hforward :=
+    actual_source_esComp_pair_eq_derived p hp1 f i j hij x
+  have hreverse :=
+    actual_source_esComp_pair_eq_derived p hp1 f j i hij.symm x
+  rw [hi, hj] at hforward hreverse
+  rw [Finset.pair_comm] at hreverse
+  exact hforward.symm.trans hreverse
+
+/-- Genuine pair moment energies are symmetric in their original
+coordinate labels. The weights are the source's own marginals. -/
+theorem original_source_pair_energy_swap
+    (p : ι → α → ℝ)
+    (hp1 : ∀ k, (∑ a : α, p k a) = 1)
+    (f : (ι → α) → ℝ)
+    (i j : ι) (hij : i ≠ j) :
+    ActualSourceFinitePairMoment.sourcePairEnergy p f i j =
+      ActualSourceFinitePairMoment.sourcePairEnergy p f j i := by
+  classical
+  unfold ActualSourceFinitePairMoment.sourcePairEnergy
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro b _
+  apply Finset.sum_congr rfl
+  intro a _
+  rw [original_source_pair_kernel_swap p hp1 f i j hij a b]
+  ring
+
 end Nightfall.Observability.ActualSourcePairEnergyBridge
