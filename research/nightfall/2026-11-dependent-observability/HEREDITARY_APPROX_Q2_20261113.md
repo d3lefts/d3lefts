@@ -4,7 +4,7 @@
 
 ## Main theorem
 
-Let h be any feasible history consisting of the supplied separator and any set of *whole observed blocks*. Let nu_h be the associated product reference distribution on the remaining blocks, and let mu_h be the actual conditional distribution. The same positive cross factors remain in the Radon–Nikodym derivative L_h and their local source-certified ranges have not widened. Define R=product_F u_F/ell_F and delta=(sqrt(R)-1)/(sqrt(R)+1). Then
+Let h be any feasible history consisting of the supplied separator and any set of *individually observed coordinates*. Let nu_h be the associated product reference distribution on the remaining blocks, and let mu_h be the actual conditional distribution. The same positive cross factors remain in the Radon–Nikodym derivative L_h and their local source-certified ranges have not widened. Define R=product_F u_F/ell_F and delta=(sqrt(R)-1)/(sqrt(R)+1). Then
 
     TV(mu_h,nu_h) <= delta
 
@@ -29,7 +29,7 @@ For two laws p,q with TV<=delta on the same support and bounded f, both Var(f) a
     |Var_p(f)-Var_q(f)|<=4B^2 delta
     |I_j^p(f)-I_j^q(f)|<=4B^2 delta.
 
-For the actual and reference conditional sources, the positive cross-factor ranges remain valid after fixing any more whole blocks; the sharp likelihood-oscillation TV lemma gives the same delta. Under the reference product law, the residual f still has degree <=2; therefore
+For the actual and reference conditional sources, the positive cross-factor ranges remain valid after fixing any more individual coordinates; the sharp likelihood-oscillation TV lemma gives the same delta. Under the reference product law, the residual f still has degree <=2: conditioning within a reference block does not couple that block to another; therefore
 
     Var_{nu_h}(f)^2 <= C2 B^2 max_j I_j^{nu_h}(f).
 
