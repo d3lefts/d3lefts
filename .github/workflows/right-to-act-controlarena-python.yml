@@ -32,7 +32,11 @@ jobs:
         run: |
           docker version
           docker info --format 'Server version={{.ServerVersion}}'
+      - name: Exercise real ControlArena Docker/Inspect with credential-free MockLLM
+        run: |
+          python research/nightfall/right-to-act-controlarena/live_iac_fast.py --execute --offline-mock --limit 1 --out controlarena-mock-results
       - name: Execute one honest and one attack sample with native Inspect logs
+        if: always()
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -40,14 +44,15 @@ jobs:
           CONTROLARENA_TRUSTED_MODEL: ${{ vars.CONTROLARENA_TRUSTED_MODEL }}
           INSPECT_MAX_CONNECTIONS: "2"
         run: |
-          python research/nightfall/right-to-act-controlarena/live_iac_fast.py --execute --limit 1 --out controlarena-results
+          python research/nightfall/right-to-act-controlarena/live_iac_fast.py --execute --limit 1 --out controlarena-model-results
       - name: Upload execution and dependency evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: right-to-act-controlarena-real-iac-fast
           path: |
-            controlarena-results/**
+            controlarena-mock-results/**
+            controlarena-model-results/**
             installed-python-packages.txt
           if-no-files-found: warn
           retention-days: 14
