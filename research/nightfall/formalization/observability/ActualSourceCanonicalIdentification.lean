@@ -152,8 +152,15 @@ theorem actual_source_esComp_pair_eq_derived
     exact hjk hje
   have hjne : ({j} : Finset ι) ≠ {k} := by
     simpa using hjk
+  have hnepair : (∅ : Finset ι) ≠ {j,k} := by
+    intro heq
+    have hmem : j ∈ (∅ : Finset ι) := by
+      rw [heq]
+      simp
+    simpa using hmem
   have h0 : (∅ : Finset ι) ∉
-      ({ {j}, {k}, {j,k} } : Finset (Finset ι)) := by simp
+      ({ {j}, {k}, {j,k} } : Finset (Finset ι)) := by
+    simp [hnepair]
   have h1 : ({j} : Finset ι) ∉
       ({ {k}, {j,k} } : Finset (Finset ι)) := by
     simp [hjne, hjpair]
