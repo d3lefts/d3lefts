@@ -1,4 +1,4 @@
-# Q2 actual-source composition ledger — 2026-11-13 (version 1)
+# Q2 actual-source composition ledger — 2026-11-13 (version 2; strict CI pending)
 
 ## Scope and truthful status
 
@@ -35,30 +35,39 @@ The intended inequality is
 
 `V² ≤ [16(1+sqrt 3)]² B² M = 256(1+sqrt 3)² B² M`.
 
-The source-only package currently includes: pointwise Σ_i ||U_i||≤8B;
-canonical V and I_i Parseval identities; an actual source greedy c with
-Σ_i c_i≤8B and genuine owned energy partition; product sampling
-identification for the first norm moment; and a finite Hilbert
-second-moment equality for an injective enumeration of J_i.
+The new source-only package `ActualSourceQ2CompositionGate` now
+imports `ActualSourceOwnerOrientation`, `ActualSourceOwnedGraph`,
+`ActualSourcePairEnergyBridge`, the current-source ANOVA and bounded
+section modules. It includes: pointwise Σ_i ||U_i||≤8B;
+canonical V and I_i Parseval identities; exact genuine pair Hilbert
+energy = current-source canonical pair energy; original source pair
+kernel/energy symmetry and greedy owner energy orientation; one
+actual source greedy c with Σ_i c_i≤8B and genuine owned energy
+partition; product sampling identification for the first norm moment;
+and finite Hilbert second moment for injective original neighbors.
+No legacy `ActualESOwnedSampleLaw` or `ProductSpaceTwoSidedBridge`
+import is used by the new proof graph.
 These are separate logical conclusions from the same f and p, not a
 hidden additional source oracle.
 
 ## Remaining indispensable source-level bridges
 
 1. **Kernel orientation and energy unification**:
-   Prove the pair kernel used by `ActualESOwnedEnergy` (legacy canonical
-   esComp) and the derived `sourceDoubleCenteredPair` in
-   `ActualSourceFinitePairMoment` coincide for every orientation of
-   a genuinely owned unordered edge, with all zero atoms. From this
-   identify the finite Hilbert moment with exactly the owned canonical
-   energy `s_i`, not an unrelated sum. Prove `s_i ≤ I_i ≤ M`.
+   The new source pair-energy Fubini theorem and pointwise
+   source-derived pair swap/energy-swap and owner orientation lemmas are
+   written, but CI still must compile them. Next identify the exact
+   distinct-neighbor finite Hilbert moment with the **owned** canonical
+   energy `s_i` by a provable reindexing of the source graph, and prove
+   `s_i ≤ I_i ≤ M`. A separate old-kernel equivalence is no longer
+   required by this source-only branch.
 2. **Actual owned-section first norm**:
-   Prove the finite independently sampled increment's first norm equals
-   the expectation of the genuine conditional source-owned section,
-   not merely the same expectation of a syntactically distinct sum.
-   Historical PR #443 contains `ActualESOwnedObservedSource` (separate
-   old compiler/representation); recover and port the actual
-   orientation and source-section equality rather than adding an axiom.
+   The new source-owned graph derives the injective neighbor product
+   law and first Hilbert norm from the same original p and f.
+   It still does not identify the observable with the **conditional**
+   original-source section. Historical PR #443 contains
+   `ActualESOwnedObservedSource` (old compiler/representation);
+   port the exact source-section equality rather than introducing a
+   supplied first-moment/projection axiom.
 3. **Conditional Jensen with original law**:
    Identify this owned section with
    `E[U_i(·;a) | X_{J_i}] - A_i(a)` and derive
@@ -101,3 +110,9 @@ or if the finite sample law is used to infer a *conditional* source
 projection identity without separately establishing it. Such a failure
 must block terminal promotion, even when the aggregate energy partitions
 and the first two sample moments are each individually correct.
+
+## CI failures and repairs logged (v2)
+
+1. Historical owner graph closure failed with `unknown module prefix 'AaronsonAmbainis'` through `ProductSpaceTwoSidedBridge`. The new source-only `ActualSourceOwnedGraph` removes this dependency, using original-source `ActualSourceFiniteSampleLaw` and `ActualSourceFinitePairMoment` directly.
+2. A later strict run reached `ActualSourceMatchingCover` and failed on `open Nightfall.Observability.WeightedGreedyMatching`; the actually defined namespace is `Nightfall.Observability.WeightedGreedy`. Corrected the import alias on the PR #476 source branch. Other downstream failures/remaining CI checks must be inspected before certification.
+3. No successful full strict source-composition receipt was available at this revision. Do not promote either the source-only structural package or the terminal exponent-two target without a passing pinned Lean run and separate scope review.
