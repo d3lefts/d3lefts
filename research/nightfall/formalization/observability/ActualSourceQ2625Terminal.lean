@@ -13,6 +13,9 @@ namespace Nightfall.Observability.ActualSourceQ2625Terminal
 
 open Finset
 open Nightfall.Observability.ActualSourceANOVA
+open Nightfall.Observability.ActualESGreedyOwnership
+open Nightfall.Observability.ActualProductSourcePairCentering
+open Nightfall.Observability.ActualSourceOwnedProjectedMomentJensen
 open Nightfall.Observability.ActualSourceVarianceEnergy
 open Nightfall.Observability.ActualSourceInfluenceEnergy
 open Nightfall.Observability.ActualSourceOwnedGraph
@@ -160,7 +163,7 @@ theorem actual_source_q2_625_given_additive_budget
     intro i
     have hsbound : s i ≤ T^2 := by
       have h := (howner i).1
-      dsimp [s] at *
+      change s i ≤ sourceInfluence p f i at h
       rw [hT2]
       exact h.trans (hM i)
     have hscubic : (s i)^3 ≤ (z i)^2*
