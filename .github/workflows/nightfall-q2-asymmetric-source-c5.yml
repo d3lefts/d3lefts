@@ -1,0 +1,38 @@
+name: NIGHTFALL Q2 asymmetric product-law c/5 source certification
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [nightfall-q2-shifted-targets-107-99-20261114]
+    paths:
+      - 'scripts/nightfall_q2_asymmetric_certify.py'
+      - 'research/nightfall/formalization/observability/ActualSourcePureQ2Fifth.lean'
+      - 'research/nightfall/formalization/q2_shifted/Q2ShiftedPureC5.lean'
+      - '.github/workflows/nightfall-q2-asymmetric-source-c5.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nightfall-q2-asym-c5-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  asymmetric-c5:
+    runs-on: ubuntu-latest
+    timeout-minutes: 110
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate source-audit Python syntax
+        run: python3 -m py_compile scripts/nightfall_q2_asymmetric_certify.py
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Strict pinned transitive original-source Lean compiler and axiom receipts
+        run: python3 scripts/nightfall_q2_asymmetric_certify.py
+      - name: Publish immutable source and receipt manifest
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: q2-asymmetric-pure-c5-source-receipts
+          path: lean-receipts/q2-asymmetric-c5/
+          retention-days: 45
