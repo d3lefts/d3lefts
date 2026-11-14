@@ -1,0 +1,137 @@
+name: NIGHTFALL Q2 one-source pinned Lean certification
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/observability/**'
+      - 'research/nightfall/formalization/product_space/**'
+      - 'scripts/lean_bridge.py'
+      - 'scripts/nightfall_q2_certify.py'
+      - '.github/actions/setup-nightfall-lean/**'
+      - '.github/workflows/nightfall-q2-consolidated-lean.yml'
+      - '.github/workflows/nightfall-q2-*-v436.yml'
+  workflow_dispatch:
+    inputs:
+      target_ref:
+        description: 'Repo branch/commit to certify (defaults to selected dispatch ref)'
+        required: false
+        type: string
+
+# One generation of the same Q2 proof branch can run at a time.
+# Superseding commits cancel older builds BEFORE they consume more time.
+concurrency:
+  group: nightfall-q2-one-certificate-${{ github.event.pull_request.head.ref || inputs.target_ref || github.ref_name }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  one-pinned-source-certificate:
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && startsWith(github.event.pull_request.head.ref, 'nightfall-q2-'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Prune superseded attempts on the two integration branches
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const {owner, repo} = context.repo;
+            const branches = [
+              'nightfall-q2-consolidated-terminal-20261114',
+              'nightfall-q2-terminal-v436-20261114'
+            ];
+            const heads = new Map();
+            for (const branch of branches) {
+              try {
+                const {data} = await github.rest.repos.getBranch({owner, repo, branch});
+                heads.set(branch, data.commit.sha);
+              } catch (error) {
+                core.warning('Could not check branch ' + branch + ': ' + error.message);
+              }
+            }
+            const candidates = new Map();
+            for (const status of ['queued', 'in_progress']) {
+              const runs = await github.paginate(
+                github.rest.actions.listWorkflowRunsForRepo,
+                {owner, repo, status, per_page: 100}
+              );
+              for (const run of runs) {
+                const head = heads.get(run.head_branch);
+                if (!head || run.head_sha === head || run.id === context.runId) continue;
+                if (!['push', 'pull_request'].includes(run.event)) continue;
+                candidates.set(run.id, run);
+              }
+            }
+            let accepted = 0, conflicts = 0, denied = 0;
+            for (const run of candidates.values()) {
+              try {
+                await github.rest.actions.cancelWorkflowRun({
+                  owner, repo, run_id: run.id
+                });
+                accepted++;
+                core.info('Cancelled obsolete ' + run.id + ' [' +
+                  run.head_branch + '] ' + run.head_sha.slice(0, 12));
+              } catch (error) {
+                if ([409, 422].includes(error.status)) {
+                  conflicts++;
+                } else {
+                  denied++;
+                  core.warning('Cancellation failed for ' + run.id + ': ' + error.message);
+                }
+              }
+            }
+            core.info(JSON.stringify({
+              obsoleteRuns: candidates.size, accepted, conflicts, denied,
+              retainedHeads: Object.fromEntries(heads)
+            }));
+            if (denied) core.warning('Some cancellations were rejected; certification may proceed.');
+
+      - name: Checkout exact source commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ (github.event_name == 'workflow_dispatch' && inputs.target_ref) || github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+
+      - name: Validate exact dependency DAG before installing Lean
+        run: |
+          set -euo pipefail
+          python3 -m py_compile scripts/nightfall_q2_certify.py
+          python3 scripts/nightfall_q2_certify.py --plan
+
+      - name: Install one pinned Lean and exact Mathlib cache
+        uses: ./.github/actions/setup-nightfall-lean
+
+      - name: Compile every source module once, then certify declarations in order
+        run: |
+          set -euo pipefail
+          python3 scripts/nightfall_q2_certify.py \
+            --workspace /tmp/mathlib4 \
+            --receipt-dir lean-receipts/q2-consolidated
+
+      - name: Immutable input and toolchain provenance
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/q2-consolidated
+          git rev-parse HEAD > lean-receipts/q2-consolidated/checkout-commit.txt
+          cat lean-toolchain > lean-receipts/q2-consolidated/toolchain.txt
+          sha256sum scripts/nightfall_q2_certify.py scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualSourceQ2Terminal.lean \
+            research/nightfall/formalization/observability/ActualSourceOwnedFourthClosure.lean \
+            > lean-receipts/q2-consolidated/SHA256SUMS.txt
+          if [ -d /tmp/mathlib4/.git ]; then
+            git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/q2-consolidated/mathlib-commit.txt
+          fi
+
+      - name: Preserve stage-by-stage strict Lean receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: q2-single-source-certificate-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/q2-consolidated/
+          retention-days: 60
