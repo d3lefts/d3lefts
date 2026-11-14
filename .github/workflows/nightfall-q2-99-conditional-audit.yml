@@ -32,6 +32,7 @@ jobs:
             --decl Nightfall.Q299.c5_not_implied_by_old_moment_envelope \
             --decl Nightfall.Q299.old_c5_polynomial_claim_false \
             --decl Nightfall.Q299.biased_two_increment_symmetric_envelope_fails \
+            --decl Nightfall.Q299.c5_old_envelope_fails_even_with_jensen \
             --json-out lean-receipts/q299/conditional.json
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q299/conditional.json
       - name: Strict c/5 restricted symmetric-type moment certificate
