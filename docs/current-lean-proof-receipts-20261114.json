@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-current-named-lean-proof-receipts-v1",
-  "version": 1,
+  "version": 2,
   "as_of": "2026-11-14",
   "target_repository": "d3lefts/d3lefts",
-  "base_main_after_research_merges": "c472505a28ab32097a37bd1803a65d486ce4ba87",
+  "base_main_after_research_merges": "0940babe1722534868e61d9c3f0a81c0344037c6",
   "historical_frozen_67_register": "docs/lean-certificate-provenance.json",
   "prior_q2_cert": "docs/q2-source-lean-certificate-20261114.json",
   "pin": {
@@ -15,7 +15,7 @@
       "propext"
     ]
   },
-  "receipt_scope": "Per-PR, current-head strict named-declaration certificates. Not a single combined after-merge Lean rebuild; mainline source integrity requires separate registry audit. Source SHA-1 hashes identify exact Git blobs.",
+  "receipt_scope": "Eight separate PR-head strict named-declaration families across 19 source blobs with pinned Lean/Mathlib. Not an after-merge common dependency build. Never infer a full infinite product theorem, a novel Efron–Stein inequality, or complete SCIF owner proof. Historical 67-source records remain frozen.",
   "new_proof_groups": [
     {
       "pr": 494,
@@ -154,6 +154,95 @@
       ],
       "run_url": "https://github.com/d3lefts/d3lefts/actions/runs/43629420558",
       "artifact_url": "https://github.com/d3lefts/d3lefts/actions/runs/43629420558/artifacts/14126244920"
+    },
+    {
+      "pr": 506,
+      "head_sha": "e8782b181677c76be32f1b8d055a81cb0342533d",
+      "merge_sha": "cee066b2b33de802de7305597216215c1a9a4b27",
+      "run": 43632637271,
+      "run_url": "https://github.com/d3lefts/d3lefts/actions/runs/43632637271",
+      "artifact_id": 14128408024,
+      "artifact_url": "https://github.com/d3lefts/d3lefts/actions/runs/43632637271/artifacts/14128408024",
+      "artifact_sha256": "10b68f3b2ba8e5dfcc84ecb420f497bd0e9064725f4ed223fedc5775eaac92eb",
+      "claim": "Actual finite source Efron–Stein variance≤sum sourceInfluence at unrestricted interaction degree; common finite alphabet, nonuniform laws including zero atoms; classical antecedent.",
+      "limits": [
+        "not infinite product or a new mathematical discovery"
+      ],
+      "source_modules": [
+        {
+          "path": "research/nightfall/formalization/observability/ActualSourceEfronStein.lean",
+          "git_blob_sha1": "4a49ec567220863ed87c6f0b5a62f9d054d755de",
+          "representative_named_declaration": "Nightfall.Observability.ActualSourceEfronStein.original_source_all_degree_efron_stein"
+        }
+      ]
+    },
+    {
+      "pr": 503,
+      "head_sha": "93c1e56936a88ab3833bdfa814f0dd16423c7505",
+      "merge_sha": "1a5dcc33c85b5abc710381b86cdb059d2fa0326f",
+      "run": 43632931330,
+      "run_url": "https://github.com/d3lefts/d3lefts/actions/runs/43632931330",
+      "artifact_id": 14128454997,
+      "artifact_url": "https://github.com/d3lefts/d3lefts/actions/runs/43632931330/artifacts/14128454997",
+      "artifact_sha256": "1b81d1de775cc1bca6447c23845401dd4df3eb1d6c24f1ed450f5a9e71a908b1",
+      "claim": "Actual source esComp degree bound survives normalized marginal law change for any finite degree; new source influence/variance equals the canonical new-law sectors; no termwise old-to-new recentering proof.",
+      "limits": [
+        "not complete owner recertification or computational optimality"
+      ],
+      "source_modules": [
+        {
+          "path": "research/nightfall/formalization/observability/SCIFSourceDegree.lean",
+          "git_blob_sha1": "fd02bd4f0160fe55b652ce28fc050eb5c5162553",
+          "representative_named_declaration": "Nightfall.SCIF.SourceDegree.source_degree_invariant_under_new_law"
+        },
+        {
+          "path": "research/nightfall/formalization/observability/SCIFSourceEnergy.lean",
+          "git_blob_sha1": "e3a5a32c5bd445320cc3a0320cf8023164697a4e",
+          "representative_named_declaration": "Nightfall.SCIF.SourceEnergy.source_edited_degree_two_influence_energy"
+        }
+      ]
+    },
+    {
+      "pr": 500,
+      "head_sha": "d5e3d7a8340697028ef807af170411fd435f6c84",
+      "merge_sha": "63e62682a968ee5fe4c1f9160125b6abde3eed90",
+      "run": 43632243900,
+      "run_url": "https://github.com/d3lefts/d3lefts/actions/runs/43632243900",
+      "artifact_id": 14128951291,
+      "artifact_url": "https://github.com/d3lefts/d3lefts/actions/runs/43632243900/artifacts/14128951291",
+      "artifact_sha256": "5a2dcdb569a5aaa0e2d60c71e6163d5a9674c1ebca719835d096189447b1db92",
+      "claim": "Actual finite full-product sourceInfluence under a one-site law change has an exact resampling/conditional residual update, any degree and zero masses; source_generated ownership still open.",
+      "limits": [
+        "not a full recertification-cost theorem"
+      ],
+      "source_modules": [
+        {
+          "path": "research/nightfall/formalization/observability/SCIFActualInfluence.lean",
+          "git_blob_sha1": "2a3a75b28423e203cab6b424629bb68cc3e6cfe1",
+          "representative_named_declaration": "Nightfall.Observability.SCIFActualInfluence.source_influence_edited_difference"
+        }
+      ]
+    },
+    {
+      "pr": 501,
+      "head_sha": "cdfcac0094c4653ecbd539a4249be228df584ff5",
+      "merge_sha": "0940babe1722534868e61d9c3f0a81c0344037c6",
+      "run": 43631863039,
+      "run_url": "https://github.com/d3lefts/d3lefts/actions/runs/43631863039",
+      "artifact_id": 14128262773,
+      "artifact_url": "https://github.com/d3lefts/d3lefts/actions/runs/43631863039/artifacts/14128262773",
+      "artifact_sha256": "8d6a2185f022ca846eb913a83bab1fa3fe2f1cf16ec29ba7fef94c4474c32db5",
+      "claim": "Actual Measure.infinitePi cylinder finite marginals and cylinder/squared integral identities for arbitrary index sets with appropriate measurability premises.",
+      "limits": [
+        "no L2 cylinder density, projected actual influence contraction or infinite Efron–Stein theorem"
+      ],
+      "source_modules": [
+        {
+          "path": "research/nightfall/formalization/universal/InfinitePiSourceBridge.lean",
+          "git_blob_sha1": "6a69efb434da886390c91b5e65533e1e814379ba",
+          "representative_named_declaration": "Nightfall.InfinitePiSourceBridge.source_cylinder_centered_square"
+        }
+      ]
     }
   ],
   "non_lean_evidence": [
