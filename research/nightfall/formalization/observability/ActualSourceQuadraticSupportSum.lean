@@ -1,6 +1,7 @@
 import ActualSourceConditionalProjection
 import ActualSourceSingletonProjection
 import ActualSourceCanonicalIdentification
+import ActualSourceInfluenceEnergy
 
 /-!
 # Exact source-only degree-two conditional support reindexing
@@ -62,12 +63,13 @@ theorem incident_degree_two_supports
         · exact (hji heq).elim
         · exact hs
       have hpairs : ({i,j} : Finset ι) ⊆ T := by
-        simp [himem, hjT]
+        simp only [Finset.insert_subset_iff, Finset.singleton_subset_iff]
+        exact ⟨himem, hjT⟩
       have hpaircard : ({i,j} : Finset ι).card = 2 := by
         simp [hji, hji.symm]
       have hEq : ({i,j} : Finset ι) = T :=
         Finset.eq_of_subset_of_card_le hpairs (by omega)
-      exact Or.inr ⟨j, hjS, hEq.symm⟩
+      exact Or.inr ⟨j, hjS, hEq⟩
   · rintro (rfl | ⟨j, hjS, rfl⟩)
     · constructor
       · simp
@@ -118,8 +120,9 @@ theorem incident_degree_two_sum
       intro h
       subst j
       exact hi hj
+    have hset : ({i,j} : Finset ι) = {i,k} := heq
     have hmem : j ∈ ({i,k} : Finset ι) := by
-      rw [← heq]
+      rw [← hset]
       simp
     have hcases : j = i ∨ j = k := by
       simpa only [Finset.mem_insert, Finset.mem_singleton] using hmem
@@ -130,6 +133,7 @@ theorem incident_degree_two_sum
       F.sum h := by
         simp only [F, Finset.sum_filter]
     _ = h {i} + (S.image (fun j => ({i,j} : Finset ι))).sum h := by
+      dsimp [F]
       rw [incident_degree_two_supports i S hi, Finset.sum_insert hnot]
     _ = h {i} + ∑ j ∈ S, h {i,j} := by
       congr 1
@@ -204,6 +208,6 @@ theorem source_degree_two_projected_section_eq_singleton_add_pairs
     exact hi hj
   have hpair := actual_source_esComp_pair_eq_derived
     p hp1 f i j hji.symm (Function.update x i a)
-  simpa [Function.update_same, Function.update_of_ne hji] using hpair
+  simpa [Function.update_of_ne hji] using hpair
 
 end Nightfall.Observability.ActualSourceQuadraticSupportSum
