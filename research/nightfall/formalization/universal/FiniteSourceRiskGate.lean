@@ -5,7 +5,7 @@ import Mathlib
 
 For any finite world space, finite observation space, arbitrary dependent
 evidence, and a nonnegative normalized source mass, the rule that grants a
-cell only if its exact source unsafe mass is <= beta times its cell mass
+cell only if its exact source violates mass is <= beta times its cell mass
 guarantees conditional violation risk <= beta.
 
 All mass and conditional claims use the SAME original source p. There is
@@ -16,6 +16,8 @@ are known; source authentication and computation are NOT proved.
 
 namespace Nightfall.FiniteSourceRiskGate
 
+open scoped Classical
+
 variable {World Observation : Type*}
 variable [Fintype World] [Fintype Observation] [DecidableEq Observation]
 
@@ -25,10 +27,10 @@ noncomputable def cellMass
   ∑ x : World, if O x = y then p x else 0
 
 noncomputable def cellUnsafeMass
-    (p : World → ℝ) (unsafe : World → Bool)
+    (p : World → ℝ) (violates : World → Bool)
     (O : World → Observation) (y : Observation) : ℝ :=
   ∑ x : World, if O x = y then
-    (if unsafe x = true then p x else 0) else 0
+    (if violates x = true then p x else 0) else 0
 
 /-- Reindex a finite world sum by observation fibers, without assuming
 that observation cells are equally probable or independent. -/
@@ -65,24 +67,24 @@ theorem sum_over_observation_cells
 /-- Local exact source-calibration per observation cell implies
 global risk-mass calibration; no independence is needed. -/
 theorem finite_cell_calibration_implies_risk_bound
-    (p : World → ℝ) (unsafe : World → Bool)
+    (p : World → ℝ) (violates : World → Bool)
     (O : World → Observation) (Grant : Observation → Prop)
     (beta : ℝ)
     (hcell : ∀ y, Grant y →
-      cellUnsafeMass p unsafe O y ≤ beta * cellMass p O y) :
+      cellUnsafeMass p violates O y ≤ beta * cellMass p O y) :
     (∑ x : World, if Grant (O x) then
-      (if unsafe x = true then p x else 0) else 0) ≤
+      (if violates x = true then p x else 0) else 0) ≤
     beta * (∑ x : World, if Grant (O x) then p x else 0) := by
   classical
   have hpoint (y : Observation) :
-      (if Grant y then cellUnsafeMass p unsafe O y else 0) ≤
+      (if Grant y then cellUnsafeMass p violates O y else 0) ≤
         beta * (if Grant y then cellMass p O y else 0) := by
     by_cases hg : Grant y
     · simpa [hg] using hcell y hg
     · simp [hg]
   have hsum :
       (∑ y : Observation, if Grant y then
-        cellUnsafeMass p unsafe O y else 0) ≤
+        cellUnsafeMass p violates O y else 0) ≤
       beta * (∑ y : Observation, if Grant y then
         cellMass p O y else 0) := by
     calc
@@ -93,12 +95,12 @@ theorem finite_cell_calibration_implies_risk_bound
         cellMass p O y else 0) := by rw [Finset.mul_sum]
   have hbad :
       (∑ y : Observation, if Grant y then
-        cellUnsafeMass p unsafe O y else 0) =
+        cellUnsafeMass p violates O y else 0) =
       ∑ x : World, if Grant (O x) then
-        (if unsafe x = true then p x else 0) else 0 := by
+        (if violates x = true then p x else 0) else 0 := by
     simpa only [cellUnsafeMass] using
       (sum_over_observation_cells
-        (w := fun x => if unsafe x = true then p x else 0) O Grant)
+        (w := fun x => if violates x = true then p x else 0) O Grant)
   have hgrant :
       (∑ y : Observation, if Grant y then
         cellMass p O y else 0) =
@@ -108,40 +110,40 @@ theorem finite_cell_calibration_implies_risk_bound
   rw [← hbad, ← hgrant]
   exact hsum
 
-/-- The actual finite source p and unsafe predicate define the grant rule.
+/-- The actual finite source p and violates predicate define the grant rule.
 The theorem has NO supplied posterior calibration assumption. -/
 theorem exact_source_threshold_gate_risk_mass_bound
-    (p : World → ℝ) (unsafe : World → Bool)
+    (p : World → ℝ) (violates : World → Bool)
     (O : World → Observation) (beta : ℝ)
     (hp : ∀ x, 0 ≤ p x)
     (hnorm : (∑ x : World, p x) = 1) :
     (∑ x : World,
-      if cellUnsafeMass p unsafe O (O x) ≤ beta * cellMass p O (O x)
-      then (if unsafe x = true then p x else 0) else 0) ≤
+      if cellUnsafeMass p violates O (O x) ≤ beta * cellMass p O (O x)
+      then (if violates x = true then p x else 0) else 0) ≤
     beta * (∑ x : World,
-      if cellUnsafeMass p unsafe O (O x) ≤ beta * cellMass p O (O x)
+      if cellUnsafeMass p violates O (O x) ≤ beta * cellMass p O (O x)
       then p x else 0) := by
-  exact finite_cell_calibration_implies_risk_bound p unsafe O
-    (fun y => cellUnsafeMass p unsafe O y ≤ beta * cellMass p O y)
+  exact finite_cell_calibration_implies_risk_bound p violates O
+    (fun y => cellUnsafeMass p violates O y ≤ beta * cellMass p O y)
     beta (fun y h => h)
 
 /-- Provided authorization has positive source probability, the
 *conditional* violation rate among accepted worlds is at most beta. -/
 theorem exact_source_threshold_gate_conditional_risk
-    (p : World → ℝ) (unsafe : World → Bool)
+    (p : World → ℝ) (violates : World → Bool)
     (O : World → Observation) (beta : ℝ)
     (hp : ∀ x, 0 ≤ p x)
     (hnorm : (∑ x : World, p x) = 1)
     (hgrant : 0 < (∑ x : World,
-      if cellUnsafeMass p unsafe O (O x) ≤ beta * cellMass p O (O x)
+      if cellUnsafeMass p violates O (O x) ≤ beta * cellMass p O (O x)
       then p x else 0)) :
     (∑ x : World,
-      if cellUnsafeMass p unsafe O (O x) ≤ beta * cellMass p O (O x)
-      then (if unsafe x = true then p x else 0) else 0) /
+      if cellUnsafeMass p violates O (O x) ≤ beta * cellMass p O (O x)
+      then (if violates x = true then p x else 0) else 0) /
     (∑ x : World,
-      if cellUnsafeMass p unsafe O (O x) ≤ beta * cellMass p O (O x)
+      if cellUnsafeMass p violates O (O x) ≤ beta * cellMass p O (O x)
       then p x else 0) ≤ beta := by
   apply (div_le_iff₀ hgrant).2
-  exact exact_source_threshold_gate_risk_mass_bound p unsafe O beta hp hnorm
+  exact exact_source_threshold_gate_risk_mass_bound p violates O beta hp hnorm
 
 end Nightfall.FiniteSourceRiskGate
