@@ -1,4 +1,4 @@
-import SCIFExactTableTransport
+import SCIFLocalSourceInfluence
 
 /-!
 # SCIF exact original-source singleton transport
@@ -16,6 +16,7 @@ namespace Nightfall.SCIFCanonicalSingleton
 open Finset
 open Nightfall.SCIFCanonicalSourceBridge
 open Nightfall.SCIFExactTableTransport
+open Nightfall.SCIFLocalSourceInfluence
 open Nightfall.Observability.ActualSourceANOVA
 open Nightfall.Observability.ActualProductMergeTower
 
