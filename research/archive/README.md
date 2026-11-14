@@ -18,6 +18,10 @@
 | Werner states | [24/25 rational source-conditional bounds](../nightfall/projects/werner-final-4-25/README.md) | Arithmetic conditions do not certify imported quantum inequalities |
 | Finite-field retrieval | [project and exact checker ledger](../nightfall/projects/adaptive-finite-field-decoder-2026-10-29/README.md) | Specific finite-field reconstruction mechanisms and review limits |
 
+## Archived CI diagnostics (November 14, 2026)
+
+The [14 retired manual-only Q2 Lean 4.36 diagnostics](workflows/q2-lean436/README.md) were archived byte-for-byte from GitHub Actions' active workflow directory. Their Git blob hashes, trigger restrictions, and nonreactivation are audited by [the retired-workflow checker](../../scripts/check_retired_workflows.py); current certificate builds use the [consolidated Q2 pipeline](../../.github/workflows/nightfall-q2-consolidated-lean.yml). No theorem source, proof receipt, or historical commit was deleted.
+
 ## Negative and superseded results must remain accessible
 
 - [PAS adverse retrospective](../nightfall/projects/pas/RETROSPECTIVE_20261013.md): no demonstrated prospective prioritization advantage.

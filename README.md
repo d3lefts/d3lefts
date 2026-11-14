@@ -18,7 +18,17 @@ For a mathematician or referee, begin with the [**paper shelf**](papers/README.m
 
 This is a **non-destructive index migration**: the original `research/nightfall/` files, Lean declarations, witness hashes, cited URLs and frozen 40-record/11-passport historical catalogues remain in place. The 15 selected claims in the current catalogue are **not** 15 refereed results or additions to the approved finding list. The [Paper A](papers/exact-recovery/MANUSCRIPT.md), [Paper B](papers/spectral-adaptive-prediction/MANUSCRIPT.md), and [Paper C](papers/specialized-complexity/MANUSCRIPT.md) manuscripts have distinct query models and certification scopes. Their validity, source completeness, independent review and originality remain separately labeled.
 
-## Current research checkpoint — 13 November 2026
+## Current research (14 November 2026)
+
+**Start with the active work, not the historical PR queue:**
+
+- **The Right to Act / autonomous assurance:** [assurance research hub](research/nightfall/assurance/README.md) · [exact semantic-fencing theorem and executable audits](research/nightfall/assurance/semantic-fencing-v0.3/README.md) · [real ControlArena IaC Fast benchmark code](research/nightfall/right-to-act-controlarena/live_iac_fast.py). The former Tennessee Eastman plan is a **historical, superseded** benchmark, not the active track. Physical/non-bypass safety remains unproved.
+- **Quadratic influence and observability:** [original-source formalization](research/nightfall/formalization/README.md) · [conditional shifted Q2 107/99 targets](research/nightfall/formalization/q2_shifted/Q2ShiftedConditionalTargets.lean) · [single pinned source certification pipeline](.github/workflows/nightfall-q2-consolidated-lean.yml). The 190/107/99 constants remain **conditional/unclosed**; do not treat passing scalar sublemmas as terminal proofs.
+- **Proof and source custody:** [November 14 PR reconciliation and limits](research/nightfall/assurance/RECONCILIATION_20261114.md) · [research archive and preserved retired workflows](research/archive/README.md) · [live pull-request queue](https://github.com/d3lefts/d3lefts/pulls?q=is%3Apr+is%3Aopen). Earlier dated queue documents are snapshots, not a live status feed.
+
+For new contributors: claim and proof status are determined by exact source, assumptions, and receipts—not by a PR's title, a green generic build, or the date in a folder name.
+
+## Historical research checkpoint — 13 November 2026
 
 The permanent archive and dated finite-evidence catalogues are preserved; recent author-side theorem work has **not** silently upgraded their originality or formalization status. For the full live overlap map, see [active research / integration queue](research/nightfall/ACTIVE_RESEARCH_QUEUE_20261113.md).
 
