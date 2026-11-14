@@ -4,7 +4,7 @@ on:
     types: [opened, synchronize, reopened]
     paths:
       - 'research/nightfall/formalization/observability/SCIFDegreeInvariant.lean'
-      - '.github/workflows/nightfall-scif-degree-bridge-lean.yml'
+      - '.github/workflows/nightfall-scif-degree-invariance-lean.yml'
   workflow_dispatch:
 
 concurrency:
