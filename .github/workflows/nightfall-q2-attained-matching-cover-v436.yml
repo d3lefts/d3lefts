@@ -5,12 +5,14 @@ on:
     paths:
       - 'research/nightfall/formalization/observability/ActualSourceAmplitudeRectangles.lean'
       - 'research/nightfall/formalization/observability/ActualSourceMatchingCover.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceQ2GenuineInterface.lean'
       - 'research/nightfall/formalization/observability/ActualProductSourceDerivedStar.lean'
       - '.github/workflows/nightfall-q2-attained-matching-cover-v436.yml'
   pull_request:
     paths:
       - 'research/nightfall/formalization/observability/ActualSourceAmplitudeRectangles.lean'
       - 'research/nightfall/formalization/observability/ActualSourceMatchingCover.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceQ2GenuineInterface.lean'
       - '.github/workflows/nightfall-q2-attained-matching-cover-v436.yml'
   workflow_dispatch:
 permissions:
@@ -70,6 +72,28 @@ jobs:
               exit 1
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-source-real-matching-cover.json
+      - name: Build same-source variance, influence and attained cover modules
+        run: |
+          set -euo pipefail
+          cd /tmp/mathlib4
+          for f in ActualSourceCentered ActualSourceOrthogonality ActualSourceVarianceEnergy ActualSourceInfluenceEnergy ActualSourceIntegratedEnergy ActualSourceMatchingCover; do
+            cp "$GITHUB_WORKSPACE/research/nightfall/formalization/observability/$f.lean" .
+            lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean"
+          done
+      - name: Strict same-source canonical energies and genuine 8B greedy cover
+        run: |
+          set -euo pipefail
+          N=Nightfall.Observability.ActualSourceQ2GenuineInterface
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualSourceQ2GenuineInterface.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.original_source_energy_and_attained_pair_cover \
+            --json-out lean-receipts/q2-source-energy-and-pair-cover.json || {
+              cat lean-receipts/q2-source-energy-and-pair-cover.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-source-energy-and-pair-cover.json
       - name: Source fingerprint, active toolchain
         if: always()
         run: |
