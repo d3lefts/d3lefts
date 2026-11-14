@@ -6,6 +6,9 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/observability/ActualSourceInfluenceEnergy.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceCanonicalCentering.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceCanonicalOrthogonality.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceCanonicalVarianceEnergy.lean'
       - '.github/workflows/nightfall-q2-source-influence-energy-v436.yml'
   workflow_dispatch:
 permissions:
@@ -22,10 +25,29 @@ jobs:
         run: |
           set -euo pipefail
           cd /tmp/mathlib4
-          for f in ActualProductMergeTower ActualProductHilbertJensen ActualProductSoftNoise ActualProductSourceMarginal ActualSourceANOVA ActualProductResampleBridge ActualProductPairSector ActualProductSoftStar ActualProductSoftStarEnergy ActualProductSoftStarParseval ActualProductSourcePairCentering ActualProductSourceDerivedStar ActualSourceCanonicalPair ActualSourceSingletonProjection ArbitraryLawFourthMoment; do
+          for f in ActualProductMergeTower ActualProductHilbertJensen ActualProductSoftNoise ActualProductSourceMarginal ActualSourceANOVA ActualProductResampleBridge ActualProductPairSector ActualProductSoftStar ActualProductSoftStarEnergy ActualProductSoftStarParseval ActualProductSourcePairCentering ActualProductSourceDerivedStar ActualSourceCanonicalPair ActualSourceSingletonProjection ArbitraryLawFourthMoment ActualSourceCanonicalCentering ActualSourceCanonicalOrthogonality; do
             cp "$GITHUB_WORKSPACE/research/nightfall/formalization/observability/$f.lean" .
             lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean"
           done
+      - name: Strict original-source degree-two canonical variance Parseval identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualSourceCanonicalVarianceEnergy
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualSourceCanonicalVarianceEnergy.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.weighted_orthogonal_sum_sq \
+            --decl $N.actual_source_variance_es_energy \
+            --decl $N.actual_degree_two_source_variance_energy \
+            --json-out lean-receipts/q2-actual-source-degree-two-variance-parseval.json || {
+              cat lean-receipts/q2-actual-source-degree-two-variance-parseval.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-actual-source-degree-two-variance-parseval.json
       - name: Strict source-section squared energy equals actual resampling influence
         shell: bash
         run: |
@@ -49,7 +71,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/observability/ActualSourceInfluenceEnergy.lean > lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/observability/ActualSource{CanonicalCentering,CanonicalOrthogonality,CanonicalVarianceEnergy,InfluenceEnergy}.lean > lean-receipts/SHA256SUMS.txt
           git rev-parse HEAD > lean-receipts/repo-commit.txt
           cat lean-toolchain > lean-receipts/lean-toolchain.txt
           git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt || true
