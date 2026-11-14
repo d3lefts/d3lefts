@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'research/nightfall/formalization/authority/AuthorityHorizon.lean'
+      - 'research/nightfall/formalization/authority/AuthorityHorizonReal.lean'
       - '.github/workflows/nightfall-authority-horizon-lean.yml'
   workflow_dispatch:
 
@@ -41,13 +42,29 @@ jobs:
             --json-out lean-receipts/authority-horizon.json
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/authority-horizon.json
+      - name: Strict real-cost Lean kernel replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/authority/AuthorityHorizonReal.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl Nightfall.AuthorityHorizonReal.bellman_eq_min \
+            --decl Nightfall.AuthorityHorizonReal.volatile_eq_closed \
+            --decl Nightfall.AuthorityHorizonReal.all_horizon_cost \
+            --decl Nightfall.AuthorityHorizonReal.stable_first_iff \
+            --decl Nightfall.AuthorityHorizonReal.stable_first_strict \
+            --json-out lean-receipts/authority-horizon-real.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/authority-horizon-real.json
       - name: Source provenance
         if: always()
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/authority/AuthorityHorizon.lean > lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/authority/AuthorityHorizon*.lean > lean-receipts/SHA256SUMS.txt
           cat lean-toolchain > lean-receipts/toolchain.txt
           git rev-parse HEAD > lean-receipts/repo-commit.txt
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
