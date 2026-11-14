@@ -90,9 +90,9 @@ theorem actual_owned_fourth_from_source_influence
   let j : ℕ → ι := neighborIndex i J
   have hne : ∀ k, k < J.card → i ≠ j k := by
     intro k hk heq
-    apply (original_owner_not_in_neighbors c i)
-    rw [heq]
-    exact neighborIndex_mem i J k hk
+    have hmem : j k ∈ J := neighborIndex_mem i J k hk
+    rw [← heq] at hmem
+    exact (original_owner_not_in_neighbors c i) hmem
   have hkernel : ∀ k, k < J.card → ∀ a b,
       |sourceDoubleCenteredPair p f i (j k) a b| ≤ c i := by
     intro k hk a b
