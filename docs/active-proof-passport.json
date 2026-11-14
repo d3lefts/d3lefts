@@ -2,10 +2,10 @@
   "schema": "nightfall-active-proof-passports-v1",
   "version": 13,
   "as_of": "2026-11-14",
-  "updated_by": "2026-11-14 v13 current-day supplement: #500 full-product actual sourceInfluence update (restricted single-law edit), #501 infinitePi cylinder identities only, #503 degree transfer for arbitrary finite degree, #506 finite all-degree Efron–Stein. Same twelve claim identities; no unconditional infinite-product or full SCIF owner terminal.",
+  "updated_by": "2026-11-14 v13 current-day supplement: #500 full-product actual sourceInfluence update (restricted single-law edit), #501 infinitePi cylinder identities only, #503 degree transfer for arbitrary finite degree, #506 finite all-degree Efron–Stein. Same twelve claim identities; no unconditional infinite-product or full SCIF owner terminal. Subsequent verified #498 closes the finite source Q2 joint-energy cap at C₂≈736.673197758287; 1064.958 remains an earlier certified weaker checkpoint.",
   "frozen_historical_registry_unchanged": true,
   "lifecycle": "active",
-  "scientific_status": "Twelve active claims, Q2 finite common-alphabet 1064.958 kernel theorem, current source-law influence update and finite-degree transport certified as scoped components, arbitrary-index cylinder identities certified but L2 density/contraction unfinished. Other active claim statuses and historical novelty gates unchanged.",
+  "scientific_status": "Finite common-alphabet Q2 source theorem now strictly Lean-certified at coefficient 736.673197758287 (#498), improving earlier certified 1064.958; current source SCIF and finite/infinite-cylinder supporting lemmas separately pinned. Infinite-product L², different alphabets, full SCOF owner terminal and historical priority remain open.",
   "source_checkpoint": {
     "repository": "d3lefts/d3lefts",
     "commit": "5bda769c2484ea2f6ea9a02c428928361c07666f",
@@ -23,17 +23,17 @@
       "id": "q2-influence",
       "title": "Bias-independent quadratic influence",
       "status": "lean-kernel-checked-finite-product-scope",
-      "claim": "For real |f(x)|≤B, pointwise Hoeffding/Efron–Stein degree ≤2, and independent finite coordinates with a COMMON finite alphabet (heterogeneous nonnegative normalized marginals, zero-mass atoms permitted), strict Lean now proves Var(f)^2≤C₂ B² max_i I_i(f), C₂=407+138√2+188√3+56√6≈1064.958449. The broader heterogeneous-type and measurable/infinite-space extension remains an analytic, not kernel-certified, claim.",
+      "claim": "For real |f(x)|≤B, pointwise Hoeffding/Efron–Stein degree ≤2 and finite independent coordinates with a COMMON finite alphabet (arbitrary nonnegative normalized marginal masses including zeros), strict pinned Lean now proves Var(f)^2≤C₂ B² max_i I_i(f), C₂=[257/20+(9/4)√2+5√3+√6]²≈736.673197758287. Earlier 1064.958 source certificate and 1228.356 manuscript remain historical; heterogeneous-type and infinite-product scopes remain uncertified.",
       "assumptions": [
         "finite coordinate type and common nonempty finite alphabet; original nonnegative normalized per-site marginals, including zeros",
         "pointwise |f(x)|≤B for every configuration, B≥0; genuine ESDegreeLE p f 2",
         "I_i(f)=E[(f−E_i f)^2] under the actual original product law; M bounds every I_i"
       ],
-      "mechanism": "Same-source canonical Hoeffding pair kernels, matching/greedy ownership and Hilbert moments, fourth-moment endpoint, source section budget and optimized coupled singleton-owner scalar closure. Related SCIF result separately proves source graph invariance under law change.",
-      "evidence": "Strict original finite Q2 terminal #479, run 43611982294 (8 named stages) was sharpened by fully unconditional source Q2 #494, run 43627249467, strict Lean 4.36.0-rc2 and only foundational axioms; the SCIF finite-table and source-graph declarations #496 passed run 43630623548 but are not the complete source-matched SCIF update theorem. Scopes/immutable blobs: docs/current-lean-proof-receipts-20261114.json. Additional strictly checked classical finite all-degree Efron–Stein source inequality: merged PR #506, run 43632637271 (not a stronger Q2 coefficient).",
+      "mechanism": "Canonical source Hoeffding pair matching/greedy ownership, source Hilbert moments and fourth-moment endpoint, joint singleton-plus-owned pair energy within actual same-coordinate influence, with an exact scalar SOS/energy dual yielding the 736.673 bound.",
+      "evidence": "Strict original finite Q2 terminal #479, run 43611982294 (8 named stages) was sharpened by fully unconditional source Q2 #494, run 43627249467, strict Lean 4.36.0-rc2 and only foundational axioms; the SCIF finite-table and source-graph declarations #496 passed run 43630623548 but are not the complete source-matched SCIF update theorem. Scopes/immutable blobs: docs/current-lean-proof-receipts-20261114.json. Additional strictly checked classical finite all-degree Efron–Stein source inequality: merged PR #506, run 43632637271 (not a stronger Q2 coefficient). Stronger unconditional source-only terminal now strictly kernel-certified via PR #498, run 43633180605, declaration Nightfall.Observability.ActualSourceQ2EnergyDualUnconditional.actual_source_q2_energy_dual_unconditional, standard permitted axioms only, immutable receipt digest aa709276c44891c2ba3d51de85dc4ec092d5b7aa01d8dcc79935a9cd6e403094.",
       "source": "research/nightfall/2026-11-active-passports/quadratic-rank-observability.md",
-      "source_detail": "Source-based scope note research/nightfall/Q2_SOURCE_LEAN_CERTIFICATION_20261114.md; current Lean receipt index docs/current-lean-proof-receipts-20261114.json; previous v9.2 PDF and internal review retained as historical manuscript evidence. Independent human and prior-art review open.",
-      "audit": "Verify the actual same-source theorem statement and declared axioms at PR #494, independently audit optimality, reduction to categorical decoupling/Grothendieck and recent 2026 completely bounded results; formalize heterogeneous coordinate alphabets and infinite-product L² bridge separately, and source-match full SCIF recertification.",
+      "source_detail": "Source-based scope note research/nightfall/Q2_SOURCE_LEAN_CERTIFICATION_20261114.md; current Lean receipt index docs/current-lean-proof-receipts-20261114.json; previous v9.2 PDF and internal review retained as historical manuscript evidence. Independent human and prior-art review open. 736.673 independent same-source joint-cap and scalar source: research/nightfall/2026-11-quadratic-law-free-audit/Q2_ENERGY_DUAL_736_BOUND_20261114.md and current Lean receipt v3.",
+      "audit": "Independent non-author audit of 736.673 source energy dual, exact assumptions and arithmetic; attempt classical Grothendieck/decoupling subsumption. Different alphabet types, all-index L2, globally generated owner recertification, and stronger analytic 625/620 candidates still require separate proof gates.",
       "limitations": [
         "Strict theorem covers finite products with common alphabet; no heterogeneous coordinate types or infinite-index L² Lean theorem",
         "Downstream Hilbert/adaptive observation promises do not become kernel-certified automatically",
@@ -288,11 +288,16 @@
   "current_named_lean_receipts": "docs/current-lean-proof-receipts-20261114.json",
   "current_named_certificate_scope": {
     "finite_q2": {
-      "status": "strict_kernal_checked_finite_common_alphabet",
-      "pr": 494,
-      "run": 43627249467,
-      "coefficient": "407+138sqrt(2)+188sqrt(3)+56sqrt(6)",
-      "value_approx": "1064.958449026294",
+      "status": "strict_kernel_checked_finite_common_alphabet",
+      "pr": 498,
+      "run": 43633180605,
+      "coefficient": "[257/20 + (9/4) sqrt(2) + 5 sqrt(3) + sqrt(6)]²",
+      "value_approx": "736.673197758287",
+      "previous_certified": {
+        "pr": 494,
+        "run": 43627249467,
+        "coefficient_approx": "1064.958449026294"
+      },
       "independent_human_review": false
     },
     "scif": {
