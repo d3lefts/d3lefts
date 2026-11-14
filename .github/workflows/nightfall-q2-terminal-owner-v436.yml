@@ -47,7 +47,7 @@ jobs:
                   raise RuntimeError(f"Lean import cycle at {module}")
               state[module] = 1
               source = modules[module].read_text()
-              for name in re.findall(r"(?m)^import\\s+([A-Za-z][A-Za-z0-9_'.]*)\\s*$", source):
+              for name in re.findall(r"(?m)^import\s+([A-Za-z][A-Za-z0-9_'.]*)\s*$", source):
                   visit(name)
               state[module] = 2
               ordered.append(module)
