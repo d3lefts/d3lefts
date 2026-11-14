@@ -36,3 +36,6 @@ jobs:
       - name: Noncommutative group path cancellation
         working-directory: research/nightfall/2026-11-recoverable-innovations
         run: python3 check_nonabelian.py
+      - name: Full nonadaptive physical Ising path Bayes optimum
+        working-directory: research/nightfall/2026-11-recoverable-innovations
+        run: python3 check_path_full.py
