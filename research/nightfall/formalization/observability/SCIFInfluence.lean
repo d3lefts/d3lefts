@@ -41,7 +41,7 @@ theorem pair_energy_recenter_exact
         m^2 * (∑ a : A, q a) := by
           rw [Finset.sum_add_distrib, Finset.sum_sub_distrib]
           simp_rw [Finset.mul_sum]
-          ring
+          all_goals ring
     _ = pairEnergyAt q H b - (firstMean q H b)^2 := by
           rw [hm, hq]
           dsimp [pairEnergyAt, m]
