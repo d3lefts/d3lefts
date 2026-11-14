@@ -169,7 +169,10 @@ theorem source_variance_eq_singleton_plus_pair_energy
       have h := original_pair_finite_moment_energy_eq_canonical
         p hp1 f (edgeFirst e) (edgeSecond e)
         (edgeFirst_ne_edgeSecond e)
-      rw [edge_pair_eq_endpoints] at h
+      change (∑ x : ι → α, originalMass p x *
+        (esComp p e.1 f x)^2) =
+          sourcePairEnergy p f (edgeFirst e) (edgeSecond e)
+      rw [edge_pair_eq_endpoints e]
       exact h.symm
 
 end Nightfall.Observability.ActualSourceQuadraticSectorSplit
