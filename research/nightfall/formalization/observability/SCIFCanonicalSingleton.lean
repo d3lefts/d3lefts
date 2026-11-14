@@ -9,8 +9,9 @@ the true global source mean. This is pointwise exact, including
 zero-mass source symbols. It is not a synthetic pair-table identity,
 and no degree bound is assumed.
 
-The bound on cost of a sparse implementation and the other singleton
-coordinates are distinct obligations.
+The full beta identity also derives the updated mean from the original
+source singleton and the changed marginal. The bound on cost of a sparse
+implementation and the other singleton coordinates are distinct obligations.
 -/
 namespace Nightfall.SCIFCanonicalSingleton
 open Finset
