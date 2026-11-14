@@ -3,6 +3,21 @@
 **Version:** 1.0 · **Owner/research direction:** Devin J. Wright · **Construction:** AI-assisted.
 **Scientific status:** strict named-declaration kernel receipts for explicitly scoped statements; mathematical novelty and non-author review unresolved.
 
+## 14 November later same-day extension — four newly merged scoped source proofs
+
+The core v1.0 table below was accurate at its initial merge checkpoint. The following four independently pinned PR-head receipts now extend it; the [current named Lean index](../../../docs/current-lean-proof-receipts-20261114.json) is version 2 and includes exact Git blob hashes for these five new sources.
+
+| New merged PR | Pinned strict result | Limitation |
+| --- | --- | --- |
+| [#500](https://github.com/d3lefts/d3lefts/pull/500), [run 43632243900](https://github.com/d3lefts/d3lefts/actions/runs/43632243900) | Six named proofs for exact actual `sourceInfluence p f` update under one-coordinate law edit, regardless of finite Efron–Stein degree. | Does not compose full old/new canonical pair recentering with source-generated SCOF cover; no optimal recertification lower bound. |
+| [#503](https://github.com/d3lefts/d3lefts/pull/503), [run 43632931330](https://github.com/d3lefts/d3lefts/actions/runs/43632931330) | Finite pointwise Efron–Stein degree transport for any degree, plus new-law canonical quadratic sector influence/variance identities. | Does not identify every updated component as an explicit old-component recentering or prove global ownership repair. |
+| [#501](https://github.com/d3lefts/d3lefts/pull/501), [run 43631863039](https://github.com/d3lefts/d3lefts/actions/runs/43631863039) | `Measure.infinitePi` finite marginals, cylinder integrals and centered square identities on arbitrary index sets, with relevant measurability. | No unconditional cylinder density in all `L²`, actual projection influence contraction or all-index Efron–Stein theorem. |
+| [#506](https://github.com/d3lefts/d3lefts/pull/506), [run 43632637271](https://github.com/d3lefts/d3lefts/actions/runs/43632637271) | Finite original-source Efron–Stein `Var(f)≤∑ Iᵢ(f)` for unrestricted interaction degree, finite common alphabets, all normalized site laws. | This is a classical known inequality, not a novelty claim, and does not prove an infinite-product extension. |
+
+This update changes a former SCIF gap: **the exact actual-source influence law-change identity is separately kernel checked**; what remains open is composing all source-derived component/owner transfers in one terminal recertification theorem. It also advances the infinite-index cylinder transport without closing L² density.
+
+---
+
 ## Core evidence contract
 
 The frozen historical 67-source `docs/lean-certificate-provenance.json` is unchanged. Source bytes newly merged to `main` are tracked by Git SHA-1 in `docs/lean-pending-source-custody.json`; the **separate** `docs/current-lean-proof-receipts-20261114.json` records current PR-head strict declaration receipts, dependencies, toolchain and known gaps. These are **not** an after-merge common-workspace compilation receipt. An original publication claim requires a dated prior-art review and independent human authorization.
