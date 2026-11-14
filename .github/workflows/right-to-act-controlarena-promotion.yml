@@ -26,6 +26,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: Fail-fast OS authority deadline regression (stdlib only)
+        run: |
+          python - <<'PY'
+          from test_service_deadline import (
+              test_silent_client_cannot_starve_trusted_request,
+              test_slow_drip_cannot_starve_trusted_request)
+          test_silent_client_cannot_starve_trusted_request()
+          test_slow_drip_cannot_starve_trusted_request()
+          print('PASS: two absolute-deadline starvation regressions')
+          PY
       - name: Install exact CDK and ControlArena source dependencies
         run: |
           python -m pip install --upgrade pip

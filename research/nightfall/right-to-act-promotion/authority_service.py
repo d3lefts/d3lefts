@@ -6,9 +6,10 @@ used nonces, and locally committed deployment template. Atomic local rename
 is the ONLY protected effect in this experiment; no AWS deployment.
 """
 from __future__ import annotations
-import argparse, hashlib, hmac, json, os, pathlib, socket, struct, tempfile
+import argparse, hashlib, hmac, json, os, pathlib, socket, struct, tempfile, time
 from independent_effect_verifier import check_promotion, EffectViolation
 MAX_REQUEST=900_000
+CONNECTION_DEADLINE_SECONDS=2.0
 
 def canon(obj):
     return (json.dumps(obj,sort_keys=True,separators=(',',':'),ensure_ascii=True)+'\n').encode()
@@ -124,9 +125,16 @@ def serve(trust,sockpath,authorized_uid):
                 try:
                     pid,uid,gid=struct.unpack('3i',conn.getsockopt(
                         socket.SOL_SOCKET,socket.SO_PEERCRED,struct.calcsize('3i')))
+                    # Absolute deadline: neither a silent client nor a slow
+                    # dripper can own this single-threaded service indefinitely.
+                    deadline=time.monotonic()+CONNECTION_DEADLINE_SECONDS
                     buf=b''
                     while len(buf)<MAX_REQUEST:
-                        data=conn.recv(min(65536,MAX_REQUEST-len(buf)))
+                        remaining=deadline-time.monotonic()
+                        if remaining<=0:raise TimeoutError('request deadline expired')
+                        conn.settimeout(min(remaining,0.5))
+                        try:data=conn.recv(min(65536,MAX_REQUEST-len(buf)))
+                        except socket.timeout:continue
                         if not data:break
                         buf+=data
                         if b'\n' in buf:break
