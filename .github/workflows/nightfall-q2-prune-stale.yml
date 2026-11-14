@@ -1,0 +1,100 @@
+name: NIGHTFALL one-shot cancel superseded Q2 runs
+on:
+  push:
+    branches:
+      - nightfall-ci-stale-q2-prune-20261114
+    paths:
+      - '.github/workflows/nightfall-q2-prune-stale.yml'
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: nightfall-q2-prune-superseded
+  cancel-in-progress: false
+
+jobs:
+  prune-superseded:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Cancel only stale workflow runs from the two active Q2 proof branches
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const {owner, repo} = context.repo;
+            const scopedBranches = [
+              'nightfall-q2-consolidated-terminal-20261114',
+              'nightfall-q2-terminal-v436-20261114'
+            ];
+            // ALWAYS re-read branch heads immediately before cancellation.
+            // Current-head runs, default-branch runs, other PRs, and this
+            // maintenance workflow are never eligible.
+            const heads = new Map();
+            for (const branch of scopedBranches) {
+              const {data} = await github.rest.repos.getBranch({owner, repo, branch});
+              heads.set(branch, data.commit.sha);
+            }
+            core.info('Preserved current Q2 heads: ' +
+              JSON.stringify(Object.fromEntries(heads)));
+
+            const byId = new Map();
+            for (const status of ['queued', 'in_progress']) {
+              const runs = await github.paginate(
+                github.rest.actions.listWorkflowRunsForRepo,
+                {owner, repo, status, per_page: 100}
+              );
+              for (const run of runs) {
+                const current = heads.get(run.head_branch);
+                if (!current || run.head_sha === current) continue;
+                if (!['push', 'pull_request'].includes(run.event)) continue;
+                if (!['queued', 'in_progress', 'waiting', 'pending'].includes(run.status)) continue;
+                if (run.id === context.runId) continue;
+                byId.set(run.id, {
+                  id: run.id, name: run.name, branch: run.head_branch,
+                  sha: run.head_sha, status: run.status
+                });
+              }
+            }
+            const stale = [...byId.values()];
+            core.info('Identified ' + stale.length + ' superseded Q2-branch workflow runs.');
+            let cancelled = 0, alreadyFinished = 0, failed = 0;
+            for (const run of stale) {
+              try {
+                await github.rest.actions.cancelWorkflowRun({
+                  owner, repo, run_id: run.id
+                });
+                cancelled++;
+                core.info('CANCELLED ' + run.id + ' ' + run.branch +
+                  ' ' + run.sha.slice(0,12) + ' ' + run.name);
+              } catch (error) {
+                const code = error.status || 'unknown';
+                if (code === 409 || code === 422) {
+                  alreadyFinished++;
+                  core.info('Already completed or no longer cancellable ' + run.id +
+                    ' HTTP ' + code);
+                } else {
+                  failed++;
+                  core.warning('FAILED ' + run.id + ' HTTP ' + code +
+                    ' ' + error.message);
+                  if (code === 403 || code === 401) throw error;
+                }
+              }
+            }
+            core.info(JSON.stringify({
+              examined: stale.length, cancellationRequestsAccepted: cancelled,
+              alreadyFinished, failed, preservedHeads: Object.fromEntries(heads)
+            }));
+            await core.summary.addHeading('NIGHTFALL stale Q2 CI pruning')
+              .addRaw('Scoped to two Q2 proof branches; current heads and all other branches protected.\n\n')
+              .addTable([
+                [{data:'Metric',header:true},{data:'Count',header:true}],
+                ['Obsolete runs examined',String(stale.length)],
+                ['Cancellation requests accepted',String(cancelled)],
+                ['Already finished',String(alreadyFinished)],
+                ['Failed cancellations',String(failed)]
+              ])
+              .write();
+            if (failed !== 0) core.setFailed('Some obsolete runs could not be cancelled');
