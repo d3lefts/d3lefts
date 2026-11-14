@@ -44,11 +44,6 @@ STAGES = (
      ("original_owned_first_norm_le_sqrt_source_influence",)),
     ("08-exact-Q2-terminal", "ActualSourceQ2Terminal",
      ("actual_source_q2_terminal",)),
-    # Conditional numerical coefficient only: this declaration still
-    # REQUIRES the sharp source additive budget as an explicit premise.
-    # Success here NEVER certifies the stronger source-only theorem.
-    ("09-strong-coefficient-conditional", "ActualSourceQ2StrongConditional",
-     ("actual_source_q2_strong_given_additive_budget",)),
 )
 
 
