@@ -96,6 +96,18 @@ jobs:
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             "$OUT/03-shifted-bernstein-c4.json"
           echo "PASS: scalar c/4 exact polynomial Lean certificate; no Hilbert Q2 terminal"
+          cp "$SRC/ShiftedOwnerQuarterMoments.lean" /tmp/mathlib4/ShiftedOwnerQuarterMoments.lean
+          (cd /tmp/mathlib4 &&
+            lake env lean -o .lake/build/lib/lean/ShiftedOwnerQuarterMoments.olean ShiftedOwnerQuarterMoments.lean)
+          N=Nightfall.Observability.ShiftedOwnerQuarterMoments
+          python3 scripts/lean_bridge.py "$SRC/ShiftedOwnerQuarterMoments.lean" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl "$N.shifted_c4_from_moments" \
+            --json-out "$OUT/04-shifted-quarter-conditional.json"
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            "$OUT/04-shifted-quarter-conditional.json"
+          echo "PASS: c/4 shifted interpolation from explicit moment premises"
 
 
       - name: Compile every source module once, then certify declarations in order
