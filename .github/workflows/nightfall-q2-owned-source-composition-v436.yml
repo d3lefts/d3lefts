@@ -6,12 +6,14 @@ on:
       - 'research/nightfall/formalization/observability/ActualSourceQ2CompositionGate.lean'
       - 'research/nightfall/formalization/observability/ActualSourcePairEnergyBridge.lean'
       - 'research/nightfall/formalization/observability/ActualSourceOwnedGraph.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceOwnerOrientation.lean'
       - '.github/workflows/nightfall-q2-owned-source-composition-v436.yml'
   pull_request:
     paths:
       - 'research/nightfall/formalization/observability/ActualSourceQ2CompositionGate.lean'
       - 'research/nightfall/formalization/observability/ActualSourcePairEnergyBridge.lean'
       - 'research/nightfall/formalization/observability/ActualSourceOwnedGraph.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceOwnerOrientation.lean'
       - '.github/workflows/nightfall-q2-owned-source-composition-v436.yml'
   workflow_dispatch:
 permissions:
@@ -102,6 +104,24 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/q2-source-owned-graph-moments.json
+      - name: Strict source owner kernel and energy orientation
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualSourceOwnerOrientation
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualSourceOwnerOrientation.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.owned_original_pair_energy_orientation \
+            --decl $N.owned_original_pair_amplitude_orientation \
+            --json-out lean-receipts/q2-owner-orientation.json || {
+              cat lean-receipts/q2-owner-orientation.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-owner-orientation.json
       - name: Strict source-only structural and genuine owned-neighbor moment receipt
         shell: bash
         run: |
@@ -123,7 +143,7 @@ jobs:
         if: always()
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/observability/ActualSourceQ2CompositionGate.lean research/nightfall/formalization/observability/ActualSourceOwnedGraph.lean research/nightfall/formalization/observability/ActualSourcePairEnergyBridge.lean > lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/observability/ActualSourceQ2CompositionGate.lean research/nightfall/formalization/observability/ActualSourceOwnedGraph.lean research/nightfall/formalization/observability/ActualSourcePairEnergyBridge.lean research/nightfall/formalization/observability/ActualSourceOwnerOrientation.lean > lean-receipts/SHA256SUMS.txt
           git rev-parse HEAD > lean-receipts/repo-commit.txt
           cat lean-toolchain > lean-receipts/lean-toolchain.txt
       - uses: actions/upload-artifact@v4
