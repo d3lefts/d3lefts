@@ -37,7 +37,7 @@ theorem single_increment_shifted_c5
     calc
       t^2 ≤ (a+c)*u := hsecond
       _ ≤ (u+c)*u :=
-        mul_le_mul_of_nonneg_right (add_le_add_right hjensen c) hu
+        mul_le_mul_of_nonneg_right (by linarith [hjensen] : a+c ≤ u+c) hu
   have hidentity :
       (r*u+c/5)^2-(u+c)*u =
        2*(u-c/12)^2+(47/1800)*c^2+
