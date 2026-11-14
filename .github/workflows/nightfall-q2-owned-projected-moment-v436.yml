@@ -78,6 +78,7 @@ jobs:
             --decl $N.original_owned_independent_first_norm_eq_projected \
             --decl $N.actual_owned_moment_and_projected_jensen \
             --decl $N.actual_owned_first_norm_sum_le_sixteen \
+            --decl $N.source_generated_owned_moment_projection_jensen \
             --json-out lean-receipts/q2-owned-moment-projected-jensen.json || {
               cat lean-receipts/q2-owned-moment-projected-jensen.json
               exit 1
