@@ -1,5 +1,5 @@
 import ActualSourceQ2589Terminal
-import ActualSourceIntegratedFive
+import ActualSourceIntegratedSections
 import Q2ShiftedPureC5
 import Q2ShiftedConditionalTargets
 
@@ -17,7 +17,9 @@ new c/5 interpolation from Q2ShiftedPureC5.
 No new fourth-moment assumption, synthetic product law or opaque axiom
 is passed to the theorem. The optional sharp section budget is an
 additional explicit premise of the conditional K99 result, but the
-K105 result uses the source-derived, merged U=5 budget.
+K239 result uses the already imported source-derived U=8 budget.
+The U=5 (K105) improvement is conditionally stated until this stacked
+branch also contains PR #525's separately certified source 5B module.
 -/
 
 namespace Nightfall.Observability.ActualSourcePureQ2Fifth
@@ -31,7 +33,6 @@ open Nightfall.Observability.ActualSourceOwnedGraph
 open Nightfall.Observability.ActualSourceFinitePairMoment
 open Nightfall.Observability.ActualSourceMeanSectionJensen
 open Nightfall.Observability.ActualSourceIntegratedSections
-open Nightfall.Observability.ActualSourceIntegratedFive
 open Nightfall.Observability.ActualSourceQ2589Terminal
 open Nightfall.Observability.ActualSourceSingletonEnergyBridge
 open Nightfall.Observability.QuadraticHilbertMany
@@ -149,9 +150,9 @@ theorem actual_source_pure_q2_given_section_budget
     hsection' hcover hvariance
   convert hgoal using 1 <;> ring
 
-/-- Unconditional *pure Q2 subclass* source result with the merged
-    5B section theorem. This is NOT an unrestricted Q2 inequality. -/
-theorem actual_source_pure_q2_105_unconditional
+/-- Unconditional *pure Q2 subclass* source result with the existing
+    8B source section budget: coefficient 238.9005. -/
+theorem actual_source_pure_q2_239_unconditional
     (p : ι → α → ℝ)
     (hp : ∀ k a, 0 ≤ p k a)
     (hp1 : ∀ k, (∑ a : α, p k a) = 1)
@@ -163,12 +164,33 @@ theorem actual_source_pure_q2_105_unconditional
     ∀ M : ℝ, 0 ≤ M →
       (∀ i : ι, sourceInfluence p f i ≤ M) →
       (sourceVariance p f)^2 ≤
-        (5*Real.sqrt 3+8/5)^2*B^2*M := by
+        (8*Real.sqrt 3+8/5)^2*B^2*M := by
   have hsection :=
-    actual_source_integrated_five_budget p hp hp1 f hdegree B hB hf
+    actual_source_integrated_eight_budget p hp hp1 f hdegree B hB hf
   exact actual_source_pure_q2_given_section_budget
-    p hp hp1 f hdegree hzero B hB hf 5 (by norm_num)
+    p hp hp1 f hdegree hzero B hB hf 8 (by norm_num)
     (by simpa only [mul_comm] using hsection)
+
+/-- Pure Q2 K105 conditional on a 5B section budget. The 5B
+    section theorem is *independently* Lean-certified in merged
+    PR #525, but not imported on this stacked base ref. -/
+theorem actual_source_pure_q2_105_given_five_section
+    (p : ι → α → ℝ)
+    (hp : ∀ k a, 0 ≤ p k a)
+    (hp1 : ∀ k, (∑ a : α, p k a) = 1)
+    (f : (ι → α) → ℝ)
+    (hdegree : ESDegreeLE p f 2)
+    (hzero : ∀ i : ι, originalSingletonNorm p f i = 0)
+    (B : ℝ) (hB : 0 ≤ B)
+    (hf : ∀ x, |f x| ≤ B)
+    (hsection : (∑ i : ι, sourceMeanSectionNorm p f i) ≤
+      5*B) :
+    ∀ M : ℝ, 0 ≤ M →
+      (∀ i : ι, sourceInfluence p f i ≤ M) →
+      (sourceVariance p f)^2 ≤
+        (5*Real.sqrt 3+8/5)^2*B^2*M := by
+  exact actual_source_pure_q2_given_section_budget
+    p hp hp1 f hdegree hzero B hB hf 5 (by norm_num) hsection
 
 /-- Pure Q2 99.263 with explicit sharp U bound; the sharp section
     theorem has NOT yet been source-certified on the current base. -/
