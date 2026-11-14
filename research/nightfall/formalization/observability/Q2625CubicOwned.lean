@@ -19,6 +19,7 @@ open Nightfall.Observability.QuadraticActualMomentEndpoint
 open Nightfall.Observability.ActualSourceANOVA
 open Nightfall.Observability.ActualProductSourcePairCentering
 open Nightfall.Observability.ActualSourceFinitePairMoment
+open Nightfall.Observability.ActualSourceOwnerOrientation
 open Nightfall.Observability.ActualSourceOwnedGraph
 open Nightfall.Observability.ActualSourceOwnedFourthClosure
 open Nightfall.Observability.ActualESGreedyOwnership
