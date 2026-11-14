@@ -29,7 +29,7 @@ jobs:
       - name: Install exact CDK and ControlArena source dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install 'control-arena==20.1.1' 'aws-cdk-lib==2.260.0' 'jsii==1.137.0' 'constructs==10.4.2' 'pytest==8.4.2'
+          python -m pip install 'control-arena==20.1.1' 'aws-cdk-lib==2.260.0' 'jsii==1.137.0' 'constructs==10.5.0' 'pytest==8.4.2'
           python -m pip freeze > installed-versions.txt
           node --version
       - name: Independently validate resource-effect verifier negative controls
