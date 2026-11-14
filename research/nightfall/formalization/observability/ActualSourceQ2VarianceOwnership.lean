@@ -27,6 +27,7 @@ open Nightfall.Observability.ActualSourceOwnedGraph
 open Nightfall.Observability.ActualSourceOwnedMomentEnergy
 open Nightfall.Observability.ActualSourceFinitePairMoment
 open Nightfall.Observability.ActualESGreedyOwnership
+open Nightfall.Observability.QuadraticHilbertMany
 open Nightfall.Observability.QuadraticHilbertMoments
 
 variable {ι α : Type} [Fintype ι] [DecidableEq ι]
