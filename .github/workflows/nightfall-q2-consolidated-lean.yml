@@ -269,6 +269,26 @@ jobs:
           python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT/04-source-unconditional.json"
           echo "PASS: source-only unconditional Q2 736.673 strict Lean declaration and axioms"
 
+      - name: Strict conditional Q2 353.292993 scalar and source terminal (sharp section is premise)
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/observability
+          OUT=lean-receipts/q2-consolidated/source-q2-353-conditional
+          mkdir -p "$OUT"
+          for name in Q2625Golden Q2625GoldenTrade Q2625ScalarEnvelope ActualSourceQ2625Cubic Q2589ScalarSite ActualSourceQ2353Terminal; do
+            cp "$SRC/$name.lean" "/tmp/mathlib4/$name.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$name.olean" "$name.lean")
+          done
+          N=Nightfall.Observability.ActualSourceQ2353Terminal
+          python3 scripts/lean_bridge.py "$SRC/ActualSourceQ2353Terminal.lean" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.actual_source_q2_353_given_additive_and_sharp_sections \
+            --decl $N.actual_source_q2_353_given_sharp_section_budget \
+            --json-out "$OUT/source-q2-353-conditional.json"
+          python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT/source-q2-353-conditional.json"
+          echo "PASS: conditional original-source Q2 353.292993; sharp-section premise remains"
+
       - name: Strict source-only Q2 364.552683 using 5B and golden cubic
         run: |
           set -euo pipefail
@@ -352,6 +372,7 @@ jobs:
             research/nightfall/formalization/observability/ActualSourceQ2EnergyDualTerminalFive.lean \
             research/nightfall/formalization/observability/ActualSourceQ2EnergyDualUnconditionalFive.lean \
             research/nightfall/formalization/observability/ActualSourceQ2364Terminal.lean \
+            research/nightfall/formalization/observability/ActualSourceQ2353Terminal.lean \
             > lean-receipts/q2-consolidated/SHA256SUMS.txt
           if [ -d /tmp/mathlib4/.git ]; then
             git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/q2-consolidated/mathlib-commit.txt
