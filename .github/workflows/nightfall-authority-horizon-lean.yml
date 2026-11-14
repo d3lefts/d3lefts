@@ -1,0 +1,59 @@
+name: NIGHTFALL authority all-horizon Lean certificate
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/authority/AuthorityHorizon.lean'
+      - '.github/workflows/nightfall-authority-horizon-lean.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: nightfall-authority-horizon-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  certify-closed-bellman:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Strict Lean kernel replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/authority/AuthorityHorizon.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl Nightfall.AuthorityHorizon.bellman_eq_min \
+            --decl Nightfall.AuthorityHorizon.volatile_eq_closed \
+            --decl Nightfall.AuthorityHorizon.all_horizon_cost \
+            --decl Nightfall.AuthorityHorizon.stable_first_iff \
+            --decl Nightfall.AuthorityHorizon.stable_first_strict \
+            --json-out lean-receipts/authority-horizon.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/authority-horizon.json
+      - name: Source provenance
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/authority/AuthorityHorizon.lean > lean-receipts/SHA256SUMS.txt
+          cat lean-toolchain > lean-receipts/toolchain.txt
+          git rev-parse HEAD > lean-receipts/repo-commit.txt
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: nightfall-authority-horizon-lean-receipts
+          path: lean-receipts/
+          if-no-files-found: warn
+          retention-days: 90
