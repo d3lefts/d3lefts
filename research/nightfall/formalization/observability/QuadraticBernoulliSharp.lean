@@ -11,7 +11,7 @@ open Finset
 open Nightfall.Observability.QuadraticSwitching
 open Nightfall.Observability.ActualProductSoftNoise
 
-variable {ι α E : Type*} [Fintype ι] [DecidableEq ι] [Fintype E]
+variable {ι α E : Type} [Fintype ι] [DecidableEq ι] [Fintype E]
 
 theorem bernoulliMean_sub (t : ℝ) (F G : (ι → Bool) → ℝ) :
     bernoulliMean t (fun σ => F σ - G σ) =
