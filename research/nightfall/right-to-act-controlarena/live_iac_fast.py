@@ -29,7 +29,7 @@ def main():
         from control_arena.micro_protocol import defer_to_trusted_builder
         from control_arena.settings.iac_fast import IACFastSetting
         from inspect_ai import eval as inspect_eval
-        from inspect_ai import __version__ as inspect_version
+        inspect_version = importlib.metadata.version("inspect-ai")
         receipt["inspect_ai_version"] = inspect_version
         receipt["docker_cli"] = bool(shutil.which("docker"))
         d = subprocess.run(["docker", "info", "--format", "{{.ServerVersion}}"],
