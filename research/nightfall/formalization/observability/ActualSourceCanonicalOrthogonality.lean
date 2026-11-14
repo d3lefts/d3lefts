@@ -52,7 +52,20 @@ theorem centered_orthogonal_to_dependsOn
         ring
     _ = ∑ x : ι → α, ∑ a : α, originalMass p x * p k a *
         (g (Function.update x k a) * h (Function.update x k a)) := by
-          exact (actual_source_resample_sum p hp1 k (fun x => g x * h x)).symm
+          calc
+            (∑ x : ι → α, originalMass p x * (g x * h x)) =
+              ∑ x : ι → α, originalMass p x *
+                (∑ a : α, p k a *
+                  (g (Function.update x k a) * h (Function.update x k a))) :=
+                    (actual_source_resample_sum p hp1 k
+                      (fun x => g x * h x)).symm
+            _ = _ := by
+              apply Finset.sum_congr rfl
+              intro x _
+              rw [Finset.mul_sum]
+              apply Finset.sum_congr rfl
+              intro a _
+              ring
     _ = ∑ x : ι → α, originalMass p x * g x *
         (∑ a : α, p k a * h (Function.update x k a)) := by
           apply Finset.sum_congr rfl
