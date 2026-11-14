@@ -23,6 +23,7 @@ open Finset
 open Nightfall.Observability.ActualSourceANOVA
 open Nightfall.Observability.ActualProductMergeTower
 open Nightfall.Observability.ActualProductSourcePairCentering
+open Nightfall.Observability.ActualProductSourceDerivedStar
 open Nightfall.Observability.ActualSourceInfluenceEnergy
 open Nightfall.Observability.ActualSourceConditionalSection
 open Nightfall.Observability.ActualSourceMeanSectionJensen
