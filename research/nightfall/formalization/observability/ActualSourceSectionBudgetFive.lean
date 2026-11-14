@@ -27,7 +27,7 @@ private theorem singleSwitched_eq_update
   · simp [singleSwitched, hj]
 
 /-- Bounded original finite quadratic function has total
-centered source-coordinate L² section norm at most 8B at each
+centered source-coordinate L² section norm at most 5B at each
 original input. This is directly derived from its real quadratic
 representation and original law: no section-budget oracle. -/
 theorem actual_quadratic_source_section_budget_five
@@ -45,7 +45,7 @@ theorem actual_quadratic_source_section_budget_five
       Real.sqrt (∑ a : α, p i a *
         (f (Function.update x i a) -
           (∑ b : α, p i b * f (Function.update x i b))) ^ 2)) ≤
-      8 * B := by
+      5 * B := by
   classical
   have hb : ∀ w : ι → α,
       |quadratic u v c h k w| ≤ B := by
