@@ -1,0 +1,50 @@
+name: NIGHTFALL Q2 99 exact conditional and no-go certificate
+on:
+  push:
+    branches: [nightfall-q2-99-conditional-audit-20261114]
+    paths:
+      - 'research/nightfall/formalization/q2_99/**'
+      - '.github/workflows/nightfall-q2-99-conditional-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nightfall-q2-99-conditional-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  q299-strict:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Strict pinned Lean compilation and named axiom audit
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/q2_99/Q299ConditionalAndNoGo.lean
+          mkdir -p /tmp/mathlib4/.lake/build/lib/lean lean-receipts/q299
+          cp "$SRC" /tmp/mathlib4/Q299ConditionalAndNoGo.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Q299ConditionalAndNoGo.olean Q299ConditionalAndNoGo.lean)
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Q299.conditional_shifted_c5_budget_99 \
+            --decl Nightfall.Q299.c5_not_implied_by_old_moment_envelope \
+            --decl Nightfall.Q299.old_c5_polynomial_claim_false \
+            --json-out lean-receipts/q299/conditional.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q299/conditional.json
+      - name: Immutable source/commit manifest
+        if: always()
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q299
+          sha256sum research/nightfall/formalization/q2_99/Q299ConditionalAndNoGo.lean             > lean-receipts/q299/SHA256SUMS
+          git rev-parse HEAD > lean-receipts/q299/commit.txt
+          cat lean-toolchain > lean-receipts/q299/lean-toolchain.txt
+      - name: Archive conditional and negative-control evidence
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: q299-conditional-source-lean-receipts
+          path: lean-receipts/q299/
+          retention-days: 45
