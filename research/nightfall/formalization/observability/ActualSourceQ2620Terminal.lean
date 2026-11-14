@@ -3,6 +3,7 @@ import ActualSourceQ2CoupledTerminalGate
 import ActualSourceQ2SharpAdditiveFinal
 import ActualSourceQ2EnergyDualSource
 import Q2620ScalarSite
+import Q2625ScalarEnvelope
 
 /-!
 # Source-only Q2 endpoint with sharp capped cubic fourth-moment closure
