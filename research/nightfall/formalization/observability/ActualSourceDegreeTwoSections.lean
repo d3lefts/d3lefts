@@ -22,7 +22,7 @@ open Nightfall.Observability.ActualSourceANOVA
 open Nightfall.Observability.ActualSourceSectionBudgetEight
 open Nightfall.Observability.QuadraticSwitching
 
-variable {ι α : Type*} [Fintype ι] [DecidableEq ι] [Nontrivial ι]
+variable {ι α : Type} [Fintype ι] [DecidableEq ι] [Nontrivial ι]
   [Fintype α] [DecidableEq α] [Nonempty α]
 
 /-- Every support of size ≤2 can be placed inside a two-element subset
