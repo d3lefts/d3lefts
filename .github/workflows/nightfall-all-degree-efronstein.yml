@@ -1,0 +1,69 @@
+name: NIGHTFALL finite source Efron–Stein all degrees pinned Lean
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/observability/ActualSourceEfronStein.lean'
+      - '.github/workflows/nightfall-all-degree-efronstein.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nightfall-es-all-degrees-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  efron-stein-original-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    steps:
+      - name: Checkout exact PR merge revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Setup pinned Lean
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile original-source transitive imports once
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import subprocess, shutil
+          from scripts.nightfall_q2_certify import local_sources, closure
+          files=local_sources()
+          for module in closure('ActualSourceEfronStein',files):
+              shutil.copyfile(files[module],Path('/tmp/mathlib4')/(module+'.lean'))
+              subprocess.run(['lake','env','lean','-o',
+                  '.lake/build/lib/lean/'+module+'.olean',module+'.lean'],
+                  cwd='/tmp/mathlib4',check=True)
+          PY
+      - name: Audit exact original-source finite all-degree theorem
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/efronstein
+          SRC=research/nightfall/formalization/observability/ActualSourceEfronStein.lean
+          N=Nightfall.Observability.ActualSourceEfronStein
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.sector_energy_nonneg \
+            --decl $N.sector_below_coordinate_incidence \
+            --decl $N.original_source_all_degree_efron_stein \
+            --json-out lean-receipts/efronstein/finite-original-source.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/efronstein/finite-original-source.json
+      - name: Preserve exact certificate, SHA, compiler source
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/efronstein
+          git rev-parse HEAD > lean-receipts/efronstein/HEAD
+          sha256sum research/nightfall/formalization/observability/ActualSourceEfronStein.lean > lean-receipts/efronstein/SHA256SUMS
+      - name: Upload receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nightfall-efronstein-all-degrees-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/efronstein
