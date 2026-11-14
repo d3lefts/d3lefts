@@ -17,7 +17,7 @@ theorem sitewise_budget_to_variance_squared_flexible
     (B T M V alpha beta gamma U : ℝ)
     (hB : 0 ≤ B) (hT : 0 ≤ T) (hV : 0 ≤ V)
     (halpha : 0 ≤ alpha) (hbeta : 0 ≤ beta) (hgamma : 0 ≤ gamma)
-    (hU : 0 ≤ U)
+    (hU0 : 0 ≤ U)
     (hsite : ∀ i, (a i)^2 + s i ≤
       T * (alpha * u i + beta * a i + gamma * c i))
     (hsection : (∑ i : Index, u i) ≤ U * B)
@@ -44,7 +44,7 @@ theorem sitewise_budget_to_variance_squared_flexible
           beta * (∑ i : Index, a i) +
           gamma * (∑ i : Index, c i)) := by
         simp only [mul_add, Finset.sum_add_distrib, ← Finset.mul_sum]
-  have hU := mul_le_mul_of_nonneg_left hsection
+  have hUbudget := mul_le_mul_of_nonneg_left hsection
     (mul_nonneg hT halpha)
   have hA := mul_le_mul_of_nonneg_left hadditive
     (mul_nonneg hT hbeta)
@@ -52,7 +52,7 @@ theorem sitewise_budget_to_variance_squared_flexible
     (mul_nonneg hT hgamma)
   have hVbound : V ≤ K * B * T := by
     dsimp [K]
-    nlinarith [hsiteSum, hU, hA, hC]
+    nlinarith [hsiteSum, hUbudget, hA, hC]
   have hK : 0 ≤ K := by
     dsimp [K]
     positivity
@@ -69,4 +69,4 @@ theorem sitewise_budget_to_variance_squared_flexible
         dsimp [K]
         ring
 
-end Nightfall.Q2625ScalarEnvelope
+end Nightfall.Q2FlexibleSectionScalar
