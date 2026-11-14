@@ -19,6 +19,9 @@ open Nightfall.Observability.ActualProductMergeTower
 open Nightfall.Observability.ActualSourceANOVA
 open Nightfall.Observability.ActualSourceInfluenceEnergy
 open Nightfall.Observability.ActualSourceSingletonEnergyBridge
+open Nightfall.Observability.ActualSourceMeanSectionJensen
+open Nightfall.Observability.ActualSourceFinitePairMoment
+open Nightfall.Observability.QuadraticHilbertMany
 open Nightfall.Observability.ActualSourceOwnedGraph
 open Nightfall.Observability.ActualSourceOwnedInfluence
 open Nightfall.Observability.ActualSourceOwnedMomentEnergy
