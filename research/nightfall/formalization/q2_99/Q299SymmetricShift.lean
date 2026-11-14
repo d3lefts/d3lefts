@@ -75,7 +75,7 @@ theorem shifted_c5_from_symmetric_type_moments
       calc
         (5*Real.sqrt 3*u)^2 =
           25*(Real.sqrt 3)^2*u^2 := by ring
-        _ = 75*u^2 := by rw [hr2]
+        _ = 75*u^2 := by rw [hr2]; ring
     have hsquared : (5*t-c)^2 ≤ (5*Real.sqrt 3*u)^2 := by
       rw [hroot]
       exact hsq
