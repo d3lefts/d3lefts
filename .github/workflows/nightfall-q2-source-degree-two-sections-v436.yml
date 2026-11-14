@@ -1,15 +1,6 @@
 name: NIGHTFALL Q2 source-derived section budget Lean 4.36
 on:
-  push:
-    branches: [nightfall-q2-source-anova-global-v436-20261113]
-    paths:
-      - 'research/nightfall/formalization/observability/ActualSourceDegreeTwoSections.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceDegreeTwoAllDimensions.lean'
-      - '.github/workflows/nightfall-q2-source-degree-two-sections-v436.yml'
-  pull_request:
-    paths:
-      - 'research/nightfall/formalization/observability/ActualSourceDegreeTwoSections.lean'
-      - '.github/workflows/nightfall-q2-source-degree-two-sections-v436.yml'
+  # Retained as manual diagnostic; Q2 pinned CI is consolidated.
   workflow_dispatch:
 permissions:
   contents: read
