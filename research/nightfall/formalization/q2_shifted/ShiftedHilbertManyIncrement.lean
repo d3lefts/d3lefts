@@ -140,8 +140,10 @@ theorem arbitrary_law_many_shifted_hilbert_fourth
         simp
       simp [shiftedMoment4, budget, mass, sumVector, Samples, ha2]
       change ((Finset.univ : Finset (Samples α 0)).card : ℝ) *
-        a^4 ≤ a^4
-      norm_num [hcard]
+        (a^2)^2 ≤ a^4
+      rw [hcard]
+      norm_num
+      ring
   | succ n ih =>
       let v : ℝ := ∑ b : α, p n b * vecNormSq (Y n b)
       let w : ℝ := ∑ b : α, p n b * (vecNormSq (Y n b))^2
