@@ -18,7 +18,7 @@ open Finset
 open Nightfall.Observability.ActualSourceANOVA
 open Nightfall.Observability.ActualSourceQuadraticRectangles
 
-variable {ι α : Type*} [Fintype ι] [DecidableEq ι]
+variable {ι α : Type} [Fintype ι] [DecidableEq ι]
   [Fintype α] [DecidableEq α]
 
 /-- The canonical Efron–Stein pair sector carries an algebraic
