@@ -1,5 +1,12 @@
 # Proof Passport v2 — Quadratic influence and rank-optimal adaptive observation
 
+## 14 November late same-day checkpoint — unconditional finite Q2 736.673
+
+Merged [PR #498](https://github.com/d3lefts/d3lefts/pull/498), current-head [strict source-only Lean run 43633180605](https://github.com/d3lefts/d3lefts/actions/runs/43633180605), certifies the exact joint energy-dual original finite common-alphabet degree-two bound `Var(f)^2 ≤ C₂ B² M`, `C₂=[257/20+(9/4)√2+5√3+√6]²≈736.673197758287`. The earlier 1064.958 theorem in #494 remains valid and weaker. The new terminal has **no extra caller-supplied joint influence hypothesis**; its original-source cap, scalar site envelope and terminal composition were separately pinned and axiom audited.
+
+This certificate does not promote the rank-r Hilbert adaptive query proof, heterogeneous alphabet **types**, infinite-measurable products or novelty. The ≤625/620 scalar candidates still lack completed source-only Lean terminals.
+
+---
 **Claim IDs:** active registry q2-influence, q2-observation; catalogue NF-PS-QUADRATIC-20261110 and NF-OBS-QUADRATIC-20261110.  
 **Checkpoint:** 2026-11-14 current-scope update; 2026-11-12 manuscript history retained. **Status:** finite scalar source Q2 kernel-certified at 1064.958; Hilbert/adaptive and measure-theoretic extensions remain analytic; externally refereed and global priority gates open. This dossier updates the live scope without rewriting immutable v7/v8 source evidence.
 
