@@ -125,13 +125,20 @@ theorem actual_source_esComp_pair_eq_derived
       sourceDoubleCenteredPair p f j k (x j) (x k) := by
   classical
   have h4 := actual_pair_is_canonical_mobius_four_term p hp1 f j k hjk x
+  have hsingle :
+      (({k} : Finset ι).powerset) =
+      ({∅, {k}} : Finset (Finset ι)) := by
+    rw [show ({k} : Finset ι) = insert k ∅ by simp,
+      Finset.powerset_insert]
+    simp
   have hpowerset :
       (({j,k} : Finset ι).powerset) =
       ({∅, {j}, {k}, {j,k}} : Finset (Finset ι)) := by
-    simp [Finset.powerset_insert, hjk, Finset.insert_comm]
+    rw [Finset.powerset_insert, hsingle]
+    simp [Finset.insert_comm, Finset.union_comm, Finset.union_assoc]
   unfold ActualSourceANOVA.esComp
   rw [hpowerset]
-  simp [Finset.sum_insert, hjk]
+  simp [Finset.card_insert_of_notMem, hjk]
   linarith [h4]
 
 end Nightfall.Observability.ActualSourceCanonicalIdentification
