@@ -1,0 +1,109 @@
+{
+  "schema": "nightfall-q2-source-named-lean-certificate-v1",
+  "certified_at_utc": "2026-11-14T15:53:00Z",
+  "source_branch": "nightfall-q2-consolidated-terminal-20261114",
+  "source_commit": "d22962ba73b037a569196bc98d946dc192e4effa",
+  "source_repository": "https://github.com/d3lefts/d3lefts",
+  "verification_run": 43611982294,
+  "run_url": "https://github.com/d3lefts/d3lefts/actions/runs/43611982294",
+  "run_conclusion": "success",
+  "artifact_id": 14121225201,
+  "artifact_url": "https://github.com/d3lefts/d3lefts/actions/runs/43611982294/artifacts/14121225201",
+  "artifact_zip_sha256": "a37009051246139350614af2ec03ba27b0871c3f7eb96699b54c2028d7a423bd",
+  "toolchain": "leanprover/lean4:v4.36.0-rc2",
+  "mathlib_commit": "9d581dfff2e41de989072ea63abf3daf69311520",
+  "checker": "scripts/lean_bridge.py --strict plus research/nightfall/formalization/product_space/check_receipts.py",
+  "accepted_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "proof_status": "all_eight_named_declarations_strict_pass",
+  "terminal_statement": {
+    "declaration": "Nightfall.Observability.ActualSourceQ2Terminal.actual_source_q2_terminal",
+    "formula": "(sourceVariance p f)^2 <= (16*(1+sqrt(3)))^2 * B^2 * M",
+    "input_law": "finite independent product; common nonempty finite alphabet; heterogeneous nonnegative normalized coordinate masses, permitting zero-probability atoms",
+    "hypotheses": [
+      "ESDegreeLE p f 2",
+      "B >= 0",
+      "for all x, |f x| <= B",
+      "M >= 0",
+      "for all i, sourceInfluence p f i <= M"
+    ],
+    "source_variance_definition": "sum_x originalMass(p,x) * (f(x) - E_p[f])^2",
+    "source_influence_definition": "sum_x originalMass(p,x) * (f(x) - sum_b p_i(b)*f(update(x,i,b)))^2"
+  },
+  "limits": [
+    "Common finite alphabet formalized; heterogeneous finite alphabets transfer not yet formalized",
+    "Measurable infinite-product transfer not kernel checked",
+    "Novelty and significance not independently reviewed",
+    "Not a public submission or peer-reviewed manuscript",
+    "Proof scope is the exact displayed hypotheses, not arbitrary nonlinear algorithmic agents"
+  ],
+  "stages": [
+    {
+      "id": "01-original-pair-fourth",
+      "source_path": "research/nightfall/formalization/observability/ActualSourceFinitePairMoment.lean",
+      "source_blob_sha": "c4df489bb16d021b76b83da005b406a796621a4f",
+      "declaration": "Nightfall.Observability.ActualSourceFinitePairMoment.original_source_distinct_pair_fourth_endpoint",
+      "strict_axiom_receipt": "ACCEPT_STANDARD_AXIOMS",
+      "source_status": "current_named_declaration_certificate_not_historical_67_ledger"
+    },
+    {
+      "id": "02-owned-pair-energy",
+      "source_path": "research/nightfall/formalization/observability/ActualSourceOwnedMomentEnergy.lean",
+      "source_blob_sha": "2846cea100e017c20fca0ec1c6a8f64109919b32",
+      "declaration": "Nightfall.Observability.ActualSourceOwnedMomentEnergy.original_owned_neighbor_moment2_le_influence",
+      "strict_axiom_receipt": "ACCEPT_STANDARD_AXIOMS",
+      "source_status": "current_named_declaration_certificate_not_historical_67_ledger"
+    },
+    {
+      "id": "03-original-projection-jensen",
+      "source_path": "research/nightfall/formalization/observability/ActualSourceOwnedProjectedMomentJensen.lean",
+      "source_blob_sha": "98e7b2d29b19b1ab0fe2c75d3815aefb981e2d19",
+      "declaration": "Nightfall.Observability.ActualSourceOwnedProjectedMomentJensen.source_generated_owned_moment_projection_jensen",
+      "strict_axiom_receipt": "ACCEPT_STANDARD_AXIOMS",
+      "source_status": "current_named_declaration_certificate_not_historical_67_ledger"
+    },
+    {
+      "id": "04-source-owned-fourth",
+      "source_path": "research/nightfall/formalization/observability/ActualSourceOwnedFourthClosure.lean",
+      "source_blob_sha": "310ed009a82912d522b63b9ab69aab826b169c0e",
+      "declaration": "Nightfall.Observability.ActualSourceOwnedFourthClosure.original_source_generated_fourth_and_jensen_package",
+      "strict_axiom_receipt": "ACCEPT_STANDARD_AXIOMS",
+      "source_status": "current_named_declaration_certificate_not_historical_67_ledger"
+    },
+    {
+      "id": "05-singleton-pair-parseval",
+      "source_path": "research/nightfall/formalization/observability/ActualSourceQuadraticSectorSplit.lean",
+      "source_blob_sha": "cb6568b55ba8bb011d651d653dd7b85ecbe45443",
+      "declaration": "Nightfall.Observability.ActualSourceQuadraticSectorSplit.source_variance_eq_singleton_plus_pair_energy",
+      "strict_axiom_receipt": "ACCEPT_STANDARD_AXIOMS",
+      "source_status": "current_named_declaration_certificate_not_historical_67_ledger"
+    },
+    {
+      "id": "06-variance-owned-moment",
+      "source_path": "research/nightfall/formalization/observability/ActualSourceSingletonEnergyBridge.lean",
+      "source_blob_sha": "28678ad57c7f56bd319f0845341df235273e3dba",
+      "declaration": "Nightfall.Observability.ActualSourceSingletonEnergyBridge.original_source_variance_eq_singleton_plus_owned_moment2",
+      "strict_axiom_receipt": "ACCEPT_STANDARD_AXIOMS",
+      "source_status": "current_named_declaration_certificate_not_historical_67_ledger"
+    },
+    {
+      "id": "07-first-norm-L2-cap",
+      "source_path": "research/nightfall/formalization/observability/ActualSourceOwnedFirstMomentCap.lean",
+      "source_blob_sha": "056f7c6b9b6313643fe206b719bae108073f113b",
+      "declaration": "Nightfall.Observability.ActualSourceOwnedFirstMomentCap.original_owned_first_norm_le_sqrt_source_influence",
+      "strict_axiom_receipt": "ACCEPT_STANDARD_AXIOMS",
+      "source_status": "current_named_declaration_certificate_not_historical_67_ledger"
+    },
+    {
+      "id": "08-exact-Q2-terminal",
+      "source_path": "research/nightfall/formalization/observability/ActualSourceQ2Terminal.lean",
+      "source_blob_sha": "9686e7ff4fd5cacf0b77420383a2d3e7c9e904f1",
+      "declaration": "Nightfall.Observability.ActualSourceQ2Terminal.actual_source_q2_terminal",
+      "strict_axiom_receipt": "ACCEPT_STANDARD_AXIOMS",
+      "source_status": "current_named_declaration_certificate_not_historical_67_ledger"
+    }
+  ]
+}

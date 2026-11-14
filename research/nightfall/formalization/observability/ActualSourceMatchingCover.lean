@@ -19,7 +19,7 @@ open Nightfall.Observability.ActualSourceGeneralMatching
 open Nightfall.Observability.ActualSourceQuadraticRectangles
 open Nightfall.Observability.ActualSourceAmplitudeRectangles
 open Nightfall.Observability.ActualSourcePairAmplitudes
-open Nightfall.Observability.WeightedGreedyMatching
+open Nightfall.Observability.WeightedGreedy
 open Nightfall.Observability.WeightedGreedyCover
 
 variable {E ι α : Type} [Fintype E] [DecidableEq E]
@@ -110,7 +110,13 @@ theorem source_attained_matching_amplitudes_le_four
       (∑ e ∈ S, pairAmplitudeWeight p f (u e) (v e)) =
       (∑ e : {t : E // t ∈ S},
         pairAmplitudeWeight p f (uS e) (vS e)) := by
-    simp [uS, vS]
+    have hatt :
+        S.attach = (Finset.univ : Finset {t : E // t ∈ S}) := by
+      ext e
+      simp
+    simpa only [uS, vS, hatt] using
+      (Finset.sum_attach S
+        (fun e : E => pairAmplitudeWeight p f (u e) (v e))).symm
   exact hreindex.trans_le (hsum.trans htotal)
 
 /-- Global actual-source 8B weighted endpoint-cover cost, with no

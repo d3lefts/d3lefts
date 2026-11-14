@@ -1,6 +1,6 @@
 name: NIGHTFALL Q2 source-derived section budget Lean 4.36
 on:
-  # Retained as manual diagnostic; automated Q2 proof CI is consolidated.
+  # Retained as manual diagnostic; Q2 pinned CI is consolidated.
   workflow_dispatch:
 permissions:
   contents: read

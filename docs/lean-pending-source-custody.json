@@ -286,6 +286,26 @@
       "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
     },
     {
+      "path": "research/nightfall/formalization/observability/ActualSourceConditionalProjection.lean",
+      "source_blob_sha": "0274521fcba86d9a6ac1e094374214c10c8eab47",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceConditionalSection.lean",
+      "source_blob_sha": "2bbf5c46b94734c0654023fda47703cc9378f840",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
+    },
+    {
       "path": "research/nightfall/formalization/observability/ActualSourceDegreeTwoAllDimensions.lean",
       "source_blob_sha": "2f2bf6e77086543a8f828856b82a97b8f9190b54",
       "classification": "unreviewed-source",
@@ -307,13 +327,13 @@
     },
     {
       "path": "research/nightfall/formalization/observability/ActualSourceFinitePairMoment.lean",
-      "source_blob_sha": "41b33c72521a94e4f519c6f1d9b8ea9595bf02b0",
+      "source_blob_sha": "c4df489bb16d021b76b83da005b406a796621a4f",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+      "receipt_scope": "Source updated from earlier historical pending SHA 41b33c72521a94e4f519c6f1d9b8ea9595bf02b0 for original-product Q2 source proof. Consult specific current-pin Q2 named-declaration receipts; not added to frozen 67-file historical registry. Novelty unreviewed."
     },
     {
       "path": "research/nightfall/formalization/observability/ActualSourceFiniteSampleLaw.lean",
@@ -337,23 +357,43 @@
     },
     {
       "path": "research/nightfall/formalization/observability/ActualSourceInfluenceEnergy.lean",
-      "source_blob_sha": "da259d70d25cca360779489bec9a57c24483919b",
+      "source_blob_sha": "8c80369fc9c21cb26c66cf1160e97392d3d8a59b",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+      "receipt_scope": "Source updated from earlier historical pending SHA da259d70d25cca360779489bec9a57c24483919b for original-product Q2 source proof. Consult specific current-pin Q2 named-declaration receipts; not added to frozen 67-file historical registry. Novelty unreviewed."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceIntegratedSections.lean",
+      "source_blob_sha": "35da725a8282c17a768b7fe6ca278fb79b225620",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
     },
     {
       "path": "research/nightfall/formalization/observability/ActualSourceMatchingCover.lean",
-      "source_blob_sha": "57609b34ba884ec8237e2142a7d46cb09010e42a",
+      "source_blob_sha": "52814088c12f83040dfeabe639b07efda3d36b7a",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+      "receipt_scope": "Source updated from earlier historical pending SHA 57609b34ba884ec8237e2142a7d46cb09010e42a for original-product Q2 source proof. Consult specific current-pin Q2 named-declaration receipts; not added to frozen 67-file historical registry. Novelty unreviewed."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceMeanSectionJensen.lean",
+      "source_blob_sha": "778856d5bd56abf572b27a551c939600e84f2750",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
     },
     {
       "path": "research/nightfall/formalization/observability/ActualSourceOrthogonality.lean",
@@ -366,6 +406,86 @@
       "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
     },
     {
+      "path": "research/nightfall/formalization/observability/ActualSourceOwnedFirstMomentCap.lean",
+      "source_blob_sha": "056f7c6b9b6313643fe206b719bae108073f113b",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceOwnedFourthClosure.lean",
+      "source_blob_sha": "310ed009a82912d522b63b9ab69aab826b169c0e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceOwnedGraph.lean",
+      "source_blob_sha": "ba0ff9cb851bd190dde5f22ec69414e0251e3602",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceOwnedInfluence.lean",
+      "source_blob_sha": "6faead71a0ea88530c7b397e54f145fc81bb116c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceOwnedMomentEnergy.lean",
+      "source_blob_sha": "2846cea100e017c20fca0ec1c6a8f64109919b32",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceOwnedProjectedMomentJensen.lean",
+      "source_blob_sha": "98e7b2d29b19b1ab0fe2c75d3815aefb981e2d19",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceOwnedSectionNorm.lean",
+      "source_blob_sha": "1e72c7f0dabac9e324081e40ad21195ce28309fb",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceOwnerOrientation.lean",
+      "source_blob_sha": "3ea259ca99ff1aa63db23986a6d536a9baf77162",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
+    },
+    {
       "path": "research/nightfall/formalization/observability/ActualSourcePairAmplitudes.lean",
       "source_blob_sha": "477d0a67616f3544d47371fb515e1c27ad7d620a",
       "classification": "unreviewed-source",
@@ -374,6 +494,66 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourcePairEnergyBridge.lean",
+      "source_blob_sha": "52de2e1955aa3a77f98d1242b13828fc79401ddd",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceProjectedJensen.lean",
+      "source_blob_sha": "5013aaa72ef9e8b7ee6c32e9ed9eb4fec325494c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceProjectedPairJensen.lean",
+      "source_blob_sha": "64b0547ce0bd84d785a751bc93b8ddd0f4b249dd",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2CompositionGate.lean",
+      "source_blob_sha": "54f81787b12324a0dec63d617362caeb24f954e9",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2Terminal.lean",
+      "source_blob_sha": "9686e7ff4fd5cacf0b77420383a2d3e7c9e904f1",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2TerminalBound.lean",
+      "source_blob_sha": "df8e3f115b3413a94243c0dfd0e48588c9ce7f73",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
     },
     {
       "path": "research/nightfall/formalization/observability/ActualSourceQ2WeakScalarClosure.lean",
@@ -396,6 +576,26 @@
       "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
     },
     {
+      "path": "research/nightfall/formalization/observability/ActualSourceQuadraticSectorSplit.lean",
+      "source_blob_sha": "cb6568b55ba8bb011d651d653dd7b85ecbe45443",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQuadraticSupportSum.lean",
+      "source_blob_sha": "016e93987037e6a48344623e2b416f66423f1c07",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
+    },
+    {
       "path": "research/nightfall/formalization/observability/ActualSourceSectionBudgetEight.lean",
       "source_blob_sha": "b730d2867cd426368a120a2e4aa51899458ebf82",
       "classification": "unreviewed-source",
@@ -404,6 +604,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceSingletonEnergyBridge.lean",
+      "source_blob_sha": "28678ad57c7f56bd319f0845341df235273e3dba",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
     },
     {
       "path": "research/nightfall/formalization/observability/ActualSourceSingletonProjection.lean",

@@ -1,6 +1,6 @@
 name: NIGHTFALL Q2 source-real attained matching cover Lean 4.36
 on:
-  # Retained as manual diagnostic; automated Q2 proof CI is consolidated.
+  # Retained as manual diagnostic; Q2 pinned CI is consolidated.
   workflow_dispatch:
 permissions:
   contents: read
@@ -15,7 +15,7 @@ jobs:
         run: |
           set -euo pipefail
           cd /tmp/mathlib4
-          for f in ActualProductMergeTower ActualProductHilbertJensen ActualProductSoftNoise ActualProductSourceMarginal ActualProductPairSector ActualProductSoftStar ActualProductSoftStarEnergy ActualProductSoftStarParseval ActualProductSourcePairCentering ActualSourceANOVA ActualProductResampleBridge ActualSourceCanonicalPair ActualSourceCanonicalIdentification ActualSourceQuadraticRectangles ActualSourcePairAmplitudes CenteredRectangles; do
+          for f in ActualProductMergeTower ActualProductHilbertJensen ActualProductSoftNoise ActualProductSourceMarginal ActualProductPairSector ActualProductSoftStar ActualProductSoftStarEnergy ActualProductSoftStarParseval ActualProductSourcePairCentering ActualSourceANOVA ActualProductResampleBridge ActualProductSourceDerivedStar ActualSourceCanonicalPair ActualSourceCanonicalIdentification ActualSourceQuadraticRectangles ActualSourcePairAmplitudes CenteredRectangles; do
             cp "$GITHUB_WORKSPACE/research/nightfall/formalization/observability/$f.lean" .
             lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean"
           done
