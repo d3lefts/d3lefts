@@ -113,28 +113,79 @@ class Ticket:
 
 
 class PromotionGate:
+    """Trusted local artifact gate with durable interprocess revocation.
+
+    All cooperating promotions/revocations serialize under a common flock.
+    The output directory must be protected from untrusted direct writes.
+    External changes to source or mission policy remain a separate trust gap.
+    """
     def __init__(self,baseline,mission_path,deployed):
         self.baseline=baseline
         self.baseline_hash=digest_json(baseline)
         self.policy_path=mission_path
         self.deployed=deployed
-        self.epoch=1
-        self.blocked=False
         self.deployed.parent.mkdir(parents=True,exist_ok=True)
         self.lock_path=self.deployed.parent/'promotion.lock'
+        self.state_path=self.deployed.parent/'authority_state.json'
         self.calls=0
+        with self._locked():
+            if not self.state_path.exists():
+                self._write_state({'epoch':1,'revoked':False,'baseline_hash':self.baseline_hash})
+            self._read_state()
+
+    def _locked(self):
+        """Use a separate file description and release the advisory lock."""
+        from contextlib import contextmanager
+        @contextmanager
+        def hold():
+            with self.lock_path.open('a+b') as f:
+                fcntl.flock(f,fcntl.LOCK_EX)
+                try:yield
+                finally:fcntl.flock(f,fcntl.LOCK_UN)
+        return hold()
+
+    def _read_state(self):
+        data=json.loads(self.state_path.read_text())
+        if (set(data)!={'epoch','revoked','baseline_hash'} or
+            type(data['epoch']) is not int or data['epoch']<1 or
+            type(data['revoked']) is not bool or
+            data['baseline_hash']!=self.baseline_hash):
+            raise RuntimeError('invalid or mismatched trusted authority state')
+        return data
+
+    def _write_state(self,state):
+        """Caller must hold promotion.lock; writes persistent state atomically."""
+        fd,name=tempfile.mkstemp(prefix='.authority-state-',dir=self.deployed.parent)
+        try:
+            with os.fdopen(fd,'wb') as f:
+                f.write(canon(state));f.flush();os.fsync(f.fileno())
+            os.replace(name,self.state_path)
+            directory_fd=os.open(self.deployed.parent,os.O_RDONLY)
+            try:os.fsync(directory_fd)
+            finally:os.close(directory_fd)
+        finally:
+            if os.path.exists(name):os.unlink(name)
+
     def prepare(self,candidate):
+        with self._locked():
+            state=self._read_state()
+            if state['revoked']:
+                raise RuntimeError('authority revoked')
+            epoch=state['epoch']
         policy=json.loads(self.policy_path.read_text())
         obj,seconds=synth(candidate)
         self.calls+=1
         proof=check_promotion(self.baseline,obj,policy)
         return Ticket(hash_source(candidate),digest_json(policy),digest_json(obj),
-                      self.baseline_hash,self.epoch),proof,seconds
+                      self.baseline_hash,epoch),proof,seconds
+
     def promote(self,candidate,ticket):
-        with self.lock_path.open('a+b') as f:
-            fcntl.flock(f,fcntl.LOCK_EX)
-            if self.blocked or ticket.epoch!=self.epoch:return False,'revoked or epoch changed',None
-            if ticket.baseline_hash != self.baseline_hash:return False,'baseline changed',None
+        with self._locked():
+            state=self._read_state()
+            if state['revoked'] or ticket.epoch!=state['epoch']:
+                return False,'revoked or epoch changed',None
+            if ticket.baseline_hash != self.baseline_hash:
+                return False,'baseline changed',None
             policy=json.loads(self.policy_path.read_text())
             if digest_json(policy)!=ticket.policy_hash:return False,'policy stale',None
             if hash_source(candidate)!=ticket.source_hash:return False,'source stale',None
@@ -145,13 +196,26 @@ class PromotionGate:
                 return False,'independent effect verifier denied: '+str(exc),None
             if hash_source(candidate)!=ticket.source_hash or digest_json(obj)!=ticket.proposed_template_hash:
                 return False,'source/template race',None
-            # Atomic *local artifact* publication; NOT a cloud-service authorization gate.
-            tmp=self.deployed.with_name(self.deployed.name+'.staging')
-            tmp.write_bytes(canon(obj))
-            os.replace(tmp,self.deployed)
+            # Serialized local artifact publication; no AWS deployment.
+            fd,tmp=tempfile.mkstemp(prefix='.promotion-',dir=self.deployed.parent)
+            try:
+                with os.fdopen(fd,'wb') as f:
+                    f.write(canon(obj));f.flush();os.fsync(f.fileno())
+                os.replace(tmp,self.deployed)
+                directory_fd=os.open(self.deployed.parent,os.O_RDONLY)
+                try:os.fsync(directory_fd)
+                finally:os.close(directory_fd)
+            finally:
+                if os.path.exists(tmp):os.unlink(tmp)
             return True,'verified local CloudFormation promotion',{'effect':proof,'synthesis_seconds':seconds}
+
     def revoke(self):
-        self.blocked=True;self.epoch+=1
+        with self._locked():
+            state=self._read_state()
+            state['revoked']=True
+            state['epoch']+=1
+            self._write_state(state)
+            return state['epoch']
 
 
 def run_official_check(path,test_path):
