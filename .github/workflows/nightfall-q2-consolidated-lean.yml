@@ -472,6 +472,45 @@ jobs:
           python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT/06-conditional-source-terminal.json"
           echo "PASS: exact Q2 190 terminal conditional on the explicit 2B singleton budget; source-only discharge remains open"
 
+      # Source-level 190.280 is CONDITIONAL until the new true
+      # singleton budget has an original p,f source proof. Never
+      # elevate this stage to unconditional Q2 on its own.
+      - name: Strict original-source Q2 190 conditional on explicit new 2B singleton budget
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/observability
+          OUT=lean-receipts/q2-consolidated/source-q2-190-conditional
+          mkdir -p "$OUT"
+          python3 - <<'PY'
+          import importlib.util
+          from pathlib import Path
+          import shutil, subprocess
+          spec = importlib.util.spec_from_file_location("qc", "scripts/nightfall_q2_certify.py")
+          qc = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(qc)
+          mods=qc.closure("ActualSourceQ2190Terminal",qc.local_sources())
+          for name in mods:
+              source=qc.local_sources()[name]
+              dest=Path("/tmp/mathlib4")/(name+".lean")
+              shutil.copy2(source,dest)
+              olean=Path("/tmp/mathlib4/.lake/build/lib/lean")/(name+".olean")
+              if not olean.exists():
+                  subprocess.run(["lake","env","lean","-o",str(olean),name+".lean"],
+                                 cwd="/tmp/mathlib4", check=True)
+          PY
+          python3 scripts/lean_bridge.py "$SRC/Q2190ScalarBudget.lean" \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Q2190.joint_site_to_190_budget \
+            --json-out "$OUT/01-exact-scalar.json"
+          python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT/01-exact-scalar.json"
+          python3 scripts/lean_bridge.py "$SRC/ActualSourceQ2190Terminal.lean" \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Observability.ActualSourceQ2190Terminal.actual_source_q2_190_given_actual_singleton_budget \
+            --json-out "$OUT/02-actual-source-conditional.json"
+          python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT/02-actual-source-conditional.json"
+          echo "PASS conditional Q2 190 (does NOT certify singleton budget premise)"
       - name: Immutable input and toolchain provenance
         if: always()
         shell: bash
