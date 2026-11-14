@@ -150,9 +150,11 @@ theorem maskWeight_nonneg
 theorem maskWeight_total_one (retain : ι → ℝ) :
     (∑ mask : ι → Bool, maskWeight retain mask) = 1 := by
   classical
-  unfold maskWeight
+  let P : ι → Bool → ℝ := fun i v =>
+    if v then retain i else (1 - retain i)
+  change (∑ mask : ι → Bool, ∏ i : ι, P i (mask i)) = 1
   rw [← Fintype.prod_sum]
-  simp [Fintype.sum_bool, sub_add_cancel]
+  simp [P, Fintype.sum_bool]
 
 /-- The soft source-noise operator (coordinatewise stay-or-refresh)
 is a genuine mixture of actual product-law conditionals. -/
