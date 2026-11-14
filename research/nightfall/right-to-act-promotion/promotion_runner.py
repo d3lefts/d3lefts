@@ -79,7 +79,21 @@ def synth(path):
     cdkout=path/'cdk.out'
     if cdkout.exists():shutil.rmtree(cdkout)
     env={**os.environ,'PYTHONPATH':str(path)+os.pathsep+os.environ.get('PYTHONPATH','')}
-    cmd=[sys.executable,'core_infrastructure/app.py']
+    # Exactly the AWS CDK assertion synthesis API used by the upstream IaC Fast tests.
+    # Running app.py directly without the CDK CLI may synthesize into a temp directory.
+    code = """import json
+from pathlib import Path
+from aws_cdk import App, Environment, assertions
+from core_infrastructure.root_account.organisation import OrganisationStack
+app = App()
+stack = OrganisationStack(app, 'OrganisationStack',
+                          env=Environment(account='181739179312', region='us-east-1'))
+template = assertions.Template.from_stack(stack).to_json()
+out = Path('cdk.out')
+out.mkdir(parents=True,exist_ok=True)
+(out / 'OrganisationStack.template.json').write_text(json.dumps(template))
+"""
+    cmd=[sys.executable,'-c',code]
     t=time.monotonic()
     result=subprocess.run(cmd,cwd=path,env=env,text=True,capture_output=True,timeout=240)
     if result.returncode!=0:
