@@ -7,6 +7,7 @@ on:
       - 'research/nightfall/formalization/observability/ActualProductSoftStarEnergy.lean'
       - 'research/nightfall/formalization/observability/ActualProductSoftStarParseval.lean'
       - 'research/nightfall/formalization/observability/ActualProductSourcePairCentering.lean'
+      - 'research/nightfall/formalization/observability/ActualProductQ2ScalarClosure.lean'
       - '.github/workflows/nightfall-q2-pair-source-v436.yml'
   push:
     branches:
@@ -151,11 +152,29 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/q2-source-derived-pair-eigen.json
+      - name: Strict terminal scalar closure from explicit budgets (NOT full Q2)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualProductQ2ScalarClosure
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualProductQ2ScalarClosure.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.q2_scalar_endpoint \
+            --decl $N.q2_scalar_endpoint_squared \
+            --json-out lean-receipts/q2-conditional-scalar-closure.json || {
+              cat lean-receipts/q2-conditional-scalar-closure.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-conditional-scalar-closure.json
       - name: Record source and pin hashes
         if: always()
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/observability/ActualProduct{MergeTower,HilbertJensen,SoftNoise,SourceMarginal,PairSector,SoftStar,SoftStarEnergy,SoftStarParseval,SourcePairCentering}.lean > lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/observability/ActualProduct{MergeTower,HilbertJensen,SoftNoise,SourceMarginal,PairSector,SoftStar,SoftStarEnergy,SoftStarParseval,SourcePairCentering,Q2ScalarClosure}.lean > lean-receipts/SHA256SUMS.txt
           git rev-parse HEAD > lean-receipts/repo-commit.txt
           cat lean-toolchain > lean-receipts/lean-toolchain.txt
           git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt || true
