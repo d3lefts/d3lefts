@@ -5,6 +5,7 @@ on:
       - 'research/nightfall/formalization/observability/ActualProductPairSector.lean'
       - 'research/nightfall/formalization/observability/ActualProductSoftStar.lean'
       - 'research/nightfall/formalization/observability/ActualProductSoftStarEnergy.lean'
+      - 'research/nightfall/formalization/observability/ActualProductSoftStarParseval.lean'
       - '.github/workflows/nightfall-q2-pair-source-v436.yml'
   push:
     branches:
@@ -97,11 +98,35 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/q2-source-soft-star-energy.json
+      - name: Compile source soft-star orthogonality for Parseval bridge
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/observability/ActualProductSoftStarEnergy.lean /tmp/mathlib4/ActualProductSoftStarEnergy.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ActualProductSoftStarEnergy.olean ActualProductSoftStarEnergy.lean)
+      - name: Strict source-weighted star energy partition
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualProductSoftStarParseval
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualProductSoftStarParseval.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.actual_source_pairwise_orthogonal_energy \
+            --decl $N.actual_source_weighted_centered_star_energy \
+            --json-out lean-receipts/q2-source-soft-star-parseval.json || {
+              cat lean-receipts/q2-source-soft-star-parseval.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-source-soft-star-parseval.json
       - name: Record source and pin hashes
         if: always()
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/observability/ActualProduct{MergeTower,HilbertJensen,SoftNoise,SourceMarginal,PairSector,SoftStar,SoftStarEnergy}.lean > lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/observability/ActualProduct{MergeTower,HilbertJensen,SoftNoise,SourceMarginal,PairSector,SoftStar,SoftStarEnergy,SoftStarParseval}.lean > lean-receipts/SHA256SUMS.txt
           git rev-parse HEAD > lean-receipts/repo-commit.txt
           cat lean-toolchain > lean-receipts/lean-toolchain.txt
           git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt || true
