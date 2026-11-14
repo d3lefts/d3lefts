@@ -1,5 +1,13 @@
 # NIGHTFALL Lean certificates — consolidated audit
 
+## Later 14 November Lean source custody checkpoint
+
+Four additional scoped Lean PRs — **#500, #501, #503 and #506** — have now merged, adding five source blobs: `SCIFActualInfluence.lean`, `InfinitePiSourceBridge.lean`, `SCIFSourceDegree.lean`, `SCIFSourceEnergy.lean` and `ActualSourceEfronStein.lean`. Their explicit pinned heads, named declarations and receipt artifacts are in [current proof index v2](../../../docs/current-lean-proof-receipts-20261114.json). The original-source influence-law update is now a strict component certificate; the full source-generated SCIF owner terminal and infinite-product L² transfer remain OPEN. The all-degree Efron–Stein statement is classical and finite.
+
+**Source custody:** 67 immutable historical successful-head records + **103 exact-hash post-checkpoint sources**. The 19 newer current-scope sources (14 older + 5 just merged) are separately linked to strict PR-head named declaration receipts, not promoted into the frozen historical register or counted as one cross-program after-merge build.
+
+---
+
 ## Current source-level certificates: 14 November 2026
 
 The 67 historical provenance records remain immutable. Merged PRs #494, #495, #496 and #497 add **14 more exact source-blob custody records**, plus seven previously merged Q2 sharp-source files reconciled at this checkpoint, giving a current pending file count of **98** (historical 67 separate). New current named-declaration evidence lives in [the dated receipt index](../../../docs/current-lean-proof-receipts-20261114.json), with source Git blob IDs, actual pinned runs and immutable artifact digests.
