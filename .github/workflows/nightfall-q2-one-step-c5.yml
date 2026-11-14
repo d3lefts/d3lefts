@@ -30,6 +30,8 @@ jobs:
             --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
             --decl Nightfall.Q2OneStep.single_increment_shifted_c5 \
             --decl Nightfall.Q2OneStep.one_increment_sos_identity \
+            --decl Nightfall.Q2OneStep.sharpK_le_fifth \
+            --decl Nightfall.Q2OneStep.single_increment_shifted_sharp \
             --json-out lean-receipts/q2-one-step/one-step.json
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-one-step/one-step.json
       - name: SHA source custody
