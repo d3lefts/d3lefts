@@ -1,0 +1,100 @@
+name: NIGHTFALL SCIF pinned staged kernel certificates
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/formalization/observability/SCIF*.lean"
+      - ".github/workflows/nightfall-scif-v436.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nightfall-scif-${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+jobs:
+  scif-certificate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile SCIF stages in dependency order with strict axiom receipts
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.SCIF
+          for file in SCIFRecenter SCIFInfluence SCIFOwnerRepair SCIFClipped; do
+            test -f "research/nightfall/formalization/observability/${file}.lean" || continue
+            cp "research/nightfall/formalization/observability/${file}.lean" /tmp/mathlib4/
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/${file}.olean" "${file}.lean")
+          done
+          for file in ActualProductMergeTower ActualProductHilbertJensen ActualProductSoftNoise ActualSourceANOVA ActualSourceQuadraticRectangles SCIFSourceGraph SCIFDegreeTransport; do
+            cp "research/nightfall/formalization/observability/${file}.lean" /tmp/mathlib4/
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/${file}.olean" "${file}.lean")
+          done
+          python3 scripts/lean_bridge.py research/nightfall/formalization/observability/SCIFSourceGraph.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 600 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Observability.SCIFSourceGraph.canonical_pair_graph_invariant \
+            --json-out lean-receipts/02b-scif-actual-source-graph.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/02b-scif-actual-source-graph.json
+          python3 scripts/lean_bridge.py research/nightfall/formalization/observability/SCIFDegreeTransport.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 600 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Observability.SCIFDegreeTransport.degree_two_preserved_by_any_law \
+            --decl Nightfall.Observability.SCIFDegreeTransport.canonical_pair_graph_invariant_after_any_law_change \
+            --json-out lean-receipts/02c-scif-source-degree-transport.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/02c-scif-source-degree-transport.json
+          python3 scripts/lean_bridge.py research/nightfall/formalization/observability/SCIFRecenter.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 600 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl ${N}.two_site_recenter_identity \
+            --decl ${N}.pairRecenter_first_centered \
+            --decl ${N}.pairRecenter_other_centered \
+            --decl ${N}.rectangle_pairRecenter \
+            --decl ${N}.algebraic_edge_iff_after_recenter \
+            --json-out lean-receipts/01-02-scif-recenter-graph.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/01-02-scif-recenter-graph.json
+          python3 scripts/lean_bridge.py research/nightfall/formalization/observability/SCIFInfluence.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 600 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl ${N}.pair_energy_recenter_exact \
+            --decl ${N}.local_influence_recenter_exact \
+            --decl ${N}.pair_energy_law_difference \
+            --json-out lean-receipts/03-scif-exact-influence-energy.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/03-scif-exact-influence-energy.json
+          python3 scripts/lean_bridge.py research/nightfall/formalization/observability/SCIFOwnerRepair.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 600 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl ${N}.centered_firstMean_abs_le_l1 \
+            --decl ${N}.fixed_owner_recenter_cover \
+            --decl ${N}.fixed_owner_scaled_total_cost \
+            --json-out lean-receipts/04-scif-fixed-owner-repair.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/04-scif-fixed-owner-repair.json
+          python3 scripts/lean_bridge.py research/nightfall/formalization/observability/SCIFClipped.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 600 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl ${N}.centered_firstMean_abs_le_clipped_l1 \
+            --decl ${N}.fixed_owner_recenter_cover_clipped \
+            --decl ${N}.fixed_owner_clipped_total_cost \
+            --decl ${N}.double_recenter_abs_le_four \
+            --json-out lean-receipts/04b-scif-clipped-and-double.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/04b-scif-clipped-and-double.json
+      - name: Record immutable inputs
+        if: always()
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/observability/SCIF*.lean > lean-receipts/SHA256SUMS
+          git rev-parse HEAD > lean-receipts/HEAD
+          cat lean-toolchain > lean-receipts/LEAN_PIN
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: nightfall-scif-staged-certificates
+          path: lean-receipts/
+          retention-days: 45
