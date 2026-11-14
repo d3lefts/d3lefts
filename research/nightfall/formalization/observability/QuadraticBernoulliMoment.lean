@@ -80,8 +80,24 @@ theorem bernoulliMean_pair (t : ℝ) (i j : ι) (hij : i ≠ j) :
   have hbits (σ : ι → Bool) :
       maskBit σ i * maskBit σ j =
         if ({i,j} : Finset ι) ⊆ maskSites σ then (1 : ℝ) else 0 := by
+    have heq :
+        (({i,j} : Finset ι) ⊆ maskSites σ) ↔
+          σ i = true ∧ σ j = true := by
+      constructor
+      · intro h
+        constructor
+        · have hi : i ∈ maskSites σ := h (by simp)
+          simpa [maskSites] using hi
+        · have hj : j ∈ maskSites σ := h (by simp)
+          simpa [maskSites] using hj
+      · intro h k hk
+        have hk' : k = i ∨ k = j := by
+          simpa only [Finset.mem_insert, Finset.mem_singleton] using hk
+        rcases hk' with rfl | rfl
+        · simpa [maskSites] using h.1
+        · simpa [maskSites] using h.2
     cases hi : σ i <;> cases hj : σ j <;>
-      simp [maskBit, maskSites, hi, hj, hij]
+      simp [maskBit, hi, hj, heq]
   unfold bernoulliMean
   calc
     (∑ σ : ι → Bool, maskWeight (fun _ => t) σ *
@@ -91,8 +107,10 @@ theorem bernoulliMean_pair (t : ℝ) (i j : ι) (hij : i ≠ j) :
             apply Finset.sum_congr rfl
             intro σ _
             rw [hbits σ]
-    _ = ∏ k : ι, if k ∈ ({i,j} : Finset ι) then t else (1 : ℝ) :=
-          original_mask_subset_weight (fun _ => t) {i,j}
-    _ = t^2 := by simp [hij, pow_two]
+    _ = ∏ k : ι, if k ∈ ({i,j} : Finset ι) then t else (1 : ℝ) := by
+          exact original_mask_subset_weight (fun _ => t) ({i,j} : Finset ι)
+    _ = t^2 := by
+      rw [Finset.prod_ite]
+      simp [hij, pow_two]
 
 end Nightfall.Observability.QuadraticBernoulli
