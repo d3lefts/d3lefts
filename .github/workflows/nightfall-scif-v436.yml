@@ -85,6 +85,35 @@ jobs:
             --json-out lean-receipts/04b-scif-clipped-and-double.json
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/04b-scif-clipped-and-double.json
+      - name: Strict actual full-product influence law-change declarations
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import subprocess, shutil
+          from pathlib import Path
+          from scripts.nightfall_q2_certify import local_sources, closure
+          files=local_sources()
+          for module in closure('SCIFActualInfluence', files):
+              source=files[module]
+              dest=Path('/tmp/mathlib4') / (module+'.lean')
+              shutil.copyfile(source,dest)
+              subprocess.run(['lake','env','lean','-o',
+                  '.lake/build/lib/lean/'+module+'.olean',module+'.lean'],
+                  cwd='/tmp/mathlib4',check=True)
+          PY
+          python3 scripts/lean_bridge.py research/nightfall/formalization/observability/SCIFActualInfluence.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Observability.SCIFActualInfluence.source_influence_eq_residual_energy \
+            --decl Nightfall.Observability.SCIFActualInfluence.residual_law_change \
+            --decl Nightfall.Observability.SCIFActualInfluence.residual_unchanged_coordinate \
+            --decl Nightfall.Observability.SCIFActualInfluence.source_influence_unedited_exact \
+            --decl Nightfall.Observability.SCIFActualInfluence.source_influence_edited_exact \
+            --decl Nightfall.Observability.SCIFActualInfluence.source_influence_edited_difference \
+            --json-out lean-receipts/05-scif-actual-source-influence.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/05-scif-actual-source-influence.json
+
       - name: Record immutable inputs
         if: always()
         run: |
