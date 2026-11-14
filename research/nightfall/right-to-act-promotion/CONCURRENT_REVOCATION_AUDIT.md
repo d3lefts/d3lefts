@@ -34,3 +34,11 @@ Trusted state is moved to a persistent JSON record in the trusted output directo
 `python -m pytest -q test_effect_verifier.py test_concurrent_authority.py`
 
 No network, cloud credentials, or model calls required. `promotion_runner.py` still exercises the source-matched official ControlArena fixture in the existing CI job; tests here isolate the race without conflating those two mechanisms.
+
+## Additional independently reproduced write races (not fixed here)
+
+A deterministic final-replacement hook in the *patched* local prototype mutated either (a) the candidate source after its last digest check or (b) the mission policy after its last digest check. In both schedules, `promote` returned success and the local template was published, even though the current source or policy digest no longer matched the ticket. This is **not** a failure of the lock's revocation linearizability theorem: source and policy writers were outside its synchronization domain. It falsifies any stronger claim of linearizable source/policy freshness against arbitrary external writers.
+
+**Indistinguishability argument (standard TOCTOU).** For any protocol whose final source/policy inspection and publication are separate operations not serialized with all permitted writers, an adversarial writer can change an input after its last inspection but before publication. From the promoter's observed transcript the changed and unchanged executions can remain identical, so it cannot guarantee that every effect is justified by the source/policy current at publication. An atomic version comparison with the protected effect, or a trusted lock enclosing *all* relevant writers, is necessary for that guarantee; an immutable snapshot suffices only when policy semantics explicitly authorize the snapshot version irrespective of later changes.
+
+Next engineering target: explicit trusted `source_version` and `policy_version` CAS in the promotion backend, with version changes and publication serialized against all authorized writers, and a negative control that modifies versions just before the commit. No general historical novelty claim (this is the classical check-then-use race).
