@@ -64,7 +64,21 @@ theorem average_condExp_update_mem
           intro a _
           rw [merge_update_pull U i hi x y a]
     _ = ∑ y : ι → α, originalMass p y * f (merge (U.erase i) x y) := by
-          exact actual_source_resample_sum p hp1 i (fun y => f (merge (U.erase i) x y))
+          calc
+            (∑ y : ι → α, ∑ a : α,
+              originalMass p y * p i a *
+                f (merge (U.erase i) x (Function.update y i a))) =
+              ∑ y : ι → α, originalMass p y *
+                (∑ a : α, p i a *
+                  f (merge (U.erase i) x (Function.update y i a))) := by
+                    apply Finset.sum_congr rfl
+                    intro y _
+                    rw [Finset.mul_sum]
+                    apply Finset.sum_congr rfl
+                    intro a _
+                    ring
+            _ = _ := actual_source_resample_sum p hp1 i
+              (fun y => f (merge (U.erase i) x y))
 
 /-- Average of any conditional expectation after a coordinate update:
 the conditioning support contracts by erasure. -/
