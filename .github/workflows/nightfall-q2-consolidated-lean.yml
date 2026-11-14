@@ -58,6 +58,40 @@ jobs:
             --workspace /tmp/mathlib4 \
             --receipt-dir lean-receipts/q2-consolidated
 
+      - name: Strict sharp scalar and source-additive reduction checkpoints when present
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/observability
+          if [ ! -f "$SRC/ActualSourceQ2SharpScalarClosure.lean" ]; then
+            echo "No sharp scalar source in this tree; base eight-stage Q2 remains authoritative."
+            exit 0
+          fi
+          mkdir -p lean-receipts/q2-consolidated/sharp-conditional
+          cp "$SRC/ActualSourceQ2SharpScalarClosure.lean" /tmp/mathlib4/ActualSourceQ2SharpScalarClosure.lean
+          (cd /tmp/mathlib4 &&
+            lake env lean -o .lake/build/lib/lean/ActualSourceQ2SharpScalarClosure.olean ActualSourceQ2SharpScalarClosure.lean)
+          N=Nightfall.Observability.ActualSourceQ2SharpScalarClosure
+          python3 scripts/lean_bridge.py \
+            "$SRC/ActualSourceQ2SharpScalarClosure.lean" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.q2_sharp_scalar_from_additive_budget \
+            --json-out lean-receipts/q2-consolidated/sharp-conditional/01-scalar.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-consolidated/sharp-conditional/01-scalar.json
+          if [ -f "$SRC/ActualSourceQ2SharpTerminalGate.lean" ]; then
+            N=Nightfall.Observability.ActualSourceQ2SharpTerminalGate
+            python3 scripts/lean_bridge.py \
+              "$SRC/ActualSourceQ2SharpTerminalGate.lean" \
+              --workspace /tmp/mathlib4 --timeout 900 --strict \
+              --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+              --decl $N.actual_source_q2_sharp_given_additive_budget \
+              --json-out lean-receipts/q2-consolidated/sharp-conditional/02-source-gate.json
+            python3 research/nightfall/formalization/product_space/check_receipts.py \
+              lean-receipts/q2-consolidated/sharp-conditional/02-source-gate.json
+          fi
+          echo "Sharp reduction is conditional on original additive singleton budget; NOT a sharp terminal certificate."
+
       - name: Immutable input and toolchain provenance
         if: always()
         shell: bash
