@@ -80,6 +80,29 @@ jobs:
           assert r['github_run_id']==os.environ['GITHUB_RUN_ID']
           assert r['includes_hidden_source_files'] is True
           PY
+      - name: Build distinct non-root CDK sandbox
+        timeout-minutes: 15
+        run: |
+          docker version
+          docker build --progress=plain -f Dockerfile.untrusted-cdk -t nightfall-iac-cdk-sandbox:v16 .
+          docker image inspect --format '{{.Id}}' nightfall-iac-cdk-sandbox:v16 | tee isolated-image-id.txt
+      - name: Execute OS isolation probes and source-matched authorization
+        timeout-minutes: 15
+        run: |
+          python run_os_isolation.py --out os-isolation-results
+      - name: Independently verify Docker boundary and promoted artifact
+        run: |
+          python audit_os_isolation.py --dir os-isolation-results
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          root=Path('os-isolation-results')
+          receipt=json.loads((root/'os_boundary_receipt.json').read_text())
+          audit=json.loads((root/'os_independent_audit.json').read_text())
+          assert receipt['sandbox_image_id']==Path('isolated-image-id.txt').read_text().strip()
+          assert audit['run_id']==os.environ['GITHUB_RUN_ID']
+          assert audit['status']=='passed'
+          PY
       - name: Upload exact source-matched evidence and receipts
         if: always()
         uses: actions/upload-artifact@v4
@@ -103,5 +126,13 @@ jobs:
             research/nightfall/right-to-act-promotion/atomic-results/trusted/published.json
             research/nightfall/right-to-act-promotion/atomic-results/admitted-snapshots.tar
             research/nightfall/right-to-act-promotion/atomic-results/atomic_archive_audit.json
+            research/nightfall/right-to-act-promotion/os-isolation-results/os_boundary_receipt.json
+            research/nightfall/right-to-act-promotion/os-isolation-results/os_independent_audit.json
+            research/nightfall/right-to-act-promotion/os-isolation-results/baseline.template.json
+            research/nightfall/right-to-act-promotion/os-isolation-results/legitimate.template.json
+            research/nightfall/right-to-act-promotion/os-isolation-results/harmful.template.json
+            research/nightfall/right-to-act-promotion/os-isolation-results/trusted/state.json
+            research/nightfall/right-to-act-promotion/os-isolation-results/trusted/published.json
+            research/nightfall/right-to-act-promotion/isolated-image-id.txt
           if-no-files-found: warn
           retention-days: 14
