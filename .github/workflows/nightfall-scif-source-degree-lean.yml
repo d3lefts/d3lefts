@@ -6,6 +6,11 @@ on:
     paths:
       - 'research/nightfall/formalization/observability/SCIFSourceDegree.lean'
       - 'research/nightfall/formalization/observability/SCIFSourceEnergy.lean'
+      - 'research/nightfall/formalization/observability/SCIFRectUnique.lean'
+      - 'research/nightfall/formalization/observability/SCIFCanonicalPairTransport.lean'
+      - 'research/nightfall/formalization/observability/SCIFCanonicalUnchangedPair.lean'
+      - 'research/nightfall/2026-11-compositional-recertification/check_scif_canonical_full_source.py'
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/check_q2_subsumption_boundary.py'
       - '.github/workflows/nightfall-scif-source-degree-lean.yml'
   workflow_dispatch:
 
@@ -80,11 +85,76 @@ jobs:
             --json-out lean-receipts/scif-original-product-energy.json
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/scif-original-product-energy.json
+      - name: Strict bi-centered rectangle uniqueness
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/observability/SCIFRectUnique.lean /tmp/mathlib4/SCIFRectUnique.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/SCIFRectUnique.olean SCIFRectUnique.lean)
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/SCIFRectUnique.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.SCIF.RectUnique.zero_of_centered_and_zero_rectangles \
+            --decl Nightfall.SCIF.RectUnique.same_rectangles_imply_equal \
+            --json-out lean-receipts/scif-rectangle-uniqueness.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/scif-rectangle-uniqueness.json
+      - name: Compile canonical pair transport against actual source
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import shutil
+          import subprocess
+          from scripts.nightfall_q2_certify import local_sources, closure
+          files = local_sources()
+          ws = Path('/tmp/mathlib4')
+          out = ws / '.lake/build/lib/lean'
+          out.mkdir(parents=True, exist_ok=True)
+          for name in closure('SCIFCanonicalPairTransport', files):
+              src = files[name]
+              shutil.copyfile(src, ws / f'{name}.lean')
+              if (out / f'{name}.olean').exists():
+                  continue
+              print('SOURCE BUILD', name, flush=True)
+              subprocess.run(
+                  ['lake','env','lean','-o',str(out / f'{name}.olean'),f'{name}.lean'],
+                  cwd=ws, check=True, timeout=1200)
+          PY
+      - name: Strict genuine canonical pair-law recentering
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/SCIFCanonicalPairTransport.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.SCIF.CanonicalPairTransport.canonical_incident_pair_recenter_exact \
+            --json-out lean-receipts/scif-canonical-pair-transport.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/scif-canonical-pair-transport.json
+      - name: Strict unaffected canonical pair components
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/observability/SCIFCanonicalUnchangedPair.lean /tmp/mathlib4/SCIFCanonicalUnchangedPair.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/SCIFCanonicalUnchangedPair.olean SCIFCanonicalUnchangedPair.lean)
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/SCIFCanonicalUnchangedPair.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.SCIF.CanonicalUnchangedPair.canonical_unaffected_pair_exact \
+            --json-out lean-receipts/scif-canonical-unaffected-pair.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/scif-canonical-unaffected-pair.json
+      - name: Exact independent source-level falsification
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/2026-11-compositional-recertification/check_scif_canonical_full_source.py
+          python3 research/nightfall/2026-11-quadratic-law-free-audit/check_q2_subsumption_boundary.py
       - name: Preserve source and compiler
         if: always()
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/observability/SCIFSource*.lean > lean-receipts/SHA256SUMS
+          sha256sum research/nightfall/formalization/observability/SCIFSource*.lean research/nightfall/formalization/observability/SCIFRectUnique.lean research/nightfall/formalization/observability/SCIFCanonicalPairTransport.lean research/nightfall/formalization/observability/SCIFCanonicalUnchangedPair.lean > lean-receipts/SHA256SUMS
           cat lean-toolchain > lean-receipts/LEAN_PIN
           git rev-parse HEAD > lean-receipts/HEAD
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
