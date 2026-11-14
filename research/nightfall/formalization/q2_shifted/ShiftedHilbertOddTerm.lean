@@ -63,7 +63,8 @@ theorem independent_shifted_odd_term
         intro x _
         apply Finset.sum_congr rfl
         intro y _
-        rw [hexpand]
+        simpa only using
+          congrArg (fun t : ℝ => p x * q y * t) (hexpand x y)
       _ = ∑ k : K, (∑ x : A, p x * U x k) *
             (∑ y : B, q y * (nv y * V y k)) := by
         apply Finset.sum_congr rfl
@@ -76,15 +77,24 @@ theorem independent_shifted_odd_term
         intro k _
         rw [hU k]
       _ = ∑ y : B, q y * (nv y * vecDot h (V y)) := by
-        rw [Finset.sum_comm]
-        apply Finset.sum_congr rfl
-        intro y _
-        rw [Finset.mul_sum]
-        unfold vecDot
-        rw [Finset.mul_sum]
-        apply Finset.sum_congr rfl
-        intro k _
-        ring
+        calc
+          (∑ k : K, h k *
+              (∑ y : B, q y * (nv y * V y k))) =
+              ∑ k : K, ∑ y : B,
+                h k * (q y * (nv y * V y k)) := by
+                  apply Finset.sum_congr rfl
+                  intro k _
+                  rw [Finset.mul_sum]
+          _ = ∑ y : B, ∑ k : K,
+                h k * (q y * (nv y * V y k)) := Finset.sum_comm
+          _ = ∑ y : B, q y * (nv y * vecDot h (V y)) := by
+                apply Finset.sum_congr rfl
+                intro y _
+                unfold vecDot
+                rw [Finset.mul_sum, Finset.mul_sum]
+                apply Finset.sum_congr rfl
+                intro k _
+                ring
   change jointAvg p q (fun x y =>
     nv y * vecDot (U x) (V y)) ≤
       a*c*(∑ y : B, q y * nv y)
