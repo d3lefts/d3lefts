@@ -1,0 +1,143 @@
+name: NIGHTFALL Q2 source Parseval variance energy strict kernel
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/ActualESVarianceEnergy.lean'
+      - 'research/nightfall/formalization/product_space/ActualESTwoCoordinateMarginal.lean'
+      - 'research/nightfall/formalization/product_space/ActualESInfluenceEnergy.lean'
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/check_exact_source_energy_20261113.py'
+      - '.github/workflows/nightfall-q2-source-parseval.yml'
+  workflow_dispatch:
+concurrency:
+  group: q2-source-parseval-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  kernel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    steps:
+      - uses: actions/checkout@v4
+      - name: Independent exact source variance and owner-energy regression
+        run: |
+          set -euo pipefail
+          python3 -I research/nightfall/2026-11-quadratic-law-free-audit/check_exact_source_energy_20261113.py
+      - name: Install historical source-compatible Lean pin
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.33.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          export PATH="$HOME/.elan/bin:$PATH"
+          git clone https://github.com/physical-superintelligence/aaronson-ambainis.git /tmp/aa
+          git -C /tmp/aa checkout 2a6ceaef872ae993708950f951989134084b851a
+          (cd /tmp/aa && lake exe cache get)
+          (cd /tmp/aa && lake build AaronsonAmbainis.DetTheorem AaronsonAmbainis.TwoSided.Antipodal \
+            AaronsonAmbainis.Bridge.Positivity AaronsonAmbainis.Row.Main \
+            AaronsonAmbainis.Pack.Main AaronsonAmbainis.Dual.Main \
+            AaronsonAmbainis.Level.Integral AaronsonAmbainis.TwoSided.CauchySchwarz)
+      - name: Build canonical source and orthogonality prerequisites
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/aa/.lake/build/lib/lean
+          P=research/nightfall/formalization/product_space
+          O=research/nightfall/formalization/observability
+          for module in ProductSpaceTwoSidedBridge ProductRowBound ProductInfluence EfronSteinDegree QuadraticHoeffdingBridge; do
+            cp "$P/$module.lean" "/tmp/aa/$module.lean"
+            (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/$module.olean" "$module.lean")
+          done
+          cp "$O/CenteredRectangles.lean" /tmp/aa/CenteredRectangles.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/CenteredRectangles.olean CenteredRectangles.lean)
+          for module in ActualESPairMatchingBridge ActualESOrthogonality; do
+            cp "$P/$module.lean" "/tmp/aa/$module.lean"
+            (cd /tmp/aa && lake env lean -o ".lake/build/lib/lean/$module.olean" "$module.lean")
+          done
+      - name: Strict actual source two-coordinate marginal and pair energy identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualESTwoCoordinateMarginal
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/product_space/ActualESTwoCoordinateMarginal.lean \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.actual_source_two_coordinate_marginal \
+            --decl $N.actual_source_pair_component_energy_eq_two_coord \
+            --json-out lean-receipts/q2-source-pair-energy.json || {
+              cat lean-receipts/q2-source-pair-energy.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-source-pair-energy.json
+      - name: Strict source Parseval theorem and exact degree-two variance check
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualESVarianceEnergy
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/product_space/ActualESVarianceEnergy.lean \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.weighted_orthogonal_sum_sq \
+            --decl $N.esComp_empty_eq_source_mean \
+            --decl $N.source_centered_es_sum \
+            --decl $N.actual_source_variance_es_energy \
+            --decl $N.actual_degree_two_source_variance_energy \
+            --json-out lean-receipts/q2-source-parseval.json || {
+              cat lean-receipts/q2-source-parseval.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-source-parseval.json
+      - name: Strict source influence ANOVA and owned pair subset energy cap
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space
+          O=research/nightfall/formalization/observability
+          cp "$P/ActualESConditionalSection.lean" /tmp/aa/ActualESConditionalSection.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESConditionalSection.olean ActualESConditionalSection.lean)
+          cp "$P/ActualESConditionalProjection.lean" /tmp/aa/ActualESConditionalProjection.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESConditionalProjection.olean ActualESConditionalProjection.lean)
+          cp "$O/ArbitraryLawFourthMoment.lean" /tmp/aa/ArbitraryLawFourthMoment.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ArbitraryLawFourthMoment.olean ArbitraryLawFourthMoment.lean)
+          cp "$P/ActualESSourceEnergy.lean" /tmp/aa/ActualESSourceEnergy.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESSourceEnergy.olean ActualESSourceEnergy.lean)
+          cp "$P/ActualESVarianceEnergy.lean" /tmp/aa/ActualESVarianceEnergy.lean
+          (cd /tmp/aa && lake env lean -o .lake/build/lib/lean/ActualESVarianceEnergy.olean ActualESVarianceEnergy.lean)
+          N=Nightfall.Observability.ActualESInfluenceEnergy
+          python3 scripts/lean_bridge.py \
+            "$P/ActualESInfluenceEnergy.lean" \
+            --workspace /tmp/aa --timeout 1200 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.source_section_full_neighbor_average \
+            --decl $N.source_section_eq_canonical_containing \
+            --decl $N.actual_source_influence_es_energy \
+            --decl $N.actual_degree_two_influence_es_energy \
+            --decl $N.actual_owned_pair_subset_energy_le_influence \
+            --json-out lean-receipts/q2-source-influence-energy.json || {
+              cat lean-receipts/q2-source-influence-energy.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-source-influence-energy.json
+      - name: Hash theorem and compiler inputs
+        if: always()
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/product_space/{ActualESVarianceEnergy,ActualESOrthogonality,ActualESTwoCoordinateMarginal,ActualESInfluenceEnergy}.lean > lean-receipts/SHA256SUMS
+          sha256sum research/nightfall/2026-11-quadratic-law-free-audit/check_exact_source_energy_20261113.py >> lean-receipts/SHA256SUMS
+          git rev-parse HEAD > lean-receipts/repo-commit
+          printf 'Source-compatible historical Lean 4.33.0; active repository default is Lean 4.35.0\n' > lean-receipts/scope.txt
+      - name: Upload strict kernel receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: q2-source-parseval-strict-lean-receipt
+          path: lean-receipts/
+          retention-days: 45
