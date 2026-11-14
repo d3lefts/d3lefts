@@ -28,9 +28,10 @@ class Ticket:
     template_hash: str
 
 class VersionedGate:
-    def __init__(self, baseline, policy, trusted):
+    def __init__(self, baseline, policy, trusted, synthesizer=None):
         self.baseline=baseline
         self.base_hash=digest_json(baseline)
+        self.synthesizer=synthesizer
         self.dir=Path(trusted)
         self.dir.mkdir(parents=True,exist_ok=True)
         self.snapshots=self.dir/'snapshots'
@@ -131,7 +132,7 @@ class VersionedGate:
             shutil.copytree(snapshot,work)
             if hash_source(work)!=s['source_hash']:
                 raise RuntimeError('snapshot copy mismatch')
-            artifact,seconds=synth(work)
+            artifact,seconds=(self.synthesizer or synth)(work)
             proof=check_promotion(self.baseline,artifact,s['policy'])
             if hash_source(snapshot)!=s['source_hash']:
                 raise RuntimeError('snapshot changed during check')
