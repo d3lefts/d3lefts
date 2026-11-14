@@ -1,18 +1,6 @@
 name: NIGHTFALL Q2 source quadratic canonical sector variance split Lean 4.36
 on:
-  push:
-    branches: [nightfall-q2-terminal-v436-20261114]
-    paths:
-      - 'research/nightfall/formalization/observability/ActualSourceVarianceEnergy.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceQuadraticSectorSplit.lean'
-      - 'research/nightfall/formalization/observability/ActualSourcePairEnergyBridge.lean'
-      - '.github/workflows/nightfall-q2-terminal-owner-v436.yml'
-  pull_request:
-    paths:
-      - 'research/nightfall/formalization/observability/ActualSourceVarianceEnergy.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceQuadraticSectorSplit.lean'
-      - 'research/nightfall/formalization/observability/ActualSourcePairEnergyBridge.lean'
-      - '.github/workflows/nightfall-q2-terminal-owner-v436.yml'
+  # Retained as manual diagnostic; Q2 pinned CI is consolidated.
   workflow_dispatch:
 permissions:
   contents: read

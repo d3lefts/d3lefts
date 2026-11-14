@@ -1,18 +1,6 @@
 name: NIGHTFALL Q2 exact original-source owned variance and singleton influence Lean 4.36
 on:
-  push:
-    branches: [nightfall-q2-terminal-v436-20261114]
-    paths:
-      - 'research/nightfall/formalization/observability/ActualSourceSingletonEnergyBridge.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceSingletonEnergyBridge.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceInfluenceEnergy.lean'
-      - '.github/workflows/nightfall-q2-terminal-owner-v436.yml'
-  pull_request:
-    paths:
-      - 'research/nightfall/formalization/observability/ActualSourceSingletonEnergyBridge.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceSingletonEnergyBridge.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceInfluenceEnergy.lean'
-      - '.github/workflows/nightfall-q2-terminal-owner-v436.yml'
+  # Retained as manual diagnostic; Q2 pinned CI is consolidated.
   workflow_dispatch:
 permissions:
   contents: read
