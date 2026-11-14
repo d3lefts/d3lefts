@@ -41,7 +41,6 @@ theorem energy_dual_site
     linarith
   by_cases htzero : T = 0
   · subst T
-    dsimp [p]
     nlinarith [henergy]
   have htpos : 0 < T := lt_of_le_of_ne hT (Ne.symm htzero)
   by_cases hsmall : 5*W ≤ 2*T
