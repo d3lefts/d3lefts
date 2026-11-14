@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1; Node 24
       - name: Reject obsolete active CI dependencies and pin drift
         run: python3 scripts/check_active_lean_compiler.py --self-test
       - name: Reject duplicate Q2 kernel autostarts and terminal certificate drift

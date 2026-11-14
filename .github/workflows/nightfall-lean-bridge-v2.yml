@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1; Node 24
       - name: Reject retired compiler or external dependencies in active CI
         run: |
           python3 - <<'PY'
@@ -77,7 +77,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1; Node 24
       - uses: ./.github/actions/setup-nightfall-lean
       - name: Pinned kernel check of exact theorem type
         shell: bash
@@ -96,7 +96,7 @@ jobs:
             lean-receipts/bridge-v2-contract.json
       - name: Upload exact compiler and source receipts
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2; Node 24
         with:
           name: nightfall-lean-bridge-v2-receipts
           path: lean-receipts/
