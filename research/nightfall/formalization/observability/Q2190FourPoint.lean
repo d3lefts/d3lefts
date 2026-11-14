@@ -80,7 +80,12 @@ theorem fourpoint_derivative_exact
   dsimp [point1, point2, point3, point4]
   have hs := fourpoint_derivative_factor
   have ht := A_add_D
-  nlinarith
+  have hrewrite :
+      A * (c0 + r*c1 + r*s1 + s2 - (c0 + r*c1 - r*s1 - s2)) -
+        D * (c0 - r*c1 + r*s1 - s2 - (c0 - r*c1 - r*s1 + s2)) =
+      (2*r*(A-D))*s1 + (2*(A+D))*s2 := by ring
+  rw [hrewrite, hs, ht]
+  ring
 
 /-- The entire four-sample derivative bound with no analytic
 Bernstein axiom and no hidden positivity/sampling hypothesis. -/
@@ -137,13 +142,15 @@ theorem rotated_mass_normalized
   classical
   calc
     (∑ x : α, (a*psi x + sign*b*v x)^2) =
-      a^2 * (∑ x : α, (psi x)^2) +
-      (2*a*sign*b) * (∑ x : α, psi x*v x) +
-      sign^2*b^2 * (∑ x : α, (v x)^2) := by
-        rw [← Finset.sum_add_distrib, ← Finset.sum_add_distrib]
+      ∑ x : α, (a^2*(psi x)^2 +
+        (2*a*sign*b)*(psi x*v x) + sign^2*b^2*(v x)^2) := by
         apply Finset.sum_congr rfl
         intro x _
         ring
-    _ = 1 := by rw [hpsi,hv,hperp,hunit,hsign]; ring
+    _ = a^2 * (∑ x : α, (psi x)^2) +
+      (2*a*sign*b) * (∑ x : α, psi x*v x) +
+      sign^2*b^2 * (∑ x : α, (v x)^2) := by
+        simp only [Finset.sum_add_distrib, ← Finset.mul_sum]
+    _ = 1 := by rw [hpsi,hv,hperp,hsign]; nlinarith [hunit]
 
 end Nightfall.Q2190
