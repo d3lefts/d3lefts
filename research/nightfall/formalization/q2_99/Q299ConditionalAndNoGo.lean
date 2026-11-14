@@ -172,4 +172,35 @@ theorem biased_two_increment_symmetric_envelope_fails :
   norm_num
 
 
+
+/-- Even adding the genuine Jensen constraint a≤u does NOT
+make the old fourth-moment envelope sufficient for c/5.
+Exact rational assignment: t=1, a=u=5/12, s=119/144, c=5/4,
+q=123433/20736.  This is a SCALAR moment-feasibility
+countermodel, not a realizable independent-Hilbert increment law. -/
+theorem c5_old_envelope_fails_even_with_jensen :
+    ((1:ℝ)^2 = (5/12:ℝ)^2 + (119/144:ℝ)) ∧
+    ((5/12:ℝ) ≤ (5/12:ℝ)) ∧
+    ((1:ℝ)^6 ≤ (5/12:ℝ)^2 * (123433/20736:ℝ)) ∧
+    ((123433/20736:ℝ) ≤ 3*(1:ℝ)^4 -
+      2*(5/12:ℝ)^4 +
+      4*(5/12:ℝ)*(5/4:ℝ)*(119/144:ℝ) +
+      (5/4:ℝ)^2*(119/144:ℝ)) ∧
+    ¬ ((1:ℝ) ≤ Real.sqrt 3*(5/12) + (5/4:ℝ)/5) := by
+  have hr0 : 0 ≤ Real.sqrt 3 := Real.sqrt_nonneg _
+  have hr2 : (Real.sqrt 3)^2=(3:ℝ) :=
+    Real.sq_sqrt (by norm_num)
+  have hroot : Real.sqrt 3*(5/12:ℝ) < (3:ℝ)/4 := by
+    nlinarith [hr2]
+  constructor
+  · norm_num
+  constructor
+  · norm_num
+  constructor
+  · norm_num
+  constructor
+  · norm_num
+  · intro h
+    nlinarith
+
 end Nightfall.Q299
