@@ -1,5 +1,13 @@
 # Active mathematical Proof Passport expansion — updated 12 November 2026
 
+## 14 November 2026 certificate reconciliation (v13)
+
+The original historical eleven Proof Passports and the twelve active claim identities remain frozen as identity sets. The active JSON registry is now **v13**, reflecting the strictly certified finite common-alphabet unconditional Q2 coefficient **1064.958449**. The older 12 November v12 language below is retained only as a dated historical description.
+
+See [Current Lean and Exact-Evidence Proof Passport](CURRENT_LEAN_PASSPORT_20261114.md) for all four merged Lean families, exact current-head receipts, SCIF graph/TV repair, conditional authority and horizon restrictions, and open source-bridge work. The current machine-readable register is [docs/current-lean-proof-receipts-20261114.json](../../../docs/current-lean-proof-receipts-20261114.json). The original 67-file Lean source register is deliberately **not** rewritten.
+
+---
+
 **NIGHTFALL Constellation / research lead Devin J. Wright.**
 These seven original claim-specific dossiers comprise **two upgrades to existing active records** and **five new active records**. The live registry is `docs/active-proof-passport.json` (v12, twelve active claims). The historically frozen eleven Proof Passports in `docs/research-registry.js`, the 40 curated research entries and the five approved findings remain unchanged. The active collection has twelve claims; the separate frozen historical collection has eleven claims. They are not the same records.
 
