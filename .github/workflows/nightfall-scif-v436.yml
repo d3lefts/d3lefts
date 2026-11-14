@@ -38,6 +38,24 @@ jobs:
             --json-out lean-receipts/01-02-scif-recenter-graph.json
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/01-02-scif-recenter-graph.json
+          python3 scripts/lean_bridge.py research/nightfall/formalization/observability/SCIFInfluence.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 600 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl ${N}.pair_energy_recenter_exact \
+            --decl ${N}.local_influence_recenter_exact \
+            --decl ${N}.pair_energy_law_difference \
+            --json-out lean-receipts/03-scif-exact-influence-energy.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/03-scif-exact-influence-energy.json
+          python3 scripts/lean_bridge.py research/nightfall/formalization/observability/SCIFOwnerRepair.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 600 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl ${N}.centered_firstMean_abs_le_l1 \
+            --decl ${N}.fixed_owner_recenter_cover \
+            --decl ${N}.fixed_owner_scaled_total_cost \
+            --json-out lean-receipts/04-scif-fixed-owner-repair.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/04-scif-fixed-owner-repair.json
       - name: Record immutable inputs
         if: always()
         run: |
