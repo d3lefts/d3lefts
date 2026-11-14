@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-current-named-lean-proof-receipts-v1",
-  "version": 2,
+  "version": 3,
   "as_of": "2026-11-14",
   "target_repository": "d3lefts/d3lefts",
-  "base_main_after_research_merges": "0940babe1722534868e61d9c3f0a81c0344037c6",
+  "base_main_after_research_merges": "021d260ded2fa16995a811c641a20867a42c4ff5",
   "historical_frozen_67_register": "docs/lean-certificate-provenance.json",
   "prior_q2_cert": "docs/q2-source-lean-certificate-20261114.json",
   "pin": {
@@ -15,7 +15,7 @@
       "propext"
     ]
   },
-  "receipt_scope": "Eight separate PR-head strict named-declaration families across 19 source blobs with pinned Lean/Mathlib. Not an after-merge common dependency build. Never infer a full infinite product theorem, a novel Efron–Stein inequality, or complete SCIF owner proof. Historical 67-source records remain frozen.",
+  "receipt_scope": "Nine distinct PR-head strict Lean 4.36.0-rc2 named-certification groups spanning 23 exact source files; strongest finite common-alphabet original-source Q2 bound is 736.673197758287 via #498. NOT one after-merge common Lean build, novel-priority finding, full SCIF owner terminal or infinite-index L2 theorem.",
   "new_proof_groups": [
     {
       "pr": 494,
@@ -241,6 +241,42 @@
           "path": "research/nightfall/formalization/universal/InfinitePiSourceBridge.lean",
           "git_blob_sha1": "6a69efb434da886390c91b5e65533e1e814379ba",
           "representative_named_declaration": "Nightfall.InfinitePiSourceBridge.source_cylinder_centered_square"
+        }
+      ]
+    },
+    {
+      "pr": 498,
+      "head_sha": "50239da1b633660f793f1710fadc05b1bdc6b3fe",
+      "merge_sha": "021d260ded2fa16995a811c641a20867a42c4ff5",
+      "run": 43633180605,
+      "run_url": "https://github.com/d3lefts/d3lefts/actions/runs/43633180605",
+      "artifact_id": 14129276102,
+      "artifact_url": "https://github.com/d3lefts/d3lefts/actions/runs/43633180605/artifacts/14129276102",
+      "artifact_sha256": "aa709276c44891c2ba3d51de85dc4ec092d5b7aa01d8dcc79935a9cd6e403094",
+      "claim": "Source-only unconditional finite common-alphabet quadratic variance-influence theorem Var(f)^2 ≤ [257/20+(9/4)sqrt(2)+5sqrt(3)+sqrt(6)]^2 B² M ≈ 736.673197758287 B² M; actual original-source influence and no extra caller joint-energy budget.",
+      "limits": [
+        "Finite common alphabet and finite coordinate set; distinct alphabets, all-index L2 bridge and historical mathematical novelty not proved."
+      ],
+      "source_modules": [
+        {
+          "path": "research/nightfall/formalization/observability/ActualSourceQ2EnergyDualScalar.lean",
+          "git_blob_sha1": "bf1d4a552ca078fee9c61ac8af9f4fc0aa75a38a",
+          "representative_named_declaration": "Nightfall.Observability.ActualSourceQ2EnergyDualScalar.energy_dual_scalar_endpoint"
+        },
+        {
+          "path": "research/nightfall/formalization/observability/ActualSourceQ2EnergyDualSource.lean",
+          "git_blob_sha1": "86c52abfab006998897d74c69e25555702c849c7",
+          "representative_named_declaration": "Nightfall.Observability.ActualSourceQ2EnergyDualSource.original_singleton_plus_owned_energy_le_influence"
+        },
+        {
+          "path": "research/nightfall/formalization/observability/ActualSourceQ2EnergyDualTerminalGate.lean",
+          "git_blob_sha1": "5e21e32974c85bb095404cc6796e06f35b72dc1f",
+          "representative_named_declaration": "Nightfall.Observability.ActualSourceQ2EnergyDualTerminalGate.actual_source_q2_energy_dual_given_additive_budget"
+        },
+        {
+          "path": "research/nightfall/formalization/observability/ActualSourceQ2EnergyDualUnconditional.lean",
+          "git_blob_sha1": "23227959efe9096093f30b08d285ba9e0345291e",
+          "representative_named_declaration": "Nightfall.Observability.ActualSourceQ2EnergyDualUnconditional.actual_source_q2_energy_dual_unconditional"
         }
       ]
     }
