@@ -68,12 +68,14 @@ theorem q2_scalar_endpoint
             exact Finset.sum_le_sum (fun i _ => hstep i)
       _ = (∑ i : ι, c i * z i) + ρ * T * (∑ i : ι, z i) := by
         simp only [mul_add, Finset.sum_add_distrib]
-        rw [← Finset.mul_sum]
+        rw [Finset.mul_sum]
         congr 1
         · apply Finset.sum_congr rfl
           intro i _
           ring
-        · ring
+        · apply Finset.sum_congr rfl
+          intro i _
+          ring
   have hrough :
       V ≤ T * (∑ i : ι, a i) +
         T * (∑ i : ι, c i) +
