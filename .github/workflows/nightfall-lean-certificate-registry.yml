@@ -8,6 +8,8 @@ on:
       - 'research/nightfall/formalization/README.md'
       - 'docs/lean-certificate-provenance.json'
       - 'docs/lean-pending-source-custody.json'
+      - 'docs/q2-source-lean-certificate-20261114.json'
+      - 'scripts/check_q2_named_certificate.py'
       - 'scripts/lean_certificate_registry.py'
       - 'scripts/test_lean_certificate_provenance.cjs'
       - 'tests/test_lean_certificate_registry.py'
@@ -18,6 +20,8 @@ on:
       - 'research/nightfall/**/*.lean'
       - 'docs/lean-certificate-provenance.json'
       - 'docs/lean-pending-source-custody.json'
+      - 'docs/q2-source-lean-certificate-20261114.json'
+      - 'scripts/check_q2_named_certificate.py'
       - 'scripts/lean_certificate_registry.py'
       - 'scripts/test_lean_certificate_provenance.cjs'
       - 'tests/test_lean_certificate_registry.py'
@@ -52,6 +56,8 @@ jobs:
           if [[ "$GITHUB_EVENT_NAME" == "pull_request" ]]; then pending+=(--allow-pending); fi
           python3 scripts/lean_certificate_registry.py --audit "${pending[@]}" \
             --json-out lean-receipts/consolidated-source-index.json
+      - name: Verify separately certified current Q2 named declarations and exact source bytes
+        run: python3 scripts/check_q2_named_certificate.py --self-test
       - name: Preserve scope-labeled inventory for inspection
         if: always()
         uses: actions/upload-artifact@v4
