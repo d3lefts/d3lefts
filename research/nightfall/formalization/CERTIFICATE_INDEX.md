@@ -1,5 +1,12 @@
 # NIGHTFALL Lean certificates — consolidated audit
 
+## Latest verified finite Q2 and current Lean inventory — 14 November
+
+**Merged #498 is a strict unconditional original-source finite Q2 terminal** at coefficient **736.673197758287**, [run 43633180605](https://github.com/d3lefts/d3lefts/actions/runs/43633180605). Its exact source-derived joint singleton/owned energy certificate is included; there is no extra caller hypothesis. Earlier #494's 1064.958 is a weaker valid checkpoint; 625/620 remain analytic.
+
+The current post-checkpoint custody is **107 source blobs**, of which **23** are separately indexed to nine pinned named-declaration PR-head receipts. Frozen 67-source historical provenance is not modified. See [current receipt index v3](../../../docs/current-lean-proof-receipts-20261114.json). No claim of after-merge global kernel replay, full all-index L² transfer, agent effect enforcement or original priority.
+
+---
 ## Later 14 November Lean source custody checkpoint
 
 Four additional scoped Lean PRs — **#500, #501, #503 and #506** — have now merged, adding five source blobs: `SCIFActualInfluence.lean`, `InfinitePiSourceBridge.lean`, `SCIFSourceDegree.lean`, `SCIFSourceEnergy.lean` and `ActualSourceEfronStein.lean`. Their explicit pinned heads, named declarations and receipt artifacts are in [current proof index v2](../../../docs/current-lean-proof-receipts-20261114.json). The original-source influence-law update is now a strict component certificate; the full source-generated SCIF owner terminal and infinite-product L² transfer remain OPEN. The all-degree Efron–Stein statement is classical and finite.
