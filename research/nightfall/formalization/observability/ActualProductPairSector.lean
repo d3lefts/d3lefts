@@ -163,4 +163,153 @@ theorem actual_product_two_site_marginal
           _ = p j a * p k d * H a d := by
                 rw [actual_product_two_site_event p hp1 j k hjk a d]
 
+
+/-- A separately source-centered *actual* pair kernel survives
+conditioning exactly when both original coordinates are retained.
+This is a product-source statement, not a synthetic neighbor law. -/
+theorem actual_centered_pair_source_projection
+    (p : ι → α → ℝ)
+    (hp1 : ∀ i, (∑ a : α, p i a) = 1)
+    (j k : ι) (hjk : j ≠ k)
+    (H : α → α → ℝ)
+    (hcenterj : ∀ b : α, (∑ a : α, p j a * H a b) = 0)
+    (hcenterk : ∀ a : α, (∑ b : α, p k b * H a b) = 0)
+    (S : Finset ι) (x : ι → α) :
+    sourceConditional p S (fun z : ι → α => H (z j) (z k)) x =
+      if j ∈ S ∧ k ∈ S then H (x j) (x k) else 0 := by
+  classical
+  have hglobal :
+      (∑ a : α, ∑ b : α, p j a * p k b * H a b) = 0 := by
+    calc
+      (∑ a : α, ∑ b : α, p j a * p k b * H a b) =
+        ∑ a : α, p j a * (∑ b : α, p k b * H a b) := by
+          apply Finset.sum_congr rfl
+          intro a _
+          rw [Finset.mul_sum]
+          apply Finset.sum_congr rfl
+          intro b _
+          ring
+      _ = 0 := by simp [hcenterk]
+  by_cases hj : j ∈ S
+  · by_cases hk : k ∈ S
+    · have hsource :
+        sourceConditional p S (fun z : ι → α => H (z j) (z k)) x =
+          H (x j) (x k) := by
+        unfold sourceConditional
+        calc
+          (∑ y : ι → α, originalMass p y •
+            H ((keepSource S x y) j) ((keepSource S x y) k)) =
+            ∑ y : ι → α, originalMass p y * H (x j) (x k) := by
+              apply Finset.sum_congr rfl
+              intro y _
+              simp [keepSource, hj, hk, smul_eq_mul]
+          _ = H (x j) (x k) := by
+              rw [← Finset.sum_mul, originalMass_total_one p hp1, one_mul]
+      simpa [hj, hk] using hsource
+    · have hsource :
+        sourceConditional p S (fun z : ι → α => H (z j) (z k)) x = 0 := by
+        unfold sourceConditional
+        calc
+          (∑ y : ι → α, originalMass p y •
+            H ((keepSource S x y) j) ((keepSource S x y) k)) =
+            ∑ y : ι → α, originalMass p y * H (x j) (y k) := by
+              apply Finset.sum_congr rfl
+              intro y _
+              simp [keepSource, hj, hk, smul_eq_mul]
+          _ = ∑ b : α, p k b * H (x j) b :=
+              actual_product_coordinate_marginal p hp1 k (fun b => H (x j) b)
+          _ = 0 := hcenterk (x j)
+      simpa [hj, hk] using hsource
+  · by_cases hk : k ∈ S
+    · have hsource :
+        sourceConditional p S (fun z : ι → α => H (z j) (z k)) x = 0 := by
+        unfold sourceConditional
+        calc
+          (∑ y : ι → α, originalMass p y •
+            H ((keepSource S x y) j) ((keepSource S x y) k)) =
+            ∑ y : ι → α, originalMass p y * H (y j) (x k) := by
+              apply Finset.sum_congr rfl
+              intro y _
+              simp [keepSource, hj, hk, smul_eq_mul]
+          _ = ∑ a : α, p j a * H a (x k) :=
+              actual_product_coordinate_marginal p hp1 j (fun a => H a (x k))
+          _ = 0 := hcenterj (x k)
+      simpa [hj, hk] using hsource
+    · have hsource :
+        sourceConditional p S (fun z : ι → α => H (z j) (z k)) x = 0 := by
+        unfold sourceConditional
+        calc
+          (∑ y : ι → α, originalMass p y •
+            H ((keepSource S x y) j) ((keepSource S x y) k)) =
+            ∑ y : ι → α, originalMass p y * H (y j) (y k) := by
+              apply Finset.sum_congr rfl
+              intro y _
+              simp [keepSource, hj, hk, smul_eq_mul]
+          _ = ∑ a : α, ∑ b : α, p j a * p k b * H a b :=
+              actual_product_two_site_marginal p hp1 j k hjk H
+          _ = 0 := hglobal
+      simpa [hj, hk] using hsource
+
+/-- Two retention-mask coordinates are independent under the exact
+Boolean product mask source; the relevant joint event has mass rj*rk. -/
+theorem actual_mask_two_site_probability
+    (retain : ι → ℝ) (j k : ι) (hjk : j ≠ k) :
+    (∑ mask : ι → Bool,
+      maskWeight retain mask *
+        (if mask j = true ∧ mask k = true then (1 : ℝ) else 0)) =
+      retain j * retain k := by
+  classical
+  let q : ι → Bool → ℝ := fun i v =>
+    if v then retain i else (1 - retain i)
+  have hq1 (i : ι) : (∑ v : Bool, q i v) = 1 := by
+    simp [q, Fintype.sum_bool]
+  have hm (mask : ι → Bool) :
+      originalMass q mask = maskWeight retain mask := by rfl
+  simpa [hm, q] using
+    (actual_product_two_site_event q hq1 j k hjk true true)
+
+/-- Exact eigenaction of genuine coordinatewise soft refresh on any
+separately centered quadratic pair sector, under the original law.
+No positive atom floor, energy bound, or a claimed Q2 theorem. -/
+theorem actual_soft_noise_centered_pair_eigen
+    (p : ι → α → ℝ)
+    (hp1 : ∀ i, (∑ a : α, p i a) = 1)
+    (retain : ι → ℝ)
+    (j k : ι) (hjk : j ≠ k)
+    (H : α → α → ℝ)
+    (hcenterj : ∀ b : α, (∑ a : α, p j a * H a b) = 0)
+    (hcenterk : ∀ a : α, (∑ b : α, p k b * H a b) = 0)
+    (x : ι → α) :
+    softSourceNoise p retain
+      (fun z : ι → α => H (z j) (z k)) x =
+      (retain j * retain k) * H (x j) (x k) := by
+  classical
+  have hterm (mask : ι → Bool) :
+      sourceConditional p (maskSites mask)
+        (fun z : ι → α => H (z j) (z k)) x =
+      if mask j = true ∧ mask k = true then H (x j) (x k) else 0 := by
+    simpa [maskSites] using
+      (actual_centered_pair_source_projection p hp1 j k hjk
+        H hcenterj hcenterk (maskSites mask) x)
+  unfold softSourceNoise sourceConditionalMixture
+  calc
+    (∑ mask : ι → Bool, maskWeight retain mask •
+      sourceConditional p (maskSites mask)
+        (fun z : ι → α => H (z j) (z k)) x) =
+      ∑ mask : ι → Bool, maskWeight retain mask *
+        (if mask j = true ∧ mask k = true then H (x j) (x k) else 0) := by
+          apply Finset.sum_congr rfl
+          intro mask _
+          rw [hterm mask]
+          rfl
+    _ = (∑ mask : ι → Bool, maskWeight retain mask *
+          (if mask j = true ∧ mask k = true then (1 : ℝ) else 0)) *
+        H (x j) (x k) := by
+          rw [Finset.sum_mul]
+          apply Finset.sum_congr rfl
+          intro mask _
+          by_cases h : mask j = true ∧ mask k = true <;> simp [h]
+    _ = (retain j * retain k) * H (x j) (x k) := by
+          rw [actual_mask_two_site_probability retain j k hjk]
+
 end Nightfall.Observability.ActualProductPairSector
