@@ -1,5 +1,7 @@
 # NIGHTFALL Lean certificates — consolidated audit
 
+**Additional strictly compiled Lean support (#520):** [run 43637631337](https://github.com/d3lefts/d3lefts/actions/runs/43637631337) proves arbitrary product sigma-algebra cylinder generation, measurable-event countable coordinate support, and real measurable-observable countable coordinate support. Exact blobs tracked in [unrestricted terminal proof-scope manifest](../../../docs/unrestricted-terminal-proof-scope-20261114.json). The all-L² original-source unconditional Lean endpoint remains OPEN.
+
 ## 14 November 2026 supplemental current-source certification
 
 Verified after the prior 98-file custody checkpoint (without changing frozen historical 67-file registry): strict named-source Lean #500 / #501 / #506 and new #512 actual `Measure.infinitePi` centered finite-cylinder variance (run 43635195844, SHA artifact 14130006709); #514 finite changed-law all-degree source-variance terminal (run 43635955108, artifact 14130003076). Strongest merged finite common-alphabet degree-two source bound #498 (run 43633180605) has `C₂≈736.673`, supplanting the previously displayed 1064.958. Separate active PR #507 intends a broader historical source-custody reconciliation; do not infer that this supplemental note is the completed custody migration.
