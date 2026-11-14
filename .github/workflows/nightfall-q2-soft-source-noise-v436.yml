@@ -42,6 +42,9 @@ jobs:
             --decl $N.maskWeight_nonneg \
             --decl $N.maskWeight_total_one \
             --decl $N.actual_soft_source_noise_L1 \
+            --decl $N.actual_source_conditional_stationary \
+            --decl $N.actual_source_conditional_mixture_stationary \
+            --decl $N.actual_soft_source_noise_stationary \
             --json-out lean-receipts/q2-soft-source-noise.json || {
               cat lean-receipts/q2-soft-source-noise.json
               exit 1
