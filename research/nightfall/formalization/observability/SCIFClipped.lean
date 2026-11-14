@@ -60,6 +60,7 @@ theorem centered_firstMean_abs_le_clipped_l1
       hmean hbound (le_refl D)
   have hampl : |firstMean q H b| ≤ C :=
     firstMean_abs_le_amplitude q H b C hq0 hq1 hbound
+  change |firstMean q H b| ≤ min D 1 * C
   by_cases hD : D ≤ 1
   · simpa only [min_eq_left hD] using hl1
   · have hD' : (1 : ℝ) ≤ D := le_of_lt (lt_of_not_ge hD)
