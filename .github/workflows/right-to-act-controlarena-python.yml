@@ -53,7 +53,16 @@ jobs:
           CONTROLARENA_TRUSTED_MODEL: ${{ vars.CONTROLARENA_TRUSTED_MODEL }}
           INSPECT_MAX_CONNECTIONS: "2"
         run: |
-          python research/nightfall/right-to-act-controlarena/live_iac_fast.py --execute --limit 1 --out controlarena-model-results
+          # Fail closed with a machine-readable blocked receipt when hosted-model
+          # credentials are unavailable. Offline MockLLM and local Qwen stages
+          # above still execute real ControlArena/Inspect evaluations.
+          if [[ -z "${OPENAI_API_KEY:-}" && -z "${ANTHROPIC_API_KEY:-}" ]]; then
+            rc=0
+            python research/nightfall/right-to-act-controlarena/live_iac_fast.py --execute --limit 1 --out controlarena-model-results || rc=$?
+            test "$rc" -eq 3
+          else
+            python research/nightfall/right-to-act-controlarena/live_iac_fast.py --execute --limit 1 --out controlarena-model-results
+          fi
       - name: Upload execution and dependency evidence
         if: always()
         uses: actions/upload-artifact@v4
