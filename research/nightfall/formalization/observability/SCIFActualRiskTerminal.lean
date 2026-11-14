@@ -19,6 +19,7 @@ namespace Nightfall.Observability.SCIFActualRiskTerminal
 open Finset
 open Nightfall.Observability.ActualProductMergeTower
 open Nightfall.Observability.ActualSourceInfluenceEnergy
+open Nightfall.Observability.ActualSourceVarianceEnergy
 open Nightfall.Observability.SCIFActualInfluence
 open Nightfall.Observability.ActualSourceEfronStein
 
