@@ -77,10 +77,31 @@ satisfies ||f||<=B, variance B²/m and innovation degree 2. Even revealing the r
 
 - check_local_innovations_exact.py — separate original physical source vs latent law, 48 3-state multiparent DAGs, 576 conditional histories, exact ANOVA influences and local update locality: **14,977 Fraction assertions PASS**. Local SHA256: b2b175c861f124dc70979a6145af0e1bc3024ef62ce30349739253ac7d006a9d.
 - check_lower_posterior_exact.py — separate direct physical-history exact Bayes risk, every 356 tested observation subsets across five rank/pair models, two-posterior cross-replica estimator including the zero-influence noise floor and a dependent Z3 star: **817 Fraction assertions PASS**. Local SHA256: d21c85f09eba882a63f67f7321c58a848ebcd09341d24d5697bd80ccfd6fb569.
-- Paper Local_Causal_Observability.tex source SHA256 24e2dd0accccbedff779d6c716cc160a8043de42ffd57756a011bcdacee6ff74; PDF SHA256 769276256816522a7b7494ee4c28a09dff8bd81e2c4376f6277dc24b65acd28e. Full LaTeX, PDF, exact original scripts and source manifest are in the conversation's downloadable archive.
+- Paper Local_Causal_Observability.tex source SHA256 a52883b522a4e7716e4062bce980324770fc0d7831cf91b58c931b44758186a0; PDF SHA256 2f2aa1bd664b637c7c05f1f3a1b4e5cadd1f4d2cbe955d3b43e13ec457f91b2b. Full LaTeX, PDF, exact original scripts and source manifest are in the conversation's downloadable archive.
 - **GitHub custody:** do not claim the full original files or PDF are GitHub-committed unless the exact bytes are uploaded here and source SHA matches; this Markdown proof passport is the repository-scoped mathematical statement.
 
 Prior art: Pearl's Markovian invertible causal mechanisms; Evans--Kenyon--Peres--Schulman tree broadcasting (2000); Koehler--Lifshitz--Minzer--Mossel mixing-measure influences (STOC 2024); classical incremental Bayesian inference and dynamic model counting (Li--Chavira--Darwiche 2007). The exact representation equivalence is elementary/classical. The operational composition is **original within the NIGHTFALL programme**, not cleared as worldwide novelty.
 
 **Decisive next research question:** Is there a quantitatively stable, *approximately locally invertible* latent model in which some innovation information is irretrievably lost through each physical read, with a certificate of the resulting observability/error loss that does not accumulate exponentially or linearly in total system size? This is stronger than restating a product lift.
 **Current PR exact check receipts:** The two committed checker files exactly match the local input SHA256 values above; GitHub Actions run https://github.com/d3lefts/d3lefts/actions/runs/43551919499 passed both (14,977 and 817 assertions). These checks do not certify Q2 analytically or under Lean.
+
+## 6. Sharp physical heat-bath influence impossibility under local invertibility
+
+A locally invertible source with d=1 and all masses strictly positive need **not** satisfy any dimension-independent quadratic inequality for the *physical heat-bath influences* of X. Take fair root sign Z, independent child noise signs U_j with P(U_j=-1)=epsilon in (0,1/2), and physical children X_j=Z U_j. All conditional rows are permutations of (1-epsilon,epsilon). For the bounded physical task f(X)=Z (innovation degree one), Var_mu(f)=1 and every leaf's heat-bath influence I_{X_j}^mu(f)=0, while
+
+    I_Z^mu(f) = 2 sum_{k=0}^m binom(m,k) (epsilon*(1-epsilon))^m /
+          [ (1-epsilon)^k epsilon^(m-k) + epsilon^k (1-epsilon)^(m-k) ]
+          <= (2 sqrt(epsilon*(1-epsilon)))^m.
+
+Proof: the two conditional likelihoods A,D for each leaf configuration give posterior root variance 4AD/(A+D)^2. Multiplying by its marginal probability (A+D)/2 yields 2AD/(A+D), and AM-GM bounds it by sqrt(AD); summing over all 2^m outcomes yields the exponential upper bound. For even m, the central binomial layer gives the lower bound
+
+    I_Z >= binom(m,m/2) [epsilon*(1-epsilon)]^(m/2)
+        = Theta(m^-1/2) [2sqrt(epsilon*(1-epsilon))]^m.
+
+Thus the exponential base is sharp. Yet a **single actual root-state read** determines f exactly. This is a theorem-level impossibility for equating physical conditional resampling influence with useful physical observation, not an impossibility for innovation-coordinate observability.
+
+Independent exact Fraction script check_physical_heatbath_obstruction.py replays the full posterior likelihood formula, upper and lower rates and monotonicity on 48 noisy-star models using **624 exact assertions**. Local SHA256: c75cad635ffd8f6310ab881276830f2aafa20bd1cd20d3c456a0895205417dbb.
+
+## 7. Updated presentation and claim boundary
+
+The companion downloadable seven-page paper includes the heat-bath obstruction; the rank/read lower bound and posterior sample lower remain separate oracles. The three exact scripts are now committed and CI replays them. All source-hash matches and CI statuses must be checked against the latest branch commit. This combined manuscript is a plausible specialized original-synthesis candidate, not a priority-cleared general high-temperature influence theorem; posterior samples/evaluations still have no matched **joint** oracle lower bound.
