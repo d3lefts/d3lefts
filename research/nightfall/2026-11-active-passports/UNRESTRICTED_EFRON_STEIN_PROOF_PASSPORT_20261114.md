@@ -74,6 +74,16 @@ All definitions involve conditional expectations on the original \(\mu\); none r
 \(V(P_Ff)\le S:=\sup_{E\text{ finite}}\sum_{i\in E}I_i(f)\).
 If \(S=\infty\) the claim is immediate. Otherwise Step A and continuity of the squared Hilbert norm yield \(V(f)=\lim_F V(P_Ff)\le S\). \(\square\)
 
+## IIa. Sharpness and boundary checks
+
+**Best universal coefficient equals 1 (mathematically exact).** Take a single nondegenerate coordinate \(i_0\), for example the fair Bernoulli law on \(\{0,1\}\), with \(f(x)=x_{i_0}-1/2\). Then \(\mathbb Ef=0\), \(V(f)=1/4\), \(I_{i_0}(f)=1/4\), and \(I_i(f)=0\) for every \(i\ne i_0\) by independence. The inequality is therefore an equality, so no constant smaller than 1 can work for *all* product spaces. The same example embeds into any index set containing a nondegenerate coordinate. No lower bound is claimed on the *largest single coordinate influence* in terms of variance without additional degree or complexity assumptions.
+
+**Empty-index edge:** if \(I=\varnothing\), the product space has one point up to measurable equivalence, \(f\) is constant a.e. and \(V(f)=0=\sup_{F}\sum_{i\in F}I_i(f)\).
+
+**RHS \(+\infty\):** allowed, the theorem is trivially true; no unlicensed conversion of the extended supremum to a finite real-number sum.
+
+**Independence is essential:** if two coordinates are perfectly correlated, the same coordinate-residual definition can assign zero to both even for a nonconstant observable. The theorem is not a general correlated-input claim.
+
 ## III. Machine-certification passport and exact source
 
 | Scope | PR, successful original-head Lean workflow | What is actually certified |
