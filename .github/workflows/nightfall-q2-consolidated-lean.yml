@@ -70,6 +70,20 @@ jobs:
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             "$OUT/01-shifted-scalar-c3.json"
           echo "PASS: exact shifted scalar c/3 conditional lemma; not source-level Q2 terminal"
+          cp "$SRC/ShiftedOwnerScalarMoments.lean" /tmp/mathlib4/ShiftedOwnerScalarMoments.lean
+          (cd /tmp/mathlib4 &&
+            lake env lean -o .lake/build/lib/lean/ShiftedOwnerScalarMoments.olean ShiftedOwnerScalarMoments.lean)
+          N=Nightfall.Observability.ShiftedOwnerScalarMoments
+          python3 scripts/lean_bridge.py "$SRC/ShiftedOwnerScalarMoments.lean" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl "$N.shifted_c3_from_moments" \
+            --decl "$N.conditional_shifted_budget_273" \
+            --json-out "$OUT/02-shifted-moments-conditional-273.json"
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            "$OUT/02-shifted-moments-conditional-273.json"
+          echo "PASS: conditional moment-to-budget Q2 273 theorem; still not original-source closed"
+
 
       - name: Compile every source module once, then certify declarations in order
         run: |
