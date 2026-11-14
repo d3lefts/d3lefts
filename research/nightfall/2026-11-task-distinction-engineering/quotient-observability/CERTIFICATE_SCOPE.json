@@ -1,0 +1,21 @@
+{
+  "project": "NIGHTFALL task-relevant quotient observability",
+  "version": "0.1",
+  "date": "2026-11-13",
+  "status": "author-analytic theorem with exhaustive finite exact-rational test evidence",
+  "independent_human_review": false,
+  "lean_terminal_proof": false,
+  "novelty_certified": false,
+  "real_sensor_attestation": false,
+  "model_calibration_certified": false,
+  "oracle_scope": "persistent coordinate reads of uniform finite-field latent X with independent, jointly correlated additive noise and authenticated exogenous sparse deltas",
+  "claims": [
+    "exact task quotient posterior",
+    "exact adaptive expected-read Bayes success frontier for scalar modular sums",
+    "pathwise worst-case row-column task revelation frontier",
+    "exact versioned delta transport with raw-word and bounded fan-in gate lower bounds",
+    "non-identifiability under hidden noise-law change"
+  ],
+  "checker": "exact_audit.py",
+  "seed": 20261113
+}
