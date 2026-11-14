@@ -1,15 +1,6 @@
 name: NIGHTFALL Q2 original-source soft noise Lean 4.36
 on:
-  pull_request:
-    paths:
-      - 'research/nightfall/formalization/observability/ActualProductSoftNoise.lean'
-      - 'research/nightfall/formalization/observability/ActualProductSourceMarginal.lean'
-      - '.github/workflows/nightfall-q2-soft-source-noise-v436.yml'
-      - 'research/nightfall/formalization/observability/ActualProductMergeTower.lean'
-      - 'research/nightfall/formalization/observability/ActualProductHilbertJensen.lean'
-  push:
-    branches:
-      - nightfall-q2-soft-source-noise-lean-v436-20261113
+  # Retained as manual diagnostic; automated Q2 proof CI is consolidated.
   workflow_dispatch:
 permissions:
   contents: read

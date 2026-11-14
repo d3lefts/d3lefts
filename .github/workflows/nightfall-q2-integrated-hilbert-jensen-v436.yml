@@ -1,12 +1,6 @@
 name: NIGHTFALL Q2 genuine product Hilbert Jensen Lean 4.36
 on:
-  push:
-    branches:
-      - nightfall-q2-integrated-hilbert-jensen-v436-20261113
-  pull_request:
-    paths:
-      - 'research/nightfall/formalization/observability/ActualProductHilbertJensen.lean'
-      - '.github/workflows/nightfall-q2-integrated-hilbert-jensen-v436.yml'
+  # Retained as manual diagnostic; automated Q2 proof CI is consolidated.
   workflow_dispatch:
 permissions:
   contents: read
