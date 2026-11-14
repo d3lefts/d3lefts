@@ -11,6 +11,8 @@
 - **E: bounded-path influence transfer.** A relative-pair target with each tree path <=D has independent innovation-degree <=D. Composing the pinned finite product influence theorem with the exact potential identity gives at most ceil(4 D^7 B³/(c*eta^(3/2))) innovation reads, each at most two physical site reads, and expected MSE<=eta. The inherited c*=sqrt(3/12500)/pi^6 is historically Lean-checked under #317/#325. The new composition is NOT newly kernel certified.
 - **F: noncommutative path identity.** Ordered products of independent edge increments/inverses equal physical relative labels. Separate S3 checks cover noncommutative cases.
 
+- **G: exact unrestricted binary-path full physical Bayes frontier.** Given a zero-field Ising path with uniform root and independent possibly biased edge sign increments, the full Bayes risk for any fixed observed vertex set S={i1<...<ir} is V-sum_l W(i_l,i_(l+1)). Each interval W is computed exactly from parity mean/covariance recurrences (including t=±1); optimal **nonadaptive** original vertex read sets of size <=r follow a weighted-path DP in O(r n²) arithmetic. Full proof: EXACT_PHYSICAL_PATH_FRONTIER_20261113.md. Source: path_full_bayes.py. Independent branch-exact audit: check_path_full.py (40 models); frozen complete independent original-spin audit: audit_path_full.py (90 models / 5,900 sets / 517 optima). This settles the earlier three-site path gap within its precise subclass; no adaptive or arbitrary-tree optimization is claimed.
+
 ## Mandatory adverse controls
 
 1. A heat-bath influence E Var(f | other innovations) is not generally the immediate gain Var(E[f | this innovation]). The first independent audit failed at trial 3 after these were mistakenly identified; the independent original-spin influence checker was then corrected. The correction is preserved in the full research ZIP.
@@ -20,7 +22,7 @@
 
 ## Original frozen artifact SHA-256 identifiers
 
-The current conversation includes a six-page TeX/PDF manuscript and a complete ZIP with a SHA256SUMS manifest. The source package was successfully replayed independently of the normalized GitHub scripts. Frozen SHA-256:
+The current conversation includes a revised eight-page v1.1 TeX/PDF manuscript and a complete ZIP with a SHA256SUMS manifest. The original v1.0 source package was successfully replayed independently of the normalized GitHub scripts. **The hashes immediately below are frozen v1.0 values, NOT v1.1**. The v1.1 ZIP includes its own SHA256SUMS file. Frozen v1.0 SHA-256:
 - Original LaTeX source: 16acb2201e3563001d0989c0ebc105f9aca215440f047272107f21dd481b8295
 - Original PDF: a851aa8548cc9c6b4fc96a164bdcbdd8f21d1b7c585a242b076b228aa462256e
 - Original original-spin exact checker: d670f76a573d91de55428a2e9c1a9b70da7c70e49d3d5bfb25a38220947b1276
@@ -37,4 +39,4 @@ Historical originality of the combined physically costed innovation theorem has 
 
 ## Next decisive test
 
-Reconstruct the proof with a non-author reviewer; compare exact same-oracle prior art; attempt an exact physical vertex-access frontier that accounts for information in path products, using the three-site 9/40 counterexample as a required test. Source physical-sensor authentication and noisy reads remain open.
+Reconstruct the proof with a non-author reviewer and compare exact same-oracle prior art. The full **nonadaptive binary-path** physical vertex-access frontier is now solved analytically and finitely checked; extend to arbitrary trees, adaptive sites, magnetic fields or noisy observations without silently losing the true Bayes interface. The three-site 9/40 counterexample remains a required regression. Source physical-sensor authentication remains open.
