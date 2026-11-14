@@ -1,5 +1,10 @@
 # Active mathematical Proof Passport expansion — updated 12 November 2026
 
+## Late 14 November finite Q2 certificate update
+
+The latest strict named Lean terminal is now merged #498, coefficient **736.673197758287** (finite common-alphabet, pointwise degree-two, actual original-source influence), [run 43633180605](https://github.com/d3lefts/d3lefts/actions/runs/43633180605). The earlier certified 1064.958 is valid weaker history. The current named receipt index v3 covers 23 sources and nine PR-head groups. This does not certify the rank-r adaptive-observation theorem or the 625/620 proposed sharper coefficients.
+
+---
 ## 14 November 2026 certificate reconciliation (v13)
 
 The original historical eleven Proof Passports and the twelve active claim identities remain frozen as identity sets. The active JSON registry is now **v13**, reflecting the strictly certified finite common-alphabet unconditional Q2 coefficient **1064.958449**. The older 12 November v12 language below is retained only as a dated historical description.
