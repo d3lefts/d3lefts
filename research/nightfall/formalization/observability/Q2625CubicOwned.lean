@@ -17,6 +17,7 @@ open Nightfall.Observability.QuadraticHilbertMany
 open Nightfall.Observability.QuadraticHilbertMoments
 open Nightfall.Observability.QuadraticActualMomentEndpoint
 open Nightfall.Observability.ActualSourceANOVA
+open Nightfall.Observability.ActualProductSourcePairCentering
 open Nightfall.Observability.ActualSourceFinitePairMoment
 open Nightfall.Observability.ActualSourceOwnedGraph
 open Nightfall.Observability.ActualSourceOwnedFourthClosure
