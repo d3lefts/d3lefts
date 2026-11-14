@@ -87,6 +87,46 @@ new theorem in historical priority. It already strictly dominates the
 coefficient 1064.958 on this **narrower fair-cube** domain. It does not
 transport to arbitrary source laws by substitution.
 
+## A categorical counterexample to a uniform root-influence sum
+
+There is a stronger obstruction than the failure of conditional
+two-draw influence comparison. For any n>=2, use n+1 independent
+coordinates of a COMMON n-symbol alphabet `{0,...,n-1}`.
+The first coordinate J is uniform on n labels. All other coordinates
+are independent fair signs encoded in two symbols, with zero mass
+on unused alphabet atoms. Define `s(0)=+1, s(1)=-1`, and `s(a)=-1`
+for unsupported atoms, and set
+
+    f(J,X_1,...,X_n) = s(X_J) = sum_{j=0}^{n-1} 1_{J=j} s(X_j).
+
+The formula is pointwise a sum of terms depending on two source
+coordinates, so its actual Efron–Stein degree is <=2 even on
+zero-probability configurations. It is bounded by 1 everywhere;
+its variance is 1. Under the true product law,
+
+    I_J = 1 - 1/n,       I_{X_j} = 1/n  (for every j),
+
+using the source conditional-variance normalization.
+Consequently,
+
+    sum_i sqrt(I_i) = sqrt(n) + sqrt(1-1/n) --> infinity
+
+despite `||f||_infty=1`, `Var(f)=1`, and `max_i I_i<=1`.
+
+**Implication:** a universal extension of the fair-cube root-influence
+SUM inequality `sum_i sqrt(I_i)<=C B` to arbitrary finite common
+alphabets is mathematically **FALSE**. Any prior-art subsumption
+of our true-source Q2 max-influence bound must use a weaker norm,
+additional structure, or a different reduction. This explicit
+counterexample does not prove our max-influence inequality historically
+novel: Grothendieck/decoupling methods might still yield it
+without a root-sum bound.
+
+The independent checker `check_q2_subsumption_boundary.py` verifies
+this construction by direct Fraction summation for finite n, not by
+assuming the derived influence formulas. This is a test, not a
+formal Lean theorem. The symbolic formulas above give the general proof.
+
 ## Exact obstruction to a naive bias-free reduction
 
 Let a single original source `X~Bernoulli(epsilon)` and `f(X)=X`.
