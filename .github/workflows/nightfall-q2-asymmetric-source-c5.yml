@@ -9,6 +9,7 @@ on:
       - 'research/nightfall/formalization/observability/ActualSourcePureQ2Fifth.lean'
       - 'research/nightfall/formalization/q2_shifted/Q2ShiftedPureC5.lean'
       - '.github/workflows/nightfall-q2-asymmetric-source-c5.yml'
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/check_asymmetric_c5_exact.py'
   workflow_dispatch:
 
 permissions:
@@ -26,6 +27,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Validate source-audit Python syntax
         run: python3 -m py_compile scripts/nightfall_q2_asymmetric_certify.py
+      - name: Adversarial exact asymmetric zero-atom product checks (not a theorem)
+        run: python3 research/nightfall/2026-11-quadratic-law-free-audit/check_asymmetric_c5_exact.py
       - uses: ./.github/actions/setup-nightfall-lean
       - name: Strict pinned transitive original-source Lean compiler and axiom receipts
         run: python3 scripts/nightfall_q2_asymmetric_certify.py
