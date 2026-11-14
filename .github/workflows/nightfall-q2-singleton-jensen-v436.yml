@@ -63,7 +63,7 @@ jobs:
               print("BUILD", mod, flush=True)
               subprocess.run(["lake","env","lean","-o",str(out / (mod + ".olean")),mod + ".lean"], check=True, cwd=workspace, timeout=1200)
           PY
-      - name: Strict owner-influence theorem kernel and axiom audit
+      - name: Strict genuine-source singleton Jensen kernel and axiom audit
         run: |
           set -euo pipefail
           mkdir -p lean-receipts
@@ -75,10 +75,10 @@ jobs:
             --decl $N.original_singleton_norm_le_source_mean_section_norm \
             --decl $N.original_singleton_norm_sum_le_eight \
             --json-out lean-receipts/q2-source-singleton-jensen.json || {
-              cat lean-receipts/q2-source-owned-influence.json
+              cat lean-receipts/q2-source-singleton-jensen.json
               exit 1
             }
-          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-source-owned-influence.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-source-singleton-jensen.json
       - name: Preserve immutable source and compiler provenance
         if: always()
         run: |
@@ -89,6 +89,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: q2-source-owned-influence
+          name: q2-source-singleton-jensen
           path: lean-receipts/
           retention-days: 45
