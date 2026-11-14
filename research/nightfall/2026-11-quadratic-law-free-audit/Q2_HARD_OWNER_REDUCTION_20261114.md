@@ -14,12 +14,12 @@ soft-refresh conditional projection.
 ## Representation and exact argument
 
 Let a finite simple graph have symmetric edge amplitudes
-(w_{ij}=w_{ji}\ge 0), nonnegative endpoint costs (c_i\ge0),
-and suppose (w_{ij}\le\max(c_i,c_j)) for every edge.
+$w_{ij}=w_{ji}\ge0$, nonnegative endpoint costs $c_i\ge0$,
+and suppose $w_{ij}\le\max$c_i,c_j$$ for every edge.
 Fix an arbitrary total order on vertex labels.
 
-Define (o(i,j)=1) if (c_i>c_j), or if (c_i=c_j) and
-(i<j); otherwise (o(i,j)=0) for (i\ne j).
+Define $o(i,j)=1$ if $c_i>c_j$, or if $c_i=c_j$ and
+$i<j$; otherwise $o(i,j)=0$ for $i\ne j$.
 (The diagonal is set to zero.)
 
 For all distinct vertices:
@@ -27,45 +27,45 @@ For all distinct vertices:
 1. Exactly one owner:
    `o(i,j)+o(j,i)=1`, hence also
    `o(i,j)^2+o(j,i)^2=1`.
-   Proof: strict trichotomy for (c_i,c_j), with label order
+   Proof: strict trichotomy for $c_i,c_j$, with label order
    breaking equality.
 2. Owned amplitude:
    `o(i,j) * w(i,j) <= c(i)`.
-   If `o(i,j)=0` this follows from (c_i\ge0); otherwise
-   (c_i\ge c_j) and (w_{ij}\le \max(c_i,c_j)=c_i).
+   If `o(i,j)=0` this follows from $c_i\ge0$; otherwise
+   $c_i\ge c_j$ and (w_{ij}\le \max$c_i,c_j$=c_i).
 
-Let (h_i,h_{ij}) be the **actual** centered Hoeffding tables of the
-same function (f), and (e_{ij}=\mathbb E h_{ij}^2).
+Let $h_i,h_{ij}$ be the **actual** centered Hoeffding tables of the
+same function (f), and $e_{ij}=\mathbb E h_{ij}^2$.
 Set
-[
+$
 H_i(a,X_{-i})=\sum_{j\ne i}o(i,j)h_{ij}(a,X_j),\qquad
 s_i=\mathbb E\|H_i\|^2.
-]
+$
 Independence/centering of different actual neighbor coordinates yields
-(s_i=\sum_{j\ne i}o(i,j)e_{ij}\le I_i), and summing over
-owners gives exactly (\sum_i s_i=\sum_{\{i,j\}}e_{ij}).
+$s_i=\sum_{j\ne i}o(i,j)e_{ij}\le I_i$, and summing over
+owners gives exactly $\sum_i s_i=\sum_{\{i,j\}}e_{ij}$.
 No independence across owners is asserted.
 
 For each owner (i), choose source coordinate-retention
-(r^{(i)}_i=1), (r^{(i)}_j=o(i,j)) for (j\ne i).
+$r^{(i)}_i=1$, $r^{(i)}_j=o(i,j)$ for (j\ne i).
 This is now a **deterministic source conditional expectation**:
 retain owned neighbors and refresh the rest from the true product law.
 The existing centered source-star eigenaction gives
-(Q_{r^{(i)}}U_i=h_i+H_i).
-(L^1) contraction and the triangle inequality yield
-(z_i=\mathbb E\|H_i\|\le u_i+a_i).
+$Q_{r^{(i)}}U_i=h_i+H_i$.
+$L^1$ contraction and the triangle inequality yield
+$z_i=\mathbb E\|H_i\|\le u_i+a_i$.
 
 Each independent owned-neighbor increment has Hilbert norm
-at most (o(i,j)w_{ij}\le c_i).
+at most $o(i,j)w_{ij}\le c_i$.
 The existing independent-vector fourth-moment argument applies with
-second-moment sum (s_i), giving
-(s_i\le z_i(c_i+\sqrt{3M})), (M=\max_i I_i).
+second-moment sum $s_i$, giving
+$s_i\le z_i(c_i+\sqrt{3M})$, $M=\max_i I_i$.
 
 Therefore **if** the genuinely source-derived 8B section budget,
 8B greedy cover, variance Parseval, and the correctly integrated
 distinct-neighbor fourth moment are all formally connected, this
 hard-owner representation supports the *same* weak scalar endpoint
-(V^2\le 256(1+\sqrt3)^2 B^2M) without any square-root
+$V^2\le256(1+\sqrt3)^2B^2M$ without any square-root
 division by endpoint costs. The sharper additive budget may likewise
 be supplied from the original source, not as a hypothesis.
 
