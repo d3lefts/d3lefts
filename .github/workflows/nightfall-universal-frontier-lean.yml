@@ -73,6 +73,27 @@ jobs:
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/universal/transfer.json
 
+      - name: Strict actual Measure.infinitePi finite-source integration bridge
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/universal/InfinitePiSourceBridge.lean
+          cp "$SRC" /tmp/mathlib4/InfinitePiSourceBridge.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/InfinitePiSourceBridge.olean InfinitePiSourceBridge.lean)
+          N=Nightfall.InfinitePiSourceBridge
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.source_finite_marginal \
+            --decl $N.source_single_coordinate \
+            --decl $N.source_cylinder_mass \
+            --decl $N.source_cylinder_integral \
+            --decl $N.source_cylinder_squared_integral \
+            --decl $N.source_cylinder_centered_square \
+            --json-out lean-receipts/universal/infinitepi-source.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/universal/infinitepi-source.json
+
       - name: Strict finite original-source conditional-risk theorem
         shell: bash
         run: |
