@@ -1,0 +1,80 @@
+{
+  "schema": "nightfall-unrestricted-terminal-scope-receipts-v1",
+  "as_of": "2026-11-14",
+  "scope": "actual finite-source and finite-cylinder input lemmas; arbitrary-index all-L2 kernel terminal NOT certified",
+  "pinned_lean": "4.36.0-rc2",
+  "repo": "d3lefts/d3lefts",
+  "frozen_67_history_untouched": true,
+  "analytic_theorem": {
+    "claim": "For arbitrary index set and independent arbitrary probability spaces, real f in L2(infinitePi μ), Var(f) <= sup_{finite F} sum_{i in F} ||f-E[f|all coordinates except i]||_2^2",
+    "mathematical_status": "complete standard author-analytic proof, non-author audit pending; no original mathematics claim",
+    "lean_status": "open",
+    "proof_passport": "research/nightfall/2026-11-active-passports/UNRESTRICTED_EFRON_STEIN_PROOF_PASSPORT_20261114.md",
+    "missing_lean": [
+      "actual infinitePi L2 cylinder density",
+      "conditional expectation operator commutation",
+      "finite Efron-Stein arbitrary measurable alphabets",
+      "source-matched resampling contraction",
+      "unconditional infinitePi terminal theorem with axiom receipt"
+    ]
+  },
+  "source_certificates": [
+    {
+      "pr": 498,
+      "run": 43633180605,
+      "source": "research/nightfall/formalization/observability/ActualSourceQ2EnergyDualUnconditional.lean",
+      "blob_sha1": "23227959efe9096093f30b08d285ba9e0345291e",
+      "name": "Nightfall.Observability.ActualSourceQ2EnergyDualUnconditional.actual_source_q2_energy_dual_unconditional",
+      "scope": "finite common alphabet Q2, C2≈736.673"
+    },
+    {
+      "pr": 500,
+      "run": 43632243900,
+      "source": "research/nightfall/formalization/observability/SCIFActualInfluence.lean",
+      "blob_sha1": "2a3a75b28423e203cab6b424629bb68cc3e6cfe1",
+      "name": "Nightfall.Observability.SCIFActualInfluence.source_influence_edited_difference",
+      "scope": "finite all-degree original-source influence law change"
+    },
+    {
+      "pr": 501,
+      "run": 43631863039,
+      "source": "research/nightfall/formalization/universal/InfinitePiSourceBridge.lean",
+      "blob_sha1": "6a69efb434da886390c91b5e65533e1e814379ba",
+      "name": "Nightfall.InfinitePiSourceBridge.source_cylinder_centered_square",
+      "scope": "actual infinitePi source finite-cylinder exact integrals"
+    },
+    {
+      "pr": 506,
+      "run": 43632637271,
+      "source": "research/nightfall/formalization/observability/ActualSourceEfronStein.lean",
+      "blob_sha1": "4a49ec567220863ed87c6f0b5a62f9d054d755de",
+      "name": "Nightfall.Observability.ActualSourceEfronStein.original_source_all_degree_efron_stein",
+      "scope": "finite common alphabet all-degree true-source Efron-Stein"
+    },
+    {
+      "pr": 512,
+      "run": 43635195844,
+      "source": "research/nightfall/formalization/universal/InfinitePiCylinderVarianceBridge.lean",
+      "blob_sha1": "60ac8a2a4f0c5322fd32d01c8b85c4ea5159d081",
+      "name": "Nightfall.InfinitePiCylinderVarianceBridge.source_cylinder_variance_exact",
+      "scope": "actual arbitrary index infinitePi cylinder variance only",
+      "receipt_artifact": 14130006709,
+      "receipt_sha256": "09e2549e7a91152a10f3e6c190bc0a33566a191bcac13658cd549c8ee019c0b7"
+    },
+    {
+      "pr": 514,
+      "run": 43635955108,
+      "source": "research/nightfall/formalization/observability/SCIFActualRiskTerminal.lean",
+      "blob_sha1": "bcd295de8f54d87c3a169a3edbee90adbd1b3eab",
+      "name": "Nightfall.Observability.SCIFActualRiskTerminal.source_variance_recertified_all_degree",
+      "scope": "finite common alphabet all-degree changed-law source variance",
+      "receipt_artifact": 14130003076,
+      "receipt_sha256": "c66d0041e14d9101708f46c8a7e7a14f9bf5662a0b3f8cf84c53d42fdd24a5a5"
+    }
+  ],
+  "independent_source_reference": {
+    "name": "YuanheZ/lean-stat-learning-theory",
+    "url": "https://github.com/YuanheZ/lean-stat-learning-theory",
+    "scope": "finite-product Lean Efron–Stein prior art, not arbitrary index"
+  }
+}
