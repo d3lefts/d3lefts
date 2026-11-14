@@ -3,6 +3,7 @@ import ActualSourceQ2CoupledTerminalGate
 import ActualSourceQ2SharpAdditiveFinal
 import ActualSourceQ2EnergyDualSource
 import Q2589ScalarSite
+import Q2FlexibleSectionScalar
 import ActualSourceIntegratedFive
 
 /-!
@@ -37,7 +38,7 @@ open Nightfall.Q2625Golden
 open Nightfall.Q2625GoldenTrade
 open Nightfall.Q2589ScalarSite
 open Nightfall.Observability.ActualSourceQ2EnergyDualSource
-open Nightfall.Q2625ScalarEnvelope
+open Nightfall.Q2FlexibleSectionScalar
 open Nightfall.Observability.QuadraticHilbertMany
 open Nightfall.Observability.QuadraticHilbertMoments
 
@@ -177,12 +178,13 @@ theorem actual_source_q2_364_given_additive_budget
       (a i) (u i) (z i) (s i) (c i) T
       hT (ha i) hsnonneg (hz i) (hc i)
       (hJensen i) (hnoise i) hjoint hscubic
-  have hfinal := sitewise_budget_to_variance_squared
+  have hfinal := sitewise_budget_to_variance_squared_flexible
     a u c s B T M (sourceVariance p f)
       (Real.sqrt 3) (Real.sqrt 13-Real.sqrt 3) gamma
+      5
       hB hT hV (by positivity)
       (by exact sub_nonneg.mpr (Real.sqrt_le_sqrt (by norm_num : (3:ℝ) ≤ 13)))
-      gamma_nonneg
+      gamma_nonneg (by positivity)
       hsite hsection (by simpa [a] using hadditive)
       hcover hvariance hT2
   convert hfinal using 1 <;> dsimp [K] <;> ring
