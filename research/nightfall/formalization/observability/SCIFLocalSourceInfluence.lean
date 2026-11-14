@@ -76,7 +76,10 @@ theorem actual_influence_change_as_single_coordinate_integral
       sourceInfluence p f j =
       (∑ x : ι → α, originalMass (editLaw p k q) x * F x) -
       (∑ x : ι → α, originalMass p x * F x) := by
-        simpa only [F] using hd
+        rw [hd, ← Finset.sum_sub_distrib]
+        apply Finset.sum_congr rfl
+        intro x _
+        ring
     _ = (∑ x : ι → α, originalMass p x *
            (∑ a : α, q a * F (Function.update x k a))) -
         (∑ x : ι → α, originalMass p x *
