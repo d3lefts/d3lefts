@@ -121,7 +121,7 @@ theorem actual_source_q2_structural_moment_package
              Real.sqrt (vecNormSq (sumVector Y J.card w))) ∧
          (moment2 (fun k => p (j k)) Y J.card =
            ∑ k ∈ Finset.range J.card,
-             sourcePairEnergy p f i (j k))))) := by
+             sourcePairEnergy p f i (j k)))) := by
   classical
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro x
