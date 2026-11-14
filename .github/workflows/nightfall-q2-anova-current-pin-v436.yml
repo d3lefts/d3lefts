@@ -1,0 +1,70 @@
+name: NIGHTFALL Q2 canonical ANOVA / source-global Lean pin 4.36
+on:
+  push:
+    branches:
+      - nightfall-q2-source-anova-global-v436-20261113
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/ActualSourceANOVA.lean'
+      - 'research/nightfall/formalization/observability/ActualProductResampleBridge.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceCanonicalPair.lean'
+      - '.github/workflows/nightfall-q2-anova-current-pin-v436.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  strict-canonical-anova:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile genuine product-law dependencies on active pin
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd /tmp/mathlib4
+          for f in ActualProductMergeTower ActualProductHilbertJensen ActualProductSoftNoise; do
+            cp "$GITHUB_WORKSPACE/research/nightfall/formalization/observability/$f.lean" .
+            lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean"
+          done
+      - name: Strict current-pin Turturean-free canonical ANOVA
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualSourceANOVA
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualSourceANOVA.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.es_decomp \
+            --decl $N.actual_degree_two_source_decomposition \
+            --decl $N.canonical_condExp_eq_sourceConditional \
+            --json-out lean-receipts/q2-actual-source-anova.json || {
+              cat lean-receipts/q2-actual-source-anova.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-actual-source-anova.json
+      - name: Compile canonical ANOVA as pinned importable module
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/observability/ActualSourceANOVA.lean /tmp/mathlib4/ActualSourceANOVA.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ActualSourceANOVA.olean ActualSourceANOVA.lean)
+      - name: Source hashes and pin
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/observability/ActualSourceANOVA.lean > lean-receipts/SHA256SUMS.txt
+          git rev-parse HEAD > lean-receipts/repo-commit.txt
+          cat lean-toolchain > lean-receipts/lean-toolchain.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: q2-actual-canonical-anova-v436
+          path: lean-receipts/
+          retention-days: 45
