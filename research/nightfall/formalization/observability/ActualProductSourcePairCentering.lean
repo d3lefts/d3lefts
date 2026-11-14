@@ -19,6 +19,7 @@ open Finset
 open Nightfall.Observability.ActualProductMergeTower
 open Nightfall.Observability.ActualProductSoftNoise
 open Nightfall.Observability.ActualProductPairSector
+open Nightfall.Observability.ActualProductSoftNoise
 
 variable {ι α : Type*} [Fintype ι] [DecidableEq ι]
   [Fintype α] [DecidableEq α]
