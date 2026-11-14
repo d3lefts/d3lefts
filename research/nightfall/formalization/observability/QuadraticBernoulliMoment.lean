@@ -13,7 +13,7 @@ open Nightfall.Observability.ActualProductSoftNoise
 open Nightfall.Observability.ActualSourceNoiseEfronStein
 open Nightfall.Observability.QuadraticSwitching
 
-variable {ι : Type*} [Fintype ι] [DecidableEq ι]
+variable {ι : Type} [Fintype ι] [DecidableEq ι]
 
 def maskBit (σ : ι → Bool) (i : ι) : ℝ := if σ i then 1 else 0
 
@@ -111,6 +111,14 @@ theorem bernoulliMean_pair (t : ℝ) (i j : ι) (hij : i ≠ j) :
           exact original_mask_subset_weight (fun _ => t) ({i,j} : Finset ι)
     _ = t^2 := by
       rw [Finset.prod_ite]
-      simp [hij, pow_two]
+      have heq :
+          ({k : ι | k = i ∨ k = j} : Finset ι) =
+            ({i,j} : Finset ι) := by
+        ext k
+        simp only [Finset.mem_filter, Finset.mem_univ, true_and,
+          Finset.mem_insert, Finset.mem_singleton]
+      rw [heq]
+      have hnot : i ∉ ({j} : Finset ι) := by simpa using hij
+      simp [hnot, pow_two]
 
 end Nightfall.Observability.QuadraticBernoulli
