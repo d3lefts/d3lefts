@@ -6,6 +6,7 @@ on:
       - 'research/nightfall/formalization/observability/ActualSourceCentered.lean'
       - 'research/nightfall/formalization/observability/ActualSourceOrthogonality.lean'
       - 'research/nightfall/formalization/observability/ActualSourceVarianceEnergy.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceIntegratedEnergy.lean'
       - 'research/nightfall/formalization/observability/ActualSourceInfluenceEnergy.lean'
       - '.github/workflows/nightfall-q2-source-variance-energy-v436.yml'
   pull_request:
@@ -13,6 +14,7 @@ on:
       - 'research/nightfall/formalization/observability/ActualSourceCentered.lean'
       - 'research/nightfall/formalization/observability/ActualSourceOrthogonality.lean'
       - 'research/nightfall/formalization/observability/ActualSourceVarianceEnergy.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceIntegratedEnergy.lean'
       - '.github/workflows/nightfall-q2-source-variance-energy-v436.yml'
   workflow_dispatch:
 permissions:
@@ -112,11 +114,27 @@ jobs:
               exit 1
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-current-source-influence-energy.json
+      - name: Strict source-only degree-two variance and influence integration
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/observability/ActualSourceInfluenceEnergy.lean /tmp/mathlib4/ActualSourceInfluenceEnergy.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ActualSourceInfluenceEnergy.olean ActualSourceInfluenceEnergy.lean)
+          N=Nightfall.Observability.ActualSourceIntegratedEnergy
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualSourceIntegratedEnergy.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.genuine_source_degree_two_variance_and_influence \
+            --json-out lean-receipts/q2-current-source-integrated-energy.json || {
+              cat lean-receipts/q2-current-source-integrated-energy.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-current-source-integrated-energy.json
       - name: Preserve source identities
         if: always()
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/observability/ActualSourceCentered.lean research/nightfall/formalization/observability/ActualSourceOrthogonality.lean research/nightfall/formalization/observability/ActualSourceVarianceEnergy.lean research/nightfall/formalization/observability/ActualSourceInfluenceEnergy.lean > lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/observability/ActualSourceCentered.lean research/nightfall/formalization/observability/ActualSourceOrthogonality.lean research/nightfall/formalization/observability/ActualSourceVarianceEnergy.lean research/nightfall/formalization/observability/ActualSourceInfluenceEnergy.lean research/nightfall/formalization/observability/ActualSourceIntegratedEnergy.lean > lean-receipts/SHA256SUMS.txt
           git rev-parse HEAD > lean-receipts/repo-commit.txt
           cat lean-toolchain > lean-receipts/lean-toolchain.txt
       - uses: actions/upload-artifact@v4
