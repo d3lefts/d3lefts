@@ -1,7 +1,37 @@
-# Proof Passport v1 — Quadratic influence and rank-optimal adaptive observation
+# Proof Passport v2 — Quadratic influence and rank-optimal adaptive observation
 
 **Claim IDs:** active registry q2-influence, q2-observation; catalogue NF-PS-QUADRATIC-20261110 and NF-OBS-QUADRATIC-20261110.  
-**Checkpoint:** 2026-11-12. **Status:** analytic manuscript, internal AI-assisted audit; **not** end-to-end Lean-certified, externally refereed or globally priority-cleared. This dossier updates the live scope without rewriting immutable v7/v8 source evidence.
+**Checkpoint:** 2026-11-14 current-scope update; 2026-11-12 manuscript history retained. **Status:** finite scalar source Q2 kernel-certified at 1064.958; Hilbert/adaptive and measure-theoretic extensions remain analytic; externally refereed and global priority gates open. This dossier updates the live scope without rewriting immutable v7/v8 source evidence.
+
+## 14 November 2026 — current scoped proof status (supersedes the old finite-scalar status below)
+
+**Finite original-source scalar Q2 is now STRICT LEAN-CERTIFIED** at coefficient
+`C₂ = 407 + 138√2 + 188√3 + 56√6 ≈ 1064.958449026294`,
+with no extra caller-supplied moment, matching or additive-budget hypothesis.
+Merged [PR #494](https://github.com/d3lefts/d3lefts/pull/494) gives
+`Nightfall.Observability.ActualSourceQ2CoupledUnconditional.actual_source_q2_coupled_unconditional`,
+[successful current-head pinned Lean run 43627249467](https://github.com/d3lefts/d3lefts/actions/runs/43627249467).
+The finite coordinate set has a **common finite alphabet**, but marginals may differ
+and may have zero-weight atoms; degree ≤2 and |f|≤B are pointwise. The influence
+is the original-source `E[(f−E_i f)²]` exactly.
+
+The old manuscript coefficient `(10+2√2)²(1+√3)²≈1228.356` remains
+historical, not the strongest presently certified value. The source-level
+[SCIF PR #496](https://github.com/d3lefts/d3lefts/pull/496), [run 43630623548](https://github.com/d3lefts/d3lefts/actions/runs/43630623548),
+adds independently verified finite pair recentering, pointwise Efron–Stein
+degree preservation, canonical graph invariance and fixed-owner amplitude bounds
+`1+min(2TV,1)` and `4` under two-endpoint recentering. Its complete
+original-source *influence-delta* and generated-owner recertification bridges are
+**not** terminally Lean-certified.
+
+**Still open:** genuinely different finite alphabet types in the Q2 theorem,
+the infinite/measurable product L² transfer, a jointly compiled rank-r Hilbert
+adaptive-observation theorem, external human review and novelty. Source
+receipt index: [current 14 November scoped Lean certificates](../../../docs/current-lean-proof-receipts-20261114.json).
+Nothing in the revised scalar proof automatically upgrades an adaptive
+query policy, physical observability, or operational authority.
+
+### Historical manuscript checkpoint — 12 November 2026 (superseded finite-scalar status)
 
 ## Mathematical statements and exact model
 
