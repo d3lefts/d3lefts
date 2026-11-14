@@ -17,6 +17,7 @@ open Nightfall.Observability.ActualProductSourcePairCentering
 open Nightfall.Observability.QuadraticHilbertMany
 open Nightfall.Observability.QuadraticActualMomentEndpoint
 open Nightfall.Observability.QuadraticHilbertMoments
+open Nightfall.Observability.ActualProductMergeTower
 
 variable {ι α : Type} [Fintype ι] [DecidableEq ι]
   [Fintype α] [DecidableEq α]
@@ -126,7 +127,12 @@ theorem finitePairIncrement_norm_bounded
       exact hkernel k hk a d
     have h := sourcePairIncrement_norm_bounded
       p hp hp1 f i jconst c hAll 0 b
-    simpa only [finitePairIncrement, if_pos hk, sourcePairIncrement, jconst] using h
+    have heq : finitePairIncrement p f i j n k b =
+        sourcePairIncrement p f i jconst 0 b := by
+      funext a
+      simp [finitePairIncrement, hk, sourcePairIncrement, jconst]
+    rw [heq]
+    exact h
   · have hc2 : 0 ≤ c^2 := sq_nonneg c
     simpa [finitePairIncrement, hk, vecNormSq] using hc2
 
@@ -299,5 +305,55 @@ theorem original_source_distinct_pair_fourth_endpoint
       Real.sqrt (vecNormSq (sumVector (finitePairIncrement p f i j n)
         n (ActualSourceFiniteSampleLaw.observedActualSample j n x)))) *
       (c + Real.sqrt (3 * M)) := by rw [hfirst]
+
+/-- Original-source fourth-moment endpoint with its exact second-moment
+budget derived from the genuine pair energies. Unlike the preceding
+endpoint, the caller supplies no numerical M or second-moment cap.
+The local amplitude bound remains explicit until owner weights and the
+attained matching cover are integrated. -/
+theorem original_source_distinct_pair_fourth_from_source_energies
+    (p : ι → α → ℝ)
+    (hp : ∀ k a, 0 ≤ p k a)
+    (hp1 : ∀ k, (∑ a : α, p k a) = 1)
+    (f : (ι → α) → ℝ)
+    (i : ι) (j : ℕ → ι) (n : ℕ)
+    (hinj : ∀ k l, k < n → l < n → k ≠ l → j k ≠ j l)
+    (hne : ∀ k, k < n → i ≠ j k)
+    (c : ℝ) (hc : 0 ≤ c)
+    (hkernel : ∀ k, k < n → ∀ a b,
+      |sourceDoubleCenteredPair p f i (j k) a b| ≤ c) :
+    (∑ x : ι → α, originalMass p x *
+      vecNormSq (sumVector (finitePairIncrement p f i j n)
+        n (ActualSourceFiniteSampleLaw.observedActualSample j n x))) ≤
+    (∑ x : ι → α, originalMass p x *
+      Real.sqrt (vecNormSq (sumVector (finitePairIncrement p f i j n)
+        n (ActualSourceFiniteSampleLaw.observedActualSample j n x)))) *
+    (c + Real.sqrt
+      (3 * (∑ k ∈ Finset.range n, sourcePairEnergy p f i (j k)))) := by
+  classical
+  let Y := finitePairIncrement p f i j n
+  have hsource :
+      (∑ x : ι → α, originalMass p x *
+        vecNormSq (sumVector Y n
+          (ActualSourceFiniteSampleLaw.observedActualSample j n x))) =
+      moment2 (fun k => p (j k)) Y n := by
+    simpa only [moment2] using
+      (ActualSourceFiniteSampleLaw.original_source_distinct_prefix_law
+        p hp1 j n hinj (fun w : Samples α n =>
+          vecNormSq (sumVector Y n w)))
+  have hM :
+      (∑ x : ι → α, originalMass p x *
+        vecNormSq (sumVector (finitePairIncrement p f i j n)
+          n (ActualSourceFiniteSampleLaw.observedActualSample j n x))) ≤
+      (∑ k ∈ Finset.range n, sourcePairEnergy p f i (j k)) := by
+    calc
+      _ = moment2 (fun k => p (j k)) Y n := hsource
+      _ = (∑ k ∈ Finset.range n, sourcePairEnergy p f i (j k)) :=
+        finitePairIncrement_moment2_eq_source_pair_energies
+          p hp hp1 f i j n hne
+  exact original_source_distinct_pair_fourth_endpoint
+    p hp hp1 f i j n hinj hne c
+      (∑ k ∈ Finset.range n, sourcePairEnergy p f i (j k))
+      hc hkernel hM
 
 end Nightfall.Observability.ActualSourceFinitePairMoment
