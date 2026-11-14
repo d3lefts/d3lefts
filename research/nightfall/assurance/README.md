@@ -12,7 +12,7 @@
 
 1. Formalize the semantic hypergraph and joint minimax definitions in the repository's pinned Lean environment.
 2. Obtain independent non-author mathematical and prior-art review (especially Heng, *Global Coherence*, 2026; He–Yu, *Cognitive Admission Control*, 2026; Shajari, *ACCA*, 2026).
-3. Build a source-matched three-service/Tennessee Eastman benchmark charging sensing, compute, model synchronization, effect-time checks, and rejected retries.
+3. Build a source-matched, adversarial **transactional multi-agent authorization sandbox** and isolated **ControlArena IaC Fast** evaluation. Charge for evidence acquisition, OS isolation, tool authorization, concurrency, version/policy binding, atomic protected-effect commits, revocation, and rejected retries. Do **not** use Tennessee Eastman as the primary research testbed.
 4. Audit actual effect-boundary mediation and non-bypass properties, including side effects outside any SQLite transaction.
 
 The project must not promote numerical checking to a theorem, a Lean conditional theorem to deployment assurance, or an archival construction to proven novelty.
