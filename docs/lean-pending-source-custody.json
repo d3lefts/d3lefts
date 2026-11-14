@@ -136,6 +136,296 @@
       "receipt_scope": "Five scoped active Lean 4.36.0-rc2 original-product merge/tower and Jensen declarations reported strictly compiled; remains outside immutable 67 historical-source registry. Not a terminal source Q2 theorem. Source-matched scoped CI: https://github.com/d3lefts/d3lefts/actions/runs/43502226556; not enrolled in this manifest's 67 historical full-source receipt classification."
     },
     {
+      "path": "research/nightfall/formalization/observability/ActualProductPairSector.lean",
+      "source_blob_sha": "ad84f85c93074654783d67d2016283b183c27203",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualProductQ2ScalarClosure.lean",
+      "source_blob_sha": "bcaa20c3cae5ab466c924903603b49e63d3e8071",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualProductResampleBridge.lean",
+      "source_blob_sha": "0ea1ba7a71920ede0fb4c32b33f983573d393a6a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualProductSoftNoise.lean",
+      "source_blob_sha": "113f90fc03e8db5ed716dfa098ddfcbb02d3974b",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualProductSoftStar.lean",
+      "source_blob_sha": "152a59fb4e5a2b7cd08d3c34f64a19292239f3fa",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualProductSoftStarEnergy.lean",
+      "source_blob_sha": "09c9d3d122a5a33091e5a0ecc09c34e3377235e6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualProductSoftStarParseval.lean",
+      "source_blob_sha": "f8b130cb1dca7214531165090acd4d51969c49bc",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualProductSourceDerivedStar.lean",
+      "source_blob_sha": "74b3594976ff3201b55f2d9f6b43f543ec04de2d",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualProductSourceMarginal.lean",
+      "source_blob_sha": "890176166af0b17eb607ca08448f697e1a7ed338",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualProductSourcePairCentering.lean",
+      "source_blob_sha": "d012087f65bcf1e18557bba9889c43ce3e81b307",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceAmplitudeRectangles.lean",
+      "source_blob_sha": "52a79d96044154ff8638d7a02e853b8255bd765f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceANOVA.lean",
+      "source_blob_sha": "29e98f82d8fe57497fc5d88b34cb7ea045146340",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceCanonicalIdentification.lean",
+      "source_blob_sha": "667fbf26849482cfb370e1fdad86f41d78363c5e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceCanonicalPair.lean",
+      "source_blob_sha": "13b78736afd93128448ce6a91e9e6096165acf15",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceCentered.lean",
+      "source_blob_sha": "c90cf2a8ba8ecf165901ddb0396eea0d0961da1a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceDegreeTwoAllDimensions.lean",
+      "source_blob_sha": "2f2bf6e77086543a8f828856b82a97b8f9190b54",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceDegreeTwoSections.lean",
+      "source_blob_sha": "81e9a5deac8bd680567b70bc37170e153e3a5aab",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceFinitePairMoment.lean",
+      "source_blob_sha": "41b33c72521a94e4f519c6f1d9b8ea9595bf02b0",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceFiniteSampleLaw.lean",
+      "source_blob_sha": "789472f2415b2c200b7ea89fed0a8d80a8685180",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceGeneralMatching.lean",
+      "source_blob_sha": "cd0e904fa0ca691954b79cff5cb6813a5ead84f9",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceInfluenceEnergy.lean",
+      "source_blob_sha": "da259d70d25cca360779489bec9a57c24483919b",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceMatchingCover.lean",
+      "source_blob_sha": "57609b34ba884ec8237e2142a7d46cb09010e42a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceOrthogonality.lean",
+      "source_blob_sha": "70cb80a9cc4651affbdc5d29f8bb49fc9bb4ee4f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourcePairAmplitudes.lean",
+      "source_blob_sha": "477d0a67616f3544d47371fb515e1c27ad7d620a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2WeakScalarClosure.lean",
+      "source_blob_sha": "2d753543b6f0b18f77aea1756cb96a6472c5dda8",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQuadraticRectangles.lean",
+      "source_blob_sha": "de5b9056d8d9dbcfa70d4d2407e20b286c1825a2",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceSectionBudgetEight.lean",
+      "source_blob_sha": "b730d2867cd426368a120a2e4aa51899458ebf82",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceSingletonProjection.lean",
+      "source_blob_sha": "57bc97f0e22efd7542a76fff1df89ae8ea55a539",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceVarianceEnergy.lean",
+      "source_blob_sha": "8e3442be9314b345b1d8a1a816a658dd59bab27b",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
       "path": "research/nightfall/formalization/observability/QuadraticActualMomentEndpoint.lean",
       "source_blob_sha": "8c082afa9a9bb518eeafab7d86fa85709757b5c2",
       "classification": "unreviewed-source",
