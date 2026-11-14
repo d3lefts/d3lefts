@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 3,
-  "as_of": "2026-11-13",
+  "revision": 4,
+  "as_of": "2026-11-14",
   "source_commit": "718752e829727d7b5107cea1c6be49fc28f08a88",
-  "scope": "Exact Git-blob custody for 27 Lean sources added after the frozen 67-entry historical registry. These are pending classification in that immutable registry: pending here does not negate separate source-matched scoped Lean 4.36.0-rc2 receipts for ActualProductMergeTower / ActualProductHilbertJensen or historical 4.33.0 receipts for the owned-sample modules. No active-pin end-to-end Q2 certification or priority finding follows from their presence. The protected checker validates paths and Git blobs fail-closed.",
+  "scope": "Historical custody has 67 independently indexed source-matched Lean records; these 77 post-checkpoint modules remain outside that immutable 2026-11-12 index. The eight Q2 stage roots additionally carry separately verified Lean 4.36.0-rc2 named-declaration certificates linked by current_named_declaration_certificate, without promoting worldwide priority or the broader heterogeneous/infinite product extension. Other pending sources are not thereby certified.",
   "sources": [
     {
       "path": "research/nightfall/formalization/observability/ActualESCanonicalPairGraph.lean",
@@ -333,7 +333,14 @@
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Source updated from earlier historical pending SHA 41b33c72521a94e4f519c6f1d9b8ea9595bf02b0 for original-product Q2 source proof. Consult specific current-pin Q2 named-declaration receipts; not added to frozen 67-file historical registry. Novelty unreviewed."
+      "receipt_scope": "Source updated from earlier historical pending SHA 41b33c72521a94e4f519c6f1d9b8ea9595bf02b0 for original-product Q2 source proof. Consult specific current-pin Q2 named-declaration receipts; not added to frozen 67-file historical registry. Novelty unreviewed.",
+      "current_named_declaration_certificate": {
+        "certificate": "docs/q2-source-lean-certificate-20261114.json",
+        "source_commit": "d22962ba73b037a569196bc98d946dc192e4effa",
+        "named_declaration": "Nightfall.Observability.ActualSourceFinitePairMoment.original_source_distinct_pair_fourth_endpoint",
+        "run": 43611982294,
+        "receipt_artifact_id": 14121225201
+      }
     },
     {
       "path": "research/nightfall/formalization/observability/ActualSourceFiniteSampleLaw.lean",
@@ -413,7 +420,14 @@
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim.",
+      "current_named_declaration_certificate": {
+        "certificate": "docs/q2-source-lean-certificate-20261114.json",
+        "source_commit": "d22962ba73b037a569196bc98d946dc192e4effa",
+        "named_declaration": "Nightfall.Observability.ActualSourceOwnedFirstMomentCap.original_owned_first_norm_le_sqrt_source_influence",
+        "run": 43611982294,
+        "receipt_artifact_id": 14121225201
+      }
     },
     {
       "path": "research/nightfall/formalization/observability/ActualSourceOwnedFourthClosure.lean",
@@ -423,7 +437,14 @@
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim.",
+      "current_named_declaration_certificate": {
+        "certificate": "docs/q2-source-lean-certificate-20261114.json",
+        "source_commit": "d22962ba73b037a569196bc98d946dc192e4effa",
+        "named_declaration": "Nightfall.Observability.ActualSourceOwnedFourthClosure.original_source_generated_fourth_and_jensen_package",
+        "run": 43611982294,
+        "receipt_artifact_id": 14121225201
+      }
     },
     {
       "path": "research/nightfall/formalization/observability/ActualSourceOwnedGraph.lean",
@@ -453,7 +474,14 @@
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim.",
+      "current_named_declaration_certificate": {
+        "certificate": "docs/q2-source-lean-certificate-20261114.json",
+        "source_commit": "d22962ba73b037a569196bc98d946dc192e4effa",
+        "named_declaration": "Nightfall.Observability.ActualSourceOwnedMomentEnergy.original_owned_neighbor_moment2_le_influence",
+        "run": 43611982294,
+        "receipt_artifact_id": 14121225201
+      }
     },
     {
       "path": "research/nightfall/formalization/observability/ActualSourceOwnedProjectedMomentJensen.lean",
@@ -463,7 +491,14 @@
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim.",
+      "current_named_declaration_certificate": {
+        "certificate": "docs/q2-source-lean-certificate-20261114.json",
+        "source_commit": "d22962ba73b037a569196bc98d946dc192e4effa",
+        "named_declaration": "Nightfall.Observability.ActualSourceOwnedProjectedMomentJensen.source_generated_owned_moment_projection_jensen",
+        "run": 43611982294,
+        "receipt_artifact_id": 14121225201
+      }
     },
     {
       "path": "research/nightfall/formalization/observability/ActualSourceOwnedSectionNorm.lean",
@@ -543,7 +578,14 @@
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim.",
+      "current_named_declaration_certificate": {
+        "certificate": "docs/q2-source-lean-certificate-20261114.json",
+        "source_commit": "d22962ba73b037a569196bc98d946dc192e4effa",
+        "named_declaration": "Nightfall.Observability.ActualSourceQ2Terminal.actual_source_q2_terminal",
+        "run": 43611982294,
+        "receipt_artifact_id": 14121225201
+      }
     },
     {
       "path": "research/nightfall/formalization/observability/ActualSourceQ2TerminalBound.lean",
@@ -583,7 +625,14 @@
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim.",
+      "current_named_declaration_certificate": {
+        "certificate": "docs/q2-source-lean-certificate-20261114.json",
+        "source_commit": "d22962ba73b037a569196bc98d946dc192e4effa",
+        "named_declaration": "Nightfall.Observability.ActualSourceQuadraticSectorSplit.source_variance_eq_singleton_plus_pair_energy",
+        "run": 43611982294,
+        "receipt_artifact_id": 14121225201
+      }
     },
     {
       "path": "research/nightfall/formalization/observability/ActualSourceQuadraticSupportSum.lean",
@@ -613,7 +662,14 @@
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
+      "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim.",
+      "current_named_declaration_certificate": {
+        "certificate": "docs/q2-source-lean-certificate-20261114.json",
+        "source_commit": "d22962ba73b037a569196bc98d946dc192e4effa",
+        "named_declaration": "Nightfall.Observability.ActualSourceSingletonEnergyBridge.original_source_variance_eq_singleton_plus_owned_moment2",
+        "run": 43611982294,
+        "receipt_artifact_id": 14121225201
+      }
     },
     {
       "path": "research/nightfall/formalization/observability/ActualSourceSingletonProjection.lean",
