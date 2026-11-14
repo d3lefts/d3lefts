@@ -74,6 +74,7 @@ jobs:
             --decl Nightfall.Q2Shifted.PureC5.fifth_interpolation_of_fourth \
             --decl Nightfall.Q2Shifted.PureC5.fifth_of_zero_odd_term_moments \
             --decl Nightfall.Q2Shifted.PureC5.fifth_for_pure_centered_sum \
+            --decl Nightfall.Q2Shifted.PureC5.fifth_from_centered_cubic \
             --json-out lean-receipts/q2-shifted/pure-c5.json
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/q2-shifted/pure-c5.json
