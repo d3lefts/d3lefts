@@ -23,4 +23,4 @@ jobs:
       - name: Replay sharp physical heatbath-influence obstruction
         run: python3 research/nightfall/2026-11-causal-observability/check_physical_heatbath_obstruction.py
       - name: Hash exact replay source inputs
-        run: sha256sum research/nightfall/2026-11-causal-observability/check_*_exact.py
+        run: sha256sum research/nightfall/2026-11-causal-observability/check_*.py
