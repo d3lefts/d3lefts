@@ -105,7 +105,7 @@ theorem mediated_step_preserves
   | accepted e o hcurrent hcompatible hpermit heffect =>
       exact admissible_sound B e o (proposal n)
         hcompatible hsafe hpermit heffect
-  | rejected s =>
+  | rejected =>
       exact hsafe
   | external heffect =>
       exact B.environment_preserves _ _ hsafe heffect
