@@ -16,7 +16,8 @@
       "finite Efron-Stein arbitrary measurable alphabets",
       "source-matched resampling contraction",
       "unconditional infinitePi terminal theorem with axiom receipt"
-    ]
+    ],
+    "current_structural_leans": "Countable-coordinate support #520 PASS, but genuine source L2 density and conditional projection commuting remain OPEN"
   },
   "source_certificates": [
     {
@@ -76,5 +77,29 @@
     "name": "YuanheZ/lean-stat-learning-theory",
     "url": "https://github.com/YuanheZ/lean-stat-learning-theory",
     "scope": "finite-product Lean Efron–Stein prior art, not arbitrary index"
+  },
+  "structural_source_certificates": [
+    {
+      "pr": 520,
+      "run": 43637631337,
+      "source": "research/nightfall/formalization/universal/InfinitePiCountableSupport.lean",
+      "blob_sha1": "0bc254e111703ca2e650a1f0bb8dd0beb498d250",
+      "name": "Nightfall.InfinitePiCountableSupport.source_measurable_event_countable_support",
+      "scope": "arbitrary product measurable event countable-coordinate dependence; borrowed Mathlib, no L2 density"
+    },
+    {
+      "pr": 520,
+      "run": 43637631337,
+      "source": "research/nightfall/formalization/universal/InfinitePiRealCountableSupport.lean",
+      "blob_sha1": "7de97cfe098a47f5bcc660df7995da3aa9a84bc8",
+      "name": "Nightfall.InfinitePiRealCountableSupport.source_measurable_real_countable_support",
+      "scope": "arbitrary product real measurable observable countable-coordinate dependence via rational cuts, no all-L2 endpoint"
+    }
+  ],
+  "structural_receipt": {
+    "head_sha": "1a036177c54c9c5571a3c50c0b82479c1d29ae6c",
+    "merge_sha": "0eedd84a7be82f0a4c38cad88c841819105d4a1e",
+    "artifact_id": 14131110488,
+    "artifact_sha256": "e48ad283b40ce870d39fd3c59edfe3eb571487e9bdac27dafcc42fa8ec75a37d"
   }
 }
