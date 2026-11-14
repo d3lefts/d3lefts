@@ -1,0 +1,74 @@
+name: NIGHTFALL Q2 sharp 1228.3563 source additive reduction Lean 4.36
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/observability/ActualSourceQ2SharpScalarClosure.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceQ2SharpTerminalGate.lean'
+      - '.github/workflows/nightfall-q2-sharp-reduction-v436.yml'
+  workflow_dispatch:
+concurrency:
+  group: nightfall-q2-sharp-reduction-${{ github.event.pull_request.head.ref || github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  sharp-conditional:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Rebuild exact active source dependencies and certify baseline Q2
+        run: |
+          set -euo pipefail
+          python3 scripts/nightfall_q2_certify.py \
+            --workspace /tmp/mathlib4 --receipt-dir lean-receipts/q2-sharp-baseline
+      - name: Build sharp scalar closure as importable Lean module
+        run: |
+          set -euo pipefail
+          cd /tmp/mathlib4
+          cp "$GITHUB_WORKSPACE/research/nightfall/formalization/observability/ActualSourceQ2SharpScalarClosure.lean" .
+          lake env lean -o .lake/build/lib/lean/ActualSourceQ2SharpScalarClosure.olean ActualSourceQ2SharpScalarClosure.lean
+      - name: Strict scalar certificate at exact sharp coefficient
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-sharp
+          N=Nightfall.Observability.ActualSourceQ2SharpScalarClosure
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualSourceQ2SharpScalarClosure.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.q2_sharp_scalar_from_additive_budget \
+            --json-out lean-receipts/q2-sharp/01-sharp-scalar.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-sharp/01-sharp-scalar.json
+      - name: Strict genuine-source sharp reduction with explicit additive premise
+        run: |
+          set -euo pipefail
+          N=Nightfall.Observability.ActualSourceQ2SharpTerminalGate
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualSourceQ2SharpTerminalGate.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.actual_source_q2_sharp_given_additive_budget \
+            --json-out lean-receipts/q2-sharp/02-source-conditional.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-sharp/02-source-conditional.json
+      - name: Preserve source and compiler identities
+        if: always()
+        run: |
+          mkdir -p lean-receipts/q2-sharp
+          git rev-parse HEAD > lean-receipts/q2-sharp/commit.txt
+          cat lean-toolchain > lean-receipts/q2-sharp/lean-toolchain.txt
+          sha256sum research/nightfall/formalization/observability/ActualSourceQ2SharpScalarClosure.lean \
+            research/nightfall/formalization/observability/ActualSourceQ2SharpTerminalGate.lean \
+            > lean-receipts/q2-sharp/SHA256SUMS.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: q2-sharp-reduction-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            lean-receipts/q2-sharp/
+            lean-receipts/q2-sharp-baseline/
+          retention-days: 60
