@@ -33,7 +33,7 @@ jobs:
           python -m pip freeze > installed-versions.txt
           node --version
       - name: Independently validate resource-effect verifier negative controls
-        run: python -m pytest -q test_effect_verifier.py test_concurrent_authority.py
+        run: python -m pytest -q test_effect_verifier.py test_concurrent_authority.py test_atomic_version_gate.py
       - name: Three-event real-source promotion experiment
         env:
           JSII_SILENCE_WARNING_UNTESTED_NODE_VERSION: "1"
@@ -53,6 +53,21 @@ jobs:
           r=json.loads(Path('promotion-results/second_oracle_audit.json').read_text())
           assert r['run']=='github:d3lefts/d3lefts:'+os.environ['GITHUB_RUN_ID'], 'stale or forged run provenance'
           PY
+      - name: Source-version and policy-epoch atomic promotion over official CDK fixture
+        env:
+          JSII_SILENCE_WARNING_UNTESTED_NODE_VERSION: "1"
+        run: |
+          python run_atomic_version_experiment.py --out atomic-results
+      - name: Independent version-bound artifact and scorer audit
+        run: |
+          python audit_atomic_artifacts.py --dir atomic-results | tee atomic-results/audit_stdout.json
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          r=json.loads(Path('atomic-results/atomic_audit.json').read_text())
+          assert r['github_run_id']==os.environ['GITHUB_RUN_ID'], 'stale source/version audit run'
+          assert r['status']=='passed'
+          PY
       - name: Upload exact source-matched evidence and receipts
         if: always()
         uses: actions/upload-artifact@v4
@@ -67,5 +82,13 @@ jobs:
             research/nightfall/right-to-act-promotion/promotion-results/harmful.template.json
             research/nightfall/right-to-act-promotion/promotion-results/promoted/OrganisationStack.template.json
             research/nightfall/right-to-act-promotion/installed-versions.txt
+            research/nightfall/right-to-act-promotion/atomic-results/atomic_receipt.json
+            research/nightfall/right-to-act-promotion/atomic-results/atomic_audit.json
+            research/nightfall/right-to-act-promotion/atomic-results/baseline.template.json
+            research/nightfall/right-to-act-promotion/atomic-results/legitimate.template.json
+            research/nightfall/right-to-act-promotion/atomic-results/harmful.template.json
+            research/nightfall/right-to-act-promotion/atomic-results/trusted/state.json
+            research/nightfall/right-to-act-promotion/atomic-results/trusted/published.json
+            research/nightfall/right-to-act-promotion/atomic-results/trusted/snapshots/**
           if-no-files-found: warn
           retention-days: 14
