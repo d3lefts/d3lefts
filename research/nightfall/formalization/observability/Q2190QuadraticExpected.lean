@@ -21,8 +21,8 @@ noncomputable def quadraticExpectation
     (m : ℝ) (a b : ι → ℝ) (c d e : E → ℝ)
     (theta sign : ℝ) : ℝ :=
   m +
-  (∑ i : ι, theta*b i + sign*r*a i) +
-  (∑ j : E, theta^2*c j + sign*r*theta*d j + r^2*e j)
+  (∑ i : ι, theta*(b i) + sign*r*(a i)) +
+  (∑ j : E, theta^2*(c j) + sign*r*theta*(d j) + r^2*(e j))
 
 theorem quadraticExpectation_sign_difference
     (m : ℝ) (a b : ι → ℝ) (c d e : E → ℝ) (theta : ℝ) :
@@ -31,10 +31,7 @@ theorem quadraticExpectation_sign_difference
       2*r*((∑ i : ι, a i) + theta*(∑ j : E, d j)) := by
   classical
   unfold quadraticExpectation
-  rw [add_sub_add_left_eq_sub, add_sub_add_left_eq_sub]
-  rw [← Finset.sum_sub_distrib, ← Finset.sum_sub_distrib]
-  simp only [one_mul, neg_one_mul]
-  rw [← Finset.mul_sum, ← Finset.mul_sum]
+  simp only [Finset.sum_add_distrib, ← Finset.mul_sum]
   ring
 
 /-- Exact four-sample cancellation of the pair-interaction contributions,
@@ -48,8 +45,13 @@ theorem quadraticExpectation_fourpoint_exact
       (∑ i : ι, a i) := by
   rw [quadraticExpectation_sign_difference,
       quadraticExpectation_sign_difference]
-  have h := fourpoint_derivative_factor
-  nlinarith
+  have hh := fourpoint_derivative_factor
+  have hfactor :
+    A*(2*r*((∑ i : ι, a i)+D*(∑ j : E, d j))) -
+      D*(2*r*((∑ i : ι, a i)+A*(∑ j : E, d j))) =
+        (2*r*(A-D))*(∑ i : ι, a i) := by ring
+  rw [hfactor, hh]
+  ring
 
 /-- Exact dimension-free first-chaos budget with four genuine bounded
 evaluation outputs. The source bridge must independently provide
@@ -61,7 +63,8 @@ theorem quadraticExpectation_first_chaos_bound
     (h3 : |quadraticExpectation m a b c d e A (-1)| ≤ B)
     (h4 : |quadraticExpectation m a b c d e D (-1)| ≤ B) :
     |∑ i : ι, a i| ≤ 2*B := by
-  rw [← quadraticExpectation_fourpoint_exact]
+  have hquad := quadraticExpectation_fourpoint_exact (ι:=ι) (E:=E) m a b c d e
+  rw [← hquad]
   exact fourpoint_functional_bound _ _ _ _ B h1 h2 h3 h4
 
 end Nightfall.Q2190
