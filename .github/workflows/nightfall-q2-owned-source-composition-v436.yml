@@ -71,6 +71,7 @@ jobs:
             --workspace /tmp/mathlib4 --timeout 900 --strict \
             --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
             --decl $N.actual_source_q2_structural_moment_package \
+            --decl $N.actual_source_single_greedy_owned_moment_package \
             --json-out lean-receipts/q2-owned-source-moment-composition.json || {
               cat lean-receipts/q2-owned-source-moment-composition.json
               exit 1
