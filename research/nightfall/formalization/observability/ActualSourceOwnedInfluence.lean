@@ -59,8 +59,8 @@ theorem actual_owned_source_pair_energy_le_influence
     apply edge_simple e d
     simpa only [q, edge_pair_eq_endpoints] using h
   have hsum : F.sum (fun e => en (q e)) = P.sum en := by
-    exact (Finset.sum_image (s := F) (f := q)
-      (g := en) (fun e he d hd h => hinj he hd h)).symm
+    exact (Finset.sum_image (s := F) (g := q)
+      (f := en) (fun e he d hd h => hinj he hd h)).symm
   have hsub : P ⊆ Finset.univ.filter (fun S : Finset ι => i ∈ S) := by
     intro S hS
     obtain ⟨e, he, rfl⟩ := Finset.mem_image.mp hS
