@@ -3,7 +3,7 @@ name: NIGHTFALL Q2 one-source pinned Lean certification
 on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
-    branches: [main]
+    branches: [main, nightfall-q2-shifted-owned-sum-20261114]
     paths:
       - 'research/nightfall/formalization/observability/**'
       - 'research/nightfall/formalization/product_space/**'
@@ -444,9 +444,6 @@ jobs:
             cp "$Q2/$name.lean" "/tmp/mathlib4/$name.lean"
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$name.olean" "$name.lean")
           done
-          # IntegratedFive belongs to merged PR #525; recompile at current checkout.
-          cp "$SRC/ActualSourceIntegratedFive.lean" /tmp/mathlib4/ActualSourceIntegratedFive.lean
-          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ActualSourceIntegratedFive.olean ActualSourceIntegratedFive.lean)
           cp "$SRC/ActualSourcePureQ2Fifth.lean" /tmp/mathlib4/ActualSourcePureQ2Fifth.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ActualSourcePureQ2Fifth.olean ActualSourcePureQ2Fifth.lean)
           N=Nightfall.Observability.ActualSourcePureQ2Fifth
@@ -454,7 +451,8 @@ jobs:
             --workspace /tmp/mathlib4 --timeout 900 --strict \
             --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
             --decl $N.actual_source_pure_q2_given_section_budget \
-            --decl $N.actual_source_pure_q2_105_unconditional \
+            --decl $N.actual_source_pure_q2_239_unconditional \
+            --decl $N.actual_source_pure_q2_105_given_five_section \
             --decl $N.actual_source_pure_q2_99_given_sharp_section \
             --json-out "$OUT/source-pure-105-and-99.json"
           python3 research/nightfall/formalization/product_space/check_receipts.py \
