@@ -159,13 +159,7 @@ for reference-product degree <=2. **If** that premise holds, (3)-(4) give
 \max_iI_i^\nu(f)\ge\frac{\operatorname{Var}_\nu(f)^2}{C_2B^2R^2}.
 \]
 
-The same argument with \(L=2R\), \(a=1/(C_2B^2R^2)\), and dyadic exponent two yields the *conditional* dimension-free policy budget
-
-\[
-N_{\mathrm{Q2}}\le \min\{n,\lceil 6 C_2R^3B^2/\eta\rceil\}.
-\]
-
-Here the geometric series coefficient is \(2/(1-2^{-1})=4\), so \(4L/a=8 C_2R^3B^2\), **not** 6. The safe corrected bound is therefore
+The same argument with \(L=2R\), \(a=1/(C_2B^2R^2)\), and dyadic exponent two gives a geometric coefficient \(2/(1-2^{-1})=4\). The resulting *conditional* dimension-free budget is
 
 \[
 \boxed{N_{\mathrm{Q2}}\le \min\{n,\lceil 8 C_2R^3B^2/\eta\rceil\}.}
