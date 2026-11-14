@@ -314,7 +314,5 @@ theorem canonical_condExp_eq_sourceConditional
   apply Finset.sum_congr rfl
   intro y _
   congr 1
-  funext i
-  rfl
 
 end Nightfall.Observability.ActualSourceANOVA
