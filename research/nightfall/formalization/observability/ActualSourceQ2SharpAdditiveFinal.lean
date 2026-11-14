@@ -63,9 +63,14 @@ theorem original_first_sector_oscillation
       rw [hzero]
       ring
     rw [heq]
-    have htri := abs_sub_le
-      (softSourceNoise p (fun _ => t) f x)
-      (softSourceNoise p (fun _ => t) f y)
+    have htri :
+        |softSourceNoise p (fun _ => t) f x -
+          softSourceNoise p (fun _ => t) f y| ≤
+        |softSourceNoise p (fun _ => t) f x| +
+          |softSourceNoise p (fun _ => t) f y| := by
+      simpa only [sub_zero, zero_sub, abs_neg] using
+        (abs_sub_le (softSourceNoise p (fun _ => t) f x)
+          (0 : ℝ) (softSourceNoise p (fun _ => t) f y))
     linarith
   have h1 : |U + W| ≤ 2 * B := by
     simpa using (hdiff 1 (by norm_num) (by norm_num))
