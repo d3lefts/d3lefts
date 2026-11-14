@@ -5,7 +5,8 @@ import Q2625GoldenTrade
 
 Uses the fourth-moment cubic at the TRUE owned moment s, choosing
 T_local=sqrt(s) instead of the global T=sqrt(M), retaining the joint
-a^2+s<=M coupling. No novel fourth-moment estimate or caller-supplied
+a^2+s<=M coupling. The only input beyond algebra is the source-proved cubic inequality.
+No novel fourth-moment estimate or caller-supplied
 source premise occurs here: this is a purely exact deterministic lemma.
 -/
 
