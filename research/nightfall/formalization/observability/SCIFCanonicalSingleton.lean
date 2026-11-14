@@ -33,7 +33,10 @@ theorem condExp_empty_eq_sourceMean
   unfold condExp sourceMean
   apply Finset.sum_congr rfl
   intro y _
-  simp [merge]
+  have hm : merge (∅ : Finset ι) x y = y := by
+    funext i
+    simp [merge]
+  rw [hm]
 
 theorem esComp_empty_eq_sourceMean
     (p : ι → α → ℝ) (f : (ι → α) → ℝ)
@@ -49,7 +52,14 @@ theorem esComp_singleton_eq_sub
     esComp p ({k} : Finset ι) f x =
       condExp p ({k} : Finset ι) f x - sourceMean p f := by
   rw [← condExp_empty_eq_sourceMean p f x]
-  simp only [esComp, Finset.powerset_singleton]
+  have hpow : ({k} : Finset ι).powerset =
+      ({∅, {k}} : Finset (Finset ι)) := by
+    change (insert k (∅ : Finset ι)).powerset =
+      ({∅, {k}} : Finset (Finset ι))
+    rw [Finset.powerset_insert]
+    simp
+  unfold esComp
+  rw [hpow]
   simp
   ring
 
