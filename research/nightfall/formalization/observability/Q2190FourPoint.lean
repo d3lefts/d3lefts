@@ -120,7 +120,8 @@ theorem degree_two_fourpoint_bernstein
     (point1 c0 c1 s1 c2 s2) (point2 c0 c1 s1 c2 s2)
     (point3 c0 c1 s1 c2 s2) (point4 c0 c1 s1 c2 s2)
     B h1 h2 h3 (by simpa using h4)
-  rwa [fourpoint_derivative_exact] at h
+  rw [fourpoint_derivative_exact]
+  exact h
 
 /-- Normalization of real spherical two-coordinate rotations.
 Works for arbitrary finite alphabets, including atoms with zero mass. -/
@@ -139,7 +140,7 @@ theorem rotated_mass_normalized
       a^2 * (∑ x : α, (psi x)^2) +
       (2*a*sign*b) * (∑ x : α, psi x*v x) +
       sign^2*b^2 * (∑ x : α, (v x)^2) := by
-        simp_rw [Finset.mul_sum]
+        rw [← Finset.sum_add_distrib, ← Finset.sum_add_distrib]
         apply Finset.sum_congr rfl
         intro x _
         ring
