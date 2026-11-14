@@ -105,6 +105,16 @@ If \(S=\infty\) the claim is immediate. Otherwise Step A and continuity of the s
 
 **Evidence tier:** analytic theorem (standard established mathematical result) versus machine-certified pieces. Do not label the all-\(L^2\) terminal "kernel-certified" until gate 5 succeeds. No external mathematical review is claimed.
 
+## IIIa. New Lean structural transition: arbitrary product -> countable observable support
+
+**Merged [PR #520](https://github.com/d3lefts/d3lefts/pull/520)** (head \`1a036177c54c9c5571a3c50c0b82479c1d29ae6c\`, merged commit \`0eedd84a7be82f0a4c38cad88c841819105d4a1e\`) passed [strict pinned Lean workflow 43637631337](https://github.com/d3lefts/d3lefts/actions/runs/43637631337), [named-declaration receipt artifact 14131110488](https://github.com/d3lefts/d3lefts/actions/runs/43637631337/artifacts/14131110488), digest \`sha256:e48ad283b40ce870d39fd3c59edfe3eb571487e9bdac27dafcc42fa8ec75a37d\`.
+
+All three named claims were checked with foundational axioms only, including \`Nightfall.InfinitePiRealCountableSupport.source_measurable_real_countable_support\`. For **any** index set \(I\) and dependent arbitrary measurable coordinate types, any measurable \(f:\prod_i X_i\to\mathbb R\) admits a **countable** \(J\subseteq I\) such that agreement on \(J\) implies equality of \(f\). Proof: Mathlib exact countable support of each measurable rational superlevel set; union these countably many supports; rational-cut separation of real values. No original countability, finite alphabet, probability law, or standard-Borel hypotheses.
+
+**Certified reusable mechanism:** product sigma-algebra generation + countably supported measurable events + rational-cut recovery. This does **not** prove that \(\mathcal G_F\) conditional expectations approximate an arbitrary all-\(L^2\) class, nor commuting projections, nor finite general-measurable-alphabet Efron–Stein. A.e.-measurability and representative details remain to be passed into an \(L^2\)-compatible density theorem. The full arbitrary-\(L^2\) *Lean* terminal remains OPEN. No novelty claim; first two named lemmas import classical Mathlib facts.
+
+---
+
 ## IV. Independent audit, prior art and stop rule
 
 Attack (A): cylinder algebra closure under complements/finite unions for dependent type coordinates; no hidden countable support assumption. Attack (B): conditional expectation equality with sigma-algebra inclusions, zero atoms, and non-standard Borel alphabets. Attack (C): finite martingale difference equality for arbitrary coordinate sigma algebras and a robust \(L^2\) projection interpretation. Attack (D): extended-real supremum versus finite real sum, degenerate \(I=\varnothing\), \(\mu_i\) on one-point spaces, and no implicit choice of a countable exhaustion.
