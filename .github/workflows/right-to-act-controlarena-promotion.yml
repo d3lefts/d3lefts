@@ -103,6 +103,21 @@ jobs:
           assert audit['run_id']==os.environ['GITHUB_RUN_ID']
           assert audit['status']=='passed'
           PY
+      - name: Test separately authenticated Linux authority effect service
+        timeout-minutes: 5
+        run: |
+          python run_effect_service_experiment.py --source os-isolation-results --out effect-service-results
+      - name: Independent service-owned deployment artifact and authorization audit
+        run: |
+          python audit_effect_service.py --source os-isolation-results --out effect-service-results
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          r=json.loads(Path('effect-service-results/service_independent_audit.json').read_text())
+          assert r['independent_audit']=='passed'
+          assert r['github_run_id']==os.environ['GITHUB_RUN_ID']
+          assert r['verified_event_count']==10
+          PY
       - name: Upload exact source-matched evidence and receipts
         if: always()
         uses: actions/upload-artifact@v4
@@ -134,5 +149,9 @@ jobs:
             research/nightfall/right-to-act-promotion/os-isolation-results/trusted/state.json
             research/nightfall/right-to-act-promotion/os-isolation-results/trusted/published.json
             research/nightfall/right-to-act-promotion/isolated-image-id.txt
+            research/nightfall/right-to-act-promotion/effect-service-results/service_receipt.json
+            research/nightfall/right-to-act-promotion/effect-service-results/service_independent_audit.json
+            research/nightfall/right-to-act-promotion/effect-service-results/service_final_state.json
+            research/nightfall/right-to-act-promotion/effect-service-results/service_committed_template.json
           if-no-files-found: warn
           retention-days: 14
