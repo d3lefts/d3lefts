@@ -18,6 +18,7 @@ open Nightfall.Observability.ActualSourceOwnedGraph
 open Nightfall.Observability.ActualSourceFinitePairMoment
 open Nightfall.Observability.ActualSourceOwnerOrientation
 open Nightfall.Observability.ActualSourceOwnedInfluence
+open Nightfall.Observability.ActualSourceInfluenceEnergy
 open Nightfall.Observability.ActualESGreedyOwnership
 open Nightfall.Observability.QuadraticHilbertMany
 
@@ -35,7 +36,8 @@ theorem actual_neighbor_range_sum_eq_neighbor_finset
       (∑ k ∈ Finset.range J.card, g (neighborIndex i J k)) =
       ∑ k : Fin J.card, h k := by
     simpa only [h, neighborIndex, dif_pos, Fin.sum_univ_eq_sum_range] using
-      (Fin.sum_univ_eq_sum_range h).symm
+      (Fin.sum_univ_eq_sum_range
+        (fun k : ℕ => g (neighborIndex i J k)) J.card).symm
   have heq :
       (∑ k : Fin J.card, h k) =
       ∑ j : J, g j.1 := by
