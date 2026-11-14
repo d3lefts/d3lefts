@@ -351,6 +351,7 @@ theorem original_source_distinct_pair_fourth_from_source_energies
       _ = (∑ k ∈ Finset.range n, sourcePairEnergy p f i (j k)) :=
         finitePairIncrement_moment2_eq_source_pair_energies
           p hp hp1 f i j n hne
+      _ ≤ (∑ k ∈ Finset.range n, sourcePairEnergy p f i (j k)) := le_refl _
   exact original_source_distinct_pair_fourth_endpoint
     p hp hp1 f i j n hinj hne c
       (∑ k ∈ Finset.range n, sourcePairEnergy p f i (j k))
