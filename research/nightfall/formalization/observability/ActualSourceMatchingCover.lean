@@ -110,7 +110,11 @@ theorem source_attained_matching_amplitudes_le_four
       (∑ e ∈ S, pairAmplitudeWeight p f (u e) (v e)) =
       (∑ e : {t : E // t ∈ S},
         pairAmplitudeWeight p f (uS e) (vS e)) := by
-    simpa only [uS, vS] using
+    have hatt :
+        S.attach = (Finset.univ : Finset {t : E // t ∈ S}) := by
+      ext e
+      simp
+    simpa only [uS, vS, hatt] using
       (Finset.sum_attach S
         (fun e : E => pairAmplitudeWeight p f (u e) (v e))).symm
   exact hreindex.trans_le (hsum.trans htotal)
