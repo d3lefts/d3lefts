@@ -24,7 +24,7 @@ The theorem's `sourceVariance` is the usual product-expectation squared deviatio
 - All **eight** named-declaration stages: strict `PASS`, each `ACCEPT_STANDARD_AXIOMS ['Classical.choice','Quot.sound','propext']`; terminal declaration in stage 08
 - Compiler: `leanprover/lean4:v4.36.0-rc2`, Mathlib commit `9d581dfff2e41de989072ea63abf3daf69311520`
 - [Receipt ZIP](https://github.com/d3lefts/d3lefts/actions/runs/43611982294/artifacts/14121225201), SHA-256 `a37009051246139350614af2ec03ba27b0871c3f7eb96699b54c2028d7a423bd`
-- [Machine-readable named-source certificate](../../../../docs/q2-source-lean-certificate-20261114.json) carries exact stage blob hashes, declaration names, provenance and explicit limits. The checker rebuilt dependency-order modules once and rejected non-allowlisted axioms.
+- [Machine-readable named-source certificate](../../docs/q2-source-lean-certificate-20261114.json) carries exact stage blob hashes, declaration names, provenance and explicit limits. The checker rebuilt dependency-order modules once and rejected non-allowlisted axioms.
 
 ## Scope distinctions and next audit
 
