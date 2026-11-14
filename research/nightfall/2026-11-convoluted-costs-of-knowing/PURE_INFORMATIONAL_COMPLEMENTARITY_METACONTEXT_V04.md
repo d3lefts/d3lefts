@@ -82,7 +82,7 @@ A positive value reflects **superadditive savings**, not necessarily pure Shanno
 
 ## F. Why this is not automatic human–AI superiority
 
-A preregistered systematic review (Vaccaro, Almaatouq and Malone, Nature Human Behaviour, 2024) covered 106 experiments / 370 effect sizes and found average *negative* human–AI synergy relative to the stronger individual baseline; the process design and task are major moderators. Berente and colleagues' 2025 information-systems literature already formalizes complementary team performance and information/capability asymmetries; human–AI complementarity in the abstract is prior art. Our research target must be narrower: source-authenticated *which-distinction-to-verify* routing, exact and noisy sensing-cost bounds, and amortized certificate maintenance in dynamic interconnected systems.
+A preregistered systematic review (Vaccaro, Almaatouq and Malone, Nature Human Behaviour, 2024) covered 106 experiments / 370 effect sizes and found average *negative* human–AI synergy relative to the stronger individual baseline; the process design and task are major moderators. Hemmer, Schemmer, Kühl, Vössing and Satzger's 2025 information-systems research already formalizes complementary team performance and information/capability asymmetries; human–AI complementarity in the abstract is prior art. Our research target must be narrower: source-authenticated *which-distinction-to-verify* routing, exact and noisy sensing-cost bounds, and amortized certificate maintenance in dynamic interconnected systems.
 
 Therefore NIGHTFALL's case study may motivate an experiment, but must not be marketed as causal evidence of collaborative superintelligence, pure information synergy, or human–AI performance superiority.
 
