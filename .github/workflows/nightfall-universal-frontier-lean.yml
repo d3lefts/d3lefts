@@ -1,0 +1,101 @@
+name: NIGHTFALL universal authority and infinite-index transfer Lean
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/universal/**'
+      - '.github/workflows/nightfall-universal-frontier-lean.yml'
+      - '.github/actions/setup-nightfall-lean/**'
+      - 'scripts/lean_bridge.py'
+  workflow_dispatch:
+
+concurrency:
+  group: nightfall-universal-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  universal-lean:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - name: Checkout pinned revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Setup exact Lean and Mathlib pin
+        uses: ./.github/actions/setup-nightfall-lean
+
+      - name: Strict kernel certificate for unrestricted authority/separation
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/universal/UniversalAuthorityFrontier.lean
+          mkdir -p lean-receipts/universal
+          cp "$SRC" /tmp/mathlib4/UniversalAuthorityFrontier.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/UniversalAuthorityFrontier.olean UniversalAuthorityFrontier.lean)
+          N=Nightfall.UniversalAuthorityFrontier
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.authorize_sound \
+            --decl $N.authorize_maximal \
+            --decl $N.authorize_more_observations \
+            --decl $N.exact_authorization_iff_conflict_separation \
+            --decl $N.evidence_budget_iff_conflict_cover \
+            --decl $N.exact_authorization_cost_eq_conflict_hitting_cost \
+            --decl $N.invariant_preserved_under_enforced_guard \
+            --json-out lean-receipts/universal/authority.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/universal/authority.json
+
+      - name: Strict transfer-lemma-only certificate (not product measure theorem)
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/universal/InfiniteEfronSteinTransfer.lean
+          cp "$SRC" /tmp/mathlib4/InfiniteEfronSteinTransfer.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/InfiniteEfronSteinTransfer.olean InfiniteEfronSteinTransfer.lean)
+          N=Nightfall.InfiniteEfronSteinTransfer
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.arbitrary_index_variance_approximation \
+            --decl $N.positive_coordinate_if_positive_variance \
+            --decl $N.finite_support_cardinality_bound \
+            --json-out lean-receipts/universal/transfer.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/universal/transfer.json
+
+      - name: Strict finite original-source conditional-risk theorem
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/universal/FiniteSourceRiskGate.lean
+          cp "$SRC" /tmp/mathlib4/FiniteSourceRiskGate.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/FiniteSourceRiskGate.olean FiniteSourceRiskGate.lean)
+          N=Nightfall.FiniteSourceRiskGate
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.sum_over_observation_cells \
+            --decl $N.finite_cell_calibration_implies_risk_bound \
+            --decl $N.exact_source_threshold_gate_risk_mass_bound \
+            --decl $N.exact_source_threshold_gate_conditional_risk \
+            --json-out lean-receipts/universal/risk.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/universal/risk.json
+
+      - name: Upload immutable scoped receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: universal-frontier-lean-receipts-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/universal
+          if-no-files-found: warn
