@@ -1,0 +1,64 @@
+name: NIGHTFALL actual infinitePi cylinder variance strict Lean
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/universal/InfinitePiCylinderVarianceBridge.lean'
+      - '.github/workflows/nightfall-infinitepi-variance-terminal.yml'
+      - 'research/nightfall/formalization/universal/UNRESTRICTED_TERMINAL_PROOF_20261114.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nightfall-infinitepi-variance-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  cylinder-variance-original-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - name: Checkout exact revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Setup pinned Lean and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile original source and cylinder variance
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/universal/InfinitePiSourceBridge.lean /tmp/mathlib4/InfinitePiSourceBridge.lean
+          cp research/nightfall/formalization/universal/InfinitePiCylinderVarianceBridge.lean /tmp/mathlib4/InfinitePiCylinderVarianceBridge.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/InfinitePiSourceBridge.olean InfinitePiSourceBridge.lean)
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/InfinitePiCylinderVarianceBridge.olean InfinitePiCylinderVarianceBridge.lean)
+      - name: Strict named source proof and allowed axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/unrestricted
+          python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiCylinderVarianceBridge.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InfinitePiCylinderVarianceBridge.source_cylinder_variance_exact \
+            --json-out lean-receipts/unrestricted/cylinder-variance.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/unrestricted/cylinder-variance.json
+      - name: Preserve provenance
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/unrestricted
+          git rev-parse HEAD > lean-receipts/unrestricted/HEAD
+          sha256sum research/nightfall/formalization/universal/InfinitePiCylinderVarianceBridge.lean > lean-receipts/unrestricted/SHA256SUMS
+      - name: Upload scoped receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nightfall-infinitepi-cylinder-variance-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/unrestricted
+          if-no-files-found: warn
