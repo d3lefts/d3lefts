@@ -1,5 +1,6 @@
 import ActualSourceIntegratedEnergy
 import ActualSourceMatchingCover
+import ActualSourceDegreeTwoSections
 
 /-!
 # One genuine finite-product source: degree-two energy and the derived 8B pair cover
@@ -23,6 +24,7 @@ open Nightfall.Observability.ActualSourceInfluenceEnergy
 open Nightfall.Observability.ActualSourceIntegratedEnergy
 open Nightfall.Observability.ActualSourcePairAmplitudes
 open Nightfall.Observability.ActualSourceMatchingCover
+open Nightfall.Observability.ActualSourceDegreeTwoSections
 
 variable {ι α : Type} [Fintype ι] [DecidableEq ι]
   [Fintype α] [DecidableEq α] [Nonempty α]
@@ -73,5 +75,34 @@ theorem original_source_energy_and_attained_pair_cover
     intro i j hij
     apply hcover (i, j)
     simp [T, hij]
+
+/-- Both global quantitative 8B constructions are extracted from the
+same bounded degree-two source. The section assertion is for nontrivial
+coordinate types, matching the independently strict-compiled
+quadratic-switching source representation. -/
+theorem original_source_section_and_attained_pair_cover
+    [Nontrivial ι]
+    (p : ι → α → ℝ)
+    (hp : ∀ i a, 0 ≤ p i a)
+    (hp1 : ∀ i, (∑ a : α, p i a) = 1)
+    (f : (ι → α) → ℝ)
+    (hdegree : ESDegreeLE p f 2)
+    (base : ι → α)
+    (B : ℝ) (hf : ∀ x, |f x| ≤ B)
+    (x : ι → α) :
+    (∑ i : ι,
+      Real.sqrt (∑ a : α, p i a *
+        (f (Function.update x i a) -
+          (∑ b : α, p i b * f (Function.update x i b))) ^ 2)) ≤ 8 * B ∧
+    (∃ c : ι → ℝ,
+      (∀ i, 0 ≤ c i) ∧
+      (∑ i : ι, c i) ≤ 8 * B ∧
+      (∀ i j : ι, i ≠ j →
+        pairAmplitudeWeight p f i j ≤ max (c i) (c j))) := by
+  constructor
+  · exact actual_degree_two_source_section_budget_eight_current
+      p hp hp1 f B hf hdegree x
+  · exact (original_source_energy_and_attained_pair_cover
+      p hp hp1 f hdegree base B hf).2
 
 end Nightfall.Observability.ActualSourceQ2GenuineInterface
