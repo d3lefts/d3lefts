@@ -44,10 +44,11 @@ Determine exact decision-relevant information, source reads, verification effort
 3. Seek a same-oracle minimax lower bound that scales with task-specific latent rank and model-change locality rather than n. Test tiny exact Bayesian decision trees before any Lean or large simulation.
 4. Stop and demote if the resulting proof is simply standard additive-channel capacity, linear secret-sharing, or classic dynamic sum maintenance.
 
-## Reproducibility command
+## Repository reproducibility command
+
+```sh
+python3 -I research/nightfall/2026-11-task-distinction-engineering/quotient-observability/exact_audit.py
+git diff --exit-code -- research/nightfall/2026-11-task-distinction-engineering/quotient-observability/audit_results.json
 ```
-cd /mnt/data/nightfall_signature_pilot
-python3 exact_audit.py
-sha256sum -c SHA256SUMS
-pdflatex -interaction=nonstopmode -halt-on-error Task_Relevant_Quotient_Observability.tex
-```
+
+The source-typed paper and full typeset PDF were produced in a companion research bundle; this repository includes the theorem and proofs as `THEOREM_AND_PROOFS.md`, the original exact audit code, the frozen audit output, and the scoped certificate passport. No PDF/TeX build step is claimed by repository CI.
