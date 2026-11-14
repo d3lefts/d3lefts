@@ -61,9 +61,10 @@ theorem actual_source_owned_cubic
       mass q J.card w *
         Real.sqrt (vecNormSq (sumVector Y J.card w))
   have hne : ∀ k, k < J.card → i ≠ j k := by
-    intro k hk
+    intro k hk heq
     have hm : j k ∈ J := neighborIndex_mem i J k hk
-    exact (original_owner_not_in_neighbors c i) hm
+    have hself : i ∈ J := heq.symm ▸ hm
+    exact (original_owner_not_in_neighbors c i) hself
   have hkernel : ∀ k, k < J.card → ∀ a b,
       |sourceDoubleCenteredPair p f i (j k) a b| ≤ c i := by
     intro k hk a b
