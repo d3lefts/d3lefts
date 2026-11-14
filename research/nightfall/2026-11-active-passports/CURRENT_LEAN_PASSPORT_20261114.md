@@ -1,5 +1,12 @@
 # NIGHTFALL — Current Lean and Exact-Evidence Proof Passport (14 November 2026)
 
+## Current strongest finite Q2 certificate — 736.673, strict 14 November
+
+[PR #498](https://github.com/d3lefts/d3lefts/pull/498) was merged after the initial table in this passport. It certifies the unconditional finite common-alphabet actual original-source quadratic influence inequality with **C₂=[257/20+(9/4)√2+5√3+√6]²≈736.673197758287**, [run 43633180605](https://github.com/d3lefts/d3lefts/actions/runs/43633180605), strict standard axioms only and no extra caller supplied source budgets. `ActualSourceQ2EnergyDualSource.original_singleton_plus_owned_energy_le_influence` and `ActualSourceQ2EnergyDualUnconditional.actual_source_q2_energy_dual_unconditional` form the decisive newly named source certificate. Prior #494 at 1064.958 remains valid and weaker. The 625/620 manuscripts remain conditional/analytic, not certified.
+
+The current index v3 now has 23 source-hashed files in nine separate PR-head named Lean receipt groups. The historical 67-source register remains untouched. The SCIF terminal, measurable all-index Q2 and novel-priority gates remain open.
+
+---
 **Version:** 1.0 · **Owner/research direction:** Devin J. Wright · **Construction:** AI-assisted.
 **Scientific status:** strict named-declaration kernel receipts for explicitly scoped statements; mathematical novelty and non-author review unresolved.
 
