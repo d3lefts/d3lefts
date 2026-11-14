@@ -134,8 +134,11 @@ theorem arbitrary_law_many_shifted_hilbert_fourth
       c^2*(budget p Y n) + 4*a*c*(budget p Y n) := by
   induction n with
   | zero =>
-      simp [shiftedMoment4, budget, mass, sumVector, Samples, ha2,
-        Finset.card_univ, Fintype.card_punit]
+      have hcard :
+          (Finset.univ : Finset (Samples α 0)).card = 1 := by
+        change (Finset.univ : Finset PUnit).card = 1
+        simp
+      simp [shiftedMoment4, budget, mass, sumVector, Samples, ha2, hcard]
       ring
   | succ n ih =>
       let v : ℝ := ∑ b : α, p n b * vecNormSq (Y n b)
@@ -177,15 +180,14 @@ theorem arbitrary_law_many_shifted_hilbert_fourth
                   intro z _
                   apply Finset.sum_congr rfl
                   intro b _
-                  apply congrArg (fun t : ℝ => mass p n z * p n b * t)
-                  congr 1
-                  unfold vecNormSq
-                  apply Finset.sum_congr rfl
-                  intro k _
-                  change
-                    (h k + (sumVector Y n z k + Y n b k))^2 =
-                    (h k + sumVector Y n z k + Y n b k)^2
-                  ring
+                  have hv :
+                      (fun k : K => h k + sumVector Y (n+1) (z,b) k) =
+                      (fun k : K => h k + sumVector Y n z k + Y n b k) := by
+                    funext k
+                    change h k + (sumVector Y n z k + Y n b k) =
+                      h k + sumVector Y n z k + Y n b k
+                    ring
+                  rw [hv]
           _ ≤ shiftedMoment4 p Y h n + w +
               6*(a^2+moment2 p Y n)*v + 4*a*c*v := by
                 dsimp [shiftedMoment4, w, v]
@@ -196,7 +198,29 @@ theorem arbitrary_law_many_shifted_hilbert_fourth
       have henergy : moment2 p Y n = budget p Y n :=
         moment2_eq_budget p Y hp1 hY n
       rw [henergy] at hq
+      let s : ℝ := budget p Y n
+      have hq' :
+          shiftedMoment4 p Y h (n+1) ≤
+            shiftedMoment4 p Y h n + w +
+              6*(a^2+s)*v + 4*a*c*v := by
+        simpa only [s] using hq
+      have ih' :
+          shiftedMoment4 p Y h n ≤
+            a^4+6*a^2*s+3*s^2+c^2*s+4*a*c*s := by
+        simpa only [s] using ih
+      have hpoly :
+          (a^4+6*a^2*(s+v)+3*(s+v)^2+
+            c^2*(s+v)+4*a*c*(s+v)) -
+          ((a^4+6*a^2*s+3*s^2+c^2*s+4*a*c*s)+
+            c^2*v+6*(a^2+s)*v+4*a*c*v) = 3*v^2 := by
+        ring
+      have hpos : 0 ≤ 3*v^2 := by positivity
+      have hfinal :
+          shiftedMoment4 p Y h (n+1) ≤
+            a^4+6*a^2*(s+v)+3*(s+v)^2+
+              c^2*(s+v)+4*a*c*(s+v) := by
+        linarith [hq', ih', hw, hpoly, hpos]
       rw [hbudget]
-      nlinarith [ih, hq, hw, sq_nonneg v]
+      exact hfinal
 
 end Nightfall.Observability.ShiftedHilbertManyIncrement
