@@ -142,8 +142,7 @@ theorem arbitrary_law_many_shifted_hilbert_fourth
       change ((Finset.univ : Finset (Samples α 0)).card : ℝ) *
         (a^2)^2 ≤ a^4
       rw [hcard]
-      norm_num
-      ring
+      norm_num <;> ring
   | succ n ih =>
       let v : ℝ := ∑ b : α, p n b * vecNormSq (Y n b)
       let w : ℝ := ∑ b : α, p n b * (vecNormSq (Y n b))^2
