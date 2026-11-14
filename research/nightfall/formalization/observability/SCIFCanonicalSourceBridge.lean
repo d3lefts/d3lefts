@@ -162,7 +162,7 @@ theorem canonical_pair_recenter_of_table_transport
   intro a _
   rw [actual_source_esComp_pair_eq_derived p hp1 f k j hkj
       (Function.update x k a)]
-  simp [hkj]
+  simp only [Function.update_of_ne (Ne.symm hkj) a x]
 
 /-- Fully source-derived canonical pair repair for an actual bounded
 or unbounded two-coordinate observable; no independent hTable oracle.
@@ -253,10 +253,23 @@ theorem actual_sourceInfluence_neighbor_update_pair
   have hj : p' j = p j := by
     funext a; simp [p', editLaw, Ne.symm hkj]
   rw [hk, hj]
-  simp_rw [← Finset.mul_sum]
   rw [← Finset.sum_sub_distrib]
   apply Finset.sum_congr rfl
   intro a _
-  ring
+  calc
+    (∑ b : α, q a * p j b *
+        (F a b - ∑ c : α, p j c * F a c)^2) -
+      (∑ b : α, p k a * p j b *
+        (F a b - ∑ c : α, p j c * F a c)^2) =
+      ∑ b : α, (q a - p k a) *
+        (p j b * (F a b - ∑ c : α, p j c * F a c)^2) := by
+        rw [← Finset.sum_sub_distrib]
+        apply Finset.sum_congr rfl
+        intro b _
+        ring
+    _ = (q a - p k a) *
+        (∑ b : α, p j b *
+          (F a b - ∑ c : α, p j c * F a c)^2) := by
+        rw [Finset.mul_sum]
 
 end Nightfall.SCIFCanonicalSourceBridge
