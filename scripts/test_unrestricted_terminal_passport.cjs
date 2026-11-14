@@ -36,4 +36,16 @@ for(const k of ["actual infinitePi L2 cylinder density","conditional expectation
  assert.ok(scope.analytic_theorem.missing_lean.includes(k));
 assert.ok(reg.current_named_certificate_scope.finite_q2.strongest_merged.pr===498);
 assert.equal(reg.current_named_certificate_scope.scif.finite_all_degree_changed_law_risk.pr,514);
+const structural=scope.structural_source_certificates;
+assert.ok(Array.isArray(structural)&&structural.length===2);
+for(const e of structural){
+ assert.equal(e.pr,520);
+ assert.equal(e.run,43637631337);
+ assert.ok(e.blob_sha1.match(/^[0-9a-f]{40}$/));
+ assert.ok(fs.existsSync(e.source));
+ assert.ok(e.name.includes("CountableSupport"));
+ assert.ok(!/Efron.Stein.*terminal|all.L2.*kernel/i.test(e.scope));
+}
+assert.equal(scope.structural_receipt.artifact_id,14131110488);
+assert.equal(scope.analytic_theorem.lean_status,"open");
 console.log("PASS: exact six-source proof scope; arbitrary-index all-L2 Lean endpoint OPEN");
