@@ -87,11 +87,16 @@ theorem mean_projected_source_norm_le_unprojected
       exact mul_le_mul_of_nonneg_left
         (source_projected_norm_pointwise_jensen p hp f i S x) (hm x)
     _ = sourceMeanSectionNorm p f i := by
-      simpa only [sourceMeanSectionNorm,
-        ActualSourceANOVA.merge,
-        ActualProductMergeTower.keepSource] using
-        (actual_product_merge_tower p hp1 S
-          (sourceSectionNorm p f i))
+      unfold sourceMeanSectionNorm
+      have hmerge (x y : ι → α) :
+          ActualSourceANOVA.merge S x y =
+          ActualProductMergeTower.keepSource S x y := by
+        funext k
+        simp only [ActualSourceANOVA.merge,
+          ActualProductMergeTower.keepSource]
+      simp_rw [hmerge]
+      exact actual_product_merge_tower p hp1 S
+        (sourceSectionNorm p f i)
 
 /-- Uniform 8B budget for any owner-selected conditioning sets,
 already valid before their ANOVA pair sectors are identified. -/
