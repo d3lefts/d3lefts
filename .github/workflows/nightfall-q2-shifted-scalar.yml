@@ -42,12 +42,32 @@ jobs:
             --json-out lean-receipts/q2-shifted/scalar.json
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/q2-shifted/scalar.json
+      - name: Strict conditional 107 and 99 terminal theorems and c/5 disproof
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/q2_shifted/Q2ShiftedConditionalTargets.lean
+          cp "$SRC" /tmp/mathlib4/Q2ShiftedConditionalTargets.lean
+          (cd /tmp/mathlib4 && lake env lean -o \
+            .lake/build/lib/lean/Q2ShiftedConditionalTargets.olean \
+            Q2ShiftedConditionalTargets.lean)
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Q2Shifted.ConditionalTargets.conditional_shifted_budget \
+            --decl Nightfall.Q2Shifted.ConditionalTargets.conditional_coefficient_107 \
+            --decl Nightfall.Q2Shifted.ConditionalTargets.conditional_coefficient_99 \
+            --decl Nightfall.Q2Shifted.ConditionalTargets.fifth_envelope_counterexample_exact \
+            --decl Nightfall.Q2Shifted.ConditionalTargets.fifth_envelope_not_universal \
+            --json-out lean-receipts/q2-shifted/conditional-107-99.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-shifted/conditional-107-99.json
       - name: Source/commit manifest
         if: always()
         run: |
           set -euo pipefail
           mkdir -p lean-receipts/q2-shifted
           sha256sum research/nightfall/formalization/q2_shifted/Q2ShiftedScalar.lean \
+            research/nightfall/formalization/q2_shifted/Q2ShiftedConditionalTargets.lean \
             research/nightfall/2026-11-quadratic-law-free-audit/check_shifted_owner_moment_107.py \
             > lean-receipts/q2-shifted/SHA256SUMS
           git rev-parse HEAD > lean-receipts/q2-shifted/commit.txt
