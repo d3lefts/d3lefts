@@ -27,6 +27,11 @@ on:
     workflows: ['Build Paper C typeset manuscript and exact archive']
     types: [completed]
   workflow_dispatch:
+# Older commits on the same branch never need to consume runner time.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.workflow_run.id || github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 jobs:

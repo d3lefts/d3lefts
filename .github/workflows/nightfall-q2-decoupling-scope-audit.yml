@@ -9,6 +9,11 @@ on:
       - 'research/nightfall/2026-11-quadratic-law-free-audit/Q2_GROTHENDIECK_DECOUPLING_SCOPE_AUDIT_20261113.md'
       - '.github/workflows/nightfall-q2-decoupling-scope-audit.yml'
   workflow_dispatch:
+# Older commits on the same branch never need to consume runner time.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.workflow_run.id || github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 jobs:
