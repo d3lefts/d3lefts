@@ -63,7 +63,10 @@ theorem actual_source_owned_cubic
   have hne : ∀ k, k < J.card → i ≠ j k := by
     intro k hk
     have hm : j k ∈ J := neighborIndex_mem i J k hk
-    exact (original_owner_not_in_neighbors c i) hm
+    have hnot : i ∉ J := original_owner_not_in_neighbors c i
+    intro heq
+    apply hnot
+    simpa [heq] using hm
   have hkernel : ∀ k, k < J.card → ∀ a b,
       |sourceDoubleCenteredPair p f i (j k) a b| ≤ c i := by
     intro k hk a b
