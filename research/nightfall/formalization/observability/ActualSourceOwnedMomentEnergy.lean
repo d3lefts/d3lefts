@@ -35,7 +35,7 @@ theorem actual_neighbor_range_sum_eq_neighbor_finset
   have hfinite :
       (∑ k ∈ Finset.range J.card, g (neighborIndex i J k)) =
       ∑ k : Fin J.card, h k := by
-    simpa only [h, neighborIndex, dif_pos, Fin.sum_univ_eq_sum_range] using
+    simpa [h, neighborIndex] using
       (Fin.sum_univ_eq_sum_range
         (fun k : ℕ => g (neighborIndex i J k)) J.card).symm
   have heq :
