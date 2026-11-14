@@ -1,0 +1,47 @@
+{
+  "audit": "finite exhaustive-update vs independent transversal identity",
+  "limitations": "Finite randomized audit only. Trust assumptions and complete dependency declarations are not empirically validated.",
+  "parameterized_subset_cases": 53608,
+  "random_instances": 400,
+  "random_seed": 20261113,
+  "sample_pareto": [
+    {
+      "facts": [
+        "b_B",
+        "c_C",
+        "d2_A"
+      ],
+      "trusted_atom_checks": "6",
+      "trusted_evidence": "5"
+    },
+    {
+      "facts": [
+        "b_B",
+        "c_C",
+        "d_A"
+      ],
+      "trusted_atom_checks": "6",
+      "trusted_evidence": "5"
+    },
+    {
+      "facts": [
+        "b2_B",
+        "c_C",
+        "d2_A"
+      ],
+      "trusted_atom_checks": "3",
+      "trusted_evidence": "7"
+    },
+    {
+      "facts": [
+        "b2_B",
+        "c_C",
+        "d_A"
+      ],
+      "trusted_atom_checks": "3",
+      "trusted_evidence": "7"
+    }
+  ],
+  "triangle_disjoint_support_pairs": 0,
+  "triangle_edit_resilience": 2
+}

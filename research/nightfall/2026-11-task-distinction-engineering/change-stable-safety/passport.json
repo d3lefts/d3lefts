@@ -1,0 +1,29 @@
+{
+  "title": "Change-stable safety certificate: synthetic exact instance",
+  "status": "DEMONSTRATION_ONLY; no real-world safety authority",
+  "version_id": "synthetic-system-v1",
+  "policy_id": "synthetic-permission-v1",
+  "action": "permit_test_action",
+  "default_action": "deny_test_action",
+  "better_action_utility": 1,
+  "default_action_utility": 0,
+  "hazard_envelope": ["h1", "h2", "h3"],
+  "mutable_components": ["A", "B", "C"],
+  "max_changed_components": 1,
+  "trust_boundary": {
+    "exclusion_validity": "ASSUMED within synthetic instance; NOT independently authenticated",
+    "dependency_completeness": "ASSUMED within synthetic instance; NOT proven for a deployed system",
+    "complete_changes": "Must be attested at real deployment; no trusted updater in this demo"
+  },
+  "evidence": {
+    "d_A":  {"covers": ["h1","h2","h3"], "deps": ["A"], "evidence_cost": 1, "check_cost": 1},
+    "d2_A": {"covers": ["h1","h2","h3"], "deps": ["A"], "evidence_cost": 1, "check_cost": 1},
+    "b_B":  {"covers": ["h2","h3"], "deps": ["B"], "evidence_cost": 1, "check_cost": 4},
+    "c_C":  {"covers": ["h1","h3"], "deps": ["C"], "evidence_cost": 3, "check_cost": 1},
+    "b2_B": {"covers": ["h2","h3"], "deps": ["B"], "evidence_cost": 3, "check_cost": 1}
+  },
+  "selected_evidence": ["d_A","b_B","c_C"],
+  "claimed_cost": {"evidence": 5, "trusted_checks": 6},
+  "claimed_pareto_costs": [[5,6],[7,3]],
+  "certificate_form": "finite exhaustive-update check; fixed k=1"
+}

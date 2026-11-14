@@ -1,0 +1,159 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[margin=0.92in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,enumitem,booktabs,hyperref,xcolor}
+\hypersetup{colorlinks=true,urlcolor=blue,linkcolor=black}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\F}{\mathbb F}
+\newcommand{\Hh}{\mathrm H}
+\newcommand{\II}{\mathrm I}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\Prb}{\mathbb P}
+\newcommand{\E}{\mathbb E}
+\newcommand{\cost}{\operatorname{cost}}
+\begin{document}
+\begin{center}
+{\Large\bfseries Task-Relevant Quotient Observability\\[3pt] and Change-Stable Certificates}\par\medskip
+{\large An exact finite-field pilot with matched observation, verification, and update interfaces}\par\medskip
+NIGHTFALL research note \(\cdot\) November 13, 2026\\
+\small AI-assisted mathematical draft; not peer-reviewed, not a novelty or formal-proof certificate.
+\end{center}
+
+\begin{abstract}
+We isolate a systems-engineering model in which the useful part of an observation is determined by a task quotient, not by the ambient dimension. For uniform finite-field state and arbitrary \emph{correlated} additive measurement noise, we give the exact conditional posterior and mutual information of a linear task after reading any subset of coordinates. Scalar modular tasks have pure information complementarity: every incomplete set of relevant coordinates gives zero improvement, and the complete set has a precisely calculable Bayes advantage. This yields an exact randomized expected-read--accuracy frontier, a sharp pre-observation versus task-revelation frontier for row--column networks, and an inductively checkable sparse-update rule. We explicitly price source reads, bounded-fan-in computation, raw-input checking, and authenticated-delta maintenance; all lower bounds apply only to those same interfaces. The underlying algebra is close to established finite-field coding, secret-sharing, and incremental-computation ideas. The contribution established here is an auditable synthesis and a candidate platform for a stronger theorem, \emph{not} a demonstrated new general result.
+\end{abstract}
+
+\section{Interface and assumptions}
+Fix a finite field \(\F_q\), \(n\) latent state coordinates \(X\in\F_q^n\) that are independent and uniformly distributed, and a noise vector \(N\in\F_q^n\) independent of \(X\). The coordinates of \(N\) may be arbitrarily dependent; their full joint distribution is known as part of the \emph{trusted model contract}. A coordinate-read oracle discloses exactly one \(Y_i=X_i+N_i\) at unit acquisition cost; a repeated read of the same \(Y_i\) gives the same value, not another independent sample. A task is \(K=AX\in\F_q^d\), where \(A\) is a declared full-row-rank \(d\times n\) matrix. For one-dimensional task support \(S\), write \(K_S=\sum_{i\in S}X_i\).
+
+The verifier is granted \emph{authenticated, version-bound} raw measurement records and a committed noise model; it checks arithmetic and version transport, not the empirical truth of uniform priors, joint noise law, source integrity, or completeness of change manifests. To obtain computational lower bounds we separately adopt a raw-word input model and fan-in-two arithmetic circuit model with no free signed aggregates, uncharged database indexes, or arbitrary precomputed functions of the current measurement values. Those restrictions are necessary: a trusted oracle directly returning \(AX\), for example, changes the result.
+
+\section{The task quotient is the observable invariant}
+Let \(Q\subseteq[n]\) be the observed indices, \(U_Q=\im A_{\bar Q}\leq\F_q^d\), and \(\pi_Q:\F_q^d\to\F_q^d/U_Q\) the canonical quotient. Let \(r_Q=\dim U_Q\).
+
+\begin{theorem}[Exact quotient--noise posterior]\label{thm:quotient}
+For every observed \(y_Q\) and every task value \(k\in\F_q^d\),
+\begin{equation}\label{eq:posterior}
+\Prb\{K=k\mid Y_Q=y_Q\}
+= q^{-r_Q}\Prb\!\left\{\pi_Q A_QN_Q=\pi_Q(A_Qy_Q-k)\right\}.
+\end{equation}
+In particular, the exact information and Bayes identification probability are
+\begin{align}
+\II(K;Y_Q)&=(d-r_Q)\log_2q-\Hh(\pi_Q A_QN_Q),\label{eq:mi}\\
+\max_{\hat k}\Prb\{\hat k(Y_Q)=K\}
+&=q^{-r_Q}\max_z\Prb\{\pi_Q A_QN_Q=z\}.\label{eq:bayes}
+\end{align}
+No measurement outside \(Q\) has been assumed free, and the task quotient automatically disregards dimensions that cannot be resolved through \(Q\).
+\end{theorem}
+
+\begin{proof}
+The uniform vector \(X\) makes \(Y=X+N\) uniform and independent of \(N\), even when the noise coordinates are jointly correlated. Also \(X_{\bar Q}\) is independent of \((Y_Q,N)\). Conditional on \((Y_Q,N_Q)\),
+\[K=A_Q(Y_Q-N_Q)+A_{\bar Q}X_{\bar Q}.\]
+The final term is uniform on \(U_Q\). Averaging its coset over the \(N_Q\) distribution proves (\ref{eq:posterior}). The quotient of \(K\) is the translated variable \(\pi_Q A_Q Y_Q-\pi_Q A_QN_Q\), and the conditional distribution within each coset is uniform. Thus \(\Hh(K\mid Y_Q)=r_Q\log_2 q+\Hh(\pi_Q A_QN_Q)\). Full row rank makes \(K\) uniform on \(\F_q^d\), giving (\ref{eq:mi}). Maximizing the coset point mass gives (\ref{eq:bayes}).
+\end{proof}
+
+\begin{remark}[What the formula does not say]
+The result is conditional on a finite-field generative model, \emph{not} a general correlated-system influence inequality. If \(X\) is not uniform, \(N\) depends on \(X\), the measurements are fresh noisy samples on each read, or the task is nonlinear, the quotient identity need not hold.
+\end{remark}
+
+\section{Pure complementarity and exact acquisition frontier}
+For a nonempty task support \(S\subseteq[n]\) of size \(p\), put \(Z_S=\sum_{i\in S}N_i\), \(p_*=\max_{z\in\F_q}\Prb\{Z_S=z\}\). Assume \(p_*>1/q\); otherwise not even all coordinates yield a better-than-prior exact-identification decision.
+
+\begin{theorem}[Matched adaptive-read bound]\label{thm:frontier}
+Let \(P\) be an already-purchased set of coordinates, and \(m=|S\setminus P|\). Any randomized, adaptive protocol which buys further coordinate reads, then predicts \(K_S\) with average success at least \(s\in[1/q,p_*]\), requires
+\begin{equation}\label{eq:frontier}
+\E[\text{new coordinate reads}]\ \geq\ m\,\frac{s-1/q}{p_*-1/q}.
+\end{equation}
+Equality is achievable. In particular, to reach the full-observation Bayes success \(p_*\) one must buy all \(m\) missing observations, and no strict improvement over \(1/q\) is possible on a transcript that omits any element of \(S\).
+\end{theorem}
+
+\begin{proof}
+If some \(i\in S\) remains unread, \(X_i\) is still independent uniform under the transcript; it masks the modular sum \(K_S\). Therefore every such terminal transcript has best success \(1/q\). For a complete-support transcript, \(Y\perp N\) implies \(K_S=\sum_{i\in S}Y_i-Z_S\), so the best success is the constant \(p_*\), independent of the transcript. Let \(\alpha\) denote the probability that the protocol completes all missing observations. Its success is at most \((1-\alpha)/q+\alpha p_*\), and its expected new-read count is at least \(m\alpha\). Eliminating \(\alpha\) proves (\ref{eq:frontier}). To attain equality, independently choose with probability \(\alpha=(s-1/q)/(p_*-1/q)\) to buy every missing read and report the posterior mode; otherwise buy none and make an arbitrary fixed guess. This proves the same-oracle bound and construction.
+\end{proof}
+
+\begin{corollary}[Noisy complementarity is controlled by joint noise, not marginal noise]\label{cor:noise}
+No individual observation helps when \(|S|\ge2\), but the full set gives
+\[\II(K_S;Y_S)=\log_2q-\Hh(Z_S),\quad
+ \Prb\{\text{best correct identification}\}=p_*.\]
+For \(q=2\) and independent bit-flip noise of probability \(\eta\),
+\[p_* =\frac{1+|1-2\eta|^p}{2}.\]
+The advantage decays exponentially with \(p\) when \(0<\eta<1/2\). In contrast, two uniformly random noises with \(N_2=-N_1\) give \(Z_{\{1,2\}}=0\): the paired measurement determines the task perfectly, though either read alone gives zero information about it.
+\end{corollary}
+
+\section{Task revelation before and after purchasing observations}
+Consider an \(r\times r\) array of latent shares, with a task revealed as one row or one column sum. There are \(2r\) possible tasks, each with support size \(r\). Assume each task's joint-noise sum is nonuniform, so achieving its full-observation Bayes success requires every relevant cell. Before the task is known, purchase \(b\) distinct cells and require a worst-case guarantee \emph{for each resulting purchased set and every possible subsequent task}. This is a pathwise, possibly adaptive-adversary guarantee; it is not an oblivious-adversary expected bound.
+
+\begin{theorem}[Exact row--column revelation frontier]\label{thm:grid}
+For any integer \(0\le b\le r^2\), the minimum worst-case number of further cell reads necessary to attain the revealed task's full Bayes accuracy is
+\begin{equation}\label{eq:grid}
+L_r(b)=r-\left\lfloor\frac br\right\rfloor.
+\end{equation}
+Thus zero post-revelation reads require purchasing all \(r^2\) cells, whereas a revealed task needs only \(r\) cells; the unanticipated-task redundancy is a factor of \(r\).
+\end{theorem}
+\begin{proof}
+Every advance-purchase set of size \(b\) has a row containing at most \(\lfloor b/r\rfloor\) selected cells, forcing at least \(r-\lfloor b/r\rfloor\) further reads. For equality, decompose the edges of the complete bipartite \(r\)-by-\(r\) grid into \(r\) cyclic perfect matchings. Purchase \(\lfloor b/r\rfloor\) complete matchings and \(b\bmod r\) edges from the next matching. Every row and column then contains at least \(\lfloor b/r\rfloor\) bought cells. Theorem~\ref{thm:frontier} with \(s=p_*\) proves the matching oracle upper bound.
+\end{proof}
+
+\section{Version transport and explicit verification cost}
+Assume a task \(K_S\) has been certified at version \(v\) using all \(p\) source-bound readings \(Y_i\), a previously authenticated noise-law commitment, and a trusted declared value \(z_*\in\arg\max_z\Prb\{Z_S=z\}\). Let the stored \emph{aggregate}\[B_v=\sum_{i\in S}Y_i,\qquad \hat K_v=B_v-z_*\] be independently checked against the raw \(p\) reads. Let an authenticated, \emph{complete} change manifest list \(k\) possibly nonzero changes to the relevant observed values, \(Y_i^{v+1}=Y_i^{v}+\delta_i\), with all unlisted values unchanged. Assume that these edits are exogenous deterministic shifts to the latent \(X\) while the noise realization and noise law persist; hence the underlying model assumptions remain true at the new version.
+
+\begin{proposition}[Change-stable posterior certificate]\label{prop:update}
+The updated aggregate and canonical Bayes decision satisfy the exact identity
+\begin{equation}\label{eq:update}
+B_{v+1}=B_v+\sum_{i\in T\cap S}\delta_i,
+\qquad
+\hat K_{v+1}=\hat K_v+\sum_{i\in T\cap S}\delta_i.
+\end{equation}
+If the \(k\) relevant deltas are explicitly supplied as separate raw words, arithmetic updating requires \(k\) group additions (one for each newly independent delta attached to the cached aggregate), and a raw-word checker must examine each of the \(k\) deltas. Both bounds are tight in the stated model. No new sensor acquisition is required. The conclusion composes by induction across versions, provided each manifest and every intermediate certificate is authenticated and checked.
+\end{proposition}
+\begin{proof}
+Equation (\ref{eq:update}) is linearity. For a lower bound, the correct output depends essentially on each one of the \(k\) independent delta words and on the prior arbitrary aggregate. A fan-in-two circuit combining \(k+1\) essential inputs must contain at least \(k\) binary gates in their connecting subgraph. Likewise, a verifier that skips any one delta on an accepted input cannot distinguish it from an altered input with the same claimed aggregate, so an exact raw-word checker must read every delta. The simple accumulator achieves both bounds. Posterior correctness follows from the exogenous-shift model: \(X^{v+1}\) remains uniform, the fixed \(N\) remains independent, and the posterior translates by the declared total shift.
+\end{proof}
+
+\begin{proposition}[From-scratch lower bounds and certificate scope]
+For \(p=|S|\) distinct raw coordinate inputs and no cached aggregate, any exact algorithm computing the canonical posterior-mode output must read all \(p\) coordinates and use at least \(p-1\) fan-in-two gates connecting the essential inputs. Direct summation attains these two counts. An exact independent checker of the claimed aggregate \(B_v\) against the raw measurement list must likewise read all \(p\) raw words; a fresh sum check takes \(p-1\) group additions. These are \emph{interface-specific} lower bounds, not RAM, cell-probe, cryptographic, or general-circuit lower bounds without their stated restrictions.
+\end{proposition}
+
+\noindent\textbf{Fail-closed boundaries.} The update rule is invalid when a manifest can silently omit a changed field; a sensor's noise is redrawn; the source or noise model changes untracked; \(S\) or its coefficients change without proof replay; an unsigned record is substituted; or a change to the latent state is not carried to the stored measurements by the authenticated delta. A \emph{new} task \(S'\) requires acquiring every newly relevant coordinate not already in the trusted cache before full Bayes accuracy is available. Mere additive algebra cannot certify a changed generative model.
+
+\section{An impossibility theorem for unverified model changes}
+\begin{proposition}[No sensor-only certification of hidden noise drift]\label{prop:drift}
+Even if both sensor coordinates may be read, an observer given only their values and authenticated exogenous state-delta receipts cannot in general determine whether a scalar task is perfectly decodable or statistically undecodable after an unannounced change in the measurement-noise law.
+\end{proposition}
+\begin{proof}
+Take \(q=2,n=2\), independent fair \(X_1,X_2\), and \(K=X_1+X_2\pmod2\). In world \(W_0\), put \(N=(B,B)\) for an independent fair bit \(B\). In world \(W_1\), put \(N=(B_1,B_2)\) with independent fair bits. In both worlds the full observation \(Y=X+N\) is uniform on \(\F_2^2\); so every sensor-only transcript and every exogenously shifted version transcript has the same distribution. Yet in \(W_0\), \(K=Y_1+Y_2\) surely, whereas in \(W_1\), \(K\) is independent of \(Y\). Thus full-read Bayes accuracy is respectively \(1\) and \(1/2\). No procedure based on the allowed sensor values can certify which accuracy regime holds. A trusted model-law certificate, calibration oracle, labelled data, or stronger structural assumption is indispensable.
+\end{proof}
+
+\noindent This is an \emph{identifiability obstruction}, not a proof that all reliable assurance under uncertainty is impossible: a conservative controller may simply decline to assert the stronger guarantee. It isolates exactly why a change to the noise law is not an ordinary signed state delta.
+
+\section{What is independently checkable and what remains open}
+A standalone source checker exhaustively enumerates latent states and correlated noise laws and compares the resulting exact rational posterior against the quotient-coset expression. It also enumerates all two-coordinate adaptive read policies under random noise, exact finite row--column purchase sets for \(r\le4\), finite-field delta updates, and a pair of observationally indistinguishable noise-law changes. The fixed seed and machine-readable record are shipped alongside this note. These are software checks, not a completed Lean formalization, independent proof audit, cryptographic attestation of a real sensor, or empirical validation of the generative assumptions.
+
+\begin{center}\small
+\begin{tabular}{ll}
+\toprule
+Audit component & Exact checks passing \\
+\midrule
+Arbitrary correlated-noise posterior & 240 models, 1,860 observed subsets, 41,706 probability cells\\
+Adaptive read lower bound & 600 noise laws, 5,400 deterministic decision trees\\
+Signed-delta aggregate maintenance & 4,000 random finite-field models\\
+Row--column revelation & 66,064 pre-purchase sets (\(r=2,3,4\))\\
+Noise-law ambiguity & Identical full sensor laws, Bayes accuracy \(1\) versus \(1/2\)\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent\textbf{Novelty gate.} The mathematical constituents closely touch linear finite-field channels, additive-noise decoding, secret-sharing complementarity, test-cover and minimum-distance questions, and established self-adjusting computation. The October 2026 assurance-evidence paper by Mukhopadhyay and Nalla addresses fail-closed evidence reuse directly. Therefore the present package is a \emph{proven finite model under stated assumptions and a reproducible pilot}, not a proven novel general TCS contribution. The next research obstacle is a theorem preserving a nontrivial observability and verification bound under \emph{unknown-dependent updates and changes in the observation law}, with a same-oracle lower bound that cannot be reduced to an additive channel or ordinary change propagation.
+
+\section*{Priority-check references (reviewed in this research session)}
+\begin{enumerate}[leftmargin=*,itemsep=2pt]
+\item G. Ramalingam, \emph{Bounded incremental computation}, Ph.D. thesis, 1993. \url{https://www.microsoft.com/en-us/research/publication/bounded-incremental-computation/}.
+\item U. Acar et al., \emph{A Library for Self-Adjusting Computation}, 2006. \url{https://www.cs.cmu.edu/~guyb/papers/ABBHT06.pdf}.
+\item A. Mukhopadhyay and S. R. Nalla, \emph{Reusing Assurance Evidence in AI Pipelines}, arXiv:2610.27672, October 2026. \url{https://arxiv.org/abs/2610.27672}.
+\item Y. K. Ko, \emph{Amortized Cell-Probe Lower Bounds for Dynamic Boolean Problems}, arXiv:2611.11508, November 2026. \url{https://arxiv.org/abs/2611.11508}.
+\end{enumerate}
+\end{document}
