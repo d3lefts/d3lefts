@@ -39,7 +39,6 @@ theorem cubic_to_sharp_affine
   have hY2 : Y^2 = 3*T^2*z^2 := by
     dsimp [Y]
     rw [mul_pow, mul_pow, hr2]
-    ring
   have hcubic2 : s^2 ≤ z^2*(c^2+3*s) := by
     by_contra hn
     have hd : 0 < s^2-z^2*(c^2+3*s) := by linarith
@@ -55,7 +54,7 @@ theorem cubic_to_sharp_affine
     nlinarith [hbase, hcapmul]
   by_contra hnot
   have hD : gamma*T*c < s-Y := by
-    dsimp [Y] at *
+    change ¬s ≤ Y + gamma*T*c at hnot
     linarith
   have hD0 : 0 ≤ s-Y := by
     nlinarith [hD, mul_nonneg (mul_nonneg hg hT) hc]
@@ -81,9 +80,10 @@ theorem cubic_to_sharp_affine
     have hprod := mul_nonneg (sub_nonneg.mpr hcap)
       (add_nonneg hs (sq_nonneg T))
     nlinarith [hprod]
+  have hgc : 0 ≤ gamma*T*c := mul_nonneg (mul_nonneg hg hT) hc
+  have hDpos : 0 < s-Y := lt_of_le_of_lt hgc hD
   have hprod2 := mul_pos (sub_pos.mpr hD)
-    (add_pos_of_nonneg_of_pos
-      (mul_nonneg (mul_nonneg hg hT) hc) (by linarith : 0 < s-Y))
+    (add_pos_of_nonneg_of_pos hgc hDpos)
   have hDsq : (gamma*T*c)^2 < (s-Y)^2 := by
     nlinarith [hprod2]
   have hstrict := mul_lt_mul_of_pos_left hDsq
