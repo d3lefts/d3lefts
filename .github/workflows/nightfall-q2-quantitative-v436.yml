@@ -152,3 +152,39 @@ jobs:
           name: q2-single-source-section-scalar
           path: lean-receipts/
           retention-days: 45
+  strict-weighted-greedy-cover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile original finite max-first matching proof on active pin
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/observability/WeightedGreedyMatching.lean /tmp/mathlib4/WeightedGreedyMatching.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/WeightedGreedyMatching.olean WeightedGreedyMatching.lean)
+      - name: Strict derived 8B matching-to-cover structural implication
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.WeightedGreedyCover
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/WeightedGreedyCover.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.matching_endpoint_cover \
+            --decl $N.matching_budget_to_endpoint_budget \
+            --json-out lean-receipts/q2-pinned-weighted-greedy-cover.json || {
+              cat lean-receipts/q2-pinned-weighted-greedy-cover.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-pinned-weighted-greedy-cover.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: q2-pinned-weighted-greedy-cover
+          path: lean-receipts/
+          retention-days: 45
