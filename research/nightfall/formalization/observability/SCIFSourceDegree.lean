@@ -21,7 +21,7 @@ namespace Nightfall.SCIF.SourceDegree
 open Finset
 open Nightfall.Observability.ActualSourceANOVA
 
-variable {ι α : Type*} [Fintype ι] [DecidableEq ι]
+variable {ι α : Type} [Fintype ι] [DecidableEq ι]
   [Fintype α] [DecidableEq α]
 
 private theorem canonical_component_ignores_outside
