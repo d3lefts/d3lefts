@@ -134,7 +134,9 @@ theorem arbitrary_law_many_shifted_hilbert_fourth
       c^2*(budget p Y n) + 4*a*c*(budget p Y n) := by
   induction n with
   | zero =>
-      simp [shiftedMoment4, budget, mass, sumVector, Samples, ha2]
+      simp [shiftedMoment4, budget, mass, sumVector, Samples, ha2,
+        Finset.card_univ, Fintype.card_punit]
+      ring
   | succ n ih =>
       let v : ℝ := ∑ b : α, p n b * vecNormSq (Y n b)
       let w : ℝ := ∑ b : α, p n b * (vecNormSq (Y n b))^2
@@ -170,7 +172,20 @@ theorem arbitrary_law_many_shifted_hilbert_fourth
                 (fun k => h k + sumVector Y n z k + Y n b k))^2) := by
                   unfold shiftedMoment4
                   rw [expectation_succ]
-                  rfl
+                  unfold jointAvg
+                  apply Finset.sum_congr rfl
+                  intro z _
+                  apply Finset.sum_congr rfl
+                  intro b _
+                  apply congrArg (fun t : ℝ => mass p n z * p n b * t)
+                  congr 1
+                  unfold vecNormSq
+                  apply Finset.sum_congr rfl
+                  intro k _
+                  change
+                    (h k + (sumVector Y n z k + Y n b k))^2 =
+                    (h k + sumVector Y n z k + Y n b k)^2
+                  ring
           _ ≤ shiftedMoment4 p Y h n + w +
               6*(a^2+moment2 p Y n)*v + 4*a*c*v := by
                 dsimp [shiftedMoment4, w, v]
