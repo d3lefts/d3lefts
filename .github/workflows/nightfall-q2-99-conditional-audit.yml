@@ -33,12 +33,25 @@ jobs:
             --decl Nightfall.Q299.old_c5_polynomial_claim_false \
             --json-out lean-receipts/q299/conditional.json
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q299/conditional.json
+      - name: Strict c/5 restricted symmetric-type moment certificate
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/q2_99/Q299SymmetricShift.lean
+          cp "$SRC" /tmp/mathlib4/Q299SymmetricShift.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Q299SymmetricShift.olean Q299SymmetricShift.lean)
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Q299.shifted_c5_from_symmetric_type_moments \
+            --decl Nightfall.Q299.symmetric_type_sos_identity \
+            --json-out lean-receipts/q299/symmetric-type.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q299/symmetric-type.json
       - name: Immutable source/commit manifest
         if: always()
         run: |
           set -euo pipefail
           mkdir -p lean-receipts/q299
-          sha256sum research/nightfall/formalization/q2_99/Q299ConditionalAndNoGo.lean             > lean-receipts/q299/SHA256SUMS
+          sha256sum research/nightfall/formalization/q2_99/Q299ConditionalAndNoGo.lean research/nightfall/formalization/q2_99/Q299SymmetricShift.lean             > lean-receipts/q299/SHA256SUMS
           git rev-parse HEAD > lean-receipts/q299/commit.txt
           cat lean-toolchain > lean-receipts/q299/lean-toolchain.txt
       - name: Archive conditional and negative-control evidence
