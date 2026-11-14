@@ -27,7 +27,7 @@ jobs:
             cp "research/nightfall/formalization/observability/${file}.lean" /tmp/mathlib4/
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/${file}.olean" "${file}.lean")
           done
-          for file in ActualProductMergeTower ActualProductHilbertJensen ActualProductSoftNoise ActualSourceANOVA ActualSourceQuadraticRectangles SCIFSourceGraph; do
+          for file in ActualProductMergeTower ActualProductHilbertJensen ActualProductSoftNoise ActualSourceANOVA ActualSourceQuadraticRectangles SCIFSourceGraph SCIFDegreeTransport; do
             cp "research/nightfall/formalization/observability/${file}.lean" /tmp/mathlib4/
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/${file}.olean" "${file}.lean")
           done
@@ -38,6 +38,14 @@ jobs:
             --json-out lean-receipts/02b-scif-actual-source-graph.json
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/02b-scif-actual-source-graph.json
+          python3 scripts/lean_bridge.py research/nightfall/formalization/observability/SCIFDegreeTransport.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 600 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Observability.SCIFDegreeTransport.degree_two_preserved_by_any_law \
+            --decl Nightfall.Observability.SCIFDegreeTransport.canonical_pair_graph_invariant_after_any_law_change \
+            --json-out lean-receipts/02c-scif-source-degree-transport.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/02c-scif-source-degree-transport.json
           python3 scripts/lean_bridge.py research/nightfall/formalization/observability/SCIFRecenter.lean \
             --workspace /tmp/mathlib4 --strict --timeout 600 \
             --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
