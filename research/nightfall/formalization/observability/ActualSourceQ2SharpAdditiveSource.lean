@@ -143,9 +143,9 @@ theorem original_degree_two_uniform_noise_polynomial
           intro S _
           rw [original_uniform_mask_weight t S]
     _ = ∑ S : Finset ι,
-          (if S.card = 0 then esComp p S f x else 0) +
-          t * (if S.card = 1 then esComp p S f x else 0) +
-          t^2 * (if S.card = 2 then esComp p S f x else 0) := by
+          ((if S.card = 0 then esComp p S f x else 0) +
+           t * (if S.card = 1 then esComp p S f x else 0) +
+           t^2 * (if S.card = 2 then esComp p S f x else 0)) := by
           apply Finset.sum_congr rfl
           intro S _
           exact hterm S
@@ -202,7 +202,7 @@ theorem original_first_sector_eq_singleton_sum
           apply Finset.sum_congr rfl
           intro i _
           have h := source_es_singleton_at_original_coordinate
-            p hp1 f hdegree i x (x i)
+            p hp1 f hdegree i x
           simpa using h
 
 end Nightfall.Observability.ActualSourceQ2SharpAdditiveSource
