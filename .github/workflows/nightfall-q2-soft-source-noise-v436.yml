@@ -68,6 +68,8 @@ jobs:
             --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
             --decl $N.actual_product_coordinate_marginal \
             --decl $N.actual_centered_singleton_source_projection \
+            --decl $N.actual_mask_one_site_probability \
+            --decl $N.actual_soft_noise_centered_singleton_eigen \
             --json-out lean-receipts/q2-source-marginal.json || {
               cat lean-receipts/q2-source-marginal.json
               exit 1
