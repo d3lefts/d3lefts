@@ -19,7 +19,7 @@ open Nightfall.Observability.ActualSourceGeneralMatching
 open Nightfall.Observability.ActualSourceQuadraticRectangles
 open Nightfall.Observability.ActualSourceAmplitudeRectangles
 open Nightfall.Observability.ActualSourcePairAmplitudes
-open Nightfall.Observability.WeightedGreedyMatching
+open Nightfall.Observability.WeightedGreedy
 open Nightfall.Observability.WeightedGreedyCover
 
 variable {E ι α : Type} [Fintype E] [DecidableEq E]
