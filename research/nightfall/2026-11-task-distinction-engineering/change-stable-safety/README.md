@@ -10,7 +10,7 @@ Research note, 13 November 2026. Author: Devin J. Wright (NIGHTFALL Independent 
 - `audit_results.json` — output of `checker.py`.
 - `passport.json` — explicit synthetic proof passport. **Not authenticated real-world safety evidence.**
 - `verify_passport.py` — synthetic version transport checker; rejects unknown edits, incomplete update notifications, and hazards outside the envelope.
-- `SHA256SUMS` — exact hash manifest.
+- The original research bundle included a PDF and hash manifest; PDF is not checked into GitHub, and this repository CI verifies committed text and reproducible outputs instead.
 
 ## Commands
 
