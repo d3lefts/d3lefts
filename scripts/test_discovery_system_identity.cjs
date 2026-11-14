@@ -16,8 +16,8 @@ assert.ok(read("docs/lean-certificate-provenance.html").includes(`PROVENANCE v${
 assert.equal(historic.schema,"nightfall-proof-passports-v1");
 assert.equal(active.schema,"nightfall-active-proof-passports-v1");
 assert.equal(historic.asOf,"2026-10-30");
-assert.equal(active.as_of,"2026-11-12");
-assert.equal(active.version,12);
+assert.equal(active.as_of,"2026-11-14");
+assert.equal(active.version,13);
 assert.equal(historic.claims.length,11);
 assert.equal(historic.mechanisms.length,5);
 assert.equal(historic.edges.length,20);
