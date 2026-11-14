@@ -15,6 +15,7 @@ namespace Nightfall.Observability.ActualSourceQ2589Terminal
 
 open Finset
 open Nightfall.Observability.ActualSourceANOVA
+open Nightfall.Observability.ActualProductMergeTower
 open Nightfall.Observability.ActualESGreedyOwnership
 open Nightfall.Observability.ActualProductSourcePairCentering
 open Nightfall.Observability.ActualSourceOwnedProjectedMomentJensen
@@ -182,7 +183,7 @@ theorem actual_source_q2_589_given_additive_budget
       gamma_nonneg
       hsite hsection (by simpa [a] using hadditive)
       hcover hvariance hT2
-  simpa only [K, mul_assoc, mul_comm, mul_left_comm] using hfinal
+  convert hfinal using 1 <;> dsimp [K] <;> ring
 
 theorem actual_source_q2_589_unconditional
     (p : ι → α → ℝ)
