@@ -97,7 +97,7 @@ theorem original_owned_first_norm_le_sqrt_source_influence
     exact hCS.trans (henergy.trans hM)
   have hroot : 0 ≤ Real.sqrt M := Real.sqrt_nonneg M
   have hroot_sq : (Real.sqrt M)^2 = M := Real.sq_sqrt hM0
-  dsimp [z] at *
+  change z ≤ Real.sqrt M
   nlinarith
 
 end Nightfall.Observability.ActualSourceOwnedFirstMomentCap
