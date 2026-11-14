@@ -1,7 +1,29 @@
 # NIGHTFALL — Current Lean and Exact-Evidence Proof Passport (14 November 2026)
 
+## Current strongest finite Q2 certificate — 736.673, strict 14 November
+
+[PR #498](https://github.com/d3lefts/d3lefts/pull/498) was merged after the initial table in this passport. It certifies the unconditional finite common-alphabet actual original-source quadratic influence inequality with **C₂=[257/20+(9/4)√2+5√3+√6]²≈736.673197758287**, [run 43633180605](https://github.com/d3lefts/d3lefts/actions/runs/43633180605), strict standard axioms only and no extra caller supplied source budgets. `ActualSourceQ2EnergyDualSource.original_singleton_plus_owned_energy_le_influence` and `ActualSourceQ2EnergyDualUnconditional.actual_source_q2_energy_dual_unconditional` form the decisive newly named source certificate. Prior #494 at 1064.958 remains valid and weaker. The 625/620 manuscripts remain conditional/analytic, not certified.
+
+The current index v3 now has 23 source-hashed files in nine separate PR-head named Lean receipt groups. The historical 67-source register remains untouched. The SCIF terminal, measurable all-index Q2 and novel-priority gates remain open.
+
+---
 **Version:** 1.0 · **Owner/research direction:** Devin J. Wright · **Construction:** AI-assisted.
 **Scientific status:** strict named-declaration kernel receipts for explicitly scoped statements; mathematical novelty and non-author review unresolved.
+
+## 14 November later same-day extension — four newly merged scoped source proofs
+
+The core v1.0 table below was accurate at its initial merge checkpoint. The following four independently pinned PR-head receipts now extend it; the [current named Lean index](../../../docs/current-lean-proof-receipts-20261114.json) is version 2 and includes exact Git blob hashes for these five new sources.
+
+| New merged PR | Pinned strict result | Limitation |
+| --- | --- | --- |
+| [#500](https://github.com/d3lefts/d3lefts/pull/500), [run 43632243900](https://github.com/d3lefts/d3lefts/actions/runs/43632243900) | Six named proofs for exact actual `sourceInfluence p f` update under one-coordinate law edit, regardless of finite Efron–Stein degree. | Does not compose full old/new canonical pair recentering with source-generated SCOF cover; no optimal recertification lower bound. |
+| [#503](https://github.com/d3lefts/d3lefts/pull/503), [run 43632931330](https://github.com/d3lefts/d3lefts/actions/runs/43632931330) | Finite pointwise Efron–Stein degree transport for any degree, plus new-law canonical quadratic sector influence/variance identities. | Does not identify every updated component as an explicit old-component recentering or prove global ownership repair. |
+| [#501](https://github.com/d3lefts/d3lefts/pull/501), [run 43631863039](https://github.com/d3lefts/d3lefts/actions/runs/43631863039) | `Measure.infinitePi` finite marginals, cylinder integrals and centered square identities on arbitrary index sets, with relevant measurability. | No unconditional cylinder density in all `L²`, actual projection influence contraction or all-index Efron–Stein theorem. |
+| [#506](https://github.com/d3lefts/d3lefts/pull/506), [run 43632637271](https://github.com/d3lefts/d3lefts/actions/runs/43632637271) | Finite original-source Efron–Stein `Var(f)≤∑ Iᵢ(f)` for unrestricted interaction degree, finite common alphabets, all normalized site laws. | This is a classical known inequality, not a novelty claim, and does not prove an infinite-product extension. |
+
+This update changes a former SCIF gap: **the exact actual-source influence law-change identity is separately kernel checked**; what remains open is composing all source-derived component/owner transfers in one terminal recertification theorem. It also advances the infinite-index cylinder transport without closing L² density.
+
+---
 
 ## Core evidence contract
 

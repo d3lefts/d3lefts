@@ -17,7 +17,10 @@ INDEX = Path("docs/current-lean-proof-receipts-20261114.json")
 CUSTODY = Path("docs/lean-pending-source-custody.json")
 HISTORICAL_Q2 = Path("docs/q2-source-lean-certificate-20261114.json")
 EXPECTED = {494: (43627249467, 3), 495: (43630294034, 3),
-            496: (43630623548, 6), 497: (43629420558, 2)}
+            496: (43630623548, 6), 497: (43629420558, 2),
+            500: (43632243900, 1), 501: (43631863039, 1),
+            503: (43632931330, 2), 506: (43632637271, 1),
+            498: (43633180605, 4)}
 PIN = "leanprover/lean4:v4.36.0-rc2"
 MATHLIB = "9d581dfff2e41de989072ea63abf3daf69311520"
 AXIOMS = {"Classical.choice", "Quot.sound", "propext"}
@@ -49,7 +52,7 @@ def audit(index: dict, custody: dict, historical: dict, root: Path) -> dict:
     old = [r for r in rows if "current_named_declaration_certificate" in r]
     new = [r for r in rows if "current_scoped_named_lean_receipt" in r]
     demand(len(old) == 8, "legacy Q2 exact-eight named certificate field changed")
-    demand(len(new) == 14, "unexpected current scoped receipt coverage")
+    demand(len(new) == 23, "unexpected current scoped receipt coverage")
     by_path = {r["path"]: r for r in rows}
     demand(len(by_path) == len(rows), "duplicate custody source path")
     seen = set()
@@ -98,7 +101,7 @@ def audit(index: dict, custody: dict, historical: dict, root: Path) -> dict:
                    f"Git source blob changed: {p}")
     demand(seen.intersection(EXPECTED) == set(EXPECTED),
            "current source family missing")
-    demand(len([x for x in seen if isinstance(x, str)]) == 14,
+    demand(len([x for x in seen if isinstance(x, str)]) == 23,
            "current indexed source count mismatch")
     flags = index.get("status", {})
     demand(flags.get("independent_human_review") is False and
@@ -107,7 +110,7 @@ def audit(index: dict, custody: dict, historical: dict, root: Path) -> dict:
            flags.get("full_source_matched_SCIF_terminal") is False and
            flags.get("physical_agent_enforcement") is False,
            "unjustified certification/novelty promotion")
-    return {"status": "PASS", "scoped_prs": 4, "current_source_hashes": 14,
+    return {"status": "PASS", "scoped_prs": 9, "current_source_hashes": 23,
             "historical_q2_stages_preserved": 8,
             "scope": "offline integrity only; no new Lean kernel build"}
 

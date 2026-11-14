@@ -52,7 +52,7 @@ const manifest=JSON.parse(read("docs/lean-certificate-provenance.json"));
 assert.equal(registry.version,13);
 assert.equal(registry.claims.length,12);
 assert.equal(manifest.modules.length,67);
-assert.ok(registry.claims.find(x=>x.id==="q2-influence").claim.includes("1064.958"));
+assert.ok(registry.claims.find(x=>x.id==="q2-influence").claim.includes("736.673"));
 const css=read("docs/site.css");
 assert.ok(css.includes(".nf-evidence-rail")&&css.includes("@media(max-width:680px)"),"Shared mobile editorial styling missing");
 const guide=read("docs/RESEARCH_COMMUNICATION_GUIDE.md");

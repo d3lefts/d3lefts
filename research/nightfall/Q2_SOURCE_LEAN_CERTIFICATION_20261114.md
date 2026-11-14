@@ -1,5 +1,17 @@
 # NIGHTFALL Q2 — source-matched finite-product Lean certificate
 
+## Strongest current Q2 finite-product certificate — 14 November, post-merge
+
+**STRICT LEAN 4.36.0-rc2, original-source unconditional terminal:** merged [PR #498](https://github.com/d3lefts/d3lefts/pull/498), strict [run 43633180605](https://github.com/d3lefts/d3lefts/actions/runs/43633180605), artifact 14129276102, SHA-256 `aa709276c44891c2ba3d51de85dc4ec092d5b7aa01d8dcc79935a9cd6e403094`.
+
+The finite **common-alphabet** degree-two original-source bound is now
+`Var_p(f)^2 ≤ [257/20+(9/4)√2+5√3+√6]^2 B^2 max_i sourceInfluence(p,f,i)`,
+coefficient ≈**736.673197758287**. Strictly verified named terminal:
+`Nightfall.Observability.ActualSourceQ2EnergyDualUnconditional.actual_source_q2_energy_dual_unconditional`. The joint original singleton plus greedily owned pair energy cap is **source-derived**, not assumed by the caller. Only standard foundational axioms are reported.
+
+The 1064.958 (#494), 1228.356 and 1910.81 proof checkpoints remain valid weaker/historical results. Source scopes, heterogeneous alphabet types, infinite products, human referee and novelty remain separate open gates. The currently unproved 625/620 candidates are NOT certified.
+
+---
 **Validity state: strict kernel certificate, original-law Q2 finite scope.**
 **Originality/significance state: unreviewed.**
 **Publication: not authorized by this technical receipt.**
