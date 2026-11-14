@@ -83,6 +83,19 @@ jobs:
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             "$OUT/02-shifted-moments-conditional-273.json"
           echo "PASS: conditional moment-to-budget Q2 273 theorem; still not original-source closed"
+          cp "$SRC/ShiftedOwnerBernstein.lean" /tmp/mathlib4/ShiftedOwnerBernstein.lean
+          (cd /tmp/mathlib4 &&
+            lake env lean -o .lake/build/lib/lean/ShiftedOwnerBernstein.olean ShiftedOwnerBernstein.lean)
+          N=Nightfall.Observability.ShiftedOwnerBernstein
+          python3 scripts/lean_bridge.py "$SRC/ShiftedOwnerBernstein.lean" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl "$N.shifted_poly_nonnegative" \
+            --decl "$N.shifted_quarter_polynomial" \
+            --json-out "$OUT/03-shifted-bernstein-c4.json"
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            "$OUT/03-shifted-bernstein-c4.json"
+          echo "PASS: scalar c/4 exact polynomial Lean certificate; no Hilbert Q2 terminal"
 
 
       - name: Compile every source module once, then certify declarations in order
