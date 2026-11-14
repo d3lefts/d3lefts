@@ -128,4 +128,24 @@ theorem fifth_for_pure_centered_sum
     (Real.sqrt s) 0 s u c q ht (by norm_num) hs hu hc
     (by rw [he]; ring) hh hq
 
+
+/-- Reuse the *already source-derived* unshifted owned-neighbor cubic,
+    without separately introducing a fourth-moment oracle. This holds
+    when the singleton h=0, so the owner first norm z is bounded by
+    the actual source section mean u. -/
+theorem fifth_from_centered_cubic
+    (s z c u : ℝ)
+    (hs : 0 ≤ s) (hz : 0 ≤ z) (hc : 0 ≤ c) (hu : 0 ≤ u)
+    (hcubic : s^3 ≤ z^2*(c^2*s+3*s^2))
+    (hzu : z ≤ u) :
+    Real.sqrt s ≤ Real.sqrt 3*u+c/5 := by
+  have hz2 : z^2 ≤ u^2 := by nlinarith [hzu, hz, hu]
+  have hfactor : 0 ≤ c^2*s+3*s^2 := by positivity
+  have hholder : s^3 ≤ u^2*(c^2*s+3*s^2) :=
+    hcubic.trans (mul_le_mul_of_nonneg_right hz2 hfactor)
+  have hfourth :
+      c^2*s+3*s^2 ≤ 3*s^2+c^2*s := by ring
+  exact fifth_for_pure_centered_sum s u c (c^2*s+3*s^2)
+    hs hu hc hholder hfourth
+
 end Nightfall.Q2Shifted.PureC5
