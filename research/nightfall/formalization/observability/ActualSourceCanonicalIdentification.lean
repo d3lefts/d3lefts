@@ -136,9 +136,25 @@ theorem actual_source_esComp_pair_eq_derived
       ({∅, {j}, {k}, {j,k}} : Finset (Finset ι)) := by
     rw [Finset.powerset_insert, hsingle]
     simp [Finset.insert_comm, Finset.union_comm, Finset.union_assoc]
+  have hjpair : ({j} : Finset ι) ≠ {j,k} := by
+    intro h
+    have hk : k ∈ ({j} : Finset ι) := by
+      rw [h]
+      simp
+    have hkj : k = j := by simpa using hk
+    exact hjk hkj.symm
+  have hkpair : ({k} : Finset ι) ≠ {j,k} := by
+    intro h
+    have hj : j ∈ ({k} : Finset ι) := by
+      rw [h]
+      simp
+    have hje : j = k := by simpa using hj
+    exact hjk hje
+  have hjne : ({j} : Finset ι) ≠ {k} := by
+    simpa using hjk
   unfold ActualSourceANOVA.esComp
   rw [hpowerset]
-  simp [Finset.card_insert_of_notMem, hjk]
+  simp [Finset.sum_insert, hjk, hjpair, hkpair, hjne]
   linarith [h4]
 
 end Nightfall.Observability.ActualSourceCanonicalIdentification
