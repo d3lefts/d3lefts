@@ -253,4 +253,46 @@ theorem actual_owned_first_norm_sum_le_sixteen
         Finset.sum_add_distrib
     _ ≤ 16 * B := by linarith
 
+/-- Source-generated greedy ownership, actual Hilbert second moment,
+original-law ANOVA projection, and Jensen bound in a SINGLE proposition.
+No owner c, energy cap, pair-section norm, matching cost, or
+independent-sampling premise is passed by the caller. -/
+theorem source_generated_owned_moment_projection_jensen
+    (p : ι → α → ℝ)
+    (hp : ∀ k a, 0 ≤ p k a)
+    (hp1 : ∀ k, (∑ a : α, p k a) = 1)
+    (f : (ι → α) → ℝ)
+    (hdegree : ESDegreeLE p f 2)
+    (B : ℝ) (hB : 0 ≤ B) (hf : ∀ x, |f x| ≤ B) :
+    ∃ c : ι → ℝ,
+      (∀ i, 0 ≤ c i) ∧
+      (∑ i : ι, c i) ≤ 8 * B ∧
+      (∀ i : ι,
+        let J := ownedNeighbors c i
+        let j := neighborIndex i J
+        let Y := finitePairIncrement p f i j J.card
+        (moment2 (fun k => p (j k)) Y J.card ≤ sourceInfluence p f i) ∧
+        ((∑ w : Samples α J.card,
+          mass (fun k => p (j k)) J.card w *
+            Real.sqrt (vecNormSq (sumVector Y J.card w))) ≤
+          sourceMeanSectionNorm p f i +
+            originalSingletonNorm p f i)) ∧
+      (∑ i : ι,
+        let J := ownedNeighbors c i
+        let j := neighborIndex i J
+        let Y := finitePairIncrement p f i j J.card
+        ∑ w : Samples α J.card, mass (fun k => p (j k)) J.card w *
+          Real.sqrt (vecNormSq (sumVector Y J.card w))) ≤ 16 * B := by
+  classical
+  let base : ι → α := fun _ => Classical.choice (inferInstance : Nonempty α)
+  obtain ⟨c, hc, hcost, _, _, _, _, _⟩ :=
+    actual_source_greedy_graph_hilbert_package
+      p hp hp1 f hdegree base B hf
+  refine ⟨c, hc, hcost, ?_, ?_⟩
+  · intro i
+    exact actual_owned_moment_and_projected_jensen
+      p hp hp1 f hdegree c i
+  · exact actual_owned_first_norm_sum_le_sixteen
+      p hp hp1 f hdegree B hB hf c
+
 end Nightfall.Observability.ActualSourceOwnedProjectedMomentJensen
