@@ -110,4 +110,21 @@ theorem actual_pair_is_canonical_mobius_four_term
   exact (actual_source_doublecenter_eq_mobius_pair
     p hp1 f j k hjk (x j) (x k)).symm
 
+
+/-- Exact source-derived pair equals the canonical order-two
+Efron–Stein/Möbius component for a genuine pair of distinct sites.
+This upgrades the four-term identity to the *actual esComp type*,
+rather than only recognizing its analytic formula. -/
+theorem actual_source_esComp_pair_eq_derived
+    (p : ι → α → ℝ)
+    (hp1 : ∀ t, (∑ a : α, p t a) = 1)
+    (f : (ι → α) → ℝ) (j k : ι) (hjk : j ≠ k)
+    (x : ι → α) :
+    ActualSourceANOVA.esComp p ({j,k} : Finset ι) f x =
+      sourceDoubleCenteredPair p f j k (x j) (x k) := by
+  classical
+  have h4 := actual_pair_is_canonical_mobius_four_term p hp1 f j k hjk x
+  simp [ActualSourceANOVA.esComp, Finset.powerset_insert, hjk] at *
+  linarith
+
 end Nightfall.Observability.ActualSourceCanonicalIdentification
