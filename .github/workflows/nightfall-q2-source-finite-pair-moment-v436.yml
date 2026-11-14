@@ -50,6 +50,7 @@ jobs:
             --decl $N.finitePairIncrement_moment2_eq_budget \
             --decl $N.finitePairIncrement_fourth_endpoint \
             --decl $N.finitePairIncrement_moment2_eq_source_pair_energies \
+            --decl $N.original_source_distinct_pair_fourth_endpoint \
             --json-out lean-receipts/q2-source-finite-pair-fourth.json || {
               cat lean-receipts/q2-source-finite-pair-fourth.json
               exit 1
