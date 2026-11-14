@@ -106,7 +106,7 @@ for(const name of newQuadratic){
  assert.ok(Number.isInteger(found.ci_run),"Missing scoped kernel receipt "+name);
 }
 const activeClaims=JSON.parse(fs.readFileSync("docs/active-proof-passport.json","utf8"));
-assert.equal(activeClaims.claims.find(x=>x.id==="q2-influence").status,"paper-proof-internal-audit");
+assert.equal(activeClaims.claims.find(x=>x.id==="q2-influence").status,"lean-kernel-checked-finite-product-scope");
 const closed=m.off_main_certificates;
 assert.ok(m.off_main_review_scope.includes("NOT an exhaustive census"));
 assert.ok(Array.isArray(closed)&&closed.length===1,"Separate off-main proof custody required");

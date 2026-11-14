@@ -1,0 +1,176 @@
+{
+  "schema": "nightfall-current-named-lean-proof-receipts-v1",
+  "version": 1,
+  "as_of": "2026-11-14",
+  "target_repository": "d3lefts/d3lefts",
+  "base_main_after_research_merges": "c472505a28ab32097a37bd1803a65d486ce4ba87",
+  "historical_frozen_67_register": "docs/lean-certificate-provenance.json",
+  "prior_q2_cert": "docs/q2-source-lean-certificate-20261114.json",
+  "pin": {
+    "lean": "leanprover/lean4:v4.36.0-rc2",
+    "mathlib_commit": "9d581dfff2e41de989072ea63abf3daf69311520",
+    "allowed_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ]
+  },
+  "receipt_scope": "Per-PR, current-head strict named-declaration certificates. Not a single combined after-merge Lean rebuild; mainline source integrity requires separate registry audit. Source SHA-1 hashes identify exact Git blobs.",
+  "new_proof_groups": [
+    {
+      "pr": 494,
+      "merge_sha": "d7f2f84adbc9338226d2c9e0024919bd1e8ceb91",
+      "head_sha": "c47fafe94b521fff20ec3276e59dd69d23bfb28b",
+      "run": 43627249467,
+      "artifact_id": 14126078653,
+      "artifact_sha256": "f6b1d8d3092ee6acc5b5d6a01b851d048853910933d0e622d3609a8497dd1259",
+      "claim": "Unconditional finite common-alphabet Q2 variance-influence bound with C=407+138sqrt(2)+188sqrt(3)+56sqrt(6)=1064.958449026294..., actual sourceInfluence, no extra caller budget premise.",
+      "limits": [
+        "finite common alphabet; heterogeneous marginal laws and zero-mass atoms allowed",
+        "no different coordinate alphabet types, infinite products, novelty or external referee"
+      ],
+      "source_modules": [
+        {
+          "path": "research/nightfall/formalization/observability/ActualSourceQ2CoupledScalarClosure.lean",
+          "git_blob_sha1": "ddf285067db12026d3de107319934f016cd09390",
+          "representative_named_declaration": "Nightfall.Observability.ActualSourceQ2CoupledScalarClosure.coupled_scalar_endpoint"
+        },
+        {
+          "path": "research/nightfall/formalization/observability/ActualSourceQ2CoupledTerminalGate.lean",
+          "git_blob_sha1": "af4517c080853513c45d1f5ebc2f35081cf27758",
+          "representative_named_declaration": "Nightfall.Observability.ActualSourceQ2CoupledTerminalGate.actual_source_q2_coupled_given_additive_budget"
+        },
+        {
+          "path": "research/nightfall/formalization/observability/ActualSourceQ2CoupledUnconditional.lean",
+          "git_blob_sha1": "62456be1b4ed72313ecca6cb7282aba004a89006",
+          "representative_named_declaration": "Nightfall.Observability.ActualSourceQ2CoupledUnconditional.actual_source_q2_coupled_unconditional"
+        }
+      ],
+      "run_url": "https://github.com/d3lefts/d3lefts/actions/runs/43627249467",
+      "artifact_url": "https://github.com/d3lefts/d3lefts/actions/runs/43627249467/artifacts/14126078653"
+    },
+    {
+      "pr": 495,
+      "merge_sha": "35235cf2c71ca2157fa03b19c4e1054d84e64031",
+      "head_sha": "784efa11d8c8e46afb50a454bf2ec4bcd7a8d7eb",
+      "run": 43630294034,
+      "artifact_id": 14127259761,
+      "artifact_sha256": "cad4b0105aa8c33b05b068d49991045b016ac3eb2b93275e7c8b8900b835467a",
+      "claim": "Set-theoretic observational authority and exact finite source risk gates; infinite-index Efron–Stein transfer requires finite-cylinder variance approximation and influence projection hypotheses.",
+      "limits": [
+        "full infinite-measure L2 bridge not certified",
+        "no computation of safety predicate, enforcement guarantee or novelty claim"
+      ],
+      "source_modules": [
+        {
+          "path": "research/nightfall/formalization/universal/FiniteSourceRiskGate.lean",
+          "git_blob_sha1": "8f7d0126de08e68b0bc376dae10d45d45182138f",
+          "representative_named_declaration": "Nightfall.FiniteSourceRiskGate.exact_source_threshold_gate_conditional_risk"
+        },
+        {
+          "path": "research/nightfall/formalization/universal/InfiniteEfronSteinTransfer.lean",
+          "git_blob_sha1": "3488f7adf891c6169478733e4d30165933a21c4b",
+          "representative_named_declaration": "Nightfall.InfiniteEfronSteinTransfer.positive_coordinate_if_positive_variance"
+        },
+        {
+          "path": "research/nightfall/formalization/universal/UniversalAuthorityFrontier.lean",
+          "git_blob_sha1": "1a2fe1012d577fcb7f25f733e44dbb0dad7cda3a",
+          "representative_named_declaration": "Nightfall.UniversalAuthorityFrontier.exact_authorization_iff_conflict_separation"
+        }
+      ],
+      "run_url": "https://github.com/d3lefts/d3lefts/actions/runs/43630294034",
+      "artifact_url": "https://github.com/d3lefts/d3lefts/actions/runs/43630294034/artifacts/14127259761"
+    },
+    {
+      "pr": 496,
+      "merge_sha": "081d6704d2607b432bea3a5c5ff3a62efb0c5094",
+      "head_sha": "897a640b302ae14e9995e8543da5075487d62253",
+      "run": 43630623548,
+      "artifact_id": 14128206335,
+      "artifact_sha256": "81fb83fcd06ab01e452357f2a340e4686edcf59c1e1dfbf5d77eefafce0f240b",
+      "claim": "Finite law-pair recentering, source-level pointwise degree-two transport and graph invariance, local singleton/pair energy update, fixed-owner bound 1+min(2TV,1), double-endpoint amplitude factor 4.",
+      "limits": [
+        "full product-source recentering and exact sourceInfluence delta composition not one terminal Lean declaration",
+        "no source-generated owner package consumer theorem or novelty certificate"
+      ],
+      "source_modules": [
+        {
+          "path": "research/nightfall/formalization/observability/SCIFClipped.lean",
+          "git_blob_sha1": "1a45410c6b7ec631c0dc140a5df3e78b46fa66a0",
+          "representative_named_declaration": "Nightfall.SCIF.fixed_owner_recenter_cover_clipped"
+        },
+        {
+          "path": "research/nightfall/formalization/observability/SCIFDegreeTransport.lean",
+          "git_blob_sha1": "35b10fe3dbd8c6b4a7d08c93c0f8e41c181dda95",
+          "representative_named_declaration": "Nightfall.Observability.SCIFDegreeTransport.degree_two_preserved_by_any_law"
+        },
+        {
+          "path": "research/nightfall/formalization/observability/SCIFInfluence.lean",
+          "git_blob_sha1": "58e0a9f81825ab3ca7591ab080708c93ff18d30e",
+          "representative_named_declaration": "Nightfall.SCIF.local_influence_recenter_exact"
+        },
+        {
+          "path": "research/nightfall/formalization/observability/SCIFOwnerRepair.lean",
+          "git_blob_sha1": "6cf80f94b3333ca854d4fafa2ad704b10584baea",
+          "representative_named_declaration": "Nightfall.SCIF.fixed_owner_recenter_cover"
+        },
+        {
+          "path": "research/nightfall/formalization/observability/SCIFRecenter.lean",
+          "git_blob_sha1": "0e45ba1c1e2d940b2eac00b1d2a81b7923998d44",
+          "representative_named_declaration": "Nightfall.SCIF.two_site_recenter_identity"
+        },
+        {
+          "path": "research/nightfall/formalization/observability/SCIFSourceGraph.lean",
+          "git_blob_sha1": "608d79dabeddc9ea3be455d5cf62de4c866b5439",
+          "representative_named_declaration": "Nightfall.Observability.SCIFSourceGraph.canonical_pair_graph_invariant"
+        }
+      ],
+      "run_url": "https://github.com/d3lefts/d3lefts/actions/runs/43630623548",
+      "artifact_url": "https://github.com/d3lefts/d3lefts/actions/runs/43630623548/artifacts/14128206335"
+    },
+    {
+      "pr": 497,
+      "merge_sha": "69fe724038bbf43abaa2f26515595438a471575c",
+      "head_sha": "a55c29002e39e6595b1bec21a46fea6a96b3096e",
+      "run": 43629420558,
+      "artifact_id": 14126244920,
+      "artifact_sha256": "6714bbb1a0e0f80336661e6c2aafd130a20bffeea900919227c6ae580291e52d",
+      "claim": "Exact Bellman closed form and stable/volatile-first threshold for specified rational/real recurrence.",
+      "limits": [
+        "not an equivalence for arbitrary adaptive source-query oracles",
+        "no operational effect-time guard, novelty or external review"
+      ],
+      "source_modules": [
+        {
+          "path": "research/nightfall/formalization/authority/AuthorityHorizon.lean",
+          "git_blob_sha1": "d52c7e2ffaf4dcd5a86d19f61a64275e6c54ce04",
+          "representative_named_declaration": "Nightfall.AuthorityHorizon.all_horizon_cost"
+        },
+        {
+          "path": "research/nightfall/formalization/authority/AuthorityHorizonReal.lean",
+          "git_blob_sha1": "1f5e2ca9c60c3689dad969a9fa5f654223465d97",
+          "representative_named_declaration": "Nightfall.AuthorityHorizonReal.all_horizon_cost"
+        }
+      ],
+      "run_url": "https://github.com/d3lefts/d3lefts/actions/runs/43629420558",
+      "artifact_url": "https://github.com/d3lefts/d3lefts/actions/runs/43629420558/artifacts/14126244920"
+    }
+  ],
+  "non_lean_evidence": [
+    {
+      "pr": 493,
+      "merge_sha": "c472505a28ab32097a37bd1803a65d486ce4ba87",
+      "run": 43626344870,
+      "claim": "Finite exact rational hybrid assurance cut and shared-evidence test package, not Lean or production enforcement",
+      "status": "finite_exact_replay_only"
+    }
+  ],
+  "status": {
+    "kernel_validity": "four scoped source families have successful pinned named-declaration CI at their respective PR heads",
+    "independent_human_review": false,
+    "global_novelty": false,
+    "full_infinite_product_theorem": false,
+    "full_source_matched_SCIF_terminal": false,
+    "physical_agent_enforcement": false
+  }
+}

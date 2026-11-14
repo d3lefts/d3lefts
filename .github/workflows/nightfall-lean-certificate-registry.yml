@@ -8,6 +8,8 @@ on:
       - 'research/nightfall/formalization/README.md'
       - 'docs/lean-certificate-provenance.json'
       - 'docs/lean-pending-source-custody.json'
+      - 'docs/current-lean-proof-receipts-20261114.json'
+      - 'scripts/check_current_named_certificates.py'
       - 'docs/q2-source-lean-certificate-20261114.json'
       - 'scripts/check_q2_named_certificate.py'
       - 'scripts/lean_certificate_registry.py'
@@ -20,6 +22,8 @@ on:
       - 'research/nightfall/**/*.lean'
       - 'docs/lean-certificate-provenance.json'
       - 'docs/lean-pending-source-custody.json'
+      - 'docs/current-lean-proof-receipts-20261114.json'
+      - 'scripts/check_current_named_certificates.py'
       - 'docs/q2-source-lean-certificate-20261114.json'
       - 'scripts/check_q2_named_certificate.py'
       - 'scripts/lean_certificate_registry.py'
@@ -58,6 +62,8 @@ jobs:
             --json-out lean-receipts/consolidated-source-index.json
       - name: Verify separately certified current Q2 named declarations and exact source bytes
         run: python3 scripts/check_q2_named_certificate.py --self-test
+      - name: Verify all newly merged current named certificate sources and negative controls
+        run: python3 scripts/check_current_named_certificates.py --self-test
       - name: Preserve scope-labeled inventory for inspection
         if: always()
         uses: actions/upload-artifact@v4

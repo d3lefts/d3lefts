@@ -12,7 +12,7 @@ const site=read("docs/site.js");
 const core=read("docs/erdos-paper-core.js");
 const art=read("docs/media/overlap-16cell-fixture.svg");
 assert.equal(data.schema,"nightfall-active-proof-passports-v1");
-assert.equal(data.version,12);
+assert.equal(data.version,13);
 assert.match(data.as_of,/^2026-11-\d\d$/);
 assert.equal(data.lifecycle,"active");
 assert.equal(data.frozen_historical_registry_unchanged,true);
@@ -117,10 +117,13 @@ const cubic=data.claims.find(c=>c.id==="cubic-obstruction");
 assert.ok(cubic.status==="exact-proof-attacks-cubic-open"&&cubic.claim.includes("OPEN"));
 assert.ok(cubic.evidence.includes("#347")&&cubic.evidence.includes("#349"));
 assert.ok(cubic.claim.includes("179722/6993")&&cubic.claim.includes("Var(Q)"),"v6.1 cubic scope and exact witness absent");
-assert.ok(data.claims.find(c=>c.id==="q2-influence").claim.includes("C₂=(10+2√2)²(1+√3)²"),"Latest proposed v9.2 scalar coefficient missing");
+const q2=data.claims.find(c=>c.id==="q2-influence");
+assert.ok(q2.status==="lean-kernel-checked-finite-product-scope"&&q2.claim.includes("C₂=407+138√2+188√3+56√6"),"Current strict finite Q2 source coefficient and scope missing");
+assert.ok(q2.evidence.includes("43627249467")&&q2.limitations.some(s=>s.includes("infinite")),"Current Q2 named Lean receipt or scope boundary missing");
+assert.ok(read("research/nightfall/2026-11-active-passports/quadratic-rank-observability.md").includes("1228.356")&&read("research/nightfall/2026-11-active-passports/quadratic-rank-observability.md").includes("historical"),"Historical Q2 manuscript checkpoint lost");
 assert.ok(data.claims.find(c=>c.id==="fair-sign-cubic").status.includes("draft-pr"));
 assert.ok(data.claims.find(c=>c.id==="universal-spectral").status.includes("conditional"));
-assert.ok(html.includes("<strong>12</strong>Active claim records")&&html.includes("<strong>v12</strong>"));
+assert.ok(html.includes("<strong>12</strong>Active claim records")&&html.includes("<strong>v13</strong>"));
 assert.ok(read("docs/discovery-system.html").includes("<dt>12</dt><dd>separate active claim passports</dd>"));
 // Finite F16 witness is a new active record but never a globally approved Original Finding.
 const phase=data.claims.find(c=>c.id==="phase-block");
@@ -156,8 +159,9 @@ console.log("PASS: 12 manual active claim passports, seven detailed dossiers, Ka
 // Nov 12 scientific updates: preserve twelve active claims and the frozen archives.
 const q2data=data.claims.find(c=>c.id==="q2-influence");
 const obsdata=data.claims.find(c=>c.id==="q2-observation");
-assert.ok(q2data.evidence.includes("#408")&&q2data.limitations.some(x=>x.includes("not end-to-end Lean")),"New source-derived proof receipts must stay scoped");
-assert.ok(obsdata.claim.includes("12 C₂")&&obsdata.limitations.some(x=>x.includes("depends on")),"Rank-observer analytic dependency missing");
+assert.ok(q2data.evidence.includes("43627249467")&&q2data.limitations.some(x=>x.includes("infinite-index")),"Current source-derived Q2 proof receipt or finite scope missing");
+assert.ok(obsdata.claim.includes("12 C₂")&&obsdata.limitations.some(x=>x.includes("does not automatically certify")),"Rank-observer analytic dependency missing");
 for (const p of ["quadratic-rank-observability.md","information-costs-identification.md","conditional-section-duality.md","check_addressed_family_independent.cjs"])
  assert.ok(fs.existsSync("research/nightfall/2026-11-active-passports/"+p),"Missing v12 proof evidence "+p);
-assert.ok(html.includes("Turturean covers all degrees")&&html.includes("not compiled"),"Public proof-status boundary drifted");
+assert.ok(html.includes("C₂=407+138√2+188√3+56√6")&&html.includes("SCIF")&&html.includes("No global novelty"),"Public finite Q2 status or remaining audit boundary drifted");
+assert.ok(read("research/nightfall/2026-11-active-passports/quadratic-rank-observability.md").includes("2026")&&read("research/nightfall/2026-11-active-passports/quadratic-rank-observability.md").includes("v9.2"),"Dated historical manuscript evidence missing");
