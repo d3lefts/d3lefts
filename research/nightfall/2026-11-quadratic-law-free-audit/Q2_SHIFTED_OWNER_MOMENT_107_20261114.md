@@ -91,6 +91,27 @@ The checker expands \(P(x,t)=3-(1-t)^2F(x,4t)\) over \([0,1]^2\), transforms exa
 
 The checker tests polynomial corner values independently of the Bernstein transform. This is an **exact arithmetic certificate for (2)**, not an independent proof of the Hilbert moment expansion, owner independence, source projection or global terminal theorem.
 
+## Fully hand-checkable backup: correction c/3 (no Bernstein checker needed)
+
+A slightly weaker lemma follows from a short standalone identity. In the normalized fourth moment, \(0\le x\le1\), and
+\[
+4x(1-x^2)\le 4\max_{0\le x\le1}x(1-x^2)
+=\frac{8}{3\sqrt3}\le2,\qquad 1-x^2\le1.
+\]
+Thus \(F(x,d)\le3+2d+d^2\). For \(0\le d\le3\),
+\[
+3-(1-d/3)^2(3+2d+d^2)=\frac{d^3(4-d)}9\ge0.
+\]
+If \(d\ge3\), the \(c/3\) term already dominates \(\sqrt e\). Hölder interpolation therefore proves the completely human-verifiable bound
+\[
+\boxed{\sqrt e\le\sqrt3\,u+c/3.}
+\]
+Its independent source-level terminal candidates are
+\[
+C_2\le\big(\sqrt3\,U+\tfrac83\big)^2.
+\]
+For \(U=8\), this is \(273.011945568\ldots\), **already below 353 without any new sharp-switching lemma or rational Bernstein proof**. At the prospective sharp \(U=2(1+\sqrt2)\), it gives \(121.655335812\ldots\). Certify this easier rational/algebraic shifted-moment mechanism before attempting the sharper \(c/4\) coefficient if formal infrastructure is a bottleneck.
+
 ## Source composition — three honest coefficient levels
 
 Fix the actual finite independent source. Let \(\mathcal H_i=L^2(p_i)\) (real-valued). The canonical singleton \(h_i\in\mathcal H_i\) is deterministic. For a fixed owner \(i\), let
