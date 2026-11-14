@@ -1,0 +1,69 @@
+name: NIGHTFALL SCIF finite-source integrated kernel terminal
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'research/nightfall/formalization/observability/SCIFFiniteSourceTerminal.lean'
+      - '.github/workflows/nightfall-scif-full-source-terminal-lean.yml'
+  workflow_dispatch:
+concurrency:
+  group: nightfall-scif-full-terminal-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  certify-full-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Build full original-source import cone
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import shutil, subprocess
+          from scripts.nightfall_q2_certify import local_sources, closure
+          files = local_sources()
+          workspace = Path("/tmp/mathlib4")
+          for name in closure("SCIFFiniteSourceTerminal",files):
+              shutil.copyfile(files[name], workspace / (name + ".lean"))
+              print("BUILD", name, flush=True)
+              subprocess.run(["lake","env","lean","-o",str(workspace / ".lake/build/lib/lean" / (name+".olean")),name+".lean"],cwd=workspace,check=True,timeout=1500)
+          PY
+      - name: Strict pinned current-head kernel proof audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.SCIFFiniteSourceTerminal
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/SCIFFiniteSourceTerminal.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.actual_source_structure_and_risk_recertification \
+            --decl $N.source_owned_pair_cover_after_single_law_edit \
+            --decl $N.editLaw_normalized \
+            --decl $N.editLaw_nonnegative \
+            --decl $N.single_source_edit_structural_risk_terminal \
+            --decl $N.fixed_owner_source_edit_total \
+            --json-out lean-receipts/scif-finite-source-terminal.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/scif-finite-source-terminal.json
+      - name: Preserve original source hash, commit and Lean pin
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/observability/SCIFFiniteSourceTerminal.lean > lean-receipts/SHA256SUMS
+          git rev-parse HEAD > lean-receipts/HEAD
+          cat lean-toolchain > lean-receipts/LEAN_PIN
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: nightfall-scif-finite-source-terminal-receipts
+          path: lean-receipts/
+          retention-days: 90
