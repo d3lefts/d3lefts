@@ -72,7 +72,6 @@ theorem original_mask_subset_weight
         ∏ i : ι, q i (mask i) := by
     unfold maskWeight
     rw [hindicator mask, ← Finset.prod_mul_distrib]
-    rfl
   have hcoord (i : ι) :
       (∑ b : Bool, q i b) =
         if i ∈ S then retain i else 1 := by
