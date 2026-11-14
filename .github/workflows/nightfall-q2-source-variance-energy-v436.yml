@@ -1,0 +1,105 @@
+name: NIGHTFALL Q2 actual-source ANOVA energy Lean 4.36
+on:
+  push:
+    branches: [nightfall-q2-source-anova-global-v436-20261113]
+    paths:
+      - 'research/nightfall/formalization/observability/ActualSourceCentered.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceOrthogonality.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceVarianceEnergy.lean'
+      - '.github/workflows/nightfall-q2-source-variance-energy-v436.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/ActualSourceCentered.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceOrthogonality.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceVarianceEnergy.lean'
+      - '.github/workflows/nightfall-q2-source-variance-energy-v436.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-energy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Original product conditioning and resampling primitives
+        run: |
+          set -euo pipefail
+          cd /tmp/mathlib4
+          for f in ActualProductMergeTower ActualProductHilbertJensen ActualProductSoftNoise ActualProductSourceMarginal ActualSourceANOVA ActualProductResampleBridge; do
+            cp "$GITHUB_WORKSPACE/research/nightfall/formalization/observability/$f.lean" .
+            lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean"
+          done
+      - name: Strict canonical ES centering from original source
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualSourceCentered
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualSourceCentered.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.average_condExp_update_mem \
+            --decl $N.average_condExp_update \
+            --decl $N.actual_esComp_centered \
+            --json-out lean-receipts/q2-source-centered.json || {
+              cat lean-receipts/q2-source-centered.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-source-centered.json
+      - name: Compile centered source module
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/observability/ActualSourceCentered.lean /tmp/mathlib4/ActualSourceCentered.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ActualSourceCentered.olean ActualSourceCentered.lean)
+      - name: Strict off-diagonal original-source orthogonality
+        run: |
+          set -euo pipefail
+          N=Nightfall.Observability.ActualSourceOrthogonality
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualSourceOrthogonality.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.centered_orthogonal_to_dependsOn \
+            --decl $N.actual_esComp_orthogonal \
+            --json-out lean-receipts/q2-source-orthogonality.json || {
+              cat lean-receipts/q2-source-orthogonality.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-source-orthogonality.json
+      - name: Compile orthogonality module
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/observability/ActualSourceOrthogonality.lean /tmp/mathlib4/ActualSourceOrthogonality.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ActualSourceOrthogonality.olean ActualSourceOrthogonality.lean)
+      - name: Strict source variance energy Parseval and degree-two projection
+        run: |
+          set -euo pipefail
+          N=Nightfall.Observability.ActualSourceVarianceEnergy
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualSourceVarianceEnergy.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.weighted_orthogonal_sum_sq \
+            --decl $N.source_centered_es_sum \
+            --decl $N.actual_source_variance_es_energy \
+            --decl $N.actual_degree_two_source_variance_energy \
+            --json-out lean-receipts/q2-current-source-variance-energy.json || {
+              cat lean-receipts/q2-current-source-variance-energy.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-current-source-variance-energy.json
+      - name: Preserve source identities
+        if: always()
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/observability/ActualSourceCentered.lean research/nightfall/formalization/observability/ActualSourceOrthogonality.lean research/nightfall/formalization/observability/ActualSourceVarianceEnergy.lean > lean-receipts/SHA256SUMS.txt
+          git rev-parse HEAD > lean-receipts/repo-commit.txt
+          cat lean-toolchain > lean-receipts/lean-toolchain.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: q2-source-variance-parseval
+          path: lean-receipts/
+          retention-days: 45
