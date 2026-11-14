@@ -6,7 +6,7 @@ namespace Nightfall.Observability.QuadraticBernoulli
 open Finset
 open Nightfall.Observability.QuadraticSwitching
 
-variable {ι α E : Type*}
+variable {ι α E : Type}
   [Fintype ι] [DecidableEq ι] [Fintype E]
 
 theorem quadratic_actual_all_section_ranges_le_sharp
