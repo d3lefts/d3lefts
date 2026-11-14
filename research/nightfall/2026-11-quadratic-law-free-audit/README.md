@@ -1,5 +1,8 @@
 # NIGHTFALL quadratic law-free analytic proof audit
 
+> **14 November exploratory checkpoint (not a new certified theorem):** [Shifted-owner Hilbert fourth moment](Q2_SHIFTED_OWNER_MOMENT_107_20261114.md) replaces the old \(\mathbb E\|Z_i\|\le u_i+a_i\) route with a direct shifted \(L^1\)–\(L^2\)–\(L^4\) bound. It gives author-side source-level **targets** \(C_2=273.012\) using an elementary \(c/3\) lemma and pre-existing \(8B\) budgets, \(C_2=251.426\) using the exact \(c/4\) polynomial certificate, and \(C_2=107.393\) **only when** PR #525's sharper section budget is independently proved. The [exact rational Bernstein checker](check_shifted_owner_moment_107.py) verifies the \(c/4\) scalar inequality, not the full Lean/source theorem. Keep existing source-level certified coefficients distinct; do not promote these targets to publication.
+
+
 ## Current checkpoint — November 13, 2026 (read before the historical v7 notes)
 
 The historical material below is not the strongest current author-analytic proof. The leading original-source finite categorical claim is
