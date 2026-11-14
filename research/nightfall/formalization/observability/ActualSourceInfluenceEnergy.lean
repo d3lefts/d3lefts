@@ -129,7 +129,7 @@ theorem actual_source_section_energy_eq_influence
         p i a * p i b *
           ((f (Function.update x i a) -
             f (Function.update x i b))^2 / 2) := by
-    simpa only [sourceSection] using
+    simpa only [originalSourceSection] using
       weighted_centered_eq_pair (p i)
         (fun a => f (Function.update x i a)) (hp1 i)
   have hG (x : ι → α) (a : α) :
