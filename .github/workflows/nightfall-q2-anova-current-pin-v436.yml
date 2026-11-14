@@ -1,16 +1,6 @@
 name: NIGHTFALL Q2 canonical ANOVA / source-global Lean pin 4.36
 on:
-  push:
-    branches:
-      - nightfall-q2-source-anova-global-v436-20261113
-  pull_request:
-    paths:
-      - 'research/nightfall/formalization/observability/ActualSourceANOVA.lean'
-      - 'research/nightfall/formalization/observability/ActualProductResampleBridge.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceCanonicalPair.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceCanonicalIdentification.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceSingletonProjection.lean'
-      - '.github/workflows/nightfall-q2-anova-current-pin-v436.yml'
+  # Retained as manual diagnostic; automated Q2 proof CI is consolidated.
   workflow_dispatch:
 permissions:
   contents: read

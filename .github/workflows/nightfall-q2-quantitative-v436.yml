@@ -1,13 +1,6 @@
 name: NIGHTFALL Q2 quantitative switching and moments pinned 4.36
 on:
-  push:
-    branches:
-      - nightfall-q2-source-anova-global-v436-20261113
-  pull_request:
-    paths:
-      - '.github/workflows/nightfall-q2-quantitative-v436.yml'
-      - 'research/nightfall/formalization/observability/ActualSourceQ2WeakScalarClosure.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceSectionBudgetEight.lean'
+  # Retained as manual diagnostic; automated Q2 proof CI is consolidated.
   workflow_dispatch:
 permissions:
   contents: read

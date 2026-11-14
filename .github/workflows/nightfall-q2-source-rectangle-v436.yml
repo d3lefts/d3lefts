@@ -1,14 +1,6 @@
 name: NIGHTFALL current-source Q2 mixed rectangle invariance Lean 4.36
 on:
-  push:
-    branches: [nightfall-q2-source-anova-global-v436-20261113]
-    paths:
-      - 'research/nightfall/formalization/observability/ActualSourceQuadraticRectangles.lean'
-      - '.github/workflows/nightfall-q2-source-rectangle-v436.yml'
-  pull_request:
-    paths:
-      - 'research/nightfall/formalization/observability/ActualSourceQuadraticRectangles.lean'
-      - '.github/workflows/nightfall-q2-source-rectangle-v436.yml'
+  # Retained as manual diagnostic; automated Q2 proof CI is consolidated.
   workflow_dispatch:
 permissions:
   contents: read

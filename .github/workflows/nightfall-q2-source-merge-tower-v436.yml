@@ -1,11 +1,7 @@
 name: NIGHTFALL Q2 original product merge tower Lean 4.36 kernel
 on:
-  pull_request:
-    paths:
-      - 'research/nightfall/formalization/observability/ActualProductMergeTower.lean'
-      - '.github/workflows/nightfall-q2-source-merge-tower-v436.yml'
+  # Retained as manual diagnostic; automated Q2 proof CI is consolidated.
   workflow_dispatch:
-
 permissions:
   contents: read
 

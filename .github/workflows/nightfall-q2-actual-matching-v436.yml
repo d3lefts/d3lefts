@@ -1,15 +1,6 @@
 name: NIGHTFALL source-real matching 4B rectangles Lean 4.36
 on:
-  push:
-    branches: [nightfall-q2-source-anova-global-v436-20261113]
-    paths:
-      - 'research/nightfall/formalization/observability/ActualSourceQuadraticRectangles.lean'
-      - 'research/nightfall/formalization/observability/ActualSourceGeneralMatching.lean'
-      - '.github/workflows/nightfall-q2-actual-matching-v436.yml'
-  pull_request:
-    paths:
-      - 'research/nightfall/formalization/observability/ActualSourceGeneralMatching.lean'
-      - '.github/workflows/nightfall-q2-actual-matching-v436.yml'
+  # Retained as manual diagnostic; automated Q2 proof CI is consolidated.
   workflow_dispatch:
 permissions:
   contents: read
