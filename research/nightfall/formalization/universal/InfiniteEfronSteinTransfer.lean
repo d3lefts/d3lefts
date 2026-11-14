@@ -35,7 +35,7 @@ theorem arbitrary_index_variance_approximation
   intro ε hε
   obtain ⟨F, hF⟩ := happrox ε hε
   refine ⟨F, ?_⟩
-  exact le_trans hF (add_le_add_right (hfinite F) ε)
+  linarith [hfinite F]
 
 /-- No degree bound and no cardinality bound are needed for this
 existential deduction. Its actual-product hypotheses remain obligations. -/
@@ -86,6 +86,6 @@ theorem finite_support_cardinality_bound
       F.sum influence ≤ F.sum (fun _ => M) :=
         Finset.sum_le_sum (fun i hi => hM i)
       _ = (F.card : ℝ) * M := by simp
-  exact le_trans hF (add_le_add_right hsum ε)
+  linarith
 
 end Nightfall.InfiniteEfronSteinTransfer
