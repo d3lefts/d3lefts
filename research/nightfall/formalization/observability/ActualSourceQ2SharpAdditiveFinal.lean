@@ -22,6 +22,7 @@ open Nightfall.Observability.ActualSourceQ2SharpAdditive
 open Nightfall.Observability.ActualSourceQ2SharpAdditiveSource
 open Nightfall.Observability.ActualSourceSingletonProjection
 open Nightfall.Observability.ActualSourceMeanSectionJensen
+open Nightfall.Observability.ActualSourceInfluenceEnergy
 open Nightfall.Observability.ActualSourceSectionBudgetEight
 
 variable {ι α : Type} [Fintype ι] [DecidableEq ι]
