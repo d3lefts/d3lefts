@@ -269,6 +269,80 @@ jobs:
           python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT/04-source-unconditional.json"
           echo "PASS: source-only unconditional Q2 736.673 strict Lean declaration and axioms"
 
+      # 620 target: genuine original-source cubic + merged source joint
+      # singleton/owner cap, no new caller premises in the terminal.
+      - name: Strict Q2 620.0204 original-source joint energy and golden cubic terminal
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/observability
+          OUT=lean-receipts/q2-consolidated/source-q2-620
+          mkdir -p "$OUT"
+          for name in Q2625Golden Q2625GoldenTrade Q2625ScalarEnvelope ActualSourceQ2625Cubic Q2620ScalarSite ActualSourceQ2620Terminal; do
+            cp "$SRC/$name.lean" "/tmp/mathlib4/$name.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$name.olean" "$name.lean")
+          done
+          N=Nightfall.Q2620ScalarSite
+          python3 scripts/lean_bridge.py "$SRC/Q2620ScalarSite.lean" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.coupled_joint_site_620 \
+            --json-out "$OUT/01-joint-scalar.json"
+          python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT/01-joint-scalar.json"
+          N=Nightfall.Q2625GoldenTrade
+          python3 scripts/lean_bridge.py "$SRC/Q2625GoldenTrade.lean" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.cubic_to_sharp_affine \
+            --json-out "$OUT/02-golden-cubic-trade.json"
+          python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT/02-golden-cubic-trade.json"
+          N=Nightfall.Observability.ActualSourceQ2625Cubic
+          python3 scripts/lean_bridge.py "$SRC/ActualSourceQ2625Cubic.lean" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.actual_source_owned_cubic \
+            --json-out "$OUT/03-actual-source-cubic.json"
+          python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT/03-actual-source-cubic.json"
+          N=Nightfall.Observability.ActualSourceQ2620Terminal
+          python3 scripts/lean_bridge.py "$SRC/ActualSourceQ2620Terminal.lean" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.original_source_generated_cubic_jensen_package \
+            --decl $N.actual_source_q2_620_given_additive_budget \
+            --decl $N.actual_source_q2_620_unconditional \
+            --json-out "$OUT/04-source-unconditional.json"
+          python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT/04-source-unconditional.json"
+          echo "PASS: original-source unconditional finite Q2 620.0204 named Lean kernel receipts"
+
+      # Strict new stronger 589 source terminal: inherits cubic and joint cap
+      # and requires explicit original p,f with no auxiliary budget premise.
+      - name: Strict source-only Q2 589.97569 golden homogeneous cubic terminal
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/observability
+          OUT=lean-receipts/q2-consolidated/source-q2-589
+          mkdir -p "$OUT"
+          for name in Q2589ScalarSite ActualSourceQ2589Terminal; do
+            cp "$SRC/$name.lean" "/tmp/mathlib4/$name.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$name.olean" "$name.lean")
+          done
+          N=Nightfall.Q2589ScalarSite
+          python3 scripts/lean_bridge.py "$SRC/Q2589ScalarSite.lean" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.joint_energy_cubic_site_589 \
+            --json-out "$OUT/01-homogeneous-cubic-site.json"
+          python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT/01-homogeneous-cubic-site.json"
+          N=Nightfall.Observability.ActualSourceQ2589Terminal
+          python3 scripts/lean_bridge.py "$SRC/ActualSourceQ2589Terminal.lean" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.original_source_generated_cubic_jensen_package \
+            --decl $N.actual_source_q2_589_given_additive_budget \
+            --decl $N.actual_source_q2_589_unconditional \
+            --json-out "$OUT/02-source-unconditional.json"
+          python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT/02-source-unconditional.json"
+          echo "PASS source-only Q2 589.97569 theorem and standard axioms"
+
       - name: Immutable input and toolchain provenance
         if: always()
         shell: bash
@@ -289,6 +363,14 @@ jobs:
             research/nightfall/formalization/observability/ActualSourceQ2EnergyDualSource.lean \
             research/nightfall/formalization/observability/ActualSourceQ2EnergyDualTerminalGate.lean \
             research/nightfall/formalization/observability/ActualSourceQ2EnergyDualUnconditional.lean \
+            research/nightfall/formalization/observability/Q2625Golden.lean \
+            research/nightfall/formalization/observability/Q2625GoldenTrade.lean \
+            research/nightfall/formalization/observability/Q2625ScalarEnvelope.lean \
+            research/nightfall/formalization/observability/ActualSourceQ2625Cubic.lean \
+            research/nightfall/formalization/observability/Q2620ScalarSite.lean \
+            research/nightfall/formalization/observability/ActualSourceQ2620Terminal.lean \
+            research/nightfall/formalization/observability/Q2589ScalarSite.lean \
+            research/nightfall/formalization/observability/ActualSourceQ2589Terminal.lean \
             > lean-receipts/q2-consolidated/SHA256SUMS.txt
           if [ -d /tmp/mathlib4/.git ]; then
             git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/q2-consolidated/mathlib-commit.txt
