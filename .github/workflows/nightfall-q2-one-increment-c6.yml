@@ -1,0 +1,45 @@
+name: NIGHTFALL Q2 one-increment reverse first moment
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/q2_shifted/Q2OneIncrementC6.lean'
+      - '.github/workflows/nightfall-q2-one-increment-c6.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nightfall-q2-one-increment-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  one-increment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Strict Lean compile and standard-axiom audit
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/q2_shifted/Q2OneIncrementC6.lean
+          OUT=lean-receipts/q2-one-increment
+          mkdir -p "$OUT" /tmp/mathlib4/.lake/build/lib/lean
+          cp "$SRC" /tmp/mathlib4/Q2OneIncrementC6.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Q2OneIncrementC6.olean Q2OneIncrementC6.lean)
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Q2OneStep.c6_square_gap \
+            --decl Nightfall.Q2OneStep.single_increment_c6 \
+            --json-out "$OUT/one-increment.json"
+          python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT/one-increment.json"
+          sha256sum "$SRC" > "$OUT/SHA256SUMS"
+          git rev-parse HEAD > "$OUT/commit.txt"
+      - name: Persist scoped receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-q2-one-increment-c6-receipts
+          path: lean-receipts/q2-one-increment/
+          retention-days: 45
