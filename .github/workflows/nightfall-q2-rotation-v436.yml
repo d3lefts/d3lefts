@@ -55,6 +55,22 @@ jobs:
             --decl Nightfall.Q2190.siteRotation_plus_sub_minus \
             --json-out lean-receipts/q2-rotation/actual-site-rotation.json
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-rotation/actual-site-rotation.json
+      - name: Compile quadratic four-law expectation cancellation
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/observability
+          cp "$SRC/Q2190FourPoint.lean" /tmp/mathlib4/
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Q2190FourPoint.olean Q2190FourPoint.lean)
+          cp "$SRC/Q2190QuadraticExpected.lean" /tmp/mathlib4/
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Q2190QuadraticExpected.olean Q2190QuadraticExpected.lean)
+          python3 scripts/lean_bridge.py "$SRC/Q2190QuadraticExpected.lean" \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Q2190.quadraticExpectation_sign_difference \
+            --decl Nightfall.Q2190.quadraticExpectation_fourpoint_exact \
+            --decl Nightfall.Q2190.quadraticExpectation_first_chaos_bound \
+            --json-out lean-receipts/q2-rotation/quadratic-expectation.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-rotation/quadratic-expectation.json
       - name: Source provenance
         if: always()
         run: |
