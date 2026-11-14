@@ -152,9 +152,18 @@ theorem actual_source_esComp_pair_eq_derived
     exact hjk hje
   have hjne : ({j} : Finset ι) ≠ {k} := by
     simpa using hjk
+  have h0 : (∅ : Finset ι) ∉
+      ({ {j}, {k}, {j,k} } : Finset (Finset ι)) := by simp
+  have h1 : ({j} : Finset ι) ∉
+      ({ {k}, {j,k} } : Finset (Finset ι)) := by
+    simp [hjne, hjpair]
+  have h2 : ({k} : Finset ι) ∉
+      ({ {j,k} } : Finset (Finset ι)) := by
+    simp [hkpair]
   unfold ActualSourceANOVA.esComp
-  rw [hpowerset]
-  simp [Finset.sum_insert, hjk, hjpair, hkpair, hjne]
+  rw [hpowerset, Finset.sum_insert h0, Finset.sum_insert h1,
+    Finset.sum_insert h2, Finset.sum_singleton]
+  simp [hjk]
   linarith [h4]
 
 end Nightfall.Observability.ActualSourceCanonicalIdentification
