@@ -99,13 +99,12 @@ def audit(root: Path) -> dict:
     require("startsWith(github.event.pull_request.head.ref, 'nightfall-q2-')" in source,
             "Q2 runner must be restricted to a Q2 source branch")
     require("head.repo.full_name == github.repository" in source,
-            "Q2 cleanup requires same-repository PR ownership")
-    require("run.id === context.runId" in source,
-            "Q2 cleanup may not cancel its own run")
-    require("run.head_sha === head" in source,
-            "Q2 cleanup must protect current-source-head runs")
-    require("actions: write" in source and "contents: read" in source,
-            "Q2 cleanup requires explicitly scoped Actions permissions")
+            "Q2 runner must reject non-repository pull requests")
+    permissions = top_block(source, "permissions")
+    require("contents: read" in permissions and "actions: write" not in permissions,
+            "Q2 proof runner must have read-only GitHub token permissions")
+    require("github.rest.actions.cancelWorkflowRun" not in source,
+            "Native branch concurrency must replace privileged API cancellation")
     require("scripts/nightfall_q2_certify.py" in source,
             "Consolidated workflow must invoke source manifest compiler")
 
@@ -170,6 +169,15 @@ def self_test() -> None:
             raise AssertionError("Missed lost stale-run cancellation")
 
         (wf / PIPELINE).write_text(good)
+        (wf / PIPELINE).write_text(good.replace(
+            "  contents: read", "  contents: read\n  actions: write", 1))
+        try:
+            audit(root)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError("Missed privilege regression in terminal proof runner")
+        (wf / PIPELINE).write_text(good)
         (scripts / "nightfall_q2_certify.py").write_text(good_script.replace(
             '"08-exact-Q2-terminal"', '"08-exact-Q2-UNVERIFIED"', 1))
         try:
@@ -178,7 +186,7 @@ def self_test() -> None:
             pass
         else:
             raise AssertionError("Missed terminal certificate manifest drift")
-    print("PASS: 7 Q2 CI governance negative/positive controls")
+    print("PASS: 8 Q2 CI governance negative/positive controls")
 
 
 if __name__ == "__main__":
