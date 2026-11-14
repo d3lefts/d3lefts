@@ -1,6 +1,6 @@
 import ActualSourceOwnerOrientation
 import ActualSourcePairEnergyBridge
-import ActualSourceDegreeTwoAllDimensions
+import ActualSourceIntegratedSections
 import ActualSourceVarianceEnergy
 import ActualSourceInfluenceEnergy
 
@@ -29,6 +29,7 @@ open Finset
 open Nightfall.Observability.ActualProductMergeTower
 open Nightfall.Observability.ActualSourceANOVA
 open Nightfall.Observability.ActualSourceDegreeTwoAllDimensions
+open Nightfall.Observability.ActualSourceIntegratedSections
 open Nightfall.Observability.ActualSourceVarianceEnergy
 open Nightfall.Observability.ActualSourceInfluenceEnergy
 open Nightfall.Observability.ActualSourcePairEnergyBridge
@@ -70,6 +71,7 @@ theorem actual_source_q2_structural_moment_package
         (f (Function.update x i a) -
           (∑ b : α, p i b * f (Function.update x i b)))^2)) ≤
        8 * B) ∧
+    ((∑ i : ι, sourceMeanSectionNorm p f i) ≤ 8 * B) ∧
     (sourceVariance p f =
       ∑ S : Finset ι,
         if S ≠ ∅ ∧ S.card ≤ 2 then
@@ -121,10 +123,12 @@ theorem actual_source_q2_structural_moment_package
            ∑ k ∈ Finset.range J.card,
              sourcePairEnergy p f i (j k))))) := by
   classical
-  refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro x
     exact actual_degree_two_source_section_budget_eight_all_current
       p hp hp1 f B hB hf hdegree x
+  · exact actual_source_integrated_eight_budget
+      p hp hp1 f hdegree B hB hf
   · exact actual_degree_two_source_variance_energy
       p hp1 f hdegree
   · intro i
