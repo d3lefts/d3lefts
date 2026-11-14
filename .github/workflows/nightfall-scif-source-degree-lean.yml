@@ -6,6 +6,8 @@ on:
     paths:
       - 'research/nightfall/formalization/observability/SCIFSourceDegree.lean'
       - 'research/nightfall/formalization/observability/SCIFSourceEnergy.lean'
+      - 'research/nightfall/2026-11-compositional-recertification/check_scif_canonical_full_source.py'
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/check_q2_subsumption_boundary.py'
       - '.github/workflows/nightfall-scif-source-degree-lean.yml'
   workflow_dispatch:
 
@@ -80,6 +82,11 @@ jobs:
             --json-out lean-receipts/scif-original-product-energy.json
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/scif-original-product-energy.json
+      - name: Exact independent source-level falsification
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/2026-11-compositional-recertification/check_scif_canonical_full_source.py
+          python3 research/nightfall/2026-11-quadratic-law-free-audit/check_q2_subsumption_boundary.py
       - name: Preserve source and compiler
         if: always()
         run: |
