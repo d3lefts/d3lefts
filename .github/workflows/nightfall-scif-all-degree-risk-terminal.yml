@@ -21,6 +21,11 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
+      - name: Independent exact fractional source risk stress check
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/formalization/observability/check_scif_risk_exact.py
       - name: Setup pinned Lean and Mathlib
         uses: ./.github/actions/setup-nightfall-lean
       - name: Compile genuine original-source transitive dependencies
