@@ -165,6 +165,13 @@ With the prospective sharp section budget \(U_0=2(1+\sqrt2)\), the current opera
 - Keep the \(8B\) cover budget and \(c/4\), but reduce the sharp source section budget below \(8B/\sqrt3\approx4.618803B\). This is about a **4.34%** improvement over \(U_0=4.828427\), but the existing Bernoulli switching interpolation may itself be optimal in its current information model.
 - Keep \(U_0\), \(8B\), and the \(c/4\) penalty, but prove a stronger shifted-norm inequality with coefficient of \(u\) strictly below \(8/U_0=4(\sqrt2-1)\approx1.656854\), in place of \(\sqrt3\). This requires information beyond the present fourth-moment/Hölder estimate, such as an independently validated anti-concentration or smoothing argument; it is **not** yet a theorem.
 
+A further falsifiable **conjectural target**, requiring a different moment/anti-concentration estimate: replace \(c/4\) in (SM) by \(c/5\), keeping the \(\sqrt3\) coefficient. That would give
+\[
+C_2 \le \left[2\sqrt3(1+\sqrt2)+\frac85\right]^2
+\approx99.262985,
+\]
+crossing 100 without modifying either source budget. This is **not proved** by the current fourth-moment argument: its exact normal-form envelope requires a correction around \(0.2380c\), exceeding \(c/5\). Preliminary optimization over shifted one- to four-term real centered two-point sums did not exhibit a \(c/5\) counterexample; this numerical observation is not a certificate. The decisive next operator would exploit distributional structure beyond a single fourth-moment upper bound and should first face asymmetric two-/three-point and rare-jump examples, including Hilbert-valued increments.
+
 **These are exact threshold calculations, not existing bounds.** The first decisive experiment should attack the current greedy owner's \(8B\) cover budget **with the actual source pair-kernel constraint** and a falsifier for odd cycles. Do not assume a fractional graph cover automatically yields an owner whose entire unscaled pair kernel is bounded by its cost. A preliminary categorical Grothendieck root-influence shortcut is already falsified in the program's source audit.
 
 ## Certification and independent attack plan
