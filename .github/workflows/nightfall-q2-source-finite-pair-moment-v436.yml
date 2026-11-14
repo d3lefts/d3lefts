@@ -1,7 +1,7 @@
 name: NIGHTFALL Q2 actual finite pair fourth moment Lean 4.36
 on:
   push:
-    branches: [nightfall-q2-source-anova-global-v436-20261113]
+    branches: [nightfall-q2-source-anova-global-v436-20261113, nightfall-q2-consolidated-terminal-20261114]
     paths:
       - 'research/nightfall/formalization/observability/ActualSourceFinitePairMoment.lean'
       - '.github/workflows/nightfall-q2-source-finite-pair-moment-v436.yml'
