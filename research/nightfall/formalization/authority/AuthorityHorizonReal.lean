@@ -15,24 +15,24 @@ this Bellman recurrence, nor effect-time enforcement.
 namespace Nightfall.AuthorityHorizonReal
 
 /-- Cost of reading and retaining the stable evidence source first. -/
-def stableCost (n : ℕ) (x y : ℝ) : ℝ :=
+noncomputable def stableCost (n : ℕ) (x y : ℝ) : ℝ :=
   y + (n : ℝ) * x / 2
 
 /-- Read fresh sources first, reading B only at the first failed volatile proof. -/
-def volatileCost : ℕ → ℝ → ℝ → ℝ
+noncomputable def volatileCost : ℕ → ℝ → ℝ → ℝ
   | 0, _, _ => 0
   | n + 1, x, y =>
       x + y / 2 + (n : ℝ) * x / 4 + volatileCost n x y / 2
 
 /-- The specified Bellman optimum: first read B, or first read A. -/
-def bellmanCost : ℕ → ℝ → ℝ → ℝ
+noncomputable def bellmanCost : ℕ → ℝ → ℝ → ℝ
   | 0, _, _ => 0
   | n + 1, x, y =>
       min (stableCost (n + 1) x y)
         (x + y / 2 + (n : ℝ) * x / 4 + bellmanCost n x y / 2)
 
 /-- Explicit volatile-first policy cost; powers are real powers. -/
-def volatileClosed (n : ℕ) (x y : ℝ) : ℝ :=
+noncomputable def volatileClosed (n : ℕ) (x y : ℝ) : ℝ :=
   ((n : ℝ) / 2 + 1 - (1 / 2 : ℝ) ^ n) * x +
     (1 - (1 / 2 : ℝ) ^ n) * y
 
