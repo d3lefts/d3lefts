@@ -1,0 +1,66 @@
+name: NIGHTFALL unrestricted product countable-coordinate source bridge
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/universal/InfinitePiCountableSupport.lean'
+      - 'research/nightfall/formalization/universal/InfinitePiRealCountableSupport.lean'
+      - '.github/workflows/nightfall-countable-support-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nightfall-countable-support-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  source-countable-support:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Setup pinned Lean and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact arbitrary-index countable-support sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          for M in InfinitePiCountableSupport InfinitePiRealCountableSupport; do
+            cp research/nightfall/formalization/universal/${M}.lean /tmp/mathlib4/${M}.lean
+            (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/${M}.olean ${M}.lean)
+          done
+      - name: Strict named-source kernel and allowed-axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/unrestricted
+          python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiCountableSupport.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InfinitePiCountableSupport.source_cylinders_generate_product \
+            --decl Nightfall.InfinitePiCountableSupport.source_measurable_event_countable_support \
+            --json-out lean-receipts/unrestricted/countable-events.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/unrestricted/countable-events.json
+          python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiRealCountableSupport.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InfinitePiRealCountableSupport.source_measurable_real_countable_support \
+            --json-out lean-receipts/unrestricted/countable-real.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/unrestricted/countable-real.json
+      - name: Preserve exact provenance
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/unrestricted
+          git rev-parse HEAD > lean-receipts/unrestricted/HEAD
+          sha256sum research/nightfall/formalization/universal/InfinitePi*CountableSupport.lean > lean-receipts/unrestricted/SHA256SUMS
+      - name: Upload source receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nightfall-countable-support-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/unrestricted
+          if-no-files-found: warn
