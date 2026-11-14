@@ -17,6 +17,7 @@ open Nightfall.Observability.ActualSourceVarianceEnergy
 open Nightfall.Observability.ActualSourceInfluenceEnergy
 open Nightfall.Observability.ActualSourceOwnedGraph
 open Nightfall.Observability.ActualSourceOwnedMomentEnergy
+open Nightfall.Observability.ActualSourceFinitePairMoment
 open Nightfall.Observability.ActualSourcePairEnergyBridge
 open Nightfall.Observability.ActualSourceQuadraticSupportSum
 open Nightfall.Observability.ActualSourceMeanSectionJensen
@@ -73,8 +74,8 @@ theorem source_singleton_support_image :
   constructor
   · intro h
     obtain ⟨i, hi⟩ := Finset.card_eq_one.mp h
-    exact ⟨i, Finset.mem_univ _, hi.symm⟩
-  · rintro ⟨i, _, rfl⟩
+    exact ⟨i, hi.symm⟩
+  · rintro ⟨i, rfl⟩
     simp
 
 theorem source_pair_support_image :
@@ -85,8 +86,8 @@ theorem source_pair_support_image :
   simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_image]
   constructor
   · intro h
-    exact ⟨⟨S,h⟩, Finset.mem_univ _, rfl⟩
-  · rintro ⟨e, _, rfl⟩
+    exact ⟨⟨S,h⟩, rfl⟩
+  · rintro ⟨e, rfl⟩
     exact e.2
 
 /-- Exact reindexing: no fractional pair multiplicities, no
@@ -115,8 +116,8 @@ theorem finite_degree_two_energy_reindex
       (f := g) (g := fun i : ι => ({i} : Finset ι))
       (fun i hi j hj heq => by
         have hmem : i ∈ ({j} : Finset ι) := by
-          rw [← heq]
-          simp
+          change ({i} : Finset ι) = {j} at heq
+          rw [← heq] <;> simp
         simpa using hmem)
   have h2 : F2.sum g = ∑ e : Edge ι, g e.1 := by
     rw [show F2 = (Finset.univ : Finset (Edge ι)).image
@@ -132,7 +133,6 @@ theorem finite_degree_two_energy_reindex
           simp only [Finset.sum_filter]
     _ = (F1 ∪ F2).sum g := by
       rw [finite_degree_two_support_partition]
-      rfl
     _ = F1.sum g + F2.sum g := Finset.sum_union hdis
     _ = (∑ i : ι, g {i}) + ∑ e : Edge ι, g e.1 := by
       rw [h1, h2]
