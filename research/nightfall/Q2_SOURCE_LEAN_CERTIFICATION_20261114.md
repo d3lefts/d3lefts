@@ -4,6 +4,49 @@
 **Originality/significance state: unreviewed.**
 **Publication: not authorized by this technical receipt.**
 
+## Latest stronger finite-Q2 certificate — 14 November 2026
+
+**STATUS: STRICT LEAN 4.36.0-rc2 KERNEL-CERTIFIED, finite common-alphabet original-source Q2; no novelty/human referee claim.**
+The initial 8-stage proof described below remains an immutable, valid **weaker**
+baseline. It has been superseded quantitatively by merged
+[PR #494](https://github.com/d3lefts/d3lefts/pull/494),
+`Nightfall.Observability.ActualSourceQ2CoupledUnconditional.actual_source_q2_coupled_unconditional`,
+whose same-pin strict compiler run [43627249467](https://github.com/d3lefts/d3lefts/actions/runs/43627249467)
+passed a fully unconditional terminal declaration with only
+`Classical.choice`, `Quot.sound` and `propext`.
+Its current-head receipt artifact [14126078653](https://github.com/d3lefts/d3lefts/actions/runs/43627249467/artifacts/14126078653)
+has SHA-256 `f6b1d8d3092ee6acc5b5d6a01b851d048853910933d0e622d3609a8497dd1259`.
+
+For every actual-coordinate cap `M≥0` as in the original theorem, the new
+coefficient is
+`C₂=407+138√2+188√3+56√6≈1064.958449026294`:
+
+\[
+(\operatorname{Var}_p f)^2 \le C_2 B^2 M.
+\]
+
+No separate matching, additive source-budget, fourth-moment or energy
+hypothesis is supplied to its terminal declaration. The common-alphabet and
+finite-coordinate premises are unchanged. The old 1228.356 manuscript and
+1910.81 terminal are **historical valid/weaker** checkpoints, not the latest
+certified constant.
+
+**New separate source-law certificates:** merged [SCIF #496](https://github.com/d3lefts/d3lefts/pull/496),
+strict run [43630623548](https://github.com/d3lefts/d3lefts/actions/runs/43630623548)
+with artifact [14128206335](https://github.com/d3lefts/d3lefts/actions/runs/43630623548/artifacts/14128206335),
+certifies finite-table recentering, source-canonical graph invariance after
+pointwise degree preservation, exact local singleton/pair energy algebra,
+zero-reassignment amplitude cover with `1+min(2TV,1)`, and two-endpoint
+amplitude inflation at most `4`. Those declarations have not yet been
+composed into one full-source `sourceInfluence` update and owner package.
+
+All new source SHA-1 and named-declaration receipts are recorded in
+[14 November current-proof index](../../docs/current-lean-proof-receipts-20261114.json).
+The frozen historical 67-source provenance and the immutable original 8-stage
+receipt remain unchanged.
+
+---
+
 ## Exact theorem
 For a finite coordinate set `ι`, a nonempty common finite alphabet `α`, coordinate laws `p_i(a) ≥ 0` with `∑_a p_i(a)=1` (zero masses permitted), a function `f : (ι → α) → ℝ` with `ESDegreeLE p f 2`, and a pointwise bound `|f(x)| ≤ B`, `B ≥ 0`, the following is proved for **every** `M ≥ 0` such that `I_i(f) ≤ M` for all coordinates:
 
