@@ -1,5 +1,6 @@
 import ActualSourceQ2589Terminal
 import ActualSourceIntegratedSections
+import ActualSourceIntegratedFive
 import Q2ShiftedPureC5
 import Q2ShiftedConditionalTargets
 
@@ -33,6 +34,7 @@ open Nightfall.Observability.ActualSourceOwnedGraph
 open Nightfall.Observability.ActualSourceFinitePairMoment
 open Nightfall.Observability.ActualSourceMeanSectionJensen
 open Nightfall.Observability.ActualSourceIntegratedSections
+open Nightfall.Observability.ActualSourceIntegratedFive
 open Nightfall.Observability.ActualSourceQ2589Terminal
 open Nightfall.Observability.ActualSourceSingletonEnergyBridge
 open Nightfall.Observability.QuadraticHilbertMany
@@ -191,6 +193,28 @@ theorem actual_source_pure_q2_105_given_five_section
         (5*Real.sqrt 3+8/5)^2*B^2*M := by
   exact actual_source_pure_q2_given_section_budget
     p hp hp1 f hdegree hzero B hB hf 5 (by norm_num) hsection
+
+/-- Original-source pure Q2 105: no supplied section budget.  The
+    separately Lean-certified 5B section theorem from merged PR #525
+    is imported into this *same named source declaration*.
+    The zero-singleton restriction remains essential. -/
+theorem actual_source_pure_q2_105_unconditional
+    (p : ι → α → ℝ)
+    (hp : ∀ k a, 0 ≤ p k a)
+    (hp1 : ∀ k, (∑ a : α, p k a) = 1)
+    (f : (ι → α) → ℝ)
+    (hdegree : ESDegreeLE p f 2)
+    (hzero : ∀ i : ι, originalSingletonNorm p f i = 0)
+    (B : ℝ) (hB : 0 ≤ B)
+    (hf : ∀ x, |f x| ≤ B) :
+    ∀ M : ℝ, 0 ≤ M →
+      (∀ i : ι, sourceInfluence p f i ≤ M) →
+      (sourceVariance p f)^2 ≤
+        (5*Real.sqrt 3+8/5)^2*B^2*M := by
+  have hsection :=
+    actual_source_integrated_five_budget p hp hp1 f hdegree B hB hf
+  exact actual_source_pure_q2_105_given_five_section
+    p hp hp1 f hdegree hzero B hB hf hsection
 
 /-- Pure Q2 99.263 with explicit sharp U bound; the sharp section
     theorem has NOT yet been source-certified on the current base. -/
