@@ -1,0 +1,53 @@
+name: NIGHTFALL SCIF pinned staged kernel certificates
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/formalization/observability/SCIF*.lean"
+      - ".github/workflows/nightfall-scif-v436.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nightfall-scif-${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+jobs:
+  scif-certificate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile SCIF stages in dependency order with strict axiom receipts
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.SCIF
+          for file in SCIFRecenter SCIFInfluence SCIFOwnerRepair; do
+            test -f "research/nightfall/formalization/observability/${file}.lean" || continue
+            cp "research/nightfall/formalization/observability/${file}.lean" /tmp/mathlib4/
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/${file}.olean" "${file}.lean")
+          done
+          python3 scripts/lean_bridge.py research/nightfall/formalization/observability/SCIFRecenter.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 600 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl ${N}.two_site_recenter_identity \
+            --decl ${N}.pairRecenter_first_centered \
+            --decl ${N}.pairRecenter_other_centered \
+            --decl ${N}.rectangle_pairRecenter \
+            --decl ${N}.algebraic_edge_iff_after_recenter \
+            --json-out lean-receipts/01-02-scif-recenter-graph.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/01-02-scif-recenter-graph.json
+      - name: Record immutable inputs
+        if: always()
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/observability/SCIF*.lean > lean-receipts/SHA256SUMS
+          git rev-parse HEAD > lean-receipts/HEAD
+          cat lean-toolchain > lean-receipts/LEAN_PIN
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: nightfall-scif-staged-certificates
+          path: lean-receipts/
+          retention-days: 45
