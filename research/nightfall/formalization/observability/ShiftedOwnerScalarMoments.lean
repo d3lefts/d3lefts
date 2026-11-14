@@ -94,7 +94,8 @@ theorem conditional_shifted_budget_273
   have hsumId :
       (∑ i : ι, Real.sqrt M*(r*u i+c i/3)) =
       Real.sqrt M*(r*(∑ i : ι, u i)+(∑ i : ι, c i)/3) := by
-    simp only [Finset.mul_sum, Finset.sum_add_distrib, Finset.sum_div]
+    simp only [mul_add, Finset.mul_sum, Finset.sum_add_distrib, Finset.sum_div]
+    ring
   have hUb : r*(∑ i : ι, u i) ≤ r*(8*B) :=
     mul_le_mul_of_nonneg_left hsection hr
   have hCb : (∑ i : ι, c i)/3 ≤ (8*B)/3 := by
@@ -127,7 +128,10 @@ theorem conditional_shifted_budget_273
     V^2 ≤ ((8*r+8/3)*B*Real.sqrt M)^2 := hVsq
     _ = (8*Real.sqrt 3+8/3)^2*B^2*M := by
       dsimp [r]
-      rw [← Real.sq_sqrt hM]
-      ring
+      calc
+        ((8*Real.sqrt 3+8/3)*B*Real.sqrt M)^2 =
+          (8*Real.sqrt 3+8/3)^2*B^2*(Real.sqrt M)^2 := by ring
+        _ = (8*Real.sqrt 3+8/3)^2*B^2*M := by
+          rw [Real.sq_sqrt hM]
 
 end Nightfall.Observability.ShiftedOwnerScalarMoments
