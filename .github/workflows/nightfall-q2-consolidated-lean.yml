@@ -349,7 +349,7 @@ jobs:
           SRC=research/nightfall/formalization/observability
           OUT=lean-receipts/q2-consolidated/source-q2-353-conditional
           mkdir -p "$OUT"
-          for name in Q2625Golden Q2625GoldenTrade Q2625ScalarEnvelope ActualSourceQ2625Cubic Q2589ScalarSite ActualSourceQ2353Terminal; do
+          for name in Q2625Golden Q2625GoldenTrade Q2625ScalarEnvelope ActualSourceQ2625Cubic Q2589ScalarSite Q2FlexibleSectionScalar ActualSourceQ2353Terminal; do
             cp "$SRC/$name.lean" "/tmp/mathlib4/$name.lean"
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$name.olean" "$name.lean")
           done
@@ -369,7 +369,7 @@ jobs:
           SRC=research/nightfall/formalization/observability
           OUT=lean-receipts/q2-consolidated/source-q2-364
           mkdir -p "$OUT"
-          for name in QuadraticSwitchDifferenceTen QuadraticSectionTen ActualSourceSectionBudgetFive ActualSourceIntegratedFive Q2625Golden Q2625GoldenTrade Q2625ScalarEnvelope ActualSourceQ2625Cubic Q2589ScalarSite ActualSourceQ2364Terminal; do
+          for name in QuadraticSwitchDifferenceTen QuadraticSectionTen ActualSourceSectionBudgetFive ActualSourceIntegratedFive Q2625Golden Q2625GoldenTrade Q2625ScalarEnvelope ActualSourceQ2625Cubic Q2589ScalarSite Q2FlexibleSectionScalar ActualSourceQ2364Terminal; do
             cp "$SRC/$name.lean" "/tmp/mathlib4/$name.lean"
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$name.olean" "$name.lean")
           done
@@ -448,6 +448,7 @@ jobs:
             research/nightfall/formalization/observability/ActualSourceQ2589Terminal.lean \
             research/nightfall/formalization/observability/ActualSourceIntegratedFive.lean \
             research/nightfall/formalization/observability/ActualSourceQ2353Terminal.lean \
+            research/nightfall/formalization/observability/Q2FlexibleSectionScalar.lean \
             research/nightfall/formalization/observability/ActualSourceQ2364Terminal.lean \
             research/nightfall/formalization/observability/ActualSourceQ2EnergyDualScalarFive.lean \
             research/nightfall/formalization/observability/ActualSourceQ2EnergyDualTerminalFive.lean \
