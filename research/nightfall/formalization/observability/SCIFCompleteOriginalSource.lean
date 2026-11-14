@@ -83,7 +83,7 @@ theorem scif_complete_finite_original_source_terminal
         sourceInfluence p f j =
       ∑ x : ι → α, originalMass p x *
         (∑ a : α, (q a - p k a) *
-          (residual p f j (Function.update x k a))^2)) ∧
+          (Nightfall.Observability.SCIFActualInfluence.residual p f j (Function.update x k a))^2)) ∧
     (∀ j : ι, k ≠ j →
       (∀ x : ι → α,
         esComp p ({k,j} : Finset ι) f x = 0) →
