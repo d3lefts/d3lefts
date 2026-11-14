@@ -1,0 +1,31 @@
+name: NIGHTFALL evidence-cut digital twin exact checks
+on:
+  push:
+    branches: [main]
+    paths:
+      - "research/nightfall/2026-11-digital-twin-evidence-cut/**"
+      - ".github/workflows/nightfall-evidence-cut.yml"
+  pull_request:
+    paths:
+      - "research/nightfall/2026-11-digital-twin-evidence-cut/**"
+      - ".github/workflows/nightfall-evidence-cut.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit v0.4 exact rational interface certificates
+        run: |
+          cd research/nightfall/2026-11-digital-twin-evidence-cut
+          python3 propose_certificate.py
+          python3 independent_checker.py
+          python3 -m json.tool audit_results.json > /dev/null
+      - name: Check earlier complementary research and locality certificates
+        run: |
+          cd research/nightfall/2026-11-digital-twin-evidence-cut
+          python3 coupled_assurance_checker_v02.py
+          python3 independent_certificate_audit_v03.py
