@@ -42,13 +42,14 @@ theorem source_weighted_hilbert_norm_sub_le
       norm q (fun a => v a - w a) := by
     congr 1
     funext a
-    simp [μ, Y, Finset.sum_bool, sub_eq_add_neg]
+    simp [μ, Y, Fintype.sum_bool, sub_eq_add_neg]
   have hNeg : norm q (fun a => -w a) = norm q w := by
-    simp [norm, sqNorm]
+    simp [ActualSourceMeanSectionJensen.norm,
+      ActualSourceMeanSectionJensen.sqNorm]
   have hR :
       (∑ b : Bool, μ b * norm q (Y b)) =
       norm q v + norm q w := by
-    simp [μ, Y, Finset.sum_bool, hNeg, add_comm]
+    simp [μ, Y, Fintype.sum_bool, hNeg, add_comm]
   calc
     norm q (fun a => v a - w a) =
       norm q (fun a => ∑ b : Bool, μ b * Y b a) := hL.symm
@@ -95,7 +96,9 @@ theorem source_projected_pair_jensen_budget
       (fun a => ∑ y : ι → α, originalMass p y *
         sourceCenteredSection p f i y a)
     simpa only [projectedPairNorm, projectedSourceNorm,
-      originalSingletonNorm, norm, sqNorm] using h
+      originalSingletonNorm,
+      ActualSourceMeanSectionJensen.norm,
+      ActualSourceMeanSectionJensen.sqNorm] using h
   calc
     meanProjectedPairNorm p f i S ≤
       ∑ x : ι → α, originalMass p x *
@@ -112,7 +115,8 @@ theorem source_projected_pair_jensen_budget
       rw [← Finset.sum_mul, sum_originalMass' p hp1, one_mul]
     _ ≤ sourceMeanSectionNorm p f i +
         originalSingletonNorm p f i := by
-      exact add_le_add_right
-        (mean_projected_source_norm_le_unprojected p hp hp1 f i S) _
+      exact add_le_add
+        (mean_projected_source_norm_le_unprojected p hp hp1 f i S)
+        (le_refl (originalSingletonNorm p f i))
 
 end Nightfall.Observability.ActualSourceProjectedPairJensen
