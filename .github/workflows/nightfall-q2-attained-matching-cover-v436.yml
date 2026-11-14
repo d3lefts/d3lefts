@@ -1,7 +1,7 @@
 name: NIGHTFALL Q2 source-real attained matching cover Lean 4.36
 on:
   push:
-    branches: [nightfall-q2-source-anova-global-v436-20261113]
+    branches: [nightfall-q2-source-anova-global-v436-20261113, nightfall-q2-consolidated-terminal-20261114]
     paths:
       - 'research/nightfall/formalization/observability/ActualSourceAmplitudeRectangles.lean'
       - 'research/nightfall/formalization/observability/ActualSourceMatchingCover.lean'
