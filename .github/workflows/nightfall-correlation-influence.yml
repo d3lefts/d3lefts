@@ -1,0 +1,39 @@
+name: Verify correlation-stable influence research
+
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/2026-11-correlation-stable-aa/**"
+      - ".github/workflows/nightfall-correlation-influence.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "research/nightfall/2026-11-correlation-stable-aa/**"
+      - ".github/workflows/nightfall-correlation-influence.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-rational-falsification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@v4
+      - name: Interpreter
+        run: python3 --version
+      - name: Correlated source and posterior drift
+        working-directory: research/nightfall/2026-11-correlation-stable-aa
+        run: python3 check_correlated_transfer.py
+      - name: Parity-moment camouflage obstruction
+        working-directory: research/nightfall/2026-11-correlation-stable-aa
+        run: python3 check_parity_camouflage.py
+      - name: Stationary multiclass completion
+        working-directory: research/nightfall/2026-11-correlation-stable-aa
+        run: python3 check_stationary_completion.py
+      - name: Singular within-block correlation
+        working-directory: research/nightfall/2026-11-correlation-stable-aa
+        run: python3 check_block_coarsening.py
