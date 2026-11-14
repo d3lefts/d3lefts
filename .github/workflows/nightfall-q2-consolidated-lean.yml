@@ -418,6 +418,28 @@ jobs:
           python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT/03-source-unconditional-473.json"
           echo "PASS: strict source-only Q2 coefficient 473.874"
 
+      - name: Strict pure Q2 golden-ratio source theorem (unconditional 100.946; conditional 95.229)
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/observability
+          OUT=lean-receipts/q2-consolidated/pure-q2-golden
+          mkdir -p "$OUT"
+          cp "$SRC/ActualSourcePureQ2Golden.lean" /tmp/mathlib4/ActualSourcePureQ2Golden.lean
+          (cd /tmp/mathlib4 &&
+            lake env lean -o .lake/build/lib/lean/ActualSourcePureQ2Golden.olean ActualSourcePureQ2Golden.lean)
+          N=Nightfall.Observability.ActualSourcePureQ2Golden
+          python3 scripts/lean_bridge.py "$SRC/ActualSourcePureQ2Golden.lean" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.pure_golden_site \
+            --decl $N.actual_source_pure_q2_golden_given_section_budget \
+            --decl $N.actual_source_pure_q2_golden_101_unconditional \
+            --decl $N.actual_source_pure_q2_golden_95_given_29_over_6 \
+            --json-out "$OUT/source-pure-q2-golden.json"
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            "$OUT/source-pure-q2-golden.json"
+          echo "PASS: pure zero-singleton original-source C100.946 unconditional; C95.229 conditional"
+
       - name: Immutable input and toolchain provenance
         if: always()
         shell: bash
