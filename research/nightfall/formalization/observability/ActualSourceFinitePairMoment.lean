@@ -14,6 +14,7 @@ and owner-energy partition are composed.
 namespace Nightfall.Observability.ActualSourceFinitePairMoment
 open Finset
 open Nightfall.Observability.ActualProductSourcePairCentering
+open Nightfall.Observability.ActualProductMergeTower
 open Nightfall.Observability.QuadraticHilbertMany
 open Nightfall.Observability.QuadraticActualMomentEndpoint
 open Nightfall.Observability.QuadraticHilbertMoments
@@ -242,5 +243,68 @@ theorem finitePairIncrement_moment2_eq_source_pair_energies
               Real.sq_sqrt (hp i a)]
             ring
 
+
+/-- The genuine original-product moment endpoint. The sampled
+labels are injectively selected actual source coordinates, rather
+than hypothetical repeated or independent synthetic neighbors.
+Only a source second-moment <=M cap is required; the fourth-moment
+conclusion itself is **derived**, not a supplied input. -/
+theorem original_source_distinct_pair_fourth_endpoint
+    (p : ι → α → ℝ)
+    (hp : ∀ k a, 0 ≤ p k a)
+    (hp1 : ∀ k, (∑ a : α, p k a) = 1)
+    (f : (ι → α) → ℝ)
+    (i : ι) (j : ℕ → ι) (n : ℕ)
+    (hinj : ∀ k l, k < n → l < n → k ≠ l → j k ≠ j l)
+    (hne : ∀ k, k < n → i ≠ j k)
+    (c M : ℝ) (hc : 0 ≤ c)
+    (hkernel : ∀ k, k < n → ∀ a b,
+      |sourceDoubleCenteredPair p f i (j k) a b| ≤ c)
+    (hM : (∑ x : ι → α, originalMass p x *
+      vecNormSq (sumVector (finitePairIncrement p f i j n)
+        n (ActualSourceFiniteSampleLaw.observedActualSample j n x))) ≤ M) :
+    (∑ x : ι → α, originalMass p x *
+      vecNormSq (sumVector (finitePairIncrement p f i j n)
+        n (ActualSourceFiniteSampleLaw.observedActualSample j n x))) ≤
+    (∑ x : ι → α, originalMass p x *
+      Real.sqrt (vecNormSq (sumVector (finitePairIncrement p f i j n)
+        n (ActualSourceFiniteSampleLaw.observedActualSample j n x)))) *
+      (c + Real.sqrt (3 * M)) := by
+  classical
+  let Y := finitePairIncrement p f i j n
+  have hsecond :
+      (∑ x : ι → α, originalMass p x *
+        vecNormSq (sumVector Y n
+          (ActualSourceFiniteSampleLaw.observedActualSample j n x))) =
+          moment2 (fun k => p (j k)) Y n := by
+    simpa only [moment2] using
+      (ActualSourceFiniteSampleLaw.original_source_distinct_prefix_law
+        p hp1 j n hinj (fun w : Samples α n =>
+          vecNormSq (sumVector Y n w)))
+  have hfirst :
+      (∑ x : ι → α, originalMass p x *
+        Real.sqrt (vecNormSq (sumVector Y n
+          (ActualSourceFiniteSampleLaw.observedActualSample j n x)))) =
+      ∑ w : Samples α n, mass (fun k => p (j k)) n w *
+        Real.sqrt (vecNormSq (sumVector Y n w)) := by
+    exact ActualSourceFiniteSampleLaw.original_source_distinct_prefix_first_norm
+      p hp1 j n hinj Y
+  have hMoment : moment2 (fun k => p (j k)) Y n ≤ M := by
+    rw [← hsecond]
+    exact hM
+  have hFourth := finitePairIncrement_fourth_endpoint
+    p hp hp1 f i j n c M hne hc hkernel hMoment
+  calc
+    (∑ x : ι → α, originalMass p x *
+      vecNormSq (sumVector (finitePairIncrement p f i j n)
+        n (ActualSourceFiniteSampleLaw.observedActualSample j n x))) =
+        moment2 (fun k => p (j k)) Y n := hsecond
+    _ ≤ (∑ w : Samples α n, mass (fun k => p (j k)) n w *
+        Real.sqrt (vecNormSq (sumVector Y n w))) *
+        (c + Real.sqrt (3 * M)) := hFourth
+    _ = (∑ x : ι → α, originalMass p x *
+      Real.sqrt (vecNormSq (sumVector (finitePairIncrement p f i j n)
+        n (ActualSourceFiniteSampleLaw.observedActualSample j n x)))) *
+      (c + Real.sqrt (3 * M)) := by rw [hfirst]
 
 end Nightfall.Observability.ActualSourceFinitePairMoment
