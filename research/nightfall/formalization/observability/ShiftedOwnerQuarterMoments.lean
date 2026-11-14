@@ -35,13 +35,13 @@ theorem shifted_c4_from_moments
       let x : ℝ := a/t
       let d : ℝ := c/t
       have htne : t ≠ 0 := ne_of_gt htpos
-      have hx0 : 0 ≤ x := div_nonneg ha ht.le
+      have hx0 : 0 ≤ x := div_nonneg ha ht
       have ha2 : a^2 ≤ t^2 := by linarith [henergy]
       have hat : a ≤ t := by nlinarith [ha2]
       have hx1 : x ≤ 1 := by
         dsimp [x]
         exact (div_le_iff₀ htpos).2 (by linarith)
-      have hd0 : 0 ≤ d := div_nonneg hc ht.le
+      have hd0 : 0 ≤ d := div_nonneg hc ht
       have hd4 : d ≤ 4 := by
         dsimp [d]
         exact (div_le_iff₀ htpos).2 (by linarith)
@@ -52,7 +52,6 @@ theorem shifted_c4_from_moments
         dsimp [F,x,d]
         rw [hsEq]
         field_simp
-        ring
       have hnormQ : q ≤ t^4*F := by
         rw [hnormalized]
         exact hfourth
@@ -92,7 +91,6 @@ theorem shifted_c4_from_moments
       have hrewrite : t*(1-d/4) = t-c/4 := by
         dsimp [d]
         field_simp
-        ring
       linarith [hlinear]
 
 end Nightfall.Observability.ShiftedOwnerQuarterMoments
