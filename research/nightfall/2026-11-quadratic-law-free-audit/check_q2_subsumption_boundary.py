@@ -42,4 +42,25 @@ for d in (2, 3, 4, 10, 100, 1000, 10000):
     assert 2 * p * (1-p) > 0
     checks += 2
 
+# Fully source-matched categorical address-function obstruction.
+# n+1 source sites share an n-symbol alphabet, with zero data-site atoms.
+# Conditional-variance influences use the actual independent source law.
+for n in range(2, 10):
+    bit_states = list(product((-1, 1), repeat=n))
+    mass = Fraction(1, n * len(bit_states))
+    total_mean = sum((mass * bits[j] for bits in bit_states for j in range(n)), Fraction())
+    total_sq = sum((mass * bits[j]**2 for bits in bit_states for j in range(n)), Fraction())
+    assert total_mean == 0 and total_sq - total_mean**2 == 1
+    checks += 1
+    i_addr = sum((Fraction(1, len(bit_states)) *
+                  (1 - (Fraction(sum(bits), n))**2)
+                  for bits in bit_states), Fraction())
+    assert i_addr == Fraction(n - 1, n)
+    checks += 1
+    for k in range(n):
+        influence = sum((mass * (bits[j] - (0 if j == k else bits[j]))**2
+                         for bits in bit_states for j in range(n)), Fraction())
+        assert influence == Fraction(1, n)
+        checks += 1
+
 print(f"PASS {checks} exact-rational falsification checks")
