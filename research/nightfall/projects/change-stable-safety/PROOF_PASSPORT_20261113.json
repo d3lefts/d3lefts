@@ -1,0 +1,126 @@
+{
+  "schema": "NIGHTFALL-proof-passport/1",
+  "record_date": "2026-11-13",
+  "owner": "NIGHTFALL independent research programme",
+  "authorship": "Author-directed, AI-assisted mathematical construction and internal adversarial audit; no non-author specialist review.",
+  "repo": "d3lefts/d3lefts",
+  "branch": "research/change-stable-tree-evidence-20261113",
+  "reference_checkpoint_commit": "6915766e9cbcf1d1e818a33bc52cddb2e57571af",
+  "exact_ci_receipt": {
+    "workflow": "Verify change-stable safety certificates",
+    "run_id": 43529824790,
+    "conclusion": "success",
+    "scope": "finite enumeration of submitted Python research checkers; not a Lean theorem or proof of real-world safety"
+  },
+  "sources": [
+    {
+      "path": "TREE_CONVEX_CERTIFICATES_20261113.md",
+      "git_blob_sha": "5c1811260eb96ca5e95067204ceaa4e9036c6a87",
+      "sha_kind": "Git blob object id (not a raw-file SHA-256)"
+    },
+    {
+      "path": "BOUNDED_EVIDENCE_SPARSIFICATION_20261113.md",
+      "git_blob_sha": "40189d9ad434b1ba6de0a041233ab5c7905a5a08",
+      "sha_kind": "Git blob object id (not a raw-file SHA-256)"
+    },
+    {
+      "path": "TRUSTED_QUERY_LOWER_BOUND_20261113.md",
+      "git_blob_sha": "b3034adbc2bfa322da70a02dd9b4b89bfa138a95",
+      "sha_kind": "Git blob object id (not a raw-file SHA-256)"
+    },
+    {
+      "path": "RANDOMIZED_CHECKING_COROLLARY_20261113.md",
+      "git_blob_sha": "7e5341cae88b16b6cb541304e836ca20fb8796e7",
+      "sha_kind": "Git blob object id (not a raw-file SHA-256)"
+    },
+    {
+      "path": "tree_certificate.py",
+      "git_blob_sha": "bb9bf8d70ee169494f3b43c8fdd074062d79c17b",
+      "sha_kind": "Git blob object id (not a raw-file SHA-256)"
+    },
+    {
+      "path": "exceptional_dependencies.py",
+      "git_blob_sha": "c6ef1585e0e9246c4cededab46b5b37cfda57b14",
+      "sha_kind": "Git blob object id (not a raw-file SHA-256)"
+    },
+    {
+      "path": "audit.py",
+      "git_blob_sha": "337e7ecac7f0f64487062baf4cabc3b03a51507a",
+      "sha_kind": "Git blob object id (not a raw-file SHA-256)"
+    },
+    {
+      "path": "audit_sparsification.py",
+      "git_blob_sha": "abe53b2bb71109df003ffcefdd3e2e0401543531",
+      "sha_kind": "Git blob object id (not a raw-file SHA-256)"
+    },
+    {
+      "path": "audit_trusted_queries.py",
+      "git_blob_sha": "aad347266d60c8d20d985a14f9e46c720bab0c4c",
+      "sha_kind": "Git blob object id (not a raw-file SHA-256)"
+    },
+    {
+      "path": "audit_randomized_queries.py",
+      "git_blob_sha": "d8e4b8b6585c1a6e536f66e4758ce8a138cf9929",
+      "sha_kind": "Git blob object id (not a raw-file SHA-256)"
+    }
+  ],
+  "claims": [
+    {
+      "id": "TREE-MARGIN",
+      "statement": "Exact max{durable margin, (k+1)-disjoint-support bottleneck margin} for connected tree supports.",
+      "status": "author_analytic_plus_finite_audit",
+      "condition": "finite explicit host tree, nonempty connected dependency supports, rectangular weakening envelope",
+      "mechanism": "subtree-packing/transversal duality",
+      "prior_art": "classical subtree/chordal theory; no standalone novelty promotion"
+    },
+    {
+      "id": "TREE-COST",
+      "statement": "Exact minimum evidence acquisition cost with a per-leaf checker cap by durable single witness versus min-cost k+1 disjoint subtrees.",
+      "status": "author_analytic_plus_finite_audit",
+      "condition": "nonnegative additive acquisition cost, bounded per-witness leaf check, explicit host tree",
+      "mechanism": "rooted active-subtree dynamic programming",
+      "prior_art": "weighted chordal independent-set methods; exact same-scope novelty unresolved"
+    },
+    {
+      "id": "EXCEPTION-CERT",
+      "statement": "Complete 2^s branch acceptance or counterexample for s supplied exceptional components.",
+      "status": "author_analytic_plus_finite_audit",
+      "condition": "after deleting supplied exceptional components, every residual support is empty or a subtree",
+      "mechanism": "exception-subset case distinction plus subtree minmax",
+      "prior_art": "parameterized modulator branching; novelty unresolved"
+    },
+    {
+      "id": "SPARSIFICATION",
+      "statement": "Every resilient collection contains resilient subcollection of at most M(s,k)=sum_j binom(s,j)(k-j+1) rows; an optimal nonnegative-cost collection may meet same size bound; M(1,1)=3 sharp.",
+      "status": "author_analytic_plus_finite_audit",
+      "condition": "same exceptional-support model, nonnegative costs",
+      "mechanism": "union of branch disjoint-packing witnesses",
+      "prior_art": "could follow from standard branching/packing; non-author subsumption check required"
+    },
+    {
+      "id": "SIGNED-LEAF",
+      "statement": "Deterministic minimum worst-case signed positive-receipt check cost equals sum of cheapest k+1 leaf prices.",
+      "status": "author_analytic_plus_finite_audit",
+      "condition": "fixed adversarial failure set before queries, disjoint supports, no change manifest, deterministic zero error, requires fresh signed YES",
+      "mechanism": "adversarial fixed NO response path",
+      "prior_art": "elementary search-game principle"
+    },
+    {
+      "id": "RANDOM-LEAF",
+      "statement": "Equal-price minimax expected signed checks with independent randomization equal (n+1)/(n-k+1).",
+      "status": "author_analytic_plus_finite_audit",
+      "condition": "fixed adversarial failure subset, randomized zero error, equal costs, signed yes output",
+      "mechanism": "negative-hypergeometric first success and Yao symmetrization",
+      "prior_art": "standard sampling without replacement"
+    }
+  ],
+  "falsification_edges": [
+    "One disconnected dependency support invalidates the subtree packing equality.",
+    "Incomplete authenticated update manifest invalidates source-to-version transfer.",
+    "Unmodeled common-cause failures can invalidate simultaneous evidence rows.",
+    "A global minimal shared-evidence selection problem for multiple hazards remains NP-hard even for k=0.",
+    "Real-world correctness of margin lower bounds is not certified by combinatorial checkers."
+  ],
+  "current_assessment": "No worldwide novelty, external peer review, Lean terminal compilation, or real-system safety certificate established.",
+  "next_test": "Matched-contract replay on independently inspected versioned agent guard; compare true proof-checking resource costs and measure smallest legitimate exception set."
+}
