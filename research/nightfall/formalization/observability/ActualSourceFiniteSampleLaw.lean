@@ -117,7 +117,7 @@ theorem original_source_distinct_prefix_law
                 F (observedActualSample j n x, b)) := by
               apply Finset.sum_congr rfl
               intro x _
-              apply congrArg
+              congr 1
               apply Finset.sum_congr rfl
               intro b _
               rw [hupdate x b]
