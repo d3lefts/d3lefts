@@ -195,9 +195,9 @@ theorem actual_source_q2_589_unconditional
     ∀ M : ℝ, 0 ≤ M →
       (∀ i : ι, sourceInfluence p f i ≤ M) →
       (sourceVariance p f)^2 ≤ K^2 * B^2 * M := by
-  exact actual_source_q2_620_given_additive_budget
+  exact actual_source_q2_589_given_additive_budget
     p hp hp1 f hdegree B hB hf
     (original_source_sharp_additive_budget
       p hp hp1 f hdegree B hB hf)
 
-end Nightfall.Observability.ActualSourceQ2620Terminal
+end Nightfall.Observability.ActualSourceQ2589Terminal
