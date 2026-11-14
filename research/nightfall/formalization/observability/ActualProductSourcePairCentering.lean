@@ -17,6 +17,7 @@ namespace Nightfall.Observability.ActualProductSourcePairCentering
 
 open Finset
 open Nightfall.Observability.ActualProductMergeTower
+open Nightfall.Observability.ActualProductSoftNoise
 open Nightfall.Observability.ActualProductPairSector
 
 variable {ι α : Type*} [Fintype ι] [DecidableEq ι]
