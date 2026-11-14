@@ -1,0 +1,26 @@
+name: NIGHTFALL locally certified causal observability exact audits
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-causal-observability/**'
+      - '.github/workflows/nightfall-causal-observability-exact.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/2026-11-causal-observability/**'
+      - '.github/workflows/nightfall-causal-observability-exact.yml'
+  workflow_dispatch:
+jobs:
+  independent-exact-audits:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Replay exact CPT and local-influence update comparisons
+        run: python3 research/nightfall/2026-11-causal-observability/check_local_innovations_exact.py
+      - name: Replay independent physical-read and posterior estimator checks
+        run: python3 research/nightfall/2026-11-causal-observability/check_lower_posterior_exact.py
+      - name: Replay sharp physical heatbath-influence obstruction
+        run: python3 research/nightfall/2026-11-causal-observability/check_physical_heatbath_obstruction.py
+      - name: Hash exact replay source inputs
+        run: sha256sum research/nightfall/2026-11-causal-observability/check_*.py
