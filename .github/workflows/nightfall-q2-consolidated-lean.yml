@@ -528,6 +528,7 @@ jobs:
             --decl $N.actual_source_pure_q2_given_section_budget \
             --decl $N.actual_source_pure_q2_239_unconditional \
             --decl $N.actual_source_pure_q2_105_given_five_section \
+            --decl $N.actual_source_pure_q2_105_unconditional \
             --decl $N.actual_source_pure_q2_99_given_sharp_section \
             --json-out "$OUT/source-pure-105-and-99.json"
           python3 research/nightfall/formalization/product_space/check_receipts.py \
