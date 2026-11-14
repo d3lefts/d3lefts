@@ -50,7 +50,10 @@ theorem fifth_interpolation_of_fourth
       nlinarith [hid, hpositive]
     have hh : t^4 ≤ u^2*D := by simpa only [D] using hfourth
     have hh3 : 3*t^4 ≤ 3*u^2*D := by
-      exact mul_le_mul_of_nonneg_left hh (by norm_num)
+      calc
+        3*t^4 ≤ 3*(u^2*D) :=
+          mul_le_mul_of_nonneg_left hh (by norm_num)
+        _ = 3*u^2*D := by ring
     have hprod : (t-c/5)^2*D ≤ (3*u^2)*D := by
       nlinarith [hpoly, hh3]
     have hsquare : (t-c/5)^2 ≤ 3*u^2 :=
@@ -116,13 +119,20 @@ theorem fifth_for_pure_centered_sum
   have he : (Real.sqrt s)^2 = s := Real.sq_sqrt hs
   have hh : (Real.sqrt s)^6 ≤ u^2*q := by
     calc
-      (Real.sqrt s)^6 = s^3 := by rw [← he]; ring
+      (Real.sqrt s)^6 = s^3 := by
+        calc
+          (Real.sqrt s)^6 = ((Real.sqrt s)^2)^3 := by ring
+          _ = s^3 := by rw [he]
       _ ≤ u^2*q := hholder
   have hq : q ≤ 3*(Real.sqrt s)^4-2*(0:ℝ)^4+c^2*s := by
     calc
       q ≤ 3*s^2+c^2*s := hfourth
       _ = 3*(Real.sqrt s)^4-2*(0:ℝ)^4+c^2*s := by
-        rw [← he]
+        have ht4 : (Real.sqrt s)^4 = s^2 := by
+          calc
+            (Real.sqrt s)^4 = ((Real.sqrt s)^2)^2 := by ring
+            _ = s^2 := by rw [he]
+        rw [ht4]
         ring
   exact fifth_of_zero_odd_term_moments
     (Real.sqrt s) 0 s u c q ht (by norm_num) hs hu hc
@@ -144,7 +154,8 @@ theorem fifth_from_centered_cubic
   have hholder : s^3 ≤ u^2*(c^2*s+3*s^2) :=
     hcubic.trans (mul_le_mul_of_nonneg_right hz2 hfactor)
   have hfourth :
-      c^2*s+3*s^2 ≤ 3*s^2+c^2*s := by ring
+      c^2*s+3*s^2 ≤ 3*s^2+c^2*s :=
+        le_of_eq (add_comm _ _)
   exact fifth_for_pure_centered_sum s u c (c^2*s+3*s^2)
     hs hu hc hholder hfourth
 
