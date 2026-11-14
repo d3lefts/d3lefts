@@ -1,0 +1,64 @@
+name: NIGHTFALL source-real matching 4B rectangles Lean 4.36
+on:
+  push:
+    branches: [nightfall-q2-source-anova-global-v436-20261113]
+    paths:
+      - 'research/nightfall/formalization/observability/ActualSourceQuadraticRectangles.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceGeneralMatching.lean'
+      - '.github/workflows/nightfall-q2-actual-matching-v436.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/ActualSourceGeneralMatching.lean'
+      - '.github/workflows/nightfall-q2-actual-matching-v436.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  global-source-rectangle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Build source and parity telescope prerequisites
+        run: |
+          set -euo pipefail
+          cd /tmp/mathlib4
+          for f in ActualProductMergeTower ActualProductHilbertJensen ActualProductSoftNoise ActualSourceANOVA ActualSourceQuadraticRectangles ParityBlockCancellation QuadraticHybridTelescoping; do
+            cp "$GITHUB_WORKSPACE/research/nightfall/formalization/observability/$f.lean" .
+            lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean"
+          done
+      - name: Strict full original-coordinate embedded matching rectangle bound
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualSourceGeneralMatching
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualSourceGeneralMatching.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.blockReplace_eq_source_updates \
+            --decl $N.liftMatching_update \
+            --decl $N.liftMatching_blockReplace \
+            --decl $N.blockRectangle_liftMatching \
+            --decl $N.matchingCoord_endpoints_distinct \
+            --decl $N.actual_source_general_matching_rectangles_le_four \
+            --json-out lean-receipts/q2-current-source-matching-4B.json || {
+              cat lean-receipts/q2-current-source-matching-4B.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-current-source-matching-4B.json
+      - name: Verify source SHA
+        if: always()
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/observability/ActualSourceQuadraticRectangles.lean research/nightfall/formalization/observability/ActualSourceGeneralMatching.lean > lean-receipts/SHA256SUMS.txt
+          git rev-parse HEAD > lean-receipts/repo-commit.txt
+          cat lean-toolchain > lean-receipts/lean-toolchain.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: q2-source-embedded-matching-4B
+          path: lean-receipts/
+          retention-days: 45
