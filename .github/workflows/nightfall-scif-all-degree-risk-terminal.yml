@@ -1,0 +1,67 @@
+name: NIGHTFALL SCIF finite all-degree actual-source risk terminal
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/observability/SCIFActualRiskTerminal.lean'
+      - '.github/workflows/nightfall-scif-all-degree-risk-terminal.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nightfall-scif-risk-terminal-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  original-source-risk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    steps:
+      - name: Checkout exact revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Setup pinned Lean and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile genuine original-source transitive dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import subprocess, shutil
+          from scripts.nightfall_q2_certify import local_sources, closure
+          files = local_sources()
+          for module in closure('SCIFActualRiskTerminal', files):
+              shutil.copyfile(files[module], Path('/tmp/mathlib4') / (module+'.lean'))
+              subprocess.run(['lake','env','lean','-o',
+                  '.lake/build/lib/lean/'+module+'.olean',module+'.lean'],
+                  cwd='/tmp/mathlib4',check=True)
+          PY
+      - name: Strict actual-source changed-law risk terminal
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/scif-risk
+          python3 scripts/lean_bridge.py research/nightfall/formalization/observability/SCIFActualRiskTerminal.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Observability.SCIFActualRiskTerminal.source_actual_influence_transport \
+            --decl Nightfall.Observability.SCIFActualRiskTerminal.source_influence_shift_zero_at_same_law \
+            --decl Nightfall.Observability.SCIFActualRiskTerminal.source_variance_recertified_all_degree \
+            --json-out lean-receipts/scif-risk/original-source.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/scif-risk/original-source.json
+      - name: Preserve immutable certificate provenance
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/scif-risk
+          git rev-parse HEAD > lean-receipts/scif-risk/HEAD
+          sha256sum research/nightfall/formalization/observability/SCIFActualRiskTerminal.lean > lean-receipts/scif-risk/SHA256SUMS
+      - name: Upload receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nightfall-scif-all-degree-risk-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/scif-risk
