@@ -68,6 +68,18 @@ jobs:
           assert r['github_run_id']==os.environ['GITHUB_RUN_ID'], 'stale source/version audit run'
           assert r['status']=='passed'
           PY
+      - name: Preserve complete admitted source snapshots and independently replay hashes
+        run: |
+          tar -C atomic-results/trusted -cf atomic-results/admitted-snapshots.tar snapshots
+          python audit_atomic_archive.py --dir atomic-results | tee atomic-results/archive_audit_stdout.json
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          r=json.loads(Path('atomic-results/atomic_archive_audit.json').read_text())
+          assert r['archive_audit']=='passed'
+          assert r['github_run_id']==os.environ['GITHUB_RUN_ID']
+          assert r['includes_hidden_source_files'] is True
+          PY
       - name: Upload exact source-matched evidence and receipts
         if: always()
         uses: actions/upload-artifact@v4
@@ -89,6 +101,7 @@ jobs:
             research/nightfall/right-to-act-promotion/atomic-results/harmful.template.json
             research/nightfall/right-to-act-promotion/atomic-results/trusted/state.json
             research/nightfall/right-to-act-promotion/atomic-results/trusted/published.json
-            research/nightfall/right-to-act-promotion/atomic-results/trusted/snapshots/**
+            research/nightfall/right-to-act-promotion/atomic-results/admitted-snapshots.tar
+            research/nightfall/right-to-act-promotion/atomic-results/atomic_archive_audit.json
           if-no-files-found: warn
           retention-days: 14
