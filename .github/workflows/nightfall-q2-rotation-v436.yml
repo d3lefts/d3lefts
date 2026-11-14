@@ -1,6 +1,11 @@
 name: NIGHTFALL Q2 190 spherical rotation certificate
-# Manual diagnostic only; consolidated Q2 is the sole PR-autostart kernel pipeline.
+# Isolated proof diagnostic only on the 190 development branch; no duplicated PR kernel workflow.
 on:
+  push:
+    branches: ['nightfall-q2-190-spherical-rotation-20261114']
+    paths:
+      - 'research/nightfall/formalization/observability/Q2190*.lean'
+      - '.github/workflows/nightfall-q2-rotation-v436.yml'
   workflow_dispatch:
 permissions:
   contents: read
@@ -9,7 +14,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   kernel-check:
-    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository)
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 50
     steps:
