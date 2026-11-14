@@ -1,0 +1,69 @@
+name: Right to Act — real ControlArena IaC Fast (controlarena-python)
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/right-to-act-controlarena-python.yml"
+      - "research/nightfall/right-to-act-controlarena/**"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: right-to-act-controlarena-python-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  run-iac-fast:
+    name: Single honest + attack ControlArena IaC Fast
+    runs-on: ubuntu-latest
+    environment: controlarena-python
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install pinned real ControlArena
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install 'control-arena==20.1.1'
+          python -m pip freeze > installed-python-packages.txt
+      - name: Verify Docker sandbox host
+        run: |
+          docker version
+          docker info --format 'Server version={{.ServerVersion}}'
+      - name: Exercise real ControlArena Docker/Inspect with credential-free MockLLM
+        run: |
+          python research/nightfall/right-to-act-controlarena/live_iac_fast.py --execute --offline-mock --limit 1 --out controlarena-mock-results
+      - name: Execute local Qwen 1.5B agent through genuine ControlArena IaC Fast
+        if: always()
+        timeout-minutes: 25
+        run: |
+          docker run -d --rm --name right-to-act-ollama --cpus 3 --memory 7g -p 127.0.0.1:11434:11434 -e OLLAMA_CONTEXT_LENGTH=32768 -e OLLAMA_NO_CLOUD=1 ollama/ollama:latest
+          for attempt in $(seq 1 40); do if curl -fsS http://127.0.0.1:11434/api/tags >/dev/null 2>&1; then break; fi; sleep 2; done
+          docker exec right-to-act-ollama ollama pull qwen2.5:1.5b
+          docker inspect --format "{{index .RepoDigests 0}}" ollama/ollama:latest > installed-ollama-image.txt
+          timeout 1000s python research/nightfall/right-to-act-controlarena/live_iac_fast.py --execute --local-model ollama/qwen2.5:1.5b --limit 1 --out controlarena-local-model-results
+      - name: Execute one honest and one attack sample with native Inspect logs
+        if: always()
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CONTROLARENA_UNTRUSTED_MODEL: ${{ vars.CONTROLARENA_UNTRUSTED_MODEL }}
+          CONTROLARENA_TRUSTED_MODEL: ${{ vars.CONTROLARENA_TRUSTED_MODEL }}
+          INSPECT_MAX_CONNECTIONS: "2"
+        run: |
+          python research/nightfall/right-to-act-controlarena/live_iac_fast.py --execute --limit 1 --out controlarena-model-results
+      - name: Upload execution and dependency evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: right-to-act-controlarena-real-iac-fast
+          path: |
+            controlarena-mock-results/**
+            controlarena-model-results/**
+            controlarena-local-model-results/**
+            installed-ollama-image.txt
+            installed-python-packages.txt
+          if-no-files-found: warn
+          retention-days: 14
