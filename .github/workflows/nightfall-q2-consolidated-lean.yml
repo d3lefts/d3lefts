@@ -108,6 +108,18 @@ jobs:
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             "$OUT/04-shifted-quarter-conditional.json"
           echo "PASS: c/4 shifted interpolation from explicit moment premises"
+          cp "$SRC/ShiftedOwnerQuarterBudget.lean" /tmp/mathlib4/ShiftedOwnerQuarterBudget.lean
+          (cd /tmp/mathlib4 &&
+            lake env lean -o .lake/build/lib/lean/ShiftedOwnerQuarterBudget.olean ShiftedOwnerQuarterBudget.lean)
+          N=Nightfall.Observability.ShiftedOwnerQuarterBudget
+          python3 scripts/lean_bridge.py "$SRC/ShiftedOwnerQuarterBudget.lean" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl "$N.conditional_shifted_quarter_budget" \
+            --json-out "$OUT/05-shifted-conditional-quarter-budget.json"
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            "$OUT/05-shifted-conditional-quarter-budget.json"
+          echo "PASS: conditional shifted budget (sqrt3 U+2)^2; not source-closed"
 
 
       - name: Compile every source module once, then certify declarations in order
