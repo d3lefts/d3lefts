@@ -1,7 +1,4 @@
 import ActualSourceOwnedFourthClosure
-import Q2625GoldenTrade
-import Q2625ScalarSite
-import Q2625ScalarEnvelope
 
 /-!
 # Source-exact cubic interpolation for greedy owned Hilbert increments
