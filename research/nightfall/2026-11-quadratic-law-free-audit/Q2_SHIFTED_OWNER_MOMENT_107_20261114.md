@@ -157,6 +157,16 @@ This gives a route **strictly below 353.293 that does not depend on the sharp sw
 
 The previous fourth-moment route first controls the *unshifted* \(Z_i\) and subsequently estimates \(\mathbb E\|Z_i\|\le u_i+\|h_i\|\). The new operator directly controls \(W_i=h_i+Z_i\), and source conditional projection bounds its **own** first moment by \(u_i\). The singleton enters its second moment \(e_i\) automatically. This removes the need to pay a separate additive budget, eliminates the scalar golden-cubic interpolation, and replaces its larger coefficient by \(\sqrt3\,U+2\).
 
+## Smallest structural changes needed for a sub-100 bound
+
+With the prospective sharp section budget \(U_0=2(1+\sqrt2)\), the current operator gives \(L=\sqrt3 U_0+8/4\approx10.3631\), hence \(K=L^2\approx107.3934\). Crossing \(K<100\) requires \(L<10\). There are three distinct, **unproved and separately testable** routes:
+
+- Keep the \(c/4\) shifted-moment lemma and \(U_0\), but reduce the total source owner-cost budget from \(8B\) to **strictly below** \(4(10-\sqrt3U_0)B\approx6.547676B\). An exact \(13B/2\) owner-cost budget, if source-valid, would yield \(K=(\sqrt3U_0+13/8)^2\approx99.761764\).
+- Keep the \(8B\) cover budget and \(c/4\), but reduce the sharp source section budget below \(8B/\sqrt3\approx4.618803B\). This is about a **4.34%** improvement over \(U_0=4.828427\), but the existing Bernoulli switching interpolation may itself be optimal in its current information model.
+- Keep \(U_0\), \(8B\), and the \(c/4\) penalty, but prove a stronger shifted-norm inequality with coefficient of \(u\) strictly below \(8/U_0=4(\sqrt2-1)\approx1.656854\), in place of \(\sqrt3\). This requires information beyond the present fourth-moment/Hölder estimate, such as an independently validated anti-concentration or smoothing argument; it is **not** yet a theorem.
+
+**These are exact threshold calculations, not existing bounds.** The first decisive experiment should attack the current greedy owner's \(8B\) cover budget **with the actual source pair-kernel constraint** and a falsifier for odd cycles. Do not assume a fractional graph cover automatically yields an owner whose entire unscaled pair kernel is bounded by its cost. A preliminary categorical Grothendieck root-influence shortcut is already falsified in the program's source audit.
+
 ## Certification and independent attack plan
 
 1. **Lean lemma:** implement Hilbert fourth-moment expansion with a deterministic shift and exact \(c/4\) scalar interpolation (or check a theorem-level rational Bernstein proof). Audit zero moments and arbitrary-dimensional real inner-product spaces.
