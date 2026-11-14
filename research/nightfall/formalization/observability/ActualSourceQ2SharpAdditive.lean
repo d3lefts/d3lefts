@@ -73,7 +73,7 @@ theorem quadratic_noise_linear_coefficient_le
       |(t - t^2) * U| ≤
         |t * U + t^2 * W| + |t^2 * (U + W)| := by
     rw [hident]
-    exact abs_sub_le _ _
+    exact abs_sub_le (t * U + t^2 * W) (t^2 * (U + W))
   have hweighted : |t^2 * (U + W)| ≤ t^2 * (2 * B) := by
     rw [abs_mul, abs_of_nonneg (sq_nonneg t)]
     exact mul_le_mul_of_nonneg_left h1 (sq_nonneg t)
@@ -92,8 +92,11 @@ theorem quadratic_noise_linear_coefficient_le
       _ ≤ |t * U + t^2 * W| + |t^2 * (U + W)| := htriangle
       _ ≤ 2 * B + t^2 * (2 * B) := add_le_add hquad hweighted
       _ = (t - t^2) * (4 * (1 + q) * B) := hscale.symm
-  have hresult : |U| ≤ 4 * (1 + q) * B :=
-    (mul_le_mul_left ha).mp hlinear
+  have hresult : |U| ≤ 4 * (1 + q) * B := by
+    by_contra hn
+    have hgt : 4 * (1 + q) * B < |U| := lt_of_not_ge hn
+    have hgtmul := mul_lt_mul_of_pos_left hgt ha
+    exact (not_lt_of_ge hlinear) hgtmul
   simpa only [q] using hresult
 
 end Nightfall.Observability.ActualSourceQ2SharpAdditive
