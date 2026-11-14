@@ -1,0 +1,38 @@
+name: Verify recoverable-innovation observation certificates
+
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/2026-11-recoverable-innovations/**"
+      - ".github/workflows/recoverable-innovation-proof-audit.yml"
+  push:
+    branches: [main]
+    paths:
+      - "research/nightfall/2026-11-recoverable-innovations/**"
+      - ".github/workflows/recoverable-innovation-proof-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-finite-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout research source
+        uses: actions/checkout@v4
+      - name: Python
+        run: python3 --version
+      - name: Sharp additive innovation upper and physical lower bounds
+        working-directory: research/nightfall/2026-11-recoverable-innovations
+        run: python3 check_sharp.py
+      - name: Exact reconstruction-only physical frontier and unrestricted counterexample
+        working-directory: research/nightfall/2026-11-recoverable-innovations
+        run: python3 check_frontier.py
+      - name: Original-spin source-ANOVA and posterior comparison
+        working-directory: research/nightfall/2026-11-recoverable-innovations
+        run: python3 check_source_anova.py
+      - name: Noncommutative group path cancellation
+        working-directory: research/nightfall/2026-11-recoverable-innovations
+        run: python3 check_nonabelian.py
