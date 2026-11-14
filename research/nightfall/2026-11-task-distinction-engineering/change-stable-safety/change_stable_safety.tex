@@ -1,0 +1,157 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1.03in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs,array,enumitem}
+\usepackage[colorlinks=true,urlcolor=blue!50!black,linkcolor=blue!45!black,citecolor=blue!50!black]{hyperref}
+\usepackage{xcolor,microtype}
+\usepackage{fancyhdr}
+\setlength{\headheight}{14pt}\pagestyle{fancy}\fancyhf{}\lhead{Wright / NIGHTFALL}\rhead{Change-Stable Safety Certificates}\cfoot{\thepage}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+\newcommand{\cm}{\mathcal M}\newcommand{\ch}{\mathcal H}\newcommand{\ci}{\mathcal I}
+\title{\vspace{-1.1cm}\bfseries The Minimum Trusted Cost of a Change-Stable Safety Decision\\[0.25em]
+\large A Dependency-Transversal Characterization and Proof-Carrying Update Certificate}
+\author{Devin J. Wright\\NIGHTFALL Independent Research Programme}
+\date{13 November 2026\\\small Research note v0.1 --- mathematical proof; novelty and external refereeing not established}
+\begin{document}
+\maketitle
+\begin{abstract}
+We study the minimum trusted evidence and checker work required to replace a universally safe default denial by a justified permission, while retaining the permission after bounded changes to a system. In a finite, explicit evidence model, evidence items exclude particular unsafe worlds and carry complete dependency sets of mutable system components. A proof can survive all updates modifying at most $k$ components precisely when, for every unsafe world, the family of dependencies of its excluding items has transversal number greater than $k$. This yields an exact two-resource safety cost frontier, a sound certificate-transport rule, an NP-hard selection problem, and a coNP-complete general robustness-verification problem. A polynomially checkable disjoint-dependency witness is sound but can have arbitrarily larger evidence cost than an unrestricted valid certificate. We provide a finite independently coded enumeration audit and a toy proof passport. The individual combinatorial foundations are classical; whether this particular composition offers a novel contribution requires a same-model prior-art review and implementation evidence.
+\end{abstract}
+
+\section{Objective, evidence types, and scope}
+Fix a candidate action $a_1$ whose utility is strictly greater than that of a sound default $a_0$ (``deny''). We ask when $a_1$ can be authorized \emph{with universal safety}, not merely a small estimated failure probability. Let $\ch$ be a finite, trusted \emph{hazard envelope}: every unsafe world of every admissible future version is represented in $\ch$. A trusted fact $i$ excludes a subset $C_i\subseteq\ch$ and has a complete set $D_i\subseteq\cm$ of mutable components on which the exclusion is semantically dependent. Its obtaining/authentication cost is $e_i\ge0$, and its trusted atomic-check cost is $t_i\ge0$. No assertion about an untrusted source is automatically admitted as an exclusion.
+
+\textbf{Contracts.} The following are substantive assumptions, not implications of a signature alone:
+\begin{enumerate}[label=(A\arabic*),leftmargin=2.1em,itemsep=0.15em]
+\item \textbf{Sound envelope.} Every relevant new unsafe circumstance remains in $\ch$. A new hazard class outside $\ch$ forces abstention and reevaluation.
+\item \textbf{Sound exclusions.} A checked item $i$ genuinely rules out every $h\in C_i$ whenever all dependencies in $D_i$ retain the attested semantics.
+\item \textbf{Complete provenance.} Any component change that could invalidate an exclusion is included in $D_i$; missing dependency annotations force abstention.
+\item \textbf{Authenticated updates.} A trusted mechanism supplies a complete changed-component set $T\subseteq\cm$. Hashes alone do not prove the completeness of this set.
+\item \textbf{Evidence-limited interface.} The controller has no additional trusted way to eliminate a hazard beyond the checked items or their justified consequences; untrusted computation cannot rule out an otherwise consistent unsafe world.
+\item \textbf{Atom-checker invoice.} Each distinct used item is acquired once and verified once, costing $(e_i,t_i)$. Searching for a selection, proving dependence completeness, checking the hazard envelope, and system-level validation remain separately priced tasks.
+\end{enumerate}
+The proof studies a fixed positive-evidence branch; it does not claim that all these facts can be obtained successfully, or that expected decision-tree acquisition costs equal its instance-wise optimum.
+
+The edit budget $k$ measures cumulative change relative to the attested base version; it does not reset after each successive release. An edit to $T$ invalidates $i$ whenever $D_i\cap T\ne\varnothing$. We conservatively discard touched items even if their conclusions happen still to be true. A selected set $I$ \emph{certifies permission} at a version if each $h\in\ch$ is excluded by at least one still-valid, checked fact in $I$.
+
+\section{The exact dependence-transversal theorem}
+For a fixed set $I$, let $I_h=\{i\in I:h\in C_i\}$. Define
+\begin{equation}
+\rho_h(I)=\min\bigl\{|T|:T\subseteq\cm,\ T\cap D_i\ne\varnothing\ \text{for all }i\in I_h\bigr\}.
+\label{eq:transversal}
+\end{equation}
+The minimum of an empty feasible family is $+\infty$; in particular if $I_h$ contains an item with $D_i=\varnothing$, then $\rho_h(I)=+\infty$. If $I_h=\varnothing$, the empty edit set meets every vacuous constraint and $\rho_h(I)=0$.
+
+\begin{theorem}[Exact update-resilience and minimum trusted-resource frontier]\label{th:main}
+Under (A1)--(A6), a certificate $I$ keeps $a_1$ justified after \emph{every} edit of at most $k$ mutable components if and only if
+\begin{equation}
+\boxed{\qquad \rho(I):=\min_{h\in\ch}\rho_h(I)>k.\qquad}\label{eq:main}
+\end{equation}
+For costs $E(I)=\sum_{i\in I}e_i$ and $V(I)=\sum_{i\in I}t_i$, the exact nondominated trusted-resource frontier is
+\begin{equation}
+\operatorname{ParetoMin}\{(E(I),V(I)):\rho(I)>k\}.
+\label{eq:pareto}
+\end{equation}
+Equivalently, for $\lambda\ge0$, the optimal scalar invoice is
+\begin{equation}
+\boxed{\qquad C_k(\lambda)=\min_{I:\rho(I)>k}\sum_{i\in I}(e_i+\lambda t_i).\qquad}\label{eq:cost}
+\end{equation}
+An infeasible minimum is $+\infty$. These cost identities concern the specified atom-checker invoice, not unrestricted computational complexity or the total work of constructing the proof.
+\end{theorem}
+\begin{proof}
+If $\rho(I)\le k$, some hazard $h$ admits an edit $T$ of size at most $k$ intersecting the dependencies of \emph{all} its excluding items. Thus no checked, still-valid item in $I$ excludes $h$. Under the evidence-limited interface, $h$ remains consistent with the trusted transcript and permitting $a_1$ is not universally justified. Conversely, if $\rho(I)>k$, for every admissible $T$ and every hazard $h$ there is an $i\in I_h$ with $D_i\cap T=\varnothing$; by soundness and complete provenance its exclusion persists, so no unsafe $h$ remains possible. Minimizing additive invoices over these necessary-and-sufficient feasible sets proves \eqref{eq:pareto} and \eqref{eq:cost}.
+\end{proof}
+
+\begin{corollary}[What ordinary redundancy misses]\label{co:redundancy}
+If every $D_i$ contains exactly one mutable component, $\rho_h(I)$ is the number of \emph{distinct} components supporting the items in $I_h$. Only if the $D_i$ for $i\in I_h$ are nonempty and pairwise disjoint does $\rho_h(I)=|I_h|$. Therefore a $(k+1)$-fold item multicover alone is insufficient when several attestations share a mutable dependency.
+\end{corollary}
+\begin{proof}A component edit destroys precisely the items depending on it. For singleton supports, a hitting set needs one edit for each distinct component. For disjoint nonempty supports, each item requires a distinct edit.\end{proof}
+
+\section{The computation frontier and two certificate languages}
+An untrusted algorithm can search for an admissible $I$; the trusted consumer must verify its claims. The difference between \emph{finding} a certificate and \emph{checking} it matters.
+
+\begin{theorem}[Selection hardness, general verification hardness, and a fast sound witness]\label{th:complexity}
+In the explicit finite incidence model:
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.2em]
+\item Minimizing $E(I)$ even for $k=0$ is NP-hard.
+\item Given a fixed $I$, deciding whether $\rho(I)>k$ is coNP-complete when $k$ is part of the input, already for one hazard and arbitrary nonempty dependency sets.
+\item For any fixed constant $k$, exhaustive verification takes time polynomial in the incidence encoding, by checking all $\sum_{j=0}^k\binom{|\cm|}{j}$ possible edits.
+\item A polynomial-size \emph{disjoint-support certificate} consisting, for each $h$, of $k+1$ excluding evidence items with pairwise disjoint dependency sets is sufficient for robustness. Its checker only needs to validate the listed items, exclusion incidence, and disjointness. The certificate language is not complete.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+(i) For $k=0$, every nonempty dependency family has transversal number $\ge1$ precisely when each hazard is covered by at least one selected fact. This is weighted Set Cover, using singleton nonempty dependency sets if desired. (ii) The complement asks whether some hazard has an edit $T$ with $|T|\le k$ hitting every $D_i$ for $i\in I_h$. Such a witness is polynomially checkable. With one hazard and all selected exclusions, this is the classical Hitting Set decision problem. (iii) Enumerate updates and test coverage. (iv) An edit of at most $k$ components intersects at most $k$ pairwise disjoint nonempty supports, so at least one exclusion survives for each $h$. Completeness fails for intersecting supports, as demonstrated below.\end{proof}
+
+For an arbitrary $k$, one may encode the existence of a size-$k$ transversal as a SAT/constraint instance and provide an independently checked \emph{unsatisfiability proof} for each hazard. LRAT-style checking permits small trusted code even when generating a proof is expensive. The theorem does \emph{not} bound the shortest such proof: coNP-completeness precludes a general polynomial-size guarantee unless NP=coNP.
+
+\begin{proposition}[Arbitrarily expensive disjoint-support presentation]\label{prop:gap}
+For $k=1$, the ratio of the cheapest disjoint-support-witness invoice to the cheapest generally valid resilience certificate can be arbitrarily large.
+\end{proposition}
+\begin{proof}
+Take one hazard and three unit-cost items with dependency sets $\{a,b\}$, $\{b,c\}$, and $\{a,c\}$. Every single-component edit leaves one item untouched; the transversal number is two, so all three facts are robust at evidence cost three. But no two of their supports are disjoint. Add one item of evidence cost $M$ depending only on $\{d\}$, where $d$ is a new component. A disjoint-support witness must use that expensive item and at least one cheap one, with cost $M+1$. For $M>2$, the unrestricted optimum remains three, hence the ratio $(M+1)/3$ is unbounded as $M\to\infty$.\end{proof}
+
+This separation is a cost of imposing a \emph{particular easily checked certificate representation}; it is not a lower bound on the computational cost of all possible proof systems.
+
+\section{Version transport: a certificate that survives actual changes}
+A portable certificate is not a version-agnostic assertion. Its proof object must bind a policy and hazard-envelope version, action identifier, audited exclusion statements, complete source dependencies, checker/toolchain identifiers, and a complete authenticated edit description. The old proof remains valid for the new version only when the envelope and dependency contracts transport.
+
+\begin{proposition}[Fail-closed transport rule]\label{prop:transport}
+Suppose a verified certificate $I$ is valid at version $v$. For an authenticated update $v\to v'$ with complete changed-component set $T$, define
+\[
+I_T=\{i\in I:D_i\cap T=\varnothing\}.
+\]
+If the envelope and exclusions retain their contractual meaning at $v'$, the old decision certificate transports to $v'$ whenever $\bigcup_{i\in I_T}C_i\supseteq\ch_{v'}$, where $\ch_{v'}$ is the verified new hazard set. Under the evidence-limited interface this condition is also necessary for the \emph{same selected claims}, without acquiring new items. If $\rho(I)>k$ and $|T|\le k$, the coverage condition follows automatically for $\ch_{v'}\subseteq\ch$.
+\end{proposition}
+\begin{proof}
+All members of $I_T$ retain their validated exclusions by dependency completeness. Covering every new unsafe circumstance proves safety. If an uncovered hazard remains, it is consistent with the surviving information, so these claims cannot justify permission. The last statement follows from Theorem~\ref{th:main}.\end{proof}
+
+With an authenticated change index and a cached coverage counter for each hazard, the trusted checker can remove each invalidated item once and decrement the counters of hazards it covered. Excluding the cost of attesting the update and the envelope, this revalidation uses
+\[
+O\!\left(|T|+\sum_{i:\,D_i\cap T\ne\varnothing}(|C_i|+1)+|\ch_{v'}|\right)
+\]
+local processing operations, assuming an inverted dependency index and constant-time dictionary operations. This is an \emph{upper bound}, not an unrestricted lower bound. Unreported environment changes, incomplete dependency maps, revocation of the certificate authority, or a changed safety policy make the verifier fail closed.
+
+\section{A complete quantitative example}
+Let $\ch=\{h_1,h_2,h_3\}$, $\cm=\{A,B,C\}$, and $k=1$. The costs below are abstract units; the table assumes each listed exclusion has already passed the specified atom-checking contract.
+\begin{center}\small
+\begin{tabular}{@{}l l l r r@{}}\toprule
+Evidence & Excludes & Depends on & Evidence cost & Check cost\\\midrule
+$d_A$ & $h_1,h_2,h_3$ & $A$ & 1 & 1\\
+$d'_A$ & $h_1,h_2,h_3$ & $A$ & 1 & 1\\
+$b_B$ & $h_2,h_3$ & $B$ & 1 & 4\\
+$c_C$ & $h_1,h_3$ & $C$ & 3 & 1\\
+$b'_B$ & $h_2,h_3$ & $B$ & 3 & 1\\\bottomrule
+\end{tabular}
+\end{center}
+Selecting $\{d_A,d'_A\}$ does \emph{not} survive changing $A$, despite using two attestations. Exhaustive selection and update enumeration finds two nondominated costs for one-edit resilience:
+\[
+\boxed{\quad (E,V)=(5,6)\quad\text{or}\quad (E,V)=(7,3).\quad}
+\]
+For example $\{d_A,b_B,c_C\}$ realizes $(5,6)$ and $\{d_A,b'_B,c_C\}$ realizes $(7,3)$. No included fact combination has both evidence cost below five and checking cost below three while providing one-edit resilience. The example exhibits an actual trade-off; it does not prove that a similarly shaped frontier appears in any deployed agent.
+
+The accompanying Python audit implements two independent tests: exhaustive edits and minimum dependency transversals. In 400 seeded small random instances, it compared the two conditions across $53{,}608$ selected-subset/update-budget cases without disagreement. The audit also enumerates the table's Pareto frontier and the overlapping-dependency counterexample. Finite tests are not a proof of Theorem~\ref{th:main}.
+
+\section{Relationship to prior art and novelty gate}
+Several indispensable components predate this work. Certificate complexity and decision-tree complexity formalize how much input must be revealed to establish a decision \cite{cert2026}. Set Cover, Hitting Set, and multicover underlie the exact cost characterization \cite{multicover}. Proof-carrying code separates costly proof production from trusted safety checking \cite{necula1997}; version-dependent safety-case maintenance and incremental verification are established areas \cite{jaradat2014,diemert2023,summary2023}. A recent AI-pipeline study explicitly proves correctness conditions for reusing signed assurance records under declared dependencies, and reports failure modes from undeclared dependencies \cite{mukhopadhyay2026}.
+
+Our existing NIGHTFALL Agent Safety Under Abstraction note already identifies minimal additional sensors as weighted Set Cover, and the Proof After Scarcity framework already distinguishes genuine proof dependencies from bibliographic relationships \cite{nightfall2026}. Accordingly, neither the set-cover reduction nor the basic dependency-reuse condition is presented as a new worldwide discovery. The potential contribution is the \emph{joint typed certificate/evidence/computation characterization}, particularly correlated-dependency resilience, incompleteness/cost of a tractable certificate language, and an inspectable fail-closed transfer contract. Its independent novelty and practical significance remain unestablished.
+
+\paragraph{Decisive next experiment.} Construct a small real safety guard with versioned permissions, trusted evidence issuance, measured verification time, and deliberately shared or missing dependencies. Compare $(i)$ full reevaluation, $(ii)$ naive $k+1$ item redundancy, $(iii)$ dependency-transversal optimization, and $(iv)$ disjoint-support fast certificates. The falsifiers are: a known theorem already gives the same result with identical access and certificate semantics; the dependency model omits a real source of invalidation; or measured benefit disappears after paying for provenance and envelope verification. Audit each claim at exact source, version, and checker scope. No release should rely solely on this manuscript.
+
+\section*{Provenance and certification status}
+\textbf{Analytic status:} Theorem~\ref{th:main}, Theorem~\ref{th:complexity}, Proposition~\ref{prop:gap}, and Proposition~\ref{prop:transport} are derived and proof-supplied in this note. \textbf{Finite status:} separate exhaustive Python checks are executable and hash-manifested. \textbf{Not certified:} terminal Lean compilation, non-author referee assessment, exhaustive priority search, calibrated real-world trusted-evidence costs, trusted hazard-envelope construction, and external system deployment. \textbf{AI assistance:} material was researched, written, and audited with AI assistance; independently executed finite checkers are not independent non-author proof review.
+
+\begin{thebibliography}{10}\small
+\bibitem{necula1997} G. C. Necula. ``Proof-Carrying Code.'' POPL, 1997. \url{https://doi.org/10.1145/263699.263712}.
+\bibitem{cert2026} C. Kayal, S. Laplante, E. Larroque, K. Pr\=usis, and J. Vihrovs. ``Certification Complexity of Boolean Functions.'' ECCC TR26-206, 2026. \url{https://eccc.weizmann.ac.il/report/2026/206/}.
+\bibitem{multicover} Y. Ran, Z. Zhang, S. Tang, and D.-Z. Du. ``Breaking the $r_{\max}$ Barrier: Enhanced Approximation Algorithms for Partial Set Multicover Problem.'' \emph{INFORMS Journal on Computing} 33(2), 2021. \url{https://doi.org/10.1287/ijoc.2020.0975}.
+\bibitem{jaradat2014} O. Jaradat et al. ``An Approach to Maintaining Safety Case Evidence After A System Change.'' 2014. \url{https://www.cs.york.ac.uk/rts/static/papers/R%3AJaradat%3A2014.pdf}.
+\bibitem{diemert2023} S. Diemert, J. B. Goodenough, J. Joyce, and C. B. Weinstock. ``Incremental Assurance Through Eliminative Argumentation.'' \emph{Journal of System Safety}, 2023. \url{https://simondiemert.ca/publications/2023-jss/}.
+\bibitem{summary2023} ``SMT-based verification of program changes through summary repair.'' 2023. \url{https://pmc.ncbi.nlm.nih.gov/articles/PMC10564826/}.
+\bibitem{mukhopadhyay2026} A. Mukhopadhyay and S. R. Nalla. ``Reusing Assurance Evidence in AI Pipelines: Validity Conditions, a Fail-Closed Release Gate, and a Replay of 714 Public Data Version Control Pipelines.'' arXiv:2610.27672, 2026. \url{https://arxiv.org/abs/2610.27672}.
+\bibitem{nightfall2026} D. J. Wright. \emph{Agent Safety Under Abstraction} (September 2026) and \emph{Proof After Scarcity, v2} (October 2026), NIGHTFALL research archive. \url{https://github.com/d3lefts/d3lefts}.
+\end{thebibliography}
+\end{document}
