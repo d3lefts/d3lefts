@@ -138,8 +138,7 @@ theorem actual_mask_one_site_probability
   have hmass (mask : ι → Bool) :
       originalMass q mask = maskWeight retain mask := by
     rfl
-  simpa only [hmass, q, Fintype.sum_bool, ite_true, ite_false,
-    mul_zero, mul_one, zero_add, sub_add_cancel] using hm
+  simpa [hmass, q] using hm
 
 /-- Correct singleton eigenaction for the actual finite-product noise
 operator. This is a real original-source Hoeffding component, not an
