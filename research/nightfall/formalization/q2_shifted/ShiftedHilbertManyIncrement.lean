@@ -138,8 +138,10 @@ theorem arbitrary_law_many_shifted_hilbert_fourth
           (Finset.univ : Finset (Samples α 0)).card = 1 := by
         change (Finset.univ : Finset PUnit).card = 1
         simp
-      simp [shiftedMoment4, budget, mass, sumVector, Samples, ha2, hcard]
-      ring
+      simp [shiftedMoment4, budget, mass, sumVector, Samples, ha2]
+      change ((Finset.univ : Finset (Samples α 0)).card : ℝ) *
+        a^4 ≤ a^4
+      norm_num [hcard]
   | succ n ih =>
       let v : ℝ := ∑ b : α, p n b * vecNormSq (Y n b)
       let w : ℝ := ∑ b : α, p n b * (vecNormSq (Y n b))^2
@@ -187,7 +189,14 @@ theorem arbitrary_law_many_shifted_hilbert_fourth
                     change h k + (sumVector Y n z k + Y n b k) =
                       h k + sumVector Y n z k + Y n b k
                     ring
-                  rw [hv]
+                  have heq :
+                      (vecNormSq
+                        (fun k : K => h k + sumVector Y (n+1) (z,b) k))^2 =
+                      (vecNormSq
+                        (fun k : K => h k + sumVector Y n z k + Y n b k))^2 :=
+                    congrArg (fun t : K → ℝ => (vecNormSq t)^2) hv
+                  simpa only using
+                    congrArg (fun t : ℝ => mass p n z * p n b * t) heq
           _ ≤ shiftedMoment4 p Y h n + w +
               6*(a^2+moment2 p Y n)*v + 4*a*c*v := by
                 dsimp [shiftedMoment4, w, v]
