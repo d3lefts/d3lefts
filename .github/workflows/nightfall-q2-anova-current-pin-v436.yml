@@ -8,6 +8,7 @@ on:
       - 'research/nightfall/formalization/observability/ActualSourceANOVA.lean'
       - 'research/nightfall/formalization/observability/ActualProductResampleBridge.lean'
       - 'research/nightfall/formalization/observability/ActualSourceCanonicalPair.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceCanonicalIdentification.lean'
       - '.github/workflows/nightfall-q2-anova-current-pin-v436.yml'
   workflow_dispatch:
 permissions:
@@ -114,12 +115,32 @@ jobs:
           set -euo pipefail
           cp research/nightfall/formalization/observability/ActualSourceCanonicalPair.lean /tmp/mathlib4/ActualSourceCanonicalPair.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ActualSourceCanonicalPair.olean ActualSourceCanonicalPair.lean)
+      - name: Strict original-source canonical two-site projector identification
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualSourceCanonicalIdentification
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualSourceCanonicalIdentification.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.actual_conditional_singleton_eq_source_table \
+            --decl $N.actual_conditional_pair_eq_source_table \
+            --decl $N.actual_conditional_empty_eq_source_mean \
+            --decl $N.actual_pair_is_canonical_mobius_four_term \
+            --json-out lean-receipts/q2-actual-source-canonical-pair-identification.json || {
+              cat lean-receipts/q2-actual-source-canonical-pair-identification.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-actual-source-canonical-pair-identification.json
       - name: Source hashes and pin
         if: always()
         shell: bash
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/observability/ActualSourceANOVA.lean research/nightfall/formalization/observability/ActualProductResampleBridge.lean research/nightfall/formalization/observability/ActualSourceCanonicalPair.lean > lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/observability/ActualSourceANOVA.lean research/nightfall/formalization/observability/ActualProductResampleBridge.lean research/nightfall/formalization/observability/ActualSourceCanonicalPair.lean research/nightfall/formalization/observability/ActualSourceCanonicalIdentification.lean > lean-receipts/SHA256SUMS.txt
           git rev-parse HEAD > lean-receipts/repo-commit.txt
           cat lean-toolchain > lean-receipts/lean-toolchain.txt
           git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/mathlib-commit.txt || true
