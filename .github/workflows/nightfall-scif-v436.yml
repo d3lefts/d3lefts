@@ -22,7 +22,7 @@ jobs:
           set -euo pipefail
           mkdir -p lean-receipts
           N=Nightfall.SCIF
-          for file in SCIFRecenter SCIFInfluence SCIFOwnerRepair; do
+          for file in SCIFRecenter SCIFInfluence SCIFOwnerRepair SCIFClipped; do
             test -f "research/nightfall/formalization/observability/${file}.lean" || continue
             cp "research/nightfall/formalization/observability/${file}.lean" /tmp/mathlib4/
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/${file}.olean" "${file}.lean")
@@ -56,6 +56,16 @@ jobs:
             --json-out lean-receipts/04-scif-fixed-owner-repair.json
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/04-scif-fixed-owner-repair.json
+          python3 scripts/lean_bridge.py research/nightfall/formalization/observability/SCIFClipped.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 600 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl ${N}.centered_firstMean_abs_le_clipped_l1 \
+            --decl ${N}.fixed_owner_recenter_cover_clipped \
+            --decl ${N}.fixed_owner_clipped_total_cost \
+            --decl ${N}.double_recenter_abs_le_four \
+            --json-out lean-receipts/04b-scif-clipped-and-double.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/04b-scif-clipped-and-double.json
       - name: Record immutable inputs
         if: always()
         run: |
