@@ -73,7 +73,8 @@ theorem quadratic_noise_linear_coefficient_le
       |(t - t^2) * U| ≤
         |t * U + t^2 * W| + |t^2 * (U + W)| := by
     rw [hident]
-    exact abs_sub_le (t * U + t^2 * W) (t^2 * (U + W))
+    simpa only [sub_zero, zero_sub, abs_neg] using
+      (abs_sub_le (t * U + t^2 * W) (0 : ℝ) (t^2 * (U + W)))
   have hweighted : |t^2 * (U + W)| ≤ t^2 * (2 * B) := by
     rw [abs_mul, abs_of_nonneg (sq_nonneg t)]
     exact mul_le_mul_of_nonneg_left h1 (sq_nonneg t)
