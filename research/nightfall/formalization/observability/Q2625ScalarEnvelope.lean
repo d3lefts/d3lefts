@@ -43,7 +43,6 @@ theorem sitewise_budget_to_variance_squared
           beta * (∑ i : Index, a i) +
           gamma * (∑ i : Index, c i)) := by
         simp only [mul_add, Finset.sum_add_distrib, ← Finset.mul_sum]
-        ring
   have hU := mul_le_mul_of_nonneg_left hsection
     (mul_nonneg hT halpha)
   have hA := mul_le_mul_of_nonneg_left hadditive
