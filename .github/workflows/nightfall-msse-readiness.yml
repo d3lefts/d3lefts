@@ -24,6 +24,7 @@ jobs:
       - name: Run independently reproducible finite benchmark
         run: |
           python3 research/nightfall/2026-11-msse-readiness/pilot_checker.py | tee msse-pilot-result.json
+          python3 research/nightfall/2026-11-msse-readiness/capstone_exact.py | tee msse-capstone-result.json
           python3 - <<'PY'
           import json
           with open('msse-pilot-result.json') as f:
@@ -31,4 +32,8 @@ jobs:
           assert result['status'] == 'EXACT_FINITE_BENCHMARK_PASSED'
           assert result['assertion_groups'] == 238
           assert result['university_credit_and_grade_awarded'] is False
+          with open('msse-capstone-result.json') as f:
+              capstone = json.load(f)
+          assert capstone['status'] == 'SYNTHETIC_CAPSTONE_EXACT_CHECK_PASSED'
+          assert capstone['assertion_groups'] == 218
           PY
