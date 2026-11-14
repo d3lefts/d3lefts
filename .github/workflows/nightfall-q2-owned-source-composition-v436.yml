@@ -75,6 +75,8 @@ jobs:
             --workspace /tmp/mathlib4 --timeout 900 --strict \
             --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
             --decl $N.original_pair_finite_moment_energy_eq_canonical \
+            --decl $N.original_source_pair_kernel_swap \
+            --decl $N.original_source_pair_energy_swap \
             --json-out lean-receipts/q2-source-pair-energy-fubini.json || {
               cat lean-receipts/q2-source-pair-energy-fubini.json
               exit 1
