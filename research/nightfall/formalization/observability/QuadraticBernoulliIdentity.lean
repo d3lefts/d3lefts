@@ -10,7 +10,7 @@ namespace Nightfall.Observability.QuadraticBernoulli
 open Finset
 open Nightfall.Observability.QuadraticSwitching
 
-variable {ι α E : Type*} [Fintype ι] [DecidableEq ι] [Fintype E]
+variable {ι α E : Type} [Fintype ι] [DecidableEq ι] [Fintype E]
 
 theorem bernoulli_quadratic_expansion
     (u v : E → ι) (hne : ∀ e, u e ≠ v e)
