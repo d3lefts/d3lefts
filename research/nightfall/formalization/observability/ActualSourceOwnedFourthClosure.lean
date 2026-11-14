@@ -17,6 +17,8 @@ namespace Nightfall.Observability.ActualSourceOwnedFourthClosure
 open Finset
 open Nightfall.Observability.ActualSourceANOVA
 open Nightfall.Observability.ActualSourceInfluenceEnergy
+open Nightfall.Observability.ActualSourceMeanSectionJensen
+open Nightfall.Observability.ActualSourceIntegratedSections
 open Nightfall.Observability.ActualSourceOwnedGraph
 open Nightfall.Observability.ActualESGreedyOwnership
 open Nightfall.Observability.ActualSourceOwnerOrientation
