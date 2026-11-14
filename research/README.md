@@ -1,5 +1,16 @@
 # NIGHTFALL Mathematical Research Archive
 
+## Active research index — November 14, 2026
+
+The primary engineering program is **The Right to Act**: conditional, source-matched authorization for autonomous agents, with [exact semantic fencing](nightfall/assurance/semantic-fencing-v0.3/README.md), [assurance hub and remaining gates](nightfall/assurance/README.md), and the [ControlArena IaC Fast harness](nightfall/right-to-act-controlarena/live_iac_fast.py). The Tennessee Eastman benchmark is a historical superseded branch, not the current testbed.
+
+The active mathematical formalization is [the original-source Q2/SCIF Lean corpus](nightfall/formalization/README.md). Conditional 107/99 scalar files and a c/5 obstruction to an existing *proof strategy* must not be confused with unconditional Q2 certification. For actual queue state, use [open PRs](https://github.com/d3lefts/d3lefts/pulls?q=is%3Apr+is%3Aopen), not earlier queue snapshots.
+
+The [November 14 reconciliation](nightfall/assurance/RECONCILIATION_20261114.md) records the difference between **merged**, **closed as superseded**, and **remaining experimental** work. Redundant manual Q2 CI definitions have their original source hashes preserved in the [retired workflows archive](archive/workflows/q2-lean436/README.md).
+
+---
+
+
 **13 November 2026 integration:** [Minimum justified knowing cost / parallel-track map](nightfall/2026-11-convoluted-costs-of-knowing/MINIMUM_JUSTIFIED_KNOWING_COST_20261113.md) is the current source-linked synthesis. It is an explicitly dated *interpretive* ledger, not an amendment to the machine-certified canonical claim list. Public research dispatch: [site](../docs/cost-of-knowing.html). Draft results remain on their individual branches and must not be mass merged.
 
 
