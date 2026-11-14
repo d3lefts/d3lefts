@@ -34,7 +34,8 @@ theorem zero_of_centered_and_zero_rectangles
     linarith
   calc
     g a b = ∑ c : A, q c * (∑ d : B, r d * g a b) := by
-      rw [← Finset.sum_mul, hr, one_mul, ← Finset.sum_mul, hq, one_mul]
+      rw [← Finset.sum_mul, ← Finset.sum_mul, hr, hq]
+      ring
     _ = ∑ c : A, q c * (∑ d : B, r d *
             (g c b + g a d - g c d)) := by
       apply Finset.sum_congr rfl
@@ -52,8 +53,8 @@ theorem zero_of_centered_and_zero_rectangles
             (∑ d : B, r d * g c b) +
             (∑ d : B, r d * g a d) -
             (∑ d : B, r d * g c d) := by
-          simp_rw [mul_add, mul_sub]
-          rw [Finset.sum_sub_distrib, Finset.sum_add_distrib]
+          simp only [mul_add, mul_sub, Finset.sum_sub_distrib,
+            Finset.sum_add_distrib]
         _ = g c b := by
           rw [← Finset.sum_mul, hr, one_mul, hcol a, hcol c]
           ring
@@ -85,7 +86,6 @@ theorem same_rectangles_imply_equal
     (by
       intro a c b d
       have h := hrect a c b d
-      dsimp
       linarith) a b
   linarith
 
