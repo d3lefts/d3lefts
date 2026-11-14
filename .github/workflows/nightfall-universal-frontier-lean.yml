@@ -73,6 +73,25 @@ jobs:
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/universal/transfer.json
 
+      - name: Strict finite original-source conditional-risk theorem
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/universal/FiniteSourceRiskGate.lean
+          cp "$SRC" /tmp/mathlib4/FiniteSourceRiskGate.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/FiniteSourceRiskGate.olean FiniteSourceRiskGate.lean)
+          N=Nightfall.FiniteSourceRiskGate
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.sum_over_observation_cells \
+            --decl $N.finite_cell_calibration_implies_risk_bound \
+            --decl $N.exact_source_threshold_gate_risk_mass_bound \
+            --decl $N.exact_source_threshold_gate_conditional_risk \
+            --json-out lean-receipts/universal/risk.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/universal/risk.json
+
       - name: Upload immutable scoped receipts
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
