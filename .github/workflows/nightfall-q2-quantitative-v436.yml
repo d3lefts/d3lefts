@@ -7,6 +7,7 @@ on:
     paths:
       - '.github/workflows/nightfall-q2-quantitative-v436.yml'
       - 'research/nightfall/formalization/observability/ActualSourceQ2WeakScalarClosure.lean'
+      - 'research/nightfall/formalization/observability/ActualSourceSectionBudgetEight.lean'
   workflow_dispatch:
 permissions:
   contents: read
@@ -44,6 +45,31 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/q2-current-pin-switching-16B.json
+      - name: Compile quadratic range budget before actual source section estimate
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/observability/QuadraticRealizedRangeBudget.lean /tmp/mathlib4/QuadraticRealizedRangeBudget.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/QuadraticRealizedRangeBudget.olean QuadraticRealizedRangeBudget.lean)
+      - name: Strict bounded actual quadratic f original-source 8B section budget
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.Observability.ActualSourceSectionBudgetEight
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/ActualSourceSectionBudgetEight.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.weighted_variance_le_quarter_range \
+            --decl $N.weighted_std_le_half_range \
+            --decl $N.actual_quadratic_source_section_budget_eight \
+            --json-out lean-receipts/q2-current-pin-actual-f-section-8B.json || {
+              cat lean-receipts/q2-current-pin-actual-f-section-8B.json
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-current-pin-actual-f-section-8B.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
