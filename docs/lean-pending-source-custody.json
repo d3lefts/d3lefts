@@ -14,7 +14,7 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Merged PR #497 has a separately scoped current Lean 4.36.0-rc2 kernel receipt (run 43629420558); this record remains outside the immutable 67-file historical source ledger. No universal, model-enforcement, human-review or novelty status is inferred.",
-      "current_named_declaration_certificate": {
+      "current_scoped_named_lean_receipt": {
         "certificate": "docs/current-lean-proof-receipts-20261114.json",
         "source_commit": "a55c29002e39e6595b1bec21a46fea6a96b3096e",
         "named_declaration": "Nightfall.AuthorityHorizon.all_horizon_cost",
@@ -30,7 +30,7 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Merged PR #497 has a separately scoped current Lean 4.36.0-rc2 kernel receipt (run 43629420558); this record remains outside the immutable 67-file historical source ledger. No universal, model-enforcement, human-review or novelty status is inferred.",
-      "current_named_declaration_certificate": {
+      "current_scoped_named_lean_receipt": {
         "certificate": "docs/current-lean-proof-receipts-20261114.json",
         "source_commit": "a55c29002e39e6595b1bec21a46fea6a96b3096e",
         "named_declaration": "Nightfall.AuthorityHorizonReal.all_horizon_cost",
@@ -611,7 +611,7 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Merged PR #494 has a separately scoped current Lean 4.36.0-rc2 kernel receipt (run 43627249467); this record remains outside the immutable 67-file historical source ledger. No universal, model-enforcement, human-review or novelty status is inferred.",
-      "current_named_declaration_certificate": {
+      "current_scoped_named_lean_receipt": {
         "certificate": "docs/current-lean-proof-receipts-20261114.json",
         "source_commit": "c47fafe94b521fff20ec3276e59dd69d23bfb28b",
         "named_declaration": "Nightfall.Observability.ActualSourceQ2CoupledScalarClosure.coupled_scalar_endpoint",
@@ -627,7 +627,7 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Merged PR #494 has a separately scoped current Lean 4.36.0-rc2 kernel receipt (run 43627249467); this record remains outside the immutable 67-file historical source ledger. No universal, model-enforcement, human-review or novelty status is inferred.",
-      "current_named_declaration_certificate": {
+      "current_scoped_named_lean_receipt": {
         "certificate": "docs/current-lean-proof-receipts-20261114.json",
         "source_commit": "c47fafe94b521fff20ec3276e59dd69d23bfb28b",
         "named_declaration": "Nightfall.Observability.ActualSourceQ2CoupledTerminalGate.actual_source_q2_coupled_given_additive_budget",
@@ -643,7 +643,7 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Merged PR #494 has a separately scoped current Lean 4.36.0-rc2 kernel receipt (run 43627249467); this record remains outside the immutable 67-file historical source ledger. No universal, model-enforcement, human-review or novelty status is inferred.",
-      "current_named_declaration_certificate": {
+      "current_scoped_named_lean_receipt": {
         "certificate": "docs/current-lean-proof-receipts-20261114.json",
         "source_commit": "c47fafe94b521fff20ec3276e59dd69d23bfb28b",
         "named_declaration": "Nightfall.Observability.ActualSourceQ2CoupledUnconditional.actual_source_q2_coupled_unconditional",
@@ -800,7 +800,7 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Merged PR #496 has a separately scoped current Lean 4.36.0-rc2 kernel receipt (run 43630623548); this record remains outside the immutable 67-file historical source ledger. No universal, model-enforcement, human-review or novelty status is inferred.",
-      "current_named_declaration_certificate": {
+      "current_scoped_named_lean_receipt": {
         "certificate": "docs/current-lean-proof-receipts-20261114.json",
         "source_commit": "897a640b302ae14e9995e8543da5075487d62253",
         "named_declaration": "Nightfall.SCIF.fixed_owner_recenter_cover_clipped",
@@ -816,7 +816,7 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Merged PR #496 has a separately scoped current Lean 4.36.0-rc2 kernel receipt (run 43630623548); this record remains outside the immutable 67-file historical source ledger. No universal, model-enforcement, human-review or novelty status is inferred.",
-      "current_named_declaration_certificate": {
+      "current_scoped_named_lean_receipt": {
         "certificate": "docs/current-lean-proof-receipts-20261114.json",
         "source_commit": "897a640b302ae14e9995e8543da5075487d62253",
         "named_declaration": "Nightfall.Observability.SCIFDegreeTransport.degree_two_preserved_by_any_law",
@@ -832,7 +832,7 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Merged PR #496 has a separately scoped current Lean 4.36.0-rc2 kernel receipt (run 43630623548); this record remains outside the immutable 67-file historical source ledger. No universal, model-enforcement, human-review or novelty status is inferred.",
-      "current_named_declaration_certificate": {
+      "current_scoped_named_lean_receipt": {
         "certificate": "docs/current-lean-proof-receipts-20261114.json",
         "source_commit": "897a640b302ae14e9995e8543da5075487d62253",
         "named_declaration": "Nightfall.SCIF.local_influence_recenter_exact",
@@ -848,7 +848,7 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Merged PR #496 has a separately scoped current Lean 4.36.0-rc2 kernel receipt (run 43630623548); this record remains outside the immutable 67-file historical source ledger. No universal, model-enforcement, human-review or novelty status is inferred.",
-      "current_named_declaration_certificate": {
+      "current_scoped_named_lean_receipt": {
         "certificate": "docs/current-lean-proof-receipts-20261114.json",
         "source_commit": "897a640b302ae14e9995e8543da5075487d62253",
         "named_declaration": "Nightfall.SCIF.fixed_owner_recenter_cover",
@@ -864,7 +864,7 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Merged PR #496 has a separately scoped current Lean 4.36.0-rc2 kernel receipt (run 43630623548); this record remains outside the immutable 67-file historical source ledger. No universal, model-enforcement, human-review or novelty status is inferred.",
-      "current_named_declaration_certificate": {
+      "current_scoped_named_lean_receipt": {
         "certificate": "docs/current-lean-proof-receipts-20261114.json",
         "source_commit": "897a640b302ae14e9995e8543da5075487d62253",
         "named_declaration": "Nightfall.SCIF.two_site_recenter_identity",
@@ -880,7 +880,7 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Merged PR #496 has a separately scoped current Lean 4.36.0-rc2 kernel receipt (run 43630623548); this record remains outside the immutable 67-file historical source ledger. No universal, model-enforcement, human-review or novelty status is inferred.",
-      "current_named_declaration_certificate": {
+      "current_scoped_named_lean_receipt": {
         "certificate": "docs/current-lean-proof-receipts-20261114.json",
         "source_commit": "897a640b302ae14e9995e8543da5075487d62253",
         "named_declaration": "Nightfall.Observability.SCIFSourceGraph.canonical_pair_graph_invariant",
@@ -1016,7 +1016,7 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Merged PR #495 has a separately scoped current Lean 4.36.0-rc2 kernel receipt (run 43630294034); this record remains outside the immutable 67-file historical source ledger. No universal, model-enforcement, human-review or novelty status is inferred.",
-      "current_named_declaration_certificate": {
+      "current_scoped_named_lean_receipt": {
         "certificate": "docs/current-lean-proof-receipts-20261114.json",
         "source_commit": "784efa11d8c8e46afb50a454bf2ec4bcd7a8d7eb",
         "named_declaration": "Nightfall.FiniteSourceRiskGate.exact_source_threshold_gate_conditional_risk",
@@ -1032,7 +1032,7 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Merged PR #495 has a separately scoped current Lean 4.36.0-rc2 kernel receipt (run 43630294034); this record remains outside the immutable 67-file historical source ledger. No universal, model-enforcement, human-review or novelty status is inferred.",
-      "current_named_declaration_certificate": {
+      "current_scoped_named_lean_receipt": {
         "certificate": "docs/current-lean-proof-receipts-20261114.json",
         "source_commit": "784efa11d8c8e46afb50a454bf2ec4bcd7a8d7eb",
         "named_declaration": "Nightfall.InfiniteEfronSteinTransfer.positive_coordinate_if_positive_variance",
@@ -1048,7 +1048,7 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Merged PR #495 has a separately scoped current Lean 4.36.0-rc2 kernel receipt (run 43630294034); this record remains outside the immutable 67-file historical source ledger. No universal, model-enforcement, human-review or novelty status is inferred.",
-      "current_named_declaration_certificate": {
+      "current_scoped_named_lean_receipt": {
         "certificate": "docs/current-lean-proof-receipts-20261114.json",
         "source_commit": "784efa11d8c8e46afb50a454bf2ec4bcd7a8d7eb",
         "named_declaration": "Nightfall.UniversalAuthorityFrontier.exact_authorization_iff_conflict_separation",
