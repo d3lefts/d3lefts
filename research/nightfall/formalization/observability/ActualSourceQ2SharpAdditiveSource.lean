@@ -175,8 +175,8 @@ theorem original_first_sector_eq_singleton_sum
     constructor
     · intro h
       obtain ⟨i, hi⟩ := Finset.card_eq_one.mp h
-      exact ⟨i, Finset.mem_univ i, hi.symm⟩
-    · rintro ⟨i, _, h⟩
+      exact ⟨i, hi.symm⟩
+    · rintro ⟨i, h⟩
       rw [← h]
       simp
   calc
@@ -194,6 +194,7 @@ theorem original_first_sector_eq_singleton_sum
             (g := fun i : ι => ({i} : Finset ι))
             (fun i _ j _ hij => by
               have hh : i ∈ ({j} : Finset ι) := by
+                change ({i} : Finset ι) = {j} at hij
                 rw [← hij]
                 simp
               simpa using hh)
