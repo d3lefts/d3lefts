@@ -5,6 +5,7 @@ import ActualSourceInfluenceEnergy
 import ActualSourceFinitePairMoment
 import ActualSourceMatchingCover
 import ActualSourcePairAmplitudes
+import ActualSourcePairEnergyBridge
 
 /-!
 # Q2: one-source structural and finite-neighbor moment composition
@@ -39,6 +40,7 @@ open Nightfall.Observability.ActualESOwnedSampleLaw
 open Nightfall.Observability.ActualSourceFinitePairMoment
 open Nightfall.Observability.ActualSourceMatchingCover
 open Nightfall.Observability.ActualSourcePairAmplitudes
+open Nightfall.Observability.ActualSourcePairEnergyBridge
 open Nightfall.Observability.QuadraticHilbertMany
 open Nightfall.Observability.QuadraticHilbertMoments
 
@@ -85,6 +87,10 @@ theorem actual_source_q2_structural_moment_package
         if i ∈ S ∧ S.card ≤ 2 then
           ∑ x : ι → α, originalMass p x * (esComp p S f x)^2
         else 0) ∧
+    (∀ i j : ι, i ≠ j →
+      ActualSourceFinitePairMoment.sourcePairEnergy p f i j =
+        ∑ x : ι → α, originalMass p x *
+          (esComp p ({i,j} : Finset ι) f x)^2) ∧
     (∃ c : ι → ℝ,
        (∀ i, 0 ≤ c i) ∧
        (∑ i : ι, c i) ≤ 8 * B ∧
@@ -115,7 +121,7 @@ theorem actual_source_q2_structural_moment_package
            ActualSourceFinitePairMoment.sourcePairEnergy
              p f i (j k))) := by
   classical
-  refine ⟨?_, ?_, ?_, ?_⟩
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
   · intro x
     exact actual_degree_two_source_section_budget_eight_all_current
       p hp hp1 f B hB hf hdegree x
@@ -124,6 +130,9 @@ theorem actual_source_q2_structural_moment_package
   · intro i
     exact original_source_degree_two_influence_energy
       p hp1 f hdegree i
+  · intro i j hij
+    exact original_pair_finite_moment_energy_eq_canonical
+      p hp1 f i j hij
   · obtain ⟨c, hc, hcost, _hamp, _hinj, _hne, henergy, hpartition⟩ :=
       actual_source_canonical_owned_energy
         p hp hp1 f hdegree base B hf
