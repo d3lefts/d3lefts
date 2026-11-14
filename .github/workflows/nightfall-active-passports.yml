@@ -15,6 +15,8 @@ on:
       - 'research/nightfall/2026-11-active-passports/**'
       - 'research/nightfall/2026-11-information-cost-dissertation/**'
       - 'scripts/test_active_proof_passport.cjs'
+      - 'scripts/test_unrestricted_terminal_passport.cjs'
+      - 'docs/unrestricted-terminal-proof-scope-20261114.json'
       - 'scripts/test_discovery_system_identity.cjs'
       - '.github/workflows/nightfall-active-passports.yml'
   workflow_dispatch:
@@ -39,6 +41,7 @@ jobs:
       - name: Verify active claims, exact Lean provenance and frozen historical boundary
         run: |
           node scripts/test_active_proof_passport.cjs
+          node scripts/test_unrestricted_terminal_passport.cjs
           node scripts/test_lean_certificate_provenance.cjs
           node scripts/test_discovery_system_identity.cjs
       - name: Independently replay finite addressed-family tester in two arithmetic implementations
