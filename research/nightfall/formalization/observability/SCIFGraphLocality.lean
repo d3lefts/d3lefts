@@ -56,7 +56,7 @@ theorem residual_ignores_k_if_mixed_rectangles_vanish
     (hrect : ∀ x : ι → α, ∀ a0 a1 b0 b1 : α,
         sourceRectangle f x k j a0 a1 b0 b1 = 0) :
     ∀ x : ι → α, ∀ a : α,
-      residual p f j (Function.update x k a) = residual p f j x := by
+      Nightfall.Observability.SCIFActualInfluence.residual p f j (Function.update x k a) = Nightfall.Observability.SCIFActualInfluence.residual p f j x := by
   intro x a
   have hcorner (b : α) :
       f (Function.update x k a) -
@@ -104,7 +104,7 @@ theorem residual_ignores_k_if_canonical_pair_zero
     (hpair : ∀ x : ι → α,
       esComp p ({k,j} : Finset ι) f x = 0) :
     ∀ x : ι → α, ∀ a : α,
-      residual p f j (Function.update x k a) = residual p f j x := by
+      Nightfall.Observability.SCIFActualInfluence.residual p f j (Function.update x k a) = Nightfall.Observability.SCIFActualInfluence.residual p f j x := by
   have hrect (x : ι → α) (a0 a1 b0 b1 : α) :
       sourceRectangle f x k j a0 a1 b0 b1 = 0 := by
     rw [actual_quadratic_rectangle_eq_es_pair p hp1 f hdegree
