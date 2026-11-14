@@ -1,15 +1,13 @@
 name: NIGHTFALL Q2 full original-source dimension-free variance influence Lean 4.36
 on:
   push:
-    branches: [nightfall-q2-terminal-v436-20261114]
+    branches: [nightfall-q2-terminal-v436-20261114, nightfall-q2-consolidated-terminal-20261114]
     paths:
-      - 'research/nightfall/formalization/observability/ActualSourceQ2Terminal.lean'
       - 'research/nightfall/formalization/observability/ActualSourceQ2Terminal.lean'
       - 'research/nightfall/formalization/observability/ActualSourceQ2WeakScalarClosure.lean'
       - '.github/workflows/nightfall-q2-terminal-owner-v436.yml'
   pull_request:
     paths:
-      - 'research/nightfall/formalization/observability/ActualSourceQ2Terminal.lean'
       - 'research/nightfall/formalization/observability/ActualSourceQ2Terminal.lean'
       - 'research/nightfall/formalization/observability/ActualSourceQ2WeakScalarClosure.lean'
       - '.github/workflows/nightfall-q2-terminal-owner-v436.yml'
@@ -82,7 +80,7 @@ jobs:
         if: always()
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/observability/ActualSourceQ2Terminal.lean research/nightfall/formalization/observability/ActualSourceQ2Terminal.lean research/nightfall/formalization/observability/ActualSourceQ2WeakScalarClosure.lean > lean-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/observability/ActualSourceQ2Terminal.lean research/nightfall/formalization/observability/ActualSourceQ2WeakScalarClosure.lean > lean-receipts/SHA256SUMS.txt
           git rev-parse HEAD > lean-receipts/repo-commit.txt
           cat lean-toolchain > lean-receipts/lean-toolchain.txt
       - uses: actions/upload-artifact@v4
