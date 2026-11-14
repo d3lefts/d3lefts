@@ -84,9 +84,11 @@ theorem shifted_c4_from_moments
       have hpositive : 0 ≤ t*(1-d/4) :=
         mul_nonneg ht hquarter
       have hpositive2 : 0 ≤ Real.sqrt 3*u := mul_nonneg hr hu
+      have hsq' : (t*(1-d/4))^2 ≤ (Real.sqrt 3*u)^2 := by
+        rw [hroot]
+        exact hsq
       have hlinear : t*(1-d/4) ≤ Real.sqrt 3*u := by
-        rw [hroot] at hsq
-        nlinarith [hsq]
+        nlinarith [hsq']
       have hrewrite : t*(1-d/4) = t-c/4 := by
         dsimp [d]
         field_simp
