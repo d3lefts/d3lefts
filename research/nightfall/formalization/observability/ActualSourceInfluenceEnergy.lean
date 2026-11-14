@@ -164,14 +164,19 @@ theorem actual_source_section_energy_eq_influence
           intro b _
           ring
     _ = ∑ x : ι → α, originalMass p x * G x := by
-          exact actual_source_resample_sum p hp1 i G
+          calc
+            (∑ x : ι → α, ∑ a : α,
+                originalMass p x * p i a * G (Function.update x i a)) =
+              ∑ x : ι → α, originalMass p x *
+                (∑ a : α, p i a * G (Function.update x i a)) := by
+                  apply Finset.sum_congr rfl
+                  intro x _
+                  rw [Finset.mul_sum]
+                  apply Finset.sum_congr rfl
+                  intro a _
+                  ring
+            _ = _ := actual_source_resample_sum p hp1 i G
     _ = actualSourceInfluence p f i := by
-          unfold actualSourceInfluence G
-          apply Finset.sum_congr rfl
-          intro x _
-          rw [Finset.mul_sum]
-          apply Finset.sum_congr rfl
-          intro b _
-          ring
+          rfl
 
 end Nightfall.Observability.ActualSourceInfluenceEnergy
