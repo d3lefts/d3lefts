@@ -107,11 +107,33 @@ theorem source_influence_edited_difference
       (∑ x : ι → α,
         originalMass q x * (lawDelta p q f i x)^2) := by
   classical
-  rw [source_influence_edited_exact, source_influence_eq_residual_energy]
-  rw [← Finset.sum_sub_distrib]
-  rw [← Finset.sum_add_distrib, ← Finset.sum_sub_distrib]
-  apply Finset.sum_congr rfl
-  intro x _
-  ring
+  rw [source_influence_edited_exact p q f i,
+      source_influence_eq_residual_energy p f i]
+  calc
+    (∑ x : ι → α,
+      originalMass q x *
+        (residual p f i x - lawDelta p q f i x)^2) -
+      (∑ x : ι → α, originalMass p x * (residual p f i x)^2) =
+      ∑ x : ι → α,
+        (originalMass q x *
+          (residual p f i x - lawDelta p q f i x)^2 -
+          originalMass p x * (residual p f i x)^2) := by
+            rw [Finset.sum_sub_distrib]
+    _ = ∑ x : ι → α,
+          ((originalMass q x - originalMass p x) * (residual p f i x)^2 -
+            (2 * (originalMass q x * residual p f i x *
+              lawDelta p q f i x)) +
+            originalMass q x * (lawDelta p q f i x)^2) := by
+          apply Finset.sum_congr rfl
+          intro x _
+          ring
+    _ = (∑ x : ι → α,
+          (originalMass q x - originalMass p x) * (residual p f i x)^2) -
+        2 * (∑ x : ι → α,
+          originalMass q x * residual p f i x * lawDelta p q f i x) +
+        (∑ x : ι → α,
+          originalMass q x * (lawDelta p q f i x)^2) := by
+          rw [Finset.sum_add_distrib, Finset.sum_sub_distrib,
+            ← Finset.mul_sum]
 
 end Nightfall.Observability.SCIFActualInfluence
