@@ -95,8 +95,12 @@ def main():
                     raise ValueError("Deployed active passport version/count does not match checked-in registry")
                 if f"MANUAL SNAPSHOT · {expected_date}" not in html:
                     raise ValueError("Deployed passport date does not match checked-in registry")
-                if f">{expected_lean_sources}-source scoped Lean provenance" not in html:
-                    raise ValueError("Deployed Lean source census is stale relative to repository manifest")
+                legacy = f">{expected_lean_sources}-source scoped Lean provenance" in html
+                frozen = f">Frozen {expected_lean_sources}-source historical Lean provenance" in html
+                if not (legacy or frozen):
+                    raise ValueError("Deployed historical Lean source census is stale relative to repository manifest")
+                if "current-lean-proof-receipts-20261114.json" not in parsed.links:
+                    raise ValueError("Current Lean named-certificate index link missing from public passport")
             if path == "portfolio.html" and "noindex" not in parsed.meta.get("robots", ""):
                 raise ValueError("Unlisted portfolio indexing instruction not present")
             report["results"].append({"url": url, "status": "PASS"})
