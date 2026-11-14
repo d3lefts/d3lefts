@@ -1,10 +1,6 @@
 name: NIGHTFALL Q2 190 spherical rotation certificate
+# Manual diagnostic only; consolidated Q2 is the sole PR-autostart kernel pipeline.
 on:
-  pull_request:
-    branches: [main]
-    paths:
-      - "research/nightfall/formalization/observability/Q2190*.lean"
-      - ".github/workflows/nightfall-q2-rotation-v436.yml"
   workflow_dispatch:
 permissions:
   contents: read
