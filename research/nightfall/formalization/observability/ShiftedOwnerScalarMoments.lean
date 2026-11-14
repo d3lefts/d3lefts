@@ -95,7 +95,6 @@ theorem conditional_shifted_budget_273
       (∑ i : ι, Real.sqrt M*(r*u i+c i/3)) =
       Real.sqrt M*(r*(∑ i : ι, u i)+(∑ i : ι, c i)/3) := by
     simp only [mul_add, Finset.mul_sum, Finset.sum_add_distrib, Finset.sum_div]
-    ring
   have hUb : r*(∑ i : ι, u i) ≤ r*(8*B) :=
     mul_le_mul_of_nonneg_left hsection hr
   have hCb : (∑ i : ι, c i)/3 ≤ (8*B)/3 := by
