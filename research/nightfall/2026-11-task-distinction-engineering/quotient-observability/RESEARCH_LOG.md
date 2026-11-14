@@ -51,4 +51,4 @@ python3 -I research/nightfall/2026-11-task-distinction-engineering/quotient-obse
 git diff --exit-code -- research/nightfall/2026-11-task-distinction-engineering/quotient-observability/audit_results.json
 ```
 
-The source-typed paper and full typeset PDF were produced in a companion research bundle; this repository includes the theorem and proofs as `THEOREM_AND_PROOFS.md`, the original exact audit code, the frozen audit output, and the scoped certificate passport. No PDF/TeX build step is claimed by repository CI.
+The editable LaTeX manuscript `Task_Relevant_Quotient_Observability.tex` is committed, along with the mathematical proof transcript `THEOREM_AND_PROOFS.md`, original exact audit code, frozen audit output, and scoped certification passport. The original PDF is in the standalone research bundle, not checked into GitHub; repository CI tests exact code and status rather than a PDF build.
