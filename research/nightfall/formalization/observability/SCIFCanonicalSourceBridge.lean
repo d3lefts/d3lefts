@@ -162,8 +162,10 @@ theorem canonical_pair_recenter_of_table_transport
   intro a _
   rw [actual_source_esComp_pair_eq_derived p hp1 f k j hkj
       (Function.update x k a)]
-  rw [Function.update_same]
-  rw [Function.update_of_ne (Ne.symm hkj) a x]
+  have hu1 : (Function.update x k a) k = a := by simp
+  have hu2 : (Function.update x k a) j = x j := by
+    exact Function.update_of_ne (Ne.symm hkj) a x
+  rw [hu1, hu2]
 
 /-- Fully source-derived canonical pair repair for an actual bounded
 or unbounded two-coordinate observable; no independent hTable oracle.
