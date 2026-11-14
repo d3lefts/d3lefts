@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 6,
+  "revision": 7,
   "as_of": "2026-11-14",
-  "source_commit": "c472505a28ab32097a37bd1803a65d486ce4ba87",
-  "scope": "Immutable 67-source historical provenance retained. All 98 actual post-checkpoint Lean files now have exact SHA-1 custody: 77 earlier, 14 merged SCIF/Q2/authority/horizon with separately scoped named compiler receipts, and 7 previously merged Q2 sharp-source files recovered in this audit without new certificate attribution. Novelty and fully general product/SCIF conclusions remain open.",
+  "source_commit": "0940babe1722534868e61d9c3f0a81c0344037c6",
+  "scope": "The frozen 67 historical successful-head source records remain unchanged. The post-checkpoint custody now comprises 103 exact Lean blobs: 98 from prior integration plus five strictly checked supporting sources merged #500/#501/#503/#506. Per-PR named receipts are separately indexed; no new infinite-product Efron–Stein/Q2 or SCIF owner-terminal proof is inferred.",
   "sources": [
     {
       "path": "research/nightfall/formalization/authority/AuthorityHorizon.lean",
@@ -356,6 +356,22 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceEfronStein.lean",
+      "source_blob_sha": "4a49ec567220863ed87c6f0b5a62f9d054d755de",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Merged #506 exact source, current pinned named Lean receipt at run 43632637271; outside frozen 67-file historical source census. No novelty or stronger infinite-product/SCIF terminal claim.",
+      "current_scoped_named_lean_receipt": {
+        "certificate": "docs/current-lean-proof-receipts-20261114.json",
+        "source_commit": "e8782b181677c76be32f1b8d055a81cb0342533d",
+        "named_declaration": "Nightfall.Observability.ActualSourceEfronStein.original_source_all_degree_efron_stein",
+        "run": 43632637271
+      }
     },
     {
       "path": "research/nightfall/formalization/observability/ActualSourceFinitePairMoment.lean",
@@ -862,6 +878,22 @@
       "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
     },
     {
+      "path": "research/nightfall/formalization/observability/SCIFActualInfluence.lean",
+      "source_blob_sha": "2a3a75b28423e203cab6b424629bb68cc3e6cfe1",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Merged #500 exact source, current pinned named Lean receipt at run 43632243900; outside frozen 67-file historical source census. No novelty or stronger infinite-product/SCIF terminal claim.",
+      "current_scoped_named_lean_receipt": {
+        "certificate": "docs/current-lean-proof-receipts-20261114.json",
+        "source_commit": "d5e3d7a8340697028ef807af170411fd435f6c84",
+        "named_declaration": "Nightfall.Observability.SCIFActualInfluence.source_influence_edited_difference",
+        "run": 43632243900
+      }
+    },
+    {
       "path": "research/nightfall/formalization/observability/SCIFClipped.lean",
       "source_blob_sha": "1a45410c6b7ec631c0dc140a5df3e78b46fa66a0",
       "classification": "unreviewed-source",
@@ -939,6 +971,38 @@
         "source_commit": "897a640b302ae14e9995e8543da5075487d62253",
         "named_declaration": "Nightfall.SCIF.two_site_recenter_identity",
         "run": 43630623548
+      }
+    },
+    {
+      "path": "research/nightfall/formalization/observability/SCIFSourceDegree.lean",
+      "source_blob_sha": "fd02bd4f0160fe55b652ce28fc050eb5c5162553",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Merged #503 exact source, current pinned named Lean receipt at run 43632931330; outside frozen 67-file historical source census. No novelty or stronger infinite-product/SCIF terminal claim.",
+      "current_scoped_named_lean_receipt": {
+        "certificate": "docs/current-lean-proof-receipts-20261114.json",
+        "source_commit": "93c1e56936a88ab3833bdfa814f0dd16423c7505",
+        "named_declaration": "Nightfall.SCIF.SourceDegree.source_degree_invariant_under_new_law",
+        "run": 43632931330
+      }
+    },
+    {
+      "path": "research/nightfall/formalization/observability/SCIFSourceEnergy.lean",
+      "source_blob_sha": "e3a5a32c5bd445320cc3a0320cf8023164697a4e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Merged #503 exact source, current pinned named Lean receipt at run 43632931330; outside frozen 67-file historical source census. No novelty or stronger infinite-product/SCIF terminal claim.",
+      "current_scoped_named_lean_receipt": {
+        "certificate": "docs/current-lean-proof-receipts-20261114.json",
+        "source_commit": "93c1e56936a88ab3833bdfa814f0dd16423c7505",
+        "named_declaration": "Nightfall.SCIF.SourceEnergy.source_edited_degree_two_influence_energy",
+        "run": 43632931330
       }
     },
     {
@@ -1107,6 +1171,22 @@
         "source_commit": "784efa11d8c8e46afb50a454bf2ec4bcd7a8d7eb",
         "named_declaration": "Nightfall.InfiniteEfronSteinTransfer.positive_coordinate_if_positive_variance",
         "run": 43630294034
+      }
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiSourceBridge.lean",
+      "source_blob_sha": "6a69efb434da886390c91b5e65533e1e814379ba",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Merged #501 exact source, current pinned named Lean receipt at run 43631863039; outside frozen 67-file historical source census. No novelty or stronger infinite-product/SCIF terminal claim.",
+      "current_scoped_named_lean_receipt": {
+        "certificate": "docs/current-lean-proof-receipts-20261114.json",
+        "source_commit": "cdfcac0094c4653ecbd539a4249be228df584ff5",
+        "named_declaration": "Nightfall.InfinitePiSourceBridge.source_cylinder_centered_square",
+        "run": 43631863039
       }
     },
     {
