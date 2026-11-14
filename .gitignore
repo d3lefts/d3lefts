@@ -33,5 +33,6 @@ yarn-error.log*
 *.fls
 *.synctex.gz
 *.toc
-\n# Do not ignore research PDFs, ZIPs, manifests, exact witness data,
-# proof receipts, or scientific logs, proof receipts or other evidence merely for file size.
+
+# Preserve research PDFs, ZIPs, source manifests, exact witnesses,
+# proof receipts and scientific logs; never ignore evidence merely for file size.
