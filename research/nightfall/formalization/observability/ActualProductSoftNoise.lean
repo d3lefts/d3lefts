@@ -126,8 +126,8 @@ theorem actual_source_conditional_mixture_L1
 
 /-- A retention mask draws each original coordinate independently:
 true means keep the original coordinate, false means refresh it. -/
-noncomputable def maskWeight (λ : ι → ℝ) (mask : ι → Bool) : ℝ :=
-  ∏ i : ι, if mask i then λ i else (1 - λ i)
+noncomputable def maskWeight (retain : ι → ℝ) (mask : ι → Bool) : ℝ :=
+  ∏ i : ι, if mask i then retain i else (1 - retain i)
 
 /-- Original coordinates retained by a Boolean mask. -/
 noncomputable def maskSites (mask : ι → Bool) : Finset ι :=
@@ -136,9 +136,9 @@ noncomputable def maskSites (mask : ι → Bool) : Finset ι :=
 /-- Retention probabilities give nonnegative mask probabilities,
 including deterministic retention, full refresh and zero atoms. -/
 theorem maskWeight_nonneg
-    (λ : ι → ℝ) (hl : ∀ i, 0 ≤ λ i)
-    (hu : ∀ i, λ i ≤ 1) (mask : ι → Bool) :
-    0 ≤ maskWeight λ mask := by
+    (retain : ι → ℝ) (hl : ∀ i, 0 ≤ retain i)
+    (hu : ∀ i, retain i ≤ 1) (mask : ι → Bool) :
+    0 ≤ maskWeight retain mask := by
   unfold maskWeight
   apply Finset.prod_nonneg
   intro i _
@@ -147,8 +147,8 @@ theorem maskWeight_nonneg
   · simpa [h] using (hl i)
 
 /-- Exact normalization, not an assumed mask-sampling oracle. -/
-theorem maskWeight_total_one (λ : ι → ℝ) :
-    (∑ mask : ι → Bool, maskWeight λ mask) = 1 := by
+theorem maskWeight_total_one (retain : ι → ℝ) :
+    (∑ mask : ι → Bool, maskWeight retain mask) = 1 := by
   classical
   unfold maskWeight
   rw [← Fintype.prod_sum]
@@ -158,9 +158,9 @@ theorem maskWeight_total_one (λ : ι → ℝ) :
 is a genuine mixture of actual product-law conditionals. -/
 noncomputable def softSourceNoise
     {H : Type*} [AddCommMonoid H] [Module ℝ H]
-    (p : ι → α → ℝ) (λ : ι → ℝ)
+    (p : ι → α → ℝ) (retain : ι → ℝ)
     (G : (ι → α) → H) (x : ι → α) : H :=
-  sourceConditionalMixture p (maskWeight λ) maskSites G x
+  sourceConditionalMixture p (maskWeight retain) maskSites G x
 
 /-- The soft operator is an actual-source L¹ norm contraction.
 This is the key no-synthetic-neighbor operator step of the proposed
@@ -170,17 +170,17 @@ theorem actual_soft_source_noise_L1
     (p : ι → α → ℝ)
     (hp : ∀ i a, 0 ≤ p i a)
     (hp1 : ∀ i, (∑ a : α, p i a) = 1)
-    (λ : ι → ℝ)
-    (hl : ∀ i, 0 ≤ λ i)
-    (hu : ∀ i, λ i ≤ 1)
+    (retain : ι → ℝ)
+    (hl : ∀ i, 0 ≤ retain i)
+    (hu : ∀ i, retain i ≤ 1)
     (G : (ι → α) → H) :
     (∑ x : ι → α, originalMass p x *
-      ‖softSourceNoise p λ G x‖) ≤
+      ‖softSourceNoise p retain G x‖) ≤
     ∑ x : ι → α, originalMass p x * ‖G x‖ := by
   exact actual_source_conditional_mixture_L1
-    p hp hp1 (maskWeight λ)
-    (maskWeight_nonneg λ hl hu)
-    (maskWeight_total_one λ)
+    p hp hp1 (maskWeight retain)
+    (maskWeight_nonneg retain hl hu)
+    (maskWeight_total_one retain)
     maskSites G
 
 end Nightfall.Observability.ActualProductSoftNoise
