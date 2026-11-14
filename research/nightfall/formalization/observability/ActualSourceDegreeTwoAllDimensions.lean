@@ -47,12 +47,12 @@ theorem actual_degree_two_source_section_budget_eight_all_current
       apply hn
       exact ⟨i, j, hij⟩
     have hcard_nat : Fintype.card ι ≤ 1 := by
-      have hinj : Function.Injective (fun _ : ι => (PUnit.unit : PUnit)) := by
+      have hinj : Function.Injective (fun _ : ι => (() : Unit)) := by
         intro a b _
         exact Subsingleton.elim a b
       simpa using
         (Fintype.card_le_of_injective
-          (fun _ : ι => (PUnit.unit : PUnit)) hinj)
+          (fun _ : ι => (() : Unit)) hinj)
     have hcard : (Fintype.card ι : ℝ) ≤ 1 := by
       exact_mod_cast hcard_nat
     have hcoord (i : ι) :
