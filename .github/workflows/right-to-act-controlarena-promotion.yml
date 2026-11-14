@@ -33,7 +33,7 @@ jobs:
           python -m pip freeze > installed-versions.txt
           node --version
       - name: Independently validate resource-effect verifier negative controls
-        run: python -m pytest -q test_effect_verifier.py
+        run: python -m pytest -q test_effect_verifier.py test_concurrent_authority.py
       - name: Three-event real-source promotion experiment
         env:
           JSII_SILENCE_WARNING_UNTESTED_NODE_VERSION: "1"
