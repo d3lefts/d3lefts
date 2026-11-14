@@ -172,23 +172,20 @@ theorem siteRotation_plus_sub_minus
       (4*u*v)*signedTangent p h x := by
   by_cases ha : siteNorm p h = 0
   · simp [siteRotation, signedTangent, ha]
-  · simp only [siteRotation, if_neg ha]
+  · simp only [siteRotation, signedTangent, if_neg ha]
     have hh : Real.sqrt (p x)*tangent p h x =
-        signedTangent p h x := by
-      simp only [tangent, signedTangent, if_neg ha]
+        p x*h x/siteNorm p h := by
+      simp only [tangent, if_neg ha]
       calc
         Real.sqrt (p x) *
-            (Real.sqrt (p x) * h x / siteNorm p h) =
-          ((Real.sqrt (p x))^2) * h x / siteNorm p h := by ring
-        _ = p x * h x / siteNorm p h := by
+            (Real.sqrt (p x)*h x/siteNorm p h) =
+          ((Real.sqrt (p x))^2)*h x/siteNorm p h := by ring
+        _ = p x*h x/siteNorm p h := by
           rw [Real.sq_sqrt (hp x)]
-    change (u*Real.sqrt (p x)+1*v*tangent p h x)^2 -
-      (u*Real.sqrt (p x)+(-1)*v*tangent p h x)^2 =
-      4*u*v*signedTangent p h x
     calc
       (u*Real.sqrt (p x)+1*v*tangent p h x)^2 -
           (u*Real.sqrt (p x)+(-1)*v*tangent p h x)^2 =
         4*u*v*(Real.sqrt (p x)*tangent p h x) := by ring
-      _ = 4*u*v*signedTangent p h x := by rw [hh]
+      _ = 4*u*v*(p x*h x/siteNorm p h) := by rw [hh]
 
 end Nightfall.Q2190
