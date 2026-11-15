@@ -1,0 +1,40 @@
+name: NIGHTFALL C96 finite exact counterexample audit (NOT proof)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/check_c96_first_second_exact.py'
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/C96_INDEPENDENT_HILBERT_PROOF_ATTACK.md'
+      - '.github/workflows/nightfall-q2-c96-exact-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  finite-grid:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run all 746493 exact finite cases, fail on negative margin/hash drift
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts
+          python3 research/nightfall/2026-11-quadratic-law-free-audit/check_c96_first_second_exact.py --max-n 4 \
+            | tee receipts/C96_FIRST_SECOND_EXACT.json
+          python3 - <<'PY'
+          import json
+          d=json.load(open('receipts/C96_FIRST_SECOND_EXACT.json'))
+          assert d['status']=='NO_COUNTEREXAMPLE_ON_GRID_NOT_A_PROOF'
+          assert d['checked']==746493
+          assert d['sha256_of_exact_case_receipts']=='66ce3536894ef434e61fc37195683c763e950796f31b96dd2670b04adb8a314b'
+          print('PASS exact finite grid ONLY; universal Hilbert conjecture is NOT proved')
+          PY
+          sha256sum research/nightfall/2026-11-quadratic-law-free-audit/check_c96_first_second_exact.py \
+            > receipts/SHA256SUMS
+      - name: Upload reproducibility receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: c96-exact-finite-audit-not-lean
+          path: receipts/
+          if-no-files-found: warn
