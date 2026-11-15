@@ -45,6 +45,40 @@ def deletion(vecs,h,kind):
             rem[i]+=norm(add(x,scale(-ei,vecs[i])),kind)/2**n
     return R,[R-z for z in rem]
 
+def independent_sign_amplitude_audit(vecs,probs,h,kind,direct_u,direct_w1):
+    """Independently reconstruct q_i/b_i from amplitude and sign states."""
+    n=len(vecs)
+    mass=[[1-p,p] for p in probs]
+    qnum=[[Q(0)]*2 for _ in range(n)]
+    bnum=[[Q(0)]*2 for _ in range(n)]
+    total=Q(0)
+    for active in product((0,1),repeat=n):
+        weight=Q(1)
+        for i,k in enumerate(active):weight*=mass[i][k]
+        if not weight:continue
+        vs=[scale(k,v) for k,v in zip(active,vecs)]
+        R=Q(0); t=[Q(0)]*n
+        for eps in product((-1,1),repeat=n):
+            x=h
+            for i,ei in enumerate(eps):x=add(x,scale(ei,vs[i]))
+            z=norm(x,kind)/2**n
+            R+=z
+            for i,ei in enumerate(eps):t[i]+=ei*z
+        assert sum(z*z for z in t)<=norm(h,kind)**2
+        total+=weight*R
+        for i,k in enumerate(active):
+            qnum[i][k]+=weight*R
+            bnum[i][k]+=weight*t[i]
+    amp=Q(0); sign=Q(0)
+    for i in range(n):
+        amp+=sum((qnum[i][k]**2/mass[i][k] for k in (0,1) if mass[i][k]),Q(0))-total**2
+        sign+=sum((bnum[i][k]**2/mass[i][k] for k in (0,1) if mass[i][k]),Q(0))
+    c=max(norm(v,kind) for v in vecs)
+    assert total==direct_u,(total,direct_u)
+    assert amp+sign==direct_w1,(amp,sign,direct_w1)
+    assert 0<=amp<=c*direct_u,(amp,c,direct_u)
+    assert 0<=sign<=norm(h,kind)**2,(sign,h)
+
 def main():
     vectors=[(Q(1),Q(0)), (Q(0),Q(1)), (Q(1,2),Q(1,2)),
              (Q(1,2),-Q(1,2))]
@@ -65,6 +99,8 @@ def main():
                         c=max(map(lambda v:norm(v,kind),vs))
                         slack=norm(h,kind)**2+c*u-w1
                         assert slack>=0,(kind,n,vi,h,ap,u,w1,slack)
+                        if num % 31 == 0:
+                            independent_sign_amplitude_audit(vs,ps,h,kind,u,w1)
                         if slack==0:exact_eq+=1
                         min_slack=slack if min_slack is None else min(min_slack,slack)
                         dig.update(f'{kind}|{n}|{vi}|{h}|{ap}|{u}|{w1}|{slack}\n'.encode()); num+=1
