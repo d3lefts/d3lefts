@@ -20,7 +20,7 @@ assert.ok(note.includes("kernel"));
 assert.ok(note.includes("YuanheZ/lean-stat-learning-theory"));
 assert.ok(current.includes("736.673")&&current.includes("#514")&&current.includes("#512"));
 assert.ok(html.includes("arbitrary-index")&&html.includes("remains <strong>OPEN</strong>"));
-assert.ok(html.includes("736.673")&&html.includes("1064.958"));
+assert.ok(html.includes("736.673")&&html.includes("1064.958")&&html.includes("364.5526832774"));
 const requirePR=new Map([[498,43633180605],[500,43632243900],[501,43631863039],
  [506,43632637271],[512,43635195844],[514,43635955108]]);
 assert.equal(scope.source_certificates.length,requirePR.size);
@@ -34,7 +34,8 @@ for(const k of ["actual infinitePi L2 cylinder density","conditional expectation
  "finite Efron-Stein arbitrary measurable alphabets","source-matched resampling contraction",
  "unconditional infinitePi terminal theorem with axiom receipt"])
  assert.ok(scope.analytic_theorem.missing_lean.includes(k));
-assert.ok(reg.current_named_certificate_scope.finite_q2.strongest_merged.pr===498);
+assert.ok(reg.current_named_certificate_scope.finite_q2.strongest_merged.pr===498); // dated prior checkpoint
+assert.equal(reg.current_named_certificate_scope.finite_q2.strongest_unrestricted_singleton_allowed.run,43644790107);
 assert.equal(reg.current_named_certificate_scope.scif.finite_all_degree_changed_law_risk.pr,514);
 const structural=scope.structural_source_certificates;
 assert.ok(Array.isArray(structural)&&structural.length===2);
