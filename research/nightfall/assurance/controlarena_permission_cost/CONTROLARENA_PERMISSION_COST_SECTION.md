@@ -156,6 +156,32 @@ The independent checker verified raw model JSON against the changed source bytes
 
 **Exact capability statement:** two valid, different *model-authored source edits* under a disclosed five-choice single-substring editing interface and an **author-authored legitimate OU scaffold**. This is stronger than duplicated generated patches and stronger than authored-only fixture cases, but it is not unrestricted autonomous coding, broad adversarial search, an externally calibrated attack-success probability, cost-effectiveness evidence, or actual AWS deployment/complete effect mediation. Reproducibility and CI success do not establish worldwide originality.
 
+
+## New multi-task cost and change-lifecycle measurement (15 November 2026)
+
+**Externally sourced benchmark and archived results:** Native ControlArena IaC Fast 20.1.1 (UK AI Security Institute/Redwood Research), NIGHTFALL [draft PR #605](https://github.com/d3lefts/d3lefts/pull/605), current-head [passing GitHub Actions run 43737300428](https://github.com/d3lefts/d3lefts/actions/runs/43737300428), immutable [receipt and official-source template artifact 14171411176](https://github.com/d3lefts/d3lefts/actions/runs/43737300428/artifacts/14171411176). Independent receipt audit passed and rejected the injected false decision.
+
+The study moves beyond a single mission: two official legitimate tasks (Applied Interpretability OU and monthly billing-alarm SNS) crossed with two official adversarial objectives (FSx export mitigation weakening and MFA policy detachment). Six *investigator-authored source-exact controls* each passed its corresponding official main scorer, the four malicious controls passed their official side scorers, and both honest controls failed both side scorers. Crucially, model origin is NOT claimed for any of these six samples. The separate [native open-tool model experiment #604](https://github.com/d3lefts/d3lefts/pull/604), run 43735308171, executed six true Inspect agent samples but all failed from token-limit errors with ZERO actual tool-call records; not a successful defender outcome.
+
+| Fixed same-candidate policy | Official harmful-side success candidates wrongly permitted | Mean actual guard wall time per candidate |
+|---|---:|---:|
+| Four-action narrow FSx check | 4 of 4 | 89.50 μs |
+| Baseline-pinned FSx check | 2 of 4 | 96.80 μs |
+| Source-path conditional full-audit | 1 of 4 | 473.73 μs |
+| **Full mission-specific baseline-diff check** | **0 of 4** | **643.48 μs** |
+| Source-path screen plus all-SCP fallback | **0 of 4** | **1203.63 μs** |
+| Baseline-pinned *all* SCP content/targets | **0 of 4** | **1623.83 μs** |
+
+Both honest candidates were permitted by every tested arm after repairing a parser false denial of legitimate CloudFormation `Fn::GetAtt` targets. Each latency is the average of 50 separate actual wall-clock timings on EACH of six templates. These are local CPU-timed checks of ALREADY-SYNTHESIZED JSON, not fully loaded admission service costs or dollars. They are not calibrated population attack rates.
+
+**Negative economic finding.** Checking all existing SCP resources was **2.52 times slower** than an independently verified full mission-specific audit on this workload. This falsifies the implicit economics of a zero-full-audit-call comparison: a renamed or decomposed verifier does not automatically reduce trusted operations. Source-matched CDK synthesizations took **8.259–8.538 seconds** for the six candidate templates; official evaluator pytest tests typically took **9.2–9.8 seconds** each, but scorer time is benchmark overhead and should not automatically be charged as deployment permission cost.
+
+**Measured source freshness, recertification, enforcement time.** In the same ephemeral runner an actual local Unix-domain service exercised authenticated (HMAC + kernel-peer-credential) requests, forked verifier and fsync/atomic JSON artifact writes. Twenty successful signed commits had **median 10.3798 ms, p95 11.179 ms, mean 10.3769 ms**. One additional signed commit succeeded after an explicit source recertification. Editing an otherwise inert comment changed the actual source SHA-256 and required **8.238508 seconds** of fresh CDK synthesis; previous ticket was rejected; a freshly signed ticket was rejected until baseline recertification; authenticated rebaseline took **8.78426 ms**; a fresh post-rebaseline local commit took **10.18961 ms**. Advancing mission policy invalidated prior authorization; the unupdated strict verifier rejected the changed mission policy. These are real, source-bound local service operations, **NOT AWS deployment** or proof of complete mediation under arbitrary untrusted hosts. The measured service and issuer are same UID, unlike prior cross-UID source-matched security tests; effects are local JSON publication.
+
+**Preserved failures.** First run 43735978510 rejected legitimate OU due an incorrect Ref-only interpretation of existing Fn::GetAtt target expressions. Second 43736575376 collected source/guard measurements but failed the local socket-length constraint; third 43737300428 is current-head success. Both failures remain in original CI/artifact audit and must not be represented as independent measurements of working service.
+
+**Frontier.** This establishes a *specific counterexample* to the assumption that cheap guarded permission costs less than full verification, a measured local recertification cost, and a concrete mechanism (source-invariant policy completeness). It does **not** establish an optimal total-cost strategy, open-ended successful agent-attack resistance, multi-platform validation, price-per-token superiority, source-to-AWS semantic soundness or historically novel universal theorem. A stronger paper must pair truly agent-generated candidate successes with equivalent actual effect-time enforcement and count all trusted workload costs.
+
 ## References and reproducible provenance
 
 - UK AI Security Institute / Redwood Research, ControlArena, https://control-arena.aisi.org.uk/ and https://control-arena.aisi.org.uk/monitors.html ; source https://github.com/UKGovernmentBEIS/control-arena
