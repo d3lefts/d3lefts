@@ -32,9 +32,18 @@ jobs:
           from test_service_deadline import (
               test_silent_client_cannot_starve_trusted_request,
               test_slow_drip_cannot_starve_trusted_request)
+          from test_service_hardening import (
+              test_expensive_authenticated_verifier_cannot_starve_following_request,
+              test_stalled_persistence_does_not_starve_or_commit,
+              test_kernel_peer_check_precedes_reading_untrusted_bytes,
+              test_bounded_nonce_history_rotates_epoch_and_rejects_old_ticket)
           test_silent_client_cannot_starve_trusted_request()
           test_slow_drip_cannot_starve_trusted_request()
-          print('PASS: two absolute-deadline starvation regressions')
+          test_expensive_authenticated_verifier_cannot_starve_following_request()
+          test_stalled_persistence_does_not_starve_or_commit()
+          test_kernel_peer_check_precedes_reading_untrusted_bytes()
+          test_bounded_nonce_history_rotates_epoch_and_rejects_old_ticket()
+          print('PASS: six complete-handler/peer/epoch starvation regressions')
           PY
       - name: Install exact CDK and ControlArena source dependencies
         run: |
