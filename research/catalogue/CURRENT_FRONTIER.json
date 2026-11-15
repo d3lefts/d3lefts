@@ -2,11 +2,68 @@
   "schema": "nightfall.frontier-evidence.v1",
   "as_of": "2026-11-15 UTC",
   "authority": "Curated original-source evidence ledger; not an independent audit or novelty certification",
-  "best_unrestricted_source_q2_certified": "q2-unrestricted-107",
+  "best_unrestricted_source_q2_certified": "q2-unrestricted-105",
   "unrestricted_sub100_unconditional": "not_proved",
   "operational_agent_boundary": "not_verified",
   "all_originality_claims": "not_reviewed",
   "claims": [
+    {
+      "id": "q2-unrestricted-105",
+      "family": "Q2 unrestricted finite product",
+      "status": "kernel_proved_domain",
+      "exact_claim": "Original-source bounded degree-two finite independent product variance-squared/influence bound with coefficient [2(1+sqrt(2))sqrt(3)+48/25]^2, approximately 105.741756923658; common finite alphabet, arbitrary heterogeneous normalized marginals including zeros, and nonzero singleton components allowed. Full source theorem; no caller-supplied moments, section, or owner budget.",
+      "coefficient_approx": 105.741756923658,
+      "source": "research/nightfall/formalization/observability/ActualSourceQ2105Terminal.lean",
+      "source_git_blob": "ed945639f7cbe26ba8fdb50d691127c01cdf863f",
+      "declaration": "Nightfall.Observability.ActualSourceQ2105Terminal.actual_source_q2_105_unconditional",
+      "receipt": {
+        "run": 43671321904,
+        "head": "ae8ebec96d6c3ce4a25fb42bc7ae6ba170ca9103",
+        "outcome": "success",
+        "pin": "leanprover/lean4:v4.36.0-rc2",
+        "scope": "strict original-source source-closed named Lean terminal declaration, standard axioms only; exact proof blob preserved in merged PR #564; not novelty or non-author review"
+      },
+      "added_unproved_premises": [],
+      "domain_limitations": [
+        "finite independent product, common nonempty finite alphabet with arbitrary heterogeneous nonnegative normalized marginals, including zero masses",
+        "pointwise Efron-Stein degree <=2; nonzero singleton and pair sectors allowed",
+        "pointwise bound |f(x)|<=B on all configurations",
+        "not an arbitrary-degree, heterogeneous alphabet type, dependent-law or infinite-product theorem"
+      ],
+      "priority": "unreviewed",
+      "external_referee": "none",
+      "physical_system_certificate": false,
+      "novel_record_status": "not_assessed"
+    },
+    {
+      "id": "q2-unrestricted-96-six-cover-conditional",
+      "family": "Q2 unrestricted finite product",
+      "status": "kernel_proved_implication_only",
+      "exact_claim": "Conditional original-source finite degree-two theorem: if an owner-cost vector c covers every actual pair kernel and sum_i c_i <=6B, then Var_p(f)^2 <= [2sqrt3(1+sqrt2)+36/25]^2 B^2 max_i I_i(f), approximately 96.10039906698. Universal existence of such a six-B cover is NOT proved.",
+      "coefficient_approx": 96.10039906698208,
+      "source": "research/nightfall/formalization/observability/ActualSourceQ296SixCover.lean",
+      "source_git_blob": "8de1ad77a9f218d0df3673d8574ddd6592556865",
+      "declaration": "Nightfall.Observability.ActualSourceQ296SixCover.actual_source_q2_96_given_six_cover",
+      "receipt": {
+        "run": 43676624010,
+        "head": "6ec3d1541f521f40cf90c064e4b736279e7cfdc2",
+        "outcome": "success",
+        "pin": "leanprover/lean4:v4.36.0-rc2",
+        "scope": "strict conditional named source theorem; 6B original-source owner cover remains explicit additional hypothesis; not universal C96 certificate"
+      },
+      "added_unproved_premises": [
+        "original-source six-B owner cover: exists c with nonnegative costs, total <= 6B, and endpoint owner costs cover all true pair kernels; no universal proof"
+      ],
+      "domain_limitations": [
+        "finite product common alphabet, arbitrary heterogenous marginals including zeros",
+        "requires source-derived degree <=2 and pointwise |f|<=B",
+        "unproved six-B owner cover condition; no unconditional C96 claim"
+      ],
+      "priority": "unreviewed",
+      "external_referee": "none",
+      "physical_system_certificate": false,
+      "novel_record_status": "not_assessed"
+    },
     {
       "id": "q2-unrestricted-107",
       "family": "Q2 unrestricted finite product",
