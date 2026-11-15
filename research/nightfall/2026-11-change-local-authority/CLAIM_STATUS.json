@@ -1,0 +1,31 @@
+{
+  "date_utc": "2026-11-15",
+  "problem": "minimum-cost mission-conditioned recertification of interacting agents",
+  "version": "v0.1",
+  "construction": "two-ended independent modular edge evidence with node and direct-gate queries",
+  "proved": [
+    "exact zero-risk safe-path cost is a maximum-closure/min-cut optimum",
+    "matching indistinguishability lower bound",
+    "exact posterior risk 1-r^{-m} for unobserved independent modular gates",
+    "exact risk-bounded safe-path cost by omitted-edge enumeration and mincut"
+  ],
+  "audited": {
+    "cases": 3000,
+    "finite_world_assignments": 296401,
+    "exact_ordered_receipt_sha256": "db65a6856e595baa84149fc94205a70d9b92f7b1ac3631ca975eca3fa2aa9f82"
+  },
+  "unproved": [
+    "unrestricted autonomous systems recertification",
+    "arbitrary correlated or noisy evidence",
+    "authenticated operational change impact and cache validity",
+    "Lean theorem in pinned mathlib",
+    "global mathematical originality and external peer review"
+  ],
+  "provenance": "Independent exact test suite and full analytic proof included in repository and archive",
+  "operator": "pure information complementarity -> maximum weight closure -> exact mincut and flow/cut dual",
+  "prior_art": [
+    "Picard 1976 maximum closure and mincut",
+    "Zhang and Xu 2026 certified task-conditioned active observability",
+    "FASE 2026 sound incremental analysis recertification"
+  ]
+}

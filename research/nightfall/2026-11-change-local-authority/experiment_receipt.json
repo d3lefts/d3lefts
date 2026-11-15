@@ -1,0 +1,579 @@
+{
+  "certification": {
+    "Lean": "not performed",
+    "analytic_theorem": "proved in THEORY.md",
+    "exhaustive_cross_check": "audit_independent.py",
+    "global_novelty": "not established",
+    "unrestricted_autonomous_systems": "not claimed"
+  },
+  "examples": [
+    {
+      "alphabet": 2,
+      "baseline_all_nodes_cost": "12",
+      "baseline_direct_only_cost": "8",
+      "cached_vertices": [],
+      "direct_gate_reads": [
+        1
+      ],
+      "edge_count": 2,
+      "edges": [
+        [
+          0,
+          1,
+          "5"
+        ],
+        [
+          2,
+          3,
+          "3"
+        ]
+      ],
+      "enumerated_risk_exempt_edges": [],
+      "experiment": "mixed evidence across two subsystems",
+      "minimum_cut_dual": "5",
+      "optimum_cost": "5",
+      "posterior_risk": "0",
+      "posterior_risk_limit": "0",
+      "selected_node_reads": [
+        0,
+        1
+      ],
+      "unverified_gates": [],
+      "vertex_costs": [
+        "1",
+        "1",
+        "5",
+        "5"
+      ],
+      "vertex_count": 4
+    },
+    {
+      "alphabet": 2,
+      "baseline_all_nodes_cost": "11",
+      "baseline_direct_only_cost": "8",
+      "cached_vertices": [
+        0
+      ],
+      "direct_gate_reads": [
+        1
+      ],
+      "edge_count": 2,
+      "edges": [
+        [
+          0,
+          1,
+          "5"
+        ],
+        [
+          2,
+          3,
+          "3"
+        ]
+      ],
+      "enumerated_risk_exempt_edges": [],
+      "experiment": "mixed evidence with cache reused",
+      "minimum_cut_dual": "4",
+      "optimum_cost": "4",
+      "posterior_risk": "0",
+      "posterior_risk_limit": "0",
+      "selected_node_reads": [
+        0,
+        1
+      ],
+      "unverified_gates": [],
+      "vertex_costs": [
+        "1",
+        "1",
+        "5",
+        "5"
+      ],
+      "vertex_count": 4
+    },
+    {
+      "alphabet": 2,
+      "baseline_all_nodes_cost": "10",
+      "baseline_direct_only_cost": "30",
+      "cached_vertices": [],
+      "direct_gate_reads": [],
+      "edge_count": 10,
+      "edges": [
+        [
+          0,
+          1,
+          "3"
+        ],
+        [
+          0,
+          2,
+          "3"
+        ],
+        [
+          0,
+          3,
+          "3"
+        ],
+        [
+          0,
+          4,
+          "3"
+        ],
+        [
+          1,
+          2,
+          "3"
+        ],
+        [
+          1,
+          3,
+          "3"
+        ],
+        [
+          1,
+          4,
+          "3"
+        ],
+        [
+          2,
+          3,
+          "3"
+        ],
+        [
+          2,
+          4,
+          "3"
+        ],
+        [
+          3,
+          4,
+          "3"
+        ]
+      ],
+      "enumerated_risk_exempt_edges": [],
+      "experiment": "five-agent full mission",
+      "minimum_cut_dual": "10",
+      "optimum_cost": "10",
+      "posterior_risk": "0",
+      "posterior_risk_limit": "0",
+      "selected_node_reads": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "unverified_gates": [],
+      "vertex_costs": [
+        "2",
+        "2",
+        "2",
+        "2",
+        "2"
+      ],
+      "vertex_count": 5
+    },
+    {
+      "alphabet": 2,
+      "baseline_all_nodes_cost": "10",
+      "baseline_direct_only_cost": "3",
+      "cached_vertices": [],
+      "direct_gate_reads": [
+        0
+      ],
+      "edge_count": 1,
+      "edges": [
+        [
+          0,
+          1,
+          "3"
+        ]
+      ],
+      "enumerated_risk_exempt_edges": [],
+      "experiment": "single changed constraint, only recertify local impact",
+      "minimum_cut_dual": "3",
+      "optimum_cost": "3",
+      "posterior_risk": "0",
+      "posterior_risk_limit": "0",
+      "selected_node_reads": [],
+      "unverified_gates": [],
+      "vertex_costs": [
+        "2",
+        "2",
+        "2",
+        "2",
+        "2"
+      ],
+      "vertex_count": 5
+    },
+    {
+      "alphabet": 2,
+      "baseline_all_nodes_cost": "12",
+      "baseline_direct_only_cost": "8",
+      "cached_vertices": [],
+      "direct_gate_reads": [
+        1
+      ],
+      "edge_count": 2,
+      "edges": [
+        [
+          0,
+          1,
+          "5"
+        ],
+        [
+          2,
+          3,
+          "3"
+        ]
+      ],
+      "enumerated_risk_exempt_edges": [],
+      "experiment": "risk-bounded two-gate instance delta=0",
+      "minimum_cut_dual": "5",
+      "optimum_cost": "5",
+      "posterior_risk": "0",
+      "posterior_risk_limit": "0",
+      "selected_node_reads": [
+        0,
+        1
+      ],
+      "unverified_gates": [],
+      "vertex_costs": [
+        "1",
+        "1",
+        "5",
+        "5"
+      ],
+      "vertex_count": 4
+    },
+    {
+      "alphabet": 2,
+      "baseline_all_nodes_cost": "10",
+      "baseline_direct_only_cost": "30",
+      "cached_vertices": [],
+      "direct_gate_reads": [],
+      "edge_count": 10,
+      "edges": [
+        [
+          0,
+          1,
+          "3"
+        ],
+        [
+          0,
+          2,
+          "3"
+        ],
+        [
+          0,
+          3,
+          "3"
+        ],
+        [
+          0,
+          4,
+          "3"
+        ],
+        [
+          1,
+          2,
+          "3"
+        ],
+        [
+          1,
+          3,
+          "3"
+        ],
+        [
+          1,
+          4,
+          "3"
+        ],
+        [
+          2,
+          3,
+          "3"
+        ],
+        [
+          2,
+          4,
+          "3"
+        ],
+        [
+          3,
+          4,
+          "3"
+        ]
+      ],
+      "enumerated_risk_exempt_edges": [],
+      "experiment": "risk-bounded full five-agent instance delta=0",
+      "minimum_cut_dual": "10",
+      "optimum_cost": "10",
+      "posterior_risk": "0",
+      "posterior_risk_limit": "0",
+      "selected_node_reads": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "unverified_gates": [],
+      "vertex_costs": [
+        "2",
+        "2",
+        "2",
+        "2",
+        "2"
+      ],
+      "vertex_count": 5
+    },
+    {
+      "alphabet": 2,
+      "baseline_all_nodes_cost": "12",
+      "baseline_direct_only_cost": "8",
+      "cached_vertices": [],
+      "direct_gate_reads": [],
+      "edge_count": 2,
+      "edges": [
+        [
+          0,
+          1,
+          "5"
+        ],
+        [
+          2,
+          3,
+          "3"
+        ]
+      ],
+      "enumerated_risk_exempt_edges": [
+        1
+      ],
+      "experiment": "risk-bounded two-gate instance delta=1/2",
+      "minimum_cut_dual": "2",
+      "optimum_cost": "2",
+      "posterior_risk": "1/2",
+      "posterior_risk_limit": "1/2",
+      "selected_node_reads": [
+        0,
+        1
+      ],
+      "unverified_gates": [
+        1
+      ],
+      "vertex_costs": [
+        "1",
+        "1",
+        "5",
+        "5"
+      ],
+      "vertex_count": 4
+    },
+    {
+      "alphabet": 2,
+      "baseline_all_nodes_cost": "10",
+      "baseline_direct_only_cost": "30",
+      "cached_vertices": [],
+      "direct_gate_reads": [],
+      "edge_count": 10,
+      "edges": [
+        [
+          0,
+          1,
+          "3"
+        ],
+        [
+          0,
+          2,
+          "3"
+        ],
+        [
+          0,
+          3,
+          "3"
+        ],
+        [
+          0,
+          4,
+          "3"
+        ],
+        [
+          1,
+          2,
+          "3"
+        ],
+        [
+          1,
+          3,
+          "3"
+        ],
+        [
+          1,
+          4,
+          "3"
+        ],
+        [
+          2,
+          3,
+          "3"
+        ],
+        [
+          2,
+          4,
+          "3"
+        ],
+        [
+          3,
+          4,
+          "3"
+        ]
+      ],
+      "enumerated_risk_exempt_edges": [],
+      "experiment": "risk-bounded full five-agent instance delta=1/2",
+      "minimum_cut_dual": "10",
+      "optimum_cost": "10",
+      "posterior_risk": "0",
+      "posterior_risk_limit": "1/2",
+      "selected_node_reads": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "unverified_gates": [],
+      "vertex_costs": [
+        "2",
+        "2",
+        "2",
+        "2",
+        "2"
+      ],
+      "vertex_count": 5
+    },
+    {
+      "alphabet": 2,
+      "baseline_all_nodes_cost": "12",
+      "baseline_direct_only_cost": "8",
+      "cached_vertices": [],
+      "direct_gate_reads": [],
+      "edge_count": 2,
+      "edges": [
+        [
+          0,
+          1,
+          "5"
+        ],
+        [
+          2,
+          3,
+          "3"
+        ]
+      ],
+      "enumerated_risk_exempt_edges": [
+        0,
+        1
+      ],
+      "experiment": "risk-bounded two-gate instance delta=3/4",
+      "minimum_cut_dual": "0",
+      "optimum_cost": "0",
+      "posterior_risk": "3/4",
+      "posterior_risk_limit": "3/4",
+      "selected_node_reads": [],
+      "unverified_gates": [
+        0,
+        1
+      ],
+      "vertex_costs": [
+        "1",
+        "1",
+        "5",
+        "5"
+      ],
+      "vertex_count": 4
+    },
+    {
+      "alphabet": 2,
+      "baseline_all_nodes_cost": "10",
+      "baseline_direct_only_cost": "30",
+      "cached_vertices": [],
+      "direct_gate_reads": [],
+      "edge_count": 10,
+      "edges": [
+        [
+          0,
+          1,
+          "3"
+        ],
+        [
+          0,
+          2,
+          "3"
+        ],
+        [
+          0,
+          3,
+          "3"
+        ],
+        [
+          0,
+          4,
+          "3"
+        ],
+        [
+          1,
+          2,
+          "3"
+        ],
+        [
+          1,
+          3,
+          "3"
+        ],
+        [
+          1,
+          4,
+          "3"
+        ],
+        [
+          2,
+          3,
+          "3"
+        ],
+        [
+          2,
+          4,
+          "3"
+        ],
+        [
+          3,
+          4,
+          "3"
+        ]
+      ],
+      "enumerated_risk_exempt_edges": [],
+      "experiment": "risk-bounded full five-agent instance delta=3/4",
+      "minimum_cut_dual": "10",
+      "optimum_cost": "10",
+      "posterior_risk": "0",
+      "posterior_risk_limit": "3/4",
+      "selected_node_reads": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "unverified_gates": [],
+      "vertex_costs": [
+        "2",
+        "2",
+        "2",
+        "2",
+        "2"
+      ],
+      "vertex_count": 5
+    }
+  ],
+  "model_version": "nightfall-change-local-authority-v0.1",
+  "scope": "independent uniform edge halves, exact deterministic node/direct observations; safe-path cost"
+}
