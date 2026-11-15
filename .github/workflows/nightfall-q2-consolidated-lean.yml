@@ -68,6 +68,17 @@ jobs:
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/q2-consolidated/c4-scalar/bernstein.json
           python3 research/nightfall/2026-11-quadratic-law-free-audit/check_shifted_c4_bernstein.py
+          cp "$SRC/ShiftedC4Scalar.lean" /tmp/mathlib4/ShiftedC4Scalar.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ShiftedC4Scalar.olean ShiftedC4Scalar.lean)
+          N=Nightfall.ShiftedC4Scalar
+          python3 scripts/lean_bridge.py "$SRC/ShiftedC4Scalar.lean" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.shifted_c4_from_strong_moments \
+            --json-out lean-receipts/q2-consolidated/c4-scalar/interpolation.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-consolidated/c4-scalar/interpolation.json
+
 
       - name: Compile every source module once, then certify declarations in order
         run: |
