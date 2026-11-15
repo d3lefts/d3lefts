@@ -144,6 +144,89 @@ theorem operational_effect_has_fresh_certificate
       M.certificateEpoch (R.abstract x) :=
   admitted_effect_current M hp.2.1 he
 
+
+/-- A concrete execution trace of the modeled actual system. The environment
+may choose any permitted observation sequence. This is an operational *trace*
+type, not an asserted Linux/AWS/physical refinement. -/
+inductive Execution
+    (M : Model Belief Action Observation)
+    {Actual : Type z} (R : OperationalRefinement M Actual) :
+    {n : ℕ} → Actual → Policy Action Observation n → List Actual → Prop where
+  | finish (x : Actual) :
+      Execution M R x (.finish) [x]
+  | execute {n : ℕ} {x y : Actual} {a : Action} {o : Observation}
+      {k : Observation → Policy Action Observation n}
+      {rest : List Actual}
+      (hstep : R.actualStep x a o y)
+      (hrest : Execution M R y (k o) rest) :
+      Execution M R x (.execute a k) (x :: rest)
+
+/-- The entire finite operational execution is safe, not only its first step.
+This holds for EVERY horizon and EVERY adversarial observation trace, provided
+the actual-to-belief forward simulation and policy validity hypotheses hold. -/
+theorem execution_all_safe
+    (M : Model Belief Action Observation)
+    {Actual : Type z} (R : OperationalRefinement M Actual)
+    {n : ℕ} {x : Actual} {p : Policy Action Observation n}
+    {trace : List Actual} (hr : Execution M R x p trace) :
+    Valid M (R.abstract x) p →
+      ∀ y, y ∈ trace → M.safe (R.abstract y) := by
+  induction hr with
+  | finish x =>
+      intro hp y hy
+      simp only [List.mem_singleton] at hy
+      subst y
+      exact valid_state_safe M hp
+  | execute hstep hrest ih =>
+      intro hp y hy
+      rcases List.mem_cons.mp hy with heq | htail
+      · subst y
+        exact valid_state_safe M hp
+      · exact ih (operational_step_safe M R hp hstep).2 y htail
+
+/-- Source-aware certificate reuse across a changed version assignment. -/
+def Reusable {Source : Type*} (dependencies : Finset Source)
+    (certificateVersion currentVersion : Source → ℕ) : Prop :=
+  ∀ i, i ∈ dependencies → certificateVersion i = currentVersion i
+
+theorem reusable_after_irrelevant_change {Source : Type*}
+    (dependencies : Finset Source)
+    (certificateVersion oldVersion newVersion : Source → ℕ)
+    (hvalid : Reusable dependencies certificateVersion oldVersion)
+    (hunchanged : ∀ i, i ∈ dependencies →
+      oldVersion i = newVersion i) :
+    Reusable dependencies certificateVersion newVersion := by
+  intro i hi
+  exact (hvalid i hi).trans (hunchanged i hi)
+
+theorem changed_dependency_invalidates {Source : Type*}
+    (dependencies : Finset Source)
+    (certificateVersion oldVersion newVersion : Source → ℕ)
+    (hvalid : Reusable dependencies certificateVersion oldVersion)
+    {i : Source} (hi : i ∈ dependencies)
+    (hchanged : oldVersion i ≠ newVersion i) :
+    ¬ Reusable dependencies certificateVersion newVersion := by
+  intro hnew
+  apply hchanged
+  exact (hvalid i hi).symm.trans (hnew i hi)
+
+theorem reusable_union_iff {Source : Type*} [DecidableEq Source]
+    (D E : Finset Source) (certificateVersion currentVersion : Source → ℕ) :
+    Reusable (D ∪ E) certificateVersion currentVersion ↔
+      Reusable D certificateVersion currentVersion ∧
+        Reusable E certificateVersion currentVersion := by
+  constructor
+  · intro h
+    constructor
+    · intro i hi
+      exact h i (Finset.mem_union.mpr (Or.inl hi))
+    · intro i hi
+      exact h i (Finset.mem_union.mpr (Or.inr hi))
+  · intro h i hi
+    rcases Finset.mem_union.mp hi with hD | hE
+    · exact h.1 i hD
+    · exact h.2 i hE
+
 def Feasible (M : Model Belief Action Observation)
     (n : ℕ) (b : Belief) : Prop :=
   ∃ p : Policy Action Observation n, Valid M b p
