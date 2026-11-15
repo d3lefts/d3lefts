@@ -52,7 +52,7 @@ for the auditing probability under S. This is a hypothesis-testing indistinguish
 
 ### Cheapest decisive experiment already checked
 
-For alpha=1/10, delta=1/100, c=100, exact rational exhaustive enumeration of every (audit probability, unaudited grant probability) on a 0.01 grid (5,252 candidates satisfying q+g<=1 before safety/usefulness tests) produced optimal q=89/100, g=1/100, audit cost=89 units. This agrees with the analytical lower and constructive upper bound. The arithmetic enumeration does NOT substitute for an independent proof.
+For alpha=1/10, delta=1/100, c=100, exact rational exhaustive enumeration of every (audit probability, unaudited grant probability) on a 0.01 grid (5,151 candidates satisfying q+g<=1 before safety/usefulness tests) produced optimal q=89/100, g=1/100, audit cost=89 units. This agrees with the analytical lower and constructive upper bound. The arithmetic enumeration does NOT substitute for an independent proof.
 
 The baseline is intentionally elementary. Its purpose is to rule out impossible claims that cheap, perfectly uninformative evidence can guarantee both high legitimate availability and low unsafe admission with no trusted audits.
 
