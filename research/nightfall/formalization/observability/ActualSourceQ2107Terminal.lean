@@ -1,5 +1,6 @@
 import ActualSourceQ2107Local
 import ActualSourceIntegratedSharp
+import ActualSourceIntegratedSharp
 
 /-!
 # Fully unrestricted finite Q2: C107.3934 sharp-section shifted owner
