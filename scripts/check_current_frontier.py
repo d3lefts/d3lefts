@@ -153,7 +153,7 @@ def audit(data: dict, root: Path = ROOT) -> dict:
         insist(git_blob(content) == sha, f"{cid}: source bytes do not match original receipt")
         if decl is not None:
             short = decl.split(".")[-1]
-            insist(re.search(r"\btheorem\\s+" + re.escape(short) + r"\b",
+            insist(re.search(r"\btheorem\s+" + re.escape(short) + r"\b",
                              content.decode("utf-8")) is not None,
                    f"{cid}: missing exact theorem declaration")
     return {"status": "PASS", "claims": len(claims),
