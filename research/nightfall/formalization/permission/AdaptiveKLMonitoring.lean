@@ -98,4 +98,60 @@ theorem finite_horizon_adaptive_kl_cost
         klDiv (safe n) (unsafeWorld n) := klDiv_map_le _ _ hpermit
     _ ≤ rate * (∑ t ∈ Finset.range n, cost t) := htotal n
 
+
+/-- The expected monitor-cost requirement, expressed without division by a
+possibly zero or infinite KL-per-cost rate. If the final decision has
+divergence at least `requiredInfo`, any compatible adaptive policy has
+`requiredInfo ≤ rate * expectedCost`. -/
+theorem adaptive_required_information_cost
+    (safe unsafeWorld : ℕ → Measure H)
+    [∀ t, IsFiniteMeasure (safe t)] [∀ t, IsFiniteMeasure (unsafeWorld t)]
+    (κ η : ℕ → Kernel H H)
+    [∀ t, IsMarkovKernel (κ t)] [∀ t, IsMarkovKernel (η t)]
+    (update : ℕ → H × H → H) (hupdate : ∀ t, Measurable (update t))
+    (hs : ∀ t, safe (t+1) = ((safe t).compProd (κ t)).map (update t))
+    (hu : ∀ t, unsafeWorld (t+1) = ((unsafeWorld t).compProd (η t)).map (update t))
+    (hinitial : safe 0 = unsafeWorld 0)
+    (rate : ENNReal) (cost : ℕ → ENNReal)
+    (hchannel : ∀ t, klDiv ((safe t).compProd (κ t))
+        ((safe t).compProd (η t)) ≤ rate * cost t)
+    (n : ℕ) (permit : H → Bool) (hpermit : Measurable permit)
+    (requiredInfo : ENNReal)
+    (hrequired : requiredInfo ≤ klDiv ((safe n).map permit)
+        ((unsafeWorld n).map permit)) :
+    requiredInfo ≤ rate * (∑ t ∈ Finset.range n, cost t) := by
+  exact hrequired.trans
+    (finite_horizon_adaptive_kl_cost safe unsafeWorld κ η update hupdate
+      hs hu hinitial rate cost hchannel n permit hpermit)
+
+/-- A finite-to-infinite *uniform horizon envelope*:
+if the partial expected costs are uniformly bounded by C, the supremum
+of finite-horizon decision divergences is bounded by rate*C. This is
+not a theorem about an almost-surely finite unbounded stopping-time
+final decision unless its KL is separately related to this supremum. -/
+theorem adaptive_uniform_horizon_envelope
+    (safe unsafeWorld : ℕ → Measure H)
+    [∀ t, IsFiniteMeasure (safe t)] [∀ t, IsFiniteMeasure (unsafeWorld t)]
+    (κ η : ℕ → Kernel H H)
+    [∀ t, IsMarkovKernel (κ t)] [∀ t, IsMarkovKernel (η t)]
+    (update : ℕ → H × H → H) (hupdate : ∀ t, Measurable (update t))
+    (hs : ∀ t, safe (t+1) = ((safe t).compProd (κ t)).map (update t))
+    (hu : ∀ t, unsafeWorld (t+1) = ((unsafeWorld t).compProd (η t)).map (update t))
+    (hinitial : safe 0 = unsafeWorld 0)
+    (rate : ENNReal) (cost : ℕ → ENNReal)
+    (hchannel : ∀ t, klDiv ((safe t).compProd (κ t))
+        ((safe t).compProd (η t)) ≤ rate * cost t)
+    (C : ENNReal) (hcost : ∀ n, (∑ t ∈ Finset.range n, cost t) ≤ C)
+    (permit : H → Bool) (hpermit : Measurable permit) :
+    (⨆ n : ℕ, klDiv ((safe n).map permit)
+      ((unsafeWorld n).map permit)) ≤ rate * C := by
+  apply iSup_le
+  intro n
+  calc
+    klDiv ((safe n).map permit) ((unsafeWorld n).map permit) ≤
+        rate * (∑ t ∈ Finset.range n, cost t) :=
+      finite_horizon_adaptive_kl_cost safe unsafeWorld κ η update hupdate
+        hs hu hinitial rate cost hchannel n permit hpermit
+    _ ≤ rate * C := mul_le_mul_left' (hcost n) rate
+
 end Nightfall.PricePermission.AdaptiveKL
