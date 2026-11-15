@@ -106,10 +106,9 @@ def process(state,message,auth_uid,key):
             new.update(source_hash=src,version=version)
         else:return state,{'ok':False,'reason':'invalid_update_type'}
         new['epoch']=state['epoch']+1
-        new['nonces']=[]  # all earlier signed tickets are now stale
         return new,{'ok':True,'epoch':new['epoch'],'reason':'trusted_version_advanced'}
     if operation=='revoke':
-        new=dict(state,revoked=True,epoch=state['epoch']+1,nonces=[])
+        new=dict(state,revoked=True,epoch=state['epoch']+1)
         return new,{'ok':True,'epoch':new['epoch'],'reason':'trusted_authority_revoked'}
     return state,{'ok':False,'reason':'unsupported_operation'}
 
@@ -132,10 +131,10 @@ def _parse_framed_request(conn, deadline):
         except socket.timeout:continue
         if not chunk:break
         buf.extend(chunk)
-        if b'\\n' in chunk:break
+        if b'\n' in chunk:break
     if len(buf)>=MAX_REQUEST:raise ValueError('request too large')
     if not buf:raise ValueError('empty request')
-    return bytes(buf).partition(b'\\n')[0]
+    return bytes(buf).partition(b'\n')[0]
 
 def _evaluate_bounded(raw, statefile, authorized_uid, key, peer_uid,
                       deadline, server, conn):
