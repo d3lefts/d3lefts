@@ -1,5 +1,15 @@
 # Active mathematical Proof Passport expansion — updated 15 November 2026
 
+## 15 November 2026 — v16 certificate source-custody supplement
+
+- **Current dated receipt index:** [`docs/current-lean-proof-receipts-20261115.json`](../../../docs/current-lean-proof-receipts-20261115.json) (five exact named source receipts, preserving the historic 14 November ledger).
+- **Scoped proof passport:** [`PROOF_PASSPORT_V16_20261115.md`](PROOF_PASSPORT_V16_20261115.md).
+- **Reproducibility gate:** `python3 scripts/check_lean_receipts_v16.py` checks Git blob identity, theorem names, run references and open sub-100 limitations. **This is a source-hash audit, not a new Lean kernel compilation.**
+- **Strongest unrestricted certified finite Q2:** `K≈105.741756923658` source PR #564, original pinned Lean run #43671321904 and exact-source replay #43678232064.
+- **Pure-sector C95:** restricted to zero singleton components. **C96.100:** conditional on unproved six-B cover. **Unrestricted C96.57352:** open.
+- PRs #569/#572/#574/#576/#577 provide exact checks or analytic proofs within their stated scopes, not automatic new source-level Lean claims. The 15 active passport identities and frozen historic registry remain unchanged.
+
+
 ## v15 — merged source-certified unrestricted Q2 C105.7417569
 
 The 15 active claim identities and 11 frozen historical records remain unchanged. The strongest **merged and pinned source-certified** finite common-alphabet degree-two coefficient is now **C₂ = [2√3(1+√2)+48/25]² ≈ 105.741756923658**, PR #564 (run 43671321904; named theorem `ActualSourceQ2105Terminal.actual_source_q2_105_unconditional`; exact source blob `ed945639f7cbe26ba8fdb50d691127c01cdf863f`). The earlier C107.393 (#558), C364.553 (#525), C736.673 and C1064.958 are retained as valid superseded certificates. The full independent-product C96 theorem remains open. PR #570 strictly proves only an **implication under an extra six-B source graph cover hypothesis**; this is not known to hold universally.

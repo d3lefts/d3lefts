@@ -1,0 +1,30 @@
+name: NIGHTFALL source-exact Lean receipt v16 (not kernel compilation)
+on:
+  pull_request:
+    paths:
+      - 'docs/current-lean-proof-receipts-20261115.json'
+      - 'docs/active-proof-passport.json'
+      - 'research/catalogue/CURRENT_FRONTIER.json'
+      - 'scripts/check_lean_receipts_v16.py'
+      - 'research/nightfall/formalization/**/*.lean'
+      - '.github/workflows/nightfall-lean-receipts-v16.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/current-lean-proof-receipts-20261115.json'
+      - 'docs/active-proof-passport.json'
+      - 'research/catalogue/CURRENT_FRONTIER.json'
+      - 'scripts/check_lean_receipts_v16.py'
+      - 'research/nightfall/formalization/**/*.lean'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-original-source-blobs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Validate exact Lean source blob receipt and status
+        run: python3 scripts/check_lean_receipts_v16.py

@@ -1,0 +1,123 @@
+{
+  "schema": "nightfall-current-named-lean-proof-receipts-v1",
+  "version": 1,
+  "as_of": "2026-11-15 UTC",
+  "target_repository": "d3lefts/d3lefts",
+  "base_main_after_research_merges": "c472505a28ab32097a37bd1803a65d486ce4ba87",
+  "historical_frozen_67_register": "docs/lean-certificate-provenance.json",
+  "prior_q2_cert": "docs/q2-source-lean-certificate-20261114.json",
+  "pin": {
+    "lean": "leanprover/lean4:v4.36.0-rc2",
+    "mathlib_commit": "9d581dfff2e41de989072ea63abf3daf69311520",
+    "allowed_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ]
+  },
+  "receipt_scope": "Per-PR, current-head strict named-declaration certificates. Not a single combined after-merge Lean rebuild; mainline source integrity requires separate registry audit. Source SHA-1 hashes identify exact Git blobs.",
+  "non_lean_evidence": [
+    {
+      "pr": 493,
+      "merge_sha": "c472505a28ab32097a37bd1803a65d486ce4ba87",
+      "run": 43626344870,
+      "claim": "Finite exact rational hybrid assurance cut and shared-evidence test package, not Lean or production enforcement",
+      "status": "finite_exact_replay_only"
+    }
+  ],
+  "status": {
+    "kernel_validity": "four scoped source families have successful pinned named-declaration CI at their respective PR heads",
+    "independent_human_review": false,
+    "global_novelty": false,
+    "full_infinite_product_theorem": false,
+    "full_source_matched_SCIF_terminal": false,
+    "physical_agent_enforcement": false
+  },
+  "scope_update": "2026-11-15: merged source-exact Lean receipts, independently bounded proof hypotheses; previous data retained as historical v14 snapshot",
+  "current_unrestricted_degree_two": {
+    "coefficient": 105.741756923658,
+    "pr": 564,
+    "receipt_run": 43671321904,
+    "integrated_replay_run": 43678232064
+  },
+  "unrestricted_sub100": "NOT PROVED",
+  "november15_named_lean_receipts": [
+    {
+      "id": "unrestricted-q2-105",
+      "source": "research/nightfall/formalization/observability/ActualSourceQ2105Terminal.lean",
+      "source_git_blob_sha1": "ed945639f7cbe26ba8fdb50d691127c01cdf863f",
+      "theorem": "actual_source_q2_105_unconditional",
+      "pinned_lean_original_run": 43671321904,
+      "integrated_exact_source_replay": 43678232064,
+      "certification_scope": "PR #564; finite common alphabet arbitrary normalized independent marginals including zero atoms and unrestricted singleton components; no extra premises",
+      "source_proof_status": "unrestricted-finite-product",
+      "all_length_c96_proved": false
+    },
+    {
+      "id": "pure-sector-q2-95",
+      "source": "research/nightfall/formalization/observability/ActualSourcePureQ2Sharp.lean",
+      "source_git_blob_sha1": "fa702f23b822b79b852c780c8c2b4e6cf92763dd",
+      "theorem": "actual_source_pure_q2_95_063_unconditional",
+      "pinned_lean_original_run": 43664979586,
+      "integrated_exact_source_replay": null,
+      "certification_scope": "PR #553; every canonical singleton must vanish; NOT unrestricted",
+      "source_proof_status": "restricted-unconditional",
+      "all_length_c96_proved": false
+    },
+    {
+      "id": "conditional-q2-96-six-cover",
+      "source": "research/nightfall/formalization/observability/ActualSourceQ296SixCover.lean",
+      "source_git_blob_sha1": "8de1ad77a9f218d0df3673d8574ddd6592556865",
+      "theorem": "actual_source_q2_96_given_six_cover",
+      "pinned_lean_original_run": 43676624010,
+      "integrated_exact_source_replay": null,
+      "certification_scope": "PR #570; requires additional source-compatible six-B graph owner cover; NOT universal",
+      "source_proof_status": "conditional-implication-only",
+      "all_length_c96_proved": false
+    },
+    {
+      "id": "one-increment-hilbert",
+      "source": "research/nightfall/formalization/q2_shifted/ShiftedOneIncrementL1L2.lean",
+      "source_git_blob_sha1": "52b36e1bb6cec2ae1f26bf35323b87581efbf76f",
+      "theorem": "See source for exact named declarations",
+      "pinned_lean_original_run": 43676488130,
+      "integrated_exact_source_replay": null,
+      "certification_scope": "PR #571; one increment only; cannot tensorize as an all-length theorem",
+      "source_proof_status": "one-increment-only",
+      "all_length_c96_proved": false
+    },
+    {
+      "id": "finite-five-cover-obstruction",
+      "source": "research/nightfall/formalization/observability/ExactFiveCoverObstruction.lean",
+      "source_git_blob_sha1": "16e228ef88a87eec7908fdc829735dd63419094a",
+      "theorem": "owner_cover_cost_ge_five",
+      "pinned_lean_original_run": 43677348342,
+      "integrated_exact_source_replay": null,
+      "certification_scope": "PR #573; finite polynomial/abstract cover obstruction; no Lean-certified source-kernel linkage",
+      "source_proof_status": "finite-abstract-lemma-only",
+      "all_length_c96_proved": false
+    }
+  ],
+  "uncertified_research_only": [
+    {
+      "pr": 569,
+      "scope": "746493 exact finite Hilbert checks; not universal proof"
+    },
+    {
+      "pr": 572,
+      "scope": "orthogonal all-length analytic argument; no Lean certification"
+    },
+    {
+      "pr": 574,
+      "scope": "symmetric all-length first-chaos analytic argument; no Lean certification"
+    },
+    {
+      "pr": 576,
+      "scope": "finite optimal recertification exact tests; no Lean certification"
+    },
+    {
+      "pr": 577,
+      "scope": "23400 exact asymmetric first-chaos finite checks; no universal proof"
+    }
+  ]
+}
