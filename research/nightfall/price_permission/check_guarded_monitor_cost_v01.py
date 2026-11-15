@@ -66,7 +66,7 @@ def audit():
     for n, repetitions in ((2,100),(3,100),(4,100),(5,100),(6,40),(7,10)):
         for k in range(repetitions):
             prices = tuple(Q(rng.randint(1,20),rng.randint(1,5)) for _ in range(n))
-            prior = tuple(Q(rng.randint(1,20)) for _ in range(n))
+            prior = tuple(rng.randint(1,20) for _ in range(n))
             opt, order = fast_opt(prices,prior)
             brute = min(cost(o,prices,prior) for o in permutations(range(n)))
             bellman = independent_bellman(prices,prior)
