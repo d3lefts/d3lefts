@@ -431,7 +431,145 @@
   "attribution": "Research led by Devin J. Wright through NIGHTFALL with substantial AI-assisted drafting and proof attempts. Imported foundations include Efron–Stein/Hoeffding decomposition and Turturean's Aaronson–Ambainis cube theorem and antipodal inequality.",
   "publication_rule": "Do not promote any record to externally certified, global novelty or published theorem status without a dated prior-art audit and independent mathematical verification. The 39-module Lean attribution and quarantine ledger lives in docs/lean-certificate-provenance.json.",
   "current_named_lean_receipts": "docs/current-lean-proof-receipts-20261114.json",
-  "current_named_certificate_scope": "[object Object] v14 cross-repo PR #525/#529/#528 certified scope; draft #554 ten exact-head Lean declarations, local integration success; no physical safety proof.",
+  "current_named_certificate_scope": {
+    "finite_q2": {
+      "status": "strict_kernal_checked_finite_common_alphabet",
+      "pr": 494,
+      "run": 43627249467,
+      "coefficient": "407+138sqrt(2)+188sqrt(3)+56sqrt(6)",
+      "value_approx": "1064.958449026294",
+      "independent_human_review": false,
+      "strongest_merged": {
+        "pr": 525,
+        "run": 43644790107,
+        "head": "a558a4dd7a2f2c7db521658c6d59d204758eb934",
+        "source_git_blob": "5263d9da1ec2f12fbc8986c3698859faedb390a3",
+        "declaration": "Nightfall.Observability.ActualSourceQ2364Terminal.actual_source_q2_364_unconditional",
+        "coefficient": "[5√3+2(1+√2)(√13−√3)+8√((5√5−11)/6)]²",
+        "value_approx": "364.5526832774",
+        "scope": "finite common alphabet, arbitrary heterogeneous site laws incl zero atoms; unrestricted original source degree ≤2 canonical singletons",
+        "added_premises": []
+      },
+      "prior_strongest_merged": {
+        "pr": 498,
+        "run": 43633180605,
+        "coefficient": "[257/20+(9/4)√2+5√3+√6]^2",
+        "value_approx": "736.673197758287",
+        "scope": "finite common alphabet, genuine source, degree ≤2"
+      },
+      "conditionals": [
+        {
+          "pr": 525,
+          "run": 43644790107,
+          "coefficient_approx": 353.2929930769,
+          "extra_premise": "sharp original-source integrated section budget; NOT discharged in terminal"
+        },
+        {
+          "pr": 540,
+          "coefficient_approx": 99.2629850192,
+          "status": "draft scalar implication, unrestricted source premise open"
+        },
+        {
+          "pr": 558,
+          "coefficient_approx": 107.3934498998,
+          "status": "unmerged stacked original-source draft, pending exact source/Lean gate"
+        }
+      ]
+    },
+    "scif": {
+      "status": "strict_kernel_checked_full_finite_original_source_terminal",
+      "pr": 529,
+      "run": 43640173972,
+      "full_source_scif_terminal": true,
+      "finite_all_degree_changed_law_risk": {
+        "pr": 514,
+        "run": 43635955108,
+        "terminal": true,
+        "scope": "finite common alphabet all degrees, original p to normalized q, actual influence shifts; NOT generated-owner certificate"
+      },
+      "terminal": {
+        "declaration": "Nightfall.SCIFCompleteOriginalSource.scif_complete_finite_original_source_terminal",
+        "source_sha256": "7e470bd97b5078aae76ea2aa047afa0fc1cf203260d28fa17bdf81c25f9d171e",
+        "assumptions": "old source-generated owner envelope; finite common alphabet, original source f,p, single-site law edit",
+        "optimal_lifecycle_cost": false,
+        "real_effect_authority": false
+      }
+    },
+    "authority": {
+      "status": "strict_kernel_checked_logic_and_conditional_transfer",
+      "pr": 495,
+      "run": 43630294034,
+      "unconditional_infinite_product": false
+    },
+    "horizon": {
+      "status": "strict_kernel_checked_specified_Bellman_recurrence",
+      "pr": 497,
+      "run": 43629420558,
+      "arbitrary_adaptive_oracle": false
+    },
+    "unrestricted_efron_stein": {
+      "analytic_theorem": "established classical Efron–Stein over arbitrary index sets and arbitrary coordinate probability spaces, real L2",
+      "analytic_proof_passport": "research/nightfall/2026-11-active-passports/UNRESTRICTED_EFRON_STEIN_PROOF_PASSPORT_20261114.md",
+      "infinite_pi_cylinder": {
+        "pr": 501,
+        "run": 43631863039,
+        "full_l2": false
+      },
+      "source_exact_cylinder_variance": {
+        "pr": 512,
+        "run": 43635195844,
+        "full_l2": false
+      },
+      "finite_all_degree": {
+        "pr": 506,
+        "run": 43632637271,
+        "common_finite_alphabet_only": true
+      },
+      "full_original_measure_infinite_pi_l2_lean": false,
+      "missing_kernel_gates": [
+        "all-L2 cylinder density",
+        "actual-source commuting finite/off-coordinate conditional expectations",
+        "finite measurable heterogeneous-alphabet Efron-Stein",
+        "actual projected influence contraction",
+        "one strict unconditional single-lemma terminal"
+      ],
+      "independent_human_review": false,
+      "originality": "classical theorem; finite Lean antecedent YuanheZ/lean-stat-learning-theory 2026",
+      "measurable_real_countable_support": {
+        "pr": 520,
+        "run": 43637631337,
+        "source": "research/nightfall/formalization/universal/InfinitePiRealCountableSupport.lean",
+        "kernel": true,
+        "full_l2": false
+      }
+    },
+    "agent_safety": {
+      "pr": 528,
+      "run": 43639554615,
+      "declaration": "Nightfall.AgentSafety.arbitrary_agent_all_horizons_safe",
+      "scope": "all finite trace horizons under complete-mediation and sound-model hypotheses; not real-world universal safety",
+      "actual_boundary_verified": false
+    },
+    "semantic_fencing": {
+      "merged_finite_pr": 537,
+      "merged_finite_run": 43648303705,
+      "draft_lean_pr": 554,
+      "strict_draft_lean_run": 43662280902,
+      "draft_lean_declarations": 10,
+      "finite_safe_bellman": true,
+      "operational_service_draft_pr": 554,
+      "local_security_run": 43662280945,
+      "model_generated_trial": {
+        "pr": 557,
+        "run": 43662000190,
+        "attempts": 3,
+        "valid_attack_attempts": 0,
+        "attack_successes": 0,
+        "safety_rate_inference": false
+      },
+      "real_external_effect_complete_mediation": false
+    }
+  },
   "current_frontier_reference": "research/catalogue/CURRENT_FRONTIER.json",
   "claim_count": 15
 }
