@@ -85,7 +85,8 @@ theorem actual_source_q2_105_unconditional
             (fun k => p (neighborIndex i (ownedNeighbors c i) k))
             (fun k b => hp (neighborIndex i (ownedNeighbors c i) k) b)
             (ownedNeighbors c i).card w) (Real.sqrt_nonneg _))
-      have hcpart : 0 ≤ (6*c i)/25 := by positivity
+      have hcpart : 0 ≤ (6*c i)/25 := by
+        exact div_nonneg (mul_nonneg (by norm_num) (hc i)) (by norm_num)
       exact add_nonneg (mul_nonneg (Real.sqrt_nonneg _) hu) hcpart
     have hreplace :
         Real.sqrt (sourceInfluence p f i) *
@@ -114,8 +115,22 @@ theorem actual_source_q2_105_unconditional
       _ ≤ ∑ i : ι, T*(Real.sqrt 3*u i+(6*c i)/25) :=
         Finset.sum_le_sum (fun i _ => hsite i)
       _ = T*(Real.sqrt 3*(∑ i : ι, u i)+(6*(∑ i : ι, c i))/25) := by
-        simp only [mul_add, Finset.sum_add_distrib, ← Finset.mul_sum,
-          Finset.sum_div]
+        have hcoef : (∑ i : ι, (6*c i)/25) =
+            (6*(∑ i : ι, c i))/25 := by
+          calc
+            _ = ∑ i : ι, (6/25:ℝ)*c i := by
+              apply Finset.sum_congr rfl
+              intro i _
+              ring
+            _ = (6/25:ℝ)*(∑ i : ι, c i) := by
+              rw [Finset.mul_sum]
+            _ = (6*(∑ i : ι, c i))/25 := by ring
+        calc
+          (∑ i : ι, T*(Real.sqrt 3*u i+(6*c i)/25)) =
+              T*(∑ i : ι, Real.sqrt 3*u i+(6*c i)/25) := by
+                rw [Finset.mul_sum]
+          _ = T*(Real.sqrt 3*(∑ i : ι, u i)+(6*(∑ i : ι, c i))/25) := by
+              rw [Finset.sum_add_distrib, ← Finset.mul_sum, hcoef]
   have hbudget :
       Real.sqrt 3*(∑ i : ι, u i)+(6*(∑ i : ι, c i))/25 ≤
         ((2*(1+Real.sqrt 2))*Real.sqrt 3+48/25)*B := by
