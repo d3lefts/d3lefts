@@ -1,0 +1,50 @@
+name: NIGHTFALL canonical frontier and CI lane contract
+on:
+  pull_request:
+    paths:
+      - 'research/catalogue/CURRENT_FRONTIER.json'
+      - 'research/nightfall/formalization/observability/**'
+      - 'research/nightfall/formalization/q2_shifted/**'
+      - 'research/nightfall/formalization/agent_safety/**'
+      - 'research/nightfall/assurance/semantic-fencing-v0.3/**'
+      - 'scripts/check_current_frontier.py'
+      - 'scripts/check_ci_lane_scope.py'
+      - '.github/workflows/verify-site.yml'
+      - '.github/workflows/nightfall-frozen-research-replay.yml'
+      - '.github/workflows/nightfall-frontier-contract.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/catalogue/CURRENT_FRONTIER.json'
+      - 'research/nightfall/formalization/observability/**'
+      - 'research/nightfall/formalization/q2_shifted/**'
+      - 'research/nightfall/formalization/agent_safety/**'
+      - 'research/nightfall/assurance/semantic-fencing-v0.3/**'
+      - 'scripts/check_current_frontier.py'
+      - 'scripts/check_ci_lane_scope.py'
+      - '.github/workflows/verify-site.yml'
+      - '.github/workflows/nightfall-frozen-research-replay.yml'
+      - '.github/workflows/nightfall-frontier-contract.yml'
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  frontier-guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1, Node 24
+        with:
+          persist-credentials: false
+      - name: Verify fixed original-head theorem scope and source custody
+        run: python3 scripts/check_current_frontier.py --self-test
+      - name: Check research-vs-browser CI routing and original replay preservation
+        run: python3 scripts/check_ci_lane_scope.py --self-test
+      - name: State what this check does NOT prove
+        run: |
+          echo 'This is a local consistency, hash and claim-scope gate.'
+          echo 'It does not run Lean, establish novel priority or prove physical effect mediation.'

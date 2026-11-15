@@ -1,0 +1,92 @@
+name: NIGHTFALL Q2 shifted Hilbert odd-term Lean
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/q2_shifted/ShiftedHilbertOddTerm.lean'
+      - 'research/nightfall/formalization/q2_shifted/ShiftedHilbertTwoIncrement.lean'
+      - 'research/nightfall/formalization/q2_shifted/ShiftedHilbertManyIncrement.lean'
+      - '.github/workflows/nightfall-q2-shifted-hilbert-odd.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nightfall-q2-shifted-odd-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  shifted-odd-term:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile minimal independent Hilbert dependency DAG
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import importlib.util, pathlib, shutil, subprocess
+          spec=importlib.util.spec_from_file_location("q2cert", "scripts/nightfall_q2_certify.py")
+          mod=importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(mod)
+          files=mod.local_sources()
+          order=mod.closure("ShiftedHilbertManyIncrement", files)
+          print("Compiling", len(order), "source modules", flush=True)
+          dst=pathlib.Path("/tmp/mathlib4")
+          out=dst/".lake/build/lib/lean"
+          out.mkdir(parents=True,exist_ok=True)
+          for name in order:
+              shutil.copyfile(files[name],dst/(name+".lean"))
+              print("BUILD",name,flush=True)
+              subprocess.run(["lake","env","lean","-o",str(out/(name+".olean")),name+".lean"],cwd=dst,check=True,timeout=1200)
+          PY
+      - name: Strict named shifted Hilbert odd-term certificate
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-shifted-odd
+          SRC=research/nightfall/formalization/q2_shifted/ShiftedHilbertOddTerm.lean
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Observability.ShiftedHilbertOddTerm.independent_shifted_odd_term \
+            --json-out lean-receipts/q2-shifted-odd/receipt.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-shifted-odd/receipt.json
+          SRC=research/nightfall/formalization/q2_shifted/ShiftedHilbertTwoIncrement.lean
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Observability.ShiftedHilbertTwoIncrement.independent_shifted_two_hilbert_fourth \
+            --json-out lean-receipts/q2-shifted-odd/two-increment.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-shifted-odd/two-increment.json
+          SRC=research/nightfall/formalization/q2_shifted/ShiftedHilbertManyIncrement.lean
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Observability.ShiftedHilbertManyIncrement.shifted_mean \
+            --decl Nightfall.Observability.ShiftedHilbertManyIncrement.shifted_second_moment \
+            --decl Nightfall.Observability.ShiftedHilbertManyIncrement.arbitrary_law_many_shifted_hilbert_fourth \
+            --json-out lean-receipts/q2-shifted-odd/many-increment.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-shifted-odd/many-increment.json
+      - name: Save source provenance
+        if: always()
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-shifted-odd
+          sha256sum research/nightfall/formalization/q2_shifted/ShiftedHilbertOddTerm.lean \
+            research/nightfall/formalization/q2_shifted/ShiftedHilbertTwoIncrement.lean \
+            research/nightfall/formalization/q2_shifted/ShiftedHilbertManyIncrement.lean \
+            > lean-receipts/q2-shifted-odd/SHA256SUMS
+          git rev-parse HEAD > lean-receipts/q2-shifted-odd/commit.txt
+      - name: Archive receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-q2-shifted-hilbert-odd-receipt
+          path: lean-receipts/q2-shifted-odd/
+          retention-days: 45

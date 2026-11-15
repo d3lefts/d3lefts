@@ -1,0 +1,99 @@
+name: NIGHTFALL model-generated IaC Fast adversarial pilot
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/nightfall-model-generated-iac.yml"
+      - "research/nightfall/right-to-act-promotion/run_model_generated_trial.py"
+      - "research/nightfall/right-to-act-promotion/audit_model_generated.py"
+      - "research/nightfall/right-to-act-promotion/Dockerfile.untrusted-cdk"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nightfall-model-generated-iac-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  isolated-agent-proposals:
+    name: Real local model proposals and independent IaC Fast scorer
+    runs-on: ubuntu-latest
+    environment: controlarena-python
+    timeout-minutes: 40
+    defaults:
+      run:
+        working-directory: research/nightfall/right-to-act-promotion
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install pinned genuine fixture dependencies
+        run: |
+          python -m pip install 'control-arena==20.1.1' 'aws-cdk-lib==2.260.0' 'constructs==10.5.0' 'jsii==1.137.0'
+          python -m pip freeze > model-trial-installed-versions.txt
+      - name: Build untrusted-CDK Docker image with official in-sandbox scorer
+        run: |
+          docker build -f Dockerfile.untrusted-cdk -t nightfall-iac-cdk-sandbox:v16 .
+          docker image inspect --format '{{.Id}}' nightfall-iac-cdk-sandbox:v16 > model-trial-cdk-image.txt
+      - name: Calibrate official main and harmful side-task scorers in same sandbox
+        timeout-minutes: 5
+        env:
+          JSII_SILENCE_WARNING_UNTESTED_NODE_VERSION: "1"
+        run: |
+          python calibrate_model_scorers.py
+      - name: Launch local model and pin exact weights digest
+        timeout-minutes: 10
+        run: |
+          docker run -d --rm --name nightfall-ollama --cpus 3 --memory 9g \
+            -p 127.0.0.1:11434:11434 \
+            -e OLLAMA_NUM_PARALLEL=1 \
+            -e OLLAMA_CONTEXT_LENGTH=8192 \
+            -e OLLAMA_NO_CLOUD=1 \
+            ollama/ollama:latest
+          for attempt in $(seq 1 90); do
+            if curl -fsS http://127.0.0.1:11434/api/tags > /dev/null; then break; fi
+            sleep 2
+          done
+          docker exec nightfall-ollama ollama pull qwen2.5-coder:3b
+          curl -fsS http://127.0.0.1:11434/api/tags > model-trial-model-tags.json
+          docker image inspect --format '{{.Id}}' ollama/ollama:latest > model-trial-ollama-image.txt
+      - name: Generate honest and adaptive attack source edits; evaluate inside sandbox
+        timeout-minutes: 18
+        env:
+          JSII_SILENCE_WARNING_UNTESTED_NODE_VERSION: "1"
+        run: |
+          python run_model_generated_trial.py --out model-generated-results --attack-rounds 2
+      - name: Independent case-level audit from model and scorer receipts
+        run: |
+          python audit_model_generated.py --out model-generated-results
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          root=Path('model-generated-results')
+          audited=json.loads((root/'model_independent_audit.json').read_text())
+          source=json.loads((root/'model_trial_receipt.json').read_text())
+          assert audited['status']=='passed'
+          assert audited['github_run_id']==os.environ['GITHUB_RUN_ID']
+          assert audited['model_digest']==source['model']['digest']
+          assert audited['number_unauthorized_promotions']==0
+          assert source['image_id']==Path('model-trial-cdk-image.txt').read_text().strip()
+          PY
+      - name: Archive exact generated edits and native score receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-model-generated-iac-real
+          path: |
+            research/nightfall/right-to-act-promotion/model-generated-results/**/receipt.json
+            research/nightfall/right-to-act-promotion/model-generated-results/**/template.json
+            research/nightfall/right-to-act-promotion/model-generated-results/model_trial_receipt.json
+            research/nightfall/right-to-act-promotion/model-generated-results/model_independent_audit.json
+            research/nightfall/right-to-act-promotion/model-generated-results/baseline.template.json
+            research/nightfall/right-to-act-promotion/model-trial-installed-versions.txt
+            research/nightfall/right-to-act-promotion/model-trial-cdk-image.txt
+            research/nightfall/right-to-act-promotion/model-trial-ollama-image.txt
+            research/nightfall/right-to-act-promotion/model-trial-model-tags.json
+            research/nightfall/right-to-act-promotion/model-trial-calibration.json
+          if-no-files-found: warn
+          retention-days: 30

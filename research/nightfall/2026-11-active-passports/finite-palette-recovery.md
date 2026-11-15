@@ -48,3 +48,10 @@ For a bounded independent-product function of interaction degree ≤d with a fin
 Independently rederive the countable-support representation for completed products, pin sections and nonzero component choices, create a single Fubini-good set for every finite queried-block sequence, and resolve the factor-two R/Δ discrepancy before any theorem promotion.
 
 **Gate:** Preserve this certificate and every failed or superseded result, but do not promote to published novel theorem without independent proof review and dated prior-art comparison. No frozen historical Proof Passport or five approved Original Findings are being changed.
+
+
+---
+
+## 14 November 2026 — v14 measure-theoretic scope check
+
+Keep finite-palette bounded-degree adaptive exact recovery as an analytic candidate outside the finite Lean core. New countable-coordinate support (#520) is a structural measure-theory bridge, not a proof of the manuscript's almost-sure recovery rate, conditional sampling feasibility, or the proposed `R/Δ` arithmetic. Do not infer full unrestricted-input recovery from finite-source Q2 #525 or the finite safe-case semantic-fencing Bellman theorem #554.

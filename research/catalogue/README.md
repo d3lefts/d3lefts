@@ -7,6 +7,14 @@ This directory is the **canonical scholarly claim index** for selected principal
 
 **November 11 publication-preflight revision:** [four-paper research and referee queue](../../papers/publication-preflight-20261111/README.md), [source-custody map](../../papers/publication-preflight-20261111/SOURCE_MAP.md), and [independent mathematical review gates](../../papers/publication-preflight-20261111/REFEREE_GATES.md). The selected machine registry now includes individually scoped SLD sharpness, Werner inverse-k continuation and exact 4/5-shuffle entries. These entries do not certify novelty or convert package-only N5 bytes into GitHub reproducibility; they remain active unrefereed research claims.
 
+## Current evidence frontier — 14 November 2026
+
+[**CURRENT_FRONTIER.json**](CURRENT_FRONTIER.json) is a compact, machine-checked, dated supplement to the November 11 scholarly catalogue. It records the strongest **original-source unrestricted finite Q2 coefficient presently verified in the checked PR-head receipts (364.5526832774)**, separately tracks strictly compiled *conditional* 353/107/99 scalar implications, and records the conditional arbitrary-agent invariant and the finite-checked semantic fence.
+
+It does **not** upgrade the frozen `CLAIMS.json` entries or claim a current-main transitive Lean rebuild, unproved unrestricted sub-100, physical deployment safety, independent external review, or first-in-literature priority. The original source SHA, exact theorem name, historical pinned run/head and extra unproved assumptions travel with every claim.
+
+Run `python3 scripts/check_current_frontier.py --self-test` to detect source tampering, fake run IDs, restriction erasure, and unjustified status promotion. This consistency checker is **not** a Lean compiler or a human referee.
+
 ## Read the evidence
 
 - [Machine-readable claim registry](CLAIMS.json): exact status, dependencies, source access, evidence files, and unresolved review/priority gates. This registry is intentionally selective, not a count of globally original theorems.

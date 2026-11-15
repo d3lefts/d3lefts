@@ -1,0 +1,73 @@
+name: NIGHTFALL SCIF exact canonical singleton Lean
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'research/nightfall/formalization/observability/SCIFCanonicalSingleton.lean'
+      - '.github/workflows/nightfall-scif-singleton-lean.yml'
+  workflow_dispatch:
+concurrency:
+  group: nightfall-scif-singleton-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile original-source dependency closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import shutil, subprocess
+          from scripts.nightfall_q2_certify import local_sources, closure
+          files=local_sources()
+          ws=Path('/tmp/mathlib4')
+          for name in closure('SCIFCanonicalSingleton',files):
+              shutil.copyfile(files[name],ws/(name+'.lean'))
+              print('COMPILE',name,flush=True)
+              subprocess.run(['lake','env','lean','-o',
+                str(ws/'.lake/build/lib/lean'/(name+'.olean')),
+                name+'.lean'],cwd=ws,check=True,timeout=1500)
+          PY
+      - name: Strict named-declaration proof and axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          N=Nightfall.SCIFCanonicalSingleton
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/SCIFCanonicalSingleton.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl $N.condExp_empty_eq_sourceMean \
+            --decl $N.esComp_empty_eq_sourceMean \
+            --decl $N.esComp_singleton_eq_sub \
+            --decl $N.condExp_edited_coordinate_invariant \
+            --decl $N.source_mean_and_edited_singleton_recenter \
+            --decl $N.source_mean_after_edit_as_old_conditional \
+            --decl $N.source_mean_shift_eq_old_singleton \
+            --decl $N.source_mean_and_singleton_exact_repair \
+            --json-out lean-receipts/scif-original-singleton.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/scif-original-singleton.json
+      - name: Source and environment custody
+        if: always()
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/observability/SCIFCanonicalSingleton.lean > lean-receipts/SHA256SUMS
+          git rev-parse HEAD > lean-receipts/HEAD
+          cat lean-toolchain > lean-receipts/LEAN_PIN
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: nightfall-scif-original-singleton
+          path: lean-receipts/
+          retention-days: 90

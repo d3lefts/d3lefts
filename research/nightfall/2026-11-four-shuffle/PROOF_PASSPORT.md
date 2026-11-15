@@ -19,3 +19,10 @@
 **Scientific boundaries:** finite exact certificate != outside peer review; specific k=4 threshold != general k theorem; a published graph method != a new graph method; repository merge != publication clearance.
 
 Research led by Devin J. Wright, NIGHTFALL Constellation; AI-assisted proof discovery and internal checks.
+
+
+---
+
+## 14 November 2026 — v14 audit checkpoint
+
+The exact finite N₄=20 / length-19 witness and the independent finite verifier remain the only certified scope. The new Q2, SCIF and agent-safety Lean receipts do not support an additional four-shuffle mathematical assertion. Originality and closest-prior-art gates remain open; no worldwide first or general-k claim is inferred.

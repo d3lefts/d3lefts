@@ -8,6 +8,8 @@ on:
       - 'lean-toolchain'
       - 'scripts/check_active_lean_compiler.py'
       - 'scripts/audit_ci_architecture.py'
+      - 'scripts/check_retired_workflows.py'
+      - 'research/archive/workflows/q2-lean436/**'
       - 'scripts/nightfall_q2_certify.py'
   push:
     branches: [main]
@@ -17,6 +19,8 @@ on:
       - 'lean-toolchain'
       - 'scripts/check_active_lean_compiler.py'
       - 'scripts/audit_ci_architecture.py'
+      - 'scripts/check_retired_workflows.py'
+      - 'research/archive/workflows/q2-lean436/**'
       - 'scripts/nightfall_q2_certify.py'
   workflow_dispatch:
 
@@ -37,3 +41,5 @@ jobs:
         run: python3 scripts/check_active_lean_compiler.py --self-test
       - name: Reject duplicate Q2 kernel autostarts and terminal certificate drift
         run: python3 scripts/audit_ci_architecture.py --self-test
+      - name: Verify archived Q2 workflow hashes and prevent accidental reactivation
+        run: python3 scripts/check_retired_workflows.py --self-test

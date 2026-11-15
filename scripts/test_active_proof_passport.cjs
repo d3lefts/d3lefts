@@ -12,17 +12,18 @@ const site=read("docs/site.js");
 const core=read("docs/erdos-paper-core.js");
 const art=read("docs/media/overlap-16cell-fixture.svg");
 assert.equal(data.schema,"nightfall-active-proof-passports-v1");
-assert.equal(data.version,13);
+assert.equal(data.version,14);
 assert.match(data.as_of,/^2026-11-\d\d$/);
 assert.equal(data.lifecycle,"active");
 assert.equal(data.frozen_historical_registry_unchanged,true);
-assert.equal(data.claims.length,12);
-assert.deepEqual(data.claims.map(x=>x.id),["q2-influence","q2-observation","finite-certificate","cubic-obstruction","kaczmarz-logfree","four-shuffle","nested-address-separation","finite-palette-recovery","fair-sign-cubic","universal-spectral","certificate-acquisition","phase-block"]);
+assert.equal(data.claims.length,15);
+assert.deepEqual(data.claims.map(x=>x.id),["q2-influence","q2-observation","finite-certificate","cubic-obstruction","kaczmarz-logfree","four-shuffle","nested-address-separation","finite-palette-recovery","fair-sign-cubic","universal-spectral","certificate-acquisition","phase-block","scif-incremental-recertification","conditional-agent-safety","semantic-fencing-authority"]);
 assert.equal(new Set(data.claims.map(x=>x.id)).size,data.claims.length);
 const statuses=new Set(["paper-proof-internal-audit","lean-kernel-checked-finite-product-scope",
  "exact-proof-attacks-cubic-open","written-proof-exact-check-replay-priority-open","computer-assisted-exact-finite-priority-open",
  "exact-finite-construction-priority-open","analytic-candidate-finite-lean-core","draft-pr-fair-sign-subclass",
- "analytic-conditional-universal-observability","conditional-certificate-adaptive-theorem","lean-checked-finite-construction-priority-open"]);
+ "analytic-conditional-universal-observability","conditional-certificate-adaptive-theorem","lean-checked-finite-construction-priority-open",
+ "lean-kernel-checked-conditional-invariant","lean-kernel-checked-draft-branch-finite-scope"]);
 for(const c of data.claims){
  assert.ok(statuses.has(c.status),c.id+" wrong status");
  for(const key of ["title","claim","mechanism","evidence","audit","source","source_detail"])
@@ -123,8 +124,8 @@ assert.ok(q2.evidence.includes("43627249467")&&q2.limitations.some(s=>s.includes
 assert.ok(read("research/nightfall/2026-11-active-passports/quadratic-rank-observability.md").includes("1228.356")&&read("research/nightfall/2026-11-active-passports/quadratic-rank-observability.md").includes("historical"),"Historical Q2 manuscript checkpoint lost");
 assert.ok(data.claims.find(c=>c.id==="fair-sign-cubic").status.includes("draft-pr"));
 assert.ok(data.claims.find(c=>c.id==="universal-spectral").status.includes("conditional"));
-assert.ok(html.includes("<strong>12</strong>Active claim records")&&html.includes("<strong>v13</strong>"));
-assert.ok(read("docs/discovery-system.html").includes("<dt>12</dt><dd>separate active claim passports</dd>"));
+assert.ok(html.includes("<strong>15</strong>Active claim records")&&html.includes("<strong>v14</strong>"));
+assert.ok(read("docs/discovery-system.html").includes("<dt>15</dt><dd>separate active claim passports</dd>"));
 // Finite F16 witness is a new active record but never a globally approved Original Finding.
 const phase=data.claims.find(c=>c.id==="phase-block");
 assert.ok(phase&&phase.status.includes("priority-open"));
@@ -154,7 +155,7 @@ assert.ok(art.includes("unrelated to the separate published 131072-cell witness"
 assert.ok(!/<script\b|<foreignObject\b/i.test(art),"Svg must remain static and inert");
 assert.ok(moon.includes('src="media/overlap-16cell-fixture.svg"'),"Archive diagram not visible");
 assert.ok(moon.includes("16-cell educational")&&moon.includes("different 131,072-cell witness"),"Fixture must not masquerade as full research result");
-console.log("PASS: 12 manual active claim passports, seven detailed dossiers, Kaczmarz source/replay, no historical promotion, 5 provenance-complete archives, exact 16-cell operator fixture");
+console.log("PASS: 15 manual active claim passports, seven detailed dossiers, Kaczmarz source/replay, no historical promotion, 5 provenance-complete archives, exact 16-cell operator fixture");
 
 // Nov 12 scientific updates: preserve twelve active claims and the frozen archives.
 const q2data=data.claims.find(c=>c.id==="q2-influence");
@@ -165,3 +166,19 @@ for (const p of ["quadratic-rank-observability.md","information-costs-identifica
  assert.ok(fs.existsSync("research/nightfall/2026-11-active-passports/"+p),"Missing v12 proof evidence "+p);
 assert.ok(html.includes("C₂=407+138√2+188√3+56√6")&&html.includes("SCIF")&&html.includes("No global novelty"),"Public finite Q2 status or remaining audit boundary drifted");
 assert.ok(read("research/nightfall/2026-11-active-passports/quadratic-rank-observability.md").includes("2026")&&read("research/nightfall/2026-11-active-passports/quadratic-rank-observability.md").includes("v9.2"),"Dated historical manuscript evidence missing");
+
+// v14 cross-check: source status must not inherit strength from unrelated CI.
+const v14New=[
+ ["scif-incremental-recertification","43640173972",true],
+ ["conditional-agent-safety","43639554615",true],
+ ["semantic-fencing-authority","43662280902",false]
+];
+for(const [id,receipt,merged] of v14New){
+ const c=data.claims.find(x=>x.id===id);
+ assert.ok(c&&c.evidence.includes(receipt),id+" exact receipt missing");
+ assert.ok(c.review_20261114&&c.limitations.length>=2,id+" review limits missing");
+ assert.ok(merged?c.evidence.includes("Merged")||c.evidence.includes("merged"):c.evidence.includes("draft"),id+" merge scope incorrect");
+}
+assert.ok(data.claims.every(c=>c.review_20261114 && c.review_20261114.remaining_gate),"All 15 active claims need explicit current review gates");
+assert.ok(q2.claim.includes("364.552683")&&q2.evidence.includes("43644790107"),"Current strongest merged unconditional Q2 receipt lost");
+assert.ok(!q2.claim.includes("unconditional C99"),"Do not promote conditional C99");
