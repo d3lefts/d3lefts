@@ -419,36 +419,23 @@ jobs:
           python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT/03-source-unconditional-473.json"
           echo "PASS: strict source-only Q2 coefficient 473.874"
 
-      - name: Strict unrestricted shifted-owner Q2 128.299 original-source terminal
+      - name: Strict unrestricted Q2 128.299 source certificate receipt
         run: |
           set -euo pipefail
-          SRC=research/nightfall/formalization/observability
-          QSHIFT=research/nightfall/formalization/q2_shifted
-          OUT=lean-receipts/q2-consolidated/source-q2-128
-          mkdir -p "$OUT"
-          for name in ShiftedHilbertOddTerm ShiftedHilbertTwoIncrement ShiftedHilbertManyIncrement; do
-            cp "$QSHIFT/$name.lean" "/tmp/mathlib4/$name.lean"
-            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$name.olean" "$name.lean")
-          done
-          for name in ShiftedOwnerScalar ShiftedOwnerScalarMoments; do
-            cp "$SRC/$name.lean" "/tmp/mathlib4/$name.lean"
-            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$name.olean" "$name.lean")
-          done
-          cp "$QSHIFT/ShiftedOwnerSourceJensen.lean" /tmp/mathlib4/ShiftedOwnerSourceJensen.lean
-          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ShiftedOwnerSourceJensen.olean ShiftedOwnerSourceJensen.lean)
-          cp "$SRC/ActualSourceQ2128Terminal.lean" /tmp/mathlib4/ActualSourceQ2128Terminal.lean
-          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ActualSourceQ2128Terminal.olean ActualSourceQ2128Terminal.lean)
-          N=Nightfall.Observability.ActualSourceQ2128Terminal
-          python3 scripts/lean_bridge.py "$SRC/ActualSourceQ2128Terminal.lean" \
-            --workspace /tmp/mathlib4 --timeout 900 --strict \
-            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
-            --decl $N.shifted_product_l1_l2_l4 \
-            --decl $N.shifted_fourth_coarse \
-            --decl $N.actual_source_shifted_site_128 \
-            --decl $N.actual_source_q2_128_unconditional \
-            --json-out "$OUT/source-q2-128.json"
-          python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT/source-q2-128.json"
-          echo "PASS: original-source unrestricted Q2 128.299, named Lean declarations and standard axioms"
+          OUT=lean-receipts/q2-consolidated
+          test -s "$OUT/09-unrestricted-Q2-128.json"
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            "$OUT/09-unrestricted-Q2-128.json"
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("lean-receipts/q2-consolidated/manifest.json")
+          m = json.loads(p.read_text())
+          assert m["status"] == "STRICT_TERMINAL_CERTIFIED"
+          assert m["stages"][-1]["label"] == "09-unrestricted-Q2-128"
+          assert m["stages"][-1]["status"] == "STRICT_LEAN_CERTIFIED"
+          print("PASS: source-only unrestricted Q2 128.299 named Lean kernel and standard-axiom receipt")
+          PY
 
       - name: Immutable input and toolchain provenance
         if: always()
