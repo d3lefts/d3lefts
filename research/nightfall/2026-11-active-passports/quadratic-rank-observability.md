@@ -1,5 +1,13 @@
 # Proof Passport v2 — Quadratic influence and rank-optimal adaptive observation
 
+## 14 November 2026 — v14 exact-source supersession (both active claims)
+
+**Current unrestricted-singleton finite Q2:** original-source `Var_p(f)^2 ≤ 364.5526832774 B² max_i I_i(f)` for finite products with a **common finite alphabet**, arbitrary normalized heterogeneous per-coordinate marginals including zero atoms, and pointwise degree ≤2. Strict named Lean source `ActualSourceQ2364Terminal.actual_source_q2_364_unconditional`, Git blob `5263d9da1ec2f12fbc8986c3698859faedb390a3`, run [43644790107](https://github.com/d3lefts/d3lefts/actions/runs/43644790107), head `a558a4dd7a2f2c7db521658c6d59d204758eb934`. The older 736.673 (#498), 1064.958 (#494) and 1228.356 manuscript figures below are **dated checkpoints, not the strongest certificate**. See [current claim frontier](../../catalogue/CURRENT_FRONTIER.json). The 353.293 source theorem is **conditional** on a still-unproved sharp section budget; 190/128/121/107/99 unrestricted proposals and pure-sector <100 proposals are not promoted from draft stage or partial scalar certificates.
+
+**Separate adaptive-observation passport:** Rank-r Hilbert posterior-risk bounds, exact hard-stop query counts and fixed-query separation are **not** end-to-end Lean certified merely because scalar Q2 improved. Keep query interfaces and source law explicit. Peer review, full heterogeneous alphabet types and arbitrary-index L² transfer remain open. The following 14 November C1064 section is retained as a historical audit trail, not as current status.
+
+---
+
 **Claim IDs:** active registry q2-influence, q2-observation; catalogue NF-PS-QUADRATIC-20261110 and NF-OBS-QUADRATIC-20261110.  
 **Checkpoint:** 2026-11-14 current-scope update; 2026-11-12 manuscript history retained. **Status:** finite scalar source Q2 kernel-certified at 1064.958; Hilbert/adaptive and measure-theoretic extensions remain analytic; externally refereed and global priority gates open. This dossier updates the live scope without rewriting immutable v7/v8 source evidence.
 
