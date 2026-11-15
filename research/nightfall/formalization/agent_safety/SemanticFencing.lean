@@ -298,6 +298,143 @@ theorem bellman_root_optimal [Fintype Source] [DecidableEq Source]
   obtain ⟨candidate, hcandidate, hbound⟩ := hcover q hq
   exact (hleast candidate hcandidate).trans hbound
 
+/-- Full finite-world adaptive optimization for an **already-safe**
+coherent evidence set. Every splitting read strictly shrinks the finite
+belief set, so well-founded induction constructs optimal child plans.
+This discharges the optimal-continuation hypotheses of the Bellman root
+theorem, rather than postulating the dynamic-programming solution.
+
+Mixed safe/unsafe initial labels and uninformative observation interfaces
+are excluded; their unrestricted minimax value may be infinite. -/
+theorem finite_safe_bellman_optimal
+    [Fintype Source] [DecidableEq Source] [DecidableEq World]
+    (M : System Source World) (obs : Source → World → Bool)
+    (readPrice checkPrice : Source → ℕ)
+    (B : Finset World)
+    (hsafe : ∀ x, x ∈ B → M.safe x)
+    (hcomplete : CompleteCoverage M (↑B : Set World)) :
+    ∃ p : EvidencePlan Source,
+      PlanValid M obs (↑B : Set World) p ∧
+      ∀ q, PlanValid M obs (↑B : Set World) q →
+        worstCost readPrice checkPrice p ≤
+          worstCost readPrice checkPrice q := by
+  classical
+  have solve : ∀ n : ℕ, ∀ C : Finset World,
+      C.card = n →
+      (∀ x, x ∈ C → M.safe x) →
+      CompleteCoverage M (↑C : Set World) →
+      ∃ p : EvidencePlan Source,
+        PlanValid M obs (↑C : Set World) p ∧
+        ∀ q, PlanValid M obs (↑C : Set World) q →
+          worstCost readPrice checkPrice p ≤
+            worstCost readPrice checkPrice q := by
+    intro n
+    induction n using Nat.strong_induction_on with
+    | h n ih =>
+      intro C hcard hsafeC hcompleteC
+      by_cases hnonempty : C.Nonempty
+      · have hpairs : ∀ i : Source,
+            ∃ pzero pone : EvidencePlan Source,
+              ((∃ x, x ∈ readFiber (↑C : Set World) obs i false) ∧
+               (∃ x, x ∈ readFiber (↑C : Set World) obs i true)) →
+                PlanValid M obs
+                  (readFiber (↑C : Set World) obs i false) pzero ∧
+                PlanValid M obs
+                  (readFiber (↑C : Set World) obs i true) pone ∧
+                (∀ q, PlanValid M obs
+                  (readFiber (↑C : Set World) obs i false) q →
+                    worstCost readPrice checkPrice pzero ≤
+                      worstCost readPrice checkPrice q) ∧
+                (∀ q, PlanValid M obs
+                  (readFiber (↑C : Set World) obs i true) q →
+                    worstCost readPrice checkPrice pone ≤
+                      worstCost readPrice checkPrice q) := by
+          intro i
+          by_cases hsplit :
+              (∃ x, x ∈ readFiber (↑C : Set World) obs i false) ∧
+              (∃ x, x ∈ readFiber (↑C : Set World) obs i true)
+          · let Czero : Finset World :=
+              C.filter (fun x => obs i x = false)
+            let Cone : Finset World :=
+              C.filter (fun x => obs i x = true)
+            have hsubsetzero : Czero ⊆ C := Finset.filter_subset _ _
+            have hsubsetone : Cone ⊆ C := Finset.filter_subset _ _
+            have hszero : Czero ⊂ C := by
+              apply (Finset.ssubset_iff_of_subset hsubsetzero).2
+              obtain ⟨x, hx⟩ := hsplit.2
+              exact ⟨x, hx.1, by simp [Czero, hx.2]⟩
+            have hsone : Cone ⊂ C := by
+              apply (Finset.ssubset_iff_of_subset hsubsetone).2
+              obtain ⟨x, hx⟩ := hsplit.1
+              exact ⟨x, hx.1, by simp [Cone, hx.2]⟩
+            have hcardzero : Czero.card < n := by
+              rw [← hcard]
+              exact Finset.card_lt_card hszero
+            have hcardone : Cone.card < n := by
+              rw [← hcard]
+              exact Finset.card_lt_card hsone
+            have hsafezero : ∀ x, x ∈ Czero → M.safe x := by
+              intro x hx
+              exact hsafeC x (hsubsetzero hx)
+            have hsafeone : ∀ x, x ∈ Cone → M.safe x := by
+              intro x hx
+              exact hsafeC x (hsubsetone hx)
+            have hcompletezero : CompleteCoverage M (↑Czero : Set World) := by
+              intro b hb y hperm hbad
+              exact hcompleteC b (hsubsetzero hb) y hperm hbad
+            have hcompleteone : CompleteCoverage M (↑Cone : Set World) := by
+              intro b hb y hperm hbad
+              exact hcompleteC b (hsubsetone hb) y hperm hbad
+            obtain ⟨pzero, hvzero, hopzero⟩ :=
+              ih Czero.card hcardzero Czero rfl hsafezero hcompletezero
+            obtain ⟨pone, hvone, hopone⟩ :=
+              ih Cone.card hcardone Cone rfl hsafeone hcompleteone
+            have hsetzero : (↑Czero : Set World) =
+                readFiber (↑C : Set World) obs i false := by
+              ext x
+              simp [Czero, readFiber]
+            have hsetone : (↑Cone : Set World) =
+                readFiber (↑C : Set World) obs i true := by
+              ext x
+              simp [Cone, readFiber]
+            rw [hsetzero] at hvzero hopzero
+            rw [hsetone] at hvone hopone
+            exact ⟨pzero, pone, fun _ =>
+              ⟨hvzero, hvone, hopzero, hopone⟩⟩
+          · exact ⟨.deny, .deny, fun h => False.elim (hsplit h)⟩
+        let pzero (i : Source) : EvidencePlan Source :=
+          Classical.choose (hpairs i)
+        let pone (i : Source) : EvidencePlan Source :=
+          Classical.choose (Classical.choose_spec (hpairs i))
+        have hbranches : ∀ i : Source,
+            ((∃ x, x ∈ readFiber (↑C : Set World) obs i false) ∧
+             (∃ x, x ∈ readFiber (↑C : Set World) obs i true)) →
+            PlanValid M obs
+              (readFiber (↑C : Set World) obs i false) (pzero i) ∧
+            PlanValid M obs
+              (readFiber (↑C : Set World) obs i true) (pone i) ∧
+            (∀ q, PlanValid M obs
+              (readFiber (↑C : Set World) obs i false) q →
+                worstCost readPrice checkPrice (pzero i) ≤
+                  worstCost readPrice checkPrice q) ∧
+            (∀ q, PlanValid M obs
+              (readFiber (↑C : Set World) obs i true) q →
+                worstCost readPrice checkPrice (pone i) ≤
+                  worstCost readPrice checkPrice q) := by
+          intro i hi
+          exact Classical.choose_spec (Classical.choose_spec (hpairs i)) hi
+        exact bellman_root_optimal M obs (↑C : Set World)
+          readPrice checkPrice hnonempty hsafeC hcompleteC
+          pzero pone hbranches
+      · have hempty : C = ∅ := Finset.not_nonempty_iff_eq_empty.mp hnonempty
+        subst C
+        refine ⟨.deny, ?_, ?_⟩
+        · intro x hx
+          simpa using hx
+        · intro q hq
+          exact Nat.zero_le _
+  exact solve B.card B rfl hsafe hcomplete
+
 /-! ## Lean-checked two-source post-certification witness -/
 
 /-- Binary states 00, 01, 10 are safe; 11 is unsafe. Each changed
