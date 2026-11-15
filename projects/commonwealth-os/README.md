@@ -38,3 +38,9 @@ The archived v1.0 reference package reported 8 passing toy checker tests. Those 
 
 ## Evidence labels
 DESIGN / IMPLEMENTED / INTERNALLY TESTED / INDEPENDENTLY VALIDATED / LEGALLY AUTHORIZED / DEPLOYED must remain distinct. Current state: **DESIGN**, plus a narrow source-package toy checker (internally tested). All other states remain unverified.
+
+## Integrated product design and evidence archive
+
+The baseline includes a separate, versioned [Product Design v1.0 source tree](product-design/v1.0/README.md) with 14 detailed design docs, requirements, schemas, diagrams, comparative prior-art matrix, synthetic Living Voter prototype and visual dossier. The [Product Design workspace index](PRODUCT_DESIGN_WORKSPACE.md) links the private [Google Drive archive](https://drive.google.com/drive/folders/1aWkKDXaiLereebPVTIbRtZWGZ2gGw0tr) and earlier Democratic Assurance, questionnaire, and Huntsville pilot research. [Research status and release gates](STATUS_AND_GATES.md) distinguish design, tests, verification and authorization.
+
+Where this representative-first implementation blueprint and the companion citizen-preference design differ, neither silently overrides the other. Treat conflicts as explicit product decisions to resolve with institution-specific authorizations and validation.

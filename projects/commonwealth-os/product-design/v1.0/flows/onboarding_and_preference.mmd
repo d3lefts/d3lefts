@@ -1,0 +1,14 @@
+flowchart TD
+ A[Choose jurisdiction and opt-in consent] --> B[Local seed questions]
+ B --> C{Direct or reviewed inference?}
+ C -->|Yes| D[Provision ledger with basis and source]
+ C -->|No| E[Unknown or conflict; targeted question]
+ D --> F[Direct user override]
+ E --> F
+ F --> G[Federal seed questions for adult flows]
+ G --> H[Private versioned profile]
+ H --> I{Law source changed?}
+ I -->|Substantive| J[Mark affected state stale and re-ask]
+ I -->|Editorial| K[Update citation cross-reference]
+ J --> H
+ K --> H

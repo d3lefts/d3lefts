@@ -1,0 +1,14 @@
+flowchart TD
+ A[Approved institution rulebook] --> B[Authorized agenda and sourced proposal]
+ B --> C[Deliberation and amendment]
+ C --> D[Text version frozen]
+ D --> E{Eligibility quorum and procedure valid?}
+ E -->|No or unknown| X[Stop or advisory only]
+ E -->|Yes| F[Authorized ballots]
+ F --> G[Independent tally and rule check]
+ G --> H{Verified and challenges resolved?}
+ H -->|No| X
+ H -->|Yes| I[Certify institution decision]
+ I --> J{Effect-time legal authority valid?}
+ J -->|No| X
+ J -->|Yes| K[Record effect and Proof Passport]

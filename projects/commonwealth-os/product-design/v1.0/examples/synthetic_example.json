@@ -1,0 +1,39 @@
+{
+  "NOTICE": "FICTIONAL SYNTHETIC DATA; NO real voters or legally authorized ballots",
+  "legislation": {
+    "institution_id": "fictional-campus",
+    "instrument_id": "SYN-001",
+    "version_id": "v1",
+    "status": "proposed",
+    "normative_provision": "A fictional council proposes shade trees at a synthetic walkway.",
+    "prior_version_id": null,
+    "change_type": "new",
+    "source": {
+      "uri": "https://example.invalid/SYN-001",
+      "retrieved_at": "2026-11-15T00:00:00Z",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "authority_status": "fictional"
+    }
+  },
+  "preference": {
+    "subject_pseudonym": "synthetic-user-001",
+    "institution_id": "fictional-campus",
+    "provision_version_id": "SYN-001@v1",
+    "state": "unknown",
+    "basis": "no-evidence",
+    "question_version_id": null,
+    "mapping_review_id": null,
+    "is_official_ballot": false
+  },
+  "passport": {
+    "decision_id": "SYN-001-D",
+    "institution_id": "fictional-campus",
+    "authority_mode": "advisory",
+    "rule_version_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "locked_text_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "eligibility_snapshot_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "verification_status": "concept",
+    "quorum_result": null,
+    "effective_event_verified": null
+  }
+}

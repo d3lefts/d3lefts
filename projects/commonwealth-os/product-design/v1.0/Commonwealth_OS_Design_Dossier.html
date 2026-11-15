@@ -1,0 +1,1111 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@page { size: Letter; margin: .78in .73in .75in .75in; @bottom-left{content:"COMMONWEALTH OS · DESIGN v1.0 · PROPOSAL";color:#6a8485;font-size:7pt} @bottom-right {content:counter(page);color:#6a8485;font-size:8pt}}
+@page:first {@bottom-left{content:none}@bottom-right{content:none}}
+html,body{font-family:"DejaVu Sans",Arial,sans-serif;color:#1a3440;font-size:9pt;line-height:1.45}
+h1,h2,h3{color:#123a3d;page-break-after:avoid;line-height:1.25}h1{font-size:19pt;border-bottom:2px solid #008b83;padding-bottom:8px;margin:5px 0 19px}h2{font-size:12pt;margin:21px 0 7px}h3{font-size:10pt;margin:15px 0 5px}p{margin:6px 0 10px}li{margin:3px 0 5px}
+table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:7.3pt;margin:13px 0 17px}th{background:#e7f3f0;color:#0d5550;text-align:left;border-bottom:1px solid #b5d1ca;padding:6px 5px;overflow-wrap:anywhere}td{border-bottom:1px solid #dde7e5;padding:5px;vertical-align:top;overflow-wrap:anywhere}tr{break-inside:avoid}
+code{font-size:7.4pt;font-family:"DejaVu Sans Mono",monospace;overflow-wrap:anywhere}pre{white-space:pre-wrap;word-break:break-word;background:#eef5f2;padding:11px;border-left:3px solid #008b83;font-size:7.2pt}a{color:#177871;text-decoration:none;overflow-wrap:anywhere}
+.section{break-before:page}.section h1{margin-top:0}.cover{padding-top:1.45in;break-after:page}.cover .eye{font-size:9pt;font-weight:800;letter-spacing:.16em;color:#008b83}.cover h1{font-size:35pt;line-height:1.08;border:0;margin:26px 0 13px}.cover .desc{color:#587580;font-size:15pt;max-width:5.7in}.cover .note{margin-top:1.1in;padding:18px 22px;border-left:4px solid #008b83;background:#edf5f2;font-size:10pt}.cover .date{margin-top:.6in;color:#647f85}.toc{break-after:page}.toc ol{font-size:11pt;line-height:1.82}
+</style></head><body>
+<section class="cover"><div class="eye">NIGHTFALL / COMMONWEALTH OS</div><h1>Democracy,<br>in the present tense.</h1><p class="desc">Mobile-first institutional governance and living legislative preferences.</p><div class="note"><b>Product design dossier · v1.0</b><p>Concept and research specification. Not an authorized election system. Pilot: UAH → Huntsville universities → city public high schools → HOAs → Huntsville City Council.</p></div><p class="date">15 November 2026 · Source-checked competitive research · Product requirements · UX · Assurance</p></section>
+<section class="toc"><h1>Contents</h1><ol><li>01 Product Charter and PRD</li><li>02 Competitive Analysis</li><li>03 Information Architecture and User Flows</li><li>04 Living Voter Mobile UX</li><li>05 Representative and Steward UX</li><li>06 Design System and Accessibility</li><li>07 Legislative Data and Integration</li><li>08 Questionnaire and Inference</li><li>09 Democratic Assurance Passport</li><li>10 Identity Privacy Security</li><li>11 Huntsville Pilot Roadmap</li><li>12 Evaluation and Audit Plan</li><li>13 Decisions Risks and Backlog</li><li>14 Sources and Attribution</li></ol><p>Editable Markdown and source material are in this package.</p></section><section class="section"><h1>Product charter and product requirements</h1>
+<p><strong>Commonwealth OS / Product Design v1.0 — 15 November 2026</strong><br />
+<strong>Status:</strong> Proposal / not institutionally authorized<br />
+<strong>Scope:</strong> Huntsville institutional pilot; mobile-first</p>
+<h2>Executive definition</h2>
+<p><strong>Commonwealth OS</strong> is a proposed multi-institution democratic operating system that connects governing rules, proposals, amendments, deliberation, authorized voting, recorded outcomes, and implementation evidence. <strong>Living Voter</strong> is its private citizen-facing legislative-preference interface. Working surface names: <strong>Chamber</strong> (representatives), <strong>Steward</strong> (administrators), and <strong>Proof Passport</strong> (audit view). Names are provisional.</p>
+<p><strong>North-star user outcome:</strong> A person can see what their governing institution is deciding, understand the relevant text and consequences, express an informed preference without being steered, and later verify whether an authorized decision actually took effect.</p>
+<p><strong>Product thesis:</strong> The cross-product gap to investigate is <em>decision-state discontinuity</em>: absence of reliably transportable evidence linking rule/version → eligible participants → consultation/deliberation → authorized vote → valid outcome → implementation. This is a <strong>research hypothesis</strong>, not proof that all compared systems lack the feature.</p>
+<h2>Fixed founding requirements</h2>
+<ol>
+<li>Mobile-first; high trust; futuristic but credible; accessible without a smartphone through institution-approved alternatives.</li>
+<li><strong>Three preference choices:</strong> Support; Don't support; No preference. Keep <strong>Unknown / not assessed</strong> as a separate internal state.</li>
+<li>Adult municipal onboarding proceeds <strong>local ordinances first, federal law second</strong>. A 96-question research instrument is a <em>budget</em>, not a proven claim of complete legislative coverage: 1 open-priorities prompt, 40 local seed questions, 30 federal seed questions, up to 25 adaptive questions. State law is a possible subsequent module, not a barrier between local and federal stages.</li>
+<li>One question may map to multiple provisions only with reviewed semantic entailment and visible provenance. A response never silently creates a binding ballot.</li>
+<li>New proposals, substantive amendments, repeals, and integrations are versioned; substantive changes prompt targeted review; editorial integration without normative change should not generate spurious preference reversal.</li>
+<li>Personal political profiles and identifiable answers are private by default. Public-facing metrics are aggregate, labeled, and suppressed when they risk identification. No political microtargeting, persuasion optimization, resale, or covert secondary use.</li>
+<li>Pilot delegates and officials have a mobile legislative workspace: tasks, pending decisions, review/amend/debate/vote, embedded explainable AI plus a persistent assistant. AI never has a vote or independent authority.</li>
+<li>Human authority is grounded in each institution's charter/bylaws and applicable law. App features cannot confer authority they do not possess.</li>
+<li>One pilot, five <strong>non-interchangeable ordered stages</strong>: UAH → other Huntsville universities → Huntsville City Schools high schools → Huntsville HOAs → Huntsville City Council. Target a potential city-approved deployment by 2030. All dates subject to institution permission.</li>
+<li>Open-source intent and eventual broader adoption are strategic aspirations; no license or legal right to use personal pilot data for another purpose has been granted.</li>
+</ol>
+<h2>Audiences and jobs to be done</h2>
+<table>
+<thead>
+<tr>
+  <th>Role</th>
+  <th>Primary job</th>
+  <th>Core safeguard</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Student senator / council representative</td>
+  <td>Review, amend, debate, and cast an authorized vote</td>
+  <td>Only correct role may vote on the locked text</td>
+</tr>
+<tr>
+  <td>Institution clerk / secretary</td>
+  <td>Set agendas, maintain records, certify proceedings</td>
+  <td>Version and authority evidence mandatory</td>
+</tr>
+<tr>
+  <td>Student / HOA member / resident</td>
+  <td>Understand decisions and express positions</td>
+  <td>Private responses, no accidental ballot casting</td>
+</tr>
+<tr>
+  <td>Institution administrator</td>
+  <td>Configure governing rules, roles and sources</td>
+  <td>Change control; no silent rule rewrite</td>
+</tr>
+<tr>
+  <td>Auditor / ombudsperson</td>
+  <td>Replay and challenge how decisions were reached</td>
+  <td>Read-only exportable receipts, exception ledger</td>
+</tr>
+<tr>
+  <td>Academic evaluator</td>
+  <td>Test fidelity, representativeness, costs</td>
+  <td>Explicit consent, research separation</td>
+</tr>
+</tbody>
+</table>
+<h2>Scope and release boundaries</h2>
+<p><strong>V0 / concept:</strong> Browser-only synthetic Living Voter demo; example laws, anonymous localStorage, no real identity, source ingestion, voting, security, or institutional authorization.</p>
+<p><strong>V1 / UAH:</strong> Staff-confirmed institution constitution and senate bylaws, agenda/case tracking, bill version diff, assigned representative tasks, meeting &amp; deliberation record, rule-configured vote lifecycle, certificates marked provisional until audited. Can operate as <strong>recording/consultation</strong> only until actual procedures are authorized.</p>
+<p><strong>V2 / universities:</strong> Tenant isolation and multiple independent governing rulebooks, federated account integration, export/import, institutional rule tests.</p>
+<p><strong>V3 / schools:</strong> School-specific governance; child and student privacy review; no minors' federal political profiling; no adult municipality eligibility claims.</p>
+<p><strong>V4 / HOAs:</strong> Exact membership, unit vote weights, proxies, quorum, budgets, and covenant-specific restrictions; legal review per association.</p>
+<p><strong>V5 / Huntsville Council:</strong> Official municipal document ingestion, authorized representative workspace, <strong>advisory public dashboard first</strong>; binding government voting only under clear legal authorization and independent election-grade assurance.</p>
+<p><strong>Explicitly out of scope for early pilots:</strong> public office replacement, autonomous elected-official votes, binding municipal referenda, identity claims based solely on GPS/IP, unconditional law-coverage percentages, political influence campaigns, production cryptographic verifiability without external audit.</p>
+<h2>Product success measures (pre-register before pilots)</h2>
+<ul>
+<li>Corpus coverage: % of verified <em>in-scope</em> governing provisions ingested, with source citations and gaps.</li>
+<li>Mapping precision: blinded human validation of answer→provision entailment; report abstention as well as error.</li>
+<li>Citizen control: override success and time-to-correct a wrong inference.</li>
+<li>Action continuity: % of decisions with complete rule→version→eligibility→ballot→outcome→implementation trail.</li>
+<li>Authorized voting: share of sample decisions passing independently reproduced quorum, eligibility and tally checks.</li>
+<li>Change latency: source update to correctly classified notification time; stratify by proposed/amended/repealed/editorial.</li>
+<li>Accessibility: automated + manual WCAG 2.2 AA audit, assistive tech and no-smartphone testing.</li>
+<li>Equity: compare completion/understanding across randomly recruited user groups; report nonresponse and coverage bias.</li>
+<li>Privacy: zero unauthorized exposures in red-team tests; deletion/export request completion and logged failures.</li>
+</ul>
+<h2>Release gates</h2>
+<p><strong>G0</strong> Design and legal scoping completed; <strong>G1</strong> source/corpus ground truth signed off; <strong>G2</strong> independent mapping study; <strong>G3</strong> rule tests, election-integrity design review and threat model; <strong>G4</strong> operator authorization; <strong>G5</strong> accessibility/security/privacy review; <strong>G6</strong> staged deployment and audit. No test can substitute for lawful institutional approval.</p>
+<h2>Non-functional requirements</h2>
+<p>Encryption in transit and at rest, scoped authorization, secure key custody, immutable event log with independently verifiable hashes (hashes are necessary but not sufficient), audit export, recovery and backup, configurable retention, responsive touch targets, explicit status states, threat modeling, rate limiting, secure notifications, disaster recovery. Production SLOs and budgets must be set after user research and vendor estimates.</p>
+<h2>Ethical and civic boundaries</h2>
+<p>Publicly disclose any long-term research into representative automation. Participation must be voluntary, consent-specific, reversible, and unlinked to education or association penalties. AI summaries require source references, dissent/uncertainty display and correction mechanisms. Do not use participant political preference profiles for electioneering, differential outreach, profiling of minors, or unconsented training.</p>
+</section><section class="section"><h1>Comparative landscape and design opportunity</h1>
+<p><strong>Commonwealth OS / Product Design v1.0 — 15 November 2026</strong><br />
+<strong>Status:</strong> Proposal / not institutionally authorized<br />
+<strong>Scope:</strong> Huntsville institutional pilot; mobile-first</p>
+<h2>Method and scope</h2>
+<p>This is a <strong>product-feature comparison</strong>, not a formal freedom-to-operate or exhaustive patent/prior-art review. Official documentation was checked on 15 November 2026 for the entries marked <em>source-checked</em>. An absent feature in checked documentation is <strong>not proof that the software cannot support it</strong> through customization or deployment practice. Earlier exploratory comps without adequate official source confirmation are listed separately.</p>
+<h2>Key comparable systems</h2>
+<table>
+<thead>
+<tr>
+  <th>Product</th>
+  <th>Officially documented strengths</th>
+  <th>Specific design lesson / boundary</th>
+  <th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>Decidim</strong></td>
+  <td>Proposals, amendments, version integrity, participation processes and administrator-updated accountability/milestones</td>
+  <td><strong>Do not claim Decidim lacks traceability.</strong> Investigate machine-checkable legal-authorization and implementation proofs <em>across</em> sources and governing authorities</td>
+  <td><a href="14_Sources_and_Attribution.md">D1</a></td>
+</tr>
+<tr>
+  <td><strong>CONSUL Democracy</strong></td>
+  <td>Proposals, verified supports, voting, budgets, participatory collaborative legislation with phases, revisions, follow-up</td>
+  <td>Treat it as a serious legislative peer; distinguish provenance-preserving change-triggered personal profiles and rule-specific decision certification</td>
+  <td>[D2]</td>
+</tr>
+<tr>
+  <td><strong>Polis</strong></td>
+  <td>Structured agree/disagree/pass on statements, clusters and consensus across large-scale deliberation</td>
+  <td>Integrate open-ended deliberation insight but avoid converting opinion groups into binding decisions</td>
+  <td>[D3]</td>
+</tr>
+<tr>
+  <td><strong>Loomio</strong></td>
+  <td>Templates for consent/consensus/advice, discussions, votes, reasons, outcomes and review reminders</td>
+  <td>Supports a coherent decision record; product must additionally check venue-specific authority and effects rather than equating a poll to a law</td>
+  <td>[D4]</td>
+</tr>
+<tr>
+  <td><strong>Go Vocal</strong></td>
+  <td>Resident proposals, supports, discussions and engagement reporting</td>
+  <td>Useful pattern for municipal civic-facing participation; require source-to-rule linkage and unbiased aggregate denominators</td>
+  <td>[D5]</td>
+</tr>
+<tr>
+  <td><strong>Granicus Legistar</strong></td>
+  <td>Legislative files, agendas, meeting management, minutes and publication</td>
+  <td>Use it as authoritative <strong>input/adjacent workflow</strong>, not pretend to replace its functions in early city pilot</td>
+  <td>[D6]</td>
+</tr>
+<tr>
+  <td><strong>Quorum (goquorum.app)</strong></td>
+  <td>Versioned constitution, article-specific challenges, AI-assisted motions and configurable AI voting seat</td>
+  <td>Excellent constitutional versioning reference; <strong>explicitly exclude AI voting seats</strong> from Commonwealth OS</td>
+  <td>[D7]</td>
+</tr>
+<tr>
+  <td><strong>ElectionGuard</strong></td>
+  <td>Voter verification codes, challenge process and third-party verifiability artifacts for elections</td>
+  <td>Cryptographic evidence is not evidence of valid jurisdiction/rules or effect-time authorization; evaluate rather than claim integrated support</td>
+  <td>[D8]</td>
+</tr>
+<tr>
+  <td><strong>OpenZeppelin Governor</strong></td>
+  <td>Proposal→vote→quorum→queue→execution for on-chain control</td>
+  <td>Illustrates strongly coupled decision/execution in smart-contract environments; not a ready-made legal municipality workflow</td>
+  <td>[D9]</td>
+</tr>
+<tr>
+  <td><strong>CivicPlus/Municode</strong></td>
+  <td>Municipal codification/public code library (Huntsville uses a municipal code provider)</td>
+  <td>Treat published code and enacted-but-not-yet-codified measures distinctly; build synchronization and reconciliation</td>
+  <td>[D10]</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Also reviewed earlier but not fully re-verified this session:</strong> eSCRIBE, Diligent Community, Anthology Engage, OpenMeeting, StuGov, Vocdoni, and other campus-specific legislative tools. Do not infer gaps for them without a named source, release, and feature-level audit. The original comparative inventory is broader than the verified subset above.</p>
+<h2>Unifying gap hypothesis: decision-state discontinuity</h2>
+<p>Existing categories often concentrate on one or more of: institutional document management, citizen engagement/deliberation, binding aggregation, cryptographic tally verification, or implementations. The research target is to establish a <strong>uniform, testable chain of meaning and authority</strong> when a document is changed, a rule is revised, membership shifts, or a decision produces effects:</p>
+<p><code>authoritative source → applicable rules → provision/version → participant eligibility → expression or authorized vote → certified outcome → implementation event → change/re-elicitation</code>.</p>
+<p>The contribution is <strong>not</strong> “nobody supports this step.” Decidim and CONSUL already cover multiple steps. The proposed differentiator is verifiable continuity <em>across institutional rules, legal document versions, personal preference provenance, and authorized effects</em>; this remains to be implemented, evaluated and compared empirically.</p>
+<h2>Four explicit points of distinction</h2>
+<ol>
+<li><strong>Living preference ledger:</strong> provision-level source-grounded, continuously editable and private direct/inferred/unknown states; change notifications target stale answers.</li>
+<li><strong>Authority portability:</strong> independent institutions instantiate different rulebooks without sharing governance entitlements.</li>
+<li><strong>Democratic Assurance Proof Passport:</strong> each consequential decision packages its legal/charter authority, eligibility, quorum, text version, outcome, exceptions and effect record; a defined external checker can replay it.</li>
+<li><strong>Separation of consultation and lawful voting:</strong> never count profile positions as ballots; publicly distinguish resident sample opinions from binding representative decisions.</li>
+</ol>
+<h2>Competitive validation plan</h2>
+<p>Choose a controlled case study: a proposal created, materially amended after a public comment, put to a vote with a changed membership roster, adopted, then incorporated into a new code edition. Test in target baseline systems where permitted. Compare provenance retention, authority proof completeness, human review steps, exception handling and total operating cost. Publish neutral feature-level findings with version/build IDs and vendor responses.</p>
+<h2>Sources</h2>
+<p>Full URLs, exact investigated assertions, and verification limitations appear in <strong>14_Sources_and_Attribution.md</strong>.</p>
+</section><section class="section"><h1>Information architecture, roles and journeys</h1>
+<p><strong>Commonwealth OS / Product Design v1.0 — 15 November 2026</strong><br />
+<strong>Status:</strong> Proposal / not institutionally authorized<br />
+<strong>Scope:</strong> Huntsville institutional pilot; mobile-first</p>
+<h2>Application topology</h2>
+<p><strong>Commonwealth OS Shell:</strong> account and institution switcher, authenticated context, alerts, support/accessibility, status and consent.</p>
+<ul>
+<li><strong>Chamber</strong> (elected/appointed institution representatives): Today; Bills; Deliberation; Votes; Audit; AI assistant.</li>
+<li><strong>Living Voter</strong> (adult resident or member, scoped by institution): Home; Laws; Changes; Profile; interactive question path; source/attribution ledger.</li>
+<li><strong>Steward</strong> (clerk/admin): Institution; Rulebook; Roles &amp; eligibility; Agendas; Documents; Publication; Security; Audit &amp; incidents.</li>
+<li><strong>Public View</strong> (phase gated): records and aggregate participatory results only where legally publishable; never identifiable private profiles.</li>
+</ul>
+<p>UI <strong>must visually pin the active institution, role and authority mode</strong>. A student senator in UAH cannot accidentally act as an HOA board member or a Huntsville resident.</p>
+<h2>Adult resident flow — local before federal</h2>
+<ol>
+<li>Choose institution/jurisdiction; privacy explanation and data-use consent.</li>
+<li>Eligibility status: unverified preview / verified institution member / verified registered voter (only after authorized integration). Avoid treating identity as voter-roll qualification.</li>
+<li>Open priorities prompt (optional/skip allowed). Then up to 40 local policy seeds, each with Support / Don't support / No preference.</li>
+<li>User sees a transparent ledger: directly answered questions, provision-level <em>inference candidates</em>, unknowns and conflicts; can override a provision directly.</li>
+<li>After local block, offer federal profile: up to 30 federal seeds; up to 25 adaptive prompts total across instrument, budgeted for unresolved high-value ambiguities.</li>
+<li>Subsequent visits emphasize targeted change queue, not redoing the whole questionnaire. User can pause, resume, withdraw consent, export and erase.</li>
+</ol>
+<p><strong>Important:</strong> For 2027 university participants and school members, the operational institution dashboard is <em>not</em> the same as an official municipal registered-voter profile. School minors do not receive federal political profiling.</p>
+<h2>Representative workflow</h2>
+<p><code>Sign in → institutional role confirmed → task dashboard → open proposed act → authoritative text/version and prior changes → AI summary with citations → debate / propose amendment → check eligibility and voting window → confirm locked text → cast authorized vote (if approved) → audit receipt → outcome &amp; implementation view</code>.</p>
+<p><strong>Critical interrupts:</strong> source stale; rulebook changed; quorum rule unavailable; vote window expired; eligibility contested; amendment after lock; external system mismatch; trust boundary unavailable. These must visibly block binding acts rather than render a green success state.</p>
+<h2>Clerk workflow</h2>
+<p><code>Import source → reconcile version → set rules and roles → define agenda → make proposal public → authorize debate/voting under institution bylaws → run tally/verifier → publish disposition + evidence → track effective action</code>.</p>
+<p>Clerk corrections to sources use append-only superseding events with reasons; never erase the underlying evidence for an authorized result.</p>
+<h2>Notification taxonomy</h2>
+<table>
+<thead>
+<tr>
+  <th>Event</th>
+  <th>Recipient</th>
+  <th>What app does</th>
+  <th>State</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Draft introduced</td>
+  <td>Subscribers / eligible participants</td>
+  <td>Summary, source, direct input option</td>
+  <td>New, no vote presumed</td>
+</tr>
+<tr>
+  <td>Substantive amendment</td>
+  <td>Those whose relevant earlier views may no longer apply</td>
+  <td>Reopen targeted questions, invalidate mapping when needed</td>
+  <td>Stale until confirmed</td>
+</tr>
+<tr>
+  <td>Repeal</td>
+  <td>Affected participants</td>
+  <td>Ask about repeal <em>proposal</em>, preserve prior law position</td>
+  <td>Proposal separate from existing-law preference</td>
+</tr>
+<tr>
+  <td>Codification/integration</td>
+  <td>Interested users</td>
+  <td>Show old/new location and equivalence proof</td>
+  <td>No unnecessary prompt if purely editorial</td>
+</tr>
+<tr>
+  <td>Vote scheduled / text locked</td>
+  <td>Eligible representatives</td>
+  <td>Authority-mode reminder, locked hash, deadline</td>
+  <td>Binding only when permitted</td>
+</tr>
+<tr>
+  <td>Outcome implemented</td>
+  <td>All relevant viewers</td>
+  <td>Source-based effect update</td>
+  <td>Effect confirmed / disputed / pending</td>
+</tr>
+</tbody>
+</table>
+<h2>States and copy rules</h2>
+<ul>
+<li><strong>Preference:</strong> <code>support</code>, <code>oppose</code>, <code>neutral</code>, <code>unknown</code> (no answer), <code>conflict</code> (evidence inconsistent), <code>stale</code> (source changed).</li>
+<li><strong>Basis:</strong> <code>direct-provision</code>, <code>direct-topic</code>, <code>inferred-reviewed</code>, <code>inferred-unverified</code>, <code>not-assessed</code>.</li>
+<li><strong>Vote:</strong> <code>not-open</code>, <code>open</code>, <code>cast-pending</code>, <code>cast-receipted</code>, <code>tally-pending</code>, <code>certified</code>, <code>challenged</code>, <code>void</code>.</li>
+<li><strong>Authority:</strong> <code>advisory</code>, <code>institution-authorized</code>, <code>lawful-government</code>, <code>unknown</code>. Never display unverified authority as certified.</li>
+</ul>
+<h2>Low-bandwidth / non-smartphone path</h2>
+<p>Provide accessible web, assisted kiosk or paper-backed channels subject to authority and auditing; manual transcription must be independently reconciled. Do not exclude participants lacking smartphones.</p>
+</section><section class="section"><h1>Living Voter mobile experience specification</h1>
+<p><strong>Commonwealth OS / Product Design v1.0 — 15 November 2026</strong><br />
+<strong>Status:</strong> Proposal / not institutionally authorized<br />
+<strong>Scope:</strong> Huntsville institutional pilot; mobile-first</p>
+<h2>Experience goals</h2>
+<p>A resident should be able to (a) understand what a question really covers, (b) respond or pass, (c) see why a law provision has a given state, (d) correct it, and (e) be notified only when the relevant legal substance changes. <strong>Never suggest a profile response has been officially cast as a ballot.</strong></p>
+<h2>Screen inventory and acceptance tests</h2>
+<table>
+<thead>
+<tr>
+  <th>Screen</th>
+  <th>Main information and actions</th>
+  <th>Acceptance criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>LV-01 Welcome / role</td>
+  <td>Institution, adult/minor flow, purpose and separate privacy consents</td>
+  <td>All important data uses visible before collecting answers</td>
+</tr>
+<tr>
+  <td>LV-02 Home</td>
+  <td>Local and federal <strong>validated</strong> coverage with denominator, active changes, task shortcuts</td>
+  <td>Unknown and unverified mappings not counted as “support measured”</td>
+</tr>
+<tr>
+  <td>LV-03 Local onboarding</td>
+  <td>40 or fewer seed items (research target), three large buttons, source explainer, progress</td>
+  <td>Keyboard/voiceover readable; no default choice; skip/pause supported</td>
+</tr>
+<tr>
+  <td>LV-04 Federal onboarding</td>
+  <td>Separate source corpus, 30 seed items + scoped adaptive review</td>
+  <td>Local stage offered before federal; no fabricated completeness</td>
+</tr>
+<tr>
+  <td>LV-05 Law ledger</td>
+  <td>Filter by jurisdiction, status, direct/inferred basis, evidence freshness</td>
+  <td>Every law links to authoritative text/version and influence explanation</td>
+</tr>
+<tr>
+  <td>LV-06 Law detail</td>
+  <td>Official text, effective date, normative clauses, answer attribution, overrides</td>
+  <td>Direct override prevails prospectively and logs provenance</td>
+</tr>
+<tr>
+  <td>LV-07 Changes inbox</td>
+  <td>Proposed, amended, repealed, integrated with diff and action</td>
+  <td>Editorial relocation handled as distinct event with proof; no false re-vote</td>
+</tr>
+<tr>
+  <td>LV-08 Profile/Privacy</td>
+  <td>Identity assurance status; export/delete; consent; language/accessibility</td>
+  <td>Erasure constraints and retention exceptions explained accurately</td>
+</tr>
+<tr>
+  <td>LV-09 Consultation/ballot</td>
+  <td>Clear title “Advisory response” <strong>or</strong> “Authorized ballot”</td>
+  <td>Separate route and confirmation, legal basis, eligibility and receipt</td>
+</tr>
+<tr>
+  <td>LV-10 AI explanation</td>
+  <td>Source-bound summary, evidence, alternative interpretations, uncertainty</td>
+  <td>Can't fabricate citations or cast positions/votes; user controls outcome</td>
+</tr>
+</tbody>
+</table>
+<h2>Mobile patterns</h2>
+<p>Bottom navigation: <strong>Home / Laws / Changes / Profile</strong>. The first screen foregrounds the next useful action, not political affiliation. Legal text uses collapsible plain-language explanation + primary authoritative text + change diff, never summary alone. Provide tap target minimum 44×44 CSS px as initial guideline, readable minimum text, reduced motion and high contrast. All state indicated by text and icon as well as color.</p>
+<h2>Question card microcopy</h2>
+<p><strong>Label:</strong> Local ordinance group / Federal law group. <strong>Prompt:</strong> neutrally worded, single normative dimension. <strong>Choices:</strong> Support / Don't support / No preference. <strong>Context:</strong> “This question may inform the following provisions,” with clear direct/inferred status and “Not an official vote.” <strong>Review:</strong> “This answer does not settle provisions with exceptions, penalties or tradeoffs not mentioned here.”</p>
+<h2>Law-status ledger semantics</h2>
+<ul>
+<li>“Directly answered”: user answered about that exact operative provision/version.</li>
+<li>“Provisional / inferred”: a reviewed question may support a suggested interpretation but is not a vote.</li>
+<li>“Uncertain”: ambiguity, contradiction or unreviewed equivalence; ask or abstain.</li>
+<li>“Unknown”: no admissible evidence.</li>
+<li>“Outdated”: answer refers to superseded legal text; prompt version-specific review.</li>
+</ul>
+<p>Display legal version and last checked source timestamp per record. Display <code>n/m mapped</code> only alongside a <strong>sample corpus label</strong> and coverage formula; in the concept demo all counts are synthetic.</p>
+<h2>Response integrity and dark-pattern prohibitions</h2>
+<p>No default choice, forced question, order optimized to move ideology, turnout nudges based on sensitive beliefs, party labels used to guess policy preferences, or notification wording that misrepresents an inference as an obligation. Users must be able to deliberately mark “No preference,” distinct from not answering.</p>
+<h2>Prototype linkage</h2>
+<p><code>../prototype/living_voter_dashboard_prototype.html</code> is the retained concept artifact, with 7 synthetic grouped questions over 14 fictional provisions. It demonstrates flow and local browser persistence <strong>only</strong>. It is not the 96-question instrument, source-ingestion system, identity service or production polling engine.</p>
+</section><section class="section"><h1>Chamber and Steward mobile product specifications</h1>
+<p><strong>Commonwealth OS / Product Design v1.0 — 15 November 2026</strong><br />
+<strong>Status:</strong> Proposal / not institutionally authorized<br />
+<strong>Scope:</strong> Huntsville institutional pilot; mobile-first</p>
+<h2>Chamber design principle</h2>
+<p>The first institution-facing experience is <strong>a personal legislative dashboard</strong> for an authorized elected student representative or council member. Voter-facing features should not leak into the workspace without a separately established authority mode. The persistent AI assistant may explain, retrieve and draft, but never independently adjudicates eligibility, changes a governing document, or casts a vote.</p>
+<h2>Screens and detailed behaviors</h2>
+<p><strong>CH-01 Today.</strong> Role badge, institution name, meeting and task queue, deadlines, assigned bills, agenda and decision states. A single pinned “Authority mode: [advisory/authorized]” chip. No misleading green certified indicator.</p>
+<p><strong>CH-02 Bills.</strong> Proposed act list with source status, version, stage, committee, visible amendment history; filters for pending review, in debate, awaiting vote, decided.</p>
+<p><strong>CH-03 Bill detail.</strong> Authoritative source and source hashes, plain-language AI summary with references, fiscal/implementation considerations, conflicting interpretations; compare versions; open debate; propose amendment; link to resident aggregate consultation (where permitted).</p>
+<p><strong>CH-04 Debate and amendment.</strong> Threaded reasoning, amendment redlines, sponsors, procedural motion history, conflict/disclosure requirements. A proposed amendment never silently changes the voting text; revisions create new text versions.</p>
+<p><strong>CH-05 Vote chamber.</strong> Preflight eligibility/rulebook/quorum gate; frozen exact motion/version; deadline; confirmation; cast receipt; no implicit proxy/delegation. If institution permits proxy/delegation, it must be an explicit, scoped and auditable rule, not a default.</p>
+<p><strong>CH-06 Decision passport.</strong> Outcome, vote method, eligibility snapshot version, governing rule citations, tally verification state, exceptions, challenges, implementation status.</p>
+<p><strong>CH-07 AI assistant.</strong> Contextual, persistent conversational interface with source retrieval, draft assistance, procedural questions and dissent display. Tool capabilities are separately permissioned, logged and confirmation-gated. It must not silently transact or vote.</p>
+<h2>Steward screens</h2>
+<p><strong>ST-01 Institution setup:</strong> charter upload, rule parsing, legal authority review, roles and access control, jurisdiction boundaries. Human administrator explicitly approves any extracted rule before activation.</p>
+<p><strong>ST-02 Members &amp; eligibility:</strong> credential proof and revocation, term dates, role coverage, conflict-of-interest restrictions. Identifiable political preferences are not visible by default.</p>
+<p><strong>ST-03 Agenda &amp; sources:</strong> schedule meeting, approve legislative provenance and source imports; reconcile out-of-sync codification.</p>
+<p><strong>ST-04 Vote administration:</strong> configure quorum, notice, ballot format and secret/open vote; dry-run rule checker; cancel or pause on integrity exceptions.</p>
+<p><strong>ST-05 Publication &amp; incidents:</strong> publish lawful record, manage corrected evidence through append-only supersession; publish decision certificate and appeals outcomes.</p>
+<h2>Institution-specific modes</h2>
+<ul>
+<li>University: eligibility from approved SGA rules; students as members; student senators as voting officers.</li>
+<li>High school: student councils only, minor protection and district supervision, no federal legal profile.</li>
+<li>HOA: lot/unit/member entitlements, weighted votes, proxy rules and thresholds verified against documents and law.</li>
+<li>Municipal: public records, open-meeting constraints, actual city officer authorization, advisory citizen preferences; legal authority for digital binding decisions requires separate written conclusion.</li>
+</ul>
+<h2>Red-line design invariants</h2>
+<ol>
+<li>One actor cannot grant themselves voter eligibility, activate a rule change and certify the same vote without separation-of-duties checks.</li>
+<li>Secret-ballot cryptographic receipts cannot link a publicly observable identity to vote content.</li>
+<li>Vote on a superseded motion is refused or re-authorized under explicit institution procedure.</li>
+<li>Ballots cannot be inferred from topic preferences.</li>
+<li>Every operator exception has a date, reason, authority and audit flag.</li>
+</ol>
+</section><section class="section"><h1>Design system, content style and accessibility</h1>
+<p><strong>Commonwealth OS / Product Design v1.0 — 15 November 2026</strong><br />
+<strong>Status:</strong> Proposal / not institutionally authorized<br />
+<strong>Scope:</strong> Huntsville institutional pilot; mobile-first</p>
+<h2>Visual direction</h2>
+<p>Working identity: <strong>quiet civic technology</strong> — institutional credibility with modern mobile usability. Existing prototype tokens (concept values, <strong>not contrast-certified</strong>) are: deep ink <code>#071B26</code>, body ink <code>#102631</code>, teal <code>#008B83</code>, pale mint <code>#B5ECBD</code>, canvas <code>#F8F8F4</code>, muted <code>#65808C</code>, border <code>#E3E8E6</code>. Prototype typography uses an accessible sans stack for body and a restrained serif for large headings. Audit all contrast pairs in actual states before use.</p>
+<h2>Basic tokens</h2>
+<table>
+<thead>
+<tr>
+  <th>Token</th>
+  <th>Proposed value</th>
+  <th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>color.surface.base</code></td>
+  <td>#F8F8F4</td>
+  <td>Main background</td>
+</tr>
+<tr>
+  <td><code>color.surface.elevated</code></td>
+  <td>#FFFFFF</td>
+  <td>Cards</td>
+</tr>
+<tr>
+  <td><code>color.text.primary</code></td>
+  <td>#102631</td>
+  <td>Main copy</td>
+</tr>
+<tr>
+  <td><code>color.text.secondary</code></td>
+  <td>#65808C</td>
+  <td>Supporting copy (contrast test required)</td>
+</tr>
+<tr>
+  <td><code>color.brand.deep</code></td>
+  <td>#071B26</td>
+  <td>Navigation and primary controls</td>
+</tr>
+<tr>
+  <td><code>color.brand.accent</code></td>
+  <td>#008B83</td>
+  <td>Interactive emphasis (contrast test required)</td>
+</tr>
+<tr>
+  <td><code>color.brand.soft</code></td>
+  <td>#B5ECBD</td>
+  <td>Selected / progress support</td>
+</tr>
+<tr>
+  <td><code>radius.card</code></td>
+  <td>18px</td>
+  <td>Dense cards</td>
+</tr>
+<tr>
+  <td><code>radius.button</code></td>
+  <td>12px</td>
+  <td>Main actions</td>
+</tr>
+<tr>
+  <td><code>spacing.base</code></td>
+  <td>4px</td>
+  <td>Scale: 4,8,12,16,24,32</td>
+</tr>
+</tbody>
+</table>
+<h2>Components</h2>
+<ul>
+<li><strong>AuthorityBadge:</strong> advisory, institution-authorized, binding-lawfully-verified, unknown; do not rely on color alone.</li>
+<li><strong>EvidenceChip:</strong> official source / imported unverified / disputed / stale / synthetic.</li>
+<li><strong>PreferenceSelector:</strong> three explicit choices, no preselected default, full keyboard and assistive tech controls.</li>
+<li><strong>VersionDiff:</strong> inline changed clauses, effective date, semantic change classification and original PDF/text link.</li>
+<li><strong>BallotPanel:</strong> motion hash, eligibility, expiration, vote method and final confirmation distinct from ordinary preferences.</li>
+<li><strong>ProofPassportCard:</strong> audit status, hashes, rule links, current validation status, audit trail export.</li>
+<li><strong>AssistantDrawer:</strong> tool scopes and provenance, clear AI nature, human confirmation for authorized actions.</li>
+<li><strong>ConsentPanel:</strong> purpose-specific choices, retention, export/delete, institutional research constraints.</li>
+</ul>
+<h2>Accessibility acceptance criteria</h2>
+<p>Target WCAG 2.2 AA for public-facing experience (to be formally audited); text zoom at 200% and 400% without functional loss where relevant; all controls accessible by keyboard and screen reader; focus order and visible focus, persistent descriptive labels, no color-only meanings, captions/transcripts for video, reduced-motion support, error recovery, 44px target guideline with appropriate WCAG target exceptions, bilingual/plain-language research in Huntsville when participants warrant it. Make real legal text available in native accessible format whenever possible.</p>
+<h2>Motion and latency</h2>
+<p>No animated pressure or voting countdown manipulation. Respect system reduced-motion. Low-end Android and iPhone performance are explicit test devices. Offline preference draft saves may be allowed; <strong>binding votes require a verified server receipt and reconnect-safe idempotency</strong>, not a local success animation.</p>
+<h2>Content standards</h2>
+<p>Use “Proposed,” “In effect,” “Repealed,” “Integrated (editorial),” “Verified by institution,” and “Not verified” precisely. Avoid “Your voice changed the law” without proven causality. Every aggregate statistic includes the eligible denominator, participant count, response rate and any weighting method. AI-generated material labelled as such with direct source links.</p>
+</section><section class="section"><h1>Legislative ontology, sources and integration architecture</h1>
+<p><strong>Commonwealth OS / Product Design v1.0 — 15 November 2026</strong><br />
+<strong>Status:</strong> Proposal / not institutionally authorized<br />
+<strong>Scope:</strong> Huntsville institutional pilot; mobile-first</p>
+<h2>Sources of truth</h2>
+<p>Prioritize authoritative enactments, minute/roll-call records and governing documents, then codified text, then verified mirrors. For Huntsville, Legistar is a council file/agenda workflow source and the municipal code library provides consolidated ordinance text; <strong>the latest codified code alone may omit enacted-but-not-codified changes</strong>. The 2026 Huntsville Legistar renewal item provides concrete evidence of the city's legislative tooling (source H1).</p>
+<p>For federal layers, GovInfo is a data source for bill/public-law/Code-related packages; ingestion of the <em>entire applicable federal law</em> is a research program, not a turnkey API request. Preserve citation granularity and applicability limits.</p>
+<h2>Core ontology</h2>
+<p><code>Institution</code> → <code>GoverningRuleVersion</code> → <code>LegislativeInstrument</code> → <code>InstrumentVersion</code> → <code>NormativeProvision</code> → <code>AmendmentEvent</code> → <code>EffectEvent</code>.</p>
+<p>At the opinion side: <code>QuestionVersion</code> → <code>QuestionProvisionMapping</code> → <code>ResponseEvent</code> → <code>DerivedPosition</code> → <code>OverrideEvent</code>, all in a private data domain. Authorized votes are separate <code>BallotDefinition</code>, <code>EligibilitySnapshot</code>, <code>CastBallot</code>, <code>TallyCertificate</code> and <code>DecisionPassport</code> events; never join personally identifiable ballots to public profiles.</p>
+<h2>Event classification</h2>
+<table>
+<thead>
+<tr>
+  <th>Event</th>
+  <th>Substance handling</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Introduced</td>
+  <td>New instrument; ask only if relevant and opted-in</td>
+</tr>
+<tr>
+  <td>Amended</td>
+  <td>New version; semantic change classification; remap and mark affected positions stale</td>
+</tr>
+<tr>
+  <td>Repealed</td>
+  <td>Preserve prior historic state, append repeal event; ask distinct repeal question</td>
+</tr>
+<tr>
+  <td>Consolidated/codified</td>
+  <td>Link old and new identifiers; verify whether normative effect identical</td>
+</tr>
+<tr>
+  <td>Corrected source transcription</td>
+  <td>Correct data through revision with operator reason, independent review</td>
+</tr>
+<tr>
+  <td>Made effective</td>
+  <td>Record effective time and legal authority; not merely a passed vote</td>
+</tr>
+</tbody>
+</table>
+<h2>Source ingestion pipeline</h2>
+<ol>
+<li>Fetch via approved endpoint (do not assume a public screen constitutes permission to bulk scrape).</li>
+<li>Persist immutable bytes, retrieval timestamp, URL, checksum, institution identifier and license/usage terms.</li>
+<li>Parse and segment instruments. Legal reviewer validates critical attributes: citations, operative clauses, enactment, effective dates.</li>
+<li>Align versions through IDs and semantic diff; AI may suggest mappings but cannot certify legal equivalence.</li>
+<li>Reconcile to institution-approved gold corpus, record missing/repealed/out-of-scope exceptions.</li>
+<li>Trigger question mapping review, provenance updates and user notifications for substantive changes.</li>
+<li>Maintain backfill, retry, source outage and human correction queues.</li>
+</ol>
+<h2>API design (illustrative; no implementation claimed)</h2>
+<ul>
+<li><code>GET /v1/institutions/{id}/rules/current</code></li>
+<li><code>GET /v1/instruments?institution_id=&amp;status=&amp;after=</code></li>
+<li><code>GET /v1/instruments/{id}/versions/{version}</code></li>
+<li><code>GET /v1/instruments/{id}/diff?from=&amp;to=</code></li>
+<li><code>GET /v1/me/preferences?jurisdiction=&amp;basis=&amp;state=</code> (private)</li>
+<li><code>POST /v1/me/responses</code> (idempotent, consent-scoped)</li>
+<li><code>POST /v1/decisions/{id}/ballots</code> (only in independently authorized voting mode)</li>
+<li><code>GET /v1/decisions/{id}/passport</code> (public/private field redaction)</li>
+</ul>
+<p>See <code>../schemas/</code> for illustrative JSON Schema; these do not substitute for authenticated API contracts, validated laws or database migration specifications.</p>
+<h2>Multi-tenancy invariants</h2>
+<p>All primary keys include or resolve immutable institution scope. No join merges member lists, voter profiles or private responses across tenants. Public government consultation aggregation is a separate and explicit policy-controlled pipeline. Rule version is frozen for each vote and amended only through new authorized snapshots.</p>
+</section><section class="section"><h1>Questionnaire design and preference attribution</h1>
+<p><strong>Commonwealth OS / Product Design v1.0 — 15 November 2026</strong><br />
+<strong>Status:</strong> Proposal / not institutionally authorized<br />
+<strong>Scope:</strong> Huntsville institutional pilot; mobile-first</p>
+<h2>Formal definitions</h2>
+<p>Let <code>L_j</code> be the finite, <strong>verified in-scope</strong> set of operative normative provisions for institution/jurisdiction <code>j</code> and legal snapshot <code>t</code>. The underlying legal corpus is changing and nonuniform: cannot conflate all published pages with distinct independent policy choices.</p>
+<p>For each user <code>u</code> and provision <code>ℓ</code>, output:</p>
+<p><code>p(u,ℓ,t) ∈ {support, oppose, neutral, unknown, conflict, stale}</code></p>
+<p>with basis <code>b ∈ {direct-provision, direct-topic, reviewed-inference, no-evidence}</code> and cited evidence/mapping version.</p>
+<p><strong>No preference (<code>neutral</code>) ≠ unknown</strong>. A person may explicitly be indifferent; unknown means the app cannot reliably assign any position.</p>
+<h2>Research questionnaire v0.1</h2>
+<p>Maximum total items <strong>96</strong>: 1 open priorities item (not scored into policy position by default) + 40 local seed questions + 30 federal seeds + up to 25 adaptive questions. The document's intent is broad coverage, but <strong>it has not been validated to infer a person's support for every ordinance or federal law</strong>. Count <em>validated mapped positions</em>, not mere candidate mappings. Local precedes federal in adult/eligible flows. One grouped item may map to many legally equivalent clauses only after reviewed mapping.</p>
+<h2>Coverage and fidelity metrics</h2>
+<ul>
+<li><code>Coverage_exact = #provisions with direct exact-version answers / #in-scope verified provisions</code>.</li>
+<li><code>Coverage_reviewed = #provisions with direct or independently validated mapping / #in-scope verified provisions</code>.</li>
+<li><code>Abstention = #unknown+conflict+stale / #in-scope verified provisions</code>.</li>
+<li><code>Mapping error</code>: rate of user disagreement with an inferred position when separately asked an exact-provision question; sample is held out and stratified. Report Wilson/Clopper-Pearson CIs.</li>
+<li><code>Question efficiency = validated incremental coverage per answered question</code>, measured against random, flat, topic-only and human-curated baselines.</li>
+<li>Evaluate fairness by age-appropriate adult groups and opt-in participant categories; no ideological optimization.</li>
+</ul>
+<h2>Decision rule (specification, not proven theorem)</h2>
+<p>A question-to-provision edge may be labeled <code>equivalent</code> only when the proposition and the clause are semantically equivalent <em>within explicitly defined conditions, exceptions, sanctions, dates, applicability and funding tradeoffs</em>. Otherwise label <code>related</code> and abstain. For every inference, present the exact generating question and the human-reviewed mapping version. If provisions bundle independent normative dimensions, split or ask the full law directly.</p>
+<p>Proposed adaptive item utility:</p>
+<p><code>utility(q) = expected reduction in unresolved high-relevance provisions * calibrated fidelity - burden_cost(q)</code>.</p>
+<p>Select questions within budget <code>B&lt;=96</code> under fairness and randomization constraints. This is an <strong>optimization target</strong>, not evidence of a universally optimal algorithm or guarantee of total legal preference reconstruction.</p>
+<h2>Version-aware update procedure</h2>
+<p>At substantive law update: identify affected clause IDs; invalidate only mappings dependent on changed semantics; generate source-specific review questions; preserve old direct responses as history; never retroactively alter a historical ballot. At editorial integration: maintain equivalence certificate and update citations without asking unneeded questions. For new provisions, default unknown until reviewed.</p>
+<h2>Bias controls</h2>
+<p>Preregister neutral wording, randomize symmetric question framing for A/B error testing, present tradeoffs and excluded exceptions, separate evaluative AI text from the three-choice response, blind reviewers to response direction and participant identity, allow no preference and skip. Report false inference, false certainty, and re-elicitation burden—not just apparent question compression.</p>
+<h2>Cheapest decisive experiment</h2>
+<p>Choose 120–200 authenticated <em>fictional</em> local ordinance clauses with human-created exact-provision reference questions, design 20–30 grouped seeds blind to held-out responses, obtain opt-in adult respondents and compare map precision and coverage against direct questioning. A pilot is positive only if the pre-registered fidelity threshold is met <em>and</em> abstentions are honestly reported. Independent reviewers must challenge mappings, particularly exceptions, penalties and cross-clause interactions.</p>
+</section><section class="section"><h1>Democratic Assurance Proof Passport and certification boundaries</h1>
+<p><strong>Commonwealth OS / Product Design v1.0 — 15 November 2026</strong><br />
+<strong>Status:</strong> Proposal / not institutionally authorized<br />
+<strong>Scope:</strong> Huntsville institutional pilot; mobile-first</p>
+<h2>Objective</h2>
+<p>Every consequential institutional decision should carry a <strong>portable evidence package</strong> allowing an independent auditor to check that the right governing rules and text were used, the right participants were authorized, the decision procedure was valid, and any subsequent effect was correctly recorded. This is a <strong>design objective</strong>, not an existing certified implementation.</p>
+<h2>Minimal passport</h2>
+<ul>
+<li><code>decision_id</code>, <code>institution_id</code>, <code>institution_type</code>, <code>authority_mode</code></li>
+<li><code>rulebook_id</code>, <code>rulebook_version_hash</code>, exact rule clauses (quorum, notice, majority, proxy, attendance, conflict)</li>
+<li><code>proposal_id</code>, <code>locked_text_version_hash</code>, publication time, amendments and challenge history</li>
+<li><code>eligibility_snapshot_hash</code>, snapshot time, eligible count/weights, exclusions and appeals</li>
+<li><code>voting_window</code>, <code>vote_method</code>, <code>secret_or_open</code>, <code>ballot_integrity_method</code></li>
+<li><code>tally</code>, <code>quorum_result</code>, <code>majority_rule_result</code>, <code>verifier_version</code>, cryptographic or signed receipts where valid</li>
+<li><code>certification_status</code>, <code>reviewers</code>, <code>exceptions</code>, <code>independent_audit_result</code></li>
+<li><code>implementation_events</code> with evidence and effective-time authorization</li>
+<li><code>provenance</code> source metadata, checkpoint hashes and public redaction policy</li>
+</ul>
+<h2>State machine</h2>
+<p><code>DRAFT → SOURCED → AUTHORITY_REVIEWED → DELIBERATING → TEXT_LOCKED → ELIGIBILITY_FROZEN → VOTING → TALLY_PROVISIONAL → INDEPENDENT_CHECK → CERTIFIED_OR_BLOCKED → EFFECT_PENDING → EFFECT_CONFIRMED_OR_DISPUTED</code>.</p>
+<p>A post-lock substantive amendment must abort/reinitialize the ballot unless the institution's specific rule says otherwise. An invalid or stale eligibility snapshot blocks valid certification. Unknown legal authority blocks a binding effect, even if the arithmetic is correct. The state machine must not be a decorative progress bar: the server guard checks transition invariants.</p>
+<h2>Verifier contract (v1 proposal)</h2>
+<p><code>verify(passport, authoritative_rule_set, verified_source_set) -&gt; {PASS, FAIL, INDETERMINATE, findings[]}</code>.</p>
+<p>To PASS, verify institution and rule authority; text and source hashes; roster validity; voting-period compliance; ballot method and weights; quorum/majority calculations; tally integrity; challenge resolution; publication and effect evidence under institution-specific requirements. <strong>INDETERMINATE</strong> if legal interpretation, audit materials or independent trust roots are missing. Publication of a JSON receipt alone is <em>not</em> a proof.</p>
+<h2>Formal safety invariant (conditional)</h2>
+<p><code>BindingEffect(e) ⇒ AuthorizedRule(e) ∧ EligibleBallot(e) ∧ LockedText(e) ∧ ValidProcedure(e) ∧ VerifiedOutcome(e) ∧ FreshSource(e) ∧ EnforcedEffectBoundary(e)</code>.</p>
+<p>This is a <strong>desired invariant conditional on complete mediation</strong>, not a theorem currently proved for real institutional systems. Network retries, paper decisions, administrative overrides, legacy credentials and off-platform effects are bypass channels requiring separate assurance.</p>
+<h2>Example checker pseudocode</h2>
+<pre><code>require passport.authority_mode == 'institution-authorized'
+require trusted(rule_version) &amp;&amp; valid_at(rule_version, vote_time)
+require trusted(source_version) &amp;&amp; hash(locked_text)==passport.locked_hash
+require verified_roster(passport.eligibility_snapshot)
+require rule_engine.validate_ballots(ballots, roster, vote_window)
+require recompute_tally(ballots, rulebook)==passport.tally
+require quorum_pass &amp;&amp; decision_threshold_pass
+require no_unresolved_material_challenge
+if effect_requested: require enforceable_boundary &amp;&amp; fresh_effect_authorization
+return PASS
+</code></pre>
+<p>A valid application cannot blindly disclose secret ballot plaintext to an external checker; integrate cryptographic tally proofs or controlled third-party audit depending on the institution's method.</p>
+<h2>Maturity labels</h2>
+<p><code>CONCEPT</code> → <code>PROTOTYPE</code> → <code>REPRODUCIBLE_TEST</code> → <code>INDEPENDENTLY_AUDITED</code> → <code>INSTITUTIONALLY_AUTHORIZED</code>. None implies universal election certification or legal effect beyond named scope. Proof Passport has no automatically granted authority.</p>
+<h2>Relation to prior art</h2>
+<p>Decidim's traceable proposal history, ElectionGuard's cryptographic verifiability, and OpenZeppelin's propose/vote/execute mechanisms are <strong>components and antecedents</strong>, not work to erase. Originality, if established, requires verified cross-rule/source/effect continuity and a same-scope comparison.</p>
+</section><section class="section"><h1>Identity, privacy, voting and security architecture</h1>
+<p><strong>Commonwealth OS / Product Design v1.0 — 15 November 2026</strong><br />
+<strong>Status:</strong> Proposal / not institutionally authorized<br />
+<strong>Scope:</strong> Huntsville institutional pilot; mobile-first</p>
+<h2>Threats and assets</h2>
+<p>Assets: sensitive political preferences, institutional rosters, identity claims, ballots, governing documents, rule configurations, source provenance, hash/signature keys, audit records, and implementation endpoints. Adversaries: credential thieves, insiders, poisoned source feeds, fabricated AI summaries, colluding members, vote replay clients, and privileged actors bypassing enforcement.</p>
+<h2>Identity vs authorization</h2>
+<p>Identity verification does not establish a person's entitlement to a specific institution vote. Use institution-approved identity and eligibility attestations for UAH, other universities, schools, and HOAs. City adult registered-voter eligibility must be verified through a separately authorized election-administration process; GPS, mailing address, publicly available voter-roll access or student status do not establish it.</p>
+<h2>Data minimization and role separation</h2>
+<p>Store the minimum necessary identifiers in a credential vault, policy preferences under a distinct pseudonymous identity, and ballots under a separate authorized tally system. Do <strong>not</strong> give institutional clerks access to individual resident political preferences by default. Do not expose secret ballot contents through audit export. Do not build tools for candidate targeting or political-message personalization.</p>
+<p>Use privacy-preserving aggregate reporting: denominators, self-selection warnings, opt-in consent category, suppression thresholds, small-cell/membership disclosure checks, and no false implication of representative sampling. Differential privacy may be considered but must not be claimed without a defined epsilon/delta, threat model and audit.</p>
+<h2>Consent and research boundaries</h2>
+<p>Separate: (i) using a governance service, (ii) optional private preference profiling, (iii) academic study, (iv) public statistical release, and (v) reuse for future research. Refusal to participate in research must not disqualify otherwise eligible official governance. Any future use to study automation of representative labor must be disclosed and separately consented to; <strong>no hidden secondary-purpose collection</strong>. Deletion must explain records required to preserve official election validity and lawful retention.</p>
+<h2>Minors and schools</h2>
+<p>Huntsville City Schools pilot requires district sponsorship and legal review. Apply FERPA where student records are involved; determine COPPA and state requirements by user age, data and operator model. Do not collect individual minors' federal ideology or political preference profiles. School-governance exercises should be narrow, educational, opt-in and age-appropriate, with parent/guardian policies documented as applicable.</p>
+<h2>Ballot and security boundaries</h2>
+<ul>
+<li>Binding ballot cast only after role/rule/eligibility/time/text lock checks.</li>
+<li>Server-authoritative idempotency for resend, retries and disconnected clients.</li>
+<li>No coercion-sensitive vote receipts showing plaintext to third parties when secret voting is required.</li>
+<li>Authenticity, ballot secrecy where mandated, tally verification, challenge procedures, malware, accessibility and operational resilience require dedicated audits.</li>
+<li>Audit events append-only and hash-linked; administrative superusers cannot erase past evidence without detection.</li>
+<li>Source-fed LLM context treated as untrusted input; prompt injection cannot operate privileged tools or alter law parsing without human review.</li>
+<li>Complete effect mediation is an assumption <strong>to verify</strong>, not a default fact.</li>
+</ul>
+<h2>Privacy incident response</h2>
+<p>Detect → contain → scope → preserve evidence → notify institution/affected participants according to law and contract → independent postmortem → remediation and regression tests. Maintain disclosure limits, retention schedules, backup deletion and breach exercises.</p>
+<h2>Legal research checkpoint</h2>
+<p>Alabama law on municipalities (§11-45-1, §11-45-2, §11-45-8) and FERPA are <strong>initial references</strong>, not a comprehensive legal opinion. The exact governing documents and institution authorization control in earlier pilots. Retain counsel's written determinations at each stage.</p>
+</section><section class="section"><h1>Huntsville first-pilot staged roadmap (2026–2030)</h1>
+<p><strong>Commonwealth OS / Product Design v1.0 — 15 November 2026</strong><br />
+<strong>Status:</strong> Proposal / not institutionally authorized<br />
+<strong>Scope:</strong> Huntsville institutional pilot; mobile-first</p>
+<h2>Fixed sequence — one evolving pilot</h2>
+<p><strong>1. UAH → 2. Other Huntsville universities → 3. Huntsville City Schools public high schools → 4. Huntsville HOAs → 5. Huntsville City Council.</strong> These stages are sequential adoption gates, not independent site deployments; however, each institution retains independent legal/charter authority. No partner has committed to participation.</p>
+<table>
+<thead>
+<tr>
+  <th>Phase (target)</th>
+  <th>Institution</th>
+  <th>Initial authority boundary</th>
+  <th>Exit evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>2026 design / 2027 operation</td>
+  <td>UAH SGA</td>
+  <td>University charter/bylaws; only those procedures formally approved</td>
+  <td>Rulebook verification, representative workflow, authorized motions/receipts and external audit</td>
+</tr>
+<tr>
+  <td>2027–2028</td>
+  <td>Alabama A&amp;M and Oakwood (candidates)</td>
+  <td>Institution-specific student governance</td>
+  <td>Rule portability, tenant separation, comparable adjudication and accessibility</td>
+</tr>
+<tr>
+  <td>2028</td>
+  <td>Huntsville City Schools high schools (district approval)</td>
+  <td>Student council and educational governance only</td>
+  <td>Child privacy review, accessibility, age-appropriate usability and verified permissions</td>
+</tr>
+<tr>
+  <td>2029</td>
+  <td>Huntsville HOAs (partners TBD)</td>
+  <td>Association covenants/bylaws and Alabama entity law</td>
+  <td>Membership/quorum/proxy/weights test, legal review, actual decision evidence</td>
+</tr>
+<tr>
+  <td>2029–2030</td>
+  <td>Huntsville City Council</td>
+  <td>City law and council rules; resident views initially advisory</td>
+  <td>Clerk source integration, independently audited authority chain and authorized municipal approval</td>
+</tr>
+</tbody>
+</table>
+<h2>UAH initial research instrument</h2>
+<p>Do not force the public federal legal questionnaire into an SGA representative workspace. At UAH, validate legislative practice using student government bylaws and an institution-specific proposal/ballot flow. The private adult Living Voter local→federal instrument is a <strong>parallel design stream</strong>, not a precondition for executing student votes.</p>
+<h2>Partners and approval dossier</h2>
+<p>For each stage collect: accountable sponsor; exact governing document versions; role and eligibility list source; permitted action matrix; institution data protection agreement; protocol for consent and IRB determination when research is involved; clerk/secretary review; technical/security review; independent observer; remediation, termination and export provisions.</p>
+<h2>City legal boundary</h2>
+<p>State law authorizes municipalities to legislate through prescribed council processes; do not infer that an app may legally replace elected council members or hold binding general-population votes. Council documents, meeting records and legal counsel are required before any official decision-mode switch. An advisory participation program and lawful legislative voting are different legal uses.</p>
+<h2>Pilot methodology</h2>
+<p>Each stage runs (1) shadow mode for at least a defined sample of historical decisions; (2) supervised side-by-side recording with official procedure as authority; (3) opt-in limited live mode only where authorized; (4) holdout and audit; (5) postmortem before next expansion. Counts and durations are proposed in the preregistered evaluation, not preapproved.</p>
+<h2>Failure and rollback</h2>
+<p>Any contested election-integrity result, unexplained authorization bypass, privacy leak, minority-exclusion pattern or failed audit causes the affected capability to revert to advisory/read-only until resolution. Do not graduate to next institution simply because usage grows.</p>
+<h2>Suggested artifacts at each transition</h2>
+<ul>
+<li>Approved charter or board resolution;</li>
+<li>institution-specific role and legal-rule annex;</li>
+<li>independent proof-passport replay report;</li>
+<li>privacy/accessibility record;</li>
+<li>incident/corrective-action ledger;</li>
+<li>transferability matrix showing changes required by next institution.</li>
+</ul>
+</section><section class="section"><h1>Evaluation plan, hypotheses and independent validation</h1>
+<p><strong>Commonwealth OS / Product Design v1.0 — 15 November 2026</strong><br />
+<strong>Status:</strong> Proposal / not institutionally authorized<br />
+<strong>Scope:</strong> Huntsville institutional pilot; mobile-first</p>
+<h2>Status</h2>
+<p>This document preregisters <strong>proposed</strong> hypotheses and audit steps. No user study, independent audit or legal approval has been conducted within this documentation effort.</p>
+<h2>Questions to test</h2>
+<p><strong>H1 (efficiency):</strong> Grouped, reviewed questions reduce respondent burden for a fixed, specified mapping-fidelity target compared with exhaustive law-by-law questioning.</p>
+<p><strong>H2 (control):</strong> Showing provenance and direct overrides improves agreement with participants' own exact-provision responses and reduces uncorrected false inferences.</p>
+<p><strong>H3 (continuity):</strong> Proof Passport exposes more correct cross-stage status transitions and more detectable authorization failures than conventional disjoint proposal, vote and implementation exports.</p>
+<p><strong>H4 (portability):</strong> A common core with institution-scoped rulebooks preserves rule validity across university, school, HOA and municipality, without violating tenant isolation.</p>
+<p><strong>H5 (equity):</strong> Comprehension, participation and successful objection are not systematically worse for accessibility and lower-bandwidth participants, or failures are detected and corrected before scale-up.</p>
+<h2>Pre-registration table</h2>
+<table>
+<thead>
+<tr>
+  <th>Study</th>
+  <th>Control</th>
+  <th>Primary endpoint</th>
+  <th>Decisive failure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Mapping study</td>
+  <td>Exact provision-by-provision questions</td>
+  <td>Correctly inferred state with abstention</td>
+  <td>Misleading coverage or CI breaches preregistered limit</td>
+</tr>
+<tr>
+  <td>Change update</td>
+  <td>Full questionnaire re-take</td>
+  <td>Correct targeted re-elicitation / burden</td>
+  <td>Missed normative changes or false recertification</td>
+</tr>
+<tr>
+  <td>Decision trace</td>
+  <td>Official record plus detached systems</td>
+  <td>Auditable chain replay completeness</td>
+  <td>Missing authority evidence or irreversible false PASS</td>
+</tr>
+<tr>
+  <td>Role boundary</td>
+  <td>Multi-tenant red-team tasks</td>
+  <td>Unauthorized access attempts rejected</td>
+  <td>Any successful cross-institution role escalation</td>
+</tr>
+<tr>
+  <td>Secret ballot</td>
+  <td>Red-team and external tally checker</td>
+  <td>Ballot secrecy + outcome verifiability</td>
+  <td>De-anonymization or unverifiable result</td>
+</tr>
+<tr>
+  <td>Accessibility</td>
+  <td>Screen reader, keyboard, no-smartphone access</td>
+  <td>Task completion and error recovery</td>
+  <td>Critical inaccessibility for eligible participants</td>
+</tr>
+</tbody>
+</table>
+<h2>Independent auditor designed before deployment</h2>
+<p>Create an audit team which <strong>does not implement the construction</strong>, uses an independent parser and rule engine where feasible, and tests edge cases: law amendments after ballot lock, mid-window member removal, tied quorum, conflicting proxies, neutral-versus-unknown, duplicated ballots, time-zone errors, delayed publication, editor-only codification, offline votes, unauthorized effect attempts. Counterexample search is not a proof; document both genuine falsifications and unresolved ambiguities.</p>
+<h2>Metrics dictionary</h2>
+<p><strong>Denominator fidelity:</strong> Define the in-scope instrument set before measuring a percentage. <strong>Sampling:</strong> Explain self-selection and weighting; do not call a volunteer dashboard a representative poll. <strong>Security:</strong> Test effect-time boundary, not only source review. <strong>Statistical estimates:</strong> Report confidence interval method, pre-registered exclusion rules and missing data. <strong>Outcomes:</strong> Separate system correctness, user satisfaction, institutional legality, and scientific novelty.</p>
+<h2>Stop rule</h2>
+<p>Stop the affected phase on any materially invalid binding result, a verified covert disclosure of individual political choices, unauthorized role elevation, repeated inability to map laws accurately, or failure of institution legal permission. Do not promote “prototype” to “certified” absent external review.</p>
+<h2>Research contribution thresholds</h2>
+<p>A <strong>novel contribution</strong> requires: (a) a claim beyond already documented Decidim/CONSUL/Polis/Loomio/ElectionGuard capabilities, (b) reproducible implementation or theorem, (c) matching-scope contemporaneous prior-art audit, and (d) independent adversarial evaluation. A good UX concept, mockup or renamed existing feature is insufficient.</p>
+</section><section class="section"><h1>Product decisions, risk register and open decisions</h1>
+<p><strong>Commonwealth OS / Product Design v1.0 — 15 November 2026</strong><br />
+<strong>Status:</strong> Proposal / not institutionally authorized<br />
+<strong>Scope:</strong> Huntsville institutional pilot; mobile-first</p>
+<h2>Accepted product decisions</h2>
+<ul>
+<li>Working brand: Commonwealth OS; resident mobile module: Living Voter.</li>
+<li>Mobile-first; UAH SGA pilot first; then Alabama A&amp;M/Oakwood (candidate institutions), Huntsville City Schools high schools, HOAs, Huntsville City Council.</li>
+<li>First representative interface: authenticated tasks, legislative review/amend/debate/vote with persistent AI. Initial public-facing institution dashboard gated by partner authorization.</li>
+<li>Resident questionnaire: 3 choices; local before federal, explicit provenance, direct overrides, change-triggered follow-up.</li>
+<li>Source-linked, multi-institution, versioned legal lifecycle and an auditable Proof Passport.</li>
+<li>Open source and wider government adoption are ambitions; licensing not selected.</li>
+</ul>
+<h2>Decisions requiring owner/institution sign-off</h2>
+<table>
+<thead>
+<tr>
+  <th>ID</th>
+  <th>Decision</th>
+  <th>Required owner</th>
+  <th>Blocking?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>OD-01</td>
+  <td>Name and trademark clearance</td>
+  <td>Project owner / counsel</td>
+  <td>Before public branding</td>
+</tr>
+<tr>
+  <td>OD-02</td>
+  <td>Software/document licenses</td>
+  <td>Project owner / contributors / counsel</td>
+  <td>Before open-source release</td>
+</tr>
+<tr>
+  <td>OD-03</td>
+  <td>UAH agreement and rulebook validity</td>
+  <td>UAH authorized body</td>
+  <td>Before live voting</td>
+</tr>
+<tr>
+  <td>OD-04</td>
+  <td>Student data processing and IRB</td>
+  <td>UAH / relevant schools</td>
+  <td>Before research enrolment</td>
+</tr>
+<tr>
+  <td>OD-05</td>
+  <td>Ballot implementation and independent audit vendor</td>
+  <td>Institution + external assessor</td>
+  <td>Before binding vote</td>
+</tr>
+<tr>
+  <td>OD-06</td>
+  <td>Data retention and export policy</td>
+  <td>Institution and privacy counsel</td>
+  <td>Before collecting real profiles</td>
+</tr>
+<tr>
+  <td>OD-07</td>
+  <td>Exact question mapping accuracy threshold</td>
+  <td>Research sponsor and auditor</td>
+  <td>Before measuring success</td>
+</tr>
+<tr>
+  <td>OD-08</td>
+  <td>HOA selection and statutory proxy/weight rules</td>
+  <td>Association counsel</td>
+  <td>Before HOA votes</td>
+</tr>
+<tr>
+  <td>OD-09</td>
+  <td>City source integration and lawful authority mode</td>
+  <td>Huntsville Clerk/IT/counsel</td>
+  <td>Before official city use</td>
+</tr>
+<tr>
+  <td>OD-10</td>
+  <td>Public demographic/equity metrics and suppression</td>
+  <td>Privacy reviewer</td>
+  <td>Before publishing aggregates</td>
+</tr>
+</tbody>
+</table>
+<h2>Risk register</h2>
+<table>
+<thead>
+<tr>
+  <th>Risk</th>
+  <th>Severity</th>
+  <th>First mitigation</th>
+  <th>Trigger/owner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Inferred law positions claimed as definite or complete</td>
+  <td>Critical</td>
+  <td>Abstention and explicit basis labels</td>
+  <td>Mapping reviewer; before pilot</td>
+</tr>
+<tr>
+  <td>Hidden reuse of political preference data</td>
+  <td>Critical</td>
+  <td>Consent segregation and public purpose disclosure</td>
+  <td>Privacy lead; before collection</td>
+</tr>
+<tr>
+  <td>AI summary biases/omits legal exceptions</td>
+  <td>High</td>
+  <td>Exact-source panel + adversarial summary evaluation</td>
+  <td>Content QA; every release</td>
+</tr>
+<tr>
+  <td>Outdated municipal codification</td>
+  <td>High</td>
+  <td>Enacted-but-uncodified delta ledger</td>
+  <td>Clerk/source operator; each import</td>
+</tr>
+<tr>
+  <td>Role/authority escalation</td>
+  <td>Critical</td>
+  <td>Rule engine, RBAC+ABAC, external audit</td>
+  <td>Security; binding gate</td>
+</tr>
+<tr>
+  <td>Failed ballot privacy or verification</td>
+  <td>Critical</td>
+  <td>Specialist election review and fallback</td>
+  <td>Auditor; binding gate</td>
+</tr>
+<tr>
+  <td>Minors' political profiling</td>
+  <td>Critical</td>
+  <td>School-only council workflow and prohibition on federal profiling</td>
+  <td>District; school gate</td>
+</tr>
+<tr>
+  <td>Low-representativeness civic feedback</td>
+  <td>High</td>
+  <td>Sample metadata and honest denominators</td>
+  <td>Research lead; each report</td>
+</tr>
+<tr>
+  <td>HOA unequal vote weights ignored</td>
+  <td>High</td>
+  <td>Verify bylaws, member and proxy entitlement</td>
+  <td>HOA legal lead; each election</td>
+</tr>
+<tr>
+  <td>Open-source use of third-party copyrighted sources</td>
+  <td>High</td>
+  <td>Source rights, attribution, no third-party code embedded by default</td>
+  <td>Legal; publication gate</td>
+</tr>
+</tbody>
+</table>
+<h2>Future backlog, not approved features</h2>
+<p>Delegation/topic standing instructions; privacy-preserving analytics; cryptographic election protocol adapter; city legislative integration; multilingual comprehension; offline kiosk reconciliation; multi-source legal diff; representative automation <em>research</em> under explicit separate governance and consent. None should be enabled silently as part of student or resident data collection.</p>
+</section><section class="section"><h1>Sources, credit and verification ledger</h1>
+<p><strong>Commonwealth OS / Product Design v1.0 — 15 November 2026</strong><br />
+<strong>Status:</strong> Proposal / not institutionally authorized<br />
+<strong>Scope:</strong> Huntsville institutional pilot; mobile-first</p>
+<h2>Verification policy</h2>
+<p>Consulted 15 November 2026. URLs below point to first-party documentation or authoritative public records when available. The fact that a feature is documented does not prove a specific deployment uses it; lack of an observed feature is not evidence of absence. Prior conversations supplied the comparison shortlist and the design-gap hypothesis; the selected sources below were checked for this package. Product names belong to their owners. This pack does <strong>not</strong> incorporate competitor source code or claim ownership of their designs.</p>
+<table>
+<thead>
+<tr>
+  <th>ID</th>
+  <th>Source</th>
+  <th>Verified relevance</th>
+  <th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>D1</td>
+  <td>Decidim official docs</td>
+  <td>Proposal version control and accountability results; participatory processes</td>
+  <td><a href="https://docs.decidim.org/en/develop/features/components.html">https://docs.decidim.org/en/develop/features/components.html</a></td>
+</tr>
+<tr>
+  <td>D1b</td>
+  <td>Decidim accountability docs</td>
+  <td>Manually updated results, statuses and milestones</td>
+  <td><a href="https://docs.decidim.org/en/develop/admin/components/accountability.html">https://docs.decidim.org/en/develop/admin/components/accountability.html</a></td>
+</tr>
+<tr>
+  <td>D2</td>
+  <td>CONSUL Democracy docs</td>
+  <td>Collaborative legislation phases and citizen proposals</td>
+  <td><a href="https://docs.consuldemocracy.org/docs_general/participation-processes/collaborative-legislation">https://docs.consuldemocracy.org/docs_general/participation-processes/collaborative-legislation</a></td>
+</tr>
+<tr>
+  <td>D2b</td>
+  <td>CONSUL features</td>
+  <td>Voting, budgeting, collaborative drafting</td>
+  <td><a href="https://consuldemocracy.org/features/">https://consuldemocracy.org/features/</a></td>
+</tr>
+<tr>
+  <td>D3</td>
+  <td>Polis docs</td>
+  <td>Opinion statements, clusters and consensus</td>
+  <td><a href="https://pol-is.github.io/polis-documentation/welcome/Overview.html">https://pol-is.github.io/polis-documentation/welcome/Overview.html</a></td>
+</tr>
+<tr>
+  <td>D4</td>
+  <td>Loomio help</td>
+  <td>Discussions, proposals, polls and outcomes</td>
+  <td><a href="https://www.loomio.com/docs/en/user_manual/polls/intro_to_decisions">https://www.loomio.com/docs/en/user_manual/polls/intro_to_decisions</a></td>
+</tr>
+<tr>
+  <td>D5</td>
+  <td>Go Vocal</td>
+  <td>Resident proposal and support workflows</td>
+  <td><a href="https://www.govocal.com/platform-features/proposals">https://www.govocal.com/platform-features/proposals</a></td>
+</tr>
+<tr>
+  <td>D6</td>
+  <td>Granicus Legistar support</td>
+  <td>Documents, agendas, minutes, workflow and files</td>
+  <td><a href="https://support.granicus.com/articles/en_US/Knowledge/Learning-Legistar">https://support.granicus.com/articles/en_US/Knowledge/Learning-Legistar</a></td>
+</tr>
+<tr>
+  <td>D7</td>
+  <td>Quorum product page</td>
+  <td>Versioned constitutions, challenges, AI voting seat (excluded from design)</td>
+  <td><a href="https://goquorum.app/features">https://goquorum.app/features</a></td>
+</tr>
+<tr>
+  <td>D8</td>
+  <td>ElectionGuard</td>
+  <td>Three core E2E verifiability capabilities</td>
+  <td><a href="https://electionguard.vote/concepts/Verifiability/">https://electionguard.vote/concepts/Verifiability/</a></td>
+</tr>
+<tr>
+  <td>D9</td>
+  <td>OpenZeppelin Governor</td>
+  <td>Governance vote to execution lifecycle</td>
+  <td><a href="https://docs.openzeppelin.com/contracts/5.x/governance">https://docs.openzeppelin.com/contracts/5.x/governance</a></td>
+</tr>
+<tr>
+  <td>D10</td>
+  <td>City of Huntsville / Municode public record</td>
+  <td>CivicPlus-Municode service authorized by Huntsville Council April 2026; municipal code is publicly available</td>
+  <td><a href="https://huntsvilleal.legistar.com/LegislationDetail.aspx?GUID=D5F7A370-CCAD-4EE7-8E30-4CF84B00DEA9&amp;ID=7974160">https://huntsvilleal.legistar.com/LegislationDetail.aspx?GUID=D5F7A370-CCAD-4EE7-8E30-4CF84B00DEA9&amp;ID=7974160</a></td>
+</tr>
+<tr>
+  <td>H1</td>
+  <td>City of Huntsville Legistar file 2026-1055</td>
+  <td>2026 agenda item regarding Legistar renewal; not proof of adopted resolution</td>
+  <td><a href="https://huntsvilleal.legistar.com/LegislationDetail.aspx?GUID=0FA7BA55-3F0E-47FE-B415-DE7B1461DE18&amp;ID=8223863">https://huntsvilleal.legistar.com/LegislationDetail.aspx?GUID=0FA7BA55-3F0E-47FE-B415-DE7B1461DE18&amp;ID=8223863</a></td>
+</tr>
+<tr>
+  <td>A1</td>
+  <td>Alabama Code §11-45-1</td>
+  <td>Municipal legislative powers bounded by law</td>
+  <td><a href="https://alison.legislature.state.al.us/code-of-alabama?section=11-45-1">https://alison.legislature.state.al.us/code-of-alabama?section=11-45-1</a></td>
+</tr>
+<tr>
+  <td>A2</td>
+  <td>Alabama Code §11-45-2</td>
+  <td>Council ordinance adoption procedures</td>
+  <td><a href="https://alison.legislature.state.al.us/code-of-alabama?section=11-45-2">https://alison.legislature.state.al.us/code-of-alabama?section=11-45-2</a></td>
+</tr>
+<tr>
+  <td>A3</td>
+  <td>Alabama Code §11-45-8</td>
+  <td>Publication and recordation</td>
+  <td><a href="https://alison.legislature.state.al.us/code-of-alabama?section=11-45-8">https://alison.legislature.state.al.us/code-of-alabama?section=11-45-8</a></td>
+</tr>
+<tr>
+  <td>U1</td>
+  <td>UAH SGA Senate bylaws (2019 published PDF; verify current version with UAH)</td>
+  <td>Example institution rulebook, not current authority determination</td>
+  <td><a href="https://www.uah.edu/images/administrative/student-life/sga/bylaws.pdf">https://www.uah.edu/images/administrative/student-life/sga/bylaws.pdf</a></td>
+</tr>
+<tr>
+  <td>O1</td>
+  <td>Oakwood University catalog</td>
+  <td>United Student Movement institution membership reference</td>
+  <td><a href="https://catalog.oakwood.edu/student-association">https://catalog.oakwood.edu/student-association</a></td>
+</tr>
+<tr>
+  <td>F1</td>
+  <td>U.S. Education Department FERPA</td>
+  <td>Student education-record protections</td>
+  <td><a href="https://studentprivacy.ed.gov/ferpa">https://studentprivacy.ed.gov/ferpa</a></td>
+</tr>
+<tr>
+  <td>G1</td>
+  <td>GovInfo API</td>
+  <td>US federal legislative documents and versioned packages</td>
+  <td><a href="https://www.govinfo.gov/features/api">https://www.govinfo.gov/features/api</a></td>
+</tr>
+<tr>
+  <td>G2</td>
+  <td>GovInfo related-document API</td>
+  <td>Links bill versions, history and laws</td>
+  <td><a href="https://www.govinfo.gov/features/api-related-document-service">https://www.govinfo.gov/features/api-related-document-service</a></td>
+</tr>
+</tbody>
+</table>
+<h2>Missing checks / caveats</h2>
+<ul>
+<li>No current UAH SGA authorization for app voting obtained; publicly available bylaws may be superseded.</li>
+<li>Other universities, HCS, HOAs and Huntsville council have <strong>not agreed to participate</strong>.</li>
+<li>No complete Huntsville enacted-ordinance inventory or federal statute corpus ingested/verified.</li>
+<li>No independent proof that the decision-state discontinuity hypothesis is globally novel.</li>
+<li>No authenticated human voter record access, no IRB ruling, no election security certification, no HOA legal determination.</li>
+<li>The earlier review also named eSCRIBE, Diligent Community, Anthology Engage, OpenMeeting, StuGov and Vocdoni; named product/version-specific validation remains outstanding.</li>
+</ul>
+</section></body></html>

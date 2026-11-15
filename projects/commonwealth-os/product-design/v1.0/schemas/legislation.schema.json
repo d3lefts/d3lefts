@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Synthetic legislative provision version",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "institution_id",
+    "instrument_id",
+    "version_id",
+    "status",
+    "normative_provision",
+    "source"
+  ],
+  "properties": {
+    "institution_id": {
+      "type": "string"
+    },
+    "instrument_id": {
+      "type": "string"
+    },
+    "version_id": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "proposed",
+        "enacted",
+        "effective",
+        "amended",
+        "repealed",
+        "integrated",
+        "disputed"
+      ]
+    },
+    "normative_provision": {
+      "type": "string"
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "uri",
+        "retrieved_at",
+        "sha256",
+        "authority_status"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "uri"
+        },
+        "retrieved_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "authority_status": {
+          "enum": [
+            "official_verified",
+            "official_unverified",
+            "mirror",
+            "fictional"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "prior_version_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "change_type": {
+      "enum": [
+        "new",
+        "substantive_amendment",
+        "repeal",
+        "editorial_integration",
+        "none"
+      ]
+    }
+  }
+}

@@ -1,0 +1,6 @@
+journey,entry,step2,step3,step4,step5,exit,requirements
+Adult local-to-federal,LV-01,LV-02,LV-03,LV-05,LV-04,LV-08,PR-002 PR-003 PR-004 PR-006 PR-021
+Change-triggered review,LV-07,LV-06,LV-03,LV-05,,,PR-007 PR-018
+Representative decision,CH-01,CH-02,CH-03,CH-04,CH-05,CH-06,PR-008 PR-009 PR-010 PR-016
+Steward rule approval,ST-01,ST-03,ST-04,ST-05,,,PR-009 PR-014 PR-018
+School council,LV-01,CH-01,CH-05,ST-01,,,PR-013 PR-014
