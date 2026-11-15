@@ -33,7 +33,8 @@ jobs:
           mkdir -p "$OUT"
           cp "$SRC" /tmp/mathlib4/AdaptiveKLMonitoring.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/AdaptiveKLMonitoring.olean AdaptiveKLMonitoring.lean)
-          for decl in adaptive_one_round_kl finite_horizon_adaptive_kl_cost
+          for decl in adaptive_one_round_kl finite_horizon_adaptive_kl_cost \
+            adaptive_required_information_cost adaptive_uniform_horizon_envelope
           do
             python3 scripts/lean_bridge.py "$SRC" \
               --workspace /tmp/mathlib4 --timeout 900 --strict \
