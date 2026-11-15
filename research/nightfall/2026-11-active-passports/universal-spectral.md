@@ -1,5 +1,11 @@
 # Proof Passport: NF-UNIVERSAL-SPECTRAL-20261111
 
+## v14 claim audit — 14 November 2026
+
+**Analytical conditional status retained.** Finite original-source scalar Q2 now has a stronger strict source terminal C=364.5526832774, but the arbitrary-index completed-product Hilbert PSD/rank tail, posterior selection, measurable greedy policy and hard stopping theorem are not composed in Lean. No automatic replacement of the all-degree coefficient `c_*` or of the original source's `U` formula is justified. Preserve the corrected p>1/2 selector identity and external referee gate. [Current mathematical frontier](../../catalogue/CURRENT_FRONTIER.json).
+
+---
+
 **NIGHTFALL Constellation · Devin J. Wright · version 1.0 (2026-11-11).**
 **Status:** ANALYTIC MANUSCRIPT; partial Lean cores; full certification OPEN. This is a claim-specific proof-passport note, not an independently refereed theorem or novelty certificate.
 
