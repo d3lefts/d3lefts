@@ -1,5 +1,11 @@
 # Proof Passport: NF-FINITE-PRODUCT-INFLUENCE-20261111
 
+## v14 claim audit — 14 November 2026
+
+**Evidence unchanged:** the original finite heterogeneous-coordinate alphabet **all-degree exponent-5/2** Lean transfer (#317/#325) remains a valid, separately pinned theorem. The stronger source Q2 coefficient 364.5526832774 is from a different *finite common-alphabet degree-two* theorem ([current frontier](../../catalogue/CURRENT_FRONTIER.json)); it does not replace this theorem's type-dependent transfer or make it measurable/infinite-product. Historical Lean pin 4.33.0, inherited Turturean machinery, external prior-art review and arbitrary-index L² gates are unchanged.
+
+---
+
 **NIGHTFALL Constellation · Devin J. Wright · version 1.0 (2026-11-11).**
 **Status:** LEAN CHECKED • finite theorem; priority and external referee open. This is a claim-specific proof-passport note, not an independently refereed theorem or novelty certificate.
 
