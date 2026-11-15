@@ -1,0 +1,9 @@
+# Registered Failure Tests
+
+1. **Missing effect guard.** If a provider API can execute without the trusted guard, no posterior or schedule certificate proves effect containment; the lower-bound model does not apply to that effect path.
+2. **Undetected source revision.** Read X=0,Y=0 and approve the action under r=2; after checking Y, change it to 1 without incrementing any guarded source version. The transcript is unchanged and the actual action is unsafe. This falsifies physical application of the theorem without complete source/version coverage.
+3. **Evidence too old.** Reading X before the final H slots when its certificate lifetime is H verification slots does not provide valid effect-time evidence; those readings must be redone.
+4. **Shared hidden state.** If all actions share the same X or Y, reading one may help certify another and the independent per-action R cost formula can overestimate optimum. Model a full dependency graph instead.
+5. **No epoch stability after prebatch invalidation.** The theorem lets an adversary invalidate B certificates before the active verification window, but **not** mutate observed half-values inside the window without triggering abort/retry. A stronger adversary requires a separate online game; applying the formula would be unsound.
+6. **Wrong monitor model.** The theorem is zero-error for exact modular checks. A nonzero-error cheap classifier with an adversarial false-negative rate cannot be treated as a perfect half-read or a perfect direct test. Its risk/availability requirements need their own sound certificates.
+7. **Cost not apples-to-apples.** The equation charges new safe-batch evidence, installed worker fees and effect-guard calls. Previously paid cache creation, unused facility maintenance, guard bypass auditing, and full real-world lifecycle costs are not included and cannot be compared as though they were.

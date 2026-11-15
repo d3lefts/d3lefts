@@ -1,0 +1,61 @@
+name: NIGHTFALL joint permission price exact replay
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/2026-11-price-of-permission/joint-price/**'
+      - '.github/workflows/nightfall-joint-permission-price.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  proof-and-adversarial-audit:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Run exact independent scheduler and negative controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd research/nightfall/2026-11-price-of-permission/joint-price
+          sha256sum -c SHA256SUMS.txt
+          python3 audit_independent.py > exact-replay.txt
+          cat exact-replay.txt
+          python3 - <<'PY'
+          import ast
+          from pathlib import Path
+          x=ast.literal_eval(Path('exact-replay.txt').read_text().strip())
+          assert x == {
+              'slot_cases': 510,
+              'slot_infeasible': 148,
+              'facility_checks': 504,
+              'modular_worlds': 818,
+              'sha256': 'e3510199a96c6732b7bda1572bc01e324d96e46509b122d600aa2c20587291f8',
+          }, x
+          PY
+          python3 test_negative.py > negative-replay.txt
+          cat negative-replay.txt
+          python3 price_exact.py > construction-replay.txt
+          sha256sum -c SHA256SUMS.txt
+          git rev-parse HEAD > effective-commit.txt
+          sha256sum price_exact.py audit_independent.py test_negative.py THEOREM.md > executed-source-hashes.txt
+      - name: Retain proof receipts
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: nightfall-joint-price-receipt
+          path: |
+            research/nightfall/2026-11-price-of-permission/joint-price/exact-replay.txt
+            research/nightfall/2026-11-price-of-permission/joint-price/negative-replay.txt
+            research/nightfall/2026-11-price-of-permission/joint-price/construction-replay.txt
+            research/nightfall/2026-11-price-of-permission/joint-price/effective-commit.txt
+            research/nightfall/2026-11-price-of-permission/joint-price/executed-source-hashes.txt
+          retention-days: 60
