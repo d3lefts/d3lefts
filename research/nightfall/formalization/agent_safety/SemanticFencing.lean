@@ -325,10 +325,22 @@ theorem two_bit_direct_cost_at_least_eight :
   intro guard hsound
   have hEzero : UnsafeEdge twoBitModel twoBitBaseline
       ({0} : Finset (Fin 2)) := by
-    refine ⟨(2 : Fin 4), ?_, (3 : Fin 4), ?_, ?_, ?_⟩ <;> decide
+    refine ⟨(2 : Fin 4), ?_, (3 : Fin 4), ?_, ?_, ?_⟩
+    · norm_num [twoBitBaseline]
+    · trivial
+    · simp [twoBitModel]
+    · change (Finset.univ.filter (fun i : Fin 2 =>
+        Nat.testBit 2 i.val ≠ Nat.testBit 3 i.val)) = {0}
+      decide
   have hEone : UnsafeEdge twoBitModel twoBitBaseline
       ({1} : Finset (Fin 2)) := by
-    refine ⟨(1 : Fin 4), ?_, (3 : Fin 4), ?_, ?_, ?_⟩ <;> decide
+    refine ⟨(1 : Fin 4), ?_, (3 : Fin 4), ?_, ?_, ?_⟩
+    · norm_num [twoBitBaseline]
+    · trivial
+    · simp [twoBitModel]
+    · change (Finset.univ.filter (fun i : Fin 2 =>
+        Nat.testBit 1 i.val ≠ Nat.testBit 3 i.val)) = {1}
+      decide
   have hzero : (0 : Fin 2) ∈ guard := by
     obtain ⟨i, hi, hmem⟩ :=
       (fence_sound_iff_hits twoBitModel twoBitBaseline guard).mp
@@ -382,6 +394,9 @@ private theorem two_bit_one_fiber_safe :
     fin_cases b <;> fin_cases y <;>
       simp_all [readFiber, twoBitBaseline, twoBitObservation,
         twoBitModel, Accept, Finset.mem_filter]
+    all_goals
+      have hbit : Nat.testBit 1 1 ≠ Nat.testBit 3 1 := by decide
+      exact hbit haccept
 
 /-- Reading one already-safe baseline bit costs 1 and leaves a single
 version check of cost 4 in either observation fiber. -/
@@ -390,7 +405,8 @@ theorem two_bit_post_certificate_gain :
     worstCost (fun _ => 1) (fun _ => 4) twoBitJointPolicy = 5 ∧
     fenceCost (fun _ => 4) (Finset.univ : Finset (Fin 2)) = 8 := by
   constructor
-  · exact ⟨⟨(0 : Fin 4), by decide⟩, ⟨(1 : Fin 4), by decide⟩,
+  · exact ⟨⟨(0 : Fin 4), by simp [readFiber, twoBitBaseline, twoBitObservation, Nat.testBit]⟩,
+      ⟨(1 : Fin 4), by simp [readFiber, twoBitBaseline, twoBitObservation, Nat.testBit]⟩,
       two_bit_zero_fiber_safe, two_bit_one_fiber_safe⟩
   · constructor <;> decide
 
