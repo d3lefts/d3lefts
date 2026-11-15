@@ -1,0 +1,59 @@
+name: NIGHTFALL change-local authority exact recertification audit
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/2026-11-change-local-authority/**'
+      - '.github/workflows/nightfall-change-local-authority-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: change-local-authority-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  exact-model-audit:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout effective merge source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Exact finite replay, flow dual checks and source integrity
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd research/nightfall/2026-11-change-local-authority
+          sha256sum --check SHA256SUMS.txt
+          python3 audit_independent.py | tee audit_stdout.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          data=json.loads(Path("audit_stdout.json").read_text())
+          assert data == {
+            "cases": 3000,
+            "finite_world_assignments_checked": 296401,
+            "sha256": "db65a6856e595baa84149fc94205a70d9b92f7b1ac3631ca975eca3fa2aa9f82",
+            "status": "PASS",
+          }
+          PY
+          python3 run_experiments.py
+          sha256sum --check SHA256SUMS.txt
+          git rev-parse HEAD > effective-commit.txt
+          sha256sum mincost.py audit_independent.py run_experiments.py > executed-source-hashes.txt
+      - name: Preserve exact audit receipts, including failures
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: change-local-authority-receipt-${{ github.run_id }}
+          path: |
+            research/nightfall/2026-11-change-local-authority/audit_stdout.json
+            research/nightfall/2026-11-change-local-authority/effective-commit.txt
+            research/nightfall/2026-11-change-local-authority/executed-source-hashes.txt
+          retention-days: 60
