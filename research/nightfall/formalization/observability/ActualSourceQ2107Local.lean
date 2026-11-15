@@ -139,8 +139,6 @@ theorem actual_source_shifted_site_107
     dsimp [q,e,s]
     rw [← hbudget] at hfourth
     convert hfourth using 1 <;> ring
-  have hqcoarse : q ≤ 3*e^2+2*(c i)*e*Real.sqrt e+(c i)^2*e :=
-    shifted_fourth_coarse a s (c i) e q ha hs (hc i) rfl hqstrong
   have hint := shifted_product_l1_l2_l4 (fun k => p (j k))
     Y H (fun k b => hp (j k) b) J.card
   have hnorm : (∑ w : Samples α J.card,
@@ -159,14 +157,16 @@ theorem actual_source_shifted_site_107
   have hrootHolder : (Real.sqrt e)^6 ≤ u^2*q := by
     calc
       (Real.sqrt e)^6 = e^3 := by
-        rw [← Real.sq_sqrt he]
-        ring
+        calc
+          (Real.sqrt e)^6 = ((Real.sqrt e)^2)^3 := by ring
+          _ = e^3 := by rw [Real.sq_sqrt he]
       _ ≤ u^2*q := hholder
   have hrootFourth :
       q ≤ 3*(Real.sqrt e)^4-2*a^4+4*a*(c i)*s+(c i)^2*s := by
     have hsqr : (Real.sqrt e)^4=e^2 := by
-      rw [← Real.sq_sqrt he]
-      ring
+      calc
+        (Real.sqrt e)^4 = ((Real.sqrt e)^2)^2 := by ring
+        _ = e^2 := by rw [Real.sq_sqrt he]
     rw [hsqr]
     exact hqstrong
   have hshift : Real.sqrt e ≤ Real.sqrt 3*u+(c i)/4 :=
