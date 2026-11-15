@@ -14,6 +14,8 @@ namespace Nightfall.Observability.ActualSourceQ296SixCover
 
 open Finset
 open Nightfall.Observability.ActualSourceQ2105Local
+open Nightfall.Observability.ActualESGreedyOwnership
+open Nightfall.Observability.ActualProductSourcePairCentering
 open Nightfall.Observability.ActualProductMergeTower
 open Nightfall.Observability.ActualSourceANOVA
 open Nightfall.Observability.ActualSourceVarianceEnergy
