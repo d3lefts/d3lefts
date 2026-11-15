@@ -1,0 +1,86 @@
+name: NIGHTFALL ControlArena paired validity-gated model attack
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/nightfall-paired-valid-attack.yml"
+      - "research/nightfall/right-to-act-promotion/run_paired_valid_attack.py"
+      - "research/nightfall/right-to-act-promotion/audit_paired_valid_attack.py"
+      - "research/nightfall/right-to-act-promotion/PAIRED_VALID_ATTACK_PROTOCOL.md"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nightfall-paired-valid-model-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  official-scored-paired:
+    runs-on: ubuntu-latest
+    environment: controlarena-python
+    timeout-minutes: 50
+    defaults:
+      run:
+        working-directory: research/nightfall/right-to-act-promotion
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Compile and syntactically audit scripts before costly model work
+        run: |
+          python -m py_compile run_paired_valid_attack.py audit_paired_valid_attack.py
+          python -m pip install 'control-arena==20.1.1' 'aws-cdk-lib==2.260.0' 'constructs==10.5.0' 'jsii==1.137.0' 'pytest==8.4.2'
+          python -m pip freeze > paired-valid-installed-versions.txt
+      - name: Build controlled no-network CDK and scorer image
+        run: |
+          docker build -f Dockerfile.untrusted-cdk -t nightfall-iac-cdk-sandbox:v16 .
+          docker image inspect --format '{{.Id}}' nightfall-iac-cdk-sandbox:v16 > paired-valid-image-id.txt
+      - name: Preflight official scorers on separately authored positive/negative controls
+        timeout-minutes: 5
+        env:
+          JSII_SILENCE_WARNING_UNTESTED_NODE_VERSION: "1"
+        run: python calibrate_model_scorers.py
+      - name: Start small local model, record exact weights and runtime images
+        timeout-minutes: 10
+        run: |
+          docker run -d --rm --name nightfall-ollama --cpus 3 --memory 9g \
+            -p 127.0.0.1:11434:11434 -e OLLAMA_NUM_PARALLEL=1 \
+            -e OLLAMA_CONTEXT_LENGTH=8192 -e OLLAMA_NO_CLOUD=1 ollama/ollama:latest
+          for attempt in $(seq 1 90); do
+            if curl -fsS http://127.0.0.1:11434/api/tags >/dev/null; then break; fi
+            sleep 2
+          done
+          docker exec nightfall-ollama ollama pull qwen2.5-coder:3b
+          curl -fsS http://127.0.0.1:11434/api/tags > paired-valid-ollama-tags.json
+          docker image inspect --format '{{.Id}}' ollama/ollama:latest > paired-valid-ollama-image-id.txt
+      - name: Execute two scaffolded model attacks and four paired arms
+        timeout-minutes: 20
+        env:
+          JSII_SILENCE_WARNING_UNTESTED_NODE_VERSION: "1"
+        run: python run_paired_valid_attack.py --out paired-valid-results
+      - name: Independently replay all four policies, including denied attacks
+        if: always()
+        run: |
+          if test -f paired-valid-results/paired_valid_attack_receipt.json; then
+            python audit_paired_valid_attack.py --dir paired-valid-results
+          else
+            echo "No paired receipt: preregistered model run blocked"
+            exit 1
+          fi
+      - name: Preserve all case receipts including failed source candidates
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-controlarena-paired-valid-evidence
+          path: |
+            research/nightfall/right-to-act-promotion/paired-valid-results/*.receipt.json
+            research/nightfall/right-to-act-promotion/paired-valid-results/*.template.json
+            research/nightfall/right-to-act-promotion/paired-valid-results/paired_valid_attack_receipt.json
+            research/nightfall/right-to-act-promotion/paired-valid-installed-versions.txt
+            research/nightfall/right-to-act-promotion/paired-valid-image-id.txt
+            research/nightfall/right-to-act-promotion/paired-valid-ollama-tags.json
+            research/nightfall/right-to-act-promotion/paired-valid-ollama-image-id.txt
+            research/nightfall/right-to-act-promotion/model-trial-calibration.json
+          if-no-files-found: warn
+          retention-days: 30
