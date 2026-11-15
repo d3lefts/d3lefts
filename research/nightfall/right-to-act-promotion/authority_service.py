@@ -136,6 +136,13 @@ def _parse_framed_request(conn, deadline):
     if not buf:raise ValueError('empty request')
     return bytes(buf).partition(b'\n')[0]
 
+def _reap_finished_workers():
+    """Avoid zombie accumulation without an unbounded waitpid."""
+    while True:
+        try:child,_=os.waitpid(-1,os.WNOHANG)
+        except ChildProcessError:break
+        if child==0:break
+
 def _evaluate_bounded(raw, statefile, authorized_uid, key, peer_uid,
                       deadline, server, conn):
     """Fork a disposable, same-UID worker so verifier/JSON/fsync hangs
@@ -184,13 +191,12 @@ def _evaluate_bounded(raw, statefile, authorized_uid, key, peer_uid,
         if timed_out:
             try:os.kill(pid,signal.SIGKILL)
             except ProcessLookupError:pass
-        # The worker reports only after persistence; ordinarily it exits at
-        # once. Never block unboundedly reaping an unexpectedly hung child.
+        # NEVER block waiting for an uninterruptible kernel-state worker.
+        # On SIGKILL, reap opportunistically during subsequent iterations.
         done,_=os.waitpid(pid,os.WNOHANG)
         if done==0:
             try:os.kill(pid,signal.SIGKILL)
             except ProcessLookupError:pass
-            os.waitpid(pid,0)
     if timed_out:return {'ok':False,'reason':'deadline_exceeded'}
     try:return json.loads(payload) if payload else {
         'ok':False,'reason':'worker_failed'}
@@ -231,6 +237,7 @@ def serve(trust,sockpath,authorized_uid):
                     response={'ok':False,'reason':'invalid_request',
                               'type':type(exc).__name__}
                 _serve_response(conn,response,deadline)
+            _reap_finished_workers()
 
 def request(socket_path,body,key,override_signature=None):
     with socket.socket(socket.AF_UNIX,socket.SOCK_STREAM) as client:
