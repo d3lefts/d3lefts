@@ -1,0 +1,77 @@
+name: NIGHTFALL permission finite evidence Lean kernel gate
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/permission/PermissionEvidenceFinite.lean'
+      - 'research/nightfall/price_permission/check_guarded_monitor_cost_v01.py'
+      - '.github/workflows/nightfall-permission-finite-lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nightfall-permission-finite-lean-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  permission-kernel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Independent original exact finite monitoring audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/price_permission/check_guarded_monitor_cost_v01.py
+      - name: Compile actual Lean source; named proof and standard axiom check
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/permission/PermissionEvidenceFinite.lean
+          cp "$SRC" /tmp/mathlib4/PermissionEvidenceFinite.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/PermissionEvidenceFinite.olean PermissionEvidenceFinite.lean)
+          mkdir -p permission-receipts
+          for decl in \
+            finite_transcript_permission_domination \
+            zero_error_forces_zero_availability \
+            false_permit_availability_tradeoff \
+            permission_exhaustion_lower_bound \
+            permission_exhaustion_attained \
+            epoch_and_effect_cost_lower_bound \
+            fresh_epoch_pathwise_cost_floor \
+            ten_action_permission_cached_expected \
+            ten_action_permission_no_cache \
+            ten_action_identification_cached_expected
+          do
+            python3 scripts/lean_bridge.py "$SRC" \
+              --workspace /tmp/mathlib4 --timeout 900 --strict \
+              --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+              --decl "Nightfall.PricePermission.$decl" \
+              --json-out "permission-receipts/$decl.json"
+          done
+          python3 research/nightfall/formalization/product_space/check_receipts.py permission-receipts/*.json
+      - name: Immutable proof receipt
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p permission-receipts
+          git rev-parse HEAD > permission-receipts/source-head.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > permission-receipts/mathlib-head.txt
+          cat lean-toolchain > permission-receipts/toolchain.txt
+          sha256sum research/nightfall/formalization/permission/PermissionEvidenceFinite.lean \
+            research/nightfall/price_permission/check_guarded_monitor_cost_v01.py \
+            > permission-receipts/SHA256SUMS.txt
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: nightfall-permission-finite-lean-${{ github.run_id }}
+          path: permission-receipts/
+          retention-days: 60
