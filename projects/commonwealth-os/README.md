@@ -1,6 +1,6 @@
 # Commonwealth OS — Governance Software Research
 
-**Status:** Design baseline v1.0; engineering implementation and institutional partnerships not established.  
+**Status:** Design baseline v1.0 plus synthetic-only browser demonstration v0.2; production engineering and institutional partnerships not established.  
 **Date:** 2026-11-15.  
 **Principal context:** *Constitution of Computational Commonwealths: Human-Sovereign Governance for the Age of Synthetic Intelligence*.
 
@@ -29,6 +29,12 @@ Commonwealth OS is a mobile-first, representative-first civic governance system 
 
 A **2027 Huntsville pitch** is a demonstration target, **not** a city deployment authorization.
 
+## Browser proof-of-concept (v0.2)
+
+The [browser demonstrator](apps/browser/README.md) is a runnable, dependency-free, **fictional-data-only** user interface and procedural checker, added as an initial implementation track. The [v0.2 browser architecture note](architecture/BROWSER_FOUNDATION_v0_2.md) documents changed demo priorities (union, student council, municipality), technical trust boundaries, negative tests, and production gates. The frozen v1.0 deployment sequence below is preserved as a historical baseline, not silently overwritten.
+
+The browser demo has **no server**, no trusted identity, no real voting, no authorized live source ingestion and no independent verifier. Its successful results are labeled `SUPPORTED_IN_SIMULATION` and cannot certify legal outcomes.
+
 ## V1 demonstrator
 The first testable vertical slice uses entirely fictional governance records:
 **Draft → Amend → Deliberate → Vote (DEMO) → Verify → Publish preview.**
@@ -37,4 +43,4 @@ Its goal is a replayable governance transaction with a version-locked motion, ru
 The archived v1.0 reference package reported 8 passing toy checker tests. Those do **not** constitute deployed software, verified ballot secrecy, legal certification, or independent security audit.
 
 ## Evidence labels
-DESIGN / IMPLEMENTED / INTERNALLY TESTED / INDEPENDENTLY VALIDATED / LEGALLY AUTHORIZED / DEPLOYED must remain distinct. Current state: **DESIGN**, plus a narrow source-package toy checker (internally tested). All other states remain unverified.
+DESIGN / IMPLEMENTED / INTERNALLY TESTED / INDEPENDENTLY VALIDATED / LEGALLY AUTHORIZED / DEPLOYED must remain distinct. Current state: **DESIGN** plus **IMPLEMENTED (synthetic browser-only demonstration)** and narrowly **INTERNALLY TESTED**. Independent validation, legal authorization and deployment remain unverified.
