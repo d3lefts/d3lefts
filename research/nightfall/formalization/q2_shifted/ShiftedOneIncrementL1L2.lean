@@ -60,7 +60,7 @@ theorem centered_one_increment_norm_variance
   have hpoint_bound (a : α) : ‖h + Y a‖ ≤ u + c := by
     calc
       ‖h + Y a‖ ≤ ‖h‖ + ‖Y a‖ := norm_add_le _ _
-      _ ≤ ‖h‖ + c := add_le_add_left (hc a) _
+      _ ≤ ‖h‖ + c := add_le_add_right (hc a) _
       _ ≤ u + c := add_le_add_left hcenter _
   have hpoint (a : α) :
       p a * ‖h + Y a‖ ^ 2 ≤ p a * ((u + c) * ‖h + Y a‖) := by
