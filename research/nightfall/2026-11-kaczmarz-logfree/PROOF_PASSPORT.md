@@ -59,3 +59,9 @@ Original user-requested proof packet SHA-256: `0245feee6e886cbfff2eb717d33ecbf8d
 **Stop rule:** no novel/solved/externally-certified badge until both independent proof review and dated priority review succeed. Matching a published theorem's stated quantifiers does not establish worldwide originality. No speculative transfer into arbitrary inconsistent systems or general nonorthogonal projections.
 
 **Claim dependency graph:** Original Kaczmarz projection identity (classical) → greedy weighted maximum (classical) → telescoping best-iterate construction (written proof) → exact checker (finite falsifier) → unresolved external referee and originality gates.
+
+---
+
+## 14 November 2026 — v14 audit checkpoint
+
+No new Kaczmarz mathematical certificate is claimed from the same-day source-product, security or agency work. The source-matched unscaled best-prefix/first-hitting projection bound remains at its earlier written-proof plus independently exact-rational-check tier, with independent human and dated prior-art review open. Preserve the previously supplied source checkpoint and the absence of an end-to-end Lean proof; no numerical bound or priority status is silently upgraded.

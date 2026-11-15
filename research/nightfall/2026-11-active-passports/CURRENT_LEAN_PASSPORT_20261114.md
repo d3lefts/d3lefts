@@ -1,5 +1,23 @@
 # NIGHTFALL — Current Lean and Exact-Evidence Proof Passport (14 November 2026)
 
+## v14 source and operational receipt reconciliation — read first
+
+**Strongest merged finite original-source Q2 unrestricted:** C₂≈**364.5526832774**, [PR #525](https://github.com/d3lefts/d3lefts/pull/525), strict pinned [run 43644790107](https://github.com/d3lefts/d3lefts/actions/runs/43644790107), actual-source declaration `ActualSourceQ2364Terminal.actual_source_q2_364_unconditional`. No additional sharp section/caller shifted-moment budget. The same run certifies a **conditional** C353.293 implication; it does not prove its external sharp integrated-section premise. Q2 C121/C107/C99 targets in draft PRs #552/#558/#540 are NOT current unrestricted source theorems. Historic #498 C736.673 remains a valid previous checkpoint.
+
+**Merged finite SCIF terminal:** [PR #529](https://github.com/d3lefts/d3lefts/pull/529), pinned [run 43640173972](https://github.com/d3lefts/d3lefts/actions/runs/43640173972); original f,p degree-two/source influence/graph/new-law variance and fixed-owner bounded transfer, with old-law owner envelope premise. No certified optimal lifecycle recertification runtime.
+
+**Merged arbitrary-proposer conditional safety:** [PR #528](https://github.com/d3lefts/d3lefts/pull/528), pinned [run 43639554615](https://github.com/d3lefts/d3lefts/actions/runs/43639554615); six strictly compiled names. Effect-time current epoch, accurate plant and environment model, complete effect mediation remain unproven implementation obligations.
+
+**Unmerged draft #554 finite semantic fencing:** pinned [run 43662280902](https://github.com/d3lefts/d3lefts/actions/runs/43662280902) passed ten named standard-axiom declarations, including exact unsafe-history hitting sets and a full finite initially-safe Bellman optimum. Source SHA256 `17779223198926147b1600c9c5faebbf333add1bc05c71562000f491ea624d58`. Merged finite-model benchmark [#537, run 43648303705](https://github.com/d3lefts/d3lefts/actions/runs/43648303705) remains independent scoped evidence. The draft authority-service update passed [source-matched run 43662280945](https://github.com/d3lefts/d3lefts/actions/runs/43662280945), not physical/cloud non-bypassability. A handler deadline does not imply atomic rollback on timeout.
+
+**Merged local model-generated pilot #557:** [run 43662000190](https://github.com/d3lefts/d3lefts/actions/runs/43662000190) contains three small-model attempts: one main-task success but not promotion, two invalid/unscored attacks, zero attack main-and-side successes. This does not establish a safety rate or withstand a frontier attacker. Independent artifact audit passed.
+
+**Remaining universal theorem gaps:** arbitrary-index all-L² Efron–Stein in Lean; unrestricted high-degree exponent-two; complete physical cloud/actuator mediation; historical novelty and independent human review. The previous v13.1 and v2.0 sections below remain dated proof history, not the latest frontier.
+
+---
+
+# NIGHTFALL — Current Lean and Exact-Evidence Proof Passport (14 November 2026)
+
 **Countable-coordinate structural bridge now Lean certified:** [#520](https://github.com/d3lefts/d3lefts/pull/520), pinned run [43637631337](https://github.com/d3lefts/d3lefts/actions/runs/43637631337), proves any measurable real observable of an arbitrary product depends on only countably many coordinates (Mathlib cylinder algebra and event countability plus rational superlevel reconstruction). This does not yet produce an arbitrary all-L² Efron–Stein Lean terminal; actual L² density and conditional projection commutation remain open. [Exact proof passport](UNRESTRICTED_EFRON_STEIN_PROOF_PASSPORT_20261114.md).
 
 ## 14 November 2026 — v2.0 source-level certification reconciliation

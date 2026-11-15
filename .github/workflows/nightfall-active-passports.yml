@@ -1,4 +1,4 @@
-name: NIGHTFALL twelve active Proof Passport scopes and Lean provenance
+name: NIGHTFALL fifteen active Proof Passport scopes and Lean provenance
 on:
   pull_request:
     paths:

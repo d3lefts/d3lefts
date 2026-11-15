@@ -48,3 +48,10 @@ For bounded degree-three f on arbitrary independent product measures, the varian
 Independently replay the rare-gate rational fourth-moment divergence and homogeneous primal–dual identity; test proposed conditional-link bounds against Hadamard, rare-address and interlocking tripartite structures. Search literature before assigning novelty.
 
 **Gate:** Preserve this certificate and every failed or superseded result, but do not promote to published novel theorem without independent proof review and dated prior-art comparison. No frozen historical Proof Passport or five approved Original Findings are being changed.
+
+
+---
+
+## 14 November 2026 — v14 adversarial frontier check
+
+The source-derived finite **degree-two** coefficient improved to C₂≈364.552683 (#525). This does not settle the unrestricted **degree-three** squared-variance influence inequality. The shared rare-core moment counterexample `179722/6993` targets a particular fourth-moment shortcut, not the cubic influence statement. The fractional-cover equality and exact counterexample families remain separate proof attacks. Seek a valid charge for conditional `Var(Q)` or a real cubic counterexample; do not promote heuristic/numerical stress tests to universal theorems.

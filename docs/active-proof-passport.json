@@ -1,11 +1,11 @@
 {
   "schema": "nightfall-active-proof-passports-v1",
-  "version": 13,
+  "version": 14,
   "as_of": "2026-11-14",
-  "updated_by": "2026-11-14 v13.1 source-exact reconciliation: #498 finite Q2 736.673, #500/#501/#506 source identities, #512 actual infinitePi cylinder variance, #514 finite all-degree changed-law variance. Complete classical analytic arbitrary-index Efron–Stein proof is recorded separately; full arbitrary-index L2 Lean terminal OPEN. Twelve identities and historical frozen 67-source register unchanged. #520 strict pinned arbitrary product countable-coordinate support now certified; all-L2 Efron–Stein Lean terminal still open.",
+  "updated_by": "v14 substantive reconciliation: strongest merged Q2 unrestricted 364.552683 (#525), SCIF genuine original-source terminal (#529), arbitrary-proposer conditional Lean invariant (#528), semantic-fence finite safe-case Bellman Lean at draft #554, and local security/model-generated trial receipts #554/#557. Twelve earlier claim identities preserved; three additional active passports added, historical eleven untouched.",
   "frozen_historical_registry_unchanged": true,
   "lifecycle": "active",
-  "scientific_status": "Verified finite common-alphabet Q2 coefficient 736.673197758287 (#498); exact finite source law-change variance at all degrees (#514); infinitePi cylinder integration/variance (#501/#512). Analytic arbitrary-index real L2 Efron–Stein proof complete in a dedicated passport; unconditional Measure.infinitePi Lean kernel endpoint remains OPEN. SCIF globally generated owner/cost package, external review and historical priority OPEN. Additional structural #520 Lean countable-coordinate support is certified, not all-L2 density.",
+  "scientific_status": "Strongest merged original-source unrestricted finite Q2 coefficient 364.552683 (#525, run 43644790107); 353.293 and 107/99 terminal claims require separately verified additional premises or draft source closure. SCIF finite original-source terminal #529 strict Lean; arbitrary-agent all-horizon conditional invariant #528 strict Lean. Semantic fencing finite safe-case optimum #554 exact-head pinned Lean success on unmerged draft plus local security integration success; full actual operational boundary remains unverified. External independent review, worldwide novelty and arbitrary-index all-L2 terminal remain open.",
   "source_checkpoint": {
     "repository": "d3lefts/d3lefts",
     "commit": "5bda769c2484ea2f6ea9a02c428928361c07666f",
@@ -23,22 +23,29 @@
       "id": "q2-influence",
       "title": "Bias-independent quadratic influence",
       "status": "lean-kernel-checked-finite-product-scope",
-      "claim": "Strongest merged finite common-alphabet degree-two theorem: Var(f)^2 ≤ [257/20+(9/4)√2+5√3+√6]^2 B² max_i I_i(f), C₂≈736.673198, pinned kernel #498. Earlier valid but weaker C₂=407+138√2+188√3+56√6≈1064.958449 (#494), and v9.2 1228.356, remain dated prior checkpoints. The arbitrary-index product Efron–Stein variance upper bound has a complete classical analytic proof, but its all-L2 original-measure Lean certificate remains open. No scalar degree-two exponent-two assertion for arbitrary measurable coordinate alphabets is promoted.",
+      "claim": "Strongest MERGED source-level unrestricted finite common-alphabet degree-two theorem: Var_p(f)^2 ≤ 364.5526832774 B² max_i I_i(f), genuine canonical singleton terms permitted, heterogeneous original per-coordinate marginals and zero-mass atoms. Pinned strict theorem #525 (run 43644790107); no extra integrated section or shifted-norm caller premise. Earlier C₂=[257/20+(9/4)√2+5√3+√6]²≈736.673198 (#498), C₂=407+138√2+188√3+56√6≈1064.958449 (#494), and v9.2 C₂≈1228.356 remain historical. New source C353.293 and C121.655/C107.393/C99.263 targets are draft or conditional, not certified as unrestricted on main.",
       "assumptions": [
         "finite coordinate type and common nonempty finite alphabet; original nonnegative normalized per-site marginals, including zeros",
         "pointwise |f(x)|≤B for every configuration, B≥0; genuine ESDegreeLE p f 2",
         "I_i(f)=E[(f−E_i f)^2] under the actual original product law; M bounds every I_i"
       ],
       "mechanism": "Same-source canonical Hoeffding pair kernels, matching/greedy ownership and Hilbert moments, fourth-moment endpoint, source section budget and optimized coupled singleton-owner scalar closure. Related SCIF result separately proves source graph invariance under law change.",
-      "evidence": "Strict original finite Q2 terminal #479, run 43611982294 (8 named stages) was sharpened by fully unconditional source Q2 #494, run 43627249467, strict Lean 4.36.0-rc2 and only foundational axioms; the SCIF finite-table and source-graph declarations #496 passed run 43630623548 but are not the complete source-matched SCIF update theorem. Scopes/immutable blobs: docs/current-lean-proof-receipts-20261114.json. New source exact all-degree finite original-law Efron–Stein #506 run 43632637271; cylinder centered-square variance #512 run 43635195844; all-degree finite law-change variance #514 run 43635955108; latest source-only finite Q2 736.673 #498 run 43633180605. Exact analytical infinite-product theorem and its Lean gap: research/nightfall/2026-11-active-passports/UNRESTRICTED_EFRON_STEIN_PROOF_PASSPORT_20261114.md.",
+      "evidence": "Pinned Lean 4.36.0-rc2 unconditional original-source theorem ActualSourceQ2364Terminal.actual_source_q2_364_unconditional in merged #525 at original PR head a558a4dd7a2f2c7db521658c6d59d204758eb934, strict CI run 43644790107, original source Git blob 5263d9da1ec2f12fbc8986c3698859faedb390a3, foundational axiom audit. The same run strictly certifies 5B source section budget, C473.874 and conditional C353.293 terminal, whose caller's sharp section premise is NOT discharged. Earlier #498 run 43633180605, #494 run 43627249467, finite all-degree #506, cylinder #512 and finite changed-law #514 remain individually scoped.",
       "source": "research/nightfall/2026-11-active-passports/quadratic-rank-observability.md",
-      "source_detail": "Source-based scope note research/nightfall/Q2_SOURCE_LEAN_CERTIFICATION_20261114.md; current Lean receipt index docs/current-lean-proof-receipts-20261114.json; previous v9.2 PDF and internal review retained as historical manuscript evidence. Independent human and prior-art review open. New source-exact unrestricted Efron–Stein proof passport: research/nightfall/2026-11-active-passports/UNRESTRICTED_EFRON_STEIN_PROOF_PASSPORT_20261114.md; standard theorem, no novelty.",
-      "audit": "Verify the actual same-source theorem statement and declared axioms at PR #494, independently audit optimality, reduction to categorical decoupling/Grothendieck and recent 2026 completely bounded results; formalize heterogeneous coordinate alphabets and infinite-product L² bridge separately, and source-match full SCIF recertification. Formalize genuine Measure.infinitePi all-L2 cylinder density, conditional projection commuting square and general-measurable-alphabet finite Efron–Stein. Check externally established StatLean/SLT finite Efron–Stein statements, do not infer arbitrary-index closure.",
+      "source_detail": "Source-based scope note research/nightfall/Q2_SOURCE_LEAN_CERTIFICATION_20261114.md; current Lean receipt index docs/current-lean-proof-receipts-20261114.json; previous v9.2 PDF and internal review retained as historical manuscript evidence. Independent human and prior-art review open. New source-exact unrestricted Efron–Stein proof passport: research/nightfall/2026-11-active-passports/UNRESTRICTED_EFRON_STEIN_PROOF_PASSPORT_20261114.md; standard theorem, no novelty. Updated v14 strongest merged source record: research/catalogue/CURRENT_FRONTIER.json; PR #525 #43644790107; proof-gated draft #549/#551/#552/#558.",
+      "audit": "Replay #525 actual source and axiom receipt; adjudicate #549 sharp Bernoulli section and #551/#552/#558 shifted owner source terminals on exact current heads; independent prior-art comparisons with 2026 fixed-bias and product-space degree-two work; do not certify novelty via absent hits. Full arbitrary-index L2 and rank-adaptive compositions remain independent proof gates.",
       "limitations": [
-        "Strict theorem covers finite products with common alphabet; no heterogeneous coordinate types or infinite-index L² Lean theorem",
-        "Downstream Hilbert/adaptive observation promises do not become kernel-certified automatically",
-        "SCIF full-product sourceInfluence repair still needs an end-to-end declaration; novelty, worldwide priority and external human review remain open"
-      ]
+        "Strict #525 original-source theorem covers finite common alphabet, heterogeneous marginal laws, zero atoms and canonical singleton terms; no heterogeneous alphabet types or infinite-index all-L2 Lean terminal.",
+        "Conditional 353/107/99 or pure-zero-singleton sub-100 statements are NOT unrestricted unconditional theorems on main",
+        "No universal rank-r adaptive query policy or digital-twin deployment guarantee follows from the scalar theorem",
+        "Independent historical priority and non-author referee review open"
+      ],
+      "review_20261114": {
+        "finding": "PR #525/run 43644790107 is strongest merged unrestricted finite source coefficient C2≈364.552683; #549/#551/#552/#558 are draft alternatives pending exact source terminal verification.",
+        "remaining_gate": "Do not promote 353.293/121.655/107.393/99.263 from draft descriptions or conditional scalar consequences; no arbitrary index or novelty signoff.",
+        "source_audit": "Manual source/CI scope reconciliation; absence of new evidence does not imply failure.",
+        "certification_change": "upgraded only for exact merged finite Q2 source"
+      }
     },
     {
       "id": "q2-observation",
@@ -53,7 +60,7 @@
         "specified finite alphabet cap m for fixed-query comparison"
       ],
       "mechanism": "Bounded quadratic scalar influence → rank-r Hilbert scalarization → actual posterior ANOVA total-influence descent and hard budget → spectral-tail truncation; additive independent-sign and address constructions provide separate exact lower examples. It is known-model state observation, not model identification or quantum measurement.",
-      "evidence": "The scalar degree-two Q2 finite common-alphabet theorem is now strict Lean-certified at C₂≈1064.958 by PR #494. The Hilbert rank lift, actual posterior descent, spectral-tail and hard stopping as one end-to-end observation theorem remain analytical and internally audited; no new rank-r query guarantee is automatically certified by the scalar improvement.",
+      "evidence": "The scalar degree-two Q2 finite common-alphabet theorem is now strict Lean-certified at C₂≈1064.958 by PR #494. The Hilbert rank lift, actual posterior descent, spectral-tail and hard stopping as one end-to-end observation theorem remain analytical and internally audited; no new rank-r query guarantee is automatically certified by the scalar improvement. 14 Nov v14 reconciliation: newer unconditional scalar C₂≈364.552683 (#525 run 43644790107) is available as a finite-product ingredient, but no current rank-r/posterior/stopping end-to-end certificate verifies substitution or a new explicit query cap.",
       "source": "research/nightfall/2026-11-active-passports/quadratic-rank-observability.md",
       "source_detail": "Theorem D research/nightfall/2026-11-quadratic-rank-optimal/UNIVERSAL_THEOREM.md; papers/finite-product-influence/Rank_Optimal_Observation_Section_v8.tex and V9_2_INTERNAL_REVIEW_20261112.md; supplementary information-costs-identification.md and conditional-section-duality.md.",
       "audit": "Explicitly compose the new current scalar Q2 theorem with source-derived Hilbert rank projection, posterior law, stopping and risk in a common Lean pin; compare fixed-query categorical counterexamples and same-oracle access costs. Require independent referee/priority review.",
@@ -62,7 +69,13 @@
         "No same-model blanket equivalence between quantum, model value, and state coordinate queries",
         "Alphabet-uniform fixed observation upper bound is false for addressed degree-two families",
         "Strict finite scalar Q2 Lean result does not automatically certify the Hilbert/adaptive whole-coordinate observation theorem"
-      ]
+      ],
+      "review_20261114": {
+        "finding": "Finite scalar premise strengthened to unrestricted C2≈364.552683 in #525; rank-r/Hilbert/posterior stopping end-to-end theorem not reverified from new coefficient.",
+        "remaining_gate": "Recompose observation theorem with current source terminal and independent named declaration before changing query budget.",
+        "source_audit": "Manual source/CI scope reconciliation; absence of new evidence does not imply failure.",
+        "certification_change": "none"
+      }
     },
     {
       "id": "finite-certificate",
@@ -84,7 +97,13 @@
         "Does not certify the separate degree-two variance-squared manuscript or its stronger numerical constant",
         "No external human referee or novelty/priority clearance"
       ],
-      "source_checkpoint": "PR317/e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb; GitHub Actions 42929857470"
+      "source_checkpoint": "PR317/e67990dfc252b6ef9446c7b7c1a9ebf06e5c58eb; GitHub Actions 42929857470",
+      "review_20261114": {
+        "finding": "Original finite dependent-alphabet transfer #317/#325 remains the correctly scoped theorem; #520 countable-coordinate support and #529 finite SCIF do not turn it into arbitrary-index measurable L2.",
+        "remaining_gate": "Independent arbitrary-index source Jensen/cylinder density and finite-to-infinite theorem composition remains open.",
+        "source_audit": "Manual source/CI scope reconciliation; absence of new evidence does not imply failure.",
+        "certification_change": "none"
+      }
     },
     {
       "id": "cubic-obstruction",
@@ -105,7 +124,13 @@
         "No counterexample to unrestricted cubic variance-squared influence was found",
         "Not an established arbitrary-law cubic theorem; bounded-cover consequences depend on the unrefereed quadratic paper",
         "Open draft hard cases and numerical checks do not establish novelty or universal conclusions"
-      ]
+      ],
+      "review_20261114": {
+        "finding": "Exact rare-gate and shared-core negative controls remain valid; tightened quadratic coefficient #525 does not imply cubic exponent-two.",
+        "remaining_gate": "Need a new variance dispersion operator or explicit cubic counterexample; continue proof attacks.",
+        "source_audit": "Manual source/CI scope reconciliation; absence of new evidence does not imply failure.",
+        "certification_change": "none"
+      }
     },
     {
       "id": "kaczmarz-logfree",
@@ -127,7 +152,13 @@
         "Classical greedy maximum-distance projection and energy identity are credited; log-free corollary may be implicit in earlier literature and global originality is unverified",
         "No high-probability fixed-time unstopped randomized iterate or end-to-end row-selection runtime claim",
         "No independent human referee or Lean formalization and no historical Original Finding promotion"
-      ]
+      ],
+      "review_20261114": {
+        "finding": "Existing exact rational and written first-hitting proof unchanged; new agent security/Q2 receipts do not affect Kaczmarz claim.",
+        "remaining_gate": "Independent non-author historical precedence comparison remains missing.",
+        "source_audit": "Manual source/CI scope reconciliation; absence of new evidence does not imply failure.",
+        "certification_change": "none"
+      }
     },
     {
       "id": "four-shuffle",
@@ -152,7 +183,13 @@
       ],
       "attribution": "Problem: Mathilde Bouvel. Factor graph and matching: Bevan–Elvey Price–Felsner, 2024 Oberwolfach. Research-directed exact threshold candidate: NIGHTFALL / Devin J. Wright.",
       "original_source_zip_sha256": "71e836af72ef0a5b4480f1aac7c704a80eb544f9dac3bfade4a1f4b9014ad759",
-      "original_pdf_sha256": "1abd05d18f40bd83350f1a634b95efdf61912163b2ed3e2748f2a7641c1d55c1"
+      "original_pdf_sha256": "1abd05d18f40bd83350f1a634b95efdf61912163b2ed3e2748f2a7641c1d55c1",
+      "review_20261114": {
+        "finding": "Finite N4=20 certificate and 19 witness unchanged; no transfer from new agent/security claims.",
+        "remaining_gate": "Independent combinatorial specialist audit and dated historical priority review needed.",
+        "source_audit": "Manual source/CI scope reconciliation; absence of new evidence does not imply failure.",
+        "certification_change": "none"
+      }
     },
     {
       "id": "nested-address-separation",
@@ -173,7 +210,13 @@
         "Exact for the constructed nested-address family, not a universal degree-d upper bound",
         "Changing address laws, replica dependence or query granularity changes the model",
         "No comprehensive novelty search or independent human referee"
-      ]
+      ],
+      "review_20261114": {
+        "finding": "Exact finite addressed-family optimal query-risk formula unchanged; evidence that adaptive sensing can beat fixed schedules is a testable analogy to post-certification source reads, NOT an equivalence.",
+        "remaining_gate": "Need shared query/cost interfaces before translating to semantic-fence decision trees.",
+        "source_audit": "Manual source/CI scope reconciliation; absence of new evidence does not imply failure.",
+        "certification_change": "none"
+      }
     },
     {
       "id": "finite-palette-recovery",
@@ -194,7 +237,13 @@
         "No outside mathematical referee or end-to-end Lean proof for the infinitary theorem",
         "An arbitrary null-set witness can destroy the hybrid-degree argument",
         "No all-output-alphabet or algorithmic runtime generalization"
-      ]
+      ],
+      "review_20261114": {
+        "finding": "Infinite-index candidate remains manuscript-level; #520 supplies countable-support bridge only and does not prove finite-palette exact selection on all measurable products.",
+        "remaining_gate": "Verify completed-product measurability, support vs equality a.s., and sharp R/Δ constants.",
+        "source_audit": "Manual source/CI scope reconciliation; absence of new evidence does not imply failure.",
+        "certification_change": "none"
+      }
     },
     {
       "id": "fair-sign-cubic",
@@ -215,7 +264,13 @@
         "Not established for arbitrary biased control laws",
         "Unrestricted cubic exponent-two conjecture and high-rank leaf case remain open",
         "Draft review/finite examples are not Lean certification, human referee or global novelty"
-      ]
+      ],
+      "review_20261114": {
+        "finding": "Fair-sign vector and cubic selector are restricted draft subclasses; no promotion from finite source #525/Q2 pure-sector results.",
+        "remaining_gate": "A fair-control or zero-singleton condition cannot be dropped without source proofs.",
+        "source_audit": "Manual source/CI scope reconciliation; absence of new evidence does not imply failure.",
+        "certification_change": "none"
+      }
     },
     {
       "id": "universal-spectral",
@@ -237,7 +292,13 @@
         "Initial-only coherence does not suffice for v6 log-free claim",
         "Neither efficient runtime nor unrestricted degree-three exponent-two is established",
         "The rank-r O(r/η) degree-two manuscript does not automatically improve the all-degree PSD theorem without its independent hypotheses."
-      ]
+      ],
+      "review_20261114": {
+        "finding": "Hilbert spectral observation remains conditional; merged finite scalar Q2 improves a dependency but not full spectral query guarantee.",
+        "remaining_gate": "Source-match PSD/Hilbert projection and stopping against exact source scalar theorem.",
+        "source_audit": "Manual source/CI scope reconciliation; absence of new evidence does not imply failure.",
+        "certification_change": "none"
+      }
     },
     {
       "id": "certificate-acquisition",
@@ -258,7 +319,13 @@
         "Does not produce an unconditional dimension-free certificate cost K or general real-valued exponent-two theorem",
         "No computational runtime guarantee for evaluating the sampling law",
         "No end-to-end arbitrary measurable-product or full Lean theorem"
-      ]
+      ],
+      "review_20261114": {
+        "finding": "Posterior fractional-row certificate acquisition remains conditional; separate #554 finite safe-case version-check Bellman optimization uses a distinct observation/authorization interface.",
+        "remaining_gate": "Prove a quantitative interface-preserving transfer with priced oracle/model calls before equating costs.",
+        "source_audit": "Manual source/CI scope reconciliation; absence of new evidence does not imply failure.",
+        "certification_change": "none"
+      }
     },
     {
       "id": "phase-block",
@@ -280,7 +347,85 @@
         "No global originality/priority determination or independent human referee",
         "81-state injectivity does not establish an end-to-end adaptive decoder or universal measurement optimality",
         "Closed PR 252/255 adaptive evidence is not merged into main; its finite Lean scope and broader written transfer must not be conflated"
-      ]
+      ],
+      "review_20261114": {
+        "finding": "Exact F16 81-output injection remains finite Lean witness; new agent-safety Lean results are logically independent.",
+        "remaining_gate": "No originality promotion or arbitrary-dimensional decoder.",
+        "source_audit": "Manual source/CI scope reconciliation; absence of new evidence does not imply failure.",
+        "certification_change": "none"
+      }
+    },
+    {
+      "id": "scif-incremental-recertification",
+      "title": "Source-compatible incremental recertification",
+      "status": "lean-kernel-checked-finite-product-scope",
+      "claim": "For a finite original independent-product source f,p with common finite alphabet, pointwise degree ≤2, including zero-mass atoms, replacement of one site marginal preserves the actual new-law degree bound and algebraic canonical pair interaction graph and yields exact original-source influence/variance update formulas and a fixed-owner changed-law bound with factor 1+min(||q_k−p_k||_1,1), conditional on an old source owner envelope.",
+      "assumptions": [
+        "Actual source function f and old/new normalized finite-product laws differ at only one coordinate",
+        "Finite common alphabet, original pointwise Efron–Stein degree≤2; pointwise-source component and owner envelope hypotheses of the exact terminal"
+      ],
+      "mechanism": "Original-source Hoeffding recentering and signed-marginal influence transport; clipping of total-variation owner cost under changed law.",
+      "evidence": "Merged PR #529; exact original-source terminal Nightfall.SCIFCompleteOriginalSource.scif_complete_finite_original_source_terminal; pinned Lean 4.36.0-rc2 run 43640173972, source SHA256 7e470bd97b5078aae76ea2aa047afa0fc1cf203260d28fa17bdf81c25f9d171e and receipt artifact #14131577831.",
+      "source": "research/nightfall/2026-11-active-passports/scif-incremental-recertification.md",
+      "source_detail": "Source, proof assumptions, exact Lean receipts, proof attacks and next source-to-authority bridge in SCIF passport; precursor merged #496/#522 preserved.",
+      "audit": "Independent audit zero atoms/new-support, exact zero canonical pairs, nonzero singleton shifts, and cost claims against full rebuild; authenticate every relevant source version and measure real work.",
+      "limitations": [
+        "No optimal lifecycle complexity or O(deg(k)a²) runtime theorem; no heterogeneous alphabet types or infinite product",
+        "No source authentication, cloud/actuator enforcement or independent human priority review"
+      ],
+      "review_20261114": {
+        "finding": "New distinct finite-source kernel-certified passport, merged #529.",
+        "remaining_gate": "Cost-optimal and authenticated operational recertification.",
+        "certification_change": "new active identity"
+      }
+    },
+    {
+      "id": "conditional-agent-safety",
+      "title": "Arbitrary-agent conditional all-horizon safety",
+      "status": "lean-kernel-checked-conditional-invariant",
+      "claim": "For any action proposal stream on arbitrary types of modeled states/actions/observations/epochs, a safe initial state and complete effect-time mediation by a sound admissibility rule (plus safe rejection and safe environment steps) imply the invariant at every finite position; the theorem does not establish actual deployment completeness or feasibility.",
+      "assumptions": [
+        "Every relevant physical effect is fully mediated, the actual compatible state and authentic current source epoch are checked at effect time",
+        "Accurate nondeterministic plant relation, invariant-preserving environment transitions and stuttering rejected steps"
+      ],
+      "mechanism": "Universal admissibility over modeled safe compatible states; step preservation; induction over arbitrary proposal traces.",
+      "evidence": "Merged #528; original-source Lean module ArbitraryAgentSafety.lean; six declarations at Lean 4.36.0-rc2 run 43639554615 (source SHA256 a335fffdddfeb81124159794db8c0289ad3afedc65c659946190d5f7da4f1397), no nonstandard axioms. Local service evidence #530/#531/#554 is a different operational scope.",
+      "source": "research/nightfall/2026-11-active-passports/conditional-agent-safety.md",
+      "source_detail": "Complete formal statement, source checks, nondeterministic environment assumptions and operational non-guarantees in dedicated v14 passport.",
+      "audit": "Falsify missing effect routes, stale source epochs, incompatible observations, erroneous plant and environment relations, compromised privileged issuer and bypass via AWS/physical actuator; no counterexample to conditional theorem follows merely from violating its premises.",
+      "limitations": [
+        "All-horizon invariant depends on externally unverified complete mediation and faithful model; no full real-world superintelligence guarantee",
+        "Admissibility is universally quantified and may not be computable; independent specialist/human review absent"
+      ],
+      "review_20261114": {
+        "finding": "Merged finite-step all-horizon conditional theorem passes strict Lean; no actual-world proof obligation discharged by this alone.",
+        "remaining_gate": "Operational source authentication, no bypass, physical/remote effect bridge.",
+        "certification_change": "new active identity"
+      }
+    },
+    {
+      "id": "semantic-fencing-authority",
+      "title": "Semantic fencing, adaptive evidence and local authority security",
+      "status": "lean-kernel-checked-draft-branch-finite-scope",
+      "claim": "For sound authenticated version-only gates, a finite source fence is safe iff it hits every unsafe source-change support; an invisible unsafe change makes version-only enforcement impossible. On finite initially safe evidence sets, an optimal adaptive observation-plus-fence plan exists; exact two-source post-label gain is 8→5 quarter-units. These are formal model results, not operational complete-mediation guarantees.",
+      "assumptions": [
+        "All unsafe permitted histories represented; authenticated ABA-free source versions; atomic version compare and effect commit",
+        "Finite initially safe evidence sets with exact coherent binary observations and additive positive costs; no extra unguarded physical/cloud effect path"
+      ],
+      "mechanism": "Weighted unsafe-change hypergraph transversal, finite strong-induction Bellman read/guard optimization, effect-time authenticated source and policy epoch checks.",
+      "evidence": "Merged finite v0.3 #537 run 43648303705 (1,700 Bellman, 350 history, 661 bounded interleavings, SQLite); draft PR #554 pinned Lean run 43662280902, ten strict named declarations, source SHA256 17779223198926147b1600c9c5faebbf333add1bc05c71562000f491ea624d58. Draft #554 source-matched service pipeline run 43662280945 succeeded (six deadline regressions, 21 verifier tests, ten authorization events). Merged #557 model-generated small-model pilot run 43662000190 had one honest task main success but no promotion, two attack proposals invalid/unscored: no adversarial safety-rate inference.",
+      "source": "research/nightfall/2026-11-active-passports/semantic-fencing-and-security.md",
+      "source_detail": "Semantic-fencing v14 passport separates formal proof, finite replay, local Unix/Docker JSON-effect service tests, model-generated trial and physical trust-boundary gaps.",
+      "audit": "Verify exact PR #554 merged status before calling main source certified; independently attack omitted sources, special source changes, epoch races, long-run nonce storage, request floods, privileged issuer and direct external effect routes.",
+      "limitations": [
+        "PR #554 source compiled strictly at exact draft PR head, but not merged; service owns local JSON record, not AWS deployment or an actual physical actuator",
+        "No global denial-of-service guarantee, no independent specialist proof review, no unconditional authority correctness across arbitrary agents or systems"
+      ],
+      "review_20261114": {
+        "finding": "New distinct finite Lean source (draft) plus tested local security passport; full operational boundary not discharged.",
+        "remaining_gate": "Merged exact-source current head, independent red-team, full external effect mediation and model completeness.",
+        "certification_change": "new active identity"
+      }
     }
   ],
   "attribution": "Research led by Devin J. Wright through NIGHTFALL with substantial AI-assisted drafting and proof attempts. Imported foundations include Efron–Stein/Hoeffding decomposition and Turturean's Aaronson–Ambainis cube theorem and antipodal inequality.",
@@ -295,23 +440,59 @@
       "value_approx": "1064.958449026294",
       "independent_human_review": false,
       "strongest_merged": {
+        "pr": 525,
+        "run": 43644790107,
+        "head": "a558a4dd7a2f2c7db521658c6d59d204758eb934",
+        "source_git_blob": "5263d9da1ec2f12fbc8986c3698859faedb390a3",
+        "declaration": "Nightfall.Observability.ActualSourceQ2364Terminal.actual_source_q2_364_unconditional",
+        "coefficient": "[5√3+2(1+√2)(√13−√3)+8√((5√5−11)/6)]²",
+        "value_approx": "364.5526832774",
+        "scope": "finite common alphabet, arbitrary heterogeneous site laws incl zero atoms; unrestricted original source degree ≤2 canonical singletons",
+        "added_premises": []
+      },
+      "prior_strongest_merged": {
         "pr": 498,
         "run": 43633180605,
         "coefficient": "[257/20+(9/4)√2+5√3+√6]^2",
         "value_approx": "736.673197758287",
         "scope": "finite common alphabet, genuine source, degree ≤2"
-      }
+      },
+      "conditionals": [
+        {
+          "pr": 525,
+          "run": 43644790107,
+          "coefficient_approx": 353.2929930769,
+          "extra_premise": "sharp original-source integrated section budget; NOT discharged in terminal"
+        },
+        {
+          "pr": 540,
+          "coefficient_approx": 99.2629850192,
+          "status": "draft scalar implication, unrestricted source premise open"
+        },
+        {
+          "pr": 558,
+          "coefficient_approx": 107.3934498998,
+          "status": "unmerged stacked original-source draft, pending exact source/Lean gate"
+        }
+      ]
     },
     "scif": {
-      "status": "strict_kernel_checked_scoped_components",
-      "pr": 496,
-      "run": 43630623548,
-      "full_source_scif_terminal": false,
+      "status": "strict_kernel_checked_full_finite_original_source_terminal",
+      "pr": 529,
+      "run": 43640173972,
+      "full_source_scif_terminal": true,
       "finite_all_degree_changed_law_risk": {
         "pr": 514,
         "run": 43635955108,
         "terminal": true,
         "scope": "finite common alphabet all degrees, original p to normalized q, actual influence shifts; NOT generated-owner certificate"
+      },
+      "terminal": {
+        "declaration": "Nightfall.SCIFCompleteOriginalSource.scif_complete_finite_original_source_terminal",
+        "source_sha256": "7e470bd97b5078aae76ea2aa047afa0fc1cf203260d28fa17bdf81c25f9d171e",
+        "assumptions": "old source-generated owner envelope; finite common alphabet, original source f,p, single-site law edit",
+        "optimal_lifecycle_cost": false,
+        "real_effect_authority": false
       }
     },
     "authority": {
@@ -361,6 +542,34 @@
         "kernel": true,
         "full_l2": false
       }
+    },
+    "agent_safety": {
+      "pr": 528,
+      "run": 43639554615,
+      "declaration": "Nightfall.AgentSafety.arbitrary_agent_all_horizons_safe",
+      "scope": "all finite trace horizons under complete-mediation and sound-model hypotheses; not real-world universal safety",
+      "actual_boundary_verified": false
+    },
+    "semantic_fencing": {
+      "merged_finite_pr": 537,
+      "merged_finite_run": 43648303705,
+      "draft_lean_pr": 554,
+      "strict_draft_lean_run": 43662280902,
+      "draft_lean_declarations": 10,
+      "finite_safe_bellman": true,
+      "operational_service_draft_pr": 554,
+      "local_security_run": 43662280945,
+      "model_generated_trial": {
+        "pr": 557,
+        "run": 43662000190,
+        "attempts": 3,
+        "valid_attack_attempts": 0,
+        "attack_successes": 0,
+        "safety_rate_inference": false
+      },
+      "real_external_effect_complete_mediation": false
     }
-  }
+  },
+  "current_frontier_reference": "research/catalogue/CURRENT_FRONTIER.json",
+  "claim_count": 15
 }
