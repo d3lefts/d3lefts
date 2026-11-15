@@ -106,8 +106,7 @@ theorem actual_source_shifted_site_107
             apply Finset.sum_congr rfl
             intro b _
             dsimp [H]
-            rw [mul_pow, Real.sq_sqrt (hp i b)]
-            ring
+            simp only [mul_pow, Real.sq_sqrt (hp i b)] <;> ring
       _ = a^2 := by rw [htab, Real.sq_sqrt hnonneg]
   have hne : ∀ k, k < J.card → i ≠ j k := by
     intro k hk
