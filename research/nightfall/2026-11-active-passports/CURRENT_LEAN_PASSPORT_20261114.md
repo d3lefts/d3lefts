@@ -1,5 +1,20 @@
 # NIGHTFALL — Current Lean and Exact-Evidence Proof Passport (14 November 2026)
 
+## 14 November 2026 — v14 current exact-head theorem reconciliation
+
+**Strongest confirmed original-source unrestricted-singleton finite Q2:** coefficient `364.5526832774` under finite common-alphabet laws with arbitrary heterogeneous per-site normalized marginals including zeros; `ActualSourceQ2364Terminal.actual_source_q2_364_unconditional`, Git blob `5263d9da1ec2f12fbc8986c3698859faedb390a3`, strict pinned run [43644790107](https://github.com/d3lefts/d3lefts/actions/runs/43644790107). The v13.1 C736.673, C1064.958 and manuscript C1228.356 figures below are **superseded historical checkpoints**. Conditional C353.292993 depends on an unproved source section budget; draft 128/121/107/99 and pure-subclass <100 results are not unrestricted certified terminals.
+
+**Agent invariant:** merged [#528](https://github.com/d3lefts/d3lefts/pull/528), strict Lean [43639554615](https://github.com/d3lefts/d3lefts/actions/runs/43639554615), six named conditional safety declarations. Assumes complete effect mediation, current authentic epoch, actual-state compatibility, sound plant/environment transition rules and environmental preservation; no physical enforcement proof.
+
+**New semantic fencing and adaptive evidence optimum:** draft, unmerged [#554](https://github.com/d3lefts/d3lefts/pull/554), exact head `b4fa2e2ecd6041caafa9b5e9f61fbc10a70f7f1e`, ten scoped declarations strictly compiled and allowed-axiom audited at [43662280902](https://github.com/d3lefts/d3lefts/actions/runs/43662280902), source SHA-256 `17779223198926147b1600c9c5faebbf333add1bc05c71562000f491ea624d58`. Covers source-version hitting-set equivalence, finite minimum-cost fence, finite **already-safe** adaptive Bellman plan, and concrete 8→5 quarter-unit witness. No general initial mixed-label policy terminal is certified. [Full supplemental proof passport](AUTHORITY_SEMANTIC_FENCING_PROOF_PASSPORT_20261114.md).
+
+**Operational security scope:** [43662280945](https://github.com/d3lefts/d3lefts/actions/runs/43662280945) passed source-matched ControlArena IaC Fast local artifact pipeline, including 6 hardening regressions, existing 21 tests, and 10 independent local-effect service event audits. PR #554 remains **unmerged draft**; no deployment outside protected JSON or proof of non-bypassable cloud/physical actuation. A timeout may occur after effect commit; status reconciliation required. Merged #557 3-case genuine small-model pilot [43662000190](https://github.com/d3lefts/d3lefts/actions/runs/43662000190) adds narrow empirical evidence, not a general safety rate.
+
+**Registry discipline:** append-only v14 update in [current receipt JSON](../../../docs/current-lean-proof-receipts-20261114.json); original frozen 67-source provenance and historical pin receipts untouched. The arbitrary-index all-L² Lean Efron–Stein theorem remains **OPEN**. External mathematical and security review, historical novelty and real trusted-boundary discharge remain **OPEN**.
+
+---
+
+
 **Countable-coordinate structural bridge now Lean certified:** [#520](https://github.com/d3lefts/d3lefts/pull/520), pinned run [43637631337](https://github.com/d3lefts/d3lefts/actions/runs/43637631337), proves any measurable real observable of an arbitrary product depends on only countably many coordinates (Mathlib cylinder algebra and event countability plus rational superlevel reconstruction). This does not yet produce an arbitrary all-L² Efron–Stein Lean terminal; actual L² density and conditional projection commutation remain open. [Exact proof passport](UNRESTRICTED_EFRON_STEIN_PROOF_PASSPORT_20261114.md).
 
 ## 14 November 2026 — v2.0 source-level certification reconciliation
