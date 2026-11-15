@@ -114,8 +114,17 @@ theorem actual_source_q2_105_unconditional
       _ ≤ ∑ i : ι, T*(Real.sqrt 3*u i+(6*c i)/25) :=
         Finset.sum_le_sum (fun i _ => hsite i)
       _ = T*(Real.sqrt 3*(∑ i : ι, u i)+(6*(∑ i : ι, c i))/25) := by
-        simp only [mul_add, Finset.sum_add_distrib, ← Finset.mul_sum,
-          Finset.sum_div]
+        have hs : (∑ i : ι, (6*c i)/25) =
+            (6*(∑ i : ι, c i))/25 := by
+          calc
+            (∑ i : ι, (6*c i)/25) =
+                (6/25:ℝ)*(∑ i : ι, c i) := by
+                  rw [← Finset.mul_sum]
+                  apply Finset.sum_congr rfl
+                  intro i _
+                  ring
+            _ = (6*(∑ i : ι, c i))/25 := by ring
+        simp only [mul_add, Finset.sum_add_distrib, ← Finset.mul_sum, hs]
   have hbudget :
       Real.sqrt 3*(∑ i : ι, u i)+(6*(∑ i : ι, c i))/25 ≤
         ((2*(1+Real.sqrt 2))*Real.sqrt 3+48/25)*B := by
