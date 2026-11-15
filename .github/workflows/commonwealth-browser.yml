@@ -1,0 +1,32 @@
+name: Commonwealth OS synthetic browser checks
+
+on:
+  pull_request:
+    paths:
+      - 'projects/commonwealth-os/apps/browser/**'
+      - 'projects/commonwealth-os/architecture/**'
+      - '.github/workflows/commonwealth-browser.yml'
+  push:
+    branches:
+      - main
+      - commonwealth-browser-architecture-20261115
+    paths:
+      - 'projects/commonwealth-os/apps/browser/**'
+      - 'projects/commonwealth-os/architecture/**'
+      - '.github/workflows/commonwealth-browser.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  demo-verifier-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify synthetic governance checks
+        working-directory: projects/commonwealth-os/apps/browser
+        run: npm test
