@@ -25,6 +25,7 @@ open Nightfall.Observability.ActualSourceANOVA
 open Nightfall.Observability.ActualSourceVarianceEnergy
 open Nightfall.Observability.ActualSourceInfluenceEnergy
 open Nightfall.Observability.ActualSourceSingletonEnergyBridge
+open Nightfall.Observability.ActualSourceMeanSectionJensen
 open Nightfall.Observability.ActualSourceIntegratedSections
 open Nightfall.Observability.ActualSourcePureQ2Golden
 open Nightfall.Observability.ActualSourceIntegratedSharp
