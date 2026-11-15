@@ -210,6 +210,94 @@ theorem optimal_safe_stopping_plan [Fintype Source] [DecidableEq Source]
   intro other hother
   exact hoptimal other hother.2
 
+/-- Bellman root principle on an already safely classified snapshot.
+Given matching optimal subplans for EVERY splitting observation, a
+globally optimal finite evidence/guard policy exists. The proof considers
+every possible first action and uses a finite minimax witness rather
+than assuming the Bellman recurrence as a definition.
+
+To obtain an executable finite-world dynamic program, one must separately
+construct the optimal subplans by well-founded induction on shrinking
+evidence fibers. That synthesis bridge is not claimed by this theorem. -/
+theorem bellman_root_optimal [Fintype Source] [DecidableEq Source]
+    (M : System Source World) (obs : Source → World → Bool)
+    (B : Set World) (readPrice checkPrice : Source → ℕ)
+    (hne : ∃ x, x ∈ B)
+    (hsafe : ∀ x, x ∈ B → M.safe x)
+    (hcomplete : CompleteCoverage M B)
+    (pzero pone : Source → EvidencePlan Source)
+    (hbranches : ∀ i : Source,
+      ((∃ x, x ∈ readFiber B obs i false) ∧
+       (∃ x, x ∈ readFiber B obs i true)) →
+      PlanValid M obs (readFiber B obs i false) (pzero i) ∧
+      PlanValid M obs (readFiber B obs i true) (pone i) ∧
+      (∀ q, PlanValid M obs (readFiber B obs i false) q →
+        worstCost readPrice checkPrice (pzero i) ≤
+          worstCost readPrice checkPrice q) ∧
+      (∀ q, PlanValid M obs (readFiber B obs i true) q →
+        worstCost readPrice checkPrice (pone i) ≤
+          worstCost readPrice checkPrice q)) :
+    ∃ p : EvidencePlan Source,
+      PlanValid M obs B p ∧
+      ∀ q, PlanValid M obs B q →
+        worstCost readPrice checkPrice p ≤ worstCost readPrice checkPrice q := by
+  classical
+  obtain ⟨guard, hguard, hbest⟩ :=
+    optimal_fence_exists M B checkPrice hcomplete
+  let splitting : Finset Source :=
+    Finset.univ.filter (fun i =>
+      (∃ x, x ∈ readFiber B obs i false) ∧
+      (∃ x, x ∈ readFiber B obs i true))
+  let choices : Finset (EvidencePlan Source) :=
+    insert (.grant guard)
+      (splitting.image (fun i => .read i (pzero i) (pone i)))
+  have hnonempty : choices.Nonempty := by
+    refine ⟨.grant guard, ?_⟩
+    simp [choices]
+  have hvalid : ∀ p ∈ choices, PlanValid M obs B p := by
+    intro p hp
+    rcases Finset.mem_insert.mp hp with heq | himg
+    · subst p
+      exact ⟨hsafe, hguard⟩
+    · obtain ⟨i, hi, rfl⟩ := Finset.mem_image.mp himg
+      have hisplit : (∃ x, x ∈ readFiber B obs i false) ∧
+          (∃ x, x ∈ readFiber B obs i true) :=
+        (Finset.mem_filter.mp hi).2
+      obtain ⟨hzero, hone, _, _⟩ := hbranches i hisplit
+      exact ⟨hisplit.1, hisplit.2, hzero, hone⟩
+  have hcover : ∀ p, PlanValid M obs B p →
+      ∃ candidate ∈ choices,
+        worstCost readPrice checkPrice candidate ≤
+          worstCost readPrice checkPrice p := by
+    intro p hp
+    cases p with
+    | deny =>
+        obtain ⟨x, hx⟩ := hne
+        exact False.elim ((hp x hx) (hsafe x hx))
+    | grant other =>
+        refine ⟨.grant guard, ?_, ?_⟩
+        · simp [choices]
+        · exact hbest other hp.2
+    | read i qzero qone =>
+        obtain ⟨hzero, hone, hqzero, hqone⟩ := hp
+        obtain ⟨_, _, hlo, hhi⟩ := hbranches i ⟨hzero, hone⟩
+        refine ⟨.read i (pzero i) (pone i), ?_, ?_⟩
+        · apply Finset.mem_insert.mpr
+          right
+          apply Finset.mem_image.mpr
+          refine ⟨i, ?_, rfl⟩
+          exact Finset.mem_filter.mpr
+            ⟨Finset.mem_univ i, ⟨hzero, hone⟩⟩
+        · exact add_le_add_right
+            (max_le_max (hlo qzero hqzero) (hhi qone hqone))
+            (readPrice i)
+  obtain ⟨best, hbestmem, hleast⟩ :=
+    Finset.exists_min_image choices (worstCost readPrice checkPrice) hnonempty
+  refine ⟨best, hvalid best hbestmem, ?_⟩
+  intro q hq
+  obtain ⟨candidate, hcandidate, hbound⟩ := hcover q hq
+  exact (hleast candidate hcandidate).trans hbound
+
 /-! ## Lean-checked two-source post-certification witness -/
 
 /-- Binary states 00, 01, 10 are safe; 11 is unsafe. Each changed
@@ -234,16 +322,76 @@ theorem two_bit_direct_cost_at_least_eight :
     ∀ guard : Finset (Fin 2),
       FenceSound twoBitModel twoBitBaseline guard →
       8 ≤ fenceCost (fun _ => 4) guard := by
-  classical
+  intro guard hsound
+  have hEzero : UnsafeEdge twoBitModel twoBitBaseline
+      ({0} : Finset (Fin 2)) := by
+    refine ⟨(2 : Fin 4), ?_, (3 : Fin 4), ?_, ?_, ?_⟩ <;> decide
+  have hEone : UnsafeEdge twoBitModel twoBitBaseline
+      ({1} : Finset (Fin 2)) := by
+    refine ⟨(1 : Fin 4), ?_, (3 : Fin 4), ?_, ?_, ?_⟩ <;> decide
+  have hzero : (0 : Fin 2) ∈ guard := by
+    obtain ⟨i, hi, hmem⟩ :=
+      (fence_sound_iff_hits twoBitModel twoBitBaseline guard).mp
+        hsound ({0} : Finset (Fin 2)) hEzero
+    have heq : i = 0 := by simpa using hmem
+    simpa [heq] using hi
+  have hone : (1 : Fin 2) ∈ guard := by
+    obtain ⟨i, hi, hmem⟩ :=
+      (fence_sound_iff_hits twoBitModel twoBitBaseline guard).mp
+        hsound ({1} : Finset (Fin 2)) hEone
+    have heq : i = 1 := by simpa using hmem
+    simpa [heq] using hi
+  have hall : guard = Finset.univ := by
+    apply Finset.eq_univ_of_forall
+    intro i
+    fin_cases i
+    · exact hzero
+    · exact hone
+  rw [hall]
   decide
 
-/-- The initially safe-certified set admits a one-bit further observation
-and one check, costing exactly 1+4 = 5 quarter-units instead of 8. -/
+/-- Explicit safety checks for each observation fiber. -/
+private theorem two_bit_zero_fiber_safe :
+    (∀ x, x ∈ readFiber twoBitBaseline twoBitObservation 0 false →
+      twoBitModel.safe x) ∧
+    FenceSound twoBitModel
+      (readFiber twoBitBaseline twoBitObservation 0 false)
+      ({0} : Finset (Fin 2)) := by
+  constructor
+  · intro x hx
+    fin_cases x <;>
+      simp_all [readFiber, twoBitBaseline, twoBitObservation, twoBitModel]
+  · intro b hb y _ haccept
+    have hv := haccept (0 : Fin 2) (by simp)
+    fin_cases b <;> fin_cases y <;>
+      simp_all [readFiber, twoBitBaseline, twoBitObservation,
+        twoBitModel, Accept, Finset.mem_filter]
+
+private theorem two_bit_one_fiber_safe :
+    (∀ x, x ∈ readFiber twoBitBaseline twoBitObservation 0 true →
+      twoBitModel.safe x) ∧
+    FenceSound twoBitModel
+      (readFiber twoBitBaseline twoBitObservation 0 true)
+      ({1} : Finset (Fin 2)) := by
+  constructor
+  · intro x hx
+    fin_cases x <;>
+      simp_all [readFiber, twoBitBaseline, twoBitObservation, twoBitModel]
+  · intro b hb y _ haccept
+    have hv := haccept (1 : Fin 2) (by simp)
+    fin_cases b <;> fin_cases y <;>
+      simp_all [readFiber, twoBitBaseline, twoBitObservation,
+        twoBitModel, Accept, Finset.mem_filter]
+
+/-- Reading one already-safe baseline bit costs 1 and leaves a single
+version check of cost 4 in either observation fiber. -/
 theorem two_bit_post_certificate_gain :
     PlanValid twoBitModel twoBitObservation twoBitBaseline twoBitJointPolicy ∧
     worstCost (fun _ => 1) (fun _ => 4) twoBitJointPolicy = 5 ∧
     fenceCost (fun _ => 4) (Finset.univ : Finset (Fin 2)) = 8 := by
-  classical
-  decide
+  constructor
+  · exact ⟨⟨(0 : Fin 4), by decide⟩, ⟨(1 : Fin 4), by decide⟩,
+      two_bit_zero_fiber_safe, two_bit_one_fiber_safe⟩
+  · constructor <;> decide
 
 end Nightfall.SemanticFencing
