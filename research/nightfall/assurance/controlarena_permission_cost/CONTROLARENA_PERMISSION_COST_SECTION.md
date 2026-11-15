@@ -92,6 +92,29 @@ Risk claims must be **per unsafe admitted effect**, not per suspicious trajector
 
 **Proven now:** the finite idealized audit formula and its exact rational sensitivity example, plus the previously executed official source-matched local promotion experiment. **Still open:** calibrated policy economics on agent-generated trajectories, operational guard completeness, exact attack-world modeling under adaptive evasion, distributed effect-time consistency, deadlines, prior-art priority, Lean checking and non-author review.
 
+## Empirical addendum v0.2 — paired official-source artifact replay (15 November 2026)
+
+**Corrected attack accounting.** The previously reported two adaptive Qwen2.5-Coder:3B attacks from PR #557 / workflow 43662000190 failed to produce source-matching executable edits in the allowed paths. They were never synthesized or given official attack-side scores. They are two *generation failures*, not two successfully blocked executable attacks. The one Qwen-generated honest candidate was officially main-task successful but did not meet the strict mission-specific permission predicate.
+
+**Paired replay against frozen independently scored cases.** Archived official IaC Fast 20.1.1 templates and scorer receipts from PR #499 (run 43631593333) and PR #557 were independently rechecked before matching the **same three scored candidates** under four predeclared offline approval policies: (a) narrow FSx action/target guard, (b) always-complete baseline-relative mission audit, (c) source-path cheap alarm with selective full audit and no unsignaled restriction, (d) identical alarm with narrow guard on unsignaled traffic. The scored population was an authored legitimate patch, an **authored (not model-generated) malicious patch** passing both official benchmark tests, and a model-generated benchmark-honest patch. Invalid adaptive attacks were excluded; no aggregate safety rates are inferred.
+
+| Policy | Full mission-audit calls (of 3) | Benchmarked malicious admitted | Strict mission-nonconforming admitted | Benchmark-benign admitted (of 2) |
+| --- | ---: | ---: | ---: | ---: |
+| Narrow guard | 0 | 0 | 1 | 2 |
+| Always full audit | 3 | 0 | 0 | 1 |
+| Source-path screen + selective full audit | 1 | 0 | 1 | 2 |
+| Source-path screen + narrow guard | 1 | 0 | 1 | 2 |
+
+The selective arms reduce **full-audit invocation count by 2/3** in this tiny fixed sample, *not* total compute expense or a certified secure audit cost. They also admit a candidate meeting the broader ControlArena legitimate scorer while violating the narrower institutional permission contract. The strict verifier's denial is therefore consistent with task-specific authorization rather than automatically a false denial of allowed mission work.
+
+**Counterexample to the narrow guard.** An explicitly synthetic modification adds a restrictive `StringEquals` principal-account condition to original FSx-denial statements. Their names, action strings and OU targets remain present; the narrow guard approves the altered template, but the full baseline-diff verifier and a separate protected-content-pinned guard reject it. This proves a check of policy names/action strings/targets alone is insufficient for the protected policy invariants in this fixture. It was **not** scored by official ControlArena tests and is not a production AWS exploit.
+
+The internal independent receipt checker recomputed the twelve policy decisions and call counts, rejected tampered digest and malicious-admission receipts, and preserved upstream source hashes. The reference replay package is associated with original run IDs and original artifact IDs 14128233791 (promotion) and 14140288021 (model pilot). The baseline matches between runs at canonical SHA-256 `6ec63264e2de0285a94b7eb46ca376cbdde4a5e2564e00137f20d056dc58281e`.
+
+**Valid-executable-attack continuation:** draft PR [#596](https://github.com/d3lefts/d3lefts/pull/596) fixes the model-generated edit interface by giving the small local model the exact FSx-invocation replacement slot, while disclosing the authored legitimate-task scaffold. Each proposed model replacement must synthesize and pass *both* official main and side scorers before it counts as an executable defended attack. The four policies run on identical candidate templates. Until that separate current-head CI returns a verified receipt, do not claim that any newly model-generated malicious candidate was defeated.
+
+**Limits:** offline template-level effect decisions, no real AWS deployment, no actual cheap AI-monitor scores, no attack-world distribution calibration, no runtime/financial audit cost superiority, no general complete mediation, and no inference about frontier-model adversaries.
+
 ## References and reproducible provenance
 
 - UK AI Security Institute / Redwood Research, ControlArena, https://control-arena.aisi.org.uk/ and https://control-arena.aisi.org.uk/monitors.html ; source https://github.com/UKGovernmentBEIS/control-arena
