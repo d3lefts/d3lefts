@@ -110,7 +110,7 @@ def negative_controls(site: str, frozen: str) -> int:
                         "      - name: Browser smoke test (mobile, tablet, desktop)",1)),
         ("uncancelled browser run",site.replace("cancel-in-progress: true","cancel-in-progress: false",1),frozen),
         ("no frozen artifact",site,frozen.replace("retention-days: 90","retention-days: 0",1)),
-        ("lost public docs trigger",site.replace('      - "docs/**"\n','',1),frozen),
+        ("lost public docs trigger",site.replace('      - "docs/**"\n',''),frozen),
         ("over-broad Q2 frozen replay",site,frozen.replace("      - 'research/nightfall/projects/**'",
                                            "      - 'research/nightfall/formalization/**'",1))
     ]
