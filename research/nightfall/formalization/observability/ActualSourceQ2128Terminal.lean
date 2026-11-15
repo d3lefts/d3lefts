@@ -15,6 +15,9 @@ promoted only after the exact-head pinned Lean axiom audit succeeds.
 namespace Nightfall.Observability.ActualSourceQ2128Terminal
 
 open Finset
+open Nightfall.Observability.ActualESGreedyOwnership
+open Nightfall.Observability.ActualProductSourcePairCentering
+open Nightfall.Observability.ActualProductSourceDerivedStar
 open Nightfall.Observability.ActualProductMergeTower
 open Nightfall.Observability.ActualSourceANOVA
 open Nightfall.Observability.ActualSourceVarianceEnergy
@@ -188,8 +191,7 @@ theorem actual_source_shifted_site_128
             apply Finset.sum_congr rfl
             intro b _
             dsimp [H]
-            rw [mul_pow, Real.sq_sqrt (hp i b)]
-            ring
+            simp only [mul_pow, Real.sq_sqrt (hp i b)] <;> ring
       _ = a^2 := by rw [htab, Real.sq_sqrt hnonneg]
   have hne : ∀ k, k < J.card → i ≠ j k := by
     intro k hk
