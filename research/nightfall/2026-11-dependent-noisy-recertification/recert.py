@@ -148,4 +148,3 @@ if __name__=='__main__':
       for cache in ({},{'z':1}):
         so=Solver(law,cache=cache)
         print('prior_b1',prior,'cache',cache,'policy',so.root_detail(), 'certificate',so.check_certificate())
-
