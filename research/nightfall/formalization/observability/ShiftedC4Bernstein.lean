@@ -412,6 +412,10 @@ theorem shifted_c4_F_nonneg
           (by norm_num) hx.1 hx.2
       have hV := affine_unit v (0:ℝ) (1/3:ℝ)
           (by norm_num) hv.1 hv.2
+      have hXd : (2/5:ℝ)-(0:ℝ) = (2/5:ℝ) := by norm_num
+      have hVd : (1/3:ℝ)-(0:ℝ) = (1/3:ℝ) := by norm_num
+      rw [hXd] at hX
+      rw [hVd] at hV
       have hcell := cell_0_0
         ((x-(0:ℝ))/(2/5:ℝ)) ((v-(0:ℝ))/(1/3:ℝ))
         hX.1 hX.2 hV.1 hV.2
@@ -423,6 +427,10 @@ theorem shifted_c4_F_nonneg
           (by norm_num) hx.1 hx.2
       have hV := affine_unit v (1/3:ℝ) (2/3:ℝ)
           (by norm_num) hv.1 hv.2
+      have hXd : (2/5:ℝ)-(0:ℝ) = (2/5:ℝ) := by norm_num
+      have hVd : (2/3:ℝ)-(1/3:ℝ) = (1/3:ℝ) := by norm_num
+      rw [hXd] at hX
+      rw [hVd] at hV
       have hcell := cell_0_1
         ((x-(0:ℝ))/(2/5:ℝ)) ((v-(1/3:ℝ))/(1/3:ℝ))
         hX.1 hX.2 hV.1 hV.2
@@ -434,6 +442,10 @@ theorem shifted_c4_F_nonneg
           (by norm_num) hx.1 hx.2
       have hV := affine_unit v (2/3:ℝ) (1:ℝ)
           (by norm_num) hv.1 hv.2
+      have hXd : (2/5:ℝ)-(0:ℝ) = (2/5:ℝ) := by norm_num
+      have hVd : (1:ℝ)-(2/3:ℝ) = (1/3:ℝ) := by norm_num
+      rw [hXd] at hX
+      rw [hVd] at hV
       have hcell := cell_0_2
         ((x-(0:ℝ))/(2/5:ℝ)) ((v-(2/3:ℝ))/(1/3:ℝ))
         hX.1 hX.2 hV.1 hV.2
@@ -446,6 +458,10 @@ theorem shifted_c4_F_nonneg
           (by norm_num) hx.1 hx.2
       have hV := affine_unit v (0:ℝ) (1/3:ℝ)
           (by norm_num) hv.1 hv.2
+      have hXd : (3/5:ℝ)-(2/5:ℝ) = (1/5:ℝ) := by norm_num
+      have hVd : (1/3:ℝ)-(0:ℝ) = (1/3:ℝ) := by norm_num
+      rw [hXd] at hX
+      rw [hVd] at hV
       have hcell := cell_1_0
         ((x-(2/5:ℝ))/(1/5:ℝ)) ((v-(0:ℝ))/(1/3:ℝ))
         hX.1 hX.2 hV.1 hV.2
@@ -457,6 +473,10 @@ theorem shifted_c4_F_nonneg
           (by norm_num) hx.1 hx.2
       have hV := affine_unit v (1/3:ℝ) (2/3:ℝ)
           (by norm_num) hv.1 hv.2
+      have hXd : (3/5:ℝ)-(2/5:ℝ) = (1/5:ℝ) := by norm_num
+      have hVd : (2/3:ℝ)-(1/3:ℝ) = (1/3:ℝ) := by norm_num
+      rw [hXd] at hX
+      rw [hVd] at hV
       have hcell := cell_1_1
         ((x-(2/5:ℝ))/(1/5:ℝ)) ((v-(1/3:ℝ))/(1/3:ℝ))
         hX.1 hX.2 hV.1 hV.2
@@ -468,6 +488,10 @@ theorem shifted_c4_F_nonneg
           (by norm_num) hx.1 hx.2
       have hV := affine_unit v (2/3:ℝ) (1:ℝ)
           (by norm_num) hv.1 hv.2
+      have hXd : (3/5:ℝ)-(2/5:ℝ) = (1/5:ℝ) := by norm_num
+      have hVd : (1:ℝ)-(2/3:ℝ) = (1/3:ℝ) := by norm_num
+      rw [hXd] at hX
+      rw [hVd] at hV
       have hcell := cell_1_2
         ((x-(2/5:ℝ))/(1/5:ℝ)) ((v-(2/3:ℝ))/(1/3:ℝ))
         hX.1 hX.2 hV.1 hV.2
@@ -480,6 +504,10 @@ theorem shifted_c4_F_nonneg
           (by norm_num) hx.1 hx.2
       have hV := affine_unit v (0:ℝ) (1/3:ℝ)
           (by norm_num) hv.1 hv.2
+      have hXd : (1:ℝ)-(3/5:ℝ) = (2/5:ℝ) := by norm_num
+      have hVd : (1/3:ℝ)-(0:ℝ) = (1/3:ℝ) := by norm_num
+      rw [hXd] at hX
+      rw [hVd] at hV
       have hcell := cell_2_0
         ((x-(3/5:ℝ))/(2/5:ℝ)) ((v-(0:ℝ))/(1/3:ℝ))
         hX.1 hX.2 hV.1 hV.2
@@ -491,6 +519,10 @@ theorem shifted_c4_F_nonneg
           (by norm_num) hx.1 hx.2
       have hV := affine_unit v (1/3:ℝ) (2/3:ℝ)
           (by norm_num) hv.1 hv.2
+      have hXd : (1:ℝ)-(3/5:ℝ) = (2/5:ℝ) := by norm_num
+      have hVd : (2/3:ℝ)-(1/3:ℝ) = (1/3:ℝ) := by norm_num
+      rw [hXd] at hX
+      rw [hVd] at hV
       have hcell := cell_2_1
         ((x-(3/5:ℝ))/(2/5:ℝ)) ((v-(1/3:ℝ))/(1/3:ℝ))
         hX.1 hX.2 hV.1 hV.2
@@ -502,6 +534,10 @@ theorem shifted_c4_F_nonneg
           (by norm_num) hx.1 hx.2
       have hV := affine_unit v (2/3:ℝ) (1:ℝ)
           (by norm_num) hv.1 hv.2
+      have hXd : (1:ℝ)-(3/5:ℝ) = (2/5:ℝ) := by norm_num
+      have hVd : (1:ℝ)-(2/3:ℝ) = (1/3:ℝ) := by norm_num
+      rw [hXd] at hX
+      rw [hVd] at hV
       have hcell := cell_2_2
         ((x-(3/5:ℝ))/(2/5:ℝ)) ((v-(2/3:ℝ))/(1/3:ℝ))
         hX.1 hX.2 hV.1 hV.2
