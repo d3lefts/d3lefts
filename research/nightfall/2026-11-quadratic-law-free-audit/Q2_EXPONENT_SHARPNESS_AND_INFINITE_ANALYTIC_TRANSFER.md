@@ -86,6 +86,20 @@ The finite-coordinate finite-partition simple cylinder functions generate the or
 
 Since expectations are preserved, `Var(P_𝒢 f)→Var(f)`. Pass to the limit in the uniformly bounded finite-Q2 inequalities to obtain `Var(f)²≤K B²M`. QED, as an analytic argument from standard product-measure facts.
 
+## 3A. Stronger analytic theorem — essential boundedness and L² Hoeffding degree ≤2
+
+The pointwise-difference hypothesis in Theorem B is convenient but unnecessarily restrictive. The natural L² version follows from the same argument, with one essential zero-cell support repair.
+
+**Theorem B′ (analytic, not Lean certified).** Under the same arbitrary-index independent product law, let f∈L∞(μ) be any bounded measurable equivalence class with essential bound ||f||∞≤B. Write E_i for integration over coordinate i and D_i=Id−E_i as commuting orthogonal projections on L²(μ). Assume D_i D_j D_k f=0 in L²(μ) for every triple of distinct indices. Then Var_μ(f)²≤K B² sup_i I_i(f), with the same finite-product K, with no global pointwise restriction or positive-atom floor.
+
+**Proof.** Let P_G be the finite-coordinate, finite-partition conditional expectation above. For each i∈F, P_G commutes with E_i, and therefore D_iD_jD_k(P_G f)=P_G(D_iD_jD_k f)=0 for all distinct i,j,k∈F. On the finite probability table of positive-probability cell labels, every configuration has strictly positive product mass. The finite canonical Hoeffding decomposition g=m+Σh_i+Σh_{ij}+Σ_{|S|≥3}h_S is orthogonal. Each h_S with |S|≥3 is fixed by D_iD_jD_k for a triple {i,j,k}⊂S; orthogonality and the preceding zero identity force h_S=0. Thus on the full supported cell configuration set the table has a pointwise decomposition g=m+Σh_i+Σh_{ij} and, by conditional Jensen, |g|≤B.
+
+For each coordinate, pick a positive-probability cell a_i^* and retract any zero-probability cell to a_i^*; extend g by composition with these retractions. The extended table is pointwise bounded by B on every label tuple and has pointwise Hoeffding degree≤2, because its explicit singleton/pair decomposition is preserved under coordinatewise retraction. Its nonzero distributional masses and influence/variance agree exactly with the supported table. Padding heterogeneous alphabets with an arbitrary common finite disjoint-union alphabet and zero masses preserves these properties again.
+
+The original-source finite Lean theorem consequently yields Var(P_G f)²≤K B² sup_i I_i(f). The same conditional-expectation contraction and dense finite-cylinder limit now prove Theorem B′. QED analytically.
+
+**Formalization distinction:** this proof requires formalizing (i) the finite supported-table chaos decomposition from the triple-centering L² condition, and (ii) bounded zero-cell retraction. These were not in the pinned Lean infinitary source. The analytic extension is stronger than Theorem B and removes its global pointwise assumptions, but is still not certified by complete Lean compilation.
+
 ## 4. Audit and unproved formalization dependencies
 
 The proof of Theorem B uses these standard but **unformalized in the current NIGHTFALL Lean terminal** results:
