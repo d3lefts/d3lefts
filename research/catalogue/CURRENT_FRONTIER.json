@@ -178,5 +178,39 @@
       "physical_system_certificate": false,
       "novel_record_status": "not_assessed"
     }
-  ]
+  ],
+  "v14_scoped_updates": {
+    "date": "2026-11-14",
+    "warning": "Historical seven claim anchors, exact SHA source and allowed statuses unchanged; these scoped updates are NOT new canonical claims or a declaration of physical safety.",
+    "current_active_passport_version": 14,
+    "source_unrestricted_q2_364_still_best": true,
+    "semantic_fencing_new_strict_lean": {
+      "pr": 554,
+      "draft_unmerged": true,
+      "run": 43662280902,
+      "head": "b4fa2e2ecd6041caafa9b5e9f61fbc10a70f7f1e",
+      "source_sha256": "17779223198926147b1600c9c5faebbf333add1bc05c71562000f491ea624d58",
+      "declarations": 10,
+      "scope": "finite safe-baseline original-source history/version-only fence, exact min hitting-set and adaptive Bellman; operational assumptions remain"
+    },
+    "conditional_agent_safety": {
+      "pr": 528,
+      "run": 43639554615,
+      "declarations": 6,
+      "scope": "conditional modeled all-horizon invariant; no physical complete mediation proof"
+    },
+    "local_effect_service": {
+      "pr": 554,
+      "run": 43662280945,
+      "source_matched_ci": "success",
+      "model_generated_small_pilot": {
+        "pr": 557,
+        "run": 43662000190,
+        "cases": 3
+      },
+      "scope": "separate UID Unix service and local JSON record only; no AWS/physical effect interposition"
+    },
+    "independently_reviewed": false,
+    "operational_agent_boundary": "not_verified"
+  }
 }
