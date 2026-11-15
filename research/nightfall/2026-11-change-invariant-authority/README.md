@@ -15,3 +15,11 @@ Expected deterministic result:
 Proof, scope and prior art: `THEOREM.md`.
 
 No sensor attestation or deployment authority is supplied by this mathematical checker. The model-dependent masses, separator and change class must be authenticated and externally validated.
+
+The representation-identifiability theorem has a separate exact coefficient checker:
+
+```bash
+python3 representation_audit.py
+```
+
+Its deterministic receipt is `representation_receipt.json`.
