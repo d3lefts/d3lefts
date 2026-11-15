@@ -62,8 +62,9 @@ def WorstCost [Fintype Observation]
     (M : Model Belief Action Observation) :
     {n : ℕ} → Belief → Policy Action Observation n → ℕ
   | _, _, .finish => 0
-  | _, b, .execute a k =>
-      PhaseCost M b a +
+  | _, b, .execute a k => by
+      classical
+      exact PhaseCost M b a +
         Finset.univ.sup (fun o : Observation =>
           if M.possible b a o
           then WorstCost M (M.post b a o) (k o)
@@ -168,6 +169,7 @@ theorem globally_optimal_lifecycle_policy_exists
       Valid M b p ∧
       ∀ q : Policy Action Observation n,
         Valid M b q → WorstCost M b p ≤ WorstCost M b q := by
+  classical
   let property (c : ℕ) : Prop :=
     ∃ p : Policy Action Observation n, Valid M b p ∧ WorstCost M b p = c
   have hex : ∃ c, property c := feasible_cost_nonempty M h
@@ -184,7 +186,8 @@ theorem min_cost_attained
     {n : ℕ} {b : Belief} (h : Feasible M n b) :
     ∃ (c : ℕ) (p : Policy Action Observation n),
       Valid M b p ∧ WorstCost M b p = c ∧
-      ∀ q, Valid M b q → c ≤ WorstCost M b q := by
+      ∀ q : Policy Action Observation n,
+        Valid M b q → c ≤ WorstCost M b q := by
   obtain ⟨p, hp, hbest⟩ :=
     globally_optimal_lifecycle_policy_exists M h
   exact ⟨WorstCost M b p, p, hp, rfl, hbest⟩
