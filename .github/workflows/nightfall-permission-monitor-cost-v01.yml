@@ -1,0 +1,51 @@
+name: NIGHTFALL Price of Permission exact monitor-cost and epoch guard audit
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - 'research/nightfall/price_permission/**'
+      - '.github/workflows/nightfall-permission-monitor-cost-v01.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-cost-authority:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Re-run independent exact arithmetic, exhaustive search and effects
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p permission-receipts
+          python3 research/nightfall/price_permission/check_guarded_monitor_cost_v01.py \
+            | tee permission-receipts/results.txt
+          grep -q "PASS 450 exact instances" permission-receipts/results.txt
+          grep -q "PASS original-product influence, 512 change histories, 160 stale effect witnesses" permission-receipts/results.txt
+          grep -q "optimal Bayes 81/8 cheapest-first 219/16 pathwise worst 16" permission-receipts/results.txt
+          grep -q "guarded cache 2013/32 guarded eager 525/4" permission-receipts/results.txt
+          grep -q "audit SHA256 a326e7685a36c30e1fb3bd03baeeb9521e0d71c8cf8c69ce3f4c33f9b3430078" permission-receipts/results.txt
+          grep -q "PASS 30 nontrivial mission permission partitions" permission-receipts/results.txt
+          grep -q "mission receipt SHA256 e6fc360634efe9cb7e0d03c0956d0a7431920c6732c02a3e8b320d236527572e" permission-receipts/results.txt
+      - name: Record exact-source and upstream dependency provenance
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p permission-receipts
+          git rev-parse HEAD > permission-receipts/effective-head.txt
+          sha256sum \
+            research/nightfall/price_permission/check_guarded_monitor_cost_v01.py \
+            research/nightfall/price_permission/MONITORING_COST_EPOCH_THEOREM_v01.md \
+            research/nightfall/formalization/observability/ActualSourceQ223802Terminal.lean \
+            > permission-receipts/SHA256SUMS.txt
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: nightfall-permission-cost-${{ github.run_id }}
+          path: permission-receipts/
+          retention-days: 60
