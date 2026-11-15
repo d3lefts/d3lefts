@@ -44,6 +44,9 @@ STAGES = (
      ("original_owned_first_norm_le_sqrt_source_influence",)),
     ("08-exact-Q2-terminal", "ActualSourceQ2Terminal",
      ("actual_source_q2_terminal",)),
+    ("09-unrestricted-Q2-128", "ActualSourceQ2128Terminal",
+     ("shifted_product_l1_l2_l4", "shifted_fourth_coarse",
+      "actual_source_shifted_site_128", "actual_source_q2_128_unconditional")),
 )
 
 
@@ -125,7 +128,7 @@ def run(args: argparse.Namespace) -> int:
         print(json.dumps({
             "stage_names": [x[0] for x in stages],
             "distinct_source_modules": len(all_modules),
-            "terminal": "Nightfall.Observability.ActualSourceQ2Terminal.actual_source_q2_terminal",
+            "terminal": "Nightfall.Observability.ActualSourceQ2128Terminal.actual_source_q2_128_unconditional",
             "all_stage_roots_present": True,
             "compiler_invoked": False,
         }, indent=2))
