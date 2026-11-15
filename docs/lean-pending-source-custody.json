@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 8,
+  "revision": 9,
   "as_of": "2026-11-15 UTC",
-  "source_commit": "PR553 integration with current main source checkout",
-  "scope": "176 pending source-exact Lean entries, including two pure-sector zero-singleton Q2 modules; historical 67 source-certification register unchanged.",
+  "source_commit": "03e063c1e2933103a0396a47d0c1d0dd30834499",
+  "scope": "177 source-exact pending Lean sources after C5 merged and pure-sector C95 integration. Historical immutable Lean proof ledger remains 67 exact blobs; pending entries are not novelty certificates.",
   "sources": [
     {
       "path": "research/nightfall/formalization/agent_safety/ArbitraryAgentSafety.lean",
@@ -670,7 +670,7 @@
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "NIGHTFALL pure-sector original-source degree-two theorem submodule; source-aligned strict Lean run 43664979586 exists on draft PR #553; this pending registry entry does not certify novelty, nonzero-singleton Q2, or universal c/5."
+      "receipt_scope": "Historical source-only pure-sector Lean receipt 43664979586 on draft head PR #553. This pending custody entry is source-byte inventory, not a new kernel/priority/fully unrestricted Q2 certificate."
     },
     {
       "path": "research/nightfall/formalization/observability/ActualSourcePureQ2Sharp.lean",
@@ -680,7 +680,7 @@
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "NIGHTFALL pure-sector original-source degree-two theorem submodule; source-aligned strict Lean run 43664979586 exists on draft PR #553; this pending registry entry does not certify novelty, nonzero-singleton Q2, or universal c/5."
+      "receipt_scope": "Historical source-only pure-sector Lean receipt 43664979586 on draft head PR #553. This pending custody entry is source-byte inventory, not a new kernel/priority/fully unrestricted Q2 certificate."
     },
     {
       "path": "research/nightfall/formalization/observability/ActualSourceQ2107Local.lean",
@@ -1766,6 +1766,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/q2_shifted/ShiftedC5MomentBridge.lean",
+      "source_blob_sha": "20abf3c92e47cd10316e2a6727ece290ce2b0435",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-exact conditional c/5 SOS and pseudo-moment method obstruction; pinned Lean historical run 43667731455, but not independently registered as historical compiler proof. Does not establish universal c/5 for arbitrary independent sums."
     },
     {
       "path": "research/nightfall/formalization/q2_shifted/ShiftedHilbertManyIncrement.lean",
