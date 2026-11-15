@@ -237,7 +237,9 @@ def socket_study(root,out,baseline,legitimate,good_source,sandbox):
             "policy_hash":auth.digest(POLICY),
             "baseline_hash":auth.digest(baseline)}
     auth.initialize(trust,record,baseline,POLICY)
-    sock=out/"permission.sock"
+    # Linux AF_UNIX pathname limit is about 108 bytes; the full GitHub
+    # checkout path exceeds it. Use a short, unguessable /tmp socket path.
+    sock=Path(tempfile.gettempdir())/(f"nf-perm-{os.getpid()}-{secrets.token_hex(5)}.sock")
     proc=subprocess.Popen([
         sys.executable,str(Path(auth.__file__).resolve()),"serve",
         "--trust",str(trust),"--sock",str(sock),"--uid",str(os.getuid())],
@@ -260,7 +262,8 @@ def socket_study(root,out,baseline,legitimate,good_source,sandbox):
         for _ in range(100):
             if sock.exists():break
             if proc.poll() is not None:
-                raise RuntimeError("service failed before socket creation")
+                _,stderr=proc.communicate(timeout=2)
+                raise RuntimeError("service failed before socket creation: "+stderr[-1800:])
             time.sleep(.03)
         else:raise RuntimeError("service did not create socket")
         timings=[]
