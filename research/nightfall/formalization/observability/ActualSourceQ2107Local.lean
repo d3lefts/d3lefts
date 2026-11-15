@@ -1,5 +1,5 @@
 import ActualSourceQ2128Terminal
-import ShiftedOwnerQuarterMoments
+import ShiftedC4Scalar
 
 /-!
 # Unrestricted source Q2: exact c/4 shifted Hilbert local site
@@ -35,7 +35,7 @@ open Nightfall.Observability.QuadraticActualMomentEndpoint
 
 
 open Nightfall.Observability.ActualSourceQ2128Terminal
-open Nightfall.Observability.ShiftedOwnerQuarterMoments
+open Nightfall.ShiftedC4Scalar
 
 variable {ι α : Type} [Fintype ι] [DecidableEq ι]
   [Fintype α] [DecidableEq α] [Nonempty α]
@@ -151,28 +151,9 @@ theorem actual_source_shifted_site_107
   have hholder : e^3 ≤ u^2*q := by
     rw [hnorm] at hint
     simpa only [u, shiftedOwnedFirstNorm, q, H, Y, j, J] using hint
-  have hrootEnergy : (Real.sqrt e)^2 = a^2+s := by
-    rw [Real.sq_sqrt he]
-    rfl
-  have hrootHolder : (Real.sqrt e)^6 ≤ u^2*q := by
-    calc
-      (Real.sqrt e)^6 = e^3 := by
-        calc
-          (Real.sqrt e)^6 = ((Real.sqrt e)^2)^3 := by ring
-          _ = e^3 := by rw [Real.sq_sqrt he]
-      _ ≤ u^2*q := hholder
-  have hrootFourth :
-      q ≤ 3*(Real.sqrt e)^4-2*a^4+4*a*(c i)*s+(c i)^2*s := by
-    have hsqr : (Real.sqrt e)^4=e^2 := by
-      calc
-        (Real.sqrt e)^4 = ((Real.sqrt e)^2)^2 := by ring
-        _ = e^2 := by rw [Real.sq_sqrt he]
-    rw [hsqr]
-    exact hqstrong
   have hshift : Real.sqrt e ≤ Real.sqrt 3*u+(c i)/4 :=
-    shifted_c4_from_moments (Real.sqrt e) a s (c i) u q
-      (Real.sqrt_nonneg _) ha hs (hc i) hu hrootEnergy
-      hrootHolder hrootFourth
+    shifted_c4_from_strong_moments a s (c i) u e q
+      ha hs (hc i) hu rfl hholder hqstrong
   have hcap : e ≤ sourceInfluence p f i := by
     simpa only [e,a,s,j,Y,J] using
       (original_singleton_plus_owned_energy_le_influence
