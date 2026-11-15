@@ -12,7 +12,7 @@ const site=read("docs/site.js");
 const core=read("docs/erdos-paper-core.js");
 const art=read("docs/media/overlap-16cell-fixture.svg");
 assert.equal(data.schema,"nightfall-active-proof-passports-v1");
-assert.equal(data.version,14);
+assert.equal(data.version,15);
 assert.match(data.as_of,/^2026-11-\d\d$/);
 assert.equal(data.lifecycle,"active");
 assert.equal(data.frozen_historical_registry_unchanged,true);
@@ -180,5 +180,6 @@ for(const [id,receipt,merged] of v14New){
  assert.ok(merged?c.evidence.includes("Merged")||c.evidence.includes("merged"):c.evidence.includes("draft"),id+" merge scope incorrect");
 }
 assert.ok(data.claims.every(c=>c.review_20261114 && c.review_20261114.remaining_gate),"All 15 active claims need explicit current review gates");
-assert.ok(q2.claim.includes("364.552683")&&q2.evidence.includes("43644790107"),"Current strongest merged unconditional Q2 receipt lost");
+assert.ok(q2.claim.includes("105.741756923658")&&q2.evidence.includes("43671321904"),"Current strongest merged unconditional C105 receipt lost");
+assert.ok(q2.claim.includes("364.552683")&&q2.evidence.includes("43644790107"),"Historical C364 receipt lost");
 assert.ok(!q2.claim.includes("unconditional C99"),"Do not promote conditional C99");
