@@ -1,0 +1,61 @@
+name: NIGHTFALL finite-horizon adaptive KL monitoring Lean certificate
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/permission/AdaptiveKLMonitoring.lean'
+      - '.github/workflows/nightfall-permission-adaptive-kl-lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nightfall-adaptive-kl-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  adaptive-kl-lean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact source and check named Lean declarations/axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/permission/AdaptiveKLMonitoring.lean
+          OUT=lean-receipts/adaptive-kl
+          mkdir -p "$OUT"
+          cp "$SRC" /tmp/mathlib4/AdaptiveKLMonitoring.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/AdaptiveKLMonitoring.olean AdaptiveKLMonitoring.lean)
+          for decl in adaptive_one_round_kl finite_horizon_adaptive_kl_cost
+          do
+            python3 scripts/lean_bridge.py "$SRC" \
+              --workspace /tmp/mathlib4 --timeout 900 --strict \
+              --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+              --decl "Nightfall.PricePermission.AdaptiveKL.$decl" \
+              --json-out "$OUT/$decl.json"
+          done
+          python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT/"*.json
+      - name: Immutable source and Mathlib pins
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=lean-receipts/adaptive-kl
+          mkdir -p "$OUT"
+          git rev-parse HEAD > "$OUT/effective-head.txt"
+          git -C /tmp/mathlib4 rev-parse HEAD > "$OUT/mathlib-head.txt"
+          cat lean-toolchain > "$OUT/lean-toolchain.txt"
+          sha256sum research/nightfall/formalization/permission/AdaptiveKLMonitoring.lean > "$OUT/SHA256SUMS.txt"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: adaptive-kl-lean-${{ github.run_id }}
+          path: lean-receipts/adaptive-kl/
+          retention-days: 60
