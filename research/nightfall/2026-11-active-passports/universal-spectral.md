@@ -60,3 +60,10 @@ The merged **ActualPosteriorInfluence.lean** passes [CI #42973878336](https://gi
 **Do not conflate three different assertions.** (1) The pinned finite heterogeneous-product scalar 5/2 theorem is kernel checked; (2) the universal all-degree Hilbert observability program in draft #332 is an **analytic** transfer candidate using scalar laws, PSD estimates and nontrivial posterior selection; (3) the degree-two **Theorem D** proposed rank-optimal bound O(rB²/η) and its sharper v9.2 numerical form use a different stronger scalar degree-two exponent-two premise. The latter is not a compiled consequence of the finite 5/2 theorem.
 
 Main PR #407 gives an actual finite quadratic Hilbert-row bridge; #408 gives eight strict compiled true Efron–Stein pair/rectangle-source declarations ([source ledger](../formalization/product_space/ACTUAL_ES_PAIR_MATCHING_LEDGER_20261112.md)). These close smaller dependencies but **not** global actual-source parity, full Hilbert rank and measurable posterior construction, or universal all-degree observability. Current original source provenance has 67 individual Lean modules; the earlier 13-declaration count in the 11 Nov spectral README refers only to that dated batch. The dedicated [quadratic and rank passport](quadratic-rank-observability.md) records theorem conditions and the pending external review.
+
+
+---
+
+## 14 November 2026 — v14 conditional transfer review
+
+The scalar law-uniform degree-two finite common-alphabet coefficient is now `364.552683` (#525, pinned run 43644790107), strengthening a *potential input* to spectral observability. This does not certify finite-rank Hilbert vector extraction, arbitrary product measurement, posterior stopping, a full source-model query policy, or the stated universal complexity. Distinguish v9.2 rank-linear degree-two manuscript from the all-degree spectral theorem and do not automatically substitute the new scalar coefficient into published query constants. External specialist review and a complete common-source Lean composition remain open.
