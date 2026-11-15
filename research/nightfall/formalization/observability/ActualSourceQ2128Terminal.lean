@@ -193,8 +193,11 @@ theorem actual_source_shifted_site_128
       _ = a^2 := by rw [htab, Real.sq_sqrt hnonneg]
   have hne : ∀ k, k < J.card → i ≠ j k := by
     intro k hk
-    have hm := neighborIndex_mem i J k hk
-    exact (original_owner_not_in_neighbors c i) (by simpa [j,J] using hm)
+    have hm : j k ∈ ownedNeighbors c i := by
+      simpa only [j, J] using (neighborIndex_mem i J k hk)
+    intro heq
+    rw [← heq] at hm
+    exact (original_owner_not_in_neighbors c i) hm
   have hkernel : ∀ k, k < J.card → ∀ b d : α,
       |sourceDoubleCenteredPair p f i (j k) b d| ≤ c i := by
     intro k hk b d
