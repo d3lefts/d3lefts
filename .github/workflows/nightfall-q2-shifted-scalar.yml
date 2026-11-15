@@ -29,6 +29,10 @@ jobs:
         run: |
           set -euo pipefail
           python3 research/nightfall/2026-11-quadratic-law-free-audit/check_shifted_owner_moment_107.py
+      - name: Independent exact rational 6/25 Bernstein replay (no floating point)
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/2026-11-quadratic-law-free-audit/check_shifted_c6_over25_bernstein.py
       - uses: ./.github/actions/setup-nightfall-lean
       - name: Strict pinned Lean compilation and named declaration audit
         run: |
