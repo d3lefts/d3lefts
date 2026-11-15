@@ -1,0 +1,32 @@
+name: NIGHTFALL Price of Admission exact audit floor
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'research/nightfall/assurance/PRICE_OF_ADMISSION_RESEARCH_CHARTER.md'
+      - 'research/nightfall/assurance/price_of_admission_min_audit_check.py'
+      - '.github/workflows/nightfall-price-of-admission.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  independent-rational-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Enumerate exact rational admission policies
+        run: |
+          set -euo pipefail
+          mkdir -p admission-receipts
+          python3 research/nightfall/assurance/price_of_admission_min_audit_check.py | tee admission-receipts/exact-rational-check.jsonlog
+          sha256sum research/nightfall/assurance/PRICE_OF_ADMISSION_RESEARCH_CHARTER.md research/nightfall/assurance/price_of_admission_min_audit_check.py > admission-receipts/SHA256SUMS.txt
+          git rev-parse HEAD > admission-receipts/commit.txt
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: price-of-admission-rational-audit
+          path: admission-receipts/
+          if-no-files-found: warn
