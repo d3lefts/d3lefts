@@ -123,4 +123,125 @@ theorem optimal_fence_exists [Fintype Source] [DecidableEq Source]
   apply hminimum other
   exact Finset.mem_filter.mpr ⟨Finset.mem_univ _, hother⟩
 
+/-! ## Finite adaptive evidence plans and Bellman read-step composition -/
+
+/-- A finite adaptive observation tree. A read branches on its exact
+coherent-snapshot answer; a successful leaf retains a source-version fence. -/
+inductive EvidencePlan (Source : Type u) where
+  | deny : EvidencePlan Source
+  | grant (guard : Finset Source) : EvidencePlan Source
+  | read (i : Source) (no yes : EvidencePlan Source) : EvidencePlan Source
+
+/-- An exact binary observation fiber of the original coherent baseline. -/
+def readFiber (B : Set World) (obs : Source → World → Bool)
+    (i : Source) (bit : Bool) : Set World :=
+  {x | x ∈ B ∧ obs i x = bit}
+
+/-- The decision tree must classify the initial snapshot correctly,
+read only genuinely separating observations, and fence every grant.
+The gate checks source versions at effect time, after these reads. -/
+def PlanValid (M : System Source World) (obs : Source → World → Bool)
+    (B : Set World) : EvidencePlan Source → Prop
+  | .deny => ∀ x, x ∈ B → ¬ M.safe x
+  | .grant guard => (∀ x, x ∈ B → M.safe x) ∧ FenceSound M B guard
+  | .read i no yes =>
+      (∃ x, x ∈ readFiber B obs i false) ∧
+      (∃ x, x ∈ readFiber B obs i true) ∧
+      PlanValid M obs (readFiber B obs i false) no ∧
+      PlanValid M obs (readFiber B obs i true) yes
+
+/-- Exact worst-case additive observation and successful-fence cost. -/
+def worstCost (readPrice checkPrice : Source → ℕ) :
+    EvidencePlan Source → ℕ
+  | .deny => 0
+  | .grant guard => fenceCost checkPrice guard
+  | .read i no yes =>
+      readPrice i + max (worstCost readPrice checkPrice no)
+        (worstCost readPrice checkPrice yes)
+
+/-- The Bellman minimax *read* operator is exact: if each answer-fiber
+continuation is optimal, their common read-cost plus maximum is an
+attainable lower bound for every policy that starts with this read.
+Global minimization over all possible root reads remains a separate
+finite-depth synthesis problem. -/
+theorem optimal_read_step
+    (M : System Source World) (obs : Source → World → Bool)
+    (B : Set World) (i : Source)
+    (readPrice checkPrice : Source → ℕ)
+    (hzero : ∃ x, x ∈ readFiber B obs i false)
+    (hone : ∃ x, x ∈ readFiber B obs i true)
+    (pzero pone : EvidencePlan Source)
+    (hvzero : PlanValid M obs (readFiber B obs i false) pzero)
+    (hvone : PlanValid M obs (readFiber B obs i true) pone)
+    (hoptzero : ∀ q, PlanValid M obs (readFiber B obs i false) q →
+      worstCost readPrice checkPrice pzero ≤ worstCost readPrice checkPrice q)
+    (hoptone : ∀ q, PlanValid M obs (readFiber B obs i true) q →
+      worstCost readPrice checkPrice pone ≤ worstCost readPrice checkPrice q) :
+    PlanValid M obs B (.read i pzero pone) ∧
+    ∀ qzero qone,
+      PlanValid M obs (readFiber B obs i false) qzero →
+      PlanValid M obs (readFiber B obs i true) qone →
+      worstCost readPrice checkPrice (.read i pzero pone) ≤
+        worstCost readPrice checkPrice (.read i qzero qone) := by
+  constructor
+  · exact ⟨hzero, hone, hvzero, hvone⟩
+  · intro qzero qone hqzero hqone
+    simp only [worstCost]
+    exact add_le_add_left
+      (max_le_max (hoptzero qzero hqzero) (hoptone qone hqone))
+      (readPrice i)
+
+/-- The exact least-cost direct grant is a valid stopping policy when the
+snapshot label is already known safe. Subsequent reads may still improve it. -/
+theorem optimal_safe_stopping_plan [Fintype Source] [DecidableEq Source]
+    (M : System Source World) (obs : Source → World → Bool)
+    (B : Set World) (readPrice checkPrice : Source → ℕ)
+    (hsafe : ∀ x, x ∈ B → M.safe x)
+    (hcomplete : CompleteCoverage M B) :
+    ∃ p : EvidencePlan Source,
+      PlanValid M obs B p ∧
+      ∀ guard : Finset Source,
+        PlanValid M obs B (.grant guard) →
+        worstCost readPrice checkPrice p ≤
+          worstCost readPrice checkPrice (.grant guard) := by
+  obtain ⟨guard, hguard, hoptimal⟩ :=
+    optimal_fence_exists M B checkPrice hcomplete
+  refine ⟨.grant guard, ⟨hsafe, hguard⟩, ?_⟩
+  intro other hother
+  exact hoptimal other hother.2
+
+/-! ## Lean-checked two-source post-certification witness -/
+
+/-- Binary states 00, 01, 10 are safe; 11 is unsafe. Each changed
+coordinate is individually reflected in its authenticated version. -/
+def twoBitModel : System (Fin 2) (Fin 4) where
+  safe := fun x => x.val ≠ 3
+  permitted := fun _ _ => True
+  changed := fun b y =>
+    Finset.univ.filter (fun i : Fin 2 =>
+      Nat.testBit b.val i.val ≠ Nat.testBit y.val i.val)
+
+def twoBitBaseline : Set (Fin 4) := {x | x.val < 3}
+
+def twoBitObservation (i : Fin 2) (x : Fin 4) : Bool :=
+  Nat.testBit x.val i.val
+
+def twoBitJointPolicy : EvidencePlan (Fin 2) :=
+  .read 0 (.grant {0}) (.grant {1})
+
+/-- Any direct version-only fence has at least two unit checks. -/
+theorem two_bit_direct_cost_at_least_eight :
+    ∀ guard : Finset (Fin 2),
+      FenceSound twoBitModel twoBitBaseline guard →
+      8 ≤ fenceCost (fun _ => 4) guard := by
+  decide
+
+/-- The initially safe-certified set admits a one-bit further observation
+and one check, costing exactly 1+4 = 5 quarter-units instead of 8. -/
+theorem two_bit_post_certificate_gain :
+    PlanValid twoBitModel twoBitObservation twoBitBaseline twoBitJointPolicy ∧
+    worstCost (fun _ => 1) (fun _ => 4) twoBitJointPolicy = 5 ∧
+    fenceCost (fun _ => 4) (Finset.univ : Finset (Fin 2)) = 8 := by
+  decide
+
 end Nightfall.SemanticFencing
