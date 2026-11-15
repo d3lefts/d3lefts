@@ -11,7 +11,7 @@ replayed by direct rational polynomial substitution.
 
 namespace Nightfall.ShiftedC6over25Bernstein
 
-private def normalizedPoly (x t : ℝ) : ℝ :=
+private noncomputable def normalizedPoly (x t : ℝ) : ℝ :=
   3-(1-t)^2*(3-2*x^4+(50/3)*x*(1-x^2)*t+(625/36)*(1-x^2)*t^2)
 
 private theorem box_1 (x t : ℝ)
