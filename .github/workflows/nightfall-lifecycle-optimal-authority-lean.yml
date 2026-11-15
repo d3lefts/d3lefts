@@ -6,6 +6,7 @@ on:
     paths:
       - 'research/nightfall/formalization/authority/LifecycleOptimalAuthority.lean'
       - '.github/workflows/nightfall-lifecycle-optimal-authority-lean.yml'
+      - 'research/nightfall/formalization/authority/LIFECYCLE_ASSURANCE_RESEARCH_CONTRACT.md'
   workflow_dispatch:
 concurrency:
   group: nightfall-lifecycle-authority-${{ github.event.pull_request.head.ref || github.ref_name }}
