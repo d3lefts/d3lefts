@@ -25,6 +25,8 @@ jobs:
         with:
           persist-credentials: false
       - uses: ./.github/actions/setup-nightfall-lean
+      - name: Independent exact Fraction interpolation and coefficient audit
+        run: python3 research/nightfall/2026-11-quadratic-law-free-audit/check_c105_416_bernstein_exact.py
       - name: Strict 37-box rational Bernstein proof and scalar moment conclusion
         shell: bash
         run: |
