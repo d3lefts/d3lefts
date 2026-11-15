@@ -77,6 +77,36 @@ then audits a fixed SHA-256 of all individual case receipts.
 `66ce3536894ef434e61fc37195683c763e950796f31b96dd2670b04adb8a314b`.
 A finite search **never** proves the universal conjecture.
 
+## Stronger shifted variance conjecture and exact equality family
+
+Independent optimization suggests the **strictly stronger** all-n conjecture
+
+```text
+e + ||H||² <= 2*u² + c*u
+```
+
+equivalently `Var(||H+sum Y_j||) <= (sum_j E||Y_j||²+c*u)/2`.
+The stronger bound implies the C96 first/second comparison, but **neither
+version is universally proved**. A second independent exact checker,
+`check_c96_strong_shift_exact.py`, exhausts the same 746,493 rational
+scalar cases using the stronger margin and reproduces SHA256
+`ebf32717e180e587a9822a39286bbeffa38942a6c316757ec745b74b8e6be175`.
+Again: finite-grid checks are NOT kernel theorems.
+
+The strengthening has an informative **exact equality class for every n**:
+choose any `c>0` and `t_j in [0,c]`, independently let
+`Y_j=c` with probability `t_j/(c+t_j)`, otherwise `Y_j=-t_j`,
+and set `H=sum_j t_j`. Every increment is centered and bounded by c;
+`S=H+sum Y_j>=0`, so `u=ES=H` and
+`e=H²+sum Var Y_j = H²+cH`. Hence
+`e+H²=2u²+c*u` **with equality**. For normalized c=1, exact rational
+examples with `t=(1/2)`, `t=(1/3,1/4)`, and
+`t=(1/8,1/4,3/8)` are replayed in the second checker.
+
+This is useful for independent Bellman-function or induction attacks:
+the candidate cannot be improved by a positive uniform slack term.
+It is **not** a derivation of the inequality for arbitrary laws or Hilbert outputs.
+
 ## Alternative operator and exact obstruction
 
 For `V=sum_i ||Y_i||²`, `W=sqrt(V)`,
