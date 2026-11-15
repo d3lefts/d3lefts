@@ -28,12 +28,15 @@ def quadratic (x : Fin 4 → Bool) : ℤ :=
   let b := bit x 1
   let c := bit x 2
   let d := bit x 3
-  -a+b-c+d-a*b+2*a*c+a*d+b*c-2*b*d-c*d
+  (0 : ℤ) - a + b - c + d - a*b + 2*a*c + a*d + b*c - 2*b*d - c*d
 
 /-- Exact exhaustive Boolean enumeration; no real-number roundoff. -/
 theorem quadratic_pointwise_bounded :
     ∀ x : Fin 4 → Bool, |quadratic x| ≤ 1 := by
-  decide
+  intro x
+  cases h0 : x 0 <;> cases h1 : x 1 <;>
+    cases h2 : x 2 <;> cases h3 : x 3 <;>
+    norm_num [quadratic, bit, h0, h1, h2, h3]
 
 def single (i : Fin 4) : Fin 4 → Bool :=
   fun j => decide (j = i)
@@ -55,7 +58,7 @@ theorem six_mixed_second_differences :
     secondDifference 1 2 = 1 ∧
     secondDifference 1 3 = -2 ∧
     secondDifference 2 3 = -1 := by
-  decide
+  norm_num [secondDifference, quadratic, bit, double, single, zero]
 
 /-- Any endpoint-max owner cover for amplitudes (1,2,1,1,2,1)
 costs at least 5. A nonnegative cost vector cannot cover the two
