@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 7,
+  "revision": 8,
   "as_of": "2026-11-15 UTC",
-  "source_commit": "62ee3725a67321c453d020804848e87c9b929b56",
-  "scope": "All 174 post-checkpoint Lean sources at main 62ee3725a673 are explicitly in pending custody. The immutable 67-source historical register remains unchanged. Custody is source-byte identity only, not named Lean certification, novelty, peer review or universal theorem promotion.",
+  "source_commit": "pending #563 source exact, contemporary main checkout",
+  "scope": "175 post-checkpoint pending Lean sources, including ShiftedC5MomentBridge.lean, each source-hash registered without invented kernel, priority or human-review credentials.",
   "sources": [
     {
       "path": "research/nightfall/formalization/agent_safety/ArbitraryAgentSafety.lean",
@@ -1746,6 +1746,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/q2_shifted/ShiftedC5MomentBridge.lean",
+      "source_blob_sha": "20abf3c92e47cd10316e2a6727ece290ce2b0435",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-exact conditional c/5 SOS and pseudo-moment method obstruction; pinned Lean historical run 43667731455, but not independently registered as historical compiler proof. Does not establish universal c/5 for arbitrary independent sums."
     },
     {
       "path": "research/nightfall/formalization/q2_shifted/ShiftedHilbertManyIncrement.lean",
