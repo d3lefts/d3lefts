@@ -32,6 +32,8 @@ jobs:
           sha256sum --check SHA256SUMS.txt
           python3 audit_independent.py > executed_receipt.json
           diff -u audit_receipt.json executed_receipt.json
+          python3 representation_audit.py > executed_representation_receipt.json
+          diff -u representation_receipt.json executed_representation_receipt.json
           grep -q '"status": "PASS"' executed_receipt.json
           sha256sum --check SHA256SUMS.txt
           git rev-parse HEAD > effective-commit.txt
@@ -42,5 +44,6 @@ jobs:
           name: change-invariant-authority-${{ github.run_id }}
           path: |
             research/nightfall/2026-11-change-invariant-authority/executed_receipt.json
+            research/nightfall/2026-11-change-invariant-authority/executed_representation_receipt.json
             research/nightfall/2026-11-change-invariant-authority/effective-commit.txt
           retention-days: 60
