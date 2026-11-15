@@ -44,3 +44,8 @@ The archived v1.0 reference package reported 8 passing toy checker tests. Those 
 
 ## Evidence labels
 DESIGN / IMPLEMENTED / INTERNALLY TESTED / INDEPENDENTLY VALIDATED / LEGALLY AUTHORIZED / DEPLOYED must remain distinct. Current state: **DESIGN** plus **IMPLEMENTED (synthetic browser-only demonstration)** and narrowly **INTERNALLY TESTED**. Independent validation, legal authorization and deployment remain unverified.
+
+
+## Transactional server foundation (v0.3, experimental)
+
+A [local synthetic-only SQLite/Node.js server](apps/server/README.md) adds authenticated institution-scoped command handling, immutable source revisions, idempotent legislative state transitions, institution-controlled eligibility, version-locked mock ballots and signed portable evidence. A separately authored [independent checker](apps/server/verify.mjs) verifies a pinned Ed25519 signer and simulated procedural consistency. The server is a development proof, not production authentication, secure election voting, real records ingestion, or legal authorization. No real identities or votes should be processed.

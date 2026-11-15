@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'projects/commonwealth-os/apps/browser/**'
+      - 'projects/commonwealth-os/apps/server/**'
       - 'projects/commonwealth-os/architecture/**'
       - '.github/workflows/commonwealth-browser.yml'
   push:
@@ -12,6 +13,7 @@ on:
       - commonwealth-browser-architecture-20261115
     paths:
       - 'projects/commonwealth-os/apps/browser/**'
+      - 'projects/commonwealth-os/apps/server/**'
       - 'projects/commonwealth-os/architecture/**'
       - '.github/workflows/commonwealth-browser.yml'
 
@@ -29,4 +31,16 @@ jobs:
           node-version: '22'
       - name: Verify synthetic governance checks
         working-directory: projects/commonwealth-os/apps/browser
+        run: npm test
+
+  server-transactional-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify transactional governance API and portable evidence
+        working-directory: projects/commonwealth-os/apps/server
         run: npm test
