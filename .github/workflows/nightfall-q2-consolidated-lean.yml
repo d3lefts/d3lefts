@@ -31,7 +31,7 @@ permissions:
 
 jobs:
   one-pinned-source-certificate:
-    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && startsWith(github.event.pull_request.head.ref, 'nightfall-q2-'))
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && (startsWith(github.event.pull_request.head.ref, 'nightfall-q2-') || startsWith(github.event.pull_request.head.ref, 'nightfall-pure-q2-')))
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
