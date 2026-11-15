@@ -1,0 +1,182 @@
+{
+  "schema": "nightfall.frontier-evidence.v1",
+  "as_of": "2026-11-14",
+  "authority": "Curated original-source evidence ledger; not an independent audit or novelty certification",
+  "best_unrestricted_source_q2_certified": "q2-unrestricted-364",
+  "unrestricted_sub100_unconditional": "not_proved",
+  "operational_agent_boundary": "not_verified",
+  "all_originality_claims": "not_reviewed",
+  "claims": [
+    {
+      "id": "q2-unrestricted-364",
+      "family": "Q2 unrestricted finite product",
+      "status": "kernel_proved_domain",
+      "exact_claim": "Original-source degree-two variance-squared/influence bound with coefficient 364.5526832774 under the stated bounded finite-product assumptions, including nonzero singleton terms and zero-mass atoms.",
+      "coefficient_approx": 364.5526832774,
+      "source": "research/nightfall/formalization/observability/ActualSourceQ2364Terminal.lean",
+      "source_git_blob": "5263d9da1ec2f12fbc8986c3698859faedb390a3",
+      "declaration": "Nightfall.Observability.ActualSourceQ2364Terminal.actual_source_q2_364_unconditional",
+      "receipt": {
+        "run": 43644790107,
+        "head": "a558a4dd7a2f2c7db521658c6d59d204758eb934",
+        "outcome": "success",
+        "pin": "leanprover/lean4:v4.36.0-rc2",
+        "scope": "strict named declaration at original PR head; not a newly rerun current-main closure"
+      },
+      "added_unproved_premises": [],
+      "domain_limitations": [
+        "finite independent product",
+        "common finite alphabet; heterogeneous marginals",
+        "pointwise Efron–Stein degree ≤2",
+        "bounded f, original-source influence cap"
+      ],
+      "priority": "unreviewed",
+      "external_referee": "none",
+      "physical_system_certificate": false,
+      "novel_record_status": "not_assessed"
+    },
+    {
+      "id": "q2-unrestricted-353-conditional",
+      "family": "Q2 unrestricted finite product",
+      "status": "kernel_proved_implication_only",
+      "exact_claim": "Conditional coefficient 353.2929930769 from the additional sharp original-source integrated-section budget; that source budget remains unproved here.",
+      "coefficient_approx": 353.2929930769,
+      "source": "research/nightfall/formalization/observability/ActualSourceQ2353Terminal.lean",
+      "source_git_blob": "342d872eb156998734dc7ce8223a2f482f865c42",
+      "declaration": "Nightfall.Observability.ActualSourceQ2353Terminal.actual_source_q2_353_given_sharp_section_budget",
+      "receipt": {
+        "run": 43644790107,
+        "head": "a558a4dd7a2f2c7db521658c6d59d204758eb934",
+        "outcome": "success",
+        "pin": "leanprover/lean4:v4.36.0-rc2",
+        "scope": "strict named conditional declaration at original PR head"
+      },
+      "added_unproved_premises": [
+        "sharp original-source integrated section budget"
+      ],
+      "domain_limitations": [
+        "same finite product scope as unconditional Q2 364"
+      ],
+      "priority": "unreviewed",
+      "external_referee": "none",
+      "physical_system_certificate": false,
+      "novel_record_status": "not_assessed"
+    },
+    {
+      "id": "q2-shifted-107-conditional",
+      "family": "Q2 shifted-owner scalar",
+      "status": "kernel_proved_implication_only",
+      "exact_claim": "Conditional shifted-owner scalar implication at coefficient 107.393; source-specific probabilistic and section budgets remain open.",
+      "coefficient_approx": 107.393,
+      "source": "research/nightfall/formalization/q2_shifted/Q2ShiftedConditionalTargets.lean",
+      "source_git_blob": "c91d0e9977ba93f3450dc6adf4367405d2af8e87",
+      "declaration": "Nightfall.Q2Shifted.ConditionalTargets.conditional_coefficient_107",
+      "receipt": {
+        "run": 43650036932,
+        "head": "ea919d9455dcfaec6dc9bedea7a2324db15132b8",
+        "outcome": "success",
+        "pin": "leanprover/lean4:v4.36.0-rc2",
+        "scope": "strict scalar implication at original PR head; not a source-only Q2 theorem"
+      },
+      "added_unproved_premises": [
+        "source-owned shifted Hilbert c/4 bound",
+        "sharp original-source integrated section budget"
+      ],
+      "domain_limitations": [
+        "arbitrary original-source product consequence NOT proved"
+      ],
+      "priority": "unreviewed",
+      "external_referee": "none",
+      "physical_system_certificate": false,
+      "novel_record_status": "not_assessed"
+    },
+    {
+      "id": "q2-shifted-99-conditional",
+      "family": "Q2 shifted-owner scalar",
+      "status": "kernel_proved_implication_only",
+      "exact_claim": "Conditional 99.2629850192 scalar implication; neither universal independent-sum c/5 source lemma nor sharp integrated source-section bound is supplied.",
+      "coefficient_approx": 99.2629850192,
+      "source": "research/nightfall/formalization/q2_shifted/Q2ShiftedConditionalTargets.lean",
+      "source_git_blob": "c91d0e9977ba93f3450dc6adf4367405d2af8e87",
+      "declaration": "Nightfall.Q2Shifted.ConditionalTargets.conditional_coefficient_99",
+      "receipt": {
+        "run": 43650036932,
+        "head": "ea919d9455dcfaec6dc9bedea7a2324db15132b8",
+        "outcome": "success",
+        "pin": "leanprover/lean4:v4.36.0-rc2",
+        "scope": "strict scalar implication; no unrestricted source theorem"
+      },
+      "added_unproved_premises": [
+        "unrestricted source-owned independent-Hilbert c/5 bound",
+        "sharp original-source integrated section budget"
+      ],
+      "domain_limitations": [
+        "quartic-envelope obstruction does NOT disprove the c/5 probabilistic inequality"
+      ],
+      "priority": "unreviewed",
+      "external_referee": "none",
+      "physical_system_certificate": false,
+      "novel_record_status": "not_assessed"
+    },
+    {
+      "id": "conditional-adversarial-agent-safety",
+      "family": "agent conditional safety",
+      "status": "kernel_proved_implication_only",
+      "exact_claim": "For every proposed action trace, modeled trusted-boundary assumptions imply invariant preservation at all finite steps.",
+      "source": "research/nightfall/formalization/agent_safety/ArbitraryAgentSafety.lean",
+      "source_git_blob": "c0e42b193a383f7e4f7ec43728806483f9b3bf68",
+      "declaration": "Nightfall.AgentSafety.arbitrary_agent_all_horizons_safe",
+      "receipt": {
+        "run": 43639554615,
+        "head": "143b40513c25fd1849e7986c4809baa0402e1a7f",
+        "outcome": "success",
+        "pin": "leanprover/lean4:v4.36.0-rc2",
+        "scope": "six named declarations strict original PR-head; model assumptions not physically discharged"
+      },
+      "added_unproved_premises": [
+        "complete effect mediation",
+        "faithful plant and environment transition models",
+        "current authentic source epochs",
+        "compatible real state",
+        "safe environmental steps",
+        "effect-time atomic enforcement"
+      ],
+      "domain_limitations": [
+        "mathematical invariant, not operational system assurance",
+        "no global physical or computability guarantee"
+      ],
+      "priority": "unreviewed",
+      "external_referee": "none",
+      "physical_system_certificate": false,
+      "novel_record_status": "not_assessed"
+    },
+    {
+      "id": "semantic-fencing-v0.3",
+      "family": "semantic fencing",
+      "status": "finite_checked_not_kernel",
+      "exact_claim": "Under a complete history model and atomic version-only guard, minimum freshness-fence cost is a weighted unsafe-change hitting set; separate finite operational checker and SQL prototype only.",
+      "source": "research/nightfall/assurance/semantic-fencing-v0.3/README.md",
+      "source_git_blob": "78b24296d35ba8cbb4c261914e23540498fc33ee",
+      "declaration": null,
+      "receipt": {
+        "run": 43648303705,
+        "head": "842341bdc8fe7a414cea399c2b5e53f480a78638",
+        "outcome": "success",
+        "pin": "Python 3 / SQLite finite replay",
+        "scope": "bounded tests and manuscript reasoning, NOT Lean compilation"
+      },
+      "added_unproved_premises": [
+        "source completeness",
+        "atomic source-version validation and effect commit",
+        "complete interposition of every consequential effect"
+      ],
+      "domain_limitations": [
+        "bounded model checking and SQLite transaction tests, not distributed physical enforcement"
+      ],
+      "priority": "unreviewed",
+      "external_referee": "none",
+      "physical_system_certificate": false,
+      "novel_record_status": "not_assessed"
+    }
+  ]
+}
