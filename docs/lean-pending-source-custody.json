@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 8,
+  "revision": 9,
   "as_of": "2026-11-15 UTC",
-  "source_commit": "pending #563 source exact, contemporary main checkout",
-  "scope": "175 post-checkpoint pending Lean sources, including ShiftedC5MomentBridge.lean, each source-hash registered without invented kernel, priority or human-review credentials.",
+  "source_commit": "03e063c1e2933103a0396a47d0c1d0dd30834499",
+  "scope": "177 source-exact pending Lean sources after C5 merged and pure-sector C95 integration. Historical immutable Lean proof ledger remains 67 exact blobs; pending entries are not novelty certificates.",
   "sources": [
     {
       "path": "research/nightfall/formalization/agent_safety/ArbitraryAgentSafety.lean",
@@ -661,6 +661,26 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourcePureQ2Golden.lean",
+      "source_blob_sha": "131192426c760c69dc0437ad3c264a74017a0c51",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Historical source-only pure-sector Lean receipt 43664979586 on draft head PR #553. This pending custody entry is source-byte inventory, not a new kernel/priority/fully unrestricted Q2 certificate."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourcePureQ2Sharp.lean",
+      "source_blob_sha": "fa702f23b822b79b852c780c8c2b4e6cf92763dd",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Historical source-only pure-sector Lean receipt 43664979586 on draft head PR #553. This pending custody entry is source-byte inventory, not a new kernel/priority/fully unrestricted Q2 certificate."
     },
     {
       "path": "research/nightfall/formalization/observability/ActualSourceQ2107Local.lean",
