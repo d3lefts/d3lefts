@@ -1,10 +1,30 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 6,
-  "as_of": "2026-11-14",
-  "source_commit": "c472505a28ab32097a37bd1803a65d486ce4ba87",
-  "scope": "Immutable 67-source historical provenance retained. All 98 actual post-checkpoint Lean files now have exact SHA-1 custody: 77 earlier, 14 merged SCIF/Q2/authority/horizon with separately scoped named compiler receipts, and 7 previously merged Q2 sharp-source files recovered in this audit without new certificate attribution. Novelty and fully general product/SCIF conclusions remain open.",
+  "revision": 7,
+  "as_of": "2026-11-15 UTC",
+  "source_commit": "62ee3725a67321c453d020804848e87c9b929b56",
+  "scope": "All 174 post-checkpoint Lean sources at main 62ee3725a673 are explicitly in pending custody. The immutable 67-source historical register remains unchanged. Custody is source-byte identity only, not named Lean certification, novelty, peer review or universal theorem promotion.",
   "sources": [
+    {
+      "path": "research/nightfall/formalization/agent_safety/ArbitraryAgentSafety.lean",
+      "source_blob_sha": "c0e42b193a383f7e4f7ec43728806483f9b3bf68",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/agent_safety/SemanticFencing.lean",
+      "source_blob_sha": "a6145a6c6131be48bd0525dbabe88d5db5fa8a96",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
     {
       "path": "research/nightfall/formalization/authority/AuthorityHorizon.lean",
       "source_blob_sha": "d52c7e2ffaf4dcd5a86d19f61a64275e6c54ce04",
@@ -36,6 +56,16 @@
         "named_declaration": "Nightfall.AuthorityHorizonReal.all_horizon_cost",
         "run": 43629420558
       }
+    },
+    {
+      "path": "research/nightfall/formalization/floor_four/Q2MeanFieldFourAlgebra.lean",
+      "source_blob_sha": "1fbf20ee1bfa3c586c5de99032e4e380e5fff3bd",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
     },
     {
       "path": "research/nightfall/formalization/observability/ActualESCanonicalPairGraph.lean",
@@ -358,6 +388,16 @@
       "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
     },
     {
+      "path": "research/nightfall/formalization/observability/ActualSourceEfronStein.lean",
+      "source_blob_sha": "4a49ec567220863ed87c6f0b5a62f9d054d755de",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
       "path": "research/nightfall/formalization/observability/ActualSourceFinitePairMoment.lean",
       "source_blob_sha": "c4df489bb16d021b76b83da005b406a796621a4f",
       "classification": "unreviewed-source",
@@ -405,6 +445,16 @@
       "receipt_scope": "Source updated from earlier historical pending SHA da259d70d25cca360779489bec9a57c24483919b for original-product Q2 source proof. Consult specific current-pin Q2 named-declaration receipts; not added to frozen 67-file historical registry. Novelty unreviewed."
     },
     {
+      "path": "research/nightfall/formalization/observability/ActualSourceIntegratedFive.lean",
+      "source_blob_sha": "5d336f6ac5bc7ea06d1b5f61eb7690c584538755",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
       "path": "research/nightfall/formalization/observability/ActualSourceIntegratedSections.lean",
       "source_blob_sha": "35da725a8282c17a768b7fe6ca278fb79b225620",
       "classification": "unreviewed-source",
@@ -413,6 +463,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceIntegratedSharp.lean",
+      "source_blob_sha": "ab93a82535a325851188f0f01c6a98450a41ff5d",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
     },
     {
       "path": "research/nightfall/formalization/observability/ActualSourceMatchingCover.lean",
@@ -603,6 +663,96 @@
       "receipt_scope": "Unregistered in immutable historical 67-file successful-head ledger; consult Q2-specific current-pin named-declaration certificate where present. No blanket compilation, novelty or universal theorem claim."
     },
     {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2107Local.lean",
+      "source_blob_sha": "bd41fb766a14425b2d73b01c09792a174b4e8c2d",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2107Terminal.lean",
+      "source_blob_sha": "a1e81b41d6c14c7da3c7f8d1ecc376027a70059f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2121Terminal.lean",
+      "source_blob_sha": "7a51c3652bf614191b629d61c333471e9c11f341",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2128Terminal.lean",
+      "source_blob_sha": "be25abf9acaa93fe0a5769b630d09cf948e79da1",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2353Terminal.lean",
+      "source_blob_sha": "2b45c43bf011e1103ace5b40ba05169c2aa3f2f2",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2364Terminal.lean",
+      "source_blob_sha": "5263d9da1ec2f12fbc8986c3698859faedb390a3",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2589Terminal.lean",
+      "source_blob_sha": "750f28cffd6c0401074fa906c6f7e09389983f7e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2620Terminal.lean",
+      "source_blob_sha": "19ae82befe0b50c4bc0d009fd15985ccb3271dc7",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2625Cubic.lean",
+      "source_blob_sha": "5cee37be225b387ee937db7239025b1c8f5f144f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
       "path": "research/nightfall/formalization/observability/ActualSourceQ2CompositionGate.lean",
       "source_blob_sha": "54f81787b12324a0dec63d617362caeb24f954e9",
       "classification": "unreviewed-source",
@@ -661,6 +811,76 @@
       }
     },
     {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2EnergyDualScalar.lean",
+      "source_blob_sha": "bf1d4a552ca078fee9c61ac8af9f4fc0aa75a38a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2EnergyDualScalarFive.lean",
+      "source_blob_sha": "68283857063dd5ff950c451015f2a1101b3c4413",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2EnergyDualSource.lean",
+      "source_blob_sha": "86c52abfab006998897d74c69e25555702c849c7",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2EnergyDualTerminalFive.lean",
+      "source_blob_sha": "e63d5848ac3c9a7afa1f463c4421e4c077b05f27",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2EnergyDualTerminalGate.lean",
+      "source_blob_sha": "5e21e32974c85bb095404cc6796e06f35b72dc1f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2EnergyDualUnconditional.lean",
+      "source_blob_sha": "23227959efe9096093f30b08d285ba9e0345291e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2EnergyDualUnconditionalFive.lean",
+      "source_blob_sha": "dd3e691878dfd356c6cb808f27122a90d5b80ddd",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
       "path": "research/nightfall/formalization/observability/ActualSourceQ2SharpAdditive.lean",
       "source_blob_sha": "27041ca837a8982fdd4203b16acce4695945d123",
       "classification": "unreviewed-source",
@@ -709,6 +929,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Previously merged Q2 sharp-source file recovered by same-head source inventory on 2026-11-14; current Git blob hash checked directly. Not entered in immutable historical 67-file register. Any kernel theorem attribution must use a separate exact named current-head Lean receipt; no new such receipt is asserted by this custody row."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ2StrongConditional.lean",
+      "source_blob_sha": "e658d8fe5d8669bd0f013ec4dba92d7a304d4755",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
     },
     {
       "path": "research/nightfall/formalization/observability/ActualSourceQ2StrongUnconditional.lean",
@@ -805,6 +1035,26 @@
       "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
     },
     {
+      "path": "research/nightfall/formalization/observability/ActualSourceSectionBudgetFive.lean",
+      "source_blob_sha": "7fc6f6771aedebd8cf80c0d8fd6db50638edb208",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceSectionBudgetSharp.lean",
+      "source_blob_sha": "be893ad1b5845de194945690621636af8aee5761",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
       "path": "research/nightfall/formalization/observability/ActualSourceSingletonEnergyBridge.lean",
       "source_blob_sha": "28678ad57c7f56bd319f0845341df235273e3dba",
       "classification": "unreviewed-source",
@@ -842,6 +1092,126 @@
       "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
     },
     {
+      "path": "research/nightfall/formalization/observability/Q2529ScalarObstruction.lean",
+      "source_blob_sha": "4926427974e0ff1d5bace4e88aa6ff81f02ed0e4",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/Q2589ScalarSite.lean",
+      "source_blob_sha": "9df02e0cdf48179ec35d1c073d7b3c7c2b4e96e0",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/Q2620ScalarSite.lean",
+      "source_blob_sha": "2ed6f26b762f82800016567fb1d2052c89fb3e84",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/Q2625Golden.lean",
+      "source_blob_sha": "4b53e815eaae2cfff7f8041373af4d4f5d69bcd7",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/Q2625GoldenTrade.lean",
+      "source_blob_sha": "cb48fc4b2c43313d49d97ef3d48dde53a23c9a11",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/Q2625ScalarEnvelope.lean",
+      "source_blob_sha": "fba1b5155d9f4aa369778ea88389089a2d760580",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/Q2FlexibleSectionScalar.lean",
+      "source_blob_sha": "4a0bdd92f9dd96f7b24a0a150f6b4d8563f6c361",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/Q2OneStepShiftedC5.lean",
+      "source_blob_sha": "fd31b3c5d15b608c15906beef8a7a5d3a4214a43",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/Q2RationalConditionalTerminal.lean",
+      "source_blob_sha": "b559f928b809d7673e9e0f891e03b4a4003445f9",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/Q2RationalTwoFifths.lean",
+      "source_blob_sha": "502c015c1c53eb4d7b21c24409a99b2483adbfb4",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/Q2ShiftedOneJumpC5.lean",
+      "source_blob_sha": "73f432cc39d192d8d8ebf67bdff4979485e38594",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/Q2ShiftedOneJumpSharp.lean",
+      "source_blob_sha": "4ac4647781ab153e68af9a6b3b59331a688746d0",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
       "path": "research/nightfall/formalization/observability/QuadraticActualMomentEndpoint.lean",
       "source_blob_sha": "8c082afa9a9bb518eeafab7d86fa85709757b5c2",
       "classification": "unreviewed-source",
@@ -852,6 +1222,36 @@
       "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
     },
     {
+      "path": "research/nightfall/formalization/observability/QuadraticBernoulliIdentity.lean",
+      "source_blob_sha": "de68fb4c7c86448ef8c930a36abd76945b6d33f5",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/QuadraticBernoulliMoment.lean",
+      "source_blob_sha": "876b13e8d6abc72cfb9f625c544268b60034f024",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/QuadraticBernoulliSharp.lean",
+      "source_blob_sha": "6e0f6a8aaaad950e00f9839cbfa194f5de201c0d",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
       "path": "research/nightfall/formalization/observability/QuadraticHybridTelescoping.lean",
       "source_blob_sha": "8ff2638bb508a557c3bdb8f9dc09c42a6cb77d55",
       "classification": "unreviewed-source",
@@ -860,6 +1260,96 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/QuadraticSectionSharp.lean",
+      "source_blob_sha": "2a6a4b7ebfe93a864b19e238f6bad08c0c04e557",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/QuadraticSectionTen.lean",
+      "source_blob_sha": "1aa6f1a8f7466b73d5030b1f71e18676c37b853a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/QuadraticSwitchDifferenceTen.lean",
+      "source_blob_sha": "dfcf5c0fdb53a4730cd2f9672f04e0990d582973",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/SCIFActualInfluence.lean",
+      "source_blob_sha": "2a3a75b28423e203cab6b424629bb68cc3e6cfe1",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/SCIFActualRiskTerminal.lean",
+      "source_blob_sha": "bcd295de8f54d87c3a169a3edbee90adbd1b3eab",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/SCIFCanonicalPairTransport.lean",
+      "source_blob_sha": "496a800bdfef9350bdbe679ea6954a626d30a522",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/SCIFCanonicalSingleton.lean",
+      "source_blob_sha": "d72de9385787ab8cf5c56c778180b5cfe43fb928",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/SCIFCanonicalSourceBridge.lean",
+      "source_blob_sha": "ccdd05a4856aa5805161a4047a8359fd37de9775",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/SCIFCanonicalUnchangedPair.lean",
+      "source_blob_sha": "33b39d3927fc84340695b78a2e22d6003873fb63",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
     },
     {
       "path": "research/nightfall/formalization/observability/SCIFClipped.lean",
@@ -878,6 +1368,26 @@
       }
     },
     {
+      "path": "research/nightfall/formalization/observability/SCIFCompleteOriginalSource.lean",
+      "source_blob_sha": "56df6cecf1f290f20a1ee497db8142e236bb3098",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/SCIFDegreeInvariant.lean",
+      "source_blob_sha": "1d285c4726aa6323ba92023a0da938e826494575",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
       "path": "research/nightfall/formalization/observability/SCIFDegreeTransport.lean",
       "source_blob_sha": "35b10fe3dbd8c6b4a7d08c93c0f8e41c181dda95",
       "classification": "unreviewed-source",
@@ -894,6 +1404,46 @@
       }
     },
     {
+      "path": "research/nightfall/formalization/observability/SCIFExactTableTransport.lean",
+      "source_blob_sha": "a16d44aa6f8089de8d075b79452047ce36c70f6b",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/SCIFFiniteSourceTerminal.lean",
+      "source_blob_sha": "79d1d852cf69ef1080b76674f03a561cd188a382",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/SCIFFullCanonicalOwner.lean",
+      "source_blob_sha": "9abaad2e10c43d526ef1a7a50125b26ab3d8d9b8",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/SCIFGraphLocality.lean",
+      "source_blob_sha": "8317093fb6e5e16851e2e002d5a3e254d1f14121",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
       "path": "research/nightfall/formalization/observability/SCIFInfluence.lean",
       "source_blob_sha": "58e0a9f81825ab3ca7591ab080708c93ff18d30e",
       "classification": "unreviewed-source",
@@ -908,6 +1458,16 @@
         "named_declaration": "Nightfall.SCIF.local_influence_recenter_exact",
         "run": 43630623548
       }
+    },
+    {
+      "path": "research/nightfall/formalization/observability/SCIFLocalSourceInfluence.lean",
+      "source_blob_sha": "28f3caf28854ffbd1ca4bdb09e5c3ed186bb2393",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
     },
     {
       "path": "research/nightfall/formalization/observability/SCIFOwnerRepair.lean",
@@ -942,6 +1502,36 @@
       }
     },
     {
+      "path": "research/nightfall/formalization/observability/SCIFRectUnique.lean",
+      "source_blob_sha": "01e60064c0298db8a72d41ecdd3449ab10bb3572",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/SCIFSourceDegree.lean",
+      "source_blob_sha": "fd02bd4f0160fe55b652ce28fc050eb5c5162553",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/SCIFSourceEnergy.lean",
+      "source_blob_sha": "e3a5a32c5bd445320cc3a0320cf8023164697a4e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
       "path": "research/nightfall/formalization/observability/SCIFSourceGraph.lean",
       "source_blob_sha": "608d79dabeddc9ea3be455d5cf62de4c866b5439",
       "classification": "unreviewed-source",
@@ -956,6 +1546,46 @@
         "named_declaration": "Nightfall.Observability.SCIFSourceGraph.canonical_pair_graph_invariant",
         "run": 43630623548
       }
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ShiftedC4Bernstein.lean",
+      "source_blob_sha": "d29a1e5f0396ca7f29fde24a34325fc324a3d3c0",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ShiftedC4Scalar.lean",
+      "source_blob_sha": "c978b8343785911162fd1028c96be32a0c9de242",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ShiftedOwnerScalar.lean",
+      "source_blob_sha": "84bf1482cf8a1a249b99822e5ef3b62d2189d858",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ShiftedOwnerScalarMoments.lean",
+      "source_blob_sha": "86b3bb79897336d7643be9a24cfe93f0260a55f6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
     },
     {
       "path": "research/nightfall/formalization/product_space/ActualESConditionalJensen.lean",
@@ -1068,6 +1698,96 @@
       "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
     },
     {
+      "path": "research/nightfall/formalization/q2_99/Q299ConditionalAndNoGo.lean",
+      "source_blob_sha": "42e9985a27986f85612516bff024e8678a4f81d1",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/q2_99/Q299SymmetricShift.lean",
+      "source_blob_sha": "e6e93b3d24905faded018c34961e513d2e89ae22",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/q2_shifted/Q2ShiftedConditionalTargets.lean",
+      "source_blob_sha": "c91d0e9977ba93f3450dc6adf4367405d2af8e87",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/q2_shifted/Q2ShiftedPureC5.lean",
+      "source_blob_sha": "65977f0eb14a89f2652402ef15bb7bd99db57b12",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/q2_shifted/Q2ShiftedScalar.lean",
+      "source_blob_sha": "b871af2255bae3b3c5ef5138ac9163bb957fda33",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/q2_shifted/ShiftedHilbertManyIncrement.lean",
+      "source_blob_sha": "981213d9df3d6291b609982cb0e99befd8b177c0",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/q2_shifted/ShiftedHilbertOddTerm.lean",
+      "source_blob_sha": "33d45b8639be35fce2a78dde3ac3b8d616ab16de",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/q2_shifted/ShiftedHilbertTwoIncrement.lean",
+      "source_blob_sha": "20ab257715266898c0f237279c065f93a6cb84fe",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/q2_shifted/ShiftedOwnerSourceJensen.lean",
+      "source_blob_sha": "5fa819b6ce31e84ecdcefeb396bda455b06e4aca",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
       "path": "research/nightfall/formalization/swansea_v5/SwanseaV5UnionConvolution.lean",
       "source_blob_sha": "84b51f629d4814a771487cbac98e5b5cd8782da8",
       "classification": "unreviewed-source",
@@ -1108,6 +1828,46 @@
         "named_declaration": "Nightfall.InfiniteEfronSteinTransfer.positive_coordinate_if_positive_variance",
         "run": 43630294034
       }
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiCountableSupport.lean",
+      "source_blob_sha": "0bc254e111703ca2e650a1f0bb8dd0beb498d250",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiCylinderVarianceBridge.lean",
+      "source_blob_sha": "60ac8a2a4f0c5322fd32d01c8b85c4ea5159d081",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiRealCountableSupport.lean",
+      "source_blob_sha": "7de97cfe098a47f5bcc660df7995da3aa9a84bc8",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiSourceBridge.lean",
+      "source_blob_sha": "6a69efb434da886390c91b5e65533e1e814379ba",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
     },
     {
       "path": "research/nightfall/formalization/universal/UniversalAuthorityFrontier.lean",
