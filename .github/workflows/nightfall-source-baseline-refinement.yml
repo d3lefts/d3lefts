@@ -6,6 +6,8 @@ on:
       - "research/nightfall/right-to-act-promotion/authority_service.py"
       - "research/nightfall/right-to-act-promotion/test_source_baseline_binding.py"
       - "research/nightfall/right-to-act-promotion/independent_source_binding_audit.py"
+      - "research/nightfall/right-to-act-promotion/test_source_epoch_game_refinement.py"
+      - "research/nightfall/assurance/source-baseline-refinement-v0.2/**"
   workflow_dispatch:
 permissions:
   contents: read
@@ -27,11 +29,16 @@ jobs:
         with:
           python-version: '3.11'
       - name: Compile actual service and independent regression module
-        run: python -m py_compile authority_service.py independent_effect_verifier.py test_source_baseline_binding.py independent_source_binding_audit.py
-      - name: Real-source pure transition and live Unix socket regression
+        run: python -m py_compile authority_service.py independent_effect_verifier.py test_source_baseline_binding.py independent_source_binding_audit.py test_source_epoch_game_refinement.py
+      - name: Exact source-epoch finite game synthesis and exhaustive independent audit
+        working-directory: research/nightfall/assurance/source-baseline-refinement-v0.2
+        run: |
+          python synthesize.py source_epoch_game.json --out source_epoch_game_certificate.json
+          python independent_game_audit.py source_epoch_game.json source_epoch_game_certificate.json
+      - name: Real-source live Unix socket and certified-game policy refinement
         run: |
           set -euo pipefail
-          python -m unittest -v test_source_baseline_binding 2>&1 | tee baseline-binding-tests.log
+          python -m unittest -v test_source_baseline_binding test_source_epoch_game_refinement 2>&1 | tee baseline-binding-tests.log
       - name: Independent signed-request and recertification truth-table audit
         run: python independent_source_binding_audit.py
       - name: Seal exact source and test receipt
@@ -39,7 +46,10 @@ jobs:
         run: |
           python - <<'PY'
           import hashlib,json,os,pathlib,platform
-          names=['authority_service.py','independent_effect_verifier.py','test_source_baseline_binding.py','independent_source_binding_audit.py']
+          names=['authority_service.py','independent_effect_verifier.py','test_source_baseline_binding.py','independent_source_binding_audit.py','test_source_epoch_game_refinement.py',
+                 '../assurance/source-baseline-refinement-v0.2/synthesize.py',
+                 '../assurance/source-baseline-refinement-v0.2/independent_game_audit.py',
+                 '../assurance/source-baseline-refinement-v0.2/source_epoch_game.json']
           sha={n:hashlib.sha256(pathlib.Path(n).read_bytes()).hexdigest() for n in names}
           receipt={'status':'passed','scope':'local service-owned JSON artifact, not cloud or physical actuation',
                    'github_sha':os.environ['GITHUB_SHA'],'github_run_id':os.environ['GITHUB_RUN_ID'],
@@ -56,5 +66,7 @@ jobs:
             research/nightfall/right-to-act-promotion/baseline-binding-tests.log
             research/nightfall/right-to-act-promotion/source-baseline-refinement-receipt.json
             research/nightfall/right-to-act-promotion/source-baseline-truth-table-results.json
+            research/nightfall/assurance/source-baseline-refinement-v0.2/source_epoch_game_certificate.json
+            research/nightfall/assurance/source-baseline-refinement-v0.2/source-epoch-game-audit.json
           if-no-files-found: warn
           retention-days: 14
