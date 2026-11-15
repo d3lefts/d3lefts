@@ -41,6 +41,7 @@ jobs:
             --decl $N.optimal_fence_exists \
             --decl $N.optimal_read_step \
             --decl $N.bellman_root_optimal \
+            --decl $N.finite_safe_bellman_optimal \
             --decl $N.optimal_safe_stopping_plan \
             --decl $N.two_bit_direct_cost_at_least_eight \
             --decl $N.two_bit_post_certificate_gain \
