@@ -64,13 +64,14 @@ def verify(root,override=None):
         else:
             assert sorted(t["Resources"][k]["Type"] for k in added)==["AWS::Budgets::Budget","AWS::SNS::Topic"]
         assert set(row["policy_arms"])==all_arm_names
+        assert "dual_critical_scp" in all_arm_names
         for arm,obs in row["policy_arms"].items():
             measured=obs["measured_verification"]
             assert measured["iterations"]==50
             assert measured["p50_wall_us"]>0 and measured["p95_wall_us"]>0
             assert measured["mean_wall_us"]>0
             if kind=="honest":assert obs["permitted"]
-            if arm in ("all_scp_pinned","always_full") and kind!="honest":
+            if arm in ("dual_critical_scp","all_scp_pinned","always_full") and kind!="honest":
                 assert not obs["permitted"]
             if kind=="mfa" and arm in ("narrow_fsx","pinned_fsx"):
                 assert obs["permitted"]
