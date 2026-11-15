@@ -1,5 +1,8 @@
 # NIGHTFALL Q2: exponent sharpness and finite-to-general-product transfer
 
+> **PRIOR-ART RECOVERY / CORRECTION, 2026-11-15.** Our newly checked fair three-bit selector gives a valid coefficient lower bound K≥2, but this is **strictly superseded** by the ALREADY MERGED original-source biased mean-field witness from [PR #521](https://github.com/d3lefts/d3lefts/pull/521), which proves **K_opt≥4 analytically**. PR #521's Lean module certifies its scalar moment formulas and ratio, not the full original-source probability computations or infinite-n limit. The true current floor is K≥4 (analytic, exact symbolic finite checks), not 2. The n≤4 fair-Boolean enumeration is only a narrow regression test. Do not claim discovery or coefficient improvement for K≥2. This document preserves the valid small example and the more meaningful exponent-optimality/infinite-product transfer work.
+
+
 **Version:** 2026-11-14 / v1.0. **Proof authority:** author-analytic derivations from exact original-source finite-Q2 theorem; **NOT** additional Lean certificates. **Author/research direction:** Devin J. Wright, AI-assisted derivation. **Independent non-author review:** not yet completed.
 
 ## 1. Source-certified starting point
