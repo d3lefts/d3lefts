@@ -127,7 +127,7 @@ theorem actual_source_q2_105_unconditional
             _ = (6*(∑ i : ι, c i))/25 := by ring
         calc
           (∑ i : ι, T*(Real.sqrt 3*u i+(6*c i)/25)) =
-              T*(∑ i : ι, Real.sqrt 3*u i+(6*c i)/25) := by
+              T*(∑ i : ι, (Real.sqrt 3*u i+(6*c i)/25)) := by
                 rw [Finset.mul_sum]
           _ = T*(Real.sqrt 3*(∑ i : ι, u i)+(6*(∑ i : ι, c i))/25) := by
               rw [Finset.sum_add_distrib, ← Finset.mul_sum, hcoef]
