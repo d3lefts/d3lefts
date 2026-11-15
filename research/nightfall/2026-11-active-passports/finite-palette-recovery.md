@@ -1,5 +1,11 @@
 # Proof Passport: NF-FINITE-PALETTE-RECOVERY-20261111
 
+## v14 claim audit — 14 November 2026
+
+**Infinitary result remains an analytic candidate.** The new original-source finite Q2 Lean terminal and the finite safe-case semantic-fencing Bellman proof do not discharge this passport's completed-product null sets, measurable coordinate-section selection, or switching-chain steps. Preserve the conservative `2R/Δ` branch and distinguish it from older unproved `R/Δ`. Independent referee and end-to-end Lean gates are open. [Live active registry](../../../docs/active-proof-passport.json).
+
+---
+
 **NIGHTFALL Constellation · Devin J. Wright · version 1.0 (2026-11-11).**
 **Status:** WRITTEN ANALYTIC CANDIDATE; finite Lean core checked; infinitary bridge OPEN. This is a claim-specific proof-passport note, not an independently refereed theorem or novelty certificate.
 
