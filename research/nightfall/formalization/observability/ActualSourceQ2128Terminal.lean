@@ -92,10 +92,12 @@ theorem shifted_fourth_coarse
   let t : ℝ := Real.sqrt e
   have ht0 : 0 ≤ t := Real.sqrt_nonneg _
   have ht2 : t^2 = e := Real.sq_sqrt he0
+  have haux : a^2*t^2 = a^4+a^2*s := by
+    rw [ht2, he]
+    ring
   have hid : e^2-2*a*s*t = (a*t-s)^2+a^2*s := by
-    dsimp [t] at *
     rw [he]
-    nlinarith [ht2]
+    nlinarith [haux]
   have hpol : 2*a*s*t ≤ e^2 := by
     nlinarith [hid, sq_nonneg (a*t-s),
       mul_nonneg (sq_nonneg a) hs]
@@ -107,7 +109,12 @@ theorem shifted_fourth_coarse
       simp [hezero]
     · have htpos : 0 < t := lt_of_le_of_ne ht0 (Ne.symm htzero)
       have hpol' : (2*a*s)*t ≤ (e*t)*t := by
-        nlinarith [hpol, ht2]
+        calc
+          (2*a*s)*t ≤ e^2 := by nlinarith [hpol]
+          _ = (e*t)*t := by
+            calc
+              e^2 = e*t^2 := by rw [ht2]; ring
+              _ = (e*t)*t := by ring
       exact (mul_le_mul_iff_of_pos_right htpos).mp hpol'
   have hcross : 4*a*c*s ≤ 2*c*e*t := by
     nlinarith [mul_nonneg (sub_nonneg.mpr hmixed) hc]
