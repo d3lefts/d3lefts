@@ -1,5 +1,11 @@
 # Proof Passport · NF-KACZMARZ-LOGFREE-20261111
 
+## v14 custody check — 14 November 2026
+
+The finite exact-rational replays and unscaled first-hitting Kaczmarz statement retain their original proof scope. There is no new Lean proof, third-party referee or priority determination in the 14 November Q2/agent-security work. Check the existing proof source and independent exhaustive audit rather than inferring support from unrelated CI. Originality of the log-free corollary remains open.
+
+---
+
 **Version:** 1.1 (2026-11-11) · **Lifecycle:** NULL FIELD / active research  
 **Research lead:** Devin J. Wright · **Claim class:** analytic best-iterate theorem  
 **Publication status:** complete elementary written proof and finite exact checks; **independent mathematical referee and historical priority unresolved**. Not an Original Finding, not in the frozen 11 historical passports.
