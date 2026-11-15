@@ -1,5 +1,11 @@
 # Proof Passport: NF-FAIR-SIGN-CUBIC-20261111
 
+## v14 claim audit — 14 November 2026
+
+**Subclass/draft status retained:** the fair-sign ℓ₁-valued degree-two and cubic selector manuscripts remain separate from unrestricted cubic influence and from unrestricted-singleton finite Q2. No full source-level Lean or external novelty/Khintchine comparison is certified by the new Q2/authority results. Verify PR #354's present merged/draft state before any future promotion. [Live active registry](../../../docs/active-proof-passport.json).
+
+---
+
 **NIGHTFALL Constellation · Devin J. Wright · version 1.0 (2026-11-11).**
 **Status:** DRAFT PROOF PR; external referee, novelty and Lean gates OPEN. This is a claim-specific proof-passport note, not an independently refereed theorem or novelty certificate.
 
