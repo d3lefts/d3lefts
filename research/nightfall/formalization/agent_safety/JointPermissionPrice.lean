@@ -84,7 +84,8 @@ theorem operationPlacement_injective {R capacity N guards : ℕ}
     Function.Injective (operationPlacement p) := by
   intro i j hij
   apply Fin.ext
-  exact congrArg Fin.val hij
+  simpa only [operationPlacement] using
+    congrArg (fun slot : Fin capacity => slot.val) hij
 
 /-- Verified plans admit a collision-free schedule in the modeled resource
 grid. A capacity index represents one of m·H worker-time cells. -/
