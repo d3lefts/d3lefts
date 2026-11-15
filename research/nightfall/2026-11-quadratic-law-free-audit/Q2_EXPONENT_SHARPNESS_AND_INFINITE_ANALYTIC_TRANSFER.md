@@ -36,6 +36,27 @@ max_i I_i(f_n)=Var(f_n)².
 
 For every real `q<2`, a dimension-free assertion `max_i I_i(f)≥c Var(f)^q/||f||∞^{2q-2}` with universal `c>0` would give `c≤n^{q-2}` for all n and thus fail. Any valid constant in the variance-squared theorem must also satisfy `K≥1` (indeed equality for these witnesses). **This proves mathematical exponent optimality.** No Lean certificate is claimed for the family or its asymptotic limiting argument.
 
+
+## 2A. Sharper exact universal coefficient floor K≥2
+
+The degree-one family establishes exponent optimality but its coefficient floor K≥1 is superseded by a three-bit degree-two selector.
+
+Let X₁,X₂,X₃ be independent uniform signs ±1 and define
+
+\[
+f(x_1,x_2,x_3)=\frac{x_1-x_3-x_1x_2-x_2x_3}{2}.
+\]
+
+When x₂=−1 this equals x₁, and when x₂=+1 this equals −x₃. Hence f takes values exactly ±1, so B=1, Ef=0 and V=Var(f)=1. The centered uniform Fourier/ANOVA support is {1}, {3}, {1,2}, {2,3}, each with squared coefficient 1/4; thus I₁=I₂=I₃=1/2. It follows exactly that
+
+\[
+V^2/(B^2\max_i I_i)=2,
+\]
+
+and **the best unrestricted universal Q2 coefficient is at least 2**. Any valid source upper coefficient, including C364 or the PR #549 strictly checked C353, is an upper bound; the current exact global optimum is not determined.
+
+Independent exact exhaustive integer Walsh audit: check_q2_K2_fair_small.py, in this same folder, enumerates all Boolean-valued degree≤2 functions on n=1,2,3,4 fair bits. Numbers of such Boolean functions are 4,16,70,222. The exact maximum Var²/(B²M) within those finite classes is 1,9/8,2,2, respectively. This does NOT establish a universal upper bound K≤2 for arbitrary dimensions, real outputs, arbitrary alphabets, or biased measures. No Lean receipt is claimed for this exact 3-bit witness.
+
 ## 3. Analytic Theorem B — arbitrary-index, arbitrary-alphabet independent product extension
 
 Let `I` be any (possibly uncountable) index set. For each `i∈I`, let `(Ω_i,Σ_i,μ_i)` be a nonempty probability space with an existing product measure `μ=⊗_{i∈I}μ_i` on the **ordinary product sigma-algebra**. No uniform bias, lower atom mass, discrete alphabet or identical-marginal condition is imposed.
