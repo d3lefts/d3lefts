@@ -16,6 +16,10 @@ namespace Nightfall.Observability.ActualSourceQ2128Terminal
 
 open Finset
 open Nightfall.Observability.ActualProductMergeTower
+open Nightfall.Observability.ActualProductSourcePairCentering
+open Nightfall.Observability.ActualProductSourceDerivedStar
+open Nightfall.Observability.ActualESGreedyOwnership
+open Nightfall.Observability.ActualSourceOwnedProjectedMomentJensen
 open Nightfall.Observability.ActualSourceANOVA
 open Nightfall.Observability.ActualSourceVarianceEnergy
 open Nightfall.Observability.ActualSourceInfluenceEnergy
