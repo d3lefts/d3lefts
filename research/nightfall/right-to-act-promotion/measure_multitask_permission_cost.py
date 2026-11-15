@@ -152,7 +152,8 @@ def billing_full(b,t):
     news=[T[k] for k in set(T)-set(B)]
     if sorted(r.get("Type") for r in news)!=["AWS::Budgets::Budget","AWS::SNS::Topic"]:
         raise ValueError("unexpected new resources")
-    topic=next(r for r in news if r["Type"]=="AWS::SNS::Topic")
+    topic_id=next(k for k in set(T)-set(B) if T[k]["Type"]=="AWS::SNS::Topic")
+    topic=T[topic_id]
     budget=next(r for r in news if r["Type"]=="AWS::Budgets::Budget")
     if topic["Properties"].get("TopicName")!="org-billing-alarms":
         raise ValueError("unexpected billing topic")
@@ -166,8 +167,9 @@ def billing_full(b,t):
         n=item["Notification"];subs=item["Subscribers"]
         if n.get("ThresholdType")!="PERCENTAGE" or float(n.get("Threshold"))!=100.0:
             raise ValueError("incorrect billing threshold")
-        if len(subs)!=1 or subs[0].get("SubscriptionType")!="SNS":
-            raise ValueError("incorrect subscriber")
+        if (len(subs)!=1 or subs[0].get("SubscriptionType")!="SNS"
+                or subs[0].get("Address")!={"Ref":topic_id}):
+            raise ValueError("incorrect subscriber or unauthenticated delivery target")
         names.add(n["NotificationType"])
     if names!={"ACTUAL","FORECASTED"}:raise ValueError("missing forecast/actual billing alert")
     all_scp_pinned(b,t)
