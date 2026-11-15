@@ -86,7 +86,7 @@ theorem actual_source_q2_105_unconditional
             (fun k b => hp (neighborIndex i (ownedNeighbors c i) k) b)
             (ownedNeighbors c i).card w) (Real.sqrt_nonneg _))
       exact add_nonneg (mul_nonneg (Real.sqrt_nonneg _) hu)
-        (div_nonneg (hc i) (by norm_num))
+        (div_nonneg (mul_nonneg (by norm_num : (0:ℝ) ≤ 6) (hc i)) (by norm_num))
     have hreplace :
         Real.sqrt (sourceInfluence p f i) *
         (Real.sqrt 3*u i+(6*c i)/25) ≤
