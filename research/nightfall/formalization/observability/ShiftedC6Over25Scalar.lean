@@ -26,7 +26,7 @@ theorem shifted_c6_over25_from_strong_moments
   have he2 : e = t^2 := ht2.symm
   by_cases hsmall : t ≤ (6*c)/25
   · have hnonneg : 0 ≤ Real.sqrt 3*u := by positivity
-    change t ≤ Real.sqrt 3*u+c/4
+    change t ≤ Real.sqrt 3*u+(6*c)/25
     linarith
   have htpos : 0 < t := by
     have hdiff : (6*c)/25 < t := lt_of_not_ge hsmall
@@ -101,7 +101,7 @@ theorem shifted_c6_over25_from_strong_moments
     rw [hcv]
     ring
   rw [hre] at hlinear
-  change t ≤ Real.sqrt 3*u+c/4
+  change t ≤ Real.sqrt 3*u+(6*c)/25
   linarith
 
-end Nightfall.ShiftedC4Scalar
+end Nightfall.ShiftedC6Over25Scalar
