@@ -1,11 +1,11 @@
 {
   "schema": "nightfall-active-proof-passports-v1",
-  "version": 14,
-  "as_of": "2026-11-14",
-  "updated_by": "v14 substantive reconciliation: strongest merged Q2 unrestricted 364.552683 (#525), SCIF genuine original-source terminal (#529), arbitrary-proposer conditional Lean invariant (#528), semantic-fence finite safe-case Bellman Lean at draft #554, and local security/model-generated trial receipts #554/#557. Twelve earlier claim identities preserved; three additional active passports added, historical eleven untouched.",
+  "version": 15,
+  "as_of": "2026-11-15",
+  "updated_by": "v15 exact-source reconciliation: strongest MERGED unrestricted finite-product Q2 coefficient C105.7417569 (PR #564, strict Lean run 43671321904; original source blob unchanged); prior merged C107.393 (#558) and C364.553 (#525) retained, conditional six-B C96.100 (#570) not promoted. Preserve 15 active claim identities and frozen historical ledger.",
   "frozen_historical_registry_unchanged": true,
   "lifecycle": "active",
-  "scientific_status": "Strongest merged original-source unrestricted finite Q2 coefficient 364.552683 (#525, run 43644790107); 353.293 and 107/99 terminal claims require separately verified additional premises or draft source closure. SCIF finite original-source terminal #529 strict Lean; arbitrary-agent all-horizon conditional invariant #528 strict Lean. Semantic fencing finite safe-case optimum #554 exact-head pinned Lean success on unmerged draft plus local security integration success; full actual operational boundary remains unverified. External independent review, worldwide novelty and arbitrary-index all-L2 terminal remain open.",
+  "scientific_status": "Strongest merged original-source unrestricted finite Q2 coefficient 105.741756923658 (#564, named pinned Lean run 43671321904); historical C107.393 (#558) and C364.552683 (#525) remain valid weaker certificates. C96.100399 (#570) assumes an unproved source-derived six-B owner-cover budget; unconditional C96.573520 is OPEN. SCIF source terminal and conditional agent-safety and semantic fencing retain their separate scope; actual operational complete mediation and external priority review remain open.",
   "source_checkpoint": {
     "repository": "d3lefts/d3lefts",
     "commit": "5bda769c2484ea2f6ea9a02c428928361c07666f",
@@ -23,20 +23,20 @@
       "id": "q2-influence",
       "title": "Bias-independent quadratic influence",
       "status": "lean-kernel-checked-finite-product-scope",
-      "claim": "Strongest MERGED source-level unrestricted finite common-alphabet degree-two theorem: Var_p(f)^2 ≤ 364.5526832774 B² max_i I_i(f), genuine canonical singleton terms permitted, heterogeneous original per-coordinate marginals and zero-mass atoms. Pinned strict theorem #525 (run 43644790107); no extra integrated section or shifted-norm caller premise. Earlier C₂=[257/20+(9/4)√2+5√3+√6]²≈736.673198 (#498), C₂=407+138√2+188√3+56√6≈1064.958449 (#494), and v9.2 C₂≈1228.356 remain historical. New source C353.293 and C121.655/C107.393/C99.263 targets are draft or conditional, not certified as unrestricted on main.",
+      "claim": "Strongest MERGED unrestricted finite common-alphabet degree-two source theorem: Var_p(f)^2 ≤ 105.741756923658 B² max_i I_i(f), with all canonical singleton components permitted, arbitrary heterogeneous independent marginal laws and zero-mass atoms. Pinned strict original-source theorem PR #564 (run 43671321904), exact source git blob ed945639f7cbe26ba8fdb50d691127c01cdf863f; no caller-supplied moment or section or ownership budgets. Historical certified weaker source coefficients are C107.3934498998 (#558), C364.5526832774 (#525), C736.673197758 (#498), C1064.958449 (#494), and C1228.356. Conditional C96.100399 (#570) requires the additional unproved six-B original source owner cover; no unrestricted C96 result is certified.",
       "assumptions": [
         "finite coordinate type and common nonempty finite alphabet; original nonnegative normalized per-site marginals, including zeros",
         "pointwise |f(x)|≤B for every configuration, B≥0; genuine ESDegreeLE p f 2",
         "I_i(f)=E[(f−E_i f)^2] under the actual original product law; M bounds every I_i"
       ],
       "mechanism": "Same-source canonical Hoeffding pair kernels, matching/greedy ownership and Hilbert moments, fourth-moment endpoint, source section budget and optimized coupled singleton-owner scalar closure. Related SCIF result separately proves source graph invariance under law change.",
-      "evidence": "Pinned Lean 4.36.0-rc2 unconditional original-source theorem ActualSourceQ2364Terminal.actual_source_q2_364_unconditional in merged #525 at original PR head a558a4dd7a2f2c7db521658c6d59d204758eb934, strict CI run 43644790107, original source Git blob 5263d9da1ec2f12fbc8986c3698859faedb390a3, foundational axiom audit. The same run strictly certifies 5B source section budget, C473.874 and conditional C353.293 terminal, whose caller's sharp section premise is NOT discharged. Earlier #498 run 43633180605, #494 run 43627249467, finite all-degree #506, cylinder #512 and finite changed-law #514 remain individually scoped.",
+      "evidence": "Pinned Lean 4.36.0-rc2 unconditional original-source theorem ActualSourceQ2364Terminal.actual_source_q2_364_unconditional in merged #525 at original PR head a558a4dd7a2f2c7db521658c6d59d204758eb934, strict CI run 43644790107, original source Git blob 5263d9da1ec2f12fbc8986c3698859faedb390a3, foundational axiom audit. The same run strictly certifies 5B source section budget, C473.874 and conditional C353.293 terminal, whose caller's sharp section premise is NOT discharged. Earlier #498 run 43633180605, #494 run 43627249467, finite all-degree #506, cylinder #512 and finite changed-law #514 remain individually scoped. NEW v15: full original-source unrestricted C105.741756923658 theorem ActualSourceQ2105Terminal.actual_source_q2_105_unconditional, exact source blob ed945639f7cbe26ba8fdb50d691127c01cdf863f, named strict Lean 4.36.0-rc2 PR #564 run 43671321904, original head ae8ebec96d6c3ce4a25fb42bc7ae6ba170ca9103, merged 2026-11-15; strict standard axioms only. C107.3934499 PR #558 run 43666215780 remains prior merged certified. The C96.100399 given-six-cover source implication PR #570 run 43676624010 is kernel proved ONLY under its explicit six-B owner-cover premise.",
       "source": "research/nightfall/2026-11-active-passports/quadratic-rank-observability.md",
-      "source_detail": "Source-based scope note research/nightfall/Q2_SOURCE_LEAN_CERTIFICATION_20261114.md; current Lean receipt index docs/current-lean-proof-receipts-20261114.json; previous v9.2 PDF and internal review retained as historical manuscript evidence. Independent human and prior-art review open. New source-exact unrestricted Efron–Stein proof passport: research/nightfall/2026-11-active-passports/UNRESTRICTED_EFRON_STEIN_PROOF_PASSPORT_20261114.md; standard theorem, no novelty. Updated v14 strongest merged source record: research/catalogue/CURRENT_FRONTIER.json; PR #525 #43644790107; proof-gated draft #549/#551/#552/#558.",
-      "audit": "Replay #525 actual source and axiom receipt; adjudicate #549 sharp Bernoulli section and #551/#552/#558 shifted owner source terminals on exact current heads; independent prior-art comparisons with 2026 fixed-bias and product-space degree-two work; do not certify novelty via absent hits. Full arbitrary-index L2 and rank-adaptive compositions remain independent proof gates.",
+      "source_detail": "Source-based scope note research/nightfall/Q2_SOURCE_LEAN_CERTIFICATION_20261114.md; current Lean receipt index docs/current-lean-proof-receipts-20261114.json; previous v9.2 PDF and internal review retained as historical manuscript evidence. Independent human and prior-art review open. New source-exact unrestricted Efron–Stein proof passport: research/nightfall/2026-11-active-passports/UNRESTRICTED_EFRON_STEIN_PROOF_PASSPORT_20261114.md; standard theorem, no novelty. Updated v14 strongest merged source record: research/catalogue/CURRENT_FRONTIER.json; PR #525 #43644790107; proof-gated draft #549/#551/#552/#558. v15 merged exact-source frontier: research/catalogue/CURRENT_FRONTIER.json anchors C105 and conditional C96 and checks original source blobs. Both final source branches merged.",
+      "audit": "Replay C105 named original-source receipt against exact blob and verify v15 fail-closed frontier. Independently pursue/falsify all-source Hilbert first/second-moment comparison and universal 6B source-owner cover before any unconditional C96 claim. Source and priority scopes remain separate; no infinite-product L2 or operational safety guarantee.",
       "limitations": [
-        "Strict #525 original-source theorem covers finite common alphabet, heterogeneous marginal laws, zero atoms and canonical singleton terms; no heterogeneous alphabet types or infinite-index all-L2 Lean terminal.",
-        "Conditional 353/107/99 or pure-zero-singleton sub-100 statements are NOT unrestricted unconditional theorems on main",
+        "Strict C105 original-source theorem covers finite common alphabet, heterogeneous marginal laws, zero atoms and unrestricted canonical singleton terms; no heterogeneous alphabet TYPES, infinite-index all-L2, or higher-degree terminal.",
+        "Conditional C96.100399 uses an unproved six-B owner cover; no unconditional unrestricted sub-100 result. Pure-sector C95.063 restricts singleton components to zero.",
         "No universal rank-r adaptive query policy or digital-twin deployment guarantee follows from the scalar theorem",
         "Independent historical priority and non-author referee review open"
       ],
@@ -45,6 +45,12 @@
         "remaining_gate": "Do not promote 353.293/121.655/107.393/99.263 from draft descriptions or conditional scalar consequences; no arbitrary index or novelty signoff.",
         "source_audit": "Manual source/CI scope reconciliation; absence of new evidence does not imply failure.",
         "certification_change": "upgraded only for exact merged finite Q2 source"
+      },
+      "review_20261115": {
+        "finding": "C105.741756923658 is the strongest merged unrestricted finite source theorem, exact Lean receipt 43671321904 and source blob ed945639f7cbe26ba8fdb50d691127c01cdf863f. Prior C107.393 (run 43666215780) and C364.552683 (run 43644790107) are valid historical weaker milestones.",
+        "remaining_gate": "Unrestricted C96 remains unproved. C96.100399 owner graph theorem needs universal 6B budget; 96.57352 requires genuine independent Hilbert first/second comparison. Independent human proof/referee and external priority separate.",
+        "source_audit": "Verified original exact-source blobs and named Lean receipts; no declaration of a new mathematical proof from website status.",
+        "certification_change": "Promote ONLY merged C105 as best unrestricted finite product Q2 source; all weaker certified results preserved and unproved C96 conditionals retained."
       }
     },
     {
@@ -440,22 +446,24 @@
       "value_approx": "1064.958449026294",
       "independent_human_review": false,
       "strongest_merged": {
-        "pr": 525,
-        "run": 43644790107,
-        "head": "a558a4dd7a2f2c7db521658c6d59d204758eb934",
-        "source_git_blob": "5263d9da1ec2f12fbc8986c3698859faedb390a3",
-        "declaration": "Nightfall.Observability.ActualSourceQ2364Terminal.actual_source_q2_364_unconditional",
-        "coefficient": "[5√3+2(1+√2)(√13−√3)+8√((5√5−11)/6)]²",
-        "value_approx": "364.5526832774",
-        "scope": "finite common alphabet, arbitrary heterogeneous site laws incl zero atoms; unrestricted original source degree ≤2 canonical singletons",
+        "pr": 564,
+        "run": 43671321904,
+        "head": "ae8ebec96d6c3ce4a25fb42bc7ae6ba170ca9103",
+        "source_git_blob": "ed945639f7cbe26ba8fdb50d691127c01cdf863f",
+        "declaration": "Nightfall.Observability.ActualSourceQ2105Terminal.actual_source_q2_105_unconditional",
+        "coefficient": "[2(1+sqrt(2))sqrt(3)+48/25]^2",
+        "value_approx": "105.741756923658",
+        "scope": "finite common alphabet, heterogeneous normalized per-coordinate laws incl zero atoms; unrestricted original-source degree <=2 with arbitrary singleton sectors; no extra moment, section or owner budget",
         "added_premises": []
       },
       "prior_strongest_merged": {
-        "pr": 498,
-        "run": 43633180605,
-        "coefficient": "[257/20+(9/4)√2+5√3+√6]^2",
-        "value_approx": "736.673197758287",
-        "scope": "finite common alphabet, genuine source, degree ≤2"
+        "pr": 558,
+        "run": 43666215780,
+        "head": "e01039b24996befc3a3f7f32225362db8d1f8b42",
+        "source_git_blob": "a1e81b41d6c14c7da3c7f8d1ecc376027a70059f",
+        "coefficient": "[2(1+sqrt(2))sqrt(3)+2]^2",
+        "value_approx": "107.3934498997707",
+        "scope": "previous exact original finite Q2 source theorem"
       },
       "conditionals": [
         {
@@ -470,9 +478,11 @@
           "status": "draft scalar implication, unrestricted source premise open"
         },
         {
-          "pr": 558,
-          "coefficient_approx": 107.3934498998,
-          "status": "unmerged stacked original-source draft, pending exact source/Lean gate"
+          "pr": 570,
+          "run": 43676624010,
+          "coefficient_approx": 96.10039906698208,
+          "status": "kernel-checked implication only",
+          "extra_premise": "source-derived six-B owner graph cover of all actual pair kernels; universal six-B existence unproved"
         }
       ]
     },
