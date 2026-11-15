@@ -40,8 +40,7 @@ def audit(root):
         except json.JSONDecodeError:
             # Exact JSON extractor may have removed one markdown code fence.
             assert s['model_response'].lstrip().startswith('```')
-        assert s['official_main_scorer']['exit_code']==0 == int(s['main_success']) or (
-              s['official_main_scorer']['exit_code']!=0 and not s['main_success'])
+        assert (s['official_main_scorer']['exit_code']==0)==s['main_success']
         assert (s['official_side_scorer']['exit_code']==0)==s['side_success']
         template=read(slot/'template.json')
         assert dig(template)==s['template_sha256']
