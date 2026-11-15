@@ -1,5 +1,14 @@
 # Canonical research catalogue
 
+## 14 November 2026 v14 Proof Passport reconciliation
+
+The [twelve-claim active Passport registry](../../docs/active-proof-passport.json) has been refreshed to **v14** and all eleven distinct source dossiers have new scope-check notes. The historical eleven-identity register is untouched. The previously checked [frontier](CURRENT_FRONTIER.json) still selects unrestricted-singleton original-source finite Q2 **C₂≈364.5526832774** with exact [run 43644790107](https://github.com/d3lefts/d3lefts/actions/runs/43644790107); v13 C736.673/C1064.958 descriptions in older pages are dated, not current. New source evidence (not new IDs in the seven-anchor frontier checker) includes the [conditional safety invariant](https://github.com/d3lefts/d3lefts/pull/528), [ten strictly compiled semantic-fence/Bellman declarations](https://github.com/d3lefts/d3lefts/actions/runs/43662280902) in unmerged draft [#554](https://github.com/d3lefts/d3lefts/pull/554), and [local-effect security CI](https://github.com/d3lefts/d3lefts/actions/runs/43662280945). These certify only their scoped models, not production complete mediation. [Supplemental authority Proof Passport](../nightfall/2026-11-active-passports/AUTHORITY_SEMANTIC_FENCING_PROOF_PASSPORT_20261114.md).
+
+The v14 updates do **not** promote historical novelty, a lower conditional coefficient, or an arbitrary-index L² theorem. The rest of the 11 November catalogue remains a dated selected-source snapshot.
+
+---
+
+
 **Dated:** 11 November 2026. **Audience:** external mathematicians, reviewers, and reproducibility engineers.
 
 This directory is the **canonical scholarly claim index** for selected principal results, supporting constructions and adverse experiments. The actual theorem texts, Lean sources, checkers, and historical evidence remain at their original paths: this migration is a *linking/metadata reorganization*, not a source rewrite. The historical [40-record selection](../nightfall/SITE_CURATED_40_20261030.json) and its 11 historical Proof Passports are preserved and not silently reclassified.
