@@ -1,0 +1,53 @@
+{
+  "schema": "nightfall.claim-status.v1",
+  "version": "0.2",
+  "date_utc": "2026-11-15",
+  "problem": "optimal mission-conditioned recertification under dependent noisy evidence with authenticated conditional cache reuse",
+  "claims": [
+    {
+      "name": "finite_pathwise_optimality",
+      "status": "analytically_proved_and_exactly_replayed",
+      "scope": "finite static calibrated complete-world models, arbitrary dependency, six-test benchmark",
+      "lean_certified": false,
+      "human_reviewed": false
+    },
+    {
+      "name": "finite_global_two_sided_occupancy_lp",
+      "status": "classical_exact_optimization_and_small_exact_primal_dual",
+      "scope": "randomized policies and globally constrained conditional error rates",
+      "lean_certified": false,
+      "human_reviewed": false
+    },
+    {
+      "name": "conditional_separator_message_reuse",
+      "status": "exact_finite_sum_identity_and_rational_counterexample",
+      "scope": "unchanged conditional source/channel/mission statistic and complete dependency separator",
+      "lean_certified": false,
+      "human_reviewed": false
+    },
+    {
+      "name": "ed25519_authenticated_cache",
+      "status": "cryptographic_prototype_with_negative_controls",
+      "scope": "origin integrity under trusted external factor and source-monitor assumptions",
+      "lean_certified": false,
+      "human_reviewed": false
+    },
+    {
+      "name": "unrestricted_operational_agent_recertification",
+      "status": "open",
+      "scope": "unvalidated dynamics, physical source, sensors, trust and domain shift",
+      "lean_certified": false,
+      "human_reviewed": false
+    }
+  ],
+  "frontier": {
+    "pathwise_uncached": "163/24",
+    "pathwise_cached_z0": "601/104",
+    "pathwise_cached_z1": "145/22",
+    "global_chance_constrained_cost": "3",
+    "global_chance_constrained_deterministic_cost": "5",
+    "independent_policy_comparisons": 54,
+    "bellman_certificate_states": 549
+  },
+  "novelty": "not_established; POMDP, occupancy LP, junction-tree messages, digital attestation are established"
+}
