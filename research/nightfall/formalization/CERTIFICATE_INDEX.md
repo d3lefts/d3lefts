@@ -1,5 +1,16 @@
 # NIGHTFALL Lean certificates — consolidated audit
 
+## 14 November 2026 v14 addition — stronger finite Q2, agent invariants and semantic fencing
+
+The independently read [current source frontier](../../../research/catalogue/CURRENT_FRONTIER.json) now identifies a strictly compiled finite common-alphabet **unrestricted-singleton** original-source Q2 terminal at C₂≈364.5526832774 ([run 43644790107](https://github.com/d3lefts/d3lefts/actions/runs/43644790107)), superseding C736.673 and C1064.958. Lower draft and conditional numeric targets remain gated. This addition does not modify historical 67-source provenance or assert arbitrary-index L² Lean certification.
+
+Merged [#528](https://github.com/d3lefts/d3lefts/pull/528) has six strict Lean declarations for a **conditional** arbitrary-agent all-horizon invariant ([run 43639554615](https://github.com/d3lefts/d3lefts/actions/runs/43639554615)). Unmerged draft [#554](https://github.com/d3lefts/d3lefts/pull/554) has **ten** strict Lean 4.36.0-rc2 declarations on source-version semantic fencing and finite already-safe Bellman evidence optimization ([run 43662280902](https://github.com/d3lefts/d3lefts/actions/runs/43662280902)), source SHA-256 `17779223198926147b1600c9c5faebbf333add1bc05c71562000f491ea624d58`. [Run 43662280945](https://github.com/d3lefts/d3lefts/actions/runs/43662280945) is **local ControlArena / Unix-service testing, not a Lean certificate or physical mediation proof**. See the [v14 scoped Proof Passport](../2026-11-active-passports/AUTHORITY_SEMANTIC_FENCING_PROOF_PASSPORT_20261114.md). All three domains are independently scoped; external review is still open.
+
+Historical 14 November sections below remain source-history checkpoints; their words "current" describe their original date, not the v14 frontmost bound.
+
+---
+
+
 **Additional strictly compiled Lean support (#520):** [run 43637631337](https://github.com/d3lefts/d3lefts/actions/runs/43637631337) proves arbitrary product sigma-algebra cylinder generation, measurable-event countable coordinate support, and real measurable-observable countable coordinate support. Exact blobs tracked in [unrestricted terminal proof-scope manifest](../../../docs/unrestricted-terminal-proof-scope-20261114.json). The all-L² original-source unconditional Lean endpoint remains OPEN.
 
 ## 14 November 2026 supplemental current-source certification
