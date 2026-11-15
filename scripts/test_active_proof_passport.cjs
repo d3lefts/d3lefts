@@ -12,7 +12,7 @@ const site=read("docs/site.js");
 const core=read("docs/erdos-paper-core.js");
 const art=read("docs/media/overlap-16cell-fixture.svg");
 assert.equal(data.schema,"nightfall-active-proof-passports-v1");
-assert.equal(data.version,14);
+assert.equal(data.version,15);
 assert.match(data.as_of,/^2026-11-\d\d$/);
 assert.equal(data.lifecycle,"active");
 assert.equal(data.frozen_historical_registry_unchanged,true);
@@ -119,12 +119,12 @@ assert.ok(cubic.status==="exact-proof-attacks-cubic-open"&&cubic.claim.includes(
 assert.ok(cubic.evidence.includes("#347")&&cubic.evidence.includes("#349"));
 assert.ok(cubic.claim.includes("179722/6993")&&cubic.claim.includes("Var(Q)"),"v6.1 cubic scope and exact witness absent");
 const q2=data.claims.find(c=>c.id==="q2-influence");
-assert.ok(q2.status==="lean-kernel-checked-finite-product-scope"&&q2.claim.includes("C₂=407+138√2+188√3+56√6"),"Current strict finite Q2 source coefficient and scope missing");
+assert.ok(q2.status==="lean-kernel-checked-finite-product-scope"&&q2.claim.includes("105.741756923658")&&q2.claim.includes("1064.958449"),"Current strict finite Q2 source coefficient and historical scope missing");
 assert.ok(q2.evidence.includes("43627249467")&&q2.limitations.some(s=>s.includes("infinite")),"Current Q2 named Lean receipt or scope boundary missing");
 assert.ok(read("research/nightfall/2026-11-active-passports/quadratic-rank-observability.md").includes("1228.356")&&read("research/nightfall/2026-11-active-passports/quadratic-rank-observability.md").includes("historical"),"Historical Q2 manuscript checkpoint lost");
 assert.ok(data.claims.find(c=>c.id==="fair-sign-cubic").status.includes("draft-pr"));
 assert.ok(data.claims.find(c=>c.id==="universal-spectral").status.includes("conditional"));
-assert.ok(html.includes("<strong>15</strong>Active claim records")&&html.includes("<strong>v14</strong>"));
+assert.ok(html.includes("<strong>15</strong>Active claim records")&&html.includes("<strong>v15</strong>"));
 assert.ok(read("docs/discovery-system.html").includes("<dt>15</dt><dd>separate active claim passports</dd>"));
 // Finite F16 witness is a new active record but never a globally approved Original Finding.
 const phase=data.claims.find(c=>c.id==="phase-block");
@@ -180,5 +180,6 @@ for(const [id,receipt,merged] of v14New){
  assert.ok(merged?c.evidence.includes("Merged")||c.evidence.includes("merged"):c.evidence.includes("draft"),id+" merge scope incorrect");
 }
 assert.ok(data.claims.every(c=>c.review_20261114 && c.review_20261114.remaining_gate),"All 15 active claims need explicit current review gates");
-assert.ok(q2.claim.includes("364.552683")&&q2.evidence.includes("43644790107"),"Current strongest merged unconditional Q2 receipt lost");
+assert.ok(q2.claim.includes("105.741756923658")&&q2.evidence.includes("43671321904"),"Current strongest merged unconditional C105 receipt lost");
+assert.ok(q2.claim.includes("364.552683")&&q2.evidence.includes("43644790107"),"Historical C364 receipt lost");
 assert.ok(!q2.claim.includes("unconditional C99"),"Do not promote conditional C99");

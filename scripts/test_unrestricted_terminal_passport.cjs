@@ -34,7 +34,7 @@ for(const k of ["actual infinitePi L2 cylinder density","conditional expectation
  "finite Efron-Stein arbitrary measurable alphabets","source-matched resampling contraction",
  "unconditional infinitePi terminal theorem with axiom receipt"])
  assert.ok(scope.analytic_theorem.missing_lean.includes(k));
-assert.ok(reg.current_named_certificate_scope.finite_q2.strongest_merged.pr===525);
+assert.ok(reg.current_named_certificate_scope.finite_q2.strongest_merged.pr===564);
 assert.equal(reg.current_named_certificate_scope.scif.finite_all_degree_changed_law_risk.pr,514);
 const structural=scope.structural_source_certificates;
 assert.ok(Array.isArray(structural)&&structural.length===2);
@@ -47,7 +47,7 @@ for(const e of structural){
  assert.ok(!/Efron.Stein.*terminal|all.L2.*kernel/i.test(e.scope));
 }
 assert.equal(scope.structural_receipt.artifact_id,14131110488);
-assert.equal(reg.current_named_certificate_scope.finite_q2.strongest_merged.run,43644790107);
+assert.equal(reg.current_named_certificate_scope.finite_q2.strongest_merged.run,43671321904);
 assert.equal(reg.current_named_certificate_scope.scif.terminal.optimal_lifecycle_cost,false);
 assert.equal(reg.current_named_certificate_scope.agent_safety.actual_boundary_verified,false);
 assert.equal(reg.current_named_certificate_scope.semantic_fencing.draft_lean_declarations,10);

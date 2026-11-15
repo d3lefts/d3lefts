@@ -31,12 +31,26 @@ ANCHORS = {
         "Nightfall.Observability.ActualSourceQ2364Terminal.actual_source_q2_364_unconditional",
         43644790107, "a558a4dd7a2f2c7db521658c6d59d204758eb934",
     ),
+    "q2-unrestricted-105": (
+        "kernel_proved_domain",
+        "research/nightfall/formalization/observability/ActualSourceQ2105Terminal.lean",
+        "ed945639f7cbe26ba8fdb50d691127c01cdf863f",
+        "Nightfall.Observability.ActualSourceQ2105Terminal.actual_source_q2_105_unconditional",
+        43671321904, "ae8ebec96d6c3ce4a25fb42bc7ae6ba170ca9103",
+    ),
     "q2-unrestricted-107": (
         "kernel_proved_domain",
         "research/nightfall/formalization/observability/ActualSourceQ2107Terminal.lean",
         "a1e81b41d6c14c7da3c7f8d1ecc376027a70059f",
         "Nightfall.Observability.ActualSourceQ2107Terminal.actual_source_q2_107_unconditional",
         43666215780, "e01039b24996befc3a3f7f32225362db8d1f8b42",
+    ),
+    "q2-unrestricted-96-six-cover-conditional": (
+        "kernel_proved_implication_only",
+        "research/nightfall/formalization/observability/ActualSourceQ296SixCover.lean",
+        "8de1ad77a9f218d0df3673d8574ddd6592556865",
+        "Nightfall.Observability.ActualSourceQ296SixCover.actual_source_q2_96_given_six_cover",
+        43676624010, "6ec3d1541f521f40cf90c064e4b736279e7cfdc2",
     ),
     "q2-unrestricted-353-conditional": (
         "kernel_proved_implication_only",
@@ -75,6 +89,8 @@ ANCHORS = {
     ),
 }
 COEFFICIENTS = {
+    "q2-unrestricted-105": 105.741756923658,
+    "q2-unrestricted-96-six-cover-conditional": 96.10039906698208,
     "q2-unrestricted-364": 364.5526832774,
     "q2-unrestricted-107": 107.3934498997707,
     "q2-unrestricted-353-conditional": 353.2929930769,
@@ -82,6 +98,7 @@ COEFFICIENTS = {
     "q2-shifted-99-conditional": 99.2629850192,
 }
 REQUIRED_PREMISE_PARTS = {
+    "q2-unrestricted-96-six-cover-conditional": ["cover"],
     "q2-unrestricted-353-conditional": ["section"],
     "q2-shifted-107-conditional": ["hilbert", "section"],
     "q2-shifted-99-conditional": ["hilbert", "section"],
@@ -98,7 +115,7 @@ def git_blob(data: bytes) -> str:
 
 def audit(data: dict, root: Path = ROOT) -> dict:
     insist(data.get("schema") == "nightfall.frontier-evidence.v1", "Schema drift")
-    insist(data.get("best_unrestricted_source_q2_certified") == "q2-unrestricted-107",
+    insist(data.get("best_unrestricted_source_q2_certified") == "q2-unrestricted-105",
            "Best unconditional original-source Q2 falsely promoted")
     insist(data.get("unrestricted_sub100_unconditional") == "not_proved",
            "Unrestricted sub-100 proof falsely promoted")
@@ -165,7 +182,7 @@ def audit(data: dict, root: Path = ROOT) -> dict:
                              content.decode("utf-8")) is not None,
                    f"{cid}: missing exact theorem declaration")
     return {"status": "PASS", "claims": len(claims),
-            "best_unrestricted_q2": "107.3934498997707, finite product, scoped",
+            "best_unrestricted_q2": "105.741756923658, finite product, scoped",
             "unrestricted_sub100": "NOT PROVED",
             "physical_boundary": "NOT VERIFIED",
             "verification": "source and original PR-head receipt custody only (no Lean rerun)"}
@@ -187,6 +204,8 @@ def negative_controls(data: dict) -> int:
         ("unproved 99 promoted", lambda d: q(d, "q2-shifted-99-conditional").update(status="kernel_proved_domain")),
         ("unproved source hypotheses removed", lambda d: q(d, "q2-shifted-99-conditional").update(added_unproved_premises=[])),
         ("wrong source theorem", lambda d: q(d, "q2-unrestricted-364").update(declaration="Bad.fake")),
+        ("C105 source SHA forgery", lambda d: q(d, "q2-unrestricted-105").update(source_git_blob="0"*40)),
+        ("C96 conditional falsely promoted", lambda d: q(d, "q2-unrestricted-96-six-cover-conditional").update(status="kernel_proved_domain")),
         ("wrong best source", lambda d: q(d, "q2-unrestricted-107").update(source_git_blob="0"*40)),
         ("false certified frontier", lambda d: d.update(best_unrestricted_source_q2_certified="q2-shifted-99-conditional")),
         ("physical enforcement invented", lambda d: d.update(operational_agent_boundary="verified")),
