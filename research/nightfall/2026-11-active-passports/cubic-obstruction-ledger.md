@@ -1,5 +1,11 @@
 # Proof Passport: NF-CUBIC-OBSTRUCTION-LEDGER-20261111
 
+## v14 claim audit — 14 November 2026
+
+**No promotion:** exact rare-gate and pure-cubic fourth-moment counterexamples are attacks on proposed proof operators, not counterexamples to the universal cubic variance–influence theorem. Improvements in finite degree-two Q2 and authority semantic fencing do not establish degree-three exponent two. Preserve exact ratio 179722/6993, the energy-dispersion condition `Var(Q)`, and open fractional-cover/hard-family audits. Independent proof/priority review remains pending; see [current frontier](../../catalogue/CURRENT_FRONTIER.json).
+
+---
+
 **NIGHTFALL Constellation · Devin J. Wright · version 1.0 (2026-11-11).**
 **Status:** EXACT OBSTRUCTIONS + conditional deductions; cubic exponent two OPEN. This is a claim-specific proof-passport note, not an independently refereed theorem or novelty certificate.
 
