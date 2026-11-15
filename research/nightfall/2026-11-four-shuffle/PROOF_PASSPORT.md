@@ -1,5 +1,11 @@
 # Proof Passport: NF-BOUVEL-4SHUFFLE-20261111
 
+## v14 custody check — 14 November 2026
+
+The exact finite forcing claim `N₄=20`, length-19 witness and independently replayable factor enumeration are preserved. No new third-party proof audit, historical priority determination, or Lean theorem has been supplied by the recent Q2 and agent-security work. The finite-source certificate status is unchanged.
+
+---
+
 **Lifecycle:** NULL FIELD / active research · **Status:** finite computer-assisted theorem candidate; not externally refereed or novelty-certified.
 
 **Claim:** The least N for which every N-permutation has a consecutive four-shuffle factor is 20. A four-shuffle consists of four disjoint equal-size (at least two) subsequences having an identical order pattern. Every 20-permutation has a qualifying factor of length 8 or 12.
