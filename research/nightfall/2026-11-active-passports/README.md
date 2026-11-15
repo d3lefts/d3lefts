@@ -1,5 +1,19 @@
 # Active mathematical Proof Passport expansion — updated 12 November 2026
 
+## 14 November 2026 — v14 all-active-claim custody checkpoint
+
+**Twelve active mathematical claim IDs have each been reviewed and their source dossiers annotated without adding an identity.** The original **eleven frozen historical Proof Passports** and five approved bounded findings have not been edited or promoted. Public registry: [v14 JSON](../../../docs/active-proof-passport.json); [web page](../../../docs/active-proof-passport.html).
+
+- Strongest strict **unrestricted-singleton finite original-source Q2** now C₂≈364.5526832774 (named [run 43644790107](https://github.com/d3lefts/d3lefts/actions/runs/43644790107)), with arbitrary heterogeneous marginals but **one common finite alphabet type**. Old 736.673, 1064.958 and 1228.356 are superseded; 353.293, 190, 128, 121, 107 and 99 have separate conditional/draft terminal gates. Source: [current frontier](../../catalogue/CURRENT_FRONTIER.json).
+- [Conditional authority and semantic-fencing supplemental Proof Passport](AUTHORITY_SEMANTIC_FENCING_PROOF_PASSPORT_20261114.md) reconciles merged conditional agent-safety [#528](https://github.com/d3lefts/d3lefts/pull/528), 10 strict Lean semantic-fence/finite already-safe Bellman declarations on **unmerged draft [#554](https://github.com/d3lefts/d3lefts/pull/554)** ([run 43662280902](https://github.com/d3lefts/d3lefts/actions/runs/43662280902)), and matched local source-bound Linux authority service ([run 43662280945](https://github.com/d3lefts/d3lefts/actions/runs/43662280945)). No AWS/physical deployment, independently audited complete mediation, or universal agent safety is claimed. The merged three-proposal small-model IaC pilot [#557](https://github.com/d3lefts/d3lefts/pull/557) is preliminary and no safety-rate estimate.
+- The other ten active mathematical claims keep their evidence tiers and separately stated limitations; rank-r Hilbert observation, all-degree cubic, measurable exact recovery, historical novelty and the all-L² infinite-product Lean terminal remain open. Their dated v14 addenda are reviews, **not automatic certification promotions**.
+- Immutable receipts and all limitations are mirrored in [current Lean receipt supplement](../../../docs/current-lean-proof-receipts-20261114.json) and [current Lean Proof Passport](CURRENT_LEAN_PASSPORT_20261114.md). All checks must run on this exact revision before declaring website/proof-registry consistency.
+
+The v13.1, v13 and v12 sections below are dated archival milestones, not the present strongest bounds.
+
+---
+
+
 ## 14 November 2026 v13.1 evidence supplement (12 claim IDs preserved)
 
 The [unrestricted Efron–Stein proof passport](UNRESTRICTED_EFRON_STEIN_PROOF_PASSPORT_20261114.md) records a complete **standard analytic proof** for any index set and any real `L²` observable under the actual independent product law, including the directed-net and extended-sum arguments. **No unconditional arbitrary-index all-`L²` Lean theorem has passed**: finite-cylinder density, actual conditional projection commutation, and the general finite-coordinate source projection theorem remain to be compiled together. Source-specific pinned strict successes: #501, #506, #512 and #514; finite changed-law variance-risk theorem at all degrees #514. Finite Q2 latest verified bound #498: `C₂≈736.673` (older 1064.958 and 1228.356 are historical). Twelve claim IDs and frozen 67-source register remain unchanged. For exact receipts and limits see [Current Lean Proof Passport](CURRENT_LEAN_PASSPORT_20261114.md).
