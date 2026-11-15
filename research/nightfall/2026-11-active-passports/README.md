@@ -1,4 +1,14 @@
-# Active mathematical Proof Passport expansion — updated 14 November 2026
+# Active mathematical Proof Passport expansion — updated 15 November 2026
+
+## v15 — merged source-certified unrestricted Q2 C105.7417569
+
+The 15 active claim identities and 11 frozen historical records remain unchanged. The strongest **merged and pinned source-certified** finite common-alphabet degree-two coefficient is now **C₂ = [2√3(1+√2)+48/25]² ≈ 105.741756923658**, PR #564 (run 43671321904; named theorem `ActualSourceQ2105Terminal.actual_source_q2_105_unconditional`; exact source blob `ed945639f7cbe26ba8fdb50d691127c01cdf863f`). The earlier C107.393 (#558), C364.553 (#525), C736.673 and C1064.958 are retained as valid superseded certificates. The full independent-product C96 theorem remains open. PR #570 strictly proves only an **implication under an extra six-B source graph cover hypothesis**; this is not known to hold universally.
+
+Canonical evidence and fail-closed checks: `research/catalogue/CURRENT_FRONTIER.json`, `scripts/check_current_frontier.py`, `docs/active-proof-passport.json`, and the dedicated original-head Lean receipts. No arbitrary-index, higher-degree, worldwide novelty or deployed-agent guarantee is inferred. External nonauthor review is still absent.
+
+---
+
+## v14 — historical 14 November snapshot (superseded current-frontier fields)
 
 ## v14 — fifteen active source-scoped records; eleven historical records unchanged
 
