@@ -13,6 +13,7 @@ No caller-supplied section or Hilbert moment premise.
 namespace Nightfall.Observability.ActualSourceQ2121Terminal
 
 open Finset
+open Nightfall.Observability.ActualSourceQ2128Terminal
 open Nightfall.Observability.ActualProductMergeTower
 open Nightfall.Observability.ActualSourceANOVA
 open Nightfall.Observability.ActualSourceVarianceEnergy
