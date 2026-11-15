@@ -58,7 +58,7 @@ def Valid (M : Model Belief Action Observation) :
       (∀ o, M.possible b a o →
         Valid M (M.post b a o) (k o))
 
-def WorstCost [Fintype Observation]
+noncomputable def WorstCost [Fintype Observation]
     (M : Model Belief Action Observation) :
     {n : ℕ} → Belief → Policy Action Observation n → ℕ
   | _, _, .finish => 0
@@ -176,9 +176,8 @@ theorem globally_optimal_lifecycle_policy_exists
   obtain ⟨p, hp, hcost⟩ := Nat.find_spec hex
   refine ⟨p, hp, ?_⟩
   intro q hq
-  by_contra hnot
-  have hlt : WorstCost M b q < Nat.find hex := Nat.lt_of_not_ge hnot
-  exact (Nat.find_min' hex hlt) ⟨q, hq, rfl⟩
+  rw [hcost]
+  exact Nat.find_min' hex ⟨q, hq, rfl⟩
 
 theorem min_cost_attained
     [Fintype Observation]
