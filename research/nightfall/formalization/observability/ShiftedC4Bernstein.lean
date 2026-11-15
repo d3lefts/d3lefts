@@ -386,4 +386,128 @@ private theorem cell_2_2 (X V : ℝ)
   rw [heq]
   exact hpos
 
+theorem shifted_c4_F_nonneg
+    (x v : ℝ) (hx0 : 0 ≤ x) (hx1 : x ≤ 1)
+    (hv0 : 0 ≤ v) (hv1 : v ≤ 1) :
+    0 ≤ F x v := by
+  have hxs : (0 ≤ x ∧ x ≤ (2/5:ℝ)) ∨
+      ((2/5:ℝ) ≤ x ∧ x ≤ (3/5:ℝ)) ∨
+      ((3/5:ℝ) ≤ x ∧ x ≤ 1) := by
+    rcases le_total x (2/5:ℝ) with h₁ | h₁
+    · exact Or.inl ⟨hx0, h₁⟩
+    · rcases le_total x (3/5:ℝ) with h₂ | h₂
+      · exact Or.inr (Or.inl ⟨h₁, h₂⟩)
+      · exact Or.inr (Or.inr ⟨h₂, hx1⟩)
+  have hvs : (0 ≤ v ∧ v ≤ (1/3:ℝ)) ∨
+      ((1/3:ℝ) ≤ v ∧ v ≤ (2/3:ℝ)) ∨
+      ((2/3:ℝ) ≤ v ∧ v ≤ 1) := by
+    rcases le_total v (1/3:ℝ) with h₁ | h₁
+    · exact Or.inl ⟨hv0, h₁⟩
+    · rcases le_total v (2/3:ℝ) with h₂ | h₂
+      · exact Or.inr (Or.inl ⟨h₁, h₂⟩)
+      · exact Or.inr (Or.inr ⟨h₂, hv1⟩)
+  rcases hxs with hx | hx | hx
+  · rcases hvs with hv | hv | hv
+    · have hX := affine_unit x (0:ℝ) (2/5:ℝ)
+          (by norm_num) hx.1 hx.2
+      have hV := affine_unit v (0:ℝ) (1/3:ℝ)
+          (by norm_num) hv.1 hv.2
+      have hcell := cell_0_0
+        ((x-(0:ℝ))/(2/5:ℝ)) ((v-(0:ℝ))/(1/3:ℝ))
+        hX.1 hX.2 hV.1 hV.2
+      have hxid : (0:ℝ)+(2/5:ℝ)*((x-(0:ℝ))/(2/5:ℝ)) = x := by ring
+      have hvid : (0:ℝ)+(1/3:ℝ)*((v-(0:ℝ))/(1/3:ℝ)) = v := by ring
+      rw [hxid, hvid] at hcell
+      exact hcell
+    · have hX := affine_unit x (0:ℝ) (2/5:ℝ)
+          (by norm_num) hx.1 hx.2
+      have hV := affine_unit v (1/3:ℝ) (2/3:ℝ)
+          (by norm_num) hv.1 hv.2
+      have hcell := cell_0_1
+        ((x-(0:ℝ))/(2/5:ℝ)) ((v-(1/3:ℝ))/(1/3:ℝ))
+        hX.1 hX.2 hV.1 hV.2
+      have hxid : (0:ℝ)+(2/5:ℝ)*((x-(0:ℝ))/(2/5:ℝ)) = x := by ring
+      have hvid : (1/3:ℝ)+(1/3:ℝ)*((v-(1/3:ℝ))/(1/3:ℝ)) = v := by ring
+      rw [hxid, hvid] at hcell
+      exact hcell
+    · have hX := affine_unit x (0:ℝ) (2/5:ℝ)
+          (by norm_num) hx.1 hx.2
+      have hV := affine_unit v (2/3:ℝ) (1:ℝ)
+          (by norm_num) hv.1 hv.2
+      have hcell := cell_0_2
+        ((x-(0:ℝ))/(2/5:ℝ)) ((v-(2/3:ℝ))/(1/3:ℝ))
+        hX.1 hX.2 hV.1 hV.2
+      have hxid : (0:ℝ)+(2/5:ℝ)*((x-(0:ℝ))/(2/5:ℝ)) = x := by ring
+      have hvid : (2/3:ℝ)+(1/3:ℝ)*((v-(2/3:ℝ))/(1/3:ℝ)) = v := by ring
+      rw [hxid, hvid] at hcell
+      exact hcell
+  · rcases hvs with hv | hv | hv
+    · have hX := affine_unit x (2/5:ℝ) (3/5:ℝ)
+          (by norm_num) hx.1 hx.2
+      have hV := affine_unit v (0:ℝ) (1/3:ℝ)
+          (by norm_num) hv.1 hv.2
+      have hcell := cell_1_0
+        ((x-(2/5:ℝ))/(1/5:ℝ)) ((v-(0:ℝ))/(1/3:ℝ))
+        hX.1 hX.2 hV.1 hV.2
+      have hxid : (2/5:ℝ)+(1/5:ℝ)*((x-(2/5:ℝ))/(1/5:ℝ)) = x := by ring
+      have hvid : (0:ℝ)+(1/3:ℝ)*((v-(0:ℝ))/(1/3:ℝ)) = v := by ring
+      rw [hxid, hvid] at hcell
+      exact hcell
+    · have hX := affine_unit x (2/5:ℝ) (3/5:ℝ)
+          (by norm_num) hx.1 hx.2
+      have hV := affine_unit v (1/3:ℝ) (2/3:ℝ)
+          (by norm_num) hv.1 hv.2
+      have hcell := cell_1_1
+        ((x-(2/5:ℝ))/(1/5:ℝ)) ((v-(1/3:ℝ))/(1/3:ℝ))
+        hX.1 hX.2 hV.1 hV.2
+      have hxid : (2/5:ℝ)+(1/5:ℝ)*((x-(2/5:ℝ))/(1/5:ℝ)) = x := by ring
+      have hvid : (1/3:ℝ)+(1/3:ℝ)*((v-(1/3:ℝ))/(1/3:ℝ)) = v := by ring
+      rw [hxid, hvid] at hcell
+      exact hcell
+    · have hX := affine_unit x (2/5:ℝ) (3/5:ℝ)
+          (by norm_num) hx.1 hx.2
+      have hV := affine_unit v (2/3:ℝ) (1:ℝ)
+          (by norm_num) hv.1 hv.2
+      have hcell := cell_1_2
+        ((x-(2/5:ℝ))/(1/5:ℝ)) ((v-(2/3:ℝ))/(1/3:ℝ))
+        hX.1 hX.2 hV.1 hV.2
+      have hxid : (2/5:ℝ)+(1/5:ℝ)*((x-(2/5:ℝ))/(1/5:ℝ)) = x := by ring
+      have hvid : (2/3:ℝ)+(1/3:ℝ)*((v-(2/3:ℝ))/(1/3:ℝ)) = v := by ring
+      rw [hxid, hvid] at hcell
+      exact hcell
+  · rcases hvs with hv | hv | hv
+    · have hX := affine_unit x (3/5:ℝ) (1:ℝ)
+          (by norm_num) hx.1 hx.2
+      have hV := affine_unit v (0:ℝ) (1/3:ℝ)
+          (by norm_num) hv.1 hv.2
+      have hcell := cell_2_0
+        ((x-(3/5:ℝ))/(2/5:ℝ)) ((v-(0:ℝ))/(1/3:ℝ))
+        hX.1 hX.2 hV.1 hV.2
+      have hxid : (3/5:ℝ)+(2/5:ℝ)*((x-(3/5:ℝ))/(2/5:ℝ)) = x := by ring
+      have hvid : (0:ℝ)+(1/3:ℝ)*((v-(0:ℝ))/(1/3:ℝ)) = v := by ring
+      rw [hxid, hvid] at hcell
+      exact hcell
+    · have hX := affine_unit x (3/5:ℝ) (1:ℝ)
+          (by norm_num) hx.1 hx.2
+      have hV := affine_unit v (1/3:ℝ) (2/3:ℝ)
+          (by norm_num) hv.1 hv.2
+      have hcell := cell_2_1
+        ((x-(3/5:ℝ))/(2/5:ℝ)) ((v-(1/3:ℝ))/(1/3:ℝ))
+        hX.1 hX.2 hV.1 hV.2
+      have hxid : (3/5:ℝ)+(2/5:ℝ)*((x-(3/5:ℝ))/(2/5:ℝ)) = x := by ring
+      have hvid : (1/3:ℝ)+(1/3:ℝ)*((v-(1/3:ℝ))/(1/3:ℝ)) = v := by ring
+      rw [hxid, hvid] at hcell
+      exact hcell
+    · have hX := affine_unit x (3/5:ℝ) (1:ℝ)
+          (by norm_num) hx.1 hx.2
+      have hV := affine_unit v (2/3:ℝ) (1:ℝ)
+          (by norm_num) hv.1 hv.2
+      have hcell := cell_2_2
+        ((x-(3/5:ℝ))/(2/5:ℝ)) ((v-(2/3:ℝ))/(1/3:ℝ))
+        hX.1 hX.2 hV.1 hV.2
+      have hxid : (3/5:ℝ)+(2/5:ℝ)*((x-(3/5:ℝ))/(2/5:ℝ)) = x := by ring
+      have hvid : (2/3:ℝ)+(1/3:ℝ)*((v-(2/3:ℝ))/(1/3:ℝ)) = v := by ring
+      rw [hxid, hvid] at hcell
+      exact hcell
+
 end Nightfall.ShiftedC4Bernstein
