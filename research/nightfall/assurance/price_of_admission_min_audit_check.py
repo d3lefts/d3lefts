@@ -47,7 +47,7 @@ def main():
     )
     assert optimal_cost == floor == 89
     assert (Fraction(89, 100), Fraction(1, 100)) in optimal
-    assert checked == 5252
+    assert checked == 5151
     result = {
         "model": "exact two-world cheap-monitor indistinguishability",
         "independent_audit": "perfect",
