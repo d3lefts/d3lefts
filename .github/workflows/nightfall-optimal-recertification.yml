@@ -1,0 +1,21 @@
+name: NIGHTFALL joint recertification exact finite audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/optimal-recertification/**'
+      - '.github/workflows/nightfall-optimal-recertification.yml'
+  workflow_dispatch:
+jobs:
+  exact-recertification:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exact independent enumeration of joint evidence/authority mincut
+        run: python3 -B research/nightfall/optimal-recertification/independent_mincut_audit.py
+      - name: Source provenance
+        run: |
+          git rev-parse HEAD
+          sha256sum research/nightfall/optimal-recertification/*.md
+          sha256sum research/nightfall/optimal-recertification/*.py
