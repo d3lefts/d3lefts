@@ -10,7 +10,7 @@ This file is purely real algebra, NOT an original-source Q2 theorem.
 
 namespace Nightfall.ShiftedC6Over25Bernstein
 
-private def F (x v : ℝ) : ℝ :=
+private noncomputable def F (x v : ℝ) : ℝ :=
   3-(1-v)^2*(3-2*x^4+(50/3:ℝ)*x*v*(1-x^2)+(625/36:ℝ)*v^2*(1-x^2))
 
 private theorem affine_unit (z a b : ℝ)
