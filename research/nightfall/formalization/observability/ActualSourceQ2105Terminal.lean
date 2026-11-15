@@ -8,6 +8,8 @@ original-source Bernoulli t=(sqrt2-1) integrated section budget.
 Nonzero singleton components, arbitrary finite heterogeneous laws,
 zero-probability atoms and genuine source influences are retained.
 No caller-supplied section or Hilbert moment premise.
+Exact coefficient: (2*(1+sqrt(2))*sqrt(3)+48/25)^2.
+Current gate: strict original p,f named source theorem, not merely scalar polynomial.
 -/
 
 namespace Nightfall.Observability.ActualSourceQ2105Terminal
