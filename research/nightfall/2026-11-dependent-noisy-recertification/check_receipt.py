@@ -108,4 +108,3 @@ def verify(path):
 if __name__=='__main__':
  p=sys.argv[1] if len(sys.argv)>1 else pathlib.Path(__file__).parent/'bellman_receipt.json'
  print(json.dumps(verify(p),sort_keys=True))
-
