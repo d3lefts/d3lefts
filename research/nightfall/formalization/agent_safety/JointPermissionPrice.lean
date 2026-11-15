@@ -70,6 +70,30 @@ structure Plan (R capacity N guards : ℕ) where
   withinDeadline : 2 * paired + direct ≤ capacity
   effectTimeGuards : N ≤ guards
 
+/-- Each verification operation is assigned a distinct flattened
+worker-slot. This is an explicit feasible finite schedule certificate,
+not just a claim that aggregate capacity is sufficient. -/
+def operationPlacement {R capacity N guards : ℕ}
+    (p : Plan R capacity N guards)
+    (op : Fin (2 * p.paired + p.direct)) : Fin capacity :=
+  ⟨op.val, Nat.lt_of_lt_of_le op.isLt p.withinDeadline⟩
+
+/-- No two verification operations can occupy the same worker-slot. -/
+theorem operationPlacement_injective {R capacity N guards : ℕ}
+    (p : Plan R capacity N guards) :
+    Function.Injective (operationPlacement p) := by
+  intro i j hij
+  apply Fin.ext
+  exact congrArg Fin.val hij
+
+/-- Verified plans admit a collision-free schedule in the modeled resource
+grid. A capacity index represents one of m·H worker-time cells. -/
+theorem finite_worker_schedule_exists {R capacity N guards : ℕ}
+    (p : Plan R capacity N guards) :
+    ∃ placement : Fin (2 * p.paired + p.direct) → Fin capacity,
+      Function.Injective placement := by
+  exact ⟨operationPlacement p, operationPlacement_injective p⟩
+
 /-- At least R worker-slots are unavoidable for R fresh actions. -/
 theorem worker_slots_necessary {R capacity N guards : ℕ}
     (p : Plan R capacity N guards) : R ≤ capacity := by
@@ -224,6 +248,30 @@ invalidations; the source epoch is assumed frozen afterward. -/
 def freshActions (N initialCache invalidated : ℕ) : ℕ :=
   N - (initialCache - invalidated)
 
+/-- Exact cached-action identity under honest cache and invalidation counts. -/
+theorem freshActions_eq (N initialCache invalidated : ℕ)
+    (hcache : initialCache ≤ N) (hinvalid : invalidated ≤ initialCache) :
+    freshActions N initialCache invalidated =
+      N - initialCache + invalidated := by
+  unfold freshActions
+  omega
+
+/-- The attaining plan carries an explicit injective map from all expensive
+and complementary-half operations into the available m·H worker-slots. -/
+theorem joint_floor_with_schedule_certificate
+    (R H m N guards c d verifierFee guardFee effectFee : ℕ)
+    (hcap : R ≤ m * H) (hg : N ≤ guards)
+    (hprice : 2 * c ≤ d) :
+    ∃ p : Plan R (m * H) N guards,
+      ∃ placement : Fin (2 * p.paired + p.direct) → Fin (m * H),
+        Function.Injective placement ∧
+        permissionCost p c d verifierFee guardFee effectFee =
+          permissionFloor R H m N guards c d verifierFee guardFee effectFee := by
+  obtain ⟨p, hpriceEq⟩ :=
+    joint_floor_is_attainable
+      R H m N guards c d verifierFee guardFee effectFee hcap hg hprice
+  exact ⟨p, operationPlacement p, operationPlacement_injective p, hpriceEq⟩
+
 /-- End-to-end **finite zero-error source-cache / worker-slot / guard**
 price theorem, with no caller-supplied cost or optimum premises. -/
 theorem exact_cached_permission_price
@@ -241,8 +289,10 @@ theorem exact_cached_permission_price
       permissionCost p c d verifierFee guardFee effectFee =
         permissionFloor (freshActions N initialCache invalidated)
           H m N guards c d verifierFee guardFee effectFee) := by
+  have hR := freshActions_eq N initialCache invalidated hcache hinvalid
+  rw [hR] at hcapacity ⊢
   exact exact_joint_permission_price
-    (freshActions N initialCache invalidated)
+    (N - initialCache + invalidated)
     H m N guards c d verifierFee guardFee effectFee
     hcapacity hguard hprice
 
