@@ -39,8 +39,14 @@ theorem one_increment_sharp_scalar
   have hs3 : 0 ≤ Real.sqrt (3:ℝ) := Real.sqrt_nonneg _
   have hs2 : 0 ≤ Real.sqrt (2:ℝ) := Real.sqrt_nonneg _
   have hs6 : 0 ≤ Real.sqrt (6:ℝ) := Real.sqrt_nonneg _
+  have hsprod : (Real.sqrt (3:ℝ)*Real.sqrt (2:ℝ))^2 =
+      (Real.sqrt (6:ℝ))^2 := by
+    calc
+      _ = (Real.sqrt (3:ℝ))^2 * (Real.sqrt (2:ℝ))^2 := by ring
+      _ = (3:ℝ)*2 := by rw [hr3, hr2]
+      _ = (Real.sqrt (6:ℝ))^2 := by rw [hr6]; norm_num
   have hs32 : Real.sqrt (3:ℝ)*Real.sqrt (2:ℝ) = Real.sqrt 6 := by
-    nlinarith [sq_nonneg (Real.sqrt (3:ℝ)*Real.sqrt (2:ℝ))]
+    nlinarith [hsprod, mul_nonneg hs3 hs2]
   have hcros : 2*Real.sqrt (3:ℝ)*beta-1 = -4*kappa := by
     unfold beta kappa
     nlinarith [hs32]
@@ -51,7 +57,10 @@ theorem one_increment_sharp_scalar
       2*(u-kappa*c)^2 := by
     calc
       _ = 2*u^2+(2*Real.sqrt 3*beta-1)*u*c+beta^2*c^2 := by
-        nlinarith [hr3]
+        calc
+          _ = ((Real.sqrt (3:ℝ))^2-1)*u^2+
+                (2*Real.sqrt 3*beta-1)*u*c+beta^2*c^2 := by ring
+          _ = _ := by rw [hr3]; ring
       _ = 2*u^2-4*kappa*u*c+2*kappa^2*c^2 := by
         rw [hcros, hbetasq]
         ring
