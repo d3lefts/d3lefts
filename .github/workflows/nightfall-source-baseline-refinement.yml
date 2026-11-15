@@ -1,0 +1,56 @@
+name: NIGHTFALL source-to-baseline epoch refinement (real service)
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/nightfall-source-baseline-refinement.yml"
+      - "research/nightfall/right-to-act-promotion/authority_service.py"
+      - "research/nightfall/right-to-act-promotion/test_source_baseline_binding.py"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nightfall-source-baseline-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  source-bound-effect-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    defaults:
+      run:
+        working-directory: research/nightfall/right-to-act-promotion
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile actual service and independent regression module
+        run: python -m py_compile authority_service.py independent_effect_verifier.py test_source_baseline_binding.py
+      - name: Real-source pure transition and live Unix socket regression
+        run: |
+          set -euo pipefail
+          python -m unittest -v test_source_baseline_binding 2>&1 | tee baseline-binding-tests.log
+      - name: Seal exact source and test receipt
+        if: success()
+        run: |
+          python - <<'PY'
+          import hashlib,json,os,pathlib,platform
+          names=['authority_service.py','independent_effect_verifier.py','test_source_baseline_binding.py']
+          sha={n:hashlib.sha256(pathlib.Path(n).read_bytes()).hexdigest() for n in names}
+          receipt={'status':'passed','scope':'local service-owned JSON artifact, not cloud or physical actuation',
+                   'github_sha':os.environ['GITHUB_SHA'],'github_run_id':os.environ['GITHUB_RUN_ID'],
+                   'python':platform.python_version(),'source_sha256':sha}
+          pathlib.Path('source-baseline-refinement-receipt.json').write_text(json.dumps(receipt,indent=2,sort_keys=True)+'\n')
+          print(json.dumps(receipt,sort_keys=True))
+          PY
+      - name: Upload executable test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-source-baseline-refinement
+          path: |
+            research/nightfall/right-to-act-promotion/baseline-binding-tests.log
+            research/nightfall/right-to-act-promotion/source-baseline-refinement-receipt.json
+          if-no-files-found: warn
+          retention-days: 14
