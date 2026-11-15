@@ -80,3 +80,5 @@ jobs:
             research/nightfall/right-to-act-promotion/cost-study-sandbox-image-id.txt
           retention-days: 30
           if-no-files-found: warn
+
+# Repair checkpoint: preserve existing Fn::GetAtt SCP target expressions; verify billing SNS Ref.
