@@ -51,7 +51,8 @@
         "remaining_gate": "Unrestricted C96 remains unproved. C96.100399 owner graph theorem needs universal 6B budget; 96.57352 requires genuine independent Hilbert first/second comparison. Independent human proof/referee and external priority separate.",
         "source_audit": "Verified original exact-source blobs and named Lean receipts; no declaration of a new mathematical proof from website status.",
         "certification_change": "Promote ONLY merged C105 as best unrestricted finite product Q2 source; all weaker certified results preserved and unproved C96 conditionals retained."
-      }
+      },
+      "certificate_note_20261115": "Strongest merged source theorem C105.7417569, verified Lean runs 43671321904 and 43678232064; C95 pure zero-singleton; C96.100 conditional six-cover; unrestricted C96.57352 open. Details in v16 dated passport."
     },
     {
       "id": "q2-observation",
@@ -81,7 +82,8 @@
         "remaining_gate": "Recompose observation theorem with current source terminal and independent named declaration before changing query budget.",
         "source_audit": "Manual source/CI scope reconciliation; absence of new evidence does not imply failure.",
         "certification_change": "none"
-      }
+      },
+      "certificate_note_20261115": "Orthogonal and symmetric first-chaos all-length analytic proofs (PR #572/#574) and asymmetric exact finite stress test (PR #577) are not unrestricted source-level Lean certificates."
     },
     {
       "id": "finite-certificate",
@@ -383,7 +385,8 @@
         "finding": "New distinct finite-source kernel-certified passport, merged #529.",
         "remaining_gate": "Cost-optimal and authenticated operational recertification.",
         "certification_change": "new active identity"
-      }
+      },
+      "certificate_note_20261115": "PR #576 finite optimal-recognition/recertification, setup-fee mincut subclass and Bayesian-risk exact audit are analytic and computational; no new combined Lean optimum or deployed-system complete mediation."
     },
     {
       "id": "conditional-agent-safety",
@@ -581,5 +584,23 @@
     }
   },
   "current_frontier_reference": "research/catalogue/CURRENT_FRONTIER.json",
-  "claim_count": 15
+  "claim_count": 15,
+  "last_certificate_reconciliation_20261115": {
+    "receipt_index": "docs/current-lean-proof-receipts-20261115.json",
+    "narrative": "research/nightfall/2026-11-active-passports/PROOF_PASSPORT_V16_20261115.md",
+    "status": "audited source-specific Lean receipts; no additional theorem promotion",
+    "main_q2_source": "research/nightfall/formalization/observability/ActualSourceQ2105Terminal.lean",
+    "unrestricted_q2_coefficient": 105.741756923658,
+    "original_direct_lean_run": 43671321904,
+    "post_reconciliation_direct_lean_run": 43678232064,
+    "pure_sector_q2_scope": "95.063 certificate requires zero canonical singleton components",
+    "six_cover_q2_scope": "96.100399 is only conditional on a universal-unproved source cover <=6B",
+    "unrestricted_96_57352": "OPEN",
+    "separate_research": [
+      "PR #572 orthogonal all-length analytic, not Lean",
+      "PR #574 symmetric first-chaos analytic, not Lean",
+      "PR #576 finite optimal recertification analytic and CI, not Lean",
+      "PR #577 asymmetric-law exact stress test, not all-n proof"
+    ]
+  }
 }
