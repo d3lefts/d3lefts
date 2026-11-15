@@ -1,0 +1,24 @@
+name: Commonwealth OS synthetic workflow check
+on:
+  pull_request:
+    paths:
+      - 'projects/commonwealth-os/workflow/**'
+      - '.github/workflows/commonwealth-workflow-check.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'projects/commonwealth-os/workflow/**'
+      - '.github/workflows/commonwealth-workflow-check.yml'
+permissions:
+  contents: read
+jobs:
+  synthetic-workflow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check syntactic validity
+        run: python3 -m py_compile projects/commonwealth-os/workflow/{workflow_model,independent_checker,test_workflow}.py
+      - name: Independent replay and negative test suite
+        working-directory: projects/commonwealth-os/workflow
+        run: python3 -m unittest -v test_workflow.py
