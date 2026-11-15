@@ -4,6 +4,6 @@ FROM python:3.11-slim-bookworm
 ENV DEBIAN_FRONTEND=noninteractive PYTHONDONTWRITEBYTECODE=1 HOME=/tmp
 RUN apt-get update && apt-get install -y --no-install-recommends nodejs \
     && rm -rf /var/lib/apt/lists/*
-RUN python -m pip install --no-cache-dir 'aws-cdk-lib==2.260.0' 'constructs==10.5.0' 'jsii==1.137.0'
+RUN python -m pip install --no-cache-dir 'aws-cdk-lib==2.260.0' 'constructs==10.5.0' 'jsii==1.137.0' 'pytest==8.4.2'
 USER 65534:65534
 WORKDIR /src
