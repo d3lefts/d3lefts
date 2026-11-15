@@ -29,13 +29,13 @@ def modularSafe (x y : Bool) : Prop := x = y
 theorem left_half_ambiguous (x : Bool) :
     ∃ good bad : Bool, modularSafe x good ∧ ¬ modularSafe x bad := by
   refine ⟨x, !x, rfl, ?_⟩
-  cases x <;> decide
+  cases x <;> simp [modularSafe]
 
 /-- A single right-half observation has both a safe and unsafe completion. -/
 theorem right_half_ambiguous (y : Bool) :
     ∃ good bad : Bool, modularSafe good y ∧ ¬ modularSafe bad y := by
   refine ⟨y, !y, rfl, ?_⟩
-  cases y <;> decide
+  cases y <;> simp [modularSafe]
 
 /-- No deterministic monitor that sees only the left input can give correct
 permission on *all* safe and unsafe full-support Boolean worlds. -/
@@ -46,7 +46,7 @@ theorem left_only_cannot_decide :
   have hgood : modularSafe false false := rfl
   have hpass : verdict false = true := (h false false).2 hgood
   have hbad : modularSafe false true := (h false true).1 hpass
-  exact (by decide : ¬ modularSafe false true) hbad
+  exact (by simp [modularSafe] : ¬ modularSafe false true) hbad
 
 /-- The same impossibility holds for right-only monitoring. -/
 theorem right_only_cannot_decide :
@@ -56,7 +56,7 @@ theorem right_only_cannot_decide :
   have hgood : modularSafe false false := rfl
   have hpass : verdict false = true := (h false false).2 hgood
   have hbad : modularSafe true false := (h true false).1 hpass
-  exact (by decide : ¬ modularSafe true false) hbad
+  exact (by simp [modularSafe] : ¬ modularSafe true false) hbad
 
 /-- A complete all-safe accepting plan can use two independent half-reads
 or a direct test for each required predicate. Pairs use two worker-slots;
@@ -133,11 +133,10 @@ theorem evidence_cost_decomposition {R capacity N guards : ℕ}
   have hd : d = 2 * c + (d - 2 * c) := by omega
   calc
     evidenceCost p c d =
-      2 * c * (p.paired + p.direct) +
-        (d - 2 * c) * p.direct := by
-          unfold evidenceCost
-          rw [hd]
-          ring
+      2 * c * p.paired + (2 * c + (d - 2 * c)) * p.direct := by
+        exact congrArg (fun v : ℕ => 2 * c * p.paired + v * p.direct) hd
+    _ = 2 * c * (p.paired + p.direct) +
+        (d - 2 * c) * p.direct := by ring
     _ = 2 * c * R + (d - 2 * c) * p.direct := by
       rw [p.allFreshCovered]
 
