@@ -4,7 +4,7 @@ import Mathlib
 # NIGHTFALL: finite permission evidence / observation-cost certificates
 
 This module separates:
-* an arbitrary finite monitor transcript's safe/unsafe likelihood domination;
+* an arbitrary finite monitor transcript's safe/unsafeMass likelihood domination;
 * exact optimal cost within the all-negative exhaustion-certificate model;
 * an epoch-by-epoch evidence + effect-guard accounting lower bound;
 * a rational ten-action independent-reset expectation.
@@ -24,40 +24,40 @@ section FiniteNoisyEvidence
 variable {Ω : Type*} [Fintype Ω]
 
 /-- An observer whose safe-world mass is bounded pointwise by κ times
-the unsafe-world mass cannot achieve a safe acceptance probability
-greater than κ times its unsafe acceptance probability.
+the unsafeMass-world mass cannot achieve a safe acceptance probability
+greater than κ times its unsafeMass acceptance probability.
 For finite support-equivalent distributions a finite κ exists.
 The domination premise is explicit here, not silently inferred. -/
 theorem finite_transcript_permission_domination
-    (safe unsafe : Ω → ℝ) (κ : ℝ)
-    (hdom : ∀ ω, safe ω ≤ κ * unsafe ω)
+    (safe unsafeMass : Ω → ℝ) (κ : ℝ)
+    (hdom : ∀ ω, safe ω ≤ κ * unsafeMass ω)
     (grant : Ω → Prop) [DecidablePred grant] :
     (∑ ω : Ω, if grant ω then safe ω else 0) ≤
-      κ * (∑ ω : Ω, if grant ω then unsafe ω else 0) := by
+      κ * (∑ ω : Ω, if grant ω then unsafeMass ω else 0) := by
   classical
   calc
     (∑ ω : Ω, if grant ω then safe ω else 0) ≤
-        ∑ ω : Ω, κ * (if grant ω then unsafe ω else 0) := by
+        ∑ ω : Ω, κ * (if grant ω then unsafeMass ω else 0) := by
           apply Finset.sum_le_sum
           intro ω _
           by_cases h : grant ω
           · simpa [h] using hdom ω
           · simp [h]
-    _ = κ * (∑ ω : Ω, if grant ω then unsafe ω else 0) := by
+    _ = κ * (∑ ω : Ω, if grant ω then unsafeMass ω else 0) := by
           rw [Finset.mul_sum]
 
-/-- In the finite-overlap model, zero unsafe grants force zero safe grants.
+/-- In the finite-overlap model, zero unsafeMass grants force zero safe grants.
 Unlike a statistical test with small positive error, no nontrivial
 finite-time zero-false-permit rule exists under this domination. -/
 theorem zero_error_forces_zero_availability
-    (safe unsafe : Ω → ℝ) (κ : ℝ)
+    (safe unsafeMass : Ω → ℝ) (κ : ℝ)
     (hsafe : ∀ ω, 0 ≤ safe ω)
-    (hdom : ∀ ω, safe ω ≤ κ * unsafe ω)
+    (hdom : ∀ ω, safe ω ≤ κ * unsafeMass ω)
     (grant : Ω → Prop) [DecidablePred grant]
-    (hzero : (∑ ω : Ω, if grant ω then unsafe ω else 0) = 0) :
+    (hzero : (∑ ω : Ω, if grant ω then unsafeMass ω else 0) = 0) :
     (∑ ω : Ω, if grant ω then safe ω else 0) = 0 := by
   classical
-  have hupper := finite_transcript_permission_domination safe unsafe κ hdom grant
+  have hupper := finite_transcript_permission_domination safe unsafeMass κ hdom grant
   rw [hzero, mul_zero] at hupper
   have hlower : 0 ≤ (∑ ω : Ω, if grant ω then safe ω else 0) := by
     apply Finset.sum_nonneg
@@ -70,14 +70,14 @@ theorem zero_error_forces_zero_availability
 /-- Error-availability tradeoff following from an explicit finite
 likelihood-ratio envelope. A fresh epoch does not erase this tradeoff. -/
 theorem false_permit_availability_tradeoff
-    (safe unsafe : Ω → ℝ) (κ α β : ℝ)
+    (safe unsafeMass : Ω → ℝ) (κ α β : ℝ)
     (hκ : 0 ≤ κ)
-    (hdom : ∀ ω, safe ω ≤ κ * unsafe ω)
+    (hdom : ∀ ω, safe ω ≤ κ * unsafeMass ω)
     (grant : Ω → Prop) [DecidablePred grant]
-    (hfalse : (∑ ω : Ω, if grant ω then unsafe ω else 0) ≤ α)
+    (hfalse : (∑ ω : Ω, if grant ω then unsafeMass ω else 0) ≤ α)
     (havail : 1 - β ≤ (∑ ω : Ω, if grant ω then safe ω else 0)) :
     1 - β ≤ κ * α := by
-  have hbound := finite_transcript_permission_domination safe unsafe κ hdom grant
+  have hbound := finite_transcript_permission_domination safe unsafeMass κ hdom grant
   have hm := mul_le_mul_of_nonneg_left hfalse hκ
   linarith
 
@@ -95,36 +95,36 @@ private theorem positive_cost_subset_monotone
     (by intro i _ _; exact hc i)
 
 /-- Any all-negative *exhaustion certificate* must pay at least the
-less expensive of the safe and unsafe candidate sets. -/
+less expensive of the safe and unsafeMass candidate sets. -/
 theorem permission_exhaustion_lower_bound
-    (universe safe inspected : Finset ι)
+    (candidates safe inspected : Finset ι)
     (cost : ι → ℝ) (hc : ∀ i, 0 ≤ cost i)
-    (hcert : safe ⊆ inspected ∨ (universe \\ safe) ⊆ inspected) :
-    min (∑ i ∈ safe, cost i) (∑ i ∈ universe \\ safe, cost i) ≤
+    (hcert : safe ⊆ inspected ∨ (candidates \ safe) ⊆ inspected) :
+    min (∑ i ∈ safe, cost i) (∑ i ∈ candidates \ safe, cost i) ≤
       ∑ i ∈ inspected, cost i := by
   rcases hcert with hs | hu
   · exact (min_le_left _ _).trans
       (positive_cost_subset_monotone cost hc safe inspected hs)
   · exact (min_le_right _ _).trans
-      (positive_cost_subset_monotone cost hc (universe \\ safe) inspected hu)
+      (positive_cost_subset_monotone cost hc (candidates \ safe) inspected hu)
 
 /-- The finite all-negative oracle lower bound is attained by inspecting
 all candidates in whichever permission class has lower total cost. -/
 theorem permission_exhaustion_attained
-    (universe safe : Finset ι) (cost : ι → ℝ)
-    (hs : safe ⊆ universe) :
+    (candidates safe : Finset ι) (cost : ι → ℝ)
+    (hs : safe ⊆ candidates) :
     ∃ inspected : Finset ι,
-      inspected ⊆ universe ∧
-      (safe ⊆ inspected ∨ (universe \\ safe) ⊆ inspected) ∧
+      inspected ⊆ candidates ∧
+      (safe ⊆ inspected ∨ (candidates \ safe) ⊆ inspected) ∧
       (∑ i ∈ inspected, cost i) =
-        min (∑ i ∈ safe, cost i) (∑ i ∈ universe \\ safe, cost i) := by
-  by_cases h : (∑ i ∈ safe, cost i) ≤ ∑ i ∈ universe \\ safe, cost i
+        min (∑ i ∈ safe, cost i) (∑ i ∈ candidates \ safe, cost i) := by
+  by_cases h : (∑ i ∈ safe, cost i) ≤ ∑ i ∈ candidates \ safe, cost i
   · refine ⟨safe, hs, Or.inl (subset_refl safe), ?_⟩
     exact (min_eq_left h).symm
-  · have hrev : (∑ i ∈ universe \\ safe, cost i) ≤
+  · have hrev : (∑ i ∈ candidates \ safe, cost i) ≤
         ∑ i ∈ safe, cost i := le_of_lt (lt_of_not_ge h)
-    refine ⟨universe \\ safe, Finset.sdiff_subset, Or.inr
-      (subset_refl (universe \\ safe)), ?_⟩
+    refine ⟨candidates \ safe, Finset.sdiff_subset, Or.inr
+      (subset_refl (candidates \ safe)), ?_⟩
     exact (min_eq_right hrev).symm
 
 end ExhaustionPermission
