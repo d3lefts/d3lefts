@@ -75,3 +75,18 @@ Attribution: NIGHTFALL joint research; source shifted Hilbert work
 Exact checker: `check_shifted_c4_bernstein.py`, using only standard
 library `fractions.Fraction`, `math.comb`, and a reverse coefficient
 transform with rational integer arithmetic.
+
+## Lean-directed compact certificate
+
+`research/nightfall/formalization/observability/ShiftedC4Bernstein.lean`
+contains nine local polynomial identities over rational rectangles:
+the x-axis split is `0,2/5,3/5,1`, and the v-axis split is
+`0,1/3,2/3,1`. Every local polynomial has a tensor Bernstein
+representation of bidegree `(4,4)` with **225 nonnegative exact rational
+coefficients** in aggregate (221 strictly positive, four zero).
+The local identities are discharged by real polynomial normalization and
+nonnegativity; `shifted_c4_F_nonneg` assembles the nine cells.
+
+This source is a **separate Lean proof attempt** from the independent
+800-coefficient rational checker. It must not be called a Lean certificate
+until its exact-head pinned compilation and named axiom audit succeed.
