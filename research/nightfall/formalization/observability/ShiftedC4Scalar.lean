@@ -57,7 +57,6 @@ theorem shifted_c4_from_strong_moments
     dsimp [v]
     have hden : (4:ℝ)*t ≠ 0 := by positivity
     field_simp [hden, ne_of_gt htpos]
-    ring
   have hs2 : s = t^2-a^2 := by rw [ht2, he]; ring
   have hmoment : 3*e^2-2*a^4+4*a*c*s+c^2*s = t^4*Q := by
     calc
