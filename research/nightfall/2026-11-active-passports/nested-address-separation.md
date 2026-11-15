@@ -1,5 +1,11 @@
 # Proof Passport: NF-NESTED-ADDRESS-SEPARATION-20261111
 
+## v14 claim audit — 14 November 2026
+
+**Finite exact construction preserved:** the fixed whole-coordinate query Bayes-risk formula and its 1,945 comparison audit remain specific to the nested-address law and original query interface. A better Q2 scalar theorem does not upgrade fixed-query complexity, costed recertification, or a universal adaptive oracle. Preserve source-normalization, nonadaptive/adaptive comparison and external priority gates. [Live active registry](../../../docs/active-proof-passport.json).
+
+---
+
 **NIGHTFALL Constellation · Devin J. Wright · version 1.0 (2026-11-11).**
 **Status:** EXACT CONSTRUCTION; finite checked; general upper theorem separate. This is a claim-specific proof-passport note, not an independently refereed theorem or novelty certificate.
 
