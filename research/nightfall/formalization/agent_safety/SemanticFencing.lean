@@ -187,7 +187,7 @@ theorem optimal_read_step
   · exact ⟨hzero, hone, hvzero, hvone⟩
   · intro qzero qone hqzero hqone
     simp only [worstCost]
-    exact add_le_add_left
+    exact add_le_add_right
       (max_le_max (hoptzero qzero hqzero) (hoptone qone hqone))
       (readPrice i)
 
@@ -234,6 +234,7 @@ theorem two_bit_direct_cost_at_least_eight :
     ∀ guard : Finset (Fin 2),
       FenceSound twoBitModel twoBitBaseline guard →
       8 ≤ fenceCost (fun _ => 4) guard := by
+  classical
   decide
 
 /-- The initially safe-certified set admits a one-bit further observation
@@ -242,6 +243,7 @@ theorem two_bit_post_certificate_gain :
     PlanValid twoBitModel twoBitObservation twoBitBaseline twoBitJointPolicy ∧
     worstCost (fun _ => 1) (fun _ => 4) twoBitJointPolicy = 5 ∧
     fenceCost (fun _ => 4) (Finset.univ : Finset (Fin 2)) = 8 := by
+  classical
   decide
 
 end Nightfall.SemanticFencing
