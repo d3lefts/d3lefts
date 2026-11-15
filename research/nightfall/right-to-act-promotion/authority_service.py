@@ -6,10 +6,11 @@ used nonces, and locally committed deployment template. Atomic local rename
 is the ONLY protected effect in this experiment; no AWS deployment.
 """
 from __future__ import annotations
-import argparse, hashlib, hmac, json, os, pathlib, socket, struct, tempfile, time
+import argparse, hashlib, hmac, json, os, pathlib, select, signal, socket, struct, tempfile, time
 from independent_effect_verifier import check_promotion, EffectViolation
 MAX_REQUEST=900_000
 CONNECTION_DEADLINE_SECONDS=2.0
+MAX_ACCEPTED_NONCES_PER_EPOCH=256
 
 def canon(obj):
     return (json.dumps(obj,sort_keys=True,separators=(',',':'),ensure_ascii=True)+'\n').encode()
@@ -79,6 +80,11 @@ def process(state,message,auth_uid,key):
                           'detail':str(exc)[:200]}
         new=dict(state)
         new['nonces']=[*state['nonces'],t['nonce']]
+        # Bounded replay ledger: automatic epoch rotation invalidates every
+        # outstanding old ticket before forgetting any used nonce.
+        if len(new['nonces']) >= MAX_ACCEPTED_NONCES_PER_EPOCH:
+            new['epoch']=state['epoch']+1
+            new['nonces']=[]
         new['committed']={'template':template,'ticket':t,
                          'template_hash':digest(template),'authority_epoch':state['epoch']}
         return new,{'ok':True,'reason':'committed_by_trusted_service',
@@ -106,6 +112,97 @@ def process(state,message,auth_uid,key):
         return new,{'ok':True,'epoch':new['epoch'],'reason':'trusted_authority_revoked'}
     return state,{'ok':False,'reason':'unsupported_operation'}
 
+def _serve_response(conn, response, deadline):
+    """Bound socket writes; errors cannot stall the serial accept loop."""
+    try:
+        conn.settimeout(max(0.001, min(0.2, deadline-time.monotonic())))
+        conn.sendall(canon(response))
+    except (OSError, TimeoutError):
+        pass
+
+def _parse_framed_request(conn, deadline):
+    """Read at most MAX_REQUEST bytes; no user-controlled idle timeout resets."""
+    buf=bytearray()
+    while len(buf)<MAX_REQUEST:
+        remaining=deadline-time.monotonic()
+        if remaining<=0:raise TimeoutError('request deadline expired')
+        conn.settimeout(min(remaining,0.25))
+        try:chunk=conn.recv(min(65536,MAX_REQUEST-len(buf)))
+        except socket.timeout:continue
+        if not chunk:break
+        buf.extend(chunk)
+        if b'\n' in chunk:break
+    if len(buf)>=MAX_REQUEST:raise ValueError('request too large')
+    if not buf:raise ValueError('empty request')
+    return bytes(buf).partition(b'\n')[0]
+
+def _reap_finished_workers():
+    """Avoid zombie accumulation without an unbounded waitpid."""
+    while True:
+        try:child,_=os.waitpid(-1,os.WNOHANG)
+        except ChildProcessError:break
+        if child==0:break
+
+def _evaluate_bounded(raw, statefile, authorized_uid, key, peer_uid,
+                      deadline, server, conn):
+    """Fork a disposable, same-UID worker so verifier/JSON/fsync hangs
+    cannot indefinitely monopolize the parent's socket accept loop.
+
+    Effect atomicity is a single-file rename, not a distributed transaction.
+    An expired request can have committed just before the timeout: clients
+    must reconcile via status/epoch and must not treat a timeout as rollback.
+    """
+    readfd,writefd=os.pipe()
+    pid=os.fork()
+    if pid==0:
+        try:
+            os.close(readfd)
+            server.close()
+            conn.close()
+            try:
+                message=json.loads(raw)
+                if not isinstance(message,dict):raise ValueError('request must be object')
+                message['__peer_uid__']=peer_uid
+                state=json.loads(statefile.read_text())
+                updated,response=process(state,message,authorized_uid,key)
+                if updated is not state:atomic(statefile,updated)
+            except BaseException as exc:
+                response={'ok':False,'reason':'invalid_request',
+                          'type':type(exc).__name__}
+            payload=canon(response)
+            # Only a bounded status response crosses this one-way pipe.
+            os.write(writefd,payload[:4096])
+        except BaseException:
+            pass
+        finally:
+            os.close(writefd)
+            os._exit(0)
+    os.close(writefd)
+    timed_out=False
+    payload=b''
+    try:
+        remaining=deadline-time.monotonic()
+        if remaining>0 and select.select([readfd],[],[],remaining)[0]:
+            payload=os.read(readfd,4096)
+        else:
+            timed_out=True
+    finally:
+        os.close(readfd)
+        if timed_out:
+            try:os.kill(pid,signal.SIGKILL)
+            except ProcessLookupError:pass
+        # NEVER block waiting for an uninterruptible kernel-state worker.
+        # On SIGKILL, reap opportunistically during subsequent iterations.
+        done,_=os.waitpid(pid,os.WNOHANG)
+        if done==0:
+            try:os.kill(pid,signal.SIGKILL)
+            except ProcessLookupError:pass
+    if timed_out:return {'ok':False,'reason':'deadline_exceeded'}
+    try:return json.loads(payload) if payload else {
+        'ok':False,'reason':'worker_failed'}
+    except (ValueError,UnicodeDecodeError):
+        return {'ok':False,'reason':'invalid_worker_response'}
+
 def serve(trust,sockpath,authorized_uid):
     trust=pathlib.Path(trust)
     statefile=trust/'authority.json'
@@ -115,37 +212,32 @@ def serve(trust,sockpath,authorized_uid):
     if sockpath.exists():sockpath.unlink()
     with socket.socket(socket.AF_UNIX,socket.SOCK_STREAM) as server:
         server.bind(str(sockpath))
-        os.chmod(sockpath,0o666) # deliberately broad; peer credentials MUST deny unknown principals
+        os.chmod(sockpath,0o666)  # untrusted clients may connect, not authorize
         server.listen(8);server.settimeout(60)
         print('READY',flush=True)
         while True:
             try:conn,_=server.accept()
             except socket.timeout:continue
             with conn:
+                deadline=time.monotonic()+CONNECTION_DEADLINE_SECONDS
                 try:
-                    pid,uid,gid=struct.unpack('3i',conn.getsockopt(
+                    _pid,uid,_gid=struct.unpack('3i',conn.getsockopt(
                         socket.SOL_SOCKET,socket.SO_PEERCRED,struct.calcsize('3i')))
-                    # Absolute deadline: neither a silent client nor a slow
-                    # dripper can own this single-threaded service indefinitely.
-                    deadline=time.monotonic()+CONNECTION_DEADLINE_SECONDS
-                    buf=b''
-                    while len(buf)<MAX_REQUEST:
-                        remaining=deadline-time.monotonic()
-                        if remaining<=0:raise TimeoutError('request deadline expired')
-                        conn.settimeout(min(remaining,0.5))
-                        try:data=conn.recv(min(65536,MAX_REQUEST-len(buf)))
-                        except socket.timeout:continue
-                        if not data:break
-                        buf+=data
-                        if b'\n' in buf:break
-                    if len(buf)>=MAX_REQUEST:raise ValueError('request too large')
-                    req=json.loads(buf.partition(b'\n')[0]);req['__peer_uid__']=uid
-                    state=json.loads(statefile.read_text())
-                    new,response=process(state,req,authorized_uid,key)
-                    if new is not state:atomic(statefile,new)
-                except Exception as exc:
-                    response={'ok':False,'reason':'invalid_request','type':type(exc).__name__}
-                conn.sendall(canon(response))
+                    # Kernel-authenticate BEFORE reading attacker-controlled
+                    # bytes: a silent unauthorized client consumes no deadline.
+                    if uid!=authorized_uid:
+                        response={'ok':False,'reason':'unauthorized_os_principal'}
+                    else:
+                        raw=_parse_framed_request(conn,deadline)
+                        response=_evaluate_bounded(raw,statefile,authorized_uid,
+                                                   key,uid,deadline,server,conn)
+                except TimeoutError:
+                    response={'ok':False,'reason':'deadline_exceeded'}
+                except BaseException as exc:
+                    response={'ok':False,'reason':'invalid_request',
+                              'type':type(exc).__name__}
+                _serve_response(conn,response,deadline)
+            _reap_finished_workers()
 
 def request(socket_path,body,key,override_signature=None):
     with socket.socket(socket.AF_UNIX,socket.SOCK_STREAM) as client:
