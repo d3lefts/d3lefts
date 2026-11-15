@@ -1,0 +1,57 @@
+name: NIGHTFALL Price of Permission exact capacity gate
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/2026-11-price-of-permission/**'
+      - '.github/workflows/nightfall-price-permission-capacity.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: price-permission-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  source-exact-audit:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout effective source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Check source custody and independent finite optimizers
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd research/nightfall/2026-11-price-of-permission
+          sha256sum -c SHA256SUMS.txt
+          python3 audit_independent.py | tee scheduler_receipt.txt
+          grep -F 'cases 2240 capacity_infeasible_cases 1425 purchase_tests 1540' scheduler_receipt.txt
+          grep -F '8f4d3efbf568a46c0a919d37a1dbcb57309a36990562963662d95de262e85412' scheduler_receipt.txt
+          python3 monitor_mixing.py | tee monitor_receipt.txt
+          grep -F 'independent exact LP vertex comparisons 500' monitor_receipt.txt
+          grep -F 'af5c9c239ad90fb87c884f90f5f38bfd07052a91123b7430ed09ae7f852cac5c' monitor_receipt.txt
+          python3 permission_bridge_exact.py | tee integration_receipt.txt
+          grep -F 'independent cost configurations 3584' integration_receipt.txt
+          grep -F '7e31b88a96cbfe9b757edcf7fd8fbf8af12730175994ba32516681b48da7c74f' integration_receipt.txt
+          sha256sum -c SHA256SUMS.txt
+          git rev-parse HEAD > effective-commit.txt
+          sha256sum *.py THEOREM.md README.md AUDIT.md THEOREM_INTEGRATION_v0_3.md > executed-source-hashes.txt
+      - name: Preserve exact audit receipts, including failures
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: price-permission-capacity-${{ github.run_id }}
+          path: |
+            research/nightfall/2026-11-price-of-permission/scheduler_receipt.txt
+            research/nightfall/2026-11-price-of-permission/monitor_receipt.txt
+            research/nightfall/2026-11-price-of-permission/integration_receipt.txt
+            research/nightfall/2026-11-price-of-permission/effective-commit.txt
+            research/nightfall/2026-11-price-of-permission/executed-source-hashes.txt
+          retention-days: 60
