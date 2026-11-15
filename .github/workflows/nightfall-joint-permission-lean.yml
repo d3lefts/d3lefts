@@ -1,0 +1,87 @@
+name: NIGHTFALL joint permission matching-price pinned Lean certification
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/agent_safety/JointPermissionPrice.lean'
+      - '.github/workflows/nightfall-joint-permission-lean.yml'
+      - '.github/actions/setup-nightfall-lean/**'
+      - 'scripts/lean_bridge.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nightfall-joint-permission-lean-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  exact-joint-permission-kernel:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - name: Checkout exact effective source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Setup pinned Lean and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile source without admitted axioms or sorry
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/agent_safety/JointPermissionPrice.lean
+          mkdir -p lean-receipts/joint-permission
+          cp "$SRC" /tmp/mathlib4/JointPermissionPrice.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/JointPermissionPrice.olean JointPermissionPrice.lean)
+      - name: Named theorem declarations and axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/agent_safety/JointPermissionPrice.lean
+          N=Nightfall.PriceOfPermission.JointLowerBound
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl "$N.left_half_ambiguous" \
+            --decl "$N.right_half_ambiguous" \
+            --decl "$N.left_only_cannot_decide" \
+            --decl "$N.right_only_cannot_decide" \
+            --decl "$N.operationPlacement_injective" \
+            --decl "$N.finite_worker_schedule_exists" \
+            --decl "$N.worker_slots_necessary" \
+            --decl "$N.deep_tests_necessary" \
+            --decl "$N.optimalPlan_direct" \
+            --decl "$N.impossibility_of_shortage" \
+            --decl "$N.evidence_cost_decomposition" \
+            --decl "$N.every_plan_pays_joint_floor" \
+            --decl "$N.joint_floor_is_attainable" \
+            --decl "$N.exact_joint_permission_price" \
+            --decl "$N.freshActions_eq" \
+            --decl "$N.joint_floor_with_schedule_certificate" \
+            --decl "$N.exact_cached_permission_price" \
+            --decl "$N.invalidation_amplification_witness" \
+            --decl "$N.fixed_facility_price_witness" \
+            --decl "$N.purchase_a_third_worker_witness" \
+            --json-out lean-receipts/joint-permission/kernel.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/joint-permission/kernel.json
+      - name: Preserve source hashes and compile receipts
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/joint-permission
+          git rev-parse HEAD > lean-receipts/joint-permission/effective-commit.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/joint-permission/mathlib-commit.txt || true
+          cat lean-toolchain > lean-receipts/joint-permission/lean-toolchain.txt
+          sha256sum research/nightfall/formalization/agent_safety/JointPermissionPrice.lean > lean-receipts/joint-permission/SHA256SUMS.txt
+      - name: Retain immutable theorem receipt
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: joint-permission-pinned-lean-${{ github.run_id }}
+          path: lean-receipts/joint-permission/
+          retention-days: 60
