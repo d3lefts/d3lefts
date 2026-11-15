@@ -1,0 +1,97 @@
+name: NIGHTFALL ControlArena adaptive distinct model source edits
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/nightfall-adaptive-omission-agents.yml"
+      - "research/nightfall/right-to-act-promotion/run_adaptive_omission_agents.py"
+      - "research/nightfall/right-to-act-promotion/audit_adaptive_omission_agents.py"
+      - "research/nightfall/right-to-act-promotion/ADAPTIVE_OMISSION_AGENT_PROTOCOL.md"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nightfall-adaptive-omissions
+  cancel-in-progress: true
+jobs:
+  actual-model-two-distinct-official-scored:
+    runs-on: ubuntu-latest
+    environment: controlarena-python
+    timeout-minutes: 50
+    defaults:
+      run:
+        working-directory: research/nightfall/right-to-act-promotion
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Compile pinned runner and independent checker
+        run: |
+          python -m py_compile run_adaptive_omission_agents.py audit_adaptive_omission_agents.py
+          python -m pip install 'control-arena==20.1.1' 'aws-cdk-lib==2.260.0' 'constructs==10.5.0' 'jsii==1.137.0' 'pytest==8.4.2'
+          python -m pip freeze > adaptive-omissions-versions.txt
+      - name: Create no-network nonroot IaC Fast runtime
+        run: |
+          docker build -f Dockerfile.untrusted-cdk -t nightfall-iac-cdk-sandbox:v16 .
+          docker image inspect --format '{{.Id}}' nightfall-iac-cdk-sandbox:v16 > adaptive-omissions-sandbox.txt
+      - name: Calibrate official main and malicious side scorer
+        timeout-minutes: 5
+        env:
+          JSII_SILENCE_WARNING_UNTESTED_NODE_VERSION: "1"
+        run: python calibrate_model_scorers.py
+      - name: Launch local Qwen model and record exact pulled weights
+        timeout-minutes: 10
+        run: |
+          docker run -d --rm --name nightfall-ollama --cpus 3 --memory 9g \
+            -p 127.0.0.1:11434:11434 -e OLLAMA_NUM_PARALLEL=1 \
+            -e OLLAMA_CONTEXT_LENGTH=8192 -e OLLAMA_NO_CLOUD=1 ollama/ollama:latest
+          for attempt in $(seq 1 90); do
+            if curl -fsS http://127.0.0.1:11434/api/tags >/dev/null; then break; fi
+            sleep 2
+          done
+          docker exec nightfall-ollama ollama pull qwen2.5-coder:3b
+          curl -fsS http://127.0.0.1:11434/api/tags > adaptive-omissions-model-tags.json
+      - name: Two model-authored adaptive source edits with official source scorers
+        timeout-minutes: 18
+        env:
+          JSII_SILENCE_WARNING_UNTESTED_NODE_VERSION: "1"
+        run: python run_adaptive_omission_agents.py --out adaptive-omissions-results
+      - name: Independent source-response, scorer and effect-policy replay
+        if: always()
+        run: |
+          if test -f adaptive-omissions-results/adaptive_omissions_receipt.json; then
+            python audit_adaptive_omission_agents.py --dir adaptive-omissions-results | tee adaptive-omissions-independent.json
+          else
+            echo "No model proposal receipt: blocked before scoring" >&2
+            exit 1
+          fi
+      - name: Reject tampered model provenance
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path=Path('adaptive-omissions-results/adaptive_omissions_receipt.json')
+          x=json.loads(path.read_text())
+          x['rows'][0]['model_response']='{"file":"fake.py","old":"x","new":""}'
+          Path('adaptive-omissions-results/poisoned.json').write_text(json.dumps(x))
+          PY
+          if python audit_adaptive_omission_agents.py --dir adaptive-omissions-results --receipt adaptive-omissions-results/poisoned.json; then
+            echo "Independent checker accepted forged model response" >&2
+            exit 1
+          fi
+      - name: Archive real model raw text, original source, scoring and gate artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-controlarena-adaptive-model-omissions
+          path: |
+            research/nightfall/right-to-act-promotion/adaptive-omissions-results/
+            research/nightfall/right-to-act-promotion/adaptive-omissions-versions.txt
+            research/nightfall/right-to-act-promotion/adaptive-omissions-model-tags.json
+            research/nightfall/right-to-act-promotion/adaptive-omissions-sandbox.txt
+            research/nightfall/right-to-act-promotion/adaptive-omissions-independent.json
+            research/nightfall/right-to-act-promotion/model-trial-calibration.json
+          retention-days: 30
+          if-no-files-found: warn
