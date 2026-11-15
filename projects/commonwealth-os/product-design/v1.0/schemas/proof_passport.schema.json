@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Proposed Democratic Assurance Proof Passport: NOT CERTIFIED",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "decision_id",
+    "institution_id",
+    "authority_mode",
+    "rule_version_hash",
+    "locked_text_hash",
+    "eligibility_snapshot_hash",
+    "verification_status"
+  ],
+  "properties": {
+    "decision_id": {
+      "type": "string"
+    },
+    "institution_id": {
+      "type": "string"
+    },
+    "authority_mode": {
+      "enum": [
+        "advisory",
+        "institution-authorized",
+        "lawful-government",
+        "unknown"
+      ]
+    },
+    "rule_version_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "locked_text_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "eligibility_snapshot_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "verification_status": {
+      "enum": [
+        "concept",
+        "provisional",
+        "independent-check-passed",
+        "failed",
+        "indeterminate"
+      ]
+    },
+    "rule_citations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "quorum_result": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "effective_event_verified": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    }
+  }
+}
