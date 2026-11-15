@@ -44,6 +44,28 @@ C(\sigma)=\sum_{k=1}^{n-1}c_{\sigma(k)}\left(1-\sum_{\ell<k}\pi_{\sigma(\ell)}\r
 
 **Proof:** for any fixed final \(j\), swapping adjacent inspected \(a,b\) changes the expected cost by \(c_a\pi_b-c_b\pi_a\). Inversions relative to increasing \(c_i/\pi_i\) cannot improve cost; exhaustive selection of the final index completes optimality. The result is a specialization of classical search ordering, not a novel search theorem.
 
+## Theorem 2b — mission-conditioned action permission is strictly cheaper than source identification
+
+For a **fixed, immutable action input** \(x\), define \(S=\{i:f_i(x)\le0\}\) and \(U=[n]\setminus S\). The required decision is *grant if and only if unknown \(j\in S\)*. The protocol may inspect coordinate \(i\) using the same perfect binary oracle \(O_i\); it need not identify \(j\) once all remaining hypotheses agree on permission.
+
+For deterministic zero-error policies, the exact optimal **pathwise worst-case** decision cost is
+
+\[
+\boxed{C_{\rm permission}^{\rm path}(x)=\min\{\sum_{i\in S}c_i,\sum_{i\in U}c_i\}.}
+\]
+
+**Lower:** on the all-negative transcript, termination with certainty is only possible if the untested hypotheses all lie in the same action-decision class. Thus the protocol has exhausted every candidate in S or every candidate in U, costing at least the cheaper side. **Upper:** test all coordinates from the cheaper side (in any order). A positive answer identifies the correct class; otherwise all remaining hypotheses lie on the other side. If S or U is empty, the correct cost is zero. This is another classical finite decision-tree lower bound, not a globally original mathematical theorem.
+
+**Bayesian version:** for prior \(\pi\), write \(R\subseteq[n]\) for the remaining hypotheses, \(\pi(R)=\sum_{j\in R}\pi_j\); if \(R\subseteq S\) or \(R\subseteq U\), stop for free. Otherwise the exact optimal conditional expected cost is the finite Bellman recurrence
+
+\[
+V(R)=\min_{i\in R}\{c_i+(1-\pi_i/\pi(R))V(R\setminus\{i\})\}.
+\]
+
+For costs (1,2,4,9,20) and prior weights (1,1,1,12,1), a request with S={0} costs **1** in both optimal expected and worst-path units, although full identification costs **81/8 expected and 16 worst-path**. A request with S={0,1,2} costs **51/8 expected, 7 worst-path**. This is a **task/mission-conditioned separation**: requiring full source discovery when the action decision needs only a binary distinction wastes acquisition work. It does **not** eliminate the independent requirement for an atomic effect-time version guard.
+
+The independent exact checker exhausts all **30 nontrivial action permission partitions** of the five-source example; for each it compares the full permutation decision oracle, independent Bellman recursion and matched worst-path lower bound. All 30 passed. Mission receipt SHA-256: \`e6fc360634efe9cb7e0d03c0956d0a7431920c6732c02a3e8b320d236527572e\`.
+
 ## Theorem 3 — necessity of effect-time version mediation
 
 An action is permitted exactly when the **current** model satisfies \(f_j(x)\le0\). Evidence was acquired at a signed epoch \(e\); an authenticated effect-time guard compares \(e\) to the currently committed epoch atomically with the effect. A valid safe decision is available under the current epoch, and unsafe actions must be blocked. Requested state \(x\) is immutable during the atomic decision/effect.
@@ -74,6 +96,8 @@ Costs \(c=(1,2,4,9,20)\), prior weights \((1,1,1,12,1)\).
 | Optimal Bayes order (zero-indexed) | 3,0,1,2,4 |
 | Optimal Bayes expected inspection | 81/8 = 10.125 |
 | Saving over cheapest-first | 19/73 = 26.0274% |
+| Fixed action safe only for source 0: permission vs identification | 1 vs 81/8 expected |
+| Fixed action safe for sources 0,1,2: permission vs identification | 51/8 vs 81/8 expected |
 | T=10, q=1/4, g=3, renew on authentic change | 2013/32 = 62.90625 |
 | Same model, inspect before every action | 525/4 = 131.25 |
 
