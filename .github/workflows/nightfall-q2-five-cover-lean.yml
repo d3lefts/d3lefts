@@ -1,0 +1,65 @@
+name: NIGHTFALL Q2 exact five-cover obstruction Lean certificate
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/observability/ExactFiveCoverObstruction.lean'
+      - '.github/workflows/nightfall-q2-five-cover-lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: q2-five-cover-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  exact-five-cover:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout exact effective PR merge head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Pinned Lean and Mathlib dependencies
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Strict finite quadratic and optimal cover kernel declarations
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/observability/ExactFiveCoverObstruction.lean
+          mkdir -p lean-receipts/q2-five-cover
+          cp "$SRC" /tmp/mathlib4/ExactFiveCoverObstruction.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ExactFiveCoverObstruction.olean ExactFiveCoverObstruction.lean)
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Q2FiveCoverObstruction.quadratic_pointwise_bounded \
+            --decl Nightfall.Q2FiveCoverObstruction.six_mixed_second_differences \
+            --decl Nightfall.Q2FiveCoverObstruction.owner_cover_cost_ge_five \
+            --decl Nightfall.Q2FiveCoverObstruction.owner_cover_five_attained \
+            --json-out lean-receipts/q2-five-cover/declarations.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-five-cover/declarations.json
+      - name: Immutable provenance
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-five-cover
+          git rev-parse HEAD > lean-receipts/q2-five-cover/effective-commit.txt
+          cat lean-toolchain > lean-receipts/q2-five-cover/toolchain.txt
+          sha256sum research/nightfall/formalization/observability/ExactFiveCoverObstruction.lean \
+            > lean-receipts/q2-five-cover/SHA256SUMS.txt
+      - name: Preserve successful or failed receipt
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: q2-five-cover-${{ github.run_id }}
+          path: lean-receipts/q2-five-cover
+          retention-days: 60
