@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/2026-11-quadratic-law-free-audit/check_c96_first_second_exact.py'
+      - 'research/nightfall/2026-11-quadratic-law-free-audit/check_c96_strong_shift_exact.py'
       - 'research/nightfall/2026-11-quadratic-law-free-audit/C96_INDEPENDENT_HILBERT_PROOF_ATTACK.md'
       - '.github/workflows/nightfall-q2-c96-exact-audit.yml'
   workflow_dispatch:
@@ -29,7 +30,18 @@ jobs:
           assert d['sha256_of_exact_case_receipts']=='66ce3536894ef434e61fc37195683c763e950796f31b96dd2670b04adb8a314b'
           print('PASS exact finite grid ONLY; universal Hilbert conjecture is NOT proved')
           PY
+          python3 research/nightfall/2026-11-quadratic-law-free-audit/check_c96_strong_shift_exact.py \
+            | tee receipts/C96_STRONG_SHIFT_EXACT.json
+          python3 - <<'PY'
+          import json
+          d=json.load(open('receipts/C96_STRONG_SHIFT_EXACT.json'))
+          assert d['status']=='NO_COUNTEREXAMPLE_ON_SCALAR_GRID_NOT_A_PROOF'
+          assert d['cases']==746493
+          assert d['exact_case_digest']=='ebf32717e180e587a9822a39286bbeffa38942a6c316757ec745b74b8e6be175'
+          print('PASS strong-shift finite grid ONLY; conjecture NOT proved')
+          PY
           sha256sum research/nightfall/2026-11-quadratic-law-free-audit/check_c96_first_second_exact.py \
+            research/nightfall/2026-11-quadratic-law-free-audit/check_c96_strong_shift_exact.py \
             > receipts/SHA256SUMS
       - name: Upload reproducibility receipt
         if: always()
