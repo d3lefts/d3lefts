@@ -1,6 +1,5 @@
 import ActualSourceQ2107Local
 import ActualSourceIntegratedSharp
-import ActualSourceIntegratedSharp
 
 /-!
 # Fully unrestricted finite Q2: C107.3934 sharp-section shifted owner
@@ -109,24 +108,24 @@ theorem actual_source_q2_107_unconditional
       _ ≤ (2*(1+Real.sqrt 2))*B := actual_source_integrated_sharp_budget
         p hp hp1 f hdegree B hB hf
   have hsum : sourceVariance p f ≤
-      T*(Real.sqrt 3*(∑ i : ι, u i)+(∑ i : ι, c i)/3) := by
+      T*(Real.sqrt 3*(∑ i : ι, u i)+(∑ i : ι, c i)/4) := by
     calc
       sourceVariance p f = ∑ i : ι, e i := hvariance
       _ ≤ ∑ i : ι, T*(Real.sqrt 3*u i+c i/4) :=
         Finset.sum_le_sum (fun i _ => hsite i)
-      _ = T*(Real.sqrt 3*(∑ i : ι, u i)+(∑ i : ι, c i)/3) := by
+      _ = T*(Real.sqrt 3*(∑ i : ι, u i)+(∑ i : ι, c i)/4) := by
         simp only [mul_add, Finset.sum_add_distrib, ← Finset.mul_sum,
           Finset.sum_div]
   have hbudget :
-      Real.sqrt 3*(∑ i : ι, u i)+(∑ i : ι, c i)/3 ≤
+      Real.sqrt 3*(∑ i : ι, u i)+(∑ i : ι, c i)/4 ≤
         ((2*(1+Real.sqrt 2))*Real.sqrt 3+2)*B := by
     have h1 := mul_le_mul_of_nonneg_left hU (Real.sqrt_nonneg (3:ℝ))
-    have h2 : (∑ i : ι, c i)/3 ≤ (8*B)/3 := by linarith [hcost]
+    have h2 : (∑ i : ι, c i)/4 ≤ (8*B)/4 := by linarith [hcost]
     nlinarith [h1,h2]
   have hVbound : sourceVariance p f ≤
       ((2*(1+Real.sqrt 2))*Real.sqrt 3+2)*B*T := by
     calc
-      _ ≤ T*(Real.sqrt 3*(∑ i : ι, u i)+(∑ i : ι, c i)/3) := hsum
+      _ ≤ T*(Real.sqrt 3*(∑ i : ι, u i)+(∑ i : ι, c i)/4) := hsum
       _ ≤ T*(((2*(1+Real.sqrt 2))*Real.sqrt 3+2)*B) :=
         mul_le_mul_of_nonneg_left hbudget hT
       _ = _ := by ring
