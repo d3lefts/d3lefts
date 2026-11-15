@@ -191,4 +191,67 @@ theorem min_cost_attained
     globally_optimal_lifecycle_policy_exists M h
   exact ⟨WorstCost M b p, p, hp, rfl, hbest⟩
 
+
+/-- Bellman root theorem: for any FIXED admissible first lifecycle action
+with a feasible contingent completion, replacing each attainable observation
+branch by its global optimal continuation cannot increase worst-case cost.
+This is not a supplied recurrence premise. It follows from actual policy
+validity, exact branch minimizers, and the adversarial finite supremum. -/
+theorem fixed_first_action_bellman
+    [Fintype Observation]
+    (M : Model Belief Action Observation)
+    {n : ℕ} {b : Belief} {a : Action}
+    (hroot : ∃ k : Observation → Policy Action Observation n,
+      Valid M b (.execute a k)) :
+    ∃ kopt : Observation → Policy Action Observation n,
+      Valid M b (.execute a kopt) ∧
+      ∀ k : Observation → Policy Action Observation n,
+        Valid M b (.execute a k) →
+          WorstCost M b (.execute a kopt) ≤
+            WorstCost M b (.execute a k) := by
+  classical
+  obtain ⟨k₀, hk₀⟩ := hroot
+  let chosen (o : Observation) (ho : M.possible b a o) :
+      Policy Action Observation n :=
+    Classical.choose (globally_optimal_lifecycle_policy_exists M
+      ⟨k₀ o, hk₀.2.2.2 o ho⟩)
+  let kopt (o : Observation) : Policy Action Observation n :=
+    if ho : M.possible b a o then chosen o ho else .finish
+  have hchosen_valid (o : Observation) (ho : M.possible b a o) :
+      Valid M (M.post b a o) (chosen o ho) := by
+    exact (Classical.choose_spec
+      (globally_optimal_lifecycle_policy_exists M
+        ⟨k₀ o, hk₀.2.2.2 o ho⟩)).1
+  have hchosen_best (o : Observation) (ho : M.possible b a o)
+      (q : Policy Action Observation n)
+      (hq : Valid M (M.post b a o) q) :
+      WorstCost M (M.post b a o) (chosen o ho) ≤
+        WorstCost M (M.post b a o) q := by
+    exact (Classical.choose_spec
+      (globally_optimal_lifecycle_policy_exists M
+        ⟨k₀ o, hk₀.2.2.2 o ho⟩)).2 q hq
+  have hvalid : Valid M b (.execute a kopt) := by
+    refine ⟨hk₀.1, hk₀.2.1, hk₀.2.2.1, ?_⟩
+    intro o ho
+    simpa [kopt, ho] using hchosen_valid o ho
+  refine ⟨kopt, hvalid, ?_⟩
+  intro k hk
+  unfold WorstCost
+  apply Nat.add_le_add_left
+  apply Finset.sup_le
+  intro o homem
+  have hpoint :
+      (if M.possible b a o then
+          WorstCost M (M.post b a o) (kopt o) else 0) ≤
+      (if M.possible b a o then
+          WorstCost M (M.post b a o) (k o) else 0) := by
+    by_cases ho : M.possible b a o
+    · have h := hchosen_best o ho (k o) (hk.2.2.2 o ho)
+      simpa [kopt, ho] using h
+    · simp [ho]
+  exact hpoint.trans (Finset.le_sup (s := Finset.univ)
+    (f := fun o : Observation =>
+      if M.possible b a o then
+        WorstCost M (M.post b a o) (k o) else 0) homem)
+
 end Nightfall.LifecycleAuthority
