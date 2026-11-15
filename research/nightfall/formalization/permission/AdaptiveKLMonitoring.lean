@@ -152,6 +152,8 @@ theorem adaptive_uniform_horizon_envelope
         rate * (∑ t ∈ Finset.range n, cost t) :=
       finite_horizon_adaptive_kl_cost safe unsafeWorld κ η update hupdate
         hs hu hinitial rate cost hchannel n permit hpermit
-    _ ≤ rate * C := mul_le_mul_left' (hcost n) rate
+    _ ≤ rate * C := by
+      gcongr
+      all_goals exact hcost n
 
 end Nightfall.PricePermission.AdaptiveKL
