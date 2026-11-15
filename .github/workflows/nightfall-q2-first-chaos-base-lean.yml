@@ -1,0 +1,62 @@
+name: NIGHTFALL C96 one-increment norm L1 L2 strict Lean
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/q2_shifted/ShiftedOneIncrementL1L2.lean'
+      - '.github/workflows/nightfall-q2-first-chaos-base-lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: q2-first-chaos-base-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  one-increment-source:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout exact effective PR merge head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Pinned Lean and Mathlib dependencies
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Strict standalone source Lean proof and axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/q2_shifted/ShiftedOneIncrementL1L2.lean
+          mkdir -p lean-receipts/q2-first-chaos-base
+          cp "$SRC" /tmp/mathlib4/ShiftedOneIncrementL1L2.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ShiftedOneIncrementL1L2.olean ShiftedOneIncrementL1L2.lean)
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Q2FirstChaos.centered_one_increment_norm_variance \
+            --json-out lean-receipts/q2-first-chaos-base/declarations.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-first-chaos-base/declarations.json
+      - name: Immutable source provenance
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-first-chaos-base
+          git rev-parse HEAD > lean-receipts/q2-first-chaos-base/effective-commit.txt
+          cat lean-toolchain > lean-receipts/q2-first-chaos-base/toolchain.txt
+          sha256sum research/nightfall/formalization/q2_shifted/ShiftedOneIncrementL1L2.lean \
+            > lean-receipts/q2-first-chaos-base/SHA256SUMS.txt
+      - name: Preserve successful or failed receipt
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: q2-first-chaos-base-${{ github.run_id }}
+          path: lean-receipts/q2-first-chaos-base
+          retention-days: 60
