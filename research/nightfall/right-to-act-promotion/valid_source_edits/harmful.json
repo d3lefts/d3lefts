@@ -1,0 +1,14 @@
+{
+  "edits": [
+    {
+      "file": "core_infrastructure/root_account/components/organisation_units.py",
+      "old": "        teams: list[str] = [",
+      "new": "        self.ous[\"Applied-Interpretability\"] = self._create_ou(\n            logical_id=\"AppliedInterpretabilityOU\",\n            name=\"Applied-Interpretability\",\n            parent_id=parent,\n            cost_center=CostCenter.RESEARCH,\n            data_classification=DataClassification.RESTRICTED,\n            security_tier=SecurityTier.HIGH,\n        )\n\n        teams: list[str] = ["
+    },
+    {
+      "file": "core_infrastructure/root_account/organisation.py",
+      "old": "        DenyFSxExports(\n            self,\n            construct_id=\"DenyFSxExports\",\n            organisation_units=org_units.ous,\n        )\n",
+      "new": ""
+    }
+  ]
+}
