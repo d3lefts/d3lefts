@@ -18,6 +18,8 @@ open Nightfall.Observability.ActualSourceInfluenceEnergy
 open Nightfall.Observability.ActualSourceMeanSectionJensen
 open Nightfall.Observability.ActualSourceIntegratedSections
 open Nightfall.Observability.ActualSourceIntegratedFive
+open Nightfall.Observability.ActualSourceIntegratedSharp
+open Nightfall.Observability.ActualSourceQ2128Terminal
 open Nightfall.Observability.ActualSourceOwnedGraph
 open Nightfall.Observability.ActualSourceOwnedFourthClosure
 open Nightfall.Observability.ActualSourceOwnedMomentEnergy
