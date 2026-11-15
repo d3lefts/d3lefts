@@ -7,7 +7,7 @@ is the ONLY protected effect in this experiment; no AWS deployment.
 """
 from __future__ import annotations
 import argparse, hashlib, hmac, json, os, pathlib, select, signal, socket, struct, tempfile, time
-from independent_effect_verifier import check_promotion, EffectViolation
+from independent_effect_verifier import check_baseline, check_promotion, EffectViolation
 MAX_REQUEST=900_000
 CONNECTION_DEADLINE_SECONDS=2.0
 MAX_ACCEPTED_NONCES_PER_EPOCH=256
@@ -42,6 +42,8 @@ def initialize(trust,record,baseline,policy):
     state={'epoch':1,'version':record['version'],'source_hash':record['source_hash'],
            'policy_hash':record['policy_hash'],'policy':policy,
            'baseline_hash':record['baseline_hash'],'baseline':baseline,
+           'baseline_source_hash':record['source_hash'],
+           'baseline_source_version':record['version'],
            'revoked':False,'nonces':[],'committed':None}
     atomic(trust/'authority.json',state)
     return state
@@ -57,7 +59,11 @@ def process(state,message,auth_uid,key):
     if operation=='status':
         return state,{'ok':True,'epoch':state['epoch'],'revoked':state['revoked'],
                       'source_hash':state['source_hash'],'policy_hash':state['policy_hash'],
-                      'version':state['version'],'committed_digest':(
+                      'version':state['version'],
+                      'baseline_certified':(
+                          state.get('baseline_source_hash')==state['source_hash'] and
+                          state.get('baseline_source_version')==state['version']),
+                      'committed_digest':(
                           digest(state['committed']) if state['committed'] else None)}
     if operation=='promote':
         t=body.get('ticket')
@@ -70,6 +76,11 @@ def process(state,message,auth_uid,key):
         if state['revoked'] or any(t.get(k)!=state[k] for k in (
             'epoch','version','source_hash','policy_hash','baseline_hash')):
             return state,{'ok':False,'reason':'stale_or_revoked_authority'}
+        # A fresh ticket must never repair stale source-to-baseline custody.
+        # Source advances require an explicit authenticated baseline refresh.
+        if (state.get('baseline_source_hash') != state['source_hash'] or
+                state.get('baseline_source_version') != state['version']):
+            return state,{'ok':False,'reason':'baseline_requires_recertification'}
         if t['nonce'] in state['nonces']:
             return state,{'ok':False,'reason':'replayed_authorization'}
         if digest(template)!=t['template_hash']:
@@ -89,6 +100,28 @@ def process(state,message,auth_uid,key):
                          'template_hash':digest(template),'authority_epoch':state['epoch']}
         return new,{'ok':True,'reason':'committed_by_trusted_service',
                     'commit_sha256':digest(new['committed'])}
+    if operation=='rebaseline':
+        # Only the authenticated issuer may attest a source-matched baseline.
+        # check_baseline validates the template semantics, NOT the external
+        # source-to-template correspondence. That remains a trusted premise.
+        if state['revoked']:
+            return state,{'ok':False,'reason':'revoked_authority_cannot_rebaseline'}
+        baseline=body.get('baseline')
+        if (body.get('source_hash') != state['source_hash'] or
+                body.get('version') != state['version'] or
+                not isinstance(baseline,dict)):
+            return state,{'ok':False,'reason':'invalid_baseline_attestation'}
+        try:check_baseline(baseline)
+        except (EffectViolation,ValueError,KeyError,TypeError) as exc:
+            return state,{'ok':False,'reason':'baseline_verification_denied',
+                          'detail':str(exc)[:200]}
+        new=dict(state,baseline=baseline,baseline_hash=digest(baseline),
+                 baseline_source_hash=state['source_hash'],
+                 baseline_source_version=state['version'],
+                 epoch=state['epoch']+1,nonces=[])
+        return new,{'ok':True,'epoch':new['epoch'],
+                    'baseline_hash':new['baseline_hash'],
+                    'reason':'baseline_recertified_for_current_source'}
     if operation=='advance':
         kind=body.get('kind')
         new=dict(state)
@@ -103,7 +136,9 @@ def process(state,message,auth_uid,key):
             version=body.get('version')
             if not isinstance(src,str) or len(src)!=64 or not isinstance(version,str):
                 return state,{'ok':False,'reason':'invalid_source_version'}
-            new.update(source_hash=src,version=version)
+            # Any new source epoch invalidates the old baseline's provenance.
+            new.update(source_hash=src,version=version,
+                       baseline_source_hash=None,baseline_source_version=None)
         else:return state,{'ok':False,'reason':'invalid_update_type'}
         new['epoch']=state['epoch']+1
         return new,{'ok':True,'epoch':new['epoch'],'reason':'trusted_version_advanced'}

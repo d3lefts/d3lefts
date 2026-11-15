@@ -1,0 +1,132 @@
+{
+  "states": [
+    "ready1",
+    "unbound2",
+    "ready3",
+    "done"
+  ],
+  "goal_states": [
+    "done"
+  ],
+  "initial_belief": [
+    "ready1",
+    "unbound2"
+  ],
+  "actions": [
+    {
+      "name": "status",
+      "cost": "1",
+      "transitions": {
+        "ready1": [
+          [
+            "ready_epoch1",
+            "ready1",
+            true
+          ]
+        ],
+        "unbound2": [
+          [
+            "unbound_epoch2",
+            "unbound2",
+            true
+          ]
+        ],
+        "ready3": [
+          [
+            "ready_epoch3",
+            "ready3",
+            true
+          ]
+        ],
+        "done": [
+          [
+            "committed",
+            "done",
+            true
+          ]
+        ]
+      }
+    },
+    {
+      "name": "rebaseline_epoch2",
+      "cost": "1",
+      "transitions": {
+        "unbound2": [
+          [
+            "baseline_recertified",
+            "ready3",
+            true
+          ]
+        ]
+      }
+    },
+    {
+      "name": "promote_epoch1",
+      "cost": "2",
+      "transitions": {
+        "ready1": [
+          [
+            "committed",
+            "done",
+            true
+          ]
+        ],
+        "unbound2": [
+          [
+            "stale",
+            "unbound2",
+            true
+          ]
+        ],
+        "ready3": [
+          [
+            "stale",
+            "ready3",
+            true
+          ]
+        ],
+        "done": [
+          [
+            "already_done",
+            "done",
+            true
+          ]
+        ]
+      }
+    },
+    {
+      "name": "promote_epoch3",
+      "cost": "2",
+      "transitions": {
+        "ready1": [
+          [
+            "stale",
+            "ready1",
+            true
+          ]
+        ],
+        "unbound2": [
+          [
+            "stale",
+            "unbound2",
+            true
+          ]
+        ],
+        "ready3": [
+          [
+            "committed",
+            "done",
+            true
+          ]
+        ],
+        "done": [
+          [
+            "already_done",
+            "done",
+            true
+          ]
+        ]
+      }
+    }
+  ]
+}
