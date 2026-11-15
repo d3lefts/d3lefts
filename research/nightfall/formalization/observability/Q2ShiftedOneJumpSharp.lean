@@ -79,7 +79,8 @@ theorem one_increment_implies_c5
     (hbound : e ≤ u*(u+c)) :
     Real.sqrt e ≤ Real.sqrt 3*u+c/5 := by
   have hb := one_increment_sharp_scalar e u c he hu hc hbound
-  have hf := beta_lt_fifth
-  nlinarith [mul_nonneg (sub_nonneg.mpr beta_nonneg) hc]
+  have hm : beta*c ≤ (1/5:ℝ)*c :=
+    mul_le_mul_of_nonneg_right (le_of_lt beta_lt_fifth) hc
+  linarith
 
 end Nightfall.Q2Shifted.OneJumpSharp
