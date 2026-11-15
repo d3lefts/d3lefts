@@ -7,6 +7,7 @@ on:
       - 'research/nightfall/formalization/q2_shifted/**'
       - 'research/nightfall/formalization/observability/ShiftedC4Bernstein.lean'
       - 'research/nightfall/formalization/observability/ShiftedC4Scalar.lean'
+      - 'research/nightfall/formalization/observability/ShiftedC6Over25*.lean'
       - 'research/nightfall/2026-11-quadratic-law-free-audit/check_shifted_owner_moment_107.py'
       - '.github/workflows/nightfall-q2-shifted-scalar.yml'
   workflow_dispatch:
@@ -63,6 +64,29 @@ jobs:
             --workspace /tmp/mathlib4 --timeout 900 --strict \
             --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
             --decl Nightfall.ShiftedC4Scalar.shifted_c4_from_strong_moments \
+            --json-out "$OUT/moments.json"
+          python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT/bernstein.json" "$OUT/moments.json"
+
+      - name: Strict exact rational 6/25 Bernstein and shifted scalar certificates
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/observability
+          OUT=lean-receipts/q2-shifted/c6-over25
+          mkdir -p "$OUT"
+          for name in ShiftedC6Over25Bernstein ShiftedC6Over25Scalar; do
+            cp "$SRC/$name.lean" "/tmp/mathlib4/$name.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$name.olean" "$name.lean")
+          done
+          python3 scripts/lean_bridge.py "$SRC/ShiftedC6Over25Bernstein.lean" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.ShiftedC6Over25Bernstein.shifted_c6_25_F_nonneg \
+            --decl Nightfall.ShiftedC6Over25Bernstein.shifted_c6_25_polynomial \
+            --json-out "$OUT/bernstein.json"
+          python3 scripts/lean_bridge.py "$SRC/ShiftedC6Over25Scalar.lean" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.ShiftedC6Over25Scalar.shifted_c6_over25_from_strong_moments \
             --json-out "$OUT/moments.json"
           python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT/bernstein.json" "$OUT/moments.json"
 
