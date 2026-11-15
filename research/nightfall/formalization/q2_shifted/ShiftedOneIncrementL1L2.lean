@@ -61,7 +61,7 @@ theorem centered_one_increment_norm_variance
     calc
       ‖h + Y a‖ ≤ ‖h‖ + ‖Y a‖ := norm_add_le _ _
       _ ≤ ‖h‖ + c := add_le_add_left (hc a) _
-      _ ≤ u + c := add_le_add_right hcenter _
+      _ ≤ u + c := add_le_add_left hcenter _
   have hpoint (a : α) :
       p a * ‖h + Y a‖ ^ 2 ≤ p a * ((u + c) * ‖h + Y a‖) := by
     have hz : 0 ≤ ‖h + Y a‖ := norm_nonneg _
