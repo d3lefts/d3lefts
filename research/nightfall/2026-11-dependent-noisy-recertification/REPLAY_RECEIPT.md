@@ -4,7 +4,7 @@ Research checkpoint UTC 2026-11-15. This branch records the theorem, audit synop
 
 ## Frozen complete-archive receipt
 
-- Zip SHA-256: `04ab343c2d5f492c8004ff9f7fbe78f434ce9904dadc6fe64046b4fa103b98c8`
+- Zip SHA-256: `6675c36566f22ed13ddb00063082a6590be9b18eb1e9151ec65a22714556f13e`
 - Generated 549-state `bellman_receipt.json` SHA-256: `1299871f6d5eae420736e127e569994e319f2647218b57540c05306ab96b1045`
 - Ordered exact independent brute policy comparison SHA-256: `d5cfdaf9a499badbf3d57255304ac14c43131b5505f0d48dd394784e2e8e95c8`.
 - Local fail-closed command: `python3 make_receipt.py && python3 run_all.py`. This command passed at the frozen local checkpoint; no GitHub CI or Lean receipt is claimed for v0.2.
