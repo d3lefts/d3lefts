@@ -58,6 +58,14 @@ Do not conflate:
 
 14. **Ryan O'Donnell, Michael Saks, Oded Schramm, Rocco A. Servedio, _Every Decision Tree Has an Influential Variable_, 2005.** Its variance/revealment inequality is available for Boolean functions under arbitrary product laws; does not alone bound decision-tree revealment by a dimension-free function of variance for *all bounded real degree-two functions*.
 
+
+15. **Littlewood's 4/3 inequality (1930), Bohnenblust–Hille (1931), and modern uniform Boolean cube BH bounds.** A sharp dimension-free bilinear coefficient norm bound is classical: for a bilinear form on `ℓ∞`, its coefficients satisfy the Littlewood 4/3 inequality; see https://pmc.ncbi.nlm.nih.gov/articles/PMC11090839/ and the Boolean cube benchmark https://teorth.github.io/optimizationproblems/constants/26a.html . These furnish a **serious high-risk algebraic antecedent**. Their stated theorems do not directly compare *resampling influences for arbitrarily rare symbols* to variance, but a hidden multilinear operator consequence might. A proof of a uniform-in-law estimate extracted from these would settle priority against us. Do not discount classical operator theory merely because its theorem lacks our terminology.
+
+### Quantitative control: why the unbiased cube special case is not first
+
+Under the uniform Rademacher law, derivatives of a degree-two `f` are affine linear Rademacher sums. Khintchine's `L²/L¹` equivalence therefore bounds `√I_i` by a universal multiple of its first absolute derivative moment. Filmus–Hatami–Keller–Lifshitz bound the **sum of those first moments** by `O(d²)||f||∞`. Summing the Rademacher `L²` derivatives and using `Var(f)≤Σ_i I_i≤√M Σ_i√I_i` therefore yields `Var(f)²≤C||f||∞²M` already on the uniform cube. For highly biased coordinates the same Khintchine `L²/L¹` step is **not uniform**: a centered two-atom variable concentrated at probability `p` can have `L²/L¹` ratio of order `p^{-1/2}`. This is exactly why citing the uniform-cube method is insufficient to anticipate our arbitrary-product result.
+
+
 ## D. Red-team tests that could kill priority
 
 - **Grothendieck operator test:** instantiate symmetric/bilinear factorization of all canonical pair kernels, compare the original `L∞` bound and `L²` owner energies, and attempt to derive `Var²≤C B² max I` without extra bounded-density or minimum-atom assumptions. If successful from an earlier theorem, priority must be demoted, even if the earlier paper does not use the word 'influence'.
