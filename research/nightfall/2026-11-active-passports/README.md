@@ -1,3 +1,21 @@
+# Active mathematical Proof Passport expansion — updated 14 November 2026
+
+## v14 — fifteen active source-scoped records; eleven historical records unchanged
+
+The canonical [machine-readable active registry](../../../docs/active-proof-passport.json) is now **v14 with fifteen claims**, preserving the original twelve IDs and adding three separately auditable passports:
+
+- [Original-source SCIF incremental recertification](scif-incremental-recertification.md): merged #529 finite source canonical graph/influence/owner terminal, strict pinned Lean 43640173972; no optimal implementation/runtime theorem.
+- [Conditional arbitrary-agent safety](conditional-agent-safety.md): merged #528 all-horizon invariant with full effect-time and environment hypotheses, strict pinned Lean 43639554615; no complete real-world mediation certificate.
+- [Semantic fencing and local security](semantic-fencing-and-security.md): merged finite #537, strict ten-declaration Lean on **unmerged** draft #554 run 43662280902, local service pipeline run 43662280945, merged #557 small-model trial (two invalid/unscored attacks, no safety-rate inference).
+
+**Current strongest merged unrestricted finite Q2:** C₂≈**364.5526832774**, #525 run 43644790107. Historical 736.673 (#498), 1064.958 (#494), 1228.356 (v9.2) remain valid weaker checkpoints. Draft 353.293 / 121.655 / 107.393 / 99.263 and restricted pure-sector claims must not be promoted without their exact source/dependency gates.
+
+All twelve preexisting active entries have an explicit `review_20261114` record containing the changed finding, remaining gap and certificate-change decision, and their eleven distinct source dossiers have dated addenda. The eleven frozen historic passports and their five original archival findings are **not changed**. No global novelty claim, independent human review or full physical/system boundary certificate is implied.
+
+[Current formal source and Lean scope](CURRENT_LEAN_PASSPORT_20261114.md) · [Dedicated arbitrary-index Efron–Stein limitations](UNRESTRICTED_EFRON_STEIN_PROOF_PASSPORT_20261114.md) · [Fenced historical/merged frontier](../../catalogue/CURRENT_FRONTIER.json).
+
+---
+
 # Active mathematical Proof Passport expansion — updated 12 November 2026
 
 ## 14 November 2026 v13.1 evidence supplement (12 claim IDs preserved)

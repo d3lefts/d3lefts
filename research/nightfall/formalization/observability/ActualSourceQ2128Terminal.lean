@@ -15,6 +15,9 @@ promoted only after the exact-head pinned Lean axiom audit succeeds.
 namespace Nightfall.Observability.ActualSourceQ2128Terminal
 
 open Finset
+open Nightfall.Observability.ActualESGreedyOwnership
+open Nightfall.Observability.ActualProductSourcePairCentering
+open Nightfall.Observability.ActualProductSourceDerivedStar
 open Nightfall.Observability.ActualProductMergeTower
 open Nightfall.Observability.ActualSourceANOVA
 open Nightfall.Observability.ActualSourceVarianceEnergy
@@ -188,13 +191,19 @@ theorem actual_source_shifted_site_128
             apply Finset.sum_congr rfl
             intro b _
             dsimp [H]
-            rw [mul_pow, Real.sq_sqrt (hp i b)]
-            ring
+            simp only [mul_pow, Real.sq_sqrt (hp i b)] <;> ring
       _ = a^2 := by rw [htab, Real.sq_sqrt hnonneg]
   have hne : ∀ k, k < J.card → i ≠ j k := by
     intro k hk
     have hm := neighborIndex_mem i J k hk
-    exact (original_owner_not_in_neighbors c i) (by simpa [j,J] using hm)
+    change j k ∈ ownedNeighbors c i at hm
+    unfold ownedNeighbors at hm
+    obtain ⟨ed, hed, heq⟩ := Finset.mem_image.mp hm
+    have hdiff := owned_neighbor_ne_owner
+      edgeFirst edgeSecond c
+      (Finset.univ : Finset (Edge ι))
+      (fun ed _ => edgeFirst_ne_edgeSecond ed) i ed hed
+    exact heq ▸ hdiff
   have hkernel : ∀ k, k < J.card → ∀ b d : α,
       |sourceDoubleCenteredPair p f i (j k) b d| ≤ c i := by
     intro k hk b d

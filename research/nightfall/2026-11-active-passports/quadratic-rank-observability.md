@@ -78,3 +78,14 @@ The [dated detailed comparison](../2026-11-information-cost-dissertation/CHAPTER
 ## Source-custody note — immutable v8 Proof Passport
 
 The historical [v8 Proof Passport](../../../papers/finite-product-influence/V8_PROOF_PASSPORT.md) is hash-pinned inside the v8 source manifest and remains byte-for-byte unchanged. The later v9.2 narrative is in a separate [dated supplementary passport](../../../papers/finite-product-influence/V9_2_PASSPORT_SUPPLEMENT_20261112.md). Neither file itself constitutes new Lean or external referee certification.
+
+
+---
+
+## 14 November 2026 — v14 exact frontier and rank-proof separation
+
+**Strongest merged original-source finite degree-two theorem:** `C₂≈364.5526832774` with canonical singletons, arbitrary normalized heterogeneous *site laws* including zero-mass atoms and a common finite alphabet; [PR #525](https://github.com/d3lefts/d3lefts/pull/525), [pinned Lean run #43644790107](https://github.com/d3lefts/d3lefts/actions/runs/43644790107), declaration `ActualSourceQ2364Terminal.actual_source_q2_364_unconditional`. Earlier #498 (736.673), #494 (1064.958) and v9.2 (1228.356) are retained as valid prior checkpoints.
+
+**Not promoted:** 353.292993 requires an extra sharp section budget in the certified conditional terminal, even though later draft #549 attempts to derive it. Draft #551/#552/#558 target 128.299/121.655/107.393 with shifted original-source Hilbert arguments; #540 targets conditional 99.263; the source terminals remain gated by exact current-head receipts and dependency composition. The zero-singleton pure-sector 95.063 proposal #553 is a different restricted theorem.
+
+**Rank-observation independence:** the earlier `ceil(12 C₂ r B²/η)` manuscript cap and `τ_r+η` target have **not** been rebuilt end-to-end with the improved source scalar coefficient. Do not silently change its certified query complexity. The whole-coordinate observation oracle differs from the new semantic version-fencing inspection interface; transfer requires an explicit cost-preserving mapping. Independent prior-art challenge and human review open.
