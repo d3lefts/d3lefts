@@ -171,6 +171,67 @@
     "global_novelty": false,
     "full_infinite_product_theorem": false,
     "full_source_matched_SCIF_terminal": false,
-    "physical_agent_enforcement": false
+    "physical_agent_enforcement": false,
+    "v14_q2_singleton_finite_source_strict": true,
+    "v14_semantic_fencing_pr_draft_lean_strict": true,
+    "v14_complete_operational_boundary_verified": false
+  },
+  "v14_supplement": {
+    "audited_at": "2026-11-14",
+    "warning": "Append-only new scopes; four historical proof group receipts and frozen 67 historical sources are untouched. Does not imply merged PR #554 or deployment certification.",
+    "unrestricted_q2": {
+      "coefficient": 364.5526832774,
+      "source": "research/nightfall/formalization/observability/ActualSourceQ2364Terminal.lean",
+      "git_blob": "5263d9da1ec2f12fbc8986c3698859faedb390a3",
+      "declaration": "Nightfall.Observability.ActualSourceQ2364Terminal.actual_source_q2_364_unconditional",
+      "run": 43644790107,
+      "head": "a558a4dd7a2f2c7db521658c6d59d204758eb934",
+      "scope": "original-source finite common-alphabet product, arbitrary normalized heterogeneous marginals including zeros, pointwise degree≤2, nonzero singletons; strict success at exact PR head"
+    },
+    "conditional_agent_safety": {
+      "pr": 528,
+      "run": 43639554615,
+      "head": "143b40513c25fd1849e7986c4809baa0402e1a7f",
+      "source": "research/nightfall/formalization/agent_safety/ArbitraryAgentSafety.lean",
+      "source_git_blob": "c0e42b193a383f7e4f7ec43728806483f9b3bf68",
+      "named_declarations": 6,
+      "scope": "arbitrary proposal stream conditional invariant under complete effect mediation, faithful model and environment safety"
+    },
+    "semantic_fence": {
+      "pr": 554,
+      "merged": false,
+      "draft": true,
+      "head": "b4fa2e2ecd6041caafa9b5e9f61fbc10a70f7f1e",
+      "run": 43662280902,
+      "source": "research/nightfall/formalization/agent_safety/SemanticFencing.lean",
+      "source_sha256": "17779223198926147b1600c9c5faebbf333add1bc05c71562000f491ea624d58",
+      "named_declarations": 10,
+      "scope": "finite unsafe history source-version fences, optimal finite safe-baseline Bellman evidence plan; no complete physical mediation"
+    },
+    "security_local": {
+      "pr": 554,
+      "run": 43662280945,
+      "head": "b4fa2e2ecd6041caafa9b5e9f61fbc10a70f7f1e",
+      "status": "source-matched integration test passed; NOT Lean",
+      "checks": "6 hardening regressions, 21 existing tests, artifact-only verification of 10 local-effect service events; trusted issuer/kernel assumed",
+      "additional_model_generated_pilot": {
+        "pr": 557,
+        "run": 43662000190,
+        "cases": 3,
+        "scope": "small local model, official task scorers, local artifact effect only"
+      }
+    },
+    "conditional_unclosed": {
+      "c353": "unproved sharp section budget",
+      "c107": "shifted Hilbert/source section original-source end-to-end current-head unproved",
+      "c99": "c/5 shifted norm and sharp source section unproved",
+      "pure_sub100": "zero-singleton subclass does not establish unrestricted Q2"
+    },
+    "missing_end_to_end": [
+      "arbitrary-index all-L² Efron–Stein Lean theorem",
+      "operational mediation of cloud/physical actions",
+      "trusted issuer compromise resistance",
+      "external non-author review and dated priority"
+    ]
   }
 }
