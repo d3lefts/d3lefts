@@ -122,7 +122,7 @@ theorem bernoulli_quadratic_expansion
         t^2 * (quadratic u v c h k y - quadratic u v c h k x -
           firstSwitch u v h k x y) := by
             simp only [quadratic, firstSwitch, Finset.sum_add_distrib,
-              Finset.sum_sub_distrib, Finset.mul_sum, Finset.sum_mul]
-            ring_nf
+              Finset.sum_sub_distrib, ← Finset.mul_sum]
+            ring
 
 end Nightfall.Observability.QuadraticBernoulli
