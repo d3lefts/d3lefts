@@ -1,0 +1,90 @@
+name: NIGHTFALL Q2 C96 conditional-six-cover direct original-source Lean terminal
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main, nightfall-q2-unrestricted-105-742-quarter-sharpen-20261114]
+    paths:
+      - 'research/nightfall/formalization/observability/**'
+      - 'research/nightfall/formalization/q2_shifted/**'
+      - 'scripts/nightfall_q2_certify.py'
+      - '.github/workflows/nightfall-q2-96six-direct-lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: q2-96six-direct-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  q2-96six-original-source:
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && startsWith(github.event.pull_request.head.ref, 'nightfall-q2-'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout exact effective PR merge head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Pinned Lean and Mathlib dependencies
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile ONLY transitive sources of C96 conditional-six-cover theorem in topological order
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from scripts.nightfall_q2_certify import local_sources, closure, sha256, ROOT
+          from pathlib import Path
+          import json, subprocess, shutil
+          files=local_sources()
+          ordered=closure("ActualSourceQ296SixCover",files)
+          workspace=Path("/tmp/mathlib4")
+          out=workspace/".lake/build/lib/lean"
+          out.mkdir(parents=True,exist_ok=True)
+          receipts=Path("lean-receipts/q2-96six-direct")
+          receipts.mkdir(parents=True,exist_ok=True)
+          manifest=[]
+          for name in ordered:
+              source=files[name]
+              target=workspace/(name+".lean")
+              shutil.copyfile(source,target)
+              assert sha256(source)==sha256(target)
+              print("BUILD",name,flush=True)
+              subprocess.run(["lake","env","lean","-o",str(out/(name+".olean")),target.name],cwd=workspace,check=True,timeout=1200)
+              manifest.append({"path":str(source.relative_to(ROOT)),"sha256":sha256(source)})
+          (receipts/"sources.json").write_text(json.dumps(manifest,indent=2)+"\n")
+          PY
+      - name: Named kernel declaration and standard-axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-96six-direct
+          N=Nightfall.Observability.ActualSourceQ296SixCover
+          python3 scripts/lean_bridge.py research/nightfall/formalization/observability/ActualSourceQ296SixCover.lean \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl "$N.actual_source_q2_96_given_six_cover" \
+            --json-out lean-receipts/q2-96six-direct/source-q2-96six.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-96six-direct/source-q2-96six.json
+      - name: Immutable provenance
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/q2-96six-direct
+          git rev-parse HEAD > lean-receipts/q2-96six-direct/effective-commit.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/q2-96six-direct/mathlib-commit.txt
+          cat lean-toolchain > lean-receipts/q2-96six-direct/toolchain.txt
+          sha256sum research/nightfall/formalization/observability/ActualSourceQ296SixCover.lean \
+            research/nightfall/formalization/observability/ActualSourceQ2105Local.lean \
+            research/nightfall/formalization/observability/ShiftedC6over25Scalar.lean \
+            research/nightfall/formalization/observability/ShiftedC6over25Bernstein.lean \
+            > lean-receipts/q2-96six-direct/SHA256SUMS.txt
+      - name: Retain source and kernel receipts even on failure
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: q2-96six-direct-receipt-${{ github.run_id }}
+          path: lean-receipts/q2-96six-direct/
+          retention-days: 60
