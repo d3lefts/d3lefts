@@ -48,6 +48,9 @@ jobs:
             --decl Commonwealth.Assurance.reachable_sink_safe \
             --decl Commonwealth.Assurance.indistinguishable_authority_impossibility \
             --decl Commonwealth.Assurance.recertification_transfer \
+            --decl Commonwealth.Assurance.exists_least_cost_sound_panel \
+            --decl Commonwealth.Assurance.ledger_evidence_implies_authority \
+            --decl Commonwealth.Assurance.reachable_evidence_guard_authority \
             --json-out lean-receipts/commonwealth-lean.json
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/commonwealth-lean.json
