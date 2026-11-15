@@ -44,6 +44,7 @@ jobs:
             --decl $N.operational_effect_has_fresh_certificate \
             --decl $N.globally_optimal_lifecycle_policy_exists \
             --decl $N.min_cost_attained \
+            --decl $N.fixed_first_action_bellman \
             --json-out lean-receipts/lifecycle/strict.json
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/lifecycle/strict.json
