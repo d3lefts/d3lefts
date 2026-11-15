@@ -1,4 +1,10 @@
 # Proof Passport — F16 cubic phase-block finite witness (11 November 2026)
+
+## v14 custody check — 14 November 2026
+
+The fixed F16 81-assignment three-query finite phase-block witness retains its existing Lean source/receipt. It is a scoped construction rather than a universal coded-oracle separation; there is no new novelty, review or infinite-dimensional transfer result. Recent Q2/agent-safety certifications do not alter the theorem statement or validity class.
+
+---
 Status: **Lean kernel-checked finite construction; global priority unverified; general adaptive transfer unrefereed.**
 
 ## Exact machine-checked statement
