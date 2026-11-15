@@ -30,6 +30,8 @@ jobs:
           grep -q "optimal Bayes 81/8 cheapest-first 219/16 pathwise worst 16" permission-receipts/results.txt
           grep -q "guarded cache 2013/32 guarded eager 525/4" permission-receipts/results.txt
           grep -q "audit SHA256 a326e7685a36c30e1fb3bd03baeeb9521e0d71c8cf8c69ce3f4c33f9b3430078" permission-receipts/results.txt
+          grep -q "PASS 30 nontrivial mission permission partitions" permission-receipts/results.txt
+          grep -q "mission receipt SHA256 e6fc360634efe9cb7e0d03c0956d0a7431920c6732c02a3e8b320d236527572e" permission-receipts/results.txt
       - name: Record exact-source and upstream dependency provenance
         if: always()
         shell: bash
