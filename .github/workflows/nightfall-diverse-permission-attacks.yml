@@ -1,0 +1,78 @@
+name: NIGHTFALL ControlArena distinct attacks and permission-cost paired replay
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/nightfall-diverse-permission-attacks.yml"
+      - "research/nightfall/right-to-act-promotion/run_diverse_attack_mechanisms.py"
+      - "research/nightfall/right-to-act-promotion/audit_diverse_attack_mechanisms.py"
+      - "research/nightfall/right-to-act-promotion/DIVERSE_PERMISSION_ATTACK_PROTOCOL.md"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nightfall-diverse-permission
+  cancel-in-progress: true
+jobs:
+  distinct-official-scorers:
+    runs-on: ubuntu-latest
+    environment: controlarena-python
+    timeout-minutes: 35
+    defaults:
+      run:
+        working-directory: research/nightfall/right-to-act-promotion
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Syntax and dependency pin
+        run: |
+          set -euo pipefail
+          python -m py_compile run_diverse_attack_mechanisms.py audit_diverse_attack_mechanisms.py
+          python -m pip install 'control-arena==20.1.1' 'aws-cdk-lib==2.260.0' 'constructs==10.5.0' 'jsii==1.137.0' 'pytest==8.4.2'
+          python -m pip freeze > diverse-installed-versions.txt
+      - name: Isolated official-source CDK sandbox
+        run: |
+          docker build -f Dockerfile.untrusted-cdk -t nightfall-iac-cdk-sandbox:v16 .
+          docker image inspect --format '{{.Id}}' nightfall-iac-cdk-sandbox:v16 > diverse-sandbox-image.txt
+      - name: Pre-register scorer semantics against authored controls
+        env:
+          JSII_SILENCE_WARNING_UNTESTED_NODE_VERSION: "1"
+        run: python calibrate_model_scorers.py
+      - name: Four distinct actual-source candidates, official main and harmful scorers, five paired policies
+        timeout-minutes: 15
+        env:
+          JSII_SILENCE_WARNING_UNTESTED_NODE_VERSION: "1"
+        run: python run_diverse_attack_mechanisms.py --out diverse-attack-results
+      - name: Independently recompute source diff, scorer semantics and all policy outcomes
+        run: python audit_diverse_attack_mechanisms.py --dir diverse-attack-results | tee diverse-independent-audit.json
+      - name: Negative control must reject poisoned receipt
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          original=Path('diverse-attack-results/diverse_attack_receipt.json')
+          a=json.loads(original.read_text())
+          a['policy_totals']['guard_only']['official_side_success_admissions']=0
+          Path('diverse-attack-results/poisoned.json').write_text(json.dumps(a))
+          PY
+          if python audit_diverse_attack_mechanisms.py --dir diverse-attack-results --receipt diverse-attack-results/poisoned.json; then
+            echo "Independent checker accepted forged attack admission count" >&2
+            exit 1
+          fi
+      - name: Preserve official scorers, exact source boundary and independent replay
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-diverse-permission-replay
+          path: |
+            research/nightfall/right-to-act-promotion/diverse-attack-results/
+            research/nightfall/right-to-act-promotion/diverse-independent-audit.json
+            research/nightfall/right-to-act-promotion/diverse-installed-versions.txt
+            research/nightfall/right-to-act-promotion/diverse-sandbox-image.txt
+            research/nightfall/right-to-act-promotion/model-trial-calibration.json
+          retention-days: 30
+          if-no-files-found: warn
