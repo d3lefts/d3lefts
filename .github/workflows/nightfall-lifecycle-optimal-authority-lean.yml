@@ -1,0 +1,62 @@
+name: NIGHTFALL lifecycle-optimal authority exact Lean terminal
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/authority/LifecycleOptimalAuthority.lean'
+      - '.github/workflows/nightfall-lifecycle-optimal-authority-lean.yml'
+  workflow_dispatch:
+concurrency:
+  group: nightfall-lifecycle-authority-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  lifecycle-original-source-lean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - name: Checkout exact revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Setup pinned Lean and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Strict source-level Lean kernel replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/authority/LifecycleOptimalAuthority.lean
+          mkdir -p lean-receipts/lifecycle
+          cp "$SRC" /tmp/mathlib4/LifecycleOptimalAuthority.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/LifecycleOptimalAuthority.olean LifecycleOptimalAuthority.lean)
+          N=Nightfall.LifecycleAuthority
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.admitted_effect_current \
+            --decl $N.admitted_successor_safe \
+            --decl $N.valid_state_safe \
+            --decl $N.valid_successor \
+            --decl $N.valid_step_safe \
+            --decl $N.operational_step_safe \
+            --decl $N.operational_effect_has_fresh_certificate \
+            --decl $N.globally_optimal_lifecycle_policy_exists \
+            --decl $N.min_cost_attained \
+            --json-out lean-receipts/lifecycle/strict.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/lifecycle/strict.json
+      - name: Preserve source hash and toolchain
+        if: always()
+        run: |
+          mkdir -p lean-receipts/lifecycle
+          sha256sum research/nightfall/formalization/authority/LifecycleOptimalAuthority.lean > lean-receipts/lifecycle/SHA256SUMS.txt
+          cat lean-toolchain > lean-receipts/lifecycle/toolchain.txt
+          git rev-parse HEAD > lean-receipts/lifecycle/repo-commit.txt
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: nightfall-lifecycle-lean-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/lifecycle/
+          if-no-files-found: warn
