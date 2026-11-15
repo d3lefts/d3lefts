@@ -42,12 +42,32 @@ jobs:
             --json-out lean-receipts/q2-shifted/scalar.json
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/q2-shifted/scalar.json
+      - name: Strict c/5 sufficient-moment bridge and Jensen-aware obstruction
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/q2_shifted/ShiftedC5MomentBridge.lean
+          cp "$SRC" /tmp/mathlib4/ShiftedC5MomentBridge.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ShiftedC5MomentBridge.olean ShiftedC5MomentBridge.lean)
+          N=Nightfall.Q2Shifted.C5MomentBridge
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.beta_lt_fifth \
+            --decl $N.first_second_sos \
+            --decl $N.c5_from_first_second_comparison \
+            --decl $N.universal_fifth_from_first_second_comparison \
+            --decl $N.rational_pseudo_jensen_holder_fourth \
+            --decl $N.rational_pseudo_violates_c5 \
+            --json-out lean-receipts/q2-shifted/c5-moment-bridge.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-shifted/c5-moment-bridge.json
       - name: Source/commit manifest
         if: always()
         run: |
           set -euo pipefail
           mkdir -p lean-receipts/q2-shifted
           sha256sum research/nightfall/formalization/q2_shifted/Q2ShiftedScalar.lean \
+            research/nightfall/formalization/q2_shifted/ShiftedC5MomentBridge.lean \
             research/nightfall/2026-11-quadratic-law-free-audit/check_shifted_owner_moment_107.py \
             > lean-receipts/q2-shifted/SHA256SUMS
           git rev-parse HEAD > lean-receipts/q2-shifted/commit.txt
