@@ -107,6 +107,31 @@ This is useful for independent Bellman-function or induction attacks:
 the candidate cannot be improved by a positive uniform slack term.
 It is **not** a derivation of the inequality for arbitrary laws or Hilbert outputs.
 
+### Two-replica angular-versus-radial decomposition
+
+There is an exact geometric reformulation of the stronger conjecture.
+Let `S=H+sum_jY_j` and `S'` be an independent copy, and write
+`F=||S||`, `u=EF`, `a=||ES||=||H||`. By independence,
+
+```text
+A = E_{S,S'}( ||S||*||S'|| - <S,S'> ) = u²-a² >= 0.
+```
+
+The stronger comparison `e+a²<=2u²+c*u` is **equivalent** to
+
+```text
+Var(||S||) <= A + c*u.
+```
+
+Thus the new burden is to bound **radial dispersion** by the
+independently sampled **angular misalignment** plus a sharp one-jump
+amplitude tax. This uses the exact identity
+`||S-S'||² = (||S||-||S'||)² + 2(||S||||S'||-<S,S'>)`.
+For scalar `S`, `A=4*E(S_+)*E((-S)_+) `: mixed-sign mass
+pays the angular term, while the all-n nonnegative equality family
+pays the linear amplitude term. This is an operator hypothesis,
+**not** a proof of the needed variance inequality.
+
 ## Alternative operator and exact obstruction
 
 For `V=sum_i ||Y_i||²`, `W=sqrt(V)`,
