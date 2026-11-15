@@ -39,6 +39,10 @@ jobs:
             --decl $N.invisible_unsafe_change_impossible \
             --decl $N.all_sources_sound \
             --decl $N.optimal_fence_exists \
+            --decl $N.optimal_read_step \
+            --decl $N.optimal_safe_stopping_plan \
+            --decl $N.two_bit_direct_cost_at_least_eight \
+            --decl $N.two_bit_post_certificate_gain \
             --json-out lean-receipts/semantic-fencing/strict.json
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/semantic-fencing/strict.json
