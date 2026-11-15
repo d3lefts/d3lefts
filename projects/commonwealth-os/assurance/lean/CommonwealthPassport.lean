@@ -255,4 +255,98 @@ theorem recertification_transfer
 
 end Temporal
 
+
+section ExactCost
+
+variable {World Query Output : Type*}
+
+/-- There is a least-cost sound nominal certificate among all available finite
+query panels whenever at least one sound panel exists. Cost is a Nat sum, and
+the exact feasibility condition is the earlier hitting-set equivalence.
+This proves mathematical optimality, not the complexity of computing it. -/
+theorem exists_least_cost_sound_panel
+    (possible authorized : World → Prop)
+    (read : Query → World → Output)
+    (nominal : World) (cost : Query → Nat)
+    (hexists : ∃ selected : Finset Query,
+      TranscriptSound possible authorized read selected nominal) :
+    ∃ selected : Finset Query,
+      TranscriptSound possible authorized read selected nominal ∧
+      ∀ alternative : Finset Query,
+        TranscriptSound possible authorized read alternative nominal →
+        selected.sum cost ≤ alternative.sum cost := by
+  classical
+  let pricePossible : Nat → Prop := fun n =>
+    ∃ s : Finset Query,
+      TranscriptSound possible authorized read s nominal ∧ s.sum cost = n
+  obtain ⟨s₀, hs₀⟩ := hexists
+  have hsome : ∃ n, pricePossible n := ⟨s₀.sum cost, s₀, hs₀, rfl⟩
+  obtain ⟨best, hbest, hprice⟩ := Nat.find_spec hsome
+  refine ⟨best, hbest, ?_⟩
+  intro alternative hgood
+  have hminimum : Nat.find hsome ≤ alternative.sum cost :=
+    Nat.find_min' hsome ⟨alternative, hgood, rfl⟩
+  rw [hprice]
+  exact hminimum
+
+end ExactCost
+
+section EndToEnd
+
+variable {World Query Output Effect EffectId : Type*}
+
+/-- Operational contract for a complete proof-passport gate: the passport
+evidence is nonempty and robust, and its true commit-time snapshot belongs
+to the same possible-world class and agrees with the certified observations.
+The two latter facts are EXTERNAL assumptions of the installed guard. -/
+def EvidencePermit
+    (possible authorized : World → Prop)
+    (read : Query → World → Output)
+    (selected : Finset Query) (nominal : World)
+    (_passport : Unit) (snapshot : World) (_effect : Effect) : Prop :=
+  ValidEvidence possible authorized read selected nominal ∧
+    possible snapshot ∧ Agreement read selected nominal snapshot
+
+/-- Direct bridge between certified evidence and historical permission events.
+This theorem proves actual-world authorization for all recorded effects IF the
+guarded ledger really contains all in-scope effects and all snapshots are true. -/
+theorem ledger_evidence_implies_authority
+    (possible authorized : World → Prop)
+    (read : Query → World → Output)
+    (selected : Finset Query) (nominal : World)
+    (identity : Effect → EffectId)
+    (ledger : Ledger Unit World Effect)
+    (hsafe : Safe (EvidencePermit possible authorized read selected nominal)
+      identity ledger) :
+    ∀ ev ∈ ledger.entries, authorized ev.snapshot := by
+  intro ev hev
+  obtain ⟨hc, hworld, hobs⟩ := hsafe.1 ev hev
+  exact valid_evidence_actual possible authorized read selected nominal
+    ev.snapshot hc hworld hobs
+
+/-- End-to-end theorem inside the DECLARED abstract model:
+sound evidence + atomic completely mediated sink steps imply every logged
+effect's actual snapshot satisfies the legal authorization predicate.
+No claim that a real implementation refines SinkStep is made here. -/
+theorem reachable_evidence_guard_authority
+    (possible authorized : World → Prop)
+    (read : Query → World → Output)
+    (selected : Finset Query) (nominal : World)
+    (identity : Effect → EffectId)
+    {initial final : Ledger Unit World Effect}
+    (hinitial : Safe (EvidencePermit possible authorized read selected nominal)
+      identity initial)
+    (hreach : Reachable
+      (SinkStep (EvidencePermit possible authorized read selected nominal) identity)
+      initial final) :
+    (∀ ev ∈ final.entries, authorized ev.snapshot) ∧
+      (final.entries.map (fun ev => identity ev.effect)).Nodup := by
+  have hsafe := reachable_sink_safe
+    (EvidencePermit possible authorized read selected nominal)
+    identity hinitial hreach
+  exact ⟨ledger_evidence_implies_authority
+    possible authorized read selected nominal identity final hsafe, hsafe.2⟩
+
+end EndToEnd
+
 end Commonwealth.Assurance
