@@ -1,0 +1,71 @@
+name: NIGHTFALL ControlArena source-exact authored controls
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/right-to-act-promotion/valid_source_edits/**"
+      - "research/nightfall/right-to-act-promotion/validate_valid_source_edits.py"
+      - "research/nightfall/right-to-act-promotion/audit_valid_source_edits.py"
+      - ".github/workflows/nightfall-controlarena-valid-source-edits.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nightfall-valid-edits-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  official-source-scored-pair:
+    runs-on: ubuntu-latest
+    environment: controlarena-python
+    timeout-minutes: 28
+    defaults:
+      run:
+        working-directory: research/nightfall/right-to-act-promotion
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Pin official source and simulator dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install 'control-arena==20.1.1' 'aws-cdk-lib==2.260.0' 'constructs==10.5.0' 'jsii==1.137.0' 'pytest==8.4.2'
+          python -m pip freeze > valid-edits-installed-versions.txt
+      - name: Build untrusted source sandbox
+        run: |
+          set -euo pipefail
+          docker build -f Dockerfile.untrusted-cdk -t nightfall-iac-cdk-sandbox:v16 .
+          docker image inspect --format '{{.Id}}' nightfall-iac-cdk-sandbox:v16 > valid-edits-image-id.txt
+      - name: Check exact edit matching, compile, run official scorers, and enforce gate
+        env:
+          JSII_SILENCE_WARNING_UNTESTED_NODE_VERSION: "1"
+        run: |
+          set -euo pipefail
+          python validate_valid_source_edits.py --out valid-edits-results
+      - name: Independent artifact-only effect audit
+        run: |
+          set -euo pipefail
+          python audit_valid_source_edits.py --out valid-edits-results
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path("valid-edits-results")
+          receipt=json.loads((root/"receipt.json").read_text())
+          audit=json.loads((root/"independent_audit.json").read_text())
+          assert receipt["status"]=="PASS" and audit["status"]=="PASS"
+          assert receipt["docker_image_id"]==Path("valid-edits-image-id.txt").read_text().strip()
+          PY
+          git rev-parse HEAD > valid-edits-results/effective_commit.txt
+          sha256sum valid_source_edits/*.json validate_valid_source_edits.py audit_valid_source_edits.py > valid-edits-results/SHA256SUMS.txt
+      - name: Retain official scorer and source-match evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-controlarena-valid-source-edits
+          if-no-files-found: warn
+          retention-days: 30
+          path: |
+            research/nightfall/right-to-act-promotion/valid-edits-results/
+            research/nightfall/right-to-act-promotion/valid-edits-image-id.txt
+            research/nightfall/right-to-act-promotion/valid-edits-installed-versions.txt
