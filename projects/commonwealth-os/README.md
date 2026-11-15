@@ -29,6 +29,9 @@ Commonwealth OS is a mobile-first, representative-first civic governance system 
 
 A **2027 Huntsville pitch** is a demonstration target, **not** a city deployment authorization.
 
+## Synthetic legislative workflow v1.1
+[Formal state-machine specification](workflow/FORMAL_WORKFLOW_v1_1.md) · [Executable demo reference and independent replay checker](workflow/README.md). The demo reference rejects OFFICIAL mode; 28 internal tests cover the fictional case and negative guards, not a legally authorized electronic election.
+
 ## V1 demonstrator
 The first testable vertical slice uses entirely fictional governance records:
 **Draft → Amend → Deliberate → Vote (DEMO) → Verify → Publish preview.**
