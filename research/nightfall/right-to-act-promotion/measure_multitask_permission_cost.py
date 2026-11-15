@@ -123,14 +123,22 @@ def all_scp_pinned(b,t):
         old_targets=a["Properties"].pop("TargetIds",[])
         new_targets=z["Properties"].pop("TargetIds",[])
         if a!=z:raise ValueError("protected SCP changed: "+k)
-        def refs(x):
-            if not isinstance(x,list) or not all(isinstance(v,dict) and set(v)=={"Ref"} for v in x):
-                raise ValueError("unexpected target syntax")
-            vs=[v["Ref"] for v in x]
-            if len(vs)!=len(set(vs)):raise ValueError("duplicated target")
-            return set(vs)
-        old_ids,new_ids=refs(old_targets),refs(new_targets)
-        if not (old_ids<=new_ids and new_ids-old_ids <= new_ous):
+        def canonical_refs(x):
+            """Preserve ANY existing CloudFormation target expression unchanged.
+            A Ref-only parser mistakenly rejects legitimate Fn::GetAtt target
+            expressions and causes false denials. Only new plain Ref targets
+            to the single authorized added OU may be introduced.
+            """
+            if not isinstance(x,list) or not all(isinstance(v,dict) for v in x):
+                raise ValueError("unexpected policy target list")
+            tokens=[json.dumps(v,sort_keys=True,separators=(",",":")) for v in x]
+            if len(tokens)!=len(set(tokens)):
+                raise ValueError("duplicate policy target expression")
+            return set(tokens)
+        old_ids,new_ids=canonical_refs(old_targets),canonical_refs(new_targets)
+        extras=new_ids-old_ids
+        permitted={json.dumps({"Ref":uid},sort_keys=True,separators=(",",":")) for uid in new_ous}
+        if not (old_ids<=new_ids and extras<=permitted):
             raise ValueError("SCP target changed outside authorized added OU")
     _check_fsx(t["Resources"])
 def billing_full(b,t):
