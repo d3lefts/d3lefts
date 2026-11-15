@@ -33,4 +33,3 @@ print('SHA256SUMS.txt','PASS')
 print(json.dumps({'status':'PASS','exact_brute_policies':54,'bellman_histories':549,
                   'cache_rejection_controls':8,'falsification_controls':8,
                   'global_lp_cost':'3','global_lp_optimum_certified_by_exact_primal_dual':True},sort_keys=True))
-
