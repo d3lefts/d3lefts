@@ -36,3 +36,23 @@ The service cannot prove that the baseline supplied by its trusted issuer was *a
 The next open proof obligation is to connect the new rebaseline operation to an independently authenticated source snapshot and a source-matched, independently replayed synthesizer output, then reject deliberately mismatched source-template attestations before actual promotion. The infinite-state and arbitrary-agent safety questions remain open.
 
 **Prior work:** NIGHTFALL merged PR #554 (semantic-fencing service), #576 (finite optimal recertification); classical transactional snapshot/TOCTOU and reference-monitor methods. No external human review or worldwide priority certification is claimed.
+
+
+## Concrete proof-to-service policy refinement (separate finite example)
+
+This directory now includes the archived finite belief-game solver, a four-state source-epoch model, and an INDEPENDENT exhaustive history-dependent policy enumerator. States encode an initial certified epoch-1 source, an epoch-2 source with invalidated baseline, an epoch-3 source after certified refresh, and a completed local JSON promotion. The initially hidden state is one of the first two. Trusted operations are status, baseline refresh, and promotion attempts; the symbolic costs are respectively 1, 1, and 2.
+
+The solver and independent checker establish exact worst-case mission cost 4 for the restricted finite action-and-observation contract. The certified optimal first action is status, after which the policy either promotes directly (nominal path cost 3), or rebaselines and then promotes (cost 4). The independent checker enumerates ALL loop-free history-dependent policy candidates for every nonempty belief, not just the solver's preferred strategy, and verifies the entire certificate.
+
+The source-specific regression test_source_epoch_game_refinement.py executes both possible optimal accepting paths using the ACTUAL authority_service transition function and the unchanged independent CloudFormation effect verifier. A source change inserted between the initial status and the proposed effect makes the stale ticket fail closed. The pre-commit source race is deliberately outside the simplified no-concurrent-changes four-state game's completeness assumptions, so the full real-world trace-simulation claim is NOT made.
+
+Run from the service directory:
+
+    python -m unittest -v test_source_epoch_game_refinement
+
+Run from THIS directory:
+
+    python synthesize.py source_epoch_game.json --out source_epoch_game_certificate.json
+    python independent_game_audit.py source_epoch_game.json source_epoch_game_certificate.json
+
+The costs are illustrative rationals, not measured financial, timing, or operational expenditure. The game treats mission completion as a terminal decision and makes no claim about the service's post-completion behavior. These checks validate two concrete traces and the exact finite synthetic model, not a full bisimulation of every possible external operating state, Linux schedule, agent intervention, source attestation, or protected physical effect.
