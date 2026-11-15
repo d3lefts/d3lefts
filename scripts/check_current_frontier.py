@@ -31,9 +31,16 @@ ANCHORS = {
         "Nightfall.Observability.ActualSourceQ2364Terminal.actual_source_q2_364_unconditional",
         43644790107, "a558a4dd7a2f2c7db521658c6d59d204758eb934",
     ),
+    "q2-unrestricted-107": (
+        "kernel_proved_domain",
+        "research/nightfall/formalization/observability/ActualSourceQ2107Terminal.lean",
+        "a1e81b41d6c14c7da3c7f8d1ecc376027a70059f",
+        "Nightfall.Observability.ActualSourceQ2107Terminal.actual_source_q2_107_unconditional",
+        43666215780, "e01039b24996befc3a3f7f32225362db8d1f8b42",
+    ),
     "q2-unrestricted-353-conditional": (
         "kernel_proved_implication_only",
-        "research/nightfall/formalization/observability/ActualSourceQ2353Terminal.lean",
+        "research/archive/historical-proof-sources/ActualSourceQ2353Terminal_43644790107.lean",
         "342d872eb156998734dc7ce8223a2f482f865c42",
         "Nightfall.Observability.ActualSourceQ2353Terminal.actual_source_q2_353_given_sharp_section_budget",
         43644790107, "a558a4dd7a2f2c7db521658c6d59d204758eb934",
@@ -69,6 +76,7 @@ ANCHORS = {
 }
 COEFFICIENTS = {
     "q2-unrestricted-364": 364.5526832774,
+    "q2-unrestricted-107": 107.3934498997707,
     "q2-unrestricted-353-conditional": 353.2929930769,
     "q2-shifted-107-conditional": 107.393,
     "q2-shifted-99-conditional": 99.2629850192,
@@ -90,7 +98,7 @@ def git_blob(data: bytes) -> str:
 
 def audit(data: dict, root: Path = ROOT) -> dict:
     insist(data.get("schema") == "nightfall.frontier-evidence.v1", "Schema drift")
-    insist(data.get("best_unrestricted_source_q2_certified") == "q2-unrestricted-364",
+    insist(data.get("best_unrestricted_source_q2_certified") == "q2-unrestricted-107",
            "Best unconditional original-source Q2 falsely promoted")
     insist(data.get("unrestricted_sub100_unconditional") == "not_proved",
            "Unrestricted sub-100 proof falsely promoted")
@@ -157,7 +165,7 @@ def audit(data: dict, root: Path = ROOT) -> dict:
                              content.decode("utf-8")) is not None,
                    f"{cid}: missing exact theorem declaration")
     return {"status": "PASS", "claims": len(claims),
-            "best_unrestricted_q2": "364.5526832774, finite product, scoped",
+            "best_unrestricted_q2": "107.3934498997707, finite product, scoped",
             "unrestricted_sub100": "NOT PROVED",
             "physical_boundary": "NOT VERIFIED",
             "verification": "source and original PR-head receipt custody only (no Lean rerun)"}
@@ -179,6 +187,7 @@ def negative_controls(data: dict) -> int:
         ("unproved 99 promoted", lambda d: q(d, "q2-shifted-99-conditional").update(status="kernel_proved_domain")),
         ("unproved source hypotheses removed", lambda d: q(d, "q2-shifted-99-conditional").update(added_unproved_premises=[])),
         ("wrong source theorem", lambda d: q(d, "q2-unrestricted-364").update(declaration="Bad.fake")),
+        ("wrong best source", lambda d: q(d, "q2-unrestricted-107").update(source_git_blob="0"*40)),
         ("false certified frontier", lambda d: d.update(best_unrestricted_source_q2_certified="q2-shifted-99-conditional")),
         ("physical enforcement invented", lambda d: d.update(operational_agent_boundary="verified")),
         ("human originality invented", lambda d: q(d, "q2-unrestricted-364").update(priority="first-in-literature")),

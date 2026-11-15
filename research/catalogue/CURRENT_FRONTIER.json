@@ -1,12 +1,40 @@
 {
   "schema": "nightfall.frontier-evidence.v1",
-  "as_of": "2026-11-14",
+  "as_of": "2026-11-15 UTC",
   "authority": "Curated original-source evidence ledger; not an independent audit or novelty certification",
-  "best_unrestricted_source_q2_certified": "q2-unrestricted-364",
+  "best_unrestricted_source_q2_certified": "q2-unrestricted-107",
   "unrestricted_sub100_unconditional": "not_proved",
   "operational_agent_boundary": "not_verified",
   "all_originality_claims": "not_reviewed",
   "claims": [
+    {
+      "id": "q2-unrestricted-107",
+      "family": "Q2 unrestricted finite product",
+      "status": "kernel_proved_domain",
+      "exact_claim": "Original-source bounded degree-two finite independent product variance-squared/influence bound with coefficient (2(1+sqrt(2))sqrt(3)+2)^2, approximately 107.39344989977; heterogeneous marginals, zero-mass atoms and nonzero singleton sectors allowed.",
+      "coefficient_approx": 107.3934498997707,
+      "source": "research/nightfall/formalization/observability/ActualSourceQ2107Terminal.lean",
+      "source_git_blob": "a1e81b41d6c14c7da3c7f8d1ecc376027a70059f",
+      "declaration": "Nightfall.Observability.ActualSourceQ2107Terminal.actual_source_q2_107_unconditional",
+      "receipt": {
+        "run": 43666215780,
+        "head": "e01039b24996befc3a3f7f32225362db8d1f8b42",
+        "outcome": "success",
+        "pin": "leanprover/lean4:v4.36.0-rc2",
+        "scope": "strict original-source named terminal declaration, standard axioms only; source bytes match this merged file; no novelty or human referee"
+      },
+      "added_unproved_premises": [],
+      "domain_limitations": [
+        "finite independent product with common finite alphabet and arbitrary heterogeneous nonnegative normalized marginals, including zero mass",
+        "pointwise Efron-Stein degree <=2",
+        "real bounded function; does not certify infinite product or unrestricted higher degree",
+        "historical original-head Lean receipt, current main full import closure not independently replayed"
+      ],
+      "priority": "unreviewed",
+      "external_referee": "none",
+      "physical_system_certificate": false,
+      "novel_record_status": "not_assessed"
+    },
     {
       "id": "q2-unrestricted-364",
       "family": "Q2 unrestricted finite product",
@@ -39,9 +67,9 @@
       "id": "q2-unrestricted-353-conditional",
       "family": "Q2 unrestricted finite product",
       "status": "kernel_proved_implication_only",
-      "exact_claim": "Conditional coefficient 353.2929930769 from the additional sharp original-source integrated-section budget; that source budget remains unproved here.",
+      "exact_claim": "Conditional coefficient 353.2929930769 from the additional sharp original-source integrated-section budget; that source budget remains unproved here. Archived original source bytes preserve the conditional historical receipt; the active 353 file has since been augmented separately.",
       "coefficient_approx": 353.2929930769,
-      "source": "research/nightfall/formalization/observability/ActualSourceQ2353Terminal.lean",
+      "source": "research/archive/historical-proof-sources/ActualSourceQ2353Terminal_43644790107.lean",
       "source_git_blob": "342d872eb156998734dc7ce8223a2f482f865c42",
       "declaration": "Nightfall.Observability.ActualSourceQ2353Terminal.actual_source_q2_353_given_sharp_section_budget",
       "receipt": {
