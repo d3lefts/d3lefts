@@ -45,6 +45,10 @@ jobs:
             --decl $N.globally_optimal_lifecycle_policy_exists \
             --decl $N.min_cost_attained \
             --decl $N.fixed_first_action_bellman \
+            --decl $N.execution_all_safe \
+            --decl $N.reusable_after_irrelevant_change \
+            --decl $N.changed_dependency_invalidates \
+            --decl $N.reusable_union_iff \
             --json-out lean-receipts/lifecycle/strict.json
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/lifecycle/strict.json
