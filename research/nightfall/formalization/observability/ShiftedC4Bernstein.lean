@@ -546,4 +546,15 @@ theorem shifted_c4_F_nonneg
       rw [hxid, hvid] at hcell
       exact hcell
 
+
+/-- Export the exact rational Bernstein consequence without exposing
+    the private local nine-rectangle implementation. -/
+theorem shifted_c4_polynomial
+    (x v : ℝ) (hx0 : 0 ≤ x) (hx1 : x ≤ 1)
+    (hv0 : 0 ≤ v) (hv1 : v ≤ 1) :
+    (1-v)^2*(3-2*x^4+16*x*v*(1-x^2)+16*v^2*(1-x^2)) ≤ 3 := by
+  have h := shifted_c4_F_nonneg x v hx0 hx1 hv0 hv1
+  unfold F at h
+  linarith
+
 end Nightfall.ShiftedC4Bernstein
