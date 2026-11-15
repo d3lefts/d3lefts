@@ -12,7 +12,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: effect-time-budget-\${{ github.event.pull_request.head.ref || github.ref_name }}
+  group: effect-time-budget-${{ github.event.pull_request.head.ref || github.ref_name }}
   cancel-in-progress: true
 
 jobs:
@@ -42,12 +42,12 @@ jobs:
           assert receipt['optimal_evidence_cost']=='1'
           PY
           git rev-parse HEAD > effective-commit.txt
-          sha256sum check_exact.py THEORY.md README.md > executed-source-sha256.txt
+          sha256sum check_exact.py THEOREM.md README.md > executed-source-sha256.txt
       - name: Retain independent check receipts
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
-          name: effect-time-budget-\${{ github.run_id }}
+          name: effect-time-budget-${{ github.run_id }}
           path: |
             research/nightfall/2026-11-effect-time-information-budget/receipt.json
             research/nightfall/2026-11-effect-time-information-budget/effective-commit.txt
