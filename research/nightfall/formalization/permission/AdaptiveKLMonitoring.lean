@@ -68,7 +68,7 @@ theorem finite_horizon_adaptive_kl_cost
     (hs : ∀ t, safe (t+1) = ((safe t).compProd (κ t)).map (update t))
     (hu : ∀ t, unsafeWorld (t+1) = ((unsafeWorld t).compProd (η t)).map (update t))
     (hinitial : safe 0 = unsafeWorld 0)
-    (rate : ℝ≥0∞) (cost : ℕ → ℝ≥0∞)
+    (rate : ENNReal) (cost : ℕ → ENNReal)
     (hchannel : ∀ t, klDiv ((safe t).compProd (κ t))
         ((safe t).compProd (η t)) ≤ rate * cost t)
     (n : ℕ) (permit : H → Bool) (hpermit : Measurable permit) :
