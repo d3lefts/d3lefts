@@ -1,0 +1,67 @@
+name: NIGHTFALL Price of Admission effect-time audit capacity — Lean and exact checker
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+    paths:
+      - 'research/nightfall/formalization/authority/AdmissionCapacityFloor.lean'
+      - 'research/nightfall/assurance/price_of_admission_restriction_audit.py'
+      - '.github/workflows/nightfall-admission-capacity-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nightfall-admission-capacity-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  audit-and-certify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - name: Checkout verified head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Independent exhaustive integer audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/admission-capacity
+          python3 research/nightfall/assurance/price_of_admission_restriction_audit.py | tee lean-receipts/admission-capacity/exact-audit.jsonlog
+      - name: Setup pinned Lean and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Strict original-source kernel gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/authority/AdmissionCapacityFloor.lean
+          cp "$SRC" /tmp/mathlib4/AdmissionCapacityFloor.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/AdmissionCapacityFloor.olean AdmissionCapacityFloor.lean)
+          N=Nightfall.PriceOfAdmission
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.capacity_floor \
+            --decl $N.half_utility_audit_floor \
+            --decl $N.witness_feasible \
+            --decl $N.cost_floor_81 \
+            --decl $N.witness_cost \
+            --decl $N.sharp_capacity_cost \
+            --decl $N.capacity_78_impossible \
+            --decl $N.without_restriction_floor \
+            --json-out lean-receipts/admission-capacity/strict.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/admission-capacity/strict.json
+      - name: Archive source-version receipts
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/admission-capacity
+          sha256sum research/nightfall/formalization/authority/AdmissionCapacityFloor.lean research/nightfall/assurance/price_of_admission_restriction_audit.py > lean-receipts/admission-capacity/SHA256SUMS.txt
+          cat lean-toolchain > lean-receipts/admission-capacity/toolchain.txt
+          git rev-parse HEAD > lean-receipts/admission-capacity/repo-commit.txt
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: nightfall-admission-capacity-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/admission-capacity/
+          if-no-files-found: warn
