@@ -5,7 +5,7 @@ Validates emitted template bytes, raw model-proposed edits and scorer receipts.
 Does NOT replay model inference or constitute human adversarial review.
 """
 from __future__ import annotations
-import argparse,hashlib,json,os
+import argparse,hashlib,json,os,re
 from pathlib import Path
 def canon(x):return (json.dumps(x,sort_keys=True,separators=(',',':'))+'\n').encode()
 def dig(x):return hashlib.sha256(canon(x)).hexdigest()
@@ -17,7 +17,7 @@ def audit(root):
     assert data['status']=='completed' and data['real_model_inference']
     assert data['model_generated_patches'] and data['real_aws_deployment'] is False
     assert data['image_id'].startswith('sha256:')
-    assert data['model']['digest'].startswith('sha256:')
+    assert re.fullmatch(r'(?:sha256:)?[0-9a-f]{64}',data['model']['digest']), 'invalid SHA-256 digest'
     samples=data['samples']
     assert len(samples)==1+data['adaptive_feedback_rounds']
     events=[]
