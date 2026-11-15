@@ -1,0 +1,47 @@
+name: NIGHTFALL ControlArena permission-cost exact frontier
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'research/nightfall/assurance/controlarena_permission_cost/**'
+      - '.github/workflows/nightfall-controlarena-permission-cost.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nightfall-controlarena-cost-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  exact-finite-admission-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Exact rational frontier with independent closed-form and mutation checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd research/nightfall/assurance/controlarena_permission_cost
+          python3 -B exact_frontier.py > frontier_receipt.txt
+          python3 -B verify_frontier_independent.py frontier_receipt.txt | tee independent_audit.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('independent_audit.json').read_text())
+          assert r['verifier']=='PASS' and r['negative_controls']==2 and r['frontier_rows']==7
+          PY
+          sha256sum exact_frontier.py verify_frontier_independent.py CONTROLARENA_PERMISSION_COST_SECTION.md frontier_receipt.txt independent_audit.json > SHA256SUMS.txt
+          git rev-parse HEAD > audited_commit.txt
+      - name: Archive model-only exact receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nightfall-controlarena-price-model-${{ github.run_id }}
+          path: |
+            research/nightfall/assurance/controlarena_permission_cost/frontier_receipt.txt
+            research/nightfall/assurance/controlarena_permission_cost/independent_audit.json
+            research/nightfall/assurance/controlarena_permission_cost/SHA256SUMS.txt
+            research/nightfall/assurance/controlarena_permission_cost/audited_commit.txt
+          if-no-files-found: error
