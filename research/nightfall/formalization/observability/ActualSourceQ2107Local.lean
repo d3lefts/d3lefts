@@ -10,6 +10,9 @@ components are admitted.  No c/5 claim.
 -/
 namespace Nightfall.Observability.ActualSourceQ2107Local
 open Finset
+open Nightfall.Observability.ActualESGreedyOwnership
+open Nightfall.Observability.ActualProductSourcePairCentering
+open Nightfall.Observability.ActualProductSourceDerivedStar
 open Nightfall.Observability.ActualProductMergeTower
 open Nightfall.Observability.ActualSourceANOVA
 open Nightfall.Observability.ActualSourceVarianceEnergy
