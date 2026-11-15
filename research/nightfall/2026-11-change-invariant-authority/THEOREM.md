@@ -94,3 +94,24 @@ The candidate original *systems-engineering* contribution is an operationally ch
 ## Next new problem (not the old C96 obstruction)
 
 Find the **minimum additional sensor acquisition cost** that restores a failing robust separator certificate under a noisy adaptive experiment model and a global two-sided-risk constraint. Seek a matching primal/dual or hardness certificate under a specified bounded interface width; do not substitute a noiseless mincut for dependent observations.
+
+## Theorem 4. Identifiability of the necessary posterior-reconstruction certificate
+
+**Decision-invariance versus exact reconstruction are different evidence tasks.** With a complete finite positive-mass interface, the function `R(lambda)` over all positive prior reweightings contains essentially the entire normalized vector of safe/unsafe separator masses unless the risk is constant across slices.
+
+Precisely, consider two positive separator totals `t_b>0, t'_b>0` with unsafe masses `a_b∈[0,t_b]` and `a'_b∈[0,t'_b]`. Their posterior response functions `R(lambda)=lambda·a/(lambda·t)` and `R'(lambda)=lambda·a'/(lambda·t')` are equal for **every** positive `lambda` if and only if:
+
+1. Their slice risks agree, `q_b=a_b/t_b=a'_b/t'_b` for every `b`; and
+2. Either all the slice risks `q_b` are identical, or the two total-mass vectors are positive scalar multiples, `t'=c t`, implying `a'=c a`.
+
+**Exact proof:** Equality on the positive orthant implies equality of polynomials `(lambda·a)(lambda·t')=(lambda·a')(lambda·t)` by continuity/polynomial identity. Coefficients of `lambda_b²` force `a_b t'_b=a'_b t_b`, i.e. `q_b=q'_b`. For `b≠j`, after substituting these equalities the coefficient of `lambda_b lambda_j` is
+
+```
+(q_b-q_j)*(t_b*t'_j-t'_b*t_j) = 0.
+```
+
+If any two slice risks differ, their total-mass ratios agree. Comparing every other coordinate with one of these two distinct-risk coordinates forces all `t'_b/t_b` equal. If all slice risks agree, the posterior risk is constant under all reweights, so arbitrary positive `t'` is observationally equivalent. The converse is immediate. QED.
+
+**Representation corollary:** To preserve all future exact posterior responses, in the generic case one needs the normalized `n` unsafe conditional masses and `n` safe conditional masses modulo a common positive scale (a `2n−1` real-parameter representation). This is an algebraic identifiability statement, **not** a bit-complexity lower bound without a specified representation/coding model. For arbitrary-prior *authorization invariance only*, the much smaller scalar `max_b q_b` is sufficient for every risk threshold `delta`. For a single fixed `delta`, even the binary pass/fail fact plus a valid attached proof suffices.
+
+This makes the choice of certificate **mission-conditioned**: exact posterior prediction may require a large conditional message; preserving an authorization decision does not. Theorem 4 and its proof are elementary rational-function identifiability, not a claim of global mathematical priority.
