@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 11,
+  "revision": 12,
   "as_of": "2026-11-15 UTC",
-  "source_commit": "C105 source head ae8ebec96d6c3ce4a25fb42bc7ae6ba170ca9103; registry union with main",
-  "scope": "184 exact pending Lean source blobs including C105 original-source certificate branch, merged C95 pure-sector sources, and merged PR #571/#573 standalone proof sources. Pending register status is not a kernel certification.",
+  "source_commit": "C105 main merged 4ee8ff09982708e8fc4d32d5c7bf1239e670b1ae, C96 conditional source head 6ec3d1541f521f40cf90c064e4b736279e7cfdc2",
+  "scope": "185 exact pending Lean source custody entries. New C96 six-cover module has explicit unproved 6B owner cover premise; source custody does not certify universal Q2 C96.",
   "sources": [
     {
       "path": "research/nightfall/formalization/agent_safety/ArbitraryAgentSafety.lean",
@@ -791,6 +791,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ296SixCover.lean",
+      "source_blob_sha": "8de1ad77a9f218d0df3673d8574ddd6592556865",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact original-source conditional six-B graph-owner implication at PR #570 source head 6ec3d1541f521f40cf90c064e4b736279e7cfdc2, named strict Lean gate https://github.com/d3lefts/d3lefts/actions/runs/43676624010. The six-B cover premise is NOT proved and unconditional C96 is NOT certified; registry custody status is not additional proof."
     },
     {
       "path": "research/nightfall/formalization/observability/ActualSourceQ2CompositionGate.lean",
