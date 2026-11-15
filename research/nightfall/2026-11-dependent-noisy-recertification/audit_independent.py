@@ -114,4 +114,3 @@ def main():
        'naive_independent_joint':'1/16'},sort_keys=True))
 
 if __name__=='__main__':main()
-
