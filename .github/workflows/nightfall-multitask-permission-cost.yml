@@ -1,0 +1,82 @@
+name: NIGHTFALL ControlArena multi-task true local enforcement costs
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/nightfall-multitask-permission-cost.yml"
+      - "research/nightfall/right-to-act-promotion/measure_multitask_permission_cost.py"
+      - "research/nightfall/right-to-act-promotion/audit_multitask_permission_cost.py"
+      - "research/nightfall/right-to-act-promotion/MULTITASK_PERMISSION_COST_PROTOCOL.md"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nightfall-multitask-cost
+  cancel-in-progress: true
+jobs:
+  real-source-local-effect-measurements:
+    runs-on: ubuntu-latest
+    environment: controlarena-python
+    timeout-minutes: 35
+    defaults:
+      run:
+        working-directory: research/nightfall/right-to-act-promotion
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Source and pinned dependency preflight
+        run: |
+          python -m py_compile measure_multitask_permission_cost.py audit_multitask_permission_cost.py
+          python -m pip install 'control-arena==20.1.1' 'aws-cdk-lib==2.260.0' 'constructs==10.5.0' 'jsii==1.137.0' 'pytest==8.4.2'
+          python -m pip freeze > cost-study-installed-versions.txt
+      - name: Build measured source-matched sandbox image
+        run: |
+          docker build -f Dockerfile.untrusted-cdk -t nightfall-iac-cdk-sandbox:v16 .
+          docker image inspect --format '{{.Id}}' nightfall-iac-cdk-sandbox:v16 > cost-study-sandbox-image-id.txt
+      - name: Measure two main tasks, two harmful tasks, six real source candidates, six guard policies, 20 local commits
+        timeout-minutes: 20
+        env:
+          JSII_SILENCE_WARNING_UNTESTED_NODE_VERSION: "1"
+        run: python measure_multitask_permission_cost.py --out multitask-cost-results
+      - name: Independently verify actual scored templates, policy outcomes, and source epoch transitions
+        run: python audit_multitask_permission_cost.py --dir multitask-cost-results | tee multitask-cost-independent.json
+      - name: Independent receipt tampering must fail
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('multitask-cost-results/measurement.json')
+          x=json.loads(p.read_text())
+          x['cases'][1]['policy_arms']['always_full']['permitted']=True
+          Path('multitask-cost-results/poisoned.json').write_text(json.dumps(x))
+          PY
+          if python audit_multitask_permission_cost.py --dir multitask-cost-results --receipt multitask-cost-results/poisoned.json; then
+            echo "ERROR: independent checker accepted false unsafe full audit" >&2
+            exit 1
+          fi
+      - name: Retain source/model boundary, CDK effects, actual latencies and version evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-multitask-real-local-enforcement-costs
+          path: |
+            research/nightfall/right-to-act-promotion/multitask-cost-results/measurement.json
+            research/nightfall/right-to-act-promotion/multitask-cost-results/baseline.template.json
+            research/nightfall/right-to-act-promotion/multitask-cost-results/*_honest.template.json
+            research/nightfall/right-to-act-promotion/multitask-cost-results/*_fsx.template.json
+            research/nightfall/right-to-act-promotion/multitask-cost-results/*_mfa.template.json
+            research/nightfall/right-to-act-promotion/multitask-cost-results/source_ou_honest/core_infrastructure/root_account/components/organisation_units.py
+            research/nightfall/right-to-act-promotion/multitask-cost-results/source_billing_honest/core_infrastructure/root_account/organisation.py
+            research/nightfall/right-to-act-promotion/multitask-cost-results/source_ou_fsx/core_infrastructure/root_account/components/service_control_policies/weight_security/deny_fsx_exports.py
+            research/nightfall/right-to-act-promotion/multitask-cost-results/source_ou_mfa/core_infrastructure/root_account/organisation.py
+            research/nightfall/right-to-act-promotion/multitask-cost-results/source_billing_fsx/core_infrastructure/root_account/components/service_control_policies/weight_security/deny_fsx_exports.py
+            research/nightfall/right-to-act-promotion/multitask-cost-results/source_billing_mfa/core_infrastructure/root_account/organisation.py
+            research/nightfall/right-to-act-promotion/multitask-cost-results/service-trust/authority.json
+            research/nightfall/right-to-act-promotion/multitask-cost-independent.json
+            research/nightfall/right-to-act-promotion/cost-study-installed-versions.txt
+            research/nightfall/right-to-act-promotion/cost-study-sandbox-image-id.txt
+          retention-days: 30
+          if-no-files-found: warn
