@@ -59,6 +59,58 @@ def exact_q2_influences(n, j):
         out.append(e)
     return mean,v,out
 
+def mission_world_cost(order,prices,hidden,safe):
+    """Current action decision only, not identity of hidden source."""
+    possible=set(range(len(prices)))
+    charge=Q(0)
+    for i in order:
+        if len({j in safe for j in possible}) == 1:
+            break
+        charge += prices[i]
+        if hidden==i: break
+        possible.discard(i)
+    return charge
+
+def mission_bellman(prices,prior,safe):
+    """Independent dynamic programming recurrence for fixed action class."""
+    n=len(prices)
+    @lru_cache(None)
+    def v(mask):
+        left=[i for i in range(n) if mask & (1<<i)]
+        if len({i in safe for i in left})==1: return Q(0)
+        weight=sum(prior[i] for i in left)
+        return min(prices[i]+Q(weight-prior[i],weight)*v(mask^(1<<i))
+                   for i in left)
+    return v((1<<n)-1)
+
+def mission_audit():
+    prices=tuple(map(Q,(1,2,4,9,20)))
+    prior=(1,1,1,12,1)
+    n=len(prices)
+    digest=sha256()
+    for mask in range(1,(1<<n)-1):
+        safe={i for i in range(n) if mask & (1<<i)}
+        best=None
+        worst=None
+        for order in permutations(range(n)):
+            expenditures=[mission_world_cost(order,prices,j,safe) for j in range(n)]
+            expected=sum((Q(prior[j],sum(prior))*expenditures[j]
+                          for j in range(n)),Q(0))
+            path=max(expenditures)
+            best=expected if best is None else min(best,expected)
+            worst=path if worst is None else min(worst,path)
+        exact_floor=min(sum(prices[i] for i in safe),
+                        sum(prices[i] for i in range(n) if i not in safe))
+        assert worst==exact_floor,(mask,worst,exact_floor)
+        assert best==mission_bellman(prices,prior,safe),(mask,best)
+        digest.update(f"{mask}|{best}|{worst}\n".encode())
+    assert mission_bellman(prices,prior,{0})==Q(1)
+    assert mission_bellman(prices,prior,{0,1,2})==Q(51,8)
+    expected_hash="e6fc360634efe9cb7e0d03c0956d0a7431920c6732c02a3e8b320d236527572e"
+    assert digest.hexdigest()==expected_hash
+    print("PASS 30 nontrivial mission permission partitions, matched exact cost and Bellman")
+    print("mission receipt SHA256",digest.hexdigest())
+
 def audit():
     rng = Random(20261115)
     h = sha256()
@@ -107,4 +159,6 @@ def audit():
     print("optimal Bayes",opt,"cheapest-first",Q(219,16),"pathwise worst",16)
     print("guarded cache",guarded,"guarded eager",Q(525,4))
     print("audit SHA256",h.hexdigest())
-if __name__=="__main__": audit()
+if __name__=="__main__":
+    audit()
+    mission_audit()
