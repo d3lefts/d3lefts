@@ -29,3 +29,10 @@ Real operational complete mediation, authentic source/version coverage including
 Closest antecedents: weighted hitting set, decision-tree optimization, optimistic concurrency, reference monitors, SLSA/in-toto, AWS CloudFormation admission, and the 2026 active-observability/continuous-authorization literature. The potential new contribution is the **joint minimal version-fence and post-classification evidence-cost characterization under an explicit interface**; require dated adversarial prior-art comparison and non-author proof review before priority promotion.
 
 **Next cheapest decisive test:** implement non-bypassable external-effect interception on a dedicated low-privilege sandbox, introduce omitted/ABA source changes and request floods, and compare matched assurance cost against full-rebuild and static-fence baselines. Preserve failed tests and immutable exact-head receipts.
+
+## 15 November 2026 — evidence acquisition and authority-scope update
+
+Semantic fencing v0.3 (#537), finite decision/guard optimizations and bounded service tests are preserved as scoped engineering and mathematical evidence. New joint-recognition/recertification results in [PR #576](https://github.com/d3lefts/d3lefts/pull/576) further characterize exact finite nominal-path evidence costs, shared observation-facility/guard-service min-cut cases, and nonmonotone Bayesian acceptance risk.
+
+**Certification boundary unchanged:** neither this analytic recertification contribution nor a bounded prototype demonstrates complete mediation by actual external/physical tools, authenticated deployment environments, general service-level availability, or unrestricted superintelligent-system safety. Distinguish Lean-checked *conditional* safety invariants from their operational trusted-boundary premises. Current source-specific receipts and limitations are in [Proof Passport v16](PROOF_PASSPORT_V16_20261115.md).
+
