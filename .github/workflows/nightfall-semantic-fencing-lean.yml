@@ -1,0 +1,57 @@
+name: NIGHTFALL exact semantic-fencing Lean certificate
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - 'research/nightfall/formalization/agent_safety/SemanticFencing.lean'
+      - '.github/workflows/nightfall-semantic-fencing-lean.yml'
+      - '.github/actions/setup-nightfall-lean/**'
+      - 'scripts/lean_bridge.py'
+  workflow_dispatch:
+concurrency:
+  group: nightfall-semantic-fencing-lean-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  semantic-fence-lean:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - name: Checkout exact revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Setup pinned Lean and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile actual semantic fence source and audit theorem statements
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/agent_safety/SemanticFencing.lean
+          mkdir -p lean-receipts/semantic-fencing
+          cp "$SRC" /tmp/mathlib4/SemanticFencing.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/SemanticFencing.olean SemanticFencing.lean)
+          N=Nightfall.SemanticFencing
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl $N.fence_sound_iff_hits \
+            --decl $N.invisible_unsafe_change_impossible \
+            --decl $N.all_sources_sound \
+            --decl $N.optimal_fence_exists \
+            --decl $N.optimal_read_step \
+            --decl $N.bellman_root_optimal \
+            --decl $N.finite_safe_bellman_optimal \
+            --decl $N.optimal_safe_stopping_plan \
+            --decl $N.two_bit_direct_cost_at_least_eight \
+            --decl $N.two_bit_post_certificate_gain \
+            --json-out lean-receipts/semantic-fencing/strict.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/semantic-fencing/strict.json
+      - name: Archive exact semantic-fence receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: semantic-fence-lean-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/semantic-fencing
+          if-no-files-found: warn

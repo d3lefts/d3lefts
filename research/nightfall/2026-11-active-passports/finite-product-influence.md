@@ -58,3 +58,10 @@ Merged PR [#325](https://github.com/d3lefts/d3lefts/pull/325) with passing Lean 
 The pinned PR #317/PR #325 product theorem is an actual **finite** Lean compilation with **inherited variance exponent 5/2 and degree exponent 6**, importing Turturean's uniform-cube result. Its support-degree/heterogeneous-alphabet scope is not an end-to-end proof of the distinct **degree-two exponent-two** claim. For the direct Turturean and Girish–Mittal–Nehoran–Raz comparison see the [Chapter 2 audit](../2026-11-information-cost-dissertation/CHAPTER2_TURTUREAN_SCOPE_AUDIT_20261112.md) and the [new quadratic claim passport](quadratic-rank-observability.md). This supplement **does not alter** the original PR #317 checked theorem statement, compiler hash or coefficient.
 
 The later PR #407/#408 scoped quadratic Lean receipts, including eight real source-derived Efron–Stein pair/rectangle declarations, belong to the separate quadratic proof chain, not to a promotion of the inherited finite 5/2 theorem. Non-author review and all-product measurable lift remain open.
+
+
+---
+
+## 14 November 2026 — v14 provenance review
+
+The original #317/#325 independent finite-product influence transfer remains a pinned Lean theorem, with arbitrary coordinate-dependent finite alphabets and zero-mass atoms under its stated support-only boundedness assumptions. The distinct #525 `364.552683` variance-squared bound applies to a common finite alphabet (heterogeneous *laws*, not heterogeneous *types*). Neither implies the other without a source-level bridge. #520 certified countable coordinate support for arbitrary measurable real observables, and #512 certified finite-cylinder integration/variance, but arbitrary-index all-L² Efron–Stein remains open in Lean. Re-run and compose exact current-source predicates before universal promotion; standard Efron–Stein is not an originality claim.

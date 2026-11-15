@@ -48,3 +48,10 @@ PR #354 supplies a written proof candidate: for an ℓ₁-valued degree-two func
 Independently check both Khintchine norm steps and every √M normalization; verify the rank-one and fixed-rank scalarization with biased/rare leaves; reconstruct posterior closure and bound at every reached state. Review PR #354 before promoting its proof.
 
 **Gate:** Preserve this certificate and every failed or superseded result, but do not promote to published novel theorem without independent proof review and dated prior-art comparison. No frozen historical Proof Passport or five approved Original Findings are being changed.
+
+
+---
+
+## 14 November 2026 — v14 conditional-subclass check
+
+The fair-sign/cubic-selector estimates are still subclass and draft statements. New original-source Q2 #525 proves a finite-degree-two scalar inequality under arbitrary site laws but does not supply the missing fair-sign vector-to-cubic mechanism for general degree three. Separately, #553's proposed sub-100 pure quadratic subclass assumes zero canonical singletons. Do not drop the fair, rank-one, zero-singleton or fixed-feature assumptions without exact source proof.

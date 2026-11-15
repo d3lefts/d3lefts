@@ -55,3 +55,10 @@ Independently derive posterior conditional means for each address fiber, verify 
 The [dissertation signed-pointer proof passport](information-costs-identification.md) adds a separate n-address scalar family f_θ(K,Z)=θ_KZ_K, with unknown θ∈{±1}^n. **Different oracle tasks:** once θ is known, the fresh state is exactly observed by reading K and Z_K (two coordinate reads); model **identification** via arbitrary complete-input queries has exact minimax squared-L² risk 1−min(q,n)/n. A one-sided two-value tester rejects ε-far functions with probability ≥ε/4 per trial. Exponential constant-scale code packing preserves an Ω(n) model query requirement. These follow from an elementary addressed-family/coding argument and are **not** further evidence for the exact nested-address allocation formula above.
 
 The n=2 trivalent tester has been independently enumerated in this session in direct integer arithmetic (6561 inputs, zero failures, 64 equality cases). CI in the v12 passport workflow must replay the committed [integer checker](check_addressed_family_independent.cjs) and the [original Python checker](../2026-11-information-cost-dissertation/check_addressed_family_exact.py). Do not promote finite tests to all-n Lean certification or claim a new broad information-cost classification.
+
+
+---
+
+## 14 November 2026 — v14 transfer distinction
+
+This passport's exact addressed-family fixed-versus-adaptive whole-coordinate Bayes risk calculation is preserved unchanged. New semantic-fencing work (#537 finite audit, #554 strict Lean on an unmerged draft head) identifies a *different* phenomenon: further authenticated snapshot reads **after** the action-safety label is already known can lower effect-time version-check cost. Both involve adaptivity, but they have different source worlds, oracle prices, goals and certificates; no cost-preserving equivalence is proved. The cheapest decisive transfer test is to instantiate the same source change-history and read/guard price model in both frameworks, with independent enumerated minimax checks.

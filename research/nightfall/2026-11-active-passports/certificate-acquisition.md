@@ -52,3 +52,10 @@ Kernel-compile product-specific posterior row restriction and total-influence id
 ## Revision v2 — precise PR #312 receipt and routine-lemma quarantine
 
 The verified Lean 4.33.0 module [VariancePosteriorOneStep.lean](../formalization/product_space/VariancePosteriorOneStep.lean) proves `normalized_one_step_degree_contraction` for finite full-support Boolean-product rows after a specific ANOVA energy table is supplied. [CI #42925787438](https://github.com/d3lefts/d3lefts/actions/runs/42925787438) is green. Neither a concrete dynamic query policy over all posterior states nor a uniform full adaptive-risk bound is the compiled declaration. The generic posterior telescoping/ANOVA identities are credited as classical supporting steps and novelty-quarantined in the [39-file ledger](../../../docs/lean-certificate-provenance.json).
+
+
+---
+
+## 14 November 2026 — v14 cross-problem contract
+
+The certificate-guided adaptive observer here operates on posterior Boolean-product fractional-row costs, while the new `finite_safe_bellman_optimal` at [draft #554](https://github.com/d3lefts/d3lefts/pull/554) optimizes exact snapshot observations plus version-only freshness fences **after a safe initial label**. Draft #554 has strict Lean receipt [43662280902](https://github.com/d3lefts/d3lefts/actions/runs/43662280902), but is unmerged and carries a different oracle/cost model. Both suggest useful post-classification information acquisition; neither proves the other's claimed rate. A source-preserving bridge must quantify actual read, sampler, effect-check and recertification costs, with independent counterexamples to missing source coverage.

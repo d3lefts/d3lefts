@@ -4,6 +4,7 @@ import ActualSourceQ2SharpAdditiveFinal
 import ActualSourceQ2EnergyDualSource
 import Q2589ScalarSite
 import Q2FlexibleSectionScalar
+import ActualSourceIntegratedSharp
 
 /-!
 # Conditional source Q2 353.292993 with ONE outstanding sharp-section budget: cubic fourth-moment and joint original energy cap
@@ -206,5 +207,23 @@ theorem actual_source_q2_353_given_sharp_section_budget
     p hp hp1 f hdegree B hB hf
     (original_source_sharp_additive_budget
       p hp hp1 f hdegree B hB hf) hsharpSection
+
+/-- Unconditional Q2 353.292993 original-law theorem: the sharp
+Bernoulli-t section cost is source-derived, not a caller premise. -/
+theorem actual_source_q2_353_unconditional
+    (p : ι → α → ℝ)
+    (hp : ∀ k a, 0 ≤ p k a)
+    (hp1 : ∀ k, (∑ a : α, p k a) = 1)
+    (f : (ι → α) → ℝ)
+    (hdegree : ESDegreeLE p f 2)
+    (B : ℝ) (hB : 0 ≤ B)
+    (hf : ∀ x, |f x| ≤ B) :
+    ∀ M : ℝ, 0 ≤ M →
+      (∀ i : ι, sourceInfluence p f i ≤ M) →
+      (sourceVariance p f)^2 ≤ K^2 * B^2 * M := by
+  exact actual_source_q2_353_given_sharp_section_budget
+    p hp hp1 f hdegree B hB hf
+    (Nightfall.Observability.ActualSourceIntegratedSharp.actual_source_integrated_sharp_budget
+      p hp hp1 f hdegree B hB hf)
 
 end Nightfall.Observability.ActualSourceQ2353Terminal

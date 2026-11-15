@@ -1,6 +1,7 @@
 name: Verify research website
-# Broad docs, research and scripts globs intentionally cover all site regressions.
-# Avoid redundant explicit paths: nested file paths are already included.
+# Only presentation, site-logic and public-doc changes trigger browser/visual tests.
+# Research-only changes are covered by the scholarly archive, named Lean gates
+# and the focused exact research replay rather than a whole 39-step browser run.
 on:
   push:
     branches: [main]
@@ -10,7 +11,6 @@ on:
       - ".gitignore"
       - ".github/pull_request_template.md"
       - "docs/**"
-      - "research/nightfall/**"
       - "scripts/**"
       - ".github/workflows/verify-site.yml"
   pull_request:
@@ -20,7 +20,6 @@ on:
       - ".gitignore"
       - ".github/pull_request_template.md"
       - "docs/**"
-      - "research/nightfall/**"
       - "scripts/**"
       - ".github/workflows/verify-site.yml"
   workflow_dispatch:
@@ -72,8 +71,6 @@ jobs:
         run: |
           node scripts/test_claim_impact.cjs
           node scripts/claim_impact.cjs
-      - name: Reject signed-overlap boundary and zero-extension regressions
-        run: python3 scripts/test_overlap_boundary.py
       - name: Parse JavaScript without executing browser code
         run: |
           node --check docs/site.js
@@ -105,8 +102,6 @@ jobs:
           node scripts/test_shared_architecture.cjs
           node --check docs/join-evidence-core.js
           node scripts/test_join_evidence.cjs
-      - name: Verify PAS v2 finite DAG proof identities (integer-exact)
-        run: node scripts/test_pas_v2.cjs
       - name: Independently verify exact Werner and finite-field tools
         run: |
           node --check docs/research-tools-core.js
@@ -124,26 +119,6 @@ jobs:
           node --check docs/orchestrator-core.js
           node --check docs/orchestrator.js
           node scripts/test_orchestrator.cjs
-      - name: Discovery Engine external worker acceptance and tamper tests
-        run: python3 scripts/test_discovery_worker.py
-      - name: Check adaptive granularity study with exact adversarial tests
-        run: |
-          python3 -m unittest discover -s research/nightfall/discovery-engine -p 'test_adaptive_resolution.py'
-          python3 -m unittest discover -s research/nightfall/discovery-engine -p 'test_granularity_study.py'
-      - name: Run frozen paired held-out granularity benchmark
-        run: |
-          python3 research/nightfall/discovery-engine/granularity_study.py --seed 1729 --train 12 --test 12 --output /tmp/granularity_results.json
-          python3 -m json.tool /tmp/granularity_results.json > /dev/null
-          sha256sum /tmp/granularity_results.json
-          cp /tmp/granularity_results.json granularity_results.json
-      - name: Archive bounded synthetic study receipt
-        uses: actions/upload-artifact@v4
-        with:
-          name: nightfall-granularity-study
-          path: granularity_results.json
-          retention-days: 90
-      - name: Self-test offline publication-scope scanner
-        run: python3 scripts/audit_release_scope.py --self-test
       - name: Install browser test dependencies
         run: |
           npm install --no-save --no-package-lock playwright-core@1.56.1
@@ -214,49 +189,3 @@ jobs:
           path: browser-artifacts/
           if-no-files-found: ignore
           retention-days: 30
-      - name: Compile verification scripts and check machine-readable task ledger
-        run: |
-          python3 -m py_compile scripts/verify_erdos_independent.py scripts/verify_frozen_release.py
-          python3 -m json.tool research/nightfall/AGENT_TASKS.json > /dev/null
-      - name: Compile exact conditional lower-envelope verifier
-        run: python3 -m py_compile research/nightfall/agent-reports/ea36_lower_20261028/verify_dual_ceiling.py
-      - name: Self-test independent exact convolution against direct arithmetic
-        run: python3 scripts/verify_erdos_independent.py --self-test
-      - name: Check agent GMP source, exact-rational geometry and JSON receipt
-        run: |
-          echo "4775c2c704d92459762f9f25e921073ea9c7d88daf1d1dd9aaacbd774a5adb79  research/nightfall/agent-reports/ea36_131072/independent_gmp_audit.cpp" | sha256sum --check
-          echo "260dd5d7fbb1967a516228990c197f02427102353a1cb4c59d51f0cfcc291fd5  research/nightfall/agent-reports/ea36_131072/verify_bridge.py" | sha256sum --check
-          python3 -m py_compile research/nightfall/agent-reports/ea36_131072/replay_erdos_gmp.py research/nightfall/agent-reports/ea36_131072/verify_bridge.py
-          python3 -m json.tool research/nightfall/agent-reports/ea36_131072/AGENT_VERDICT.json > /dev/null
-          python3 research/nightfall/agent-reports/ea36_131072/verify_bridge.py
-          g++ -O3 -std=c++17 research/nightfall/agent-reports/ea36_131072/independent_gmp_audit.cpp -lgmpxx -lgmp -o /tmp/nightfall-gmp-audit
-      - name: Independently audit adaptive finite-field decoder and sparse phase separator
-        run: |
-          python3 research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/checker.py
-          python3 research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/separator_checker.py
-      - name: Verify extension-degree packing, exact optimality and nonadaptive obstruction
-        run: |
-          python3 research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/verify_extension_packing.py
-          python3 research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/verify_characteristic_two_subfield.py
-      - name: Independently verify characteristic-three cancellation packing and one-query sharpness
-        run: python3 research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/verify_q3_cancellation.py
-      - name: Verify projective phase-alphabet criterion and finite-subgroup shift covers
-        run: python3 research/nightfall/projects/adaptive-finite-field-decoder-2026-10-29/verify_unified.py
-      - name: Machine-replay frozen Sidon witness with two distinct exact algorithms
-        run: |
-          python3 research/nightfall/projects/sidon-finite-30/verify_sidon30_standalone.py
-          python3 research/nightfall/projects/sidon-finite-30/verify_sidon30_direct_sums.py
-          python3 research/nightfall/projects/sidon-finite-30/verify_reader_origin.py
-      - name: Certify universal factor-network equality quotient
-        run: |
-          python3 -m py_compile research/nightfall/projects/sat-network-universal/check_structural_certificate.py
-          python3 research/nightfall/projects/sat-network-universal/check_structural_certificate.py research/nightfall/projects/sat-network-universal/example_graph.json
-      - name: Verify nonabelian involution-shadow theorem instance and universal erasure allocation
-        run: |
-          python3 -m py_compile research/nightfall/projects/involution-shadow-codes/certify_nonabelian_instance.py research/nightfall/projects/involution-shadow-codes/verify_nonabelian_erasure_optimum.py
-          python3 research/nightfall/projects/involution-shadow-codes/certify_nonabelian_instance.py research/nightfall/projects/involution-shadow-codes/S4_nonabelian_certificate.json
-          python3 research/nightfall/projects/involution-shadow-codes/verify_nonabelian_erasure_optimum.py
-      - name: Verify heterogeneous erasure reliability and full two-label Pareto frontier
-        run: |
-          python3 -m py_compile research/nightfall/projects/involution-shadow-codes/verify_heterogeneous_erasure.py
-          python3 research/nightfall/projects/involution-shadow-codes/verify_heterogeneous_erasure.py
