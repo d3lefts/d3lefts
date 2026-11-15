@@ -1,5 +1,11 @@
 # Proof Passport: NF-CERTIFICATE-ACQUISITION-20261111
 
+## v14 claim audit — 14 November 2026
+
+**Conditional adaptive acquisition remains conditional.** The new strict Lean proof of a finite already-safe observation/semantic-version-fence Bellman optimum ([PR #554](https://github.com/d3lefts/d3lefts/pull/554), run [43662280902](https://github.com/d3lefts/d3lefts/actions/runs/43662280902)) concerns authenticated **baseline classification/fence costs** and not the fractional-certificate posterior sampling law in this passport. No guarantee about physical effects, arbitrary oracle economics, or full Hilbert policy follows. The original `K²` sampling argument and incomplete full-product instance gates remain unchanged; historical 11 passports remain untouched.
+
+---
+
 **NIGHTFALL Constellation · Devin J. Wright · version 1.0 (2026-11-11).**
 **Status:** SCOPED LEAN COMPONENTS; joint adaptive theorem not kernel-compiled. This is a claim-specific proof-passport note, not an independently refereed theorem or novelty certificate.
 
