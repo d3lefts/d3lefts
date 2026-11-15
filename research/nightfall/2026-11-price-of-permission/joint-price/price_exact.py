@@ -36,4 +36,3 @@ if __name__=='__main__':
     for B in (0,1):
         print('N3 K1 B',B,'H2 installed optimum',optimized(3,1,B,2,1,5,4,1,1))
     print('Fixed m2 invalidated:',price(3,1,1,2,2,3,1,5,4,1,1))
-
