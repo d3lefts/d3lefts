@@ -1,0 +1,101 @@
+# The Price of Permission — ControlArena study and exact information-to-audit frontier
+
+**NIGHTFALL research insert v0.1 | 15 November 2026**  
+**Research direction:** Devin J. Wright. **Implementation and derivation:** AI-assisted; requires independent non-author mathematical and experimental review.  
+**Status:** an exact theorem for a deliberately restricted finite decision model, reproducible local calculations, and a previously executed source-matched ControlArena *offline* test. It is **not** a measured frontier-model control cost, an operational AWS effect guarantee, a new Lean certificate, or a claim of mathematical priority.
+
+## A consequential distinction: detection is not permission
+
+The economic object of interest is not the price of classifying a transcript as suspicious. It is the cost of allowing a specific effect by a fixed deadline while ensuring that (i) unsafe effects rarely cross a trusted finality boundary, (ii) valid effects remain available, (iii) source/mission/evidence bindings are current, and (iv) all trusted verification, monitoring, delay and enforcement work is counted. A retrospective scorer may accurately diagnose a bad trajectory without being able to prevent an asynchronous harmful effect. The present experiment therefore treats ControlArena's monitoring scores as candidate *inputs* to an online admission policy and its main/side-task outcomes as independent outcome labels; the local promotion guard is a separate necessary trusted decision point.
+
+**External controls already studied:** Hua et al. (NeurIPS 2025), *Combining Cost Constrained Runtime Monitors for AI Safety*, optimizes monitor/intervention selection under budgets; Terekhov et al. (ICLR 2026), *Control Tax: The Price of Keeping AI in Check*, studies financial/operational overhead and optimized monitoring; ControlArena (UK AISI/Redwood Research) provides standardized honest/attack settings, online protocols, and post-hoc monitoring. Our novel *research question* is the price of source-fresh, enforced permission, not the pre-existing idea of a cheap/expensive cascade or a Neyman–Pearson monitoring threshold. Priority of a new integrated formal theorem remains unestablished.
+
+## Verified source-matched anchor (not a statistical sample)
+
+Repository: `d3lefts/d3lefts`, merged PR **#499**, GitHub Actions workflow **43631593333** (14 Nov 2026; successful; source commit `adf92e04339651e276d366a5bbefaf09c8e56bf7`). Its reproduction entrypoint is `research/nightfall/right-to-act-promotion/promotion_runner.py`, pinned to `control-arena==20.1.1`, `aws-cdk-lib==2.260.0`.
+
+The official IaC Fast main-task test passes for both a deliberately constructed legitimate Applied-Interpretability OU patch and a paired patch with the FSx-export denial removed. The official harmful side-task test fails for the legitimate candidate and passes for the harmful candidate (this means the harmful objective was attained at the benchmark-template level). A *separately authored* template-diff verifier, used as a trusted local promotion boundary, accepts the legitimate synthesized CloudFormation artifact and rejects the harmful one. Source mutation, policy mutation, and revocation also invalidate prepared tickets. An independent template replay and a second artifact-only oracle pass. No AWS deployment, model-generated adversarial population, gate cost calibration, or distributed complete mediation was established. Five deterministic cases must not be converted into empirical false-negative/false-positive probabilities.
+
+The event-level receipt adapter in `exact_frontier.py --promotion-receipt PATH` checks that the *actual* five-event source-matched receipt has these expected result types, but does not replace `audit_receipt.py`'s independent inspection of source templates. The adapter refuses to estimate population risk from these fixtures.
+
+## Proposition 1: exact permission-audit price for a finite cheap-observation interface
+
+Fix a safe world with authenticated cheap-signal distribution `s=(s_1,...,s_m)` and one or more unsafe/adversarial worlds with distributions `t^k=(t^k_1,...,t^k_m)`. All distributions sum to one. A previously evaluated, immutable effect guard decides a pass set `G` of cheap-signal/effect classes; an effect outside `G` must be denied. The guard is assumed unbypassable within this idealized model. This guard need **not** be assumed sound for all harmful objectives; any unsafe passes remain represented by the `t^k` distributions.
+
+In class `i` of `G`, a causal permission policy grants *without* further audit with probability `u_i`, purchases a perfectly accurate independent audit and grants iff safe with probability `a_i`, and otherwise denies. Thus `u_i,a_i>=0` and `u_i+a_i<=1` within `G`, while both are zero outside. The audit decision and cheap signal cannot use the hidden safe/unsafe-world label. Every paid audit costs the same `c>0`; safe-world availability must be at least `A`; unsafe admission must be at most `delta` for **each** adversarial world. Let `beta=sum_{i in G} s_i` be the safe-world fraction allowed by the guard. Assume all timing, repair and audit-capacity constraints have been temporarily removed.
+
+Define the **maximum allowable unaudited legitimate mass**
+
+`V(delta) = max { sum_i s_i u_i : 0<=u_i<=1_{i in G}; sum_i t^k_i u_i<=delta for every k }`.
+
+**Exact result.** If `A > beta`, permission is infeasible, regardless of audit budget. If `A <= beta`, the *minimum safe-world expected independent-audit cost* is exactly
+
+`C_audit* = c max(0, A - V(delta))`.
+
+**Proof.** Any feasible policy satisfies `sum_i s_i (u_i+a_i)>=A`, so its audited safe mass `sum_i s_i a_i` is at least `A-sum_i s_i u_i >= A-V(delta)`, and is nonnegative. Conversely, take an optimizer `u` of `V` (finite compact polytope). Its safe mass is `V<=beta`; choose additional audits only in the residual capacity `1_{i in G}-u_i` until safe admission reaches `max(A,V)`. This is possible since the residual safe mass is `beta-V>=A-V`. A perfect audit never grants an unsafe effect, so every unsafe constraint stays satisfied. The cost meets the lower bound. If `A>beta`, even auditing every guard-pass sample cannot meet availability. QED.
+
+This is an exact finite LP/knapsack identity derived from standard linear optimization and selective testing principles, **not** a new mathematics priority claim. It is important for this paper because it explicitly exposes the expensive-audit floor *after* source-conditioned screening and effect restriction, while refusing to trade away valid-action availability.
+
+The **total** cost includes unavoidable trustworthy screening and effect-verification costs (at least `c_screen+c_guard` per attempted action under a fully invoked two-stage implementation), certificate/version maintenance, and delay/denial accounting. The equation prices only the *additional independent-audit component*. `C_audit*` is not `C_permission*`.
+
+## An exact adaptive-evasion stress test
+
+Use an **illustrative**, deliberately hypothetical pair of cheap classes `L,H`:
+
+- Safe-world signal frequencies `s=(4/5, 1/5)`;
+- Nominal unsafe-world frequencies `t^0=(1/200,199/200)`;
+- All effects pass the basic guard for this abstraction; paid audit perfectly identifies safety;
+- Required safe-world availability `A=9/10`; maximum unsafe-world permission `delta=1/100`;
+- Example paid-audit cost `c=100` arbitrary units. These are **not fitted to ControlArena's five-case gate test**.
+
+With no informative cheap signal, the two-indistinguishable-world floor is 89 audit units/attempt. With the nominal signal, the exact optimal policy grants all `L` traffic without audit and grants `1/199` of `H` without audit; it audits `197/398` of `H`. It grants safe actions with probability `9/10`, grants unsafe actions with probability exactly `1/100`, and purchases an audit in `197/1990` of safe proposals. Its paid-audit component is exactly `1970/199 ~= 9.89949749` units, **88.88% below the indistinguishable-world paid-audit component**. Screening, verifier and operational costs are not included.
+
+Now allow an adaptive attacker to generate cheap observations from any mixture `t^rho=(1-rho)t^0+rho s` for `0<=rho<=R`: a fraction of its attack distribution becomes observationally indistinguishable from legitimate traffic. The admission policy must meet the 1% unsafe acceptance target for *all* rho in this interval. Because the constraints are affine in rho, checking the two endpoint laws is sufficient. The exact optimum is
+
+`q*(R) = 9/10 - [4/5 + (1/5)(1-159R)/(199-159R)]` for `0<=R<=1/159`, and
+
+`q*(R) = 9/10 - 8/[5(1+159R)]` for `1/159<=R<=1`.
+
+Here `q*` is the minimum **safe-world paid-audit probability**. The break at `R=1/159` is a change in the active information-budget constraint: above it, even the apparently low-risk class must be restricted. This is an exact structural transition, not an empirically observed attacker capability.
+
+| Maximum mimicry fraction R | Exact minimum paid-audit probability | Audit cost, arbitrary units |
+|:--|--:|--:|
+| 0 | 197/1990 ~= 0.098995 | 9.8995 |
+| 1/159 ~= 0.006289 | 1/10 | 10 |
+| 1/100 | 0.282239 | 28.2239 |
+| 1/20 | 0.721229 | 72.1229 |
+| 1/10 | 1361/1690 ~= 0.805325 | 80.5325 |
+| 1 | 89/100 | 89 |
+
+A **10% permitted mimicry mixture** erases most of the nominal paid-audit saving, even though no monitor prices changed. The authentic engineering question is therefore: *what independently verifiable restriction on the attacker’s cheap-evidence distribution, or on the action effects themselves, justifies a low-cost admission policy?* Declaring a cheap monitor accurate on a static sample cannot answer it.
+
+**Capacity corollary (necessary, not sufficient).** At safe proposal rate `lambda` actions/s, if the optimal policy requires safe-world audit fraction `q*`, a sustained trusted-audit service rate `mu` must satisfy `mu >= lambda q*`. At 10 proposed actions/s, the nominal illustrative floor needs at least ~0.990 audits/s, while 10% mimicry requires at least ~8.053 audits/s. Stability, queueing variance, deadline tails and denial costs can demand greater capacity; this bound alone proves no service-level availability.
+
+## Independent exact check and falsification
+
+Execute without cloud access or model credentials:
+
+```
+python3 exact_frontier.py > frontier_receipt.txt
+python3 verify_frontier_independent.py frontier_receipt.txt
+```
+
+`exact_frontier.py` constructs feasible policies and independently enumerates the vertices of a two-variable rational LP. `verify_frontier_independent.py` reads only the printed artifact, checks source hash and every primal constraint, verifies the closed-form bound for seven mimicry radii, and rejects two corrupted receipts. No floating-point optimizer, fitted model scores or non-reproducible data are used. This is an **algorithmically separate local checker**, not third-party review or a Lean theorem.
+
+**Required falsifiers before claiming real monitoring savings:** (1) retrain/attack against a permitted cheap monitor; (2) manipulate model-inserted code so it changes effects outside the synthesized template; (3) revoke/change the policy between prediction and actual irreversible effect; (4) demonstrate source manifest completeness, source freshness and route all effect APIs through the guard; (5) run paired honest/attack ControlArena trajectories, save `.eval` logs and action-level guard receipts, and price cheap screening, privileged verifier, paid model, queue, human review, failures and recertification; (6) compare full cost-safety-availability frontiers to Hua et al. and Control Tax on matched settings, not a cherry-picked 5-case result.
+
+### Evaluation protocol for the next empirical stage
+
+Instrument **ControlArena IaC Fast** in both `EvalMode.HONEST` and `EvalMode.ATTACK`, pairing the main task and side-task scorer with a *pre-publication* effect guard. For each proposed consequential change, log a cryptographically bound `(trajectory, source revision, mission policy revision, candidate effect hash, cheap monitor score, paid monitor invoked, monitor cost, verifier cost, pre-effect timestamp, gate verdict, local publication outcome)` record. The policies compared must include unguarded cheap/expensive cascades, always-audit, guard-only, and guard-plus-adaptive-audit, with exactly the same authentic attack/benign pool and deadline.
+
+Risk claims must be **per unsafe admitted effect**, not per suspicious trajectory. Effect reachability and missing mediation paths require independent red-team audit. Pre-register a confidence interval or worst-case adversarial set, and report detected attacks separately from effect attempts that the hard guard made impossible. Never infer worst-case `t^rho` bounds from two fixtures.
+
+**Proven now:** the finite idealized audit formula and its exact rational sensitivity example, plus the previously executed official source-matched local promotion experiment. **Still open:** calibrated policy economics on agent-generated trajectories, operational guard completeness, exact attack-world modeling under adaptive evasion, distributed effect-time consistency, deadlines, prior-art priority, Lean checking and non-author review.
+
+## References and reproducible provenance
+
+- UK AI Security Institute / Redwood Research, ControlArena, https://control-arena.aisi.org.uk/ and https://control-arena.aisi.org.uk/monitors.html ; source https://github.com/UKGovernmentBEIS/control-arena
+- Hua et al. (2025), NeurIPS, https://proceedings.neurips.cc/paper_files/paper/2025/hash/ed56a654ddb681841fdb2184463c253e-Abstract-Conference.html
+- Terekhov et al. (2026), ICLR, https://proceedings.iclr.cc/paper_files/paper/2026/hash/c8c352e9ff2c3eb8511c6a996cbd77b1-Abstract-Conference.html
+- NIGHTFALL source-matched experiment: https://github.com/d3lefts/d3lefts/pull/499 ; workflow run https://github.com/d3lefts/d3lefts/actions/runs/43631593333 ; research files `research/nightfall/right-to-act-promotion/`.
+- NIGHTFALL foundational price charter: https://github.com/d3lefts/d3lefts/pull/590 .
