@@ -26,6 +26,7 @@ open Nightfall.Observability.ActualSourceMeanSectionJensen
 open Nightfall.Observability.ActualSourceIntegratedSections
 open Nightfall.Observability.ActualSourceIntegratedFive
 open Nightfall.Observability.ActualSourceOwnedGraph
+open Nightfall.Observability.ActualSourceOwnedProjectedMomentJensen
 open Nightfall.Observability.ActualSourceOwnedFourthClosure
 open Nightfall.Observability.ActualSourceOwnedMomentEnergy
 open Nightfall.Observability.ActualSourceSingletonEnergyBridge
