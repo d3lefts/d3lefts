@@ -102,11 +102,51 @@ theorem productDensity_trace_one (d : ℕ) (r : ℝ) (phase : Fin d → ℂ)
   rw [productDensity, densityOfAmplitude_trace]
   exact productAmplitude_norm_one d r phase hlocal
 
+theorem qubitAmplitude_norm_one (r : ℝ) (θ : ℂ)
+    (hr : r ^ 2 = 3) (hθ : θ * star θ = 1) :
+    (∑ a : Fin 2,
+      qubitAmplitude r θ a * star (qubitAmplitude r θ a)) = 1 := by
+  have hrC : (r : ℂ) ^ 2 = 3 := by exact_mod_cast hr
+  have hvalue :
+      (((r : ℂ) / 2) * star ((r : ℂ) / 2) +
+        (θ / 2) * star (θ / 2)) = 1 := by
+    calc
+      _ = ((r : ℂ) ^ 2 + θ * star θ) / 4 := by
+        simp only [map_div₀, star_ofReal, star_natCast]
+        ring
+      _ = 1 := by rw [hrC, hθ]; norm_num
+  simpa [Fin.sum_univ_two, qubitAmplitude] using hvalue
+
+theorem unit_phase_powers (θ : ℂ) (hθ : θ * star θ = 1) (n : ℕ) :
+    θ ^ n * star (θ ^ n) = 1 := by
+  rw [map_pow, ← mul_pow, hθ, one_pow]
+
+theorem normalized_product_physical (d : ℕ) (phase : Fin d → ℂ)
+    (hphase : ∀ j, phase j * star (phase j) = 1) :
+    Matrix.trace (productDensity d (Real.sqrt 3) phase) = 1 := by
+  apply productDensity_trace_one
+  intro j
+  apply qubitAmplitude_norm_one
+  · norm_num
+  · exact hphase j
+
+theorem powered_phase_product_physical
+    (d : ℕ) (ω : ℂ) (hω : ω * star ω = 1)
+    (x : Fin d → Fin 3) :
+    Matrix.trace (productDensity d (Real.sqrt 3)
+      (fun j => ω ^ (x j).val)) = 1 := by
+  apply normalized_product_physical
+  intro j
+  exact unit_phase_powers ω hω _
+
 #print axioms Nightfall.Quantum.PhysicalQubit.densityOfAmplitude_psd
 #print axioms Nightfall.Quantum.PhysicalQubit.qubitDensity_psd
 #print axioms Nightfall.Quantum.PhysicalQubit.productDensity_psd
 #print axioms Nightfall.Quantum.PhysicalQubit.productDensity_entry
 #print axioms Nightfall.Quantum.PhysicalQubit.productDensity_trace_one
+#print axioms Nightfall.Quantum.PhysicalQubit.qubitAmplitude_norm_one
+#print axioms Nightfall.Quantum.PhysicalQubit.normalized_product_physical
+#print axioms Nightfall.Quantum.PhysicalQubit.powered_phase_product_physical
 
 end
 
