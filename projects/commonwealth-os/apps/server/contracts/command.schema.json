@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Institution-scoped synthetic legislative command",
+  "type": "object",
+  "required": [
+    "institutionId",
+    "itemId",
+    "action",
+    "expectedVersion",
+    "payload",
+    "key"
+  ],
+  "properties": {
+    "institutionId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{1,63}$"
+    },
+    "itemId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{1,63}$"
+    },
+    "action": {
+      "enum": [
+        "CREATE",
+        "REVISE",
+        "SUBMIT",
+        "AGENDA",
+        "BEGIN",
+        "ATTEND",
+        "LOCK",
+        "OPEN",
+        "CAST",
+        "CLOSE",
+        "REVIEW",
+        "VOID",
+        "ATTACH_SOURCE",
+        "PREPARE_PUBLICATION",
+        "REVIEW_PUBLICATION",
+        "PUBLISH_PREVIEW",
+        "CORRECT_PUBLICATION"
+      ]
+    },
+    "expectedVersion": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "payload": {
+      "type": "object"
+    },
+    "key": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 120
+    }
+  }
+}
