@@ -31,6 +31,7 @@ test("Permission lab is interactive and usable on desktop and mobile Chromium", 
   page.on("pageerror",e=>errors.push(e.message));
   await page.goto(url,{waitUntil:"networkidle"});
   await page.locator("#pl-cost-result").waitFor();
+  assert.equal(await page.locator('a[href="#practical-advantages"]').count(),1);
   assert.match(await page.locator("#pl-cost-result").innerText(),/26 modeled cost units/);
   assert.match(await page.locator("#pl-worlds").innerText(),/Right-only evidence: sufficient/);
   assert.match(await page.locator("#pl-compare-result").innerText(),/20%/);

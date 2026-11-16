@@ -60,3 +60,7 @@
 .pl-compare-findings{border-left:2px solid var(--line,#53606c);padding:16px 22px;margin:21px 0;background:color-mix(in srgb,currentColor 3%,transparent)}
 .pl-compare-findings p{margin:10px 0 0}
 @media(max-width:760px){.pl-timeline{grid-template-columns:repeat(2,minmax(0,1fr))}.pl-compare-table{font-size:12px}.pl-compare-table th,.pl-compare-table td{padding:12px 10px}}
+
+.pl-jump-line{margin:20px 0 8px}
+.pl-jump{display:inline-flex;align-items:center;border:1px solid var(--line,#647387);border-radius:7px;padding:11px 15px;font-size:14px;font-weight:650;text-decoration:none}
+.pl-jump:hover,.pl-jump:focus-visible{outline:2px solid currentColor;outline-offset:2px}
