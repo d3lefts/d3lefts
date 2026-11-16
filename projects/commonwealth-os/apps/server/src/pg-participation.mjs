@@ -2,7 +2,8 @@
 // Persistent authority and actor checks share one PG transaction; no cross-DB auth.
 // Existing SQLite reducer is used strictly as an ephemeral deterministic replay
 // interpreter, never as durable storage for PostgreSQL mode.
-import { Pool } from 'pg';
+import pg from 'pg';
+const { Pool } = pg;
 import { DatabaseSync } from 'node:sqlite';
 import { createCipheriv, createDecipheriv, randomBytes } from 'node:crypto';
 import { readFileSync } from 'node:fs';
