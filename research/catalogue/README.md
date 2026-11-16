@@ -7,13 +7,37 @@ This directory is the **canonical scholarly claim index** for selected principal
 
 **November 11 publication-preflight revision:** [four-paper research and referee queue](../../papers/publication-preflight-20261111/README.md), [source-custody map](../../papers/publication-preflight-20261111/SOURCE_MAP.md), and [independent mathematical review gates](../../papers/publication-preflight-20261111/REFEREE_GATES.md). The selected machine registry now includes individually scoped SLD sharpness, Werner inverse-k continuation and exact 4/5-shuffle entries. These entries do not certify novelty or convert package-only N5 bytes into GitHub reproducibility; they remain active unrefereed research claims.
 
-## Current evidence frontier — 14 November 2026
+## Canonical current-status lookup — 16 November 2026
 
-[**CURRENT_FRONTIER.json**](CURRENT_FRONTIER.json) is a compact, machine-checked, dated supplement to the November 11 scholarly catalogue. It records the strongest **original-source unrestricted finite Q2 coefficient presently verified in the checked PR-head receipts (364.5526832774)**, separately tracks strictly compiled *conditional* 353/107/99 scalar implications, and records the conditional arbitrary-agent invariant and the finite-checked semantic fence.
+**Do not infer the latest theorem from this file's older historical prose or
+the original 11 November `CLAIMS.json` publication catalogue.** Those entries
+remain dated historical descriptions, not a continuously updated proof status.
 
-It does **not** upgrade the frozen `CLAIMS.json` entries or claim a current-main transitive Lean rebuild, unproved unrestricted sub-100, physical deployment safety, independent external review, or first-in-literature priority. The original source SHA, exact theorem name, historical pinned run/head and extra unproved assumptions travel with every claim.
+- [`CURRENT_FRONTIER.json`](CURRENT_FRONTIER.json) is the fail-closed,
+  exact-source ledger for selected certified statements. Its current strongest
+  merged original-source unrestricted finite-Q2 coefficient is
+  **K ≈ 105.741756923658**, named terminal
+  `Nightfall.Observability.ActualSourceQ2105Terminal.actual_source_q2_105_unconditional`,
+  source Git blob `ed945639f7cbe26ba8fdb50d691127c01cdf863f`,
+  historical strict pinned run [43671321904](https://github.com/d3lefts/d3lefts/actions/runs/43671321904).
+  The former K≈364.55268 entry and the older 1228.356 analytic
+  manuscript are **historical/superseded** as unrestricted coefficient
+  claims. Unrestricted sub-100 remains **unproved**.
+- [`ACTIVE_DEPENDENCY_CLOSURE.json`](ACTIVE_DEPENDENCY_CLOSURE.json)
+  and its [maintenance contract](ACTIVE_DEPENDENCY_CLOSURE.md) identify
+  two currently **open** end-to-end proof targets: the physical-quantum
+  Bayes/POVM theorem and the F9 same-oracle asymptotic theorem.
+  This is a dated source-bound *draft-PR* recovery snapshot; it is not
+  a Lean compilation or automatic proof promotion.
+- Execute `python3 scripts/check_current_frontier.py --self-test` for
+  historical source/claim custody, then
+  `python3 scripts/check_active_dependency_closure.py --self-test --summary`
+  for active proof dependencies; optionally add `--live` to check
+  the snapshot's source PR heads against current GitHub.
 
-Run `python3 scripts/check_current_frontier.py --self-test` to detect source tampering, fake run IDs, restriction erasure, and unjustified status promotion. This consistency checker is **not** a Lean compiler or a human referee.
+These machine checks validate **scope, lineage and dependency metadata**.
+No successful workflow color establishes worldwide novelty, complete
+physical assurance or an unproved imported premise.
 
 ## Read the evidence
 
