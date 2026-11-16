@@ -127,7 +127,7 @@ def evaluate(bundle):
                     raise ValueError("proof contradiction")
                 derived[name] = value
                 sid = fact["source_id"]
-                dependencies[sid] = sources[sid]["sha256"]
+                dependencies[sid] = _source_state(sources[sid])
             elif step.get("kind") == "rule":
                 rule = rules.get(step.get("ref"))
                 if rule is None:
@@ -141,7 +141,7 @@ def evaluate(bundle):
                     raise ValueError("proof contradiction")
                 derived[name] = True
                 sid = rule["source_id"]
-                dependencies[sid] = sources[sid]["sha256"]
+                dependencies[sid] = _source_state(sources[sid])
             else:
                 raise ValueError("unknown proof step kind")
         if derived.get(goal) is not True:
@@ -156,15 +156,21 @@ def evaluate(bundle):
         return {"status": "INVALID", "reasons": [str(exc)]}
 
 
+def _source_state(source):
+    return {field: source.get(field) for field in
+            ("sha256", "status", "valid_from", "valid_until",
+             "observed_at", "authenticity", "locator")}
+
+
 def source_change_status(previous_receipt, next_sources):
     """Conservative change detector. Unchanged hashes do not establish currency."""
     try:
         deps = previous_receipt["dependencies"]
-        current = {s["id"]: s["sha256"] for s in next_sources}
+        current = {s["id"]: _source_state(s) for s in next_sources}
         changed = sorted(sid for sid, digest in deps.items() if current.get(sid) != digest)
-        return {"status": "RECHECK_REQUIRED" if changed else "SOURCE_DIGESTS_UNCHANGED",
+        return {"status": "RECHECK_REQUIRED" if changed else "RECORDED_SOURCES_UNCHANGED",
                 "changed_dependencies": changed,
-                "warning": "Legal status, completeness and temporal applicability still require rechecking."}
+                "warning": "Unchanged recorded sources never prove that source discovery is complete or current."}
     except (TypeError, KeyError, AttributeError) as exc:
         return {"status": "INVALID", "reasons": [str(exc)]}
 
