@@ -5,6 +5,7 @@ on:
     branches: [nightfall/quantum-physical-numerator-bridge-20261116]
     paths:
       - 'research/nightfall/formalization/quantum/PhysicalBornTerminal.lean'
+      - 'research/nightfall/formalization/quantum/PhysicalGainNormalized.lean'
       - 'research/nightfall/2026-11-quantum-terminal/**'
       - '.github/workflows/nightfall-quantum-born-terminal.yml'
   workflow_dispatch:
@@ -41,6 +42,19 @@ jobs:
           N=Nightfall.Quantum.ActualBornTerminal
           python3 scripts/lean_bridge.py research/nightfall/formalization/quantum/PhysicalBornTerminal.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.bornNum_coherence" --decl "$N.bornDen_actual_weight" --decl "$N.all_physical_povms_bounded" --decl "$N.fullGHZ_positive" --decl "$N.fullGHZ_complete" --decl "$N.plus_actual_source_born" --decl "$N.minus_actual_source_born" --decl "$N.full_GHZ_attains_actual_physical_bound" --decl "$N.actual_physical_povm_optimal" --json-out physical-terminal-receipts/terminal.json
           python3 research/nightfall/formalization/product_space/check_receipts.py physical-terminal-receipts/terminal.json
+      - name: Compile source-closed exact ternary Bayes normalization
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/quantum/PhysicalGainNormalized.lean /tmp/mathlib4/PhysicalGainNormalized.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/PhysicalGainNormalized.olean PhysicalGainNormalized.lean)
+      - name: Audit normalized gain theorem under strict standard axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          N=Nightfall.Quantum.PhysicalGainNormalized
+          python3 scripts/lean_bridge.py research/nightfall/formalization/quantum/PhysicalGainNormalized.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.source_weight_all_zero" --decl "$N.source_weight_all_one" --decl "$N.physical_source_corner_real" --decl "$N.exact_gain_ratio_scalar" --decl "$N.actual_physical_optimal_gain_normalized" --json-out physical-terminal-receipts/normalized.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py physical-terminal-receipts/normalized.json
       - name: Independent exact-formula and numerical full-matrix audit
         run: |
           python3 -m pip install --user numpy==2.2.6
@@ -51,7 +65,7 @@ jobs:
           mkdir -p physical-terminal-receipts
           git rev-parse HEAD > physical-terminal-receipts/commit.txt
           git -C /tmp/mathlib4 rev-parse HEAD > physical-terminal-receipts/mathlib.txt || true
-          sha256sum research/nightfall/formalization/quantum/{PhysicalQubitEnsemble,TensorCharacter,TernaryPhase,LocalTernaryMoments,PhysicalOperatorReduction,PhysicalSourceBorn,PhysicalSourceBornTrace,PhysicalOutcomeNumerator,AmbientGHZMeasurement,PhysicalBornTerminal}.lean > physical-terminal-receipts/source_sha256.txt
+          sha256sum research/nightfall/formalization/quantum/{PhysicalQubitEnsemble,TensorCharacter,TernaryPhase,LocalTernaryMoments,PhysicalOperatorReduction,PhysicalSourceBorn,PhysicalSourceBornTrace,PhysicalOutcomeNumerator,AmbientGHZMeasurement,PhysicalBornTerminal,PhysicalGainNormalized}.lean > physical-terminal-receipts/source_sha256.txt
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
