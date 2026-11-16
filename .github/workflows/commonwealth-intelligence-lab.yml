@@ -3,6 +3,10 @@ on:
   pull_request:
     paths:
       - 'docs/commonwealth-intelligence*'
+      - 'docs/commonwealth-archetypes.js'
+      - 'docs/commonwealth-archetypes/**'
+      - 'projects/commonwealth-os/product-design/GENZ_ARCHETYPES_REFERENCE_v1.md'
+      - 'scripts/test_commonwealth_journey.mjs'
       - 'docs/commonwealth.html'
       - 'docs/commonwealth-os.html'
       - 'docs/sitemap.xml'
@@ -15,6 +19,10 @@ on:
     branches: [main]
     paths:
       - 'docs/commonwealth-intelligence*'
+      - 'docs/commonwealth-archetypes.js'
+      - 'docs/commonwealth-archetypes/**'
+      - 'projects/commonwealth-os/product-design/GENZ_ARCHETYPES_REFERENCE_v1.md'
+      - 'scripts/test_commonwealth_journey.mjs'
       - 'docs/commonwealth.html'
       - 'docs/commonwealth-os.html'
       - 'docs/sitemap.xml'
