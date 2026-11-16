@@ -41,8 +41,10 @@ jobs:
           N=Nightfall.Quantum.ActualBornTerminal
           python3 scripts/lean_bridge.py research/nightfall/formalization/quantum/PhysicalBornTerminal.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.bornNum_coherence" --decl "$N.bornDen_actual_weight" --decl "$N.all_physical_povms_bounded" --decl "$N.fullGHZ_positive" --decl "$N.fullGHZ_complete" --decl "$N.plus_actual_source_born" --decl "$N.minus_actual_source_born" --decl "$N.full_GHZ_attains_actual_physical_bound" --decl "$N.actual_physical_povm_optimal" --json-out physical-terminal-receipts/terminal.json
           python3 research/nightfall/formalization/product_space/check_receipts.py physical-terminal-receipts/terminal.json
-      - name: Independent exact and numerical physical-state audit
-        run: python3 research/nightfall/2026-11-quantum-terminal/check_ghz_full_independent.py
+      - name: Independent exact-formula and numerical full-matrix audit
+        run: |
+          python3 -m pip install --user numpy==2.2.6
+          python3 research/nightfall/2026-11-quantum-terminal/check_ghz_full_independent.py
       - name: Freeze exact source identities
         if: always()
         run: |
