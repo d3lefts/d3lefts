@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.1.0",
+  "jurisdiction_id": "synthetic_university_01",
+  "tenant_id": "synthetic_tenant_01",
+  "decision_id": "resolution_2026_test_01",
+  "proposal_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "rule_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "election_proof_ref": "synthetic://proof/001",
+  "effect_scope_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "authority_epoch": 1,
+  "challenge_epoch": 1,
+  "rule_epoch": 1,
+  "claim_status": "MODEL_TESTED",
+  "public_evidence_root": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "claims": [
+    {
+      "type": "EFFECT_GUARD_CHECK",
+      "predicate": "effect-request-matches-current-authorization",
+      "scope": "synthetic internal ledger; no external effect",
+      "assumptions": [
+        "truthful signed facts",
+        "complete local mediation",
+        "atomic state snapshot"
+      ],
+      "evidence_ref": "synthetic://receipts/001",
+      "checker_version": "reference_guard_v1.1",
+      "result": "PASS_IN_SCOPE",
+      "expiry": null,
+      "dependencies": [
+        "proposal_digest",
+        "rule_digest",
+        "authority_epoch"
+      ],
+      "reviewer": "internal-model-test-not-external-review",
+      "limitations": [
+        "not an actual election",
+        "no cryptographic proof or legal assessment"
+      ]
+    }
+  ]
+}

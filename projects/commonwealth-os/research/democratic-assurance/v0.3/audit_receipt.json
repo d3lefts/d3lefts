@@ -1,0 +1,9 @@
+{
+  "allowed": 2,
+  "explicit_adversarial_cases": 9,
+  "model": "commonwealth2030-finite-guard-v0.1",
+  "rejected": 32766,
+  "result": "pass",
+  "scope": "finite toy; assumes complete trusted effect mediation; no actual cryptographic or constitutional validity test",
+  "tested_cases": 32768
+}

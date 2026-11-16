@@ -1,0 +1,10 @@
+{
+  "fixture_type": "FICTIONAL; NOT OFFICIAL CURRENT MEMBER VOTES",
+  "source_adapters": ["https://www.senate.gov/votes/", "https://clerk.house.gov/Votes", "https://api.congress.gov/"],
+  "delegation": {"state":"EX", "district":"07", "as_of":"DEMO", "source":"manual fictional location", "members":[
+    {"member_id":"fictional_senator_a", "name":"Senator A (fictional)", "chamber":"Senate", "roll_votes":[{"roll_number":"DEMO-101","question":"On a fictional procedural motion","category":"Yea","source_status":"DEMO_NOT_VERIFIED"}]},
+    {"member_id":"fictional_senator_b", "name":"Senator B (fictional)", "chamber":"Senate", "roll_votes":[{"roll_number":"DEMO-101","question":"On a fictional procedural motion","category":"Nay","source_status":"DEMO_NOT_VERIFIED"}]},
+    {"member_id":"fictional_house_rep", "name":"Representative (fictional)", "chamber":"House", "roll_votes":[{"roll_number":"DEMO-202","question":"On passage of a fictional bill","category":"Not voting","source_status":"DEMO_NOT_VERIFIED"}]}
+  ]},
+  "public_comparison": "NO_COMPARISON"
+}
