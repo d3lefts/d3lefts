@@ -40,7 +40,7 @@ theorem character_weighted_tensor_sum
           intro x _
           rw [Finset.prod_mul_distrib]
     _ = ∏ j, (∑ s : Fin 3, ω ^ s.val * F j s) :=
-      ternary_tensor_sum_factor d _
+      ternary_tensor_sum_factor d (fun j s => ω ^ s.val * F j s)
 
 theorem local_moment_zero_kills_tensor
     (d : ℕ) (G : Fin d → Fin 3 → ℂ)
