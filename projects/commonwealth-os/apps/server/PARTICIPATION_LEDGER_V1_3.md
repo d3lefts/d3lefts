@@ -34,12 +34,14 @@ All endpoints below require the same locally seeded synthetic bearer token as th
 - `GET /api/v1/participation/:tenant/board` returns tenant-scoped, actor-filtered browser state and integrity metadata.
 - `POST /api/v1/participation/commands`: `{institutionId,command,expectedSequence,expectedRevision,key}`. The command is an existing v1.2 reducer command. Server disregards any forged client role and instead checks the actor record.
 - `GET /api/v1/participation/:tenant/dossiers/:proposalId` returns a privacy-minimized case export.
+- `GET /api/v1/participation/:tenant/receipts/:proposalId` wraps that public dossier in the existing local Ed25519 portable evidence envelope. The key is **self-asserted unless externally pinned**; the signature does not certify government or source custody.
 - `GET /browser/` serves the existing browser from the same local origin, avoiding CORS and mixed-content credential handling.
 
-Independent local checker, after a seeded test has generated events:
+Independent checkers, after a seeded test has generated events and a JSON receipt has been exported:
 
 ```bash
 node verify-participation.mjs data/commonwealth.sqlite student-demo
+node verify-participation-receipt.mjs synthetic-receipt.json [trusted-public-key.pem]
 ```
 
 ## Tests and limitations

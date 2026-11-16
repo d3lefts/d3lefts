@@ -26,6 +26,7 @@ jobs:
           node-version: '22'
       - name: Check ES module syntax
         run: |
+          node --check projects/commonwealth-os/apps/server/verify-participation-receipt.mjs
           node --check projects/commonwealth-os/apps/server/verify-participation.mjs
           node --check projects/commonwealth-os/apps/server/src/participation.mjs
           node --check projects/commonwealth-os/apps/server/src/http.mjs

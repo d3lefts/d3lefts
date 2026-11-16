@@ -45,6 +45,8 @@ export function createServer({dbPath=':memory:',keyPath=join(root,'data','signin
       }
       const partBoard=path?.match(/^\/api\/v1\/participation\/([a-z0-9-]+)\/board$/);
       if(req.method==='GET'&&partBoard)return json(res,200,participation.view(actor,partBoard[1]));
+      const partReceipt=path?.match(/^\/api\/v1\/participation\/([a-z0-9-]+)\/receipts\/([A-Za-z0-9-]+)$/);
+      if(req.method==='GET'&&partReceipt)return json(res,200,exportEvidence(participation.dossier(actor,partReceipt[1],partReceipt[2]),privateKey));
       const partDossier=path?.match(/^\/api\/v1\/participation\/([a-z0-9-]+)\/dossiers\/([A-Za-z0-9-]+)$/);
       if(req.method==='GET'&&partDossier)return json(res,200,participation.dossier(actor,partDossier[1],partDossier[2]));
       if(req.method==='GET'&&path==='/api/v1/me')return json(res,200,{id:actor.id,institutionId:actor.institutionId,role:actor.role,eligible:actor.eligible,mode:'SYNTHETIC_ONLY'});

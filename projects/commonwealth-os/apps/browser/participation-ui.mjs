@@ -122,14 +122,14 @@ async function exportCase(p){
  let dossier=publicDossier(p);
  if(backend){
   try{
-   const r=await fetch('/api/v1/participation/'+backend.institutionId+'/dossiers/'+encodeURIComponent(p.id),{headers:{Authorization:'Bearer '+backend.token}});
+   const r=await fetch('/api/v1/participation/'+backend.institutionId+'/receipts/'+encodeURIComponent(p.id),{headers:{Authorization:'Bearer '+backend.token}});
    const j=await r.json();
    if(!r.ok)throw Error(j.error||'DOSSIER_UNAVAILABLE');
    dossier=j;
   }catch(e){notice('No dossier exported: '+e.message,'error');return;}
  }
  const content=JSON.stringify(dossier,null,2);const blob=new Blob([content],{type:'application/json'});const url=URL.createObjectURL(blob),a=element('a');a.href=url;a.download='commonwealth-fictional-'+p.id+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),5000);
- notice('Fictional public dossier downloaded without individual preference or comment bodies. It is not a signed Proof Passport.','ok');
+ notice(backend?'Synthetic receipt signed by an UNVERIFIED local key; no legal authority or independent proof of source authenticity.':'Fictional public dossier downloaded without individual preference or comment bodies. It is not a signed Proof Passport.','ok');
 }
 function renderBudget(){
  const list=empty(byId('cwpart-budget-projects'));

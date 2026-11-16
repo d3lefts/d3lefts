@@ -7,6 +7,9 @@ import { Store } from '../src/store.mjs';
 import { ParticipationLedger } from '../src/participation.mjs';
 import { createServer } from '../src/http.mjs';
 import { verifyLocalParticipationChain } from '../verify-participation.mjs';
+import { verifySyntheticParticipationReceipt } from '../verify-participation-receipt.mjs';
+import { signingKey, exportEvidence } from '../src/evidence.mjs';
+import { createPublicKey } from 'node:crypto';
 
 function setup(){
   const dir=mkdtempSync(join(tmpdir(),'cw-participation-'));
@@ -104,6 +107,22 @@ test('tampering detected under independent replay and idempotency survives retri
   }finally{t.cleanup();}
 });
 
+test('independently verified signed synthetic receipt requires a pinned key for provenance',()=>{
+  const t=setup();try{
+    t.submit('a',{type:'ADVISE',id:'P-UAH-01',choice:'SUPPORT'},0,1);
+    const payload=t.ledger.dossier(t.actor('a'),'student-demo','P-UAH-01');
+    const key=signingKey(join(t.dir,'key.pem'));
+    const envelope=exportEvidence(payload,key);
+    const defaultVerdict=verifySyntheticParticipationReceipt(envelope);
+    assert.equal(defaultVerdict.authenticity,'SELF_ASSERTED_KEY');
+    const pinned=createPublicKey(key).export({type:'spki',format:'pem'}).toString();
+    assert.equal(verifySyntheticParticipationReceipt(envelope,{trustedPublicKeyPem:pinned}).authenticity,'PINNED_LOCAL_KEY');
+    const corrupted=structuredClone(envelope);corrupted.payload.revision=999;
+    assert.throws(()=>verifySyntheticParticipationReceipt(corrupted,{trustedPublicKeyPem:pinned}),/RECEIPT_SIGNATURE_INVALID/);
+    assert.equal(JSON.stringify(envelope).includes('"choice":"SUPPORT"'),false);
+  }finally{t.cleanup();}
+});
+
 test('HTTP integration serves same-origin browser and enforces bearer roles',async()=>{
   const t=setup();
   const {server}=createServer({store:t.store,keyPath:join(t.dir,'key.pem')});
@@ -128,5 +147,8 @@ test('HTTP integration serves same-origin browser and enforces bearer roles',asy
     r=await fetch(base+'/api/v1/participation/student-demo/dossiers/P-UAH-01',{headers:ha});
     assert.equal(r.status,200);
     assert.equal((await r.json()).individualAdviceIncluded,false);
+    r=await fetch(base+'/api/v1/participation/student-demo/receipts/P-UAH-01',{headers:ha});
+    assert.equal(r.status,200);
+    assert.equal(verifySyntheticParticipationReceipt(await r.json()).officialCertification,false);
   }finally{await new Promise(ok=>server.close(ok));t.cleanup();}
 });
