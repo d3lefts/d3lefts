@@ -22,6 +22,9 @@ class DossierTests(unittest.TestCase):
         self.assertEqual(result["decision_authority"], "NOT_ESTABLISHED")
         self.assertTrue(all(v is False for v in result["privacy_contract"].values()))
         self.assertEqual(len(result["source_dependencies"]), 4)
+        self.assertEqual(len(result["source_library"]), 4)
+        self.assertEqual(len(result["legal_derivation"]["proof"]), 4)
+        self.assertIn("FICTIONAL", result["source_disclosure"])
 
     def test_real_mode_is_rejected(self):
         self.example["mode"] = "OFFICIAL"
