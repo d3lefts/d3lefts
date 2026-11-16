@@ -32,6 +32,7 @@ jobs:
           node --check projects/commonwealth-os/apps/server/src/pg-seed.mjs
           node --check projects/commonwealth-os/apps/server/src/pg-migrate.mjs
           node --check projects/commonwealth-os/apps/server/src/pg-anchor.mjs
+          node --check projects/commonwealth-os/apps/server/verify-pg-ledger-anchor.mjs
           node --check projects/commonwealth-os/apps/server/verify-pg-anchor.mjs
           node --check projects/commonwealth-os/apps/server/verify-participation-receipt.mjs
           node --check projects/commonwealth-os/apps/server/verify-participation.mjs
@@ -87,6 +88,12 @@ jobs:
       - name: Cold migration, two-client race, privacy, corruption and HTTP
         working-directory: projects/commonwealth-os/apps/server
         run: CW_PG_RECOVERY_MANIFEST="$RUNNER_TEMP/cw-pg-expected.json" npm run test:pg
+      - name: Independently replay the encrypted hash chain against a pinned test checkpoint
+        working-directory: projects/commonwealth-os/apps/server
+        run: |
+          node src/pg-anchor.mjs student-demo > "$RUNNER_TEMP/pg-test-checkpoint.json"
+          openssl pkey -in data/pg-checkpoint-key.pem -pubout -out "$RUNNER_TEMP/pg-test-signer.pem"
+          node verify-pg-ledger-anchor.mjs "$RUNNER_TEMP/pg-test-checkpoint.json" "$RUNNER_TEMP/pg-test-signer.pem"
       - name: Database dump and isolated restore with replay check
         working-directory: projects/commonwealth-os/apps/server
         run: |
