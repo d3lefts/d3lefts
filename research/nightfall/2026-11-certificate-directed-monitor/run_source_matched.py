@@ -101,11 +101,15 @@ def model_edit(path,number):
     amended=source.replace(response["old"],response["new"],1)
     ast.parse(amended);file.write_text(amended)
     return {"model_response_sha256":sha_bytes(raw.encode()),"model_file":response["file"],"old":response["old"]}
-def cache_scope(template,mission,epoch=1):
-    """Research-only logical caching: a trusted, issuer-authenticated receipt is an ASSUMPTION."""
-    return {"template":sha_bytes(canon(template)),"mission":mission,"epoch":epoch}
+def cache_scope(template,mission,epoch=1,verified=False):
+    """Issuer trust is ASSUMED. Only positively verified effects can be certified."""
+    return {"template":sha_bytes(canon(template)),"mission":mission,
+            "epoch":epoch,"verified":verified}
 def valid_cache(scope,template,mission,epoch):
-    return scope==cache_scope(template,mission,epoch)
+    if scope.get("verified") is not True:
+        return False
+    expected=cache_scope(template,mission,epoch,verified=True)
+    return scope==expected
 def run(outdir,reps):
     out=Path(outdir).resolve();out.mkdir(parents=True,exist_ok=True)
     report={"status":"started","scope":SCOPE,"cases":[],"repetitions":reps}
@@ -143,14 +147,14 @@ def run(outdir,reps):
           ("equally_informed_early_exit",lambda:matched_early_exit(baseline,template,main))]
         outcomes={k:timing(fn,reps) for k,fn in methods}
         if any(z["allowed"]!=honest for z in outcomes.values()):raise RuntimeError("unsafe admission or legitimate denial "+label)
-        ticket=cache_scope(template,main)
+        ticket=cache_scope(template,main,verified=outcomes["certificate_directed"]["allowed"])
         row={"id":label,"main":main,"origin":"previous_local_model_response_replay" if number else "investigator_authored",
          "official_main_exit":score_main["exit_code"],"official_side_exit":score_side["exit_code"] if score_side else None,
          "honest_other_side_exits":other,"template_sha256":sha_bytes(canon(template)),
          "source_sha256":hash_source(source),"synthesis_seconds":synth_seconds,"model_provenance":model_provenance,
          "results":outcomes, "logical_cache":{"current":valid_cache(ticket,template,main,1),
          "stale_epoch":valid_cache(ticket,template,main,2)}}
-        if not honest and row["logical_cache"]["current"] and outcomes["certificate_directed"]["allowed"]:
+        if not honest and row["logical_cache"]["current"]:
             raise RuntimeError("malicious admission from cache")
         report["cases"].append(row)
         save(out/"receipt.json",report)
