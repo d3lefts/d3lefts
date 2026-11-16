@@ -10,7 +10,7 @@ capacity_cases=0
 for R, total, spent, c, d, raw, predicate in product(
     range(0,5), range(0,10), range(0,10),
     range(0,3), range(0,5), range(0,3), range(0,3)):
-    if spent>total or d+predicate < 2*(c+raw):
+    if spent>total:
         continue
     cap=total-spent
     prices=[]
@@ -18,8 +18,8 @@ for R, total, spent, c, d, raw, predicate in product(
         direct=R-paired
         if 2*paired+direct<=cap:
             prices.append(2*(c+raw)*paired+(d+predicate)*direct)
-    expected=(2*(c+raw)*R
-              +(d+predicate-2*(c+raw))*max(0,2*R-cap))
+    expected=(min(d+predicate,2*(c+raw))*R
+              +max(0,d+predicate-2*(c+raw))*max(0,2*R-cap))
     assert (cap>=R)==bool(prices), ('FEASIBILITY',R,total,spent)
     if prices:
         assert min(prices)==expected, ('PRICE',R,total,spent,prices,expected)
