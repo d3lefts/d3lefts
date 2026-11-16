@@ -125,7 +125,7 @@ def live_check(entries: list[dict], fetch=github_get) -> list[dict]:
                 e["id"] + ": unsupported source format")
         body = base64.b64decode(source["content"], validate=False).decode("utf-8")
         # Presence is a link check only. The pinned Lean CI is the compilation check.
-        require(re.search(r"\\btheorem\\s+" + re.escape(e["declaration"]) + r"\\b", body),
+        require(re.search(r"\btheorem\s+" + re.escape(e["declaration"]) + r"\b", body),
                 e["id"] + ": named theorem missing from source")
         report.append({
             "node": e["node"], "proposal": e["proposed_status"],
