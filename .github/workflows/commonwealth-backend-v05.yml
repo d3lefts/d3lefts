@@ -1,0 +1,62 @@
+name: Commonwealth OS hardening v0.5 (synthetic)
+on:
+  pull_request:
+    paths:
+      - 'projects/commonwealth-os/apps/server/**'
+      - '.github/workflows/commonwealth-backend-v05.yml'
+  push:
+    branches:
+      - main
+      - 'nightfall/commonwealth-**'
+    paths:
+      - 'projects/commonwealth-os/apps/server/**'
+      - '.github/workflows/commonwealth-backend-v05.yml'
+permissions:
+  contents: read
+jobs:
+  source-independent-assurance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Existing v0.4 backend suite
+        working-directory: projects/commonwealth-os/apps/server
+        run: npm test
+      - name: Pinned OIDC and ballot stop-gate tests
+        working-directory: projects/commonwealth-os/apps/server
+        run: node --test security/tests.test.mjs
+      - name: Bounded exact independent oracle (216 configurations)
+        working-directory: projects/commonwealth-os/apps/server
+        run: node assurance/generate-cases.mjs | python3 assurance/check_cases.py
+  postgres-tenant-ledger:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: cwos_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d cwos_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    env:
+      CWOS_POSTGRES_TEST_URL: postgresql://postgres:postgres@localhost:5432/cwos_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated PostgreSQL driver
+        working-directory: projects/commonwealth-os/apps/server
+        run: npm install --no-save --ignore-scripts pg@8.14.1
+      - name: Apply real PostgreSQL migration and run independent replay tests
+        working-directory: projects/commonwealth-os/apps/server
+        run: node --test postgres/tests/*.test.mjs

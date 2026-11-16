@@ -1,0 +1,398 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Commonwealth OS Synthetic Backend API",
+    "version": "0.4.0",
+    "description": "LOCAL research-only. No official voting, real municipal ingestion, or real ID federation."
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:4180"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "BearerToken": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Local synthetic tokens; never for real identities"
+      }
+    }
+  },
+  "paths": {
+    "/healthz": {
+      "get": {
+        "operationId": "health",
+        "summary": "Health",
+        "description": "Synthetic-only. Authorization verified server-side. No credentials",
+        "responses": {
+          "200": {
+            "description": "Synthetic result"
+          },
+          "400": {
+            "description": "Malformed request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "409": {
+            "description": "State/authority conflict"
+          }
+        }
+      }
+    },
+    "/api/v1/me": {
+      "get": {
+        "operationId": "read_actor",
+        "summary": "Read actor",
+        "description": "Synthetic-only. Authorization verified server-side. Current synthetic credential",
+        "responses": {
+          "200": {
+            "description": "Synthetic result"
+          },
+          "400": {
+            "description": "Malformed request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "409": {
+            "description": "State/authority conflict"
+          }
+        },
+        "security": [
+          {
+            "BearerToken": []
+          }
+        ]
+      }
+    },
+    "/api/v1/commands": {
+      "post": {
+        "operationId": "execute_transition",
+        "summary": "Execute transition",
+        "description": "Synthetic-only. Authorization verified server-side. Institution-bound actor",
+        "responses": {
+          "200": {
+            "description": "Synthetic result"
+          },
+          "400": {
+            "description": "Malformed request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "409": {
+            "description": "State/authority conflict"
+          }
+        },
+        "security": [
+          {
+            "BearerToken": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./command.schema.json"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/eligibility": {
+      "post": {
+        "operationId": "change_eligibility",
+        "summary": "Change eligibility",
+        "description": "Synthetic-only. Authorization verified server-side. Administrator or auditor as documented",
+        "responses": {
+          "200": {
+            "description": "Synthetic result"
+          },
+          "400": {
+            "description": "Malformed request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "409": {
+            "description": "State/authority conflict"
+          }
+        },
+        "security": [
+          {
+            "BearerToken": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/policies": {
+      "post": {
+        "operationId": "change_rules",
+        "summary": "Change rules",
+        "description": "Synthetic-only. Authorization verified server-side. Administrator or auditor as documented",
+        "responses": {
+          "200": {
+            "description": "Synthetic result"
+          },
+          "400": {
+            "description": "Malformed request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "409": {
+            "description": "State/authority conflict"
+          }
+        },
+        "security": [
+          {
+            "BearerToken": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/actors/revoke": {
+      "post": {
+        "operationId": "revoke_synthetic_actor",
+        "summary": "Revoke synthetic actor",
+        "description": "Synthetic-only. Authorization verified server-side. Administrator or auditor as documented",
+        "responses": {
+          "200": {
+            "description": "Synthetic result"
+          },
+          "400": {
+            "description": "Malformed request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "409": {
+            "description": "State/authority conflict"
+          }
+        },
+        "security": [
+          {
+            "BearerToken": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/sources": {
+      "post": {
+        "operationId": "import_fictional_source",
+        "summary": "Import fictional source",
+        "description": "Synthetic-only. Authorization verified server-side. Administrator or auditor as documented",
+        "responses": {
+          "200": {
+            "description": "Synthetic result"
+          },
+          "400": {
+            "description": "Malformed request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "409": {
+            "description": "State/authority conflict"
+          }
+        },
+        "security": [
+          {
+            "BearerToken": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/recertify": {
+      "post": {
+        "operationId": "analyze_change_impact",
+        "summary": "Analyze change impact",
+        "description": "Synthetic-only. Authorization verified server-side. Administrator or auditor as documented",
+        "responses": {
+          "200": {
+            "description": "Synthetic result"
+          },
+          "400": {
+            "description": "Malformed request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "409": {
+            "description": "State/authority conflict"
+          }
+        },
+        "security": [
+          {
+            "BearerToken": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/institutions/{institutionId}/items/{itemId}": {
+      "get": {
+        "operationId": "read_item",
+        "summary": "Read item",
+        "description": "Synthetic-only. Authorization verified server-side. Institution-scoped; evidence requires auditor/clerk/admin",
+        "responses": {
+          "200": {
+            "description": "Synthetic result"
+          },
+          "400": {
+            "description": "Malformed request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "409": {
+            "description": "State/authority conflict"
+          }
+        },
+        "security": [
+          {
+            "BearerToken": []
+          }
+        ]
+      }
+    },
+    "/api/v1/institutions/{institutionId}/items/{itemId}/evidence": {
+      "get": {
+        "operationId": "export_restricted_signed_evidence",
+        "summary": "Export restricted signed evidence",
+        "description": "Synthetic-only. Authorization verified server-side. Institution-scoped; evidence requires auditor/clerk/admin",
+        "responses": {
+          "200": {
+            "description": "Synthetic result"
+          },
+          "400": {
+            "description": "Malformed request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "409": {
+            "description": "State/authority conflict"
+          }
+        },
+        "security": [
+          {
+            "BearerToken": []
+          }
+        ]
+      }
+    },
+    "/api/v1/institutions/{institutionId}/items/{itemId}/public-preview": {
+      "get": {
+        "operationId": "read_reviewed_fictional_projection",
+        "summary": "Read reviewed fictional projection",
+        "description": "Synthetic-only. Authorization verified server-side. Institution-scoped; evidence requires auditor/clerk/admin",
+        "responses": {
+          "200": {
+            "description": "Synthetic result"
+          },
+          "400": {
+            "description": "Malformed request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "409": {
+            "description": "State/authority conflict"
+          }
+        },
+        "security": [
+          {
+            "BearerToken": []
+          }
+        ]
+      }
+    }
+  }
+}
