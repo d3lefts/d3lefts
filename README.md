@@ -6,6 +6,8 @@ Research directed by **Devin J. Wright** · Human-led, AI-assisted · 2026
 
 [Principal mathematical results](https://d3lefts.github.io/d3lefts/mathematical-results.html) · [Research website](https://d3lefts.github.io/d3lefts/) · [Browse research](https://d3lefts.github.io/d3lefts/research.html) · [Independent review](https://d3lefts.github.io/d3lefts/review.html) · [Source and evidence](https://d3lefts.github.io/d3lefts/evidence.html)
 
+**Upcoming civic product preview:** [Commonwealth OS — Interactive Product Demo](https://d3lefts.github.io/d3lefts/commonwealth-os.html) · [Source, synthetic prototypes and release limits](projects/commonwealth-os/README.md). The browser preview is fictional and not an authorized voting platform.
+
 [![Verify research website](https://github.com/d3lefts/d3lefts/actions/workflows/verify-site.yml/badge.svg)](https://github.com/d3lefts/d3lefts/actions/workflows/verify-site.yml)
 
 NIGHTFALL studies mathematical structures and builds reproducible mechanisms for discovering, checking, and explaining results. Every claim should travel with its **statement, assumptions, source, verification method, and limitations**. A computation, a formal proof, an originality assessment, and a competition result are different kinds of evidence.
