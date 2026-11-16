@@ -35,15 +35,19 @@ def minusEffect (a b : ι) : Matrix ι ι ℂ :=
 def complementEffect (a b : ι) : Matrix ι ι ℂ :=
   Matrix.diagonal (fun i => if i = a ∨ i = b then 0 else (1 : ℂ))
 
+theorem complex_half_nonneg : (0 : ℂ) ≤ 1 / 2 := by
+  rw [RCLike.nonneg_iff]
+  constructor <;> norm_num
+
 theorem plusEffect_posSemidef (a b : ι) :
     (plusEffect a b).PosSemidef := by
   exact (Matrix.posSemidef_vecMulVec_self_star (plusVector a b)).smul
-    (by norm_num : (0 : ℂ) ≤ 1 / 2)
+    complex_half_nonneg
 
 theorem minusEffect_posSemidef (a b : ι) :
     (minusEffect a b).PosSemidef := by
   exact (Matrix.posSemidef_vecMulVec_self_star (minusVector a b)).smul
-    (by norm_num : (0 : ℂ) ≤ 1 / 2)
+    complex_half_nonneg
 
 theorem complementEffect_posSemidef (a b : ι) :
     (complementEffect a b).PosSemidef := by
@@ -61,7 +65,7 @@ theorem complete_three_ambient_effects (a b : ι) (hab : a ≠ b) :
     by_cases hja : j = a <;> by_cases hjb : j = b <;>
       simp_all [plusEffect, minusEffect, complementEffect, plusVector, minusVector,
         Matrix.vecMulVec, Matrix.smul_apply, Matrix.diagonal_apply, Matrix.one_apply] <;>
-      norm_num <;> ring
+      norm_num <;> try ring
 
 def ghzAmbient (a b : ι) (z : Fin 3) : Matrix ι ι ℂ :=
   if z = 0 then plusEffect a b
@@ -80,6 +84,7 @@ theorem ghzAmbient_complete (a b : ι) (hab : a ≠ b) :
   simpa [Fin.sum_univ_three, ghzAmbient] using
     complete_three_ambient_effects a b hab
 
+#print axioms Nightfall.Quantum.AmbientGHZ.complex_half_nonneg
 #print axioms Nightfall.Quantum.AmbientGHZ.plusEffect_posSemidef
 #print axioms Nightfall.Quantum.AmbientGHZ.minusEffect_posSemidef
 #print axioms Nightfall.Quantum.AmbientGHZ.complementEffect_posSemidef
