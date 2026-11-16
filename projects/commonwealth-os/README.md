@@ -1,6 +1,6 @@
 # Commonwealth OS — Governance Software Research
 
-**Status:** Design baseline v1.0; engineering implementation and institutional partnerships not established.  
+**Status:** Design baseline plus synthetic browser/server and legal-proof workbenches; production and institutional partnerships not established.  
 **Date:** 2026-11-15.  
 **Principal context:** *Constitution of Computational Commonwealths: Human-Sovereign Governance for the Age of Synthetic Intelligence*.
 
@@ -13,6 +13,22 @@ Commonwealth OS is a mobile-first, representative-first civic governance system 
 - [Pilot research charter](pilots/PILOT_CHARTER.md), [administrator PRD](pilots/ADMIN_APP_PRD.md), [neutral-question standard](pilots/QUESTION_STANDARD.md) (see notes on legal and survey validation).
 
 - [Mathematical Proof Passport workbench](assurance/README.md): explicitly scoped finite-world theorems, exact evidence certificate optimization, source-different audits, and documented unresolved deployment assumptions.
+
+## New: source-to-proof-to-dossier vertical slice (DEMO ONLY)
+
+The [Commonwealth Legal Knowledge Kernel](legal/README.md) now implements a
+narrow fictional, versioned rule/fact derivation with a source-different verifier,
+adversarial tests, source-status/effective-date recertification checks and a
+neutral riverfront development dossier. It requires explicit grounding for
+negative exception facts, and records missing housing, developer, environmental
+and public-cost data rather than inventing answers. It performs **no real law
+ingestion, preference storage, official vote, or administrative effect**.
+
+This is deliberately distinct from the existing procedural Democratic Assurance
+Passport. The next stage needs an authoritative U.S. legal source graph,
+independently reviewed statutory/case-law interpretation, and one reconciled
+backend command path. Neither hashes nor a formal deduction establish the truth
+of an unverified rule encoding.
 
 ## Non-negotiable constraints
 1. **No live city-council record ingestion yet.** Use synthetic fixtures first. The municipal intake connector remains disabled by default.
