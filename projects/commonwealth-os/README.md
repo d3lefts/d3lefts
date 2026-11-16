@@ -69,6 +69,17 @@ The baseline includes a separate, versioned [Product Design v1.0 source tree](pr
 
 Where this representative-first implementation blueprint and the companion citizen-preference design differ, neither silently overrides the other. Treat conflicts as explicit product decisions to resolve with institution-specific authorizations and validation.
 
+## Backend v0.4/v0.5 integration (synthetic only)
+
+The [backend integration receipt](architecture/BACKEND_INTEGRATION_v05_20261115.md)
+links source PRs #618 and #627 and their exact CI runs. The local Node server
+now includes synthetic public publication/correction workflows, independently
+replayed evidence, source recertification checks, an OIDC token-verification
+boundary and a PostgreSQL-16 transaction candidate with tenant RLS and dedicated
+tests. **No real identities, official elections, secret ballots, live city sources
+or production permission are enabled.** Python `app/` and Node `apps/server/`
+remain parallel prototypes; backend convergence is tracked in #626.
+
 ## Experimental browser and server workbench (DEMO ONLY)
 
 - [Reference browser app](apps/browser/README.md): synthetic scenarios, browser core, fixture tests.
