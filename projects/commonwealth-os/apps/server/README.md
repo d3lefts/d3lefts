@@ -2,6 +2,8 @@
 
 **Status:** working **synthetic-only** proof of architecture, not a voting product, municipal system, election security certification, or legal compliance assessment. Do not enter real users, ballots, ordinances or identities. Bind to localhost only.
 
+**PostgreSQL v1.4:** a separate local participation backend with a cold-import path, encrypted-at-rest event journal, pinned-signature checkpoint verification and a restore drill. See [POSTGRES_MIGRATION_V1_4.md](POSTGRES_MIGRATION_V1_4.md). It does **not** replace the earlier SQLite procedural voting simulator.
+
 **New in participation v1.3:** persistent version-fenced event journal, privacy-minimized dossier views, independent local chain continuity checker, and same-origin optional browser adapter. See [PARTICIPATION_LEDGER_V1_3.md](PARTICIPATION_LEDGER_V1_3.md). PostgreSQL and external custody have not been implemented.
 
 ## Runtime

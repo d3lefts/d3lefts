@@ -5,6 +5,7 @@ on:
       - 'docs/commonwealth-browser/**'
       - 'docs/commonwealth-os.html'
       - 'projects/commonwealth-os/apps/server/**'
+      - 'projects/commonwealth-os/apps/server/**'
       - 'projects/commonwealth-os/apps/browser/**'
       - '.github/workflows/commonwealth-comprehensive-browser.yml'
   push:
@@ -26,6 +27,12 @@ jobs:
           node-version: '22'
       - name: Check ES module syntax
         run: |
+          node --check projects/commonwealth-os/apps/server/src/pg-participation.mjs
+          node --check projects/commonwealth-os/apps/server/src/pg-http.mjs
+          node --check projects/commonwealth-os/apps/server/src/pg-seed.mjs
+          node --check projects/commonwealth-os/apps/server/src/pg-migrate.mjs
+          node --check projects/commonwealth-os/apps/server/src/pg-anchor.mjs
+          node --check projects/commonwealth-os/apps/server/verify-pg-anchor.mjs
           node --check projects/commonwealth-os/apps/server/verify-participation-receipt.mjs
           node --check projects/commonwealth-os/apps/server/verify-participation.mjs
           node --check projects/commonwealth-os/apps/server/src/participation.mjs
@@ -48,3 +55,45 @@ jobs:
         run: |
           node --test docs/commonwealth-browser/tests/*.test.mjs projects/commonwealth-os/apps/browser/tests/*.test.mjs tests/test_commonwealth_web_demo.mjs
           cd projects/commonwealth-os/apps/server && npm test
+
+  pg-participation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: cwtest
+          POSTGRES_PASSWORD: synthetic-test-only
+          POSTGRES_DB: cwtest
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U cwtest -d cwtest"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      COMMONWEALTH_PG_URL: postgresql://cwtest:synthetic-test-only@127.0.0.1:5432/cwtest
+      COMMONWEALTH_PG_EVENT_KEY: "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned PostgreSQL adapter
+        working-directory: projects/commonwealth-os/apps/server
+        run: npm install --ignore-scripts --no-audit --no-fund --no-package-lock
+      - name: Cold migration, two-client race, privacy, corruption and HTTP
+        working-directory: projects/commonwealth-os/apps/server
+        run: CW_PG_RECOVERY_MANIFEST="$RUNNER_TEMP/cw-pg-expected.json" npm run test:pg
+      - name: Database dump and isolated restore with replay check
+        working-directory: projects/commonwealth-os/apps/server
+        run: |
+          if ! command -v pg_dump >/dev/null || ! command -v pg_restore >/dev/null; then
+            sudo apt-get update -qq && sudo apt-get install -y postgresql-client
+          fi
+          pg_dump --format=custom --file="$RUNNER_TEMP/cw-synthetic.dump" "$COMMONWEALTH_PG_URL"
+          psql "$COMMONWEALTH_PG_URL" -v ON_ERROR_STOP=1 -c 'CREATE DATABASE cwrestore'
+          pg_restore --no-owner --dbname="postgresql://cwtest:synthetic-test-only@127.0.0.1:5432/cwrestore" "$RUNNER_TEMP/cw-synthetic.dump"
+          COMMONWEALTH_PG_URL="postgresql://cwtest:synthetic-test-only@127.0.0.1:5432/cwrestore" node tests/pg-recovery-check.mjs "$RUNNER_TEMP/cw-pg-expected.json"
