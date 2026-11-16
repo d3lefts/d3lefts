@@ -30,3 +30,37 @@
 .pl-panel:focus-within{outline:1px solid var(--line,#46515a)}
 @media(max-width:730px){.pl-grid{grid-template-columns:1fr}.pl-main{padding:26px 16px 70px}.pl-fields{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:390px){.pl-fields{grid-template-columns:1fr}}
+
+/* Comparative finite evidence; uses the shared site theme. */
+.pl-showdown{scroll-margin-top:85px}
+.pl-compare-controls{display:flex;flex-wrap:wrap;gap:15px 30px;align-items:end;margin:24px 0}
+.pl-compare-controls label{display:grid;gap:8px;font:500 13px/1.4 var(--sans,system-ui,sans-serif)}
+.pl-compare-controls select{font:500 16px/1.4 var(--sans,system-ui,sans-serif);padding:12px 14px;background:var(--bg,#0f1724);color:var(--ink,#e9eef5);border:1px solid var(--line,#586474);border-radius:7px;max-width:100%;min-width:0}
+.pl-compare-controls .pl-compare-check{display:flex;align-items:center;gap:10px;padding:13px 0}
+.pl-compare-check input{width:18px;height:18px}
+.pl-timeline{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:19px 0}
+.pl-timeline>div{border:1px solid var(--line,#53606c);border-radius:8px;padding:14px;min-width:0}
+.pl-timeline b{display:block;font:600 10px/1.5 var(--mono,monospace);letter-spacing:.06em;color:var(--muted,#96a1ac)}
+.pl-timeline strong{display:block;font:500 17px/1.25 var(--serif,Georgia,serif);margin:8px 0}
+.pl-timeline small{display:block;font-size:11px;line-height:1.55;color:var(--muted,#96a1ac)}
+.pl-compare-table-wrap{overflow-x:auto;border:1px solid var(--line,#53606c);border-radius:10px;margin:18px 0}
+.pl-compare-table{width:100%;border-collapse:collapse;text-align:left;font-size:13px;line-height:1.5}
+.pl-compare-table th,.pl-compare-table td{padding:14px 12px;vertical-align:middle;border-bottom:1px solid var(--line,#53606c)}
+.pl-compare-table th{font:600 11px/1.5 var(--mono,monospace);letter-spacing:.03em;color:var(--muted,#a4abb4)}
+.pl-compare-table tbody tr:last-child td{border-bottom:0}
+.pl-compare-table td:first-child{min-width:190px;font-weight:600}
+.pl-compare-table td:nth-child(2){min-width:135px}
+.pl-compare-table td:last-child{min-width:135px}
+.pl-compare-table td strong{display:inline-block;white-space:nowrap;margin-top:3px}
+.pl-compare-bar{height:5px;min-width:60px;border-radius:4px;background:color-mix(in srgb,currentColor 10%,transparent);overflow:hidden}
+.pl-compare-bar span{display:block;height:100%;background:#849fac}
+.pl-compare-highlight{background:color-mix(in srgb,currentColor 5%,transparent)}
+.pl-compare-highlight .pl-compare-bar span{background:#4f9aa5}
+.pl-compare-denied{font-weight:600}
+.pl-compare-findings{border-left:2px solid var(--line,#53606c);padding:16px 22px;margin:21px 0;background:color-mix(in srgb,currentColor 3%,transparent)}
+.pl-compare-findings p{margin:10px 0 0}
+@media(max-width:760px){.pl-timeline{grid-template-columns:repeat(2,minmax(0,1fr))}.pl-compare-table{font-size:12px}.pl-compare-table th,.pl-compare-table td{padding:12px 10px}}
+
+.pl-jump-line{margin:20px 0 8px}
+.pl-jump{display:inline-flex;align-items:center;border:1px solid var(--line,#647387);border-radius:7px;padding:11px 15px;font-size:14px;font-weight:650;text-decoration:none}
+.pl-jump:hover,.pl-jump:focus-visible{outline:2px solid currentColor;outline-offset:2px}

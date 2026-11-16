@@ -24,5 +24,21 @@
     "Cryptographic privacy under adversarial observers",
     "Independent human peer review"
   ],
-  "frozenRegistriesUnchanged": true
+  "frozenRegistriesUnchanged": true,
+  "practicalBenchmark": {
+    "type": "Reproducible synthetic finite comparison; independently checked by dynamic programming",
+    "baselines": [
+      "full direct refresh",
+      "scope-aware direct",
+      "scope-aware paired",
+      "exact mixed schedule"
+    ],
+    "empirical": "Separate pinned six-fixture ControlArena measurement, not a learned frontier monitor win",
+    "sources": [
+      "https://github.com/d3lefts/d3lefts/pull/605",
+      "https://github.com/d3lefts/d3lefts/pull/636"
+    ],
+    "strictSOTAWin": "Not demonstrated",
+    "tests": "Node independent finite benchmark and Chromium interactive desktop/mobile"
+  }
 }

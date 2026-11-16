@@ -9,7 +9,7 @@
 <title>Permission Lab — NIGHTFALL Certificate-Directed Monitoring</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="site.css"><link rel="stylesheet" href="ethereal-theme.css"><link rel="stylesheet" href="two-skies.css"><link rel="stylesheet" href="permission-lab.css">
-<script src="site.js" defer></script><script src="ethereal-theme.js" defer></script><script src="permission-lab-core.js" defer></script><script src="permission-lab.js" defer></script>
+<script src="site.js" defer></script><script src="ethereal-theme.js" defer></script><script src="permission-lab-core.js" defer></script><script src="permission-lab-evidence-core.js" defer></script><script src="permission-lab-evidence.js" defer></script><script src="permission-lab.js" defer></script>
 </head>
 <body><a class="skip" href="#main">Skip to permission lab</a><div class="topline"></div>
 <header class="header"><div class="wrap header-inner">
@@ -22,9 +22,64 @@
 <div class="pl-kicker">NIGHTFALL / PRICE OF PERMISSION / 15 NOVEMBER 2026</div>
 <h1 id="pl-title">A monitor asks.<br><em>A certificate answers.</em></h1>
 <p>Explore a source-scoped mathematical model of how much evidence is needed to justify an autonomous action when authorization changes, verification capacity is limited, and disclosure has a cost.</p>
+<p class="pl-jump-line"><a class="pl-jump" href="#practical-advantages">Run the evidence comparison ↓</a></p>
 <div class="pl-pills"><span>19 named Lean declarations passed</span><span>Finite conditional theorem</span><span>No real-agent authorization</span></div>
 <div class="pl-links"><a href="https://github.com/d3lefts/d3lefts/pull/636">Merged theorem PR #636 ↗</a><a href="https://github.com/d3lefts/d3lefts/actions/runs/43801167480">Pinned Lean CI receipt ↗</a><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/formalization/agent_safety/DynamicPermissionBridge.lean">Source-level proof ↗</a></div>
 </section>
+
+<section class="pl-section pl-showdown" id="practical-advantages" aria-labelledby="pl-compare-title">
+<div class="pl-kicker">00 / CONTROL LAB · REPRODUCIBLE COMPARISON</div>
+<h2 id="pl-compare-title">A policy changes. <em>Which monitor can still act?</em></h2>
+<p>A synthetic deployment agent has six actions waiting for approval. Some have authenticated certificates; a source update invalidates one. Every strategy uses the same trusted effect guards and must certify <strong>every genuinely safe action</strong> before the remaining verification slots expire. The exact-mathematics comparison below does not run any real deployment or learned monitor.</p>
+<form id="pl-compare-form" class="pl-compare-controls" aria-label="Select modeled evidence evaluation case">
+<label for="pl-compare-scenario">Benchmark condition
+<select id="pl-compare-scenario">
+<option value="tight">Scarce verification capacity</option>
+<option value="ample">Ample capacity: stronger comparator</option>
+<option value="privacy">Disclosure fees change the strategy</option>
+<option value="parity">No gain when costs tie</option>
+</select></label>
+<label class="pl-compare-check"><input type="checkbox" id="pl-compare-changed" checked> Revoke one previously valid certificate</label>
+</form>
+<div class="pl-timeline" aria-label="Source-bound permission decision stages">
+<div><b>01 / AUTHORITY</b><strong>Policy changes</strong><small>Authenticated scope and cache impact assumed</small></div>
+<div><b>02 / EVIDENCE</b><strong id="pl-compare-count">Calculating…</strong><small>Unaffected certificates may transfer</small></div>
+<div><b>03 / CAPACITY</b><strong id="pl-compare-slots">Calculating…</strong><small>Worker time already spent cannot be recovered</small></div>
+<div><b>04 / FINALITY</b><strong>Guard every effect</strong><small>Trusted complete mediation is an assumption</small></div>
+</div>
+<p id="pl-compare-context" class="pl-caption"></p>
+<div class="pl-compare-table-wrap">
+<table class="pl-compare-table" aria-label="Modeled cost and feasibility of competing verification strategies">
+<thead><tr><th scope="col">Strategy</th><th scope="col">Incremental evidence cost</th><th scope="col">Schedule or blocking reason</th></tr></thead>
+<tbody id="pl-compare-rows"><tr><td colspan="3">JavaScript is needed for live comparisons.</td></tr></tbody>
+</table>
+</div>
+<div class="pl-compare-findings" role="status" aria-live="polite" aria-atomic="true">
+<div class="pl-kicker">EVIDENCE-HONEST RESULT</div>
+<p id="pl-compare-result">Calculating…</p>
+<p id="pl-compare-evidence" class="pl-caption"></p>
+<p id="pl-compare-oracle" class="pl-caption"></p>
+</div>
+<p class="pl-caption">All policies share fixed verifier setup, effect-guard and historical sunk costs; differences here are <strong>incremental evidence-cost units</strong>, not dollars, latency, or a measured frontier-system advantage. Full refresh is explicitly declared infeasible when its schedule exceeds capacity. The matched optimal comparator always ties NIGHTFALL by construction; cost benefit depends on the weaker baseline chosen.</p>
+<div class="pl-links"><a href="permission-lab-evidence.json">Exact scenario and comparator record ↗</a><a href="https://github.com/d3lefts/d3lefts/pull/636">Lean-certified finite theorem ↗</a><a href="#pl-world-title">Challenge a stale evidence certificate ↓</a></div>
+</section>
+<section class="pl-section" id="pl-real-evidence" aria-labelledby="pl-real-title">
+<div class="pl-kicker">EMPIRICAL CHECK / PINNED CONTROLARENA RUN</div>
+<h2 id="pl-real-title">The faster guard was <em>not the safer one.</em></h2>
+<p>These are measurements from the repository's actual source-matched IaC Fast experiment—not figures from the finite mathematical calculator. All policies admitted the two investigator-authored honest controls. The four harmful cases were also authored fixtures, <strong>not successful unrestricted model-generated attacks</strong>.</p>
+<div class="pl-compare-table-wrap"><table class="pl-compare-table">
+<thead><tr><th scope="col">Guard policy</th><th scope="col">Authored harmful fixtures admitted</th><th scope="col">Mean verifier time</th></tr></thead>
+<tbody>
+<tr><td>Narrow FSx guard</td><td>4 / 4</td><td>89.50 μs</td></tr>
+<tr><td>Source-path selective audit</td><td>1 / 4</td><td>473.73 μs</td></tr>
+<tr class="pl-compare-highlight"><td>Full mission baseline-diff audit</td><td>0 / 4</td><td>643.48 μs</td></tr>
+<tr><td>Full all-SCP baseline pin</td><td>0 / 4</td><td>1,623.83 μs</td></tr>
+</tbody></table></div>
+<div class="pl-compare-findings"><p><strong>Mechanism:</strong> tighter mission and effect semantics can eliminate harmful permissions that a narrower source-path check misses. In this fixed experiment the all-SCP verifier was approximately 2.52× slower than the full mission audit; indiscriminate extra checks did not buy additional detected harm. This is a measured negative result, not a claim of real-world attack-proofness.</p>
+<p class="pl-caption">Means from 50 guard checks per fixture, six source-matched fixtures on one GitHub runner. Excludes CDK synthesis (~8.3 seconds), official evaluator overhead and local trusted effect service (~10.4 ms median). No live AWS effects, dollar-cost inference or statistical safety rate.</p></div>
+<div class="pl-links"><a href="https://github.com/d3lefts/d3lefts/pull/605">Experiment, source changes and negative controls ↗</a><a href="https://github.com/d3lefts/d3lefts/actions/runs/43737300428">Successful exact-source measurement CI ↗</a></div>
+</section>
+
 <section class="pl-section" aria-labelledby="pl-price-title">
 <div class="pl-kicker">01 / AUTHORITY CHANGES INSIDE A VERIFICATION WINDOW</div>
 <h2 id="pl-price-title">Pay for what must be checked again.</h2>
