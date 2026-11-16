@@ -17,11 +17,9 @@ theorem complex_psd_corner_gram
     (hM : M.PosSemidef) :
     (M 0 1).re ^ 2 ≤ (M 0 0).re * (M 1 1).re := by
   have hdiag0 : (M 0 0).im = 0 := by
-    apply Complex.im_eq_zero_iff_isSelfAdjoint.mpr
-    exact hM.1.apply 0 0
+    exact (Complex.im_eq_zero_iff_isSelfAdjoint _).mpr (hM.1.apply 0 0)
   have hdiag1 : (M 1 1).im = 0 := by
-    apply Complex.im_eq_zero_iff_isSelfAdjoint.mpr
-    exact hM.1.apply 1 1
+    exact (Complex.im_eq_zero_iff_isSelfAdjoint _).mpr (hM.1.apply 1 1)
   have hji : M 1 0 = star (M 0 1) :=
     (hM.1.apply 1 0).symm
   have hdet : 0 ≤ (M.det).re :=
