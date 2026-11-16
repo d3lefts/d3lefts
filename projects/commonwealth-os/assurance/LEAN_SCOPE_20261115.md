@@ -42,3 +42,7 @@ Use the repository-wide pinned Lean 4.36.0-rc2/Mathlib setup with `.github/workf
 Independent A/B audit still required: make a second formal semantics or TLA+ model of asynchronous version race, challenge every hypothesis boundary, exercise the current browser kernel under hostile inputs and require an external legal/election security review.
 
 **Research status:** useful mechanization of existing scoped theorems, **not** a worldwide novel discovery or a real-election guarantee.
+
+## Exact theorem-type freeze
+
+[passport-contract.json](lean/passport-contract.json) binds the full types of `transcript_sound_iff_cover`, `indistinguishable_authority_impossibility`, and `reachable_evidence_guard_authority` to the pinned Mathlib commit. The CI runs the strict proof bridge both for every named declaration and again against these independently authored proposition texts. This exact-type gate prevents accidental weakening of the central claim while preserving a compiling theorem name. An exact-type contract passes only when its own CI step succeeds; source-only compilation is not a substitute.
