@@ -33,8 +33,14 @@ theorem effects_diagonal_normalized
   have hentry : (∑ z, E z a a) = 1 := by
     have h := congrArg (fun M : Matrix ι ι ℂ => M a a) hcomplete
     simpa [Matrix.sum_apply] using h
+  have hmap (s : Finset Out) :
+      Complex.re (s.sum (fun z => E z a a)) =
+        s.sum (fun z => Complex.re (E z a a)) := by
+    induction s using Finset.induction_on with
+    | empty => simp
+    | @insert z s hz ih => simp [Finset.sum_insert hz, Complex.add_re, ih]
   have hre := congrArg Complex.re hentry
-  simpa only [Complex.sum_re, Complex.one_re] using hre
+  simpa only [hmap Finset.univ, Complex.one_re] using hre
 
 theorem complex_povm_energy_optimal
     {ι Out : Type*} [Fintype ι] [DecidableEq ι] [Fintype Out]
