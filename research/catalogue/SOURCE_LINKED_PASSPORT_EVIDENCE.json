@@ -1,0 +1,54 @@
+{
+  "schema": "nightfall.source-linked-passport-evidence.v1",
+  "as_of": "2026-11-16",
+  "active_registry": "docs/active-proof-passport.json",
+  "frozen_dependency_graph": "research/catalogue/ACTIVE_DEPENDENCY_CLOSURE.json",
+  "policy": "Evidence overlay only. Never promote a frozen open node, merge a PR, or assert independent mathematical review from CI success.",
+  "entries": [
+    {
+      "id": "quantum-normalized-terminal",
+      "frontier": "quantum-physical-operator",
+      "node": "q-terminal",
+      "pr": 658,
+      "head": "0dd5541a7589ce21127e82a92b60769af42e01ed",
+      "workflow_run": 43945324247,
+      "workflow_name": "NIGHTFALL actual physical Born and full POVM terminal Lean",
+      "file": "research/nightfall/formalization/quantum/PhysicalGainNormalized.lean",
+      "blob": "47ce8ffe8b7b0ceb1ba79a14d790563c842f88ce",
+      "declaration": "actual_physical_optimal_gain_normalized",
+      "evidence_scope": "pinned named Lean theorem plus independent finite matrix audit; source-defined ternary model, d>=1",
+      "proposed_status": "candidate-terminal-source-ci-passed",
+      "remaining": "Integrate the draft stack into the canonical registry after checking dependency closure; no novelty or deployment claim."
+    },
+    {
+      "id": "f9-fixed-same-oracle-lower",
+      "frontier": "f9-asymptotic-oracle",
+      "node": "f-nonadaptive-bridge",
+      "pr": 659,
+      "head": "4020cd04b577c47bf5d007ada010fd4942131573",
+      "workflow_run": 43967606911,
+      "workflow_name": "NIGHTFALL F9 same-oracle decoder and complement bridge Lean",
+      "file": "research/nightfall/formalization/finite_field/F9ConcreteLower.lean",
+      "blob": "b9fd8af34e07b96acdf70efebc564c58b77db422",
+      "declaration": "actual_fixed_family_lower",
+      "evidence_scope": "all-k finite-dimensional lower bound m>=2k-1 for full separating fixed rows of the squared F9 oracle",
+      "proposed_status": "component-source-ci-passed",
+      "remaining": "All-k legal adaptive decoder is not yet kernel-proved, hence F9 terminal remains OPEN."
+    },
+    {
+      "id": "f9-sign-packets-all-n",
+      "frontier": "f9-asymptotic-oracle",
+      "node": "f-decoder-bridge",
+      "pr": 659,
+      "head": "4020cd04b577c47bf5d007ada010fd4942131573",
+      "workflow_run": 43967606911,
+      "workflow_name": "NIGHTFALL F9 same-oracle decoder and complement bridge Lean",
+      "file": "research/nightfall/formalization/finite_field/F9SignPacketAllK.lean",
+      "blob": "a60ae6358ca34995b2908fa205dc5a025f2c3258",
+      "declaration": "all_sign_bits_decoded",
+      "evidence_scope": "unconditional all-length two-sign squared-block injectivity and exact packet-budget arithmetic, with independent k<=5 transcript collision audit",
+      "proposed_status": "component-source-ci-passed",
+      "remaining": "The all-k legal adaptive-row policy derived solely from preceding square outputs is not yet formalized; the F9 terminal remains open."
+    }
+  ]
+}

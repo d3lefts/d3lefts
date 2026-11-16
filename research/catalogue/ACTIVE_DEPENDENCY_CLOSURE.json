@@ -1,0 +1,261 @@
+{
+  "schema": "nightfall.dependency-closure.v1",
+  "snapshot_utc": "2026-11-16",
+  "owner": "NIGHTFALL research continuity; original work and credit retained in source PRs",
+  "meaning": "Read-only, dated recovery graph; scoped CI reports are not independently reconstructed proofs; no status promotion, novelty claim or external review inferred.",
+  "frontiers": [
+    {
+      "id": "quantum-physical-operator",
+      "terminal": "q-terminal",
+      "priority": 1,
+      "scope": "Finite d>0; the pinned physical ternary pure-qubit source family; arbitrary complex POVM effects; exact source-derived Born risk and achievable optimum.",
+      "snapshot_prs": [
+        {
+          "pr": 647,
+          "head": "23e279c25502777fc4f581c1142abd067bc74a05"
+        },
+        {
+          "pr": 655,
+          "head": "339cdeddcda925bc14dc593b950863005d6f6f9c"
+        }
+      ],
+      "not_claimed": [
+        "No terminal source-to-Born-to-POVM Lean theorem",
+        "No physical deployment certification",
+        "No novel-priority determination"
+      ]
+    },
+    {
+      "id": "f9-asymptotic-oracle",
+      "terminal": "f-terminal",
+      "priority": 2,
+      "scope": "One identical finite-field oracle/cost model for adaptive upper and nonadaptive lower bounds, plus exact asymptotic transfer; no mixing of query primitives.",
+      "snapshot_prs": [
+        {
+          "pr": 645,
+          "head": "513bd8f46573e683d8343f8c9a3f619e4daafded"
+        }
+      ],
+      "not_claimed": [
+        "Conditional F9 asymptotic Lean arithmetic does not discharge oracle-matched hypotheses",
+        "Decoder, obstruction and coding bridge are not transitive Lean dependencies",
+        "No independent worldwide priority determination"
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "q-physical-states",
+      "frontier": "quantum-physical-operator",
+      "status": "scoped_ci_reported",
+      "deps": [],
+      "claim": "Explicit physical tensor-product pure-state density family is PSD and trace one in the pinned Lean scope.",
+      "evidence": {
+        "pr": 647,
+        "run": 43917859989
+      },
+      "assumptions": [],
+      "limitations": [
+        "Source-level physical family; not an experimental device"
+      ],
+      "next_experiment": null
+    },
+    {
+      "id": "q-actual-operators",
+      "frontier": "quantum-physical-operator",
+      "status": "scoped_ci_reported",
+      "deps": [
+        "q-physical-states"
+      ],
+      "claim": "Source-derived B/C/A matrix entries and real Born-trace identities in the current scoped physical-operator branch.",
+      "evidence": {
+        "pr": 647,
+        "run": 43917859989
+      },
+      "assumptions": [],
+      "limitations": [
+        "The terminal numerator is not yet linked to universal optimality"
+      ],
+      "next_experiment": null
+    },
+    {
+      "id": "q-ghz-support",
+      "frontier": "quantum-physical-operator",
+      "status": "scoped_ci_reported",
+      "deps": [
+        "q-actual-operators"
+      ],
+      "claim": "Full source-derived A has only off-diagonal GHZ-corner support in the stated finite-dimensional physical model.",
+      "evidence": {
+        "pr": 655,
+        "run": 43917861968
+      },
+      "assumptions": [],
+      "limitations": [
+        "Does not by itself compute full arbitrary-effect Born objective"
+      ],
+      "next_experiment": null
+    },
+    {
+      "id": "q-born-numerator",
+      "frontier": "quantum-physical-operator",
+      "status": "open",
+      "deps": [
+        "q-actual-operators",
+        "q-ghz-support"
+      ],
+      "claim": "For every complex POVM effect, actual-source Tr(AE) equals the GHZ-coherence expression, without an assumed GHZ-only A hypothesis.",
+      "evidence": null,
+      "assumptions": [],
+      "limitations": [
+        "No end-to-end named Lean result recorded"
+      ],
+      "next_experiment": {
+        "prediction": "An exact finite matrix trace expansion reduces to two conjugate GHZ terms.",
+        "alternative": "An omitted diagonal or off-corner contribution remains.",
+        "decisive_test": "Construct the matrix trace proof using actual A definitions in pinned Lean; verify a fresh named declaration and inspect axioms.",
+        "independent_check": "Separate enumeration of matrix entries for d=1,2,3 with exact cyclotomic or algebraic arithmetic; find a counterexample before reusing construction lemmas."
+      }
+    },
+    {
+      "id": "q-optimal-povm",
+      "frontier": "quantum-physical-operator",
+      "status": "open",
+      "deps": [
+        "q-physical-states",
+        "q-ghz-support"
+      ],
+      "claim": "Full 2^d-dimensional GHZ ± projectors plus complementary effect are PSD, complete and attain the universal complex POVM bound.",
+      "evidence": null,
+      "assumptions": [],
+      "limitations": [
+        "Full-dimensional positivity/completeness/equality not transitive in Lean"
+      ],
+      "next_experiment": {
+        "prediction": "GHZ ± rank-one projectors are orthogonal and their complement is positive.",
+        "alternative": "The proposed effects fail a completeness or equality hypothesis.",
+        "decisive_test": "Lean construct all three effects on the actual physical Hilbert space, prove positivity, sum-one and exact witness equality.",
+        "independent_check": "Independent rational/complex small-d eigenspectrum and trace verifier; attack d=1 and degenerate p,q endpoints."
+      }
+    },
+    {
+      "id": "q-terminal",
+      "frontier": "quantum-physical-operator",
+      "status": "open",
+      "deps": [
+        "q-born-numerator",
+        "q-optimal-povm"
+      ],
+      "claim": "Dependency-closed pinned theorem identifies exact physical Bayes gain (pq)^d/(p^d+q^d) and a physically feasible attaining POVM in one source chain.",
+      "evidence": null,
+      "assumptions": [],
+      "limitations": [
+        "NO full theorem certificate; nonauthor review and novelty are separate"
+      ],
+      "next_experiment": {
+        "prediction": "Composition closes under the same p,q,d and actual ensemble without imported target-shaped hypotheses.",
+        "alternative": "A mismatch in normalization, oracle, posterior or operator indexing blocks composition.",
+        "decisive_test": "Single pinned Lean named terminal theorem, standard-axiom audit, exact source commit and immutable run receipt.",
+        "independent_check": "Build a fresh paper-level derivation against the exact declaration and check source-normalization conventions at d=1,2."
+      }
+    },
+    {
+      "id": "f-conditional-arithmetic",
+      "frontier": "f9-asymptotic-oracle",
+      "status": "conditional_ci_reported",
+      "deps": [],
+      "claim": "Pinned Lean conditional asymptotic arithmetic implication from supplied same-oracle F9 adaptive upper and nonadaptive lower hypotheses.",
+      "evidence": {
+        "pr": 645,
+        "run": 43811312747
+      },
+      "assumptions": [
+        "Same-oracle adaptive upper bound not discharged by this implication",
+        "Same-oracle nonadaptive lower bound not discharged by this implication"
+      ],
+      "limitations": [
+        "Conditional implication only, not full F9 asymptotic separation"
+      ],
+      "next_experiment": null
+    },
+    {
+      "id": "f-decoder-bridge",
+      "frontier": "f9-asymptotic-oracle",
+      "status": "open",
+      "deps": [],
+      "claim": "Connect the actual arbitrary-k finite-field decoder and its query accounting to the exact adaptive F9 upper hypothesis in Lean.",
+      "evidence": null,
+      "assumptions": [],
+      "limitations": [
+        "Previous finite decoder claims are not a transitive Lean premise"
+      ],
+      "next_experiment": {
+        "prediction": "The decoder construction instantiates the same-oracle adaptive bound.",
+        "alternative": "Oracle/cost mismatch or finite-k constants invalidate the transfer.",
+        "decisive_test": "Formalize a theorem whose conclusion is literally the upper hypothesis used by the conditional F9 theorem.",
+        "independent_check": "Independent finite-field decoder implementation and adversarial k/parameter boundary tests with oracle call accounting."
+      }
+    },
+    {
+      "id": "f-nonadaptive-bridge",
+      "frontier": "f9-asymptotic-oracle",
+      "status": "open",
+      "deps": [],
+      "claim": "Connect the exact nonadaptive complement obstruction to the same F9 oracle model and required lower-bound quantifiers.",
+      "evidence": null,
+      "assumptions": [],
+      "limitations": [
+        "Existing obstruction does not automatically prove the imported lower premise"
+      ],
+      "next_experiment": {
+        "prediction": "The obstruction yields the required lower rate for precisely the same oracle.",
+        "alternative": "Restriction or parameter gap makes the claimed lower bound weaker.",
+        "decisive_test": "Write same-oracle lower theorem and map every imported assumption by named Lean declarations.",
+        "independent_check": "Independent enumeration/exact rank checker for minimal cases and edge countermodels; audit all quantifiers."
+      }
+    },
+    {
+      "id": "f-coding-transfer",
+      "frontier": "f9-asymptotic-oracle",
+      "status": "open",
+      "deps": [
+        "f-nonadaptive-bridge"
+      ],
+      "claim": "Discharge the 17/8 intersecting-code liminf/coding-rate transfer as used by the terminal asymptotic statement.",
+      "evidence": null,
+      "assumptions": [],
+      "limitations": [
+        "Conditional arithmetic certificate is not the complete asymptotic proof"
+      ],
+      "next_experiment": {
+        "prediction": "Exact rate parameters compose with the source lower theorem.",
+        "alternative": "The liminf/rate conversion requires an unstated monotonicity or uniformity premise.",
+        "decisive_test": "Lean exact transfer theorem under only the source-dischargeable hypotheses.",
+        "independent_check": "Separate rational interval and asymptotic-direction audit; test endpoint and rounding conventions."
+      }
+    },
+    {
+      "id": "f-terminal",
+      "frontier": "f9-asymptotic-oracle",
+      "status": "open",
+      "deps": [
+        "f-conditional-arithmetic",
+        "f-decoder-bridge",
+        "f-nonadaptive-bridge",
+        "f-coding-transfer"
+      ],
+      "claim": "Dependency-closed F9 same-oracle unbounded adaptive/nonadaptive separation established by a single pinned Lean declaration.",
+      "evidence": null,
+      "assumptions": [],
+      "limitations": [
+        "NO terminal Lean receipt; distinct oracles cannot be substituted"
+      ],
+      "next_experiment": {
+        "prediction": "All four exact premises compose into the scoped F9 asymptotic theorem with no additional unproved assumption.",
+        "alternative": "A source premise or coding bridge cannot be instantiated.",
+        "decisive_test": "Pinned Lean whole-chain compile plus named-axiom audit and exact-source immutable receipt.",
+        "independent_check": "Independently reconstruct oracle definitions and all quantifier/rate steps without seeing constructor intermediary lemmas."
+      }
+    }
+  ]
+}

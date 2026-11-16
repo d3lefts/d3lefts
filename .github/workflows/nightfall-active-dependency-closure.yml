@@ -1,0 +1,66 @@
+name: NIGHTFALL active dependency closure and recovery
+on:
+  pull_request:
+    paths:
+      - 'research/catalogue/ACTIVE_DEPENDENCY_CLOSURE.json'
+      - 'research/catalogue/ACTIVE_DEPENDENCY_CLOSURE.md'
+      - 'scripts/check_active_dependency_closure.py'
+      - 'scripts/independent_dependency_closure.cjs'
+      - 'scripts/reconcile_source_linked_passports.py'
+      - 'scripts/propose_source_refresh.py'
+      - 'research/catalogue/SOURCE_LINKED_PASSPORT_EVIDENCE.json'
+      - '.github/workflows/nightfall-active-dependency-closure.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/catalogue/ACTIVE_DEPENDENCY_CLOSURE.json'
+      - 'research/catalogue/ACTIVE_DEPENDENCY_CLOSURE.md'
+      - 'scripts/check_active_dependency_closure.py'
+      - 'scripts/independent_dependency_closure.cjs'
+      - 'scripts/reconcile_source_linked_passports.py'
+      - 'scripts/propose_source_refresh.py'
+      - 'research/catalogue/SOURCE_LINKED_PASSPORT_EVIDENCE.json'
+      - '.github/workflows/nightfall-active-dependency-closure.yml'
+  workflow_dispatch:
+  schedule:
+    - cron: '13 10 * * *'
+permissions:
+  contents: read
+  pull-requests: read
+jobs:
+  recovery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Check transitive obligations and attempt twelve adversarial ledger mutations
+        run: python3 scripts/check_active_dependency_closure.py --self-test --summary
+      - name: Independently audit graph closure and eight negative mutations in Node
+        run: node scripts/independent_dependency_closure.cjs
+      - name: Check that all pinned draft PR heads are still current
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/check_active_dependency_closure.py --live
+      - name: Prepare non-mutating refresh proposals from live matching heads and CI
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/propose_source_refresh.py --output source-refresh-proposals.json
+      - name: Reconcile exact quantum and F9 draft source links without automatic promotion
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 scripts/reconcile_source_linked_passports.py --self-test --live
+      - name: Preserve source-linked refresh proposal as a workflow artifact
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: nightfall-source-refresh-${{ github.run_id }}
+          path: source-refresh-proposals.json
+          if-no-files-found: ignore
+          retention-days: 30
+      - name: Explicit gate boundary
+        run: |
+          echo 'Dependency/source snapshot consistency only, not Lean proof compilation.'
+          echo 'No terminal theorem or originality assertion is promoted by this check.'
