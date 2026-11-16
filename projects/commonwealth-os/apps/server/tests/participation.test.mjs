@@ -101,7 +101,7 @@ test('same-origin localhost web app, authenticated API, and redacted fictional d
   const page=await fetch(base+'/demo/');assert.equal(page.status,200);
   assert.match(await page.text(),/cwpart-app/);
   assert.match(page.headers.get('content-security-policy'),/connect-src 'self'/);
-  assert.equal((await fetch(base+'/demo/%2e%2e/src/store.mjs')).status,404);
+  const denied=await fetch(base+'/demo/%2e%2e/src/store.mjs');assert.ok([401,404].includes(denied.status));assert.equal((await denied.text()).includes('class Store'),false);
   assert.equal((await fetch(base+'/api/v1/participation/UAH')).status,401);
   const headers={Authorization:'Bearer '+x.tokens.UAH.member.token,'Content-Type':'application/json'};
   const first=await fetch(base+'/api/v1/participation/UAH',{headers});
