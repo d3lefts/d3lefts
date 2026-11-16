@@ -29,11 +29,11 @@ noncomputable def projectMinus : Matrix (Fin 2) (Fin 2) ℂ :=
 
 theorem projectPlus_posSemidef : projectPlus.PosSemidef := by
   exact (Matrix.posSemidef_vecMulVec_self_star ketPlus).smul
-    (by norm_num : (0 : ℂ) ≤ 1 / 2)
+    (RCLike.ofReal_nonneg.mpr (by norm_num : (0 : ℝ) ≤ 1 / 2))
 
 theorem projectMinus_posSemidef : projectMinus.PosSemidef := by
   exact (Matrix.posSemidef_vecMulVec_self_star ketMinus).smul
-    (by norm_num : (0 : ℂ) ≤ 1 / 2)
+    (RCLike.ofReal_nonneg.mpr (by norm_num : (0 : ℝ) ≤ 1 / 2))
 
 theorem two_projectors_complete : projectPlus + projectMinus = 1 := by
   ext i j
@@ -101,7 +101,7 @@ theorem ghz_measurement_optimal_among_all_physical_povms (u v t : ℝ)
 #print axioms Nightfall.Quantum.GHZTwoRay.projectPlus_posSemidef
 #print axioms Nightfall.Quantum.GHZTwoRay.projectMinus_posSemidef
 #print axioms Nightfall.Quantum.GHZTwoRay.two_projectors_complete
-#print axioms Nightfall.Quantum.GHZTwoRay.ghz_measurement_complete
+#print axioms Nightfall.Quantum.GHZTwoRay.ghzMeasurement_complete
 #print axioms Nightfall.Quantum.GHZTwoRay.ghz_measurement_attains_bayes_optimum
 #print axioms Nightfall.Quantum.GHZTwoRay.ghz_measurement_optimal_among_all_physical_povms
 
