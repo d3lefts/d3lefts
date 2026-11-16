@@ -95,7 +95,7 @@ export class PgParticipationStore{
       }
       for(const row of rows){
         const plain=this._open(tenant,row);
-        mem.run('INSERT INTO participation_events VALUES(?,?,?,?,?,?)',tenant,row.seq,plain,row.previous_hash,row.hash);
+        mem.run('INSERT INTO participation_events VALUES(?,?,?,?,?)',tenant,row.seq,plain,row.previous_hash,row.hash);
       }
       ledger.replay(tenant);
       return {ledger,mem};
@@ -199,7 +199,7 @@ export class PgParticipationStore{
           interpreter.run('INSERT INTO actors VALUES(?,?,?,?,?,?)',tenant,'migration-auditor','auditor',0,1,sha('migration-auditor-'+tenant));
           const l=new ParticipationLedger(interpreter);
           if(row)interpreter.run('INSERT INTO participation_streams VALUES(?,?,?)',tenant,row.seq,row.head_hash);
-          for(const r of records)interpreter.run('INSERT INTO participation_events VALUES(?,?,?,?,?,?)',tenant,r.seq,r.event_json,r.previous_hash,r.hash);
+          for(const r of records)interpreter.run('INSERT INTO participation_events VALUES(?,?,?,?,?)',tenant,r.seq,r.event_json,r.previous_hash,r.hash);
           l.replay(tenant); // source must be intact and replayable
         }finally{interpreter.close();}
         source.push({tenant,actors,records,stream:row??{seq:0,head_hash:GENESIS}});
