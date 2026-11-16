@@ -70,14 +70,14 @@ try{
   await download.saveAs(exportFile);
   await page.locator("#verify-input").setInputFiles(exportFile);
   await page.locator("#verify").click();
-  assert.match(await page.locator("#verify-result").innerText(),/^MATCH:/);
+  await page.waitForFunction(() => document.querySelector("#verify-result").textContent.startsWith("MATCH:"));
   const json=JSON.parse(await readFile(exportFile,"utf8"));
   json.payload.profileId="TAMPERED";
   const altered=join(output,"cw-passport-tampered-"+width+".json");
   await writeFile(altered,JSON.stringify(json,null,2));
   await page.locator("#verify-input").setInputFiles(altered);
   await page.locator("#verify").click();
-  assert.match(await page.locator("#verify-result").innerText(),/^MISMATCH:/);
+  await page.waitForFunction(() => document.querySelector("#verify-result").textContent.startsWith("MISMATCH:"));
   assert.deepEqual(errors,[],"No runtime failures or missing local assets");
   await context.close();
   console.log("PASS guided Discover, private profile, exact-source history and Passport verifier at "+width+"px");
