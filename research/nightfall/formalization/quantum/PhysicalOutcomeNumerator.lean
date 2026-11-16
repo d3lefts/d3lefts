@@ -126,7 +126,8 @@ theorem actual_physical_A_trace_two_rays
       unnormalizedA d (oneRay d) (zeroRay d) *
         E (zeroRay d) (oneRay d) := by
   classical
-  rw [physical_A_is_two_corner_matrix d hd, add_mul, Matrix.trace_add]
+  conv_lhs => rw [physical_A_is_two_corner_matrix d hd]
+  rw [add_mul, Matrix.trace_add]
   simp only [Matrix.trace_single_mul, smul_eq_mul]
 
 #print axioms Nightfall.Quantum.PhysicalNumerator.two_GHZ_rays_distinct
