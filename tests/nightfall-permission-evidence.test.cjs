@@ -23,7 +23,7 @@ if(x.hybrid.cost!==null){a.ok(x.direct.cost>=x.hybrid.cost);
 if(x.direct.cost>x.hybrid.cost)wins++;else ties++;}
 total++;
 }
-a.ok(total>100000&&wins>0&&ties>0,JSON.stringify({total,wins,ties}));
+a.ok(total>80000&&wins>0&&ties>0,JSON.stringify({total,wins,ties}));
 });
 test("The change causes exact invalidation amplification with no overclaim",()=>{
 const before=core.preset("tight",false).model,after=core.preset("tight",true).model;

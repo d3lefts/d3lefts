@@ -33,6 +33,16 @@ test("Permission lab is interactive and usable on desktop and mobile Chromium", 
   await page.locator("#pl-cost-result").waitFor();
   assert.match(await page.locator("#pl-cost-result").innerText(),/26 modeled cost units/);
   assert.match(await page.locator("#pl-worlds").innerText(),/Right-only evidence: sufficient/);
+  assert.match(await page.locator("#pl-compare-result").innerText(),/20%/);
+  assert.match(await page.locator("#pl-compare-rows").innerText(),/Cannot finish/);
+  await page.selectOption("#pl-compare-scenario","ample");
+  assert.match(await page.locator("#pl-compare-result").innerText(),/No cost advantage/);
+  await page.selectOption("#pl-compare-scenario","privacy");
+  assert.match(await page.locator("#pl-compare-rows").innerText(),/15 units/);
+  await page.selectOption("#pl-compare-scenario","tight");
+  await page.uncheck("#pl-compare-changed");
+  assert.match(await page.locator("#pl-compare-result").innerText(),/No cost advantage/);
+  await page.check("#pl-compare-changed");
   await page.check("#pl-changed");
   assert.match(await page.locator("#pl-worlds").innerText(),/Right-only evidence: insufficient/);
   assert.match(await page.locator("#pl-proof-result").innerText(),/left \+ right/);

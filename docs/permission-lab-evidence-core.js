@@ -20,7 +20,7 @@ return {id,label:labels[id],feasible,cost:feasible?cost:null,slots:ops,paired,di
 const full=item("full",p.N,dp*p.N,0,p.N);
 const direct=item("direct",R,dp*R,0,R);
 const paired=item("paired",2*R,pairCost*R,R,0);
-const deep=dp<pairCost?R:Math.max(0,2*R-p.K);
+const deep=dp<pairCost?R:Math.min(R,Math.max(0,2*R-p.K));
 const hybrid=item("hybrid",2*R-deep,pairCost*(R-deep)+dp*deep,R-deep,deep);
 if([full,direct,paired,hybrid].some(a=>a.cost!==null&&!Number.isSafeInteger(a.cost)))throw new RangeError("Cost overflow");
 return {N:p.N,R,K:p.K,cp,dp,pairCost,full,direct,paired,hybrid,strategies:[full,direct,paired,hybrid]};

@@ -14,6 +14,7 @@ on:
       - 'docs/constellation.html'
       - 'docs/atlas.html'
       - 'tests/nightfall-permission-frontend.test.cjs'
+      - 'tests/nightfall-permission-evidence.test.cjs'
       - 'tests/test_permission_lab_browser.mjs'
       - '.github/workflows/nightfall-permission-frontend.yml'
   workflow_dispatch:
@@ -30,7 +31,7 @@ jobs:
       - name: Node version and exact finite demo cases
         run: |
           node --version
-          node --test tests/nightfall-permission-frontend.test.cjs
+          node --test tests/nightfall-permission-frontend.test.cjs tests/nightfall-permission-evidence.test.cjs
       - name: Browser functional regression on desktop and phone
         run: |
           npm install --no-save --no-package-lock playwright-core@1.56.1
