@@ -1,0 +1,90 @@
+name: NIGHTFALL dynamic permission and privacy pinned Lean
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/agent_safety/DynamicPermissionBridge.lean'
+      - 'research/nightfall/formalization/agent_safety/JointPermissionPrice.lean'
+      - 'research/nightfall/2026-11-price-of-permission/dynamic-bridge/**'
+      - '.github/workflows/nightfall-dynamic-permission-lean.yml'
+      - '.github/actions/setup-nightfall-lean/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  dynamic-lean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Setup pinned Lean and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile original frozen-epoch theorem
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/agent_safety/JointPermissionPrice.lean /tmp/mathlib4/JointPermissionPrice.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/JointPermissionPrice.olean JointPermissionPrice.lean)
+      - name: Compile dynamic/correlation/privacy extension
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/agent_safety/DynamicPermissionBridge.lean /tmp/mathlib4/DynamicPermissionBridge.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/DynamicPermissionBridge.olean DynamicPermissionBridge.lean)
+      - name: Audit named kernel proofs
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/agent_safety/DynamicPermissionBridge.lean
+          N=Nightfall.PriceOfPermission.DynamicBridge
+          mkdir -p lean-receipts/dynamic
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl "$N.checkpoint_lower" \
+            --decl "$N.checkpoint_attainable" \
+            --decl "$N.checkpoint_matching_price" \
+            --decl "$N.checkpoint_shortage" \
+            --decl "$N.disclosure_matching_price" \
+            --decl "$N.allDirect_cost" \
+            --decl "$N.direct_cheaper_lower" \
+            --decl "$N.universal_disclosure_matching_price" \
+            --decl "$N.privacy_switch_witness" \
+            --decl "$N.delayed_invalidation_price_witness" \
+            --decl "$N.certifies_iff_hitting" \
+            --decl "$N.private_plan_hitting" \
+            --decl "$N.privacy_obstruction" \
+            --decl "$N.finite_private_optimum_exists" \
+            --decl "$N.correlation_change_requires_recertification" \
+            --decl "$N.predicate_only_allowed" \
+            --decl "$N.toy_private_recertification" \
+            --decl "$N.toy_privacy_requires_slot" \
+            --decl "$N.predicate_only_noninterference" \
+            --json-out lean-receipts/dynamic/kernel.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/dynamic/kernel.json
+      - name: Independent finite audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/2026-11-price-of-permission/dynamic-bridge/audit_independent.py
+      - name: Freeze source and results
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/dynamic
+          git rev-parse HEAD > lean-receipts/dynamic/commit.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/dynamic/mathlib.txt || true
+          cat lean-toolchain > lean-receipts/dynamic/toolchain.txt
+          sha256sum research/nightfall/formalization/agent_safety/DynamicPermissionBridge.lean > lean-receipts/dynamic/SHA256SUMS.txt
+      - name: Retain immutable receipt
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: dynamic-permission-pinned-lean
+          path: lean-receipts/dynamic/
+          retention-days: 60
