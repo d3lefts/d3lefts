@@ -48,3 +48,17 @@ The verifier checks Ed25519 signatures, key fingerprints, signed event and item-
 SQLite transactions (`BEGIN IMMEDIATE`) make commands atomic; unique constraints and immutable update/delete triggers protect revisions, policies, ballots and events from accidental SQL updates. A database administrator can still delete the entire database, drop triggers, alter data, or replace signing keys. A compromised signing key can authenticate fabricated exports. Secure external anchoring, true independent review, replicated custody and key rotation are **not implemented**.
 
 Votes are synthetic, named, and roll-call only. They are neither secret nor suitable for union elections, student elections or municipal elections. Rule/eligibility changes fail closed and require human case disposition; automatic migration of locked decisions is intentionally not implemented. The web UI has **not yet been connected** to these endpoints. No external deployment should be attempted without independent testing and institutional authorization.
+
+
+## Participation/accountability bridge v1.3 — local synthetic data only
+
+The existing transactional Node server also serves the comprehensive browser at **http://127.0.0.1:4180/demo/**. To test SQLite-backed participation, start with a **new fictional-only database**, run `npm run seed`, then `npm start`. The one-time seeder provisions distinct `student-demo`, `hoa-demo`, `municipal-demo` tenants (the existing `union-demo` remains separate). Copy a fictional member/clerk/admin token into the browser's local-session connection panel. The token is held only in page memory and is cleared from the input. **Do not enter real names, political views or official records.** Existing seeded databases are not automatically given a new HOA tenant; do not delete or overwrite any valuable data.
+
+Authenticated endpoints (same-origin; no CORS grants):
+- `GET /api/v1/participation/{UAH|HOA|HSV}` — institution-scoped fictional board and replay status.
+- `POST /api/v1/participation/{UAH|HOA|HSV}/commands` — `{key,expectedVersion,command:{type,...}}`; requires a fictional bearer token; server-owned actor/role injection and optimistic concurrency.
+- `GET /api/v1/participation/{UAH|HOA|HSV}/dossiers/{id}` — reduced public-view mock dossier, excludes comment bodies and individual survey responses.
+
+Durable commands: CREATE, COMMENT, AMEND, CORRECTION (fictional participants); RESPOND_COMMENT, REVIEW_AMEND, STAGE, MILESTONE, BUDGET (fictional clerk/chair/admin). `ADVISE` and personal questionnaire answers are **never** stored by this backend. A member cannot obtain steward permission by setting a browser dropdown or sending `role: DEMO_STEWARD`. A local SQLite `participation_events` journal replays the pure browser reducer, checks versions/hashes before reads and writes, and retains amended text history; event update/delete triggers reject ordinary modifications. Exact receipt scope is **LOCAL_REPLAY_ONLY**—no external custody, trusted real identity, cryptographic authority or independent government proof.
+
+The browser served by GitHub Pages remains an independently interactive **in-memory** synthetic demo. No public hosting of the Node server is authorized, and actual identity, municipal import and OFFICIAL voting remain absent. Tests: `npm test` in `apps/server` now includes durable-participation API/replay/HTTP checks. This integration is a development milestone, not production completion.
