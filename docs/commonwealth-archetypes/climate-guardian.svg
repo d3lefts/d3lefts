@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" role="img" aria-label="The Climate Guardian sticker illustration">
  <defs><pattern id="dots" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.5" fill="#ffffff" opacity=".23"/></pattern><filter id="grain"><feTurbulence baseFrequency=".65" numOctaves="2" seed="13" stitchTiles="stitch" type="fractalNoise"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".09"/></feComponentTransfer></filter></defs>
- <rect width="400" height="250" rx="22" fill="#22c99d"/>
+ <rect width="400" height="250" rx="22" fill="#4fb987"/>
  <path d="M0 208 Q80 151 146 215 T400 166 L400 250 L0 250Z" fill="#0a1025" opacity=".20"/>
  <path d="M18 38 L63 55 L44 7 M335 19 l37 34 l-7 -45 M316 220 l33 -35 l12 34" fill="none" stroke="#f4ff46" stroke-width="9" stroke-linejoin="round" stroke-linecap="round"/>
  <circle cx="258" cy="120" r="101" fill="#10152c" opacity=".21"/>

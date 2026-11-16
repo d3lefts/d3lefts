@@ -29,7 +29,7 @@
     "name": "The Climate Guardian",
     "category": "Energy and resilience",
     "description": "Focuses on clean energy, resilient infrastructure, and protecting shared environments. Thinks long-term public decisions should count environmental costs.",
-    "color": "#22c99d",
+    "color": "#4fb987",
     "emoji": "🐻‍❄️",
     "topic": "climate",
     "tagline": "Future-proof it.",
