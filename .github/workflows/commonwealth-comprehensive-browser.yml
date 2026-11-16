@@ -1,0 +1,32 @@
+name: Commonwealth comprehensive browser workspace
+on:
+  pull_request:
+    paths:
+      - 'docs/commonwealth-browser/**'
+      - 'docs/commonwealth-os.html'
+      - '.github/workflows/commonwealth-comprehensive-browser.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/commonwealth-browser/**'
+      - 'docs/commonwealth-os.html'
+      - '.github/workflows/commonwealth-comprehensive-browser.yml'
+permissions:
+  contents: read
+jobs:
+  synthetic-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check ES module syntax
+        run: |
+          node --check docs/commonwealth-browser/history-core.mjs
+          node --check docs/commonwealth-browser/question-data.mjs
+          node --check docs/commonwealth-browser/workspace.mjs
+          node --check docs/commonwealth-browser/app.mjs
+      - name: Pure synthetic history, questionnaire and entrypoint tests
+        run: node --test docs/commonwealth-browser/tests/*.test.mjs
