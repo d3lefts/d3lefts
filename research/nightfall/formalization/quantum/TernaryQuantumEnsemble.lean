@@ -14,7 +14,7 @@ optimal Bayes decision theorem are separate subsequent gates.
 
 namespace Nightfall.Quantum.TernarySource
 
-open scoped ComplexOrder
+open scoped BigOperators ComplexOrder
 open Nightfall.Quantum.PhysicalQubit
 open Nightfall.Quantum.TernaryPhase
 open Nightfall.Quantum.TensorCharacter
@@ -35,6 +35,51 @@ theorem first_character_tensor_cancels
   simpa using
     (local_moment_zero_kills_tensor d
       (fun _ (s : Fin 3) => omega ^ s.val) j omega_sum)
+
+theorem actual_source_unweighted_tensor_factor (d : ℕ)
+    (a b : Fin d → Fin 2) :
+    (∑ x : Fin d → Fin 3,
+       productDensity d (Real.sqrt 3) (fun j => omega ^ (x j).val) a b) =
+    ∏ j, (∑ s : Fin 3,
+       qubitDensity (Real.sqrt 3) (omega ^ s.val) (a j) (b j)) := by
+  classical
+  calc
+    (∑ x : Fin d → Fin 3,
+       productDensity d (Real.sqrt 3) (fun j => omega ^ (x j).val) a b) =
+      ∑ x : Fin d → Fin 3, ∏ j,
+        qubitDensity (Real.sqrt 3) (omega ^ (x j).val) (a j) (b j) := by
+          apply Finset.sum_congr rfl
+          intro x _
+          exact productDensity_entry d (Real.sqrt 3)
+            (fun j => omega ^ (x j).val) a b
+    _ = ∏ j, (∑ s : Fin 3,
+        qubitDensity (Real.sqrt 3) (omega ^ s.val) (a j) (b j)) :=
+          ternary_tensor_sum_factor d
+            (fun j s => qubitDensity (Real.sqrt 3) (omega ^ s.val) (a j) (b j))
+
+theorem actual_source_character_weighted_tensor_factor (d : ℕ) (a b : Fin d → Fin 2) :
+    (∑ x : Fin d → Fin 3,
+       (∏ j, omega ^ (x j).val) *
+         productDensity d (Real.sqrt 3) (fun j => omega ^ (x j).val) a b) =
+    ∏ j, (∑ s : Fin 3,
+       omega ^ s.val * qubitDensity (Real.sqrt 3) (omega ^ s.val) (a j) (b j)) := by
+  classical
+  calc
+    (∑ x : Fin d → Fin 3,
+       (∏ j, omega ^ (x j).val) *
+         productDensity d (Real.sqrt 3) (fun j => omega ^ (x j).val) a b) =
+      ∑ x : Fin d → Fin 3, (∏ j, omega ^ (x j).val) *
+        (∏ j, qubitDensity (Real.sqrt 3) (omega ^ (x j).val) (a j) (b j)) := by
+          apply Finset.sum_congr rfl
+          intro x _
+          rw [productDensity_entry]
+    _ = ∏ j, (∑ s : Fin 3,
+       omega ^ s.val * qubitDensity (Real.sqrt 3) (omega ^ s.val) (a j) (b j)) :=
+          character_weighted_tensor_sum d omega
+            (fun j s => qubitDensity (Real.sqrt 3) (omega ^ s.val) (a j) (b j))
+
+#print axioms Nightfall.Quantum.TernarySource.actual_source_unweighted_tensor_factor
+#print axioms Nightfall.Quantum.TernarySource.actual_source_character_weighted_tensor_factor
 
 #print axioms Nightfall.Quantum.TernarySource.actual_ternary_state_physical
 #print axioms Nightfall.Quantum.TernarySource.first_character_tensor_cancels
