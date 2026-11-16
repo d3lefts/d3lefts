@@ -9,8 +9,9 @@ assert.equal((nav.match(/<a\b/g)||[]).length,3,"Keep the three primary research 
 for(const href of ['href="./" aria-current="page"','href="constellation.html"','href="review.html"'])assert.ok(nav.includes(href));
 const actions=[...field.matchAll(/<div class="hero-actions"[^>]*>([\s\S]*?)<\/div>/g)]
  .map(m=>[...m[1].matchAll(/<a\b[^>]*href="([^"]+)"/g)].map(x=>x[1]));
-assert.deepEqual(actions,[["#flagships","mathematical-results.html"]],
- "NULL FIELD first screen must lead to the current claim evidence passport and mathematical explanation");
+assert.deepEqual(actions,[["#nightfall-story","#flagships"]],
+ "NIGHTFALL first screen must invite story-led exploration and provide a direct flagship research route");
+assert.ok(field.includes('href="mathematical-results.html"'),"Specialist mathematical research entry point missing");
 assert.ok(moon.includes('href="evidence.html#public-downloads"')&&moon.includes('href="review.html#erdos"'),
  "NEW MOON must expose public frozen evidence and independent Erdős audit");
 assert.ok(field.indexOf('id="nf-scroll-cinema"')<field.indexOf('id="flagships"'),"Research cinema before proof catalogue");
@@ -24,7 +25,7 @@ for(const path of ["erdos-paper.html","living-paper.html","passport.html?claim=s
 assert.ok(moon.includes('id="sidon-toggle"')&&moon.includes('disabled title='),"Archived no-JS Sidon checker stays safe");
 assert.equal((field.match(/class="flagship-card /g)||[]).length,4,"Four current programs retain status summaries");
 assert.ok((field.match(/<section\b/g)||[]).length<=13,"Active home remains selective");
-assert.ok((field.match(/<a\b/g)||[]).length<=45,"Active home link budget");
+assert.ok((field.match(/<a\b/g)||[]).length<=46,"Active home link budget");
 assert.ok(!field.includes("nf-section-index")&&!field.includes("nf-home-toolbox"),"No duplicate navigation");
 for(const id of ["flagships","featured-title","nf-scroll-cinema","observatory","review","work","research-systems"])
  assert.ok(field.includes('id="'+id+'"'),"Missing active anchor "+id);
