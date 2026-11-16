@@ -115,6 +115,7 @@ def evaluate(bundle):
                 raise ValueError("contradictory rule conditions")
         derived = {}
         dependencies = {}
+        goal_rule_seen = False
         for number, step in enumerate(proof, 1):
             if not isinstance(step, dict):
                 raise ValueError("bad proof step")
@@ -137,6 +138,7 @@ def evaluate(bundle):
                 if not all(p in derived and derived[p] is False for p in rule["when_false"]):
                     return {"status": "INDETERMINATE", "reasons": [f"unproved explicit exception denial at step {number}"]}
                 name = rule["conclusion"]
+                goal_rule_seen = goal_rule_seen or (name == goal)
                 if name in derived and derived[name] is False:
                     raise ValueError("proof contradiction")
                 derived[name] = True
@@ -144,7 +146,7 @@ def evaluate(bundle):
                 dependencies[sid] = _source_state(sources[sid])
             else:
                 raise ValueError("unknown proof step kind")
-        if derived.get(goal) is not True:
+        if not goal_rule_seen or derived.get(goal) is not True:
             return {"status": "INDETERMINATE", "reasons": ["goal not derived"]}
         return {"status": "SUPPORTED_IN_FICTIONAL_MODEL",
                 "goal": goal, "jurisdiction": bundle["jurisdiction"],
