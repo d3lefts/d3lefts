@@ -14,6 +14,15 @@ Commonwealth OS is a mobile-first, representative-first civic governance system 
 
 - [Mathematical Proof Passport workbench](assurance/README.md): explicitly scoped finite-world theorems, exact evidence certificate optimization, source-different audits, and documented unresolved deployment assumptions.
 
+## New: Commonwealth legal proof kernel (DEMO ONLY)
+
+The [Legal Knowledge Kernel](legal/README.md) supplies exact-text, version-scoped
+fictional legal derivations, a source-different checker, adversarial tests and
+a neutral riverfront civic dossier that exposes missing market and impact data.
+A supported deduction is **not** a legal opinion or evidence that its cited
+rule was correctly formalized. No actual law ingestion, legal precedent lookup,
+voter preference storage, official ballot or governmental effect is enabled.
+
 ## Non-negotiable constraints
 1. **No live city-council record ingestion yet.** Use synthetic fixtures first. The municipal intake connector remains disabled by default.
 2. **No institutional authority by implication.** Official voting is forbidden until jurisdiction-specific legal authorization, configured rules, security assurance, and independent sign-off.

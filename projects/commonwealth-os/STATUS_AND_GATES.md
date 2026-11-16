@@ -17,7 +17,19 @@
 
 The comparators (Decidim, CONSUL, Polis, Loomio, Legistar, ElectionGuard and related systems) are credited in the design's [competitive analysis](product-design/v1.0/docs/02_Competitive_Analysis.md). Claims of universal uniqueness are not certified.
 
-| Synthetic full-stack civic demo (Python v0.2) | 3 simulated tenants, 72 draft issues, representative and constituent views, demo role revocation, signed local receipts, generated budgets, 55 local test cases | Implemented and internally tested; separate JS server and browser remain independent workbenches | Formal cross-stack compatibility, real IdP, external signing custody, managed persistence, institution review, accessible E2E testing |\n\n## Release decision rule
+| Synthetic full-stack civic demo (Python v0.2) | 3 simulated tenants, 72 draft issues, representative and constituent views, demo role revocation, signed local receipts, generated budgets, 55 local test cases | Implemented and internally tested; separate JS server and browser remain independent workbenches | Formal cross-stack compatibility, real IdP, external signing custody, managed persistence, institution review, accessible E2E testing |
+
+## Legal knowledge kernel — additive workbench v0.1
+
+Source-grounded fictional derivation, second-source replay, legal effective and
+observation dates, explicit exception denial, source-change detection, a neutral
+decision dossier and negative-case CI are now implemented. They are internally
+tested only, with **no real jurisdiction source corpus or legal interpretation
+attestation**. US precedential reasoning, signed reviewer custody, authoritative
+continuous ingestion, economic-data adapters, privacy/eligibility systems, and
+one consolidated production backend remain open obligations.
+
+## Release decision rule
 
 No transition from draft to authorized production ballot without a documented authority chain, stable ballot and governing-rule versions, eligibility/quorum checks, independent result verification, effect-time enforceability, rollback and incident-response policies, and a signed institutional release decision. A research theorem does not substitute for legal authorization. A lawfully authorized vote does not by itself validate inferred preferences.
 
