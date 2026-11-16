@@ -136,3 +136,35 @@ test('failed commands do not change transition projection; changing epoch reject
     assert.equal(f.snapshot().institution.eligibilityVersion,2);
   }finally{f.close();}
 });
+
+
+test('revocation between outer precheck and BEGIN IMMEDIATE rejects at authoritative commit boundary',()=>{
+  const f=fixture(),other=new Store(f.db);
+  try{
+    f.run('member-a','CREATE',0,{body:'Fictional motion'});
+    const staleActor=f.actors['member-a'].session;
+    const before=f.store.snapshot(f.actors.auditor.session,'union-demo','test-item');
+    const originalTx=f.store.tx.bind(f.store);
+    let injected=false;
+    f.store.tx=(fn)=>{
+      if(!injected){
+        injected=true;
+        // Controlled second-connection interleaving after the initial precheck
+        // but before the first write transaction's BEGIN IMMEDIATE.
+        other.run("UPDATE actors SET active=0 WHERE institution_id=? AND id=?",
+          'union-demo','member-a');
+      }
+      return originalTx(fn);
+    };
+    assert.throws(()=>f.store.command(staleActor,{
+      institutionId:'union-demo',itemId:'test-item',action:'SUBMIT',
+      expectedVersion:1,key:'race-command-00001',payload:{}
+    }),/ACTOR_SESSION_STALE/);
+    assert.ok(injected);
+    const after=f.store.snapshot(f.actors.auditor.session,'union-demo','test-item');
+    assert.deepEqual(after.item,before.item);
+    assert.deepEqual(after.events,before.events);
+    assert.equal(f.store.one("SELECT COUNT(*) AS n FROM requests WHERE command_key=?",
+      'race-command-00001').n,0);
+  }finally{other.close();f.close();}
+});
