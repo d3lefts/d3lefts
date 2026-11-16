@@ -55,7 +55,7 @@ jobs:
         run: |
           set -euo pipefail
           N=Nightfall.FiniteField.F9NonadaptiveLower
-          python3 scripts/lean_bridge.py research/nightfall/formalization/finite_field/F9NonadaptiveLower.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.short_rows_have_nonzero_kernel" --decl "$N.all_short_row_partitions_fail_square_recovery" --json-out f9-receipts/nonadaptive.json
+          python3 scripts/lean_bridge.py research/nightfall/formalization/finite_field/F9NonadaptiveLower.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.short_rows_have_nonzero_kernel" --decl "$N.all_short_row_partitions_fail_square_recovery" --decl "$N.concatenated_short_row_designs_fail" --decl "$N.all_short_fixed_designs_fail" --json-out f9-receipts/nonadaptive.json
           python3 research/nightfall/formalization/product_space/check_receipts.py f9-receipts/nonadaptive.json
       - name: Independently reconstruct exact GF9 with two distinct irreducible polynomials
         run: python3 research/nightfall/2026-11-f9-bridge/verify_two_models.py
