@@ -1,6 +1,23 @@
 # Commonwealth OS — proof, authorization and release gate register
 
-**Revision:** 2026-11-15 / baseline v1.0. No independent peer-review or official institutional endorsement is implied.
+**Revision:** Product Design v1.1 reconciliation, source audit of main at c562a76821d95aaa40d3db794b371e5c788f49ad (2026-11-15 U.S. Eastern). No external peer review, official institutional endorsement, real identity or production authorization is implied.
+
+## Current executable / integration evidence
+
+| Component | Observed at audit checkpoint | Status | Remaining gate |
+|---|---|---|---|
+| Python legislative app | app/main.py and app/static/app.js implement fictional role-switching and v1.1 demo workflow; current branch no longer has app/history.py or app/civic.py | IMPLEMENTED_SYNTHETIC (v0.1-style), not v0.3 integrated | Reconcile deleted PR #619/#629 modules and prove current-head E2E |
+| Historical recorded-vote service | historical/ with bundled synthetic House, Senate, municipal and issue fixtures, separate read-only API | IMPLEMENTED_SYNTHETIC; **separate service** | Integration adapter for actual-residence/DOB-specific history, source custody and privacy |
+| Browser civic intelligence lab | docs/commonwealth-intelligence.html/js synthetic local-only comparison and profile walkthrough | IMPLEMENTED_SYNTHETIC; not authenticated/integrated | Tested server API binding and independent provenance |
+| Node transactional demo and browser evidence checker | apps/server and apps/browser; different synthetic authority/evidence models | IMPLEMENTED_SYNTHETIC; distinct workbenches | Common authority contract and source-different replay suite, see [#626](https://github.com/d3lefts/d3lefts/issues/626) |
+| Formal assurance | assurance/ finite model and Lean scoped proof | INTERNAL FORMAL SCOPE only | Real source and deployed action proof assumptions remain open |
+| Source custody / law applicability | [#623](https://github.com/d3lefts/d3lefts/issues/623), [#624](https://github.com/d3lefts/d3lefts/issues/624) | DESIGNED, not real-corpus certified | Current-law versioning, applicability, exceptions and precedence audit |
+| Profile/semantic integration | [#625](https://github.com/d3lefts/d3lefts/issues/625), Living Voter prototype | DESIGNED and partially synthetic | Explicitly no inferred/automated ballots; held-out semantic validation |
+| Production identity, official votes and municipal import | disabled / no institutional authorization | NOT ESTABLISHED | Institution, identity, privacy, source-custody, accessibility, independent security review |
+
+**Critical reconciliation:** historical representation PR #629 merged as fe49bedad20d958622c8e96075f5f83faefb3395, but the Python modules and tests added there were subsequently deleted on main. Previously published 79-test results refer to an earlier head, **not** present-main app coverage. The separate historical/ service is real synthetic code but does not substitute for the missing Python Representation UI. Read [v1.1 design revision](product-design/v1.1/README.md) and [integration audit](product-design/v1.1/05_IMPLEMENTATION_RECONCILIATION_AND_ACCEPTANCE.md) before promoting status.
+
+## Original v1.0 workstream goals (retained for traceability)
 
 | Workstream | Current evidence | Verification status | Needed before advance |
 |---|---|---|---|

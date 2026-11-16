@@ -8,6 +8,9 @@ Commonwealth OS is a vendor-neutral architecture for preserving continuity acros
 
 ## Canonical sources
 
+**Current design revision:** [Product Design v1.1](product-design/v1.1/README.md) is the additive implementation-reconciliation and historical-representation specification. Original v1.0 source files and its MANIFEST.json remain an immutable source archive. Where a current implementation assertion conflicts with archived prose, verify the exact executable main-branch revision; do not silently rewrite history.
+
+
 - [Editable Product Design v1.0](product-design/v1.0/README.md), including all 14 design documents, schemas, flowcharts, requirements and synthetic prototype.
 - [Living Voter mobile prototype](product-design/v1.0/prototype/living_voter_dashboard_prototype.html).
 - [Requirements register](product-design/v1.0/requirements/requirements_register.csv).
@@ -17,6 +20,7 @@ Commonwealth OS is a vendor-neutral architecture for preserving continuity acros
 - [Huntsville phase plan](product-design/v1.0/docs/11_Huntsville_Pilot_Roadmap.md).
 - [Source and attribution list](product-design/v1.0/docs/14_Sources_and_Attribution.md).
 - [Product and research evidence status](STATUS_AND_GATES.md).
+- [Historical representation contract](HISTORICAL_REPRESENTATION_CONTRACT_v0_3.md), [standalone fictional history engine](historical/README.md), [browser civic intelligence demonstration](../../docs/commonwealth-intelligence.html), and [v1.1 source reconciliation](product-design/v1.1/05_IMPLEMENTATION_RECONCILIATION_AND_ACCEPTANCE.md).
 - [Google Drive archive, PDFs, earlier formal research and constitutional drafts](https://drive.google.com/drive/folders/1aWkKDXaiLereebPVTIbRtZWGZ2gGw0tr).
 
 ## Document archive
@@ -58,4 +62,4 @@ Baseline v1.0 is an **engineering specification draft**, not a production releas
 
 ## Next decisive gate
 
-Secure an appropriately bounded UAH SGA pilot agreement; map the institution's actual governing rules and election procedure to versioned test fixtures, and commission independent review before an official ballot is accepted.
+First reconcile the parallel synthetic components on current main: identify the intended canonical UI/API and restore or formally supersede the missing Python history/civic implementation from PRs #619/#629. Demonstrate the opted-in DOB-to-present representation flow and any-era history controls, with exact motion semantics, private data separation and independent synthetic tests. **Only after internal integration is evidence-complete** should a bounded UAH SGA pilot agreement and institution-specific rule review be pursued; official ballots require separate authorization and external assurance.
