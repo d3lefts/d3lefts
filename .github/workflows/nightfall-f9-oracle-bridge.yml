@@ -6,6 +6,7 @@ on:
     paths:
       - 'research/nightfall/formalization/finite_field/F9OracleBridge.lean'
       - 'research/nightfall/formalization/finite_field/F9ActualFieldBasis.lean'
+      - 'research/nightfall/formalization/finite_field/F9NonadaptiveLower.lean'
       - 'research/nightfall/2026-11-f9-bridge/**'
       - '.github/workflows/nightfall-f9-oracle-bridge.yml'
   workflow_dispatch:
@@ -33,6 +34,12 @@ jobs:
           set -euo pipefail
           cp research/nightfall/formalization/finite_field/F9ActualFieldBasis.lean /tmp/mathlib4/F9ActualFieldBasis.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/F9ActualFieldBasis.olean F9ActualFieldBasis.lean)
+      - name: Compile unconditional short-partition fixed lower obstruction
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/finite_field/F9NonadaptiveLower.lean /tmp/mathlib4/F9NonadaptiveLower.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/F9NonadaptiveLower.olean F9NonadaptiveLower.lean)
       - name: Strict named standard-axiom audit
         shell: bash
         run: |
@@ -43,6 +50,13 @@ jobs:
           N=Nightfall.FiniteField.F9ActualField
           python3 scripts/lean_bridge.py research/nightfall/formalization/finite_field/F9ActualFieldBasis.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.actual_F9_finrank" --decl "$N.actual_F9_squared_pair_decodes" --json-out f9-receipts/concrete-field.json
           python3 research/nightfall/formalization/product_space/check_receipts.py f9-receipts/concrete-field.json
+      - name: Strict named short-partition obstruction audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          N=Nightfall.FiniteField.F9NonadaptiveLower
+          python3 scripts/lean_bridge.py research/nightfall/formalization/finite_field/F9NonadaptiveLower.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.short_rows_have_nonzero_kernel" --decl "$N.all_short_row_partitions_fail_square_recovery" --json-out f9-receipts/nonadaptive.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py f9-receipts/nonadaptive.json
       - name: Independently reconstruct exact GF9 with two distinct irreducible polynomials
         run: python3 research/nightfall/2026-11-f9-bridge/verify_two_models.py
       - name: Freeze source identities and compiler
@@ -51,7 +65,7 @@ jobs:
           mkdir -p f9-receipts
           git rev-parse HEAD > f9-receipts/commit.txt
           git -C /tmp/mathlib4 rev-parse HEAD > f9-receipts/mathlib.txt || true
-          sha256sum research/nightfall/formalization/finite_field/{F9OracleBridge,F9ActualFieldBasis}.lean research/nightfall/2026-11-f9-bridge/verify_two_models.py > f9-receipts/source_sha256.txt
+          sha256sum research/nightfall/formalization/finite_field/{F9OracleBridge,F9ActualFieldBasis,F9NonadaptiveLower}.lean research/nightfall/2026-11-f9-bridge/verify_two_models.py > f9-receipts/source_sha256.txt
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
