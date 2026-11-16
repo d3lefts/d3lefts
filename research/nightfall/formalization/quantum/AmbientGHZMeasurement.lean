@@ -65,7 +65,7 @@ theorem complete_three_ambient_effects (a b : ι) (hab : a ≠ b) :
     by_cases hja : j = a <;> by_cases hjb : j = b <;>
       simp_all [plusEffect, minusEffect, complementEffect, plusVector, minusVector,
         Matrix.vecMulVec, Matrix.smul_apply, Matrix.diagonal_apply, Matrix.one_apply] <;>
-      norm_num <;> try ring
+      norm_num <;> simp_all [eq_comm] <;> try ring
 
 def ghzAmbient (a b : ι) (z : Fin 3) : Matrix ι ι ℂ :=
   if z = 0 then plusEffect a b
