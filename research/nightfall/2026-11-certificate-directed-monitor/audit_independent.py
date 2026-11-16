@@ -31,7 +31,7 @@ def verify(directory,receipt=None):
             assert item["mean_wall_us"]>0 and item["median_wall_us"]>0 and item["p95_wall_us"]>0
         # same source, same guards and evidence; comparison of check order only
         assert row["results"]["certificate_directed"]["allowed"]==row["results"]["equally_informed_early_exit"]["allowed"]
-        assert row["logical_cache"]=={"current":True,"stale_epoch":False}
+        assert row["logical_cache"]=={"current":truly_honest,"stale_epoch":False}
         if label.startswith("model_"):
             model=row["model_provenance"]
             assert row["origin"]=="previous_local_model_response_replay"
