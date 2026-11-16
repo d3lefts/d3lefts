@@ -10,11 +10,13 @@ const mime={".html":"text/html;charset=utf-8",".js":"text/javascript;charset=utf
 const server=createServer(async(req,res)=>{
  try{
   const p=decodeURIComponent(new URL(req.url,"http://localhost").pathname).slice(1);
+  if(p==="favicon.ico"){res.writeHead(204).end();return;}
   const file=resolve(join(root,normalize(p||"index.html")));
   if(!file.startsWith(root+sep)){res.writeHead(403).end();return;}
+  const body=await readFile(file);
   res.writeHead(200,{"Content-Type":mime[extname(file)]||"application/octet-stream"});
-  res.end(await readFile(file));
- }catch(e){res.writeHead(404).end("Not found");}
+  res.end(body);
+ }catch(e){if(!res.headersSent)res.writeHead(404);res.end("Not found");}
 });
 await new Promise(done=>server.listen(0,"127.0.0.1",done));
 const base="http://127.0.0.1:"+server.address().port+"/";
