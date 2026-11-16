@@ -7,6 +7,16 @@ test('all seed institutions exist and valid event sequences',()=>{const b=seeded
 test('create is locally scoped and does not mutate previous board',()=>{const b=seededBoard();const r=transact(b,{type:'CREATE',institution:'HOA',title:'Publish shared costs',text:'Publish shared maintenance invoices and approve independent corrections.'});assert.equal(r.ok,true);assert.equal(b.proposals.length,6);assert.equal(r.board.proposals.length,7);assert.equal(r.board.proposals[0].institution,'HOA');});
 test('invalid create and malformed comment do not mutate',()=>{let b=seededBoard();let r=tx(b,'CREATE',null,{title:'x',text:'short'});assert.equal(r.ok,false);assert.deepEqual(r.board,b);r=tx(b,'COMMENT',undefined,{text:'x',stance:'CONCERN'});assert.equal(r.ok,false);});
 test('comments retain stance but not externally verified identity',()=>{const b=seededBoard();const r=tx(b,'COMMENT',undefined,{text:'Could we see operating cost ranges?',stance:'QUESTION'});assert.equal(r.ok,true);assert.equal(r.board.proposals[0].comments[0].author,'FICTIONAL_VISITOR');assert.equal(b.proposals[0].comments.length,0);});
+test('reviewer must respond to individual concerns and pending count is exportable without text',()=>{
+ let b=tx(seededBoard(),'COMMENT',undefined,{text:'Could you document the budget source?',stance:'QUESTION'}).board;
+ assert.equal(tx(b,'RESPOND_COMMENT',undefined,{commentId:'C-1',role:'DEMO_VISITOR',reason}).ok,false);
+ b=tx(b,'RESPOND_COMMENT',undefined,{commentId:'C-1',role:'DEMO_STEWARD',reason}).board;
+ assert.equal(b.proposals[0].comments[0].status,'ANSWERED_IN_SIMULATION');
+ assert.equal(b.proposals[0].comments[0].response,reason);
+ const dossier=publicDossier(b.proposals[0]);assert.equal(dossier.answeredCount,1);assert.equal(dossier.unansweredCount,0);
+ assert.equal(JSON.stringify(dossier).includes('Could you document the budget source?'),false);
+ assert.equal(tx(b,'RESPOND_COMMENT',undefined,{commentId:'C-1',role:'DEMO_STEWARD',reason}).ok,false);
+});
 test('advisory no preference distinct unknown and versioned',()=>{let b=seededBoard();let r=tx(b,'ADVISE',undefined,{choice:'NO_PREFERENCE'});assert.equal(r.ok,true);b=r.board;assert.equal(b.proposals[0].positions[0].choice,'NO_PREFERENCE');r=tx(b,'ADVISE',undefined,{choice:'SUPPORT'});assert.equal(r.ok,true);assert.equal(r.board.proposals[0].positions.length,1);});
 test('amendment does not change live text before approval',()=>{const b=seededBoard();const r=tx(b,'AMEND',undefined,{text:'Evaluate adding a fictional shuttle route with accessibility and budget constraints after 9 p.m.',reason:'Clarify access'});assert.equal(r.ok,true);assert.equal(r.board.proposals[0].revision,1);assert.equal(r.board.proposals[0].text,b.proposals[0].text);assert.equal(r.board.proposals[0].amendments[0].status,'PENDING');});
 test('amendment acceptance increments revision and excludes earlier answers',()=>{let b=tx(seededBoard(),'ADVISE',undefined,{choice:'SUPPORT'}).board;b=tx(b,'AMEND',undefined,{text:'Evaluate one fictional shuttle route and a documented cost review after 9 p.m. weekdays.',reason:'Clarify fiscal cost'}).board;
