@@ -1,0 +1,25 @@
+{
+  "schema": "nightfall-theorem-contract/v1",
+  "source": "projects/commonwealth-os/apps/server/formal/ServerRefinement.lean",
+  "workspace_commit": "9d581dfff2e41de989072ea63abf3daf69311520",
+  "targets": [
+    {
+      "declaration": "Commonwealth.Server.fresh_iff_locked_stamp",
+      "expected_type": "∀ (s : Commonwealth.Server.State), Commonwealth.Server.fresh s = true ↔ s.locked = some (Commonwealth.Server.stamp s)"
+    },
+    {
+      "declaration": "Commonwealth.Server.accepted_cast_is_fresh",
+      "expected_type": "∀ (s after : Commonwealth.Server.State) (voter : String) (eligible present : Bool), Commonwealth.Server.step s (.cast voter eligible present) = some after → Commonwealth.Server.fresh s = true"
+    },
+    {
+      "declaration": "Commonwealth.Server.accepted_review_is_fresh",
+      "expected_type": "∀ (s after : Commonwealth.Server.State) (clerkIndependent quorum : Bool), Commonwealth.Server.step s (.review clerkIndependent quorum) = some after → Commonwealth.Server.fresh s = true"
+    },
+    {
+      "declaration": "Commonwealth.Server.duplicate_cast_rejected",
+      "expected_type": "∀ (s : Commonwealth.Server.State) (voter : String) (eligible present : Bool), voter ∈ s.castBy → Commonwealth.Server.step s (.cast voter eligible present) = none"
+    }
+  ],
+  "claim_scope": "Executable Lean server abstraction only. The complete JavaScript/SQLite source has not been formally translated into or verified against the Lean model. No official voting permission, legal authority, physical effect or election security is established.",
+  "promoted_full": false
+}

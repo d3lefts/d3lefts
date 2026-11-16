@@ -1,0 +1,69 @@
+name: Commonwealth server refinement pinned Lean
+
+on:
+  pull_request:
+    paths:
+      - 'projects/commonwealth-os/apps/server/formal/**'
+      - '.github/workflows/commonwealth-server-refinement-lean.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'projects/commonwealth-os/apps/server/formal/**'
+      - '.github/workflows/commonwealth-server-refinement-lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  pinned-server-refinement:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Check all named server-model propositions under strict Lean
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          python3 scripts/lean_bridge.py \
+            projects/commonwealth-os/apps/server/formal/ServerRefinement.lean \
+            --workspace /tmp/mathlib4 --timeout 650 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Commonwealth.Server.fresh_iff_locked_stamp \
+            --decl Commonwealth.Server.stale_open_rejected \
+            --decl Commonwealth.Server.stale_cast_rejected \
+            --decl Commonwealth.Server.stale_close_rejected \
+            --decl Commonwealth.Server.stale_review_rejected \
+            --decl Commonwealth.Server.duplicate_cast_rejected \
+            --decl Commonwealth.Server.revision_after_lock_rejected \
+            --decl Commonwealth.Server.accepted_cast_is_fresh \
+            --decl Commonwealth.Server.accepted_review_is_fresh \
+            --decl Commonwealth.Server.accepted_cast_was_new \
+            --decl Commonwealth.Server.stale_demo_review_not_current \
+            --json-out lean-receipts/server-refinement.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/server-refinement.json
+          python3 scripts/lean_bridge.py \
+            projects/commonwealth-os/apps/server/formal/ServerRefinement.lean \
+            --workspace /tmp/mathlib4 --timeout 650 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Commonwealth.Server.fresh_iff_locked_stamp \
+            --decl Commonwealth.Server.accepted_cast_is_fresh \
+            --decl Commonwealth.Server.accepted_review_is_fresh \
+            --decl Commonwealth.Server.duplicate_cast_rejected \
+            --contract projects/commonwealth-os/apps/server/formal/server-contract.json \
+            --json-out lean-receipts/server-exact-contract.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/server-exact-contract.json
+      - name: Upload source-bound Lean proof receipts
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: commonwealth-server-refinement-lean
+          path: lean-receipts/
+          if-no-files-found: warn
+          retention-days: 90
