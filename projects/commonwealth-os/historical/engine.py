@@ -291,12 +291,17 @@ class HistoricalEngine:
                               else r['choice'] if r else 'NO_RECORDED_POSITION')
                     positions.append({**dict(rep), 'position': status,
                                       'vote_record_id': r['record_id'] if r else None,
-                                      'vote_digest': r['digest'] if r else None})
+                                      'vote_digest': r['digest'] if r else None,
+                                      'direct_vote_comparison_permitted': (
+                                          row['relation'] == 'EXACT_QUESTION' and
+                                          row['rollcall_type'] == 'RECORDED' and r is not None)})
                 if not reps:
                     positions.append({'person_id': None, 'position': 'NO_MATCHING_TENURE',
-                                      'seat': None, 'vote_record_id': None})
+                                      'seat': None, 'vote_record_id': None,
+                                      'direct_vote_comparison_permitted': False})
                 data['representatives_at_vote_date'] = positions
-                data['direct_vote_comparison_permitted'] = row['relation'] == 'EXACT_QUESTION'
+                data['direct_vote_comparison_permitted'] = any(
+                    p['direct_vote_comparison_permitted'] for p in positions)
                 data['source_completeness'] = 'CURATED_SYNTHETIC_SUBSET_NOT_COMPLETE'
                 entries.append(data)
         return {
