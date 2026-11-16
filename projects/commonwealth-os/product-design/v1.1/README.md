@@ -22,6 +22,7 @@ This directory is the forward-looking design addendum to [immutable Product Desi
 | [05 Implementation reconciliation](05_IMPLEMENTATION_RECONCILIATION_AND_ACCEPTANCE.md) | What current main actually contains, removed functionality, restoration gates, nonclaims |
 | [06 Institutional pilots](06_INSTITUTIONAL_PILOTS_AND_EVALUATION.md) | Research instruments, staged adoption, benchmarks and institution-specific authority |
 | [07 Evidence traceability](07_EVIDENCE_AND_DEPENDENCY_INDEX.md) | Source-to-requirement map, known conflicts, issue references, review backlog |
+| [08 Competitor parity and accountability](08_COMPETITIVE_PARITY_AND_ACCOUNTABILITY.md) | Decidim/CONSUL functional comparison, synthetic feature scopes, civic feedback improvements and release gates |
 
 ## Critical finding from source audit
 
