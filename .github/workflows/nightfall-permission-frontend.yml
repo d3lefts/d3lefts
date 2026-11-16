@@ -14,6 +14,7 @@ on:
       - 'docs/constellation.html'
       - 'docs/atlas.html'
       - 'tests/nightfall-permission-frontend.test.cjs'
+      - 'tests/test_permission_lab_browser.mjs'
       - '.github/workflows/nightfall-permission-frontend.yml'
   workflow_dispatch:
 permissions:
@@ -30,3 +31,15 @@ jobs:
         run: |
           node --version
           node --test tests/nightfall-permission-frontend.test.cjs
+      - name: Browser functional regression on desktop and phone
+        run: |
+          npm install --no-save --no-package-lock playwright-core@1.56.1
+          CHROME_BIN="$(command -v google-chrome)" node --test tests/test_permission_lab_browser.mjs
+      - name: Retain visual review screenshots
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: nightfall-permission-lab-${{ github.run_id }}
+          path: browser-artifacts/permission-lab-*.png
+          if-no-files-found: warn
+          retention-days: 30
