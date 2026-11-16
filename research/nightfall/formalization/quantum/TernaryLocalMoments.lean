@@ -1,6 +1,7 @@
 import Mathlib
 import PhysicalQubitEnsemble
 import TernaryPhase
+import LocalTernaryMoments
 
 /-!
 NIGHTFALL: actual qubit local phase identities for the fixed physical
@@ -23,7 +24,7 @@ theorem omega_star_sq : star omega = omega ^ 2 := by
     have hu := omega_unit
     rw [hz] at hu
     norm_num at hu
-  exact (mul_eq_zero.mp h).resolve_left hn
+  exact sub_eq_zero.mp ((mul_eq_zero.mp h).resolve_left hn)
 
 theorem real_sqrt_three_complex_sq :
     ((Real.sqrt 3 : ℝ) : ℂ) ^ 2 = 3 := by
@@ -37,14 +38,14 @@ theorem actual_local_density_entry (s : Fin 3) (a b : Fin 2) :
       else
         (if b = 0 then ((Real.sqrt 3 : ℝ) : ℂ) / 4 * omega ^ s.val
          else (1 / 4 : ℂ)) := by
-  have hr := real_sqrt_three_complex_sq
   fin_cases a <;> fin_cases b
-  all_goals
-    simp [qubitDensity, densityOfAmplitude_entry, densityOfAmplitude,
-      qubitAmplitude, Matrix.vecMulVec, star_pow, star_div₀,
-      omega_star_sq]
-    <;> ring_nf
-    <;> linear_combination hr
+  · simpa using (Nightfall.Quantum.LocalMoments.entry_00 (omega ^ s.val))
+  · have hs : star (omega ^ s.val) = (omega ^ 2) ^ s.val := by
+      rw [star_pow, omega_star_sq]
+    simpa [hs] using (Nightfall.Quantum.LocalMoments.entry_01 (omega ^ s.val))
+  · simpa [mul_comm] using (Nightfall.Quantum.LocalMoments.entry_10 (omega ^ s.val))
+  · simpa using (Nightfall.Quantum.LocalMoments.entry_11 (omega ^ s.val)
+      (unit_phase_powers omega omega_unit s.val))
 
 #print axioms Nightfall.Quantum.LocalTernaryMoments.omega_star_sq
 #print axioms Nightfall.Quantum.LocalTernaryMoments.actual_local_density_entry
