@@ -130,6 +130,54 @@ theorem actual_physical_A_trace_two_rays
   rw [add_mul, Matrix.trace_add]
   simp only [Matrix.trace_single_mul, smul_eq_mul]
 
+theorem C_GHZ_corner_is_real (d : ℕ) :
+    star (unnormalizedC d (zeroRay d) (oneRay d)) =
+      unnormalizedC d (zeroRay d) (oneRay d) := by
+  change star (unnormalizedC d (fun _ => 0) (fun _ => 1)) =
+    unnormalizedC d (fun _ => 0) (fun _ => 1)
+  rw [actual_fourier_ghz_corner_value]
+  simp
+
+theorem A_reverse_GHZ_corner_matches (d : ℕ) (hd : 0 < d) :
+    unnormalizedA d (oneRay d) (zeroRay d) =
+      unnormalizedA d (zeroRay d) (oneRay d) := by
+  have hC10 : unnormalizedC d (oneRay d) (zeroRay d) = 0 := by
+    exact actual_fourier_entry_zero_off_ghz d _ _ ⟨0, hd⟩
+      (Or.inl (by simp [oneRay]))
+  calc
+    unnormalizedA d (oneRay d) (zeroRay d) =
+      (unnormalizedC d (oneRay d) (zeroRay d) +
+        star (unnormalizedC d (zeroRay d) (oneRay d))) / 2 :=
+          physical_A_entry_from_fourier d _ _
+    _ = star (unnormalizedC d (zeroRay d) (oneRay d)) / 2 := by
+          rw [hC10]
+          ring
+    _ = unnormalizedC d (zeroRay d) (oneRay d) / 2 := by
+          rw [C_GHZ_corner_is_real]
+    _ = unnormalizedA d (zeroRay d) (oneRay d) := by
+          rw [physical_A_entry_from_fourier, hC10]
+          ring
+
+theorem actual_physical_A_real_trace_coherence
+    (d : ℕ) (hd : 0 < d)
+    (E : Matrix (Register d) (Register d) ℂ)
+    (hE : E.PosSemidef) :
+    (Matrix.trace (unnormalizedA d * E)).re =
+      2 * (unnormalizedA d (zeroRay d) (oneRay d)).re *
+        (E (zeroRay d) (oneRay d)).re := by
+  rw [actual_physical_A_trace_two_rays d hd]
+  rw [A_reverse_GHZ_corner_matches d hd]
+  have hEconj : E (oneRay d) (zeroRay d) =
+      star (E (zeroRay d) (oneRay d)) :=
+    (hE.1.apply (oneRay d) (zeroRay d)).symm
+  rw [hEconj]
+  simp only [Complex.add_re, Complex.mul_re, Complex.star_def,
+    Complex.conj_re, Complex.conj_im]
+  ring
+
+#print axioms Nightfall.Quantum.PhysicalNumerator.C_GHZ_corner_is_real
+#print axioms Nightfall.Quantum.PhysicalNumerator.A_reverse_GHZ_corner_matches
+#print axioms Nightfall.Quantum.PhysicalNumerator.actual_physical_A_real_trace_coherence
 #print axioms Nightfall.Quantum.PhysicalNumerator.two_GHZ_rays_distinct
 #print axioms Nightfall.Quantum.PhysicalNumerator.physical_A_is_two_corner_matrix
 #print axioms Nightfall.Quantum.PhysicalNumerator.actual_physical_A_trace_two_rays
