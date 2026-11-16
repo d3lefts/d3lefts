@@ -12,6 +12,7 @@
   <link rel="canonical" href="https://d3lefts.github.io/d3lefts/commonwealth.html">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="commonwealth.css">
+  <script src="site.js" defer></script>
   <script defer src="commonwealth-fixtures.js"></script>
   <script defer src="commonwealth-app.js"></script>
   <title>Commonwealth OS — Interactive Product Research Demo</title>
@@ -21,7 +22,8 @@
 <header class="cw-header">
   <div class="cw-container cw-head-inner">
     <a href="index.html" class="cw-parent"><span class="cw-mark">N∕F</span><span>NIGHTFALL <small>RESEARCH LAB</small></span></a>
-    <nav aria-label="Page navigation"><a href="#explore">Historical records</a><a href="#discover">Discover</a><a href="#architecture">Architecture</a><a href="index.html">Research home</a></nav>
+    <button type="button" class="cw-menu-toggle" id="menu-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">MENU +</button>
+    <nav id="site-nav" aria-label="Page navigation"><a href="#explore">Historical records</a><a href="#discover">Discover</a><a href="#architecture">Architecture</a><a href="index.html">Research home</a></nav>
   </div>
 </header>
 <main id="main">
