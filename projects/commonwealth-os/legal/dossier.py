@@ -21,13 +21,16 @@ def assemble(path: Path):
     if dossier.get("decision_authority") != "NOT_ESTABLISHED" or dossier.get("decision_mode") != "ADVISORY_SIMULATION":
         raise DossierError("this demo cannot certify official authority")
     privacy = dossier["privacy_contract"]
-    if not isinstance(privacy, dict) or any(value is not False for value in privacy.values()):
+    if (not isinstance(privacy, dict) or
+        set(privacy) != {"collect_response", "persist_response", "cast_ballot", "infer_profile", "share_with_party"} or
+        any(value is not False for value in privacy.values())):
         raise DossierError("no consent/profile/ballot effects allowed")
     required_fields = {"zoning_and_review", "median_housing_cost",
                        "comparable_building_occupancy", "developer_and_beneficial_ownership",
                        "traffic_utilities_and_public_cost", "floodplain_environment"}
     sections = dossier["evidence_sections"]
-    if not isinstance(sections, list) or {row["field"] for row in sections} != required_fields:
+    if (not isinstance(sections, list) or len(sections) != len(required_fields) or
+        {row["field"] for row in sections} != required_fields):
         raise DossierError("incomplete evidence categories")
     if any(row.get("status") not in ("FICTIONAL_LEGAL_DERIVATION", "MISSING") for row in sections):
         raise DossierError("unsupported empirical certainty")
