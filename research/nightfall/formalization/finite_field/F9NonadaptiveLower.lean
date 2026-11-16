@@ -123,11 +123,33 @@ theorem all_short_fixed_designs_fail
     rfl
   simpa only [subrows, hcast] using hi
 
+
+def fixedSquareSeparates {m k : ℕ}
+    (rows : Fin m → Fin k → K) : Prop :=
+  ∀ x y : Fin k → K,
+    (∀ i : Fin m, (dot (rows i) x) ^ 2 = (dot (rows i) y) ^ 2) →
+      x = y ∨ x = -y
+
+theorem same_oracle_nonadaptive_lower
+    {m k : ℕ} (hk : 2 ≤ k)
+    (rows : Fin m → Fin k → K)
+    (h2 : (2 : K) ≠ 0)
+    (hsep : fixedSquareSeparates rows) :
+    2 * k - 1 ≤ m := by
+  by_contra h
+  have hsmall : m ≤ 2 * k - 2 := by omega
+  obtain ⟨x, y, hxy, hneg, hcoll⟩ :=
+    all_short_fixed_designs_fail hk hsmall rows h2
+  rcases hsep x y hcoll with heq | hsign
+  · exact hxy heq
+  · exact hneg hsign
+
 #print axioms Nightfall.FiniteField.F9NonadaptiveLower.rowMap
 #print axioms Nightfall.FiniteField.F9NonadaptiveLower.short_rows_have_nonzero_kernel
 #print axioms Nightfall.FiniteField.F9NonadaptiveLower.all_short_row_partitions_fail_square_recovery
 #print axioms Nightfall.FiniteField.F9NonadaptiveLower.concatenated_short_row_designs_fail
 #print axioms Nightfall.FiniteField.F9NonadaptiveLower.all_short_fixed_designs_fail
+#print axioms Nightfall.FiniteField.F9NonadaptiveLower.same_oracle_nonadaptive_lower
 
 end
 end Nightfall.FiniteField.F9NonadaptiveLower
