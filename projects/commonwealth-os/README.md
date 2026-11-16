@@ -52,3 +52,12 @@ DESIGN / IMPLEMENTED / INTERNALLY TESTED / INDEPENDENTLY VALIDATED / LEGALLY AUT
 The baseline includes a separate, versioned [Product Design v1.0 source tree](product-design/v1.0/README.md) with 14 detailed design docs, requirements, schemas, diagrams, comparative prior-art matrix, synthetic Living Voter prototype and visual dossier. The [Product Design workspace index](PRODUCT_DESIGN_WORKSPACE.md) links the private [Google Drive archive](https://drive.google.com/drive/folders/1aWkKDXaiLereebPVTIbRtZWGZ2gGw0tr) and earlier Democratic Assurance, questionnaire, and Huntsville pilot research. [Research status and release gates](STATUS_AND_GATES.md) distinguish design, tests, verification and authorization.
 
 Where this representative-first implementation blueprint and the companion citizen-preference design differ, neither silently overrides the other. Treat conflicts as explicit product decisions to resolve with institution-specific authorizations and validation.
+
+## Experimental browser and server workbench (DEMO ONLY)
+
+- [Reference browser app](apps/browser/README.md): synthetic scenarios, browser core, fixture tests.
+- [Local transactional server](apps/server/README.md): SQLite prototype restricted to localhost, typed tenant/role/eligibility actions, versioned decisions and synthetic signed evidence; its `OFFICIAL` mode is absent and `legalAuthority` is `NOT_ASSESSED`.
+- [Verifier](apps/server/verify.mjs) and [conditional Lean refinement model](apps/server/formal/REFINEMENT_LEDGER_20261115.md): evidence contracts and tests, **not** a verified refinement of production JS/SQL or a legally authorized election.
+- [Integration provenance and gates](architecture/INTEGRATION_READINESS_20261115.md).
+
+This intentionally integrates the scoped contents of development PRs #610 and #615 without overwriting the existing product baseline or consent/privacy controls. Figma and Living Voter UX previews remain separately versioned under `product-design/` and `prototypes/`. Production election activation, municipal ingestion, remote API binding and real users remain out of scope.
