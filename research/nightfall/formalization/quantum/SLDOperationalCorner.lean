@@ -15,8 +15,7 @@ theorem symmetric_log_derivative_corner
     (u v t : ℝ) (h : u + v ≠ 0) :
     u * (2 * t / (u + v)) +
       v * (2 * t / (u + v)) = 2 * t := by
-  field_simp [h]
-  ring
+  field_simp [h] <;> ring
 
 theorem sld_energy_corner
     (u v t : ℝ) :
@@ -29,8 +28,7 @@ theorem physical_ghz_measurement_matches_sld_energy
     2 * ((u + v) / 2) * (2 * t / (u + v)) ^ 2 =
       4 * t ^ 2 / (u + v) := by
   have hn : u + v ≠ 0 := ne_of_gt h
-  field_simp [hn]
-  ring
+  field_simp [hn] <;> ring
 
 -- Exact rational physical p=3/4, q=1/4 cases. These independently
 -- detect factor-of-two errors in the SLD/GHZ gain normalization.
