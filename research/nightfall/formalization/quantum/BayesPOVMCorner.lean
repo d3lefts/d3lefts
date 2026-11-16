@@ -135,15 +135,15 @@ theorem physical_bayes_gain_upper
       mul_le_mul_of_nonneg_left hbase (by positivity)
     _ = 4 * t ^ 2 / (u + v) := by ring
 
-def ghzAlpha (z : Fin 3) : ℝ :=
+noncomputable def ghzAlpha (z : Fin 3) : ℝ :=
   if z = 2 then 0 else 1 / 2
 
-def ghzBeta (z : Fin 3) : ℝ := ghzAlpha z
+noncomputable def ghzBeta (z : Fin 3) : ℝ := ghzAlpha z
 
-def ghzGamma (z : Fin 3) : ℝ :=
+noncomputable def ghzGamma (z : Fin 3) : ℝ :=
   if z = 0 then 1 / 2 else if z = 1 then -(1 / 2) else 0
 
-def ghzWeight (u v : ℝ) (z : Fin 3) : ℝ :=
+noncomputable def ghzWeight (u v : ℝ) (z : Fin 3) : ℝ :=
   if z = 2 then 1 - u - v else (u + v) / 2
 
 theorem ghz_three_outcome_normalized (u v : ℝ)
