@@ -4,6 +4,8 @@ on:
     paths:
       - 'docs/commonwealth-browser/**'
       - 'docs/commonwealth-os.html'
+      - 'projects/commonwealth-os/apps/server/**'
+      - 'projects/commonwealth-os/apps/browser/**'
       - '.github/workflows/commonwealth-comprehensive-browser.yml'
   push:
     branches: [main]
@@ -24,6 +26,10 @@ jobs:
           node-version: '22'
       - name: Check ES module syntax
         run: |
+          node --check projects/commonwealth-os/apps/server/verify-participation-receipt.mjs
+          node --check projects/commonwealth-os/apps/server/verify-participation.mjs
+          node --check projects/commonwealth-os/apps/server/src/participation.mjs
+          node --check projects/commonwealth-os/apps/server/src/http.mjs
           node --check docs/commonwealth-browser/history-core.mjs
           node --check docs/commonwealth-browser/question-data.mjs
           node --check docs/commonwealth-browser/workspace.mjs
@@ -39,4 +45,6 @@ jobs:
             cmp "docs/commonwealth-browser/$file" "projects/commonwealth-os/apps/browser/$file"
           done
       - name: Pure synthetic history, questionnaire and entrypoint tests
-        run: node --test docs/commonwealth-browser/tests/*.test.mjs projects/commonwealth-os/apps/browser/tests/*.test.mjs tests/test_commonwealth_web_demo.mjs
+        run: |
+          node --test docs/commonwealth-browser/tests/*.test.mjs projects/commonwealth-os/apps/browser/tests/*.test.mjs tests/test_commonwealth_web_demo.mjs
+          cd projects/commonwealth-os/apps/server && npm test
