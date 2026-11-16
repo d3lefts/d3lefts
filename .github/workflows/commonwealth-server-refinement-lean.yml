@@ -48,6 +48,17 @@ jobs:
             --decl Commonwealth.Server.stale_demo_review_not_current \
             --json-out lean-receipts/server-refinement.json
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/server-refinement.json
+          python3 scripts/lean_bridge.py \
+            projects/commonwealth-os/apps/server/formal/ServerRefinement.lean \
+            --workspace /tmp/mathlib4 --timeout 650 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Commonwealth.Server.fresh_iff_locked_stamp \
+            --decl Commonwealth.Server.accepted_cast_is_fresh \
+            --decl Commonwealth.Server.accepted_review_is_fresh \
+            --decl Commonwealth.Server.duplicate_cast_rejected \
+            --contract projects/commonwealth-os/apps/server/formal/server-contract.json \
+            --json-out lean-receipts/server-exact-contract.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/server-exact-contract.json
       - name: Upload source-bound Lean proof receipts
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
