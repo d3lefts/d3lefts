@@ -2,3 +2,8 @@ data/
 *.sqlite
 *.sqlite-wal
 *.sqlite-shm
+*.dump
+*.backup
+*.pem
+.env*
+synthetic-checkpoint*.json
