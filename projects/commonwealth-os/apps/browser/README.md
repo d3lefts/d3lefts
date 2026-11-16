@@ -29,3 +29,13 @@ This **does not implement real electronic voting**: everything happens client-si
 5. Only then consider an institution-specific approval for consequential decisions. Official voting and municipal source ingestion remain DISABLED.
 
 See `../../architecture/BROWSER_FOUNDATION_v0_2.md` for design boundaries.
+
+## Comprehensive static browser workspace v1.1
+
+This canonical source app now mirrors `docs/commonwealth-browser/` byte-for-byte for `index.html`, the original checker, and the new comprehensive workspace assets. The existing 10-check procedural evidence core and export/verification remain unchanged.
+
+The additional `workspace.mjs` UI provides the three full 24-question **unvalidated** research instruments, opt-in browser-memory-only responses, a fictional birth-to-present representation timeline (with arbitrary intervals and nonpersonal research modes), exact recorded motion/term/seat joins, source-coverage gaps, public evidence records and non-operational steward gates. The purely synthetic `historical-fixtures.js` is a local copy of `docs/commonwealth-intelligence-fixtures.js` so development and public preview resolve relative paths within their own directories.
+
+Run tests with `npm test` from this directory. See [Product Design v1.1](../../product-design/v1.1/README.md) and the [web workbench handoff](../../../../docs/commonwealth-browser/README.md).
+
+**Not implemented:** real record import, historical geography authentication, real DOB/address profile, persistent personal civic data, legal authority, secure ballot custody or a production frontend/backend. A simulated recorded official is not a real elected official.
