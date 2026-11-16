@@ -25,6 +25,10 @@ The public identity is **“Discovery should compound. Evidence should travel.�
 
 Both experiences share source records and review standards, but divide by research lifecycle, not proof strength. An archived candidate is not automatically a certified theorem, and an active theorem can have checked sublemmas. The historical CSS token `data-nf-experience="archive"` denotes the NULL FIELD light palette for compatibility; it is **not** a scientific archive classification. Do not rename this implementation token until linked CSS and browser tests migrate together. Each landing page has a distinct layout. Keep the theme switch functional, keyboard-accessible, and honest about destination.
 
+## Historical & Civic Intelligence Lab — synthetic public feature (15 November 2026)
+
+[**Historical & Civic Intelligence Lab**](commonwealth-intelligence.html) complements the existing Commonwealth product pages instead of replacing them. It presents the backend's exact `house.json`, `senate.json`, `municipal.json`, and `issues.json` fictional fixtures in an interactive read-only history browser with historical tenure-at-vote joins, topic/procedural distinctions, and no-record conditions. It also provides an in-memory voluntary preference exercise and an expressly **unvalidated** 20-question / 12-archetype Discover experience. No actual ballot, KYC, identity or persistent political profile. Run `node scripts/test_commonwealth_intelligence.cjs` to test source equality and key logic.
+
 ## Product showcase — Commonwealth OS
 
 [**Commonwealth OS: Upcoming Product Demo**](commonwealth-os.html) is a separate, static, mobile-responsive civic-product showcase within the NIGHTFALL site. It presents four interactive **fictional** preview surfaces (Chamber, Living Voter, Legal Proof Passport, Representation), the proposed five-stage Huntsville-area adoption path, a security/authority boundary explanation and direct links into the [canonical Commonwealth repository source](../projects/commonwealth-os/README.md).
