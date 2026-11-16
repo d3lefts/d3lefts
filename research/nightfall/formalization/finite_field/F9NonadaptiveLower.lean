@@ -32,6 +32,7 @@ def rowMap (rows : Fin m → Fin k → K) :
     simp only [Pi.smul_apply, smul_eq_mul, dot, Finset.mul_sum]
     apply Finset.sum_congr rfl
     intro j _
+    change rows i j * c * x j = rows i j * x j * c
     ring
 
 theorem short_rows_have_nonzero_kernel
