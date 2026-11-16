@@ -112,14 +112,18 @@ theorem qubitAmplitude_norm_one (r : ℝ) (θ : ℂ)
         (θ / 2) * star (θ / 2)) = 1 := by
     calc
       _ = ((r : ℂ) ^ 2 + θ * star θ) / 4 := by
-        simp only [map_div₀, star_ofReal, star_natCast]
+        simp only [map_div₀, star_pow]
+        have hrstar : star (r : ℂ) = (r : ℂ) := by simp
+        have htwostar : star (2 : ℂ) = 2 := by norm_num
+        rw [hrstar, htwostar]
         ring
       _ = 1 := by rw [hrC, hθ]; norm_num
-  simpa [Fin.sum_univ_two, qubitAmplitude] using hvalue
+  have htwostar : star (2 : ℂ) = 2 := by norm_num
+  simpa [Fin.sum_univ_two, qubitAmplitude, map_div₀, htwostar] using hvalue
 
 theorem unit_phase_powers (θ : ℂ) (hθ : θ * star θ = 1) (n : ℕ) :
     θ ^ n * star (θ ^ n) = 1 := by
-  rw [map_pow, ← mul_pow, hθ, one_pow]
+  rw [star_pow, ← mul_pow, hθ, one_pow]
 
 theorem normalized_product_physical (d : ℕ) (phase : Fin d → ℂ)
     (hphase : ∀ j, phase j * star (phase j) = 1) :
