@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "source_system": "SYNTH_HOUSE",
+  "source_id": "fixture://commonwealth/house/v1",
+  "chamber": "HOUSE",
+  "jurisdiction": "fictional-union",
+  "people": [
+    {"person_id": "fx-house-morgan", "name": "Morgan Alder (fictional)"},
+    {"person_id": "fx-house-sam", "name": "Sam Briar (fictional)"},
+    {"person_id": "fx-house-jordan", "name": "Jordan Cedar (fictional)"}
+  ],
+  "tenures": [
+    {"tenure_id": "fx-h-tenure-old", "person_id": "fx-house-morgan", "seat": "H-07", "district": "07", "from": "2024-01-03", "to": "2025-01-03"},
+    {"tenure_id": "fx-h-tenure-new", "person_id": "fx-house-sam", "seat": "H-07", "district": "07", "from": "2025-01-03", "to": "2027-01-03"},
+    {"tenure_id": "fx-h-tenure-eight", "person_id": "fx-house-jordan", "seat": "H-08", "district": "08", "from": "2024-01-03", "to": "2027-01-03"}
+  ],
+  "questions": [
+    {"question_id": "fx-house-roll-001", "date": "2024-06-10", "kind": "FINAL_PASSAGE", "rollcall_type": "RECORDED", "title": "Fictional House roll 001: riverfront public access", "proposition": "Adopt a fictional riverfront public-access improvement plan.", "result": "AGREED"},
+    {"question_id": "fx-house-roll-002", "date": "2025-07-02", "kind": "FINAL_PASSAGE", "rollcall_type": "RECORDED", "title": "Fictional House roll 002: stormwater inspections", "proposition": "Update fictional stormwater inspection frequency.", "result": "NOT_AGREED"},
+    {"question_id": "fx-house-roll-003", "date": "2025-09-03", "kind": "AMENDMENT", "rollcall_type": "RECORDED", "title": "Fictional House roll 003: parking amendment", "proposition": "Amend a fictional parking-space allocation formula.", "result": "AGREED"}
+  ],
+  "votes": [
+    {"record_id": "fx-h-vote-001a", "question_id": "fx-house-roll-001", "person_id": "fx-house-morgan", "choice": "YEA"},
+    {"record_id": "fx-h-vote-001b", "question_id": "fx-house-roll-001", "person_id": "fx-house-jordan", "choice": "NAY"},
+    {"record_id": "fx-h-vote-002a", "question_id": "fx-house-roll-002", "person_id": "fx-house-sam", "choice": "NAY"},
+    {"record_id": "fx-h-vote-002b", "question_id": "fx-house-roll-002", "person_id": "fx-house-jordan", "choice": "PRESENT"},
+    {"record_id": "fx-h-vote-003a", "question_id": "fx-house-roll-003", "person_id": "fx-house-sam", "choice": "PRESENT"},
+    {"record_id": "fx-h-vote-003b", "question_id": "fx-house-roll-003", "person_id": "fx-house-jordan", "choice": "NOT_VOTING"}
+  ]
+}
