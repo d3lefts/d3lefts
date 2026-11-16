@@ -57,6 +57,8 @@ jobs:
           python3 research/nightfall/formalization/product_space/check_receipts.py crossfrontier-receipts/sld.json
       - name: Independently replay dynamic-world repair
         run: python3 research/nightfall/2026-11-crossfrontier/check_dynamic_revisions.py
+      - name: Independently replay cyclotomic quantum physical and operational gains
+        run: python3 research/nightfall/2026-11-crossfrontier/check_quantum_operational_exact.py
       - name: Freeze provenance
         if: always()
         shell: bash
@@ -65,7 +67,7 @@ jobs:
           git rev-parse HEAD > crossfrontier-receipts/commit.txt
           git -C /tmp/mathlib4 rev-parse HEAD > crossfrontier-receipts/mathlib.txt || true
           cat lean-toolchain > crossfrontier-receipts/toolchain.txt
-          sha256sum research/nightfall/formalization/finite_field/F9GapArithmetic.lean research/nightfall/formalization/quantum/SLDOperationalCorner.lean research/nightfall/formalization/permission/RevisionIndistinguishability.lean research/nightfall/2026-11-crossfrontier/check_dynamic_revisions.py > crossfrontier-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/finite_field/F9GapArithmetic.lean research/nightfall/formalization/quantum/SLDOperationalCorner.lean research/nightfall/formalization/permission/RevisionIndistinguishability.lean research/nightfall/2026-11-crossfrontier/check_dynamic_revisions.py research/nightfall/2026-11-crossfrontier/check_quantum_operational_exact.py > crossfrontier-receipts/SHA256SUMS.txt
       - name: Retain immutable receipts
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
