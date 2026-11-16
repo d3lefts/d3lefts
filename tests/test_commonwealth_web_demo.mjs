@@ -50,7 +50,7 @@ test("Standalone HTML and ESM module dependencies are within the static site",()
 });
 test("The public demo does not promote fictional or hypothetical data to binding elections",()=>{
  const page=text("docs/commonwealth.html");
- for(const phrase of ["Nonbinding","not a voting service","fictional","unknown","No official votes","NOT","not a deployment commitment"]){
+ for(const phrase of ["Nonbinding","not a voting service","fictional","unknown","Official votes or real-user profiles collected","NOT","not a deployment commitment"]){
   assert.ok(page.toLowerCase().includes(phrase.toLowerCase()),"lost explicit trust boundary "+phrase);
  }
  const core=text("docs/commonwealth-browser/core.mjs");

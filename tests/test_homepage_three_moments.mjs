@@ -51,7 +51,7 @@ test("Cross-entrance navigation is explicit and in both directions",()=>{
  assert.ok(field.includes('href="new-moon.html#archived-records"'));
  assert.ok(moon.includes('href="index.html"'));
  assert.ok(field.includes('href="commonwealth.html"'),"Commonwealth product demo must be linked");
- assert.equal(count(field,/<a\b/g)<=47,true,"Active homepage link budget; two Commonwealth product-demo routes added");
+ assert.equal(count(field,/<a\b/g)<=46,true,"Active homepage link budget; one Commonwealth product-demo feature added");
  assert.ok(count(field,/<section\b/g)<=13,"Active homepage section budget");
  assert.ok(count(field,/<details\b/g)<=2,"Avoid nested disclosures");
 });
