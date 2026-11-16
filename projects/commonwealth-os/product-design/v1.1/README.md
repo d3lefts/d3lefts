@@ -1,6 +1,6 @@
 # Commonwealth OS — Product Design v1.1 (implementation reconciliation)
 
-**Revision date:** 2026-11-16 (America/New_York). **Status:** design and source-audit revision, synthetic-only. **Authority:** none to enact law, administer elections or import real personal/government data.
+**Revision date:** 2026-11-15 (America/New_York). **Status:** design and source-audit revision, synthetic-only. **Authority:** none to enact law, administer elections or import real personal/government data.
 
 This directory is the forward-looking design addendum to [immutable Product Design v1.0](../v1.0/README.md). The v1.0 MANIFEST.json describes the earlier archive and is deliberately not modified. Do not describe that archived checksum as validating the v1.1 additions.
 
