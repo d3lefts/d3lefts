@@ -90,7 +90,10 @@ theorem productAmplitude_norm_one (d : ℕ) (r : ℝ) (phase : Fin d → ℂ)
           qubitAmplitude r (phase j) a *
           star (qubitAmplitude r (phase j) a) := by
           simpa only [Fintype.piFinset_univ] using hsum
-    _ = 1 := by simp [hlocal]
+    _ = 1 := by
+      apply Finset.prod_eq_one
+      intro j _
+      simpa only [Fin.sum_univ_two] using hlocal j
 
 theorem productDensity_trace_one (d : ℕ) (r : ℝ) (phase : Fin d → ℂ)
     (hlocal : ∀ j, ∑ a : Fin 2,
@@ -104,5 +107,7 @@ theorem productDensity_trace_one (d : ℕ) (r : ℝ) (phase : Fin d → ℂ)
 #print axioms Nightfall.Quantum.PhysicalQubit.productDensity_psd
 #print axioms Nightfall.Quantum.PhysicalQubit.productDensity_entry
 #print axioms Nightfall.Quantum.PhysicalQubit.productDensity_trace_one
+
+end
 
 end Nightfall.Quantum.PhysicalQubit
