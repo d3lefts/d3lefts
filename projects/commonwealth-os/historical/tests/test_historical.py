@@ -65,6 +65,7 @@ def test_dashboard_all_chambers_correct_vote_date_not_current_member(env):
     assert questions['fx-senate-roll-001']['direct_vote_comparison_permitted'] is False
     senate = questions['fx-senate-roll-002']
     assert [r['position'] for r in senate['representatives_at_vote_date']] == ['YEA', 'NO_RECORDED_POSITION']
+    assert [r['direct_vote_comparison_permitted'] for r in senate['representatives_at_vote_date']] == [True, False]
     assert all(e['source_completeness'].startswith('CURATED_SYNTHETIC') for e in rows['entries'])
     assert rows['historical_votes_are_user_ballots'] is False
 
@@ -76,6 +77,7 @@ def test_voice_vote_has_no_attributed_member_position(env):
     assert row['rollcall_type'] == 'VOICE'
     assert row['representatives_at_vote_date'][0]['position'] == 'VOICE_VOTE_NO_NAMED_POSITION'
     assert row['representatives_at_vote_date'][0]['vote_record_id'] is None
+    assert row['direct_vote_comparison_permitted'] is False
 
 
 def test_missing_constituency_not_misreported_as_nay(env):
