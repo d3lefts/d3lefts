@@ -181,7 +181,7 @@ theorem physical_A_entry_is_two_characters (d : ℕ)
   classical
   simp only [unnormalizedA, unnormalizedC, unnormalizedCconj,
     Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul]
-  rw [← Finset.sum_add_distrib, ← Finset.sum_div]
+  rw [← Finset.sum_add_distrib, Finset.sum_div]
   apply Finset.sum_congr rfl
   intro x _
   ring
