@@ -44,3 +44,8 @@ Chromium was exercised via `page.set_content` and inline script bundling for loc
 ## Implementation files
 
 `workspace.mjs` implements the UI; `history-core.mjs` implements pure matching/semantics; `question-data.mjs` is the unvalidated pilot seed bank; `workspace.css` adds scoped mobile styles; original `app.mjs`, `core.mjs`, `fixtures.mjs` are unchanged. `historical-fixtures.js` is kept byte-for-byte consistent with the existing synthetic civic intelligence fixture snapshot.
+## Participation v1.2 — proposal to accountability
+
+[New end-to-end synthetic design and limits](PARTICIPATION_V1_2.md). The browser now supports fictional proposal drafting, transparent deliberation, written amendment review with full revision history, nonbinding advisory responses tied to exact revisions, mandatory rationales for simulated institutional responses, milestone/correction tracking, meeting-agenda examples, and a ceiling-constrained participatory budget planner. It links related fictional topics to the separate dated historical-roll-call workspace while preserving precise status and uncertainty.
+
+All actions remain **local browser state only**. A freely selectable `DEMO_STEWARD` is not an authenticated administrator; no collective ballots, moderation, real government records, cryptographic proof of locally edited proposals, real budgets, or institutional deployment are implemented. The existing ten-check synthetic Proof Passport checker is unchanged and **does not validate locally edited proposals**. Source and mirrored GitHub Pages modules are kept byte-identical and the new pure reducer is separately tested.
