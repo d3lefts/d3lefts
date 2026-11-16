@@ -129,9 +129,9 @@ theorem direct_cheaper_lower {R m H spent N guards c d sunk : ℕ}
     Nat.mul_le_mul_right p.paired hcheap
   calc
     sunk + d * R =
-      sunk + (d * p.paired + d * p.direct) := by
-        rw [← p.allFreshCovered]
-        ring
+      sunk + d * (p.paired + p.direct) :=
+        congrArg (fun n : ℕ => sunk + d * n) p.allFreshCovered.symm
+    _ = sunk + (d * p.paired + d * p.direct) := by ring
     _ ≤ sunk + (2 * c * p.paired + d * p.direct) := by omega
     _ = checkpointCost p c d sunk := by rfl
 
