@@ -77,8 +77,9 @@ theorem weighted_11_zero :
     intro s _
     rw [entry_11 _ (PhysicalQubit.unit_phase_powers
       TernaryPhase.omega TernaryPhase.omega_unit s.val)]
-  rw [h, ← Finset.sum_mul, TernaryPhase.omega_sum]
-  ring
+    ring
+  rw [h]
+  simp only [mul_one, ← Finset.sum_div, TernaryPhase.omega_sum, zero_div]
 
 theorem weighted_10_zero :
     (∑ s : Fin 3, TernaryPhase.omega ^ s.val *
