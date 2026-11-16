@@ -54,6 +54,10 @@ The baseline includes a separate, versioned [Product Design v1.0 source tree](pr
 
 Where this representative-first implementation blueprint and the companion citizen-preference design differ, neither silently overrides the other. Treat conflicts as explicit product decisions to resolve with institution-specific authorizations and validation.
 
+## Comprehensive browser participation demonstration v1.2
+
+[Launch the static synthetic Commonwealth browser app](https://d3lefts.github.io/d3lefts/commonwealth-browser/) · [source](apps/browser/README.md) · [competitive parity and evidence matrix](product-design/v1.1/08_COMPETITIVE_PARITY_AND_ACCOUNTABILITY.md). Adds locally simulated proposals, reasoned deliberation, reviewed amendments and immutable revisions, advisory responses, budget ceilings, reasoned institutional answers, milestone tracking and correction requests. The browser integrates a *topic link* to the existing fictional historical representation view, **not** proof of semantic equivalence or authenticated source custody. In-memory simulation is not deployed civic infrastructure, legally binding voting or actual multi-user participation.
+
 ## Historical intelligence: separate implemented components and integration gap
 
 - [Historical roll-call contract v0.3](HISTORICAL_REPRESENTATION_CONTRACT_v0_3.md) specifies an opt-in DOB-to-present default, any-date browsing, prior representatives, redistricting and exact named recorded votes.
