@@ -5,6 +5,7 @@ on:
       - 'research/catalogue/ACTIVE_DEPENDENCY_CLOSURE.json'
       - 'research/catalogue/ACTIVE_DEPENDENCY_CLOSURE.md'
       - 'scripts/check_active_dependency_closure.py'
+      - 'scripts/independent_dependency_closure.cjs'
       - '.github/workflows/nightfall-active-dependency-closure.yml'
   push:
     branches: [main]
@@ -27,6 +28,8 @@ jobs:
           persist-credentials: false
       - name: Check transitive obligations and attempt twelve adversarial ledger mutations
         run: python3 scripts/check_active_dependency_closure.py --self-test --summary
+      - name: Independently audit graph closure and eight negative mutations in Node
+        run: node scripts/independent_dependency_closure.cjs
       - name: Check that all pinned draft PR heads are still current
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
