@@ -105,9 +105,11 @@ export function verifyExtended(envelope,{trustedPublicKeyPem}={}){
    assert(actor?.active&&actor.role===e.actorRole&&entryRoles[e.action]?.includes(actor.role),'EVENT_ACTOR_ROLE');
    if(e.action==='CREATE')assert(state===null&&e.from===null&&e.to==='DRAFT','CREATE_EDGE');
    else if(e.action==='REVISE'){
-     assert(['DRAFT','IN_REVIEW'].includes(state)&&e.from===state&&e.to==='DRAFT'&&(e.actorId===p.item.proposer||actor.role==='clerk'),'REVISE_EDGE');
+     assert(['DRAFT','IN_REVIEW','AGENDA_SET','DELIBERATING'].includes(state)&&e.from===state&&e.to==='DRAFT'&&(e.actorId===p.item.proposer||actor.role==='clerk'),'REVISE_EDGE');
+     if(['AGENDA_SET','DELIBERATING'].includes(state))attendance=[];
    }else if(e.action==='ATTACH_SOURCE'){
-     assert(['DRAFT','IN_REVIEW'].includes(state)&&e.from===state&&e.to==='DRAFT'&&(e.actorId===p.item.proposer||actor.role==='clerk'),'ATTACH_EDGE');
+     assert(['DRAFT','IN_REVIEW','AGENDA_SET','DELIBERATING'].includes(state)&&e.from===state&&e.to==='DRAFT'&&(e.actorId===p.item.proposer||actor.role==='clerk'),'ATTACH_EDGE');
+     if(['AGENDA_SET','DELIBERATING'].includes(state))attendance=[];
      const sc=a.sources.get(e.details.sourceId);assert(sc?.version===e.details.sourceVersion&&sc?.hash===e.details.sourceHash&&p.sources.find(s=>s.sourceId===e.details.sourceId&&s.version===sc.version)?.status!=='UNKNOWN','ATTACH_SOURCE_REF');
      deps.set(e.details.sourceId,{sourceId:e.details.sourceId,version:e.details.sourceVersion,hash:e.details.sourceHash});
    }else if(e.action==='VOID'){

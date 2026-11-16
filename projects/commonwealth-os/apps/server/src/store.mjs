@@ -174,10 +174,12 @@ export class Store {
       const transitions={SUBMIT:'IN_REVIEW',AGENDA:'AGENDA_SET',BEGIN:'DELIBERATING',ATTEND:'DELIBERATING',LOCK:'MOTION_LOCKED',OPEN:'BALLOT_OPEN',CAST:'BALLOT_OPEN',CLOSE:'BALLOT_CLOSED',REVIEW:'REVIEWED_DEMO'};
       let next=transitions[action];let details={};let revision=item.current_revision;
       if(action==='REVISE') {
-        invariant(['DRAFT','IN_REVIEW'].includes(old),'REVISION_LOCKED');
+        invariant(['DRAFT','IN_REVIEW','AGENDA_SET','DELIBERATING'].includes(old),'REVISION_LOCKED');
         invariant(item.proposer===actor.id||can(actor,'clerk'),'REVISION_FORBIDDEN',403);
         const result=this.addRevision(institutionId,itemId,payload.body,actor);
-        revision=result.revision;next='DRAFT';details={revision,bodyHash:result.bodyHash};
+        revision=result.revision;next='DRAFT';
+        if(old==='AGENDA_SET'||old==='DELIBERATING')this.run('DELETE FROM attendance WHERE institution_id=? AND item_id=?',institutionId,itemId);
+        details={revision,bodyHash:result.bodyHash};
       } else {
         invariant(Object.hasOwn(transitions,action),'UNKNOWN_ACTION',400);
         const allowedFrom=STATE[action][0];invariant(old===allowedFrom,'INVALID_TRANSITION');

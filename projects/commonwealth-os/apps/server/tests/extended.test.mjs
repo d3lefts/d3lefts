@@ -167,3 +167,22 @@ test('transactional crash/reopen retains revisions, authority and hash chains',(
  try{assert.deepEqual(other.events('union-demo','item-demo'),snap.events);assert.equal(other.institution('union-demo').policy_version,1);assert.equal(other.authority('union-demo').length,snap.authorityJournal.length);}finally{other.close();}
  }finally{f.close();}
 });
+
+test('amendment after agenda or deliberation resets to DRAFT and invalidates old attendance',()=>{
+ const f=make();try{
+ f.cmd('member-a','CREATE',0,{body:'Initial fictional resolution'});
+ f.cmd('member-a','SUBMIT',1);
+ f.cmd('chair','AGENDA',2);
+ f.cmd('chair','BEGIN',3);
+ f.cmd('clerk','ATTEND',4,{attendees:['member-a','member-b']});
+ const revised=f.cmd('member-a','REVISE',5,{body:'Material amendment while deliberating'});
+ assert.equal(revised.state,'DRAFT');assert.deepEqual(f.snapshot().attendance,[]);
+ assert.equal(accepts(f).ok,true);
+ assert.throws(()=>f.cmd('chair','LOCK',6),/INVALID_TRANSITION/);
+ f.cmd('member-a','SUBMIT',6);
+ f.cmd('chair','AGENDA',7);
+ const again=f.cmd('clerk','REVISE',8,{body:'Second fictional amendment'});
+ assert.equal(again.state,'DRAFT');
+ assert.equal(accepts(f).ok,true);
+ }finally{f.close();}
+});

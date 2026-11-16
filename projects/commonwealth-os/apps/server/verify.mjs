@@ -40,7 +40,7 @@ export function verifyEvidence(envelope,{trustedPublicKeyPem}={}) {
  for(const e of p.events){
   const {hash,previousHash,...event}=e;
   check('EVENT_'+e.seq,e.seq===++lastSeq&&previousHash===lastHash&&digest({event,previousHash})===hash);
-  check('EVENT_EDGE_'+e.seq,Object.hasOwn(edges,e.action)&&((e.action==='REVISE'&&e.to==='DRAFT'&&['DRAFT','IN_REVIEW'].includes(e.from))||(edges[e.action]&&edges[e.action][0]===e.from&&edges[e.action][1]===e.to))&&e.from===lastState);
+  check('EVENT_EDGE_'+e.seq,Object.hasOwn(edges,e.action)&&((e.action==='REVISE'&&e.to==='DRAFT'&&['DRAFT','IN_REVIEW','AGENDA_SET','DELIBERATING'].includes(e.from))||(edges[e.action]&&edges[e.action][0]===e.from&&edges[e.action][1]===e.to))&&e.from===lastState);
   lastHash=hash;lastState=e.to;
   if(e.action==='LOCK')locked=e;
   if(e.action==='CAST')castEvents.push(e);

@@ -7,7 +7,7 @@ const stamp=()=>new Date().toISOString();
 const idPattern=/^[a-z][a-z0-9-]{1,63}$/;
 const itemIdPattern=/^[a-z][a-z0-9-]{2,63}$/;
 const roles=new Set(['admin','chair','clerk','member','auditor','release-reviewer']);
-const writableStates=new Set(['DRAFT','IN_REVIEW']);
+const writableStates=new Set(['DRAFT','IN_REVIEW','AGENDA_SET','DELIBERATING']);
 const voidStates=new Set(['DRAFT','IN_REVIEW','AGENDA_SET','DELIBERATING','MOTION_LOCKED','BALLOT_OPEN','BALLOT_CLOSED']);
 const extCommands=new Set(['VOID','PREPARE_PUBLICATION','REVIEW_PUBLICATION','PUBLISH_PREVIEW','CORRECT_PUBLICATION','ATTACH_SOURCE']);
 const isText=(x,max)=>typeof x==='string'&&x.trim().length>0&&x.length<=max;
@@ -173,6 +173,7 @@ export class ExtendedStore extends Store {
         const source=this.one('SELECT * FROM source_documents WHERE institution_id=? AND source_id=? ORDER BY version DESC LIMIT 1',institutionId,payload.sourceId);
         invariant(source&&source.status!=='UNKNOWN','UNVERIFIED_SOURCE',409);
         this.run('INSERT INTO item_sources VALUES(?,?,?,?,?) ON CONFLICT(institution_id,item_id,source_id) DO UPDATE SET source_version=excluded.source_version,hash=excluded.hash',institutionId,itemId,source.source_id,source.version,source.hash);
+        if(from==='AGENDA_SET'||from==='DELIBERATING')this.run('DELETE FROM attendance WHERE institution_id=? AND item_id=?',institutionId,itemId);
         details={sourceId:source.source_id,sourceVersion:source.version,sourceHash:source.hash};
         to='DRAFT'; // changing source attribution invalidates review
       } else if(action==='VOID'){

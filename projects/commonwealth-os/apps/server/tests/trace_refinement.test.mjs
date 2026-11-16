@@ -60,8 +60,8 @@ function newFixture(){
       s.locked.eligibilityVersion===s.eligibilityVersion;
     switch(action){
       case 'REVISE':
-        if(!['DRAFT','IN_REVIEW'].includes(s.phase)||!(user==='member-a'||role==='clerk'))return null;
-        s.revision++;break;
+        if(!['DRAFT','IN_REVIEW','AGENDA_SET','DELIBERATING'].includes(s.phase)||!(user==='member-a'||role==='clerk'))return null;
+        s.revision++;s.phase='DRAFT';s.attendance=[];break;
       case 'SUBMIT':
         if(s.phase!=='DRAFT'||!(user==='member-a'||role==='chair'))return null;
         s.phase='IN_REVIEW';break;
