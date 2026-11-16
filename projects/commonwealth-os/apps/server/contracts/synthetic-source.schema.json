@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://commonwealth.example.invalid/schemas/synthetic-source-v0.4",
+  "title": "Synthetic Source Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "sourceId",
+    "text",
+    "status",
+    "sourceUri"
+  ],
+  "properties": {
+    "sourceId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{1,63}$"
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 50000
+    },
+    "status": {
+      "enum": [
+        "DRAFT",
+        "PROPOSED",
+        "ENACTED",
+        "REPEALED",
+        "UNKNOWN"
+      ]
+    },
+    "sourceUri": {
+      "type": "string",
+      "pattern": "^synthetic:"
+    },
+    "institutionId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{1,63}$"
+    },
+    "key": {
+      "type": "string",
+      "minLength": 8
+    }
+  }
+}

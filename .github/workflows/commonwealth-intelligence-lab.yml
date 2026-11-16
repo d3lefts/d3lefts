@@ -1,0 +1,40 @@
+name: Commonwealth civic intelligence lab
+on:
+  pull_request:
+    paths:
+      - 'docs/commonwealth-intelligence*'
+      - 'docs/commonwealth.html'
+      - 'docs/commonwealth-os.html'
+      - 'docs/sitemap.xml'
+      - 'scripts/test_commonwealth_intelligence.cjs'
+      - 'projects/commonwealth-os/historical/fixtures/**'
+      - '.github/workflows/commonwealth-intelligence-lab.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/commonwealth-intelligence*'
+      - 'docs/commonwealth.html'
+      - 'docs/commonwealth-os.html'
+      - 'docs/sitemap.xml'
+      - 'scripts/test_commonwealth_intelligence.cjs'
+      - 'projects/commonwealth-os/historical/fixtures/**'
+      - '.github/workflows/commonwealth-intelligence-lab.yml'
+permissions:
+  contents: read
+jobs:
+  fixture-parity-and-site-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Parse browser program
+        run: node --check docs/commonwealth-intelligence.js
+      - name: Verify fictional-source parity, tenure, correspondence, and archetype scope
+        run: node scripts/test_commonwealth_intelligence.cjs
+      - name: Confirm existing Commonwealth public demos remain unchanged
+        run: node --test tests/test_commonwealth_web_demo.mjs
+      - name: Validate site metadata, links, and accessibility skeleton
+        run: python3 scripts/check_site.py

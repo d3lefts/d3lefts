@@ -1,0 +1,32 @@
+{
+  "dp_witness": [
+    "atomic-guard",
+    "combined-roster-tally",
+    "joint-authority-evidence"
+  ],
+  "isolated_evidence_cost": 22,
+  "joint_evidence_cost": 18,
+  "joint_witnesses": [
+    [
+      "atomic-guard",
+      "combined-roster-tally",
+      "joint-authority-evidence"
+    ]
+  ],
+  "methods": [
+    "full-subset-enumeration",
+    "bitmask-dynamic-programming"
+  ],
+  "model": "toy-democratic-assurance-evidence-cover-v0.2",
+  "requirements": [
+    "electorate",
+    "tally",
+    "legal",
+    "freshness",
+    "budget",
+    "effect"
+  ],
+  "saving_in_synthetic_units": 4,
+  "scope": "illustrative weighted set cover; toy operation prices and coverage; no empirical democratic cost estimate; not a novel algorithm",
+  "status": "passed"
+}

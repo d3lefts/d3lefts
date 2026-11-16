@@ -1,0 +1,120 @@
+{
+  "schema": "commonwealth.legal-derivation.demo.v1",
+  "mode": "DEMO",
+  "jurisdiction": "FICTIONAL_RIVER_COUNTY",
+  "as_of": "2026-11-15",
+  "known_at": "2026-11-15",
+  "sources": [
+    {
+      "id": "law-r12",
+      "text": "FICTIONAL River County Code R-12: A residential construction proposal within the River Overlay requires planning review unless an exemption has been granted.",
+      "sha256": "b491e792256b8209cd60c21a1c12dfb1d2fd1296b9a776a16e24356922cb433a",
+      "authenticity": "FICTIONAL",
+      "locator": "fictional://river-county/code/R-12",
+      "status": "ACTIVE",
+      "valid_from": "2025-01-01",
+      "observed_at": "2026-11-01"
+    },
+    {
+      "id": "parcel-map",
+      "text": "FICTIONAL parcel map RIV-042: Parcel RIV-042 is inside the River Overlay.",
+      "sha256": "b9aa0f4e68ba76b57fd2da250fadcfdabe1619a4d103879e01e9f95132aa00b5",
+      "authenticity": "FICTIONAL",
+      "locator": "fictional://river-county/gis/RIV-042",
+      "status": "ACTIVE",
+      "valid_from": "2026-01-01",
+      "observed_at": "2026-11-10"
+    },
+    {
+      "id": "application",
+      "text": "FICTIONAL application D-204: The developer proposes a residential condominium on Parcel RIV-042.",
+      "sha256": "0b62188a2d05f1ecb42339840e427d946ed7666df2c891175a95b174e4165f66",
+      "authenticity": "FICTIONAL",
+      "locator": "fictional://river-county/applications/D-204",
+      "status": "ACTIVE",
+      "valid_from": "2026-11-01",
+      "observed_at": "2026-11-10"
+    },
+    {
+      "id": "clerk-registry",
+      "text": "FICTIONAL clerk exemption registry for RIV-042: No planning-review exemption has been granted for this parcel as of 2026-11-15.",
+      "sha256": "1ea777902ff776f9eee3359ac9b9dfd920d96c4043e1309c1e702303dced9a47",
+      "authenticity": "FICTIONAL",
+      "locator": "fictional://river-county/registry/exemptions",
+      "status": "ACTIVE",
+      "valid_from": "2026-11-15",
+      "observed_at": "2026-11-15",
+      "valid_until": "2026-11-16"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f-overlay",
+      "source_id": "parcel-map",
+      "quote": "Parcel RIV-042 is inside the River Overlay.",
+      "predicate": "parcel_in_overlay",
+      "value": true,
+      "reviewer": "FICTIONAL_REVIEWER_NOT_LEGAL_AUTHORITY",
+      "valid_from": "2026-11-15",
+      "observed_at": "2026-11-15"
+    },
+    {
+      "id": "f-application",
+      "source_id": "application",
+      "quote": "The developer proposes a residential condominium on Parcel RIV-042.",
+      "predicate": "residential_application",
+      "value": true,
+      "reviewer": "FICTIONAL_REVIEWER_NOT_LEGAL_AUTHORITY",
+      "valid_from": "2026-11-15",
+      "observed_at": "2026-11-15"
+    },
+    {
+      "id": "f-exemption",
+      "source_id": "clerk-registry",
+      "quote": "No planning-review exemption has been granted for this parcel as of 2026-11-15.",
+      "predicate": "exemption_granted",
+      "value": false,
+      "reviewer": "FICTIONAL_REVIEWER_NOT_LEGAL_AUTHORITY",
+      "valid_from": "2026-11-15",
+      "observed_at": "2026-11-15",
+      "valid_until": "2026-11-16"
+    }
+  ],
+  "rules": [
+    {
+      "id": "r-review",
+      "source_id": "law-r12",
+      "quote": "A residential construction proposal within the River Overlay requires planning review unless an exemption has been granted.",
+      "reviewer": "FICTIONAL_REVIEWER_NOT_LEGAL_AUTHORITY",
+      "valid_from": "2026-11-15",
+      "observed_at": "2026-11-15",
+      "when_true": [
+        "parcel_in_overlay",
+        "residential_application"
+      ],
+      "when_false": [
+        "exemption_granted"
+      ],
+      "conclusion": "planning_review_required"
+    }
+  ],
+  "proof": [
+    {
+      "kind": "fact",
+      "ref": "f-overlay"
+    },
+    {
+      "kind": "fact",
+      "ref": "f-application"
+    },
+    {
+      "kind": "fact",
+      "ref": "f-exemption"
+    },
+    {
+      "kind": "rule",
+      "ref": "r-review"
+    }
+  ],
+  "goal": "planning_review_required"
+}
