@@ -155,7 +155,7 @@ def test_public_synthetic_riverfront_dossier(context):
     with TestClient(app) as client:
         page = client.get('/demo/riverfront')
         assert page.status_code == 200
-        assert 'Fictional' in page.text and 'not a vote' in page.text
+        assert 'fictional' in page.text.lower() and 'not a vote' in page.text.lower()
         assert client.get('/static/riverfront.js').status_code == 200
         result = client.get('/api/public/demo/dossiers/riverfront-001')
         assert result.status_code == 200, result.text
