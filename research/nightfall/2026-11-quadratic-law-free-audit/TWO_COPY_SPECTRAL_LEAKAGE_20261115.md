@@ -1,48 +1,57 @@
 # C96 first-chaos — exact two-copy Fourier leakage obstruction
 
-2026-11-15 UTC. Analytic identity and exact finite counterexample. Does **not** refute the desired unrestricted first-level budget and does **not** provide an end-to-end C96 Lean certificate.
+**Research date:** 2026-11-15 UTC.
+**Status:** Analytic spectral identity plus exact finite counterexample, independently replayed in rational arithmetic. No pinned Lean source compilation, independent human referee or global novelty certificate. This does **not** refute the desired unrestricted first-chaos budget or establish an end-to-end C96 theorem.
 
-## Universal product spectral identity
+## Universal finite-product spectral identity
 
-For a real scalar finite product function (Fin L^2(igotimes_imu_i)) with orthogonal Hoeffding expansion (F=sum_{Ssubseteq[n]}F_S), let (W_S=mathbb E F_S^2).
+Let \(F\) be any scalar, square-integrable function of independent finite-law coordinates with orthogonal Hoeffding decomposition \(F=\sum_{S\subseteq[n]}F_S\), and let \(W_S=\mathbb E[F_S^2]\). Independently draw pairs \(A_i,B_i\sim\mu_i\), and fair orientation signs \(\epsilon_i\). Define \(Z_i(\epsilon_i)=A_i\) if \(\epsilon_i=+1\), else \(B_i\), and
 
-Independently sample two draws (A_i,B_isimmu_i) and fair orientation signs (epsilon_i). Let (Z_i(epsilon_i)=A_i) for sign (+1), (B_i) for (-1), and set
-[
- t_i(A,B)=mathbb E_epsilon[epsilon_i F(Z(epsilon))].
-]
+\[
+t_i(A,B)=\mathbb E_{\epsilon}[\epsilon_i F(Z(\epsilon))].
+\]
 
-**Exact identity:**
-[
-oxed{2,mathbb E_{A,B}sum_i t_i(A,B)^2
-=sum_{arnothing
-eq Ssubseteq[n]} |S|,2^{1-|S|}W_S.}	ag{1}
-]
+Then the **exact spectral identity** is
 
-**Proof.** For a pure degenerate component (F_S) with (iin S), the (i)-th first-sign coefficient is the coordinate-pair difference ((D_iF)(a_i,b_i)=rac12(F(a_i)-F(b_i))), followed by coordinate-pair averages (M_j=(f(a_j)+f(b_j))/2) for each (jin Ssetminus{i}). Under independent pairs, each of these maps divides the squared (L^2) norm by (2) on the corresponding centered coordinate subspace. Their product therefore contributes (2^{-|S|}W_S). Components indexed by distinct (S) remain orthogonal because at least one coordinate in their symmetric difference is centered in exactly one component. Sum over (iin S) and multiply by 2. Constants have no signed coefficient.
+\[
+\boxed{2\mathbb E_{A,B}\sum_i t_i(A,B)^2
+=\sum_{\varnothing\ne S\subseteq[n]} |S|\,2^{1-|S|}W_S.}\tag{1}
+\]
 
-Equivalently, writing product noise stability (N(ho)=mathbb E F,T_ho F=sum_S ho^{|S|}W_S),
-[
-2mathbb Esum_i t_i^2=N'(1/2), qquad W_1=N'(0).
-]
-The two-copy method evaluates the **wrong spectral derivative**. It includes every degree-two component with weight 1, even though the target first-level budget involves only degree one.
+**Derivation.** For a pure degenerate component \(F_S\) with \(i\in S\), the \(i\)-th signed coefficient is a pairwise difference \(D_i\) (square norm factor \(1/2\)) followed by pairwise averages \(M_j\) (each contributing another square norm factor \(1/2\)) for all \(j\in S\setminus\{i\}\). Thus each \(i\in S\) contributes \(2^{-|S|}W_S\). Different \(S\) remain orthogonal, and constants contribute no signed coefficient. Summing over \(i\in S\) and multiplying by two proves (1).
 
-## Exact four-sign no-go
+For product noise stability \(N(\rho)=\sum_S\rho^{|S|}W_S\), equation (1) equals \(N'(1/2)\); the genuine first-level projection budget is \(W_1=N'(0)\). The two-copy operator evaluates the **wrong spectral derivative** and assigns every second-order component the same coefficient as a first-order component.
 
-Take independent fair (epsilon_1,dots,epsilon_4in{-1,+1}), shift (h=0), (c=1), (F=|epsilon_1+cdots+epsilon_4|). The Walsh expansion is exactly
-[
-F=rac32+rac12sum_{i<j}epsilon_iepsilon_j-rac12prod_iepsilon_i.
-]
-Thus (u=mathbb EF=3/2), (W_1=0), (W_2=3/2), (W_4=1/4). Identity (1) gives
-[
-2mathbb Esum_i t_i^2 = W_2+	frac12 W_4
-=	frac32+	frac18=	frac{13}{8}>	frac32=c,u.
-]
-Hence the proposed *stronger* two-copy comparison
-(2Esum_i t_i^2le |h|^2+c u)
-is FALSE by exactly (1/8), while the original desired (W_1le|h|^2+c u) holds with (W_1=0). The counterexample is also independently checkable by direct enumeration over (4^4) equally likely draw-pairs and all (2^4) orientations. No floating point or tolerance is involved.
+## Exact four-sign counterexample to the *stronger* operator bound
 
-## Research operator to retain
+Let \(\epsilon_1,\dots,\epsilon_4\) be independent fair signs, set \(h=0\), \(c=1\), and
 
-The correct object is *exact zero-correlation first-chaos projection*, not a positive-correlation two-copy sign energy bound. Any proof using pair symmetrization must subtract or cancel all degree-two and higher components before appealing to the (c,E|X|) budget. Increasing the replica count or lowering a fixed positive noise correlation does not achieve a dimension-free conclusion without controlling the residual spectral tail.
+\[
+F=\left|\sum_{i=1}^4\epsilon_i\right|
+=\frac32+\frac12\sum_{i<j}\epsilon_i\epsilon_j-\frac12\prod_{i=1}^4\epsilon_i.
+\]
 
-**Proof status:** paper identity with independent exact enumeration; no pinned Lean compilation, no external referee. **Scope:** arbitrary finite independent source laws, scalar real output (F) (in particular (F=|h+sum_iY_i|)). This is an operator obstruction, not an inequality for arbitrary high-dimensional agent systems.
+Consequently,
+
+\[
+u=\mathbb EF=\frac32,\qquad W_1=0,\qquad W_2=\frac32,\qquad W_4=\frac14.
+\]
+
+Equation (1) gives
+
+\[
+2\mathbb E_{A,B}\sum_i t_i^2=W_2+\tfrac12 W_4
+=\frac{13}{8}>\frac32=c\,u,
+\]
+
+with **exact gap \(1/8\)**. Hence the *stronger* proposed comparison \(2\mathbb E\sum_i t_i^2\le\|h\|^2+c\,u\) is **false**. By contrast, the actual desired \(W_1\le\|h\|^2+c\,u\) holds here with \(W_1=0\). This does not disprove the original first-chaos conjecture.
+
+The stand-alone \`check_two_copy_four_sign_no_go.py\` enumerates \(256\) paired assignments and \(16\) orientations per assignment using Python \`fractions.Fraction\`, checking the identity and gap without floating point, discretization or tolerance.
+
+## Reusable research lesson and remaining gap
+
+An unrestricted first-chaos proof must isolate the exact zero-correlation projection, rather than bounding the uncorrected two-copy positive-correlation energy. Pair symmetrization requires explicit subtraction or cancellation of degree-two and higher Fourier/Hoeffding leakage. Raising replica count alone does not certify the missing universal norm inequality without a spectral-tail argument.
+
+**Audit boundary:** independent exact code replay verifies the counterexample and coefficient arithmetic; the universal identity has an analytic operator proof, not an independently human-reviewed or Lean-certified source formalization. The cited calculation concerns finite independent scalar laws, not deployment correctness or unrestricted Hilbert-space first-chaos bounds.
+
+**Attribution and dependencies:** NIGHTFALL research directed by Devin J. Wright; related merged symmetric first-chaos PR #574, orthogonal-source PR #572, and one-increment Lean PR #571. The checker is source-controlled with this note. The previous text version accidentally contained 7 ASCII control characters in formula markup; this revision restores readable equations without changing the scientific claim.
