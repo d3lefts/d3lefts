@@ -1,6 +1,6 @@
 # Current-main implementation reconciliation and recovery gate — v1.1
 
-This file records a source-backed observation, **not** a claim that full historical functionality is currently present in the Python app. The baseline audited was GitHub main at **c562a76821d95aaa40d3db794b371e5c788f49ad** on November 16, 2026. Refresh this checkpoint on every future integration.
+This file records a source-backed observation, **not** a claim that full historical functionality is currently present in the Python app. The baseline audited was GitHub main at **c562a76821d95aaa40d3db794b371e5c788f49ad** on November 15, 2026 (U.S. Eastern). Refresh this checkpoint on every future integration.
 
 ## Main component inventory
 
