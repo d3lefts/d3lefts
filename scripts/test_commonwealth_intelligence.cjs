@@ -51,7 +51,7 @@ const app = read("docs/commonwealth-intelligence.js");
 for(const prohibited of [/\bfetch\s*\(/,/\bXMLHttpRequest\b/,/\blocalStorage\b/,/\bsessionStorage\b/,/\bsendBeacon\b/])
   assert(!prohibited.test(app),"Public demo must not retrieve or persist private data: "+prohibited);
 const html=read("docs/commonwealth-intelligence.html");
-for(const label of ["SYNTHETIC ONLY","NOT SAVED","NOT LEGAL CERTIFICATION","NOT AUTHORIZED","commonwealth-fixtures.js","commonwealth-app.js"])
+for(const label of ["SYNTHETIC ONLY","NOT SAVED","NOT LEGAL CERTIFICATION","NOT AUTHORIZED","commonwealth-intelligence-fixtures.js","commonwealth-intelligence.js"])
   assert(html.includes(label),"Missing explicit boundary: "+label);
 assert(read("docs/commonwealth.html").includes('href="commonwealth-intelligence.html"'),"Canonical Commonwealth product page must link to the intelligence lab");
 console.log("PASS: Commonwealth public demo fixture parity, tenure boundaries, procedure separation, 12 archetypes, and site links");
