@@ -89,6 +89,49 @@ theorem A_all_diagonal_entries_zero (d : ℕ) (hd : 0 < d)
     (a : Register d) : unnormalizedA d a a = 0 := by
   exact actual_A_zero_if_local_diagonal d a a ⟨0, hd⟩ rfl
 
+theorem two_GHZ_rays_distinct (d : ℕ) (hd : 0 < d) :
+    zeroRay d ≠ oneRay d := by
+  intro h
+  have h01 : (0 : Fin 2) = 1 := by
+    simpa [zeroRay, oneRay] using
+      congrArg (fun v : Register d => v ⟨0, hd⟩) h
+  exact (by decide : (0 : Fin 2) ≠ 1) h01
+
+theorem physical_A_is_two_corner_matrix (d : ℕ) (hd : 0 < d) :
+    unnormalizedA d =
+      Matrix.single (zeroRay d) (oneRay d)
+        (unnormalizedA d (zeroRay d) (oneRay d)) +
+      Matrix.single (oneRay d) (zeroRay d)
+        (unnormalizedA d (oneRay d) (zeroRay d)) := by
+  classical
+  have hray := two_GHZ_rays_distinct d hd
+  ext a b
+  by_cases h1 : a = zeroRay d ∧ b = oneRay d
+  · rcases h1 with ⟨rfl, rfl⟩
+    simp [Matrix.single, hray, hray.symm]
+  by_cases h2 : a = oneRay d ∧ b = zeroRay d
+  · rcases h2 with ⟨rfl, rfl⟩
+    simp [Matrix.single, hray, hray.symm]
+  have hf : a ≠ zeroRay d ∨ b ≠ oneRay d := not_and_or.mp h1
+  have hb : b ≠ zeroRay d ∨ a ≠ oneRay d := (not_and_or.mp h2).symm
+  have hzero := A_zero_outside_two_GHZ_corners d a b hf hb
+  simp [Matrix.single, hzero, h1, h2, eq_comm]
+
+theorem actual_physical_A_trace_two_rays
+    (d : ℕ) (hd : 0 < d)
+    (E : Matrix (Register d) (Register d) ℂ) :
+    Matrix.trace (unnormalizedA d * E) =
+      unnormalizedA d (zeroRay d) (oneRay d) *
+        E (oneRay d) (zeroRay d) +
+      unnormalizedA d (oneRay d) (zeroRay d) *
+        E (zeroRay d) (oneRay d) := by
+  classical
+  rw [physical_A_is_two_corner_matrix d hd, add_mul, Matrix.trace_add]
+  simp only [Matrix.trace_single_mul, smul_eq_mul]
+
+#print axioms Nightfall.Quantum.PhysicalNumerator.two_GHZ_rays_distinct
+#print axioms Nightfall.Quantum.PhysicalNumerator.physical_A_is_two_corner_matrix
+#print axioms Nightfall.Quantum.PhysicalNumerator.actual_physical_A_trace_two_rays
 #print axioms Nightfall.Quantum.PhysicalNumerator.C_zero_outside_GHZ_corner
 #print axioms Nightfall.Quantum.PhysicalNumerator.A_zero_outside_two_GHZ_corners
 #print axioms Nightfall.Quantum.PhysicalNumerator.A_nonzero_implies_GHZ_corners

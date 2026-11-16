@@ -38,7 +38,7 @@ jobs:
           set -euo pipefail
           mkdir -p numerator-receipts
           N=Nightfall.Quantum.PhysicalNumerator
-          python3 scripts/lean_bridge.py research/nightfall/formalization/quantum/PhysicalOutcomeNumerator.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.C_zero_outside_GHZ_corner" --decl "$N.A_zero_outside_two_GHZ_corners" --decl "$N.A_nonzero_implies_GHZ_corners" --decl "$N.A_all_diagonal_entries_zero" --json-out numerator-receipts/source-support.json
+          python3 scripts/lean_bridge.py research/nightfall/formalization/quantum/PhysicalOutcomeNumerator.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.C_zero_outside_GHZ_corner" --decl "$N.A_zero_outside_two_GHZ_corners" --decl "$N.A_nonzero_implies_GHZ_corners" --decl "$N.A_all_diagonal_entries_zero" --decl "$N.two_GHZ_rays_distinct" --decl "$N.physical_A_is_two_corner_matrix" --decl "$N.actual_physical_A_trace_two_rays" --json-out numerator-receipts/source-support.json
           python3 research/nightfall/formalization/product_space/check_receipts.py numerator-receipts/source-support.json
       - name: Freeze source provenance
         if: always()
