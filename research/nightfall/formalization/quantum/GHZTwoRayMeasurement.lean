@@ -27,13 +27,17 @@ noncomputable def projectPlus : Matrix (Fin 2) (Fin 2) ℂ :=
 noncomputable def projectMinus : Matrix (Fin 2) (Fin 2) ℂ :=
   (1 / 2 : ℂ) • Matrix.vecMulVec ketMinus (star ketMinus)
 
+theorem complex_half_nonneg : (0 : ℂ) ≤ 1 / 2 := by
+  rw [RCLike.nonneg_iff]
+  constructor <;> norm_num
+
 theorem projectPlus_posSemidef : projectPlus.PosSemidef := by
   exact (Matrix.posSemidef_vecMulVec_self_star ketPlus).smul
-    (RCLike.ofReal_nonneg.mpr (by norm_num : (0 : ℝ) ≤ 1 / 2))
+    complex_half_nonneg
 
 theorem projectMinus_posSemidef : projectMinus.PosSemidef := by
   exact (Matrix.posSemidef_vecMulVec_self_star ketMinus).smul
-    (RCLike.ofReal_nonneg.mpr (by norm_num : (0 : ℝ) ≤ 1 / 2))
+    complex_half_nonneg
 
 theorem two_projectors_complete : projectPlus + projectMinus = 1 := by
   ext i j
