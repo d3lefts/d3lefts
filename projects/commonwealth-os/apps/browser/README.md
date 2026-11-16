@@ -39,3 +39,9 @@ The additional `workspace.mjs` UI provides the three full 24-question **unvalida
 Run tests with `npm test` from this directory. See [Product Design v1.1](../../product-design/v1.1/README.md) and the [web workbench handoff](../../../../docs/commonwealth-browser/README.md).
 
 **Not implemented:** real record import, historical geography authentication, real DOB/address profile, persistent personal civic data, legal authority, secure ballot custody or a production frontend/backend. A simulated recorded official is not a real elected official.
+
+## Participation v1.2 — proposal to accountability
+
+[New end-to-end synthetic design and limits](PARTICIPATION_V1_2.md). The browser now supports fictional proposal drafting, transparent deliberation, written amendment review with full revision history, nonbinding advisory responses tied to exact revisions, mandatory rationales for simulated institutional responses, milestone/correction tracking, meeting-agenda examples, and a ceiling-constrained participatory budget planner. It links related fictional topics to the separate dated historical-roll-call workspace while preserving precise status and uncertainty.
+
+All actions remain **local browser state only**. A freely selectable `DEMO_STEWARD` is not an authenticated administrator; no collective ballots, moderation, real government records, cryptographic proof of locally edited proposals, real budgets, or institutional deployment are implemented. The existing ten-check synthetic Proof Passport checker is unchanged and **does not validate locally edited proposals**. Source and mirrored GitHub Pages modules are kept byte-identical and the new pure reducer is separately tested.
