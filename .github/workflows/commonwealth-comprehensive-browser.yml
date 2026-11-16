@@ -84,11 +84,7 @@ jobs:
           node-version: '22'
       - name: Install pinned PostgreSQL adapter
         working-directory: projects/commonwealth-os/apps/server
-        run: |
-          npm install --ignore-scripts --no-audit --no-fund
-          echo BEGIN_CW_PG_LOCK
-          cat package-lock.json
-          echo END_CW_PG_LOCK
+        run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Cold migration, two-client race, privacy, corruption and HTTP
         working-directory: projects/commonwealth-os/apps/server
         run: CW_PG_RECOVERY_MANIFEST="$RUNNER_TEMP/cw-pg-expected.json" npm run test:pg
