@@ -18,7 +18,44 @@ main{padding:24px 22px calc(110px + env(safe-area-inset-bottom))}.prepilot{color
 .bottom{position:fixed;bottom:0;width:100%;max-width:460px;height:calc(74px + env(safe-area-inset-bottom));background:#0e1b2bf2;border-top:1px solid #334358;display:grid;grid-template-columns:repeat(4,1fr);padding:9px 9px calc(8px + env(safe-area-inset-bottom));backdrop-filter:blur(20px);z-index:20}.nav{background:transparent;border:0;color:#9eb1c4;font-size:10px;letter-spacing:.01em;display:flex;flex-direction:column;align-items:center;gap:4px;justify-content:center;min-height:47px}.nav .symbol{font-size:21px;line-height:20px}.nav.active{color:var(--mint);font-weight:770}.stepno{display:inline-flex;align-items:center;justify-content:center;border:1px solid #476077;width:27px;height:27px;border-radius:8px;color:var(--mint);font-weight:850;font-size:12px}.decisionBtns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:17px}.decisionBtns .btn{font-size:16px}.disabledExplain{padding:12px;border:1px dashed #60758c;border-radius:10px;font-size:12px;color:var(--muted)}.source{font-size:12px;color:#d2e9f3;overflow-wrap:anywhere;text-decoration:underline;text-underline-offset:3px}.timeline{border-left:2px solid #45637a;padding-left:15px;margin:10px 0 10px 12px}.timeline > div{position:relative;margin-bottom:16px}.timeline > div:before{content:"";position:absolute;width:9px;height:9px;background:var(--mint);border-radius:50%;left:-20.5px;top:7px}.label{font-size:10px;letter-spacing:.1em;font-weight:800;color:var(--mint);text-transform:uppercase}.barline{height:1px;background:#2e4155;margin:13px 0}.legal{font-size:11px;color:#93a8bd;line-height:1.55;margin:16px 0}.empty{border:1px dashed #566a7e;border-radius:14px;padding:20px;color:var(--muted);font-size:14px;text-align:center}
 @media(min-width:700px){body{padding:30px 0}#stage{border-radius:26px;overflow:hidden;min-height:880px}.bottom{bottom:30px;border-radius:0 0 26px 26px}main{min-height:780px}}@media(prefers-reduced-motion:reduce){*,*::after,*::before{scroll-behavior:auto!important;transition:none!important}}
 </style></head>
-<body><div id="stage"><header class="appbar"><div class="brand"><div class="brandmark" aria-hidden="true">◇</div><div class="brandtxt">COMMONWEALTH <span style="color:var(--mint)">OS</span><span class="brandsub">THE LIVING VOTER</span></div></div><div class="headright"><span class="chip">RESEARCH DEMO</span></div></header><main id="view" aria-live="polite"></main><nav class="bottom" id="bottomNav" aria-label="Main navigation" hidden></nav></div>
+<body><div id="stage"><header class="appbar"><div class="brand"><div class="brandmark" aria-hidden="true">◇</div><div class="brandtxt">COMMONWEALTH <span style="color:var(--mint)">OS</span><span class="brandsub">THE LIVING VOTER</span></div></div><div class="headright"><span class="chip">RESEARCH DEMO</span></div></header><main id="view" aria-live="polite"><section id="preview-start">
+<p class="prepilot">A citizen-centered democracy</p>
+<h1 class="title">Government should be understandable.</h1>
+<p class="lead">Discover a governance issue. Review the evidence. Decide how you would vote. Then examine elected officials' documented roll calls.</p>
+<div class="heroGraphic" aria-hidden="true"><div class="ballot"><div class="line short"></div><div class="line"></div><div class="line"></div><div class="check">✓</div></div></div>
+<div class="callout"><strong>Mobile preview mode.</strong> If this file viewer blocks JavaScript, the reference walkthrough below remains readable. These choices are hypothetical, nonbinding, and never transmitted.</div>
+<div class="actions"><a class="btn primary" href="#preview-survey">01 · Optional survey ↓</a><a class="btn secondary" href="#preview-dashboard">02 · Living Voter Dashboard ↓</a><a class="btn secondary" href="#preview-evidence">03 · Examine a governance issue ↓</a><a class="btn secondary" href="#preview-choice">04 · Simulate my vote ↓</a><a class="btn secondary" href="#preview-record">05 · Official representative vote ↓</a></div>
+</section>
+<section id="preview-survey" style="padding-top:40px">
+<p class="prepilot">01 / Optional questionnaire</p><h2 class="title sm">What matters to you?</h2>
+<div class="card"><h3>Illustrative, not an actual referendum</h3><p>Should a hypothetical student council publish its agenda at least 72 hours before meetings?</p>
+<form class="stack" aria-label="Illustrative survey choice">
+<label><input type="radio" name="survey"> Support</label><label><input type="radio" name="survey"> Don't support</label><label><input type="radio" name="survey"> No preference</label><label><input type="radio" name="survey"> Need more information</label><label><input type="radio" name="survey"> Skip</label></form>
+<p class="small muted">This static walkthrough does not save a response. Survey answers do not cast votes.</p></div>
+<a class="btn primary" href="#preview-dashboard">Continue to dashboard ↓</a></section>
+<section id="preview-dashboard" style="padding-top:40px"><p class="prepilot">02 / Your information</p><h2 class="title sm">Living Voter Dashboard</h2>
+<div class="stats"><div class="stat"><strong>Views</strong><span>Voluntary survey responses</span></div><div class="stat"><strong>Choices</strong><span>Retrospective simulated votes</span></div><div class="stat"><strong>Records</strong><span>Official member roll calls</span></div><div class="stat"><strong>3</strong><span>Historical sample records</span></div></div>
+<p class="small muted">This preview does not infer your location or voting registration. The full prototype uses in-memory choices only.</p>
+<a class="btn primary" href="#preview-evidence">Explore exact historical question ↓</a></section>
+<section id="preview-evidence" style="padding-top:40px"><p class="prepilot">03 / Source-grounded understanding</p><h2 class="title sm">Review an actual House motion</h2>
+<div class="card"><div class="eyebrow">House 297 · September 14, 2026</div><h3>H.R. 3276 · Local Communities &amp; Bird Habitat Stewardship Act</h3>
+<p><strong>Exact question:</strong> On Motion to Suspend the Rules and Pass, as Amended.</p>
+<p class="small muted">A Yea supports passage under this procedure; a Nay opposes passage under this procedure. The record does not establish each member's motives or views about every section.</p>
+<a class="source" href="https://clerk.house.gov/Votes/2026297" target="_blank" rel="noopener noreferrer">Official House Clerk roll call ↗</a></div>
+<a class="btn primary" href="#preview-choice">Practice a nonbinding decision ↓</a></section>
+<section id="preview-choice" style="padding-top:40px"><p class="prepilot">04 / Hypothetical retrospective choice</p><h2 class="title sm">How would you have voted?</h2><p class="lead">This is not a ballot you cast in the past, nor an actual election.</p>
+<div class="card"><form class="stack" aria-label="Retrospective simulated vote">
+<label><input type="radio" name="historical-choice"> Yea</label><label><input type="radio" name="historical-choice"> Nay</label><label><input type="radio" name="historical-choice"> No preference</label>
+</form><p class="small muted">The preview does not save, transmit or count this choice.</p></div>
+<a class="btn primary" href="#preview-record">Reveal official recorded position ↓</a></section>
+<section id="preview-record" style="padding-top:40px"><p class="prepilot">05 / Recorded public evidence</p><h2 class="title sm">How did representatives vote?</h2>
+<div class="card"><div class="eyebrow">Same House motion · Roll 297</div><h3>Rep. Dale Strong · Alabama House District 5</h3><span class="position">Nay</span><p><a class="source" href="https://clerk.house.gov/Votes/2026297" target="_blank" rel="noopener noreferrer">Inspect the official House roll call ↗</a></p></div>
+<div class="card"><div class="eyebrow">Different Senate procedural questions</div><h3>Alabama's U.S. Senators</h3>
+<p>Senate Roll 259, November 12, 2026: Katie Britt — Yea; Tommy Tuberville — Yea (cloture on the Gregory Carl Cook nomination).</p><p><a class="source" href="https://www.senate.gov/legislative/LIS/roll_call_votes/vote1192/vote_119_2_00259.htm" target="_blank" rel="noopener noreferrer">Official Senate roll 259 ↗</a></p>
+<p>Senate Roll 262, November 12, 2026: Katie Britt — Yea; Tommy Tuberville — Not Voting (cloture on the Anna St. John nomination).</p><p><a class="source" href="https://www.senate.gov/legislative/LIS/roll_call_votes/vote1192/vote_119_2_00262.htm" target="_blank" rel="noopener noreferrer">Official Senate roll 262 ↗</a></p>
+<p class="small muted">These Senate cloture motions are not the same question as House Roll 297, nor are they final confirmation votes. Not Voting is not Nay.</p></div>
+<a class="btn secondary" href="#preview-start">Back to introduction ↑</a>
+</section></main><nav class="bottom" id="bottomNav" aria-label="Main navigation" hidden></nav></div>
 <script>
 'use strict';
 // Demonstration data, independently linked to dated official House and Senate roll-call records.
