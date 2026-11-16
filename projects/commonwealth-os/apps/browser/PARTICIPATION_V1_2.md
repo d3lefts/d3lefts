@@ -5,7 +5,7 @@
 ## Competitor-parity capabilities (within scope of a local demonstration)
 
 - Proposal docket: search/filter, create draft, inspect exact text version and lifecycle status, institution-scoped synthetic UAH/HOA/municipal cases.
-- Public deliberation **simulation**: add comments classified as question, support or concern; visibly distinguish unreviewed comments from authorized evidence. No actual cross-user collaboration or moderation service.
+- Public deliberation **simulation**: add comments classified as question, support or concern; fictional reviewers can answer each individually with a reason. Unanswered concerns are counted and remain visible; real moderation is still absent. No actual cross-user collaboration or moderation service.
 - Amendment review: submit an alternative text and reason; fictional steward may accept or decline with a written explanation. Accepting increments the revision, invalidates prior-revision advisory positions and supersedes competing outstanding amendments.
 - Voluntary advisory stance for the **exact displayed revision**, with Unknown ≠ No preference, no ballot/identity/representative claim.
 - Decision feedback: a fictional institution must provide a reasoned transition; accepted/declined/review stages never silently disappear. Local demo steward mode does not confer real authority.
@@ -26,7 +26,7 @@ Source: `participation-core.mjs` (pure reducer, fixture data and budget logic), 
 
 ## Evidence, exclusions, and defects to test next
 
-Tests of the new reducer include 16 cases for institution separation, version semantics, stale amendments, transitions, budget caps, corrections, and public-export privacy. Separate author-side Chromium interaction tests exercised desktop and mobile layout with synthetic local fixtures and bundled scripts. They **do not verify a deployed browser with real HTTP module fetching**, nor provide independent security, identity, legal, source-authenticity, open-record completeness, moderation, publication, accessibility or election certification.
+Tests of the new reducer include 17 cases for institution separation, version semantics, stale amendments, transitions, budget caps, corrections, and public-export privacy. Separate author-side Chromium interaction tests exercised desktop and mobile layout with synthetic local fixtures and bundled scripts. They **do not verify a deployed browser with real HTTP module fetching**, nor provide independent security, identity, legal, source-authenticity, open-record completeness, moderation, publication, accessibility or election certification.
 
 These demonstrations are **not** functionally equivalent to Decidim/CONSUL live multi-user platforms: no persistence, moderation queue, approval permissions, real budgeting allocation, authentic membership, or operational hosting exists. Future server-side work must implement these with evidence and institutional approval before enabling actual participation. Keep exact source mapping and public-roll-call custody distinct from individual private preference/identity data. UAH → other Huntsville universities → high schools → HOAs → Huntsville council remains the proposed staged research adoption sequence.
 
