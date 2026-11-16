@@ -51,7 +51,18 @@ function renderDetail(){
  const older=p.positions.filter(x=>x.revision!==p.revision);if(older.length)feedback.append(message(`${older.length} older-version response(s) explicitly excluded from this revision.`));panel.append(feedback);
  const discussion=element('section','cwpart-subsection');discussion.append(element('h4','','Deliberation · comments and concerns'));
  if(!p.comments.length)discussion.append(message('No fictional visitor contributions yet; unreviewed comments do not become an institutional finding.'));
- for(const c of p.comments){append(discussion,append(element('div','cwpart-discussion'),element('span','cwpart-meta',c.stance+' · revision '+c.revision+' · '+c.status),element('p','',c.text)));}
+ for(const c of p.comments){
+  const entry=append(element('div','cwpart-discussion'),element('span','cwpart-meta',c.stance+' · revision '+c.revision+' · '+c.status),element('p','',c.text));
+  if(c.response)entry.append(append(element('div','cwpart-response'),element('strong','','Reviewer response · fictional only'),element('p','',c.response)));
+  if(mode==='STEWARD'&&c.status==='UNANSWERED_FICTIONAL'){
+   const rf=field('cwpart-reply-'+c.id,'Written response for '+c.id);
+   append(entry,rf,button('Answer this question/concern',()=>apply({type:'RESPOND_COMMENT',id:p.id,commentId:c.id,reason:rf.querySelector('input').value,role:'DEMO_STEWARD'}),{secondary:true}));
+  }
+  discussion.append(entry);
+ }
+ const unanswered=p.comments.filter(x=>x.status!=='ANSWERED_IN_SIMULATION').length;
+ discussion.append(message(unanswered+' unresolved fictional contribution(s); unanswered concerns remain visible.'));
+
  const commentForm=element('form','cwpart-form');const stance=field('cwpart-comment-stance','Contribution type','select');for(const opt of ['QUESTION','SUPPORT','CONCERN']){const o=element('option','',opt);o.value=opt;stance.querySelector('select').append(o);}const comment=field('cwpart-comment-text','Your reasoned contribution (10–500 characters)','textarea');
  append(commentForm,stance,comment,button('Add local contribution',()=>{const val=comment.querySelector('textarea').value;const st=stance.querySelector('select').value;apply({type:'COMMENT',id:p.id,text:val,stance:st});},{disabled:!['OPEN','REVIEW'].includes(p.stage)}));discussion.append(commentForm);panel.append(discussion);
  const amendments=element('section','cwpart-subsection');amendments.append(element('h4','','Collaborative amendments · text version history'));
