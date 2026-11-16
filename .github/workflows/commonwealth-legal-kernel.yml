@@ -1,0 +1,29 @@
+name: Commonwealth legal kernel (fictional only)
+on:
+  push:
+    paths:
+      - "projects/commonwealth-os/legal/**"
+      - ".github/workflows/commonwealth-legal-kernel.yml"
+  pull_request:
+    paths:
+      - "projects/commonwealth-os/legal/**"
+      - ".github/workflows/commonwealth-legal-kernel.yml"
+permissions:
+  contents: read
+jobs:
+  independent-legal-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Adversarial unit tests and checker agreement
+        run: python -m unittest discover -s projects/commonwealth-os/legal/tests -p "test_*.py" -v
+      - name: Primary deterministic proof replay
+        run: python projects/commonwealth-os/legal/kernel.py projects/commonwealth-os/legal/fixtures/riverfront_passport.json
+      - name: Independently implemented replay
+        run: python projects/commonwealth-os/legal/independent_checker.py projects/commonwealth-os/legal/fixtures/riverfront_passport.json
+      - name: Source-grounded dossier build (no personal data)
+        run: python projects/commonwealth-os/legal/dossier.py
