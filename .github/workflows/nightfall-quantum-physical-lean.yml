@@ -42,6 +42,12 @@ jobs:
           set -euo pipefail
           cp research/nightfall/formalization/quantum/TernaryPhase.lean /tmp/mathlib4/TernaryPhase.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/TernaryPhase.olean TernaryPhase.lean)
+      - name: Compile actual local p=3/4 ternary operator coefficients
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/quantum/TernaryLocalMoments.lean /tmp/mathlib4/TernaryLocalMoments.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/TernaryLocalMoments.olean TernaryLocalMoments.lean)
       - name: Compile arbitrary complex PSD effect coherence constraint
         shell: bash
         run: |
@@ -74,6 +80,8 @@ jobs:
           SRC=research/nightfall/formalization/quantum/PhysicalQubitEnsemble.lean
           N=Nightfall.Quantum.PhysicalQubit
           python3 scripts/lean_bridge.py "$SRC" --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.densityOfAmplitude_psd" --decl "$N.qubitDensity_psd" --decl "$N.productDensity_psd" --decl "$N.productDensity_entry" --decl "$N.productDensity_trace_one" --decl "$N.qubitAmplitude_norm_one" --decl "$N.normalized_product_physical" --decl "$N.powered_phase_product_physical" --json-out quantum-receipts/physical.json
+          N=Nightfall.Quantum.LocalTernaryMoments
+          python3 scripts/lean_bridge.py research/nightfall/formalization/quantum/TernaryLocalMoments.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.omega_star_sq" --decl "$N.actual_local_density_entry" --json-out quantum-receipts/local-moments.json
           N=Nightfall.Quantum.GHZTwoRay
           python3 scripts/lean_bridge.py research/nightfall/formalization/quantum/GHZTwoRayMeasurement.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.projectPlus_posSemidef" --decl "$N.projectMinus_posSemidef" --decl "$N.two_projectors_complete" --decl "$N.ghzMeasurement_complete" --decl "$N.ghz_measurement_attains_bayes_optimum" --decl "$N.ghz_measurement_optimal_among_all_physical_povms" --json-out quantum-receipts/ghz-measurement.json
           N=Nightfall.Quantum.ComplexPOVM
@@ -96,13 +104,14 @@ jobs:
           python3 research/nightfall/formalization/product_space/check_receipts.py quantum-receipts/ternary-source.json
           python3 research/nightfall/formalization/product_space/check_receipts.py quantum-receipts/complex-povm.json
           python3 research/nightfall/formalization/product_space/check_receipts.py quantum-receipts/ghz-measurement.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py quantum-receipts/local-moments.json
       - name: Freeze provenance
         if: always()
         run: |
           mkdir -p quantum-receipts
           git rev-parse HEAD > quantum-receipts/commit.txt
           git -C /tmp/mathlib4 rev-parse HEAD > quantum-receipts/mathlib.txt || true
-          sha256sum research/nightfall/formalization/quantum/PhysicalQubitEnsemble.lean research/nightfall/formalization/quantum/BayesPOVMCorner.lean research/nightfall/formalization/quantum/TensorCharacter.lean research/nightfall/formalization/quantum/TernaryPhase.lean research/nightfall/formalization/quantum/PhysicalPOVMCompression.lean research/nightfall/formalization/quantum/TernaryQuantumEnsemble.lean research/nightfall/formalization/quantum/ComplexPOVMOptimal.lean research/nightfall/formalization/quantum/GHZTwoRayMeasurement.lean > quantum-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/quantum/PhysicalQubitEnsemble.lean research/nightfall/formalization/quantum/BayesPOVMCorner.lean research/nightfall/formalization/quantum/TensorCharacter.lean research/nightfall/formalization/quantum/TernaryPhase.lean research/nightfall/formalization/quantum/PhysicalPOVMCompression.lean research/nightfall/formalization/quantum/TernaryQuantumEnsemble.lean research/nightfall/formalization/quantum/ComplexPOVMOptimal.lean research/nightfall/formalization/quantum/GHZTwoRayMeasurement.lean research/nightfall/formalization/quantum/TernaryLocalMoments.lean > quantum-receipts/SHA256SUMS.txt
       - name: Retain artifacts
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
