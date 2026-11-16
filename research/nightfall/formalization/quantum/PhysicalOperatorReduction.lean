@@ -84,8 +84,8 @@ theorem unnormalizedC_entry (d : ℕ)
     simp only [unnormalizedC, Matrix.sum_apply, Matrix.smul_apply]
     apply Finset.sum_congr rfl
     intro x _
-    rw [PhysicalQubit.productDensity_entry]
-    rfl
+    simp only [smul_eq_mul, state, character,
+      PhysicalQubit.productDensity_entry]
   rw [h]
   exact TensorCharacter.character_weighted_tensor_sum d TernaryPhase.omega
     (fun j s => PhysicalQubit.qubitDensity (Real.sqrt 3)
@@ -106,7 +106,7 @@ theorem unnormalizedA_from_actual_states (d : ℕ)
     unnormalizedA d a b =
       ∑ x : Fin d → Fin 3,
         ((character d x + star (character d x)) / 2) * (state d x a b) := by
-  simp [unnormalizedA]
+  simp [unnormalizedA, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul]
 
 #print axioms Nightfall.Quantum.OperatorReduction.state_is_physical
 #print axioms Nightfall.Quantum.OperatorReduction.unnormalizedB_entry
