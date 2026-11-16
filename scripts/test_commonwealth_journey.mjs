@@ -35,6 +35,7 @@ try{
   assert.equal(await page.locator("[data-cw-guide-link]").count(),5);
   assert.equal(await page.locator(".cw-archetype-card").count(),12,"12 themed sticker cards");
   assert.equal(await page.locator(".cw-archetype-card img").count(),12,"12 independent illustrations");
+  await page.waitForFunction(() => [...document.querySelectorAll(".cw-archetype-card img")].every(img=>img.complete));
   const failedImages=await page.locator(".cw-archetype-card img").evaluateAll(imgs=>
     imgs.filter(img=>!img.complete||img.naturalWidth===0).map(img=>img.src));
   assert.deepEqual(failedImages,[],"no failed sticker images");
