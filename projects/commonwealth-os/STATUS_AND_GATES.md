@@ -1,6 +1,6 @@
 # Commonwealth OS — proof, authorization and release gate register
 
-**Revision:** Product Design v1.1 reconciliation, source audit of main at c562a76821d95aaa40d3db794b371e5c788f49ad (2026-11-16). No external peer review, official institutional endorsement, real identity or production authorization is implied.
+**Revision:** Product Design v1.1 reconciliation, source audit of main at c562a76821d95aaa40d3db794b371e5c788f49ad (2026-11-15 U.S. Eastern). No external peer review, official institutional endorsement, real identity or production authorization is implied.
 
 ## Current executable / integration evidence
 
