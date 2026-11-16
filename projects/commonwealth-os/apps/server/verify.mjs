@@ -34,6 +34,14 @@ export function verifyEvidence(envelope,{trustedPublicKeyPem}={}) {
   check('EVENT_EDGE_'+e.seq,Object.hasOwn(edges,e.action)&&((e.action==='REVISE'&&e.from===e.to&&['DRAFT','IN_REVIEW'].includes(e.from))||(edges[e.action]&&edges[e.action][0]===e.from&&edges[e.action][1]===e.to))&&e.from===lastState);
   lastHash=hash;lastState=e.to;
   if(e.action==='LOCK')locked=e;
+  if(['OPEN','CAST','CLOSE','REVIEW'].includes(e.action)){
+    // Prove the signed event's claimed rule and eligibility epochs agree with
+    // the immutable LOCK event, even when exported after later changes.
+    check('EPOCH_WITNESS_'+e.seq,!!locked&&
+      e.details?.policyVersion===locked.details.policyVersion&&
+      e.details?.eligibilityVersion===locked.details.eligibilityVersion&&
+      e.details?.lockedRevision===locked.details.lockedRevision);
+  }
   if(e.action==='CAST')castEvents.push(e);
   if(e.action==='REVIEW')reviewEvent=e;
  }
@@ -44,11 +52,16 @@ export function verifyEvidence(envelope,{trustedPublicKeyPem}={}) {
   prev=r.bodyHash;
  }
  check('LATEST_REVISION',p.item.currentRevision===rev);
+ // Every policy history row must be hash-valid and version-contiguous.
+ // Only the latest is allowed to be advertised as the current active policy.
+ check('POLICY_HISTORY',Array.isArray(p.policies)&&p.policies.length>0&&
+   p.policies.every((row,i)=>row.version===i+1&&digest(row.policy)===row.hash)&&
+   p.institution.policyVersion===p.policies[p.policies.length-1].version);
  const revEvents=p.events.filter(e=>e.action==='REVISE'||e.action==='CREATE');
- check('REVISION_EVENTS',revEvents.length===rev&&revEvents.every((e,i)=>e.details.revision===i+1&&e.details.bodyHash===p.revisions[i].bodyHash));
+ check('REVISION_EVENTS',revEvents.length===rev&&revEvents.every((e,i)=>e.details.revision===i+1&&e.details.bodyHash===p.revisions[i].bodyHash&&e.actorId===p.revisions[i].author));
  if(locked){
   const d=locked.details;
-  check('MOTION_PIN',p.item.lockedRevision===d.lockedRevision&&d.lockedRevision===rev&&d.policyVersion===p.item.lockedPolicyVersion);
+  check('MOTION_PIN',p.item.lockedRevision===d.lockedRevision&&d.lockedRevision===rev&&d.policyVersion===p.item.lockedPolicyVersion&&d.eligibilityVersion===p.item.lockedEligibilityVersion);
   const active=p.policies.find(x=>x.version===d.policyVersion);
   check('POLICY_PIN',!!active&&active.hash===d.policyHash&&digest(active.policy)===active.hash);
   check('ROSTER_AT_LOCK',Array.isArray(d.eligibleRoster)&&new Set(d.eligibleRoster).size===d.eligibleRoster.length);
