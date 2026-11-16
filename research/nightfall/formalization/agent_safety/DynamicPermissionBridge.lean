@@ -226,21 +226,40 @@ theorem correlation_change_requires_recertification :
     ¬ Certifies broadSupport toySafe toyRead ∅ (false, false) ∧
     Certifies broadSupport toySafe toyRead
       ({⟨2, by decide⟩} : Finset (Fin 3)) (false, false) := by
-  decide
+  constructor
+  · intro v hv hsame
+    exact hv
+  constructor
+  · intro h
+    have hb := h (true, false) trivial (by simp [SameTranscript])
+    exact (by decide : ¬ toySafe (true, false)) hb
+  · intro v hv hsame
+    have hf := hsame ⟨2, by decide⟩ (by simp)
+    simpa [toyRead, toySafe] using hf
 
 theorem predicate_only_allowed :
     ∀ s ∈ ({⟨2, by decide⟩} : Finset (Fin 3)), toyAllowed s := by
+  intro s hs
+  have heq : s = (⟨2, by decide⟩ : Fin 3) := Finset.mem_singleton.mp hs
+  subst s
   decide
 
 theorem toy_private_recertification :
     PrivatePlan broadSupport toySafe toyRead ∅ toyAllowed
       (false, false) 1 ({⟨2, by decide⟩} : Finset (Fin 3)) := by
-  decide
+  refine ⟨predicate_only_allowed, ?_, ?_, ?_⟩
+  · simp
+  · decide
+  · intro v hv hsame
+    have hf := hsame ⟨2, by decide⟩ (by simp)
+    simpa [toyRead, toySafe] using hf
 
 theorem toy_privacy_requires_slot :
     ¬ PrivatePlan broadSupport toySafe toyRead ∅ toyAllowed
       (false, false) 0 ∅ := by
-  decide
+  intro hp
+  have hb := hp.2.2.2 (true, false) trivial (by simp [SameTranscript])
+  exact (by decide : ¬ toySafe (true, false)) hb
 
 /-- Decision-class noninterference: the predicate-only output carries no
 additional information distinguishing private worlds with the same decision. -/
