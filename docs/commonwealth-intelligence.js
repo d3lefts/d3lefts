@@ -353,6 +353,27 @@
       } else qs("#cw-quiz-feedback").textContent = "Native sharing is unavailable. Use Copy result summary instead.";
     });
   }
+  function initMenu(){
+    const button=qs("#menu-button"),nav=qs("#site-nav");
+    if(!button||!nav)return;
+    const close=()=>{
+      nav.classList.remove("open");
+      button.setAttribute("aria-expanded","false");
+      button.textContent="MENU +";
+    };
+    button.addEventListener("click",()=>{
+      const open=nav.classList.toggle("open");
+      button.setAttribute("aria-expanded",String(open));
+      button.textContent=open?"CLOSE −":"MENU +";
+    });
+    nav.querySelectorAll("a").forEach(link=>link.addEventListener("click",close));
+    document.addEventListener("keydown",event=>{
+      if(event.key==="Escape"&&nav.classList.contains("open")){close();button.focus();}
+    });
+    document.addEventListener("click",event=>{
+      if(nav.classList.contains("open")&&!nav.contains(event.target)&&!button.contains(event.target))close();
+    });
+  }
   const stages = [
     "A fictional human representative drafts a proposal. Source and version are identified.",
     "The text is amended. Prior versions remain inspectable, and authorizations are reconsidered.",
@@ -376,5 +397,5 @@
   window.COMMONWEALTH_DEMO_LOGIC = Object.freeze({tenureAt,recordPosition,questionLinks,resolveMembers,classify,qualifyQuiz,quizCount:quiz.length,archetypeCount:Object.keys(archetypes).length});
   // Allow DOM-free, independent model tests; no hidden network or storage setup.
   if (typeof document === "undefined" || !document.querySelector || !document.querySelector("#cw-issue")) return;
-  initHistory();initQuiz();initWorkflow();
+  initMenu();initHistory();initQuiz();initWorkflow();
 })();
