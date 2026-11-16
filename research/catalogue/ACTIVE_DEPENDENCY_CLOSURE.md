@@ -37,13 +37,14 @@ It records independently identified draft sources for:
   attaining POVM on [PR #658](https://github.com/d3lefts/d3lefts/pull/658).
   Its scoped Lean theorem passed; the original frozen q-terminal=open entry
   must not be misread as current proof status.
-- **F9:** the same-oracle fixed lower-bound component on
+- **F9:** the same-oracle fixed lower-bound component **and an all-length
+  squared sign-packet injection theorem** on
   [PR #659](https://github.com/d3lefts/d3lefts/pull/659). Its adaptive
-  all-k *legal policy* remains unformalized. Packet-algebra proofs and finite
+  all-k *legal policy* remains unformalized. The packet proof and finite
   transcript tests do not discharge this terminal gate.
 
 Run `python3 scripts/reconcile_source_linked_passports.py --self-test --live`
-to check two exact PR heads, source Git blobs, matching successful named CI
+to check three exact source records across two PR heads, Git blobs, matching successful named CI
 workflow runs and named source declaration presence, with **nine adversarial
 source/CI/claim-promotion mutations**. Head drift, failed workflow or changed
 source fails closed instead of silently promoting a claim.
