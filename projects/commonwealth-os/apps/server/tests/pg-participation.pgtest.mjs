@@ -55,6 +55,10 @@ test('cold migration, PostgreSQL durability, concurrent writers, AEAD tamper det
       const current=await pg.checkpoint(scope);
       assert.equal(current.headHash,expected.headHash);
       assert.equal(current.sequence,2);
+      // A restored ciphertext database without the independently retained key
+      // must fail closed, never produce invented or partial public history.
+      const wrongKey=new PgParticipationStore(pg.pool,Buffer.alloc(32,0));
+      await checkReject(wrongKey.checkpoint(scope),/PG_EVENT_AUTHENTICATION_FAILED/);
       const migratedRetry=await pg.command(tokens[scope]['member-a'],command(scope,{type:'ADVISE',id:'P-UAH-01',choice:'SUPPORT'},'legacy-stance-001',0,1));
       assert.deepEqual(migratedRetry,sourceA);
       assert.equal((await pg.checkpoint(scope)).sequence,2,'idempotent retry must not append');
