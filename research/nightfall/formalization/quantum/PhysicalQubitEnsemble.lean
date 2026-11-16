@@ -114,7 +114,7 @@ theorem qubitAmplitude_norm_one (r : ℝ) (θ : ℂ)
       _ = ((r : ℂ) ^ 2 + θ * star θ) / 4 := by
         have hrstar : star (r : ℂ) = (r : ℂ) := by simp
         have htwostar : star (2 : ℂ) = 2 := by norm_num
-        rw [hrstar, htwostar]
+        rw [star_div₀, star_div₀, hrstar, htwostar]
         ring
       _ = 1 := by rw [hrC, hθ]; norm_num
   rw [Fin.sum_univ_two]
