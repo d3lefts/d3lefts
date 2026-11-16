@@ -1,0 +1,280 @@
+{
+  "schema": "commonwealth.synthetic.case.v1",
+  "fictional": true,
+  "case_id": "riverfront-001",
+  "title": "Riverfront Condominium Proposal — Synthetic Case",
+  "jurisdiction": "fictional-river-city",
+  "legal_at": "2026-11-15T00:00:00Z",
+  "known_at": "2026-11-15T00:00:00Z",
+  "decision_question": "Should the fictional city approve the proposed condominium development on parcel P-001?",
+  "proposal_id": "project-001",
+  "sources": [
+    {
+      "id": "Z7",
+      "kind": "LEGAL",
+      "issuer": "Fictional River City Council",
+      "jurisdiction": "fictional-river-city",
+      "facts": [
+        {
+          "id": "Z7-f1",
+          "proposition": {
+            "predicate": "district_permits_review",
+            "args": [
+              "river-mixed",
+              "condominium"
+            ]
+          }
+        }
+      ],
+      "rules": [
+        {
+          "id": "Z7-r1",
+          "requires": [
+            "Z7-f1",
+            "MAP-f1",
+            "APP-f1",
+            "APP-f3"
+          ],
+          "conclusion": {
+            "predicate": "zoning_review_eligible",
+            "args": [
+              "project-001"
+            ]
+          },
+          "limitations": "Grounded synthetic interpretation; not actual legal holding"
+        }
+      ],
+      "raw_text": "Fictional ordinance Z-7: River-Mixed district permits multifamily proposals to seek site-plan review; this is not final approval.",
+      "source_uri": "synthetic://river-city/Z7",
+      "status": "ASSUMED_SYNTHETIC",
+      "published_at": "2026-10-01T00:00:00Z",
+      "effective_at": "2026-10-01T00:00:00Z",
+      "observed_at": "2026-11-01T00:00:00Z",
+      "supersedes": [],
+      "content_sha256": "f5d741340645ee971157dcdbc33354ab9737d4367ee4e796cc4ebc31ce5ab535"
+    },
+    {
+      "id": "F2",
+      "kind": "LEGAL",
+      "issuer": "Fictional River City Council",
+      "jurisdiction": "fictional-river-city",
+      "facts": [
+        {
+          "id": "F2-f1",
+          "proposition": {
+            "predicate": "floodplain_review_triggered_by",
+            "args": [
+              "regulated-floodplain",
+              "building"
+            ]
+          }
+        }
+      ],
+      "rules": [
+        {
+          "id": "F2-r1",
+          "requires": [
+            "F2-f1",
+            "MAP-f2",
+            "APP-f2",
+            "APP-f3"
+          ],
+          "conclusion": {
+            "predicate": "floodplain_review_required",
+            "args": [
+              "project-001"
+            ]
+          },
+          "limitations": "Grounded synthetic interpretation; not actual legal holding"
+        }
+      ],
+      "raw_text": "Fictional ordinance F-2: Building projects in mapped regulated floodplains require floodplain permit review; exceptions require separate legal assessment.",
+      "source_uri": "synthetic://river-city/F2",
+      "status": "ASSUMED_SYNTHETIC",
+      "published_at": "2026-10-01T00:00:00Z",
+      "effective_at": "2026-10-01T00:00:00Z",
+      "observed_at": "2026-11-01T00:00:00Z",
+      "supersedes": [],
+      "content_sha256": "56db129f34123f3a771c154271b00bff73002aff03840110801cf02dc03053af"
+    },
+    {
+      "id": "MAP",
+      "kind": "RECORD",
+      "issuer": "Fictional Planning Office",
+      "jurisdiction": "fictional-river-city",
+      "facts": [
+        {
+          "id": "MAP-f1",
+          "proposition": {
+            "predicate": "parcel_zone",
+            "args": [
+              "parcel-001",
+              "river-mixed"
+            ]
+          }
+        },
+        {
+          "id": "MAP-f2",
+          "proposition": {
+            "predicate": "parcel_flood_class",
+            "args": [
+              "parcel-001",
+              "regulated-floodplain"
+            ]
+          }
+        }
+      ],
+      "rules": [],
+      "raw_text": "Fictional cadastral map snapshot: parcel P-001 classified River-Mixed and within mapped regulated floodplain.",
+      "source_uri": "synthetic://river-city/MAP",
+      "status": "ASSUMED_SYNTHETIC",
+      "published_at": "2026-10-01T00:00:00Z",
+      "effective_at": "2026-10-01T00:00:00Z",
+      "observed_at": "2026-11-01T00:00:00Z",
+      "supersedes": [],
+      "content_sha256": "12010a0f03c1a5e7daa9b975d7dc3a5564cabbb05bfb03678551bf3c789d9dc9"
+    },
+    {
+      "id": "APP",
+      "kind": "RECORD",
+      "issuer": "Fictional Development Applicant",
+      "jurisdiction": "fictional-river-city",
+      "facts": [
+        {
+          "id": "APP-f1",
+          "proposition": {
+            "predicate": "project_type",
+            "args": [
+              "project-001",
+              "condominium"
+            ]
+          }
+        },
+        {
+          "id": "APP-f2",
+          "proposition": {
+            "predicate": "project_kind",
+            "args": [
+              "project-001",
+              "building"
+            ]
+          }
+        },
+        {
+          "id": "APP-f3",
+          "proposition": {
+            "predicate": "project_parcel",
+            "args": [
+              "project-001",
+              "parcel-001"
+            ]
+          }
+        },
+        {
+          "id": "APP-f4",
+          "proposition": {
+            "predicate": "proposed_units",
+            "args": [
+              "project-001",
+              84
+            ]
+          }
+        }
+      ],
+      "rules": [],
+      "raw_text": "Fictional application D-001: 84-unit condominium proposed on parcel P-001; no application has been legally approved.",
+      "source_uri": "synthetic://river-city/APP",
+      "status": "ASSUMED_SYNTHETIC",
+      "published_at": "2026-10-01T00:00:00Z",
+      "effective_at": "2026-10-01T00:00:00Z",
+      "observed_at": "2026-11-01T00:00:00Z",
+      "supersedes": [],
+      "content_sha256": "27a85e36d1810c1806e9ad59e445fd4e32450af686d328add8e56676f32c8572"
+    },
+    {
+      "id": "MARKET",
+      "kind": "THIRD_PARTY",
+      "issuer": "Fictional Comparative Survey",
+      "jurisdiction": "fictional-river-city",
+      "facts": [
+        {
+          "id": "MARKET-f1",
+          "proposition": {
+            "predicate": "median_home_price_usd",
+            "args": [
+              "fictional-river-city",
+              325000
+            ]
+          }
+        },
+        {
+          "id": "MARKET-f2",
+          "proposition": {
+            "predicate": "comparable_occupancy_pct",
+            "args": [
+              "fictional-river-city",
+              91
+            ]
+          }
+        }
+      ],
+      "rules": [],
+      "raw_text": "Fabricated comparative housing survey for example only: median area housing price USD 325000; comparable occupancy 91 percent; unknown sampling quality.",
+      "source_uri": "synthetic://river-city/MARKET",
+      "status": "ASSUMED_SYNTHETIC",
+      "published_at": "2026-10-01T00:00:00Z",
+      "effective_at": "2026-10-01T00:00:00Z",
+      "observed_at": "2026-11-01T00:00:00Z",
+      "supersedes": [],
+      "content_sha256": "ef0e9dbd682dc87f7c1b6ed7ffc431fdc446ed5109e6d65765a2c76703518129"
+    },
+    {
+      "id": "DEV",
+      "kind": "RECORD",
+      "issuer": "Fictional Corporate Registry",
+      "jurisdiction": "fictional-river-city",
+      "facts": [
+        {
+          "id": "DEV-f1",
+          "proposition": {
+            "predicate": "developer_name",
+            "args": [
+              "project-001",
+              "Riverwalk Development LLC"
+            ]
+          }
+        }
+      ],
+      "rules": [],
+      "raw_text": "Fictional corporate filing for example only: developer is Riverwalk Development LLC; ownership review is incomplete.",
+      "source_uri": "synthetic://river-city/DEV",
+      "status": "ASSUMED_SYNTHETIC",
+      "published_at": "2026-10-01T00:00:00Z",
+      "effective_at": "2026-10-01T00:00:00Z",
+      "observed_at": "2026-11-01T00:00:00Z",
+      "supersedes": [],
+      "content_sha256": "3cf0992bbefda4af452c06c9867c04d36baf021c261c08d856978bd79fc848b3"
+    }
+  ],
+  "goals": [
+    {
+      "predicate": "zoning_review_eligible",
+      "args": [
+        "project-001"
+      ]
+    },
+    {
+      "predicate": "floodplain_review_required",
+      "args": [
+        "project-001"
+      ]
+    },
+    {
+      "predicate": "development_approved",
+      "args": [
+        "project-001"
+      ]
+    }
+  ],
+  "caution": "No source, price, company or jurisdiction in this package is real. Model verification is not legal approval."
+}

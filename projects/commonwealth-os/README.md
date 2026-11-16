@@ -14,20 +14,6 @@ Commonwealth OS is a mobile-first, representative-first civic governance system 
 
 - [Mathematical Proof Passport workbench](assurance/README.md): explicitly scoped finite-world theorems, exact evidence certificate optimization, source-different audits, and documented unresolved deployment assumptions.
 
-## New: Commonwealth legal proof kernel (DEMO ONLY)
-
-The [Legal Knowledge Kernel](legal/README.md) supplies exact-text, version-scoped
-fictional legal derivations, a source-different checker, adversarial tests and
-a neutral riverfront civic dossier that exposes missing market and impact data.
-A supported deduction is **not** a legal opinion or evidence that its cited
-rule was correctly formalized. No actual law ingestion, legal precedent lookup,
-voter preference storage, official ballot or governmental effect is enabled.
-
-
-## Interactive historical and civic intelligence research lab
-
-The public site's [Historical & Civic Intelligence Lab](https://d3lefts.github.io/d3lefts/commonwealth-intelligence.html) is a synthetic-only, read-only fixture explorer and a browser-memory-only demonstration of voluntary issue preferences and a proposed 20-question / 12-archetype Discover entry point. It does not collect identity, store political profiles, ingest official government data, issue a real Proof Passport or cast a ballot. Its four historical source documents are snapshots of [historical/fixtures](historical/fixtures/), checked by `scripts/test_commonwealth_intelligence.cjs`; separate [Commonwealth full product demo](https://d3lefts.github.io/d3lefts/commonwealth.html) and [upcoming product showcase](https://d3lefts.github.io/d3lefts/commonwealth-os.html) remain intact. Archetype labels and scores are illustrative and not psychometrically validated.
-
 ## Non-negotiable constraints
 1. **No live city-council record ingestion yet.** Use synthetic fixtures first. The municipal intake connector remains disabled by default.
 2. **No institutional authority by implication.** Official voting is forbidden until jurisdiction-specific legal authorization, configured rules, security assurance, and independent sign-off.
@@ -48,15 +34,8 @@ A **2027 Huntsville pitch** is a demonstration target, **not** a city deployment
 ## Synthetic legislative workflow v1.1
 [Formal state-machine specification](workflow/FORMAL_WORKFLOW_v1_1.md) · [Executable demo reference and independent replay checker](workflow/README.md). The demo reference rejects OFFICIAL mode; 28 internal tests cover the fictional case and negative guards, not a legally authorized electronic election.
 
-## Runnable legislative app v0.3
-[Run the synthetic governance workspace v0.3](app/README.md). The Python mobile-first app now includes three fictional pilot questionnaires, audited role revocation, multi-item dockets, synthetic budget/public views, private advisory profiles, and locally signed test receipts. It reuses the v1.1 workflow reducer and independent checker. **Role switching remains a demo, and no real municipal data, verified voter identity, official election, or authorized public service is present.** See [source](app/main.py) and [scoped app CI](../../.github/workflows/commonwealth-app-ci.yml).
-
-## Historical representation explorer v0.3
-[Formal historical record contract](HISTORICAL_REPRESENTATION_CONTRACT_v0_3.md) · [Read-only historical join engine](app/history.py) · [Fictional 38-roll-call dataset](app/data/history_synthetic.json) · [Tests](app/tests/test_history.py).
-
-The mobile-first **Representation history** screen displays exactly the named **recorded member positions available in the source**, joined to a dated residence, district assignment and official service term. The default period begins at a fictional user's birth date; a custom range and separately labeled pre-birth current-seat history are available. Seven representative groups, historical moves and redistricting are modeled in fictitious data. Missing, non-roll-call or non-attributable individual votes are not guessed. The study feature passes 79 author-side tests including a separately written brute-force join oracle.
-
-**No real officials, rolls, addresses, profiles, city minutes, or institutional roll-call datasets were imported**. Federal and local source integrations remain future research gates; all output is marked synthetic and incomplete.
+## Runnable legislative app v0.1
+[Run the mobile-first fictional governance workspace](app/README.md). This FastAPI / SQLite / vanilla JS demo reuses the versioned workflow reducer and independent checker, has local HTTP integration tests, and explicitly **does not authenticate real voters, authorize elections, or ingest municipal records**. See [source](app/main.py) and [scoped app CI](../../.github/workflows/commonwealth-app-ci.yml).
 
 ## V1 demonstrator
 The first testable vertical slice uses entirely fictional governance records:
@@ -66,24 +45,13 @@ Its goal is a replayable governance transaction with a version-locked motion, ru
 The archived v1.0 reference package reported 8 passing toy checker tests. Those do **not** constitute deployed software, verified ballot secrecy, legal certification, or independent security audit.
 
 ## Evidence labels
-DESIGN / IMPLEMENTED / INTERNALLY TESTED / INDEPENDENTLY VALIDATED / LEGALLY AUTHORIZED / DEPLOYED must remain distinct. Current state: **IMPLEMENTED SYNTHETIC PROTOTYPES** (Python v0.2 and separate JS browser/server workbenches), **INTERNALLY TESTED**, not externally certified, legally authorized, identity-verified or deployed.
+DESIGN / IMPLEMENTED / INTERNALLY TESTED / INDEPENDENTLY VALIDATED / LEGALLY AUTHORIZED / DEPLOYED must remain distinct. Current state: **DESIGN**, plus a narrow source-package toy checker (internally tested). All other states remain unverified.
 
 ## Integrated product design and evidence archive
 
 The baseline includes a separate, versioned [Product Design v1.0 source tree](product-design/v1.0/README.md) with 14 detailed design docs, requirements, schemas, diagrams, comparative prior-art matrix, synthetic Living Voter prototype and visual dossier. The [Product Design workspace index](PRODUCT_DESIGN_WORKSPACE.md) links the private [Google Drive archive](https://drive.google.com/drive/folders/1aWkKDXaiLereebPVTIbRtZWGZ2gGw0tr) and earlier Democratic Assurance, questionnaire, and Huntsville pilot research. [Research status and release gates](STATUS_AND_GATES.md) distinguish design, tests, verification and authorization.
 
 Where this representative-first implementation blueprint and the companion citizen-preference design differ, neither silently overrides the other. Treat conflicts as explicit product decisions to resolve with institution-specific authorizations and validation.
-
-## Backend v0.4/v0.5 integration (synthetic only)
-
-The [backend integration receipt](architecture/BACKEND_INTEGRATION_v05_20261115.md)
-links source PRs #618 and #627 and their exact CI runs. The local Node server
-now includes synthetic public publication/correction workflows, independently
-replayed evidence, source recertification checks, an OIDC token-verification
-boundary and a PostgreSQL-16 transaction candidate with tenant RLS and dedicated
-tests. **No real identities, official elections, secret ballots, live city sources
-or production permission are enabled.** Python `app/` and Node `apps/server/`
-remain parallel prototypes; backend convergence is tracked in #626.
 
 ## Experimental browser and server workbench (DEMO ONLY)
 

@@ -9,19 +9,10 @@ function canonical(v){
 }
 const digest=v=>createHash('sha256').update(typeof v==='string'?v:canonical(v)).digest('hex');
 const requireCheck=(p,c)=>{if(!c)throw new Error('CHECK_FAILED_'+p);};
-function fraction(policy,votes,present,eligible){
+function fraction(policy,votes){
  const yes=votes.filter(v=>v.choice==='yes').length,no=votes.filter(v=>v.choice==='no').length;
- const denominator={DECISIVE:yes+no,CAST:votes.length,PRESENT:present,ELIGIBLE:eligible}[policy.approvalBasis??'DECISIVE'];
- if(!Number.isSafeInteger(denominator)||denominator<=0)return false;
- const lhs=BigInt(yes)*BigInt(policy.yesDenominator),rhs=BigInt(denominator)*BigInt(policy.yesNumerator);
- return policy.strict?lhs>rhs:lhs>=rhs;
-}
-function quorum(policy,present,eligible){
- if(present<policy.quorum)return false;
- if(!policy.quorumFraction)return true;
- const q=policy.quorumFraction;
- const left=BigInt(present)*BigInt(q.denominator),right=BigInt(eligible)*BigInt(q.numerator);
- return q.strict?left>right:left>=right;
+ const lhs=BigInt(yes)*BigInt(policy.yesDenominator),rhs=BigInt(yes+no)*BigInt(policy.yesNumerator);
+ return yes+no>0&&(policy.strict?lhs>rhs:lhs>=rhs);
 }
 export function verifyEvidence(envelope,{trustedPublicKeyPem}={}) {
  const checked=[];
@@ -40,9 +31,17 @@ export function verifyEvidence(envelope,{trustedPublicKeyPem}={}) {
  for(const e of p.events){
   const {hash,previousHash,...event}=e;
   check('EVENT_'+e.seq,e.seq===++lastSeq&&previousHash===lastHash&&digest({event,previousHash})===hash);
-  check('EVENT_EDGE_'+e.seq,Object.hasOwn(edges,e.action)&&((e.action==='REVISE'&&e.to==='DRAFT'&&['DRAFT','IN_REVIEW','AGENDA_SET','DELIBERATING'].includes(e.from))||(edges[e.action]&&edges[e.action][0]===e.from&&edges[e.action][1]===e.to))&&e.from===lastState);
+  check('EVENT_EDGE_'+e.seq,Object.hasOwn(edges,e.action)&&((e.action==='REVISE'&&e.from===e.to&&['DRAFT','IN_REVIEW'].includes(e.from))||(edges[e.action]&&edges[e.action][0]===e.from&&edges[e.action][1]===e.to))&&e.from===lastState);
   lastHash=hash;lastState=e.to;
   if(e.action==='LOCK')locked=e;
+  if(['OPEN','CAST','CLOSE','REVIEW'].includes(e.action)){
+    // Prove the signed event's claimed rule and eligibility epochs agree with
+    // the immutable LOCK event, even when exported after later changes.
+    check('EPOCH_WITNESS_'+e.seq,!!locked&&
+      e.details?.policyVersion===locked.details.policyVersion&&
+      e.details?.eligibilityVersion===locked.details.eligibilityVersion&&
+      e.details?.lockedRevision===locked.details.lockedRevision);
+  }
   if(e.action==='CAST')castEvents.push(e);
   if(e.action==='REVIEW')reviewEvent=e;
  }
@@ -53,7 +52,11 @@ export function verifyEvidence(envelope,{trustedPublicKeyPem}={}) {
   prev=r.bodyHash;
  }
  check('LATEST_REVISION',p.item.currentRevision===rev);
- check('POLICY_HISTORY',Array.isArray(p.policies)&&p.policies.length>0&&p.policies.every((row,i)=>row.version===i+1&&digest(row.policy)===row.hash)&&p.institution.policyVersion===p.policies[p.policies.length-1].version);
+ // Every policy history row must be hash-valid and version-contiguous.
+ // Only the latest is allowed to be advertised as the current active policy.
+ check('POLICY_HISTORY',Array.isArray(p.policies)&&p.policies.length>0&&
+   p.policies.every((row,i)=>row.version===i+1&&digest(row.policy)===row.hash)&&
+   p.institution.policyVersion===p.policies[p.policies.length-1].version);
  const revEvents=p.events.filter(e=>e.action==='REVISE'||e.action==='CREATE');
  check('REVISION_EVENTS',revEvents.length===rev&&revEvents.every((e,i)=>e.details.revision===i+1&&e.details.bodyHash===p.revisions[i].bodyHash&&e.actorId===p.revisions[i].author));
  if(locked){
@@ -62,11 +65,11 @@ export function verifyEvidence(envelope,{trustedPublicKeyPem}={}) {
   const active=p.policies.find(x=>x.version===d.policyVersion);
   check('POLICY_PIN',!!active&&active.hash===d.policyHash&&digest(active.policy)===active.hash);
   check('ROSTER_AT_LOCK',Array.isArray(d.eligibleRoster)&&new Set(d.eligibleRoster).size===d.eligibleRoster.length);
-  check('ATTENDANCE',JSON.stringify([...p.attendance].sort())===JSON.stringify([...d.attendees].sort())&&new Set(p.attendance).size===p.attendance.length&&p.attendance.every(x=>d.eligibleRoster.includes(x))&&quorum(active.policy,p.attendance.length,d.eligibleRoster.length));
+  check('ATTENDANCE',JSON.stringify([...p.attendance].sort())===JSON.stringify([...d.attendees].sort())&&new Set(p.attendance).size===p.attendance.length&&p.attendance.every(x=>d.eligibleRoster.includes(x))&&p.attendance.length>=active.policy.quorum);
   check('VOTES',castEvents.length===p.votes.length&&new Set(p.votes.map(v=>v.actorId)).size===p.votes.length&&p.votes.every(v=>p.attendance.includes(v.actorId)&&['yes','no','abstain'].includes(v.choice)&&castEvents.some(e=>e.actorId===v.actorId&&e.actorRole==='member'&&e.details.voter===v.actorId&&e.details.choice===v.choice)));
   if(reviewEvent){
    check('REVIEWER',reviewEvent.actorRole==='clerk'&&reviewEvent.actorId===p.item.reviewer&&reviewEvent.actorId!==p.item.proposer&&!p.votes.some(v=>v.actorId===reviewEvent.actorId));
-   const outcome=fraction(active.policy,p.votes,p.attendance.length,d.eligibleRoster.length)?'SUPPORTED_IN_SIMULATION':'REJECTED_IN_SIMULATION';
+   const outcome=fraction(active.policy,p.votes)?'SUPPORTED_IN_SIMULATION':'REJECTED_IN_SIMULATION';
    const counts={yes:p.votes.filter(v=>v.choice==='yes').length,no:p.votes.filter(v=>v.choice==='no').length,abstain:p.votes.filter(v=>v.choice==='abstain').length};
    check('REVIEW_OUTCOME',reviewEvent.details.outcome===outcome&&p.item.outcome===outcome&&Object.keys(counts).every(k=>counts[k]===reviewEvent.details.counts?.[k]));
   }

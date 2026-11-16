@@ -123,18 +123,6 @@ jobs:
         run: |
           npm install --no-save --no-package-lock playwright-core@1.56.1
           mkdir -p browser-artifacts
-      - name: Verify Commonwealth OS upcoming demo at mobile and desktop sizes
-        run: |
-          node --check docs/commonwealth-os.js
-          CHROME_BIN="$(command -v google-chrome)" node scripts/test_commonwealth_demo.mjs
-      - name: Preserve Commonwealth preview screenshots
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: commonwealth-demo-preview-${{ github.run_id }}
-          path: browser-artifacts/commonwealth-demo-*.png
-          if-no-files-found: ignore
-          retention-days: 21
       - name: Enforce no-lime palette contract and theme contrast
         run: node scripts/check_palette_contract.mjs
       - name: Verify the product-space dossier visual and scientific-scope contract

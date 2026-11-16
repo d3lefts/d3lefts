@@ -1,8 +1,0 @@
-*.sqlite3
-*.sqlite3-wal
-*.sqlite3-shm
-*.demo-ed25519
-*.key
-__pycache__/
-.pytest_cache/
-*.pyc

@@ -149,3 +149,23 @@ def test_official_command_cannot_be_sent(context):
     r=a.post('/api/items/SB-014/commands',headers={'X-CW-Action':'demo'},json={
       'action':'SUBMIT_REVIEW','expected_version':version,'command_id':str(uuid4()),'mode':'OFFICIAL'})
     assert r.status_code==422
+
+def test_public_synthetic_riverfront_dossier(context):
+    app, _, _ = context
+    with TestClient(app) as client:
+        page = client.get('/demo/riverfront')
+        assert page.status_code == 200
+        assert 'fictional' in page.text.lower() and 'not a vote' in page.text.lower()
+        assert client.get('/static/riverfront.js').status_code == 200
+        result = client.get('/api/public/demo/dossiers/riverfront-001')
+        assert result.status_code == 200, result.text
+        body = result.json()
+        assert body['verification']['status'] == 'MODEL_VALID'
+        assert body['verification']['legal_authority'] == 'NOT_ASSESSED'
+        assert [g['status'] for g in body['verification']['goals']] == [
+            'MODEL_DERIVED', 'MODEL_DERIVED', 'INDETERMINATE']
+        assert body['preference']['ballot_cast'] is False
+        assert body['preference']['stored'] is False
+        assert body['evidence'][0]['original_text'].startswith('Fictional ordinance Z-7')
+        assert client.get('/api/demo/tenants').status_code == 200
+        assert client.get('/api/public/decisions').json() == []
