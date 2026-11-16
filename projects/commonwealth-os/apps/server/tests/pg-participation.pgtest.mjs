@@ -78,7 +78,7 @@ test('cold migration, PostgreSQL durability, concurrent writers, AEAD tamper det
         await pg.command(tokens[scope]['member-b'],command(scope,amendment,'followup-amendment-005',3,1));
         state=await pg.view(tokens[scope]['member-b'],scope);
       }
-      await checkReject(pg.command(tokens[scope]['member-a'],command(scope,{type:'REVIEW_AMEND',id:'P-UAH-01',amendmentId:'A-1',decision:'ACCEPT',reason},state.sequence,1)),/PARTICIPATION_CLERK_REQUIRED/);
+      await checkReject(pg.command(tokens[scope]['member-a'],command(scope,{type:'REVIEW_AMEND',id:'P-UAH-01',amendmentId:'A-1',decision:'ACCEPT',reason},'forged-review-006',state.sequence,1)),/PARTICIPATION_CLERK_REQUIRED/);
       const versioned=await pg.command(tokens[scope]['clerk'],command(scope,{type:'REVIEW_AMEND',id:'P-UAH-01',amendmentId:'A-1',decision:'ACCEPT',reason},'fictional-clerk-review-006',state.sequence,1));
       assert.equal(versioned.revision,2);
       await checkReject(pg.command(tokens[scope]['member-a'],command(scope,{type:'ADVISE',id:'P-UAH-01',choice:'OPPOSE'},'stale-revision-007',versioned.sequence,1)),/PARTICIPATION_REVISION_CONFLICT/);
