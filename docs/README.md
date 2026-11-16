@@ -1,5 +1,10 @@
 # NIGHTFALL public website
 
+## Commonwealth OS — separate civic systems research demo (15 November 2026)
+
+[Commonwealth interactive demonstration](commonwealth.html) is a new publicly accessible static **synthetic-only** product research page. It draws its fictional House/Senate/municipal question and member-tenure fixtures directly from `../projects/commonwealth-os/historical/fixtures/`, preserving exact correspondence types and vote procedure distinctions. The local preference and illustrative 20-question archetype interaction collect nothing and submit no votes. The page also links to the fictional legislative workflow, legal knowledge kernel, Living Voter prototype and release gates. Test with `node scripts/test_commonwealth_site.cjs` from the repository root. This does not represent deployment, scientific validation of archetypes, official-vote authorization, or real government-source ingestion.
+
+
 **November 13 integration:** [The minimum cost of knowing](cost-of-knowing.html) links the latest publicly accessible parallel research findings to their exact scopes and open gates: posterior actionable influence, oracle-matched KL information cover, source-level Q2, change-stable evidence ([draft #456](https://github.com/d3lefts/d3lefts/pull/456)), correlated-product transfer ([draft #457](https://github.com/d3lefts/d3lefts/pull/457)) and separator observability ([draft #458](https://github.com/d3lefts/d3lefts/pull/458)). The [full written ledger](../research/nightfall/2026-11-convoluted-costs-of-knowing/MINIMUM_JUSTIFIED_KNOWING_COST_20261113.md) distinguishes known lemmas from author-analytic candidates. This dated dispatch is additive and does not change the frozen 40-record library, 11 historical Proof Passports or certified theorem counts.
 
 
