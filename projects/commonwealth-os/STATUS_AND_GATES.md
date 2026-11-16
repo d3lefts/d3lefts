@@ -17,6 +17,22 @@
 
 The comparators (Decidim, CONSUL, Polis, Loomio, Legistar, ElectionGuard and related systems) are credited in the design's [competitive analysis](product-design/v1.0/docs/02_Competitive_Analysis.md). Claims of universal uniqueness are not certified.
 
+## 2026-11-15 additive legal-kernel progress
+
+- **Implemented on a review branch:** `legal/kernel.py` deterministic fictional
+  source/claim/derivation checker; `legal/independent_checker.py` separate replay;
+  `legal/dossier.py` read-only civic dossier; hash-anchored fictional source fixture;
+  adversarial Python tests and scoped CI. Once merged, this establishes a tested
+  *in-model deduction* capability only.
+- **Still not implemented:** real authoritative legal corpus and custody; formal
+  binding-precedent/exception semantics; signed legal-reviewer interpretation
+  attestations; continuously reconciled source updates; real economic-data
+  adapters; Living Voter persistence integration; certified voter identity or
+  secret ballots; one production backend and externally enforced effects.
+- **Remain prohibited:** interpreting a supported fictional derivation as a
+  legal opinion, actual development permit, public election, or real institution
+  endorsement. No current claimed legal authority or external audit.
+
 ## Release decision rule
 
 No transition from draft to authorized production ballot without a documented authority chain, stable ballot and governing-rule versions, eligibility/quorum checks, independent result verification, effect-time enforceability, rollback and incident-response policies, and a signed institutional release decision. A research theorem does not substitute for legal authorization. A lawfully authorized vote does not by itself validate inferred preferences.
