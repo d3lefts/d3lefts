@@ -46,6 +46,9 @@ export class Store {
   all(sql, ...args) { return this.db.prepare(sql).all(...args); }
   run(sql, ...args) { return this.db.prepare(sql).run(...args); }
   tx(fn) { this.db.exec('BEGIN IMMEDIATE'); try { const result=fn(); this.db.exec('COMMIT'); return result; } catch(e){ this.db.exec('ROLLBACK'); throw e; } }
+  // Freeze multi-query exports to ONE committed database snapshot across connections.
+  // Read transaction starts at first SELECT; all following SELECTs see that snapshot.
+  readTx(fn) { this.db.exec('BEGIN'); try { const result=fn(); this.db.exec('COMMIT'); return result; } catch(e){ this.db.exec('ROLLBACK'); throw e; } }
 
   // Bootstrap is a local trusted-administrator operation, never exposed over HTTP.
   provisionInstitution(id, name, policy) {
@@ -115,6 +118,9 @@ export class Store {
     invariant(typeof key==='string' && /^[A-Za-z0-9._:-]{8,120}$/.test(key),'BAD_IDEMPOTENCY_KEY',400);
     const digest=sha(request);
     return this.tx(()=>{
+      // Authentication/tenant/role/eligibility freshness MUST be checked inside
+      // the same serialization boundary as the command or administrative edit.
+      this.actorFor(actor,id);
       const prior=this.one('SELECT * FROM requests WHERE institution_id=? AND actor_id=? AND command_key=?',id,actor.id,key);
       if(prior){invariant(prior.request_hash===digest,'IDEMPOTENCY_CONFLICT',409);return JSON.parse(prior.response_json);}
       const result=action();
@@ -200,6 +206,10 @@ export class Store {
           const i=this.institution(institutionId);
           invariant(item.locked_policy_version===i.policy_version&&item.locked_eligibility_version===i.eligibility_version,'AUTHORITY_CHANGED');
           invariant(item.locked_revision===item.current_revision,'MOTION_CHANGED');
+          // These values are independently checkable assertions about the exact
+          // epoch at each guarded transition, not about legal authority.
+          details={...details,policyVersion:i.policy_version,
+            eligibilityVersion:i.eligibility_version,lockedRevision:item.locked_revision};
         }
         if(action==='CAST') {
           invariant(can(actor,'member')&&actor.eligible===1,'NOT_ELIGIBLE',403);
@@ -207,7 +217,7 @@ export class Store {
           invariant(['yes','no','abstain'].includes(payload.choice),'INVALID_CHOICE',400);
           invariant(!this.one('SELECT actor_id FROM votes WHERE institution_id=? AND item_id=? AND actor_id=?',institutionId,itemId,actor.id),'DUPLICATE_CAST');
           this.run('INSERT INTO votes VALUES(?,?,?,?)',institutionId,itemId,actor.id,payload.choice);
-          details={voter:actor.id,choice:payload.choice};
+          details={...details,voter:actor.id,choice:payload.choice};
         }
         if(action==='REVIEW') {
           invariant(can(actor,'clerk'),'CLERK_REQUIRED',403);
@@ -218,7 +228,7 @@ export class Store {
           const result=tallyOK(policy,votes);
           const outcome=result.accepted?'SUPPORTED_IN_SIMULATION':'REJECTED_IN_SIMULATION';
           this.run('UPDATE items SET reviewer=?,outcome=? WHERE institution_id=? AND id=?',actor.id,outcome,institutionId,itemId);
-          details={outcome,counts:{yes:result.yes,no:result.no,abstain:result.abstain},reviewer:actor.id};
+          details={...details,outcome,counts:{yes:result.yes,no:result.no,abstain:result.abstain},reviewer:actor.id};
         }
       }
       const newVersion=item.version+1;
@@ -228,6 +238,7 @@ export class Store {
     });
   }
   snapshot(actor,id,itemId) {
+    return this.readTx(()=>{
     this.actorFor(actor,id);
     const item=this.item(id,itemId);
     const institution=this.institution(id);
@@ -235,5 +246,6 @@ export class Store {
     const members=this.all('SELECT id,role,eligible,active FROM actors WHERE institution_id=? ORDER BY id',id);
     const revisions=this.revisions(id,itemId).map(x=>({revision:x.revision,body:x.body,bodyHash:x.body_hash,previousHash:x.previous_hash,author:x.author,at:x.at}));
     return {format:'commonwealth.os.demo-evidence.v1',institution:{id:institution.id,name:institution.name,policyVersion:institution.policy_version,eligibilityVersion:institution.eligibility_version},item:{id:item.id,state:item.state,version:item.version,currentRevision:item.current_revision,proposer:item.proposer,lockedRevision:item.locked_revision,lockedPolicyVersion:item.locked_policy_version,lockedEligibilityVersion:item.locked_eligibility_version,reviewer:item.reviewer,outcome:item.outcome},policies:policyRows,members,revisions,attendance:this.present(id,itemId),votes:this.votes(id,itemId),events:this.events(id,itemId),legalAuthority:'NOT_ASSESSED',officialCertification:false};
+    });
   }
 }
