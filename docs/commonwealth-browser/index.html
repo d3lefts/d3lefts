@@ -4,13 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#111827">
-  <meta name="description" content="Commonwealth OS: synthetic Chamber, 72 draft pilot questions, historical roll-call representation, public evidence and procedural Proof Passport. No real ballots or records.">
+  <meta name="description" content="Commonwealth OS: synthetic proposals, deliberation, amendments, budgets, accountable outcomes, 72 draft pilot questions, historical roll calls, source evidence and Proof Passports. No real ballots or records.">
   <title>Commonwealth OS | Comprehensive Synthetic Civic Workspace</title>
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./workspace.css">
+  <link rel="stylesheet" href="./participation.css">
   <script defer src="./historical-fixtures.js"></script>
   <script type="module" src="./app.mjs"></script>
   <script type="module" src="./workspace.mjs"></script>
+  <script type="module" src="./participation-ui.mjs"></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to main content</a>
@@ -19,10 +21,10 @@
     <span class="mode">SYNTHETIC DEMONSTRATION</span>
   </header>
   <main id="main">
-    <section class="intro"><p class="eyebrow">2027 pilot architecture · browser proof of concept</p><h1>One governance kernel.<br>Three institutions.</h1><p>Explore the original fictional procedural checker, 72 draft university/HOA/municipal questions, historical representation and public evidence. The checker includes a separate union example. All scenarios and personal details are synthetic; this app is not an election system.</p></section>
+    <section class="intro"><p class="eyebrow">2027 pilot architecture · browser proof of concept</p><h1>One governance kernel.<br>Three institutions.</h1><p>Explore versioned fictional proposals, deliberation, amendments, advisory budgeting, reasoned decisions, implementation tracking, the original procedural checker, 72 draft institutional questions, historical representation and public evidence. The checker includes a separate union example. All scenarios and personal details are synthetic; this app is not an election system.</p></section>
     <div class="notice" role="note"><strong>Nonbinding demonstration only.</strong> No real ballots, personal voter data, city sources, official decisions, or live municipal integration. A supported simulated decision is not a legal certification.</div>
     <nav class="cwui-nav" aria-label="Commonwealth workspace navigation">
-  <a href="#cwui-chamber">Chamber</a><a href="#cwui-issues">Issue questions</a>
+  <a href="#cwui-chamber">Chamber</a><a href="#cwpart-app">Participation</a><a href="#cwui-issues">Issue questions</a>
   <a href="#cwui-representation">Representation</a><a href="#cwui-public">Public records</a>
   <a href="#cwui-steward">Steward</a><a href="#cwui-assurance">Proof Passport</a>
 </nav>
@@ -34,6 +36,59 @@
       <div class="verify-panel"><label for="verify-input">Check a previously exported evidence file</label><input type="file" id="verify-input" accept=".json,application/json"><button type="button" id="verify" class="secondary">Verify local payload digest</button><p id="verify-result" role="status" aria-live="polite">Select your exported JSON to check its payload digest. The file stays on this device.</p></div>
       <p class="small">SHA-256 covers the UTF-8 bytes of JSON.stringify(payload, null, 2), NOT the whole downloaded envelope. A matching checksum is not a signature, proof of origin, official legal conclusion, or independent election certification. A separate Node verifier is linked in the project source.</p></section>
     </div>
+<section id="cwpart-app" class="cwpart-section" aria-labelledby="cwpart-title">
+  <div class="cwpart-heading">
+    <div><p class="eyebrow">NEW / PARTICIPATION → EVIDENCE → ACCOUNTABILITY</p><h2 id="cwpart-title">From a proposal to a <em>publicly explainable outcome.</em></h2><p>Draft, deliberate, amend, review, plan budgets and track milestones in a fictional institution. Every decision retains its version and rationale; unresolved steps stay visible rather than disappearing into a vote total.</p></div>
+    <span class="cwpart-badge">ALL CONTENT FICTIONAL · NO PUBLIC SUBMISSION</span>
+  </div>
+  <div class="cwpart-toolbar cwpart-card">
+    <div><label for="cwpart-institution">Institution</label><select id="cwpart-institution"></select></div>
+    <div><label for="cwpart-role">View as (fictional)</label><select id="cwpart-role"><option value="VISITOR">Constituent / visitor</option><option value="STEWARD">Steward simulation</option></select></div>
+    <div class="cwpart-toolbar-note"><strong id="cwpart-active-institution">Fictional institution</strong><p>No accounts, official votes or legal authority. Changing the role is only a demonstration switch.</p></div>
+    <button id="cwpart-reset" class="cwpart-btn cwpart-btn-quiet" type="button">Reset all local demo changes</button>
+  </div>
+  <p class="cwpart-feedback" id="cwpart-feedback" role="status" aria-live="polite">Select a proposal to inspect its evidence and development history. All edits disappear when this page is reloaded.</p>
+  <div class="cwpart-feature-strip" role="list" aria-label="Integrated civic participation steps">
+    <div role="listitem"><b>01</b><strong>Propose</strong><small>Versioned drafts</small></div>
+    <div role="listitem"><b>02</b><strong>Deliberate</strong><small>Concerns and amendments</small></div>
+    <div role="listitem"><b>03</b><strong>Respond</strong><small>Rationale and objections</small></div>
+    <div role="listitem"><b>04</b><strong>Implement</strong><small>Milestones and corrections</small></div>
+    <div role="listitem"><b>05</b><strong>Audit</strong><small>Source status and event trail</small></div>
+  </div>
+  <div class="cwpart-grid">
+    <aside class="cwpart-directory cwpart-card" aria-labelledby="cwpart-docket-title">
+      <h3 id="cwpart-docket-title">Open civic docket</h3><p class="cwpart-muted">Search and filter fictional proposals</p>
+      <label for="cwpart-search">Search proposals</label><input type="search" id="cwpart-search" placeholder="Service, housing, transparency…">
+      <label for="cwpart-filter">Process status</label><select id="cwpart-filter"><option value="ALL">All states</option></select>
+      <p id="cwpart-proposal-count" class="cwpart-muted"></p><div id="cwpart-list" class="cwpart-proposal-list"></div>
+      <form id="cwpart-new-form" class="cwpart-new" autocomplete="off">
+        <h4>Submit a fictional proposal</h4><label for="cwpart-new-title">Title (10–110 characters)</label><input id="cwpart-new-title" maxlength="110" minlength="10" placeholder="A local proposal title" required>
+        <label for="cwpart-new-text">Precise action (30–600 characters)</label><textarea id="cwpart-new-text" maxlength="600" minlength="30" rows="4" placeholder="What should the institution consider doing, and under what conditions?" required></textarea>
+        <button type="submit" class="cwpart-btn">Add local draft</button><small>No government, organization, or server receives this draft.</small>
+      </form>
+    </aside>
+    <div id="cwpart-detail" class="cwpart-detail cwpart-card" aria-live="polite" aria-label="Selected proposal and review evidence"></div>
+  </div>
+  <div class="cwpart-lower">
+    <section id="cwpart-budget" class="cwpart-card" aria-labelledby="cwpart-budget-title">
+      <p class="eyebrow">PARTICIPATORY BUDGETING / NONBINDING</p><h3 id="cwpart-budget-title">Make the trade-offs visible.</h3>
+      <p>Choose a portfolio of fictional projects under a fixed demonstration ceiling. No actual funding or budget vote occurs.</p>
+      <div id="cwpart-budget-projects" class="cwpart-project-list"></div><strong id="cwpart-budget-total"></strong><p id="cwpart-budget-result" role="status" aria-live="polite"></p><small id="cwpart-budget-caveat"></small>
+      <button type="button" class="cwpart-btn cwpart-btn-quiet" id="cwpart-budget-clear">Clear budget slate</button>
+    </section>
+    <section class="cwpart-card" aria-labelledby="cwpart-meeting-title">
+      <p class="eyebrow">MEETINGS & ACCESSIBILITY / SHADOW MODE</p><h3 id="cwpart-meeting-title">Participation must work beyond a phone.</h3>
+      <p>Each fictional meeting has an agenda, source status, and an explicitly proposed non-digital participation path. No registration or attendance is recorded here.</p>
+      <div id="cwpart-meetings" class="cwpart-meetings"></div>
+    </section>
+  </div>
+  <section id="cwpart-accountability" class="cwpart-card cwpart-accountability" aria-labelledby="cwpart-accountability-title">
+    <div class="cwpart-heading"><div><p class="eyebrow">PUBLIC ACCOUNTABILITY / NO SILENT DISAPPEARING PROPOSALS</p><h3 id="cwpart-accountability-title">What did the institution say, and what happened next?</h3><p>Every fictional item retains its reasoned response or an explicit pending state, plus any declared implementation milestones and correction requests.</p></div><span class="cwpart-badge">NO REAL GOVERNMENT ENDORSEMENT</span></div>
+    <div id="cwpart-accountability-list" class="cwpart-accountability-grid"></div>
+  </section>
+  <p class="cwpart-boundary">Commonwealth differentiator: exact historical member roll calls and provision-specific policy comparisons are available in <a href="#cwui-representation">Representation</a>; source gaps and original record identifiers appear in <a href="#cwui-public">Public Evidence</a>; the separate <a href="#cwui-assurance">Proof Passport</a> evaluates a fixed fictional governance scenario. This new participation area does not falsely attest those independent checks as applied to its locally editable proposals.</p>
+</section>
+
 <section id="cwui-issues" class="cwui-section" aria-labelledby="cwui-issues-title">
   <div class="cwui-section-heading"><div><p class="eyebrow">02 / LIVING VOTER · QUESTION DESIGN</p><h2 id="cwui-issues-title">Constituent issues</h2><p>Explore the 72 standardized <strong>draft</strong> pilot questions: 24 university, 24 HOA, and 24 municipal. These have not been tested or certified for neutrality. Responses stay in page memory only.</p></div><span class="cwui-chip">ADVISORY · IN-MEMORY</span></div>
   <div class="cwui-grid">
