@@ -232,7 +232,7 @@ theorem correlation_change_requires_recertification :
   constructor
   · intro h
     have hb := h (true, false) trivial (by simp [SameTranscript])
-    exact (by decide : ¬ toySafe (true, false)) hb
+    exact (by simp [toySafe] : ¬ toySafe (true, false)) hb
   · intro v hv hsame
     have hf := hsame ⟨2, by decide⟩ (by simp)
     simpa [toyRead, toySafe] using hf
@@ -242,7 +242,7 @@ theorem predicate_only_allowed :
   intro s hs
   have heq : s = (⟨2, by decide⟩ : Fin 3) := Finset.mem_singleton.mp hs
   subst s
-  decide
+  simp [toyAllowed]
 
 theorem toy_private_recertification :
     PrivatePlan broadSupport toySafe toyRead ∅ toyAllowed
@@ -259,7 +259,7 @@ theorem toy_privacy_requires_slot :
       (false, false) 0 ∅ := by
   intro hp
   have hb := hp.2.2.2 (true, false) trivial (by simp [SameTranscript])
-  exact (by decide : ¬ toySafe (true, false)) hb
+  exact (by simp [toySafe] : ¬ toySafe (true, false)) hb
 
 /-- Decision-class noninterference: the predicate-only output carries no
 additional information distinguishing private worlds with the same decision. -/
