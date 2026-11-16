@@ -52,11 +52,16 @@ const first=L.pickArchetype(sparse);
 assert.equal(first.profile.name,"The Tech Reformist","one explicit tech answer maps only to its theme");
 assert.equal(first.starter,false);
 assert.equal(first.quality.eligible,false,"one answer is not a validated profile");
-for(let i=0;i<12;i++){
+const anchors=[
+  "tech-reformist","civic-creator","climate-guardian","liberty-defender",
+  "equality-champion","working-american","community-builder","global-minded",
+  "security-sentinel","care-advocate","opportunity-builder","balanced-pragmatist"];
+for(let i=0;i<anchors.length;i++){
  const sample=Array(20).fill(null);sample[i]=1;
- assert.equal(L.pickArchetype(sample).profile.key,profiles[i].key,
-   "each archetype must be reachable from its explicit anchor question: "+profiles[i].name);
+ assert.equal(L.pickArchetype(sample).profile.key,anchors[i],
+   "each archetype must be reachable from its dedicated issue prompt: "+anchors[i]);
 }
+assert.equal(new Set(anchors).size,12,"twelve independently reachable archetypes");
 const complete=L.pickArchetype(Array(20).fill(1));
 assert.equal(complete.quality.answered,20);
 assert.equal(complete.quality.eligible,true);
