@@ -91,4 +91,25 @@ await test('wrong-tenant and missing active actor are denied by the adapter',asy
  await assert.rejects(()=>cmd(ledger,tenantB,'procedural-motion','unlisted','CREATE',0,{body:'bad'}),/INACTIVE_ACTOR/);
  const r=await ledger.readEvidence(tenantA,'procedural-motion');assert.equal(r.events.length,11);
 });
+
+await test('concurrent conflicting CREATE requests commit at most one item',async()=>{
+ const id='concurrent-motion';
+ const attempts=Array.from({length:8},()=>cmd(ledger,tenantB,id,'member-a','CREATE',0,{body:'Synthetic concurrent proposal'}));
+ const results=await Promise.allSettled(attempts);
+ assert.equal(results.filter(x=>x.status==='fulfilled').length,1);
+ assert.equal(results.filter(x=>x.status==='rejected').length,7);
+ const snapshot=await ledger.readEvidence(tenantB,id);
+ assert.equal(snapshot.events.length,1);
+ assert.equal(snapshot.item.version,'1');
+ assert.equal(verifyPgLedger(snapshot).ok,true);
+});
+await test('postgreSQL persistence survives new database connections',async()=>{
+ const other=new Pool({connectionString:appUrl.href,max:1});
+ try{
+  const independent=new PostgresLedger(other);
+  const persisted=await independent.readEvidence(tenantA,'procedural-motion');
+  assert.equal(persisted.events.length,11);
+  assert.equal(verifyPgLedger(persisted).ok,true);
+ }finally{await other.end();}
+});
 await app.end();await admin.end();
