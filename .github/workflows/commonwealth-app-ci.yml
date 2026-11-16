@@ -30,7 +30,9 @@ jobs:
       - name: Compile Python code
         run: python -m compileall -q projects/commonwealth-os/app projects/commonwealth-os/workflow
       - name: JavaScript syntax
-        run: node --check projects/commonwealth-os/app/static/app.js
+        run: |
+          node --check projects/commonwealth-os/app/static/app.js
+          node --check projects/commonwealth-os/app/static/riverfront.js
       - name: Contract tests and HTTP integration tests
         working-directory: projects/commonwealth-os
         run: python -m pytest -q app/tests/test_app.py workflow/test_workflow.py

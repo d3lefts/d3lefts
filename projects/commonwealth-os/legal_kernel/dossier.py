@@ -21,6 +21,9 @@ def build(case):
         {"source_id": source["id"], "kind": source["kind"],
          "issuer": source["issuer"], "content_sha256": source["content_sha256"],
          "source_uri": source["source_uri"], "status": "FABRICATED_EXAMPLE",
+         "original_text": source["raw_text"], "legal_effective_at": source["effective_at"],
+         "published_at": source["published_at"], "observed_at": source["observed_at"],
+         "interpretation_status": "UNREVIEWED_FIXTURE_ASSUMPTION",
          "facts": source["facts"]}
         for source in case["sources"]
     ]

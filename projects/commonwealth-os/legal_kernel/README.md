@@ -36,3 +36,9 @@ Implement official source adaptors (e.g. legislation, ordinances, court decision
 ## Mechanism lineage
 
 Ground Horn derivations, provenance, source versions and invalidation are established ideas; this implementation does not claim novelty. Related Commonwealth work: `../assurance/`, `../workflow/` and `../product-design/`. Credit prior art in the main comparison, including LegalRuleML, Catala, Decidim and CONSUL.
+
+## Browser-facing demonstration
+
+When the existing synthetic FastAPI app is running, open `http://127.0.0.1:8000/demo/riverfront`. The read-only dossier endpoint is `/api/public/demo/dossiers/riverfront-001`. Its sole inputs are committed fictional source records. The browser renders the exact source text, provisional derivations, fabricated market/developer facts, neutral considerations and separate preference options; it performs **no response POST, identity collection or storage**. The existing representative workspace links to it.
+
+**Open assurance gap:** the source SHA-256 protects original-text bytes, but the extracted formalized facts and grounded rules are currently authored assumptions in the same synthetic fixture. They have NOT been independently certified as semantically faithful to source text. Formalization attestation, exception handling, binding precedent resolution and external trust-root verification remain mandatory before any legal-operational claim.

@@ -159,8 +159,11 @@ def source_impact(case, proof, source_ids):
         step_sources[step.get("id")] = used
         if changed & used:
             tainted_steps.append(step.get("id"))
-    proof_claims = {canon(step["conclusion"]): step["id"] for step in proof.get("steps", [])}
+    # Multiple alternative proofs may support one goal. Conservatively flag a
+    # goal if ANY displayed witness depends on a changed source.
+    tainted_set = set(tainted_steps)
     affected = [goal for goal in case.get("goals", [])
-                if proof_claims.get(canon(goal)) in tainted_steps]
+                if any(step.get("id") in tainted_set and step.get("conclusion") == goal
+                       for step in proof.get("steps", []))]
     return {"changed_sources": sorted(changed), "affected_proof_steps": tainted_steps,
             "affected_goals": affected, "policy": "RECHECK_NOT_AUTO_REUSE"}

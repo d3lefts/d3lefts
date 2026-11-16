@@ -128,6 +128,15 @@ class LegalKernelTests(unittest.TestCase):
         self.assertIn("rule:Z7-r1", r["affected_proof_steps"])
         self.assertNotIn("rule:F2-r1", r["affected_proof_steps"])
 
+    def test_change_impact_conservative_with_alternative_witnesses(self):
+        proof = copy.deepcopy(self.proof)
+        original = next(s for s in proof["steps"] if s["id"] == "rule:Z7-r1")
+        another = copy.deepcopy(original)
+        another["id"] = "alternative:Z7"
+        proof["steps"].append(another)
+        affected = source_impact(self.case, proof, ["Z7"])["affected_goals"]
+        self.assertEqual(affected, [{"predicate": "zoning_review_eligible", "args": ["project-001"]}])
+
     def test_rules_are_grounded_not_general_statutes(self):
         self.assertTrue(all(isinstance(r["conclusion"]["args"], list)
                             for s in self.case["sources"] for r in s["rules"]))

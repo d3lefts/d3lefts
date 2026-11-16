@@ -247,6 +247,21 @@ def create_app(db_path: str | None = None) -> FastAPI:
     def index():
         return FileResponse(str(ROOT / "static" / "index.html"))
 
+    @app.get("/demo/riverfront")
+    def synthetic_riverfront_page():
+        """Public, static, fictional civic-dossier demonstration. No ballots."""
+        return FileResponse(str(ROOT / "static" / "riverfront.html"))
+
+    @app.get("/api/public/demo/dossiers/riverfront-001")
+    def synthetic_riverfront_dossier():
+        """Read-only source → proof → dossier demonstration, never live law."""
+        from legal_kernel.dossier import build
+        path = ROOT.parent / "legal_kernel" / "fixtures" / "riverfront.json"
+        dossier = build(json.loads(path.read_text(encoding="utf-8")))
+        if dossier["verification"]["status"] != "MODEL_VALID":
+            raise HTTPException(503, "Synthetic dossier validation failed")
+        return dossier
+
     @app.get("/api/demo/tenants")
     def tenants():
         return [{"id": k, "label": v["label"], "kind": v["kind"], "item_id": v["item_id"]}
