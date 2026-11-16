@@ -63,8 +63,7 @@ theorem packet_count_fits_same_oracle_upper
 
 theorem full_support_exact_budget (k : ℕ) :
     k + k / 2 = F9GapArithmetic.adaptiveUpper k := by
-  dsimp [F9GapArithmetic.adaptiveUpper]
-  omega
+  simp [F9GapArithmetic.adaptiveUpper]
 
 #print axioms Nightfall.FiniteField.F9SignPacketAllK.all_sign_bits_decoded
 #print axioms Nightfall.FiniteField.F9SignPacketAllK.packet_count_fits_same_oracle_upper
