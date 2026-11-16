@@ -2,6 +2,7 @@ import Mathlib
 import PhysicalQubitEnsemble
 import TernaryPhase
 import TensorCharacter
+import LocalTernaryMoments
 
 /-!
 NIGHTFALL — transitive physical operator-entry bridge.
@@ -101,6 +102,30 @@ theorem unnormalizedC_zero_of_local
   rw [unnormalizedC_entry]
   exact Finset.prod_eq_zero (Finset.mem_univ j) hzero
 
+theorem weighted_local_zero_outside_01
+    (a b : Fin 2) (h : a ≠ 0 ∨ b ≠ 1) :
+    (∑ s : Fin 3, TernaryPhase.omega ^ s.val *
+      PhysicalQubit.qubitDensity (Real.sqrt 3)
+        (TernaryPhase.omega ^ s.val) a b) = 0 := by
+  fin_cases a <;> fin_cases b
+  · exact LocalMoments.weighted_00_zero
+  · simp at h
+  · exact LocalMoments.weighted_10_zero
+  · exact LocalMoments.weighted_11_zero
+
+theorem actual_fourier_entry_zero_off_ghz
+    (d : ℕ) (a b : Fin d → Fin 2) (j : Fin d)
+    (h : a j ≠ 0 ∨ b j ≠ 1) :
+    unnormalizedC d a b = 0 := by
+  exact unnormalizedC_zero_of_local d a b j
+    (weighted_local_zero_outside_01 (a j) (b j) h)
+
+theorem actual_fourier_ghz_corner_value (d : ℕ) :
+    unnormalizedC d (fun _ => 0) (fun _ => 1) =
+      ((3:ℂ) * ((Real.sqrt (3:ℝ) : ℂ)/4)) ^ d := by
+  rw [unnormalizedC_entry]
+  simp [LocalMoments.weighted_01_value]
+
 theorem unnormalizedA_from_actual_states (d : ℕ)
     (a b : Fin d → Fin 2) :
     unnormalizedA d a b =
@@ -112,6 +137,9 @@ theorem unnormalizedA_from_actual_states (d : ℕ)
 #print axioms Nightfall.Quantum.OperatorReduction.unnormalizedB_entry
 #print axioms Nightfall.Quantum.OperatorReduction.unnormalizedC_entry
 #print axioms Nightfall.Quantum.OperatorReduction.unnormalizedC_zero_of_local
+#print axioms Nightfall.Quantum.OperatorReduction.weighted_local_zero_outside_01
+#print axioms Nightfall.Quantum.OperatorReduction.actual_fourier_entry_zero_off_ghz
+#print axioms Nightfall.Quantum.OperatorReduction.actual_fourier_ghz_corner_value
 #print axioms Nightfall.Quantum.OperatorReduction.unnormalizedA_from_actual_states
 
 end
