@@ -1,0 +1,28 @@
+{
+  "schema": "nightfall-finite-permission-frontend-v1",
+  "asOf": "2026-11-15",
+  "title": "NIGHTFALL dynamic permission bridge",
+  "implementation": "Educational finite model, not an authorization engine or deployed agent monitor",
+  "scope": {
+    "theorem": "One authenticated within-window authority checkpoint and stable suffix; independent tasks and exact checks, with separate correlated-world distinguishability/selective evidence theorem",
+    "claims": "19 named Lean declarations compiled and standard-axiom audited at pinned source head",
+    "audit": "37,125 reported exact capacity/price cases and 1,024 correlation/privacy configurations at final checkpoint",
+    "review": "Nonauthor formal review, privacy guarantee and deployment refinement remain open"
+  },
+  "sources": {
+    "mergedPR": "https://github.com/d3lefts/d3lefts/pull/636",
+    "receipt": "https://github.com/d3lefts/d3lefts/actions/runs/43801167480",
+    "proof": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/formalization/agent_safety/DynamicPermissionBridge.lean",
+    "independentAudit": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-price-of-permission/dynamic-bridge/audit_independent.py"
+  },
+  "privacy": "A fee for disclosure is not a cryptographic selective-disclosure proof. No personal information is acquired or transmitted by this lab.",
+  "knownOpenProblems": [
+    "Repeated adversarial changes",
+    "General correlated and noisy adaptive decision policies",
+    "Physical complete mediation",
+    "Production legal semantics",
+    "Cryptographic privacy under adversarial observers",
+    "Independent human peer review"
+  ],
+  "frozenRegistriesUnchanged": true
+}
