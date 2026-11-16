@@ -1,0 +1,20 @@
+services:
+  synthetic-commonwealth:
+    build:
+      context: .
+      dockerfile: Dockerfile.synthetic
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - sandbox_state:/data
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    environment:
+      CW_DB_PATH: /data/commonwealth-demo.sqlite3
+volumes:
+  sandbox_state:
