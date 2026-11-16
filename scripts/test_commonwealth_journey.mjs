@@ -33,6 +33,13 @@ try{
   await page.goto(base+"commonwealth-intelligence.html",{waitUntil:"load"});
   assert.equal(await page.locator("section.cw-section").first().getAttribute("id"),"discover");
   assert.equal(await page.locator("[data-cw-guide-link]").count(),5);
+  assert.equal(await page.locator(".nf-home-route-nav, .nf-journey-rail").count(),0,"Civic journey must not inherit unrelated NIGHTFALL navigation");
+  if(width===390){
+    await page.locator("#menu-button").click();
+    assert.equal(await page.locator("#menu-button").getAttribute("aria-expanded"),"true");
+    await page.keyboard.press("Escape");
+    assert.equal(await page.locator("#menu-button").getAttribute("aria-expanded"),"false");
+  }
   await page.locator("#cw-start-quiz").click();
   assert.equal(await page.locator("#cw-quiz-back").isDisabled(),true);
   await page.locator('[data-quiz-choice="1"]').click();
