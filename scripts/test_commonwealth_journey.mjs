@@ -9,7 +9,7 @@ const mime={".html":"text/html;charset=utf-8",".js":"text/javascript;charset=utf
 ".mjs":"text/javascript;charset=utf-8",".css":"text/css;charset=utf-8",".json":"application/json"};
 const server=createServer(async(req,res)=>{
  try{
-  const p=decodeURIComponent(new URL(req.url,"http://localhost").pathname).replace(/^\\/+/,"");
+  const p=decodeURIComponent(new URL(req.url,"http://localhost").pathname).slice(1);
   const file=resolve(join(root,normalize(p||"index.html")));
   if(!file.startsWith(root+sep)){res.writeHead(403).end();return;}
   res.writeHead(200,{"Content-Type":mime[extname(file)]||"application/octet-stream"});
