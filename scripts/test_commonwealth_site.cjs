@@ -20,7 +20,7 @@ for (const name of ["house","senate","municipal","issues"]) {
   assert.deepEqual(actual,expected,name+" public-site source must exactly match backend fixture");
   assert.equal(actual.synthetic,true);
 }
-const find = (source,id) => source.questions.find(q => q.question_id === id);
+const find = (source,id) => Object.assign({chamber:source.chamber},source.questions.find(q => q.question_id === id));
 assert.equal(L.quizCount,20);
 assert.equal(L.archetypeCount,12);
 assert.equal(L.tenureAt(F.house,"2025-01-02","07")[0].person_id,"fx-house-morgan");
