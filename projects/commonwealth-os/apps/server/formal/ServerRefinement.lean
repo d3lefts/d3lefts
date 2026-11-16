@@ -56,26 +56,30 @@ inductive Command where
   | policyEdit
   | eligibilityEdit
 
-/-- A successful command returns the new state; an invalid one fails closed.
-Pure projection of item phase, optimistic version, locked epochs and cast set.
-The real server additionally checks actor identity, source fields and payload. -/
+/-- Increment the item version on a successful phase transition. -/
+def advancePhase (s : State) (phase : Phase) : State :=
+  let updated : State := {s with phase := phase}
+  {updated with itemVersion := s.itemVersion + 1}
+
+/-- The accepted mutation path corresponds to the in-scope server transitions.
+Never infer that this reference implementation verifies the JS runtime. -/
 def step (s : State) : Command → Option State
   | .revise allowed =>
-      if s.phase == .draft || s.phase == .inReview then
-        if allowed then some { s with revision := s.revision + 1,
-                              itemVersion := s.itemVersion + 1 } else none
+      if (s.phase == .draft || s.phase == .inReview) && allowed then
+        let updated : State := {s with revision := s.revision + 1}
+        some {updated with itemVersion := s.itemVersion + 1}
       else none
   | .submit allowed =>
       if s.phase == .draft && allowed then
-        some {s with phase := .inReview, itemVersion := s.itemVersion + 1}
+        some (advancePhase s .inReview)
       else none
   | .agenda chair =>
       if s.phase == .inReview && chair then
-        some {s with phase := .agendaSet, itemVersion := s.itemVersion + 1}
+        some (advancePhase s .agendaSet)
       else none
   | .begin chair =>
       if s.phase == .agendaSet && chair then
-        some {s with phase := .deliberating, itemVersion := s.itemVersion + 1}
+        some (advancePhase s .deliberating)
       else none
   | .attend clerk =>
       if s.phase == .deliberating && clerk then
@@ -83,26 +87,26 @@ def step (s : State) : Command → Option State
       else none
   | .lock chair quorum =>
       if s.phase == .deliberating && chair && quorum then
-        some {s with phase := .motionLocked, itemVersion := s.itemVersion + 1,
-                     locked := some (stamp s)}
+        let updated := advancePhase s .motionLocked
+        some {updated with locked := some (stamp s)}
       else none
   | .open chair =>
       if s.phase == .motionLocked && chair && fresh s then
-        some {s with phase := .ballotOpen, itemVersion := s.itemVersion + 1}
+        some (advancePhase s .ballotOpen)
       else none
   | .cast voter eligible present =>
       if s.phase == .ballotOpen && fresh s && eligible && present &&
           decide (voter ∉ s.castBy) then
-        some {s with castBy := insert voter s.castBy,
-                     itemVersion := s.itemVersion + 1}
+        let updated : State := {s with castBy := insert voter s.castBy}
+        some {updated with itemVersion := s.itemVersion + 1}
       else none
   | .close chair =>
       if s.phase == .ballotOpen && chair && fresh s then
-        some {s with phase := .ballotClosed, itemVersion := s.itemVersion + 1}
+        some (advancePhase s .ballotClosed)
       else none
   | .review clerkIndependent quorum =>
       if s.phase == .ballotClosed && clerkIndependent && quorum && fresh s then
-        some {s with phase := .reviewedDemo, itemVersion := s.itemVersion + 1}
+        some (advancePhase s .reviewedDemo)
       else none
   | .policyEdit =>
       some {s with policyVersion := s.policyVersion + 1}
