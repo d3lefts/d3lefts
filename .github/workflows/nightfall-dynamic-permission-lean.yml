@@ -50,6 +50,10 @@ jobs:
             --decl "$N.checkpoint_matching_price" \
             --decl "$N.checkpoint_shortage" \
             --decl "$N.disclosure_matching_price" \
+            --decl "$N.allDirect_cost" \
+            --decl "$N.direct_cheaper_lower" \
+            --decl "$N.universal_disclosure_matching_price" \
+            --decl "$N.privacy_switch_witness" \
             --decl "$N.delayed_invalidation_price_witness" \
             --decl "$N.certifies_iff_hitting" \
             --decl "$N.private_plan_hitting" \
