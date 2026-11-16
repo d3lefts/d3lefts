@@ -118,7 +118,10 @@ theorem all_short_fixed_designs_fail
   refine ⟨x, y, hxy, hxneg, ?_⟩
   intro i
   have hi := hall (Fin.cast hsum.symm i)
-  simpa only [subrows, Fin.cast_cast] using hi
+  have hcast : Fin.cast hsum (Fin.cast hsum.symm i) = i := by
+    apply Fin.ext
+    rfl
+  simpa only [subrows, hcast] using hi
 
 #print axioms Nightfall.FiniteField.F9NonadaptiveLower.rowMap
 #print axioms Nightfall.FiniteField.F9NonadaptiveLower.short_rows_have_nonzero_kernel
