@@ -85,6 +85,38 @@ theorem ghzAmbient_complete (a b : ι) (hab : a ≠ b) :
     complete_three_ambient_effects a b hab
 
 #print axioms Nightfall.Quantum.AmbientGHZ.complex_half_nonneg
+theorem ambient_ghz_corner_values (a b : ι) (hab : a ≠ b) :
+    (ghzAmbient a b 0 a a).re = 1 / 2 ∧
+    (ghzAmbient a b 1 a a).re = 1 / 2 ∧
+    (ghzAmbient a b 0 b b).re = 1 / 2 ∧
+    (ghzAmbient a b 1 b b).re = 1 / 2 ∧
+    (ghzAmbient a b 0 a b).re = 1 / 2 ∧
+    (ghzAmbient a b 1 a b).re = -(1 / 2) ∧
+    (ghzAmbient a b 2 a a).re = 0 ∧
+    (ghzAmbient a b 2 b b).re = 0 ∧
+    (ghzAmbient a b 2 a b).re = 0 := by
+  norm_num [ghzAmbient, plusEffect, minusEffect, complementEffect,
+    plusVector, minusVector, Matrix.vecMulVec, Matrix.smul_apply,
+    Matrix.diagonal_apply, hab, hab.symm]
+
+theorem ambient_ghz_attains_two_ray_energy
+    (a b : ι) (hab : a ≠ b)
+    (u v t : ℝ) (hu : 0 < u) (hv : 0 < v) :
+    (∑ z : Fin 3,
+      (2 * t * (ghzAmbient a b z a b).re) ^ 2 /
+        (u * (ghzAmbient a b z a a).re +
+         v * (ghzAmbient a b z b b).re)) =
+      4 * t ^ 2 / (u + v) := by
+  have hden : u + v ≠ 0 := (add_pos hu hv).ne'
+  obtain ⟨h00, h10, h01, h11, hco, hcm, h20, h21, h2c⟩ :=
+    ambient_ghz_corner_values a b hab
+  simp only [Fin.sum_univ_three]
+  rw [h00, h10, h01, h11, hco, hcm, h20, h21, h2c]
+  field_simp
+  <;> ring
+
+#print axioms Nightfall.Quantum.AmbientGHZ.ambient_ghz_corner_values
+#print axioms Nightfall.Quantum.AmbientGHZ.ambient_ghz_attains_two_ray_energy
 #print axioms Nightfall.Quantum.AmbientGHZ.plusEffect_posSemidef
 #print axioms Nightfall.Quantum.AmbientGHZ.minusEffect_posSemidef
 #print axioms Nightfall.Quantum.AmbientGHZ.complementEffect_posSemidef
