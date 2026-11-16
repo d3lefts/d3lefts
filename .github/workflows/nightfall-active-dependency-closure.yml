@@ -13,6 +13,7 @@ on:
       - 'research/catalogue/ACTIVE_DEPENDENCY_CLOSURE.json'
       - 'research/catalogue/ACTIVE_DEPENDENCY_CLOSURE.md'
       - 'scripts/check_active_dependency_closure.py'
+      - 'scripts/independent_dependency_closure.cjs'
       - '.github/workflows/nightfall-active-dependency-closure.yml'
   workflow_dispatch:
 permissions:
