@@ -135,6 +135,82 @@ theorem physical_bayes_gain_upper
       mul_le_mul_of_nonneg_left hbase (by positivity)
     _ = 4 * t ^ 2 / (u + v) := by ring
 
+def ghzAlpha (z : Fin 3) : ℝ :=
+  if z = 2 then 0 else 1 / 2
+
+def ghzBeta (z : Fin 3) : ℝ := ghzAlpha z
+
+def ghzGamma (z : Fin 3) : ℝ :=
+  if z = 0 then 1 / 2 else if z = 1 then -(1 / 2) else 0
+
+def ghzWeight (u v : ℝ) (z : Fin 3) : ℝ :=
+  if z = 2 then 1 - u - v else (u + v) / 2
+
+theorem ghz_three_outcome_normalized (u v : ℝ)
+    (hu : 0 < u) (hv : 0 < v) (hsum : u + v ≤ 1) :
+    (∀ z, 0 ≤ ghzAlpha z) ∧
+    (∀ z, 0 ≤ ghzBeta z) ∧
+    (∀ z, ghzGamma z ^ 2 ≤ ghzAlpha z * ghzBeta z) ∧
+    (∀ z, u * ghzAlpha z + v * ghzBeta z ≤ ghzWeight u v z) ∧
+    ((∑ z : Fin 3, ghzAlpha z) = 1) ∧
+    ((∑ z : Fin 3, ghzBeta z) = 1) ∧
+    ((∑ z : Fin 3, ghzWeight u v z) = 1) := by
+  constructor
+  · intro z
+    fin_cases z <;> norm_num [ghzAlpha]
+  constructor
+  · intro z
+    fin_cases z <;> norm_num [ghzBeta, ghzAlpha]
+  constructor
+  · intro z
+    fin_cases z <;> norm_num [ghzAlpha, ghzBeta, ghzGamma]
+  constructor
+  · intro z
+    fin_cases z <;> simp [ghzAlpha, ghzBeta, ghzWeight] <;> nlinarith
+  constructor
+  · norm_num [Fin.sum_univ_three, ghzAlpha]
+  constructor
+  · norm_num [Fin.sum_univ_three, ghzBeta, ghzAlpha]
+  · simp [Fin.sum_univ_three, ghzWeight]
+    <;> ring
+
+theorem ghz_three_outcome_attains (u v t : ℝ)
+    (hu : 0 < u) (hv : 0 < v) :
+    (∑ z : Fin 3,
+      (2 * t * ghzGamma z) ^ 2 / ghzWeight u v z) =
+      4 * t ^ 2 / (u + v) := by
+  have hden : u + v ≠ 0 := (add_pos hu hv).ne'
+  simp [Fin.sum_univ_three, ghzGamma, ghzWeight]
+  field_simp
+  <;> ring
+
+theorem ghz_three_outcome_optimal (u v t : ℝ)
+    (hu : 0 < u) (hv : 0 < v) (hsum : u + v ≤ 1) :
+    (∑ z : Fin 3,
+      (2 * t * ghzGamma z) ^ 2 / ghzWeight u v z) =
+      4 * t ^ 2 / (u + v) ∧
+    (∀ {Out : Type*} [Fintype Out]
+      (a b g w : Out → ℝ),
+      (∀ z, 0 ≤ a z) →
+      (∀ z, 0 ≤ b z) →
+      (∀ z, g z ^ 2 ≤ a z * b z) →
+      (∀ z, u * a z + v * b z ≤ w z) →
+      (∑ z, a z) = 1 →
+      (∑ z, b z) = 1 →
+      (∑ z, (2 * t * g z) ^ 2 / w z) ≤
+        (∑ z : Fin 3,
+          (2 * t * ghzGamma z) ^ 2 / ghzWeight u v z)) := by
+  constructor
+  · exact ghz_three_outcome_attains u v t hu hv
+  · intro Out _ a b g w ha hb hg hw haSum hbSum
+    rw [ghz_three_outcome_attains u v t hu hv]
+    exact physical_bayes_gain_upper u v t hu hv
+      a b g w ha hb hg hw haSum hbSum
+
+#print axioms Nightfall.Quantum.BayesCorner.ghz_three_outcome_normalized
+#print axioms Nightfall.Quantum.BayesCorner.ghz_three_outcome_attains
+#print axioms Nightfall.Quantum.BayesCorner.ghz_three_outcome_optimal
+
 #print axioms Nightfall.Quantum.BayesCorner.single_outcome_bayes_bound
 #print axioms Nightfall.Quantum.BayesCorner.finite_povm_bayes_bound
 #print axioms Nightfall.Quantum.BayesCorner.physical_bayes_gain_upper
