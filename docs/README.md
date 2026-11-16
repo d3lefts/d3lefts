@@ -25,6 +25,12 @@ The public identity is **“Discovery should compound. Evidence should travel.�
 
 Both experiences share source records and review standards, but divide by research lifecycle, not proof strength. An archived candidate is not automatically a certified theorem, and an active theorem can have checked sublemmas. The historical CSS token `data-nf-experience="archive"` denotes the NULL FIELD light palette for compatibility; it is **not** a scientific archive classification. Do not rename this implementation token until linked CSS and browser tests migrate together. Each landing page has a distinct layout. Keep the theme switch functional, keyboard-accessible, and honest about destination.
 
+## Product showcase — Commonwealth OS
+
+[**Commonwealth OS: Upcoming Product Demo**](commonwealth-os.html) is a separate, static, mobile-responsive civic-product showcase within the NIGHTFALL site. It presents four interactive **fictional** preview surfaces (Chamber, Living Voter, Legal Proof Passport, Representation), the proposed five-stage Huntsville-area adoption path, a security/authority boundary explanation and direct links into the [canonical Commonwealth repository source](../projects/commonwealth-os/README.md).
+
+The preview interactions are local JavaScript display state only: no real law ingestion, identity collection, profile persistence, server calls, ballot submission, authoritative verification, or institutional endorsement. The actual working synthetic app, legal kernel, source-different checker and historical engine live under projects/commonwealth-os/ and have their own scoped tests. The product page is not an official government election or legal-precedent product.
+
 ## Research and verification pages
 
 | Entry | Meaning |
