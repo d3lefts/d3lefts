@@ -30,7 +30,7 @@ for(const id of ["flagships","featured-title","nf-scroll-cinema","observatory","
  assert.ok(field.includes('id="'+id+'"'),"Missing active anchor "+id);
 assert.ok(moon.includes('id="live-case"')&&moon.includes('id="archived-records"'));
 assert.ok(!field.includes('src="home-system.js"'),"Do not hydrate active cards using historical registry data");
-assert.ok(chrome.includes('["index.html","new-moon.html","constellation.html","review.html"].includes(page)'),"No duplicate home rails");
+assert.ok(chrome.includes('["index.html","new-moon.html","constellation.html","review.html","commonwealth.html","commonwealth-intelligence.html"].includes(page)'),"No duplicate home rails");
 assert.ok(field.includes('class="nf-hero-jump">READ THE CURRENT CLAIM &amp; EVIDENCE'),"Current evidence is visible before the long hero copy");
 assert.ok(field.includes("C₂=(10+2√2)²(1+√3)²")&&field.includes("not end-to-end Lean-certified"),"Homepage must show current analytic scalar constant without implying full Lean closure");
 console.log("PASS: active NULL FIELD and historical NEW MOON with current theorem passport first");
