@@ -105,6 +105,96 @@ theorem disclosure_matching_price
   · exact checkpoint_attainable R m H spent N guards
       (c + rawFee) (d + predicateFee) sunk hcap hg hprice
 
+/-- All-direct plan, feasible whenever there is at least one available worker-slot
+per fresh task. It is optimal if direct predicate-only checks are cheaper. -/
+def allDirectPlan (R capacity N guards : ℕ)
+    (hcap : R ≤ capacity) (hg : N ≤ guards) :
+    Plan R capacity N guards := by
+  refine ⟨0, R, ?_, ?_, hg⟩ <;> omega
+
+theorem allDirect_cost
+    (R m H spent N guards c d sunk : ℕ)
+    (hcap : R ≤ remainingSlots m H spent) (hg : N ≤ guards) :
+    checkpointCost (allDirectPlan R (remainingSlots m H spent) N guards hcap hg)
+      c d sunk = sunk + d * R := by
+  simp [checkpointCost, evidenceCost, allDirectPlan]
+
+/-- In the direct-cheaper regime, all R fresh tasks must still be checked;
+no paired observations can lower the evidence price below d*R. -/
+theorem direct_cheaper_lower {R m H spent N guards c d sunk : ℕ}
+    (p : Plan R (remainingSlots m H spent) N guards)
+    (hcheap : d ≤ 2 * c) :
+    sunk + d * R ≤ checkpointCost p c d sunk := by
+  have hpaired : d * p.paired ≤ 2 * c * p.paired :=
+    Nat.mul_le_mul_right p.paired hcheap
+  calc
+    sunk + d * R =
+      sunk + (d * p.paired + d * p.direct) := by
+        rw [← p.allFreshCovered]
+        ring
+    _ ≤ sunk + (2 * c * p.paired + d * p.direct) := by omega
+    _ = checkpointCost p c d sunk := by rfl
+
+/-- Single closed form valid for ALL nonnegative raw/predicate disclosure
+fees, with no price-order assumption. The privacy fee can flip the
+cost-optimal plan from complementary raw reads to a predicate-only proof. -/
+def universalDisclosureFloor
+    (R m H spent c d rawFee predicateFee sunk : ℕ) : ℕ :=
+  sunk + min (2 * (c + rawFee)) (d + predicateFee) * R +
+    (d + predicateFee - 2 * (c + rawFee)) *
+      (2 * R - remainingSlots m H spent)
+
+/-- Matching, privacy-priced, checkpointed joint lower/upper bound in both
+the cheap-pair and cheap-predicate regimes. All effects still require
+the original independent trusted guards at commitment. -/
+theorem universal_disclosure_matching_price
+    (R m H spent N guards c d rawFee predicateFee sunk : ℕ)
+    (hcap : R ≤ remainingSlots m H spent) (hg : N ≤ guards) :
+    (∀ p : Plan R (remainingSlots m H spent) N guards,
+      universalDisclosureFloor R m H spent c d rawFee predicateFee sunk ≤
+        disclosureCost p c d rawFee predicateFee sunk) ∧
+    (∃ p : Plan R (remainingSlots m H spent) N guards,
+      disclosureCost p c d rawFee predicateFee sunk =
+        universalDisclosureFloor R m H spent c d rawFee predicateFee sunk) := by
+  by_cases hprice : 2 * (c + rawFee) ≤ d + predicateFee
+  · have heq : universalDisclosureFloor R m H spent c d rawFee predicateFee sunk =
+        disclosureFloor R m H spent c d rawFee predicateFee sunk := by
+      simp [universalDisclosureFloor, disclosureFloor, checkpointFloor, evidenceFloor,
+        Nat.min_eq_left hprice]
+      omega
+    obtain ⟨hlower, ⟨p, hattain⟩⟩ :=
+      disclosure_matching_price R m H spent N guards
+        c d rawFee predicateFee sunk hcap hg hprice
+    constructor
+    · intro q
+      rw [heq]
+      exact hlower q
+    · refine ⟨p, ?_⟩
+      rw [heq]
+      exact hattain
+  · have hcheap : d + predicateFee ≤ 2 * (c + rawFee) := by omega
+    have hzero : d + predicateFee - 2 * (c + rawFee) = 0 :=
+      Nat.sub_eq_zero_of_le hcheap
+    have heq : universalDisclosureFloor R m H spent c d rawFee predicateFee sunk =
+        sunk + (d + predicateFee) * R := by
+      simp [universalDisclosureFloor, Nat.min_eq_right hcheap, hzero]
+    constructor
+    · intro p
+      rw [heq]
+      exact direct_cheaper_lower p hcheap
+    · let p := allDirectPlan R (remainingSlots m H spent) N guards hcap hg
+      refine ⟨p, ?_⟩
+      rw [heq]
+      exact allDirect_cost R m H spent N guards
+        (c + rawFee) (d + predicateFee) sunk hcap hg
+
+/-- Privacy-price phase transition with the same three actions and capacity:
+raw exposure fee 0 favors pairs (price 6), fee 2 favors predicate-only (15). -/
+theorem privacy_switch_witness :
+    universalDisclosureFloor 3 2 3 0 1 5 0 0 0 = 6 ∧
+    universalDisclosureFloor 3 2 3 0 1 5 2 0 0 = 15 := by
+  decide
+
 /-- Late invalidation incurs a genuine nonadditive evidence/deadline premium. -/
 theorem delayed_invalidation_price_witness :
     checkpointFloor 2 2 2 0 1 5 0 = 4 ∧
