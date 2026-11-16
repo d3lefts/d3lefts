@@ -367,8 +367,21 @@ def main() -> int:
             continue
         if "menu-button" not in parsed.ids or "site-nav" not in parsed.ids:
             FAILURES.append(f"{page_path}: missing responsive navigation control or target")
-        if not re.search(r'<script\s+src="site.js"\s+defer\s*></script>', src):
-            FAILURES.append(f"{page_path}: missing shared navigation JavaScript")
+        has_shared_navigation = bool(re.search(r'<script\s+src="site.js"\s+defer\s*></script>', src))
+        if not has_shared_navigation:
+            # The isolated civic lab must not inject scientific research journey rails.
+            # It owns an accessible local menu with the same open/close/Escape contract.
+            if page_path.name == "commonwealth-intelligence.html":
+                local_js = (DOCS / "commonwealth-intelligence.js").read_text(encoding="utf-8")
+                local_menu_ok = ('src="commonwealth-intelligence.js"' in src
+                                 and all(item in local_js for item in
+                                         ("function initMenu()", '"aria-expanded"', '"Escape"',
+                                          'nav.classList.remove("open")',
+                                          'button.setAttribute("aria-expanded","false")')))
+                if not local_menu_ok:
+                    FAILURES.append(f"{page_path}: missing independently controlled accessible navigation")
+            else:
+                FAILURES.append(f"{page_path}: missing shared navigation JavaScript")
     # Public source scope and verified metadata baseline.
     excluded = ("research/nightfall/projects/xi-dossier.md",
                 "research/nightfall/projects/xi-continuous-shift-rank22.md",
