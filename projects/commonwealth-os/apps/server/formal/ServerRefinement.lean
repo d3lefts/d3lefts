@@ -9,7 +9,7 @@ JavaScript compiler, nor proof that its runtime/SQLite code implements 'step'.
 
 All role/roster/quorum bits are inputs supplied by a trusted institutional
 oracle. 'review' is a nonbinding DEMONSTRATION status, NOT an official effect.
--/-
+-/
 
 namespace Commonwealth.Server
 
