@@ -126,9 +126,9 @@ export class ParticipationLedger {
       const state=this.replay(institutionId),board=clone(state.board);
       const reviewer=['clerk','auditor','admin','chair'].includes(actor.role);
       const ownerOf={};
-      const advice=new Map();
       const amendments={};
-      const corrections=[];
+      const corrections=new Set();
+      let correctionIndex=0;
       for(const event of state.events){
         const c=event.command;
         if(c.type==='COMMENT'){
@@ -140,8 +140,7 @@ export class ParticipationLedger {
           amendments[c.id]??=[];
           amendments[c.id].push(event.actorId);
         }
-        if(c.type==='ADVISE' && event.actorId===actor.id) advice.set(c.id+'|'+event.at+'|'+event.seq,{id:c.id,revision:0,choice:c.choice});
-        if(c.type==='CORRECTION'&&event.actorId===actor.id) corrections.push(c.id);
+        if(c.type==='CORRECTION') {correctionIndex++;if(event.actorId===actor.id)corrections.add('R-'+correctionIndex);}
       }
       // Resolve advice revision at event time by replay of public events; required
       // because a response to v1 must never be presented as a v2 response.
@@ -165,7 +164,7 @@ export class ParticipationLedger {
           return (own||reviewer||a.status==='ACCEPTED')?a:{...a,text:'[Proposed text withheld pending review]',reason:'[Withheld]',author:'REDACTED'};
         });
       }
-      board.corrections=board.corrections.filter(c=>corrections.includes(c.proposalId));
+      board.corrections=board.corrections.filter(c=>corrections.has(c.id));
       return {mode:'SYNTHETIC_ONLY',board,sequence:state.sequence,headHash:state.headHash,integrity:'REPLAYED_LOCAL_CHAIN',official:false};
     });
   }
