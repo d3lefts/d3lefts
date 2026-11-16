@@ -72,7 +72,7 @@ theorem all_physical_povms_bounded
         (E out (z d) (o d)).re :=
     bornNum_coherence d hd (E out) (hpositive out)
   simp_rw [hnum]
-  simpa only [bornDen] using
+  simpa only [bornDen, z, o, SourceBorn.zeroRay, SourceBorn.oneRay] using
     (SourceBornTrace.physical_povm_upper_with_actual_source_trace
       d hd E hpositive hcomplete
       ((unnormalizedA d (z d) (o d)).re))
@@ -84,14 +84,27 @@ private theorem source_weight_pair_sum
       w i * (if i = a then (1/2 : ℝ) else if i = b then 1/2 else 0)) =
       (w a + w b) / 2 := by
   classical
-  simp [Finset.sum_ite, hab, add_div]
+  have hterm (i : ι) :
+      w i * (if i = a then (1/2 : ℝ) else if i = b then 1/2 else 0) =
+        (if i = a then w a / 2 else 0) +
+          (if i = b then w b / 2 else 0) := by
+    by_cases ha : i = a
+    · subst i
+      simp [hab]
+    · by_cases hb : i = b
+      · subst i
+        simp [ha]
+      · simp [ha, hb]
+  simp_rw [hterm]
+  simp [Finset.sum_add_distrib, add_div]
 
 theorem plus_diag (d : ℕ) (hd : 0 < d) (i : Register d) :
     (fullGHZ d 0 i i).re =
       if i = z d then (1 / 2 : ℝ)
       else if i = o d then 1 / 2 else 0 := by
   classical
-  have hab := PhysicalNumerator.two_GHZ_rays_distinct d hd
+  have hab : z d ≠ o d := PhysicalNumerator.two_GHZ_rays_distinct d hd
+  have hba : o d ≠ z d := hab.symm
   by_cases ha : i = z d
   · simp [ha, fullGHZ, AmbientGHZ.ghzAmbient,
       AmbientGHZ.plusEffect, AmbientGHZ.plusVector,
@@ -115,7 +128,7 @@ theorem minus_diag (d : ℕ) (hd : 0 < d) (i : Register d) :
       AmbientGHZ.minusEffect, AmbientGHZ.minusVector,
       Matrix.vecMulVec, Matrix.smul_apply]
   · by_cases hb : i = o d
-    · simp [ha, hb, fullGHZ, AmbientGHZ.ghzAmbient,
+    · simp [ha, hb, hba, fullGHZ, AmbientGHZ.ghzAmbient,
         AmbientGHZ.minusEffect, AmbientGHZ.minusVector,
         Matrix.vecMulVec, Matrix.smul_apply]
     · simp [ha, hb, fullGHZ, AmbientGHZ.ghzAmbient,
@@ -162,11 +175,17 @@ theorem full_GHZ_attains_actual_physical_bound
   rcases hcorner with ⟨h00, h10, h01, h11, hco, hcm, h20, h21, h2c⟩
   have hnplus : bornNum d (fullGHZ d 0) =
       (unnormalizedA d (z d) (o d)).re := by
-    rw [bornNum_coherence d hd _ (fullGHZ_positive d 0), hco]
+    rw [bornNum_coherence d hd _ (fullGHZ_positive d 0)]
+    change 2 * (unnormalizedA d (z d) (o d)).re *
+      (AmbientGHZ.ghzAmbient (z d) (o d) 0 (z d) (o d)).re = _
+    rw [hco]
     ring
   have hnminus : bornNum d (fullGHZ d 1) =
       -(unnormalizedA d (z d) (o d)).re := by
-    rw [bornNum_coherence d hd _ (fullGHZ_positive d 1), hcm]
+    rw [bornNum_coherence d hd _ (fullGHZ_positive d 1)]
+    change 2 * (unnormalizedA d (z d) (o d)).re *
+      (AmbientGHZ.ghzAmbient (z d) (o d) 1 (z d) (o d)).re = _
+    rw [hcm]
     ring
   have hden : (SourceBorn.sourceWeight d (z d) +
     SourceBorn.sourceWeight d (o d)) ≠ 0 := by
