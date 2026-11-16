@@ -30,6 +30,12 @@ jobs:
           set -euo pipefail
           cp research/nightfall/formalization/quantum/BayesPOVMCorner.lean /tmp/mathlib4/BayesPOVMCorner.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/BayesPOVMCorner.olean BayesPOVMCorner.lean)
+      - name: Compile all-length tensor-character exact sum transfer
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/quantum/TensorCharacter.lean /tmp/mathlib4/TensorCharacter.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/TensorCharacter.olean TensorCharacter.lean)
       - name: Strict named kernel theorem audit
         shell: bash
         run: |
@@ -38,17 +44,20 @@ jobs:
           SRC=research/nightfall/formalization/quantum/PhysicalQubitEnsemble.lean
           N=Nightfall.Quantum.PhysicalQubit
           python3 scripts/lean_bridge.py "$SRC" --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.densityOfAmplitude_psd" --decl "$N.qubitDensity_psd" --decl "$N.productDensity_psd" --decl "$N.productDensity_entry" --decl "$N.productDensity_trace_one" --decl "$N.qubitAmplitude_norm_one" --decl "$N.normalized_product_physical" --decl "$N.powered_phase_product_physical" --json-out quantum-receipts/physical.json
+          N=Nightfall.Quantum.TensorCharacter
+          python3 scripts/lean_bridge.py research/nightfall/formalization/quantum/TensorCharacter.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.ternary_tensor_sum_factor" --decl "$N.character_weighted_tensor_sum" --decl "$N.local_moment_zero_kills_tensor" --decl "$N.weighted_local_zero_kills_tensor" --json-out quantum-receipts/tensor.json
           N=Nightfall.Quantum.BayesCorner
           python3 scripts/lean_bridge.py research/nightfall/formalization/quantum/BayesPOVMCorner.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.single_outcome_bayes_bound" --decl "$N.finite_povm_bayes_bound" --decl "$N.physical_bayes_gain_upper" --json-out quantum-receipts/bayes.json
           python3 research/nightfall/formalization/product_space/check_receipts.py quantum-receipts/physical.json
           python3 research/nightfall/formalization/product_space/check_receipts.py quantum-receipts/bayes.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py quantum-receipts/tensor.json
       - name: Freeze provenance
         if: always()
         run: |
           mkdir -p quantum-receipts
           git rev-parse HEAD > quantum-receipts/commit.txt
           git -C /tmp/mathlib4 rev-parse HEAD > quantum-receipts/mathlib.txt || true
-          sha256sum research/nightfall/formalization/quantum/PhysicalQubitEnsemble.lean research/nightfall/formalization/quantum/BayesPOVMCorner.lean > quantum-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/quantum/PhysicalQubitEnsemble.lean research/nightfall/formalization/quantum/BayesPOVMCorner.lean research/nightfall/formalization/quantum/TensorCharacter.lean > quantum-receipts/SHA256SUMS.txt
       - name: Retain artifacts
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
