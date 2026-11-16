@@ -28,5 +28,8 @@ jobs:
           node --check docs/commonwealth-browser/question-data.mjs
           node --check docs/commonwealth-browser/workspace.mjs
           node --check docs/commonwealth-browser/app.mjs
+          node --check projects/commonwealth-os/apps/browser/workspace.mjs
+          node --check projects/commonwealth-os/apps/browser/history-core.mjs
+          cmp docs/commonwealth-browser/historical-fixtures.js docs/commonwealth-intelligence-fixtures.js
       - name: Pure synthetic history, questionnaire and entrypoint tests
-        run: node --test docs/commonwealth-browser/tests/*.test.mjs
+        run: node --test docs/commonwealth-browser/tests/*.test.mjs projects/commonwealth-os/apps/browser/tests/*.test.mjs tests/test_commonwealth_web_demo.mjs
