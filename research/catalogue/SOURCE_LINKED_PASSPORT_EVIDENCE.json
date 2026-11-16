@@ -1,0 +1,39 @@
+{
+  "schema": "nightfall.source-linked-passport-evidence.v1",
+  "as_of": "2026-11-16",
+  "active_registry": "docs/active-proof-passport.json",
+  "frozen_dependency_graph": "research/catalogue/ACTIVE_DEPENDENCY_CLOSURE.json",
+  "policy": "Evidence overlay only. Never promote a frozen open node, merge a PR, or assert independent mathematical review from CI success.",
+  "entries": [
+    {
+      "id": "quantum-normalized-terminal",
+      "frontier": "quantum-physical-operator",
+      "node": "q-terminal",
+      "pr": 658,
+      "head": "0dd5541a7589ce21127e82a92b60769af42e01ed",
+      "workflow_run": 43945324247,
+      "workflow_name": "NIGHTFALL actual physical Born and full POVM terminal Lean",
+      "file": "research/nightfall/formalization/quantum/PhysicalGainNormalized.lean",
+      "blob": "47ce8ffe8b7b0ceb1ba79a14d790563c842f88ce",
+      "declaration": "actual_physical_optimal_gain_normalized",
+      "evidence_scope": "pinned named Lean theorem plus independent finite matrix audit; source-defined ternary model, d>=1",
+      "proposed_status": "candidate-terminal-source-ci-passed",
+      "remaining": "Integrate the draft stack into the canonical registry after checking dependency closure; no novelty or deployment claim."
+    },
+    {
+      "id": "f9-fixed-same-oracle-lower",
+      "frontier": "f9-asymptotic-oracle",
+      "node": "f-nonadaptive-bridge",
+      "pr": 659,
+      "head": "af58ab352bfd4b6889f37704d774469af8c12ce4",
+      "workflow_run": 43945329346,
+      "workflow_name": "NIGHTFALL F9 same-oracle decoder and complement bridge Lean",
+      "file": "research/nightfall/formalization/finite_field/F9ConcreteLower.lean",
+      "blob": "b9fd8af34e07b96acdf70efebc564c58b77db422",
+      "declaration": "actual_fixed_family_lower",
+      "evidence_scope": "all-k finite-dimensional lower bound m>=2k-1 for full separating fixed rows of the squared F9 oracle",
+      "proposed_status": "component-source-ci-passed",
+      "remaining": "All-k legal adaptive decoder is not yet kernel-proved, hence F9 terminal remains OPEN."
+    }
+  ]
+}
