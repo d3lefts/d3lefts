@@ -17,7 +17,9 @@ noncomputable section
 abbrev F9 := F9ActualField.F9
 
 theorem F9_two_ne_zero : (2 : F9) ≠ 0 := by
-  norm_num [F9]
+  intro h
+  have hdiv : 3 ∣ 2 := (CharP.cast_eq_zero_iff F9 3 2).mp h
+  omega
 
 theorem actual_fixed_square_lower
     {m k : ℕ} (hk : 2 ≤ k)
