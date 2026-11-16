@@ -31,7 +31,7 @@ jobs:
           mkdir -p quantum-receipts
           SRC=research/nightfall/formalization/quantum/PhysicalQubitEnsemble.lean
           N=Nightfall.Quantum.PhysicalQubit
-          python3 scripts/lean_bridge.py "$SRC" --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.densityOfAmplitude_psd" --decl "$N.qubitDensity_psd" --decl "$N.productDensity_psd" --decl "$N.productDensity_entry" --decl "$N.productDensity_trace_one" --json-out quantum-receipts/physical.json
+          python3 scripts/lean_bridge.py "$SRC" --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.densityOfAmplitude_psd" --decl "$N.qubitDensity_psd" --decl "$N.productDensity_psd" --decl "$N.productDensity_entry" --decl "$N.productDensity_trace_one" --decl "$N.qubitAmplitude_norm_one" --decl "$N.normalized_product_physical" --decl "$N.powered_phase_product_physical" --json-out quantum-receipts/physical.json
           python3 research/nightfall/formalization/product_space/check_receipts.py quantum-receipts/physical.json
       - name: Freeze provenance
         if: always()
