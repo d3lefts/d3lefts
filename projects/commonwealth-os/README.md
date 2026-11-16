@@ -32,6 +32,9 @@ A **2027 Huntsville pitch** is a demonstration target, **not** a city deployment
 ## Synthetic legislative workflow v1.1
 [Formal state-machine specification](workflow/FORMAL_WORKFLOW_v1_1.md) · [Executable demo reference and independent replay checker](workflow/README.md). The demo reference rejects OFFICIAL mode; 28 internal tests cover the fictional case and negative guards, not a legally authorized electronic election.
 
+## Runnable legislative app v0.1
+[Run the mobile-first fictional governance workspace](app/README.md). This FastAPI / SQLite / vanilla JS demo reuses the versioned workflow reducer and independent checker, has local HTTP integration tests, and explicitly **does not authenticate real voters, authorize elections, or ingest municipal records**. See [source](app/main.py) and [scoped app CI](../../.github/workflows/commonwealth-app-ci.yml).
+
 ## V1 demonstrator
 The first testable vertical slice uses entirely fictional governance records:
 **Draft → Amend → Deliberate → Vote (DEMO) → Verify → Publish preview.**
