@@ -186,6 +186,53 @@ theorem physical_A_entry_is_two_characters (d : ℕ)
   intro x _
   ring
 
+theorem physical_Cconj_entry_star_swap (d : ℕ)
+    (a b : Fin d → Fin 2) :
+    unnormalizedCconj d a b = star (unnormalizedC d b a) := by
+  classical
+  calc
+    unnormalizedCconj d a b =
+      ∑ x : Fin d → Fin 3,
+        star (character d x * state d x b a) := by
+          simp only [unnormalizedCconj, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul]
+          apply Finset.sum_congr rfl
+          intro x _
+          have h : star (state d x b a) = state d x a b :=
+            ((state_is_physical d x).1.1.apply a b)
+          rw [star_mul, h]
+          ring
+    _ = star (∑ x : Fin d → Fin 3,
+        character d x * state d x b a) := by
+          simp
+    _ = star (unnormalizedC d b a) := by
+          simp [unnormalizedC, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul]
+
+theorem physical_A_entry_from_fourier (d : ℕ)
+    (a b : Fin d → Fin 2) :
+    unnormalizedA d a b =
+      (unnormalizedC d a b + star (unnormalizedC d b a)) / 2 := by
+  rw [physical_A_entry_is_two_characters,
+    physical_Cconj_entry_star_swap]
+
+theorem actual_A_zero_if_local_diagonal
+    (d : ℕ) (a b : Fin d → Fin 2) (j : Fin d)
+    (h : a j = b j) : unnormalizedA d a b = 0 := by
+  rw [physical_A_entry_from_fourier,
+    actual_C_zero_if_local_diagonal d a b j h,
+    actual_C_zero_if_local_diagonal d b a j h.symm]
+  norm_num
+
+theorem actual_A_ghz_corner_value
+    (d : ℕ) (hd : 0 < d) :
+    unnormalizedA d (fun _ => 0) (fun _ => 1) =
+      (((3:ℂ) * ((Real.sqrt (3:ℝ) : ℂ)/4)) ^ d) / 2 := by
+  let j : Fin d := ⟨0, hd⟩
+  have hzero : unnormalizedC d (fun _ => 1) (fun _ => 0) = 0 :=
+    actual_fourier_entry_zero_off_ghz d _ _ j (Or.inl (by simp))
+  rw [physical_A_entry_from_fourier,
+    actual_fourier_ghz_corner_value, hzero]
+  simp
+
 theorem unnormalizedA_from_actual_states (d : ℕ)
     (a b : Fin d → Fin 2) :
     unnormalizedA d a b =
@@ -206,6 +253,10 @@ theorem unnormalizedA_from_actual_states (d : ℕ)
 #print axioms Nightfall.Quantum.OperatorReduction.actual_B_offdiagonal
 #print axioms Nightfall.Quantum.OperatorReduction.actual_C_zero_if_local_diagonal
 #print axioms Nightfall.Quantum.OperatorReduction.physical_A_entry_is_two_characters
+#print axioms Nightfall.Quantum.OperatorReduction.physical_Cconj_entry_star_swap
+#print axioms Nightfall.Quantum.OperatorReduction.physical_A_entry_from_fourier
+#print axioms Nightfall.Quantum.OperatorReduction.actual_A_zero_if_local_diagonal
+#print axioms Nightfall.Quantum.OperatorReduction.actual_A_ghz_corner_value
 #print axioms Nightfall.Quantum.OperatorReduction.unnormalizedA_from_actual_states
 
 end
