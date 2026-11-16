@@ -5,6 +5,7 @@ on:
     branches: [nightfall/quantum-sld-full-20261116]
     paths:
       - 'research/nightfall/formalization/quantum/PhysicalOperatorReduction.lean'
+      - 'research/nightfall/formalization/quantum/LocalTernaryMoments.lean'
       - '.github/workflows/nightfall-quantum-operator-reduction.yml'
   workflow_dispatch:
 permissions:
@@ -26,6 +27,12 @@ jobs:
             cp "research/nightfall/formalization/quantum/$F.lean" "/tmp/mathlib4/$F.lean"
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$F.olean" "$F.lean")
           done
+      - name: Compile exact physical ternary local operator moments
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/quantum/LocalTernaryMoments.lean /tmp/mathlib4/LocalTernaryMoments.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/LocalTernaryMoments.olean LocalTernaryMoments.lean)
       - name: Compile actual averaged operator bridge
         shell: bash
         run: |
@@ -37,6 +44,9 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p operator-reduction-receipts
+          N=Nightfall.Quantum.LocalMoments
+          python3 scripts/lean_bridge.py research/nightfall/formalization/quantum/LocalTernaryMoments.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.weighted_00_zero" --decl "$N.weighted_11_zero" --decl "$N.weighted_10_zero" --decl "$N.weighted_01_value" --json-out operator-reduction-receipts/local-moments.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py operator-reduction-receipts/local-moments.json
           N=Nightfall.Quantum.OperatorReduction
           python3 scripts/lean_bridge.py research/nightfall/formalization/quantum/PhysicalOperatorReduction.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.state_is_physical" --decl "$N.unnormalizedB_entry" --decl "$N.unnormalizedC_entry" --decl "$N.unnormalizedC_zero_of_local" --decl "$N.unnormalizedA_from_actual_states" --json-out operator-reduction-receipts/bridge.json
           python3 research/nightfall/formalization/product_space/check_receipts.py operator-reduction-receipts/bridge.json
@@ -46,7 +56,7 @@ jobs:
           mkdir -p operator-reduction-receipts
           git rev-parse HEAD > operator-reduction-receipts/commit.txt
           git -C /tmp/mathlib4 rev-parse HEAD > operator-reduction-receipts/mathlib.txt || true
-          sha256sum research/nightfall/formalization/quantum/{PhysicalQubitEnsemble,TernaryPhase,TensorCharacter,PhysicalOperatorReduction}.lean > operator-reduction-receipts/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/quantum/{PhysicalQubitEnsemble,TernaryPhase,TensorCharacter,PhysicalOperatorReduction,LocalTernaryMoments}.lean > operator-reduction-receipts/SHA256SUMS.txt
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
