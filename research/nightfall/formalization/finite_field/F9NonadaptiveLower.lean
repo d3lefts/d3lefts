@@ -73,9 +73,58 @@ theorem all_short_row_partitions_fail_square_recovery
     rw [dot_add, dot_sub, hT i]
     ring
 
+
+theorem concatenated_short_row_designs_fail
+    {s t k : ℕ} (hs : s < k) (ht : t < k)
+    (rows : Fin (s + t) → Fin k → K)
+    (h2 : (2 : K) ≠ 0) :
+    ∃ x y : Fin k → K,
+      x ≠ y ∧ x ≠ -y ∧
+      ∀ i : Fin (s + t),
+        (dot (rows i) x) ^ 2 = (dot (rows i) y) ^ 2 := by
+  let rowsS : Fin s → Fin k → K := fun i => rows (Fin.castAdd t i)
+  let rowsT : Fin t → Fin k → K := fun i => rows (Fin.natAdd s i)
+  obtain ⟨x, y, hxy, hxneg, hS, hT⟩ :=
+    all_short_row_partitions_fail_square_recovery hs ht rowsS rowsT h2
+  refine ⟨x, y, hxy, hxneg, ?_⟩
+  intro i
+  exact Fin.addCases
+    (motive := fun i : Fin (s+t) =>
+      (dot (rows i) x) ^ 2 = (dot (rows i) y) ^ 2)
+    (fun j => hS j) (fun j => hT j) i
+
+theorem all_short_fixed_designs_fail
+    {m k : ℕ} (hk : 2 ≤ k) (hm : m ≤ 2 * k - 2)
+    (rows : Fin m → Fin k → K) (h2 : (2 : K) ≠ 0) :
+    ∃ x y : Fin k → K,
+      x ≠ y ∧ x ≠ -y ∧
+      ∀ i : Fin m,
+        (dot (rows i) x) ^ 2 = (dot (rows i) y) ^ 2 := by
+  let s := min m (k - 1)
+  let t := m - s
+  have hs : s < k := by
+    dsimp [s]
+    omega
+  have ht : t < k := by
+    dsimp [t, s]
+    omega
+  have hsum : s + t = m := by
+    dsimp [s, t]
+    omega
+  let subrows : Fin (s + t) → Fin k → K :=
+    fun i => rows (Fin.cast hsum i)
+  obtain ⟨x, y, hxy, hxneg, hall⟩ :=
+    concatenated_short_row_designs_fail hs ht subrows h2
+  refine ⟨x, y, hxy, hxneg, ?_⟩
+  intro i
+  have hi := hall (Fin.cast hsum.symm i)
+  simpa only [subrows, Fin.cast_cast] using hi
+
 #print axioms Nightfall.FiniteField.F9NonadaptiveLower.rowMap
 #print axioms Nightfall.FiniteField.F9NonadaptiveLower.short_rows_have_nonzero_kernel
 #print axioms Nightfall.FiniteField.F9NonadaptiveLower.all_short_row_partitions_fail_square_recovery
+#print axioms Nightfall.FiniteField.F9NonadaptiveLower.concatenated_short_row_designs_fail
+#print axioms Nightfall.FiniteField.F9NonadaptiveLower.all_short_fixed_designs_fail
 
 end
 end Nightfall.FiniteField.F9NonadaptiveLower
