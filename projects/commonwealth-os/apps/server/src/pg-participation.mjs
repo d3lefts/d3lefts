@@ -195,7 +195,7 @@ export class PgParticipationStore{
         const row=src.prepare('SELECT seq,head_hash FROM participation_streams WHERE institution_id=?').get(tenant);
         const actors=src.prepare('SELECT id,role,eligible,active,token_hash FROM actors WHERE institution_id=?').all(tenant);
         const records=src.prepare('SELECT seq,event_json,previous_hash,hash FROM participation_events WHERE institution_id=? ORDER BY seq').all(tenant);
-        const requests=src.prepare('SELECT actor_id,command_key,request_hash,response_json FROM participation_requests WHERE institution_id=?').all(tenant);
+        const requests=src.prepare('SELECT actor_id,request_key,request_hash,response_json FROM participation_requests WHERE institution_id=?').all(tenant);
         invariant(actors.length>0,'PG_SOURCE_ACTORS_MISSING');
         const interpreter=new Store(':memory:');
         try{
@@ -220,7 +220,7 @@ export class PgParticipationStore{
             await client.query('INSERT INTO cw_pg_events VALUES ($1,$2,$3,$4,$5,$6,$7)',[s.tenant,r.seq,r.previous_hash,r.hash,sealed.nonce,sealed.tag,sealed.ciphertext]);
           }
           for(const req of s.requests){
-            await client.query('INSERT INTO cw_pg_requests (tenant,actor_id,request_key,request_hash,response_json) VALUES ($1,$2,$3,$4,$5::jsonb)',[s.tenant,req.actor_id,req.command_key,req.request_hash,req.response_json]);
+            await client.query('INSERT INTO cw_pg_requests (tenant,actor_id,request_key,request_hash,response_json) VALUES ($1,$2,$3,$4,$5::jsonb)',[s.tenant,req.actor_id,req.request_key,req.request_hash,req.response_json]);
           }
           await client.query('UPDATE cw_pg_streams SET seq=$2,head_hash=$3 WHERE tenant=$1',[s.tenant,s.stream.seq,s.stream.head_hash]);
         }
