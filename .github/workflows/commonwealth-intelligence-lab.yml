@@ -40,5 +40,21 @@ jobs:
         run: node scripts/test_commonwealth_export.cjs
       - name: Confirm existing Commonwealth public demos remain unchanged
         run: node --test tests/test_commonwealth_web_demo.mjs
+      - name: Install pinned Chromium browser-test driver
+        run: npm install --no-save --no-package-lock playwright-core@1.56.1
+      - name: Exercise guided civic journey and Passport checker at phone/desktop widths
+        run: |
+          mkdir -p browser-artifacts
+          CHROME_BIN="$(command -v google-chrome)" node scripts/test_commonwealth_journey.mjs
+      - name: Preserve mobile and desktop browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: commonwealth-civic-lab-${{ github.run_id }}
+          path: |
+            browser-artifacts/cw-guided-*.png
+            browser-artifacts/cw-passport-*.json
+          if-no-files-found: warn
+          retention-days: 30
       - name: Validate site metadata, links, and accessibility skeleton
         run: python3 scripts/check_site.py
