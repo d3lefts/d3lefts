@@ -18,11 +18,15 @@ def signBit (b : Bool) : ZMod 3 := if b then 2 else 0
 
 theorem signBit_injective : Function.Injective signBit := by
   intro a b h
-  cases a <;> cases b <;> norm_num [signBit] at *
+  have h20 : (2 : ZMod 3) ≠ 0 := by decide
+  cases a <;> cases b <;> simp_all [signBit]
 
 theorem signBit_neg_collision (a b : Bool)
     (h : signBit a = -signBit b) : a = b := by
-  cases a <;> cases b <;> norm_num [signBit] at *
+  have h20 : (2 : ZMod 3) ≠ 0 := by decide
+  have h02 : (0 : ZMod 3) ≠ -(2 : ZMod 3) := by decide
+  have h22 : (2 : ZMod 3) ≠ -(2 : ZMod 3) := by decide
+  cases a <;> cases b <;> simp_all [signBit]
 
 variable {K : Type*} [Field K] [Algebra (ZMod 3) K]
 
