@@ -1,0 +1,131 @@
+/* Commonwealth OS v0.1 — fictional-only representative dashboard.
+ * This client never determines authority, tally or certification. */
+(() => {
+  'use strict';
+  const $ = (selector) => document.querySelector(selector);
+  const state = {tenants: [], actors: [], me: null, item: null, screen: 'home', activeTab: 'text', passport: null};
+  const pages = [
+    ['home', '⌂', 'Home'], ['bills', '▤', 'Bills'], ['session', '◷', 'Session'],
+    ['vote', '✓', 'Vote'], ['records', '▱', 'Records'], ['assistant', '✧', 'Assistant']
+  ];
+  const stepStates = [
+    ['Draft', ['DRAFT']], ['Review', ['IN_REVIEW', 'AGENDA_SET']],
+    ['Deliberate', ['DELIBERATING', 'MOTION_LOCKED']], ['Vote', ['BALLOT_OPEN', 'BALLOT_CLOSED']],
+    ['Certify', ['CERTIFIED', 'REJECTED']], ['Publish', ['PUBLICATION_REVIEW', 'PUBLISHED']]
+  ];
+  const pretty = (s) => (s || '').replace(/_/g, ' ').toLowerCase().replace(/(^|\s)\w/g, x => x.toUpperCase());
+  const e = (str) => String(str ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const short = (str, n=13) => str ? e(str.slice(0,n)) + '…' : 'Not established';
+  const screenName = (name) => ({home:'Overview',bills:'Legislation',session:'Senate Session',vote:'Cast Vote',records:'Evidence & Records',assistant:'Governance Assistant'})[name] || pretty(name);
+  const verb = (ev) => ({CREATE:'Proposal created', AMEND:'Revision proposed', SUBMIT_REVIEW:'Submitted for review', SET_AGENDA:'Added to agenda', OPEN_DEBATE:'Deliberation opened', LOCK_MOTION:'Motion locked', OPEN_BALLOT:'Demo ballot opened', CAST:'Demo vote recorded', CLOSE_BALLOT:'Demo ballot closed', CERTIFY:'Decision certified', PREPARE_PUBLICATION:'Publication prepared', REVIEW_PUBLICATION:'First review completed', APPROVE_PUBLICATION_PREVIEW:'Preview approved', VOID:'Motion voided'})[ev] || pretty(ev);
+  let toastTimer;
+  function toast(text, error=false){ const node=$('#toast'); node.textContent=text; node.className='toast show'+(error?' error':''); clearTimeout(toastTimer); toastTimer=setTimeout(()=>node.className='toast',4200); }
+  async function api(url, opts={}){
+    const res=await fetch(url, {credentials:'same-origin', headers:{...(opts.body?{'Content-Type':'application/json','X-CW-Action':'demo'}:{})},...opts});
+    let data; try{data=await res.json();}catch{data={detail:'Unexpected server response'};}
+    if(!res.ok) throw new Error(typeof data.detail==='string'?data.detail:JSON.stringify(data.detail));
+    return data;
+  }
+  async function init(){
+    try{
+      [state.tenants,state.actors]=await Promise.all([api('/api/demo/tenants'),api('/api/demo/actors')]);
+      $('#tenant-select').innerHTML=state.tenants.map(t=>`<option value="${e(t.id)}">${e(t.label)} — ${e(t.kind)}</option>`).join('');
+      $('#actor-select').innerHTML=state.actors.map(a=>`<option value="${e(a.id)}">${e(pretty(a.id))} · ${e(a.roles.join(', '))}</option>`).join('');
+      $('#enter-demo').addEventListener('click', async()=>await enter());
+      $('#switch-role').addEventListener('click',()=>showOnboarding());
+      $('#sidebar-switch').addEventListener('click',()=>showOnboarding());
+      $('#refresh-btn').addEventListener('click', async()=>{await refresh();toast('State refreshed from server');});
+      $('#side-nav').addEventListener('click',navClick);
+      $('#mobile-nav').addEventListener('click',navClick);
+      $('#view').addEventListener('click',handleContent);
+      $('#action-form').addEventListener('submit',submitAction);
+      $('#cancel-action').addEventListener('click',()=>$('#action-dialog').close());
+      $('.close-passport').addEventListener('click',()=>$('#passport-dialog').close());
+      $('#passport-dialog .dialog-footer .close-passport').addEventListener('click',()=>$('#passport-dialog').close());
+      $('#download-passport').addEventListener('click',downloadPassport);
+      renderNav();
+      try {state.me=await api('/api/me');await refresh();displayShell();}
+      catch {showOnboarding();}
+    }catch(error){toast('App initialization failed: '+error.message,true);}
+  }
+  function showOnboarding(){
+    if(state.me){$('#tenant-select').value=state.me.tenant;$('#actor-select').value=state.me.id;}
+    $('#onboarding').hidden=false;$('#shell').hidden=true;
+  }
+  function displayShell(){$('#onboarding').hidden=true;$('#shell').hidden=false;}
+  async function enter(){
+    $('#enter-demo').disabled=true;
+    try{
+      await api('/api/demo/login',{method:'POST',body:JSON.stringify({tenant:$('#tenant-select').value,actor:$('#actor-select').value})});
+      state.me=await api('/api/me');state.screen='home';await refresh();displayShell();toast('Fictional role activated; not an identity verification');
+    }catch(err){toast(err.message,true);}finally{$('#enter-demo').disabled=false;}
+  }
+  function navClick(ev){ const b=ev.target.closest('[data-screen]'); if(!b)return;state.screen=b.dataset.screen;render();window.scrollTo({top:0,behavior:'instant'}); }
+  function renderNav(){
+    const html=pages.map(([id,ico,label])=>`<button class="nav-link ${state.screen===id?'active':''}" data-screen="${id}" type="button" ${state.screen===id?'aria-current="page"':''}><span class="nav-icon" aria-hidden="true">${ico}</span><span>${label}</span></button>`).join('');
+    $('#side-nav').innerHTML=html;$('#mobile-nav').innerHTML=html;
+  }
+  async function refresh(){
+    if(!state.me) return;
+    const list=await api('/api/items');state.item=list[0]||null;
+    render();
+  }
+  function badge(status){const klass=({PUBLISHED:'green',CERTIFIED:'green',REJECTED:'gold',BALLOT_OPEN:'cyan',MOTION_LOCKED:'violet',PUBLICATION_REVIEW:'violet',VOIDED:'gold'})[status]||'violet';return `<span class="pill ${klass}">${e(pretty(status))}</span>`;}
+  function currentStep(){const x=stepStates.findIndex(([,values])=>values.includes(state.item?.status)); return x===-1?0:x;}
+  function steps(){const i=currentStep();return `<div class="stepper" aria-label="Legislative progress">${stepStates.map(([label],idx)=>`<div class="step ${idx<i?'done':idx===i?'current':''}"><b>${idx<i?'✓':idx+1}</b>${label}</div>`).join('')}</div>`;}
+  function sectionHead(kicker,title,description,extra=''){return `<div class="page-head"><div><div class="overline">${kicker}</div><h1>${title}</h1><p>${description}</p></div>${extra}</div>`;}
+  function actions(){const a=state.item?.actions||[];return a.length ? `<div class="button-stack">${a.map((x,idx)=>`<button class="${idx===0?'primary-button':'secondary-button'}" data-action="${e(x.action)}" type="button">${e(x.label)} <span>→</span></button>`).join('')}</div>`:`<div class="muted small">No actions assigned to this simulated role at the current stage. Switch roles to continue the workflow.</div>`;}
+  function timeline(limit){const events=(state.item?.events||[]).slice().reverse();return events.slice(0,limit||events.length).map(x=>`<div class="timeline-event"><b>${e(verb(x.name))}</b><small>Event #${x.seq} · ${e(pretty(x.actor))}</small></div>`).join('');}
+  function roleHint(){const a=state.item?.actions||[];if(a.length)return `You have ${a.length} available procedural action${a.length===1?'':'s'} in this stage.`;return 'This role has no procedural actions at this stage. The next action belongs to another institutional officer.';}
+  function home(){const d=state.item;
+    return sectionHead('PERSONAL LEGISLATIVE DASHBOARD','Good evening, '+e(pretty(state.me.id))+'.','Your legislative work, decisions, and authenticated evidence in one place.',badge(d.status))+
+    `<div class="metric-grid"><div class="metric emphasis"><div class="metric-label">Open tasks</div><span class="metric-number">${d.actions.length}</span></div><div class="metric"><div class="metric-label">Current revision</div><span class="metric-number">v${d.revision}</span></div><div class="metric"><div class="metric-label">Audit events</div><span class="metric-number">${d.event_count}</span></div></div>`+
+    `<div class="main-grid"><div><section class="panel"><div class="panel-header"><h2>Current legislative docket</h2><span class="pill">${e(d.id)}</span></div><div class="doc-card"><div class="doc-row"><span class="overline">SYNTHETIC PROPOSAL · VERSION ${d.revision}</span>${badge(d.status)}</div><h3>${e(d.id)} · Institutional resolution</h3><p>${e(d.text)}</p><button class="ghost-button" data-screen="bills">Review legislation →</button></div><h3>Available actions</h3>${actions()}</section><section class="panel" style="margin-top:18px"><div class="panel-header"><h2>Recent activity</h2><button class="mini-link" data-screen="records">Full event ledger →</button></div><div class="timeline">${timeline(5)}</div></section></div><div><section class="panel"><h2>Next procedural step</h2><div class="info-block"><h3>${e(pretty(d.status))}</h3><p>${e(roleHint())}</p></div><hr class="mini-divider"><div class="keyval"><span>Demo institution</span><strong>${e(d.institution)}</strong></div><div class="keyval"><span>Rule version</span><strong>${e(d.rules_version)}</strong></div><div class="keyval"><span>Motion lock</span><strong>${d.locked_motion_hash?'Enabled':'Pending'}</strong></div></section><section class="assistant-teaser" style="margin-top:18px"><div class="spark">✧</div><strong>Procedural assistant</strong><p>Read what the contract requires next, with no authority to alter a vote or enact legislation.</p><button class="secondary-button" data-screen="assistant">Inspect workflow →</button></section></div></div>`;
+  }
+  function bills(){const d=state.item;const tabs=['text','changes','evidence'];return sectionHead('LEGISLATIVE DOCUMENTS','Legislation','Review the exact text and its immutable revision history.',`<span class="pill cyan">${e(d.id)} · v${d.revision}</span>`)+steps()+`<div class="main-grid"><div><section class="panel"><div class="panel-header"><h2>${e(d.id)} · Institutional resolution</h2>${badge(d.status)}</div><div class="button-stack" role="tablist" aria-label="Legislation details">${tabs.map(t=>`<button class="${state.activeTab===t?'primary-button':'secondary-button'}" data-tab="${t}" role="tab" aria-selected="${state.activeTab===t}">${pretty(t)}</button>`).join('')}</div><hr class="mini-divider">${state.activeTab==='text'?`<div class="doc-card"><div class="overline">LEGISLATIVE TEXT · REVISION ${d.revision}</div><p style="font-size:15px;color:#e3eefb">${e(d.text)}</p><div class="hash">SHA-256 motion: ${e(d.motion_hash)}</div></div>`:state.activeTab==='changes'?`<div class="timeline">${d.events.filter(x=>['CREATE','AMEND','SUBMIT_REVIEW'].includes(x.name)).slice().reverse().map(x=>`<div class="timeline-event"><b>${e(verb(x.name))}</b><small>Event #${x.seq} · ${e(pretty(x.actor))}</small></div>`).join('')}</div><p class="note">Earlier revision content remains in immutable CREATE and AMEND event payloads. This interface displays revision events; exact full text is available in an authorized evidence export.</p>`:`<div class="keyval"><span>Locked text</span><strong>${d.locked_motion_hash?'Yes':'Not yet'}</strong></div><div class="keyval"><span>Rule source</span><strong>${e(d.rules_version)}</strong></div><div class="keyval"><span>Event sequence</span><strong>${d.event_count} entries</strong></div><p class="hash">${e(d.event_root)}</p>`}<h3>Next actions</h3>${actions()}</section></div><aside><section class="panel"><h2>Document controls</h2><div class="keyval"><span>Revision</span><strong>v${d.revision}</strong></div><div class="keyval"><span>Institution</span><strong>${e(d.kind)}</strong></div><div class="keyval"><span>Mode</span><strong>Demo / fictional</strong></div><div class="info-block"><h3>Amendment safeguard</h3><p>Amending creates a new version and returns the proposal to DRAFT. Previously approved review and agenda state cannot be reused.</p></div></section></aside></div>`;}
+  function session(){const d=state.item;return sectionHead('INSTITUTIONAL SESSION','Session chamber','Agenda, attendance, authority and procedural state are server-controlled.',badge(d.status))+`<div class="main-grid"><div><section class="panel"><div class="panel-header"><h2>Fictional session agenda</h2><span class="pill">01 of 01</span></div><div class="doc-card"><div class="doc-row"><span class="overline">AGENDA ITEM</span>${badge(d.status)}</div><h3>${e(d.id)} · Legislative resolution</h3><p>${e(d.text)}</p><div class="hash">Motion: ${short(d.locked_motion_hash)}</div></div>${steps()}<h3>Session actions</h3>${actions()}</section><section class="panel" style="margin-top:18px"><h2>Session event timeline</h2><div class="timeline">${timeline(8)}</div></section></div><aside><section class="panel"><h2>Procedural readiness</h2><div class="keyval"><span>Eligible demo members</span><strong>${d.roster_count}</strong></div><div class="keyval"><span>Attending members</span><strong>${d.attendance_count}</strong></div><div class="keyval"><span>Fictional quorum threshold</span><strong>${d.quorum}</strong></div><div class="keyval"><span>Quorum in fixture</span><strong class="success-line">${d.attendance_count>=d.quorum?'Satisfied':'Missing'}</strong></div><div class="keyval"><span>Ballot status</span><strong>${d.status==='BALLOT_OPEN'?'OPEN':'Not open'}</strong></div><div class="info-block"><h3>Rules are fictional</h3><p>The 2-of-3 quorum and simple-majority threshold are demonstration rules, not an adopted UAH, HOA, or municipal procedure.</p></div></section></aside></div>`;}
+  function vote(){const d=state.item;const castEnabled=d.actions.some(x=>x.action==='CAST');return sectionHead('VERSION-LOCKED BALLOT','Cast vote','Only an eligible fictional member can cast one demo vote on the locked motion.',badge(d.status))+
+    `<div class="main-grid"><div><section class="panel"><div class="panel-header"><h2>${e(d.id)} · ${d.locked_motion_hash?'Motion locked':'Awaiting motion lock'}</h2><span class="pill violet">DEMO VOTING ONLY</span></div><div class="doc-card"><span class="overline">EXACT TEXT ON BALLOT · v${d.revision}</span><p style="font-size:15px;color:#e4edf9">${e(d.text)}</p><div class="hash">Locked motion: ${e(d.locked_motion_hash||'NOT LOCKED')}</div></div>${d.my_cast?`<div class="info-block"><h3 class="success-line">Your vote is recorded: ${e(d.my_cast)}</h3><p>The model forbids a second vote for the same member on this ballot.</p></div>`:''}${castEnabled?`<fieldset class="ballot-options" id="vote-options" style="border:0;padding:0;margin-bottom:15px"><legend class="overline" style="margin-bottom:14px">SELECT YOUR VOTE</legend>${['AYE','NAY','ABSTAIN'].map(x=>`<label class="ballot-option"><input type="radio" name="vote-choice" value="${x}" ${x==='AYE'?'checked':''}>${x==='AYE'?'✓':x==='NAY'?'×':'○'} ${pretty(x)}</label>`).join('')}</fieldset><button class="primary-button" data-action="CAST">Confirm and cast demo vote →</button>`:`<p class="muted small">The ballot is not open for this role, or this member has already voted. See the status and role-specific actions below.</p>`}<hr class="mini-divider">${actions().replace(/<button[^>]*data-action="CAST"[\s\S]*?<\/button>/,'')}</section></div><aside><section class="panel"><h2>Voting readiness</h2><div class="keyval"><span>Mode</span><strong>FICTIONAL DEMO</strong></div><div class="keyval"><span>Rule current</span><strong class="success-line">Fixture only</strong></div><div class="keyval"><span>Quorum threshold</span><strong>${d.quorum}</strong></div><div class="keyval"><span>Casts recorded</span><strong>${d.cast_count} of ${d.roster_count}</strong></div><div class="keyval"><span>Official authority</span><strong style="color:#ffbf8e">Not established</strong></div>${d.tally?`<div class="info-block"><h3>Certified demo tally</h3><p>${d.tally.aye} Aye · ${d.tally.nay} Nay · ${d.tally.abstain} Abstain</p></div>`:''}</section></aside></div>`;}
+  function records(){const d=state.item;const allowed=state.me.roles.some(r=>['CLERK','PRESIDER','AUDITOR','RELEASE_REVIEWER'].includes(r));const isCertified=['CERTIFIED','REJECTED','PUBLICATION_REVIEW','PUBLISHED'].includes(d.status);return sectionHead('AUDIT & ASSURANCE','Decision records','A complete fictional audit trail, verifiable outcome, and reviewed publication preview.',badge(d.status))+
+    `<div class="main-grid"><div><section class="panel"><div class="panel-header"><h2>Immutable event history</h2><span class="pill">${d.event_count} events</span></div><div class="timeline">${timeline()}</div><hr class="mini-divider"><div class="overline">CURRENT EVENT ROOT</div><p class="hash">${e(d.event_root)}</p></section></div><aside><section class="panel"><h2>Proof Passport</h2><div class="info-block"><h3>Independent replay</h3><p>Event reconstruction uses a separate checker from the state-transition reducer. Evidence is from fictional fixtures and remains internally verified only.</p></div><div class="keyval"><span>Certified demo result</span><strong>${isCertified?'Available':'Pending'}</strong></div><div class="keyval"><span>Independent legal review</span><strong>No</strong></div><div class="keyval"><span>Public review approvals</span><strong>${d.review_count} of 2</strong></div><div class="button-stack" style="margin-top:16px"><button class="secondary-button width-full" data-passport ${!allowed||!isCertified?'disabled title="Available only for internal review after certification"':''}>Open Proof Passport →</button></div><hr class="mini-divider"><h3>Public projection</h3>${d.status==='PUBLISHED'?`<p class="small success-line">Approved fictional public preview.</p><button class="ghost-button" data-public>View public preview →</button>`:`<p class="small muted">No information released. A separate two-reviewer approval is required.</p>`}<div style="margin-top:15px">${actions()}</div></section></aside></div>`;}
+  function assistant(){const d=state.item;return sectionHead('RULE-BASED PROCEDURAL HELPER','Governance assistant','A transparent, deterministic contract explainer. This demo does not call a language model or make decisions.')+`<div class="main-grid"><div><section class="panel"><div style="font-size:35px;color:#ba9aff">✧</div><h2>What happens next?</h2><div class="info-block"><h3>${e(pretty(d.status))}</h3><p>${e(roleHint())} Every consequential command is validated by the server against the v1.1 contract.</p></div><hr class="mini-divider"><h3>Suggested procedural checks</h3><div class="timeline">${['Check exact legislative version and source attribution','Review current rule, quorum and eligibility snapshots','Distinguish certified outcome from legal enactment','Use the independent checker before publication','Protect individual ballots and private preference profiles'].map(t=>`<div class="timeline-event"><b>${e(t)}</b></div>`).join('')}</div><button class="secondary-button" data-screen="records">Inspect current audit trail →</button></section></div><aside><section class="panel"><h2>Authority boundary</h2><p class="small muted">This assistant can explain the workflow. It cannot draft authoritative law, open a ballot, cast a vote, certify a decision or release records. An eventual AI model would use read-only, sourced retrieval and human acceptance of all drafts.</p><div class="keyval"><span>AI role authority</span><strong>None</strong></div><div class="keyval"><span>Municipal intake</span><strong>Disabled</strong></div><div class="keyval"><span>Official voting</span><strong>Disabled</strong></div></section></aside></div>`;}
+  function render(){if(!state.me||!state.item)return;$('#institution-name').textContent=state.me.institution;$('#actor-name').textContent=pretty(state.me.id);$('#avatar').textContent=state.me.id[0].toUpperCase();$('#section-kicker').textContent=screenName(state.screen).toUpperCase();renderNav();const functions={home,bills,session,vote,records,assistant};$('#view').innerHTML=functions[state.screen]();}
+  async function handleContent(ev){
+    const nav=ev.target.closest('[data-screen]');if(nav){state.screen=nav.dataset.screen;render();return;}
+    const tab=ev.target.closest('[data-tab]');if(tab){state.activeTab=tab.dataset.tab;render();return;}
+    const proof=ev.target.closest('[data-passport]');if(proof){await openPassport();return;}
+    const pub=ev.target.closest('[data-public]');if(pub){await showPublic();return;}
+    const action=ev.target.closest('[data-action]');if(action){showAction(action.dataset.action);}
+  }
+  let pendingAction=null;
+  function showAction(action){
+    if(!state.item.actions.find(a=>a.action===action))return toast('Action not available for this role at this stage',true);
+    pendingAction=action;const labels={AMEND:'Create a new immutable legislative revision',CAST:'Confirm your vote on this exact motion',VOID:'Void this fictional motion'};
+    $('#dialog-title').textContent=(state.item.actions.find(a=>a.action===action)||{label:action}).label;
+    $('#dialog-desc').textContent=labels[action]||'This server-enforced transition will be appended to the immutable fictional event journal.';
+    $('#dialog-kicker').textContent='DEMO INSTITUTIONAL ACTION · '+state.item.id;
+    $('#dialog-body').innerHTML=action==='AMEND'?`<label class="overline" for="amend-text">NEW PROPOSAL TEXT</label><textarea id="amend-text" maxlength="30000">${e(state.item.text)}</textarea><p class="note">Any substantive change returns the proposal to Draft and invalidates approvals.</p>`:action==='VOID'?`<label class="overline" for="void-reason">VOID REASON</label><textarea id="void-reason" style="min-height:90px" placeholder="Why is the motion voided?"></textarea>`:action==='CAST'?`<div class="ballot-options">${['AYE','NAY','ABSTAIN'].map(c=>`<label class="ballot-option"><input type="radio" name="modal-choice" value="${c}" ${($('#vote-options input:checked')?.value||'AYE')===c?'checked':''}>${e(pretty(c))}</label>`).join('')}</div><p class="hash">Locked motion: ${e(state.item.locked_motion_hash)}</p>`:'<p class="note">The server will independently check your simulated role, document revision and voting conditions before accepting the action.</p>';
+    $('#confirm-action').textContent=action==='CAST'?'Record demo vote':'Confirm transition';$('#action-dialog').showModal();
+  }
+  async function submitAction(ev){
+    ev.preventDefault();if(!pendingAction)return;
+    const action=pendingAction;const payload={action,expected_version:state.item.version,command_id:crypto.randomUUID()};
+    if(action==='AMEND')payload.text=$('#amend-text').value;
+    if(action==='VOID')payload.reason=$('#void-reason').value;
+    if(action==='CAST')payload.choice=$('[name="modal-choice"]:checked')?.value||'AYE';
+    $('#confirm-action').disabled=true;
+    try{state.item=await api(`/api/items/${encodeURIComponent(state.item.id)}/commands`,{method:'POST',body:JSON.stringify(payload)});$('#action-dialog').close();toast(verb(action)+' · accepted by server');render();}
+    catch(err){toast(err.message,true);if(err.message.includes('Stale'))await refresh();}
+    finally{$('#confirm-action').disabled=false;}
+  }
+  async function openPassport(){
+    try{state.passport=await api(`/api/items/${encodeURIComponent(state.item.id)}/passport`);
+      const p=state.passport.passport,c=state.passport.checker;
+      $('#passport-content').innerHTML=`<p class="${c.consistent?'success-line':'failure-line'}"><strong>${c.consistent?'✓ Internal replay consistency passed':'✕ Internal replay inconsistency'}</strong></p><div class="keyval"><span>Decision outcome</span><strong>${e(p.outcome)}</strong></div><div class="keyval"><span>Legal authorization</span><strong>No — fictional demo</strong></div><div class="keyval"><span>Independent external review</span><strong>Not performed</strong></div><div class="keyval"><span>Recorded tally</span><strong>${e(p.tally.join(' / '))}</strong></div><h3 style="margin-top:20px">Machine-readable receipt</h3><pre class="passport-json">${e(JSON.stringify(p,null,2))}</pre><p class="note">This demonstrates event replay only. No signature attestation or real electronic-election guarantees.</p>`;
+      $('#passport-dialog').showModal();}
+    catch(err){toast(err.message,true);}
+  }
+  function downloadPassport(){if(!state.passport)return;const blob=new Blob([JSON.stringify(state.passport,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`${state.item.id}-fictional-proof-passport.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+  async function showPublic(){try{const r=await api(`/api/public/decisions/${encodeURIComponent(state.item.tenant)}/${encodeURIComponent(state.item.id)}`);$('#passport-content').innerHTML=`<p class="pill gold">${e(r.label)}</p><h3>${e(r.item_id)} · Revision ${r.revision}</h3><p>${e(r.text)}</p><div class="keyval"><span>Recorded outcome</span><strong>${e(r.outcome)}</strong></div><div class="keyval"><span>Aye / Nay / Abstain</span><strong>${r.tally.aye} / ${r.tally.nay} / ${r.tally.abstain}</strong></div><div class="hash">${e(r.source_root)}</div><p class="note">Approved demo-only aggregate public projection. No personal voting information disclosed.</p>`;$('#passport-dialog').showModal();}catch(err){toast(err.message,true);}}
+  init();
+})();
