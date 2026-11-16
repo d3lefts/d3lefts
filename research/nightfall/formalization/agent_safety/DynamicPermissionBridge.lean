@@ -108,8 +108,8 @@ theorem disclosure_matching_price
 /-- Late invalidation incurs a genuine nonadditive evidence/deadline premium. -/
 theorem delayed_invalidation_price_witness :
     checkpointFloor 2 2 2 0 1 5 0 = 4 ∧
-    checkpointFloor 3 2 2 1 1 5 1 = 15 ∧
-    checkpointFloor 3 2 2 1 1 5 1 - checkpointFloor 2 2 2 0 1 5 0 = 11 := by
+    checkpointFloor 3 2 2 1 1 5 1 = 16 ∧
+    checkpointFloor 3 2 2 1 1 5 1 - checkpointFloor 2 2 2 0 1 5 0 = 12 := by
   decide
 
 /-! ## Correlation-aware finite-world and selective-disclosure calculus.
