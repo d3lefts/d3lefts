@@ -155,7 +155,7 @@ theorem accepted_cast_is_fresh (s after : State) (voter : String)
     fresh s = true := by
   cases hval : fresh s with
   | false => simp [step, hval] at h
-  | true => exact hval
+  | true => simp [hval]
 
 /-- The same legal/procedural version obligation applies to review. -/
 theorem accepted_review_is_fresh (s after : State)
@@ -164,7 +164,7 @@ theorem accepted_review_is_fresh (s after : State)
     fresh s = true := by
   cases hval : fresh s with
   | false => simp [step, hval] at h
-  | true => exact hval
+  | true => simp [hval]
 
 /-- A committed vote must have been new to that exact pre-state. -/
 theorem accepted_cast_was_new (s after : State) (voter : String)
