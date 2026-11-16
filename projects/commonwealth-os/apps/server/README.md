@@ -1,6 +1,8 @@
-# Commonwealth OS — transactional server demo v0.3
+# Commonwealth OS — transactional synthetic server (v0.3 + participation v1.3)
 
 **Status:** working **synthetic-only** proof of architecture, not a voting product, municipal system, election security certification, or legal compliance assessment. Do not enter real users, ballots, ordinances or identities. Bind to localhost only.
+
+**New in participation v1.3:** persistent version-fenced event journal, privacy-minimized dossier views, independent local chain continuity checker, and same-origin optional browser adapter. See [PARTICIPATION_LEDGER_V1_3.md](PARTICIPATION_LEDGER_V1_3.md). PostgreSQL and external custody have not been implemented.
 
 ## Runtime
 Node.js >=22.13; built-in `node:sqlite` (experimental in Node 22), `node:http`, `node:crypto`. No cloud/vendor packages. SQLite is a local functional proof; production migration to Postgres plus HSM/KMS, OIDC/passkeys, role and tenant isolation tests, backups, and operational reviews remains required.

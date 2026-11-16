@@ -6,6 +6,7 @@ import { join } from 'node:path';
 import { Store } from '../src/store.mjs';
 import { ParticipationLedger } from '../src/participation.mjs';
 import { createServer } from '../src/http.mjs';
+import { verifyLocalParticipationChain } from '../verify-participation.mjs';
 
 function setup(){
   const dir=mkdtempSync(join(tmpdir(),'cw-participation-'));
@@ -94,10 +95,12 @@ test('tampering detected under independent replay and idempotency survives retri
     const b=t.submit('a',command,0,1,'student-demo',key);
     assert.deepEqual(a,b);
     assert.equal(t.ledger.view(t.actor('b'),'student-demo').sequence,1);
+    assert.equal(verifyLocalParticipationChain(t.file,'student-demo').sequence,1);
     assert.throws(()=>t.submit('a',{...command,text:'Different comment text provided for retry.'},0,1,'student-demo',key),/IDEMPOTENCY_CONFLICT/);
     t.store.db.exec('DROP TRIGGER participation_events_no_update');
     t.store.db.exec("UPDATE participation_events SET event_json='{}' WHERE institution_id='student-demo' AND seq=1");
     assert.throws(()=>t.ledger.view(t.actor('a'),'student-demo'),/PARTICIPATION_(CHAIN|SEQUENCE)_CORRUPT/);
+    assert.throws(()=>verifyLocalParticipationChain(t.file,'student-demo'),/INDEPENDENT_/);
   }finally{t.cleanup();}
 });
 
