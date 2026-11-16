@@ -57,6 +57,8 @@ def assemble(path: Path):
     return {
         "decision_id": dossier["decision_id"],
         "title": dossier["title"],
+        "description": dossier["description"],
+        "source_disclosure": dossier["source_disclosure"],
         "question": dossier["question"],
         "proposal_version": dossier["proposal_version"],
         "mode": "DEMO_ADVISORY_NO_VOTE",
@@ -66,6 +68,8 @@ def assemble(path: Path):
         "legal_as_of": proof["as_of"],
         "legal_known_at": proof["known_at"],
         "source_dependencies": primary.get("dependencies", {}),
+        "source_library": proof["sources"],
+        "legal_derivation": {"facts": proof["facts"], "rules": proof["rules"], "proof": proof["proof"]},
         "evidence_sections": sections,
         "considerations": dossier["considerations"],
         "response_choices": dossier["response_choices"],
