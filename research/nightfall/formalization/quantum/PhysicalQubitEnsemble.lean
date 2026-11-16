@@ -13,7 +13,8 @@ by the caller. Full trace normalization follows from local norm-one identities.
 
 namespace Nightfall.Quantum.PhysicalQubit
 
-open scoped BigOperators Matrix
+open scoped BigOperators Matrix ComplexOrder
+noncomputable section
 open Matrix
 
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
@@ -64,7 +65,7 @@ theorem productDensity_entry (d : ℕ) (r : ℝ) (phase : Fin d → ℂ)
     productDensity d r phase a b =
       ∏ j, qubitDensity r (phase j) (a j) (b j) := by
   simp [productDensity, qubitDensity, densityOfAmplitude_entry,
-    productAmplitude, Finset.prod_mul_distrib, map_prod]
+    productAmplitude, Finset.prod_mul_distrib]
 
 theorem productAmplitude_norm_one (d : ℕ) (r : ℝ) (phase : Fin d → ℂ)
     (hlocal : ∀ j, ∑ a : Fin 2,
@@ -76,9 +77,20 @@ theorem productAmplitude_norm_one (d : ℕ) (r : ℝ) (phase : Fin d → ℂ)
       (g := fun j a => qubitAmplitude r (phase j) a *
         star (qubitAmplitude r (phase j) a))
   simp only [Fintype.piFinset_univ] at hsum
-  rw [← hsum]
-  simp_rw [← Finset.prod_mul_distrib, map_prod]
-  simp [hlocal]
+  calc
+    (∑ b : Fin d → Fin 2,
+        productAmplitude d r phase b * star (productAmplitude d r phase b)) =
+        ∑ b : Fin d → Fin 2, ∏ j,
+          qubitAmplitude r (phase j) (b j) *
+          star (qubitAmplitude r (phase j) (b j)) := by
+          apply Finset.sum_congr rfl
+          intro b _
+          simp [productAmplitude, Finset.prod_mul_distrib]
+    _ = ∏ j, ∑ a : Fin 2,
+          qubitAmplitude r (phase j) a *
+          star (qubitAmplitude r (phase j) a) := by
+          simpa only [Fintype.piFinset_univ] using hsum
+    _ = 1 := by simp [hlocal]
 
 theorem productDensity_trace_one (d : ℕ) (r : ℝ) (phase : Fin d → ℂ)
     (hlocal : ∀ j, ∑ a : Fin 2,
