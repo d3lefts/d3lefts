@@ -1,0 +1,143 @@
+{
+  "package": "Commonwealth OS Product Design v1.0",
+  "prepared": "2026-11-15",
+  "status": "design-only; no real voting",
+  "file_count": 27,
+  "files": [
+    {
+      "path": "Commonwealth_OS_Design_Dossier.html",
+      "size": 82631,
+      "sha256": "6625d5e93d99e0f1c668ec69069e3b19b5bab0f38a4bbc0b7e153c4579e50dd6"
+    },
+    {
+      "path": "Commonwealth_OS_Design_Dossier.pdf",
+      "size": 122378,
+      "sha256": "f591890f10ae08812b31739dc1d69f570fe043e48aaec2e747965689ae7a6782"
+    },
+    {
+      "path": "README.md",
+      "size": 3090,
+      "sha256": "1ad5bbd9b6732946a106ae2ba10c1e1a5540e2a21987167c83b04d2d4b60f8c0"
+    },
+    {
+      "path": "docs/01_Product_Charter_and_PRD.md",
+      "size": 8268,
+      "sha256": "e1bbc52f6a621cac0b1dd4f185d9152edc63662df124bcc227031b9b2c9a9651"
+    },
+    {
+      "path": "docs/02_Competitive_Analysis.md",
+      "size": 6126,
+      "sha256": "fb9c6d07285a83eaf9cc5fc35daaa9bfe9b97815cd4473b636ac3a895c3ee522"
+    },
+    {
+      "path": "docs/03_Information_Architecture_and_User_Flows.md",
+      "size": 5038,
+      "sha256": "6364cede696b4d3ec528caaf82930cec7cb4d5679346ceef730ddc825765c3af"
+    },
+    {
+      "path": "docs/04_Living_Voter_Mobile_UX.md",
+      "size": 4643,
+      "sha256": "605010baae8d0fede9110433886032b3156bb9b221103d8f5b0d9e57e9bfab9d"
+    },
+    {
+      "path": "docs/05_Representative_and_Steward_UX.md",
+      "size": 4319,
+      "sha256": "4f2053f5d83c44342428d727b94b37a116bdc3220d08976ca2ecaeab4f97afe7"
+    },
+    {
+      "path": "docs/06_Design_System_and_Accessibility.md",
+      "size": 3644,
+      "sha256": "561cc31d2de61b75164a357aaf93aa31d590cfa57c45ba1813815c660bb37421"
+    },
+    {
+      "path": "docs/07_Legislative_Data_and_Integration.md",
+      "size": 3943,
+      "sha256": "6e22db263cc6880202418a6bcb5d75c12a0bcb551c076a0dec11f6c0af0ded8f"
+    },
+    {
+      "path": "docs/08_Questionnaire_and_Inference.md",
+      "size": 4538,
+      "sha256": "2c534e40fc34657620212832a89d7576fd1cf4d63af37f00d0d2229371864d43"
+    },
+    {
+      "path": "docs/09_Democratic_Assurance_Passport.md",
+      "size": 4588,
+      "sha256": "510f73581e2974ae3e8390b52c2873d4d79dbb3c18a5f7e212d2b930edaf4518"
+    },
+    {
+      "path": "docs/10_Identity_Privacy_Security.md",
+      "size": 4354,
+      "sha256": "c80db2de83a7cfbdaae3069e78119e55d21e5d5b4475113d499c0f0432136e1d"
+    },
+    {
+      "path": "docs/11_Huntsville_Pilot_Roadmap.md",
+      "size": 3911,
+      "sha256": "b503a6363e78928676a2c0b262d630af562fff3df9794e55e51539d7bdd33d5f"
+    },
+    {
+      "path": "docs/12_Evaluation_and_Audit_Plan.md",
+      "size": 4141,
+      "sha256": "11ec9f394a5cf3b34a3bc95b9848810be82377672f651e79695cef48060572df"
+    },
+    {
+      "path": "docs/13_Decisions_Risks_and_Backlog.md",
+      "size": 3990,
+      "sha256": "f142031f6662c426ddaf7d9e048e42939e039af8c912eff80fd12d879ce6402e"
+    },
+    {
+      "path": "docs/14_Sources_and_Attribution.md",
+      "size": 4825,
+      "sha256": "60c4738c3de049cb4f9bdd86ebdbf241a8bd0d9dd72189ca34c1fe44c8539ae7"
+    },
+    {
+      "path": "examples/synthetic_example.json",
+      "size": 1445,
+      "sha256": "46f4ce7385b75ac5951b94aad776c76bb713ed46afb9b448ebdc4982b1e6c711"
+    },
+    {
+      "path": "flows/authority_and_decision.mmd",
+      "size": 541,
+      "sha256": "07474db5f430f46c9e747dc20c90f4cb1392485fb7e8aa4bf88ccd218792feb6"
+    },
+    {
+      "path": "flows/onboarding_and_preference.mmd",
+      "size": 517,
+      "sha256": "3a4c722e5397da900bed88c6018c7bcd37861eb83f28f339f795b132b158bd3a"
+    },
+    {
+      "path": "flows/pilot_stage_gates.mmd",
+      "size": 323,
+      "sha256": "cabb57fc0e2870804d677d2f1d7158d88af6bd754ab2afcd2862d6a709ec8211"
+    },
+    {
+      "path": "prototype/living_voter_dashboard_prototype.html",
+      "size": 29567,
+      "sha256": "7c7afd13197beda0c5e04d949e5ee335c529d55ab295f0939ae14da02bdd02dd"
+    },
+    {
+      "path": "requirements/journey_traceability.csv",
+      "size": 432,
+      "sha256": "a3a4045bb873754807b8f546c5c9485966704253b2c57bb240c16d93e85bead8"
+    },
+    {
+      "path": "requirements/requirements_register.csv",
+      "size": 2921,
+      "sha256": "9ea5e35ce8a69f351466a19bf367b4379bb9b0fcc154a3803c8cd5b69353586a"
+    },
+    {
+      "path": "schemas/legislation.schema.json",
+      "size": 1677,
+      "sha256": "da58312d08e13ab6b08f31764f0cd345a07ef47da60c207393b05de3af3ca18f"
+    },
+    {
+      "path": "schemas/preference.schema.json",
+      "size": 1051,
+      "sha256": "a9a1b33ede9f5438908e8a165eebb49aeb2a4c2260e2e6091d6c36aa3eb5c130"
+    },
+    {
+      "path": "schemas/proof_passport.schema.json",
+      "size": 1420,
+      "sha256": "e3580aa84254995e40ce54c0e8ef3bd9c5fd3dd538b1e101592fdaee18450055"
+    }
+  ]
+}

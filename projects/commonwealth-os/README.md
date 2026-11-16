@@ -35,6 +35,10 @@ The [browser demonstrator](apps/browser/README.md) is a runnable, dependency-fre
 
 The browser demo has **no server**, no trusted identity, no real voting, no authorized live source ingestion and no independent verifier. Its successful results are labeled `SUPPORTED_IN_SIMULATION` and cannot certify legal outcomes.
 
+## Synthetic legislative workflow v1.1
+[Formal state-machine specification](workflow/FORMAL_WORKFLOW_v1_1.md) · [Executable demo reference and independent replay checker](workflow/README.md). The demo reference rejects OFFICIAL mode; 28 internal tests cover the fictional case and negative guards, not a legally authorized electronic election.
+
+
 ## V1 demonstrator
 The first testable vertical slice uses entirely fictional governance records:
 **Draft → Amend → Deliberate → Vote (DEMO) → Verify → Publish preview.**
@@ -49,3 +53,10 @@ DESIGN / IMPLEMENTED / INTERNALLY TESTED / INDEPENDENTLY VALIDATED / LEGALLY AUT
 ## Transactional server foundation (v0.3, experimental)
 
 A [local synthetic-only SQLite/Node.js server](apps/server/README.md) adds authenticated institution-scoped command handling, immutable source revisions, idempotent legislative state transitions, institution-controlled eligibility, version-locked mock ballots and signed portable evidence. A separately authored [independent checker](apps/server/verify.mjs) verifies a pinned Ed25519 signer and simulated procedural consistency. The server is a development proof, not production authentication, secure election voting, real records ingestion, or legal authorization. No real identities or votes should be processed.
+
+
+## Integrated product design and evidence archive
+
+The baseline includes a separate, versioned [Product Design v1.0 source tree](product-design/v1.0/README.md) with 14 detailed design docs, requirements, schemas, diagrams, comparative prior-art matrix, synthetic Living Voter prototype and visual dossier. The [Product Design workspace index](PRODUCT_DESIGN_WORKSPACE.md) links the private [Google Drive archive](https://drive.google.com/drive/folders/1aWkKDXaiLereebPVTIbRtZWGZ2gGw0tr) and earlier Democratic Assurance, questionnaire, and Huntsville pilot research. [Research status and release gates](STATUS_AND_GATES.md) distinguish design, tests, verification and authorization.
+
+Where this representative-first implementation blueprint and the companion citizen-preference design differ, neither silently overrides the other. Treat conflicts as explicit product decisions to resolve with institution-specific authorizations and validation.

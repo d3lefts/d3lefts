@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Private preference: not a ballot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "subject_pseudonym",
+    "institution_id",
+    "provision_version_id",
+    "state",
+    "basis",
+    "is_official_ballot"
+  ],
+  "properties": {
+    "subject_pseudonym": {
+      "type": "string"
+    },
+    "institution_id": {
+      "type": "string"
+    },
+    "provision_version_id": {
+      "type": "string"
+    },
+    "state": {
+      "enum": [
+        "support",
+        "oppose",
+        "neutral",
+        "unknown",
+        "conflict",
+        "stale"
+      ]
+    },
+    "basis": {
+      "enum": [
+        "direct-provision",
+        "direct-topic",
+        "reviewed-inference",
+        "no-evidence"
+      ]
+    },
+    "question_version_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "mapping_review_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "is_official_ballot": {
+      "const": false
+    }
+  }
+}
