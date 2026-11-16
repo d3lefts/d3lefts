@@ -97,10 +97,11 @@ jobs:
       - name: Database dump and isolated restore with replay check
         working-directory: projects/commonwealth-os/apps/server
         run: |
-          if ! command -v pg_dump >/dev/null || ! command -v pg_restore >/dev/null; then
-            sudo apt-get update -qq && sudo apt-get install -y postgresql-client
-          fi
-          pg_dump --format=custom --file="$RUNNER_TEMP/cw-synthetic.dump" "$COMMONWEALTH_PG_URL"
-          psql "$COMMONWEALTH_PG_URL" -v ON_ERROR_STOP=1 -c 'CREATE DATABASE cwrestore'
-          pg_restore --no-owner --dbname="postgresql://cwtest:synthetic-test-only@127.0.0.1:5432/cwrestore" "$RUNNER_TEMP/cw-synthetic.dump"
+          # Use the matching PostgreSQL 16 client inside its service container.
+          # The runner's newer pg_dump adds settings PG16 cannot restore.
+          container="$(docker ps -q --filter ancestor=postgres:16 | head -1)"
+          test -n "$container"
+          docker exec "$container" pg_dump -U cwtest -d cwtest -Fc > "$RUNNER_TEMP/cw-synthetic.dump"
+          docker exec "$container" psql -U cwtest -d cwtest -v ON_ERROR_STOP=1 -c 'CREATE DATABASE cwrestore'
+          docker exec -i "$container" pg_restore --no-owner --exit-on-error -U cwtest -d cwrestore < "$RUNNER_TEMP/cw-synthetic.dump"
           COMMONWEALTH_PG_URL="postgresql://cwtest:synthetic-test-only@127.0.0.1:5432/cwrestore" node tests/pg-recovery-check.mjs "$RUNNER_TEMP/cw-pg-expected.json"
