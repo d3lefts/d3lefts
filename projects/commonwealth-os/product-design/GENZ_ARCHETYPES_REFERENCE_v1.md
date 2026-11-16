@@ -35,7 +35,7 @@ Wants transparent systems, less paperwork, and public services that actually wor
 
 ![The Climate Guardian illustration](../../../docs/commonwealth-archetypes/climate-guardian.svg)
 
-**Energy and resilience · #25da78** — Future-proof it.
+**Energy and resilience · #22c99d** — Future-proof it.
 
 Focuses on clean energy, resilient infrastructure, and protecting shared environments. Thinks long-term public decisions should count environmental costs.
 

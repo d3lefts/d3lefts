@@ -415,7 +415,7 @@
       "STARTER PICK · No position was inferred. All 12 cards are available to explore.":
       "ILLUSTRATIVE · "+(result.tieCount>1?"Other themes also matched. ":"")+
       "Only answers you explicitly gave were scored. Not a real vote, scientific diagnosis, or official political classification.";
-    resultSummary="Commonwealth Discover: "+name+
+    resultSummary="Commonwealth Discover archetype: "+name+
       " — "+result.profile.tagline+" Illustrative civic sticker, not a vote or validated political profile.";
     qs("#cw-apply-archetype").disabled=false; // user may explicitly save even a clearly identified starter badge
     setGuide("discover",result.starter?

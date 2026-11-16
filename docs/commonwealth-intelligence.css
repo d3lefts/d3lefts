@@ -47,7 +47,7 @@ body{background:radial-gradient(circle at 12% 9%,#443e9340,transparent 33%),radi
 .cw-hero-facts{display:flex;flex-wrap:wrap;gap:7px;margin-top:29px}
 .cw-hero-facts span{font-size:.7rem;background:#2d315b;color:#f4f3ff;border:1px solid #545a96;border-radius:99px;padding:7px 11px;font-weight:820;letter-spacing:.04em}
 .cw-hero-panel{border:1px solid #7475bd;background:radial-gradient(circle at 45% 30%,#4c42a0aa,#151936 65%);border-radius:20px;padding:20px;align-self:stretch}
-.cw-hero-scribble{height:106px;display:flex;align-items:center;justify-content:center;gap:12px;font-size:2.3rem;color:#f1ee41;font-weight:950;transform:rotate(-7deg)}
+.cw-hero-scribble{height:106px;display:flex;align-items:center;justify-content:center;gap:12px;font-size:2.3rem;color:#ffd34d;font-weight:950;transform:rotate(-7deg)}
 .cw-hero-scribble span{display:block;background:#fff;color:#13132b;padding:8px 17px;box-shadow:6px 7px 0 #d24cff;letter-spacing:-.1em}
 .cw-terminal-top,.cw-terminal-line strong{color:#fcfaff}
 .cw-terminal-line{border-color:#535485}
