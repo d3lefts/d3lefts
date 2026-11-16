@@ -85,7 +85,7 @@ export class PostgresLedger {
    const idempotent=await client.query('SELECT request_hash,response FROM cwos.requests WHERE institution_id=$1 AND actor_id=$2 AND command_key=$3',[institutionId,actorId,key]);
    if(idempotent.rows.length){if(idempotent.rows[0].request_hash!==requestHash)reject('IDEMPOTENCY_CONFLICT');return idempotent.rows[0].response;}
    let itemResult=await client.query('SELECT * FROM cwos.items WHERE institution_id=$1 AND item_id=$2 FOR UPDATE',[institutionId,itemId]);
-   let item=itemResult.rows[0]??null,from=item?.state??null,to=from,details={},revision=item?.current_revision??0;
+   let item=itemResult.rows[0]??null,from=item?.state??null,to=from,details={},revision=Number(item?.current_revision??0);
    if(action==='CREATE'){
     if(item||expectedVersion!==0||!['member','chair'].includes(a.role)||typeof payload.body!=='string'||!payload.body.trim())reject('BAD_CREATE');
     revision=1;to='DRAFT';
@@ -98,7 +98,7 @@ export class PostgresLedger {
     const transitions={SUBMIT:['DRAFT','IN_REVIEW'],AGENDA:['IN_REVIEW','AGENDA_SET'],BEGIN:['AGENDA_SET','DELIBERATING'],ATTEND:['DELIBERATING','DELIBERATING'],LOCK:['DELIBERATING','MOTION_LOCKED'],OPEN:['MOTION_LOCKED','BALLOT_OPEN'],CAST:['BALLOT_OPEN','BALLOT_OPEN'],CLOSE:['BALLOT_OPEN','BALLOT_CLOSED'],REVIEW:['BALLOT_CLOSED','REVIEWED_DEMO']};
     if(action==='REVISE'){
      if(!['DRAFT','IN_REVIEW','AGENDA_SET','DELIBERATING'].includes(from)||!(item.proposer===actorId||a.role==='clerk')||typeof payload.body!=='string'||!payload.body.trim())reject('REVISION_FORBIDDEN');
-     revision=item.current_revision+1;to='DRAFT';
+     revision=Number(item.current_revision)+1;to='DRAFT';
      const prior=await client.query('SELECT body_hash FROM cwos.revisions WHERE institution_id=$1 AND item_id=$2 ORDER BY revision DESC LIMIT 1',[institutionId,itemId]);
      const previousHash=prior.rows[0].body_hash,bodyHash=sha({institutionId,itemId,revision,body:payload.body,previousHash});
      await client.query('INSERT INTO cwos.revisions(institution_id,item_id,revision,body,previous_hash,body_hash,author) VALUES($1,$2,$3,$4,$5,$6,$7)',[institutionId,itemId,revision,payload.body,previousHash,bodyHash,actorId]);
