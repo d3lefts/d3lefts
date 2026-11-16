@@ -34,16 +34,17 @@ npm run migrate:pg -- /absolute/path/to/stopped-commonwealth.sqlite
 npm run start:pg
 ```
 
-Migration reads SQLite read-only, independently replays the source journal, retains only synthetic actor token hashes, encrypts event payloads, copies the exact sequence and head hash, then replays the target. Mixed old/new writers are forbidden. The source cannot be proved authentic solely from a self-consistent local chain; externally pinned earlier checkpoints would be necessary to detect coherent rewrites.
+Migration reads SQLite read-only, independently replays the source journal, retains only synthetic actor token hashes, encrypts event payloads, copies the exact sequence, head hash **and prior idempotency receipts**, then replays the target. Mixed old/new writers are forbidden. The source cannot be proved authentic solely from a self-consistent local chain; externally pinned earlier checkpoints would be necessary to detect coherent rewrites.
 
 ## Checkpoints: capability versus actual custody
 
 ```bash
 npm run anchor:pg -- student-demo > synthetic-checkpoint.json
 node verify-pg-anchor.mjs synthetic-checkpoint.json trusted-checkpoint-public.pem
+node verify-pg-ledger-anchor.mjs synthetic-checkpoint.json trusted-checkpoint-public.pem
 ```
 
-This emits a local Ed25519-signed `tenant, sequence, headHash, seedHash` receipt. The independent verifier uses a public key pinned outside the signing process. A receipt stored on the same operator's disk is **not an external anchor**. No third-party custody, independently controlled transparency log, government trust root, or external submission is configured or claimed. Private keys must remain separate; a leaked signer can fabricate receipts.
+This emits a local Ed25519-signed `tenant, sequence, headHash, seedHash` receipt. The independent verifier uses a public key pinned outside the signing process. A receipt stored on the same operator's disk is **not an external anchor**. The additional PostgreSQL checker replays ciphertext authentication and the exact hash-chain prefix matched to the pinned record; it does not replay the legal or institutional semantics. No third-party custody, independently controlled transparency log, government trust root, or external submission is configured or claimed. Private keys must remain separate; a leaked signer can fabricate receipts.
 
 ## Tests and disaster-recovery rehearsal
 
