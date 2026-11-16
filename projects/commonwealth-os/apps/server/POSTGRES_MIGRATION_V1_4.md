@@ -16,14 +16,14 @@ Requires Node >=22.13, PostgreSQL 16+, and a database on localhost dedicated to 
 
 ```bash
 cd projects/commonwealth-os/apps/server
-npm install --ignore-scripts
+npm ci --ignore-scripts
 export COMMONWEALTH_PG_URL='postgresql://cwtest:local-password@127.0.0.1:5432/cwtest'
 export COMMONWEALTH_PG_EVENT_KEY="$(openssl rand -hex 32)"
 npm run seed:pg      # fresh PostgreSQL only; synthetic tokens printed locally once
 npm run start:pg     # http://127.0.0.1:4180/browser/
 ```
 
-Do not save credentials or encryption material in Git or a web browser profile. The service binds to `127.0.0.1` only. The local synthetic bearer tokens authenticate demo roles, not people. GitHub Pages stays an in-memory browser demo.
+Do not save credentials or encryption material in Git or a web browser profile. The complete dependency tree is pinned in `package-lock.json`; CI uses `npm ci`. The service binds to `127.0.0.1` only. The local synthetic bearer tokens authenticate demo roles, not people. GitHub Pages stays an in-memory browser demo.
 
 ## Cold migration from v1.3 SQLite
 
