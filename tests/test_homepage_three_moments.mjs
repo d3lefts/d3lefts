@@ -7,14 +7,16 @@ const moon=readFileSync("docs/new-moon.html","utf8");
 const styles=readFileSync("docs/home-rhythm.css","utf8");
 const count=(s,re)=>(s.match(re)||[]).length;
 
-test("NULL FIELD leads with current product-space research, not an Erdős archival headline",()=>{
- const stages=['<section class="hero wrap nf-opening"','<section class="nf-cinema',
+test("NIGHTFALL introduces compounding discovery while preserving current product-space research and exact claim limits",()=>{
+ const stages=['<section class="hero wrap nf-opening"','id="nightfall-story"','<section class="nf-cinema',
                '<section class="section wrap flagships"','id="featured-title"',
                'id="new-discoveries"','id="observatory"','id="review"','id="work"']
                .map(t=>field.indexOf(t));
  assert.ok(stages.every((v,i)=>v>=0&&(i===0||v>stages[i-1])),String(stages));
  assert.ok(field.includes("ACTIVE RESEARCH")&&field.includes("Wright"));
- assert.ok(field.includes('id="hero-title-archive">Low interaction.<br><em>Detectable influence.</em>'));
+ assert.ok(field.includes('id="hero-title-archive">What if discovery<br><em>could compound?</em>'));
+ assert.ok(field.includes('id="commonwealth-product"')&&field.includes('class="nf-republic-portal"'),"Distinct Commonwealth portal missing");
+ assert.ok(field.includes('href="commonwealth.html"')&&field.includes('Separate civic experience'),"Civic gateway must retain scope boundaries");
  assert.ok(field.includes("observability.html")&&field.includes("product-space-influence.html")&&field.includes("active-proof-passport.html"));
  assert.ok(field.includes("CUBIC_OBSTRUCTION_NOTE.md"));
  assert.ok(!field.includes('id="live-case"'),"Finite Sidon exhibit belongs to NEW MOON");
@@ -50,7 +52,7 @@ test("Cross-entrance navigation is explicit and in both directions",()=>{
  }
  assert.ok(field.includes('href="new-moon.html#archived-records"'));
  assert.ok(moon.includes('href="index.html"'));
- assert.equal(count(field,/<a\b/g)<=45,true,"Active homepage link budget");
+ assert.equal(count(field,/<a\b/g)<=52,true,"Story-led homepage link budget");
  assert.ok(count(field,/<section\b/g)<=13,"Active homepage section budget");
  assert.ok(count(field,/<details\b/g)<=2,"Avoid nested disclosures");
 });
