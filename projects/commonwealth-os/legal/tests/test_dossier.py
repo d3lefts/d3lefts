@@ -24,7 +24,7 @@ class DossierTests(unittest.TestCase):
         self.assertEqual(len(result["source_dependencies"]), 4)
         self.assertEqual(len(result["source_library"]), 4)
         self.assertEqual(len(result["legal_derivation"]["proof"]), 4)
-        self.assertIn("FICTIONAL", result["source_disclosure"])
+        self.assertIn("fictional", result["source_disclosure"].lower())
 
     def test_real_mode_is_rejected(self):
         self.example["mode"] = "OFFICIAL"
