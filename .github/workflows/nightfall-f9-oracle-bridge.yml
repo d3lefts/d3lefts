@@ -8,6 +8,7 @@ on:
       - 'research/nightfall/formalization/finite_field/F9ActualFieldBasis.lean'
       - 'research/nightfall/formalization/finite_field/F9NonadaptiveLower.lean'
       - 'research/nightfall/formalization/finite_field/F9ConcreteLower.lean'
+      - 'research/nightfall/formalization/finite_field/F9SignPacketAllK.lean'
       - 'research/nightfall/2026-11-f9-bridge/**'
       - '.github/workflows/nightfall-f9-oracle-bridge.yml'
   workflow_dispatch:
@@ -73,6 +74,15 @@ jobs:
           N=Nightfall.FiniteField.F9ConcreteLower
           python3 scripts/lean_bridge.py research/nightfall/formalization/finite_field/F9ConcreteLower.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.F9_two_ne_zero" --decl "$N.actual_fixed_square_lower" --decl "$N.actual_fixed_family_lower" --decl "$N.same_oracle_gap_given_actual_adaptive_upper" --json-out f9-receipts/f9-concrete.json
           python3 research/nightfall/formalization/product_space/check_receipts.py f9-receipts/f9-concrete.json
+      - name: Compile and strictly audit arbitrary-length F9 sign-packet injection
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/finite_field/F9SignPacketAllK.lean /tmp/mathlib4/F9SignPacketAllK.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/F9SignPacketAllK.olean F9SignPacketAllK.lean)
+          N=Nightfall.FiniteField.F9SignPacketAllK
+          python3 scripts/lean_bridge.py research/nightfall/formalization/finite_field/F9SignPacketAllK.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.all_sign_bits_decoded" --decl "$N.packet_count_fits_same_oracle_upper" --decl "$N.full_support_exact_budget" --json-out f9-receipts/sign-packets-all-k.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py f9-receipts/sign-packets-all-k.json
       - name: Independently reconstruct exact GF9 with two distinct irreducible polynomials
         run: python3 research/nightfall/2026-11-f9-bridge/verify_two_models.py
       - name: Independent decoder-free transcript fiber audit over every GF9 signal through k=5
@@ -83,7 +93,7 @@ jobs:
           mkdir -p f9-receipts
           git rev-parse HEAD > f9-receipts/commit.txt
           git -C /tmp/mathlib4 rev-parse HEAD > f9-receipts/mathlib.txt || true
-          sha256sum research/nightfall/formalization/finite_field/{F9GapArithmetic,F9OracleBridge,F9ActualFieldBasis,F9NonadaptiveLower,F9ConcreteLower}.lean research/nightfall/2026-11-f9-bridge/verify_two_models.py research/nightfall/2026-11-f9-bridge/verify_transcript_independent.py > f9-receipts/source_sha256.txt
+          sha256sum research/nightfall/formalization/finite_field/{F9GapArithmetic,F9OracleBridge,F9ActualFieldBasis,F9NonadaptiveLower,F9ConcreteLower,F9SignPacketAllK}.lean research/nightfall/2026-11-f9-bridge/verify_two_models.py research/nightfall/2026-11-f9-bridge/verify_transcript_independent.py > f9-receipts/source_sha256.txt
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
