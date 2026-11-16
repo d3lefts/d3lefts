@@ -120,7 +120,10 @@ export class PgParticipationStore{
       invariant(actor.institutionId===institutionId,'FORBIDDEN_TENANT',403);
       const locked=await client.query('SELECT seq,head_hash FROM cw_pg_streams WHERE tenant=$1 FOR UPDATE',[institutionId]);
       invariant(locked.rowCount===1,'PG_TENANT_NOT_PROVISIONED',404);
-      const hash=sha({institutionId,cmd:{...command,institution:PARTICIPATION_SCOPE[institutionId],...(command.type==='RESPOND_COMMENT'||command.type==='REVIEW_AMEND'||command.type==='MILESTONE'||command.type==='STAGE'?{role:'DEMO_STEWARD'}:{})},expectedSequence,expectedRevision});
+      const normalized={...command,institution:PARTICIPATION_SCOPE[institutionId]};
+      delete normalized.role; // ignored in v1.3; never affects idempotency semantics
+      if(['RESPOND_COMMENT','REVIEW_AMEND','MILESTONE','STAGE'].includes(command.type))normalized.role='DEMO_STEWARD';
+      const hash=sha({institutionId,cmd:normalized,expectedSequence,expectedRevision});
       const prior=await client.query('SELECT request_hash,response_json FROM cw_pg_requests WHERE tenant=$1 AND actor_id=$2 AND request_key=$3',[institutionId,actor.id,key]);
       if(prior.rowCount){
         invariant(prior.rows[0].request_hash===hash,'PARTICIPATION_IDEMPOTENCY_CONFLICT');
@@ -192,6 +195,7 @@ export class PgParticipationStore{
         const row=src.prepare('SELECT seq,head_hash FROM participation_streams WHERE institution_id=?').get(tenant);
         const actors=src.prepare('SELECT id,role,eligible,active,token_hash FROM actors WHERE institution_id=?').all(tenant);
         const records=src.prepare('SELECT seq,event_json,previous_hash,hash FROM participation_events WHERE institution_id=? ORDER BY seq').all(tenant);
+        const requests=src.prepare('SELECT actor_id,command_key,request_hash,response_json FROM participation_requests WHERE institution_id=?').all(tenant);
         invariant(actors.length>0,'PG_SOURCE_ACTORS_MISSING');
         const interpreter=new Store(':memory:');
         try{
@@ -202,7 +206,7 @@ export class PgParticipationStore{
           for(const r of records)interpreter.run('INSERT INTO participation_events VALUES(?,?,?,?,?)',tenant,r.seq,r.event_json,r.previous_hash,r.hash);
           l.replay(tenant); // source must be intact and replayable
         }finally{interpreter.close();}
-        source.push({tenant,actors,records,stream:row??{seq:0,head_hash:GENESIS}});
+        source.push({tenant,actors,records,requests,stream:row??{seq:0,head_hash:GENESIS}});
       }
       await this.tx(async client=>{
         const exists=await client.query('SELECT tenant FROM cw_pg_streams LIMIT 1');
@@ -214,6 +218,9 @@ export class PgParticipationStore{
           for(const r of s.records){
             const sealed=this._seal(s.tenant,r);
             await client.query('INSERT INTO cw_pg_events VALUES ($1,$2,$3,$4,$5,$6,$7)',[s.tenant,r.seq,r.previous_hash,r.hash,sealed.nonce,sealed.tag,sealed.ciphertext]);
+          }
+          for(const req of s.requests){
+            await client.query('INSERT INTO cw_pg_requests (tenant,actor_id,request_key,request_hash,response_json) VALUES ($1,$2,$3,$4,$5::jsonb)',[s.tenant,req.actor_id,req.command_key,req.request_hash,req.response_json]);
           }
           await client.query('UPDATE cw_pg_streams SET seq=$2,head_hash=$3 WHERE tenant=$1',[s.tenant,s.stream.seq,s.stream.head_hash]);
         }
