@@ -29,7 +29,7 @@ from workflow_model import (Actor, Event, Rules, Workflow, establish, amend,
                             advance, cast, certify, prepare_publication,
                             approve_publication, abort, check_log, passport)
 from independent_checker import verify
-from app import civic, attest, authority
+from app import civic, attest, authority, history
 
 ROOT = Path(__file__).resolve().parent
 DEMO_TENANTS = {
@@ -229,7 +229,7 @@ def create_app(db_path: str | None = None) -> FastAPI:
     attest.prepare_attest(connect,db_path)
     civic.install_tables(connect,db_path)
     authority.prepare_authority(connect,db_path,DEMO_TENANTS,ROLES)
-    app = FastAPI(title="Commonwealth OS — Fictional Legislative Demo", version="0.1.0", docs_url=None, redoc_url=None)
+    app = FastAPI(title="Commonwealth OS — Fictional Legislative Demo", version="0.3.0", docs_url=None, redoc_url=None)
     app.mount("/static", StaticFiles(directory=str(ROOT / "static")), name="static")
 
     @app.middleware("http")
@@ -505,6 +505,7 @@ def create_app(db_path: str | None = None) -> FastAPI:
 
     civic.install_routes(app,connect,db_path,identity,DEMO_TENANTS)
     authority.install_routes(app,connect,db_path,identity,ROLES)
+    history.install_routes(app,identity)
     return app
 
 

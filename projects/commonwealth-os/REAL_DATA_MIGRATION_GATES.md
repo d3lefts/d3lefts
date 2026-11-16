@@ -27,3 +27,7 @@ No production seed may contain identity or official permissions from `demo-*` te
 - Real institutional identity, authoritative rules, external signatures, managed persistence, independently reviewed consent and privacy, source ingestion, public law publication, legally valid voting: **NOT ESTABLISHED**.
 
 No date, institution, or legal approval is implied by this roadmap.
+
+## D. Historical roll-call source onboarding (NOT CLEARED)
+
+The v0.3 synthetic representation explorer supplies an exact dated join interface but does not ingest any real member histories, user residence history, district maps or named votes. Federal roll-call archives, state records and municipal minutes must each pass custodian reconciliation, historical seat/term identity crosswalk validation, legal-source authority, completeness/gap reporting, privacy review and independent sampling checks. Manual date ranges before a resident's birth are marked as history of seats, not a claim of personal representation. Voice votes must not become invented member choices. See `HISTORICAL_REPRESENTATION_CONTRACT_v0_3.md`.

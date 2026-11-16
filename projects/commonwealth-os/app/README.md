@@ -1,4 +1,4 @@
-# Commonwealth OS — Synthetic Governance Application v0.2
+# Commonwealth OS — Synthetic Governance Application v0.3
 
 **Research demonstration — NOT a government, election, judicial, or financial platform.**
 
@@ -74,4 +74,19 @@ See [Real Data Migration Plan](REAL_DATA_MIGRATION_GATES.md). Future migration r
 
 ## Repository integration
 
-The v0.2 files live under `projects/commonwealth-os/app/` and reuse `projects/commonwealth-os/workflow/` without modification. The existing UAH → other universities → Huntsville City Schools → HOAs → Huntsville City Council rollout remains unchanged. Development with generated fixtures is not permission to initiate any of those pilots.
+The v0.3 files live under `projects/commonwealth-os/app/` and reuse `projects/commonwealth-os/workflow/` without modification. The existing UAH → other universities → Huntsville City Schools → HOAs → Huntsville City Council rollout remains unchanged. Development with generated fixtures is not permission to initiate any of those pilots.
+
+
+## Historical representation explorer — synthetic v0.3
+
+A new **Representation history** workspace displays a date-filterable, group-filterable record of how fictional officials in the user's applicable constituencies voted on **explicitly recorded motions**. The default date starts at the fictional user's birth date; custom ranges can predate birth using a separately labeled **history of current seats** option.
+
+- Seven representative groups, 21 mock service terms, 38 synthetic roll-call events, historical moves/redistricting and named per-official recorded positions.
+- Date-effective residence → seat → official-term → roll-call joins, with no position guessed when the source lacks an individual vote.
+- Exact motion/procedural type, source status, row-level synthetic digest, bounded pagination and provenance warnings.
+- Read-only authenticated *demo* APIs: `GET /api/history/catalogue` and `GET /api/history/representation`.
+- No real user birth dates, home addresses, official votes or legislative files have been loaded.
+- See [Historical Representation Contract](../HISTORICAL_REPRESENTATION_CONTRACT_v0_3.md), and future [real data migration gates](../REAL_DATA_MIGRATION_GATES.md).
+
+The new historical engine is **not a full archive**: older votes, voice votes, incomplete local minutes and source gaps must remain identifiable rather than fabricated. See the formal contract for official House, Senate, and Congress.gov source planning.
+
