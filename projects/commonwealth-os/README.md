@@ -43,8 +43,15 @@ A **2027 Huntsville pitch** is a demonstration target, **not** a city deployment
 ## Synthetic legislative workflow v1.1
 [Formal state-machine specification](workflow/FORMAL_WORKFLOW_v1_1.md) · [Executable demo reference and independent replay checker](workflow/README.md). The demo reference rejects OFFICIAL mode; 28 internal tests cover the fictional case and negative guards, not a legally authorized electronic election.
 
-## Runnable legislative app v0.2
-[Run the full synthetic governance workspace v0.2](app/README.md). The Python mobile-first app now includes three fictional pilot questionnaires, audited role revocation, multi-item dockets, synthetic budget/public views, private advisory profiles, and locally signed test receipts. It reuses the v1.1 workflow reducer and independent checker. **Role switching remains a demo, and no real municipal data, verified voter identity, official election, or authorized public service is present.** See [source](app/main.py) and [scoped app CI](../../.github/workflows/commonwealth-app-ci.yml).
+## Runnable legislative app v0.3
+[Run the synthetic governance workspace v0.3](app/README.md). The Python mobile-first app now includes three fictional pilot questionnaires, audited role revocation, multi-item dockets, synthetic budget/public views, private advisory profiles, and locally signed test receipts. It reuses the v1.1 workflow reducer and independent checker. **Role switching remains a demo, and no real municipal data, verified voter identity, official election, or authorized public service is present.** See [source](app/main.py) and [scoped app CI](../../.github/workflows/commonwealth-app-ci.yml).
+
+## Historical representation explorer v0.3
+[Formal historical record contract](HISTORICAL_REPRESENTATION_CONTRACT_v0_3.md) · [Read-only historical join engine](app/history.py) · [Fictional 38-roll-call dataset](app/data/history_synthetic.json) · [Tests](app/tests/test_history.py).
+
+The mobile-first **Representation history** screen displays exactly the named **recorded member positions available in the source**, joined to a dated residence, district assignment and official service term. The default period begins at a fictional user's birth date; a custom range and separately labeled pre-birth current-seat history are available. Seven representative groups, historical moves and redistricting are modeled in fictitious data. Missing, non-roll-call or non-attributable individual votes are not guessed. The study feature passes 79 author-side tests including a separately written brute-force join oracle.
+
+**No real officials, rolls, addresses, profiles, city minutes, or institutional roll-call datasets were imported**. Federal and local source integrations remain future research gates; all output is marked synthetic and incomplete.
 
 ## V1 demonstrator
 The first testable vertical slice uses entirely fictional governance records:
