@@ -1,0 +1,37 @@
+name: NIGHTFALL active dependency closure and recovery
+on:
+  pull_request:
+    paths:
+      - 'research/catalogue/ACTIVE_DEPENDENCY_CLOSURE.json'
+      - 'research/catalogue/ACTIVE_DEPENDENCY_CLOSURE.md'
+      - 'scripts/check_active_dependency_closure.py'
+      - '.github/workflows/nightfall-active-dependency-closure.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/catalogue/ACTIVE_DEPENDENCY_CLOSURE.json'
+      - 'research/catalogue/ACTIVE_DEPENDENCY_CLOSURE.md'
+      - 'scripts/check_active_dependency_closure.py'
+      - '.github/workflows/nightfall-active-dependency-closure.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  pull-requests: read
+jobs:
+  recovery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Check transitive obligations and attempt twelve adversarial ledger mutations
+        run: python3 scripts/check_active_dependency_closure.py --self-test --summary
+      - name: Check that all pinned draft PR heads are still current
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/check_active_dependency_closure.py --live
+      - name: Explicit gate boundary
+        run: |
+          echo 'Dependency/source snapshot consistency only, not Lean proof compilation.'
+          echo 'No terminal theorem or originality assertion is promoted by this check.'
