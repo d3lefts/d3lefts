@@ -1,30 +1,4 @@
 # NIGHTFALL active research / integration queue
-
-## Reconciliation — November 15, 2026 (supersedes this file's 13-Nov open-PR snapshot)
-
-**Decision:** 15 NIGHTFALL PRs reviewed at their exact branch heads. Four archived to main; eleven closed without merging older or uncertified proof source over current main. Each PR has an explicit disposition and proof-status explanation in its GitHub discussion. As checked after those actions, **no NIGHTFALL research PR remains open**. This is a repository hygiene decision, **not** external theorem validation.
-
-| Disposition | PR and exact result scope |
-| --- | --- |
-| **Merged** | [#606](https://github.com/d3lefts/d3lefts/pull/606): offline ControlArena JSON open-path editor, exact-head experiment/promotion workflows passed; only four preregistered tasks, investigator-authored legitimate scaffolds, no general safety rate or production enforcement claim |
-| **Merged** | [#578](https://github.com/d3lefts/d3lefts/pull/578): symmetric finite independent increments, arbitrary normed spaces, analytic first-chaos comparison plus 34,944 exact tests; no Lean or human peer review |
-| **Merged** | [#581](https://github.com/d3lefts/d3lefts/pull/581): two-copy spectral leakage identity and exact 1/8 counterexample to an *overstrong operator*, **not** the underlying first-chaos conjecture. Repaired 7 corrupted mathematical control characters; corrected-head exact-audit CI passed; no Lean or external referee |
-| **Merged** | [#582](https://github.com/d3lefts/d3lefts/pull/582): original-centered-cap acute-cone first-chaos subclass theorem and exact checker; restrictions on nonnegative scalar amplitudes, acute Gram interactions and residual vector remain essential; no Lean or external review |
-| **Closed: already on main** | [#546](https://github.com/d3lefts/d3lefts/pull/546): pure-sector Q2 C100.946 Lean module at exactly identical Git blob SHA `131192426c760c69dc0437ad3c264a74017a0c51`; named one-source CI passed, zero-singleton assumption remains |
-| **Closed: certified historical weaker checkpoint** | [#552](https://github.com/d3lefts/d3lefts/pull/552): C121.655 original-source terminal had a passing pinned named-source run, superseded as a target by later C107 source work; old shared workflows not re-merged |
-| **Closed: certified historical / other gate failed** | [#551](https://github.com/d3lefts/d3lefts/pull/551): C128.299 one-source Lean receipt passed, separate active pin audit failed; later source work exists on main |
-| **Closed: candidate lacks current-head source proof** | [#561](https://github.com/d3lefts/d3lefts/pull/561): C105.7417 desired coefficient, exact Bernstein subcertificate, but **no current-head full pinned Lean CI**; not promoted |
-| **Closed: failed source Lean gate** | [#548](https://github.com/d3lefts/d3lefts/pull/548), [#544](https://github.com/d3lefts/d3lefts/pull/544), [#535](https://github.com/d3lefts/d3lefts/pull/535): Bernoulli source switching / sharp-section normalization attempts failed their pinned source build; no C99/C353 promotion |
-| **Closed: failed source Lean gate** | [#541](https://github.com/d3lefts/d3lefts/pull/541): pure-sector asymmetric c/5 source gate failed, despite exact finite checker; [#534](https://github.com/d3lefts/d3lefts/pull/534): C190 original-source rotation still partial, pinned one-source build failed |
-| **Closed: intermediate / superseded** | [#539](https://github.com/d3lefts/d3lefts/pull/539): conditional C107/C99 implications and c/5 envelope obstruction, **no current-head CI** (prior scalar run was older head); [#533](https://github.com/d3lefts/d3lefts/pull/533): shifted-owner scalar gate passed, but full source terminal gate failed at exact head |
-
-**Proof-custody rule:** A passing named, pinned Lean receipt certifies the proposition under *its exact source and imports*; it is not automatically transferable to modified mainline files or stronger claims. A checked finite counterexample refutes only its stated operator. Source-file presence in main is not itself an exact-head certificate. None of these PR decisions asserts external novelty, legal authority, deployment or independent human review.
-
-**Archive retention:** closing a PR does not remove its branch, original commits, prior CI artifacts or failure discussion. Do not delete those branches without separate source-custody review. Restore a closed line of research only with a new exact-source test that resolves its recorded blocker.
-
-**Cross-project boundary:** [#618](https://github.com/d3lefts/d3lefts/pull/618) is an open **Commonwealth OS** backend development draft on a `nightfall/`-prefixed branch; it was intentionally excluded from the mathematical NIGHTFALL cleanup. Its release gates must be checked separately.
-
----
 **Snapshot:** 2026-11-13, after main `8981a26477f07c864604121a7d0dce6dda3ae8bf`. **Purpose:** prevent overlapping parallel-instance work from being mistaken for independent theorems or blindly squash-merged. This is an editorial snapshot, not a live queue. Use the [GitHub open pull requests](https://github.com/d3lefts/d3lefts/pulls?q=is%3Apr+is%3Aopen) for authoritative present status.
 
 

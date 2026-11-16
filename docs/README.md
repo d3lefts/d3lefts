@@ -25,16 +25,6 @@ The public identity is **“Discovery should compound. Evidence should travel.�
 
 Both experiences share source records and review standards, but divide by research lifecycle, not proof strength. An archived candidate is not automatically a certified theorem, and an active theorem can have checked sublemmas. The historical CSS token `data-nf-experience="archive"` denotes the NULL FIELD light palette for compatibility; it is **not** a scientific archive classification. Do not rename this implementation token until linked CSS and browser tests migrate together. Each landing page has a distinct layout. Keep the theme switch functional, keyboard-accessible, and honest about destination.
 
-## Historical & Civic Intelligence Lab — synthetic public feature (15 November 2026)
-
-[**Historical & Civic Intelligence Lab**](commonwealth-intelligence.html) complements the existing Commonwealth product pages instead of replacing them. It presents the backend's exact `house.json`, `senate.json`, `municipal.json`, and `issues.json` fictional fixtures in an interactive read-only history browser with historical tenure-at-vote joins, topic/procedural distinctions, and no-record conditions. It also provides an in-memory voluntary preference exercise and an expressly **unvalidated** 20-question / 12-archetype Discover experience. No actual ballot, KYC, identity or persistent political profile. Run `node scripts/test_commonwealth_intelligence.cjs` to test source equality and key logic.
-
-## Product showcase — Commonwealth OS
-
-[**Commonwealth OS: Upcoming Product Demo**](commonwealth-os.html) is a separate, static, mobile-responsive civic-product showcase within the NIGHTFALL site. It presents four interactive **fictional** preview surfaces (Chamber, Living Voter, Legal Proof Passport, Representation), the proposed five-stage Huntsville-area adoption path, a security/authority boundary explanation and direct links into the [canonical Commonwealth repository source](../projects/commonwealth-os/README.md).
-
-The preview interactions are local JavaScript display state only: no real law ingestion, identity collection, profile persistence, server calls, ballot submission, authoritative verification, or institutional endorsement. The actual working synthetic app, legal kernel, source-different checker and historical engine live under projects/commonwealth-os/ and have their own scoped tests. The product page is not an official government election or legal-precedent product.
-
 ## Research and verification pages
 
 | Entry | Meaning |
@@ -79,7 +69,3 @@ Do not update canonical source counts or scientific status merely to make a test
 GitHub Pages is configured for the **`main` branch, `/docs` directory**. The [site validation workflow](../.github/workflows/verify-site.yml) runs on pull requests and relevant pushes. Verify published Pages separately after merging; a green source check does not by itself establish a successful public deployment.
 
 This folder contains a website and local instruments, not a stand-alone software package. For research attribution, contribution rules, historical releases, or licensing limits, consult the repository [README](../README.md) and [CONTRIBUTING](../CONTRIBUTING.md) documents.
-
-## Commonwealth OS product demonstration
-
-The static website publishes [`commonwealth.html`](commonwealth.html), an evidence-scoped product page embedding the versioned script-resistant [Living Voter v1.3.1](commonwealth-demos/living-voter.html) and the browser-only [synthetic institutional assurance workbench](commonwealth-browser/index.html). The mirrored demo blobs are reused directly from `projects/commonwealth-os/` and retain provenance through Git object identity. Neither demo is an authenticated election system; fictional institutional fixtures, example congressional snapshots, and formal/legal research are explicitly distinguished. Changes to upstream demos require an intentional mirror refresh; this is not a runtime backend integration.

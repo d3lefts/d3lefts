@@ -1,7 +1,6 @@
 import { DatabaseSync } from 'node:sqlite';
 import { randomBytes } from 'node:crypto';
 import { canon, sha, invariant, policyOK, tallyOK } from './codec.mjs';
-import { quorumCheck } from './policy.mjs';
 
 const STATE = Object.freeze({
   SUBMIT: ['DRAFT', 'IN_REVIEW'],
@@ -47,8 +46,10 @@ export class Store {
   all(sql, ...args) { return this.db.prepare(sql).all(...args); }
   run(sql, ...args) { return this.db.prepare(sql).run(...args); }
   tx(fn) { this.db.exec('BEGIN IMMEDIATE'); try { const result=fn(); this.db.exec('COMMIT'); return result; } catch(e){ this.db.exec('ROLLBACK'); throw e; } }
-
+  // Freeze multi-query exports to ONE committed database snapshot across connections.
+  // Read transaction starts at first SELECT; all following SELECTs see that snapshot.
   readTx(fn) { this.db.exec('BEGIN'); try { const result=fn(); this.db.exec('COMMIT'); return result; } catch(e){ this.db.exec('ROLLBACK'); throw e; } }
+
   // Bootstrap is a local trusted-administrator operation, never exposed over HTTP.
   provisionInstitution(id, name, policy) {
     invariant(/^[a-z][a-z0-9-]{1,63}$/.test(id), 'BAD_INSTITUTION', 400);
@@ -60,7 +61,7 @@ export class Store {
     });
   }
   provisionActor(institutionId, id, role, eligible = false) {
-    invariant(['admin','chair','clerk','member','auditor','release-reviewer'].includes(role), 'BAD_ROLE',400);
+    invariant(['admin','chair','clerk','member','auditor'].includes(role), 'BAD_ROLE',400);
     invariant(/^[a-z][a-z0-9-]{1,63}$/.test(id), 'BAD_ACTOR_ID',400);
     const token = randomBytes(32).toString('hex');
     return this.tx(() => {
@@ -117,6 +118,8 @@ export class Store {
     invariant(typeof key==='string' && /^[A-Za-z0-9._:-]{8,120}$/.test(key),'BAD_IDEMPOTENCY_KEY',400);
     const digest=sha(request);
     return this.tx(()=>{
+      // Authentication/tenant/role/eligibility freshness MUST be checked inside
+      // the same serialization boundary as the command or administrative edit.
       this.actorFor(actor,id);
       const prior=this.one('SELECT * FROM requests WHERE institution_id=? AND actor_id=? AND command_key=?',id,actor.id,key);
       if(prior){invariant(prior.request_hash===digest,'IDEMPOTENCY_CONFLICT',409);return JSON.parse(prior.response_json);}
@@ -174,12 +177,10 @@ export class Store {
       const transitions={SUBMIT:'IN_REVIEW',AGENDA:'AGENDA_SET',BEGIN:'DELIBERATING',ATTEND:'DELIBERATING',LOCK:'MOTION_LOCKED',OPEN:'BALLOT_OPEN',CAST:'BALLOT_OPEN',CLOSE:'BALLOT_CLOSED',REVIEW:'REVIEWED_DEMO'};
       let next=transitions[action];let details={};let revision=item.current_revision;
       if(action==='REVISE') {
-        invariant(['DRAFT','IN_REVIEW','AGENDA_SET','DELIBERATING'].includes(old),'REVISION_LOCKED');
+        invariant(['DRAFT','IN_REVIEW'].includes(old),'REVISION_LOCKED');
         invariant(item.proposer===actor.id||can(actor,'clerk'),'REVISION_FORBIDDEN',403);
         const result=this.addRevision(institutionId,itemId,payload.body,actor);
-        revision=result.revision;next='DRAFT';
-        if(old==='AGENDA_SET'||old==='DELIBERATING')this.run('DELETE FROM attendance WHERE institution_id=? AND item_id=?',institutionId,itemId);
-        details={revision,bodyHash:result.bodyHash};
+        revision=result.revision;next=old;details={revision,bodyHash:result.bodyHash};
       } else {
         invariant(Object.hasOwn(transitions,action),'UNKNOWN_ACTION',400);
         const allowedFrom=STATE[action][0];invariant(old===allowedFrom,'INVALID_TRANSITION');
@@ -197,16 +198,18 @@ export class Store {
         }
         if(action==='LOCK') {
           const i=this.institution(institutionId),policy=this.activePolicy(institutionId);
-          invariant(quorumCheck(policy,this.present(institutionId,itemId).length,this.all('SELECT id FROM actors WHERE institution_id=? AND role=? AND eligible=1 AND active=1',institutionId,'member').length)===true,'QUORUM_UNMET');
+          invariant(this.present(institutionId,itemId).length>=policy.quorum,'QUORUM_UNMET');
           this.run('UPDATE items SET locked_revision=?,locked_policy_version=?,locked_eligibility_version=? WHERE institution_id=? AND id=?',revision,i.policy_version,i.eligibility_version,institutionId,itemId);
-          details={lockedRevision:revision,policyVersion:i.policy_version,policyHash:policy.hash,eligibilityVersion:i.eligibility_version,attendees:this.present(institutionId,itemId),eligibleRoster:this.all('SELECT id FROM actors WHERE institution_id=? AND role=? AND eligible=1 AND active=1 ORDER BY id',institutionId,'member').map(x=>x.id),sources:typeof this.sourceDependencies==='function'?this.sourceDependencies(institutionId,itemId):[]};
+          details={lockedRevision:revision,policyVersion:i.policy_version,policyHash:policy.hash,eligibilityVersion:i.eligibility_version,attendees:this.present(institutionId,itemId),eligibleRoster:this.all('SELECT id FROM actors WHERE institution_id=? AND role=? AND eligible=1 AND active=1 ORDER BY id',institutionId,'member').map(x=>x.id)};
         }
         if(['OPEN','CAST','CLOSE','REVIEW'].includes(action)) {
           const i=this.institution(institutionId);
           invariant(item.locked_policy_version===i.policy_version&&item.locked_eligibility_version===i.eligibility_version,'AUTHORITY_CHANGED');
           invariant(item.locked_revision===item.current_revision,'MOTION_CHANGED');
-          if(typeof this.sourceCurrencyOK==='function')invariant(this.sourceCurrencyOK(institutionId,itemId),'SOURCE_SUPERSEDED');
-          details={...details,policyVersion:i.policy_version,eligibilityVersion:i.eligibility_version,lockedRevision:item.locked_revision};
+          // These values are independently checkable assertions about the exact
+          // epoch at each guarded transition, not about legal authority.
+          details={...details,policyVersion:i.policy_version,
+            eligibilityVersion:i.eligibility_version,lockedRevision:item.locked_revision};
         }
         if(action==='CAST') {
           invariant(can(actor,'member')&&actor.eligible===1,'NOT_ELIGIBLE',403);
@@ -221,8 +224,8 @@ export class Store {
           invariant(actor.id!==item.proposer,'SEPARATION_OF_DUTIES',403);
           invariant(!this.one('SELECT actor_id FROM votes WHERE institution_id=? AND item_id=? AND actor_id=?',institutionId,itemId,actor.id),'REVIEWER_VOTED',403);
           const policy=this.activePolicy(institutionId), present=this.present(institutionId,itemId),votes=this.votes(institutionId,itemId);
-          invariant(quorumCheck(policy,present.length,this.all('SELECT id FROM actors WHERE institution_id=? AND role=? AND eligible=1 AND active=1',institutionId,'member').length)===true,'QUORUM_UNMET');
-          const result=tallyOK(policy,votes,{presentCount:present.length,eligibleCount:this.all('SELECT id FROM actors WHERE institution_id=? AND role=? AND eligible=1 AND active=1',institutionId,'member').length});
+          invariant(present.length>=policy.quorum,'QUORUM_UNMET');
+          const result=tallyOK(policy,votes);
           const outcome=result.accepted?'SUPPORTED_IN_SIMULATION':'REJECTED_IN_SIMULATION';
           this.run('UPDATE items SET reviewer=?,outcome=? WHERE institution_id=? AND id=?',actor.id,outcome,institutionId,itemId);
           details={...details,outcome,counts:{yes:result.yes,no:result.no,abstain:result.abstain},reviewer:actor.id};

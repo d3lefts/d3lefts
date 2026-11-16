@@ -16,7 +16,6 @@ import sqlite3
 import sys
 import time
 from typing import Annotated
-from uuid import uuid4
 
 from fastapi import Cookie, FastAPI, Header, HTTPException, Request
 from fastapi.responses import FileResponse, JSONResponse
@@ -29,7 +28,6 @@ from workflow_model import (Actor, Event, Rules, Workflow, establish, amend,
                             advance, cast, certify, prepare_publication,
                             approve_publication, abort, check_log, passport)
 from independent_checker import verify
-from app import civic, attest, authority, history
 
 ROOT = Path(__file__).resolve().parent
 DEMO_TENANTS = {
@@ -42,8 +40,6 @@ ROLES = {
     "member1": ("MEMBER",), "member2": ("MEMBER",), "member3": ("MEMBER",),
     "reviewer1": ("RELEASE_REVIEWER",), "reviewer2": ("RELEASE_REVIEWER",),
     "auditor": ("AUDITOR",),
-    "institution_admin": ("INSTITUTION_ADMIN",),
-    **{f"constituent{i}": ("CONSTITUENT",) for i in range(1,13)},
 }
 ACTION_LABELS = {
     "AMEND": "Propose amendment", "SUBMIT_REVIEW": "Submit for review",
@@ -116,20 +112,12 @@ def prepare_db(db_path: str) -> None:
           token_hash TEXT PRIMARY KEY, tenant TEXT NOT NULL, actor TEXT NOT NULL,
           created_at INTEGER NOT NULL
         );
-        CREATE TABLE IF NOT EXISTS creation_commands (
-          tenant TEXT NOT NULL, token_hash TEXT NOT NULL, command_id TEXT NOT NULL,
-          request_hash TEXT NOT NULL, item_id TEXT NOT NULL,
-          PRIMARY KEY(tenant,token_hash,command_id));
         CREATE TABLE IF NOT EXISTS commands (
           tenant TEXT NOT NULL, item_id TEXT NOT NULL, token_hash TEXT NOT NULL,
-          command_id TEXT NOT NULL, request_hash TEXT NOT NULL, response_json TEXT NOT NULL,
+          command_id TEXT NOT NULL, response_json TEXT NOT NULL,
           PRIMARY KEY(tenant,item_id,token_hash,command_id)
         );
         """)
-        # Schema upgrades retain existing fictional item and command data.
-        columns={row["name"] for row in conn.execute("PRAGMA table_info(commands)")}
-        if "request_hash" not in columns:
-            conn.execute("ALTER TABLE commands ADD COLUMN request_hash TEXT NOT NULL DEFAULT ''")
         for tenant, d in DEMO_TENANTS.items():
             w = establish(d["item_id"], tenant, d["jurisdiction"], "DEMO",
                           actors(tenant)["author"], d["initial"],
@@ -207,12 +195,6 @@ class Login(BaseModel):
     actor: str
 
 
-class NewItem(BaseModel):
-    model_config = ConfigDict(extra="forbid")
-    text: str = Field(min_length=10,max_length=30000)
-    command_id: str = Field(min_length=8,max_length=128)
-
-
 class Command(BaseModel):
     model_config = ConfigDict(extra="forbid")
     action: str
@@ -226,10 +208,7 @@ class Command(BaseModel):
 def create_app(db_path: str | None = None) -> FastAPI:
     db_path = db_path or os.getenv("CW_DB_PATH", str(ROOT / "commonwealth-demo.sqlite3"))
     prepare_db(db_path)
-    attest.prepare_attest(connect,db_path)
-    civic.install_tables(connect,db_path)
-    authority.prepare_authority(connect,db_path,DEMO_TENANTS,ROLES)
-    app = FastAPI(title="Commonwealth OS — Fictional Legislative Demo", version="0.3.0", docs_url=None, redoc_url=None)
+    app = FastAPI(title="Commonwealth OS — Fictional Legislative Demo", version="0.1.0", docs_url=None, redoc_url=None)
     app.mount("/static", StaticFiles(directory=str(ROOT / "static")), name="static")
 
     @app.middleware("http")
@@ -247,28 +226,17 @@ def create_app(db_path: str | None = None) -> FastAPI:
             raise HTTPException(401, "Select a fictional role to enter the demo")
         h = sha256(token.encode()).hexdigest()
         with connect(db_path) as conn:
-            row = conn.execute("SELECT tenant,actor,created_at FROM sessions WHERE token_hash=?", (h,)).fetchone()
+            row = conn.execute("SELECT tenant,actor FROM sessions WHERE token_hash=?", (h,)).fetchone()
         if row is None:
             raise HTTPException(401, "Demo session expired")
-        if int(time.time()) - row["created_at"] > 3600:
-            with connect(db_path) as conn:
-                conn.execute("DELETE FROM sessions WHERE token_hash=?",(h,))
-            raise HTTPException(401,"Demo session expired")
-        active=authority.active_roles(connect,db_path,row["tenant"],row["actor"])
-        if not active:
-            raise HTTPException(403,"This fictional role grant has been revoked")
-        return Actor(row["actor"],row["tenant"],active),h
+        return actors(row["tenant"])[row["actor"]], h
 
     def get_item(tenant: str, item_id: str) -> tuple[Workflow, int]:
         with connect(db_path) as conn:
             row = conn.execute("SELECT version,state_json FROM items WHERE tenant=? AND id=?", (tenant, item_id)).fetchone()
         if row is None:
             raise HTTPException(404, "Unknown fictional legislative item")
-        w=decode(row["state_json"])
-        with connect(db_path) as conn:
-            if not attest.check_custody(conn,w) or not check_log(w):
-                raise HTTPException(503,"Ledger custody verification failed")
-        return w, row["version"]
+        return decode(row["state_json"]), row["version"]
 
     @app.get("/healthz")
     def health():
@@ -327,51 +295,7 @@ def create_app(db_path: str | None = None) -> FastAPI:
         actor, _ = identity(cw_demo)
         with connect(db_path) as conn:
             rows = conn.execute("SELECT state_json,version FROM items WHERE tenant=? ORDER BY id", (actor.tenant,)).fetchall()
-        views=[]
-        with connect(db_path) as conn:
-            for row in rows:
-                w=decode(row["state_json"])
-                if not attest.check_custody(conn,w) or not check_log(w):
-                    raise HTTPException(503,"Ledger custody verification failed")
-                views.append(private_view(w,row["version"],actor))
-        return views
-
-    @app.post("/api/items")
-    def create_item(body: NewItem, cw_demo: Annotated[str | None, Cookie()] = None,
-                    x_cw_action: Annotated[str | None, Header()] = None):
-        if x_cw_action != MUTATION_HEADER:
-            raise HTTPException(403,"Missing action-intent header")
-        actor, token_hash=identity(cw_demo)
-        if "AUTHOR" not in actor.roles:raise HTTPException(403,"Only a human fixture author may create a proposal")
-        payload_hash=sha256(body.model_dump_json().encode()).hexdigest()
-        with connect(db_path) as conn:
-            try:
-                conn.execute("BEGIN IMMEDIATE")
-                old=conn.execute("SELECT request_hash,item_id FROM creation_commands WHERE tenant=? AND token_hash=? AND command_id=?",
-                                 (actor.tenant,token_hash,body.command_id)).fetchone()
-                if old is not None:
-                    if old["request_hash"] != payload_hash:
-                        raise HTTPException(409,"Idempotency key reused for different proposal")
-                    item_id=old["item_id"]
-                    conn.commit()
-                    w,v=get_item(actor.tenant,item_id)
-                    return private_view(w,v,actor)
-                prefix={"demo-campus":"SB","demo-hoa":"HOA","demo-city":"CIV"}[actor.tenant]
-                item_id=f"{prefix}-{uuid4().hex[:10].upper()}"
-                w=establish(item_id,actor.tenant,DEMO_TENANTS[actor.tenant]["jurisdiction"],"DEMO",
-                            actor,body.text,Rules("fictional-rules-v1",quorum=2),
-                            {"member1","member2","member3"},{"member1","member2","member3"})
-                conn.execute("INSERT INTO items(tenant,id,version,state_json) VALUES (?,?,?,?)",
-                             (actor.tenant,item_id,len(w.events),encode(w)))
-                attest.add_journal(conn,w)
-                conn.execute("INSERT INTO creation_commands VALUES (?,?,?,?,?)",
-                             (actor.tenant,token_hash,body.command_id,payload_hash,item_id))
-                conn.commit()
-                return private_view(w,len(w.events),actor)
-            except HTTPException:
-                conn.rollback();raise
-            except sqlite3.Error as exc:
-                conn.rollback();raise HTTPException(500,"Failed to create proposal") from exc
+        return [private_view(decode(r["state_json"]), r["version"], actor) for r in rows]
 
     @app.get("/api/items/{item_id}")
     def item(item_id: str, cw_demo: Annotated[str | None, Cookie()] = None):
@@ -391,12 +315,9 @@ def create_app(db_path: str | None = None) -> FastAPI:
         with connect(db_path) as conn:
             try:
                 conn.execute("BEGIN IMMEDIATE")
-                idem = conn.execute("SELECT response_json,request_hash FROM commands WHERE tenant=? AND item_id=? AND token_hash=? AND command_id=?",
+                idem = conn.execute("SELECT response_json FROM commands WHERE tenant=? AND item_id=? AND token_hash=? AND command_id=?",
                                     (actor.tenant, item_id, token_hash, body.command_id)).fetchone()
-                request_hash=sha256(body.model_dump_json().encode()).hexdigest()
                 if idem is not None:
-                    if idem["request_hash"] != request_hash:
-                        raise HTTPException(409,"Idempotency key already used for a different command")
                     conn.commit()
                     return json.loads(idem["response_json"])
                 row = conn.execute("SELECT state_json,version FROM items WHERE tenant=? AND id=?",
@@ -407,10 +328,6 @@ def create_app(db_path: str | None = None) -> FastAPI:
                 if version != body.expected_version:
                     raise HTTPException(409, f"Stale revision; current state version is {version}")
                 w = decode(row["state_json"])
-                if body.action in ("LOCK_MOTION","OPEN_BALLOT","CAST","CLOSE_BALLOT","CERTIFY") and not authority.rule_is_current(connect,db_path,w):
-                    raise HTTPException(409,"Institution fixture rule authority revoked or obsolete")
-                if not attest.check_custody(conn,w) or not check_log(w):
-                    raise HTTPException(503,"Ledger custody verification failed")
                 try:
                     if body.action == "AMEND":
                         w2 = amend(w, actor, (body.text or "").strip())
@@ -437,15 +354,10 @@ def create_app(db_path: str | None = None) -> FastAPI:
                     raise HTTPException(500, "Contract journal inconsistency")
                 after = len(w2.events)
                 result = private_view(w2, after, actor)
-                updated=conn.execute("UPDATE items SET state_json=?,version=? WHERE tenant=? AND id=? AND version=?",
+                conn.execute("UPDATE items SET state_json=?,version=? WHERE tenant=? AND id=? AND version=?",
                              (encode(w2), after, actor.tenant, item_id, version))
-                if updated.rowcount != 1:
-                    raise HTTPException(409,"Concurrent modification rejected")
-                attest.add_journal(conn,w2)
-                if body.action in ("CERTIFY","APPROVE_PUBLICATION_PREVIEW"):
-                    attest.issue_attestation(conn,w2,db_path)
-                conn.execute("INSERT INTO commands(tenant,item_id,token_hash,command_id,request_hash,response_json) VALUES(?,?,?,?,?,?)",
-                             (actor.tenant, item_id, token_hash, body.command_id,request_hash,
+                conn.execute("INSERT INTO commands(tenant,item_id,token_hash,command_id,response_json) VALUES(?,?,?,?,?)",
+                             (actor.tenant, item_id, token_hash, body.command_id,
                               json.dumps(result, separators=(",", ":"))))
                 conn.commit()
                 return result
@@ -466,11 +378,7 @@ def create_app(db_path: str | None = None) -> FastAPI:
             raise HTTPException(409, "No decision to verify yet")
         claim, proof_data = passport(w), evidence(w)
         ok, failures = verify(claim, proof_data)
-        with connect(db_path) as conn:
-            signatures=attest.attestation_bundle(conn,w)
         return {"passport": claim, "evidence": proof_data,
-                "local_attestations": signatures,
-                "local_signature_consistent": bool(signatures) and all(x["verified_local_signature"] for x in signatures),
                 "checker": {"consistent": ok, "errors": failures,
                             "source": "independent_checker.py (internal, unaudited)"},
                 "classification": "FICTIONAL_DEMO_NOT_LEGALLY_BINDING"}
@@ -479,33 +387,15 @@ def create_app(db_path: str | None = None) -> FastAPI:
     def public_decisions():
         with connect(db_path) as conn:
             rows = conn.execute("SELECT state_json FROM items").fetchall()
-        views=[]
-        with connect(db_path) as conn:
-            for row in rows:
-                w=decode(row["state_json"])
-                if not attest.check_custody(conn,w) or not check_log(w):
-                    raise HTTPException(503,"Public record custody mismatch")
-                if w.status=="PUBLISHED":
-                    bundle=attest.attestation_bundle(conn,w)
-                    if not bundle or not bundle[-1]["verified_local_signature"] or bundle[-1]["scope"]!="PUBLIC_PREVIEW":
-                        raise HTTPException(503,"Public record missing demo release attestation")
-                    views.append({**public_view(w),"demo_attestation":{k:bundle[-1][k] for k in ("signature","public_key","payload")}})
-        return views
+        return [public_view(w) for r in rows if (w := decode(r["state_json"])).status == "PUBLISHED"]
 
     @app.get("/api/public/decisions/{tenant}/{item_id}")
     def public_decision(tenant: str, item_id: str):
         if tenant not in DEMO_TENANTS:
             raise HTTPException(404, "Unknown fictional tenant")
         w, _ = get_item(tenant, item_id)
-        with connect(db_path) as conn:
-            bundle=attest.attestation_bundle(conn,w)
-        if w.status!="PUBLISHED" or not bundle or not bundle[-1]["verified_local_signature"] or bundle[-1]["scope"]!="PUBLIC_PREVIEW":
-            raise HTTPException(404,"No reviewed synthetic public record")
-        return {**public_view(w),"demo_attestation":{k:bundle[-1][k] for k in ("signature","public_key","payload")}}
+        return public_view(w)
 
-    civic.install_routes(app,connect,db_path,identity,DEMO_TENANTS)
-    authority.install_routes(app,connect,db_path,identity,ROLES)
-    history.install_routes(app,identity)
     return app
 
 
