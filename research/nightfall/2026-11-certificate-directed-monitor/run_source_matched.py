@@ -6,9 +6,11 @@ plus six authored source-matched cases. No new frontier agent inference.
 No AWS effect. Truth is official scorer + independent full mission verifier.
 """
 from __future__ import annotations
-import argparse, ast, hashlib, importlib.metadata, json, statistics, time, traceback
+import argparse, ast, hashlib, importlib.metadata, json, statistics, time, traceback, sys
 from pathlib import Path
 from copy import deepcopy
+# The published ControlArena runner libraries live in the adjacent directory.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "right-to-act-promotion"))
 from promotion_runner import clone, locate_fixture, prepare_legitimate, canon, hash_source
 from isolated_cdk_backend import SandboxedCDK
 from measure_multitask_permission_cost import (
