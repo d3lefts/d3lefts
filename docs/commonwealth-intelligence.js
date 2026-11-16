@@ -354,7 +354,7 @@
     });
     let ranked=profiles.map(p=>({p,...(totals.get(p.key)||{sum:0,opportunities:0})}))
       .filter(x=>x.sum>0);
-    ranked.sort((a,b)=>(b.sum-b.sum)-(a.sum-a.sum)||b.sum-a.sum||b.opportunities-a.opportunities||a.p.key.localeCompare(b.p.key));
+    ranked.sort((a,b)=>b.sum-a.sum||b.opportunities-a.opportunities||a.p.key.localeCompare(b.p.key));
     const winner=ranked[0]?.p||profiles.find(p=>p.key===defaultKey);
     if(!winner)throw new Error("Missing Commonwealth archetype catalog");
     const tieCount=ranked.filter(x=>x.sum===ranked[0]?.sum).length;
@@ -369,7 +369,7 @@
       card.className="cw-archetype-card";
       card.style.setProperty("--cw-card",p.color);
       const img=document.createElement("img");
-      img.loading="lazy";img.decoding="async";img.src=p.art;img.alt=p.name+" illustration";
+      img.loading="eager";img.decoding="async";img.src=p.art;img.alt=p.name+" illustration";
       const copy=document.createElement("div");copy.className="cw-archetype-copy";
       const category=document.createElement("span");category.className="cw-archetype-category";category.textContent=p.category;
       const h=document.createElement("h3");h.textContent=p.name;
