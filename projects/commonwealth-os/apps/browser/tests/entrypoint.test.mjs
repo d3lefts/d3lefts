@@ -6,7 +6,7 @@ const ui=readFileSync(new URL('../workspace.mjs',import.meta.url),'utf8');
 const original=readFileSync(new URL('../app.mjs',import.meta.url),'utf8');
 
 test('comprehensive app loads local synthetic assets and retains checker',()=>{
- for(const file of ['workspace.css','workspace.mjs','commonwealth-intelligence-fixtures.js','app.mjs'])
+ for(const file of ['workspace.css','workspace.mjs','historical-fixtures.js','app.mjs'])
    assert.ok(html.includes(file),'missing '+file);
  for(const id of ['cwui-chamber','cwui-issues','cwui-representation','cwui-public','cwui-steward','cwui-assurance','cwui-history-results','cwui-question-text'])
    assert.ok(html.includes('id="'+id+'"'),'missing '+id);
