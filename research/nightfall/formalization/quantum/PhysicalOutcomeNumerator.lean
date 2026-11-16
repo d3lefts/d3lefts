@@ -156,7 +156,7 @@ theorem A_reverse_GHZ_corner_matches (d : ℕ) (hd : 0 < d) :
           rw [C_GHZ_corner_is_real]
     _ = unnormalizedA d (zeroRay d) (oneRay d) := by
           rw [physical_A_entry_from_fourier, hC10]
-          ring
+          simp
 
 theorem actual_physical_A_real_trace_coherence
     (d : ℕ) (hd : 0 < d)
