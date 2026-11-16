@@ -72,7 +72,8 @@ theorem all_physical_povms_bounded
         (E out (z d) (o d)).re :=
     bornNum_coherence d hd (E out) (hpositive out)
   simp_rw [hnum]
-  simpa only [bornDen, z, o, SourceBorn.zeroRay, SourceBorn.oneRay] using
+  simpa [bornDen, ActualBornTerminal.z, ActualBornTerminal.o,
+    SourceBorn.zeroRay, SourceBorn.oneRay] using
     (SourceBornTrace.physical_povm_upper_with_actual_source_trace
       d hd E hpositive hcomplete
       ((unnormalizedA d (z d) (o d)).re))
@@ -90,10 +91,10 @@ private theorem source_weight_pair_sum
           (if i = b then w b / 2 else 0) := by
     by_cases ha : i = a
     · subst i
-      simp [hab]
+      simp [hab, div_eq_mul_inv]
     · by_cases hb : i = b
       · subst i
-        simp [ha]
+        simp [ha, div_eq_mul_inv]
       · simp [ha, hb]
   simp_rw [hterm]
   simp [Finset.sum_add_distrib, add_div]
@@ -122,7 +123,8 @@ theorem minus_diag (d : ℕ) (hd : 0 < d) (i : Register d) :
       if i = z d then (1 / 2 : ℝ)
       else if i = o d then 1 / 2 else 0 := by
   classical
-  have hab := PhysicalNumerator.two_GHZ_rays_distinct d hd
+  have hab : z d ≠ o d := PhysicalNumerator.two_GHZ_rays_distinct d hd
+  have hba : o d ≠ z d := hab.symm
   by_cases ha : i = z d
   · simp [ha, fullGHZ, AmbientGHZ.ghzAmbient,
       AmbientGHZ.minusEffect, AmbientGHZ.minusVector,
