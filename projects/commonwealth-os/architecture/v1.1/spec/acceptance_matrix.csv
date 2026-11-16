@@ -1,0 +1,16 @@
+scenario,obligation,expected,checker
+Wrong tenant,B1 policy boundary,Reject; no budget debit,test_wrong_tenant
+Mismatched jurisdiction,Authority provenance,Reject,test_wrong_jurisdiction
+Tampered frozen proposal,Text-to-vote identity,Reject,test_proposal_swap
+Stale governing rule,Current source requirement,Reject pending human legal review,test_rule_change
+Unverified tally,Independent verifier,Reject,test_election_unverified
+Missing legal attestation,Human sovereign authority,Reject,test_missing_legal_attestation
+Court/association stay,Effective legal challenge,Reject,test_stay
+Revoked authority,Current permission,Reject,test_authority_revocation
+Budget exceeded,Scope and capacity,Reject,test_budget
+Replayed effect,At-most-once effect,Reject,test_replay
+Concurrent identical effects,Atomic linearization,Exactly one model commit,test_concurrent_duplicate
+Privacy linkage,Cross-system secrecy,External attack test required,NOT_TESTED
+AI manipulation,Human agency,Preregistered human test required,NOT_TESTED
+Unmediated external payment,Complete effect mediation,Integration audit required,NOT_TESTED
+Unauthorized municipal direct vote,Jurisdiction law,Independent legal review required,NOT_TESTED

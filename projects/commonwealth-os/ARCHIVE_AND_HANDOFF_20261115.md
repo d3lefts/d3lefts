@@ -1,19 +1,24 @@
-# Commonwealth OS — source integration archive (2026-11-15)
+# Commonwealth OS — archival source and prepilot handoff (2026-11-15)
 
-Status: consolidated research/design/source archive; **not production deployment or legal authorization**.
+This directory consolidates source-level outputs from parallel Commonwealth/NIGHTFALL work without modifying the already implemented `app/`, `apps/`, `assurance/`, `workflow/` and design v1.0 baselines.
 
-## Components
-- [Living Voter prepilot v1.3.1](prepilot/v1.3.1/living_voter_mobile.html): mobile demo with HTML fallback for JavaScript-disabled iPhone file previews; not a secure ballot.
-- [Complete architecture blueprint v1.1](architecture/v1.1/BLUEPRINT_v1_1_COMPLETE.md): comprehensive system design alongside current main baseline.
-- [Democratic Assurance OS contract](architecture/v1.1/DAP_OS_CONTRACT_v1_1_FULL.md): typed evidence and effect-time limits.
-- [DAP research v0.2](research/democratic-assurance/v0.2/DEMOCRATIC_ASSURANCE_PASSPORT_v0_2.md): conditional proof contract.
-- [Compositional theorem v0.3](research/democratic-assurance/v0.3/COMPOSITION_THEOREM_v0_3.md): observational sufficiency, evidence cover and privacy invariance.
+## Canonical progression
+- Research: `research/democratic-assurance/v0.1` through `v0.3`, finite models, receipts, scope limitations, reproducible checkers.
+- Architecture: `architecture/v1.1`, full design blueprint, typed schema, guard reference and 19 synthetic tests. Not deployed.
+- Prepilot: `prepilot/v1.2` initial instrument and historical rollcall demo, `v1.3` mobile source/tests, `v1.3.1` fixed HTML with no-JavaScript fallback.
+- Figma transfer: `product-design/figma-import-v1.2`, six editable SVG wireframes and one overview; Figma tool quota prevented direct import.
 
-## Parallel work boundaries
-Preserve product-design v1.0, v0.2 UX, browser/server workbenches, proof-passport Lean scopes and release gates already in main. This additive archive does not authorize official ballots, real citizen records, municipal ingestion or a deployment. Hosting is deferred.
+## Status and authority
+Every prepilot personal vote is *retrospective simulated*, never a real historical ballot or official binding vote. Survey answers, simulated choices and official congressional member positions must remain distinct. Named rollcalls are exact-question records; voice votes, procedural votes, `Not Voting`, and missing coverage cannot be imputed. The three 2026 sample rollcalls are a bounded fixture, not complete source ingestion or actual live-data API.
 
-## Research evidence
-The v1.1 authorization reference completed 19 internal synthetic tests; the v0.3 finite recertification audit and schema fixture passed locally on November 15, 2026. No independent human review, production cryptographic certification, lawfulness finding, or empirical agency/equality validation is claimed.
+DAP statements are finite-model conditional guarantees; human agency, political equality, legal validity, real ballot secrecy, complete mediation, and national assurance remain independent research/deployment gates. Do not upload real citizen records, personal ideology profiles, credentials or live elections. No hosting/deployment is authorized by this archive.
 
-## Product honesty
-Consent and optional survey lead to a Living Voter Dashboard, sourced issue briefing, retrospective nonbinding user simulation and exact historical roll-call records. Procedural House/Senate motions and different questions must never be treated as directly equivalent; distinguish Not Voting and missing data. No covert profiling or inferred individual ballots.
+## Reproduce
+- `python -m unittest discover -s architecture/v1.1/tests -p 'test*.py'` (19 local tests passed on 2026-11-15).
+- `python research/democratic-assurance/v0.3/audit_semantic_reuse_independent.py` (finite independent enumeration passed).
+- `python research/democratic-assurance/v0.3/validate_passport_schema.py` (schema fixture passed).
+- `python -m unittest discover -s prepilot/v1.2/tests -p 'test*.py'` (rerun after dependency setup; browser tests require Playwright).
+- Browser assets are static and should be reviewed and hosted only in later explicit release work; no website or Figma canvas update is implied.
+
+## Provenance
+Written and coded through AI-assisted NIGHTFALL sessions under Devin J. Wright's project direction. External political and computer-science sources cited by the original reports should retain their attribution. All generated source bytes are listed with SHA-256 in the archive's MANIFEST.json; source files are not independent human peer review.

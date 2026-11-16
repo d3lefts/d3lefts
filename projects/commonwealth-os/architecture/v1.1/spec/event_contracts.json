@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.1.0",
+  "common_required": [
+    "event_id",
+    "tenant_id",
+    "decision_id",
+    "occurred_at",
+    "issuer_ref",
+    "schema_version",
+    "prior_event_digest",
+    "payload_digest"
+  ],
+  "events": {
+    "ProposalFrozen": [
+      "proposal_digest",
+      "source_refs"
+    ],
+    "ProcedureFrozen": [
+      "rule_digest",
+      "procedure_profile_digest"
+    ],
+    "ElectorateCommitted": [
+      "election_id",
+      "eligibility_root"
+    ],
+    "ElectionClosed": [
+      "election_id",
+      "closure_digest"
+    ],
+    "TallyVerified": [
+      "election_id",
+      "proof_digest",
+      "verifier_version"
+    ],
+    "AuthorityAttested": [
+      "authority_epoch",
+      "legal_basis_ref",
+      "reviewer_ref"
+    ],
+    "ChallengeFiled": [
+      "challenge_epoch",
+      "effective_stay"
+    ],
+    "AuthorizationReevaluated": [
+      "passport_ref",
+      "outcome",
+      "reuse_proof_ref"
+    ],
+    "EffectRequested": [
+      "effect_id",
+      "effect_digest",
+      "idempotency_key"
+    ],
+    "EffectCommitted": [
+      "effect_id",
+      "guard_receipt_digest"
+    ],
+    "EffectRejected": [
+      "effect_id",
+      "reason_code"
+    ]
+  },
+  "warning": "Secret ballots and private voter profile/AI content MUST NOT enter this event log."
+}

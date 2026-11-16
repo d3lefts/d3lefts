@@ -1,0 +1,26 @@
+{
+  "feasible_subsets": 14,
+  "notice": "Arbitrary design scores and costs. Exact enumeration only; NOT real-world feasibility, comparison, or novelty.",
+  "optimal_synthetic_cost": "21",
+  "options": 8,
+  "scores": {
+    "A": 5,
+    "E": 4,
+    "L": 4,
+    "S": 5
+  },
+  "selected": [
+    "evidence-grounded-ai",
+    "adversarial-deliberation",
+    "non-digital-access",
+    "legal-scope-review",
+    "atomic-effect-guard"
+  ],
+  "subsets_enumerated": 256,
+  "thresholds": {
+    "A": 4,
+    "E": 4,
+    "L": 4,
+    "S": 5
+  }
+}
