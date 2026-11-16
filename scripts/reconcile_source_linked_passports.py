@@ -39,6 +39,13 @@ EXPECTED = {
         "declaration": "actual_fixed_family_lower",
         "workflow_name": "NIGHTFALL F9 same-oracle decoder and complement bridge Lean",
     },
+    "f9-sign-packets-all-n": {
+        "node": "f-decoder-bridge",
+        "pr": 659,
+        "file": "research/nightfall/formalization/finite_field/F9SignPacketAllK.lean",
+        "declaration": "all_sign_bits_decoded",
+        "workflow_name": "NIGHTFALL F9 same-oracle decoder and complement bridge Lean",
+    },
 }
 
 
@@ -154,7 +161,7 @@ def self_test(manifest: dict, graph: dict, active: dict) -> int:
             ).decode(),
         }
     def checked(fx: dict) -> None:
-        require(len(live_check(entries, lambda path: fx[path])) == 2,
+        require(len(live_check(entries, lambda path: fx[path])) == len(entries),
                 "unexpected checked entry count")
     checked(fixtures)
 
@@ -166,7 +173,7 @@ def self_test(manifest: dict, graph: dict, active: dict) -> int:
         except (ValueError, KeyError):
             return
         raise AssertionError("forged source/CI linkage was accepted")
-    q, f = entries
+    q, f = entries[0], entries[1]
     qpath = "contents/" + urllib.parse.quote(q["file"], safe="/") + "?ref=" + q["head"]
     actions = [
         lambda fx: fx[f"pulls/{q['pr']}"]["head"].update(sha="0"*40),
