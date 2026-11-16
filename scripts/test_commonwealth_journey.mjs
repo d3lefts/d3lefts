@@ -33,6 +33,12 @@ try{
   await page.goto(base+"commonwealth-intelligence.html",{waitUntil:"load"});
   assert.equal(await page.locator("section.cw-section").first().getAttribute("id"),"discover");
   assert.equal(await page.locator("[data-cw-guide-link]").count(),5);
+  assert.equal(await page.locator(".cw-archetype-card").count(),12,"12 themed sticker cards");
+  assert.equal(await page.locator(".cw-archetype-card img").count(),12,"12 independent illustrations");
+  const failedImages=await page.locator(".cw-archetype-card img").evaluateAll(imgs=>
+    imgs.filter(img=>!img.complete||img.naturalWidth===0).map(img=>img.src));
+  assert.deepEqual(failedImages,[],"no failed sticker images");
+  assert.match(await page.locator("#cw-title").innerText(),/Discover your civic archetype/i);
   assert.equal(await page.locator(".nf-home-route-nav, .nf-journey-rail").count(),0,"Civic journey must not inherit unrelated NIGHTFALL navigation");
   if(width===390){
     await page.locator("#menu-button").click();
@@ -47,10 +53,13 @@ try{
   await page.locator("#cw-quiz-back").click();
   assert.match(await page.locator("#cw-quiz-number").innerText(),/Question 1/);
   for(let i=0;i<20;i++)await page.locator('[data-quiz-choice="skip"]').click();
-  assert.match(await page.locator("#cw-quiz-archetype").innerText(),/Insufficient information/);
-  assert.equal(await page.locator("#cw-apply-archetype").isDisabled(),true);
+  assert.match(await page.locator("#cw-quiz-archetype").innerText(),/The Balanced Pragmatist/);
+  assert.match(await page.locator("#cw-quiz-mode").innerText(),/STARTER BADGE/);
+  assert.match(await page.locator("#cw-quiz-coverage").innerText(),/No thematic match is asserted/);
+  assert.equal(await page.locator("#cw-apply-archetype").isEnabled(),true);
   await page.locator("#cw-quiz-again").click();
   for(const x of directional)await page.locator('[data-quiz-choice="'+x+'"]').click();
+  assert.match(await page.locator("#cw-quiz-archetype").innerText(),/^The /);
   assert.equal(await page.locator("#cw-apply-archetype").isEnabled(),true);
   await page.locator("#cw-apply-archetype").click();
   assert.match(await page.locator("#cw-profile-insight").innerText(),/archetype/i);
