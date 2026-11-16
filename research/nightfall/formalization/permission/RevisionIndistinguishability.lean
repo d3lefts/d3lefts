@@ -25,7 +25,7 @@ theorem indistinguishable_revision_forces_deny
     (sound : ∀ w, permit (obs w) = true → safe w) :
     permit (obs nominal) = false := by
   cases h : permit (obs nominal) with
-  | false => exact h
+  | false => rfl
   | true =>
     have badpermit : permit (obs bad) = true := by
       rw [← same]
@@ -60,7 +60,7 @@ theorem stale_first_coordinate_no_live_sound_guard
        permit (observation w) = true → missionSafe w) :
     permit (observation (false, false)) = false := by
   exact indistinguishable_revision_forces_deny observation missionSafe
-    (false, false) (false, true) (by rfl) (by decide) permit sound
+    (false, false) (false, true) (by rfl) (by simp [missionSafe]) permit sound
 
 #print axioms Nightfall.PriceOfPermission.RevisionImpossibility.indistinguishable_revision_forces_deny
 #print axioms Nightfall.PriceOfPermission.RevisionImpossibility.no_zero_error_sound_and_nominal_live
