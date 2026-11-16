@@ -9,7 +9,7 @@ NIGHTFALL — transitive physical operator-entry bridge.
 The averaged source operators here are *defined from the actual positive
 pure-product density matrices*, not from a supplied diagonal/corner ansatz.
 Their entries factor by the finite ternary-product character theorem.
-No POVM optimality, GHZ saturation, or character-local matrix-entry formula
+CI revision 2: verify transitive dependency compilation and explicit entry factorization.\nNo POVM optimality, GHZ saturation, or character-local matrix-entry formula
 is asserted without its own subsequent proof.
 -/
 
