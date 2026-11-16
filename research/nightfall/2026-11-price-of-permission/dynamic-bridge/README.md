@@ -8,14 +8,14 @@ No priority, production safety, legal authorization or physical effect certifica
 2. **Exact conditional price.** For suffix capacity `K=mH-spent`, with `K≥R`, `guards≥N` and `d≥2c`:
    `C*(R,K)=sunk+2cR+(d-2c)(2R-K)_+`.
    If capacity or guards are insufficient, no fully accepting zero-error plan exists. `sunk` is a provided previously paid amount, not audited from an execution trace. Facility and effect guard fees from the original PR #603 may be added unchanged under its assumptions.
-3. **Explicit disclosure cost accounting.** Replace c by c+rawFee and d by d+predicateFee if `d+predicateFee≥2(c+rawFee)`. This accounts for disclosure *fees* only and is not differential privacy or compositional leakage certification.
+3. **Universal disclosure-priced optimum.** Let `cp=c+rawFee` and `dp=d+predicateFee`. For **all nonnegative fees**, when `K=mH-spent≥R` and guards suffice, the exact suffix floor is `sunk + R*min(2cp,dp) + (dp-2cp)_+*(2R-K)_+`. If `dp<2cp`, all R direct predicate proofs attain the floor; if `dp≥2cp`, the original optimal mixture attains it. This prices disclosure fees and proves the strategy phase transition; it is **not** differential privacy or compositional leakage certification.
 4. **Correlated-support checker.** Independent of the counting theorem, arbitrary dependent possible-world supports are covered by the exact condition: the selected transcript must distinguish the nominal safe world from *every* unsafe possible world. Cached observations require independent authenticated transfer; newly disclosed observations must obey an allowlist and suffix slot budget. A minimum-cost private bundle exists whenever feasible, by well ordering. In general its computation is combinatorial.
 5. **Counterexample.** A source constraint x=y makes the safety predicate vacuously true and justifies a zero-read certificate; broadening the possible worlds to all four Boolean pairs invalidates it. Publishing only `x=y` (not x or y) restores the certificate without revealing more than the permitted predicate; no-new-slot must fail.
 
 **Critical type separation:** The independent-obligation closed-form optimum does NOT automatically extend to correlated shared evidence. For correlated evidence, only the finite-world certificate and existence result are stated here. No false universal substitution of R for rank or support size.
 
 ## Reproducible audit
-`python3 audit_independent.py` computes 16,225 zero-error checkpointed integer price instances and 1,024 independent finite-world, sensor, and privacy combinations. The checker is source-different from Lean and independent of the original price functions. It checks the specific formula and counterexample, not a universal proof.
+`python3 audit_independent.py` computes 37,125 zero-error checkpointed integer price instances and 1,024 independent finite-world, sensor, and privacy combinations. The checker is source-different from Lean and independent of the original price functions. It checks the specific formula and counterexample, not a universal proof.
 Pinned Lean 4.36.0-rc2 + Mathlib, source hashing and named standard-axiom audit are in the dedicated workflow. Do not claim Lean certification before CI success.
 
 ## Prior art checked
