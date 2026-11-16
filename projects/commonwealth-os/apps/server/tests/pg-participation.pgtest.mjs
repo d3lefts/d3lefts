@@ -54,6 +54,10 @@ test('cold migration, PostgreSQL durability, concurrent writers, AEAD tamper det
       const current=await pg.checkpoint(scope);
       assert.equal(current.headHash,expected.headHash);
       assert.equal(current.sequence,2);
+      const migratedRetry=await pg.command(tokens[scope]['member-a'],command(scope,{type:'ADVISE',id:'P-UAH-01',choice:'SUPPORT'},'legacy-stance-001',0,1));
+      assert.deepEqual(migratedRetry,sourceA);
+      assert.equal((await pg.checkpoint(scope)).sequence,2,'idempotent retry must not append');
+      await checkReject(pg.command(tokens[scope]['member-a'],command(scope,{type:'ADVISE',id:'P-UAH-01',choice:'OPPOSE'},'legacy-stance-001',0,1)),/IDEMPOTENCY_CONFLICT/);
       await checkReject(pg.migrateSqlite(srcFile),/PG_DESTINATION_NOT_EMPTY/);
       const own=await pg.view(tokens[scope]['member-a'],scope);
       const other=await pg.view(tokens[scope]['member-b'],scope);
