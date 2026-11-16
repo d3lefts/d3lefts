@@ -18,32 +18,32 @@ namespace Nightfall.PriceOfPermission.RevisionImpossibility
 theorem indistinguishable_revision_forces_deny
     {World Transcript : Type*}
     (obs : World → Transcript) (safe : World → Prop)
-    (nominal unsafe : World)
-    (same : obs nominal = obs unsafe)
-    (unsafe_world : ¬ safe unsafe)
+    (nominal bad : World)
+    (same : obs nominal = obs bad)
+    (unsafe_world : ¬ safe bad)
     (permit : Transcript → Bool)
     (sound : ∀ w, permit (obs w) = true → safe w) :
     permit (obs nominal) = false := by
   cases h : permit (obs nominal) with
   | false => exact h
   | true =>
-    have badpermit : permit (obs unsafe) = true := by
+    have badpermit : permit (obs bad) = true := by
       rw [← same]
       exact h
-    exact False.elim (unsafe_world (sound unsafe badpermit))
+    exact False.elim (unsafe_world (sound bad badpermit))
 
 theorem no_zero_error_sound_and_nominal_live
     {World Transcript : Type*}
     (obs : World → Transcript) (safe : World → Prop)
-    (nominal unsafe : World)
-    (same : obs nominal = obs unsafe)
-    (unsafe_world : ¬ safe unsafe) :
+    (nominal bad : World)
+    (same : obs nominal = obs bad)
+    (unsafe_world : ¬ safe bad) :
     ¬ ∃ permit : Transcript → Bool,
         (∀ w, permit (obs w) = true → safe w) ∧
         permit (obs nominal) = true := by
   rintro ⟨permit, sound, live⟩
   have denied :=
-    indistinguishable_revision_forces_deny obs safe nominal unsafe
+    indistinguishable_revision_forces_deny obs safe nominal bad
       same unsafe_world permit sound
   rw [live] at denied
   cases denied
@@ -59,12 +59,8 @@ theorem stale_first_coordinate_no_live_sound_guard
     (sound : ∀ w : Bool × Bool,
        permit (observation w) = true → missionSafe w) :
     permit (observation (false, false)) = false := by
-  apply indistinguishable_revision_forces_deny observation missionSafe
-    (false, false) (false, true)
-  · rfl
-  · simp [missionSafe]
-  · exact permit
-  · exact sound
+  exact indistinguishable_revision_forces_deny observation missionSafe
+    (false, false) (false, true) (by rfl) (by decide) permit sound
 
 #print axioms Nightfall.PriceOfPermission.RevisionImpossibility.indistinguishable_revision_forces_deny
 #print axioms Nightfall.PriceOfPermission.RevisionImpossibility.no_zero_error_sound_and_nominal_live
