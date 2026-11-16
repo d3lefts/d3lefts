@@ -6,7 +6,7 @@ import {extname,resolve,join,normalize,sep} from "node:path";
 import {chromium} from "playwright-core";
 const root=resolve("docs"),output=resolve("browser-artifacts");
 const mime={".html":"text/html;charset=utf-8",".js":"text/javascript;charset=utf-8",
-".mjs":"text/javascript;charset=utf-8",".css":"text/css;charset=utf-8",".json":"application/json"};
+".mjs":"text/javascript;charset=utf-8",".css":"text/css;charset=utf-8",".svg":"image/svg+xml;charset=utf-8",".json":"application/json"};
 const server=createServer(async(req,res)=>{
  try{
   const p=decodeURIComponent(new URL(req.url,"http://localhost").pathname).slice(1);
@@ -33,6 +33,13 @@ try{
   await page.goto(base+"commonwealth-intelligence.html",{waitUntil:"load"});
   assert.equal(await page.locator("section.cw-section").first().getAttribute("id"),"discover");
   assert.equal(await page.locator("[data-cw-guide-link]").count(),5);
+  assert.equal(await page.locator(".cw-archetype-card").count(),12,"12 themed sticker cards");
+  assert.equal(await page.locator(".cw-archetype-card img").count(),12,"12 independent illustrations");
+  await page.waitForFunction(() => [...document.querySelectorAll(".cw-archetype-card img")].every(img=>img.complete));
+  const failedImages=await page.locator(".cw-archetype-card img").evaluateAll(imgs=>
+    imgs.filter(img=>!img.complete||img.naturalWidth===0).map(img=>img.src));
+  assert.deepEqual(failedImages,[],"no failed sticker images");
+  assert.match(await page.locator("#cw-title").innerText(),/Discover your civic archetype/i);
   assert.equal(await page.locator(".nf-home-route-nav, .nf-journey-rail").count(),0,"Civic journey must not inherit unrelated NIGHTFALL navigation");
   if(width===390){
     await page.locator("#menu-button").click();
@@ -47,10 +54,13 @@ try{
   await page.locator("#cw-quiz-back").click();
   assert.match(await page.locator("#cw-quiz-number").innerText(),/Question 1/);
   for(let i=0;i<20;i++)await page.locator('[data-quiz-choice="skip"]').click();
-  assert.match(await page.locator("#cw-quiz-archetype").innerText(),/Insufficient information/);
-  assert.equal(await page.locator("#cw-apply-archetype").isDisabled(),true);
+  assert.match(await page.locator("#cw-quiz-archetype").innerText(),/The Balanced Pragmatist/);
+  assert.match(await page.locator("#cw-quiz-mode").innerText(),/STARTER BADGE/);
+  assert.match(await page.locator("#cw-quiz-coverage").innerText(),/No thematic match is asserted/);
+  assert.equal(await page.locator("#cw-apply-archetype").isEnabled(),true);
   await page.locator("#cw-quiz-again").click();
   for(const x of directional)await page.locator('[data-quiz-choice="'+x+'"]').click();
+  assert.match(await page.locator("#cw-quiz-archetype").innerText(),/^The /);
   assert.equal(await page.locator("#cw-apply-archetype").isEnabled(),true);
   await page.locator("#cw-apply-archetype").click();
   assert.match(await page.locator("#cw-profile-insight").innerText(),/archetype/i);

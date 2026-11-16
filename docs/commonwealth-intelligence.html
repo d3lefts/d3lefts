@@ -5,43 +5,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#091116">
   <meta name="description" content="Commonwealth OS: an interactive synthetic-only demonstration of civic preference profiles, historical legislative records, legal evidence and assured governance workflows.">
-  <meta property="og:title" content="Commonwealth OS — Synthetic Civic Intelligence Lab">
-  <meta property="og:description" content="Explore fictional legislative records, source-linked issue evidence and a privacy-local civic profile. Not a live election or a real government dataset.">
+  <meta property="og:title" content="Commonwealth Discover — What is your civic archetype?">
+  <meta property="og:description" content="Twenty fictional civic questions, 12 collectible archetype stickers, one optional private profile. An illustrative demo, not a vote.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://d3lefts.github.io/d3lefts/commonwealth-intelligence.html">
   <link rel="canonical" href="https://d3lefts.github.io/d3lefts/commonwealth-intelligence.html">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="commonwealth-intelligence.css">
+  <script defer src="commonwealth-archetypes.js"></script>
   <script defer src="commonwealth-intelligence-fixtures.js"></script>
   <script defer src="commonwealth-intelligence.js"></script>
-  <title>Commonwealth OS — Historical & Civic Intelligence Lab</title>
+  <title>Commonwealth Discover — 12 Civic Archetypes</title>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="cw-header">
   <div class="cw-container cw-head-inner">
-    <a href="index.html" class="cw-parent"><span class="cw-mark">N∕F</span><span>NIGHTFALL <small>RESEARCH LAB</small></span></a>
+    <a href="commonwealth.html" class="cw-parent"><span class="cw-mark">C/W</span><span>COMMONWEALTH OS <small>THE PEOPLE’S CIVIC OPERATING SYSTEM · DEMO</small></span></a>
     <button type="button" class="cw-menu-toggle" id="menu-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">MENU +</button>
-    <nav id="site-nav" aria-label="Page navigation"><a href="#discover">Discover</a><a href="#profile">Living Voter</a><a href="#explore">Historical records</a><a href="#architecture">Architecture</a><a href="commonwealth.html">Full product demo</a></nav>
+    <nav id="site-nav" aria-label="Page navigation"><a href="#discover">✦ Discover</a><a href="#profile">Living Voter</a><a href="#explore">History</a><a href="#chamber">Chamber</a><a href="#passport">Passport</a></nav>
   </div>
 </header>
 <main id="main">
 <section class="cw-hero cw-container" aria-labelledby="cw-title">
   <div class="cw-hero-copy">
-    <p class="cw-eyebrow">COMMONWEALTH OS / HISTORICAL & CIVIC INTELLIGENCE LAB</p>
-    <h1 id="cw-title">Explore the civic record.<br><em>Without inventing the evidence.</em></h1>
-    <p class="cw-lead">An experimental democratic operating system connecting continuous civic preferences, exact legislative history, source-grounded legal evidence, and accountable institutional decision-making.</p>
-    <div class="cw-actions"><a class="cw-primary" href="#discover">Start Discover · 20 questions <span aria-hidden="true">↗</span></a><a class="cw-secondary" href="https://github.com/d3lefts/d3lefts/tree/main/projects/commonwealth-os/">Inspect the source</a></div>
+    <p class="cw-eyebrow">COMMONWEALTH DISCOVER / YOUR CIVIC STICKER UNIVERSE ✳</p>
+    <h1 id="cw-title">Discover your <em>civic archetype.</em><span class="cw-hero-doodle" aria-hidden="true">✦</span></h1>
+    <p class="cw-lead">20 hypothetical questions. 12 political-themed collectibles. A fresh way to explore what matters to you—without turning your answers into votes.</p>
+    <div class="cw-actions"><a class="cw-primary cw-quiz-cta" href="#cw-quiz-start">Take the Discover Quiz <span aria-hidden="true">➜</span></a><a class="cw-secondary" href="#cw-archetype-gallery">Meet the 12 archetypes ↓</a></div>
+    <div class="cw-hero-facts"><span>⚡ 20 QUESTIONS</span><span>◉ 12 ARCHETYPES</span><span>▣ PRIVATE & OPTIONAL</span><span>✱ NOT A VOTING SITE</span></div>
   </div>
-  <aside class="cw-hero-panel" aria-label="Public demo boundaries">
-    <div class="cw-terminal-top"><span>COMMONWEALTH / DEMO STATUS</span><span class="cw-signal">RESEARCH</span></div>
-    <div class="cw-terminal-line"><span>Source data</span><strong>SYNTHETIC ONLY</strong></div>
-    <div class="cw-terminal-line"><span>Historical adapter</span><strong>OFFLINE FIXTURES</strong></div>
-    <div class="cw-terminal-line"><span>User preferences</span><strong>THIS PAGE ONLY</strong></div>
-    <div class="cw-terminal-line"><span>Binding authority</span><strong>DISABLED</strong></div>
-    <div class="cw-terminal-line"><span>Real government feeds</span><strong>NOT CONNECTED</strong></div>
-    <p>All names, jurisdictions and vote records in the interactive comparison are invented. No account is created and no answer is sent to a server by this page.</p>
+  <aside class="cw-hero-panel" aria-label="Illustrative product safety boundaries">
+    <div class="cw-terminal-top"><span>DISCOVER / BETA</span><span class="cw-signal">ZERO BALLOTS CAST</span></div>
+    <div class="cw-hero-scribble" aria-hidden="true">✦ <span>YOU</span> ✧</div>
+    <div class="cw-terminal-line"><span>Question answers</span><strong>THIS PAGE ONLY</strong></div>
+    <div class="cw-terminal-line"><span>Underlying legislative examples</span><strong>SYNTHETIC ONLY</strong></div>
+    <div class="cw-terminal-line"><span>Binding voting authority</span><strong>DISABLED</strong></div>
+    <p>Unvalidated, just-for-exploration political archetypes. No account, political targeting, answer submission, or official vote.</p>
   </aside>
+</section>
+<section class="cw-container cw-collection" aria-labelledby="cw-collection-title">
+  <div class="cw-collection-heading"><div><p class="cw-eyebrow">THE LINEUP / PICK YOUR LENS</p><h2 id="cw-collection-title">12 political archetypes.<br><em>Zero boring personality tests.</em></h2></div><p>Original illustrated stickers. Different civic priorities, no better-or-worse rankings. A result is an invitation to explore, not a political identity claim.</p></div>
+  <div id="cw-archetype-gallery" class="cw-archetype-grid" aria-label="Twelve illustrative civic archetype cards"></div>
+  <noscript><p>JavaScript is required to render the collectible cards. Review all 12 profiles in the <a href="https://github.com/d3lefts/d3lefts/blob/main/projects/commonwealth-os/product-design/GENZ_ARCHETYPES_REFERENCE_v1.md">illustration reference guide</a>.</p></noscript>
 </section>
 <div class="cw-ribbon" role="note"><div class="cw-container"><strong>Fictional test environment.</strong> Not a government service, poll, voting system or legal certification. No partnership or endorsement by any proposed pilot institution.</div></div>
 <nav class="cw-container cw-path" aria-label="Guided demonstration stages">
@@ -54,11 +60,11 @@
 <div class="cw-container cw-guide-status" role="status" aria-live="polite" id="cw-guide-status">START HERE · Discover is an optional, unvalidated questionnaire. No vote is cast or stored.</div>
 
 <section class="cw-section cw-container" id="discover" aria-labelledby="quiz-title">
-  <div class="cw-heading"><div><p class="cw-eyebrow">01 / DISCOVER / PROPOSED ACQUISITION EXPERIENCE</p><h2 id="quiz-title">Twenty questions. <em>One starting point.</em></h2><p>Try an illustrative 20-question classification across government scope, decision-making level and institutional change. The 12 possible archetypes are <strong>unvalidated product concepts</strong>, not scientific diagnoses, voter predictions or preferences on actual laws.</p></div><span class="cw-evidence-tag">EXPERIMENTAL UI / UNVALIDATED</span></div>
+  <div class="cw-heading"><div><p class="cw-eyebrow">01 / DISCOVER / PROPOSED ACQUISITION EXPERIENCE</p><h2 id="quiz-title">Pick a stance. <em>Get a sticker.</em></h2><p>Answer 20 hypothetical policy prompts. The topics map to 12 descriptive civic themes, not a validated personality test. No response becomes a ballot, and skipping does not turn into an inferred political view.</p></div><span class="cw-evidence-tag">EXPERIMENTAL UI / UNVALIDATED</span></div>
   <div class="cw-quiz cw-card">
-    <div id="cw-quiz-start"><p class="cw-mini">20 QUESTIONS · NO LOGIN · NO STORAGE</p><h3>Explore a civic outlook without creating an account.</h3><p>Suggested for adults. Every question is hypothetical; skip any question. We do not collect the answers.</p><button id="cw-start-quiz" class="cw-primary" type="button">Start fictional quiz ↗</button></div>
+    <div id="cw-quiz-start"><p class="cw-mini">⚡ 20 QUESTIONS · 12 COLLECTIBLE ARCHETYPES</p><h3>So, what is your civic vibe?</h3><p>Suggested for adults. No account, no storage, no right or wrong answers. You can skip every question and still see a clearly marked <strong>starter sticker</strong>—not an inferred political stance.</p><button id="cw-start-quiz" class="cw-primary cw-quiz-cta" type="button">Let’s find out ➜</button></div>
     <div id="cw-quiz-step" hidden><div class="cw-quiz-meter"><span id="cw-quiz-number">Question 1 of 20</span><span id="cw-quiz-progress-label">0% complete</span></div><progress id="cw-quiz-progress" max="20" value="0"></progress><p class="cw-mini">HYPOTHETICAL INSTITUTIONAL POLICY</p><h3 id="cw-quiz-question"></h3><div class="cw-option-row"><button type="button" data-quiz-choice="1">Support</button><button type="button" data-quiz-choice="-1">Do not support</button><button type="button" data-quiz-choice="0">No preference</button><button type="button" data-quiz-choice="skip">Skip</button></div><div class="cw-quiz-controls"><button type="button" class="cw-quiet-button" id="cw-quiz-back">Previous question</button><button type="button" class="cw-quiet-button" id="cw-quiz-restart">Start over</button></div></div>
-    <div id="cw-quiz-result" hidden><p class="cw-mini">ILLUSTRATIVE ARCHETYPE / NOT A VOTE</p><h3 id="cw-quiz-archetype"></h3><p id="cw-quiz-description"></p><p class="cw-muted" id="cw-quiz-coverage"></p><div class="cw-option-row"><button type="button" id="cw-apply-archetype">Add provisional result to private profile</button><button type="button" id="cw-share-archetype">Share archetype only</button><button type="button" id="cw-copy-archetype">Copy result summary</button><button type="button" id="cw-quiz-again">Take again</button></div><p id="cw-quiz-feedback" class="cw-muted" role="status"></p></div>
+    <div id="cw-quiz-result" hidden><p class="cw-mini">✦ YOUR CIVIC STICKER / NOT A VOTE</p><div id="cw-quiz-result-card" class="cw-result-sticker"><img id="cw-quiz-art" alt="" width="400" height="250"><div class="cw-result-text"><span id="cw-quiz-mode" class="cw-result-mode"></span><h3 id="cw-quiz-archetype"></h3><p id="cw-quiz-description"></p></div></div><p class="cw-muted" id="cw-quiz-coverage"></p><p class="cw-muted" id="cw-quiz-scope"></p><div class="cw-option-row"><button type="button" id="cw-apply-archetype">Add provisional result to private profile</button><button type="button" id="cw-share-archetype">Share archetype only</button><button type="button" id="cw-copy-archetype">Copy result summary</button><button type="button" id="cw-quiz-again">Take again</button></div><p id="cw-quiz-feedback" class="cw-muted" role="status"></p></div>
   </div>
 </section>
 

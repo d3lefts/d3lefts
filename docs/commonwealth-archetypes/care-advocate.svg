@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" role="img" aria-label="The Care Advocate sticker illustration">
+ <defs><pattern id="dots" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.5" fill="#ffffff" opacity=".23"/></pattern><filter id="grain"><feTurbulence baseFrequency=".65" numOctaves="2" seed="20" stitchTiles="stitch" type="fractalNoise"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".09"/></feComponentTransfer></filter></defs>
+ <rect width="400" height="250" rx="22" fill="#ff4ea8"/>
+ <path d="M0 208 Q80 151 146 215 T400 166 L400 250 L0 250Z" fill="#0a1025" opacity=".20"/>
+ <path d="M18 38 L63 55 L44 7 M335 19 l37 34 l-7 -45 M316 220 l33 -35 l12 34" fill="none" stroke="#f4ff46" stroke-width="9" stroke-linejoin="round" stroke-linecap="round"/>
+ <circle cx="258" cy="120" r="101" fill="#10152c" opacity=".21"/>
+ <circle cx="265" cy="127" r="83" fill="#f2f7ff" opacity=".24"/>
+ <rect width="400" height="250" fill="url(#dots)"/>
+ <path d="M18 82 l64 -21 M26 103 l60 -17 M300 196 l74 -25" fill="none" stroke="#faff6b" stroke-width="6" opacity=".85" stroke-linecap="round"/>
+ <text x="264" y="167" font-size="126" text-anchor="middle" font-family="Apple Color Emoji,Segoe UI Emoji,Noto Color Emoji,system-ui">🦝</text>
+ <g transform="rotate(-10 105 159)"><rect x="26" y="137" width="159" height="61" rx="8" fill="#fafafa"/><rect x="32" y="143" width="147" height="49" rx="5" fill="#0b1020"/><text x="105" y="176" text-anchor="middle" fill="#ffffff" font-family="Impact,Arial Black,system-ui" font-weight="900" font-size="24">CARE</text></g>
+ <g transform="rotate(12 335 48)"><rect x="309" y="30" width="65" height="29" rx="5" fill="#ffffff"/><text x="341" y="50" font-size="12" text-anchor="middle" font-family="Arial Black,system-ui" fill="#10132c">C/W 010</text></g>
+ <rect width="400" height="250" rx="22" fill="#ffffff" filter="url(#grain)" opacity=".55"/>
+ </svg>

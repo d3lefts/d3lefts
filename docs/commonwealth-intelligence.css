@@ -21,3 +21,67 @@
 .cw-quiz-controls{display:flex;flex-wrap:wrap;gap:9px}
 .cw-option-row button:disabled,.cw-quiet-button:disabled{opacity:.45;cursor:not-allowed}
 @media(max-width:650px){.cw-path>a{padding:13px 10px}.cw-path strong{font-size:.82rem}}
+
+
+/* Commonwealth Discover / Gen Z sticker reference v1.0.
+   Scope: new Discover hero, collectible gallery, quiz result and CTA; other assurance modules remain neutral. */
+:root{--cw-bg:#090d22;--cw-surface:#171c38;--cw-surface-2:#1e2644;--cw-line:#3f4671;--cw-text:#f8f7ff;--cw-muted:#c3c6e0;--cw-gold:#f8d532;--cw-teal:#72e6ff}
+body{background:radial-gradient(circle at 12% 9%,#443e9340,transparent 33%),radial-gradient(circle at 90% 29%,#6e268740,transparent 34%),#090d22}
+.cw-header{background:#090d20f5;border-bottom:1px solid #4f4e8c;box-shadow:0 8px 32px #0003}
+.cw-head-inner{min-height:74px}
+.cw-parent{letter-spacing:-.04em;font-size:1.06rem;font-weight:950}
+.cw-parent small{letter-spacing:.03em;font-size:.6rem}
+.cw-mark{width:46px;height:46px;border:1px solid #af91f7;background:#2d2b61;color:#fff;font-family:system-ui;font-weight:950;transform:rotate(-7deg)}
+.cw-head-inner nav a{font-weight:720;color:#f6f4ff}
+.cw-head-inner nav a:first-child{color:#f3b8ff}
+.cw-hero{padding-block:46px 24px;gap:30px;grid-template-columns:minmax(0,1.55fr) minmax(220px,.45fr)}
+.cw-eyebrow,.cw-mini{color:#b8a4ff;letter-spacing:.14em}
+.cw-hero h1{font-family:Inter,ui-sans-serif,system-ui,sans-serif;font-weight:950;font-size:clamp(3rem,7.7vw,6.8rem);line-height:.96;letter-spacing:-.08em;max-width:12ch;margin-bottom:16px;text-wrap:balance}
+.cw-hero h1 em{font-style:normal;color:#fff;text-shadow:3px 4px 0 #b34dff,6px 7px 0 #304dff}
+.cw-hero-doodle{display:inline-block;font-size:.45em;color:#ff58d5;text-shadow:2px 2px #9d38f2;transform:rotate(-16deg);vertical-align:top;margin-left:12px}
+.cw-lead{font-size:1.05rem;color:#e6e2ff;max-width:52ch}
+.cw-primary,.cw-secondary{font-weight:850;border-radius:13px}
+.cw-quiz-cta{background:linear-gradient(105deg,#23dffc 0%,#c752ff 62%,#fff050 100%);color:#10132d;border:2px solid #e8edff;box-shadow:0 7px 0 #51257c,0 10px 32px #9a26ed88;letter-spacing:-.02em}
+.cw-quiz-cta:hover{color:#11152e;filter:brightness(1.1);transform:translateY(-2px)}
+.cw-secondary{border-color:#747fb2}
+.cw-hero-facts{display:flex;flex-wrap:wrap;gap:7px;margin-top:29px}
+.cw-hero-facts span{font-size:.7rem;background:#2d315b;color:#f4f3ff;border:1px solid #545a96;border-radius:99px;padding:7px 11px;font-weight:820;letter-spacing:.04em}
+.cw-hero-panel{border:1px solid #7475bd;background:radial-gradient(circle at 45% 30%,#4c42a0aa,#151936 65%);border-radius:20px;padding:20px;align-self:stretch}
+.cw-hero-scribble{height:106px;display:flex;align-items:center;justify-content:center;gap:12px;font-size:2.3rem;color:#ffd34d;font-weight:950;transform:rotate(-7deg)}
+.cw-hero-scribble span{display:block;background:#fff;color:#13132b;padding:8px 17px;box-shadow:6px 7px 0 #d24cff;letter-spacing:-.1em}
+.cw-terminal-top,.cw-terminal-line strong{color:#fcfaff}
+.cw-terminal-line{border-color:#535485}
+.cw-hero-panel p{color:#d5d5f2}
+.cw-collection{padding-block:25px 48px}
+.cw-collection-heading{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:22px}
+.cw-collection-heading h2{font-family:system-ui;font-size:clamp(1.5rem,3vw,2.4rem);font-weight:950;line-height:1.04;letter-spacing:-.055em;margin:0}
+.cw-collection-heading h2 em{font-style:normal;color:#ffd8fb}
+.cw-collection-heading>p{max-width:29ch;font-size:.84rem;color:#bec4e5}
+.cw-archetype-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.cw-archetype-card{min-width:0;overflow:hidden;border:1px solid #ffffff47;border-radius:19px;background:linear-gradient(180deg,var(--cw-card),#151a37 78%);box-shadow:0 8px 22px #0004}
+.cw-archetype-card img{display:block;width:100%;aspect-ratio:8/5;object-fit:cover}
+.cw-archetype-copy{position:relative;padding:8px 14px 17px;min-height:190px;background:linear-gradient(180deg,#141832dc,#10152cf7);border-top:1px solid #ffffff4d}
+.cw-archetype-category{display:inline-block;font-size:.63rem;text-transform:uppercase;letter-spacing:.08em;font-weight:900;color:var(--cw-card)}
+.cw-archetype-copy h3{display:table;max-width:100%;font-family:system-ui;font-size:clamp(1rem,1.5vw,1.25rem);letter-spacing:-.055em;line-height:1.05;font-weight:1000;color:#0c0d1b;background:#fcfcff;padding:7px 9px;border-radius:3px;margin:9px 0 11px;transform:rotate(-1deg);box-shadow:3px 4px 0 var(--cw-card)}
+.cw-archetype-copy p{font-size:.78rem;line-height:1.45;color:#fff;margin:0}
+.cw-quiz{border:2px solid #7474b8;background:radial-gradient(circle at 100% 0,#49368b5b,transparent 45%),#151a34;box-shadow:0 16px 60px #0005}
+.cw-quiz h3{font-family:system-ui;font-size:clamp(1.5rem,3vw,2.5rem);font-weight:900;letter-spacing:-.055em}
+.cw-quiz progress::-webkit-progress-value{background:linear-gradient(90deg,#59eeff,#cc52fa)}
+.cw-quiz progress::-moz-progress-bar{background:#b84cff}
+.cw-quiz .cw-option-row button{font-weight:800;background:#272d57;border:1px solid #757ab3;min-height:47px}
+.cw-quiz .cw-option-row button:hover,.cw-quiz .cw-option-row button:focus-visible{border-color:#ffdb5a}
+.cw-quiz .cw-option-row button[aria-pressed="true"]{background:#8547d1}
+.cw-result-sticker{display:grid;grid-template-columns:minmax(160px,.85fr) minmax(0,1.15fr);align-items:stretch;background:#191d40;border:2px solid var(--cw-card,#d879ff);border-radius:18px;overflow:hidden;margin:18px 0}
+.cw-result-sticker img{width:100%;height:100%;object-fit:cover;background:var(--cw-card)}
+.cw-result-text{padding:18px;align-self:center}
+.cw-result-text h3{color:#fff;margin:12px 0;font-weight:950}
+.cw-result-text p{font-size:.88rem}
+.cw-result-mode{display:inline-block;color:#11142c;background:#fefdf7;box-shadow:3px 4px var(--cw-card);font-weight:950;font-size:.7rem;letter-spacing:.06em;padding:7px 9px;transform:rotate(-3deg)}
+.cw-result-text .cw-muted{color:#f1f0fa}
+.cw-guide-status{border-left-color:#d35eff;background:#282141;color:#f6e8ff}
+.cw-path>a[aria-current="step"]{border-color:#b54cff;background:#2c2050}
+.cw-ribbon{background:#221e49;border-color:#5f569a}
+@media(max-width:1020px){.cw-archetype-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.cw-hero{grid-template-columns:1fr 240px}.cw-archetype-copy{min-height:178px}}
+@media(max-width:740px){.cw-archetype-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cw-hero-panel{display:none}.cw-hero{grid-template-columns:1fr;padding-block:34px 17px}.cw-collection-heading{display:block}.cw-collection-heading>p{max-width:60ch}.cw-archetype-copy{min-height:182px}}
+@media(max-width:440px){.cw-hero h1{font-size:clamp(2.6rem,12vw,4rem)}.cw-hero-facts{gap:5px}.cw-hero-facts span{font-size:.62rem}.cw-archetype-grid{gap:9px}.cw-archetype-copy{padding:8px 10px 12px;min-height:206px}.cw-archetype-copy h3{font-size:1rem}.cw-archetype-copy p{font-size:.74rem}.cw-result-sticker{grid-template-columns:1fr}.cw-result-sticker img{height:180px}.cw-collection{padding-bottom:24px}}
+@media(prefers-reduced-motion:reduce){.cw-quiz-cta:hover{transform:none}}

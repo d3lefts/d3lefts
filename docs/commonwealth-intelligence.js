@@ -197,72 +197,186 @@
     renderHistory();
   }
 
-  /* Deliberately unvalidated archetype exercise: descriptive only, no persuasion or prediction. */
-  const quiz = [
-    ["gov", 1,"Should a fictional municipality operate public recreation facilities using its budget?"],
-    ["level", 1,"Should a fictional city decide how its own parks are managed?"],
-    ["change",1,"Should a fictional institution pilot a revised public meeting process?"],
-    ["gov",-1,"Should a fictional municipality limit its direct role in operating commercial venues?"],
-    ["level",-1,"Should a fictional national body set one uniform infrastructure reporting format?"],
-    ["gov",1,"Should a fictional government invest in publicly operated transit routes?"],
-    ["change",-1,"Should a fictional institution retain its existing committee rules until a scheduled review?"],
-    ["level",1,"Should fictional municipal departments choose local approaches to accessibility upgrades?"],
-    ["gov",-1,"Should fictional public facilities be managed through private contracts when feasible?"],
-    ["change",1,"Should a fictional student council experiment with a new participatory budgeting process?"],
-    ["gov",1,"Should a fictional government directly fund community housing services?"],
-    ["level",-1,"Should a fictional national law specify uniform requirements for government data publication?"],
-    ["change",-1,"Should a fictional institution make small procedural changes before considering a complete redesign?"],
-    ["gov",-1,"Should a fictional municipality prefer voluntary agreements to new public service programs?"],
-    ["level",1,"Should a fictional city decide its own street-design priorities?"],
-    ["gov",1,"Should a fictional government offer a public broadband service?"],
-    ["change",1,"Should a fictional legislative body replace manual amendment tracking with a new audited workflow?"],
-    ["level",-1,"Should a fictional national authority establish consistent public-record accessibility rules?"],
-    ["gov",-1,"Should a fictional government minimize direct operation of new facilities?"],
-    ["change",-1,"Should a fictional charter be amended only after a lengthy public review period?"]
-  ];
-  const archetypes = {
-    "limited-local-gradual":"The Local Steward",
-    "limited-local-reform":"The Local Reformer",
-    "limited-national-gradual":"The Constitutional Minimalist",
-    "limited-national-reform":"The Lean-System Reformer",
-    "mixed-local-gradual":"The Community Pragmatist",
-    "mixed-local-reform":"The Community Builder",
-    "mixed-national-gradual":"The Institutional Balancer",
-    "mixed-national-reform":"The Civic Modernizer",
-    "active-local-gradual":"The Municipal Steward",
-    "active-local-reform":"The Local Investment Advocate",
-    "active-national-gradual":"The Public Program Steward",
-    "active-national-reform":"The National Renewal Advocate"
-  };
-  let quizIndex = 0;
-  let answers = [];
-  let resultSummary = "";
-  const axisMean = (axis, samples=answers) => {
-    const relevant = quiz.map((q,i) => ({q,a:samples[i]}))
-      .filter(row => row.q[0] === axis && typeof row.a === "number" && row.a !== 0);
-    if (!relevant.length) return null;
-    return relevant.reduce((total,row) => total + row.a * row.q[1],0)/relevant.length;
-  };
-  const classify = values => {
-    if (values.gov === null || values.level === null || values.change === null) return null;
-    const gov = values.gov <= -0.25 ? "limited" : values.gov >= 0.25 ? "active" : "mixed";
-    const level = values.level >= 0 ? "local" : "national";
-    const change = values.change >= 0 ? "reform" : "gradual";
-    return {gov,level,change,key:gov+"-"+level+"-"+change};
-  };
-  // A small number of responses must never create a confident-seeming label.
-  // This threshold is a product safeguard, NOT psychometric validation.
-  const qualifyQuiz = samples => {
-    const counts = {gov:0,level:0,change:0};
-    quiz.forEach((q,i) => {
-      if (typeof samples[i] === "number" && samples[i] !== 0) counts[q[0]]++;
+  /* Illustrative political THEMES, not a psychological diagnosis or policy-vote prediction.
+   * Source catalog: docs/commonwealth-archetypes.js; no fetch, no storage or external profile API. */
+  const profiles=window.COMMONWEALTH_ARCHETYPES||[];
+  const quiz=[
+  {
+    "tags": [
+      "tech-reformist"
+    ],
+    "text": "Should a fictional city put permit applications and their status online for public inspection?"
+  },
+  {
+    "tags": [
+      "civic-creator"
+    ],
+    "text": "Should a fictional student assembly let volunteers propose items for a public agenda?"
+  },
+  {
+    "tags": [
+      "climate-guardian"
+    ],
+    "text": "Should a fictional municipality offer incentives for energy-efficient public buildings?"
+  },
+  {
+    "tags": [
+      "liberty-defender"
+    ],
+    "text": "Should a fictional institution require independent authorization before accessing private digital messages?"
+  },
+  {
+    "tags": [
+      "equality-champion"
+    ],
+    "text": "Should a fictional transit service prioritize accessibility for people with disabilities?"
+  },
+  {
+    "tags": [
+      "working-american"
+    ],
+    "text": "Should a fictional city co-fund apprenticeships with local employers?"
+  },
+  {
+    "tags": [
+      "community-builder"
+    ],
+    "text": "Should a fictional neighborhood choose some street improvements through participatory budgeting?"
+  },
+  {
+    "tags": [
+      "global-minded"
+    ],
+    "text": "Should a fictional national agency join international disaster-preparedness exercises?"
+  },
+  {
+    "tags": [
+      "security-sentinel"
+    ],
+    "text": "Should a fictional municipality routinely practice emergency response and cybersecurity drills?"
+  },
+  {
+    "tags": [
+      "care-advocate"
+    ],
+    "text": "Should a fictional county fund a clinic with extended evening hours?"
+  },
+  {
+    "tags": [
+      "opportunity-builder"
+    ],
+    "text": "Should a fictional city simplify licensing for small, low-risk businesses?"
+  },
+  {
+    "tags": [
+      "balanced-pragmatist"
+    ],
+    "text": "Should a fictional public program have a published evaluation and a scheduled review date?"
+  },
+  {
+    "tags": [
+      "tech-reformist",
+      "balanced-pragmatist"
+    ],
+    "text": "Should a fictional city publish budget data in a machine-readable format with independent audits?"
+  },
+  {
+    "tags": [
+      "civic-creator",
+      "community-builder"
+    ],
+    "text": "Should a fictional student government allocate a small budget through an open campus proposal process?"
+  },
+  {
+    "tags": [
+      "climate-guardian",
+      "security-sentinel"
+    ],
+    "text": "Should a fictional coastal town reinforce stormwater systems against future flooding?"
+  },
+  {
+    "tags": [
+      "liberty-defender"
+    ],
+    "text": "Should a fictional city require judicial approval before police access sensitive personal location records?"
+  },
+  {
+    "tags": [
+      "equality-champion",
+      "care-advocate"
+    ],
+    "text": "Should a fictional public clinic offer services in formats accessible to people with different needs?"
+  },
+  {
+    "tags": [
+      "working-american",
+      "community-builder"
+    ],
+    "text": "Should a fictional municipality offer locally delivered skills training with public reporting on outcomes?"
+  },
+  {
+    "tags": [
+      "global-minded",
+      "liberty-defender"
+    ],
+    "text": "Should a fictional international research partnership share public data only under explicit privacy protections?"
+  },
+  {
+    "tags": [
+      "opportunity-builder",
+      "balanced-pragmatist"
+    ],
+    "text": "Should a fictional city pilot a simpler business registration rule and publicly evaluate its effects?"
+  }
+];
+  const defaultKey="balanced-pragmatist"; // A sample badge when no supported issue-theme alignment exists.
+  let quizIndex=0,answers=[],resultSummary="";
+  function qualifyQuiz(samples) {
+    const counts={directional:0,neutral:0,skipped:0};
+    const supportedTopics=new Set();
+    quiz.forEach((q,i)=>{
+      const a=samples[i];
+      if (a===1||a===-1){counts.directional++;q.tags.forEach(t=>supportedTopics.add(t));}
+      else if(a===0)counts.neutral++;
+      else counts.skipped++;
     });
-    const answered = counts.gov + counts.level + counts.change;
-    const scores = {gov:axisMean("gov",samples),level:axisMean("level",samples),change:axisMean("change",samples)};
-    const eligible = answered >= 12 && counts.gov >= 4 && counts.level >= 3 &&
-      counts.change >= 3 && Math.abs(scores.level) >= 0.2 && Math.abs(scores.change) >= 0.2;
-    return {eligible,answered,counts,scores};
-  };
+    return {eligible:counts.directional>=12&&supportedTopics.size>=6,
+      answered:counts.directional,counts,topics:supportedTopics.size,
+      coverage:counts.directional===0?"starter":counts.directional<12?"early-preview":"exploratory"};
+  }
+  function pickArchetype(samples) {
+    const quality=qualifyQuiz(samples);
+    // Only explicit directional responses are counted. Missing and neutral do not become positions.
+    const totals=new Map(profiles.map(p=>[p.key,{sum:0,opportunities:0}]));
+    quiz.forEach((q,i)=>{
+      const a=samples[i];if(a!==1&&a!==-1)return;
+      for(const key of q.tags){const row=totals.get(key);if(row){row.sum+=a;row.opportunities++;}}
+    });
+    let ranked=profiles.map(p=>({p,...(totals.get(p.key)||{sum:0,opportunities:0})}))
+      .filter(x=>x.sum>0);
+    ranked.sort((a,b)=>b.sum-a.sum||b.opportunities-a.opportunities||a.p.key.localeCompare(b.p.key));
+    const winner=ranked[0]?.p||profiles.find(p=>p.key===defaultKey);
+    if(!winner)throw new Error("Missing Commonwealth archetype catalog");
+    const tieCount=ranked.filter(x=>x.sum===ranked[0]?.sum).length;
+    return {profile:winner,starter:!ranked.length,quality,tieCount,
+      mode:!ranked.length?"STARTER BADGE":quality.eligible?"ILLUSTRATIVE MATCH":"EARLY PREVIEW"};
+  }
+  function initArchetypeGallery(){
+    const grid=qs("#cw-archetype-gallery");
+    if(!grid)return;
+    for(const p of profiles){
+      const card=document.createElement("article");
+      card.className="cw-archetype-card";
+      card.style.setProperty("--cw-card",p.color);
+      const img=document.createElement("img");
+      img.loading="eager";img.decoding="async";img.src=p.art;img.alt=p.name+" illustration";
+      const copy=document.createElement("div");copy.className="cw-archetype-copy";
+      const category=document.createElement("span");category.className="cw-archetype-category";category.textContent=p.category;
+      const h=document.createElement("h3");h.textContent=p.name;
+      const desc=document.createElement("p");desc.textContent=p.description;
+      copy.append(category,h,desc);card.append(img,copy);grid.append(card);
+    }
+  }
   function showQuizStep() {
     qs("#cw-quiz-start").hidden = true;
     qs("#cw-quiz-result").hidden = true;
@@ -270,7 +384,7 @@
     qs("#cw-quiz-number").textContent = "Question " + (quizIndex + 1) + " of " + quiz.length;
     qs("#cw-quiz-progress-label").textContent = String(Math.round(100*quizIndex/quiz.length))+"% complete";
     qs("#cw-quiz-progress").value = quizIndex;
-    qs("#cw-quiz-question").textContent = quiz[quizIndex][2];
+    qs("#cw-quiz-question").textContent = quiz[quizIndex].text;
     qs("#cw-quiz-back").disabled = quizIndex === 0;
   }
   function startQuiz() {
@@ -280,32 +394,33 @@
     setGuide("discover","DISCOVER IN PROGRESS · Answer, skip, or revisit any question. No responses leave this page.");
   }
   function completeQuiz() {
-    const quality = qualifyQuiz(answers);
-    const result = quality.eligible ? classify(quality.scores) : null;
+    const result = pickArchetype(answers);
+    const quality = result.quality;
     const answered = quality.answered;
     qs("#cw-quiz-step").hidden = true;
     qs("#cw-quiz-result").hidden = false;
-    if (!result) {
-      qs("#cw-quiz-archetype").textContent = "Insufficient information";
-      resultSummary = "My Commonwealth Discover result was inconclusive. This fictional exercise does not infer missing positions.";
-      qs("#cw-quiz-description").textContent =
-        "Insufficient or ambiguous evidence for even an illustrative classification. This demo requires at least 12 directional responses, including 4 government-scope, 3 decision-level and 3 change responses, with a non-tied level and change direction. Missing evidence stays missing.";
-    } else {
-      const label = archetypes[result.key];
-      qs("#cw-quiz-archetype").textContent = label;
-      qs("#cw-quiz-description").textContent =
-        "Your answers suggest a " + result.gov + " government role, " + result.level +
-        " decision-making emphasis, and a " + result.change + "-oriented approach to institutional change. These are illustrative categories, not validated traits or legislative vote predictions.";
-      resultSummary = "My fictional Commonwealth Discover archetype: " + label +
-        ". Illustrative, unvalidated civic exercise. No vote cast.";
-    }
-    qs("#cw-quiz-coverage").textContent = answered+" directional answer(s) / "+quiz.length+
-      " questions (scope "+quality.counts.gov+", level "+quality.counts.level+", change "+quality.counts.change+
-      "). Illustrative evidence threshold: 12 total; 4/3/3 by dimension. No result was saved.";
-    qs("#cw-apply-archetype").disabled = !result;
-    setGuide("discover",result ?
-      "DISCOVER COMPLETE · Provisional archetype available. Add it to your private working profile only if you choose." :
-      "DISCOVER INCONCLUSIVE · More directional answers needed. No label or policy position was inferred.");
+    const name=result.profile.name;
+    qs("#cw-quiz-archetype").textContent=name;
+    qs("#cw-quiz-art").src=result.profile.art;
+    qs("#cw-quiz-art").alt=result.profile.name+" illustrated civic sticker";
+    qs("#cw-quiz-result-card").style.setProperty("--cw-card",result.profile.color);
+    qs("#cw-quiz-mode").textContent=result.mode;
+    qs("#cw-quiz-description").textContent=result.profile.description;
+    qs("#cw-quiz-coverage").textContent=answered+" directional answer(s) of "+quiz.length+
+      " · "+quality.counts.neutral+" no-preference · "+quality.counts.skipped+
+      " skipped. "+(result.starter?"No thematic match is asserted. This is a sample collectible badge.":
+      quality.eligible?"An illustrative topical match, not a validated political identity.":
+      "An early preview; unanswered topics have not been inferred.");
+    qs("#cw-quiz-scope").textContent=result.starter?
+      "STARTER PICK · No position was inferred. All 12 cards are available to explore.":
+      "ILLUSTRATIVE · "+(result.tieCount>1?"Other themes also matched. ":"")+
+      "Only answers you explicitly gave were scored. Not a real vote, scientific diagnosis, or official political classification.";
+    resultSummary="Commonwealth Discover archetype: "+name+
+      " — "+result.profile.tagline+" Illustrative civic sticker, not a vote or validated political profile.";
+    qs("#cw-apply-archetype").disabled=false; // user may explicitly save even a clearly identified starter badge
+    setGuide("discover",result.starter?
+      "DISCOVER COMPLETE · Your sample sticker is ready. No political preference was inferred.":
+      "DISCOVER COMPLETE · Your illustrative sticker is ready; optional profile addition requires a click.");
     qs("#cw-quiz-feedback").textContent = "";
   }
   function chooseQuiz(value) {
@@ -394,8 +509,8 @@
     qs("#cw-reset-steps").addEventListener("click",() => {step=0;renderWorkflow();});
     renderWorkflow();
   }
-  window.COMMONWEALTH_DEMO_LOGIC = Object.freeze({tenureAt,recordPosition,questionLinks,resolveMembers,classify,qualifyQuiz,quizCount:quiz.length,archetypeCount:Object.keys(archetypes).length});
+  window.COMMONWEALTH_DEMO_LOGIC = Object.freeze({tenureAt,recordPosition,questionLinks,resolveMembers,qualifyQuiz,pickArchetype,quizCount:quiz.length,archetypeCount:profiles.length});
   // Allow DOM-free, independent model tests; no hidden network or storage setup.
   if (typeof document === "undefined" || !document.querySelector || !document.querySelector("#cw-issue")) return;
-  initMenu();initHistory();initQuiz();initWorkflow();
+  initMenu();initHistory();initQuiz();initWorkflow();initArchetypeGallery();
 })();
