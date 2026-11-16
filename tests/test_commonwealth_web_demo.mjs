@@ -11,7 +11,15 @@ const mirrors=[
  ["docs/commonwealth-browser/app.mjs","projects/commonwealth-os/apps/browser/app.mjs"],
  ["docs/commonwealth-browser/core.mjs","projects/commonwealth-os/apps/browser/core.mjs"],
  ["docs/commonwealth-browser/fixtures.mjs","projects/commonwealth-os/apps/browser/fixtures.mjs"],
- ["docs/commonwealth-browser/styles.css","projects/commonwealth-os/apps/browser/styles.css"]
+ ["docs/commonwealth-browser/styles.css","projects/commonwealth-os/apps/browser/styles.css"],
+ ["docs/commonwealth-browser/historical-fixtures.js","projects/commonwealth-os/apps/browser/historical-fixtures.js"],
+ ["docs/commonwealth-browser/history-core.mjs","projects/commonwealth-os/apps/browser/history-core.mjs"],
+ ["docs/commonwealth-browser/question-data.mjs","projects/commonwealth-os/apps/browser/question-data.mjs"],
+ ["docs/commonwealth-browser/workspace.mjs","projects/commonwealth-os/apps/browser/workspace.mjs"],
+ ["docs/commonwealth-browser/workspace.css","projects/commonwealth-os/apps/browser/workspace.css"],
+ ["docs/commonwealth-browser/tests/history-core.test.mjs","projects/commonwealth-os/apps/browser/tests/history-core.test.mjs"],
+ ["docs/commonwealth-browser/tests/question-bank.test.mjs","projects/commonwealth-os/apps/browser/tests/question-bank.test.mjs"],
+ ["docs/commonwealth-browser/tests/entrypoint.test.mjs","projects/commonwealth-os/apps/browser/tests/entrypoint.test.mjs"]
 ];
 test("The website mirrors exactly the source demo bytes",()=>{
  for(const [site,source] of mirrors) assert.deepEqual(read(site),read(source),site+" drifted from source");
