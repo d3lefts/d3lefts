@@ -23,6 +23,11 @@ A supported deduction is **not** a legal opinion or evidence that its cited
 rule was correctly formalized. No actual law ingestion, legal precedent lookup,
 voter preference storage, official ballot or governmental effect is enabled.
 
+
+## Interactive historical and civic intelligence research lab
+
+The public site's [Historical & Civic Intelligence Lab](https://d3lefts.github.io/d3lefts/commonwealth-intelligence.html) is a synthetic-only, read-only fixture explorer and a browser-memory-only demonstration of voluntary issue preferences and a proposed 20-question / 12-archetype Discover entry point. It does not collect identity, store political profiles, ingest official government data, issue a real Proof Passport or cast a ballot. Its four historical source documents are snapshots of [historical/fixtures](historical/fixtures/), checked by `scripts/test_commonwealth_intelligence.cjs`; separate [Commonwealth full product demo](https://d3lefts.github.io/d3lefts/commonwealth.html) and [upcoming product showcase](https://d3lefts.github.io/d3lefts/commonwealth-os.html) remain intact. Archetype labels and scores are illustrative and not psychometrically validated.
+
 ## Non-negotiable constraints
 1. **No live city-council record ingestion yet.** Use synthetic fixtures first. The municipal intake connector remains disabled by default.
 2. **No institutional authority by implication.** Official voting is forbidden until jurisdiction-specific legal authorization, configured rules, security assurance, and independent sign-off.
