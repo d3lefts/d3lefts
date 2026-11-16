@@ -90,6 +90,20 @@ test('private contribution bodies withheld from other members and public export'
   }finally{t.cleanup();}
 });
 
+test('correction requests remain visible only to the submitting actor',()=>{
+  const t=setup();try{
+    t.submit('a',{type:'CORRECTION',id:'P-UAH-01',reason:'Private correction one about a sample source.'},0,1);
+    t.submit('b',{type:'CORRECTION',id:'P-UAH-01',reason:'Private correction two about a sample source.'},1,1);
+    const mine=t.ledger.view(t.actor('a'),'student-demo').board.corrections;
+    const other=t.ledger.view(t.actor('b'),'student-demo').board.corrections;
+    assert.equal(mine.length,1);assert.equal(other.length,1);
+    assert.match(mine[0].reason,/correction one/);
+    assert.doesNotMatch(JSON.stringify(mine),/correction two/);
+    assert.doesNotMatch(JSON.stringify(other),/correction one/);
+    assert.doesNotMatch(JSON.stringify(t.ledger.dossier(t.actor('a'),'student-demo','P-UAH-01')),/correction one|correction two/);
+  }finally{t.cleanup();}
+});
+
 test('tampering detected under independent replay and idempotency survives retries',()=>{
   const t=setup();try{
     const command={type:'COMMENT',id:'P-UAH-01',text:'Please explain the simulated shuttle safety review.',stance:'QUESTION'};
@@ -144,6 +158,15 @@ test('HTTP integration serves same-origin browser and enforces bearer roles',asy
     r=await fetch(base+'/api/v1/participation/commands',{method:'POST',headers:ha,body:JSON.stringify({institutionId:'student-demo',expectedSequence:0,expectedRevision:1,key:'http-command-001',command:{type:'ADVISE',id:'P-UAH-01',choice:'SUPPORT'}})});
     assert.equal(r.status,200);
     assert.equal((await r.json()).sequence,1);
+    const hb={Authorization:'Bearer '+t.tokens['student-demo'].b,'Content-Type':'application/json'};
+    const race=[
+      {institutionId:'student-demo',expectedSequence:1,expectedRevision:1,key:'race-command-001',command:{type:'COMMENT',id:'P-UAH-01',text:'Synthetic participation concern from client one.',stance:'CONCERN'}},
+      {institutionId:'student-demo',expectedSequence:1,expectedRevision:1,key:'race-command-002',command:{type:'AMEND',id:'P-UAH-01',text:'Evaluate a documented synthetic shuttle route after public comment review.',reason:'Clarify operational scope'}}
+    ];
+    const replies=await Promise.all(race.map((body,i)=>fetch(base+'/api/v1/participation/commands',{method:'POST',headers:i?hb:ha,body:JSON.stringify(body)})));
+    assert.deepEqual(replies.map(x=>x.status).sort(),[200,409]);
+    r=await fetch(base+'/api/v1/participation/student-demo/board',{headers:ha});
+    assert.equal((await r.json()).sequence,2);
     r=await fetch(base+'/api/v1/participation/student-demo/dossiers/P-UAH-01',{headers:ha});
     assert.equal(r.status,200);
     assert.equal((await r.json()).individualAdviceIncluded,false);

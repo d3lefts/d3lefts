@@ -174,7 +174,9 @@ export class ParticipationLedger {
       const state=this.replay(institutionId);
       const proposal=state.board.proposals.find(p=>p.id===proposalId);
       invariant(!!proposal,'PARTICIPATION_PROPOSAL_NOT_FOUND',404);
-      return {...publicDossier(proposal),ledger:{sequence:state.sequence,headHash:state.headHash,verification:'LOCAL_REPLAY_ONLY',externalAnchor:false},certification:'NOT_CERTIFIED',individualAdviceIncluded:false};
+      const safe=clone(proposal);
+      safe.events=safe.events.map(e=>e.type==='COMMENT'?{...e,detail:'Unpublished contribution received; individual stance withheld'}:e);
+      return {...publicDossier(safe),ledger:{sequence:state.sequence,headHash:state.headHash,verification:'LOCAL_REPLAY_ONLY',externalAnchor:false},certification:'NOT_CERTIFIED',individualAdviceIncluded:false};
     });
   }
 }

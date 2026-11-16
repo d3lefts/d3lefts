@@ -23,6 +23,7 @@ The **same server process and SQLite database** now handle the legacy synthetic 
 - All commands execute inside the existing `BEGIN IMMEDIATE` transaction with fresh role/eligibility checks. Both `expectedSequence` and `expectedRevision` are required. A stale client is rejected; the browser refreshes the latest view after a conflict.
 - Source fixtures are pinned by a `seedHash`. A change to the seed data or state machine can fail replay rather than silently reinterpreting old records; a planned schema/fixture migration must version the replay implementation.
 - `transact()` from the browser v1.2 reducer validates and replays non-advisory commands; no new official voting logic is added.
+- Public dossiers redact the stance labels of unpublished comments; submission metadata and counts still need production small-group privacy review.
 - Private `ADVISE` events do not enter the public proposal state. Member views show only their own exact-revision advisory choices; private comment text and pending amendment text are withheld from other members. Fictional clerks/chairs/auditors can inspect local unmoderated submissions, explicitly *not* a production privacy model.
 - `GET /api/v1/participation/:tenant/dossiers/:proposalId` uses the minimized public dossier; includes a locally replayed ledger sequence and head, **never** a claim of signed government evidence, source authenticity, or an established Proof Passport.
 - `verify-participation.mjs` is a distinct implementation of a hash-chain continuity checker; it does not import the primary ledger implementation or the reducer. It tests persisted consistency, **not** institutional authority or the correctness of every state transition.
@@ -46,6 +47,6 @@ node verify-participation-receipt.mjs synthetic-receipt.json [trusted-public-key
 
 ## Tests and limitations
 
-`npm test` includes role and tenant separation, idempotency, comment and stance privacy, amendment revision fencing, restart/replay survival, trigger enforcement, deliberate SQL corruption, and authenticated HTTP serving. The GitHub comprehensive-browser workflow invokes these tests together with the v1.2 mirrored-browser checks.
+`npm test` includes role and tenant separation, idempotency, comment, correction and stance privacy, two-client command races, amendment revision fencing, restart/replay survival, trigger enforcement, deliberate SQL corruption, and authenticated HTTP serving. The GitHub comprehensive-browser workflow invokes these tests together with the v1.2 mirrored-browser checks.
 
 **Remaining gates:** migration to PostgreSQL with transactional invariants preserved, external anchored checkpoints, independent validator and adversarial security audit, consent/retention/deletion, live moderation and abuse handling, production IdP, automated backup/recovery drills, accurate source-of-law custody, accessibility/usability evaluation, and legal institutional authorization. No user information or ballots should be entered before these gates. This work is not a new patentability claim, a governmental assurance certificate, or a deployment-ready competitor to Decidim/CONSUL.
