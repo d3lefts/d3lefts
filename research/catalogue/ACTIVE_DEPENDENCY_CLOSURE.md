@@ -7,6 +7,12 @@ change any public claim, or assert independently checked Lean theorems.
 
 **Recovery:** `python3 scripts/check_active_dependency_closure.py --self-test --summary`
 
+**Independent structural audit:** `node scripts/independent_dependency_closure.cjs`
+uses a separate runtime and iterative topological/reachability algorithm. Together
+these checks reject **20 independently implemented negative metadata fixtures**
+(12 Python, 8 Node). Both read the same frozen JSON, so this is algorithmic
+cross-checking, *not* blind theorem reconstruction or independent Lean review.
+
 **Freshness:** `python3 scripts/check_active_dependency_closure.py --live`
 checks the *three* frozen draft PR head SHAs against GitHub and fails if any
 have moved. It verifies source identity only; historical CI success alone
