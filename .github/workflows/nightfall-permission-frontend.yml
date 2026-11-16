@@ -1,0 +1,32 @@
+name: NIGHTFALL permission lab finite frontend replay
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'docs/permission-lab*'
+      - 'docs/index.html'
+      - 'docs/research.html'
+      - 'docs/active-proof-passport.html'
+      - 'docs/cost-of-knowing.html'
+      - 'docs/review.html'
+      - 'docs/commonwealth-os.html'
+      - 'docs/commonwealth.html'
+      - 'docs/constellation.html'
+      - 'docs/atlas.html'
+      - 'tests/nightfall-permission-frontend.test.cjs'
+      - '.github/workflows/nightfall-permission-frontend.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  finite-frontend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Node version and exact finite demo cases
+        run: |
+          node --version
+          node --test tests/nightfall-permission-frontend.test.cjs
