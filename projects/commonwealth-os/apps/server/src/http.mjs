@@ -4,6 +4,8 @@ import { resolve, join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Store } from './store.mjs';
 import { signingKey, exportEvidence } from './evidence.mjs';
+import { ParticipationStore } from './participation-store.mjs';
+import { serveSyntheticBrowser, serveParticipationAPI } from './participation-http.mjs';
 
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const json=(res,status,body)=>{
@@ -18,12 +20,15 @@ async function body(req) {
 export function createServer({dbPath=':memory:',keyPath=join(root,'data','signing-key.pem'),store:givenStore}={}) {
   const store=givenStore??new Store(dbPath);
   const privateKey=signingKey(keyPath);
+  const participation=new ParticipationStore(store);
   const server=http.createServer(async(req,res)=>{
     try{
       const path=parse(req.url||'').pathname;
       if(req.method==='GET'&&path==='/healthz')return json(res,200,{status:'local-demo-only',officialVoting:false,municipalIngestion:false});
+      if(serveSyntheticBrowser(req,res,path))return;
       const token=(req.headers.authorization||'').match(/^Bearer ([a-f0-9]{64})$/)?.[1];
       const actor=store.authenticate(token);
+      if(await serveParticipationAPI(req,res,path,actor,participation))return;
       if(req.method==='GET'&&path==='/api/v1/me')return json(res,200,{id:actor.id,institutionId:actor.institutionId,role:actor.role,eligible:actor.eligible,mode:'SYNTHETIC_ONLY'});
       if(req.method==='POST'&&path==='/api/v1/commands') {
         const b=await body(req);
