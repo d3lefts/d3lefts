@@ -1,5 +1,5 @@
 /* Commonwealth OS / public product research preview. Scoped to avoid altering NIGHTFALL pages. */
-.cw-page{--cw-bg:#07151d;--cw-navy:#0d202b;--cw-panel:#102632;--cw-line:rgba(175,212,218,.2);--cw-white:#eff8f7;--cw-muted:#a5bdc5;--cw-teal:#8fe5ce;--cw-gold:#f2c88b;--cw-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;--cw-serif:Georgia,"Times New Roman",serif;background:var(--cw-bg);color:var(--cw-white);color-scheme:dark}
+.cw-page{--cw-bg:#07151d;--cw-navy:#0d202b;--cw-panel:#102632;--cw-line:rgba(175,212,218,.2);--cw-white:#eff8f7;--cw-muted:#a5bdc5;--cw-teal:#9edbea;--cw-gold:#f2c88b;--cw-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;--cw-serif:Georgia,"Times New Roman",serif;background:var(--cw-bg);color:var(--cw-white);color-scheme:dark}
 .cw-page *{box-sizing:border-box}
 .cw-page a{color:inherit}
 .cw-page a:focus-visible,.cw-page button:focus-visible,.cw-page select:focus-visible{outline:3px solid var(--cw-gold);outline-offset:4px}
@@ -30,7 +30,7 @@
 .cw-button{appearance:none;display:inline-flex;align-items:center;justify-content:space-between;gap:22px;padding:15px 20px;min-height:52px;font:600 12px/1.5 var(--cw-mono);text-decoration:none!important;border:1px solid transparent;cursor:pointer;transition:background .18s,color .18s,transform .18s}
 .cw-button:hover{transform:translateY(-2px)}
 .cw-button-primary{background:var(--cw-teal);color:#082126!important}
-.cw-button-primary:hover{background:#b2f4e2}
+.cw-button-primary:hover{background:#c3e9f0}
 .cw-button-outline{background:transparent;color:var(--cw-white)!important;border-color:rgba(181,223,223,.5)}
 .cw-button-outline:hover{background:#1b3943}
 .cw-hero-caveat{font:400 12px/1.8 var(--cw-mono);color:var(--cw-muted);max-width:650px}
@@ -49,7 +49,7 @@
 .cw-orbit-inner{width:48%;aspect-ratio:1;border-style:dashed;border-color:rgba(242,200,139,.2)}
 .cw-orbit:after{content:"";position:absolute;top:4.7%;left:17%;width:9px;height:9px;border-radius:50%;background:var(--cw-gold);box-shadow:0 0 25px rgba(242,200,139,.5)}
 .cw-art-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;text-align:center;z-index:2;width:50%}
-.cw-art-glyph{font:400 clamp(55px,6vw,95px)/1 var(--cw-serif);letter-spacing:-.1em;color:#d9f8ee}
+.cw-art-glyph{font:400 clamp(55px,6vw,95px)/1 var(--cw-serif);letter-spacing:-.1em;color:#d9f1f8}
 .cw-art-glyph span{color:var(--cw-gold);margin:0 .06em}
 .cw-art-center strong{font:600 10px/1.6 var(--cw-mono);letter-spacing:.12em;margin-top:15px}
 .cw-art-center small{font:400 11px/1.7 var(--cw-mono);color:var(--cw-muted)}
