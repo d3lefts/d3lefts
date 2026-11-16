@@ -1,0 +1,33 @@
+name: Commonwealth OS finite assurance checks
+
+on:
+  pull_request:
+    paths:
+      - 'projects/commonwealth-os/assurance/**'
+      - '.github/workflows/commonwealth-assurance-finite.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'projects/commonwealth-os/assurance/**'
+      - '.github/workflows/commonwealth-assurance-finite.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  finite-assurance-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Compile source
+        run: python -m compileall -q projects/commonwealth-os/assurance/
+      - name: Independently audit finite model
+        working-directory: projects/commonwealth-os/assurance
+        env:
+          PYTHONHASHSEED: '0'
+        run: python independent_audit.py

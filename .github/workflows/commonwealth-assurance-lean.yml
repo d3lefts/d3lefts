@@ -1,0 +1,75 @@
+name: Commonwealth OS proof-passport pinned Lean kernel
+
+on:
+  pull_request:
+    paths:
+      - 'projects/commonwealth-os/assurance/lean/**'
+      - 'projects/commonwealth-os/assurance/LEAN_SCOPE_20261115.md'
+      - '.github/workflows/commonwealth-assurance-lean.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'projects/commonwealth-os/assurance/lean/**'
+      - '.github/workflows/commonwealth-assurance-lean.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  pinned-named-lean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Source-exact named Lean proofs with foundational axiom custody
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          python3 scripts/lean_bridge.py \
+            projects/commonwealth-os/assurance/lean/CommonwealthPassport.lean \
+            --workspace /tmp/mathlib4 --timeout 650 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Commonwealth.Assurance.transcript_sound_iff_cover \
+            --decl Commonwealth.Assurance.transcript_sound_actual \
+            --decl Commonwealth.Assurance.empty_evidence_rejected \
+            --decl Commonwealth.Assurance.valid_evidence_actual \
+            --decl Commonwealth.Assurance.same_world_composition \
+            --decl Commonwealth.Assurance.joint_claims_actual \
+            --decl Commonwealth.Assurance.empty_safe \
+            --decl Commonwealth.Assurance.accept_preserves_safe \
+            --decl Commonwealth.Assurance.sink_step_preserves_safe \
+            --decl Commonwealth.Assurance.reachable_sink_safe \
+            --decl Commonwealth.Assurance.indistinguishable_authority_impossibility \
+            --decl Commonwealth.Assurance.recertification_transfer \
+            --decl Commonwealth.Assurance.exists_least_cost_sound_panel \
+            --decl Commonwealth.Assurance.ledger_evidence_implies_authority \
+            --decl Commonwealth.Assurance.reachable_evidence_guard_authority \
+            --json-out lean-receipts/commonwealth-lean.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/commonwealth-lean.json
+          python3 scripts/lean_bridge.py \
+            projects/commonwealth-os/assurance/lean/CommonwealthPassport.lean \
+            --workspace /tmp/mathlib4 --timeout 650 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Commonwealth.Assurance.transcript_sound_iff_cover \
+            --decl Commonwealth.Assurance.indistinguishable_authority_impossibility \
+            --decl Commonwealth.Assurance.reachable_evidence_guard_authority \
+            --contract projects/commonwealth-os/assurance/lean/passport-contract.json \
+            --json-out lean-receipts/commonwealth-exact-contract.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/commonwealth-exact-contract.json
+      - name: Preserve compiler and source receipts
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: commonwealth-proof-passport-lean
+          path: lean-receipts/
+          if-no-files-found: warn
+          retention-days: 90

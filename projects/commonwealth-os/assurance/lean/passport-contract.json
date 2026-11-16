@@ -1,0 +1,21 @@
+{
+  "schema": "nightfall-theorem-contract/v1",
+  "source": "projects/commonwealth-os/assurance/lean/CommonwealthPassport.lean",
+  "workspace_commit": "9d581dfff2e41de989072ea63abf3daf69311520",
+  "targets": [
+    {
+      "declaration": "Commonwealth.Assurance.transcript_sound_iff_cover",
+      "expected_type": "∀ {World Query Output : Type*} (possible authorized : World → Prop) (read : Query → World → Output) (selected : Finset Query) (nominal : World), Commonwealth.Assurance.TranscriptSound possible authorized read selected nominal ↔ Commonwealth.Assurance.Covered possible authorized read selected nominal"
+    },
+    {
+      "declaration": "Commonwealth.Assurance.indistinguishable_authority_impossibility",
+      "expected_type": "∀ {World Observation : Type*} (read : World → Observation) (decision : Observation → Bool) (authorized revoked : World), read authorized = read revoked → decision (read authorized) = true → decision (read revoked) = false → False"
+    },
+    {
+      "declaration": "Commonwealth.Assurance.reachable_evidence_guard_authority",
+      "expected_type": "∀ {World Query Output Effect EffectId : Type*} (possible authorized : World → Prop) (read : Query → World → Output) (selected : Finset Query) (nominal : World) (identity : Effect → EffectId) {initial final : Commonwealth.Assurance.Ledger Unit World Effect}, Commonwealth.Assurance.Safe (Commonwealth.Assurance.EvidencePermit possible authorized read selected nominal) identity initial → Commonwealth.Assurance.Reachable (Commonwealth.Assurance.SinkStep (Commonwealth.Assurance.EvidencePermit possible authorized read selected nominal) identity) initial final → (∀ ev ∈ final.entries, authorized ev.snapshot) ∧ (final.entries.map (fun ev => identity ev.effect)).Nodup"
+    }
+  ],
+  "claim_scope": "Exact theorem types are scoped to a finite/abstract possible-world model, proof-checked on a pinned Lean compiler; external legal truth, cryptographic voting, runtime refinement and complete mediation are NOT certified.",
+  "promoted_full": false
+}

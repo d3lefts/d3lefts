@@ -12,6 +12,8 @@ Commonwealth OS is a mobile-first, representative-first civic governance system 
 - [City records ingestion freeze](CITY_SOURCE_INGESTION_POLICY.md): interface contract, provenance and enablement restrictions.
 - [Pilot research charter](pilots/PILOT_CHARTER.md), [administrator PRD](pilots/ADMIN_APP_PRD.md), [neutral-question standard](pilots/QUESTION_STANDARD.md) (see notes on legal and survey validation).
 
+- [Mathematical Proof Passport workbench](assurance/README.md): explicitly scoped finite-world theorems, exact evidence certificate optimization, source-different audits, and documented unresolved deployment assumptions.
+
 ## Non-negotiable constraints
 1. **No live city-council record ingestion yet.** Use synthetic fixtures first. The municipal intake connector remains disabled by default.
 2. **No institutional authority by implication.** Official voting is forbidden until jurisdiction-specific legal authorization, configured rules, security assurance, and independent sign-off.

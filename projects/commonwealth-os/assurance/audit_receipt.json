@@ -1,0 +1,19 @@
+{
+  "version": "commonwealth-assurance-v0.3",
+  "date": "2026-11-15",
+  "python_version": "3.13.5",
+  "command": "PYTHONHASHSEED=0 python3 independent_audit.py",
+  "result": "PASS",
+  "finite_certificate_instances": 3108,
+  "cost_certificate_impossible_in_parameter_sweep": 0,
+  "explicit_indistinguishable_world_fixture": "PASS",
+  "empty_consistency_fixture": "PASS",
+  "guard_perturbations": 529,
+  "replay_fixture": "PASS",
+  "stale_check_revocation_fixture": "PASS",
+  "source_sha256": {
+    "finite_model.py": "88d61e136ea93e85c6d53ddd6a426f758749949052f813e907658f56d701ea74",
+    "independent_audit.py": "f83adad2e1d3a8dba669b58eedf883672a31b71b4b96ba539fe1cf46e5fac89d"
+  },
+  "status": "author-side finite validation only; no Lean, independent human, cryptographic, legal, concurrency or deployed-system verification"
+}
