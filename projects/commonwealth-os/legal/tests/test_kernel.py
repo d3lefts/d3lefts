@@ -122,7 +122,7 @@ class LegalPassportTests(unittest.TestCase):
         status = source_change_status(receipt, changed)
         self.assertEqual(status["status"], "RECHECK_REQUIRED")
         self.assertEqual(status["changed_dependencies"], ["law-r12"])
-        self.assertEqual(source_change_status(receipt, self.doc["sources"])["status"], "SOURCE_DIGESTS_UNCHANGED")
+        self.assertEqual(source_change_status(receipt, self.doc["sources"])["status"], "RECORDED_SOURCES_UNCHANGED")
 
 
 if __name__ == "__main__":
