@@ -23,6 +23,13 @@ A supported deduction is **not** a legal opinion or evidence that its cited
 rule was correctly formalized. No actual law ingestion, legal precedent lookup,
 voter preference storage, official ballot or governmental effect is enabled.
 
+
+## Public research-product demonstration (synthetic only)
+
+The [Commonwealth product demo website](https://d3lefts.github.io/d3lefts/commonwealth.html) is generated from [`docs/commonwealth.html`](../../docs/commonwealth.html) and the exact [historical fixture files](historical/fixtures/). It offers a read-only synthetic historical explorer, local-only explicit issue preferences, a **demonstrative/unvalidated** 20-question 12-archetype exercise, a source-provenance explainer and a nonbinding Chamber workflow illustration. No real records, profiles, identity, eligibility, authenticated voting, KYC, network data collection or legal effect is present.
+
+Test source parity, historical tenure transitions, exact/procedural distinctions and browser-local boundaries with `node scripts/test_commonwealth_site.cjs` from the repository root. Working synthetic services and aspirational product designs must remain separately labeled; pending draft backend work is not represented as integrated or production-ready.
+
 ## Non-negotiable constraints
 1. **No live city-council record ingestion yet.** Use synthetic fixtures first. The municipal intake connector remains disabled by default.
 2. **No institutional authority by implication.** Official voting is forbidden until jurisdiction-specific legal authorization, configured rules, security assurance, and independent sign-off.
