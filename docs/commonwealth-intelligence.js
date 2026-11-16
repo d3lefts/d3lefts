@@ -31,6 +31,15 @@
   };
   const config = {issue:issues[0].issue_id,seat:"ALL",onlyExact:false};
   const userAnswers = Object.create(null);
+  let quizInsight = null;
+  const setGuide = (stage, message) => {
+    const notice = document.querySelector("#cw-guide-status");
+    if (notice) notice.textContent = message;
+    document.querySelectorAll("[data-cw-guide-link]").forEach(link => {
+      if (link.dataset.cwGuideLink === stage) link.setAttribute("aria-current","step");
+      else link.removeAttribute("aria-current");
+    });
+  };
   const questionLinks = (issueId, onlyExact) => F.issues.correspondence
     .filter(link => link.issue_id === issueId && (!onlyExact || link.relation === "EXACT_QUESTION"))
     .map(link => ({link,question:byId.get(link.question_id)}))
@@ -138,6 +147,8 @@
       row.append(el("span","",issue.title),el("strong","",labels[userAnswers[id]]));
       history.append(row);
     });
+    qs("#cw-profile-insight").textContent = quizInsight ||
+      "No quiz result added. Your answers to policies stay separate from archetype descriptions.";
   }
   function renderPassport() {
     const issue = issues.find(item => item.issue_id === config.issue);
@@ -175,10 +186,13 @@
     document.querySelectorAll("[data-choice]").forEach(button => button.addEventListener("click", () => {
       userAnswers[config.issue] = button.dataset.choice;
       renderProfile();
+      setGuide("profile","PROFILE UPDATED · Explicit hypothetical preference recorded in this page only; no ballot was cast.");
     }));
     qs("#cw-clear-preferences").addEventListener("click",() => {
       Object.keys(userAnswers).forEach(key => delete userAnswers[key]);
+      quizInsight = null;
       renderProfile();
+      setGuide("profile","PROFILE CLEARED · No policy answers or Discover insight remain in this page.");
     });
     renderHistory();
   }
@@ -223,8 +237,8 @@
   let quizIndex = 0;
   let answers = [];
   let resultSummary = "";
-  const axisMean = axis => {
-    const relevant = quiz.map((q,i) => ({q,a:answers[i]}))
+  const axisMean = (axis, samples=answers) => {
+    const relevant = quiz.map((q,i) => ({q,a:samples[i]}))
       .filter(row => row.q[0] === axis && typeof row.a === "number" && row.a !== 0);
     if (!relevant.length) return null;
     return relevant.reduce((total,row) => total + row.a * row.q[1],0)/relevant.length;
@@ -236,6 +250,19 @@
     const change = values.change >= 0 ? "reform" : "gradual";
     return {gov,level,change,key:gov+"-"+level+"-"+change};
   };
+  // A small number of responses must never create a confident-seeming label.
+  // This threshold is a product safeguard, NOT psychometric validation.
+  const qualifyQuiz = samples => {
+    const counts = {gov:0,level:0,change:0};
+    quiz.forEach((q,i) => {
+      if (typeof samples[i] === "number" && samples[i] !== 0) counts[q[0]]++;
+    });
+    const answered = counts.gov + counts.level + counts.change;
+    const scores = {gov:axisMean("gov",samples),level:axisMean("level",samples),change:axisMean("change",samples)};
+    const eligible = answered >= 12 && counts.gov >= 4 && counts.level >= 3 &&
+      counts.change >= 3 && Math.abs(scores.level) >= 0.2 && Math.abs(scores.change) >= 0.2;
+    return {eligible,answered,counts,scores};
+  };
   function showQuizStep() {
     qs("#cw-quiz-start").hidden = true;
     qs("#cw-quiz-result").hidden = true;
@@ -244,22 +271,25 @@
     qs("#cw-quiz-progress-label").textContent = String(Math.round(100*quizIndex/quiz.length))+"% complete";
     qs("#cw-quiz-progress").value = quizIndex;
     qs("#cw-quiz-question").textContent = quiz[quizIndex][2];
+    qs("#cw-quiz-back").disabled = quizIndex === 0;
   }
   function startQuiz() {
     quizIndex = 0;answers = [];
+    resultSummary = "";
     showQuizStep();
+    setGuide("discover","DISCOVER IN PROGRESS · Answer, skip, or revisit any question. No responses leave this page.");
   }
   function completeQuiz() {
-    const scores = {gov:axisMean("gov"),level:axisMean("level"),change:axisMean("change")};
-    const result = classify(scores);
-    const answered = answers.filter(a => typeof a === "number" && a !== 0).length;
+    const quality = qualifyQuiz(answers);
+    const result = quality.eligible ? classify(quality.scores) : null;
+    const answered = quality.answered;
     qs("#cw-quiz-step").hidden = true;
     qs("#cw-quiz-result").hidden = false;
     if (!result) {
       qs("#cw-quiz-archetype").textContent = "Insufficient information";
       resultSummary = "My Commonwealth Discover result was inconclusive. This fictional exercise does not infer missing positions.";
       qs("#cw-quiz-description").textContent =
-        "At least one dimension has no directional responses. No archetype is assigned from missing evidence.";
+        "Insufficient or ambiguous evidence for even an illustrative classification. This demo requires at least 12 directional responses, including 4 government-scope, 3 decision-level and 3 change responses, with a non-tied level and change direction. Missing evidence stays missing.";
     } else {
       const label = archetypes[result.key];
       qs("#cw-quiz-archetype").textContent = label;
@@ -270,7 +300,12 @@
         ". Illustrative, unvalidated civic exercise. No vote cast.";
     }
     qs("#cw-quiz-coverage").textContent = answered+" directional answer(s) / "+quiz.length+
-      " questions. Missing and neutral answers do not become inferred preferences. No results were saved.";
+      " questions (scope "+quality.counts.gov+", level "+quality.counts.level+", change "+quality.counts.change+
+      "). Illustrative evidence threshold: 12 total; 4/3/3 by dimension. No result was saved.";
+    qs("#cw-apply-archetype").disabled = !result;
+    setGuide("discover",result ?
+      "DISCOVER COMPLETE · Provisional archetype available. Add it to your private working profile only if you choose." :
+      "DISCOVER INCONCLUSIVE · More directional answers needed. No label or policy position was inferred.");
     qs("#cw-quiz-feedback").textContent = "";
   }
   function chooseQuiz(value) {
@@ -282,7 +317,20 @@
   function initQuiz() {
     qs("#cw-start-quiz").addEventListener("click",startQuiz);
     qs("#cw-quiz-restart").addEventListener("click",startQuiz);
+    qs("#cw-quiz-back").addEventListener("click",() => {
+      if (quizIndex === 0) return;
+      quizIndex -= 1;
+      answers.pop();
+      showQuizStep();
+    });
     qs("#cw-quiz-again").addEventListener("click",startQuiz);
+    qs("#cw-apply-archetype").addEventListener("click",() => {
+      if (qs("#cw-apply-archetype").disabled || !resultSummary) return;
+      quizInsight = resultSummary;
+      renderProfile();
+      setGuide("profile","PROFILE INSIGHT ADDED · The quiz provides a provisional descriptor, NOT a vote or an inferred policy position.");
+      qs("#profile").scrollIntoView({behavior:"auto",block:"start"});
+    });
     document.querySelectorAll("[data-quiz-choice]").forEach(button =>
       button.addEventListener("click",() => chooseQuiz(button.dataset.quizChoice)));
     qs("#cw-copy-archetype").addEventListener("click", async () => {
@@ -325,7 +373,7 @@
     qs("#cw-reset-steps").addEventListener("click",() => {step=0;renderWorkflow();});
     renderWorkflow();
   }
-  window.COMMONWEALTH_DEMO_LOGIC = Object.freeze({tenureAt,recordPosition,questionLinks,resolveMembers,classify,quizCount:quiz.length,archetypeCount:Object.keys(archetypes).length});
+  window.COMMONWEALTH_DEMO_LOGIC = Object.freeze({tenureAt,recordPosition,questionLinks,resolveMembers,classify,qualifyQuiz,quizCount:quiz.length,archetypeCount:Object.keys(archetypes).length});
   // Allow DOM-free, independent model tests; no hidden network or storage setup.
   if (typeof document === "undefined" || !document.querySelector || !document.querySelector("#cw-issue")) return;
   initHistory();initQuiz();initWorkflow();
