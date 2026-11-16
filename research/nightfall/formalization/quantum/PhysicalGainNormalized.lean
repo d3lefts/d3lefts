@@ -20,12 +20,12 @@ noncomputable section
 theorem source_weight_all_zero (d : ℕ) :
     SourceBorn.sourceWeight d (z d) = ((9 / 4 : ℝ) ^ d) := by
   simp [SourceBorn.sourceWeight, SourceBorn.localWeight, z,
-    Finset.prod_const, Finset.card_fin]
+    Finset.prod_const, Finset.card_fin, div_pow]
 
 theorem source_weight_all_one (d : ℕ) :
     SourceBorn.sourceWeight d (o d) = ((3 / 4 : ℝ) ^ d) := by
   simp [SourceBorn.sourceWeight, SourceBorn.localWeight, o,
-    Finset.prod_const, Finset.card_fin]
+    Finset.prod_const, Finset.card_fin, div_pow]
 
 theorem physical_source_corner_real (d : ℕ) (hd : 0 < d) :
     (unnormalizedA d (z d) (o d)).re =
@@ -40,7 +40,8 @@ theorem physical_source_corner_real (d : ℕ) (hd : 0 < d) :
     ring
   rw [hv] at hsource
   rw [hsource]
-  simp [v]
+  change (((v : ℂ) ^ d / 2)).re = v ^ d / 2
+  simp
 
 theorem exact_gain_ratio_scalar (d : ℕ) :
     (4 * (((3 * Real.sqrt 3 / 4 : ℝ) ^ d / 2) ^ 2) /
@@ -58,7 +59,7 @@ theorem exact_gain_ratio_scalar (d : ℕ) :
       4 * (((3 * Real.sqrt 3 / 4 : ℝ) ^ d / 2) ^ 2) =
           ((3 * Real.sqrt 3 / 4 : ℝ) ^ d) ^ 2 := by ring
       _ = (((3 * Real.sqrt 3 / 4 : ℝ) ^ 2) ^ d) := by
-          rw [← pow_mul, ← pow_mul, mul_comm]
+          rw [← pow_mul, ← pow_mul, Nat.mul_comm d 2]
       _ = (27 / 16 : ℝ) ^ d := by rw [hsquare]
       _ = ((3 : ℝ) * 3 * (3 / 16)) ^ d := by norm_num
       _ = (3 : ℝ) ^ d * (3 : ℝ) ^ d * (3 / 16 : ℝ) ^ d := by
@@ -74,8 +75,7 @@ theorem exact_gain_ratio_scalar (d : ℕ) :
   have hb : (3 / 4 : ℝ) ^ d + (1 / 4 : ℝ) ^ d ≠ 0 :=
     (add_pos (pow_pos (by norm_num) _) (pow_pos (by norm_num) _)).ne'
   rw [hnum, hden]
-  field_simp [hp, hb]
-  ring
+  field_simp [hp, hb] <;> ring
 
 theorem actual_physical_optimal_gain_normalized
     (d : ℕ) (hd : 0 < d) :
