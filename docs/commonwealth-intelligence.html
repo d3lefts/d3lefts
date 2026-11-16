@@ -23,7 +23,7 @@
   <div class="cw-container cw-head-inner">
     <a href="index.html" class="cw-parent"><span class="cw-mark">N∕F</span><span>NIGHTFALL <small>RESEARCH LAB</small></span></a>
     <button type="button" class="cw-menu-toggle" id="menu-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">MENU +</button>
-    <nav id="site-nav" aria-label="Page navigation"><a href="#explore">Historical records</a><a href="#discover">Discover</a><a href="#architecture">Architecture</a><a href="commonwealth.html">Full product demo</a></nav>
+    <nav id="site-nav" aria-label="Page navigation"><a href="#discover">Discover</a><a href="#profile">Living Voter</a><a href="#explore">Historical records</a><a href="#architecture">Architecture</a><a href="commonwealth.html">Full product demo</a></nav>
   </div>
 </header>
 <main id="main">
@@ -32,7 +32,7 @@
     <p class="cw-eyebrow">COMMONWEALTH OS / HISTORICAL & CIVIC INTELLIGENCE LAB</p>
     <h1 id="cw-title">Explore the civic record.<br><em>Without inventing the evidence.</em></h1>
     <p class="cw-lead">An experimental democratic operating system connecting continuous civic preferences, exact legislative history, source-grounded legal evidence, and accountable institutional decision-making.</p>
-    <div class="cw-actions"><a class="cw-primary" href="#explore">Try the synthetic demo <span aria-hidden="true">↗</span></a><a class="cw-secondary" href="https://github.com/d3lefts/d3lefts/tree/main/projects/commonwealth-os/">Inspect the source</a></div>
+    <div class="cw-actions"><a class="cw-primary" href="#discover">Start Discover · 20 questions <span aria-hidden="true">↗</span></a><a class="cw-secondary" href="https://github.com/d3lefts/d3lefts/tree/main/projects/commonwealth-os/">Inspect the source</a></div>
   </div>
   <aside class="cw-hero-panel" aria-label="Public demo boundaries">
     <div class="cw-terminal-top"><span>COMMONWEALTH / DEMO STATUS</span><span class="cw-signal">RESEARCH</span></div>
@@ -45,25 +45,21 @@
   </aside>
 </section>
 <div class="cw-ribbon" role="note"><div class="cw-container"><strong>Fictional test environment.</strong> Not a government service, poll, voting system or legal certification. No partnership or endorsement by any proposed pilot institution.</div></div>
-<section class="cw-container cw-path" aria-label="Product concept sequence">
-  <div><span>01 / DISCOVER</span><strong>Start with curiosity</strong><small>Voluntary issue questions</small></div>
-  <div><span>02 / UNDERSTAND</span><strong>Living Voter</strong><small>Explicit positions, not ballots</small></div>
-  <div><span>03 / INSPECT</span><strong>Historical intelligence</strong><small>Exact votes and source context</small></div>
-  <div><span>04 / JUSTIFY</span><strong>Proof Passports</strong><small>Evidence and limits</small></div>
-  <div><span>05 / GOVERN</span><strong>Chamber</strong><small>Authorized process only</small></div>
-</section>
+<nav class="cw-container cw-path" aria-label="Guided demonstration stages">
+  <a href="#discover" class="cw-journey-link" data-cw-guide-link="discover"><span>01 / DISCOVER</span><strong>Start with curiosity</strong><small>Voluntary issue questions</small></a>
+  <a href="#profile" class="cw-journey-link" data-cw-guide-link="profile"><span>02 / UNDERSTAND</span><strong>Living Voter</strong><small>Explicit positions, not ballots</small></a>
+  <a href="#explore" class="cw-journey-link" data-cw-guide-link="explore"><span>03 / INSPECT</span><strong>Historical intelligence</strong><small>Exact votes and source context</small></a>
+  <a href="#passport" class="cw-journey-link" data-cw-guide-link="passport"><span>04 / JUSTIFY</span><strong>Proof Passports</strong><small>Evidence and limits</small></a>
+  <a href="#chamber" class="cw-journey-link" data-cw-guide-link="chamber"><span>05 / GOVERN</span><strong>Chamber</strong><small>Authorized process only</small></a>
+</nav>
+<div class="cw-container cw-guide-status" role="status" aria-live="polite" id="cw-guide-status">START HERE · Discover is an optional, unvalidated questionnaire. No vote is cast or stored.</div>
 
-<section class="cw-section cw-container" id="explore" aria-labelledby="history-title">
-  <div class="cw-heading"><div><p class="cw-eyebrow">01 / RUNNABLE SYNTHETIC HISTORICAL INTELLIGENCE</p><h2 id="history-title">What did the record <em>actually say?</em></h2><p>Explore fictional House, Senate and municipal proceedings. Tenure is matched at the date of each question, and a procedural vote is never silently converted into support for the underlying policy.</p></div><span class="cw-evidence-tag">IMPLEMENTED / FIXTURE SNAPSHOT</span></div>
-  <div class="cw-workbench">
-    <div class="cw-controls">
-      <div><label for="cw-issue">Civic question</label><select id="cw-issue"></select></div>
-      <div><label for="cw-seat">Historical constituency or seat</label><select id="cw-seat"><option value="ALL">All fictional seats</option><option value="HOUSE:07">House / District 07</option><option value="HOUSE:08">House / District 08</option><option value="SENATE:ALL">Senate / both statewide seats</option><option value="MUNICIPAL:02">Municipal / Ward 02</option><option value="MUNICIPAL:03">Municipal / Ward 03</option></select></div>
-      <div class="cw-check"><label><input type="checkbox" id="cw-exact"> Show exact-question matches only</label></div>
-    </div>
-    <div class="cw-issue-panel"><span class="cw-mini">EXACT ISSUE PROPOSITION / FICTIONAL</span><p id="cw-issue-proposition"></p><p id="cw-history-summary" aria-live="polite" class="cw-muted"></p></div>
-    <div class="cw-history-list" id="cw-history-list" aria-live="polite"></div>
-    <div class="cw-workbench-footer"><span>Source correspondence is scoped to this deliberately incomplete fictional corpus.</span><a href="https://github.com/d3lefts/d3lefts/tree/main/projects/commonwealth-os/historical/">Backend, adapters, tests and API ↗</a></div>
+<section class="cw-section cw-container" id="discover" aria-labelledby="quiz-title">
+  <div class="cw-heading"><div><p class="cw-eyebrow">01 / DISCOVER / PROPOSED ACQUISITION EXPERIENCE</p><h2 id="quiz-title">Twenty questions. <em>One starting point.</em></h2><p>Try an illustrative 20-question classification across government scope, decision-making level and institutional change. The 12 possible archetypes are <strong>unvalidated product concepts</strong>, not scientific diagnoses, voter predictions or preferences on actual laws.</p></div><span class="cw-evidence-tag">EXPERIMENTAL UI / UNVALIDATED</span></div>
+  <div class="cw-quiz cw-card">
+    <div id="cw-quiz-start"><p class="cw-mini">20 QUESTIONS · NO LOGIN · NO STORAGE</p><h3>Explore a civic outlook without creating an account.</h3><p>Suggested for adults. Every question is hypothetical; skip any question. We do not collect the answers.</p><button id="cw-start-quiz" class="cw-primary" type="button">Start fictional quiz ↗</button></div>
+    <div id="cw-quiz-step" hidden><div class="cw-quiz-meter"><span id="cw-quiz-number">Question 1 of 20</span><span id="cw-quiz-progress-label">0% complete</span></div><progress id="cw-quiz-progress" max="20" value="0"></progress><p class="cw-mini">HYPOTHETICAL INSTITUTIONAL POLICY</p><h3 id="cw-quiz-question"></h3><div class="cw-option-row"><button type="button" data-quiz-choice="1">Support</button><button type="button" data-quiz-choice="-1">Do not support</button><button type="button" data-quiz-choice="0">No preference</button><button type="button" data-quiz-choice="skip">Skip</button></div><div class="cw-quiz-controls"><button type="button" class="cw-quiet-button" id="cw-quiz-back">Previous question</button><button type="button" class="cw-quiet-button" id="cw-quiz-restart">Start over</button></div></div>
+    <div id="cw-quiz-result" hidden><p class="cw-mini">ILLUSTRATIVE ARCHETYPE / NOT A VOTE</p><h3 id="cw-quiz-archetype"></h3><p id="cw-quiz-description"></p><p class="cw-muted" id="cw-quiz-coverage"></p><div class="cw-option-row"><button type="button" id="cw-apply-archetype">Add provisional result to private profile</button><button type="button" id="cw-share-archetype">Share archetype only</button><button type="button" id="cw-copy-archetype">Copy result summary</button><button type="button" id="cw-quiz-again">Take again</button></div><p id="cw-quiz-feedback" class="cw-muted" role="status"></p></div>
   </div>
 </section>
 
@@ -77,16 +73,21 @@
       </fieldset>
       <button id="cw-clear-preferences" class="cw-quiet-button" type="button">Clear all local responses</button>
     </div>
-    <div class="cw-card cw-profile-summary"><span class="cw-mini">PRIVATE WORKING PROFILE / SESSION ONLY</span><strong id="cw-profile-status" aria-live="polite">Unanswered</strong><p id="cw-profile-note">Unknown is not opposition, abstention, support or a cast vote.</p><div id="cw-profile-history"></div><p class="cw-muted">No browser storage, account, identity verification, analytics or external submission. Clearing or refreshing this page discards these selections.</p></div>
+    <div class="cw-card cw-profile-summary"><span class="cw-mini">PRIVATE WORKING PROFILE / SESSION ONLY</span><strong id="cw-profile-status" aria-live="polite">Unanswered</strong><p id="cw-profile-note">Unknown is not opposition, abstention, support or a cast vote.</p><div id="cw-profile-history"></div><div class="cw-profile-insight" role="status" aria-live="polite"><strong>Optional Discover insight</strong><p id="cw-profile-insight">No quiz result added. Your answers to policies stay separate from archetype descriptions.</p></div><p class="cw-muted">No browser storage, account, identity verification, analytics or external submission. Clearing or refreshing this page discards these selections.</p></div>
   </div>
 </section>
 
-<section class="cw-section cw-container" id="discover" aria-labelledby="quiz-title">
-  <div class="cw-heading"><div><p class="cw-eyebrow">03 / DISCOVER / PROPOSED ACQUISITION EXPERIENCE</p><h2 id="quiz-title">Twenty questions. <em>One starting point.</em></h2><p>Try an illustrative 20-question classification across government scope, decision-making level and institutional change. The 12 possible archetypes are <strong>unvalidated product concepts</strong>, not scientific diagnoses, voter predictions or preferences on actual laws.</p></div><span class="cw-evidence-tag">EXPERIMENTAL UI / UNVALIDATED</span></div>
-  <div class="cw-quiz cw-card">
-    <div id="cw-quiz-start"><p class="cw-mini">20 QUESTIONS · NO LOGIN · NO STORAGE</p><h3>Explore a civic outlook without creating an account.</h3><p>Suggested for adults. Every question is hypothetical; skip any question. We do not collect the answers.</p><button id="cw-start-quiz" class="cw-primary" type="button">Start fictional quiz ↗</button></div>
-    <div id="cw-quiz-step" hidden><div class="cw-quiz-meter"><span id="cw-quiz-number">Question 1 of 20</span><span id="cw-quiz-progress-label">0% complete</span></div><progress id="cw-quiz-progress" max="20" value="0"></progress><p class="cw-mini">HYPOTHETICAL INSTITUTIONAL POLICY</p><h3 id="cw-quiz-question"></h3><div class="cw-option-row"><button type="button" data-quiz-choice="1">Support</button><button type="button" data-quiz-choice="-1">Do not support</button><button type="button" data-quiz-choice="0">No preference</button><button type="button" data-quiz-choice="skip">Skip</button></div><button type="button" class="cw-quiet-button" id="cw-quiz-restart">Start over</button></div>
-    <div id="cw-quiz-result" hidden><p class="cw-mini">ILLUSTRATIVE ARCHETYPE / NOT A VOTE</p><h3 id="cw-quiz-archetype"></h3><p id="cw-quiz-description"></p><p class="cw-muted" id="cw-quiz-coverage"></p><div class="cw-option-row"><button type="button" id="cw-share-archetype">Share archetype only</button><button type="button" id="cw-copy-archetype">Copy result summary</button><button type="button" id="cw-quiz-again">Take again</button></div><p id="cw-quiz-feedback" class="cw-muted" role="status"></p></div>
+<section class="cw-section cw-container" id="explore" aria-labelledby="history-title">
+  <div class="cw-heading"><div><p class="cw-eyebrow">03 / RUNNABLE SYNTHETIC HISTORICAL INTELLIGENCE</p><h2 id="history-title">What did the record <em>actually say?</em></h2><p>Explore fictional House, Senate and municipal proceedings. Tenure is matched at the date of each question, and a procedural vote is never silently converted into support for the underlying policy.</p></div><span class="cw-evidence-tag">IMPLEMENTED / FIXTURE SNAPSHOT</span></div>
+  <div class="cw-workbench">
+    <div class="cw-controls">
+      <div><label for="cw-issue">Civic question</label><select id="cw-issue"></select></div>
+      <div><label for="cw-seat">Historical constituency or seat</label><select id="cw-seat"><option value="ALL">All fictional seats</option><option value="HOUSE:07">House / District 07</option><option value="HOUSE:08">House / District 08</option><option value="SENATE:ALL">Senate / both statewide seats</option><option value="MUNICIPAL:02">Municipal / Ward 02</option><option value="MUNICIPAL:03">Municipal / Ward 03</option></select></div>
+      <div class="cw-check"><label><input type="checkbox" id="cw-exact"> Show exact-question matches only</label></div>
+    </div>
+    <div class="cw-issue-panel"><span class="cw-mini">EXACT ISSUE PROPOSITION / FICTIONAL</span><p id="cw-issue-proposition"></p><p id="cw-history-summary" aria-live="polite" class="cw-muted"></p></div>
+    <div class="cw-history-list" id="cw-history-list" aria-live="polite"></div>
+    <div class="cw-workbench-footer"><span>Source correspondence is scoped to this deliberately incomplete fictional corpus.</span><a href="https://github.com/d3lefts/d3lefts/tree/main/projects/commonwealth-os/historical/">Backend, adapters, tests and API ↗</a></div>
   </div>
 </section>
 
@@ -104,6 +105,7 @@
     <ol id="cw-workflow-steps" class="cw-workflow-steps"><li>Propose</li><li>Amend</li><li>Deliberate</li><li>Demo vote</li><li>Verify</li><li>Review publication</li></ol><p id="cw-workflow-copy" aria-live="polite"></p>
     <div class="cw-actions"><button type="button" class="cw-primary" id="cw-next-step">Next demonstration stage</button><button type="button" class="cw-quiet-button" id="cw-reset-steps">Reset stages</button></div>
     <p class="cw-muted">Binding institutional votes require documented legal authority, real eligibility checks, independent election assurance and accessible alternatives. They are disabled throughout this public demo.</p>
+    <p><a class="cw-primary" href="commonwealth-browser/index.html">Launch the executable synthetic procedure checker ↗</a></p>
     <a href="https://github.com/d3lefts/d3lefts/tree/main/projects/commonwealth-os/workflow/">Inspect the versioned workflow contract ↗</a>
   </div>
 </section>
