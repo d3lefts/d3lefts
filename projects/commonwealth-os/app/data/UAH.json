@@ -1,0 +1,985 @@
+{
+  "version": "1.0-draft",
+  "dated": "2026-11-15",
+  "status": "RESEARCH DRAFT — ADVISORY, NONBINDING; NO INSTITUTIONAL ENDORSEMENT",
+  "pilot": "UAH",
+  "name": "Academic Commonwealth — University Student Government",
+  "jurisdiction": "Campus student-government organization; University of Alabama in Huntsville as proposed candidate",
+  "source_rule": "No legal status or enforceable vote may be inferred without source retrieval and independent legal review",
+  "questions": [
+    {
+      "id": "UAH-G01",
+      "concept_id": "G01",
+      "pilot": "UAH",
+      "domain": "Transparency",
+      "question": "Should the student government association publish its adopted annual budget in a searchable, itemized format?",
+      "governance_scope": "procedural_policy",
+      "legal_sources": [],
+      "legal_status": "not_yet_verified",
+      "kind": "standing_issue_seed",
+      "mapping_confidence": null,
+      "certification": "unvalidated",
+      "response_options": [
+        {
+          "code": "support",
+          "label": "Support",
+          "score": 1
+        },
+        {
+          "code": "oppose",
+          "label": "Do not support",
+          "score": -1
+        },
+        {
+          "code": "no_preference",
+          "label": "No preference",
+          "score": 0
+        },
+        {
+          "code": "need_information",
+          "label": "Need more information",
+          "score": null
+        },
+        {
+          "code": "not_applicable",
+          "label": "Not applicable to me",
+          "score": null
+        }
+      ]
+    },
+    {
+      "id": "UAH-G02",
+      "concept_id": "G02",
+      "pilot": "UAH",
+      "domain": "Transparency",
+      "question": "Should the student government association publish draft agendas at least seven days before regularly scheduled public meetings?",
+      "governance_scope": "procedural_policy",
+      "legal_sources": [],
+      "legal_status": "not_yet_verified",
+      "kind": "standing_issue_seed",
+      "mapping_confidence": null,
+      "certification": "unvalidated",
+      "response_options": [
+        {
+          "code": "support",
+          "label": "Support",
+          "score": 1
+        },
+        {
+          "code": "oppose",
+          "label": "Do not support",
+          "score": -1
+        },
+        {
+          "code": "no_preference",
+          "label": "No preference",
+          "score": 0
+        },
+        {
+          "code": "need_information",
+          "label": "Need more information",
+          "score": null
+        },
+        {
+          "code": "not_applicable",
+          "label": "Not applicable to me",
+          "score": null
+        }
+      ]
+    },
+    {
+      "id": "UAH-G03",
+      "concept_id": "G03",
+      "pilot": "UAH",
+      "domain": "Transparency",
+      "question": "Should the student government association publish how each governing-body representative voted on non-confidential decisions?",
+      "governance_scope": "procedural_policy",
+      "legal_sources": [],
+      "legal_status": "not_yet_verified",
+      "kind": "standing_issue_seed",
+      "mapping_confidence": null,
+      "certification": "unvalidated",
+      "response_options": [
+        {
+          "code": "support",
+          "label": "Support",
+          "score": 1
+        },
+        {
+          "code": "oppose",
+          "label": "Do not support",
+          "score": -1
+        },
+        {
+          "code": "no_preference",
+          "label": "No preference",
+          "score": 0
+        },
+        {
+          "code": "need_information",
+          "label": "Need more information",
+          "score": null
+        },
+        {
+          "code": "not_applicable",
+          "label": "Not applicable to me",
+          "score": null
+        }
+      ]
+    },
+    {
+      "id": "UAH-G04",
+      "concept_id": "G04",
+      "pilot": "UAH",
+      "domain": "Participation",
+      "question": "Should the student government association accept written constituent comments for at least five days before voting on non-emergency rule changes?",
+      "governance_scope": "procedural_policy",
+      "legal_sources": [],
+      "legal_status": "not_yet_verified",
+      "kind": "standing_issue_seed",
+      "mapping_confidence": null,
+      "certification": "unvalidated",
+      "response_options": [
+        {
+          "code": "support",
+          "label": "Support",
+          "score": 1
+        },
+        {
+          "code": "oppose",
+          "label": "Do not support",
+          "score": -1
+        },
+        {
+          "code": "no_preference",
+          "label": "No preference",
+          "score": 0
+        },
+        {
+          "code": "need_information",
+          "label": "Need more information",
+          "score": null
+        },
+        {
+          "code": "not_applicable",
+          "label": "Not applicable to me",
+          "score": null
+        }
+      ]
+    },
+    {
+      "id": "UAH-G05",
+      "concept_id": "G05",
+      "pilot": "UAH",
+      "domain": "Budget & oversight",
+      "question": "Should the student government association publish estimated annual operating costs before approving a new recurring service?",
+      "governance_scope": "procedural_policy",
+      "legal_sources": [],
+      "legal_status": "not_yet_verified",
+      "kind": "standing_issue_seed",
+      "mapping_confidence": null,
+      "certification": "unvalidated",
+      "response_options": [
+        {
+          "code": "support",
+          "label": "Support",
+          "score": 1
+        },
+        {
+          "code": "oppose",
+          "label": "Do not support",
+          "score": -1
+        },
+        {
+          "code": "no_preference",
+          "label": "No preference",
+          "score": 0
+        },
+        {
+          "code": "need_information",
+          "label": "Need more information",
+          "score": null
+        },
+        {
+          "code": "not_applicable",
+          "label": "Not applicable to me",
+          "score": null
+        }
+      ]
+    },
+    {
+      "id": "UAH-G06",
+      "concept_id": "G06",
+      "pilot": "UAH",
+      "domain": "Budget & oversight",
+      "question": "Should the student government association publish quarterly reports comparing actual expenditures with its approved budget?",
+      "governance_scope": "procedural_policy",
+      "legal_sources": [],
+      "legal_status": "not_yet_verified",
+      "kind": "standing_issue_seed",
+      "mapping_confidence": null,
+      "certification": "unvalidated",
+      "response_options": [
+        {
+          "code": "support",
+          "label": "Support",
+          "score": 1
+        },
+        {
+          "code": "oppose",
+          "label": "Do not support",
+          "score": -1
+        },
+        {
+          "code": "no_preference",
+          "label": "No preference",
+          "score": 0
+        },
+        {
+          "code": "need_information",
+          "label": "Need more information",
+          "score": null
+        },
+        {
+          "code": "not_applicable",
+          "label": "Not applicable to me",
+          "score": null
+        }
+      ]
+    },
+    {
+      "id": "UAH-G07",
+      "concept_id": "G07",
+      "pilot": "UAH",
+      "domain": "Accountability",
+      "question": "Should the student government association provide a documented procedure for correcting errors in its published decisions?",
+      "governance_scope": "procedural_policy",
+      "legal_sources": [],
+      "legal_status": "not_yet_verified",
+      "kind": "standing_issue_seed",
+      "mapping_confidence": null,
+      "certification": "unvalidated",
+      "response_options": [
+        {
+          "code": "support",
+          "label": "Support",
+          "score": 1
+        },
+        {
+          "code": "oppose",
+          "label": "Do not support",
+          "score": -1
+        },
+        {
+          "code": "no_preference",
+          "label": "No preference",
+          "score": 0
+        },
+        {
+          "code": "need_information",
+          "label": "Need more information",
+          "score": null
+        },
+        {
+          "code": "not_applicable",
+          "label": "Not applicable to me",
+          "score": null
+        }
+      ]
+    },
+    {
+      "id": "UAH-G08",
+      "concept_id": "G08",
+      "pilot": "UAH",
+      "domain": "Accountability",
+      "question": "Should the student government association publish quarterly progress reports on objectives established in its adopted plans?",
+      "governance_scope": "procedural_policy",
+      "legal_sources": [],
+      "legal_status": "not_yet_verified",
+      "kind": "standing_issue_seed",
+      "mapping_confidence": null,
+      "certification": "unvalidated",
+      "response_options": [
+        {
+          "code": "support",
+          "label": "Support",
+          "score": 1
+        },
+        {
+          "code": "oppose",
+          "label": "Do not support",
+          "score": -1
+        },
+        {
+          "code": "no_preference",
+          "label": "No preference",
+          "score": 0
+        },
+        {
+          "code": "need_information",
+          "label": "Need more information",
+          "score": null
+        },
+        {
+          "code": "not_applicable",
+          "label": "Not applicable to me",
+          "score": null
+        }
+      ]
+    },
+    {
+      "id": "UAH-S01",
+      "concept_id": "S01",
+      "pilot": "UAH",
+      "domain": "Student budget",
+      "question": "Should the SGA reserve at least 25% of its discretionary programming budget for grants to registered student organizations?",
+      "governance_scope": "proposed_policy_or_recommendation",
+      "legal_sources": [],
+      "legal_status": "not_yet_verified",
+      "kind": "standing_issue_seed",
+      "mapping_confidence": null,
+      "certification": "unvalidated",
+      "response_options": [
+        {
+          "code": "support",
+          "label": "Support",
+          "score": 1
+        },
+        {
+          "code": "oppose",
+          "label": "Do not support",
+          "score": -1
+        },
+        {
+          "code": "no_preference",
+          "label": "No preference",
+          "score": 0
+        },
+        {
+          "code": "need_information",
+          "label": "Need more information",
+          "score": null
+        },
+        {
+          "code": "not_applicable",
+          "label": "Not applicable to me",
+          "score": null
+        }
+      ]
+    },
+    {
+      "id": "UAH-S02",
+      "concept_id": "S02",
+      "pilot": "UAH",
+      "domain": "Student budget",
+      "question": "Should the SGA publish its eligibility criteria for student-organization funding?",
+      "governance_scope": "proposed_policy_or_recommendation",
+      "legal_sources": [],
+      "legal_status": "not_yet_verified",
+      "kind": "standing_issue_seed",
+      "mapping_confidence": null,
+      "certification": "unvalidated",
+      "response_options": [
+        {
+          "code": "support",
+          "label": "Support",
+          "score": 1
+        },
+        {
+          "code": "oppose",
+          "label": "Do not support",
+          "score": -1
+        },
+        {
+          "code": "no_preference",
+          "label": "No preference",
+          "score": 0
+        },
+        {
+          "code": "need_information",
+          "label": "Need more information",
+          "score": null
+        },
+        {
+          "code": "not_applicable",
+          "label": "Not applicable to me",
+          "score": null
+        }
+      ]
+    },
+    {
+      "id": "UAH-S03",
+      "concept_id": "S03",
+      "pilot": "UAH",
+      "domain": "Student budget",
+      "question": "Should the SGA publish the names of student organizations receiving grants and the amounts awarded?",
+      "governance_scope": "proposed_policy_or_recommendation",
+      "legal_sources": [],
+      "legal_status": "not_yet_verified",
+      "kind": "standing_issue_seed",
+      "mapping_confidence": null,
+      "certification": "unvalidated",
+      "response_options": [
+        {
+          "code": "support",
+          "label": "Support",
+          "score": 1
+        },
+        {
+          "code": "oppose",
+          "label": "Do not support",
+          "score": -1
+        },
+        {
+          "code": "no_preference",
+          "label": "No preference",
+          "score": 0
+        },
+        {
+          "code": "need_information",
+          "label": "Need more information",
+          "score": null
+        },
+        {
+          "code": "not_applicable",
+          "label": "Not applicable to me",
+          "score": null
+        }
+      ]
+    },
+    {
+      "id": "UAH-S04",
+      "concept_id": "S04",
+      "pilot": "UAH",
+      "domain": "Student budget",
+      "question": "Should the SGA conduct an open student hearing before adopting its annual discretionary budget?",
+      "governance_scope": "proposed_policy_or_recommendation",
+      "legal_sources": [],
+      "legal_status": "not_yet_verified",
+      "kind": "standing_issue_seed",
+      "mapping_confidence": null,
+      "certification": "unvalidated",
+      "response_options": [
+        {
+          "code": "support",
+          "label": "Support",
+          "score": 1
+        },
+        {
+          "code": "oppose",
+          "label": "Do not support",
+          "score": -1
+        },
+        {
+          "code": "no_preference",
+          "label": "No preference",
+          "score": 0
+        },
+        {
+          "code": "need_information",
+          "label": "Need more information",
+          "score": null
+        },
+        {
+          "code": "not_applicable",
+          "label": "Not applicable to me",
+          "score": null
+        }
+      ]
+    },
+    {
+      "id": "UAH-S05",
+      "concept_id": "S05",
+      "pilot": "UAH",
+      "domain": "Campus activities",
+      "question": "Should the SGA fund at least one event each semester that is open to all enrolled students?",
+      "governance_scope": "proposed_policy_or_recommendation",
+      "legal_sources": [],
+      "legal_status": "not_yet_verified",
+      "kind": "standing_issue_seed",
+      "mapping_confidence": null,
+      "certification": "unvalidated",
+      "response_options": [
+        {
+          "code": "support",
+          "label": "Support",
+          "score": 1
+        },
+        {
+          "code": "oppose",
+          "label": "Do not support",
+          "score": -1
+        },
+        {
+          "code": "no_preference",
+          "label": "No preference",
+          "score": 0
+        },
+        {
+          "code": "need_information",
+          "label": "Need more information",
+          "score": null
+        },
+        {
+          "code": "not_applicable",
+          "label": "Not applicable to me",
+          "score": null
+        }
+      ]
+    },
+    {
+      "id": "UAH-S06",
+      "concept_id": "S06",
+      "pilot": "UAH",
+      "domain": "Campus activities",
+      "question": "Should the SGA offer competitive grants for student-led community service projects?",
+      "governance_scope": "proposed_policy_or_recommendation",
+      "legal_sources": [],
+      "legal_status": "not_yet_verified",
+      "kind": "standing_issue_seed",
+      "mapping_confidence": null,
+      "certification": "unvalidated",
+      "response_options": [
+        {
+          "code": "support",
+          "label": "Support",
+          "score": 1
+        },
+        {
+          "code": "oppose",
+          "label": "Do not support",
+          "score": -1
+        },
+        {
+          "code": "no_preference",
+          "label": "No preference",
+          "score": 0
+        },
+        {
+          "code": "need_information",
+          "label": "Need more information",
+          "score": null
+        },
+        {
+          "code": "not_applicable",
+          "label": "Not applicable to me",
+          "score": null
+        }
+      ]
+    },
+    {
+      "id": "UAH-S07",
+      "concept_id": "S07",
+      "pilot": "UAH",
+      "domain": "Campus activities",
+      "question": "Should the SGA allow enrolled students to attend open SGA meetings remotely?",
+      "governance_scope": "proposed_policy_or_recommendation",
+      "legal_sources": [],
+      "legal_status": "not_yet_verified",
+      "kind": "standing_issue_seed",
+      "mapping_confidence": null,
+      "certification": "unvalidated",
+      "response_options": [
+        {
+          "code": "support",
+          "label": "Support",
+          "score": 1
+        },
+        {
+          "code": "oppose",
+          "label": "Do not support",
+          "score": -1
+        },
+        {
+          "code": "no_preference",
+          "label": "No preference",
+          "score": 0
+        },
+        {
+          "code": "need_information",
+          "label": "Need more information",
+          "score": null
+        },
+        {
+          "code": "not_applicable",
+          "label": "Not applicable to me",
+          "score": null
+        }
+      ]
+    },
+    {
+      "id": "UAH-S08",
+      "concept_id": "S08",
+      "pilot": "UAH",
+      "domain": "Campus activities",
+      "question": "Should the SGA accept written policy proposals from any enrolled student?",
+      "governance_scope": "proposed_policy_or_recommendation",
+      "legal_sources": [],
+      "legal_status": "not_yet_verified",
+      "kind": "standing_issue_seed",
+      "mapping_confidence": null,
+      "certification": "unvalidated",
+      "response_options": [
+        {
+          "code": "support",
+          "label": "Support",
+          "score": 1
+        },
+        {
+          "code": "oppose",
+          "label": "Do not support",
+          "score": -1
+        },
+        {
+          "code": "no_preference",
+          "label": "No preference",
+          "score": 0
+        },
+        {
+          "code": "need_information",
+          "label": "Need more information",
+          "score": null
+        },
+        {
+          "code": "not_applicable",
+          "label": "Not applicable to me",
+          "score": null
+        }
+      ]
+    },
+    {
+      "id": "UAH-S09",
+      "concept_id": "S09",
+      "pilot": "UAH",
+      "domain": "Academic advocacy",
+      "question": "Should the SGA formally recommend that the university extend library hours during final-examination weeks?",
+      "governance_scope": "proposed_policy_or_recommendation",
+      "legal_sources": [],
+      "legal_status": "not_yet_verified",
+      "kind": "standing_issue_seed",
+      "mapping_confidence": null,
+      "certification": "unvalidated",
+      "response_options": [
+        {
+          "code": "support",
+          "label": "Support",
+          "score": 1
+        },
+        {
+          "code": "oppose",
+          "label": "Do not support",
+          "score": -1
+        },
+        {
+          "code": "no_preference",
+          "label": "No preference",
+          "score": 0
+        },
+        {
+          "code": "need_information",
+          "label": "Need more information",
+          "score": null
+        },
+        {
+          "code": "not_applicable",
+          "label": "Not applicable to me",
+          "score": null
+        }
+      ]
+    },
+    {
+      "id": "UAH-S10",
+      "concept_id": "S10",
+      "pilot": "UAH",
+      "domain": "Academic advocacy",
+      "question": "Should the SGA formally recommend that the university publish required course-material costs before class registration opens?",
+      "governance_scope": "proposed_policy_or_recommendation",
+      "legal_sources": [],
+      "legal_status": "not_yet_verified",
+      "kind": "standing_issue_seed",
+      "mapping_confidence": null,
+      "certification": "unvalidated",
+      "response_options": [
+        {
+          "code": "support",
+          "label": "Support",
+          "score": 1
+        },
+        {
+          "code": "oppose",
+          "label": "Do not support",
+          "score": -1
+        },
+        {
+          "code": "no_preference",
+          "label": "No preference",
+          "score": 0
+        },
+        {
+          "code": "need_information",
+          "label": "Need more information",
+          "score": null
+        },
+        {
+          "code": "not_applicable",
+          "label": "Not applicable to me",
+          "score": null
+        }
+      ]
+    },
+    {
+      "id": "UAH-S11",
+      "concept_id": "S11",
+      "pilot": "UAH",
+      "domain": "Academic advocacy",
+      "question": "Should the SGA formally recommend that the university offer remote academic-advising appointments?",
+      "governance_scope": "proposed_policy_or_recommendation",
+      "legal_sources": [],
+      "legal_status": "not_yet_verified",
+      "kind": "standing_issue_seed",
+      "mapping_confidence": null,
+      "certification": "unvalidated",
+      "response_options": [
+        {
+          "code": "support",
+          "label": "Support",
+          "score": 1
+        },
+        {
+          "code": "oppose",
+          "label": "Do not support",
+          "score": -1
+        },
+        {
+          "code": "no_preference",
+          "label": "No preference",
+          "score": 0
+        },
+        {
+          "code": "need_information",
+          "label": "Need more information",
+          "score": null
+        },
+        {
+          "code": "not_applicable",
+          "label": "Not applicable to me",
+          "score": null
+        }
+      ]
+    },
+    {
+      "id": "UAH-S12",
+      "concept_id": "S12",
+      "pilot": "UAH",
+      "domain": "Academic advocacy",
+      "question": "Should the SGA formally recommend that the university provide at least one campus-shuttle trip after 9 p.m. on weekdays during the academic term?",
+      "governance_scope": "proposed_policy_or_recommendation",
+      "legal_sources": [],
+      "legal_status": "not_yet_verified",
+      "kind": "standing_issue_seed",
+      "mapping_confidence": null,
+      "certification": "unvalidated",
+      "response_options": [
+        {
+          "code": "support",
+          "label": "Support",
+          "score": 1
+        },
+        {
+          "code": "oppose",
+          "label": "Do not support",
+          "score": -1
+        },
+        {
+          "code": "no_preference",
+          "label": "No preference",
+          "score": 0
+        },
+        {
+          "code": "need_information",
+          "label": "Need more information",
+          "score": null
+        },
+        {
+          "code": "not_applicable",
+          "label": "Not applicable to me",
+          "score": null
+        }
+      ]
+    },
+    {
+      "id": "UAH-S13",
+      "concept_id": "S13",
+      "pilot": "UAH",
+      "domain": "Campus policy advocacy",
+      "question": "Should the SGA formally recommend that the university permit student organizations to reserve available meeting rooms without rental charges?",
+      "governance_scope": "proposed_policy_or_recommendation",
+      "legal_sources": [],
+      "legal_status": "not_yet_verified",
+      "kind": "standing_issue_seed",
+      "mapping_confidence": null,
+      "certification": "unvalidated",
+      "response_options": [
+        {
+          "code": "support",
+          "label": "Support",
+          "score": 1
+        },
+        {
+          "code": "oppose",
+          "label": "Do not support",
+          "score": -1
+        },
+        {
+          "code": "no_preference",
+          "label": "No preference",
+          "score": 0
+        },
+        {
+          "code": "need_information",
+          "label": "Need more information",
+          "score": null
+        },
+        {
+          "code": "not_applicable",
+          "label": "Not applicable to me",
+          "score": null
+        }
+      ]
+    },
+    {
+      "id": "UAH-S14",
+      "concept_id": "S14",
+      "pilot": "UAH",
+      "domain": "Campus policy advocacy",
+      "question": "Should the SGA formally recommend that the university install secure bicycle parking near residence halls?",
+      "governance_scope": "proposed_policy_or_recommendation",
+      "legal_sources": [],
+      "legal_status": "not_yet_verified",
+      "kind": "standing_issue_seed",
+      "mapping_confidence": null,
+      "certification": "unvalidated",
+      "response_options": [
+        {
+          "code": "support",
+          "label": "Support",
+          "score": 1
+        },
+        {
+          "code": "oppose",
+          "label": "Do not support",
+          "score": -1
+        },
+        {
+          "code": "no_preference",
+          "label": "No preference",
+          "score": 0
+        },
+        {
+          "code": "need_information",
+          "label": "Need more information",
+          "score": null
+        },
+        {
+          "code": "not_applicable",
+          "label": "Not applicable to me",
+          "score": null
+        }
+      ]
+    },
+    {
+      "id": "UAH-S15",
+      "concept_id": "S15",
+      "pilot": "UAH",
+      "domain": "Campus policy advocacy",
+      "question": "Should the SGA formally recommend that the university publish aggregate campus-safety incident counts each semester?",
+      "governance_scope": "proposed_policy_or_recommendation",
+      "legal_sources": [],
+      "legal_status": "not_yet_verified",
+      "kind": "standing_issue_seed",
+      "mapping_confidence": null,
+      "certification": "unvalidated",
+      "response_options": [
+        {
+          "code": "support",
+          "label": "Support",
+          "score": 1
+        },
+        {
+          "code": "oppose",
+          "label": "Do not support",
+          "score": -1
+        },
+        {
+          "code": "no_preference",
+          "label": "No preference",
+          "score": 0
+        },
+        {
+          "code": "need_information",
+          "label": "Need more information",
+          "score": null
+        },
+        {
+          "code": "not_applicable",
+          "label": "Not applicable to me",
+          "score": null
+        }
+      ]
+    },
+    {
+      "id": "UAH-S16",
+      "concept_id": "S16",
+      "pilot": "UAH",
+      "domain": "Campus policy advocacy",
+      "question": "Should the SGA formally recommend that the university provide drinking-water refill stations in all major academic buildings?",
+      "governance_scope": "proposed_policy_or_recommendation",
+      "legal_sources": [],
+      "legal_status": "not_yet_verified",
+      "kind": "standing_issue_seed",
+      "mapping_confidence": null,
+      "certification": "unvalidated",
+      "response_options": [
+        {
+          "code": "support",
+          "label": "Support",
+          "score": 1
+        },
+        {
+          "code": "oppose",
+          "label": "Do not support",
+          "score": -1
+        },
+        {
+          "code": "no_preference",
+          "label": "No preference",
+          "score": 0
+        },
+        {
+          "code": "need_information",
+          "label": "Need more information",
+          "score": null
+        },
+        {
+          "code": "not_applicable",
+          "label": "Not applicable to me",
+          "score": null
+        }
+      ]
+    }
+  ],
+  "response_semantics": {
+    "support": 1,
+    "oppose": -1,
+    "no_preference": 0,
+    "need_information": null,
+    "not_applicable": null,
+    "unanswered": null
+  },
+  "question_budget": {
+    "fixed": 24,
+    "adaptive_max": 12,
+    "optional_priorities": 1,
+    "total_max": 37
+  }
+}

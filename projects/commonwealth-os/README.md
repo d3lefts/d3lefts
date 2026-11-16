@@ -34,8 +34,8 @@ A **2027 Huntsville pitch** is a demonstration target, **not** a city deployment
 ## Synthetic legislative workflow v1.1
 [Formal state-machine specification](workflow/FORMAL_WORKFLOW_v1_1.md) · [Executable demo reference and independent replay checker](workflow/README.md). The demo reference rejects OFFICIAL mode; 28 internal tests cover the fictional case and negative guards, not a legally authorized electronic election.
 
-## Runnable legislative app v0.1
-[Run the mobile-first fictional governance workspace](app/README.md). This FastAPI / SQLite / vanilla JS demo reuses the versioned workflow reducer and independent checker, has local HTTP integration tests, and explicitly **does not authenticate real voters, authorize elections, or ingest municipal records**. See [source](app/main.py) and [scoped app CI](../../.github/workflows/commonwealth-app-ci.yml).
+## Runnable legislative app v0.2
+[Run the full synthetic governance workspace v0.2](app/README.md). The Python mobile-first app now includes three fictional pilot questionnaires, audited role revocation, multi-item dockets, synthetic budget/public views, private advisory profiles, and locally signed test receipts. It reuses the v1.1 workflow reducer and independent checker. **Role switching remains a demo, and no real municipal data, verified voter identity, official election, or authorized public service is present.** See [source](app/main.py) and [scoped app CI](../../.github/workflows/commonwealth-app-ci.yml).
 
 ## V1 demonstrator
 The first testable vertical slice uses entirely fictional governance records:
@@ -45,7 +45,7 @@ Its goal is a replayable governance transaction with a version-locked motion, ru
 The archived v1.0 reference package reported 8 passing toy checker tests. Those do **not** constitute deployed software, verified ballot secrecy, legal certification, or independent security audit.
 
 ## Evidence labels
-DESIGN / IMPLEMENTED / INTERNALLY TESTED / INDEPENDENTLY VALIDATED / LEGALLY AUTHORIZED / DEPLOYED must remain distinct. Current state: **DESIGN**, plus a narrow source-package toy checker (internally tested). All other states remain unverified.
+DESIGN / IMPLEMENTED / INTERNALLY TESTED / INDEPENDENTLY VALIDATED / LEGALLY AUTHORIZED / DEPLOYED must remain distinct. Current state: **IMPLEMENTED SYNTHETIC PROTOTYPES** (Python v0.2 and separate JS browser/server workbenches), **INTERNALLY TESTED**, not externally certified, legally authorized, identity-verified or deployed.
 
 ## Integrated product design and evidence archive
 
