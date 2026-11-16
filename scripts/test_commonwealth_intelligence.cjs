@@ -23,6 +23,14 @@ for (const name of ["house","senate","municipal","issues"]) {
 const find = (source,id) => Object.assign({chamber:source.chamber},source.questions.find(q => q.question_id === id));
 assert.equal(L.quizCount,20);
 assert.equal(L.archetypeCount,12);
+assert.equal(L.qualifyQuiz(Array(20).fill(null)).eligible,false,"all skips must be inconclusive");
+assert.equal(L.qualifyQuiz([1,null,1,...Array(17).fill(null)]).eligible,false,"three-response shortcut forbidden");
+assert.equal(L.qualifyQuiz(Array(20).fill(0)).eligible,false,"neutral answers are not directional");
+const directional=[1,-1,1,-1,-1,1,-1,1,-1,1,1,-1,-1,-1,1,1,1,-1,-1,-1];
+const allPositive=L.qualifyQuiz(directional.map((v)=>v));
+assert.equal(allPositive.eligible,true,"complete, directional source-coded instrument qualifies");
+assert.equal(allPositive.answered,20);
+
 assert.equal(L.tenureAt(F.house,"2025-01-02","07")[0].person_id,"fx-house-morgan");
 assert.equal(L.tenureAt(F.house,"2025-01-03","07")[0].person_id,"fx-house-sam");
 assert.equal(L.tenureAt(F.house,"2027-01-03","07").length,0);
