@@ -77,3 +77,7 @@
 .cwpart-showcase strong{font-size:1.1rem;line-height:1.23;color:#f0fffb}
 .cwpart-showcase small{font-size:.77rem;line-height:1.4;color:#b4cad1}
 @media(max-width:680px){.cwpart-showcase{grid-template-columns:1fr}.cwpart-showcase a{min-height:auto}}
+
+/* v1.3 local durable demo controls; intentionally hidden from production APIs. */
+.cwpart-server{border:1px solid var(--line,#d9e0e9);border-radius:12px;padding:1rem;margin-bottom:1.25rem}
+.cwpart-server input[type=password]{width:min(100%,32rem)}
