@@ -45,12 +45,41 @@ async function exportPassport(){
  const raw=JSON.stringify(current,null,2);
  const digest=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(raw));
  const hex=[...new Uint8Array(digest)].map(v=>v.toString(16).padStart(2,"0")).join("");
- const bundle=JSON.stringify({warning:"Synthetic demonstration; digest is not a signature or proof of legal authority.",sha256OfPayload:hex,payload:current},null,2);
+ const bundle=JSON.stringify({
+   schemaVersion:1,
+   digestScope:"UTF8(JSON.stringify(payload,null,2))",
+   warning:"Synthetic demonstration: payload integrity only; not a signature, independently authenticated source, or legal authority.",
+   sha256OfPayload:hex,
+   payload:current
+ },null,2);
  const blob=new Blob([bundle],{type:"application/json"});
  const url=URL.createObjectURL(blob),link=document.createElement("a");
  link.href=url;link.download="commonwealth-"+current.profileId+"-demo-passport.json";link.click();
  setTimeout(()=>URL.revokeObjectURL(url),5000);
 }
+async function verifyExport(){
+ const file=byId("verify-input").files?.[0];
+ const status=byId("verify-result");
+ if(!file){status.textContent="Choose a downloaded Commonwealth JSON file first.";return;}
+ if(file.size>2_000_000){status.textContent="Rejected: evidence file is larger than the 2 MB demo limit.";return;}
+ try{
+  const parsed=JSON.parse(await file.text());
+  if(!parsed || parsed.schemaVersion!==1 ||
+     parsed.digestScope!=="UTF8(JSON.stringify(payload,null,2))" ||
+     !/^[a-f0-9]{64}$/.test(parsed.sha256OfPayload) ||
+     !parsed.payload || parsed.payload.report?.mode!=="SYNTHETIC" ||
+     parsed.payload.report?.officialCertification!==false ||
+     parsed.payload.report?.legalAuthorization!=="NOT_ASSESSED")
+    throw new Error("Invalid or out-of-scope demo evidence envelope.");
+  const bytes=new TextEncoder().encode(JSON.stringify(parsed.payload,null,2));
+  const rawDigest=await crypto.subtle.digest("SHA-256",bytes);
+  const digest=[...new Uint8Array(rawDigest)].map(v=>v.toString(16).padStart(2,"0")).join("");
+  status.textContent=digest===parsed.sha256OfPayload ?
+    "MATCH: payload SHA-256 agrees with the exported digest. Origin, authority, and real-world correctness remain unverified." :
+    "MISMATCH: exported payload differs from its recorded SHA-256 digest.";
+ }catch(e){status.textContent="INVALID: "+e.message;}
+}
+byId("verify").addEventListener("click",()=>{verifyExport().catch(()=>{byId("verify-result").textContent="Integrity check could not run.";});});
 byId("scenario").addEventListener("change",run);
 byId("run").addEventListener("click",run);
 byId("download").addEventListener("click",()=>{exportPassport().catch(()=>{alert("Export failed: WebCrypto requires a secure context, such as localhost or HTTPS.");});});
