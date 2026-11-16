@@ -11,6 +11,7 @@ import { ParticipationLedger } from '../src/participation.mjs';
 import { PgParticipationStore } from '../src/pg-participation.mjs';
 import { signingKey, exportEvidence } from '../src/evidence.mjs';
 import { verifyExternalCheckpoint } from '../verify-pg-anchor.mjs';
+import { verifyPgAnchoredPrefix } from '../verify-pg-ledger-anchor.mjs';
 import { createPgServer } from '../src/pg-http.mjs';
 
 const digest=bytes=>createHash('sha256').update(bytes).digest('hex');
@@ -120,9 +121,16 @@ test('cold migration, PostgreSQL durability, concurrent writers, AEAD tamper det
       const envelope=exportEvidence(anchor,signing);
       const pinned=createPublicKey(signing).export({type:'spki',format:'pem'}).toString();
       assert.equal(verifyExternalCheckpoint(envelope,pinned).headHash,anchor.headHash);
+      const anchored=await verifyPgAnchoredPrefix({connectionString:process.env.COMMONWEALTH_PG_URL,eventKeyHex:process.env.COMMONWEALTH_PG_EVENT_KEY,envelope,pinnedPublicKeyPem:pinned});
+      assert.equal(anchored.anchoredPrefixMatched,true);
       const altered=structuredClone(envelope);altered.payload.sequence=anchor.sequence+1;
       assert.throws(()=>verifyExternalCheckpoint(altered,pinned),/CHECKPOINT_SIGNATURE_INVALID/);
       assert.throws(()=>verifyExternalCheckpoint(envelope,createPublicKey(signingKey(join(dir,'forged-key.pem'))).export({type:'spki',format:'pem'}).toString()),/PINNED_CHECKPOINT_SIGNER_MISMATCH/);
+
+      // A later legitimate append does not invalidate an externally pinned prefix.
+      const advanced=await pg.command(tokens[scope]['member-a'],command(scope,{type:'ADVISE',id:'P-UAH-01',choice:'OPPOSE'},'post-anchor-advisory-009',anchor.sequence,2));
+      assert.equal(advanced.sequence,anchor.sequence+1);
+      assert.equal((await verifyPgAnchoredPrefix({connectionString:process.env.COMMONWEALTH_PG_URL,eventKeyHex:process.env.COMMONWEALTH_PG_EVENT_KEY,envelope,pinnedPublicKeyPem:pinned})).anchoredPrefixMatched,true);
 
       // Unprivileged HTTP paths do not expose commands, encrypted rows, or private advice.
       const server=createPgServer(pg,{keyPath:join(dir,'receipt-key.pem')});
@@ -140,7 +148,7 @@ test('cold migration, PostgreSQL durability, concurrent writers, AEAD tamper det
 
       // Manifest contains no credentials and can validate a separate restored database.
       const manifest=process.env.CW_PG_RECOVERY_MANIFEST;
-      if(manifest)writeFileSync(manifest,JSON.stringify({tenant:scope,headHash:anchor.headHash,sequence:anchor.sequence,seedHash:anchor.seedHash}),{mode:0o600});
+      if(manifest){const latest=await pg.checkpoint(scope);writeFileSync(manifest,JSON.stringify({tenant:scope,headHash:latest.headHash,sequence:latest.sequence,seedHash:latest.seedHash}),{mode:0o600});}
     }finally{await pg.close();}
   }finally{try{sqlite.close();}catch{}rmSync(dir,{recursive:true,force:true});}
 });
