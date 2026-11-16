@@ -1,0 +1,174 @@
+{
+  "schema": "nightfall-permission-demo-evidence-v1",
+  "asOf": "2026-11-15",
+  "theorem": {
+    "url": "https://github.com/d3lefts/d3lefts/pull/636",
+    "ci": "https://github.com/d3lefts/d3lefts/actions/runs/43801167480",
+    "model": "Frozen authority after a single within-window trusted checkpoint, exact independent modular observations, complete source-impact closure, independent obligations, adequate trusted effect guards. Matched finite evidence price."
+  },
+  "protocol": {
+    "objective": "Minimize new evidence cost for a batch of genuinely safe actions; fixed guard/facility costs shared by all policies and omitted from deltas.",
+    "policies": [
+      "full direct all actions",
+      "impact-aware direct fresh only",
+      "impact-aware paired fresh only",
+      "optimal mixture of direct and pairs"
+    ],
+    "noClaim": "These baselines are illustrative, not replicas of frontier commercial systems. An equivalently optimized comparator ties the optimum.",
+    "predictions": [
+      "Tight case: selective policy finishes where a full refresh cannot.",
+      "Mixed policy beats impacted-direct with scarce capacity and high direct-check fee.",
+      "With abundant capacity, an impacted-paired comparator ties.",
+      "High raw disclosure fee changes preferred evidence mode.",
+      "Unauthenticated change-impact closure cannot support sound reuse."
+    ]
+  },
+  "cases": {
+    "tightChanged": {
+      "N": 6,
+      "cached": 4,
+      "invalidated": 1,
+      "K": 4,
+      "raw": 1,
+      "rawFee": 0,
+      "direct": 5,
+      "directFee": 0,
+      "guards": 6,
+      "expected": [
+        null,
+        15,
+        null,
+        12
+      ]
+    },
+    "tightUnchanged": {
+      "N": 6,
+      "cached": 4,
+      "invalidated": 0,
+      "K": 4,
+      "raw": 1,
+      "rawFee": 0,
+      "direct": 5,
+      "directFee": 0,
+      "guards": 6,
+      "expected": [
+        null,
+        10,
+        4,
+        4
+      ]
+    },
+    "ample": {
+      "N": 6,
+      "cached": 4,
+      "invalidated": 1,
+      "K": 7,
+      "raw": 1,
+      "rawFee": 0,
+      "direct": 5,
+      "directFee": 0,
+      "guards": 6,
+      "expected": [
+        30,
+        15,
+        6,
+        6
+      ]
+    },
+    "privacy": {
+      "N": 6,
+      "cached": 4,
+      "invalidated": 1,
+      "K": 7,
+      "raw": 1,
+      "rawFee": 4,
+      "direct": 5,
+      "directFee": 0,
+      "guards": 6,
+      "expected": [
+        30,
+        15,
+        30,
+        15
+      ]
+    },
+    "parity": {
+      "N": 6,
+      "cached": 4,
+      "invalidated": 1,
+      "K": 7,
+      "raw": 1,
+      "rawFee": 0,
+      "direct": 2,
+      "directFee": 0,
+      "guards": 6,
+      "expected": [
+        12,
+        6,
+        6,
+        6
+      ]
+    }
+  },
+  "observed": {
+    "source": "https://github.com/d3lefts/d3lefts/pull/605",
+    "ci": "https://github.com/d3lefts/d3lefts/actions/runs/43737300428",
+    "context": "ControlArena IaC Fast 20.1.1; six investigator-authored source-matched candidates (two honest, four harmful). No unrestricted attack-model win or production AWS effect.",
+    "guardTimes": "Means of 50 warmup-excluded checks per fixture. Guard-only latency, excludes CDK synthesis and official scoring.",
+    "rows": [
+      [
+        "Narrow FSx guard",
+        4,
+        2,
+        89.5
+      ],
+      [
+        "Source-path selective audit",
+        1,
+        2,
+        473.73
+      ],
+      [
+        "Full mission audit",
+        0,
+        2,
+        643.48
+      ],
+      [
+        "All-SCP baseline pin",
+        0,
+        2,
+        1623.83
+      ]
+    ],
+    "additional": "Local atomic commit service median 10.3798ms; one no-effect source revision demanded ~8.239s re-synthesis. Real production latency and USD prices are unmeasured.",
+    "lesson": "Faster selective audit admitted a harmful authored fixture. The broad all-SCP check was 2.52× slower than full audit on this fixed workload."
+  },
+  "counterexample": {
+    "before": [
+      "00",
+      "01"
+    ],
+    "after": [
+      "00",
+      "01",
+      "10"
+    ],
+    "nominal": "00",
+    "rightOnlyInvalidAfter": true,
+    "rawPairsCost": 8,
+    "predicateCost": 9,
+    "caveat": "Possible-world indistinguishability is exact; synthetic source restrictions and disclosure fees do not establish real semantic correctness or cryptographic privacy."
+  },
+  "audit": {
+    "checker": "Independent finite DP against closed-form theorem",
+    "stop": "Do not promote an outcome when proof formula differs from oracle, a stale certificate is accepted, or a stronger matched baseline ties or wins.",
+    "open": [
+      "Repeated adaptive policy changes",
+      "Correlated shared sensors with noise and evolving distributions",
+      "Privacy guarantees",
+      "Complete physical effect mediation",
+      "Independent human review"
+    ]
+  }
+}
