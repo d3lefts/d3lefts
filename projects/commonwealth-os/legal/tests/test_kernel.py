@@ -96,6 +96,11 @@ class LegalPassportTests(unittest.TestCase):
         self.doc["rules"][0]["when_false"].append("historic_exception_granted")
         self.outcome("INDETERMINATE")
 
+    def test_next_day_requires_fresh_negative_evidence(self):
+        self.doc["as_of"] = "2026-11-16"
+        self.doc["known_at"] = "2026-11-16"
+        self.outcome("INDETERMINATE")
+
     def test_missing_source(self):
         self.doc["sources"].pop()
         self.outcome("INVALID")
