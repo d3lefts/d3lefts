@@ -1,5 +1,4 @@
-/* Commonwealth OS participation & accountability workspace v1.2.
-   All actions are voluntary, synthetic, in-memory and nonbinding. */
+/* Commonwealth OS participation v1.3 — optional localhost-only SQLite mode; no official authority. */
 import {INSTITUTIONS,STATUS,CHOICES,BUDGET_PROJECTS,MEETINGS,seededBoard,transact,budgetSlate,publicDossier,validateBoard} from './participation-core.mjs';
 const byId=id=>document.getElementById(id);
 const element=(tag,cls,txt)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(txt!==undefined)n.textContent=String(txt);return n;};
@@ -7,6 +6,48 @@ const append=(parent,...children)=>{parent.append(...children);return parent;};
 const empty=node=>{node.replaceChildren();return node;};
 const choiceLabel={SUPPORT:'Support',OPPOSE:'Do not support',NO_PREFERENCE:'No preference',NEED_INFORMATION:'Need information'};
 let board=seededBoard();let institution='UAH';let selected='P-UAH-01';let budgetChoices=new Set();let mode='VISITOR';
+let remote=null,offlineBoard=board,sending=false;
+const localStances=new Map();
+const stanceKey=(p)=>institution+':'+p.id+':'+p.revision;
+async function api(path,options={}){
+ const response=await fetch(path,{...options,headers:{Authorization:'Bearer '+remote.token,...(options.body?{'Content-Type':'application/json'}:{})},cache:'no-store',credentials:'omit',redirect:'error'});
+ let data;try{data=await response.json();}catch{throw Error('INVALID_LOCAL_SERVER_RESPONSE');}
+ if(!response.ok)throw Error(data.error||'LOCAL_SERVER_REQUEST_FAILED');
+ return data;
+}
+async function refreshRemote(){
+ const data=await api('/api/v1/participation/'+remote.institution);
+ remote.version=data.version;board=data.board;validateBoard(board);
+ if(!board.proposals.some(p=>p.id===selected))selected=board.proposals[0]?.id||null;
+ renderAll();
+}
+async function connectRemote(){
+ if(remote)return;
+ const input=byId('cwpart-token'),token=input.value.trim();input.value='';
+ if(!/^[a-f0-9]{64}$/.test(token)){notice('Use a fictional 64-character token from npm run seed on localhost.','error');return;}
+ try{
+  const response=await fetch('/api/v1/me',{headers:{Authorization:'Bearer '+token},cache:'no-store',credentials:'omit',redirect:'error'});
+  if(!response.ok)throw Error('LOCAL_TOKEN_NOT_AUTHENTICATED');
+  const me=await response.json();
+  const target={'student-demo':'UAH','hoa-demo':'HOA','municipal-demo':'HSV'}[me.institutionId];
+  if(!target)throw Error('NO_PARTICIPATION_ADAPTER_FOR_THIS_FICTIONAL_TENANT');
+  offlineBoard=board;remote={token,institution:target,actor:me,version:0};
+  institution=target;selected=null;budgetChoices.clear();
+  mode=['admin','chair','clerk'].includes(me.role)?'STEWARD':'VISITOR';
+  await refreshRemote();
+  byId('cwpart-institution').disabled=true;byId('cwpart-role').disabled=true;byId('cwpart-reset').disabled=true;
+  byId('cwpart-connect').disabled=true;byId('cwpart-disconnect').disabled=false;
+  notice('Connected to local SQLite as fictional '+me.role+'. This is not institutional authorization.','ok');
+ }catch(e){remote=null;board=offlineBoard;institution='UAH';selected='P-UAH-01';mode='VISITOR';renderAll();notice('Connection failed: '+e.message+'. Browser-only mode retained.','error');}
+}
+function disconnectRemote(){
+ if(!remote)return;
+ remote=null;board=offlineBoard;institution='UAH';selected='P-UAH-01';mode='VISITOR';budgetChoices.clear();localStances.clear();
+ for(const id of ['cwpart-institution','cwpart-role','cwpart-reset','cwpart-connect'])byId(id).disabled=false;
+ byId('cwpart-disconnect').disabled=true;
+ notice('Disconnected. Server changes retained on localhost; local-only demo restored.','ok');renderAll();
+}
+
 const label=(id,txt)=>{if(byId(id))byId(id).textContent=String(txt);};
 const message=(text,kind='')=>element('p','cwpart-message '+kind,text);
 function button(text,action,{secondary=false,disabled=false}={}){
@@ -14,8 +55,31 @@ function button(text,action,{secondary=false,disabled=false}={}){
 }
 function notice(text,kind=''){label('cwpart-feedback',text);const node=byId('cwpart-feedback');if(node)node.dataset.kind=kind;}
 function current(){return board.proposals.find(x=>x.id===selected&&x.institution===institution)||null;}
-function apply(cmd){const result=transact(board,{...cmd,institution});if(result.ok){board=result.board;notice(result.reason,'ok');renderAll();}else notice(result.reason,'error');}
-function setInstitution(value){if(!INSTITUTIONS[value])return;institution=value;selected=board.proposals.find(x=>x.institution===institution)?.id||null;budgetChoices=new Set();renderAll();}
+async function apply(cmd){
+ if(remote){
+  if(cmd.type==='ADVISE'){
+   const p=current();if(!p)return false;
+   localStances.set(stanceKey(p),cmd.choice);
+   notice('Your practice answer stays in browser memory. It was not sent to the server or counted as a vote.','ok');
+   renderDetail();return true;
+  }
+  if(sending)return false;
+  sending=true;
+  try{
+   const data=await api('/api/v1/participation/'+remote.institution+'/commands',{method:'POST',body:JSON.stringify({key:'participation-'+crypto.randomUUID(),expectedVersion:remote.version,command:{...cmd,institution:remote.institution}})});
+   remote.version=data.version;board=data.board;
+   if(cmd.type==='CREATE')selected=board.proposals[0]?.id;
+   notice('Saved fictional action in SQLite v'+remote.version+'. No official authority.','ok');renderAll();return true;
+  }catch(e){
+   const cause=e.message;try{await refreshRemote();}catch{}
+   notice('Backend rejected action: '+cause+'. Refresh attempted to reconcile state.','error');return false;
+  }finally{sending=false;}
+ }
+ const result=transact(board,{...cmd,institution});
+ if(result.ok){board=result.board;offlineBoard=board;notice(result.reason,'ok');renderAll();return true;}
+ notice(result.reason,'error');return false;
+}
+function setInstitution(value){if(remote||!INSTITUTIONS[value])return;institution=value;selected=board.proposals.find(x=>x.institution===institution)?.id||null;budgetChoices=new Set();renderAll();}
 function renderDirectory(){
  const list=empty(byId('cwpart-list'));
  const needle=byId('cwpart-search').value.toLowerCase().trim(),filter=byId('cwpart-filter').value;
@@ -45,10 +109,10 @@ function renderDetail(){
   const control=byId('cwui-issue-filter');if(control){control.value=p.issueId;control.dispatchEvent(new Event('change'));byId('cwui-representation')?.scrollIntoView({behavior:'smooth'});}else notice('Historical workspace is unavailable','error');
  },{secondary:true});panel.append(link);panel.append(message('This is a topic link only. It does not assert any actual official endorsed this proposal.'));}
  const feedback=element('section','cwpart-subsection');feedback.append(element('h4','','Your advisory response · current revision'));
- const choices=element('div','cwpart-buttons');const previous=p.positions.find(x=>x.author==='FICTIONAL_VISITOR'&&x.revision===p.revision)?.choice;
+ const choices=element('div','cwpart-buttons');const previous=remote?localStances.get(stanceKey(p)):p.positions.find(x=>x.author==='FICTIONAL_VISITOR'&&x.revision===p.revision)?.choice;
  for(const choice of CHOICES){const b=button(choiceLabel[choice],()=>apply({type:'ADVISE',id:p.id,choice}),{secondary:previous!==choice,disabled:!['OPEN','REVIEW'].includes(p.stage)});b.setAttribute('aria-pressed',String(choice===previous));choices.append(b);}
  feedback.append(choices);feedback.append(message(previous?'Your current response: '+choiceLabel[previous]+' (not a vote)':'No response recorded for this text version. Unknown ≠ No preference.'));
- const older=p.positions.filter(x=>x.revision!==p.revision);if(older.length)feedback.append(message(`${older.length} older-version response(s) explicitly excluded from this revision.`));panel.append(feedback);
+ const older=remote?[...localStances.keys()].filter(k=>k.startsWith(institution+':'+p.id+':')&&k!==stanceKey(p)):p.positions.filter(x=>x.revision!==p.revision);if(older.length)feedback.append(message(`${older.length} older-version response(s) explicitly excluded from this revision.`));panel.append(feedback);
  const discussion=element('section','cwpart-subsection');discussion.append(element('h4','','Deliberation · comments and concerns'));
  if(!p.comments.length)discussion.append(message('No fictional visitor contributions yet; unreviewed comments do not become an institutional finding.'));
  for(const c of p.comments){
@@ -88,7 +152,7 @@ function renderDetail(){
  for(const m of p.milestones)accountability.append(append(element('div','cwpart-discussion'),element('strong','',m.percent+'% · '+m.id),element('p','',m.description)));
  const correction=field('cwpart-correction','Request correction of an alleged factual/procedural error');append(accountability,correction,button('Record an unreviewed correction request',()=>apply({type:'CORRECTION',id:p.id,reason:correction.querySelector('input').value}),{secondary:true}));
  const own=board.corrections.filter(x=>x.proposalId===p.id);for(const c of own)accountability.append(message(c.id+' · '+c.status+' · '+c.reason));panel.append(accountability);
- const audit=element('section','cwpart-subsection');audit.append(element('h4','','Transparent event history (locally editable demo state)'));
+ const audit=element('section','cwpart-subsection');audit.append(element('h4','',remote?'Transparent synthetic event history (replayed in local SQLite)':'Transparent event history (locally editable demo state)'));
  const eventList=element('ol','cwpart-events');for(const e of p.events)eventList.append(append(element('li',''),element('strong','',e.type+' · v'+e.revision),element('span','',e.detail)));audit.append(eventList);
  audit.append(button('Export public-facing fictional case dossier',()=>exportCase(p),{secondary:true}));audit.append(message('Exports include proposal title/text and all publicly displayed version text. Review anything you entered before sharing the JSON file. Private advisory positions and comment bodies are excluded.'));panel.append(audit);
 }
@@ -105,7 +169,9 @@ function renderBudget(){
  const data=budgetSlate(institution,[...budgetChoices]);label('cwpart-budget-total',`${data.total.toLocaleString()} / ${data.limit.toLocaleString()} fictional credits`);
  label('cwpart-budget-result',data.feasible?`Within the sample ceiling · ${data.remaining.toLocaleString()} credits unallocated`:`Over the sample ceiling by ${Math.abs(data.remaining).toLocaleString()} credits; slate is invalid`);
  byId('cwpart-budget-result').dataset.kind=data.feasible?'ok':'error';
- label('cwpart-budget-caveat','Your local budget slate only. Not a collective allocation, fiscal appropriation, grant, or ballot.');
+ label('cwpart-budget-caveat',remote?'Local budget draft. Only a fictional steward may save this nonbinding plan; never a vote or appropriation.':'Your local budget slate only. Not a collective allocation, fiscal appropriation, grant, or ballot.');
+ const save=byId('cwpart-budget-submit');save.hidden=!(remote&&mode==='STEWARD');save.disabled=!data.feasible;
+ label('cwpart-budget-saved',remote&&board.budgetSubmission?'Stored fictional steward slate: '+board.budgetSubmission.total.toLocaleString()+' credits, no funding allocated.':'No persisted fictional budget plan.');
 }
 function renderAccountability(){
  const boardElm=empty(byId('cwpart-accountability-list'));
@@ -120,15 +186,19 @@ function renderAccountability(){
   const x=element('article','cwpart-meeting');append(x,element('strong','',m.title),element('p','',m.when+' · '+m.location),element('p','',m.access),element('small','',m.items.join(', ')+' · Minutes: '+m.minutes));meeting.append(x);
  }
 }
-function renderAll(){validateBoard(board);label('cwpart-active-institution',INSTITUTIONS[institution].label);byId('cwpart-institution').value=institution;byId('cwpart-role').value=mode;renderDirectory();renderDetail();renderBudget();renderAccountability();}
+function renderAll(){validateBoard(board);label('cwpart-mode-status',remote?'LOCAL SQLITE / '+remote.actor.role+' / VERSION '+remote.version:'BROWSER MEMORY / NOT PERSISTED');label('cwpart-active-institution',INSTITUTIONS[institution].label);byId('cwpart-institution').value=institution;byId('cwpart-role').value=mode;renderDirectory();renderDetail();renderBudget();renderAccountability();}
 function boot(){
  if(!byId('cwpart-app'))return;
  const sel=byId('cwpart-institution');for(const [code,v] of Object.entries(INSTITUTIONS)){const opt=element('option','',v.label);opt.value=code;sel.append(opt);}sel.addEventListener('change',()=>setInstitution(sel.value));
  const stage=byId('cwpart-filter');for(const st of STATUS){const opt=element('option','',st.replaceAll('_',' '));opt.value=st;stage.append(opt);}stage.addEventListener('change',renderDirectory);byId('cwpart-search').addEventListener('input',renderDirectory);
- byId('cwpart-role').addEventListener('change',e=>{mode=e.target.value;notice(mode==='STEWARD'?'Fictional reviewer simulation only; no permissions or identities are authenticated.':'Visitor preview enabled; no server or identity is connected.');renderDetail();});
- byId('cwpart-new-form').addEventListener('submit',e=>{e.preventDefault();apply({type:'CREATE',title:byId('cwpart-new-title').value,text:byId('cwpart-new-text').value});if(byId('cwpart-feedback').dataset.kind==='ok'){byId('cwpart-new-title').value='';byId('cwpart-new-text').value='';selected=board.proposals[0]?.id;renderAll();}});
+ byId('cwpart-role').addEventListener('change',e=>{if(remote)return;mode=e.target.value;notice(mode==='STEWARD'?'Fictional reviewer simulation only; no permissions or identities are authenticated.':'Visitor preview enabled; no server or identity is connected.');renderDetail();});
+ byId('cwpart-new-form').addEventListener('submit',async e=>{e.preventDefault();const succeeded=await apply({type:'CREATE',title:byId('cwpart-new-title').value,text:byId('cwpart-new-text').value});if(succeeded){byId('cwpart-new-title').value='';byId('cwpart-new-text').value='';selected=board.proposals[0]?.id;renderAll();}});
  byId('cwpart-budget-clear').addEventListener('click',()=>{budgetChoices.clear();renderBudget();});
- byId('cwpart-reset').addEventListener('click',()=>{board=seededBoard();institution='UAH';selected='P-UAH-01';budgetChoices.clear();mode='VISITOR';byId('cwpart-search').value='';byId('cwpart-filter').value='ALL';notice('Demo restored; all local contributions, answers, milestones and corrections cleared.','ok');renderAll();});
+ byId('cwpart-reset').addEventListener('click',()=>{if(remote)return;board=seededBoard();offlineBoard=board;institution='UAH';selected='P-UAH-01';budgetChoices.clear();mode='VISITOR';byId('cwpart-search').value='';byId('cwpart-filter').value='ALL';notice('Demo restored; all local contributions, answers, milestones and corrections cleared.','ok');renderAll();});
+ byId('cwpart-connect').addEventListener('click',()=>{void connectRemote();});
+ byId('cwpart-disconnect').addEventListener('click',disconnectRemote);
+ byId('cwpart-budget-submit').addEventListener('click',()=>{if(remote&&mode==='STEWARD')void apply({type:'BUDGET',selected:[...budgetChoices]});});
+ byId('cwpart-disconnect').disabled=true;
  renderAll();
 }
 boot();
