@@ -79,7 +79,7 @@ function renderDetail(){
  const own=board.corrections.filter(x=>x.proposalId===p.id);for(const c of own)accountability.append(message(c.id+' · '+c.status+' · '+c.reason));panel.append(accountability);
  const audit=element('section','cwpart-subsection');audit.append(element('h4','','Transparent event history (locally editable demo state)'));
  const eventList=element('ol','cwpart-events');for(const e of p.events)eventList.append(append(element('li',''),element('strong','',e.type+' · v'+e.revision),element('span','',e.detail)));audit.append(eventList);
- audit.append(button('Export public-facing fictional case dossier',()=>exportCase(p),{secondary:true}));panel.append(audit);
+ audit.append(button('Export public-facing fictional case dossier',()=>exportCase(p),{secondary:true}));audit.append(message('Exports include proposal title/text and all publicly displayed version text. Review anything you entered before sharing the JSON file. Private advisory positions and comment bodies are excluded.'));panel.append(audit);
 }
 function exportCase(p){
  const content=JSON.stringify(publicDossier(p),null,2);const blob=new Blob([content],{type:'application/json'});const url=URL.createObjectURL(blob),a=element('a');a.href=url;a.download='commonwealth-fictional-'+p.id+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),5000);
