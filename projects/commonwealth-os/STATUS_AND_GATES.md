@@ -17,21 +17,17 @@
 
 The comparators (Decidim, CONSUL, Polis, Loomio, Legistar, ElectionGuard and related systems) are credited in the design's [competitive analysis](product-design/v1.0/docs/02_Competitive_Analysis.md). Claims of universal uniqueness are not certified.
 
-## 2026-11-15 additive legal-kernel progress
+| Synthetic full-stack civic demo (Python v0.2) | 3 simulated tenants, 72 draft issues, representative and constituent views, demo role revocation, signed local receipts, generated budgets, 55 local test cases | Implemented and internally tested; separate JS server and browser remain independent workbenches | Formal cross-stack compatibility, real IdP, external signing custody, managed persistence, institution review, accessible E2E testing |
 
-- **Implemented on a review branch:** `legal/kernel.py` deterministic fictional
-  source/claim/derivation checker; `legal/independent_checker.py` separate replay;
-  `legal/dossier.py` read-only civic dossier; hash-anchored fictional source fixture;
-  adversarial Python tests and scoped CI. Once merged, this establishes a tested
-  *in-model deduction* capability only.
-- **Still not implemented:** real authoritative legal corpus and custody; formal
-  binding-precedent/exception semantics; signed legal-reviewer interpretation
-  attestations; continuously reconciled source updates; real economic-data
-  adapters; Living Voter persistence integration; certified voter identity or
-  secret ballots; one production backend and externally enforced effects.
-- **Remain prohibited:** interpreting a supported fictional derivation as a
-  legal opinion, actual development permit, public election, or real institution
-  endorsement. No current claimed legal authority or external audit.
+## Legal knowledge kernel — additive workbench v0.1
+
+Source-grounded fictional derivation, second-source replay, legal effective and
+observation dates, explicit exception denial, source-change detection, a neutral
+decision dossier and negative-case CI are now implemented. They are internally
+tested only, with **no real jurisdiction source corpus or legal interpretation
+attestation**. US precedential reasoning, signed reviewer custody, authoritative
+continuous ingestion, economic-data adapters, privacy/eligibility systems, and
+one consolidated production backend remain open obligations.
 
 ## Release decision rule
 

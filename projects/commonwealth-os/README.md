@@ -1,6 +1,6 @@
 # Commonwealth OS — Governance Software Research
 
-**Status:** Design baseline plus synthetic browser/server and legal-proof workbenches; production and institutional partnerships not established.  
+**Status:** Design baseline v1.0; engineering implementation and institutional partnerships not established.  
 **Date:** 2026-11-15.  
 **Principal context:** *Constitution of Computational Commonwealths: Human-Sovereign Governance for the Age of Synthetic Intelligence*.
 
@@ -14,21 +14,14 @@ Commonwealth OS is a mobile-first, representative-first civic governance system 
 
 - [Mathematical Proof Passport workbench](assurance/README.md): explicitly scoped finite-world theorems, exact evidence certificate optimization, source-different audits, and documented unresolved deployment assumptions.
 
-## New: source-to-proof-to-dossier vertical slice (DEMO ONLY)
+## New: Commonwealth legal proof kernel (DEMO ONLY)
 
-The [Commonwealth Legal Knowledge Kernel](legal/README.md) now implements a
-narrow fictional, versioned rule/fact derivation with a source-different verifier,
-adversarial tests, source-status/effective-date recertification checks and a
-neutral riverfront development dossier. It requires explicit grounding for
-negative exception facts, and records missing housing, developer, environmental
-and public-cost data rather than inventing answers. It performs **no real law
-ingestion, preference storage, official vote, or administrative effect**.
-
-This is deliberately distinct from the existing procedural Democratic Assurance
-Passport. The next stage needs an authoritative U.S. legal source graph,
-independently reviewed statutory/case-law interpretation, and one reconciled
-backend command path. Neither hashes nor a formal deduction establish the truth
-of an unverified rule encoding.
+The [Legal Knowledge Kernel](legal/README.md) supplies exact-text, version-scoped
+fictional legal derivations, a source-different checker, adversarial tests and
+a neutral riverfront civic dossier that exposes missing market and impact data.
+A supported deduction is **not** a legal opinion or evidence that its cited
+rule was correctly formalized. No actual law ingestion, legal precedent lookup,
+voter preference storage, official ballot or governmental effect is enabled.
 
 ## Non-negotiable constraints
 1. **No live city-council record ingestion yet.** Use synthetic fixtures first. The municipal intake connector remains disabled by default.
@@ -50,8 +43,8 @@ A **2027 Huntsville pitch** is a demonstration target, **not** a city deployment
 ## Synthetic legislative workflow v1.1
 [Formal state-machine specification](workflow/FORMAL_WORKFLOW_v1_1.md) · [Executable demo reference and independent replay checker](workflow/README.md). The demo reference rejects OFFICIAL mode; 28 internal tests cover the fictional case and negative guards, not a legally authorized electronic election.
 
-## Runnable legislative app v0.1
-[Run the mobile-first fictional governance workspace](app/README.md). This FastAPI / SQLite / vanilla JS demo reuses the versioned workflow reducer and independent checker, has local HTTP integration tests, and explicitly **does not authenticate real voters, authorize elections, or ingest municipal records**. See [source](app/main.py) and [scoped app CI](../../.github/workflows/commonwealth-app-ci.yml).
+## Runnable legislative app v0.2
+[Run the full synthetic governance workspace v0.2](app/README.md). The Python mobile-first app now includes three fictional pilot questionnaires, audited role revocation, multi-item dockets, synthetic budget/public views, private advisory profiles, and locally signed test receipts. It reuses the v1.1 workflow reducer and independent checker. **Role switching remains a demo, and no real municipal data, verified voter identity, official election, or authorized public service is present.** See [source](app/main.py) and [scoped app CI](../../.github/workflows/commonwealth-app-ci.yml).
 
 ## V1 demonstrator
 The first testable vertical slice uses entirely fictional governance records:
@@ -61,7 +54,7 @@ Its goal is a replayable governance transaction with a version-locked motion, ru
 The archived v1.0 reference package reported 8 passing toy checker tests. Those do **not** constitute deployed software, verified ballot secrecy, legal certification, or independent security audit.
 
 ## Evidence labels
-DESIGN / IMPLEMENTED / INTERNALLY TESTED / INDEPENDENTLY VALIDATED / LEGALLY AUTHORIZED / DEPLOYED must remain distinct. Current state: **DESIGN**, plus a narrow source-package toy checker (internally tested). All other states remain unverified.
+DESIGN / IMPLEMENTED / INTERNALLY TESTED / INDEPENDENTLY VALIDATED / LEGALLY AUTHORIZED / DEPLOYED must remain distinct. Current state: **IMPLEMENTED SYNTHETIC PROTOTYPES** (Python v0.2 and separate JS browser/server workbenches), **INTERNALLY TESTED**, not externally certified, legally authorized, identity-verified or deployed.
 
 ## Integrated product design and evidence archive
 

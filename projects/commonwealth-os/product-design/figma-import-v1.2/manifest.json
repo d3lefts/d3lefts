@@ -1,0 +1,21 @@
+{
+  "title": "Commonwealth OS \u2014 Living Voter Prepilot Wireframes v1.2",
+  "figma_file": "https://www.figma.com/design/reZeEFA8DfQL9G51AvHdqW",
+  "screens": [
+    "01_welcome.svg",
+    "02_optional_survey.svg",
+    "03_living_dashboard.svg",
+    "04_issue_briefing.svg",
+    "05_simulated_vote.svg",
+    "06_vote_comparison.svg"
+  ],
+  "width_px": 390,
+  "height_px": 1170,
+  "source_prototype": "living_voter_demo.html",
+  "status": "IMPORT PACKAGE: not yet added to Figma due to Starter-plan MCP tool cap",
+  "official_source_urls": [
+    "https://clerk.house.gov/evs/2026/roll297",
+    "https://www.senate.gov/legislative/LIS/roll_call_votes/vote1192/vote_119_2_00259.htm",
+    "https://www.senate.gov/legislative/LIS/roll_call_votes/vote1192/vote_119_2_00262.htm"
+  ]
+}
