@@ -75,13 +75,15 @@ jobs:
           python3 research/nightfall/formalization/product_space/check_receipts.py f9-receipts/f9-concrete.json
       - name: Independently reconstruct exact GF9 with two distinct irreducible polynomials
         run: python3 research/nightfall/2026-11-f9-bridge/verify_two_models.py
+      - name: Independent decoder-free transcript fiber audit over every GF9 signal through k=5
+        run: python3 research/nightfall/2026-11-f9-bridge/verify_transcript_independent.py
       - name: Freeze source identities and compiler
         if: always()
         run: |
           mkdir -p f9-receipts
           git rev-parse HEAD > f9-receipts/commit.txt
           git -C /tmp/mathlib4 rev-parse HEAD > f9-receipts/mathlib.txt || true
-          sha256sum research/nightfall/formalization/finite_field/{F9GapArithmetic,F9OracleBridge,F9ActualFieldBasis,F9NonadaptiveLower,F9ConcreteLower}.lean research/nightfall/2026-11-f9-bridge/verify_two_models.py > f9-receipts/source_sha256.txt
+          sha256sum research/nightfall/formalization/finite_field/{F9GapArithmetic,F9OracleBridge,F9ActualFieldBasis,F9NonadaptiveLower,F9ConcreteLower}.lean research/nightfall/2026-11-f9-bridge/verify_two_models.py research/nightfall/2026-11-f9-bridge/verify_transcript_independent.py > f9-receipts/source_sha256.txt
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
