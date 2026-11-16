@@ -1,6 +1,6 @@
 "use strict";
 /* Commonwealth OS: synthetic, browser-local product exploration.
-   Do not add network requests, localStorage, identity inference, or official vote submission. */
+   Do not add network requests, persistent storage, identity inference, or official vote submission. */
 (function () {
   const ROOT = "https://github.com/d3lefts/d3lefts/blob/main/projects/commonwealth-os/historical/fixtures/";
   const F = window.COMMONWEALTH_SYNTHETIC;
