@@ -67,10 +67,15 @@ theorem all_physical_povms_bounded
       4 * ((unnormalizedA d (z d) (o d)).re) ^ 2 /
         (SourceBorn.sourceWeight d (z d) +
           SourceBorn.sourceWeight d (o d)) := by
-  simp_rw [bornNum_coherence d hd (E := _)]
-  exact SourceBornTrace.physical_povm_upper_with_actual_source_trace
-    d hd E hpositive hcomplete
-    ((unnormalizedA d (z d) (o d)).re)
+  have hnum (out : Out) : bornNum d (E out) =
+      2 * (unnormalizedA d (z d) (o d)).re *
+        (E out (z d) (o d)).re :=
+    bornNum_coherence d hd (E out) (hpositive out)
+  simp_rw [hnum]
+  simpa only [bornDen] using
+    (SourceBornTrace.physical_povm_upper_with_actual_source_trace
+      d hd E hpositive hcomplete
+      ((unnormalizedA d (z d) (o d)).re))
 
 private theorem source_weight_pair_sum
     {ι : Type*} [Fintype ι] [DecidableEq ι]
@@ -139,9 +144,9 @@ theorem complement_num_zero (d : ℕ) (hd : 0 < d) :
     bornNum d (fullGHZ d 2) = 0 := by
   rw [bornNum_coherence d hd _ (fullGHZ_positive d 2)]
   have h : (fullGHZ d 2 (z d) (o d)).re = 0 := by
-    simpa [fullGHZ, z, o] using
-      (AmbientGHZ.ambient_ghz_corner_values (z d) (o d)
-        (PhysicalNumerator.two_GHZ_rays_distinct d hd)).2.2.2.2.2.2.2.2
+    simpa [fullGHZ, AmbientGHZ.ghzAmbient,
+      AmbientGHZ.complementEffect, Matrix.diagonal_apply,
+      PhysicalNumerator.two_GHZ_rays_distinct d hd]
   rw [h]
   ring
 
@@ -171,6 +176,7 @@ theorem full_GHZ_attains_actual_physical_bound
   simp only [Fin.sum_univ_three]
   rw [hnplus, hnminus, complement_num_zero d hd,
     plus_actual_source_born d hd, minus_actual_source_born d hd]
+  simp only [zero_pow (by norm_num : 2 ≠ 0), zero_div, add_zero]
   field_simp
   <;> ring
 
