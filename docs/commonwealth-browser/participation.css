@@ -68,3 +68,12 @@
 @media(max-width:930px){.cwpart-grid{grid-template-columns:1fr}.cwpart-proposal-list{max-height:350px}.cwpart-accountability-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:660px){.cwpart-heading{display:block}.cwpart-badge{display:inline-block;margin:.6rem 0}.cwpart-feature-strip{grid-template-columns:repeat(2,minmax(0,1fr))}.cwpart-lower,.cwpart-accountability-grid{grid-template-columns:1fr}.cwpart-toolbar{align-items:stretch}.cwpart-section{margin:1.3rem 0}.cwpart-card{padding:.9rem}.cwpart-statusline span{flex-basis:75px}}
 @media(prefers-reduced-motion:reduce){.cwpart-section *{scroll-behavior:auto!important}}
+
+/* Leading feature-story links, visually separate from the demo proof checker. */
+.cwpart-showcase{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.75rem;margin:1.2rem 0 1.4rem}
+.cwpart-showcase a{background:linear-gradient(145deg,#17323d,#0d2330);border:1px solid #376471;border-radius:14px;text-decoration:none;color:#eaf9f7;display:flex;flex-direction:column;gap:.45rem;padding:1.15rem;min-height:150px}
+.cwpart-showcase a:hover,.cwpart-showcase a:focus-visible{border-color:#a5e8d7;outline-offset:3px}
+.cwpart-showcase span{color:#98d6ca;font-size:.65rem;font-weight:800;letter-spacing:.08em}
+.cwpart-showcase strong{font-size:1.1rem;line-height:1.23;color:#f0fffb}
+.cwpart-showcase small{font-size:.77rem;line-height:1.4;color:#b4cad1}
+@media(max-width:680px){.cwpart-showcase{grid-template-columns:1fr}.cwpart-showcase a{min-height:auto}}
