@@ -26,6 +26,38 @@ obstruction, coding-rate transfer and one final theorem. Construction is
 not automatically completion: `scoped_ci_reported` and
 `conditional_ci_reported` remain separate from `open`.
 
+## Source-linked refresh overlay — 16 November 2026
+
+The original 11-node DAG is intentionally an immutable *earlier* snapshot,
+not a live truth table. The higher-freshness evidence index is
+[`SOURCE_LINKED_PASSPORT_EVIDENCE.json`](SOURCE_LINKED_PASSPORT_EVIDENCE.json).
+It records independently identified draft sources for:
+
+- **Quantum:** physical-source normalized Born optimum and full-dimensional
+  attaining POVM on [PR #658](https://github.com/d3lefts/d3lefts/pull/658).
+  Its scoped Lean theorem passed; the original frozen q-terminal=open entry
+  must not be misread as current proof status.
+- **F9:** the same-oracle fixed lower-bound component on
+  [PR #659](https://github.com/d3lefts/d3lefts/pull/659). Its adaptive
+  all-k *legal policy* remains unformalized. Packet-algebra proofs and finite
+  transcript tests do not discharge this terminal gate.
+
+Run `python3 scripts/reconcile_source_linked_passports.py --self-test --live`
+to check two exact PR heads, source Git blobs, matching successful named CI
+workflow runs and named source declaration presence, with **nine adversarial
+source/CI/claim-promotion mutations**. Head drift, failed workflow or changed
+source fails closed instead of silently promoting a claim.
+
+Run `python3 scripts/propose_source_refresh.py --output source-refresh-proposals.json`
+to *generate a review-only candidate* from current sources. The CI workflow
+also produces this review artifact and runs a scheduled daily drift check.
+Neither program writes the canonical registry, changes the frozen graph,
+merges branches, executes external code, or proves novelty. Changes to active
+scientific status require manual scope review plus exact checking of the
+source and proof dependencies.
+
+---
+
 ## Repair rules
 
 - The JSON is an immutable dated *checkpoint*. To update source evidence,
