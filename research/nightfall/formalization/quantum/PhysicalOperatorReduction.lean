@@ -126,6 +126,66 @@ theorem actual_fourier_ghz_corner_value (d : ℕ) :
   rw [unnormalizedC_entry]
   simp [LocalMoments.weighted_01_value]
 
+def localBWeight (a : Fin 2) : ℂ :=
+  if a = 0 then (9:ℂ)/4 else (3:ℂ)/4
+
+theorem local_B_diagonal (a : Fin 2) :
+    (∑ s : Fin 3,
+      PhysicalQubit.qubitDensity (Real.sqrt 3)
+        (TernaryPhase.omega ^ s.val) a a) = localBWeight a := by
+  fin_cases a
+  · exact LocalMoments.unweighted_00_value
+  · exact LocalMoments.unweighted_11_value
+
+theorem local_B_offdiagonal (a b : Fin 2) (h : a ≠ b) :
+    (∑ s : Fin 3,
+      PhysicalQubit.qubitDensity (Real.sqrt 3)
+        (TernaryPhase.omega ^ s.val) a b) = 0 := by
+  fin_cases a <;> fin_cases b
+  · simp at h
+  · exact LocalMoments.unweighted_01_zero
+  · exact LocalMoments.unweighted_10_zero
+  · simp at h
+
+theorem actual_B_diagonal (d : ℕ) (a : Fin d → Fin 2) :
+    unnormalizedB d a a = ∏ j, localBWeight (a j) := by
+  rw [unnormalizedB_entry]
+  apply Finset.prod_congr rfl
+  intro j _
+  exact local_B_diagonal (a j)
+
+theorem actual_B_offdiagonal (d : ℕ) (a b : Fin d → Fin 2)
+    (j : Fin d) (h : a j ≠ b j) :
+    unnormalizedB d a b = 0 := by
+  rw [unnormalizedB_entry]
+  exact Finset.prod_eq_zero (Finset.mem_univ j)
+    (local_B_offdiagonal (a j) (b j) h)
+
+theorem actual_C_zero_if_local_diagonal
+    (d : ℕ) (a b : Fin d → Fin 2) (j : Fin d)
+    (h : a j = b j) : unnormalizedC d a b = 0 := by
+  by_cases ha : a j = 0
+  · have hb : b j = 0 := by rw [← h]; exact ha
+    exact actual_fourier_entry_zero_off_ghz d a b j
+      (Or.inr (by simp [hb]))
+  · exact actual_fourier_entry_zero_off_ghz d a b j (Or.inl ha)
+
+def unnormalizedCconj (d : ℕ) :
+    Matrix (Fin d → Fin 2) (Fin d → Fin 2) ℂ :=
+  ∑ x : Fin d → Fin 3, (star (character d x)) • state d x
+
+theorem physical_A_entry_is_two_characters (d : ℕ)
+    (a b : Fin d → Fin 2) :
+    unnormalizedA d a b =
+      (unnormalizedC d a b + unnormalizedCconj d a b) / 2 := by
+  classical
+  simp only [unnormalizedA, unnormalizedC, unnormalizedCconj,
+    Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul]
+  rw [← Finset.sum_add_distrib, ← Finset.sum_div]
+  apply Finset.sum_congr rfl
+  intro x _
+  ring
+
 theorem unnormalizedA_from_actual_states (d : ℕ)
     (a b : Fin d → Fin 2) :
     unnormalizedA d a b =
@@ -140,6 +200,12 @@ theorem unnormalizedA_from_actual_states (d : ℕ)
 #print axioms Nightfall.Quantum.OperatorReduction.weighted_local_zero_outside_01
 #print axioms Nightfall.Quantum.OperatorReduction.actual_fourier_entry_zero_off_ghz
 #print axioms Nightfall.Quantum.OperatorReduction.actual_fourier_ghz_corner_value
+#print axioms Nightfall.Quantum.OperatorReduction.local_B_diagonal
+#print axioms Nightfall.Quantum.OperatorReduction.local_B_offdiagonal
+#print axioms Nightfall.Quantum.OperatorReduction.actual_B_diagonal
+#print axioms Nightfall.Quantum.OperatorReduction.actual_B_offdiagonal
+#print axioms Nightfall.Quantum.OperatorReduction.actual_C_zero_if_local_diagonal
+#print axioms Nightfall.Quantum.OperatorReduction.physical_A_entry_is_two_characters
 #print axioms Nightfall.Quantum.OperatorReduction.unnormalizedA_from_actual_states
 
 end
