@@ -72,11 +72,10 @@ theorem all_physical_povms_bounded
         (E out (z d) (o d)).re :=
     bornNum_coherence d hd (E out) (hpositive out)
   simp_rw [hnum]
-  simpa [bornDen, ActualBornTerminal.z, ActualBornTerminal.o,
-    SourceBorn.zeroRay, SourceBorn.oneRay] using
-    (SourceBornTrace.physical_povm_upper_with_actual_source_trace
-      d hd E hpositive hcomplete
-      ((unnormalizedA d (z d) (o d)).re))
+  have h := SourceBornTrace.physical_povm_upper_with_actual_source_trace
+    d hd E hpositive hcomplete
+    ((unnormalizedA d (z d) (o d)).re)
+  convert h using 1 <;> rfl
 
 private theorem source_weight_pair_sum
     {ι : Type*} [Fintype ι] [DecidableEq ι]
