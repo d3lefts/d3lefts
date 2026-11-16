@@ -94,7 +94,7 @@ export class PostgresLedger {
     await client.query('INSERT INTO cwos.revisions(institution_id,item_id,revision,body,previous_hash,body_hash,author) VALUES($1,$2,1,$3,$4,$5,$6)',[institutionId,itemId,payload.body,'GENESIS',bodyHash,actorId]);
     details={revision,bodyHash};
    }else{
-    if(!item||item.version!==expectedVersion)reject('VERSION_CONFLICT');
+    if(!item||Number(item.version)!==expectedVersion)reject('VERSION_CONFLICT');
     const transitions={SUBMIT:['DRAFT','IN_REVIEW'],AGENDA:['IN_REVIEW','AGENDA_SET'],BEGIN:['AGENDA_SET','DELIBERATING'],ATTEND:['DELIBERATING','DELIBERATING'],LOCK:['DELIBERATING','MOTION_LOCKED'],OPEN:['MOTION_LOCKED','BALLOT_OPEN'],CAST:['BALLOT_OPEN','BALLOT_OPEN'],CLOSE:['BALLOT_OPEN','BALLOT_CLOSED'],REVIEW:['BALLOT_CLOSED','REVIEWED_DEMO']};
     if(action==='REVISE'){
      if(!['DRAFT','IN_REVIEW','AGENDA_SET','DELIBERATING'].includes(from)||!(item.proposer===actorId||a.role==='clerk')||typeof payload.body!=='string'||!payload.body.trim())reject('REVISION_FORBIDDEN');
