@@ -1,0 +1,38 @@
+name: Commonwealth OS website demo integrity
+on:
+  pull_request:
+    paths:
+      - 'docs/commonwealth*'
+      - 'docs/index.html'
+      - 'docs/new-moon.html'
+      - 'docs/portfolio.html'
+      - 'docs/sitemap.xml'
+      - 'projects/commonwealth-os/apps/browser/**'
+      - 'projects/commonwealth-os/prepilot/v1.3.1/**'
+      - 'tests/test_commonwealth_web_demo.mjs'
+      - '.github/workflows/commonwealth-website.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/commonwealth*'
+      - 'docs/index.html'
+      - 'docs/new-moon.html'
+      - 'docs/portfolio.html'
+      - 'docs/sitemap.xml'
+      - 'projects/commonwealth-os/apps/browser/**'
+      - 'projects/commonwealth-os/prepilot/v1.3.1/**'
+      - 'tests/test_commonwealth_web_demo.mjs'
+      - '.github/workflows/commonwealth-website.yml'
+permissions:
+  contents: read
+jobs:
+  static-demo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify site mirror, routes, modules and evidence boundaries
+        run: node --test tests/test_commonwealth_web_demo.mjs
