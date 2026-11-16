@@ -41,8 +41,13 @@ theorem physical_source_corner_real (d : ℕ) (hd : 0 < d) :
   rw [hv] at hsource
   rw [hsource]
   change (((v : ℂ) ^ d / 2)).re = v ^ d / 2
-  rw [← Complex.ofReal_pow]
-  simp
+  have hc : ((v : ℂ) ^ d / 2) = ((v ^ d / 2 : ℝ) : ℂ) := by
+    calc
+      ((v : ℂ) ^ d / 2) = ((v ^ d : ℝ) : ℂ) / 2 := by
+        rw [Complex.ofReal_pow]
+      _ = ((v ^ d / 2 : ℝ) : ℂ) := by push_cast; ring
+  rw [hc]
+  exact Complex.ofReal_re _
 
 theorem exact_gain_ratio_scalar (d : ℕ) :
     (4 * (((3 * Real.sqrt 3 / 4 : ℝ) ^ d / 2) ^ 2) /
