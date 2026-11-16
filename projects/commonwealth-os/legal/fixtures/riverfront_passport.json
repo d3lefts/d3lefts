@@ -43,7 +43,8 @@
       "locator": "fictional://river-county/registry/exemptions",
       "status": "ACTIVE",
       "valid_from": "2026-11-15",
-      "observed_at": "2026-11-15"
+      "observed_at": "2026-11-15",
+      "valid_until": "2026-11-16"
     }
   ],
   "facts": [
@@ -75,7 +76,8 @@
       "value": false,
       "reviewer": "FICTIONAL_REVIEWER_NOT_LEGAL_AUTHORITY",
       "valid_from": "2026-11-15",
-      "observed_at": "2026-11-15"
+      "observed_at": "2026-11-15",
+      "valid_until": "2026-11-16"
     }
   ],
   "rules": [
