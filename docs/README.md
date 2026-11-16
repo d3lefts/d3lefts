@@ -69,3 +69,12 @@ Do not update canonical source counts or scientific status merely to make a test
 GitHub Pages is configured for the **`main` branch, `/docs` directory**. The [site validation workflow](../.github/workflows/verify-site.yml) runs on pull requests and relevant pushes. Verify published Pages separately after merging; a green source check does not by itself establish a successful public deployment.
 
 This folder contains a website and local instruments, not a stand-alone software package. For research attribution, contribution rules, historical releases, or licensing limits, consult the repository [README](../README.md) and [CONTRIBUTING](../CONTRIBUTING.md) documents.
+
+## Commonwealth OS — guided synthetic demonstrations (November 2026)
+
+- [Guided Discover → Living Voter → Historical Intelligence → Proof Passport → Chamber](commonwealth-intelligence.html#discover): entirely synthetic in-memory civic exercises. The 20-question classification is unvalidated, refuses sparse or ambiguous evidence, and is included in the working profile only by explicit opt-in. No preferences, accounts, votes, or identity are persisted or submitted.
+- [Embedded full Living Voter and institutional checker](commonwealth.html): browser-only examples including dated congressional snapshots and an institutional 10-check synthetic evaluator. These are not current or complete government records.
+- [Four-workspace product showcase](commonwealth-os.html): conceptual previews and source/release scope.
+- [Separate evidence-digest checker](../scripts/verify_commonwealth_export.cjs): `node scripts/verify_commonwealth_export.cjs saved.json`. SHA-256 covers serialized `payload`, **not** the full JSON envelope; cryptographic integrity does not authenticate real sources or certify law.
+- Regression suite: `node scripts/test_commonwealth_intelligence.cjs`, `node scripts/test_commonwealth_export.cjs`, `node --test tests/test_commonwealth_web_demo.mjs`; with Chromium and playwright-core: `node scripts/test_commonwealth_journey.mjs`. GitHub Actions captures 390px and 1280px screenshots.
+- All real-world authority, election participation, legal precedent ingestion and persistent political data collection remain disabled.
