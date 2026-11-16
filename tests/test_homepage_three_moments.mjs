@@ -52,7 +52,7 @@ test("Cross-entrance navigation is explicit and in both directions",()=>{
  }
  assert.ok(field.includes('href="new-moon.html#archived-records"'));
  assert.ok(moon.includes('href="index.html"'));
- assert.equal(count(field,/<a\b/g)<=52,true,"Story-led homepage link budget");
+ assert.equal(count(field,/<a\b/g)<=46,true,"Story-led homepage preserves focused navigation");
  assert.ok(count(field,/<section\b/g)<=13,"Active homepage section budget");
  assert.ok(count(field,/<details\b/g)<=2,"Avoid nested disclosures");
 });
