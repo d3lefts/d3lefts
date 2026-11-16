@@ -79,7 +79,7 @@ jobs:
           N=Nightfall.Quantum.ComplexPOVM
           python3 scripts/lean_bridge.py research/nightfall/formalization/quantum/ComplexPOVMOptimal.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.effects_diagonal_normalized" --decl "$N.complex_povm_energy_optimal" --json-out quantum-receipts/complex-povm.json
           N=Nightfall.Quantum.TernarySource
-          python3 scripts/lean_bridge.py research/nightfall/formalization/quantum/TernaryQuantumEnsemble.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.actual_ternary_state_physical" --decl "$N.first_character_tensor_cancels" --json-out quantum-receipts/ternary-source.json
+          python3 scripts/lean_bridge.py research/nightfall/formalization/quantum/TernaryQuantumEnsemble.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.actual_ternary_state_physical" --decl "$N.first_character_tensor_cancels" --decl "$N.actual_source_unweighted_tensor_factor" --decl "$N.actual_source_character_weighted_tensor_factor" --json-out quantum-receipts/ternary-source.json
           N=Nightfall.Quantum.PhysicalPOVM
           python3 scripts/lean_bridge.py research/nightfall/formalization/quantum/PhysicalPOVMCompression.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.complex_psd_corner_gram" --decl "$N.complex_psd_compressed_gram" --json-out quantum-receipts/psd-povm.json
           N=Nightfall.Quantum.TernaryPhase
