@@ -7,6 +7,8 @@ on:
       - 'docs/commonwealth-os.html'
       - 'docs/sitemap.xml'
       - 'scripts/test_commonwealth_intelligence.cjs'
+      - 'scripts/test_commonwealth_export.cjs'
+      - 'scripts/verify_commonwealth_export.cjs'
       - 'projects/commonwealth-os/historical/fixtures/**'
       - '.github/workflows/commonwealth-intelligence-lab.yml'
   push:
@@ -34,6 +36,8 @@ jobs:
         run: node --check docs/commonwealth-intelligence.js
       - name: Verify fictional-source parity, tenure, correspondence, and archetype scope
         run: node scripts/test_commonwealth_intelligence.cjs
+      - name: Verify exported Passport payload integrity and adversarial tampering
+        run: node scripts/test_commonwealth_export.cjs
       - name: Confirm existing Commonwealth public demos remain unchanged
         run: node --test tests/test_commonwealth_web_demo.mjs
       - name: Validate site metadata, links, and accessibility skeleton
