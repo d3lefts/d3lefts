@@ -49,7 +49,11 @@ theorem omega_square_sum : (∑ a : Fin 3, (omega ^ a.val) ^ 2) = 0 := by
   have hfour : omega ^ 4 = omega := by
     calc omega ^ 4 = omega ^ 3 * omega := by ring
       _ = omega := by rw [omega_cube]; ring
-  rw [hfour]
+  have hs : (omega ^ 2) ^ 2 = omega := by
+    calc
+      (omega ^ 2) ^ 2 = omega ^ 4 := by ring
+      _ = omega := hfour
+  rw [hs]
   linear_combination omega_poly
 
 #print axioms Nightfall.Quantum.TernaryPhase.omega_poly
