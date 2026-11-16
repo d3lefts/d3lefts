@@ -3,10 +3,10 @@
 (() => {
   'use strict';
   const $ = (selector) => document.querySelector(selector);
-  const state = {tenants: [], actors: [], me: null, item: null, items: [], selectedId: null, authority: null, screen: 'home', activeTab: 'text', passport: null, civic: null, profile: null, public: null, issueIndex: 0};
+  const state = {history: null,historyFilters:{from:'',to:'',group:'',scope:'PERSONAL_HISTORY',page:1},tenants: [], actors: [], me: null, item: null, items: [], selectedId: null, authority: null, screen: 'home', activeTab: 'text', passport: null, civic: null, profile: null, public: null, issueIndex: 0};
   const pages = [
     ['home', '⌂', 'Home'], ['bills', '▤', 'Bills'], ['session', '◷', 'Session'],
-    ['vote', '✓', 'Vote'], ['records', '▱', 'Records'], ['issues', '◉', 'Issues'], ['finance', '$', 'Budget'], ['public', '◎', 'Public'], ['sources','⌕','Sources'], ['authority','⚑','Authority'], ['assistant', '✧', 'Assistant']
+    ['vote', '✓', 'Vote'], ['records', '▱', 'Records'], ['issues', '◉', 'Issues'], ['finance', '$', 'Budget'], ['public', '◎', 'Public'], ['history', '▦', 'Representation'], ['sources','⌕','Sources'], ['authority','⚑','Authority'], ['assistant', '✧', 'Assistant']
   ];
   const stepStates = [
     ['Draft', ['DRAFT']], ['Review', ['IN_REVIEW', 'AGENDA_SET']],
@@ -16,7 +16,7 @@
   const pretty = (s) => (s || '').replace(/_/g, ' ').toLowerCase().replace(/(^|\s)\w/g, x => x.toUpperCase());
   const e = (str) => String(str ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const short = (str, n=13) => str ? e(str.slice(0,n)) + '…' : 'Not established';
-  const screenName = (name) => ({home:'Overview',bills:'Legislation',session:'Senate Session',vote:'Cast Vote',records:'Evidence & Records',assistant:'Governance Assistant',issues:'Issue Questions',finance:'Fiscal Ledger',public:'Public Transparency',sources:'Source Registry',authority:'Institution Authority'})[name] || pretty(name);
+  const screenName = (name) => ({home:'Overview',bills:'Legislation',session:'Senate Session',vote:'Cast Vote',records:'Evidence & Records',assistant:'Governance Assistant',issues:'Issue Questions',finance:'Fiscal Ledger',public:'Public Transparency',history:'Representation History',sources:'Source Registry',authority:'Institution Authority'})[name] || pretty(name);
   const verb = (ev) => ({CREATE:'Proposal created', AMEND:'Revision proposed', SUBMIT_REVIEW:'Submitted for review', SET_AGENDA:'Added to agenda', OPEN_DEBATE:'Deliberation opened', LOCK_MOTION:'Motion locked', OPEN_BALLOT:'Demo ballot opened', CAST:'Demo vote recorded', CLOSE_BALLOT:'Demo ballot closed', CERTIFY:'Decision certified', PREPARE_PUBLICATION:'Publication prepared', REVIEW_PUBLICATION:'First review completed', APPROVE_PUBLICATION_PREVIEW:'Preview approved', VOID:'Motion voided'})[ev] || pretty(ev);
   let toastTimer;
   function toast(text, error=false){ const node=$('#toast'); node.textContent=text; node.className='toast show'+(error?' error':''); clearTimeout(toastTimer); toastTimer=setTimeout(()=>node.className='toast',4200); }
@@ -60,7 +60,7 @@
     $('#enter-demo').disabled=true;
     try{
       await api('/api/demo/login',{method:'POST',body:JSON.stringify({tenant:$('#tenant-select').value,actor:$('#actor-select').value})});
-      state.me=await api('/api/me');state.screen='home';state.selectedId=null;state.issueIndex=0;await refresh();displayShell();toast('Fictional role activated; not an identity verification');
+      state.me=await api('/api/me');state.screen='home';state.selectedId=null;state.issueIndex=0;state.history=null;state.historyFilters={from:'',to:'',group:'',scope:'PERSONAL_HISTORY',page:1};await refresh();displayShell();toast('Fictional role activated; not an identity verification');
     }catch(err){toast(err.message,true);}finally{$('#enter-demo').disabled=false;}
   }
   function navClick(ev){ if(ev.target.closest('[data-more]')){$('#more-dialog').showModal();return;}const b=ev.target.closest('[data-screen]'); if(!b)return;state.screen=b.dataset.screen;render();window.scrollTo({top:0,behavior:'instant'}); }
@@ -77,6 +77,7 @@
     state.civic={questions:q,finance:f,summary:agg};state.public=pub;
     state.profile=state.me.roles.includes('CONSTITUENT') ? await api('/api/civic/profile'):null;
     state.authority=state.me.roles.includes('INSTITUTION_ADMIN') ? await api('/api/admin/authority'):null;
+    await loadHistory();
     render();
   }
   function badge(status){const klass=({PUBLISHED:'green',CERTIFIED:'green',REJECTED:'gold',BALLOT_OPEN:'cyan',MOTION_LOCKED:'violet',PUBLICATION_REVIEW:'violet',VOIDED:'gold'})[status]||'violet';return `<span class="pill ${klass}">${e(pretty(status))}</span>`;}
@@ -116,8 +117,57 @@
      `<div class="metric-grid"><div class="metric"><div class="metric-label">Fictional institution</div><span class="metric-number" style="font-size:16px">${e(x?.name||'Demo')}</span></div><div class="metric"><div class="metric-label">Budget reporting</div><span class="metric-number">${money(b?.spent_to_date)}</span></div><div class="metric"><div class="metric-label">Synthetic respondents</div><span class="metric-number">${s?.respondent_count??'—'}</span></div></div>`+
      `<div class="main-grid"><div><section class="panel"><h2>Public legislative record</h2>${published?`<div class="doc-card"><span class="pill green">Reviewed public preview</span><h3>${e(state.item.id)} · v${state.item.revision}</h3><p>${e(state.item.text)}</p><button class="ghost-button" data-public>Inspect review-certified synthetic projection →</button></div>`:`<p class="muted">No released decision yet. Certification and separate two-person release approval are required.</p>`}<hr class="mini-divider"><h2>Fiscal accountability</h2><div class="ledger-table">${b.lines.map(x=>`<div class="ledger-row"><strong>${e(x.category)}</strong><span>${money(x.appropriated)}</span><span>${money(x.spent)}</span></div>`).join('')}</div></section></div><aside><section class="panel"><h2>Preference transparency</h2><p class="small muted">Population: 12 generated test identities, *not* survey participants. Five-response suppression threshold is applied. Individual profiles never appear in this public read model.</p><div class="keyval"><span>Question version</span><strong>${e(s.question_version)}</strong></div><div class="keyval"><span>Legal authority</span><strong>None</strong></div><div class="keyval"><span>Binding standing votes</span><strong>None</strong></div><button class="secondary-button width-full" data-screen="issues" style="margin-top:14px">Examine draft questions →</button></section></aside></div>`;
   }
-  function render(){if(!state.me||!state.item)return;$('#institution-name').textContent=state.me.institution;$('#actor-name').textContent=pretty(state.me.id);$('#avatar').textContent=state.me.id[0].toUpperCase();$('#section-kicker').textContent=screenName(state.screen).toUpperCase();renderNav();const functions={home,bills,session,vote,records,assistant,issues:questions,finance,public:publicDashboard,sources,authority:authorityPage};$('#view').innerHTML=(state.items.length>1 ? `<div class="docket-picker"><label for="docket-select">CURRENT FICTIONAL PROPOSAL</label><select id="docket-select">${state.items.map(x=>`<option value="${e(x.id)}" ${x.id===state.item.id?'selected':''}>${e(x.id)} · ${e(pretty(x.status))}</option>`).join('')}</select></div>`:'')+functions[state.screen]();}
+  async function loadHistory(){
+    const f=state.historyFilters;
+    const query=new URLSearchParams({mode:f.scope,page:String(f.page),page_size:'20'});
+    if(f.from)query.set('from',f.from);
+    if(f.to)query.set('to',f.to);
+    if(f.group)query.set('group',f.group);
+    state.history=await api('/api/history/representation?'+query.toString());
+  }
+  function historyView(){
+    const h=state.history;
+    if(!h)return sectionHead('HISTORICAL PUBLIC RECORDS','Representation history','Historical lookup is currently unavailable.');
+    const f=state.historyFilters;
+    const positions={YEA:'Yea',NAY:'Nay',PRESENT:'Present',ABSTAIN:'Abstained',NOT_VOTING:'Not voting (recorded)',EXCUSED:'Excused',NO_INDIVIDUAL_RECORD:'No individual position in fixture'};
+    const rows=h.rows.map(r=>`<article class="history-row">
+      <div class="history-row-top"><span class="overline">${e(r.date)} · ${e(r.group_label)}</span><span class="pill ${r.position_status==='RECORDED'?'':'gold'}">${e(positions[r.member_position]||r.member_position)}</span></div>
+      <h3>${e(r.question)}</h3><p><strong>${e(r.official_name)}</strong> · ${e(r.seat)} · ${e(pretty(r.motion_type))}</p>
+      <div class="history-source">${e(r.source_record_id)} · ${e(r.source_status)} · ${e(r.relationship.replaceAll('_',' ').toLowerCase())}</div>
+      <details><summary>Record details &amp; provenance</summary><div class="keyval"><span>Issue label</span><strong>${e(r.issue)}</strong></div><div class="keyval"><span>Service term</span><strong>${e(r.term_start)} — ${e(r.term_until||'ongoing (demo)')}</strong></div><div class="keyval"><span>Vote type</span><strong>${e(r.motion_type)}</strong></div><div class="keyval"><span>Position evidence</span><strong>${e(r.position_status)}</strong></div><div class="hash">Synthetic record digest: ${e(r.fixture_digest)}</div><p class="note">No authoritative external record or legal standing is asserted. A yea/nay on a procedural motion or amendment must not be conflated with support for the underlying bill.</p></details>
+    </article>`).join('');
+    const representatives=h.officials.reduce((acc,t)=>{(acc[t.group]??=[]).push(t);return acc;},{});
+    const roster=Object.entries(representatives).map(([k,terms])=>`<div class="history-roster-group"><h3>${e(h.available_groups.find(g=>g.id===k)?.label||k)}</h3>${terms.map(t=>`<div class="history-roster-entry"><b>${e(t.official_name)}</b><span>${e(t.seat)} · ${e(t.start)}—${e(t.until||'present (demo)')}</span></div>`).join('')}</div>`).join('');
+    return sectionHead('OFFICIAL ROLL-CALL RESEARCH · FICTIONAL','Representation history','Browse each recorded vote by every official holding the relevant seat at the time; no inferred individual votes.',`<span class="pill gold">FICTIONAL HISTORICAL ARCHIVE</span>`)+
+      `<section class="panel"><h2>Date and representation controls</h2><p class="note">Default: from the example resident’s birth date (${e(h.default_from_birth)}). Custom dates may predate birth; use current-seats mode to browse older seat history without claiming those officials represented the user at that time.</p>
+      <div class="history-filter">
+        <label>Start date<input id="history-from" type="date" value="${e(f.from||h.date_range.from)}"/></label>
+        <label>End date<input id="history-to" type="date" value="${e(f.to||h.date_range.to)}"/></label>
+        <label>Representative group<select id="history-group"><option value="">All groups</option>${h.available_groups.map(g=>`<option value="${e(g.id)}" ${f.group===g.id?'selected':''}>${e(g.label)}</option>`).join('')}</select></label>
+        <label>Historical scope<select id="history-scope"><option value="PERSONAL_HISTORY" ${f.scope==='PERSONAL_HISTORY'?'selected':''}>Represented during residence</option><option value="CURRENT_SEATS" ${f.scope==='CURRENT_SEATS'?'selected':''}>History of current seats</option></select></label>
+      </div><div class="history-filter-actions"><button class="primary-button" data-history-apply>Apply range</button><button class="secondary-button" data-history-birth>Reset: since birth</button></div>
+      <p class="note" role="status">${e(h.coverage_notice)}</p></section>
+      <div class="metric-grid"><div class="metric"><div class="metric-label">Individual recorded positions</div><span class="metric-number">${h.total_recorded_member_positions}</span></div><div class="metric"><div class="metric-label">Missing positions</div><span class="metric-number">${h.total_missing_member_positions}</span></div><div class="metric"><div class="metric-label">Service terms in selected scope</div><span class="metric-number">${h.officials.length}</span></div></div>
+      <div class="main-grid"><section class="panel"><div class="panel-header"><h2>Publicly recorded issue motions — fictional sample</h2><span class="pill">Page ${h.page} of ${Math.max(1,h.total_pages)}</span></div>
+       ${rows||'<p class="note">No matching records in this sample. Absence here does not establish that no government vote occurred.</p>'}
+       <div class="history-filter-actions"><button class="secondary-button" data-history-page="${Math.max(1,h.page-1)}" ${h.page<=1?'disabled':''}>Previous</button><button class="secondary-button" data-history-page="${h.page+1}" ${h.page>=h.total_pages?'disabled':''}>Next</button></div>
+       <p class="note">${h.total_matched_rows} matching official–motion records in this limited sample. No overall political rankings or preference-alignment scores are generated.</p></section>
+       <aside><section class="panel"><h2>Historical officeholders</h2>${roster||'<p class="note">No documented service terms in this sample for this range.</p>'}
+       <hr class="mini-divider"><h3>Evidence boundaries</h3><p class="note">All names, districts, issues, votes, and dates here are synthetic. Representative continuity requires dated district and residency evidence. Voice votes and missing records cannot be attributed to individuals without a source.</p></section></aside></div>`;
+  }
+  async function historyAction(el){
+    try{
+      if(el.hasAttribute('data-history-birth')){state.historyFilters={from:'',to:'',group:'',scope:'PERSONAL_HISTORY',page:1};}
+      else if(el.hasAttribute('data-history-page')){state.historyFilters.page=Number(el.dataset.historyPage);}
+      else {
+        state.historyFilters={from:$('#history-from').value,to:$('#history-to').value,group:$('#history-group').value,scope:$('#history-scope').value,page:1};
+      }
+      await loadHistory();render();
+    }catch(error){toast('Historical query: '+error.message,true);}
+  }
+  function render(){if(!state.me||!state.item)return;$('#institution-name').textContent=state.me.institution;$('#actor-name').textContent=pretty(state.me.id);$('#avatar').textContent=state.me.id[0].toUpperCase();$('#section-kicker').textContent=screenName(state.screen).toUpperCase();renderNav();const functions={home,bills,session,vote,records,assistant,issues:questions,finance,public:publicDashboard,sources,authority:authorityPage,history:historyView};$('#view').innerHTML=(state.items.length>1 ? `<div class="docket-picker"><label for="docket-select">CURRENT FICTIONAL PROPOSAL</label><select id="docket-select">${state.items.map(x=>`<option value="${e(x.id)}" ${x.id===state.item.id?'selected':''}>${e(x.id)} · ${e(pretty(x.status))}</option>`).join('')}</select></div>`:'')+functions[state.screen]();}
   async function handleContent(ev){
+    const hact=ev.target.closest('[data-history-apply],[data-history-birth],[data-history-page]');if(hact){await historyAction(hact);return;}
     const nav=ev.target.closest('[data-screen]');if(nav){state.screen=nav.dataset.screen;render();return;}
     const tab=ev.target.closest('[data-tab]');if(tab){state.activeTab=tab.dataset.tab;render();return;}
     const proof=ev.target.closest('[data-passport]');if(proof){await openPassport();return;}
