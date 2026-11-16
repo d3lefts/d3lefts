@@ -111,7 +111,7 @@ def check(document):
                 raise ValueError("contradictory deduction")
             validated[name] = value
             origin = sources[row["source_id"]]
-            support[origin["id"]] = origin["sha256"]
+            support[origin["id"]] = {key: origin.get(key) for key in ("sha256", "status", "valid_from", "valid_until", "observed_at", "authenticity", "locator")}
         if validated.get(goal) is not True:
             return {"status": "INDETERMINATE"}
         return {"status": "SUPPORTED_IN_FICTIONAL_MODEL", "dependencies": dict(sorted(support.items()))}
