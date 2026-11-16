@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101727">
+<meta name="description" content="Interactive, finite educational model of NIGHTFALL's Lean-certified checkpointed permission price and correlation-aware evidence certificates. Includes source scope and review limitations.">
+<link rel="canonical" href="https://d3lefts.github.io/d3lefts/permission-lab.html">
+<link rel="alternate" type="application/json" href="permission-lab-status.json" title="Finite model assurance status">
+<title>Permission Lab — NIGHTFALL Certificate-Directed Monitoring</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="site.css"><link rel="stylesheet" href="ethereal-theme.css"><link rel="stylesheet" href="two-skies.css"><link rel="stylesheet" href="permission-lab.css">
+<script src="site.js" defer></script><script src="ethereal-theme.js" defer></script><script src="permission-lab-core.js" defer></script><script src="permission-lab.js" defer></script>
+</head>
+<body><a class="skip" href="#main">Skip to permission lab</a><div class="topline"></div>
+<header class="header"><div class="wrap header-inner">
+<a href="index.html" class="brand" aria-label="NIGHTFALL research home"><span class="mark" aria-hidden="true">N∕F</span><span class="brand-copy">NIGHTFALL <span>ASSURANCE / FINITE MODEL</span></span></a>
+<button type="button" id="menu-button" class="menu-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Toggle navigation">MENU +</button>
+<nav class="nav" id="site-nav" aria-label="Primary navigation"><a href="index.html">Research</a><a href="research.html">Library</a><a href="active-proof-passport.html">Proof passports</a><a class="nav-call" href="review.html">Independent review ↗</a></nav>
+</div></header>
+<main id="main" class="pl-main">
+<section class="pl-hero" aria-labelledby="pl-title">
+<div class="pl-kicker">NIGHTFALL / PRICE OF PERMISSION / 15 NOVEMBER 2026</div>
+<h1 id="pl-title">A monitor asks.<br><em>A certificate answers.</em></h1>
+<p>Explore a source-scoped mathematical model of how much evidence is needed to justify an autonomous action when authorization changes, verification capacity is limited, and disclosure has a cost.</p>
+<div class="pl-pills"><span>19 named Lean declarations passed</span><span>Finite conditional theorem</span><span>No real-agent authorization</span></div>
+<div class="pl-links"><a href="https://github.com/d3lefts/d3lefts/pull/636">Merged theorem PR #636 ↗</a><a href="https://github.com/d3lefts/d3lefts/actions/runs/43801167480">Pinned Lean CI receipt ↗</a><a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/formalization/agent_safety/DynamicPermissionBridge.lean">Source-level proof ↗</a></div>
+</section>
+<section class="pl-section" aria-labelledby="pl-price-title">
+<div class="pl-kicker">01 / AUTHORITY CHANGES INSIDE A VERIFICATION WINDOW</div>
+<h2 id="pl-price-title">Pay for what must be checked again.</h2>
+<p>A trusted checkpoint identifies fresh obligations following an authenticated change. Slots already consumed cannot be recovered. This matching price applies only when the remaining epoch is stable, predicates are independent, observations are exact, and the specified final guards are trusted.</p>
+<div class="pl-equation">R = N − cached + invalidated; K = workers × slots − spent;<br>
+C* = sunk + worker fees + guard fees + effect fees + R min(2cₚ,dₚ) + max(dₚ−2cₚ,0) max(2R−K,0)</div>
+<div class="pl-grid">
+<form class="pl-panel" id="pl-cost-form" aria-label="Finite checkpoint permission price inputs">
+<fieldset style="border:0;padding:0;margin:0"><legend>Adjust model parameters</legend>
+<div class="pl-fields">
+<label>Actions N<input data-number type="number" name="N" min="0" max="40" step="1" value="3"></label>
+<label>Valid cached certificates<input data-number type="number" name="initialCache" min="0" max="40" step="1" value="1"></label>
+<label>Invalidated at checkpoint<input data-number type="number" name="invalidated" min="0" max="40" step="1" value="1"></label>
+<label>Verification workers<input data-number type="number" name="workers" min="0" max="20" step="1" value="2"></label>
+<label>Slots per worker<input data-number type="number" name="slotsPerWorker" min="0" max="40" step="1" value="2"></label>
+<label>Already spent slots<input data-number type="number" name="spentSlots" min="0" max="80" step="1" value="0"></label>
+<label>Final-effect guards<input data-number type="number" name="guards" min="0" max="40" step="1" value="3"></label>
+<label>Raw half-read base cost<input data-number type="number" name="rawBaseCost" min="0" max="100" step="1" value="1"></label>
+<label>Raw half-read disclosure cost<input data-number type="number" name="rawDisclosure" min="0" max="100" step="1" value="0"></label>
+<label>Predicate-only base cost<input data-number type="number" name="directBaseCost" min="0" max="100" step="1" value="5"></label>
+<label>Predicate-only disclosure cost<input data-number type="number" name="directDisclosure" min="0" max="100" step="1" value="0"></label>
+<label>Worker setup fee<input data-number type="number" name="verifierFee" min="0" max="100" step="1" value="4"></label>
+<label>Guard setup fee<input data-number type="number" name="guardFee" min="0" max="100" step="1" value="1"></label>
+<label>Per-effect fee<input data-number type="number" name="effectFee" min="0" max="100" step="1" value="1"></label>
+<label>Sunk verification cost<input data-number type="number" name="sunkCost" min="0" max="1000" step="1" value="0"></label>
+</div></fieldset></form>
+<div class="pl-panel" role="status" aria-live="polite" aria-atomic="true">
+<div class="pl-kicker">MATCHING FINITE-PLAN OPTIMUM</div>
+<div class="pl-result" id="pl-cost-result">Calculating…</div>
+<p id="pl-cost-detail" class="pl-output">Calculation requires JavaScript.</p>
+<p class="pl-caption">Modeled integer cost units, not measured currency or monitor latency. No real protected effect is executed. An infeasible setting is never described as a certified action.</p>
+</div>
+</div>
+</section>
+<section class="pl-section" aria-labelledby="pl-world-title">
+<div class="pl-kicker">02 / CORRELATED POSSIBLE WORLDS AND SELECTIVE DISCLOSURE</div>
+<h2 id="pl-world-title">A source change can break an old certificate.</h2>
+<p>Before a change, only worlds 00 (permitted) and 01 (unsafe) are possible. The right observation distinguishes them. After the source expands to include unsafe world 10, the same right-only observation is no longer sufficient. This is exact finite indistinguishability, not an assertion that observed real-world correlations are authenticated.</p>
+<div class="pl-grid">
+<form class="pl-panel pl-choices" id="pl-world-form" aria-label="Finite possible-world evidence controls">
+<label><input type="checkbox" id="pl-changed"> Add unsafe world 10 at a new source epoch</label>
+<fieldset class="pl-choices"><legend>Allow evidence channels</legend>
+<label><input type="checkbox" id="pl-allow-left" checked> Private left observation · cost 4</label>
+<label><input type="checkbox" id="pl-allow-right" checked> Private right observation · cost 4</label>
+<label><input type="checkbox" id="pl-allow-direct" checked> Predicate-only observation · cost 9</label>
+</fieldset>
+<p class="pl-caption">Channel fees illustrate disclosure preferences; they do not implement encryption, zero knowledge, differential privacy or a confidential-ballot system.</p>
+</form>
+<div class="pl-panel" role="status" aria-live="polite" aria-atomic="true">
+<div class="pl-kicker">SOUND CERTIFICATE / FINITE WORLD MODEL</div>
+<p class="pl-output" id="pl-worlds">Calculating…</p>
+<div class="pl-result" style="font-size:clamp(20px,2.5vw,28px)" id="pl-proof-result">Calculating…</div>
+<p class="pl-caption">Only world 00 is the nominal target. The criterion checks that no unsafe possible world has the same selected observation transcript. Unknown or insufficient evidence means no authorization.</p>
+</div>
+</div>
+</section>
+<section class="pl-section" aria-labelledby="pl-transfer-title">
+<div class="pl-kicker">03 / ONE RESEARCH MECHANISM, DISTINCT APPLICATIONS</div>
+<h2 id="pl-transfer-title">From governance decisions to agent actions.</h2>
+<p><strong>Commonwealth OS</strong> studies proof obligations for hypothetical institutional decisions and changing legal sources. <strong>NIGHTFALL</strong> studies evidence selection and trusted permission boundaries for consequential agent actions. These are research transfers, not evidence that either system has deployed official voting or a universal unbypassable tool monitor.</p>
+<div class="pl-links"><a href="commonwealth-os.html">Commonwealth research preview ↗</a><a href="cost-of-knowing.html">Cost of Knowing synthesis ↗</a><a href="review.html">Independent review and limitations ↗</a></div>
+</section>
+<aside class="pl-boundary" aria-label="Scientific and operational limitations"><strong>Certificate boundaries</strong>
+The Lean result proves a finite, independent-task, stable-post-checkpoint matching price plus separate finite correlated-world and disclosure selection results. It does not establish the unrestricted repeated-change, correlated-noisy, adaptive privacy-constrained optimum; it does not verify a deployed JavaScript/PostgreSQL/ref-monitor implementation, real-world legal semantics, side-channel privacy, or comprehensive nonauthor review. Existing FAVA, Matoi, VEPA and assurance scheduling research constrain novelty claims.</aside>
+<noscript><p class="pl-note">JavaScript is required for this illustrative calculator. The exact theorem and audit source remain accessible through the links above.</p></noscript>
+</main>
+<footer class="wrap" style="padding:28px 16px 45px;color:var(--muted);font-size:12px"><span>© 2026 NIGHTFALL · conditional verification, not operational authorization</span></footer>
+</body></html>

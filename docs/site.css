@@ -839,3 +839,14 @@ html{scroll-padding-top:24px}
  .hero .hero-description{font-size:16px;line-height:1.57}
 }
 @media(prefers-reduced-motion:reduce){.nf-evidence-rail a{transition:none}}
+
+
+/* 2026-11-15 finite permission synthesis: shared editorial bridge. */
+.nf-permission-bridge{max-width:1160px;margin:32px auto;padding:28px clamp(18px,3.5vw,36px);border:1px solid var(--line,#596477);border-radius:12px;box-sizing:border-box}
+.nf-permission-bridge-kicker{font:600 10px/1.7 var(--mono,monospace);letter-spacing:.13em;text-transform:uppercase;color:var(--muted,#909ba6)}
+.nf-permission-bridge h2{font:400 clamp(26px,3.8vw,43px)/1.13 var(--serif,Georgia,serif);margin:12px 0 13px;color:var(--ink,#eaebf0)}
+.nf-permission-bridge p{font:400 15px/1.75 var(--sans,system-ui,sans-serif);max-width:900px;margin:0 0 13px;color:var(--muted,#a5adba)}
+.nf-permission-bridge-links{display:flex;flex-wrap:wrap;gap:11px 24px;margin:18px 0;font:600 13px/1.6 var(--sans,system-ui,sans-serif)}
+.nf-permission-bridge-links a{border-bottom:1px solid currentColor;overflow-wrap:anywhere}
+.nf-permission-bridge .nf-permission-bridge-gate{font-size:12px;line-height:1.65;margin-bottom:0}
+@media(max-width:700px){.nf-permission-bridge{margin:18px 12px;padding:22px 18px}}
