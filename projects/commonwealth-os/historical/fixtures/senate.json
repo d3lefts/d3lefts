@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "source_system": "SYNTH_SENATE",
+  "source_id": "fixture://commonwealth/senate/v1",
+  "chamber": "SENATE",
+  "jurisdiction": "fictional-union",
+  "people": [
+    {"person_id": "fx-senate-taylor", "name": "Taylor Elm (fictional)"},
+    {"person_id": "fx-senate-robin", "name": "Robin Fir (fictional)"}
+  ],
+  "tenures": [
+    {"tenure_id": "fx-s-tenure-one", "person_id": "fx-senate-taylor", "seat": "S-1", "district": "ALL", "from": "2023-01-03", "to": "2029-01-03"},
+    {"tenure_id": "fx-s-tenure-two", "person_id": "fx-senate-robin", "seat": "S-2", "district": "ALL", "from": "2023-01-03", "to": "2027-01-03"}
+  ],
+  "questions": [
+    {"question_id": "fx-senate-roll-001", "date": "2024-08-01", "kind": "CLOTURE", "rollcall_type": "RECORDED", "title": "Fictional Senate roll 001: debate limit on riverfront study", "proposition": "Limit further debate on a fictional riverfront access study.", "result": "AGREED"},
+    {"question_id": "fx-senate-roll-002", "date": "2025-02-05", "kind": "FINAL_PASSAGE", "rollcall_type": "RECORDED", "title": "Fictional Senate roll 002: riverfront public access", "proposition": "Adopt a fictional riverfront public-access improvement plan.", "result": "AGREED"},
+    {"question_id": "fx-senate-roll-003", "date": "2025-04-03", "kind": "NOMINATION", "rollcall_type": "RECORDED", "title": "Fictional Senate roll 003: synthetic planning commissioner nomination", "proposition": "Confirm the fictional commissioner of public facilities.", "result": "AGREED"}
+  ],
+  "votes": [
+    {"record_id": "fx-s-vote-001a", "question_id": "fx-senate-roll-001", "person_id": "fx-senate-taylor", "choice": "YEA"},
+    {"record_id": "fx-s-vote-001b", "question_id": "fx-senate-roll-001", "person_id": "fx-senate-robin", "choice": "NAY"},
+    {"record_id": "fx-s-vote-002a", "question_id": "fx-senate-roll-002", "person_id": "fx-senate-taylor", "choice": "YEA"},
+    {"record_id": "fx-s-vote-003a", "question_id": "fx-senate-roll-003", "person_id": "fx-senate-taylor", "choice": "YEA"},
+    {"record_id": "fx-s-vote-003b", "question_id": "fx-senate-roll-003", "person_id": "fx-senate-robin", "choice": "NOT_VOTING"}
+  ]
+}
