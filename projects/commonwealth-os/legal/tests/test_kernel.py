@@ -115,6 +115,21 @@ class LegalPassportTests(unittest.TestCase):
         result = self.outcome("INDETERMINATE")
         self.assertEqual(result["status"], "INDETERMINATE")
 
+    def test_changed_authority_status_or_effective_date_triggers_recheck(self):
+        receipt = self.outcome("SUPPORTED_IN_FICTIONAL_MODEL")
+        for field, value in (("status", "WITHDRAWN"),
+                             ("valid_until", "2026-11-16"),
+                             ("observed_at", "2026-11-16")):
+            with self.subTest(field=field):
+                altered = copy.deepcopy(self.doc["sources"])
+                altered[0][field] = value
+                self.assertEqual(source_change_status(receipt, altered)["status"], "RECHECK_REQUIRED")
+
+    def test_missing_recorded_source_triggers_recheck(self):
+        receipt = self.outcome("SUPPORTED_IN_FICTIONAL_MODEL")
+        altered = [s for s in self.doc["sources"] if s["id"] != "law-r12"]
+        self.assertEqual(source_change_status(receipt, altered)["changed_dependencies"], ["law-r12"])
+
     def test_change_dependency_recheck(self):
         receipt = self.outcome("SUPPORTED_IN_FICTIONAL_MODEL")
         changed = copy.deepcopy(self.doc["sources"])
