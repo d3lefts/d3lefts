@@ -1,0 +1,34 @@
+name: Commonwealth synthetic public demo
+on:
+  pull_request:
+    paths:
+      - 'docs/commonwealth*'
+      - 'docs/index.html'
+      - 'docs/sitemap.xml'
+      - 'projects/commonwealth-os/historical/fixtures/**'
+      - 'scripts/test_commonwealth_site.cjs'
+      - '.github/workflows/commonwealth-public-demo.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/commonwealth*'
+      - 'docs/index.html'
+      - 'docs/sitemap.xml'
+      - 'projects/commonwealth-os/historical/fixtures/**'
+      - 'scripts/test_commonwealth_site.cjs'
+      - '.github/workflows/commonwealth-public-demo.yml'
+permissions:
+  contents: read
+jobs:
+  synthetic-site-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Reproduce fixture parity, tenure and procedure distinctions
+        run: node scripts/test_commonwealth_site.cjs
+      - name: Static website navigation and source link check
+        run: python3 scripts/check_site.py
