@@ -11,14 +11,14 @@ premises refer to exact, versioned governing sources.
 
 From repository root:
 
-\`\`\`sh
+```sh
 python3 -m unittest discover -s projects/commonwealth-os/legal/tests -p 'test_*.py' -v
 python3 projects/commonwealth-os/legal/kernel.py projects/commonwealth-os/legal/fixtures/riverfront_passport.json
 python3 projects/commonwealth-os/legal/independent_checker.py projects/commonwealth-os/legal/fixtures/riverfront_passport.json
 python3 projects/commonwealth-os/legal/dossier.py
-\`\`\`
+```
 
-CI: \`.github/workflows/commonwealth-legal-kernel.yml\`.
+CI: `.github/workflows/commonwealth-legal-kernel.yml`.
 
 ### What is actually checked
 
@@ -37,7 +37,7 @@ Both checkers reject corrupted source hashes, unanchored quotes, contradictory
 premises, bad proof order, unsupported goals, unauthorized mode, missing sources,
 stale/withdrawn sources and other hostile input. The second checker shares no
 Python imports with the first. The output says
-\`SUPPORTED_IN_FICTIONAL_MODEL\`, \`INDETERMINATE\`, or \`INVALID\`; it never says
+`SUPPORTED_IN_FICTIONAL_MODEL`, `INDETERMINATE`, or `INVALID`; it never says
 "legally authorized."
 
 The decision dossier attaches neutral consideration statements, explicit
@@ -56,11 +56,11 @@ A reader's political preference is not measured by mere dossier access.
    checker; independent legal review remains mandatory.
 3. **Completeness:** this kernel cannot discover omitted statutes, binding
    precedent, emergency stays, contradictory facts, or unpublished decisions.
-4. **Temporality:** \`valid_from/valid_until\` refer to the declared legal/factual
-   applicability interval; \`observed_at\` refers to when the system claims to
-   have seen the record. \`as_of\` and \`known_at\` are separately checked. Date
+4. **Temporality:** `valid_from/valid_until` refer to the declared legal/factual
+   applicability interval; `observed_at` refers to when the system claims to
+   have seen the record. `as_of` and `known_at` are separately checked. Date
    equality is an approximation for dates, not an exact effect-time transaction.
-5. **Recertification:** \`source_change_status\` compares *all recorded source
+5. **Recertification:** `source_change_status` compares *all recorded source
    dependencies*, including document hashes, status, effective intervals and
    observation date. A change requires rechecking. Identical recorded sources
    do not establish that all controlling legal sources have been discovered.
@@ -83,7 +83,7 @@ A reader's political preference is not measured by mere dossier access.
 - **Authenticity and legal-status custody:** official endpoints or legally
   validated custodians, source signatures where available, reliable catalog
   completeness claims, retrieval permissions, typed provenance and corrections.
-  \`published_at\`, \`effective_at\`, \`repealed_at\`, \`learned_at\` and proof
+  `published_at`, `effective_at`, `repealed_at`, `learned_at` and proof
   evaluation time cannot be conflated.
 - **Independent evaluation:** two-source reconciliation, a separately authored
   formal semantics, court/legal practitioner challenge fixtures, adversarial
@@ -95,8 +95,8 @@ A reader's political preference is not measured by mere dossier access.
 
 ### Integration plan — one authoritative workflow, no parallel government
 
-\`legal/\` is dependency-free and intentionally does not choose or change an
-authoritative backend. Existing \`app/\` (FastAPI/reducer) and \`apps/server/\`
+`legal/` is dependency-free and intentionally does not choose or change an
+authoritative backend. Existing `app/` (FastAPI/reducer) and `apps/server/`
 (Node/SQLite) are **two experimental implementations**, not two independent
 sources of governing truth. The next integration must select one command
 pipeline after a feature/guard comparison, preserve an independent checker,
