@@ -19,7 +19,7 @@ Commonwealth OS is a mobile-first, representative-first civic governance system 
 1. **No live city-council record ingestion yet.** Use synthetic fixtures first. The municipal intake connector remains disabled by default.
 2. **No institutional authority by implication.** Official voting is forbidden until jurisdiction-specific legal authorization, configured rules, security assurance, and independent sign-off.
 3. **No autonomous lawmaking by AI.** AI assists with reading, sourcing, drafting and comparisons; binding actions require authorized institutional processes.
-4. **No secret constituent profiling.** Private voter profiles are encrypted, consent-scoped, and segregated from the public record and political organizations.
+4. **No secret constituent profiling.** Any future private voter profiles must be encrypted, consent-scoped, and segregated from public records and political organizations; existing synthetic demos do not constitute production privacy assurance.
 5. **No misleading endorsement.** The University of Alabama in Huntsville, local HOAs, Huntsville City Schools, and Huntsville city government are *prospective* pilot settings, not institutional partners.
 6. **Transparency of public decisions does not mean public personal ballots.** Public publishing requires review, redaction, legal basis, and a dedicated read model.
 
