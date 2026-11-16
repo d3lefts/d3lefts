@@ -4,7 +4,7 @@
 
 ## Running
 
-Open `docs/commonwealth-browser/index.html` through a local HTTP server or the repository's GitHub Pages deployment. It loads local ES modules and its only historical data source is the sibling static script `../commonwealth-intelligence-fixtures.js`. No external API requests, storage, real civic identities, DOB or address collection, analytical beacons, or official ballots are added by this feature.
+Open `docs/commonwealth-browser/index.html` through a local HTTP server or the repository's GitHub Pages deployment. It loads local ES modules and its only historical data source is `./historical-fixtures.js`, a static synthetic snapshot mirrored from `docs/commonwealth-intelligence-fixtures.js`. No external API requests, storage, real civic identities, DOB or address collection, analytical beacons, or official ballots are added by this feature.
 
 The existing procedural checker and its evidence download/local digest check remain intact. Its digest is not a legal certification, signature or independent source authentication.
 
@@ -43,4 +43,4 @@ Chromium was exercised via `page.set_content` and inline script bundling for loc
 
 ## Implementation files
 
-`workspace.mjs` implements the UI; `history-core.mjs` implements pure matching/semantics; `question-data.mjs` is the unvalidated pilot seed bank; `workspace.css` adds scoped mobile styles; original `app.mjs`, `core.mjs`, `fixtures.mjs` are unchanged.
+`workspace.mjs` implements the UI; `history-core.mjs` implements pure matching/semantics; `question-data.mjs` is the unvalidated pilot seed bank; `workspace.css` adds scoped mobile styles; original `app.mjs`, `core.mjs`, `fixtures.mjs` are unchanged. `historical-fixtures.js` is kept byte-for-byte consistent with the existing synthetic civic intelligence fixture snapshot.
