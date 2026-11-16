@@ -57,6 +57,69 @@ theorem entry_01 (θ : ℂ) :
   rw [star_div₀, two_star]
   ring
 
+theorem unweighted_00_value :
+    (∑ s : Fin 3,
+      PhysicalQubit.qubitDensity (Real.sqrt 3)
+        (TernaryPhase.omega ^ s.val) 0 0) = (9:ℂ)/4 := by
+  simp_rw [entry_00]
+  rw [Fin.sum_univ_three]
+  ring
+
+theorem unweighted_11_value :
+    (∑ s : Fin 3,
+      PhysicalQubit.qubitDensity (Real.sqrt 3)
+        (TernaryPhase.omega ^ s.val) 1 1) = (3:ℂ)/4 := by
+  calc
+    (∑ s : Fin 3,
+      PhysicalQubit.qubitDensity (Real.sqrt 3)
+        (TernaryPhase.omega ^ s.val) 1 1) =
+      ∑ _s : Fin 3, (1:ℂ)/4 := by
+        apply Finset.sum_congr rfl
+        intro s _
+        exact entry_11 _ (PhysicalQubit.unit_phase_powers
+          TernaryPhase.omega TernaryPhase.omega_unit s.val)
+    _ = (3:ℂ)/4 := by rw [Fin.sum_univ_three]; ring
+
+theorem conjugate_character_sum :
+    (∑ s : Fin 3, star (TernaryPhase.omega ^ s.val)) = 0 := by
+  have h := congrArg (fun z : ℂ => star z) TernaryPhase.omega_sum
+  rw [Fin.sum_univ_three] at h ⊢
+  simp only [star_add, star_zero] at h
+  exact h
+
+theorem unweighted_10_zero :
+    (∑ s : Fin 3,
+      PhysicalQubit.qubitDensity (Real.sqrt 3)
+        (TernaryPhase.omega ^ s.val) 1 0) = 0 := by
+  calc
+    (∑ s : Fin 3,
+      PhysicalQubit.qubitDensity (Real.sqrt 3)
+        (TernaryPhase.omega ^ s.val) 1 0) =
+      (∑ s : Fin 3, TernaryPhase.omega ^ s.val) *
+        ((Real.sqrt (3:ℝ) : ℂ)/4) := by
+          rw [Finset.sum_mul]
+          apply Finset.sum_congr rfl
+          intro s _
+          exact entry_10 _
+    _ = 0 := by rw [TernaryPhase.omega_sum]; ring
+
+theorem unweighted_01_zero :
+    (∑ s : Fin 3,
+      PhysicalQubit.qubitDensity (Real.sqrt 3)
+        (TernaryPhase.omega ^ s.val) 0 1) = 0 := by
+  calc
+    (∑ s : Fin 3,
+      PhysicalQubit.qubitDensity (Real.sqrt 3)
+        (TernaryPhase.omega ^ s.val) 0 1) =
+      (∑ s : Fin 3, star (TernaryPhase.omega ^ s.val)) *
+        ((Real.sqrt (3:ℝ) : ℂ)/4) := by
+          rw [Finset.sum_mul]
+          apply Finset.sum_congr rfl
+          intro s _
+          rw [entry_01]
+          ring
+    _ = 0 := by rw [conjugate_character_sum]; ring
+
 theorem weighted_00_zero :
     (∑ s : Fin 3, TernaryPhase.omega ^ s.val *
       PhysicalQubit.qubitDensity (Real.sqrt 3)
@@ -125,6 +188,10 @@ theorem weighted_01_value :
       rw [Fin.sum_univ_three]
       ring
 
+#print axioms Nightfall.Quantum.LocalMoments.unweighted_00_value
+#print axioms Nightfall.Quantum.LocalMoments.unweighted_11_value
+#print axioms Nightfall.Quantum.LocalMoments.unweighted_10_zero
+#print axioms Nightfall.Quantum.LocalMoments.unweighted_01_zero
 #print axioms Nightfall.Quantum.LocalMoments.weighted_00_zero
 #print axioms Nightfall.Quantum.LocalMoments.weighted_11_zero
 #print axioms Nightfall.Quantum.LocalMoments.weighted_10_zero
