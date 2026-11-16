@@ -59,8 +59,14 @@ export function transact(input,cmd){
  if(cmd.type==='COMMENT'){
   if(!['OPEN','REVIEW'].includes(p.stage))return good(false,'Discussion is closed in this example',input);
   if(!clean(cmd.text,10,500)||!['SUPPORT','QUESTION','CONCERN'].includes(cmd.stance))return good(false,'A 10–500 character contribution and stance are required',input);
-  const entry={id:'C-'+(p.comments.length+1),revision:p.revision,text:cmd.text.trim(),stance:cmd.stance,author:'FICTIONAL_VISITOR',status:'VISIBLE_UNREVIEWED'};
+  const entry={id:'C-'+(p.comments.length+1),revision:p.revision,text:cmd.text.trim(),stance:cmd.stance,author:'FICTIONAL_VISITOR',status:'UNANSWERED_FICTIONAL'};
   p.comments.push(entry);event(p,'COMMENT',entry.id+' · '+entry.stance);return good(true,'Comment added locally; it is not published or moderated by an institution',next);
+ }
+ if(cmd.type==='RESPOND_COMMENT'){
+  const c=p.comments.find(x=>x.id===cmd.commentId);
+  if(cmd.role!=='DEMO_STEWARD'||!c||c.status!=='UNANSWERED_FICTIONAL'||!clean(cmd.reason,15,400))return good(false,'A fictional reviewer and an explicit 15–400 character response are required',input);
+  c.status='ANSWERED_IN_SIMULATION';c.response=cmd.reason.trim();event(p,'COMMENT_RESPONSE',c.id+' · response recorded (non-authoritative)');
+  return good(true,'A fictional response was attached to this particular question/concern',next);
  }
  if(cmd.type==='ADVISE'){
   if(!['OPEN','REVIEW'].includes(p.stage)||!CHOICES.includes(cmd.choice))return good(false,'Advisory response unavailable or invalid',input);
@@ -113,5 +119,5 @@ export function budgetSlate(institution,selected){
  return {mode:'SYNTHETIC_ONLY',institution,limit:INSTITUTIONS[institution].budget,selected:[...selected],total,remaining:INSTITUTIONS[institution].budget-total,feasible:total<=INSTITUTIONS[institution].budget,authority:'NONE',funding:'NOT_ALLOCATED'};
 }
 export function publicDossier(p){
- return {kind:'COMMONWEALTH_SYNTHETIC_DOSSIER_V1',id:p.id,title:p.title,institution:p.institution,text:p.text,revision:p.revision,stage:p.stage,source:p.source,sourceStatus:p.sourceStatus,response:p.response,revisions:clone(p.revisions),milestones:clone(p.milestones),events:clone(p.events),commentCount:p.comments.length,amendmentCount:p.amendments.length,official:false,verifiedSource:false,recordCompleteness:'NOT_ASSESSED',warnings:['No real vote, institution response, public release or government source.','Local browser data is mutable and unauthenticated; this dossier is not a Proof Passport.']};
+ return {kind:'COMMONWEALTH_SYNTHETIC_DOSSIER_V1',id:p.id,title:p.title,institution:p.institution,text:p.text,revision:p.revision,stage:p.stage,source:p.source,sourceStatus:p.sourceStatus,response:p.response,revisions:clone(p.revisions),milestones:clone(p.milestones),events:clone(p.events),commentCount:p.comments.length,answeredCount:p.comments.filter(x=>x.status==='ANSWERED_IN_SIMULATION').length,unansweredCount:p.comments.filter(x=>x.status!=='ANSWERED_IN_SIMULATION').length,amendmentCount:p.amendments.length,official:false,verifiedSource:false,recordCompleteness:'NOT_ASSESSED',warnings:['No real vote, institution response, public release or government source.','Local browser data is mutable and unauthenticated; this dossier is not a Proof Passport.']};
 }
