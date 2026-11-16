@@ -325,6 +325,8 @@
     qs("#cw-reset-steps").addEventListener("click",() => {step=0;renderWorkflow();});
     renderWorkflow();
   }
-  window.COMMONWEALTH_DEMO_LOGIC = Object.freeze({tenureAt,recordPosition,questionLinks,resolveMembers,classify});
+  window.COMMONWEALTH_DEMO_LOGIC = Object.freeze({tenureAt,recordPosition,questionLinks,resolveMembers,classify,quizCount:quiz.length,archetypeCount:Object.keys(archetypes).length});
+  // Allow DOM-free, independent model tests; no hidden network or storage setup.
+  if (typeof document === "undefined" || !document.querySelector || !document.querySelector("#cw-issue")) return;
   initHistory();initQuiz();initWorkflow();
 })();
