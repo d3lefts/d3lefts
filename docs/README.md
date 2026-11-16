@@ -69,3 +69,7 @@ Do not update canonical source counts or scientific status merely to make a test
 GitHub Pages is configured for the **`main` branch, `/docs` directory**. The [site validation workflow](../.github/workflows/verify-site.yml) runs on pull requests and relevant pushes. Verify published Pages separately after merging; a green source check does not by itself establish a successful public deployment.
 
 This folder contains a website and local instruments, not a stand-alone software package. For research attribution, contribution rules, historical releases, or licensing limits, consult the repository [README](../README.md) and [CONTRIBUTING](../CONTRIBUTING.md) documents.
+
+## Commonwealth OS product demonstration
+
+The static website publishes [`commonwealth.html`](commonwealth.html), an evidence-scoped product page embedding the versioned script-resistant [Living Voter v1.3.1](commonwealth-living-voter.html) and the browser-only [synthetic institutional assurance workbench](commonwealth-browser/index.html). The mirrored demo blobs are reused directly from `projects/commonwealth-os/` and retain provenance through Git object identity. Neither demo is an authenticated election system; fictional institutional fixtures, example congressional snapshots, and formal/legal research are explicitly distinguished. Changes to upstream demos require an intentional mirror refresh; this is not a runtime backend integration.
