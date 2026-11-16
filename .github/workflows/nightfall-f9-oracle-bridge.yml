@@ -1,0 +1,50 @@
+name: NIGHTFALL F9 same-oracle decoder and complement bridge Lean
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [nightfall/erdos-tenure-phase-sld-permission-20261116]
+    paths:
+      - 'research/nightfall/formalization/finite_field/F9OracleBridge.lean'
+      - 'research/nightfall/2026-11-f9-bridge/**'
+      - '.github/workflows/nightfall-f9-oracle-bridge.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  oracle-bridge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile genuine squared-oracle block and complement lemmas
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p f9-receipts
+          cp research/nightfall/formalization/finite_field/F9OracleBridge.lean /tmp/mathlib4/F9OracleBridge.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/F9OracleBridge.olean F9OracleBridge.lean)
+      - name: Strict named standard-axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          N=Nightfall.FiniteField.F9OracleBridge
+          python3 scripts/lean_bridge.py research/nightfall/formalization/finite_field/F9OracleBridge.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.signBit_injective" --decl "$N.signBit_neg_collision" --decl "$N.block_value_squared_injective" --decl "$N.dot_add" --decl "$N.dot_sub" --decl "$N.complement_kernel_collision" --decl "$N.complement_witness_not_sign_equivalent" --json-out f9-receipts/bridge.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py f9-receipts/bridge.json
+      - name: Independently reconstruct exact GF9 with two distinct irreducible polynomials
+        run: python3 research/nightfall/2026-11-f9-bridge/verify_two_models.py
+      - name: Freeze source identities and compiler
+        if: always()
+        run: |
+          mkdir -p f9-receipts
+          git rev-parse HEAD > f9-receipts/commit.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > f9-receipts/mathlib.txt || true
+          sha256sum research/nightfall/formalization/finite_field/F9OracleBridge.lean research/nightfall/2026-11-f9-bridge/verify_two_models.py > f9-receipts/source_sha256.txt
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: nightfall-f9-oracle-bridge-${{ github.run_id }}
+          path: f9-receipts/
+          retention-days: 60
