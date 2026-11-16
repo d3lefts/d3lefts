@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111827">
+  <meta name="description" content="Commonwealth OS synthetic governance-assurance demonstration">
+  <title>Commonwealth OS | Synthetic Governance Demonstrator</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to main content</a>
+  <header class="masthead">
+    <div class="brand"><span class="mark" aria-hidden="true">◈</span><div><strong>COMMONWEALTH OS</strong><small>Democratic assurance workbench</small></div></div>
+    <span class="mode">SYNTHETIC DEMONSTRATION</span>
+  </header>
+  <main id="main">
+    <section class="intro"><p class="eyebrow">2027 pilot architecture · browser proof of concept</p><h1>One governance kernel.<br>Three institutions.</h1><p>Inspect and challenge the same decision-verification pipeline in a union, student senate, and municipality. All actors, motions and records are invented. This app is not an election system.</p></section>
+    <div class="notice" role="note"><strong>Nonbinding demonstration only.</strong> No real ballots, personal voter data, city sources, official decisions, or live municipal integration. A supported simulated decision is not a legal certification.</div>
+    <section aria-labelledby="pilot-heading" class="panel"><h2 id="pilot-heading">Choose a governance profile</h2><div id="pilot-tabs" class="tabs" role="group" aria-label="Synthetic pilot environments"></div><h3 id="pilot-name"></h3><p id="pilot-description"></p><dl class="details"><div><dt>Authority basis</dt><dd id="authority"></dd></div><div><dt>Decision scope</dt><dd id="scope"></dd></div><div><dt>Rule revision</dt><dd id="rule-revision"></dd></div><div><dt>Quorum</dt><dd id="quorum"></dd></div><div><dt>Yes/no threshold</dt><dd id="threshold"></dd></div></dl></section>
+    <div class="columns">
+      <section class="panel" aria-labelledby="motion-heading"><p class="eyebrow">Legislative work item</p><h2 id="motion-heading"></h2><p id="motion-summary"></p><div class="trace"><div>01 Draft</div><div>02 Amend</div><div>03 Lock revision</div><div>04 Close demo ballot</div><div>05 Verify</div></div><label for="scenario">Adversarial evidence case</label><select id="scenario"></select><button id="run" type="button">Run procedural checker</button><p class="small">The checker is deterministic, local, and reads only synthetic fixtures. Browser controls cannot authorize an official action.</p></section>
+      <section class="panel" aria-labelledby="result-heading"><p class="eyebrow">Proof Passport preview</p><h2 id="result-heading">Evidence evaluation</h2><p id="result" class="result" aria-live="polite"></p><div id="tally" class="tally"></div><ol id="checks" class="checks"></ol><button id="download" type="button" class="secondary">Export evidence JSON + SHA-256 payload digest</button>
+      <div class="verify-panel"><label for="verify-input">Check a previously exported evidence file</label><input type="file" id="verify-input" accept=".json,application/json"><button type="button" id="verify" class="secondary">Verify local payload digest</button><p id="verify-result" role="status" aria-live="polite">Select your exported JSON to check its payload digest. The file stays on this device.</p></div>
+      <p class="small">SHA-256 covers the UTF-8 bytes of JSON.stringify(payload, null, 2), NOT the whole downloaded envelope. A matching checksum is not a signature, proof of origin, official legal conclusion, or independent election certification. A separate Node verifier is linked in the project source.</p></section>
+    </div>
+    <footer><p>Architecture status: <strong>functional synthetic prototype</strong> · official voting OFF · municipal intake OFF · constituent profiles OFF · AI effects OFF.</p><p>Open interfaces; no vendor-specific identity, AI provider or voting service required.</p></footer>
+  </main>
+</body>
+</html>
