@@ -91,6 +91,7 @@ def check(document):
             raise ValueError("bad proof")
         validated = {}
         support = {}
+        goal_rule_seen = False
         for step in document["proof"]:
             if not isinstance(step, dict):
                 raise ValueError("bad step")
@@ -105,6 +106,7 @@ def check(document):
                 if any(p not in validated or validated[p] is not False for p in row["when_false"]):
                     return {"status": "INDETERMINATE"}
                 name, value = row["conclusion"], True
+                goal_rule_seen = goal_rule_seen or (name == goal)
             else:
                 raise ValueError("unknown step")
             if name in validated and validated[name] is not value:
@@ -112,7 +114,7 @@ def check(document):
             validated[name] = value
             origin = sources[row["source_id"]]
             support[origin["id"]] = {key: origin.get(key) for key in ("sha256", "status", "valid_from", "valid_until", "observed_at", "authenticity", "locator")}
-        if validated.get(goal) is not True:
+        if not goal_rule_seen or validated.get(goal) is not True:
             return {"status": "INDETERMINATE"}
         return {"status": "SUPPORTED_IN_FICTIONAL_MODEL", "dependencies": dict(sorted(support.items()))}
     except (KeyError, ValueError, TypeError, OverflowError) as ex:
