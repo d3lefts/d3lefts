@@ -1,0 +1,78 @@
+name: NIGHTFALL Q2 zero-cell source variance and influence invariance Lean
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/universal/InfinitePiQ2ZeroCellSourceInvariance.lean'
+      - '.github/workflows/nightfall-infinitepi-q2-zero-cell-invariance.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: q2-zero-cell-invariance-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  original-source-exact-invariance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Setup pinned Lean and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Build original finite source ANOVA dependencies and exact zero-cell invariance
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from scripts.nightfall_q2_certify import local_sources, closure
+          from pathlib import Path
+          import shutil,subprocess
+          files=local_sources()
+          ws=Path("/tmp/mathlib4")
+          out=ws/".lake/build/lib/lean"
+          out.mkdir(parents=True,exist_ok=True)
+          for name in closure("ActualSourceInfluenceEnergy",files):
+              print("BUILD SOURCE",name,flush=True)
+              shutil.copyfile(files[name],ws/(name+".lean"))
+              subprocess.run(["lake","env","lean","-o",str(out/(name+".olean")),name+".lean"],cwd=ws,check=True,timeout=1200)
+          for name in ["InfinitePiQ2DegreeRetraction","InfinitePiQ2FiniteSupportRepair","InfinitePiQ2ZeroCellSourceInvariance"]:
+              src=Path("research/nightfall/formalization/universal")/(name+".lean")
+              shutil.copyfile(src,ws/(name+".lean"))
+              print("BUILD INVARIANCE",name,flush=True)
+              subprocess.run(["lake","env","lean","-o",str(out/(name+".olean")),name+".lean"],cwd=ws,check=True,timeout=1200)
+          PY
+      - name: Source named declarations and standard-axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-infinite
+          python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiQ2ZeroCellSourceInvariance.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InfinitePiQ2ZeroCellSourceInvariance.originalMass_zero_of_unsupported \
+            --decl Nightfall.InfinitePiQ2ZeroCellSourceInvariance.supported_update \
+            --decl Nightfall.InfinitePiQ2ZeroCellSourceInvariance.sourceMean_congr_on_support \
+            --decl Nightfall.InfinitePiQ2ZeroCellSourceInvariance.sourceVariance_congr_on_support \
+            --decl Nightfall.InfinitePiQ2ZeroCellSourceInvariance.sourceInfluence_congr_on_support \
+            --decl Nightfall.InfinitePiQ2ZeroCellSourceInvariance.sourceVariance_retractToPositive_exact \
+            --decl Nightfall.InfinitePiQ2ZeroCellSourceInvariance.sourceInfluence_retractToPositive_exact \
+            --json-out lean-receipts/q2-infinite/zero-cell-invariance.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-infinite/zero-cell-invariance.json
+      - name: Exact provenance
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/q2-infinite
+          git rev-parse HEAD > lean-receipts/q2-infinite/zero-cell-invariance-head.txt
+          sha256sum research/nightfall/formalization/universal/InfinitePiQ2ZeroCellSourceInvariance.lean > lean-receipts/q2-infinite/zero-cell-invariance-sha256.txt
+      - name: Upload proof receipt
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: q2-source-zero-invariance-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/q2-infinite
+          if-no-files-found: warn
