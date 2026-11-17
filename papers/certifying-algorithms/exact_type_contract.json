@@ -1,0 +1,14 @@
+{
+  "schema": "nightfall-theorem-contract/v1",
+  "source": "papers/certifying-algorithms/lean/RationalFarkasCertificate.lean",
+  "targets": [
+    {
+      "declaration": "Nightfall.CertifyingAlgorithms.rational_linear_combination_bound",
+      "expected_type": "∀ {m n : ℕ} (A : Fin m → Fin n → ℚ) (b : Fin m → ℚ)\n     (w : Fin m → ℚ) (x : Fin n → ℚ),\n     (∀ i, 0 ≤ w i) →\n     (∀ i, (∑ j : Fin n, A i j * x j) ≤ b i) →\n     (∑ i : Fin m, w i * (∑ j : Fin n, A i j * x j)) ≤\n       (∑ i : Fin m, w i * b i)"
+    },
+    {
+      "declaration": "Nightfall.CertifyingAlgorithms.rational_farkas_infeasibility",
+      "expected_type": "∀ {m n : ℕ} (A : Fin m → Fin n → ℚ) (b : Fin m → ℚ)\n     (w : Fin m → ℚ),\n     (∀ i, 0 ≤ w i) →\n     (∀ j, (∑ i : Fin m, w i * A i j) = 0) →\n     (∑ i : Fin m, w i * b i) < 0 →\n     ¬ ∃ x : Fin n → ℚ, ∀ i,\n       (∑ j : Fin n, A i j * x j) ≤ b i"
+    }
+  ]
+}
