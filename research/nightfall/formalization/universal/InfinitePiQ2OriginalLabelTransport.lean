@@ -74,4 +74,52 @@ theorem sourceFiniteLabelLaw_exact
     _ = Measure.pi (fun j : F => (μ j).map (φ j)) := by
       exact Measure.infinitePi_map_restrict (fun i => (μ i).map (φ i))
 
+/-- The finite label vector is measure preserving from the unchanged
+source infinite product into the true finite source table law. -/
+theorem sourceFiniteLabelMap_measurePreserving
+    (F : Finset ι)
+    (φ : ∀ i, X i → Y i)
+    (hφ : ∀ i, Measurable (φ i)) :
+    MeasurePreserving
+      (fun x : (i : ι) → X i => F.restrict (sourceLabelMap φ x))
+      (Measure.infinitePi μ)
+      (Measure.pi (fun j : F => (μ j).map (φ j))) := by
+  refine ⟨?_, sourceFiniteLabelLaw_exact μ F φ hφ⟩
+  exact (Finset.measurable_restrict F).comp
+    (sourceLabelMap_measurable φ hφ)
+
+/-- The finite-cell source variance is exactly the original infinite-product
+variance of its lifted cylinder, with no coefficient or atom loss.
+This holds for any measurable table, not merely degree-two tables. -/
+theorem sourceFiniteLabelVariance_exact
+    (F : Finset ι)
+    (φ : ∀ i, X i → Y i)
+    (hφ : ∀ i, Measurable (φ i))
+    (g : ((j : F) → Y j) → ℝ)
+    (hg : Measurable g) :
+    ProbabilityTheory.variance
+        (fun x : (i : ι) → X i =>
+          g (F.restrict (sourceLabelMap φ x)))
+        (Measure.infinitePi μ) =
+      ProbabilityTheory.variance g
+        (Measure.pi (fun j : F => (μ j).map (φ j))) := by
+  exact (sourceFiniteLabelMap_measurePreserving μ F φ hφ).variance_fun_comp
+    hg.aemeasurable
+
+/-- Actual infinite-product pullback of any finite-table L² observable
+is an isometry, so second moments and L² convergence are not measured
+under a substituted law. -/
+theorem sourceFiniteLabelL2_norm_exact
+    (F : Finset ι)
+    (φ : ∀ i, X i → Y i)
+    (hφ : ∀ i, Measurable (φ i))
+    (g : Lp ℝ (2 : ENNReal)
+      (Measure.pi (fun j : F => (μ j).map (φ j)))) :
+    ‖Lp.compMeasurePreserving
+      (fun x : (i : ι) → X i =>
+        F.restrict (sourceLabelMap φ x))
+      (sourceFiniteLabelMap_measurePreserving μ F φ hφ) g‖ = ‖g‖ := by
+  exact Lp.norm_compMeasurePreserving g
+    (sourceFiniteLabelMap_measurePreserving μ F φ hφ)
+
 end Nightfall.InfinitePiQ2OriginalLabelTransport
