@@ -15,6 +15,7 @@ heat-bath intertwining, without countability or surrogate measures.
 namespace Nightfall.InfinitePiQ2FiniteTestSiteLabels
 
 open MeasureTheory
+open Nightfall.InfinitePiQ2FiniteCellDensity
 open Nightfall.InfinitePiQ2FiniteBooleanTestFactor
 open Nightfall.InfinitePiQ2OriginalLabelTransport
 
@@ -75,6 +76,7 @@ theorem siteTestLabel_owned_bit
     (t : T) (x : (i : ι) → X i) :
     siteTestLabel T t.1.1 (x t.1.1) t =
       (if x t.1.1 ∈ t.1.2.1 then true else false) := by
+  classical
   simp [siteTestLabel]
 
 /-- The original globally evaluated finite tests factor EXACTLY through
