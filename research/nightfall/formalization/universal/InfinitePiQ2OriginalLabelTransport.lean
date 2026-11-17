@@ -176,7 +176,7 @@ theorem sourceFiniteLabelIntegral_exact
     (∫ x, g (F.restrict (sourceLabelMap φ x))
       ∂ Measure.infinitePi μ) =
       ∫ y, g y ∂ ((Measure.infinitePi μ).map label) := by
-        exact (integral_map hmeas hstrong).symm
+        exact (integral_map hmeas.aemeasurable hstrong).symm
     _ = ∫ y, g y ∂ Measure.pi
         (fun j : F => (μ j).map (φ j)) := by
       rw [sourceFiniteLabelLaw_exact μ F φ hφ]
@@ -216,7 +216,7 @@ theorem sourcePairedIntegral_exact
       ∂ Measure.infinitePi (fun i => (μ i).prod (μ i))) =
       ∫ y, g y
         ∂ ((Measure.infinitePi (fun i => (μ i).prod (μ i))).map label) := by
-          exact (integral_map hmeas hstrong).symm
+          exact (integral_map hmeas.aemeasurable hstrong).symm
     _ = ∫ y, g y
         ∂ Measure.infinitePi
           (fun i => ((μ i).map (φ i)).prod ((μ i).map (φ i))) := by
