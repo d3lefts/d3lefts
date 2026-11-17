@@ -87,7 +87,7 @@ theorem no_continuous_final_row_all_dimensions (k : ℕ)
       change (∑ i, row (pathData k t) i * lift3 k x y 1 i)^2 =
         lastSquare a b c t x y
       rw [dot_lift3]
-      rfl
+      simp [lastSquare, a, b, c]
     have hreadY :
         (∑ i, row (fun j => (Y j)^2) i * Y i)^2 =
           lastSquare a b c t x' y' := by
@@ -95,7 +95,7 @@ theorem no_continuous_final_row_all_dimensions (k : ℕ)
       change (∑ i, row (pathData k t) i * lift3 k x' y' 1 i)^2 =
         lastSquare a b c t x' y'
       rw [dot_lift3]
-      rfl
+      simp [lastSquare, a, b, c]
     have hh : (∑ i, row (fun j => (X j)^2) i * X i)^2 =
         (∑ i, row (fun j => (Y j)^2) i * Y i)^2 := by
       exact hreadX.trans (hread.trans hreadY.symm)
@@ -105,9 +105,15 @@ theorem no_continuous_final_row_all_dimensions (k : ℕ)
         simpa [X, Y, lift3] using hi
       · have hi := congrArg (fun f : Fin (k+3) → ℝ => f 1) hXY
         simpa [X, Y, lift3] using hi
-    · have hi := congrArg (fun f : Fin (k+3) → ℝ => f 2) hXY
+    · let idx2 : Fin (k+3) :=
+        Fin.succ (Fin.succ (0 : Fin (k+1)))
+      have hi := congrArg (fun f : Fin (k+3) → ℝ => f idx2) hXY
+      have hXval : X idx2 = (1 : ℝ) := by
+        simp [X, idx2, lift3]
+      have hYval : Y idx2 = (1 : ℝ) := by
+        simp [Y, idx2, lift3]
       have hbad : (1:ℝ) = -1 := by
-        simpa [X, Y, lift3, Pi.neg_apply] using hi
+        simpa [Pi.neg_apply, hXval, hYval] using hi
       norm_num at hbad
   exact no_continuous_coordinate_first_single_last a b c h0 h1 hs
 
