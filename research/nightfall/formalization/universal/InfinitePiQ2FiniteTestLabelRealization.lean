@@ -73,11 +73,12 @@ theorem sourceTestLabel_measurable
   · have hs : MeasurableSet (h ▸ t.1.2.1) := by
       cases h
       exact t.1.2.2
-    change Measurable
-      (fun a : X i => if a ∈ (h ▸ t.1.2.1) then true else false)
-    exact Measurable.ite hs measurable_const measurable_const
-  · change Measurable (fun _ : X i => (false : Bool))
-    exact measurable_const
+    simpa [sourceTestLabel, h] using
+      (Measurable.ite hs measurable_const measurable_const :
+        Measurable (fun a : X i =>
+          if a ∈ (h ▸ t.1.2.1) then true else false))
+  · simpa [sourceTestLabel, h] using
+      (measurable_const : Measurable (fun _ : X i => (false : Bool)))
 
 /-- Exact finite coordinate support of the original source tests. -/
 noncomputable def sourceTestSupport
