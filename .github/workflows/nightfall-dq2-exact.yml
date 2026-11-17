@@ -1,0 +1,45 @@
+name: NIGHTFALL DQ2 exact finite-law replay (NOT a Lean theorem certificate)
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-dq2/**'
+      - '.github/workflows/nightfall-dq2-exact.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-finite-replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@v4
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install exact symbolic checker dependency
+        run: python -m pip install --disable-pip-version-check 'sympy==1.14.0'
+      - name: Run three independent-formulation exact finite checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/dq2
+          python research/nightfall/2026-11-dq2/dq2_chain_exact_checker.py | tee artifacts/dq2/chain-rational.json
+          python research/nightfall/2026-11-dq2/dq2_chain_independent_audit.py | tee artifacts/dq2/chain-sympy.json
+          python research/nightfall/2026-11-dq2/dq2_tree_independent_audit.py | tee artifacts/dq2/tree-geodesic.json
+          python research/nightfall/2026-11-dq2/dq2_weighted_tree_checker.py | tee artifacts/dq2/weighted-tree-rational.json
+      - name: Record source and output SHA-256
+        shell: bash
+        run: |
+          set -euo pipefail
+          sha256sum research/nightfall/2026-11-dq2/*.py artifacts/dq2/*.json | tee artifacts/dq2/SHA256SUMS.txt
+      - name: Preserve finite-test receipts, not a Lean claim
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-dq2-exact-finite-replay
+          path: artifacts/dq2/
+          if-no-files-found: error
