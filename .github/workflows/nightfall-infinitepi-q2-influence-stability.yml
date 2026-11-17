@@ -1,0 +1,89 @@
+name: NIGHTFALL Q2 arbitrary-product source influence stability Lean
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/universal/InfinitePiQ2Density.lean'
+      - 'research/nightfall/formalization/universal/InfinitePiQ2InfluenceStability.lean'
+      - 'research/nightfall/formalization/universal/InfinitePiQ2DegreeRetraction.lean'
+      - 'research/nightfall/formalization/universal/InfinitePiQ2DegreeAverage.lean'
+      - '.github/workflows/nightfall-infinitepi-q2-influence-stability.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: infinitepi-q2-influence-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  actual-source-coordinate-residual:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Setup pinned Lean and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile original source density dependency and influence stability
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/universal/InfinitePiQ2Density.lean /tmp/mathlib4/InfinitePiQ2Density.lean
+          cp research/nightfall/formalization/universal/InfinitePiQ2InfluenceStability.lean /tmp/mathlib4/InfinitePiQ2InfluenceStability.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/InfinitePiQ2Density.olean InfinitePiQ2Density.lean)
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/InfinitePiQ2InfluenceStability.olean InfinitePiQ2InfluenceStability.lean)
+          cp research/nightfall/formalization/universal/InfinitePiQ2DegreeRetraction.lean /tmp/mathlib4/InfinitePiQ2DegreeRetraction.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/InfinitePiQ2DegreeRetraction.olean InfinitePiQ2DegreeRetraction.lean)
+          cp research/nightfall/formalization/universal/InfinitePiQ2DegreeAverage.lean /tmp/mathlib4/InfinitePiQ2DegreeAverage.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/InfinitePiQ2DegreeAverage.olean InfinitePiQ2DegreeAverage.lean)
+      - name: Exact source named theorem and allowed axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-infinite
+          python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiQ2InfluenceStability.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InfinitePiQ2InfluenceStability.sourceOtherSigma_le \
+            --decl Nightfall.InfinitePiQ2InfluenceStability.sourceOtherProjection_contract \
+            --decl Nightfall.InfinitePiQ2InfluenceStability.sourceOtherProjection_sub \
+            --decl Nightfall.InfinitePiQ2InfluenceStability.sourceCoordinateResidual_sub \
+            --decl Nightfall.InfinitePiQ2InfluenceStability.sourceCoordinateResidual_lipschitz \
+            --decl Nightfall.InfinitePiQ2InfluenceStability.sourceCoordinateInfluence_stable \
+            --json-out lean-receipts/q2-infinite/influence-stability.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-infinite/influence-stability.json
+          python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiQ2DegreeRetraction.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InfinitePiQ2DegreeRetraction.mapInputs_update \
+            --decl Nightfall.InfinitePiQ2DegreeRetraction.delta_comp \
+            --decl Nightfall.InfinitePiQ2DegreeRetraction.delta_three_comp \
+            --decl Nightfall.InfinitePiQ2DegreeRetraction.degree_two_under_coordinate_maps \
+            --decl Nightfall.InfinitePiQ2DegreeRetraction.bound_under_coordinate_maps \
+            --json-out lean-receipts/q2-infinite/retraction.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-infinite/retraction.json
+          python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiQ2DegreeAverage.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InfinitePiQ2DegreeAverage.delta_integral \
+            --decl Nightfall.InfinitePiQ2DegreeAverage.integrable_delta \
+            --decl Nightfall.InfinitePiQ2DegreeAverage.delta_three_integral \
+            --decl Nightfall.InfinitePiQ2DegreeAverage.degree_two_under_integral \
+            --json-out lean-receipts/q2-infinite/degree-average.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-infinite/degree-average.json
+      - name: Preserve source provenance
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/q2-infinite
+          git rev-parse HEAD > lean-receipts/q2-infinite/HEAD
+          sha256sum research/nightfall/formalization/universal/InfinitePiQ2InfluenceStability.lean research/nightfall/formalization/universal/InfinitePiQ2DegreeAverage.lean > lean-receipts/q2-infinite/INFLUENCE_SHA256
+      - name: Upload exact theorem receipt
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: q2-infinite-influence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/q2-infinite
+          if-no-files-found: warn
