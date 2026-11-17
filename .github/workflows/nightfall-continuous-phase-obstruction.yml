@@ -5,6 +5,7 @@ on:
       - 'research/nightfall/formalization/finite_field/ContinuousPhaseCrossing.lean'
       - 'research/nightfall/formalization/finite_field/ContinuousPhaseOracleObstruction.lean'
       - 'research/nightfall/formalization/finite_field/ContinuousPhaseAllDimensions.lean'
+      - 'research/nightfall/continuous-phase-obstruction/independent_checker.py'
       - '.github/workflows/nightfall-continuous-phase-obstruction.yml'
   workflow_dispatch:
 permissions:
@@ -30,3 +31,8 @@ jobs:
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean") 2>&1 | tee "/tmp/$f.log"
             if grep -Ei "sorryAx|axiom.*sorry" "/tmp/$f.log"; then exit 1; fi
           done
+      - name: Run independent finite checker (stdlib Python)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/continuous-phase-obstruction/independent_checker.py
