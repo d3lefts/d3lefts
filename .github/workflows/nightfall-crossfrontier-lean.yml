@@ -1,0 +1,77 @@
+name: NIGHTFALL F9 asymptotic arithmetic and quantum SLD-corner pinned Lean
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/finite_field/F9GapArithmetic.lean'
+      - 'research/nightfall/formalization/quantum/SLDOperationalCorner.lean'
+      - 'research/nightfall/formalization/permission/RevisionIndistinguishability.lean'
+      - 'research/nightfall/2026-11-crossfrontier/**'
+      - '.github/workflows/nightfall-crossfrontier-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  crossfrontier-lean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Setup pinned Lean and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile F9 arithmetic (conditional on oracle bounds)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p crossfrontier-receipts
+          cp research/nightfall/formalization/finite_field/F9GapArithmetic.lean /tmp/mathlib4/F9GapArithmetic.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/F9GapArithmetic.olean F9GapArithmetic.lean)
+      - name: Compile real SLD corner identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/quantum/SLDOperationalCorner.lean /tmp/mathlib4/SLDOperationalCorner.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/SLDOperationalCorner.olean SLDOperationalCorner.lean)
+      - name: Compile source-change safety-versus-availability impossibility
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/permission/RevisionIndistinguishability.lean /tmp/mathlib4/RevisionIndistinguishability.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/RevisionIndistinguishability.olean RevisionIndistinguishability.lean)
+      - name: Named source and standard-axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          N=Nightfall.FiniteField.F9GapArithmetic
+          python3 scripts/lean_bridge.py research/nightfall/formalization/finite_field/F9GapArithmetic.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.f9_fixed_vs_adaptive_gap" --decl "$N.f9_gap_unbounded" --decl "$N.conditional_uniform_code_rate" --json-out crossfrontier-receipts/f9.json
+          N=Nightfall.Quantum.SLDOperationalCorner
+          python3 scripts/lean_bridge.py research/nightfall/formalization/quantum/SLDOperationalCorner.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.symmetric_log_derivative_corner" --decl "$N.sld_energy_corner" --decl "$N.physical_ghz_measurement_matches_sld_energy" --decl "$N.physical_gain_one_register" --decl "$N.physical_gain_two_registers" --json-out crossfrontier-receipts/sld.json
+          N=Nightfall.PriceOfPermission.RevisionImpossibility
+          python3 scripts/lean_bridge.py research/nightfall/formalization/permission/RevisionIndistinguishability.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.indistinguishable_revision_forces_deny" --decl "$N.no_zero_error_sound_and_nominal_live" --decl "$N.stale_first_coordinate_no_live_sound_guard" --json-out crossfrontier-receipts/revision.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py crossfrontier-receipts/revision.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py crossfrontier-receipts/f9.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py crossfrontier-receipts/sld.json
+      - name: Independently replay dynamic-world repair
+        run: python3 research/nightfall/2026-11-crossfrontier/check_dynamic_revisions.py
+      - name: Independently replay cyclotomic quantum physical and operational gains
+        run: python3 research/nightfall/2026-11-crossfrontier/check_quantum_operational_exact.py
+      - name: Freeze provenance
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p crossfrontier-receipts
+          git rev-parse HEAD > crossfrontier-receipts/commit.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > crossfrontier-receipts/mathlib.txt || true
+          cat lean-toolchain > crossfrontier-receipts/toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/F9GapArithmetic.lean research/nightfall/formalization/quantum/SLDOperationalCorner.lean research/nightfall/formalization/permission/RevisionIndistinguishability.lean research/nightfall/2026-11-crossfrontier/check_dynamic_revisions.py research/nightfall/2026-11-crossfrontier/check_quantum_operational_exact.py > crossfrontier-receipts/SHA256SUMS.txt
+      - name: Retain immutable receipts
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: crossfrontier-lean-${{ github.run_id }}
+          path: crossfrontier-receipts/
+          retention-days: 60
