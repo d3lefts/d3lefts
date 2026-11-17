@@ -25,14 +25,37 @@ def audit(log: str) -> None:
         )
         matches = pattern.findall(log)
         no_axioms = f"'{target}' does not depend on any axioms" in log
-        if len(matches) + int(no_axioms) != 1:
-            raise ValueError(f"Missing or ambiguous axiom audit: {target}")
-        if matches:
-            actual = {a.strip() for a in matches[0].split(",") if a.strip()}
-            unexpected = actual - ALLOWED
-            if unexpected:
-                raise ValueError(f"{target}: unexpected axioms {sorted(unexpected)}")
-        print(f"PASS named axiom audit: {target}")
+        if not matches and not no_axioms:
+            raise ValueError(f"Missing named axiom audit: {target}")
+        # The same declaration is printed by its original source and then
+        # again by Nightfall/Main.lean during the single Lake dependency build.
+        # Repetition is expected; contradictory or nonstandard reports fail.
+        sets = [
+            {a.strip() for a in receipt.split(",") if a.strip()}
+            for receipt in matches
+        ]
+        if no_axioms:
+            sets.append(set())
+        if len(set(map(frozenset, sets))) != 1:
+            raise ValueError(f"Inconsistent axiom reports for {target}: {sets}")
+        actual = sets[0]
+        unexpected = actual - ALLOWED
+        if unexpected:
+            raise ValueError(f"{target}: unexpected axioms {sorted(unexpected)}")
+        # This is an INTEGRATED build receipt: every target must be audited
+        # from the common Nightfall/Main.lean import as well as any source.
+        integrated = re.compile(
+            r"info: Nightfall/Main\.lean:\d+:\d+: " +
+            re.escape("'" + target + "'") +
+            r" depends on axioms: \[([^\]]*)\]"
+        )
+        if not integrated.search(log) and not re.search(
+            r"info: Nightfall/Main\.lean:\d+:\d+: " +
+            re.escape("'" + target + "'") +
+            r" does not depend on any axioms", log
+        ):
+            raise ValueError(f"Missing shared Nightfall/Main axiom receipt: {target}")
+        print(f"PASS named integrated axiom audit: {target} ({len(sets)} congruent receipts)")
 
 
 if __name__ == "__main__":
