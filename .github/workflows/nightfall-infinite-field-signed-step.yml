@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/finite_field/InfiniteFieldSignedStep.lean'
+      - 'research/nightfall/formalization/finite_field/InfiniteFieldFixedLower.lean'
       - '.github/workflows/nightfall-infinite-field-signed-step.yml'
   workflow_dispatch:
 permissions:
@@ -20,8 +21,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          src=research/nightfall/formalization/finite_field/InfiniteFieldSignedStep.lean
-          ! grep -nE '\\b(sorry|admit)\\b' "$src"
-          cp "$src" /tmp/mathlib4/InfiniteFieldSignedStep.lean
-          (cd /tmp/mathlib4 && lake env lean InfiniteFieldSignedStep.lean) 2>&1 | tee /tmp/infinite-field-signed-step.log
-          grep -q 'axioms Nightfall.InfiniteFieldPhase.exists_signed_code_extension' /tmp/infinite-field-signed-step.log || true
+          for f in InfiniteFieldSignedStep InfiniteFieldFixedLower; do
+            src="research/nightfall/formalization/finite_field/$f.lean"
+            ! grep -nE '\\b(sorry|admit)\\b' "$src"
+            cp "$src" "/tmp/mathlib4/$f.lean"
+            (cd /tmp/mathlib4 && lake env lean "$f.lean") 2>&1 | tee "/tmp/$f.log"
+          done
