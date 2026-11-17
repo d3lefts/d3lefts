@@ -14,9 +14,13 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="site.css">
 <link rel="stylesheet" href="theory.css">
+<link rel="stylesheet" href="theory-evidence.css">
 <script src="site.js" defer></script>
+<script src="research-registry.js" defer></script>
 <script src="theory-map-data.js" defer></script>
+<script src="theory-evidence-core.js" defer></script>
 <script src="theory.js" defer></script>
+<script src="theory-evidence-ui.js" defer></script>
 </head>
 <body class="theory-page">
 <a class="skip" href="#main">Skip to theory</a>
@@ -116,11 +120,36 @@
 <div><dt>Cheapest decisive check</dt><dd id="theory-inspector-next">Inspect one exact source and challenge its assumption-to-conclusion step.</dd></div>
 </dl>
 <a id="theory-inspector-source" class="theory-source-link" href="research.html">Open the public research library ↗</a>
+<div class="theory-evidence-scopes" aria-labelledby="theory-evidence-detail-title">
+<h4 id="theory-evidence-detail-title">CONNECTED PROOF PASSPORTS &amp; LEAN RECEIPTS</h4>
+<p class="theory-evidence-guard">Source-bound claims only. The certificate below verifies its named statement, not an unproved graph transfer.</p>
+<div id="theory-evidence-detail" aria-live="polite"><p>Loading published registries. No proof status is inferred while unavailable.</p></div>
+</div>
 <div class="theory-linked"><h4>CONNECTED ENTRIES</h4><div id="theory-related"><p>Choose a node to display its typed relationships.</p></div></div>
 </aside>
 </div>
 <div class="theory-legend" aria-label="Relationship types"><span><i class="theory-legend-line"></i> Documented context / method</span><span><i class="theory-legend-line theory-legend-line--compare"></i> Model comparison</span><span><i class="theory-legend-line theory-legend-line--open"></i> Unproved bridge</span></div>
 </div>
+</section>
+
+<section class="theory-registers wrap" id="source-registers" aria-labelledby="theory-register-title">
+<div class="theory-section-head"><span class="theory-kicker">03 / PROOF PASSPORTS &amp; FORMAL SOURCES</span>
+<h2 id="theory-register-title">The evidence, <em>not merely the label.</em></h2>
+<p>Browse the existing Proof Passport ledgers and Lean custody records directly. The graph crosswalk is explicit: a name match, source file, or green CI receipt does not automatically certify another theorem.</p></div>
+<div class="theory-register-status">
+<strong id="theory-registry-status" role="status" aria-live="polite" data-complete="false">Loading published proof registries…</strong>
+<p id="theory-registry-dates">Published source snapshots are not live compiler replay.</p>
+</div>
+<div class="theory-register-tools">
+<label for="theory-register-search">FIND A SOURCE, THEOREM OR CLAIM
+<input id="theory-register-search" type="search" autocomplete="off" placeholder="Search declarations, source files, proof passport IDs…"></label>
+<a href="lean-certificate-provenance.html">Lean certificate custody ↗</a>
+<a href="active-proof-passport.html">Active Proof Passports ↗</a>
+</div>
+<div id="theory-register-tabs" class="theory-register-tabs" aria-label="Evidence registry sources"></div>
+<p id="theory-register-count" class="theory-register-count" role="status" aria-live="polite">Registry contents not yet available.</p>
+<div id="theory-register-results" class="theory-register-results"><p>Registry records will appear after source validation.</p></div>
+<p class="theory-register-boundary">All records retain their source-specific limitations. This interface displays published metadata; it does not run Lean, recheck prior art, prove mathematical equivalence, or obtain human certification.</p>
 </section>
 
 <section class="theory-field-guide wrap" id="corridors" aria-labelledby="corridors-title">
@@ -140,7 +169,7 @@
 <section class="theory-method wrap" id="method" aria-labelledby="method-title">
 <div class="theory-section-head"><span class="theory-kicker">05 / COVERAGE AND CHECKING</span><h2 id="method-title">No invented coverage. <em>No inherited certainty.</em></h2></div>
 <div class="theory-method-grid">
-<div><h3>What this edition actually covers</h3><p>The atlas contains a <strong>manually selected set of 24 entries and 24 typed relationships</strong>, spanning six areas of mathematics and computer science. Some entries are published prior art, some are NIGHTFALL formal subresults or exact constructions, and some are explicitly open conjectures.</p><p>It does not contain a citation crawl, citation centrality rankings, paper-by-paper error counts, full-text screening, human referee verdicts, or an independent audit of every work it links. The status descriptions correspond to an editorial source snapshot and can become stale as the repository evolves.</p><p><strong>Snapshot:</strong> source and claim scope reviewed against the public repository catalogue as of <time datetime="2026-11-17">17 November 2026</time>. For newer theorem status, use the exact source, theorem statement, and associated CI receipt rather than trusting this static map.</p></div>
+<div><h3>What this edition actually covers</h3><p>The atlas contains a <strong>manually selected set of 24 entries and 24 typed relationships</strong>, spanning six areas of mathematics and computer science. Some entries are published prior art, some are NIGHTFALL formal subresults or exact constructions, and some are explicitly open conjectures.</p><p>It does not contain a citation crawl, citation centrality rankings, paper-by-paper error counts, full-text screening, human referee verdicts, or an independent audit of every work it links. Selected claims have a read-only registry crosswalk below. Source-backed receipts retain their original exact-head and theorem scopes; changes require recertification rather than automatic promotion. The curated graph remains a dated editorial snapshot.</p><p><strong>Snapshot:</strong> source and claim scope reviewed against the public repository catalogue as of <time datetime="2026-11-17">17 November 2026</time>. For newer theorem status, use the exact source, theorem statement, and associated CI receipt rather than trusting this static map.</p></div>
 <div><h3>What would make it a field-scale audit?</h3>
 <ol class="theory-method-steps">
 <li><strong>Define the corpus.</strong> Choose subfields and inclusion rules before counting papers; preserve full bibliographic provenance.</li>
