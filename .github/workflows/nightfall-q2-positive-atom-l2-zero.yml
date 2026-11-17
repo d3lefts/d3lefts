@@ -1,0 +1,59 @@
+name: NIGHTFALL Q2 finite native positive-atom L2-zero Lean
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/universal/InfinitePiQ2PositiveAtomL2Zero.lean'
+      - '.github/workflows/nightfall-q2-positive-atom-l2-zero.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: q2-positive-atom-zero-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  genuine-original-finite-product-positive-atoms:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Setup pinned Lean and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Kernel compile actual native positive-atom L2 bridge
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/universal/InfinitePiQ2PositiveAtomL2Zero.lean /tmp/mathlib4/InfinitePiQ2PositiveAtomL2Zero.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/InfinitePiQ2PositiveAtomL2Zero.olean InfinitePiQ2PositiveAtomL2Zero.lean)
+      - name: Strict named declarations and standard-axiom check
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-infinite
+          python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiQ2PositiveAtomL2Zero.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InfinitePiQ2PositiveAtomL2Zero.weighted_square_zero_at_positive \
+            --decl Nightfall.InfinitePiQ2PositiveAtomL2Zero.nativeMass_pos_of_supported \
+            --decl Nightfall.InfinitePiQ2PositiveAtomL2Zero.nativeMass_nonneg \
+            --decl Nightfall.InfinitePiQ2PositiveAtomL2Zero.native_L2_zero_implies_supported_pointwise_zero \
+            --json-out lean-receipts/q2-infinite/positive-atom-l2-zero.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-infinite/positive-atom-l2-zero.json
+      - name: Preserve original source receipt
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/q2-infinite
+          git rev-parse HEAD > lean-receipts/q2-infinite/positive-atom-head
+          sha256sum research/nightfall/formalization/universal/InfinitePiQ2PositiveAtomL2Zero.lean > lean-receipts/q2-infinite/positive-atom-sha256
+      - name: Upload exact source receipt
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: q2-positive-atom-zero-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/q2-infinite
+          if-no-files-found: warn
