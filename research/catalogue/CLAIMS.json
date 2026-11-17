@@ -203,6 +203,34 @@
       ]
     },
     {
+      "id": "NF-PS-Q2-INFINITE-LIFT-20261117",
+      "title": "Infinite-product degree-two influence bound lifted from the certified finite C105 theorem",
+      "area": "product-space",
+      "lifecycle": "active",
+      "validity": "analytic-manuscript-unrefereed",
+      "source_status": "public-analytic-manuscript",
+      "review": "none-recorded",
+      "priority": "unresolved",
+      "primary": "research/nightfall/2026-11-infinite-product-q2/PROOF.md",
+      "evidence": [
+        "research/nightfall/2026-11-infinite-product-q2/check_finite_cell_reduction.py",
+        "research/nightfall/formalization/universal/InfinitePiQ2NativeHeterogeneousTerminal.lean",
+        "research/nightfall/formalization/universal/InfinitePiQ2Limit.lean"
+      ],
+      "dependencies": [],
+      "claim_scope": "Analytic, not end-to-end Lean: for f in L2 of an arbitrary (possibly uncountable) product of arbitrary probability spaces, |f|<=B a.e., R_iR_jR_k f=0 for distinct i,j,k, Var(f)^2 <= C0 B^2 sup_i I_i(f) with C0=(2(1+sqrt2)sqrt3+11901/6250)^2 ~ 105.4, the constant of the kernel-checked finite theorem native_heterogeneous_q2_105416_unconditional. The reduction is a standard finite-cell martingale argument composed with the kernel-checked source_q2_quadratic_limit; all substance is in the finite inequality.",
+      "open_gates": [
+        "Non-author review of the finite-cell reduction (Lemmas 1-5 of PROOF.md)",
+        "Lean: extend product-type conditional-expectation factorization from tensor tests to all of L2",
+        "Lean: positive-table residual degree implies pointwise degree two (converse of FiniteDegreeBridge)",
+        "Lean: finite-sub-algebra cell net inside a fixed finite coordinate set, and one composed terminal declaration with strict axiom receipt",
+        "Priority: compare with low-degree Aaronson-Ambainis-type and Grothendieck/decoupling bounds before any originality claim"
+      ],
+      "inherited": [
+        "Classical Efron-Stein / martingale approximation arguments (no novelty claimed for the lift)"
+      ]
+    },
+    {
       "id": "NF-OBS-QUADRATIC-20261110",
       "title": "Quadratic adaptive and nonadaptive query separation",
       "area": "observability",

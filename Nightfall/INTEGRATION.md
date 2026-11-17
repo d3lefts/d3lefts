@@ -83,3 +83,41 @@ premises remain separate mandatory gates.
 
 Upstream reference:
 https://lean-lang.org/doc/reference/latest/releases/v4.35.0/
+
+## Original-product source-tensor integration extension (2026-11-17)
+
+The proposed Lake extension increases the selected source closure from
+**103 to 107** original Lean modules without changing any historical
+source file. The four newly imported universal files are:
+
+- `InfinitePiQ2InfluenceStability.lean`: actual original-law
+  `sourceOtherProjection μ i := condExpL2` and residuals.
+- `InfinitePiQ2OriginalIndependence.lean`: a coordinate is independent
+  of **all** its other coordinates under `Measure.infinitePi μ`.
+- `InfinitePiQ2ConditionalSourceTest.lean`: the genuine source
+  coordinate conditional mean and tensor pull-out, source-head exact
+  compiler receipt [44101974306](https://github.com/d3lefts/d3lefts/actions/runs/44101974306).
+- `InfinitePiQ2SourceHilbertTensor.lean`: (L^2) identification of
+  the original-source Hilbert projection on coordinate × complement tensors,
+  source-head pinned receipt
+  [44103373431](https://github.com/d3lefts/d3lefts/actions/runs/44103373431).
+
+The default `Nightfall.Main` now imports the real tensor projection theorem
+and audits four additional named declarations alongside the original four
+Q2 scalar/limit targets. The generated closure and new eight-declaration
+axiom list are mandatory to the integrated workflow.
+
+**New shared Lake compilation and `lake check`: pending until exact-head
+CI succeeds.** Separate source receipts are not a substitute for a
+transitive common Lake build. The new mathematical statements are still
+restricted to individual coordinate tests and integrable (L^2) tensors.
+They do **not** establish the general finite-label projection commutation
+`E_i P_Y = P_Y E_i`, bounded conditional cell-average table, degree-two
+preservation, or the unconditional infinite-product Q2 terminal.
+
+The next proof-engineering target is the actual-source finite-label
+conditional projection on each finite partition, then the commuting
+square on the dense tensor/cylinder span and extension by (L^2)
+continuity. Direct finite-cell integral ratios
+`g(y)=(∫_{Y=y} f dμ)/μ(Y=y)` on positive cells avoid constructing
+disintegrations for arbitrary measurable coordinate spaces.

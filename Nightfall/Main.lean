@@ -1,13 +1,14 @@
 import Nightfall.Targets
 import ActualSourceQ2107Terminal
 import InfinitePiQ2Limit
+import InfinitePiQ2SourceHilbertTensor
 import Q2ShiftedConditionalTargets
 
 /-!
 # Integrated Q2 import checkpoint
 
 This single Lean module forces the selected original finite-source proof,
-the original infinite-product L² limit, and the conditional shifted targets
+the original infinite-product L² limit, scoped genuine heat-bath tensor bridges, and the conditional shifted targets
 to compile in one dependency environment.
 
 It does NOT establish the missing finite-label/conditional-mean/heat-bath
@@ -22,7 +23,19 @@ hypothesis is discharged by printing an axiom list.
 #check Nightfall.Q2Shifted.ConditionalTargets.conditional_coefficient_107
 #check Nightfall.Q2Shifted.ConditionalTargets.conditional_coefficient_99
 
+-- Original-product coordinate/complement independence and true L² tensor projection.
+-- These are scoped source bridges, not the unconditional infinite-product Q2 terminal.
+#check Nightfall.InfinitePiQ2OriginalIndependence.source_coordinate_other_indepFun
+#check Nightfall.InfinitePiQ2ConditionalSourceTest.source_condExp_coordinate_test
+#check Nightfall.InfinitePiQ2ConditionalSourceTest.source_condExp_coordinate_mul_other
+#check Nightfall.InfinitePiQ2SourceHilbertTensor.sourceOtherProjection_tensor_ae
+
 #print axioms Nightfall.Observability.ActualSourceQ2107Terminal.actual_source_q2_107_unconditional
 #print axioms Nightfall.InfinitePiQ2Limit.source_q2_quadratic_limit
 #print axioms Nightfall.Q2Shifted.ConditionalTargets.conditional_coefficient_107
 #print axioms Nightfall.Q2Shifted.ConditionalTargets.conditional_coefficient_99
+
+#print axioms Nightfall.InfinitePiQ2OriginalIndependence.source_coordinate_other_indepFun
+#print axioms Nightfall.InfinitePiQ2ConditionalSourceTest.source_condExp_coordinate_test
+#print axioms Nightfall.InfinitePiQ2ConditionalSourceTest.source_condExp_coordinate_mul_other
+#print axioms Nightfall.InfinitePiQ2SourceHilbertTensor.sourceOtherProjection_tensor_ae

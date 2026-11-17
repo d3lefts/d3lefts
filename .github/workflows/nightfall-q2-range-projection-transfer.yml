@@ -1,0 +1,60 @@
+name: NIGHTFALL Q2 label range projection commutation and degree
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/universal/InfinitePiQ2RangeProjectionTransfer.lean'
+      - '.github/workflows/nightfall-q2-range-projection-transfer.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-kernel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile actual Hilbert operator transfer source
+        shell: bash
+        run: |
+          set -euo pipefail
+          for n in InfinitePiQ2AdjointTransfer InfinitePiQ2RangeProjectionTransfer; do
+            src="research/nightfall/formalization/universal/${n}.lean"
+            test -f "$src"
+            ! grep -nE '\\b(sorry|admit)\\b' "$src"
+            cp "$src" "/tmp/mathlib4/${n}.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/${n}.olean" "${n}.lean") 2>&1 | tee "/tmp/${n}.log"
+            ! grep -qE "error:|sorryAx" "/tmp/${n}.log"
+          done
+      - name: Audit exact named theorem kernel and foundational axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-range-projection
+          python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiQ2RangeProjectionTransfer.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InfinitePiQ2RangeProjectionTransfer.labelRangeProjection_commutes \
+            --decl Nightfall.InfinitePiQ2RangeProjectionTransfer.labelRangeProjection_residual \
+            --decl Nightfall.InfinitePiQ2RangeProjectionTransfer.labelRangeProjection_residual_norm_le \
+            --decl Nightfall.InfinitePiQ2RangeProjectionTransfer.labelRangeProjection_triple_zero \
+            --json-out lean-receipts/q2-range-projection/strict.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-range-projection/strict.json
+      - name: Preserve source and exact git hash
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-range-projection
+          git rev-parse HEAD > lean-receipts/q2-range-projection/HEAD
+          sha256sum research/nightfall/formalization/universal/InfinitePiQ2RangeProjectionTransfer.lean > lean-receipts/q2-range-projection/SOURCE_SHA256
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: q2-range-projection-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/q2-range-projection
+          if-no-files-found: warn

@@ -1,6 +1,7 @@
 """Regression checks for active NULL FIELD and archival NEW MOON experiences."""
 from html.parser import HTMLParser
 from pathlib import Path
+import re
 import unittest
 
 DOCS = Path(__file__).resolve().parents[1] / "docs"
@@ -62,9 +63,16 @@ class DualHomepageTests(unittest.TestCase):
 
     def test_current_research_scope_is_not_promoted(self):
         self.assertEqual(self.active.count('class="nf-claim-passport"'), 4)
+        # Count terms only inside claim passports; plain Scope/Evidence/Limit
+        # summary cards elsewhere on the page are not passports.
+        passports = re.findall(r'<dl class="nf-claim-passport"[^>]*>.*?</dl>', self.active, re.S)
+        self.assertEqual(len(passports), 4)
         for term in ("<dt>Claim</dt>", "<dt>Evidence</dt>", "<dt>Limit</dt>", "<dt>Reproduce</dt>"):
-            self.assertEqual(self.active.count(term), 4)
-        self.assertIn("not externally", self.active.lower())
+            self.assertTrue(all(block.count(term) == 1 for block in passports), term)
+        # Every Claim term on the page must belong to a passport.
+        self.assertEqual(self.active.count("<dt>Claim</dt>"), 4)
+        # The page must still disclaim external refereeing, in any wording.
+        self.assertRegex(self.active.lower(), r"not[^.<]{0,60}externally refereed")
         self.assertIn("CUBIC_OBSTRUCTION_NOTE.md", self.active)
         self.assertIn("INTERNAL REPLAY", self.archive)
         self.assertIn("IMPORTED THEOREM DEPENDENCIES", self.archive)
