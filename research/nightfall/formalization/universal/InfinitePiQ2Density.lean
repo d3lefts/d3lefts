@@ -82,14 +82,14 @@ theorem source_finite_cylinders_L2_dense :
           closure {indicatorConstLp (2 : ENNReal)
             (hA.measurable t ht) hνt c |
             (t : Set ((i : ι) → X i))
-            (ht : t ∈ measurableCylinders X) (hνt : ν t ≠ ∞)} :=
+            (ht : t ∈ measurableCylinders X) (hνt : ν t ≠ ⊤)} :=
         (hA.indicatorConstLp_subset_closure (p := (2 : ENNReal)) c)
           ⟨s, hs, hνs.ne, rfl⟩
       have hsub :
           {indicatorConstLp (2 : ENNReal)
             (hA.measurable t ht) hνt c |
             (t : Set ((i : ι) → X i))
-            (ht : t ∈ measurableCylinders X) (hνt : ν t ≠ ∞)} ⊆ S := by
+            (ht : t ∈ measurableCylinders X) (hνt : ν t ≠ ⊤)} ⊆ S := by
         rintro _ ⟨t, ht, hνt, rfl⟩
         exact ⟨t, ht, c, rfl⟩
       have hc := closure_mono hsub hmem
