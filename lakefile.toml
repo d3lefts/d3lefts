@@ -235,10 +235,18 @@ globs = [
 name = "LegacyUniversal"
 srcDir = "research/nightfall/formalization/universal"
 roots = [
+  "InfinitePiQ2ConditionalSourceTest",
   "InfinitePiQ2Density",
-  "InfinitePiQ2Limit"
+  "InfinitePiQ2InfluenceStability",
+  "InfinitePiQ2Limit",
+  "InfinitePiQ2OriginalIndependence",
+  "InfinitePiQ2SourceHilbertTensor"
 ]
 globs = [
+  "InfinitePiQ2ConditionalSourceTest",
   "InfinitePiQ2Density",
-  "InfinitePiQ2Limit"
+  "InfinitePiQ2InfluenceStability",
+  "InfinitePiQ2Limit",
+  "InfinitePiQ2OriginalIndependence",
+  "InfinitePiQ2SourceHilbertTensor"
 ]
