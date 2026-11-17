@@ -1,0 +1,102 @@
+{
+  "schema": "nightfall.proof-object-passport.v1",
+  "version": 1,
+  "policy": {
+    "approach": "checker-first/original-model-before-projection",
+    "source_inspiration": "https://generalised.si/",
+    "scientific_scope": "Proof object and specified formal theorem only; no real-world semantic completeness guarantee",
+    "required_chain": [
+      "original_model",
+      "derived_instance",
+      "proof_object",
+      "exact_checker",
+      "lean_type_contract",
+      "source_pinned_kernel_receipt"
+    ],
+    "exact_checker_required": true,
+    "negative_controls_required": true,
+    "independent_reproduction_required_for_full_certification": true,
+    "no_automatic_promotion": true,
+    "invalidation_rule": "Revalidate original model, derivation/encoding, proof object, checker, Lean source, exact theorem contract, toolchain, and source/authority version after any change.",
+    "historical_claims_unchanged": true
+  },
+  "records": [
+    {
+      "id": "permission-two-source-farkas-v1",
+      "programme": "The Price of Permission / semantic recertification",
+      "status": "source_matched_scoped_named_lean_receipt",
+      "complete_certification": false,
+      "original_semantic_model": {
+        "path": "papers/certifying-algorithms/two_source_fence.json",
+        "git_blob_sha1": "adb5d0908642a84586de94922aaeae95d509cbef",
+        "embedded_key": "source_model",
+        "source_sha256": "70d5120f2e781df6933a7927e6b6792ec6386794de8b7884abcb7ec646613a6e",
+        "audited_completeness": "not_verified"
+      },
+      "derived_instance": {
+        "embedded_key": "model",
+        "sha256": "298573dc7b9aac4661bf4239d9cd4133a3358112572224f92aadbaf738fa4ad4",
+        "reconstruction": "from_unsafe_change_supports_and_budget"
+      },
+      "proof_object": {
+        "embedded_key": "certificate",
+        "format": "nightfall-farkas-infeasibility/v1",
+        "mathematical_claim": "exact_rational_linear_system_infeasible"
+      },
+      "checker": {
+        "path": "papers/certifying-algorithms/check_farkas.py",
+        "git_blob_sha1": "83d6c25374de927791a6f37c10d58a34cc82fbee",
+        "invocation": [
+          "python3",
+          "-I",
+          "papers/certifying-algorithms/check_farkas.py",
+          "papers/certifying-algorithms/two_source_fence.json"
+        ],
+        "mutation_suite": "--self-test",
+        "negative_control_count": 11,
+        "role": "Exact arithmetic and source-model reconstruction, not Lean kernel and not non-author review"
+      },
+      "lean": {
+        "source": "papers/certifying-algorithms/lean/RationalFarkasCertificate.lean",
+        "source_git_blob_sha1": "1c7acd53bd8ce9bb4d96d209a62966bb92de24fc",
+        "contract": "papers/certifying-algorithms/exact_type_contract.json",
+        "contract_git_blob_sha1": "25c755d84407a74250070d5657ce2b844af46428",
+        "declarations": [
+          "Nightfall.CertifyingAlgorithms.rational_linear_combination_bound",
+          "Nightfall.CertifyingAlgorithms.rational_farkas_infeasibility"
+        ],
+        "compiler_lock": "docs/lean-compiler-lock.json",
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      },
+      "evidence": {
+        "pr": 775,
+        "exact_head": "9d96452c76fa7cb87a5ae204f71bb61b651fd21d",
+        "merge_commit": "530ad862208fd47dece70d63dbe9317f69ea5c80",
+        "ci_run": 44171429696,
+        "artifact_id": 14368172012,
+        "source": "https://github.com/d3lefts/d3lefts/actions/runs/44171429696",
+        "observed_result": "success_on_exact_original_pr_head",
+        "independent_lake_check": "not_run",
+        "external_human_review": "none"
+      },
+      "claim_gates": {
+        "source_model_to_matrix": "exact_checker_passed_on_ci",
+        "matrix_to_proof_object": "exact_checker_passed_on_ci",
+        "proof_object_to_formal_soundness": "separate_named_lean_soundness_theorem",
+        "exact_type": "pinned_named_kernel_receipt_passed",
+        "full_research_claim": "open"
+      },
+      "limitations": [
+        "Only the specified finite rational infeasibility model is covered.",
+        "Unsafe-change supports are assumed complete; real-world source completeness is unverified.",
+        "No integer optimum/feasible construction, general operating authority, Q2 theorem, or full Lake kernel replay follows.",
+        "Lean source theorems establish a general implication, not a formal evaluation of the JSON proof-object witness.",
+        "CI provenance is a historical exact-head reference; this local auditor does not query GitHub to authenticate it."
+      ]
+    }
+  ]
+}
