@@ -44,14 +44,14 @@ noncomputable def sourceCylinderIndicator
     (s : Set ((i : ι) → X i))
     (hs : s ∈ measurableCylinders X)
     (c : ℝ) :
-    Lp ℝ (2 : ℝ≥0∞) (Measure.infinitePi μ) :=
+    Lp ℝ (2 : ENNReal) (Measure.infinitePi μ) :=
   indicatorConstLp 2
     ((source_finite_cylinders_measure_dense μ).measurable s hs)
     (measure_ne_top (Measure.infinitePi μ) s) c
 
 /-- No auxiliary probability or density oracle in this generator set. -/
 noncomputable def sourceCylinderGenerators :
-    Set (Lp ℝ (2 : ℝ≥0∞) (Measure.infinitePi μ)) :=
+    Set (Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) :=
   {v | ∃ (s : Set ((i : ι) → X i))
     (hs : s ∈ measurableCylinders X) (c : ℝ),
       v = sourceCylinderIndicator μ s hs c}
@@ -66,27 +66,27 @@ theorem source_finite_cylinders_L2_dense :
   classical
   let ν := Measure.infinitePi μ
   let S := sourceCylinderGenerators μ
-  let U : Submodule ℝ (Lp ℝ (2 : ℝ≥0∞) ν) :=
+  let U : Submodule ℝ (Lp ℝ (2 : ENNReal) ν) :=
     Submodule.span ℝ S
   let hA := source_finite_cylinders_measure_dense μ
-  have hAll : ∀ f : Lp ℝ (2 : ℝ≥0∞) ν,
+  have hAll : ∀ f : Lp ℝ (2 : ENNReal) ν,
       f ∈ U.topologicalClosure := by
-    refine Lp.induction (μ := ν) (p := (2 : ℝ≥0∞))
+    refine Lp.induction (μ := ν) (p := (2 : ENNReal))
       (by norm_num)
       (motive := fun f => f ∈ U.topologicalClosure) ?_ ?_
       U.isClosed_topologicalClosure
     · intro c s hs hνs
       rw [Lp.simpleFunc.coe_indicatorConst]
       have hmem :
-          indicatorConstLp (2 : ℝ≥0∞) hs hνs.ne c ∈
-          closure {indicatorConstLp (2 : ℝ≥0∞)
+          indicatorConstLp (2 : ENNReal) hs hνs.ne c ∈
+          closure {indicatorConstLp (2 : ENNReal)
             (hA.measurable t ht) hνt c |
             (t : Set ((i : ι) → X i))
             (ht : t ∈ measurableCylinders X) (hνt : ν t ≠ ∞)} :=
-        (hA.indicatorConstLp_subset_closure (p := (2 : ℝ≥0∞)) c)
+        (hA.indicatorConstLp_subset_closure (p := (2 : ENNReal)) c)
           ⟨s, hs, hνs.ne, rfl⟩
       have hsub :
-          {indicatorConstLp (2 : ℝ≥0∞)
+          {indicatorConstLp (2 : ENNReal)
             (hA.measurable t ht) hνt c |
             (t : Set ((i : ι) → X i))
             (ht : t ∈ measurableCylinders X) (hνt : ν t ≠ ∞)} ⊆ S := by
