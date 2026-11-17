@@ -1,0 +1,27 @@
+name: NIGHTFALL infinite-field signed-code Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/InfiniteFieldSignedStep.lean'
+      - '.github/workflows/nightfall-infinite-field-signed-step.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  infinite-field-signed-step:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile generic signed-code extension under pinned Lean/Mathlib
+        shell: bash
+        run: |
+          set -euo pipefail
+          src=research/nightfall/formalization/finite_field/InfiniteFieldSignedStep.lean
+          ! grep -nE '\\b(sorry|admit)\\b' "$src"
+          cp "$src" /tmp/mathlib4/InfiniteFieldSignedStep.lean
+          (cd /tmp/mathlib4 && lake env lean InfiniteFieldSignedStep.lean) 2>&1 | tee /tmp/infinite-field-signed-step.log
+          grep -q 'axioms Nightfall.InfiniteFieldPhase.exists_signed_code_extension' /tmp/infinite-field-signed-step.log || true
