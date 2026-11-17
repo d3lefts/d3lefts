@@ -2488,7 +2488,7 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Original infinite-product single-site coordinate conditional expectation and one-coordinate × complement tensor pull-out; four strict pinned named theorems, no arbitrary-function finite-cell commutation or unconditional Q2.",
-      "current_scoped_named_lean_receipt": {
+      "parallel_scoped_named_ci": {
         "source_commit": "bd22e280537ce8124c25dae4c45be9c0eaf69dae",
         "named_declaration": "Nightfall.InfinitePiQ2ConditionalSourceTest.source_condExp_coordinate_mul_other",
         "run": 44103839708
@@ -2643,7 +2643,7 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Actual original-product condExpL2 heat-bath identification on integrable coordinate tensors; strict named foundational-axiom CI only; not full L2 finite-cell projection commutation or infinite Q2 terminal.",
-      "current_scoped_named_lean_receipt": {
+      "parallel_scoped_named_ci": {
         "source_commit": "ebb2b4378c9353a60270a42f7a263ba55ef0e266",
         "named_declaration": "Nightfall.InfinitePiQ2SourceHilbertTensor.sourceOtherProjection_tensor_ae",
         "run": 44103373431
