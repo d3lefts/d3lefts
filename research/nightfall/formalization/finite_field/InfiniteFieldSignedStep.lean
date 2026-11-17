@@ -33,7 +33,7 @@ theorem exists_signed_code_extension
           have hxy : x = y := hf (by linear_combination heq)
           simpa [hxy]
       | true =>
-          have he : f x - z = f y + z := by simpa using heq
+          have he : f x - z = f y + z := by simpa only [sub_eq_add_neg] using heq
           have hcalc : z = (f x - f y) / (2 : K) := by
             apply (eq_div_iff htwo).2
             linear_combination -he
@@ -45,7 +45,7 @@ theorem exists_signed_code_extension
   | true =>
       cases c with
       | false =>
-          have he : f x + z = f y - z := by simpa using heq
+          have he : f x + z = f y - z := by simpa only [sub_eq_add_neg] using heq
           have hcalc : z = (f y - f x) / (2 : K) := by
             apply (eq_div_iff htwo).2
             linear_combination he
