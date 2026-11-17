@@ -1,13 +1,13 @@
 # Priority dossier: Q2 against Grothendieck, decoupling and the November 2026 AA literature
 
-**Dated literature audit, 2026-11-17. Human-led, AI-assisted.** This is a search record, not a priority certificate. It covers the public sources listed below, retrieved on this date. "No prior art found" means none was found in these sources, not that none exists.
+**Dated literature audit, 2026-11-17. Human-led, AI-assisted.** This is a search record, not a priority certificate. It covers the accessible public sources listed below; the two reported Zenodo references were not independently accessible or corroborated. "No prior art found" means none was found in these sources, not that none exists.
 
 ## Verdicts by claim
 
 | Claim | Scope | Verdict |
 |---|---|---|
 | Binary degree-two bound `Var² ≤ 16 K_G² B² max Inf` (coefficient < 51) | `{−1,1}^n`, any product law | **Classical, no NIGHTFALL priority.** This is a corollary of Grothendieck's inequality plus Efron–Stein; the bounded-quadratic ↔ Grothendieck link is in Aaronson–Ambainis–Iraids–Kokainis–Smotrovs (CCC 2016). The repo already labels it a comparator (v8, Prop. `prop:groth`). It is now formalized in Lean, with Grothendieck/Krivine as an explicit premise (`formalization/binary_grothendieck/`). |
-| `NF-PS-FINITE-20261110`: general-degree influence bound on heterogeneous finite products, exponents (5/2, 6), no atom-mass dependence | arbitrary finite product laws | **Prior public deposit exists.** Deep Bhattacharjee, *Influence Bounds for Arbitrary Product Measures*, Zenodo, 2026-11-08 (v1.0.0; a further record on 2026-11-11). Per its abstract: every bounded low-degree function on a finite product with an arbitrary product measure has an influential coordinate; variance exponent 5/2; constants independent of all atom probabilities; the exponent-two question is left open. The earliest NIGHTFALL product-space commit is 2026-11-10 (`cbd4bcc`), and PR #317 is dated 2026-11-11. Both build on Turturean (arXiv:2611.09773, 2026-11-06, uniform cube). **Do not claim priority for this extension.** The content was checked at abstract level only; the full text has not been compared. |
+| `NF-PS-FINITE-20261110`: general-degree influence bound on heterogeneous finite products, exponents (5/2, 6), no atom-mass dependence | arbitrary finite product laws | **Priority unresolved; external citation requires verification.** Two purported Zenodo records (24051767/24124921), attributed here to Deep Bhattacharjee and a 2026-11-08 product-measure result, could not be retrieved via live access or independently corroborated by exact-title/record-ID search. Their publication dates, author/title, theorem scope, and very existence as matching records are **unverified**. Neither precedence nor originality can be inferred. Obtain dated record metadata and source text, then compare exact hypotheses before updating the verdict. |
 | `NF-PS-QUADRATIC-20261110` / Q2: degree ≤ 2, **arbitrary alphabets**, `Var² ≤ C B² max Inf` with a constant independent of alphabet, laws and atoms | arbitrary (finite → infinite) products | **No prior art found; priority unresolved.** See the analysis below. |
 | `NF-PS-Q2-INFINITE-LIFT-20261117` | lift of the above to arbitrary products | No novelty claimed: a standard approximation argument. |
 
@@ -30,7 +30,7 @@
 - **Girish–Mittal–Nehoran–Raz**, arXiv:2609.35327 (2026-09-28): the biased-product (fixed p) and slice variants of AA are *equivalent* to the uniform one. Coordinate-dependent biases and non-binary alphabets are not addressed in the abstract.
 - **Escudero Gutiérrez**, arXiv:2304.06713: homogeneous **Fourier-completely-bounded** degree-2d polynomials on the uniform cube have `max Inf ≥ Var²`. Its Remark 4.3 says the method does not extend to all bounded polynomials. Uniform measure only.
 - **Bansal–Sinha–de Wolf**, CCC 2022: AA for completely bounded block-multilinear forms; uniform cube.
-- **Bhattacharjee** (Zenodo 2026-11-08 / 2026-11-11): see the table above.
+- **Unverified Zenodo lead** (reported 2026-11-08 / 2026-11-11): see the table above; not evidence of an established predecessor.
 
 None of these sources states a degree-two, variance-exponent-two influence bound on **non-binary** product spaces with constants independent of alphabet and atom mass.
 
@@ -41,7 +41,7 @@ None of these sources states a degree-two, variance-exponent-two influence bound
 
 ## Recommended catalogue actions (applied in this PR)
 
-1. `NF-PS-FINITE-20261110`: keep `priority: unresolved`, add the Bhattacharjee 2026-11-08 deposit as a prior-publication gate, and add this dossier as evidence.
+1. `NF-PS-FINITE-20261110`: keep `priority: unresolved`; retain the purported Zenodo citation only as an **unverified investigation lead**, not a proven prior-publication gate. Require retrievable dated metadata and a scope-matched full-text review.
 2. `NF-PS-QUADRATIC-20261110`: keep `priority: unresolved`, record that no prior art was found in the sources above, and record that the Grothendieck and decoupling routes have documented obstructions.
 3. No claim is promoted to `externally-audited`; that tier requires an outside reviewer.
 
@@ -53,7 +53,7 @@ None of these sources states a degree-two, variance-exponent-two influence bound
 - Girish, Mittal, Nehoran, Raz, *Distributional Variants of the Aaronson–Ambainis Conjecture*, arXiv:2609.35327 — https://arxiv.org/abs/2609.35327
 - Escudero Gutiérrez, *Influences of Fourier Completely Bounded Polynomials…*, arXiv:2304.06713 — https://arxiv.org/abs/2304.06713
 - Bansal, Sinha, de Wolf, CCC 2022, arXiv:2203.00212 — https://arxiv.org/abs/2203.00212
-- Bhattacharjee, *Influence Bounds for Arbitrary Product Measures*, Zenodo — https://zenodo.org/records/24051767 , https://zenodo.org/records/24124921
+- Unverified claimed Zenodo references (inaccessible in current review; no substantive conclusion drawn): https://zenodo.org/records/24051767 , https://zenodo.org/records/24124921
 - Aaronson, Ambainis, Iraids, Kokainis, Smotrovs, CCC 2016, arXiv:1511.08682 — https://arxiv.org/abs/1511.08682
 - Braverman, Makarychev, Makarychev, Naor, *The Grothendieck constant is strictly smaller than Krivine's bound* — https://arxiv.org/abs/1103.6161
 - Grothendieck-constant improvement, arXiv:2606.03991 — https://arxiv.org/abs/2606.03991
