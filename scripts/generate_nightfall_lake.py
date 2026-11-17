@@ -17,6 +17,7 @@ SOURCE = ROOT / "research/nightfall/formalization"
 OUTPUT = ROOT / "lakefile.toml"
 SEEDS = (
     "ActualSourceQ2107Terminal",
+    "CubicTopCoverEnergy",
     "InfinitePiQ2Limit",
     "InfinitePiQ2SourceHilbertTensor",
     "Q2ShiftedConditionalTargets",
