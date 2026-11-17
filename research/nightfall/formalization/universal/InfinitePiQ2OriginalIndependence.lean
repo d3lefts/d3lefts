@@ -62,6 +62,6 @@ theorem source_coordinate_other_indepFun (i : ι) :
     dsimp [eval]
     fun_prop
   have h := (source_singleton_other_indepFun μ i).comp heval measurable_id
-  simpa only [Function.comp_def, eval, S] using h
+  simpa only [Function.comp_def, eval, S, id_eq] using h
 
 end Nightfall.InfinitePiQ2OriginalIndependence
