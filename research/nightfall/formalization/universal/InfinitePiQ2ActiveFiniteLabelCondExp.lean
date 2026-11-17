@@ -134,7 +134,45 @@ theorem source_condExp_lifted_finite_label
   rw [htarget] at hlinear
   simpa only [h, v] using hlinear
 
+/-- The preceding original-product conditional identity is the actual
+L² orthogonal heat-bath projection, with no conditional-projection
+identity or L² membership supplied by the caller. The latter follows
+from the finite-label bound, and the former from Mathlib's condExpL2
+representation theorem under the unchanged source law. -/
+theorem sourceOtherProjection_lifted_finite_label_ae
+    (φ : ∀ i, X i → Y i) (hφ : ∀ i, Measurable (φ i))
+    (g : ((j : ι) → Y j) → ℝ) (hg : Measurable g)
+    (B : ℝ) (hB : 0 ≤ B)
+    (hbound : ∀ y, |g y| ≤ B)
+    (i : ι) [Fintype (Y i)] [DecidableEq (Y i)] :
+    let f : ((j : ι) → X j) → ℝ :=
+      fun x => g (sourceLabelMap φ x)
+    let hmem : MemLp f (2 : ENNReal) (Measure.infinitePi μ) :=
+      MemLp.of_bound
+        ((hg.comp (sourceLabelMap_measurable φ hφ)).aestronglyMeasurable)
+        B (Filter.Eventually.of_forall (fun x => by
+          simpa only [Real.norm_eq_abs] using
+            hbound (sourceLabelMap φ x)))
+    (↑↑↑(sourceOtherProjection μ i hmem.toLp)) =ᵐ[Measure.infinitePi μ]
+      (fun x => ∑ a : Y i,
+        (∫ b : X i, (if φ i b = a then (1 : ℝ) else 0) ∂ μ i) *
+          g (Function.update (sourceLabelMap φ x) i a)) := by
+  dsimp only
+  have hf : MemLp (fun x => g (sourceLabelMap φ x))
+      (2 : ENNReal) (Measure.infinitePi μ) := by
+    apply MemLp.of_bound
+      ((hg.comp (sourceLabelMap_measurable φ hφ)).aestronglyMeasurable) B
+    exact Filter.Eventually.of_forall (fun x => by
+      simpa only [Real.norm_eq_abs] using
+        hbound (sourceLabelMap φ x))
+  have hL2 :=
+    MemLp.condExpL2_ae_eq_condExp (E := ℝ) (𝕜 := ℝ)
+      (sourceOtherSigma_le (X := X) i) hf
+  exact hL2.trans
+    (source_condExp_lifted_finite_label μ φ hφ g hg B hB hbound i)
+
 #print axioms Nightfall.InfinitePiQ2ActiveFiniteLabelCondExp.label_site_decomposition
+#print axioms Nightfall.InfinitePiQ2ActiveFiniteLabelCondExp.sourceOtherProjection_lifted_finite_label_ae
 #print axioms Nightfall.InfinitePiQ2ActiveFiniteLabelCondExp.source_condExp_lifted_finite_label
 
 end Nightfall.InfinitePiQ2ActiveFiniteLabelCondExp
