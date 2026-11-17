@@ -46,6 +46,8 @@ jobs:
             --decl Nightfall.InfinitePiQ2OriginalLabelTransport.sourceFiniteLabelVariance_exact \
             --decl Nightfall.InfinitePiQ2OriginalLabelTransport.sourceFiniteLabelL2_norm_exact \
             --decl Nightfall.InfinitePiQ2OriginalLabelTransport.sourcePairedLabelLaw_exact \
+            --decl Nightfall.InfinitePiQ2OriginalLabelTransport.sourceFiniteLabelIntegral_exact \
+            --decl Nightfall.InfinitePiQ2OriginalLabelTransport.sourcePairedIntegral_exact \
             --json-out lean-receipts/q2-infinite/original-label-transport.json
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-infinite/original-label-transport.json
       - name: Exact source custody
