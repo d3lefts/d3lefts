@@ -73,7 +73,12 @@ For every active coordinate i, independently refreshing the original X_i changes
 \]
 For inactive i, \(I_i^\mu(P_Y f)=0\). This can be checked either by direct conditional integration of the source/label products or by the paired independent resampling identity \(\tfrac12 E[(h(X)-h(X^{(i)}))^2]\) for h=g⁺∘Y; the latter has exact original-law label transport in #691, but identifying that energy with \`sourceOtherProjection\` is still an explicit Lean obligation.
 
-Finally, the coordinatewise finite-label conditional projection \(P_Y\) commutes with the genuine original-source other-coordinate projection \(E_i h=E[h\mid X_{I\setminus\{i\}}]\). To see it, decompose Y into the label Y_i and the labels of all other coordinates. The original law is product, so averaging i and taking conditional expectations in any other coordinate's finite labels commute; conditioning on Y_i then averaging i is the same as averaging i directly. Thus
+Finally, the coordinatewise finite-label conditional projection \(P_Y\) commutes with the genuine original-source other-coordinate projection \(E_i h=E[h\mid X_{I\setminus\{i\}}]\). This follows by an **explicit finite disintegration**, without a commutation axiom. For \(i\in F\), write \(y_{-i}=(y_j)_{j\in F\setminus\{i\}}\) and \(\nu_{-i,y_{-i}}\) for the product of conditional measures at all other labeled coordinates, with the original measures outside F. The two compositions, evaluated at source words with labeled profile \(y_{-i}\), are equal to the single function
+\[
+ \sum_{a\in A_i} q_i(a)
+ \int f(z_{-i},u_i)\,d\nu_{-i,y_{-i}}(z_{-i})\,d\nu_{i,a}(u_i),
+\]
+where zero-mass labels are omitted. Indeed, in \(E_i P_Y f\), first use the finite conditional-cell table \(g(a,y_{-i})\) and then integrate the original coordinate i, which gives exactly the displayed finite sum. In \(P_Y E_i f\), first integrate f over \(\mu_i\) and then over \(\nu_{-i,y_{-i}}\); the identity \(\mu_i=\sum_a q_i(a)\nu_{i,a}\), as equality of finite measures, followed by Fubini gives the same expression. If \(i\notin F\), then \(E_i P_Y f=P_Y f=P_Y E_i f\) because no label uses coordinate i. Boundedness guarantees the finite interchange and Fubini. Thus
 \[
     (1-E_i)P_Y f=P_Y(1-E_i)f.
 \]
