@@ -48,7 +48,9 @@ theorem source_other_coordinate_measurable
   have hcomp : Measurable[sourceOtherSigma (X := X) i]
       (fun x : ((k : ι) → X k) => (r x) (⟨j, hji⟩ : sourceOtherIndices i)) :=
     hj.comp hr
-  simpa only [r] using hcomp
+  change Measurable[sourceOtherSigma (X := X) i]
+    (fun x : ((k : ι) → X k) => x j) at hcomp
+  exact hcomp
 
 /-- Every coordinate of the frozen finite-label word is measurable
 using only the original-source complement of the frozen coordinate. -/
@@ -58,11 +60,13 @@ theorem source_frozen_label_word_measurable
     Measurable[sourceOtherSigma (X := X) i]
       (fun x : ((k : ι) → X k) =>
         Function.update (sourceLabelMap φ x) i a) := by
+  letI : MeasurableSpace ((k : ι) → X k) :=
+    sourceOtherSigma (X := X) i
   apply measurable_pi_iff.mpr
   intro j
   by_cases h : j = i
   · subst j
-    simpa only [Function.update_same] using
+    simpa using
       (measurable_const :
         Measurable[sourceOtherSigma (X := X) i]
           (fun _ : ((k : ι) → X k) => a))
