@@ -1,0 +1,33 @@
+name: NIGHTFALL F9 deterministic calibrated-row Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/F9CalibratedRow.lean'
+      - '.github/workflows/nightfall-f9-calibrated-row.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  f9-calibrated:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Build actual F9 basis, squared oracle, and new row
+        shell: bash
+        run: |
+          set -euo pipefail
+          for F in F9OracleBridge F9ActualFieldBasis F9CalibratedRow; do
+            cp "research/nightfall/formalization/finite_field/$F.lean" "/tmp/mathlib4/$F.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$F.olean" "$F.lean")
+          done
+      - name: Named theorem and axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          N=Nightfall.FiniteField.F9CalibratedRow
+          python3 scripts/lean_bridge.py research/nightfall/formalization/finite_field/F9CalibratedRow.lean --workspace /tmp/mathlib4 --strict --timeout 900 --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.canonicalRoot_square" --decl "$N.source_is_canonical_root_up_to_sign" --decl "$N.calibratedRow_dot" --decl "$N.calibratedRow_prefix_deterministic" --decl "$N.calibratedRow_global_sign_invariant" --json-out /tmp/f9-calibrated-row-receipt.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py /tmp/f9-calibrated-row-receipt.json
