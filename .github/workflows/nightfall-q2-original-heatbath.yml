@@ -1,0 +1,62 @@
+name: NIGHTFALL exact original-source heat-bath intertwining
+on:
+  pull_request:
+    branches: [main, nightfall-q2-original-label-transport-20261116]
+    paths:
+      - 'research/nightfall/formalization/universal/InfinitePiQ2OriginalHeatBath.lean'
+      - 'research/nightfall/formalization/universal/InfinitePiQ2OriginalLabelTransport.lean'
+      - '.github/workflows/nightfall-q2-original-heatbath.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: q2-original-heatbath-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  source-heatbath:
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Build original source label law and source heat-bath theorem
+        shell: bash
+        run: |
+          set -euo pipefail
+          for name in InfinitePiQ2Density InfinitePiQ2OriginalLabelTransport InfinitePiQ2OriginalHeatBath; do
+            cp "research/nightfall/formalization/universal/${name}.lean" "/tmp/mathlib4/${name}.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/${name}.olean" "${name}.lean")
+          done
+      - name: Strict named theorem axiom check
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-heatbath
+          python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiQ2OriginalHeatBath.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InfinitePiQ2OriginalHeatBath.sourceLabelMap_update \
+            --decl Nightfall.InfinitePiQ2OriginalHeatBath.measurable_label_section \
+            --decl Nightfall.InfinitePiQ2OriginalHeatBath.source_heatBath_intertwines_label \
+            --decl Nightfall.InfinitePiQ2OriginalHeatBath.restrict_sourceLabelMap_update \
+            --decl Nightfall.InfinitePiQ2OriginalHeatBath.source_finiteLabel_heatBath_intertwines \
+            --json-out lean-receipts/q2-heatbath/heatbath.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-heatbath/heatbath.json
+      - name: Preserve exact source, compiler and dependency identity
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-heatbath
+          git rev-parse HEAD > lean-receipts/q2-heatbath/HEAD
+          sha256sum research/nightfall/formalization/universal/InfinitePiQ2OriginalHeatBath.lean \
+            research/nightfall/formalization/universal/InfinitePiQ2OriginalLabelTransport.lean \
+            > lean-receipts/q2-heatbath/SOURCE_SHA256
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: q2-original-heatbath-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/q2-heatbath
+          if-no-files-found: warn
