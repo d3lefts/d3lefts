@@ -40,7 +40,7 @@ theorem sourceOtherProjection_tensor_ae
     (↑↑↑(sourceOtherProjection μ i hf.toLp)) =ᵐ[Measure.infinitePi μ]
       (fun x => (∫ a : X i, h a ∂ μ i) * v x) := by
   have hL2 :=
-    MemLp.condExpL2_ae_eq_condExp
+    MemLp.condExpL2_ae_eq_condExp (E := ℝ) (𝕜 := ℝ)
       (sourceOtherSigma_le (X := X) i) hf
   have hTensor :=
     source_condExp_coordinate_mul_other μ i h hh v hv hui huv
