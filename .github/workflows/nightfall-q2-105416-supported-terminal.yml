@@ -1,0 +1,89 @@
+name: NIGHTFALL Q2 C105 on-support original-source full Lean terminal
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/universal/InfinitePiQ2FiniteSupportedTerminal.lean'
+      - '.github/workflows/nightfall-q2-105416-supported-terminal.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: q2-105416-supported-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  q2-original-supported-terminal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Install exact pinned Lean 4.36.0-rc2 and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile full original-source Q2 C105 dependency and exact supported-source closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from scripts.nightfall_q2_certify import local_sources, closure, sha256, ROOT
+          from pathlib import Path
+          import shutil,subprocess,json
+          files=local_sources()
+          ws=Path("/tmp/mathlib4")
+          out=ws/".lake/build/lib/lean"
+          out.mkdir(parents=True,exist_ok=True)
+          receipts=Path("lean-receipts/q2-supported-direct")
+          receipts.mkdir(parents=True,exist_ok=True)
+          manifest=[]
+          for name in closure("ActualSourceQ223802Terminal",files):
+              source=files[name]
+              target=ws/(name+".lean")
+              shutil.copyfile(source,target)
+              assert sha256(source)==sha256(target)
+              print("BUILD ORIGINAL C105",name,flush=True)
+              subprocess.run(["lake","env","lean","-o",str(out/(name+".olean")),name+".lean"],cwd=ws,check=True,timeout=1200)
+              manifest.append({"path":str(source.relative_to(ROOT)),"sha256":sha256(source)})
+          for name in ["InfinitePiQ2DegreeRetraction",
+                       "InfinitePiQ2FiniteSupportRepair",
+                       "InfinitePiQ2FiniteDegreeBridge",
+                       "InfinitePiQ2ZeroCellSourceInvariance",
+                       "InfinitePiQ2FiniteSupportedTerminal"]:
+              source=Path("research/nightfall/formalization/universal")/(name+".lean")
+              target=ws/(name+".lean")
+              shutil.copyfile(source,target)
+              assert sha256(source)==sha256(target)
+              print("BUILD SUPPORTED C105",name,flush=True)
+              subprocess.run(["lake","env","lean","-o",str(out/(name+".olean")),name+".lean"],cwd=ws,check=True,timeout=1200)
+              manifest.append({"path":str(source),"sha256":sha256(source)})
+          (receipts/"sources.json").write_text(json.dumps(manifest,indent=2)+"\n")
+          PY
+      - name: Strict exact original-source finite terminal named theorem and axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-supported-direct
+          python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiQ2FiniteSupportedTerminal.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InfinitePiQ2FiniteSupportedTerminal.original_source_q2_105416_support_unconditional \
+            --json-out lean-receipts/q2-supported-direct/source-C105-supported.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-supported-direct/source-C105-supported.json
+      - name: Immutable proof provenance
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/q2-supported-direct
+          git rev-parse HEAD > lean-receipts/q2-supported-direct/effective-head.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/q2-supported-direct/mathlib-head.txt
+          cat lean-toolchain > lean-receipts/q2-supported-direct/toolchain.txt
+          sha256sum research/nightfall/formalization/universal/InfinitePiQ2FiniteSupportedTerminal.lean > lean-receipts/q2-supported-direct/TERMINAL_SHA256.txt
+      - name: Upload exact kernel receipts including on failure
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: q2-supported-C105-terminal-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/q2-supported-direct
+          if-no-files-found: warn
