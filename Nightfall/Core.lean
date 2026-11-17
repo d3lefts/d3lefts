@@ -33,7 +33,7 @@ def sourceVariance (p : FiniteProductLaw ι α) (f : (ι → α) → ℝ) : ℝ 
   ∑ x : ι → α, productMass p x * (f x - sourceMean p f)^2
 
 /-- Original-law Efron–Stein influence, with the resampling factor 1/2. -/
-def sourceInfluence (p : FiniteProductLaw ι α)
+noncomputable def sourceInfluence (p : FiniteProductLaw ι α)
     (f : (ι → α) → ℝ) (i : ι) : ℝ :=
   (1 / 2 : ℝ) * ∑ x : ι → α, ∑ b : α,
     productMass p x * p.pmf i b *
