@@ -134,7 +134,8 @@ theorem source_condExp_coordinate_factor
 times a section which ignores that coordinate. This is the exact
 rank-one algebraic decomposition needed by source heat-bath transfer. -/
 theorem finite_label_rank_one_decomposition
-    {Y : ι → Type v} (i : ι) [Fintype (Y i)]
+    {Y : ι → Type v} (i : ι) [DecidableEq ι]
+    [Fintype (Y i)] [DecidableEq (Y i)]
     (g : ((j : ι) → Y j) → ℝ) (y : (j : ι) → Y j) :
     g y = ∑ a : Y i,
       (if y i = a then g (Function.update y i a) else 0) := by
@@ -144,7 +145,7 @@ theorem finite_label_rank_one_decomposition
 /-- Freezing coordinate i makes the resulting table section invariant
 under any subsequent update of the same coordinate. -/
 theorem finite_label_rank_one_section_invariant
-    {Y : ι → Type v} (i : ι)
+    {Y : ι → Type v} (i : ι) [DecidableEq ι]
     (g : ((j : ι) → Y j) → ℝ)
     (a b : Y i) (y : (j : ι) → Y j) :
     g (Function.update (Function.update y i a) i b) =
