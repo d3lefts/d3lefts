@@ -2,8 +2,8 @@
   "schema": "nightfall-lean-pending-source-custody-v1",
   "revision": 15,
   "as_of": "2026-11-17 UTC",
-  "source_commit": "a8142aacf0ad2d4d7864d7693af679140da436a0",
-  "scope": "235 exact pending Lean source custody entries, including 9 new merged files at a8142aacf0ad2d4d7864d7693af679140da436a0; frozen 67 historical records unchanged. Pending classification is historical custody only and does not supersede separate current scoped compiler receipts. No new unconditional Q2 or F9 terminal claim.",
+  "source_commit": "4162d135971963b518fac0cdeab6c1cf1101d082",
+  "scope": "236 exact pending Lean source custody entries, including ten newly merged files as of 4162d135971963b518fac0cdeab6c1cf1101d082. Frozen 67-source historical registry unchanged; separately recorded pinned named Lean receipts remain separately scoped. No unconditional infinite Q2 or F9 terminal claimed.",
   "sources": [
     {
       "path": "research/nightfall/formalization/agent_safety/ArbitraryAgentSafety.lean",
@@ -166,6 +166,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/F9PhysicalSquareBlock.lean",
+      "source_blob_sha": "ab34378efa891b5f81fe56dc744b5114edfe619e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Merged original-source code at 4162d135971963b518fac0cdeab6c1cf1101d082; exact Git blob pending source custody only, separate from its current pinned named Lean receipt. No blanket terminal, human-review or originality certification."
     },
     {
       "path": "research/nightfall/formalization/finite_field/F9SignPacketAllK.lean",
