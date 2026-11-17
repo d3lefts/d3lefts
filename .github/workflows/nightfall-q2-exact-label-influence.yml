@@ -1,0 +1,55 @@
+name: NIGHTFALL Q2 exact original-law label influence equality
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/universal/InfinitePiQ2SourceLabelExactInfluence.lean'
+      - '.github/workflows/nightfall-q2-exact-label-influence.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: q2-original-label-influence-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  exact-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile original source exact pullback influence
+        shell: bash
+        run: |
+          set -euo pipefail
+          for name in InfinitePiQ2Density InfinitePiQ2InfluenceStability InfinitePiQ2OriginalIndependence InfinitePiQ2ConditionalSourceTest InfinitePiQ2FiniteRankConditional InfinitePiQ2OriginalLabelTransport InfinitePiQ2OriginalHeatBath InfinitePiQ2FrozenLabelMeasurable InfinitePiQ2ActiveFiniteLabelCondExp InfinitePiQ2LabelAtomMass InfinitePiQ2BoundedLabelIntertwining InfinitePiQ2GenuineLabelIsometry InfinitePiQ2SourceLabelL2Intertwining InfinitePiQ2SourceLabelLpIntertwining InfinitePiQ2AllL2LabelIntertwining InfinitePiQ2SourceLabelExactInfluence; do
+            cp "research/nightfall/formalization/universal/${name}.lean" "/tmp/mathlib4/${name}.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/${name}.olean" "${name}.lean")
+          done
+      - name: Strict named standard-axiom gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-exact-label-influence
+          python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiQ2SourceLabelExactInfluence.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InfinitePiQ2SourceLabelExactInfluence.source_label_pullback_residual_norm_eq \
+            --decl Nightfall.InfinitePiQ2SourceLabelExactInfluence.source_label_pullback_influence_eq \
+            --json-out lean-receipts/q2-exact-label-influence/receipt.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-exact-label-influence/receipt.json
+      - name: Preserve immutable source identity
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-exact-label-influence
+          git rev-parse HEAD > lean-receipts/q2-exact-label-influence/HEAD
+          sha256sum research/nightfall/formalization/universal/InfinitePiQ2SourceLabelExactInfluence.lean research/nightfall/formalization/universal/InfinitePiQ2AllL2LabelIntertwining.lean > lean-receipts/q2-exact-label-influence/SOURCE_SHA256
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: q2-exact-label-influence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/q2-exact-label-influence
+          if-no-files-found: warn
