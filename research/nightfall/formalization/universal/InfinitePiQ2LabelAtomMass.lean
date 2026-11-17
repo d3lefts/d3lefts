@@ -32,7 +32,7 @@ variable [∀ i, IsProbabilityMeasure (μ i)]
 image atom mass, including zero-probability label cells. -/
 theorem source_label_indicator_integral_eq_atom
     (φ : ∀ i, X i → Y i) (hφ : ∀ i, Measurable (φ i))
-    (i : ι) (a : Y i) :
+    (i : ι) (a : Y i) [DecidableEq (Y i)] :
     (∫ b : X i, (if φ i b = a then (1 : ℝ) else 0) ∂ μ i) =
       ((μ i).map (φ i)).real {a} := by
   classical
