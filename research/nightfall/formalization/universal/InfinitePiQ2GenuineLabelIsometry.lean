@@ -74,7 +74,11 @@ theorem original_infinite_label_lift_ae
     (↑(original_infinite_label_lift μ φ hφ g) :
       ((i : ι) → X i) → ℝ) =ᵐ[Measure.infinitePi μ]
         (fun x => g (sourceLabelMap φ x)) := by
-  simpa only [original_infinite_label_lift] using
+  change (↑(Lp.compMeasurePreserving (sourceLabelMap φ)
+      (original_infinite_label_measurePreserving μ φ hφ) g) :
+      ((i : ι) → X i) → ℝ) =ᵐ[Measure.infinitePi μ]
+        (fun x => g (sourceLabelMap φ x))
+  simpa only [Function.comp_apply] using
     (Lp.coeFn_compMeasurePreserving g
       (original_infinite_label_measurePreserving μ φ hφ))
 
