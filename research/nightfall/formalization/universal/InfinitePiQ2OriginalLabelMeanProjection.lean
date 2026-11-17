@@ -20,6 +20,7 @@ range projections. It does not assert their L² density or any Q2 bound.
 namespace Nightfall.InfinitePiQ2OriginalLabelMeanProjection
 
 open MeasureTheory
+open scoped InnerProductSpace
 open Nightfall.InfinitePiQ2RangeProjectionTransfer
 open Nightfall.InfinitePiQ2GenuineLabelIsometry
 open Nightfall.InfinitePiQ2OriginalLabelTransport
@@ -64,7 +65,7 @@ theorem sourceLabelLift_one
     Lp.compMeasurePreserving (sourceLabelMap φ) hmp
       (Lp.const (2 : ENNReal) (Measure.infinitePi q) (1 : ℝ)) =
     Lp.const (2 : ENNReal) (Measure.infinitePi μ) (1 : ℝ)
-  simpa only [Lp.indicatorConstLp_univ, Set.preimage_univ] using
+  simpa only [indicatorConstLp_univ, Set.preimage_univ] using
     (Lp.indicatorConstLp_compMeasurePreserving
       (p := (2 : ENNReal)) (μ := Measure.infinitePi μ)
       (μb := Measure.infinitePi q)
@@ -93,7 +94,7 @@ theorem sourceLabelRangeProjection_preserves_mean
   have hP :
       ⟪cμ, labelRangeProjection U f⟫_ℝ =
         (∫ x, (labelRangeProjection U f) x ∂ Measure.infinitePi μ) := by
-    simpa only [cμ, Lp.indicatorConstLp_univ, MeasureTheory.setIntegral_univ] using
+    simpa only [cμ, indicatorConstLp_univ, MeasureTheory.setIntegral_univ] using
       (L2.inner_indicatorConstLp_one
         (MeasurableSet.univ : MeasurableSet (Set.univ : Set ((i : ι) → X i)))
         (measure_ne_top (Measure.infinitePi μ) Set.univ)
@@ -101,7 +102,7 @@ theorem sourceLabelRangeProjection_preserves_mean
   have hfmean :
       ⟪cμ, f⟫_ℝ =
         (∫ x, f x ∂ Measure.infinitePi μ) := by
-    simpa only [cμ, Lp.indicatorConstLp_univ, MeasureTheory.setIntegral_univ] using
+    simpa only [cμ, indicatorConstLp_univ, MeasureTheory.setIntegral_univ] using
       (L2.inner_indicatorConstLp_one
         (MeasurableSet.univ : MeasurableSet (Set.univ : Set ((i : ι) → X i)))
         (measure_ne_top (Measure.infinitePi μ) Set.univ) f)
