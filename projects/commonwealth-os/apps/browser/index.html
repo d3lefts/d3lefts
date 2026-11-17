@@ -9,10 +9,12 @@
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./workspace.css">
   <link rel="stylesheet" href="./participation.css">
+  <link rel="stylesheet" href="./experience.css">
   <script defer src="./historical-fixtures.js"></script>
   <script type="module" src="./app.mjs"></script>
   <script type="module" src="./workspace.mjs"></script>
   <script type="module" src="./participation-ui.mjs"></script>
+  <script type="module" src="./experience.mjs"></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to main content</a>
@@ -21,6 +23,103 @@
     <span class="mode">SYNTHETIC DEMONSTRATION</span>
   </header>
   <main id="main">
+<section id="cwexp" aria-labelledby="cwexp-title">
+  <div class="cwexp-top">
+    <div>
+      <p class="cwexp-kicker">COMMONWEALTH / A CIVIC EXPERIENCE · SYNTHETIC PREVIEW</p>
+      <h1 id="cwexp-title">A government you can <em>understand.</em><br>And hold to account.</h1>
+      <p>Explore one fictional public decision from the first question to the unanswered follow-through. No login, no real politics, no ballot and no submission.</p>
+      <a class="cwexp-link" href="#cwexp-choose">Explore the experience <span aria-hidden="true">↓</span></a>
+    </div>
+    <div class="cwexp-signet" aria-hidden="true"><span class="cwexp-kicker">THE PUBLIC RECORD</span><b>✦</b><p>VOICE · REASON · EVIDENCE</p></div>
+  </div>
+  <div class="cwexp-steps" aria-label="Three stages of civic participation">
+    <div><span>01 / UNDERSTAND</span><strong>Discover the issue</strong><small>What is actually being proposed?</small></div>
+    <div><span>02 / EXPRESS</span><strong>Consider a preference</strong><small>Private exploration, not a cast vote</small></div>
+    <div><span>03 / TRACK</span><strong>Follow the response</strong><small>Reasons, versions and unresolved steps</small></div>
+  </div>
+  <div id="cwexp-choose" class="cwexp-role-heading">
+    <div><p class="cwexp-eyebrow">A DIFFERENT ENTRANCE FOR EVERY ROLE</p><h2>How would you like to explore?</h2></div>
+    <div class="cwexp-switcher" role="group" aria-label="Choose an experience">
+      <button type="button" data-cwexp-role="resident" aria-pressed="true">Resident</button>
+      <button type="button" data-cwexp-role="representative" aria-pressed="false">Representative</button>
+      <button type="button" data-cwexp-role="developer" aria-pressed="false">Developer</button>
+    </div>
+    <p id="cwexp-role-status" role="status" aria-live="polite"></p>
+  </div>
+  <div class="cwexp-panel" data-cwexp-panel="resident">
+    <p class="cwexp-eyebrow">TRY A FICTIONAL POLICY QUESTION / DEMO-EX-014 v2</p>
+    <h3>Should a fictional campus trial extended library hours?</h3>
+    <p>An imaginary six-week pilot with a capped demonstration budget. The question has not been validated for neutrality or legal applicability.</p>
+    <div class="cwexp-options" role="group" aria-label="Illustrative nonbinding preference">
+      <button type="button" data-cwexp-answer="support" aria-pressed="false">Support</button>
+      <button type="button" data-cwexp-answer="oppose" aria-pressed="false">Do not support</button>
+      <button type="button" data-cwexp-answer="need_information" aria-pressed="false">Need more information</button>
+      <button type="button" data-cwexp-answer="no_preference" aria-pressed="false">No preference</button>
+    </div>
+    <p id="cwexp-answer-status" class="cwexp-status" role="status" aria-live="polite">No preference selected. Unknown is distinct from No preference.</p>
+    <div class="cwexp-action-row">
+      <button id="cwexp-reveal-button" class="cwexp-secondary" type="button">View fictional perspectives without answering</button>
+      <button id="cwexp-clear-button" class="cwexp-secondary" type="button">Clear my sample answer</button>
+    </div>
+    <div id="cwexp-perspectives" class="cwexp-results" hidden>
+      <div class="cwexp-results-header"><h4>Where a fictional room might disagree</h4><span>ILLUSTRATIVE COUNTS / NOT SURVEY DATA</span></div>
+      <p id="cwexp-reveal-context" aria-live="polite"></p>
+      <p><strong id="cwexp-viewpoint-total">24</strong> invented example positions, not respondents, sampling, polling, votes or verified public sentiment.</p>
+      <div class="cwexp-groups" aria-label="Fictional example viewpoints">
+        <div class="cwexp-group"><h5>Expand access</h5><span class="cwexp-count"><span id="cwexp-group-access">11</span> example positions</span><p>Later hours might help commuting students.</p></div>
+        <div class="cwexp-group"><h5>Protect staffing</h5><span class="cwexp-count"><span id="cwexp-group-staffing">7</span> example positions</span><p>Worker safety and scheduling need safeguards.</p></div>
+        <div class="cwexp-group"><h5>Request evidence</h5><span class="cwexp-count"><span id="cwexp-group-evidence">6</span> example positions</span><p>Costs, use and accessibility should be measured first.</p></div>
+      </div>
+      <p class="cwexp-common"><strong>Constructed shared concern:</strong> explain costs and publish the evaluation. This is a teaching illustration, not detected consensus.</p>
+    </div>
+    <p class="cwexp-disclosure">Answer stays in the page's temporary memory only. It does not change the invented viewpoint counts, create a profile or cast a vote.</p>
+  </div>
+  <div class="cwexp-panel" data-cwexp-panel="representative" hidden>
+    <p class="cwexp-eyebrow">REPRESENTATIVE / ACCOUNTABILITY FIRST</p>
+    <h3>Hear concerns. Explain decisions. Keep the record.</h3>
+    <p>Preview a fictional issue with its exact amendment, competing reasons and pending implementation evidence. Real constituent aggregates, demographic clusters and inferred political profiles are not used.</p>
+    <a class="cwexp-link" href="#cwpart-app">Inspect the simulated Chamber and proposal history ↗</a>
+    <p class="cwexp-disclosure">This preview neither measures actual constituents nor grants any representative authority.</p>
+  </div>
+  <div class="cwexp-panel" data-cwexp-panel="developer" hidden>
+    <p class="cwexp-eyebrow">DEVELOPER / PUBLIC RECORDS, NOT PRIVATE PROFILES</p>
+    <h3>Ask what changed, and inspect the evidence.</h3>
+    <p>Commonwealth Connect is a proposed read-only MCP/API surface. There is no live MCP endpoint here. Its first scope would be synthetic or independently sourced public records only.</p>
+    <pre class="cwexp-interface"><code>{
+  "resource": "proposal/DEMO-EX-014",
+  "revision": "v2",
+  "source_status": "SYNTHETIC_UNVERIFIED",
+  "authority": "NOT_AUTHENTICATED",
+  "implementation": "UNKNOWN",
+  "private_preferences": "NOT_EXPOSED"
+}</code></pre>
+    <a class="cwexp-link" href="#cwui-public">Inspect fictional public records ↗</a>
+    <p class="cwexp-disclosure">Sample representation, not a network response, source authentication, formal certificate or operational integration.</p>
+  </div>
+  <div class="cwexp-story">
+    <p class="cwexp-eyebrow">THE DECISION TRAIL / EXPLORE EACH DEPENDENCY</p>
+    <h2>What happened to the question?</h2>
+    <div class="cwexp-stepnav" role="group" aria-label="Select an illustrative decision stage">
+      <button type="button" data-cwexp-step="0" aria-pressed="true"><span>01</span>Source</button>
+      <button type="button" data-cwexp-step="1" aria-pressed="false"><span>02</span>Proposal</button>
+      <button type="button" data-cwexp-step="2" aria-pressed="false"><span>03</span>Deliberation</button>
+      <button type="button" data-cwexp-step="3" aria-pressed="false"><span>04</span>Response</button>
+      <button type="button" data-cwexp-step="4" aria-pressed="false"><span>05</span>Follow-through</button>
+    </div>
+    <div class="cwexp-stepdetail">
+      <div>
+        <span id="cwexp-story-progress" class="cwexp-eyebrow">STEP 1 OF 5</span>
+        <h3 id="cwexp-step-heading">Establish the governing rule</h3>
+        <p id="cwexp-step-narrative">A fictional senate ruleset establishes who can decide a resolution.</p>
+        <span id="cwexp-step-evidence" class="cwexp-source">SIMULATED RULESET / not authenticated</span>
+      </div>
+      <button id="cwexp-next-step" class="cwexp-next" type="button">Next stage →</button>
+    </div>
+    <p class="cwexp-foot">All five stages are an invented teaching case, separate from the existing synthetic proposal fixtures and the ten-check procedural verifier. Source status: <strong id="cwexp-source-status">SYNTHETIC_UNVERIFIED</strong>. <a href="#cwui-assurance">See what the actual demo checker evaluates</a>.</p>
+  </div>
+</section>
+
     <section class="intro"><p class="eyebrow">2027 pilot architecture · browser proof of concept</p><h1>Participation should lead to <em>an answer.</em><br>And the answer should have evidence.</h1><p>Explore versioned fictional proposals, deliberation, amendments, advisory budgeting, reasoned decisions, implementation tracking, the original procedural checker, 72 draft institutional questions, historical representation and public evidence. The checker includes a separate union example. All scenarios and personal details are synthetic; this app is not an election system.</p></section>
     <div class="notice" role="note"><strong>Nonbinding demonstration only.</strong> No real ballots, personal voter data, city sources, official decisions, or live municipal integration. A supported simulated decision is not a legal certification.</div>
     <div class="cwpart-showcase" role="list" aria-label="Commonwealth differentiators">
