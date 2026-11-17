@@ -40,17 +40,21 @@ variable [∀ i, IsProbabilityMeasure (μ i)]
 L². No numerical finite Q2 inequality is supplied: the theorem
 below derives it from the independently certified finite C105.
 
-We use nonempty Fin alphabets to keep the existential data first-order
-rather than carrying Fintype/Nonempty typeclass witnesses. Arbitrary
-finite native alphabet types can be enumerated and embedded into these
-finite alphabets without changing finite Q2's coefficient. -/
+The active-coordinate map is injective and each native atom weight is\nthe literal pushforward of the corresponding ORIGINAL source marginal.\nThe approximant is almost everywhere the original-source pullback of\nthe finite native table, so arbitrary unrelated surrogate laws or\nvariance-matched toy tables cannot satisfy this witness. Additional\nexact mean/variance transport and native influence/degree/bound proofs\nare still required before declaring model existence.\n\nNonempty Fin alphabets avoid transporting Fintype witnesses in this\ninterface; they can encode heterogeneous finite native alphabets. -/
 def NativeFiniteQ2ApproxData
     (f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))
     (B M ε : ℝ) : Prop :=
   ∃ n m : ℕ,
-    ∃ (p : Fin (n + 1) → Fin (m + 1) → ℝ)
+    ∃ (active : Fin (n + 1) → ι)
+      (φ : ∀ i, X i → Fin (m + 1))
+      (p : Fin (n + 1) → Fin (m + 1) → ℝ)
       (g : (Fin (n + 1) → Fin (m + 1)) → ℝ)
       (h : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)),
+      Function.Injective active ∧
+      (∀ i, Measurable (φ i)) ∧
+      (∀ i a, p i a = ((μ (active i)).map (φ (active i))).real {a}) ∧
+      (fun x : (i : ι) → X i => h x) =ᵐ[Measure.infinitePi μ]
+        (fun x => g (fun i => φ (active i) (x (active i)))) ∧
       ‖f - h‖ < ε ∧
       (∫ x, h x ∂ Measure.infinitePi μ) =
         (∫ x, f x ∂ Measure.infinitePi μ) ∧
@@ -81,8 +85,9 @@ theorem source_q2_C105_from_finite_native_label_models
   apply source_q2_bound_of_approximate_finite_labels μ f
     (((2*(1+Real.sqrt 2))*Real.sqrt 3+11901/6250)^2*B^2*M)
   intro ε hε
-  obtain ⟨n, m, p, g, h, hclose, hmean, hvariance,
-    hp, hp1, hdegree, hbound, hI⟩ := hmodels ε hε
+  obtain ⟨n, m, active, φ, p, g, h, hinj, hφ, hsourceMass,
+    hsourceRep, hclose, hmean, hvariance, hp, hp1, hdegree,
+    hbound, hI⟩ := hmodels ε hε
   let A : Fin (n + 1) → Type := fun _ => Fin (m + 1)
   have hfinite :
       (nativeVariance A p g)^2 ≤
