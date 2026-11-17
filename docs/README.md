@@ -2,6 +2,9 @@
 
 # NIGHTFALL public website
 
+**Theory Atlas (source-bound field guide):** [Theoretical mathematics & computer science](theory.html) is a narrative, interactive reading map with six disciplines, 24 curated nodes, and 24 typed relationships. It distinguishes externally published antecedents, named kernel-checked subresults, exact finite witnesses, analytic manuscripts, and open goals. It is *not* a field-wide bibliometric analysis or independent error audit. Data are manually scoped in [theory-map-data.js](theory-map-data.js); node and edge integrity is checked by `node --test tests/nightfall-theory-atlas.test.cjs` at repository root. Its graph links canonical theorem sources and Proof Passports without rewriting the frozen historical registry.
+
+
 **November 13 integration:** [The minimum cost of knowing](cost-of-knowing.html) links the latest publicly accessible parallel research findings to their exact scopes and open gates: posterior actionable influence, oracle-matched KL information cover, source-level Q2, change-stable evidence ([draft #456](https://github.com/d3lefts/d3lefts/pull/456)), correlated-product transfer ([draft #457](https://github.com/d3lefts/d3lefts/pull/457)) and separator observability ([draft #458](https://github.com/d3lefts/d3lefts/pull/458)). The [full written ledger](../research/nightfall/2026-11-convoluted-costs-of-knowing/MINIMUM_JUSTIFIED_KNOWING_COST_20261113.md) distinguishes known lemmas from author-analytic candidates. This dated dispatch is additive and does not change the frozen 40-record library, 11 historical Proof Passports or certified theorem counts.
 
 
