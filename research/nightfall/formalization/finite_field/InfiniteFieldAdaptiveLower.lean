@@ -391,7 +391,7 @@ theorem critical_adaptive_strategy_fails
       have htrans : history policy x0 (k+1) = history policy y (k+1) := by
         apply history_eq_of_frozen_squares
         intro i
-        exact hsame i
+        exact (hsame i).symm
       exact ⟨y, x0, hneq, hsign, htrans.symm⟩
     · obtain ⟨z, hz⟩ := nonzero_dot_witness b hb
       have hsource : ∃ x : Fin (k+1) → K,
@@ -432,7 +432,7 @@ theorem critical_adaptive_strategy_fails
       have htrans : history policy x (k+1) = history policy y (k+1) := by
         apply history_eq_of_frozen_squares
         intro i
-        exact hsame i
+        exact (hsame i).symm
       exact ⟨y, x, hneq, hsign, htrans.symm⟩
 
 #print axioms Nightfall.InfiniteFieldPhase.AdaptiveLower.critical_adaptive_strategy_fails
