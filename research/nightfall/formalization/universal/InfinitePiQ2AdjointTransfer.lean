@@ -34,7 +34,12 @@ theorem isometryAdjoint_contract (U : H →ₗᵢ[ℝ] K) (f : K) :
     exact (ContinuousLinearMap.adjoint).norm_map _
   have hop := U.toContinuousLinearMap.adjoint.le_opNorm f
   have hmul := mul_le_mul_of_nonneg_right hU (norm_nonneg f)
-  nlinarith
+  calc
+    ‖U.toContinuousLinearMap.adjoint f‖ ≤
+        ‖U.toContinuousLinearMap.adjoint‖ * ‖f‖ := hop
+    _ = ‖U.toContinuousLinearMap‖ * ‖f‖ := by rw [hAdj]
+    _ ≤ 1 * ‖f‖ := hmul
+    _ = ‖f‖ := one_mul _
 
 /-- Self-adjoint heat-bath operators intertwine in the reverse
 direction along the Hilbert adjoint of the finite-label lift. -/
