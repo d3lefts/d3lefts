@@ -19,8 +19,9 @@ noncomputable section
 
 /-- A fixed function of an observed square, including nonsquare inputs.
 Only source-generated square inputs use the successful branch. -/
-noncomputable def canonicalRoot (v : F9) : F9 :=
-  if h : ∃ z : F9, z ^ 2 = v then Classical.choose h else 0
+noncomputable def canonicalRoot (v : F9) : F9 := by
+  classical
+  exact if h : ∃ z : F9, z ^ 2 = v then Classical.choose h else 0
 
 theorem canonicalRoot_square (x : F9) :
     (canonicalRoot (x ^ 2)) ^ 2 = x ^ 2 := by
