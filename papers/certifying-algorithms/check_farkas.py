@@ -25,12 +25,45 @@ def canonical_model(model):
     return json.dumps(model, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode()
 
 
+def semantic_fence_matrix(spec):
+    """Reconstruct LP constraints from original unsafe-change supports.
+
+    Every Boolean guard hitting every unsafe change set satisfies the rows.
+    Infeasibility of this rational LP excludes every Boolean guard.
+    """
+    if not isinstance(spec, dict) or spec.get("kind") != "weighted-hitting-set-budget/v1":
+        raise ValueError("unsupported source model")
+    n = spec.get("num_sources")
+    edges, weights, budget = spec.get("unsafe_change_supports"), spec.get("weights"), spec.get("budget")
+    if isinstance(n, bool) or not isinstance(n, int) or n < 1:
+        raise ValueError("invalid source count")
+    if not isinstance(edges, list) or not edges or not isinstance(weights, list) or len(weights) != n:
+        raise ValueError("invalid supports or weights")
+    if not all(parse_q(w) >= 0 for w in weights) or parse_q(budget) < 0:
+        raise ValueError("negative cost or budget")
+    rows = []
+    for edge in edges:
+        if not isinstance(edge, list) or len(set(edge)) != len(edge) or any(
+                isinstance(j, bool) or not isinstance(j, int) or j < 0 or j >= n for j in edge):
+            raise ValueError("invalid unsafe-change support")
+        rows.append([str(-int(j in edge)) for j in range(n)])
+    rows.append([str(parse_q(w)) for w in weights])
+    return {"A": rows, "b": ["-1"] * len(edges) + [str(parse_q(budget))]}
+
+
 def validate(payload):
     if not isinstance(payload, dict) or payload.get("schema") != SCHEMA:
         raise ValueError("unknown schema")
     model, cert = payload.get("model"), payload.get("certificate")
     if not isinstance(model, dict) or not isinstance(cert, dict):
         raise ValueError("missing model/certificate")
+    source = payload.get("source_model")
+    if source is not None:
+        expected = semantic_fence_matrix(source)
+        if model != expected:
+            raise ValueError("matrix does not match original unsafe-change supports")
+        if cert.get("source_sha256") != hashlib.sha256(canonical_model(source)).hexdigest():
+            raise ValueError("source model digest mismatch")
     A, b = model.get("A"), model.get("b")
     lam = cert.get("lambda")
     if not isinstance(A, list) or not A or not all(isinstance(r, list) for r in A) or not isinstance(b, list) or not isinstance(lam, list):
@@ -54,16 +87,19 @@ def validate(payload):
         raise ValueError("combined upper bound does not contradict zero")
     return {"status": "PASS", "rows": m, "variables": n,
             "certificate_rhs": str(rhs), "model_sha256": digest,
+            "source_bound": source is not None,
             "scope": "exact rational Farkas infeasibility only; not a Lean kernel certificate"}
 
 
 def self_test():
-    model = {"A": [["-1", "0"], ["0", "-1"], ["1", "1"]],
-             "b": ["-1", "-1", "1"]}
+    source = {"kind": "weighted-hitting-set-budget/v1", "num_sources": 2,
+              "unsafe_change_supports": [[0], [1]], "weights": ["1", "1"], "budget": "1"}
+    model = semantic_fence_matrix(source)
     import copy
-    payload = {"schema": SCHEMA, "model": model,
+    payload = {"schema": SCHEMA, "model": model, "source_model": source,
                "certificate": {"lambda": ["1", "1", "1"],
-                               "model_sha256": hashlib.sha256(canonical_model(model)).hexdigest()}}
+                               "model_sha256": hashlib.sha256(canonical_model(model)).hexdigest(),
+                               "source_sha256": hashlib.sha256(canonical_model(source)).hexdigest()}}
     assert validate(payload)["certificate_rhs"] == "-1"
     mutants = []
     a = copy.deepcopy(payload); a["certificate"]["lambda"] = ["1", "0", "1"]; mutants.append(a)
@@ -74,6 +110,9 @@ def self_test():
     a = copy.deepcopy(payload); a["certificate"]["lambda"][0] = "0.1"; mutants.append(a)
     a = copy.deepcopy(payload); a["certificate"]["lambda"][0] = 0.1; mutants.append(a)
     a = copy.deepcopy(payload); a["model"]["A"][1].pop(); mutants.append(a)
+    a = copy.deepcopy(payload); a["source_model"]["unsafe_change_supports"][0] = [1]; mutants.append(a)
+    a = copy.deepcopy(payload); a["source_model"]["budget"] = "2"; mutants.append(a)
+    a = copy.deepcopy(payload); a["source_model"]["weights"][0] = "2"; mutants.append(a)
     for i, a in enumerate(mutants):
         try:
             validate(a)
@@ -84,7 +123,7 @@ def self_test():
     # Different checker: exhaustive integer fence selection, not Farkas arithmetic.
     legal = [(x, y) for x in (0, 1) for y in (0, 1) if x >= 1 and y >= 1]
     assert legal == [(1, 1)] and not any(x + y <= 1 for x, y in legal)
-    print("PASS: 1 exact rational Farkas witness; 8 negative controls; 4-state independent exhaustive fence check")
+    print("PASS: 1 original-model-bound rational Farkas witness; 11 negative controls; 4-state independent exhaustive fence check")
 
 
 def main():
