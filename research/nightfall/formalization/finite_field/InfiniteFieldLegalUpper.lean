@@ -122,8 +122,8 @@ theorem legal_history_prefix :
           (coordinatePolicy (coordinateHistory x m)) x)^2 ::
           coordinateHistory x m
       rw [hprev]
-      have hrow : legalPolicy (coordinateHistory x m) =
-          coordinatePolicy (coordinateHistory x m) := by
+      have hrow : legalPolicy (n := n) (coordinateHistory x m) =
+          coordinatePolicy (n := n) (coordinateHistory x m) := by
         unfold legalPolicy
         rw [if_pos (by
           have hl : (coordinateHistory x m).length = m := history_length _ x m
