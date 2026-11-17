@@ -222,4 +222,101 @@ theorem sourcePairedIntegral_exact
           (fun i => ((μ i).map (φ i)).prod ((μ i).map (φ i))) := by
       rw [sourcePairedLabelLaw_exact μ φ hφ]
 
+/-- The first draw from the original per-coordinate independent pair law. -/
+def sourcePairFirst
+    (z : (i : ι) → X i × X i) : (i : ι) → X i :=
+  fun i => (z i).1
+
+/-- Independently refreshing exactly coordinate i of the first draw. -/
+def sourcePairRefresh [DecidableEq ι] (i : ι)
+    (z : (j : ι) → X j × X j) : (j : ι) → X j :=
+  Function.update (sourcePairFirst z) i (z i).2
+
+/-- The source-resampling energy integrated under actual independent
+per-coordinate pairs. This is an explicit observable, not an axiom
+identifying it with the condExpL2 source residual. -/
+noncomputable def sourcePairedRefreshEnergy [DecidableEq ι] (i : ι)
+    (f : ((j : ι) → X j) → ℝ) : ℝ :=
+  ∫ z, (f (sourcePairFirst z) - f (sourcePairRefresh i z)) ^ 2 / 2
+    ∂ Measure.infinitePi (fun j => (μ j).prod (μ j))
+
+theorem sourcePairFirst_measurable :
+    Measurable (sourcePairFirst (X := X)) := by
+  change Measurable (fun (z : (i : ι) → X i × X i) i => (z i).1)
+  fun_prop
+
+theorem sourcePairRefresh_measurable [DecidableEq ι] (i : ι) :
+    Measurable (sourcePairRefresh (X := X) i) := by
+  change Measurable
+    (fun (z : (j : ι) → X j × X j) =>
+      Function.update (sourcePairFirst z) i (z i).2)
+  fun_prop
+
+/-- Per-coordinate independent refreshing commutes *pointwise* with
+arbitrary source cell labels. The same paired source is used on both
+sides. This lemma has no measure assumptions. -/
+theorem sourcePairRefresh_label_commute
+    [DecidableEq ι] (i : ι)
+    (φ : ∀ j, X j → Y j)
+    (z : (j : ι) → X j × X j) :
+    sourceLabelMap φ (sourcePairRefresh i z) =
+      sourcePairRefresh i
+        (fun j => Prod.map (φ j) (φ j) (z j)) := by
+  funext j
+  by_cases hij : j = i
+  · subst j
+    simp [sourceLabelMap, sourcePairRefresh, sourcePairFirst]
+  · simp [sourceLabelMap, sourcePairRefresh, sourcePairFirst,
+      Function.update_of_ne hij]
+
+/-- Exact original-law resampling energy of a finite-label observable
+equals its genuine label-product-law resampling energy. No replacement
+source distribution and no L2 projection hypothesis. -/
+theorem sourcePairedRefreshEnergy_label_exact
+    [DecidableEq ι]
+    (φ : ∀ i, X i → Y i)
+    (hφ : ∀ i, Measurable (φ i))
+    (g : ((i : ι) → Y i) → ℝ) (hg : Measurable g)
+    (i : ι) :
+    sourcePairedRefreshEnergy μ i (fun x => g (sourceLabelMap φ x)) =
+      sourcePairedRefreshEnergy
+        (fun j => (μ j).map (φ j)) i g := by
+  let G : ((j : ι) → Y j × Y j) → ℝ :=
+    fun y => (g (sourcePairFirst y) - g (sourcePairRefresh i y)) ^ 2 / 2
+  have hG : Measurable G := by
+    dsimp [G]
+    have hfirst : Measurable (sourcePairFirst (X := Y)) :=
+      sourcePairFirst_measurable
+    have hsecond : Measurable (sourcePairRefresh (X := Y) i) :=
+      sourcePairRefresh_measurable i
+    fun_prop
+  have hfirst (z : (j : ι) → X j × X j) :
+      sourceLabelMap φ (sourcePairFirst z) =
+        sourcePairFirst (fun j => Prod.map (φ j) (φ j) (z j)) := by
+    rfl
+  have hsecond (z : (j : ι) → X j × X j) :
+      sourceLabelMap φ (sourcePairRefresh i z) =
+        sourcePairRefresh i (fun j => Prod.map (φ j) (φ j) (z j)) :=
+    sourcePairRefresh_label_commute i φ z
+  have hint (z : (j : ι) → X j × X j) :
+      (g (sourceLabelMap φ (sourcePairFirst z)) -
+          g (sourceLabelMap φ (sourcePairRefresh i z))) ^ 2 / 2 =
+      G (fun j => Prod.map (φ j) (φ j) (z j)) := by
+    rw [hfirst z, hsecond z]
+    rfl
+  calc
+    sourcePairedRefreshEnergy μ i (fun x => g (sourceLabelMap φ x)) =
+        ∫ z, G (fun j => Prod.map (φ j) (φ j) (z j))
+          ∂ Measure.infinitePi (fun j => (μ j).prod (μ j)) := by
+      unfold sourcePairedRefreshEnergy
+      apply integral_congr_ae
+      exact Filter.Eventually.of_forall hint
+    _ = ∫ y, G y
+          ∂ Measure.infinitePi
+            (fun j => ((μ j).map (φ j)).prod ((μ j).map (φ j))) :=
+      sourcePairedIntegral_exact μ φ hφ G hG
+    _ = sourcePairedRefreshEnergy
+        (fun j => (μ j).map (φ j)) i g := by
+      rfl
+
 end Nightfall.InfinitePiQ2OriginalLabelTransport
