@@ -29,6 +29,7 @@ variable {ι : Type u} {X : ι → Type v} {Y : ι → Type w}
 variable [∀ i, MeasurableSpace (X i)] [∀ i, MeasurableSpace (Y i)]
 variable (μ : (i : ι) → Measure (X i))
 variable [∀ i, IsProbabilityMeasure (μ i)]
+variable [DecidableEq ι]
 
 /-- Exact original-product one-site heat-bath, defined from μ i itself. -/
 noncomputable def sourceHeatBath (i : ι)
@@ -87,7 +88,7 @@ theorem source_heatBath_intertwines_label
   have hG : AEStronglyMeasurable
       (fun b : Y i => g (Function.update (sourceLabelMap φ x) i b))
       ((μ i).map (φ i)) :=
-    (measurable_label_section μ φ g hg i x).aestronglyMeasurable
+    (measurable_label_section φ hg i x).aestronglyMeasurable
   calc
     sourceHeatBath μ i (fun z => g (sourceLabelMap φ z)) x =
       ∫ a, g (Function.update (sourceLabelMap φ x) i (φ i a)) ∂ μ i := by
