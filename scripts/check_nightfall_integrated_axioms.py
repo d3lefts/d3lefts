@@ -8,6 +8,8 @@ ALLOWED = {"propext", "Classical.choice", "Quot.sound"}
 TARGETS = [
     "Nightfall.Observability.ActualSourceQ2107Terminal.actual_source_q2_107_unconditional",
     "Nightfall.InfinitePiQ2Limit.source_q2_quadratic_limit",
+    "Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional",
+    "Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional_variance",
     "Nightfall.Q2Shifted.ConditionalTargets.conditional_coefficient_107",
     "Nightfall.Q2Shifted.ConditionalTargets.conditional_coefficient_99",
     "Nightfall.InfinitePiQ2OriginalIndependence.source_coordinate_other_indepFun",
