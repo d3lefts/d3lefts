@@ -149,4 +149,77 @@ theorem sourcePairedLabelLaw_exact
       funext i
       exact (Measure.map_prod_map (μ i) (μ i) (hφ i) (hφ i)).symm
 
+/-- Every integrable observable of the finite source labels has exactly
+the same expectation under the original infinite product as under the
+true finite label law. For a nonintegrable observable both sides obey
+Mathlib's same integral convention. -/
+theorem sourceFiniteLabelIntegral_exact
+    (F : Finset ι)
+    (φ : ∀ i, X i → Y i)
+    (hφ : ∀ i, Measurable (φ i))
+    (g : ((j : F) → Y j) → ℝ)
+    (hg : Measurable g) :
+    (∫ x, g (F.restrict (sourceLabelMap φ x))
+      ∂ Measure.infinitePi μ) =
+      ∫ y, g y ∂ Measure.pi (fun j : F => (μ j).map (φ j)) := by
+  let label : ((i : ι) → X i) → ((j : F) → Y j) :=
+    fun x => F.restrict (sourceLabelMap φ x)
+  have hmp := sourceFiniteLabelMap_measurePreserving μ F φ hφ
+  have hmeas : Measurable label := hmp.measurable
+  have hstrong :
+      AEStronglyMeasurable g ((Measure.infinitePi μ).map label) := by
+    rw [show ((Measure.infinitePi μ).map label) =
+      Measure.pi (fun j : F => (μ j).map (φ j)) from
+        sourceFiniteLabelLaw_exact μ F φ hφ]
+    exact hg.aestronglyMeasurable
+  calc
+    (∫ x, g (F.restrict (sourceLabelMap φ x))
+      ∂ Measure.infinitePi μ) =
+      ∫ y, g y ∂ ((Measure.infinitePi μ).map label) := by
+        exact (integral_map hmeas hstrong).symm
+    _ = ∫ y, g y ∂ Measure.pi
+        (fun j : F => (μ j).map (φ j)) := by
+      rw [sourceFiniteLabelLaw_exact μ F φ hφ]
+
+/-- An arbitrary measurable function of *two independent coordinate
+draws* has exactly its original-source expectation after replacing each
+pair by the corresponding labeled pair. This is the measure transport
+for the paired heat-bath energy representation, not a claim about
+identification with the condExpL2 residual. -/
+theorem sourcePairedIntegral_exact
+    (φ : ∀ i, X i → Y i)
+    (hφ : ∀ i, Measurable (φ i))
+    (g : ((i : ι) → Y i × Y i) → ℝ)
+    (hg : Measurable g) :
+    (∫ z, g (fun i => Prod.map (φ i) (φ i) (z i))
+      ∂ Measure.infinitePi (fun i => (μ i).prod (μ i))) =
+      ∫ y, g y
+        ∂ Measure.infinitePi
+          (fun i => ((μ i).map (φ i)).prod ((μ i).map (φ i))) := by
+  let label : ((i : ι) → X i × X i) → ((i : ι) → Y i × Y i) :=
+    fun z i => Prod.map (φ i) (φ i) (z i)
+  have hmeas : Measurable label := by
+    change Measurable
+      (fun (z : (i : ι) → X i × X i) i =>
+        Prod.map (φ i) (φ i) (z i))
+    fun_prop
+  have hstrong : AEStronglyMeasurable g
+      ((Measure.infinitePi (fun i => (μ i).prod (μ i))).map label) := by
+    rw [show
+      ((Measure.infinitePi (fun i => (μ i).prod (μ i))).map label) =
+      Measure.infinitePi
+        (fun i => ((μ i).map (φ i)).prod ((μ i).map (φ i)))
+      from sourcePairedLabelLaw_exact μ φ hφ]
+    exact hg.aestronglyMeasurable
+  calc
+    (∫ z, g (fun i => Prod.map (φ i) (φ i) (z i))
+      ∂ Measure.infinitePi (fun i => (μ i).prod (μ i))) =
+      ∫ y, g y
+        ∂ ((Measure.infinitePi (fun i => (μ i).prod (μ i))).map label) := by
+          exact (integral_map hmeas hstrong).symm
+    _ = ∫ y, g y
+        ∂ Measure.infinitePi
+          (fun i => ((μ i).map (φ i)).prod ((μ i).map (φ i))) := by
+      rw [sourcePairedLabelLaw_exact μ φ hφ]
+
 end Nightfall.InfinitePiQ2OriginalLabelTransport
