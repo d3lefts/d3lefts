@@ -137,18 +137,22 @@ theorem squared_signedSum_injective_mod_sign {n : ℕ}
 /-! ## Support-safe sign packing for actual linear readings -/
 
 /-- Inactive coordinates are zero, even when their Boolean label changes. -/
-def maskedSignedSum {n : ℕ} (w a : Fin n → K) (s : Fin n → Bool) : K :=
-  ∑ i, if a i = 0 then 0 else (if s i then w i else -w i)
+noncomputable def maskedSignedSum {n : ℕ} (w a : Fin n → K) (s : Fin n → Bool) : K := by
+  classical
+  exact ∑ i, if a i = 0 then 0 else (if s i then w i else -w i)
 
-def clippedSigns {n : ℕ} (a : Fin n → K) (s : Fin n → Bool) : Fin n → Bool :=
-  fun i => if a i = 0 then false else s i
+noncomputable def clippedSigns {n : ℕ} (a : Fin n → K) (s : Fin n → Bool) : Fin n → Bool := by
+  classical
+  exact fun i => if a i = 0 then false else s i
 
-def inactiveOffset {n : ℕ} (w a : Fin n → K) : K :=
-  ∑ i, if a i = 0 then w i else 0
+noncomputable def inactiveOffset {n : ℕ} (w a : Fin n → K) : K := by
+  classical
+  exact ∑ i, if a i = 0 then w i else 0
 
 theorem maskedSignedSum_eq {n : ℕ} (w a : Fin n → K) (s : Fin n → Bool) :
     maskedSignedSum w a s =
       signedSum w (clippedSigns a s) + inactiveOffset w a := by
+  classical
   unfold maskedSignedSum signedSum clippedSigns inactiveOffset
   rw [← Finset.sum_add_distrib]
   apply Finset.sum_congr rfl
@@ -162,15 +166,19 @@ theorem maskedSignedSum_injective_active {n : ℕ}
     (s t : Fin n → Bool)
     (h : maskedSignedSum w a s = maskedSignedSum w a t) :
     ∀ i, a i ≠ 0 → s i = t i := by
+  classical
   rw [maskedSignedSum_eq, maskedSignedSum_eq] at h
   have he : clippedSigns a s = clippedSigns a t := hw (add_right_cancel h)
   intro i hi
   have hj := congrArg (fun f : Fin n → Bool => f i) he
-  simpa [clippedSigns, hi] using hj
+  change (if a i = 0 then false else s i) =
+    (if a i = 0 then false else t i) at hj
+  simpa only [if_neg hi] using hj
 
 theorem maskedSignedSum_compl {n : ℕ}
     (w a : Fin n → K) (s : Fin n → Bool) :
     maskedSignedSum w a (fun i => !(s i)) = -(maskedSignedSum w a s) := by
+  classical
   unfold maskedSignedSum
   rw [← Finset.sum_neg_distrib]
   apply Finset.sum_congr rfl
@@ -185,6 +193,7 @@ theorem squared_maskedSignedSum_injective_active {n : ℕ}
     (h : (maskedSignedSum w a s) ^ 2 = (maskedSignedSum w a t) ^ 2) :
     (∀ i, a i ≠ 0 → s i = t i) ∨
     (∀ i, a i ≠ 0 → s i = !(t i)) := by
+  classical
   have hmul : maskedSignedSum w a s * maskedSignedSum w a s =
       maskedSignedSum w a t * maskedSignedSum w a t := by
     simpa only [pow_two] using h
@@ -196,8 +205,9 @@ theorem squared_maskedSignedSum_injective_active {n : ℕ}
     exact he
 
 /-- Coefficients divided by observed root representatives; zeros are safe. -/
-def adaptiveRow {n : ℕ} (w a : Fin n → K) : Fin n → K :=
-  fun i => if a i = 0 then 0 else w i / a i
+noncomputable def adaptiveRow {n : ℕ} (w a : Fin n → K) : Fin n → K := by
+  classical
+  exact fun i => if a i = 0 then 0 else w i / a i
 
 def oriented {n : ℕ} (a : Fin n → K) (s : Fin n → Bool) : Fin n → K :=
   fun i => if s i then a i else -a i
@@ -206,6 +216,7 @@ theorem adaptiveRow_oriented_dot {n : ℕ}
     (w a : Fin n → K) (s : Fin n → Bool) :
     (∑ i, adaptiveRow w a i * oriented a s i) =
       maskedSignedSum w a s := by
+  classical
   unfold maskedSignedSum
   apply Finset.sum_congr rfl
   intro i _
@@ -262,6 +273,7 @@ theorem adaptiveRow_separates_square_fiber {n : ℕ}
     (hread : (∑ i, adaptiveRow w a i * x i) ^ 2 =
              (∑ i, adaptiveRow w a i * y i) ^ 2) :
     x = y ∨ x = -y := by
+  classical
   obtain ⟨s, hs⟩ := exists_oriented_vector a x hx
   obtain ⟨t, ht⟩ := exists_oriented_vector a y hy
   have hcode : (maskedSignedSum w a s) ^ 2 =
@@ -282,11 +294,13 @@ theorem adaptiveRow_separates_square_fiber {n : ℕ}
 
 /-- A canonical square root when one exists; the other case is unreachable
 on a fiber actually produced by a signal. -/
-noncomputable def rootChoice (z : K) : K :=
-  if h : ∃ a : K, a ^ 2 = z then Classical.choose h else 0
+noncomputable def rootChoice (z : K) : K := by
+  classical
+  exact if h : ∃ a : K, a ^ 2 = z then Classical.choose h else 0
 
 theorem rootChoice_square (x : K) :
     (rootChoice (x ^ 2)) ^ 2 = x ^ 2 := by
+  classical
   have h : ∃ a : K, a ^ 2 = x ^ 2 := ⟨x, rfl⟩
   unfold rootChoice
   rw [dif_pos h]
@@ -311,6 +325,7 @@ theorem observedSquareRow_separates_fiber {n : ℕ}
     (hread : (∑ i, observedSquareRow data i * x i) ^ 2 =
              (∑ i, observedSquareRow data i * y i) ^ 2) :
     x = y ∨ x = -y := by
+  classical
   let a : Fin n → K := fun i => rootChoice (data i)
   have ha (i : Fin n) : (a i) ^ 2 = data i := by
     change (rootChoice (data i)) ^ 2 = data i
@@ -334,6 +349,7 @@ every vector modulo the unavoidable global sign, including zeros. -/
 theorem adaptiveTranscript_injective_mod_sign {n : ℕ} (x y : Fin n → K)
     (h : adaptiveTranscript x = adaptiveTranscript y) :
     x = y ∨ x = -y := by
+  classical
   have hd : (fun i : Fin n => (x i) ^ 2) =
       (fun i : Fin n => (y i) ^ 2) := by
     exact congrArg Prod.fst h
