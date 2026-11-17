@@ -88,18 +88,38 @@ theorem source_heatBath_intertwines_label
   have hG : AEStronglyMeasurable
       (fun b : Y i => g (Function.update (sourceLabelMap φ x) i b))
       ((μ i).map (φ i)) :=
-    (measurable_label_section φ hg i x).aestronglyMeasurable
+    (measurable_label_section φ g hg i x).aestronglyMeasurable
   calc
     sourceHeatBath μ i (fun z => g (sourceLabelMap φ z)) x =
       ∫ a, g (Function.update (sourceLabelMap φ x) i (φ i a)) ∂ μ i := by
         unfold sourceHeatBath
         apply integral_congr_ae
         exact Filter.Eventually.of_forall (fun a => by
+          change g (sourceLabelMap φ (Function.update x i a)) =
+            g (Function.update (sourceLabelMap φ x) i (φ i a))
           rw [sourceLabelMap_update (φ := φ) i a x])
     _ = ∫ b, g (Function.update (sourceLabelMap φ x) i b)
           ∂ ((μ i).map (φ i)) := by
         exact (integral_map (hφ i).aemeasurable hG).symm
     _ = labelHeatBath μ φ i g (sourceLabelMap φ x) := rfl
+
+/-- Coordinate restriction commutes with an arbitrary site update
+in the FULL label space, including label values with zero source mass. -/
+theorem restrict_update
+    (F : Finset ι) (i : ι) (hi : i ∈ F)
+    (y : (j : ι) → Y j) (b : Y i) :
+    F.restrict (Function.update y i b) =
+      Function.update (F.restrict y) (⟨i, hi⟩ : F) b := by
+  funext j
+  by_cases h : (j : ι) = i
+  · have hj : j = (⟨i, hi⟩ : F) := Subtype.ext h
+    subst j
+    simp [Finset.restrict]
+  · have hj : j ≠ (⟨i, hi⟩ : F) := by
+      intro heq
+      exact h (congrArg Subtype.val heq)
+    simp [Finset.restrict, Function.update_of_ne h,
+      Function.update_of_ne hj]
 
 /-- Restricting a coordinatewise source label word to a finite set
 commutes with the same original-site refresh when the site is in it. -/
@@ -158,16 +178,8 @@ theorem source_finiteLabel_heatBath_intertwines
   unfold labelHeatBath finiteLabelHeatBath G
   apply integral_congr_ae
   exact Filter.Eventually.of_forall (fun b => by
-    congr 1
-    funext j
-    by_cases h : (j : ι) = i
-    · have hj : j = (⟨i, hi⟩ : F) := Subtype.ext h
-      subst j
-      simp
-    · have hj : j ≠ (⟨i, hi⟩ : F) := by
-        intro heq
-        exact h (congrArg Subtype.val heq)
-      simp [Finset.restrict, Function.update_of_ne h,
-        Function.update_of_ne hj])
+    change g (F.restrict (Function.update (sourceLabelMap φ x) i b)) =
+      g (Function.update (F.restrict (sourceLabelMap φ x)) (⟨i, hi⟩ : F) b)
+    rw [restrict_update (Y := Y) F i hi (sourceLabelMap φ x) b])
 
 end Nightfall.InfinitePiQ2OriginalHeatBath
