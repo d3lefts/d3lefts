@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 28,
+  "revision": 29,
   "as_of": "2026-11-17 UTC",
-  "source_commit": "b9bd66f68e3c1f59896105e1b0d826dacedab6bf",
-  "scope": "Exact pending source custody includes newly promoted original-product heat-bath source, with frozen 67 historical records untouched. Scoped original-head pinned Lean CI for the pointwise source-level identity is separately recorded; full infinite-product L² terminal not certified. Two exact new original-product conditional tensor and Hilbert-projection files enrolled as pending source custody, with separate strict named source CI; no unconditional Q2 terminal or novelty promotion. Reconciled source-identical merged 4.36 named receipts for original-product finite-label, bounded source-conditional and label L2 isometry bridges; no historic ledger mutation or infinite-product theorem promotion. Reconciles seven extra original-source Lean blobs merged by parallel Q2 sessions (including source heat-bath and L2 bridges) as unreviewed custody without claiming unrestricted Q2 or overriding prior receipts. Reconcile changed merged SourceBoundedCondExp blob after strict source-level subSigma generalization while preserving older source receipt. Add exact merged supported-native C105.416 original source blob without promoting infinite-product or unreviewed claims. Reconcile three merged exact Lean source receipts for positive atom a.e. extraction, actual finite Boolean labels, and original-product all-L2 operator intertwinning; claim gates remain unreviewed and end-to-end infinite theorem open. Three main-merged original Q2 results on actual source law: label mean/variance, finite-label Hilbert residual degree/influence, and native positive-atom weighted L2 vanishing; source custody only, no unrestricted terminal promotion. Source-certified original-product coordinate influence equality, native triple residual to pointwise degree, finite original-coordinate Boolean test factoring reconciled by exact immutable source blobs; no final infinite-product Q2 promotion.",
+  "source_commit": "778135e9aa293ed1f7ea904739b8c3ad5f66f9c0",
+  "scope": "Exact pending source custody includes newly promoted original-product heat-bath source, with frozen 67 historical records untouched. Scoped original-head pinned Lean CI for the pointwise source-level identity is separately recorded; full infinite-product L² terminal not certified. Two exact new original-product conditional tensor and Hilbert-projection files enrolled as pending source custody, with separate strict named source CI; no unconditional Q2 terminal or novelty promotion. Reconciled source-identical merged 4.36 named receipts for original-product finite-label, bounded source-conditional and label L2 isometry bridges; no historic ledger mutation or infinite-product theorem promotion. Reconciles seven extra original-source Lean blobs merged by parallel Q2 sessions (including source heat-bath and L2 bridges) as unreviewed custody without claiming unrestricted Q2 or overriding prior receipts. Reconcile changed merged SourceBoundedCondExp blob after strict source-level subSigma generalization while preserving older source receipt. Add exact merged supported-native C105.416 original source blob without promoting infinite-product or unreviewed claims. Reconcile three merged exact Lean source receipts for positive atom a.e. extraction, actual finite Boolean labels, and original-product all-L2 operator intertwinning; claim gates remain unreviewed and end-to-end infinite theorem open. Three main-merged original Q2 results on actual source law: label mean/variance, finite-label Hilbert residual degree/influence, and native positive-atom weighted L2 vanishing; source custody only, no unrestricted terminal promotion. Source-certified original-product coordinate influence equality, native triple residual to pointwise degree, finite original-coordinate Boolean test factoring reconciled by exact immutable source blobs; no final infinite-product Q2 promotion. Revision 29 enrolls 13 previously unregistered merged Q2 source blobs into unreviewed custody, preserving the historical 67-file certified ledger and all separate named compiler receipts; this is not a proof promotion.",
   "sources": [
     {
       "path": "research/nightfall/formalization/agent_safety/ArbitraryAgentSafety.lean",
@@ -2531,6 +2531,26 @@
       }
     },
     {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2CellLabelProjection.lean",
+      "source_blob_sha": "98ec9085bfa368d94133c05b3c8ec720c0d32fa8",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact main-source Git blob registered for pending custody after merged Q2 work. This custody entry is NOT a compiler receipt. Some modules have separate original-head named Lean checks; those must be examined individually. No unconditional infinite-product Q2, novel theorem, or non-author review is inferred."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2CellSpanProjection.lean",
+      "source_blob_sha": "3d4b3de77eec9978fdd1bab4f2b2a5a0d874d2fb",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact main-source Git blob registered for pending custody after merged Q2 work. This custody entry is NOT a compiler receipt. Some modules have separate original-head named Lean checks; those must be examined individually. No unconditional infinite-product Q2, novel theorem, or non-author review is inferred."
+    },
+    {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2ConditionalSourceTest.lean",
       "source_blob_sha": "ce819ddb0796a266a8a9842c7205623d58c602d1",
       "classification": "unreviewed-source",
@@ -2564,6 +2584,26 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2DenseLabelLimit.lean",
+      "source_blob_sha": "dc03cd54297b57b8a5c9680e1077df1c7e88bbb7",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact main-source Git blob registered for pending custody after merged Q2 work. This custody entry is NOT a compiler receipt. Some modules have separate original-head named Lean checks; those must be examined individually. No unconditional infinite-product Q2, novel theorem, or non-author review is inferred."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2DenseOriginalLabelProjection.lean",
+      "source_blob_sha": "26a135aa0307f5ed1bb953b195917a818fe30da7",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact main-source Git blob registered for pending custody after merged Q2 work. This custody entry is NOT a compiler receipt. Some modules have separate original-head named Lean checks; those must be examined individually. No unconditional infinite-product Q2, novel theorem, or non-author review is inferred."
     },
     {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2Density.lean",
@@ -2650,6 +2690,26 @@
       "receipt_scope": "Exact Git blob registered from merged protected-main source a8142aacf0ad2d4d7864d7693af679140da436a0. Custody only, not a new named-declaration Lean receipt, external review, or originality/priority certificate; any existing scoped compiler evidence is tracked separately."
     },
     {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2FiniteLabelDoobDynkin.lean",
+      "source_blob_sha": "2bb0474e3ec5346aa4a06103a093db8340bca70d",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact main-source Git blob registered for pending custody after merged Q2 work. This custody entry is NOT a compiler receipt. Some modules have separate original-head named Lean checks; those must be examined individually. No unconditional infinite-product Q2, novel theorem, or non-author review is inferred."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2FiniteNativeToDenseLimit.lean",
+      "source_blob_sha": "966787ed25e073954605ddc09d52bac0f7267c5e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact main-source Git blob registered for pending custody after merged Q2 work. This custody entry is NOT a compiler receipt. Some modules have separate original-head named Lean checks; those must be examined individually. No unconditional infinite-product Q2, novel theorem, or non-author review is inferred."
+    },
+    {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2FiniteRankConditional.lean",
       "source_blob_sha": "6cfdc67f6bcb25aaa0718c4632e7525b0dc12715",
       "classification": "unreviewed-source",
@@ -2685,6 +2745,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact Git blob registered from merged protected-main source a8142aacf0ad2d4d7864d7693af679140da436a0. Custody only, not a new named-declaration Lean receipt, external review, or originality/priority certificate; any existing scoped compiler evidence is tracked separately."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2FiniteTestLabelRealization.lean",
+      "source_blob_sha": "6eab37bf33a7c478166a588da23886eeea3232da",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact main-source Git blob registered for pending custody after merged Q2 work. This custody entry is NOT a compiler receipt. Some modules have separate original-head named Lean checks; those must be examined individually. No unconditional infinite-product Q2, novel theorem, or non-author review is inferred."
     },
     {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2FrozenLabelMeasurable.lean",
@@ -2795,6 +2865,26 @@
       "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
     },
     {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2NativeHeterogeneousTerminal.lean",
+      "source_blob_sha": "b1e9f129b5636cbe5132f0c77baa65ef39149eca",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact main-source Git blob registered for pending custody after merged Q2 work. This custody entry is NOT a compiler receipt. Some modules have separate original-head named Lean checks; those must be examined individually. No unconditional infinite-product Q2, novel theorem, or non-author review is inferred."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2NativeL2SupportedDegree.lean",
+      "source_blob_sha": "9ad4a01f4028f0b664261a3b3492421f08d627e3",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact main-source Git blob registered for pending custody after merged Q2 work. This custody entry is NOT a compiler receipt. Some modules have separate original-head named Lean checks; those must be examined individually. No unconditional infinite-product Q2, novel theorem, or non-author review is inferred."
+    },
+    {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2NativeSupportedTerminal.lean",
       "source_blob_sha": "13205ce8ab03d16ae79cefad4fcd962241ab35a8",
       "classification": "unreviewed-source",
@@ -2822,6 +2912,26 @@
       "receipt_scope": "Source bytes pinned Lean-compiled on original stacked PR #698 head 53254b0f5d7891f35508d489960d749269605a79, run 44028496652; this pending custody row itself does not certify terminal Q2, external peer review or priority."
     },
     {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2OriginalIndependence.lean",
+      "source_blob_sha": "4fdabf7ad301d0d85df79df9a7aa7d3a7116288a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact main-source Git blob registered for pending custody after merged Q2 work. This custody entry is NOT a compiler receipt. Some modules have separate original-head named Lean checks; those must be examined individually. No unconditional infinite-product Q2, novel theorem, or non-author review is inferred."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2OriginalLabelMeanProjection.lean",
+      "source_blob_sha": "430a846b1c5ba9ec791e897dfc12620a62265df1",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact main-source Git blob registered for pending custody after merged Q2 work. This custody entry is NOT a compiler receipt. Some modules have separate original-head named Lean checks; those must be examined individually. No unconditional infinite-product Q2, novel theorem, or non-author review is inferred."
+    },
+    {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2OriginalLabelResidualTransfer.lean",
       "source_blob_sha": "7e74291d5ad87be78113d67bf60476ad5b40fed8",
       "classification": "unreviewed-source",
@@ -2837,6 +2947,16 @@
         "kernel": "strict_named_compilation",
         "theorem_scope": "Real source finite-label averaging contracts coordinate influence residual and preserves triple-residual degree two under actual all-L2 intertwining; source-only proof, not terminal."
       }
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2OriginalLabelSupportedBound.lean",
+      "source_blob_sha": "1c5ba36100f75219135c37b4c953c22ba2ab7357",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact main-source Git blob registered for pending custody after merged Q2 work. This custody entry is NOT a compiler receipt. Some modules have separate original-head named Lean checks; those must be examined individually. No unconditional infinite-product Q2, novel theorem, or non-author review is inferred."
     },
     {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2OriginalLabelTransport.lean",
@@ -2947,6 +3067,16 @@
         "named_declaration": "Nightfall.InfinitePiQ2SourceHilbertTensor.sourceOtherProjection_tensor_ae",
         "run": 44103373431
       }
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2SourceL2BoundedProjection.lean",
+      "source_blob_sha": "d37e34a5bb4474bc0033733d456c42f788e0f9c8",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact main-source Git blob registered for pending custody after merged Q2 work. This custody entry is NOT a compiler receipt. Some modules have separate original-head named Lean checks; those must be examined individually. No unconditional infinite-product Q2, novel theorem, or non-author review is inferred."
     },
     {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2SourceLabelExactInfluence.lean",
