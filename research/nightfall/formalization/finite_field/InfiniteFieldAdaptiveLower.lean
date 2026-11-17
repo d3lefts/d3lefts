@@ -340,6 +340,102 @@ theorem history_eq_of_frozen_squares
 #print axioms Nightfall.InfiniteFieldPhase.AdaptiveLower.history_eq_of_frozen_squares
 
 
+
+/-! ## The critical n-query adaptive obstruction -/
+
+/-- An n-query causal squared-linear strategy on n>=2 coordinates must
+collide on two non-sign-equivalent vectors. This closes the sharp
+adaptive lower bound under the same legal squared-linear oracle. -/
+theorem critical_adaptive_strategy_fails
+    {k : ℕ} [NeZero (2 : K)] (hk : 1 ≤ k)
+    (policy : List K → Fin (k+1) → K) :
+    ∃ x y : Fin (k+1) → K,
+      x ≠ y ∧ x ≠ -y ∧
+      history policy x (k+1) = history policy y (k+1) := by
+  classical
+  let a : Fin (k+1) → K := policy []
+  by_cases ha : a = 0
+  · obtain ⟨v, hv, hvrest⟩ :=
+      short_rows_have_kernel (n := k+1)
+        (fun j : Fin k =>
+          policy (List.replicate (j.val + 1) (0 : K))) (by omega)
+    have hz : ∀ j : ℕ, j < k+1 →
+        dot (policy (List.replicate j (0 : K))) v = 0 := by
+      intro j hj
+      let fi : Fin (k+1) := ⟨j, hj⟩
+      have hfi : dot (policy (List.replicate fi.val (0 : K))) v = 0 := by
+        induction fi using Fin.cases with
+        | zero =>
+            change dot a v = 0
+            simp [ha, dot]
+        | succ q =>
+            exact hvrest q
+      exact hfi
+    refine ⟨v, 0, hv, ?_, ?_⟩
+    · simpa using hv
+    · rw [history_zero]
+      exact history_of_zero_path policy v (k+1) hz
+  · obtain ⟨x0, hx0⟩ := nonzero_dot_witness a ha
+    let b : Fin (k+1) → K := policy [(dot a x0)^2]
+    by_cases hb : b = 0
+    · let rows : Fin (k+1) → Fin (k+1) → K :=
+        fun i => policy (history policy x0 i.val)
+      have hrow1 : rows (Fin.succ (0 : Fin k)) = 0 := by
+        change policy [(dot a x0)^2] = 0
+        exact hb
+      obtain ⟨y, hneq, hsign, hsame⟩ :=
+        frozen_collision_with_zero_row rows x0
+          (Fin.succ (0 : Fin k)) hrow1
+      have htrans : history policy x0 (k+1) = history policy y (k+1) := by
+        apply history_eq_of_frozen_squares
+        intro i
+        exact hsame i
+      exact ⟨y, x0, hneq, hsign, htrans.symm⟩
+    · obtain ⟨z, hz⟩ := nonzero_dot_witness b hb
+      have hsource : ∃ x : Fin (k+1) → K,
+          dot a x = dot a x0 ∧ dot b x ≠ 0 := by
+        by_cases hb0 : dot b x0 = 0
+        · let c : K := dot a z / dot a x0
+          let x : Fin (k+1) → K := x0 + z - c • x0
+          have hc : c * dot a x0 = dot a z := by
+            dsimp [c]
+            field_simp
+          have hax : dot a x = dot a x0 := by
+            dsimp [x]
+            rw [dot_sub, dot_add, dot_smul, hc]
+            ring
+          have hbx : dot b x = dot b z := by
+            dsimp [x]
+            rw [dot_sub, dot_add, dot_smul, hb0]
+            ring
+          exact ⟨x, hax, hbx.symm ▸ hz⟩
+        · exact ⟨x0, rfl, hb0⟩
+      obtain ⟨x, hax, hbx⟩ := hsource
+      have hfirst : dot (policy []) x ≠ 0 := by
+        change dot a x ≠ 0
+        rw [hax]
+        exact hx0
+      have hsecond : dot (policy (history policy x 1)) x ≠ 0 := by
+        have hp : policy (history policy x 1) = b := by
+          change policy [(dot a x)^2] = policy [(dot a x0)^2]
+          rw [hax]
+        rw [hp]
+        exact hbx
+      let rows : Fin (k+1) → Fin (k+1) → K :=
+        fun i => policy (history policy x i.val)
+      have hf : dot (rows 0) x ≠ 0 := hfirst
+      have hs : dot (rows (Fin.succ (0 : Fin k))) x ≠ 0 := hsecond
+      obtain ⟨y, hneq, hsign, hsame⟩ :=
+        frozen_collision_two_nonzero hk rows x hf hs
+      have htrans : history policy x (k+1) = history policy y (k+1) := by
+        apply history_eq_of_frozen_squares
+        intro i
+        exact hsame i
+      exact ⟨y, x, hneq, hsign, htrans.symm⟩
+
+#print axioms Nightfall.InfiniteFieldPhase.AdaptiveLower.critical_adaptive_strategy_fails
+
+
 #print axioms Nightfall.InfiniteFieldPhase.AdaptiveLower.history_zero
 #print axioms Nightfall.InfiniteFieldPhase.AdaptiveLower.history_of_zero_path
 #print axioms Nightfall.InfiniteFieldPhase.AdaptiveLower.short_adaptive_strategy_fails
