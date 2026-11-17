@@ -59,6 +59,7 @@ jobs:
             --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
             --decl Nightfall.InfinitePiQ2CellLabelMeasurable.sourceCell_measurable_in_finite_site_labels \
             --decl Nightfall.InfinitePiQ2CellLabelMeasurable.sourceCellIndicator_fixed_by_finite_site_labels \
+            --decl Nightfall.InfinitePiQ2CellLabelMeasurable.finiteFamily_sourceCells_common_site_label_sigma \
             --json-out lean-receipts/q2-cell-label-meas/strict.json
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-cell-label-meas/strict.json
       - name: Source hash
