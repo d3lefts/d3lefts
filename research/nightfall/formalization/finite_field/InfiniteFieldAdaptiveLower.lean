@@ -157,16 +157,24 @@ theorem frozen_collision_two_nonzero
       funext i
       have hh := congrArg (fun f : Fin (k + 1) → K => f i) heq
       change x i + v i = x i at hh
-      change v i = (0 : K)
-      linear_combination hh
+      have hzero : v i = (0 : K) := by
+        calc
+          v i = (x i + v i) - x i := by ring
+          _ = x i - x i := by rw [hh]
+          _ = 0 := sub_self _
+      simpa only [Pi.zero_apply] using hzero
     have hminus : x - v ≠ x := by
       intro heq
       apply hv
       funext i
       have hh := congrArg (fun f : Fin (k + 1) → K => f i) heq
       change x i - v i = x i at hh
-      change v i = (0 : K)
-      linear_combination hh
+      have hzero : v i = (0 : K) := by
+        calc
+          v i = x i - (x i - v i) := by ring
+          _ = x i - x i := by rw [hh]
+          _ = 0 := sub_self _
+      simpa only [Pi.zero_apply] using hzero
     have hpm : x + v ≠ x - v := by
       intro heq
       apply hv
@@ -262,14 +270,24 @@ theorem kernel_pointwise_collision {d : ℕ} [NeZero (2 : K)]
     funext i
     have hh := congrArg (fun f : Fin d → K => f i) heq
     change x i + v i = x i at hh
-    linear_combination hh
+    have hzero : v i = (0 : K) := by
+      calc
+        v i = (x i + v i) - x i := by ring
+        _ = x i - x i := by rw [hh]
+        _ = 0 := sub_self _
+    simpa only [Pi.zero_apply] using hzero
   have hminus : x - v ≠ x := by
     intro heq
     apply hv
     funext i
     have hh := congrArg (fun f : Fin d → K => f i) heq
     change x i - v i = x i at hh
-    linear_combination hh
+    have hzero : v i = (0 : K) := by
+      calc
+        v i = x i - (x i - v i) := by ring
+        _ = x i - x i := by rw [hh]
+        _ = 0 := sub_self _
+    simpa only [Pi.zero_apply] using hzero
   have hpm : x + v ≠ x - v := by
     intro heq
     apply hv
