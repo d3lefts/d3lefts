@@ -1,6 +1,6 @@
 # Continuous and Finite-Precision Taxes for Adaptive Squared-Linear Sensing
 
-**Status:** theorem A (three-coordinate obstruction) kernel-certified; all-dimensional source-port under pinned CI in PR #699. Classical projective embedding consequence and precision packing bound are *not* Lean certificates. No originality or peer-review claim.
+**Status:** theorem A (three-coordinate and all-dimensional continuity obstruction) kernel-certified under pinned Lean 4.36.0-rc2, with standard axioms only. Verified source run: https://github.com/d3lefts/d3lefts/actions/runs/44029629084 . Classical projective embedding consequence and precision packing bound are *not* Lean certificates. No originality or peer-review claim.
 
 ## Model and objective
 
@@ -31,7 +31,7 @@ This theorem uses only the intermediate value theorem; its scope is the coordina
 **Formal sources:**
 - `research/nightfall/formalization/finite_field/ContinuousPhaseCrossing.lean`: real IVT signed-crossing lemma.
 - `research/nightfall/formalization/finite_field/ContinuousPhaseOracleObstruction.lean`: actual three-coordinate squared-linear no-go; compiled under pinned Lean 4.36.0-rc2, Mathlib `9d581dfff2e41de989072ea63abf3daf69311520`, run 44028162692, standard axioms only.
-- `research/nightfall/formalization/finite_field/ContinuousPhaseAllDimensions.lean`: embedded three-active-coordinate obstruction for every (n=k+3), subject to its own green run and axiom audit. Do not auto-promote this file based only on the three-coordinate receipt.
+- `research/nightfall/formalization/finite_field/ContinuousPhaseAllDimensions.lean`: embedded three-active-coordinate obstruction for every (n=k+3), kernel-certified for every `n=k+3` by pinned run 44029629084, named declaration `no_continuous_final_row_all_dimensions`; standard axioms `[propext, Classical.choice, Quot.sound]`, no `sorryAx`.
 
 ## Broader classical topological consequence — NOT a Lean theorem here
 
