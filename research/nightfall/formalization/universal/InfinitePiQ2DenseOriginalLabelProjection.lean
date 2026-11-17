@@ -104,7 +104,9 @@ theorem source_finite_label_projection_L2_approx
           Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) := by
     rw [hsub, hfixed]
     abel
-  have hcontract :=
+  have hcontract :
+      ‖(condExpL2 ℝ ℝ hle (f - g) :
+        Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))‖ ≤ ‖f - g‖ :=
     norm_condExpL2_coe_le hle (f - g)
   refine ⟨F, T, ?_⟩
   change ‖f - (condExpL2 ℝ ℝ hle f :
