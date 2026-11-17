@@ -1,0 +1,13 @@
+{
+  "description": "Illustrative declared dependencies, deliberately incomplete with respect to external environments and authorities.",
+  "claims": {
+    "trace_arithmetic": ["file:labs/output.csv", "file:labs/audit.py"],
+    "synthetic_generation": ["file:labs/aurora.py", "file:labs/output.csv"],
+    "simulated_performance_report": ["claim:trace_arithmetic", "claim:synthetic_generation"],
+    "paired_policy_loss": ["claim:synthetic_generation", "file:labs/compare.py", "file:labs/any.csv", "file:labs/quorum.csv"],
+    "observed_loss_switch": ["claim:paired_policy_loss", "file:labs/exact_switch.py"],
+    "policy_abstraction_invariants": ["file:labs/modelcheck.py"],
+    "byte_identity_gate": ["file:labs/passport.py", "file:evidence/dependency-graph.json"],
+    "site_rendered_notes": ["file:README.md", "file:TOOLKIT.md", "file:MATH_BRIDGE.md", "file:assets/site.css", "file:build.py"]
+  }
+}

@@ -1,0 +1,39 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Change, provenance &amp; recertification · The Unwritten Semester</title><meta name="description" content="Trace exactly which evidence may expire after a system revision."><meta name="theme-color" content="#0e1117">
+<link rel="stylesheet" href="../assets/site.css"></head><body><a class="skip" href="#content">Skip to content</a><header class="site-header"><div class="wrap nav">
+    <a href="../index.html" class="brand" aria-label="The Unwritten Semester, home"><span class="mark" aria-hidden="true">✳</span><span>UNWRITTEN<small>THE SYSTEMS SEMESTER</small></span></a>
+    <nav class="nav-links" aria-label="Main navigation"><a href="../index.html#sessions" class="active">Sessions</a><a href="../capstone.html" class="">Field exercise</a><a href="../resources.html" class="">Library</a><a href="../toolkit.html" class="">Toolkit</a><a href="../about.html" class="">About</a></nav></div></header><main id="content"><div class="wrap pagehead"><div class="breadcrumb"><a href="../index.html#sessions">ALL SESSIONS</a> / VERIFY / 12</div>
+<div class="eyebrow" style="margin-top:17px">SESSION 12 / 14 — VERIFY</div><h1>Change, provenance &amp; recertification</h1>
+<p class="description">Trace exactly which evidence may expire after a system revision.</p><div class="tags"><span>90 min · lab 3h</span><span>LECTURE + LAB + ADVERSARIAL CHECK</span><span>NO PREREQUISITE INSTALLS</span></div></div><div class="wrap article-layout"><article class="article"><h2 id="the-operating-principle">The operating principle</h2>
+<p>Research rarely survives contact with revision unless every result knows what it depends on. A source update, policy change, altered requirement, new calibration, or replaced component may invalidate some evidence while leaving the rest usable. <strong>Recertification</strong> is a dependency-selection problem constrained by safety and resource cost.</p>
+<p>A simple rule — rerun everything after every change — is defensible but wasteful. Rerun nothing — often unjustified. A useful change-impact analysis tells you which claims require renewed evidence and which remain valid under a demonstrated noninterference argument.</p>
+<h2 id="an-evidence-dependency-graph">An evidence dependency graph</h2>
+<p>Consider <code>R1: alarm records are traceable</code>, <code>R2: policy calculates the declared threshold</code>, and <code>R3: anomaly miss rate is below a specified value in model M</code>. If only the HTML presentation changes, the computation evidence may remain valid. If the alarm policy changes, R2 and R3 must be revisited. If the latent event model changes, R3 must be revisited even when R2 still passes.</p>
+<p>Define evidence status as <strong>valid under named versions and assumptions</strong>. Avoid universal “green” indicators without a scope. Version links should point to actual immutable content identifiers, not free-text dates alone.</p>
+<h2 id="lab-incremental-recertification">Lab — incremental recertification</h2>
+<ol>
+<li>Create a graph of five claims with dependencies on code, environment, policy, parameters, and observed data.</li>
+<li>Consider three events: (a) CSS edit, (b) quorum-to-any policy edit, (c) changed common-failure probability.</li>
+<li>For each event, calculate the smallest sound <em>candidate</em> impact set by dependency traversal.</li>
+<li>Specify what proof or test could justify excluding an indirectly linked node from recheck.</li>
+<li>Measure full-rerun and selective-rerun costs in toy operation units; do not call a selective gain valid until the selection rule is sound.</li>
+</ol>
+<p><strong>Acceptance artifact:</strong> <code>12-recertification.md</code> with before/after versions, invalidated nodes, retained evidence rationale, and cost accounting.</p>
+<h2 id="adversarial-check">Adversarial check</h2>
+<p>Construct a change that bypasses your dependency graph: for instance a changed shared environment variable, calibration file, or authority policy. If your detector misses it, the efficiency gain is not a legitimate safety-preserving optimization.</p>
+<h2 id="doctoral-extension">Doctoral extension</h2>
+<p>Formalize soundness: under an explicitly defined dependency semantics, all claims whose truth may change must be included in the impact set. Search for sufficient conditions under which a smaller impact operator is provably sound.</p>
+<h2 id="read-further">Read further</h2>
+<ul>
+<li><a href="https://www.nasa.gov/reference/systems-engineering-handbook/">NASA — Configuration Management</a>.</li>
+<li><a href="https://sebokwiki.org/wiki/Configuration_Management">SEBoK — Configuration Management</a>.</li>
+</ul>
+
+<div class="lesson-nav"><a href="11.html">← Previous: Causality, observability &amp; impossible knowledge</a><a href="13.html">Next: Reproducible research as infrastructure →</a></div></article>
+<aside class="rail"><div class="rail-box"><h3>Session navigation</h3><ul class="contents"><li><a href="#the-operating-principle">The operating principle</a></li><li><a href="#an-evidence-dependency-graph">An evidence dependency graph</a></li><li><a href="#lab-incremental-recertification">Lab — incremental recertification</a></li><li><a href="#adversarial-check">Adversarial check</a></li><li><a href="#doctoral-extension">Doctoral extension</a></li><li><a href="#read-further">Read further</a></li></ul>
+<button class="complete" data-toggle-complete="12" type="button">Mark this session complete</button>
+<p style="font-size:11px;color:var(--dim);margin:13px 0 0">Progress is stored in this browser only. Completing a lesson is self-reported, not a credential.</p>
+<div style="border-top:1px solid var(--line);margin:18px 0;padding-top:17px"><h3>Working materials</h3>
+<ul><li><a href="../capstone.html">AURORA field exercise ↗</a></li><li><a href="../toolkit.html">Executable toolkit ↗</a></li><li><a href="../math-bridge.html">Quantitative foundations ↗</a></li><li><a href="../resources.html">Reference library ↗</a></li><li><a href="../README.md">Repository instructions ↗</a></li></ul></div></div></aside></div></main><footer class="wrap footer"><span>Independent open course · doctoral research-skills supplement · no degree or certification granted</span>
+    <span>Format inspired by <a href="https://missing.csail.mit.edu/" target="_blank" rel="noopener noreferrer">MIT's Missing Semester</a> · <a href="../LICENSE.md">Licenses</a></span></footer>
+<script src="../assets/site.js" defer></script></body></html>

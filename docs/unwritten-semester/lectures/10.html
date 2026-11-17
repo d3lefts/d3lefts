@@ -1,0 +1,39 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Safety, security &amp; graceful failure · The Unwritten Semester</title><meta name="description" content="Connect hazards, attack models, common causes, and recovery."><meta name="theme-color" content="#0e1117">
+<link rel="stylesheet" href="../assets/site.css"></head><body><a class="skip" href="#content">Skip to content</a><header class="site-header"><div class="wrap nav">
+    <a href="../index.html" class="brand" aria-label="The Unwritten Semester, home"><span class="mark" aria-hidden="true">✳</span><span>UNWRITTEN<small>THE SYSTEMS SEMESTER</small></span></a>
+    <nav class="nav-links" aria-label="Main navigation"><a href="../index.html#sessions" class="active">Sessions</a><a href="../capstone.html" class="">Field exercise</a><a href="../resources.html" class="">Library</a><a href="../toolkit.html" class="">Toolkit</a><a href="../about.html" class="">About</a></nav></div></header><main id="content"><div class="wrap pagehead"><div class="breadcrumb"><a href="../index.html#sessions">ALL SESSIONS</a> / VERIFY / 10</div>
+<div class="eyebrow" style="margin-top:17px">SESSION 10 / 14 — VERIFY</div><h1>Safety, security &amp; graceful failure</h1>
+<p class="description">Connect hazards, attack models, common causes, and recovery.</p><div class="tags"><span>90 min · lab 3h</span><span>LECTURE + LAB + ADVERSARIAL CHECK</span><span>NO PREREQUISITE INSTALLS</span></div></div><div class="wrap article-layout"><article class="article"><h2 id="the-operating-principle">The operating principle</h2>
+<p>Safety analysis asks how people, missions, and environments can be harmed. Security analysis asks how intentional adversaries can cause unacceptable behavior. Resilience asks what the system can continue to do, and how it can recover, <strong>after</strong> a disturbance. A nominal reliability number cannot replace these questions.</p>
+<p>Three methods illuminate different failure mechanisms: a hazard analysis works backward from unacceptable outcomes; a fault tree expresses combinations of events; a failure mode and effects analysis (FMEA) works forward from components. Choose the method that fits the causal question.</p>
+<h2 id="worked-failure-tree">Worked failure tree</h2>
+<p>For AURORA, consider the top event “an anomaly occurs and no alert is generated.” This can arise from total loss of observability, insufficient positive readings, incorrect policy implementation, or failure to deliver an alert. The supplied simulator represents only some of these paths. It does not model downstream notification or human response, so a claim about <em>mission outcome</em> would be unsupported.</p>
+<p>Model adversarial inputs as explicit scope changes, not as “just another independent failure probability.” Data spoofing, identity/authority confusion, and time-of-check/time-of-use changes require different controls than random sensor noise.</p>
+<h2 id="lab-trace-a-hazard-to-a-test">Lab — trace a hazard to a test</h2>
+<ol>
+<li>Populate <code>templates/failure-modes.csv</code> with five modes, their causes, effect, detectability, and mitigation.</li>
+<li>Draw a fault tree for one top-level hazard. Mark common causes; avoid multiplying probabilities before demonstrating independence.</li>
+<li>Propose one prevention control, one detection control, and one recovery control.</li>
+<li>Change the simulator's <code>--common-fail</code> parameter and quantify the impact on operability.</li>
+<li>Explain which important safety or security failure remains entirely out of scope in your test environment.</li>
+</ol>
+<p><strong>Acceptance artifact:</strong> <code>10-hazard-case.md</code> with a fault tree and a hazard-to-requirement-to-evidence chain.</p>
+<h2 id="adversarial-check">Adversarial check</h2>
+<p>Use a threat model with attacker capability, controlled inputs, and protected effects. A successful defense against a non-executable attack is not evidence of protection against an executable one. Challenge assumptions that data are truthful, current, or issued by the expected authority.</p>
+<h2 id="doctoral-extension">Doctoral extension</h2>
+<p>Give a bound on a top-event probability from a fully stated fault tree, then identify where common-cause dependence destroys the bound. Distinguish a probabilistic risk estimate from a safety guarantee.</p>
+<h2 id="read-further">Read further</h2>
+<ul>
+<li><a href="https://www.nist.gov/itl/ai-risk-management-framework">NIST AI Risk Management Framework</a> as a cross-domain risk framing reference.</li>
+<li><a href="https://www.nasa.gov/reference/systems-engineering-handbook/">NASA Systems Engineering Handbook</a>, technical risk management.</li>
+</ul>
+
+<div class="lesson-nav"><a href="09.html">← Previous: Verification, validation &amp; proof passports</a><a href="11.html">Next: Causality, observability &amp; impossible knowledge →</a></div></article>
+<aside class="rail"><div class="rail-box"><h3>Session navigation</h3><ul class="contents"><li><a href="#the-operating-principle">The operating principle</a></li><li><a href="#worked-failure-tree">Worked failure tree</a></li><li><a href="#lab-trace-a-hazard-to-a-test">Lab — trace a hazard to a test</a></li><li><a href="#adversarial-check">Adversarial check</a></li><li><a href="#doctoral-extension">Doctoral extension</a></li><li><a href="#read-further">Read further</a></li></ul>
+<button class="complete" data-toggle-complete="10" type="button">Mark this session complete</button>
+<p style="font-size:11px;color:var(--dim);margin:13px 0 0">Progress is stored in this browser only. Completing a lesson is self-reported, not a credential.</p>
+<div style="border-top:1px solid var(--line);margin:18px 0;padding-top:17px"><h3>Working materials</h3>
+<ul><li><a href="../capstone.html">AURORA field exercise ↗</a></li><li><a href="../toolkit.html">Executable toolkit ↗</a></li><li><a href="../math-bridge.html">Quantitative foundations ↗</a></li><li><a href="../resources.html">Reference library ↗</a></li><li><a href="../README.md">Repository instructions ↗</a></li></ul></div></div></aside></div></main><footer class="wrap footer"><span>Independent open course · doctoral research-skills supplement · no degree or certification granted</span>
+    <span>Format inspired by <a href="https://missing.csail.mit.edu/" target="_blank" rel="noopener noreferrer">MIT's Missing Semester</a> · <a href="../LICENSE.md">Licenses</a></span></footer>
+<script src="../assets/site.js" defer></script></body></html>

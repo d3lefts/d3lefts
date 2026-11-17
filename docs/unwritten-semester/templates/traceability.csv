@@ -1,0 +1,4 @@
+requirement_id,architecture_element,verification_id,evidence_id,verification_status,validation_status
+R-01,alarm-policy,V-01,audit-output.json,not-run,not-established
+R-02,unknown,V-02,none,undefined,not-established
+R-03,trace-logger,V-03,audit-output.json,not-run,not-established

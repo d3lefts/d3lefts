@@ -1,0 +1,3 @@
+mode_id,element,cause,effect,detection,mitigation,evidence_status
+FM-01,all-channels,shared-power-outage,loss-of-observability,external-power-monitor,independent-power-domain,synthetic-model-only
+FM-02,operator-console,unmodeled-notification-loss,alarm-never-seen,heartbeat-ack,escalation-path,not-tested

@@ -1,0 +1,43 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Models, abstractions &amp; digital threads · The Unwritten Semester</title><meta name="description" content="Connect analytic, executable, and operational models without false equivalence."><meta name="theme-color" content="#0e1117">
+<link rel="stylesheet" href="../assets/site.css"></head><body><a class="skip" href="#content">Skip to content</a><header class="site-header"><div class="wrap nav">
+    <a href="../index.html" class="brand" aria-label="The Unwritten Semester, home"><span class="mark" aria-hidden="true">✳</span><span>UNWRITTEN<small>THE SYSTEMS SEMESTER</small></span></a>
+    <nav class="nav-links" aria-label="Main navigation"><a href="../index.html#sessions" class="active">Sessions</a><a href="../capstone.html" class="">Field exercise</a><a href="../resources.html" class="">Library</a><a href="../toolkit.html" class="">Toolkit</a><a href="../about.html" class="">About</a></nav></div></header><main id="content"><div class="wrap pagehead"><div class="breadcrumb"><a href="../index.html#sessions">ALL SESSIONS</a> / MODEL / 05</div>
+<div class="eyebrow" style="margin-top:17px">SESSION 05 / 14 — MODEL</div><h1>Models, abstractions &amp; digital threads</h1>
+<p class="description">Connect analytic, executable, and operational models without false equivalence.</p><div class="tags"><span>90 min · lab 2h</span><span>LECTURE + LAB + ADVERSARIAL CHECK</span><span>NO PREREQUISITE INSTALLS</span></div></div><div class="wrap article-layout"><article class="article"><h2 id="the-operating-principle">The operating principle</h2>
+<p>A model is a deliberate loss of detail. The question is not whether it is “accurate”; the question is <strong>which decision survives the loss</strong>. Every model should have a <em>model card for systems</em>: purpose, state space, structural assumptions, numerical method, calibration data, validity region, and known failure cases.</p>
+<p>Use three levels of representation when possible: an abstract proof model, an executable digital model, and a field or experimental observation model. The arrows between levels are assumptions to verify, not automatic equivalences.</p>
+<h2 id="model-hierarchy">Model hierarchy</h2>
+<ul>
+<li><strong>Abstract:</strong> a binary event, three sensors, common-mode failure and local failure probabilities.</li>
+<li><strong>Executable:</strong> <code>labs/aurora.py</code>, with a seeded pseudorandom episode generator and deterministic decision policy.</li>
+<li><strong>Operational:</strong> an actual sensing network, not provided by this course. It includes drift, maintenance, unmodeled faults, human response, and nonstationary conditions.</li>
+</ul>
+<p>An empirical success at level two cannot certify level three without external validation. A theorem about level one does not imply its assumptions are met at level two.</p>
+<h2 id="lab-create-and-break-a-model-card">Lab — create and break a model card</h2>
+<ol>
+<li>Read the simulator and write its variables, probability distributions, and conditional independences.</li>
+<li>Draw a compact influence diagram for true event, common outage, channel availability, channel reading, alarm, and observed cost.</li>
+<li>Identify two assumptions whose violation could change the preferred alarm policy.</li>
+<li>Change one parameter at a time; explain where this local sensitivity study misses interactions.</li>
+<li>Define a model-version identifier that includes source revision, parameters, seed, and output schema.</li>
+</ol>
+<p><strong>Acceptance artifact:</strong> <code>05-model-card.md</code> with a bounded applicability statement and two disconfirming scenarios.</p>
+<h2 id="adversarial-check">Adversarial check</h2>
+<p>Have one critic infer the simulator's probabilistic model from outputs alone, then compare against the source. Missing information reveals observability limits. Ask whether the chosen metric hides severe failures in rare subpopulations.</p>
+<h2 id="doctoral-extension">Doctoral extension</h2>
+<p>Specify a refinement relation between abstract and executable states. For a proposed theorem, list the premises required for that relation to preserve the result. Then present either a proof sketch or a counterexample.</p>
+<h2 id="read-further">Read further</h2>
+<ul>
+<li><a href="https://sebokwiki.org/wiki/System_Analysis">SEBoK — Modeling and Simulation</a>.</li>
+<li><a href="https://nap.nationalacademies.org/catalog/25303/reproducibility-and-replicability-in-science">National Academies — Reproducibility and Replicability</a>.</li>
+</ul>
+
+<div class="lesson-nav"><a href="04.html">← Previous: Architecture is a dependency hypothesis</a><a href="06.html">Next: Experiments designed to disprove you →</a></div></article>
+<aside class="rail"><div class="rail-box"><h3>Session navigation</h3><ul class="contents"><li><a href="#the-operating-principle">The operating principle</a></li><li><a href="#model-hierarchy">Model hierarchy</a></li><li><a href="#lab-create-and-break-a-model-card">Lab — create and break a model card</a></li><li><a href="#adversarial-check">Adversarial check</a></li><li><a href="#doctoral-extension">Doctoral extension</a></li><li><a href="#read-further">Read further</a></li></ul>
+<button class="complete" data-toggle-complete="05" type="button">Mark this session complete</button>
+<p style="font-size:11px;color:var(--dim);margin:13px 0 0">Progress is stored in this browser only. Completing a lesson is self-reported, not a credential.</p>
+<div style="border-top:1px solid var(--line);margin:18px 0;padding-top:17px"><h3>Working materials</h3>
+<ul><li><a href="../capstone.html">AURORA field exercise ↗</a></li><li><a href="../toolkit.html">Executable toolkit ↗</a></li><li><a href="../math-bridge.html">Quantitative foundations ↗</a></li><li><a href="../resources.html">Reference library ↗</a></li><li><a href="../README.md">Repository instructions ↗</a></li></ul></div></div></aside></div></main><footer class="wrap footer"><span>Independent open course · doctoral research-skills supplement · no degree or certification granted</span>
+    <span>Format inspired by <a href="https://missing.csail.mit.edu/" target="_blank" rel="noopener noreferrer">MIT's Missing Semester</a> · <a href="../LICENSE.md">Licenses</a></span></footer>
+<script src="../assets/site.js" defer></script></body></html>

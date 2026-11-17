@@ -1,0 +1,121 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AURORA / The final field exercise · The Unwritten Semester</title><meta name="description" content="Turn the full course into one auditable systems engineering research case."><meta name="theme-color" content="#0e1117">
+<link rel="stylesheet" href="assets/site.css"></head><body><a class="skip" href="#content">Skip to content</a><header class="site-header"><div class="wrap nav">
+    <a href="index.html" class="brand" aria-label="The Unwritten Semester, home"><span class="mark" aria-hidden="true">✳</span><span>UNWRITTEN<small>THE SYSTEMS SEMESTER</small></span></a>
+    <nav class="nav-links" aria-label="Main navigation"><a href="index.html#sessions" class="">Sessions</a><a href="capstone.html" class="active">Field exercise</a><a href="resources.html" class="">Library</a><a href="toolkit.html" class="">Toolkit</a><a href="about.html" class="">About</a></nav></div></header><main id="content"><div class="wrap pagehead"><div class="breadcrumb"><a href="index.html">HOME</a> / A SHARED SYNTHETIC RESEARCH SYSTEM</div><div class="eyebrow" style="margin-top:17px">A SHARED SYNTHETIC RESEARCH SYSTEM</div><h1>AURORA / The final field exercise</h1><p class="description">Turn the full course into one auditable systems engineering research case.</p></div><div class="wrap article-layout"><article class="article"><h2 id="the-mission">The mission</h2>
+<p><strong>AURORA</strong> is a fully synthetic remote environmental monitoring network. Three simulated channels observe a latent binary anomaly. A shared disturbance can disable all channels; additional independent failures and noisy readings create uncertain evidence. A decision rule raises an <em>advisory</em> alarm. Nothing is connected to infrastructure or people, and no result is calibrated for real-world use.</p>
+<p>Your task is not to tune a threshold until the plot looks good. Your task is to produce a <strong>decision-ready, source-traceable, adversarially testable research case</strong> for one architecture under explicitly bounded assumptions.</p>
+<h2 id="starter-laboratory">Starter laboratory</h2>
+<p>From the course root:</p>
+<pre><code class="language-bash">python3 labs/aurora.py --seed 2026 --trials 5000 --policy quorum --out labs/output.csv
+python3 labs/audit.py labs/output.csv
+python3 -m unittest discover -s labs -p 'test_*.py' -v
+</code></pre>
+<p>Run the other policies on the <strong>same seeded world</strong>:</p>
+<pre><code class="language-bash">python3 labs/aurora.py --seed 2026 --trials 5000 --policy any --out labs/any.csv
+python3 labs/aurora.py --seed 2026 --trials 5000 --policy single --out labs/single.csv
+</code></pre>
+<h3 id="checked-reference-run">Checked reference run</h3>
+<p>With seed <code>2026</code>, <code>5000</code> simulated episodes, default event prevalence <code>0.15</code>, common-mode failure probability <code>0.025</code>, and the <code>quorum</code> policy, the archived trace yields:</p>
+<table>
+<thead>
+<tr>
+  <th>Quantity</th>
+  <th style="text-align:right">Exact count</th>
+  <th style="text-align:right">Simulated fraction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Misses among events</td>
+  <td style="text-align:right">72 / 724</td>
+  <td style="text-align:right">0.09945</td>
+</tr>
+<tr>
+  <td>False alarms among quiet episodes</td>
+  <td style="text-align:right">39 / 4276</td>
+  <td style="text-align:right">0.00912</td>
+</tr>
+<tr>
+  <td>Episodes with enough available channels for quorum</td>
+  <td style="text-align:right">4786 / 5000</td>
+  <td style="text-align:right">0.95720</td>
+</tr>
+<tr>
+  <td>Sensor acquisition cost</td>
+  <td style="text-align:right">16 units / episode</td>
+  <td style="text-align:right">fixed by policy</td>
+</tr>
+</tbody>
+</table>
+<p>These are <strong>real outputs from the supplied synthetic code</strong>, not measured real-world performance or certified probabilities. The event and non-event denominators differ and must not be mixed.</p>
+<p>The independent trace checker verifies the declared policy's arithmetic and cost convention. It does not validate random-number quality, the source generator, statistical assumptions, calibration, or field safety. The unit tests are a second useful guard, not an independently conducted scientific review.</p>
+<h2 id="four-deliverables">Four deliverables</h2>
+<h3 id="i-frame-the-mission">I. Frame the mission</h3>
+<p>Provide a context and responsibility diagram, at least six operational scenarios, five measurable requirements, a requirements-to-evidence graph, and an assumption register. Distinguish a synthetic measurement from a real-world need. State who has authority to choose the loss function and authorize action.</p>
+<h3 id="ii-construct-the-case">II. Construct the case</h3>
+<p>Provide an architecture and common-cause failure model; a model card; a preregistered policy comparison; per-policy miss, false-alarm, operability, and cost metrics with denominators; and a declared Pareto analysis. Analyze at least one parameter shift and an observation design that could change the decision.</p>
+<h3 id="iii-attack-the-case">III. Attack the case</h3>
+<p>Produce at least two adversarial counterexamples, a failure tree, and two different reviewer protocols: one that independently recomputes reported trace decisions and another that attacks model assumptions or prior-art comparison. Deliberately corrupt a test trace and demonstrate that the independent arithmetic checker rejects it. Record all findings, including failed attacks.</p>
+<h3 id="iv-defend-the-case">IV. Defend the case</h3>
+<p>Release a provenance manifest with command lines, source and data hashes, model limitations, known unresolved issues, an evidence passport, a change-impact table, and a concise defense packet. A valid defense can conclude “insufficient evidence for deployment”; this is preferable to an unjustified green status.</p>
+<h2 id="assessment-rubric-100-points">Assessment rubric (100 points)</h2>
+<table>
+<thead>
+<tr>
+  <th>Criterion</th>
+  <th style="text-align:right">Weight</th>
+  <th>Full-credit condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Problem formalization</td>
+  <td style="text-align:right">20</td>
+  <td>Mission, boundaries, falsifiers, and comparator are all explicit</td>
+</tr>
+<tr>
+  <td>Modeling and architecture</td>
+  <td style="text-align:right">20</td>
+  <td>Causal assumptions, interfaces, shared failures, and sensitivities are inspectable</td>
+</tr>
+<tr>
+  <td>Experiments and decisions</td>
+  <td style="text-align:right">20</td>
+  <td>Preregistered, paired where applicable, full denominators, legitimate trade-space comparison</td>
+</tr>
+<tr>
+  <td>Assurance and independent criticism</td>
+  <td style="text-align:right">25</td>
+  <td>Recomputable trace, scoped evidence, adversarial tests, properly separated validation</td>
+</tr>
+<tr>
+  <td>Research communication and transfer</td>
+  <td style="text-align:right">15</td>
+  <td>Reproducible release, clear limitations, honest novelty claim, viable next experiment</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Non-negotiable gates:</strong> fabricated evidence, undocumented data exclusions, a claimed field safety certification, or knowingly invalid comparisons void the submission independent of numeric score. A checker pass earns no automatic doctoral credit.</p>
+<h2 id="suggested-schedule">Suggested schedule</h2>
+<ul>
+<li>Session A: formalize mission, scope, requirements (3–5 hours).</li>
+<li>Session B: model alternatives and preregister the experiment (3–5 hours).</li>
+<li>Session C: run tests, audit, sensitivity, and counterexamples (4–6 hours).</li>
+<li>Session D: version the evidence, rebut critic, write and defend (4–6 hours).</li>
+</ul>
+<p>This is an educational exercise. A real thesis additionally requires original research, appropriate institutional supervision, independent scholarly review, research ethics, and the degree-granting institution's rules.</p>
+<h2 id="the-exit-standard">The exit standard</h2>
+<p>You succeed when a new reader can answer <strong>what was claimed, what would disprove it, how the result was generated, whether the checker checked the right property, what was left untested, and what should happen after a material source change</strong>—without relying on your personal explanation.</p>
+<h2 id="executable-extension-evidence-that-survives-a-critic">Executable extension: evidence that survives a critic</h2>
+<p>The <a href="toolkit.html">field toolkit</a> and <a href="math-bridge.html">quantitative bridge</a> make four new capstone submissions testable:</p>
+<ol>
+<li><strong>Paired decision analysis:</strong> show the synthetic policies evaluated on identical latent episodes; report the loss assumptions, conditional rate differences, percentile bootstrap interval and a prevalence-sensitivity boundary.</li>
+<li><strong>Finite abstraction proof:</strong> report the complete 27-state enumeration and provide a counterexample to a stronger false claim. State why the physical deployment is not covered.</li>
+<li><strong>Change impact:</strong> seal a SHA-256 manifest and declared dependency graph, change a tracked file, demonstrate recheck propagation, and document an unmodeled dependency.</li>
+<li><strong>Adversarial defense:</strong> demonstrate an invalid unpaired experiment being rejected and a mutated policy violating a formal-style invariant. Differentiate algorithmic checks from external review.</li>
+</ol>
+<p>These are additional exercises; they do not change the capstone rubric weights or imply independent scientific certification.</p>
+</article><aside class="rail"><div class="rail-box"><h3>On this page</h3><ul class="contents"><li><a href="#the-mission">The mission</a></li><li><a href="#starter-laboratory">Starter laboratory</a></li><li><a href="#four-deliverables">Four deliverables</a></li><li><a href="#assessment-rubric-100-points">Assessment rubric (100 points)</a></li><li><a href="#suggested-schedule">Suggested schedule</a></li><li><a href="#the-exit-standard">The exit standard</a></li><li><a href="#executable-extension-evidence-that-survives-a-critic">Executable extension: evidence that survives a critic</a></li></ul><a class="button" href="index.html#sessions">← Full course index</a></div></aside></div></main><footer class="wrap footer"><span>Independent open course · doctoral research-skills supplement · no degree or certification granted</span>
+    <span>Format inspired by <a href="https://missing.csail.mit.edu/" target="_blank" rel="noopener noreferrer">MIT's Missing Semester</a> · <a href="LICENSE.md">Licenses</a></span></footer>
+<script src="assets/site.js" defer></script></body></html>

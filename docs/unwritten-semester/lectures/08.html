@@ -1,0 +1,39 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Optimization beyond the winning score · The Unwritten Semester</title><meta name="description" content="Map Pareto tradeoffs, constraints, and robustness under uncertainty."><meta name="theme-color" content="#0e1117">
+<link rel="stylesheet" href="../assets/site.css"></head><body><a class="skip" href="#content">Skip to content</a><header class="site-header"><div class="wrap nav">
+    <a href="../index.html" class="brand" aria-label="The Unwritten Semester, home"><span class="mark" aria-hidden="true">✳</span><span>UNWRITTEN<small>THE SYSTEMS SEMESTER</small></span></a>
+    <nav class="nav-links" aria-label="Main navigation"><a href="../index.html#sessions" class="active">Sessions</a><a href="../capstone.html" class="">Field exercise</a><a href="../resources.html" class="">Library</a><a href="../toolkit.html" class="">Toolkit</a><a href="../about.html" class="">About</a></nav></div></header><main id="content"><div class="wrap pagehead"><div class="breadcrumb"><a href="../index.html#sessions">ALL SESSIONS</a> / MODEL / 08</div>
+<div class="eyebrow" style="margin-top:17px">SESSION 08 / 14 — MODEL</div><h1>Optimization beyond the winning score</h1>
+<p class="description">Map Pareto tradeoffs, constraints, and robustness under uncertainty.</p><div class="tags"><span>90 min · lab 3h</span><span>LECTURE + LAB + ADVERSARIAL CHECK</span><span>NO PREREQUISITE INSTALLS</span></div></div><div class="wrap article-layout"><article class="article"><h2 id="the-operating-principle">The operating principle</h2>
+<p>A best design is best only <strong>relative to an objective function and feasible set</strong>. Systems engineering rarely has a single scalar goal: detection, false alarms, latency, capital cost, lifecycle cost, maintainability, privacy, and failure tolerance often conflict. Reporting one winning architecture without showing the trade space hides the decision.</p>
+<p>A design is <strong>Pareto dominated</strong> if another feasible design is no worse on every objective and strictly better on at least one. Pareto efficiency is not global social desirability and does not establish robust performance.</p>
+<h2 id="a-minimal-trade-space-study">A minimal trade-space study</h2>
+<p>For AURORA, compare the <code>single</code>, <code>any</code>, and <code>quorum</code> policies with common synthetic episodes. Track missed events (minimize), false alarms (minimize), per-episode sensor cost (minimize), and operability (maximize). Because <code>any</code> and <code>quorum</code> use the same three channels, their sensor costs match in the supplied simulator; only their decision behavior differs. The single-channel policy costs less, but uses fewer observations.</p>
+<p>Before optimizing, define hard constraints separately from preferences. A simple requirement might be that every reported alarm have a traceable underlying record. A performance target such as miss fraction below 0.05 is a <em>hypothetical target</em> until justified by an actual stakeholder and demonstrated with uncertainty.</p>
+<h2 id="lab-map-an-actual-pareto-frontier">Lab — map an actual Pareto frontier</h2>
+<ol>
+<li>Run three policies with the same seed and trial count.</li>
+<li>Create a table of all four metrics; include numerator and denominator for every fraction.</li>
+<li>Identify which policies are Pareto dominated in the observed finite sample.</li>
+<li>Change the cost assigned to sensor B and rerun the trade-space analysis. Does the architecture ranking change?</li>
+<li>Add a robustness criterion: worst-case performance across a small, declared set of common-failure probabilities, not merely average performance.</li>
+</ol>
+<p><strong>Acceptance artifact:</strong> <code>08-tradespace.csv</code> plus a one-page decision note reporting assumptions, constraints, and non-dominated alternatives.</p>
+<h2 id="adversarial-check">Adversarial check</h2>
+<p>Ask whether a design was optimized for the test set it is subsequently “validated” on. Inspect constraint violations separately from score. A tiny gain smaller than measurement or verifier tolerance is at best a tie.</p>
+<h2 id="doctoral-extension">Doctoral extension</h2>
+<p>State an optimization problem with decision variables, uncertainty set, and feasible region. Compare a scalarization, epsilon-constraint approach, and robust minimax approach; show one case where weighted sums miss a nonconvex Pareto frontier point.</p>
+<h2 id="read-further">Read further</h2>
+<ul>
+<li><a href="https://sebokwiki.org/wiki/Decision_Management">SEBoK — Trade-off Analysis</a>.</li>
+<li><a href="https://www.nasa.gov/reference/systems-engineering-handbook/">NASA Systems Engineering Handbook</a>, decision and technical assessment topics.</li>
+</ul>
+
+<div class="lesson-nav"><a href="07.html">← Previous: Uncertainty, decisions &amp; information value</a><a href="09.html">Next: Verification, validation &amp; proof passports →</a></div></article>
+<aside class="rail"><div class="rail-box"><h3>Session navigation</h3><ul class="contents"><li><a href="#the-operating-principle">The operating principle</a></li><li><a href="#a-minimal-trade-space-study">A minimal trade-space study</a></li><li><a href="#lab-map-an-actual-pareto-frontier">Lab — map an actual Pareto frontier</a></li><li><a href="#adversarial-check">Adversarial check</a></li><li><a href="#doctoral-extension">Doctoral extension</a></li><li><a href="#read-further">Read further</a></li></ul>
+<button class="complete" data-toggle-complete="08" type="button">Mark this session complete</button>
+<p style="font-size:11px;color:var(--dim);margin:13px 0 0">Progress is stored in this browser only. Completing a lesson is self-reported, not a credential.</p>
+<div style="border-top:1px solid var(--line);margin:18px 0;padding-top:17px"><h3>Working materials</h3>
+<ul><li><a href="../capstone.html">AURORA field exercise ↗</a></li><li><a href="../toolkit.html">Executable toolkit ↗</a></li><li><a href="../math-bridge.html">Quantitative foundations ↗</a></li><li><a href="../resources.html">Reference library ↗</a></li><li><a href="../README.md">Repository instructions ↗</a></li></ul></div></div></aside></div></main><footer class="wrap footer"><span>Independent open course · doctoral research-skills supplement · no degree or certification granted</span>
+    <span>Format inspired by <a href="https://missing.csail.mit.edu/" target="_blank" rel="noopener noreferrer">MIT's Missing Semester</a> · <a href="../LICENSE.md">Licenses</a></span></footer>
+<script src="../assets/site.js" defer></script></body></html>

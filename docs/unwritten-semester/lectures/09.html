@@ -1,0 +1,46 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verification, validation &amp; proof passports · The Unwritten Semester</title><meta name="description" content="Build scoped claim–argument–evidence chains and independent checks."><meta name="theme-color" content="#0e1117">
+<link rel="stylesheet" href="../assets/site.css"></head><body><a class="skip" href="#content">Skip to content</a><header class="site-header"><div class="wrap nav">
+    <a href="../index.html" class="brand" aria-label="The Unwritten Semester, home"><span class="mark" aria-hidden="true">✳</span><span>UNWRITTEN<small>THE SYSTEMS SEMESTER</small></span></a>
+    <nav class="nav-links" aria-label="Main navigation"><a href="../index.html#sessions" class="active">Sessions</a><a href="../capstone.html" class="">Field exercise</a><a href="../resources.html" class="">Library</a><a href="../toolkit.html" class="">Toolkit</a><a href="../about.html" class="">About</a></nav></div></header><main id="content"><div class="wrap pagehead"><div class="breadcrumb"><a href="../index.html#sessions">ALL SESSIONS</a> / VERIFY / 09</div>
+<div class="eyebrow" style="margin-top:17px">SESSION 09 / 14 — VERIFY</div><h1>Verification, validation &amp; proof passports</h1>
+<p class="description">Build scoped claim–argument–evidence chains and independent checks.</p><div class="tags"><span>90 min · lab 3h</span><span>LECTURE + LAB + ADVERSARIAL CHECK</span><span>NO PREREQUISITE INSTALLS</span></div></div><div class="wrap article-layout"><article class="article"><h2 id="the-operating-principle">The operating principle</h2>
+<p><strong>Verification</strong> tests conformance to a specified model or requirement. <strong>Validation</strong> asks whether the model or requirement is right for the stakeholder's actual need. <strong>Assurance</strong> makes the argument that evidence is adequate for a particular consequential decision. They are connected but not synonyms.</p>
+<p>A passing test is a fact about a test run. It becomes assurance evidence only after you know its purpose, scope, source version, assumptions, coverage, and limitations. Strong assurance cases also identify defeaters: observations that invalidate the argument.</p>
+<h2 id="claim-argument-evidence">Claim → argument → evidence</h2>
+<p>Use a compact assurance case:</p>
+<ul>
+<li><strong>Top claim:</strong> the trace report correctly represents AURORA policy outcomes for the archived synthetic run.</li>
+<li><strong>Argument:</strong> the generator records primitive episode variables; decision policy is specified; a separate checker recomputes the decision from the trace.</li>
+<li><strong>Evidence:</strong> source hash, command, seed, CSV, audit result, test suite.</li>
+<li><strong>Assumptions:</strong> the language runtime and file bytes behave as declared; input data are complete and unmodified.</li>
+<li><strong>Limits:</strong> no claim about physical sensors or field safety; the audit program is not a formal proof and does not independently validate the generator's statistical model.</li>
+</ul>
+<p>An evidence passport makes a claim travel with the minimum facts needed to understand what it certifies, without confusing provenance with truth.</p>
+<h2 id="lab-build-and-challenge-a-passport">Lab — build and challenge a passport</h2>
+<ol>
+<li>Run the simulator and the auditor with the commands in <code>README.md</code>.</li>
+<li>Create a file listing claim ID, scope, source/version hash, checker command, result, dependencies, and known exceptions.</li>
+<li>Deliberately edit one alarm bit in the CSV and rerun the auditor. Confirm that it fails.</li>
+<li>Deliberately change a <strong>model assumption</strong> while leaving the policy checker untouched. Explain why the checker can still pass although the real-world interpretation is different.</li>
+<li>State who has authority to accept the evidence and what would trigger revalidation.</li>
+</ol>
+<p><strong>Acceptance artifact:</strong> <code>09-assurance-passport.md</code> with a verified computation claim and a conspicuous unverified modeling claim.</p>
+<h2 id="adversarial-check">Adversarial check</h2>
+<p>Separate three questions: Does the file hash match? Does the checker validate the promised property? Does the property answer the mission question? A hash can prove byte identity relative to a trusted digest; it cannot prove correctness.</p>
+<h2 id="doctoral-extension">Doctoral extension</h2>
+<p>Choose one result suitable for a machine-checkable formal specification. Encode the decision rule in a second language, or a proof assistant, and prove a refinement statement relating the abstract rule to the executable behavior. State unverified compiler and runtime assumptions.</p>
+<h2 id="read-further">Read further</h2>
+<ul>
+<li><a href="https://www.nasa.gov/reference/systems-engineering-handbook/">NASA — Verification and Validation</a>.</li>
+<li><a href="https://sebokwiki.org/wiki/System_Verification">SEBoK — Verification</a> and <a href="https://sebokwiki.org/wiki/System_Validation">Validation</a>.</li>
+</ul>
+
+<div class="lesson-nav"><a href="08.html">← Previous: Optimization beyond the winning score</a><a href="10.html">Next: Safety, security &amp; graceful failure →</a></div></article>
+<aside class="rail"><div class="rail-box"><h3>Session navigation</h3><ul class="contents"><li><a href="#the-operating-principle">The operating principle</a></li><li><a href="#claim-argument-evidence">Claim → argument → evidence</a></li><li><a href="#lab-build-and-challenge-a-passport">Lab — build and challenge a passport</a></li><li><a href="#adversarial-check">Adversarial check</a></li><li><a href="#doctoral-extension">Doctoral extension</a></li><li><a href="#read-further">Read further</a></li></ul>
+<button class="complete" data-toggle-complete="09" type="button">Mark this session complete</button>
+<p style="font-size:11px;color:var(--dim);margin:13px 0 0">Progress is stored in this browser only. Completing a lesson is self-reported, not a credential.</p>
+<div style="border-top:1px solid var(--line);margin:18px 0;padding-top:17px"><h3>Working materials</h3>
+<ul><li><a href="../capstone.html">AURORA field exercise ↗</a></li><li><a href="../toolkit.html">Executable toolkit ↗</a></li><li><a href="../math-bridge.html">Quantitative foundations ↗</a></li><li><a href="../resources.html">Reference library ↗</a></li><li><a href="../README.md">Repository instructions ↗</a></li></ul></div></div></aside></div></main><footer class="wrap footer"><span>Independent open course · doctoral research-skills supplement · no degree or certification granted</span>
+    <span>Format inspired by <a href="https://missing.csail.mit.edu/" target="_blank" rel="noopener noreferrer">MIT's Missing Semester</a> · <a href="../LICENSE.md">Licenses</a></span></footer>
+<script src="../assets/site.js" defer></script></body></html>
