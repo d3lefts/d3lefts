@@ -37,6 +37,7 @@ jobs:
             --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
             --decl Nightfall.InfinitePiQ2ActiveFiniteLabelCondExp.label_site_decomposition \
             --decl Nightfall.InfinitePiQ2ActiveFiniteLabelCondExp.source_condExp_lifted_finite_label \
+            --decl Nightfall.InfinitePiQ2ActiveFiniteLabelCondExp.sourceOtherProjection_lifted_finite_label_ae \
             --json-out lean-receipts/q2-active-finite-label/conditional.json
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-active-finite-label/conditional.json
       - name: Preserve exact source identity
