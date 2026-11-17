@@ -52,14 +52,17 @@ theorem sourceLabelLift_mean_exact
         ((i : ι) → X i) → ℝ) =ᵐ[Measure.infinitePi μ]
         (fun x => g (m x)) :=
     original_infinite_label_lift_ae μ φ hφ g
+  have hsm : AEStronglyMeasurable
+      (g : ((i : ι) → Y i) → ℝ) ((Measure.infinitePi μ).map m) := by
+    rw [hmp.map_eq]
+    exact Lp.aestronglyMeasurable g
   calc
     (∫ x, (original_infinite_label_lift μ φ hφ g) x
       ∂ Measure.infinitePi μ) =
         ∫ x, g (m x) ∂ Measure.infinitePi μ :=
       integral_congr_ae hae
     _ = ∫ y, g y ∂ (Measure.infinitePi μ).map m := by
-      exact (integral_map hmeas.aemeasurable
-        (Lp.aestronglyMeasurable g)).symm
+      exact (integral_map hmeas.aemeasurable hsm).symm
     _ = ∫ y, g y ∂ Measure.infinitePi q := by
       rw [hmp.map_eq]
 
