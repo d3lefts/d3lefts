@@ -114,4 +114,60 @@ theorem sourceFiniteCellAlgebra_factors_through_site_labels
 #print axioms Nightfall.InfinitePiQ2FiniteTestSiteLabels.evalTests_eq_sourceLabelMap
 #print axioms Nightfall.InfinitePiQ2FiniteTestSiteLabels.sourceFiniteCellAlgebra_factors_through_site_labels
 
+
+/-- Only finitely many original coordinates own tests from T. -/
+noncomputable def siteTestSupport
+    (T : Finset (CoordinateTest (X := X))) : Finset ι := by
+  classical
+  exact T.image (fun t => t.1)
+
+/-- Labels outside the actual finite source support are deterministically
+zero, independent of the source coordinates' cardinality or measures. -/
+theorem siteTestLabel_zero_outside
+    (T : Finset (CoordinateTest (X := X)))
+    (i : ι) (hi : i ∉ siteTestSupport T) (xi : X i) :
+    siteTestLabel T i xi = (fun _ : T => false) := by
+  classical
+  funext t
+  have ht : t.1.1 ∈ siteTestSupport T := by
+    exact Finset.mem_image.mpr ⟨t.1, t.2, rfl⟩
+  have hnot : i ≠ t.1.1 := by
+    intro heq
+    apply hi
+    simpa [heq] using ht
+  simp [siteTestLabel, hnot]
+
+/-- Stronger finite-model extraction: every event in the genuine
+original-product finite-cell algebra is represented by a function of
+finite-valued labels on an ACTUAL FINITE coordinate set F. This is an
+exact representation, not an approximation and not a surrogate law. -/
+theorem sourceFiniteCellAlgebra_factors_through_finite_site_labels
+    (s : Set ((i : ι) → X i))
+    (hs : s ∈ sourceFiniteCellAlgebra (X := X)) :
+    ∃ F : Finset ι, ∃ T : Finset (CoordinateTest (X := X)),
+      ∃ U : Set ((j : F) → (T → Bool)),
+        ∀ x : (i : ι) → X i,
+          (x ∈ s ↔ (fun j : F =>
+            siteTestLabel T j (x j)) ∈ U) := by
+  classical
+  obtain ⟨T, V, hV⟩ :=
+    sourceFiniteCellAlgebra_hasFiniteTests s hs
+  let F := siteTestSupport T
+  have ht (t : T) : t.1.1 ∈ F := by
+    exact Finset.mem_image.mpr ⟨t.1, t.2, rfl⟩
+  refine ⟨F, T, {w | (fun t : T => w ⟨t.1.1, ht t⟩ t) ∈ V}, ?_⟩
+  intro x
+  change x ∈ s ↔
+    (fun t : T => siteTestLabel T t.1.1 (x t.1.1) t) ∈ V
+  have hbits :
+      (fun t : T => siteTestLabel T t.1.1 (x t.1.1) t) =
+        evalTests T x := by
+    funext t
+    simpa only [evalTests] using siteTestLabel_owned_bit T t x
+  rw [hbits]
+  exact hV x
+
+#print axioms Nightfall.InfinitePiQ2FiniteTestSiteLabels.siteTestLabel_zero_outside
+#print axioms Nightfall.InfinitePiQ2FiniteTestSiteLabels.sourceFiniteCellAlgebra_factors_through_finite_site_labels
+
 end Nightfall.InfinitePiQ2FiniteTestSiteLabels
