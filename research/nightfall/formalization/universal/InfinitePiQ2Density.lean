@@ -184,6 +184,41 @@ theorem source_finite_info_fixes_cylinder
       (sourceFiniteCoordinateSigma_le (X := X) F) hs
       (measure_ne_top (Measure.infinitePi μ) (cylinder F S)) c)
 
+
+/-- A cylinder stays fixed by every larger finite-coordinate conditional
+expectation, enabling directed, not merely pointwise, approximation. -/
+theorem source_finite_info_fixes_cylinder_of_subset
+    (F G : Finset ι) (hFG : F ⊆ G)
+    (S : Set ((i : F) → X i))
+    (hS : MeasurableSet S) (c : ℝ) :
+    (condExpL2 ℝ ℝ (sourceFiniteCoordinateSigma_le (X := X) G)
+      (sourceCylinderIndicator μ (cylinder F S)
+        ((mem_measurableCylinders _).mpr ⟨F, S, hS, rfl⟩) c) :
+      Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) =
+      sourceCylinderIndicator μ (cylinder F S)
+        ((mem_measurableCylinders _).mpr ⟨F, S, hS, rfl⟩) c := by
+  have hs : MeasurableSet[sourceFiniteCoordinateSigma (X := X) G] (cylinder F S) :=
+    (sourceFiniteCoordinateSigma_mono (X := X) hFG)
+      _ (source_finite_info_cylinder_measurable (X := X) F S hS)
+  simpa only [sourceCylinderIndicator] using
+    (condExpL2_indicator_of_measurable
+      (sourceFiniteCoordinateSigma_le (X := X) G) hs
+      (measure_ne_top (Measure.infinitePi μ) (cylinder F S)) c)
+
+/-- Any member of the source-cylinder generating set is exactly fixed
+by all sufficiently large finite-coordinate conditional expectations. -/
+theorem source_cylinder_generator_eventually_fixed
+    (g : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))
+    (hg : g ∈ sourceCylinderGenerators μ) :
+    ∃ F : Finset ι, ∀ G : Finset ι, F ⊆ G →
+      (condExpL2 ℝ ℝ (sourceFiniteCoordinateSigma_le (X := X) G) g :
+        Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) = g := by
+  obtain ⟨s, hs, c, rfl⟩ := hg
+  obtain ⟨F, S, hS, rfl⟩ := (mem_measurableCylinders s).mp hs
+  refine ⟨F, ?_⟩
+  intro G hFG
+  exact source_finite_info_fixes_cylinder_of_subset μ F G hFG S hS c
+
 /-- An original-product finite-information conditional expectation has
 exactly the original source mean, not merely an assumed expectation. -/
 theorem source_finite_info_preserves_mean
