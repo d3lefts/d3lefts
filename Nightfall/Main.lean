@@ -1,0 +1,28 @@
+import Nightfall.Targets
+import ActualSourceQ2107Terminal
+import InfinitePiQ2Limit
+import Q2ShiftedConditionalTargets
+
+/-!
+# Integrated Q2 import checkpoint
+
+This single Lean module forces the selected original finite-source proof,
+the original infinite-product L² limit, and the conditional shifted targets
+to compile in one dependency environment.
+
+It does NOT establish the missing finite-label/conditional-mean/heat-bath
+adapter, and it does NOT contain an unconditional infinite-product theorem.
+The theorem audit below prints axioms for ACTUAL imported declarations; no
+hypothesis is discharged by printing an axiom list.
+-/
+
+#check Nightfall.Targets.finiteProductQ2_107
+#check Nightfall.Observability.ActualSourceQ2107Terminal.actual_source_q2_107_unconditional
+#check Nightfall.InfinitePiQ2Limit.source_q2_quadratic_limit
+#check Nightfall.Q2Shifted.ConditionalTargets.conditional_coefficient_107
+#check Nightfall.Q2Shifted.ConditionalTargets.conditional_coefficient_99
+
+#print axioms Nightfall.Observability.ActualSourceQ2107Terminal.actual_source_q2_107_unconditional
+#print axioms Nightfall.InfinitePiQ2Limit.source_q2_quadratic_limit
+#print axioms Nightfall.Q2Shifted.ConditionalTargets.conditional_coefficient_107
+#print axioms Nightfall.Q2Shifted.ConditionalTargets.conditional_coefficient_99

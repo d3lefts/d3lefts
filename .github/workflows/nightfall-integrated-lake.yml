@@ -1,0 +1,79 @@
+name: NIGHTFALL integrated Lake dependency checkpoint
+
+on:
+  pull_request:
+    paths:
+      - 'lakefile.toml'
+      - 'Nightfall.lean'
+      - 'Nightfall/**'
+      - 'research/nightfall/formalization/observability/**'
+      - 'research/nightfall/formalization/universal/**'
+      - 'research/nightfall/formalization/q2_shifted/**'
+      - 'scripts/check_nightfall_integrated_axioms.py'
+      - '.github/workflows/nightfall-integrated-lake.yml'
+  workflow_dispatch:
+    inputs:
+      paranoid:
+        description: 'Also replay via every bundled independent checker (resource intensive)'
+        type: boolean
+        required: false
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: nightfall-integrated-lake-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  integrated-source-dependencies:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Generate strict transitive legacy import closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m py_compile scripts/generate_nightfall_lake.py
+          python3 scripts/generate_nightfall_lake.py --check
+      - name: Resolve one exact Mathlib revision
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake update
+          test "$(git -C .lake/packages/mathlib rev-parse HEAD)" = 9d581dfff2e41de989072ea63abf3daf69311520
+          test "$(cat .lake/packages/mathlib/lean-toolchain)" = leanprover/lean4:v4.36.0-rc2
+          lake exe cache get
+      - name: Build shared vocabulary and existing source certificates together
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/integrated
+          lake build Nightfall 2>&1 | tee lean-receipts/integrated/build.log
+          python3 scripts/check_nightfall_integrated_axioms.py lean-receipts/integrated/build.log
+          git rev-parse HEAD > lean-receipts/integrated/repo-head.txt
+          git -C .lake/packages/mathlib rev-parse HEAD > lean-receipts/integrated/mathlib-head.txt
+          sha256sum Nightfall/Main.lean Nightfall/Targets.lean Nightfall/Core.lean lakefile.toml > lean-receipts/integrated/source-sha256.txt
+      - name: Replay complete selected Lake project through the kernel
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake check 2>&1 | tee lean-receipts/integrated/lake-check.log
+          printf '%s\n' 'LAKE_CHECK_STANDARD_AXIOMS_PASS' > lean-receipts/integrated/lake-check-status.txt
+      - name: Optional cross-kernel paranoid replay of the same source graph
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.paranoid == true }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake check --paranoid 2>&1 | tee lean-receipts/integrated/lake-paranoid.log
+          printf '%s\n' 'LAKE_PARANOID_ALL_BUNDLED_CHECKERS_PASS' > lean-receipts/integrated/lake-paranoid-status.txt
+      - name: Preserve full dependency-build evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nightfall-integrated-lake-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/integrated/
+          if-no-files-found: warn
+          retention-days: 30
