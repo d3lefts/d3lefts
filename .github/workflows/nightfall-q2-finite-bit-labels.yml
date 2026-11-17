@@ -1,0 +1,58 @@
+name: NIGHTFALL Q2 finite original-source Boolean label representation
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/universal/InfinitePiQ2FiniteBitLabels.lean'
+      - '.github/workflows/nightfall-q2-finite-bit-labels.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: q2-finite-bit-labels-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  source-kernel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact per-coordinate finite-bit labeling
+        shell: bash
+        run: |
+          set -euo pipefail
+          src=research/nightfall/formalization/universal/InfinitePiQ2FiniteBitLabels.lean
+          ! grep -nE '\\b(sorry|admit)\\b' "$src"
+          cp "$src" /tmp/mathlib4/InfinitePiQ2FiniteBitLabels.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/InfinitePiQ2FiniteBitLabels.olean InfinitePiQ2FiniteBitLabels.lean) 2>&1 | tee /tmp/q2-finite-bit-labels.log
+          ! grep -qE "error:|sorryAx" /tmp/q2-finite-bit-labels.log
+      - name: Audit strict four named source declarations
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-finite-bit-labels
+          python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiQ2FiniteBitLabels.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InfinitePiQ2FiniteBitLabels.sourceFiniteBitLabels_finite \
+            --decl Nightfall.InfinitePiQ2FiniteBitLabels.sourceFiniteBitLabels_recovers \
+            --decl Nightfall.InfinitePiQ2FiniteBitLabels.sourceFiniteBitLabels_measurable \
+            --decl Nightfall.InfinitePiQ2FiniteBitLabels.sourceFiniteBitLabels_test_in_label_sigma \
+            --json-out lean-receipts/q2-finite-bit-labels/strict.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-finite-bit-labels/strict.json
+      - name: Preserve exact source and Git identity
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/q2-finite-bit-labels
+          git rev-parse HEAD > lean-receipts/q2-finite-bit-labels/HEAD
+          sha256sum research/nightfall/formalization/universal/InfinitePiQ2FiniteBitLabels.lean > lean-receipts/q2-finite-bit-labels/SOURCE_SHA256
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: q2-finite-bit-labels-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/q2-finite-bit-labels
+          if-no-files-found: warn
