@@ -73,10 +73,17 @@ theorem sourceTestLabel_measurable
   · have hs : MeasurableSet (h ▸ t.1.2.1) := by
       cases h
       exact t.1.2.2
-    simpa [sourceTestLabel, h] using
-      (Measurable.ite hs measurable_const measurable_const :
-        Measurable (fun a : X i =>
-          if a ∈ (h ▸ t.1.2.1) then true else false))
+    have hdecide : Measurable (fun a : X i =>
+        decide (a ∈ (h ▸ t.1.2.1))) := by
+      have heq :
+          (fun a : X i => decide (a ∈ (h ▸ t.1.2.1))) =
+          (fun a : X i =>
+            if a ∈ (h ▸ t.1.2.1) then true else false) := by
+        funext a
+        by_cases ha : a ∈ (h ▸ t.1.2.1) <;> simp [ha]
+      rw [heq]
+      exact Measurable.ite hs measurable_const measurable_const
+    simpa [sourceTestLabel, h] using hdecide
   · simpa [sourceTestLabel, h] using
       (measurable_const : Measurable (fun _ : X i => (false : Bool)))
 
