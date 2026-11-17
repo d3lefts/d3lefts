@@ -40,7 +40,7 @@ theorem weighted_square_zero_at_positive
   nlinarith
 
 universe u v
-variable {ι : Type u} [Fintype ι]
+variable {ι : Type u} [Fintype ι] [DecidableEq ι]
 variable {A : ι → Type v} [∀ i, Fintype (A i)]
 
 /-- Native heterogeneous source product weights; no common alphabet
