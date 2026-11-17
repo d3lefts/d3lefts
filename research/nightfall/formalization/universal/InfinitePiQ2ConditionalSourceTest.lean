@@ -124,7 +124,7 @@ theorem independent_condExp_product
     condExp_mul_of_stronglyMeasurable_right hv huv hui
   have hmean :
       ν[u | m₂] =ᵐ[ν] (fun _ => ∫ z, u z ∂ν) :=
-    condExp_indep_eq hm₁ hm₂ hu hind
+    condExp_indep_eq (m := m) hm₁ hm₂ hu hind
   apply hpull.trans
   filter_upwards [hmean] with x hx
   simpa only [Pi.mul_apply, hx]
