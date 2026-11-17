@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 22,
+  "revision": 23,
   "as_of": "2026-11-17 UTC",
   "source_commit": "b9bd66f68e3c1f59896105e1b0d826dacedab6bf",
-  "scope": "Exact pending source custody includes newly promoted original-product heat-bath source, with frozen 67 historical records untouched. Scoped original-head pinned Lean CI for the pointwise source-level identity is separately recorded; full infinite-product L² terminal not certified. Two exact new original-product conditional tensor and Hilbert-projection files enrolled as pending source custody, with separate strict named source CI; no unconditional Q2 terminal or novelty promotion. Reconciled source-identical merged 4.36 named receipts for original-product finite-label, bounded source-conditional and label L2 isometry bridges; no historic ledger mutation or infinite-product theorem promotion.",
+  "scope": "Exact pending source custody includes newly promoted original-product heat-bath source, with frozen 67 historical records untouched. Scoped original-head pinned Lean CI for the pointwise source-level identity is separately recorded; full infinite-product L² terminal not certified. Two exact new original-product conditional tensor and Hilbert-projection files enrolled as pending source custody, with separate strict named source CI; no unconditional Q2 terminal or novelty promotion. Reconciled source-identical merged 4.36 named receipts for original-product finite-label, bounded source-conditional and label L2 isometry bridges; no historic ledger mutation or infinite-product theorem promotion. Reconciles seven extra original-source Lean blobs merged by parallel Q2 sessions (including source heat-bath and L2 bridges) as unreviewed custody without claiming unrestricted Q2 or overriding prior receipts.",
   "sources": [
     {
       "path": "research/nightfall/formalization/agent_safety/ArbitraryAgentSafety.lean",
@@ -2680,6 +2680,33 @@
       "receipt_scope": "Merged heterogeneous-to-tagged finite alphabet original-source operator; source custody only. Not finite-measure influence transport or infinite Q2 terminal."
     },
     {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2InactiveFiniteLabel.lean",
+      "source_blob_sha": "5377405f3966bc885f4a70cf75877ef9b527aa2c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Main-merged source commit a36b4e32b85aabbe65cf10a97c1375fd9c95ccb8: inactive finite-label L2 source zero influence; exact Git blob custody only, not a completed original-head kernel receipt, not an unconditional infinite-product Q2 terminal or novelty/human review.",
+      "parallel_scoped_named_ci": {
+        "source_commit": "61c9dae1e517d984e38247bda5422e98947ce93c",
+        "run": 44122031544,
+        "status": "source_scoped_original_head_only",
+        "kernel": "strict_named_compilation",
+        "theorem_scope": "inactive finite-label L2 source zero influence"
+      }
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2InactiveSourceSigma.lean",
+      "source_blob_sha": "545580d25c27d5edd75c07567c5dddab16c74cf4",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Main-merged source commit c4dfab572dbeac891174275361bc616f8de793b6: source-inactive coordinate L² heat-bath identity; exact Git blob custody only, not a completed original-head kernel receipt, not an unconditional infinite-product Q2 terminal or novelty/human review."
+    },
+    {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2InfluenceStability.lean",
       "source_blob_sha": "36632df228871b892e9e9fad3583d17ebde5ff90",
       "classification": "unreviewed-source",
@@ -2737,6 +2764,33 @@
       "receipt_scope": "Exact merged Git blob at dc14a2830ab834385cd30cdad94d38bdd86ceea0; pending historical custody only. Existing named-declaration kernel receipts are separate and retain their exact domain. No new terminal or human/novelty certification from this registry."
     },
     {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2PositiveAtomBound.lean",
+      "source_blob_sha": "afddee9f576a359b63e05b147e7ddf41f30ce295",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Main-merged source commit 56e2b23371c24c382a8bb9e12b3ab32302acd593: original positive-label atom bound witness; exact Git blob custody only, not a completed original-head kernel receipt, not an unconditional infinite-product Q2 terminal or novelty/human review."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2RangeProjectionTransfer.lean",
+      "source_blob_sha": "d8c0d4f8dc14d1239b774b3dcc28a10a758a222f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Main-merged source commit c5905415de0105edc835036321ac3f4d86784fb3: Hilbert label range projection conditional commutation and residual transport; exact Git blob custody only, not a completed original-head kernel receipt, not an unconditional infinite-product Q2 terminal or novelty/human review.",
+      "parallel_scoped_named_ci": {
+        "source_commit": "31b77fc4a91204797e98f5ccae3244cd224081ec",
+        "run": 44121393439,
+        "status": "source_scoped_original_head_only",
+        "kernel": "strict_named_compilation",
+        "theorem_scope": "Hilbert label range projection conditional commutation and residual transport"
+      }
+    },
+    {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2SourceBoundedCondExp.lean",
       "source_blob_sha": "ca17c937bf7b2fa3e6280d43bf3b2da888001385",
       "classification": "unreviewed-source",
@@ -2767,6 +2821,36 @@
         "named_declaration": "Nightfall.InfinitePiQ2SourceHilbertTensor.sourceOtherProjection_tensor_ae",
         "run": 44103373431
       }
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2SourceLabelL2Intertwining.lean",
+      "source_blob_sha": "4959df8185a1d4eaf4496b5481e885e4e178c956",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Main-merged source commit d27a1538fe3901b36ea195a72a5eca644c56c4e8: original label/source L2 heat-bath identity; exact Git blob custody only, not a completed original-head kernel receipt, not an unconditional infinite-product Q2 terminal or novelty/human review."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2SourceLabelLpIntertwining.lean",
+      "source_blob_sha": "f064f59e2ee14e63211918f3d603f09a25c96bad",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Main-merged source commit d74d24e1920824e497e9bd8267444f7674c79b40: bounded original source to label L2 heat-bath equality; exact Git blob custody only, not a completed original-head kernel receipt, not an unconditional infinite-product Q2 terminal or novelty/human review."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2SourceSelfAdjoint.lean",
+      "source_blob_sha": "72932a5159c498673a5377de8e66834e24ee383c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Main-merged source commit 754f04a6e6ca4a67f718d1467b612a089bf76ef9: genuine original source heat-bath self-adjointness; exact Git blob custody only, not a completed original-head kernel receipt, not an unconditional infinite-product Q2 terminal or novelty/human review."
     },
     {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2TaggedSourceTransport.lean",
