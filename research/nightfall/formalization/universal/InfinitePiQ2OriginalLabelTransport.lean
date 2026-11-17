@@ -33,7 +33,7 @@ theorem sourceLabelMap_measurable
     (φ : ∀ i, X i → Y i)
     (hφ : ∀ i, Measurable (φ i)) :
     Measurable (sourceLabelMap φ) := by
-  change Measurable (fun x i => φ i (x i))
+  change Measurable (fun (x : (j : ι) → X j) (i : ι) => φ i (x i))
   fun_prop
 
 /-- Pushing the genuine infinite product through all coordinate
@@ -44,8 +44,9 @@ theorem sourceLabelLaw_exact
     (hφ : ∀ i, Measurable (φ i)) :
     (Measure.infinitePi μ).map (sourceLabelMap φ) =
       Measure.infinitePi (fun i => (μ i).map (φ i)) := by
-  simpa only [sourceLabelMap] using
-    (Measure.infinitePi_map_pi μ hφ)
+  change (Measure.infinitePi μ).map (fun x i => φ i (x i)) =
+    Measure.infinitePi (fun i => (μ i).map (φ i))
+  exact Measure.infinitePi_map_pi μ hφ
 
 /-- The actual finite-coordinate cell word has precisely the
 heterogeneous finite product of the original source cell measures.
