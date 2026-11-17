@@ -130,9 +130,33 @@ theorem source_condExp_coordinate_factor
           exact (source_condExp_coordinate_test μ i h hh).mul
             (Filter.EventuallyEq.rfl)
 
+/-- A finite-label table is a finite sum of one-coordinate indicator
+times a section which ignores that coordinate. This is the exact
+rank-one algebraic decomposition needed by source heat-bath transfer. -/
+theorem finite_label_rank_one_decomposition
+    {Y : ι → Type v} (i : ι) [Fintype (Y i)]
+    (g : ((j : ι) → Y j) → ℝ) (y : (j : ι) → Y j) :
+    g y = ∑ a : Y i,
+      (if y i = a then g (Function.update y i a) else 0) := by
+  classical
+  simp
+
+/-- Freezing coordinate i makes the resulting table section invariant
+under any subsequent update of the same coordinate. -/
+theorem finite_label_rank_one_section_invariant
+    {Y : ι → Type v} (i : ι)
+    (g : ((j : ι) → Y j) → ℝ)
+    (a b : Y i) (y : (j : ι) → Y j) :
+    g (Function.update (Function.update y i a) i b) =
+      g (Function.update y i b) := by
+  classical
+  simp
+
 #print axioms Nightfall.InfinitePiQ2ConditionalSourceTest.source_coordinate_other_sigma_indep
 #print axioms Nightfall.InfinitePiQ2ConditionalSourceTest.original_source_coordinate_integral
 #print axioms Nightfall.InfinitePiQ2ConditionalSourceTest.source_condExp_coordinate_test
 #print axioms Nightfall.InfinitePiQ2ConditionalSourceTest.source_condExp_coordinate_factor
+#print axioms Nightfall.InfinitePiQ2ConditionalSourceTest.finite_label_rank_one_decomposition
+#print axioms Nightfall.InfinitePiQ2ConditionalSourceTest.finite_label_rank_one_section_invariant
 
 end Nightfall.InfinitePiQ2ConditionalSourceTest
