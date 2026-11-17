@@ -17,6 +17,8 @@ Q2 theorem. No unrestricted cubic theorem or novelty claim is made.
 
 namespace Nightfall.Observability.CubicTopCoverEnergy
 
+attribute [local instance] Classical.propDecidable
+
 open Finset
 open Nightfall.Observability.ActualProductMergeTower
 open Nightfall.Observability.ActualSourceANOVA
@@ -50,11 +52,15 @@ theorem covered_energy_le_sum_influences
               _ ≤ ∑ i ∈ H, if i ∈ S then w S else 0 := by
                 apply Finset.single_le_sum
                 · intro j hj hji
-                  split_ifs\n                  · exact hw S\n                  · exact le_refl 0
+                  split_ifs
+                  · exact hw S
+                  · exact le_refl 0
                 · exact hiH
           · rw [if_neg hS]
             exact Finset.sum_nonneg fun i hi => by
-              split_ifs\n                  · exact hw S\n                  · exact le_refl 0
+              split_ifs
+                  · exact hw S
+                  · exact le_refl 0
     _ = ∑ i ∈ H, ∑ S : Finset ι, if i ∈ S then w S else 0 := by
           rw [Finset.sum_comm]
 
@@ -145,9 +151,9 @@ theorem source_variance_loss_le_cover_influences
     sourceVariance p f - outsideSourceEnergy p f H =
         ∑ S : Finset ι, if touches H S then w S else 0 := by
           rw [hvar]
-          change (∑ S : Finset ι, w S) -
-            (∑ S : Finset ι, if touches H S then 0 else w S) = _
-          linarith
+          unfold outsideSourceEnergy
+          dsimp only [w]
+          linarith [hsplit]
     _ ≤ ∑ i ∈ H, ∑ S : Finset ι, if i ∈ S then w S else 0 := hbound
     _ = ∑ i ∈ H, sourceInfluence p f i := by
           apply Finset.sum_congr rfl
@@ -204,7 +210,9 @@ theorem cubic_cover_terminal_from_projected_q2
     calc
       E^2 ≤ D^2 * B^2 * M := hprojectedQ2
       _ = (D * B * Real.sqrt M)^2 := by
-        calc\n          D^2 * B^2 * M = D^2 * B^2 * (Real.sqrt M)^2 := by rw [Real.sq_sqrt hM]\n          _ = (D * B * Real.sqrt M)^2 := by ring
+        calc
+          D^2 * B^2 * M = D^2 * B^2 * (Real.sqrt M)^2 := by rw [Real.sq_sqrt hM]
+          _ = (D * B * Real.sqrt M)^2 := by ring
   have hEbound : E ≤ D * B * Real.sqrt M := by
     nlinarith [sq_nonneg (E + D * B * Real.sqrt M)]
   have hcost := source_variance_loss_le_cover_influences p hp hp1 f H
