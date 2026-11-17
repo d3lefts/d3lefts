@@ -5,7 +5,7 @@ import {join,normalize,resolve,sep} from "node:path";
 import {chromium} from "playwright-core";
 
 const root=resolve("docs");
-const pages=["index.html","living-paper.html","erdos-paper.html","join.html","constellation.html","review.html","evidence.html","agenda.html","research.html","exact-research.html","desk.html","frontier.html","portfolio.html","product-space-influence.html"];
+const pages=["index.html","living-paper.html","erdos-paper.html","join.html","constellation.html","review.html","evidence.html","agenda.html","research.html","exact-research.html","desk.html","frontier.html","portfolio.html","product-space-influence.html","theory.html"];
 const types={".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".svg":"image/svg+xml"};
 const server=createServer(async (req,res)=>{
  try{
@@ -56,6 +56,41 @@ try{
     assert.fail(file+" horizontal overflow "+overflow+"px at "+width+"; culprits="+JSON.stringify(culprits));
    }
   }
+  // The Theory Atlas is a real browser integration, not merely a JSON join.
+  await page.goto(origin+"theory.html",{waitUntil:"load"});
+  await page.locator('#theory-registry-status[data-complete="true"]').waitFor({timeout:10000});
+  assert.match(await page.locator("#theory-registry-status").innerText(),/4\/4/,
+    "All four canonical proof/custody registries load on the atlas");
+  await page.locator('[data-node="q2-finite"]').click();
+  assert.equal(await page.locator("#theory-evidence-detail .theory-evidence-certificate").count(),2,
+    "Finite native C105 has only its two actual-source Lean certificates");
+  assert.match(await page.locator("#theory-evidence-detail").innerText(),/InfinitePiQ2NativeSupportedTerminal/,
+    "The concrete native supported declaration is visible");
+  assert.doesNotMatch(await page.locator("#theory-evidence-detail").innerText(),/q2-finite-current/,
+    "Historical common-alphabet overlay is not substituted as native certificate");
+  await page.locator('[data-node="q2-infinite"]').click();
+  assert.match(await page.locator("#theory-evidence-detail").innerText(),/CONDITIONAL SOURCE RECEIPT/,
+    "Infinite theorem is identified as a conditional limit");
+  assert.match(await page.locator("#theory-evidence-detail").innerText(),/UNPROVED GRAPH BRIDGE/,
+    "Open mathematical arrows remain visible next to kernel receipts");
+  await page.locator('#theory-register-tabs [data-collection="active"]').click();
+  assert.equal(await page.locator("#theory-register-results .theory-catalog-item").count(),15,
+    "All active proof passports appear in the public evidence library");
+  await page.locator('#theory-register-tabs [data-collection="historical"]').click();
+  assert.equal(await page.locator("#theory-register-results .theory-catalog-item").count(),11,
+    "All historical frozen proof passports appear without promotion");
+  await page.locator('#theory-register-tabs [data-collection="overlay"]').click();
+  assert.equal(await page.locator("#theory-register-results .theory-catalog-item").count(),4,
+    "All four original Lean overlay records remain discoverable");
+  await page.locator('#theory-register-tabs [data-collection="provenance"]').click();
+  assert.equal(await page.locator("#theory-register-results .theory-catalog-item").count(),67,
+    "All historical Lean modules remain linked to source custody, not invented global proofs");
+  await page.locator("#theory-register-search").fill("ActualPosteriorInfluence");
+  assert.equal(await page.locator("#theory-register-results .theory-catalog-item").count(),1,
+    "Source custody search is precise and reproducible");
+  await page.locator("#theory-register-search").fill("");
+  assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth))<=3,
+    "Theory Atlas registry UI must fit at "+width+"px");
   if(width===390){
    // An unlisted page must still render its real canonical records.
    await page.goto(origin+"portfolio.html",{waitUntil:"load"});
