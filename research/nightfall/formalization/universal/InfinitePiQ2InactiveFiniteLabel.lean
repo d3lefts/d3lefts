@@ -38,12 +38,12 @@ theorem sourceOtherProjection_fixes_subSigma_projection
     (i : ι) (hmi : m ≤ sourceOtherSigma (X := X) i)
     (f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) :
     sourceOtherProjection μ i
-      (condExpL2 ℝ ℝ hm f :
+      (condExpL2 ℝ ℝ (μ := Measure.infinitePi μ) hm f :
         Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) =
-      (condExpL2 ℝ ℝ hm f :
+      (condExpL2 ℝ ℝ (μ := Measure.infinitePi μ) hm f :
         Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) := by
   let g : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ) :=
-    (condExpL2 ℝ ℝ hm f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))
+    (condExpL2 ℝ ℝ (μ := Measure.infinitePi μ) hm f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))
   have hsmall : AEStronglyMeasurable[m]
       (g : ((j : ι) → X j) → ℝ) (Measure.infinitePi μ) := by
     exact aestronglyMeasurable_condExpL2 hm f
