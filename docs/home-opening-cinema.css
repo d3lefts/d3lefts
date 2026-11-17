@@ -922,3 +922,8 @@ html #main>.hero.nf-opening .nf-opening-overlap-value {
 @media(max-width:680px){.nf-origin-intro{grid-template-columns:1fr;gap:18px}.nf-origin-chapters{grid-template-columns:1fr}.nf-origin-chapters article{min-height:0;padding:24px}.nf-republic-inner{grid-template-columns:1fr;gap:30px}.nf-republic-emblem{min-height:220px}.nf-republic-emblem svg{max-width:220px}.nf-republic-copy h2{font-size:clamp(35px,8vw,52px)}.nf-republic-portal{margin:35px 0}}
 @media(prefers-reduced-motion:reduce){.nf-republic-button{transition:none}.nf-republic-button:hover{transform:none}}
 
+
+/* The one-minute evidence guide reuses the established research-story layout. */
+@media(min-width:981px){.nf-first-minute .nf-origin-chapters{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.nf-first-minute .nf-origin-chapters article{min-height:0}
+.nf-first-minute.nf-origin-story{padding-block:clamp(30px,4vw,60px)}

@@ -14,8 +14,9 @@ test("The first-minute orientation is readable, bounded and evidence-status fait
  assert.ok(field.includes('id="nf-first-minute-title"'));
  for(const phrase of ["THE OBJECT","THE CHECK","THE EDGE","a named Lean declaration","separate tests"])
    assert.ok(field.includes(phrase),"Missing novice guidance: "+phrase);
- assert.equal(count(field,/<li><span>0[1-3] \/ THE /g),3);
- assert.ok(styles.includes(".nf-first-minute-steps")&&styles.includes("@media(max-width:660px)"),"Missing responsive novice guide");
+ assert.equal(count(field,/<article><span class="nf-origin-number">0[1-3] \/ THE /g),3);
+ const opening=readFileSync("docs/home-opening-cinema.css","utf8");
+ assert.ok(field.includes('class="nf-origin-story wrap nf-first-minute"')&&opening.includes(".nf-first-minute .nf-origin-chapters"),"Missing reused responsive story layout for novice guide");
 });
 
 test("NIGHTFALL introduces compounding discovery while preserving current product-space research and exact claim limits",()=>{
