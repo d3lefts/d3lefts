@@ -1,0 +1,40 @@
+name: NIGHTFALL Lean compiler lock and certificate trust boundaries
+on:
+  pull_request:
+    paths:
+      - 'lean-toolchain'
+      - 'docs/lean-compiler-lock.json'
+      - 'docs/lean-proof-passport-overlay.json'
+      - 'docs/current-lean-proof-receipts-20261116.json'
+      - 'projects/commonwealth-os/assurance/lean/passport-contract.json'
+      - '.github/actions/setup-nightfall-lean/action.yml'
+      - 'scripts/check_nightfall_compiler_lock.py'
+      - 'tests/test_nightfall_compiler_lock.py'
+      - 'scripts/check_lean_proof_passport_overlay.cjs'
+      - '.github/workflows/nightfall-compiler-lock.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'lean-toolchain'
+      - 'docs/lean-compiler-lock.json'
+      - '.github/actions/setup-nightfall-lean/action.yml'
+      - 'scripts/check_nightfall_compiler_lock.py'
+      - 'tests/test_nightfall_compiler_lock.py'
+      - '.github/workflows/nightfall-compiler-lock.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  compiler-lock-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Fail closed on any inconsistent compiler, Mathlib, receipt or theorem-contract pin
+        run: python3 scripts/check_nightfall_compiler_lock.py --checkout .
+      - name: Independent negative tests for pin and compiler identity tampering
+        run: python3 -m unittest discover -s tests -p 'test_nightfall_compiler_lock.py' -v
+      - name: Ensure no science passport was promoted by pin-only changes
+        run: node scripts/check_lean_proof_passport_overlay.cjs
