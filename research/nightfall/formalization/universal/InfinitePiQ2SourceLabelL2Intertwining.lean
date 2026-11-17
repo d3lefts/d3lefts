@@ -45,8 +45,8 @@ theorem sourceOtherProjection_lift_intertwines_bounded_ae
     (hlift2 : MemLp (fun x => g (sourceLabelMap φ x)) (2 : ENNReal)
       (Measure.infinitePi μ)) :
     (↑↑↑(sourceOtherProjection μ i hlift2.toLp)) =ᵐ[Measure.infinitePi μ]
-      (fun x => (↑↑↑(sourceOtherProjection
-        (fun j => (μ j).map (φ j)) i hg2.toLp))
+      (fun x => (sourceOtherProjection
+        (fun j => (μ j).map (φ j)) i hg2.toLp : ((j : ι) → Y j) → ℝ)
         (sourceLabelMap φ x)) := by
   let q : (j : ι) → Measure (Y j) := fun j => (μ j).map (φ j)
   have hsourceL2 :
@@ -65,7 +65,7 @@ theorem sourceOtherProjection_lift_intertwines_bounded_ae
       (Measure.infinitePi μ) (Measure.infinitePi q) :=
     original_infinite_label_measurePreserving μ φ hφ
   have htableLift :
-      (fun x => (↑↑↑(sourceOtherProjection q i hg2.toLp))
+      (fun x => (sourceOtherProjection q i hg2.toLp : ((j : ι) → Y j) → ℝ)
         (sourceLabelMap φ x)) =ᵐ[Measure.infinitePi μ]
       (fun x => (Measure.infinitePi q)[g |
         sourceOtherSigma (X := Y) i] (sourceLabelMap φ x)) := by
