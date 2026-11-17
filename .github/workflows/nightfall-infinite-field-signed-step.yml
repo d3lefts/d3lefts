@@ -4,6 +4,7 @@ on:
     paths:
       - 'research/nightfall/formalization/finite_field/InfiniteFieldSignedStep.lean'
       - 'research/nightfall/formalization/finite_field/InfiniteFieldFixedLower.lean'
+      - 'research/nightfall/formalization/finite_field/InfiniteFieldFixedUpper.lean'
       - '.github/workflows/nightfall-infinite-field-signed-step.yml'
   workflow_dispatch:
 permissions:
@@ -21,7 +22,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for f in InfiniteFieldSignedStep InfiniteFieldFixedLower; do
+          for f in InfiniteFieldSignedStep InfiniteFieldFixedLower InfiniteFieldFixedUpper; do
             src="research/nightfall/formalization/finite_field/$f.lean"
             ! grep -nE '\\b(sorry|admit)\\b' "$src"
             cp "$src" "/tmp/mathlib4/$f.lean"
