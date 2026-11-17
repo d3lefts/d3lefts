@@ -66,3 +66,27 @@ test("The public demo does not promote fictional or hypothetical data to binding
   assert.ok(core.includes(phrase),"lost evidence-scope marker "+phrase);
  }
 });
+
+test("Commonwealth public entrances share a civic identity without NIGHTFALL chrome injection",()=>{
+ const landing=text("docs/commonwealth.html"),workspace=text("docs/commonwealth-os.html"),
+   discover=text("docs/commonwealth-intelligence.html"),chrome=text("docs/site.js");
+ const family=text("docs/commonwealth-family.css");
+ for(const page of [landing,workspace,discover]){
+  assert.ok(page.includes('href="commonwealth-mark.svg"'),"Civic identity icon missing");
+  assert.ok(page.includes("Synthetic")||page.includes("synthetic")||page.includes("FICTIONAL")||page.includes("Fictional"),
+    "Synthetic demonstration scope missing");
+ }
+ assert.ok(landing.includes('class="cw-page cw-republic"'),"Primary civic visual identity missing");
+ for(const page of [workspace,discover]){
+  assert.ok(page.includes('href="commonwealth-family.css"'),"Shared civic palette missing");
+  assert.ok(page.includes('href="commonwealth.html"'),"Commonwealth home link missing");
+  assert.ok(!page.includes("N∕F")&&!page.includes("NULL FIELD"),"Research lab branding leaked into civic product");
+ }
+ assert.ok(workspace.includes('class="cw-page cw-family cw-family-os"'));
+ assert.ok(discover.includes('class="cw-family cw-family-intelligence"'));
+ assert.ok(chrome.includes('page==="commonwealth.html"||page.startsWith("commonwealth-")'),
+   "NIGHTFALL navigation injection must stop at Commonwealth boundary");
+ assert.ok(family.includes(".cw-family-os")&&family.includes(".cw-family-intelligence"));
+ assert.ok(!workspace.includes("NOV 2026 DESIGN SNAPSHOT"),"Undated product preview must not imply a dated research result");
+ assert.ok(!discover.includes("RESEARCH DEMO · 2026"),"Generic footer date returned");
+});
