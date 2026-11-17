@@ -124,3 +124,27 @@ At independence r=0, the Efron–Stein degree<=2 subspace is nontrivial. Thus th
 **Review boundary:** The infinite-chain step is an author-side analytic proof, with finite boundary identities exactly checked by CI. No Lean proof of conditional-fiber measurability, regular conditionals, tail triviality, or the final infinite L2 theorem is attached. These obligations should be separately formalized or independently reviewed before an external theorem claim.
 
 **New next theorem target:** Construct an oblique/probability-law-adapted degree-two notion with nonconstant Markov observables that is stable as r tends to 0, then prove an influence lower bound with explicit dependence penalty. The naive residual-word definition cannot serve as that degree notion on these models.
+
+
+## Theorem H — quantitative degree leakage, and why leakage alone is insufficient
+
+Let ν be **any** full-support law on a finite binary cube such that for every i and every outside configuration,
+|E_ν[X_i|X_{-i}]| <= ε <=1.
+Let P_i be the coordinate-residual for independent *uniform* fair signs (pointwise uniform averaging), and R_i the genuine ν-coordinate residual. A direct two-atom conditional-expectation calculation gives, as operators on L∞,
+||R_i-P_i|| <= ε,  ||P_i|| <=1,  ||R_i|| <=1+ε.
+If f has algebraic/Fourier degree<=2 relative to the fair product law, then P_iP_jP_k f=0 for every distinct ordered triple. Telescope the three noncommuting factors:
+
+R_iR_jR_k - P_iP_jP_k
+= (R_i-P_i)R_jR_k + P_i(R_j-P_j)R_k + P_iP_j(R_k-P_k).
+
+Consequently every bounded such f satisfies the **dimension-free quantitative leakage bound**
+
+sup_{i,j,k distinct} ||R_iR_jR_k f||_{L²(ν)}
+<= sup ||R_iR_jR_k f||∞
+<= [(1+ε)^3-1] ||f||∞.
+
+This is a reusable analytic operator perturbation estimate and **not** an influence theorem. On the nearest-neighbor Ising chain, ε<=2|r|/(1+r²), so the leakage is O(|r|) uniformly in chain length, even though exact vanishing forces constants.
+
+**Decisive obstruction to an epsilon-only Q2 repair.** Let ν be the fair mixture of two independent sign-product laws with coordinate conditional means aZ, 0<a<1, and set f=(1/n)sum_i X_i. Then f has fair-product algebraic degree one, ||f||∞<=1, and genuine site conditional bias |E_ν[X_i|X_-i]|<=a. Thus its ordered triple leakage is uniformly <=(1+a)^3-1, which can be made arbitrarily small by fixing tiny a. Yet Var_ν(f)>=a² and max_i I_i^ν(f)<=1/n²; hence Var²/max influence grows at least a^4 n². No dimension-free full-variance Q2 coefficient depending **only** on a fixed positive leakage tolerance can hold in this unrestricted dependent class.
+
+**Interpretation:** a successful dependent Q2 theorem requires a control on **global latent variance, mixing/spectral-gap structure, or a comparably global dependency quantity**, not just local conditional bias or near-commutation. Theorems C–E give one controlled latent-regime alternative. No novelty tier or Lean certification is attached to this elementary analytic perturbation corollary.
