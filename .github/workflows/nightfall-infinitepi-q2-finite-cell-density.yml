@@ -1,0 +1,61 @@
+name: NIGHTFALL infinite-product finite-cell L2 density Lean
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/universal/InfinitePiQ2FiniteCellDensity.lean'
+      - '.github/workflows/nightfall-infinitepi-q2-finite-cell-density.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: q2-infinite-finite-cell-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  original-infinite-source-finite-cell-density:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Setup pinned Lean and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile source-product L2 density and finite-cell strengthening
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/universal/InfinitePiQ2Density.lean /tmp/mathlib4/InfinitePiQ2Density.lean
+          cp research/nightfall/formalization/universal/InfinitePiQ2FiniteCellDensity.lean /tmp/mathlib4/InfinitePiQ2FiniteCellDensity.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/InfinitePiQ2Density.olean InfinitePiQ2Density.lean)
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/InfinitePiQ2FiniteCellDensity.olean InfinitePiQ2FiniteCellDensity.lean)
+      - name: Strict named declarations and standard axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-infinite
+          python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiQ2FiniteCellDensity.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InfinitePiQ2FiniteCellDensity.sourceFiniteCellAlgebra_generates \
+            --decl Nightfall.InfinitePiQ2FiniteCellDensity.sourceFiniteCellAlgebra_measure_dense \
+            --decl Nightfall.InfinitePiQ2FiniteCellDensity.sourceFiniteCellAlgebra_L2_dense \
+            --decl Nightfall.InfinitePiQ2FiniteCellDensity.sourceFiniteCellAlgebra_L2_approx \
+            --json-out lean-receipts/q2-infinite/finite-cell-density.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-infinite/finite-cell-density.json
+      - name: Exact source provenance
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/q2-infinite
+          git rev-parse HEAD > lean-receipts/q2-infinite/finite-cell-head.txt
+          sha256sum research/nightfall/formalization/universal/InfinitePiQ2FiniteCellDensity.lean > lean-receipts/q2-infinite/finite-cell-sha256.txt
+      - name: Upload exact receipt
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: q2-infinite-finite-cell-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/q2-infinite
+          if-no-files-found: warn
