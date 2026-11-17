@@ -107,7 +107,8 @@ theorem sourceOtherProjectionCLM_intertwines_all_L2
       rw [← hrep]
       exact hstep
     simpa only [Function.comp_apply, ContinuousLinearMap.comp_apply,
-      sourceOtherProjectionCLM_apply] using hgoal
+      sourceOtherProjectionCLM_apply,
+      LinearIsometry.coe_toContinuousLinearMap] using hgoal
   apply ContinuousLinearMap.ext
   intro f
   exact congrFun hfun f
