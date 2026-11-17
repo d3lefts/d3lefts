@@ -19,6 +19,8 @@ SEEDS = (
     "ActualSourceQ2107Terminal",
     "InfinitePiQ2Limit",
     "InfinitePiQ2SourceHilbertTensor",
+    "InfinitePiQ2AllL2LabelIntertwining",
+    "InfinitePiQ2RangeProjectionTransfer",
     "Q2ShiftedConditionalTargets",
 )
 EXTERNAL_PREFIXES = (
