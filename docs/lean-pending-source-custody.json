@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 20,
+  "revision": 21,
   "as_of": "2026-11-17 UTC",
   "source_commit": "b9bd66f68e3c1f59896105e1b0d826dacedab6bf",
-  "scope": "Exact pending source custody includes newly promoted original-product heat-bath source, with frozen 67 historical records untouched. Scoped original-head pinned Lean CI for the pointwise source-level identity is separately recorded; full infinite-product L² terminal not certified.",
+  "scope": "Exact pending source custody includes newly promoted original-product heat-bath source, with frozen 67 historical records untouched. Scoped original-head pinned Lean CI for the pointwise source-level identity is separately recorded; full infinite-product L² terminal not certified. Adds exact source custody for six newly merged or stacked original-product finite-label source lemmas, with separately scoped named kernel receipts and no promotion to unconditional Q2.",
   "sources": [
     {
       "path": "research/nightfall/formalization/agent_safety/ArbitraryAgentSafety.lean",
@@ -2460,6 +2460,23 @@
       "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
     },
     {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2ActiveFiniteLabelCondExp.lean",
+      "source_blob_sha": "85bfac86e779e0810f7ee519363be1a059eeeb49",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source custody only. Separate exact-head strict Lean 4.36.0-rc2 named source and axiom run 44109527366: bounded finite-label original-product active-site conditional expectation. Not unconditional infinite-product Q2, no nonauthor mathematical review or novelty claim.",
+      "parallel_scoped_named_ci": {
+        "source_commit": "898d9821cd587018be11e0243daaf99545ccb926",
+        "run": 44109527366,
+        "status": "source_scoped_original_head_only",
+        "kernel": "strict_named_compilation",
+        "theorem_scope": "bounded finite-label original-product active-site conditional expectation"
+      }
+    },
+    {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2AdjointTransfer.lean",
       "source_blob_sha": "55ca6bdb9a3d8cbf8f1d15cb93f51b9e0a5bb7c6",
       "classification": "unreviewed-source",
@@ -2478,6 +2495,23 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "PR #668 merged pinned Lean source for finite anchored source restrictions, scoped separately by exact PR-head workflow. This custody record asserts source integrity only, not a complete arbitrary-product Q2 theorem."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2BoundedLabelIntertwining.lean",
+      "source_blob_sha": "c70ab2a72af3f80826576f32c81fcc07973994af",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source custody only. Separate exact-head strict Lean 4.36.0-rc2 named source and axiom run 44114540604: bounded original-source/label condExp intertwined a.e., not arbitrary L2 operator. Not unconditional infinite-product Q2, no nonauthor mathematical review or novelty claim.",
+      "parallel_scoped_named_ci": {
+        "source_commit": "3a7b654fdcd0ec03fe871bb58559cee673aca76b",
+        "run": 44114540604,
+        "status": "source_scoped_original_head_only",
+        "kernel": "strict_named_compilation",
+        "theorem_scope": "bounded original-source/label condExp intertwined a.e., not arbitrary L2 operator"
+      }
     },
     {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2DegreeAverage.lean",
@@ -2550,6 +2584,23 @@
       "receipt_scope": "Exact Git blob registered from merged protected-main source a8142aacf0ad2d4d7864d7693af679140da436a0. Custody only, not a new named-declaration Lean receipt, external review, or originality/priority certificate; any existing scoped compiler evidence is tracked separately."
     },
     {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2FiniteRankConditional.lean",
+      "source_blob_sha": "6cfdc67f6bcb25aaa0718c4632e7525b0dc12715",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source custody only. Separate exact-head strict Lean 4.36.0-rc2 named source and axiom run 44103723868: actual source-coordinate finite-rank conditional expectation; not general finite-cell projection. Not unconditional infinite-product Q2, no nonauthor mathematical review or novelty claim.",
+      "parallel_scoped_named_ci": {
+        "source_commit": "034c2a27d7e6c0867321cd3bdfab43391c66a0d9",
+        "run": 44103723868,
+        "status": "source_scoped_original_head_only",
+        "kernel": "strict_named_compilation",
+        "theorem_scope": "actual source-coordinate finite-rank conditional expectation; not general finite-cell projection"
+      }
+    },
+    {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2FiniteSupportedTerminal.lean",
       "source_blob_sha": "d361023a0ae311ce2ed3b83d828f2e42ef49c94f",
       "classification": "unreviewed-source",
@@ -2570,6 +2621,23 @@
       "receipt_scope": "Exact Git blob registered from merged protected-main source a8142aacf0ad2d4d7864d7693af679140da436a0. Custody only, not a new named-declaration Lean receipt, external review, or originality/priority certificate; any existing scoped compiler evidence is tracked separately."
     },
     {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2FrozenLabelMeasurable.lean",
+      "source_blob_sha": "974dde0fc4c7296b55c859ee3285aca1780b4bbc",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source custody only. Separate exact-head strict Lean 4.36.0-rc2 named source and axiom run 44105162971: original source complement-measurability of frozen finite-label factors. Not unconditional infinite-product Q2, no nonauthor mathematical review or novelty claim.",
+      "parallel_scoped_named_ci": {
+        "source_commit": "66b75e48347aa6f67167992a54621693fadac81c",
+        "run": 44105162971,
+        "status": "source_scoped_original_head_only",
+        "kernel": "strict_named_compilation",
+        "theorem_scope": "original source complement-measurability of frozen finite-label factors"
+      }
+    },
+    {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2HeterogeneousAlphabet.lean",
       "source_blob_sha": "2fc2e12afbbaa84af15d73b9839d06c715f41358",
       "classification": "unreviewed-source",
@@ -2588,6 +2656,23 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2LabelAtomMass.lean",
+      "source_blob_sha": "05bd4d9603f2dda666d7d42afeed5d6577bdcde2",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source custody only. Separate exact-head strict Lean 4.36.0-rc2 named source and axiom run 44111260622: finite-label source pushforward atom weights and genuine heat-bath sums. Not unconditional infinite-product Q2, no nonauthor mathematical review or novelty claim.",
+      "parallel_scoped_named_ci": {
+        "source_commit": "1bd857f68888d0622121d5e015662d7dcb84f456",
+        "run": 44111260622,
+        "status": "source_scoped_original_head_only",
+        "kernel": "strict_named_compilation",
+        "theorem_scope": "finite-label source pushforward atom weights and genuine heat-bath sums"
+      }
     },
     {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2Limit.lean",
@@ -2618,6 +2703,23 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact merged Git blob at dc14a2830ab834385cd30cdad94d38bdd86ceea0; pending historical custody only. Existing named-declaration kernel receipts are separate and retain their exact domain. No new terminal or human/novelty certification from this registry."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2SourceBoundedCondExp.lean",
+      "source_blob_sha": "ca17c937bf7b2fa3e6280d43bf3b2da888001385",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source custody only. Separate exact-head strict Lean 4.36.0-rc2 named source and axiom run 44107109905: source finite-information condExp preserves essential bounds under original product. Not unconditional infinite-product Q2, no nonauthor mathematical review or novelty claim.",
+      "parallel_scoped_named_ci": {
+        "source_commit": "9b1cbe1b77c363ebc8a2d16a6e951774a2d35cdb",
+        "run": 44107109905,
+        "status": "source_scoped_original_head_only",
+        "kernel": "strict_named_compilation",
+        "theorem_scope": "source finite-information condExp preserves essential bounds under original product"
+      }
     },
     {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2TaggedSourceTransport.lean",
