@@ -94,7 +94,8 @@ theorem sourceOtherProjectionCLM_intertwines_all_L2
       apply MemLp.of_bound
         (hg.comp (sourceLabelMap_measurable φ hφ)).aestronglyMeasurable B
       exact Filter.Eventually.of_forall (fun x => by
-        simpa only [Real.norm_eq_abs] using hbound (sourceLabelMap φ x))
+        simpa only [Function.comp_apply, Real.norm_eq_abs] using
+          hbound (sourceLabelMap φ x))
     have hstep :=
       sourceOtherProjection_lift_intertwines_bounded_Lp μ φ hφ
         (g : ((j : ι) → Y j) → ℝ) hg B hB hbound i hg2 hlift2
@@ -105,7 +106,7 @@ theorem sourceOtherProjectionCLM_intertwines_all_L2
           (fs : Lp ℝ (2 : ENNReal) (Measure.infinitePi q))) := by
       rw [← hrep]
       exact hstep
-    simpa only [ContinuousLinearMap.comp_apply,
+    simpa only [Function.comp_apply, ContinuousLinearMap.comp_apply,
       sourceOtherProjectionCLM_apply] using hgoal
   apply ContinuousLinearMap.ext
   intro f
