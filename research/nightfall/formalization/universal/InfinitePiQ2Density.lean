@@ -135,6 +135,19 @@ theorem sourceFiniteCoordinateSigma_le (F : Finset ι) :
       (inferInstance : MeasurableSpace ((i : ι) → X i)) := by
   exact (Finset.measurable_restrict F).comap_le
 
+/-- Enlarging a finite coordinate set enlarges the corresponding
+information σ-algebra; this is the ordering needed for the directed
+finite-information approximation, with arbitrary ambient index type. -/
+theorem sourceFiniteCoordinateSigma_mono
+    {F G : Finset ι} (hFG : F ⊆ G) :
+    sourceFiniteCoordinateSigma (X := X) F ≤
+      sourceFiniteCoordinateSigma (X := X) G := by
+  unfold sourceFiniteCoordinateSigma
+  refine MeasurableSpace.comap_le_comap_of_eq_comp
+    (Finset.restrict₂ hFG) (Finset.measurable_restrict₂ hFG) ?_
+  funext x i
+  rfl
+
 /-- The true finite-information conditional expectation is L²
 contractive for arbitrary product laws, including uncountable indices. -/
 theorem source_finite_info_L2_contract
