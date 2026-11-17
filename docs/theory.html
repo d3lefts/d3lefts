@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0c1214">
+<meta name="description" content="A source-linked atlas of theoretical mathematics and computer science: influence inequalities, information complexity, exact constructions, quantum operators, formal proofs and agent security. Claims, certificates, and open problems remain distinct.">
+<meta property="og:title" content="Theory Atlas — NIGHTFALL">
+<meta property="og:description" content="Trace a theorem from its intellectual roots through concrete constructions, certified claims and unsolved proof obligations.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://d3lefts.github.io/d3lefts/theory.html">
+<link rel="canonical" href="https://d3lefts.github.io/d3lefts/theory.html">
+<title>Theory Atlas — Mathematics &amp; Computer Science · NIGHTFALL</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="theory.css">
+<script src="site.js" defer></script>
+<script src="theory-map-data.js" defer></script>
+<script src="theory.js" defer></script>
+</head>
+<body class="theory-page">
+<a class="skip" href="#main">Skip to theory</a>
+<div class="topline"></div>
+<header class="header"><div class="wrap header-inner">
+<a class="brand" href="index.html" aria-label="NIGHTFALL home"><span class="mark" aria-hidden="true">N∕F</span><span class="brand-copy">NIGHTFALL <span>THEORY ATLAS / MATHEMATICS &amp; CS</span></span></a>
+<button type="button" class="menu-toggle" id="menu-button" aria-label="Toggle navigation" aria-controls="site-nav" aria-expanded="false">MENU +</button>
+<nav id="site-nav" class="nav" aria-label="Primary navigation"><a href="index.html">Research</a><a href="theory.html" aria-current="page">Theory atlas</a><a href="constellation.html">Mechanisms</a><a class="nav-call" href="review.html">Independent review ↗</a></nav>
+</div></header>
+<main id="main">
+<section class="theory-hero" aria-labelledby="theory-title">
+<div class="theory-hero-inner wrap">
+<div class="theory-hero-top"><span>NIGHTFALL / THEORY · AN AUDITABLE READING MAP</span><span>MATHEMATICS × THEORETICAL COMPUTER SCIENCE</span></div>
+<div class="theory-hero-grid">
+<div class="theory-hero-copy">
+<p class="theory-kicker">01 / WHY THIS MAP EXISTS</p>
+<h1 id="theory-title">What do we <em>actually</em> know?</h1>
+<p class="theory-lead">A theorem never stands alone. It rests on definitions, prior results, representations and proof obligations that can be easy to lose when the answer is all we publish.</p>
+<p class="theory-lead-secondary">This is a field guide to the mathematics and computer science NIGHTFALL works on: what the literature establishes, what our code can verify, and which arrows are still missing. It is a curated map, <strong>not a claim to have read or audited the entire field.</strong></p>
+<div class="theory-actions"><a class="theory-primary" href="#explore">Explore the research map <span aria-hidden="true">↘</span></a><a href="#method">How this was checked ↗</a></div>
+</div>
+<div class="theory-hero-art" aria-hidden="true">
+<svg viewBox="0 0 520 550" preserveAspectRatio="xMidYMid meet" role="presentation">
+<defs><radialGradient id="theory-halo"><stop offset="0" stop-color="#b6a08a" stop-opacity=".17"/><stop offset="1" stop-color="#b6a08a" stop-opacity="0"/></radialGradient></defs>
+<circle cx="255" cy="276" r="243" fill="url(#theory-halo)"/>
+<g stroke="#7d8f91" stroke-opacity=".25" fill="none">
+<ellipse cx="257" cy="275" rx="205" ry="114" transform="rotate(-32 257 275)"/>
+<ellipse cx="257" cy="275" rx="196" ry="153" transform="rotate(42 257 275)"/>
+<ellipse cx="257" cy="275" rx="120" ry="223" transform="rotate(12 257 275)"/>
+<path d="M45 440 166 329 256 253 367 187 483 111M66 120 182 178 255 253 374 341 461 438"/>
+</g>
+<g fill="#cbb398" stroke="#d9c6ac" stroke-width="1">
+<circle cx="45" cy="440" r="3"/><circle cx="166" cy="329" r="5"/><circle cx="256" cy="253" r="10"/><circle cx="367" cy="187" r="5"/><circle cx="483" cy="111" r="3"/>
+<circle cx="66" cy="120" r="3"/><circle cx="182" cy="178" r="5"/><circle cx="374" cy="341" r="5"/><circle cx="461" cy="438" r="3"/>
+</g>
+<g stroke="#e4c5a5" stroke-opacity=".65" fill="none"><circle cx="256" cy="253" r="26"/><circle cx="256" cy="253" r="44" stroke-dasharray="1 10" stroke-linecap="round"/></g>
+<g fill="#b2b8b5" font-family="monospace" font-size="10" letter-spacing="2"><text x="31" y="93">ASSUMPTION</text><text x="352" y="152">CONSTRUCTION</text><text x="304" y="270">CERTIFICATE</text><text x="321" y="482">OPEN EDGE</text></g>
+</svg>
+<div class="theory-art-caption"><span>THE INFERENCE CHAIN</span><strong>Premise → mechanism → proof → limitation</strong><small>No edge becomes a theorem just because it is drawn.</small></div>
+</div>
+</div>
+<div class="theory-metric-rail" aria-label="Scope of the curated atlas">
+<div><strong id="theory-fields-count">06</strong><span>Research corridors</span></div>
+<div><strong id="theory-node-count">24</strong><span>Curated concepts and claims</span></div>
+<div><strong id="theory-edge-count">24</strong><span>Typed relationships</span></div>
+<div><strong>0</strong><span>Claimed field-wide audits</span></div>
+</div>
+</div>
+</section>
+
+<section class="theory-statement wrap" id="story" aria-labelledby="theory-story-heading">
+<div class="theory-statement-number">THE PROBLEM / NOT JUST THE ANSWER</div>
+<div class="theory-statement-main">
+<h2 id="theory-story-heading">The missing step is often <em>the whole problem.</em></h2>
+<p>A proof of an influence inequality on the Boolean cube does not automatically apply to every product probability law. A finite witness for an optimization problem is not proof of the global optimum. An accepted Lean declaration verifies its own assumptions—not the last theorem someone hopes to derive from it.</p>
+<p>Our research program sits at these boundaries. Its most reusable result may be a representation change, a certified operator identity, a counterexample to a proposed shortcut, or a way to track whether evidence survives a change in assumptions.</p>
+<div class="theory-story-links"><a href="mathematical-results.html">Read the mathematical statements ↗</a><a href="active-proof-passport.html">Inspect scoped proof passports ↗</a></div>
+</div>
+</section>
+
+<section class="theory-explorer-section" id="explore" aria-labelledby="explore-title">
+<div class="wrap">
+<div class="theory-section-head"><span class="theory-kicker">02 / THE RESEARCH LANDSCAPE</span><h2 id="explore-title">Follow the <em>dependencies.</em></h2><p>Twenty-four curated entries arranged by their role in an argument—not by invented citation counts. Select a node to inspect its exact scope, strongest available evidence, limits and next decisive check. Dashed edges mark unresolved transfers.</p></div>
+<form class="theory-controls" role="search" onsubmit="return false" aria-label="Filter the theory atlas">
+<label for="theory-search">SEARCH<input id="theory-search" type="search" autocomplete="off" placeholder="A theorem, field or method…"></label>
+<label for="theory-field">RESEARCH CORRIDOR<select id="theory-field"><option value="all">All six corridors</option></select></label>
+<label for="theory-status">EVIDENCE TYPE<select id="theory-status">
+<option value="all">All statuses</option>
+<option value="published">Published antecedent</option>
+<option value="kernel">Scoped Lean certificate</option>
+<option value="finite">Exact finite witness</option>
+<option value="analytic">Analytic / unrefereed</option>
+<option value="conditional">Conditional result</option>
+<option value="open">Open problem</option>
+<option value="method">Documented method</option>
+</select></label>
+<button type="button" id="theory-reset">Reset filters</button>
+</form>
+<div class="theory-explorer-grid">
+<div class="theory-graph-panel">
+<div class="theory-graph-caption"><span id="theory-visible-count" role="status" aria-live="polite">24 entries visible</span><span>CLICK A NODE / FOLLOW AN EDGE</span></div>
+<div class="theory-stage-grid" aria-hidden="true"><span>Foundations</span><span>Constructions</span><span>Transfers</span><span>Frontiers</span></div>
+<div id="theory-canvas" class="theory-canvas">
+<svg id="theory-connectors" class="theory-connectors" aria-hidden="true"></svg>
+<div id="theory-nodes" class="theory-nodes" aria-label="Research concepts by field and stage"></div>
+</div>
+<p class="theory-graph-note">Line styles describe the relationship, not the truth of either endpoint. The complete evidence lives at the linked source. On narrow screens, the graph becomes a keyboard-accessible list.</p>
+</div>
+<aside class="theory-inspector" id="theory-inspector" aria-label="Selected theorem or topic">
+<div class="theory-inspector-head"><span>INSPECT THE CLAIM</span><span id="theory-inspector-status">CURATED MAP</span></div>
+<h3 id="theory-inspector-title">Select a node.</h3>
+<p id="theory-inspector-intro">Each node has an exact scope, an evidence type, a known limitation and a next test. Clicking it does not promote its proof status.</p>
+<dl class="theory-proof-rail">
+<div><dt>Scope</dt><dd id="theory-inspector-scope">Choose a theorem, construction, method or open problem from the map.</dd></div>
+<div><dt>Evidence</dt><dd id="theory-inspector-evidence">Source links are curated. No automated literature ingestion has run for this atlas.</dd></div>
+<div><dt>Open / limitation</dt><dd id="theory-inspector-limit">A public model or a well-typed graph edge is not itself a certificate.</dd></div>
+<div><dt>Cheapest decisive check</dt><dd id="theory-inspector-next">Inspect one exact source and challenge its assumption-to-conclusion step.</dd></div>
+</dl>
+<a id="theory-inspector-source" class="theory-source-link" href="research.html">Open the public research library ↗</a>
+<div class="theory-linked"><h4>CONNECTED ENTRIES</h4><div id="theory-related"><p>Choose a node to display its typed relationships.</p></div></div>
+</aside>
+</div>
+<div class="theory-legend" aria-label="Relationship types"><span><i class="theory-legend-line"></i> Documented context / method</span><span><i class="theory-legend-line theory-legend-line--compare"></i> Model comparison</span><span><i class="theory-legend-line theory-legend-line--open"></i> Unproved bridge</span></div>
+</div>
+</section>
+
+<section class="theory-field-guide wrap" id="corridors" aria-labelledby="corridors-title">
+<div class="theory-section-head"><span class="theory-kicker">03 / SIX CORRIDORS</span><h2 id="corridors-title">The questions that organize the field.</h2><p>Every corridor connects classical mathematics, a source-bearing NIGHTFALL contribution, and a concrete open obligation. They are research selections, not a bibliometric classification of the whole discipline.</p></div>
+<div id="theory-corridor-list" class="theory-corridor-list"></div>
+</section>
+
+<section class="theory-narratives" aria-labelledby="narratives-title">
+<div class="wrap">
+<div class="theory-section-head"><span class="theory-kicker">04 / THREE RESEARCH CASES</span><h2 id="narratives-title">Three ways a strong result <em>can still be incomplete.</em></h2></div>
+<div class="theory-cases">
+<article><span>CASE 01 / PRODUCT MEASURES</span><h3>Finite is not infinite.</h3><p>The original-source finite Q2 theorem has a kernel-checked coefficient near 105.416. The arbitrary-index theorem needs a valid finite-information approximation, source-faithful degree and influence transport, and the final norm limit. A checked intermediate operator equality does not close that chain.</p><a href="https://github.com/d3lefts/d3lefts/blob/main/research/catalogue/README.md" target="_blank" rel="noopener noreferrer">Read the exact scope ledger ↗</a></article>
+<article><span>CASE 02 / EXTREMAL METHODS</span><h3>A witness is not an optimum.</h3><p>A rational step-function construction provides an upper bound for Erdős minimum overlap. Even a fully replayed integer certificate does not supply a matching lower bound. The missing tool is a global argument—not another decimal digit.</p><a href="erdos-paper.html">Inspect the finite construction ↗</a></article>
+<article><span>CASE 03 / SAFE AGENTS</span><h3>Safety is not availability.</h3><p>A restrictive policy can prevent forbidden actions by also preventing legitimate ones. The Price of Permission asks for the resource cost of satisfying both, under authenticated source freshness and effect-time enforcement. Synthetic or finite results do not certify production security.</p><a href="permission-lab.html">Compare the bounded models ↗</a></article>
+</div></div></section>
+
+<section class="theory-method wrap" id="method" aria-labelledby="method-title">
+<div class="theory-section-head"><span class="theory-kicker">05 / COVERAGE AND CHECKING</span><h2 id="method-title">No invented coverage. <em>No inherited certainty.</em></h2></div>
+<div class="theory-method-grid">
+<div><h3>What this edition actually covers</h3><p>The atlas contains a <strong>manually selected set of 24 entries and 24 typed relationships</strong>, spanning six areas of mathematics and computer science. Some entries are published prior art, some are NIGHTFALL formal subresults or exact constructions, and some are explicitly open conjectures.</p><p>It does not contain a citation crawl, citation centrality rankings, paper-by-paper error counts, full-text screening, human referee verdicts, or an independent audit of every work it links. The status descriptions correspond to an editorial source snapshot and can become stale as the repository evolves.</p><p><strong>Snapshot:</strong> source and claim scope reviewed against the public repository catalogue as of <time datetime="2026-11-17">17 November 2026</time>. For newer theorem status, use the exact source, theorem statement, and associated CI receipt rather than trusting this static map.</p></div>
+<div><h3>What would make it a field-scale audit?</h3>
+<ol class="theory-method-steps">
+<li><strong>Define the corpus.</strong> Choose subfields and inclusion rules before counting papers; preserve full bibliographic provenance.</li>
+<li><strong>Extract claims, not adjectives.</strong> Normalize theorems, assumptions, equations, models and cited dependencies; record which full texts are accessible.</li>
+<li><strong>Recompute selectively.</strong> Build executable checkers for impactful claims; distinguish a plausible flag from a reproducible counterexample.</li>
+<li><strong>Adversarially verify.</strong> Separate construction from independent audit; publish versions, errors, contradictions and retractions.</li>
+<li><strong>Preserve the graph.</strong> Keep every source, mechanism, proof, limitation and possible transfer linked to its exact certificate.</li>
+</ol>
+</div>
+</div>
+<div class="theory-method-footer"><p>Casey Handmer’s <a href="https://science.caseyhandmer.com/physics/" target="_blank" rel="noopener noreferrer">physics field audit</a> inspired the narrative-plus-map approach. This edition is independently written and has a deliberately narrower, fully disclosed evidence base.</p><a href="review.html">Challenge a claim or report a correction ↗</a></div>
+</section>
+
+<section class="theory-conclusion">
+<div class="wrap"><span class="theory-kicker">THE OPEN QUESTION BEHIND THE OPEN QUESTIONS</span><h2>Can we make the <em>next proof</em> easier to find?</h2><p>That is the experiment. Preserve the definitions, the source, the checked operator, the counterexample, and the exact missing implication. Let each discovery change the map without pretending the next discovery has already happened.</p><div class="theory-actions"><a class="theory-primary" href="constellation.html">Explore mechanisms and transfers ↗</a><a href="active-proof-passport.html">Read the Proof Passports ↗</a></div></div>
+</section>
+</main>
+<footer class="theory-footer"><div class="wrap"><span>NIGHTFALL / MATHEMATICS AND THEORETICAL CS</span><span>THEORY ATLAS · CURATED, SOURCE-BOUND, OPEN TO CORRECTION</span><a href="index.html">Back to NIGHTFALL ↑</a></div></footer>
+</body>
+</html>
