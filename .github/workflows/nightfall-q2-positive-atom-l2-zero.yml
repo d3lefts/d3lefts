@@ -27,6 +27,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          cp research/nightfall/formalization/universal/InfinitePiQ2DegreeRetraction.lean /tmp/mathlib4/InfinitePiQ2DegreeRetraction.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/InfinitePiQ2DegreeRetraction.olean InfinitePiQ2DegreeRetraction.lean)
           cp research/nightfall/formalization/universal/InfinitePiQ2PositiveAtomL2Zero.lean /tmp/mathlib4/InfinitePiQ2PositiveAtomL2Zero.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/InfinitePiQ2PositiveAtomL2Zero.olean InfinitePiQ2PositiveAtomL2Zero.lean)
       - name: Strict named declarations and standard-axiom check
@@ -41,6 +43,9 @@ jobs:
             --decl Nightfall.InfinitePiQ2PositiveAtomL2Zero.nativeMass_pos_of_supported \
             --decl Nightfall.InfinitePiQ2PositiveAtomL2Zero.nativeMass_nonneg \
             --decl Nightfall.InfinitePiQ2PositiveAtomL2Zero.native_L2_zero_implies_supported_pointwise_zero \
+            --decl Nightfall.InfinitePiQ2PositiveAtomL2Zero.sourceSupported_update \
+            --decl Nightfall.InfinitePiQ2PositiveAtomL2Zero.delta_zero_on_source_support \
+            --decl Nightfall.InfinitePiQ2PositiveAtomL2Zero.native_L2_zero_implies_supported_mixed_third_zero \
             --json-out lean-receipts/q2-infinite/positive-atom-l2-zero.json
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-infinite/positive-atom-l2-zero.json
       - name: Preserve original source receipt
