@@ -39,7 +39,9 @@ jobs:
             "sourceFiniteCoordinateSigma_le_other_of_not_mem",
             "sourceOtherProjection_fixes_inactive_cylinder",
             "sourceCoordinateResidual_inactive_cylinder_zero",
-            "sourceCoordinateInfluence_inactive_cylinder_zero"
+            "sourceCoordinateInfluence_inactive_cylinder_zero",
+            "sourceOtherProjection_fixes_inactive_finiteProjection",
+            "sourceCoordinateInfluence_inactive_finiteProjection_zero"
           ]
           for decl in decls:
               name = f"Nightfall.InfinitePiQ2InactiveSourceSigma.{decl}"
