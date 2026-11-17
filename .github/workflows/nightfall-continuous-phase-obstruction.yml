@@ -4,6 +4,7 @@ on:
     paths:
       - 'research/nightfall/formalization/finite_field/ContinuousPhaseCrossing.lean'
       - 'research/nightfall/formalization/finite_field/ContinuousPhaseOracleObstruction.lean'
+      - 'research/nightfall/formalization/finite_field/ContinuousPhaseAllDimensions.lean'
       - '.github/workflows/nightfall-continuous-phase-obstruction.yml'
   workflow_dispatch:
 permissions:
@@ -21,7 +22,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for f in ContinuousPhaseCrossing ContinuousPhaseOracleObstruction; do
+          for f in ContinuousPhaseCrossing ContinuousPhaseOracleObstruction ContinuousPhaseAllDimensions; do
             src="research/nightfall/formalization/finite_field/$f.lean"
             if [ ! -f "$src" ]; then continue; fi
             ! grep -nE '\b(sorry|admit)\b' "$src"
