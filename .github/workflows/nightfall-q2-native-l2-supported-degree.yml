@@ -5,6 +5,7 @@ on:
     paths:
       - 'research/nightfall/formalization/universal/InfinitePiQ2NativeL2SupportedDegree.lean'
       - 'research/nightfall/formalization/universal/InfinitePiQ2PositiveAtomL2Zero.lean'
+      - 'research/nightfall/formalization/universal/InfinitePiQ2NativeSupportedTerminal.lean'
       - 'research/nightfall/formalization/universal/InfinitePiQ2TripleResidualDegree.lean'
       - '.github/workflows/nightfall-q2-native-l2-supported-degree.yml'
   workflow_dispatch:
