@@ -42,6 +42,8 @@ jobs:
             --decl Nightfall.InfinitePiQ2FiniteBooleanTestFactor.finiteTests_isSetAlgebra \
             --decl Nightfall.InfinitePiQ2FiniteBooleanTestFactor.squareCylinder_hasFiniteTests \
             --decl Nightfall.InfinitePiQ2FiniteBooleanTestFactor.sourceFiniteCellAlgebra_hasFiniteTests \
+            --decl Nightfall.InfinitePiQ2FiniteBooleanTestFactor.finiteTests_refine \
+            --decl Nightfall.InfinitePiQ2FiniteBooleanTestFactor.finiteFamily_sourceCells_commonTests \
             --json-out lean-receipts/q2-infinite/finite-boolean-factor.json
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-infinite/finite-boolean-factor.json
       - name: Preserve exact source provenance
