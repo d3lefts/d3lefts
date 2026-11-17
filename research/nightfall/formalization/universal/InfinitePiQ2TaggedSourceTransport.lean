@@ -19,6 +19,7 @@ namespace Nightfall.InfinitePiQ2TaggedSourceTransport
 
 open Finset
 open Nightfall.InfinitePiQ2HeterogeneousAlphabet
+open Nightfall.InfinitePiQ2DegreeRetraction
 open Nightfall.Observability.ActualProductMergeTower
 
 variable {ι : Type} [Fintype ι] [DecidableEq ι]
@@ -49,10 +50,13 @@ theorem embed_decode_correct
     (hw : CorrectTags A w) :
     embedWord A (decodeWord A w) = w := by
   funext i
-  obtain ⟨j, a⟩ := w i
-  have hji : j = i := hw i
-  subst j
-  simp [embedWord, decodeWord, decodeLetter, embedLetter, mapInputs]
+  change embedLetter A i (decodeLetter A i (w i)) = w i
+  cases hwi : w i with
+  | mk j a =>
+    have hj : j = i := by
+      simpa only [hwi] using hw i
+    subst j
+    simp [decodeLetter, embedLetter, hwi]
 
 /-- Any wrong tag makes the complete tagged original source weight
 EXACTLY zero; no normalization or positivity assumption is needed. -/
@@ -124,7 +128,12 @@ theorem originalSource_sum_tagged_exact
     exact Finset.mem_univ _
   · intro w hw
     have hgood : CorrectTags A w := (Finset.mem_filter.mp hw).2
-    simp only [G, originalMass_correct_tags A p w hgood]
+    dsimp [G]
+    rw [originalMass_correct_tags A p w hgood]
+  · intro x hx
+    refine ⟨embedWord A x, ?_, ?_⟩
+    · exact Finset.mem_filter.mpr ⟨Finset.mem_univ _, embedWord_correct A x⟩
+    · exact decode_embedWord A x
   · intro w hw v hv hEq
     have hwgood : CorrectTags A w := (Finset.mem_filter.mp hw).2
     have hvgood : CorrectTags A v := (Finset.mem_filter.mp hv).2
@@ -133,9 +142,5 @@ theorem originalSource_sum_tagged_exact
         (embed_decode_correct A w hwgood).symm
       _ = embedWord A (decodeWord A v) := by rw [hEq]
       _ = v := embed_decode_correct A v hvgood
-  · intro x hx
-    refine ⟨embedWord A x, ?_, ?_⟩
-    · exact Finset.mem_filter.mpr ⟨Finset.mem_univ _, embedWord_correct A x⟩
-    · exact decode_embedWord A x
 
 end Nightfall.InfinitePiQ2TaggedSourceTransport
