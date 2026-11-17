@@ -197,6 +197,11 @@
     }
     renderNodes(visible);
     renderDetail();
+    // Read-only bridge: explicit node IDs, no status inference from graph edges.
+    $("theory-inspector").dataset.theoryNode = chosen || "";
+    document.dispatchEvent(new CustomEvent("nightfall:theory-node-change", {
+      detail: {nodeId: chosen || null}
+    }));
     counts.visible.textContent = visible.length + " of " + data.nodes.length + " curated entries visible";
     schedule();
   }
