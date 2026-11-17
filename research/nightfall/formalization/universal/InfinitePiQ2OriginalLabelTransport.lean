@@ -250,7 +250,11 @@ theorem sourcePairRefresh_measurable [DecidableEq ι] (i : ι) :
   change Measurable
     (fun (z : (j : ι) → X j × X j) =>
       Function.update (sourcePairFirst z) i (z i).2)
-  fun_prop
+  have hf : Measurable (fun (z : (j : ι) → X j × X j) =>
+      sourcePairFirst z) := sourcePairFirst_measurable
+  have hg : Measurable (fun (z : (j : ι) → X j × X j) =>
+      (z i).2) := by fun_prop
+  exact measurable_update'.comp (hf.prodMk hg)
 
 /-- Per-coordinate independent refreshing commutes *pointwise* with
 arbitrary source cell labels. The same paired source is used on both
@@ -303,7 +307,6 @@ theorem sourcePairedRefreshEnergy_label_exact
           g (sourceLabelMap φ (sourcePairRefresh i z))) ^ 2 / 2 =
       G (fun j => Prod.map (φ j) (φ j) (z j)) := by
     rw [hfirst z, hsecond z]
-    rfl
   calc
     sourcePairedRefreshEnergy μ i (fun x => g (sourceLabelMap φ x)) =
         ∫ z, G (fun j => Prod.map (φ j) (φ j) (z j))
