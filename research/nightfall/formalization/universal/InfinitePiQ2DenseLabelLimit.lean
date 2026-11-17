@@ -66,7 +66,7 @@ theorem source_q2_bound_of_mean_preserving_closure
   have hclosure : closure S ⊆ {g | Q g ≤ R} :=
     closure_minimal hsub hclosed
   have hresult := hclosure hf
-  simpa only [Q, c, sourceL2Variance] using hresult
+  simpa only [Set.mem_setOf_eq, Q, c, sourceL2Variance] using hresult
 
 /-- Epsilon form of the actual original-product finite-LABEL limit.
 For every ε, a genuine label projection with:
