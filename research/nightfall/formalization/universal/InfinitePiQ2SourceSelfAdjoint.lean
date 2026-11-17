@@ -30,9 +30,9 @@ continuous-linear map, not a supplied or surrogate operator. -/
 noncomputable def sourceOtherProjectionCLM (i : ι) :
     Lp ℝ (2 : ENNReal) (Measure.infinitePi μ) →L[ℝ]
       Lp ℝ (2 : ENNReal) (Measure.infinitePi μ) :=
-  (condExpL2 ℝ ℝ (sourceOtherSigma_le (X := X) i) :
-    Lp ℝ (2 : ENNReal) (Measure.infinitePi μ) →L[ℝ]
-      Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))
+  (lpMeas ℝ ℝ (sourceOtherSigma (X := X) i)
+    (2 : ENNReal) (Measure.infinitePi μ)).subtypeL.comp
+      (condExpL2 ℝ ℝ (sourceOtherSigma_le (X := X) i))
 
 /-- The map really is the exact source conditional expectation on
 each L² observable. -/
