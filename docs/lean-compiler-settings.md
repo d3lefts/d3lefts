@@ -80,3 +80,69 @@ The canonical live [Proof Passport overlay](lean-proof-passport-overlay.json) re
 - [Lake check and paranoid checking](https://lean-lang.org/doc/reference/latest/Build-Tools-and-Distribution/Lake/)
 - [Lean-community proof verification checklist](https://leanprover-community.github.io/did_you_prove_it.html)
 - [NIGHTFALL integrated source dependency record](../Nightfall/INTEGRATION.md)
+
+
+## Source-bound proof-object certification (2026-11-17)
+
+The existing five Lean gates (package, build, inclusion, axioms, statement)
+remain unchanged. Model-bound computational claims additionally require an
+**original input → derived instance → proof object → exact checker → formal
+soundness theorem** chain. The canonical extension is
+[`proof-object-passport.json`](proof-object-passport.json), linked from
+[`lean-proof-passport-overlay.json`](lean-proof-passport-overlay.json) and
+[`active-proof-passport.json`](active-proof-passport.json).
+
+**Mandatory for new model-bound certificates:**
+
+1. Preserve an immutable, inspectable original problem model and its source
+   version. Hash that original model, the exact derived instance and the proof
+   object separately; a valid matrix-level witness does not show that the
+   matrix faithfully encodes the original problem.
+2. Replay the independently written exact checker against the *original model*.
+   Require negative/mutation controls, not only a single positive example.
+   A solver's own "unsatisfiable" or "optimal" return code is not a certificate.
+3. Supply the actual Lean theorem source **and a separately stated exact-type
+   contract**. Run `scripts/lean_bridge.py --strict --contract ... --decl ...`
+   under `docs/lean-compiler-lock.json`; audit the named dependencies and
+   immutable source digests. Run a common Lake build and independent
+   `lake check` only when claiming those additional levels of replay.
+4. Retain exact PR head, CI run, artifact, source/toolchain hashes, dependencies,
+   intended claim and limitations. Changes to any model, encoding, witness,
+   checker, theorem contract, dependency or authenticated authority version
+   invalidate the corresponding reusable certificate until rechecked.
+5. Separate **checker acceptance**, **scoped Lean soundness**, **end-to-end
+   mathematical application**, **external independent review**, **source
+   authority**, and **novelty**. No transition occurs automatically.
+
+The first worked example is
+[`papers/certifying-algorithms/`](../papers/certifying-algorithms/README.md):
+a finite two-source weighted hitting-set budget is reduced to rational
+inequalities and refuted using an exact Farkas multiplier. The independent
+Python verifier reconstructs the matrix from the recorded unsafe-change
+supports and budget; two Lean soundness lemmas were compiled with a separate
+exact theorem-type contract under run
+[#44171429696](https://github.com/d3lefts/d3lefts/actions/runs/44171429696).
+This is **not** a Lean evaluation of the JSON witness, a certified
+integer optimum for arbitrary recertification instances, a real-world
+completeness guarantee, or an independent `lake check` replay.
+
+```bash
+node scripts/check_proof_object_passport.cjs
+node scripts/check_lean_proof_passport_overlay.cjs
+python3 -I papers/certifying-algorithms/check_farkas.py --self-test
+python3 -I papers/certifying-algorithms/check_farkas.py \
+  papers/certifying-algorithms/two_source_fence.json
+```
+
+These are offline integrity and exact-arithmetic checks. GitHub's
+`nightfall-gsi-farkas-certificate-lean.yml` separately runs the pinned Lean
+compiler. The shared `nightfall-lean-bridge-v2.yml` and
+`nightfall-active-passports.yml` workflows now enforce this extra
+proof-object policy without changing historical four-record Lean overlays or
+promoting any existing Q2, F9, permission, or Commonwealth scientific claim.
+
+**Methods credit:** Generalised Superintelligence's
+[checker-first research](https://generalised.si/) motivated the process
+change; Farkas' lemma and sound proof-carrying verification are classical.
+No reported external discovery or benchmark speedup is imported as a
+NIGHTFALL result.
