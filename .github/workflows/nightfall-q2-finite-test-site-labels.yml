@@ -61,6 +61,8 @@ jobs:
             --decl Nightfall.InfinitePiQ2FiniteTestSiteLabels.siteTestLabel_measurable \
             --decl Nightfall.InfinitePiQ2FiniteTestSiteLabels.evalTests_eq_sourceLabelMap \
             --decl Nightfall.InfinitePiQ2FiniteTestSiteLabels.sourceFiniteCellAlgebra_factors_through_site_labels \
+            --decl Nightfall.InfinitePiQ2FiniteTestSiteLabels.siteTestLabel_zero_outside \
+            --decl Nightfall.InfinitePiQ2FiniteTestSiteLabels.sourceFiniteCellAlgebra_factors_through_finite_site_labels \
             --json-out lean-receipts/q2-finite-test-site-labels/strict.json
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-finite-test-site-labels/strict.json
       - name: Source hash
