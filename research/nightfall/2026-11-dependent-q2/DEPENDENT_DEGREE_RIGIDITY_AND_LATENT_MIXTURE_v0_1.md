@@ -1,0 +1,150 @@
+# DQ2 structural transition: generic residual-degree collapse and finite-regime mixture transfer
+
+**Status:** 2026-11-17, author-derived, exact arithmetic verified; **not Lean-certified, externally peer-reviewed, novelty-cleared, or merged as a proven NIGHTFALL catalogue claim**. All named components rely on the independently source-checked product C2 theorem at its exact stated hypotheses. The mixture theorem is a mathematical corollary, not a new product-space theorem.
+
+## Objectives and scope
+Find a mathematically valid notion of degree for dependent coordinate laws and a dimension-free actual-law influence theorem. Two decisive findings: the naive genuine-residual triple condition is generically degenerate; degree defined relative to finitely many product regimes admits a useful dependent-law inequality with a necessary latent-variance correction and a necessary linear regime-count factor. No universal dependent-law Q2 is claimed.
+
+## Theorem A — 4-spin Ising-chain residual-degree rigidity
+
+For x in {-1,1}^4 and 0<|r|<1, define
+p_r(x) = (1/16) product_{j=0}^2 (1 + r x_j x_{j+1}).
+All 16 atoms are positive and sum to 1. Set
+Q_i f = E_{p_r}[f | x_j, j != i], R_i=Id-Q_i.
+If R_i R_j R_k f = 0 for **every ordered triple of pairwise distinct** i,j,k, then f is constant. Conversely constants satisfy this condition.
+
+**Exact certificate.** With 4-bit states a=0,...,15 (bit i encodes x_i=+1, else -1), define A_i = 2R_i for endpoints i=0,3 and A_i = 2(1+r^2)R_i for interiors i=1,2. Rows of A_i map e_a^T to c_i(a,r)(e_a^T-e_{a xor 2^i}^T), with
+c_0=1-r x_0x_1, c_3=1-r x_3x_2,
+c_1=1+r^2-r x_1(x_0+x_2), c_2=1+r^2-r x_2(x_1+x_3).
+Select the 15 rows indexed by:
+- (0,1,2,a) for a in {0,2,4,6,8,10,12,14};
+- (0,1,3,0), (0,1,3,2);
+- (0,2,1,0), (0,2,3,0);
+- (1,2,3,0), (2,1,0,0), (3,2,1,0).
+Drop state column a=0. The resulting integer-polynomial 15x15 matrix H(r) has
+
+det H(r) = -2^26 r^17 (1+r^2)^9 (r-1)^18 (r+1)^5.
+
+Each row polynomial degree is at most 3 + the number of interior operators in its triple; their total is 45+27=72. The determinant identity is therefore certified by **73 exact integer evaluations** (r=-36,...,36) using fraction-free Bareiss elimination. An independent full-joint-law rational construction verifies the equivalent original-residual minor
+
+det H_R(r) = - r^17 (1-r)^18 (1+r)^5 / [2^19(1+r^2)^18]
+
+at r=1/2,1/3,-1/2,1/100. The formula never vanishes for 0<|r|<1. Because the residuals annihilate constants, their combined rank is exactly 15. At r=0, ordinary independent ANOVA degree<=2 instead has dimension 1+4+6=11. The degree space thus jumps discontinuously under arbitrarily small nonzero interaction.
+
+**Interpretation:** This theorem invalidates any attempt to define useful intrinsic dependent quadratic degree solely by vanishing of all ordered third-order genuine conditional residuals. It does **not** refute dependent Hoeffding/oblique degree notions.
+
+## Theorem B — generic collapse on n>=4 binary coordinates
+
+For each fixed finite n>=4, for Lebesgue-almost-every strictly positive probability vector p on {-1,1}^n, the simultaneous kernel of all ordered triple genuine residual products is exactly the constants.
+
+Proof. The fixed 15x15 rational minor above is nonzero at a positive 4-site probability vector. After clearing positive marginal denominators, its nonvanishing defines a nonempty Zariski-open full-measure subset G of the 4-spin probability simplex. Fix any four sites A and any assignment z to the other coordinates. The conditional law p(X_A|X_{-A}=z) depends rationally on the global positive atom vector. Its minor numerator is not the zero polynomial, since p = p_r on A times any positive product law on -A gives the positive witness. Hence the exceptional set for that (A,z) has measure zero. There are finitely many such pairs; outside their union every conditional 4-site fiber is rigid. For f annihilated by all ordered triples, fixing the outside coordinates and restricting the residuals to each 4-site fiber forces f constant across that fiber. Each original site lies in a 4-set, hence f is independent of every site, and thus constant on the hypercube.
+
+This proves generic rigidity in every finite dimension >=4 without requiring explicit n-site determinants. Dense-open genericity also shows failure of stability arbitrarily close to a strictly positive independent-product law. No uniform quantitative lower bound on the smallest singular value is claimed; it necessarily degenerates at r=0.
+
+## Theorem C — latent-regime Q2 transfer (provisional analytic corollary)
+
+Let ν = sum_{z=1}^m p_z μ_z, with m finite, p_z>0, and each μ_z an arbitrary independent product probability law on the same index/alphabet system (finite or infinite). Suppose |f|<=B ν-a.e. and f has Efron–Stein degree<=2 in L2(μ_z) for every z. Let V=Var_ν(f), H=Var_Z(E_{μ_Z} f), and I_i^ν(f)=inf_{h measurable outside i} E_ν[(f-h)^2]. Then
+
+(V-H)^2 <= C2*m*B^2*sup_i I_i^ν(f),
+
+where C2=(2(1+sqrt(2))*sqrt(3)+11901/6250)^2 approx 105.41624 is the previously certified product theorem coefficient.
+
+Proof: V-H = sum_z p_z Var_{μ_z}(f). For each z, Var_{μ_z}(f)^2 <= C2 B^2 M_z with M_z=sup_i I_i^{μ_z}(f). By Jensen, (V-H)^2<=C2 B^2 sum_z p_z M_z. For every i, variational minimization gives
+I_i^ν(f) = inf_h sum_z p_z E_{μ_z}[(f-h)^2] >= sum_z p_z I_i^{μ_z}(f).
+For finite m, sum_z p_z sup_i I_i^{μ_z}(f) <= sum_z sup_i (p_z I_i^{μ_z}(f)) <= m sup_i I_i^ν(f). The inequality is valid even when component measures are mutually singular. If all component means coincide, H=0 and the actual-law V^2 Q2 inequality follows.
+
+**Important:** this degree hypothesis is relative to the product components, not the degenerate intrinsic actual-law triple residual condition. The latent count m is structural and a dimension-free bound needs control of H.
+
+## Theorem D — m factor is necessary, even with full support
+
+For m>=2, let latent Z be uniform on {1,...,m}. Conditional on Z=z, draw two observed categorical labels L1,L2 independently, each equal to z with probability 1-δ and otherwise uniformly among the remaining m-1 symbols, for 0<δ<=1/(4m). Independently draw m fair signs Y_1,...,Y_m. Set f=Y_{L1}. Each component law is a full-support product, |f|=1, E[f|Z]=0, and f has product Efron–Stein degree<=2 because f=sum_j 1_{L1=j}Y_j. Under the actual mixture, Var(f)=1, I_{L2}=0, and each I_{Y_j}=Pr(L1=j)=1/m. The variational choice h=Y_{L2} gives I_{L1}<=E[(Y_{L1}-Y_{L2})^2]=2Pr(L1 != L2)<=4δ<=1/m. Consequently max_i I_i^ν(f)=1/m and V^2/(B^2 max I)=m, **exactly**. The linear dependence on m is unavoidable (although C2 is not asserted sharp). Exact finite enumerations pass for m=2,3,4,5 at δ=1/(8m).
+
+## Theorem E — latent mean term is necessary
+
+For m=2 let Z be a fair sign, and conditional on Z let X_i be iid signs with E[X_i|Z]=aZ, 0<a<1. For f=n^{-1} sum_i X_i, |f|<=1, f is product degree one in each component. Then Var_ν(f)=a^2+(1-a^2)/n, H=a^2, but for every original site I_i^ν(f)<=1/n^2, by the conditional variational characterization. Thus no universal dimension-free full-variance bound can hold for the class with H uncontrolled, even when every pairwise observed correlation a^2 is arbitrarily small. No claim is made that f has vanishing actual-law triple residuals.
+
+## Independent audit / priority / scope
+
+Author-side exact rational checks and the polynomial certificate are not an independent human mathematical review or Lean proof. The checker must be audited as a certifying algorithm; row selection, orientation of R_iR_jR_k, factor formula, and determinant degree bound are proof dependencies. The direct-law construction independently verifies the analytic transition formulas. A 2nd reviewer should reproduce the polynomial certificate without using the same code, then formalize the finite rank theorem in Lean. The mixture corollary uses a kernel-checked product inequality but its mixture comparison, infinite product sigma-algebra and regime-count steps are not separately formalized.
+
+Closest known work: Il Idrissi et al., *Hoeffding decomposition of functions of random dependent variables*, J. Multivar. Anal. 2025, https://doi.org/10.1016/j.jmva.2025.105444 ; Chastaing et al., EJS 2012 https://doi.org/10.1214/12-EJS749 ; Bardet–Capel–Rouzé, *Approximate Tensorization of the Relative Entropy for Noncommuting Conditional Expectations*, 2022 https://arxiv.org/abs/2001.07981 . These develop existing dependent decompositions and noncommutative-projection machinery; this dossier does **not** claim novelty after an exhaustive priority search. Product source catalogue: ../2026-11-priority/Q2_PRIORITY_DOSSIER_20261117.md . Separate unmerged integrated source gate #776 is not silently promoted.
+
+**Cheapest decisive next experiment:** an independent implementation of the 15x15 polynomial determinant and its full support measure interpretation; then formalize one exact finite-rank theorem in Lean. After that, construct a new nondegenerate dependent-degree operator using oblique projections or latent-reference degree, not triple residual vanishing.
+
+**Proposed reusable mechanism:** operator-word rank rigidity under noncommuting conditional projections, plus variance splitting through a hidden product-mixture index. Record this as a representation-level structural transition rather than a claimed globally novel Q2 theorem.
+
+
+## Theorem F — residual-degree rigidity for every finite one-dimensional Ising chain
+
+**Stronger than Theorem A.** For any finite n>=4, any 0<|r|<1, and the strictly positive nearest-neighbor Ising-chain law
+
+p_{n,r}(x) = 2^{-n} product_{j=0}^{n-2} (1+r x_j x_{j+1}),
+
+all ordered triple residual conditions R_i R_j R_k f=0 (pairwise distinct indices) force f to be constant. At r=0 the independent-product degree<=2 space instead has dimension 1+n+n(n-1)/2.
+
+**Exact four-site boundary certificates.** Conditioning any four consecutive sites on the rest yields a four-spin law proportional to
+
+product_{j=0}^2 (1+r x_j x_{j+1}) (1+s r x_0) (1+t r x_3),
+
+where s,t belong to {0,+1,-1}, encoding absent/fixed neighboring boundary spins. Global spin flip and spatial reflection reduce the nine possibilities to four representatives: (0,0), (1,0), (1,1), and (1,-1).
+
+For each representative, define A_1,A_2=2(1+r^2)R_1,R_2. For i=0 or 3 with no external boundary, A_i=2R_i; with boundary, A_i=2(1-r^4)R_i. These scalars are nonzero whenever |r|<1. With the **same 15 selected rows and state columns as Theorem A**, let H_{s,t}(r) be the resulting polynomial matrix of ordered A_i A_j A_k rows.
+
+**Exact determinant identities:**
+
+| boundary (s,t) | det H_{s,t}(r) / (-2^26 r^17) |
+|---|---|
+| (0,0) | (1+r²)^9 (r-1)^18 (r+1)^5 |
+| (1,0) | (1+r²)^16 (r-1)^24 (r+1)^23 |
+| (1,1) | (1+r²)^19 (r-1)^26 (r+1)^28 |
+| (1,-1) | (1+r²)^16 (r-1)^32 (r+1)^28 |
+
+All four are nonzero for 0<|r|<1. The script `scripts/check_ising_chain_boundary_rigidity_exact.py` verifies each identity **exactly**, using a determinant degree upper bound and 73/112/127/127 distinct integer evaluations respectively (439 exact determinants). Endpoint polynomial degrees rise from 1 to 4 when an external boundary is fixed. Independent **joint-law conditional-expectation constructions**, without the A_i formula, matched the same minor determinants at r=1/2, -1/2, 1/3 in each of the four cases. This is an author-side second implementation, not external peer review.
+
+**Finite all-length proof:** Let f satisfy every ordered triple residual condition on the n-site law. Fix any four consecutive sites A and fix all other spins. Conditional on this outside configuration, the residual operators R_i for i in A act exactly as the four-site residuals for the corresponding boundary law. The triple conditions therefore hold in each fiber. The nonvanishing boundary determinant forces f to be constant as a function of x_A in that fiber. Every site is contained in a length-four interval, so f is independent of every individual coordinate. Full support and finite hypercube connectivity imply f is constant globally.
+
+**Scope:** All finite n>=4, all r in (-1,0) union (0,1), no lower bound on |r| and no n-dependent constants. Extension to countable infinite Ising Markov chains would additionally require proving tail triviality and the almost-everywhere fiber-to-tail step; that extension is **not** certified here. This theorem demonstrates operator-word rigidity, not a new Q2 inequality for connected Gibbs fields. No novelty or priority tier is promoted without a scope-specific adversarial literature search and independent review.
+
+**New decisive test:** independently reproduce at least one nontrivial boundary determinant by a different exact matrix algorithm, then formalize a four-site boundary theorem in Lean, and use a parameterized finite-chain conditionalization lemma to carry it to arbitrary finite n. This is the structural mechanism that replaces repetitive case-by-case n-dimensional enumeration.
+
+
+## Theorem G — stationary countably infinite Ising Markov chain (analytic corollary)
+
+For r in (-1,0) union (0,1), let (X_j)_{j>=1} be the stationary two-state Markov chain with P(X_1=+1)=P(X_1=-1)=1/2 and P(X_{j+1}=t|X_j=s)=(1+r st)/2. Define genuine L2 coordinate residuals R_i f=f-E[f|all sites except i] under this **dependent infinite-coordinate law**. If R_i R_j R_k f=0 in L2 for every ordered triple of pairwise distinct indices, then f is almost surely constant.
+
+**Proof sketch with explicit analytic obligations:**
+
+1. Every four-consecutive-site conditional law, after conditioning on the infinite exterior, has strictly positive density proportional to the four-site Ising chain with at most two nearest-neighbor boundary factors (1+s r x_left)(1+t r x_right), s,t in {0,+1,-1}. This follows from the finite-memory Markov factorization (including the one-sided first block).
+2. Each coordinate conditional expectation Q_i for i inside the four-block acts fiberwise on that conditional law. Hence each ordered triple residual equation restricts to the corresponding finite-fiber equation for almost every exterior configuration. Since the conditional fiber has all 16 atoms positive, the exact four-boundary rank theorem makes f constant across that entire four-spin fiber almost everywhere. Therefore f is measurable outside each four-site block, and in particular Q_i f=f for every site i.
+3. For each finite prefix [1,N], full-support conditional distributions of that prefix given the infinite tail and countable intersection of the single-site invariances imply that f is constant across every state of that finite prefix for almost every fixed tail. Thus f is measurable with respect to sigma(X_{N+1},X_{N+2},...) for every N: it is tail-measurable.
+4. **Self-contained tail triviality:** If A belongs to the future tail sigma algebra and h_n(s)=P(A|X_n=s), then the Markov property and tail measurability imply h_n=P^k h_{n+k} for all k>=1. The transition matrix P has eigenvalues 1 and r, so |h_n(+)-h_n(-)| <= |r|^k. Sending k to infinity gives h_n(s)=P(A) for both states. Again by the Markov property E[1_A|X_1,...,X_n]=P(A); martingale convergence to 1_A implies P(A) in {0,1}. Hence the tail sigma algebra is trivial and f constant almost surely.
+
+At independence r=0, the Efron–Stein degree<=2 subspace is nontrivial. Thus the discontinuous residual-degree collapse persists for a **genuinely dependent infinite product state space** without using an infinite-product *measure*.
+
+**Review boundary:** The infinite-chain step is an author-side analytic proof, with finite boundary identities exactly checked by CI. No Lean proof of conditional-fiber measurability, regular conditionals, tail triviality, or the final infinite L2 theorem is attached. These obligations should be separately formalized or independently reviewed before an external theorem claim.
+
+**New next theorem target:** Construct an oblique/probability-law-adapted degree-two notion with nonconstant Markov observables that is stable as r tends to 0, then prove an influence lower bound with explicit dependence penalty. The naive residual-word definition cannot serve as that degree notion on these models.
+
+
+## Theorem H — quantitative degree leakage, and why leakage alone is insufficient
+
+Let ν be **any** full-support law on a finite binary cube such that for every i and every outside configuration,
+|E_ν[X_i|X_{-i}]| <= ε <=1.
+Let P_i be the coordinate-residual for independent *uniform* fair signs (pointwise uniform averaging), and R_i the genuine ν-coordinate residual. A direct two-atom conditional-expectation calculation gives, as operators on L∞,
+||R_i-P_i|| <= ε,  ||P_i|| <=1,  ||R_i|| <=1+ε.
+If f has algebraic/Fourier degree<=2 relative to the fair product law, then P_iP_jP_k f=0 for every distinct ordered triple. Telescope the three noncommuting factors:
+
+R_iR_jR_k - P_iP_jP_k
+= (R_i-P_i)R_jR_k + P_i(R_j-P_j)R_k + P_iP_j(R_k-P_k).
+
+Consequently every bounded such f satisfies the **dimension-free quantitative leakage bound**
+
+sup_{i,j,k distinct} ||R_iR_jR_k f||_{L²(ν)}
+<= sup ||R_iR_jR_k f||∞
+<= [(1+ε)^3-1] ||f||∞.
+
+This is a reusable analytic operator perturbation estimate and **not** an influence theorem. On the nearest-neighbor Ising chain, ε<=2|r|/(1+r²), so the leakage is O(|r|) uniformly in chain length, even though exact vanishing forces constants.
+
+**Decisive obstruction to an epsilon-only Q2 repair.** Let ν be the fair mixture of two independent sign-product laws with coordinate conditional means aZ, 0<a<1, and set f=(1/n)sum_i X_i. Then f has fair-product algebraic degree one, ||f||∞<=1, and genuine site conditional bias |E_ν[X_i|X_-i]|<=a. Thus its ordered triple leakage is uniformly <=(1+a)^3-1, which can be made arbitrarily small by fixing tiny a. Yet Var_ν(f)>=a² and max_i I_i^ν(f)<=1/n²; hence Var²/max influence grows at least a^4 n². No dimension-free full-variance Q2 coefficient depending **only** on a fixed positive leakage tolerance can hold in this unrestricted dependent class.
+
+**Interpretation:** a successful dependent Q2 theorem requires a control on **global latent variance, mixing/spectral-gap structure, or a comparably global dependency quantity**, not just local conditional bias or near-commutation. Theorems C–E give one controlled latent-regime alternative. No novelty tier or Lean certification is attached to this elementary analytic perturbation corollary.

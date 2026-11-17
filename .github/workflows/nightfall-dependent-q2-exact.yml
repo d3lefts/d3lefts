@@ -1,0 +1,32 @@
+name: NIGHTFALL dependent Q2 exact research checks
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-dependent-q2/**'
+      - 'scripts/check_dependent_degree_collapse_exact.py'
+      - 'scripts/check_latent_regime_count_sharp.py'
+      - 'scripts/check_ising_chain_boundary_rigidity_exact.py'
+      - 'scripts/check_latent_mixture_q2_exact.py'
+      - '.github/workflows/nightfall-dependent-q2-exact.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-research-checks:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Prove polynomial determinant identity by 73 exact evaluations
+        run: python3 scripts/check_dependent_degree_collapse_exact.py
+      - name: Verify four boundary determinant polynomials and all-chain rigidity
+        run: python3 scripts/check_ising_chain_boundary_rigidity_exact.py
+      - name: Check full-support linear latent-regime lower bound
+        run: python3 scripts/check_latent_regime_count_sharp.py
+      - name: Audit finite-mixture variance and influence identities
+        run: python3 scripts/check_latent_mixture_q2_exact.py
