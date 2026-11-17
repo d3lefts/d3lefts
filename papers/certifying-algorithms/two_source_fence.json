@@ -1,0 +1,51 @@
+{
+  "schema": "nightfall-farkas-infeasibility/v1",
+  "model": {
+    "A": [
+      [
+        "-1",
+        "0"
+      ],
+      [
+        "0",
+        "-1"
+      ],
+      [
+        "1",
+        "1"
+      ]
+    ],
+    "b": [
+      "-1",
+      "-1",
+      "1"
+    ]
+  },
+  "certificate": {
+    "lambda": [
+      "1",
+      "1",
+      "1"
+    ],
+    "model_sha256": "298573dc7b9aac4661bf4239d9cd4133a3358112572224f92aadbaf738fa4ad4",
+    "source_sha256": "70d5120f2e781df6933a7927e6b6792ec6386794de8b7884abcb7ec646613a6e"
+  },
+  "source_model": {
+    "kind": "weighted-hitting-set-budget/v1",
+    "num_sources": 2,
+    "unsafe_change_supports": [
+      [
+        0
+      ],
+      [
+        1
+      ]
+    ],
+    "weights": [
+      "1",
+      "1"
+    ],
+    "budget": "1"
+  },
+  "status": "toy original-model-bound exact witness; not a physical or general safety guarantee"
+}
