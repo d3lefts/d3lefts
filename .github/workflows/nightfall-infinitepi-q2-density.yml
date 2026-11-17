@@ -38,6 +38,7 @@ jobs:
             --workspace /tmp/mathlib4 --strict --timeout 900 \
             --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
             --decl Nightfall.InfinitePiQ2Density.source_finite_cylinders_measure_dense \
+            --decl Nightfall.InfinitePiQ2Density.source_finite_cylinders_L2_dense \
             --json-out lean-receipts/q2-infinite/cylinder-measure-dense.json
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/q2-infinite/cylinder-measure-dense.json
