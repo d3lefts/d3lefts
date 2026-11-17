@@ -37,6 +37,7 @@ jobs:
             --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
             --decl Nightfall.InfinitePiQ2LabelAtomMass.source_label_indicator_integral_eq_atom \
             --decl Nightfall.InfinitePiQ2LabelAtomMass.source_condExp_lifted_label_atom_sum \
+            --decl Nightfall.InfinitePiQ2LabelAtomMass.sourceOtherProjection_lifted_label_atom_sum_ae \
             --json-out lean-receipts/q2-label-mass/atom-weights.json
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-label-mass/atom-weights.json
       - name: Preserve source identity
