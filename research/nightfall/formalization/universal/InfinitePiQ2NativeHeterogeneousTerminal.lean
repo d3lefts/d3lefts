@@ -82,7 +82,10 @@ theorem tagged_one_coordinate_heatbath
       f (Function.update (decodeWord A w) i a)) := by
   classical
   simp only [Fintype.sum_sigma]
-  simp [taggedMass, decode_update_embed]
+  simp [taggedMass]
+  apply Finset.sum_congr rfl
+  intro a _
+  rw [decode_update_embed A w i a]
 
 theorem tagged_influence_exact
     (p : (i : ι) → A i → ℝ)
