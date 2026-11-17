@@ -52,3 +52,26 @@ peer review. Do not merge this draft until the build is green and its
 dependency and statement scope has been inspected.
 
 CI: `.github/workflows/nightfall-integrated-lake.yml`.
+
+## Independent kernel replay extension (2026-11-17)
+
+The integrated project now has a mandatory `lake check` step **after**
+`lake build Nightfall` and its four named `#print axioms` audits. As
+documented in Lean 4.35 release notes, `lake check` exports the complete
+default build target and independently replays it through Lean's proof kernel,
+rejecting nonstandard axioms. The workflow archives `lake-check.log` and
+only writes a PASS marker after a successful command exit.
+
+A manual workflow-dispatch input `paranoid: true` additionally requests
+`lake check --paranoid`, running every bundled external checker. This is
+intentionally opt-in because replaying the full Mathlib-backed closure
+through multiple kernels has a substantial resource cost.
+
+**Neither step certifies an infinite-product theorem that is absent from
+the imported sources.** Kernel agreement validates that the checked terms
+inhabit their Lean types; independent review of the exact mathematical
+statement, source heat-bath intertwining, and removal of conditional
+premises remain separate mandatory gates.
+
+Upstream reference:
+https://lean-lang.org/doc/reference/latest/releases/v4.35.0/
