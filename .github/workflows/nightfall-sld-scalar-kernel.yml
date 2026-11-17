@@ -1,0 +1,31 @@
+name: NIGHTFALL sharp SLD scalar spectral Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/quantum/SLDSharpScalarKernel.lean'
+      - '.github/workflows/nightfall-sld-scalar-kernel.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  sharp-sld-scalar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile the full-length spectral scalar theorem
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/quantum/SLDSharpScalarKernel.lean /tmp/mathlib4/SLDSharpScalarKernel.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/SLDSharpScalarKernel.olean SLDSharpScalarKernel.lean)
+      - name: Strict named theorem and standard-axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          N=Nightfall.Quantum.SLDSharpScalarKernel
+          python3 scripts/lean_bridge.py research/nightfall/formalization/quantum/SLDSharpScalarKernel.lean --workspace /tmp/mathlib4 --strict --timeout 900 --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.two_factor_exact_sld" --decl "$N.all_length_sharp_spectral_envelope" --decl "$N.aligned_two_factor_equality" --json-out /tmp/sld-sharp-scalar-receipt.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py /tmp/sld-sharp-scalar-receipt.json
