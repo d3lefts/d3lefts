@@ -251,6 +251,48 @@ theorem source_cylinder_span_eventually_fixed
       intro G hG
       simpa only [map_smul, Submodule.coe_smul, hF G hG]
 
+
+/-- Unconditional directed finite-information L² approximation under the
+actual infinite product measure. Given any L² observable and accuracy ε,
+a finite coordinate set F exists so that EVERY larger finite
+conditional-expectation projection is ε-close to the observable.
+No oracle, countability or finite-coordinate approximation assumption. -/
+theorem source_finite_info_L2_approx
+    (f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))
+    (ε : ℝ) (hε : 0 < ε) :
+    ∃ F : Finset ι, ∀ G : Finset ι, F ⊆ G →
+      ‖f - (condExpL2 ℝ ℝ (sourceFiniteCoordinateSigma_le (X := X) G) f :
+        Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))‖ < ε := by
+  obtain ⟨g, hg, hclose⟩ :=
+    source_finite_cylinders_L2_approx μ f (ε / 3) (by linarith)
+  obtain ⟨F, hfixed⟩ := source_cylinder_span_eventually_fixed μ g hg
+  refine ⟨F, ?_⟩
+  intro G hFG
+  let P := condExpL2 ℝ ℝ (sourceFiniteCoordinateSigma_le (X := X) G)
+  have hfixedg : (P g : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) = g :=
+    hfixed G hFG
+  have hlinear : (P (g - f) : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) =
+      (P g : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) -
+        (P f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) := by
+    simp [P, map_sub]
+  have hcalc : (P (g - f) : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) =
+      g - (P f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) := by
+    rw [hlinear, hfixedg]
+  have hbridge : ‖g - (P f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))‖ ≤
+      ‖g - f‖ := by
+    rw [← hcalc]
+    exact source_finite_info_L2_contract μ G (g - f)
+  have htriangle : ‖f - (P f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))‖ ≤
+      ‖f - g‖ + ‖g - (P f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))‖ := by
+    calc
+      ‖f - (P f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))‖ =
+          ‖(f - g) + (g - (P f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)))‖ := by
+            congr 1
+            abel
+      _ ≤ _ := norm_add_le _ _
+  have hsymm : ‖g - f‖ = ‖f - g‖ := norm_sub_rev _ _
+  linarith
+
 /-- An original-product finite-information conditional expectation has
 exactly the original source mean, not merely an assumed expectation. -/
 theorem source_finite_info_preserves_mean
