@@ -9,6 +9,7 @@ on:
       - 'docs/lean-proof-passport-overlay.json'
       - 'docs/active-proof-passport.json'
       - 'scripts/check_proof_object_passport.cjs'
+      - 'scripts/check_price_permission_optimality_passport.cjs'
       - 'scripts/check_lean_proof_passport_overlay.cjs'
       - '.github/workflows/nightfall-gsi-farkas-certificate-lean.yml'
   workflow_dispatch:
