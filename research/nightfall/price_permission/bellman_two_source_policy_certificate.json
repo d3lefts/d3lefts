@@ -1,0 +1,80 @@
+{
+  "schema": "nightfall-semantic-bellman-certificate/v1",
+  "source_model": {
+    "kind": "nightfall-complete-bitcube-evidence/v1",
+    "change_history": "complete-baseline-to-final-xor",
+    "sources": 2,
+    "baseline_worlds": [
+      0,
+      1,
+      2
+    ],
+    "unsafe_worlds": [
+      3
+    ],
+    "read_costs": [
+      "1",
+      "1"
+    ],
+    "guard_costs": [
+      "4",
+      "4"
+    ]
+  },
+  "certificate": {
+    "source_sha256": "d5a33d4a341d07a48e3e058e71acc4b5cea9060d1cef041fd82458931521c3de",
+    "root_belief": 7,
+    "claimed_optimal_cost": "5",
+    "states": {
+      "1": {
+        "value": "4",
+        "choice": {
+          "kind": "grant",
+          "guard": 1
+        }
+      },
+      "2": {
+        "value": "4",
+        "choice": {
+          "kind": "grant",
+          "guard": 2
+        }
+      },
+      "3": {
+        "value": "4",
+        "choice": {
+          "kind": "grant",
+          "guard": 2
+        }
+      },
+      "4": {
+        "value": "4",
+        "choice": {
+          "kind": "grant",
+          "guard": 1
+        }
+      },
+      "5": {
+        "value": "4",
+        "choice": {
+          "kind": "grant",
+          "guard": 1
+        }
+      },
+      "6": {
+        "value": "5",
+        "choice": {
+          "kind": "read",
+          "source": 0
+        }
+      },
+      "7": {
+        "value": "5",
+        "choice": {
+          "kind": "read",
+          "source": 0
+        }
+      }
+    }
+  }
+}
