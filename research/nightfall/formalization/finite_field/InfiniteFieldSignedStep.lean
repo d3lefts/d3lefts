@@ -106,6 +106,36 @@ theorem exists_all_length_signed_code (n : ℕ) :
           rw [hhead, htail]
         _ = t := Fin.cons_self_tail t
 
+
+/-- Flipping every Boolean sign negates the mixed linear reading. -/
+theorem signedSum_compl {n : ℕ} (w : Fin n → K) (s : Fin n → Bool) :
+    signedSum w (fun i => !(s i)) = -(signedSum w s) := by
+  unfold signedSum
+  rw [← Finset.sum_neg_distrib]
+  apply Finset.sum_congr rfl
+  intro i _
+  cases hs : s i <;> simp [hs]
+
+/-- The ONE actual squared reading identifies the sign vector modulo its
+single unavoidable global sign, once a separating weight row is chosen. -/
+theorem squared_signedSum_injective_mod_sign {n : ℕ}
+    (w : Fin n → K) (hw : Function.Injective (signedSum w))
+    (s t : Fin n → Bool)
+    (h : (signedSum w s) ^ 2 = (signedSum w t) ^ 2) :
+    s = t ∨ s = (fun i => !(t i)) := by
+  have hmul : signedSum w s * signedSum w s =
+      signedSum w t * signedSum w t := by
+    simpa only [pow_two] using h
+  rcases (mul_self_eq_mul_self_iff).mp hmul with he | he
+  · exact Or.inl (hw he)
+  · right
+    apply hw
+    rw [signedSum_compl]
+    exact he
+
+#print axioms Nightfall.InfiniteFieldPhase.squared_signedSum_injective_mod_sign
+
+
 #print axioms Nightfall.InfiniteFieldPhase.exists_all_length_signed_code
 
 
