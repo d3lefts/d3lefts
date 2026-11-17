@@ -99,7 +99,7 @@ theorem sourceSupported_update
   intro j
   by_cases hji : j = i
   · subst j
-    simpa only [Function.update_same] using ha
+    simpa using ha
   · simpa only [Function.update_of_ne hji] using hx j
 
 /-- A function vanishing at every genuine positive native source atom
