@@ -1,7 +1,7 @@
 name: NIGHTFALL genuine source single-coordinate conditional expectation
 on:
   pull_request:
-    branches: [main]
+    branches: [main, nightfall-q2-source-conditional-independence-20261117]
     paths:
       - 'research/nightfall/formalization/universal/InfinitePiQ2ConditionalSourceTest.lean'
       - 'research/nightfall/formalization/universal/InfinitePiQ2InfluenceStability.lean'
