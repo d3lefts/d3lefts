@@ -10,6 +10,10 @@ TARGETS = [
     "Nightfall.InfinitePiQ2Limit.source_q2_quadratic_limit",
     "Nightfall.Q2Shifted.ConditionalTargets.conditional_coefficient_107",
     "Nightfall.Q2Shifted.ConditionalTargets.conditional_coefficient_99",
+    "Nightfall.InfinitePiQ2OriginalIndependence.source_coordinate_other_indepFun",
+    "Nightfall.InfinitePiQ2ConditionalSourceTest.source_condExp_coordinate_test",
+    "Nightfall.InfinitePiQ2ConditionalSourceTest.source_condExp_coordinate_mul_other",
+    "Nightfall.InfinitePiQ2SourceHilbertTensor.sourceOtherProjection_tensor_ae",
 ]
 
 
