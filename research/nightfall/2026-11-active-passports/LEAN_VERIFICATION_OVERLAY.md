@@ -76,3 +76,43 @@ The checker deliberately rejects:
 ## Review and stop rule
 
 Before promotion, obtain a single-pinned source-closed compiler receipt; verify the named theorem type and no additional hypotheses; require independent field-statement matching, and separately evaluate novelty/prior art if making a priority claim. A source-only/metadata checker is never allowed to promote a claim on its own. Public claim IDs and the frozen historical 11-passport archive remain unchanged.
+
+## Reproducible compiler upgrade policy
+
+The authoritative environment is now `docs/lean-compiler-lock.json`.
+The shared `.github/actions/setup-nightfall-lean/action.yml` rejects
+compiler/tag/Mathlib/source-commit disagreement before cached artifacts
+can support a new named theorem receipt. The lock guard cross-checks:
+
+- root `lean-toolchain`, active strict receipt index, exact Commonwealth
+  theorem contract and five-gate scientific passport;
+- root `lakefile.toml`, if present, against the same Mathlib Git revision;
+- actual `lean --version` Git commit and installed Mathlib `git rev-parse HEAD`
+  during the shared setup action.
+
+`python3 scripts/check_nightfall_compiler_lock.py` checks local source
+consistency; the additional `--installed-mathlib` and
+`--lean-version-file` options check the actual CI compiler installation.
+The independent, no-Lean test suite
+`python3 -m unittest discover -s tests -p 'test_nightfall_compiler_lock.py'`
+contains tampering tests. The dedicated
+`.github/workflows/nightfall-compiler-lock.yml` is a fast metadata gate,
+not a proof checker.
+
+**No compiler upgrade performed:** Lean 4.36.0-rc2 and Mathlib commit
+`9d581dfff2e41de989072ea63abf3daf69311520` remain fixed.
+Future upgrades must take an isolated branch and re-run all affected
+source-level proof dependencies. An inherited old receipt is not a
+certificate for a new toolchain.
+
+## New independent-kernel certification gate
+
+The currently separate PR #696 integrated Lake closure adds the actual
+`lake check` command after `lake build Nightfall`; an optional
+`lake check --paranoid` invokes the bundled independent kernel
+implementations. Until the **same head** of that PR passes, the overlay
+records this gate as scheduled rather than complete. A passing check
+never closes absent mathematical premises or the expert statement audit.
+
+Official reference:
+https://lean-lang.org/doc/reference/latest/releases/v4.35.0/
