@@ -44,3 +44,207 @@ jobs:
             --title "TEMPORARY: pinned Mathlib build export (to be deleted)" \
             --notes "Temporary development artifact for the q2-infinite-unconditional branch. Not a research release." \
             /tmp/mathlib4-pinned.tar.gz.part-*
+
+  delete-temporary-release:
+    if: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[cleanup-release]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Delete the temporary Mathlib export draft release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh release delete tmp-q2-mathlib-export -R "$GITHUB_REPOSITORY" --yes --cleanup-tag || true
+          gh api "repos/$GITHUB_REPOSITORY/releases?per_page=100" -q '.[]|select(.name|startswith("TEMPORARY: pinned Mathlib"))|.id' | while read -r id; do
+            gh api -X DELETE "repos/$GITHUB_REPOSITORY/releases/$id"
+          done
+          echo "remaining temporary releases:"
+          gh api "repos/$GITHUB_REPOSITORY/releases?per_page=100" -q '.[]|select(.name|startswith("TEMPORARY"))|.name'
+
+  infinite-product-terminal:
+    if: ${{ github.event_name == 'workflow_dispatch' || !contains(github.event.head_commit.message, '[export-mathlib]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile the exact original-source import closure (118 modules, dependency order)
+        shell: bash
+        run: |
+          set -euo pipefail
+          for P in \
+            research/nightfall/formalization/universal/InfinitePiQ2DegreeRetraction.lean \
+            research/nightfall/formalization/universal/InfinitePiQ2HeterogeneousAlphabet.lean \
+            research/nightfall/formalization/observability/ActualProductMergeTower.lean \
+            research/nightfall/formalization/universal/InfinitePiQ2TaggedSourceTransport.lean \
+            research/nightfall/formalization/observability/ActualProductHilbertJensen.lean \
+            research/nightfall/formalization/observability/ActualProductSoftNoise.lean \
+            research/nightfall/formalization/observability/ActualSourceANOVA.lean \
+            research/nightfall/formalization/universal/InfinitePiQ2FiniteDegreeBridge.lean \
+            research/nightfall/formalization/observability/ActualESGreedyOwnership.lean \
+            research/nightfall/formalization/observability/ActualSourceQuadraticRectangles.lean \
+            research/nightfall/formalization/observability/ParityBlockCancellation.lean \
+            research/nightfall/formalization/observability/QuadraticHybridTelescoping.lean \
+            research/nightfall/formalization/observability/ActualSourceGeneralMatching.lean \
+            research/nightfall/formalization/observability/ActualProductSourceMarginal.lean \
+            research/nightfall/formalization/observability/ActualProductPairSector.lean \
+            research/nightfall/formalization/observability/ActualProductSoftStar.lean \
+            research/nightfall/formalization/observability/ActualProductSoftStarEnergy.lean \
+            research/nightfall/formalization/observability/ActualProductSoftStarParseval.lean \
+            research/nightfall/formalization/observability/ActualProductSourcePairCentering.lean \
+            research/nightfall/formalization/observability/ActualSourcePairAmplitudes.lean \
+            research/nightfall/formalization/observability/ActualProductResampleBridge.lean \
+            research/nightfall/formalization/observability/ActualProductSourceDerivedStar.lean \
+            research/nightfall/formalization/observability/ActualSourceCanonicalPair.lean \
+            research/nightfall/formalization/observability/ActualSourceCanonicalIdentification.lean \
+            research/nightfall/formalization/observability/CenteredRectangles.lean \
+            research/nightfall/formalization/observability/ActualSourceAmplitudeRectangles.lean \
+            research/nightfall/formalization/observability/WeightedGreedyMatching.lean \
+            research/nightfall/formalization/observability/WeightedGreedyCover.lean \
+            research/nightfall/formalization/observability/ActualSourceMatchingCover.lean \
+            research/nightfall/formalization/observability/ArbitraryLawFourthMoment.lean \
+            research/nightfall/formalization/observability/HilbertTwoIncrementMoment.lean \
+            research/nightfall/formalization/observability/HilbertManyIncrementMoment.lean \
+            research/nightfall/formalization/observability/QuadraticEndpointInterpolation.lean \
+            research/nightfall/formalization/observability/QuadraticActualMomentEndpoint.lean \
+            research/nightfall/formalization/observability/ActualSourceFiniteSampleLaw.lean \
+            research/nightfall/formalization/observability/ActualSourceFinitePairMoment.lean \
+            research/nightfall/formalization/observability/ActualSourceOwnedGraph.lean \
+            research/nightfall/formalization/observability/ActualSourcePairEnergyBridge.lean \
+            research/nightfall/formalization/observability/ActualSourceCentered.lean \
+            research/nightfall/formalization/observability/ActualSourceOrthogonality.lean \
+            research/nightfall/formalization/observability/ActualSourceVarianceEnergy.lean \
+            research/nightfall/formalization/observability/ActualSourceInfluenceEnergy.lean \
+            research/nightfall/formalization/observability/ActualSourceOwnedInfluence.lean \
+            research/nightfall/formalization/observability/ActualSourceOwnerOrientation.lean \
+            research/nightfall/formalization/observability/ActualSourceOwnedMomentEnergy.lean \
+            research/nightfall/formalization/observability/ActualSourceOwnedSectionNorm.lean \
+            research/nightfall/formalization/observability/QuadraticMatchedParity.lean \
+            research/nightfall/formalization/observability/QuadraticSwitchingIdentity.lean \
+            research/nightfall/formalization/observability/QuadraticSingleReplacement.lean \
+            research/nightfall/formalization/observability/QuadraticOscillationBound.lean \
+            research/nightfall/formalization/observability/QuadraticRealizedRangeBudget.lean \
+            research/nightfall/formalization/observability/ActualSourceSectionBudgetEight.lean \
+            research/nightfall/formalization/observability/ActualSourceDegreeTwoSections.lean \
+            research/nightfall/formalization/observability/ActualSourceDegreeTwoAllDimensions.lean \
+            research/nightfall/formalization/observability/ActualSourceIntegratedSections.lean \
+            research/nightfall/formalization/observability/ActualSourceMeanSectionJensen.lean \
+            research/nightfall/formalization/observability/ActualSourceConditionalSection.lean \
+            research/nightfall/formalization/observability/ActualSourceProjectedJensen.lean \
+            research/nightfall/formalization/observability/ActualSourceConditionalProjection.lean \
+            research/nightfall/formalization/observability/ActualSourceSingletonProjection.lean \
+            research/nightfall/formalization/observability/ActualSourceQuadraticSupportSum.lean \
+            research/nightfall/formalization/observability/ActualSourceProjectedPairJensen.lean \
+            research/nightfall/formalization/observability/ActualSourceOwnedProjectedMomentJensen.lean \
+            research/nightfall/formalization/observability/ActualSourceOwnedFourthClosure.lean \
+            research/nightfall/formalization/observability/Q2625Golden.lean \
+            research/nightfall/formalization/observability/Q2625GoldenTrade.lean \
+            research/nightfall/formalization/observability/Q2625ScalarEnvelope.lean \
+            research/nightfall/formalization/observability/ActualSourceQ2625Cubic.lean \
+            research/nightfall/formalization/observability/ActualSourceQuadraticSectorSplit.lean \
+            research/nightfall/formalization/observability/ActualSourceSingletonEnergyBridge.lean \
+            research/nightfall/formalization/observability/ActualSourceOwnedFirstMomentCap.lean \
+            research/nightfall/formalization/observability/ActualProductQ2ScalarClosure.lean \
+            research/nightfall/formalization/observability/ActualSourceQ2CoupledScalarClosure.lean \
+            research/nightfall/formalization/observability/ActualSourceQ2CompositionGate.lean \
+            research/nightfall/formalization/observability/ActualSourceQ2CoupledTerminalGate.lean \
+            research/nightfall/formalization/observability/ActualSourceNoiseEfronStein.lean \
+            research/nightfall/formalization/observability/ActualSourceQ2SharpAdditive.lean \
+            research/nightfall/formalization/observability/ActualSourceQ2SharpAdditiveSource.lean \
+            research/nightfall/formalization/observability/ActualSourceQ2SharpAdditiveFinal.lean \
+            research/nightfall/formalization/observability/ActualSourceQ2EnergyDualSource.lean \
+            research/nightfall/formalization/observability/Q2589ScalarSite.lean \
+            research/nightfall/formalization/observability/Q2FlexibleSectionScalar.lean \
+            research/nightfall/formalization/observability/QuadraticSwitchDifferenceTen.lean \
+            research/nightfall/formalization/observability/QuadraticSectionTen.lean \
+            research/nightfall/formalization/observability/ActualSourceSectionBudgetFive.lean \
+            research/nightfall/formalization/observability/ActualSourceIntegratedFive.lean \
+            research/nightfall/formalization/observability/ActualSourceQ2364Terminal.lean \
+            research/nightfall/formalization/observability/ShiftedOwnerScalar.lean \
+            research/nightfall/formalization/observability/ShiftedOwnerScalarMoments.lean \
+            research/nightfall/formalization/q2_shifted/ShiftedHilbertOddTerm.lean \
+            research/nightfall/formalization/q2_shifted/ShiftedHilbertTwoIncrement.lean \
+            research/nightfall/formalization/q2_shifted/ShiftedHilbertManyIncrement.lean \
+            research/nightfall/formalization/q2_shifted/ShiftedOwnerSourceJensen.lean \
+            research/nightfall/formalization/observability/ActualSourceQ2128Terminal.lean \
+            research/nightfall/formalization/observability/ShiftedC23802Bernstein.lean \
+            research/nightfall/formalization/observability/ShiftedC23802Scalar.lean \
+            research/nightfall/formalization/observability/ActualSourceQ223802Local.lean \
+            research/nightfall/formalization/observability/QuadraticBernoulliMoment.lean \
+            research/nightfall/formalization/observability/QuadraticBernoulliIdentity.lean \
+            research/nightfall/formalization/observability/QuadraticBernoulliSharp.lean \
+            research/nightfall/formalization/observability/QuadraticSectionSharp.lean \
+            research/nightfall/formalization/observability/ActualSourceSectionBudgetSharp.lean \
+            research/nightfall/formalization/observability/ActualSourceIntegratedSharp.lean \
+            research/nightfall/formalization/observability/ActualSourceQ223802Terminal.lean \
+            research/nightfall/formalization/universal/InfinitePiQ2NativeHeterogeneousTerminal.lean \
+            research/nightfall/formalization/universal/InfinitePiQ2FiniteSupportRepair.lean \
+            research/nightfall/formalization/universal/InfinitePiQ2ZeroCellSourceInvariance.lean \
+            research/nightfall/formalization/universal/InfinitePiQ2FiniteSupportedTerminal.lean \
+            research/nightfall/formalization/universal/InfinitePiQ2NativeSupportedTerminal.lean \
+            research/nightfall/formalization/universal/InfinitePiQ2Density.lean \
+            research/nightfall/formalization/universal/InfinitePiQ2InfluenceStability.lean \
+            research/nightfall/formalization/universal/InfinitePiQ2OriginalIndependence.lean \
+            research/nightfall/formalization/universal/InfinitePiQ2ConditionalSourceTest.lean \
+            research/nightfall/formalization/universal/InfinitePiQ2Limit.lean \
+            research/nightfall/formalization/universal/InfinitePiQ2EventualTerminal.lean \
+            research/nightfall/formalization/universal/InfinitePiQ2CellAverage.lean \
+            research/nightfall/formalization/universal/InfinitePiQ2FiniteCellDensity.lean \
+            research/nightfall/formalization/universal/InfinitePiQ2UnconditionalTerminal.lean; do
+            F=$(basename "$P" .lean)
+            cp "$P" "/tmp/mathlib4/$F.lean"
+            echo "::group::$F"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$F.olean" "$F.lean")
+            echo "::endgroup::"
+          done
+      - name: Strict named-theorem and standard axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-infinite-unconditional
+          N=Nightfall.InfinitePiQ2UnconditionalTerminal
+          C=Nightfall.InfinitePiQ2CellAverage.CellLabels
+          python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiQ2UnconditionalTerminal.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 1800 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl "$N.infinitePi_q2_105416_unconditional" \
+            --decl "$N.infinitePi_q2_105416_unconditional_variance" \
+            --decl "$N.exists_labels_variance_gap" \
+            --decl "$N.cellAverage_q2_all" \
+            --decl "$C.native_influence_le" \
+            --decl "$C.avg_nativeSupportedDegreeTwo" \
+            --decl "$C.variance_gap_le" \
+            --json-out lean-receipts/q2-infinite-unconditional/receipt.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-infinite-unconditional/receipt.json
+      - name: Independent re-check of the closure with lean4checker-style kernel replay of the terminal module
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd /tmp/mathlib4
+          cat > NightfallQ2InfiniteAudit.lean <<'LEAN'
+          import InfinitePiQ2UnconditionalTerminal
+          #print axioms Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional
+          #print axioms Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional_variance
+          #check @Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional
+          #check @Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional_variance
+          LEAN
+          lake env lean NightfallQ2InfiniteAudit.lean | tee "$GITHUB_WORKSPACE/lean-receipts/q2-infinite-unconditional/axioms.txt"
+          ! grep -E "sorryAx|axiom [A-Za-z]" "$GITHUB_WORKSPACE/lean-receipts/q2-infinite-unconditional/axioms.txt" | grep -vE "propext|Classical.choice|Quot.sound"
+      - name: Capture exact source and compiler head
+        if: always()
+        run: |
+          mkdir -p lean-receipts/q2-infinite-unconditional
+          git rev-parse HEAD > lean-receipts/q2-infinite-unconditional/head
+          sha256sum research/nightfall/formalization/universal/InfinitePiQ2CellAverage.lean \
+            research/nightfall/formalization/universal/InfinitePiQ2UnconditionalTerminal.lean \
+            > lean-receipts/q2-infinite-unconditional/source-sha256
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: q2-infinite-unconditional-${{ github.run_id }}
+          path: lean-receipts/q2-infinite-unconditional
+          if-no-files-found: warn
