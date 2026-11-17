@@ -108,18 +108,22 @@ end Basic
 
 /-! ## Finite measurable labels on original coordinates -/
 
-universe v
+universe u v
 
-variable {ι : Type} [DecidableEq ι] {X : ι → Type v}
+variable {ι : Type u} [DecidableEq ι] {X : ι → Type v}
 variable [∀ i, MeasurableSpace (X i)]
 
-/-- Finitely many original coordinates, each with a finite measurable label. -/
+/-- Finitely many distinct original coordinates `e 0, …, e (n-1)`, each with a
+finite measurable label. Indexing by `Fin n` keeps the finite model in `Type`
+for an index type `ι` of ANY universe. -/
 structure CellLabels (X : ι → Type v) [∀ i, MeasurableSpace (X i)] where
-  F : Finset ι
-  N : F → ℕ
+  n : ℕ
+  e : Fin n → ι
+  inj : Function.Injective e
+  N : Fin n → ℕ
   pos : ∀ k, 0 < N k
-  φ : (k : F) → X k → Fin (N k)
-  meas : ∀ (k : F) (a : Fin (N k)), MeasurableSet (φ k ⁻¹' {a})
+  φ : (k : Fin n) → X (e k) → Fin (N k)
+  meas : ∀ (k : Fin n) (a : Fin (N k)), MeasurableSet (φ k ⁻¹' {a})
 
 /-! ### Exact coordinate independence on original cells -/
 
@@ -191,18 +195,18 @@ namespace CellLabels
 
 variable (L : CellLabels X)
 
-abbrev Letter (k : L.F) : Type := Fin (L.N k)
+abbrev Letter (k : Fin L.n) : Type := Fin (L.N k)
 
-instance instNonemptyLetter (k : L.F) : Nonempty (L.Letter k) := ⟨⟨0, L.pos k⟩⟩
+instance instNonemptyLetter (k : Fin L.n) : Nonempty (L.Letter k) := ⟨⟨0, L.pos k⟩⟩
 
-abbrev Word : Type := (k : L.F) → L.Letter k
+abbrev Word : Type := (k : Fin L.n) → L.Letter k
 
-def word (x : (i : ι) → X i) : L.Word := fun k => L.φ k (x k)
+def word (x : (i : ι) → X i) : L.Word := fun k => L.φ k (x (L.e k))
 
 def cell (y : L.Word) : Set ((i : ι) → X i) := {x | L.word x = y}
 
 theorem mem_cell {y : L.Word} {x : (i : ι) → X i} :
-    x ∈ L.cell y ↔ ∀ k : L.F, L.φ k (x k) = y k := by
+    x ∈ L.cell y ↔ ∀ k : Fin L.n, L.φ k (x (L.e k)) = y k := by
   simp only [cell, word, Set.mem_setOf_eq, funext_iff]
 
 theorem mem_cell_word (x : (i : ι) → X i) : x ∈ L.cell (L.word x) := by
@@ -210,21 +214,21 @@ theorem mem_cell_word (x : (i : ι) → X i) : x ∈ L.cell (L.word x) := by
 
 theorem measurableSet_cell (y : L.Word) : MeasurableSet (L.cell y) := by
   have h : L.cell y =
-      ⋂ k : L.F, (fun x : (i : ι) → X i => x k) ⁻¹' (L.φ k ⁻¹' {y k}) := by
+      ⋂ k : Fin L.n, (fun x : (i : ι) → X i => x (L.e k)) ⁻¹' (L.φ k ⁻¹' {y k}) := by
     ext x; simp [mem_cell]
   rw [h]
-  exact MeasurableSet.iInter fun k => (measurable_pi_apply (k : ι)) (L.meas k (y k))
+  exact MeasurableSet.iInter fun k => (measurable_pi_apply (L.e k)) (L.meas k (y k))
 
 variable (μ : (i : ι) → Measure (X i)) [∀ i, IsProbabilityMeasure (μ i)]
 
 /-- Original label probability at one coordinate. -/
-noncomputable def prob (k : L.F) (a : L.Letter k) : ℝ :=
-  (μ k).real (L.φ k ⁻¹' {a})
+noncomputable def prob (k : Fin L.n) (a : L.Letter k) : ℝ :=
+  (μ (L.e k)).real (L.φ k ⁻¹' {a})
 
-theorem prob_nonneg (k : L.F) (a : L.Letter k) : 0 ≤ L.prob μ k a :=
+theorem prob_nonneg (k : Fin L.n) (a : L.Letter k) : 0 ≤ L.prob μ k a :=
   measureReal_nonneg
 
-theorem prob_sum (k : L.F) : ∑ a : L.Letter k, L.prob μ k a = 1 := by
+theorem prob_sum (k : Fin L.n) : ∑ a : L.Letter k, L.prob μ k a = 1 := by
   unfold prob
   simp only [measureReal_def]
   rw [← ENNReal.toReal_sum (fun a _ => measure_ne_top _ _),
@@ -233,28 +237,18 @@ theorem prob_sum (k : L.F) : ∑ a : L.Letter k, L.prob μ k a = 1 := by
 
 /-- Exact original-product measure of a label cell. -/
 theorem measure_cell (y : L.Word) :
-    Measure.infinitePi μ (L.cell y) = ∏ k : L.F, μ k (L.φ k ⁻¹' {y k}) := by
-  classical
-  let t : (i : ι) → Set (X i) := fun i =>
-    if h : i ∈ L.F then L.φ ⟨i, h⟩ ⁻¹' {y ⟨i, h⟩} else Set.univ
-  have ht : ∀ i ∈ L.F, MeasurableSet (t i) := by
-    intro i hi
-    simp only [t, dif_pos hi]
-    exact L.meas _ _
-  have hcell : L.cell y = Set.pi (↑L.F) t := by
-    ext x
-    simp only [mem_cell, Set.mem_pi, Finset.mem_coe, t]
-    constructor
-    · intro h i hi
-      rw [dif_pos hi]
-      exact h ⟨i, hi⟩
-    · intro h k
-      have hk := h k k.2
-      rw [dif_pos k.2] at hk
-      exact hk
-  rw [hcell, Measure.infinitePi_pi (μ := μ) ht, ← Finset.prod_coe_sort L.F]
+    Measure.infinitePi μ (L.cell y) = ∏ k : Fin L.n, μ (L.e k) (L.φ k ⁻¹' {y k}) := by
+  have hind : iIndepFun (fun (k : Fin L.n) (x : (i : ι) → X i) => x (L.e k))
+      (Measure.infinitePi μ) :=
+    (iIndepFun_infinitePi (P := μ) (X := fun i => (id : X i → X i))
+      (fun i => measurable_id)).precomp L.inj
+  have hcell : L.cell y = ⋂ k ∈ (Finset.univ : Finset (Fin L.n)),
+      (fun x : (i : ι) → X i => x (L.e k)) ⁻¹' (L.φ k ⁻¹' {y k}) := by
+    ext x; simp [mem_cell]
+  rw [hcell, hind.measure_inter_preimage_eq_mul _ (fun k _ => L.meas k (y k))]
   refine Finset.prod_congr rfl fun k _ => ?_
-  simp only [t, dif_pos k.2]
+  rw [← Measure.map_apply (measurable_pi_apply (L.e k)) (L.meas k (y k)),
+    Measure.infinitePi_map_eval]
 
 /-- Native finite mass of a word is the original cell probability. -/
 theorem nativeMass_eq (y : L.Word) :
@@ -402,38 +396,38 @@ theorem variance_gap_le {f u : ((i : ι) → X i) → ℝ}
 
 
 /-- The cell of all labels except at `k`. -/
-def otherCell (k : L.F) (y : L.Word) : Set ((i : ι) → X i) :=
-  {x | ∀ l : L.F, l ≠ k → L.φ l (x l) = y l}
+def otherCell (k : Fin L.n) (y : L.Word) : Set ((i : ι) → X i) :=
+  {x | ∀ l : Fin L.n, l ≠ k → L.φ l (x (L.e l)) = y l}
 
-theorem measurableSet_otherCell_other (k : L.F) (y : L.Word) :
-    MeasurableSet[sourceOtherSigma (X := X) (k : ι)] (L.otherCell k y) := by
+theorem measurableSet_otherCell_other (k : Fin L.n) (y : L.Word) :
+    MeasurableSet[sourceOtherSigma (X := X) (L.e k)] (L.otherCell k y) := by
   have h : L.otherCell k y =
-      ⋂ l : L.F, {x : (i : ι) → X i | l ≠ k → L.φ l (x l) = y l} := by
+      ⋂ l : Fin L.n, {x : (i : ι) → X i | l ≠ k → L.φ l (x (L.e l)) = y l} := by
     ext x; simp [otherCell]
   rw [h]
   refine MeasurableSet.iInter fun l => ?_
   by_cases hl : l = k
-  · have : {x : (i : ι) → X i | l ≠ k → L.φ l (x l) = y l} = Set.univ := by
+  · have : {x : (i : ι) → X i | l ≠ k → L.φ l (x (L.e l)) = y l} = Set.univ := by
       ext x; simp [hl]
     rw [this]; exact MeasurableSet.univ
-  · have hne : (l : ι) ≠ (k : ι) := fun h => hl (Subtype.ext h)
-    have : {x : (i : ι) → X i | l ≠ k → L.φ l (x l) = y l} =
-        (fun x : (i : ι) → X i => x l) ⁻¹' (L.φ l ⁻¹' {y l}) := by
+  · have hne : L.e l ≠ L.e k := fun h => hl (L.inj h)
+    have : {x : (i : ι) → X i | l ≠ k → L.φ l (x (L.e l)) = y l} =
+        (fun x : (i : ι) → X i => x (L.e l)) ⁻¹' (L.φ l ⁻¹' {y l}) := by
       ext x; simp [hl]
     rw [this]
     exact (measurable_coord_other hne) (L.meas l (y l))
 
-theorem measurableSet_otherCell (k : L.F) (y : L.Word) :
+theorem measurableSet_otherCell (k : Fin L.n) (y : L.Word) :
     MeasurableSet (L.otherCell k y) :=
-  sourceOtherSigma_le (X := X) (k : ι) _ (L.measurableSet_otherCell_other k y)
+  sourceOtherSigma_le (X := X) (L.e k) _ (L.measurableSet_otherCell_other k y)
 
-theorem cell_update_indicator (k : L.F) (y : L.Word) (a : L.Letter k)
+theorem cell_update_indicator (k : Fin L.n) (y : L.Word) (a : L.Letter k)
     (W : ((i : ι) → X i) → ℝ) (x : (i : ι) → X i) :
     (L.cell (Function.update y k a)).indicator W x =
-      (L.φ k ⁻¹' {a}).indicator (fun _ => (1 : ℝ)) (x k) *
+      (L.φ k ⁻¹' {a}).indicator (fun _ => (1 : ℝ)) (x (L.e k)) *
         (L.otherCell k y).indicator W x := by
   have hmem : x ∈ L.cell (Function.update y k a) ↔
-      L.φ k (x k) = a ∧ x ∈ L.otherCell k y := by
+      L.φ k (x (L.e k)) = a ∧ x ∈ L.otherCell k y := by
     rw [mem_cell]
     constructor
     · intro h
@@ -443,35 +437,35 @@ theorem cell_update_indicator (k : L.F) (y : L.Word) (a : L.Letter k)
       by_cases hl : l = k
       · subst hl; simpa using h1
       · simpa [Function.update_of_ne hl] using h2 l hl
-  by_cases h1 : L.φ k (x k) = a <;> by_cases h2 : x ∈ L.otherCell k y <;>
+  by_cases h1 : L.φ k (x (L.e k)) = a <;> by_cases h2 : x ∈ L.otherCell k y <;>
     simp [Set.indicator, hmem, h1, h2]
 
 /-- Exact factorization of a cell integral at coordinate `k`. -/
-theorem setIntegral_cell_update (k : L.F) (y : L.Word) (a : L.Letter k)
+theorem setIntegral_cell_update (k : Fin L.n) (y : L.Word) (a : L.Letter k)
     {W : ((i : ι) → X i) → ℝ}
-    (hW : StronglyMeasurable[sourceOtherSigma (X := X) (k : ι)] W) :
+    (hW : StronglyMeasurable[sourceOtherSigma (X := X) (L.e k)] W) :
     ∫ x in L.cell (Function.update y k a), W x ∂ Measure.infinitePi μ =
       L.prob μ k a * ∫ x in L.otherCell k y, W x ∂ Measure.infinitePi μ := by
   rw [← integral_indicator (L.measurableSet_cell _),
     ← integral_indicator (L.measurableSet_otherCell k y)]
   simp_rw [L.cell_update_indicator k y a W]
-  have hWD : StronglyMeasurable[sourceOtherSigma (X := X) (k : ι)]
+  have hWD : StronglyMeasurable[sourceOtherSigma (X := X) (L.e k)]
       ((L.otherCell k y).indicator W) :=
     hW.indicator (L.measurableSet_otherCell_other k y)
-  rw [integral_coord_mul_other μ (k : ι)
+  rw [integral_coord_mul_other μ (L.e k)
       (measurable_const.indicator (L.meas k a)) hWD]
   congr 1
   rw [integral_indicator (L.meas k a), setIntegral_const, smul_eq_mul, mul_one]
   rfl
 
-theorem mass_update (k : L.F) (y : L.Word) (a : L.Letter k) :
+theorem mass_update (k : Fin L.n) (y : L.Word) (a : L.Letter k) :
     (Measure.infinitePi μ).real (L.cell (Function.update y k a)) =
       L.prob μ k a * (Measure.infinitePi μ).real (L.otherCell k y) := by
   have h := L.setIntegral_cell_update μ k y a
     (W := fun _ => (1 : ℝ)) stronglyMeasurable_const
   simpa [setIntegral_const] using h
 
-theorem otherCell_update (k : L.F) (y : L.Word) (a : L.Letter k) :
+theorem otherCell_update (k : Fin L.n) (y : L.Word) (a : L.Letter k) :
     L.otherCell k (Function.update y k a) = L.otherCell k y := by
   ext x
   simp only [otherCell, Set.mem_setOf_eq]
@@ -480,7 +474,7 @@ theorem otherCell_update (k : L.F) (y : L.Word) (a : L.Letter k) :
   · intro h l hl; simpa [Function.update_of_ne hl] using h l hl
 
 /-- An other-cell splits exactly over the letter at `k`. -/
-theorem setIntegral_otherCell_split (k : L.F) (y : L.Word)
+theorem setIntegral_otherCell_split (k : Fin L.n) (y : L.Word)
     {h : ((i : ι) → X i) → ℝ} (hh : Integrable h (Measure.infinitePi μ)) :
     ∫ x in L.otherCell k y, h x ∂ Measure.infinitePi μ =
       ∑ a : L.Letter k,
@@ -489,10 +483,10 @@ theorem setIntegral_otherCell_split (k : L.F) (y : L.Word)
       ∑ a : L.Letter k, (L.cell (Function.update y k a)).indicator h x := by
     intro x
     simp_rw [L.cell_update_indicator k y _ h x]
-    rw [Finset.sum_eq_single (L.φ k (x k))]
+    rw [Finset.sum_eq_single (L.φ k (x (L.e k)))]
     · simp
     · intro b _ hb
-      have : x k ∉ L.φ k ⁻¹' {b} := fun hx => hb (Set.mem_singleton_iff.mp hx).symm
+      have : x (L.e k) ∉ L.φ k ⁻¹' {b} := fun hx => hb (Set.mem_singleton_iff.mp hx).symm
       simp [Set.indicator_of_notMem this]
     · intro hx; exact absurd (Finset.mem_univ _) hx
   rw [← integral_indicator (L.measurableSet_otherCell k y)]
@@ -506,11 +500,11 @@ theorem setIntegral_otherCell_split (k : L.F) (y : L.Word)
 /-- Exact heat-bath identity: the native one-coordinate resampling of the
 cell-average table equals the cell integral of the genuine original
 conditional expectation, for EVERY word (no positivity needed). -/
-theorem heatBath_mass_eq (k : L.F) (y : L.Word) {f : ((i : ι) → X i) → ℝ}
+theorem heatBath_mass_eq (k : Fin L.n) (y : L.Word) {f : ((i : ι) → X i) → ℝ}
     (hf : Integrable f (Measure.infinitePi μ))
     {h' : ((i : ι) → X i) → ℝ}
-    (hh' : StronglyMeasurable[sourceOtherSigma (X := X) (k : ι)] h')
-    (hset : ∀ s, MeasurableSet[sourceOtherSigma (X := X) (k : ι)] s →
+    (hh' : StronglyMeasurable[sourceOtherSigma (X := X) (L.e k)] h')
+    (hset : ∀ s, MeasurableSet[sourceOtherSigma (X := X) (L.e k)] s →
       ∫ x in s, h' x ∂ Measure.infinitePi μ = ∫ x in s, f x ∂ Measure.infinitePi μ) :
     (∑ a : L.Letter k, L.prob μ k a * L.avg μ f (Function.update y k a)) *
         (Measure.infinitePi μ).real (L.cell y) =
@@ -549,53 +543,53 @@ theorem heatBath_mass_eq (k : L.F) (y : L.Word) {f : ((i : ι) → X i) → ℝ}
 coordinate influence of the bounded measurable source function. -/
 theorem native_influence_le {f : ((i : ι) → X i) → ℝ} (hfm : Measurable f)
     {B : ℝ} (hb : ∀ x, |f x| ≤ B)
-    (hf2 : MemLp f 2 (Measure.infinitePi μ)) (k : L.F) :
+    (hf2 : MemLp f 2 (Measure.infinitePi μ)) (k : Fin L.n) :
     nativeInfluence L.Letter (L.prob μ) (L.avg μ f) k ≤
-      sourceCoordinateInfluence μ (k : ι) (hf2.toLp f) := by
+      sourceCoordinateInfluence μ (L.e k) (hf2.toLp f) := by
   have hf : Integrable f (Measure.infinitePi μ) :=
     integrable_of_abs_le (Measure.infinitePi μ) hfm B hb
-  have hPm : AEStronglyMeasurable[sourceOtherSigma (X := X) (k : ι)]
-      (sourceOtherProjection μ (k : ι) (hf2.toLp f) : ((i : ι) → X i) → ℝ)
+  have hPm : AEStronglyMeasurable[sourceOtherSigma (X := X) (L.e k)]
+      (sourceOtherProjection μ (L.e k) (hf2.toLp f) : ((i : ι) → X i) → ℝ)
       (Measure.infinitePi μ) :=
     lpMeas.aestronglyMeasurable
-      (condExpL2 ℝ ℝ (sourceOtherSigma_le (X := X) (k : ι)) (hf2.toLp f))
+      (condExpL2 ℝ ℝ (sourceOtherSigma_le (X := X) (L.e k)) (hf2.toLp f))
   obtain ⟨h', hh', hPh'⟩ := hPm
-  have hset : ∀ s, MeasurableSet[sourceOtherSigma (X := X) (k : ι)] s →
+  have hset : ∀ s, MeasurableSet[sourceOtherSigma (X := X) (L.e k)] s →
       ∫ x in s, h' x ∂(Measure.infinitePi μ) =
         ∫ x in s, f x ∂(Measure.infinitePi μ) := by
     intro s hs
-    have hs' : MeasurableSet s := sourceOtherSigma_le (X := X) (k : ι) _ hs
+    have hs' : MeasurableSet s := sourceOtherSigma_le (X := X) (L.e k) _ hs
     have h1 : ∫ x in s, h' x ∂(Measure.infinitePi μ) =
-        ∫ x in s, (sourceOtherProjection μ (k : ι) (hf2.toLp f) :
+        ∫ x in s, (sourceOtherProjection μ (L.e k) (hf2.toLp f) :
           ((i : ι) → X i) → ℝ) x ∂(Measure.infinitePi μ) :=
       setIntegral_congr_ae hs' (hPh'.mono fun x hx _ => hx.symm)
-    have h2 : ∫ x in s, (sourceOtherProjection μ (k : ι) (hf2.toLp f) :
+    have h2 : ∫ x in s, (sourceOtherProjection μ (L.e k) (hf2.toLp f) :
           ((i : ι) → X i) → ℝ) x ∂(Measure.infinitePi μ) =
         ∫ x in s, (hf2.toLp f) x ∂(Measure.infinitePi μ) :=
-      integral_condExpL2_eq (sourceOtherSigma_le (X := X) (k : ι)) (hf2.toLp f) hs
+      integral_condExpL2_eq (sourceOtherSigma_le (X := X) (L.e k)) (hf2.toLp f) hs
         (measure_ne_top _ _)
     have h3 : ∫ x in s, (hf2.toLp f) x ∂(Measure.infinitePi μ) =
         ∫ x in s, f x ∂(Measure.infinitePi μ) :=
       setIntegral_congr_ae hs' ((hf2.coeFn_toLp).mono fun x hx _ => hx)
     rw [h1, h2, h3]
-  have hres : ((hf2.toLp f - sourceOtherProjection μ (k : ι) (hf2.toLp f) :
+  have hres : ((hf2.toLp f - sourceOtherProjection μ (L.e k) (hf2.toLp f) :
       Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) : ((i : ι) → X i) → ℝ)
         =ᵐ[Measure.infinitePi μ] fun x => f x - h' x := by
     filter_upwards [Lp.coeFn_sub (hf2.toLp f)
-      (sourceOtherProjection μ (k : ι) (hf2.toLp f)), hf2.coeFn_toLp, hPh']
+      (sourceOtherProjection μ (L.e k) (hf2.toLp f)), hf2.coeFn_toLp, hPh']
       with x h1 h2 h3
     rw [h1, Pi.sub_apply, h2, h3]
   have hR2 : Integrable (fun x => (f x - h' x) ^ 2) (Measure.infinitePi μ) := by
     have := (Lp.memLp (hf2.toLp f -
-      sourceOtherProjection μ (k : ι) (hf2.toLp f))).integrable_sq
+      sourceOtherProjection μ (L.e k) (hf2.toLp f))).integrable_sq
     exact this.congr (hres.mono fun x hx => by simp only [hx])
   have hP1 : Integrable h' (Measure.infinitePi μ) := by
-    have : Integrable (sourceOtherProjection μ (k : ι) (hf2.toLp f) :
+    have : Integrable (sourceOtherProjection μ (L.e k) (hf2.toLp f) :
         ((i : ι) → X i) → ℝ) (Measure.infinitePi μ) :=
       (Lp.memLp _).integrable one_le_two
     exact this.congr hPh'
   have hR1 : Integrable (fun x => f x - h' x) (Measure.infinitePi μ) := hf.sub hP1
-  have hInf : sourceCoordinateInfluence μ (k : ι) (hf2.toLp f) =
+  have hInf : sourceCoordinateInfluence μ (L.e k) (hf2.toLp f) =
       ∫ x, (f x - h' x) ^ 2 ∂(Measure.infinitePi μ) := by
     unfold sourceCoordinateInfluence sourceCoordinateResidual
     rw [← real_inner_self_eq_norm_sq, L2.inner_def]
@@ -624,15 +618,14 @@ theorem native_influence_le {f : ((i : ι) → X i) → ℝ} (hfm : Measurable f
 
 /-! ### Degree two of the cell-average table -/
 
-/-- If a source function ignores coordinate `k`, its table ignores every
-positive letter at `k`. -/
-theorem avg_update_invariant (k : L.F) (t0 : X k)
-    {V : ((i : ι) → X i) → ℝ} (hV : Measurable V)
-    (hinv : ∀ x t, V (Function.update x (k : ι) t) = V x)
+/-- A source function measurable for the original all-other-coordinates sigma
+algebra at `e k` has a table ignoring every positive letter at `k`. -/
+theorem avg_update_invariant_of_other (k : Fin L.n)
+    {V : ((i : ι) → X i) → ℝ}
+    (hW : StronglyMeasurable[sourceOtherSigma (X := X) (L.e k)] V)
     (y : L.Word) (a a' : L.Letter k)
     (ha : 0 < L.prob μ k a) (ha' : 0 < L.prob μ k a') :
     L.avg μ V (Function.update y k a) = L.avg μ V (Function.update y k a') := by
-  have hW := stronglyMeasurable_other_of_invariant (k : ι) t0 hV hinv
   have e : ∀ b : L.Letter k, 0 < L.prob μ k b →
       L.avg μ V (Function.update y k b) =
         (∫ x in L.otherCell k y, V x ∂ Measure.infinitePi μ) /
@@ -643,9 +636,20 @@ theorem avg_update_invariant (k : L.F) (t0 : X k)
       mul_div_mul_left _ _ hb.ne']
   rw [e a ha, e a' ha']
 
+/-- If a source function ignores coordinate `e k`, its table ignores every
+positive letter at `k`. -/
+theorem avg_update_invariant (k : Fin L.n) (t0 : X (L.e k))
+    {V : ((i : ι) → X i) → ℝ} (hV : Measurable V)
+    (hinv : ∀ x t, V (Function.update x (L.e k) t) = V x)
+    (y : L.Word) (a a' : L.Letter k)
+    (ha : 0 < L.prob μ k a) (ha' : 0 < L.prob μ k a') :
+    L.avg μ V (Function.update y k a) = L.avg μ V (Function.update y k a') :=
+  L.avg_update_invariant_of_other μ k
+    (stronglyMeasurable_other_of_invariant (L.e k) t0 hV hinv) y a a' ha ha'
+
 /-- Triple differences vanish when the table ignores the outer coordinate. -/
 theorem delta_three_zero_of_outer {G : L.Word → ℝ}
-    (i j k : L.F) (hij : i ≠ j) (hik : i ≠ k)
+    (i j k : Fin L.n) (hij : i ≠ j) (hik : i ≠ k)
     (a a' : L.Letter i) (b b' : L.Letter j) (c c' : L.Letter k)
     (hinv : ∀ z : L.Word, G (Function.update z i a) = G (Function.update z i a'))
     (y : L.Word) :
@@ -659,7 +663,7 @@ theorem delta_three_zero_of_outer {G : L.Word → ℝ}
   simp only [e, hinv]
   ring
 
-theorem delta_comm {G : L.Word → ℝ} (i j : L.F) (hij : i ≠ j)
+theorem delta_comm {G : L.Word → ℝ} (i j : Fin L.n) (hij : i ≠ j)
     (a a' : L.Letter i) (b b' : L.Letter j) :
     delta i a a' (delta j b b' G) = delta j b b' (delta i a a' G) := by
   funext y
@@ -712,22 +716,22 @@ theorem avg_nativeSupportedDegreeTwo {f : ((i : ι) → X i) → ℝ}
     (hdeg : PointwiseDegreeTwo f) (x0 : (i : ι) → X i) :
     NativeSupportedDegreeTwo L.Letter (L.prob μ) (L.avg μ f) := by
   intro k1 k2 k3 h12 h13 h23 a a' b b' c c' y _ ha ha' hb1 hb1' hc hc'
-  have n12 : (k1 : ι) ≠ k2 := fun h => h12 (Subtype.ext h)
-  have n13 : (k1 : ι) ≠ k3 := fun h => h13 (Subtype.ext h)
-  have n23 : (k2 : ι) ≠ k3 := fun h => h23 (Subtype.ext h)
-  set u1 := x0 k1
-  set u2 := x0 k2
-  set u3 := x0 k3
+  have n12 : L.e k1 ≠ L.e k2 := fun h => h12 (L.inj h)
+  have n13 : L.e k1 ≠ L.e k3 := fun h => h13 (L.inj h)
+  have n23 : L.e k2 ≠ L.e k3 := fun h => h23 (L.inj h)
+  set u1 := x0 (L.e k1)
+  set u2 := x0 (L.e k2)
+  set u3 := x0 (L.e k3)
   have hupd : ∀ (j : ι) (t : X j), Measurable fun x : (i : ι) → X i => Function.update x j t :=
     fun j t => (measurable_update_other j t).mono (sourceOtherSigma_le (X := X) j) le_rfl
   let A1 : ((i : ι) → X i) → ℝ := fun x =>
-    f (Function.update x k1 u1) -
-      f (Function.update (Function.update x k1 u1) k3 u3) -
-      f (Function.update (Function.update x k1 u1) k2 u2) +
-      f (Function.update (Function.update (Function.update x k1 u1) k2 u2) k3 u3)
+    f (Function.update x (L.e k1) u1) -
+      f (Function.update (Function.update x (L.e k1) u1) (L.e k3) u3) -
+      f (Function.update (Function.update x (L.e k1) u1) (L.e k2) u2) +
+      f (Function.update (Function.update (Function.update x (L.e k1) u1) (L.e k2) u2) (L.e k3) u3)
   let A2 : ((i : ι) → X i) → ℝ := fun x =>
-    f (Function.update x k2 u2) - f (Function.update (Function.update x k2 u2) k3 u3)
-  let A3 : ((i : ι) → X i) → ℝ := fun x => f (Function.update x k3 u3)
+    f (Function.update x (L.e k2) u2) - f (Function.update (Function.update x (L.e k2) u2) (L.e k3) u3)
+  let A3 : ((i : ι) → X i) → ℝ := fun x => f (Function.update x (L.e k3) u3)
   have mA1 : Measurable A1 := by
     refine (((hfm.comp (hupd _ _)).sub (hfm.comp ((hupd _ _).comp (hupd _ _)))).sub
       (hfm.comp ((hupd _ _).comp (hupd _ _)))).add
@@ -737,18 +741,18 @@ theorem avg_nativeSupportedDegreeTwo {f : ((i : ι) → X i) → ℝ}
   have mA3 : Measurable A3 := hfm.comp (hupd _ _)
   have bA1 : ∀ x, |A1 x| ≤ 4 * B := by
     intro x
-    have h1 := abs_le.mp (hb (Function.update x k1 u1))
-    have h2 := abs_le.mp (hb (Function.update (Function.update x k1 u1) k3 u3))
-    have h3 := abs_le.mp (hb (Function.update (Function.update x k1 u1) k2 u2))
+    have h1 := abs_le.mp (hb (Function.update x (L.e k1) u1))
+    have h2 := abs_le.mp (hb (Function.update (Function.update x (L.e k1) u1) (L.e k3) u3))
+    have h3 := abs_le.mp (hb (Function.update (Function.update x (L.e k1) u1) (L.e k2) u2))
     have h4 := abs_le.mp
-      (hb (Function.update (Function.update (Function.update x k1 u1) k2 u2) k3 u3))
+      (hb (Function.update (Function.update (Function.update x (L.e k1) u1) (L.e k2) u2) (L.e k3) u3))
     simp only [A1]
     rw [abs_le]
     constructor <;> linarith [h1.1, h1.2, h2.1, h2.2, h3.1, h3.2, h4.1, h4.2]
   have bA2 : ∀ x, |A2 x| ≤ 2 * B := by
     intro x
-    have h1 := abs_le.mp (hb (Function.update x k2 u2))
-    have h2 := abs_le.mp (hb (Function.update (Function.update x k2 u2) k3 u3))
+    have h1 := abs_le.mp (hb (Function.update x (L.e k2) u2))
+    have h2 := abs_le.mp (hb (Function.update (Function.update x (L.e k2) u2) (L.e k3) u3))
     simp only [A2]
     rw [abs_le]
     constructor <;> linarith [h1.1, h1.2, h2.1, h2.2]
@@ -756,17 +760,17 @@ theorem avg_nativeSupportedDegreeTwo {f : ((i : ι) → X i) → ℝ}
   have iA2 : Integrable A2 (Measure.infinitePi μ) := integrable_of_abs_le (Measure.infinitePi μ) mA2 _ bA2
   have iA3 : Integrable A3 (Measure.infinitePi μ) := integrable_of_abs_le (Measure.infinitePi μ) mA3 _ fun x => hb _
   have hdec : ∀ x, f x = A1 x + A2 x + A3 x := fun x =>
-    anchored_decomposition hdeg k1 k2 k3 n12 n13 n23 u1 u2 u3 x
+    anchored_decomposition hdeg (L.e k1) (L.e k2) (L.e k3) n12 n13 n23 u1 u2 u3 x
   have hsum : ∀ z : L.Word, L.avg μ f z = L.avg μ A1 z + L.avg μ A2 z + L.avg μ A3 z := by
     intro z
     have hf' : f = fun x => (A1 x + A2 x) + A3 x := funext hdec
     rw [hf', L.avg_add μ (f := fun x => A1 x + A2 x) (g := A3) (iA1.add iA2) iA3,
       L.avg_add μ iA1 iA2]
-  have inv1 : ∀ x t, A1 (Function.update x (k1 : ι) t) = A1 x := by
+  have inv1 : ∀ x t, A1 (Function.update x (L.e k1) t) = A1 x := by
     intro x t; simp only [A1, Function.update_idem]
-  have inv2 : ∀ x t, A2 (Function.update x (k2 : ι) t) = A2 x := by
+  have inv2 : ∀ x t, A2 (Function.update x (L.e k2) t) = A2 x := by
     intro x t; simp only [A2, Function.update_idem]
-  have inv3 : ∀ x t, A3 (Function.update x (k3 : ι) t) = A3 x := by
+  have inv3 : ∀ x t, A3 (Function.update x (L.e k3) t) = A3 x := by
     intro x t; simp only [A3, Function.update_idem]
   have z1 : delta k1 a a' (delta k2 b b' (delta k3 c c' (L.avg μ A1))) y = 0 :=
     L.delta_three_zero_of_outer k1 k2 k3 h12 h13 a a' b b' c c'
@@ -789,23 +793,119 @@ theorem avg_nativeSupportedDegreeTwo {f : ((i : ι) → X i) → ℝ}
   rw [hlin, z1, z2, z3]
   ring
 
+/-! ### Almost-everywhere (L²) Efron–Stein degree two -/
+
+/-- The table of an `L²` class: cell averages of any representative. -/
+theorem avg_congr_ae {f g : ((i : ι) → X i) → ℝ}
+    (h : f =ᵐ[Measure.infinitePi μ] g) (y : L.Word) :
+    L.avg μ f y = L.avg μ g y := by
+  unfold avg
+  rw [setIntegral_congr_ae (L.measurableSet_cell y) (h.mono fun x hx _ => hx)]
+
+theorem avg_Lp_add (G H : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) (y : L.Word) :
+    L.avg μ (⇑(G + H)) y = L.avg μ (⇑G) y + L.avg μ (⇑H) y := by
+  rw [L.avg_congr_ae μ (Lp.coeFn_add G H) y]
+  exact L.avg_add μ ((Lp.memLp G).integrable one_le_two)
+    ((Lp.memLp H).integrable one_le_two) y
+
+theorem avg_Lp_zero (y : L.Word) :
+    L.avg μ (⇑(0 : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))) y = 0 := by
+  rw [L.avg_congr_ae μ (Lp.coeFn_zero ℝ (2 : ENNReal) (Measure.infinitePi μ)) y]
+  simp [avg]
+
+/-- The table of a genuine original projection ignores positive letters at `k`. -/
+theorem avg_projection_invariant (k : Fin L.n)
+    (G : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))
+    (y : L.Word) (a a' : L.Letter k)
+    (ha : 0 < L.prob μ k a) (ha' : 0 < L.prob μ k a') :
+    L.avg μ (⇑(sourceOtherProjection μ (L.e k) G)) (Function.update y k a) =
+      L.avg μ (⇑(sourceOtherProjection μ (L.e k) G)) (Function.update y k a') := by
+  have hPm : AEStronglyMeasurable[sourceOtherSigma (X := X) (L.e k)]
+      (sourceOtherProjection μ (L.e k) G : ((i : ι) → X i) → ℝ)
+      (Measure.infinitePi μ) :=
+    lpMeas.aestronglyMeasurable
+      (condExpL2 ℝ ℝ (sourceOtherSigma_le (X := X) (L.e k)) G)
+  obtain ⟨h', hh', hPh'⟩ := hPm
+  rw [L.avg_congr_ae μ hPh', L.avg_congr_ae μ hPh']
+  exact L.avg_update_invariant_of_other μ k hh' y a a' ha ha'
+
+/-- Peeling one genuine original residual at the outer coordinate. -/
+theorem delta_three_peel (G : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))
+    (i j k : Fin L.n) (hij : i ≠ j) (hik : i ≠ k)
+    (a a' : L.Letter i) (b b' : L.Letter j) (c c' : L.Letter k)
+    (ha : 0 < L.prob μ i a) (ha' : 0 < L.prob μ i a') (y : L.Word) :
+    delta i a a' (delta j b b' (delta k c c' (L.avg μ (⇑G)))) y =
+      delta i a a' (delta j b b' (delta k c c'
+        (L.avg μ (⇑(sourceCoordinateResidual μ (L.e i) G))))) y := by
+  have hsplit : ∀ z : L.Word, L.avg μ (⇑G) z =
+      L.avg μ (⇑(sourceOtherProjection μ (L.e i) G)) z +
+        L.avg μ (⇑(sourceCoordinateResidual μ (L.e i) G)) z := by
+    intro z
+    rw [← L.avg_Lp_add μ]
+    congr 2
+    unfold sourceCoordinateResidual
+    abel
+  have hz := L.delta_three_zero_of_outer i j k hij hik a a' b b' c c'
+    (G := L.avg μ (⇑(sourceOtherProjection μ (L.e i) G)))
+    (fun z => L.avg_projection_invariant μ i G z a a' ha ha') y
+  have hlin : delta i a a' (delta j b b' (delta k c c' (L.avg μ (⇑G)))) y =
+      delta i a a' (delta j b b' (delta k c c'
+        (L.avg μ (⇑(sourceOtherProjection μ (L.e i) G))))) y +
+      delta i a a' (delta j b b' (delta k c c'
+        (L.avg μ (⇑(sourceCoordinateResidual μ (L.e i) G))))) y := by
+    simp only [delta, hsplit]
+    ring
+  rw [hlin, hz, zero_add]
+
+/-- **L² Efron–Stein degree two.** For every three distinct original
+coordinates, the three genuine original-source residuals annihilate `G`.
+This is a statement about the `L²` class only (no pointwise representative). -/
+def TripleResidualZero (G : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) : Prop :=
+  ∀ i j k : ι, i ≠ j → i ≠ k → j ≠ k →
+    sourceCoordinateResidual μ i
+      (sourceCoordinateResidual μ j (sourceCoordinateResidual μ k G)) = 0
+
+/-- The cell table of an L² class of Efron–Stein degree two has native
+supported degree two. -/
+theorem avg_nativeSupportedDegreeTwo_of_triple
+    (G : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))
+    (hG : TripleResidualZero (X := X) μ G) :
+    NativeSupportedDegreeTwo L.Letter (L.prob μ) (L.avg μ (⇑G)) := by
+  intro k1 k2 k3 h12 h13 h23 a a' b b' c c' y _ ha ha' hb1 hb1' hc hc'
+  have s1 := L.delta_three_peel μ G k1 k2 k3 h12 h13 a a' b b' c c' ha ha' y
+  have s2 := L.delta_three_peel μ (sourceCoordinateResidual μ (L.e k1) G)
+    k2 k1 k3 (Ne.symm h12) h23 b b' a a' c c' hb1 hb1' y
+  have s3 := L.delta_three_peel μ (sourceCoordinateResidual μ (L.e k2)
+      (sourceCoordinateResidual μ (L.e k1) G))
+    k3 k2 k1 (Ne.symm h23) (Ne.symm h13) c c' b b' a a' hc hc' y
+  have hzero : sourceCoordinateResidual μ (L.e k3) (sourceCoordinateResidual μ (L.e k2)
+      (sourceCoordinateResidual μ (L.e k1) G)) = 0 :=
+    hG (L.e k3) (L.e k2) (L.e k1) (fun h => h23 (L.inj h).symm)
+      (fun h => h13 (L.inj h).symm) (fun h => h12 (L.inj h).symm)
+  rw [s1, L.delta_comm k1 k2 h12, s2,
+    L.delta_comm (G := L.avg μ (⇑(sourceCoordinateResidual μ (L.e k2)
+      (sourceCoordinateResidual μ (L.e k1) G)))) k1 k3 h13,
+    L.delta_comm k2 k3 h23, s3, hzero]
+  simp only [delta, L.avg_Lp_zero μ]
+  ring
+
 /-! ### The finite original-source Q2 inequality for every label table -/
 
 /-- Unconditional C105.416 inequality for the original-source cell-average
-table of a bounded measurable pointwise degree-two source, with the
-genuine original infinite-product influences on the right. -/
+table of a bounded measurable source whose table has native supported
+degree two, with the genuine original infinite-product influences. -/
 theorem cellAverage_q2 {f : ((i : ι) → X i) → ℝ} (hfm : Measurable f)
-    (hdeg : PointwiseDegreeTwo f) {B : ℝ} (hB : 0 ≤ B) (hb : ∀ x, |f x| ≤ B)
+    (hdegT : NativeSupportedDegreeTwo L.Letter (L.prob μ) (L.avg μ f))
+    {B : ℝ} (hB : 0 ≤ B) (hb : ∀ x, |f x| ≤ B)
     (hf2 : MemLp f 2 (Measure.infinitePi μ)) {M : ℝ} (hM : 0 ≤ M)
     (hI : ∀ i : ι, sourceCoordinateInfluence μ i (hf2.toLp f) ≤ M)
-    (x0 : (i : ι) → X i) [Nonempty L.F] :
+    [Nonempty (Fin L.n)] :
     (nativeVariance L.Letter (L.prob μ) (L.avg μ f)) ^ 2 ≤
       ((2 * (1 + Real.sqrt 2)) * Real.sqrt 3 + 11901 / 6250) ^ 2 * B ^ 2 * M :=
   native_heterogeneous_q2_105416_supported_unconditional L.Letter (L.prob μ)
-    (L.prob_nonneg μ) (L.prob_sum μ) (L.avg μ f)
-    (L.avg_nativeSupportedDegreeTwo μ hfm hb hdeg x0) B hB
+    (L.prob_nonneg μ) (L.prob_sum μ) (L.avg μ f) hdegT B hB
     (fun y _ => L.abs_avg_le μ hB hb y) M hM
-    (fun k => (L.native_influence_le μ hfm hb hf2 k).trans (hI k))
+    (fun k => (L.native_influence_le μ hfm hb hf2 k).trans (hI (L.e k)))
 
 end CellLabels
 

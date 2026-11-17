@@ -42,10 +42,11 @@ open Nightfall.InfinitePiQ2NativeHeterogeneousTerminal
 open Nightfall.InfinitePiQ2FiniteCellDensity
 open Nightfall.InfinitePiQ2EventualTerminal
 open Nightfall.InfinitePiQ2CellAverage
+open Nightfall.InfinitePiQ2NativeSupportedTerminal
 
-universe v
+universe u v
 
-variable {ι : Type} [DecidableEq ι] {X : ι → Type v}
+variable {ι : Type u} [DecidableEq ι] {X : ι → Type v}
 variable [∀ i, MeasurableSpace (X i)]
 
 /-! ## Finite families of coordinate tests -/
@@ -139,33 +140,42 @@ theorem span_determined (v : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))
       rw [h0, Pi.smul_apply, h1, Pi.smul_apply]
 
 open Classical in
-/-- Finite measurable labels recording the outcomes of finitely many tests. -/
+theorem testLabel_meas {Y : Type v} [MeasurableSpace Y] (T : Finset (Set Y))
+    (hT : ∀ t ∈ T, MeasurableSet t) (a : Fin (Fintype.card (T → Bool))) :
+    MeasurableSet ((fun z : Y => Fintype.equivFin (T → Bool)
+      (fun t => decide (z ∈ (t : Set Y)))) ⁻¹' {a}) := by
+  have e : (fun z : Y => Fintype.equivFin (T → Bool)
+        (fun t => decide (z ∈ (t : Set Y)))) ⁻¹' {a} =
+      ⋂ t : T, {z : Y | decide (z ∈ (t : Set Y)) =
+        (Fintype.equivFin (T → Bool)).symm a t} := by
+    ext z
+    simp only [Set.mem_preimage, Set.mem_singleton_iff, Set.mem_iInter,
+      Set.mem_setOf_eq]
+    rw [Equiv.apply_eq_iff_eq_symm_apply, funext_iff]
+  rw [e]
+  refine MeasurableSet.iInter fun t => ?_
+  have ht : MeasurableSet (t : Set Y) := hT t t.2
+  cases hval : (Fintype.equivFin (T → Bool)).symm a t
+  · have : {z : Y | decide (z ∈ (t : Set Y)) = false} = (t : Set Y)ᶜ := by
+      ext z; simp
+    rw [this]; exact ht.compl
+  · have : {z : Y | decide (z ∈ (t : Set Y)) = true} = (t : Set Y) := by
+      ext z; simp
+    rw [this]; exact ht
+
+open Classical in
+/-- Finite measurable labels recording the outcomes of finitely many tests,
+indexed by `Fin F.card` through the enumeration of `F`. -/
 noncomputable def testLabels (F : Finset ι) (S : ∀ i, Finset (Set (X i)))
     (hS : Tests S) : CellLabels X where
-  F := F
-  N := fun k => Fintype.card (S k → Bool)
+  n := F.card
+  e := fun k => (F.equivFin.symm k : ι)
+  inj := fun a b h => F.equivFin.symm.injective (Subtype.ext h)
+  N := fun k => Fintype.card (S (F.equivFin.symm k : ι) → Bool)
   pos := fun _ => Fintype.card_pos
-  φ := fun k z => Fintype.equivFin (S k → Bool) (fun t => decide (z ∈ (t : Set (X k))))
-  meas := by
-    intro k a
-    have e : (fun z : X k => Fintype.equivFin (S k → Bool)
-          (fun t => decide (z ∈ (t : Set (X k))))) ⁻¹' {a} =
-        ⋂ t : S k, {z : X k | decide (z ∈ (t : Set (X k))) =
-          (Fintype.equivFin (S k → Bool)).symm a t} := by
-      ext z
-      simp only [Set.mem_preimage, Set.mem_singleton_iff, Set.mem_iInter,
-        Set.mem_setOf_eq]
-      rw [Equiv.apply_eq_iff_eq_symm_apply, funext_iff]
-    rw [e]
-    refine MeasurableSet.iInter fun t => ?_
-    have ht : MeasurableSet (t : Set (X k)) := hS k t t.2
-    cases hval : (Fintype.equivFin (S k → Bool)).symm a t
-    · have : {z : X k | decide (z ∈ (t : Set (X k))) = false} = (t : Set (X k))ᶜ := by
-        ext z; simp
-      rw [this]; exact ht.compl
-    · have : {z : X k | decide (z ∈ (t : Set (X k))) = true} = (t : Set (X k)) := by
-        ext z; simp
-      rw [this]; exact ht
+  φ := fun k z => Fintype.equivFin (S (F.equivFin.symm k : ι) → Bool)
+    (fun t => decide (z ∈ (t : Set (X (F.equivFin.symm k : ι)))))
+  meas := fun k a => testLabel_meas _ (hS _) a
 
 open Classical in
 theorem testLabels_agree (F : Finset ι) (S : ∀ i, Finset (Set (X i))) (hS : Tests S)
@@ -174,9 +184,13 @@ theorem testLabels_agree (F : Finset ι) (S : ∀ i, Finset (Set (X i))) (hS : T
     AgreeOn F S x x' := by
   intro i hi t ht
   rw [CellLabels.mem_cell] at hx hx'
-  have h := (hx ⟨i, hi⟩).trans (hx' ⟨i, hi⟩).symm
+  obtain ⟨k, hk⟩ : ∃ k, (testLabels F S hS).e k = i :=
+    ⟨F.equivFin ⟨i, hi⟩, by simp [testLabels]⟩
+  subst hk
+  have h := (hx k).trans (hx' k).symm
   have h' := congrFun ((Fintype.equivFin _).injective h) ⟨t, ht⟩
-  simpa using h'
+  simp only [decide_eq_decide] at h'
+  convert h' using 0
 
 /-! ## Variance identities -/
 
@@ -200,15 +214,16 @@ theorem nativeVariance_nonneg {κ : Type} [Fintype κ] [DecidableEq κ]
 
 /-- Finite-table Q2 for every label system, including the degenerate empty one. -/
 theorem cellAverage_q2_all (L : CellLabels X) {f : ((i : ι) → X i) → ℝ}
-    (hfm : Measurable f) (hdeg : PointwiseDegreeTwo f) {B : ℝ} (hB : 0 ≤ B)
+    (hfm : Measurable f)
+    (hdegT : NativeSupportedDegreeTwo L.Letter (L.prob μ) (L.avg μ f))
+    {B : ℝ} (hB : 0 ≤ B)
     (hb : ∀ x, |f x| ≤ B) (hf2 : MemLp f 2 (Measure.infinitePi μ)) {M : ℝ} (hM : 0 ≤ M)
-    (hI : ∀ i : ι, sourceCoordinateInfluence μ i (hf2.toLp f) ≤ M)
-    (x0 : (i : ι) → X i) :
+    (hI : ∀ i : ι, sourceCoordinateInfluence μ i (hf2.toLp f) ≤ M) :
     (nativeVariance L.Letter (L.prob μ) (L.avg μ f)) ^ 2 ≤
       ((2 * (1 + Real.sqrt 2)) * Real.sqrt 3 + 11901 / 6250) ^ 2 * B ^ 2 * M := by
-  by_cases hF : Nonempty L.F
-  · exact L.cellAverage_q2 μ hfm hdeg hB hb hf2 hM hI x0
-  · have hE : IsEmpty L.F := not_nonempty_iff.mp hF
+  by_cases hF : Nonempty (Fin L.n)
+  · exact L.cellAverage_q2 μ hfm hdegT hB hb hf2 hM hI
+  · have hE : IsEmpty (Fin L.n) := not_nonempty_iff.mp hF
     have hzero : nativeVariance L.Letter (L.prob μ) (L.avg μ f) = 0 := by
       unfold nativeVariance nativeMean nativeMass
       simp [Finset.univ_eq_empty]
@@ -256,11 +271,11 @@ theorem exists_labels_variance_gap {f : ((i : ι) → X i) → ℝ} (hfm : Measu
 
 /-! ## The unconditional infinite-product terminal -/
 
-/-- **Unconditional infinite-product Q2 (original source law).**
-Arbitrary index type and coordinate laws; bounded measurable pointwise
-degree-two `f`; every genuine original-source influence at most `M`. -/
-theorem infinitePi_q2_105416_unconditional
-    (f : ((i : ι) → X i) → ℝ) (hfm : Measurable f) (hdeg : PointwiseDegreeTwo f)
+/-- Core composition: if every finite-label cell table has native supported
+degree two, the original-source Q2 bound holds for the infinite product. -/
+theorem infinitePi_q2_core
+    (f : ((i : ι) → X i) → ℝ) (hfm : Measurable f)
+    (hdegT : ∀ L : CellLabels X, NativeSupportedDegreeTwo L.Letter (L.prob μ) (L.avg μ f))
     (B : ℝ) (hB : 0 ≤ B) (hb : ∀ x, |f x| ≤ B)
     (hf2 : MemLp f 2 (Measure.infinitePi μ))
     (M : ℝ) (hM : 0 ≤ M)
@@ -269,15 +284,12 @@ theorem infinitePi_q2_105416_unconditional
       ((2 * (1 + Real.sqrt 2)) * Real.sqrt 3 + 11901 / 6250) ^ 2 * B ^ 2 * M := by
   set K := ((2 * (1 + Real.sqrt 2)) * Real.sqrt 3 + 11901 / 6250) ^ 2 * B ^ 2 * M with hK
   have hK0 : 0 ≤ K := by positivity
-  have hne : ∀ i, Nonempty (X i) := fun i =>
-    ⟨(nonempty_of_measure_ne_zero (μ := μ i) (s := Set.univ) (by simp)).some⟩
-  let x0 : (i : ι) → X i := fun i => Classical.choice (hne i)
   set V := sourceL2Variance μ (hf2.toLp f)
   have hV0 : 0 ≤ V := source_variance_nonneg μ (hf2.toLp f)
   have hVr : V ≤ Real.sqrt K := by
     refine le_of_forall_pos_le_add fun ε hε => ?_
     obtain ⟨L, hL⟩ := exists_labels_variance_gap μ hfm hb hf2 ε hε
-    have hq := cellAverage_q2_all μ L hfm hdeg hB hb hf2 hM hI x0
+    have hq := cellAverage_q2_all μ L hfm (hdegT L) hB hb hf2 hM hI
     have hn0 := nativeVariance_nonneg L.Letter (L.prob μ) (L.prob_nonneg μ) (L.avg μ f)
     have hn : nativeVariance L.Letter (L.prob μ) (L.avg μ f) ≤ Real.sqrt K := by
       rw [← Real.sqrt_sq hn0]
@@ -286,14 +298,28 @@ theorem infinitePi_q2_105416_unconditional
   calc V ^ 2 ≤ (Real.sqrt K) ^ 2 := pow_le_pow_left₀ hV0 hVr 2
     _ = K := Real.sq_sqrt hK0
 
+/-- **Unconditional infinite-product Q2, pointwise degree form.** -/
+theorem infinitePi_q2_105416_unconditional
+    (f : ((i : ι) → X i) → ℝ) (hfm : Measurable f) (hdeg : PointwiseDegreeTwo f)
+    (B : ℝ) (hB : 0 ≤ B) (hb : ∀ x, |f x| ≤ B)
+    (hf2 : MemLp f 2 (Measure.infinitePi μ))
+    (M : ℝ) (hM : 0 ≤ M)
+    (hI : ∀ i : ι, sourceCoordinateInfluence μ i (hf2.toLp f) ≤ M) :
+    (sourceL2Variance μ (hf2.toLp f)) ^ 2 ≤
+      ((2 * (1 + Real.sqrt 2)) * Real.sqrt 3 + 11901 / 6250) ^ 2 * B ^ 2 * M := by
+  have hne : ∀ i, Nonempty (X i) := fun i =>
+    ⟨(nonempty_of_measure_ne_zero (μ := μ i) (s := Set.univ) (by simp)).some⟩
+  let x0 : (i : ι) → X i := fun i => Classical.choice (hne i)
+  exact infinitePi_q2_core μ f hfm
+    (fun L => L.avg_nativeSupportedDegreeTwo μ hfm hb hdeg x0) B hB hb hf2 M hM hI
+
 /-- Bounded measurable sources are automatically square integrable. -/
 theorem memLp_two_of_bounded {f : ((i : ι) → X i) → ℝ} (hfm : Measurable f)
     {B : ℝ} (hb : ∀ x, |f x| ≤ B) : MemLp f 2 (Measure.infinitePi μ) :=
   MemLp.of_bound hfm.aestronglyMeasurable B
     (Filter.Eventually.of_forall fun x => by simpa only [Real.norm_eq_abs] using hb x)
 
-/-- The same terminal stated with Mathlib's `ProbabilityTheory.variance`
-of the function itself, with square integrability derived, not assumed. -/
+/-- Pointwise form stated with Mathlib's `ProbabilityTheory.variance`. -/
 theorem infinitePi_q2_105416_unconditional_variance
     (f : ((i : ι) → X i) → ℝ) (hfm : Measurable f) (hdeg : PointwiseDegreeTwo f)
     (B : ℝ) (hB : 0 ≤ B) (hb : ∀ x, |f x| ≤ B)
@@ -306,5 +332,46 @@ theorem infinitePi_q2_105416_unconditional_variance
     (memLp_two_of_bounded μ hfm hb) M hM hI
   rwa [sourceL2Variance_eq_actual_variance,
     variance_congr (memLp_two_of_bounded μ hfm hb).coeFn_toLp] at h
+
+/-- **Unconditional infinite-product Q2, almost-everywhere L² form.**
+`G` is any `L²` class under the original product law, essentially bounded by
+`B`, of `L²` Efron–Stein degree two (all triple genuine original residuals
+vanish), with every genuine original influence at most `M`. No pointwise
+representative, everywhere bound, or measurability of a representative is
+assumed. -/
+theorem infinitePi_q2_105416_ae
+    (G : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))
+    (B : ℝ) (hB : 0 ≤ B) (hb : ∀ᵐ x ∂ Measure.infinitePi μ, |G x| ≤ B)
+    (hdeg : CellLabels.TripleResidualZero μ G)
+    (M : ℝ) (hM : 0 ≤ M)
+    (hI : ∀ i : ι, sourceCoordinateInfluence μ i G ≤ M) :
+    (sourceL2Variance μ G) ^ 2 ≤
+      ((2 * (1 + Real.sqrt 2)) * Real.sqrt 3 + 11901 / 6250) ^ 2 * B ^ 2 * M := by
+  -- clamp a measurable representative into [-B, B]
+  obtain ⟨g, hgs, hGg⟩ := Lp.aestronglyMeasurable G
+  have hgm : Measurable g := hgs.measurable
+  let f : ((i : ι) → X i) → ℝ := fun x => max (-B) (min B (g x))
+  have hfm : Measurable f := measurable_const.max (measurable_const.min hgm)
+  have hfb : ∀ x, |f x| ≤ B := by
+    intro x
+    rw [abs_le]
+    constructor
+    · exact le_max_left _ _
+    · exact max_le (by linarith) (min_le_left _ _)
+  have hfG : f =ᵐ[Measure.infinitePi μ] (G : ((i : ι) → X i) → ℝ) := by
+    filter_upwards [hGg, hb] with x hx hxb
+    have h2 := abs_le.mp hxb
+    simp only [f]
+    rw [← hx, min_eq_right h2.2, max_eq_right h2.1]
+  have hf2 : MemLp f 2 (Measure.infinitePi μ) := memLp_two_of_bounded μ hfm hfb
+  have hGf : hf2.toLp f = G := Lp.ext (hf2.coeFn_toLp.trans hfG)
+  have hdegT : ∀ L : CellLabels X,
+      NativeSupportedDegreeTwo L.Letter (L.prob μ) (L.avg μ f) := by
+    intro L
+    have heq : L.avg μ f = L.avg μ (⇑G) := funext fun y => L.avg_congr_ae μ hfG y
+    rw [heq]
+    exact L.avg_nativeSupportedDegreeTwo_of_triple μ G hdeg
+  have h := infinitePi_q2_core μ f hfm hdegT B hB hfb hf2 M hM (by rw [hGf]; exact hI)
+  rwa [hGf] at h
 
 end Nightfall.InfinitePiQ2UnconditionalTerminal

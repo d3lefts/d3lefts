@@ -211,12 +211,15 @@ jobs:
           python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiQ2UnconditionalTerminal.lean \
             --workspace /tmp/mathlib4 --strict --timeout 1800 \
             --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl "$N.infinitePi_q2_105416_ae" \
+            --decl "$N.infinitePi_q2_core" \
             --decl "$N.infinitePi_q2_105416_unconditional" \
             --decl "$N.infinitePi_q2_105416_unconditional_variance" \
             --decl "$N.exists_labels_variance_gap" \
             --decl "$N.cellAverage_q2_all" \
             --decl "$C.native_influence_le" \
             --decl "$C.avg_nativeSupportedDegreeTwo" \
+            --decl "$C.avg_nativeSupportedDegreeTwo_of_triple" \
             --decl "$C.variance_gap_le" \
             --json-out lean-receipts/q2-infinite-unconditional/receipt.json
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-infinite-unconditional/receipt.json
@@ -227,6 +230,9 @@ jobs:
           cd /tmp/mathlib4
           cat > NightfallQ2InfiniteAudit.lean <<'LEAN'
           import InfinitePiQ2UnconditionalTerminal
+          #print axioms Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_ae
+          #check @Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_ae
+          #print Nightfall.InfinitePiQ2CellAverage.CellLabels.TripleResidualZero
           #print axioms Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional
           #print axioms Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional_variance
           #check @Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional
