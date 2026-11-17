@@ -105,13 +105,7 @@
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Exact-source pinned Lean 4.36.0-rc2 final all-length physical squared-linear adaptive terminal compiled with standard Lean axioms only in run 44015925118 at source head 3966892d41d63ae65b8710ae7d17d4de2880ecda. The named declarations actual_adaptive_transcript_injective, all_dimensions_actual_adaptive_upper, and actual_same_oracle_gap_unbounded are strictly source-matched; valid for every positive finite dimension and arbitrary sparse/zero GF9 source under the actual squared-linear oracle. This historical-67-source pending custody row does not itself promote the theorem, establish novelty, or imply external review.",
-      "current_scoped_named_lean_receipt": {
-        "certificate": "https://github.com/d3lefts/d3lefts/actions/runs/44015925118",
-        "source_commit": "3966892d41d63ae65b8710ae7d17d4de2880ecda",
-        "named_declaration": "Nightfall.FiniteField.F9ActualAdaptiveTerminal.actual_same_oracle_gap_unbounded",
-        "run": 44015925118
-      }
+      "receipt_scope": "Exact-source pinned Lean 4.36.0-rc2 final all-length physical squared-linear adaptive terminal compiled with standard Lean axioms only in run 44015925118 at source head 3966892d41d63ae65b8710ae7d17d4de2880ecda. The named declarations actual_adaptive_transcript_injective, all_dimensions_actual_adaptive_upper, and actual_same_oracle_gap_unbounded are strictly source-matched; valid for every positive finite dimension and arbitrary sparse/zero GF9 source under the actual squared-linear oracle. This historical-67-source pending custody row does not itself promote the theorem, establish novelty, or imply external review."
     },
     {
       "path": "research/nightfall/formalization/finite_field/F9ActualFieldBasis.lean",
