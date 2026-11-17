@@ -4,6 +4,7 @@ on:
     types: [opened, synchronize, reopened, ready_for_review]
     paths:
       - 'research/nightfall/formalization/universal/InfinitePiQ2FiniteNativeToDenseLimit.lean'
+      - 'research/nightfall/formalization/universal/InfinitePiQ2DenseLabelLimit.lean'
       - '.github/workflows/nightfall-q2-finite-native-to-dense-limit.yml'
   workflow_dispatch:
 permissions:
