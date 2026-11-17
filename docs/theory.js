@@ -131,7 +131,7 @@
     $("theory-inspector-next").textContent = node.next;
     source.href = validLink(node.source) ? node.source : "#method";
     source.textContent = node.sourceLabel + " ↗";
-    if (source.href.startsWith("https:")) {
+    if (node.source.startsWith("https:")) {
       source.target = "_blank";
       source.rel = "noopener noreferrer";
     } else {
