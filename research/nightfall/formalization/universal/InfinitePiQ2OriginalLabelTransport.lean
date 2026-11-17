@@ -122,4 +122,31 @@ theorem sourceFiniteLabelL2_norm_exact
   exact Lp.norm_compMeasurePreserving g
     (sourceFiniteLabelMap_measurePreserving μ F φ hφ)
 
+/-- Two independent original-source draws in EVERY coordinate retain
+their exact product law after simultaneous coordinatewise labeling.
+This is the paired-input representation needed for finite heat-bath
+influence transport. No resampling/canonical-residual equality is
+asserted by this statement. -/
+theorem sourcePairedLabelLaw_exact
+    (φ : ∀ i, X i → Y i)
+    (hφ : ∀ i, Measurable (φ i)) :
+    (Measure.infinitePi (fun i => (μ i).prod (μ i))).map
+        (fun z i => Prod.map (φ i) (φ i) (z i)) =
+      Measure.infinitePi
+        (fun i => ((μ i).map (φ i)).prod ((μ i).map (φ i))) := by
+  have hpair (i : ι) : Measurable (Prod.map (φ i) (φ i)) := by
+    fun_prop
+  calc
+    (Measure.infinitePi (fun i => (μ i).prod (μ i))).map
+        (fun z i => Prod.map (φ i) (φ i) (z i)) =
+      Measure.infinitePi
+        (fun i => ((μ i).prod (μ i)).map (Prod.map (φ i) (φ i))) := by
+          exact Measure.infinitePi_map_pi
+            (fun i => (μ i).prod (μ i)) hpair
+    _ = Measure.infinitePi
+        (fun i => ((μ i).map (φ i)).prod ((μ i).map (φ i))) := by
+      congr 1
+      funext i
+      exact (Measure.map_prod_map (μ i) (μ i) (hφ i) (hφ i)).symm
+
 end Nightfall.InfinitePiQ2OriginalLabelTransport
