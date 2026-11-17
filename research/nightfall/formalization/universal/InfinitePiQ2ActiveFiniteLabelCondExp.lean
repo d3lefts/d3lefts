@@ -78,8 +78,11 @@ theorem source_condExp_lifted_finite_label
   let v : Y i → ((j : ι) → X j) → ℝ := fun a x =>
     g (Function.update (sourceLabelMap φ x) i a)
   have hmeas (a : Y i) : Measurable (h a) := by
-    dsimp [h]
-    fun_prop
+    have hm := Measurable.ite
+      ((hφ i) (measurableSet_singleton a))
+      (measurable_const : Measurable (fun _ : X i => (1 : ℝ)))
+      (measurable_const : Measurable (fun _ : X i => (0 : ℝ)))
+    simpa only [h, Set.mem_preimage, Set.mem_singleton_iff] using hm
   have hother (a : Y i) :
       StronglyMeasurable[sourceOtherSigma (X := X) i] (v a) := by
     exact source_frozen_label_factor_stronglyMeasurable φ hφ i a g hg
@@ -93,7 +96,9 @@ theorem source_condExp_lifted_finite_label
     refine Integrable.of_bound (hsite a).aestronglyMeasurable 1
       (Filter.Eventually.of_forall ?_)
     intro x
-    simp [sourceOneCoordTest, h]
+    by_cases ha : φ i (x i) = a
+    · simp [sourceOneCoordTest, h, ha]
+    · simp [sourceOneCoordTest, h, ha]
   have hprod (a : Y i) :
       Integrable (sourceOneCoordTest i (h a) * v a) ν := by
     refine Integrable.of_bound ((hsite a).mul (hfull a)).aestronglyMeasurable
@@ -115,10 +120,10 @@ theorem source_condExp_lifted_finite_label
        (fun x => g (sourceLabelMap φ x)) := by
     funext x
     have hd := label_site_decomposition (X := X) φ g i x
-    simpa only [Finset.sum_univ, Finset.sum_apply, Pi.mul_apply,
+    simpa only [Finset.sum_apply, Pi.mul_apply,
       sourceOneCoordTest, h, v] using hd.symm
   rw [hsum] at hlinear
-  simpa only [Finset.sum_univ, Finset.sum_apply, h, v] using hlinear
+  simpa only [Finset.sum_apply, h, v] using hlinear
 
 #print axioms Nightfall.InfinitePiQ2ActiveFiniteLabelCondExp.label_site_decomposition
 #print axioms Nightfall.InfinitePiQ2ActiveFiniteLabelCondExp.source_condExp_lifted_finite_label
