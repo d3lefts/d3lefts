@@ -28,5 +28,5 @@ jobs:
             src="research/nightfall/formalization/finite_field/$f.lean"
             ! grep -nE '\\b(sorry|admit)\\b' "$src"
             cp "$src" "/tmp/mathlib4/$f.lean"
-            (cd /tmp/mathlib4 && lake env lean -o "$f.olean" "$f.lean") 2>&1 | tee "/tmp/$f.log"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean") 2>&1 | tee "/tmp/$f.log"
           done
