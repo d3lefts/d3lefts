@@ -104,7 +104,7 @@
           {id:record.id,title:record.theorem_declaration || record.id,
             status:"REGISTERED GATES: " + Object.values(record.gates || {}).join(" / "),
             note: "Complete certificate for global target: " + (record.complete_certification ? "reported" : "NO") +
-              ". " + (record.limitations || []).join(" ")}
+              ". " + (Array.isArray(record.limitations) ? record.limitations.join(" ") : String(record.limitations || ""))}
           : {id:record.id,title:record.title,status:record.status ||
               record.validity?.label || record.validity?.level || "Historical / scoped",
             note: (record.limitations || []).join(" ") || record.short || record.claim || ""};
