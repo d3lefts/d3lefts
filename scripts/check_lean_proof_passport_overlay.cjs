@@ -16,6 +16,14 @@ function gitBlob(p) {
 function verify(overlay, registry, receipts, frontier, contract) {
   assert.equal(overlay.schema, 'nightfall.lean-proof-passport-overlay.v1');
   assert.equal(overlay.version, 1);
+  assert.equal(overlay.policy.compiler_lock, 'docs/lean-compiler-lock.json');
+  const compilerLock = load(overlay.policy.compiler_lock);
+  assert.equal(compilerLock.schema, 'nightfall-lean-compiler-lock/v1');
+  assert.equal(compilerLock.toolchain, overlay.policy.lean_pin);
+  assert.equal(compilerLock.mathlib_commit, overlay.policy.mathlib_commit);
+  assert.deepEqual(compilerLock.allowed_axioms.slice().sort(), overlay.policy.allowed_axioms.slice().sort());
+  assert.equal(overlay.policy.kernel_replay.ordinary, 'lake check');
+  assert.equal(overlay.policy.kernel_replay.multiple_kernel, 'lake check --paranoid');
   assert.equal(overlay.policy.official_standard,
     'https://leanprover-community.github.io/did_you_prove_it.html');
   assert.deepEqual(overlay.policy.allowed_axioms.slice().sort(),
@@ -41,6 +49,10 @@ function verify(overlay, registry, receipts, frontier, contract) {
       entry.id + ': improperly promoted');
     assert.equal(entry.statement_equivalence_independently_reviewed, false, entry.id);
     assert.equal(entry.novelty_reviewed, false, entry.id);
+    assert.ok(entry.kernel_replay && typeof entry.kernel_replay.status === 'string', entry.id);
+    assert.ok(['not_in_this_passport_receipt', 'scheduled_in_PR_696_CI'].includes(entry.kernel_replay.status),
+      entry.id + ': no manufactured kernel replay result permitted');
+    assert.ok(entry.kernel_replay.review.includes('do_not_'), entry.id);
     assert.equal(entry.real_world_authority_verified, false, entry.id);
     assert.ok(entry.limitations.length > 40, entry.id);
     assert.deepEqual(Object.keys(entry.gates).sort(),
@@ -93,6 +105,7 @@ function verify(overlay, registry, receipts, frontier, contract) {
   const inf = lookup['q2-infinite-integration'];
   assert.equal(inf.passport_id, 'q2-influence');
   assert.equal(inf.evidence.pr, 696);
+  assert.equal(inf.kernel_replay.status, 'scheduled_in_PR_696_CI');
   assert.equal(inf.gates.package, 'pr_head_receipt_referenced');
   assert.equal(inf.gates.build, 'pr_head_receipt_referenced');
   assert.equal(inf.gates.inclusion, 'open');
