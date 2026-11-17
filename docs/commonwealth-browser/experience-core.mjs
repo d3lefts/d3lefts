@@ -10,7 +10,7 @@ export const RESPONSES = Object.freeze([
 ]);
 export const FICTIONAL_ISSUE = Object.freeze({
   id:"DEMO-EX-014", revision:"v2", authority:"FICTIONAL STUDENT SENATE",
-  title:"Should a fictional campus trial extended library hours?",
+  title:"Should a fictional campus pilot extend library hours?",
   description:"A hypothetical six-week evening-access pilot would use a capped demonstration budget. This is not a proposal at any actual institution.",
   sourceStatus:"SYNTHETIC_UNVERIFIED",
   publicStatus:"ILLUSTRATIVE_ONLY"
