@@ -1,0 +1,66 @@
+name: NIGHTFALL ControlArena certificate-directed versus matched monitor
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-certificate-directed-monitor/**'
+      - '.github/workflows/nightfall-certificate-directed-controlarena.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-matched-monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    defaults:
+      run:
+        working-directory: research/nightfall/right-to-act-promotion
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Preflight and source pin
+        run: |
+          python -m py_compile ../2026-11-certificate-directed-monitor/run_source_matched.py ../2026-11-certificate-directed-monitor/audit_independent.py
+          python -m pip install 'control-arena==20.1.1' 'aws-cdk-lib==2.260.0' 'constructs==10.5.0' 'jsii==1.137.0' 'pytest==8.4.2'
+          python -m pip freeze > certificate-monitor-dependencies.txt
+      - name: Build pinned official source-matched container
+        run: |
+          docker build -f Dockerfile.untrusted-cdk -t nightfall-iac-cdk-sandbox:v16 .
+          docker image inspect --format '{{.Id}}' nightfall-iac-cdk-sandbox:v16 > certificate-monitor-sandbox-image.txt
+      - name: Replay all eight fixed IaC Fast sources, real official scores and paired monitor timings
+        env:
+          JSII_SILENCE_WARNING_UNTESTED_NODE_VERSION: '1'
+        timeout-minutes: 22
+        run: |
+          python ../2026-11-certificate-directed-monitor/run_source_matched.py --out certificate-monitor-results --repeats 100
+      - name: Independent receipt verification and negative control
+        run: |
+          python ../2026-11-certificate-directed-monitor/audit_independent.py --out certificate-monitor-results | tee certificate-monitor-independent.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('certificate-monitor-results/receipt.json')
+          data=json.loads(p.read_text())
+          data['cases'][0]['results']['certificate_directed']['allowed']=not data['cases'][0]['results']['certificate_directed']['allowed']
+          Path('certificate-monitor-results/poisoned.json').write_text(json.dumps(data))
+          PY
+          if python ../2026-11-certificate-directed-monitor/audit_independent.py --out certificate-monitor-results --receipt certificate-monitor-results/poisoned.json; then
+            echo "ERROR: corrupted admission receipt accepted" >&2
+            exit 1
+          fi
+      - name: Archive source-matched templates, timings, audit and environment
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-certificate-monitor-controlarena
+          path: |
+            research/nightfall/right-to-act-promotion/certificate-monitor-results/receipt.json
+            research/nightfall/right-to-act-promotion/certificate-monitor-results/*.template.json
+            research/nightfall/right-to-act-promotion/certificate-monitor-independent.json
+            research/nightfall/right-to-act-promotion/certificate-monitor-dependencies.txt
+            research/nightfall/right-to-act-promotion/certificate-monitor-sandbox-image.txt
+          if-no-files-found: warn
+          retention-days: 30
