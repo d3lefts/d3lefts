@@ -1,0 +1,58 @@
+name: NIGHTFALL Q2 original-label supported positive atom bound
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/universal/InfinitePiQ2PositiveAtomBound.lean'
+      - '.github/workflows/nightfall-q2-positive-atom-bound.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  original-positive-atom:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact original-label positive-atom bound
+        shell: bash
+        run: |
+          set -euo pipefail
+          for name in InfinitePiQ2Density InfinitePiQ2OriginalLabelTransport InfinitePiQ2PositiveAtomBound; do
+            src="research/nightfall/formalization/universal/${name}.lean"
+            test -f "$src"
+            ! grep -nE '\\b(sorry|admit)\\b' "$src"
+            cp "$src" "/tmp/mathlib4/${name}.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/${name}.olean" "${name}.lean") 2>&1 | tee "/tmp/${name}.log"
+          done
+      - name: Strict named declaration kernel and axiom receipt
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-positive-atom-bound
+          python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiQ2PositiveAtomBound.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InfinitePiQ2PositiveAtomBound.ae_property_at_nonnull_atom \
+            --decl Nightfall.InfinitePiQ2PositiveAtomBound.abs_bound_at_positive_atom \
+            --decl Nightfall.InfinitePiQ2PositiveAtomBound.original_label_positive_atom_bound \
+            --json-out lean-receipts/q2-positive-atom-bound/receipt.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-positive-atom-bound/receipt.json
+      - name: Preserve source identity
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-positive-atom-bound
+          git rev-parse HEAD > lean-receipts/q2-positive-atom-bound/HEAD
+          sha256sum research/nightfall/formalization/universal/InfinitePiQ2PositiveAtomBound.lean \
+            research/nightfall/formalization/universal/InfinitePiQ2OriginalLabelTransport.lean \
+            > lean-receipts/q2-positive-atom-bound/SOURCE_SHA256
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: q2-positive-atom-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/q2-positive-atom-bound
+          if-no-files-found: warn
