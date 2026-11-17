@@ -7,6 +7,9 @@ on:
       - 'research/nightfall/formalization/product_space/check_receipts.py'
       - 'scripts/test_lean_bridge_v2.py'
       - 'scripts/check_proof_graph.py'
+      - 'scripts/check_nightfall_compiler_lock.py'
+      - 'scripts/audit_active_lean_436.py'
+      - 'docs/lean-compiler-lock.json'
       - 'research/nightfall/formalization/compiler/**'
       - '.github/actions/setup-nightfall-lean/**'
       - '.github/workflows/nightfall-lean-bridge-v2.yml'
@@ -36,35 +39,29 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1; Node 24
-      - name: Reject retired compiler or external dependencies in active CI
+      - name: Reject unpinned compiler or retired workspaces in active CI
         run: |
+          set -euo pipefail
+          python3 scripts/check_nightfall_compiler_lock.py --checkout .
+          python3 scripts/audit_active_lean_436.py
           python3 - <<'PY'
           from pathlib import Path
-          root = Path("lean-toolchain").read_text().strip()
-          assert root == "leanprover/lean4:v4.36.0-rc2", root
-          # Construct retired signatures in pieces so the guard also checks
-          # its own workflow without self-matching its literal test patterns.
-          old_compilers = ("4." + "33.0", "4." + "35.0")
+          import json
+          lock = json.loads(Path("docs/lean-compiler-lock.json").read_text())
+          assert Path("lean-toolchain").read_text().strip() == lock["toolchain"]
+          source = Path(".github/actions/setup-nightfall-lean/action.yml").read_text()
+          assert "docs/lean-compiler-lock.json" in source
+          assert "NIGHTFALL_LEAN_COMMIT" in source
+          assert "NIGHTFALL_MATHLIB_COMMIT" in source
           old_dependency = "/".join(("physical-superintelligence", "aaronson-ambainis"))
           old_workspace = "/tmp/" + "aa/"
-          old_checkout = "--branch v" + "4.35.0"
           for workflow in Path(".github/workflows").glob("*.yml"):
-              if workflow.name == "nightfall-lean-bridge-v2.yml":
-                  continue  # This checker necessarily contains the forbidden strings.
-              source = workflow.read_text()
-              if "./.github/actions/setup-nightfall-lean" not in source:
-                  continue  # Legacy jobs are not upgraded/certified by this gate.
-              for version in old_compilers:
-                  assert "leanprover/lean4:v" + version not in source, workflow
-              assert old_dependency not in source, workflow
-              assert old_workspace not in source, workflow
-              assert old_checkout not in source, workflow
-          mathlib_setup = Path(".github/actions/setup-nightfall-lean/action.yml").read_text()
-          for pin in ["b35cb10cf2ced51a2fd1880cfdbf75c71ab7a35a",
-                      "9d581dfff2e41de989072ea63abf3daf69311520",
-                      "leanprover/lean4:v4.36.0-rc2"]:
-              assert pin in mathlib_setup, pin
-          print("PASS: active CI pins and exact Mathlib release-candidate custody")
+              body = workflow.read_text()
+              if "./.github/actions/setup-nightfall-lean" not in body:
+                  continue
+              assert old_dependency not in body, workflow
+              assert old_workspace not in body, workflow
+          print("PASS: all active compiler pins derived from central 4.36 lock")
           PY
       - name: Fail-closed bridge and graph mutation controls
         run: |
