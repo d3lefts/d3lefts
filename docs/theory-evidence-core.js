@@ -114,7 +114,7 @@
           t.key === "overlay" ?
           {id: x.id, title: x.theorem_declaration || x.id, status: x.kernel_replay?.status ||
             "overlay record", path: x.source_path, run: x.evidence?.ci_run,
-            blob: x.git_blob_sha1, note: x.limitations?.join(" "), full: x.complete_certification} :
+            blob: x.git_blob_sha1, note: Array.isArray(x.limitations) ? x.limitations.join(" ") : String(x.limitations || ""), full: x.complete_certification} :
           {id: x.id, title: x.title, status: x.status || x.validity?.label || x.validity?.level ||
             "recorded", source: x.source, note: x.claim || x.short ||
             x.statement || x.conditions || ""})};
