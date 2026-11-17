@@ -235,18 +235,44 @@ globs = [
 name = "LegacyUniversal"
 srcDir = "research/nightfall/formalization/universal"
 roots = [
+  "InfinitePiQ2ActiveFiniteLabelCondExp",
+  "InfinitePiQ2AdjointTransfer",
+  "InfinitePiQ2AllL2LabelIntertwining",
+  "InfinitePiQ2BoundedLabelIntertwining",
   "InfinitePiQ2ConditionalSourceTest",
   "InfinitePiQ2Density",
+  "InfinitePiQ2FiniteRankConditional",
+  "InfinitePiQ2FrozenLabelMeasurable",
+  "InfinitePiQ2GenuineLabelIsometry",
   "InfinitePiQ2InfluenceStability",
+  "InfinitePiQ2LabelAtomMass",
   "InfinitePiQ2Limit",
+  "InfinitePiQ2OriginalHeatBath",
   "InfinitePiQ2OriginalIndependence",
-  "InfinitePiQ2SourceHilbertTensor"
+  "InfinitePiQ2OriginalLabelTransport",
+  "InfinitePiQ2RangeProjectionTransfer",
+  "InfinitePiQ2SourceHilbertTensor",
+  "InfinitePiQ2SourceLabelL2Intertwining",
+  "InfinitePiQ2SourceLabelLpIntertwining"
 ]
 globs = [
+  "InfinitePiQ2ActiveFiniteLabelCondExp",
+  "InfinitePiQ2AdjointTransfer",
+  "InfinitePiQ2AllL2LabelIntertwining",
+  "InfinitePiQ2BoundedLabelIntertwining",
   "InfinitePiQ2ConditionalSourceTest",
   "InfinitePiQ2Density",
+  "InfinitePiQ2FiniteRankConditional",
+  "InfinitePiQ2FrozenLabelMeasurable",
+  "InfinitePiQ2GenuineLabelIsometry",
   "InfinitePiQ2InfluenceStability",
+  "InfinitePiQ2LabelAtomMass",
   "InfinitePiQ2Limit",
+  "InfinitePiQ2OriginalHeatBath",
   "InfinitePiQ2OriginalIndependence",
-  "InfinitePiQ2SourceHilbertTensor"
+  "InfinitePiQ2OriginalLabelTransport",
+  "InfinitePiQ2RangeProjectionTransfer",
+  "InfinitePiQ2SourceHilbertTensor",
+  "InfinitePiQ2SourceLabelL2Intertwining",
+  "InfinitePiQ2SourceLabelLpIntertwining"
 ]
