@@ -14,6 +14,10 @@ TARGETS = [
     "Nightfall.InfinitePiQ2ConditionalSourceTest.source_condExp_coordinate_test",
     "Nightfall.InfinitePiQ2ConditionalSourceTest.source_condExp_coordinate_mul_other",
     "Nightfall.InfinitePiQ2SourceHilbertTensor.sourceOtherProjection_tensor_ae",
+    "Nightfall.InfinitePiQ2AllL2LabelIntertwining.sourceOtherProjectionCLM_intertwines_all_L2",
+    "Nightfall.InfinitePiQ2RangeProjectionTransfer.labelRangeProjection_commutes",
+    "Nightfall.InfinitePiQ2RangeProjectionTransfer.labelRangeProjection_triple_zero",
+    "Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_ae",
 ]
 
 
