@@ -71,7 +71,7 @@ theorem source_label_projection_residual_norm_le
       (sourceOtherProjectionCLM q i)
       (sourceOtherProjectionCLM μ i)
       hT hS hI f
-  simpa only [residual, sourceCoordinateResidual,
+  simpa only [InfinitePiQ2AdjointTransfer.residual, sourceCoordinateResidual,
     sourceOtherProjectionCLM_apply] using hcontract
 
 /-- True original-product Efron-Stein L² degree at most two survives
@@ -105,7 +105,7 @@ theorem source_label_projection_triple_zero
   have hf' : residual (sourceOtherProjectionCLM μ i)
       (residual (sourceOtherProjectionCLM μ j)
         (residual (sourceOtherProjectionCLM μ k) f)) = 0 := by
-    simpa only [residual, sourceCoordinateResidual,
+    simpa only [InfinitePiQ2AdjointTransfer.residual, sourceCoordinateResidual,
       sourceOtherProjectionCLM_apply] using hf
   have hdegree :=
     labelRangeProjection_triple_zero
@@ -113,7 +113,7 @@ theorem source_label_projection_triple_zero
       (fun l => sourceOtherProjectionCLM q l)
       (fun l => sourceOtherProjectionCLM μ l)
       hT hS hI i j k f hf'
-  simpa only [residual, sourceCoordinateResidual,
+  simpa only [InfinitePiQ2AdjointTransfer.residual, sourceCoordinateResidual,
     sourceOtherProjectionCLM_apply] using hdegree
 
 #print axioms Nightfall.InfinitePiQ2OriginalLabelResidualTransfer.sourceOtherProjectionCLM_selfAdjoint
