@@ -18,6 +18,12 @@ For a mathematician or referee, begin with the [**paper shelf**](papers/README.m
 
 This is a **non-destructive index migration**: the original `research/nightfall/` files, Lean declarations, witness hashes, cited URLs and frozen 40-record/11-passport historical catalogues remain in place. The 15 selected claims in the current catalogue are **not** 15 refereed results or additions to the approved finding list. The [Paper A](papers/exact-recovery/MANUSCRIPT.md), [Paper B](papers/spectral-adaptive-prediction/MANUSCRIPT.md), and [Paper C](papers/specialized-complexity/MANUSCRIPT.md) manuscripts have distinct query models and certification scopes. Their validity, source completeness, independent review and originality remain separately labeled.
 
+## Active Lean certification environment — 17 November 2026
+
+The active Lean/Mathlib compiler configuration is **Lean 4.36.0-rc2** (exact Mathlib commit `9d581dfff2e41de989072ea63abf3daf69311520`), defined in [the compiler lock](docs/lean-compiler-lock.json), reproduced via the [compiler and certification guide](docs/lean-compiler-settings.md), and checked by the shared [CI installation](.github/actions/setup-nightfall-lean/action.yml). Historical 4.33/4.35 certificate receipts are retained at their original pins, not silently migrated.
+
+Merged [PR #696](https://github.com/d3lefts/d3lefts/pull/696) provides a **103-source selected Q2 Lake build**, four named axiom checks and `lake check` official kernel replay at this exact pin (run [44027853225](https://github.com/d3lefts/d3lefts/actions/runs/44027853225)). Its infinite-product L² limit is **conditional**, not an unconditional infinite-product Q2 theorem; multi-kernel `lake check --paranoid` and independent field-statement review remain separate gates. Current finite unrestricted Q2 coefficient C105.416 has its own original-source certificate. See the [active Proof Passport overlay](docs/lean-proof-passport-overlay.json) for exact named declaration and remaining obligations.
+
 ## Current research (14 November 2026)
 
 **Start with the active work, not the historical PR queue:**
