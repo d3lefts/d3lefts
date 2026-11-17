@@ -92,7 +92,8 @@ theorem labelRangeProjection_residual
       labelRangeProjection U (Esource f) := by
     have h := congrArg (fun T : K →L[ℝ] K => T f) hc
     simpa only [ContinuousLinearMap.comp_apply] using h
-  dsimp only [residual]
+  change labelRangeProjection U f - Esource (labelRangeProjection U f) =
+    labelRangeProjection U (f - Esource f)
   rw [heq]
   exact ((labelRangeProjection U).map_sub f (Esource f)).symm
 
