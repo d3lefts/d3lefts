@@ -151,7 +151,7 @@ theorem sourceOtherProjection_lifted_finite_label_ae
       MemLp.of_bound
         ((hg.comp (sourceLabelMap_measurable φ hφ)).aestronglyMeasurable)
         B (Filter.Eventually.of_forall (fun x => by
-          simpa only [Real.norm_eq_abs] using
+          simpa only [Real.norm_eq_abs, Function.comp_apply] using
             hbound (sourceLabelMap φ x)))
     (↑↑↑(sourceOtherProjection μ i hmem.toLp)) =ᵐ[Measure.infinitePi μ]
       (fun x => ∑ a : Y i,
@@ -163,7 +163,7 @@ theorem sourceOtherProjection_lifted_finite_label_ae
     apply MemLp.of_bound
       ((hg.comp (sourceLabelMap_measurable φ hφ)).aestronglyMeasurable) B
     exact Filter.Eventually.of_forall (fun x => by
-      simpa only [Real.norm_eq_abs] using
+      simpa only [Real.norm_eq_abs, Function.comp_apply] using
         hbound (sourceLabelMap φ x))
   have hL2 :=
     MemLp.condExpL2_ae_eq_condExp (E := ℝ) (𝕜 := ℝ)
