@@ -3,6 +3,7 @@ import InfiniteFieldSignedStep
 import InfiniteFieldFixedLower
 import InfiniteFieldFixedUpper
 import InfiniteFieldAdaptiveLower
+import InfiniteFieldLegalUpper
 
 /-!
 # Infinite-field squared-linear phase retrieval: source-exact terminal
@@ -77,6 +78,46 @@ theorem infinite_field_phase_retrieval_terminal (k : ℕ) (hk : 1 ≤ k) :
     exact adaptive_lower_all_short hk hm policy
   · intro m rows hsep
     exact fixed_lower_all_short hk rows hsep
+
+/-- The concrete n+1-query adaptive design is a legal history-only policy. -/
+theorem exists_causal_adaptive_upper (k : ℕ) :
+    ∃ policy : List K → Fin (k+1) → K,
+      ∀ x y : Fin (k+1) → K,
+        AdaptiveLower.history policy x ((k+1)+1) =
+          AdaptiveLower.history policy y ((k+1)+1) →
+        x = y ∨ x = -y := by
+  refine ⟨LegalUpper.legalPolicy (n := k+1), ?_⟩
+  intro x y h
+  exact LegalUpper.legal_history_injective_mod_sign x y h
+
+/-- Exact optimal query counts in ONE causally modeled squared-linear oracle.
+For n=k+1≥2, n+1 adaptive readings are necessary and sufficient;
+2n-1 fixed readings are necessary and sufficient. -/
+theorem infinite_field_phase_retrieval_causal_terminal (k : ℕ) (hk : 1 ≤ k) :
+    (∃ policy : List K → Fin (k+1) → K,
+      ∀ x y : Fin (k+1) → K,
+        AdaptiveLower.history policy x ((k+1)+1) =
+          AdaptiveLower.history policy y ((k+1)+1) →
+        x = y ∨ x = -y) ∧
+    (∀ (m : ℕ), m ≤ k+1 →
+      ∀ (policy : List K → Fin (k+1) → K),
+        ∃ x y : Fin (k+1) → K,
+          x ≠ y ∧ x ≠ -y ∧
+          AdaptiveLower.history policy x m =
+          AdaptiveLower.history policy y m) ∧
+    (∃ rows : Fin (2 * (k+1) - 1) → Fin (k+1) → K,
+        FixedLower.fixedSquareSeparates rows) ∧
+    (∀ (m : ℕ) (rows : Fin m → Fin (k+1) → K),
+        FixedLower.fixedSquareSeparates rows →
+        2 * (k+1) - 1 ≤ m) := by
+  refine ⟨exists_causal_adaptive_upper k, ?_, exists_fixed_upper k, ?_⟩
+  · intro m hm policy
+    exact adaptive_lower_all_short hk hm policy
+  · intro m rows hsep
+    exact fixed_lower_all_short hk rows hsep
+
+#print axioms Nightfall.InfiniteFieldPhase.Terminal.exists_causal_adaptive_upper
+#print axioms Nightfall.InfiniteFieldPhase.Terminal.infinite_field_phase_retrieval_causal_terminal
 
 #print axioms Nightfall.InfiniteFieldPhase.Terminal.adaptive_lower_all_short
 #print axioms Nightfall.InfiniteFieldPhase.Terminal.fixed_lower_all_short
