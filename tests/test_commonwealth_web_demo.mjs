@@ -37,6 +37,24 @@ test("Guided civic experience is public, fictional, and role specific",()=>{
  assert.ok(entry.includes("ILLUSTRATIVE COUNTS / NOT SURVEY DATA"));
  assert.ok(entry.includes("not a vote"));
 });
+test("The Warrant has its own legal-evidence route and never claims judicial power",()=>{
+ const page=text("docs/commonwealth-warrant.html");
+ const js=text("docs/commonwealth-warrant.mjs");
+ const home=text("docs/commonwealth.html");
+ const os=text("docs/commonwealth-os.html");
+ const app=text("docs/commonwealth-browser/index.html");
+ const intel=text("docs/commonwealth-intelligence.html");
+ for(const label of ["AUTHORITY","EVIDENCE","ASSURANCE","Verified Evidence","Unverified","Contested","Illustrative"])
+  assert.ok(page.includes(label),"missing status/layer "+label);
+ for(const phrase of ["not a judicial warrant","nonbinding","no signed issuance","not a legal instrument"])
+  assert.ok(page.toLowerCase().includes(phrase.toLowerCase()),"missing legal boundary: "+phrase);
+ assert.ok(home.includes("The Commonwealth Warrant"));
+ assert.ok(os.includes("The Warrant"));
+ assert.ok(intel.includes("commonwealth-warrant.html"));
+ assert.ok(app.includes("Technical Proof Passport"));
+ assert.ok(app.includes("../commonwealth-warrant.html"));
+ assert.doesNotMatch(js,/fetch\\s*\\(|localStorage|sessionStorage|indexedDB|XMLHttpRequest|sendBeacon/);
+});
 test("Two self-contained working interfaces are linked from an accessible product page",()=>{
  const page=text("docs/commonwealth.html");
  assert.match(page,/<main id="main">/);
