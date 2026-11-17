@@ -24,7 +24,7 @@ open Nightfall.Observability.ActualSourceQ2107Terminal
 open Nightfall.Observability.CubicTopCoverEnergy
 
 variable {ι α : Type} [Fintype ι] [DecidableEq ι]
-  [Fintype α] [DecidableEq α]
+  [Fintype α] [DecidableEq α] [Nonempty α]
 
 /-- Canonical components are eigenvectors of their own ANOVA projector,
 and all other projectors annihilate them. -/
@@ -51,7 +51,7 @@ theorem esComp_of_esComp
       rw [condExp_esComp_eq_ite p hp1 f V T x, if_neg hTV]
       ring
     · intro hn
-      exact (hn (Finset.mem_powerset.mpr (Finset.Subset.refl T))).elim
+      exact (hn (Finset.mem_powerset.mpr (subset_refl T))).elim
   · rw [if_neg heq]
     by_cases hTS : T ⊆ S
     · have hmiss : ∃ k, k ∈ S ∧ k ∉ T := by
