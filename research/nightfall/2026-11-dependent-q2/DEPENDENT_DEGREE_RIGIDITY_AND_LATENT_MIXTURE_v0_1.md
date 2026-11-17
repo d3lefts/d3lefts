@@ -106,3 +106,21 @@ All four are nonzero for 0<|r|<1. The script `scripts/check_ising_chain_boundary
 **Scope:** All finite n>=4, all r in (-1,0) union (0,1), no lower bound on |r| and no n-dependent constants. Extension to countable infinite Ising Markov chains would additionally require proving tail triviality and the almost-everywhere fiber-to-tail step; that extension is **not** certified here. This theorem demonstrates operator-word rigidity, not a new Q2 inequality for connected Gibbs fields. No novelty or priority tier is promoted without a scope-specific adversarial literature search and independent review.
 
 **New decisive test:** independently reproduce at least one nontrivial boundary determinant by a different exact matrix algorithm, then formalize a four-site boundary theorem in Lean, and use a parameterized finite-chain conditionalization lemma to carry it to arbitrary finite n. This is the structural mechanism that replaces repetitive case-by-case n-dimensional enumeration.
+
+
+## Theorem G — stationary countably infinite Ising Markov chain (analytic corollary)
+
+For r in (-1,0) union (0,1), let (X_j)_{j>=1} be the stationary two-state Markov chain with P(X_1=+1)=P(X_1=-1)=1/2 and P(X_{j+1}=t|X_j=s)=(1+r st)/2. Define genuine L2 coordinate residuals R_i f=f-E[f|all sites except i] under this **dependent infinite-coordinate law**. If R_i R_j R_k f=0 in L2 for every ordered triple of pairwise distinct indices, then f is almost surely constant.
+
+**Proof sketch with explicit analytic obligations:**
+
+1. Every four-consecutive-site conditional law, after conditioning on the infinite exterior, has strictly positive density proportional to the four-site Ising chain with at most two nearest-neighbor boundary factors (1+s r x_left)(1+t r x_right), s,t in {0,+1,-1}. This follows from the finite-memory Markov factorization (including the one-sided first block).
+2. Each coordinate conditional expectation Q_i for i inside the four-block acts fiberwise on that conditional law. Hence each ordered triple residual equation restricts to the corresponding finite-fiber equation for almost every exterior configuration. Since the conditional fiber has all 16 atoms positive, the exact four-boundary rank theorem makes f constant across that entire four-spin fiber almost everywhere. Therefore f is measurable outside each four-site block, and in particular Q_i f=f for every site i.
+3. For each finite prefix [1,N], full-support conditional distributions of that prefix given the infinite tail and countable intersection of the single-site invariances imply that f is constant across every state of that finite prefix for almost every fixed tail. Thus f is measurable with respect to sigma(X_{N+1},X_{N+2},...) for every N: it is tail-measurable.
+4. **Self-contained tail triviality:** If A belongs to the future tail sigma algebra and h_n(s)=P(A|X_n=s), then the Markov property and tail measurability imply h_n=P^k h_{n+k} for all k>=1. The transition matrix P has eigenvalues 1 and r, so |h_n(+)-h_n(-)| <= |r|^k. Sending k to infinity gives h_n(s)=P(A) for both states. Again by the Markov property E[1_A|X_1,...,X_n]=P(A); martingale convergence to 1_A implies P(A) in {0,1}. Hence the tail sigma algebra is trivial and f constant almost surely.
+
+At independence r=0, the Efron–Stein degree<=2 subspace is nontrivial. Thus the discontinuous residual-degree collapse persists for a **genuinely dependent infinite product state space** without using an infinite-product *measure*.
+
+**Review boundary:** The infinite-chain step is an author-side analytic proof, with finite boundary identities exactly checked by CI. No Lean proof of conditional-fiber measurability, regular conditionals, tail triviality, or the final infinite L2 theorem is attached. These obligations should be separately formalized or independently reviewed before an external theorem claim.
+
+**New next theorem target:** Construct an oblique/probability-law-adapted degree-two notion with nonconstant Markov observables that is stable as r tends to 0, then prove an influence lower bound with explicit dependence penalty. The naive residual-word definition cannot serve as that degree notion on these models.
