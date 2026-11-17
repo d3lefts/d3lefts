@@ -100,8 +100,10 @@ theorem exists_all_length_signed_code (n : ℕ) :
         exact hs.symm.trans (hst.trans ht)
       calc
         s = Fin.cons (s 0) (Fin.tail s) := (Fin.cons_self_tail s).symm
-        _ = Fin.cons (t 0) (Fin.tail t) :=
-            congrArg (fun p : Bool × (Fin n → Bool) => Fin.cons p.1 p.2) he
+        _ = Fin.cons (t 0) (Fin.tail t) := by
+          have hhead : s 0 = t 0 := congrArg Prod.fst he
+          have htail : Fin.tail s = Fin.tail t := congrArg Prod.snd he
+          rw [hhead, htail]
         _ = t := Fin.cons_self_tail t
 
 #print axioms Nightfall.InfiniteFieldPhase.exists_all_length_signed_code
