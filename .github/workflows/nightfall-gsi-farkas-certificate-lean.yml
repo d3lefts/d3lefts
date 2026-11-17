@@ -42,6 +42,7 @@ jobs:
           mkdir -p lean-receipts/farkas
           python3 scripts/lean_bridge.py papers/certifying-algorithms/lean/RationalFarkasCertificate.lean \
             --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --contract papers/certifying-algorithms/exact_type_contract.json \
             --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
             --decl Nightfall.CertifyingAlgorithms.rational_linear_combination_bound \
             --decl Nightfall.CertifyingAlgorithms.rational_farkas_infeasibility \
@@ -57,7 +58,8 @@ jobs:
           cat lean-toolchain > lean-receipts/farkas/toolchain.txt
           sha256sum papers/certifying-algorithms/lean/RationalFarkasCertificate.lean \
             papers/certifying-algorithms/check_farkas.py \
-            papers/certifying-algorithms/two_source_fence.json > lean-receipts/farkas/source-sha256.txt
+            papers/certifying-algorithms/two_source_fence.json \
+            papers/certifying-algorithms/exact_type_contract.json > lean-receipts/farkas/source-sha256.txt
       - name: Upload exact receipts
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
