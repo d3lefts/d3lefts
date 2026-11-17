@@ -42,13 +42,12 @@ jobs:
         run: |
           set -euo pipefail
           node research/nightfall/price_permission/check_semantic_fence_independent.cjs
-      - name: Verify model-bound Proof Passport registry if integrated
+      - name: Fail-closed model-bound Proof Passport and cross-language checker provenance
         shell: bash
         run: |
           set -euo pipefail
-          if test -e scripts/check_price_permission_optimality_passport.cjs; then
-            node scripts/check_price_permission_optimality_passport.cjs
-          fi
+          node scripts/check_price_permission_optimality_passport.cjs
+          node scripts/check_proof_object_passport.cjs
       - name: Set up pinned Lean + Mathlib
         uses: ./.github/actions/setup-nightfall-lean
       - name: Compile original rational dual source
