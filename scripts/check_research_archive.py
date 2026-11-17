@@ -68,7 +68,7 @@ def repo_file(rel: str) -> Path:
 
 def validate_catalogue(doc: dict) -> None:
     guard(doc.get("schema_version") == "1.0", "Unsupported claim catalogue schema")
-    guard(doc.get("as_of") == "2026-11-11", "Update dated scope review before bumping checkpoint")
+    guard(doc.get("as_of") == "2026-11-17", "Update dated scope review before bumping checkpoint")
     guard(isinstance(doc.get("claims"), list) and bool(doc["claims"]), "Empty claim catalogue")
     entries = doc["claims"]
     ids = [r.get("id") for r in entries]
@@ -147,6 +147,28 @@ def validate_catalogue(doc: dict) -> None:
 
     for v in ids:
         visit(v)
+
+    # Finite C105 is strictly source-scoped and may not silently promote the
+    # separately conditional infinite-product result.
+    finite_q2 = by_id.get("NF-PS-Q2-FINITE-C105-20261117")
+    infinite_q2 = by_id.get("NF-PS-Q2-INFINITE-LIFT-20261117")
+    if finite_q2 is not None or infinite_q2 is not None:
+        guard(finite_q2 is not None and infinite_q2 is not None,
+              "Missing finite/infinite Q2 status separation")
+        guard(finite_q2["validity"] == "kernel-checked-scoped"
+              and finite_q2["primary"].endswith("InfinitePiQ2NativeHeterogeneousTerminal.lean")
+              and "native_heterogeneous_q2_105416_unconditional"
+              in finite_q2["formal"]["declaration"],
+              "Finite C105 certificate or exact native theorem provenance drift")
+        guard(infinite_q2["validity"] == "analytic-manuscript-unrefereed"
+              and infinite_q2["dependencies"] == [
+                  {"id": finite_q2["id"], "type": "uses-as-premise"}],
+              "Unproved infinite Q2 theorem incorrectly promoted or detached from finite base")
+        historic_q2 = by_id.get("NF-PS-QUADRATIC-20261110")
+        guard(historic_q2 is not None
+              and historic_q2["lifecycle"] == "archive"
+              and historic_q2.get("superseded_by") == finite_q2["id"],
+              "Historic 1228 analytic coefficient cannot masquerade as current finite record")
 
     # Paper C synthesizes source-specific regimes: no promotion to a global
     # Lean theorem, and no illicit transfer between whole-coordinate and
