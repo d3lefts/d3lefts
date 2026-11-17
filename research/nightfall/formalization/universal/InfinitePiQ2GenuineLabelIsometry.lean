@@ -78,9 +78,12 @@ theorem original_infinite_label_lift_ae
       (original_infinite_label_measurePreserving μ φ hφ) g) :
       ((i : ι) → X i) → ℝ) =ᵐ[Measure.infinitePi μ]
         (fun x => g (sourceLabelMap φ x))
-  simpa only [Function.comp_apply] using
-    (Lp.coeFn_compMeasurePreserving g
-      (original_infinite_label_measurePreserving μ φ hφ))
+  change (↑(Lp.compMeasurePreserving (sourceLabelMap φ)
+      (original_infinite_label_measurePreserving μ φ hφ) g) :
+      ((i : ι) → X i) → ℝ) =ᵐ[Measure.infinitePi μ]
+        (g ∘ sourceLabelMap φ)
+  exact Lp.coeFn_compMeasurePreserving g
+    (original_infinite_label_measurePreserving μ φ hφ)
 
 #print axioms Nightfall.InfinitePiQ2GenuineLabelIsometry.original_infinite_label_measurePreserving
 #print axioms Nightfall.InfinitePiQ2GenuineLabelIsometry.original_infinite_label_lift_norm
