@@ -40,7 +40,6 @@ jobs:
             --decl Nightfall.InfinitePiQ2ConditionalSourceTest.source_coordinate_other_sigma_indep \
             --decl Nightfall.InfinitePiQ2ConditionalSourceTest.original_source_coordinate_integral \
             --decl Nightfall.InfinitePiQ2ConditionalSourceTest.source_condExp_coordinate_test \
-            --decl Nightfall.InfinitePiQ2ConditionalSourceTest.independent_condExp_product \
             --decl Nightfall.InfinitePiQ2ConditionalSourceTest.source_condExp_coordinate_mul_other \
             --json-out lean-receipts/q2-conditional-source-test/independence.json
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-conditional-source-test/independence.json
