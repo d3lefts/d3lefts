@@ -100,7 +100,6 @@ theorem anchor_triple_eq_delta
   have hself_k : Function.update x k (x k) = x := update_self x k
   simp only [hself_i, hself_j, hself_k,
     hfix_jk, hfix_ik, hfix_ij, hfix_ijk]
-  ring
 
 /-- Pointwise degree at most two kills the triple anchored difference
 at every source word, including zero-mass words. -/
