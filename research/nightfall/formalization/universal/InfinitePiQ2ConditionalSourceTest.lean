@@ -128,9 +128,39 @@ theorem independent_condExp_product
     _ =ᵐ[ν] (fun x => (∫ z, u z ∂ν) * v x) := by
       exact hindep.mul (Filter.EventuallyEq.rfl)
 
+/-- The original-source one-coordinate conditional expectation commutes
+with multiplication by an integrable complement-measurable factor.
+
+This is the actual product-space tensor-cylinder identity: it uses the
+independence-derived source-coordinate condExp theorem above. In contrast to
+a generic conditional-mean oracle, there is no caller-supplied independence
+hypothesis and the source measure remains Measure.infinitePi μ. -/
+theorem source_condExp_coordinate_mul_other
+    (i : ι) (h : X i → ℝ) (hh : Measurable h)
+    (v : ((j : ι) → X j) → ℝ)
+    (hv : StronglyMeasurable[sourceOtherSigma (X := X) i] v)
+    (hui : Integrable (sourceOneCoordTest i h) (Measure.infinitePi μ))
+    (huv : Integrable (sourceOneCoordTest i h * v) (Measure.infinitePi μ)) :
+    (Measure.infinitePi μ)[sourceOneCoordTest i h * v |
+        sourceOtherSigma (X := X) i] =ᵐ[Measure.infinitePi μ]
+      (fun x => (∫ a : X i, h a ∂ μ i) * v x) := by
+  have hpull :
+      (Measure.infinitePi μ)[sourceOneCoordTest i h * v |
+          sourceOtherSigma (X := X) i] =ᵐ[Measure.infinitePi μ]
+        ((Measure.infinitePi μ)[sourceOneCoordTest i h |
+          sourceOtherSigma (X := X) i] * v) :=
+    condExp_mul_of_stronglyMeasurable_right hv huv hui
+  have hmean :
+      (Measure.infinitePi μ)[sourceOneCoordTest i h |
+          sourceOtherSigma (X := X) i] =ᵐ[Measure.infinitePi μ]
+        (fun _ : (j : ι) → X j => ∫ a : X i, h a ∂ μ i) :=
+    source_condExp_coordinate_test μ i h hh
+  exact hpull.trans (hmean.mul (Filter.EventuallyEq.rfl))
+
 #print axioms Nightfall.InfinitePiQ2ConditionalSourceTest.source_coordinate_other_sigma_indep
 #print axioms Nightfall.InfinitePiQ2ConditionalSourceTest.original_source_coordinate_integral
 #print axioms Nightfall.InfinitePiQ2ConditionalSourceTest.source_condExp_coordinate_test
 #print axioms Nightfall.InfinitePiQ2ConditionalSourceTest.independent_condExp_product
+#print axioms Nightfall.InfinitePiQ2ConditionalSourceTest.source_condExp_coordinate_mul_other
 
 end Nightfall.InfinitePiQ2ConditionalSourceTest
