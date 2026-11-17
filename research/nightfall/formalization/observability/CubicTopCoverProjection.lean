@@ -60,8 +60,7 @@ theorem esComp_of_esComp
         apply heq
         apply Finset.Subset.antisymm
         · intro k hk
-          by_contra hkt
-          exact hn k hk hkt
+          exact hn k hk
         · exact hTS
       obtain ⟨k, hkS, hkT⟩ := hmiss
       apply esComp_indep p S (esComp p T f) x k hkS
