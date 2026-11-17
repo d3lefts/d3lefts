@@ -66,6 +66,7 @@ theorem source_q2_bound_of_mean_preserving_closure
   have hclosure : closure S ⊆ {g | Q g ≤ R} :=
     closure_minimal hsub hclosed
   have hresult := hclosure hf
+  change Q f ≤ R at hresult
   simpa only [Q, c, sourceL2Variance] using hresult
 
 /-- Epsilon form of the actual original-product finite-LABEL limit.
