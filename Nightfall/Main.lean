@@ -56,4 +56,8 @@ hypothesis is discharged by printing an axiom list.
 
 -- Genuinely unconditional infinite-product terminal on arbitrary-universe original products.
 #check Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_ae
+#check Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional
+#check Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional_variance
 #print axioms Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_ae
+#print axioms Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional
+#print axioms Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional_variance
