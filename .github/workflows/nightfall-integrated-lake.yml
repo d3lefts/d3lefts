@@ -14,6 +14,7 @@ on:
       - 'docs/lean-compiler-lock.json'
       - 'scripts/generate_nightfall_lake.py'
       - '.github/workflows/nightfall-integrated-lake.yml'
+      - '.github/workflows/nightfall-q2-all-l2-label-intertwining.yml'
   workflow_dispatch:
     inputs:
       paranoid:
