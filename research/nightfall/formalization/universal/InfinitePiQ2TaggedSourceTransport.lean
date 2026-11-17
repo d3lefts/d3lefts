@@ -128,12 +128,9 @@ theorem originalSource_sum_tagged_exact
     exact Finset.mem_univ _
   · intro w hw
     have hgood : CorrectTags A w := (Finset.mem_filter.mp hw).2
-    dsimp [G]
+    change originalMass (taggedMass A p) w * H (decodeWord A w) =
+      (∏ i : ι, p i ((decodeWord A w) i)) * H (decodeWord A w)
     rw [originalMass_correct_tags A p w hgood]
-  · intro x hx
-    refine ⟨embedWord A x, ?_, ?_⟩
-    · exact Finset.mem_filter.mpr ⟨Finset.mem_univ _, embedWord_correct A x⟩
-    · exact decode_embedWord A x
   · intro w hw v hv hEq
     have hwgood : CorrectTags A w := (Finset.mem_filter.mp hw).2
     have hvgood : CorrectTags A v := (Finset.mem_filter.mp hv).2
@@ -142,5 +139,9 @@ theorem originalSource_sum_tagged_exact
         (embed_decode_correct A w hwgood).symm
       _ = embedWord A (decodeWord A v) := by rw [hEq]
       _ = v := embed_decode_correct A v hvgood
+  · intro x hx
+    refine ⟨embedWord A x, ?_, ?_⟩
+    · exact Finset.mem_filter.mpr ⟨Finset.mem_univ _, embedWord_correct A x⟩
+    · exact decode_embedWord A x
 
 end Nightfall.InfinitePiQ2TaggedSourceTransport
