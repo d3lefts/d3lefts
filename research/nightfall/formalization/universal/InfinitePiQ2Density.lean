@@ -102,4 +102,24 @@ theorem source_finite_cylinders_L2_dense :
   exact hAll f
 
 
+/-- Every original-product L² random variable has an arbitrarily close
+finite real-linear combination of genuine finite-cylinder indicators.
+This is the epsilon approximation interface needed for the subsequent
+finite-information projection limit; it has no oracle hypotheses. -/
+theorem source_finite_cylinders_L2_approx
+    (f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))
+    (ε : ℝ) (hε : 0 < ε) :
+    ∃ g : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ),
+      g ∈ Submodule.span ℝ (sourceCylinderGenerators μ) ∧
+      ‖f - g‖ < ε := by
+  have hmem :
+      f ∈ (Submodule.span ℝ (sourceCylinderGenerators μ)).topologicalClosure := by
+    rw [source_finite_cylinders_L2_dense μ]
+    trivial
+  rw [← SetLike.mem_coe, Submodule.topologicalClosure_coe,
+    Metric.mem_closure_iff] at hmem
+  obtain ⟨g, hg, hnear⟩ := hmem ε hε
+  exact ⟨g, hg, by simpa only [dist_eq_norm] using hnear⟩
+
+
 end Nightfall.InfinitePiQ2Density
