@@ -379,19 +379,19 @@ measure. This removes any ambiguity about the variance normalization. -/
 theorem sourceL2Variance_eq_actual_variance
     (f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) :
     sourceL2Variance μ f =
-      variance (fun x => f x) (Measure.infinitePi μ) := by
+      ProbabilityTheory.variance (fun x => f x) (Measure.infinitePi μ) := by
   have hnorm :
       ‖f‖ ^ 2 =
         ∫ x, (f x) ^ 2 ∂ Measure.infinitePi μ := by
     calc
-      ‖f‖ ^ 2 = ⟪f, f⟫_ℝ :=
+      ‖f‖ ^ 2 = inner ℝ f f :=
         (real_inner_self_eq_norm_sq f).symm
       _ = ∫ x, (f x) ^ 2 ∂ Measure.infinitePi μ := by
         rw [L2.inner_def]
         congr 1
         funext x
         simp [real_inner_self_eq_norm_sq, Real.norm_eq_abs, sq_abs]
-  rw [variance_eq_sub (Lp.memLp f)]
+  rw [ProbabilityTheory.variance_eq_sub (Lp.memLp f)]
   unfold sourceL2Variance
   rw [hnorm]
 
