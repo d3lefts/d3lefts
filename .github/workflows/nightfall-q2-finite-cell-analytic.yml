@@ -16,4 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - name: Exact rational source/table and dependent negative-control replay
-        run: python3 research/nightfall/2026-11-infinite-q2/check_finite_cell_projection_exact.py
+        run: |
+          python3 research/nightfall/2026-11-infinite-q2/check_finite_cell_projection_exact.py
+          python3 research/nightfall/2026-11-infinite-q2/check_L2_degree_null_words_exact.py
