@@ -73,7 +73,29 @@ theorem anchor_triple_eq_delta
       (anchorDifference j b (anchorDifference k c f)) x =
     delta i (x i) a (delta j (x j) b (delta k (x k) c f)) x := by
   simp only [anchorDifference, delta]
-  simp [update_self, Function.update_comm, hij, hik, hjk]
+  have hfix_jk :
+      Function.update (Function.update x j b) k (x k) =
+      Function.update x j b := by
+    simpa only [Function.update_of_ne hjk.symm] using
+      (update_self (Function.update x j b) k)
+  have hfix_ik :
+      Function.update (Function.update x i a) k (x k) =
+      Function.update x i a := by
+    simpa only [Function.update_of_ne hik.symm] using
+      (update_self (Function.update x i a) k)
+  have hfix_ij :
+      Function.update (Function.update x i a) j (x j) =
+      Function.update x i a := by
+    simpa only [Function.update_of_ne hij.symm] using
+      (update_self (Function.update x i a) j)
+  have hfix_ijk :
+      Function.update (Function.update (Function.update x i a) j b) k (x k) =
+      Function.update (Function.update x i a) j b := by
+    have hv : (Function.update (Function.update x i a) j b) k = x k := by
+      simp [Function.update_of_ne hik.symm, Function.update_of_ne hjk.symm]
+    simpa only [hv] using
+      (update_self (Function.update (Function.update x i a) j b) k)
+  simp only [hfix_jk, hfix_ik, hfix_ij, hfix_ijk]
   ring
 
 /-- Pointwise degree at most two kills the triple anchored difference
