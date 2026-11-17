@@ -36,7 +36,7 @@ variable [∀ i, IsProbabilityMeasure (μ i)]
 contained in the all-other-sites σ-algebra is unchanged by refreshing i. -/
 theorem sourceOtherProjection_fixes_subSigma_projection
     (m : MeasurableSpace ((j : ι) → X j))
-    (hm : m ≤ (MeasurableSpace.pi : MeasurableSpace ((j : ι) → X j)))
+    (hm : m ≤ (inferInstance : MeasurableSpace ((j : ι) → X j)))
     (i : ι) (hmi : m ≤ sourceOtherSigma (X := X) i)
     (f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) :
     sourceOtherProjection μ i
