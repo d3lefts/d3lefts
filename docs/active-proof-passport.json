@@ -640,5 +640,6 @@
     "coefficient": 105.41623981998771,
     "scope": "finite common alphabet source Q2 only; C96 and rank/adaptive separately open",
     "receipt_index": "docs/current-lean-proof-receipts-20261116.json"
-  }
+  },
+  "lean_community_gate_overlay": "docs/lean-proof-passport-overlay.json"
 }

@@ -1,0 +1,210 @@
+{
+  "schema": "nightfall.lean-proof-passport-overlay.v1",
+  "version": 1,
+  "created": "2026-11-17",
+  "policy": {
+    "official_standard": "https://leanprover-community.github.io/did_you_prove_it.html",
+    "lean_pin": "leanprover/lean4:v4.36.0-rc2",
+    "mathlib_commit": "9d581dfff2e41de989072ea63abf3daf69311520",
+    "allowed_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "five_gates": [
+      "package",
+      "build",
+      "inclusion",
+      "axioms",
+      "statement"
+    ],
+    "status_meaning": {
+      "receipt_referenced": "Existing source-matched kernel receipt cited; current overlay audit is NOT a compiler replay",
+      "pr_head_receipt_referenced": "Original specific PR-head receipt cited; not automatically present on protected main",
+      "open": "Proof dependency or main integration not yet established",
+      "human_review_pending": "No independent expert has signed off on claim-to-theorem semantic equivalence"
+    },
+    "revocation_rule": "Any source Git blob, theorem declaration, compiler pin, mathematical premise, authenticated authority version, or dependency change requires targeted revalidation before reuse.",
+    "no_automatic_promotion": true,
+    "compiler_lock": "docs/lean-compiler-lock.json",
+    "kernel_replay": {
+      "ordinary": "lake check",
+      "multiple_kernel": "lake check --paranoid",
+      "status": "requires actual pinned Lake CI receipt for named imported source graph",
+      "claim_boundary": "Independent kernel replay validates formal derivations, not mathematical statement equivalence or real-world authority; no automatic promotion."
+    }
+  },
+  "registries": {
+    "scientific": "docs/active-proof-passport.json",
+    "receipts": "docs/current-lean-proof-receipts-20261116.json",
+    "frontier": "research/catalogue/CURRENT_FRONTIER.json",
+    "commonwealth_contract": "projects/commonwealth-os/assurance/lean/passport-contract.json"
+  },
+  "records": [
+    {
+      "id": "q2-finite-current",
+      "program": "nightfall",
+      "passport_id": "q2-influence",
+      "source_location": "main",
+      "source_path": "research/nightfall/formalization/observability/ActualSourceQ223802Terminal.lean",
+      "git_blob_sha1": "eb9d1422f14f0f742fa79e7424c269ab83b22ba2",
+      "theorem_declaration": "Nightfall.Observability.ActualSourceQ223802Terminal.actual_source_q2_23802_unconditional",
+      "evidence": {
+        "pr": 587,
+        "ci_run": 43732382337,
+        "head": "784c76669d08fa60e170c32fc379a6768c50e9e1",
+        "scalar_run": 43732382354,
+        "interpretation": "historical named original-source kernel receipt; this overlay checker does not rerun Lean"
+      },
+      "gates": {
+        "package": "receipt_referenced",
+        "build": "receipt_referenced",
+        "inclusion": "receipt_referenced",
+        "axioms": "receipt_referenced",
+        "statement": "human_review_pending"
+      },
+      "dependencies": [],
+      "remaining_obligations": [
+        "Independent human verification of mathematical statement equivalence and scope; not an infinite-product statement"
+      ],
+      "limitations": "Finite common alphabet with heterogeneous normalized per-site laws and zero atoms; degree at most two; pointwise bounded. No arbitrary-index source theorem, novelty certification, or real-world guarantee.",
+      "complete_certification": false,
+      "statement_equivalence_independently_reviewed": false,
+      "novelty_reviewed": false,
+      "real_world_authority_verified": false,
+      "kernel_replay": {
+        "status": "not_in_this_passport_receipt",
+        "gate": "separate CI source-head replay required",
+        "review": "do_not_infer_from_named_axiom_audit"
+      }
+    },
+    {
+      "id": "q2-infinite-integration",
+      "program": "nightfall",
+      "passport_id": "q2-influence",
+      "source_location": "pr-head",
+      "source_path": null,
+      "git_blob_sha1": null,
+      "theorem_declaration": null,
+      "candidate_source_path": "Nightfall/Main.lean",
+      "evidence": {
+        "pr": 696,
+        "ci_run": 44023827988,
+        "head": "90853957ec9b743f29bcb84566e9f2ff1d0859d4",
+        "interpretation": "verified PR-head 103-source selected Lake dependency build, not an unconditional infinite-product terminal"
+      },
+      "gates": {
+        "package": "pr_head_receipt_referenced",
+        "build": "pr_head_receipt_referenced",
+        "inclusion": "open",
+        "axioms": "open",
+        "statement": "human_review_pending"
+      },
+      "dependencies": [
+        "q2-finite-current",
+        "PR #691 original-label product law",
+        "PR #694 abstract Hilbert adjoint transfer",
+        "Finite-cell density and original-L2 limit"
+      ],
+      "remaining_obligations": [
+        "Source-specific heat-bath conditional-expectation intertwining at the exact original product law",
+        "L-infinity bounded fiber-mean identification and degree-two preservation",
+        "Compose the unconditional finite source Q2 theorem and L2 limit in one actual named terminal without extra hypotheses",
+        "Independently compare terminal type with mathematical field statement"
+      ],
+      "limitations": "Successful selected Lake import graph is a dependency milestone only; no unconditional infinite-product Q2 theorem has been named or compiled.",
+      "complete_certification": false,
+      "statement_equivalence_independently_reviewed": false,
+      "novelty_reviewed": false,
+      "real_world_authority_verified": false,
+      "kernel_replay": {
+        "status": "scheduled_in_PR_696_CI",
+        "gate": "lake check on Nightfall default target; optional paranoid manual run",
+        "review": "do_not_promote_until_same_head_pass_and_unconditional_terminal_exists"
+      }
+    },
+    {
+      "id": "f9-adaptive-pr-head",
+      "program": "nightfall",
+      "passport_id": null,
+      "source_location": "pr-head",
+      "source_path": null,
+      "git_blob_sha1": null,
+      "theorem_declaration": null,
+      "candidate_source_path": "research/nightfall/formalization/finite_field/F9ActualAdaptiveTerminal.lean",
+      "evidence": {
+        "pr": 690,
+        "ci_run": 44015925118,
+        "head": "3966892d41d63ae65b8710ae7d17d4de2880ecda",
+        "interpretation": "named original branch-head adaptive F9 compiler receipt; present head may differ and main is not promoted"
+      },
+      "gates": {
+        "package": "pr_head_receipt_referenced",
+        "build": "pr_head_receipt_referenced",
+        "inclusion": "open",
+        "axioms": "pr_head_receipt_referenced",
+        "statement": "human_review_pending"
+      },
+      "dependencies": [
+        "source-closed same-oracle fixed-design lower bound"
+      ],
+      "remaining_obligations": [
+        "Current PR head needs source-exact replay before merge",
+        "Independent statement-equivalence review and scope confirmation"
+      ],
+      "limitations": "All-length F9 adaptive legal-square-oracle result on a PR branch, not the generic infinite-field terminal and not a main-branch certified active passport.",
+      "complete_certification": false,
+      "statement_equivalence_independently_reviewed": false,
+      "novelty_reviewed": false,
+      "real_world_authority_verified": false,
+      "kernel_replay": {
+        "status": "not_in_this_passport_receipt",
+        "gate": "separate CI source-head replay required",
+        "review": "do_not_infer_from_named_axiom_audit"
+      }
+    },
+    {
+      "id": "commonwealth-abstract-authority",
+      "program": "commonwealth",
+      "passport_id": null,
+      "source_location": "main",
+      "source_path": "projects/commonwealth-os/assurance/lean/CommonwealthPassport.lean",
+      "git_blob_sha1": "bfbb3c19f81638cfe41a5688ba30da0e310b0930",
+      "theorem_declaration": "Commonwealth.Assurance.reachable_evidence_guard_authority",
+      "contract_path": "projects/commonwealth-os/assurance/lean/passport-contract.json",
+      "evidence": {
+        "pr": 613,
+        "ci_run": 43777510711,
+        "head": null,
+        "interpretation": "historical 15-declaration pinned Lean theorem-contract receipt for abstract possible-world model; exact-type contract is checked by existing workflow"
+      },
+      "gates": {
+        "package": "receipt_referenced",
+        "build": "receipt_referenced",
+        "inclusion": "receipt_referenced",
+        "axioms": "receipt_referenced",
+        "statement": "human_review_pending"
+      },
+      "dependencies": [
+        "projects/commonwealth-os/assurance/lean/passport-contract.json",
+        "Authenticated real authority sources (not certified)",
+        "Real transactional enforcement and privacy controls (not certified)"
+      ],
+      "remaining_obligations": [
+        "Independent semantic and exact-type statement review",
+        "Cryptographic authentication and private-evidence binding",
+        "Effect-time complete mediation and real authority-version recertification"
+      ],
+      "limitations": "Lean soundness is conditional on declared model and hypotheses; not evidence of real legal truth, actual authenticated ballots, deployed enforcement, or authority to act.",
+      "complete_certification": false,
+      "statement_equivalence_independently_reviewed": false,
+      "novelty_reviewed": false,
+      "real_world_authority_verified": false,
+      "kernel_replay": {
+        "status": "not_in_this_passport_receipt",
+        "gate": "separate CI source-head replay required",
+        "review": "do_not_infer_from_named_axiom_audit"
+      }
+    }
+  ]
+}

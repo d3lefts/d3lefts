@@ -1,0 +1,17 @@
+{
+  "schema": "nightfall-lean-compiler-lock/v1",
+  "version": 1,
+  "toolchain": "leanprover/lean4:v4.36.0-rc2",
+  "lean_source_commit": "b35cb10cf2ced51a2fd1880cfdbf75c71ab7a35a",
+  "mathlib_commit": "9d581dfff2e41de989072ea63abf3daf69311520",
+  "mathlib_tag": "v4.36.0-rc2",
+  "allowed_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "policy": "Immutable original-source certificate environment; upgrades require separate compatibility PR, exact-source rebuild, independent kernel replay and no silent recertification.",
+  "status": "active-pinned-environment; this lock is not a proof certificate",
+  "upstream_lean_release": "https://github.com/leanprover/lean4/releases/tag/v4.36.0-rc2",
+  "upstream_mathlib_repository": "https://github.com/leanprover-community/mathlib4"
+}
