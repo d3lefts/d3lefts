@@ -119,13 +119,15 @@ theorem independent_condExp_product
     (hui : Integrable u ν)
     (huv : Integrable (u * v) ν) :
     ν[u * v | m₂] =ᵐ[ν] (fun x => (∫ z, u z ∂ν) * v x) := by
-  have hpull := condExp_mul_of_stronglyMeasurable_right hv huv hui
-  have hindep := condExp_indep_eq hm₁ hm₂ hu hind
-  filter_upwards [hpull, hindep] with x hmul hmean
-  calc
-    ν[u * v | m₂] x = (ν[u | m₂] * v) x := hmul
-    _ = (∫ z, u z ∂ν) * v x := by
-      rw [Pi.mul_apply, hmean]
+  have hpull :
+      ν[u * v | m₂] =ᵐ[ν] (ν[u | m₂] * v) :=
+    condExp_mul_of_stronglyMeasurable_right hv huv hui
+  have hmean :
+      ν[u | m₂] =ᵐ[ν] (fun _ => ∫ z, u z ∂ν) :=
+    condExp_indep_eq hm₁ hm₂ hu hind
+  apply hpull.trans
+  filter_upwards [hmean] with x hx
+  simpa only [Pi.mul_apply, hx]
 
 #print axioms Nightfall.InfinitePiQ2ConditionalSourceTest.source_coordinate_other_sigma_indep
 #print axioms Nightfall.InfinitePiQ2ConditionalSourceTest.original_source_coordinate_integral
