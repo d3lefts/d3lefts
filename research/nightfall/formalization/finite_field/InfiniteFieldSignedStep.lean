@@ -213,6 +213,149 @@ theorem adaptiveRow_oriented_dot {n : ℕ}
   · simp [adaptiveRow, oriented, hi]
   · cases hs : s i <;> simp [adaptiveRow, oriented, hi, hs, div_mul_cancel₀]
 
+
+/-! ## A legal row chosen from coordinate-square observations -/
+
+theorem exists_oriented_scalar (a x : K) (h : x ^ 2 = a ^ 2) :
+    ∃ b : Bool, x = if b then a else -a := by
+  have hh : x * x = a * a := by simpa only [pow_two] using h
+  rcases (mul_self_eq_mul_self_iff).mp hh with he | he
+  · exact ⟨true, by simpa using he⟩
+  · exact ⟨false, by simpa using he⟩
+
+theorem exists_oriented_vector {n : ℕ} (a x : Fin n → K)
+    (h : ∀ i, (x i) ^ 2 = (a i) ^ 2) :
+    ∃ s : Fin n → Bool, x = oriented a s := by
+  classical
+  have hchoices : ∀ i : Fin n, ∃ s : Bool, x i = if s then a i else -a i := by
+    intro i
+    exact exists_oriented_scalar (a i) (x i) (h i)
+  choose s hs using hchoices
+  refine ⟨s, ?_⟩
+  funext i
+  exact hs i
+
+theorem oriented_eq_of_active {n : ℕ} (a : Fin n → K) (s t : Fin n → Bool)
+    (h : ∀ i, a i ≠ 0 → s i = t i) :
+    oriented a s = oriented a t := by
+  funext i
+  by_cases hi : a i = 0
+  · simp [oriented, hi]
+  · have he := h i hi
+    simp only [oriented]
+    rw [he]
+
+theorem oriented_neg_of_active_compl {n : ℕ}
+    (a : Fin n → K) (s t : Fin n → Bool)
+    (h : ∀ i, a i ≠ 0 → s i = !(t i)) :
+    oriented a s = -(oriented a t) := by
+  funext i
+  by_cases hi : a i = 0
+  · simp [oriented, hi]
+  · have he := h i hi
+    cases ht : t i <;> simp [oriented, he, ht]
+
+theorem adaptiveRow_separates_square_fiber {n : ℕ}
+    (w a x y : Fin n → K) (hw : Function.Injective (signedSum w))
+    (hx : ∀ i, (x i) ^ 2 = (a i) ^ 2)
+    (hy : ∀ i, (y i) ^ 2 = (a i) ^ 2)
+    (hread : (∑ i, adaptiveRow w a i * x i) ^ 2 =
+             (∑ i, adaptiveRow w a i * y i) ^ 2) :
+    x = y ∨ x = -y := by
+  obtain ⟨s, hs⟩ := exists_oriented_vector a x hx
+  obtain ⟨t, ht⟩ := exists_oriented_vector a y hy
+  have hcode : (maskedSignedSum w a s) ^ 2 =
+      (maskedSignedSum w a t) ^ 2 := by
+    rw [hs, ht] at hread
+    simpa only [adaptiveRow_oriented_dot] using hread
+  rcases squared_maskedSignedSum_injective_active w a hw s t hcode with hsame | hflip
+  · left
+    calc
+      x = oriented a s := hs
+      _ = oriented a t := oriented_eq_of_active a s t hsame
+      _ = y := ht.symm
+  · right
+    calc
+      x = oriented a s := hs
+      _ = -(oriented a t) := oriented_neg_of_active_compl a s t hflip
+      _ = -y := by rw [ht]
+
+/-- A canonical square root when one exists; the other case is unreachable
+on a fiber actually produced by a signal. -/
+noncomputable def rootChoice (z : K) : K :=
+  if h : ∃ a : K, a ^ 2 = z then Classical.choose h else 0
+
+theorem rootChoice_square (x : K) :
+    (rootChoice (x ^ 2)) ^ 2 = x ^ 2 := by
+  have h : ∃ a : K, a ^ 2 = x ^ 2 := ⟨x, rfl⟩
+  unfold rootChoice
+  rw [dif_pos h]
+  exact Classical.choose_spec h
+
+/-- Global sign-code weights are fixed before measurements. -/
+noncomputable def selectedWeights (n : ℕ) : Fin n → K :=
+  Classical.choose (exists_all_length_signed_code (K := K) n)
+
+theorem selectedWeights_injective (n : ℕ) :
+    Function.Injective (signedSum (selectedWeights (K := K) n)) :=
+  Classical.choose_spec (exists_all_length_signed_code (K := K) n)
+
+/-- The final row depends ONLY on the previously observed coordinate squares. -/
+noncomputable def observedSquareRow {n : ℕ} (data : Fin n → K) : Fin n → K :=
+  adaptiveRow (selectedWeights (K := K) n) (fun i => rootChoice (data i))
+
+theorem observedSquareRow_separates_fiber {n : ℕ}
+    (data x y : Fin n → K)
+    (hx : ∀ i, (x i) ^ 2 = data i)
+    (hy : ∀ i, (y i) ^ 2 = data i)
+    (hread : (∑ i, observedSquareRow data i * x i) ^ 2 =
+             (∑ i, observedSquareRow data i * y i) ^ 2) :
+    x = y ∨ x = -y := by
+  let a : Fin n → K := fun i => rootChoice (data i)
+  have ha (i : Fin n) : (a i) ^ 2 = data i := by
+    change (rootChoice (data i)) ^ 2 = data i
+    rw [← hx i]
+    exact rootChoice_square (x i)
+  have hxa (i : Fin n) : (x i) ^ 2 = (a i) ^ 2 := (hx i).trans (ha i).symm
+  have hya (i : Fin n) : (y i) ^ 2 = (a i) ^ 2 := (hy i).trans (ha i).symm
+  exact adaptiveRow_separates_square_fiber
+    (selectedWeights (K := K) n) a x y
+    (selectedWeights_injective (K := K) n) hxa hya
+    (by simpa only [observedSquareRow, a] using hread)
+
+/-- Exactly n coordinate-square readings and one history-dependent square. -/
+noncomputable def adaptiveTranscript {n : ℕ} (x : Fin n → K) :
+    (Fin n → K) × K :=
+  let data : Fin n → K := fun i => (x i) ^ 2
+  (data, (∑ i, observedSquareRow data i * x i) ^ 2)
+
+/-- Certified upper bound: the actual n+1-query transcript recovers
+every vector modulo the unavoidable global sign, including zeros. -/
+theorem adaptiveTranscript_injective_mod_sign {n : ℕ} (x y : Fin n → K)
+    (h : adaptiveTranscript x = adaptiveTranscript y) :
+    x = y ∨ x = -y := by
+  have hd : (fun i : Fin n => (x i) ^ 2) =
+      (fun i : Fin n => (y i) ^ 2) := by
+    exact congrArg Prod.fst h
+  have hr :
+      (∑ i, observedSquareRow (fun j : Fin n => (x j) ^ 2) i * x i) ^ 2 =
+      (∑ i, observedSquareRow (fun j : Fin n => (x j) ^ 2) i * y i) ^ 2 := by
+    have hs := congrArg Prod.snd h
+    change
+      (∑ i, observedSquareRow (fun j : Fin n => (x j) ^ 2) i * x i) ^ 2 =
+      (∑ i, observedSquareRow (fun j : Fin n => (y j) ^ 2) i * y i) ^ 2 at hs
+    rw [← hd] at hs
+    exact hs
+  apply observedSquareRow_separates_fiber (fun i => (x i) ^ 2) x y
+  · intro i
+    rfl
+  · intro i
+    exact (congrArg (fun f : Fin n → K => f i) hd).symm
+  · exact hr
+
+#print axioms Nightfall.InfiniteFieldPhase.adaptiveTranscript_injective_mod_sign
+
+
 #print axioms Nightfall.InfiniteFieldPhase.squared_maskedSignedSum_injective_active
 #print axioms Nightfall.InfiniteFieldPhase.adaptiveRow_oriented_dot
 
