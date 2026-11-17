@@ -105,30 +105,34 @@ theorem source_condExp_coordinate_test
   have hint := original_source_coordinate_integral μ i h hh
   simpa only [e, sourceOneCoordTest, hint] using heq
 
-/-- Pull-out of an independent site factor, a reusable operator law
-for finite-table indicator products. No independent-expectation oracle. -/
-theorem independent_condExp_product
-    {Ω : Type*} [m : MeasurableSpace Ω] {m₁ m₂ : MeasurableSpace Ω}
-    {ν : Measure Ω}
-    (hm₁ : m₁ ≤ m) (hm₂ : m₂ ≤ m)
-    [IsProbabilityMeasure ν]
-    (hind : Indep m₁ m₂ ν)
-    (u v : Ω → ℝ)
-    (hu : StronglyMeasurable[m₁] u)
-    (hv : StronglyMeasurable[m₂] v)
-    (hui : Integrable u ν)
-    (huv : Integrable (u * v) ν) :
-    ν[u * v | m₂] =ᵐ[ν] (fun x => (∫ z, u z ∂ν) * v x) := by
+/-- For the actual original infinite product, a one-coordinate factor
+can be pulled through conditional expectation onto ALL other coordinates.
+This is the finite-cylinder rank-one building block for the source/table
+L² heat-bath intertwining theorem; no generic independence oracle is supplied. -/
+theorem source_condExp_coordinate_factor
+    (i : ι) (h : X i → ℝ) (hh : Measurable h)
+    (v : ((j : ι) → X j) → ℝ)
+    (hv : StronglyMeasurable[sourceOtherSigma (X := X) i] v)
+    (hui : Integrable (sourceOneCoordTest i h) (Measure.infinitePi μ))
+    (huv : Integrable (sourceOneCoordTest i h * v) (Measure.infinitePi μ)) :
+    (Measure.infinitePi μ)[sourceOneCoordTest i h * v |
+      sourceOtherSigma (X := X) i] =ᵐ[Measure.infinitePi μ]
+        (fun x => (∫ a : X i, h a ∂ μ i) * v x) := by
   calc
-    ν[u * v | m₂] =ᵐ[ν] (ν[u | m₂] * v) :=
-      condExp_mul_of_stronglyMeasurable_right hv huv hui
-    _ =ᵐ[ν] (fun x => (∫ z, u z ∂ν) * v x) := by
-      exact (condExp_indep_eq (m := m) hm₁ hm₂ hu hind).mul
-        (Filter.EventuallyEq.rfl)
+    (Measure.infinitePi μ)[sourceOneCoordTest i h * v |
+        sourceOtherSigma (X := X) i]
+        =ᵐ[Measure.infinitePi μ]
+          ((Measure.infinitePi μ)[sourceOneCoordTest i h |
+            sourceOtherSigma (X := X) i] * v) :=
+          condExp_mul_of_stronglyMeasurable_right hv huv hui
+    _ =ᵐ[Measure.infinitePi μ]
+        (fun x => (∫ a : X i, h a ∂ μ i) * v x) := by
+          exact (source_condExp_coordinate_test μ i h hh).mul
+            (Filter.EventuallyEq.rfl)
 
 #print axioms Nightfall.InfinitePiQ2ConditionalSourceTest.source_coordinate_other_sigma_indep
 #print axioms Nightfall.InfinitePiQ2ConditionalSourceTest.original_source_coordinate_integral
 #print axioms Nightfall.InfinitePiQ2ConditionalSourceTest.source_condExp_coordinate_test
-#print axioms Nightfall.InfinitePiQ2ConditionalSourceTest.independent_condExp_product
+#print axioms Nightfall.InfinitePiQ2ConditionalSourceTest.source_condExp_coordinate_factor
 
 end Nightfall.InfinitePiQ2ConditionalSourceTest
