@@ -30,7 +30,7 @@
     "kernel_replay": {
       "ordinary": "lake check",
       "multiple_kernel": "lake check --paranoid",
-      "status": "Selected Q2 103-source lake check PASS on PR #696 exact head, run 44027853225; multi-kernel paranoid replay not yet certified; F9 not in selected closure",
+      "status": "Selected Q2 103-source lake check PASS on #696 (run 44027853225); extended 107-source build and independent lake check PASS on #718 exact head (run 44120677824), no paranoid replay, no unconditional infinite-product terminal. F9 remains outside the selected Q2 Lake closure.",
       "claim_boundary": "Independent kernel replay validates formal derivations, not mathematical statement equivalence or real-world authority; no automatic promotion.",
       "selected_lake_receipt": {
         "pr": 696,
@@ -41,6 +41,17 @@
         "kernel_check": "passed",
         "paranoid": "not_run",
         "source_coverage": "103 selected Lean source modules",
+        "conditional_theorem_only": true
+      },
+      "latest_extended_lake_receipt": {
+        "pr": 718,
+        "head": "8e63401fcb1c40a37b9416e5413e7e96fc988307",
+        "merge_commit": "836af9435cf1ef33b779ce91eafe917ce5f99edc",
+        "run": 44120677824,
+        "build": "passed",
+        "kernel_check": "passed",
+        "paranoid": "not_run",
+        "source_coverage": "107 selected Lean source modules",
         "conditional_theorem_only": true
       }
     }
@@ -103,7 +114,7 @@
         "ci_run": 44027853225,
         "head": "a5770989b9e6e3234c750f8c0d9228802cb088f7",
         "merge_sha": "06a4eb403b7c7c5c9f62660848803e1d91ab0a70",
-        "interpretation": "Main-merged selected 103-source Q2 closure: pinned Lake build and Lean-kernel lake check PASS. Imported original infinite-product limit remains conditional on finite-information inequalities; not an unconditional Q2 result."
+        "interpretation": "Main-merged selected 103-source Q2 closure: pinned Lake build and Lean-kernel lake check PASS. Imported original infinite-product limit remains conditional on finite-information inequalities; not an unconditional Q2 result. A later 107-source Q2 Lake build+independent kernel replay PASS (#718 exact run 44120677824) includes four new original-law tensor and Hilbert source modules; this does not close the unconditional infinite Q2 theorem."
       },
       "gates": {
         "package": "receipt_referenced",
@@ -119,12 +130,12 @@
         "Finite-cell density and original-L2 limit"
       ],
       "remaining_obligations": [
-        "Source-specific heat-bath conditional-expectation intertwining at the exact original product law",
-        "L-infinity bounded fiber-mean identification and degree-two preservation",
-        "Compose the unconditional finite source Q2 theorem and L2 limit in one actual named terminal without extra hypotheses",
-        "Independently compare terminal type with mathematical field statement"
+        "Integrate the actual original-source all-L2 source/label heat-bath CLM equality and Hilbert residual/influence transfer into the same checked Lake source graph; #743 120-source expansion is pending exact-head compilation/replay",
+        "Complete original-source finite Boolean-test coordinate labels, positive-support cell averaging, and finite-table L2/pointwise degree and influence transfer without replacement measure or atom floor",
+        "Compose finite supported native C105.416 source theorem and actual arbitrary-index original-L2 quadratic limit into one named theorem with no missing assumptions",
+        "Obtain independent statement-equivalence and mathematical field-scope review"
       ],
-      "limitations": "Successful selected Lake import graph is a dependency milestone only; no unconditional infinite-product Q2 theorem has been named or compiled.",
+      "limitations": "Merged #718 107-source selected source closure has passed one Lake build and standard independent lake check; its imported infinite L2 limit remains conditional and does not constitute the unconditional infinite-product Q2 theorem. Multi-kernel paranoid replay and expert statement review remain open.",
       "complete_certification": false,
       "statement_equivalence_independently_reviewed": false,
       "novelty_reviewed": false,
@@ -133,6 +144,17 @@
         "status": "lake_check_receipt_referenced",
         "gate": "pinned exact PR #696 head run 44027853225; lake check PASS; lake check --paranoid not run",
         "review": "do_not_promote_to_unconditional_infinite_Q2"
+      },
+      "current_extended_lake_receipt": {
+        "pr": 718,
+        "head": "8e63401fcb1c40a37b9416e5413e7e96fc988307",
+        "merge_commit": "836af9435cf1ef33b779ce91eafe917ce5f99edc",
+        "run": 44120677824,
+        "build": "passed",
+        "kernel_check": "passed",
+        "paranoid": "not_run",
+        "source_coverage": "107 selected Lean source modules",
+        "conditional_theorem_only": true
       }
     },
     {
@@ -148,7 +170,7 @@
         "pr": 690,
         "ci_run": 44015925118,
         "head": "3966892d41d63ae65b8710ae7d17d4de2880ecda",
-        "interpretation": "Merged original-source GF9 all-length actual adaptive transcript theorem; historical strict named pinned Lean run at PR #690 head, not part of 103-source Q2 Lake closure and not generic infinite-field terminal",
+        "interpretation": "PR #690 is merged on main; original-head strict pinned Lean source/axiom receipt run 44015925118 for actual all-length GF(9) adaptive legal squared-oracle transcript. No claim of an arbitrary infinite field or independently checked common F9 Lake target.",
         "merge_sha": "ba5e57cf36e21df8589df82308f9a8be0ecd23d0"
       },
       "gates": {
@@ -162,10 +184,11 @@
         "source-closed same-oracle fixed-design lower bound"
       ],
       "remaining_obligations": [
-        "Current PR head needs source-exact replay before merge",
-        "Independent statement-equivalence review and scope confirmation"
+        "The exact all-length GF(9) squared-oracle theorem is main-merged; independent theorem-to-field-statement review and source/reviewer sign-off still absent",
+        "A separate shared F9 Lake build plus independent lake check is not included in the selected Q2 Lake graph; the dedicated strict original F9 source CI is not equivalent to this second kernel-checker gate",
+        "The all-length GF(9) result must not be promoted to an unrestricted infinite-field phase-retrieval theorem without a separately checked statement"
       ],
-      "limitations": "All-length F9 adaptive legal-square-oracle result on a PR branch, not the generic infinite-field terminal and not a main-branch certified active passport.",
+      "limitations": "Merged all-length actual legal-squared-oracle adaptive GF(9) certificate on main, original PR-head strict source/axiom receipt; no generic infinite-field extension or independently reviewed mathematical statement. F9 sources are outside the selected 107-source Q2 Lake target.",
       "complete_certification": false,
       "statement_equivalence_independently_reviewed": false,
       "novelty_reviewed": false,
