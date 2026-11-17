@@ -62,7 +62,7 @@ theorem sourceFiniteCellSum_fixed_by_one_finite_label
         (∑ s : S, sourceCellIndicator μ s.1 (hS s.1 s.2) (c s.1)) :
           Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) =
         ∑ s : S, sourceCellIndicator μ s.1 (hS s.1 s.2) (c s.1)
-  rw [map_sum]
+  simp only [map_sum, Submodule.coe_sum]
   apply Finset.sum_congr rfl
   intro s hs
   exact (condExpL2_indicator_of_measurable hle
