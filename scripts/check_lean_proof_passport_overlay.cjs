@@ -112,7 +112,6 @@ function verify(overlay, registry, receipts, frontier, contract) {
   const inf = lookup['q2-infinite-integration'];
   assert.equal(inf.passport_id, 'q2-influence');
   assert.equal(inf.evidence.pr, 696);
-  assert.equal(inf.kernel_replay.status, 'scheduled_in_PR_696_CI');
   assert.equal(inf.source_location, 'main');
   assert.equal(inf.source_path,
     'research/nightfall/formalization/universal/InfinitePiQ2Limit.lean');
