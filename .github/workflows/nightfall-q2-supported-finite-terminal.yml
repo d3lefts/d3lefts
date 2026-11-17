@@ -1,0 +1,83 @@
+name: NIGHTFALL Q2 support-only C105.416 finite terminal Lean
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches:
+      - main
+      - nightfall-q2-source-zero-cell-variance-influence-20261116
+    paths:
+      - 'research/nightfall/formalization/universal/InfinitePiQ2SupportedFiniteTerminal.lean'
+      - '.github/workflows/nightfall-q2-supported-finite-terminal.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  actual-source-supported-finite:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout exact effective PR head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Setup pinned Lean and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile complete original-source finite theorem and support adapter
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from scripts.nightfall_q2_certify import local_sources, closure
+          from pathlib import Path
+          import shutil, subprocess
+          files = local_sources()
+          ws = Path("/tmp/mathlib4")
+          out = ws / ".lake/build/lib/lean"
+          out.mkdir(parents=True, exist_ok=True)
+          for name in closure("ActualSourceQ223802Terminal", files):
+              shutil.copyfile(files[name], ws / (name + ".lean"))
+              print("BUILD ORIGINAL SOURCE", name, flush=True)
+              subprocess.run(["lake", "env", "lean", "-o",
+                              str(out / (name + ".olean")), name + ".lean"],
+                             cwd=ws, check=True, timeout=1200)
+          for name in [
+              "InfinitePiQ2DegreeRetraction",
+              "InfinitePiQ2FiniteSupportRepair",
+              "InfinitePiQ2FiniteDegreeBridge",
+              "InfinitePiQ2ZeroCellSourceInvariance",
+              "InfinitePiQ2SupportedFiniteTerminal",
+          ]:
+              src = Path("research/nightfall/formalization/universal") / (name + ".lean")
+              shutil.copyfile(src, ws / (name + ".lean"))
+              print("BUILD ADAPTER", name, flush=True)
+              subprocess.run(["lake", "env", "lean", "-o",
+                              str(out / (name + ".olean")), name + ".lean"],
+                             cwd=ws, check=True, timeout=1200)
+          PY
+      - name: Named theorem strict standard-axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-infinite
+          python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiQ2SupportedFiniteTerminal.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InfinitePiQ2SupportedFiniteTerminal.source_q2_supported_degree_two_unconditional \
+            --json-out lean-receipts/q2-infinite/supported-finite-terminal.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-infinite/supported-finite-terminal.json
+      - name: Exact source provenance
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/q2-infinite
+          git rev-parse HEAD > lean-receipts/q2-infinite/supported-finite-terminal-head.txt
+          sha256sum research/nightfall/formalization/universal/InfinitePiQ2SupportedFiniteTerminal.lean > lean-receipts/q2-infinite/supported-finite-terminal-sha256.txt
+      - name: Upload receipt
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: q2-supported-finite-terminal-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/q2-infinite
+          if-no-files-found: warn
