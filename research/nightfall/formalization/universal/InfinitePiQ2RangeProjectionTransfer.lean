@@ -92,7 +92,9 @@ theorem labelRangeProjection_residual
       labelRangeProjection U (Esource f) := by
     have h := congrArg (fun T : K →L[ℝ] K => T f) hc
     simpa only [ContinuousLinearMap.comp_apply] using h
-  simp only [residual, heq, map_sub]
+  dsimp only [residual]
+  rw [heq]
+  exact ((labelRangeProjection U).map_sub f (Esource f)).symm
 
 /-- Label conditional averaging contracts every actual-source
 coordinate residual in the genuine L² Hilbert norm. -/
