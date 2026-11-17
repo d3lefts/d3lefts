@@ -8,6 +8,12 @@
 
 This is the **active certification environment** across current-source NIGHTFALL and Commonwealth Lean verification. Historic Lean 4.33/4.35 reports and dated receipts remain pinned to the exact compiler that originally produced them. Changing a version string on an old receipt is prohibited; reproducing it at 4.36 requires a new named source-matched receipt.
 
+## Current consolidated proof-checkpoint status
+
+The original **103-source** Q2 source graph (#696, run 44027853225) remains a valid historical full `lake check` certificate. It has now been extended on `main` by the **107-source** source graph of #718 (merge `836af9435cf1ef33b779ce91eafe917ce5f99edc`). [Run 44120677824](https://github.com/d3lefts/d3lefts/actions/runs/44120677824) passed exact-version compiler/Mathlib setup, generated closure, `lake build Nightfall`, eight named axiom checks, and an independent `lake check`. There is **no** full arbitrary-index infinite-product Q2 terminal and no multi-kernel paranoid replay; the new 120-source all-(L^2) candidate in #743 requires a separate exact-head build/check.
+
+F9's all-length actual GF(9) squared-oracle adaptive terminal (#690) was merged with its own source-matched strict named Lean 4.36 compiler receipt (run 44015925118). Its theorem source is outside this Q2 Lake build, so no F9 `lake check` is inferred. Commonwealth's finite abstract authority proof passports have a distinct exact-type Lean workflow and are not live-law or real-world enforcement certificates.
+
 ## One exact compiler environment
 
 The following consume the same root lock (rather than copying a version from documentation):

@@ -5,6 +5,12 @@
 **Canonical scientific passports:** [docs/active-proof-passport.json](../../../docs/active-proof-passport.json)
 **External verification standard:** https://leanprover-community.github.io/did_you_prove_it.html
 
+## Verified 17 November Q2 / F9 integration checkpoint
+
+The **107-source selected original Q2 Lake closure** passed `lake build Nightfall`, eight named standard-axiom audits and the independent `lake check` on exact PR #718 head `8e63401fcb1c40a37b9416e5413e7e96fc988307` in [run 44120677824](https://github.com/d3lefts/d3lefts/actions/runs/44120677824); merge commit `836af9435cf1ef33b779ce91eafe917ce5f99edc`. This **extends** the earlier #696 103-source receipt without modifying it. The integrated 107-source theorem graph includes actual original-product conditional-expectation and Hilbert tensor bridges, but its (L^2) limit remains conditional and there is **no unconditional infinite-product Q2 terminal**. The 120-source all-(L^2) expansion is independent, still awaiting exact same-head CI (#743). No `lake check --paranoid` receipt is asserted.
+
+The **all-length actual legal squared-oracle GF(9) F9 adaptive theorem is already merged to main** (#690, merge `ba5e57cf36e21df8589df82308f9a8be0ecd23d0`, strict original-source named Lean run 44015925118). Its four-source F9-specific status remains a different source graph, **not** part of the 107-source Q2 Lake graph and **not** the arbitrary infinite-field theorem. The Commonwealth abstract proof-passport source/contract remains conditional and distinct from deployed authority.
+
 ## Mechanism
 
 A Proof Passport is a record of *exact statement -> assumptions -> source -> pinned compiler and dependency tree -> kernel receipt -> source change and human semantic review -> permitted scope of reuse*. A compiled Lean file is not independently a scientific result, and a proof of a finite model is not authorization to take a real-world action.

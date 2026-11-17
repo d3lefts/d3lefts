@@ -24,6 +24,8 @@ The active Lean/Mathlib compiler configuration is **Lean 4.36.0-rc2** (exact Mat
 
 Merged [PR #696](https://github.com/d3lefts/d3lefts/pull/696) provides a **103-source selected Q2 Lake build**, four named axiom checks and `lake check` official kernel replay at this exact pin (run [44027853225](https://github.com/d3lefts/d3lefts/actions/runs/44027853225)). Its infinite-product L² limit is **conditional**, not an unconditional infinite-product Q2 theorem; multi-kernel `lake check --paranoid` and independent field-statement review remain separate gates. Current finite unrestricted Q2 coefficient C105.416 has its own original-source certificate. See the [active Proof Passport overlay](docs/lean-proof-passport-overlay.json) for exact named declaration and remaining obligations.
 
+**Expanded shared certificate:** Merged [PR #718](https://github.com/d3lefts/d3lefts/pull/718) subsequently extended the selected Q2 closure to **107 original source modules**; exact [run 44120677824](https://github.com/d3lefts/d3lefts/actions/runs/44120677824) passed `lake build Nightfall`, eight named axiom reports and independent `lake check`. Its infinite-product limit is still conditional. The all-(L^2) source-label extension in #743 has its own pending common-build gate. The merged GF(9) all-length adaptive source certificate (#690) is **not** included in this selected Q2 Lake graph.
+
 ## Current research (14 November 2026)
 
 **Start with the active work, not the historical PR queue:**
