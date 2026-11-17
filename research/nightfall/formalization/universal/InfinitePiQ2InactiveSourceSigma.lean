@@ -98,6 +98,54 @@ theorem sourceCoordinateInfluence_inactive_cylinder_zero
   rw [sourceCoordinateResidual_inactive_cylinder_zero μ F i hi S hS c]
   simp
 
+/-- The genuine L² projection onto a finite coordinate set is fixed by
+refreshing an original-source site outside that set. This is the
+unconditional inactive-index operator composition, for EVERY source L²
+observable, not just cylinders. -/
+theorem sourceOtherProjection_fixes_inactive_finiteProjection
+    (F : Finset ι) (i : ι) (hi : i ∉ F)
+    (f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) :
+    sourceOtherProjection μ i
+      (condExpL2 ℝ ℝ (sourceFiniteCoordinateSigma_le (X := X) F) f :
+        Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) =
+      (condExpL2 ℝ ℝ (sourceFiniteCoordinateSigma_le (X := X) F) f :
+        Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) := by
+  let g : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ) :=
+    (condExpL2 ℝ ℝ (sourceFiniteCoordinateSigma_le (X := X) F) f :
+      Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))
+  have hsmall :
+      AEStronglyMeasurable[sourceFiniteCoordinateSigma (X := X) F]
+        (g : ((j : ι) → X j) → ℝ) (Measure.infinitePi μ) := by
+    exact aestronglyMeasurable_condExpL2
+      (sourceFiniteCoordinateSigma_le (X := X) F) f
+  have hlarge :
+      AEStronglyMeasurable[sourceOtherSigma (X := X) i]
+        (g : ((j : ι) → X j) → ℝ) (Measure.infinitePi μ) := by
+    exact hsmall.mono (sourceFiniteCoordinateSigma_le_other_of_not_mem
+      (X := X) F i hi)
+  have hmem : g ∈ lpMeas ℝ ℝ (sourceOtherSigma (X := X) i)
+      (2 : ENNReal) (Measure.infinitePi μ) :=
+    mem_lpMeas_iff_aestronglyMeasurable.mpr hlarge
+  let gg : lpMeas ℝ ℝ (sourceOtherSigma (X := X) i)
+      (2 : ENNReal) (Measure.infinitePi μ) := ⟨g, hmem⟩
+  have hfix := Submodule.orthogonalProjectionOnto_mem_subspace_eq_self gg
+  simpa only [sourceOtherProjection, condExpL2, gg, g] using hfix
+
+/-- The actual original infinite-product influence of an F-coordinate
+conditional projection is identically zero at every coordinate outside F. -/
+theorem sourceCoordinateInfluence_inactive_finiteProjection_zero
+    (F : Finset ι) (i : ι) (hi : i ∉ F)
+    (f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) :
+    sourceCoordinateInfluence μ i
+      (condExpL2 ℝ ℝ (sourceFiniteCoordinateSigma_le (X := X) F) f :
+        Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) = 0 := by
+  unfold sourceCoordinateInfluence sourceCoordinateResidual
+  rw [sourceOtherProjection_fixes_inactive_finiteProjection μ F i hi f]
+  simp
+
+#print axioms Nightfall.InfinitePiQ2InactiveSourceSigma.sourceOtherProjection_fixes_inactive_finiteProjection
+#print axioms Nightfall.InfinitePiQ2InactiveSourceSigma.sourceCoordinateInfluence_inactive_finiteProjection_zero
+
 #print axioms Nightfall.InfinitePiQ2InactiveSourceSigma.sourceFiniteCoordinateSigma_le_other_of_not_mem
 #print axioms Nightfall.InfinitePiQ2InactiveSourceSigma.sourceOtherProjection_fixes_inactive_cylinder
 #print axioms Nightfall.InfinitePiQ2InactiveSourceSigma.sourceCoordinateResidual_inactive_cylinder_zero
