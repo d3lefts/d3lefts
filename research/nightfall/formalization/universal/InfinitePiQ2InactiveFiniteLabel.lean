@@ -44,6 +44,7 @@ theorem sourceOtherProjection_fixes_subSigma_projection
         Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) =
       (condExpL2 ℝ ℝ (μ := Measure.infinitePi μ) (m := m) hm f :
         Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) := by
+  letI : MeasurableSpace ((j : ι) → X j) := MeasurableSpace.pi
   let g : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ) :=
     (condExpL2 ℝ ℝ (μ := Measure.infinitePi μ) (m := m) hm f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))
   have hsmall : AEStronglyMeasurable[m]
