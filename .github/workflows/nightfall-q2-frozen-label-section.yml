@@ -1,0 +1,51 @@
+name: NIGHTFALL Q2 frozen finite-label complement measurability
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/universal/InfinitePiQ2FrozenLabelSection.lean'
+      - '.github/workflows/nightfall-q2-frozen-label-section.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-frozen-section:
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile all exact original-source dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          for f in InfinitePiQ2Density InfinitePiQ2InfluenceStability InfinitePiQ2OriginalLabelTransport InfinitePiQ2OriginalHeatBath InfinitePiQ2FrozenLabelSection; do
+            src="research/nightfall/formalization/universal/$f.lean"
+            test -f "$src"
+            ! grep -nE '\b(sorry|admit)\b' "$src"
+            cp "$src" "/tmp/mathlib4/$f.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean") 2>&1 | tee "/tmp/$f.log"
+            ! grep -qE "error:|sorryAx" "/tmp/$f.log"
+          done
+      - name: Exact named theorem standard-axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import re
+          s=open("/tmp/InfinitePiQ2FrozenLabelSection.log").read()
+          names=[
+            "reconstructOther_measurable",
+            "reconstructOther_restrict",
+            "source_other_measurable_of_update_invariant",
+            "frozen_label_section_stronglyMeasurable_other",
+          ]
+          for n in names:
+            theorem="Nightfall.InfinitePiQ2FrozenLabelSection."+n
+            m=re.search(re.escape(f"'{theorem}' depends on axioms: [")+r"([^\]]*)\]",s,re.S)
+            assert m is not None, theorem
+            actual={x.strip() for x in m.group(1).split(",")}
+            assert actual <= {"propext","Classical.choice","Quot.sound"},(theorem,actual)
+            print("PASS",theorem,sorted(actual))
+          PY
