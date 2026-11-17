@@ -19,6 +19,7 @@ ACTIVE = (
     ".github/workflows/nightfall-compiler-lock.yml",
     ".github/workflows/nightfall-active-passports.yml",
     ".github/workflows/nightfall-lean-receipts-v16.yml",
+    ".github/workflows/nightfall-lean-bridge-v2.yml",
 )
 RE_COMMIT = re.compile(r"\b[0-9a-f]{40}\b")
 RE_TOOLCHAIN = re.compile(r"leanprover/lean4:v\d+\.\d+\.\d+(?:-(?:rc|beta|alpha)\d+)?")
