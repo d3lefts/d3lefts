@@ -1,12 +1,39 @@
 {
   "schema": "nightfall.frontier-evidence.v1",
-  "as_of": "2026-11-15 UTC",
+  "as_of": "2026-11-16 UTC",
   "authority": "Curated original-source evidence ledger; not an independent audit or novelty certification",
-  "best_unrestricted_source_q2_certified": "q2-unrestricted-105",
+  "best_unrestricted_source_q2_certified": "q2-unrestricted-105-416",
   "unrestricted_sub100_unconditional": "not_proved",
   "operational_agent_boundary": "not_verified",
   "all_originality_claims": "not_reviewed",
   "claims": [
+    {
+      "id": "q2-unrestricted-105-416",
+      "family": "Q2 unrestricted finite product",
+      "status": "kernel_proved_domain",
+      "exact_claim": "Strongest currently verified original-source finite common-alphabet degree-two independent-product variance-squared/influence bound with coefficient [2(1+sqrt(2))sqrt(3)+11901/6250]^2, approximately 105.41623981998771; all canonical singleton components allowed, arbitrary heterogeneous normalized per-coordinate marginal laws including zero atoms, pointwise bounded on every configuration. No caller-supplied moment, section or owner budgets.",
+      "coefficient_approx": 105.41623981998771,
+      "source": "research/nightfall/formalization/observability/ActualSourceQ223802Terminal.lean",
+      "source_git_blob": "eb9d1422f14f0f742fa79e7424c269ab83b22ba2",
+      "declaration": "Nightfall.Observability.ActualSourceQ223802Terminal.actual_source_q2_23802_unconditional",
+      "receipt": {
+        "run": 43732382337,
+        "head": "784c76669d08fa60e170c32fc379a6768c50e9e1",
+        "outcome": "success",
+        "pin": "leanprover/lean4:v4.36.0-rc2",
+        "scope": "Strict full-transitive original-source Lean compilation, named theorem standard-axiom audit; separate exact Bernstein scalar run 43732382354; PR #587 merged November 15, 2026"
+      },
+      "added_unproved_premises": [],
+      "domain_limitations": [
+        "Finite independent product and common nonempty finite alphabet; heterogeneous normalized marginal laws including zeros",
+        "Genuine original-law Hoeffding/Efron–Stein degree ≤2 with pointwise bound |f(x)|≤B; singleton terms unrestricted",
+        "Not a heterogeneous alphabet-type, dependent-law, arbitrary-degree, or infinite-L2 Lean theorem"
+      ],
+      "priority": "unreviewed",
+      "external_referee": "none",
+      "physical_system_certificate": false,
+      "novel_record_status": "not_assessed"
+    },
     {
       "id": "q2-unrestricted-105",
       "family": "Q2 unrestricted finite product",
