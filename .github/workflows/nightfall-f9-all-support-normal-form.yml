@@ -1,0 +1,33 @@
+name: NIGHTFALL F9 all-support normal-form Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/F9AllSupportNormalForm.lean'
+      - '.github/workflows/nightfall-f9-all-support-normal-form.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  f9-normal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Build source-closed normal form from actual calibrated source
+        shell: bash
+        run: |
+          set -euo pipefail
+          for F in F9OracleBridge F9ActualFieldBasis F9CalibratedRow F9AllSupportNormalForm; do
+            cp "research/nightfall/formalization/finite_field/$F.lean" "/tmp/mathlib4/$F.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$F.olean" "$F.lean")
+          done
+      - name: Strict named axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          N=Nightfall.FiniteField.F9AllSupportNormalForm
+          python3 scripts/lean_bridge.py research/nightfall/formalization/finite_field/F9AllSupportNormalForm.lean --workspace /tmp/mathlib4 --strict --timeout 900 --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.square_profile_normalized" --decl "$N.square_profile_has_normal_form" --json-out /tmp/f9-normal-form-receipt.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py /tmp/f9-normal-form-receipt.json
