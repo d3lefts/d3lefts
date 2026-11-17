@@ -446,7 +446,7 @@
   ],
   "attribution": "Research led by Devin J. Wright through NIGHTFALL with substantial AI-assisted drafting and proof attempts. Imported foundations include Efron–Stein/Hoeffding decomposition and Turturean's Aaronson–Ambainis cube theorem and antipodal inequality.",
   "publication_rule": "Do not promote any record to externally certified, global novelty or published theorem status without a dated prior-art audit and independent mathematical verification. The 39-module Lean attribution and quarantine ledger lives in docs/lean-certificate-provenance.json.",
-  "current_named_lean_receipts": "docs/current-lean-proof-receipts-20261114.json",
+  "current_named_lean_receipts": "docs/current-lean-proof-receipts-20261116.json",
   "current_named_certificate_scope": {
     "finite_q2": {
       "status": "strict_kernal_checked_finite_common_alphabet",
@@ -638,6 +638,7 @@
     "direct_source_run": 43732382337,
     "independent_scalar_run": 43732382354,
     "coefficient": 105.41623981998771,
-    "scope": "finite common alphabet source Q2 only; C96 and rank/adaptive separately open"
+    "scope": "finite common alphabet source Q2 only; C96 and rank/adaptive separately open",
+    "receipt_index": "docs/current-lean-proof-receipts-20261116.json"
   }
 }
