@@ -179,7 +179,7 @@ theorem source_finite_info_preserves_mean
     (∫ x, (condExpL2 ℝ ℝ (sourceFiniteCoordinateSigma_le (X := X) F) f :
       Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) x ∂ Measure.infinitePi μ) =
     (∫ x, f x ∂ Measure.infinitePi μ) := by
-  have h := integral_condExpL2_eq
+  have h := integral_condExpL2_eq (𝕜 := ℝ)
     (sourceFiniteCoordinateSigma_le (X := X) F) f
     (MeasurableSet.univ :
       MeasurableSet[sourceFiniteCoordinateSigma (X := X) F] Set.univ)
