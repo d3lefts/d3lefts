@@ -67,8 +67,7 @@ theorem square_profile_has_normal_form {n : ℕ}
   · right
     funext i
     rcases Fin.eq_self_or_eq_succAbove a i with rfl | ⟨j, rfl⟩
-    · have hneg := (hsign a).resolve_left ha
-      simp [normalizedSource, hneg]
+    · simpa [normalizedSource] using (hsign i).resolve_left ha
     · have hj : -x (a.succAbove j) = r (a.succAbove j) ∨
           -x (a.succAbove j) = -r (a.succAbove j) := by
         rcases hsign (a.succAbove j) with h | h
@@ -77,10 +76,19 @@ theorem square_profile_has_normal_form {n : ℕ}
         · left
           simp [h]
       by_cases heq : -x (a.succAbove j) = r (a.succAbove j)
-      · simp [normalizedSource, orientationBits, ha, heq]
+      · have hval : x (a.succAbove j) = -r (a.succAbove j) := by
+          have hh := congrArg (fun z : F9 => -z) heq
+          simpa only [neg_neg] using hh
+        have hbit : orientationBits x r a j = true := by
+          simp [orientationBits, ha, heq]
+        simp [normalizedSource, hbit, hval]
       · have hjneg := hj.resolve_left heq
-        simp [normalizedSource, orientationBits, ha, heq, hjneg]
-
+        have hval : x (a.succAbove j) = r (a.succAbove j) := by
+          have hh := congrArg (fun z : F9 => -z) hjneg
+          simpa only [neg_neg] using hh
+        have hbit : orientationBits x r a j = false := by
+          simp [orientationBits, ha, heq]
+        simp [normalizedSource, hbit, hval]
 #print axioms Nightfall.FiniteField.F9AllSupportNormalForm.square_profile_normalized
 #print axioms Nightfall.FiniteField.F9AllSupportNormalForm.square_profile_has_normal_form
 
