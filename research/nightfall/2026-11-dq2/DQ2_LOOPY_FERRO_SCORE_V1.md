@@ -91,3 +91,32 @@ Independent reviewer must attack: exact repeated-index four-point step, GKS posi
 Next structural transition: replace Lebowitz/GKS for signed interactions or nonzero external fields, or prove an unrestricted weak-mixing quadratic covariance row budget from cluster expansion. Do not polish C2 until novelty/validity gating is complete.
 
 Discovery graph: dependent Q2 → algebraic quadratic spin functions → Lebowitz fourth-order operator bound and local dual conditional scores → restricted covariance and native influence comparison → all-graph dimension-free Q2 when susceptibility stays bounded → finite rational checks → limits (zero field, ferromagnetism, S budget) → transfer to loopy correlated sensing systems.
+
+
+## v1.1 analytic corollary — infinite-volume dependent observability (NOT Lean-certified)
+
+Let G=(V,E) be a **countable locally finite** graph with nonnegative finite edge interactions J_e and uniform local field budget H=sup_i Σ_{e∋i}J_e<∞. Let Λ_n exhaust V and let ν_n be the zero-field **free-boundary finite-volume** Ising law on Λ_n, embedded in {-1,+1}^V. Assume ν_n converges weakly to an infinite-volume Gibbs law ν and that the finite-volume susceptibilities are uniformly bounded:
+
+  sup_n max_{i∈Λ_n} Σ_{j∈Λ_n} E_{ν_n}[X_i X_j] ≤ S <∞.
+
+Define uniform score budget D_H=cosh²(H)+H exp(2H) and conditional-variance floor v_H=sech²(H). Then for every bounded physical-spin degree≤2 cylinder polynomial f, with |f|≤B on the whole cube,
+
+  Var_ν(f)² ≤ C2 S⁴ (D_H/v_H) B² sup_{i∈V} I_i^ν(f),
+
+where I_i^ν(f)=||f-E_ν[f|X_{V\setminus{i}}]||² in genuine original infinite-volume L². Moreover, the same bound holds for every L²(ν) limit of such uniformly B-bounded finite quadratic cylinder polynomials. This is a **nontrivial dependence-adapted low-degree class**: unlike the vanishing ordered triple-residual condition, it contains the original single-site and pair-spin observables.
+
+**Proof:** Uniform H bounds each ν_n's local-variance floor by v_H and each sparse conditional-score row budget by D_H (use sinh(2J)e^{2(H-J)}/2≤Je^{2H}). Apply the proven finite all-graph inequality on each Λ_n using S, D_H, v_H. For fixed quadratic cylinder f with finite support A, Var_{ν_n}(f)→Var_ν(f) by weak convergence. For each i∈A, when n includes A and its finite neighbor set, the finite-volume single-site conditional mean equals tanh(Σ_{j~i}J_ij X_j). The DLR condition gives the *same local function* under ν; hence I_i^{ν_n}(f)→I_i^ν(f) by weak convergence of this explicitly finite-coordinate integrand. All i outside A have influence zero since f ignores them. Pass the finite inequality to the limit.
+
+For L²-closure, each R_i^ν=Id-E_ν[·|X_{-i}] is an orthogonal projection, so
+
+ |sqrt(I_i^ν(f))-sqrt(I_i^ν(g))| ≤ ||f-g||_2
+
+**uniformly in i**. Consequently sup_i sqrt(I_i^ν) is 1-Lipschitz, while Var(f) is L²-continuous. Pass the inequality along uniformly bounded approximants. No independent product assumption is used in this final limit.
+
+**Explicit infinite correlated example:** the stationary zero-field infinite one-dimensional Ising Markov chain with nearest-neighbor tanh J=r=1/2 is a free-boundary weak limit of finite chains, and all finite susceptibilities are <3. The local score budgets D=61/9 and v=9/25 are uniform, so the sharper bound
+
+  Var_ν(f)² ≤ 1525 C2 B² sup_i I_i^ν(f)
+
+holds for bounded quadratic cylinder observables and their uniformly B-bounded L² closure. Its physical quadratic degree is not the naive (generically collapsing) genuine-residual triple-zero degree from merged PR #785.
+
+**Formalization and limitations:** This depends on the same classical Lebowitz/GKS inputs, a DLR local-conditional identity, weak convergence, and L² residual projection continuity. It is **author-analytic**, unreviewed and not kernel certified; no automatic extension to arbitrary infinite Gibbs phases, infinite-degree graphs, signed couplings, or functions outside the specified closure. The uniform finite susceptibility S assumption is essential to the displayed constant. Independent review should attack the finite-to-infinite conditional-influence limit and the closure class before promotion.
