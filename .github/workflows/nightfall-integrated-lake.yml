@@ -10,6 +10,9 @@ on:
       - 'research/nightfall/formalization/universal/**'
       - 'research/nightfall/formalization/q2_shifted/**'
       - 'scripts/check_nightfall_integrated_axioms.py'
+      - 'scripts/check_nightfall_compiler_lock.py'
+      - 'docs/lean-compiler-lock.json'
+      - 'scripts/generate_nightfall_lake.py'
       - '.github/workflows/nightfall-integrated-lake.yml'
   workflow_dispatch:
     inputs:
@@ -43,8 +46,9 @@ jobs:
         run: |
           set -euo pipefail
           lake update
-          test "$(git -C .lake/packages/mathlib rev-parse HEAD)" = 9d581dfff2e41de989072ea63abf3daf69311520
-          test "$(cat .lake/packages/mathlib/lean-toolchain)" = leanprover/lean4:v4.36.0-rc2
+          python3 scripts/check_nightfall_compiler_lock.py --checkout . \
+            --installed-mathlib .lake/packages/mathlib \
+            --lean-version-file /tmp/nightfall-lean-version.txt
           lake exe cache get
       - name: Build shared vocabulary and existing source certificates together
         shell: bash
