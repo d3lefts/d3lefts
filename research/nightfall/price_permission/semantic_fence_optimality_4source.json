@@ -1,0 +1,84 @@
+{
+  "schema": "nightfall-price-permission-primal-dual/v1",
+  "source_model": {
+    "kind": "full-bitcube-semantic-fence/v1",
+    "history_policy": "all-baseline-to-final-world-single-epoch",
+    "num_sources": 4,
+    "baseline_worlds": [
+      0
+    ],
+    "unsafe_worlds": [
+      3,
+      6,
+      12
+    ],
+    "version_check_costs": [
+      "3",
+      "2",
+      "2",
+      "3"
+    ]
+  },
+  "derived_instance": {
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        3
+      ]
+    ],
+    "A": [
+      [
+        1,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        1
+      ]
+    ],
+    "costs": [
+      "3",
+      "2",
+      "2",
+      "3"
+    ]
+  },
+  "certificate": {
+    "source_sha256": "314b4187f2cc3ec1746916b1cab75fb7c35a96698639509cd6b45e4e7de8c492",
+    "model_sha256": "bb846628a8c1063e9a8800b0c9d24985d707952a2198c55d9a591b503ad7466a",
+    "primal_fence": [
+      0,
+      1,
+      1,
+      0
+    ],
+    "dual_packing": [
+      "2",
+      "0",
+      "2"
+    ],
+    "claimed_optimal_cost": "4"
+  },
+  "limitations": [
+    "All 16 source final worlds are enumerated only within the synthetic four-bit state model.",
+    "Source changes outside the four versioned variables and operational commit races are not represented."
+  ]
+}
