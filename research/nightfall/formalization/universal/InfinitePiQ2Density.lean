@@ -64,6 +64,7 @@ There is no finite-coordinate density hypothesis in the theorem. -/
 theorem source_finite_cylinders_L2_dense :
     (Submodule.span ℝ (sourceCylinderGenerators μ)).topologicalClosure = ⊤ := by
   classical
+  letI : Fact ((2 : ENNReal) ≠ ⊤) := ⟨by norm_num⟩
   let ν := Measure.infinitePi μ
   let S := sourceCylinderGenerators μ
   let U : Submodule ℝ (Lp ℝ (2 : ENNReal) ν) :=
