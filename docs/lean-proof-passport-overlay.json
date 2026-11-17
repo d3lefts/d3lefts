@@ -54,6 +54,23 @@
         "source_coverage": "107 selected Lean source modules",
         "conditional_theorem_only": true
       }
+    },
+    "proof_object_chain": {
+      "schema": "nightfall.proof-object-passport.v1",
+      "manifest": "docs/proof-object-passport.json",
+      "verifier": "scripts/check_proof_object_passport.cjs",
+      "required_before_new_model_bound_certificate": [
+        "original_model",
+        "derived_instance",
+        "proof_object",
+        "exact_checker",
+        "lean_type_contract",
+        "source_pinned_kernel_receipt"
+      ],
+      "state": "separate_scoped_protocol; legacy four receipts unchanged",
+      "no_automatic_promotion": true,
+      "human_review_still_required": true,
+      "historical_pin_preserved": true
     }
   },
   "registries": {
