@@ -31,7 +31,6 @@ jobs:
         run: |
           set -euo pipefail
           python3 -m py_compile scripts/generate_nightfall_lake.py
-          python3 scripts/generate_nightfall_lake.py --write
           python3 scripts/generate_nightfall_lake.py --check
       - name: Resolve one exact Mathlib revision
         shell: bash

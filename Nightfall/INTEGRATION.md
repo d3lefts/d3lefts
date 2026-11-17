@@ -41,7 +41,9 @@ residual degree predicate is not yet proved equivalent to `ESDegreeLE`.
 
 ## Certification status
 
-**Unverified until CI passes.** The local environment that prepared this
+**Integrated compilation verified for the selected 103-source closure** by strict pinned CI run 44023827988 (branch commit 90853957ec9b743f29bcb84566e9f2ff1d0859d4). The four named terminal/conditional axiom audits reported only `propext`, `Classical.choice`, and `Quot.sound`. The generated closure is now checked in and CI enforces exact match against the original sources. Remaining infinite-product bridging and human statement review are expressly open.
+
+**Scope is not unconditional infinite-product Q2.** The local environment that prepared this
 scaffold has no Lean executable. A passing build would prove only that
 these named modules and their transitive dependencies compiled together
 at one pin, and that the listed theorem axiom sets were acceptable.
