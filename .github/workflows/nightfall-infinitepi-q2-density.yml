@@ -39,6 +39,9 @@ jobs:
             --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
             --decl Nightfall.InfinitePiQ2Density.source_finite_cylinders_measure_dense \
             --decl Nightfall.InfinitePiQ2Density.source_finite_cylinders_L2_dense \
+            --decl Nightfall.InfinitePiQ2Density.source_finite_cylinders_L2_approx \
+            --decl Nightfall.InfinitePiQ2Density.sourceFiniteCoordinateSigma_le \
+            --decl Nightfall.InfinitePiQ2Density.source_finite_info_L2_contract \
             --json-out lean-receipts/q2-infinite/cylinder-measure-dense.json
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/q2-infinite/cylinder-measure-dense.json
