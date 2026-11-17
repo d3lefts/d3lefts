@@ -14,7 +14,7 @@
 
 We implement this **standard Farkas soundness direction** independently, without importing GSI code:
 
-1. `lean/RationalFarkasCertificate.lean` states and proves the soundness implication for arbitrary finite rational matrices. It is *not a novel Farkas theorem*. The pinned named-declaration Lean CI must pass before classifying it as kernel-checked.
+1. `lean/RationalFarkasCertificate.lean` states and proves the soundness implication for arbitrary finite rational matrices. `exact_type_contract.json` freezes both expected theorem propositions independently of theorem names and the source body; the existing Lean bridge compiles explicit instances of these types. It is *not a novel Farkas theorem*. The final-head named-declaration and exact-type Lean CI must pass before classifying it as kernel-checked.
 2. `check_farkas.py` validates separately presented JSON witnesses with `fractions.Fraction`, reconstructs the rational constraints from original unsafe-change supports and budget, checks SHA-256 of both the source model and derived matrix, and rejects eleven deliberately malformed/false witnesses. This script does **not** run Lean or prove the fidelity of an external model encoding.
 3. `two_source_fence.json` is a small original NIGHTFALL semantic-fencing benchmark. Two singleton unsafe-change supports require two checks, but a proposed budget permits only one. `-x_1 <= -1`, `-x_2 <= -1`, `x_1+x_2 <= 1` have the exact Farkas certificate `(1,1,1)` giving `0 <= -1`. A separate enumeration checks the four Boolean guard choices. **This certificate proves a model-specific lower bound, not global safety or an optimality theorem for arbitrary systems.**
 
@@ -27,7 +27,7 @@ python3 -I papers/certifying-algorithms/check_farkas.py --self-test
 python3 -I papers/certifying-algorithms/check_farkas.py papers/certifying-algorithms/two_source_fence.json
 ```
 
-A dedicated workflow compiles the **exact original Lean source** under the repository's pinned Lean 4.36.0-rc2 and Mathlib commit, checks two named declarations with only allowed foundation axioms, and saves SHA-256 and exact-head receipts. A Python `PASS` never implies Lean compilation. A green Lean receipt certifies precisely these implications, not their application to an arbitrary physical-world or SAT encoding.
+A dedicated workflow compiles the **exact original Lean source** under the repository's pinned Lean 4.36.0-rc2 and Mathlib commit, checks two named declarations **against their explicit exact-type contract** with only allowed foundation axioms, and saves SHA-256 and exact-head receipts. A Python `PASS` never implies Lean compilation. A green Lean receipt certifies precisely these implications, not their application to an arbitrary physical-world or SAT encoding.
 
 ## Where to transfer next
 
