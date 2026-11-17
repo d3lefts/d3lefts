@@ -45,6 +45,8 @@ jobs:
             --decl Nightfall.InfinitePiQ2Density.source_finite_info_L2_contract \
             --decl Nightfall.InfinitePiQ2Density.source_finite_info_cylinder_measurable \
             --decl Nightfall.InfinitePiQ2Density.source_finite_info_fixes_cylinder \
+            --decl Nightfall.InfinitePiQ2Density.source_finite_info_fixes_cylinder_of_subset \
+            --decl Nightfall.InfinitePiQ2Density.source_cylinder_generator_eventually_fixed \
             --decl Nightfall.InfinitePiQ2Density.source_finite_info_preserves_mean \
             --json-out lean-receipts/q2-infinite/cylinder-measure-dense.json
           python3 research/nightfall/formalization/product_space/check_receipts.py \
