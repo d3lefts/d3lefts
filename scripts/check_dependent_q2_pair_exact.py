@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Independent finite-state audit for dependent-Q2 v0.1.
+"""Standalone exact finite-state audit for dependent-Q2 v0.1.
 
-This audits exact finite laws and Gram formulas with fractions; it does NOT
+This replays author-derived formulas with exact fractions; it does NOT
 prove the arbitrary-measure, infinite-product, or transfer statements.
 Run: python3 scripts/check_dependent_q2_pair_exact.py
 """
