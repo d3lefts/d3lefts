@@ -25,7 +25,14 @@
       "human_review_pending": "No independent expert has signed off on claim-to-theorem semantic equivalence"
     },
     "revocation_rule": "Any source Git blob, theorem declaration, compiler pin, mathematical premise, authenticated authority version, or dependency change requires targeted revalidation before reuse.",
-    "no_automatic_promotion": true
+    "no_automatic_promotion": true,
+    "compiler_lock": "docs/lean-compiler-lock.json",
+    "kernel_replay": {
+      "ordinary": "lake check",
+      "multiple_kernel": "lake check --paranoid",
+      "status": "requires actual pinned Lake CI receipt for named imported source graph",
+      "claim_boundary": "Independent kernel replay validates formal derivations, not mathematical statement equivalence or real-world authority; no automatic promotion."
+    }
   },
   "registries": {
     "scientific": "docs/active-proof-passport.json",
@@ -64,7 +71,12 @@
       "complete_certification": false,
       "statement_equivalence_independently_reviewed": false,
       "novelty_reviewed": false,
-      "real_world_authority_verified": false
+      "real_world_authority_verified": false,
+      "kernel_replay": {
+        "status": "not_in_this_passport_receipt",
+        "gate": "separate CI source-head replay required",
+        "review": "do_not_infer_from_named_axiom_audit"
+      }
     },
     {
       "id": "q2-infinite-integration",
@@ -104,7 +116,12 @@
       "complete_certification": false,
       "statement_equivalence_independently_reviewed": false,
       "novelty_reviewed": false,
-      "real_world_authority_verified": false
+      "real_world_authority_verified": false,
+      "kernel_replay": {
+        "status": "scheduled_in_PR_696_CI",
+        "gate": "lake check on Nightfall default target; optional paranoid manual run",
+        "review": "do_not_promote_until_same_head_pass_and_unconditional_terminal_exists"
+      }
     },
     {
       "id": "f9-adaptive-pr-head",
@@ -139,7 +156,12 @@
       "complete_certification": false,
       "statement_equivalence_independently_reviewed": false,
       "novelty_reviewed": false,
-      "real_world_authority_verified": false
+      "real_world_authority_verified": false,
+      "kernel_replay": {
+        "status": "not_in_this_passport_receipt",
+        "gate": "separate CI source-head replay required",
+        "review": "do_not_infer_from_named_axiom_audit"
+      }
     },
     {
       "id": "commonwealth-abstract-authority",
@@ -177,7 +199,12 @@
       "complete_certification": false,
       "statement_equivalence_independently_reviewed": false,
       "novelty_reviewed": false,
-      "real_world_authority_verified": false
+      "real_world_authority_verified": false,
+      "kernel_replay": {
+        "status": "not_in_this_passport_receipt",
+        "gate": "separate CI source-head replay required",
+        "review": "do_not_infer_from_named_axiom_audit"
+      }
     }
   ]
 }
