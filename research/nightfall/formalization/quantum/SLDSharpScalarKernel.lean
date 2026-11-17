@@ -71,8 +71,11 @@ theorem prodK_ge_one (xs : List SpectralPair) : 1 ≤ prodK xs := by
   | nil => norm_num [prodK]
   | cons p ps ih =>
       change 1 ≤ p.kappa * prodK ps
-      nlinarith [mul_nonneg (sub_nonneg.mpr p.kappa_ge_one)
-        (sub_nonneg.mpr ih)]
+      calc
+        (1 : ℝ) = 1 * 1 := by ring
+        _ ≤ p.kappa * prodK ps :=
+          mul_le_mul p.kappa_ge_one ih (by norm_num)
+            (by linarith [p.kappa_ge_one])
 
 theorem prodOnePlusK_nonneg (xs : List SpectralPair) :
     0 ≤ prodOnePlusK xs := by
