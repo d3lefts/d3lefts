@@ -50,22 +50,6 @@ theorem supported_table_bound_from_original_ae
     exact (ae_map_iff hL.measurable.aemeasurable hset).2 hsource
   exact abs_bound_at_positive_atom ν g B a hlabel ha
 
-/-- For an arbitrary original infinite independent product, a finite
-vector of coordinatewise measurable source labels inherits the bound
-on every atom with positive ORIGINAL pushforward product probability. -/
-theorem original_finite_label_table_supported_bound
-    {ι : Type u} {X : ι → Type v}
-    [∀ i, MeasurableSpace (X i)]
-    (μ : (i : ι) → Measure (X i))
-    [∀ i, IsProbabilityMeasure (μ i)]
-    (F : Finset ι) (Y : F → Type*)
-    [∀ i, MeasurableSpace (Y i)]
-    [∀ i, Fintype (Y i)] [∀ i, MeasurableSingletonClass (Y i)]
-    (φ : ∀ i, X i → (if h : i ∈ F then Y ⟨i,h⟩ else PUnit))
-    (hφ : ∀ i, Measurable (φ i)) :
-    True := by
-  trivial
-
 #print axioms Nightfall.InfinitePiQ2OriginalLabelSupportedBound.supported_table_bound_from_original_ae
 
 end Nightfall.InfinitePiQ2OriginalLabelSupportedBound
