@@ -1,0 +1,175 @@
+{
+  "schema": "nightfall.theory-evidence-links.v1",
+  "snapshot": "2026-11-17",
+  "editorial_notice": "This is an explicit crosswalk, NOT a proof certificate, identity claim, priority decision, or automatic promotion. Registries supply current site-published metadata; compiler receipt records remain scoped and historical until replayed.",
+  "registry_files": {
+    "active": "active-proof-passport.json",
+    "overlay": "lean-proof-passport-overlay.json",
+    "provenance": "lean-certificate-provenance.json",
+    "historical": "research-registry.js"
+  },
+  "toolchain": {
+    "lean": "leanprover/lean4:v4.36.0-rc2",
+    "mathlib_commit": "9d581dfff2e41de989072ea63abf3daf69311520",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ]
+  },
+  "bindings": {
+    "q2-finite": {
+      "active": [
+        "q2-influence"
+      ],
+      "certificates": [
+        "finite-heterogeneous-c105",
+        "finite-supported-c105"
+      ],
+      "note": "The current active passport describes the finite common-alphabet source theorem. The heterogeneous-type native theorems below are separate, scope-limited source certificates."
+    },
+    "q2-l2": {
+      "active": [
+        "q2-influence"
+      ],
+      "certificates": [
+        "source-all-l2-intertwining",
+        "source-residual-transfer"
+      ],
+      "note": "Related Q2 family only; finite scalar Q2 and an all-L² operator identity are different statements."
+    },
+    "q2-infinite": {
+      "active": [
+        "q2-influence"
+      ],
+      "overlay": [
+        "q2-infinite-integration"
+      ],
+      "certificates": [
+        "conditional-infinite-limit"
+      ],
+      "note": "The Lean limit theorem is CONDITIONAL on finite-information bounds. Neither it nor the linked passport certifies the unconditional infinite product inequality."
+    },
+    "palette": {
+      "active": [
+        "finite-palette-recovery"
+      ]
+    },
+    "spectral": {
+      "active": [
+        "universal-spectral"
+      ]
+    },
+    "oracles": {
+      "active": [
+        "phase-block"
+      ],
+      "note": "A related specialized finite-oracle example, not a certificate for same-oracle universal complexity."
+    },
+    "sidon30": {
+      "historical": [
+        "sidon30"
+      ]
+    },
+    "overlap": {
+      "historical": [
+        "erdos36"
+      ]
+    },
+    "optimum": {
+      "historical": [
+        "erdos-dual-ceiling"
+      ],
+      "note": "A finite row-wise ceiling is not a matching global continuum lower bound."
+    },
+    "werner": {
+      "historical": [
+        "werner"
+      ],
+      "note": "The historical finite-copy passport and later unrestricted continuation concern related but non-equivalent statements."
+    },
+    "asua": {
+      "historical": [
+        "asua-collateral"
+      ]
+    },
+    "permission": {
+      "active": [
+        "semantic-fencing-authority"
+      ],
+      "note": "Source-fencing examples are relevant but do not certify an end-to-end minimum-price permission theorem."
+    },
+    "effect": {
+      "active": [
+        "scif-incremental-recertification",
+        "conditional-agent-safety"
+      ],
+      "note": "Separate conditional/finite authority and safety lemmas are context; no complete effect-time production assurance follows."
+    },
+    "receipts": {
+      "note": "Open the full registries below; certificate provenance is a source-custody system, not proof promotion."
+    },
+    "passport": {
+      "note": "Full active and historical registries below supply the authoritative passport records."
+    },
+    "closure": {
+      "overlay": [
+        "q2-infinite-integration"
+      ],
+      "note": "A global end-to-end theorem remains open despite individual component certificates."
+    }
+  },
+  "certificates": [
+    {
+      "id": "finite-heterogeneous-c105",
+      "node": "q2-finite",
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2NativeHeterogeneousTerminal.lean",
+      "sha": "b1e9f129b5636cbe5132f0c77baa65ef39149eca",
+      "declaration": "Nightfall.InfinitePiQ2NativeHeterogeneousTerminal.native_heterogeneous_q2_105416_unconditional",
+      "run": 44094971286,
+      "pr": 702,
+      "scope": "Finite coordinate index, finite heterogeneous native alphabets, original-law C105.416 theorem; pointwise native hypotheses."
+    },
+    {
+      "id": "finite-supported-c105",
+      "node": "q2-finite",
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2NativeSupportedTerminal.lean",
+      "sha": "13205ce8ab03d16ae79cefad4fcd962241ab35a8",
+      "declaration": "Nightfall.InfinitePiQ2NativeSupportedTerminal.native_heterogeneous_q2_105416_supported_unconditional",
+      "run": 44124722630,
+      "pr": 740,
+      "scope": "Finite native table C105.416 bound with hypotheses restricted to strictly positive original-source support; no atom floor."
+    },
+    {
+      "id": "source-all-l2-intertwining",
+      "node": "q2-l2",
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2AllL2LabelIntertwining.lean",
+      "sha": "bb5bb0d5728cc4cac8e41c0221c5d2447089ee13",
+      "declaration": "Nightfall.InfinitePiQ2AllL2LabelIntertwining.sourceOtherProjectionCLM_intertwines_all_L2",
+      "run": 44129193199,
+      "pr": 753,
+      "scope": "All-L² original-source/label heat-bath intertwining on a finite refreshed label alphabet; not the final Q2 inequality."
+    },
+    {
+      "id": "source-residual-transfer",
+      "node": "q2-l2",
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2OriginalLabelResidualTransfer.lean",
+      "sha": "7e74291d5ad87be78113d67bf60476ad5b40fed8",
+      "declaration": "Nightfall.InfinitePiQ2OriginalLabelResidualTransfer.source_label_projection_residual_norm_le",
+      "run": 44133001342,
+      "pr": 756,
+      "scope": "Genuine source residual contraction and degree-two preservation for finite-label projections; not an unconditional infinite-product bound."
+    },
+    {
+      "id": "conditional-infinite-limit",
+      "node": "q2-infinite",
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2Limit.lean",
+      "sha": "550b5f0596b1e0d81e2516c12f9df1d3c18c13b1",
+      "declaration": "Nightfall.InfinitePiQ2Limit.source_q2_quadratic_limit",
+      "run": 44027853225,
+      "pr": 696,
+      "scope": "Conditional arbitrary-index variance limit assuming uniform source finite-information Q2 bounds. Does NOT supply those bounds.",
+      "conditional": true
+    }
+  ]
+}
