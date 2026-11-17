@@ -16,6 +16,8 @@ identification for arbitrary f.
 
 namespace Nightfall.InfinitePiQ2ConditionalSourceTest
 
+set_option maxHeartbeats 1200000
+
 open MeasureTheory ProbabilityTheory
 open Nightfall.InfinitePiQ2InfluenceStability
 open Nightfall.InfinitePiQ2OriginalIndependence
@@ -78,27 +80,30 @@ theorem source_condExp_coordinate_test
       =ᵐ[Measure.infinitePi μ]
         (fun _ : (j : ι) → X j => ∫ a : X i, h a ∂ μ i) := by
   let e : ((j : ι) → X j) → X i := fun x => x i
-  let m₁ : MeasurableSpace ((j : ι) → X j) :=
-    MeasurableSpace.comap e (inferInstance : MeasurableSpace (X i))
-  let m₂ : MeasurableSpace ((j : ι) → X j) :=
-    sourceOtherSigma (X := X) i
-  have hmeval :
-      Measurable e := by fun_prop
+  have hmeval : Measurable e := by
+    dsimp [e]
+    fun_prop
   have h₁ :
-      m₁ ≤ (inferInstance : MeasurableSpace ((j : ι) → X j)) := by
-    exact hmeval.comap_le
+      MeasurableSpace.comap e (inferInstance : MeasurableSpace (X i)) ≤
+        (inferInstance : MeasurableSpace ((j : ι) → X j)) := hmeval.comap_le
   have h₂ :
-      m₂ ≤ (inferInstance : MeasurableSpace ((j : ι) → X j)) :=
+      sourceOtherSigma (X := X) i ≤
+        (inferInstance : MeasurableSpace ((j : ι) → X j)) :=
     sourceOtherSigma_le (X := X) i
   have hstrong :
-      StronglyMeasurable[m₁]
-        (fun x : (j : ι) → X j => h (x i)) := by
+      StronglyMeasurable[MeasurableSpace.comap e
+        (inferInstance : MeasurableSpace (X i))]
+        (sourceOneCoordTest i h) := by
+    change StronglyMeasurable[MeasurableSpace.comap e
+        (inferInstance : MeasurableSpace (X i))] (fun x => h (e x))
     exact (hh.comp (comap_measurable e)).stronglyMeasurable
-  have hind : Indep m₁ m₂ (Measure.infinitePi μ) := by
+  have hind : Indep
+      (MeasurableSpace.comap e (inferInstance : MeasurableSpace (X i)))
+      (sourceOtherSigma (X := X) i) (Measure.infinitePi μ) := by
     exact source_coordinate_other_sigma_indep μ i
   have heq := condExp_indep_eq h₁ h₂ hstrong hind
   have hint := original_source_coordinate_integral μ i h hh
-  simpa only [e, m₁, m₂, sourceOneCoordTest, hint] using heq
+  simpa only [e, sourceOneCoordTest, hint] using heq
 
 /-- Pull-out of an independent site factor, a reusable operator law
 for finite-table indicator products. No independent-expectation oracle. -/
