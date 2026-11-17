@@ -12,6 +12,12 @@ on:
       - 'scripts/check_nightfall_integrated_axioms.py'
       - '.github/workflows/nightfall-integrated-lake.yml'
   workflow_dispatch:
+    inputs:
+      paranoid:
+        description: 'Also replay via every bundled independent checker (resource intensive)'
+        type: boolean
+        required: false
+        default: false
 permissions:
   contents: read
 concurrency:
@@ -50,6 +56,19 @@ jobs:
           git rev-parse HEAD > lean-receipts/integrated/repo-head.txt
           git -C .lake/packages/mathlib rev-parse HEAD > lean-receipts/integrated/mathlib-head.txt
           sha256sum Nightfall/Main.lean Nightfall/Targets.lean Nightfall/Core.lean lakefile.toml > lean-receipts/integrated/source-sha256.txt
+      - name: Replay complete selected Lake project through the kernel
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake check 2>&1 | tee lean-receipts/integrated/lake-check.log
+          printf '%s\n' 'LAKE_CHECK_STANDARD_AXIOMS_PASS' > lean-receipts/integrated/lake-check-status.txt
+      - name: Optional cross-kernel paranoid replay of the same source graph
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.paranoid == true }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake check --paranoid 2>&1 | tee lean-receipts/integrated/lake-paranoid.log
+          printf '%s\n' 'LAKE_PARANOID_ALL_BUNDLED_CHECKERS_PASS' > lean-receipts/integrated/lake-paranoid-status.txt
       - name: Preserve full dependency-build evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
