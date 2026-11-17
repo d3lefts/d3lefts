@@ -30,8 +30,19 @@
     "kernel_replay": {
       "ordinary": "lake check",
       "multiple_kernel": "lake check --paranoid",
-      "status": "requires actual pinned Lake CI receipt for named imported source graph",
-      "claim_boundary": "Independent kernel replay validates formal derivations, not mathematical statement equivalence or real-world authority; no automatic promotion."
+      "status": "Selected Q2 103-source lake check PASS on PR #696 exact head, run 44027853225; multi-kernel paranoid replay not yet certified; F9 not in selected closure",
+      "claim_boundary": "Independent kernel replay validates formal derivations, not mathematical statement equivalence or real-world authority; no automatic promotion.",
+      "selected_lake_receipt": {
+        "pr": 696,
+        "head": "a5770989b9e6e3234c750f8c0d9228802cb088f7",
+        "merge_commit": "06a4eb403b7c7c5c9f62660848803e1d91ab0a70",
+        "run": 44027853225,
+        "build": "passed",
+        "kernel_check": "passed",
+        "paranoid": "not_run",
+        "source_coverage": "103 selected Lean source modules",
+        "conditional_theorem_only": true
+      }
     }
   },
   "registries": {
@@ -82,22 +93,23 @@
       "id": "q2-infinite-integration",
       "program": "nightfall",
       "passport_id": "q2-influence",
-      "source_location": "pr-head",
-      "source_path": null,
-      "git_blob_sha1": null,
-      "theorem_declaration": null,
+      "source_location": "main",
+      "source_path": "research/nightfall/formalization/universal/InfinitePiQ2Limit.lean",
+      "git_blob_sha1": "550b5f0596b1e0d81e2516c12f9df1d3c18c13b1",
+      "theorem_declaration": "Nightfall.InfinitePiQ2Limit.source_q2_quadratic_limit",
       "candidate_source_path": "Nightfall/Main.lean",
       "evidence": {
         "pr": 696,
-        "ci_run": 44023827988,
-        "head": "90853957ec9b743f29bcb84566e9f2ff1d0859d4",
-        "interpretation": "verified PR-head 103-source selected Lake dependency build, not an unconditional infinite-product terminal"
+        "ci_run": 44027853225,
+        "head": "a5770989b9e6e3234c750f8c0d9228802cb088f7",
+        "merge_sha": "06a4eb403b7c7c5c9f62660848803e1d91ab0a70",
+        "interpretation": "Main-merged selected 103-source Q2 closure: pinned Lake build and Lean-kernel lake check PASS. Imported original infinite-product limit remains conditional on finite-information inequalities; not an unconditional Q2 result."
       },
       "gates": {
-        "package": "pr_head_receipt_referenced",
-        "build": "pr_head_receipt_referenced",
-        "inclusion": "open",
-        "axioms": "open",
+        "package": "receipt_referenced",
+        "build": "receipt_referenced",
+        "inclusion": "receipt_referenced",
+        "axioms": "receipt_referenced",
         "statement": "human_review_pending"
       },
       "dependencies": [
@@ -118,31 +130,32 @@
       "novelty_reviewed": false,
       "real_world_authority_verified": false,
       "kernel_replay": {
-        "status": "scheduled_in_PR_696_CI",
-        "gate": "lake check on Nightfall default target; optional paranoid manual run",
-        "review": "do_not_promote_until_same_head_pass_and_unconditional_terminal_exists"
+        "status": "lake_check_receipt_referenced",
+        "gate": "pinned exact PR #696 head run 44027853225; lake check PASS; lake check --paranoid not run",
+        "review": "do_not_promote_to_unconditional_infinite_Q2"
       }
     },
     {
       "id": "f9-adaptive-pr-head",
       "program": "nightfall",
       "passport_id": null,
-      "source_location": "pr-head",
-      "source_path": null,
-      "git_blob_sha1": null,
-      "theorem_declaration": null,
+      "source_location": "main",
+      "source_path": "research/nightfall/formalization/finite_field/F9ActualAdaptiveTerminal.lean",
+      "git_blob_sha1": "b4c5ef516168a56a6c84106b11351007fb05a497",
+      "theorem_declaration": "Nightfall.FiniteField.F9ActualAdaptiveTerminal.actual_adaptive_transcript_injective",
       "candidate_source_path": "research/nightfall/formalization/finite_field/F9ActualAdaptiveTerminal.lean",
       "evidence": {
         "pr": 690,
         "ci_run": 44015925118,
         "head": "3966892d41d63ae65b8710ae7d17d4de2880ecda",
-        "interpretation": "named original branch-head adaptive F9 compiler receipt; present head may differ and main is not promoted"
+        "interpretation": "Merged original-source GF9 all-length actual adaptive transcript theorem; historical strict named pinned Lean run at PR #690 head, not part of 103-source Q2 Lake closure and not generic infinite-field terminal",
+        "merge_sha": "ba5e57cf36e21df8589df82308f9a8be0ecd23d0"
       },
       "gates": {
-        "package": "pr_head_receipt_referenced",
-        "build": "pr_head_receipt_referenced",
-        "inclusion": "open",
-        "axioms": "pr_head_receipt_referenced",
+        "package": "receipt_referenced",
+        "build": "receipt_referenced",
+        "inclusion": "receipt_referenced",
+        "axioms": "receipt_referenced",
         "statement": "human_review_pending"
       },
       "dependencies": [

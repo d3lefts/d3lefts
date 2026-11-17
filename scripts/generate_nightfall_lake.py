@@ -7,6 +7,7 @@ original source files and does not synthesize lemmas or silently omit imports.
 from __future__ import annotations
 
 import argparse
+import json
 from collections import defaultdict
 from pathlib import Path
 import re
@@ -24,7 +25,16 @@ EXTERNAL_PREFIXES = (
     "Cli", "ProofWidgets", "Plausible", "LeanSearchClient",
     "ImportGraph", "Lake",
 )
-MATHLIB_COMMIT = "9d581dfff2e41de989072ea63abf3daf69311520"
+# The active Mathlib revision comes from the same lock as the shared Lean CI action.
+# Historical source receipts are intentionally not migrated by this generator.
+def locked_mathlib_commit() -> str:
+    lock = json.loads((ROOT / "docs/lean-compiler-lock.json").read_text(encoding="utf-8"))
+    if lock.get("schema") != "nightfall-lean-compiler-lock/v1":
+        raise RuntimeError("Unknown Lean compiler lock schema")
+    commit = lock.get("mathlib_commit")
+    if not isinstance(commit, str) or not re.fullmatch(r"[a-f0-9]{40}", commit):
+        raise RuntimeError("Mathlib Git commit absent from compiler lock")
+    return commit
 
 
 def discover() -> tuple[dict[str, Path], dict[str, set[str]]]:
@@ -99,7 +109,7 @@ defaultTargets = ["Nightfall"]
 [[require]]
 name = "mathlib"
 scope = "leanprover-community"
-rev = "'''+MATHLIB_COMMIT+'''"
+rev = "'''+locked_mathlib_commit()+'''"
 
 [[lean_lib]]
 name = "Nightfall"

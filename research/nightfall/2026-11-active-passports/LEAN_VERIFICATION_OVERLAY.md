@@ -1,6 +1,6 @@
 # Lean community five-gate Proof Passport overlay
 
-**Status:** proposed cross-program verification overlay; not a new mathematical certificate.
+**Status:** active machine-checked evidence overlay, with main-merged 4.36 source certificates; not a new mathematical theorem.
 **Registry:** [docs/lean-proof-passport-overlay.json](../../../docs/lean-proof-passport-overlay.json)
 **Canonical scientific passports:** [docs/active-proof-passport.json](../../../docs/active-proof-passport.json)
 **External verification standard:** https://leanprover-community.github.io/did_you_prove_it.html
@@ -24,8 +24,8 @@ The overlay records *receipt references* without converting them into live same-
 | Evidence record | Present scope | Review and promotion boundary |
 |---|---|---|
 | `q2-finite-current` | Original-source finite Q2 at the exact C105.416 coefficient, merged source blob and named strict kernel receipt | Independent mathematical statement review open; NOT arbitrary infinite product |
-| `q2-infinite-integration` | PR #696: 103-source pinned Lake **selected import** build | No unconditional infinite terminal; original-source conditional-expectation/intertwining, bounded fiber mean, degree transfer and exact statement bridge open |
-| `f9-adaptive-pr-head` | PR #690: strict named all-length F9 transcript certificate at its original checked head | PR-only, not a generic infinite-field theorem and no promotion to main |
+| `q2-infinite-integration` | **Merged PR #696**, 103-source Lean 4.36 selected Lake dependency build, four named foundational-axiom audits, and actual `lake check` kernel replay **PASS** (run #44027853225) | The imported infinite L² limit remains conditional; no unconditional infinite terminal, field-statement review, or paranoid multi-kernel pass |
+| `f9-adaptive-pr-head` | **Merged PR #690**: source-closed all-length GF(9) adaptive transcript declaration with pinned named Lean receipt | On main, but outside the selected 103-source Q2 Lake closure; not the generic infinite-field terminal and no independent statement review |
 | `commonwealth-abstract-authority` | PR #613 finite/abstract possible-world Lean model, exact theorem contract | Not proof of legal truth, authenticated evidence, complete physical mediation, or live authority |
 
 ### Proof dependency graph
@@ -64,14 +64,15 @@ node scripts/check_lean_proof_passport_overlay.cjs
 node scripts/test_active_proof_passport.cjs
 ```
 
-These checks run in the existing `.github/workflows/nightfall-active-passports.yml`. Keep them distinct from the actual `lake build`, pinned named `lean_bridge.py`, exact theorem-contract and standard-axiom CI receipts. The PR #696 integrated Lake build is a separate proof-engineering gate and remains source-specific.
+These checks run in the existing `.github/workflows/nightfall-active-passports.yml`. Keep them distinct from the actual `lake build`, pinned named `lean_bridge.py`, exact theorem-contract and standard-axiom CI receipts. Merged PR #696's Lake build and official kernel replay have a separate, source-scoped CI receipt. Their proof content is conditional for infinite-product Q2.
 
 ### Negative tests
 
 The checker deliberately rejects:
 - Replacing the merged finite Q2 source identity with an unverified blob.
 - Marking an open infinite-product terminal as fully certified.
-- Treating an unmerged PR-head proof source as a verified main-source declaration.
+- Falsely claiming a `lake check --paranoid` result without a receipt.
+- Relabeling the imported conditional infinite-product theorem as a nonexistent unconditional terminal.
 
 ## Review and stop rule
 
@@ -107,12 +108,14 @@ certificate for a new toolchain.
 
 ## New independent-kernel certification gate
 
-The currently separate PR #696 integrated Lake closure adds the actual
-`lake check` command after `lake build Nightfall`; an optional
-`lake check --paranoid` invokes the bundled independent kernel
-implementations. Until the **same head** of that PR passes, the overlay
-records this gate as scheduled rather than complete. A passing check
-never closes absent mathematical premises or the expert statement audit.
+Merged PR #696 added an actual `lake check` after `lake build Nightfall`.
+Both PASS at exact source head `a5770989b9e6e3234c750f8c0d9228802cb088f7`
+in GitHub Actions run `44027853225`; merge commit
+`06a4eb403b7c7c5c9f62660848803e1d91ab0a70`. This certifies only
+the selected 103-source import graph. `lake check --paranoid` is
+optional and has **no passing recorded result**. No kernel result closes
+an absent mathematical premise or substitutes for expert statement audit.
+See `docs/lean-compiler-settings.md` for current root tools and historical versions.
 
 Official reference:
 https://lean-lang.org/doc/reference/latest/releases/v4.35.0/

@@ -2,6 +2,22 @@
 
 This is an **interface to the official Lean 4 compiler and kernel**, not a new implementation of Lean or a proof synthesizer. It lets ChatGPT/Claude agent workspaces, local machines, Codespaces, and GitHub Actions use the **same checked-in toolchain and receipt format**. The repository currently pins `leanprover/lean4:v4.36.0-rc2` in `lean-toolchain`, with Mathlib commit `9d581dfff2e41de989072ea63abf3daf69311520`. The shared [setup action](../../../.github/actions/setup-nightfall-lean/action.yml) checks these exact versions; historical compiler receipts remain tied to their original pins.
 
+## Unified root Lake package and source-preserving certification
+
+Merged [PR #696](https://github.com/d3lefts/d3lefts/pull/696) introduces a single root Lake package for a **selected 103-source Q2 import closure**. At Lean 4.36.0-rc2, [strict run 44027853225](https://github.com/d3lefts/d3lefts/actions/runs/44027853225) passed `lake build Nightfall`, four named `#print axioms` audits, and `lake check` independent Lean kernel replay. This does not include every file in the research archive, is not a `lake check --paranoid` certificate, and does not close the unconditional infinite-product theorem. Its imported L² limit still has explicit finite-information premises.
+
+The active compiler pin is now source-controlled via [`docs/lean-compiler-lock.json`](../../../docs/lean-compiler-lock.json); [`docs/lean-compiler-settings.md`](../../../docs/lean-compiler-settings.md) documents local setup, current CI, multi-kernel replay, and the immutable historical 4.33/4.35 receipts. `scripts/generate_nightfall_lake.py` obtains Mathlib from this lock, and the shared action verifies the installed compiler Git source commit.
+
+```sh
+python3 scripts/check_nightfall_compiler_lock.py --checkout .
+python3 scripts/audit_active_lean_436.py
+python3 scripts/generate_nightfall_lake.py --check
+lake update
+lake exe cache get
+lake build Nightfall
+lake check
+```
+
 ## Local and agent sandbox use
 
 Install the [official `elan` toolchain manager](https://lean-lang.org/doc/reference/latest/Build-Tools-and-Distribution/Managing-Toolchains-with-Elan/), then in the repository run:

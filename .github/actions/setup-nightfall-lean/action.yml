@@ -1,29 +1,43 @@
 name: Setup NIGHTFALL pinned Lean/Mathlib
-description: Verify Lean 4.36.0-rc2 and immutable Mathlib v4.36.0-rc2 commit, then reuse its cache
+description: Resolve the checked-in Lean 4.36 compiler lock, verify compiler Git source and Mathlib commit, and reuse exact-pin cache
 runs:
   using: composite
   steps:
-    - name: Verify repository Lean compiler lock before installation
+    - name: Resolve and verify active compiler lock
       shell: bash
-      run: python3 scripts/check_nightfall_compiler_lock.py --checkout "$GITHUB_WORKSPACE"
-    - name: Install pinned Lean via elan
+      run: |
+        set -euo pipefail
+        python3 scripts/check_nightfall_compiler_lock.py --checkout "$GITHUB_WORKSPACE"
+        python3 - <<'PY' >> "$GITHUB_ENV"
+        import json
+        from pathlib import Path
+        lock = json.loads(Path("docs/lean-compiler-lock.json").read_text(encoding="utf-8"))
+        for key, value in {
+            "NIGHTFALL_LEAN_TOOLCHAIN": lock["toolchain"],
+            "NIGHTFALL_LEAN_COMMIT": lock["lean_source_commit"],
+            "NIGHTFALL_MATHLIB_TAG": lock["mathlib_tag"],
+            "NIGHTFALL_MATHLIB_COMMIT": lock["mathlib_commit"],
+        }.items():
+            print(f"{key}={value}")
+        PY
+    - name: Install source-pinned Lean via elan
       shell: bash
       run: |
         set -euo pipefail
         curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/nightfall-elan-init.sh
-        sh /tmp/nightfall-elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.36.0-rc2
+        sh /tmp/nightfall-elan-init.sh -y --no-modify-path --default-toolchain "$NIGHTFALL_LEAN_TOOLCHAIN"
         echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
         "$HOME/.elan/bin/lean" --version | tee /tmp/nightfall-lean-version.txt
-        grep -F 'version 4.36.0-rc2' /tmp/nightfall-lean-version.txt
-        grep -F 'b35cb10cf2ced51a2fd1880cfdbf75c71ab7a35a' /tmp/nightfall-lean-version.txt
+        grep -F "version ${NIGHTFALL_LEAN_TOOLCHAIN#leanprover/lean4:v}" /tmp/nightfall-lean-version.txt
+        grep -F "$NIGHTFALL_LEAN_COMMIT" /tmp/nightfall-lean-version.txt
     - name: Clone exact pinned Mathlib
       shell: bash
       run: |
         set -euo pipefail
-        git clone --depth 1 --branch v4.36.0-rc2 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4
-        test "$(git -C /tmp/mathlib4 rev-parse HEAD)" = 9d581dfff2e41de989072ea63abf3daf69311520
-        test "$(cat /tmp/mathlib4/lean-toolchain)" = leanprover/lean4:v4.36.0-rc2
-    - name: Verify installed compiler Git revision and pinned Mathlib
+        git clone --depth 1 --branch "$NIGHTFALL_MATHLIB_TAG" https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4
+        test "$(git -C /tmp/mathlib4 rev-parse HEAD)" = "$NIGHTFALL_MATHLIB_COMMIT"
+        test "$(cat /tmp/mathlib4/lean-toolchain)" = "$NIGHTFALL_LEAN_TOOLCHAIN"
+    - name: Independently verify installed compiler and Mathlib source identity
       shell: bash
       run: |
         set -euo pipefail
@@ -35,17 +49,17 @@ runs:
       id: mathlib-cache
       with:
         path: /tmp/mathlib4/.lake
-        key: ${{ runner.os }}-nightfall-lean-v4360rc2-mathlib-9d581dfff2e41de989072ea63abf3daf69311520-v2
+        key: ${{ runner.os }}-nightfall-${{ env.NIGHTFALL_MATHLIB_TAG }}-mathlib-${{ env.NIGHTFALL_MATHLIB_COMMIT }}-v3
     - name: Fetch pinned Mathlib artifacts on cache miss
       if: steps.mathlib-cache.outputs.cache-hit != 'true'
       shell: bash
       run: |
         set -euo pipefail
         (cd /tmp/mathlib4 && "$HOME/.elan/bin/lake" exe cache get)
-    - name: Verify Mathlib dependency pin and restored artifacts
+    - name: Verify pinned Mathlib and artifacts after cache restore
       shell: bash
       run: |
         set -euo pipefail
-        test "$(git -C /tmp/mathlib4 rev-parse HEAD)" = 9d581dfff2e41de989072ea63abf3daf69311520
-        test "$(cat /tmp/mathlib4/lean-toolchain)" = leanprover/lean4:v4.36.0-rc2
+        test "$(git -C /tmp/mathlib4 rev-parse HEAD)" = "$NIGHTFALL_MATHLIB_COMMIT"
+        test "$(cat /tmp/mathlib4/lean-toolchain)" = "$NIGHTFALL_LEAN_TOOLCHAIN"
         test -f /tmp/mathlib4/.lake/build/lib/lean/Mathlib.olean

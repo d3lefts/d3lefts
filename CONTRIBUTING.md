@@ -4,6 +4,12 @@ NIGHTFALL welcomes exact reproductions, proof criticism, source corrections, res
 
 Research is directed by Devin J. Wright and is substantially AI-assisted. Internal model agreement is not independent external peer review. A passing test certifies only its stated scope.
 
+## Active Lean 4.36 certification
+
+New formalization and current-source CI changes must use the [canonical compiler lock](docs/lean-compiler-lock.json) and [reproduction guide](docs/lean-compiler-settings.md): Lean `4.36.0-rc2` and exact pinned Mathlib, checked via the shared `setup-nightfall-lean` action. Reuse the generated [Lake dependency manifest](lakefile.toml) and run `python3 scripts/generate_nightfall_lake.py --check`; never hand-edit source imports or historical receipts to make a build pass.
+
+For a named theorem, retain exact source SHA, original definition/hypotheses, `#print axioms`, `lean_bridge.py --strict` receipt, and a scoped independent `lake check` when in a common project. `lake check --paranoid` is a separate, resource-intensive certification that must actually pass before being claimed. Do **not** promote a conditional theorem just because its source graph compiled. Before broadening the compiler pin or using a historical 4.33/4.35 result under 4.36, independently recompile affected sources and issue a new certificate rather than overwriting prior evidence.
+
 ## Scholarly source-of-truth protocol
 
 Use the [paper shelf](papers/README.md) and [canonical claim catalogue](research/catalogue/CLAIMS.json) before introducing a new named mathematical result. A paper entry is an editorial **pointer to the original theorem**; do not copy formal declarations or replace historical source files in order to improve navigation.
