@@ -30,15 +30,6 @@ variable [∀ i, MeasurableSpace (Y i)]
 variable (μ : (i : ι) → Measure (X i))
 variable [∀ i, IsProbabilityMeasure (μ i)]
 
-/-- The coordinatewise source label image has exactly the full
-infinite product of original pushforward marginals as its law. -/
-theorem original_infinite_label_law_exact
-    (φ : ∀ i, X i → Y i)
-    (hφ : ∀ i, Measurable (φ i)) :
-    (Measure.infinitePi μ).map (sourceLabelMap φ) =
-      Measure.infinitePi (fun i => (μ i).map (φ i)) := by
-  exact Measure.infinitePi_map_pi hφ
-
 /-- True original product source to its own original-marginal
 label product is measure preserving, with no probability oracle. -/
 theorem original_infinite_label_measurePreserving
@@ -48,7 +39,7 @@ theorem original_infinite_label_measurePreserving
       (Measure.infinitePi μ)
       (Measure.infinitePi (fun i => (μ i).map (φ i))) := by
   exact ⟨sourceLabelMap_measurable φ hφ,
-    original_infinite_label_law_exact μ φ hφ⟩
+    sourceLabelLaw_exact μ φ hφ⟩
 
 /-- True original L² label pullback, constructed from an independently
 verified measure-preserving map, not passed in as an isometry premise. -/
@@ -87,7 +78,6 @@ theorem original_infinite_label_lift_ae
     (Lp.coeFn_compMeasurePreserving g
       (original_infinite_label_measurePreserving μ φ hφ))
 
-#print axioms Nightfall.InfinitePiQ2GenuineLabelIsometry.original_infinite_label_law_exact
 #print axioms Nightfall.InfinitePiQ2GenuineLabelIsometry.original_infinite_label_measurePreserving
 #print axioms Nightfall.InfinitePiQ2GenuineLabelIsometry.original_infinite_label_lift_norm
 #print axioms Nightfall.InfinitePiQ2GenuineLabelIsometry.original_infinite_label_lift_ae
