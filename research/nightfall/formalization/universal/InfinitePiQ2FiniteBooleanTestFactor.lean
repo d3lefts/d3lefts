@@ -112,7 +112,7 @@ theorem squareCylinder_hasFiniteTests
   classical
   rcases hs with ⟨F, t, ht, rfl⟩
   let test : F → CoordinateTest (X := X) := fun j =>
-    ⟨(j : ι), ⟨t (j : ι), ht (j : ι) j.property⟩⟩
+    ⟨(j : ι), ⟨t (j : ι), ht (j : ι) (Set.mem_univ _)⟩⟩
   let T : Finset (CoordinateTest (X := X)) :=
     Finset.univ.image test
   have hmem (j : F) : test j ∈ T :=
