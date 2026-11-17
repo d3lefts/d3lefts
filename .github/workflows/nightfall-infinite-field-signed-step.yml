@@ -6,6 +6,7 @@ on:
       - 'research/nightfall/formalization/finite_field/InfiniteFieldFixedLower.lean'
       - 'research/nightfall/formalization/finite_field/InfiniteFieldFixedUpper.lean'
       - 'research/nightfall/formalization/finite_field/InfiniteFieldAdaptiveLower.lean'
+      - 'research/nightfall/formalization/finite_field/InfiniteFieldTerminal.lean'
       - '.github/workflows/nightfall-infinite-field-signed-step.yml'
   workflow_dispatch:
 permissions:
@@ -23,9 +24,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for f in InfiniteFieldSignedStep InfiniteFieldFixedLower InfiniteFieldFixedUpper InfiniteFieldAdaptiveLower; do
+          for f in InfiniteFieldSignedStep InfiniteFieldFixedLower InfiniteFieldFixedUpper InfiniteFieldAdaptiveLower InfiniteFieldTerminal; do
             src="research/nightfall/formalization/finite_field/$f.lean"
             ! grep -nE '\\b(sorry|admit)\\b' "$src"
             cp "$src" "/tmp/mathlib4/$f.lean"
-            (cd /tmp/mathlib4 && lake env lean "$f.lean") 2>&1 | tee "/tmp/$f.log"
+            (cd /tmp/mathlib4 && lake env lean -o "$f.olean" "$f.lean") 2>&1 | tee "/tmp/$f.log"
           done
