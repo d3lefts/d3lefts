@@ -5,6 +5,11 @@ on:
     branches: [main]
     paths:
       - 'papers/certifying-algorithms/**'
+      - 'docs/proof-object-passport.json'
+      - 'docs/lean-proof-passport-overlay.json'
+      - 'docs/active-proof-passport.json'
+      - 'scripts/check_proof_object_passport.cjs'
+      - 'scripts/check_lean_proof_passport_overlay.cjs'
       - '.github/workflows/nightfall-gsi-farkas-certificate-lean.yml'
   workflow_dispatch:
 permissions:
@@ -24,6 +29,7 @@ jobs:
       - name: Run model-bound rational checker and mutation tests
         run: |
           set -euo pipefail
+          node scripts/check_proof_object_passport.cjs
           python3 -I papers/certifying-algorithms/check_farkas.py --self-test
           python3 -I papers/certifying-algorithms/check_farkas.py papers/certifying-algorithms/two_source_fence.json
       - name: Setup pinned Lean and Mathlib

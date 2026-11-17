@@ -641,5 +641,13 @@
     "scope": "finite common alphabet source Q2 only; C96 and rank/adaptive separately open",
     "receipt_index": "docs/current-lean-proof-receipts-20261116.json"
   },
-  "lean_community_gate_overlay": "docs/lean-proof-passport-overlay.json"
+  "lean_community_gate_overlay": "docs/lean-proof-passport-overlay.json",
+  "proof_object_certificate_protocol": {
+    "schema": "nightfall.proof-object-passport.v1",
+    "manifest": "docs/proof-object-passport.json",
+    "lean_overlay": "docs/lean-proof-passport-overlay.json",
+    "scope": "Additional exact model-bound certificates; existing active scientific claims and frozen history unchanged",
+    "status": "scoped_source_matched_formal_soundness_only",
+    "no_automatic_promotion": true
+  }
 }

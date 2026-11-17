@@ -7,6 +7,10 @@ on:
       - 'research/nightfall/formalization/product_space/check_receipts.py'
       - 'scripts/test_lean_bridge_v2.py'
       - 'scripts/check_proof_graph.py'
+      - 'scripts/check_proof_object_passport.cjs'
+      - 'docs/proof-object-passport.json'
+      - 'docs/lean-proof-passport-overlay.json'
+      - 'papers/certifying-algorithms/**'
       - 'scripts/check_nightfall_compiler_lock.py'
       - 'scripts/audit_active_lean_436.py'
       - 'docs/lean-compiler-lock.json'
@@ -20,6 +24,10 @@ on:
       - 'research/nightfall/formalization/product_space/check_receipts.py'
       - 'scripts/test_lean_bridge_v2.py'
       - 'scripts/check_proof_graph.py'
+      - 'scripts/check_proof_object_passport.cjs'
+      - 'docs/proof-object-passport.json'
+      - 'docs/lean-proof-passport-overlay.json'
+      - 'papers/certifying-algorithms/**'
       - 'research/nightfall/formalization/compiler/**'
       - '.github/actions/setup-nightfall-lean/**'
       - '.github/workflows/nightfall-lean-bridge-v2.yml'
@@ -66,6 +74,7 @@ jobs:
       - name: Fail-closed bridge and graph mutation controls
         run: |
           set -euo pipefail
+          node scripts/check_proof_object_passport.cjs
           python3 scripts/test_lean_bridge_v2.py
           python3 scripts/check_proof_graph.py --self-test research/nightfall/formalization/compiler/PROOF_GRAPH.json
 

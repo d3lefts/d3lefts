@@ -4,6 +4,9 @@ on:
     paths:
       - 'docs/active-proof-passport.*'
       - 'docs/lean-proof-passport-overlay.json'
+      - 'docs/proof-object-passport.json'
+      - 'scripts/check_proof_object_passport.cjs'
+      - 'papers/certifying-algorithms/**'
       - 'scripts/check_lean_proof_passport_overlay.cjs'
       - 'projects/commonwealth-os/assurance/lean/passport-contract.json'
       - 'docs/*proof-passport.html'
@@ -45,6 +48,7 @@ jobs:
         run: |
           node scripts/test_active_proof_passport.cjs
           node scripts/check_lean_proof_passport_overlay.cjs
+          node scripts/check_proof_object_passport.cjs
           node scripts/test_unrestricted_terminal_passport.cjs
           node scripts/test_lean_certificate_provenance.cjs
           node scripts/test_discovery_system_identity.cjs
