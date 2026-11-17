@@ -1,0 +1,62 @@
+/* Standalone Commonwealth Warrant interface; no external fonts or dependencies. */
+:root{color-scheme:dark;--w-navy:#10243b;--w-night:#091b2e;--w-gold:#dbc18b;--w-muted:#c5cdd4;--w-line:rgba(228,202,150,.36)}
+[hidden]{display:none!important}
+body.cw-warrant{margin:0;background:radial-gradient(circle at 85% -5%,#2f4560,#12263f 39%,#0b1b30 84%);color:#f5ede0;font-family:Georgia,'Times New Roman',serif}
+.cw-warrant .brand{font-family:"Segoe UI",Arial,sans-serif;color:#f3e5ca}.cw-warrant .brand-copy span{font-family:"Segoe UI",Arial,sans-serif;color:var(--w-gold)}
+.cw-warrant .nav{font-family:"Segoe UI",Arial,sans-serif}.cw-warrant .nav-call{background:var(--w-gold);color:#182a3e}
+.cw-warrant-mark{display:inline-grid;place-items:center;width:42px;height:42px;border:1px solid var(--w-gold);color:var(--w-gold);font-size:28px}
+.cw-warrant .wrap{max-width:1150px;margin-left:auto;margin-right:auto}
+.cw-warrant-kicker{font:800 11px/1.45 "Segoe UI",Arial,sans-serif;letter-spacing:.15em;color:var(--w-gold);text-transform:uppercase}
+.cw-warrant-hero{padding-top:clamp(44px,8vw,100px);padding-bottom:50px;display:grid;grid-template-columns:minmax(0,1.55fr) minmax(250px,.7fr);gap:36px;align-items:center}
+.cw-warrant-hero h1{font:normal clamp(64px,10vw,128px)/1 Georgia,serif;letter-spacing:-.06em;margin:10px 0 20px}
+.cw-warrant-hero h1 em{color:var(--w-gold);font-weight:400}
+.cw-warrant-statement{font-size:clamp(23px,3vw,34px);line-height:1.3;margin:0 0 24px}
+.cw-warrant-lede{font:17px/1.65 "Segoe UI",Arial,sans-serif;color:#d0d8df;max-width:680px}
+.cw-warrant-lede strong{color:#f1e6d4}
+.cw-warrant-actions,.cw-warrant-links{display:flex;gap:17px;align-items:center;flex-wrap:wrap;margin-top:27px}
+.cw-warrant a{color:#e8d09e;text-underline-offset:4px}
+.cw-warrant .cw-warrant-primary{display:inline-flex;padding:14px 19px;background:#e6ce9a;color:#162a42;text-decoration:none;font:800 13px "Segoe UI",Arial,sans-serif;letter-spacing:.015em;border:1px solid #e6ce9a}
+.cw-warrant-boundary{font:13px/1.65 "Segoe UI",Arial,sans-serif;color:#bfc9d6;margin-top:27px;max-width:740px}
+.cw-warrant-boundary strong{color:#eacb91}
+.cw-warrant-seal{border:1px solid var(--w-line);background:radial-gradient(circle at center,#344960,#142b45 70%);min-height:330px;display:flex;flex-direction:column;align-items:center;justify-content:space-around;padding:24px;text-align:center}
+.cw-warrant-seal span,.cw-warrant-seal strong,.cw-warrant-seal small{font:700 10px/1.5 "Segoe UI",Arial,sans-serif;letter-spacing:.14em;color:#ead6ac}
+.cw-warrant-seal div{width:172px;height:172px;border:1px solid #a88d65;border-radius:50%;display:grid;place-items:center;color:#e9d4a1;font-size:74px}
+.cw-warrant-layers,.cw-warrant-case,.cw-warrant-guide,.cw-warrant-lineage{padding-top:58px;padding-bottom:54px;border-top:1px solid var(--w-line)}
+.cw-warrant h2{font:normal clamp(29px,4.5vw,46px)/1.12 Georgia,serif;letter-spacing:-.035em;margin:15px 0 28px;max-width:890px}
+.cw-warrant-grid,.cw-warrant-lineage-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.cw-warrant-grid article,.cw-warrant-lineage-grid article{padding:25px;border:1px solid #536476;background:#172e49}
+.cw-warrant-grid article span{color:var(--w-gold);font:800 11px "Segoe UI",Arial,sans-serif;letter-spacing:.12em}
+.cw-warrant-grid article h3,.cw-warrant-lineage-grid article h3{font-size:26px;margin:17px 0 9px;color:#f5e7c9;font-weight:400}
+.cw-warrant-grid article p,.cw-warrant-lineage-grid article p{font:14px/1.7 "Segoe UI",Arial,sans-serif;color:#d0d7de}
+.cw-warrant-grid article small{font:12px/1.5 "Segoe UI",Arial,sans-serif;color:#dfc998}
+.cw-warrant-case-header{display:flex;align-items:center;justify-content:space-between;gap:22px}
+.cw-warrant-case-header>div:first-child{max-width:760px}.cw-warrant-case-header p{color:#d1d8de;font:15px/1.6 "Segoe UI",Arial,sans-serif}
+.cw-warrant-status{border:1px solid #d3b77d;padding:17px 21px;min-width:210px;background:#26334c}
+.cw-warrant-status span,.cw-warrant-status small{display:block;color:#dbcdaf;font:11px/1.6 "Segoe UI",Arial,sans-serif}
+.cw-warrant-status strong{display:block;color:#ffe7b2;font:800 19px/1.55 "Segoe UI",Arial,sans-serif;letter-spacing:.07em}
+.cw-warrant-board{margin-top:24px;border:1px solid #5a6875;background:#f0e9dd;color:#142943}
+.cw-warrant-switch{display:flex;background:#172d49;gap:1px;padding:6px}
+.cw-warrant-switch button{flex:1;min-width:0;padding:15px;background:#223956;border:1px solid #546b85;color:#ecdfcb;font:800 13px "Segoe UI",Arial,sans-serif;cursor:pointer}
+.cw-warrant-switch button[aria-pressed=true]{background:#e3cc9d;color:#17283e}
+.cw-warrant button:focus-visible,.cw-warrant a:focus-visible{outline:3px solid #e7d29d;outline-offset:3px}
+.cw-warrant-view{padding:clamp(20px,4vw,48px)}
+.cw-warrant-view .cw-warrant-kicker{color:#8d6542}
+.cw-warrant-view h3{font:normal clamp(26px,4vw,37px)/1.17 Georgia,serif;max-width:670px;margin:15px 0 30px}
+.cw-warrant-view dl{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cw-warrant-view dl div{border-top:1px solid #aaadae;padding-top:14px}
+.cw-warrant-view dt{font:700 11px/1.45 "Segoe UI",Arial,sans-serif;text-transform:uppercase;letter-spacing:.09em;color:#505965}
+.cw-warrant-view dd{margin:5px 0 0;font:15px/1.6 "Segoe UI",Arial,sans-serif;overflow-wrap:anywhere}
+.cw-warrant-view>p:not(.cw-warrant-kicker){font:14px/1.6 "Segoe UI",Arial,sans-serif;color:#35475c;max-width:780px}
+.cw-warrant-board-footer{border-top:1px solid #c6b99f;padding:17px 25px;font:12px/1.6 "Segoe UI",Arial,sans-serif;color:#39465a}
+.cw-warrant-secondary{cursor:pointer;border:1px solid #344d62;background:#223c56;color:#fff0d5;padding:12px 17px;font:700 13px "Segoe UI",Arial,sans-serif}
+.cw-warrant-recheck-note{font-weight:700!important}
+.cw-warrant-statuses{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.cw-warrant-statuses article{padding:19px;border:1px solid #57677c;background:#152b44;min-width:0}
+.cw-warrant-statuses strong{display:block;color:#ebd3a3;font:700 17px Georgia,serif}
+.cw-warrant-statuses p{color:#d0d8df;font:13px/1.6 "Segoe UI",Arial,sans-serif}
+.cw-warrant-statuses small{color:#c4b18e;font:11px/1.4 "Segoe UI",Arial,sans-serif}
+.cw-warrant-footer{padding:28px 0;border-top:1px solid var(--w-line);font:12px "Segoe UI",Arial,sans-serif;color:#d6d5ce}
+.cw-warrant-footer .wrap{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+@media(max-width:800px){.cw-warrant-hero{grid-template-columns:1fr}.cw-warrant-seal{display:none}.cw-warrant-grid,.cw-warrant-lineage-grid{grid-template-columns:1fr}.cw-warrant-statuses{grid-template-columns:repeat(2,minmax(0,1fr))}.cw-warrant-case-header{align-items:flex-start;flex-direction:column}}
+@media(max-width:550px){.cw-warrant-switch{flex-direction:column}.cw-warrant-view dl{grid-template-columns:1fr}.cw-warrant-statuses{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.cw-warrant *, .cw-warrant *::before,.cw-warrant *::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}

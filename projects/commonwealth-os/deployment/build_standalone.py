@@ -16,6 +16,7 @@ DOCS = ROOT / "docs"
 PACKAGE = Path(__file__).resolve().parent
 ROOT_ASSETS = (
     "commonwealth.html", "commonwealth-os.html", "commonwealth-intelligence.html",
+    "commonwealth-warrant.html", "commonwealth-warrant.css", "commonwealth-warrant.mjs",
     "commonwealth.css", "commonwealth-republic.css", "commonwealth-family.css",
     "commonwealth-os.css", "commonwealth-intelligence.css",
     "commonwealth-shell.css", "commonwealth-shell.js",
@@ -88,7 +89,7 @@ def produce(output: Path, origin: str, research: str, source_ref: str, archive: 
     shutil.copyfile(site / "commonwealth.html", site / "index.html")
     (site / ".nojekyll").write_bytes(b"")
     (site / "robots.txt").write_text("User-agent: *\nAllow: /\nSitemap: " + urljoin(origin, "sitemap.xml") + "\n", encoding="utf-8")
-    pages = ("", "commonwealth-os.html", "commonwealth-intelligence.html",
+    pages = ("", "commonwealth-os.html", "commonwealth-intelligence.html", "commonwealth-warrant.html",
              "commonwealth-browser/index.html", "commonwealth-demos/living-voter.html")
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     for p in pages:
