@@ -16,7 +16,8 @@
       "primary": "research/nightfall/formalization/product_space/ProductInfluence.lean",
       "evidence": [
         "research/nightfall/formalization/product_space/FINITE_PRODUCT_INFLUENCE_PROOF_PASSPORT_20261110.md",
-        "docs/lean-certificate-provenance.json"
+        "docs/lean-certificate-provenance.json",
+        "research/nightfall/2026-11-priority/Q2_PRIORITY_DOSSIER_20261117.md"
       ],
       "dependencies": [],
       "formal": {
@@ -28,6 +29,7 @@
       },
       "claim_scope": "Finite coordinate type; common finite alphabet type, heterogeneous probability tables (including zero mass); bounded indicator-product degree d. Inherited exponent (5/2,6), explicitly weaker numerical coefficient.",
       "open_gates": [
+        "Unverified external-priority lead: two purported Zenodo records (24051767 and 24124921) attributed in the 2026-11-17 dossier to a 2026-11-08 product-measure influence result could not be retrieved or corroborated by exact-title searches. Do not assert publication, precedence, or theorem scope until independently accessible dated metadata and full text permit a source-to-source comparison. Priority remains unresolved",
         "Non-author theorem and priority review",
         "General measurable-product lift not covered by this declaration",
         "The source-matched Lean certificate is historical; the retired dependency-bound CI workflow is no longer active. Recompile and audit the exact declaration under the new Lean 4.36.0-rc2 toolchain before asserting migrated kernel certification."
@@ -187,11 +189,13 @@
         "research/nightfall/observability-publication/SOURCE_ACCESS.md",
         "research/nightfall/formalization/observability/README.md",
         "papers/finite-product-influence/NIGHTFALL_Beyond_Boolean_Cube_v9_2.pdf",
-        "papers/finite-product-influence/V9_2_INTERNAL_REVIEW_20261112.md"
+        "papers/finite-product-influence/V9_2_INTERNAL_REVIEW_20261112.md",
+        "research/nightfall/2026-11-priority/Q2_PRIORITY_DOSSIER_20261117.md"
       ],
       "dependencies": [],
       "claim_scope": "Analytic, not end-to-end Lean: for bounded scalar Hoeffding degree at most two on arbitrary independent products, Var(f)^2 <= K B^2 sup_i I_i(f), K=(10+2sqrt(2))^2(1+sqrt(3))^2=1228.356323837..., improving v7's K=225(1+sqrt(3))^2. A sharper additive-projection range bound is composed with the existing matching/fourth-moment proof. Variance exponent two is optimal. For binary products, classical Grothendieck methods give a stronger coefficient <51; categorical originality review remains open.",
       "open_gates": [
+        "Dated audit 2026-11-17: no prior art found for an alphabet- and atom-independent degree-two exponent-two bound on non-binary products in the checked sources; binary case is classical (Grothendieck); Grothendieck root-sum and decoupling routes have documented obstructions. Priority remains unresolved pending specialist review",
         "Independent non-author check of actual matching coupling, oscillation budgets, greedy Hilbert fourth moment and finite-to-infinite lift",
         "Full-chain Lean certification still absent: named 4B/8B/16B and moment declarations are only sublemmas",
         "Dated scope-matched worldwide prior-art comparison, especially classical bilinear and completely bounded inequalities",
