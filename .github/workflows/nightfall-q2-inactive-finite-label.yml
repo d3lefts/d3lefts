@@ -1,0 +1,52 @@
+name: NIGHTFALL Q2 inactive finite-label original L2 projection
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/universal/InfinitePiQ2InactiveFiniteLabel.lean'
+      - '.github/workflows/nightfall-q2-inactive-finite-label.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  kernel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Rebuild actual original source module closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          for f in InfinitePiQ2Density InfinitePiQ2InfluenceStability InfinitePiQ2InactiveSourceSigma InfinitePiQ2OriginalLabelTransport InfinitePiQ2InactiveFiniteLabel; do
+            src="research/nightfall/formalization/universal/$f.lean"
+            test -f "$src"
+            ! grep -nE '\b(sorry|admit)\b' "$src"
+            cp "$src" "/tmp/mathlib4/$f.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean") 2>&1 | tee "/tmp/$f.log"
+            ! grep -qE "error:|sorryAx" "/tmp/$f.log"
+          done
+      - name: Audit all 5 named source-head kernel declarations
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import re
+          s=open("/tmp/InfinitePiQ2InactiveFiniteLabel.log").read()
+          names=[
+            "sourceOtherProjection_fixes_subSigma_projection",
+            "sourceFiniteLabelSigma_le_coordinate",
+            "sourceFiniteLabelSigma_le_other_of_not_mem",
+            "sourceOtherProjection_fixes_inactive_labelProjection",
+            "sourceCoordinateInfluence_inactive_labelProjection_zero"
+          ]
+          for n in names:
+            theorem="Nightfall.InfinitePiQ2InactiveFiniteLabel."+n
+            m=re.search(re.escape(f"'{theorem}' depends on axioms: [")+r"([^\]]*)\]",s,re.S)
+            assert m is not None, theorem
+            actual={x.strip() for x in m.group(1).split(",")}
+            assert actual <= {"propext","Classical.choice","Quot.sound"},(theorem,actual)
+            print("PASS",theorem,sorted(actual))
+          PY
