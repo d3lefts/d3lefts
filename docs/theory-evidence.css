@@ -1,0 +1,60 @@
+/* Source-bound evidence layer, separate from the curated Theory Atlas map.
+   No visual badge denotes a globally proved result or a live compiler run. */
+.theory-evidence-scopes{margin-top:32px;padding-top:25px;border-top:1px solid #495457}
+.theory-evidence-scopes h4{font:600 10px/1.5 var(--mono);letter-spacing:.09em;color:#e4c79f;margin:0 0 12px}
+.theory-evidence-guard{font-size:11px;line-height:1.65;color:#b2bdb8;margin:0 0 17px}
+.theory-evidence-note{color:#bdc8c5;font-size:12px;line-height:1.65;margin:9px 0}
+.theory-evidence-record{border-top:1px solid #4c5554;padding:16px 0 18px}
+.theory-evidence-record h5{font:500 18px/1.3 var(--sans);overflow-wrap:anywhere;letter-spacing:-.025em;color:#f3eae0;margin:8px 0}
+.theory-evidence-record .theory-evidence-status{font-size:10px;line-height:1.65;color:#dbbc91;overflow-wrap:anywhere}
+.theory-evidence-kind{font:500 9px/1.4 var(--mono);letter-spacing:.1em;color:#b9c3be;text-transform:uppercase}
+.theory-evidence-small{font-size:11px;color:#b8c4c0;line-height:1.7;overflow-wrap:anywhere;margin:8px 0}
+.theory-evidence-warning{border:1px dashed #e0a781;padding:12px 14px;color:#f0c9a7;background:#32282045;margin:9px 0 19px}
+.theory-evidence-warning strong{font:600 10px/1.5 var(--mono);letter-spacing:.06em}
+.theory-evidence-warning .theory-evidence-note{color:#f3d2b0}
+.theory-evidence-certificate{border-color:#857962}
+.theory-evidence-certificate h5{font:500 12px/1.65 var(--mono);color:#ebd3b7;word-break:break-word}
+.theory-evidence-actions{display:flex;flex-wrap:wrap;gap:7px 16px;margin-top:13px}
+.theory-evidence-link{font:500 11px/1.5 var(--sans);color:#f0cb9f!important;text-decoration:underline;text-underline-offset:4px;overflow-wrap:anywhere}
+.theory-evidence-link:hover{color:#ffe5b9!important}
+.theory-evidence-sha{display:block;font:400 10px/1.55 var(--mono);color:#c4d0ce;overflow-wrap:anywhere;margin-top:11px}
+.theory-evidence-certificate-meta{margin:14px 0 0}
+.theory-evidence-certificate-meta>div{border-top:1px solid #344043;padding:8px 0}
+.theory-evidence-certificate-meta dt{font:500 9px/1.5 var(--mono);color:#bea688;letter-spacing:.05em}
+.theory-evidence-certificate-meta dd{margin:4px 0 0;font:400 10px/1.5 var(--mono);color:#d9dfdb;word-break:break-word}
+.theory-registers{padding-top:108px;padding-bottom:108px;border-bottom:1px solid #424d50}
+.theory-register-status{display:flex;flex-direction:column;gap:6px;border:1px solid #59615c;background:#182225;padding:22px 24px;margin:25px 0}
+.theory-register-status strong{font:500 12px/1.65 var(--mono);color:#e8ceaa}
+.theory-register-status strong[data-complete=false]{color:#f3ab91}
+.theory-register-status p{font-size:12px;line-height:1.65;color:#adbab4}
+.theory-register-tools{display:flex;align-items:end;flex-wrap:wrap;gap:15px 24px;margin:28px 0}
+.theory-register-tools label{display:grid;gap:10px;flex:1 1 300px;font:500 10px/1.45 var(--mono);letter-spacing:.08em;color:#c3cabf}
+.theory-register-tools input{max-width:680px;padding:14px;background:#152022;border:1px solid #697675;color:#e3dfd4;font:400 14px var(--sans);border-radius:0}
+.theory-register-tools>a{padding:10px 0;text-decoration:underline;text-underline-offset:4px;color:#eac99f;font-size:12px}
+.theory-register-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border:1px solid #465457}
+.theory-register-tabs button{background:#111b1d;color:#bbc5c1;border:0;border-right:1px solid #465457;padding:15px 12px;text-align:left;font:500 10px/1.5 var(--mono);letter-spacing:.04em}
+.theory-register-tabs button:last-child{border-right:0}
+.theory-register-tabs button[aria-pressed=true]{background:#2d3533;color:#f4d3a9;box-shadow:inset 0 -3px 0 #e1bd91}
+.theory-register-tabs button:hover{color:#fff}
+.theory-register-count{font:400 11px/1.5 var(--mono);color:#bdc7c1;margin:20px 0}
+.theory-register-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:#445052;border:1px solid #445052}
+.theory-register-results>p{grid-column:1/-1;margin:0;padding:26px;color:#c9d2cd;background:#10191b}
+.theory-catalog-item{padding:21px 18px;background:#111a1c;min-width:0}
+.theory-catalog-item h4{font:400 24px/1.16 var(--serif);letter-spacing:-.015em;margin:10px 0;color:#f2ede3;overflow-wrap:anywhere}
+.theory-catalog-item .theory-evidence-status{font:500 10px/1.6 var(--mono);color:#d3af86;overflow-wrap:anywhere}
+.theory-catalog-item .theory-evidence-small{font-size:12px;line-height:1.7;max-height:140px;overflow:auto}
+.theory-catalog-item .theory-evidence-actions{margin-top:16px}
+.theory-catalog-item .theory-evidence-sha{font-size:9px}
+.theory-evidence-limitation{font:500 10px/1.5 var(--mono);color:#f3b69c;margin-top:10px}
+.theory-register-boundary{margin:20px 0 0;color:#aeb9b5;font-size:12px;line-height:1.7;max-width:800px}
+@media (max-width:1100px){
+  .theory-register-results{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:680px){
+  .theory-registers{padding-top:75px;padding-bottom:75px}
+  .theory-register-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .theory-register-tabs button:nth-child(2){border-right:0}
+  .theory-register-tabs button:nth-child(-n+2){border-bottom:1px solid #465457}
+  .theory-register-results{grid-template-columns:1fr}
+  .theory-catalog-item{padding:19px 16px}
+}
