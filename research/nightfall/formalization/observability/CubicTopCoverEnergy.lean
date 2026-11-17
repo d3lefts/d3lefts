@@ -51,12 +51,14 @@ theorem covered_energy_le_sum_influences
             calc
               w S = (if i ∈ S then w S else 0) := by simp [hiS]
               _ ≤ ∑ i ∈ H, if i ∈ S then w S else 0 := by
-                apply Finset.single_le_sum
-                · intro j hj hji
+                have hn : ∀ j ∈ H, 0 ≤ (if j ∈ S then w S else 0) := by
+                  intro j hj
                   by_cases hjS : j ∈ S
                   · simpa [hjS] using hw S
                   · simp [hjS]
-                · exact hiH
+                exact Finset.single_le_sum
+                  (s := H) (f := fun j => if j ∈ S then w S else 0)
+                  hn hiH
           · rw [if_neg hS]
             apply Finset.sum_nonneg
             intro j hj
