@@ -30,8 +30,11 @@ test("Two self-contained working interfaces are linked from an accessible produc
  assert.match(page,/<title>Commonwealth OS/);
  assert.match(page,/name="description"/);
  assert.match(page,/rel="canonical"/);
- assert.match(page,/site.js/);
+ assert.match(page,/commonwealth-shell.js/);
  assert.match(page,/commonwealth.css/);
+ assert.match(page,/commonwealth-shell.css/);
+ assert.doesNotMatch(page,/<script src="site.js"/);
+ assert.doesNotMatch(page,/href="site.css"/);
  for(const route of ["commonwealth-demos/living-voter.html","commonwealth-browser/index.html"]){
   assert.ok(existsSync(join("docs",route)),"missing iframe source "+route);
   assert.ok(page.includes('src="'+route+'"'),"missing live iframe "+route);
