@@ -1,7 +1,7 @@
-# Integrated Lake migration checkpoint (draft)
+# Integrated Lean 4.36 Lake source-closure checkpoint
 
 The purpose is to remove ambiguity between individually compiled claims and
-one actual Lean dependency build. This draft introduces a **single Lake package**
+one actual Lean dependency build. This mainline checkpoint provides a **single Lake package**
 pinned to Lean 4.36.0-rc2 and Mathlib commit
 `9d581dfff2e41de989072ea63abf3daf69311520`.
 
@@ -41,15 +41,23 @@ residual degree predicate is not yet proved equivalent to `ESDegreeLE`.
 
 ## Certification status
 
-**Integrated compilation verified for the selected 103-source closure** by strict pinned CI run 44023827988 (branch commit 90853957ec9b743f29bcb84566e9f2ff1d0859d4). The four named terminal/conditional axiom audits reported only `propext`, `Classical.choice`, and `Quot.sound`. The generated closure is now checked in and CI enforces exact match against the original sources. Remaining infinite-product bridging and human statement review are expressly open.
+**Integrated compilation and independent Lean-kernel replay verified for the selected 103-source closure** by strict pinned CI run [44027853225](https://github.com/d3lefts/d3lefts/actions/runs/44027853225), exact source head `a5770989b9e6e3234c750f8c0d9228802cb088f7`, merged in PR #696 at `06a4eb403b7c7c5c9f62660848803e1d91ab0a70`. The four named terminal/conditional axiom audits reported only `propext`, `Classical.choice`, and `Quot.sound`. The generated closure is now checked in and CI enforces exact match against the original sources. Remaining infinite-product bridging and human statement review are expressly open.
 
-**Scope is not unconditional infinite-product Q2.** The local environment that prepared this
-scaffold has no Lean executable. A passing build would prove only that
-these named modules and their transitive dependencies compiled together
-at one pin, and that the listed theorem axiom sets were acceptable.
-It would not prove the infinite-product Q2 target, originality, or external
-peer review. Do not merge this draft until the build is green and its
-dependency and statement scope has been inspected.
+**Scope remains conditional for infinite-product Q2.** The successful
+`lake build Nightfall` and `lake check` establish a shared, source-closed
+compilation and an independent kernel replay at the pinned toolchain.
+They do not eliminate the finite-information premise of
+`InfinitePiQ2Limit.source_q2_quadratic_limit`, discharge the heat-bath
+intertwining/fiber-mean obligations, establish novelty, or constitute
+independent mathematical review. `lake check --paranoid` remains an
+optional, separately unverified multi-checker gate.
+
+**Current compiler policy:** root `lean-toolchain`,
+`docs/lean-compiler-lock.json`, the generated `lakefile.toml`, and
+the shared Lean CI action all use Lean **4.36.0-rc2** and exact Mathlib
+Git commit `9d581dfff2e41de989072ea63abf3daf69311520`.
+See `docs/lean-compiler-settings.md` for local reproduction and
+the historical-receipt boundary.
 
 CI: `.github/workflows/nightfall-integrated-lake.yml`.
 
