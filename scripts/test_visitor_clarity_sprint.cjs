@@ -76,4 +76,6 @@ for(const selector of ["#main>.hero.nf-opening","#nf-scroll-cinema.nf-cinema--st
  assert.ok(openingCss.includes(selector),"Compact evidence-first layout regression: "+selector);
 assert.equal((home.match(/<a\b/g)||[]).length<=46,true,"Keep the original focused homepage link budget despite new story and gateway");
 
+assert.ok(home.includes('href="#first-minute">Start here · one minute'),"First-time visitors require a short evidence guide");
+assert.ok(home.includes('id="first-minute"')&&home.includes('id="nf-first-minute-title"'),"Missing accessible first-minute orientation");
 console.log("PASS: active NULL FIELD, signature-first evidence and copy budget, archival NEW MOON, exact novice reviewer path");
