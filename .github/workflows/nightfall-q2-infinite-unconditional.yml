@@ -220,7 +220,7 @@ jobs:
             --decl "$C.variance_gap_le" \
             --json-out lean-receipts/q2-infinite-unconditional/receipt.json
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-infinite-unconditional/receipt.json
-      - name: Independent re-check of the closure with lean4checker-style kernel replay of the terminal module
+      - name: Print axioms and types of the terminal declarations (not an independent kernel replay)
         shell: bash
         run: |
           set -euo pipefail
