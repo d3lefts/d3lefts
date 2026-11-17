@@ -26,6 +26,13 @@ jobs:
         with:
           persist-credentials: false
       - uses: ./.github/actions/setup-nightfall-lean
+      - name: Generate strict transitive legacy import closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m py_compile scripts/generate_nightfall_lake.py
+          python3 scripts/generate_nightfall_lake.py --write
+          python3 scripts/generate_nightfall_lake.py --check
       - name: Resolve one exact Mathlib revision
         shell: bash
         run: |
@@ -43,7 +50,7 @@ jobs:
           python3 scripts/check_nightfall_integrated_axioms.py lean-receipts/integrated/build.log
           git rev-parse HEAD > lean-receipts/integrated/repo-head.txt
           git -C .lake/packages/mathlib rev-parse HEAD > lean-receipts/integrated/mathlib-head.txt
-          sha256sum Nightfall/Main.lean Nightfall/Targets.lean Nightfall/Core.lean > lean-receipts/integrated/source-sha256.txt
+          sha256sum Nightfall/Main.lean Nightfall/Targets.lean Nightfall/Core.lean lakefile.toml > lean-receipts/integrated/source-sha256.txt
       - name: Preserve full dependency-build evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
