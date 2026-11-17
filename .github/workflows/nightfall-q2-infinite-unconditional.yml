@@ -1,0 +1,46 @@
+name: NIGHTFALL Q2 infinite-product unconditional terminal (working branch)
+on:
+  push:
+    branches: [q2-infinite-unconditional]
+    paths:
+      - 'research/nightfall/formalization/universal/InfinitePiQ2Cell*.lean'
+      - 'research/nightfall/formalization/universal/InfinitePiQ2UnconditionalTerminal.lean'
+      - '.github/workflows/nightfall-q2-infinite-unconditional.yml'
+  workflow_dispatch:
+    inputs:
+      export_mathlib:
+        description: 'Upload pinned Mathlib build as a temporary draft-release asset'
+        required: false
+        default: 'false'
+permissions:
+  contents: write
+jobs:
+  export-pinned-mathlib:
+    # Temporary development aid: lets an offline-cache session compile locally
+    # against the exact pinned Mathlib build. The draft release is deleted after use.
+    if: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[export-mathlib]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Package pinned Mathlib build
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd /tmp
+          tar --exclude='mathlib4/.git' -cf - mathlib4 | gzip -1 | split -b 1900m - /tmp/mathlib4-pinned.tar.gz.part-
+          ls -la /tmp/mathlib4-pinned.tar.gz.part-*
+      - name: Upload as temporary draft release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh release delete tmp-q2-mathlib-export -R "$GITHUB_REPOSITORY" --yes --cleanup-tag || true
+          gh release create tmp-q2-mathlib-export -R "$GITHUB_REPOSITORY" --draft --target "$GITHUB_SHA" \
+            --title "TEMPORARY: pinned Mathlib build export (to be deleted)" \
+            --notes "Temporary development artifact for the q2-infinite-unconditional branch. Not a research release." \
+            /tmp/mathlib4-pinned.tar.gz.part-*
