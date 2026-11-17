@@ -18,6 +18,7 @@ OUTPUT = ROOT / "lakefile.toml"
 SEEDS = (
     "ActualSourceQ2107Terminal",
     "InfinitePiQ2Limit",
+    "InfinitePiQ2UnconditionalTerminal",
     "InfinitePiQ2SourceHilbertTensor",
     "Q2ShiftedConditionalTargets",
 )
