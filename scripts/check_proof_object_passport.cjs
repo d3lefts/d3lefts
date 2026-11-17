@@ -74,6 +74,13 @@ function verify(passport, {replay=true}={}) {
 
   for (const r of passport.records) {
     assert.ok(typeof r.id === 'string' && r.id.length > 6);
+    // Additional scientific proof-object families use their own exact,
+    // source-derived validation. Keep the historical Farkas receipt immutable.
+    if (r.proof_object?.format === 'nightfall-price-permission-primal-dual/v1') {
+      require('./check_price_permission_optimality_passport.cjs').verifyRecord(r, {replay});
+      continue;
+    }
+    assert.equal(r.id, 'permission-two-source-farkas-v1', 'unknown proof-object family');
     assert.equal(r.status, 'source_matched_scoped_named_lean_receipt', r.id);
     assert.equal(r.complete_certification, false, r.id);
     assert.equal(r.original_semantic_model.audited_completeness, 'not_verified', r.id);
@@ -196,8 +203,11 @@ if (require.main === module) {
   const manifest = load(MANIFEST);
   const audit = verify(manifest);
   const count = selfTest(manifest);
+  const optimum = manifest.records.find(r=>r.id==='permission-four-source-optimal-fence-v1');
+  assert.ok(optimum, 'missing Price of Permission optimum record');
+  const extra = require('./check_price_permission_optimality_passport.cjs').selfTest(optimum);
   console.log('PASS: ' + audit.records + ' original-model proof-object passports, ' +
-    count + ' independent metadata mutations rejected; original rational checker and exact types linked.');
+    (count + extra) + ' independent metadata mutations rejected; original rational and operational checkers and exact Lean types linked.');
   console.log('STATUS: offline chain audit only; historical pinned Lean named receipt, not a fresh kernel replay.');
 }
 module.exports = { verify, selfTest };

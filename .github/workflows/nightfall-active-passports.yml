@@ -6,6 +6,7 @@ on:
       - 'docs/lean-proof-passport-overlay.json'
       - 'docs/proof-object-passport.json'
       - 'scripts/check_proof_object_passport.cjs'
+      - 'scripts/check_price_permission_optimality_passport.cjs'
       - 'papers/certifying-algorithms/**'
       - 'scripts/check_lean_proof_passport_overlay.cjs'
       - 'projects/commonwealth-os/assurance/lean/passport-contract.json'

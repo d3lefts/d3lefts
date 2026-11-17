@@ -97,6 +97,87 @@
         "Lean source theorems establish a general implication, not a formal evaluation of the JSON proof-object witness.",
         "CI provenance is a historical exact-head reference; this local auditor does not query GitHub to authenticate it."
       ]
+    },
+    {
+      "id": "permission-four-source-optimal-fence-v1",
+      "programme": "The Price of Permission / synthetic source-derived semantic fencing",
+      "status": "source_matched_scoped_named_lean_receipt",
+      "complete_certification": false,
+      "original_semantic_model": {
+        "path": "research/nightfall/price_permission/semantic_fence_optimality_4source.json",
+        "git_blob_sha1": "acca3052dc14721f5cb1405bcfb22191c82b3c57",
+        "embedded_key": "source_model",
+        "source_sha256": "314b4187f2cc3ec1746916b1cab75fb7c35a96698639509cd6b45e4e7de8c492",
+        "audited_completeness": "synthetic_model_only"
+      },
+      "derived_instance": {
+        "embedded_key": "derived_instance",
+        "sha256": "bb846628a8c1063e9a8800b0c9d24985d707952a2198c55d9a591b503ad7466a",
+        "reconstruction": "all_baseline_to_final_unsafe_bitcube_histories"
+      },
+      "proof_object": {
+        "embedded_key": "certificate",
+        "format": "nightfall-price-permission-primal-dual/v1",
+        "mathematical_claim": "matching_primal_dual_exact_fence_optimality",
+        "optimal_cost": "4"
+      },
+      "checker": {
+        "path": "research/nightfall/price_permission/check_semantic_fence_primal_dual.py",
+        "git_blob_sha1": "fece36e8f258272954c35104f1ad99923cb0cc14",
+        "independent_path": "research/nightfall/price_permission/check_semantic_fence_independent.cjs",
+        "independent_git_blob_sha1": "2376be05d60214f3b8a2cadebab71c0a01da260a",
+        "invocation": [
+          "python3",
+          "-I",
+          "research/nightfall/price_permission/check_semantic_fence_primal_dual.py",
+          "research/nightfall/price_permission/semantic_fence_optimality_4source.json"
+        ],
+        "mutation_suite": "--self-test",
+        "negative_control_count": 14,
+        "independent_negative_control_count": 8,
+        "role": "Exact arithmetic source-derived incidence verification plus logically separate direct-world exhaustive operational scan; not physical guarantee"
+      },
+      "lean": {
+        "source": "research/nightfall/formalization/permission/PricePermissionFenceDual.lean",
+        "source_git_blob_sha1": "3f0a976643d50b9a7c7efc82d6389419055722bb",
+        "contract": "research/nightfall/price_permission/semantic_fence_dual_type_contract.json",
+        "contract_git_blob_sha1": "b12538587db2c6fb72225b9981c10e395c60b2ea",
+        "declarations": [
+          "Nightfall.PricePermission.CertifyingFences.rational_covering_dual_lower_bound",
+          "Nightfall.PricePermission.CertifyingFences.rational_matching_fence_optimal"
+        ],
+        "compiler_lock": "docs/lean-compiler-lock.json",
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      },
+      "evidence": {
+        "pr": 783,
+        "exact_head": "234c4a04e8f5c48479bea0a0b835c18a57597e78",
+        "ci_run": 44177927091,
+        "artifact_id": 14369688989,
+        "source": "https://github.com/d3lefts/d3lefts/actions/runs/44177927091",
+        "observed_result": "success_on_exact_original_pr_head",
+        "independent_lake_check": "not_run",
+        "external_human_review": "none"
+      },
+      "claim_gates": {
+        "original_history_enumeration": "exact_checker_passed_on_ci",
+        "derived_matrix_and_dual": "exact_checker_passed_on_ci",
+        "feasible_fence_independent_world_scan": "independent_exhaustive_passed_on_ci",
+        "lean_duality_soundness": "pinned_named_kernel_receipt_passed",
+        "exact_type": "pinned_named_kernel_receipt_passed",
+        "global_joint_minimax": "open"
+      },
+      "limitations": [
+        "All final worlds are enumerated only in a synthetic 4-bit model; physical-world history completeness is not verified.",
+        "The declared version-only single-epoch XOR transition rule omits arbitrary ABA changes, unsensed sources, physical authority and deployment races.",
+        "Lean source theorems establish general primal-dual soundness; they do not evaluate this JSON witness inside Lean.",
+        "The previous adaptive observation joint minimax theorem and any independent Lake check remain separate, unpromoted goals.",
+        "Independent non-author mathematical or operational review has not occurred; CI is a historical exact source-head receipt."
+      ]
     }
   ]
 }

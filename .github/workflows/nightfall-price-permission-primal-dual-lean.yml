@@ -1,0 +1,92 @@
+name: NIGHTFALL Price of Permission exact fence primal-dual Lean
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/permission/PricePermissionFenceDual.lean'
+      - 'research/nightfall/price_permission/check_semantic_fence_primal_dual.py'
+      - 'research/nightfall/price_permission/check_semantic_fence_independent.cjs'
+      - 'research/nightfall/price_permission/semantic_fence_optimality_4source.json'
+      - 'research/nightfall/price_permission/semantic_fence_dual_type_contract.json'
+      - 'docs/proof-object-passport.json'
+      - 'scripts/check_proof_object_passport.cjs'
+      - 'scripts/check_price_permission_optimality_passport.cjs'
+      - '.github/workflows/nightfall-price-permission-primal-dual-lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nightfall-price-permission-dual-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  original-model-and-dual:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Exact original-history primal-dual verifier with 14 mutation controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I research/nightfall/price_permission/check_semantic_fence_primal_dual.py --self-test
+          python3 -I research/nightfall/price_permission/check_semantic_fence_primal_dual.py research/nightfall/price_permission/semantic_fence_optimality_4source.json
+      - name: Independent JavaScript exhaustive operational verification
+        shell: bash
+        run: |
+          set -euo pipefail
+          node research/nightfall/price_permission/check_semantic_fence_independent.cjs
+      - name: Fail-closed model-bound Proof Passport and cross-language checker provenance
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/check_price_permission_optimality_passport.cjs
+          node scripts/check_proof_object_passport.cjs
+      - name: Set up pinned Lean + Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile original rational dual source
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/permission/PricePermissionFenceDual.lean /tmp/mathlib4/PricePermissionFenceDual.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/PricePermissionFenceDual.olean PricePermissionFenceDual.lean)
+      - name: Strict named proofs and exact theorem type contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/permission-fence-dual
+          python3 scripts/lean_bridge.py research/nightfall/formalization/permission/PricePermissionFenceDual.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --contract research/nightfall/price_permission/semantic_fence_dual_type_contract.json \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.PricePermission.CertifyingFences.rational_covering_dual_lower_bound \
+            --decl Nightfall.PricePermission.CertifyingFences.rational_matching_fence_optimal \
+            --json-out lean-receipts/permission-fence-dual/named.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/permission-fence-dual/named.json
+      - name: Preserve exact source and original-model custody
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/permission-fence-dual
+          git rev-parse HEAD > lean-receipts/permission-fence-dual/source-head.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/permission-fence-dual/mathlib-head.txt || true
+          cat lean-toolchain > lean-receipts/permission-fence-dual/toolchain.txt
+          sha256sum research/nightfall/formalization/permission/PricePermissionFenceDual.lean \
+            research/nightfall/price_permission/check_semantic_fence_primal_dual.py \
+            research/nightfall/price_permission/check_semantic_fence_independent.cjs \
+            research/nightfall/price_permission/semantic_fence_optimality_4source.json \
+            research/nightfall/price_permission/semantic_fence_dual_type_contract.json \
+            > lean-receipts/permission-fence-dual/source-sha256.txt
+      - name: Upload exact source and theorem receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nightfall-price-permission-fence-dual-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/permission-fence-dual
+          if-no-files-found: warn

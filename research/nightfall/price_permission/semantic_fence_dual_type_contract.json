@@ -1,0 +1,14 @@
+{
+  "schema": "nightfall-theorem-contract/v1",
+  "source": "research/nightfall/formalization/permission/PricePermissionFenceDual.lean",
+  "targets": [
+    {
+      "declaration": "Nightfall.PricePermission.CertifyingFences.rational_covering_dual_lower_bound",
+      "expected_type": "∀ {m n : ℕ} (A : Fin m → Fin n → ℚ) (c : Fin n → ℚ)\n  (x : Fin n → ℚ) (y : Fin m → ℚ),\n  (∀ i, 0 ≤ x i) →\n  (∀ e, 0 ≤ y e) →\n  (∀ e, 1 ≤ ∑ i : Fin n, A e i * x i) →\n  (∀ i, (∑ e : Fin m, y e * A e i) ≤ c i) →\n  (∑ e : Fin m, y e) ≤ ∑ i : Fin n, c i * x i"
+    },
+    {
+      "declaration": "Nightfall.PricePermission.CertifyingFences.rational_matching_fence_optimal",
+      "expected_type": "∀ {m n : ℕ} (A : Fin m → Fin n → ℚ) (c : Fin n → ℚ)\n  (x : Fin n → ℚ) (y : Fin m → ℚ),\n  (∀ i, 0 ≤ x i) →\n  (∀ e, 0 ≤ y e) →\n  (∀ e, 1 ≤ ∑ i : Fin n, A e i * x i) →\n  (∀ i, (∑ e : Fin m, y e * A e i) ≤ c i) →\n  (∑ i : Fin n, c i * x i) = ∑ e : Fin m, y e →\n  (∀ e, 1 ≤ ∑ i : Fin n, A e i * x i) ∧\n    ∀ z : Fin n → ℚ,\n      (∀ i, 0 ≤ z i) →\n      (∀ e, 1 ≤ ∑ i : Fin n, A e i * z i) →\n      (∑ i : Fin n, c i * x i) ≤ ∑ i : Fin n, c i * z i"
+    }
+  ]
+}
