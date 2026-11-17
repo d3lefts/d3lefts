@@ -1,6 +1,7 @@
 import Nightfall.Targets
 import ActualSourceQ2107Terminal
 import CubicTopCoverEnergy
+import CubicTopCoverProjection
 import InfinitePiQ2Limit
 import InfinitePiQ2SourceHilbertTensor
 import Q2ShiftedConditionalTargets
@@ -18,6 +19,8 @@ The theorem audit below prints axioms for ACTUAL imported declarations; no
 hypothesis is discharged by printing an axiom list.
 -/
 
+#check Nightfall.Observability.CubicTopCoverProjection.actual_source_cubic_top_cover_107
+#check Nightfall.Observability.CubicTopCoverProjection.projected_variance_eq_outside_energy
 #check Nightfall.Observability.CubicTopCoverEnergy.source_variance_loss_le_cover_influences
 #check Nightfall.Observability.CubicTopCoverEnergy.cubic_outside_sector_vanishes
 #check Nightfall.Observability.CubicTopCoverEnergy.cubic_cover_terminal_from_projected_q2
@@ -34,6 +37,8 @@ hypothesis is discharged by printing an axiom list.
 #check Nightfall.InfinitePiQ2ConditionalSourceTest.source_condExp_coordinate_mul_other
 #check Nightfall.InfinitePiQ2SourceHilbertTensor.sourceOtherProjection_tensor_ae
 
+#print axioms Nightfall.Observability.CubicTopCoverProjection.actual_source_cubic_top_cover_107
+#print axioms Nightfall.Observability.CubicTopCoverProjection.projected_variance_eq_outside_energy
 #print axioms Nightfall.Observability.CubicTopCoverEnergy.source_variance_loss_le_cover_influences
 #print axioms Nightfall.Observability.CubicTopCoverEnergy.cubic_outside_sector_vanishes
 #print axioms Nightfall.Observability.CubicTopCoverEnergy.cubic_cover_terminal_from_projected_q2
