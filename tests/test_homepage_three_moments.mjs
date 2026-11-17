@@ -16,7 +16,7 @@ test("NIGHTFALL introduces compounding discovery while preserving current produc
  assert.ok(field.includes("ACTIVE RESEARCH")&&field.includes("Wright"));
  assert.ok(field.includes('id="hero-title-archive">What if discovery<br><em>could compound?</em>'));
  assert.ok(field.includes('id="commonwealth-product"')&&field.includes('class="nf-republic-portal"'),"Distinct Commonwealth portal missing");
- assert.ok(field.includes('href="commonwealth.html"')&&field.includes('Separate civic experience'),"Civic gateway must retain scope boundaries");
+ assert.ok(field.includes('href="https://d3lefts.github.io/commonwealth/"')&&field.includes('Separate civic experience'),"Civic gateway must retain scope boundaries");
  assert.ok(field.includes("observability.html")&&field.includes("product-space-influence.html")&&field.includes("active-proof-passport.html"));
  assert.ok(field.includes("CUBIC_OBSTRUCTION_NOTE.md"));
  assert.ok(!field.includes('id="live-case"'),"Finite Sidon exhibit belongs to NEW MOON");

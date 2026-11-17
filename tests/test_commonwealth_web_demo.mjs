@@ -40,7 +40,7 @@ test("Two self-contained working interfaces are linked from an accessible produc
   assert.ok(page.includes('src="'+route+'"'),"missing live iframe "+route);
   assert.ok(page.includes('href="'+route+'"'),"missing fullscreen route "+route);
  }
- assert.ok(text("docs/index.html").includes('href="commonwealth.html"'));
+ assert.ok(text("docs/index.html").includes('href="https://d3lefts.github.io/commonwealth/"'));
  assert.ok(text("docs/new-moon.html").includes('href="commonwealth.html"'));
  assert.ok(text("docs/portfolio.html").includes('href="commonwealth.html"'));
  assert.ok(text("docs/sitemap.xml").includes("commonwealth.html"));
