@@ -2,6 +2,8 @@ import Nightfall.Targets
 import ActualSourceQ2107Terminal
 import InfinitePiQ2Limit
 import InfinitePiQ2SourceHilbertTensor
+import InfinitePiQ2AllL2LabelIntertwining
+import InfinitePiQ2RangeProjectionTransfer
 import Q2ShiftedConditionalTargets
 
 /-!
@@ -9,7 +11,7 @@ import Q2ShiftedConditionalTargets
 
 This single Lean module forces the selected original finite-source proof,
 the original infinite-product L² limit, scoped genuine heat-bath tensor bridges, and the conditional shifted targets
-to compile in one dependency environment.
+and true-label all-L² source heat-bath operator equality to compile in one dependency environment.
 
 It does NOT establish the missing finite-label/conditional-mean/heat-bath
 adapter, and it does NOT contain an unconditional infinite-product theorem.
@@ -39,3 +41,12 @@ hypothesis is discharged by printing an axiom list.
 #print axioms Nightfall.InfinitePiQ2ConditionalSourceTest.source_condExp_coordinate_test
 #print axioms Nightfall.InfinitePiQ2ConditionalSourceTest.source_condExp_coordinate_mul_other
 #print axioms Nightfall.InfinitePiQ2SourceHilbertTensor.sourceOtherProjection_tensor_ae
+
+-- Genuine source/label L² operator equality and reusable Hilbert commutation.
+#check Nightfall.InfinitePiQ2AllL2LabelIntertwining.sourceOtherProjectionCLM_intertwines_all_L2
+#check Nightfall.InfinitePiQ2RangeProjectionTransfer.labelRangeProjection_commutes
+#check Nightfall.InfinitePiQ2RangeProjectionTransfer.labelRangeProjection_triple_zero
+
+#print axioms Nightfall.InfinitePiQ2AllL2LabelIntertwining.sourceOtherProjectionCLM_intertwines_all_L2
+#print axioms Nightfall.InfinitePiQ2RangeProjectionTransfer.labelRangeProjection_commutes
+#print axioms Nightfall.InfinitePiQ2RangeProjectionTransfer.labelRangeProjection_triple_zero
