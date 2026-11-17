@@ -46,21 +46,23 @@ theorem covered_energy_le_sum_influences
           intro S _
           by_cases hS : touches H S
           · obtain ⟨i, hiH, hiS⟩ := hS
-            rw [if_pos hS]
+            have ht : touches H S := ⟨i, hiH, hiS⟩
+            rw [if_pos ht]
             calc
               w S = (if i ∈ S then w S else 0) := by simp [hiS]
               _ ≤ ∑ i ∈ H, if i ∈ S then w S else 0 := by
                 apply Finset.single_le_sum
                 · intro j hj hji
-                  split_ifs
-                  · exact hw S
-                  · exact le_refl 0
+                  by_cases hjS : j ∈ S
+                  · simpa [hjS] using hw S
+                  · simp [hjS]
                 · exact hiH
           · rw [if_neg hS]
-            exact Finset.sum_nonneg fun i hi => by
-              split_ifs
-                  · exact hw S
-                  · exact le_refl 0
+            apply Finset.sum_nonneg
+            intro j hj
+            by_cases hjS : j ∈ S
+            · simpa [hjS] using hw S
+            · simp [hjS]
     _ = ∑ i ∈ H, ∑ S : Finset ι, if i ∈ S then w S else 0 := by
           rw [Finset.sum_comm]
 
