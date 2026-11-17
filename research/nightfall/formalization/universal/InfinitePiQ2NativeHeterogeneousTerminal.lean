@@ -85,7 +85,9 @@ theorem tagged_one_coordinate_heatbath
   simp [taggedMass]
   apply Finset.sum_congr rfl
   intro a _
-  rw [decode_update_embed A w i a]
+  simpa only [embedLetter] using
+    congrArg (fun u : ((j : ι) → A j) => p i a * f u)
+      (decode_update_embed A w i a)
 
 theorem tagged_influence_exact
     (p : (i : ι) → A i → ℝ)
