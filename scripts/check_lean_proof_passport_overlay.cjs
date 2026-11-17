@@ -24,6 +24,13 @@ function verify(overlay, registry, receipts, frontier, contract) {
   assert.deepEqual(compilerLock.allowed_axioms.slice().sort(), overlay.policy.allowed_axioms.slice().sort());
   assert.equal(overlay.policy.kernel_replay.ordinary, 'lake check');
   assert.equal(overlay.policy.kernel_replay.multiple_kernel, 'lake check --paranoid');
+  const selected = overlay.policy.kernel_replay.selected_lake_receipt;
+  assert.equal(selected.pr, 696);
+  assert.equal(selected.run, 44027853225);
+  assert.equal(selected.build, 'passed');
+  assert.equal(selected.kernel_check, 'passed');
+  assert.equal(selected.paranoid, 'not_run');
+  assert.equal(selected.conditional_theorem_only, true);
   assert.equal(overlay.policy.official_standard,
     'https://leanprover-community.github.io/did_you_prove_it.html');
   assert.deepEqual(overlay.policy.allowed_axioms.slice().sort(),
@@ -50,7 +57,7 @@ function verify(overlay, registry, receipts, frontier, contract) {
     assert.equal(entry.statement_equivalence_independently_reviewed, false, entry.id);
     assert.equal(entry.novelty_reviewed, false, entry.id);
     assert.ok(entry.kernel_replay && typeof entry.kernel_replay.status === 'string', entry.id);
-    assert.ok(['not_in_this_passport_receipt', 'scheduled_in_PR_696_CI'].includes(entry.kernel_replay.status),
+    assert.ok(['not_in_this_passport_receipt', 'lake_check_receipt_referenced'].includes(entry.kernel_replay.status),
       entry.id + ': no manufactured kernel replay result permitted');
     assert.ok(entry.kernel_replay.review.includes('do_not_'), entry.id);
     assert.equal(entry.real_world_authority_verified, false, entry.id);
@@ -106,16 +113,30 @@ function verify(overlay, registry, receipts, frontier, contract) {
   assert.equal(inf.passport_id, 'q2-influence');
   assert.equal(inf.evidence.pr, 696);
   assert.equal(inf.kernel_replay.status, 'scheduled_in_PR_696_CI');
-  assert.equal(inf.gates.package, 'pr_head_receipt_referenced');
-  assert.equal(inf.gates.build, 'pr_head_receipt_referenced');
-  assert.equal(inf.gates.inclusion, 'open');
-  assert.equal(inf.gates.axioms, 'open');
+  assert.equal(inf.source_location, 'main');
+  assert.equal(inf.source_path,
+    'research/nightfall/formalization/universal/InfinitePiQ2Limit.lean');
+  assert.equal(inf.theorem_declaration,
+    'Nightfall.InfinitePiQ2Limit.source_q2_quadratic_limit');
+  assert.equal(inf.evidence.ci_run, selected.run);
+  assert.equal(inf.evidence.head, selected.head);
+  assert.equal(inf.evidence.merge_sha, selected.merge_commit);
+  for (const gate of ['package','build','inclusion','axioms'])
+    assert.equal(inf.gates[gate], 'receipt_referenced');
+  assert.equal(inf.kernel_replay.status, 'lake_check_receipt_referenced');
+  assert.equal(inf.complete_certification, false);
   assert.ok(inf.dependencies.includes('q2-finite-current'));
   assert.ok(inf.remaining_obligations.length >= 3);
   const f9 = lookup['f9-adaptive-pr-head'];
   assert.equal(f9.passport_id, null);
   assert.equal(f9.evidence.pr, 690);
-  assert.equal(f9.gates.inclusion, 'open');
+  assert.equal(f9.source_location, 'main');
+  assert.equal(f9.source_path,
+    'research/nightfall/formalization/finite_field/F9ActualAdaptiveTerminal.lean');
+  assert.equal(f9.theorem_declaration,
+    'Nightfall.FiniteField.F9ActualAdaptiveTerminal.actual_adaptive_transcript_injective');
+  assert.equal(f9.gates.inclusion, 'receipt_referenced');
+  assert.equal(f9.kernel_replay.status, 'not_in_this_passport_receipt');
   const cw = lookup['commonwealth-abstract-authority'];
   assert.equal(cw.source_path, contract.source);
   assert.equal(cw.contract_path,
@@ -143,10 +164,13 @@ function main() {
   promoted.records[1].complete_certification = true;
   assert.throws(() => verify(promoted, registry, receipts, frontier, contract),
     /improperly promoted/);
-  const premature = clone(overlay);
-  premature.records[1].gates.inclusion = 'receipt_referenced';
-  assert.throws(() => verify(premature, registry, receipts, frontier, contract));
-  console.log('PASS: Lean five-gate Proof Passport overlay, source custody and three negative tests. No kernel compilation claimed.');
+  const falseParanoid = clone(overlay);
+  falseParanoid.policy.kernel_replay.selected_lake_receipt.paranoid = 'passed';
+  assert.throws(() => verify(falseParanoid, registry, receipts, frontier, contract));
+  const falseScope = clone(overlay);
+  falseScope.records[1].theorem_declaration = 'Nightfall.InfinitePiQ2Limit.unconditional_q2';
+  assert.throws(() => verify(falseScope, registry, receipts, frontier, contract));
+  console.log('PASS: Lean five-gate Proof Passport overlay, source custody and four negative tests. No kernel compilation claimed.');
 }
 if (require.main === module) main();
 module.exports = {verify};
