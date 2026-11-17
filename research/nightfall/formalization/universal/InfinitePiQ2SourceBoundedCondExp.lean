@@ -32,13 +32,14 @@ finite-coordinate information. In particular, this applies to the
 finite-cell label σ-algebra of #725 without a positive-atom floor. -/
 theorem source_subSigma_condExp_essential_bound
     (m : MeasurableSpace ((j : ι) → X j))
-    (hm : m ≤ (inferInstance : MeasurableSpace ((j : ι) → X j)))
+    (hm : m ≤ (MeasurableSpace.pi : MeasurableSpace ((j : ι) → X j)))
     (f : ((j : ι) → X j) → ℝ)
     (B : ℝ)
     (hf : Integrable f (Measure.infinitePi μ))
     (hbound : ∀ᵐ x ∂(Measure.infinitePi μ), |f x| ≤ B) :
     ∀ᵐ x ∂(Measure.infinitePi μ),
       |(Measure.infinitePi μ)[f | m] x| ≤ B := by
+  letI : MeasurableSpace ((j : ι) → X j) := MeasurableSpace.pi
   let ν : Measure ((j : ι) → X j) := Measure.infinitePi μ
   have hlow : (fun _ : ((j : ι) → X j) => -B) ≤ᵐ[ν] f := by
     filter_upwards [hbound] with x hx
