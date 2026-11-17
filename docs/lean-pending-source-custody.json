@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 19,
+  "revision": 20,
   "as_of": "2026-11-17 UTC",
-  "source_commit": "8fbf40ebbbb9abb06b4d5c14454f082151af4995",
-  "scope": "253 pending exact Git blobs + 67 frozen historical; all 320 NIGHTFALL Lean files accounted for at 8fbf40ebbbb9abb06b4d5c14454f082151af4995. Named kernel certifications remain separate from historical pending source custody.",
+  "source_commit": "b9bd66f68e3c1f59896105e1b0d826dacedab6bf",
+  "scope": "Exact pending source custody includes newly promoted original-product heat-bath source, with frozen 67 historical records untouched. Scoped original-head pinned Lean CI for the pointwise source-level identity is separately recorded; full infinite-product L² terminal not certified.",
   "sources": [
     {
       "path": "research/nightfall/formalization/agent_safety/ArbitraryAgentSafety.lean",
@@ -2598,6 +2598,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2OriginalHeatBath.lean",
+      "source_blob_sha": "e30e6f39a6260dc208406d66b5b91308291ce4a6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source bytes pinned Lean-compiled on original stacked PR #698 head 53254b0f5d7891f35508d489960d749269605a79, run 44028496652; this pending custody row itself does not certify terminal Q2, external peer review or priority."
     },
     {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2OriginalLabelTransport.lean",
