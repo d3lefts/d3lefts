@@ -44,20 +44,20 @@ theorem sourceOtherProjection_lift_intertwines_bounded_ae
       (Measure.infinitePi (fun j => (μ j).map (φ j))))
     (hlift2 : MemLp (fun x => g (sourceLabelMap φ x)) (2 : ENNReal)
       (Measure.infinitePi μ)) :
-    (↑↑↑(sourceOtherProjection μ i hlift2.toLp)) =ᵐ[Measure.infinitePi μ]
-      (fun x => (sourceOtherProjection
-        (fun j => (μ j).map (φ j)) i hg2.toLp : ((j : ι) → Y j) → ℝ)
+    (↑(sourceOtherProjection μ i hlift2.toLp) : ((j : ι) → X j) → ℝ) =ᵐ[Measure.infinitePi μ]
+      (fun x => (↑(sourceOtherProjection
+        (fun j => (μ j).map (φ j)) i hg2.toLp) : ((j : ι) → Y j) → ℝ)
         (sourceLabelMap φ x)) := by
   let q : (j : ι) → Measure (Y j) := fun j => (μ j).map (φ j)
   have hsourceL2 :
-      (↑↑↑(sourceOtherProjection μ i hlift2.toLp)) =ᵐ[Measure.infinitePi μ]
+      (↑(sourceOtherProjection μ i hlift2.toLp) : ((j : ι) → X j) → ℝ) =ᵐ[Measure.infinitePi μ]
         (Measure.infinitePi μ)[
           (fun x => g (sourceLabelMap φ x)) |
           sourceOtherSigma (X := X) i] := by
     exact MemLp.condExpL2_ae_eq_condExp (E := ℝ) (𝕜 := ℝ)
       (sourceOtherSigma_le (X := X) i) hlift2
   have htableL2 :
-      (↑↑↑(sourceOtherProjection q i hg2.toLp)) =ᵐ[Measure.infinitePi q]
+      (↑(sourceOtherProjection q i hg2.toLp) : ((j : ι) → Y j) → ℝ) =ᵐ[Measure.infinitePi q]
         (Measure.infinitePi q)[g | sourceOtherSigma (X := Y) i] := by
     exact MemLp.condExpL2_ae_eq_condExp (E := ℝ) (𝕜 := ℝ)
       (sourceOtherSigma_le (X := Y) i) hg2
@@ -65,7 +65,7 @@ theorem sourceOtherProjection_lift_intertwines_bounded_ae
       (Measure.infinitePi μ) (Measure.infinitePi q) :=
     original_infinite_label_measurePreserving μ φ hφ
   have htableLift :
-      (fun x => (sourceOtherProjection q i hg2.toLp : ((j : ι) → Y j) → ℝ)
+      (fun x => (↑(sourceOtherProjection q i hg2.toLp) : ((j : ι) → Y j) → ℝ)
         (sourceLabelMap φ x)) =ᵐ[Measure.infinitePi μ]
       (fun x => (Measure.infinitePi q)[g |
         sourceOtherSigma (X := Y) i] (sourceLabelMap φ x)) := by
