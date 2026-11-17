@@ -159,11 +159,11 @@ theorem all_length_sharp_spectral_envelope
       have hc := mul_neg_of_pos_of_neg hK hneg
       exact (not_lt_of_ge hnonneg) hc
 
-/-- The all-aligned endpoint witnesses attain the scalar bound exactly. -/
-theorem aligned_extremal_equality
-    (ks bs : List ℝ) (h : ks.length = bs.length) :
-    True := by
-  trivial
+/-- Aligned extremal eigenvalue ratios attain the two-factor bound. -/
+theorem aligned_two_factor_equality (k l u v : ℝ) :
+    (k * u + u) * (l * v + v) * (1 + k * l) =
+      ((k * u) * (l * v) + u * v) * (1 + k) * (1 + l) := by
+  ring
 
 #print axioms Nightfall.Quantum.SLDSharpScalarKernel.two_factor_exact_sld
 #print axioms Nightfall.Quantum.SLDSharpScalarKernel.all_length_sharp_spectral_envelope
