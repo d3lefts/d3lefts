@@ -1,0 +1,70 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Boundaries, actors &amp; the operational world · The Unwritten Semester</title><meta name="description" content="Build mission-centered contexts and operational scenarios without losing authority."><meta name="theme-color" content="#0e1117">
+<link rel="stylesheet" href="../assets/site.css"></head><body><a class="skip" href="#content">Skip to content</a><header class="site-header"><div class="wrap nav">
+    <a href="../index.html" class="brand" aria-label="The Unwritten Semester, home"><span class="mark" aria-hidden="true">✳</span><span>UNWRITTEN<small>THE SYSTEMS SEMESTER</small></span></a>
+    <nav class="nav-links" aria-label="Main navigation"><a href="../index.html#sessions" class="active">Sessions</a><a href="../capstone.html" class="">Field exercise</a><a href="../resources.html" class="">Library</a><a href="../toolkit.html" class="">Toolkit</a><a href="../about.html" class="">About</a></nav></div></header><main id="content"><div class="wrap pagehead"><div class="breadcrumb"><a href="../index.html#sessions">ALL SESSIONS</a> / FRAME / 02</div>
+<div class="eyebrow" style="margin-top:17px">SESSION 02 / 14 — FRAME</div><h1>Boundaries, actors &amp; the operational world</h1>
+<p class="description">Build mission-centered contexts and operational scenarios without losing authority.</p><div class="tags"><span>90 min · lab 2h</span><span>LECTURE + LAB + ADVERSARIAL CHECK</span><span>NO PREREQUISITE INSTALLS</span></div></div><div class="wrap article-layout"><article class="article"><h2 id="the-operating-principle">The operating principle</h2>
+<p>Every engineered system is a choice of boundary. Put a physical sensor outside the boundary and its failure becomes an environmental disturbance; put it inside and it becomes a design responsibility. Neither choice is inherently correct. The test is whether the boundary represents the mission and the decisions for which your conclusions will be used.</p>
+<p>A context diagram should show more than boxes. It should show <strong>actors, interfaces, authority, information, matter, energy, and possible loss of control</strong>. In a sociotechnical system, the people who authorize, operate, maintain, fund, and experience consequences are not interchangeable.</p>
+<h2 id="from-mission-to-operational-concept">From mission to operational concept</h2>
+<p>Build a compact Concept of Operations (ConOps) with six scenes: nominal use; a missing observation; a degraded component; operator override; an external change; and retirement/recovery. For each scene, specify the trigger, observable state, authorized action, and safe outcome. This reveals latent requirements early.</p>
+<p>Use AURORA as a running case: a remote observation station measures a synthetic binary environmental anomaly and routes an alert to a human. It contains three simulated channels, an alarm rule, a maintainer, a human decision-maker, and a synthetic event source. AURORA's alarm is <strong>advisory</strong>, not an autonomous authorization to act.</p>
+<table>
+<thead>
+<tr>
+  <th>Boundary choice</th>
+  <th>Included responsibility</th>
+  <th>What can go wrong if omitted</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Sensor observations</td>
+  <td>quality and missingness</td>
+  <td>pretending unavailable evidence is negative evidence</td>
+</tr>
+<tr>
+  <td>Decision policy</td>
+  <td>alarm threshold and logic</td>
+  <td>ambiguous semantics of an “alert”</td>
+</tr>
+<tr>
+  <td>Human response</td>
+  <td>authority and timing</td>
+  <td>assuming an alarm causes a successful intervention</td>
+</tr>
+<tr>
+  <td>Shared infrastructure</td>
+  <td>power / communications</td>
+  <td>incorrectly independent failure probabilities</td>
+</tr>
+</tbody>
+</table>
+<h2 id="lab-draw-two-valid-architectures">Lab — draw two valid architectures</h2>
+<ol>
+<li>Draw AURORA as a physical decomposition (sensors, processor, link, console).</li>
+<li>Draw it again as a responsibility architecture (event, observer, decision, authority, intervention, audit).</li>
+<li>Mark the assumptions crossing each boundary; add one explicit interface contract to each arrow.</li>
+<li>Construct a scenario matrix with six ConOps scenes and measurable success criteria.</li>
+<li>Find a case where the physical diagram suggests the system is healthy but the responsibility diagram reveals a missing decision authority.</li>
+</ol>
+<p><strong>Acceptance artifact:</strong> <code>02-context-and-conops.md</code> containing two diagrams, six scenes, and an assumption register.</p>
+<h2 id="adversarial-check">Adversarial check</h2>
+<p>Ask whose incentives or hazards disappear when you draw the boundary. Inspect time: the system may be valid at design time but invalid after a software update, power failure, or policy change. Identify a boundary that would reverse your risk estimate.</p>
+<h2 id="doctoral-extension">Doctoral extension</h2>
+<p>Prove or empirically demonstrate <strong>boundary sensitivity</strong>: a result that is invariant under a well-specified boundary refinement is more reusable than one that holds only for a convenient drawing.</p>
+<h2 id="read-further">Read further</h2>
+<ul>
+<li><a href="https://www.nasa.gov/reference/systems-engineering-handbook/">NASA Systems Engineering Handbook</a>, particularly system design and technical management.</li>
+<li><a href="https://sebokwiki.org/wiki/System_Context_(glossary">SEBoK — System Context</a>) for boundary terminology.</li>
+</ul>
+
+<div class="lesson-nav"><a href="01.html">← Previous: The research problem as a contract</a><a href="03.html">Next: Requirements that can actually fail →</a></div></article>
+<aside class="rail"><div class="rail-box"><h3>Session navigation</h3><ul class="contents"><li><a href="#the-operating-principle">The operating principle</a></li><li><a href="#from-mission-to-operational-concept">From mission to operational concept</a></li><li><a href="#lab-draw-two-valid-architectures">Lab — draw two valid architectures</a></li><li><a href="#adversarial-check">Adversarial check</a></li><li><a href="#doctoral-extension">Doctoral extension</a></li><li><a href="#read-further">Read further</a></li></ul>
+<button class="complete" data-toggle-complete="02" type="button">Mark this session complete</button>
+<p style="font-size:11px;color:var(--dim);margin:13px 0 0">Progress is stored in this browser only. Completing a lesson is self-reported, not a credential.</p>
+<div style="border-top:1px solid var(--line);margin:18px 0;padding-top:17px"><h3>Working materials</h3>
+<ul><li><a href="../capstone.html">AURORA field exercise ↗</a></li><li><a href="../toolkit.html">Executable toolkit ↗</a></li><li><a href="../math-bridge.html">Quantitative foundations ↗</a></li><li><a href="../resources.html">Reference library ↗</a></li><li><a href="../README.md">Repository instructions ↗</a></li></ul></div></div></aside></div></main><footer class="wrap footer"><span>Independent open course · doctoral research-skills supplement · no degree or certification granted</span>
+    <span>Format inspired by <a href="https://missing.csail.mit.edu/" target="_blank" rel="noopener noreferrer">MIT's Missing Semester</a> · <a href="../LICENSE.md">Licenses</a></span></footer>
+<script src="../assets/site.js" defer></script></body></html>

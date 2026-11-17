@@ -1,0 +1,57 @@
+{
+  "added_checks": [
+    "python3 labs/modelcheck.py",
+    "python3 labs/exact_switch.py labs/any.csv labs/quorum.csv",
+    "python3 scripts/check_site.py",
+    "python3 scripts/verify_reference.py"
+  ],
+  "audit": {
+    "episodes": 5000,
+    "events": 724,
+    "false_alarm_count": 39,
+    "false_alarm_fraction_given_quiet": 0.00912067352666043,
+    "limitation": "Does not validate sensor distributions, source integrity, field fitness, or safety.",
+    "mean_acquisition_cost_units": 16.0,
+    "miss_fraction_given_event": 0.09944751381215469,
+    "missed_count": 72,
+    "operability_fraction": 0.9572,
+    "operable_count": 4786,
+    "quiet_episodes": 4276,
+    "sha256": "c9aae7de7da9cc32abd6eddb3d7a9d01be099d75c604bc6b7dcca7aacaeba394",
+    "status": "trace-arithmetic-verified"
+  },
+  "audit_command": "python3 labs/audit.py labs/output.csv",
+  "claim_id": "C-01",
+  "evidence_scope": "Original reference trace arithmetical replay; appended checks have narrower independently named scopes.",
+  "files_sha256": {
+    "CAPSTONE.md": "5e5dc837fe4b9efa91d1a41212ea415f8d1ac1490d677981163c0c4bae98770b",
+    "MATH_BRIDGE.md": "93c59df7ddf912fc29e4f3160949225bc06f9e5f67147b8c64935c77854a87a7",
+    "README.md": "f3451260d2c80061faf76d81a68665b6d74e582081d49e646fadb776d47a3bec",
+    "TOOLKIT.md": "420001d338d78f1a489744910b8647003fe54d08c65b5d4f35b3b18359a2bf37",
+    "evidence/dependency-graph.json": "dcd843f0c0a45a7911a6510bf1335d152bd1756892ddb5482155b5f010c4046f",
+    "labs/audit.py": "04749a033c2550cd5afda2b6d2bdb366a061167f866402bdf2955a182184de84",
+    "labs/aurora.py": "250aeba839c8d3ee8c4ce22d6a51e2a459528d81a3d5a5892694ba9ddec1a99f",
+    "labs/compare.py": "4965a63de038f5e6b87b957081f79701945aa3e5942c5eac8000ed0a7028c102",
+    "labs/exact_switch.py": "f33cc0112613c5abbd051e12a1d1b0ee567ff582cb035d9a2524533f4d953a73",
+    "labs/modelcheck.py": "1987984a279358aba3ff6d8e50a6b376ec5596f996e29557725d4d0e7dc6859a",
+    "labs/output.csv": "c9aae7de7da9cc32abd6eddb3d7a9d01be099d75c604bc6b7dcca7aacaeba394",
+    "labs/passport.py": "52d3acea97c071a3e7dcb0d2e3e8043a9352c334271f74722494cfe11e2c5714",
+    "labs/test_aurora.py": "0e1ce8f2e0176549cd411c3d3843c463ca47eb00a02c01ce2c17524eb2bea92f",
+    "labs/test_toolchain.py": "b24f0cf3af5d4c8c2f5fb2f4e79de8487a96b7fa13b8a361c9c8bec1321cddf5",
+    "scripts/check_site.py": "4ded74f18408b1a3224358e11b0babc3e3ac0c9e81dcab487200bea83d74fdd2",
+    "scripts/verify_reference.py": "62feb0a7548c06aa67eda263ac0e81a1f4da217c11c6b666b2c007cf1c4d521d"
+  },
+  "generation_command": "python3 labs/aurora.py --seed 2026 --trials 5000 --policy quorum --out labs/output.csv",
+  "limits": [
+    "Seeded pseudorandom simulation under stipulated distributions",
+    "Not field calibrated",
+    "Not a guarantee of safety or availability",
+    "Hash values are digests relative to this manifest, not authenticated signatures"
+  ],
+  "model": "AURORA synthetic v1",
+  "review_status": "No independent external reviewer. Different auditor implementation; not a formal proof.",
+  "runtime": "3.13.5",
+  "status": "arithmetical-trace-verified; model-not-validated",
+  "test_command": "python3 -m unittest discover -s labs -p 'test_*.py' -v",
+  "title": "AURORA synthetic reference trace / reproducibility receipt"
+}

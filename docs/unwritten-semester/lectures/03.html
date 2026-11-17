@@ -1,0 +1,51 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Requirements that can actually fail · The Unwritten Semester</title><meta name="description" content="Translate stakeholder intent into testable, versioned traceability."><meta name="theme-color" content="#0e1117">
+<link rel="stylesheet" href="../assets/site.css"></head><body><a class="skip" href="#content">Skip to content</a><header class="site-header"><div class="wrap nav">
+    <a href="../index.html" class="brand" aria-label="The Unwritten Semester, home"><span class="mark" aria-hidden="true">✳</span><span>UNWRITTEN<small>THE SYSTEMS SEMESTER</small></span></a>
+    <nav class="nav-links" aria-label="Main navigation"><a href="../index.html#sessions" class="active">Sessions</a><a href="../capstone.html" class="">Field exercise</a><a href="../resources.html" class="">Library</a><a href="../toolkit.html" class="">Toolkit</a><a href="../about.html" class="">About</a></nav></div></header><main id="content"><div class="wrap pagehead"><div class="breadcrumb"><a href="../index.html#sessions">ALL SESSIONS</a> / FRAME / 03</div>
+<div class="eyebrow" style="margin-top:17px">SESSION 03 / 14 — FRAME</div><h1>Requirements that can actually fail</h1>
+<p class="description">Translate stakeholder intent into testable, versioned traceability.</p><div class="tags"><span>90 min · lab 2h</span><span>LECTURE + LAB + ADVERSARIAL CHECK</span><span>NO PREREQUISITE INSTALLS</span></div></div><div class="wrap article-layout"><article class="article"><h2 id="the-operating-principle">The operating principle</h2>
+<p>A requirement is a testable contract, not a feature wish. “The system shall be reliable” is neither measurable nor assignable. “For synthetic event episodes under dataset D, policy P shall record a per-episode alarm decision and trace its sensor inputs” can be tested, though it still says nothing about a field reliability target.</p>
+<p>The essential graph is <strong>stakeholder need → requirement → architecture element → verification procedure → evidence → acceptance decision</strong>. An orphaned node means the engineering story has broken. An untested requirement is not satisfied because the model looks convincing; a passed unit test is not sufficient to show stakeholder validation.</p>
+<h2 id="the-six-column-contract">The six-column contract</h2>
+<p>Use stable identifiers and record:</p>
+<ul>
+<li><code>id</code>: never silently reassign it after revision;</li>
+<li><code>shall</code>: one atomic, unambiguous proposition;</li>
+<li><code>source</code>: stakeholder, hazard, policy, or governing assumption;</li>
+<li><code>rationale</code>: why this condition is necessary;</li>
+<li><code>verification</code>: test, analysis, inspection, or demonstration with acceptance conditions;</li>
+<li><code>version</code>: the authority and design revision under which it applies.</li>
+</ul>
+<p>Separate <strong>verification</strong> (“Did we build to the stated specification?”) from <strong>validation</strong> (“Does the specification address the actual need?”). Neither implies the other.</p>
+<h2 id="worked-example">Worked example</h2>
+<p><strong>Bad:</strong> “AURORA sensors should never fail.”</p>
+<p><strong>Better synthetic requirement R-03:</strong> “For every simulated episode in the archived test trace, the report shall contain the observed channel states A/B/C, the policy identifier, the resulting alarm decision, and an operability flag.”</p>
+<p><strong>Test:</strong> Parse all rows; assert required columns exist and alarm decisions match the published threshold logic. This verifies the <em>report format and decision calculation</em>, not sensor accuracy or safety.</p>
+<h2 id="lab-build-traceability-that-bites">Lab — build traceability that bites</h2>
+<ol>
+<li>Inspect <code>templates/requirements.csv</code> and <code>templates/traceability.csv</code>.</li>
+<li>Rewrite two deliberately vague requirements into atomic, testable ones.</li>
+<li>Create a requirements trace graph that covers all selected claims and acceptance checks.</li>
+<li>Add a change event: the decision rule changes from any-positive to quorum. Enumerate the directly and indirectly affected requirements.</li>
+<li>Propose one verification test and a separate stakeholder validation question for each altered requirement.</li>
+</ol>
+<p><strong>Acceptance artifact:</strong> a requirement/verification matrix with no unjustified “verified” labels and explicit orphan reporting.</p>
+<h2 id="adversarial-check">Adversarial check</h2>
+<p>Have a reviewer invent a product that satisfies your written requirements but fails the mission. Every successful attack exposes missing validation content. Also test whether two different readers can implement the same “shall” statement without further clarification.</p>
+<h2 id="doctoral-extension">Doctoral extension</h2>
+<p>Formalize traceability as a typed directed graph. Define a change-impact operator over the graph, and state whether the operator is sound (finds all affected evidence) or complete (does not return irrelevant evidence). These are distinct claims.</p>
+<h2 id="read-further">Read further</h2>
+<ul>
+<li><a href="https://www.nasa.gov/reference/system-engineering-handbook-appendix/">NASA — Appendix C: How to Write a Good Requirement</a>.</li>
+<li><a href="https://www.incose.org/resource/incose-systems-engineering-handbook-a-guide-for-system-life-cycle-processes-and-activities-5th-edition/">INCOSE Systems Engineering Handbook, 5th ed.</a>.</li>
+</ul>
+
+<div class="lesson-nav"><a href="02.html">← Previous: Boundaries, actors &amp; the operational world</a><a href="04.html">Next: Architecture is a dependency hypothesis →</a></div></article>
+<aside class="rail"><div class="rail-box"><h3>Session navigation</h3><ul class="contents"><li><a href="#the-operating-principle">The operating principle</a></li><li><a href="#the-six-column-contract">The six-column contract</a></li><li><a href="#worked-example">Worked example</a></li><li><a href="#lab-build-traceability-that-bites">Lab — build traceability that bites</a></li><li><a href="#adversarial-check">Adversarial check</a></li><li><a href="#doctoral-extension">Doctoral extension</a></li><li><a href="#read-further">Read further</a></li></ul>
+<button class="complete" data-toggle-complete="03" type="button">Mark this session complete</button>
+<p style="font-size:11px;color:var(--dim);margin:13px 0 0">Progress is stored in this browser only. Completing a lesson is self-reported, not a credential.</p>
+<div style="border-top:1px solid var(--line);margin:18px 0;padding-top:17px"><h3>Working materials</h3>
+<ul><li><a href="../capstone.html">AURORA field exercise ↗</a></li><li><a href="../toolkit.html">Executable toolkit ↗</a></li><li><a href="../math-bridge.html">Quantitative foundations ↗</a></li><li><a href="../resources.html">Reference library ↗</a></li><li><a href="../README.md">Repository instructions ↗</a></li></ul></div></div></aside></div></main><footer class="wrap footer"><span>Independent open course · doctoral research-skills supplement · no degree or certification granted</span>
+    <span>Format inspired by <a href="https://missing.csail.mit.edu/" target="_blank" rel="noopener noreferrer">MIT's Missing Semester</a> · <a href="../LICENSE.md">Licenses</a></span></footer>
+<script src="../assets/site.js" defer></script></body></html>

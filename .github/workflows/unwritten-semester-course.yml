@@ -1,0 +1,35 @@
+name: Unwritten Semester reproducibility checks
+on:
+  push:
+    paths: ['docs/unwritten-semester/**', '.github/workflows/unwritten-semester-course.yml']
+  pull_request:
+    paths: ['docs/unwritten-semester/**', '.github/workflows/unwritten-semester-course.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  course:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Verify simulation, audit, negative tests, and exact policy switch
+        working-directory: docs/unwritten-semester
+        run: python3 -m unittest discover -s labs -p 'test_*.py' -v
+      - name: Verify frozen synthetic research receipt and byte-level replay
+        working-directory: docs/unwritten-semester
+        run: python3 scripts/verify_reference.py
+      - name: Check all generated HTML routes, relative links and anchors
+        working-directory: docs/unwritten-semester
+        run: python3 scripts/check_site.py
+      - name: Exhaustive abstract policy check and exact arithmetic
+        working-directory: docs/unwritten-semester
+        run: |
+          python3 labs/modelcheck.py
+          python3 labs/exact_switch.py labs/any.csv labs/quorum.csv
+      - name: Check manifest identities and declared dependency gate
+        working-directory: docs/unwritten-semester
+        run: python3 labs/passport.py verify --root . --manifest evidence/passport.json --graph evidence/dependency-graph.json

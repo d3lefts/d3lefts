@@ -1,0 +1,39 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Causality, observability &amp; impossible knowledge · The Unwritten Semester</title><meta name="description" content="Detect observationally indistinguishable worlds before optimizing."><meta name="theme-color" content="#0e1117">
+<link rel="stylesheet" href="../assets/site.css"></head><body><a class="skip" href="#content">Skip to content</a><header class="site-header"><div class="wrap nav">
+    <a href="../index.html" class="brand" aria-label="The Unwritten Semester, home"><span class="mark" aria-hidden="true">✳</span><span>UNWRITTEN<small>THE SYSTEMS SEMESTER</small></span></a>
+    <nav class="nav-links" aria-label="Main navigation"><a href="../index.html#sessions" class="active">Sessions</a><a href="../capstone.html" class="">Field exercise</a><a href="../resources.html" class="">Library</a><a href="../toolkit.html" class="">Toolkit</a><a href="../about.html" class="">About</a></nav></div></header><main id="content"><div class="wrap pagehead"><div class="breadcrumb"><a href="../index.html#sessions">ALL SESSIONS</a> / VERIFY / 11</div>
+<div class="eyebrow" style="margin-top:17px">SESSION 11 / 14 — VERIFY</div><h1>Causality, observability &amp; impossible knowledge</h1>
+<p class="description">Detect observationally indistinguishable worlds before optimizing.</p><div class="tags"><span>90 min · lab 3h</span><span>LECTURE + LAB + ADVERSARIAL CHECK</span><span>NO PREREQUISITE INSTALLS</span></div></div><div class="wrap article-layout"><article class="article"><h2 id="the-operating-principle">The operating principle</h2>
+<p>A measurement system may have many sensors and still be unable to distinguish two decision-relevant worlds. <strong>Observability</strong> is about recovering information from available measurements; <strong>identifiability</strong> is about distinguishing models or parameters; <strong>causal inference</strong> is about what would happen under an intervention. These questions are connected but not interchangeable.</p>
+<p>A perfect predictor can rely on a spurious variable. A calibrated sensor can be useless for the decision if the uncertainty it resolves never changes the action. An observability matrix can have full rank in a linear model that fails under an unmodeled change.</p>
+<h2 id="a-two-world-impossibility-argument">A two-world impossibility argument</h2>
+<p>Suppose safe world <code>W0</code> and unsafe world <code>W1</code> produce exactly the same observable input <code>o</code> to any admission rule. A deterministic rule must return the same action in both worlds. Therefore it cannot both admit <code>W0</code> and reject <code>W1</code> based on <code>o</code> alone. A randomized rule cannot have both probabilities equal to one for the opposite required actions either.</p>
+<p>This is a basic <strong>indistinguishability</strong> argument: it identifies missing evidence. It does not show that all useful admission rules are impossible; it states what cannot be guaranteed under that observation map.</p>
+<h2 id="lab-find-indistinguishable-worlds">Lab — find indistinguishable worlds</h2>
+<ol>
+<li>Describe two states in AURORA that produce the same sensor reading but imply different true event status.</li>
+<li>Write a causal graph with event, common outage, available channels, readings, alarm, and human action.</li>
+<li>Name which arrows are implemented by the simulator and which are unmodeled assumptions.</li>
+<li>Formulate an additional observation that could distinguish the two worlds; estimate its acquisition cost.</li>
+<li>Explain whether its acquisition improves state estimation, causal identification, decision value, or more than one.</li>
+</ol>
+<p><strong>Acceptance artifact:</strong> <code>11-indistinguishability.md</code> containing a two-world construction and one observation-design proposal.</p>
+<h2 id="adversarial-check">Adversarial check</h2>
+<p>Search for model pairs that fit every observed datum but disagree on the intervention outcome. If they exist, report partial identification or additional assumptions; do not fill the gap with a smooth narrative. If an experiment resolves only a model-internal ambiguity, say so.</p>
+<h2 id="doctoral-extension">Doctoral extension</h2>
+<p>For a linear dynamical system with specified matrices, calculate the observability matrix rank and construct an unobservable state direction if the rank is deficient. Then compare this local algebraic result with a nonlinear or distributional identifiability argument.</p>
+<h2 id="read-further">Read further</h2>
+<ul>
+<li><a href="https://sebokwiki.org/wiki/System_Analysis">SEBoK — Systems Analysis</a>.</li>
+<li><a href="https://www.itl.nist.gov/div898/handbook/">NIST Engineering Statistics Handbook</a>.</li>
+</ul>
+
+<div class="lesson-nav"><a href="10.html">← Previous: Safety, security &amp; graceful failure</a><a href="12.html">Next: Change, provenance &amp; recertification →</a></div></article>
+<aside class="rail"><div class="rail-box"><h3>Session navigation</h3><ul class="contents"><li><a href="#the-operating-principle">The operating principle</a></li><li><a href="#a-two-world-impossibility-argument">A two-world impossibility argument</a></li><li><a href="#lab-find-indistinguishable-worlds">Lab — find indistinguishable worlds</a></li><li><a href="#adversarial-check">Adversarial check</a></li><li><a href="#doctoral-extension">Doctoral extension</a></li><li><a href="#read-further">Read further</a></li></ul>
+<button class="complete" data-toggle-complete="11" type="button">Mark this session complete</button>
+<p style="font-size:11px;color:var(--dim);margin:13px 0 0">Progress is stored in this browser only. Completing a lesson is self-reported, not a credential.</p>
+<div style="border-top:1px solid var(--line);margin:18px 0;padding-top:17px"><h3>Working materials</h3>
+<ul><li><a href="../capstone.html">AURORA field exercise ↗</a></li><li><a href="../toolkit.html">Executable toolkit ↗</a></li><li><a href="../math-bridge.html">Quantitative foundations ↗</a></li><li><a href="../resources.html">Reference library ↗</a></li><li><a href="../README.md">Repository instructions ↗</a></li></ul></div></div></aside></div></main><footer class="wrap footer"><span>Independent open course · doctoral research-skills supplement · no degree or certification granted</span>
+    <span>Format inspired by <a href="https://missing.csail.mit.edu/" target="_blank" rel="noopener noreferrer">MIT's Missing Semester</a> · <a href="../LICENSE.md">Licenses</a></span></footer>
+<script src="../assets/site.js" defer></script></body></html>

@@ -1,0 +1,2 @@
+claim_id,evidence_id,source_version,command,input_digest,output_digest,checker,limits,reviewer
+C-01,E-01,unrecorded,"python3 labs/aurora.py --policy quorum --seed 2026 --trials 5000 --out labs/output.csv",TO_FILL,TO_FILL,"python3 labs/audit.py labs/output.csv","Validates policy arithmetic only",UNREVIEWED

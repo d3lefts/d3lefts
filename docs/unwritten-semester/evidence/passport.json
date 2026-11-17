@@ -1,0 +1,27 @@
+{
+  "claim": "Synthetic AURORA evidence and declared local dependencies; no field or reviewer certification",
+  "files": {
+    "MATH_BRIDGE.md": "93c59df7ddf912fc29e4f3160949225bc06f9e5f67147b8c64935c77854a87a7",
+    "README.md": "f3451260d2c80061faf76d81a68665b6d74e582081d49e646fadb776d47a3bec",
+    "TOOLKIT.md": "420001d338d78f1a489744910b8647003fe54d08c65b5d4f35b3b18359a2bf37",
+    "assets/site.css": "6295508f92f438d3369df887e64414013843d40982979ff1cec5c91753028cd0",
+    "build.py": "826225d703be60a5b7d9b5bed1f7c0c06e97267a564a751f534a009d03ebed1c",
+    "evidence/dependency-graph.json": "dcd843f0c0a45a7911a6510bf1335d152bd1756892ddb5482155b5f010c4046f",
+    "labs/any.csv": "ce8351d957687e07faa29eeff6952ab5827f7a0c66ad770e710e33acebc6f141",
+    "labs/audit.py": "04749a033c2550cd5afda2b6d2bdb366a061167f866402bdf2955a182184de84",
+    "labs/aurora.py": "250aeba839c8d3ee8c4ce22d6a51e2a459528d81a3d5a5892694ba9ddec1a99f",
+    "labs/compare.py": "4965a63de038f5e6b87b957081f79701945aa3e5942c5eac8000ed0a7028c102",
+    "labs/exact_switch.py": "f33cc0112613c5abbd051e12a1d1b0ee567ff582cb035d9a2524533f4d953a73",
+    "labs/modelcheck.py": "1987984a279358aba3ff6d8e50a6b376ec5596f996e29557725d4d0e7dc6859a",
+    "labs/output.csv": "c9aae7de7da9cc32abd6eddb3d7a9d01be099d75c604bc6b7dcca7aacaeba394",
+    "labs/passport.py": "52d3acea97c071a3e7dcb0d2e3e8043a9352c334271f74722494cfe11e2c5714",
+    "labs/quorum.csv": "c9aae7de7da9cc32abd6eddb3d7a9d01be099d75c604bc6b7dcca7aacaeba394"
+  },
+  "limitations": [
+    "Untracked inputs and environment may matter.",
+    "SHA-256 equality does not authenticate creator or content.",
+    "Neither a theorem proof nor a deployment safety certificate."
+  ],
+  "schema": "unwritten-passport/v1",
+  "status": "unreviewed-byte-identity-manifest"
+}

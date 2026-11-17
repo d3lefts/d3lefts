@@ -1,0 +1,4 @@
+id,requirement,source,rationale,verification,version
+R-01,"Every archived episode shall include policy, sensor readings, alarm and operability status","Synthetic research protocol","Replay policy decisions","Schema inspection and independent policy audit",v1
+R-02,"System shall be very reliable","Unspecified stakeholder","Unclear","Unverifiable; rewrite before acceptance",v1
+R-03,"Each archived trace shall record a sequential nonnegative trial ID","Reproducible audit","Detect missing or reordered trials","Independent CSV row/index check",v1

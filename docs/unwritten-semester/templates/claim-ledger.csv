@@ -1,0 +1,3 @@
+claim_id,statement,scope,assumptions,baseline,certificate,status,falsifier,version
+C-01,"Trace alarms follow specified quorum rule","AURORA synthetic v1","Fixed input schema and policy semantics","Independent audit of CSV decision logic","Run labs/audit.py on pinned trace","provisional","Any row with incorrect alarm decision",v1
+C-02,"Quorum has better field reliability than single","Actual deployed sensors","Sensor model and calibration to be established","Real field-reliability benchmark","Not available","unverified","Field study with contrary evidence",v1

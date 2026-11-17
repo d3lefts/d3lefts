@@ -1,0 +1,117 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The executable research toolkit · The Unwritten Semester</title><meta name="description" content="From paired comparison to exhaustive checks, manifests, and revalidation."><meta name="theme-color" content="#0e1117">
+<link rel="stylesheet" href="assets/site.css"></head><body><a class="skip" href="#content">Skip to content</a><header class="site-header"><div class="wrap nav">
+    <a href="index.html" class="brand" aria-label="The Unwritten Semester, home"><span class="mark" aria-hidden="true">✳</span><span>UNWRITTEN<small>THE SYSTEMS SEMESTER</small></span></a>
+    <nav class="nav-links" aria-label="Main navigation"><a href="index.html#sessions" class="">Sessions</a><a href="capstone.html" class="">Field exercise</a><a href="resources.html" class="">Library</a><a href="toolkit.html" class="active">Toolkit</a><a href="about.html" class="">About</a></nav></div></header><main id="content"><div class="wrap pagehead"><div class="breadcrumb"><a href="index.html">HOME</a> / FOUR FIELD PRACTICUMS</div><div class="eyebrow" style="margin-top:17px">FOUR FIELD PRACTICUMS</div><h1>The executable research toolkit</h1><p class="description">From paired comparison to exhaustive checks, manifests, and revalidation.</p></div><div class="wrap article-layout"><article class="article"><h2 id="the-reproducible-toolchain">The reproducible toolchain</h2>
+<p>The 14 sessions teach research judgment; this toolkit supplies executable instruments for some of those judgments. Everything in this section uses <strong>Python 3.11+ and the standard library only</strong>. It makes claims about a synthetic instructional model, never about deployed monitoring infrastructure.</p>
+<p>The reference problem is AURORA: three binary/absent sensors, a shared-outage variable, three acquisition policies, and a choice between detecting anomalies and avoiding false alarms. The code is deliberately small enough to read line by line.</p>
+<table>
+<thead>
+<tr>
+  <th>Tool</th>
+  <th>Question answered</th>
+  <th>What it does <strong>not</strong> establish</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>labs/aurora.py</code></td>
+  <td>What does this assumed generator produce?</td>
+  <td>A physically valid sensor model</td>
+</tr>
+<tr>
+  <td><code>labs/audit.py</code></td>
+  <td>Are policy decisions and reported totals consistent with trace bytes?</td>
+  <td>Correctness of data-generation assumptions</td>
+</tr>
+<tr>
+  <td><code>labs/compare.py</code></td>
+  <td>Under stated costs and prevalence, which observed policy has lower expected loss?</td>
+  <td>A valid deployment prevalence, costs, or robust superiority</td>
+</tr>
+<tr>
+  <td><code>labs/modelcheck.py</code></td>
+  <td>Do four safety-style invariants hold in all 27 abstract sensor states?</td>
+  <td>Physical-system safety or equivalence to the simulator implementation</td>
+</tr>
+<tr>
+  <td><code>labs/passport.py</code></td>
+  <td>Have named files changed; which declared dependent claims must be revisited?</td>
+  <td>Genuine provenance, complete dependency coverage, or permission to act</td>
+</tr>
+</tbody>
+</table>
+<h2 id="lab-a-paired-experiments-and-decisions">Lab A — Paired experiments and decisions</h2>
+<p>Generate exactly the same latent episodes for <code>any</code> and <code>quorum</code> by holding the seed and generator parameters fixed:</p>
+<pre><code class="language-bash">python3 labs/aurora.py --policy any --seed 2026 --trials 5000 --out labs/any.csv
+python3 labs/aurora.py --policy quorum --seed 2026 --trials 5000 --out labs/quorum.csv
+python3 labs/audit.py labs/any.csv
+python3 labs/audit.py labs/quorum.csv
+python3 labs/compare.py labs/any.csv labs/quorum.csv --prevalence .15 --false-alarm-cost 2 --miss-cost 12 --acquisition-weight .05 --bootstrap 800
+</code></pre>
+<p>With <code>left=any</code> and <code>right=quorum</code>, the comparator reports a <strong>left-minus-right loss difference</strong>. Negative means <code>any</code> is better for the stipulated loss function; positive means <code>quorum</code> is better. A negative difference in miss rate can coexist with a positive overall loss difference because false alarms and misses are different errors.</p>
+<p>For an exact rational crossing of the two <em>observed</em> loss curves, run:</p>
+<pre><code class="language-bash">python3 labs/exact_switch.py labs/any.csv labs/quorum.csv
+</code></pre>
+<p>The output reports an exact fraction (for the provided run and costs, <code>19910/80843</code>, about 24.63% event prevalence). That boundary is exact <strong>conditional on the observed trace counts and stipulated losses</strong>, not an exact environmental prevalence or population-optimal decision.</p>
+<p>The estimand, for target event probability <code>p</code>, is</p>
+<p>&lt;div class=&quot;equation&quot;&gt;ΔR = p C&lt;sub&gt;FN&lt;/sub&gt;(m̂&lt;sub&gt;A&lt;/sub&gt; − m̂&lt;sub&gt;B&lt;/sub&gt;) + (1 − p) C&lt;sub&gt;FP&lt;/sub&gt;(f̂&lt;sub&gt;A&lt;/sub&gt; − f̂&lt;sub&gt;B&lt;/sub&gt;) + λ(c̄&lt;sub&gt;A&lt;/sub&gt; − c̄&lt;sub&gt;B&lt;/sub&gt;)&lt;/div&gt;</p>
+<p>Here <code>m</code> is the conditional miss rate, <code>f</code> the conditional false-alarm rate, <code>c</code> acquisition cost, and <code>C</code> and <code>λ</code> are stipulated loss parameters. The implementation pairs <strong>identical episodes</strong> and resamples event and quiet strata separately. The percentile bootstrap interval represents finite synthetic-sample variability under an independent-episode approximation; it does not quantify uncertainty in the assumed physical model, costs, or target prevalence.</p>
+<p><strong>Experiment:</strong> vary <code>--prevalence</code> to <code>.02</code> and <code>.40</code>, holding <em>both traces</em> fixed. Record whether the decision changes. Then deliberately compare against a second trace with seed <code>2027</code> and verify that the checker rejects the mismatched worlds rather than presenting an invalid paired comparison.</p>
+<p><strong>Acceptance:</strong> a table of risk differences, units, interval bounds, experimental conditions, and the first prevalence at which the preferred policy flips. Mark any extrapolation beyond the model explicitly.</p>
+<h2 id="lab-b-finite-state-adversarial-model-checking">Lab B — Finite-state adversarial model checking</h2>
+<pre><code class="language-bash">python3 labs/modelcheck.py
+</code></pre>
+<p>The checker enumerates all <code>3³ = 27</code> observable triples over <code>{NA, 0, 1}</code> and tests four properties: every alarm requires enough observations for its policy, quorum alarm implies any alarm, full absence of observations produces no alarm, and a quorum alarm requires at least two positive observations.</p>
+<p>A 27-state exhaustive check is a proof by enumeration <strong>for the named finite abstraction</strong>, assuming the enumerator is correctly implemented. It is not a mechanized kernel proof, nor does it establish whether physical sensors implement the abstraction. A test also injects a defective quorum implementation and confirms that the checker detects it.</p>
+<p><strong>Experiment:</strong> add a fourth state <code>STALE</code> to the model. Define which policy, if any, may use stale data. State an authorization/freshness invariant before editing code. Run exhaustive checking again, find a counterexample if the invariant fails, and keep both the counterexample and corrected statement.</p>
+<p><strong>Acceptance:</strong> a state-space definition, invariant list, exhaustive-state count, one genuine counterexample to a false stronger claim, and an explanation of the abstraction-to-implementation gap.</p>
+<h2 id="lab-c-evidence-passport-and-change-impact-gate">Lab C — Evidence passport and change-impact gate</h2>
+<p>The manifest records SHA-256 content hashes. It is intentionally labeled an <strong>unreviewed byte-identity manifest</strong>: a digest alone cannot establish who generated data, what the algorithm means, or whether a reviewer is independent.</p>
+<pre><code class="language-bash">python3 labs/passport.py create --root . --claim 'AURORA synthetic trace arithmetic only' --out evidence/passport.json labs/aurora.py labs/audit.py labs/modelcheck.py labs/output.csv README.md TOOLKIT.md MATH_BRIDGE.md build.py assets/site.css labs/compare.py labs/exact_switch.py labs/passport.py labs/any.csv labs/quorum.csv evidence/dependency-graph.json
+python3 labs/passport.py verify --root . --manifest evidence/passport.json --graph evidence/dependency-graph.json
+</code></pre>
+<p>The dependency graph connects claims to named inputs and to each other. If a byte changes, its dependent claims are marked for recheck via transitive reachability. This <strong>cannot</strong> prove that declared dependencies are complete. After a policy change, manually challenge whether additional assumptions, environment variables, and source authorities are missing from the graph.</p>
+<p><strong>Experiment:</strong> change one nonsemantic CSS comment and recheck; then restore and change a simulator constant. Record which claims are touched. If a file is not in the manifest, the toy gate cannot see it; this is an expected, documented limitation, not a passing assurance result.</p>
+<p><strong>Acceptance:</strong> original manifest, modified-file report, a trace of graph reachability, explicit unmodeled dependencies, and a justified recertification plan.</p>
+<h2 id="lab-d-research-defense-including-negative-evidence">Lab D — Research defense, including negative evidence</h2>
+<pre><code class="language-bash">python3 -m unittest discover -s labs -p 'test_*.py' -v
+</code></pre>
+<p>Prepare a four-part evidence packet: a claim contract, method and generator versions, the exact commands and audit outputs, and a defect/limitations register. The strongest scientific criticism should be about <strong>whether AURORA's synthetic model is appropriate to the question</strong>, not whether a CSV addition was implemented correctly.</p>
+<p>A second reviewer should independently specify what would refute the system claim before seeing the conclusion. Keep the review plan and the findings separate; an independent source-code file does not, by itself, constitute independent scholarly review.</p>
+<p><strong>Acceptance:</strong> the examiner can reproduce a positive result, reproduce a deliberately rejected corrupted input, show a finite counterexample to a too-strong theorem, and identify one condition under which the whole exercise would be decision-irrelevant.</p>
+<h2 id="recommended-completion-standard">Recommended completion standard</h2>
+<table>
+<thead>
+<tr>
+  <th>Level</th>
+  <th>Minimum evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Practiced</td>
+  <td>Commands run; result files and assumptions preserved</td>
+</tr>
+<tr>
+  <td>Reproducible candidate</td>
+  <td>A fresh environment reproduces reported counts and hashes</td>
+</tr>
+<tr>
+  <td>Verified computation</td>
+  <td>A named checker recomputes a clearly stated property from the trace</td>
+</tr>
+<tr>
+  <td>Independently criticized</td>
+  <td>A separately specified adversarial protocol tests model and proof dependencies</td>
+</tr>
+<tr>
+  <td>Research contribution</td>
+  <td>Relevant dated prior art and independent scholarly scrutiny support originality and usefulness</td>
+</tr>
+</tbody>
+</table>
+<p>No local script automatically promotes a result between levels. See the <a href="math-bridge.html">quantitative foundations bridge</a> for technical coursework that a terminal-degree researcher should command alongside these labs.</p>
+</article><aside class="rail"><div class="rail-box"><h3>On this page</h3><ul class="contents"><li><a href="#the-reproducible-toolchain">The reproducible toolchain</a></li><li><a href="#lab-a-paired-experiments-and-decisions">Lab A — Paired experiments and decisions</a></li><li><a href="#lab-b-finite-state-adversarial-model-checking">Lab B — Finite-state adversarial model checking</a></li><li><a href="#lab-c-evidence-passport-and-change-impact-gate">Lab C — Evidence passport and change-impact gate</a></li><li><a href="#lab-d-research-defense-including-negative-evidence">Lab D — Research defense, including negative evidence</a></li><li><a href="#recommended-completion-standard">Recommended completion standard</a></li></ul><a class="button" href="index.html#sessions">← Full course index</a></div></aside></div></main><footer class="wrap footer"><span>Independent open course · doctoral research-skills supplement · no degree or certification granted</span>
+    <span>Format inspired by <a href="https://missing.csail.mit.edu/" target="_blank" rel="noopener noreferrer">MIT's Missing Semester</a> · <a href="LICENSE.md">Licenses</a></span></footer>
+<script src="assets/site.js" defer></script></body></html>
