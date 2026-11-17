@@ -53,7 +53,7 @@ test("The Warrant has its own legal-evidence route and never claims judicial pow
  assert.ok(intel.includes("commonwealth-warrant.html"));
  assert.ok(app.includes("Technical Proof Passport"));
  assert.ok(app.includes("../commonwealth-warrant.html"));
- assert.doesNotMatch(js,/fetch\\s*\\(|localStorage|sessionStorage|indexedDB|XMLHttpRequest|sendBeacon/);
+ assert.doesNotMatch(js,/fetch\s*\(|localStorage|sessionStorage|indexedDB|XMLHttpRequest|sendBeacon/);
 });
 test("Two self-contained working interfaces are linked from an accessible product page",()=>{
  const page=text("docs/commonwealth.html");
