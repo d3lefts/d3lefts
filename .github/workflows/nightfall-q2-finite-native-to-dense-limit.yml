@@ -1,0 +1,71 @@
+name: NIGHTFALL Q2 finite C105 to genuine original-source dense label limit
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - 'research/nightfall/formalization/universal/InfinitePiQ2FiniteNativeToDenseLimit.lean'
+      - '.github/workflows/nightfall-q2-finite-native-to-dense-limit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: q2-finite-native-to-dense-label-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  original-source-native-to-limit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile complete original-source finite C105 and dense-label limit dependency graph
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          from scripts.nightfall_q2_certify import local_sources, closure, sha256, ROOT
+          import json, shutil, subprocess
+          files=local_sources()
+          ws=Path("/tmp/mathlib4")
+          out=ws/".lake/build/lib/lean"
+          out.mkdir(parents=True,exist_ok=True)
+          receipts=Path("lean-receipts/q2-native-c105-dense-limit")
+          receipts.mkdir(parents=True,exist_ok=True)
+          provenance=[]
+          for name in closure("InfinitePiQ2FiniteNativeToDenseLimit",files):
+              src=files[name]
+              dst=ws/(name+".lean")
+              shutil.copyfile(src,dst)
+              assert sha256(src)==sha256(dst)
+              print("BUILD ORIGINAL SOURCE",name,flush=True)
+              subprocess.run(["lake","env","lean","-o",str(out/(name+".olean")),name+".lean"],cwd=ws,check=True,timeout=1200)
+              provenance.append({"path":str(src.relative_to(ROOT)),"sha256":sha256(src)})
+          (receipts/"sources.json").write_text(json.dumps(provenance,indent=2)+"\n")
+          PY
+      - name: Strict exact named transitive finite C105 to infinite-source limit theorem
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiQ2FiniteNativeToDenseLimit.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InfinitePiQ2FiniteNativeToDenseLimit.source_q2_C105_from_finite_native_label_models \
+            --json-out lean-receipts/q2-native-c105-dense-limit/strict.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-native-c105-dense-limit/strict.json
+      - name: Preserve exact head and source bytes
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/q2-native-c105-dense-limit
+          git rev-parse HEAD > lean-receipts/q2-native-c105-dense-limit/HEAD
+          cat lean-toolchain > lean-receipts/q2-native-c105-dense-limit/TOOLCHAIN
+          sha256sum research/nightfall/formalization/universal/InfinitePiQ2FiniteNativeToDenseLimit.lean > lean-receipts/q2-native-c105-dense-limit/SOURCE_SHA256
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: q2-native-c105-dense-limit-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/q2-native-c105-dense-limit
+          if-no-files-found: warn
