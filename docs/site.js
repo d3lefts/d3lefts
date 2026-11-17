@@ -27,6 +27,9 @@
 
  const main=document.querySelector("main");
  const page=location.pathname.split("/").pop()||"index.html";
+ // The Commonwealth civic family has a separate identity and its own navigation.
+ // Keep the basic mobile menu above, but do not inject NIGHTFALL research routes.
+ if(page==="commonwealth.html"||page.startsWith("commonwealth-"))return;
  // The two entrances are distinct documents: NULL FIELD is active, NEW MOON is archival. Source pages remain shared,
  // but offer both destination routes independently of the reading palette.
  const header=document.querySelector(".header");
