@@ -84,7 +84,47 @@ theorem source_condExp_lifted_label_atom_sum
     rw [source_label_indicator_integral_eq_atom μ φ hφ i a]
   exact hcore.trans (Filter.Eventually.of_forall htarget)
 
+/-- The genuine original-product L² Hilbert heat-bath, not merely L¹
+conditional expectation, is the exact finite-table atom-weight
+heat-bath expression. The bounded lift's L² witness is constructed
+within the theorem statement, with no caller projection oracle. -/
+theorem sourceOtherProjection_lifted_label_atom_sum_ae
+    (φ : ∀ i, X i → Y i) (hφ : ∀ i, Measurable (φ i))
+    (g : ((j : ι) → Y j) → ℝ) (hg : Measurable g)
+    (B : ℝ) (hB : 0 ≤ B)
+    (hbound : ∀ y, |g y| ≤ B)
+    (i : ι) [Fintype (Y i)] [DecidableEq (Y i)] :
+    let f : ((j : ι) → X j) → ℝ :=
+      fun x => g (sourceLabelMap φ x)
+    let hmem : MemLp f (2 : ENNReal) (Measure.infinitePi μ) :=
+      MemLp.of_bound
+        ((hg.comp (sourceLabelMap_measurable φ hφ)).aestronglyMeasurable)
+        B (Filter.Eventually.of_forall (fun x => by
+          simpa only [Real.norm_eq_abs, Function.comp_apply] using
+            hbound (sourceLabelMap φ x)))
+    (↑↑↑(sourceOtherProjection μ i hmem.toLp)) =ᵐ[Measure.infinitePi μ]
+      (fun x => ∑ a : Y i,
+        ((μ i).map (φ i)).real {a} *
+          g (Function.update (sourceLabelMap φ x) i a)) := by
+  dsimp only
+  have hcore :=
+    sourceOtherProjection_lifted_finite_label_ae
+      μ φ hφ g hg B hB hbound i
+  have htarget : ∀ x : ((j : ι) → X j),
+      (∑ a : Y i,
+        (∫ b : X i, (if φ i b = a then (1 : ℝ) else 0) ∂ μ i) *
+          g (Function.update (sourceLabelMap φ x) i a)) =
+      (∑ a : Y i,
+        ((μ i).map (φ i)).real {a} *
+          g (Function.update (sourceLabelMap φ x) i a)) := by
+    intro x
+    apply Finset.sum_congr rfl
+    intro a _
+    rw [source_label_indicator_integral_eq_atom μ φ hφ i a]
+  exact hcore.trans (Filter.Eventually.of_forall htarget)
+
 #print axioms Nightfall.InfinitePiQ2LabelAtomMass.source_label_indicator_integral_eq_atom
+#print axioms Nightfall.InfinitePiQ2LabelAtomMass.sourceOtherProjection_lifted_label_atom_sum_ae
 #print axioms Nightfall.InfinitePiQ2LabelAtomMass.source_condExp_lifted_label_atom_sum
 
 end Nightfall.InfinitePiQ2LabelAtomMass
