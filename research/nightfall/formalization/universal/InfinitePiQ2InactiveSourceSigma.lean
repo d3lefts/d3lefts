@@ -126,10 +126,19 @@ theorem sourceOtherProjection_fixes_inactive_finiteProjection
   have hmem : g ∈ lpMeas ℝ ℝ (sourceOtherSigma (X := X) i)
       (2 : ENNReal) (Measure.infinitePi μ) :=
     mem_lpMeas_iff_aestronglyMeasurable.mpr hlarge
+  change
+    (condExpL2 ℝ ℝ (sourceOtherSigma_le (X := X) i) g :
+      Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) = g
+  rw [condExpL2]
+  haveI : Fact (sourceOtherSigma (X := X) i ≤
+      (inferInstance : MeasurableSpace ((j : ι) → X j))) :=
+    ⟨sourceOtherSigma_le (X := X) i⟩
   let gg : lpMeas ℝ ℝ (sourceOtherSigma (X := X) i)
       (2 : ENNReal) (Measure.infinitePi μ) := ⟨g, hmem⟩
+  have h_coe_gg :
+      (gg : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) = g := rfl
   have hfix := Submodule.orthogonalProjectionOnto_mem_subspace_eq_self gg
-  simpa only [sourceOtherProjection, condExpL2, gg, g] using hfix
+  rw [← h_coe_gg, hfix]
 
 /-- The actual original infinite-product influence of an F-coordinate
 conditional projection is identically zero at every coordinate outside F. -/
