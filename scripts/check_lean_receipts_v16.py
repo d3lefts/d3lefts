@@ -6,6 +6,7 @@ import re
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
+CURRENT=ROOT/"docs/current-lean-proof-receipts-20261116.json"
 MANIFEST=ROOT/"docs/current-lean-proof-receipts-20261115.json"
 EXPECTED={
 "unrestricted-q2-105":("ed945639f7cbe26ba8fdb50d691127c01cdf863f",43671321904,"unrestricted-finite-product"),
@@ -48,11 +49,33 @@ def check():
             assert re.search(r"\btheorem\s+"+re.escape(name)+r"\b",source.decode("utf-8")),("missing theorem",identifier)
         assert "scope" in e["certification_scope"].lower() or len(e["certification_scope"])>30
     assert found==EXPECTED.keys()|{"pure-sector-q2-95"},found
+
+    current=json.loads(CURRENT.read_text("utf-8"))
+    assert current["previous_unrestricted_degree_two"]==m["current_unrestricted_degree_two"]
+    newest=current["current_unrestricted_degree_two"]
+    assert newest["pr"]==587 and newest["receipt_run"]==43732382337
+    assert newest["independent_scalar_run"]==43732382354
+    assert abs(newest["coefficient"]-105.41623981998771)<1e-12
+    fresh=current["november16_named_lean_receipts"]
+    assert len(fresh)==1 and fresh[0]["id"]=="unrestricted-q2-105-416"
+    e=fresh[0]
+    p=Path(e["source"])
+    assert not p.is_absolute() and ".." not in p.parts
+    source=(ROOT/p).read_bytes()
+    blob=hashlib.sha1(b"blob "+str(len(source)).encode()+b"\x00"+source).hexdigest()
+    assert blob==e["source_git_blob_sha1"]==newest["source_git_blob_sha1"]=="eb9d1422f14f0f742fa79e7424c269ab83b22ba2"
+    assert e["pinned_lean_original_run"]==newest["receipt_run"]
+    assert e["independent_scalar_run"]==newest["independent_scalar_run"]
+    assert e["original_head"]==newest["original_head"]=="784c76669d08fa60e170c32fc379a6768c50e9e1"
+    assert re.search(r"\btheorem\s+"+re.escape(e["theorem"])+r"\b",source.decode("utf-8"))
+    assert e["source_proof_status"]=="unrestricted-finite-product" and e["all_length_c96_proved"] is False
+    assert current["unrestricted_sub100"]=="NOT PROVED"
     q=json.loads((ROOT/"docs/active-proof-passport.json").read_text("utf-8"))
-    assert q["current_named_certificate_scope"]["finite_q2"]["strongest_merged"]["pr"]==564
+    assert q["current_named_certificate_scope"]["finite_q2"]["strongest_merged"]["pr"]==587
     assert q["last_certificate_reconciliation_20261115"]["unrestricted_96_57352"]=="OPEN"
+    assert q["current_named_lean_receipts"]=="docs/current-lean-proof-receipts-20261116.json"
     frontier=json.loads((ROOT/"research/catalogue/CURRENT_FRONTIER.json").read_text("utf-8"))
-    assert frontier["best_unrestricted_source_q2_certified"]=="q2-unrestricted-105"
+    assert frontier["best_unrestricted_source_q2_certified"]=="q2-unrestricted-105-416"
     assert frontier["unrestricted_sub100_unconditional"]=="not_proved"
-    print("PASS: v16 five exact-blob Lean receipt scopes; unrestricted C96 OPEN; main frontier C105")
+    print("PASS: v16 six exact-blob Lean receipt scopes including newest C105.416; unrestricted C96 OPEN")
 if __name__=="__main__":check()

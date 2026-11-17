@@ -99,7 +99,8 @@ def main():
                 frozen = f">Frozen {expected_lean_sources}-source historical Lean provenance" in html
                 if not (legacy or frozen):
                     raise ValueError("Deployed historical Lean source census is stale relative to repository manifest")
-                if "current-lean-proof-receipts-20261114.json" not in parsed.links:
+                current_receipts = registry["current_named_lean_receipts"].removeprefix("docs/")
+                if current_receipts not in parsed.links:
                     raise ValueError("Current Lean named-certificate index link missing from public passport")
             if path == "portfolio.html" and "noindex" not in parsed.meta.get("robots", ""):
                 raise ValueError("Unlisted portfolio indexing instruction not present")

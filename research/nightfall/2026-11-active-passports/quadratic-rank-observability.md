@@ -1,9 +1,19 @@
 # Proof Passport v2 — Quadratic influence and rank-optimal adaptive observation
 
 **Claim IDs:** active registry q2-influence, q2-observation; catalogue NF-PS-QUADRATIC-20261110 and NF-OBS-QUADRATIC-20261110.  
-**Checkpoint:** 2026-11-14 current-scope update; 2026-11-12 manuscript history retained. **Status:** finite scalar source Q2 kernel-certified at 1064.958; Hilbert/adaptive and measure-theoretic extensions remain analytic; externally refereed and global priority gates open. This dossier updates the live scope without rewriting immutable v7/v8 source evidence.
+**Checkpoint:** 2026-11-16 current certified finite-Q2 status; prior 2026-11-14 and 2026-11-15 receipts retained as dated history. **Status:** finite scalar original-source Q2 kernel-certified at C105.41623981998771; Hilbert/adaptive and measure-theoretic extensions remain analytical; non-author referee and global priority gates open. This dossier updates the live scope without rewriting immutable v7/v8 source evidence.
 
-## 14 November 2026 — current scoped proof status (supersedes the old finite-scalar status below)
+## 16 November 2026 — v16 exact-source Q2 reconciliation (current)
+
+The strongest **merged, unrestricted, finite common-alphabet** original-source degree-two theorem is now
+
+\[\operatorname{Var}_p(f)^2\le[2(1+\sqrt2)\sqrt3+11901/6250]^2 B^2\max_i I_i^p(f)\approx105.41623981998771 B^2\max_i I_i^p(f).\]
+
+Proof source: [`ActualSourceQ223802Terminal.lean`](../formalization/observability/ActualSourceQ223802Terminal.lean), exact Git blob `eb9d1422f14f0f742fa79e7424c269ab83b22ba2`, [merged PR #587](https://github.com/d3lefts/d3lefts/pull/587) at head `784c76669d08fa60e170c32fc379a6768c50e9e1`. The [pinned full original-source named-declaration Lean run 43732382337](https://github.com/d3lefts/d3lefts/actions/runs/43732382337) and [independent rational Bernstein/scalar run 43732382354](https://github.com/d3lefts/d3lefts/actions/runs/43732382354) both completed successfully. Original source distribution, real bounded function, degree ≤2, pointwise boundedness, and original resampling-influence normalization are unchanged; nonzero singletons and zero atoms are allowed.
+
+**Historical, still valid:** C105.741756923658 from #564, C107.393 from #558, C364.553 from #525 and older certificates. **Not promoted:** conditional C96.100399 (unproved 6B owner cover), unrestricted C96.573520, an arbitrary-index/all-L² Lean terminal, any Hilbert/rank-r adaptive-query end-to-end theorem, and independent novelty/peer-review status. The November 14–15 notes below are retained as *dated* historical checkpoints.
+
+## 14 November 2026 — historical scoped proof checkpoint
 
 **Finite original-source scalar Q2 is now STRICT LEAN-CERTIFIED** at coefficient
 `C₂ = 407 + 138√2 + 188√3 + 56√6 ≈ 1064.958449026294`,

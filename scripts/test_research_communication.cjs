@@ -49,7 +49,7 @@ assert.ok(quantum.includes("Conditional on quadratic C₂"),"Quantum implication
 assert.ok(dispatch.includes("Sixty-seven scoped Lean source modules"),"Current provenance census drift");
 const registry=JSON.parse(read("docs/active-proof-passport.json"));
 const manifest=JSON.parse(read("docs/lean-certificate-provenance.json"));
-assert.equal(registry.version,15);
+assert.equal(registry.version,16);
 assert.equal(registry.claims.length,15);
 assert.equal(manifest.modules.length,67);
 assert.ok(registry.claims.find(x=>x.id==="q2-influence").claim.includes("105.741756923658")&&registry.claims.find(x=>x.id==="q2-influence").claim.includes("1064.958"));
