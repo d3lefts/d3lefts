@@ -73,9 +73,10 @@ given ALL the other sites is its original marginal integral. This
 is a genuine conditional expectation, not an assumed heat-bath operator. -/
 theorem source_condExp_coordinate_test
     (i : ι) (h : X i → ℝ) (hh : Measurable h) :
-    (Measure.infinitePi μ)
-        [sourceOneCoordTest i h | sourceOtherSigma (X := X) i] =ᵐ[Measure.infinitePi μ]
-      (fun _ : (j : ι) → X j => ∫ a : X i, h a ∂ μ i) := by
+    MeasureTheory.condExp (sourceOtherSigma (X := X) i)
+        (Measure.infinitePi μ) (sourceOneCoordTest i h)
+      =ᵐ[Measure.infinitePi μ]
+        (fun _ : (j : ι) → X j => ∫ a : X i, h a ∂ μ i) := by
   let e : ((j : ι) → X j) → X i := fun x => x i
   let m₁ : MeasurableSpace ((j : ι) → X j) :=
     MeasurableSpace.comap e (inferInstance : MeasurableSpace (X i))
@@ -105,7 +106,7 @@ theorem independent_condExp_product
     {Ω : Type*} [m : MeasurableSpace Ω] {m₁ m₂ : MeasurableSpace Ω}
     {ν : Measure Ω}
     (hm₁ : m₁ ≤ m) (hm₂ : m₂ ≤ m)
-    [SigmaFinite (ν.trim hm₂)]
+    [IsProbabilityMeasure ν]
     (hind : Indep m₁ m₂ ν)
     (u v : Ω → ℝ)
     (hu : StronglyMeasurable[m₁] u)
