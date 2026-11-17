@@ -9,8 +9,6 @@ on:
       - "docs/**"
       - "scripts/verify_public_pages.py"
       - ".github/workflows/audit-live-pages.yml"
-  schedule:
-    - cron: "23 7 * * *"
   workflow_dispatch:
 permissions:
   contents: read
