@@ -222,4 +222,3 @@ html[data-nf-theme="dusk"] .nf-deep-disclosure > summary span {color:var(--muted
 #main>.nf-discovery-section .section-intro{line-height:1.73}
 @media(max-width:980px){#main>.nf-discovery-section{grid-template-columns:1fr}}
 @media(max-width:620px){#main>.nf-discovery-section{padding:24px;margin-block:38px}}
-

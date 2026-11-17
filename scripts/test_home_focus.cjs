@@ -9,8 +9,9 @@ assert.equal((nav.match(/<a\b/g)||[]).length,3,"Keep the three primary research 
 for(const href of ['href="./" aria-current="page"','href="constellation.html"','href="review.html"'])assert.ok(nav.includes(href));
 const actions=[...field.matchAll(/<div class="hero-actions"[^>]*>([\s\S]*?)<\/div>/g)]
  .map(m=>[...m[1].matchAll(/<a\b[^>]*href="([^"]+)"/g)].map(x=>x[1]));
-assert.deepEqual(actions,[["#nightfall-story","#flagships"]],
- "NIGHTFALL first screen must invite story-led exploration and provide a direct flagship research route");
+assert.deepEqual(actions,[["#first-minute","#flagships"]],
+ "NIGHTFALL first screen must offer a one-minute evidence orientation and a direct flagship research route");
+assert.ok(field.includes('id="first-minute"')&&field.indexOf('id="first-minute"')<field.indexOf('id="nightfall-story"'),"Evidence guide must precede the full research story");
 assert.ok(field.includes('href="mathematical-results.html"'),"Specialist mathematical research entry point missing");
 assert.ok(moon.includes('href="evidence.html#public-downloads"')&&moon.includes('href="review.html#erdos"'),
  "NEW MOON must expose public frozen evidence and independent Erdős audit");

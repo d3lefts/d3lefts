@@ -7,6 +7,18 @@ const moon=readFileSync("docs/new-moon.html","utf8");
 const styles=readFileSync("docs/home-rhythm.css","utf8");
 const count=(s,re)=>(s.match(re)||[]).length;
 
+test("The first-minute orientation is readable, bounded and evidence-status faithful",()=>{
+ const start=field.indexOf('id="first-minute"');
+ assert.ok(start>field.indexOf('id="hero-title-archive"')&&start<field.indexOf('id="nightfall-story"'));
+ assert.ok(field.includes('href="#first-minute">Start here · one minute'));
+ assert.ok(field.includes('id="nf-first-minute-title"'));
+ for(const phrase of ["THE OBJECT","THE CHECK","THE EDGE","a named Lean declaration","separate tests"])
+   assert.ok(field.includes(phrase),"Missing novice guidance: "+phrase);
+ assert.equal(count(field,/<article><span class="nf-origin-number">0[1-3] \/ THE /g),3);
+ const opening=readFileSync("docs/home-opening-cinema.css","utf8");
+ assert.ok(field.includes('class="nf-origin-story wrap nf-first-minute"')&&opening.includes(".nf-first-minute .nf-origin-chapters"),"Missing reused responsive story layout for novice guide");
+});
+
 test("NIGHTFALL introduces compounding discovery while preserving current product-space research and exact claim limits",()=>{
  const stages=['<section class="hero wrap nf-opening"','id="nightfall-story"','<section class="nf-cinema',
                '<section class="section wrap flagships"','id="featured-title"',
