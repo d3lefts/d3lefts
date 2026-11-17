@@ -2,7 +2,7 @@
 
 **Status:** kernel-checked, source-matched Lean theorems at the pinned
 environment (Lean 4.36.0-rc2, Mathlib `9d581dfff2e41de989072ea63abf3daf69311520`).
-CI receipt: RECEIPT_PENDING.
+CI receipt: [run 44167592199](https://github.com/d3lefts/d3lefts/actions/runs/44167592199) at head `5b3a598aaf3b8887328dde2675e924a1cc8347e7`: full 118-module original-source closure compiled in dependency order; strict `lean_bridge.py` audit of 10 named declarations, all `allowlisted_dependencies`. Source SHA-256: `InfinitePiQ2CellAverage.lean` `7206bcf38006e1a87d2d50e71a391e9c3163243658ca039abf3036ce818d0740`, `InfinitePiQ2UnconditionalTerminal.lean` `75b73bc7989bfced714e99d8fe699cdd71a6c087da85ba2788a88a76ae5f62f2`.
 Independent human statement review, priority and novelty are **open** and are
 not implied by compilation.
 
