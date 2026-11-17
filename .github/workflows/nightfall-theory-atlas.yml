@@ -1,0 +1,40 @@
+name: NIGHTFALL Theory Atlas — static source and interaction audit
+on:
+  pull_request:
+    paths:
+      - 'docs/theory.html'
+      - 'docs/theory.css'
+      - 'docs/theory.js'
+      - 'docs/theory-map-data.js'
+      - 'docs/index.html'
+      - 'docs/mathematical-results.html'
+      - 'tests/nightfall-theory-atlas.test.cjs'
+      - '.github/workflows/nightfall-theory-atlas.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nightfall-theory-atlas-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  scoped-static:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Verify runtime
+        run: node --version
+      - name: JavaScript syntax
+        run: |
+          node --check docs/theory-map-data.js
+          node --check docs/theory.js
+          node --check tests/nightfall-theory-atlas.test.cjs
+      - name: Audit curated sources, typed edges and accessible page
+        run: node --test tests/nightfall-theory-atlas.test.cjs
+      - name: Capture exact source identity
+        run: |
+          git rev-parse HEAD
+          sha256sum docs/theory.html docs/theory.css docs/theory.js docs/theory-map-data.js tests/nightfall-theory-atlas.test.cjs
