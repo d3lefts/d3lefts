@@ -146,4 +146,45 @@ theorem source_finite_info_L2_contract
     (sourceFiniteCoordinateSigma_le (X := X) F) f
 
 
+/-- Each actual finite-cylinder event is measurable for its finite
+coordinate-information sigma-algebra. -/
+theorem source_finite_info_cylinder_measurable
+    (F : Finset ι) (S : Set ((i : F) → X i))
+    (hS : MeasurableSet S) :
+    MeasurableSet[sourceFiniteCoordinateSigma (X := X) F] (cylinder F S) := by
+  exact ⟨S, hS, rfl⟩
+
+/-- Finite-coordinate conditional expectation fixes the indicator of
+every measurable cylinder supported on those coordinates. -/
+theorem source_finite_info_fixes_cylinder
+    (F : Finset ι) (S : Set ((i : F) → X i))
+    (hS : MeasurableSet S) (c : ℝ) :
+    (condExpL2 ℝ ℝ (sourceFiniteCoordinateSigma_le (X := X) F)
+      (sourceCylinderIndicator μ (cylinder F S)
+        ((mem_measurableCylinders _).mpr ⟨F, S, hS, rfl⟩) c) :
+      Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) =
+      sourceCylinderIndicator μ (cylinder F S)
+        ((mem_measurableCylinders _).mpr ⟨F, S, hS, rfl⟩) c := by
+  have hs := source_finite_info_cylinder_measurable (X := X) F S hS
+  simpa only [sourceCylinderIndicator] using
+    (condExpL2_indicator_of_measurable
+      (sourceFiniteCoordinateSigma_le (X := X) F) hs
+      (measure_ne_top (Measure.infinitePi μ) (cylinder F S)) c)
+
+/-- An original-product finite-information conditional expectation has
+exactly the original source mean, not merely an assumed expectation. -/
+theorem source_finite_info_preserves_mean
+    (F : Finset ι)
+    (f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) :
+    (∫ x, (condExpL2 ℝ ℝ (sourceFiniteCoordinateSigma_le (X := X) F) f :
+      Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) x ∂ Measure.infinitePi μ) =
+    (∫ x, f x ∂ Measure.infinitePi μ) := by
+  have h := integral_condExpL2_eq
+    (sourceFiniteCoordinateSigma_le (X := X) F) f
+    (MeasurableSet.univ :
+      MeasurableSet[sourceFiniteCoordinateSigma (X := X) F] Set.univ)
+    (measure_ne_top (Measure.infinitePi μ) Set.univ)
+  simpa only [MeasureTheory.setIntegral_univ] using h
+
+
 end Nightfall.InfinitePiQ2Density
