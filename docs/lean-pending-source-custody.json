@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 27,
+  "revision": 28,
   "as_of": "2026-11-17 UTC",
   "source_commit": "b9bd66f68e3c1f59896105e1b0d826dacedab6bf",
-  "scope": "Exact pending source custody includes newly promoted original-product heat-bath source, with frozen 67 historical records untouched. Scoped original-head pinned Lean CI for the pointwise source-level identity is separately recorded; full infinite-product L² terminal not certified. Two exact new original-product conditional tensor and Hilbert-projection files enrolled as pending source custody, with separate strict named source CI; no unconditional Q2 terminal or novelty promotion. Reconciled source-identical merged 4.36 named receipts for original-product finite-label, bounded source-conditional and label L2 isometry bridges; no historic ledger mutation or infinite-product theorem promotion. Reconciles seven extra original-source Lean blobs merged by parallel Q2 sessions (including source heat-bath and L2 bridges) as unreviewed custody without claiming unrestricted Q2 or overriding prior receipts. Reconcile changed merged SourceBoundedCondExp blob after strict source-level subSigma generalization while preserving older source receipt. Add exact merged supported-native C105.416 original source blob without promoting infinite-product or unreviewed claims. Reconcile three merged exact Lean source receipts for positive atom a.e. extraction, actual finite Boolean labels, and original-product all-L2 operator intertwinning; claim gates remain unreviewed and end-to-end infinite theorem open. Three main-merged original Q2 results on actual source law: label mean/variance, finite-label Hilbert residual degree/influence, and native positive-atom weighted L2 vanishing; source custody only, no unrestricted terminal promotion.",
+  "scope": "Exact pending source custody includes newly promoted original-product heat-bath source, with frozen 67 historical records untouched. Scoped original-head pinned Lean CI for the pointwise source-level identity is separately recorded; full infinite-product L² terminal not certified. Two exact new original-product conditional tensor and Hilbert-projection files enrolled as pending source custody, with separate strict named source CI; no unconditional Q2 terminal or novelty promotion. Reconciled source-identical merged 4.36 named receipts for original-product finite-label, bounded source-conditional and label L2 isometry bridges; no historic ledger mutation or infinite-product theorem promotion. Reconciles seven extra original-source Lean blobs merged by parallel Q2 sessions (including source heat-bath and L2 bridges) as unreviewed custody without claiming unrestricted Q2 or overriding prior receipts. Reconcile changed merged SourceBoundedCondExp blob after strict source-level subSigma generalization while preserving older source receipt. Add exact merged supported-native C105.416 original source blob without promoting infinite-product or unreviewed claims. Reconcile three merged exact Lean source receipts for positive atom a.e. extraction, actual finite Boolean labels, and original-product all-L2 operator intertwinning; claim gates remain unreviewed and end-to-end infinite theorem open. Three main-merged original Q2 results on actual source law: label mean/variance, finite-label Hilbert residual degree/influence, and native positive-atom weighted L2 vanishing; source custody only, no unrestricted terminal promotion. Source-certified original-product coordinate influence equality, native triple residual to pointwise degree, finite original-coordinate Boolean test factoring reconciled by exact immutable source blobs; no final infinite-product Q2 promotion.",
   "sources": [
     {
       "path": "research/nightfall/formalization/agent_safety/ArbitraryAgentSafety.lean",
@@ -2603,6 +2603,23 @@
       }
     },
     {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2FiniteBooleanTestFactor.lean",
+      "source_blob_sha": "8faa6ce4d34dac62d5aa025fd610acfb25941f91",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Original source exact-head Lean 4.36 strict theorem+axioms receipt 44134044618. Every original finite Boolean-cell event factors through finitely many original-coordinate measurable tests, independent of source alphabet cardinality; no full finite-table Q2 limit. No claimed human statement/novelty certification.",
+      "parallel_scoped_named_ci": {
+        "source_commit": "cb5cab34bff6c093667104f098aafcff65f17e6d",
+        "run": 44134044618,
+        "status": "source_scoped_original_head_only",
+        "kernel": "strict_named_compilation",
+        "theorem_scope": "Every original finite Boolean-cell event factors through finitely many original-coordinate measurable tests, independent of source alphabet cardinality; no full finite-table Q2 limit."
+      }
+    },
+    {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2FiniteCellDensity.lean",
       "source_blob_sha": "3cefdbefb7b950e455f937d0c136f0ebd6260252",
       "classification": "unreviewed-source",
@@ -2932,6 +2949,23 @@
       }
     },
     {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2SourceLabelExactInfluence.lean",
+      "source_blob_sha": "e1b90b02225fb9fb0b078522f0bb258b60197ddb",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Original source exact-head Lean 4.36 strict theorem+axioms receipt 44131027083. Actual original-product coordinate influence of L² finite-label pullback equals original-label coordinate influence, under exact source/label pushforward and finite site label; no unconditional infinite-product Q2 terminal. No claimed human statement/novelty certification.",
+      "parallel_scoped_named_ci": {
+        "source_commit": "8c128e1a949f323cb68286d43829eeaff3044122",
+        "run": 44131027083,
+        "status": "source_scoped_original_head_only",
+        "kernel": "strict_named_compilation",
+        "theorem_scope": "Actual original-product coordinate influence of L² finite-label pullback equals original-label coordinate influence, under exact source/label pushforward and finite site label; no unconditional infinite-product Q2 terminal."
+      }
+    },
+    {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2SourceLabelL2Intertwining.lean",
       "source_blob_sha": "4959df8185a1d4eaf4496b5481e885e4e178c956",
       "classification": "unreviewed-source",
@@ -2987,6 +3021,23 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact merged Git blob at dc14a2830ab834385cd30cdad94d38bdd86ceea0; pending historical custody only. Existing named-declaration kernel receipts are separate and retain their exact domain. No new terminal or human/novelty certification from this registry."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2TripleResidualDegree.lean",
+      "source_blob_sha": "e2bd75ce053e8b7ccf322c132effd03201186ba9",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Original source exact-head Lean 4.36 strict theorem+axioms receipt 44124045296. Finite native heat-bath third residual vanishing implies native pointwise degree two; separate nonnegative weighted/positive-atom L2 extraction necessary. No claimed human statement/novelty certification.",
+      "parallel_scoped_named_ci": {
+        "source_commit": "af2f632eb66c1f183147065e248e7ea5cb68ff4c",
+        "run": 44124045296,
+        "status": "source_scoped_original_head_only",
+        "kernel": "strict_named_compilation",
+        "theorem_scope": "Finite native heat-bath third residual vanishing implies native pointwise degree two; separate nonnegative weighted/positive-atom L2 extraction necessary."
+      }
     },
     {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2UniformInfluence.lean",
