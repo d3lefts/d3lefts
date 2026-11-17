@@ -3,6 +3,8 @@ on:
   pull_request:
     paths:
       - "docs/commonwealth*"
+      - "docs/commonwealth*/**"
+      - "scripts/test_commonwealth_standalone_browser.mjs"
       - "projects/commonwealth-os/deployment/**"
       - "tests/test_commonwealth_web_demo.mjs"
       - ".github/workflows/commonwealth-standalone-release.yml"
@@ -10,6 +12,8 @@ on:
     branches: [main]
     paths:
       - "docs/commonwealth*"
+      - "docs/commonwealth*/**"
+      - "scripts/test_commonwealth_standalone_browser.mjs"
       - "projects/commonwealth-os/deployment/**"
       - ".github/workflows/commonwealth-standalone-release.yml"
   workflow_dispatch:
