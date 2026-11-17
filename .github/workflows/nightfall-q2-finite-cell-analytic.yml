@@ -1,0 +1,21 @@
+name: NIGHTFALL Q2 exact finite-cell analytic negative controls
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-infinite-q2/**'
+      - '.github/workflows/nightfall-q2-finite-cell-analytic.yml'
+  push:
+    paths:
+      - 'research/nightfall/2026-11-infinite-q2/**'
+      - '.github/workflows/nightfall-q2-finite-cell-analytic.yml'
+  workflow_dispatch:
+
+jobs:
+  exact-finite-falsification:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Exact rational source/table and dependent negative-control replay
+        run: |
+          python3 research/nightfall/2026-11-infinite-q2/check_finite_cell_projection_exact.py
+          python3 research/nightfall/2026-11-infinite-q2/check_L2_degree_null_words_exact.py
