@@ -480,6 +480,7 @@ theorem mix (s t : Fin n → ℝ) :
     rw [h, e1j, Fintype.sum_bool]
     norm_num [unif]
     try ring
+    all_goals simp
   have e2' : ∀ i j, Q.b i j *
       E (fun σ => (if σ i then s i else t i) * (if σ j then s j else t j)) =
         Q.b i j * ((s i + t i) / 2 * ((s j + t j) / 2)) := by
