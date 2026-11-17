@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 20,
+  "revision": 21,
   "as_of": "2026-11-17 UTC",
   "source_commit": "b9bd66f68e3c1f59896105e1b0d826dacedab6bf",
-  "scope": "Exact pending source custody includes newly promoted original-product heat-bath source, with frozen 67 historical records untouched. Scoped original-head pinned Lean CI for the pointwise source-level identity is separately recorded; full infinite-product L² terminal not certified.",
+  "scope": "Exact pending source custody includes newly promoted original-product heat-bath source, with frozen 67 historical records untouched. Scoped original-head pinned Lean CI for the pointwise source-level identity is separately recorded; full infinite-product L² terminal not certified. Two exact new original-product conditional tensor and Hilbert-projection files enrolled as pending source custody, with separate strict named source CI; no unconditional Q2 terminal or novelty promotion.",
   "sources": [
     {
       "path": "research/nightfall/formalization/agent_safety/ArbitraryAgentSafety.lean",
@@ -2480,6 +2480,21 @@
       "receipt_scope": "PR #668 merged pinned Lean source for finite anchored source restrictions, scoped separately by exact PR-head workflow. This custody record asserts source integrity only, not a complete arbitrary-product Q2 theorem."
     },
     {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2ConditionalSourceTest.lean",
+      "source_blob_sha": "ce819ddb0796a266a8a9842c7205623d58c602d1",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Original infinite-product single-site coordinate conditional expectation and one-coordinate × complement tensor pull-out; four strict pinned named theorems, no arbitrary-function finite-cell commutation or unconditional Q2.",
+      "current_scoped_named_lean_receipt": {
+        "source_commit": "bd22e280537ce8124c25dae4c45be9c0eaf69dae",
+        "named_declaration": "Nightfall.InfinitePiQ2ConditionalSourceTest.source_condExp_coordinate_mul_other",
+        "run": 44103839708
+      }
+    },
+    {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2DegreeAverage.lean",
       "source_blob_sha": "64d4c16f5ebcc66e6235a76333452a923bdf4408",
       "classification": "unreviewed-source",
@@ -2618,6 +2633,21 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact merged Git blob at dc14a2830ab834385cd30cdad94d38bdd86ceea0; pending historical custody only. Existing named-declaration kernel receipts are separate and retain their exact domain. No new terminal or human/novelty certification from this registry."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2SourceHilbertTensor.lean",
+      "source_blob_sha": "6296b5d9635173d22e3837170ed5796589ba57dc",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Actual original-product condExpL2 heat-bath identification on integrable coordinate tensors; strict named foundational-axiom CI only; not full L2 finite-cell projection commutation or infinite Q2 terminal.",
+      "current_scoped_named_lean_receipt": {
+        "source_commit": "ebb2b4378c9353a60270a42f7a263ba55ef0e266",
+        "named_declaration": "Nightfall.InfinitePiQ2SourceHilbertTensor.sourceOtherProjection_tensor_ae",
+        "run": 44103373431
+      }
     },
     {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2TaggedSourceTransport.lean",
