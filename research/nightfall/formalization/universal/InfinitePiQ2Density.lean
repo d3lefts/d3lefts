@@ -219,6 +219,38 @@ theorem source_cylinder_generator_eventually_fixed
   intro G hFG
   exact source_finite_info_fixes_cylinder_of_subset μ F G hFG S hS c
 
+
+/-- Every finite real-linear combination of original-source finite-cylinder
+indicators is fixed by all sufficiently large finite-information
+orthogonal projections. This is the bridge from generators to their
+dense linear span, for arbitrary coordinate index types. -/
+theorem source_cylinder_span_eventually_fixed
+    (g : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))
+    (hg : g ∈ Submodule.span ℝ (sourceCylinderGenerators μ)) :
+    ∃ F : Finset ι, ∀ G : Finset ι, F ⊆ G →
+      (condExpL2 ℝ ℝ (sourceFiniteCoordinateSigma_le (X := X) G) g :
+        Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) = g := by
+  induction hg using Submodule.span_induction with
+  | mem g hg =>
+      exact source_cylinder_generator_eventually_fixed μ g hg
+  | zero =>
+      refine ⟨∅, ?_⟩
+      intro G hG
+      simp
+  | add x y hx hy hx' hy' =>
+      obtain ⟨F, hF⟩ := hx'
+      obtain ⟨H, hH⟩ := hy'
+      refine ⟨F ∪ H, ?_⟩
+      intro G hG
+      have hFG : F ⊆ G := Finset.Subset.trans Finset.subset_union_left hG
+      have hHG : H ⊆ G := Finset.Subset.trans Finset.subset_union_right hG
+      simpa only [map_add, Submodule.coe_add, hF G hFG, hH G hHG]
+  | smul c x hx hx' =>
+      obtain ⟨F, hF⟩ := hx'
+      refine ⟨F, ?_⟩
+      intro G hG
+      simpa only [map_smul, Submodule.coe_smul, hF G hG]
+
 /-- An original-product finite-information conditional expectation has
 exactly the original source mean, not merely an assumed expectation. -/
 theorem source_finite_info_preserves_mean
