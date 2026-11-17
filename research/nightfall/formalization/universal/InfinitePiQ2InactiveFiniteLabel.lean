@@ -36,7 +36,7 @@ variable [∀ i, IsProbabilityMeasure (μ i)]
 contained in the all-other-sites σ-algebra is unchanged by refreshing i. -/
 theorem sourceOtherProjection_fixes_subSigma_projection
     (m : MeasurableSpace ((j : ι) → X j))
-    (hm : m ≤ (MeasurableSpace.pi : MeasurableSpace ((j : ι) → X j)))
+    (hm : m ≤ (inferInstance : MeasurableSpace ((j : ι) → X j)))
     (i : ι) (hmi : m ≤ sourceOtherSigma (X := X) i)
     (f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) :
     sourceOtherProjection μ i
@@ -60,7 +60,7 @@ theorem sourceOtherProjection_fixes_subSigma_projection
       Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) = g
   rw [condExpL2]
   haveI : Fact (sourceOtherSigma (X := X) i ≤
-      (MeasurableSpace.pi : MeasurableSpace ((j : ι) → X j))) :=
+      (inferInstance : MeasurableSpace ((j : ι) → X j))) :=
     ⟨sourceOtherSigma_le (X := X) i⟩
   let gg : lpMeas ℝ ℝ (sourceOtherSigma (X := X) i)
       (2 : ENNReal) (Measure.infinitePi μ) := ⟨g, hmem⟩
@@ -96,6 +96,17 @@ theorem sourceFiniteLabelSigma_le_coordinate
   funext x j
   rfl
 
+/-- The finite-label sub-σ-algebra sits inside the declared original
+product measurable space. Naming the ambient here prevents typeclass
+synthesis from using the label σ-algebra itself as the ambient space. -/
+theorem sourceFiniteLabelSigma_le_pi
+    (F : Finset ι) (φ : ∀ j, X j → Y j)
+    (hφ : ∀ j, Measurable (φ j)) :
+    sourceFiniteLabelSigma (X := X) F φ ≤
+      (inferInstance : MeasurableSpace ((j : ι) → X j)) := by
+  exact (sourceFiniteLabelSigma_le_coordinate F φ hφ).trans
+    (sourceFiniteCoordinateSigma_le (X := X) F)
+
 /-- Cell label information over F never depends on an original source
 coordinate outside F. -/
 theorem sourceFiniteLabelSigma_le_other_of_not_mem
@@ -116,17 +127,14 @@ theorem sourceOtherProjection_fixes_inactive_labelProjection
     (f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) :
     sourceOtherProjection μ i
       (condExpL2 ℝ ℝ
-        ((sourceFiniteLabelSigma_le_coordinate F φ hφ).trans
-          (sourceFiniteCoordinateSigma_le (X := X) F)) f :
+        (sourceFiniteLabelSigma_le_pi F φ hφ) f :
         Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) =
       (condExpL2 ℝ ℝ
-        ((sourceFiniteLabelSigma_le_coordinate F φ hφ).trans
-          (sourceFiniteCoordinateSigma_le (X := X) F)) f :
+        (sourceFiniteLabelSigma_le_pi F φ hφ) f :
         Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) := by
   exact sourceOtherProjection_fixes_subSigma_projection μ
     (sourceFiniteLabelSigma (X := X) F φ)
-    ((sourceFiniteLabelSigma_le_coordinate F φ hφ).trans
-      (sourceFiniteCoordinateSigma_le (X := X) F))
+    (sourceFiniteLabelSigma_le_pi F φ hφ)
     i (sourceFiniteLabelSigma_le_other_of_not_mem F φ hφ i hi) f
 
 /-- No source-coordinate influence at all is introduced by a finite
@@ -138,8 +146,7 @@ theorem sourceCoordinateInfluence_inactive_labelProjection_zero
     (f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) :
     sourceCoordinateInfluence μ i
       (condExpL2 ℝ ℝ
-        ((sourceFiniteLabelSigma_le_coordinate F φ hφ).trans
-          (sourceFiniteCoordinateSigma_le (X := X) F)) f :
+        (sourceFiniteLabelSigma_le_pi F φ hφ) f :
         Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) = 0 := by
   unfold sourceCoordinateInfluence sourceCoordinateResidual
   rw [sourceOtherProjection_fixes_inactive_labelProjection μ F φ hφ i hi f]
