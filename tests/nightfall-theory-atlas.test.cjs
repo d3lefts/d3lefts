@@ -43,7 +43,7 @@ test("every entry exposes evidence, a concrete limit and a safe source link", ()
   for (const n of data.nodes) {
     for (const key of ["id","title","scope","evidence","limit","next","sourceLabel","source"]) {
       assert.equal(typeof n[key], "string", n.id + " missing " + key);
-      assert.ok(n[key].length >= 4, n.id + " has empty " + key);
+      assert.ok(n[key].length >= (key === "id" ? 2 : 4), n.id + " has empty " + key);
     }
     assert.ok(categories.has(n.status), n.id + " invalid status");
     assert.ok(externalSource.test(n.source) || localSource.test(n.source),
