@@ -64,14 +64,17 @@ theorem original_source_coordinate_integral
     _ = ∫ a : X i, h a ∂ μ i := by
       rw [Measure.infinitePi_map_eval]
 
+/-- A one-site observable on the actual source product. -/
+def sourceOneCoordTest (i : ι) (h : X i → ℝ)
+    (x : (j : ι) → X j) : ℝ := h (x i)
+
 /-- Original-product conditional expectation of a one-site source test
 given ALL the other sites is its original marginal integral. This
 is a genuine conditional expectation, not an assumed heat-bath operator. -/
 theorem source_condExp_coordinate_test
     (i : ι) (h : X i → ℝ) (hh : Measurable h) :
     (Measure.infinitePi μ)
-        [(fun x : (j : ι) → X j => h (x i)) |
-          sourceOtherSigma (X := X) i] =ᵐ[Measure.infinitePi μ]
+        [sourceOneCoordTest i h | sourceOtherSigma (X := X) i] =ᵐ[Measure.infinitePi μ]
       (fun _ : (j : ι) → X j => ∫ a : X i, h a ∂ μ i) := by
   let e : ((j : ι) → X j) → X i := fun x => x i
   let m₁ : MeasurableSpace ((j : ι) → X j) :=
@@ -94,12 +97,12 @@ theorem source_condExp_coordinate_test
     exact source_coordinate_other_sigma_indep μ i
   have heq := condExp_indep_eq h₁ h₂ hstrong hind
   have hint := original_source_coordinate_integral μ i h hh
-  simpa only [e, m₁, m₂, hint] using heq
+  simpa only [e, m₁, m₂, sourceOneCoordTest, hint] using heq
 
 /-- Pull-out of an independent site factor, a reusable operator law
 for finite-table indicator products. No independent-expectation oracle. -/
 theorem independent_condExp_product
-    {Ω : Type*} {m m₁ m₂ : MeasurableSpace Ω}
+    {Ω : Type*} [m : MeasurableSpace Ω] {m₁ m₂ : MeasurableSpace Ω}
     {ν : Measure Ω}
     (hm₁ : m₁ ≤ m) (hm₂ : m₂ ≤ m)
     [SigmaFinite (ν.trim hm₂)]
