@@ -1,0 +1,31 @@
+name: NIGHTFALL positive-support ANOVA Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/quantum/PositiveSupportANOVA.lean'
+      - '.github/workflows/nightfall-anova-positive-support.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  anova-positive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Build nonnegative interaction-support ANOVA kernel
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/quantum/PositiveSupportANOVA.lean /tmp/mathlib4/PositiveSupportANOVA.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/PositiveSupportANOVA.olean PositiveSupportANOVA.lean)
+      - name: Strict named theorem and axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          N=Nightfall.Quantum.PositiveSupportANOVA
+          python3 scripts/lean_bridge.py research/nightfall/formalization/quantum/PositiveSupportANOVA.lean --workspace /tmp/mathlib4 --strict --timeout 900 --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.supportGain_mono" --decl "$N.supportGain_supermodular" --json-out /tmp/positive-anova-receipt.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py /tmp/positive-anova-receipt.json
