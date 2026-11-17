@@ -394,5 +394,6 @@ theorem sourceL2Variance_eq_actual_variance
   rw [ProbabilityTheory.variance_eq_sub (Lp.memLp f)]
   unfold sourceL2Variance
   rw [hnorm]
+  simp only [Pi.pow_apply]
 
 end Nightfall.InfinitePiQ2Density
