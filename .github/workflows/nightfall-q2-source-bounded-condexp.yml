@@ -33,6 +33,7 @@ jobs:
           python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiQ2SourceBoundedCondExp.lean \
             --workspace /tmp/mathlib4 --strict --timeout 900 \
             --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InfinitePiQ2SourceBoundedCondExp.source_subSigma_condExp_essential_bound \
             --decl Nightfall.InfinitePiQ2SourceBoundedCondExp.source_finite_information_condExp_essential_bound \
             --json-out lean-receipts/q2-source-bound/bound.json
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-source-bound/bound.json

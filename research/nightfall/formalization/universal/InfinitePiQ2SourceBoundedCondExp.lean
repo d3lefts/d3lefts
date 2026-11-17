@@ -26,6 +26,40 @@ variable [∀ i, MeasurableSpace (X i)]
 variable (μ : (i : ι) → Measure (X i))
 variable [∀ i, IsProbabilityMeasure (μ i)]
 
+/-- Original-source conditional expectation is an essential L∞ contraction
+for ANY sub-σ-algebra of the true product measurable space, not merely
+finite-coordinate information. In particular, this applies to the
+finite-cell label σ-algebra of #725 without a positive-atom floor. -/
+theorem source_subSigma_condExp_essential_bound
+    (m : MeasurableSpace ((j : ι) → X j))
+    (hm : m ≤ (MeasurableSpace.pi : MeasurableSpace ((j : ι) → X j)))
+    (f : ((j : ι) → X j) → ℝ)
+    (B : ℝ)
+    (hf : Integrable f (Measure.infinitePi μ))
+    (hbound : ∀ᵐ x ∂(Measure.infinitePi μ), |f x| ≤ B) :
+    ∀ᵐ x ∂(Measure.infinitePi μ),
+      |(Measure.infinitePi μ)[f | m] x| ≤ B := by
+  letI : MeasurableSpace ((j : ι) → X j) := MeasurableSpace.pi
+  let ν : Measure ((j : ι) → X j) := Measure.infinitePi μ
+  have hlow : (fun _ : ((j : ι) → X j) => -B) ≤ᵐ[ν] f := by
+    filter_upwards [hbound] with x hx
+    exact (abs_le.mp hx).1
+  have hhigh : f ≤ᵐ[ν] (fun _ : ((j : ι) → X j) => B) := by
+    filter_upwards [hbound] with x hx
+    exact (abs_le.mp hx).2
+  have hlowExp :
+      ν[(fun _ : ((j : ι) → X j) => -B) | m] ≤ᵐ[ν] ν[f | m] :=
+    condExp_mono (integrable_const (-B)) hf hlow
+  have hhighExp :
+      ν[f | m] ≤ᵐ[ν] ν[(fun _ : ((j : ι) → X j) => B) | m] :=
+    condExp_mono hf (integrable_const B) hhigh
+  have hlow' : (fun _ : ((j : ι) → X j) => -B) ≤ᵐ[ν] ν[f | m] := by
+    simpa only [condExp_const hm] using hlowExp
+  have hhigh' : ν[f | m] ≤ᵐ[ν] (fun _ : ((j : ι) → X j) => B) := by
+    simpa only [condExp_const hm] using hhighExp
+  filter_upwards [hlow', hhigh'] with x hL hU
+  exact abs_le.mpr ⟨hL, hU⟩
+
 /-- A genuine source-product finite-information conditional expectation
 is an L∞ contraction in the exact almost-everywhere sense. -/
 theorem source_finite_information_condExp_essential_bound
@@ -58,6 +92,7 @@ theorem source_finite_information_condExp_essential_bound
   filter_upwards [hlow', hhigh'] with x hL hU
   exact abs_le.mpr ⟨hL, hU⟩
 
+#print axioms Nightfall.InfinitePiQ2SourceBoundedCondExp.source_subSigma_condExp_essential_bound
 #print axioms Nightfall.InfinitePiQ2SourceBoundedCondExp.source_finite_information_condExp_essential_bound
 
 end Nightfall.InfinitePiQ2SourceBoundedCondExp
