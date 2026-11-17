@@ -230,6 +230,7 @@ theorem source_cylinder_span_eventually_fixed
     ∃ F : Finset ι, ∀ G : Finset ι, F ⊆ G →
       (condExpL2 ℝ ℝ (sourceFiniteCoordinateSigma_le (X := X) G) g :
         Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) = g := by
+  classical
   induction hg using Submodule.span_induction with
   | mem g hg =>
       exact source_cylinder_generator_eventually_fixed μ g hg
@@ -268,7 +269,10 @@ theorem source_finite_info_L2_approx
   obtain ⟨F, hfixed⟩ := source_cylinder_span_eventually_fixed μ g hg
   refine ⟨F, ?_⟩
   intro G hFG
-  let P := condExpL2 ℝ ℝ (sourceFiniteCoordinateSigma_le (X := X) G)
+  let P : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ) →
+      Lp ℝ (2 : ENNReal) (Measure.infinitePi μ) :=
+    fun h => (condExpL2 ℝ ℝ (sourceFiniteCoordinateSigma_le (X := X) G) h :
+      Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))
   have hfixedg : (P g : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) = g :=
     hfixed G hFG
   have hlinear : (P (g - f) : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) =
