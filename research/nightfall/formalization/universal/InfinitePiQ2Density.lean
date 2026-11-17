@@ -313,4 +313,63 @@ theorem source_finite_info_preserves_mean
   simpa only [MeasureTheory.setIntegral_univ] using h
 
 
+
+/-- The original-product L² variance written using the actual product mean
+and the squared Hilbert norm. Its equality to the corresponding centered
+integral is the standard probability-space L² identity. -/
+noncomputable def sourceL2Variance
+    (f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) : ℝ :=
+  ‖f‖ ^ 2 - (∫ x, f x ∂ Measure.infinitePi μ) ^ 2
+
+/-- The true source-projection variance is arbitrarily close to the
+unprojected L² variance, uniformly for every sufficiently large finite
+coordinate information set, with no approximation hypothesis. -/
+theorem source_finite_info_variance_approx
+    (f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))
+    (ε : ℝ) (hε : 0 < ε) :
+    ∃ F : Finset ι, ∀ G : Finset ι, F ⊆ G →
+      sourceL2Variance μ f ≤
+        sourceL2Variance μ
+          (condExpL2 ℝ ℝ (sourceFiniteCoordinateSigma_le (X := X) G) f :
+            Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) + ε := by
+  have hdenom : 0 < 2 * (‖f‖ + 1) := by positivity
+  have hδ : 0 < ε / (2 * (‖f‖ + 1)) := div_pos hε hdenom
+  obtain ⟨F, happrox⟩ :=
+    source_finite_info_L2_approx μ f (ε / (2 * (‖f‖ + 1))) hδ
+  refine ⟨F, ?_⟩
+  intro G hFG
+  let P : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ) :=
+    (condExpL2 ℝ ℝ (sourceFiniteCoordinateSigma_le (X := X) G) f :
+      Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))
+  have hPnorm : ‖P‖ ≤ ‖f‖ := source_finite_info_L2_contract μ G f
+  have hclose : ‖f - P‖ < ε / (2 * (‖f‖ + 1)) :=
+    happrox G hFG
+  have htriangle : ‖f‖ ≤ ‖f - P‖ + ‖P‖ := by
+    calc
+      ‖f‖ = ‖(f - P) + P‖ := by congr 1; abel
+      _ ≤ ‖f - P‖ + ‖P‖ := norm_add_le _ _
+  have hdiff : ‖f‖ - ‖P‖ ≤ ‖f - P‖ := by linarith
+  have hsum : ‖f‖ + ‖P‖ ≤ 2 * (‖f‖ + 1) := by
+    have hf : 0 ≤ ‖f‖ := norm_nonneg f
+    linarith
+  have hmul :
+      (‖f‖ - ‖P‖) * (‖f‖ + ‖P‖) ≤
+        ‖f - P‖ * (2 * (‖f‖ + 1)) := by
+    calc
+      (‖f‖ - ‖P‖) * (‖f‖ + ‖P‖) ≤
+          ‖f - P‖ * (‖f‖ + ‖P‖) :=
+        mul_le_mul_of_nonneg_right hdiff (by positivity)
+      _ ≤ ‖f - P‖ * (2 * (‖f‖ + 1)) :=
+        mul_le_mul_of_nonneg_left hsum (norm_nonneg _)
+  have hsmall : ‖f - P‖ * (2 * (‖f‖ + 1)) < ε :=
+    (lt_div_iff₀ hdenom).mp hclose
+  have hmean :
+      (∫ x, P x ∂ Measure.infinitePi μ) =
+        (∫ x, f x ∂ Measure.infinitePi μ) :=
+    source_finite_info_preserves_mean μ G f
+  change ‖f‖ ^ 2 - (∫ x, f x ∂ Measure.infinitePi μ) ^ 2 ≤
+    ‖P‖ ^ 2 - (∫ x, P x ∂ Measure.infinitePi μ) ^ 2 + ε
+  rw [hmean]
+  nlinarith
+
 end Nightfall.InfinitePiQ2Density
