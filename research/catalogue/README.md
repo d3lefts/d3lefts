@@ -1,28 +1,38 @@
 # Canonical research catalogue
 
-**Dated:** 11 November 2026. **Audience:** external mathematicians, reviewers, and reproducibility engineers.
+**Originally indexed:** 11 November 2026. **Q2 reconciled:** 17 November 2026. **Audience:** external mathematicians, reviewers, and reproducibility engineers.
 
 This directory is the **canonical scholarly claim index** for selected principal results, supporting constructions and adverse experiments. The actual theorem texts, Lean sources, checkers, and historical evidence remain at their original paths: this migration is a *linking/metadata reorganization*, not a source rewrite. The historical [40-record selection](../nightfall/SITE_CURATED_40_20261030.json) and its 11 historical Proof Passports are preserved and not silently reclassified.
 
 
 **November 11 publication-preflight revision:** [four-paper research and referee queue](../../papers/publication-preflight-20261111/README.md), [source-custody map](../../papers/publication-preflight-20261111/SOURCE_MAP.md), and [independent mathematical review gates](../../papers/publication-preflight-20261111/REFEREE_GATES.md). The selected machine registry now includes individually scoped SLD sharpness, Werner inverse-k continuation and exact 4/5-shuffle entries. These entries do not certify novelty or convert package-only N5 bytes into GitHub reproducibility; they remain active unrefereed research claims.
 
-## Canonical current-status lookup — 16 November 2026
+## Canonical current-status lookup — 17 November 2026
 
 **Do not infer the latest theorem from this file's older historical prose or
 the original 11 November `CLAIMS.json` publication catalogue.** Those entries
 remain dated historical descriptions, not a continuously updated proof status.
 
-- [`CURRENT_FRONTIER.json`](CURRENT_FRONTIER.json) is the fail-closed,
-  exact-source ledger for selected certified statements. Its current strongest
-  merged original-source unrestricted finite-Q2 coefficient is
-  **K ≈ 105.741756923658**, named terminal
-  `Nightfall.Observability.ActualSourceQ2105Terminal.actual_source_q2_105_unconditional`,
-  source Git blob `ed945639f7cbe26ba8fdb50d691127c01cdf863f`,
-  historical strict pinned run [43671321904](https://github.com/d3lefts/d3lefts/actions/runs/43671321904).
-  The former K≈364.55268 entry and the older 1228.356 analytic
-  manuscript are **historical/superseded** as unrestricted coefficient
-  claims. Unrestricted sub-100 remains **unproved**.
+- [`CURRENT_FRONTIER.json`](CURRENT_FRONTIER.json) and [`CLAIMS.json`](CLAIMS.json)
+  both index the strongest **finite original-source** unrestricted Q2 coefficient:
+  **C ≈ 105.41623981998771**, including the native heterogeneous finite
+  alphabet theorem
+  `Nightfall.InfinitePiQ2NativeHeterogeneousTerminal.native_heterogeneous_q2_105416_unconditional`
+  in [`InfinitePiQ2NativeHeterogeneousTerminal.lean`](../nightfall/formalization/universal/InfinitePiQ2NativeHeterogeneousTerminal.lean),
+  source blob `b1e9f129b5636cbe5132f0c77baa65ef39149eca`,
+  strict pinned [run 44094971286](https://github.com/d3lefts/d3lefts/actions/runs/44094971286)
+  (merged PR #702). The on-positive-support finite variant is separately
+  certified under merged PR #740. The historical C105.741 and analytic
+  C1228.356 results remain archived for provenance, not presented as the
+  strongest current **finite** bound. Unrestricted sub-100 remains unproved.
+- **Infinite-product Q2 is *not* kernel-certified.** The named
+  `Nightfall.InfinitePiQ2Limit.source_q2_quadratic_limit` proves the
+  arbitrary-index variance limit **conditional on uniform bounds for
+  every genuine source finite-information projection**; the finite
+  C105 theorem does not automatically supply those hypotheses.
+  The separate [infinite claim](CLAIMS.json) records the open
+  all-finite-projection source/table construction and its dependent
+  Lean gates. No finite result is relabelled as an infinite theorem.
 - [`ACTIVE_DEPENDENCY_CLOSURE.json`](ACTIVE_DEPENDENCY_CLOSURE.json)
   and its [maintenance contract](ACTIVE_DEPENDENCY_CLOSURE.md) identify
   two currently **open** end-to-end proof targets: the physical-quantum
