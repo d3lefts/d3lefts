@@ -133,7 +133,7 @@ def sourceFiniteCoordinateSigma (F : Finset ι) :
 theorem sourceFiniteCoordinateSigma_le (F : Finset ι) :
     sourceFiniteCoordinateSigma (X := X) F ≤
       (inferInstance : MeasurableSpace ((i : ι) → X i)) := by
-  exact measurable_restrict F
+  exact (Finset.measurable_restrict F).comap_le
 
 /-- The true finite-information conditional expectation is L²
 contractive for arbitrary product laws, including uncountable indices. -/
