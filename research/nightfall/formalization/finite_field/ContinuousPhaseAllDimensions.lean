@@ -109,12 +109,8 @@ theorem no_continuous_final_row_all_dimensions (k : ℕ)
         Fin.succ (Fin.succ (0 : Fin (k+1)))
       have hi := congrArg (fun f : Fin (k+3) → ℝ => f idx2) hXY
       have hXval : X idx2 = (1 : ℝ) := by
-        change (Fin.cons x (Fin.cons y (Fin.cons (1:ℝ)
-          (fun _ : Fin k => 0)))) (Fin.succ (Fin.succ (0 : Fin (k+1)))) = 1
         rfl
       have hYval : Y idx2 = (1 : ℝ) := by
-        change (Fin.cons x' (Fin.cons y' (Fin.cons (1:ℝ)
-          (fun _ : Fin k => 0)))) (Fin.succ (Fin.succ (0 : Fin (k+1)))) = 1
         rfl
       have hbad : (1:ℝ) = -1 := by
         simpa [Pi.neg_apply, hXval, hYval] using hi
