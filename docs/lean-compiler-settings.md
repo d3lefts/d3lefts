@@ -146,3 +146,49 @@ promoting any existing Q2, F9, permission, or Commonwealth scientific claim.
 change; Farkas' lemma and sound proof-carrying verification are classical.
 No reported external discovery or benchmark speedup is imported as a
 NIGHTFALL result.
+
+## Adaptive-policy Bellman proof objects
+
+The next transfer of the original-model-first policy is a **finite adaptive
+policy certificate** rather than a static infeasibility/LP witness. See
+[`BELLMAN_POLICY_CERTIFICATE_20261117.md`](../research/nightfall/price_permission/BELLMAN_POLICY_CERTIFICATE_20261117.md)
+and `docs/proof-object-passport.json` (`permission-two-source-bellman-policy-v1`).
+
+The untrusted original `semantic_fence.joint_value` solver proposes a
+value and grant/read action for **every nonempty belief subset** of the
+declared coherent baseline. The independent checker must verify that:
+
+- the value is bounded above by the cost of **every** feasible direct grant
+  and by the Bellman continuation cost of **every** splitting read;
+- the selected action is actually feasible and has cost equal to the value;
+- the source-bound read/guard semantics are reconstructed from the original
+  worlds (not imported from a claimed constraint matrix), and reads strictly
+  shrink the belief;
+- a separate budget-decision checker can accept the proposed value and reject
+  one unit less in an exact integer-scaled problem.
+
+The imported Lean `SemanticFencing.EvidencePlan`, `PlanValid`,
+`FenceSound`, and `worstCost` provide the proof theory.
+`SemanticBellmanPotential.lean` states a generic lower-potential soundness
+theorem and matching-policy optimality rule, with separately frozen exact
+theorem types. This generic source theorem does **not** evaluate the JSON
+candidate in Lean: any later promotion to a single completely Lean-evaluated
+instance requires a source-to-Lean bridge and a fresh exact-head pinned
+certificate.
+
+Reproduction:
+
+```sh
+python3 -I research/nightfall/price_permission/generate_bellman_policy_certificate.py --check
+python3 -I research/nightfall/price_permission/check_bellman_policy_certificate.py --self-test
+node research/nightfall/price_permission/check_bellman_policy_independent.cjs
+node scripts/check_bellman_policy_passport.cjs
+node scripts/check_proof_object_passport.cjs
+```
+
+The dedicated `nightfall-bellman-policy-passport-lean.yml` workflow also
+builds the original semantic-fencing dependencies in the pinned Lean
+environment, checks exact theorem types and allowed foundational axioms,
+and preserves source/checker/model SHA-256 receipts. No production-safe
+guard, historical scientific priority, dynamic noisy-monitor optimum, or
+independent non-author proof review follows automatically.

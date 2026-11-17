@@ -178,6 +178,83 @@
         "The previous adaptive observation joint minimax theorem and any independent Lake check remain separate, unpromoted goals.",
         "Independent non-author mathematical or operational review has not occurred; CI is a historical exact source-head receipt."
       ]
+    },
+    {
+      "id": "permission-two-source-bellman-policy-v1",
+      "programme": "The Price of Permission / adaptive observation and semantic fencing",
+      "status": "source_matched_scoped_named_lean_receipt",
+      "complete_certification": false,
+      "original_semantic_model": {
+        "path": "research/nightfall/price_permission/bellman_two_source_policy_certificate.json",
+        "git_blob_sha1": "6320c8b55ac7bfb5a22b66c360922f78cb670822",
+        "embedded_key": "source_model",
+        "source_sha256": "d5a33d4a341d07a48e3e058e71acc4b5cea9060d1cef041fd82458931521c3de",
+        "audited_completeness": "synthetic_model_only"
+      },
+      "proof_object": {
+        "embedded_key": "certificate",
+        "format": "nightfall-semantic-bellman-certificate/v1",
+        "mathematical_claim": "all_belief_minimax_upper_and_lower_match",
+        "optimal_cost": "5",
+        "belief_states": 7
+      },
+      "checker": {
+        "path": "research/nightfall/price_permission/check_bellman_policy_certificate.py",
+        "git_blob_sha1": "d03e8a43f9d03f2f903578c49adb0136128936ab",
+        "independent_path": "research/nightfall/price_permission/check_bellman_policy_independent.cjs",
+        "independent_git_blob_sha1": "b50305b0e72ee2fc13edb2e3485128a6e85c2f8a",
+        "generator_path": "research/nightfall/price_permission/generate_bellman_policy_certificate.py",
+        "generator_git_blob_sha1": "8d78942912a034e10373be5224ccb3f53fe43838",
+        "generator_dependency": "research/nightfall/assurance/semantic-fencing-v0.3/semantic_fence.py",
+        "generator_dependency_git_blob_sha1": "e9383202e88ecbf12ec37f3f2a84ca850c722c9d",
+        "negative_controls": 19,
+        "independent_negative_controls": 11,
+        "role": "Source-backed seven-belief local Bellman inequalities plus separately implemented exhaustive yes/no budget solver"
+      },
+      "lean": {
+        "source": "research/nightfall/formalization/agent_safety/SemanticBellmanPotential.lean",
+        "source_git_blob_sha1": "e2cec16b123b97b216bb19652fe9524a2c40756e",
+        "depends_on": "research/nightfall/formalization/agent_safety/SemanticFencing.lean",
+        "depends_on_git_blob_sha1": "a6145a6c6131be48bd0525dbabe88d5db5fa8a96",
+        "contract": "research/nightfall/price_permission/bellman_policy_type_contract.json",
+        "contract_git_blob_sha1": "80972effb0ef3884aa0bc3a29ecb68bf972b5068",
+        "declarations": [
+          "Nightfall.SemanticFencing.bellman_lower_certificate_sound",
+          "Nightfall.SemanticFencing.bellman_matching_policy_optimal"
+        ],
+        "compiler_lock": "docs/lean-compiler-lock.json",
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      },
+      "evidence": {
+        "pr": 784,
+        "exact_head": "23018587c297e2a3fcdaa292fa88df6d80e517b8",
+        "ci_run": 44183973991,
+        "artifact_id": 14372299469,
+        "source": "https://github.com/d3lefts/d3lefts/actions/runs/44183973991",
+        "observed_result": "success_on_exact_original_pr_head",
+        "independent_lake_check": "not_run",
+        "external_human_review": "none",
+        "semantic_model_verified_externally": false
+      },
+      "claim_gates": {
+        "original_history_model": "source_bound_exact_checker_passed",
+        "all_belief_local_inequalities": "source_bound_exact_checker_passed",
+        "independent_budget_decision": "independent_exact_checker_passed",
+        "lean_soundness": "pinned_named_kernel_receipt_passed",
+        "JSON_to_Lean_instance": "not_formalized",
+        "global_physical_safety": "open"
+      },
+      "limitations": [
+        "The declared complete bitcube includes only 4 states and a coherent original snapshot, and cannot certify physical instrumentation completeness.",
+        "Bellman potential inequalities are source-matched in Python but not evaluated as this specific JSON instance inside Lean.",
+        "The general Lean theorem proves a conditional soundness rule with globally quantified potential obligations; the JSON table checks only the finite candidate belief subspace and no Lean instance bridge is claimed.",
+        "Operational version counter authenticity, atomic effect time, external review and comprehensive source coverage remain assumptions.",
+        "General dynamic recertification with in-window writes, noisy observation and arbitrary adversarial source changes is open."
+      ]
     }
   ]
 }
