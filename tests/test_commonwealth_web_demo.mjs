@@ -19,10 +19,23 @@ const mirrors=[
  ["docs/commonwealth-browser/workspace.css","projects/commonwealth-os/apps/browser/workspace.css"],
  ["docs/commonwealth-browser/tests/history-core.test.mjs","projects/commonwealth-os/apps/browser/tests/history-core.test.mjs"],
  ["docs/commonwealth-browser/tests/question-bank.test.mjs","projects/commonwealth-os/apps/browser/tests/question-bank.test.mjs"],
- ["docs/commonwealth-browser/tests/entrypoint.test.mjs","projects/commonwealth-os/apps/browser/tests/entrypoint.test.mjs"]
+ ["docs/commonwealth-browser/tests/entrypoint.test.mjs","projects/commonwealth-os/apps/browser/tests/entrypoint.test.mjs"],
+ ["docs/commonwealth-browser/experience-core.mjs","projects/commonwealth-os/apps/browser/experience-core.mjs"],
+ ["docs/commonwealth-browser/experience.mjs","projects/commonwealth-os/apps/browser/experience.mjs"],
+ ["docs/commonwealth-browser/experience.css","projects/commonwealth-os/apps/browser/experience.css"],
+ ["docs/commonwealth-browser/tests/experience-core.test.mjs","projects/commonwealth-os/apps/browser/tests/experience-core.test.mjs"]
 ];
 test("The website mirrors exactly the source demo bytes",()=>{
  for(const [site,source] of mirrors) assert.deepEqual(read(site),read(source),site+" drifted from source");
+});
+test("Guided civic experience is public, fictional, and role specific",()=>{
+ const entry=text("docs/commonwealth-browser/index.html");
+ const page=text("docs/commonwealth-os.html");
+ assert.ok(page.includes("commonwealth-browser/index.html#cwexp"));
+ for(const role of ["resident","representative","developer"])
+   assert.ok(entry.includes('data-cwexp-role="'+role+'"'));
+ assert.ok(entry.includes("ILLUSTRATIVE COUNTS / NOT SURVEY DATA"));
+ assert.ok(entry.includes("not a vote"));
 });
 test("Two self-contained working interfaces are linked from an accessible product page",()=>{
  const page=text("docs/commonwealth.html");

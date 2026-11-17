@@ -49,3 +49,12 @@ Chromium was exercised via `page.set_content` and inline script bundling for loc
 [New end-to-end synthetic design and limits](PARTICIPATION_V1_2.md). The browser now supports fictional proposal drafting, transparent deliberation, written amendment review with full revision history, nonbinding advisory responses tied to exact revisions, mandatory rationales for simulated institutional responses, milestone/correction tracking, meeting-agenda examples, and a ceiling-constrained participatory budget planner. It links related fictional topics to the separate dated historical-roll-call workspace while preserving precise status and uncertainty.
 
 All actions remain **local browser state only**. A freely selectable `DEMO_STEWARD` is not an authenticated administrator; no collective ballots, moderation, real government records, cryptographic proof of locally edited proposals, real budgets, or institutional deployment are implemented. The existing ten-check synthetic Proof Passport checker is unchanged and **does not validate locally edited proposals**. Source and mirrored GitHub Pages modules are kept byte-identical and the new pure reducer is separately tested.
+
+
+## Guided civic experience (fictional, frontend-only)
+
+The browser entry now begins with a role-specific interactive demonstration: **Resident** (sample answer and explicitly invented viewpoint positions), **Representative** (illustrative accountability path), and **Developer** (read-only Commonwealth Connect *concept*, not a live MCP endpoint). All three share a five-step fictional source-to-follow-through explainer. The original Chamber, participation, questionnaires, historical intelligence, and independent procedural checker remain available below unchanged.
+
+- `experience-core.mjs`: fixed sample case and pure validation helpers; `experience.mjs`: progressive enhancement and ephemeral page-memory controls; `experience.css`: scoped civic presentation.
+- `tests/experience-core.test.mjs`: roles/choices, arithmetic, gap states, no-persistence and entrypoint tests. The files are mirrored byte-for-byte under `docs/commonwealth-browser/`.
+- **Trust boundary:** no real participants, municipal records, polls, ballots, sampling, political profiles, endpoint, source authentication or decision authority. Invented viewpoint counts do not represent real-world agreement or feed existing proposals. The page does not implement an MCP server; all links refer to the existing synthetic workbench.
