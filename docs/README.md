@@ -2,6 +2,8 @@
 
 # NIGHTFALL public website
 
+**Theory Atlas proof integration:** [Theory Atlas](theory.html) now reads the published [active Proof Passport JSON](active-proof-passport.json), [historical passport registry](research-registry.js), [Lean passport overlay](lean-proof-passport-overlay.json), and [historical Lean source custody](lean-certificate-provenance.json) through the read-only [evidence bridge](theory-evidence-core.js), [inspector UI](theory-evidence-ui.js), and an explicit [exact-source crosswalk](theory-evidence-links.json). Its five selected certificate links carry their exact Git blob identities, named declarations, and original CI receipt URLs. `node --test tests/nightfall-theory-atlas.test.cjs tests/nightfall-theory-evidence.test.cjs` audits these bytes and their mappings. A registry load failure, dangling ID, changed source byte, open graph edge, or an older related certificate can never automatically upgrade an unproved theorem. No independent new Lean kernel execution is claimed by the website.
+
 **Theory Atlas (source-bound field guide):** [Theoretical mathematics & computer science](theory.html) is a narrative, interactive reading map with six disciplines, 24 curated nodes, and 24 typed relationships. It distinguishes externally published antecedents, named kernel-checked subresults, exact finite witnesses, analytic manuscripts, and open goals. It is *not* a field-wide bibliometric analysis or independent error audit. Data are manually scoped in [theory-map-data.js](theory-map-data.js); node and edge integrity is checked by `node --test tests/nightfall-theory-atlas.test.cjs` at repository root. Its graph links canonical theorem sources and Proof Passports without rewriting the frozen historical registry.
 
 

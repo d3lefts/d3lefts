@@ -6,6 +6,16 @@ on:
       - 'docs/theory.css'
       - 'docs/theory.js'
       - 'docs/theory-map-data.js'
+      - 'docs/theory-evidence-links.json'
+      - 'docs/theory-evidence-core.js'
+      - 'docs/theory-evidence-ui.js'
+      - 'docs/theory-evidence.css'
+      - 'docs/active-proof-passport.json'
+      - 'docs/research-registry.js'
+      - 'docs/lean-proof-passport-overlay.json'
+      - 'docs/lean-certificate-provenance.json'
+      - 'research/nightfall/formalization/universal/**'
+      - 'tests/nightfall-theory-evidence.test.cjs'
       - 'docs/index.html'
       - 'docs/mathematical-results.html'
       - 'tests/nightfall-theory-atlas.test.cjs'
@@ -31,10 +41,12 @@ jobs:
         run: |
           node --check docs/theory-map-data.js
           node --check docs/theory.js
+          node --check docs/theory-evidence-core.js
+          node --check docs/theory-evidence-ui.js
           node --check tests/nightfall-theory-atlas.test.cjs
       - name: Audit curated sources, typed edges and accessible page
-        run: node --test tests/nightfall-theory-atlas.test.cjs
+        run: node --test tests/nightfall-theory-atlas.test.cjs tests/nightfall-theory-evidence.test.cjs
       - name: Capture exact source identity
         run: |
           git rev-parse HEAD
-          sha256sum docs/theory.html docs/theory.css docs/theory.js docs/theory-map-data.js tests/nightfall-theory-atlas.test.cjs
+          sha256sum docs/theory.html docs/theory.css docs/theory.js docs/theory-map-data.js docs/theory-evidence-links.json docs/theory-evidence-core.js docs/theory-evidence-ui.js docs/theory-evidence.css tests/nightfall-theory-atlas.test.cjs tests/nightfall-theory-evidence.test.cjs
