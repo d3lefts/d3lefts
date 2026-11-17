@@ -77,7 +77,7 @@ theorem source_condExp_finite_separable_sum
           ν[f a + (fun x => ∑ b ∈ s, f b x) | m] =ᵐ[ν]
             (fun x => g a x + ∑ b ∈ s, g b x) := by
         exact (condExp_add hprod_a hsum_integrable m).trans (hpart.add hrest)
-      simpa only [Finset.sum_insert ha, Pi.add_apply] using hcombined
+      simpa only [Finset.sum_insert ha, Pi.add_apply, Pi.mul_apply, f, g] using hcombined
 
 #print axioms Nightfall.InfinitePiQ2FiniteSeparableCondExp.source_condExp_finite_separable_sum
 end Nightfall.InfinitePiQ2FiniteSeparableCondExp
