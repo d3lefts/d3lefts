@@ -78,3 +78,10 @@
 @media(max-width:980px){.cw-republic .cw-hero{grid-template-columns:1fr}.cw-republic .cw-system{max-width:690px}.cw-declaration-inner{grid-template-columns:1fr;gap:15px}}
 @media(max-width:680px){.cw-republic .cw-brand-mark{width:38px;height:38px}.cw-republic .brand-copy{font-size:17px}.cw-republic .brand-copy span{font-size:8px}.cw-republic .cw-hero{padding-top:56px}.cw-republic .cw-hero h1{font-size:clamp(48px,10vw,68px)}.cw-republic .cw-civic-seal svg{max-width:180px}.cw-republic .cw-declaration h2{font-size:40px}.cw-declaration-inner{padding-top:50px;padding-bottom:50px}}
 @media(prefers-reduced-motion:reduce){.cw-republic .cw-button:hover{transform:none}}
+
+/* Backward-compatible gateway for links to the original research-hosted civic demo. */
+.cw-republic .cw-standalone-handoff{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin-block:14px 0;padding:14px 17px;border:1px solid rgba(220,189,127,.38);border-left:3px solid #a73739;background:rgba(20,43,73,.86);color:#f2e9d8;font-size:13px;line-height:1.6}
+.cw-republic .cw-standalone-handoff strong{font-weight:650}
+.cw-republic .cw-standalone-handoff a{color:#ecd09d;text-decoration:underline;text-underline-offset:3px;font-weight:750}
+.cw-republic .cw-standalone-handoff span{color:#c7cbd0}
+@media(max-width:700px){.cw-republic .cw-standalone-handoff{align-items:flex-start;flex-direction:column}}
