@@ -87,7 +87,7 @@ theorem source_finite_label_projection_L2_approx
       (condExpL2 ℝ ℝ hle g :
          Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) = g := by
     rw [← hrepr]
-    simp only [map_sum, map_smul, hfix]
+    simp [map_sum, map_smul, Submodule.coe_sum, hfix]
   have hsub :
       (condExpL2 ℝ ℝ hle (f - g) :
         Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) =
