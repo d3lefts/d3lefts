@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 18,
+  "revision": 19,
   "as_of": "2026-11-17 UTC",
-  "source_commit": "dc14a2830ab834385cd30cdad94d38bdd86ceea0",
-  "scope": "250 exact pending source custody entries; 67 frozen historical, 317 current NIGHTFALL Lean files. Nine newly merged source blobs registered against dc14a2830ab834385cd30cdad94d38bdd86ceea0. Separate exact-head kernel receipts are not overwritten or inferred.",
+  "source_commit": "8fbf40ebbbb9abb06b4d5c14454f082151af4995",
+  "scope": "253 pending exact Git blobs + 67 frozen historical; all 320 NIGHTFALL Lean files accounted for at 8fbf40ebbbb9abb06b4d5c14454f082151af4995. Named kernel certifications remain separate from historical pending source custody.",
   "sources": [
     {
       "path": "research/nightfall/formalization/agent_safety/ArbitraryAgentSafety.lean",
@@ -96,6 +96,36 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ContinuousPhaseAllDimensions.lean",
+      "source_blob_sha": "60d694176a099fbd24269122e659e9949387d2df",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact protected-main Git blob at 8fbf40ebbbb9abb06b4d5c14454f082151af4995; historical pending custody only, not a new theorem receipt, novelty claim or independent review."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ContinuousPhaseCrossing.lean",
+      "source_blob_sha": "8d448d01f4143c8877134746b33c0040acaa1ace",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact protected-main Git blob at 8fbf40ebbbb9abb06b4d5c14454f082151af4995; historical pending custody only, not a new theorem receipt, novelty claim or independent review."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ContinuousPhaseOracleObstruction.lean",
+      "source_blob_sha": "5cfb8704a59eb23e61cfb9929f7fdfc39b5afff1",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact protected-main Git blob at 8fbf40ebbbb9abb06b4d5c14454f082151af4995; historical pending custody only, not a new theorem receipt, novelty claim or independent review."
     },
     {
       "path": "research/nightfall/formalization/finite_field/F9ActualAdaptiveTerminal.lean",
