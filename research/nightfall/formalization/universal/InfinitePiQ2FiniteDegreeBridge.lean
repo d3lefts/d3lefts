@@ -95,7 +95,8 @@ theorem anchor_triple_eq_delta
       simp [Function.update_of_ne hik.symm, Function.update_of_ne hjk.symm]
     simpa only [hv] using
       (update_self (Function.update (Function.update x i a) j b) k)
-  simp only [hfix_jk, hfix_ik, hfix_ij, hfix_ijk]
+  have hself_i : Function.update x i (x i) = x := update_self x i
+  simp only [hself_i, hfix_jk, hfix_ik, hfix_ij, hfix_ijk]
   ring
 
 /-- Pointwise degree at most two kills the triple anchored difference
