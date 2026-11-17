@@ -6,6 +6,7 @@ on:
       - 'research/nightfall/formalization/finite_field/ContinuousPhaseOracleObstruction.lean'
       - 'research/nightfall/formalization/finite_field/ContinuousPhaseAllDimensions.lean'
       - 'research/nightfall/continuous-phase-obstruction/independent_checker.py'
+      - 'research/nightfall/continuous-phase-obstruction/PROOF_PASSPORT.md'
       - '.github/workflows/nightfall-continuous-phase-obstruction.yml'
   workflow_dispatch:
 permissions:
@@ -25,7 +26,7 @@ jobs:
           set -euo pipefail
           for f in ContinuousPhaseCrossing ContinuousPhaseOracleObstruction ContinuousPhaseAllDimensions; do
             src="research/nightfall/formalization/finite_field/$f.lean"
-            if [ ! -f "$src" ]; then continue; fi
+            test -f "$src"
             ! grep -nE '\b(sorry|admit)\b' "$src"
             cp "$src" "/tmp/mathlib4/$f.lean"
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean") 2>&1 | tee "/tmp/$f.log"
@@ -36,3 +37,26 @@ jobs:
         run: |
           set -euo pipefail
           python3 research/nightfall/continuous-phase-obstruction/independent_checker.py
+      - name: Check named theorem and exact standard-axiom list
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import re
+          specs = [
+            ("ContinuousPhaseCrossing", "Nightfall.ContinuousPhaseObstruction.signed_contributions_cross"),
+            ("ContinuousPhaseOracleObstruction", "Nightfall.ContinuousPhaseObstruction.no_continuous_coordinate_first_single_last"),
+            ("ContinuousPhaseAllDimensions", "Nightfall.ContinuousPhaseObstruction.no_continuous_final_row_all_dimensions")
+          ]
+          expected = {"propext","Classical.choice","Quot.sound"}
+          for filename, name in specs:
+              source = open(f"research/nightfall/formalization/finite_field/{filename}.lean").read()
+              assert f"#print axioms {name}" in source, (filename,name)
+              data = open(f"/tmp/{filename}.log").read()
+              pattern = re.escape(f"'{name}' depends on axioms: [") + r"([^\]]*)\]"
+              m = re.search(pattern, data, re.S)
+              assert m is not None, ("axiom receipt missing", name)
+              found = {x.strip() for x in m.group(1).split(",")}
+              assert found == expected, (name, found)
+              print(f"PASS {name}: {sorted(found)}")
+          PY
