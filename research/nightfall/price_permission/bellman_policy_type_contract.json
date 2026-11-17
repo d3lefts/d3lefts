@@ -1,0 +1,14 @@
+{
+  "schema": "nightfall-theorem-contract/v1",
+  "source": "research/nightfall/formalization/agent_safety/SemanticBellmanPotential.lean",
+  "targets": [
+    {
+      "declaration": "Nightfall.SemanticFencing.bellman_lower_certificate_sound",
+      "expected_type": "∀ {Source : Type} {World : Type}\n  (M : Nightfall.SemanticFencing.System Source World)\n  (obs : Source → World → Bool)\n  (readPrice checkPrice : Source → ℕ)\n  (L : Set World → ℕ),\n  Nightfall.SemanticFencing.BellmanLowerCertificate\n    M obs readPrice checkPrice L →\n  ∀ (B : Set World) (p : Nightfall.SemanticFencing.EvidencePlan Source),\n    Nightfall.SemanticFencing.PlanValid M obs B p →\n    L B ≤ Nightfall.SemanticFencing.worstCost readPrice checkPrice p"
+    },
+    {
+      "declaration": "Nightfall.SemanticFencing.bellman_matching_policy_optimal",
+      "expected_type": "∀ {Source : Type} {World : Type}\n  (M : Nightfall.SemanticFencing.System Source World)\n  (obs : Source → World → Bool)\n  (readPrice checkPrice : Source → ℕ)\n  (L : Set World → ℕ),\n  Nightfall.SemanticFencing.BellmanLowerCertificate\n    M obs readPrice checkPrice L →\n  ∀ (B : Set World) (p : Nightfall.SemanticFencing.EvidencePlan Source),\n    Nightfall.SemanticFencing.PlanValid M obs B p →\n    Nightfall.SemanticFencing.worstCost readPrice checkPrice p = L B →\n    ∀ q : Nightfall.SemanticFencing.EvidencePlan Source,\n      Nightfall.SemanticFencing.PlanValid M obs B q →\n      Nightfall.SemanticFencing.worstCost readPrice checkPrice p ≤\n        Nightfall.SemanticFencing.worstCost readPrice checkPrice q"
+    }
+  ]
+}
