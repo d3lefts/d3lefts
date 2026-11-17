@@ -18,6 +18,8 @@ fixpoint of pinned Mathlib.
 
 namespace Nightfall.InfinitePiQ2InactiveFiniteLabel
 
+set_option maxHeartbeats 1200000
+
 open MeasureTheory
 open Nightfall.InfinitePiQ2Density
 open Nightfall.InfinitePiQ2InfluenceStability
@@ -34,7 +36,7 @@ variable [∀ i, IsProbabilityMeasure (μ i)]
 contained in the all-other-sites σ-algebra is unchanged by refreshing i. -/
 theorem sourceOtherProjection_fixes_subSigma_projection
     (m : MeasurableSpace ((j : ι) → X j))
-    (hm : m ≤ (inferInstance : MeasurableSpace ((j : ι) → X j)))
+    (hm : m ≤ (MeasurableSpace.pi : MeasurableSpace ((j : ι) → X j)))
     (i : ι) (hmi : m ≤ sourceOtherSigma (X := X) i)
     (f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) :
     sourceOtherProjection μ i
@@ -58,7 +60,7 @@ theorem sourceOtherProjection_fixes_subSigma_projection
       Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) = g
   rw [condExpL2]
   haveI : Fact (sourceOtherSigma (X := X) i ≤
-      (inferInstance : MeasurableSpace ((j : ι) → X j))) :=
+      (MeasurableSpace.pi : MeasurableSpace ((j : ι) → X j))) :=
     ⟨sourceOtherSigma_le (X := X) i⟩
   let gg : lpMeas ℝ ℝ (sourceOtherSigma (X := X) i)
       (2 : ENNReal) (Measure.infinitePi μ) := ⟨g, hmem⟩
