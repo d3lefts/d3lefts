@@ -122,7 +122,7 @@ theorem independent_condExp_product
   have hpull : ν[u * v | m₂] =ᵐ[ν] (ν[u | m₂] * v) :=
     condExp_mul_of_stronglyMeasurable_right hv huv hui
   have hindep : ν[u | m₂] =ᵐ[ν] (fun _ => ∫ z, u z ∂ν) :=
-    condExp_indep_eq hm₁ hm₂ hu hind
+    condExp_indep_eq (m := m) hm₁ hm₂ hu hind
   calc
     ν[u * v | m₂] =ᵐ[ν] (ν[u | m₂] * v) := hpull
     _ =ᵐ[ν] (fun x => (∫ z, u z ∂ν) * v x) := by
