@@ -72,3 +72,37 @@ Closest known work: Il Idrissi et al., *Hoeffding decomposition of functions of 
 **Cheapest decisive next experiment:** an independent implementation of the 15x15 polynomial determinant and its full support measure interpretation; then formalize one exact finite-rank theorem in Lean. After that, construct a new nondegenerate dependent-degree operator using oblique projections or latent-reference degree, not triple residual vanishing.
 
 **Proposed reusable mechanism:** operator-word rank rigidity under noncommuting conditional projections, plus variance splitting through a hidden product-mixture index. Record this as a representation-level structural transition rather than a claimed globally novel Q2 theorem.
+
+
+## Theorem F — residual-degree rigidity for every finite one-dimensional Ising chain
+
+**Stronger than Theorem A.** For any finite n>=4, any 0<|r|<1, and the strictly positive nearest-neighbor Ising-chain law
+
+p_{n,r}(x) = 2^{-n} product_{j=0}^{n-2} (1+r x_j x_{j+1}),
+
+all ordered triple residual conditions R_i R_j R_k f=0 (pairwise distinct indices) force f to be constant. At r=0 the independent-product degree<=2 space instead has dimension 1+n+n(n-1)/2.
+
+**Exact four-site boundary certificates.** Conditioning any four consecutive sites on the rest yields a four-spin law proportional to
+
+product_{j=0}^2 (1+r x_j x_{j+1}) (1+s r x_0) (1+t r x_3),
+
+where s,t belong to {0,+1,-1}, encoding absent/fixed neighboring boundary spins. Global spin flip and spatial reflection reduce the nine possibilities to four representatives: (0,0), (1,0), (1,1), and (1,-1).
+
+For each representative, define A_1,A_2=2(1+r^2)R_1,R_2. For i=0 or 3 with no external boundary, A_i=2R_i; with boundary, A_i=2(1-r^4)R_i. These scalars are nonzero whenever |r|<1. With the **same 15 selected rows and state columns as Theorem A**, let H_{s,t}(r) be the resulting polynomial matrix of ordered A_i A_j A_k rows.
+
+**Exact determinant identities:**
+
+| boundary (s,t) | det H_{s,t}(r) / (-2^26 r^17) |
+|---|---|
+| (0,0) | (1+r²)^9 (r-1)^18 (r+1)^5 |
+| (1,0) | (1+r²)^16 (r-1)^24 (r+1)^23 |
+| (1,1) | (1+r²)^19 (r-1)^26 (r+1)^28 |
+| (1,-1) | (1+r²)^16 (r-1)^32 (r+1)^28 |
+
+All four are nonzero for 0<|r|<1. The script `scripts/check_ising_chain_boundary_rigidity_exact.py` verifies each identity **exactly**, using a determinant degree upper bound and 73/112/127/127 distinct integer evaluations respectively (439 exact determinants). Endpoint polynomial degrees rise from 1 to 4 when an external boundary is fixed. Independent **joint-law conditional-expectation constructions**, without the A_i formula, matched the same minor determinants at r=1/2, -1/2, 1/3 in each of the four cases. This is an author-side second implementation, not external peer review.
+
+**Finite all-length proof:** Let f satisfy every ordered triple residual condition on the n-site law. Fix any four consecutive sites A and fix all other spins. Conditional on this outside configuration, the residual operators R_i for i in A act exactly as the four-site residuals for the corresponding boundary law. The triple conditions therefore hold in each fiber. The nonvanishing boundary determinant forces f to be constant as a function of x_A in that fiber. Every site is contained in a length-four interval, so f is independent of every individual coordinate. Full support and finite hypercube connectivity imply f is constant globally.
+
+**Scope:** All finite n>=4, all r in (-1,0) union (0,1), no lower bound on |r| and no n-dependent constants. Extension to countable infinite Ising Markov chains would additionally require proving tail triviality and the almost-everywhere fiber-to-tail step; that extension is **not** certified here. This theorem demonstrates operator-word rigidity, not a new Q2 inequality for connected Gibbs fields. No novelty or priority tier is promoted without a scope-specific adversarial literature search and independent review.
+
+**New decisive test:** independently reproduce at least one nontrivial boundary determinant by a different exact matrix algorithm, then formalize a four-site boundary theorem in Lean, and use a parameterized finite-chain conditionalization lemma to carry it to arbitrary finite n. This is the structural mechanism that replaces repetitive case-by-case n-dimensional enumeration.
