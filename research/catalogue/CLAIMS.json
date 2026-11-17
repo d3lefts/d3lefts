@@ -29,7 +29,7 @@
       },
       "claim_scope": "Finite coordinate type; common finite alphabet type, heterogeneous probability tables (including zero mass); bounded indicator-product degree d. Inherited exponent (5/2,6), explicitly weaker numerical coefficient.",
       "open_gates": [
-        "Prior public deposit: D. Bhattacharjee, 'Influence Bounds for Arbitrary Product Measures', Zenodo 2026-11-08 (atom-independent constants, variance exponent 5/2) predates NIGHTFALL's 2026-11-10/11 product-space work; do not claim priority for the product-measure extension (dossier 2026-11-17, abstract-level comparison only)",
+        "Unverified external-priority lead: two purported Zenodo records (24051767 and 24124921) attributed in the 2026-11-17 dossier to a 2026-11-08 product-measure influence result could not be retrieved or corroborated by exact-title searches. Do not assert publication, precedence, or theorem scope until independently accessible dated metadata and full text permit a source-to-source comparison. Priority remains unresolved",
         "Non-author theorem and priority review",
         "General measurable-product lift not covered by this declaration",
         "The source-matched Lean certificate is historical; the retired dependency-bound CI workflow is no longer active. Recompile and audit the exact declaration under the new Lean 4.36.0-rc2 toolchain before asserting migrated kernel certification."
