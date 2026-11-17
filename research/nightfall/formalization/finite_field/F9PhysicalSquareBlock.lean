@@ -63,7 +63,7 @@ theorem actual_basis_block_expansion (bits : Fin 2 → Bool) :
   classical
   rw [blockValue, Nightfall.FiniteField.F9ActualField.actual_F9_basis.equivFun_symm_apply, Fin.sum_univ_two]
   have htwo : (algebraMap (ZMod 3) F9) (2 : ZMod 3) = (2 : F9) := by
-    norm_num
+    exact map_ofNat (algebraMap (ZMod 3) F9) 2
   cases h0 : bits 0 <;> cases h1 : bits 1 <;>
     simp [digit, signBit, h0, h1, Algebra.smul_def, htwo] <;> ring
 
