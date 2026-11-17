@@ -1,0 +1,52 @@
+name: NIGHTFALL Q2 inactive-source L2 heatbath
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/universal/InfinitePiQ2InactiveSourceSigma.lean'
+      - '.github/workflows/nightfall-q2-inactive-source-sigma.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  kernel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Exact-source Lean kernel build
+        shell: bash
+        run: |
+          set -euo pipefail
+          for f in InfinitePiQ2Density InfinitePiQ2InfluenceStability InfinitePiQ2InactiveSourceSigma; do
+            src="research/nightfall/formalization/universal/$f.lean"
+            test -f "$src"
+            ! grep -nE '\b(sorry|admit)\b' "$src"
+            cp "$src" "/tmp/mathlib4/$f.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean") 2>&1 | tee "/tmp/$f.log"
+            ! grep -qE "error:|sorryAx" "/tmp/$f.log"
+          done
+      - name: Check exact source theorem axiom receipts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import re
+          data = open("/tmp/InfinitePiQ2InactiveSourceSigma.log").read()
+          decls = [
+            "sourceFiniteCoordinateSigma_le_other_of_not_mem",
+            "sourceOtherProjection_fixes_inactive_cylinder",
+            "sourceCoordinateResidual_inactive_cylinder_zero",
+            "sourceCoordinateInfluence_inactive_cylinder_zero"
+          ]
+          for decl in decls:
+              name = f"Nightfall.InfinitePiQ2InactiveSourceSigma.{decl}"
+              m = re.search(re.escape(f"'{name}' depends on axioms: [") +
+                            r"([^\]]*)\]", data, re.S)
+              assert m is not None, name
+              actual = {x.strip() for x in m.group(1).split(",")}
+              assert actual <= {"propext", "Classical.choice", "Quot.sound"}, (name, actual)
+              print("PASS", name, sorted(actual))
+          PY
