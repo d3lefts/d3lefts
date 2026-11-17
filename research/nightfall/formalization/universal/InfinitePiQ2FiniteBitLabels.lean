@@ -25,8 +25,9 @@ variable [∀ i, MeasurableSpace (X i)]
 exact original-coordinate membership interpretation. -/
 noncomputable def sourceFiniteBitLabels (F : Finset ι) (n : ℕ)
     (tests : (j : F) → Fin n → Set (X j))
-    (x : (i : ι) → X i) : (j : F) → Fin n → Bool :=
-  fun j k => if x j ∈ tests j k then true else false
+    (x : (i : ι) → X i) : (j : F) → Fin n → Bool := by
+  classical
+  exact fun j k => if x j ∈ tests j k then true else false
 
 /-- No finite-alphabet hypothesis on the original source:
 a finite coordinate set and finitely many tests induce finite labels. -/
@@ -56,11 +57,12 @@ theorem sourceFiniteBitLabels_measurable
   intro j
   apply Measurable.of_eval
   intro k
-  change Measurable (fun x : (i : ι) → X i =>
-    if x j ∈ tests j k then true else false)
-  exact Measurable.ite
-    ((htests j k).preimage (measurable_pi_apply (j : ι)))
-    measurable_const measurable_const
+  have htest : Measurable (fun x : (i : ι) → X i =>
+      if x j ∈ tests j k then true else false) :=
+    Measurable.ite
+      ((htests j k).preimage (measurable_pi_apply (j : ι)))
+      measurable_const measurable_const
+  simpa only [sourceFiniteBitLabels] using htest
 
 /-- Every original one-coordinate test is measurable in the actual
 finite-label sigma algebra, not merely in finite-coordinate information. -/
@@ -69,10 +71,11 @@ theorem sourceFiniteBitLabels_test_in_label_sigma
     (F : Finset ι) (n : ℕ)
     (tests : (j : F) → Fin n → Set (X j))
     (j : F) (k : Fin n) :
-    MeasurableSet[
-      MeasurableSpace.comap (sourceFiniteBitLabels F n tests)
-        (inferInstance : MeasurableSpace ((j : F) → Fin n → Bool))]
-        {x : (i : ι) → X i | x j ∈ tests j k} := by
+    @MeasurableSet ((i : ι) → X i)
+      (MeasurableSpace.comap (sourceFiniteBitLabels F n tests)
+        (inferInstance : MeasurableSpace ((j : F) → Fin n → Bool)))
+      {x : (i : ι) → X i | x j ∈ tests j k} := by
+  classical
   have heval : Measurable
       (fun y : (j : F) → Fin n → Bool => y j k) :=
     (measurable_pi_apply k).comp (measurable_pi_apply j)
