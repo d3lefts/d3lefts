@@ -47,7 +47,8 @@ theorem source_label_pullback_residual_norm_eq
       (fun T : Lp ℝ (2 : ENNReal) (Measure.infinitePi q) →L[ℝ]
         Lp ℝ (2 : ENNReal) (Measure.infinitePi μ) => T g) hI
     simpa only [ContinuousLinearMap.comp_apply,
-      sourceOtherProjectionCLM_apply] using h
+      sourceOtherProjectionCLM_apply,
+      LinearIsometry.coe_toContinuousLinearMap] using h
   have hsub : U (g - sourceOtherProjection q i g) =
       U g - U (sourceOtherProjection q i g) :=
     map_sub U g (sourceOtherProjection q i g)
