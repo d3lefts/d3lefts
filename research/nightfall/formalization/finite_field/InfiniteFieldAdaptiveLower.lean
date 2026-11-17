@@ -228,6 +228,118 @@ theorem frozen_collision_two_nonzero
 #print axioms Nightfall.InfiniteFieldPhase.AdaptiveLower.frozen_collision_two_nonzero
 
 
+
+/-! ## Pointwise collisions from a kernel or an inactive row -/
+
+theorem nonzero_dot_witness {d : ℕ} (a : Fin d → K) (ha : a ≠ 0) :
+    ∃ x : Fin d → K, dot a x ≠ 0 := by
+  classical
+  have hi : ∃ i : Fin d, a i ≠ 0 := by
+    by_contra h
+    apply ha
+    funext i
+    by_contra hz
+    exact h ⟨i, hz⟩
+  obtain ⟨i, hi⟩ := hi
+  refine ⟨(fun j => if j = i then (1 : K) else 0), ?_⟩
+  have he : dot a (fun j => if j = i then (1 : K) else 0) = a i := by
+    simp [dot, mul_ite]
+  rw [he]
+  exact hi
+
+theorem kernel_pointwise_collision {d : ℕ} [NeZero (2 : K)]
+    (rows : Fin d → Fin d → K) (x v : Fin d → K)
+    (hv : v ≠ 0) (hker : ∀ i, dot (rows i) v = 0) :
+    ∃ y : Fin d → K,
+      y ≠ x ∧ y ≠ -x ∧
+      ∀ i, (dot (rows i) y) ^ 2 = (dot (rows i) x) ^ 2 := by
+  have h2 : (2 : K) ≠ 0 := NeZero.ne _
+  have hplus : x + v ≠ x := by
+    intro heq
+    apply hv
+    funext i
+    have hh := congrArg (fun f : Fin d → K => f i) heq
+    change x i + v i = x i at hh
+    linear_combination hh
+  have hminus : x - v ≠ x := by
+    intro heq
+    apply hv
+    funext i
+    have hh := congrArg (fun f : Fin d → K => f i) heq
+    change x i - v i = x i at hh
+    linear_combination hh
+  have hpm : x + v ≠ x - v := by
+    intro heq
+    apply hv
+    funext i
+    have hh := congrArg (fun f : Fin d → K => f i) heq
+    change x i + v i = x i - v i at hh
+    have hzero : (2 : K) * v i = 0 := by linear_combination hh
+    exact (mul_eq_zero.mp hzero).resolve_left h2
+  have hp (i : Fin d) : dot (rows i) (x + v) = dot (rows i) x := by
+    rw [dot_add, hker i]
+    simp
+  have hm (i : Fin d) : dot (rows i) (x - v) = dot (rows i) x := by
+    rw [dot_sub, hker i]
+    simp
+  by_cases hneg : x + v = -x
+  · refine ⟨x - v, hminus, ?_, ?_⟩
+    · intro he
+      exact hpm (hneg.trans he.symm)
+    · intro i
+      rw [hm i]
+  · refine ⟨x + v, hplus, hneg, ?_⟩
+    intro i
+    rw [hp i]
+
+theorem frozen_collision_with_zero_row {k : ℕ} [NeZero (2 : K)]
+    (rows : Fin (k+1) → Fin (k+1) → K)
+    (x : Fin (k+1) → K) (j : Fin (k+1)) (hj : rows j = 0) :
+    ∃ y : Fin (k+1) → K,
+      y ≠ x ∧ y ≠ -x ∧
+      ∀ i, (dot (rows i) y)^2 = (dot (rows i) x)^2 := by
+  obtain ⟨v, hv, hrest⟩ :=
+    short_rows_have_kernel (n := k+1)
+      (fun i : Fin k => rows (j.succAbove i)) (by omega)
+  have hall (i : Fin (k+1)) : dot (rows i) v = 0 := by
+    rcases Fin.eq_self_or_eq_succAbove j i with he | ⟨q,he⟩
+    · subst i
+      simp [hj, dot]
+    · subst i
+      exact hrest q
+  exact kernel_pointwise_collision rows x v hv hall
+
+/-- Frozen responses determine the true causal responses, by induction
+on the transcript prefix, without any future-observation dependency. -/
+theorem history_eq_of_frozen_squares
+    (policy : List K → Fin n → K) (x y : Fin n → K) (m : ℕ)
+    (h : ∀ i : Fin m,
+      (dot (policy (history policy x i.val)) x)^2 =
+      (dot (policy (history policy x i.val)) y)^2) :
+    history policy x m = history policy y m := by
+  induction m with
+  | zero => rfl
+  | succ m ih =>
+      have hp : ∀ i : Fin m,
+          (dot (policy (history policy x i.val)) x)^2 =
+          (dot (policy (history policy x i.val)) y)^2 := by
+        intro i
+        exact h ⟨i.val, by omega⟩
+      have hprev := ih hp
+      have hlast :
+          (dot (policy (history policy x m)) x)^2 =
+          (dot (policy (history policy x m)) y)^2 :=
+        h ⟨m, by omega⟩
+      change
+          (dot (policy (history policy x m)) x)^2 :: history policy x m =
+          (dot (policy (history policy y m)) y)^2 :: history policy y m
+      rw [← hprev, hlast]
+
+#print axioms Nightfall.InfiniteFieldPhase.AdaptiveLower.kernel_pointwise_collision
+#print axioms Nightfall.InfiniteFieldPhase.AdaptiveLower.frozen_collision_with_zero_row
+#print axioms Nightfall.InfiniteFieldPhase.AdaptiveLower.history_eq_of_frozen_squares
+
+
 #print axioms Nightfall.InfiniteFieldPhase.AdaptiveLower.history_zero
 #print axioms Nightfall.InfiniteFieldPhase.AdaptiveLower.history_of_zero_path
 #print axioms Nightfall.InfiniteFieldPhase.AdaptiveLower.short_adaptive_strategy_fails
