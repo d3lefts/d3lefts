@@ -4,6 +4,7 @@ on:
     paths:
       - 'research/nightfall/formalization/universal/InfinitePiQ2BoundedLabelIntertwining.lean'
       - '.github/workflows/nightfall-q2-bounded-label-intertwining.yml'
+      - 'docs/lean-pending-source-custody.json'
   workflow_dispatch:
 permissions:
   contents: read
