@@ -17,8 +17,8 @@ open Nightfall.FiniteField.F9OracleBridge
 open Nightfall.FiniteField.F9CalibratedRow
 abbrev F9 := Nightfall.FiniteField.F9ActualField.F9
 
-def phase (b : Bool) : F9 := if b then 1 else -1
-def digit (b : Bool) : F9 := if b then 2 else 0
+noncomputable def phase (b : Bool) : F9 := if b then 1 else -1
+noncomputable def digit (b : Bool) : F9 := if b then 2 else 0
 
 theorem physical_square_two_digit
     (u0 u1 u2 v w e : F9)
@@ -35,7 +35,7 @@ theorem physical_square_two_digit
         (w / u2) * (e * phase b1 * u2) =
         e * (v * digit b0 + w * digit b1) := by
     cases b0 <;> cases b1 <;>
-      simp only [phase, digit, ite_true, ite_false] <;>
+      simp [phase, digit] <;>
       field_simp [hu0, hu1, hu2] <;> ring
   rw [hval, mul_pow, he, one_mul]
 
@@ -61,7 +61,7 @@ theorem actual_basis_block_expansion (bits : Fin 2 → Bool) :
       Nightfall.FiniteField.F9ActualField.actual_F9_basis 0 * digit (bits 0) +
       Nightfall.FiniteField.F9ActualField.actual_F9_basis 1 * digit (bits 1) := by
   classical
-  rw [blockValue, Basis.equivFun_symm_apply, Fin.sum_univ_two]
+  rw [blockValue, Nightfall.FiniteField.F9ActualField.actual_F9_basis.equivFun_symm_apply, Fin.sum_univ_two]
   cases h0 : bits 0 <;> cases h1 : bits 1 <;>
     simp [digit, signBit, h0, h1, Algebra.smul_def] <;> ring
 
