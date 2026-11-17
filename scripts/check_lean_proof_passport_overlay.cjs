@@ -17,6 +17,19 @@ function verify(overlay, registry, receipts, frontier, contract) {
   assert.equal(overlay.schema, 'nightfall.lean-proof-passport-overlay.v1');
   assert.equal(overlay.version, 1);
   assert.equal(overlay.policy.compiler_lock, 'docs/lean-compiler-lock.json');
+  // Source → encoding → proof object → exact checker → statement → Lean receipt.
+  // This adds a distinct model-bound proof-object gate to the five Lean gates;
+  // it does not modify any of the four historical source/claim records.
+  const chain = overlay.policy.proof_object_chain;
+  assert.equal(chain.schema, 'nightfall.proof-object-passport.v1');
+  assert.equal(chain.manifest, 'docs/proof-object-passport.json');
+  assert.equal(chain.verifier, 'scripts/check_proof_object_passport.cjs');
+  assert.equal(chain.no_automatic_promotion, true);
+  assert.equal(chain.historical_pin_preserved, true);
+  assert.equal(chain.human_review_still_required, true);
+  assert.deepEqual(chain.required_before_new_model_bound_certificate,
+    ['original_model','derived_instance','proof_object','exact_checker',
+     'lean_type_contract','source_pinned_kernel_receipt']);
   const compilerLock = load(overlay.policy.compiler_lock);
   assert.equal(compilerLock.schema, 'nightfall-lean-compiler-lock/v1');
   assert.equal(compilerLock.toolchain, overlay.policy.lean_pin);
@@ -49,6 +62,12 @@ function verify(overlay, registry, receipts, frontier, contract) {
   assert.equal(overlay.policy.mathlib_commit, receipts.pin.mathlib_commit);
   assert.equal(contract.workspace_commit, overlay.policy.mathlib_commit);
   assert.equal(registry.schema, 'nightfall-active-proof-passports-v1');
+  assert.equal(registry.proof_object_certificate_protocol.schema,
+    'nightfall.proof-object-passport.v1');
+  assert.equal(registry.proof_object_certificate_protocol.manifest, chain.manifest);
+  assert.equal(registry.proof_object_certificate_protocol.lean_overlay,
+    'docs/lean-proof-passport-overlay.json');
+  assert.equal(registry.proof_object_certificate_protocol.no_automatic_promotion, true);
   assert.equal(registry.lean_community_gate_overlay, 'docs/lean-proof-passport-overlay.json');
   assert.equal(registry.current_named_lean_receipts,
     'docs/current-lean-proof-receipts-20261116.json');
@@ -172,6 +191,9 @@ function main() {
   const frontier = load('research/catalogue/CURRENT_FRONTIER.json');
   const contract = load('projects/commonwealth-os/assurance/lean/passport-contract.json');
   verify(overlay, registry, receipts, frontier, contract);
+  // Independent machine audit of the referenced original model, witness,
+  // exact checker, theorem contract, and preserved original-head receipt.
+  require('./check_proof_object_passport.cjs').verify(load(overlay.policy.proof_object_chain.manifest));
   const clone = x => JSON.parse(JSON.stringify(x));
   const tampered = clone(overlay);
   tampered.records[0].git_blob_sha1 = '0'.repeat(40);
@@ -190,10 +212,13 @@ function main() {
   const falseMergeF9 = clone(overlay);
   falseMergeF9.records[2].remaining_obligations.push('source PR head needs replay before merge');
   assert.throws(() => verify(falseMergeF9, registry, receipts, frontier, contract));
+  const falseChain = clone(overlay);
+  falseChain.policy.proof_object_chain.no_automatic_promotion = false;
+  assert.throws(() => verify(falseChain, registry, receipts, frontier, contract));
   const falseScope = clone(overlay);
   falseScope.records[1].theorem_declaration = 'Nightfall.InfinitePiQ2Limit.unconditional_q2';
   assert.throws(() => verify(falseScope, registry, receipts, frontier, contract));
-  console.log('PASS: Lean five-gate Proof Passport overlay, source custody and six negative tests. No kernel compilation claimed.');
+  console.log('PASS: Lean five-gate Proof Passport overlay, model-bound proof-object chain, source custody and seven overlay negative tests. No new kernel compilation claimed.');
 }
 if (require.main === module) main();
 module.exports = {verify};
