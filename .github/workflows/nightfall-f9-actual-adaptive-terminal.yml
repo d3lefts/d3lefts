@@ -1,0 +1,33 @@
+name: NIGHTFALL F9 all-k actual legal squared transcript terminal Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/F9ActualAdaptiveTerminal.lean'
+      - '.github/workflows/nightfall-f9-actual-adaptive-terminal.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  actual-adaptive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile all actual F9 source-level dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          for F in F9OracleBridge F9ActualFieldBasis F9GapArithmetic F9CalibratedRow F9PhysicalSquareBlock F9AllSupportNormalForm F9SignPacketAllK F9NonadaptiveLower F9ConcreteLower F9ActualAdaptiveTerminal; do
+            cp "research/nightfall/formalization/finite_field/$F.lean" "/tmp/mathlib4/$F.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$F.olean" "$F.lean")
+          done
+      - name: Strict final named standard-axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          N=Nightfall.FiniteField.F9ActualAdaptiveTerminal
+          python3 scripts/lean_bridge.py research/nightfall/formalization/finite_field/F9ActualAdaptiveTerminal.lean --workspace /tmp/mathlib4 --strict --timeout 1200 --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.actual_two_digit_with_zero_slots" --decl "$N.actual_adaptive_transcript_injective" --decl "$N.all_dimensions_actual_adaptive_upper" --decl "$N.actual_same_oracle_gap_unbounded" --json-out /tmp/f9-actual-terminal-receipt.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py /tmp/f9-actual-terminal-receipt.json
