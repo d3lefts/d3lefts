@@ -126,9 +126,9 @@ theorem esComp_condExp
             exact (hn (Finset.mem_univ S)).elim
 
 /-- A set S lies outside the cover H precisely when its canonical
-coordinate support is retained by conditioning on univ \\ H. -/
+coordinate support is retained by conditioning on univ \ H. -/
 theorem subset_complement_iff_no_touch (H S : Finset ι) :
-    S ⊆ (Finset.univ \\ H) ↔ ¬ touches H S := by
+    S ⊆ (Finset.univ \ H) ↔ ¬ touches H S := by
   constructor
   · intro h ⟨i, hiH, hiS⟩
     have hi := h hiS
@@ -168,22 +168,22 @@ theorem projected_variance_eq_outside_energy
     (p : ι → α → ℝ)
     (hp1 : ∀ i, ∑ a : α, p i a = 1)
     (f : (ι → α) → ℝ) (H : Finset ι) :
-    sourceVariance p (condExp p (Finset.univ \\ H) f) =
+    sourceVariance p (condExp p (Finset.univ \ H) f) =
       outsideSourceEnergy p f H := by
   classical
-  rw [actual_source_variance_es_energy p hp1 (condExp p (Finset.univ \\ H) f)]
+  rw [actual_source_variance_es_energy p hp1 (condExp p (Finset.univ \ H) f)]
   unfold outsideSourceEnergy
   apply Finset.sum_congr rfl
   intro S _
-  change sourceSectorEnergy p (condExp p (Finset.univ \\ H) f) S =
+  change sourceSectorEnergy p (condExp p (Finset.univ \ H) f) S =
     (if touches H S then 0 else sourceSectorEnergy p f S)
-  rw [sector_energy_condExp p hp1 f (Finset.univ \\ H) S]
+  rw [sector_energy_condExp p hp1 f (Finset.univ \ H) S]
   by_cases h : touches H S
-  · have hno : ¬ S ⊆ (Finset.univ \\ H) := by
+  · have hno : ¬ S ⊆ (Finset.univ \ H) := by
       intro hs
       exact (subset_complement_iff_no_touch H S).mp hs h
     simp [h, hno]
-  · have hs : S ⊆ (Finset.univ \\ H) :=
+  · have hs : S ⊆ (Finset.univ \ H) :=
       (subset_complement_iff_no_touch H S).mpr h
     simp [h, hs]
 
@@ -268,10 +268,10 @@ theorem covered_projection_degree_two
     (H : Finset ι)
     (hcover : ∀ S : Finset ι, S.card = 3 →
       ¬ touches H S → ∀ x, esComp p S f x = 0) :
-    ESDegreeLE p (condExp p (Finset.univ \\ H) f) 2 := by
+    ESDegreeLE p (condExp p (Finset.univ \ H) f) 2 := by
   intro S hS x
-  rw [esComp_condExp p hp1 f (Finset.univ \\ H) S x]
-  by_cases hSU : S ⊆ (Finset.univ \\ H)
+  rw [esComp_condExp p hp1 f (Finset.univ \ H) S x]
+  by_cases hSU : S ⊆ (Finset.univ \ H)
   · rw [if_pos hSU]
     by_cases hg : 3 < S.card
     · exact hdegree S hg x
@@ -302,7 +302,7 @@ theorem actual_source_cubic_top_cover_107
       ((2 * (1 + Real.sqrt 2)) * Real.sqrt 3 + 2) *
       B * Real.sqrt M + (H.card : ℝ) * M := by
   classical
-  let U : Finset ι := Finset.univ \\ H
+  let U : Finset ι := Finset.univ \ H
   let g : (ι → α) → ℝ := condExp p U f
   have hgd : ESDegreeLE p g 2 :=
     covered_projection_degree_two p hp1 f hdegree H hcover
