@@ -1,0 +1,77 @@
+name: NIGHTFALL Q2 canonical source finite cell L2 label projection Lean
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - 'research/nightfall/formalization/universal/InfinitePiQ2CellLabelProjection.lean'
+      - 'research/nightfall/formalization/universal/InfinitePiQ2FiniteTestLabelRealization.lean'
+      - '.github/workflows/nightfall-q2-cell-l2-projection.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: q2-boolean-to-label-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  original-source-label-law-from-boolean-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout exact original source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Install pinned Lean 4.36 and original locked Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile full original source and finite Boolean factor closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from scripts.nightfall_q2_certify import local_sources, closure, sha256, ROOT
+          from pathlib import Path
+          import shutil, subprocess, json
+          files=local_sources()
+          ws=Path("/tmp/mathlib4")
+          out=ws/".lake/build/lib/lean"
+          out.mkdir(parents=True,exist_ok=True)
+          receipt=Path("lean-receipts/q2-cell-l2-projection")
+          receipt.mkdir(parents=True,exist_ok=True)
+          manifest=[]
+          for name in closure("InfinitePiQ2CellLabelProjection",files):
+              src=files[name]
+              dst=ws/(name+".lean")
+              shutil.copyfile(src,dst)
+              assert sha256(src)==sha256(dst)
+              print("BUILD SOURCE",name,flush=True)
+              subprocess.run(["lake","env","lean","-o",str(out/(name+".olean")),name+".lean"],cwd=ws,check=True,timeout=1200)
+              manifest.append({"path":str(src.relative_to(ROOT)),"sha256":sha256(src)})
+          (receipt/"sources.json").write_text(json.dumps(manifest,indent=2)+"\n")
+          PY
+      - name: Strict real finite-label source theorem and standard-axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiQ2CellLabelProjection.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InfinitePiQ2CellLabelProjection.finiteFamily_sourceCells_measurable_in_site_labels \
+            --decl Nightfall.InfinitePiQ2CellLabelProjection.sourceCell_measurable_in_finite_site_labels \
+            --decl Nightfall.InfinitePiQ2CellLabelProjection.sourceCellIndicator_fixed_by_finite_site_labels \
+            --json-out lean-receipts/q2-cell-l2-projection/strict.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-cell-l2-projection/strict.json
+      - name: Exact source/compiler provenance
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/q2-cell-l2-projection
+          git rev-parse HEAD > lean-receipts/q2-cell-l2-projection/HEAD
+          cat lean-toolchain > lean-receipts/q2-cell-l2-projection/TOOLCHAIN
+          sha256sum research/nightfall/formalization/universal/InfinitePiQ2CellLabelProjection.lean > lean-receipts/q2-cell-l2-projection/TERMINAL_SHA256
+      - name: Upload source and theorem receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: q2-original-source-finite-bit-labels-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/q2-cell-l2-projection
+          if-no-files-found: warn
