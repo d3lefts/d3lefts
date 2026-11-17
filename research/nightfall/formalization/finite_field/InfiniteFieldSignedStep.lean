@@ -58,6 +58,55 @@ theorem exists_signed_code_extension
           have hxy : x = y := hf (by linear_combination heq)
           simpa [hxy]
 
+
+/-- Signed sums of Boolean orientations in a field. -/
+def signedSum {n : ℕ} (w : Fin n → K) (s : Fin n → Bool) : K :=
+  ∑ i, (if s i then (1 : K) else -1) * w i
+
+private theorem signedSum_cons {n : ℕ} (z : K) (w : Fin n → K)
+    (b : Bool) (s : Fin n → Bool) :
+    signedSum (Fin.cons z w) (Fin.cons b s) =
+      signedSum w s + (if b then z else -z) := by
+  simp [signedSum, Fin.sum_univ_succ, add_comm]
+
+/-- Every finite number of signs can be packed into one unsquared field
+element over any infinite field with two invertible. -/
+theorem exists_all_length_signed_code (n : ℕ) :
+    ∃ w : Fin n → K, Function.Injective (signedSum w) := by
+  classical
+  induction n with
+  | zero =>
+      refine ⟨Fin.elim0, ?_⟩
+      intro s t _
+      funext i
+      exact Fin.elim0 i
+  | succ n ih =>
+      obtain ⟨w, hw⟩ := ih
+      obtain ⟨z, hz⟩ := exists_signed_code_extension (signedSum w) hw
+      refine ⟨Fin.cons z w, ?_⟩
+      intro s t hst
+      have hs : signedSum (Fin.cons z w) s =
+          signedSum w (Fin.tail s) + (if s 0 then z else -z) := by
+        rw [← Fin.cons_self_tail s]
+        exact signedSum_cons z w (s 0) (Fin.tail s)
+      have ht : signedSum (Fin.cons z w) t =
+          signedSum w (Fin.tail t) + (if t 0 then z else -z) := by
+        rw [← Fin.cons_self_tail t]
+        exact signedSum_cons z w (t 0) (Fin.tail t)
+      have he : (s 0, Fin.tail s) = (t 0, Fin.tail t) := by
+        apply hz
+        change signedSum w (Fin.tail s) + (if s 0 then z else -z) =
+          signedSum w (Fin.tail t) + (if t 0 then z else -z)
+        exact hs.symm.trans (hst.trans ht)
+      calc
+        s = Fin.cons (s 0) (Fin.tail s) := (Fin.cons_self_tail s).symm
+        _ = Fin.cons (t 0) (Fin.tail t) :=
+            congrArg (fun p : Bool × (Fin n → Bool) => Fin.cons p.1 p.2) he
+        _ = t := Fin.cons_self_tail t
+
+#print axioms Nightfall.InfiniteFieldPhase.exists_all_length_signed_code
+
+
 #print axioms Nightfall.InfiniteFieldPhase.exists_signed_code_extension
 
 end
