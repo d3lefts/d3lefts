@@ -9,6 +9,10 @@ on:
       - 'projects/commonwealth-os/assurance/lean/passport-contract.json'
       - '.github/actions/setup-nightfall-lean/action.yml'
       - 'scripts/check_nightfall_compiler_lock.py'
+      - 'scripts/audit_active_lean_436.py'
+      - 'tests/test_active_lean_436.py'
+      - 'scripts/generate_nightfall_lake.py'
+      - '.github/workflows/nightfall-integrated-lake.yml'
       - 'tests/test_nightfall_compiler_lock.py'
       - 'scripts/check_lean_proof_passport_overlay.cjs'
       - '.github/workflows/nightfall-compiler-lock.yml'
@@ -20,6 +24,8 @@ on:
       - '.github/actions/setup-nightfall-lean/action.yml'
       - 'scripts/check_nightfall_compiler_lock.py'
       - 'tests/test_nightfall_compiler_lock.py'
+      - 'scripts/audit_active_lean_436.py'
+      - 'tests/test_active_lean_436.py'
       - '.github/workflows/nightfall-compiler-lock.yml'
   workflow_dispatch:
 permissions:
@@ -36,5 +42,9 @@ jobs:
         run: python3 scripts/check_nightfall_compiler_lock.py --checkout .
       - name: Independent negative tests for pin and compiler identity tampering
         run: python3 -m unittest discover -s tests -p 'test_nightfall_compiler_lock.py' -v
+      - name: Audit maintained 4.36 workflows and inventory historical compiler pins
+        run: |
+          python3 scripts/audit_active_lean_436.py
+          python3 -m unittest discover -s tests -p 'test_active_lean_436.py' -v
       - name: Ensure no science passport was promoted by pin-only changes
         run: node scripts/check_lean_proof_passport_overlay.cjs
