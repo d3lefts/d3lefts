@@ -48,7 +48,7 @@ jobs:
               subprocess.run(["lake", "env", "lean", "-o", str(out / (name + ".olean")), name + ".lean"],
                              cwd=ws, check=True, timeout=1200)
               manifest.append({"path": str(src.relative_to(ROOT)), "sha256": sha256(src)})
-          (receipt / "sources.json").write_text(json.dumps(manifest, indent=2)+"\\n")
+          (receipt / "sources.json").write_text(json.dumps(manifest, indent=2)+"\n")
           PY
       - name: Strict source law and standard-axiom gate
         shell: bash
