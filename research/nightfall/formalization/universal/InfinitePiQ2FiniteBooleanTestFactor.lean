@@ -147,4 +147,73 @@ theorem sourceFiniteCellAlgebra_hasFiniteTests
     (fun t ht => squareCylinder_hasFiniteTests t ht)
     (finiteTests_isSetAlgebra (X := X))) hs
 
+/-- Every finite source Boolean-test representation remains exact after
+enlarging its finite test set. The forgotten bits are restricted out
+by a literal reindexing of the same source observations. -/
+theorem finiteTests_refine
+    (T R : Finset (CoordinateTest (X := X)))
+    (hTR : T ⊆ R)
+    (U : Set (T → Bool)) :
+    ∃ V : Set (R → Bool), ∀ x : (i : ι) → X i,
+       (evalTests T x ∈ U ↔ evalTests R x ∈ V) := by
+  let restrict : (R → Bool) → (T → Bool) :=
+    fun b j => b ⟨j.1, hTR j.2⟩
+  refine ⟨{b | restrict b ∈ U}, ?_⟩
+  intro x
+  have htest : restrict (evalTests R x) = evalTests T x := by
+    funext j
+    rfl
+  change (evalTests T x ∈ U ↔ restrict (evalTests R x) ∈ U)
+  rw [htest]
+
+/-- A *finite family* of original-product Boolean-cell events shares
+one finite source-coordinate test label. This turns the density
+theorem's arbitrary finite linear combinations of cell indicators
+into a single finite-label measurable function, without infinite
+label alphabets or a countability hypothesis on the source index. -/
+theorem finiteFamily_sourceCells_commonTests
+    (S : Finset (Set ((i : ι) → X i)))
+    (hS : ∀ s ∈ S, s ∈ sourceFiniteCellAlgebra (X := X)) :
+    ∃ T : Finset (CoordinateTest (X := X)),
+      ∀ s ∈ S, ∃ U : Set (T → Bool),
+        ∀ x : (i : ι) → X i, x ∈ s ↔ evalTests T x ∈ U := by
+  classical
+  suffices h :
+      ∀ S : Finset (Set ((i : ι) → X i)),
+        (∀ s ∈ S, s ∈ sourceFiniteCellAlgebra (X := X)) →
+        ∃ T : Finset (CoordinateTest (X := X)),
+          ∀ s ∈ S, ∃ U : Set (T → Bool),
+            ∀ x : (i : ι) → X i,
+              x ∈ s ↔ evalTests T x ∈ U from h S hS
+  intro S
+  induction S using Finset.induction_on with
+  | empty =>
+      intro _
+      refine ⟨∅, ?_⟩
+      intro s hs
+      simp at hs
+  | @insert a S ha ih =>
+      intro hsource
+      have haSource : a ∈ sourceFiniteCellAlgebra (X := X) :=
+        hsource a (Finset.mem_insert_self a S)
+      have htail : ∀ s ∈ S,
+          s ∈ sourceFiniteCellAlgebra (X := X) := by
+        intro s hs
+        exact hsource s (Finset.mem_insert_of_mem hs)
+      obtain ⟨Told, hold⟩ := ih htail
+      obtain ⟨Tnew, Unew, hnew⟩ :=
+        sourceFiniteCellAlgebra_hasFiniteTests a haSource
+      let T : Finset (CoordinateTest (X := X)) := Tnew ∪ Told
+      have hnewSub : Tnew ⊆ T := Finset.subset_union_left
+      have holdSub : Told ⊆ T := Finset.subset_union_right
+      refine ⟨T, ?_⟩
+      intro s hs
+      rcases Finset.mem_insert.mp hs with hsa | hsOld
+      · subst s
+        obtain ⟨V, hV⟩ := finiteTests_refine Tnew T hnewSub Unew
+        exact ⟨V, fun x => (hnew x).trans (hV x)⟩
+      · obtain ⟨U, hU⟩ := hold s hsOld
+        obtain ⟨V, hV⟩ := finiteTests_refine Told T holdSub U
+        exact ⟨V, fun x => (hU x).trans (hV x)⟩
+
 end Nightfall.InfinitePiQ2FiniteBooleanTestFactor
