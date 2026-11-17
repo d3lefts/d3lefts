@@ -57,6 +57,52 @@ theorem sourceCell_measurable_in_finite_site_labels
   rw [hset]
   exact ⟨U, hmeas, rfl⟩
 
+
+/-- A finite family of source Boolean-cell events is measurable for
+ONE common original-site finite-label observation. This is the exact
+finite-family compatibility needed to approximate arbitrary simple
+source L² functions without assuming countable source generators. -/
+theorem finiteFamily_sourceCells_common_site_label_sigma
+    (S : Finset (Set ((i : ι) → X i)))
+    (hS : ∀ s ∈ S, s ∈ sourceFiniteCellAlgebra (X := X)) :
+    ∃ F : Finset ι, ∃ T : Finset (CoordinateTest (X := X)),
+      ∀ s ∈ S, @MeasurableSet ((i : ι) → X i)
+        (sourceFiniteLabelSigma (X := X) F
+          (siteTestLabelFamily T)) s := by
+  classical
+  obtain ⟨T, hT⟩ := finiteFamily_sourceCells_commonTests S hS
+  let F : Finset ι := siteTestSupport T
+  have ht (t : T) : t.1.1 ∈ F := by
+    exact Finset.mem_image.mpr ⟨t.1, t.2, rfl⟩
+  refine ⟨F, T, ?_⟩
+  intro s hs
+  obtain ⟨U, hU⟩ := hT s hs
+  let V : Set ((j : F) → (T → Bool)) :=
+    {w | (fun t : T => w ⟨t.1.1, ht t⟩ t) ∈ U}
+  have hV : MeasurableSet V := (Set.toFinite V).measurableSet
+  have heq : s =
+      (fun x : (i : ι) → X i =>
+        F.restrict (sourceLabelMap (siteTestLabelFamily T) x)) ⁻¹' V := by
+    ext x
+    change x ∈ s ↔
+      (fun t : T => siteTestLabel T t.1.1 (x t.1.1) t) ∈ U
+    have hbits :
+        (fun t : T => siteTestLabel T t.1.1 (x t.1.1) t) =
+          evalTests T x := by
+      funext t
+      simpa only [evalTests] using siteTestLabel_owned_bit T t x
+    rw [hbits]
+    exact hU x
+  change @MeasurableSet ((i : ι) → X i)
+    (MeasurableSpace.comap
+      (fun x : (i : ι) → X i =>
+        F.restrict (sourceLabelMap (siteTestLabelFamily T) x))
+      (inferInstance : MeasurableSpace ((j : F) → (T → Bool)))) s
+  rw [heq]
+  exact ⟨V, hV, rfl⟩
+
+#print axioms Nightfall.InfinitePiQ2CellLabelMeasurable.finiteFamily_sourceCells_common_site_label_sigma
+
 variable (μ : (i : ι) → Measure (X i))
 variable [∀ i, IsProbabilityMeasure (μ i)]
 
