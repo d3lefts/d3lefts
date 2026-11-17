@@ -53,7 +53,7 @@ theorem source_coordinate_other_indepFun (i : ι) :
     IndepFun
       (fun x : (j : ι) → X j => x i)
       (fun x : (j : ι) → X j =>
-        (sourceOtherIndices i).restrict x)
+        (fun j : sourceOtherIndices i => x j))
       (Measure.infinitePi μ) := by
   let S : Set ι := {i}
   let eval : ((j : S) → X j) → X i :=
@@ -62,6 +62,6 @@ theorem source_coordinate_other_indepFun (i : ι) :
     dsimp [eval]
     fun_prop
   have h := (source_singleton_other_indepFun μ i).comp heval measurable_id
-  simpa only [Function.comp_def, eval, S, Set.restrict] using h
+  simpa only [Function.comp_def, eval, S] using h
 
 end Nightfall.InfinitePiQ2OriginalIndependence
