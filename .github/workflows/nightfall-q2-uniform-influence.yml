@@ -1,0 +1,48 @@
+name: NIGHTFALL Q2 arbitrary-product uniform source influence transfer Lean
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/universal/InfinitePiQ2UniformInfluence.lean'
+      - '.github/workflows/nightfall-q2-uniform-influence.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  uniform-source-influence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Build actual infinite-product source finite L2 density and coordinate influence closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          for F in InfinitePiQ2Density InfinitePiQ2InfluenceStability InfinitePiQ2UniformInfluence; do
+            cp "research/nightfall/formalization/universal/$F.lean" "/tmp/mathlib4/$F.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$F.olean" "$F.lean")
+          done
+      - name: Strict named declaration and standard-axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-uniform
+          N=Nightfall.InfinitePiQ2UniformInfluence
+          python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiQ2UniformInfluence.lean --workspace /tmp/mathlib4 --strict --timeout 900 --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.finite_info_residuals_uniform" --decl "$N.finite_info_influences_uniform" --json-out lean-receipts/q2-uniform/receipt.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-uniform/receipt.json
+      - name: Freeze source and compiler provenance
+        if: always()
+        run: |
+          mkdir -p lean-receipts/q2-uniform
+          git rev-parse HEAD > lean-receipts/q2-uniform/head
+          sha256sum research/nightfall/formalization/universal/InfinitePiQ2UniformInfluence.lean > lean-receipts/q2-uniform/source-sha256
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: q2-uniform-influence-${{ github.run_id }}
+          path: lean-receipts/q2-uniform
+          if-no-files-found: warn

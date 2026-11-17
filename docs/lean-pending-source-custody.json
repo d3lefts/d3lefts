@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 15,
+  "revision": 16,
   "as_of": "2026-11-17 UTC",
-  "source_commit": "4162d135971963b518fac0cdeab6c1cf1101d082",
-  "scope": "236 exact pending Lean source custody entries, including ten newly merged files as of 4162d135971963b518fac0cdeab6c1cf1101d082. Frozen 67-source historical registry unchanged; separately recorded pinned named Lean receipts remain separately scoped. No unconditional infinite Q2 or F9 terminal claimed.",
+  "source_commit": "f76f3847638f3ba3b51bbaf228ef32d0079e19ae",
+  "scope": "240 exact pending Lean source custody entries. The original 67-source historical certificate ledger remains immutable. Source custody alone never certifies compilation, mathematical theorem scope, or novelty; consult separately scoped kernel CI runs.",
   "sources": [
     {
       "path": "research/nightfall/formalization/agent_safety/ArbitraryAgentSafety.lean",
@@ -2400,6 +2400,16 @@
       "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
     },
     {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2EventualTerminal.lean",
+      "source_blob_sha": "87c350d7f5a350494347ea11451cfed2bfe494b6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Scoped exact-source pinned Lean 4.36.0-rc2 named declaration passed run 44014057007: arbitrary-index source-product Q2 ε-limit conditional on eventually valid finite-resolution Q2 bounds. The eventually-valid finite-resolution premise is NOT discharged."
+    },
+    {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2FiniteCellDensity.lean",
       "source_blob_sha": "3cefdbefb7b950e455f937d0c136f0ebd6260252",
       "classification": "unreviewed-source",
@@ -2430,6 +2440,16 @@
       "receipt_scope": "Exact Git blob registered from merged protected-main source a8142aacf0ad2d4d7864d7693af679140da436a0. Custody only, not a new named-declaration Lean receipt, external review, or originality/priority certificate; any existing scoped compiler evidence is tracked separately."
     },
     {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2FiniteSupportedTerminal.lean",
+      "source_blob_sha": "d361023a0ae311ce2ed3b83d828f2e42ef49c94f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Merged finite C105.416 positive-support repair terminal, dated named Lean receipt is separately auditable. Pending historical ledger registration is source custody only; not novel/unrestricted infinite theorem."
+    },
+    {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2FiniteSupportRepair.lean",
       "source_blob_sha": "0ef04eae9c92f18ae6da2d8382f178307585609e",
       "classification": "unreviewed-source",
@@ -2438,6 +2458,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact Git blob registered from merged protected-main source a8142aacf0ad2d4d7864d7693af679140da436a0. Custody only, not a new named-declaration Lean receipt, external review, or originality/priority certificate; any existing scoped compiler evidence is tracked separately."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2HeterogeneousAlphabet.lean",
+      "source_blob_sha": "2fc2e12afbbaa84af15d73b9839d06c715f41358",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Merged heterogeneous-to-tagged finite alphabet original-source operator; source custody only. Not finite-measure influence transport or infinite Q2 terminal."
     },
     {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2InfluenceStability.lean",
@@ -2458,6 +2488,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2UniformInfluence.lean",
+      "source_blob_sha": "169be77bb9a98ce96638e4d6976c81720ea86a13",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Scoped exact-source pinned Lean 4.36.0-rc2 named declarations passed run 44012877226: simultaneous uniform residual and influence caps on arbitrary original product L² finite information projections. Does not prove original finite-label Q2 transport."
     },
     {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2ZeroCellSourceInvariance.lean",
