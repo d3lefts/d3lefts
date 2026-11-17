@@ -1,0 +1,53 @@
+name: NIGHTFALL Q2 positive-atom almost-everywhere extraction
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/universal/InfinitePiQ2PositiveAtomExtraction.lean'
+      - '.github/workflows/nightfall-q2-positive-atom-extraction.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: q2-positive-atom-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  exact-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact native positive-atom extraction
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/universal/InfinitePiQ2PositiveAtomExtraction.lean /tmp/mathlib4/InfinitePiQ2PositiveAtomExtraction.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/InfinitePiQ2PositiveAtomExtraction.olean InfinitePiQ2PositiveAtomExtraction.lean)
+      - name: Strict named standard-axiom gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-positive-atom
+          python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiQ2PositiveAtomExtraction.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InfinitePiQ2PositiveAtomExtraction.ae_abs_bound_at_positive_atom \
+            --decl Nightfall.InfinitePiQ2PositiveAtomExtraction.ae_eq_at_positive_atom \
+            --json-out lean-receipts/q2-positive-atom/receipt.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-positive-atom/receipt.json
+      - name: Preserve exact source identity
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-positive-atom
+          git rev-parse HEAD > lean-receipts/q2-positive-atom/HEAD
+          sha256sum research/nightfall/formalization/universal/InfinitePiQ2PositiveAtomExtraction.lean > lean-receipts/q2-positive-atom/SOURCE_SHA256
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: q2-positive-atom-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/q2-positive-atom
+          if-no-files-found: warn
