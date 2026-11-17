@@ -380,6 +380,18 @@ def main() -> int:
                                           'button.setAttribute("aria-expanded","false")')))
                 if not local_menu_ok:
                     FAILURES.append(f"{page_path}: missing independently controlled accessible navigation")
+            elif page_path.name in ("commonwealth.html", "commonwealth-os.html"):
+                # Commonwealth has its own shell and independent menu controls.
+                # Do not re-import site.js or the NIGHTFALL research navigation.
+                local_js = (DOCS / "commonwealth-shell.js").read_text(encoding="utf-8")
+                local_menu_ok = ('src="commonwealth-shell.js"' in src
+                                 and all(item in local_js for item in
+                                         ('nav.classList.toggle("open")',
+                                          'menu.setAttribute("aria-expanded"',
+                                          'e.key==="Escape"',
+                                          'nav.querySelectorAll("a")')))
+                if not local_menu_ok or 'href="site.css"' in src:
+                    FAILURES.append(f"{page_path}: missing standalone Commonwealth navigation")
             else:
                 FAILURES.append(f"{page_path}: missing shared navigation JavaScript")
     # Public source scope and verified metadata baseline.

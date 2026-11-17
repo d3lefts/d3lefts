@@ -1,0 +1,34 @@
+/* Commonwealth-only shared shell. No NIGHTFALL CSS, JS, theme state, or research navigation. */
+:root{color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;-webkit-font-smoothing:antialiased;font-family:"Segoe UI",Arial,sans-serif}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit}
+button{cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e1c28b;outline-offset:3px}
+p{margin:0}h1,h2,h3,h4{margin:0;font-weight:400}
+.skip{position:absolute;top:-100px;left:1rem;z-index:1000;background:#f3e8d4;color:#142b49;padding:12px 18px;border:2px solid #e1c28b}
+.skip:focus{top:1rem}
+.wrap{width:min(1320px,calc(100% - 88px));margin-left:auto;margin-right:auto}
+.topline{height:4px;background:linear-gradient(90deg,#a74147 0 33%,#f2e8d7 33% 66%,#c6a36e 66% 100%)}
+.header{position:relative;z-index:30;border-bottom:1px solid rgba(225,194,139,.3)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:90px}
+.brand{display:flex;align-items:center;gap:13px;min-width:0}
+.brand-copy{font-size:18px;letter-spacing:.06em;line-height:1.25}
+.brand-copy span{display:block;font-size:10px;margin-top:4px;line-height:1.5}
+.nav{display:flex;align-items:center;gap:clamp(15px,2.2vw,32px);font-size:13px;font-weight:600}
+.nav a:hover{opacity:.8}
+.nav a.nav-call{padding:11px 15px}
+.menu-toggle{display:none;border:1px solid rgba(225,194,139,.65);padding:10px 13px;background:transparent;color:#f3e8d4;border-radius:2px;font-size:12px;font-weight:750}
+@media(max-width:900px){
+ .wrap{width:min(100% - 38px,1320px)}
+ .header-inner{min-height:76px}
+ .menu-toggle{display:inline-flex;align-items:center;justify-content:center}
+ .header .nav{display:none;position:absolute;left:0;right:0;top:100%;z-index:31;flex-direction:column;align-items:stretch;gap:0;background:#0d2038;padding:12px max(19px,calc((100% - 1320px)/2));border-bottom:1px solid rgba(225,194,139,.4);box-shadow:0 20px 35px #0005}
+ .header .nav.open{display:flex}
+ .header .nav a{display:block;padding:14px 16px}
+ .header .nav a.nav-call{margin:8px 16px 12px;text-align:center;color:#142b49;background:#e1c28b}
+}
+@media(max-width:680px){.wrap{width:calc(100% - 38px)}.brand-copy{font-size:16px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}

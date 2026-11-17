@@ -1,0 +1,44 @@
+name: Build isolated Commonwealth deployable release
+on:
+  pull_request:
+    paths:
+      - "docs/commonwealth*"
+      - "projects/commonwealth-os/deployment/**"
+      - "tests/test_commonwealth_web_demo.mjs"
+      - ".github/workflows/commonwealth-standalone-release.yml"
+  push:
+    branches: [main]
+    paths:
+      - "docs/commonwealth*"
+      - "projects/commonwealth-os/deployment/**"
+      - ".github/workflows/commonwealth-standalone-release.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  release-integrity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build deterministic standalone release
+        run: |
+          python3 projects/commonwealth-os/deployment/build_standalone.py \
+            --output /tmp/commonwealth-repository \
+            --zip-output /tmp/commonwealth-standalone-release.zip \
+            --base-url https://d3lefts.github.io/commonwealth/ \
+            --source-ref "$GITHUB_SHA"
+      - name: Validate runtime dependencies, provenance, and checksums
+        run: python3 projects/commonwealth-os/deployment/test_standalone.py /tmp/commonwealth-repository
+      - name: Install browser test driver
+        run: npm install --no-save --no-package-lock playwright-core@1.56.1
+      - name: Test standalone deployment in desktop and mobile browsers
+        run: |
+          CHROME_BIN="$(command -v google-chrome)" \
+          node scripts/test_commonwealth_standalone_browser.mjs /tmp/commonwealth-repository/site
+      - name: Upload independent deployable repository ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: commonwealth-standalone-release
+          path: /tmp/commonwealth-standalone-release.zip
+          if-no-files-found: error
+          retention-days: 30
