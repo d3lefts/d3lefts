@@ -37,8 +37,7 @@ theorem source_finite_information_condExp_essential_bound
     ∀ᵐ x ∂(Measure.infinitePi μ),
       |(Measure.infinitePi μ)[f | sourceFiniteCoordinateSigma (X := X) F] x| ≤ B := by
   let ν : Measure ((j : ι) → X j) := Measure.infinitePi μ
-  let m := sourceFiniteCoordinateSigma (X := X) F
-  have hm : m ≤ (inferInstance : MeasurableSpace ((j : ι) → X j)) :=
+  have hm : sourceFiniteCoordinateSigma (X := X) F ≤ (inferInstance : MeasurableSpace ((j : ι) → X j)) :=
     sourceFiniteCoordinateSigma_le (X := X) F
   have hlow : (fun _ : ((j : ι) → X j) => -B) ≤ᵐ[ν] f := by
     filter_upwards [hbound] with x hx
@@ -47,14 +46,14 @@ theorem source_finite_information_condExp_essential_bound
     filter_upwards [hbound] with x hx
     exact (abs_le.mp hx).2
   have hlowExp :
-      ν[(fun _ : ((j : ι) → X j) => -B) | m] ≤ᵐ[ν] ν[f | m] :=
+      ν[(fun _ : ((j : ι) → X j) => -B) | sourceFiniteCoordinateSigma (X := X) F] ≤ᵐ[ν] ν[f | sourceFiniteCoordinateSigma (X := X) F] :=
     condExp_mono (integrable_const (-B)) hf hlow
   have hhighExp :
-      ν[f | m] ≤ᵐ[ν] ν[(fun _ : ((j : ι) → X j) => B) | m] :=
+      ν[f | sourceFiniteCoordinateSigma (X := X) F] ≤ᵐ[ν] ν[(fun _ : ((j : ι) → X j) => B) | sourceFiniteCoordinateSigma (X := X) F] :=
     condExp_mono hf (integrable_const B) hhigh
-  have hlow' : (fun _ : ((j : ι) → X j) => -B) ≤ᵐ[ν] ν[f | m] := by
+  have hlow' : (fun _ : ((j : ι) → X j) => -B) ≤ᵐ[ν] ν[f | sourceFiniteCoordinateSigma (X := X) F] := by
     simpa only [condExp_const hm] using hlowExp
-  have hhigh' : ν[f | m] ≤ᵐ[ν] (fun _ : ((j : ι) → X j) => B) := by
+  have hhigh' : ν[f | sourceFiniteCoordinateSigma (X := X) F] ≤ᵐ[ν] (fun _ : ((j : ι) → X j) => B) := by
     simpa only [condExp_const hm] using hhighExp
   filter_upwards [hlow', hhigh'] with x hL hU
   exact abs_le.mpr ⟨hL, hU⟩
