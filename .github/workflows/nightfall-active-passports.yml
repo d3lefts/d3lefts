@@ -3,6 +3,9 @@ on:
   pull_request:
     paths:
       - 'docs/active-proof-passport.*'
+      - 'docs/lean-proof-passport-overlay.json'
+      - 'scripts/check_lean_proof_passport_overlay.cjs'
+      - 'projects/commonwealth-os/assurance/lean/passport-contract.json'
       - 'docs/*proof-passport.html'
       - 'docs/lean-certificate-provenance.*'
       - 'research/nightfall/formalization/**'
@@ -41,6 +44,7 @@ jobs:
       - name: Verify active claims, exact Lean provenance and frozen historical boundary
         run: |
           node scripts/test_active_proof_passport.cjs
+          node scripts/check_lean_proof_passport_overlay.cjs
           node scripts/test_unrestricted_terminal_passport.cjs
           node scripts/test_lean_certificate_provenance.cjs
           node scripts/test_discovery_system_identity.cjs
