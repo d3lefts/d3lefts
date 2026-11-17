@@ -380,7 +380,7 @@ def main() -> int:
                                           'button.setAttribute("aria-expanded","false")')))
                 if not local_menu_ok:
                     FAILURES.append(f"{page_path}: missing independently controlled accessible navigation")
-            elif page_path.name in ("commonwealth.html", "commonwealth-os.html"):
+            elif page_path.name in ("commonwealth.html", "commonwealth-os.html", "commonwealth-warrant.html"):
                 # Commonwealth has its own shell and independent menu controls.
                 # Do not re-import site.js or the NIGHTFALL research navigation.
                 local_js = (DOCS / "commonwealth-shell.js").read_text(encoding="utf-8")
