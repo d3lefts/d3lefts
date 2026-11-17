@@ -136,7 +136,7 @@ theorem frozen_collision_two_nonzero
     (rows : Fin (k + 1) → Fin (k + 1) → K)
     (x : Fin (k + 1) → K)
     (hfirst : dot (rows 0) x ≠ 0)
-    (hsecond : dot (rows (Fin.succ (0 : Fin k))) x ≠ 0) :
+    (hsecond : dot (rows (Fin.succ (⟨0, by omega⟩ : Fin k))) x ≠ 0) :
     ∃ y : Fin (k + 1) → K,
       y ≠ x ∧ y ≠ -x ∧
       ∀ i, (dot (rows i) y) ^ 2 = (dot (rows i) x) ^ 2 := by
@@ -157,6 +157,7 @@ theorem frozen_collision_two_nonzero
       funext i
       have hh := congrArg (fun f : Fin (k + 1) → K => f i) heq
       change x i + v i = x i at hh
+      change v i = (0 : K)
       linear_combination hh
     have hminus : x - v ≠ x := by
       intro heq
@@ -164,6 +165,7 @@ theorem frozen_collision_two_nonzero
       funext i
       have hh := congrArg (fun f : Fin (k + 1) → K => f i) heq
       change x i - v i = x i at hh
+      change v i = (0 : K)
       linear_combination hh
     have hpm : x + v ≠ x - v := by
       intro heq
@@ -207,16 +209,16 @@ theorem frozen_collision_two_nonzero
       intro he
       have hh := congrArg (fun z : Fin (k + 1) → K => dot (rows 0) z) he
       rw [hzero0] at hh
-      have hzero : (2 : K) * dot (rows 0) x = 0 := by linear_combination hh
+      have hzero : (2 : K) * dot (rows 0) x = 0 := by linear_combination -hh
       exact hfirst ((mul_eq_zero.mp hzero).resolve_left h2)
     have hnotneg : y ≠ -x := by
       intro he
       have hh := congrArg
         (fun z : Fin (k + 1) → K =>
-          dot (rows (Fin.succ (0 : Fin k))) z) he
-      rw [htail (0 : Fin k), dot_neg] at hh
+          dot (rows (Fin.succ (⟨0, by omega⟩ : Fin k))) z) he
+      rw [htail (⟨0, by omega⟩ : Fin k), dot_neg] at hh
       have hzero : (2 : K) *
-          dot (rows (Fin.succ (0 : Fin k))) x = 0 := by
+          dot (rows (Fin.succ (⟨0, by omega⟩ : Fin k))) x = 0 := by
         linear_combination hh
       exact hsecond ((mul_eq_zero.mp hzero).resolve_left h2)
     refine ⟨y, hnotx, hnotneg, ?_⟩
@@ -380,12 +382,12 @@ theorem critical_adaptive_strategy_fails
     by_cases hb : b = 0
     · let rows : Fin (k+1) → Fin (k+1) → K :=
         fun i => policy (history policy x0 i.val)
-      have hrow1 : rows (Fin.succ (0 : Fin k)) = 0 := by
+      have hrow1 : rows (Fin.succ (⟨0, by omega⟩ : Fin k)) = 0 := by
         change policy [(dot a x0)^2] = 0
         exact hb
       obtain ⟨y, hneq, hsign, hsame⟩ :=
         frozen_collision_with_zero_row rows x0
-          (Fin.succ (0 : Fin k)) hrow1
+          (Fin.succ (⟨0, by omega⟩ : Fin k)) hrow1
       have htrans : history policy x0 (k+1) = history policy y (k+1) := by
         apply history_eq_of_frozen_squares
         intro i
@@ -424,7 +426,7 @@ theorem critical_adaptive_strategy_fails
       let rows : Fin (k+1) → Fin (k+1) → K :=
         fun i => policy (history policy x i.val)
       have hf : dot (rows 0) x ≠ 0 := hfirst
-      have hs : dot (rows (Fin.succ (0 : Fin k))) x ≠ 0 := hsecond
+      have hs : dot (rows (Fin.succ (⟨0, by omega⟩ : Fin k))) x ≠ 0 := hsecond
       obtain ⟨y, hneq, hsign, hsame⟩ :=
         frozen_collision_two_nonzero hk rows x hf hs
       have htrans : history policy x (k+1) = history policy y (k+1) := by
