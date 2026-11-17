@@ -1,0 +1,65 @@
+name: NIGHTFALL physical Bayes numerator source-support Lean
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [nightfall/quantum-sld-full-20261116]
+    paths:
+      - 'research/nightfall/formalization/quantum/PhysicalOutcomeNumerator.lean'
+      - 'research/nightfall/formalization/quantum/AmbientGHZMeasurement.lean'
+      - '.github/workflows/nightfall-quantum-physical-numerator.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-numerator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Build exact source dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          for F in PhysicalQubitEnsemble TensorCharacter TernaryPhase LocalTernaryMoments PhysicalOperatorReduction; do
+            cp "research/nightfall/formalization/quantum/$F.lean" "/tmp/mathlib4/$F.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$F.olean" "$F.lean")
+          done
+      - name: Compile global source numerator GHZ support
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/quantum/PhysicalOutcomeNumerator.lean /tmp/mathlib4/PhysicalOutcomeNumerator.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/PhysicalOutcomeNumerator.olean PhysicalOutcomeNumerator.lean)
+      - name: Compile genuinely full-dimensional GHZ POVM
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/quantum/AmbientGHZMeasurement.lean /tmp/mathlib4/AmbientGHZMeasurement.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/AmbientGHZMeasurement.olean AmbientGHZMeasurement.lean)
+      - name: Strict named transitive Lean axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p numerator-receipts
+          N=Nightfall.Quantum.PhysicalNumerator
+          python3 scripts/lean_bridge.py research/nightfall/formalization/quantum/PhysicalOutcomeNumerator.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.C_zero_outside_GHZ_corner" --decl "$N.A_zero_outside_two_GHZ_corners" --decl "$N.A_nonzero_implies_GHZ_corners" --decl "$N.A_all_diagonal_entries_zero" --decl "$N.two_GHZ_rays_distinct" --decl "$N.physical_A_is_two_corner_matrix" --decl "$N.actual_physical_A_trace_two_rays" --decl "$N.C_GHZ_corner_is_real" --decl "$N.A_reverse_GHZ_corner_matches" --decl "$N.actual_physical_A_real_trace_coherence" --json-out numerator-receipts/source-support.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py numerator-receipts/source-support.json
+          N=Nightfall.Quantum.AmbientGHZ
+          python3 scripts/lean_bridge.py research/nightfall/formalization/quantum/AmbientGHZMeasurement.lean --workspace /tmp/mathlib4 --timeout 900 --strict --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext --decl "$N.complex_half_nonneg" --decl "$N.plusEffect_posSemidef" --decl "$N.minusEffect_posSemidef" --decl "$N.complementEffect_posSemidef" --decl "$N.complete_three_ambient_effects" --decl "$N.ghzAmbient_positive" --decl "$N.ghzAmbient_complete" --decl "$N.ambient_ghz_corner_values" --decl "$N.ambient_ghz_attains_two_ray_energy" --json-out numerator-receipts/ambient-ghz.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py numerator-receipts/ambient-ghz.json
+      - name: Freeze source provenance
+        if: always()
+        run: |
+          mkdir -p numerator-receipts
+          git rev-parse HEAD > numerator-receipts/commit.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > numerator-receipts/mathlib.txt || true
+          sha256sum research/nightfall/formalization/quantum/{PhysicalQubitEnsemble,TensorCharacter,TernaryPhase,LocalTernaryMoments,PhysicalOperatorReduction,PhysicalOutcomeNumerator,AmbientGHZMeasurement}.lean > numerator-receipts/SHA256SUMS.txt
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: nightfall-physical-numerator-${{ github.run_id }}
+          path: numerator-receipts/
+          retention-days: 60
