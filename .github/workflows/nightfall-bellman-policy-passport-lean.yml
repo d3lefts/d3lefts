@@ -1,0 +1,102 @@
+name: NIGHTFALL source-bound Bellman policy Proof Passport Lean certificate
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/price_permission/bellman_*'
+      - 'research/nightfall/price_permission/check_bellman_*'
+      - 'research/nightfall/price_permission/generate_bellman_*'
+      - 'research/nightfall/formalization/agent_safety/SemanticBellmanPotential.lean'
+      - 'research/nightfall/formalization/agent_safety/SemanticFencing.lean'
+      - 'research/nightfall/assurance/semantic-fencing-v0.3/semantic_fence.py'
+      - 'docs/proof-object-passport.json'
+      - 'scripts/check_proof_object_passport.cjs'
+      - 'scripts/check_bellman_policy_passport.cjs'
+      - '.github/workflows/nightfall-bellman-policy-passport-lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+concurrency:
+  group: nightfall-bellman-source-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  bellman-policy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Reproduce candidate with existing semantic_fence Bellman engine
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I research/nightfall/price_permission/generate_bellman_policy_certificate.py --check
+      - name: Exact source-bound Bellman lower/upper audit and 19 negative controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I research/nightfall/price_permission/check_bellman_policy_certificate.py --self-test
+          python3 -I research/nightfall/price_permission/check_bellman_policy_certificate.py research/nightfall/price_permission/bellman_two_source_policy_certificate.json
+      - name: Independent model-based budget feasibility and 11 negative controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          node research/nightfall/price_permission/check_bellman_policy_independent.cjs
+      - name: Shared source-bound Proof Passport metadata and checker replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/check_bellman_policy_passport.cjs
+          node scripts/check_proof_object_passport.cjs
+      - name: Setup pinned Lean and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile original semantic-fencing dependencies and new potential source
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/agent_safety/SemanticFencing.lean /tmp/mathlib4/SemanticFencing.lean
+          cp research/nightfall/formalization/agent_safety/SemanticBellmanPotential.lean /tmp/mathlib4/SemanticBellmanPotential.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/SemanticFencing.olean SemanticFencing.lean)
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/SemanticBellmanPotential.olean SemanticBellmanPotential.lean)
+      - name: Strict independent exact theorem-type and axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/bellman-policy
+          python3 scripts/lean_bridge.py research/nightfall/formalization/agent_safety/SemanticBellmanPotential.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --contract research/nightfall/price_permission/bellman_policy_type_contract.json \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.SemanticFencing.bellman_lower_certificate_sound \
+            --decl Nightfall.SemanticFencing.bellman_matching_policy_optimal \
+            --json-out lean-receipts/bellman-policy/named.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/bellman-policy/named.json
+      - name: Immutable original-model, checker and Lean source custody
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/bellman-policy
+          git rev-parse HEAD > lean-receipts/bellman-policy/source-head.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/bellman-policy/mathlib-head.txt || true
+          cat lean-toolchain > lean-receipts/bellman-policy/toolchain.txt
+          sha256sum research/nightfall/formalization/agent_safety/SemanticFencing.lean \
+            research/nightfall/formalization/agent_safety/SemanticBellmanPotential.lean \
+            research/nightfall/price_permission/bellman_two_source_policy_certificate.json \
+            research/nightfall/price_permission/generate_bellman_policy_certificate.py \
+            research/nightfall/price_permission/check_bellman_policy_certificate.py \
+            research/nightfall/price_permission/check_bellman_policy_independent.cjs \
+            research/nightfall/price_permission/bellman_policy_type_contract.json \
+            research/nightfall/assurance/semantic-fencing-v0.3/semantic_fence.py \
+            > lean-receipts/bellman-policy/SHA256SUMS.txt
+      - name: Upload source- and type-matched certificate
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nightfall-bellman-policy-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/bellman-policy
+          if-no-files-found: warn
