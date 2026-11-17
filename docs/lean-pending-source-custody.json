@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 12,
-  "as_of": "2026-11-15 UTC",
-  "source_commit": "C105 main merged 4ee8ff09982708e8fc4d32d5c7bf1239e670b1ae, C96 conditional source head 6ec3d1541f521f40cf90c064e4b736279e7cfdc2",
-  "scope": "185 exact pending Lean source custody entries. New C96 six-cover module has explicit unproved 6B owner cover premise; source custody does not certify universal Q2 C96.",
+  "revision": 13,
+  "as_of": "2026-11-17 UTC",
+  "source_commit": "1dc4990e64d84cb031f81fbf494681548e8238f0",
+  "scope": "225 exact pending Lean source custody entries, including 40 new sources from merged scoped branches on 2026-11-17. This is a source-integrity queue, not a historical Lean receipt or novel theorem promotion; previously certified scoped named receipts remain independently recorded.",
   "sources": [
     {
       "path": "research/nightfall/formalization/agent_safety/ArbitraryAgentSafety.lean",
@@ -16,6 +16,26 @@
       "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
     },
     {
+      "path": "research/nightfall/formalization/agent_safety/DynamicPermissionBridge.lean",
+      "source_blob_sha": "b52bcc9d68ddcf490c9177e89b2bdbf38528c481",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/agent_safety/JointPermissionPrice.lean",
+      "source_blob_sha": "0c1be84c6242c5b766900ea68f66b1bb9683ab65",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
       "path": "research/nightfall/formalization/agent_safety/SemanticFencing.lean",
       "source_blob_sha": "a6145a6c6131be48bd0525dbabe88d5db5fa8a96",
       "classification": "unreviewed-source",
@@ -24,6 +44,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/authority/AdmissionCapacityFloor.lean",
+      "source_blob_sha": "530d7cb95f74c6c7b82962a621fd1cf043291bcf",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
     },
     {
       "path": "research/nightfall/formalization/authority/AuthorityHorizon.lean",
@@ -56,6 +86,76 @@
         "named_declaration": "Nightfall.AuthorityHorizonReal.all_horizon_cost",
         "run": 43629420558
       }
+    },
+    {
+      "path": "research/nightfall/formalization/authority/LifecycleOptimalAuthority.lean",
+      "source_blob_sha": "41cab67680f946e0e8c8bb790cc0e388bb0e41c5",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/F9ActualFieldBasis.lean",
+      "source_blob_sha": "8203a2de2d18d18b4bf667787c57a591e86f2fbe",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/F9ConcreteLower.lean",
+      "source_blob_sha": "b9fd8af34e07b96acdf70efebc564c58b77db422",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/F9GapArithmetic.lean",
+      "source_blob_sha": "ae1f95d2394fcb9fee940f1983f18d73cad0087f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/F9NonadaptiveLower.lean",
+      "source_blob_sha": "217e9dcf2acacee0967121eea0f82e58f13d1875",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/F9OracleBridge.lean",
+      "source_blob_sha": "13b4fc43812e2e18ab3c845fada43f5c12311bd8",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/F9SignPacketAllK.lean",
+      "source_blob_sha": "a60ae6358ca34995b2908fa205dc5a025f2c3258",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
     },
     {
       "path": "research/nightfall/formalization/floor_four/Q2MeanFieldFourAlgebra.lean",
@@ -741,6 +841,26 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ223802Local.lean",
+      "source_blob_sha": "831f7b3c0555a08eaf65cb0a5899704dc1028df8",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ActualSourceQ223802Terminal.lean",
+      "source_blob_sha": "eb9d1422f14f0f742fa79e7424c269ab83b22ba2",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
     },
     {
       "path": "research/nightfall/formalization/observability/ActualSourceQ2353Terminal.lean",
@@ -1608,6 +1728,26 @@
       }
     },
     {
+      "path": "research/nightfall/formalization/observability/ShiftedC23802Bernstein.lean",
+      "source_blob_sha": "bfdb5236ac512e813d291e4f59dd10344ff08d98",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/ShiftedC23802Scalar.lean",
+      "source_blob_sha": "f461b20a397df043461a63709d894470c37f054c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
       "path": "research/nightfall/formalization/observability/ShiftedC4Bernstein.lean",
       "source_blob_sha": "d29a1e5f0396ca7f29fde24a34325fc324a3d3c0",
       "classification": "unreviewed-source",
@@ -1666,6 +1806,36 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/permission/AdaptiveKLMonitoring.lean",
+      "source_blob_sha": "e2aab1b9f3f41f08bf3b1e4031621e61bc550426",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/permission/PermissionEvidenceFinite.lean",
+      "source_blob_sha": "46fb3ce7bd1f3fec28ec8ccd124f30bc385af718",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/permission/RevisionIndistinguishability.lean",
+      "source_blob_sha": "41813a89565a93ac8a58baf45d6421d01aedc47a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
     },
     {
       "path": "research/nightfall/formalization/product_space/ActualESConditionalJensen.lean",
@@ -1898,6 +2068,186 @@
       "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
     },
     {
+      "path": "research/nightfall/formalization/quantum/AmbientGHZMeasurement.lean",
+      "source_blob_sha": "53cc6d2cd035c236feec41aa7df5c5f28272ff98",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/quantum/BayesPOVMCorner.lean",
+      "source_blob_sha": "312293542cb3f9e1c18995519ba11e083bd7a2dd",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/quantum/ComplexPOVMOptimal.lean",
+      "source_blob_sha": "1672d8afba3de980dfaade548b7c51e4a6a50364",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/quantum/GHZTwoRayMeasurement.lean",
+      "source_blob_sha": "2962b51bc6849074399673237ca799b218533de7",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/quantum/LocalTernaryMoments.lean",
+      "source_blob_sha": "10f04cc446a3af1b593fe201fb367846e3813af5",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/quantum/PhysicalBornTerminal.lean",
+      "source_blob_sha": "7d436d5b6b440b0fee25e7a86cbb1387fd75815e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/quantum/PhysicalGainNormalized.lean",
+      "source_blob_sha": "47ce8ffe8b7b0ceb1ba79a14d790563c842f88ce",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/quantum/PhysicalOperatorReduction.lean",
+      "source_blob_sha": "bcf7ee7151e585a34905fd7e5f6f3012360b2c72",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/quantum/PhysicalOutcomeNumerator.lean",
+      "source_blob_sha": "644a21075c304e569fb1ae163a75fc08639b0d55",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/quantum/PhysicalPOVMCompression.lean",
+      "source_blob_sha": "97dc7417ed1116a5078e5e09465c87385761e3a4",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/quantum/PhysicalQubitEnsemble.lean",
+      "source_blob_sha": "c74495c1f38ee53f78cbc82444e5853894fa6011",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/quantum/PhysicalSourceBorn.lean",
+      "source_blob_sha": "26387c282f33519f1766130ec2c2c85956077b23",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/quantum/PhysicalSourceBornTrace.lean",
+      "source_blob_sha": "25711af8764d830d08b69b57e9de609c039fd50c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/quantum/SLDOperationalCorner.lean",
+      "source_blob_sha": "15aa6dae335a4eef2bb6cd73fc3be6e9249df88a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/quantum/TensorCharacter.lean",
+      "source_blob_sha": "74ecde678a6fc4476f4a6e9129cfd68b127915ab",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/quantum/TernaryLocalMoments.lean",
+      "source_blob_sha": "9aad766d3ec8c6ce1c43d50649e1d17566c5cb8e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/quantum/TernaryPhase.lean",
+      "source_blob_sha": "6ddc2d9ee7c618ee8f7450269f21458c32a121a5",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/quantum/TernaryQuantumEnsemble.lean",
+      "source_blob_sha": "ff467dab1f5eebb7d5ab8eb0a78918121e689daf",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
       "path": "research/nightfall/formalization/swansea_v5/SwanseaV5UnionConvolution.lean",
       "source_blob_sha": "84b51f629d4814a771487cbac98e5b5cd8782da8",
       "classification": "unreviewed-source",
@@ -1958,6 +2308,56 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2DegreeAverage.lean",
+      "source_blob_sha": "64d4c16f5ebcc66e6235a76333452a923bdf4408",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2DegreeRetraction.lean",
+      "source_blob_sha": "d7f5b66017ab0ec23f2283e6fd72d4adbb80cd22",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2Density.lean",
+      "source_blob_sha": "aa9a7f631bcb2f1a60cf3592e08d33a64940ca9a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2InfluenceStability.lean",
+      "source_blob_sha": "36632df228871b892e9e9fad3583d17ebde5ff90",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2Limit.lean",
+      "source_blob_sha": "550b5f0596b1e0d81e2516c12f9df1d3c18c13b1",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
     },
     {
       "path": "research/nightfall/formalization/universal/InfinitePiRealCountableSupport.lean",
