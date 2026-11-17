@@ -62,7 +62,12 @@ theorem source_condExp_lift_intertwines_bounded
         (fun j => (id : Y j → Y j))
         (fun j => (measurable_id : Measurable (id : Y j → Y j)))
         g hg B hB hbound i
-    simpa [q, sourceLabelMap] using h
+    have hid : sourceLabelMap (fun j => (id : Y j → Y j)) =
+        (id : ((j : ι) → Y j) → ((j : ι) → Y j)) := by
+      funext y j
+      rfl
+    rw [hid] at h
+    simpa only [id_eq, Measure.map_id] using h
   have hmp : MeasurePreserving (sourceLabelMap φ)
       (Measure.infinitePi μ) (Measure.infinitePi q) := by
     exact ⟨sourceLabelMap_measurable φ hφ,
@@ -73,7 +78,15 @@ theorem source_condExp_lift_intertwines_bounded
       ((fun y => ∑ a : Y i, (q i).real {a} *
         g (Function.update y i a)) ∘ sourceLabelMap φ) :=
     hmp.quasiMeasurePreserving.ae_eq_comp htable
-  exact hsource.trans (by simpa only [Function.comp_apply, q] using hlift.symm)
+  have hsumform :
+      (fun x : ((j : ι) → X j) =>
+        ∑ a : Y i, (q i).real {a} *
+          g (Function.update (sourceLabelMap φ x) i a)) =
+      ((fun y : ((j : ι) → Y j) =>
+        ∑ a : Y i, (q i).real {a} *
+          g (Function.update y i a)) ∘ sourceLabelMap φ) := rfl
+  rw [← hsumform] at hlift
+  exact hsource.trans hlift.symm
 
 #print axioms Nightfall.InfinitePiQ2BoundedLabelIntertwining.source_condExp_lift_intertwines_bounded
 
