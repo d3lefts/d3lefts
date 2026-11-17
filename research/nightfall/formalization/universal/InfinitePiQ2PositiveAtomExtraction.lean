@@ -33,8 +33,9 @@ theorem ae_abs_bound_at_positive_atom
     have hxy : x = y := Set.mem_singleton_iff.mp hx
     simpa [hxy] using hbad
   have hzero : μ {x | ¬ |g x| ≤ B} = 0 := by
-    simpa only [Set.compl_setOf] using (mem_ae_iff.mp hbound)
-  have hle := measure_mono hsubset
+    simpa only [Set.compl_ofPred] using (mem_ae_iff.mp hbound)
+  have hle : μ {y} ≤ μ {x | ¬ |g x| ≤ B} :=
+    measure_mono hsubset
   exact (not_lt_of_ge (hle.trans_eq hzero)) hy
 
 /-- Two almost-everywhere equal functions have identical values at
@@ -51,8 +52,9 @@ theorem ae_eq_at_positive_atom
     have hxy : x = y := Set.mem_singleton_iff.mp hx
     simpa [hxy] using hbad
   have hzero : μ {x | f x ≠ g x} = 0 := by
-    simpa only [Set.compl_setOf] using (mem_ae_iff.mp heq)
-  have hle := measure_mono hsubset
+    simpa only [Set.compl_ofPred] using (mem_ae_iff.mp heq)
+  have hle : μ {y} ≤ μ {x | f x ≠ g x} :=
+    measure_mono hsubset
   exact (not_lt_of_ge (hle.trans_eq hzero)) hy
 
 #print axioms Nightfall.InfinitePiQ2PositiveAtomExtraction.ae_abs_bound_at_positive_atom
