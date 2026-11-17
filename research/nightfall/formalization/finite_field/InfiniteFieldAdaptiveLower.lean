@@ -104,6 +104,130 @@ theorem short_adaptive_strategy_fails {m : ℕ} (hm : m < n)
   · rw [history_zero]
     exact history_of_zero_path policy v m hz
 
+
+/-! ## Pointwise phase collision for a frozen square design -/
+
+theorem dot_add (a x y : Fin n → K) :
+    dot a (x + y) = dot a x + dot a y := by
+  simp [dot, Pi.add_apply, mul_add, Finset.sum_add_distrib]
+
+theorem dot_sub (a x y : Fin n → K) :
+    dot a (x - y) = dot a x - dot a y := by
+  simp [dot, Pi.sub_apply, mul_sub, Finset.sum_sub_distrib]
+
+theorem dot_smul (a x : Fin n → K) (c : K) :
+    dot a (c • x) = c * dot a x := by
+  unfold dot
+  rw [Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro i _
+  change a i * (c * x i) = c * (a i * x i)
+  ring
+
+theorem dot_neg (a x : Fin n → K) :
+    dot a (-x) = -(dot a x) := by
+  simp [dot, Pi.neg_apply, mul_neg, Finset.sum_neg_distrib]
+
+/-- If at least two frozen squared-linear readings are nonzero, a square
+matrix of rows admits a collision at the given x. One row is sign-flipped,
+while one other nonzero row stays fixed. This handles singular designs too. -/
+theorem frozen_collision_two_nonzero
+    {k : ℕ} [NeZero (2 : K)] (hk : 1 ≤ k)
+    (rows : Fin (k + 1) → Fin (k + 1) → K)
+    (x : Fin (k + 1) → K)
+    (hfirst : dot (rows 0) x ≠ 0)
+    (hsecond : dot (rows (Fin.succ (0 : Fin k))) x ≠ 0) :
+    ∃ y : Fin (k + 1) → K,
+      y ≠ x ∧ y ≠ -x ∧
+      ∀ i, (dot (rows i) y) ^ 2 = (dot (rows i) x) ^ 2 := by
+  classical
+  have h2 : (2 : K) ≠ 0 := NeZero.ne _
+  obtain ⟨v, hv, hvrows⟩ :=
+    short_rows_have_kernel (n := k + 1)
+      (fun j : Fin k => rows j.succ) (by omega)
+  by_cases hvfirst : dot (rows 0) v = 0
+  · have hvall : ∀ i : Fin (k + 1), dot (rows i) v = 0 := by
+      intro i
+      induction i using Fin.cases with
+      | zero => exact hvfirst
+      | succ j => exact hvrows j
+    have hplus : x + v ≠ x := by
+      intro heq
+      apply hv
+      funext i
+      have hh := congrArg (fun f : Fin (k + 1) → K => f i) heq
+      change x i + v i = x i at hh
+      linear_combination hh
+    have hminus : x - v ≠ x := by
+      intro heq
+      apply hv
+      funext i
+      have hh := congrArg (fun f : Fin (k + 1) → K => f i) heq
+      change x i - v i = x i at hh
+      linear_combination hh
+    have hpm : x + v ≠ x - v := by
+      intro heq
+      apply hv
+      funext i
+      have hh := congrArg (fun f : Fin (k + 1) → K => f i) heq
+      change x i + v i = x i - v i at hh
+      have hzero : (2 : K) * v i = 0 := by linear_combination hh
+      exact (mul_eq_zero.mp hzero).resolve_left h2
+    have hp (i : Fin (k + 1)) :
+        dot (rows i) (x + v) = dot (rows i) x := by
+      rw [dot_add, hvall i]
+      simp
+    have hm (i : Fin (k + 1)) :
+        dot (rows i) (x - v) = dot (rows i) x := by
+      rw [dot_sub, hvall i]
+      simp
+    by_cases hneg : x + v = -x
+    · refine ⟨x - v, hminus, ?_, ?_⟩
+      · intro he
+        exact hpm (hneg.trans he.symm)
+      · intro i
+        rw [hm i]
+    · refine ⟨x + v, hplus, hneg, ?_⟩
+      intro i
+      rw [hp i]
+  · let c : K := (-(2 : K) * dot (rows 0) x) / dot (rows 0) v
+    let y : Fin (k + 1) → K := x + c • v
+    have hc : c * dot (rows 0) v = -(2 : K) * dot (rows 0) x := by
+      dsimp [c]
+      field_simp
+    have hzero0 : dot (rows 0) y = -dot (rows 0) x := by
+      calc
+        dot (rows 0) y = dot (rows 0) x +
+            c * dot (rows 0) v := by simp [y, dot_add, dot_smul]
+        _ = -dot (rows 0) x := by rw [hc]; ring
+    have htail (j : Fin k) :
+        dot (rows j.succ) y = dot (rows j.succ) x := by
+      simp [y, dot_add, dot_smul, hvrows j]
+    have hnotx : y ≠ x := by
+      intro he
+      have hh := congrArg (fun z : Fin (k + 1) → K => dot (rows 0) z) he
+      rw [hzero0] at hh
+      have hzero : (2 : K) * dot (rows 0) x = 0 := by linear_combination hh
+      exact hfirst ((mul_eq_zero.mp hzero).resolve_left h2)
+    have hnotneg : y ≠ -x := by
+      intro he
+      have hh := congrArg
+        (fun z : Fin (k + 1) → K =>
+          dot (rows (Fin.succ (0 : Fin k))) z) he
+      rw [htail (0 : Fin k), dot_neg] at hh
+      have hzero : (2 : K) *
+          dot (rows (Fin.succ (0 : Fin k))) x = 0 := by
+        linear_combination hh
+      exact hsecond ((mul_eq_zero.mp hzero).resolve_left h2)
+    refine ⟨y, hnotx, hnotneg, ?_⟩
+    intro i
+    induction i using Fin.cases with
+    | zero => rw [hzero0]; ring
+    | succ j => rw [htail j]
+
+#print axioms Nightfall.InfiniteFieldPhase.AdaptiveLower.frozen_collision_two_nonzero
+
+
 #print axioms Nightfall.InfiniteFieldPhase.AdaptiveLower.history_zero
 #print axioms Nightfall.InfiniteFieldPhase.AdaptiveLower.history_of_zero_path
 #print axioms Nightfall.InfiniteFieldPhase.AdaptiveLower.short_adaptive_strategy_fails
