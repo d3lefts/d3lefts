@@ -182,7 +182,7 @@
     {
       "id": "permission-two-source-bellman-policy-v1",
       "programme": "The Price of Permission / adaptive observation and semantic fencing",
-      "status": "source_matched_pending_lean_receipt",
+      "status": "source_matched_scoped_named_lean_receipt",
       "complete_certification": false,
       "original_semantic_model": {
         "path": "research/nightfall/price_permission/bellman_two_source_policy_certificate.json",
@@ -231,11 +231,11 @@
       },
       "evidence": {
         "pr": 784,
-        "exact_head": null,
-        "ci_run": null,
-        "artifact_id": null,
-        "source": null,
-        "observed_result": "pending",
+        "exact_head": "23018587c297e2a3fcdaa292fa88df6d80e517b8",
+        "ci_run": 44183973991,
+        "artifact_id": 14372299469,
+        "source": "https://github.com/d3lefts/d3lefts/actions/runs/44183973991",
+        "observed_result": "success_on_exact_original_pr_head",
         "independent_lake_check": "not_run",
         "external_human_review": "none",
         "semantic_model_verified_externally": false
@@ -244,7 +244,7 @@
         "original_history_model": "source_bound_exact_checker_passed",
         "all_belief_local_inequalities": "source_bound_exact_checker_passed",
         "independent_budget_decision": "independent_exact_checker_passed",
-        "lean_soundness": "pending_pinned_kernel",
+        "lean_soundness": "pinned_named_kernel_receipt_passed",
         "JSON_to_Lean_instance": "not_formalized",
         "global_physical_safety": "open"
       },
