@@ -28,9 +28,8 @@ open Nightfall.InfinitePiQ2TripleResidualDegree
 open Nightfall.InfinitePiQ2NativeSupportedTerminal
 open Nightfall.InfinitePiQ2DegreeRetraction
 
-universe u v
-variable {ι : Type u} [Fintype ι] [DecidableEq ι] [Nonempty ι]
-variable (A : ι → Type v) [∀ i, Fintype (A i)] [∀ i, Nonempty (A i)]
+variable {ι : Type} [Fintype ι] [DecidableEq ι] [Nonempty ι]
+variable (A : ι → Type) [∀ i, Fintype (A i)] [∀ i, Nonempty (A i)]
 
 /-- Full exact finite native source L² degree-two → native positive
 support pointwise degree-two. This theorem does not assume any global
