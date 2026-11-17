@@ -100,7 +100,8 @@ try{
     });
     assert.equal(record.value,"V² / [C₂ B²]","The current analytic quadratic denominator leads the hero");
     assert.ok(record.qualified.includes("C₂=(10+2√2)²(1+√3)²≈1228.36"),"The exact current coefficient is displayed, not merely a decimal approximation");
-    assert.equal(record.firstFold,"DEGREE TWO","Active quadratic influence is visible immediately");
+    assert.equal(record.firstFold,"DISCOVERY SHOULD COMPOUND","Story-led homepage mission is visible immediately");
+    assert.ok(record.qualified.includes("degree ≤ 2"),"The first-screen mathematical sidebar still exposes the degree-two scope");
     assert.equal(record.cells,"2","Degree-two scope is disclosed in the hero");
     assert.equal(record.source,true,"The hero links directly to the qualified current research source");
     assert.equal(record.ink,"rgb(234, 240, 245)","Current bound remains legible over black illustration");
