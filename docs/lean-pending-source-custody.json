@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 13,
+  "revision": 14,
   "as_of": "2026-11-17 UTC",
-  "source_commit": "1dc4990e64d84cb031f81fbf494681548e8238f0",
-  "scope": "225 exact pending Lean source custody entries, including 40 new sources from merged scoped branches on 2026-11-17. This is a source-integrity queue, not a historical Lean receipt or novel theorem promotion; previously certified scoped named receipts remain independently recorded.",
+  "source_commit": "ea6664151ae8f1a6b2e6da2522c0f8f5c32be600",
+  "scope": "226 exact pending Lean source custody entries including the merged #668 anchored-restriction module. All source hashes are registered without promoting any proof scope or altering the frozen 67-file historical certificate registry.",
   "sources": [
     {
       "path": "research/nightfall/formalization/agent_safety/ArbitraryAgentSafety.lean",
@@ -2308,6 +2308,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2AnchoredRestriction.lean",
+      "source_blob_sha": "fccaa59910f7761898ae310e8c974190dba66e3b",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "PR #668 merged pinned Lean source for finite anchored source restrictions, scoped separately by exact PR-head workflow. This custody record asserts source integrity only, not a complete arbitrary-product Q2 theorem."
     },
     {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2DegreeAverage.lean",
