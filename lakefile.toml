@@ -1,0 +1,30 @@
+name = "nightfall"
+version = "0.1.0"
+defaultTargets = ["Nightfall"]
+
+# The one active compiler pin is in root lean-toolchain.
+# Historical Lean 4.33/4.35 receipts remain historical, not migrated.
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "9d581dfff2e41de989072ea63abf3daf69311520"
+
+[[lean_lib]]
+name = "Nightfall"
+
+# Existing files remain in place: Lake builds them under their original
+# flat module names, without duplicating certified source into wrappers.
+[[lean_lib]]
+name = "LegacyQ2Finite"
+srcDir = "research/nightfall/formalization/observability"
+roots = ["ActualSourceQ2107Terminal"]
+
+[[lean_lib]]
+name = "LegacyQ2InfiniteLimit"
+srcDir = "research/nightfall/formalization/universal"
+roots = ["InfinitePiQ2Limit"]
+
+[[lean_lib]]
+name = "LegacyQ2Conditional"
+srcDir = "research/nightfall/formalization/q2_shifted"
+roots = ["Q2ShiftedConditionalTargets"]
