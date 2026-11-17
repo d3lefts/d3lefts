@@ -1,0 +1,66 @@
+name: NIGHTFALL Q2 exact tagged heterogeneous original-source expectation Lean
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/universal/InfinitePiQ2TaggedSourceTransport.lean'
+      - '.github/workflows/nightfall-q2-tagged-source-transport.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: q2-tagged-source-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  original-finite-source-weight-transport:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Setup pinned Lean and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Build exact source mass and tagged transport
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/observability/ActualProductMergeTower.lean /tmp/mathlib4/ActualProductMergeTower.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ActualProductMergeTower.olean ActualProductMergeTower.lean)
+          for name in InfinitePiQ2DegreeRetraction InfinitePiQ2HeterogeneousAlphabet InfinitePiQ2TaggedSourceTransport; do
+            cp "research/nightfall/formalization/universal/${name}.lean" "/tmp/mathlib4/${name}.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/${name}.olean" "${name}.lean")
+          done
+      - name: Exact named declarations and standard axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-infinite
+          python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiQ2TaggedSourceTransport.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InfinitePiQ2TaggedSourceTransport.embedWord_correct \
+            --decl Nightfall.InfinitePiQ2TaggedSourceTransport.decode_embedWord \
+            --decl Nightfall.InfinitePiQ2TaggedSourceTransport.embed_decode_correct \
+            --decl Nightfall.InfinitePiQ2TaggedSourceTransport.originalMass_wrong_tag_zero \
+            --decl Nightfall.InfinitePiQ2TaggedSourceTransport.originalMass_correct_tags \
+            --decl Nightfall.InfinitePiQ2TaggedSourceTransport.originalMass_embedWord \
+            --decl Nightfall.InfinitePiQ2TaggedSourceTransport.originalSource_sum_tagged_exact \
+            --json-out lean-receipts/q2-infinite/tagged-source-sum.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/q2-infinite/tagged-source-sum.json
+      - name: Exact source provenance
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/q2-infinite
+          git rev-parse HEAD > lean-receipts/q2-infinite/tagged-head.txt
+          sha256sum research/nightfall/formalization/universal/InfinitePiQ2TaggedSourceTransport.lean > lean-receipts/q2-infinite/tagged-sha256.txt
+      - name: Upload exact receipt
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: q2-tagged-source-sum-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/q2-infinite
+          if-no-files-found: warn
