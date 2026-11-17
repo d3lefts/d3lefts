@@ -35,9 +35,9 @@ source-other-coordinate sigma algebra. -/
 noncomputable def sourceOtherProjectionCLM (i : ι) :
     Lp ℝ (2 : ENNReal) (Measure.infinitePi μ) →L[ℝ]
       Lp ℝ (2 : ENNReal) (Measure.infinitePi μ) :=
-  (condExpL2 ℝ ℝ (sourceOtherSigma_le (X := X) i) :
-    Lp ℝ (2 : ENNReal) (Measure.infinitePi μ) →L[ℝ]
-      Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))
+  (lpMeas ℝ ℝ (sourceOtherSigma (X := X) i)
+    (2 : ENNReal) (Measure.infinitePi μ)).subtypeL ∘L
+      condExpL2 ℝ ℝ (sourceOtherSigma_le (X := X) i)
 
 theorem sourceOtherProjectionCLM_apply
     (i : ι) (f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) :
