@@ -18,6 +18,8 @@ TARGETS = [
     "Nightfall.InfinitePiQ2RangeProjectionTransfer.labelRangeProjection_commutes",
     "Nightfall.InfinitePiQ2RangeProjectionTransfer.labelRangeProjection_triple_zero",
     "Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_ae",
+    "Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional",
+    "Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional_variance",
 ]
 
 
