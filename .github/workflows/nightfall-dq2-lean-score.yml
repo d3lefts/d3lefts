@@ -15,15 +15,21 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - name: Install pinned Lean and pinned Mathlib cache
-        uses: leanprover/lean-action@v1
-        with:
-          auto-config: false
-          build: false
-          test: false
-          lint: false
-          use-github-cache: false
-          use-mathlib-cache: true
+      - name: Install exact pinned Lean toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --silent --show-error https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          "$HOME/.elan/bin/lean" --version
+      - name: Generate manifest from pinned Mathlib revision and load cache
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(cat lean-toolchain)" = "leanprover/lean4:v4.36.0-rc2"
+          "$HOME/.elan/bin/lake" update
+          grep -F '9d581dfff2e41de989072ea63abf3daf69311520' lake-manifest.json
+          "$HOME/.elan/bin/lake" exe cache get
       - name: Compile exact source and print named theorem axioms
         shell: bash
         run: |
