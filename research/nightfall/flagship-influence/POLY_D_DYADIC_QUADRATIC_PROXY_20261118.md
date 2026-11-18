@@ -269,3 +269,35 @@ These follow by separate Walsh-spectrum and exhaustive supported-disagreement/se
     U1^2/[d*A1^2*max_i J1_i]=(1/4)/(2*3/16)=2/3.
 
 Therefore **any universal LIN-ANNEALED-d coefficient must be >=2/3**, refuting the tempting extension of the disjoint-monomial coefficient 1/2. This does not refute the conjectured C=1 linear gate; it is a concrete adversarial control and quantitative calibration. This supersedes the v0.4 preliminary "best sampled ratio 1/2" observation; the new exact three-bit witness was not in that 110-case sample. No global optimality of 2/3 is asserted.
+
+
+## v0.6 source-law extension: first-chaos spectral transport on heterogeneous finite products
+
+**Scope/status:** author-side exact Hilbert/ANOVA proof of the *reduction machinery* for any finite family of independent probability laws, without fair-sign hypotheses; checked by a separate independent small finite rational categorical enumerator. This does **not** prove LIN-ANNEALED-d for arbitrary laws, cubic Q3 or all-degree exponent two. General infinite-index / measure-theoretic and formal-Lean composition remains a distinct gate, with work in #847.
+
+Let mu=product_i mu_i be any finite independent product (finite arbitrary alphabets, including zero-probability labels, or more generally standard probability spaces with finite coordinate set and the usual finite ANOVA decomposition). Write h=f-c, |h|<=B mu-a.s., and canonical f=sum_S h_S, degree<=d. For t in (0,1/2], sample independent original-law X,Y ~ mu; independently sample R_i~Bernoulli(2t). For selector sigma_i in {-1,+1}, choose
+
+    W_i(sigma) = X_i                  if R_i=0 or sigma_i=+1,
+                 Y_i                  if R_i=1 and sigma_i=-1.
+
+Set L=Pi_{selector level 1} h(W(sigma)), U1_t=E Var_sigma L, and J1_i,t=E Inf_i^sigma L (all expectations under the ACTUAL original law and refresh-attempt mechanism, not a uniform replacement). **Exact original-law spectral transport:**
+
+    U1_t = sum_{S != empty} ||h_S||_(L²(mu))^2 * |S| t(1-t)^(|S|-1),
+    J1_i,t = sum_{S containing i} ||h_S||_(L²(mu))^2 * t(1-t)^(|S|-1).
+
+Proof: at an original site with mean-zero Hilbert input phi in L²_0(mu_i), a refreshed pair has selector-constant and selector-linear components
+
+    e0(phi)=(phi(X_i)+phi(Y_i))/2,
+    e1(phi)=(phi(X_i)-phi(Y_i))/2.
+
+Independence/centering gives <e_a(phi),e_b(psi)> = (1/2) 1[a=b] <phi,psi> for a,b in {0,1}; on unrefreshed sites, selector-constant phi(X_i) has energy 1 and selector-linear energy 0. Averaging R_i makes selector-constant energy (1-2t)*1+(2t)/2 =1-t and selector-linear energy (2t)/2=t, with cross term zero. Tensorize on every genuine canonical ANOVA support; different supports remain orthogonal by original-source centering. Selector level 1 retains exactly the binomial weight |S|t(1-t)^(|S|-1), and a specified selector coordinate i retains t(1-t)^(|S|-1). No alphabet cardinality, atom floor or bias factor appears.
+
+The selector polynomial g(sigma)=h(W(sigma)) has selector Fourier degree<=d; every fixed sigma word has the original mu law and thus |g|<=B for all selector words simultaneously, mu-pair/R-a.s. (finite n). The classical trigonometric Bernstein argument gives A1<=dB. Mixing dyadically as in v0.4 therefore gives **the same unconditional reduction invariants** for ALL finite independent original laws:
+
+    U1>=V/(6m),    J1_i<=Inf_i(f)/m,    A1<=dB,    m=ceil(log2 d).
+
+**Conditional all-product theorem (NOT a proved theorem):** if the *original-product* source-coupled linear annealed gate U1²<=C d A1² max_iJ1_i holds uniformly over all finite independent laws, then V²<=36 C d³ ceil(log2 d) B² M for every such original law. A proof of the uniform fair-cube gate alone does not automatically establish this arbitrary-law gate. Degree-one and constant cases remain trivial. An extension to arbitrary-index products still requires finite-cylinder L² approximation and supported-word/null-set consistency, as handled in the existing all-degree transfer program #847.
+
+**Reproducible independent source checker:** the updated workflow runs a dedicated exact Fraction enumerator (separate from the Walsh/fair-sign script) that derives finite native ANOVA components by conditional-expectation Möbius inversion; separately enumerates X,Y, every refresh mask R and selector word sigma under heterogeneous rational probabilities; compares U1/J1 formulae, source variance, source resampling influences and Bernstein amplitude. It includes mixed binary/ternary distributions, a nonzero pure degree-3 interaction and zero-mass labels with adversarial off-support values. These tests do NOT kernel-prove the Hilbert argument and cannot certify the missing gate.
+
+**Research transfer:** the reusable operator is the *two-draw symmetric/antisymmetric Hilbert split with Bernoulli refresh*, with the exact degree-only binomial spectral weights unchanged across original product laws. Communicate it as a **provisional ANOVA reduction**, not an exponent-two Q3 theorem, to the parallel arbitrary-product instance (#803/#847).
