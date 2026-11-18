@@ -5,10 +5,12 @@ on:
     paths:
       - '.github/workflows/nightfall-q3-efronstein-reuse.yml'
       - 'research/nightfall/formalization/observability/ActualSourceEfronStein.lean'
+      - 'research/nightfall/formalization/observability/OriginalSourceConditionalPoincare.lean'
   pull_request:
     paths:
       - '.github/workflows/nightfall-q3-efronstein-reuse.yml'
       - 'research/nightfall/formalization/observability/ActualSourceEfronStein.lean'
+      - 'research/nightfall/formalization/observability/OriginalSourceConditionalPoincare.lean'
   workflow_dispatch:
 permissions:
   contents: read
@@ -55,12 +57,28 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/q3-original-law-efronstein.json
+      - name: Strict pointwise-integrated original-source conditional Poincare
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/OriginalSourceConditionalPoincare.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.CubicQ3.ConditionalPoincare.conditional_original_source_efron_stein \
+            --json-out lean-receipts/q3-conditional-original-source-poincare.json || {
+              cat lean-receipts/q3-conditional-original-source-poincare.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q3-conditional-original-source-poincare.json
       - name: Preserve exact source and compiler revisions
         if: always()
         shell: bash
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/observability/ActualSourceEfronStein.lean > lean-receipts/SHA256SUMS
+          sha256sum research/nightfall/formalization/observability/ActualSourceEfronStein.lean research/nightfall/formalization/observability/OriginalSourceConditionalPoincare.lean > lean-receipts/SHA256SUMS
           git rev-parse HEAD > lean-receipts/repository-head.txt
           (git -C /tmp/mathlib4 rev-parse HEAD || true) > lean-receipts/mathlib-head.txt
           cat lean-toolchain > lean-receipts/lean-toolchain.txt
