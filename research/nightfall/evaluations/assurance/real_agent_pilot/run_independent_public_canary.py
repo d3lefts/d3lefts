@@ -18,6 +18,38 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from local_model_swe_pilot import ALLOWED_TASKS, PilotFailure, sha
 
 
+def compare_to_seed(task, findings):
+    """Preserve every public case identity; count fixes AND new regressions."""
+    rows = findings.get("cases")
+    if type(rows) is not list or len(rows) != (13 if task=="DispatchQ-B1" else 20):
+        raise PilotFailure("missing/incorrect public case vector")
+    expected_bad = "FAIL" if task=="DispatchQ-B1" else "VIOLATION"
+    observed_key = "result" if task=="DispatchQ-B1" else "observed"
+    expected_key = "seed_expectation" if task=="DispatchQ-B1" else "expected_seed"
+    case_key = "name" if task=="DispatchQ-B1" else "id"
+    seen=set()
+    observed=[]
+    fixed=[]
+    regressions=[]
+    for row in rows:
+        if type(row) is not dict:
+            raise PilotFailure("malformed public case row")
+        case,expected,status=(row.get(k) for k in
+                              (case_key,expected_key,observed_key))
+        if (type(case) is not str or case in seen or
+            expected not in ("PASS",expected_bad) or
+            status not in ("PASS",expected_bad,"ERROR")):
+            raise PilotFailure("invalid/duplicate public case result")
+        seen.add(case)
+        observed.append({"case":case,"original_seed_expected":expected,
+                         "agent_candidate_observed":status})
+        if expected==expected_bad and status=="PASS":
+            fixed.append(case)
+        if expected=="PASS" and status!="PASS":
+            regressions.append(case)
+    return observed,fixed,regressions
+
+
 def public_canary(task, source, audit_script, patch, pilot_receipt,
                   output, image_id):
     if task not in ALLOWED_TASKS:
@@ -84,6 +116,7 @@ def public_canary(task, source, audit_script, patch, pilot_receipt,
         total != passed+failed+bad or
         total != (13 if task=="DispatchQ-B1" else 20)):
         raise PilotFailure("auditor totals inconsistent")
+    case_vector, fixed_cases, regressed_cases = compare_to_seed(task, findings)
     result = {
         "schema":"nightfall.swe.independent-public-canary.v1",
         "task":task,
@@ -95,6 +128,9 @@ def public_canary(task, source, audit_script, patch, pilot_receipt,
         "public_contract_checks_passed":passed,
         "public_contract_checks_violated":failed,
         "unexpected_public_audit_errors":bad,
+        "public_case_vector":case_vector,
+        "original_seed_violations_now_passing":fixed_cases,
+        "original_seed_positive_controls_now_failing":regressed_cases,
         "no_private_grader_executed":True,
         "blind_agent_score":None,
         "label":"post_agent_independently_authored_public_contract_canary",
