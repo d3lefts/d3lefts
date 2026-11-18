@@ -5,6 +5,7 @@ import InfinitePiQ2SourceHilbertTensor
 import InfinitePiQ2AllL2LabelIntertwining
 import InfinitePiQ2RangeProjectionTransfer
 import InfinitePiQ2UnconditionalTerminal
+import InfinitePiQ2FiniteANOVAEquivalence
 import Q2ShiftedConditionalTargets
 
 /-!
@@ -16,8 +17,8 @@ and true-label all-L² source heat-bath operator equality to compile in one depe
 
 This shared graph also imports the unconditional infinite-product a.e. L²
 C105.416 theorem; its hypothesis is the triple-original-source-residual
-operator condition. Its equivalence to a chosen ANOVA degree definition
-remains an independent statement-review obligation.
+operator condition. Finite canonical ANOVA is now separately related to mixed third differences;
+the full arbitrary-index L² ANOVA semantic equivalence remains open.
 The theorem audit below prints axioms for ACTUAL imported declarations; no
 hypothesis is discharged by printing an axiom list.
 -/
@@ -55,6 +56,10 @@ hypothesis is discharged by printing an axiom list.
 #print axioms Nightfall.InfinitePiQ2RangeProjectionTransfer.labelRangeProjection_triple_zero
 
 -- Genuinely unconditional infinite-product terminal on arbitrary-universe original products.
+-- Finite canonical ANOVA ↔ mixed third differences; infinite L2 semantic bridge remains open.
+#check Nightfall.InfinitePiQ2FiniteANOVAEquivalence.canonical_ANOVA_degree_two_iff_mixed_third_zero
+#print axioms Nightfall.InfinitePiQ2FiniteANOVAEquivalence.canonical_ANOVA_degree_two_iff_mixed_third_zero
+
 #check Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_ae
 #check Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional
 #check Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional_variance
