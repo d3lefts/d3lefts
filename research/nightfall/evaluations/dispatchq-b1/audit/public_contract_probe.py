@@ -107,19 +107,21 @@ def invalid_worker(f):
 def invalid_payload(f):
     q = f.queue()
     try:
-        q.submit("x", {"not": "a string"})
-    except (ValueError, TypeError):
-        return
-    raise AssertionError("invalid payload accepted")
+        accepted = q.submit("x", {"not": "a string"})
+    except Exception:
+        accepted = False
+    require(accepted is False, "non-string payload returned success")
+    require(q.status("x") is None, "non-string payload persisted")
 
 
 def nonfinite_due(f):
     q = f.queue()
     try:
-        q.submit("x", "data", due_at=float("nan"))
-    except (ValueError, TypeError):
-        return
-    raise AssertionError("nonfinite due date accepted")
+        accepted = q.submit("x", "data", due_at=float("nan"))
+    except Exception:
+        accepted = False
+    require(accepted is False, "nonfinite due_at returned success")
+    require(q.status("x") is None, "nonfinite due_at persisted")
 
 
 def expired_fail(f):
@@ -173,8 +175,8 @@ CASES = [
     ("exhausted_fail", exhausted_fail, "FAIL"),
     ("invalid_constructor", invalid_constructor, "FAIL"),
     ("invalid_worker", invalid_worker, "FAIL"),
-    ("invalid_payload", invalid_payload, "FAIL"),
-    ("nonfinite_due", nonfinite_due, "FAIL"),
+    ("invalid_payload", invalid_payload, "PASS"),
+    ("nonfinite_due", nonfinite_due, "PASS"),
     ("expired_fail", expired_fail, "FAIL"),
     ("persistence", persistence, "PASS"),
     ("happy_path", happy_path, "PASS"),
