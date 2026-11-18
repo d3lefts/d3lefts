@@ -55,7 +55,7 @@ def test_model(laws_a, groups, seed):
                  vals[x]-vals[x[:i]+(new,)+x[i+1:]])**2/2
                  for x in states for new in range(len(laws_a[i]))),Q())
         else:
-            I=sum((weight(x)*(vals[x]-vals[x[:i]+(-x[i],)+x[i+1:])**2/4
+            I=sum((weight(x)*(vals[x]-vals[x[:i]+(-x[i],)+x[i+1:]])**2/4
                  for x in states),Q())
         influences.append(I)
     a_inf=[]
