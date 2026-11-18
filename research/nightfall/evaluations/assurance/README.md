@@ -74,3 +74,104 @@ The next decisive experiment is genuine clean-checkout, isolated, fixed-budget c
 ## Independent criticism and reuse
 
 This implementation deliberately remains in `research/nightfall/evaluations/assurance/` and does not edit or merge either benchmark author's source, grader, private references, or candidate branches. A separate reviewer should attack assumptions on the evidence schema and the sandbox/credential boundary. Failures must be preserved with input SHA and a correction record; do not label these synthetic attack tests independent human peer review. This tool can transfer to any NIGHTFALL SWE task without claiming portability to environments with richer interaction schemas until their event format is explicitly validated.
+
+
+## v0.3 trusted-host *grader execution* gate (separate from model execution)
+
+**New experimental component:** \`trusted_container_grade.py\`. It closes one narrow,
+real defect in the preceding evidence chain: the v2 receipt verifier could only
+confirm that an author *reported* a grader identity and score, not that a real
+scorer process executed against the submitted code. The new host-side component
+constructs a patched workspace and executes a pinned single-file private Python
+grader using Docker. Successful grades are derived **only from the executed
+process output**, with failure or score-dimension drift denying publication.
+The output remains **local, unauthenticated evidence**, not an independent blind
+agent benchmark score or a solution to untrusted host compromise.
+
+### Execution/custody protocol
+
+1. Prepare a seed tree containing **only** the agent-visible starter code, a
+   submitted UTF-8 Git patch, and an independent grader Python file **outside
+   the agent-visible starter**. Never publish any private grader/reference.
+2. Before the run, externally commit the exact v2 \`plan.json\` bytes and its
+   SHA-256, the source tree hash (defined below), the grader file SHA-256,
+   permitted attempt IDs, grader denominators, and Docker **image ID** in the
+   plan's \`runner_image_digest\`. The image must already be present locally;
+   the scoring tool does not silently fetch a newer tag.
+3. The trusted host verifies the plan, source, grader, submitted attempt,
+   image ID and patch paths. It copies the seed to a new temporary workspace
+   and applies the patch with \`git apply --check\` and \`git apply\`. It
+   re-hashes the resulting tree. No \`.git\` directory or symlinks are allowed.
+4. **Only after the agent has finished** does the host run the scorer in Docker
+   with \`--network none\`, read-only container rootfs, all Linux capabilities
+   dropped, no-new-privileges, explicit UID/GID, CPU/memory/pid limits and a
+   wall-clock deadline. The ephemeral patched worktree is writable only within
+   the controlled scoring phase; the private grader file is mounted read-only
+   at \`/opt/grader/score.py\`. The host captures bounded stdout and accepts
+   only a single JSON score object. No grade is written for a timeout, failed
+   grader, output overflow, schema drift or denominator mismatch.
+5. On a successful run, an external output directory receives \`grade.json\`
+   compatible with the v2 frozen receipt gate and \`capture.json\` with task,
+   image, plan, grader, patch, seed-tree, patched-tree and grade hashes. Keep
+   both under trusted custody, then assemble a full run packet using the *real
+   model's* independently captured attempt trace. The capture tool itself
+   **never invokes a model or creates a fictional agent attempt**.
+
+**Canonical seed-tree SHA-256:** recursively visit regular files in sorted
+POSIX-relative-path order (nonempty tree, no symlinks, no \`.git\` component).
+For each file append
+\`UTF8(relative_path) || 0x00 || ASCII(executable_bit_0_or_1) || 0x00 || ASCII(hex(file_SHA256)) || 0x0a\`
+to the SHA-256 stream. Source byte hashes are not Git tree hashes; this
+separate convention is pinned for this runner's v0.3 protocol.
+
+**Private grader process contract:** a single Python file named by
+\`--private-grader\` receives \`/work\` as its sole argument and emits exactly:
+\`{"tests_passed":int,"tests_total":int,"score_points":int,"max_points":int}\`
+to stdout with a zero process exit. Booleans, duplicate keys, nonfinite values,
+self-adjusted maxima, partial logs and errors fail closed. An agent-controlled
+module can execute *during* grading, but the agent cannot interact with the
+grader while the held-out scoring phase occurs.
+
+**Run (trusted host only, after externally freezing the plan):**
+
+\`\`\`sh
+python3 research/nightfall/evaluations/assurance/trusted_container_grade.py \
+  --plan /trusted/plan.json \
+  --externally-pinned-plan-sha256 "$PINNED_PLAN_SHA256" \
+  --attempt-id try-1 \
+  --seed /trusted/agent-visible-seed \
+  --patch /trusted/submitted-attempt.patch \
+  --private-grader /trusted/locked/score.py \
+  --output /trusted/out/try-1
+\`\`\`
+
+The scorer executes untrusted candidate code and **must run on a disposable,
+appropriately hardened Docker host without credentials or access to production
+secrets**; Docker hardening is risk reduction, not a formal sandbox guarantee.
+The temporary grader process could inspect hidden grader source and try to
+write it to its disposable workspace; therefore never hand the post-grading
+workspace or raw logs back to an agent, and do not claim that the grader is
+secret from adversarial code *during* scoring. The returned score's
+correctness is only as strong as the private grader and source contract.
+
+### Independent synthetic proof attacks (no actual model performance)
+
+\`tests/test_trusted_container_grade.py\` validates source-tree identity,
+patch-path confinement, grader output schema and frozen score dimensions, then
+runs **genuine Docker** scoring on a tiny synthetic \`ANSWER=0\` task changed by
+a submitted Git patch to \`ANSWER=1\`. It also tests source/grader tampering,
+grade denominator drift, failure-without-grade and denial of outbound network.
+The CI matrix runs Python 3.10 and 3.13, capturing exact source hashes and
+the Docker image ID actually executed. The demonstration's model ID deliberately
+contains \`synthetic-nonmodel\`; it is not a blind-agent run, model benchmark
+score, hidden-grader validation, or externally signed attestation.
+
+### Remaining promotion gate
+
+Before publishing any DispatchQ-B1 or ArtifactGraph-B2 agent score:
+independently challenge the **actual** private grader, freeze real attempts
+and score denominators, run a true isolated coding agent with complete raw tool
+transcripts and verifiable task source, inspect runner/container trust
+boundaries, score the untouched submitted patch with this or a stronger
+executor, and have a separate reviewer verify the receipts. Otherwise the
+portfolio must still report **zero accepted blind-agent evaluations**.
