@@ -65,7 +65,7 @@ def main():
     budget=((4,2,120),(6,2,90),(8,2,50),(4,3,120),(6,3,70))
     for n,d,count in budget:
         masks=[S for k in range(1,d+1) for S in combinations(range(n),k)]
-        best=(-1,None)
+        best=(-1,None); best_target=(-1,None)
         for trial in range(count):
             if trial%7==0:
                 weights=[(1,1)]*n
@@ -73,6 +73,7 @@ def main():
             else:
                 weights=[(rng.choice(sources),rng.choice(sources)) for _ in range(n)]
                 mode=trial%7
+                if mode in (1,2): weights=[(1,1)]*n
                 if mode==1: coeffs=[rng.choice((-4,-2,0,0,2,4)) for _ in masks]
                 elif mode==2: coeffs=[rng.choice((0,0,0,-5,5)) for _ in masks]
                 elif mode==3: coeffs=[rng.choice((-3,0,3)) if len(S)==d else 0 for S in masks]
@@ -82,13 +83,19 @@ def main():
                 if not any(coeffs): coeffs[0]=1
             result=model(n,d,weights,coeffs)
             if result[0]>best[0]:best=(result[0],(weights,coeffs,result))
+            if result[1][3]==d and result[0]>best_target[0]:
+                best_target=(result[0],(weights,coeffs,result))
             if result[0]>1:
                 independent_replica_audit(result)
                 raise AssertionError(('EXACT C=1 COUNTEREXAMPLE',n,d,weights,coeffs,result[0]))
         ratio,(weights,coeffs,result)=best
         independent_replica_audit(result)
+        assert best_target[1] is not None
+        ratio_target,(_,_,target)=best_target
+        independent_replica_audit(target)
         print('PASS canonical original-law degree <=',d,'n=',n,'trials',count,
               'best V²/(degree R² M)=',str(ratio),'float',format(float(ratio),'.9f'),
-              'best degree',result[1][3])
+              'best degree',result[1][3],
+              'best_exact_degree_d',str(ratio_target), 'exact_degree_d_float',format(float(ratio_target),'.9f'))
     print('NO sampled weighted-R violation. This does NOT prove the all-degree bound.')
 if __name__=='__main__':main()
