@@ -227,3 +227,33 @@ For \(m=2\), it follows from the established Boolean two-sided row theorem. For 
 **New exact checker:** \`check_row_threshold_brownian_bridge.py\` independently computes the Green inverse, all original resampling Grams by both pairwise replacements and conditional covariances, the PSD sandwich via exact principal minors, and random rational-gap energy identities. It also checks a dual packing certificate for the four-bit K=6 source example. Finite matrix tests do not establish the conjectural inequality (R4).
 
 **Discovery graph:** real row problem → finite output threshold filtration → Brownian-bridge precision → source conditional Gram PSD/order → polyhedral fractional-row gauge → **missing coupled bilinear estimate** → hypothetical row \(\alpha=2\) → hypothetical polynomial degree-cost UE2. Original Aaronson–Ambainis/Turturean and finite-product Lean row bridge credited; no priority assertion.
+
+
+## 7. Sharp additive equality rules out **entrywise** bilinear comparison
+
+For any \(n\ge2\), take independent fair \(\{0,1\}\) bits \(X_1,\dots,X_n\) and the additive function \(f=\sum_i X_i\), whose \(m=n+1\) output levels are \(0,1,\dots,n\). This is **Efron–Stein degree one**, and exactly saturates the proposed coefficient-four full-row inequality:
+\[
+V=n/4,\quad I_i=1/4,\quad
+K^*=n,\quad
+\boxed{\frac{4V^2}{K^{*2}M}=1}.
+\]
+The row \(a_i(x)\equiv1\) is feasible, and at the all-zero input changing any single bit forces \(a_i\ge1\) for all i, so the exact uniform optimum is \(K^*=n\).
+
+The threshold indicators \(g_k=\mathbf1_{\{\sum_i X_i\ge k+1\}}\), \(k=0,\ldots,n-1\), have a **dense strictly positive** global Brownian bridge covariance matrix \(C\):
+\(C_{k\ell}=s_{\min(k,\ell)}(1-s_{\max(k,\ell)})>0\) for \(k\ne\ell\), since every binomial count \(0,\ldots,n\) has positive mass.
+
+But for **every original coordinate** \(i\), a single-site resampling changes the count by at most one, so a pair of *distinct* thresholds can never change simultaneously. Thus the conditional/source influence matrix is **strictly diagonal**:
+\[
+\boxed{
+J_i(k,\ell)=
+\begin{cases}
+\binom{n-1}{k}/(4\,2^{n-1})&k=\ell,\\
+0&k\ne\ell.
+\end{cases}
+}
+\]
+In particular, any proposed **entrywise** comparison of the form \(C_{k\ell}\le cK^2\max_iJ_i(k,\ell)\) fails at every off-diagonal pair (positive left side, exactly zero right side), **even though the desired full quadratic-form row inequality is attained with equality**.
+
+This is not a counterexample to the true bilinear target; it is a mandatory proof-shape restriction. The dense global covariance must be transported through cross-level geometry, for example the tridiagonal **Green inverse** (BB), and controlled by the *aggregate* diagonal original-source influence, not by an entrywise comparison of \(C\) and \(J_i\). In this family, \(\delta=(1,\ldots,1)\), \(\delta^\top C\delta=n/4\), \(\delta^\top J_i\delta=1/4\), and the row gauge \(K(\delta)=n\) restores exact equality.
+
+**Independent checker:** the Brownian-bridge script now replays this equality and \(C_{k\ell}>0\), \(J_i(k,\ell)=0\) for n=2,3,4,5 with true original resampling and exact rational arithmetic. This example is the classical sharp degree-one additive family, credited accordingly; only its *use as an off-diagonal bilinear proof attack* is newly archived here.
