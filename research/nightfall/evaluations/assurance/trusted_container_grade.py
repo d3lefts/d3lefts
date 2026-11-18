@@ -21,7 +21,7 @@ import tempfile
 import time
 import uuid
 
-from frozen_run_gate import InvalidEvidence, json_file, need, sha_file, validate_plan
+from frozen_run_gate import InvalidEvidence, need, no_duplicates, sha_file, validate_plan
 
 PATCH_PATH = re.compile(r"[A-Za-z0-9_.\-/]{1,220}\Z")
 HEX_SHA = re.compile(r"[0-9a-f]{64}\Z")
@@ -115,8 +115,7 @@ def limited_process(argv, timeout_seconds, limit=MAX_GRADER_OUTPUT_BYTES):
 def validate_result(text: bytes, plan, attempt_id):
     try:
         parsed = json.loads(text.decode("utf-8"),
-                            object_pairs_hook=__import__(
-                                "frozen_run_gate").no_duplicates,
+                            object_pairs_hook=no_duplicates,
                             parse_constant=lambda x: (_ for _ in ()).throw(
                                 InvalidEvidence("nonfinite grader value")))
     except (UnicodeError, json.JSONDecodeError) as exc:
@@ -149,10 +148,17 @@ def capture(plan_path: Path, externally_pinned_plan_sha256: str,
     need(type(externally_pinned_plan_sha256) is str and
          HEX_SHA.fullmatch(externally_pinned_plan_sha256) is not None,
          "external plan commitment required")
-    need(plan_path.is_file() and
-         sha_file(plan_path) == externally_pinned_plan_sha256,
-         "frozen plan SHA-256 mismatch")
-    plan = json_file(plan_path)
+    need(plan_path.is_file() and not plan_path.is_symlink(),
+         "missing or symlinked frozen plan")
+    raw_plan = plan_path.read_bytes()
+    need(hashlib.sha256(raw_plan).hexdigest() ==
+         externally_pinned_plan_sha256, "frozen plan SHA-256 mismatch")
+    try:
+        plan = json.loads(raw_plan, object_pairs_hook=no_duplicates,
+                          parse_constant=lambda x: (_ for _ in ()).throw(
+                              InvalidEvidence("nonfinite plan value")))
+    except (UnicodeError, json.JSONDecodeError) as exc:
+        raise InvalidEvidence("frozen plan is not strict JSON") from exc
     validate_plan(plan)
     need(attempt_id in plan["attempt_ids"], "attempt not preregistered")
     need(type(timeout_seconds) is int and 1 <= timeout_seconds <= 240,
@@ -164,6 +170,8 @@ def capture(plan_path: Path, externally_pinned_plan_sha256: str,
     need(not destination.exists() and destination.parent.is_dir(),
          "trusted output must be new and outside workspace")
     # The reference and grader must never be copied into the agent tree.
+    need(not seed.is_symlink() and not patch.is_symlink(),
+         "symlinked seed/patch input")
     seed = seed.resolve(strict=True)
     grader = grader.resolve(strict=True)
     patch = patch.resolve(strict=True)
@@ -189,12 +197,20 @@ def capture(plan_path: Path, externally_pinned_plan_sha256: str,
     uid = f"{os.getuid()}:{os.getgid()}"
     with tempfile.TemporaryDirectory(prefix="nightfall-grader-") as tempdir:
         workspace = Path(tempdir) / "work"
+        locked_patch = Path(tempdir) / "submitted.patch"
+        locked_grader = Path(tempdir) / "score.py"
+        shutil.copyfile(patch, locked_patch)
+        shutil.copyfile(grader, locked_grader)
+        need(sha_file(locked_grader) == plan["grader_sha256"] and
+             sha_file(locked_patch) == sha_file(patch),
+             "grader/patch bytes drifted during custody copy")
+        locked_grader.chmod(0o444)
         shutil.copytree(seed, workspace)
         need(tree_sha256(workspace) == original_sha,
              "source copy changed before patch")
         for phase in (["--check"], []):
             result = subprocess.run(
-                ["git", "apply", *phase, str(patch)],
+                ["git", "apply", *phase, str(locked_patch)],
                 cwd=workspace, capture_output=True, text=True,
                 timeout=15, check=False)
             need(result.returncode == 0, "submitted patch failed git apply")
@@ -210,7 +226,7 @@ def capture(plan_path: Path, externally_pinned_plan_sha256: str,
             "--memory", "768m", "--cpus", "1",
             "--user", uid, "--tmpfs", "/tmp:rw,nosuid,nodev,size=64m",
             "--volume", str(workspace) + ":/work:rw",
-            "--volume", str(grader) + ":/opt/grader/score.py:ro",
+            "--volume", str(locked_grader) + ":/opt/grader/score.py:ro",
             "--workdir", "/work", "--env", "PYTHONDONTWRITEBYTECODE=1",
             image, "python3", "-I", "/opt/grader/score.py", "/work",
         ]
@@ -234,8 +250,8 @@ def capture(plan_path: Path, externally_pinned_plan_sha256: str,
             "image_id": image,
             "original_candidate_tree_sha256": original_sha,
             "patched_candidate_tree_sha256": final_sha,
-            "submitted_patch_sha256": sha_file(patch),
-            "grader_sha256": sha_file(grader),
+            "submitted_patch_sha256": sha_file(locked_patch),
+            "grader_sha256": sha_file(locked_grader),
             "grade_json_sha256": grade_sha,
             "grader_exit_code_observed": code,
             "grader_duration_seconds": round(seconds, 3),
