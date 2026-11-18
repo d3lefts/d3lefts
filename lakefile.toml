@@ -14,6 +14,18 @@ rev = "9d581dfff2e41de989072ea63abf3daf69311520"
 name = "Nightfall"
 
 [[lean_lib]]
+name = "LegacyDq2"
+srcDir = "research/nightfall/formalization/dq2"
+roots = [
+  "DQ2BinarySection",
+  "DQ2HeatBathScoreTransfer"
+]
+globs = [
+  "DQ2BinarySection",
+  "DQ2HeatBathScoreTransfer"
+]
+
+[[lean_lib]]
 name = "LegacyObservability"
 srcDir = "research/nightfall/formalization/observability"
 roots = [
