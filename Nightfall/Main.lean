@@ -1,5 +1,8 @@
 import Nightfall.Targets
 import ActualSourceQ2107Terminal
+import CubicTopCover105416
+import CubicTopCoverEnergy
+import CubicTopCoverProjection
 import InfinitePiQ2Limit
 import InfinitePiQ2SourceHilbertTensor
 import InfinitePiQ2AllL2LabelIntertwining
@@ -22,6 +25,12 @@ The theorem audit below prints axioms for ACTUAL imported declarations; no
 hypothesis is discharged by printing an axiom list.
 -/
 
+#check Nightfall.Observability.CubicTopCover105416.actual_source_cubic_top_cover_105416
+#check Nightfall.Observability.CubicTopCoverProjection.actual_source_cubic_top_cover_107
+#check Nightfall.Observability.CubicTopCoverProjection.projected_variance_eq_outside_energy
+#check Nightfall.Observability.CubicTopCoverEnergy.source_variance_loss_le_cover_influences
+#check Nightfall.Observability.CubicTopCoverEnergy.cubic_outside_sector_vanishes
+#check Nightfall.Observability.CubicTopCoverEnergy.cubic_cover_terminal_from_projected_q2
 #check Nightfall.Targets.finiteProductQ2_107
 #check Nightfall.Observability.ActualSourceQ2107Terminal.actual_source_q2_107_unconditional
 #check Nightfall.InfinitePiQ2Limit.source_q2_quadratic_limit
@@ -35,6 +44,12 @@ hypothesis is discharged by printing an axiom list.
 #check Nightfall.InfinitePiQ2ConditionalSourceTest.source_condExp_coordinate_mul_other
 #check Nightfall.InfinitePiQ2SourceHilbertTensor.sourceOtherProjection_tensor_ae
 
+#print axioms Nightfall.Observability.CubicTopCover105416.actual_source_cubic_top_cover_105416
+#print axioms Nightfall.Observability.CubicTopCoverProjection.actual_source_cubic_top_cover_107
+#print axioms Nightfall.Observability.CubicTopCoverProjection.projected_variance_eq_outside_energy
+#print axioms Nightfall.Observability.CubicTopCoverEnergy.source_variance_loss_le_cover_influences
+#print axioms Nightfall.Observability.CubicTopCoverEnergy.cubic_outside_sector_vanishes
+#print axioms Nightfall.Observability.CubicTopCoverEnergy.cubic_cover_terminal_from_projected_q2
 #print axioms Nightfall.Observability.ActualSourceQ2107Terminal.actual_source_q2_107_unconditional
 #print axioms Nightfall.InfinitePiQ2Limit.source_q2_quadratic_limit
 #print axioms Nightfall.Q2Shifted.ConditionalTargets.conditional_coefficient_107

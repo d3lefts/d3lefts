@@ -6,6 +6,12 @@ import sys
 
 ALLOWED = {"propext", "Classical.choice", "Quot.sound"}
 TARGETS = [
+    "Nightfall.Observability.CubicTopCover105416.actual_source_cubic_top_cover_105416",
+    "Nightfall.Observability.CubicTopCoverProjection.actual_source_cubic_top_cover_107",
+    "Nightfall.Observability.CubicTopCoverProjection.projected_variance_eq_outside_energy",
+    "Nightfall.Observability.CubicTopCoverEnergy.source_variance_loss_le_cover_influences",
+    "Nightfall.Observability.CubicTopCoverEnergy.cubic_outside_sector_vanishes",
+    "Nightfall.Observability.CubicTopCoverEnergy.cubic_cover_terminal_from_projected_q2",
     "Nightfall.Observability.ActualSourceQ2107Terminal.actual_source_q2_107_unconditional",
     "Nightfall.InfinitePiQ2Limit.source_q2_quadratic_limit",
     "Nightfall.Q2Shifted.ConditionalTargets.conditional_coefficient_107",
