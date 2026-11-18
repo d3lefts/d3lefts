@@ -29,6 +29,9 @@ SEEDS = (
     "Q2ShiftedConditionalTargets",
     "InfinitePiAAProductTerminal",
     "CubePrintedAA",
+    "InfinitePiAllDegreeLabelTransfer",
+    "InfinitePiAllDegreeFiniteIndicators",
+    "InfinitePiAllDegreeFiniteResidualBridge",
 )
 EXTERNAL_PREFIXES = (
     "Mathlib", "Lean", "Std", "Batteries", "Qq", "Aesop",
