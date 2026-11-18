@@ -119,7 +119,7 @@ def matrices(laws, f, label):
                         I+=mu[x]*pa*(ff[x]-ff[y])**2/2
             assert I==bilinear(delta,J[coord],delta)
     print('PASS',label,'states',len(X),'levels',m,'Brownian-bridge inverse / PSD source sandwich / 3 exact gap energies')
-    return X,vals,levels,mu
+    return X,vals,levels,mu,C,J
 
 
 def primal_dual_fourbit():
@@ -161,4 +161,31 @@ if __name__=='__main__':
     ]
     matrices(mixed,lambda x: Q(((x[0]+2*x[1]+3*x[2])%5)-2),'mixed categorical with zero atom')
     primal_dual_fourbit()
+    # Exact sharp *all-degree-one* negative control for naive entrywise
+    # covariance<=conditional-influence claims: global C offdiagonal is
+    # strictly positive but each source J_i has ZERO offdiagonals.
+    for n in (2,3,4,5):
+        laws=[(Q(1,2),Q(1,2))]*n
+        X,vals,levels,mu,C,J=matrices(
+            laws,lambda x: Q(sum(x)),f'additive fair n={n}')
+        assert levels==list(range(n+1))
+        ones=tuple(Q(1) for _ in range(n))
+        V=bilinear(ones,C,ones)
+        infs=[bilinear(ones,Ji,ones) for Ji in J]
+        assert V==Q(n,4) and infs==[Q(1,4)]*n
+        for k in range(n):
+            assert all(Ji[k][k]==Q(__import__('math').comb(n-1,k),4*2**(n-1)) for Ji in J)
+            for l in range(n):
+                if k!=l:
+                    assert C[k][l]>0
+                    assert all(Ji[k][l]==0 for Ji in J)
+        # Unit global rows certify K<=n; n disjoint singleton demands
+        # from the all-zero point force K>=n.
+        K=n
+        assert Q(4)*V*V==K*K*max(infs)
+        assert all(abs(vals[x]-vals[y])<=sum(x[i]!=y[i] for i in range(n))
+                   for x in X for y in X)
+        zero=tuple(0 for _ in range(n))
+        assert all(abs(vals[zero]-vals[zero[:i]+(1,)+zero[i+1:]])==1 for i in range(n))
+        print(f'PASS additive n={n}: K*=n, sharp c=4 equality, C dense positive vs J_i strictly diagonal')
     print('SCOPE exact matrix and row-polytope identities, NOT a proof of row bilinear conjecture R4')
