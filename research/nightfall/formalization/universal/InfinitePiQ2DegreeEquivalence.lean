@@ -90,7 +90,8 @@ theorem tripleResidualZero_iff_all_higher_mixed_residuals
   · intro h i j k hij hik hjk
     have hn : ([k,j,i] : List ι).Nodup := by
       simp [List.nodup_cons, hij, hik, hjk, Ne.symm hij, Ne.symm hik, Ne.symm hjk]
-    have hh := h [k,j,i] hn (by decide)
+    have hlength : 3 ≤ ([k, j, i] : List ι).length := by simp
+    have hh := h [k, j, i] hn hlength
     simpa [sourceResidualWord] using hh
 
 /-- Existing finite-label native ANOVA consequence, exposed as a reusable
