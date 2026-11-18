@@ -104,5 +104,4 @@ def main():
     assert 4*Q(99,100)*Q(1,100)<1
     print(json.dumps({'status':'PASS','cases':result,'scope':'finite exact PSD audits, not an all-n or Lean proof'},indent=2))
 
-
 if __name__=='__main__':main()
