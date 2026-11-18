@@ -52,11 +52,11 @@ theorem sharp_two_sign_rademacher
   have hnv : 0 ≤ ‖v‖ := norm_nonneg _
   have hsqU : (2 * ‖u‖) ^ 2 ≤ s ^ 2 := by
     have hp := mul_nonneg (sub_nonneg.mpr hu)
-      (add_nonneg hs (mul_nonneg (by norm_num) hnu))
+      (add_nonneg hs (mul_nonneg (show (0 : ℝ) ≤ 2 by norm_num) hnu))
     nlinarith
   have hsqV : (2 * ‖v‖) ^ 2 ≤ s ^ 2 := by
     have hp := mul_nonneg (sub_nonneg.mpr hv)
-      (add_nonneg hs (mul_nonneg (by norm_num) hnv))
+      (add_nonneg hs (mul_nonneg (show (0 : ℝ) ≤ 2 by norm_num) hnv))
     nlinarith
   have hE : 0 ≤ ‖u‖ ^ 2 + ‖v‖ ^ 2 := by positivity
   have htarget : 2 * (‖u‖ ^ 2 + ‖v‖ ^ 2) ≤ s ^ 2 := by
@@ -73,8 +73,20 @@ theorem sharp_two_sign_rademacher
     nlinarith [htarget]
   have hmul := mul_le_mul_of_nonneg_left hle
     (Real.sqrt_nonneg (2 : ℝ))
-  dsimp [s] at *
-  nlinarith [hroot2]
+  change Real.sqrt (‖u‖ ^ 2 + ‖v‖ ^ 2) ≤
+    Real.sqrt (2 : ℝ) * (s / 2)
+  calc
+    Real.sqrt (‖u‖ ^ 2 + ‖v‖ ^ 2) =
+        ((Real.sqrt (2 : ℝ)) ^ 2 *
+          Real.sqrt (‖u‖ ^ 2 + ‖v‖ ^ 2)) / 2 := by
+        rw [hroot2]
+        ring
+    _ = Real.sqrt (2 : ℝ) *
+          (Real.sqrt (2 : ℝ) *
+            Real.sqrt (‖u‖ ^ 2 + ‖v‖ ^ 2)) / 2 := by ring
+    _ ≤ Real.sqrt (2 : ℝ) * s / 2 := by
+      exact div_le_div_of_nonneg_right hmul (by norm_num)
+    _ = Real.sqrt (2 : ℝ) * (s / 2) := by ring
 
 /-- The pair u=v=1 saturates the constant, so it cannot be improved even for
 real scalars. This is a concrete exact equality, not a numerical search. -/
