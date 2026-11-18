@@ -7,6 +7,8 @@ import InfinitePiQ2RangeProjectionTransfer
 import InfinitePiQ2UnconditionalTerminal
 import InfinitePiQ2DegreeEquivalence
 import DQ2SpectralSandwich
+import DQ2BinarySection
+import DQ2HeatBathScoreTransfer
 import Q2ShiftedConditionalTargets
 
 /-!
@@ -75,3 +77,27 @@ hypothesis is discharged by printing an axiom list.
 -- and signed-graph/Dobrushin discharge are separate proof gates.
 #check Nightfall.DQ2SpectralSandwich.quadratic_spectral_sandwich
 #print axioms Nightfall.DQ2SpectralSandwich.quadratic_spectral_sandwich
+
+-- Exact source imported from independent DQ2 PR #786; 11 distinct named declarations.
+#check Nightfall.DQ2.score_duality_from_heatbath_contract
+#print axioms Nightfall.DQ2.score_duality_from_heatbath_contract
+#check Nightfall.DQ2.reference_q2_transfer
+#print axioms Nightfall.DQ2.reference_q2_transfer
+#check Nightfall.DQ2.biased_heatbath_q2_scalar_terminal
+#print axioms Nightfall.DQ2.biased_heatbath_q2_scalar_terminal
+#check Nightfall.DQ2.local_floor_heatbath_q2_scalar_terminal
+#print axioms Nightfall.DQ2.local_floor_heatbath_q2_scalar_terminal
+#check Nightfall.DQ2.binary_section_score_mean_zero
+#print axioms Nightfall.DQ2.binary_section_score_mean_zero
+#check Nightfall.DQ2.binary_section_variance_eq
+#print axioms Nightfall.DQ2.binary_section_variance_eq
+#check Nightfall.DQ2.binary_section_variance_pos
+#print axioms Nightfall.DQ2.binary_section_variance_pos
+#check Nightfall.DQ2.binary_section_score_energy
+#print axioms Nightfall.DQ2.binary_section_score_energy
+#check Nightfall.DQ2.binary_section_spin_score
+#print axioms Nightfall.DQ2.binary_section_spin_score
+#check Nightfall.DQ2.binary_global_residual_orthogonal
+#print axioms Nightfall.DQ2.binary_global_residual_orthogonal
+#check Nightfall.DQ2.binary_global_spin_score
+#print axioms Nightfall.DQ2.binary_global_spin_score
