@@ -223,7 +223,7 @@ theorem influence_formula_closed (n : ℕ) (hn : 1 ≤ n) :
     64*extremalBias*(1-extremalBias) *
         (((n-1:ℕ):ℝ) + ((n-1:ℕ):ℝ)*(((n-1:ℕ):ℝ)-1)*extremalMean^2) =
       (64*extremalBias*(1-extremalBias)) *
-        ((n-1:ℕ) + ((n-1:ℕ):ℝ)*(((n-1:ℕ):ℝ)-1)*extremalMean^2) := by ring
+        (((n-1:ℕ):ℝ) + ((n-1:ℕ):ℝ)*(((n-1:ℕ):ℝ)-1)*extremalMean^2) := by ring
     _ = 8 * (((n-1:ℕ):ℝ) +
         ((n-1:ℕ):ℝ)*(((n-1:ℕ):ℝ)-1)*extremalMean^2) := by rw [hscale]
     _ = 4*(n:ℝ)*((n:ℝ)-1) := by rw [hcast, extremal_mean_square]; ring
@@ -317,7 +317,7 @@ private theorem weighted_raw_sq (l : List (ℝ × ℝ)) (t : ℝ) :
 not as a proxy imported from an asymptotic formula. -/
 def physicalVariance (p : ℝ) (n : ℕ) : ℝ :=
   weighted (fun s => (rawQuadratic n s)^2) (source p n) -
-    (weighted (rawQuadratic n) (source p n))^2
+    (weighted (fun s => rawQuadratic n s) (source p n))^2
 
 /-- The finite difference across a resampled original coordinate,
 conditioned on the other n coordinates. -/
