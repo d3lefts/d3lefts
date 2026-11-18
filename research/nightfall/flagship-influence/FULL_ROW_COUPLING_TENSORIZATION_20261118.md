@@ -216,6 +216,87 @@ the missing source-consistent *off-diagonal transport factorization*
 in a form that can be attacked with SOCP/dual certificates, unlike
 unstructured threshold-by-threshold searches.
 
+## v1.2 EXACT 3-bit NO-GO: even optimal Boolean atomic decompositions lose K
+
+This is a concrete **new proof-attack** against a proposed shortcut
+to the cross-threshold real-row theorem. It is NOT a falsification
+of Turturean's real-row K-to-influence conjecture. Prior-art/novelty
+of the small witness has not been independently checked.
+
+On three independent fair Boolean bits in lexicographic word order
+
+  000,001,010,011,100,101,110,111,
+
+take the integer-valued real function
+
+  f=(-2,-2,3,-1,2,-4,4,-2).
+
+Independent **PRIMAL** full pairwise row optimization over all eight
+worlds gives the exact pointwise costs
+
+  K_x(f)=(9,7,10,7,12,10,12,9), so K(f)=12.
+
+Define the Boolean atomic decomposition cost
+
+  A(f) = inf {sum_j |c_j| K(g_j) :
+                 f=constant+sum_j c_j*g_j,
+                 g_j:{0,1}³->{0,1}}.
+
+By triangle inequality for genuine full rows, K(f)<=A(f) always.
+A plausible but FALSE shortcut was A(f)=K(f), since then every real
+function would be a *lossless* weighted mixture of Boolean cuts. The
+exact counterexample here gives
+
+  **A(f)=13 > K(f)=12.**
+
+**Lower bound certificate independent of a numerical solver:**
+Define the rational linear functional on eight real values
+
+  L(v)=v(001)-v(011)-v(101)+2v(110)-v(000).
+
+Direct calculation yields L(f)=13. For each of the 254 nonconstant
+Boolean functions g on the three-bit cube, the exact source-free
+full row LP satisfies **|L(g)|<=K(g)**. The checker enumerates all
+254 and computes each K(g) using an INDEPENDENT dual fractional
+packing enumeration with exactly 16 vertices on three coordinates.
+Thus, for every signed Boolean expansion of f,
+
+  13 = |L(f)| <=sum_j |c_j| |L(g_j)|
+                 <=sum_j |c_j| K(g_j),
+
+so A(f)>=13. This argument works for arbitrary numbers of Boolean
+atoms; it is a rigorous *dual certificate*, not heuristic search.
+
+**Matching six-term exact primal decomposition:** modulo an
+irrelevant constant, take Boolean word-value vectors b_j and their
+signed rational coefficients:
+
+  b1=(0,0,1,0,1,0,1,0),    c1=5/2, K(b1)=2;
+  b2=(0,0,1,1,0,0,1,1),    c2=3/2, K(b2)=1;
+  b3=(0,1,0,1,1,0,1,0),    c3=1,   K(b3)=2;
+  b4=(0,1,1,0,1,0,1,1),    c4=1/2, K(b4)=3;
+  b5=(0,1,1,1,0,0,1,0),    c5=1/2, K(b5)=2;
+  b6=(1,0,1,0,1,0,1,0),    c6=2,   K(b6)=1.
+
+The exact reconstructed differences from the base world 000 are
+  (0,5,1,4,-2,6,0),
+identical to those of f; every atom cost is independently verified
+by both PRIMAL and DUAL row LPs; the total weighted cost is
+  5 + 3/2 + 2 + 3/2 + 1 + 2 = 13.
+Therefore A(f)<=13, completing an exact min/max certificate.
+
+**Implication:** Not merely choosing one best threshold, but choosing
+an *arbitrary optimized signed Boolean expansion* can introduce a
+strict certificate overhead. Thus no all-degree exponent-two proof
+may assume that full real rows can be decomposed into Boolean rows
+with zero multiplicative loss. This does not exclude a bounded
+universal overhead C>1, nor refute any stronger Hilbert-source
+factorization gate. The off-diagonal real coupling still needs proof.
+
+This witness is embedded in the same fail-closed exact original
+checker and remains a finite explicit rational result, not a Lean
+all-functions theorem or a prior-art novelty certificate.
+
 ## Discovery graph / next decisive operator
 
 Turturean real full-row K gate → actual supported-pair constraints → exact row/direct-sum tensorization → connected component localization → nested two-threshold squared difference → cross-coordinate row-pair coupling → **missing routing of off-diagonal i≠j energy into original source I_i(f)** → original-product and all-degree exponent-two problem.
