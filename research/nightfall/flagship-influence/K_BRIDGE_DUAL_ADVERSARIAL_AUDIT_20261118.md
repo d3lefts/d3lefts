@@ -55,3 +55,29 @@ Additional independent **numerical** differential-evolution / SciPy LP explorati
 This is finite sampled evidence, NOT a proof of the full-row conjecture or matching sharp constant. The search samples arbitrary tables without enforcing low Hoeffding degree; consequently it is relevant directly to the degree-free (K) bridge but it does not independently certify a degree-restricted upper theorem. The earlier separate fixed-degree (R) numerical search (d=2,3, n=4,6,8) also found no violation of (V^2\le dR^2M), but did not produce a theorem or a CI artifact. The all-degree (V^2\le C dR^2M) route remains an unproved hypothesis and is not entailed by #823.
 
 Priority: devise a joint threshold/covariance inequality for **full** (K); search larger supports and continuous laws only after source-consistent masks and a primal/dual exact witness recorder are retained. A numerical violation must be converted to a small rational source table and independently audited before publication. Preserve #823's false singleton-bridge correction and credit classical fractional certificate LP duality.
+
+
+## Independent degree-weighted singleton-R adversary (exact)
+
+A **separate** checker `check_weighted_R_low_degree_exact.py` tests the *still-possible* hypothesis `V² <= c d R² M`, which the biased degree-n AND counterexample in #823 does **not** refute.
+
+For independent full-support original rational Bernoulli laws, the checker generates
+`f(x)=sum_{1<=|S|<=d} c_S prod_{i in S}(x_i-p_i)` with integer coefficients.
+The largest active `|S|` is used as **actual** canonical Efron-Stein degree, rather than the nominal search cap. Orthogonality gives exact analytic `V=sum_S c_S² prod_{i in S} p_i(1-p_i)` and true source `I_i=sum_{S contains i} c_S² prod p_j(1-p_j)`. For each full original support point, it explicitly computes `D_i f` and `R=max_x sum_i |D_i f(x)|`.
+
+The exact checker independently re-enumerates every source state for the best case in each stratum and recomputes physical variance, original-law conditional residual influences, and fresh two-replica influences. All arithmetic is `fractions.Fraction`; seeded `20261118`.
+
+| Coordinates | Degree cap | Exact candidates | Largest `V²/(degree R² M)` |
+|---:|---:|---:|---:|
+| 4 | 2 | 120 | 1 (degree-one fair additive control) |
+| 6 | 2 | 90 | 1 (control) |
+| 8 | 2 | 50 | 1 (control) |
+| 4 | 3 | 120 | 1 (control) |
+| 6 | 3 | 70 | 1 (control) |
+
+The 450 exact candidates include bias ratios from integer weights among 1,2,3,11,29,127, dense and sparse pure/hybrid quadratic and cubic terms, and fair additive equality controls. No exact candidate exceeds 1. **This does not certify the candidate coefficient 1, any higher coefficient, or the existence of a degree-weighted theorem.** It merely keeps the auxiliary route alive under these tests. Because degree-one controls attain 1, future searches must report the best *nonadditive exact-degree d* result separately; current maxima by themselves are uninformative for d=2,3.
+
+Reproducer:
+`python3 -I research/nightfall/flagship-influence/check_weighted_R_low_degree_exact.py`
+
+Status: tested locally; newest exact-head CI receipt required before merge.
