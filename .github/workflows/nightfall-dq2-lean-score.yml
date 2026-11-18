@@ -51,7 +51,7 @@ jobs:
           sha256sum "$SRC" "$SECTION" lean-toolchain lakefile.toml lake-manifest.json | tee artifacts/dq2-lean/SHA256SUMS.txt
           lake env lean "$SRC" 2>&1 | tee artifacts/dq2-lean/named-axioms.log
           lake env lean "$SECTION" 2>&1 | tee -a artifacts/dq2-lean/named-axioms.log
-          for d in score_duality_from_heatbath_contract reference_q2_transfer biased_heatbath_q2_scalar_terminal local_floor_heatbath_q2_scalar_terminal binary_section_score_mean_zero binary_section_variance_eq binary_section_variance_pos binary_section_score_energy binary_section_spin_score; do
+          for d in score_duality_from_heatbath_contract reference_q2_transfer biased_heatbath_q2_scalar_terminal local_floor_heatbath_q2_scalar_terminal binary_section_score_mean_zero binary_section_variance_eq binary_section_variance_pos binary_section_score_energy binary_section_spin_score binary_global_residual_orthogonal binary_global_spin_score; do
             grep -F "'Nightfall.DQ2.${d}' depends on axioms:" artifacts/dq2-lean/named-axioms.log
           done
           ! grep -E 'sorryAx|declaration uses .sorry|error:' artifacts/dq2-lean/named-axioms.log
