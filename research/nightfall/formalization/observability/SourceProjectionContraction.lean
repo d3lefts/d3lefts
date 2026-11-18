@@ -42,8 +42,8 @@ theorem weighted_square_jensen
       _ = (∑ a, p a * (d a) ^ 2) -
           2 * μ * (∑ a, p a * d a) +
           μ ^ 2 * (∑ a, p a) := by
-          rw [Finset.sum_add_distrib, Finset.sum_sub_distrib]
-          rw [Finset.mul_sum, Finset.mul_sum]
+          simp only [Finset.sum_add_distrib, Finset.sum_sub_distrib,
+            ← Finset.mul_sum]
   have hμ : (∑ a, p a * d a) = μ := rfl
   rw [hexpand, hμ, hpsum] at hnonneg
   change μ ^ 2 ≤ (∑ a, p a * (d a) ^ 2)
