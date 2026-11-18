@@ -27,9 +27,13 @@ jobs:
         include:
           - task: DispatchQ-B1
             source_sha: c11881717d354462d49205ad86eecbdde719c47e
+            audit_sha: a983e602e3da4611be1e786b1be93af4939c3f84
+            audit_subpath: research/nightfall/evaluations/dispatchq-b1/audit
             source_subpath: research/nightfall/evaluations/dispatchq-b1/candidate
           - task: ArtifactGraph-B2
             source_sha: d5158a3aa37fa0f0ac877406ec806389cc04b5b6
+            audit_sha: 70fc1e231e76e0df0bfddcee9ffd576ce03703a9
+            audit_subpath: research/nightfall/evaluations/artifactgraph-b2/audit
             source_subpath: research/nightfall/evaluations/artifactgraph-b2/candidate
     steps:
       - name: Checkout trusted pilot tools (no persisted credentials)
@@ -46,11 +50,22 @@ jobs:
           sparse-checkout: |
             ${{ matrix.source_subpath }}
           sparse-checkout-cone-mode: false
+      - name: Checkout independently authored PUBLIC canary separately (not model-visible)
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ matrix.audit_sha }}
+          path: audit-source
+          sparse-checkout: |
+            ${{ matrix.audit_subpath }}
+          sparse-checkout-cone-mode: false
       - name: Assert exact task source SHA and no agent-visible grader
         shell: bash
         run: |
           set -euo pipefail
           test "$(git -C task-source rev-parse HEAD)" = "${{ matrix.source_sha }}"
+          test "$(git -C audit-source rev-parse HEAD)" = "${{ matrix.audit_sha }}"
+          test -f "audit-source/${{ matrix.audit_subpath }}/public_contract_probe.py"
           test -f "task-source/${{ matrix.source_subpath }}/ISSUE.md"
           test ! -d "task-source/${{ matrix.source_subpath }}/audit"
           test ! -e "task-source/${{ matrix.source_subpath }}/hidden_grader.py"
@@ -115,6 +130,20 @@ jobs:
           print('EXACT OUTCOME:',json.dumps({k:x[k] for k in
             ['tool_calls_executed','source_writes_executed','changed_files','finish_reason','public_smoke_exit_code','model_digest']},sort_keys=True))
           PY
+      - name: Independently probe public contract ONLY after model tool session finishes
+        shell: bash
+        timeout-minutes: 4
+        run: |
+          set -euo pipefail
+          image="$(cat python-scoring-image-id.txt)"
+          python3 -I pilot/research/nightfall/evaluations/assurance/real_agent_pilot/run_independent_public_canary.py \
+            --task "${{ matrix.task }}" \
+            --source "task-source/${{ matrix.source_subpath }}" \
+            --audit-script "audit-source/${{ matrix.audit_subpath }}/public_contract_probe.py" \
+            --patch "model-output/${{ matrix.task }}/PRIVATE_CANDIDATE_PATCH.diff" \
+            --pilot-receipt "model-output/${{ matrix.task }}/PUBLIC_CALIBRATION_RECEIPT.json" \
+            --output "model-output/${{ matrix.task }}/PUBLIC_INDEPENDENT_CANARY.json" \
+            --docker-image-id "$image" | tee independent-public-canary-console.txt
       - name: Preserve public calibration receipt only (withhold model source patches)
         if: always()
         uses: actions/upload-artifact@v4
@@ -129,6 +158,8 @@ jobs:
             model-tags.json
             mediator-contract-checks.txt
             model-pilot-console.txt
+            independent-public-canary-console.txt
+            model-output/${{ matrix.task }}/PUBLIC_INDEPENDENT_CANARY.json
             model-output/${{ matrix.task }}/PUBLIC_CALIBRATION_RECEIPT.json
             model-output/${{ matrix.task }}/PUBLIC_SMOKE_OUTPUT.txt
           retention-days: 7
