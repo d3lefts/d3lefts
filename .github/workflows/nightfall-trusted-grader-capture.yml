@@ -1,0 +1,59 @@
+name: NIGHTFALL frozen task real Docker grader capture (synthetic controls)
+
+on:
+  push:
+    branches:
+      - nightfall-eval-trusted-grader-capture-20261118
+    paths:
+      - 'research/nightfall/evaluations/assurance/**'
+      - '.github/workflows/nightfall-trusted-grader-capture.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/evaluations/assurance/**'
+      - '.github/workflows/nightfall-trusted-grader-capture.yml'
+  workflow_dispatch:
+
+jobs:
+  synthetic-executed-grader:
+    name: Docker scorer source-bound regression (Python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.10', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Capture source and runner preregistration evidence
+        shell: bash
+        run: |
+          set -euxo pipefail
+          git rev-parse HEAD | tee source-head.txt
+          sha256sum research/nightfall/evaluations/assurance/trusted_container_grade.py research/nightfall/evaluations/assurance/tests/test_trusted_container_grade.py research/nightfall/evaluations/assurance/README.md | tee source-sha256.txt
+          docker pull python:3.13-slim
+          image="$(docker image inspect --format '{{.Id}}' python:3.13-slim)"
+          test "${image#sha256:}" != "$image"
+          echo "NIGHTFALL_TEST_DOCKER_ID=$image" >> "$GITHUB_ENV"
+          printf '%s\n' "$image" | tee scorer-image-id.txt
+      - name: Exact source and synthetic real Docker grading controls
+        shell: bash
+        run: |
+          set -euxo pipefail
+          python -m unittest research/nightfall/evaluations/assurance/tests/test_trusted_container_grade.py -v 2>&1 | tee trusted-grader-controls.txt
+          python -m unittest discover -s research/nightfall/evaluations/assurance/tests -p 'test_frozen_run_gate.py' -v 2>&1 | tee frozen-run-gate-v2-controls.txt
+      - name: Preserve score custody and test exit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-trusted-score-capture-python-${{ matrix.python }}
+          path: |
+            source-head.txt
+            source-sha256.txt
+            scorer-image-id.txt
+            trusted-grader-controls.txt
+            frozen-run-gate-v2-controls.txt
+          if-no-files-found: warn
