@@ -7,6 +7,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/2026-11-product-all-degree/check_renyi_transfer.py'
+      - 'research/nightfall/2026-11-product-all-degree/check_latent_mixture_influence.py'
       - '.github/workflows/nightfall-renyi-quantum-transfer.yml'
   workflow_dispatch:
 
@@ -21,5 +22,8 @@ jobs:
         run: |
           git rev-parse HEAD
           sha256sum research/nightfall/2026-11-product-all-degree/check_renyi_transfer.py
+          sha256sum research/nightfall/2026-11-product-all-degree/check_latent_mixture_influence.py
       - name: Run exact Fraction audit (no external dependencies)
-        run: python3 research/nightfall/2026-11-product-all-degree/check_renyi_transfer.py
+        run: |
+          python3 research/nightfall/2026-11-product-all-degree/check_renyi_transfer.py
+          python3 research/nightfall/2026-11-product-all-degree/check_latent_mixture_influence.py
