@@ -52,7 +52,7 @@ def test_model(laws_a, groups, seed):
         if i<p:
             # influence as 1/2 expected squared difference with independent resampling
             I=sum((weight(x)*laws_a[i][new]*(
-                 vals[x]-vals[x[:i]+(new,)+x[i+1:])**2/2
+                 vals[x]-vals[x[:i]+(new,)+x[i+1:]])**2/2
                  for x in states for new in range(len(laws_a[i]))),Q())
         else:
             I=sum((weight(x)*(vals[x]-vals[x[:i]+(-x[i],)+x[i+1:])**2/4
