@@ -1,3 +1,5 @@
+> **RETRACTION / STATUS UPDATE — 2026-11-17:** The original real-valued **sharp coefficient-one** pointwise-sensitivity conjecture (PSI) in this historical note is **FALSE**, already for four fair signs and Fourier degree two. The exact witness (f=(-a+b-c-d)/2+(a+b)(c-d)/4) has (V=5/4), (R=4), (M=3/8), and (4V^2/(R^2M)=25/24>1). See [full exact proof and replacement operator note](PSI_FALSIFIER_SOURCE_NOISE_BERNSTEIN_20261117.md). Its finite checker did not include all real-valued 4-bit functions. The separate additive theorem, earlier Boolean-valued enumeration receipts, and degree-dependent upper estimates remain as originally scoped; do not interpret them as supporting the falsified general real-valued coefficient-one statement. A corrected real-valued PSI must allow coefficient at least 25/24. This is **not** a counterexample to N-UE2(2,1).
+
 # Pointwise total sensitivity and squared-variance influence: exact checkpoint
 
 **NIGHTFALL Constellation / 11 November 2026**  
