@@ -125,3 +125,48 @@ The new Lean theorem variance_le_derivative_cost proves, by induction on k and w
 This is a genuine all-degree functional operator theorem for potentially noncommuting D_i, with the finite scalar telescoping theorem as a related alternative. **The law-level claim remains unproved in Lean:** a later finite binary specialization must prove from the original p(x) the actual Poincare-gradient comparison and that every length-d physical derivative of a degree-d polynomial has zero variance. The original-law two-atom variance/fiber comparison IS separately Lean-checked in CubicContractionBinarySource.lean, but the full high-level law application has not yet compiled.
 
 The abstract operator proof is subject to exact current-head pinned Lean compilation and strict standard-axiom checks before any promotion. It cannot be cited as a kernel proof of unrestricted Q3, and its general iterative-Poincare character likely has strong preexisting literature antecedents.
+
+
+## v0.4: dependency-corrected cubic top-cover exponent two — positive transfer
+
+**Analytic theorem, conditional on an explicit established quadratic-coercivity premise.** This is a substantial, narrowly scoped positive dependent-law Q3 result, NOT unrestricted cubic exponent two and NOT original-priority certified.
+
+Let nu be any full-support **zero-mean** finite binary law satisfying:
+1. (P) For all g, Var_nu(g) <= A sum_i I_i^nu(g), A>0.
+2. (U) Native single-site conditional spin variance w_i(x_-i)>=v>0.
+3. (QC) **Quadratic anti-concentration**: for every coefficients b_jk, Var_nu(sum_{j<k} b_jk XjXk) >= beta sum_{j<k} b_jk² with beta>0.
+
+Let c_ijk be an arbitrary finite symmetric triple coefficient tensor indexed by unordered three-distinct-site subsets. Let H be a set of coordinates meeting EVERY triple with nonzero c_ijk; let h=|H|. Define the law-adapted pure-cubic plus linear polynomial
+
+  f°(x)=sum_{i<j<k} c_ijk XiXjXk
+         -sum_i Xi * [sum_{j<k, j,k != i} c_ijk E_nu(XjXk)].
+
+This is precisely the mean-physical-gradient contraction correction: E_nu D_i f°=0. Under zero means E Xi=0, the second derivative expectations also vanish (D_iD_j f° is linear in remaining spins). The exact all-degree Poincare hierarchy then gives
+
+  Var_nu(f°) <= 6 A³ * sum_{i<j<k} c_ijk².      (1)
+
+For each original physical coordinate i, D_i f° = sum_{j<k} c_ijk (XjXk-E_nu XjXk). By native single-site conditional variance,
+
+  I_i^nu(f°)=E[w_i(D_i f°)^2]
+            >= v Var_nu(D_i f°)
+            >= v beta sum_{j<k} c_ijk².         (2)
+
+Summing (2) over the top-degree vertex cover H (every cubic coefficient appears in >=1 gradient at an i∈H) gives
+
+  sum_{i<j<k} c_ijk² <= h/(v beta) * max_i I_i^nu(f°).
+
+Combine with (1):
+
+  **Var_nu(f°) <= [6 A³ h/(v beta)] * max_i I_i^nu(f°).**
+
+If additionally |f°|<=B pointwise (automatically some finite B), Var_nu(f°)<=B², yielding the requested exponent-two form
+
+  **Var_nu(f°)² <= [6 A³ h/(v beta)] * B² * max_i I_i^nu(f°).**
+
+This is dimension-free for families where A, v, beta and h stay bounded. It handles genuinely dependent and frustrated laws under those assumptions. Unlike an attempt to pass through fair-product influences, it uses the **native original-law gradient coercivity**, bypassing the exact counterexample in v0.2.
+
+**Established Ising input:** Diakonikolas–Kane–Stewart–Sun, COLT 2021, arXiv:2102.02171 Theorem 4.2 proves Var[(X−z)^T Q (X−z)] >= c(M,alpha)*||Q||_F² for (M,alpha)-bounded Ising models, including signed couplings. For zero external fields z=0, choose Q_jk=b_jk/2 on distinct pairs, Q_jj=0. Then beta=c(M,0)/2 (or any smaller strictly positive uniform constant). The conventional Dobrushin Poincare bound supplies A=(1-delta)^−1 when delta=max_i sum_j tanh|J_ij|<1, and local finite interactions supply v>=sech²(max_i sum_j |J_ij|). This gives a dimension-free **signed/loopy Ising** corollary for uniformly high-temp coupling, bounded top-degree cover, and the explicit *contraction-centered pure-cubic+linear class*. The coefficient is NOT sharp, c(M,0) is externally provided and not presently a numerical Lean constant.
+
+**Exact finite checker:** scripts/check_cubic_centered_cover_exact.py independently enumerates full signed, frustrated finite laws (n=4,5,6), forms the **complete** quadratic-covariance Gram, finds an exact rational beta with full LDL positive-definiteness (not random witnesses), checks native original-law influence for every site, centered derivatives, variance inequality and the squared-variance bound. This checks finite instances; it does not prove the external universal beta theorem, general Poincare, or a Lean terminal.
+
+**Publication/novelty gate:** This follows by composing classical Poincare iteration and DKSS quadratic anti-concentration, so novelty is unresolved and likely largely classical. It is valuable as a **reusable theorem interface** and as a controlled dependent-cubic transfer; do not label it a globally new influence theorem, a source-only fully Lean-certified theorem, or a proof of unrestricted cubic exponent two. External theorem-level review and a true-law Lean composition are still required. Score against competing lower-degree decompositions and DKSS direct corollaries before promotion.
