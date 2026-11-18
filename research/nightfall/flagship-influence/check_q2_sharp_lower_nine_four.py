@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
-"""NIGHTFALL: exact rational lower-bound witness for sharp arbitrary-product Q2.
+"""NIGHTFALL: exact FAIR-CUBE five-/six-bit degree-two witness C_fair >= 9/4.
 
-Claim: any proposed universal degree-2 coefficient C in
-    Var(f)^2 <= C B(f)^2 max_i Inf_i(f)
-must have C >= 9/4, already on a five-bit uniform Boolean cube.
-No upper-bound theorem or originality assertion is provided.
+This is NOT the strongest arbitrary-product lower-bound witness. The
+biased Bernstein construction in merged PR #805 already forces
+C_product >= 4 (author-analytic limit). This file certifies an explicit
+finite fair-source example and non-bipartite signed-graph test families.
+No universal upper theorem, fair-cube best-constant claim, or
+originality assertion is provided.
 
 Separately exhausts ALL 0,±1 bipartite 2x2, 2x3 and 3x3 matrices.
 Direct physical input-table flip/resampling influence validates witness
@@ -183,7 +185,7 @@ def main():
     assert graph_count == 26+728+59048
     print("PASS exact quadratic sweep:", tested+graph_count,
           "nonzero matrices/graphs; no Q2 C=4 refutation. "
-          "C>=9/4 lower bound certified by finite witness ONLY.")
+          "FAIR-CUBE C>=9/4 finite witness ONLY; product C>=4 is already in #805.")
 
 
 if __name__ == "__main__":
