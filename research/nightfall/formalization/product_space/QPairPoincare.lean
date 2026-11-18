@@ -14,21 +14,21 @@ The substantive new proof object is a sum-of-squares identity.
 namespace Nightfall.CorrelatedPairs
 
 /-- Exact mean under the correlated pair law. -/
-def pairMean (a b c d : ℝ) : ℝ := (3*a+b+c+3*d)/8
+noncomputable def pairMean (a b c d : ℝ) : ℝ := (3*a+b+c+3*d)/8
 
 /-- Variance under joint probabilities (3,1,1,3)/8. -/
-def pairVariance (a b c d : ℝ) : ℝ :=
+noncomputable def pairVariance (a b c d : ℝ) : ℝ :=
   (3*(a-pairMean a b c d)^2 +
       (b-pairMean a b c d)^2 +
       (c-pairMean a b c d)^2 +
     3*(d-pairMean a b c d)^2)/8
 
 /-- The true single-site conditional-resampling influence of the first bit. -/
-def pairInfluence1 (a b c d : ℝ) : ℝ :=
+noncomputable def pairInfluence1 (a b c d : ℝ) : ℝ :=
   3/32*((a-c)^2+(b-d)^2)
 
 /-- The true single-site conditional-resampling influence of the second bit. -/
-def pairInfluence2 (a b c d : ℝ) : ℝ :=
+noncomputable def pairInfluence2 (a b c d : ℝ) : ℝ :=
   3/32*((a-b)^2+(c-d)^2)
 
 /-- Sharp SOS certificate for the two-site heat-bath spectral gap. -/
