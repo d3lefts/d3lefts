@@ -106,6 +106,28 @@
 <a href="https://github.com/d3lefts/d3lefts/pull/841">Separate synthetic trusted-grader execution gate · draft #841 ↗</a>
 </div>
 </section>
+<section class="eng-section" id="historical-incubator" aria-labelledby="historical-incubator-heading">
+<p class="eng-kicker">TWO DRAFT TASKS / HISTORICAL FAILURE-TO-BENCHMARK TRANSFER</p>
+<h2 id="historical-incubator-heading">Repair the failure.<br><em>Then prove the grader can find it.</em></h2>
+<p class="eng-section-lead">These new tasks are derived from previously executed security and proof-provenance research. Each has an inspectable agent-facing issue, defective multi-module starter, intentionally weak smoke tests, a separately implemented public API checker and a proposed numerical rubric. The checkers were developed inside the same research program. Neither task has a sealed independently accepted grader or blind model score.</p>
+<div class="eng-grid two">
+<article class="eng-card">
+<span class="eng-number">AUTHORITYEPOCH-C3 / LOCAL EFFECT-AUTHORITY SERVICE</span><span class="eng-tag pending">Calibration only</span>
+<h3>Fresh ticket, stale evidence.</h3>
+<p>A validly signed ticket must not authorize a new source version against an old baseline. Eight accepted promotions must not allow a nonce replay after compaction. Idle and slowly dripping Unix-socket clients must not starve trusted callers. The historical problems are real; this new challenge is a synthetic local JSON authority, not live deployment.</p>
+<p><strong>Observed defective-seed controls:</strong> 5 violations, 7 passes, 0 expectation mismatches on Python 3.10 and 3.13.</p>
+<a href="https://github.com/d3lefts/d3lefts/pull/849">Review C3 task source · draft #849 ↗</a><a href="https://github.com/d3lefts/d3lefts/actions/runs/44392543520">C3 source-exact CI ↗</a>
+</article>
+<article class="eng-card">
+<span class="eng-number">CERTIFICATECUSTODY-D4 / SOURCE AND RECEIPT VERIFIER</span><span class="eng-tag pending">Calibration only</span>
+<h3>Green ledger, forged proof.</h3>
+<p>An audit must reject missing, modified or extra Lean sources; noncanonical and escaping paths; pending sources claiming reviewed status; HMAC-forged receipts; and mismatched theorem/commit identities. The example receipt key is explicitly synthetic and public. No Lean theorem is compiled or externally validated.</p>
+<p><strong>Observed defective-seed controls:</strong> 13 wrongly admitted attacks, 2 correctly rejected attacks, 2 valid accepts, 0 mismatches on Python 3.10 and 3.13.</p>
+<a href="https://github.com/d3lefts/d3lefts/pull/852">Review D4 task source · draft #852 ↗</a><a href="https://github.com/d3lefts/d3lefts/actions/runs/44392557351">D4 source-exact CI ↗</a>
+</article>
+</div>
+<div class="eng-callout" style="margin-top:20px"><h3>What these numbers are not.</h3><p>Counts are from finite public negative/positive controls executed against deliberately defective starter code. They are not model accuracy rates, hidden grader scores, independent human acceptances, production safety properties, or mathematical certification. The historical fixes are already public; a defensible blind version must mitigate source contamination and validate alternative correct solutions. Do not rank AI models with these receipts.</p></div>
+</section>
 <section class="eng-section" id="run-evidence" aria-labelledby="run-evidence-title">
 <p class="eng-kicker">EVALUATION INSTRUMENT / ATTEMPT AND SCORING PROVENANCE</p>
 <h2 id="run-evidence-title">The denominator is<br><em>part of the experiment.</em></h2>

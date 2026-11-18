@@ -48,6 +48,18 @@ assert.ok(eng.includes('href="dispatchq-b1.html"'));
 assert.ok(lab.includes('href="dispatchq-b1.html"'));
 assert.ok(lab.includes('id="dispatchq"'));
 assert.ok(eng.includes('id="current-eval"') && eng.includes("Two tasks."));
+assert.ok(eng.includes('id="benchmark-incubator"'), "Historical SWE incubator section missing");
+assert.ok(eng.includes("AuthorityEpoch-C3") && eng.includes("CertificateCustody-D4"));
+assert.ok(eng.includes("unscored, potentially contaminated prototypes"));
+assert.ok(eng.includes("five of twelve separate contract checks"));
+assert.ok(eng.includes("thirteen malicious mutations remain wrongly accepted"));
+assert.ok(eng.includes("/pull/849") && eng.includes("/pull/852"));
+assert.ok(eng.includes("44392543520") && eng.includes("44392557351"));
+assert.ok(lab.includes("44392543520") && lab.includes("44392557351"));
+assert.ok(lab.includes('id="historical-incubator"'), "Public evaluation incubator missing");
+assert.ok(lab.includes("5 violations, 7 passes") && lab.includes("13 wrongly admitted attacks"));
+assert.ok(lab.includes("not model accuracy rates") && lab.includes("Do not rank AI models"));
+
 assert.ok(eng.includes("DispatchQ-B1") && eng.includes("ArtifactGraph-B2"));
 assert.ok(lab.includes('id="artifactgraph"'), "B2 evaluator missing");
 assert.ok(lab.includes("11 contract violations, 9 positive controls"));
