@@ -51,6 +51,7 @@ theorem rational_hull_supporting_certificate
     (p : Fin m → ℚ) (d : Fin n → Fin m → ℚ)
     (h : Fin m → ℚ) (λ : ℚ)
     (hp : ∀ z, 0 ≤ p z)
+    (hnorm : (∑ z : Fin m, p z * (h z) ^ 2) = λ)
     (hsupport : ∀ a, λ ≤ ∑ z : Fin m, p z * h z * d a z) :
     ∀ (q : Fin n → ℚ),
       (∀ a, 0 ≤ q a) →
@@ -92,9 +93,36 @@ theorem rational_hull_supporting_certificate
     apply Finset.sum_nonneg
     intro z _
     exact mul_nonneg (hp z) (sq_nonneg _)
-  rw [weighted_square_identity p g h] at hsq ⊢
-  -- The dual inner product gives the required lower bound via
-  -- completion of squares; the proof below does not divide by λ.
-  sorry
+  have hid := weighted_square_identity p g h
+  have heq : (∑ z : Fin m, p z * (g z) ^ 2) =
+      (∑ z : Fin m, p z * (g z - h z) ^ 2) +
+      2 * (∑ z : Fin m, p z * h z * g z) - λ := by
+    rw [hid, hnorm]
+  change λ ≤ ∑ z : Fin m, p z * (g z) ^ 2
+  rw [heq]
+  linarith
+
+/-- Matching source-law witness and support hyperplane together certify the
+exact minimum, not merely a lower bound. -/
+theorem rational_hull_matching_optimal
+    {m n : ℕ}
+    (p : Fin m → ℚ) (d : Fin n → Fin m → ℚ)
+    (h : Fin m → ℚ) (λ : ℚ)
+    (hp : ∀ z, 0 ≤ p z)
+    (hnorm : (∑ z : Fin m, p z * (h z) ^ 2) = λ)
+    (hsupport : ∀ a, λ ≤ ∑ z : Fin m, p z * h z * d a z)
+    (qstar : Fin n → ℚ)
+    (hqlaw : (∀ a, 0 ≤ qstar a) ∧ (∑ a : Fin n, qstar a) = 1)
+    (hresponse : ∀ z, h z = ∑ a : Fin n, qstar a * d a z) :
+    (∀ (q : Fin n → ℚ), (∀ a, 0 ≤ q a) →
+        (∑ a : Fin n, q a) = 1 →
+        λ ≤ ∑ z : Fin m, p z * (∑ a : Fin n, q a * d a z) ^ 2) ∧
+      (∑ z : Fin m, p z *
+        (∑ a : Fin n, qstar a * d a z) ^ 2) = λ := by
+  constructor
+  · intro q hq hqsum
+    exact rational_hull_supporting_certificate p d h λ hp hnorm
+      hsupport q hq hqsum
+  · simpa only [← hresponse] using hnorm
 
 end Nightfall.RobustObservationHull
