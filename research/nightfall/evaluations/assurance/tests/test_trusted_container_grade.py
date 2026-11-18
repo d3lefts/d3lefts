@@ -168,6 +168,31 @@ class RealContainerSyntheticTests(unittest.TestCase):
             self.run_capture()
         self.assertFalse((self.root/"capture").exists())
 
+    def test_oversized_grader_output_is_denied_without_score(self):
+        put(self.grader, "print('X'*20000)\n")
+        self.plan_data["grader_sha256"] = sha_file(self.grader)
+        self.repin()
+        with self.assertRaises(InvalidEvidence):
+            self.run_capture()
+        self.assertFalse((self.root/"capture").exists())
+
+    def test_hanging_grader_is_denied_without_score(self):
+        put(self.grader, "import time\ntime.sleep(10)\n")
+        self.plan_data["grader_sha256"] = sha_file(self.grader)
+        self.repin()
+        with self.assertRaises(InvalidEvidence):
+            capture(self.plan, self.plan_sha, "try-1", self.seed,
+                    self.patch, self.grader, self.root/"capture", 2)
+        self.assertFalse((self.root/"capture").exists())
+
+    def test_input_patch_symlink_is_denied(self):
+        patch_link = self.root/"alternate.patch"
+        patch_link.symlink_to(self.patch)
+        with self.assertRaises(InvalidEvidence):
+            capture(self.plan, self.plan_sha, "try-1", self.seed,
+                    patch_link, self.grader, self.root/"capture", 30)
+        self.assertFalse((self.root/"capture").exists())
+
     def test_network_is_disabled_in_real_container(self):
         src = (
             "import json,socket\n"
