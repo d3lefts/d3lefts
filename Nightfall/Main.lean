@@ -5,6 +5,7 @@ import InfinitePiQ2SourceHilbertTensor
 import InfinitePiQ2AllL2LabelIntertwining
 import InfinitePiQ2RangeProjectionTransfer
 import InfinitePiQ2UnconditionalTerminal
+import InfinitePiQ2DegreeEquivalence
 import Q2ShiftedConditionalTargets
 
 /-!
@@ -61,3 +62,10 @@ hypothesis is discharged by printing an axiom list.
 #print axioms Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_ae
 #print axioms Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional
 #print axioms Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional_variance
+
+-- General original-source finite mixed-residual equivalence, and finite-label implication.
+-- These do not yet supply the closed-span ANOVA converse.
+#check Nightfall.InfinitePiQ2DegreeEquivalence.tripleResidualZero_iff_all_higher_mixed_residuals
+#check Nightfall.InfinitePiQ2DegreeEquivalence.tripleResidualZero_implies_every_finite_label_supported_q2
+#print axioms Nightfall.InfinitePiQ2DegreeEquivalence.tripleResidualZero_iff_all_higher_mixed_residuals
+#print axioms Nightfall.InfinitePiQ2DegreeEquivalence.tripleResidualZero_implies_every_finite_label_supported_q2
