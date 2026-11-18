@@ -34,8 +34,8 @@ theorem weighted_square_jensen
         μ ^ 2 * (∑ a, p a) := by
     calc
       (∑ a, p a * (d a - μ) ^ 2) =
-          (∑ a, p a * (d a) ^ 2 -
-            (2 * μ) * (p a * d a) + μ ^ 2 * p a) := by
+          (∑ a, (p a * (d a) ^ 2 -
+            (2 * μ) * (p a * d a) + μ ^ 2 * p a)) := by
           apply Finset.sum_congr rfl
           intro a _
           ring
@@ -46,7 +46,7 @@ theorem weighted_square_jensen
           rw [Finset.mul_sum, Finset.mul_sum]
   have hμ : (∑ a, p a * d a) = μ := rfl
   rw [hexpand, hμ, hpsum] at hnonneg
-  dsimp [μ]
+  change μ ^ 2 ≤ (∑ a, p a * (d a) ^ 2)
   nlinarith
 
 /-- Averaging over arbitrary original-law anchor data cannot increase
@@ -63,7 +63,7 @@ theorem pointwise_projection_difference_contracts
         (∑ a, p a * f a x) - (∑ a, p a * f a y) := by
     calc
       (∑ a, p a * (f a x - f a y)) =
-          (∑ a, p a * f a x - p a * f a y) := by
+          (∑ a, (p a * f a x - p a * f a y)) := by
             apply Finset.sum_congr rfl
             intro a _
             ring
