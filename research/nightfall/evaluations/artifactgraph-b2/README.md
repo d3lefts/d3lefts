@@ -6,7 +6,7 @@ A realistic Python stdlib repair task spanning manifest parsing, dependency
 planning, content-addressed persistence and source boundary validation.
 Broken starter source is in `candidate/`; the full agent-facing contract is in
 [`candidate/ISSUE.md`](candidate/ISSUE.md). This tests a substantially different
-engineering skill set than [DispatchQ-B1](../dispatchq-b1/README.md), which
+engineering skill set than [DispatchQ-B1 (draft PR #818)](https://github.com/d3lefts/d3lefts/pull/818), which
 emphasizes queue leases and cross-process concurrency.
 
 ## Quick start
