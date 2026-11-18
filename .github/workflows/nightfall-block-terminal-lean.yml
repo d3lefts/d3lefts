@@ -1,0 +1,72 @@
+name: NIGHTFALL block-correlated influence terminal Lean integration
+
+on:
+  push:
+    branches: [nightfall-renyi-quantum-transfer-20261118]
+    paths:
+      - 'research/nightfall/formalization/product_space/BlockInfluenceTerminal.lean'
+      - '.github/workflows/nightfall-block-terminal-lean.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/BlockInfluenceTerminal.lean'
+      - '.github/workflows/nightfall-block-terminal-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  block-conditional-terminal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact original pinned AA prerequisite closure up through finite heterogeneous theorem
+        shell: bash
+        run: |
+          set -euo pipefail
+          found=0
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="${M//.//}"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean")
+            if [ "$M" = "HeterogeneousAlphabets" ]; then found=1; break; fi
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+          test "$found" = 1
+      - name: Compile block-conditional terminal against real heterogeneous AA theorem
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/product_space/BlockInfluenceTerminal.lean /tmp/mathlib4/BlockInfluenceTerminal.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/BlockInfluenceTerminal.olean BlockInfluenceTerminal.lean)
+      - name: Strict proof dependency and axiom receipt
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py research/nightfall/formalization/product_space/BlockInfluenceTerminal.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 1800 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.ProductSpace.BlockInfluenceTerminal.finite_block_aa_of_site_poincare \
+            --json-out block-terminal-receipt.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py block-terminal-receipt.json
+          cd /tmp/mathlib4
+          cat > BlockTerminalAudit.lean <<'LEAN'
+          import BlockInfluenceTerminal
+          #check @Nightfall.ProductSpace.BlockInfluenceTerminal.finite_block_aa_of_site_poincare
+          #print axioms Nightfall.ProductSpace.BlockInfluenceTerminal.finite_block_aa_of_site_poincare
+          LEAN
+          lake env lean BlockTerminalAudit.lean | tee "$GITHUB_WORKSPACE/block-terminal-axioms.txt"
+          ! grep -E 'sorryAx|Lean\.ofReduceBool|native_decide' "$GITHUB_WORKSPACE/block-terminal-axioms.txt"
+          git -C "$GITHUB_WORKSPACE" rev-parse HEAD
+          sha256sum "$GITHUB_WORKSPACE/research/nightfall/formalization/product_space/BlockInfluenceTerminal.lean"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: block-terminal-${{ github.run_id }}
+          path: |
+            block-terminal-receipt.json
+            block-terminal-axioms.txt
+          if-no-files-found: warn
