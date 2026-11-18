@@ -68,12 +68,44 @@ theorem witness_variance_twelve : fairVariance = 12 := by
   rw [witness_mean_zero, Finset.sum_fin_eq_sum_range]
   norm_num [Finset.sum_range_succ, witness, bit, sourceWorld]
 
+-- Each original-coordinate influence is checked separately to keep
+-- kernel arithmetic proofs small and inspectable.
+set_option maxHeartbeats 2000000
+
+theorem source_influence_0 :
+    fairResamplingInfluence (0 : Fin 5) = 4 := by
+  norm_num [fairResamplingInfluence, Finset.sum_fin_eq_sum_range,
+    Finset.sum_range_succ, witness, bit, sourceWorld, flip]
+
+theorem source_influence_1 :
+    fairResamplingInfluence (1 : Fin 5) = 4 := by
+  norm_num [fairResamplingInfluence, Finset.sum_fin_eq_sum_range,
+    Finset.sum_range_succ, witness, bit, sourceWorld, flip]
+
+theorem source_influence_2 :
+    fairResamplingInfluence (2 : Fin 5) = 4 := by
+  norm_num [fairResamplingInfluence, Finset.sum_fin_eq_sum_range,
+    Finset.sum_range_succ, witness, bit, sourceWorld, flip]
+
+theorem source_influence_3 :
+    fairResamplingInfluence (3 : Fin 5) = 4 := by
+  norm_num [fairResamplingInfluence, Finset.sum_fin_eq_sum_range,
+    Finset.sum_range_succ, witness, bit, sourceWorld, flip]
+
+theorem source_influence_4 :
+    fairResamplingInfluence (4 : Fin 5) = 4 := by
+  norm_num [fairResamplingInfluence, Finset.sum_fin_eq_sum_range,
+    Finset.sum_range_succ, witness, bit, sourceWorld, flip]
+
 theorem witness_source_influence_four :
     ∀ i : Fin 5, fairResamplingInfluence i = 4 := by
   intro i
-  fin_cases i <;>
-    norm_num [fairResamplingInfluence, Finset.sum_fin_eq_sum_range,
-      Finset.sum_range_succ, witness, bit, sourceWorld, flip]
+  fin_cases i
+  · exact source_influence_0
+  · exact source_influence_1
+  · exact source_influence_2
+  · exact source_influence_3
+  · exact source_influence_4
 
 /-- Actual half-range B=4, variance V=12, max original resampling
 influence M=4 give the **exact** ratio V²/(B² M) = 9/4. -/
