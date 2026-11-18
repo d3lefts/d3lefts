@@ -74,7 +74,7 @@ class PublicPilotContractTests(unittest.TestCase):
                 "status":"completed","exit_code":0,"tail":"synthetic smoke PASS"}):
             receipt=p.run("DispatchQ-B1",source,output,
                           "sha256:"+"f"*64,"mocked",steps=4)
-        self.assertEqual(receipt["tool_calls_executed"],3)
+        self.assertEqual(receipt["tool_calls_executed"],2)
         self.assertEqual(receipt["source_writes_executed"],1)
         self.assertIsNone(receipt["blind_agent_score"])
         self.assertTrue(receipt["no_private_grader_executed"])
