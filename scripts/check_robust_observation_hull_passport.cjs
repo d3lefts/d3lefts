@@ -44,6 +44,8 @@ function verifyRecord(r,{replay=true}={}){
   assert.equal(r.original_model.path,MODEL);
   assert.equal(r.original_model.embedded_key,'source_model');
   assert.equal(r.original_model.completeness,'synthetic_original_table_only');
+  assert.equal(r.derived_instance.embedded_key,'certificate.response_gram');
+  assert.equal(r.derived_instance.reconstruction,'original_model_centered_conditional_response_inner_products');
   assert.equal(r.proof_object.embedded_key,'certificate');
   assert.equal(r.proof_object.format,'nightfall.robust-observation-hull.v1');
   assert.equal(r.proof_object.robust_before,'1/6');
@@ -76,6 +78,7 @@ function verifyRecord(r,{replay=true}={}){
   assert.equal(obj.source_model.kind,'finite-product-original-response/v1');
   assert.equal(sha(obj.source_model),r.original_model.sha256);
   assert.equal(obj.certificate.source_sha256,r.original_model.sha256);
+  assert.equal(sha(obj.certificate.response_gram),r.derived_instance.sha256);
   assert.equal(obj.certificate.robust_unobserved_gain,r.proof_object.robust_before);
   assert.equal(obj.certificate.robust_observed_gain,r.proof_object.robust_after);
   assert.equal(obj.certificate.coordinate_influence_y,r.proof_object.source_influence);
@@ -127,6 +130,7 @@ function selfTest(r){
   const tests=[
     x=>x.original_model.sha256='0'.repeat(64),
     x=>x.original_model.git_blob_sha1='0'.repeat(40),
+    x=>x.derived_instance.sha256='0'.repeat(64),
     x=>x.checker.exact_blob_sha1='0'.repeat(40),
     x=>x.checker.independent_blob_sha1='0'.repeat(40),
     x=>x.checker.locality_blob_sha1='0'.repeat(40),
