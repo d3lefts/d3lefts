@@ -67,7 +67,7 @@
         "triple support covered by H"
       ],
       "external_source": "Diakonikolas–Kane–Stewart–Sun COLT 2021 arXiv:2102.02171 Theorem 4.2 supplies beta=c(M,0)/2 in (M,0)-bounded Ising",
-      "evidence": "author-side full analytic chain and new exact full quadratic Gram rational checker",
+      "evidence": "Analytic proof and exact full state tests: signed square (n=4, h=1, beta=1/2), pentagon (n=5, h=1, beta=1/2), six-cycle (n=6, h=2, beta=1/2); success on source head 3faf01f7, workflow 44211643144",
       "lean_status": "NOT Lean-certified source-level; scalar and local fiber subtheorems separately compiled",
       "scope": "restricted pure cubic+compensating linear functions with finite cover size, not arbitrary cubic functions"
     }
@@ -115,7 +115,10 @@
       "Quot.sound"
     ],
     "scope": "Lean proofs are scalar telescoping and exact two-atom/source-fiber algebra only; no universal probabilistic recurrence or cubic Q3 theorem",
-    "current_head_replay": "required after v0.4 centered-cubic additions; previous exact-head abstract theorem PASS run 44210478056"
+    "current_head_replay": "This passport update alone changes branch head; previous source-file head 3faf01f7 passed exactly, but newest metadata-only head archive CI should be checked separately.",
+    "latest_successful_checker_and_lean_head": "3faf01f7ed66d77314d04dc130ec4313d8213f8a",
+    "latest_successful_workflow": "https://github.com/d3lefts/d3lefts/actions/runs/44211643144",
+    "latest_successful_scope": "full strict source-scope scalar+binary-fiber+abstract operator Lean, exact finite hierarchy, exact full-quadratic Gram and centered-cubic top-cover checker; NOT native-law Q3 Lean terminal"
   },
   "next_decisive_test": "Independent audit of DKSS 2021 normalization beta, exact-head CI, then formalize source-level dependent cubic top-cover with Poincare and quadratic coercivity as explicit Lean premises; do not claim unrestricted Q3 or novelty."
 }
