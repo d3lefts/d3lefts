@@ -85,6 +85,49 @@ theorem iterResidual_zero_after_labelRangeProjection
   rw [iterResidual_labelRangeProjection U Etable Esource hT hS hI sites f, hf]
   exact map_zero (labelRangeProjection U)
 
+
+/-- Exact all-degree transfer into the *finite label table itself*.
+The adjoint of the genuine source-to-label L² isometry is conditional
+cell averaging; this identity replaces the old degree-two-only triple
+adjoint theorem with an arbitrary residual word. -/
+theorem iterResidual_labelAdjoint
+    {ι : Type*} (U : H →ₗᵢ[ℝ] K)
+    (Etable : ι → H →L[ℝ] H)
+    (Esource : ι → K →L[ℝ] K)
+    (hT : ∀ i, (Etable i).adjoint = Etable i)
+    (hS : ∀ i, (Esource i).adjoint = Esource i)
+    (hI : ∀ i, Esource i ∘L U.toContinuousLinearMap =
+      U.toContinuousLinearMap ∘L Etable i)
+    (sites : List ι) (f : K) :
+    iterResidual Etable sites (U.toContinuousLinearMap.adjoint f) =
+      U.toContinuousLinearMap.adjoint (iterResidual Esource sites f) := by
+  induction sites with
+  | nil => rfl
+  | cons i rest ih =>
+      change residual (Etable i)
+        (iterResidual Etable rest (U.toContinuousLinearMap.adjoint f)) =
+        U.toContinuousLinearMap.adjoint
+          (residual (Esource i) (iterResidual Esource rest f))
+      rw [ih]
+      exact isometryAdjoint_residual U (Etable i) (Esource i)
+        (hT i) (hS i) (hI i) (iterResidual Esource rest f)
+
+/-- If a source residual word vanishes, the corresponding finite-label
+table residual word vanishes, with no d-dependent loss. -/
+theorem iterResidual_labelAdjoint_zero
+    {ι : Type*} (U : H →ₗᵢ[ℝ] K)
+    (Etable : ι → H →L[ℝ] H)
+    (Esource : ι → K →L[ℝ] K)
+    (hT : ∀ i, (Etable i).adjoint = Etable i)
+    (hS : ∀ i, (Esource i).adjoint = Esource i)
+    (hI : ∀ i, Esource i ∘L U.toContinuousLinearMap =
+      U.toContinuousLinearMap ∘L Etable i)
+    (sites : List ι) (f : K)
+    (hf : iterResidual Esource sites f = 0) :
+    iterResidual Etable sites (U.toContinuousLinearMap.adjoint f) = 0 := by
+  rw [iterResidual_labelAdjoint U Etable Esource hT hS hI sites f, hf]
+  exact map_zero U.toContinuousLinearMap.adjoint
+
 end Abstract
 
 section OriginalSource
@@ -179,12 +222,73 @@ theorem original_source_label_all_degree_zero
   rw [original_source_label_all_degree μ φ hφ sites f, hf]
   exact map_zero (labelRangeProjection (original_infinite_label_lift μ φ hφ))
 
+
+/-- **Actual finite-cell average theorem, arbitrary degree.**
+For the literal pushforward product law q, the cell-averaged table
+U† f has its entire iterated table residual equal to U† of the original
+source iterated residual. Thus any zero (d+1)-word is inherited with
+exactly the same d. -/
+theorem original_cell_average_all_degree
+    (φ : ∀ i, X i → Y i) (hφ : ∀ i, Measurable (φ i))
+    [∀ i, Fintype (Y i)] [∀ i, DecidableEq (Y i)]
+    (sites : List ι)
+    (f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) :
+    iterResidual
+        (sourceOtherProjectionCLM (fun i => (μ i).map (φ i))) sites
+        (original_infinite_label_lift μ φ hφ).toContinuousLinearMap.adjoint f =
+      (original_infinite_label_lift μ φ hφ).toContinuousLinearMap.adjoint
+        (sourceIterResidual μ sites f) := by
+  let q : (i : ι) → Measure (Y i) := fun i => (μ i).map (φ i)
+  have hT : ∀ i, (sourceOtherProjectionCLM q i).adjoint =
+      sourceOtherProjectionCLM q i :=
+    fun i => sourceOtherProjectionCLM_selfAdjoint q i
+  have hS : ∀ i, (sourceOtherProjectionCLM μ i).adjoint =
+      sourceOtherProjectionCLM μ i :=
+    fun i => sourceOtherProjectionCLM_selfAdjoint μ i
+  have hI : ∀ i, sourceOtherProjectionCLM μ i ∘L
+      (original_infinite_label_lift μ φ hφ).toContinuousLinearMap =
+      (original_infinite_label_lift μ φ hφ).toContinuousLinearMap ∘L
+        sourceOtherProjectionCLM q i :=
+    fun i => sourceOtherProjectionCLM_intertwines_all_L2 μ φ hφ i
+  have htransfer :=
+    iterResidual_labelAdjoint
+      (original_infinite_label_lift μ φ hφ)
+      (fun i => sourceOtherProjectionCLM q i)
+      (fun i => sourceOtherProjectionCLM μ i)
+      hT hS hI sites f
+  calc
+    iterResidual (sourceOtherProjectionCLM q) sites
+        ((original_infinite_label_lift μ φ hφ).toContinuousLinearMap.adjoint f) =
+      (original_infinite_label_lift μ φ hφ).toContinuousLinearMap.adjoint
+        (iterResidual (sourceOtherProjectionCLM μ) sites f) := htransfer
+    _ = (original_infinite_label_lift μ φ hφ).toContinuousLinearMap.adjoint
+        (sourceIterResidual μ sites f) := by
+          rw [iterResidual_eq_source μ sites f]
+
+/-- Native L² residual-degree preservation for the cell average;
+all finite words (particularly distinct lists of length d+1) transfer. -/
+theorem original_cell_average_all_degree_zero
+    (φ : ∀ i, X i → Y i) (hφ : ∀ i, Measurable (φ i))
+    [∀ i, Fintype (Y i)] [∀ i, DecidableEq (Y i)]
+    (sites : List ι)
+    (f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ))
+    (hf : sourceIterResidual μ sites f = 0) :
+    iterResidual
+        (sourceOtherProjectionCLM (fun i => (μ i).map (φ i))) sites
+        ((original_infinite_label_lift μ φ hφ).toContinuousLinearMap.adjoint f) = 0 := by
+  rw [original_cell_average_all_degree μ φ hφ sites f, hf]
+  exact map_zero (original_infinite_label_lift μ φ hφ).toContinuousLinearMap.adjoint
+
 end OriginalSource
 
 #print axioms Nightfall.InfinitePiAllDegreeLabelTransfer.iterResidual_labelRangeProjection
 #print axioms Nightfall.InfinitePiAllDegreeLabelTransfer.iterResidual_zero_after_labelRangeProjection
+#print axioms Nightfall.InfinitePiAllDegreeLabelTransfer.iterResidual_labelAdjoint
+#print axioms Nightfall.InfinitePiAllDegreeLabelTransfer.iterResidual_labelAdjoint_zero
 #print axioms Nightfall.InfinitePiAllDegreeLabelTransfer.iterResidual_eq_source
 #print axioms Nightfall.InfinitePiAllDegreeLabelTransfer.original_source_label_all_degree
 #print axioms Nightfall.InfinitePiAllDegreeLabelTransfer.original_source_label_all_degree_zero
+#print axioms Nightfall.InfinitePiAllDegreeLabelTransfer.original_cell_average_all_degree
+#print axioms Nightfall.InfinitePiAllDegreeLabelTransfer.original_cell_average_all_degree_zero
 
 end Nightfall.InfinitePiAllDegreeLabelTransfer
