@@ -93,3 +93,55 @@ Run \`python3 -I research/nightfall/flagship-influence/check_finite_level_rows_e
 - m=2 Boolean equality for a fair dictator, and the multi-output one-coordinate near-endpoint sharpness mechanism.
 
 **Certification:** analytic deduction + exact finite regression + explicit primal/dual certificate for the four-bit witness. No Lean (except the imported earlier Boolean source theorem), non-author mathematical review, or full universal/novelty proof. Exact checker is *not* evidence that the open real-valued row theorem holds for arbitrary m. The next decisive operator is a coherent *bilinear* estimate summing threshold interactions without losing one gap factor per cut. Any success must survive the one-coordinate m-level example, the four-bit \(K=6\) source certificate, and the true source-consistent Q3 replica witness with \(K_{\rm annealed}\ge64/49\) from draft #810.
+
+
+## 5. Genuine **degree-three** bilinear proof attack: fixed optimal row cost, divergent ℓ¹(L²)
+
+A separate exact source construction (related to the categorical selector/charge theorem of draft PR #811) disproves a tempting *intermediate norm estimate*, **even with full fractional rows and Efron–Stein degree precisely three**. It does **not** disprove the real-valued row-to-influence conjecture.
+
+Fix \(m\ge2\). Let \(A,B\) be two independent uniform m-letter categorical variables, and let the \(m^2\) leaves \(Y_{ab}\) be mutually independent fair signs, independent of \(A,B\). Define
+\[
+\boxed{\quad f_m(A,B,Y)=Y_{AB}.\quad}
+\]
+This is sign-valued, centered, \(V=B(f_m)^2=1\), and has **ANOVA degree exactly three** for every \(m\ge2\). Indeed
+\[
+f_m=\sum_{a,b}\Big(\frac1m+\alpha_a(A)\Big)
+                 \Big(\frac1m+\beta_b(B)\Big)Y_{ab},
+\quad
+\alpha_a=1_{\{A=a\}}-\frac1m,\ \beta_b=1_{\{B=b\}}-\frac1m,
+\]
+and the exact level-three energy is \(\sum_{a,b}\|\alpha_a\beta_bY_{ab}\|_2^2=(1-1/m)^2>0\).
+
+The **true original-source resampling influences** are
+\[
+I_A(f_m)=I_B(f_m)=1-\frac1m,\qquad
+I_{Y_{ab}}(f_m)=\frac1{m^2}.
+\]
+Thus \(M=1-1/m\), while
+\[
+\boxed{\sum_{\text{all source sites }i}\sqrt{I_i(f_m)}
+=2\sqrt{1-1/m}+m\longrightarrow\infty.}
+\]
+
+Yet the **optimal uniform full fractional-row cost is exactly six** for every m. At a given source configuration \(x=(a,b,y)\), assign row weights \(r_A^x=r_B^x=2\), \(r_{Y_{ab}}^x=2\), all other weights zero. If a comparison \(z\) changes either address, the address row contributes at least 2 and dominates \(|f(x)-f(z)|\le2\); if both addresses stay fixed, the selected leaf row contributes exactly 2 when its output changes. Hence the row is valid against **every** comparison, with pointwise cost \(6\).
+
+For the matching lower bound choose an input with \(Y_{ab}=+1\), \(Y_{a'b}=Y_{ab'}=-1\) for some \(a'\ne a,b'\ne b\). Three disjoint **singleton** changes — resample \(A\) to \(a'\), \(B\) to \(b'\), or flip \(Y_{ab}\) — each changes output by 2. Thus every row at this input has \(r_A\ge2,r_B\ge2,r_{Y_{ab}}\ge2\), and \(K^*(f_m)\ge6\). This is an exact primal/dual row certificate.
+
+For this explicit optimal row family
+\[
+\sup_x\sum_i r_i^x=6,\qquad
+\sum_i\|r_i\|_{L^2(\mu)}=4+2m\to\infty.
+\]
+Moreover the lower bound \(\sum_{a,b}\|r_{Y_{ab}}\|_2\ge2m\) holds for **every** valid row family, because the one-leaf comparison forces \(r_{Y_{ab}}^x\ge2\) whenever \((A,B)=(a,b)\), an event of probability \(1/m^2\).
+
+**Proven no-go:** Neither
+\[
+\sum_i\sqrt{I_i(f)}\le C K^*(f)
+\quad\text{nor}\quad
+\sum_i\|r_i\|_{L^2}\le C K
+\]
+can hold with universal C, **even on bounded original-product functions of exact Efron–Stein degree three**, and the second statement fails for *all* feasible row choices. This destroys any proposed bilinear proof that first embeds the pointwise \(\ell_1\) row budget into a sum of coordinate \(L^2\) gradient norms. It also gives a genuine source-selector negative control for the annealed-Q2 challenge (#799/#803): the selector coordinates must be charged **jointly** with their \(m^2\) rare leaves. 
+
+**What survives:** The real-valued row conjecture is perfectly consistent: \(K^{*2}M/V^2=36(1-1/m)\), bounded below by 18. The full-row coefficient-four hypothesis \(K^2M\ge4V^2\) holds with ample slack. The structure is a two-address extension of #811's already credited one-categorical-address proof attack, not asserted as a novel worldwide construction. Its new use here is the exact fixed-degree-three **all-feasible-row ℓ¹(L²) obstruction**, with explicit optimal primal/dual row cost.
+
+**Independent exact replay:** \`python3 -I research/nightfall/flagship-influence/check_two_address_row_l2_no_go.py\` exhaustively checks genuine source influences at \(m=2,3\), and verifies symbolic all-m row feasibility, Efron–Stein level-three energy, the exact uniform K=6 dual, and the divergence formulas.
