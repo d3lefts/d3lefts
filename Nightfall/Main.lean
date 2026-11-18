@@ -6,6 +6,7 @@ import InfinitePiQ2AllL2LabelIntertwining
 import InfinitePiQ2RangeProjectionTransfer
 import InfinitePiQ2UnconditionalTerminal
 import InfinitePiQ2DegreeEquivalence
+import DQ2SpectralSandwich
 import Q2ShiftedConditionalTargets
 
 /-!
@@ -69,3 +70,8 @@ hypothesis is discharged by printing an axiom list.
 #check Nightfall.InfinitePiQ2DegreeEquivalence.tripleResidualZero_implies_every_finite_label_supported_q2
 #print axioms Nightfall.InfinitePiQ2DegreeEquivalence.tripleResidualZero_iff_all_higher_mixed_residuals
 #print axioms Nightfall.InfinitePiQ2DegreeEquivalence.tripleResidualZero_implies_every_finite_label_supported_q2
+
+-- Conditional *algebraic* spectral sandwich; true-law operator hypotheses
+-- and signed-graph/Dobrushin discharge are separate proof gates.
+#check Nightfall.DQ2SpectralSandwich.quadratic_spectral_sandwich
+#print axioms Nightfall.DQ2SpectralSandwich.quadratic_spectral_sandwich
