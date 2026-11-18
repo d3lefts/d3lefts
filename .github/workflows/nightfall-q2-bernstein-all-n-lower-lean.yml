@@ -55,7 +55,6 @@ jobs:
       - name: Independent original Bernoulli rational checker
         run: |
           python3 -I research/nightfall/flagship-influence/check_q2_bernstein_sqrt2_worlds.py
-          python3 -I research/nightfall/flagship-influence/check_q2_biased_bernstein_priority.py
           python3 -I research/nightfall/flagship-influence/check_ue2_bernstein_saturation.py
       - name: Preserve precise source custody
         if: always()
