@@ -78,6 +78,8 @@ I_S=1/1600,\quad M=I_T.
 ]
 Since (\sqrt{I_S}=1/40) and (I_T>(39/40)^2), it follows *exactly* that (\sqrt{I_T}+\sqrt{I_S}>1=K/2).
 
+**Exact scope boundary for Theorem B.** In this same trit/bit example, the global coordinate-edge oscillations are A_T=2 and A_S=1/2, yet K=2<5/2=A_T+A_S. Thus the two-*binary*-site identity K=ΣA_i cannot be extended naively to a categorical site. This is an independent obstruction to the edge-alignment proof, not to the variance-squared conjecture.
+
 The actual target remains satisfied:
 [
 \frac{4V^2}{K^2M}=\frac{2512225}{2535984}<1.
@@ -94,7 +96,7 @@ Standard-library exact source checker:
 - 300 seeded biased two-binary original laws and arbitrary rational f, exact row primal at all four source worlds, two-replica influence independently rederived, Popoviciu/ES tests, and additive exact equality.
 - Six-world explicit trit-bit categorical obstruction with exact K, V, both original-source I, and rational strict inequality avoiding floating-point acceptance.
 - 15 disjoint-sum trials combining two binary pairs, a categorical singleton and a binary singleton, across six original coordinates; physical V, all native I and R are computed from the entire source truth table, compared with independent block calculations. Global K additivity is established by Theorem A, not inferred from a sampled optimum.
-- **CI:** direct exact-head source-hash and fail-closed Python run (link and SHA recorded after GitHub passes). This is *not* a Lean kernel formalization of the full row theorem. The exact computations audit the author-side analytic deductions and falsifier but cannot substitute for external mathematical review.
+- **CI: PASS** direct exact-head source-hash and fail-closed Python run [GitHub Actions #44377643358](https://github.com/d3lefts/d3lefts/actions/runs/44377643358) on source commit `fc890082de0bffeec9ba49b40deed448a48c8ee7`, custody artifact `14460649584`. This receipt predates this editorial scope note, but its mathematical checker source is unchanged. This is *not* a Lean kernel formalization of the full row theorem. The exact computations audit the author-side analytic deductions and falsifier but cannot substitute for external mathematical review.
 
 **Prior art:** the notions of fractional certificates and disjoint-sum composition are classical. Cite Turturean, *A proof of the Aaronson–Ambainis conjecture* (arXiv:2611.09773, 2026), especially §§5 and 9.5, and related certificate/OSSS work. Our contribution here is a sourced integration of the exact tensorization operator, its closed binary-pair class, and the categorical counterexample to a tempting source-gradient reduction. Do not advertise either straightforward tensorization or two-coordinate inequalities as globally new.
 
