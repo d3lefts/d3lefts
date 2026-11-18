@@ -88,3 +88,49 @@ Credit: NIGHTFALL program; previous disjoint-selector PR #811;
 classical Efron--Stein, Cauchy--Schwarz and Popoviciu. Keep all earlier
 disjoint theorem receipts unchanged, maintain draft until Lean actual
 exact-head PASS and source-leaf bridge audit.
+
+
+## v0.2 source activation-budget certificate (2026-11-18)
+
+Added unconditional Lean theorem source_activation_budget in
+Nightfall.SelectorOverlap. It derives directly from nonnegative
+normalized original finite categorical weights and Boolean masks:
+
+  sum_i Pr_A(i active at A) = sum_a p_a |L_a| <= t.
+
+Disjointness and positive atom floors are NOT assumed. Exact-head
+strict named kernel run 44248073683 PASSED at HEAD
+79a9af79c810b0a81b161ccdc71d9717db58d4d6.
+
+**Full native-source bridge still OPEN:** prove source-to-selector
+residual identification for f and E_A f and the total-variance tower,
+and apply the already certified all-degree native original-source
+Efron--Stein theorem in ActualSourceEfronStein.lean to address and
+leaf blocks. This Lean module DOES NOT supply these original f-based
+operator identities. The end-to-end selector theorem is author-side,
+not fully Lean certified; no stronger passport can be issued.
+
+## Dense-versus-sparse continuation (not an all-degree theorem)
+
+Occupancy alone can be arbitrarily weak even at degree one: on n
+fair signs, f_n=(sum_i Y_i)/n has B=1, V=1/n and M=1/n^2,
+while all n leaves are active. The occupancy charge nM=1/n
+is n-fold weaker than the sharp V<=B sqrt(M)=1/n. Thus no bound
+of occupancy solely by a degree polynomial can hold, even for d=1.
+
+Complementary source-operator mechanism (already foreshadowed by
+merged cubic top-cover PR #787): if the leaf average g=E_A f has
+ANOVA degree at most 2, the certified Q2 C2 bound gives
+Var(g)<=sqrt(C2) B sqrt(M) without leaf support limits.
+Consequently the two existing mechanisms can be combined as
+
+  Var(f) <= sum_(j in A) I_j(f)
+     + min{sum_i w_i I_i(f), sqrt(C2) B sqrt(M)}.
+
+For degree-one g, replace sqrt(C2) by 1. This is an analytic
+recombination of classical tools and the previously certified
+Q2/top-cover program, NOT an original or unrestricted UE2 result.
+
+**Missing breakthrough:** an effective switching-energy charge for
+dense, high-degree, overlapping control functions. No inference to
+N-UE2(6), N-UE2(2) or Turturean's real-row question.
