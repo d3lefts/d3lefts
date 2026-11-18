@@ -54,3 +54,50 @@ Let \(f^{(1)},\dots,f^{(m)}\) be independent disjoint copies, and set \(F_m=m^{-
 Source and CI SHA-256 are part of the PR. This exact finite replay does NOT establish any universal upper inequality.
 
 **Discovery graph:** unrestricted cubic → pure three-partite stress gate → balanced 16-edge incidence tensor → exact amplitude-4 cancellation → influence max 6 → rational ratio 8/3 → no C=2 shortcut → continue source-consistent mean-coupled two-replica quadratic gate (#799/#803). Competing prior art in multilinear Littlewood/Varopoulos and three-way tensor norms must be reviewed before any originality claim.
+
+
+## Stronger mechanism discovered after exact replay: perfect three-way routing
+
+Define three row coefficients \(H_i(B,C)=\sum_{j,k}T_{ijk}B_jC_k\). The independent 64-state control enumeration shows that **for every** \((B,C)\in\{\pm1\}^{3+3}\), the vector
+\[
+(H_0,H_1,H_2)\in\{(\pm4,0,0),(0,\pm4,0),(0,0,\pm4)\}.
+\]
+It follows that \(f(A,B,C)=\pm4\) at **every** one of the 512 full assignments; after scaling by four, \(f/4\) is a *balanced sign-valued pure Fourier cubic*. Thus the amplitude bound is an exact pointwise **identity**, not merely a maximal-value check.
+
+Equivalently, \(f/4\) defines a perfect two-coloring of the nine-dimensional Boolean cube with exactly **three pivotal coordinates at every input** (its Fourier spectrum is entirely on level three). Its coordinate *average* sensitivities vary: \((3/8,3/8,1/4;3/8,3/8,1/4;3/8,1/4,3/8)\). The mechanism is a three-way router with exactly one active A-leaf and selector influence more evenly distributed than binary-address routing.
+
+**Priority caution:** Pure-degree Boolean functions are classical equitable partitions/perfect colorings; the 2024 classification literature and Tarannikov–Carlet/Chiarelli–Hatami–Saks constructions are relevant. An explicit nine-bit table must **not** be called a new worldwide Boolean perfect coloring until compared to those classifications.
+
+## General theorem transferred from classical junta bounds: sign-valued homogeneous degree three
+
+This is a **mathematical upper bound for a restricted class**, unlike the exact lower construction. Let \(g:\{\pm1\}^n\to\{\pm1\}\) have Fourier support **only on subsets of size 3** (uniform independent fair signs). Then
+\[
+\boxed{\max_i I_i(g)\ge\frac5{16},\quad
+\frac{\operatorname{Var}(g)^2}{\|g\|_\infty^2\max_iI_i(g)}
+\le\frac{16}{5}=3.2.}
+\tag{BQ3}
+\]
+This uses a classical, **externally imported** sharp bound: every real-Fourier-degree-three Boolean function has at most ten relevant variables \(r(g)\le10\). This was established in the Boolean relevant-variable literature (Tarannikov–Kirienko/Zverev; recorded by Chiarelli–Hatami–Saks and Ferdinand Ihringer's historical survey, https://blog.ihringer.org/2021/11/01/a-boolean-function-with-small-degree-and-many-variables/). No originality is claimed for that imported bound.
+
+**Proof.** For a set \(S\) of three coordinates and any fixed settings of the others, degree three implies the coefficient \(\widehat g(S)\) equals the eight-point signed average \((1/8)\sum_{u\in\{\pm1\}^S}g(u,x_{-S})\prod_{i\in S}u_i\). Every summand is ±1, so this eight-term sum is even; hence every degree-three Fourier coefficient lies in \((1/4)\mathbb Z\). Pure homogeneity implies \(E g=0\) and \(\operatorname{Var}(g)=E g^2=1\). By Parseval,
+\[
+I_i(g)=\sum_{S\ni i}\widehat g(S)^2 \in (1/16)\mathbb Z_{\ge0},
+\quad \sum_i I_i(g)=3.
+\]
+If \(M<5/16\), integrality gives \(M\le4/16=1/4\), whence \(3=\sum_i I_i\le r(g)M\le10/4=5/2\), contradiction. Therefore \(M\ge5/16\). Since \(\|g\|_\infty=1\), (BQ3) follows.
+
+**All-degree transfer operator.** For a pure degree-d Boolean sign function \(g\), the same \(2^d\)-corner argument gives \(\widehat g(S)\in2^{1-d}\mathbb Z\) for \(|S|=d\), so \(I_i\in4^{1-d}\mathbb Z\), while \(\sum_iI_i=d\). If the established maximum-relevant-variable bound is \(r(g)\le R_d\), then
+\[
+\boxed{\max_iI_i(g)\ge
+4^{1-d}\left\lceil\frac{d\,4^{d-1}}{R_d}\right\rceil.}
+\tag{JIT}
+\]
+This *junta-to-influence quantization operator* transforms a structural variable-count theorem into a numerical influence theorem. At degree 2, the classical exact \(R_2=4\) gives \(M\ge1/2\), sharp for the four-bit bilinear selector. At degree 3, exact \(R_3=10\) gives \(M\ge5/16\). The new nine-bit router gives \(M=3/8\), so within **uniform-cube, ±1-valued homogeneous cubic functions** the valid bracket is
+\[
+\boxed{\frac83\le C^*_{\rm Boolean,pure,3}\le\frac{16}{5}.}
+\]
+This is **not** an inequality for arbitrary real-valued cubics, biased signs, arbitrary categorical alphabets, or nonhomogeneous degree≤3 functions. N-UE2(2,1) and the unrestricted cubic theorem remain OPEN.
+
+**Adversarial comparator:** The classical ten-variable Chiarelli–Hatami–Saks recursive Boolean function \(G_3(s,t,y,z)=(s+t)G_2(y)/2+(s-t)G_2(z)/2\), \(G_2(s,t,u,v)=(s+t)u/2+(s-t)v/2\), is pure degree-three and depends on all ten variables, but its two selector influences are \(1/2\) and its eight descendants each have influence \(1/4\). Its normalized ratio is only 2. Thus a larger relevant-variable count by itself does not yield a harder influence example. The checker adds an independent 1,024-state replay of this comparator, and of the router's exact one-active-leaf identity.
+
+**Certification:** The displayed deduction imports the classical \(R_3=10\) classification and otherwise uses elementary exact Fourier/Parseval arithmetic. This is **author-side analytic**, with finite negative controls, and is not an independent proof or Lean verification of the historical classification. The tensor itself remains a finite exact checked witness. Publication originality review is still required.
