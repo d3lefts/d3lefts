@@ -76,6 +76,10 @@ function verify(passport, {replay=true}={}) {
     assert.ok(typeof r.id === 'string' && r.id.length > 6);
     // Additional scientific proof-object families use their own exact,
     // source-derived validation. Keep the historical Farkas receipt immutable.
+    if (r.proof_object?.format === 'nightfall.robust-observation-hull.v1') {
+      require('./check_robust_observation_hull_passport.cjs').verifyRecord(r, {replay});
+      continue;
+    }
     if (r.proof_object?.format === 'nightfall-semantic-bellman-certificate/v1') {
       require('./check_bellman_policy_passport.cjs').verifyRecord(r, {replay});
       continue;
@@ -213,8 +217,11 @@ if (require.main === module) {
   const bellman = manifest.records.find(r=>r.id==='permission-two-source-bellman-policy-v1');
   assert.ok(bellman,'missing source-bound Bellman policy record');
   const policyNegative = require('./check_bellman_policy_passport.cjs').selfTest(bellman);
+  const hull = manifest.records.find(r=>r.id==='permission-robust-observation-hull-v1');
+  assert.ok(hull,'missing source-bound robust observation hull record');
+  const hullNegatives = require('./check_robust_observation_hull_passport.cjs').selfTest(hull);
   console.log('PASS: ' + audit.records + ' original-model proof-object passports, ' +
-    (count + extra + policyNegative) + ' independent metadata mutations rejected; original rational, Bellman, and operational checkers and exact Lean types linked.');
+    (count + extra + policyNegative + hullNegatives) + ' independent metadata mutations rejected; original rational, Bellman, robust-hull, and operational checkers and exact Lean types linked.');
   console.log('STATUS: offline chain audit only; historical pinned Lean named receipt, not a fresh kernel replay.');
 }
 module.exports = { verify, selfTest };
