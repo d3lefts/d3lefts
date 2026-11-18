@@ -23,3 +23,10 @@ A separate checker recomputes the full six-case denominator, official source tas
 ## Limits
 
 This is a local low-resource model (not a frontier agent), a genuine native tool interface (not unrestricted computation), three of 45 available task combinations, an isolated IaC simulator, and no AWS deployment. A complete cost-safe substitution remains unverified even if all six source edits become executable. Compare any claimed protection against independent structural-monitoring prior art rather than assuming a novel benchmark.
+
+## V3 corrective preflight, frozen after inspecting V2 failure
+
+The V2 Qwen3:4b direct Ollama probe [run 44213790354](https://github.com/d3lefts/d3lefts/actions/runs/44213790354), artifact 14388035122, failed with zero structured tool calls **because generation exhausted its 256-token `num_predict` budget** (exact `done_reason=length`, `eval_count=256`), producing only `message.thinking` content. It is therefore **not** yet evidence of tool-channel incompatibility. V2 never executed any of the six intended samples and the CI failure was correct.
+
+V3 changes ONLY the diagnostic probe, **before** rerunning six samples: add `/no_think` to the system and user prompt and raise `num_predict` to 1024, record `done_reason`, exact token count and whether `thinking` appeared despite `think:false`. Run one Qwen3:4b probe, no retry or model change within this protocol. This addresses a verified parameter-budget failure without cherry-picking model-generated attacks. Stop and preserve raw response on any continued failure; after this one repair use a separately justified provider/model route rather than repeatedly expanding budgets.
+
