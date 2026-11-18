@@ -4,7 +4,11 @@ This is an **interface to the official Lean 4 compiler and kernel**, not a new i
 
 ## Unified root Lake package and source-preserving certification
 
-Merged [PR #696](https://github.com/d3lefts/d3lefts/pull/696) introduces a single root Lake package for a **selected 103-source Q2 import closure**. At Lean 4.36.0-rc2, [strict run 44027853225](https://github.com/d3lefts/d3lefts/actions/runs/44027853225) passed `lake build Nightfall`, four named `#print axioms` audits, and `lake check` independent Lean kernel replay. This does not include every file in the research archive, is not a `lake check --paranoid` certificate, and does not close the unconditional infinite-product theorem. Its imported L² limit still has explicit finite-information premises.
+Merged [PR #696](https://github.com/d3lefts/d3lefts/pull/696) established the historical selected 103-source Lake closure; [strict run 44027853225](https://github.com/d3lefts/d3lefts/actions/runs/44027853225) passed the then-current `lake build Nightfall`, scoped named axioms and `lake check`. That **historical** result must not be represented as verification of later imports.
+
+The current mainline Q2/cubic/infinite-product root has 140 selected modules; draft integration [PR #859](https://github.com/d3lefts/d3lefts/pull/859), stacked on [AA product-space PR #858](https://github.com/d3lefts/d3lefts/pull/858), expands the deterministic closure to **203** exact-source modules. Added modules are 51 attributed upstream AA auxiliaries, seven product-space modules, the infinite-product AA terminal, three source-identical all-degree transfers from [PR #847](https://github.com/d3lefts/d3lefts/pull/847), and one existing original-label residual dependency. The shared `Nightfall/Main.lean` imports and audits actual theorem declarations from all four families, and `scripts/check_nightfall_lake_scope.py` enforces the 177-module upstream dependency inventory and rejects importing upstream cube-terminal shortcuts. This is a **draft integration**, not a claim that the 203-module pinned Lake build is already green.
+
+The current mainline Q2 import includes an unconditional arbitrary-index *a.e.* terminal under its stated genuine triple-residual degree predicate, and the separate variance statement. Claiming a different canonical ANOVA degree notion is equivalent requires its own statement-level review. Likewise, the AA product-space theorem and the exact printed-cube specialization have separate strict receipts, but no certificate is transferred to this new combined build until its own `lake build Nightfall`, integrated named-axiom audit and `lake check` succeed. Off-tree author-side cubic/Q3, dependent-law DQ2, poly-d UE2 and open degree-semantics results are deliberately not promoted by inclusion or prose. Neither successful compilation nor a passing axiom audit establishes novelty or independent mathematical peer review.
 
 The active compiler pin is now source-controlled via [`docs/lean-compiler-lock.json`](../../../docs/lean-compiler-lock.json); [`docs/lean-compiler-settings.md`](../../../docs/lean-compiler-settings.md) documents local setup, current CI, multi-kernel replay, and the immutable historical 4.33/4.35 receipts. `scripts/generate_nightfall_lake.py` obtains Mathlib from this lock, and the shared action verifies the installed compiler Git source commit.
 
@@ -12,6 +16,7 @@ The active compiler pin is now source-controlled via [`docs/lean-compiler-lock.j
 python3 scripts/check_nightfall_compiler_lock.py --checkout .
 python3 scripts/audit_active_lean_436.py
 python3 scripts/generate_nightfall_lake.py --check
+python3 scripts/check_nightfall_lake_scope.py
 lake update
 lake exe cache get
 lake build Nightfall
