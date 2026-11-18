@@ -143,3 +143,36 @@ worlds, computes physical source resampling influences, and verifies
 the parity homogenization identity on every one of them. A Lean
 certificate for the 5-bit model is pending its strict exact-head CI;
 the six-bit extension is not a separate kernel theorem yet.
+
+
+## General reusable operator: fair-cube quadratic homogenization
+
+For any fair-cube quadratic f=c+f1+f2 with degree-one f1 and
+homogeneous degree-two f2, introduce one independent fair sign z and set
+H(z,x)=z*f1(x)+f2(x). Exact identity:
+
+  H(z,x) = f(z*x)-c.
+
+Consequently **for every such f**:
+- H is homogeneous of degree two on n+1 fair signs;
+- the centered essential radius B(H)=B(f);
+- Var(H)=Var(f);
+- for every old coordinate i, Inf_i(H)=Inf_i(f);
+- the **new anchor influence** is Inf_z(H)=Var(f1).
+
+Thus the maximal influence changes from M(f) to
+max(M(f), Var(f1)). In general this extra anchor influence may be
+larger: homogenization is NOT an automatic constant-preserving
+equivalence between all mixed and all homogeneous Q2 problems.
+
+For the current explicit five-bit witness Var(f1)=4=M(f), so the
+homogenization preserves M exactly and proves the pure homogeneous
+six-bit ratio 9/4. This is a mechanism-level explanation of why the
+bipartite matrix sweep is insufficient. Any attempt to deduce sharp Q2
+from a bipartite Littlewood inequality must account for non-bipartite
+signed interaction graphs and the artificial-anchor influence cost.
+
+Audit status: elementary fair-cube Fourier identity, verified for the
+specific witness by exact 64-world physical resampling enumeration;
+the fully general operator is an author-side mathematical observation,
+not a new named Lean declaration or a novelty claim.
