@@ -1,0 +1,35 @@
+name: NIGHTFALL ArtifactGraph-B2 public contract canary
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/evaluations/artifactgraph-b2/**'
+      - '.github/workflows/nightfall-artifactgraph-contract-canary.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  canary:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Check private reference and grader absent
+        run: test ! -e research/nightfall/evaluations/artifactgraph-b2/private
+      - name: Source-exact candidate negative/positive contract replay
+        run: |
+          python research/nightfall/evaluations/artifactgraph-b2/audit/public_contract_canary.py \
+            --package-root research/nightfall/evaluations/artifactgraph-b2/candidate \
+            --require-seed-violations 11 \
+            --json-out b2-canary-${{ matrix.python-version }}.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: b2-canary-${{ matrix.python-version }}
+          path: b2-canary-${{ matrix.python-version }}.json
+          if-no-files-found: warn
