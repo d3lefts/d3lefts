@@ -18,7 +18,7 @@ Fix an integer k>=0 and a real C>=0. Consider the assertion for ALL such product
 V(f)^2\le C\, d^k\, B(f)^2\, M(f).
 \]
 
-This universal assertion is TRUE if and only if it holds for every FINITE coordinate product, each coordinate with a finite alphabet and STRICTLY POSITIVE RATIONAL probabilities, and every table of RATIONAL function values having algebraic interaction degree <=d. One can restrict probabilities and table coefficients to DYADIC rationals without changing the equivalence.
+This universal assertion is TRUE if and only if it holds for every FINITE coordinate product, each coordinate with a finite alphabet and STRICTLY POSITIVE RATIONAL probabilities, and every table of RATIONAL function values having algebraic interaction degree <=d. One can restrict probabilities and table coefficients to DYADIC rationals without changing the equivalence. Because the inequality is homogeneous of degree four in f, after choosing dyadic table values one may multiply by a common power of two and take all table values to be INTEGERS. Thus strictly failing examples, if any, have a dyadic-probability / integer-table exact normal form.
 
 Equivalently: ANY strict counterexample on ANY independent product admits a FINITE full-support categorical RATIONAL counterexample of the SAME degree bound. For rational C (including C=1), every resulting violation has an exact integer-arithmetic certificate. This is a refutation-completeness theorem, not a claim of a finite search bound or decision procedure for truth.
 
@@ -35,7 +35,7 @@ h_S(x_S)=\sum_{T\subseteq S}(-1)^{|S|-|T|}g(x_T,0_{-T})
 \]
 for nonreference positions in S, extending each h_S by zero if a coordinate equals its reference letter. This formula is a finite integer-coefficient change of basis. A full-support finite categorical table has product-Hoeffding degree <=d exactly when its anchored components h_S vanish for |S|>d, equivalently when it is a sum of functions of at most d coordinates. Approximate the finitely many remaining h_S coefficients by dyadic rationals. The reconstructed table stays EXACT degree <=d.
 
-4. **Rationalizing probabilities.** Approximate every positive cell mass by a positive dyadic rational, preserving that each coordinate row sums to one. The table remains degree <=d under the perturbed law: the representation as a sum of functions supported on at most d coordinates is an algebraic, law-independent property on a full-support table. Its variance, every true conditional-variance influence, and its centered half-range B (max minus min divided by two) vary continuously with the finitely many probabilities and table values. Hence the original strict violation persists for sufficiently accurate approximants.
+4. **Rationalizing probabilities.** Approximate every positive cell mass by a positive dyadic rational, preserving that each coordinate row sums to one. The table remains degree <=d under the perturbed law: the representation as a sum of functions supported on at most d coordinates is an algebraic, law-independent property on a full-support table. Its variance, every true conditional-variance influence, and its centered half-range B (max minus min divided by two) vary continuously with the finitely many probabilities and table values. Hence the original strict violation persists for sufficiently accurate approximants. Finally, multiply all table entries by a common power of two: the resulting table is integer-valued, retains degree<=d, and its strict violation is unchanged because V² and B²M both scale as the fourth power.
 
 The reverse implication follows by inclusion of the finite rational class among arbitrary product laws. This establishes the equivalence for all fixed (d,k,C), independently of the truth of the conjectured inequality.
 
@@ -66,7 +66,16 @@ in L2. The conditional expectation has centered radius at most B(f). The g_a's a
 \sum_{a\in A}B_a\le B(f)\quad\text{for every finite A},\qquad
 \boxed{\sum_a B_a\le B(f).}
 \]
-The seemingly extra assumption sum B_a < infinity in the previous explicit block-summable infinite extension is thus AUTOMATIC for bounded f with no cross-component interactions. No countability/atom-floor assumption on I or its factors is needed.
+In fact this implies the stronger EXACT identity
+\[
+\boxed{\quad B(f)=\sum_a B_a.\quad}
+\]
+**Additional proof:** Every g_a is mean-zero, so 0 lies between its essential infimum and supremum. Therefore \(\|g_a\|_\infty\le2B_a\). The automatically summable radii imply that \(\sum_a g_a\) converges absolutely in essential sup norm, and hence in L2. Its L2 limit is \(f-\mathbb Ef\) by the Hoeffding decomposition, so this sum equals f a.e. Subadditivity and continuity of centered radius in L-infinity give \(B(f)\le\sum_aB_a\), reversing the preceding inequality. For every finite component set A this also certifies the a.e. tail bound
+\[
+\left\|f-\mathbb Ef-\sum_{a\in A}g_a\right\|_\infty
+\le 2\sum_{a\notin A}B_a .
+\]
+Thus the previous assumption sum B_a < infinity in the explicit block-summable infinite extension is AUTOMATIC, with exact range equality and essential-uniform convergence, for bounded f whose active Hoeffding interactions split into independent components. No countability/atom-floor assumption on I or its factors is needed.
 
 Define the (possibly infinite) fractional vertex-cover value
 \[
