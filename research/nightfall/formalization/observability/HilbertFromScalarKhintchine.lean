@@ -39,15 +39,15 @@ theorem finite_cauchy_norm
   have hcs :
       (∑ k, x k * |y k|)^2 ≤
         (∑ k, (x k)^2) * (∑ k, (y k)^2) := by
-    convert Finset.sum_mul_sq_le_sq_mul_sq
-        (Finset.univ : Finset K) x (fun k => |y k|) using 1
-    · rfl
-    · apply congrArg
-      fun z : ℝ => (∑ k, (x k)^2) * z
-      apply Finset.sum_congr rfl
-      intro k _
-      rw [sq_abs]
-  nlinarith
+    simpa only [sq_abs] using
+      (Finset.sum_mul_sq_le_sq_mul_sq
+        (Finset.univ : Finset K) x (fun k => |y k|))
+  have hrootSq :
+      (Real.sqrt (∑ k, (x k)^2) *
+        Real.sqrt (∑ k, (y k)^2))^2 =
+      (∑ k, (x k)^2) * (∑ k, (y k)^2) := by
+    rw [mul_pow, hsqX, hsqY]
+  nlinarith [hrootSq]
 
 /-- Conditional scalar-to-Hilbert L1/L2 lifting at precisely the same
 factor C. The external sign space may be any finite weighted table.
@@ -101,20 +101,27 @@ theorem vector_khintchine_from_scalar_coordinates
         exact hscalarWeighted k
       _ = C * (∑ ω, p ω * (∑ k, b k * |e ω k|)) := by
         calc
-          _ = C * (∑ k, ∑ ω, p ω * (b k * |e ω k|)) := by
-            rw [Finset.mul_sum]
+          (∑ k, C * b k * (∑ ω, p ω * |e ω k|)) =
+              (∑ k, ∑ ω, (C * b k) * (p ω * |e ω k|)) := by
             apply Finset.sum_congr rfl
             intro k _
             rw [Finset.mul_sum]
-            apply Finset.sum_congr rfl
-            intro ω _
-            ring
-          _ = C * (∑ ω, ∑ k, p ω * (b k * |e ω k|)) := by
+          _ = (∑ ω, ∑ k, C * (p ω * (b k * |e ω k|))) := by
             rw [Finset.sum_comm]
-          _ = C * (∑ ω, p ω * (∑ k, b k * |e ω k|)) := by
-            congr 1
             apply Finset.sum_congr rfl
             intro ω _
+            apply Finset.sum_congr rfl
+            intro k _
+            ring
+          _ = (∑ ω, C * (p ω * (∑ k, b k * |e ω k|))) := by
+            apply Finset.sum_congr rfl
+            intro ω _
+            calc
+              _ = C * (∑ k, p ω * (b k * |e ω k|)) := by
+                rw [Finset.mul_sum]
+              _ = C * (p ω * (∑ k, b k * |e ω k|)) := by
+                rw [Finset.mul_sum]
+          _ = C * (∑ ω, p ω * (∑ k, b k * |e ω k|)) := by
             rw [Finset.mul_sum]
   have hsumCS :
       (∑ ω, p ω * (∑ k, b k * |e ω k|)) ≤ S * A := by
