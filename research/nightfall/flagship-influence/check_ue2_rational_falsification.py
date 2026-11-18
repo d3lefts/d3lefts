@@ -158,6 +158,19 @@ def tests():
         raise AssertionError("incorrect degree accepted")
     except AssertionError as e:
         assert "greater than declared" in str(e), str(e)
+    # First possible pure quadratic high-cover size: connected K9 has
+    # rational fractional cover tau*=9/2>4 (weights 1/2 per vertex,
+    # matching weights 1/8 per edge), but it does NOT refute C=1.
+    xs=list(product((0,1),repeat=9))
+    ob={"degree":2,"constant":"1","probabilities":[["1/2","1/2"]]*9,
+        "values":[str(sum((2*x[i]-1)*(2*x[j]-1)
+                          for i in range(9) for j in range(i+1,9)))
+                  for x in xs]}
+    k9=analyze(ob)
+    assert (k9["B"],k9["V"],k9["M"],k9["normalized_ratio"]) == (
+        Q(20),Q(36),Q(8),Q(81,800))
+    assert not k9["violates"]
+    print("PASS connected K9 high-cover tau=9/2, true normalized ratio 81/800")
     print("PASS categorical 3-letter selector, Hadamard block-range additivity")
     print("PASS high-degree negative control correctly rejected")
     print("PASS heterogeneous rational categorical law; NO universal bound asserted")
