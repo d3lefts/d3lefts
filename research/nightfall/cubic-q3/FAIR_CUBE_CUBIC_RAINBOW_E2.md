@@ -1,4 +1,4 @@
-# NIGHTFALL rainbow influence theorem: fair-cube Q3 (v1.1)
+# NIGHTFALL rainbow influence theorem: fair-cube Q3 and bounded nonfair-coordinate transfer (v1.2)
 
 **2026-11-17/18. Status: author-side analytic theorem with exact finite rational replay, not Lean-certified, not independent external review, not novelty-cleared.** Earlier v1.0 C<3661 obtained by using general Q2 with a fivefold amplitude loss; v1.1 sharpens this **16.6x** by using degree-parity selection *before* quadratic control. No all-product or all-degree total-variance claim.
 
@@ -69,3 +69,25 @@ At d=1,2,3 the coefficients are 1, 8, 81. This has exponential degree dependence
 - The unrestricted arbitrary-bias/categorical Q3 exponent-two theorem remains **OPEN**, as do universal N-UE2(6) and N-UE2(2). Replicated fair orientations produce environment-dependent maxima and cannot be averaged into original-law max influence without a new source-consistent coupled theorem (see [PR #803](https://github.com/d3lefts/d3lefts/pull/803)).
 
 **Discovery graph:** low-degree cube -> exact parity representations -> norm-one r-color projectors -> multipartite Khintchine -> 1/2 and 2/9 Fourier energy survival -> noise-extracted degree-one amplitude -> sector recombination -> cubic exponent-two -> unresolved arbitrary-law transfer.
+
+
+## v1.2 corollary: arbitrary-law coordinates with bounded total influence (new scope)
+
+Let the original independent product have a block F of fair signs and a disjoint block A of **arbitrary coordinate probability laws and alphabets**, including biased or zero-atom distributions. Suppose f is bounded with original Efron–Stein degree <=3, B half its essential range, and M the maximum **original-law resampling** influence over all coordinates. Set S_A = sum_(j in A) Inf_j(f), interpreted as a finite sum for finite A.
+
+**Hybrid theorem (finite A):**
+**Var(f) <= sqrt(220) B sqrt(M) + S_A.**
+
+Proof: set g=E_[X_A] f, an original-product conditional expectation onto the fair block. By independence, g remains bounded in the same essential interval, has fair Fourier degree <=3, and Inf_i(g)<=Inf_i(f) for every fair i (Jensen/contraction). Apply the preceding fair-cube bound to obtain Var(g)<=sqrt(220) B sqrt(M). The law of total variance gives
+Var(f)=Var(g)+E_[X_F] Var_[X_A](f | X_F).
+For every fixed fair configuration, the ordinary Efron–Stein/Poincare inequality on the **original independent A-law** bounds the conditional variance by the sum of its coordinate resampling influences. After averaging over X_F, the latter sum is exactly S_A. This proves the hybrid inequality. No fake fair law replaces any arbitrary marginal.
+
+**Finite-count consequence (k=|A|):** since S_A<=kM and M<=Var(f)<=B^2 (each coordinate conditional variance <= total variance; Popoviciu), we have
+**Var(f)^2 <= (sqrt(220)+k)^2 B^2 M.**
+In particular, when all but one input coordinates are fair signs, **Var(f)^2 < 251 B^2 M** even if the remaining coordinate has arbitrary categorical alphabet, bias or zero-probability atoms. For k=2, the coefficient is <284; for k=3, <319. No restriction on the number of fair coordinates. For k growing with dimension, the constant grows: this is **not** a dimension-free all-product cubic theorem.
+
+The hybrid bound remains meaningful with many arbitrary-law coordinates whenever S_A is itself bounded; it is stronger than replacing S_A by kM in that setting. The product decomposition is an exact source-law operator bridge and can be reused with any future fair-subspace influence theorem.
+
+**New independent exact checker:** check_cubic_mixed_anchor.py independently enumerates original resampling influences, conditional fair projection, source-law Poincare remainder, and k=1,2,3 constants for 36 rational models including zero-weight categorical atoms. Exact finite checks are not a universal certificate; a dedicated Lean proof and independent expert review remain open.
+
+**Explicit limit:** Does not establish the universal arbitrary-product cubic inequality with a constant independent of k, does not establish N-UE2(6)/(2), and does not assert priority. The v1.1 fair-cube C<220 and v1.2 mixed-law hybrid are author-side derived from classical tools and the #804 anchored theorem.
