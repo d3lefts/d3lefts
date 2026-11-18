@@ -302,6 +302,34 @@ class FrozenRunGateTests(unittest.TestCase):
         self.update_receipt(r)
         self.assert_bad()
 
+    def test_undeclared_hidden_grader_in_attempt_rejected(self):
+        (self.root / "attempts" / "try-1" / "hidden_grader.py").write_text(
+            "secret = True", encoding="utf-8")
+        self.assert_bad()
+
+    def test_undeclared_top_level_evidence_file_rejected(self):
+        (self.root / "untracked-private-reference.py").write_text(
+            "source", encoding="utf-8")
+        self.assert_bad()
+
+    def test_cross_attempt_trace_reuse_rejected(self):
+        r = self.receipt()
+        r["trace_path"] = "attempts/try-2/trace.json"
+        r["trace_sha256"] = sha_file(self.root / r["trace_path"])
+        self.update_receipt(r)
+        self.assert_bad()
+
+    def test_cross_attempt_grade_reuse_rejected(self):
+        r = self.receipt("try-2")
+        r["outcome"] = "completed"
+        r["tool_calls"] = 1
+        r["patch_path"] = "attempts/try-1/patch.diff"
+        r["patch_sha256"] = sha_file(self.root / r["patch_path"])
+        r["grade_path"] = "attempts/try-1/grade.json"
+        r["grade_sha256"] = sha_file(self.root / r["grade_path"])
+        self.update_receipt(r, "try-2")
+        self.assert_bad()
+
     def test_trace_unknown_event_rejected_with_fresh_hash(self):
         a = self.root / "attempts" / "try-1"
         trace = json.loads((a / "trace.json").read_text())
