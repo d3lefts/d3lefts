@@ -159,6 +159,7 @@ def direct_linear(n, fvals, t):
 
 def test_linear_source_replay():
     cases=[
+      (3,2,{2:F(1,2),4:F(1,2),3:F(-1,2),5:F(1,2)}),
       (3,1,{1:F(2),2:F(-1),4:F(3)}),
       (4,3,{1:F(3),2:F(-1),3:F(2),5:F(1),7:F(-2)}),
       (5,5,{1:F(2),4:F(-3),3:F(2),21:F(-1),31:F(1)}),
@@ -185,6 +186,8 @@ def test_linear_source_replay():
         assert 6*m*U>=V, (n,d,'variance retention')
         assert all(m*Js[i]<=M[i] for i in range(n)),(n,d,'influence cap')
         assert A<=d*B,(n,d,'Bernstein amplitude')
+        if n==3 and d==2:
+            assert (U,Js,A)==(F(1,2),[F(1,8),F(3,16),F(3,16)],F(1)), (U,Js,A)
     print('PASS: genuine source (X,Y) selector-table vs spectral first-chaos,',
           matched,'exact independent scale-model identities; dyadic bounds')
 
