@@ -156,6 +156,73 @@ theorem source_activation_budget
     _ = (∑ a : Address, p a) * (t : ℝ) := by rw [Finset.sum_mul]
     _ = (t : ℝ) := by rw [hnorm, one_mul]
 
+
+/-- Full **source-row** consequence: if each site's original masked
+squared-residual energy is <= M, the aggregate energy of the mean
+selector residuals costs at most t*M. Disjointness and atom floors are
+not used. The hypothesis hJ still must be identified with the native
+resampling influence of an actual original-product selector f. -/
+theorem source_overlap_leaf_energy_le_activation_max
+    (p : Address → ℝ) (q : Sample → ℝ)
+    (active : Address → Site → Bool)
+    (z : Address → Site → Sample → ℝ)
+    (t : ℕ) (M : ℝ)
+    (hp : ∀ a, 0 ≤ p a) (hq : ∀ y, 0 ≤ q y)
+    (hnorm : (∑ a : Address, p a) = 1)
+    (hcap : ∀ a : Address,
+      ((Finset.univ.filter (fun i : Site => active a i)).card ≤ t))
+    (hM : 0 ≤ M)
+    (hJ : ∀ i : Site,
+      (∑ y : Sample, q y *
+        (∑ a ∈ (Finset.univ.filter
+          (fun a : Address => active a i)), p a * (z a i y) ^ 2)) ≤ M) :
+    (∑ i : Site, ∑ y : Sample, q y *
+      (∑ a ∈ (Finset.univ.filter
+        (fun a : Address => active a i)), p a * z a i y) ^ 2) ≤
+      (t : ℝ) * M := by
+  let w : Site → ℝ := fun i =>
+    ∑ a ∈ (Finset.univ.filter (fun a : Address => active a i)), p a
+  let J : Site → ℝ := fun i =>
+    ∑ y : Sample, q y *
+      (∑ a ∈ (Finset.univ.filter
+        (fun a : Address => active a i)), p a * (z a i y) ^ 2)
+  have hw (i : Site) : 0 ≤ w i := by
+    exact Finset.sum_nonneg (by
+      intro a ha
+      exact hp a)
+  have hbudget : (∑ i : Site, w i) ≤ (t : ℝ) := by
+    calc
+      (∑ i : Site, w i) =
+        ∑ i : Site, ∑ a : Address,
+          if active a i then p a else 0 := by
+            apply Finset.sum_congr rfl
+            intro i hi
+            simp only [w, Finset.sum_filter]
+      _ ≤ (t : ℝ) :=
+        source_activation_budget p active t hp hnorm hcap
+  have hsource :
+      (∑ i : Site, ∑ y : Sample, q y *
+        (∑ a ∈ (Finset.univ.filter
+          (fun a : Address => active a i)), p a * z a i y) ^ 2) ≤
+      ∑ i : Site, w i * J i :=
+    finite_source_weighted_overlap_energy p q active z hp hq
+  have hcharged : (∑ i : Site, w i * J i) ≤
+      (∑ i : Site, w i) * M := by
+    calc
+      _ ≤ ∑ i : Site, w i * M :=
+        Finset.sum_le_sum (by
+          intro i hi
+          exact mul_le_mul_of_nonneg_left (hJ i) (hw i))
+      _ = (∑ i : Site, w i) * M := by rw [Finset.sum_mul]
+  calc
+    (∑ i : Site, ∑ y : Sample, q y *
+      (∑ a ∈ (Finset.univ.filter
+        (fun a : Address => active a i)), p a * z a i y) ^ 2) ≤
+        (∑ i : Site, w i) * M :=
+      hsource.trans hcharged
+    _ ≤ (t : ℝ) * M :=
+      mul_le_mul_of_nonneg_right hbudget hM
+
 /-- Pure scalar budget consequence. hsource and haddr are *explicit*
 conditional total-variance / original-law Efron--Stein obligations; they
 are not derived from f in this declaration. -/
@@ -194,6 +261,7 @@ theorem selector_weighted_terminal_from_source_obligations
 #print axioms Nightfall.SelectorOverlap.finite_source_weighted_row_energy
 #print axioms Nightfall.SelectorOverlap.finite_source_weighted_overlap_energy
 #print axioms Nightfall.SelectorOverlap.source_activation_budget
+#print axioms Nightfall.SelectorOverlap.source_overlap_leaf_energy_le_activation_max
 #print axioms Nightfall.SelectorOverlap.selector_weighted_terminal_from_source_obligations
 
 end Nightfall.SelectorOverlap
