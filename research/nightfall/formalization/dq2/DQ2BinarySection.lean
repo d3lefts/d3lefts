@@ -78,4 +78,40 @@ theorem binary_section_spin_score
 #print axioms Nightfall.DQ2.binary_section_score_energy
 #print axioms Nightfall.DQ2.binary_section_spin_score
 
+/-- Residuals are orthogonal to any observable depending only on the
+other-coordinate configuration. The section index type is arbitrary finite,
+and the weights need only have nonzero total mass on each section. -/
+theorem binary_global_residual_orthogonal
+    {κ : Type*} [Fintype κ]
+    (pMinus pPlus φ : κ → ℝ)
+    (h : ∀ k, pMinus k + pPlus k ≠ 0) :
+    (∑ k : κ,
+      (pPlus k * (1 - binaryConditionalMean (pMinus k) (pPlus k)) +
+       pMinus k * (-1 - binaryConditionalMean (pMinus k) (pPlus k))) * φ k) = 0 := by
+  classical
+  apply Finset.sum_eq_zero
+  intro k hk
+  rw [binary_section_score_mean_zero (pMinus k) (pPlus k) (h k)]
+  simp
+
+/-- Global finite-section spin/score cross-correlation is the integrated
+conditional variance, with no product-law or zero-mean assumption. -/
+theorem binary_global_spin_score
+    {κ : Type*} [Fintype κ]
+    (pMinus pPlus : κ → ℝ)
+    (h : ∀ k, pMinus k + pPlus k ≠ 0) :
+    (∑ k : κ,
+      pPlus k * (1 - binaryConditionalMean (pMinus k) (pPlus k)) +
+      pMinus k * (1 + binaryConditionalMean (pMinus k) (pPlus k))) =
+    (∑ k : κ,
+      (pMinus k + pPlus k) *
+      (1 - (binaryConditionalMean (pMinus k) (pPlus k)) ^ 2)) := by
+  classical
+  apply Finset.sum_congr rfl
+  intro k hk
+  exact binary_section_spin_score (pMinus k) (pPlus k) (h k)
+
+#print axioms Nightfall.DQ2.binary_global_residual_orthogonal
+#print axioms Nightfall.DQ2.binary_global_spin_score
+
 end Nightfall.DQ2
