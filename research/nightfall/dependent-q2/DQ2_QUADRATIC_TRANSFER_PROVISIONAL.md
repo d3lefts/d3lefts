@@ -4,16 +4,12 @@
 
 ## Definitions
 
-Let (
-u) be a strictly positive law on ({-1,1}^n).
-Set (R_i f=f-mathbb E_
-u[f\mid X_{-i}]) and
-(I_i(f)=mathbb E_
-u[\operatorname{Var}(f\mid X_{-i})]).
-Let (A=\sum_iR_i) have Poincaré gap (lambda>0).
-Write (w_i(x_{-i})=\operatorname{Var}(X_i\mid x_{-i})),
-(v_i=\mathbb E_
-u w_i), (D=\operatorname{diag}(v_i)),
+Let \(\nu\) be a strictly positive law on \(\{-1,1\}^n\).
+Set \(R_i f=f-\mathbb E_\nu[f\mid X_{-i}]\) and
+\(I_i(f)=\mathbb E_\nu[\operatorname{Var}(f\mid X_{-i})]\).
+Let \(A=\sum_iR_i\) have Poincaré gap \(\lambda>0\).
+Write \(w_i(x_{-i})=\operatorname{Var}(X_i\mid x_{-i})\),
+\(v_i=\mathbb E_\nu w_i\), \(D=\operatorname{diag}(v_i)\),
 and \(\Sigma=\operatorname{Cov}_\nu(X)\).
 For the site-conditional TV Dobrushin matrix \(c_{ij}\), let
 \(\kappa=\max_i\sum_{j\ne i}c_{ij}<1\).
@@ -34,7 +30,7 @@ satisfies
  \left(5+\frac{4\sqrt2\,\beta}{\sqrt\alpha}\right)^2
  B^2\max_i I_i(f).}
 \]
-All constants are independent of (n), graph degree and interaction overlap.
+All constants are independent of \(n\), graph degree and interaction overlap.
 
 ## Corollary B: Dobrushin and high-temperature Ising
 
@@ -42,7 +38,7 @@ Under Dobrushin, \(\alpha=(1+\kappa)^{-1}\),
 \(\beta=(1-\kappa)^{-1}\), \(\lambda\ge1-\kappa\).
 For an Ising law
 \(\nu(x)\propto\exp(\sum_i h_ix_i+\sum_{i<j}J_{ij}x_ix_j)\)
-with \(H=\max_i\sum_{j\ne i}|J_{ij}|<1\), all fields (h_i)
+with \(H=\max_i\sum_{j\ne i}|J_{ij}|<1\), all fields \(h_i\)
 may be arbitrary. Since \(\kappa\le H\) and
 \(w_i(x)=\operatorname{sech}^2(h_i+\sum_jJ_{ij}x_j)\),
 the log conditional variance is 2-Lipschitz in the local field
@@ -71,7 +67,7 @@ B^2\max_iI_i(f).
 
 **1. Residual Gram comparison.** Let
 \(\zeta_i=X_i-\mathbb E[X_i\mid X_{-i}]\), with
-\(\mathbb E\zeta_i^2=v_i\). For (i\ne j),
+\(\mathbb E\zeta_i^2=v_i\). For \(i\ne j\),
 \(\mathbb E\zeta_iX_j=0\), and the binary conditional covariance
 identity yields
 \(|\mathbb E\zeta_i\zeta_j|\le
@@ -92,14 +88,14 @@ Cauchy–Schwarz gives
 The heat-bath Poincaré inequality gives the matching upper
 \((1-\kappa)^{-1}\sum_i a_i^2v_i\).
 
-**2. Deterministic quadratic decoupling.** Symmetrize (b_{ij})
+**2. Deterministic quadratic decoupling.** Symmetrize \(b_{ij}\)
 with zero diagonal and put
 \(q(x)=\sum_{i<j}b_{ij}x_ix_j\). Boundedness implies
 \(\sum_i|a_i|\le B\) and \(\operatorname{osc}(q)\le2B\).
-For sign vectors (x,y), put (u=(x+y)/2), (v=(x-y)/2).
+For sign vectors \(x,y\), put \(u=(x+y)/2\), \(v=(x-y)/2\).
 The identity \(x^\top by=2(q(u)-q(v))\), and multilinear
 interpolation to the sign cube, give \(|x^\top by|\le4B\).
-The sharp (L^1) Khintchine inequality then gives
+The sharp \(L^1\) Khintchine inequality then gives
 \[
 \sum_i\left(\sum_jb_{ij}^2\right)^{1/2}\le4\sqrt2 B.
 \]
@@ -158,6 +154,6 @@ https://arxiv.org/abs/math/0611635 ;
 Mukherjee et al., *Logistic Regression under Network Dependence*
 (JMLR 2024, Lemma 23), https://jmlr.org/papers/volume25/22-1040/22-1040.pdf.
 
-**Next gate:** independent proof attack of (i) (c_{ij}) orientation,
+**Next gate:** independent proof attack of (i) \(c_{ij}\) orientation,
 (ii) conditional-variance ratio, (iii) decoupling identity and constants,
 and (iv) relationship to the cited high-temperature Ising results.
