@@ -65,7 +65,7 @@ theorem finite_block_aa_of_site_poincare
     apply mul_nonneg
     · apply mul_nonneg
       · unfold dMass
-        exact Finset.prod_nonneg_iff.mpr (fun j _ => hq j (y j))
+        exact Finset.prod_nonneg (fun j _ => hq j (y j))
       · exact hq k b
     · exact div_nonneg (sq_nonneg _) (by norm_num)
   have hsq : dinfl q F k ^ 2 ≤ (Λ * M) ^ 2 :=
