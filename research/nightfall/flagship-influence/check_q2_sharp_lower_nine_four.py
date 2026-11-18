@@ -27,6 +27,11 @@ CHSH = (
     ((0, 2), Q(1, 2)), ((0, 3), Q(1, 2)),
     ((1, 2), Q(1, 2)), ((1, 3), Q(-1, 2)),
 )
+# Homogenize every singleton by adjoining the new fair sign x5.
+# The resulting six-bit polynomial is PURE quadratic and non-bipartite.
+HOMOGENEOUS_WITNESS = tuple(
+    (S + (5,), c) if len(S) == 1 else (S, c) for S, c in WITNESS
+)
 
 
 def sign_poly(terms, x):
@@ -112,6 +117,17 @@ def main():
     assert V**2 / (B*B*M) == Q(9, 4)
     print("PASS 5-bit fair Q2 lower-bound witness:",
           "V=12, B=4, M=4, ratio=9/4")
+    assert all(len(S) == 2 for S, _ in HOMOGENEOUS_WITNESS)
+    V6, B6, M6, I6, hist6 = physical_uniform_stats(6, HOMOGENEOUS_WITNESS)
+    assert (V6, B6, M6) == (Q(12), Q(4), Q(4))
+    assert I6 == [Q(4)] * 6
+    assert hist6 == Counter({Q(-4): 24, Q(0): 16, Q(4): 24})
+    assert V6**2 / (B6*B6*M6) == Q(9, 4)
+    for x in product((-1, 1), repeat=6):
+        assert sign_poly(HOMOGENEOUS_WITNESS, x) == sign_poly(
+            WITNESS, tuple(x[5] * x[i] for i in range(5)))
+    print("PASS 6-bit PURE homogeneous non-bipartite quadratic:",
+          "V=12, B=4, I_i=4 for all six, ratio=9/4")
     V0, B0, M0, I0, h0 = physical_uniform_stats(4, CHSH)
     assert (V0, B0, M0) == (Q(1), Q(1), Q(1, 2))
     assert I0 == [Q(1, 2)]*4
