@@ -1,0 +1,36 @@
+{
+  "artifact": "NIGHTFALL-DISPATCHQ-B1-STATEFUL-v0.1",
+  "date_utc": "2026-11-18",
+  "status": "internal_reproducible_public_seed_calibration_private_alternate_provisional",
+  "base_benchmark_pr": 818,
+  "related_contract_canary_pr": 820,
+  "frozen_run_gate_pr": 829,
+  "candidate_source_sha256": "05edf787fbd1cb3841ed4aa813361ee1024b354f6fcd7505a56eddf98cbfd406",
+  "alternate_source_sha256_private": "05430a9b7553e3fa8a1b9fa3c912c789de1ef4e790e30e639f7a95a6f83d16c2",
+  "checker_sha256": "9991376ef8f378ead5212807a21e213f090d1c115778fd7beec5f9a4cec18f29",
+  "python_local": "3.13.5",
+  "seed_list": "0..31 inclusive",
+  "actions_per_trajectory": 120,
+  "total_chained_actions": 3840,
+  "seed_calibration": {
+    "matching_trajectories": 0,
+    "divergent_trajectories": 32,
+    "silent_invalid_input_acceptances": 12,
+    "invalid_input_probes": 13,
+    "unexpected_execution_errors": 0
+  },
+  "private_alternate": {
+    "strict_matching_trajectories": 32,
+    "divergent_trajectories": 0,
+    "silent_invalid_input_acceptances": 0,
+    "unexpected_execution_errors": 0,
+    "private_grader_score_runs": [100,100,100,100,100,100,100,100,100,100],
+    "private_grader_total_points": 100,
+    "private_grader_total_cases": 20,
+    "six_process_probe_passed_rounds": 5,
+    "six_process_probe_rounds": 5,
+    "mutated_private_repair_variants_caught": 8,
+    "mutated_private_repair_variants_tested": 8
+  },
+  "verification_boundary": "The public seed can be independently replayed. Private alternate and grader are withheld, their author-side receipts are not independently verified. No blind coding-agent/model scores or human review."
+}

@@ -1,0 +1,43 @@
+name: NIGHTFALL DispatchQ-B1 stateful public contract check
+
+on:
+  push:
+    paths:
+      - 'research/nightfall/evaluations/dispatchq-b1/audit/stateful/**'
+      - 'research/nightfall/evaluations/dispatchq-b1/candidate/**'
+      - '.github/workflows/nightfall-dispatchq-stateful.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/evaluations/dispatchq-b1/audit/stateful/**'
+      - 'research/nightfall/evaluations/dispatchq-b1/candidate/**'
+      - '.github/workflows/nightfall-dispatchq-stateful.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  public-stateful:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Reproduce source-exact seed profile (trusted source only)
+        run: |
+          python research/nightfall/evaluations/dispatchq-b1/audit/stateful/model_check.py \
+            --candidate research/nightfall/evaluations/dispatchq-b1/candidate \
+            --seeds 32 --steps 120 --mode seed-calibration \
+            --output dispatchq-stateful-python-${{ matrix.python-version }}.json
+      - name: Upload replayable source-exact receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dispatchq-stateful-py-${{ matrix.python-version }}
+          path: dispatchq-stateful-python-${{ matrix.python-version }}.json
+          if-no-files-found: error
