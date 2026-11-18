@@ -58,7 +58,7 @@ theorem variance_le_derivative_cost
               Cost A D mean k (D i f))) := by
         apply Finset.sum_le_sum
         intro i hi
-        exact add_le_add_left (hchild i) _
+        linarith [hchild i]
       have hp := hpoincare f
       simp_rw [hsecond] at hp
       have hscaled := mul_le_mul_of_nonneg_left hsum hA
