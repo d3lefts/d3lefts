@@ -142,6 +142,22 @@ class RealContainerSyntheticTests(unittest.TestCase):
         self.assertTrue(res["agent_model_not_run_by_this_script"])
         self.assertFalse((self.root/"seed"/"hidden_grader.py").exists())
 
+    def test_real_task_is_blocked_despite_synthetic_model_label(self):
+        """A real task ID must not use this same-process scorer adapter."""
+        self.plan_data["task_id"] = "DispatchQ-B1"
+        self.repin()
+        with self.assertRaisesRegex(InvalidEvidence, "UNTRUSTED_SCORE_ORIGIN"):
+            self.run_capture()
+        self.assertFalse((self.root/"capture").exists())
+
+    def test_real_model_is_blocked_despite_synthetic_task_label(self):
+        """A real agent identity cannot get a trusted score from this adapter."""
+        self.plan_data["model_id"] = "independent-real-agent/run-a@2026-11-18"
+        self.repin()
+        with self.assertRaisesRegex(InvalidEvidence, "UNTRUSTED_SCORE_ORIGIN"):
+            self.run_capture()
+        self.assertFalse((self.root/"capture").exists())
+
     def test_frozen_grader_bytes_cannot_change(self):
         put(self.grader, self.grade_src + "# changed\n")
         with self.assertRaises(InvalidEvidence):
