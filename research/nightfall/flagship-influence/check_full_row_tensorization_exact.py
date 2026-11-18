@@ -173,6 +173,20 @@ def main():
                   lambda x:sum(x))
         assert (F['V'],F['M'],F['K'],F['T'])==(
             Q(n,4),Q(1,4),Q(n),Q(1))
+    # ALL-DEGREE STRUCTURED REAL-OUTPUT COROLLARY: independent
+    # Boolean blocks can have nonlinear AND interactions and different
+    # original source biases. Real coefficients create 4 output levels.
+    for a,b,c0 in ((1,3,5),(3,5,7),(7,1,11),(2,9,17)):
+        shapeA,shapeB=(2,2),(2,)
+        pA,pB=[[1,a],[b,1]],[[1,c0]]
+        for scale in (Q(2,3),Q(7,4),Q(-5,2)):
+            g={x:Q(int(x[0]==1 and x[1]==1))*scale
+               for x in product((0,1),repeat=2)}
+            h={(0,):Q(0),(1,):Q(1)}
+            F=direct_sum(shapeA,pA,g,shapeB,pB,h)
+            assert 4*F['V']**2 <= F['K']**2 * F['M']
+    print("PASS 12 mixed-level source-coupled Boolean-block sums:"
+          " sharp full K coefficient at arbitrary block degree")
     # A single categorical site at base zero, with two different
     # endpoint letters. Independent threshold maxima OVERPAY 2 vs K=1.
     vals=(-1,0,1);base=1
