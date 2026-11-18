@@ -1,6 +1,6 @@
 # Q2 original-product Bernstein lower-bound Lean candidate
 
-Date: 2026-11-18. Status: **draft until pinned strict Lean CI passes**.
+Date: 2026-11-18. Status: **strict Lean kernel stage passed at source head `b49fbd3` (run 44351363272); final complete workflow receipt pending. The draft PR remains unmerged pending review.**
 
 ## Objective
 
@@ -37,14 +37,20 @@ obtained by two-way source branching.
 
 `Q2BernsteinFamilySharpLower.lean` builds the original product
 source as weighted ±1 branches, proves moments through order four,
-derives the variance/influence *formulas*, and shows that their
-all-n coefficient must be at least 4. A complete claim that the
-original physical function-space statistics equal these moment
-formulas additionally requires an explicit Lean bridge from
-`f_n=2S²−n²` to squared centered expectation and conditional
-variance, plus the bound and degree proof. Until this bridge is
-kernel-checked, treat the coefficient-4 physical consequence as
-**mathematically derived but only partially Lean-formalized**.
+and **kernel-proves** the all-n coefficient obstruction. It also
+**kernel-proves** the physical-source bridge:
+- the mass-one original-world expectation of `f_n` and `f_n²`;
+- the physical variance as the exact closed-form moment polynomial;
+- the physical one-coordinate resampling influence as the exact closed-form moment polynomial;
+- all-n coefficient necessity `C≥4` from the actual-source statistics;
+- product probability support strictly interior, Boolean-cube range `[-n²,n²]`, and exact vanishing third differences/nonvanishing second differences of the quadratic polynomial.
+
+The named Lean results compile with only the standard axiom allowlist
+(`propext`, `Classical.choice`, `Quot.sound`), without `sorryAx`.
+A measure-theoretic theorem identifying the additive-difference criterion
+with the canonical Hoeffding/ANOVA degree-2 predicate is **not** yet
+a named Lean declaration. This is an explicit remaining *definition bridge*,
+not a failure of the exact finite original-source construction.
 
 No universal upper-bound theorem is inserted as an axiom. Existing
 #816 already certifies a separate full-world degree-two lower bound
@@ -53,12 +59,16 @@ outside Lean.
 
 ## Audit
 
-Pinned Lean compiler and Mathlib, exact-head named declaration
-allowlist, source hashes and workflow receipt, plus independent
-rational source enumeration and exact asymptotic formulas. Reviewer
-should attack: arithmetic of fourth moments, resampling factor,
-the original source versus a uniform surrogate, the centered radius,
-the degree-two assertion, and the remaining function-space bridge.
+Pinned Lean 4.36.0-rc2 and Mathlib 9d581dff, exact-head named
+declaration allowlist, source hashes and workflow receipt.
+An **independent** `Q(√2)` full-product-world enumerator
+`check_q2_bernstein_sqrt2_worlds.py` passed for n=2,...,10,
+with a separate centered-ANOVA reconstruction and exact ratio.
+The earlier partial workflow failure was solely an unavailable checker
+owned by the separate unmerged draft PR #816; the workflow dependency
+has been removed. Reviewer should attack fourth moments, the
+resampling factor, the original law, centered radius, the
+degree definition bridge, and prior-art priority.
 
 Classical mathematical ingredients are credited to Chebyshev /
 Bernstein extremality and elementary independent Bernoulli moments.
