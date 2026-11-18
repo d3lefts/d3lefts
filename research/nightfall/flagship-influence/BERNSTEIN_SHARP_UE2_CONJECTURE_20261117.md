@@ -111,3 +111,17 @@ H'(0)=-\sum_i \epsilon_i\sqrt{p_i(1-p_i)}\,\partial_iP(p)
 proving (AB). Boundary points follow by continuity. For \(P(t)=T_d(2m^{-1}\sum_i t_i-1)\) at all \(p_i=p_d\), (AB) is **exactly saturated**: the left-hand side equals \(d\).
 
 **Crucial limitation.** For a bounded Boolean-cube function \(f\), its multilinear mean map \(P(p)=\mathbb E_{\otimes_i\mathrm{Ber}(p_i)}f\) inherits degree \(\le d\), and (AB) gives a sharp inequality for **mean** first derivatives \(\partial_iP\). It does NOT control the full original-law influence \(p_i(1-p_i)\,\mathbb E_{-i}(\Delta_if)^2\), which is a second moment rather than the square of the mean derivative. Treating \(\mathbb E(\Delta f)^2\) as \((\mathbb E\Delta f)^2\) would erase precisely the coupled Q3 obstruction. The gap between (AB) and N-UE2(2,1) is therefore a genuine missing *source-coupling / second-moment* operator, not a constant-polishing task.
+
+
+## Solved asymptotic subproblem: all smooth empirical-mean polynomial lifts
+
+**Author-side theorem, derived without the universal conjecture.** Fix a nonconstant real polynomial \(h:[0,1]\to\mathbb R\) of degree \(e\le d\), with positive centered range radius \(B_h=(\max h-\min h)/2\). Let \(p\in(0,1)\) with \(h'(p)\ne0\), let \(K_n\sim\operatorname{Bin}(n,p)\), and write \(f_n(X)=h(K_n/n)\) on \(n\) independent Bernoulli-\(p\) coordinates. Then, for \(n\ge e\),
+\[
+\lim_{n\to\infty}\frac{\operatorname{Var}(f_n)^2}
+{B(f_n)^2\max_i I_i(f_n)}
+=\frac{p(1-p)h'(p)^2}{B_h^2}
+\le e^2\le d^2.
+\]
+The limit follows from the same two binomial Taylor expansions as above and \(B(f_n)\to B_h\); the inequality is the classical univariate Bernstein inequality after mapping \([0,1]\to[-1,1]\). For \(h(t)=T_d(2t-1)\) and \(p=p_d\), both inequalities are equalities in the limit. **This establishes, author-side, the coefficient-one conjecture for the limiting ratio of the entire smooth mean-field polynomial family, not for arbitrary finite products or general polynomials.**
+
+**Mechanism transfer:** the equality example links (a) the weighted Bernstein derivative seminorm of the mean map, (b) original-law one-coordinate resampling variance, and (c) actual variance through first-order binomial fluctuation. The missing general mechanism is a replacement for this one-dimensional common-fluctuation alignment in arbitrary high-order mixed ANOVA tensors; the existing source-consistent Q3 replica gate is a natural place to test such a replacement.
