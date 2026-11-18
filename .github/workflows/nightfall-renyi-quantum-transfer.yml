@@ -1,0 +1,25 @@
+name: NIGHTFALL Renyi quantum transfer exact spot audit
+
+on:
+  push:
+    branches:
+      - nightfall-renyi-quantum-transfer-20261118
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-product-all-degree/check_renyi_transfer.py'
+      - '.github/workflows/nightfall-renyi-quantum-transfer.yml'
+  workflow_dispatch:
+
+jobs:
+  exact-spot-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Record pinned checker input
+        shell: bash
+        run: |
+          git rev-parse HEAD
+          sha256sum research/nightfall/2026-11-product-all-degree/check_renyi_transfer.py
+      - name: Run exact Fraction audit (no external dependencies)
+        run: python3 research/nightfall/2026-11-product-all-degree/check_renyi_transfer.py
