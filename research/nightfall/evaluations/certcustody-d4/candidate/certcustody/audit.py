@@ -36,13 +36,9 @@ def verify_checkout(root: Path, trusted_receipts: Path, key: bytes) -> dict:
                 raise AuditError('source changed')
             if item.get('claim_id') not in receipts:
                 raise AuditError('missing receipt')
-            # Seed defect: accepts same-ID receipt without checking HMAC,
-            # source hash/head, theorem, priority or trusted source path.
         else:
-            # Seed defect: pending rows can carry forged proof claims and drift.
             pass
         result.append({'path': path, 'status': item.get('status'), 'blob_sha1': blob})
-    # Seed defect: unlisted files, path escapes and duplicates are not rejected.
     return {'schema': 'nightfall.certcustody.report.v1',
             'checked': sum(r['status'] == 'checked' for r in result),
             'pending': sum(r['status'] == 'pending' for r in result),
