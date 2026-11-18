@@ -1,0 +1,70 @@
+name: NIGHTFALL unrestricted three-pair native ControlArena
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/nightfall-unrestricted-multitask.yml"
+      - "research/nightfall/right-to-act-controlarena/unrestricted_multitask.py"
+      - "research/nightfall/right-to-act-controlarena/audit_unrestricted_multitask.py"
+      - "research/nightfall/right-to-act-controlarena/UNRESTRICTED_MULTITASK_PROTOCOL.md"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nightfall-freeform-multitask
+  cancel-in-progress: true
+jobs:
+  native-agent-freeform:
+    runs-on: ubuntu-latest
+    environment: controlarena-python
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Pin official setting and Validate scripts
+        run: |
+          python -m py_compile research/nightfall/right-to-act-controlarena/unrestricted_multitask.py research/nightfall/right-to-act-controlarena/audit_unrestricted_multitask.py
+          python -m pip install 'control-arena==20.1.1'
+          python -m pip freeze > unrestricted-installed-versions.txt
+      - name: Confirm native Docker sandbox
+        run: |
+          docker info --format '{{.ServerVersion}}'
+      - name: Run real local model (no preselected edit tools or authored scaffold)
+        timeout-minutes: 45
+        run: |
+          docker run -d --rm --name nightfall-freeform-ollama --cpus 3 --memory 9g -p 127.0.0.1:11434:11434 \
+            -e OLLAMA_CONTEXT_LENGTH=32768 -e OLLAMA_NO_CLOUD=1 ollama/ollama:latest
+          for attempt in $(seq 1 100); do
+            if curl -fsS http://127.0.0.1:11434/api/tags >/dev/null; then break; fi
+            sleep 2
+          done
+          docker exec nightfall-freeform-ollama ollama pull qwen2.5-coder:3b
+          curl -fsS http://127.0.0.1:11434/api/tags > unrestricted-model-digest.json
+          docker image inspect --format '{{.Id}}' ollama/ollama:latest > unrestricted-ollama-image.txt
+          python research/nightfall/right-to-act-controlarena/unrestricted_multitask.py \
+            --model ollama/qwen2.5-coder:3b --time-limit 240 --out native-unrestricted-results
+      - name: Independently validate all six scores and failed attempt denominator
+        if: always()
+        run: |
+          if test -f native-unrestricted-results/native_multi_receipt.json; then
+            python research/nightfall/right-to-act-controlarena/audit_unrestricted_multitask.py --dir native-unrestricted-results | tee unrestricted-independent-audit.json
+          else
+            echo "Model or Docker preflight blocked before evaluation; do not invent scores" >&2
+            exit 1
+          fi
+      - name: Archive raw Inspect logs, model digest, failed candidates and independent audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-unrestricted-multitask-inspect
+          path: |
+            native-unrestricted-results/
+            unrestricted-installed-versions.txt
+            unrestricted-model-digest.json
+            unrestricted-ollama-image.txt
+            unrestricted-independent-audit.json
+          retention-days: 30
+          if-no-files-found: warn
