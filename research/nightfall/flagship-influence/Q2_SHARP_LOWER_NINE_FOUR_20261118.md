@@ -176,3 +176,26 @@ Audit status: elementary fair-cube Fourier identity, verified for the
 specific witness by exact 64-world physical resampling enumeration;
 the fully general operator is an author-side mathematical observation,
 not a new named Lean declaration or a novelty claim.
+
+
+## Exact structural control: small pure homogeneous signed graphs
+
+A second exhaustive *integer* checker enumerates every homogeneous
+quadratic on n=3,4,5 uniform fair signs whose off-diagonal Walsh
+coefficients belong to {-1,0,+1}. The search sizes and attained maxima
+of V²/(B²M) are:
+
+ n=3: 26 nonzero signed graphs; maximum 9/8.
+ n=4: 728 nonzero signed graphs; maximum 2.
+ n=5: 59,048 nonzero signed graphs; maximum 2.
+
+The separate pure homogeneous six-bit witness attains 9/4. Thus the
+strict 2 barrier is first broken here by **six fair coordinates within
+this explicitly enumerated integer-coefficient class**. This is NOT
+a universal minimal-dimension theorem: arbitrary real coefficients,
+categorical laws, and larger n are not exhausted.
+
+Combined with signed bipartite matrices, the repo checks 80,292
+nonzero exact integer test objects, plus the explicit five- and
+six-bit witnesses. No claim of statistical significance or universal
+upper bound follows from exhaustive search of bounded dimensions.
