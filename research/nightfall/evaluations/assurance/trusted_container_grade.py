@@ -108,6 +108,8 @@ def limited_process(argv, timeout_seconds, limit=MAX_GRADER_OUTPUT_BYTES):
         if process.poll() is None:
             process.kill()
             process.wait(timeout=5)
+        if process.stdout is not None:
+            process.stdout.close()
 
 
 def validate_result(text: bytes, plan, attempt_id):
