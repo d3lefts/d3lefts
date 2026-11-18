@@ -1,0 +1,37 @@
+name: NIGHTFALL DispatchQ-B1 independent public contract canary
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/evaluations/dispatchq-b1/**"
+      - ".github/workflows/nightfall-dispatchq-public-canary.yml"
+  push:
+    branches: [main]
+    paths:
+      - "research/nightfall/evaluations/dispatchq-b1/**"
+      - ".github/workflows/nightfall-dispatchq-public-canary.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  independent-canary:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run a public independent contract canary against the defective seed
+        run: |
+          python research/nightfall/evaluations/dispatchq-b1/audit/public_contract_probe.py --mode seed --output dispatchq-public-canary.json
+      - name: Preserve the generated receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dispatchq-public-canary-${{ matrix.python-version }}
+          path: dispatchq-public-canary.json
+          retention-days: 30
+          if-no-files-found: warn
