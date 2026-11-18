@@ -1,0 +1,54 @@
+name: NIGHTFALL cubic contraction scalar Lean and exact replay
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/CubicContractionHierarchyScalar.lean'
+      - 'research/nightfall/2026-11-dq2/CUBIC_CONTRACTION_HIERARCHY_V0_1.md'
+      - 'research/nightfall/2026-11-dq2/CUBIC_CONTRACTION_PASSPORT_V0_1.json'
+      - 'scripts/check_cubic_contraction_hierarchy_exact.py'
+      - '.github/workflows/nightfall-cubic-contraction.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-finite:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Independently replay exact rational derivative hierarchy
+        run: python3 scripts/check_cubic_contraction_hierarchy_exact.py
+      - name: Record source digest
+        run: sha256sum scripts/check_cubic_contraction_hierarchy_exact.py research/nightfall/formalization/observability/CubicContractionHierarchyScalar.lean
+
+  lean-scalar:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+      - name: Check exact pinned Lean source and named scalar declarations
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "Toolchain: $(cat lean-toolchain)"
+          lake env lean research/nightfall/formalization/observability/CubicContractionHierarchyScalar.lean 2>&1 | tee scalar-lean.log
+          grep -q 'finite_energy_telescoping' scalar-lean.log
+          grep -q 'scalar_contraction_hierarchy' scalar-lean.log
+          if grep -E '(sorryAx|^error:|error:)' scalar-lean.log; then
+            echo "Lean source contains a sorry axiom or error"
+            exit 1
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cubic-contraction-scalar-lean
+          path: scalar-lean.log
