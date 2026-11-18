@@ -1,0 +1,65 @@
+name: NIGHTFALL UE2 scalar implications pinned Lean audit
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/ue2/UE2ScalarImplications.lean'
+      - '.github/workflows/nightfall-ue2-scalar-implications-lean.yml'
+  push:
+    branches: [nightfall-ue2-scalar-implications-20261117]
+    paths:
+      - 'research/nightfall/formalization/ue2/UE2ScalarImplications.lean'
+      - '.github/workflows/nightfall-ue2-scalar-implications-lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  conditional-implications:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Pinned Lean 4.36.0-rc2 / Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile and check named theorem axioms with exact source
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/ue2/UE2ScalarImplications.lean
+          OUT=lean-receipts/ue2-scalar
+          mkdir -p "$OUT"
+          cp "$SRC" /tmp/mathlib4/UE2ScalarImplications.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/UE2ScalarImplications.olean UE2ScalarImplications.lean)
+          for decl in \
+            degree_two_cost_implies_degree_six_cost \
+            fair_flip_equals_four_resample \
+            six_cost_implies_aa_flip \
+            aa_flip_implies_five_halves_at_threshold \
+            turturean_threshold_constant; do
+            python3 scripts/lean_bridge.py "$SRC" \
+              --workspace /tmp/mathlib4 --timeout 900 --strict \
+              --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+              --decl "Nightfall.UE2.ScalarImplications.$decl" \
+              --json-out "$OUT/$decl.json"
+          done
+          python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT"/*.json
+      - name: Capture provenance
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/ue2-scalar
+          git rev-parse HEAD > lean-receipts/ue2-scalar/source-commit.txt
+          cat lean-toolchain > lean-receipts/ue2-scalar/toolchain.txt
+          sha256sum research/nightfall/formalization/ue2/UE2ScalarImplications.lean > lean-receipts/ue2-scalar/SHA256SUMS.txt
+      - name: Archive exact-head Lean receipts
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: ue2-scalar-${{ github.run_id }}
+          path: lean-receipts/ue2-scalar/
+          retention-days: 60
