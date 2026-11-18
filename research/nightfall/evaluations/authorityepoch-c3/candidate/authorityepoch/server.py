@@ -1,4 +1,4 @@
-"""Unix peer-cred socket protocol; intentionally lacks total request lifetime."""
+
 import argparse
 import json
 import os
@@ -29,8 +29,6 @@ def serve(sock_path, state_path, secret, uid, ready=None):
             while True:
                 client, _ = listener.accept()
                 with client:
-                    # Known seed defect: idle peer and slow drip may monopolize
-                    # this single-threaded service past a total request deadline.
                     data = bytearray()
                     while len(data) < MAX_REQUEST and not data.endswith(b'\n'):
                         chunk = client.recv(min(4096, MAX_REQUEST - len(data)))
