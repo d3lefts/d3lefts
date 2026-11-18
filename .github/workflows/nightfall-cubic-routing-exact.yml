@@ -1,0 +1,27 @@
+name: NIGHTFALL cubic routing exact proof attack
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-12-cubic-overlap/**'
+      - '.github/workflows/nightfall-cubic-routing-exact.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-witness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout source at exact head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Independent full-state 8-bit cubic routing witness
+        run: python3 -I research/nightfall/2026-11-12-cubic-overlap/check_fair_binary_routing.py
+      - name: Existing overlap analytic check arithmetic
+        run: python3 -I research/nightfall/2026-11-12-cubic-overlap/check_aggregate_link_overlap.py
+      - name: Existing skew-binary directed spike search
+        run: python3 -I research/nightfall/2026-11-12-cubic-overlap/search_spike_tail.py
