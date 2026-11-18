@@ -167,7 +167,7 @@ def run(root,model_name,per_case_seconds=300):
 if __name__=="__main__":
     a=argparse.ArgumentParser()
     a.add_argument("--out",default="native-unrestricted-results")
-    a.add_argument("--model",default="ollama/qwen2.5-coder:3b")
+    a.add_argument("--model",default="ollama/qwen3:4b")
     a.add_argument("--time-limit",type=int,default=240)
     args=a.parse_args()
     assert 45<=args.time_limit<=480
