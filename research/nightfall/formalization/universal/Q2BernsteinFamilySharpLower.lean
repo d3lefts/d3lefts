@@ -218,7 +218,10 @@ theorem influence_formula_closed (n : ℕ) (hn : 1 ≤ n) :
   have hscale : 64*extremalBias*(1-extremalBias) = (8:ℝ) := by
     nlinarith [extremal_bias_variance]
   have hcast : (((n-1:ℕ):ℝ)) = (n:ℝ)-1 := by
-    exact Nat.cast_sub hn
+    have hnat : n - 1 + 1 = n := Nat.sub_add_cancel hn
+    have hreal : (((n-1:ℕ):ℝ)) + 1 = (n:ℝ) := by
+      exact_mod_cast hnat
+    linarith
   calc
     64*extremalBias*(1-extremalBias) *
         (((n-1:ℕ):ℝ) + ((n-1:ℕ):ℝ)*(((n-1:ℕ):ℝ)-1)*extremalMean^2) =
