@@ -1,0 +1,109 @@
+{
+  "schema": "nightfall.swe.two-real-model-public-calibration.v1",
+  "date": "2026-11-18",
+  "status": "real_mediated_tool_use_unscored_exploratory",
+  "comparison_design": "retrospective_matched_protocol_not_externally_preregistered",
+  "accepted_blind_model_scores": 0,
+  "source_branch": "nightfall-swe-second-qwen-model-20261118",
+  "evidence_boundary": "Public receipts and source-exact CI logs. Raw model responses and generated patches withheld from public artifacts; hashes do not authenticate missing bytes. Independent human reviewer absent. No private/author-hidden grading.",
+  "budget": {
+    "model_turns": 9,
+    "tool_interface": [
+      "list_files",
+      "read_file",
+      "write_file",
+      "run_smoke",
+      "finish"
+    ],
+    "smoke_only": true
+  },
+  "tasks": {
+    "DispatchQ-B1": {
+      "commit": "c11881717d354462d49205ad86eecbdde719c47e",
+      "candidate_source_sha256": "37d53ad2dc50287dc08a81b90a9b0302878467374614afaf56c8ddc2ad0161cd",
+      "issue_sha256": "a6767ee61330f02452f65c01cf6d89dc8135170584854d1bcd7d83a84e6ad252",
+      "canary_sha256": "3e7cf8f5d7a7e09e023d7abe6936978b8beb1b722b83205355d64798c1d43d1e",
+      "checks": 13
+    },
+    "ArtifactGraph-B2": {
+      "commit": "d5158a3aa37fa0f0ac877406ec806389cc04b5b6",
+      "candidate_source_sha256": "c0b4eec0e6ac526696bcd332d2c009bd7157beae505e4e687d8189adce2614bc",
+      "issue_sha256": "f85f0d8303797319bc28b182f5548fa7a8d45798b3ae5064106caf924454260c",
+      "canary_sha256": "9aee5efda15befc0786ddf531fb10f51b5b1f607ee3e6493d55ac308b8403ebf",
+      "checks": 20
+    }
+  },
+  "model_weights": {
+    "qwen2.5-coder:1.5b": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "qwen2.5-coder:3b": "f72c60cabf6237b07f6e632b2c48d533cef25eda2efbd34bed21c5e9c01e6225"
+  },
+  "runner_image_id": "sha256:e48f59cdba69a3cbd9ed2cf0f348d90d45a8d350d98134cf1070bc106ee9ed90",
+  "observations": [
+    {
+      "task": "DispatchQ-B1",
+      "model": "qwen2.5-coder:1.5b",
+      "workflow_run": 44390828857,
+      "artifact_id": 14468011300,
+      "tool_calls": 4,
+      "write_calls": 1,
+      "changed_files": [],
+      "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transcript_sha256": "bb53c5d3be6d1d8d063e5a340c0515f3d2257be057b1898cd476c727080b193b",
+      "smoke_exit_code": 0,
+      "canary_passed": 5,
+      "canary_violated": 8,
+      "canary_unexpected_errors": 0,
+      "blind_grade": null
+    },
+    {
+      "task": "DispatchQ-B1",
+      "model": "qwen2.5-coder:3b",
+      "workflow_run": 44390828722,
+      "artifact_id": 14469111176,
+      "tool_calls": 4,
+      "write_calls": 1,
+      "changed_files": [
+        "dispatchq/queue.py"
+      ],
+      "patch_sha256": "c727e6fd517391519e6ae0e20fb1ac8f6be584624bb869f37a5f21e6accedb5f",
+      "transcript_sha256": "edd308c4d6ec2d2f0742adea2ceb34a3b96ff73c2b0ff4c9f9a633a1fa48ab4b",
+      "smoke_exit_code": 0,
+      "canary_passed": 5,
+      "canary_violated": 8,
+      "canary_unexpected_errors": 0,
+      "blind_grade": null
+    },
+    {
+      "task": "ArtifactGraph-B2",
+      "model": "qwen2.5-coder:1.5b",
+      "workflow_run": 44390828857,
+      "artifact_id": 14467886438,
+      "tool_calls": 1,
+      "write_calls": 0,
+      "changed_files": [],
+      "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transcript_sha256": "fb031b4f543a26df19676bfde2755ecfa4063e3a1812c03adaae70aaf27181b3",
+      "smoke_exit_code": 0,
+      "canary_passed": 9,
+      "canary_violated": 11,
+      "canary_unexpected_errors": 0,
+      "blind_grade": null
+    },
+    {
+      "task": "ArtifactGraph-B2",
+      "model": "qwen2.5-coder:3b",
+      "workflow_run": 44390828722,
+      "artifact_id": 14467716806,
+      "tool_calls": 8,
+      "write_calls": 0,
+      "changed_files": [],
+      "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transcript_sha256": "efec13ceb7bc69723046e087b98afbd24ef93225081e86a3fb224e918c62b1e7",
+      "smoke_exit_code": 0,
+      "canary_passed": 9,
+      "canary_violated": 11,
+      "canary_unexpected_errors": 0,
+      "blind_grade": null
+    }
+  ]
+}
