@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" data-nf-experience="engineering">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b1220">
+<meta name="description" content="NIGHTFALL DispatchQ-B1: a source-linked, calibrated Python/SQLite durable work queue software engineering task. Inspect the requirements, public controls, preliminary evidence, and missing evaluation gates.">
+<meta property="og:type" content="website"><meta property="og:title" content="DispatchQ-B1 · The anatomy of an honest AI software evaluation">
+<meta property="og:description" content="One substantial task. Source-level defects. Independent public canary. Exact evidence boundaries.">
+<meta property="og:url" content="https://d3lefts.github.io/d3lefts/dispatchq-b1.html">
+<link rel="canonical" href="https://d3lefts.github.io/d3lefts/dispatchq-b1.html">
+<title>DispatchQ-B1 — NIGHTFALL Engineering Evaluations</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="site.css"><link rel="stylesheet" href="engineering.css">
+<script src="site.js" defer></script>
+</head>
+<body class="nf-eng"><a class="skip" href="#main">Skip to benchmark dossier</a><div class="topline"></div>
+<header class="header"><div class="wrap header-inner">
+<a class="brand" href="index.html" aria-label="NIGHTFALL homepage"><span class="mark" aria-hidden="true">N∕F</span><span class="brand-copy">NIGHTFALL <span>EVALUATION LAB / DISPATCHQ-B1</span></span></a>
+<button type="button" class="menu-toggle" id="menu-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">MENU +</button>
+<nav class="nav" id="site-nav" aria-label="Primary navigation"><a href="engineering.html">Engineering</a><a href="evals.html" aria-current="page">Evaluation lab</a><a href="theory.html">Theory Atlas</a><a href="about.html">Research leadership</a><a class="nav-call" href="review.html">Review evidence ↗</a></nav>
+</div></header>
+<main id="main" class="wrap eng-page">
+<section class="eng-hero" aria-labelledby="dispatchq-title">
+<div>
+<p class="eng-kicker">EVALUATION DESIGN / DISPATCHQ-B1 / 18 NOVEMBER 2026</p>
+<h1 id="dispatchq-title">One task.<br><em>Many ways to be wrong.</em></h1>
+<p class="eng-lead">Repair a persistent Python/SQLite work queue in a multi-worker document-processing service. The public task challenges an AI coding agent to preserve correctness across idempotent submission, atomic cross-process claims, lease expiry, token fencing, retries, dead lettering, and deterministic due-time ordering.</p>
+<div class="eng-action-row"><a href="https://github.com/d3lefts/d3lefts/pull/818" class="eng-action">Inspect the actual task source ↗</a><a href="#process" class="eng-action secondary">Follow the evaluation protocol ↓</a></div>
+<span class="eng-hero-note">Public candidate on draft PR #818 · not a finalized benchmark or a verified frontier-model ranking</span>
+</div>
+<aside class="eng-statuspanel" aria-label="Author-side calibration only">
+<div class="eng-status-title"><strong>WHAT HAS ACTUALLY BEEN MEASURED</strong><span class="eng-mini">AUTHOR-SIDE ONLY</span></div>
+<div class="eng-stat-row"><strong>20</strong><span>Author-held weighted contract tests in a withheld local grader, totaling 100 points; tests and reference are not publicly committed.</span></div>
+<div class="eng-stat-row"><strong>100/100</strong><span>Reported author reference score, repeated ten times. Not independent verification and not an agent score.</span></div>
+<div class="eng-stat-row"><strong>52–60/100</strong><span>Reported defective-starter range over ten runs; a concurrency check changes with scheduling.</span></div>
+<div class="eng-stat-row"><strong>0</strong><span>Blind agent evaluations reported for this task; no validated model ranking or external human review.</span></div>
+</aside>
+</section>
+<aside class="eng-inline-warning"><strong>Certification boundary:</strong> These numbers come from the candidate author's published evidence record on a draft PR. The hidden tests, reference implementation, full mutation receipts, and source-exact grader replay were not accessible for independent verification in this site update. A separate public contract canary reproduced ten predicted failures and three positive controls in source-exact CI on Python 3.10 and 3.13 (run 44348467883). This is an internal code-level cross-check, not the withheld grader or an independently verified model score.</aside>
+<section class="eng-section" id="challenge" aria-labelledby="challenge-heading">
+<p class="eng-kicker">01 / REALISTIC ENGINEERING CONTRACT</p>
+<h2 id="challenge-heading">Make the system correct,<br><em>not just the tests green.</em></h2>
+<p class="eng-section-lead">The task is not a single-function toy. Errors can be exposed by time passing, workers racing, retries exhausting, duplicate submissions or reopening the database in another process.</p>
+<div class="eng-grid">
+<article class="eng-card"><span class="eng-number">DURABLE IDENTITY</span><h3>Submit once.</h3><p>Repeating an ID, even with changed payload or due date, must not overwrite existing state. A reopened process must see the same persisted record.</p><span class="eng-tag">State transitions</span></article>
+<article class="eng-card"><span class="eng-number">CONCURRENT OWNERSHIP</span><h3>Claim once.</h3><p>Independent processes must claim atomically under SQLite locking, honor due-time order and never yield the same live job to simultaneous workers.</p><span class="eng-tag">Interleaving and ordering</span></article>
+<article class="eng-card"><span class="eng-number">TIME AND FENCING</span><h3>Finish only if current.</h3><p>Expired or stale lease tokens must never authorize a finish or retry. Attempts are bounded, terminal states remain terminal, and exhausted jobs dead-letter.</p><span class="eng-tag">Adversarial lifecycle</span></article>
+</div>
+</section>
+<section class="eng-section" id="process" aria-labelledby="process-heading">
+<p class="eng-kicker">02 / TWO-ENGINE EVALUATION PROCESS</p>
+<h2 id="process-heading">Construction meets<br><em>independent attack.</em></h2>
+<p class="eng-section-lead">The same question has two distinct workflows. The construction engine creates a task, a deliberately defective starter, a reference and a proposed grader. A separate checking engine designs public API probes, adversarial repairs and independent reproduction checks. A green author test never certifies its own grader.</p>
+<div class="eng-ledger">
+<div class="eng-ledger-row"><span class="eng-mini">STEP 01 / DEFINE</span><div><h3>Freeze the specification.</h3><p>Agent-visible issue, exact public API, expected state transitions, error conventions, dependencies and versioned source. Review contradictions and ambiguous edge cases before scoring agents.</p></div><div><a href="https://github.com/d3lefts/d3lefts/pull/818">Task and issue · PR #818 ↗</a></div></div>
+<div class="eng-ledger-row"><span class="eng-mini">STEP 02 / CONSTRUCT</span><div><h3>Calibrate the author baseline.</h3><p>Keep the deliberately defective starter, author reference, a protected grader, seeded mutations, and repeated test outcomes separate. Report unstable tests rather than silently averaging them into model scores.</p></div><div><a href="https://github.com/d3lefts/d3lefts/blob/nightfall-evals-dispatchq-b1-20261118/research/nightfall/evaluations/dispatchq-b1/PUBLIC_EVIDENCE.json">Author-side evidence ledger ↗</a></div></div>
+<div class="eng-ledger-row"><span class="eng-mini">STEP 03 / CHALLENGE</span><div><h3>Independent public canary.</h3><p>A separately implemented API checker targets ten specific defect classes with three positive controls. Seed-expectation mode must reject a repaired or changed seed that no longer exhibits the predicted failures. Source-exact CI on Python 3.10 and 3.13 reported ten predicted seed failures and three positive controls, with no mismatches. This remains an internal public canary, not the withheld grader.</p></div><div><a href="https://github.com/d3lefts/d3lefts/actions/runs/44348467883">Two-Python canary CI receipt ↗</a><a href="https://github.com/d3lefts/d3lefts/pull/820">Audit source · draft PR #820 ↗</a></div></div>
+<div class="eng-ledger-row"><span class="eng-mini">STEP 04 / ADVERSARIAL</span><div><h3>Try alternate correct solutions.</h3><p>An independent implementation must pass an audited grader. Plausible shortcut solutions and mutation families must fail for the right reason, without depending on private source signatures. This is an outstanding gate.</p></div><div><span class="eng-tag pending">Not yet certified</span></div></div>
+<div class="eng-ledger-row"><span class="eng-mini">STEP 05 / MEASURE</span><div><h3>Execute genuine coding agents.</h3><p>Run blind copies with normal tools, preregistered inference and time budgets, source-pinned evaluators, complete tool traces and independent isolated grading. A failed tool-call protocol is a failed evaluation setup, not agent success or defense success.</p></div><div><span class="eng-tag pending">No blind scores</span></div></div>
+<div class="eng-ledger-row"><span class="eng-mini">STEP 06 / CERTIFY</span><div><h3>Ship only transferable evidence.</h3><p>Preserve exact hashes, test versions, grader/agent isolation, independent human review, observed scores, limitations and adversarial counterexamples before ranking models or calling a benchmark hard.</p></div><div><a href="review.html">Independent review standards ↗</a></div></div>
+</div>
+</section>
+<section class="eng-section" id="failure-diagnosis" aria-labelledby="failure-heading">
+<p class="eng-kicker">03 / WHY THIS TEST CAN BE DISCRIMINATING</p>
+<h2 id="failure-heading">Passing the happy path<br><em>is a weak signal.</em></h2>
+<div class="eng-inspector">
+<div class="eng-inspector-head"><h3>Failure anatomy</h3><span class="eng-tag">Documented mechanisms, not model scores</span></div>
+<details open><summary>Duplicate submission silently destroys state</summary><div class="eng-detail-body"><p>The defective starter uses a replace-on-conflict write. Submitting the same ID with a later due time mutates the original record, despite returning a duplicate indication. A good grader checks row identity and full state after rejection, not only the return value.</p></div></details>
+<details><summary>Time-of-check / time-of-use race across processes</summary><div class="eng-detail-body"><p>The starter lists eligible jobs before a separate transaction marks them leased. Two processes can observe the same row before either obtains exclusive ownership. A correct repair needs transactional claiming under SQLite semantics; an in-process mutex is insufficient.</p></div></details>
+<details><summary>Stale worker can acknowledge after expiry</summary><div class="eng-detail-body"><p>The starter's finish updates on job ID and token but omits unexpired lease-state requirements, enabling a completion even after a lease has expired. Token fencing must hold across retries and all terminal transitions.</p></div></details>
+<details><summary>Deadline and attempt exhaustion are separate invariants</summary><div class="eng-detail-body"><p>Claims must order by due time before insertion time and ID, while expired exhausted leases should become dead. A patch that fixes ordering but ignores lifecycle termination is incomplete.</p></div></details>
+<details><summary>Submission input and clock validation</summary><div class="eng-detail-body"><p>NaN, infinities, invalid payload types, empty worker IDs and nonpositive lease settings can compromise invariants. The public probe treats these as separate semantic obligations, not incidental database exceptions.</p></div></details>
+</div>
+</section>
+<section class="eng-section" id="evidence" aria-labelledby="evidence-heading">
+<p class="eng-kicker">04 / EVIDENCE AND OPEN GATES</p>
+<h2 id="evidence-heading">Exactly what we can<br><em>and cannot claim.</em></h2>
+<div class="eng-grid two">
+<article class="eng-card"><span class="eng-number">AVAILABLE NOW / PUBLIC SOURCE</span>
+<h3>Inspectable candidate and internal checks.</h3>
+<p>Public task/defective source and three smoke tests, an author-side evidence JSON, path-scoped Python CI, plus a separately proposed independent public contract canary. Public canary checks cannot stand in for blind holdouts or the author-hidden grader.</p>
+<a href="https://github.com/d3lefts/d3lefts/pull/818">Candidate development and CI ↗</a>
+</article>
+<article class="eng-card"><span class="eng-number">PENDING / VALIDATED BENCHMARK</span>
+<h3>Independent reproduction and real agents.</h3>
+<p>Source-exact holdout and reference custody, independent correct alternate solver, adversarial grading tests, actual isolated model-tool traces, stable scorer results, external human review, and matched model baselines remain necessary before claiming discriminative difficulty.</p>
+<a href="https://github.com/d3lefts/d3lefts/pull/820">Independent canary and limitations ↗</a>
+</article>
+</div>
+<div class="eng-callout" style="margin-top:20px"><h3>The result that would change the hiring case.</h3><p>One validated long-horizon SWE evaluation with a legitimate alternative solution, source-pinned graders, tamper-resistant receipts, real agent attempts and meaningful differential failure analysis is more valuable than dozens of unreviewed examples. DispatchQ-B1 is a first public candidate toward that standard, not a finished record.</p></div>
+</section>
+<footer class="eng-footer"><p class="eng-kicker">PUBLIC EXPERIMENT · NOT AFFILIATED WITH ANY EMPLOYER OR EVALUATION PROVIDER</p>
+<p>Human-directed NIGHTFALL work with AI-assisted implementation and internal attack/review. No blind agent successes, independent human certification, security sandbox guarantees, formal theorem, or worldwide originality claim is inferred. The linked pull requests are the live authoritative source, and may evolve after this dated site snapshot.</p>
+<nav class="eng-footer-nav" aria-label="Related research"><a href="evals.html">Evaluation Lab</a><a href="engineering.html">Research Engineering</a><a href="about.html">Authorship</a><a href="review.html">Adversarial review</a><a href="index.html">Research home</a></nav></footer>
+</main></body></html>
