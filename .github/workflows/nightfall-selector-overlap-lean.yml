@@ -40,6 +40,7 @@ jobs:
             --decl Nightfall.SelectorOverlap.finite_source_weighted_row_energy \
             --decl Nightfall.SelectorOverlap.finite_source_weighted_overlap_energy \
             --decl Nightfall.SelectorOverlap.source_activation_budget \
+            --decl Nightfall.SelectorOverlap.source_overlap_leaf_energy_le_activation_max \
             --decl Nightfall.SelectorOverlap.selector_weighted_terminal_from_source_obligations \
             --json-out lean-receipts/selector-overlap/row-conditional.json
           python3 research/nightfall/formalization/product_space/check_receipts.py \
