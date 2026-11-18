@@ -46,6 +46,9 @@ jobs:
             --decl Nightfall.Q2BernsteinLower.physical_coefficient_at_least_four \
             --decl Nightfall.Q2BernsteinLower.third_mixed_difference_zero \
             --decl Nightfall.Q2BernsteinLower.second_mixed_difference_sixteen \
+            --decl Nightfall.Q2BernsteinLower.extremal_bias_interior \
+            --decl Nightfall.Q2BernsteinLower.signed_sum_bounds \
+            --decl Nightfall.Q2BernsteinLower.quadratic_cube_range \
             --json-out "$OUT/named-proof.json"
           python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT/named-proof.json"
       - name: Independent original Bernoulli rational checker
