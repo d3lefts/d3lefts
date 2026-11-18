@@ -18,5 +18,7 @@ jobs:
         run: sha256sum -c SOURCE_SHA256SUMS_STRUCTURAL_20261117
       - name: Independently check biased two-block quadratic resampling
         run: python3 -I research/nightfall/flagship-influence/check_fixed_block_meanfield_no_go.py
+      - name: Independent full-state small-interaction-component positive theorem control
+        run: python3 -I research/nightfall/flagship-influence/check_ue2_small_components_exact.py
       - name: Exact fair-address Walsh and inverse-degree gradient falsifier
         run: python3 -I research/nightfall/flagship-influence/check_address_resolvent_no_go.py
