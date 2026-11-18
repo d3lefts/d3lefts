@@ -12,6 +12,7 @@ on:
       - 'research/nightfall/formalization/product_space/SimulationErrorTail.lean'
       - 'research/nightfall/formalization/product_space/LatentMixtureInfluence.lean'
       - 'research/nightfall/formalization/product_space/QPairPoincare.lean'
+      - 'research/nightfall/formalization/product_space/LatentMixtureTerminal.lean'
       - '.github/workflows/nightfall-renyi-transfer-lean.yml'
   pull_request:
     paths:
@@ -51,6 +52,8 @@ jobs:
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/LatentMixtureInfluence.olean LatentMixtureInfluence.lean)
           cp research/nightfall/formalization/product_space/QPairPoincare.lean /tmp/mathlib4/QPairPoincare.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/QPairPoincare.olean QPairPoincare.lean)
+          cp research/nightfall/formalization/product_space/LatentMixtureTerminal.lean /tmp/mathlib4/LatentMixtureTerminal.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/LatentMixtureTerminal.olean LatentMixtureTerminal.lean)
       - name: Strict named declaration axioms and source hash
         shell: bash
         run: |
@@ -65,6 +68,7 @@ jobs:
           import SimulationErrorTail
           import LatentMixtureInfluence
           import QPairPoincare
+          import LatentMixtureTerminal
           #check @Nightfall.RenyiSimulation.event_mass_le_of_pointwise
           #check @Nightfall.RenyiSimulation.error_probability_transfer_inf
           #print axioms Nightfall.RenyiSimulation.event_mass_le_of_pointwise
@@ -90,6 +94,8 @@ jobs:
           #check @Nightfall.CorrelatedPairs.correlated_pair_poincare
           #check Nightfall.CorrelatedPairs.correlated_pair_gap_sharp
           #print axioms Nightfall.CorrelatedPairs.correlated_pair_poincare
+          #check @Nightfall.LatentMixture.finite_mixture_aa_influence_from_witnesses
+          #print axioms Nightfall.LatentMixture.finite_mixture_aa_influence_from_witnesses
           LEAN
           lake env lean RenyiTransferAudit.lean | tee "$GITHUB_WORKSPACE/renyi-axioms.txt"
           ! grep -E 'sorryAx|Lean\.ofReduceBool|native_decide' "$GITHUB_WORKSPACE/renyi-axioms.txt"
@@ -102,3 +108,4 @@ jobs:
           sha256sum "$GITHUB_WORKSPACE/research/nightfall/formalization/product_space/SimulationErrorTail.lean"
           sha256sum "$GITHUB_WORKSPACE/research/nightfall/formalization/product_space/LatentMixtureInfluence.lean"
           sha256sum "$GITHUB_WORKSPACE/research/nightfall/formalization/product_space/QPairPoincare.lean"
+          sha256sum "$GITHUB_WORKSPACE/research/nightfall/formalization/product_space/LatentMixtureTerminal.lean"
