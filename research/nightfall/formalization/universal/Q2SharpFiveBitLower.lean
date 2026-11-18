@@ -29,19 +29,25 @@ def witness (x : Fin 5 → Bool) : ℤ :=
   let e := bit x 4
   a + c + d + e + a*b - a*c + a*d - b*c - b*d + b*e + c*e - d*e
 
-/-- Enumerates all 32 original source input assignments. -/
+/-- A concrete effective enumeration of the 32 original fair worlds.
+Every five-bit pattern occurs exactly once (binary expansion of 0..31).
+No abstract Fintype.choice implementation is used by the kernel reduction. -/
+def sourceWorld (w : Fin 32) : Fin 5 → Bool :=
+  fun i => Nat.testBit w.val i.val
+
 def fairMean : ℚ :=
-  (∑ x : Fin 5 → Bool, (witness x : ℚ)) / 32
+  (∑ w : Fin 32, (witness (sourceWorld w) : ℚ)) / 32
 
 def fairVariance : ℚ :=
-  (∑ x : Fin 5 → Bool, ((witness x : ℚ) - fairMean)^2) / 32
+  (∑ w : Fin 32, ((witness (sourceWorld w) : ℚ) - fairMean)^2) / 32
 
 /-- True coordinate-resampling influence. For a fair bit,
 E_(X,X'_i)[(f(X)-f(X_i<-X'_i))²/2] equals the 1/4 averaged flip square.
 Thus with 32 input states the denominator is 4*32=128. -/
 def fairResamplingInfluence (i : Fin 5) : ℚ :=
-  (∑ x : Fin 5 → Bool,
-    ((witness x - witness (flip i x) : ℤ) : ℚ)^2) / 128
+  (∑ w : Fin 32,
+    ((witness (sourceWorld w) -
+      witness (flip i (sourceWorld w)) : ℤ) : ℚ)^2) / 128
 
 theorem witness_range : ∀ x : Fin 5 → Bool,
     (-4 : ℤ) ≤ witness x ∧ witness x ≤ 4 := by
