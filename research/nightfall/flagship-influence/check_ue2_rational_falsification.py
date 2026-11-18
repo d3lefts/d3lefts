@@ -34,7 +34,7 @@ def analyze(ob):
     d=int(ob["degree"])
     k=int(ob.get("degree_power",2))
     C=frac(ob.get("constant","1"))
-    assert 1<=d<=n and k>=0 and C>=0
+    assert 1<=d and k>=0 and C>=0
     mass={x:prod(p[i][x[i]] for i in range(n)) for x in xs}
     assert sum(mass.values(),Q(0))==1
     mean=sum((mass[x]*f[x] for x in xs),Q(0))
@@ -129,6 +129,38 @@ def tests():
     print("PASS exact original-law conditional and independent two-replica influence")
     print("PASS anchored Mobius degree / positive rational product audit")
     print("PASS degree-one sharp equality; Hadamard; false-C=1/4 negative control")
+    # An independent 3-letter address, two 2-letter leaves: a real
+    # nonbinary original-law degree-two selector, with all atoms positive.
+    xs=list(product(range(3), range(2), range(2)))
+    ob={"degree":2,"constant":"1",
+        "probabilities":[["1/2","1/3","1/6"],["1/2","1/2"],["1/2","1/2"]],
+        "values":[str(2*(x[1] if x[0]!=2 else x[2])-1) for x in xs]}
+    assert analyze(ob)["degree"]==2
+
+    # Two disjoint quadratic Hadamard blocks: exact essential radius
+    # additivity and equality in the local fractional-cover profile.
+    xs=list(product((0,1),repeat=8))
+    def had(x):
+        a,b,c,d=(2*t-1 for t in x)
+        return a*c+a*d+b*c-b*d
+    ob={"degree":2,"constant":"1","probabilities":[["1/2","1/2"]]*8,
+        "values":[str(Q(had(x[:4]))+Q(1,2)*had(x[4:])) for x in xs]}
+    v=analyze(ob)
+    assert (v["B"],v["V"],v["M"])==(Q(3),Q(5),Q(2))
+    assert v["V"]==Q(2)*Q(2)+Q(1)*Q(1)
+
+    # Fail closed on a true degree-3 input misdeclared as degree 2.
+    ob={"degree":2,"constant":"1","probabilities":[["1/2","1/2"]]*3,
+        "values":[str((2*x[0]-1)*(2*x[1]-1)*(2*x[2]-1))
+                  for x in product((0,1),repeat=3)]}
+    try:
+        analyze(ob)
+        raise AssertionError("incorrect degree accepted")
+    except AssertionError as e:
+        if str(e)=="incorrect degree accepted":
+            raise
+    print("PASS categorical 3-letter selector, Hadamard block-range additivity")
+    print("PASS high-degree negative control correctly rejected")
     print("PASS heterogeneous rational categorical law; NO universal bound asserted")
 
 
