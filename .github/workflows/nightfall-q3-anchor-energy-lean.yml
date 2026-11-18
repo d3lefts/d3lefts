@@ -1,0 +1,56 @@
+name: NIGHTFALL Q3 anchored mixed-norm source-energy Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/AnchoredEnergyTransfer.lean'
+      - '.github/workflows/nightfall-q3-anchor-energy-lean.yml'
+  push:
+    branches: [nightfall-anchored-multipartite-e2-20261117]
+    paths:
+      - 'research/nightfall/formalization/observability/AnchoredEnergyTransfer.lean'
+      - '.github/workflows/nightfall-q3-anchor-energy-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  anchored-energy-kernel:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Kernel check exact anchored mixed-norm to influence transfer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/AnchoredEnergyTransfer.lean \
+            --workspace /tmp/mathlib4 --timeout 480 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.CubicQ3.AnchoredEnergy.mixed_norm_from_row_budget \
+            --decl Nightfall.CubicQ3.AnchoredEnergy.anchored_exponent_two_from_row_khintchine \
+            --decl Nightfall.CubicQ3.AnchoredEnergy.cubic_anchored_four_from_row_khintchine \
+            --json-out lean-receipts/q3-anchor-energy.json || {
+              cat lean-receipts/q3-anchor-energy.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q3-anchor-energy.json
+      - name: Source and compiler custody
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/observability/AnchoredEnergyTransfer.lean > lean-receipts/SHA256SUMS
+          git rev-parse HEAD > lean-receipts/repository-head.txt
+          (git -C /tmp/mathlib4 rev-parse HEAD || true) > lean-receipts/mathlib-head.txt
+          cat lean-toolchain > lean-receipts/lean-toolchain.txt
+      - name: Archive receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-q3-anchored-energy-lean
+          path: lean-receipts/
+          retention-days: 45
+          if-no-files-found: warn
