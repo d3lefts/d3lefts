@@ -1,0 +1,74 @@
+{
+  "schema": "nightfall.robust-observation-hull.v1",
+  "source_model": {
+    "kind": "finite-product-original-response/v1",
+    "sources": [
+      "authority_epoch",
+      "sensor_y"
+    ],
+    "coordinate_alphabets": [
+      [
+        "0",
+        "1"
+      ],
+      [
+        "0",
+        "1",
+        "2"
+      ]
+    ],
+    "fixed_second_marginal": [
+      "1/3",
+      "1/3",
+      "1/3"
+    ],
+    "original_first_marginal": [
+      "1",
+      "0"
+    ],
+    "allowed_replacement_law": "entire_probability_simplex",
+    "mission_table": [
+      [
+        "1",
+        "-1",
+        "0"
+      ],
+      [
+        "0",
+        "1",
+        "-1"
+      ]
+    ],
+    "observed_target": "sensor_y",
+    "changed_marginal": "authority_epoch",
+    "loss": "squared_error"
+  },
+  "certificate": {
+    "source_sha256": "2c821af72c6caf8c85a35c53049a46b67510947b8e9d1c84cb80704d71b77178",
+    "response_gram": [
+      [
+        "2/3",
+        "-1/3"
+      ],
+      [
+        "-1/3",
+        "2/3"
+      ]
+    ],
+    "minimizer_law": [
+      "1/2",
+      "1/2"
+    ],
+    "separating_response": [
+      "1/2",
+      "0",
+      "-1/2"
+    ],
+    "robust_unobserved_gain": "1/6",
+    "robust_observed_gain": "2/3",
+    "original_law_unobserved_gain": "2/3",
+    "coordinate_influence_y": "2/3",
+    "squared_gain_threshold": "1/2",
+    "minimum_fixed_sensor_count_for_robust_threshold": 2
+  }
+}
