@@ -67,7 +67,10 @@ jobs:
           sha256sum Nightfall/Main.lean Nightfall/Targets.lean Nightfall/Core.lean lakefile.toml \
             research/nightfall/formalization/universal/InfinitePiAAProductTerminal.lean \
             research/nightfall/formalization/product_space/CubePrintedAA.lean \
-            research/nightfall/formalization/aa_product/CLOSURE.txt > lean-receipts/integrated/source-sha256.txt
+            research/nightfall/formalization/aa_product/CLOSURE.txt \
+            research/nightfall/formalization/universal/InfinitePiAllDegreeLabelTransfer.lean \
+            research/nightfall/formalization/universal/InfinitePiAllDegreeFiniteIndicators.lean \
+            research/nightfall/formalization/universal/InfinitePiAllDegreeFiniteResidualBridge.lean > lean-receipts/integrated/source-sha256.txt
       - name: Replay complete selected Lake project through the kernel
         shell: bash
         run: |
