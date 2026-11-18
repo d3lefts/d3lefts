@@ -36,6 +36,16 @@
 </aside>
 </section>
 <aside class="eng-inline-warning"><strong>Certification boundary:</strong> These numbers come from the candidate author's published evidence record on a draft PR. The hidden tests, reference implementation, full mutation receipts, and source-exact grader replay were not accessible for independent verification in this site update. A separate public contract canary reproduced ten predicted failures and three positive controls in source-exact CI on Python 3.10 and 3.13 (run 44348467883). This is an internal code-level cross-check, not the withheld grader or an independently verified model score.</aside>
+<section class="eng-section" id="coverage-contrast" aria-labelledby="coverage-title">
+<p class="eng-kicker">MEASURED EXAMPLE / WHY AN EVAL NEEDS DEEPER CHECKS</p>
+<h2 id="coverage-title">The smoke suite was green.<br><em>The contract was not.</em></h2>
+<p class="eng-section-lead">On the exact same intentionally defective starter, three deliberately shallow public smoke tests passed, while ten independent public contract probes exposed broken requirements. Both suites ran successfully as designed on Python 3.10 and 3.13. These are different test sets, not competing estimates of model accuracy.</p>
+<div class="eng-grid two">
+<article class="eng-card"><span class="eng-number">PUBLIC SMOKE / INTENTIONALLY SHALLOW</span><span class="eng-tag">CI PASS · Python 3.10 / 3.13</span><h3>3 of 3 green.</h3><p>Submit and claim, finish, and a simple future-due-time case pass on the defective implementation. That green status does not imply the full written contract holds.</p><a href="https://github.com/d3lefts/d3lefts/actions/runs/44349472666">Source-exact public smoke CI ↗</a></article>
+<article class="eng-card"><span class="eng-number">INDEPENDENT PUBLIC API CANARY</span><span class="eng-tag">CI PASS · Python 3.10 / 3.13</span><h3>10 defects exposed.</h3><p>Ten predicted seed-failure cases failed and three positive controls passed, with zero mismatches in the preregistered seed profile. This is independent test construction, not blind human validation or a full grader.</p><a href="https://github.com/d3lefts/d3lefts/actions/runs/44348467883">Source-exact contract-canary CI ↗</a></article>
+</div>
+<div class="eng-callout" style="margin-top:20px"><h3>General lesson: a passing test is only as strong as the behavior it probes.</h3><p>A realistic software-engineering evaluation needs negative controls, stateful interleavings, time and persistence invariants, protected held-out grading, independently correct alternate solutions, and valid model tool-use traces. This demonstration validates the *contrast in coverage*; it does not yet validate the withheld grader or establish frontier-model difficulty.</p><p class="eng-mono">Pinned candidate source SHA-256: 05edf787fbd1cb3841ed4aa813361ee1024b354f6fcd7505a56eddf98cbfd406</p></div>
+</section>
 <section class="eng-section" id="challenge" aria-labelledby="challenge-heading">
 <p class="eng-kicker">01 / REALISTIC ENGINEERING CONTRACT</p>
 <h2 id="challenge-heading">Make the system correct,<br><em>not just the tests green.</em></h2>
