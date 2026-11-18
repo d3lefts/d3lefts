@@ -53,11 +53,8 @@ def locked_mathlib_commit() -> str:
 def discover() -> tuple[dict[str, Path], dict[str, set[str]]]:
     by_name: dict[str, Path] = {}
     for file in SOURCE.rglob("*.lean"):
-        # Vendored third-party trees keep their own hierarchical module names
-        # (e.g. AaronsonAmbainis.Bridge.Basic) and are built by their own
-        # workflows; they are not flat NIGHTFALL modules.
-        if VENDOR in file.parents:
-            continue
+        # The pinned upstream auxiliary modules now participate in the unified
+        # Lake closure under their full hierarchical source module names.
         # Retain upstream's nested import identifiers; flat NIGHTFALL files keep their stems.
         vendor = SOURCE / "vendor/aaronson_ambainis"
         name = (".".join(file.relative_to(vendor).with_suffix("").parts)
