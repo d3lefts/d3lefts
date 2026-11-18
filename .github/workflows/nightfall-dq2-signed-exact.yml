@@ -1,0 +1,26 @@
+name: NIGHTFALL DQ2 signed-graph exact checks
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-dq2/DQ2_SIGNED_DOBRUSHIN_SPECTRAL_SANDWICH_V0_1.md'
+      - 'research/nightfall/2026-11-dq2/DQ2_SIGNED_DOBRUSHIN_PASSPORT_V0_1.json'
+      - 'scripts/check_dq2_signed_dobrushin_exact.py'
+      - '.github/workflows/nightfall-dq2-signed-exact.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  signed-ising-exact:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify exact all-function Poincare and spectral-sandwich matrices
+        run: python3 scripts/check_dq2_signed_dobrushin_exact.py
+      - name: Record checker source checksum
+        run: sha256sum scripts/check_dq2_signed_dobrushin_exact.py
