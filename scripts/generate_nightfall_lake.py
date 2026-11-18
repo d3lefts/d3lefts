@@ -22,6 +22,7 @@ SEEDS = (
     "InfinitePiQ2AllL2LabelIntertwining",
     "InfinitePiQ2RangeProjectionTransfer",
     "InfinitePiQ2UnconditionalTerminal",
+    "InfinitePiQ2FiniteANOVAEquivalence",
     "Q2ShiftedConditionalTargets",
 )
 EXTERNAL_PREFIXES = (
