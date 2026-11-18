@@ -1,0 +1,117 @@
+{
+  "benchmark": "NIGHTFALL-DISPATCHQ-B1",
+  "audit_id": "B1-PRIVATE-GRADER-PROOF-ATTACK-20261118-v02",
+  "date": "2026-11-18",
+  "status": "internal_source_exact_author_side_not_independently_reviewed",
+  "scope": "trusted fixture semantic mutation; not blind coding-agent results",
+  "candidate_source_sha256": "507b5857018d3706bbb6e94c67c9976f9aaa7c290b9a6506f7561c5f26c343e3",
+  "v01_tests_sha256": "2674ad64b10fd2d541be3bc5c9d074ec42b77d7a5f7519c7b10b63fae9538e48",
+  "v02_tests_sha256": "1b1c23ada5fcf7b6a05ba1261e873c8472b99f0b71ba2f8930a8f24bcbe2b2ce",
+  "original_archive_sha256": "6be359d6bcd1f09ab21e45ab242c2ce7ab52c8cf8a774bcfe242bf6998b8e8ea",
+  "private_v02_archive_sha256": "78fd45854d4f650e100cd2042964297ebb332ed357ef1e47d7727d2965d1b33f",
+  "python_tested": "3.13.5",
+  "tests_v01": 20,
+  "tests_v02": 25,
+  "max_points_v01": 100,
+  "max_points_v02": 100,
+  "model_attempts": 0,
+  "independent_human_review": false,
+  "pre_registered_families": 12,
+  "pre_registered_executed": 11,
+  "post_registered_executed": 1,
+  "dropped_pre_registered_family": "claim_limit_float (SQLite already rejects float LIMIT; not a valid fault witness)",
+  "post_registered_family": "token_unique",
+  "reference_v02_repeats": [
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100
+  ],
+  "defective_starter_v02_repeats": [
+    47,
+    47,
+    47,
+    47,
+    47,
+    47,
+    47,
+    47,
+    47,
+    47
+  ],
+  "independent_contract_witnesses": {
+    "reference_passed": 5,
+    "total": 5,
+    "five_surviving_mutants_each_fail_own_witness": true
+  },
+  "faults": [
+    {
+      "family": "max_attempts_boolean",
+      "v01_score": 100,
+      "v02_score": 97
+    },
+    {
+      "family": "max_attempts_float",
+      "v01_score": 100,
+      "v02_score": 97
+    },
+    {
+      "family": "lease_length_finite_validation",
+      "v01_score": 100,
+      "v02_score": 97
+    },
+    {
+      "family": "claim_limit_boolean",
+      "v01_score": 100,
+      "v02_score": 97
+    },
+    {
+      "family": "batch_limit_off_by_one",
+      "v01_score": 5,
+      "v02_score": 16
+    },
+    {
+      "family": "due_boundary_strict",
+      "v01_score": 74,
+      "v02_score": 75
+    },
+    {
+      "family": "lease_expiry_strict",
+      "v01_score": 76,
+      "v02_score": 80
+    },
+    {
+      "family": "job_sort_tie_break",
+      "v01_score": 95,
+      "v02_score": 96
+    },
+    {
+      "family": "terminal_ack_missing_cleanup",
+      "v01_score": 96,
+      "v02_score": 97
+    },
+    {
+      "family": "fail_delay_subsecond",
+      "v01_score": 100,
+      "v02_score": 96
+    },
+    {
+      "family": "claim_expired_exhaustion_edge",
+      "v01_score": 94,
+      "v02_score": 95
+    },
+    {
+      "family": "token_unique",
+      "v01_score": 83,
+      "v02_score": 86
+    }
+  ],
+  "withheld": "private archive contains grader, source mutation operators, exact witnesses, and reference; not committed to public Git history",
+  "claim_limit": "Source-exact internal QA only. Hashes identify files but do not authenticate independent execution or proof of full contract coverage."
+}
