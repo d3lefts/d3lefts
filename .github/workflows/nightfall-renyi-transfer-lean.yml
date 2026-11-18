@@ -1,0 +1,48 @@
+name: NIGHTFALL Renyi finite event-transfer Lean gate
+
+on:
+  push:
+    branches: [nightfall-renyi-quantum-transfer-20261118]
+    paths:
+      - 'research/nightfall/formalization/product_space/RenyiTransferEvent.lean'
+      - '.github/workflows/nightfall-renyi-transfer-lean.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/RenyiTransferEvent.lean'
+      - '.github/workflows/nightfall-renyi-transfer-lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  finite-event-transfer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile author-side finite event-transfer theorems
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/product_space/RenyiTransferEvent.lean /tmp/mathlib4/RenyiTransferEvent.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/RenyiTransferEvent.olean RenyiTransferEvent.lean)
+      - name: Strict named declaration axioms and source hash
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd /tmp/mathlib4
+          cat > RenyiTransferAudit.lean <<'LEAN'
+          import RenyiTransferEvent
+          #check @Nightfall.RenyiSimulation.event_mass_le_of_pointwise
+          #check @Nightfall.RenyiSimulation.error_probability_transfer_inf
+          #print axioms Nightfall.RenyiSimulation.event_mass_le_of_pointwise
+          #print axioms Nightfall.RenyiSimulation.error_probability_transfer_inf
+          LEAN
+          lake env lean RenyiTransferAudit.lean | tee "$GITHUB_WORKSPACE/renyi-axioms.txt"
+          ! grep -E 'sorryAx|Lean\.ofReduceBool|native_decide' "$GITHUB_WORKSPACE/renyi-axioms.txt"
+          git -C "$GITHUB_WORKSPACE" rev-parse HEAD
+          sha256sum "$GITHUB_WORKSPACE/research/nightfall/formalization/product_space/RenyiTransferEvent.lean"
