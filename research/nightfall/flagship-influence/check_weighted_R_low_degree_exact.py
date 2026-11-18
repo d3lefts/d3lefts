@@ -43,7 +43,7 @@ def independent_replica_audit(result):
     w=[prod((p[i] if x[i] else 1-p[i] for i in range(n)),start=Q(1)) for x in states]
     assert sum(w,Q(0))==1
     mean=sum((w[j]*f[j] for j in range(len(states))),Q(0))
-    Vcheck=sum((w[j]*(f[j]-mean)**2 for j in range(len(states)),),Q(0))
+    Vcheck=sum((w[j]*(f[j]-mean)**2 for j in range(len(states))),Q(0))
     assert mean==0 and V==Vcheck
     assert R==max(sum(map(abs,v),Q(0)) for v in D)
     for i in range(n):
