@@ -125,7 +125,8 @@ def validate_plan(plan):
          "runner image must be pinned by sha256 digest")
     need(type(plan["model_id"]) is str and
          4 <= len(plan["model_id"]) <= 180 and
-         "/" in plan["model_id"], "model identity lacks provider/version")
+         "/" in plan["model_id"] and "@" in plan["model_id"].split("/", 1)[1],
+         "model identity lacks provider/version pin")
     budget = plan["budget"]
     exact_keys(budget, ("wall_seconds", "tokens", "tool_calls"), "budget")
     need(all(positive_int(x) for x in budget.values()), "budget must be positive")
@@ -144,7 +145,7 @@ def validate_plan(plan):
          "unsafe or undeclared holdout assumptions")
 
 
-def validate_trace(trace, attempt_id, reported_calls):
+def validate_trace(trace, attempt_id, reported_calls, completed):
     exact_keys(trace, ("schema", "attempt_id", "events"), "trace")
     need(trace["schema"] == "nightfall.eval.trace.v1", "wrong trace schema")
     need(trace["attempt_id"] == attempt_id, "trace attempt identity mismatch")
@@ -152,11 +153,13 @@ def validate_trace(trace, attempt_id, reported_calls):
     need(type(events) is list and len(events) > 0 and len(events) <= 100000,
          "trace absent or enormous")
     calls = 0
+    pending = {}
     for i, event in enumerate(events):
         exact_keys(event, ("seq", "kind", "tool"), "trace event")
         need(type(event["seq"]) is int and event["seq"] == i,
              "trace sequence reordered or omitted")
-        need(event["kind"] in KINDS, "unknown trace event kind")
+        need(type(event["kind"]) is str and event["kind"] in KINDS,
+             "unknown trace event kind")
         need(type(event["tool"]) is str and len(event["tool"]) <= 128,
              "invalid trace tool name")
         if event["kind"] in ("tool_call", "tool_result"):
@@ -165,7 +168,15 @@ def validate_trace(trace, attempt_id, reported_calls):
             need(event["tool"] == "", "non-tool event has a tool name")
         if event["kind"] == "tool_call":
             calls += 1
+            pending[event["tool"]] = pending.get(event["tool"], 0) + 1
+        if event["kind"] == "tool_result":
+            need(pending.get(event["tool"], 0) > 0,
+                 "tool result without preceding matching call")
+            pending[event["tool"]] -= 1
     need(calls == reported_calls, "tool count contradicts raw trace")
+    if completed:
+        need(not any(pending.values()),
+             "completed episode has unanswered tool calls")
     return calls
 
 
@@ -215,7 +226,8 @@ def verify(root, expected_plan_sha256):
              receipt["task_commit"] == plan["task_commit"] and
              receipt["model_id"] == plan["model_id"],
              "attempt crossed frozen model/plan/source identity")
-        need(receipt["outcome"] in TERMINAL, "unknown terminal outcome")
+        need(type(receipt["outcome"]) is str and
+             receipt["outcome"] in TERMINAL, "unknown terminal outcome")
         for key, maximum in (
             ("elapsed_seconds", budget["wall_seconds"]),
             ("tokens_used", budget["tokens"]),
@@ -226,8 +238,8 @@ def verify(root, expected_plan_sha256):
         trace_path = file_and_hash(
             root, receipt["trace_path"], receipt["trace_sha256"], "trace")
         trace = json_file(trace_path)
-        calls = validate_trace(trace, attempt_id, receipt["tool_calls"])
         completed = receipt["outcome"] == "completed"
+        calls = validate_trace(trace, attempt_id, receipt["tool_calls"], completed)
         if completed:
             need(calls > 0, "completed attempt has no tool-use evidence")
             patch = file_and_hash(root, receipt["patch_path"],
