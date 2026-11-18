@@ -9,6 +9,7 @@ on:
       - 'research/nightfall/2026-11-dq2/CUBIC_CONTRACTION_HIERARCHY_V0_1.md'
       - 'research/nightfall/2026-11-dq2/CUBIC_CONTRACTION_PASSPORT_V0_1.json'
       - 'scripts/check_cubic_contraction_hierarchy_exact.py'
+      - 'scripts/check_cubic_centered_cover_exact.py'
       - '.github/workflows/nightfall-cubic-contraction.yml'
   workflow_dispatch:
 
@@ -25,8 +26,10 @@ jobs:
           python-version: '3.11'
       - name: Independently replay exact rational derivative hierarchy
         run: python3 scripts/check_cubic_contraction_hierarchy_exact.py
+      - name: Replay conditional centered cubic cover inequality
+        run: python3 scripts/check_cubic_centered_cover_exact.py
       - name: Record source digest
-        run: sha256sum scripts/check_cubic_contraction_hierarchy_exact.py research/nightfall/formalization/observability/CubicContractionHierarchyScalar.lean research/nightfall/formalization/observability/CubicContractionBinarySource.lean research/nightfall/formalization/observability/CubicContractionOperator.lean
+        run: sha256sum scripts/check_cubic_centered_cover_exact.py scripts/check_cubic_contraction_hierarchy_exact.py research/nightfall/formalization/observability/CubicContractionHierarchyScalar.lean research/nightfall/formalization/observability/CubicContractionBinarySource.lean research/nightfall/formalization/observability/CubicContractionOperator.lean
 
   lean-scalar:
     runs-on: ubuntu-24.04
