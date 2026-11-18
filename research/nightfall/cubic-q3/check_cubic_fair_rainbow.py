@@ -67,15 +67,46 @@ def experiment(n, d, seed):
     if B and M:
         assert Vd*Vd <= Q(2**(d-1),1)/p**2*B*B*M
     if d == 3:
-        c3 = {s:v for s,v in a.items() if len(s)==3}
-        V3 = sum((v*v for v in c3.values()),Q())
-        h3 = {x:sum((v*character(x,s) for s,v in c3.items()),Q())
-              for x in cube}
+        lin={s:v for s,v in a.items() if len(s)==1}
+        quad={s:v for s,v in a.items() if len(s)==2}
+        cubic={s:v for s,v in a.items() if len(s)==3}
+        V1=sum((v*v for v in lin.values()),Q())
+        V2=sum((v*v for v in quad.values()),Q())
+        V3=sum((v*v for v in cubic.values()),Q())
+        assert V == V1+V2+V3
+
+        # Crucial new independent physical check: 2-color parity projection
+        # of a CUBIC input retains only rainbow quadratic Walsh monomials.
+        # This is not the same as calling the d=2 checker on quadratic input.
+        total2=Q()
+        for c2 in product(range(2), repeat=n):
+            r2={s:v for s,v in quad.items() if len({c2[i] for i in s})==2}
+            energy=sum((v*v for v in r2.values()),Q())
+            total2+=energy
+            for x in cube:
+                direct2=sum((
+                    Q(character(sig,(0,1)),4) *
+                    f[tuple(x[i]*sig[c2[i]] for i in range(n))]
+                    for sig in product((-1,1), repeat=2)
+                ),Q())
+                spectral2=sum((v*character(x,s) for s,v in r2.items()),Q())
+                assert direct2 == spectral2, (n,seed,c2,x,direct2,spectral2)
+                assert abs(direct2) <= B
+            assert energy*energy <= 2*B*B*M
+        assert total2 == 2**n*Q(1,2)*V2
+
+        h1={x:sum((v*character(x,s) for s,v in lin.items()),Q())
+            for x in cube}
+        h3={x:sum((v*character(x,s) for s,v in cubic.items()),Q())
+            for x in cube}
+        assert max(map(abs,h1.values()), default=Q()) <= 3*B
+        assert max(map(abs,h3.values()), default=Q()) <= 4*B
+        assert V1*V1 <= 9*B*B*M
+        assert V2*V2 <= 8*B*B*M
         assert V3*V3 <= 81*B*B*M
-        assert max(map(abs,h3.values()),default=Q()) <= 4*B
-        assert max((abs(f[x]-h3[x]) for x in cube),default=Q()) <= 5*B
-        # C2<106 and 5sqrt(106)+9<121/2: exact rational corollary.
-        assert V*V <= Q(14641,4)*B*B*M
+        # (3 + 2 sqrt(2) + 9)^2 = 152 + 48 sqrt(2) < 220.
+        # The final assertion has no floating-point operations.
+        assert V*V <= 220*B*B*M
     return 1
 
 
