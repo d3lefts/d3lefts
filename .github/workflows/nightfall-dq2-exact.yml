@@ -32,6 +32,7 @@ jobs:
           python research/nightfall/2026-11-dq2/dq2_chain_independent_audit.py | tee artifacts/dq2/chain-sympy.json
           python research/nightfall/2026-11-dq2/dq2_tree_independent_audit.py | tee artifacts/dq2/tree-geodesic.json
           python research/nightfall/2026-11-dq2/dq2_weighted_tree_checker.py | tee artifacts/dq2/weighted-tree-rational.json
+          python research/nightfall/2026-11-dq2/dq2_cycles_exact_gate.py | tee artifacts/dq2/cycles-and-hyperedges-exact.json
       - name: Record source and output SHA-256
         shell: bash
         run: |
