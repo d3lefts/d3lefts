@@ -51,3 +51,19 @@ Independent exact Fraction spot checker: research/nightfall/2026-11-product-all-
 Sources checked 2026-11-18: David Turturean (arXiv:2611.09773); Aaronson–Ambainis 2014; Girish–Mittal–Nehoran–Raz, Distributional Variants (arXiv:2609.35327); Huffstutler–Miloschewsky–Podder, completion framework (arXiv:2611.12795); NIGHTFALL #858. Rényi/Hölder transfer is standard. Independent novelty/priority review and new Lean certificates remain OPEN. Keep this draft stacked on #858; no flagship release or merge.
 
 Next proof gate: Lean-formalize finite Theorem A using the independently verified J-decrement identity, then formalize finite-space Hölder transfer separately. Seek adversarial referee review and exact earlier work addressing Rényi-near-product quantum query simulation.
+
+
+## Fundamental barrier to a correlated-source influence theorem (exact counterexample)
+
+**Do not conjecture that a bounded upper Rényi divergence alone implies a direct correlated-source influence lower bound.** Let μ be uniform on two independent bits, let 0<q<1/2, and define ν by ν(00)=ν(11)=(1−q)/2, ν(01)=ν(10)=q/2. Then density ratio h=dν/dμ takes values 2(1−q) on equal bits and 2q on unequal bits, so D_infinity(ν||μ)=log(2(1−q))≤log 2. For f(x1,x2)=x1, algebraic degree is one and Var_ν(f)=1/4; yet
+
+- I_1^ν(f)=E Var_ν(X1|X2)=q(1−q),
+- I_2^ν(f)=E Var_ν(X1|X1)=0.
+
+Consequently max_i I_i^ν(f)→0 as q→0 even with uniformly bounded D_infinity and nonzero variance. This defeats any positive lower influence bound depending only on degree, variance, and an upper Rényi bound. It does NOT contradict Theorem B (which estimates product-reference influences before transferring the final error event) or auxiliary Theorem C (which also assumes a positive *lower* bound a≤h, here a=2q→0). A viable correlated-source theorem needs quantitative nondegeneracy/mixing or a different influence notion.
+
+Checker includes exact rational q=1/10000 and analytical formulas above; this is a mathematical counterexample rather than a finite search nonexistence claim.
+
+### Lean gate chronology
+
+First new formalization slice: product-to-target event domination at alpha=infinity, in product_space/RenyiTransferEvent.lean. CI workflow nightfall-renyi-transfer-lean.yml compiles and prints the named declaration axioms; status must be checked at the exact head. This finite event step does not formalize the total-influence stopping-time argument or finite-order alpha Hölder step. Those remain open.
