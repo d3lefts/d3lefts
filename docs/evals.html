@@ -66,6 +66,13 @@
 <details><summary>Exact source and checker independence</summary><div class="eng-detail-body">
 <p>Both Python jobs emitted per-module SHA-256 fingerprints and retained JSON case receipts. Internal second-implementation criticism is useful, but it is not independent human evaluation, a graded blind agent run, or a proof that the author-hidden grader accepts all legitimate solutions.</p>
 </div></details>
+<details><summary>When the reference solution fails a separate checker</summary><div class="eng-detail-body">
+<p>A second public 22-case metamorphic audit, kept separate from the original author grader, reported that the <strong>original author reference passed only 20/22</strong> repeated local cases despite passing its own 25-case suite. The two new counterexamples were JSON version values `true` in the manifest and persisted index: Python treats `True == 1` as true even though the task requires numeric version 1.</p>
+<p>A local privately corrected reference was reported at 22/22 on those extra cases and 25/25 on the original author suite. Those <strong>reference results are reported from a private local audit, not independently replayed by public CI</strong>. The public source-exact CI checks the deliberately defective starter and the separate canary; it does not disclose or certify the held-back reference solution.</p>
+<p><strong>Process consequence:</strong> a reference's original perfect score cannot establish grader completeness. A proposed model score remains unverified until alternate correct solutions, external review, and protected holdout evaluation have passed.</p>
+<a href="https://github.com/d3lefts/d3lefts/pull/827">Separate 22-case reference proof attack · draft #827 ↗</a>
+<a href="https://github.com/d3lefts/d3lefts/actions/runs/44357912261">Seed canary exact-source two-Python CI ↗</a>
+</div></details>
 <details><summary>Next decisive validation gates</summary><div class="eng-detail-body">
 <p>Freeze grader source and task commit, test a separately implemented correct alternate repair under both the public canary and withheld rubric, attack scorer loopholes and alternative serializations, then run genuine coding agents with valid tool traces in isolated no-credential environments. Measure costs, failure modes and score stability before making model ranking claims.</p>
 </div></details>
@@ -74,6 +81,26 @@
 <a href="https://github.com/d3lefts/d3lefts/pull/824">ArtifactGraph task source · draft #824 ↗</a>
 <a href="https://github.com/d3lefts/d3lefts/pull/825">Separate checker source · draft #825 ↗</a>
 <a href="https://github.com/d3lefts/d3lefts/actions/runs/44354996082">Exact-source two-Python CI receipts ↗</a>
+</div>
+</section>
+<section class="eng-section" id="run-evidence" aria-labelledby="run-evidence-title">
+<p class="eng-kicker">EVALUATION INSTRUMENT / ATTEMPT AND SCORING PROVENANCE</p>
+<h2 id="run-evidence-title">The denominator is<br><em>part of the experiment.</em></h2>
+<p class="eng-section-lead">To evaluate coding agents fairly, all preregistered attempts must count—even timeouts and tool-interface failures. Scores also need one precommitted meaning. NIGHTFALL's shared evidence checker was subjected to a deliberately adversarial schema audit before any real model results were accepted.</p>
+<div class="eng-inspector">
+<div class="eng-inspector-head"><h3>Independent attack on the run-receipt checker</h3><span class="eng-tag">Synthetic tests · no models run</span></div>
+<details open><summary>Reproduced flaw in the original verifier</summary><div class="eng-detail-body">
+<p>The original gate pinned the task, prompt, grader identity and attempt list but let completed receipts self-report their test counts and maximum points. Two synthetic attacks were accepted: the same frozen grader could report incompatible 50/100 and 7/7 score scales across attempts, or a single record could be rewritten from 50/100 to 1/1 without changing the plan. This was reproduced by 39 source-exact synthetic tests passing on Python 3.10 and 3.13.</p>
+<a href="https://github.com/d3lefts/d3lefts/actions/runs/44374307614">Original-gate counterexample CI ↗</a>
+</div></details>
+<details><summary>Repair: versioned frozen scoring scales</summary><div class="eng-detail-body">
+<p>A stacked draft patch moves both `tests_total` and `max_points` into the externally SHA-256-pinned, versioned evaluation plan. It rejects any result whose grader denominator disagrees with the plan and refuses legacy plans that did not freeze the scale. The repaired source passed 46 synthetic verifier tests on Python 3.10 and 3.13, including the former exploit cases as negative regressions and a valid matched-scale control.</p>
+<a href="https://github.com/d3lefts/d3lefts/pull/830">Versioned checker proof attack and fix · draft #830 ↗</a>
+<a href="https://github.com/d3lefts/d3lefts/actions/runs/44374815964">Repaired-gate exact-head CI ↗</a>
+</div></details>
+<details><summary>Why passing the evidence gate is still not a benchmark score</summary><div class="eng-detail-body">
+<p>The checker verifies the structure and hashes of internally supplied records only. A malicious operator can fabricate records and their hashes; self-reported sandbox isolation is not OS enforcement. Raw tool arguments/results, authentic model identity, an independently executed held-out grader and real coding-agent attempts remain outstanding. There are <strong>zero accepted blind agent scores</strong> for DispatchQ-B1 or ArtifactGraph-B2.</p>
+</div></details>
 </div>
 </section>
 <section class="eng-section" id="controlarena" aria-labelledby="case-control-title">
