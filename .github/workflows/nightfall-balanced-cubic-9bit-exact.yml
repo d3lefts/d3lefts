@@ -5,10 +5,12 @@ on:
     branches: [nightfall-cubic-balanced-9bit-20261117]
     paths:
       - 'research/nightfall/cubic-q3/check_*9bit.py'
+      - 'research/nightfall/cubic-q3/BALANCED_9BIT_PURE_CUBIC_8_OVER_3.md'
       - '.github/workflows/nightfall-balanced-cubic-9bit-exact.yml'
   pull_request:
     paths:
       - 'research/nightfall/cubic-q3/check_*9bit.py'
+      - 'research/nightfall/cubic-q3/BALANCED_9BIT_PURE_CUBIC_8_OVER_3.md'
       - '.github/workflows/nightfall-balanced-cubic-9bit-exact.yml'
   workflow_dispatch:
 
