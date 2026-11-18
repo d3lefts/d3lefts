@@ -46,7 +46,7 @@ jobs:
         run: |
           set -euo pipefail
           python3 -I research/nightfall/price_permission/robust_observation_hull/check_quadratic_gain_locality.py
-      - name: Shared source-bound Proof Passport, historical bridge compatibility and 17 provenance attacks
+      - name: Shared source-bound Proof Passport, historical bridge compatibility and 18 provenance attacks
         shell: bash
         run: |
           set -euo pipefail
