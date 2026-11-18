@@ -22,7 +22,8 @@ assert.ok(home.includes('href="engineering.html"'));
 assert.equal((home.match(/<section\b/g)||[]).length,13);
 assert.ok((home.match(/<a\b/g)||[]).length<=46);
 assert.ok(home.replace(/<[^>]+>/g," ").replace(/\s+/g," ").length<=14000);
-assert.ok(home.includes('href="engineering.css"'));
+assert.ok(home.includes('href="experience-pages.css"'));
+assert.ok(read("docs/experience-pages.css").includes(".nf-engineering-gateway"));
 
 // Two public standalone pages must be crawlable, usable without JavaScript and reciprocal.
 for (const [file,body] of [["engineering.html",engineering],["evals.html",evals]]) {
