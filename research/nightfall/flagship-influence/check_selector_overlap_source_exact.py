@@ -40,13 +40,14 @@ def evaluate(k, t, n, seed, shared):
     support = {}
     coefficients = {}
     for a in alist:
+        active_count = rng.randint(1, t)
         if shared:
-            # Reuse a high-traffic coordinate in all addresses;
-            # other active sites can overlap arbitrarily.
+            # Shared coordinate; varying address-dependent support sizes.
             leaves = {0}
-            leaves.update(rng.sample(range(1, n), k=min(t - 1, n - 1)))
+            leaves.update(rng.sample(range(1, n),
+                                     k=min(active_count - 1, n - 1)))
         else:
-            leaves = set(rng.sample(range(n), k=min(t, n)))
+            leaves = set(rng.sample(range(n), k=min(active_count, n)))
         support[a] = leaves
         subsets = [s for q in range(1, min(2, len(leaves)) + 1)
                    for s in combinations(sorted(leaves), q)]
@@ -113,8 +114,12 @@ def evaluate(k, t, n, seed, shared):
     assert Vg <= sum((weights[i] * infs[k+i] for i in range(n)), Q(0))
     assert V <= sum(infs[:k]) + sum(
         (weights[i] * infs[k+i] for i in range(n)), Q(0))
+    effective = sum(weights)
+    assert effective <= t
+    assert V <= (k + effective) * M
     assert V <= (k + t) * M
     assert V <= B * B
+    assert V * V <= (k + effective) * B * B * M
     assert V * V <= (k + t) * B * B * M
     return int(sum(1 for a in alist if 0 in support[a]) > 1)
 
@@ -130,7 +135,7 @@ def main():
                 count += 1
     assert count == 72 and shared_count >= 40
     print("PASS: ", count, "independent exact-rational product models;",
-          shared_count, "with source-law overlapping selection")
+          shared_count, "with overlapping, variable-size source activation")
 
 
 if __name__ == "__main__":
