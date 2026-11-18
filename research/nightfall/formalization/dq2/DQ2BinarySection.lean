@@ -101,8 +101,8 @@ theorem binary_global_spin_score
     (pMinus pPlus : κ → ℝ)
     (h : ∀ k, pMinus k + pPlus k ≠ 0) :
     (∑ k : κ,
-      pPlus k * (1 - binaryConditionalMean (pMinus k) (pPlus k)) +
-      pMinus k * (1 + binaryConditionalMean (pMinus k) (pPlus k))) =
+      (pPlus k * (1 - binaryConditionalMean (pMinus k) (pPlus k)) +
+       pMinus k * (1 + binaryConditionalMean (pMinus k) (pPlus k)))) =
     (∑ k : κ,
       (pMinus k + pPlus k) *
       (1 - (binaryConditionalMean (pMinus k) (pPlus k)) ^ 2)) := by
