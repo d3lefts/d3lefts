@@ -1,0 +1,44 @@
+name: NIGHTFALL full-row dual adversary (exact rational replay)
+
+on:
+  push:
+    branches:
+      - nightfall-real-row-dual-adversary-20261118
+    paths:
+      - 'research/nightfall/flagship-influence/check_bridge_dual_adversary.py'
+      - 'research/nightfall/flagship-influence/K_BRIDGE_DUAL_ADVERSARIAL_AUDIT_20261118.md'
+      - '.github/workflows/nightfall-real-row-dual-adversary.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/flagship-influence/check_bridge_dual_adversary.py'
+      - 'research/nightfall/flagship-influence/K_BRIDGE_DUAL_ADVERSARIAL_AUDIT_20261118.md'
+      - '.github/workflows/nightfall-real-row-dual-adversary.yml'
+  workflow_dispatch:
+
+jobs:
+  exact-source-adversary:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python source version
+        run: python3 --version
+      - name: Record exact sources
+        run: |
+          sha256sum research/nightfall/flagship-influence/check_bridge_dual_adversary.py research/nightfall/flagship-influence/K_BRIDGE_DUAL_ADVERSARIAL_AUDIT_20261118.md | tee source-sha256.txt
+          git rev-parse HEAD | tee exact-head.txt
+      - name: Deterministic candidate search with exact primal/dual audit
+        run: |
+          set -o pipefail
+          python3 -I research/nightfall/flagship-influence/check_bridge_dual_adversary.py | tee dual-adversarial-receipt.txt
+      - name: Preserve source-and-result custody
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-real-row-dual-adversary-receipt
+          path: |
+            source-sha256.txt
+            exact-head.txt
+            dual-adversarial-receipt.txt
+          if-no-files-found: warn
