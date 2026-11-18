@@ -5,7 +5,9 @@ on:
     paths:
       - 'research/nightfall/2026-11-dq2/DQ2_SIGNED_DOBRUSHIN_SPECTRAL_SANDWICH_V0_1.md'
       - 'research/nightfall/2026-11-dq2/DQ2_SIGNED_DOBRUSHIN_PASSPORT_V0_1.json'
+      - 'research/nightfall/2026-11-dq2/DQ2_ALL_GRAPHS_SCOPE_AND_NO_GO_V0_1.md'
       - 'scripts/check_dq2_signed_dobrushin_exact.py'
+      - 'scripts/check_dq2_all_graphs_no_go_exact.py'
       - '.github/workflows/nightfall-dq2-signed-exact.yml'
   workflow_dispatch:
 
@@ -22,5 +24,7 @@ jobs:
           python-version: '3.11'
       - name: Verify exact all-function Poincare and spectral-sandwich matrices
         run: python3 scripts/check_dq2_signed_dobrushin_exact.py
-      - name: Record checker source checksum
-        run: sha256sum scripts/check_dq2_signed_dobrushin_exact.py
+      - name: Verify exact unrestricted all-graph path-Ising no-go family
+        run: python3 scripts/check_dq2_all_graphs_no_go_exact.py
+      - name: Record both checker source checksums
+        run: sha256sum scripts/check_dq2_signed_dobrushin_exact.py scripts/check_dq2_all_graphs_no_go_exact.py
