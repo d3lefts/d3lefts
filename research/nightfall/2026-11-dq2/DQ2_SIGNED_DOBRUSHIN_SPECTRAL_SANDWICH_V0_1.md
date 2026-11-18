@@ -74,3 +74,25 @@ Passed instances: frustrated triangle n=3 (alpha=11/30), frustrated square n=4 (
 Independent mathematical audit must attack normalization (continuous-time vs random scan), universal alpha-to-H conversion, score off-edge conditional measurability, all-quadratic Poincare composition, n=0 and n=1 edges, and infinite DLR convergence. Run an independent implementation of at least one full Poincare rational matrix. Formalize the abstract spectral sandwich in Lean as a theorem *with explicit hypotheses*; the signed score and Dobrushin gap are separate dependencies. Prior art is unresolved: Wu, Eldan–Koehler–Zeitouni and Koehler–Lifshitz–Minzer–Mossel may already imply this transfer. Do not claim novelty, a sharper coefficient or an unconditional Lean theorem, and do not merge as a verified landmark.
 
 Cheapest decisive next experiment (completed): exact full-function PSD checks on five frustrated finite graphs. Next stop gate: an independent reviewer must validate the analytic spectral-sandwich and compare it with existing Ising low-degree influence theorems. Discovery graph: dependent Q2 -> physical algebraic degree -> full-law Poincare and covariance sandwich -> actual-site influence -> signed frustrated all-graph Q2 -> rational checker -> infinite correlated extension -> limitations (Dobrushin alpha<1, zero field, binary spin, algebraic degree two) -> transfer to correlated sensing.
+
+
+## G. Cubic barrier — exact connected-chain counterexample to degree-independent covariance transfer
+
+This is an important **negative control**, not a counterexample to the quadratic theorem. Fix any 0<r<1/2 and any integer k>=2. Take the connected zero-field (k+2)-spin Ising chain X0,Y1,...,Y_{k+1} with *every* edge tanh J=r. Its Dobrushin parameter is alpha=2r<1 (for the interior). Let
+
+  f_k(X0,Y) = (X0/k) sum_{j=1}^k Y_j Y_{j+1}.
+
+This is a bounded |f_k|<=1 algebraic degree-three polynomial. Global spin-flip symmetry gives E_nu f_k=0. On a zero-field Ising tree the bond variables Z_j=Y_jY_{j+1} are independent with E Z_j=r, so
+
+  Var_nu(f_k) = E[(sum_j Z_j / k)^2]
+              = r^2+(1-r^2)/k.
+
+Under the fair independent-spin reference law mu, these k bond variables are independent mean-zero signs, so Var_mu(f_k)=1/k. Consequently
+
+  Var_nu(f_k)/Var_mu(f_k) = 1+(k-1)r^2 -> infinity.
+
+There is therefore **no dimension-uniform constant depending only on the Dobrushin alpha** satisfying Var_nu(f)<=K(alpha) Var_mu(f) for *all bounded algebraic degree-three polynomials*, even on weakly correlated connected Ising chains with a fixed 1D degree bound. This invalidates the tempting attempt to extend the quadratic spectral-sandwich variance comparison to cubic functions without additional cancellations. It does not refute a genuine cubic variance-squared/maximum-actual-influence inequality: I_{nu,X0}(f_k)=Var_nu(f_k), so an influential coordinate is present.
+
+Mechanism: the quadratic gradient with respect to X0 has coherent nonzero mean E_nu[(sum_j Y_jY_{j+1})/k]=r. This creates a nonvanishing linear effective component when physical-spin cubic monomials are measured under nu. Degree-three repair should center bond contractions / use a law-adapted Wick or chaos decomposition before assuming covariance-sector comparability. Exact rational bond-product checks for r=1/3, k=2,3,4,6,10 match the displayed identity.
+
+**No new landmark claim from this obstruction alone:** tree bond independence and the computation are elementary classical facts; it is a diagnostic theorem/counterexample establishing why quadratic transfer does not naively extend. It should be preserved with the DQ2 certificate so future cubic work does not repeat the failed operator family.
