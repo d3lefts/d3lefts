@@ -145,3 +145,85 @@ can hold with universal C, **even on bounded original-product functions of exact
 **What survives:** The real-valued row conjecture is perfectly consistent: \(K^{*2}M/V^2=36(1-1/m)\), bounded below by 18. The full-row coefficient-four hypothesis \(K^2M\ge4V^2\) holds with ample slack. The structure is a two-address extension of #811's already credited one-categorical-address proof attack, not asserted as a novel worldwide construction. Its new use here is the exact fixed-degree-three **all-feasible-row ℓ¹(L²) obstruction**, with explicit optimal primal/dual row cost.
 
 **Independent exact replay:** \`python3 -I research/nightfall/flagship-influence/check_two_address_row_l2_no_go.py\` exhaustively checks genuine source influences at \(m=2,3\), and verifies symbolic all-m row feasibility, Efron–Stein level-three energy, the exact uniform K=6 dual, and the divergence formulas.
+
+
+## 6. Exact bilinear representation: a Brownian-bridge threshold kernel and a row-polytope gauge
+
+This is the mathematically precise missing **multilevel bilinear** interface. Its identities are author-side proved from elementary conditional covariance and finite LP duality. The Brownian-bridge kernel and tridiagonal Green precision are **classical**, not claimed as novel. Crucially, the final source-coupled inequality below is a **CONJECTURE**, not obtained by the identities.
+
+Fix **the level labeling** \(\ell:\Omega\to\{1,\ldots,m\}\) on the supported product sample space; every label has positive mass \(r_j=\Pr(\ell=j)>0\). Vary the positive gap vector \(\delta=(\delta_1,\ldots,\delta_{m-1})\), and set
+\[
+f_\delta(x)=u_1+\sum_{k=1}^{m-1}\delta_k\,g_k(x),\qquad
+g_k(x)=\mathbf1_{\{\ell(x)>k\}}.
+\]
+Let \(s_k=\Pr(\ell\le k)=\sum_{j\le k}r_j\), \(0=s_0<s_1<\cdots<s_m=1\), and write
+\[
+C_{k\ell}=\operatorname{Cov}(g_k,g_\ell)
+=\min(s_k,s_\ell)-s_ks_\ell.
+\]
+This is the **Brownian bridge covariance matrix** sampled at the cumulative output probabilities. It is positive definite for positive \(r_j\), with an explicit **tridiagonal inverse**
+\[
+\boxed{\quad
+(C^{-1})_{kk}=\frac1{r_k}+\frac1{r_{k+1}},\qquad
+(C^{-1})_{k,k+1}=(C^{-1})_{k+1,k}=-\frac1{r_{k+1}},
+\quad (C^{-1})_{k\ell}=0\ \text{if }|k-\ell|>1.
+\quad}\tag{BB}
+\]
+Verification: the discrete Green function \(s\mapsto\min(s,s_\ell)-s\,s_\ell\) is piecewise affine with its only unit slope jump at \(s_\ell\); the weighted second difference with spacings \(r_k\) yields the Kronecker delta.
+
+For an actual original source coordinate \(i\), define the **cross-level resampling Gram**
+\[
+J_i(k,\ell)=\mathbb E_{X_{-i}}
+   \big[\operatorname{Cov}_{X_i}(g_k,g_\ell\mid X_{-i})\big]
+=\tfrac12\mathbb E_{X,X_i'}\big[
+    (g_k(X)-g_k(X_{-i},X_i'))(g_\ell(X)-g_\ell(X_{-i},X_i'))
+  \big].
+\]
+All \(J_i\) are positive semidefinite **and entrywise nonnegative** (for each resampling pair, all nested threshold changes have the same sign). In fact
+\[
+\boxed{0\preceq J_i\preceq C\preceq\sum_iJ_i,}
+\tag{MPS}
+\]
+where the first two inequalities are covariance decomposition/conditional Jensen and the last is original-product Efron–Stein applied to **every signed linear combination** of the \(g_k\).
+
+**Exact energy identities:**
+\[
+\boxed{\operatorname{Var}(f_\delta)=\delta^\top C\delta,\qquad
+I_i^\mu(f_\delta)=\delta^\top J_i\delta.}\tag{E}
+\]
+These are not approximations, do not change original source laws, and include all off-diagonal *cross-threshold* terms that disappear in the isolated-cut argument.
+
+**Full row constraints as a polyhedral gauge.** Define \(D_x(y,i)=\mathbf1_{\{x_i\ne y_i\}}\), and the **threshold-crossing vector** \(w_x(y,k)=\mathbf1_{\{\min(\ell(x),\ell(y))\le k<\max(\ell(x),\ell(y))\}}\). For \(\delta\ge0\),
+\[
+|f_\delta(x)-f_\delta(y)|=\sum_k w_x(y,k)\delta_k.
+\]
+Therefore the minimum full fractional-row cost at x is *exactly* the primal/dual LP pair
+\[
+K_x^*(\delta)=\min_{\substack{a_i\ge0\\D_xa\ge W_x\delta}}
+\sum_i a_i
+=\max_{\substack{\lambda_y\ge0\\D_x^\top\lambda\le\mathbf1}}
+\sum_{y,k}\lambda_y w_x(y,k)\delta_k.
+\]
+The uniform source cost is
+\[
+\boxed{\mathcal K(\delta)=\max_x K_x^*(\delta).}\tag{G}
+\]
+For fixed original support labeling, \(\mathcal K\) is a **positively homogeneous convex piecewise-linear support function** of the gap vector. Dual packings are exact checker-friendly certificates and automatically account for simultaneous disjoint multibit constraints, unlike \(R=\max_x\sum_i|f(x)-f(x^i)|\).
+
+**The *unproved* sharp bilinear gate is now a finite-dimensional conic inequality**
+\[
+\boxed{
+4\,(\delta^\top C\delta)^2
+\ \stackrel{?}{\le}\
+\mathcal K(\delta)^2\,
+\max_i(\delta^\top J_i\delta)
+\qquad(\delta>0).
+}\tag{R4}
+\]
+For \(m=2\), it follows from the established Boolean two-sided row theorem. For fixed \(m\), (FL) proves the same statement with 4 replaced by \(4/(m-1)^4\). **The matrix positivity sandwich (MPS), the inverse (BB), and LP identity (G) alone do not establish (R4)**; the missing step is an estimate that uses the *source-consistent coupling* between row feasible faces and the off-diagonal conditional covariance Grams.
+
+**Why this representation is useful.** After fixing an output-level partition and the source law, \(C\) and \(J_i\) are fixed exact rational matrices and the row costs are maxima of rational linear forms in \(\delta\) (vertices of the row dual polytopes). This isolates the continuous degree of freedom to the \(m-1\) nonnegative gaps. It gives an exact/interval-admissible adversarial search for the bilinear gate: enumerate supported labelings, compute the Brownian-bridge precision and true-law conditional Grams independently, generate row dual vertices, then optimize (R4) over positive gaps. A violating rational gap vector plus rational source masses and full primal/dual row certificates is a decisive falsifier of coefficient **four**, though not necessarily of the existence of some weaker constant.
+
+**New exact checker:** \`check_row_threshold_brownian_bridge.py\` independently computes the Green inverse, all original resampling Grams by both pairwise replacements and conditional covariances, the PSD sandwich via exact principal minors, and random rational-gap energy identities. It also checks a dual packing certificate for the four-bit K=6 source example. Finite matrix tests do not establish the conjectural inequality (R4).
+
+**Discovery graph:** real row problem → finite output threshold filtration → Brownian-bridge precision → source conditional Gram PSD/order → polyhedral fractional-row gauge → **missing coupled bilinear estimate** → hypothetical row \(\alpha=2\) → hypothetical polynomial degree-cost UE2. Original Aaronson–Ambainis/Turturean and finite-product Lean row bridge credited; no priority assertion.
