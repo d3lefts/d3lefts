@@ -45,7 +45,7 @@ def main():
     model_token=os.environ.get("GITHUB_TOKEN","")
     messages=[
       {"role":"system","content":"You are an external coding agent doing an independently scored software repair. Use available tools to inspect, edit implementation files and run PUBLIC tests. Do not edit tests or the issue. Satisfy the entire written contract, not only public smoke tests. Call finish when ready. You have a strict call budget."},
-      {"role":"user","content":f"TASK {args.task}. Files: {visible}. Work only in the candidate. Contract follows:\\n{issue}"}
+      {"role":"user","content":f"TASK {args.task}. Files: {visible}. Work only in the candidate. Contract follows:\n{issue}"}
     ]
     events=[];usage=[];status="model_not_started";error=None;tools_used=0;started=time.monotonic()
     def invoke(name,inputs):
@@ -119,8 +119,8 @@ def main():
        "candidate_initial_file_hashes":{p:sha(v) for p,v in initial.items()},
        "issue_sha256":sha(issue.encode()),"wall_seconds":round(time.monotonic()-started,2),
        "usage":usage,"independent_external_model_execution":status!="no_external_model_token" and len(usage)>0}
-    (out/"receipt.json").write_text(json.dumps(receipt,indent=2,sort_keys=True)+"\\n")
-    (out/"trace.json").write_text(json.dumps(events,indent=2,sort_keys=True)+"\\n")
-    (out/"transcript.json").write_text(json.dumps(messages,indent=2)+"\\n")
+    (out/"receipt.json").write_text(json.dumps(receipt,indent=2,sort_keys=True)+"\n")
+    (out/"trace.json").write_text(json.dumps(events,indent=2,sort_keys=True)+"\n")
+    (out/"transcript.json").write_text(json.dumps(messages,indent=2)+"\n")
     print(json.dumps({k:v for k,v in receipt.items() if k not in ("candidate_initial_file_hashes","usage")},sort_keys=True))
 if __name__=="__main__":main()
