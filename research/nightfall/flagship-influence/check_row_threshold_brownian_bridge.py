@@ -41,7 +41,7 @@ def matrices(laws, f, label):
     vals={x:Q(f(x)) for x in X}
     levels=sorted(set(vals.values()))
     m=len(levels)
-    assert 2<=m<=7
+    assert 2<=m<=7,(label,m,levels,len(X),vals)
     r=[sum((mu[x] for x in X if vals[x]==z),Q()) for z in levels]
     assert all(z>0 for z in r) and sum(r,Q())==1
     h=m-1
