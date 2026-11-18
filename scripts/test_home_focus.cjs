@@ -16,7 +16,7 @@ assert.ok(field.includes('href="mathematical-results.html"'),"Specialist mathema
 assert.ok(moon.includes('href="evidence.html#public-downloads"')&&moon.includes('href="review.html#erdos"'),
  "NEW MOON must expose public frozen evidence and independent Erdős audit");
 assert.ok(field.indexOf('id="nf-scroll-cinema"')<field.indexOf('id="flagships"'),"Research cinema before proof catalogue");
-for(const claim of ["PROPOSED DEGREE-TWO THEOREM","Product-space certificate engine","The cubic frontier","A bound is not a proof"])
+for(const claim of ["LEAN-CERTIFIED DEGREE-TWO THEOREM","Product-space certificate engine","The cubic frontier","A bound is not a proof"])
  assert.ok(field.includes(claim),"Active research boundary lost: "+claim);
 for(const claim of ["0.380856370118","17 / 30","131,072","global optimality","INTERNAL REPLAY"])
  assert.ok(moon.includes(claim),"Archived finite evidence lost: "+claim);
@@ -34,5 +34,5 @@ assert.ok(moon.includes('id="live-case"')&&moon.includes('id="archived-records"'
 assert.ok(!field.includes('src="home-system.js"'),"Do not hydrate active cards using historical registry data");
 assert.ok(chrome.includes('["index.html","new-moon.html","constellation.html","review.html"].includes(page)'),"No duplicate home rails");
 assert.ok(field.includes('class="nf-hero-jump">READ THE CURRENT CLAIM &amp; EVIDENCE'),"Current evidence is visible before the long hero copy");
-assert.ok(field.includes("C₂=(10+2√2)²(1+√3)²")&&field.includes("not end-to-end Lean-certified"),"Homepage must show current analytic scalar constant without implying full Lean closure");
+assert.ok(field.includes("C₂≈105.41623982")&&field.includes("run #43732382337")&&field.includes("independent external review remain open"),"Homepage must display merged original-law Q2 Lean scope, actual receipt and outstanding human review");
 console.log("PASS: active NULL FIELD and historical NEW MOON with current theorem passport first");
