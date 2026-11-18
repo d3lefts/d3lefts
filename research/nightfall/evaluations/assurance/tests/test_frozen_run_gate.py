@@ -25,7 +25,7 @@ class FrozenRunGateTests(unittest.TestCase):
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name)
         self.plan = {
-            "schema": "nightfall.eval.plan.v1",
+            "schema": "nightfall.eval.plan.v2",
             "task_id": "DispatchQ-B1",
             "task_commit": "a" * 40,
             "candidate_tree_sha256": "b" * 64,
@@ -34,6 +34,7 @@ class FrozenRunGateTests(unittest.TestCase):
             "runner_image_digest": "sha256:" + "e" * 64,
             "model_id": "laboratory/model-v1@2026-11-18",
             "budget": {"wall_seconds": 300, "tokens": 20000, "tool_calls": 20},
+            "grading": {"tests_total": 2, "max_points": 100},
             "attempt_ids": ["try-1", "try-2"],
             "holdout": {"hidden_tests_visible_to_agent": False,
                         "grader_outside_agent_workspace": True,
@@ -330,8 +331,8 @@ class FrozenRunGateTests(unittest.TestCase):
         self.update_receipt(r, "try-2")
         self.assert_bad()
 
-    def test_counterexample_v1_accepts_conflicting_grader_denominators(self):
-        """Witness v1 gap: two results from the same pinned grader disagree on max/total."""
+    def test_v2_rejects_conflicting_grader_denominators(self):
+        """Regression for independently reproduced v1 accept-with-mismatched-scales bug."""
         self.make_attempt("try-2", completed=True)
         folder = self.root / "attempts" / "try-2"
         grade = json.loads((folder / "grade.json").read_text())
@@ -342,22 +343,50 @@ class FrozenRunGateTests(unittest.TestCase):
         receipt = self.receipt("try-2")
         receipt["grade_sha256"] = write_json(folder / "grade.json", grade)
         self.update_receipt(receipt, "try-2")
-        report = verify(self.root, self.plan_hash)
-        self.assertEqual(
-            [item["max_points"] for item in report[
-                "author_reported_grader_scores_not_verified"]],
-            [100, 7]
-        )
+        self.assert_bad("two attempts cannot disagree on scorer scale")
 
-    def test_counterexample_v1_accepts_arbitrary_single_grade_scale(self):
-        """Witness v1 gap: plan anchors grader digest, but not score scale."""
+    def test_v2_rejects_arbitrary_single_grade_scale(self):
+        """One attempt cannot redefine the frozen point maximum."""
         self.mutate_grade("score_points", 1)
         self.mutate_grade("max_points", 1)
-        report = verify(self.root, self.plan_hash)
-        self.assertEqual(
-            report["author_reported_grader_scores_not_verified"][0]["max_points"],
-            1,
-        )
+        self.assert_bad("one attempt cannot change its own scorer maximum")
+
+    def test_v2_allows_two_completed_at_same_scoring_scale(self):
+        self.make_attempt("try-2", completed=True)
+        result = verify(self.root, self.plan_hash)
+        self.assertEqual(result["frozen_grading_denominator"],
+                         {"tests_total": 2, "max_points": 100})
+        self.assertEqual(result["completed_with_tool_and_grade"], 2)
+        self.assertEqual(result["planned_attempts"], 2)
+
+    def test_v1_plan_rejected_no_silent_legacy_promotion(self):
+        self.plan["schema"] = "nightfall.eval.plan.v1"
+        self.plan.pop("grading")
+        self.plan_hash = write_json(self.root / "plan.json", self.plan)
+        self.assert_bad("v1 plans never pinned the score denominator")
+
+    def test_grade_tests_total_drift_rejected(self):
+        self.mutate_grade("tests_total", 3)
+        self.assert_bad("grader test count drift")
+
+    def test_grade_max_points_drift_rejected(self):
+        self.mutate_grade("max_points", 101)
+        self.assert_bad("grader max points drift")
+
+    def test_plan_missing_frozen_grading_rejected(self):
+        self.plan.pop("grading")
+        self.plan_hash = write_json(self.root / "plan.json", self.plan)
+        self.assert_bad("no unpinned score scale")
+
+    def test_plan_boolean_grading_denominator_rejected(self):
+        self.plan["grading"]["tests_total"] = True
+        self.plan_hash = write_json(self.root / "plan.json", self.plan)
+        self.assert_bad("Python True must not masquerade as integer one")
+
+    def test_plan_empty_grading_denominator_rejected(self):
+        self.plan["grading"]["max_points"] = 0
+        self.plan_hash = write_json(self.root / "plan.json", self.plan)
+        self.assert_bad("no zero score ceiling")
 
     def test_trace_unknown_event_rejected_with_fresh_hash(self):
         a = self.root / "attempts" / "try-1"
