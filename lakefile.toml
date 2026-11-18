@@ -272,6 +272,9 @@ name = "LegacyUniversal"
 srcDir = "research/nightfall/formalization/universal"
 roots = [
   "InfinitePiAAProductTerminal",
+  "InfinitePiAllDegreeFiniteIndicators",
+  "InfinitePiAllDegreeFiniteResidualBridge",
+  "InfinitePiAllDegreeLabelTransfer",
   "InfinitePiQ2ActiveFiniteLabelCondExp",
   "InfinitePiQ2AdjointTransfer",
   "InfinitePiQ2AllL2LabelIntertwining",
@@ -307,6 +310,9 @@ roots = [
 ]
 globs = [
   "InfinitePiAAProductTerminal",
+  "InfinitePiAllDegreeFiniteIndicators",
+  "InfinitePiAllDegreeFiniteResidualBridge",
+  "InfinitePiAllDegreeLabelTransfer",
   "InfinitePiQ2ActiveFiniteLabelCondExp",
   "InfinitePiQ2AdjointTransfer",
   "InfinitePiQ2AllL2LabelIntertwining",
