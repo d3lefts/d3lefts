@@ -127,3 +127,117 @@ real-row problem. The real test is to derive an all-size *coupled*
 threshold inequality, not to expand these tiny LP samples indefinitely.
 The R bridge is mathematically refuted, whereas this full K bridge
 remains a legitimate conjecture.
+
+
+## v1.2 new exact search operator: static Hamming-mask dual packings
+
+For a fixed original source word x and every nonempty coordinate subset
+S, define the **exact Hamming-signature maximum**
+
+  b_x(S) = max{|f(x)-f(y)| :
+                {i:x_i != y_i}=S},
+
+with empty maximum zero. The true pointwise full row LP is EXACTLY
+
+  K_x = min{sum_i a_i : a_i>=0,
+            sum_(i in S) a_i>=b_x(S) for all nonempty S}.
+
+Proof: every original pair constraint with the same difference mask S
+has identical left side; retaining the maximum right side is exact.
+Thus alphabet growth changes the b_x(S) values but NOT the packing
+constraint geometry, which depends only on coordinate count n.
+
+Finite LP duality gives an exact homogeneous fractional packing formula:
+
+  K_x=max{sum_(nonempty S)lambda_S b_x(S):
+         lambda_S>=0, sum_(S contains i)lambda_S<=1 for all i}.
+
+Every extreme point has at most n positive lambda_S because there are
+only n budget constraints. Exact Fraction Gaussian elimination can
+therefore enumerate all vertices by selecting <=n supported masks
+and equally many tight coordinate constraints; no solver floating
+tolerance. Our stand-alone enumerator certifies exactly
+  n=2: 5 vertices; n=3: 16 vertices; n=4: 95 vertices.
+The cardinalities and rational feasibility are independently
+recomputed on each exact-head run; denominators for n=4 are only
+1,2,3. For each search champion, a separately enumerated PRIMAL
+basic feasible row solves the true row LP and equals the dual optimum,
+and a two-replica full-state check independently matches actual
+source-resampling influence.
+
+This produces a reusable source-independent **FULL ROW evaluation
+operator**, unlike the false singleton R surrogate and unlike
+threshold-by-threshold cutoff. It does not prove the real-row
+inequality or constitute a new theoretical complexity claim.
+
+## Preregistered exact-head adversarial findings (2026-11-18)
+
+Script: check_real_row_K_adversarial_exact.py (Python stdlib/Fraction).
+
+Deterministic seeds, initial data include fair additive equality
+and highly biased categorical AND. Positive original categorical
+weights are mutated across [1,2,3,7,31,127], and integer output
+values are varied. Objective functions are kept separate:
+
+  S_K = 4 V²/(K² M)  [SHARP full row conjecture <=1]
+  S_R = V²/(d R² M) [unproved UNIT-coefficient weighted-R conjecture <=1]
+
+Here d is **actually recomputed** as the maximum nonzero anchored
+categorical Mobius interaction degree, not the ambient site count.
+Each run checks 4948 exact rational candidate evaluations across
+four heterogeneous product shapes:
+  (2,2,2)      8 words, 16 full-row dual vertices, 1528 evaluations;
+  (2,2,3)     12 words, 16 vertices, 1528 evaluations;
+  (2,3,3)     18 words, 16 vertices, 1528 evaluations;
+  (2,2,2,2)   16 words, 95 vertices, 364 evaluations.
+
+**RESULT**: In each searched family, maximal S_K=1 and maximal
+S_R=1. Both are ATTAINED by fair additive component controls; no
+violation was found by the deterministic hill-climb. These are
+finite, nonexhaustive, sometimes repeated evaluations, NOT a proof.
+Any strict S_K>1 or S_R>1 automatically fails CI and reports the
+complete source-rational witness with objective score and inputs.
+
+For champions, exact independent source conditional residual
+versus fresh-coordinate two-replica influence equality passed, as
+did the distinct primal/dual full row cost check. There was NO
+integer/rationalization error because every search operation uses
+Fraction arithmetic from the outset.
+
+**Exact-head receipt:** GitHub Actions
+https://github.com/d3lefts/d3lefts/actions/runs/44357834056
+on head e4e6537b0bf6783a8c1d451c5aafcb5b68278eaf
+completed successfully; immutable source/artifact ID 14453982467.
+
+## What the weighted R search DOES and DOES NOT establish
+
+The biased AND family has *algebraic degree d=n* and exact
+  V²/(d R² M)=q_n(1-q_n)² -> e^-1(1-e^-1)²>0.
+Therefore for ANY beta<1 and any fixed C there are original
+independent product laws violating V²<=C d^beta R² M:
+the degree penalty power must be at least 1. This shows the proposed
+linear d penalty is **necessary** at the scale of polynomial exponents,
+but its **sufficiency is open**; small rational tests cannot prove it.
+
+The additive fair degree-one function f=sum_i (2X_i-1) has R=n,
+V=n, M=1, and V²/(dR²M)=1. Thus any possible unit-penalty bound must
+have coefficient c>=1. No claim of optimum c or dimension-free
+proof is made.
+
+If the conjectured weighted R inequality
+  V²<=c d R² M
+were eventually established with universal c, combining it with
+PR #808's **author-side** source Bernstein row bound
+  R<=4 d² B
+would give
+  V²<=16 c d^5 B² M,
+an all-degree polynomial-d exponent-two inequality (stronger
+degree exponent than N-UE2(6)). This is a CONDITIONAL implication,
+NOT a theorem now, and the established failure of the d^0 R bridge
+must remain attached.
+
+**Stop rule:** Do not confuse no counterexample in 4948 tests with
+a general real-row K theorem, a valid weighted-R theorem, or
+certified polynomial-in-degree AA progress. Prioritize an adversarial
+proof of the coupled threshold-PSD conic gate in #814, with exact
+rational LP oracle and explicit R-weighted attack as a backup.
