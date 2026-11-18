@@ -24,6 +24,8 @@ SEEDS = (
     "InfinitePiQ2UnconditionalTerminal",
     "InfinitePiQ2DegreeEquivalence",
     "DQ2SpectralSandwich",
+    "DQ2BinarySection",
+    "DQ2HeatBathScoreTransfer",
     "Q2ShiftedConditionalTargets",
 )
 EXTERNAL_PREFIXES = (
