@@ -32,7 +32,7 @@ class FrozenRunGateTests(unittest.TestCase):
             "prompt_sha256": "c" * 64,
             "grader_sha256": "d" * 64,
             "runner_image_digest": "sha256:" + "e" * 64,
-            "model_id": "laboratory/model-v1",
+            "model_id": "laboratory/model-v1@2026-11-18",
             "budget": {"wall_seconds": 300, "tokens": 20000, "tool_calls": 20},
             "attempt_ids": ["try-1", "try-2"],
             "holdout": {"hidden_tests_visible_to_agent": False,
@@ -259,6 +259,46 @@ class FrozenRunGateTests(unittest.TestCase):
         trace["events"][1]["seq"] = 4
         r = self.receipt()
         r["trace_sha256"] = write_json(a / "trace.json", trace)
+        self.update_receipt(r)
+        self.assert_bad()
+
+    def test_versionless_model_id_rejected(self):
+        self.plan["model_id"] = "laboratory/model"
+        self.plan_hash = write_json(self.root / "plan.json", self.plan)
+        self.assert_bad()
+
+    def test_completed_unanswered_tool_call_rejected(self):
+        a = self.root / "attempts" / "try-1"
+        trace = {
+            "schema": "nightfall.eval.trace.v1", "attempt_id": "try-1",
+            "events": [{"seq": 0, "kind": "tool_call", "tool": "edit_file"}],
+        }
+        r = self.receipt()
+        r["trace_sha256"] = write_json(a / "trace.json", trace)
+        self.update_receipt(r)
+        self.assert_bad()
+
+    def test_orphan_tool_result_rejected(self):
+        a = self.root / "attempts" / "try-1"
+        trace = json.loads((a / "trace.json").read_text())
+        trace["events"][0] = {"seq": 0, "kind": "tool_result", "tool": "edit_file"}
+        r = self.receipt()
+        r["trace_sha256"] = write_json(a / "trace.json", trace)
+        self.update_receipt(r)
+        self.assert_bad()
+
+    def test_malformed_event_kind_cannot_crash_checker(self):
+        a = self.root / "attempts" / "try-1"
+        trace = json.loads((a / "trace.json").read_text())
+        trace["events"][0]["kind"] = {"malformed": True}
+        r = self.receipt()
+        r["trace_sha256"] = write_json(a / "trace.json", trace)
+        self.update_receipt(r)
+        self.assert_bad()
+
+    def test_malformed_outcome_cannot_crash_checker(self):
+        r = self.receipt()
+        r["outcome"] = {"fake": "completed"}
         self.update_receipt(r)
         self.assert_bad()
 
