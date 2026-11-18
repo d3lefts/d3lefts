@@ -61,7 +61,7 @@ for(const term of ["PR #601","PR #644","PR #798"]) {
 }
 assert.ok(evals.includes("not an open-ended tool-using repository agent"));
 assert.ok(evals.includes("No production cost or latency win"));
-assert.ok(evals.includes("not an agent completion"));
+assert.ok(evals.includes("not agent completion costs"));
 assert.ok(evals.includes("Design only / unvalidated weights"));
 assert.ok(engineering.includes("not external human peer review") || engineering.includes("not independent human peer review") || engineering.includes("independent human peer review"));
 assert.ok(about.includes('href="engineering.html"') && portfolio.includes('href="engineering.html"'));
