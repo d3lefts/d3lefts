@@ -112,6 +112,50 @@ theorem finite_source_weighted_overlap_energy
     intro i hi
     exact finite_source_weighted_row_energy p q active z hp hq i)
 
+
+/-- Genuine source activation budget: total leaf occupancy is the
+original-address-law expectation of the active leaf-set size.
+No disjointness of address rows and no lower bound on p are used. -/
+theorem source_activation_budget
+    (p : Address → ℝ) (active : Address → Site → Bool)
+    (t : ℕ)
+    (hp : ∀ a, 0 ≤ p a)
+    (hnorm : (∑ a : Address, p a) = 1)
+    (hcap : ∀ a : Address,
+      ((Finset.univ.filter (fun i : Site => active a i)).card ≤ t)) :
+    (∑ i : Site, ∑ a : Address,
+      if active a i then p a else 0) ≤ (t : ℝ) := by
+  let support : Address → Finset Site :=
+    fun a => Finset.univ.filter (fun i : Site => active a i)
+  have hrewrite :
+      (∑ i : Site, ∑ a : Address,
+        if active a i then p a else 0) =
+      ∑ a : Address, p a * ((support a).card : ℝ) := by
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro a ha
+    calc
+      (∑ i : Site, if active a i then p a else 0) =
+          ∑ i ∈ support a, p a := by
+            simp only [support, Finset.sum_filter]
+      _ = ((support a).card : ℝ) * p a := by simp
+      _ = p a * ((support a).card : ℝ) := by ring
+  have hsum :
+      (∑ a : Address, p a * ((support a).card : ℝ)) ≤
+      ∑ a : Address, p a * (t : ℝ) := by
+    apply Finset.sum_le_sum
+    intro a ha
+    have haCard : ((support a).card : ℝ) ≤ (t : ℝ) := by
+      exact_mod_cast hcap a
+    exact mul_le_mul_of_nonneg_left haCard (hp a)
+  calc
+    (∑ i : Site, ∑ a : Address,
+      if active a i then p a else 0) =
+      ∑ a : Address, p a * ((support a).card : ℝ) := hrewrite
+    _ ≤ ∑ a : Address, p a * (t : ℝ) := hsum
+    _ = (∑ a : Address, p a) * (t : ℝ) := by rw [Finset.sum_mul]
+    _ = (t : ℝ) := by rw [hnorm, one_mul]
+
 /-- Pure scalar budget consequence. hsource and haddr are *explicit*
 conditional total-variance / original-law Efron--Stein obligations; they
 are not derived from f in this declaration. -/
@@ -149,6 +193,7 @@ theorem selector_weighted_terminal_from_source_obligations
 #print axioms Nightfall.SelectorOverlap.finite_weighted_cauchy
 #print axioms Nightfall.SelectorOverlap.finite_source_weighted_row_energy
 #print axioms Nightfall.SelectorOverlap.finite_source_weighted_overlap_energy
+#print axioms Nightfall.SelectorOverlap.source_activation_budget
 #print axioms Nightfall.SelectorOverlap.selector_weighted_terminal_from_source_obligations
 
 end Nightfall.SelectorOverlap
