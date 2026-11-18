@@ -34,3 +34,11 @@ The model-based checker #833 performs thousands of **sequential** operations acr
 **Future acceptance gate:** A repaired candidate should be challenged by an independently implemented, *black-box* multi-process stress experiment in an OS-isolated, credential-free environment, using controlled starts, repeated seeds and a recorded denominator. Those runs complement, but cannot replace, deterministic state-model checking or a formal linearizability proof.
 
 **Attribution:** Human-directed AI-generated adversarial schedule and code; internally reproduced if CI passes. No independent human referee. The reference implementation and withheld grader were neither accessed nor published.
+
+## Source-exact result (2026-11-18)
+
+[GitHub Actions run 44380919138](https://github.com/d3lefts/d3lefts/actions/runs/44380919138) **PASS** on both Python **3.10 and 3.13**. Each spawned two distinct OS processes against the pinned defective starter. Each process returned exactly one lease for job `race`, each claimed attempt 1, with distinct opaque tokens. The persisted DB row had attempts 1 and contained precisely one worker's token. No unexpected unfinished processes. Each CI job preserved a JSON receipt artifact, including exact candidate SHA-256.
+
+**Formal violation witness:** There exists a feasible overlapping two-process execution on the known starter in which two workers simultaneously obtain lease objects for the same job, contradicting ISSUE.md's atomic-claim requirement. This refutes the starter's concurrent safety. It **does not** refute the state-machine oracle's sequential observations, which are for a different experimental regime.
+
+**Certification:** Reproduced internal deterministic counterexample, not formal schedule enumeration, repaired-candidate conformance, human review or a blind agent model result. This is the most limited supported claim. We do not claim process race frequency or likelihood under naturally scheduled starts.
