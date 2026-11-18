@@ -5,6 +5,7 @@ import InfinitePiQ2SourceHilbertTensor
 import InfinitePiQ2AllL2LabelIntertwining
 import InfinitePiQ2RangeProjectionTransfer
 import InfinitePiQ2UnconditionalTerminal
+import InfinitePiQ2HoeffdingDegree
 import Q2ShiftedConditionalTargets
 
 /-!
@@ -16,8 +17,10 @@ and true-label all-L² source heat-bath operator equality to compile in one depe
 
 This shared graph also imports the unconditional infinite-product a.e. L²
 C105.416 theorem; its hypothesis is the triple-original-source-residual
-operator condition. Its equivalence to a chosen ANOVA degree definition
-remains an independent statement-review obligation.
+operator condition. `InfinitePiQ2HoeffdingDegree` proves that Hoeffding
+degree ≤ 2 (L² closure of degenerate components on at most two coordinates)
+implies that condition, giving the Hoeffding-form terminal. Existence of the
+Hoeffding decomposition for arbitrary L² functions is not formalized.
 The theorem audit below prints axioms for ACTUAL imported declarations; no
 hypothesis is discharged by printing an axiom list.
 -/
@@ -61,3 +64,9 @@ hypothesis is discharged by printing an axiom list.
 #print axioms Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_ae
 #print axioms Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional
 #print axioms Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional_variance
+
+-- Hoeffding (degenerate Efron–Stein) degree ≤ 2 bridge and terminal.
+#check Nightfall.InfinitePiQ2HoeffdingDegree.hoeffdingDegreeLeTwo_tripleResidualZero
+#check Nightfall.InfinitePiQ2HoeffdingDegree.infinitePi_q2_105416_hoeffding
+#print axioms Nightfall.InfinitePiQ2HoeffdingDegree.hoeffdingDegreeLeTwo_tripleResidualZero
+#print axioms Nightfall.InfinitePiQ2HoeffdingDegree.infinitePi_q2_105416_hoeffding

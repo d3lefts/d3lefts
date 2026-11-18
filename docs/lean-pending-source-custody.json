@@ -1,8 +1,8 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 29,
-  "as_of": "2026-11-17 UTC",
-  "source_commit": "778135e9aa293ed1f7ea904739b8c3ad5f66f9c0",
+  "revision": 30,
+  "as_of": "2026-11-18 UTC",
+  "source_commit": "2d805e8eabf8733cf01463af9bef9fd37e2407a8",
   "scope": "Exact pending source custody includes newly promoted original-product heat-bath source, with frozen 67 historical records untouched. Scoped original-head pinned Lean CI for the pointwise source-level identity is separately recorded; full infinite-product L² terminal not certified. Two exact new original-product conditional tensor and Hilbert-projection files enrolled as pending source custody, with separate strict named source CI; no unconditional Q2 terminal or novelty promotion. Reconciled source-identical merged 4.36 named receipts for original-product finite-label, bounded source-conditional and label L2 isometry bridges; no historic ledger mutation or infinite-product theorem promotion. Reconciles seven extra original-source Lean blobs merged by parallel Q2 sessions (including source heat-bath and L2 bridges) as unreviewed custody without claiming unrestricted Q2 or overriding prior receipts. Reconcile changed merged SourceBoundedCondExp blob after strict source-level subSigma generalization while preserving older source receipt. Add exact merged supported-native C105.416 original source blob without promoting infinite-product or unreviewed claims. Reconcile three merged exact Lean source receipts for positive atom a.e. extraction, actual finite Boolean labels, and original-product all-L2 operator intertwinning; claim gates remain unreviewed and end-to-end infinite theorem open. Three main-merged original Q2 results on actual source law: label mean/variance, finite-label Hilbert residual degree/influence, and native positive-atom weighted L2 vanishing; source custody only, no unrestricted terminal promotion. Source-certified original-product coordinate influence equality, native triple residual to pointwise degree, finite original-coordinate Boolean test factoring reconciled by exact immutable source blobs; no final infinite-product Q2 promotion. Revision 29 enrolls 13 previously unregistered merged Q2 source blobs into unreviewed custody, preserving the historical 67-file certified ledger and all separate named compiler receipts; this is not a proof promotion.",
   "sources": [
     {
@@ -3224,6 +3224,66 @@
         "named_declaration": "Nightfall.UniversalAuthorityFrontier.exact_authorization_iff_conflict_separation",
         "run": 43630294034
       }
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2CellAverage.lean",
+      "source_blob_sha": "5cba0ae2e5c855a681d44ae4ed4fca8515940d2f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Merged PR #776: integrated pinned Lean 4.36.0-rc2 `lake build Nightfall` + `lake check` passed (run 44171646200) with standard-axiom named audit of infinitePi_q2_105416_ae; earlier per-module receipts runs 44151332468 and 44167592199. Recorded here as source custody only: no historical-ledger promotion, human review or novelty status is inferred."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2UnconditionalTerminal.lean",
+      "source_blob_sha": "837b6066d1dfc1c6b7b294434542555e1d87a817",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Merged PR #776: integrated pinned Lean 4.36.0-rc2 `lake build Nightfall` + `lake check` passed (run 44171646200) with standard-axiom named audit of infinitePi_q2_105416_ae; earlier per-module receipts runs 44151332468 and 44167592199. Recorded here as source custody only: no historical-ledger promotion, human review or novelty status is inferred."
+    },
+    {
+      "path": "research/nightfall/formalization/agent_safety/SemanticBellmanPotential.lean",
+      "source_blob_sha": "e2cec16b123b97b216bb19652fe9524a2c40756e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Merged to main without a recorded scoped Lean receipt in this ledger; source custody only. No certification, human-review or novelty status is inferred."
+    },
+    {
+      "path": "research/nightfall/formalization/permission/PricePermissionFenceDual.lean",
+      "source_blob_sha": "3f0a976643d50b9a7c7efc82d6389419055722bb",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Merged to main without a recorded scoped Lean receipt in this ledger; source custody only. No certification, human-review or novelty status is inferred."
+    },
+    {
+      "path": "research/nightfall/formalization/permission/RobustObservationHull.lean",
+      "source_blob_sha": "c7dd20689d52dd091a143da954f6e6bb90e04984",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Merged to main without a recorded scoped Lean receipt in this ledger; source custody only. No certification, human-review or novelty status is inferred."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2HoeffdingDegree.lean",
+      "source_blob_sha": "37673af7af8f0f0d7a2c2d3ae272842c87a167cd",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Hoeffding degree-two bridge to the a.e. infinite-product C105.416 terminal; integrated lake build/check receipt requested by the PR adding it. Source custody only: no historical-ledger promotion, human review or novelty status is inferred."
     }
   ]
 }
