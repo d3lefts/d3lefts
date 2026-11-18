@@ -53,3 +53,9 @@ The initial public canary **incorrectly classified two valid rejections as contr
 The corrected probe accepts an exception of any class or an explicit `False` result, provided no row was inserted. These two cases are now **positive controls**, not broken behavior. They are not evidence that the starter validates inputs well; only the observed semantic rejection is checked. The earlier **ten-defect headline was incorrect and is withdrawn**; do not cite its counts as confirmed contract violations. Versioned history is retained rather than overwritten. The exact replay of v0.2 must be assessed on its own commit before announcing a replacement result.
 
 Other limits unchanged: exception handling alone cannot certify rollback in arbitrary concurrent histories, test independence from prior observations, hidden grader validity or real agent difficulty.
+
+## Corrected source-exact CI receipt — 18 November 2026
+
+**PASS** [run 44351598574](https://github.com/d3lefts/d3lefts/actions/runs/44351598574) on **Python 3.10 and Python 3.13**. Both independently replayed the same candidate source SHA-256 `05edf787fbd1cb3841ed4aa813361ee1024b354f6fcd7505a56eddf98cbfd406` and reported **8 failed contract cases, 5 passing controls, 0 mismatches** under the corrected seed-profile checker. Artifacts are attached to each runner job. The initial run 44348467883 must not be cited for the number of genuine defects: it improperly rejected `sqlite3.ProgrammingError` and `sqlite3.IntegrityError` in input-rejection cases. The narrow conclusion is that eight semantic violations exist in the defective starter under this checker's specified finite cases.
+
+**Checker independence boundary:** A separate code implementation from the same AI-assisted research program is an internal cross-check. No third-party human review, holdout benchmark certification, blinded agent run or universal proof occurred.
