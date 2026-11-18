@@ -33,8 +33,8 @@ for(const page of navPages){
 }
 const home=read("docs/index.html");
 assert.ok(home.includes('href="active-proof-passport.html#q2-influence"'),"First-screen current proof passport missing");
-assert.ok(home.includes("C₂=(10+2√2)²(1+√3)²"),"Proposed scalar constant drift");
-assert.ok(home.includes("not end-to-end Lean-certified"),"Full quadratic Lean status misrepresented");
+assert.ok(home.includes("C₂≈105.41623982")&&home.includes("FINITE PRODUCTS"),"Merged finite-product scalar theorem and scope drift");
+assert.ok(home.includes("LEAN-CERTIFIED DEGREE-TWO THEOREM")&&home.includes("43732382337")&&home.includes("independent external review remain open"),"Scoped Lean certificate or review boundary missing");
 
 const mathematics=read("docs/mathematical-results.html");
 const review=read("docs/review.html");
