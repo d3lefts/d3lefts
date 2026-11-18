@@ -1,0 +1,88 @@
+name: NIGHTFALL Aaronson–Ambainis product-space terminal (pinned 4.36)
+on:
+  push:
+    branches: [q-all-degree-lift]
+    paths:
+      - 'research/nightfall/formalization/**'
+      - '.github/workflows/nightfall-aa-product-terminal.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/aa_product/**'
+      - 'research/nightfall/formalization/universal/InfinitePiAAProductTerminal.lean'
+      - 'research/nightfall/formalization/product_space/MixedDifferenceDegree.lean'
+      - 'research/nightfall/formalization/vendor/aaronson_ambainis/**'
+      - '.github/workflows/nightfall-aa-product-terminal.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  aa-product-terminal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile the exact 169-module closure (vendored Turturean modules + NIGHTFALL) in dependency order
+        shell: bash
+        run: |
+          set -euo pipefail
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="${M//.//}"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            echo "::group::$M"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean" 2>&1 | tee "/tmp/log-$M.txt")
+            echo "::endgroup::"
+            if grep -q "declaration uses .sorry" "/tmp/log-$M.txt"; then echo "sorry in $M"; exit 1; fi
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+      - name: Strict named-theorem and standard axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/aa-product
+          N=Nightfall.InfinitePiAAProductTerminal
+          C=Nightfall.InfinitePiQ2CellAverage.CellLabels
+          D=Nightfall.ProductSpace.MixedDifference
+          python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiAAProductTerminal.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 1800 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl "$N.infinitePi_aa_product" \
+            --decl "$C.table_aa" \
+            --decl "$C.rtable_degree" \
+            --decl "$C.mdelta_table_zero" \
+            --decl "$C.dinfl_rtable" \
+            --decl "$D.depDegree_of_mdelta" \
+            --decl "$D.dinfl_eq_heatBath" \
+            --decl "Nightfall.ProductSpace.Heterogeneous.heterogeneous_influence" \
+            --json-out lean-receipts/aa-product/receipt.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/aa-product/receipt.json
+      - name: Print axioms and exact types of the terminal (not an independent kernel replay)
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd /tmp/mathlib4
+          cat > NightfallAAProductAudit.lean <<'LEAN'
+          import InfinitePiAAProductTerminal
+          #print axioms Nightfall.InfinitePiAAProductTerminal.infinitePi_aa_product
+          #check @Nightfall.InfinitePiAAProductTerminal.infinitePi_aa_product
+          #print Nightfall.InfinitePiAAProductTerminal.ESDegreeLE
+          #print Nightfall.InfinitePiAAProductTerminal.iterResidual
+          #print axioms Nightfall.ProductSpace.Heterogeneous.heterogeneous_influence
+          LEAN
+          lake env lean NightfallAAProductAudit.lean | tee "$GITHUB_WORKSPACE/lean-receipts/aa-product/axioms.txt"
+          ! grep -E "sorryAx" "$GITHUB_WORKSPACE/lean-receipts/aa-product/axioms.txt"
+      - name: Capture exact source and compiler head
+        if: always()
+        run: |
+          mkdir -p lean-receipts/aa-product
+          git rev-parse HEAD > lean-receipts/aa-product/head
+          cut -d' ' -f2 research/nightfall/formalization/aa_product/CLOSURE.txt | xargs sha256sum > lean-receipts/aa-product/source-sha256
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: aa-product-terminal-${{ github.run_id }}
+          path: lean-receipts/aa-product
+          if-no-files-found: warn
