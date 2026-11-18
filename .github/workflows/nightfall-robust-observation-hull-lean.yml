@@ -1,0 +1,93 @@
+name: NIGHTFALL robust observation-hull Q2-to-permission certificate
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/price_permission/robust_observation_hull/**'
+      - 'research/nightfall/formalization/permission/RobustObservationHull.lean'
+      - '.github/workflows/nightfall-robust-observation-hull-lean.yml'
+      - '.github/actions/setup-nightfall-lean/**'
+      - 'scripts/lean_bridge.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+concurrency:
+  group: nightfall-response-hull-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  source-bound-gram-and-lean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Exact original-source convex-hull and supporting-witness verifier
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I research/nightfall/price_permission/robust_observation_hull/check_hull_exact.py \
+            research/nightfall/price_permission/robust_observation_hull/source_bound_hull_witness.json --self-test
+      - name: Independent BigInt source-world quadratic minimizer
+        shell: bash
+        run: |
+          set -euo pipefail
+          node research/nightfall/price_permission/robust_observation_hull/check_hull_independent.cjs
+      - name: Independent original-world quadratic observation locality and cubic attack
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I research/nightfall/price_permission/robust_observation_hull/check_quadratic_gain_locality.py
+      - name: Exact pinned Lean and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile original generic rational hull-dual source
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/permission/RobustObservationHull.lean /tmp/mathlib4/RobustObservationHull.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/RobustObservationHull.olean RobustObservationHull.lean)
+      - name: Verify two named theorem types and allowed foundational axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/robust-observation-hull
+          python3 scripts/lean_bridge.py research/nightfall/formalization/permission/RobustObservationHull.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --contract research/nightfall/price_permission/robust_observation_hull/lean_type_contract.json \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.RobustObservationHull.rational_hull_supporting_certificate \
+            --decl Nightfall.RobustObservationHull.rational_hull_matching_optimal \
+            --json-out lean-receipts/robust-observation-hull/named.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/robust-observation-hull/named.json
+      - name: Record original source and pin digests
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/robust-observation-hull
+          git rev-parse HEAD > lean-receipts/robust-observation-hull/source-head.txt
+          cat lean-toolchain > lean-receipts/robust-observation-hull/toolchain.txt
+          if test -d /tmp/mathlib4/.git; then
+            git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/robust-observation-hull/mathlib-head.txt
+          fi
+          sha256sum \
+            research/nightfall/formalization/permission/RobustObservationHull.lean \
+            research/nightfall/price_permission/robust_observation_hull/source_bound_hull_witness.json \
+            research/nightfall/price_permission/robust_observation_hull/check_hull_exact.py \
+            research/nightfall/price_permission/robust_observation_hull/check_hull_independent.cjs \
+            research/nightfall/price_permission/robust_observation_hull/check_quadratic_gain_locality.py \
+            research/nightfall/price_permission/robust_observation_hull/lean_type_contract.json \
+            research/nightfall/price_permission/robust_observation_hull/RESEARCH_NOTE.md \
+            > lean-receipts/robust-observation-hull/SHA256SUMS.txt
+      - name: Upload original-source scoped certificate
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nightfall-robust-observation-hull-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/robust-observation-hull
+          if-no-files-found: warn
