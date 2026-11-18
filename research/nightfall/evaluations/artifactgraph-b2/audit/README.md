@@ -55,3 +55,21 @@ A separate AI-assisted implementation can reveal specific mistakes in the author
 The next decisive experiment is an **independently implemented correct alternate solution**, with a preregistered oracle-equivalence test and adversarial mutations. Only after a trusted repair passes independent and author graders, and real agents are run under identical frozen budgets in OS isolation, should task difficulty or model comparisons be claimed.
 
 **Data custody:** never include hidden grader, author solution or private mutation archive in a public site release. Use CI receipt artifacts for numeric outcomes; do not hand-transcribe unverified values into a promoted benchmark registry.
+
+## Exact-source CI receipt — 18 November 2026
+
+**PASS:** [run 44354996082](https://github.com/d3lefts/d3lefts/actions/runs/44354996082), including two successful \`contract-audit\` jobs with attached JSON receipt artifacts. Python 3.10.22 and 3.13.18 each reported **20/20 predicted outcomes: 9 PASS, 11 VIOLATION, 0 ERROR, 0 mismatches**. The deliberately defective starter is the object under test, not a blind AI-generated patch. No author-side hidden-grader score is reproduced by these receipts.
+
+The source-level Python module SHA-256 identities recorded independently in **both** job logs were:
+
+| Module | SHA-256 |
+|---|---|
+| \`engine.py\` | \`46182d02c68dba0a9e97454a9b9497e9d80d9651df8543383e387b00dbd83628\` |
+| \`cache.py\` | \`a809ca16470dc30b99ae9f46e707dceea7b57e94b7d8375e94fc0c5a8ec8eebb\` |
+| \`manifest.py\` | \`3aa3f096d914c75b33fe6cdf4319ceff068d5e4687c468d2bf2f8c4724c5ceb8\` |
+
+The 11 failures are **semantic, finite negative controls**, not 11 agent attempts or 11 independent discovered vulnerabilities in production software. Several arise from intentionally seeded defects already known to the task author. The additional JSON Boolean version controls are independent boundary challenges. The report cannot certify completeness, long-horizon difficulty or task novelty.
+
+### Audit priority
+
+Prioritize a separately implemented **correct alternative repair** before improving cosmetic rubric detail. That independent repair must satisfy all 20 public probes and the unchanged private grader in an isolated environment; authors should then introduce at least one new mutation family after freezing grader version. Unexpected failures or grader disagreement block certification. Keep the public source and withheld reference strictly separated.
