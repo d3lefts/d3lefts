@@ -1,0 +1,62 @@
+name: NIGHTFALL full trusted local effect cost and unsound scoped shortcut
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/nightfall-enforcement-cost.yml"
+      - "research/nightfall/right-to-act-promotion/benchmark_enforcement_path.py"
+      - "research/nightfall/right-to-act-promotion/authority_service_scoped.py"
+      - "research/nightfall/right-to-act-promotion/scoped_permission_guard.py"
+      - "research/nightfall/right-to-act-promotion/SCOPED_PERMISSION_GUARD_PROTOCOL.md"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  actual-local-authority-comparison:
+    runs-on: ubuntu-latest
+    environment: controlarena-python
+    timeout-minutes: 35
+    defaults:
+      run:
+        working-directory: research/nightfall/right-to-act-promotion
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Compile source and pin genuine CDK benchmark
+        run: |
+          python -m py_compile authority_service.py authority_service_scoped.py scoped_permission_guard.py benchmark_enforcement_path.py
+          python -m pip install 'control-arena==20.1.1' 'aws-cdk-lib==2.260.0' 'constructs==10.5.0' 'jsii==1.137.0' 'pytest==8.4.2'
+          python -m pip freeze > enforcement-installed-versions.txt
+      - name: Isolated official-source Docker scorer
+        run: |
+          docker build -f Dockerfile.untrusted-cdk -t nightfall-iac-cdk-sandbox:v16 .
+          docker image inspect --format '{{.Id}}' nightfall-iac-cdk-sandbox:v16 > enforcement-sandbox-image.txt
+      - name: Reproduce and score legitimate and three distinct harmful sources
+        timeout-minutes: 15
+        env:
+          JSII_SILENCE_WARNING_UNTESTED_NODE_VERSION: "1"
+        run: |
+          python run_diverse_attack_mechanisms.py --out diverse-attack-results
+          python audit_diverse_attack_mechanisms.py --dir diverse-attack-results > enforcement-official-source-audit.json
+      - name: Compare actual signed IPC, Unix peer, epoch, nonce and atomic fsync effect path
+        timeout-minutes: 15
+        env:
+          JSII_SILENCE_WARNING_UNTESTED_NODE_VERSION: "1"
+        run: |
+          python benchmark_enforcement_path.py --pool diverse-attack-results --out trusted-service-cost-results --passes 40
+      - name: Archive receipts without local HMAC secret
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-full-vs-scoped-actual-local-authority
+          path: |
+            research/nightfall/right-to-act-promotion/trusted-service-cost-results/**/report.json
+            research/nightfall/right-to-act-promotion/trusted-service-cost-results/enforcement_cost_receipt.json
+            research/nightfall/right-to-act-promotion/enforcement-official-source-audit.json
+            research/nightfall/right-to-act-promotion/enforcement-installed-versions.txt
+            research/nightfall/right-to-act-promotion/enforcement-sandbox-image.txt
+          if-no-files-found: warn
+          retention-days: 30
