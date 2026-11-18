@@ -1,4 +1,4 @@
-# NIGHTFALL rainbow influence theorem: fair-cube Q3 and bounded nonfair-coordinate transfer (v1.2)
+# NIGHTFALL rainbow influence theorem: fair-cube Q3 and bounded nonfair-coordinate transfer (v1.3; prior-art correction)
 
 **2026-11-17/18. Status: author-side analytic theorem with exact finite rational replay, not Lean-certified, not independent external review, not novelty-cleared.** Earlier v1.0 C<3661 obtained by using general Q2 with a fivefold amplitude loss; v1.1 sharpens this **16.6x** by using degree-parity selection *before* quadratic control. No all-product or all-degree total-variance claim.
 
@@ -15,7 +15,7 @@ Consequently
 
 **Var(f)^2 <= (12+2sqrt(2))^2 B^2 M = (152+48sqrt(2)) B^2 M < 220 B^2 M.**
 
-At B=0 or M=0, all nonconstant coefficients vanish and the inequality holds with equality. This is stronger in variance exponent, and numerically stronger at degree 3, than the all-degree uniform-cube displayed bound of Turturean (arXiv:2611.09773). It is **strictly narrower in degree and source law**, and does not subsume the all-degree theorem.
+At B=0 or M=0, all nonconstant coefficients vanish and the inequality holds with equality. **CORRECTED PRIOR-ART INTERPRETATION:** This does NOT establish variance exponent two at fixed degree for the first time. Defant, Mastyło and Pérez (2019) already proved that for bounded functions on the uniform Boolean cube, max original fair influence is at least Var(f)^2/(d^4 exp(4d)). The improvement here is an **explicit numerical degree-three coefficient**: at d=3, DMP gives C_DMP=81 exp(12)≈13,183,138, while this author-side derivation gives C=152+48sqrt(2)≈219.8823, approximately 59,955-fold smaller. The comparison is between these *two displayed estimates*, not a certified best-prior constant or first-ever d=3 improvement. Turturean's 2026 breakthrough is **polynomial dependence on the degree d** for all d; he openly leaves polynomial-in-d variance exponent two unresolved. Therefore this fixed-degree bound does **not** subsume, solve, or surpass his main theorem. [Turturean §1.4, §9.5](https://arxiv.org/abs/2611.09773); [DMP 2019, Math. Ann.](https://arxiv.org/abs/1706.03670).
 
 ## Exact norm-one r-color projector
 
@@ -65,7 +65,7 @@ At d=1,2,3 the coefficients are 1, 8, 81. This has exponential degree dependence
 - Exact on-repo checker: check_cubic_fair_rainbow.py; 45 seeded Fraction models, exhaustive r-colorings/vertices (up to six fair coordinates), a separate **direct table-value parity projection evaluator** against independent Fourier support calculations, all original flip influences from actual values, and the eight-variable routing stress case with V=1 and M=1/2.
 - A CI workflow is provided; its green check, if achieved, proves only these finite replays, **not** the theorem for every n. The analytic argument invokes classical Hilbert-valued Khintchine and previously author-side PR #804, so **no new Lean kernel theorem is claimed**.
 - Infinite products of fair-sign coordinates admit an author-side transfer by finite-coordinate conditional expectations (L∞, degree and influence contraction; L² convergence). A named Lean proof for this new cubic result is not yet present.
-- Prior art: DFKO (2006/07), O'Donnell–Zhao (2016), Defant–Mastyło–Pérez (2019) give earlier exponential-in-degree influence results. Escudero Gutiérrez (2023) proves degree-independent influence for the distinct completely bounded homogeneous class. These are substantive comparators; **novelty, optimal constants and global priority remain unresolved**.
+- Prior art: DFKO (2006/07), O'Donnell–Zhao (2016), and **Defant–Mastyło–Pérez (2019) already establish variance exponent two with exponential degree dependence**; DMP explicitly gives max influence ≥ Var(f)^2/(d^4 e^(4d)), as quoted in Turturean §1.4. Escudero Gutiérrez (2023) proves degree-independent influence for the distinct completely bounded homogeneous class. These are substantive comparators; **novelty, optimal constants and global priority remain unresolved**.
 - The unrestricted arbitrary-bias/categorical Q3 exponent-two theorem remains **OPEN**, as do universal N-UE2(6) and N-UE2(2). Replicated fair orientations produce environment-dependent maxima and cannot be averaged into original-law max influence without a new source-consistent coupled theorem (see [PR #803](https://github.com/d3lefts/d3lefts/pull/803)).
 
 **Discovery graph:** low-degree cube -> exact parity representations -> norm-one r-color projectors -> multipartite Khintchine -> 1/2 and 2/9 Fourier energy survival -> noise-extracted degree-one amplitude -> sector recombination -> cubic exponent-two -> unresolved arbitrary-law transfer.
@@ -90,4 +90,13 @@ The hybrid bound remains meaningful with many arbitrary-law coordinates whenever
 
 **New independent exact checker:** check_cubic_mixed_anchor.py independently enumerates original resampling influences, conditional fair projection, source-law Poincare remainder, and k=1,2,3 constants for 36 rational models including zero-weight categorical atoms. Exact finite checks are not a universal certificate; a dedicated Lean proof and independent expert review remain open.
 
-**Explicit limit:** Does not establish the universal arbitrary-product cubic inequality with a constant independent of k, does not establish N-UE2(6)/(2), and does not assert priority. The v1.1 fair-cube C<220 and v1.2 mixed-law hybrid are author-side derived from classical tools and the #804 anchored theorem.
+**Explicit limit and novelty correction:** Fixed-degree exponent two was known by 2019; the candidate contribution is an improved explicit d=3 constant in a known regime, with a bounded-k original-law extension requiring separate prior-art audit. It does not establish the universal arbitrary-product cubic inequality with a constant independent of k, does not establish N-UE2(6)/(2), and does not assert priority. The v1.1 fair-cube C<220 and v1.2 mixed-law hybrid are author-side derived from classical tools and the #804 anchored theorem.
+
+
+## v1.3 correction ledger (2026-11-18)
+
+- **Retracted claim:** Calling the d=3 exponent-two result a new exponent or a breakthrough surpassing Turturean/Stanford. This conflated the two axes: fixed-degree variance exponent and **uniform polynomial degree dependence**.
+- **Verified attribution:** Turturean §1.4 explicitly attributes `max_j Inf_j(f) >= Var(f)^2/(d^4 exp(4d))` to Defant, Mastyło and Pérez (2019); §9.5 explicitly leaves all-degree variance exponent 2 with polynomial degree dependence open.
+- **Corrected classification:** Quantitative candidate with ~59,955x coefficient reduction against the *DMP stated bound at d=3*, not against the strongest unknown d=3 literature constant; no novelty or sharpness certification.
+- **Required independent audit:** establish stronger applicable pre-2026 or later degree-three constants, check all influence normalizations and half-range scaling, audit anchored #804 proof and equality cases, and obtain non-author proof review and Lean certification before promotion.
+- **Actual landmark:** prove a *uniform-in-d* `Var(f)^2 <= C d^beta B^2 M` with absolute C and polynomial d^beta. The conjectured beta=2 is the sharp degree-power objective. Fixed-d constants, however small, do not discharge either conjecture.
