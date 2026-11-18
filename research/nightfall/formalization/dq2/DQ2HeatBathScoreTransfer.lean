@@ -109,4 +109,26 @@ theorem biased_heatbath_q2_scalar_terminal
 #print axioms Nightfall.DQ2.reference_q2_transfer
 #print axioms Nightfall.DQ2.biased_heatbath_q2_scalar_terminal
 
+/-- The marginal-variance parameter is redundant once the native conditional
+variance floor is available. Exact scalar coefficient is K0*4*L²/(gamma⁵*v⁷),
+still conditional on the stated variance/influence operator comparisons. -/
+theorem local_floor_heatbath_q2_scalar_terminal
+    (Vdep Vprod Idep Iprod K B γ v L : ℝ)
+    (hVdep : 0 ≤ Vdep) (hVprod : 0 ≤ Vprod)
+    (hK : 0 ≤ K) (hγ : 0 < γ) (hv : 0 < v)
+    (hVar : γ ^ 2 * v ^ 2 * Vdep ≤ 2 * Vprod)
+    (hInfluence : v ^ 3 * γ * Iprod ≤ L ^ 2 * Idep)
+    (hProductQ2 : Vprod ^ 2 ≤ K * B ^ 2 * Iprod) :
+    (γ ^ 5 * v ^ 7) * Vdep ^ 2 ≤
+      4 * L ^ 2 * K * B ^ 2 * Idep := by
+  calc
+    (γ ^ 5 * v ^ 7) * Vdep ^ 2 =
+        (γ ^ 5 * v ^ 4 * v ^ 3) * Vdep ^ 2 := by ring
+    _ ≤ 4 * L ^ 2 * K * B ^ 2 * Idep :=
+      biased_heatbath_q2_scalar_terminal Vdep Vprod Idep Iprod
+        K B γ v v L hVdep hVprod hK hγ hv hv
+        hVar hInfluence hProductQ2
+
+#print axioms Nightfall.DQ2.local_floor_heatbath_q2_scalar_terminal
+
 end Nightfall.DQ2
