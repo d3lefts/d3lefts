@@ -12,12 +12,12 @@ from math import prod
 def spin(s,i): return 1 if (s>>i)&1 else -1
 
 def law_of(n,edges):
-    raw={s:prod((1+t*spin(s,i)*spin(s,j) for i,j,t in edges),Q(1)) for s in range(1<<n)}
+    raw={s:prod((1+t*spin(s,i)*spin(s,j) for i,j,t in edges),start=Q(1)) for s in range(1<<n)}
     Z=sum(raw.values())
     return {s:w/Z for s,w in raw.items()}
 
 def moment(p, inds):
-    return sum((w*prod((spin(s,i) for i in inds),1) for s,w in p.items()),Q(0))
+    return sum((w*prod((spin(s,i) for i in inds),start=1) for s,w in p.items()),Q(0))
 
 def positive_definite(mat):
     size=len(mat)
@@ -58,7 +58,7 @@ def audit(n, edges, H, tag):
             for T in combinations(range(n),3) if any(i in H for i in T)}
     assert cubics
     def M(s):
-        return sum((c*prod((spin(s,i) for i in T),1) for T,c in cubics.items()),Q(0))
+        return sum((c*prod((spin(s,i) for i in T),start=1) for T,c in cubics.items()),Q(0))
     # Correct all mean physical gradients, including outside H.
     linear={
         i:-sum((c*moment(p,tuple(j for j in T if j!=i))
@@ -68,7 +68,7 @@ def audit(n, edges, H, tag):
     def f(s):return M(s)+sum((a*spin(s,i) for i,a in linear.items()),Q(0))
     def gradient(s,i):
         return linear[i]+sum(
-            (c*prod((spin(s,j) for j in T if j!=i),1)
+            (c*prod((spin(s,j) for j in T if j!=i),start=1)
              for T,c in cubics.items() if i in T),Q(0))
     assert all(sum((p[s]*gradient(s,i) for s in p),Q(0))==0 for i in range(n))
     m=sum((p[s]*f(s) for s in p),Q(0))
