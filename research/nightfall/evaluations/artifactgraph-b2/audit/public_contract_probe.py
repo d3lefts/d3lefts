@@ -75,8 +75,9 @@ def assert_normal_build(home):
     result = Builder(root).build(["app"])
     check(result.built == ("core", "app"), "wrong initial dependency order")
     check(set(result.outputs) == {"core", "app"}, "wrong output closure")
-    check(Builder(root).read_output("app").startswith(b"AGB2\n"),
-          "expected starter framing not preserved")  # informational seed guard
+    artifact = Builder(root).read_output("app")
+    check(hashlib.sha256(artifact).hexdigest() == result.outputs["app"],
+          "artifact and reported content digest disagree")
 
 
 def assert_reopened_cache(home):
@@ -108,8 +109,9 @@ def assert_missing_object_repair(home):
     again = Builder(root).build(["n"])
     check(again.built == ("n",), "missing object reused")
     check(object_path(root, again.outputs["n"]).is_file(), "missing object not rebuilt")
-    check(Builder(root).read_output("n") == Builder(root).read_output("n"),
-          "reopened object did not persist")
+    content = Builder(root).read_output("n")
+    check(hashlib.sha256(content).hexdigest() == again.outputs["n"],
+          "repaired persistent object does not match its digest")
 
 
 def assert_invalid_index_shape(home):
@@ -124,7 +126,10 @@ def assert_binary_source(home):
     raw = bytes([0, 255, 10, 128, 13])
     root = workspace(home, {"n": node("n.dat")}, {"n.dat": raw})
     Builder(root).build(["n"])
-    check(Builder(root).read_output("n").endswith(raw), "binary source not represented")
+    first = Builder(root).build(["n"]).outputs["n"]
+    (root / "src" / "n.dat").write_bytes(raw + b"second")
+    second = Builder(root).build(["n"]).outputs["n"]
+    check(first != second, "binary source change was ignored")
 
 
 def assert_deterministic_clean_rebuild(home):
