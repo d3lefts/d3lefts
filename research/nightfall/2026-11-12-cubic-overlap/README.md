@@ -2,7 +2,7 @@
 
 **Classification:** author-side analytic *conditional lemma* + finite exact falsification; missing universal spike-tail theorem; no referee or Lean cert; no global priority claim.
 
-[Full mathematical note and proof](AGGREGATE_LINK_OVERLAP_LEMMA.md) | [Exact overlap checker](check_aggregate_link_overlap.py) | [Directed spike-tail search](search_spike_tail.py)
+[Full mathematical note and proof](AGGREGATE_LINK_OVERLAP_LEMMA.md) | [Exact overlap checker](check_aggregate_link_overlap.py) | [Directed spike-tail search](search_spike_tail.py) | [New fair-binary routing proof attack](FAIR_BINARY_ROUTING_OBSTRUCTION.md)
 
 ## Setup and proved conditional result
 
@@ -26,11 +26,16 @@ It also gives the unconditional *data-dependent*, not constant-uniform, inverse-
 
 This checkpoint extends the [tripartite link-energy representation](../../new-moon/spectral-observability/homogeneous-cubic-v8/TRIPARTITE_LINK_OPERATOR.md), itself part of the merged [PR #349](https://github.com/d3lefts/d3lefts/pull/349). Do not confuse this conditional overlap operator with an unrestricted cubic proof.
 
+## Fair-binary routing obstruction (new exact counterexample to a constant-one subclaim)
+
+A pure 8-bit three-partite cubic with all inputs fair signs has `B=1`, `V=1`, `max influence M=1/2`, and four aggregate rows all with `kappa=4`. Its `W_spike(3)^2/(B^2 M)=2`, falsifying the **specific** guess `W_spike(3) <= B sqrt(M)`, not the general unresolved spike-tail conjecture. It forces any universal pure-cubic link coefficient `C >= sqrt(2)`. Independent disjoint copies give an unbounded-cover family with the same ratio, but still fall under independent-block results. See the [full proof and exact 256-state checker](FAIR_BINARY_ROUTING_OBSTRUCTION.md).
+
 ## Replay and next decisive experiment
 
 ```sh
 python3 -I research/nightfall/2026-11-12-cubic-overlap/check_aggregate_link_overlap.py
 python3 -I research/nightfall/2026-11-12-cubic-overlap/search_spike_tail.py
+python3 -I research/nightfall/2026-11-12-cubic-overlap/check_fair_binary_routing.py
 ```
 
 Try rational skew-atom 2–3 A / 2–3 B / 2–3 C models; independently recalculate conditional second and fourth moments of any candidate violation. If no structural progress, switch operator families to conditional-event overlap or link-covariance. **Do not promote the spike-tail conjecture on finite sampling.**
