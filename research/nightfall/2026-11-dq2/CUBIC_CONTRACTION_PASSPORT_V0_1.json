@@ -1,0 +1,66 @@
+{
+  "schema": "nightfall-proof-passport-v1",
+  "id": "NF-CUBIC-CONTRACTION-20261117",
+  "version": "0.1",
+  "date": "2026-11-17",
+  "status": "DRAFT_AUTHOR_ANALYTIC",
+  "novelty": "no novelty claimed; prior art strongly overlaps",
+  "independent_human_review": false,
+  "claims": [
+    {
+      "id": "CUBIC-H1",
+      "statement": "Finite dependent binary law with full-function heat-bath Poincare constant A has Var(f)<=sum_{k=1}^d A^k k! sum_{|T|=k}(E D_T f)^2 for every algebraic degree<=d polynomial.",
+      "evidence": "analytic conditional-variance identity and inductive Poincare; exact finite rational tests",
+      "lean_status": "scalar recursion only; original-law statement not compiled"
+    },
+    {
+      "id": "CUBIC-H2",
+      "statement": "Under mean-zero spins, cubic degree<=3 has Var(f)<=A sum_i (a_i+sum_jk c_ijk C_jk)^2+2 A² sum b_ij²+6 A³ sum c_ijk².",
+      "evidence": "direct algebraic expansion of derivative expectation tensors",
+      "lean_status": "not formalized"
+    },
+    {
+      "id": "CUBIC-H3",
+      "statement": "Wick-like correction a_i=-sum_jk c_ijk C_jk cancels mean gradients; pure cubic+linear corrected functions have Var<=6 A³ sum c².",
+      "evidence": "symbolic identity + exact finite Ising checks",
+      "lean_status": "not formalized"
+    },
+    {
+      "id": "CUBIC-H4",
+      "statement": "Connected Ising-chain uncorrected cubic has Varν/Varμ=1+(k−1)r², proving naive degree3 covariance comparison impossible at fixed Dobrushin r.",
+      "evidence": "independent edge bond exact formula, finite rational replay",
+      "lean_status": "not formalized"
+    },
+    {
+      "id": "CUBIC-H5",
+      "statement": "Scalar finite-energy telescoping and hierarchy induction.",
+      "evidence": "Lean proof source on draft branch",
+      "lean_status": "current-head pinned CI pending; does NOT prove H1 original-law premise"
+    }
+  ],
+  "dependencies": [
+    "Original-source Poincare (not formalized)",
+    "Mathlib pinned Lean 4.36.0-rc2",
+    "finite algebraic derivatives",
+    "previous DQ2 research #788 and draft #789"
+  ],
+  "prior_art": [
+    "Adamczak & Wolff (2015) arXiv:1304.1826",
+    "Götze, Sambale, Sinulis (2018) arXiv:1801.06348",
+    "Adamczak et al. arXiv:1809.03187",
+    "Diakonikolas et al. (2021) arXiv:2102.02171"
+  ],
+  "files": [
+    "research/nightfall/2026-11-dq2/CUBIC_CONTRACTION_HIERARCHY_V0_1.md",
+    "research/nightfall/formalization/observability/CubicContractionHierarchyScalar.lean",
+    "scripts/check_cubic_contraction_hierarchy_exact.py",
+    ".github/workflows/nightfall-cubic-contraction.yml"
+  ],
+  "no_claims": [
+    "Not unrestricted cubic exponent-two",
+    "No independent original-law Lean terminal",
+    "No novel first discovery",
+    "Not a competitive coefficient improvement"
+  ],
+  "cheapest_next_experiment": "Source-matched Lean proof of original-law derivative identity and Poincare recurrence, then adversarial test of any proposed cubic influence lower comparison"
+}
