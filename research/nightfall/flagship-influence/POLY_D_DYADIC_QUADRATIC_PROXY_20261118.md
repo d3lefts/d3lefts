@@ -153,3 +153,100 @@ This analytically excludes the canonical exponential-leaf address family as a co
 The updated exact checker compares the two *separately derived* address spectral formulas for k=1..16 at five rational scales, verifies the exact C<=1 consequence for all dyadic selector families k=1..128, verifies the nonnegative integer/rational SOS identity, and adds star/matching finite fixtures. These tests support and challenge the written author-side proof but are **not** Lean or human-independent proof review.
 
 Remaining decisive search: connected high fractional-cover support hypergraphs without a common vertex, with substantial interacting overlaps not decomposable into disjoint monomials or selector address blocks. Optimize the actual A over every supported source-disagreement set; do not substitute the d^2 B amplitude upper bound. If no structural counterexample emerges, look for a global source-coupled overlap-congestion operator. The universal C=1 gate and unrestricted exponent-two claim both remain **OPEN**.
+
+
+## v0.4 STRUCTURAL PIVOT: linear-only dyadic source proxy (preferred conditional target)
+
+**Research status:** Exact author-side spectral reduction and three analytically proved restricted families; all-degree linear-annealed gate remains **OPEN**. This improves the *conditional* d-dependence from O(d^5 log d) of the quadratic projection to **O(d^3 log d)**, NOT an unconditional influence theorem. Never represent the conditional theorem as a completed proof. Earlier quadratic results v0.1–v0.3 remain archived; this is a representation change, not a retrospective claim of solving the main conjecture.
+
+### Proposition L (exact source-coupled first-chaos representation)
+
+Keep the genuine two-replica paired construction and dyadic K from v0.1 but replace Q by
+
+    L_(X,Y)(sigma) = Pi_{selector Fourier level 1} h(W(sigma)).
+
+Let U1=E_{K,X,Y} Var_sigma L, J1_i=E_{K,X,Y} Inf_i^sigma L, and A1=esssup |L| over all supported K,X,Y,sigma. Write
+
+    w1_s(t)=s t (1-t)^(s-1),    v1_s(t)=t (1-t)^(s-1).
+
+The same source-orthogonal Fourier derivation gives the *exact* identities
+
+    U1=sum_{S != empty} fhat(S)^2 E_K w1_|S|(t),
+    J1_i=sum_{S containing i} fhat(S)^2 E_K v1_|S|(t).
+
+For m=ceil(log2 d), d>=2, the source-consistent invariants improve to
+
+    V/(6m) <= U1 <= V,
+    J1_i <= Inf_i(f)/m,
+    A1 <= d B.
+
+For each 1<=s<=d choose dyadic t in [1/(2s),1/s]; then w1_s(t)>=1/6, because (1-1/s)^(s-1)>=1/e>1/3. The sum of dyadic t is <1. For the amplitude, if P_x(rho)=T_rho(g_(X,Y))(sigma) on the fair selector cube, then L=P_x'(0); P_x is a degree-d polynomial bounded by B on [-1,1], so the classical trigonometric Bernstein derivative bound gives |P_x'(0)|<=dB. No source-independent fake coefficient distribution is used.
+
+### Sharper sufficient gate: polynomial d^3 log d, CONDITIONAL
+
+The new unknown source-coupled inequality is
+
+    (LIN-ANNEALED-d): U1^2 <= C*d*A1^2*max_i J1_i
+
+for one absolute C for **all original bounded degree<=d fair-cube sources**, using the dyadic paired construction above. If it holds, then
+
+    V^2 <= 36 C m d^3 B^2 M,  m=ceil(log2 d),
+
+which is O(d^3 log d) in degree at variance exponent two. Proof: V<=6m U1, J1max<=M/m, and A1<=dB. In contrast the previous quadratic gate only conditionally gave 36 C m d^5 B^2 M (and its coarser 36 C d^6 statement). Neither gate has been proved universally; this reduction is a **research target, not a universal theorem**.
+
+### Sharpness of the linear gate's degree loss within this representation
+
+For pure parity f=chi_[d], A1=1, U1=d J1_i and U1>=1/(6m). Therefore
+
+    U1^2/(A1^2 J1max) = d U1 >= d/(6m).
+
+No linear-proxy annealed gate with degree loss o(d/log d) can hold universally, even for source-coupled families. Thus a linear-d loss is within a logarithmic factor of necessary for this *particular proxy method*. This does not establish that the original influence theorem needs a degree exponent 3.
+
+### Restricted-family theorem L-S: common hub, C=1
+
+When all nonconstant Walsh supports meet a fixed site i0, the exact identity w1_s=s v1_s<=d v1_s gives U1<=d J1_i0. Since L is selector-mean-zero and |L|<=A1, U1<=A1^2. Multiply:
+
+    U1^2 <= d A1^2 J1_i0.
+
+### Restricted-family theorem L-M: disjoint Walsh monomials, C=1/2
+
+For f=c+sum_a c_a chi_(S_a) with pairwise disjoint nonempty supports, choose a source-disagreement set meeting each S_a exactly once. The resulting linear selector projection has amplitude sum_a|c_a|, so A1>=sum_a|c_a|. With averaged w_a,v_a, we have U1=sum c_a^2 w_a and J1max=max_a c_a^2 v_a. The binomial one-success estimate
+
+    w1_s(t)=P(Bin(s,t)=1) <= 1/2   for 0<t<=1/2, s>=1
+
+follows for s=1 directly, and for s>=2 by maximizing at t=1/s and using Bernoulli's inequality (1+1/(s-1))^(s-1)>=2. Hence w_a^2/v_a=s w_a<=d/2. Therefore
+
+    U1^2 <= (d/2) A1^2 J1max.
+
+This coefficient 1/2 is attained for a single degree-one fair dictator under the d=1, t=1/2 convention, so this restricted normalization cannot improve universally below 1/2.
+
+### Restricted-family theorem L-T: exact no-loss direct-sum tensorization
+
+For f=sum_a f_a on pairwise disjoint coordinate blocks under the *same* global d and K distribution, each L_a is a mean-zero **linear** selector polynomial on its own disjoint selector block. For each source pair, sup_sigma |L|=sum_a sup_sigma |L_a|, because the linear coefficients can be aligned independently. Every source-disagreement set has positive support at each K, so
+
+    A1(f) = sum_a A1(f_a),    U1(f)=sum_a U1(f_a),
+    J1max(f)=max_a J1max(f_a).
+
+Consequently, if each block has L-gate constant C, then their disjoint sum has the **same C**, without the quadratic proxy's factor-four loss. In particular, an unrestricted number of disjoint common-hub components satisfies C=1, and an unrestricted number of disjoint-monomial components satisfies C=1/2. This is a conditional/direct-sum operator, not unrestricted LIN-ANNEALED-d.
+
+### Restricted-family theorem L-ASEL: exponential leaves, C=1
+
+For the k-bit address selector f(A,Y)=Y_A of v0.3, d=k+1, put a=1-t/2 and u=1-t. The original Fourier distribution of order 1+Bin(k,1/2) yields exactly
+
+    U1_t=t a^k + (k t u/2)a^(k-1),
+    J1_addr,t=(t u/2)a^(k-1).
+
+Equivalently U1_t=(k+2a/u)J1_addr,t <= (k+3)J1_addr,t, since 0<t<=1/2 gives a/u<=3/2. Every source degree has w1_s(t)<=1/2 and the selector's source variance is exactly 1, giving U1<=1/2. The source pair with fixed address and only the selected leaf different gives a linear selector dictator, so A1>=1. Hence any mixture of t in (0,1/2], including the dyadic K, satisfies
+
+    U1^2 <= ((k+3)/2) J1_addr <= (k+1) A1^2 J1max
+         = d A1^2 J1max.
+
+Thus the same coefficient-one gate holds for ALL k>=1, despite 2^k distinct leaf coordinates. Exact direct Fourier-binomial and closed-form replay accompanies this proof.
+
+### Independent attacks, reviewer gates and proof status
+
+The existing exact checker now also checks 110 signed finite Walsh models against the *actual* linear-projection amplitude (all discrepancy sets), and compares independent address Fourier/binomial formulas at rational t. A separate numpy numerical sweep of 2,600 sparse Walsh draws across n=6,8 and d=2..n found no linear-gate ratio >1; that sweep is **author-side exploratory only and is not an exact CI receipt**. Its current best ratio 1/2 arises from disjoint degree-two parities; do not interpret finite optimization as universal proof.
+
+**Independent proof B (pre-specified attacks):** verify the first-chaos coefficient extraction and Bernstein bound at every supported pair; check tensorization with shared K (not independent K per block); look for connected overlap patterns that are neither hub supports nor disjoint monomials; optimize amplitude using *every* supported D before evaluating a candidate; compare with established fixed-degree DMP and Turturean quantitative statements. A formal kernel theorem and an external expert review remain absent. The conjectures N-UE2(6), N-UE2(2) and LIN-ANNEALED-d are all **OPEN**.
+
+**Mechanism/transfer:** two-replica fair source -> first-chaos selector filter -> dyadic log-band energy preservation -> dB (rather than d^2B) amplitude -> no-loss block tensorization -> O(d^3 log d) **conditional** variance-exponent-two target; parity witnesses near-sharp proxy cost, address selectors exclude the simplest exponential routing obstruction.
