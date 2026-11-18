@@ -119,21 +119,21 @@ def run(root,model_name,per_case_seconds=300):
                     for samp in (getattr(log,"samples",None) or []):
                         native_scores=to_json(getattr(samp,"scores",None))
                         native_messages=(getattr(samp,"messages",None) or [])
-                    native_tool_calls=sum(len(getattr(m,"tool_calls",None) or [])
-                                          for m in native_messages)
-                    native_tool_results=sum(str(getattr(m,"role",""))=="tool"
-                                            for m in native_messages)
-                    diff_text=(getattr(samp,"store",{}) or {}).get("submission_diff") if hasattr(getattr(samp,"store",{}),"get") else None
-                    sam.append({"tool_calls":native_tool_calls,
-                                "tool_results":native_tool_results,
-                                "submission_diff_bytes":len(diff_text.encode()) if isinstance(diff_text,str) else 0,
-                                "sample_limit":to_json(getattr(samp,"limit",None)),
-                                "id":getattr(samp,"id",None),
-                                    "scores":native_scores,
-                                    "scores_present":bool(native_scores),
-                                    "status":str(getattr(samp,"status","")),
-                                    "metadata":to_json(getattr(samp,"metadata",{})),
-                                    "store":to_json(getattr(samp,"store",{}))})
+                        native_tool_calls=sum(len(getattr(m,"tool_calls",None) or [])
+                                              for m in native_messages)
+                        native_tool_results=sum(str(getattr(m,"role",""))=="tool"
+                                                for m in native_messages)
+                        diff_text=(getattr(samp,"store",{}) or {}).get("submission_diff") if hasattr(getattr(samp,"store",{}),"get") else None
+                        sam.append({"tool_calls":native_tool_calls,
+                                    "tool_results":native_tool_results,
+                                    "submission_diff_bytes":len(diff_text.encode()) if isinstance(diff_text,str) else 0,
+                                    "sample_limit":to_json(getattr(samp,"limit",None)),
+                                    "id":getattr(samp,"id",None),
+                                        "scores":native_scores,
+                                        "scores_present":bool(native_scores),
+                                        "status":str(getattr(samp,"status","")),
+                                        "metadata":to_json(getattr(samp,"metadata",{})),
+                                        "store":to_json(getattr(samp,"store",{}))})
                     summary["samples"]=sam
                     item["inspect_logs"].append(summary)
                 item["status"]="EVAL_COMPLETED" if all(x["eval_status"]=="success" for x in item["inspect_logs"]) else "EVAL_FAILED"
