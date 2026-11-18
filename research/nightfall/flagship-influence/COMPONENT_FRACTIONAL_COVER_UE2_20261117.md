@@ -100,3 +100,27 @@ The checker separately computes all finite ANOVA components from conditional exp
 - Classical inputs: Efron–Stein/Hoeffding ANOVA orthogonality, Popoviciu, fractional cover/packing LP duality. No originality is claimed for those or for the elementary inequality absent dated expert review.
 - New-to-repository reusable operator: **componentwise range tensorization + spectral fractional-cover certificate**, giving a fail-fast restriction on counterexample geometry and a quantitatively sharp certificate for selected large classes.
 - Independent human proof review, Lean kernel formalization, full priority search and paper/submission authorization are **not performed** here. Do not promote this to an unrestricted UE2 theorem or to a novel competitive record.
+
+
+## Further transfer to the parallel fair-cube cubic theorem (#807): weighted hybrid gate
+
+**Conditional on the separate, author-side fair-cube Q3 bound in PR #807** (not an independent proof of that input): split a finite independent product into fair-sign coordinates \(F\) and arbitrary-law coordinates \(A\). Let \(f\) have degree \(\le3\), centered radius \(B\), original variance \(V\), and max original resampling influence \(M\). Let \(\mathcal H_A\) consist of the active ANOVA supports that meet \(A\). For **any feasible nonnegative fractional cover** of this subhypergraph, with weights \(w_i\) on arbitrary coordinates \(i\in A\) satisfying
+\[
+\sum_{i\in S\cap A}w_i\ge1\quad \forall S\in\mathcal H_A,
+\qquad t_A=\sum_{i\in A}w_i,
+\]
+one has the source-preserving hybrid bound
+\[
+\boxed{
+V\le \sqrt{152+48\sqrt2}\, B\sqrt M+t_A M
+\quad\text{and}\quad
+V^2\le\big(\sqrt{152+48\sqrt2}+t_A\big)^2B^2M .
+}
+\]
+The same bound holds for fractional covers using *all* coordinates in \(S\) (not just \(S\cap A\)), though then \(t_A\) denotes the total weight. Every A-touching ANOVA component is assigned to the residual once, independent of its overlaps with fair coordinates.
+
+**Proof:** \(g=E[f\mid X_F]\) is a fair-cube degree-\(\le3\) function with the same centered range bound and \(\max I_i(g)\le M\). Apply #807's sector theorem: \(\operatorname{Var}(g)\le \sqrt{152+48\sqrt2} B\sqrt M\). The orthogonal residual \(r=f-g\) has **exactly** the ANOVA supports meeting \(A\), so by the same fractional-cover/Parseval calculation \(\operatorname{Var}(r)=\sum_{S\in\mathcal H_A}W_S\le\sum_iw_i I_i(f)\le t_A M\). Orthogonality gives \(V=V(g)+V(r)\). Finally \(M\le V\le B^2\), so \(t_AM\le t_A B\sqrt M\).
+
+**Quantitative transfer:** PR #807's existing v1.2 theorem has \(t_A=|A|\), obtained by putting weight 1 on every nonfair coordinate. Here the **fractional cover can be substantially smaller than \(|A|\)**. If all nonfair-touching active supports contain one distinguished arbitrary coordinate \(a_0\), then \(t_A=1\) independently of \(|A|\); the cubic bound is \(V^2<251 B^2M\) even with arbitrarily many nonfair coordinate laws. The original full-product sharp C=1 bound remains **OPEN**, and this mixed-law theorem still depends on the scoped fair-cube input.
+
+**Independent audit obligation:** check that the fair projection's centered essential range and influences contract under the actual product law, especially for null atoms; then independently verify the fair-cube sector bound from #807. The fractional-cover step itself is unconditional elementary ANOVA algebra.
