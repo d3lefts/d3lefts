@@ -1,7 +1,7 @@
 {
   "schema": "nightfall-proof-passport-v1",
   "id": "NF-CUBIC-CONTRACTION-20261117",
-  "version": "0.3",
+  "version": "0.4",
   "date": "2026-11-17",
   "status": "DRAFT_AUTHOR_ANALYTIC_WITH_SCOPED_SCALAR_AND_BINARY_FIBER_LEAN",
   "novelty": "no novelty claimed; prior art strongly overlaps",
@@ -54,6 +54,22 @@
       "statement": "Abstract all-degree functional operator inequality: second=mean^2+variance, variance<=A sum_i second(D_i g), DegreeZero(k,g) implies variance(g)<=Cost(k,g) via recursive derivative expectation energy; no supplied energy recurrence",
       "evidence": "CubicContractionOperator.lean",
       "lean_status": "Lean source on branch; current exact-head pinned compilation required. Does not instantiate native original-law probabilities or show physical degree termination"
+    },
+    {
+      "id": "CUBIC-H9",
+      "statement": "Conditional centered cubic Q3 with top-degree vertex cover H: Varν(f°)<=6A³ |H|/(v beta) max_i I_iν(f°) and Varν(f°)^2<=6A³ |H|/(v beta) B² max_i I_iν(f°)",
+      "premises": [
+        "full-function native heat-bath Poincare A",
+        "conditional spin variance floor v",
+        "all-quadratic Gram lower eigenbound beta",
+        "zero-mean spins",
+        "pure cubic with all mean-gradient linear contractions canceled",
+        "triple support covered by H"
+      ],
+      "external_source": "Diakonikolas–Kane–Stewart–Sun COLT 2021 arXiv:2102.02171 Theorem 4.2 supplies beta=c(M,0)/2 in (M,0)-bounded Ising",
+      "evidence": "author-side full analytic chain and new exact full quadratic Gram rational checker",
+      "lean_status": "NOT Lean-certified source-level; scalar and local fiber subtheorems separately compiled",
+      "scope": "restricted pure cubic+compensating linear functions with finite cover size, not arbitrary cubic functions"
     }
   ],
   "dependencies": [
@@ -74,7 +90,8 @@
     "scripts/check_cubic_contraction_hierarchy_exact.py",
     ".github/workflows/nightfall-cubic-contraction.yml",
     "research/nightfall/formalization/observability/CubicContractionBinarySource.lean",
-    "research/nightfall/formalization/observability/CubicContractionOperator.lean"
+    "research/nightfall/formalization/observability/CubicContractionOperator.lean",
+    "scripts/check_cubic_centered_cover_exact.py"
   ],
   "no_claims": [
     "Not unrestricted cubic exponent-two",
@@ -98,7 +115,7 @@
       "Quot.sound"
     ],
     "scope": "Lean proofs are scalar telescoping and exact two-atom/source-fiber algebra only; no universal probabilistic recurrence or cubic Q3 theorem",
-    "current_head_replay": "required after v0.3 edits; earlier binary+scalar PASS at 8c12f152, run 44209594975"
+    "current_head_replay": "required after v0.4 centered-cubic additions; previous exact-head abstract theorem PASS run 44210478056"
   },
-  "next_decisive_test": "Check exact-head abstract operator Lean with zero sorryAx, then formalize original law + derivative commutation/degree termination + Poincare source connection; separately audit cubic influence no-go"
+  "next_decisive_test": "Independent audit of DKSS 2021 normalization beta, exact-head CI, then formalize source-level dependent cubic top-cover with Poincare and quadratic coercivity as explicit Lean premises; do not claim unrestricted Q3 or novelty."
 }
