@@ -5,6 +5,7 @@ on:
     paths:
       - 'research/nightfall/formalization/observability/CubicContractionHierarchyScalar.lean'
       - 'research/nightfall/formalization/observability/CubicContractionBinarySource.lean'
+      - 'research/nightfall/formalization/observability/CubicContractionOperator.lean'
       - 'research/nightfall/2026-11-dq2/CUBIC_CONTRACTION_HIERARCHY_V0_1.md'
       - 'research/nightfall/2026-11-dq2/CUBIC_CONTRACTION_PASSPORT_V0_1.json'
       - 'scripts/check_cubic_contraction_hierarchy_exact.py'
@@ -25,7 +26,7 @@ jobs:
       - name: Independently replay exact rational derivative hierarchy
         run: python3 scripts/check_cubic_contraction_hierarchy_exact.py
       - name: Record source digest
-        run: sha256sum scripts/check_cubic_contraction_hierarchy_exact.py research/nightfall/formalization/observability/CubicContractionHierarchyScalar.lean research/nightfall/formalization/observability/CubicContractionBinarySource.lean
+        run: sha256sum scripts/check_cubic_contraction_hierarchy_exact.py research/nightfall/formalization/observability/CubicContractionHierarchyScalar.lean research/nightfall/formalization/observability/CubicContractionBinarySource.lean research/nightfall/formalization/observability/CubicContractionOperator.lean
 
   lean-scalar:
     runs-on: ubuntu-24.04
@@ -54,7 +55,9 @@ jobs:
           lake env lean research/nightfall/formalization/observability/CubicContractionBinarySource.lean 2>&1 | tee binary-source-lean.log
           grep -q 'weighted_pair_variance_eq' binary-source-lean.log
           grep -q 'summed_fiber_influence_le_derivative' binary-source-lean.log
-          if grep -E '(sorryAx|^error:|error:)' scalar-lean.log binary-source-lean.log; then
+          lake env lean research/nightfall/formalization/observability/CubicContractionOperator.lean 2>&1 | tee operator-lean.log
+          grep -q 'variance_le_derivative_cost' operator-lean.log
+          if grep -E '(sorryAx|^error:|error:)' scalar-lean.log binary-source-lean.log operator-lean.log; then
             echo "Lean source contains a sorry axiom or error"
             exit 1
           fi
@@ -64,3 +67,4 @@ jobs:
           path: |
             scalar-lean.log
             binary-source-lean.log
+            operator-lean.log
