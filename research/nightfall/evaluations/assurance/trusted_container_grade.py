@@ -160,6 +160,16 @@ def capture(plan_path: Path, externally_pinned_plan_sha256: str,
     except (UnicodeError, json.JSONDecodeError) as exc:
         raise InvalidEvidence("frozen plan is not strict JSON") from exc
     validate_plan(plan)
+    # STOP-SHIP GUARD: this adapter runs candidate-controlled Python within
+    # the grader interpreter and exposes /opt/grader/score.py to that process.
+    # A malicious candidate can emit forged grade JSON and call os._exit(0).
+    # This host-level grading architecture is SYNTHETIC-ONLY until the
+    # score authority and untrusted candidate are process/mount separated.
+    # Names are a policy guard, NOT authentication of model identity.
+    need(plan["task_id"].lower().startswith("synthetic-") and
+         plan["model_id"].startswith("laboratory/synthetic-"),
+         "UNTRUSTED_SCORE_ORIGIN: same-process grader synthetic-only; "
+         "real task/model scores prohibited until scorer isolation")
     need(attempt_id in plan["attempt_ids"], "attempt not preregistered")
     need(type(timeout_seconds) is int and 1 <= timeout_seconds <= 240,
          "grader timeout outside fixed bounds")
