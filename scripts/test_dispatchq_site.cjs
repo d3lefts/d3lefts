@@ -42,6 +42,17 @@ assert.ok(lab.includes("author-hidden grader") && lab.includes("Neither test sui
 assert.ok(lab.includes("https://github.com/d3lefts/d3lefts/pull/824"));
 assert.ok(lab.includes("https://github.com/d3lefts/d3lefts/pull/825"));
 assert.ok(lab.includes("https://github.com/d3lefts/d3lefts/actions/runs/44354996082"));
+assert.ok(lab.includes('id="run-evidence"'));
+assert.ok(lab.includes("original author reference passed only 20/22"));
+assert.ok(lab.includes("private local audit, not independently replayed by public CI"));
+assert.ok(lab.includes("https://github.com/d3lefts/d3lefts/pull/827"));
+assert.ok(lab.includes("https://github.com/d3lefts/d3lefts/actions/runs/44357912261"));
+assert.ok(lab.includes("incompatible 50/100 and 7/7 score scales"));
+assert.ok(lab.includes("externally SHA-256-pinned"));
+assert.ok(lab.includes("https://github.com/d3lefts/d3lefts/pull/830"));
+assert.ok(lab.includes("https://github.com/d3lefts/d3lefts/actions/runs/44374815964"));
+assert.ok(lab.includes("zero accepted blind agent scores"));
+
 assert.ok((lab.match(/<details\b/g) || []).length >= 16, "B2 inspection details missing");
 
 assert.ok(profile.includes("Master of Science in Software Engineering (in progress; anticipated March 2027)"));
