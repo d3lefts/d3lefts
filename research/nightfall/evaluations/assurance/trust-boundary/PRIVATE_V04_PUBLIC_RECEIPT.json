@@ -1,0 +1,41 @@
+{
+  "schema": "nightfall.eval.trust-boundary.private-replay-summary.v1",
+  "date": "2026-11-18",
+  "audit_status": "controlled_local_author_side_replay_only",
+  "benchmark": "DispatchQ-B1",
+  "python_version": "3.13.5",
+  "original_defective_queue_sha256": "05edf787fbd1cb3841ed4aa813361ee1024b354f6fcd7505a56eddf98cbfd406",
+  "old_v03_tests_sha256": "9cd1b34e8c347acf88d86e96a5d9dd553378a60951d79a6c409b3423a8f94abc",
+  "separated_v04_hidden_tests_sha256": "1e94c51cc79e9220b6aaa20df3dbadae49e3d5c38c8ca23e008ff05eb6c28aa7",
+  "v04_scorer_and_transport_tree_sha256": "544cafa8325b6000035fc5fad1a572e605e62e5444b35377ad263a7c74574a56",
+  "source_trees": {
+    "normal_defective": "28234c924f96594d5e9084147375e7a2f4dac73f902ad932f7aafea635dd8e6c",
+    "poisoned_initializer": "b533eabbae5c86542055da5bafa8a2e49949e7fdf2fdf0d4b81ffc492c662bec"
+  },
+  "scores": {
+    "v03_poisoned_initializer": 100,
+    "v04_reference": 100,
+    "v04_defective": 58,
+    "v04_poisoned_initializer": 58
+  },
+  "private_archive": {
+    "filename": "NIGHTFALL_DispatchQ_B1_author_v0_4_PRIVATE.zip",
+    "sha256": "da03cff9855f1d66652dd66a23c2e0536052c7185b29704e8be8fe0a9978dd37",
+    "custody": "owner-held outside public repository"
+  },
+  "clean_extraction_replay": true,
+  "public_synthetic_tests": {
+    "test_cases": 4,
+    "local_pass": true,
+    "ci_python_versions": [
+      "3.10",
+      "3.13"
+    ]
+  },
+  "private_python_310_replay": false,
+  "accepted_blind_model_scores": 0,
+  "human_independent_review": false,
+  "graded_under_os_isolation": false,
+  "policy": "STOP-SHIP real candidate scoring: separate process alone does NOT prevent reading private scorer files or accessing host credentials",
+  "certificate_ceiling": "This receipt is a public summary of locally executed private fixtures, not an externally authenticated replay or attestation"
+}
