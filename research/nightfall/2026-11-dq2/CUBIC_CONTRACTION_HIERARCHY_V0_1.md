@@ -77,3 +77,31 @@ Code: scripts/check_cubic_contraction_hierarchy_exact.py; scalar Lean source: re
 Next fail-closed gates: (1) run exact-head pinned Lean for scalar recurrence and inspect named axioms; (2) independent proof of actual conditional-variance identity and ordered tuple counting; (3) source-level Lean law-to-recurrence theorem with no externally supplied recurrence; (4) compare exact centered cubic class against Götze–Sambale–Sinulis and Adamczak et al.; (5) only then attempt a boundedness/influence inequality for the centered cubic sector. Preserve this operator even if historical novelty fails.
 
 Mechanism graph: dependent cubic covariance obstruction -> physical derivatives -> Poincare derivative recursion -> contraction-mean energy -> law-adapted Wick cancellation -> exact checker -> scalar Lean certificate -> unproved original-law Lean bridge -> possible Q3 transfer.
+
+
+## v0.2: a second obstruction, after the Wick correction
+
+The centered cubic sector fixes the **variance** comparison but does not make the **native influence** comparable to fair-product influence. This is an exact obstruction on the same connected Ising chain.
+
+Let f_k^circle be the pure cubic above plus the full law-adapted linear correction a_i=-E_nu D_i f_k. The root derivative is
+
+  D_{X0} f_k^circle = (1/k) sum_{j=1}^k Y_jY_{j+1} - r.
+
+The conditional variance of the endpoint spin X0 given all other spins is exactly 1-r². The independent edge-bond representation yields
+
+  I_{nu,X0}(f_k^circle) = (1-r²)²/k.
+
+Under the uniform **independent fair-spin reference law mu**, the same physical polynomial has
+
+  I_{mu,X0}(f_k^circle) = r² + 1/k.
+
+Therefore
+
+  I_{nu,X0}(f_k^circle) / I_{mu,X0}(f_k^circle)
+    = (1-r²)²/(1+k*r²) -> 0
+
+at every fixed 0<r<1/2, while the dependency matrix still has Dobrushin alpha=2r<1. The correction's supnorm remains bounded independently of k: the original cubic is bounded by 1, a_0=-r, and the absolute sum of other correction coefficients is bounded by a convergent geometric series times 1/k.
+
+**Consequence:** the naive proposal "Wick-center the cubic, compare its variance to the fair-product variance, and then replace fair-product influences by true-law influences with a uniform factor" is INVALID. Variance correction and influence correction are distinct gates. A useful dependent-cubic proof must build a genuinely law-adapted derivative/influence reference (or avoid product-reference influence transfer entirely), not merely subtract mean contractions. This is a stronger, mechanistic reason for the open problem than numerical coefficient stalls. The exact Fraction checker now independently verifies both native root influence and fair root influence over k=2..6.
+
+This is a classical elementary counterexample, not a claim of a new field-wide theorem or an unrestricted Q3 lower bound. Keep previous version statements and their limitations.
