@@ -1,0 +1,27 @@
+{
+  "id": "NIGHTFALL-DISPATCHQ-B1",
+  "version": "v0.1",
+  "date": "2026-11-18",
+  "status": "author-side calibrated prototype; blind-agent and independent review pending",
+  "independent_human_review": false,
+  "blind_agent_runs": 0,
+  "language": "Python",
+  "runtime": "Python 3.13.5 (local); candidate minimum Python 3.10",
+  "grader": {"withheld": true, "weighted_tests": 20, "max_points": 100},
+  "local_reference": {"score": 100, "tests_passed": 20, "repeated_runs": 10, "score_range": [100, 100]},
+  "local_defective_starter": {"repeated_runs": 10, "score_range": [52, 60], "nondeterministic_concurrency_case": true},
+  "fault_injection": {"mutants_detected": 8, "mutants_tested": 8, "claim": "author-designed mutations, not an exhaustive fault model"},
+  "non_scored_multiprocess_probe": {"reference_passes": 5, "reference_trials": 5, "starter_passes": 4, "starter_trials": 5, "processes": 6, "jobs": 20},
+  "sha256": {
+    "public_candidate_zip_v0_1": "af1aacc94ee9a41281a37939d7170a84eadfa64e703b3e162f88cf78ca0ea549",
+    "withheld_author_archive_v0_1": "6be359d6bcd1f09ab21e45ab242c2ce7ab52c8cf8a774bcfe242bf6998b8e8ea"
+  },
+  "limits": [
+    "Synthetic task, not production fault trace",
+    "No independent reviewer or agent evaluation",
+    "No complete sandbox or credential isolation built into the grader",
+    "Some defective-starter outcomes depend on scheduler interleaving",
+    "No validated ranking or evidence of frontier-model difficulty"
+  ],
+  "next_gate": "independent correct alternate implementation and repeated blind real-agent runs"
+}
