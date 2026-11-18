@@ -241,3 +241,42 @@ a general real-row K theorem, a valid weighted-R theorem, or
 certified polynomial-in-degree AA progress. Prioritize an adversarial
 proof of the coupled threshold-PSD conic gate in #814, with exact
 rational LP oracle and explicit R-weighted attack as a backup.
+
+
+## v1.3 structured high-degree bias-tuned test + final exact-head gate
+
+Added 21 independent exact rational **symmetric Chebyshev**
+degree d=2,...,8 source families with n=12d inputs each,
+using p=1/2, a rational near-Bernstein bias, or p=1-1/n.
+For t_k=T_d((2k-n)/n) the TRUE original-law singleton residual cost
+is exactly
+
+  R=max_(0<=k<=n) [
+      k(1-p)|t_k-t_(k-1)|
+      +(n-k)p|t_(k+1)-t_k|
+    ],
+
+with zero boundary terms. This max explicitly includes the
+exponentially rare full-support tail source words rather than
+substituting a typical derivative. V and M come from exact binomial
+and conditional-variance sums. All exact 21 tests satisfy the
+candidate unit-weighted R inequality; the largest observed
+  V²/(dR²M)=637563/14739136≈0.043256
+at d=2,n=24,p=17/20. These results are stress tests,
+not an all-degree theorem.
+
+**FINAL exact-head source run:** GitHub Actions
+https://github.com/d3lefts/d3lefts/actions/runs/44358693159
+commit f41aec0c146e37437e703bb1ff7baf89fceb7694,
+SUCCESS. All-n biased-AND closed formulas and physical finite tables,
+fair Rubinstein sensitivity/row separation, nine independent original-
+categorical full-row primal LP tests, all 4948 exact rational active
+search evaluations, and all 21 high-degree Chebyshev families passed.
+Immutable receipt artifact **14451593452**.
+
+The test maxima equal one only because the search includes and
+correctly reproduces additive fair equality controls. This does not
+prove the K-sharp or unit-weighted-R conjectures. The R degree-free
+inequality remains disproved; the degree-weighted R and the real K
+bridge remain open. CI failures carry the exact counterexample
+values and source probabilities for any strict detected violation.
