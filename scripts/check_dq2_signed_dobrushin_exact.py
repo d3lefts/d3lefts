@@ -106,3 +106,28 @@ if __name__=="__main__":
     audit(5,[(0,1,F(-1,9)),(1,2,F(1,10)),(2,3,F(-1,8)),(3,4,F(-1,11)),(4,0,F(1,12)),(0,2,F(1,13))],"frustrated pentagon chord")
     audit(4,[(i,j,F(-1,13) if (i+j)%2 else F(1,15)) for i,j in combinations(range(4),2)],"signed K4")
     print("PASS all exact full-function Poincare and complete quadratic PSD audits")
+
+
+def cubic_barrier():
+    # Independent bond-variable calculation for connected Ising chain.
+    # The attachment spin X0 is correlated with Y1, so its native
+    # conditional variance contributes the factor (1-r*r).
+    from itertools import product
+    r=F(1,3)
+    for k in (2,3,4,6,10):
+        val=F(0)
+        for signs in product((-1,1),repeat=k):
+            law=prod((1+r*z)/2 for z in signs)
+            val+=law*F(sum(signs)**2,k*k)
+        expected=r*r+(1-r*r)/k
+        assert val==expected,(k,val,expected)
+        assert val*k == 1+(k-1)*r*r
+        influence_X0=(1-r*r)*val
+        assert influence_X0>0
+        print("PASS exact cubic degree-transfer obstruction k",k,
+              "Var_nu",val,"Var_mu",F(1,k),
+              "ratio",k*val,"actual Inf_X0",influence_X0)
+    print("PASS exact connected-chain cubic covariance-transfer no-go tests")
+
+if __name__=="__main__":
+    cubic_barrier()
