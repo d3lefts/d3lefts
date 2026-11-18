@@ -133,6 +133,89 @@ This confirms why #814's single-threshold m^4 shortcut must not be presumed shar
 
 **Certification levels:** Theorems A/B/C have complete elementary author-side proofs above and exact finite regression. Their full generality is NOT yet a named integrated Lean theorem or independent non-author review. A conditional scalar Lean tensorization gate may be added, explicitly retaining its component hypotheses. The **global** real-row constant is unproved, and no \`N-UE2(6)\` or \`N-UE2(2)\` claim is certified by this PR.
 
+## v1.1 exact Hilbert transport dual: a stronger, UNPROVED coupling gate
+
+There is an informative **representation-level** candidate which
+uses the actual source heat-bath projections and bypasses explicit
+threshold counts. It is not in Turturean's paper as a proved theorem.
+
+For a finite, supported independent product with Hilbert space
+H=L²_0(mu), let D_i=Id-E_i be the genuine original-law
+orthogonal coordinate residual projection and define
+
+  G_mu(g) = max_i ||D_i g||_2
+          = sqrt(max_i Inf_i(g)).
+
+Define the source-preserving coordinate-transport norm
+
+  T_mu(f) = inf {sum_i ||h_i||_2 :
+       f-E_mu f=sum_i h_i, E_i h_i=0 for every i}.
+
+Every centered finite f admits such a decomposition: its canonical
+ANOVA term f_S belongs to the degenerate subspace of every i in S;
+assign each nonempty S to any i in S.
+
+**EXACT HILBERT DUALITY** (elementary finite-dimensional
+Hahn–Banach / polar of the convex hull of union of unit balls):
+
+  T_mu(f)=sup {Cov_mu(f,g): G_mu(g)<=1}.
+
+Proof: the unit ball of T is the convex hull of the union over i
+of unit L² balls in H_i=ran(D_i); its polar consists precisely of
+mean-zero g satisfying ||P_(H_i)g||_2=||D_i g||_2<=1 for every i.
+Bipolarity in finite dimensions proves the displayed equality.
+All weights, projections, variances and correlations use the
+ORIGINAL source. This is an **exact classical functional-analytic
+identity**, not a novel influence theorem.
+
+**STRONGER OPEN OPERATOR CONJECTURE (not established):**
+
+  T_mu(f) <= K(f)/2
+
+for every real f on a finite original product, with K the TRUE
+full pairwise fractional row cost on positive support.
+
+If proved, taking g=f in the dual gives
+
+  Var(f) <= T_mu(f) sqrt(M(f))
+          <= (K(f)/2) sqrt(M(f)),
+  hence 4 Var(f)^2 <= K(f)^2 M(f).
+
+It would solve the original product-law version of Turturean's
+§9.5 sharp real-row conjecture, and the uniform cube exponent-two
+all-degree theorem with d^4 dependence. **It is strictly stronger
+than the self-paired inequality and could be false**, so it must
+first survive an adversarial f,g search and a real proof attack;
+do not report a breakthrough from its formulation.
+
+**Source-exact bilinear testable consequence:** for all f,g,
+
+  4 Cov_mu(f,g)^2 <= K(f)^2 max_i Inf_i(g).
+
+Failure of this inequality refutes the stronger T gate but
+NOT the original self-paired full-row conjecture. This is a
+particularly cheap decisive finite-rational witness test. Fair
+additive f=g=sum_i X_i attains equality. For one arbitrary
+categorical coordinate, T(f)=sqrt(Var(f)) and K(f)=range(f),
+so K>=2T follows from Popoviciu; by tensorization it holds
+for arbitrary sums of independent single-coordinate functions.
+
+T also tensorizes on disjoint independent blocks:
+  T_mu(g(A)+h(B))=T_A(g)+T_B(h).
+The ≤ direction concatenates feasible decompositions. For ≥,
+choose independent dual witness functions with G<=1 in each block;
+their sum still has global G<=1, and their covariances add.
+Thus the stronger gate, if true, can again be reduced to connected
+ANOVA components. This exact tensorization is purely classical
+Hilbert duality; priority/novelty unresolved.
+
+**Key distinction:** \`T(f)<=K/2\` is an independent hypothesis;
+the exact polar identity does NOT imply it. This is not a
+rephrasing that proves exponent two. We record it to expose
+the missing source-consistent *off-diagonal transport factorization*
+in a form that can be attacked with SOCP/dual certificates, unlike
+unstructured threshold-by-threshold searches.
+
 ## Discovery graph / next decisive operator
 
 Turturean real full-row K gate → actual supported-pair constraints → exact row/direct-sum tensorization → connected component localization → nested two-threshold squared difference → cross-coordinate row-pair coupling → **missing routing of off-diagonal i≠j energy into original source I_i(f)** → original-product and all-degree exponent-two problem.
