@@ -75,7 +75,7 @@ The exact checker independently re-enumerates every source state for the best ca
 | 4 | 3 | 120 | 1 (control) |
 | 6 | 3 | 70 | 1 (control) |
 
-The 450 exact candidates include bias ratios from integer weights among 1,2,3,11,29,127, dense and sparse pure/hybrid quadratic and cubic terms, and fair additive equality controls. No exact candidate exceeds 1. **This does not certify the candidate coefficient 1, any higher coefficient, or the existence of a degree-weighted theorem.** It merely keeps the auxiliary route alive under these tests. Because degree-one controls attain 1, future searches must report the best *nonadditive exact-degree d* result separately; current maxima by themselves are uninformative for d=2,3.
+The 450 exact candidates include bias ratios from integer weights among 1,2,3,11,29,127, dense and sparse pure/hybrid quadratic and cubic terms, and fair additive equality controls. Separate fair-bias dense/sparse samples force nonadditive exact-degree attempts. No exact candidate exceeds 1. **This does not certify the candidate coefficient 1, any higher coefficient, or the existence of a degree-weighted theorem.** It merely keeps the auxiliary route alive under these tests. The checker therefore additionally reports the strongest **actual exact-degree d** sample and independently audits it: n=4/6/8 for d=2 yield approximately **0.264062500, 0.157552083, 0.132821724**; n=4/6 for d=3 yield approximately **0.123623837, 0.084281132**. These small values reflect the tested coefficient/bias distribution and have no universal significance.
 
 Reproducer:
 `python3 -I research/nightfall/flagship-influence/check_weighted_R_low_degree_exact.py`
