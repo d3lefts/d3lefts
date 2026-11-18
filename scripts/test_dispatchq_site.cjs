@@ -33,6 +33,17 @@ assert.ok(p.includes("hidden tests") || p.includes("withheld grader"));
 assert.ok(eng.includes('href="dispatchq-b1.html"'));
 assert.ok(lab.includes('href="dispatchq-b1.html"'));
 assert.ok(lab.includes('id="dispatchq"'));
+assert.ok(eng.includes('id="current-eval"') && eng.includes("Two tasks."));
+assert.ok(eng.includes("DispatchQ-B1") && eng.includes("ArtifactGraph-B2"));
+assert.ok(lab.includes('id="artifactgraph"'), "B2 evaluator missing");
+assert.ok(lab.includes("11 contract violations, 9 positive controls"));
+assert.ok(lab.includes("zero unexpected errors, zero mismatches"));
+assert.ok(lab.includes("author-hidden grader") && lab.includes("Neither test suite is an AI model success rate"));
+assert.ok(lab.includes("https://github.com/d3lefts/d3lefts/pull/824"));
+assert.ok(lab.includes("https://github.com/d3lefts/d3lefts/pull/825"));
+assert.ok(lab.includes("https://github.com/d3lefts/d3lefts/actions/runs/44354996082"));
+assert.ok((lab.match(/<details\b/g) || []).length >= 16, "B2 inspection details missing");
+
 assert.ok(profile.includes("Master of Science in Software Engineering (in progress; anticipated March 2027)"));
 const resume = read("docs/resume.html");
 assert.ok(resume.includes("Master of Science in Software Engineering, in progress; anticipated March 2027 (not yet conferred)"));
