@@ -231,7 +231,8 @@ def run(task, source, output, image_id, endpoint, *, steps=MAX_STEPS):
                      "model_metadata": meta, "proposed_tool": action}
             try:
                 result = tool_action(work, action, package, image_id)
-                tool_calls += 1
+                if action["tool"] != "finish":
+                    tool_calls += 1
                 if action["tool"] == "write_file":
                     write_count += 1
                 if action["tool"] == "run_smoke":
