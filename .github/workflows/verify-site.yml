@@ -99,6 +99,7 @@ jobs:
           node scripts/test_portfolio_search.cjs
           node scripts/test_home_focus.cjs
           node scripts/test_engineering_portfolio.cjs
+          node scripts/test_dispatchq_site.cjs
           node scripts/test_home_maintenance.cjs
           node scripts/test_shared_architecture.cjs
           node --check docs/join-evidence-core.js
