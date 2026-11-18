@@ -1,0 +1,29 @@
+name: NIGHTFALL DQ2 loopy Ising exact research checks
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-dq2/DQ2_LOOPY_FERRO_SCORE_V1.md'
+      - 'research/nightfall/2026-11-dq2/DQ2_LOOPY_FERRO_PASSPORT_V1.json'
+      - 'scripts/check_dq2_loopy_ferro_exact.py'
+      - 'scripts/check_dq2_loopy_score_exact.py'
+      - '.github/workflows/nightfall-dq2-loopy-exact.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  loopy-research-exact:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate zero-field Lebowitz/GKS quadratic comparisons
+        run: python3 scripts/check_dq2_loopy_ferro_exact.py
+      - name: Validate dual-score covariance conditioning beyond S<2
+        run: python3 scripts/check_dq2_loopy_score_exact.py
+      - name: Record source checksums
+        run: sha256sum scripts/check_dq2_loopy_ferro_exact.py scripts/check_dq2_loopy_score_exact.py

@@ -1,0 +1,78 @@
+{
+  "schema": "nightfall-proof-passport-v1",
+  "id": "NF-DQ2-LOOPY-FERRO-SCORE-20261117",
+  "version": "v1.1",
+  "status": "provisional-author-analytic",
+  "date": "2026-11-17",
+  "novelty": "unresolved",
+  "independent_external_review": false,
+  "lean_kernel_checked": false,
+  "claims": [
+    {
+      "id": "DQ2-L1",
+      "statement": "Dual conditional-score covariance lower bound for arbitrary finite signed Ising graphs, including external fields",
+      "mechanism": "local graph-sparse score Gram matrix and exact conditional duality",
+      "status": "author-proof+exact-finite-tests"
+    },
+    {
+      "id": "DQ2-L2",
+      "statement": "All finite zero-field ferromagnetic graph quadratic covariance Var_nu<=S^2 Var_uniform",
+      "premises": [
+        "GKS",
+        "Lebowitz four-point inequality"
+      ],
+      "status": "conditional-author-proof"
+    },
+    {
+      "id": "DQ2-L3",
+      "statement": "Var_nu^2 <= C2*S^4*(D/v)*B^2*max_i I_i^nu for degree<=2 bounded f",
+      "premises": [
+        "DQ2-L1",
+        "DQ2-L2",
+        "original finite product Q2"
+      ],
+      "status": "conditional-author-proof"
+    },
+    {
+      "id": "DQ2-L4",
+      "statement": "Every ferromagnetic n-cycle with r=1/2 obeys uniform bound 1525*C2",
+      "premises": [
+        "exact cycle 2-point correlations",
+        "DQ2-L3"
+      ],
+      "status": "conditional-author-proof"
+    },
+    {
+      "id": "DQ2-L5",
+      "statement": "Infinite-volume Gibbs weak-limit lift on countable locally finite ferromagnetic graphs with uniform free-volume susceptibility, H bounded, and uniformly B-bounded quadratic-cylinder L2 closure",
+      "premises": [
+        "DQ2-L3",
+        "DLR single-site conditional identity",
+        "weak convergence",
+        "uniform L2 influence contraction"
+      ],
+      "status": "conditional-author-analytic-not-Lean-certified"
+    }
+  ],
+  "inputs": {
+    "finite_product_q2": "https://github.com/d3lefts/d3lefts/pull/587",
+    "parallel_tree_work": "https://github.com/d3lefts/d3lefts/pull/786",
+    "classical_lebowitz": "https://doi.org/10.1103/PhysRevB.5.2538"
+  },
+  "evidence": {
+    "note": "research/nightfall/2026-11-dq2/DQ2_LOOPY_FERRO_SCORE_V1.md",
+    "checks": [
+      "scripts/check_dq2_loopy_ferro_exact.py",
+      "scripts/check_dq2_loopy_score_exact.py"
+    ],
+    "local_replay": "Prior finite exact checker CI PASS at PR head ea67c856fc10050ea607282aad077557ad3d5aff; v1.1 weak-limit analytic extension is not independently tested or Lean-certified; current-head CI must be rechecked.",
+    "checker_not_lean": true
+  },
+  "limitations": [
+    "finite zero-field ferromagnets in full Q2 theorem",
+    "susceptibility S must be uniformly bounded for dimension-free family",
+    "external inequalities not formalized as unconditional Lean proofs",
+    "no originality, global sharpness or publication claim"
+  ],
+  "next_decisive_experiment": "Independent attack on finite-volume to infinite-Gibbs conditional-influence continuity and on Lebowitz score bounds; then Lean operator comparison and fixed finite-volume theorem"
+}
