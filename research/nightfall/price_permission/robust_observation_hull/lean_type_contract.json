@@ -4,11 +4,11 @@
   "targets": [
     {
       "declaration": "Nightfall.RobustObservationHull.rational_hull_supporting_certificate",
-      "expected_type": "∀ {m n : ℕ} (p : Fin m → ℚ) (d : Fin n → Fin m → ℚ)\n  (h : Fin m → ℚ) (λ : ℚ),\n  (∀ z, 0 ≤ p z) →\n  (∑ z : Fin m, p z * (h z) ^ 2) = λ →\n  (∀ a, λ ≤ ∑ z : Fin m, p z * h z * d a z) →\n  ∀ (q : Fin n → ℚ),\n    (∀ a, 0 ≤ q a) →\n    (∑ a : Fin n, q a) = 1 →\n    λ ≤ ∑ z : Fin m, p z * (∑ a : Fin n, q a * d a z) ^ 2"
+      "expected_type": "∀ {m n : ℕ} (p : Fin m → ℚ) (d : Fin n → Fin m → ℚ)\n  (h : Fin m → ℚ) (lam : ℚ),\n  (∀ z, 0 ≤ p z) →\n  (∑ z : Fin m, p z * (h z) ^ 2) = lam →\n  (∀ a, lam ≤ ∑ z : Fin m, p z * h z * d a z) →\n  ∀ (q : Fin n → ℚ),\n    (∀ a, 0 ≤ q a) →\n    (∑ a : Fin n, q a) = 1 →\n    lam ≤ ∑ z : Fin m, p z * (∑ a : Fin n, q a * d a z) ^ 2"
     },
     {
       "declaration": "Nightfall.RobustObservationHull.rational_hull_matching_optimal",
-      "expected_type": "∀ {m n : ℕ} (p : Fin m → ℚ) (d : Fin n → Fin m → ℚ)\n  (h : Fin m → ℚ) (λ : ℚ),\n  (∀ z, 0 ≤ p z) →\n  (∑ z : Fin m, p z * (h z) ^ 2) = λ →\n  (∀ a, λ ≤ ∑ z : Fin m, p z * h z * d a z) →\n  ∀ (qstar : Fin n → ℚ),\n    ((∀ a, 0 ≤ qstar a) ∧ (∑ a : Fin n, qstar a) = 1) →\n    (∀ z, h z = ∑ a : Fin n, qstar a * d a z) →\n    (∀ (q : Fin n → ℚ), (∀ a, 0 ≤ q a) →\n      (∑ a : Fin n, q a) = 1 →\n      λ ≤ ∑ z : Fin m, p z * (∑ a : Fin n, q a * d a z) ^ 2) ∧\n    (∑ z : Fin m, p z * (∑ a : Fin n, qstar a * d a z) ^ 2) = λ"
+      "expected_type": "∀ {m n : ℕ} (p : Fin m → ℚ) (d : Fin n → Fin m → ℚ)\n  (h : Fin m → ℚ) (lam : ℚ),\n  (∀ z, 0 ≤ p z) →\n  (∑ z : Fin m, p z * (h z) ^ 2) = lam →\n  (∀ a, lam ≤ ∑ z : Fin m, p z * h z * d a z) →\n  ∀ (qstar : Fin n → ℚ),\n    ((∀ a, 0 ≤ qstar a) ∧ (∑ a : Fin n, qstar a) = 1) →\n    (∀ z, h z = ∑ a : Fin n, qstar a * d a z) →\n    (∀ (q : Fin n → ℚ), (∀ a, 0 ≤ q a) →\n      (∑ a : Fin n, q a) = 1 →\n      lam ≤ ∑ z : Fin m, p z * (∑ a : Fin n, q a * d a z) ^ 2) ∧\n    (∑ z : Fin m, p z * (∑ a : Fin n, qstar a * d a z) ^ 2) = lam"
     }
   ]
 }
