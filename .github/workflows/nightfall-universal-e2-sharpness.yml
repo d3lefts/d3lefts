@@ -26,6 +26,8 @@ jobs:
         run: python3 research/nightfall/flagship-influence/check_ue2_sharpness.py
       - name: Exact even-odd Chebyshev witnesses (not a universal theorem)
         run: python3 research/nightfall/flagship-influence/check_ue2_chebyshev.py
+      - name: Exact biased Bernstein saturation witnesses (not universal proof)
+        run: python3 research/nightfall/flagship-influence/check_ue2_bernstein_saturation.py
 
   conditional-implications-lean:
     runs-on: ubuntu-24.04
