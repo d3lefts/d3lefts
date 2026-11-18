@@ -203,6 +203,8 @@ def verify(root, expected_plan_sha256):
     root = Path(root)
     need(is_hex(expected_plan_sha256), "pin the expected plan hash externally")
     plan_file = safe_member(root, "plan.json")
+    need(set(x.name for x in root.iterdir()) == {"plan.json", "attempts"},
+         "undeclared top-level evidence material")
     need(sha_file(plan_file) == expected_plan_sha256,
          "plan changed since preregistration")
     plan = json_file(plan_file)
@@ -235,12 +237,20 @@ def verify(root, expected_plan_sha256):
         ):
             need(nonnegative_int(receipt[key]) and receipt[key] <= maximum,
                  "budget or type violation: " + key)
+        need(receipt["trace_path"] ==
+             "attempts/" + attempt_id + "/trace.json",
+             "trace not owned by matching attempt")
         trace_path = file_and_hash(
             root, receipt["trace_path"], receipt["trace_sha256"], "trace")
         trace = json_file(trace_path)
         completed = receipt["outcome"] == "completed"
         calls = validate_trace(trace, attempt_id, receipt["tool_calls"], completed)
         if completed:
+            need(receipt["patch_path"] ==
+                 "attempts/" + attempt_id + "/patch.diff" and
+                 receipt["grade_path"] ==
+                 "attempts/" + attempt_id + "/grade.json",
+                 "graded artifact crosses attempt boundary")
             need(calls > 0, "completed attempt has no tool-use evidence")
             patch = file_and_hash(root, receipt["patch_path"],
                                   receipt["patch_sha256"], "patch")
@@ -257,6 +267,12 @@ def verify(root, expected_plan_sha256):
                  receipt["grade_path"] is None and
                  receipt["grade_sha256"] is None,
                  "incomplete episode invented a graded patch")
+        expected_files = {"receipt.json", "trace.json"}
+        if completed:
+            expected_files |= {"patch.diff", "grade.json"}
+        attempt_dir = root / "attempts" / attempt_id
+        need(set(x.name for x in attempt_dir.iterdir()) == expected_files,
+             "undeclared artifact or hidden grader in attempt packet")
         attempts.append({"attempt_id": attempt_id,
                          "outcome": receipt["outcome"], "tool_calls": calls})
     # Check no undeclared attempt receipts are hidden from the denominator.
