@@ -4,7 +4,7 @@
 This is an import-custody check, not a proof or a compiler certificate.
 """
 from pathlib import Path
-from scripts.generate_nightfall_lake import ROOT, SOURCE, discover, closure
+from generate_nightfall_lake import ROOT, SOURCE, discover, closure
 
 AA_SEEDS = ("InfinitePiAAProductTerminal", "CubePrintedAA")
 DENIED_UPSTREAM_TERMINALS = {
