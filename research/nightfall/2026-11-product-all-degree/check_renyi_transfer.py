@@ -92,6 +92,26 @@ assert pv == Q(1, 4) and after_var == pv  # no variance decrease!
 c = 8*sqrt(3/12500)/pi**6
 assert 2**1.5/c < 22000
 
+
+# Exact adversarial correlated-source obstruction (two nondegenerate bits).
+# The upper density stays <=2 relative to the fair independent reference,
+# yet true conditional ν-influence tends to zero while Var_ν=1/4.
+q = Q(1, 10000)
+nucorr = {(0, 0): (1-q)/2, (1, 1): (1-q)/2,
+          (0, 1): q/2, (1, 0): q/2}
+muref = {x: Q(1, 4) for x in nucorr}
+signal = lambda x: Q(x[0])
+assert sum(nucorr.values()) == 1
+assert all(0 < nucorr[x] <= 2*muref[x] for x in nucorr)
+assert var(nucorr, signal) == Q(1, 4)
+def true_corr_influence(i):
+    others = [j for j in range(2) if j != i]
+    return mean(nucorr, lambda x: (signal(x)-cond_mean(nucorr, signal, x, others))**2)
+assert true_corr_influence(0) == q*(1-q)
+assert true_corr_influence(1) == 0
+assert true_corr_influence(0) < Q(1, 1000)
+print("PASS: exact correlated-source counterexample under D_inf <= log 2")
+
 print("PASS: exact heterogeneous degree-2 ANOVA, variance, spectral J, all J decrements")
 print("PASS: exact correlated tilt, heat-bath comparisons, α=2 Hölder")
 print("PASS: parity variance counterexample; numerical coefficient check")
