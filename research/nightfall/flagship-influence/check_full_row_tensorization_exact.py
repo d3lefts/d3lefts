@@ -199,6 +199,35 @@ def main():
     # even for f=sum Xi and genuine optimal full rows a_i=1.
     for n in (2,4,8,16):
         assert n*n>n
+    # NEW STRONGER UNPROVED bilinear gate. Rational f and g are
+    # INDEPENDENT random tables, K(f) is genuine full-row LP,
+    # M(g) is original-law heat-bath maximum influence.
+    # A strict counterexample would refute this stronger operator
+    # hypothesis only, NOT Turturean's self-paired K conjecture.
+    for shape in ((2,2),(2,3),(2,2,2)):
+        probs=[[1,1] if j==0 else [1,7] if j==1 else [1,3]
+               for j in range(len(shape))]
+        if shape==(2,3): probs=[[1,11],[1,3,0]]
+        source=[tuple(Q(v,sum(p)) for v in ps) for ps in probs]
+        for trial in range(12):
+            f={x:Q(rng.randrange(-6,7),rng.randrange(1,4))
+               for x in product(*(range(k) for k in shape))}
+            g={x:Q(rng.randrange(-6,7),rng.randrange(1,4))
+               for x in product(*(range(k) for k in shape))}
+            F=metrics(shape,probs,lambda x:f[x])
+            G=metrics(shape,probs,lambda x:g[x])
+            def expectation(table):
+                return sum((
+                    prod((source[i][x[i]] for i in range(len(shape))),
+                         start=Q(1))*table[x]
+                    for x in F['states']),Q())
+            covariance=expectation({x:f[x]*g[x] for x in F['states']})
+            covariance-=expectation(f)*expectation(g)
+            assert 4*covariance**2<=F['K']**2*G['M'],(
+                "STRONG BILINEAR GATE FALSE (not self-paired K)",
+                shape,probs,f,g,covariance,F['K'],G['M'])
+    print("PASS 36 exact rational stronger bilinear covariance"
+          " stress controls, no universal claim")
     print("PASS 20 exact rational source products: full primal/dual rows,"
           " direct-sum tensorization, nested threshold square identities")
     print("PASS fair additive sharp equality; independent-threshold"
