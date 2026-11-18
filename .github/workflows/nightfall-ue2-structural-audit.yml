@@ -20,6 +20,8 @@ jobs:
         run: python3 -I research/nightfall/flagship-influence/check_fixed_block_meanfield_no_go.py
       - name: Independent full-state small-interaction-component positive theorem control
         run: python3 -I research/nightfall/flagship-influence/check_ue2_small_components_exact.py
+      - name: Independent source-weighted overlapping-leaf selector revealment
+        run: python3 -I research/nightfall/flagship-influence/check_selector_overlap_revealment_exact.py
       - name: Independent all-degree categorical-selector charge terminal
         run: python3 -I research/nightfall/flagship-influence/check_categorical_selector_terminal_exact.py
       - name: Independent categorical degree-two full-state selector proof-attack
