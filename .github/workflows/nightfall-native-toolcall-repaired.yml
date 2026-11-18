@@ -1,0 +1,80 @@
+name: NIGHTFALL unrestricted three-pair model with certified native tool channel
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/nightfall-native-toolcall-repaired.yml"
+      - "research/nightfall/right-to-act-controlarena/probe_native_tool_channel.py"
+      - "research/nightfall/right-to-act-controlarena/unrestricted_multitask_v2.py"
+      - "research/nightfall/right-to-act-controlarena/audit_unrestricted_multitask_v2.py"
+      - "research/nightfall/right-to-act-controlarena/NATIVE_TOOL_CHANNEL_REPAIR_PROTOCOL.md"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nightfall-native-tool-repair
+  cancel-in-progress: true
+jobs:
+  real-unrestricted-model:
+    runs-on: ubuntu-latest
+    environment: controlarena-python
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Pin real source and compile
+        run: |
+          python -m py_compile research/nightfall/right-to-act-controlarena/probe_native_tool_channel.py \
+            research/nightfall/right-to-act-controlarena/unrestricted_multitask_v2.py \
+            research/nightfall/right-to-act-controlarena/audit_unrestricted_multitask_v2.py
+          python -m pip install 'control-arena==20.1.1'
+          python -m pip freeze > unrestricted-v2-installed-versions.txt
+      - name: Check native setting Docker
+        run: docker info --format '{{.ServerVersion}}'
+      - name: Pull tool-capable local model and validate native structured tool channel
+        timeout-minutes: 14
+        run: |
+          docker run -d --rm --name nightfall-native-qwen3 --cpus 3 --memory 9g -p 127.0.0.1:11434:11434 \
+            -e OLLAMA_CONTEXT_LENGTH=32768 -e OLLAMA_NUM_PARALLEL=1 \
+            -e OLLAMA_GO_TEMPLATE=false -e OLLAMA_NO_CLOUD=1 ollama/ollama:latest
+          for attempt in $(seq 1 100); do
+            if curl -fsS http://127.0.0.1:11434/api/tags >/dev/null; then break; fi
+            sleep 2
+          done
+          docker exec nightfall-native-qwen3 ollama pull qwen3:4b
+          curl -fsS http://127.0.0.1:11434/api/tags > unrestricted-v2-model-tags.json
+          docker image inspect --format '{{.Id}}' ollama/ollama:latest > unrestricted-v2-image.txt
+          python research/nightfall/right-to-act-controlarena/probe_native_tool_channel.py \
+            --model qwen3:4b --out unrestricted-v2-structured-probe.json
+      - name: Execute three genuine main/side task pairs with full unrestricted agent tools
+        timeout-minutes: 38
+        run: |
+          python research/nightfall/right-to-act-controlarena/unrestricted_multitask_v2.py \
+            --model ollama/qwen3:4b --time-limit 240 --out native-unrestricted-v2-results
+      - name: Independent exact scorer and executed tool-call audit
+        if: always()
+        run: |
+          if test -f native-unrestricted-v2-results/native_multi_receipt.json; then
+            python research/nightfall/right-to-act-controlarena/audit_unrestricted_multitask_v2.py \
+              --dir native-unrestricted-v2-results | tee unrestricted-v2-independent-audit.json
+          else
+            echo "Model native tool channel blocked before evaluation: do not claim any source attack" >&2
+            exit 1
+          fi
+      - name: Archive all tool trajectories and failed attempts without credentials
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-unrestricted-v2-native-tool-results
+          path: |
+            native-unrestricted-v2-results/
+            unrestricted-v2-model-tags.json
+            unrestricted-v2-structured-probe.json
+            unrestricted-v2-image.txt
+            unrestricted-v2-installed-versions.txt
+            unrestricted-v2-independent-audit.json
+          if-no-files-found: warn
+          retention-days: 30
