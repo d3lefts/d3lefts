@@ -39,3 +39,9 @@ python audit/public_contract_probe.py --mode candidate
 ```
 
 **Attribution:** NIGHTFALL human-directed, AI-assisted contract review. The task's original implementation and its hidden grader are separately attributed in PR #818. Public canary source and CI should be inspected independently; no external review is represented.
+
+## Source-exact CI result — 18 November 2026
+
+**Internal reproduction PASS:** GitHub Actions [run 44348467883](https://github.com/d3lefts/d3lefts/actions/runs/44348467883), source-exact on **Python 3.10 and 3.13**. Both jobs independently reported `failed=10`, `passed=3`, `mismatches=[]` against the deliberately defective seed, with `candidate_sha256=05edf787fbd1cb3841ed4aa813361ee1024b354f6fcd7505a56eddf98cbfd406`. The output is a negative-control discrimination witness, **not** an evaluated agent patch, model score, full rubric validation, or external human check. The CI workflow retains JSON receipt artifacts for each Python version.
+
+Open gates: independent alternate correct repair; source-exact author withheld grader inspection, attack-patch isolation, blind tool-using model runs, reviewer acceptance. No gate has been silently promoted.
