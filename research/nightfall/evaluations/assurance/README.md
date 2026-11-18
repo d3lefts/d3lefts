@@ -175,3 +175,62 @@ transcripts and verifiable task source, inspect runner/container trust
 boundaries, score the untouched submitted patch with this or a stronger
 executor, and have a separate reviewer verify the receipts. Otherwise the
 portfolio must still report **zero accepted blind-agent evaluations**.
+
+
+### v0.4 execution-to-report join: a separate fraud gate
+
+\`join_grader_capture.py\` independently validates a **complete** v2 frozen-run
+packet using \`frozen_run_gate.verify\` and then insists that every completed
+attempt correspond to exactly one previously captured *executed grader*
+result. Failed/timeout attempts remain in the frozen denominator and have no
+grader capture. This join prevents a score, patch or source identity from
+being silently replaced between a real grader execution and later reporting.
+It does **not** prove the model trace was real, the scorer was correct, or
+that the host recording the capture is trustworthy.
+
+The trusted capture bundle has this minimal shape:
+
+\`\`\`text
+captures/
+  capture-manifest.json
+  attempts/
+    try-1/
+      capture.json
+      grade.json
+\`\`\`
+
+The manifest is strict \`nightfall.eval.capture-manifest.v1\` JSON containing
+\`schema\`, \`plan_sha256\`, and \`captures\` — an array of
+\`{"attempt_id":"try-1","capture_sha256":"...","grade_sha256":"..."}\`.
+For each completed attempt, the join checks: exact manifest hash *separately
+frozen after scorer execution*, source/plan/task/model image identity,
+unmodified patch bytes, exact grader output bytes and grade SHA, expected
+original task tree, positive source hashes, trusted local capture status,
+zero observed grader exit, and one-to-one matching across the entire planned
+attempt set. The complete run packet and the separately frozen manifest hash
+must be taken from trusted custody; a dishonest host that fabricates both can
+still forge the whole story.
+
+\`\`\`sh
+python3 research/nightfall/evaluations/assurance/join_grader_capture.py \
+  /trusted/run \
+  /trusted/captures \
+  --expected-plan-sha256 "$PINNED_PLAN_SHA256" \
+  --externally-pinned-capture-manifest-sha256 "$CAPTURE_MANIFEST_SHA256"
+\`\`\`
+
+**Adversarial regression witness.** A synthetic two-attempt report has a
+deliberately fabricated metadata-only tool trace, one complete attempt with a
+real executed Docker toy grader, and one failed attempt. If the report author
+substitutes a 99-point grade for the truly captured 100-point grade, repairs
+its grade/receipt SHA-256, and keeps the grading maximum at 100, the older
+v2 receipt-only gate still accepts that fake substitution. Likewise a changed
+patch plus repaired receipt SHA passes the old gate. **The new execution join
+rejects both**, even after the manifest was separately frozen. Dropping the
+completed attempt from the manifest is also rejected, including if the
+attacker controls a rehashed manifest. This is a synthetic *adversarial
+instrumentation result*, not a scored model evaluation.
+
+The checker is a compatibility layer; actual model execution, trusted
+host/container attestation and independent evaluator review remain future
+requirements. Do not use the word “blind” for synthetic model metadata.
