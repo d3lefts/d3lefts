@@ -115,7 +115,6 @@ theorem anchored_exponent_two_from_row_khintchine
     (∑ i, q i) ^ 2 ≤ (K * B * Real.sqrt M) ^ 2 := hsq
     _ = K ^ 2 * B ^ 2 * M := by
       rw [mul_pow, mul_pow, Real.sq_sqrt hM]
-      ring
 
 /-- Exact cubic coefficient 4 follows with no algebraic loose ends, if the
 analytic rowwise two-sign-block Khintchine input yields K=2. -/
