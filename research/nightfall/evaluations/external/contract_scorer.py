@@ -275,9 +275,15 @@ def run():
     buf=io.StringIO()
     result=unittest.TextTestRunner(stream=buf,verbosity=2).run(suite)
     failures=[{"test":str(t),"reason":str(msg)[-600:]} for t,msg in result.failures+result.errors]
-    passed=total-len(result.failures)-len(result.errors)-len(result.skipped)
+    # unittest subTest produces multiple errors for one parent test method.
+    # Never count more failed tests than the frozen suite denominator.
+    bad_methods={getattr(t,"_testMethodName",str(t)) for t,_ in result.failures+result.errors}
+    skipped_methods={getattr(t,"_testMethodName",str(t)) for t,_ in result.skipped}
+    failed_count=len(bad_methods | skipped_methods)
+    assert 0 <= failed_count <= total
+    passed=total-failed_count
     receipt={"task":args.task,"tests_total":total,"tests_passed":passed,
-       "tests_failed":len(result.failures)+len(result.errors),"max_points":100,
+       "tests_failed":failed_count,"max_points":100,
        "points":round(100*passed/total,4),
        "scorer_kind":"contract_derived_preliminary_not_author_hidden",
        "independent_human_audit":False,"failures":failures,"report":buf.getvalue()[-5000:]}
