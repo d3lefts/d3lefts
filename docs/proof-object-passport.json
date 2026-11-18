@@ -255,6 +255,81 @@
         "Operational version counter authenticity, atomic effect time, external review and comprehensive source coverage remain assumptions.",
         "General dynamic recertification with in-window writes, noisy observation and arbitrary adversarial source changes is open."
       ]
+    },
+    {
+      "id": "permission-robust-observation-hull-v1",
+      "programme": "NIGHTFALL Q2 / SCIF / Price of Permission intermediate",
+      "status": "source_matched_scoped_named_lean_receipt",
+      "complete_certification": false,
+      "external_novelty_verified": false,
+      "physical_permission_certified": false,
+      "original_model": {
+        "path": "research/nightfall/price_permission/robust_observation_hull/source_bound_hull_witness.json",
+        "git_blob_sha1": "6999ed3480ff2e5f367803d7dcf42cd9e6a06cf0",
+        "embedded_key": "source_model",
+        "sha256": "2c821af72c6caf8c85a35c53049a46b67510947b8e9d1c84cb80704d71b77178",
+        "completeness": "synthetic_original_table_only"
+      },
+      "proof_object": {
+        "embedded_key": "certificate",
+        "format": "nightfall.robust-observation-hull.v1",
+        "robust_before": "1/6",
+        "robust_after": "2/3",
+        "source_influence": "2/3",
+        "one_to_two_sensor_transition": "exact_fixed_bundle_only"
+      },
+      "checker": {
+        "exact": "research/nightfall/price_permission/robust_observation_hull/check_hull_exact.py",
+        "exact_blob_sha1": "e642e9964c620d9016420f44444f06c10ec6a2d5",
+        "independent": "research/nightfall/price_permission/robust_observation_hull/check_hull_independent.cjs",
+        "independent_blob_sha1": "0241817e72cb29c0e74d0596d2c7de4a431a8d5f",
+        "locality": "research/nightfall/price_permission/robust_observation_hull/check_quadratic_gain_locality.py",
+        "locality_blob_sha1": "10d67b5efa6d3f539c19a5a80f0e0139b8ef75c3",
+        "exact_negative_controls": 18,
+        "independent_negative_controls": 10,
+        "roles": "Exact original source-to-response Gram and supporting rational global minimum, independently derived BigInt quadratic minimum, and direct-world Q2/locality/cubic attacks"
+      },
+      "lean": {
+        "source": "research/nightfall/formalization/permission/RobustObservationHull.lean",
+        "source_blob_sha1": "c7dd20689d52dd091a143da954f6e6bb90e04984",
+        "contract": "research/nightfall/price_permission/robust_observation_hull/lean_type_contract.json",
+        "contract_blob_sha1": "0332b0fe1234b642d892dd43719049dbc6e344b1",
+        "declarations": [
+          "Nightfall.RobustObservationHull.rational_hull_supporting_certificate",
+          "Nightfall.RobustObservationHull.rational_hull_matching_optimal"
+        ],
+        "compiler_lock": "docs/lean-compiler-lock.json",
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      },
+      "evidence": {
+        "pr": 793,
+        "exact_head": "f0fa0ea201bc8ffd5c6368b3c25d62b9ed19e1ab",
+        "run_id": 44210111162,
+        "artifact_id": 14385218800,
+        "ci_url": "https://github.com/d3lefts/d3lefts/actions/runs/44210111162",
+        "named_lean_result": "pinned_compiled_exact_types_standard_axioms",
+        "independent_lake_check": "not_run",
+        "external_human_review": "none"
+      },
+      "gates": {
+        "original_source_model": "finite_reconstructed_and_exactly_checked",
+        "generic_rational_hull_soundness": "pinned_named_lean_pass",
+        "q2_gain_locality": "exact_original_world_finite_audit_not_lean",
+        "json_instance_lean": "not_connected",
+        "zero_error_permission": "not_entailed",
+        "prior_art_novelty": "unresolved"
+      },
+      "limitations": [
+        "One replacement source law is an arbitrary finite marginal on a complete synthetic original product; no dependence or dynamic physical source law is covered.",
+        "All robust information gains are expected squared-error reductions, not zero-error safety or a guarantee that a consequential effect is mediated.",
+        "Lean proves generic exact rational hull supporting and matching implications; no JSON-to-Lean evaluated instance or Q2 locality theorem has been kernel-certified by this receipt.",
+        "The source pair tables on previously zero-mass atoms must be supplied and validated to prevent unseen-support changes.",
+        "This is a classical convex projection/ANOVA proof-object synthesis without verified novelty or independent human peer review."
+      ]
     }
   ]
 }
