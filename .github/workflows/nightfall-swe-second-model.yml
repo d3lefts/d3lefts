@@ -1,0 +1,170 @@
+name: NIGHTFALL independent second coding model Qwen1.5B (UNSCORED)
+
+on:
+  push:
+    branches:
+      - nightfall-swe-second-qwen-model-20261118
+    paths:
+      - 'research/nightfall/evaluations/assurance/real_agent_pilot/qwen1p5b_second_agent.py'
+      - '.github/workflows/nightfall-swe-second-model.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/evaluations/assurance/real_agent_pilot/qwen1p5b_second_agent.py'
+      - '.github/workflows/nightfall-swe-second-model.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  real-local-agent:
+    name: Independent Qwen 1.5B tool-using pilot / ${{ matrix.task }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - task: DispatchQ-B1
+            source_sha: c11881717d354462d49205ad86eecbdde719c47e
+            audit_sha: a983e602e3da4611be1e786b1be93af4939c3f84
+            audit_subpath: research/nightfall/evaluations/dispatchq-b1/audit
+            source_subpath: research/nightfall/evaluations/dispatchq-b1/candidate
+          - task: ArtifactGraph-B2
+            source_sha: d5158a3aa37fa0f0ac877406ec806389cc04b5b6
+            audit_sha: 70fc1e231e76e0df0bfddcee9ffd576ce03703a9
+            audit_subpath: research/nightfall/evaluations/artifactgraph-b2/audit
+            source_subpath: research/nightfall/evaluations/artifactgraph-b2/candidate
+    steps:
+      - name: Checkout trusted pilot tools (no persisted credentials)
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          path: pilot
+      - name: Checkout pinned unmodified task source in isolated tree
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ matrix.source_sha }}
+          path: task-source
+          sparse-checkout: |
+            ${{ matrix.source_subpath }}
+          sparse-checkout-cone-mode: false
+      - name: Checkout independently authored PUBLIC canary separately (not model-visible)
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ matrix.audit_sha }}
+          path: audit-source
+          sparse-checkout: |
+            ${{ matrix.audit_subpath }}
+          sparse-checkout-cone-mode: false
+      - name: Assert exact task source SHA and no agent-visible grader
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git -C task-source rev-parse HEAD)" = "${{ matrix.source_sha }}"
+          test "$(git -C audit-source rev-parse HEAD)" = "${{ matrix.audit_sha }}"
+          test -f "audit-source/${{ matrix.audit_subpath }}/public_contract_probe.py"
+          test -f "task-source/${{ matrix.source_subpath }}/ISSUE.md"
+          test ! -d "task-source/${{ matrix.source_subpath }}/audit"
+          test ! -e "task-source/${{ matrix.source_subpath }}/hidden_grader.py"
+          git -C pilot rev-parse HEAD | tee trusted-pilot-head.txt
+          printf '%s\n' "${{ matrix.source_sha }}" | tee pinned-task-source-head.txt
+          sha256sum pilot/research/nightfall/evaluations/assurance/real_agent_pilot/*.py | tee trusted-tool-source-sha256.txt
+      - name: Independent Python mediator boundary checks (synthetic ONLY)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I pilot/research/nightfall/evaluations/assurance/real_agent_pilot/test_local_model_swe_pilot.py |& tee mediator-contract-checks.txt
+      - name: Download and record Docker runtime images
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker pull python:3.13-slim
+          docker image inspect --format '{{.Id}}' python:3.13-slim | tee python-scoring-image-id.txt
+          docker pull ollama/ollama:latest
+          docker image inspect --format '{{.Id}}' ollama/ollama:latest | tee ollama-runtime-image-id.txt
+      - name: Start local model endpoint and record exact weights digest
+        shell: bash
+        timeout-minutes: 13
+        run: |
+          set -euo pipefail
+          docker run -d --rm --name nf-swe-ollama --cpus 3 --memory 6g \
+            -p 127.0.0.1:11434:11434 \
+            -e OLLAMA_NUM_PARALLEL=1 \
+            -e OLLAMA_CONTEXT_LENGTH=8192 \
+            -e OLLAMA_NO_CLOUD=1 \
+            ollama/ollama:latest
+          ready=0
+          for attempt in $(seq 1 90); do
+            if curl -fsS http://127.0.0.1:11434/api/tags > /dev/null; then ready=1; break; fi
+            sleep 2
+          done
+          test "$ready" -eq 1
+          docker exec nf-swe-ollama ollama pull qwen2.5-coder:1.5b
+          curl -fsS http://127.0.0.1:11434/api/tags > model-tags.json
+          python3 -c 'import json; d=json.load(open("model-tags.json")); a=[m for m in d["models"] if m["name"]=="qwen2.5-coder:1.5b"]; assert len(a)==1 and len(a[0]["digest"])==64; print("PINNED LOCAL MODEL WEIGHTS:",a[0]["digest"])'
+      - name: Genuine local-model tool session on agent-visible source ONLY
+        shell: bash
+        timeout-minutes: 24
+        run: |
+          set -euo pipefail
+          image="$(cat python-scoring-image-id.txt)"
+          python3 -I pilot/research/nightfall/evaluations/assurance/real_agent_pilot/qwen1p5b_second_agent.py \
+            --task "${{ matrix.task }}" \
+            --source "task-source/${{ matrix.source_subpath }}" \
+            --output "model-output/${{ matrix.task }}" \
+            --docker-image-id "$image" \
+            --steps 9 | tee model-pilot-console.txt
+          python3 - <<'PY'
+          import json,pathlib,os
+          task = "${{ matrix.task }}"
+          x=json.loads((pathlib.Path('model-output')/task/'PUBLIC_CALIBRATION_RECEIPT.json').read_text())
+          assert x['task']==task
+          assert x['no_private_grader_executed'] is True
+          assert x['blind_agent_score'] is None
+          assert x['status']=='genuine_local_model_tool_trial_unscored'
+          assert x['ceiling']=='NOT_A_VALIDATED_BLIND_BENCHMARK'
+          assert x['model_digest'] in pathlib.Path('model-tags.json').read_text()
+          assert x['model_name']=='qwen2.5-coder:1.5b'
+          print('EXACT OUTCOME:',json.dumps({k:x[k] for k in
+            ['tool_calls_executed','source_writes_executed','changed_files','finish_reason','public_smoke_exit_code','model_digest']},sort_keys=True))
+          PY
+      - name: Independently probe public contract ONLY after model tool session finishes
+        shell: bash
+        timeout-minutes: 4
+        run: |
+          set -euo pipefail
+          image="$(cat python-scoring-image-id.txt)"
+          python3 -I pilot/research/nightfall/evaluations/assurance/real_agent_pilot/run_independent_public_canary.py \
+            --task "${{ matrix.task }}" \
+            --source "task-source/${{ matrix.source_subpath }}" \
+            --audit-script "audit-source/${{ matrix.audit_subpath }}/public_contract_probe.py" \
+            --patch "model-output/${{ matrix.task }}/PRIVATE_CANDIDATE_PATCH.diff" \
+            --pilot-receipt "model-output/${{ matrix.task }}/PUBLIC_CALIBRATION_RECEIPT.json" \
+            --output "model-output/${{ matrix.task }}/PUBLIC_INDEPENDENT_CANARY.json" \
+            --docker-image-id "$image" | tee independent-public-canary-console.txt
+      - name: Preserve public calibration receipt only (withhold model source patches)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-second-qwen1p5b-agent-unscored-${{ matrix.task }}
+          path: |
+            trusted-pilot-head.txt
+            pinned-task-source-head.txt
+            trusted-tool-source-sha256.txt
+            python-scoring-image-id.txt
+            ollama-runtime-image-id.txt
+            model-tags.json
+            mediator-contract-checks.txt
+            model-pilot-console.txt
+            independent-public-canary-console.txt
+            model-output/${{ matrix.task }}/PUBLIC_INDEPENDENT_CANARY.json
+            model-output/${{ matrix.task }}/PUBLIC_CALIBRATION_RECEIPT.json
+            model-output/${{ matrix.task }}/PUBLIC_SMOKE_OUTPUT.txt
+          retention-days: 7
+          if-no-files-found: warn
+      - name: Stop local model service
+        if: always()
+        run: docker rm -f nf-swe-ollama >/dev/null 2>&1 || true
