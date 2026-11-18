@@ -112,8 +112,9 @@ def validate_plan(plan):
     exact_keys(plan, ("schema", "task_id", "task_commit",
                       "candidate_tree_sha256", "prompt_sha256",
                       "grader_sha256", "runner_image_digest", "model_id",
-                      "budget", "attempt_ids", "holdout"), "plan")
-    need(plan["schema"] == "nightfall.eval.plan.v1", "unsupported plan schema")
+                      "budget", "grading", "attempt_ids", "holdout"), "plan")
+    need(plan["schema"] == "nightfall.eval.plan.v2",
+         "unsupported plan schema: scoring denominators must be externally pinned")
     need(type(plan["task_id"]) is str and TASK.fullmatch(plan["task_id"]),
          "invalid task ID")
     need(is_hex(plan["task_commit"], COMMIT), "missing task source commit")
@@ -130,6 +131,10 @@ def validate_plan(plan):
     budget = plan["budget"]
     exact_keys(budget, ("wall_seconds", "tokens", "tool_calls"), "budget")
     need(all(positive_int(x) for x in budget.values()), "budget must be positive")
+    grading = plan["grading"]
+    exact_keys(grading, ("tests_total", "max_points"), "grading")
+    need(all(positive_int(v) for v in grading.values()),
+         "grading denominators must be positive exact integers")
     ids = plan["attempt_ids"]
     need(type(ids) is list and 1 <= len(ids) <= 100 and
          all(type(x) is str and ATTEMPT.fullmatch(x) for x in ids) and
@@ -195,6 +200,9 @@ def validate_grade(grade, plan, attempt_id):
          "empty grading denominator")
     need(grade["tests_passed"] <= grade["tests_total"] and
          grade["score_points"] <= grade["max_points"], "score over maximum")
+    need(grade["tests_total"] == plan["grading"]["tests_total"] and
+         grade["max_points"] == plan["grading"]["max_points"],
+         "grader denominator drift relative to frozen plan")
     need(grade["grader_exit_code"] == 0, "grader command failed")
     return grade["score_points"], grade["max_points"]
 
@@ -285,6 +293,7 @@ def verify(root, expected_plan_sha256):
         "decision": "structurally_consistent_unattested_internal_records",
         "plan_sha256": expected_plan_sha256,
         "task_id": plan["task_id"],
+        "frozen_grading_denominator": plan["grading"],
         "planned_attempts": len(plan["attempt_ids"]),
         "observed_attempts": len(attempts),
         "completed_with_tool_and_grade": len(scores),
