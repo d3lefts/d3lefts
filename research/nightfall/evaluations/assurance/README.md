@@ -234,3 +234,16 @@ instrumentation result*, not a scored model evaluation.
 The checker is a compatibility layer; actual model execution, trusted
 host/container attestation and independent evaluator review remain future
 requirements. Do not use the word “blind” for synthetic model metadata.
+
+
+### v0.5 STOP-SHIP: real-task scoring disabled pending scorer isolation
+
+Independent exact-Docker proof attack PR #843 found that two intentionally INCORRECT synthetic patches each received 100/100 from trusted_container_grade.capture(). With a legitimate scorer script pinned to disk and run in Docker, a candidate imported by that script can write perfect-grade JSON to file descriptor 1 and call os._exit(0) to terminate the grader before it checks correctness. A second candidate returns a correct answer only if the private grader's mounted /opt/grader/score.py is present. Both cases preserve SHA-pinned source, scorer, image, plan and score denominators.
+
+Exact source-head run https://github.com/d3lefts/d3lefts/actions/runs/44388473844 reproduces both false accepts on Python 3.10 and 3.13. A GREEN run means the VULNERABILITY WAS REPRODUCED, not that scoring is trustworthy. Neither a real private grader nor an AI model was used.
+
+Interim fail-closed policy (this branch): capture() now rejects any plan unless task_id begins synthetic- (case-insensitive) AND model_id begins laboratory/synthetic-. A real DispatchQ-B1 or ArtifactGraph-B2 task with its honest task/model identity cannot be graded via this known-insecure boundary. Regression tests check both rejection paths and preserve the toy Docker control. These identifiers are NOT cryptographic identity authentication: a malicious operator who controls the plan can lie. This is a stop-ship policy guard, NOT a complete scorer-security repair.
+
+Outstanding actual repair: use two separate trust domains, in which candidate code NEVER runs in the scorer process and NEVER has access to private grader/reference/hidden-test mounts. Trusted scoring must derive its own grade from independently observed candidate behavior and retain the authoritative score stdout. Both proof attacks must be converted to expected rejections, followed by a real independent repair and isolated two-agent trials with external frozen plan, attempts and grader denominator.
+
+Until scorer isolation and independent review are established, ZERO eligible real model scores may be issued through this capsule. Synthetic proof-of-execution receipts are not evidence of Polaris benchmark task difficulty.
