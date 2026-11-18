@@ -59,14 +59,21 @@ theorem witness_attains_bounds :
   decide
 
 theorem witness_mean_zero : fairMean = 0 := by
-  decide
+  unfold fairMean
+  rw [Finset.sum_fin_eq_sum_range]
+  norm_num [Finset.sum_range_succ, witness, bit, sourceWorld]
 
 theorem witness_variance_twelve : fairVariance = 12 := by
-  decide
+  unfold fairVariance
+  rw [witness_mean_zero, Finset.sum_fin_eq_sum_range]
+  norm_num [Finset.sum_range_succ, witness, bit, sourceWorld]
 
 theorem witness_source_influence_four :
     ∀ i : Fin 5, fairResamplingInfluence i = 4 := by
-  decide
+  intro i
+  fin_cases i <;>
+    norm_num [fairResamplingInfluence, Finset.sum_fin_eq_sum_range,
+      Finset.sum_range_succ, witness, bit, sourceWorld, flip]
 
 /-- Actual half-range B=4, variance V=12, max original resampling
 influence M=4 give the **exact** ratio V²/(B² M) = 9/4. -/
