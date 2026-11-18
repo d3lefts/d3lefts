@@ -130,6 +130,70 @@ def rubinstein_family(m):
     return m,n,N,K_zero,R
 
 
+
+def chebyshev(d, z):
+    """Exact first-kind T_d on any rational z."""
+    if d==0:
+        return Q(1)
+    if d==1:
+        return z
+    a,b=Q(1),z
+    for _ in range(2,d+1):
+        a,b=b,2*z*b-a
+    return b
+
+
+def chebyshev_weighted_R(d,n,p):
+    """Exact degree-d symmetric source-world formula, NOT a theorem.
+
+    At Hamming weight k:
+      R_k=k(1-p)|t_k-t_(k-1)|+(n-k)p|t_(k+1)-t_k|.
+    This includes R on extremely rare but POSITIVE-MASS tail points.
+    The constant-slope family and biased degree-d oscillations test
+    a distinct high-degree regime from the AND family.
+    """
+    from math import comb
+    assert n>=d>=2 and 0<p<1
+    y=[chebyshev(d,Q(2*k-n,n)) for k in range(n+1)]
+    w=[Q(comb(n,k))*p**k*(1-p)**(n-k) for k in range(n+1)]
+    assert sum(w,Q())==1
+    avg=sum((w[k]*y[k] for k in range(n+1)),Q())
+    V=sum((w[k]*(y[k]-avg)**2 for k in range(n+1)),Q())
+    wother=[Q(comb(n-1,k))*p**k*(1-p)**(n-1-k)
+            for k in range(n)]
+    M=p*(1-p)*sum((wother[k]*(y[k+1]-y[k])**2
+                   for k in range(n)),Q())
+    R=max((
+        k*(1-p)*(abs(y[k]-y[k-1]) if k else 0)
+       +(n-k)*p*(abs(y[k+1]-y[k]) if k<n else 0)
+        for k in range(n+1)),default=Q())
+    assert R>0 and M>0
+    return V*V/(Q(d)*R*R*M),R
+
+
+def structured_degree_weighted_R_stress():
+    """Positive-support exact rational degrees 2...8; no floats."""
+    near_bernstein={
+        2:Q(17,20),3:Q(14,15),4:Q(25,26),5:Q(39,40),
+        6:Q(983,1000),7:Q(99,100),8:Q(199,200)
+    }
+    checked=0; top=(Q(),None)
+    for d in range(2,9):
+        n=12*d
+        for tag,p in (
+            ("fair",Q(1,2)),
+            ("biased",near_bernstein[d]),
+            ("rare-tail",Q(n-1,n))
+        ):
+            score,R=chebyshev_weighted_R(d,n,p)
+            checked+=1
+            if score>top[0]: top=(score,(d,n,tag,p,R))
+            assert score<=1,("candidate c=1 weighted R refuted",d,n,p,score)
+    print("PASS 21 exact rational Chebyshev degree-weighted R tests;",
+          "maximum",top[0],"witness",top[1])
+    return checked
+
+
 def main():
     for n in (2,4,8,10,20,50,100,300):
         p,q,V,M,R,K,cR,cK=AND_formula(n)
@@ -143,7 +207,11 @@ def main():
         m,n,N,K,R=rubinstein_family(m)
         print(f"PASS classical Rubinstein m={m}, n={n}, worlds={N}: "
               f"R={R} and exact K_at_zero={K}, K/R={m}")
+    structured_degree_weighted_R_stress()
     assert AND_formula(8)[6]>1 and AND_formula(100)[6]>14
+    # The AND witness has algebraic degree d=n. Its normalized ratio
+    # V²/(d R² M) tends to q(1-q)²>0, ruling out every degree exponent <1.
+    assert AND_formula(300)[6]/300 >= Q(1,16)
     print("PASS NO-GO: no universal c makes Var² <= c R² max original influence")
     print("FULL fractional-row K bridge remains OPEN; no contradiction asserted.")
 
