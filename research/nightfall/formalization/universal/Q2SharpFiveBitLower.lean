@@ -35,9 +35,10 @@ No abstract Fintype.choice implementation is used by the kernel reduction. -/
 def sourceWorld (w : Fin 32) : Fin 5 → Bool :=
   fun i => decide ((w.val / (2 ^ i.val)) % 2 = 1)
 
+set_option maxHeartbeats 2000000
+
 /-- Binary expansion visits every original fair five-bit word exactly once.
 This bridges the effective 32-world representation and the actual cube. -/
-set_option maxHeartbeats 2000000 in
 theorem sourceWorld_bijective : Function.Bijective sourceWorld := by
   decide
 
