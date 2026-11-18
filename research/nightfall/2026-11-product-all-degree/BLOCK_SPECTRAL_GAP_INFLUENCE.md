@@ -63,3 +63,16 @@ check_block_gap.py reproduces the exact correlated-pair Gram matrices over Fract
 This is a complete author-side proof, not a Lean terminal theorem. To formalize end-to-end: (1) add the block grouping degree-invariance map to the finite heterogeneous product theorem; (2) use the finite conditional-variance identity for the local Poincare lift; (3) combine in a named terminal and check exact compiler axioms. The named scalar inequality and exact example are not enough alone.
 
 Prior-art direction: 'Influences in Mixing Measures' (arXiv:2307.07625) proves related KKL/Talagrand results under correlation decay. These results and spectral-gap literature must be compared before claiming novelty.
+
+
+## Corollary: block-query simulation needs no local spectral gap
+
+For the same source ν=⊗_kν_k, assume only a maximum block size b, **not** any local Poincaré inequality. Grouping each block into a supersymbol preserves [0,1] range, variance, and degree≤d. Apply the independent-product query simulator at the block level. Every query for a complete supersymbol can be implemented by at most b original-site queries. Consequently an additive-(ε,δ) deterministic classical approximation uses at most
+
+    b * ceil(22000 d^7 ε^-5 δ^-7/2)
+
+individual coordinate queries, for any degree-d bounded acceptance function, regardless of internal block singularities or density-floor failure. For a T-query quantum algorithm take d=max(1,2T).
+
+This is a *query-simulation* theorem; it must not be confused with the direct coordinate-influence lower bound, which **does** require local spectral-gap control. A perfectly locked block (X1=X2) can have zero true one-site influences despite its whole-block influence being positive, but a classical simulator can query both sites together for cost b. This cleanly separates observability by individual coordinate from availability of inexpensive block measurements.
+
+Lean status: finite grouped-degree transport and explicit whole-block decision-tree simulator are not yet linked as a named end-to-end theorem. The argument is author-side.
