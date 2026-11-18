@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-proof-passport-v1",
   "id": "NF-CUBIC-CONTRACTION-20261117",
-  "version": "0.1",
+  "version": "0.2",
   "date": "2026-11-17",
-  "status": "DRAFT_AUTHOR_ANALYTIC",
+  "status": "DRAFT_AUTHOR_ANALYTIC_WITH_SCOPED_SCALAR_AND_BINARY_FIBER_LEAN",
   "novelty": "no novelty claimed; prior art strongly overlaps",
   "independent_human_review": false,
   "claims": [
@@ -36,6 +36,18 @@
       "statement": "Scalar finite-energy telescoping and hierarchy induction.",
       "evidence": "Lean proof source on draft branch",
       "lean_status": "current-head pinned CI pending; does NOT prove H1 original-law premise"
+    },
+    {
+      "id": "CUBIC-H6",
+      "statement": "Exact two-atom weighted conditional variance identity and its coefficient <= 1/4 times total atom mass; finite-fiber original-law sum comparison",
+      "evidence": "CubicContractionBinarySource.lean, named pinned Lean 4.36.0-rc2 proof CI run 44209594975",
+      "lean_status": "kernel-checked source-scoped four declarations, only standard axioms; no Poincare law formalized"
+    },
+    {
+      "id": "CUBIC-H7",
+      "statement": "On fixed-r connected Ising chains, complete Wick gradient-centering does not yield a uniform native-to-fair root influence comparison: ratio=(1-r²)^2/(1+k*r²) -> 0.",
+      "evidence": "exact analytical endpoint conditional variance + independent bond moments, Fraction checker over k=2..6",
+      "lean_status": "not formalized"
     }
   ],
   "dependencies": [
@@ -54,7 +66,8 @@
     "research/nightfall/2026-11-dq2/CUBIC_CONTRACTION_HIERARCHY_V0_1.md",
     "research/nightfall/formalization/observability/CubicContractionHierarchyScalar.lean",
     "scripts/check_cubic_contraction_hierarchy_exact.py",
-    ".github/workflows/nightfall-cubic-contraction.yml"
+    ".github/workflows/nightfall-cubic-contraction.yml",
+    "research/nightfall/formalization/observability/CubicContractionBinarySource.lean"
   ],
   "no_claims": [
     "Not unrestricted cubic exponent-two",
@@ -62,5 +75,23 @@
     "No novel first discovery",
     "Not a competitive coefficient improvement"
   ],
-  "cheapest_next_experiment": "Source-matched Lean proof of original-law derivative identity and Poincare recurrence, then adversarial test of any proposed cubic influence lower comparison"
+  "cheapest_next_experiment": "Source-matched Lean proof of original-law derivative identity and Poincare recurrence, then adversarial test of any proposed cubic influence lower comparison",
+  "certificates": {
+    "prior_source_head": "8c12f1524539aba5baf16758cdd64ff98f834108",
+    "run": "https://github.com/d3lefts/d3lefts/actions/runs/44209594975",
+    "checked_declarations": [
+      "Nightfall.CubicContractionHierarchy.finite_energy_telescoping",
+      "Nightfall.CubicContractionHierarchy.scalar_contraction_hierarchy",
+      "Nightfall.CubicContractionBinarySource.weighted_pair_variance_eq",
+      "Nightfall.CubicContractionBinarySource.summed_fiber_influence_le_derivative"
+    ],
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "scope": "Lean proofs are scalar telescoping and exact two-atom/source-fiber algebra only; no universal probabilistic recurrence or cubic Q3 theorem",
+    "current_head_replay": "required after v0.2 edits"
+  },
+  "next_decisive_test": "Lean formalize finite original-law pair-partition conditional expectation and derive k-level Poincare recurrence without an explicit hypothesis; then independently test contracted native influence vs boundedness for top-cover cubic; do not assume fair-product gradient coercivity"
 }
