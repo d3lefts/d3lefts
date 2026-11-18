@@ -1,0 +1,79 @@
+# NIGHTFALL — Dependent cubic contraction hierarchy
+
+**v0.1, 2026-11-17.** Analytic calculation and exact finite-law replay. A standalone Lean scalar certificate is proposed; **no Lean proof of the dependent-law Poincare bridge, no external review, and no novelty claim**. Does not solve unrestricted Q3 exponent two.
+
+## Contract and prior art
+
+Goal: repair the false, dimension-uniform comparison between ordinary degree-three physical-spin variance under a dependent Ising law and variance under fair product measure. Represent the missing operator through expectations of algebraic derivatives instead of using the noncommuting native residual words as a degree grading.
+
+Checked literature: Diakonikolas–Kane–Stewart–Sun (2021), arXiv:2102.02171, Theorem 4.2 and Lemma 4.1 (degree-two Ising anti-concentration/concentration); Götze–Sambale–Sinulis, arXiv:1801.06348 (higher-order concentration under weak dependence); Adamczak–Wolff, arXiv:1304.1826 (derivative inequalities under Poincare); Adamczak–Kotowski–Polaczyk–Strzelecki, arXiv:1809.03187 (Ising polynomial multilevel bounds). Iterated Poincare and derivative-expectation mechanisms are classical. No novelty or priority established.
+
+## Theorem: all-degree contraction hierarchy
+
+Let nu be any strictly positive finite binary law and let actual-law single-site conditional influences be I_i(g)=E Var(g|X_-i). Assume for every function g,
+
+  Var_nu(g) <= A * sum_i I_i(g), A>=0.
+
+Let D_i g(x_-i)=[g(x_i=+1)-g(x_i=-1)]/2. For a multilinear f of algebraic degree at most d, let D_T=product_{i in T}D_i (commuting physical derivatives), and
+
+  M_k(f)=k! * sum_{T subset [n], |T|=k} (E_nu D_T f)^2,
+  V_k(f)=k! * sum_{T subset [n], |T|=k} Var_nu(D_T f).
+
+Since conditional variance of Xi is w_i<=1,
+  I_i(g) = E_nu[w_i (D_i g)^2] <= E_nu[(D_i g)^2].
+Apply the actual-law Poincare inequality to every D_T f and use E h²=(E h)²+Var h. Counting k! ordered tuples yields
+
+  V_k <= A*(M_{k+1}+V_{k+1}), k<d; V_d=0.
+
+Therefore:
+
+  Var_nu(f) <= sum_{k=1}^d A^k M_k(f).  (HIERARCHY)
+
+The proof applies to arbitrary full-support binary laws with a stated Poincare constant; no Ising, product, commutation-of-native-residuals or global density-ratio assumption. The proposed Lean file proves only the scalar finite telescoping from hstep and hterminal; it does NOT establish those hypotheses from original-source probability operators.
+
+## Cubic specialization / exact contraction mechanism
+
+Write
+f=c+sum_i a_i Xi+sum_{i<j} b_ij XiXj+sum_{i<j<k} c_ijk XiXjXk,
+and assume E Xi=0. Let C_jk=E XjXk. Then
+
+  E D_i f=a_i+sum_{j<k, j,k != i} c_ijk C_jk,
+  E D_i D_j f=b_ij,
+  E D_i D_j D_k f=c_ijk.
+
+Thus
+
+  Var_nu(f) <= A * sum_i (a_i+sum_{j<k} c_ijk C_jk)^2
+             +2 A² * sum_{i<j} b_ij²
+             +6 A³ * sum_{i<j<k} c_ijk².
+
+Choosing a_i=-sum_{j<k} c_ijk C_jk cancels the entire mean-first-derivative contraction. For pure cubic + this linear correction, M1=M2=0 and
+
+  Var_nu(f_corrected) <= 6 A³ sum_{i<j<k} c_ijk².
+
+That is an exact dimension-free variance control on a law-adapted contraction-centered cubic subspace, not a general cubic variance-influence inequality; the correction can increase the function's norm and change its reference variance.
+
+## Connected-chain failure and repair
+
+On the connected zero-field (k+2)-spin Ising chain X0,Y1,...,Y(k+1), every edge correlation 0<r<1/2, take bounded cubic
+
+  f_k=(X0/k)*sum_{j=1}^k Yj Y(j+1).
+
+Independent Ising edge-bond factors give
+
+  Var_nu(f_k)=r²+(1-r²)/k, Var_uniform(f_k)=1/k,
+  Var_nu/Var_uniform=1+(k-1)r² -> infinity.
+
+The contracted mean gradients detect the rank-one coherent contribution. Correcting all linear coefficients via a_i=-E_nu D_i f_k produces E_nu D_i f_corrected=0 for every site. With the classical Dobrushin Poincare A=(1-2r)^-1 and zero spin means, HIERARCHY gives
+
+  Var_nu(f_corrected)<=6 A³/k.
+
+The exact rational checker tests r=1/3 and k=2,3,4,5,6 using full joint distribution and original conditional influences. This mechanism is a representation correction, not a new cubically sharp coefficient or an unrestricted Q3 theorem.
+
+## Reproducibility, verification and limits
+
+Code: scripts/check_cubic_contraction_hierarchy_exact.py; scalar Lean source: research/nightfall/formalization/observability/CubicContractionHierarchyScalar.lean. The Python checker separately verifies the true-law Poincare inequality for every derivative of each tested polynomial, the k! counting, the complete hierarchy, the chain variance ratio, contraction cancellation and corrected bound. It is finite-instance evidence, not an all-n certificate.
+
+Next fail-closed gates: (1) run exact-head pinned Lean for scalar recurrence and inspect named axioms; (2) independent proof of actual conditional-variance identity and ordered tuple counting; (3) source-level Lean law-to-recurrence theorem with no externally supplied recurrence; (4) compare exact centered cubic class against Götze–Sambale–Sinulis and Adamczak et al.; (5) only then attempt a boundedness/influence inequality for the centered cubic sector. Preserve this operator even if historical novelty fails.
+
+Mechanism graph: dependent cubic covariance obstruction -> physical derivatives -> Poincare derivative recursion -> contraction-mean energy -> law-adapted Wick cancellation -> exact checker -> scalar Lean certificate -> unproved original-law Lean bridge -> possible Q3 transfer.
