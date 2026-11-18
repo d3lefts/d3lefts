@@ -23,6 +23,7 @@ SEEDS = (
     "InfinitePiQ2RangeProjectionTransfer",
     "InfinitePiQ2UnconditionalTerminal",
     "InfinitePiQ2DegreeEquivalence",
+    "DQ2SpectralSandwich",
     "Q2ShiftedConditionalTargets",
 )
 EXTERNAL_PREFIXES = (
