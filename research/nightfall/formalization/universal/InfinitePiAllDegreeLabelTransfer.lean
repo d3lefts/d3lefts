@@ -141,7 +141,8 @@ variable (μ : (i : ι) → Measure (X i))
 variable [∀ i, IsProbabilityMeasure (μ i)]
 
 /-- Ordered residual on the actual source product L² space. -/
-noncomputable def sourceIterResidual :
+noncomputable def sourceIterResidual
+    (μ : (i : ι) → Measure (X i)) [∀ i, IsProbabilityMeasure (μ i)] :
     List ι →
       Lp ℝ (2 : ENNReal) (Measure.infinitePi μ) →
       Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)
@@ -235,7 +236,7 @@ theorem original_cell_average_all_degree
     (f : Lp ℝ (2 : ENNReal) (Measure.infinitePi μ)) :
     iterResidual
         (sourceOtherProjectionCLM (fun i => (μ i).map (φ i))) sites
-        (original_infinite_label_lift μ φ hφ).toContinuousLinearMap.adjoint f =
+        ((original_infinite_label_lift μ φ hφ).toContinuousLinearMap.adjoint f) =
       (original_infinite_label_lift μ φ hφ).toContinuousLinearMap.adjoint
         (sourceIterResidual μ sites f) := by
   let q : (i : ι) → Measure (Y i) := fun i => (μ i).map (φ i)
