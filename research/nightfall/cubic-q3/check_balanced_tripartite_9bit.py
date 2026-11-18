@@ -31,6 +31,7 @@ def audit():
     V=sum((Q(z*z,512) for z in values.values()),Q())-mean*mean
     B=Q(max(values.values())-min(values.values()),2)
     assert mean==0 and V==16 and B==4
+    assert all(abs(z)==4 for z in values.values())
 
     actual=[]
     for i in range(9):
@@ -55,6 +56,16 @@ def audit():
     assert V**2/(B**2*max(actual))==Q(8,3)
     print('PASS 512 source states and 512 Walsh modes: pure cubic, B=4, Var=16, M=6, ratio=8/3')
     print('PASS 9 genuine source resampling influences:',','.join(map(str,actual)))
+
+    # A stronger all-input structural identity: for every B,C sign setting,
+    # exactly ONE A-coordinate has nonzero coefficient, of magnitude 4.
+    for b in product((-1,1),repeat=3):
+        for c in product((-1,1),repeat=3):
+            rows=[sum(T[i][j][k]*b[j]*c[k]
+                      for j in range(3) for k in range(3)) for i in range(3)]
+            assert sorted(map(abs,rows))==[0,0,4],(b,c,rows)
+    print('PASS 64 control states: unique active A-row with amplitude exactly 4')
+
 
     # Full enumeration of all possible 9-site vertex cover subsets.
     edge_sets=[{i,j,k} for i,j,k,w in EDGES]
@@ -109,7 +120,24 @@ def audit():
         assert fm==0 and Vm==Q(16,m) and Bm==4
         assert Vm**2/(Bm**2*Mm)==Q(8,3)
     print('PASS independent block m=1..4 exact convolution, invariant 8/3 ratio')
-    print('SCOPE exact finite witness; does not prove a universal cubic bound')
+    # Classical CHS 10-variable degree-three Boolean sign recursion,
+    # included to prevent mistaking maximum relevant-variable count for
+    # minimum maximum coordinate influence. Historical formula is credited.
+    def G2(x):
+        s,t,u,v=x
+        return ((s+t)*u+(s-t)*v)//2
+    def G3(x):
+        s,t=x[:2]
+        return ((s+t)*G2(x[2:6])+(s-t)*G2(x[6:10]))//2
+    words10=tuple(product((-1,1),repeat=10))
+    chs={x:G3(x) for x in words10}
+    assert set(chs.values())=={-1,1}
+    chsI=[sum((Q((v-chs[x[:i]+(-x[i],)+x[i+1:]])**2,4*1024)
+              for x,v in chs.items()),Q()) for i in range(10)]
+    assert chsI==[Q(1,2)]*2+[Q(1,4)]*8
+    assert sum(chsI)==3 and max(chsI)==Q(1,2)
+    print('PASS classical CHS 10-variable pure cubic control: selector I=1/2, child I=1/4, ratio=2')
+    print('SCOPE finite exact witness and imported historical junta bound, not general cubic proof')
 
 if __name__=='__main__':
     audit()
