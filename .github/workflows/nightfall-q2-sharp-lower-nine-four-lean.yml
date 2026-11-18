@@ -1,0 +1,70 @@
+name: NIGHTFALL exact Q2 five-bit nine-over-four lower-bound Lean
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/universal/Q2SharpFiveBitLower.lean'
+      - 'research/nightfall/flagship-influence/check_q2_sharp_lower_nine_four.py'
+      - 'research/nightfall/flagship-influence/Q2_SHARP_LOWER_NINE_FOUR_20261118.md'
+      - '.github/workflows/nightfall-q2-sharp-lower-nine-four-lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  physical-source-witness:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout exact PR head
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Pin compiler and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Exact 32-world fair source kernel proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=lean-receipts/q2-fivebit-sharp
+          mkdir -p "$OUT"
+          SRC=research/nightfall/formalization/universal/Q2SharpFiveBitLower.lean
+          cp "$SRC" /tmp/mathlib4/Q2SharpFiveBitLower.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Q2SharpFiveBitLower.olean Q2SharpFiveBitLower.lean)
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Q2SharpFiveBitLower.witness_range \
+            --decl Nightfall.Q2SharpFiveBitLower.witness_attains_bounds \
+            --decl Nightfall.Q2SharpFiveBitLower.witness_mean_zero \
+            --decl Nightfall.Q2SharpFiveBitLower.witness_variance_twelve \
+            --decl Nightfall.Q2SharpFiveBitLower.witness_source_influence_four \
+            --decl Nightfall.Q2SharpFiveBitLower.witness_exact_nine_four \
+            --decl Nightfall.Q2SharpFiveBitLower.refutes_coefficient_two \
+            --json-out "$OUT/named-proof.json"
+          python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT/named-proof.json"
+      - name: Independently enumerate original fair source and small Bell matrices
+        run: python3 -I research/nightfall/flagship-influence/check_q2_sharp_lower_nine_four.py
+      - name: Preserve source hashes and proof pin
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=lean-receipts/q2-fivebit-sharp
+          mkdir -p "$OUT"
+          git rev-parse HEAD > "$OUT/commit.txt"
+          git -C /tmp/mathlib4 rev-parse HEAD > "$OUT/mathlib.txt" 2>/dev/null || true
+          cat lean-toolchain > "$OUT/toolchain.txt" || true
+          sha256sum research/nightfall/formalization/universal/Q2SharpFiveBitLower.lean \
+            research/nightfall/flagship-influence/check_q2_sharp_lower_nine_four.py \
+            research/nightfall/flagship-influence/Q2_SHARP_LOWER_NINE_FOUR_20261118.md > "$OUT/SHA256SUMS"
+      - name: Archive exact-head receipt
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: q2-fivebit-lower-bound
+          path: lean-receipts/q2-fivebit-sharp/
+          retention-days: 60
