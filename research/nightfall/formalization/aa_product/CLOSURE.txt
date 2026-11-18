@@ -167,3 +167,11 @@ ProductInfluence research/nightfall/formalization/product_space/ProductInfluence
 HeterogeneousAlphabets research/nightfall/formalization/product_space/HeterogeneousAlphabets.lean
 MixedDifferenceDegree research/nightfall/formalization/product_space/MixedDifferenceDegree.lean
 InfinitePiAAProductTerminal research/nightfall/formalization/universal/InfinitePiAAProductTerminal.lean
+AaronsonAmbainis.Level.Basic research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Level/Basic.lean
+AaronsonAmbainis.Bridge.Fourier research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Bridge/Fourier.lean
+AaronsonAmbainis.Bridge.Algebra research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Bridge/Algebra.lean
+AaronsonAmbainis.Bridge.Poly research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Bridge/Poly.lean
+AaronsonAmbainis.Bridge.Affine research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Bridge/Affine.lean
+AaronsonAmbainis.Bridge.PrintedAA research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Bridge/PrintedAA.lean
+AaronsonAmbainis.Conjecture research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Conjecture.lean
+CubePrintedAA research/nightfall/formalization/product_space/CubePrintedAA.lean

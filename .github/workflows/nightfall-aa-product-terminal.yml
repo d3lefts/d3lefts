@@ -10,6 +10,7 @@ on:
       - 'research/nightfall/formalization/aa_product/**'
       - 'research/nightfall/formalization/universal/InfinitePiAAProductTerminal.lean'
       - 'research/nightfall/formalization/product_space/MixedDifferenceDegree.lean'
+      - 'research/nightfall/formalization/product_space/CubePrintedAA.lean'
       - 'research/nightfall/formalization/vendor/aaronson_ambainis/**'
       - '.github/workflows/nightfall-aa-product-terminal.yml'
   workflow_dispatch:
@@ -24,7 +25,7 @@ jobs:
         with:
           persist-credentials: false
       - uses: ./.github/actions/setup-nightfall-lean
-      - name: Compile the exact 169-module closure (vendored Turturean modules + NIGHTFALL) in dependency order
+      - name: Compile the exact 177-module closure (vendored Turturean modules + NIGHTFALL) in dependency order
         shell: bash
         run: |
           set -euo pipefail
@@ -74,6 +75,37 @@ jobs:
           LEAN
           lake env lean NightfallAAProductAudit.lean | tee "$GITHUB_WORKSPACE/lean-receipts/aa-product/axioms.txt"
           ! grep -E "sorryAx" "$GITHUB_WORKSPACE/lean-receipts/aa-product/axioms.txt"
+      - name: Printed Aaronson–Ambainis conjecture from the product-space chain (strict audit)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/aa-product
+          Q=Nightfall.ProductSpace.CubeAA
+          python3 scripts/lean_bridge.py research/nightfall/formalization/product_space/CubePrintedAA.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 1800 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl "$Q.printedConjecture" \
+            --decl "$Q.explicitBound" \
+            --decl "$Q.mainTheorem_of_productSpace" \
+            --decl "$Q.hasProdDegreeLE_of_hasDegreeLE" \
+            --decl "$Q.sum_pincr_unif_le" \
+            --json-out lean-receipts/aa-product/printed-receipt.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/aa-product/printed-receipt.json
+          cd /tmp/mathlib4
+          cat > NightfallPrintedAAAudit.lean <<'LEAN'
+          import CubePrintedAA
+          #check (Nightfall.ProductSpace.CubeAA.printedConjecture : AaronsonAmbainis.PrintedConjecture)
+          #check (Nightfall.ProductSpace.CubeAA.explicitBound : AaronsonAmbainis.ExplicitBound)
+          #print AaronsonAmbainis.PrintedConjecture
+          #print axioms Nightfall.ProductSpace.CubeAA.printedConjecture
+          #print axioms Nightfall.ProductSpace.CubeAA.explicitBound
+          LEAN
+          lake env lean NightfallPrintedAAAudit.lean | tee "$GITHUB_WORKSPACE/lean-receipts/aa-product/printed-axioms.txt"
+          ! grep -E "sorryAx" "$GITHUB_WORKSPACE/lean-receipts/aa-product/printed-axioms.txt"
+          # The upstream cube theorem and its chain are not in the closure.
+          ! grep -E "^AaronsonAmbainis\.(Chain|Main|MainTheorem) " "$GITHUB_WORKSPACE/research/nightfall/formalization/aa_product/CLOSURE.txt"
+          # Conjecture.lean is byte-identical to the pinned upstream file.
+          sha256sum "$GITHUB_WORKSPACE/research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Conjecture.lean" | tee -a "$GITHUB_WORKSPACE/lean-receipts/aa-product/printed-axioms.txt"
       - name: Capture exact source and compiler head
         if: always()
         run: |
