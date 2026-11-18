@@ -85,11 +85,9 @@ def audit(laws, f, label):
     # all-pairs differences. This is NOT assumed to be LP optimal.
     rows={}
     for x in states:
-        rows[x]=tuple(max(
-            (abs(vals[x]-vals[y])/sum(x[j]!=y[j] for j in range(n)
-             if False),default=Q()) for i in range(n)) if False else tuple(
+        rows[x]=tuple(
             max((abs(vals[x]-vals[y])/sum(x[j]!=y[j] for j in range(n))
-                for y in states if x[i]!=y[i]),default=Q())
+                 for y in states if x[i]!=y[i]), default=Q())
             for i in range(n))
     K=max(sum(row) for row in rows.values())
     assert K>0
