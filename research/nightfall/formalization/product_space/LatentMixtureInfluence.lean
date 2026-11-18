@@ -49,14 +49,24 @@ theorem factorized_mixture_conditional_variance
         (∑ θ : Θ, w θ * q θ γ * p θ a) * (g γ a - z γ)^2) := by
     apply Finset.sum_congr rfl
     intro γ hγ
-    rw [Finset.sum_mul]
-    rw [Finset.sum_comm]
-    apply Finset.sum_congr rfl
-    intro a ha
-    rw [Finset.sum_mul]
-    apply Finset.sum_congr rfl
-    intro θ hθ
-    ring
+    calc
+      (∑ θ : Θ, (w θ * q θ γ) *
+         (∑ a : A, p θ a * (g γ a - z γ)^2))
+          = ∑ θ : Θ, ∑ a : A,
+              (w θ * q θ γ) * (p θ a * (g γ a - z γ)^2) := by
+                apply Finset.sum_congr rfl
+                intro θ hθ
+                rw [Finset.mul_sum]
+      _ = ∑ a : A, ∑ θ : Θ,
+              (w θ * q θ γ) * (p θ a * (g γ a - z γ)^2) := Finset.sum_comm
+      _ = ∑ a : A, (∑ θ : Θ, w θ * q θ γ * p θ a) *
+              (g γ a - z γ)^2 := by
+                apply Finset.sum_congr rfl
+                intro a ha
+                rw [Finset.sum_mul]
+                apply Finset.sum_congr rfl
+                intro θ hθ
+                ring
   rw [hleft, hright] at hh
   exact hh
 
