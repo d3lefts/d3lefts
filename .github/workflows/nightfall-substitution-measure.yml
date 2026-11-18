@@ -1,0 +1,54 @@
+name: NIGHTFALL measured permission substitution and source drift
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/nightfall-substitution-measure.yml"
+      - "research/nightfall/right-to-act-promotion/measure_permission_substitution.py"
+      - "research/nightfall/right-to-act-promotion/SUBSTITUTION_GENERALIZATION_PROTOCOL.md"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline-measured-cost:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    defaults:
+      run:
+        working-directory: research/nightfall/right-to-act-promotion
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Pin dependencies and syntax
+        run: |
+          python -m py_compile measure_permission_substitution.py
+          python -m pip install 'control-arena==20.1.1' 'aws-cdk-lib==2.260.0' 'constructs==10.5.0' 'jsii==1.137.0' 'pytest==8.4.2'
+          python -m pip freeze > substitution-versions.txt
+      - name: Build restricted official source runtime
+        run: |
+          docker build -f Dockerfile.untrusted-cdk -t nightfall-iac-cdk-sandbox:v16 .
+          docker image inspect --format '{{.Id}}' nightfall-iac-cdk-sandbox:v16 > substitution-image.txt
+      - name: Reproduce official scored distinct source pool
+        timeout-minutes: 15
+        env:
+          JSII_SILENCE_WARNING_UNTESTED_NODE_VERSION: '1'
+        run: python run_diverse_attack_mechanisms.py --out diverse-attack-results
+      - name: Independently audit scored pool
+        run: python audit_diverse_attack_mechanisms.py --dir diverse-attack-results > substitution-pool-audit.json
+      - name: Measure actual wall and CPU policy evaluation cost and changed-source epoch controls
+        run: python measure_permission_substitution.py --pool diverse-attack-results --out substitution-cost-results --reps 301
+      - name: Preserve complete measured receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-substitution-measured-host-cost
+          path: |
+            research/nightfall/right-to-act-promotion/substitution-cost-results/
+            research/nightfall/right-to-act-promotion/substitution-pool-audit.json
+            research/nightfall/right-to-act-promotion/substitution-versions.txt
+            research/nightfall/right-to-act-promotion/substitution-image.txt
+          retention-days: 30
+          if-no-files-found: warn
