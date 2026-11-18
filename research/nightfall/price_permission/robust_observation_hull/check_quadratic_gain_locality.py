@@ -68,6 +68,19 @@ def run():
                 cases += 1
                 if j in (2, 3):
                     assert gain(f, S, j, laws) == baseline[j, tuple(sorted(S))]
+
+                # More stringent source-local Gram consequence: exact
+                # marginal gain uses the edited source's one pair table,
+                # the candidate singleton and incident OBSERVED pair energies,
+                # not the full ambient product.
+                mean_k = 2 * p - 1
+                beta_kj = EDGES.get((0, j), Q(0))
+                observed_edge_energy = sum(
+                    (v * v for (u, vtx), v in EDGES.items()
+                     if ((u == j and vtx in S) or (vtx == j and u in S))
+                     and u != 0 and vtx != 0), Q(0))
+                local_gram_gain = (SINGLETONS[j] + beta_kj * mean_k)**2 + observed_edge_energy
+                assert gain(f, S, j, laws) == local_gram_gain
     # Dropping degree-two invalidates the graph-locality implication:
     # a pure cubic with no 0-2 pair term has source-law dependent gain at j=2.
     triple = lambda x: Q(x[0] * x[2] * x[3])
@@ -78,7 +91,7 @@ def run():
     cub_after = gain(triple, {3}, 2, shifted)
     assert cub_before == 0 and cub_after == 1
     print("PASS: original-world quadratic unlock/locality", cases,
-          "exact expected gain checks, zero-mass marginals included;"
+          "exact pair-unlock and local-Gram gain checks, zero-mass marginals included;"
           " cubic counterexample 0 -> 1")
 
 
