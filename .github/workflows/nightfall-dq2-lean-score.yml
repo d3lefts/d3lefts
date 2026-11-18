@@ -1,0 +1,54 @@
+name: NIGHTFALL DQ2 Lean score-duality scalar interface (scope-limited)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/dq2/**'
+      - '.github/workflows/nightfall-dq2-lean-score.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  lean-score-interface:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 65
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install pinned Lean and pinned Mathlib cache
+        uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-github-cache: false
+          use-mathlib-cache: true
+      - name: Compile exact source and print named theorem axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/dq2/DQ2HeatBathScoreTransfer.lean
+          test "$(cat lean-toolchain)" = "leanprover/lean4:v4.36.0-rc2"
+          python3 - <<'PY_GATE'
+          from pathlib import Path
+          import re
+          s=Path('research/nightfall/formalization/dq2/DQ2HeatBathScoreTransfer.lean').read_text()
+          s=re.sub(r'/-.*?-/', '', s, flags=re.S)
+          s=re.sub(r'--[^\\n]*', '', s)
+          assert not re.search(r'\\b(sorry|admit|axiom)\\b', s), 'Unapproved placeholder or custom axiom'
+          PY_GATE
+          mkdir -p artifacts/dq2-lean
+          sha256sum "$SRC" lean-toolchain lakefile.toml lake-manifest.json | tee artifacts/dq2-lean/SHA256SUMS.txt
+          lake env lean "$SRC" 2>&1 | tee artifacts/dq2-lean/named-axioms.log
+          for d in score_duality_from_heatbath_contract reference_q2_transfer biased_heatbath_q2_scalar_terminal; do
+            grep -F "'Nightfall.DQ2.${d}' depends on axioms:" artifacts/dq2-lean/named-axioms.log
+          done
+          ! grep -E 'sorryAx|declaration uses .sorry|error:' artifacts/dq2-lean/named-axioms.log
+      - name: Save exact-source Lean proof receipt
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dq2-score-duality-lean-scoped
+          path: artifacts/dq2-lean/
+          if-no-files-found: warn
