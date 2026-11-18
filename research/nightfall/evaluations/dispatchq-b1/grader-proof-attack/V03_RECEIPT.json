@@ -1,0 +1,49 @@
+{
+  "audit_id": "NIGHTFALL-DISPATCHQ-B1-GRADER-V03-20261118",
+  "date": "2026-11-18",
+  "status": "internal_author_side_calibration_only",
+  "prerecorded_source_sha256": "507b5857018d3706bbb6e94c67c9976f9aaa7c290b9a6506f7561c5f26c343e3",
+  "starter_source_sha256": "05edf787fbd1cb3841ed4aa813361ee1024b354f6fcd7505a56eddf98cbfd406",
+  "original_preregistration_sha256": "ed7016128085e06890b792628cc162abcd38f067f33078a2b07e2a6fb7f06eb4",
+  "v02_grader_sha256": "1b1c23ada5fcf7b6a05ba1261e873c8472b99f0b71ba2f8930a8f24bcbe2b2ce",
+  "v03_grader_sha256": "9cd1b34e8c347acf88d86e96a5d9dd553378a60951d79a6c409b3423a8f94abc",
+  "v03_bounded_launcher_sha256": "41b527307fd6520ac3fbdccd42f052f3698ade5603a5f146437f8c0b2bcf82a0",
+  "private_v03_archive_sha256": "61fe5511fc9fbe94118b3d3d5a1feb5b9f200dd86ff994384503b546054e11c5",
+  "v02_total_tests": 25,
+  "v03_total_tests": 37,
+  "score_ceiling_v02": 100,
+  "score_ceiling_v03": 100,
+  "preregistered_new_mutation_families": 12,
+  "v02_new_mutations_full_credit": 12,
+  "v03_new_mutations_full_credit": 0,
+  "v03_old_mutations_full_credit": 0,
+  "v03_total_tested_non_equivalent_mutants": 24,
+  "v03_total_mutants_rejected": 24,
+  "reference_v03_repeat_scores": [
+    100,
+    100,
+    100,
+    100,
+    100
+  ],
+  "starter_v03_repeat_scores": [
+    58,
+    58,
+    58,
+    66,
+    58
+  ],
+  "reference_contract_witness_controls": 12,
+  "mutant_contract_witness_failures": 12,
+  "bounded_launcher_control": {
+    "trusted_reference_scored": 100,
+    "trusted_starter_scored": 58,
+    "synthetic_sleep_status": "blocked_timeout",
+    "synthetic_sleep_score_present": false
+  },
+  "local_python_version": "3.13.5",
+  "python_310_private_replay": false,
+  "human_independent_review": false,
+  "blind_agent_attempts": 0,
+  "certificate_boundary": "Public CI validates self-reported metadata consistency only; hidden grader/replay execution evidence held privately. No independent certification."
+}

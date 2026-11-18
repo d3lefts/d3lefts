@@ -1,0 +1,27 @@
+name: NIGHTFALL DispatchQ v0.3 public receipt consistency
+on:
+  push:
+    paths:
+      - 'research/nightfall/evaluations/dispatchq-b1/grader-proof-attack/V03_*'
+      - 'research/nightfall/evaluations/dispatchq-b1/grader-proof-attack/check_v03_receipt.py'
+      - '.github/workflows/nightfall-dispatchq-v03-public-receipt.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/evaluations/dispatchq-b1/grader-proof-attack/V03_*'
+      - 'research/nightfall/evaluations/dispatchq-b1/grader-proof-attack/check_v03_receipt.py'
+      - '.github/workflows/nightfall-dispatchq-v03-public-receipt.yml'
+  workflow_dispatch:
+jobs:
+  receipt:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        python-version: ['3.10','3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python research/nightfall/evaluations/dispatchq-b1/grader-proof-attack/check_v03_receipt.py
