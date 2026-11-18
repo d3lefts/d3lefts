@@ -146,6 +146,66 @@ def direct_sum(sA,wA,fA,sB,wB,fB):
     return F
 
 
+
+def exact_boolean_atomic_no_go():
+    """TRUE 3-fair-bit full row K=12 versus Boolean atomic norm 13.
+
+    Independent exact:
+      (i) primal row LP K(f)=12,
+      (ii) all 254 Boolean atoms' true K via rational dual vertices,
+      (iii) nonnegative atomic dual functional L<=K(atom),
+      (iv) explicit rational 6-atom decomposition with cost 13.
+    Does NOT falsify Turturean real full K influence inequality.
+    """
+    states=list(product((0,1), repeat=3))
+    f=[Q(v) for v in (-2,-2,3,-1,2,-4,4,-2)]
+    point=[primal_row(states,f,j) for j in range(8)]
+    assert point==list(map(Q,(9,7,10,7,12,10,12,9)))
+    K=max(point)
+    assert K==12
+    duals=dual_vertices(3)
+    coeff=(Q(1),Q(0),Q(-1),Q(0),Q(-1),Q(2),Q(0))
+    # L(g)=sum_j coeff_j*(g(j+1)-g(000)).
+    def L(v):
+        return sum((a*(v[j+1]-v[0]) for j,a in enumerate(coeff)),Q())
+    assert L(f)==13
+    atoms={}
+    for flags in product((0,1),repeat=8):
+        if len(set(flags))<2: continue
+        v=[Q(t) for t in flags]
+        k=max(dual_row(states,v,j,duals) for j in range(8))
+        assert abs(L(v))<=k,("boolean atomic lower dual invalid",flags,k,L(v))
+        atoms[flags]=k
+    assert len(atoms)==254
+
+    sparse=(
+      ((0,0,1,0,1,0,1,0),Q(5,2),Q(2)),
+      ((0,0,1,1,0,0,1,1),Q(3,2),Q(1)),
+      ((0,1,0,1,1,0,1,0),Q(1),Q(2)),
+      ((0,1,1,0,1,0,1,1),Q(1,2),Q(3)),
+      ((0,1,1,1,0,0,1,0),Q(1,2),Q(2)),
+      ((1,0,1,0,1,0,1,0),Q(2),Q(1)),
+    )
+    cost=Q()
+    reconstruction=[Q() for _ in range(7)]
+    for flags,coefficient,expectedK in sparse:
+        actualK=atoms[flags]
+        assert actualK==expectedK
+        # Independent primal LP check for each of the six atomic
+        # functions supporting the upper construction.
+        assert max(primal_row(states,[Q(v) for v in flags],j)
+                   for j in range(8))==actualK
+        cost+=abs(coefficient)*actualK
+        for j in range(7):
+            reconstruction[j]+=coefficient*(flags[j+1]-flags[0])
+    assert reconstruction==[f[j]-f[0] for j in range(1,8)]
+    assert cost==13 and L(f)==13 and K==12
+    print("PASS EXACT 3-fair-bit Boolean atomic no-go:"
+          " K(real)=12, min signed Boolean atomic K-cost=13")
+    print("PASS all 254 Boolean atoms against independent integer"
+          " dual witness and six-term rational primal decomposition")
+
+
 def main():
     rng=Random(390013)
     cases=(
@@ -168,6 +228,7 @@ def main():
                   "worlds",len(F['states']),"levels",len(set(F['f'])),
                   "rowK",F['K'])
     assert count==20
+    exact_boolean_atomic_no_go()
     for n in (1,2,3):
         F=metrics((2,)*n,[[1,1] for _ in range(n)],
                   lambda x:sum(x))
