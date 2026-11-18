@@ -83,6 +83,29 @@
 <a href="https://github.com/d3lefts/d3lefts/actions/runs/44354996082">Exact-source two-Python CI receipts ↗</a>
 </div>
 </section>
+<section class="eng-section" id="real-agent-pilot" aria-labelledby="real-agent-title">
+<p class="eng-kicker">REAL LOCAL CODE MODEL / TWO PROVISIONAL TASKS / UNSCORED</p>
+<h2 id="real-agent-title">The model changed the code.<br><em>The smoke suite couldn't tell.</em></h2>
+<p class="eng-section-lead">NIGHTFALL ran a genuine local <code>qwen2.5-coder:3b</code> coding-model session against each candidate's exact original source. The model could read and replace implementation files and run public tests through a fixed mediated tool interface; generated Python was executed only inside a no-network, resource-bounded Docker container. The model never received the separately developed contract checker, hidden grader or author reference. The case-level pilot is <strong>exploratory calibration</strong>, not a privately scored or independently reviewed benchmark.</p>
+<div class="eng-grid two">
+<article class="eng-card">
+<span class="eng-number">DISPATCHQ-B1 / REAL TOOL-AGENT CALIBRATION</span><span class="eng-tag pending">Public API audit · unscored</span>
+<h3>Green smoke. Eight defects remain.</h3>
+<p>The model executed <strong>four nonterminal tool calls</strong> and changed <code>dispatchq/queue.py</code>. Public smoke tests returned success. The independently authored post-agent 13-case public contract checker instead found <strong>5 passing cases and 8 violations</strong>, the original defective starter's same aggregate failure count.</p>
+</article>
+<article class="eng-card">
+<span class="eng-number">ARTIFACTGRAPH-B2 / REAL TOOL-AGENT CALIBRATION</span><span class="eng-tag pending">Public API audit · unscored</span>
+<h3>Green smoke. Eleven defects remain.</h3>
+<p>The same pinned local model executed <strong>four nonterminal tool calls</strong> and changed <code>artifactgraph/engine.py</code>. Public smoke tests returned success. The independent post-agent 20-case public checker found <strong>9 passing cases and 11 violations</strong>, again matching the defective starter's aggregate count.</p>
+</article>
+</div>
+<p class="eng-section-lead"><strong>Experimental boundaries:</strong> Source-head-pinned task code and public auditor code were separate. The local model weights and Docker image IDs were recorded from the actual run, but this initial pilot did not precommit their digests before download. Equal failure totals do not by themselves prove identical per-case outcomes or no individual repaired behavior. Raw generated patches and transcripts are withheld from the public site to avoid contaminating future attempts, so fully independent raw replay remains an open gate. No withheld-grader execution occurred; <strong>zero accepted blind agent scores</strong> and no claim about stronger models.</p>
+<div class="eng-source-list">
+<a href="https://github.com/d3lefts/d3lefts/actions/runs/44389930077">Exact-head real-agent and public-audit CI · both tasks ↗</a>
+<a href="https://github.com/d3lefts/d3lefts/pull/845">Pilot harness, independent checker and limitations · draft #845 ↗</a>
+<a href="https://github.com/d3lefts/d3lefts/pull/841">Separate synthetic trusted-grader execution gate · draft #841 ↗</a>
+</div>
+</section>
 <section class="eng-section" id="run-evidence" aria-labelledby="run-evidence-title">
 <p class="eng-kicker">EVALUATION INSTRUMENT / ATTEMPT AND SCORING PROVENANCE</p>
 <h2 id="run-evidence-title">The denominator is<br><em>part of the experiment.</em></h2>

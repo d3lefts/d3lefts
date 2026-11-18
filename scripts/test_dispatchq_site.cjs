@@ -66,6 +66,13 @@ assert.ok(lab.includes("externally SHA-256-pinned"));
 assert.ok(lab.includes("https://github.com/d3lefts/d3lefts/pull/830"));
 assert.ok(lab.includes("https://github.com/d3lefts/d3lefts/actions/runs/44374815964"));
 assert.ok(lab.includes("zero accepted blind agent scores"));
+assert.ok(lab.includes('id="real-agent-pilot"'), "Real local agent section missing");
+assert.ok(eng.includes("First real coding-agent calibration:") && eng.includes("four nonterminal mediated tool calls"));
+assert.ok(lab.includes("dispatchq/queue.py") && lab.includes("artifactgraph/engine.py"));
+assert.ok(lab.includes("44389930077") && lab.includes("/pull/845"));
+assert.ok(lab.includes("8 violations") && lab.includes("11 violations"));
+assert.ok(lab.includes("Equal failure totals do not by themselves prove identical per-case outcomes"));
+assert.ok(lab.includes("No withheld-grader execution occurred") && lab.includes("zero accepted blind agent scores"));
 
 assert.ok((lab.match(/<details\b/g) || []).length >= 16, "B2 inspection details missing");
 
