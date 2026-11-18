@@ -157,8 +157,7 @@ def tests():
         analyze(ob)
         raise AssertionError("incorrect degree accepted")
     except AssertionError as e:
-        if str(e)=="incorrect degree accepted":
-            raise
+        assert "greater than declared" in str(e), str(e)
     print("PASS categorical 3-letter selector, Hadamard block-range additivity")
     print("PASS high-degree negative control correctly rejected")
     print("PASS heterogeneous rational categorical law; NO universal bound asserted")
