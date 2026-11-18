@@ -105,3 +105,23 @@ at every fixed 0<r<1/2, while the dependency matrix still has Dobrushin alpha=2r
 **Consequence:** the naive proposal "Wick-center the cubic, compare its variance to the fair-product variance, and then replace fair-product influences by true-law influences with a uniform factor" is INVALID. Variance correction and influence correction are distinct gates. A useful dependent-cubic proof must build a genuinely law-adapted derivative/influence reference (or avoid product-reference influence transfer entirely), not merely subtract mean contractions. This is a stronger, mechanistic reason for the open problem than numerical coefficient stalls. The exact Fraction checker now independently verifies both native root influence and fair root influence over k=2..6.
 
 This is a classical elementary counterexample, not a claim of a new field-wide theorem or an unrestricted Q3 lower bound. Keep previous version statements and their limitations.
+
+
+## v0.3: abstract operator-level Lean interface (separate from native-law theorem)
+
+New source: research/nightfall/formalization/observability/CubicContractionOperator.lean.
+
+For any type F of observables, finite index type of operators D_i:F→F, functions mean, variance, second:F→R and A≥0, suppose:
+
+  second(g)=mean(g)^2+variance(g) for all g;
+  variance(g)≤A*sum_i second(D_i g) for all g.
+
+Define recursively DegreeZero(0,g) := variance(g)=0 and DegreeZero(k+1,g) := every D_i g satisfies DegreeZero(k). Define Cost(0,g)=0 and Cost(k+1,g)=A sum_i [mean(D_i g)^2+Cost(k,D_i g)].
+
+The new Lean theorem variance_le_derivative_cost proves, by induction on k and without any supplied recurrence lemma,
+
+  DegreeZero(k,g) => variance(g)≤Cost(k,g).
+
+This is a genuine all-degree functional operator theorem for potentially noncommuting D_i, with the finite scalar telescoping theorem as a related alternative. **The law-level claim remains unproved in Lean:** a later finite binary specialization must prove from the original p(x) the actual Poincare-gradient comparison and that every length-d physical derivative of a degree-d polynomial has zero variance. The original-law two-atom variance/fiber comparison IS separately Lean-checked in CubicContractionBinarySource.lean, but the full high-level law application has not yet compiled.
+
+The abstract operator proof is subject to exact current-head pinned Lean compilation and strict standard-axiom checks before any promotion. It cannot be cited as a kernel proof of unrestricted Q3, and its general iterative-Poincare character likely has strong preexisting literature antecedents.
