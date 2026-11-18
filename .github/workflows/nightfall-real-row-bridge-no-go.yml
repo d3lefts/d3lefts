@@ -1,0 +1,46 @@
+name: NIGHTFALL real row bridge R-no-go exact source audit
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/flagship-influence/check_real_row_R_no_go_exact.py'
+      - 'research/nightfall/flagship-influence/REAL_ROW_R_BRIDGE_NO_GO_20261118.md'
+      - '.github/workflows/nightfall-real-row-bridge-no-go.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-coupled-falsifier:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact proof head
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Preserve independent source custody
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p proof-receipts/real-row-R-no-go
+          git rev-parse HEAD > proof-receipts/real-row-R-no-go/HEAD.txt
+          sha256sum research/nightfall/flagship-influence/check_real_row_R_no_go_exact.py \
+            research/nightfall/flagship-influence/REAL_ROW_R_BRIDGE_NO_GO_20261118.md \
+            > proof-receipts/real-row-R-no-go/SHA256SUMS
+      - name: Original-law exact rational AND + fair Rubinstein source audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I research/nightfall/flagship-influence/check_real_row_R_no_go_exact.py \
+            | tee proof-receipts/real-row-R-no-go/replay.txt
+      - name: Archive exact-head falsification evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nightfall-real-row-R-no-go
+          path: proof-receipts/real-row-R-no-go/
+          retention-days: 60
