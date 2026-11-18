@@ -49,6 +49,33 @@
 </div>
 <div class="eng-action-row"><a class="eng-action" href="dispatchq-b1.html#process">Follow the six-stage evaluation process ↗</a></div>
 </section>
+<section class="eng-section" id="artifactgraph" aria-labelledby="artifactgraph-title">
+<p class="eng-kicker">TASK CANDIDATE / ARTIFACTGRAPH-B2 / SEPARATE DRAFT</p>
+<h2 id="artifactgraph-title">A green build can<br><em>still publish the wrong thing.</em></h2>
+<p class="eng-section-lead">The second evaluation candidate tackles an orthogonal skill: repairing a multi-module Python incremental build engine. Its public issue specifies exact dependency ordering, byte-based cache invalidation, DAG validation, safe source paths, SHA-verified object reuse, and atomic index replacement. The author's initial calibration reports 25/25 tests for a withheld reference and 15/25 for the defective starter. These author-side results have not been independently reproduced.</p>
+<div class="eng-inspector">
+<div class="eng-inspector-head"><h3>Independent ArtifactGraph audit</h3><span class="eng-tag">20 public semantic controls / scoped</span></div>
+<details open><summary>Reproducible finite observation</summary><div class="eng-detail-body">
+<p>Source-exact Python 3.10 and 3.13 CI runs each reported <strong>11 contract violations, 9 positive controls, zero unexpected errors, zero mismatches</strong> for the deliberately defective seed. The 20-case checker was separately written from the public contract; it is not a replay of the withheld grader.</p>
+<p>The same starter passes the three public smoke tests. That result is compatible with failing stronger semantic checks. Neither test suite is an AI model success rate.</p>
+</div></details>
+<details><summary>Failure mechanisms under test</summary><div class="eng-detail-body">
+<p>Cases expose unreachable cycles, existing parent/symlink source escapes, timestamp-only rebuilds, stale cache after byte changes with a restored mtime, dependency-order loss, corrupted cached objects and outputs, partial index publication after late errors, and JSON Boolean values masquerading as numeric format versions.</p>
+<p>Correct implementations can use any deterministic unambiguous serialization permitted by the contract. The independent checker does not assume the starter's artifact byte format.</p>
+</div></details>
+<details><summary>Exact source and checker independence</summary><div class="eng-detail-body">
+<p>Both Python jobs emitted per-module SHA-256 fingerprints and retained JSON case receipts. Internal second-implementation criticism is useful, but it is not independent human evaluation, a graded blind agent run, or a proof that the author-hidden grader accepts all legitimate solutions.</p>
+</div></details>
+<details><summary>Next decisive validation gates</summary><div class="eng-detail-body">
+<p>Freeze grader source and task commit, test a separately implemented correct alternate repair under both the public canary and withheld rubric, attack scorer loopholes and alternative serializations, then run genuine coding agents with valid tool traces in isolated no-credential environments. Measure costs, failure modes and score stability before making model ranking claims.</p>
+</div></details>
+</div>
+<div class="eng-source-list">
+<a href="https://github.com/d3lefts/d3lefts/pull/824">ArtifactGraph task source · draft #824 ↗</a>
+<a href="https://github.com/d3lefts/d3lefts/pull/825">Separate checker source · draft #825 ↗</a>
+<a href="https://github.com/d3lefts/d3lefts/actions/runs/44354996082">Exact-source two-Python CI receipts ↗</a>
+</div>
+</section>
 <section class="eng-section" id="controlarena" aria-labelledby="case-control-title">
 <p class="eng-kicker">TASK RECORD 01 / EXECUTED / SOURCE-MATCHED CONTROLARENA</p>
 <h2 id="case-control-title">The malicious change<br><em>that passed both tasks.</em></h2>
