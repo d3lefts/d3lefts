@@ -96,5 +96,35 @@ class PublicPilotContractTests(unittest.TestCase):
                           "dispatchq","unused")
 
 
+class PublicCanaryVectorContractTests(unittest.TestCase):
+    def test_casewise_fixed_and_regressed_distinguished_even_if_totals_tie(self):
+        from run_independent_public_canary import compare_to_seed
+        cases=[]
+        for i in range(13):
+            expected="FAIL" if i<8 else "PASS"
+            observed=expected
+            if i==0: observed="PASS"
+            if i==8: observed="FAIL"
+            cases.append({"name":f"case_{i}","seed_expectation":expected,
+                          "result":observed})
+        vector,fixed,regress=compare_to_seed(
+            "DispatchQ-B1",{"cases":cases})
+        self.assertEqual(len(vector),13)
+        self.assertEqual(fixed,["case_0"])
+        self.assertEqual(regress,["case_8"])
+        self.assertEqual(sum(x["agent_candidate_observed"]=="PASS"
+                             for x in vector),5)
+
+    def test_categorical_casewise_audit_duplicate_rejected(self):
+        from run_independent_public_canary import compare_to_seed
+        cases=[{"id":f"b2_{i}","expected_seed":"PASS" if i<9 else "VIOLATION",
+                "observed":"PASS" if i<9 else "VIOLATION"} for i in range(20)]
+        vector,fixed,regress=compare_to_seed("ArtifactGraph-B2",{"cases":cases})
+        self.assertEqual((len(vector),fixed,regress),(20,[],[]))
+        cases[19]["id"]=cases[18]["id"]
+        with self.assertRaises(p.PilotFailure):
+            compare_to_seed("ArtifactGraph-B2",{"cases":cases})
+
+
 if __name__=="__main__":
     unittest.main()
