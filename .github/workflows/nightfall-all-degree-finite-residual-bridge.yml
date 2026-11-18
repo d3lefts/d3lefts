@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/universal/InfinitePiAllDegreeFiniteResidualBridge.lean'
+      - 'research/nightfall/2026-11-product-all-degree/check_all_degree_bridge_exact.py'
       - '.github/workflows/nightfall-all-degree-finite-residual-bridge.yml'
   workflow_dispatch:
 permissions:
@@ -19,6 +20,8 @@ jobs:
         with:
           persist-credentials: false
       - uses: ./.github/actions/setup-nightfall-lean
+      - name: Independent exact rational positive, negative and null-atom checks
+        run: python3 research/nightfall/2026-11-product-all-degree/check_all_degree_bridge_exact.py
       - name: Compile exact ANOVA and all-degree native finite bridge
         shell: bash
         run: |
