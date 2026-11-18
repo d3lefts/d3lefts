@@ -26,6 +26,10 @@ TARGETS = [
     "Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_ae",
     "Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional",
     "Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional_variance",
+    "Nightfall.InfinitePiAAProductTerminal.infinitePi_aa_product",
+    "Nightfall.ProductSpace.CubeAA.mainTheorem_of_productSpace",
+    "Nightfall.ProductSpace.CubeAA.printedConjecture",
+    "Nightfall.ProductSpace.CubeAA.explicitBound",
 ]
 
 
