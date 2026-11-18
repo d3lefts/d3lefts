@@ -242,6 +242,9 @@ class ArtifactGraph(unittest.TestCase):
         before=self.Builder(self.root).build(["a"])
         index=self.root/".artifactgraph"/"index.json"
         prior=index.read_bytes()
+        # Force a legitimate rebuild of a BEFORE a later expected source error.
+        # The committed index must still reflect only the earlier valid build.
+        (self.root/"src"/"a.bin").write_bytes(b"changed source for a")
         nodes=dict(self.nodes)
         nodes["b"]={"source":"missing_source.bin","deps":[]}
         self.manifest(nodes=nodes)
