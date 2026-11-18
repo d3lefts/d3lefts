@@ -1,4 +1,4 @@
-# NIGHTFALL / Frozen blind-run evidence gate (v0.1)
+# NIGHTFALL / Frozen blind-run evidence gate (v0.2)
 
 **Purpose:** keep all coding-agent evaluation attempts, including tool failures and timeouts, in the denominator while preserving a frozen task/source, model, budget and hidden-grader identity. This is a **portable internal receipt consistency checker** and an adversarial test suite, **not** an agent executor, reference solution, grader, sandbox, independent human review, benchmark validator or cryptographically authenticated attestation.
 
@@ -28,11 +28,30 @@ run/
       trace.json
 ```
 
-The run directory contains **only** the listed plan and attempts; each attempt contains exactly its allowed receipt, trace and (only for completed attempts) patch and grade files. The exact `plan.json` bytes must be SHA-256 pinned **outside the run directory before execution**. It freezes task Git commit and candidate-tree SHA-256, prompt SHA-256, private grader SHA-256, runner image digest, version-qualified model name, positive budgets, distinct attempt IDs and declared holdout/isolation policy. It records the *intended* isolation, which must be independently verified by an actual OS/container runner. Do not put hidden grader tests/reference in the public run directory.
+The run directory contains **only** the listed plan and attempts; each attempt contains exactly its allowed receipt, trace and (only for completed attempts) patch and grade files. The exact `plan.json` bytes must be SHA-256 pinned **outside the run directory before execution**. It freezes task Git commit and candidate-tree SHA-256, prompt SHA-256, private grader SHA-256, runner image digest, version-qualified model name, positive budgets, **immutable score denominators** (`grading.tests_total` and `grading.max_points`), distinct attempt IDs and declared holdout/isolation policy. It records the *intended* isolation, which must be independently verified by an actual OS/container runner. Do not put hidden grader tests/reference in the public run directory.
 
-Each receipt references a hashed per-attempt **tool-event metadata trace** (call/result types and tool names, not raw arguments and outputs). A full runner must retain its complete raw transcript separately with independently controlled custody and a digest attached to the runner's authoritative record; this utility cannot certify it. An episode labeled `completed` must have at least one logged tool call and a nonempty hashed patch, plus a hashed grader receipt matching the frozen grader identity and score denominator. Non-completed episodes—including zero-tool-call failures—must remain in the planned denominator **without a fabricated graded result**. The gate rejects undeclared/missing attempt directories, duplicate JSON keys, nonfinite JSON tokens, stale plan hashes, mismatched source and grader IDs, over-budget claims, unsafe file paths and symlinks, cross-attempt artifact reuse, undeclared private grader files, tampered traces, invalid scores and silent omitted attempts. The checker never constructs a success rate from absent data.
+Each receipt references a hashed per-attempt **tool-event metadata trace** (call/result types and tool names, not raw arguments and outputs). A full runner must retain its complete raw transcript separately with independently controlled custody and a digest attached to the runner's authoritative record; this utility cannot certify it. An episode labeled `completed` must have at least one logged tool call and a nonempty hashed patch, plus a hashed grader receipt matching the frozen grader identity and **both separately pinned grading denominators** (number of tests and maximum points). Non-completed episodes—including zero-tool-call failures—must remain in the planned denominator **without a fabricated graded result**. The gate rejects score/test denominator drift, undeclared/missing attempt directories, duplicate JSON keys, nonfinite JSON tokens, stale plan hashes, mismatched source and grader IDs, over-budget claims, unsafe file paths and symlinks, cross-attempt artifact reuse, undeclared private grader files, tampered traces, invalid scores and silent omitted attempts. The checker never constructs a success rate from absent data.
 
 The result is always labeled `structurally_consistent_unattested_internal_records`. The output field `author_reported_grader_scores_not_verified` explicitly prevents a successful schema/hashing check from being mislabeled a verified model benchmark.
+
+### Plan format v2: frozen grading denominator
+
+The plan is now schema `nightfall.eval.plan.v2` and must include exactly:
+
+```json
+"grading": {"tests_total": 20, "max_points": 100}
+```
+
+These values are **illustrative**; select the actual task grader's test count and score ceiling during preregistration, before *any* model attempt or graded patch. They must be positive exact JSON integers (booleans forbidden). Each completed attempt's `grade.tests_total` and `grade.max_points` must agree with the externally pinned plan; otherwise reject **the entire run packet**. V1 plans are intentionally rejected: v1 anchored the attempt set, source, model and grader digest but not the score denominator. No accepted real model runs require migration. The structural gate still cannot certify whether those points were deserved, whether the grader actually executed, or whether a forged complete transcript was created by a malicious operator.
+
+### Independent v1 counterexample and repair
+
+A separate review first added two **positive witnesses of a flaw** without changing v1 enforcement, then ran [source-exact CI 44374307614](https://github.com/d3lefts/d3lefts/actions/runs/44374307614) on Python 3.10 and 3.13 (**39 synthetic tests green**).
+
+1. Under one frozen plan and grader SHA-256, an attacker reported a completed 50/100-point score and a second completed 7/7-point score with `tests_total` 2 versus 3. V1 accepted both as structurally consistent even though the scores have incomparable scales.
+2. With no plan update, the attacker rewrote the only completed grade to 1/1 instead of 50/100, rehashed grade/receipt, and V1 accepted the report.
+
+These witnesses establish the precise v1 parser weakness but say **nothing** about real agent/model scores. V2 includes the grader's `max_points` and `tests_total` in the externally frozen plan; both witnesses are now negative regression tests. Positive tests include two completed attempts at the same frozen scoring scale. No other reader should infer a new scored model run or independent human certification.
 
 ## Inspectable checker
 
