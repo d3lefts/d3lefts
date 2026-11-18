@@ -36,7 +36,7 @@ Current source `research/nightfall/formalization/dq2/DQ2HeatBathScoreTransfer.le
 
 **Removed as independent hypotheses:** trees, path uniqueness, pairwise Ising, no cycles, global spin-flip symmetry, zero marginal means, separate marginal variance floor, and strict Dobrushin \(\delta<1\) (a direct positive spectral-gap certificate replaces it). Full support need not be listed separately if a positive local-variance floor is required at every supported section: the cube's single-flip connectivity forces every atom into support.
 
-**Still necessary for this proof:** finite binary coordinate spaces; algebraic degree ≤2; boundedness \(|f|\le B\); positive local conditional uncertainty; positive heat-bath spectral gap; finite score-sensitivity norm; a source-certified finite product Q2 input. A dimension-free *family* additionally needs \(\gamma,v,L\) bounded uniformly in system size. An infinite dependent-law lifting argument, arbitrary-alphabet vector scores, degree ≥3, and near-sharp \(K(\delta)\to K_0\) perturbative comparison are **not established**.
+**Still necessary for this proof:** finite binary coordinate spaces; algebraic degree ≤2; an essential magnitude cap \(|f|\le B\) (a.e. and pointwise are equivalent in finite full support); positive local conditional uncertainty; positive heat-bath spectral gap; finite score-sensitivity norm; a source-certified finite product Q2 input. A dimension-free *family* additionally needs \(\gamma,v,L\) bounded uniformly in system size. An infinite dependent-law lifting argument, arbitrary-alphabet vector scores, degree ≥3, and near-sharp \(K(\delta)\to K_0\) perturbative comparison are **not established**.
 
 ## Related work / priority
 
