@@ -1,0 +1,33 @@
+name: NIGHTFALL DispatchQ-B1 source-exact two-process race witness
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/evaluations/dispatchq-b1/**"
+      - ".github/workflows/nightfall-dispatchq-concurrency-witness.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  forced-interleaving:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Source-guarded deterministic two-process TOCTOU witness
+        run: |
+          python research/nightfall/evaluations/dispatchq-b1/audit/concurrency/forced_interleaving.py --output dispatchq-crossprocess-witness.json
+      - name: Retain exact-source counterexample receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dispatchq-crossprocess-witness-${{ matrix.python-version }}
+          path: dispatchq-crossprocess-witness.json
+          retention-days: 30
+          if-no-files-found: warn
