@@ -7,6 +7,7 @@ on:
       - 'research/nightfall/formalization/product_space/RenyiTransferEvent.lean'
       - 'research/nightfall/formalization/product_space/SimulationDrift.lean'
       - 'research/nightfall/formalization/product_space/RenyiTwoEvent.lean'
+      - 'research/nightfall/formalization/product_space/LatentMixtureVariance.lean'
       - '.github/workflows/nightfall-renyi-transfer-lean.yml'
   pull_request:
     paths:
@@ -36,6 +37,8 @@ jobs:
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/SimulationDrift.olean SimulationDrift.lean)
           cp research/nightfall/formalization/product_space/RenyiTwoEvent.lean /tmp/mathlib4/RenyiTwoEvent.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/RenyiTwoEvent.olean RenyiTwoEvent.lean)
+          cp research/nightfall/formalization/product_space/LatentMixtureVariance.lean /tmp/mathlib4/LatentMixtureVariance.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/LatentMixtureVariance.olean LatentMixtureVariance.lean)
       - name: Strict named declaration axioms and source hash
         shell: bash
         run: |
@@ -45,6 +48,7 @@ jobs:
           import RenyiTransferEvent
           import SimulationDrift
           import RenyiTwoEvent
+          import LatentMixtureVariance
           #check @Nightfall.RenyiSimulation.event_mass_le_of_pointwise
           #check @Nightfall.RenyiSimulation.error_probability_transfer_inf
           #print axioms Nightfall.RenyiSimulation.event_mass_le_of_pointwise
@@ -56,6 +60,9 @@ jobs:
           #check @Nightfall.RenyiSimulation.event_mass_sq_le_second_moment
           #check @Nightfall.RenyiSimulation.error_probability_transfer_two
           #print axioms Nightfall.RenyiSimulation.error_probability_transfer_two
+          #check @Nightfall.LatentMixture.mean_minimizes_squared_loss
+          #check @Nightfall.LatentMixture.conditional_mixture_fibre_dominance
+          #print axioms Nightfall.LatentMixture.conditional_mixture_fibre_dominance
           LEAN
           lake env lean RenyiTransferAudit.lean | tee "$GITHUB_WORKSPACE/renyi-axioms.txt"
           ! grep -E 'sorryAx|Lean\.ofReduceBool|native_decide' "$GITHUB_WORKSPACE/renyi-axioms.txt"
@@ -63,3 +70,4 @@ jobs:
           sha256sum "$GITHUB_WORKSPACE/research/nightfall/formalization/product_space/RenyiTransferEvent.lean"
           sha256sum "$GITHUB_WORKSPACE/research/nightfall/formalization/product_space/SimulationDrift.lean"
           sha256sum "$GITHUB_WORKSPACE/research/nightfall/formalization/product_space/RenyiTwoEvent.lean"
+          sha256sum "$GITHUB_WORKSPACE/research/nightfall/formalization/product_space/LatentMixtureVariance.lean"
