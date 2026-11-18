@@ -1,6 +1,6 @@
-# NIGHTFALL sharp degree-two coefficient: verified five-bit lower bound
+# NIGHTFALL Q2 fair-cube witness 9/4; biased-product Bernstein sharpness is 4
 
-2026-11-18. Status: **exact analytic five-bit witness, independent original-law Fraction verifier, Lean source candidate (pinned CI pending).** No global upper bound, no optimal-constant determination, no novelty/priority assertion.
+2026-11-18, v1.1 prior-art/self-correction. **The 9/4 witness is a certified fair-cube lower-bound example, NOT a product-space coefficient record.** Strict pinned Lean source checks passed in run [44342791899](https://github.com/d3lefts/d3lefts/actions/runs/44342791899), receipt 14443254820. The stronger biased-product saturation (C_{2,\mathrm{product}}\ge4) was ALREADY in merged PR #805, as an author-side analytic limit with exact rational regression and CI. No universal coefficient-four UPPER bound, novelty priority, or independent referee certificate is claimed.
 
 ## What is actually proved by the finite witness
 
@@ -31,11 +31,7 @@ Thus the exact ratio V²/(B² M) = 144/(16*4) = **9/4**.
 Rescale f/4 to a function with range {-1,0,+1},
 variance V=3/4 and all five influences M=1/4.
 
-**Mathematically valid conclusion:** the optimal degree-two universal
-constant C2 is at least 9/4, because a fair 5-bit cube is a special
-case of arbitrary independent products. The proposed sharp-Q2
-coefficient 4 (N-UE2(2,1) at d=2) has NOT been refuted or proved.
-The tempting stronger C2=2 is false.
+**Correct classification:** the optimal degree-two FAIR-CUBE coefficient is at least 9/4. This example also supplies the logically weaker product-space lower bound 9/4, **superseded there by the biased Bernstein family in PR #805, which forces product-space coefficient at least 4.** The proposed universal upper inequality with coefficient 4 remains open; if proved, that constant would be sharp. The stronger proposed coefficient 2 is false on the fair cube. The best fair-cube coefficient is unknown from the audited evidence; do not claim this is the global fair-cube record.
 
 ## Scope of separate exhaustive search
 
@@ -52,41 +48,57 @@ The exact five-bit witness is already a higher ratio than CHSH.
 No finite search, including a full small-Bell enumeration, proves an
 upper bound for all n.
 
-## Chebyshev sharpness distinction
+## Corrected #805 priority: biased Bernstein already forces coefficient 4
 
-Merged dossier PR #805 verifies classical Chebyshev examples forcing
-degree exponent at least 2 in ANY **uniform in d** inequality
-V² <= C d^beta B² M with absolute C. It DOES NOT show that the
-coefficient d² is attained, or that C2=4 is best at fixed d=2.
-In particular, its finite d=2, n=4 Chebyshev witness has ratio
-V²/(B² M) = 3/4, not 4. The coefficient-one conjecture remains
-an independent optimal-constant question.
+**Two different constructions in merged PR #805:**
 
-The currently kernel-supported arbitrary-product degree-two upper
-bound is approximately C2=105.416 (merged PR #776), not C2=4.
-Our present verified quantitative interval from the explicit witness
-and that upper result is
+1. The **fair Chebyshev family** with n=d² demonstrates that no all-degree estimate of the form V²<=C d^beta B²M can have degree power beta<2; it does not establish fixed-d=2 coefficient 4.
+2. The separate **biased Bernstein extremizing family** proves, at the author-analytic level, that each fixed degree d requires coefficient at least d². For d=2 this is EXACTLY 4, not 9/4.
 
-    9/4 <= C2_opt <= ~105.416,
+Take n even, Xi iid Bernoulli(p) with FULL support 0<p<1, and
+  f_n=T_2(2K/n-1)=1-8K(n-K)/n²,  K=sum_i Xi.
+All binary words have positive probability, and f_n achieves +1 at K=0,n and -1 at K=n/2, so the **actual half-range B=1 exactly**. Write q=p(1-p), t=1-2p. Exact independent quadratic ANOVA and binomial calculations give
 
-with no claim that either endpoint on the upper side is best available
-in the literature. A recent-date theorem-level prior-art search and
-independent referee check are still necessary.
+  V_n = 64q/n³ * [(n-1)² t² + 2(n-1)q],
+  M_n = 64q/n⁴ * [(n-1)² t² + 4(n-1)q].
+
+M is the original-law coordinate RESAMPLING influence, not flip influence under the fair law. Therefore
+  lim_(n even -> infinity) V_n²/(B²M_n)
+    = 64q t² = 16t²(1-t²)
+    = 4 - 4(2t²-1)².
+
+The limiting expression is at most 4 and **attains exactly 4** when t²=1/2, equivalently p_*=(1+1/sqrt(2))/2=(1+cos(pi/4))/2. This certifies (as an exact analytic calculation, not yet Lean-checked) the lower bound
+  C2_product >= 4.
+
+An entirely rational nearby bias p=17/20 gives the exact limiting ratio 2499/625=3.9984, and finite exact ratios:
+  n=4:  2.299346590909091 (already stronger than fair 9/4)
+  n=10: 3.248410170731707
+  n=30: 3.737444163949275
+  n=100:3.918938999926561
+  n=300:3.971800416765973.
+
+The same T2 symmetric family at fair p=1/2 has limiting ratio zero; small fair-cube coefficient searches miss this effect because the fixed half-range is controlled by extraordinarily rare tails at the biased source. A finite rational n=300 sample approaches but does NOT establish the limit; the limit follows from the closed expressions above.
+
+**Reconciliation:** The currently Lean-certified arbitrary-product quadratic UPPER coefficient is approximately 105.416, not 4. The supported situation is
+  4 <= C2_product_opt <= 105.416... (lower analytic, upper Lean)
+and independently
+  C2_fair_opt >= 9/4 (five-bit witness, Lean-certified).
+There is no verified uniform-cube best-constant determination here. The coefficient-four product-space conjecture is an UPPER-bound problem now; a proof of C2_product<=4 would be optimal.
+
+**Certification and independent replay:** Original PR #805 includes BERNSTEIN_SHARP_UE2_CONJECTURE_20261117.md and its exact checker check_ue2_bernstein_saturation.py. This PR adds a separately derived closed-form-versus-binomial-versus-native-ANOVA Fraction checker check_q2_biased_bernstein_priority.py. That CI audit does not certify the universal upper bound. The asymptotic sharpness is supported by explicit exact moment identities, but remains author-analytic rather than a named Lean limit theorem; independent expert review and priority clearance are still open.
 
 ## Certificate and reproducibility
 
 - Python exact Fraction checker: check_q2_sharp_lower_nine_four.py.
   Distinct actual-source table and Walsh calculations, CHSH
   normalization and all signed Bell matrices.
-- Lean finite-source certificate candidate:
+- Lean finite-source witness certificate:
   research/nightfall/formalization/universal/Q2SharpFiveBitLower.lean.
   Defines the actual original fair product by exact 32-state uniform
   sums; prove mean zero, variance 12, true resampling influence 4,
-  range +/-4, and exact 9/4 ratio, plus failure of coefficient two.
+  range +/-4, and exact 9/4 ratio, plus failure of coefficient two. The exact-head kernel proof and source-world bijection passed in run 44342791899.
 - Dedicated strict pinned Lean workflow:
-  nightfall-q2-sharp-lower-nine-four-lean.yml. Green CI proves only
-  this finite lower bound. Do NOT promote before the named
-  #print axioms receipt and exact-head provenance are inspected.
+  nightfall-q2-sharp-lower-nine-four-lean.yml. The named axiom receipt has PASSED for the finite lower bound; this does not prove the proposed universal coefficient-four upper bound.
 - Credit: classical Fourier analysis and original-source
   Efron–Stein influence; NIGHTFALL AI-assisted candidate search,
   exact independent replay. No priority or external sign-off.
@@ -95,14 +107,11 @@ independent referee check are still necessary.
 
 1. Optimize unbiased five-bit real coefficient quadratic forms around
    the witness; exact-reconstruct any improvement before claiming it.
-2. Test highly skew binary and categorical product laws, since a
-   fair-cube lower bound need not be worst-case for all product laws.
-3. Attack an actual C2<=4 proof, using source-coupled variance
+2. The highly biased binary near-saturators were ALREADY proved as an author-side lower-bound family in PR #805. Test categorical product laws only for potential upper-bound counterexamples, using original-source normalization and retaining rare-tail range information.
+3. Attack the actual SHARP product-space C2<=4 proof, using source-coupled variance
    rather than the invalid total-influence shortcut (CHSH:
    sum_i I_i=2 > d B sqrt(M)=sqrt(2)).
-4. If C2<=4 is obtained, Lean-certify native finite original-source
-   theorem and transport via merged #776 finite-information pipeline.
-   Do not call it sharp unless C2>=4 is independently established.
+4. If C2<=4 is obtained, Lean-certify native finite original-source theorem and transport via merged #776 finite-information pipeline. The matching C2>=4 bound is already supported by PR #805's biased Bernstein construction; still require an independent audit of that limit before claiming a fully certified sharp theorem.
 
 This result is a **lower-bound construction**, not a breakthrough or
 solution of Turturean's all-degree variance-exponent-two question.
