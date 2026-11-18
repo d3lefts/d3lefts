@@ -21,6 +21,10 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Check private reference and grader absent
         run: test ! -e research/nightfall/evaluations/artifactgraph-b2/private
+      - name: Verify candidate bytes against pinned SHA-256 manifest
+        run: |
+          cd research/nightfall/evaluations/artifactgraph-b2/candidate
+          sha256sum -c ../audit/CANDIDATE_SHA256SUMS.txt
       - name: Source-exact candidate negative/positive contract replay
         run: |
           python research/nightfall/evaluations/artifactgraph-b2/audit/public_contract_canary.py \
