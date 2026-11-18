@@ -89,3 +89,41 @@ Reproduce with:
 
 Discovery graph:
 Turturean §9.5 -> full pairwise rows K -> tempting singleton R replacement -> biased-AND source law -> exact closed moments, true resampling and per-point residual -> R=1 versus K=n -> divergence n/16 -> retire false operator -> focus coupled real-valued row geometry and cross-threshold covariance.
+
+
+## v1.1 actual full-row cost search (not an upper-bound proof)
+
+An additional dependency-free exact *rational linear-programming* engine
+\`check_real_row_K_exact_lp.py\` now explores the CORRECT conjecture,
+not the disproved singleton shortcut.
+
+For every supported original-source word x, it solves:
+  min sum_i a_i,
+  subject to a_i>=0 and
+  sum_(i:x_i!=y_i) a_i >= |f(x)-f(y)|
+  for ALL supported y.
+
+It enumerates all basic feasible vertices by exact rational Gaussian
+elimination and verifies every candidate's full row feasibility. The
+global K is the maximum of the resulting per-point optima. No SciPy
+or floating point, and no replacement of true original source laws.
+Original resampling influences are independently computed by
+conditional squared residuals and fresh-coordinate two-replica means.
+
+Initial preregistered deterministic scope: 9 nonconstant rational
+observable tables with 3 independent coordinates, each with positive
+heterogeneous rational categorical laws, in alphabets (2,2,2),
+(3,2,2) and (2,3,3). Test-only controls include additive fair-sign
+f=sum_i(2X_i-1) on 3 bits, where
+  V=3, M=1, R=3, K=6,
+  V²/(R²M)=1 and V²/(K²M)=1/4 EXACTLY.
+This additive example saturates the candidate sharp **full**-row
+constant \`4V²<=K²M\`, so any universal c in V²<=cK²M
+must be at least 1/4. That is background elementary mathematics,
+not a new optimal-constant theorem.
+
+No sampled violation of 4V²<=K²M proves anything about the general
+real-row problem. The real test is to derive an all-size *coupled*
+threshold inequality, not to expand these tiny LP samples indefinitely.
+The R bridge is mathematically refuted, whereas this full K bridge
+remains a legitimate conjecture.
