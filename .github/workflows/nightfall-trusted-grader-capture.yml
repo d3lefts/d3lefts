@@ -33,7 +33,7 @@ jobs:
         run: |
           set -euxo pipefail
           git rev-parse HEAD | tee source-head.txt
-          sha256sum research/nightfall/evaluations/assurance/trusted_container_grade.py research/nightfall/evaluations/assurance/tests/test_trusted_container_grade.py research/nightfall/evaluations/assurance/README.md | tee source-sha256.txt
+          sha256sum research/nightfall/evaluations/assurance/trusted_container_grade.py research/nightfall/evaluations/assurance/join_grader_capture.py research/nightfall/evaluations/assurance/tests/test_trusted_container_grade.py research/nightfall/evaluations/assurance/README.md | tee source-sha256.txt
           docker pull python:3.13-slim
           image="$(docker image inspect --format '{{.Id}}' python:3.13-slim)"
           test "${image#sha256:}" != "$image"
