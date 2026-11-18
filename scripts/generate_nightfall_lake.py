@@ -15,6 +15,7 @@ import re
 ROOT = Path(__file__).resolve().parent.parent
 SOURCE = ROOT / "research/nightfall/formalization"
 OUTPUT = ROOT / "lakefile.toml"
+VENDOR = SOURCE / "vendor"
 SEEDS = (
     "ActualSourceQ2107Terminal",
     "CubicTopCover105416",
@@ -47,6 +48,11 @@ def locked_mathlib_commit() -> str:
 def discover() -> tuple[dict[str, Path], dict[str, set[str]]]:
     by_name: dict[str, Path] = {}
     for file in SOURCE.rglob("*.lean"):
+        # Vendored third-party trees keep their own hierarchical module names
+        # (e.g. AaronsonAmbainis.Bridge.Basic) and are built by their own
+        # workflows; they are not flat NIGHTFALL modules.
+        if VENDOR in file.parents:
+            continue
         name = file.stem
         if name in by_name:
             raise RuntimeError(
