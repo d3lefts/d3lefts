@@ -30,7 +30,7 @@ def gram(q):
                 # paired conditional covariance
                 for y in xs:
                     if x[other]!=y[other]: continue
-                    ans += nu[x]*nu[y]/den * (
+                    ans += nu[x]*nu[y]/denom * (
                         (basis[i](x)-basis[i](y))*
                         (basis[j](x)-basis[j](y)))/2
         return ans
