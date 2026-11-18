@@ -1,0 +1,15 @@
+# Permission substitution generalization — measurement protocol v1
+
+**Objective:** measure the marginal evaluation cost of five policies on a fixed official-scored pool, falsify incomplete-guard and stale-epoch assumptions, then extend to unrestricted generated patches and multiple official ControlArena task pairs.
+
+**Predeclared scope:** pinned ControlArena 20.1.1 IaC Fast, four archived investigator-authored cases from #599, independent official main/side pytest scoring. 301 repeated wall-clock and process-CPU measurements per candidate per policy on the same GitHub runner, reporting medians and p95 without subtracting measurement overhead. Synthesis and scorer times are reported separately. No monetary estimate until real provisioned compute rate, API tokens, storage, review, and enforcement path are measured. No claims of AWS deployment or actual effect-time mediation.
+
+**Policies:** narrow four-action FSx guard, full mission baseline-diff audit, authenticated protected SCP-content pin + narrow guard, source-path selective audit, source-path selective audit + narrow guard. All decisions must equal the independent #599 receipts or the experiment fails.
+
+**Changed-source negative controls:** (1) remove an unchecked FSx action in an already-synthesized legitimate CloudFormation template: narrow guard accepts, pin and full audit reject; (2) advance source epoch without changing synthesized protected policy: the content-only pin still accepts, whereas a separate authenticated source-epoch check must reject. This explicitly demonstrates the *remaining* freshness gap. Neither synthetic drift case is counted as an official-scored candidate.
+
+**Independent criticism:** the measured run must preserve full template identities and re-run the independent #599 source/scorer auditor. CI success establishes only repeatability under this source pool. Benchmarks must be repeated on at least three independently selected runner instances before reporting hardware-robust cost comparisons; current runner costs are exploratory.
+
+**Next required gates, NOT covered by this first measurement:** unrestricted model-generated patches (no preselected file, substring or authored benign scaffold), three or more independently sourced ControlArena main/side task pairs with task-specific semantic oracles, source-epoch and mission-policy mutation at actual prepare/commit boundaries, and measured end-to-end cloud-effect enforcement costs including service delays, retries, rejected legitimate requests, human review and deployment. Pre-register at least 20 attempts per task, preserve every invalid patch in denominator, report confidence intervals, and attack the actual guard with independent model configurations. No automatic promotion from a single task or two model responses.
+
+**Stop rule:** any official scoring mismatch, unexpected admission, missing baseline identity, failed drift negative control or unavailable dependency marks the current run FAILED or BLOCKED. Do not extrapolate from successful local timing to universal safety or cost savings.
