@@ -1,7 +1,3 @@
-"""EXPERIMENTAL SCOPED MODE: identical local authority service except effect verifier.
-This module is deliberately NOT a full mission guard and must never be
-used for production authorization. See SCOPED_PERMISSION_GUARD_PROTOCOL.md.
-"""
 #!/usr/bin/env python3
 """Trusted Linux-peer-authenticated, HMAC-authenticated local promotion service.
 
@@ -10,6 +6,7 @@ used nonces, and locally committed deployment template. Atomic local rename
 is the ONLY protected effect in this experiment; no AWS deployment.
 """
 from __future__ import annotations
+# RESEARCH ONLY: scoped guard does not enforce full mission semantics.
 import argparse, hashlib, hmac, json, os, pathlib, select, signal, socket, struct, tempfile, time
 from independent_effect_verifier import check_baseline, EffectViolation
 from scoped_permission_guard import check_promotion
