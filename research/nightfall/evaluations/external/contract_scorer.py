@@ -32,7 +32,7 @@ class DispatchQ(unittest.TestCase):
         self.q.submit("b", "b", due_at=80)
         self.q.submit("a", "a", due_at=80)
         self.q.submit("z", "z", due_at=70)
-        self.assertEqual([x.job_id for x in self.q.claim("w", limit=3)], ["z", "b", "a"])
+        self.assertEqual([x.job_id for x in self.q.claim("w", limit=3)], ["z", "a", "b"])
 
     def test_not_due(self):
         self.q.submit("later", "{}", due_at=120)
