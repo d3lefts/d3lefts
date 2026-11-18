@@ -112,6 +112,34 @@ Once the source-derived singleton/pair tables and energies have been authenticat
 
 The exact original-world checker `check_quadratic_gain_locality.py` recomputes conditional sums directly on a 4-coordinate quadratic model, including previously zero-mass atoms, and tests the source-local edge identity. A pure cubic supplies a sharp counterexample: the j gain changes from 0 to 1 after editing k even though the old j–k pair projection vanishes. Thus the degree hypothesis cannot be discarded.
 
+## Corollary — exact robust two-source acquisition-cost phase diagram
+
+This gives a **priced information-acquisition** theorem, rather than only a qualitative influence-versus-information obstruction. Assume the *only* selectable exact sensors are the changed source k and the candidate j, with positive read prices c_k,c_j; the source law q_k can be any simplex marginal; the other marginal and original mission table are fixed. The performance requirement is a *uniform lower bound on explained variance*, at least τ, over every q_k. Define
+
+\[
+L=\operatorname{dist}\!\left(0,\operatorname{conv}\{d_a\}\right)^2,\qquad
+U=\min_a\|d_a\|^2.
+\]
+
+Then the exact minimum **fixed-sensor-bundle** price is
+
+\[
+\boxed{
+C^*(\tau)=
+\begin{cases}
+0,&\tau\le0,\\
+c_j,&0<\tau\le L,\\
+c_j+c_k,&L<\tau\le U,\\
++\infty,&\tau>U.
+\end{cases}}
+\]
+
+**Lower bound and matching construction:** no observations capture zero variance; observing k alone has worst-law explained variance zero because the adversary may choose q_k to be a point mass. Observing j alone has robust gain exactly L by the response-hull theorem. Observing both has robust gain exactly U: by the total-variance decomposition,
+\(\operatorname{Var}_q(f)=\mathbb E_q[\operatorname{Var}(f\mid X_k)]+\operatorname{Var}_q(\mathbb E[f\mid X_k])\ge U\),
+with equality at the point-mass source law on a minimizing k-symbol. Thus the four cases are exhaustive and attained. This is a genuine sharp phase diagram for **robust fixed-coordinate squared-loss observation**, but it is NOT the full adaptive Bellman/recertification problem and it does not certify zero-error action safety.
+
+For the original numerical witness below, \(L=1/6\), \(U=2/3\). With unit observation prices and threshold \(\tau=1/2\), the robust acquisition optimum is exactly two reads; under the old deterministic source law it was one. This cleanly locates a *cost jump* caused by information cancellation while the original resampling influence stays constant.
+
 ## Original-source quantitative witness: influence stays high while evidence fails
 
 `source_bound_hull_witness.json` records the two-coordinate original mission table
