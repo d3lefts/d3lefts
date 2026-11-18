@@ -127,6 +127,16 @@ def test_chain_cubic():
         assert cent_E[1] == 0
         assert cent_E[2] == 0  # zero spin means, pure cubic top sector
         assert cent_bound == 6*A**3/k
+        # Critical extra no-go: law-centering repairs variance comparison,
+        # but does NOT repair the native-to-fair influence comparison.
+        fair = {state: Q(1,2**n) for state in range(1<<n)}
+        root_actual = influence(law, corrected, 0)
+        root_fair = influence(fair, corrected, 0)
+        assert root_actual == (1-r*r)**2/k
+        assert root_fair == r*r+Q(1,k)
+        assert root_actual/root_fair == (1-r*r)**2/(1+k*r*r)
+        print('PASS corrected root influence ratio',k,
+              root_actual/root_fair)
         print('PASS cubic k',k,'uncorrected Var',expected,
               'reference Var',Q(1,k),'contracted E1',energies[1],
               'corrected Var',cent_V[0],'corrected upper',cent_bound)
