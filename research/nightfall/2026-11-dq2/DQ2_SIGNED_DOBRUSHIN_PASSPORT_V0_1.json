@@ -1,0 +1,109 @@
+{
+  "schema": "nightfall-proof-passport-v1",
+  "id": "NF-DQ2-SIGNED-SANDWICH-20261117",
+  "version": "0.1",
+  "date": "2026-11-17",
+  "status": "AUTHOR_ANALYTIC_PROVISIONAL",
+  "promotion_allowed": false,
+  "novelty": "unresolved",
+  "independent_external_mathematical_review": false,
+  "lean_kernel_terminal": false,
+  "source_parent": "https://github.com/d3lefts/d3lefts/pull/788",
+  "claims": [
+    {
+      "id": "DQ2-S1",
+      "statement": "Abstract Q2 transfer on any finite full-support, mean-zero binary law: Var_nu(f)^2 <= 4 K0 A^4/(v gamma) B^2 max_i I_i^nu(f) for quadratic f",
+      "premises": [
+        "full-function true-site variance tensorization with A",
+        "Cov(X)>=gamma I",
+        "conditional Var(Xi|X_-i)>=v",
+        "existing finite independent-sign Q2"
+      ],
+      "evidence": "written exact algebraic derivation",
+      "status": "analytic_unreviewed"
+    },
+    {
+      "id": "DQ2-S2",
+      "statement": "Graph-sparse dual conditional scores for general signed Ising yield covariance floor Cov(X)>=D^-1 I",
+      "premises": [
+        "strictly positive signed pairwise Ising law",
+        "bounded local absolute interaction budget"
+      ],
+      "evidence": "native two-atom exact rational matrix tests",
+      "status": "analytic_unreviewed"
+    },
+    {
+      "id": "DQ2-S3",
+      "statement": "For signed zero-field Ising graphs with Dobrushin alpha<1, quadratic Q2 bound with alpha-only coefficient F(alpha)=4[1+alpha(1+alpha)^2]/[(1-alpha)^4(1-alpha^2)^2]",
+      "premises": [
+        "DQ2-S1",
+        "DQ2-S2",
+        "classical Wu Dobrushin Poincare gap 1-alpha"
+      ],
+      "evidence": "proof and exact finite-model full-function PSD audits",
+      "status": "external_premise_conditional_unreviewed"
+    },
+    {
+      "id": "DQ2-S4",
+      "statement": "Countable locally finite signed Gibbs uniqueness-regime extension for quadratic cylinders and bounded L2 closure",
+      "premises": [
+        "DQ2-S3",
+        "Dobrushin uniqueness",
+        "DLR single-site conditional law and finite-volume weak convergence",
+        "uniform L2 influence contraction"
+      ],
+      "evidence": "analytic extension; no kernel or independent measure theory check",
+      "status": "provisional_analytic"
+    }
+  ],
+  "finite_exact_checker": {
+    "path": "scripts/check_dq2_signed_dobrushin_exact.py",
+    "method": "full 2^n state enumeration; exact Fraction LDL on (L-(1-alpha)V) quotient, C-D^-1 I, quadratic covariance, all site gradient forms",
+    "models": [
+      "signed frustrated triangle n=3 alpha=11/30",
+      "signed frustrated square n=4 alpha=13/40",
+      "frustrated square with chord n=4 alpha=257/770",
+      "frustrated pentagon with chord n=5 alpha=157/520",
+      "signed K4 n=4 alpha=43/195"
+    ],
+    "observed": "local independent-model implementation PASS; GitHub exact-head CI pending",
+    "local_original_source_sha256": "5d7b2589cb730ffebb792481d6054abd146c8035d5b09211a44668d9edd8f385",
+    "limits": "Finite instances do not prove universally quantified statements; exact LDL verifies each enumerated model only."
+  },
+  "external_sources": [
+    {
+      "author": "Liming Wu",
+      "year": 2006,
+      "url": "https://arxiv.org/abs/math/0611635",
+      "role": "Dobrushin spectral-gap Poincare estimate"
+    },
+    {
+      "author": "Eldan, Koehler, Zeitouni",
+      "year": 2022,
+      "url": "https://arxiv.org/abs/2007.08200",
+      "role": "High-temperature Ising Poincare theory / comparator"
+    },
+    {
+      "author": "Koehler, Lifshitz, Minzer, Mossel",
+      "year": 2024,
+      "url": "https://arxiv.org/abs/2307.07625",
+      "role": "Existing dependent measure influence theory / priority comparator"
+    }
+  ],
+  "limitations": [
+    "zero external field needed for mean-zero transfer as stated",
+    "physical algebraic quadratic degree, not native dependent ANOVA",
+    "Dobrushin alpha<1 for unconditional Ising specialization",
+    "full support/finite interactions",
+    "not valid novelty clearance, sharp constant, external review or Lean formalization"
+  ],
+  "independent_audit_plan": [
+    "Recheck continuous-time versus discrete Glauber normalization",
+    "Independently derive C<=AI via native influences",
+    "Check all graph-sparse score cross terms including negative edges",
+    "Prove alpha-to-H superadditivity",
+    "Independent infinite Gibbs/DLR cylinder limit review",
+    "Lean abstract theorem with explicit hypotheses, then discharge external premises"
+  ],
+  "next_decisive_test": "Scope-matched prior-art theorem implication review and Lean source-level abstract Q2 spectral-sandwich terminal, before any promotion or merge as verified mathematical theorem"
+}
