@@ -89,7 +89,10 @@ theorem aa_flip_implies_five_halves_at_threshold
       16 * (t * V ^ 2 * Real.sqrt V) =
           (16 * V ^ 2) * (t * Real.sqrt V) := by ring
       _ ≤ (C * z) * (t * Real.sqrt V) := by
-          simpa only [z] using hscaled
+          calc
+            (16 * V ^ 2) * (t * Real.sqrt V) ≤
+                C * (d : ℝ) ^ 6 * I * (t * Real.sqrt V) := hscaled
+            _ = (C * z) * (t * Real.sqrt V) := by dsimp [z]; ring
       _ = (C * t * Real.sqrt V) * z := by ring
       _ ≤ 16 * z := hfactor
   dsimp [z] at hresult
