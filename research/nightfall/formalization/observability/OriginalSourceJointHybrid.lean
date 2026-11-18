@@ -91,6 +91,7 @@ theorem joint_original_source_poincare_bridge
     _ ≤ projectedVariance p ρ f +
       (∑ i : ι, ∑ y : β,
         ρ y * sourceInfluence p (fun x => f x y) i) :=
-        add_le_add_left hcond _
+        by
+          nlinarith [add_le_add_left hcond (projectedVariance p ρ f)]
 
 end Nightfall.CubicQ3.JointHybrid
