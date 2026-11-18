@@ -14,7 +14,7 @@ assert x['source_scope'].find('not by an independent human reviewer')>=0
 assert x['claim_status']=='source_frozen_internal_private_grader_replay_not_external_certification'
 assert len(x['limitations'])>=6
 assert any('same-process Docker grader' in item and 'compromised' in item for item in x['limitations'])
-assert any('not outputs from any model' in item for item in x['limitations'])
+assert any('never Qwen outputs' in item for item in x['limitations'])
 a=x['b1'];b=x['b2']
 assert (a['private_grader_cases_passed'],a['private_grader_cases_total'])==(37,37)
 assert (a['private_grader_points'],a['private_grader_max_points'])==(100,100)
