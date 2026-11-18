@@ -1,7 +1,7 @@
 {
   "schema": "nightfall-proof-passport-v1",
   "id": "NF-DQ2-SIGNED-SANDWICH-20261117",
-  "version": "0.2",
+  "version": "0.3",
   "date": "2026-11-17",
   "status": "AUTHOR_ANALYTIC_PROVISIONAL",
   "promotion_allowed": false,
@@ -60,6 +60,17 @@
       "statement": "For connected uniform r Ising chain, bounded cubic f_k=X0*k^-1 sum Y_jY_{j+1} has Var_nu/Var_mu=1+(k-1)r^2 unbounded at fixed r<1/2",
       "status": "exact analytic no-go and rational enumeration",
       "scope": "This refutes uniform cubic covariance comparison only; it does not refute actual-law cubic influence Q2; true influence at X0 is (1-r^2) Var_nu."
+    },
+    {
+      "id": "DQ2-S6",
+      "statement": "Unrestricted dimension-free Q2 with constant independent of interaction strength is impossible even for linear f on n-site zero-field Ising paths: with r_n=1-1/n^2 and f_n=n^-1 sum X_i, Var(f_n)^2/max_i I_i(f_n) >= (n-1)^2/(2/n^2-1/n^4) ~ n^4/2",
+      "premises": [
+        "native conditional-resampling influence",
+        "full-support path Ising law with finite but n-dependent couplings"
+      ],
+      "evidence": "elementary all-n analytic proof, independently implemented rational full-state enumeration n=2,3,4,5,7,9, exact closed-form rational checks n=12,24,50,100",
+      "status": "exact_analytic_obstruction_finite_replay_not_lean",
+      "scope": "No restriction on all graph topologies alone can yield an interaction-uniform coefficient; this does not refute the quantitative Dobrushin regime."
     }
   ],
   "finite_exact_checker": {
@@ -110,7 +121,16 @@
     "Check all graph-sparse score cross terms including negative edges",
     "Prove alpha-to-H superadditivity",
     "Independent infinite Gibbs/DLR cylinder limit review",
-    "Lean abstract theorem with explicit hypotheses, then discharge external premises"
+    "Lean abstract theorem with explicit hypotheses, then discharge external premises",
+    "Attempt to invalidate exact path-Ising native influence formulas and n^4 obstruction; verify unrestricted all-interaction reading is excluded"
   ],
-  "next_decisive_test": "Independent proof audit of the signed spectral sandwich and separate cubic Wick contraction renormalization, plus theorem-level prior art and Lean conditional terminal"
+  "next_decisive_test": "Current-head CI of signed checker plus no-go checker; named Lean interface for heat-bath Poincare, score covariance, and finite product Q2; human statement-level prior-art review",
+  "unrestricted_no_go_checker": {
+    "path": "scripts/check_dq2_all_graphs_no_go_exact.py",
+    "note": "research/nightfall/2026-11-dq2/DQ2_ALL_GRAPHS_SCOPE_AND_NO_GO_V0_1.md",
+    "command": "python3 scripts/check_dq2_all_graphs_no_go_exact.py",
+    "source_sha256": "4f8b062a487b0a27040bd2651c67f2691e4bb56086e5d1443de224f55f821421",
+    "status": "locally_exact_replayed_ci_pending",
+    "limitations": "Finite instances are not theorem proof; all-n claim rests on elementary symbolic argument"
+  }
 }
