@@ -106,3 +106,40 @@ independent referee check are still necessary.
 
 This result is a **lower-bound construction**, not a breakthrough or
 solution of Turturean's all-degree variance-exponent-two question.
+
+
+## Stronger structural presentation: pure homogeneous quadratic on six fair bits
+
+The previous five-bit polynomial f decomposes as f=f1+f2 into
+singleton and pair Walsh sectors. Add a SIXTH independent fair sign z,
+and define
+
+  F(x0,...,x4,z)=z f1(x0,...,x4)+f2(x0,...,x4).
+
+F is **homogeneous degree exactly two**. Explicit coefficients are
+the eight pair terms of f, plus the four new terms
+z*x0+z*x2+z*x3+z*x4. The underlying signed interaction graph is
+non-bipartite; this is crucial, since the exhaustive bipartite
+subfamily has only reached ratio 2.
+
+The exact identity F(x,z)=f(z*x) follows from the parity of f1/f2.
+Since (z,x)->z*x has the same uniform five-bit output law as x,
+F has the doubled output histogram:
+-4:24 states, 0:16 states, +4:24 states.
+Thus B=4,V=12 as before. Its original fair resampling influences
+are I_i(F)=I_i(f)=4 for i=0,...,4 and
+I_z(F)=Var(f1)=4. Hence M=4 and ratio 9/4 again.
+
+**Corrected mechanism claim:** The lower-bound obstruction does NOT
+depend on mixing linear and quadratic Fourier degrees; one more fair
+coordinate homogenizes it without changing variance, B or M. The
+relevant distinction in this family is **bipartite versus non-bipartite
+quadratic coupling**. A general sharp-Q2 proof must address
+non-bipartite signed graphs rather than just Littlewood's bipartite
+bilinear bound.
+
+The exact Python checker independently enumerates all 64 six-bit
+worlds, computes physical source resampling influences, and verifies
+the parity homogenization identity on every one of them. A Lean
+certificate for the 5-bit model is pending its strict exact-head CI;
+the six-bit extension is not a separate kernel theorem yet.
