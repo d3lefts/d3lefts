@@ -8,9 +8,9 @@ conditional response table d(a,z), the useful pre-observation gain is
 
     gain(q) = Σ_z p(z) (Σ_a q(a) d(a,z))².
 
-A source-derived support vector h with squared norm λ and
-  Σ_z p(z) h(z) d(a,z) >= λ for EVERY source atom a
-certifies gain(q) >= λ for EVERY q in the simplex.  A matching
+A source-derived support vector h with squared norm lam and
+  Σ_z p(z) h(z) d(a,z) >= lam for EVERY source atom a
+certifies gain(q) >= lam for EVERY q in the simplex.  A matching
 convex combination q* with h=Σ_a q*(a)d(a,z) certifies exact optimality.
 
 This is elementary convex projection / Gram duality, not a new
@@ -49,21 +49,21 @@ There is no assumed optimizer, Gram-matrix oracle or numerical tolerance. -/
 theorem rational_hull_supporting_certificate
     {m n : ℕ}
     (p : Fin m → ℚ) (d : Fin n → Fin m → ℚ)
-    (h : Fin m → ℚ) (λ : ℚ)
+    (h : Fin m → ℚ) (lam : ℚ)
     (hp : ∀ z, 0 ≤ p z)
-    (hnorm : (∑ z : Fin m, p z * (h z) ^ 2) = λ)
-    (hsupport : ∀ a, λ ≤ ∑ z : Fin m, p z * h z * d a z) :
+    (hnorm : (∑ z : Fin m, p z * (h z) ^ 2) = lam)
+    (hsupport : ∀ a, lam ≤ ∑ z : Fin m, p z * h z * d a z) :
     ∀ (q : Fin n → ℚ),
       (∀ a, 0 ≤ q a) →
       (∑ a : Fin n, q a) = 1 →
-      λ ≤ ∑ z : Fin m, p z * (∑ a : Fin n, q a * d a z) ^ 2
+      lam ≤ ∑ z : Fin m, p z * (∑ a : Fin n, q a * d a z) ^ 2
       := by
   intro q hq hqsum
   let g : Fin m → ℚ := fun z => ∑ a : Fin n, q a * d a z
-  have hcross : λ ≤ ∑ z : Fin m, p z * h z * g z := by
+  have hcross : lam ≤ ∑ z : Fin m, p z * h z * g z := by
     calc
-      λ = (∑ a : Fin n, q a) * λ := by rw [hqsum]; ring
-      _ = ∑ a : Fin n, q a * λ := by rw [Finset.sum_mul]
+      lam = (∑ a : Fin n, q a) * lam := by rw [hqsum]; ring
+      _ = ∑ a : Fin n, q a * lam := by rw [Finset.sum_mul]
       _ ≤ ∑ a : Fin n, q a *
             (∑ z : Fin m, p z * h z * d a z) := by
           apply Finset.sum_le_sum
@@ -96,9 +96,9 @@ theorem rational_hull_supporting_certificate
   have hid := weighted_square_identity p g h
   have heq : (∑ z : Fin m, p z * (g z) ^ 2) =
       (∑ z : Fin m, p z * (g z - h z) ^ 2) +
-      2 * (∑ z : Fin m, p z * h z * g z) - λ := by
+      2 * (∑ z : Fin m, p z * h z * g z) - lam := by
     rw [hid, hnorm]
-  change λ ≤ ∑ z : Fin m, p z * (g z) ^ 2
+  change lam ≤ ∑ z : Fin m, p z * (g z) ^ 2
   rw [heq]
   linarith
 
@@ -107,21 +107,21 @@ exact minimum, not merely a lower bound. -/
 theorem rational_hull_matching_optimal
     {m n : ℕ}
     (p : Fin m → ℚ) (d : Fin n → Fin m → ℚ)
-    (h : Fin m → ℚ) (λ : ℚ)
+    (h : Fin m → ℚ) (lam : ℚ)
     (hp : ∀ z, 0 ≤ p z)
-    (hnorm : (∑ z : Fin m, p z * (h z) ^ 2) = λ)
-    (hsupport : ∀ a, λ ≤ ∑ z : Fin m, p z * h z * d a z)
+    (hnorm : (∑ z : Fin m, p z * (h z) ^ 2) = lam)
+    (hsupport : ∀ a, lam ≤ ∑ z : Fin m, p z * h z * d a z)
     (qstar : Fin n → ℚ)
     (hqlaw : (∀ a, 0 ≤ qstar a) ∧ (∑ a : Fin n, qstar a) = 1)
     (hresponse : ∀ z, h z = ∑ a : Fin n, qstar a * d a z) :
     (∀ (q : Fin n → ℚ), (∀ a, 0 ≤ q a) →
         (∑ a : Fin n, q a) = 1 →
-        λ ≤ ∑ z : Fin m, p z * (∑ a : Fin n, q a * d a z) ^ 2) ∧
+        lam ≤ ∑ z : Fin m, p z * (∑ a : Fin n, q a * d a z) ^ 2) ∧
       (∑ z : Fin m, p z *
-        (∑ a : Fin n, qstar a * d a z) ^ 2) = λ := by
+        (∑ a : Fin n, qstar a * d a z) ^ 2) = lam := by
   constructor
   · intro q hq hqsum
-    exact rational_hull_supporting_certificate p d h λ hp hnorm
+    exact rational_hull_supporting_certificate p d h lam hp hnorm
       hsupport q hq hqsum
   · simpa only [← hresponse] using hnorm
 
