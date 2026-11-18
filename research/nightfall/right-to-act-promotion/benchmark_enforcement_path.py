@@ -8,7 +8,7 @@ JSON effect logic are byte-identical. No AWS deployment, no dollar inference.
 The scoped mode MUST admit an out-of-scope resource: report UNSOUND.
 """
 from __future__ import annotations
-import argparse,copy,hashlib,json,os,pathlib,secrets,statistics,subprocess,sys,tempfile,time
+import argparse,copy,hashlib,json,os,pathlib,secrets,shutil,statistics,subprocess,sys,tempfile,time
 import authority_service as client
 from promotion_runner import POLICY, BASE_SOURCE_FILE, clone, hash_source, canon
 from isolated_cdk_backend import SandboxedCDK
@@ -47,7 +47,9 @@ def run_mode(mode,pool,out,passes):
     record={"version":"source-v1","source_hash":source_hash,
             "baseline_hash":client.digest(base),"policy_hash":client.digest(POLICY)}
     client.initialize(trust,record,base,POLICY)
-    sock=work/"s.sock"
+    # Linux AF_UNIX pathname maximum is 107 bytes; GitHub worktree is longer.
+    short_sock_dir=pathlib.Path(tempfile.mkdtemp(prefix="nf-gate-sock-"))
+    sock=short_sock_dir/"s"
     script=pathlib.Path(__file__).with_name(
         "authority_service_scoped.py" if mode=="scoped" else "authority_service.py")
     proc=subprocess.Popen([sys.executable,str(script),"serve",
@@ -182,6 +184,7 @@ def run_mode(mode,pool,out,passes):
         # Never archive the local HMAC key.
         try:(trust/"shared_key").unlink()
         except FileNotFoundError:pass
+        shutil.rmtree(short_sock_dir,ignore_errors=True)
 
 def run(pool,out,passes):
     pool=pathlib.Path(pool).resolve()
