@@ -14,6 +14,8 @@ on:
       - 'scripts/check_proof_object_passport.cjs'
       - 'scripts/check_price_permission_optimality_passport.cjs'
       - 'scripts/check_bellman_policy_passport.cjs'
+      - 'scripts/check_robust_observation_hull_passport.cjs'
+      - 'research/nightfall/price_permission/robust_observation_hull/**'
       - '.github/workflows/nightfall-price-permission-primal-dual-lean.yml'
   workflow_dispatch:
 
