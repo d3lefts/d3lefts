@@ -1,4 +1,4 @@
-name: NIGHTFALL external-model benchmark pilot (UNVALIDATED)
+name: NIGHTFALL actual local-model repair + contract scoring (PROVISIONAL)
 
 on:
   pull_request:
@@ -9,113 +9,170 @@ on:
 
 permissions:
   contents: read
-  models: read
 
 jobs:
-  preliminary-external-model-run:
-    name: external-model pilot / ${{ matrix.task }}
+  local-agent-preliminary-score:
+    name: local Qwen tool agent + contract scorer / ${{ matrix.task }}
     runs-on: ubuntu-latest
-    timeout-minutes: 22
+    timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:
-        task: [dispatchq, artifactgraph]
+        include:
+          - task: DispatchQ-B1
+            task_short: dispatchq
+            source_sha: c11881717d354462d49205ad86eecbdde719c47e
+            source_subpath: research/nightfall/evaluations/dispatchq-b1/candidate
+          - task: ArtifactGraph-B2
+            task_short: artifactgraph
+            source_sha: d5158a3aa37fa0f0ac877406ec806389cc04b5b6
+            source_subpath: research/nightfall/evaluations/artifactgraph-b2/candidate
     steps:
-      - name: Checkout read-only harness (no persisted credentials)
+      - name: Checkout preliminary scorer (no stored credentials)
         uses: actions/checkout@v4
         with:
           persist-credentials: false
-
-      - name: Freeze candidate from exact draft PR head
-        shell: bash
-        env:
-          TASK: ${{ matrix.task }}
-        run: |
-          set -euo pipefail
-          case "$TASK" in
-            dispatchq)
-              SHA=c11881717d354462d49205ad86eecbdde719c47e
-              TASKPATH=research/nightfall/evaluations/dispatchq-b1/candidate ;;
-            artifactgraph)
-              SHA=d5158a3aa37fa0f0ac877406ec806389cc04b5b6
-              TASKPATH=research/nightfall/evaluations/artifactgraph-b2/candidate ;;
-            *) exit 10 ;;
-          esac
-          WORK="$RUNNER_TEMP/nightfall-$TASK"
-          mkdir -p "$WORK/archive" "$WORK/original" "$GITHUB_WORKSPACE/baseline-evidence/$TASK"
-          git fetch --no-tags --depth 1 origin "$SHA"
-          git archive FETCH_HEAD "$TASKPATH" | tar -x -C "$WORK/archive"
-          cp -a "$WORK/archive/$TASKPATH/." "$WORK/original/"
-          cp -a "$WORK/original" "$WORK/candidate"
-          echo "CANDIDATE_DIR=$WORK/candidate" >> "$GITHUB_ENV"
-          echo "ORIGINAL_DIR=$WORK/original" >> "$GITHUB_ENV"
-          echo "OUTPUT_DIR=$GITHUB_WORKSPACE/baseline-evidence/$TASK" >> "$GITHUB_ENV"
-          echo "TASK_SHA=$SHA" >> "$GITHUB_ENV"
-          echo "Task PR head: $SHA"
-          sha256sum "$WORK/candidate/ISSUE.md"
-
-      - name: Prepare separate no-network Python sandbox
-        run: docker pull python:3.13-slim
-
-      - name: Run external model with read/edit/smoke-test tools (no evaluator access)
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TASK: ${{ matrix.task }}
+          path: grader-source
+      - name: Checkout pinned genuine local-model agent runner from parallel PR 845
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: 50b18e268b1907051f7a12d3d304dae075019be7
+          path: agent-runner
+          sparse-checkout: |
+            research/nightfall/evaluations/assurance/real_agent_pilot
+          sparse-checkout-cone-mode: false
+      - name: Checkout pinned original benchmark task (no grader)
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ matrix.source_sha }}
+          path: task-source
+          sparse-checkout: |
+            ${{ matrix.source_subpath }}
+          sparse-checkout-cone-mode: false
+      - name: Confirm immutable source and scorer identity before inference
         shell: bash
         run: |
           set -euo pipefail
-          python research/nightfall/evaluations/external/model_agent.py \
-            --task "$TASK" --candidate "$CANDIDATE_DIR" \
-            --model "openai/gpt-4.1" --max-model-turns 8 --max-tools 20 \
-            --out "$OUTPUT_DIR"
+          test "$(git -C task-source rev-parse HEAD)" = "${{ matrix.source_sha }}"
+          test "$(git -C agent-runner rev-parse HEAD)" = "50b18e268b1907051f7a12d3d304dae075019be7"
+          test -f "task-source/${{ matrix.source_subpath }}/ISSUE.md"
+          sha256sum grader-source/research/nightfall/evaluations/external/contract_scorer.py
+          sha256sum agent-runner/research/nightfall/evaluations/assurance/real_agent_pilot/local_model_swe_pilot.py
+          python3 -I agent-runner/research/nightfall/evaluations/assurance/real_agent_pilot/test_local_model_swe_pilot.py
 
-      - name: Preliminary contract scoring in separate credential-free step
-        env:
-          TASK: ${{ matrix.task }}
+      - name: Pin execution image digests on the actual runner
+        run: |
+          set -euo pipefail
+          docker pull python:3.13-slim
+          docker image inspect --format '{{.Id}}' python:3.13-slim > python-image-id.txt
+          docker pull ollama/ollama:latest
+          docker image inspect --format '{{.Id}}' ollama/ollama:latest > ollama-image-id.txt
+
+      - name: Start local Qwen model and observe exact weights digest
+        timeout-minutes: 13
         shell: bash
         run: |
           set -euo pipefail
-          # Source from a model is not executed with GITHUB_TOKEN or on host.
+          docker run -d --rm --name nf-polaris-ollama --cpus 3 --memory 6g \
+            -p 127.0.0.1:11434:11434 -e OLLAMA_NUM_PARALLEL=1 \
+            -e OLLAMA_CONTEXT_LENGTH=8192 -e OLLAMA_NO_CLOUD=1 \
+            ollama/ollama:latest
+          for i in $(seq 1 90); do
+            if curl -fsS http://127.0.0.1:11434/api/tags > /dev/null; then break; fi
+            sleep 2
+          done
+          docker exec nf-polaris-ollama ollama pull qwen2.5-coder:3b
+          curl -fsS http://127.0.0.1:11434/api/tags > model-tags.json
+          python3 - <<'PY'
+          import json
+          x=json.load(open("model-tags.json"))["models"]
+          q=[a for a in x if a["name"]=="qwen2.5-coder:3b"]
+          assert len(q)==1 and len(q[0]["digest"])==64
+          print("Observed model weights SHA-256:",q[0]["digest"])
+          PY
+
+      - name: Genuine agent model inference and mediated edits
+        timeout-minutes: 24
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I agent-runner/research/nightfall/evaluations/assurance/real_agent_pilot/local_model_swe_pilot.py \
+            --task "${{ matrix.task }}" \
+            --source "task-source/${{ matrix.source_subpath }}" \
+            --output "model-output/${{ matrix.task }}" \
+            --docker-image-id "$(cat python-image-id.txt)" --steps 9 \
+            | tee model-pilot-console.txt
+
+      - name: Execute separate fixed-denominator contract scorer without model credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "grade-output/${{ matrix.task }}" scoring-copy
+          cp -a "task-source/${{ matrix.source_subpath }}/." scoring-copy/
+          PATCH="model-output/${{ matrix.task }}/PRIVATE_CANDIDATE_PATCH.diff"
+          if [ -s "$PATCH" ]; then
+            (cd scoring-copy && git apply --check "../$PATCH" && git apply "../$PATCH")
+          fi
           docker run --rm --network none --read-only \
             --tmpfs /tmp:rw,exec,nosuid,size=128m \
             --cap-drop ALL --security-opt no-new-privileges \
-            --memory 512m --pids-limit 128 \
-            --user "$(id -u):$(id -g)" -e PYTHONDONTWRITEBYTECODE=1 \
-            -v "$CANDIDATE_DIR:/task:ro" \
-            -v "$GITHUB_WORKSPACE/research/nightfall/evaluations/external:/grader:ro" \
-            -v "$OUTPUT_DIR:/out:rw" \
-            python:3.13-slim python /grader/contract_scorer.py \
-              --task "$TASK" --out /out/grade.json
-          diff -ruN "$ORIGINAL_DIR" "$CANDIDATE_DIR" > "$OUTPUT_DIR/patch.diff" || test "$?" -eq 1
-          python - <<'PY'
-          import hashlib,json,os
-          from pathlib import Path
-          out=Path(os.environ["OUTPUT_DIR"])
-          rec=json.loads((out/"receipt.json").read_text())
-          score=json.loads((out/"grade.json").read_text())
-          manifest={
-            "schema":"nightfall.external-pilot-result.v0.1",
-            "task":os.environ["TASK"],"source_git_sha":os.environ["TASK_SHA"],
-            "requested_model":"openai/gpt-4.1",
-            "agent_status":rec["status"],
-            "valid_external_model_attempt":rec["status"]=="completed" and rec["model_responses_received"]>0,
-            "preliminary_contract_score":score["points"] if rec["status"]=="completed" else None,
-            "score_if_attempt_not_completed":0,
-            "score_ceiling":score["max_points"],"tests_total":score["tests_total"],
-            "tests_passed":score["tests_passed"],
-            "scorer_sha256":hashlib.sha256(Path("research/nightfall/evaluations/external/contract_scorer.py").read_bytes()).hexdigest(),
-            "runner_sha256":hashlib.sha256(Path("research/nightfall/evaluations/external/model_agent.py").read_bytes()).hexdigest(),
-            "result_classification":"preliminary external-model run; new contract tests; no independent human grader review",
+            --pids-limit 128 --memory 512m \
+            --user "$(id -u):$(id -g)" \
+            -e PYTHONDONTWRITEBYTECODE=1 \
+            -v "$PWD/scoring-copy:/task:ro" \
+            -v "$PWD/grader-source/research/nightfall/evaluations/external:/grader:ro" \
+            -v "$PWD/grade-output/${{ matrix.task }}:/out:rw" \
+            "$(cat python-image-id.txt)" python3 /grader/contract_scorer.py \
+            --task "${{ matrix.task_short }}" --out /out/grade.json
+          python3 - <<'PY'
+          import json,hashlib,pathlib
+          task="${{ matrix.task }}"
+          out=pathlib.Path("grade-output")/task
+          agent=json.loads((pathlib.Path("model-output")/task/"PUBLIC_CALIBRATION_RECEIPT.json").read_text())
+          grade=json.loads((out/"grade.json").read_text())
+          assert grade["tests_passed"]>=0 and grade["tests_passed"]<=grade["tests_total"]
+          valid=agent["finish_reason"]=="model_finished" and agent["tool_calls_executed"]>0 and agent["source_writes_executed"]>0
+          report={
+            "classification":"ACTUAL_LOCAL_MODEL_PRELIMINARY_CONTRACT_SCORE_NOT_VALIDATED",
+            "task":task,"requested_model":"qwen2.5-coder:3b",
+            "model_weights_digest":agent["model_digest"],
+            "source_head":"${{ matrix.source_sha }}",
+            "scorer_sha256":hashlib.sha256(pathlib.Path("grader-source/research/nightfall/evaluations/external/contract_scorer.py").read_bytes()).hexdigest(),
+            "agent_runner_head":"50b18e268b1907051f7a12d3d304dae075019be7",
+            "patch_sha256":agent["patch_sha256"],
+            "finish_reason":agent["finish_reason"],
+            "tool_calls_executed":agent["tool_calls_executed"],
+            "source_writes_executed":agent["source_writes_executed"],
+            "observed_contract_test_passed":grade["tests_passed"],
+            "observed_contract_test_total":grade["tests_total"],
+            "observed_preliminary_score_points":grade["points"],
+            "completed_attempt_score":grade["points"] if valid else None,
+            "valid_scored_attempt":valid,
+            "scorer_independent_human_review":False,
+            "author_private_grader_executed":False,
+            "source_and_hidden_grader_blind_model_prompt":True,
           }
-          (out/"manifest.json").write_text(json.dumps(manifest,sort_keys=True,indent=2)+"\n")
-          print(json.dumps(manifest,sort_keys=True))
+          (out/"PUBLIC_PRELIMINARY_SCORE.json").write_text(json.dumps(report,sort_keys=True,indent=2)+"\n")
+          print("ACTUAL PRELIMINARY RESULT",json.dumps(report,sort_keys=True))
           PY
 
-      - name: Retain original attempts, traces, grader output, and failures
+      - name: Upload receipts and scores only (no raw patch or transcript)
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: external-model-${{ matrix.task }}-${{ github.sha }}
-          path: baseline-evidence/${{ matrix.task }}/
+          name: local-agent-preliminary-score-${{ matrix.task }}
+          path: |
+            grade-output/${{ matrix.task }}/
+            model-output/${{ matrix.task }}/PUBLIC_CALIBRATION_RECEIPT.json
+            model-output/${{ matrix.task }}/PUBLIC_SMOKE_OUTPUT.txt
+            python-image-id.txt
+            ollama-image-id.txt
+            model-tags.json
           if-no-files-found: warn
-          retention-days: 30
+          retention-days: 21
+
+      - name: Stop local model service
+        if: always()
+        run: docker rm -f nf-polaris-ollama >/dev/null 2>&1 || true
