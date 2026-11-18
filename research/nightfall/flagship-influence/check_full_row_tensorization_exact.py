@@ -208,7 +208,7 @@ def main():
         probs=[[1,1] if j==0 else [1,7] if j==1 else [1,3]
                for j in range(len(shape))]
         if shape==(2,3): probs=[[1,11],[1,3,0]]
-        source=[tuple(Q(v,sum(p)) for v in ps) for ps in probs]
+        source=[tuple(Q(v,sum(ps)) for v in ps) for ps in probs]
         for trial in range(12):
             f={x:Q(rng.randrange(-6,7),rng.randrange(1,4))
                for x in product(*(range(k) for k in shape))}
