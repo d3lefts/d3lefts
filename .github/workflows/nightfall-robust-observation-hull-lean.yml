@@ -10,6 +10,9 @@ on:
       - '.github/workflows/nightfall-robust-observation-hull-lean.yml'
       - '.github/actions/setup-nightfall-lean/**'
       - 'scripts/lean_bridge.py'
+      - 'scripts/check_proof_object_passport.cjs'
+      - 'scripts/check_robust_observation_hull_passport.cjs'
+      - 'docs/proof-object-passport.json'
   workflow_dispatch:
 
 permissions:
@@ -43,6 +46,12 @@ jobs:
         run: |
           set -euo pipefail
           python3 -I research/nightfall/price_permission/robust_observation_hull/check_quadratic_gain_locality.py
+      - name: Shared source-bound Proof Passport, historical bridge compatibility and 17 provenance attacks
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/check_robust_observation_hull_passport.cjs
+          node scripts/check_proof_object_passport.cjs
       - name: Exact pinned Lean and Mathlib
         uses: ./.github/actions/setup-nightfall-lean
       - name: Compile original generic rational hull-dual source
