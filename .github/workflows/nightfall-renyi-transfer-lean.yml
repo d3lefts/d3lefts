@@ -10,6 +10,7 @@ on:
       - 'research/nightfall/formalization/product_space/LatentMixtureVariance.lean'
       - 'research/nightfall/formalization/product_space/LatentMixtureAmplification.lean'
       - 'research/nightfall/formalization/product_space/SimulationErrorTail.lean'
+      - 'research/nightfall/formalization/product_space/LatentMixtureInfluence.lean'
       - '.github/workflows/nightfall-renyi-transfer-lean.yml'
   pull_request:
     paths:
@@ -45,6 +46,8 @@ jobs:
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/LatentMixtureAmplification.olean LatentMixtureAmplification.lean)
           cp research/nightfall/formalization/product_space/SimulationErrorTail.lean /tmp/mathlib4/SimulationErrorTail.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/SimulationErrorTail.olean SimulationErrorTail.lean)
+          cp research/nightfall/formalization/product_space/LatentMixtureInfluence.lean /tmp/mathlib4/LatentMixtureInfluence.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/LatentMixtureInfluence.olean LatentMixtureInfluence.lean)
       - name: Strict named declaration axioms and source hash
         shell: bash
         run: |
@@ -57,6 +60,7 @@ jobs:
           import LatentMixtureVariance
           import LatentMixtureAmplification
           import SimulationErrorTail
+          import LatentMixtureInfluence
           #check @Nightfall.RenyiSimulation.event_mass_le_of_pointwise
           #check @Nightfall.RenyiSimulation.error_probability_transfer_inf
           #print axioms Nightfall.RenyiSimulation.event_mass_le_of_pointwise
@@ -76,6 +80,8 @@ jobs:
           #print axioms Nightfall.LatentMixture.latent_witness_amplification
           #check @Nightfall.QuerySimulation.finite_squared_error_tail
           #print axioms Nightfall.QuerySimulation.finite_squared_error_tail
+          #check @Nightfall.LatentMixture.factorized_mixture_conditional_variance
+          #print axioms Nightfall.LatentMixture.factorized_mixture_conditional_variance
           LEAN
           lake env lean RenyiTransferAudit.lean | tee "$GITHUB_WORKSPACE/renyi-axioms.txt"
           ! grep -E 'sorryAx|Lean\.ofReduceBool|native_decide' "$GITHUB_WORKSPACE/renyi-axioms.txt"
@@ -86,3 +92,4 @@ jobs:
           sha256sum "$GITHUB_WORKSPACE/research/nightfall/formalization/product_space/LatentMixtureVariance.lean"
           sha256sum "$GITHUB_WORKSPACE/research/nightfall/formalization/product_space/LatentMixtureAmplification.lean"
           sha256sum "$GITHUB_WORKSPACE/research/nightfall/formalization/product_space/SimulationErrorTail.lean"
+          sha256sum "$GITHUB_WORKSPACE/research/nightfall/formalization/product_space/LatentMixtureInfluence.lean"
