@@ -1,0 +1,59 @@
+name: NIGHTFALL Q3 rainbow conditional Lean kernel (NOT full theorem)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/FairCubicRainbowConditional.lean'
+      - '.github/workflows/nightfall-fair-cubic-rainbow-lean.yml'
+  push:
+    branches: [nightfall-fair-cubic-rainbow-e2-20261117]
+    paths:
+      - 'research/nightfall/formalization/observability/FairCubicRainbowConditional.lean'
+      - '.github/workflows/nightfall-fair-cubic-rainbow-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  scoped-conditional-kernel:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Strict named Lean kernel proof and standard-axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/FairCubicRainbowConditional.lean \
+            --workspace /tmp/mathlib4 --timeout 480 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.CubicQ3.FairRainbow.two_odd_colors_force_degree_two \
+            --decl Nightfall.CubicQ3.FairRainbow.three_odd_colors_force_degree_three \
+            --decl Nightfall.CubicQ3.FairRainbow.fair_cubic_from_sector_bounds \
+            --decl Nightfall.CubicQ3.FairRainbow.cubic_coefficient_lt_220 \
+            --decl Nightfall.CubicQ3.FairRainbow.fair_cubic_220_from_sector_bounds \
+            --decl Nightfall.CubicQ3.FairRainbow.hybrid_from_fair_and_poincare \
+            --json-out lean-receipts/q3-rainbow-conditional.json || {
+              cat lean-receipts/q3-rainbow-conditional.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q3-rainbow-conditional.json
+      - name: Pin original source and compiler revisions
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/observability/FairCubicRainbowConditional.lean > lean-receipts/SHA256SUMS
+          git rev-parse HEAD > lean-receipts/repository-head.txt
+          (git -C /tmp/mathlib4 rev-parse HEAD || true) > lean-receipts/mathlib-head.txt
+          cat lean-toolchain > lean-receipts/lean-toolchain.txt
+      - name: Archive check receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-q3-rainbow-conditional-lean
+          path: lean-receipts/
+          retention-days: 45
+          if-no-files-found: warn
