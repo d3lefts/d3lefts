@@ -35,19 +35,23 @@ jobs:
         run: |
           set -euo pipefail
           SRC=research/nightfall/formalization/dq2/DQ2HeatBathScoreTransfer.lean
+          SECTION=research/nightfall/formalization/dq2/DQ2BinarySection.lean
           test "$(cat lean-toolchain)" = "leanprover/lean4:v4.36.0-rc2"
           python3 - <<'PY_GATE'
           from pathlib import Path
           import re
-          s=Path('research/nightfall/formalization/dq2/DQ2HeatBathScoreTransfer.lean').read_text()
+          s='\n'.join(Path(f).read_text() for f in (
+            'research/nightfall/formalization/dq2/DQ2HeatBathScoreTransfer.lean',
+            'research/nightfall/formalization/dq2/DQ2BinarySection.lean'))
           s=re.sub(r'/-.*?-/', '', s, flags=re.S)
           s=re.sub(r'--[^\\n]*', '', s)
           assert not re.search(r'\\b(sorry|admit|axiom)\\b', s), 'Unapproved placeholder or custom axiom'
           PY_GATE
           mkdir -p artifacts/dq2-lean
-          sha256sum "$SRC" lean-toolchain lakefile.toml lake-manifest.json | tee artifacts/dq2-lean/SHA256SUMS.txt
+          sha256sum "$SRC" "$SECTION" lean-toolchain lakefile.toml lake-manifest.json | tee artifacts/dq2-lean/SHA256SUMS.txt
           lake env lean "$SRC" 2>&1 | tee artifacts/dq2-lean/named-axioms.log
-          for d in score_duality_from_heatbath_contract reference_q2_transfer biased_heatbath_q2_scalar_terminal local_floor_heatbath_q2_scalar_terminal; do
+          lake env lean "$SECTION" 2>&1 | tee -a artifacts/dq2-lean/named-axioms.log
+          for d in score_duality_from_heatbath_contract reference_q2_transfer biased_heatbath_q2_scalar_terminal local_floor_heatbath_q2_scalar_terminal binary_section_score_mean_zero binary_section_variance_eq binary_section_variance_pos binary_section_score_energy binary_section_spin_score; do
             grep -F "'Nightfall.DQ2.${d}' depends on axioms:" artifacts/dq2-lean/named-axioms.log
           done
           ! grep -E 'sorryAx|declaration uses .sorry|error:' artifacts/dq2-lean/named-axioms.log
