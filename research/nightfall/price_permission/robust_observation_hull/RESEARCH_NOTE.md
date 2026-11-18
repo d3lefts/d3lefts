@@ -95,6 +95,21 @@ The interaction energy is exactly the additional **expected actionable informati
 
 If the law at k changes, every candidate j outside the canonical pair-neighbor set \(N(k)\) retains `G_j(S)` **for every existing S disjoint from j,k**. Under the same product-law/pointwise-factor hypotheses, this follows from SCIF source-local recentering: the old singleton/pair weights involving j are unchanged. It is a source-local expected-information update, **not** stability of the globally optimal Bellman policy or of zero-error permission.
 
+**Locality of the entire source-derived Gram proof object.** Fix the old original-product ANOVA components as pointwise tables on the common admissible source alphabet, and let `j,k∉S` be distinct. Write
+\[
+D=f_j(X_j)+\sum_{\ell∈S}f_{j\ell}(X_j,X_\ell),
+\qquad A_a=f_{jk}(a,X_j).
+\]
+Then `d_a=D+A_a`. By product centering, distinct incident pair terms are orthogonal; hence the full robust Gram is
+\[
+\boxed{K_{ab} =
+ w_j+\sum_{\ell∈S}w_{j\ell}
+ +\langle f_j,A_a\rangle_{L²(\mu_j)}
+ +\langle f_j,A_b\rangle_{L²(\mu_j)}
+ +\langle A_a,A_b\rangle_{L²(\mu_j)}.}
+\]
+Once the source-derived singleton/pair tables and energies have been authenticated, **constructing the Gram for candidate j and changed k does not require enumerating the complete product space**. It costs `O(|X_k|² |X_j| + |S∩N(j)|)` exact arithmetic to assemble the table and scalar observed-edge energy, ignoring source authentication and table parsing. A zero canonical pair `f_{jk}=0` makes every `A_a=0`: the entire Gram and gain are invariant to replacement at k. This is a computational localization of expected one-step *information value*, **not** an algorithm for globally optimal dynamic recertification.
+
 The exact original-world checker `check_quadratic_gain_locality.py` recomputes conditional sums directly on a 4-coordinate quadratic model, including previously zero-mass atoms, and tests the source-local edge identity. A pure cubic supplies a sharp counterexample: the j gain changes from 0 to 1 after editing k even though the old j–k pair projection vanishes. Thus the degree hypothesis cannot be discarded.
 
 ## Original-source quantitative witness: influence stays high while evidence fails
