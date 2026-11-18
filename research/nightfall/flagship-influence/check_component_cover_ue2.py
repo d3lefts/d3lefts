@@ -17,8 +17,8 @@ def subsets(items):
 
 def audit(marginals, fn, proposed_covers, label):
     m = len(marginals)
-    assert all(sum(p) == 1 and all(x > 0 for x in p) for p in marginals)
-    states = list(product(*(range(len(p)) for p in marginals)))
+    assert all(sum(p) == 1 and all(x >= 0 for x in p) and any(x > 0 for x in p) for p in marginals)
+    states = list(product(*([i for i,weight in enumerate(p) if weight > 0] for p in marginals)))
     probs = {x: reduce(lambda a, b: a*b, (marginals[i][x[i]] for i in range(m)), F(1)) for x in states}
     assert sum(probs.values()) == 1
     vals = {x:F(fn(x)) for x in states}
@@ -116,14 +116,14 @@ def main():
           [{i:(F(1) if i==0 else F(0)) for i in range(6)}],
           'dense anchored triples')
 
-    marginal=[[F(1,2),F(1,3),F(1,6)],
+    marginal=[[F(1,2),F(1,3),F(1,6),F(0)],
               [F(2,3),F(1,3)],
               [F(1,4),F(3,4)],
               [F(2,5),F(3,5)],
               [F(1,3),F(1,3),F(1,3)]]
     def hetero(x):
         h=lambda i,j: F(int(x[i]==j))-marginal[i][j]
-        return h(0,0)*h(1,1)*h(2,1)+h(0,0)*h(2,1)+2*h(3,1)*h(4,2)
+        return h(0,0)*h(1,1)*h(2,1)+h(0,0)*h(2,1)+2*h(3,1)*h(4,2)+1000000*int(x[0]==3)
     audit(marginal,hetero,[{0:F(1),1:F(0),2:F(0)},{3:F(1),4:F(0)}],
           'heterogeneous categorical independent components')
     print('ALL PASS: source-law ANOVA, true resampling influences, fractional-cover certificate, exact component range.')
