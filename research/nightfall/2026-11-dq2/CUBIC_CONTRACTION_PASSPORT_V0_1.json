@@ -1,7 +1,7 @@
 {
   "schema": "nightfall-proof-passport-v1",
   "id": "NF-CUBIC-CONTRACTION-20261117",
-  "version": "0.2",
+  "version": "0.3",
   "date": "2026-11-17",
   "status": "DRAFT_AUTHOR_ANALYTIC_WITH_SCOPED_SCALAR_AND_BINARY_FIBER_LEAN",
   "novelty": "no novelty claimed; prior art strongly overlaps",
@@ -48,6 +48,12 @@
       "statement": "On fixed-r connected Ising chains, complete Wick gradient-centering does not yield a uniform native-to-fair root influence comparison: ratio=(1-r²)^2/(1+k*r²) -> 0.",
       "evidence": "exact analytical endpoint conditional variance + independent bond moments, Fraction checker over k=2..6",
       "lean_status": "not formalized"
+    },
+    {
+      "id": "CUBIC-H8",
+      "statement": "Abstract all-degree functional operator inequality: second=mean^2+variance, variance<=A sum_i second(D_i g), DegreeZero(k,g) implies variance(g)<=Cost(k,g) via recursive derivative expectation energy; no supplied energy recurrence",
+      "evidence": "CubicContractionOperator.lean",
+      "lean_status": "Lean source on branch; current exact-head pinned compilation required. Does not instantiate native original-law probabilities or show physical degree termination"
     }
   ],
   "dependencies": [
@@ -67,7 +73,8 @@
     "research/nightfall/formalization/observability/CubicContractionHierarchyScalar.lean",
     "scripts/check_cubic_contraction_hierarchy_exact.py",
     ".github/workflows/nightfall-cubic-contraction.yml",
-    "research/nightfall/formalization/observability/CubicContractionBinarySource.lean"
+    "research/nightfall/formalization/observability/CubicContractionBinarySource.lean",
+    "research/nightfall/formalization/observability/CubicContractionOperator.lean"
   ],
   "no_claims": [
     "Not unrestricted cubic exponent-two",
@@ -91,7 +98,7 @@
       "Quot.sound"
     ],
     "scope": "Lean proofs are scalar telescoping and exact two-atom/source-fiber algebra only; no universal probabilistic recurrence or cubic Q3 theorem",
-    "current_head_replay": "required after v0.2 edits"
+    "current_head_replay": "required after v0.3 edits; earlier binary+scalar PASS at 8c12f152, run 44209594975"
   },
-  "next_decisive_test": "Lean formalize finite original-law pair-partition conditional expectation and derive k-level Poincare recurrence without an explicit hypothesis; then independently test contracted native influence vs boundedness for top-cover cubic; do not assume fair-product gradient coercivity"
+  "next_decisive_test": "Check exact-head abstract operator Lean with zero sorryAx, then formalize original law + derivative commutation/degree termination + Poincare source connection; separately audit cubic influence no-go"
 }
