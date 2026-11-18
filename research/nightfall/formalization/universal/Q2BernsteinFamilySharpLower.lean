@@ -171,7 +171,7 @@ theorem extremal_mean_square : extremalMean ^ 2 = (1/2:ℝ) := by
   unfold extremalMean
   rw [Real.sq_sqrt (by norm_num)]
 
-def extremalBias : ℝ := (1+extremalMean)/2
+noncomputable def extremalBias : ℝ := (1+extremalMean)/2
 
 theorem extremal_bias_mean : 2*extremalBias-1 = extremalMean := by
   unfold extremalBias
@@ -185,11 +185,11 @@ theorem extremal_bias_variance :
 /-- These are the exact, unnormalised variance and conditional
 resampling influence derived from the first four source moments.
 The source function is f(s) = 2s² - n², and B ≤ n². -/
-def varianceFormula (n : ℕ) : ℝ :=
+noncomputable def varianceFormula (n : ℕ) : ℝ :=
   4*(sourceMoment extremalBias n 4 -
        (sourceMoment extremalBias n 2)^2)
 
-def influenceFormula (n : ℕ) : ℝ :=
+noncomputable def influenceFormula (n : ℕ) : ℝ :=
   64*extremalBias*(1-extremalBias)*
     sourceMoment extremalBias (n-1) 2
 
@@ -201,19 +201,32 @@ theorem variance_formula_closed (n : ℕ) :
   unfold varianceFormula
   rw [h2, h4, extremal_bias_mean]
   have hm := extremal_mean_square
-  nlinarith [hm]
+  have hm4 : extremalMean ^ 4 = (1/4:ℝ) := by
+    calc
+      extremalMean ^ 4 = (extremalMean ^ 2)^2 := by ring
+      _ = (1/2:ℝ)^2 := by rw [hm]
+      _ = 1/4 := by norm_num
+  rw [hm4, hm]
+  ring
 
 theorem influence_formula_closed (n : ℕ) (hn : 1 ≤ n) :
     influenceFormula n = 4*(n:ℝ)*((n:ℝ)-1) := by
   obtain ⟨h0,h1,h2,h3,h4⟩ :=
     original_source_moments extremalBias (n-1)
   unfold influenceFormula
-  rw [h2, extremal_bias_mean, extremal_bias_variance]
-  have hm := extremal_mean_square
+  rw [h2, extremal_bias_mean]
+  have hscale : 64*extremalBias*(1-extremalBias) = (8:ℝ) := by
+    nlinarith [extremal_bias_variance]
   have hcast : (((n-1:ℕ):ℝ)) = (n:ℝ)-1 := by
-    exact Nat.cast_sub hn  -- coerces the natural subtraction
-  rw [hcast]
-  nlinarith [hm]
+    exact Nat.cast_sub hn
+  calc
+    64*extremalBias*(1-extremalBias) *
+        ((n-1:ℕ) + ((n-1:ℕ):ℝ)*(((n-1:ℕ):ℝ)-1)*extremalMean^2) =
+      (64*extremalBias*(1-extremalBias)) *
+        ((n-1:ℕ) + ((n-1:ℕ):ℝ)*(((n-1:ℕ):ℝ)-1)*extremalMean^2) := by ring
+    _ = 8 * (((n-1:ℕ):ℝ) +
+        ((n-1:ℕ):ℝ)*(((n-1:ℕ):ℝ)-1)*extremalMean^2) := by rw [hscale]
+    _ = 4*(n:ℝ)*((n:ℝ)-1) := by rw [hcast, extremal_mean_square]; ring
 
 /-- The necessary coefficient ratio of this exact moment family
 converges algebraically to 4. No limit theorem is assumed. -/
@@ -238,7 +251,6 @@ theorem arbitrarily_close_to_four (C : ℝ) (hC : C < 4) :
   have hmult := mul_lt_mul_of_pos_left hratio hdelta
   have hcancel : (4-C)*(8/(4-C)) = (8:ℝ) := by
     field_simp
-    ring
   have hstrong : (8:ℝ) < (4-C)*(n:ℝ) := by nlinarith
   have hpos : (0:ℝ) < ((4-C)*(n:ℝ)-8)*(n:ℝ)^2 :=
     mul_pos (by linarith) (sq_pos_of_pos (by linarith))
@@ -259,8 +271,11 @@ theorem coefficient_at_least_four (C : ℝ)
   rw [variance_formula_closed,
     influence_formula_closed n (by omega)] at hineq
   have hn2 : (2:ℝ) ≤ (n:ℝ) := by exact_mod_cast hn
+  have hnp : (0:ℝ) < (n:ℝ) := by linarith
+  have hn1 : (0:ℝ) < (n:ℝ)-1 := by linarith
   have hpos : (0:ℝ) <
-      4*(n:ℝ)^2*((n:ℝ)-1) := by positivity
+      4*(n:ℝ)^2*((n:ℝ)-1) :=
+    mul_pos (mul_pos (by positivity) (sq_pos_of_pos hnp)) hn1
   have hfail : 0 <
       (4*(n:ℝ)^2*((n:ℝ)-1)) *
         (((n:ℝ)-1)*(2*(n:ℝ)-1)^2-C*(n:ℝ)^3) :=
