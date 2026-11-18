@@ -10,6 +10,8 @@ import InfinitePiQ2RangeProjectionTransfer
 import InfinitePiQ2UnconditionalTerminal
 import InfinitePiAAProductTerminal
 import CubePrintedAA
+import InfinitePiAllDegreeLabelTransfer
+import InfinitePiAllDegreeFiniteResidualBridge
 import Q2ShiftedConditionalTargets
 
 /-!
@@ -89,3 +91,16 @@ hypothesis is discharged by printing an axiom list.
 #print axioms Nightfall.ProductSpace.CubeAA.mainTheorem_of_productSpace
 #print axioms Nightfall.ProductSpace.CubeAA.printedConjecture
 #print axioms Nightfall.ProductSpace.CubeAA.explicitBound
+
+-- Source-exact #847 all-degree transfer intermediates. These are scoped statements,
+-- not the unresolved universal supported-cell/ANOVA semantic identification.
+#check Nightfall.InfinitePiAllDegreeLabelTransfer.original_source_label_all_degree
+#check Nightfall.InfinitePiAllDegreeLabelTransfer.original_cell_average_all_degree_zero
+#check Nightfall.InfinitePiAllDegreeFiniteIndicators.esDegreeLE_implies_indicatorDegreeLE
+#check Nightfall.InfinitePiAllDegreeFiniteResidualBridge.nativeResidualWords_imply_ESDegreeLE
+#check Nightfall.InfinitePiAllDegreeFiniteResidualBridge.nativeResidualWords_imply_indicatorDegreeLE
+#print axioms Nightfall.InfinitePiAllDegreeLabelTransfer.original_source_label_all_degree
+#print axioms Nightfall.InfinitePiAllDegreeLabelTransfer.original_cell_average_all_degree_zero
+#print axioms Nightfall.InfinitePiAllDegreeFiniteIndicators.esDegreeLE_implies_indicatorDegreeLE
+#print axioms Nightfall.InfinitePiAllDegreeFiniteResidualBridge.nativeResidualWords_imply_ESDegreeLE
+#print axioms Nightfall.InfinitePiAllDegreeFiniteResidualBridge.nativeResidualWords_imply_indicatorDegreeLE
