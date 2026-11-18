@@ -1,0 +1,24 @@
+# AuthorityEpoch-C3 — repair a source-bound local promotion authority
+
+## Context
+A build-deployment coordinator uses one trusted local Unix-domain socket to authorize a consequential **synthetic local JSON effect** (not AWS or a physical actuator). Its trusted state is a crash-consistent JSON file; clients can be trusted issuers or untrusted local users. Historical NIGHTFALL service audits exposed two classes of bug: an unauthenticated idle client can hold a serial accept loop indefinitely, and a source change can render trusted evidence stale even if new authorization tickets are fresh. This repository is a new, deliberately defective task fixture, not a copy of the historical production code.
+
+## Assignment
+Repair `authorityepoch/` without changing the public API or disabling checks. Implement the complete contract while preserving valid approvals:
+
+1. **Authentication:** Linux `SO_PEERCRED` UID and HMAC-SHA256 over canonical JSON must both authenticate a request. Invalid and unknown requests must be denied without persistent mutation. The secret comes from a separate restricted local file; never log it.
+2. **Source lifecycle:** Bootstrap pins the current `(source, version)` to a verified local baseline. `advance_source` accepts a valid SHA-256 fingerprint and strictly increasing integer version, rotates the epoch, and invalidates the **baseline-to-source binding** even if the hash is reused. No new promotion can succeed after *any* advance until an explicit authenticated `rebaseline` attests a valid baseline for the current pair and rotates the epoch. A freshly signed ticket must not bypass recertification. `status.baseline_certified` reports actual binding.
+3. **Effect-time enforcement:** A promotion needs a complete ticket pinning `source, version, epoch, baseline_digest, effect_digest, nonce`. A nonce must have at least 12 characters; the effect must keep `resources.audit is True` and `resources.retention is True`. Promotion is prohibited after revocation. A successful effect and consumed nonce persist together before acknowledgement. Concurrent processes cannot spend one nonce twice; rejection must leave state unchanged.
+4. **Replay boundedness:** After eight accepted promotions in one epoch, the service may compact nonce history only by advancing the epoch and thereby invalidating *all* old tickets. Forgetting used nonces without an epoch change is forbidden.
+5. **Liveness:** A connected idle client or one dripping bytes every 100ms cannot occupy the serial parser beyond an **absolute 0.75s accepted-connection request lifetime**, with a 0.75s CI scheduling tolerance. Use a monotonic clock; reads consume the remaining total budget rather than resetting an idle timeout. After expiring the hostile connection, an authenticated status request must complete within 2.25s on a lightly loaded Linux runner. Handle bad/oversize JSON and connection errors without taking down the daemon. This does not guarantee service against unbounded floods, CPU starvation or host compromise.
+6. **Persistence:** Serialise state transitions under a file lock, use atomic replace, fsync the file and parent directory, and preserve all admission/rejection invariants across process restarts.
+
+Use only Python standard library; target Python 3.10 and 3.13 on Linux. The protected effect is **one local JSON document**, not cloud or physical deployment. Do not remove auditing, return fabricated responses, or sleep to game tests. No external service or credentials required.
+
+## Evidence and scoring contract
+- Public smoke: from this benchmark root, `PYTHONPATH=candidate python -m unittest discover -s candidate/tests -v`. Three deliberately shallow positives, not a sufficient evaluator.
+- A separately implemented public contract probe in `audit/` tests source recertification, replay rollover, idle/slow-drip liveness, and positive controls. It is **not** the sealed grader.
+- Proposed **100-point rubric, not independently validated:** source/baseline binding 25, authenticated persistent effects 25, bounded peer lifetime 20, replay/epoch correctness 15, restart/concurrent acceptance 15. A full score must not be claimed until alternate correct repairs, grader false-pass tests and isolated blind model attempts exist.
+
+## Historical transfer and leakage warning
+Based on the mechanisms in NIGHTFALL [#530](https://github.com/d3lefts/d3lefts/pull/530), [#531](https://github.com/d3lefts/d3lefts/pull/531) and [#579](https://github.com/d3lefts/d3lefts/pull/579). Those fixes are publicly visible and may contaminate model attempts. A future blind variant should transform architecture, token schema, trust roots and test families, with an explicit contamination audit. This is an **author-calibration prototype**, not a certified long-horizon frontier benchmark. The locally repaired version and any grader must remain out of the public candidate branch pending review.
