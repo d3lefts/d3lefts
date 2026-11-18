@@ -37,3 +37,18 @@ python research/nightfall/evaluations/dispatchq-b1/audit/concurrency/blackbox_pr
 Path-scoped GitHub Actions runs on Python 3.10 and 3.13, retains the source SHA-256 and each individual round result in an uploaded JSON receipt. Because scheduling may vary, the published measurements must be reported as observed *counts and trial denominators*, never a general probability or an agent score.
 
 **Authorship:** NIGHTFALL AI-assisted engineering, internally derived separately from task author; no human-independent code audit or tool-agent experiment is claimed. Private grader and reference are neither accessed nor published.
+
+## Exact-source CI result — 18 November 2026
+
+[GitHub Actions run 44384068910](https://github.com/d3lefts/d3lefts/actions/runs/44384068910) completed the public black-box probe on Python **3.10 and 3.13**, using the same pinned defective source SHA-256 `05edf787fbd1cb3841ed4aa813361ee1024b354f6fcd7505a56eddf98cbfd406`. Both platforms passed the six synthetic semantic controls and reported:
+
+| Observation | Python 3.10 | Python 3.13 |
+|---|---:|---:|
+| API-only OS-process rounds completed | 8/8 | 8/8 |
+| Rounds with duplicate claims | **8/8** | **8/8** |
+| Operational errors/timeouts | 0 | 0 |
+| Workers per round | 6 | 6 |
+
+The process probe uses only `WorkQueue.submit`, `WorkQueue.claim`, `WorkQueue.status`, and an ordinary *pre-call* barrier. It does not patch `sqlite3.Connection` or intercept an internal SELECT. Each CI matrix job uploaded all eight trial records. On this specific environment and concurrency configuration, duplicate leases were reproducibly observed; **8/8 is a finite observed count, not a general race probability**.
+
+This strengthens the seed counterexample without certifying any correct repair or grading a real tool-agent attempt. For independent review, replay the same command on a differently provisioned worker and audit a separately implemented fixed queue in strict mode inside a no-credential environment. Even a strict all-pass finite replay cannot prove all possible concurrent schedules.
