@@ -329,7 +329,12 @@
         "Lean proves generic exact rational hull supporting and matching implications; no JSON-to-Lean evaluated instance or Q2 locality theorem has been kernel-certified by this receipt.",
         "The source pair tables on previously zero-mass atoms must be supplied and validated to prevent unseen-support changes.",
         "This is a classical convex projection/ANOVA proof-object synthesis without verified novelty or independent human peer review."
-      ]
+      ],
+      "derived_instance": {
+        "embedded_key": "certificate.response_gram",
+        "reconstruction": "original_model_centered_conditional_response_inner_products",
+        "sha256": "3dbe8d2245b5ab4f19377262b2880963c2bf3da112f4dc72b7aa054d33ac3386"
+      }
     }
   ]
 }
