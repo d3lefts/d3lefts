@@ -1,6 +1,16 @@
 # All-degree finite-label transfer toward NF-PS-FINITE
 
-Date: 2026-11-18 (America/New_York) · Version 0.1 · Status: **new proof source, CI not yet adjudicated**. No theorem, novelty, or publication-level claim is promoted without current-head compilation and independent review.
+Date: 2026-11-18 (America/New_York) · Version 0.2 · Status: **three scoped author-side Lean kernel-checked modules; full product-space AA still OPEN**. Exact-head checks, no external mathematical review. Each statement below is conditional on its printed hypotheses.
+
+## New exact-head evidence and upgrade boundary
+
+Three modules compile under pinned Lean 4.36.0-rc2 / Mathlib 9d581dfff with **named strict standard-axiom audit**. They are scoped constructions, not the full conjecture:
+- `InfinitePiAllDegreeLabelTransfer.lean`: both `D_sites(U†f)=U†D_sites(f)` and `D_sites(UU†f)=UU†D_sites(f)` on the actual source/label Hilbert spaces, all finite ordered words. [PASS run 44391363516](https://github.com/d3lefts/d3lefts/actions/runs/44391363516), exact head `8ff45242783734dd793ee3ddf162d9bc72ee20ec`.
+- `InfinitePiAllDegreeFiniteIndicators.lean`: all-degree canonical finite ANOVA `ESDegreeLE p f d` yields an exact supported-size≤d indicator monomial expansion, no minimum atom mass. [PASS run 44391363597](https://github.com/d3lefts/d3lefts/actions/runs/44391363597), same exact head.
+- `InfinitePiAllDegreeFiniteResidualBridge.lean`: if each `S` with `|S|>d` has a **pointwise-zero original-law residual word** along `S.toList`, then `ESDegreeLE p f d` and hence indicator degree≤d. [PASS run 44392343129](https://github.com/d3lefts/d3lefts/actions/runs/44392343129), exact head `35adf8066cae2afc4680480a205a69ad2e8f5d1e`.
+- Independent stdlib exact-rational audit `check_all_degree_bridge_exact.py`: separate control for Möbius vs. Hilbert ANOVA, zero atoms, and wrong uniform-law mutation. Latest workflow includes this executable as a required step; receipt not yet promoted.
+
+These checks do NOT yet derive pointwise full-table residual zero from **source L² degree** when the label law has null atoms. A table may vanish in L² but be arbitrarily nonzero on null words. The correct next step is positive-support extraction and degree-preserving zero-cell repair (with a source-consistent tagged alphabet), followed by actual `RowBound.HasProdDegreeLE` import/replay.
 
 ## Objective, source and significance threshold
 
@@ -22,10 +32,10 @@ Strongest directly checked external references this session:
 - Mechanism: degree-free induction on the residual word from already proved **per-coordinate self-adjoint intertwining**, no combinatorial `2^(d+1)` expansion and no degradation in constants. It makes the transfer independent of `d`. Repeated sites are permitted; the degree hypothesis applies to *pairwise distinct* sites of length `d+1`.
 - Current **verification status**: author-side Lean source on a separate branch, awaiting exact-source pinned Lean compile, named standard-axiom audit, source SHA and CI receipt. Until those pass, classify as **provisional construction**.
 
-## Remaining composition gates against NF-PS-FINITE
+## Remaining composition gates against NF-PS-FINITE (post v0.2)
 
-1. **Finite label degree → indicator monomial degree**. `ProductInfluence.product_influence` requires `RowBound.HasProdDegreeLE f d`, an exact finite *pointwise* indicator expansion. Establish the implication from zero `d+1` iterated genuine label residuals to supported canonical Efron–Stein degree, then to an indicator expansion after zero-atom repair; do **not** assume it. This is the principal new finite theorem. The existing `ActualSourceANOVA.es_decomp` and `esComp_dependsOn` are the strongest reuse candidates.
-2. **Null atoms and tagged dependent alphabets**. The finite AA theorem has a common finite alphabet and an all-words bound, while the table comes from heterogeneous alphabets with possibly null cells. Implement a supported-word repair by coordinatewise projection to positive-mass letters and show the degree predicate is preserved for *every* `d`; then apply existing tagged-alphabet transport. Preserve true original masses.
+1. **Source-label L² zero → whole finite table residual zero**. The abstract degree-preserving and finite algebraic steps now compile, but the bridge across zero-probability configurations is still open. Extract positive-support pointwise residuals from true finite-cell L² equality, then repair null cells by a **coordinatewise positive-mass retraction**, preserving degree d. Do not infer pointwise zero from L² zero directly. The finite indicator expansion itself is DONE as a scoped theorem.
+2. **Tagged heterogeneous alphabets and imported NF-PS degree**. The finite AA theorem has a common alphabet and the predicate `RowBound.HasProdDegreeLE`. Prove the new `HasIndicatorDegreeLE` matches that imported predicate at the active Lean pin; compose the positive-support repair and already-present tagged-alphabet transport for every d. Preserve true original masses.
 3. **Current Lean pin for ProductInfluence**. Recompile exact finite theorem on the pinned Lean 4.36.0-rc2 / Mathlib lock, with no unstated assumptions, and compare the declaration's actual `HasProdDegreeLE` shape.
 4. **End-to-end finite-cell limit**. Reuse the already certified Q2 finite-label variance/influence contraction and density, while proving that the `d`-degree hypothesis survives each approximation. Handle variance zero, `d=0`, empty coordinate sets and arbitrary essential (rather than global) bounds separately.
 5. **Independent audit and prior art**. An adversarial checker must try zero-mass categorical counterexamples, nonrectangular encodings, uncountable index cases, scaling conventions, the source-vs-tagged-law influence and a misleading classical-simulation claim. Settle the purported Zenodo source before any novelty statement.
@@ -40,8 +50,8 @@ First run the strict Lean file using the existing original-label residual depend
 |---|---|---|
 | Finite AA bound `product_influence` | Historical Lean certificate only | Current 4.36 recompile required |
 | Original-law all-L² source/label intertwining | Previously pinned Lean-checked in merged Q2 integration | Exact imported source |
-| Arbitrary-word residual/adjoint transfer | Provisional new Lean construction | Strict PR CI in progress |
-| Native categorical `d` indicator bridge | Open | No source-exact proof yet |
+| Arbitrary-word residual/adjoint transfer | Kernel-checked-scoped | Run 44391363516, strict standard-axiom audit |
+| Finite ANOVA→indicator `d` bridge | Kernel-checked-scoped | Run 44391363597, strict standard-axiom audit |\n| Finite full-word residual→ANOVA→indicator | Kernel-checked-scoped; pointwise residual hypothesis | Run 44392343129, strict standard-axiom audit |\n| Supported L²→pointwise repair, tagged conversion | Open | Must not equate L² with all-words equality |
 | Infinite-product AA terminal | Open | Do not claim full theorem |
 | Quantum query corollary | Open | Needs encoding / acceptance / distributional proof |
 | Priority and independent review | Open | Accessible dated source comparison required |
