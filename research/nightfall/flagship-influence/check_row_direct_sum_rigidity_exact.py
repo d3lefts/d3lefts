@@ -163,7 +163,7 @@ def direct_sum_regression():
         assert all(abs(global_f[x]-global_f[y])<=K for x in global_f for y in global_f)
         runs+=1
     print("PASS independent disjoint source tensorization in",runs,
-          "8-coordinate heterogeneous 2+1+1+2 blocks: V, every I, R and K budget")
+          "6-coordinate heterogeneous 2+1+1+2 blocks: V, every I, R and K budget")
 
 
 def main():
