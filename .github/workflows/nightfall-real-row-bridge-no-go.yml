@@ -7,6 +7,7 @@ on:
     paths:
       - 'research/nightfall/flagship-influence/check_real_row_R_no_go_exact.py'
       - 'research/nightfall/flagship-influence/check_real_row_K_exact_lp.py'
+      - 'research/nightfall/flagship-influence/check_real_row_K_adversarial_exact.py'
       - 'research/nightfall/flagship-influence/REAL_ROW_R_BRIDGE_NO_GO_20261118.md'
       - '.github/workflows/nightfall-real-row-bridge-no-go.yml'
   workflow_dispatch:
@@ -31,6 +32,7 @@ jobs:
           git rev-parse HEAD > proof-receipts/real-row-R-no-go/HEAD.txt
           sha256sum research/nightfall/flagship-influence/check_real_row_R_no_go_exact.py \
             research/nightfall/flagship-influence/check_real_row_K_exact_lp.py \
+            research/nightfall/flagship-influence/check_real_row_K_adversarial_exact.py \
             research/nightfall/flagship-influence/REAL_ROW_R_BRIDGE_NO_GO_20261118.md \
             > proof-receipts/real-row-R-no-go/SHA256SUMS
       - name: Original-law exact rational AND + fair Rubinstein source audit
@@ -44,6 +46,11 @@ jobs:
         run: |
           set -euo pipefail
           python3 -I research/nightfall/flagship-influence/check_real_row_K_exact_lp.py             | tee proof-receipts/real-row-R-no-go/categorical-lp.txt
+      - name: Active exact adversarial full-K and degree-weighted R search
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I research/nightfall/flagship-influence/check_real_row_K_adversarial_exact.py             | tee proof-receipts/real-row-R-no-go/adversarial-search.txt
       - name: Archive exact-head falsification evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
