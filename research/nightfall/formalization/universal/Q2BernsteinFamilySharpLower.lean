@@ -395,6 +395,63 @@ theorem second_mixed_difference_sixteen (n : ℕ) (s : ℝ) :
   unfold rawQuadratic
   ring
 
+
+/-! ## Product-law validity and centered range on the actual Boolean cube -/
+
+/-- The extremal bias is an interior probability: every original
+Bernoulli source atom therefore has strictly positive weight. -/
+theorem extremal_bias_interior :
+    0 < extremalBias ∧ extremalBias < 1 := by
+  have h0 : 0 ≤ extremalMean := Real.sqrt_nonneg _
+  have hq : extremalMean ^ 2 = (1/2:ℝ) := extremal_mean_square
+  have hlt : extremalMean < 1 := by nlinarith
+  constructor
+  · change (0:ℝ) < (1+extremalMean)/2
+    linarith
+  · change (1+extremalMean)/2 < (1:ℝ)
+    linarith
+
+def signedSum {n : ℕ} (x : Fin n → Bool) : ℝ :=
+  ∑ i : Fin n, if x i then (1:ℝ) else -1
+
+theorem signed_sum_bounds {n : ℕ} (x : Fin n → Bool) :
+    -(n:ℝ) ≤ signedSum x ∧ signedSum x ≤ (n:ℝ) := by
+  have hmin :
+      (∑ i : Fin n, (-1:ℝ)) ≤
+      (∑ i : Fin n, if x i then (1:ℝ) else -1) := by
+    apply Finset.sum_le_sum
+    intro i hi
+    by_cases hb : x i <;> simp [hb]
+  have hmax :
+      (∑ i : Fin n, if x i then (1:ℝ) else -1) ≤
+      (∑ i : Fin n, (1:ℝ)) := by
+    apply Finset.sum_le_sum
+    intro i hi
+    by_cases hb : x i <;> simp [hb]
+  constructor
+  · simpa [signedSum] using hmin
+  · simpa [signedSum] using hmax
+
+/-- The bounded degree-two witness has pointwise centered radius ≤ n²,
+uniformly in product dimension and coordinate law. -/
+theorem quadratic_cube_range {n : ℕ} (x : Fin n → Bool) :
+    -((n:ℝ)^2) ≤ rawQuadratic n (signedSum x) ∧
+      rawQuadratic n (signedSum x) ≤ (n:ℝ)^2 := by
+  obtain ⟨hlo,hhi⟩ := signed_sum_bounds x
+  have hleft : 0 ≤ (n:ℝ)-signedSum x := by linarith
+  have hright : 0 ≤ (n:ℝ)+signedSum x := by linarith
+  have hsq : (signedSum x)^2 ≤ (n:ℝ)^2 := by
+    nlinarith [mul_nonneg hleft hright]
+  constructor
+  · unfold rawQuadratic
+    nlinarith [sq_nonneg (signedSum x)]
+  · unfold rawQuadratic
+    nlinarith [hsq]
+
+#print axioms Nightfall.Q2BernsteinLower.extremal_bias_interior
+#print axioms Nightfall.Q2BernsteinLower.signed_sum_bounds
+#print axioms Nightfall.Q2BernsteinLower.quadratic_cube_range
+
 #print axioms Nightfall.Q2BernsteinLower.physical_variance_matches
 #print axioms Nightfall.Q2BernsteinLower.physical_influence_matches
 #print axioms Nightfall.Q2BernsteinLower.physical_coefficient_at_least_four
