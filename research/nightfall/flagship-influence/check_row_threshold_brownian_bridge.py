@@ -153,7 +153,7 @@ if __name__=='__main__':
     def f4(x):
         a,b,c,d=x
         return Q(-a+b-c-d,2)+Q((a+b)*(c-d),4)
-    matrices(fair,f4,'fourbit PSI')
+    matrices(fair,lambda x:f4(tuple(2*z-1 for z in x)),'fourbit PSI')
     mixed=[
       (Q(0),Q(1,3),Q(2,3)),
       (Q(2,5),Q(3,5)),
