@@ -1,0 +1,23 @@
+name: Q3 source-consistent replica reconstruction rational audit
+
+on:
+  push:
+    paths:
+      - 'research/nightfall/cubic-q3/check_replica_reconstruction.py'
+      - '.github/workflows/nightfall-q3-reconstruction-audit.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/cubic-q3/check_replica_reconstruction.py'
+      - '.github/workflows/nightfall-q3-reconstruction-audit.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  source-exact-reconstruction:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout audited source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Exact Python rational replay (no external dependencies)
+        run: python3 research/nightfall/cubic-q3/check_replica_reconstruction.py
