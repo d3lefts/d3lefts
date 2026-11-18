@@ -37,6 +37,7 @@ jobs:
           python3 scripts/lean_bridge.py "$SRC" \
             --workspace /tmp/mathlib4 --timeout 900 --strict \
             --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Q2SharpFiveBitLower.sourceWorld_bijective \
             --decl Nightfall.Q2SharpFiveBitLower.witness_range \
             --decl Nightfall.Q2SharpFiveBitLower.witness_attains_bounds \
             --decl Nightfall.Q2SharpFiveBitLower.witness_mean_zero \
