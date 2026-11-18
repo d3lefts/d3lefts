@@ -33,7 +33,7 @@ def witness (x : Fin 5 → Bool) : ℤ :=
 Every five-bit pattern occurs exactly once (binary expansion of 0..31).
 No abstract Fintype.choice implementation is used by the kernel reduction. -/
 def sourceWorld (w : Fin 32) : Fin 5 → Bool :=
-  fun i => Nat.testBit w.val i.val
+  fun i => decide ((w.val / (2 ^ i.val)) % 2 = 1)
 
 def fairMean : ℚ :=
   (∑ w : Fin 32, (witness (sourceWorld w) : ℚ)) / 32
