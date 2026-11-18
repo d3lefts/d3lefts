@@ -270,7 +270,23 @@ def main():
     if args.require_all_pass:
         return 1 if failures else 0
     if args.require_seed_violations is not None:
-        return 0 if len(failures) == args.require_seed_violations else 1
+        # Pin identities as well as the failure count: a changed failure mix
+        # must not be misreported as the old source-exact calibration.
+        expected = {
+            "test_02_changed_bytes_same_mtime",
+            "test_03_touch_same_bytes",
+            "test_04_dependency_reordering",
+            "test_06_unreachable_cycle",
+            "test_08_external_symlink",
+            "test_09_parent_traversal",
+            "test_10_corrupt_object_regeneration",
+            "test_11_corrupt_object_read",
+            "test_13_invalid_source_preserves_index",
+            "test_16_boolean_manifest_version",
+            "test_17_boolean_index_version",
+        }
+        actual = {failure["test"] for failure in failures}
+        return 0 if result.testsRun == 22 and len(failures) == args.require_seed_violations == 11 and actual == expected else 1
     return 0
 
 if __name__ == "__main__":
