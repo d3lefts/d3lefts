@@ -1,0 +1,18 @@
+{
+  "schema": "nightfall.receipts.v1",
+  "receipts": [
+    {
+      "body": {
+        "claim_id": "ALPHA",
+        "source_path": "sources/Alpha.lean",
+        "blob_sha1": "a389e02a2b0bf67cd8336a7dad17f3a436b686e2",
+        "ci_head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "ci_run": 314159,
+        "theorem": "CustodyExample.example",
+        "status": "checked",
+        "priority": "unverified"
+      },
+      "hmac": "4f1cba71453fe3d0abe678af09b01674d3c40bab4b78d0f038191fb30c6dbd59"
+    }
+  ]
+}
