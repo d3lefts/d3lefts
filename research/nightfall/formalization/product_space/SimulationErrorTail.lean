@@ -42,6 +42,6 @@ theorem finite_squared_error_tail
   have hh : ε ^ 2 * (∑ x ∈ E, mu x) ≤ ε ^ 2 * δ :=
     (hsum.trans hsubset).trans hmoment
   have he2 : 0 < ε ^ 2 := pow_pos hε 2
-  have hres := (mul_le_mul_left he2).mp hh
+  have hres := (mul_le_mul_iff_of_pos_left he2).mp hh
   exact hres
 end Nightfall.QuerySimulation
