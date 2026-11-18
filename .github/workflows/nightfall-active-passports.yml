@@ -8,6 +8,8 @@ on:
       - 'scripts/check_proof_object_passport.cjs'
       - 'scripts/check_price_permission_optimality_passport.cjs'
       - 'scripts/check_bellman_policy_passport.cjs'
+      - 'scripts/check_robust_observation_hull_passport.cjs'
+      - 'research/nightfall/price_permission/robust_observation_hull/**'
       - 'research/nightfall/price_permission/bellman_*'
       - 'research/nightfall/price_permission/check_bellman_*'
       - 'research/nightfall/price_permission/generate_bellman_*'
