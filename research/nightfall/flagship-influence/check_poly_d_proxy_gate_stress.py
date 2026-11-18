@@ -283,3 +283,31 @@ def check_linear_structural_pivot():
 
 if __name__=='__main__':
     check_linear_structural_pivot()
+
+
+# v0.5: exact NECESSARY COEFFICIENT 2/3 from a three-sign address selector.
+# This prevents erroneously promoting the disjoint-monomial C=1/2 to all functions.
+def check_linear_two_thirds_lower_bound():
+    # a=x0 (address), b=x1 and c=x2 (leaves).
+    # f=(b+c)/2 + a*(c-b)/2.  This is exactly b or c according to address.
+    co=[F(0)]*8
+    for s,v in {2:F(1,2),4:F(1,2),3:F(-1,2),5:F(1,2)}.items():
+        co[s]=v
+    d=2
+    t=F(1,2)
+    U=F(0);J=[F(0)]*3
+    for s,v in enumerate(co):
+        if not s or not v: continue
+        w=t*(1-t)**(pop(s)-1)
+        U+=pop(s)*v*v*w
+        for i in range(3):
+            if s>>i&1:J[i]+=v*v*w
+    A=amp_linear(3,co)
+    r=U*U/(d*A*A*max(J))
+    assert (U,J,A,r)==(F(1,2),[F(1,8),F(3,16),F(3,16)],F(1),F(2,3))
+    assert r==score_linear(3,2,co)
+    print('PASS sharp necessary first-chaos gate coefficient C >= 2/3:',
+          'U=',U,'J=',J,'A=',A,'C_needed=',r)
+
+if __name__=='__main__':
+    check_linear_two_thirds_lower_bound()
