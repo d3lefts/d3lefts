@@ -129,4 +129,51 @@ def main():
     print('ALL PASS: source-law ANOVA, true resampling influences, fractional-cover certificate, exact component range.')
     print('Finite tests do not prove the general theorem or N-UE2(2,1).')
 
-if __name__=='__main__':main()
+
+
+def hybrid_regression():
+    """A-touching source sectors have fractional cover cost 1 despite |A|=3.
+
+    Validates only the ANOVA residual/specified-cover part of the separate
+    author-side fair-Q3 hybrid theorem in PR #807, not its analytic fair bound.
+    """
+    marginals = [[F(1,2),F(1,3),F(1,6)],
+                 [F(2,3),F(1,3)],
+                 [F(1,4),F(3,4)],
+                 [F(1,2),F(1,2)],
+                 [F(1,2),F(1,2)],
+                 [F(1,2),F(1,2)]]
+    states = list(product(*(range(len(p)) for p in marginals)))
+    def prob(x):
+        return reduce(lambda a,b:a*b,
+                      (marginals[i][x[i]] for i in range(6)), F(1))
+    def h(x,i,j):return F(int(x[i]==j))-marginals[i][j]
+    def u(x,i):return 2*x[i]-1
+    def residual(x):
+        return h(x,0,0)*(h(x,1,1)*u(x,3)+h(x,2,1)*u(x,4)+u(x,3)*u(x,4))
+    def fair(x):
+        return u(x,3)+u(x,3)*u(x,4)+u(x,3)*u(x,4)*u(x,5)
+    def source(x):return fair(x)+residual(x)
+    V=sum((prob(x)*source(x)**2 for x in states),F(0))
+    Vr=sum((prob(x)*residual(x)**2 for x in states),F(0))
+    Vg=sum((prob(x)*fair(x)**2 for x in states),F(0))
+    influences=[]
+    for i in range(6):
+        Ii=F(0)
+        for x in states:
+            cond=sum((marginals[i][q]*source(x[:i]+(q,)+x[i+1:])
+                      for q in range(len(marginals[i]))),F(0))
+            Ii+=prob(x)*(source(x)-cond)**2
+        influences.append(Ii)
+    M=max(influences)
+    B=F(max(source(x) for x in states)-min(source(x) for x in states),2)
+    assert (V,Vr,Vg,influences[0],M,B)==(
+        F(1931,576),F(203,576),F(3),F(203,576),F(119,36),F(49,12))
+    assert V==Vr+Vg and Vr==influences[0] and Vr<=M and M<=B**2
+    print('PASS hybrid residual cover: |A|=3 but t_A=1, V_A=I_A0='
+          +str(Vr)+', full V='+str(V)+'; fair cubic theorem remains external to checker.')
+
+
+if __name__=='__main__':
+    main()
+    hybrid_regression()
