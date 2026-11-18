@@ -30,6 +30,11 @@ TARGETS = [
     "Nightfall.ProductSpace.CubeAA.mainTheorem_of_productSpace",
     "Nightfall.ProductSpace.CubeAA.printedConjecture",
     "Nightfall.ProductSpace.CubeAA.explicitBound",
+    "Nightfall.InfinitePiAllDegreeLabelTransfer.original_source_label_all_degree",
+    "Nightfall.InfinitePiAllDegreeLabelTransfer.original_cell_average_all_degree_zero",
+    "Nightfall.InfinitePiAllDegreeFiniteIndicators.esDegreeLE_implies_indicatorDegreeLE",
+    "Nightfall.InfinitePiAllDegreeFiniteResidualBridge.nativeResidualWords_imply_ESDegreeLE",
+    "Nightfall.InfinitePiAllDegreeFiniteResidualBridge.nativeResidualWords_imply_indicatorDegreeLE",
 ]
 
 
