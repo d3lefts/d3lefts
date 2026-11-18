@@ -22,3 +22,5 @@ jobs:
           persist-credentials: false
       - name: Exact rational classical examples and normalization checker
         run: python3 research/nightfall/flagship-influence/check_ue2_sharpness.py
+      - name: Exact even-odd Chebyshev witnesses (not a universal theorem)
+        run: python3 research/nightfall/flagship-influence/check_ue2_chebyshev.py
