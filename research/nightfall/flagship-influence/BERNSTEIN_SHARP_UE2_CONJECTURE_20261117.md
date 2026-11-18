@@ -90,3 +90,24 @@ Proved-bound candidate: none beyond existing Q2 / restricted cubic and the autho
 Certificate: exact finite Fraction checker at \`research/nightfall/flagship-influence/check_ue2_bernstein_saturation.py\` (finite Bernoulli binomial and independent direct-cube conditionals). It does **not** prove the \(n\to\infty\) limit or the universal inequality.
 Independent audit: rederive Taylor/ANOVA degree without reusing this proof, test full source-coupled Q3, and find a counterexample to \(V^2/(d^2B^2 M)\le1\) or produce a rigorous inequality.
 Stop rule: keep N-UE2(6) as conservative backup. If any valid ratio \(>1\) appears, **demote** N-UE2(2,1) and retain N-UE2(2) with unspecified universal \(C\); do not rationalize away adverse examples. Avoid coefficient polishing before attempting the missing universal mechanism.
+
+
+## Reusable exact operator: the arcsine-path Bernstein inequality
+
+**Author-side derivation from classical trigonometric Bernstein (NOT the influence conjecture).** Let \(P:[0,1]^m\to\mathbb R\) be a real polynomial of *total* degree at most \(d\), bounded in centered radius \(B\) on the whole cube. Then at every \(p=(p_i)\in[0,1]^m\),
+\[
+\boxed{\sum_{i=1}^m\sqrt{p_i(1-p_i)}\,|\partial_iP(p)|\le dB.}\tag{AB}
+\]
+
+**Proof.** First let every \(p_i\in(0,1)\). Put \(\theta_i=\arccos(2p_i-1)\), choose \(\epsilon_i\in\{-1,+1\}\) so that \(-\epsilon_i\partial_iP(p)\ge0\), and define
+\[
+p_i(s)=\frac{1+\cos(\theta_i+\epsilon_i s)}2.
+\]
+Then \(H(s)=P(p_1(s),\dots,p_m(s))\) is a **trigonometric polynomial of degree at most \(d\)** because each coordinate is a degree-one trigonometric polynomial and \(P\) has total degree \(\le d\). Every \(p_i(s)\in[0,1]\), so \(|H(s)-c|\le B\) for the centered midrange \(c\). Classical trigonometric Bernstein gives \(|H'(0)|\le dB\). The chain rule yields
+\[
+H'(0)=-\sum_i \epsilon_i\sqrt{p_i(1-p_i)}\,\partial_iP(p)
+=\sum_i\sqrt{p_i(1-p_i)}\,|\partial_iP(p)|,
+\]
+proving (AB). Boundary points follow by continuity. For \(P(t)=T_d(2m^{-1}\sum_i t_i-1)\) at all \(p_i=p_d\), (AB) is **exactly saturated**: the left-hand side equals \(d\).
+
+**Crucial limitation.** For a bounded Boolean-cube function \(f\), its multilinear mean map \(P(p)=\mathbb E_{\otimes_i\mathrm{Ber}(p_i)}f\) inherits degree \(\le d\), and (AB) gives a sharp inequality for **mean** first derivatives \(\partial_iP\). It does NOT control the full original-law influence \(p_i(1-p_i)\,\mathbb E_{-i}(\Delta_if)^2\), which is a second moment rather than the square of the mean derivative. Treating \(\mathbb E(\Delta f)^2\) as \((\mathbb E\Delta f)^2\) would erase precisely the coupled Q3 obstruction. The gap between (AB) and N-UE2(2,1) is therefore a genuine missing *source-coupling / second-moment* operator, not a constant-polishing task.
