@@ -221,7 +221,7 @@ theorem influence_formula_closed (n : ℕ) (hn : 1 ≤ n) :
     exact Nat.cast_sub hn
   calc
     64*extremalBias*(1-extremalBias) *
-        ((n-1:ℕ) + ((n-1:ℕ):ℝ)*(((n-1:ℕ):ℝ)-1)*extremalMean^2) =
+        (((n-1:ℕ):ℝ) + ((n-1:ℕ):ℝ)*(((n-1:ℕ):ℝ)-1)*extremalMean^2) =
       (64*extremalBias*(1-extremalBias)) *
         ((n-1:ℕ) + ((n-1:ℕ):ℝ)*(((n-1:ℕ):ℝ)-1)*extremalMean^2) := by ring
     _ = 8 * (((n-1:ℕ):ℝ) +
@@ -281,6 +281,125 @@ theorem coefficient_at_least_four (C : ℝ)
         (((n:ℝ)-1)*(2*(n:ℝ)-1)^2-C*(n:ℝ)^3) :=
     mul_pos hpos (sub_pos.mpr hbad)
   nlinarith [hfail]
+
+
+/-! ## Bridge from exact original-source moments to physical statistics -/
+
+/-- The physical function is quadratic in the original individual signs.
+It has centered radius at most n² on the sign cube. -/
+def rawQuadratic (n : ℕ) (s : ℝ) : ℝ := 2*s^2-(n:ℝ)^2
+
+private def weighted (g : ℝ → ℝ) : List (ℝ × ℝ) → ℝ
+  | [] => 0
+  | w :: ws => w.1*g w.2 + weighted g ws
+
+private theorem weighted_raw (l : List (ℝ × ℝ)) (t : ℝ) :
+    weighted (fun s => 2*s^2-t^2) l =
+      2*moment 2 l-t^2*moment 0 l := by
+  induction l with
+  | nil => simp [weighted, moment]
+  | cons w ws ih =>
+      simp only [weighted, moment]
+      rw [ih]
+      ring
+
+private theorem weighted_raw_sq (l : List (ℝ × ℝ)) (t : ℝ) :
+    weighted (fun s => (2*s^2-t^2)^2) l =
+      4*moment 4 l-4*t^2*moment 2 l+t^4*moment 0 l := by
+  induction l with
+  | nil => simp [weighted, moment]
+  | cons w ws ih =>
+      simp only [weighted, moment]
+      rw [ih]
+      ring
+
+/-- The variance is defined on the actual finite weighted product source,
+not as a proxy imported from an asymptotic formula. -/
+def physicalVariance (p : ℝ) (n : ℕ) : ℝ :=
+  weighted (fun s => (rawQuadratic n s)^2) (source p n) -
+    (weighted (rawQuadratic n) (source p n))^2
+
+/-- The finite difference across a resampled original coordinate,
+conditioned on the other n coordinates. -/
+def physicalResamplingInfluence (p : ℝ) (n : ℕ) : ℝ :=
+  p*(1-p)*
+    weighted (fun s =>
+      (rawQuadratic (n+1) (s+1)-rawQuadratic (n+1) (s-1))^2)
+      (source p n)
+
+private theorem weighted_difference_sq (l : List (ℝ × ℝ)) (n : ℕ) :
+    weighted (fun s =>
+      (rawQuadratic n (s+1)-rawQuadratic n (s-1))^2) l =
+      64*moment 2 l := by
+  induction l with
+  | nil => simp [weighted, moment]
+  | cons w ws ih =>
+      simp only [weighted, moment]
+      rw [ih]
+      unfold rawQuadratic
+      ring
+
+/-- Exact original product variance, not just a scalar surrogate. -/
+theorem physical_variance_matches (n : ℕ) :
+    physicalVariance extremalBias n = varianceFormula n := by
+  unfold physicalVariance
+  simp only [rawQuadratic]
+  rw [weighted_raw_sq, weighted_raw]
+  unfold varianceFormula sourceMoment
+  have h0 : moment 0 (source extremalBias n) = 1 :=
+    (original_source_moments extremalBias n).1
+  rw [h0]
+  ring
+
+/-- Exact original-product conditional variance of a resampled site. -/
+theorem physical_influence_matches (n : ℕ) :
+    physicalResamplingInfluence extremalBias n =
+      influenceFormula (n+1) := by
+  unfold physicalResamplingInfluence influenceFormula sourceMoment
+  rw [show n+1-1=n by omega]
+  rw [weighted_difference_sq]
+  ring
+
+/-- The exact original-law physical variance and influence require
+coefficient at least four, provided the valid radius upper bound n²
+is used in the hypothesized inequality. -/
+theorem physical_coefficient_at_least_four (C : ℝ)
+    (h : ∀ n : ℕ, 2 ≤ n →
+      physicalVariance extremalBias n ^ 2 ≤
+        C*(n:ℝ)^4*physicalResamplingInfluence extremalBias (n-1)) :
+    4 ≤ C := by
+  apply coefficient_at_least_four C
+  intro n hn
+  have h0 := h n hn
+  rw [physical_variance_matches] at h0
+  have hnext : n-1+1=n := Nat.sub_add_cancel (by omega)
+  have hi := physical_influence_matches (n-1)
+  rw [hnext] at hi
+  rw [hi] at h0
+  exact h0
+
+/-- Alternating third finite differences vanish identically;
+this is the exact degree-at-most-two mechanism, for any source. -/
+theorem third_mixed_difference_zero (n : ℕ) (s a b c : ℝ) :
+    rawQuadratic n (s+a+b+c) - rawQuadratic n (s+a+b) -
+    rawQuadratic n (s+a+c) - rawQuadratic n (s+b+c) +
+    rawQuadratic n (s+a) + rawQuadratic n (s+b) +
+    rawQuadratic n (s+c) - rawQuadratic n s = 0 := by
+  unfold rawQuadratic
+  ring
+
+/-- The quadratic component is nonzero on a pair of coordinates. -/
+theorem second_mixed_difference_sixteen (n : ℕ) (s : ℝ) :
+    rawQuadratic n (s+2)-2*rawQuadratic n s+
+      rawQuadratic n (s-2) = 16 := by
+  unfold rawQuadratic
+  ring
+
+#print axioms Nightfall.Q2BernsteinLower.physical_variance_matches
+#print axioms Nightfall.Q2BernsteinLower.physical_influence_matches
+#print axioms Nightfall.Q2BernsteinLower.physical_coefficient_at_least_four
+#print axioms Nightfall.Q2BernsteinLower.third_mixed_difference_zero
+#print axioms Nightfall.Q2BernsteinLower.second_mixed_difference_sixteen
 
 #print axioms Nightfall.Q2BernsteinLower.original_source_moments
 #print axioms Nightfall.Q2BernsteinLower.extremal_mean_square
