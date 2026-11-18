@@ -50,10 +50,26 @@
 <aside class="eng-inline-warning"><strong>Evidence policy:</strong> Official benchmark scores, local source replay, mathematical proof, kernel compilation, novel discovery, and independent human peer review are different certifications. The numbers above describe selected fixed experiments, not deployment safety, general model success rates, or externally validated novelty.</aside>
 
 <section class="eng-section" id="current-eval" aria-labelledby="current-eval-title">
-<p class="eng-kicker">CURRENT BUILD / ONE DEEP SOFTWARE ENGINEERING EVALUATION</p>
-<h2 id="current-eval-title">A durable queue.<br><em>A rigorous repair challenge.</em></h2>
-<p class="eng-section-lead">DispatchQ-B1 is a new Python/SQLite repository-level evaluation candidate covering persistence, atomic claims across processes, token-fenced leases and retry exhaustion. The author reports a 20-test/100-point withheld grader and reference calibration; a separately implemented public canary now reproduces eight predicted seed failures and five positive controls on two Python versions; blind tool-using agent runs and external review remain unfinished gates. The public dossier demonstrates the evaluation process without presenting a prototype as a validated benchmark.</p>
-<div class="eng-action-row"><a href="dispatchq-b1.html" class="eng-action">Examine the task and adversarial audit ↗</a><a href="https://github.com/d3lefts/d3lefts/pull/818" class="eng-action secondary">See candidate source · draft PR #818 ↗</a></div>
+<p class="eng-kicker">CURRENT BUILD / TWO ORTHOGONAL SOFTWARE ENGINEERING TASKS</p>
+<h2 id="current-eval-title">Two tasks.<br><em>One evidence standard.</em></h2>
+<p class="eng-section-lead">NIGHTFALL is developing a small portfolio of hard engineering evaluations rather than multiplying shallow benchmarks. DispatchQ-B1 tests persistent concurrent state; ArtifactGraph-B2 tests incremental dependency builds, content identity, filesystem confinement and atomic publication. Both remain author-calibrated prototypes without blind agent scores or independent human grader review.</p>
+<div class="eng-grid two">
+<article class="eng-card">
+<span class="eng-number">EVALUATION 01 / DURABLE CONCURRENCY</span><span class="eng-tag pending">Author-calibrated prototype</span>
+<h3>DispatchQ-B1</h3>
+<p>A Python/SQLite work-queue repair involving atomic claims, idempotency, lease expiration and token fencing. The defective starter passes three deliberately shallow public smoke tests but violates eight of thirteen separately implemented public contract checks; five controls pass.</p>
+<p><strong>Audit:</strong> Python 3.10/3.13 source-exact CI, corrected after two false-positive assertions. The author-hidden grader, alternate correct repair and blind model evaluation remain unverified.</p>
+<a href="dispatchq-b1.html">Task, corrected checks and limitations ↗</a>
+</article>
+<article class="eng-card">
+<span class="eng-number">EVALUATION 02 / INCREMENTAL BUILD INTEGRITY</span><span class="eng-tag pending">Author-calibrated prototype</span>
+<h3>ArtifactGraph-B2</h3>
+<p>A multi-module build-system repair involving a dependency DAG, cache identity, path boundaries, object corruption and atomic index publication. On the deliberately defective seed, an independently implemented 20-case public checker reproduced eleven contract violations and nine passing controls.</p>
+<p><strong>Audit:</strong> Python 3.10/3.13 source-exact CI; no unexpected exceptions or prediction mismatches. These finite controls do not certify the author's 25-case withheld grader, task difficulty or actual agent performance.</p>
+<a href="evals.html#artifactgraph">Inspect task, mechanisms and audit receipts ↗</a>
+</article>
+</div>
+<div class="eng-action-row"><a href="evals.html" class="eng-action">Compare evaluation evidence ↗</a><a href="https://github.com/d3lefts/d3lefts/pull/825" class="eng-action secondary">Independent ArtifactGraph audit · draft #825 ↗</a></div>
 </section>
 <section class="eng-section" id="case-studies" aria-labelledby="cases-heading">
 <p class="eng-kicker">01 / SELECTED WORK — DEPTH OVER VOLUME</p>
