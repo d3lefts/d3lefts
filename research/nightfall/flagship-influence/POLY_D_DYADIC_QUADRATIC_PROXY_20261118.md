@@ -250,3 +250,22 @@ The existing exact checker now also checks 110 signed finite Walsh models agains
 **Independent proof B (pre-specified attacks):** verify the first-chaos coefficient extraction and Bernstein bound at every supported pair; check tensorization with shared K (not independent K per block); look for connected overlap patterns that are neither hub supports nor disjoint monomials; optimize amplitude using *every* supported D before evaluating a candidate; compare with established fixed-degree DMP and Turturean quantitative statements. A formal kernel theorem and an external expert review remain absent. The conjectures N-UE2(6), N-UE2(2) and LIN-ANNEALED-d are all **OPEN**.
 
 **Mechanism/transfer:** two-replica fair source -> first-chaos selector filter -> dyadic log-band energy preservation -> dB (rather than d^2B) amplitude -> no-loss block tensorization -> O(d^3 log d) **conditional** variance-exponent-two target; parity witnesses near-sharp proxy cost, address selectors exclude the simplest exponential routing obstruction.
+
+
+## v0.5 exact falsification of universal linear-proxy C=1/2; necessary coefficient C>=2/3
+
+The C=1/2 statement of Theorem L-M is **restricted to disjoint Fourier monomials** and cannot be generalized without loss. With three independent fair signs a,b,c, take the k=1 two-leaf selector
+
+    f(a,b,c) = (b+c)/2 + a(c-b)/2.
+
+This is a real bounded degree-2 function with B=V=1. The dyadic law has m=1,t=1/2. The first-chaos source-paired selector proxy has exact parameters
+
+    U1=1/2,
+    (J1_a,J1_b,J1_c)=(1/8,3/16,3/16),
+    A1=1.
+
+These follow by separate Walsh-spectrum and exhaustive supported-disagreement/selector calculations in the exact checker. Hence
+
+    U1^2/[d*A1^2*max_i J1_i]=(1/4)/(2*3/16)=2/3.
+
+Therefore **any universal LIN-ANNEALED-d coefficient must be >=2/3**, refuting the tempting extension of the disjoint-monomial coefficient 1/2. This does not refute the conjectured C=1 linear gate; it is a concrete adversarial control and quantitative calibration. This supersedes the v0.4 preliminary "best sampled ratio 1/2" observation; the new exact three-bit witness was not in that 110-case sample. No global optimality of 2/3 is asserted.
