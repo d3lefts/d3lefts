@@ -1,0 +1,72 @@
+name: NIGHTFALL all-degree native finite residual to AA degree bridge
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/universal/InfinitePiAllDegreeFiniteResidualBridge.lean'
+      - '.github/workflows/nightfall-all-degree-finite-residual-bridge.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nightfall-all-degree-native-residual-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  exact-native:
+    runs-on: ubuntu-latest
+    timeout-minutes: 100
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact ANOVA and all-degree native finite bridge
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from scripts.nightfall_q2_certify import local_sources, closure
+          from pathlib import Path
+          import shutil, subprocess
+          files=local_sources()
+          ws=Path("/tmp/mathlib4")
+          out=ws/".lake/build/lib/lean"
+          out.mkdir(parents=True,exist_ok=True)
+          for name in closure("ActualSourceANOVA",files):
+              print("BUILD SOURCE",name,flush=True)
+              shutil.copyfile(files[name],ws/(name+".lean"))
+              subprocess.run(["lake","env","lean","-o",str(out/(name+".olean")),name+".lean"],cwd=ws,check=True,timeout=1200)
+          for name in ["InfinitePiQ2DegreeRetraction","InfinitePiQ2FiniteDegreeBridge",
+                       "InfinitePiAllDegreeFiniteIndicators","InfinitePiAllDegreeFiniteResidualBridge"]:
+              src=Path("research/nightfall/formalization/universal")/(name+".lean")
+              shutil.copyfile(src,ws/(name+".lean"))
+              print("BUILD BRIDGE",name,flush=True)
+              subprocess.run(["lake","env","lean","-o",str(out/(name+".olean")),name+".lean"],cwd=ws,check=True,timeout=1200)
+          PY
+      - name: Audit named all-degree finite degree theorems and standard axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/product-all-degree-finite-residual
+          python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiAllDegreeFiniteResidualBridge.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InfinitePiAllDegreeFiniteResidualBridge.nativeHeatBath_ignore \
+            --decl Nightfall.InfinitePiAllDegreeFiniteResidualBridge.esComp_nativeResidual \
+            --decl Nightfall.InfinitePiAllDegreeFiniteResidualBridge.esComp_iterNativeResidual \
+            --decl Nightfall.InfinitePiAllDegreeFiniteResidualBridge.nativeResidualWords_imply_ESDegreeLE \
+            --decl Nightfall.InfinitePiAllDegreeFiniteResidualBridge.nativeResidualWords_imply_indicatorDegreeLE \
+            --json-out lean-receipts/product-all-degree-finite-residual/theorems.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/product-all-degree-finite-residual/theorems.json
+      - name: Preserve exact source and lock provenance
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/product-all-degree-finite-residual
+          git rev-parse HEAD > lean-receipts/product-all-degree-finite-residual/COMMIT
+          sha256sum research/nightfall/formalization/universal/InfinitePiAllDegreeFiniteResidualBridge.lean research/nightfall/formalization/universal/InfinitePiAllDegreeFiniteIndicators.lean research/nightfall/formalization/observability/ActualSourceANOVA.lean > lean-receipts/product-all-degree-finite-residual/SHA256SUMS
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: product-all-degree-native-residual-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/product-all-degree-finite-residual
+          if-no-files-found: warn
