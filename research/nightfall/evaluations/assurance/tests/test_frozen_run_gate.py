@@ -330,6 +330,35 @@ class FrozenRunGateTests(unittest.TestCase):
         self.update_receipt(r, "try-2")
         self.assert_bad()
 
+    def test_counterexample_v1_accepts_conflicting_grader_denominators(self):
+        """Witness v1 gap: two results from the same pinned grader disagree on max/total."""
+        self.make_attempt("try-2", completed=True)
+        folder = self.root / "attempts" / "try-2"
+        grade = json.loads((folder / "grade.json").read_text())
+        grade["tests_total"] = 3
+        grade["tests_passed"] = 3
+        grade["max_points"] = 7
+        grade["score_points"] = 7
+        receipt = self.receipt("try-2")
+        receipt["grade_sha256"] = write_json(folder / "grade.json", grade)
+        self.update_receipt(receipt, "try-2")
+        report = verify(self.root, self.plan_hash)
+        self.assertEqual(
+            [item["max_points"] for item in report[
+                "author_reported_grader_scores_not_verified"]],
+            [100, 7]
+        )
+
+    def test_counterexample_v1_accepts_arbitrary_single_grade_scale(self):
+        """Witness v1 gap: plan anchors grader digest, but not score scale."""
+        self.mutate_grade("score_points", 1)
+        self.mutate_grade("max_points", 1)
+        report = verify(self.root, self.plan_hash)
+        self.assertEqual(
+            report["author_reported_grader_scores_not_verified"][0]["max_points"],
+            1,
+        )
+
     def test_trace_unknown_event_rejected_with_fresh_hash(self):
         a = self.root / "attempts" / "try-1"
         trace = json.loads((a / "trace.json").read_text())
