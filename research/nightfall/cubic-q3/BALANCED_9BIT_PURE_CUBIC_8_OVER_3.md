@@ -101,3 +101,33 @@ This is **not** an inequality for arbitrary real-valued cubics, biased signs, ar
 **Adversarial comparator:** The classical ten-variable Chiarelli–Hatami–Saks recursive Boolean function \(G_3(s,t,y,z)=(s+t)G_2(y)/2+(s-t)G_2(z)/2\), \(G_2(s,t,u,v)=(s+t)u/2+(s-t)v/2\), is pure degree-three and depends on all ten variables, but its two selector influences are \(1/2\) and its eight descendants each have influence \(1/4\). Its normalized ratio is only 2. Thus a larger relevant-variable count by itself does not yield a harder influence example. The checker adds an independent 1,024-state replay of this comparator, and of the router's exact one-active-leaf identity.
 
 **Certification:** The displayed deduction imports the classical \(R_3=10\) classification and otherwise uses elementary exact Fourier/Parseval arithmetic. This is **author-side analytic**, with finite negative controls, and is not an independent proof or Lean verification of the historical classification. The tensor itself remains a finite exact checked witness. Publication originality review is still required.
+
+
+## Source-consistent annealed-Q2 gate stress: K ≥ 64/49 exactly
+
+Unlike the earlier counterexample to the *unstructured* annealed quadratic inequality, this test is an actual source-consistent two-replica image of the 9-bit pure cubic above.
+
+For independent original uniform source draws \(X,Z\) and independent fair selector signs \(\varepsilon_i\), define \(F_{X,Z}(\varepsilon)=f(Y)\), where \(Y_i=X_i\) for \(\varepsilon_i=+1\) and \(Z_i\) otherwise. Let \(Q_{X,Z}=\Pi_{\le2}^{\varepsilon}F_{X,Z}\). Use precisely the #799 definitions
+\[
+A=\operatorname{ess\,sup}_{X,Z,\varepsilon}|Q_{X,Z}(\varepsilon)|,\quad
+U=\mathbb E_{X,Z}\operatorname{Var}_\varepsilon(Q_{X,Z}),\quad
+J=\max_i\mathbb E_{X,Z}I_i^\varepsilon(Q_{X,Z}).
+\]
+The exact values are
+\[
+\boxed{A=7,\qquad U=12,\qquad J=9/4,\qquad
+\frac{U^2}{A^2J}=\frac{64}{49}>1.}
+\]
+**Therefore the coefficient-one source-consistent annealed-Q2 gate \(U^2\le A^2J\) is FALSE.** The genuine open question in #799/#803 remains whether a finite **universal** coefficient \(K\ge64/49\) exists; no such upper bound is proved here.
+
+**Exact mechanism / efficient full enumeration.** Let \(D=\{i:X_i\ne Z_i\}\). Every original cubic Walsh term \(T_e\chi_e\) becomes a fair Walsh character with selector support \(e\cap D\). The projected \(Q\) removes exactly those original terms for which the full cubic support \(e\subset D\), leaving
+\[
+Q_{D,X}(\varepsilon)=\sum_{e:\,|e\cap D|\le2}T_e\chi_e(X)\chi_{e\cap D}(\varepsilon).
+\]
+For any fixed \(D\), varying \(X\) and \(\varepsilon\) is equivalent for the amplitude maximum to varying \(X\) at \(\varepsilon=+\mathbf1\). The checker enumerates **all \(2^9\) disagreement masks and all \(2^9\) original \(X\)-states**, collecting the exact fair Walsh coefficients by selector support. It computes \(A=7\) without invoking the spectral transport identity, and the exact separate fair variance/influence squares directly: \(U=12\), \(J_i=(9/4,9/4,3/2;\ 9/4,9/4,3/2;\ 9/4,3/2,9/4)\). The maximum possible amplitude over 512 disagreement masks has frequency distribution \(A_D=0:1,\ 4:223,\ 5:76,\ 6:160,\ 7:52\).
+
+The analytic spectral identities #799 give an independent cross-check: pure cubic \(U=3V/4=12\) and \(J_i=3I_i/8\), hence \(J_{\max}=9/4\). The full exact enumeration goes beyond simply assuming those identities.
+
+**Under disjoint m-block replication** with \(f_m=m^{-1}\sum_r f^{(r)}\), the source-consistent projection remains block-additive, its essential amplitude remains \(A=7\), \(U=12/m\), and \(J=9/(4m^2)\). Thus the gate ratio \(64/49\) persists with growing support and cubic-cover size. This is not a counterexample to dimension-freeness, only to the specific coefficient-one shortcut.
+
+**Checker:** \`python3 -I research/nightfall/cubic-q3/check_replica_balanced_9bit.py\`, independently replayed alongside the cubic truth/Walsh checker in the same fail-closed GitHub CI action. This is an exact finite lower certificate; neither the universal annealed-Q2 bound nor unrestricted Q3 exponent two has been proved.
