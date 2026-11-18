@@ -115,7 +115,7 @@ jobs:
           print('EXACT OUTCOME:',json.dumps({k:x[k] for k in
             ['tool_calls_executed','source_writes_executed','changed_files','finish_reason','public_smoke_exit_code','model_digest']},sort_keys=True))
           PY
-      - name: Preserve real model and score custody without private grader files
+      - name: Preserve public calibration receipt only (withhold model source patches)
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -131,8 +131,6 @@ jobs:
             model-pilot-console.txt
             model-output/${{ matrix.task }}/PUBLIC_CALIBRATION_RECEIPT.json
             model-output/${{ matrix.task }}/PUBLIC_SMOKE_OUTPUT.txt
-            model-output/${{ matrix.task }}/PRIVATE_RAW_TRANSCRIPT.json
-            model-output/${{ matrix.task }}/PRIVATE_CANDIDATE_PATCH.diff
           retention-days: 7
           if-no-files-found: warn
       - name: Stop local model service
