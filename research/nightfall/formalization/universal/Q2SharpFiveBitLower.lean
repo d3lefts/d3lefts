@@ -35,6 +35,12 @@ No abstract Fintype.choice implementation is used by the kernel reduction. -/
 def sourceWorld (w : Fin 32) : Fin 5 → Bool :=
   fun i => decide ((w.val / (2 ^ i.val)) % 2 = 1)
 
+/-- Binary expansion visits every original fair five-bit word exactly once.
+This bridges the effective 32-world representation and the actual cube. -/
+set_option maxHeartbeats 2000000 in
+theorem sourceWorld_bijective : Function.Bijective sourceWorld := by
+  decide
+
 def fairMean : ℚ :=
   (∑ w : Fin 32, (witness (sourceWorld w) : ℚ)) / 32
 
@@ -121,6 +127,7 @@ theorem refutes_coefficient_two :
   rw [witness_variance_twelve]
   norm_num
 
+#print axioms Nightfall.Q2SharpFiveBitLower.sourceWorld_bijective
 #print axioms Nightfall.Q2SharpFiveBitLower.witness_range
 #print axioms Nightfall.Q2SharpFiveBitLower.witness_attains_bounds
 #print axioms Nightfall.Q2SharpFiveBitLower.witness_mean_zero
