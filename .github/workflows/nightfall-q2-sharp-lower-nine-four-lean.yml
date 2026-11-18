@@ -7,6 +7,7 @@ on:
     paths:
       - 'research/nightfall/formalization/universal/Q2SharpFiveBitLower.lean'
       - 'research/nightfall/flagship-influence/check_q2_sharp_lower_nine_four.py'
+      - 'research/nightfall/flagship-influence/check_q2_biased_bernstein_priority.py'
       - 'research/nightfall/flagship-influence/Q2_SHARP_LOWER_NINE_FOUR_20261118.md'
       - '.github/workflows/nightfall-q2-sharp-lower-nine-four-lean.yml'
   workflow_dispatch:
@@ -49,6 +50,8 @@ jobs:
           python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT/named-proof.json"
       - name: Independently enumerate original fair source and small Bell matrices
         run: python3 -I research/nightfall/flagship-influence/check_q2_sharp_lower_nine_four.py
+      - name: Independently audit biased Bernstein source and sharpness asymptotic
+        run: python3 -I research/nightfall/flagship-influence/check_q2_biased_bernstein_priority.py
       - name: Preserve source hashes and proof pin
         if: always()
         shell: bash
@@ -61,6 +64,7 @@ jobs:
           cat lean-toolchain > "$OUT/toolchain.txt" || true
           sha256sum research/nightfall/formalization/universal/Q2SharpFiveBitLower.lean \
             research/nightfall/flagship-influence/check_q2_sharp_lower_nine_four.py \
+            research/nightfall/flagship-influence/check_q2_biased_bernstein_priority.py \
             research/nightfall/flagship-influence/Q2_SHARP_LOWER_NINE_FOUR_20261118.md > "$OUT/SHA256SUMS"
       - name: Archive exact-head receipt
         if: always()
