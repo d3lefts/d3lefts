@@ -64,11 +64,11 @@ def audit(n):
     q = 1-p
     mu = Quadratic(F(0),F(1,2))
     v = Quadratic(F(1,2))
-    assert mu**2 == F(1,2)
-    assert p*q == F(1,8)
+    assert mu**2 == as_q(F(1,2))
+    assert p*q == as_q(F(1,8))
     cache = [p**k*q**(n-k) for k in range(n+1)]
     words = list(product((0,1),repeat=n))
-    assert sum((cache[sum(x)] for x in words), Quadratic(F(0))) == 1
+    assert sum((cache[sum(x)] for x in words), Quadratic(F(0))) == as_q(1)
     mean = sum((cache[sum(x)]*raw(n,x) for x in words), Quadratic(F(0)))
     second = sum((cache[sum(x)]*raw(n,x)**2 for x in words),
                  Quadratic(F(0)))
@@ -92,8 +92,8 @@ def audit(n):
     influence_anova = v*a*a+16*(n-1)*v*v
     assert variance == variance_anova
     assert influence == influence_anova
-    assert variance == 2*n*(n-1)*(2*n-1)
-    assert influence == 4*n*(n-1)
+    assert variance == as_q(2*n*(n-1)*(2*n-1))
+    assert influence == as_q(4*n*(n-1))
     assert variance.b == 0 and influence.b == 0
     b_actual = F(max(raw(n,x) for x in words)-
                  min(raw(n,x) for x in words),2)
