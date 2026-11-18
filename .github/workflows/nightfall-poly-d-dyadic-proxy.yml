@@ -1,0 +1,33 @@
+name: NIGHTFALL poly-d dyadic quadratic proxy — exact source replay
+
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/flagship-influence/POLY_D_DYADIC_QUADRATIC_PROXY_20261118.md"
+      - "research/nightfall/flagship-influence/check_poly_d_dyadic_proxy.py"
+      - ".github/workflows/nightfall-poly-d-dyadic-proxy.yml"
+  workflow_dispatch:
+
+jobs:
+  exact-rational-proxy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Report immutable source identifiers
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD
+          sha256sum research/nightfall/flagship-influence/check_poly_d_dyadic_proxy.py
+          sha256sum research/nightfall/flagship-influence/POLY_D_DYADIC_QUADRATIC_PROXY_20261118.md
+      - name: Exact rational spectral versus independent selector-table replay
+        run: |
+          set -euo pipefail
+          python3 -I research/nightfall/flagship-influence/check_poly_d_dyadic_proxy.py
+      - name: Verify no unsafe theorem promotion
+        run: |
+          set -euo pipefail
+          grep -q "not a proof of exponent two" research/nightfall/flagship-influence/POLY_D_DYADIC_QUADRATIC_PROXY_20261118.md
