@@ -14,7 +14,7 @@ Run: python3 -I research/nightfall/flagship-influence/check_q2_sharp_lower_nine_
 """
 from collections import Counter
 from fractions import Fraction as Q
-from itertools import product
+from itertools import combinations, product
 
 # Each tuple is (support, Walsh coefficient).
 WITNESS = (
@@ -109,6 +109,36 @@ def bell_matrix_sweep(m, n):
     return count, best, best_w
 
 
+
+
+def homogeneous_signed_graph_sweep(n):
+    """Exhaustive homogeneous signed graphs on n<=5 sites.
+
+    This enumerates ALL edge coefficients in {-1,0,1} on K_n; it does
+    not enumerate real-valued coefficients or graphs on six-plus sites.
+    """
+    edges = list(combinations(range(n), 2))
+    states = list(product((-1, 1), repeat=n))
+    chars = [tuple(x[i]*x[j] for i,j in edges) for x in states]
+    best = Q(0)
+    checked = 0
+    for coeff in product((-1, 0, 1), repeat=len(edges)):
+        if not any(coeff):
+            continue
+        checked += 1
+        V = sum(c*c for c in coeff)
+        M = max(sum(c*c for c,(i,j) in zip(coeff,edges) if k in (i,j))
+                for k in range(n))
+        outputs = [sum(c*v for c,v in zip(coeff,row)) for row in chars]
+        width = max(outputs)-min(outputs)
+        ratio = Q(4*V*V,width*width*M)
+        if ratio > best:
+            best = ratio
+    expected = {3:Q(9,8),4:Q(2),5:Q(2)}[n]
+    assert checked == 3**len(edges)-1
+    assert best == expected, ("homogeneous signed graph",n,best,expected)
+    return checked, best
+
 def main():
     V, B, M, I, hist = physical_uniform_stats(5, WITNESS)
     assert (V, B, M) == (Q(12), Q(4), Q(4))
@@ -143,8 +173,16 @@ def main():
         print("PASS exhaustive signed bipartite", m, "x", n,
               "nonzero", count, "best", best, "no ratio >4")
     assert tested == 80+728+19682
-    print("PASS exact signed Bell sweep:", tested,
-          "nonzero matrices; no Q2 C=4 refutation. "
+    print("PASS exact signed Bell sweep:", tested, "nonzero matrices")
+    graph_count = 0
+    for n in (3,4,5):
+        count,best = homogeneous_signed_graph_sweep(n)
+        graph_count += count
+        print("PASS exhaustive homogeneous signed K", n,
+              "nonzero", count, "best", best)
+    assert graph_count == 26+728+59048
+    print("PASS exact quadratic sweep:", tested+graph_count,
+          "nonzero matrices/graphs; no Q2 C=4 refutation. "
           "C>=9/4 lower bound certified by finite witness ONLY.")
 
 
