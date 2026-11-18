@@ -58,7 +58,7 @@
 <span class="eng-number">EVALUATION 01 / DURABLE CONCURRENCY</span><span class="eng-tag pending">Author-calibrated prototype</span>
 <h3>DispatchQ-B1</h3>
 <p>A Python/SQLite work-queue repair involving atomic claims, idempotency, lease expiration and token fencing. The defective starter passes three deliberately shallow public smoke tests but violates eight of thirteen separately implemented public contract checks; five controls pass.</p>
-<p><strong>Audit:</strong> Python 3.10/3.13 source-exact CI, corrected after two false-positive assertions. A separate two-process forced interleaving demonstrably double-leases the defective seed; this is an existential counterexample, not a repaired-solution grader. The author-hidden grader and blind model evaluation remain unverified.</p>
+<p><strong>Audit:</strong> Python 3.10/3.13 source-exact CI, corrected after two false-positive assertions. Two distinct process tests now reproduce double-leasing in the defective seed, including unmodified-API six-process stress (8/8 observed rounds on Python 3.10 and 3.13). A separate internal proof attack found five contract-breaking variants that falsely scored 100/100 on the original private grader; the author revised the grader, but independent replay and blind model evaluation remain open.</p>
 <a href="dispatchq-b1.html">Task, corrected checks and limitations ↗</a>
 </article>
 <article class="eng-card">
