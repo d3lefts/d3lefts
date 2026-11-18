@@ -45,7 +45,7 @@
     "scalar_source_sha256": "2e619eea0c471004822de8e15439e223a33393be2663ec55975094bec37c5d0d",
     "scalar_axiom_receipt": "https://github.com/d3lefts/d3lefts/actions/runs/44209385471",
     "binary_section_source": "research/nightfall/formalization/dq2/DQ2BinarySection.lean",
-    "source_status": "additional two global section declarations pending source-exact CI",
+    "source_status": "11 named scalar and actual two-atom/finite-section declarations compiled and axiom-audited on exact source. No unconditional dependent-law Lean terminal.",
     "no_custom_axioms": true,
     "no_sorry": true,
     "still_missing": [
@@ -54,7 +54,29 @@
       "global covariance matrix operator comparison",
       "full q2 source-declaration composition",
       "full Lake build / exact named DQ2 terminal"
-    ]
+    ],
+    "binary_section_source_sha256": "bc046d8a2242587bd5248865d26461967227e212a10198d4286466017fda3b0a",
+    "latest_11_declaration_ci": "https://github.com/d3lefts/d3lefts/actions/runs/44210901748",
+    "named_declaration_count": 11,
+    "named_declarations": [
+      "score_duality_from_heatbath_contract",
+      "reference_q2_transfer",
+      "biased_heatbath_q2_scalar_terminal",
+      "local_floor_heatbath_q2_scalar_terminal",
+      "binary_section_score_mean_zero",
+      "binary_section_variance_eq",
+      "binary_section_variance_pos",
+      "binary_section_score_energy",
+      "binary_section_spin_score",
+      "binary_global_residual_orthogonal",
+      "binary_global_spin_score"
+    ],
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "certification_scope": "Four scalar conditional implications, five exact two-atom conditional-law identities, two finite-section global-sum/orthogonality identities; NOT the full dependent-likelihood finite-product Q2 comparison."
   },
   "exact_tests": {
     "source": "dq2_v4_bias_gap_exact.py (repro package attached in current conversation)",
@@ -63,7 +85,8 @@
     "finite_models": 8,
     "models_with_delta_ge_one": 2,
     "coefficient_space_psd": true,
-    "source_comparison": "exact rational source and output, no external reviewer"
+    "source_comparison": "exact rational source and output, no external reviewer",
+    "repro_bundle": "DQ2_v4_lean_and_exact_evidence.zip in current conversation"
   },
   "prior_art": [
     "Diakonikolas/Kane/Stewart/Sun 2021 robust Ising learning with fields",
