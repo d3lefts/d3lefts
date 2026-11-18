@@ -81,7 +81,6 @@ class Authority:
             state['source'], state['version'] = source, version
             state['epoch'] += 1
             state['used_nonces'] = []
-            # Known seed defect: old evidence is retained, not recertified.
             return {'ok': True, 'epoch': state['epoch']}, True
         if op == 'rebaseline':
             baseline = body.get('baseline')
@@ -111,10 +110,8 @@ class Authority:
                 return {'ok': False, 'reason': 'stale_or_mismatched_ticket'}, False
             if t['nonce'] in state['used_nonces']:
                 return {'ok': False, 'reason': 'replay'}, False
-            # Known seed defect: no baseline_source and baseline_version check.
             state['used_nonces'].append(t['nonce'])
             if len(state['used_nonces']) >= MAX_NONCES:
-                # Known seed defect: forgotten nonces without epoch rotation.
                 state['used_nonces'] = []
             state['committed'] = {'effect': copy.deepcopy(effect), 'ticket': copy.deepcopy(t)}
             return {'ok': True, 'commit': digest(state['committed'])}, True
