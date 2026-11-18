@@ -54,6 +54,8 @@ assert.ok(eng.includes("unscored, potentially contaminated prototypes"));
 assert.ok(eng.includes("five of twelve separate contract checks"));
 assert.ok(eng.includes("thirteen malicious mutations remain wrongly accepted"));
 assert.ok(eng.includes("/pull/849") && eng.includes("/pull/852"));
+assert.ok(eng.includes("44392543520") && eng.includes("44392557351"));
+assert.ok(lab.includes("44392543520") && lab.includes("44392557351"));
 assert.ok(lab.includes('id="historical-incubator"'), "Public evaluation incubator missing");
 assert.ok(lab.includes("5 violations, 7 passes") && lab.includes("13 wrongly admitted attacks"));
 assert.ok(lab.includes("not model accuracy rates") && lab.includes("Do not rank AI models"));
