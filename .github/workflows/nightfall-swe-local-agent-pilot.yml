@@ -7,11 +7,11 @@ on:
     paths:
       - 'research/nightfall/evaluations/assurance/real_agent_pilot/**'
       - '.github/workflows/nightfall-swe-local-agent-pilot.yml'
-  pull_request:
-    paths:
-      - 'research/nightfall/evaluations/assurance/real_agent_pilot/**'
-      - '.github/workflows/nightfall-swe-local-agent-pilot.yml'
   workflow_dispatch:
+
+concurrency:
+  group: nightfall-real-local-agent-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
