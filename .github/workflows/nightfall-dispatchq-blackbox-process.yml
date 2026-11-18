@@ -1,0 +1,39 @@
+name: NIGHTFALL DispatchQ-B1 black-box multiprocess probe
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/evaluations/dispatchq-b1/**"
+      - ".github/workflows/nightfall-dispatchq-blackbox-process.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  process-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Independent semantics of the observation oracle
+        run: |
+          python research/nightfall/evaluations/dispatchq-b1/audit/concurrency/blackbox_process_probe.py --self-test
+      - name: API-only process stress on source-pinned defective seed
+        run: |
+          python research/nightfall/evaluations/dispatchq-b1/audit/concurrency/blackbox_process_probe.py \
+            --candidate research/nightfall/evaluations/dispatchq-b1/candidate \
+            --mode seed-survey --rounds 8 --workers 6 \
+            --output dispatchq-blackbox-survey.json
+      - name: Preserve all rounds and source digest
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dispatchq-blackbox-survey-${{ matrix.python-version }}
+          path: dispatchq-blackbox-survey.json
+          retention-days: 30
+          if-no-files-found: warn
