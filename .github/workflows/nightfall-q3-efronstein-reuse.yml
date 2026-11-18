@@ -6,11 +6,15 @@ on:
       - '.github/workflows/nightfall-q3-efronstein-reuse.yml'
       - 'research/nightfall/formalization/observability/ActualSourceEfronStein.lean'
       - 'research/nightfall/formalization/observability/OriginalSourceConditionalPoincare.lean'
+      - 'research/nightfall/formalization/observability/SourceTotalVariance.lean'
+      - 'research/nightfall/formalization/observability/OriginalSourceJointHybrid.lean'
   pull_request:
     paths:
       - '.github/workflows/nightfall-q3-efronstein-reuse.yml'
       - 'research/nightfall/formalization/observability/ActualSourceEfronStein.lean'
       - 'research/nightfall/formalization/observability/OriginalSourceConditionalPoincare.lean'
+      - 'research/nightfall/formalization/observability/SourceTotalVariance.lean'
+      - 'research/nightfall/formalization/observability/OriginalSourceJointHybrid.lean'
   workflow_dispatch:
 permissions:
   contents: read
@@ -36,6 +40,20 @@ jobs:
               shutil.copyfile(files[module], Path('/tmp/mathlib4') / (module+'.lean'))
               subprocess.run(['lake','env','lean','-o',
                   '.lake/build/lib/lean/'+module+'.olean', module+'.lean'],
+                  cwd='/tmp/mathlib4',check=True)
+          PY
+      - name: Compile two independently checked Q3 source-dependency modules for import
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import subprocess, shutil
+          root = Path('research/nightfall/formalization/observability')
+          for module in ('SourceTotalVariance', 'OriginalSourceConditionalPoincare'):
+              shutil.copyfile(root/(module+'.lean'),Path('/tmp/mathlib4')/(module+'.lean'))
+              subprocess.run(['lake','env','lean','-o',
+                  '.lake/build/lib/lean/'+module+'.olean',module+'.lean'],
                   cwd='/tmp/mathlib4',check=True)
           PY
       - name: Strict original-law all-degree Efron Stein named theorem
@@ -73,12 +91,28 @@ jobs:
             }
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/q3-conditional-original-source-poincare.json
+      - name: Strict joint-source conditional Poincare terminal
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/OriginalSourceJointHybrid.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.CubicQ3.JointHybrid.joint_original_source_poincare_bridge \
+            --json-out lean-receipts/q3-joint-source-hybrid.json || {
+              cat lean-receipts/q3-joint-source-hybrid.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q3-joint-source-hybrid.json
       - name: Preserve exact source and compiler revisions
         if: always()
         shell: bash
         run: |
           mkdir -p lean-receipts
-          sha256sum research/nightfall/formalization/observability/ActualSourceEfronStein.lean research/nightfall/formalization/observability/OriginalSourceConditionalPoincare.lean > lean-receipts/SHA256SUMS
+          sha256sum research/nightfall/formalization/observability/ActualSourceEfronStein.lean research/nightfall/formalization/observability/OriginalSourceConditionalPoincare.lean research/nightfall/formalization/observability/SourceTotalVariance.lean research/nightfall/formalization/observability/OriginalSourceJointHybrid.lean > lean-receipts/SHA256SUMS
           git rev-parse HEAD > lean-receipts/repository-head.txt
           (git -C /tmp/mathlib4 rev-parse HEAD || true) > lean-receipts/mathlib-head.txt
           cat lean-toolchain > lean-receipts/lean-toolchain.txt
