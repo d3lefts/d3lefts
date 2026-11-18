@@ -19,9 +19,9 @@ def run(model,output):
         "parameters":{"type":"object","properties":{}}}}
     payload={"model":model,"stream":False,"think":False,
              "messages":[
-                {"role":"system","content":"Call nightfall_probe as a STRUCTURED tool call. Do not write JSON or markdown text."},
-                {"role":"user","content":"Please invoke nightfall_probe now with empty arguments."}],
-             "tools":[tool],"options":{"temperature":0,"num_predict":256}}
+                {"role":"system","content":"You have one task: immediately invoke nightfall_probe with an empty object as a native function call. Do not narrate. /no_think"},
+                {"role":"user","content":"/no_think\nInvoke nightfall_probe now. No explanation."}],
+             "tools":[tool],"options":{"temperature":0.1,"num_predict":1024,"num_ctx":4096}}
     with urlopen("http://127.0.0.1:11434/api/tags",timeout=20) as resp:
         models=json.load(resp)["models"]
     info=next((m for m in models if m.get("name")==model),None)
@@ -37,6 +37,10 @@ def run(model,output):
         "tool_call_count":len(calls),
         "structured_probe_present":bool(valid),
         "text_only_tool_emulation":bool(msg.get("content")) and not bool(calls),
+        "thinking_present_despite_think_false":bool(msg.get("thinking")),
+        "thinking_characters":len(msg.get("thinking","")),
+        "done_reason":ans.get("done_reason"),
+        "generated_tokens":ans.get("eval_count"),
         "raw_response":ans,
         "status":"STRUCTURED_TOOL_CHANNEL_PASS" if valid else "BLOCKED_MODEL_TOOL_CHANNEL",
         "limitation":"A direct Ollama probe is necessary but not sufficient for Inspect-native tool calls."}
