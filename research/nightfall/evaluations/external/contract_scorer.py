@@ -264,6 +264,24 @@ class ArtifactGraph(unittest.TestCase):
         self.assertEqual(out.built, ())
         self.assertEqual(out.reused, ())
 
+def count_method_results(result, total):
+    """Count failed/skipped PARENT unittest methods, not subTest events.
+
+    Python's _SubTest has _testMethodName == 'runTest' for EVERY parent;
+    grouping on that field merges distinct failing tests. Multiple failed
+    subTests within the same parent must count as just one failed method.
+    """
+    def parent_identity(test):
+        parent = getattr(test, "test_case", test)
+        return parent.id()
+    failed = {parent_identity(t) for t, _ in result.failures + result.errors}
+    failed.update(parent_identity(t) for t, _ in result.skipped)
+    failed.update(parent_identity(t) for t in result.unexpectedSuccesses)
+    count = len(failed)
+    if not 0 <= count <= total:
+        raise AssertionError("grader method accounting exceeds frozen denominator")
+    return total - count, count
+
 def run():
     parser=argparse.ArgumentParser()
     parser.add_argument("--task",required=True,choices=["dispatchq","artifactgraph"])
@@ -278,13 +296,7 @@ def run():
     buf=io.StringIO()
     result=unittest.TextTestRunner(stream=buf,verbosity=2).run(suite)
     failures=[{"test":str(t),"reason":str(msg)[-600:]} for t,msg in result.failures+result.errors]
-    # unittest subTest produces multiple errors for one parent test method.
-    # Never count more failed tests than the frozen suite denominator.
-    bad_methods={getattr(t,"_testMethodName",str(t)) for t,_ in result.failures+result.errors}
-    skipped_methods={getattr(t,"_testMethodName",str(t)) for t,_ in result.skipped}
-    failed_count=len(bad_methods | skipped_methods)
-    assert 0 <= failed_count <= total
-    passed=total-failed_count
+    passed,failed_count=count_method_results(result,total)
     receipt={"task":args.task,"tests_total":total,"tests_passed":passed,
        "tests_failed":failed_count,"max_points":100,
        "points":round(100*passed/total,4),
