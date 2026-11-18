@@ -197,3 +197,89 @@ def check_address_and_support_classes():
 
 if __name__=='__main__':
     check_address_and_support_classes()
+
+
+# v0.4: exact first-chaos source-paired proxy stress and no-loss operators.
+def amp_linear(n, coeff):
+    N=1<<n
+    ans=0
+    for live in range(N):
+        # All source disagreement sets are supported at each dyadic scale.
+        h=[v if pop(s&live)==1 else 0 for s,v in enumerate(coeff)]
+        ans=max(ans,max(map(abs,transform(h))))
+    return ans
+
+def score_linear(n,d,coeff):
+    assert len(coeff)==1<<n
+    assert all(not c or pop(s)<=d for s,c in enumerate(coeff))
+    m=max(1,(d-1).bit_length())
+    U=F(0);Js=[F(0)]*n
+    for s,a in enumerate(coeff):
+        order=pop(s)
+        if not order or not a:continue
+        v=F(0)
+        for k in range(1,m+1):
+            t=F(1,2**k)
+            v += t*(1-t)**(order-1)/m
+        U+=a*a*order*v
+        for i in range(n):
+            if s&(1<<i):Js[i]+=a*a*v
+    if not U:return F(0)
+    A=amp_linear(n,coeff)
+    return U*U/(d*A*A*max(Js))
+
+def linear_address_closed(k,t):
+    assert 1<=k and F(0)<t<=F(1,2)
+    a=1-t/2
+    u=1-t
+    return t*a**k+F(k,2)*t*u*a**(k-1), t*u*a**(k-1)/2
+
+def linear_address_independent(k,t):
+    # Independent: enumerate source Walsh weights at each address order.
+    u,j=F(0),F(0)
+    for r in range(k+1):
+        wt=F(comb(k,r),2**k)
+        u += wt*(r+1)*t*(1-t)**r
+        if r>=1: j+=F(comb(k-1,r-1),2**k)*t*(1-t)**r
+    return u,j
+
+def check_linear_structural_pivot():
+    assert 'families' in globals(), 'Run this exact checker as a script'
+    best=(F(0),None)
+    for name,d,coeff in families:
+        ratio=score_linear(n,d,coeff)
+        if ratio>best[0]:best=(ratio,name)
+        assert ratio<=1, (name,ratio,'candidate LIN-ANNEALED-C=1 falsifier')
+    # Distinct source cases in dyadic gate:
+    assert score_linear(6,2,[int(i==3) for i in range(1<<6)])==F(1,2)
+    linear_pairs=0
+    for k in range(1,17):
+        for scale in range(1,6):
+            t=F(1,2**scale)
+            u,j=linear_address_closed(k,t)
+            assert (u,j)==linear_address_independent(k,t)
+            assert u<=F(1,2) and u<=(k+3)*j
+            assert u*u<=(k+1)*j
+            linear_pairs+=1
+    selector_best=(F(0),0)
+    for k in range(1,129):
+        m=k.bit_length()
+        U=sum((linear_address_closed(k,F(1,2**scale))[0] for scale in range(1,m+1)), F(0))/m
+        J=sum((linear_address_closed(k,F(1,2**scale))[1] for scale in range(1,m+1)), F(0))/m
+        cap=U*U/((k+1)*J) # A1 >= 1, so true C_needed no larger
+        assert cap<=1,(k,cap)
+        if cap>selector_best[0]:selector_best=(cap,k)
+    # Direct-sum amplitude tensorization with common dyadic distribution:
+    a1=[0]*(1<<6); a2=[0]*(1<<6)
+    for s,c in {1:3,3:-1,5:2}.items():a1[s]=c
+    for s,c in {8:-2,24:1,40:-3}.items():a2[s]=c
+    combined=[a+b for a,b in zip(a1,a2)]
+    assert amp_linear(6,combined)==amp_linear(6,a1)+amp_linear(6,a2)
+    assert score_linear(6,3,combined)<=1
+    print('PASS first-chaos: ',len(families),'actual-amplitude exact Walsh models, '
+          +str(linear_pairs)+' independent rational selector formulas, 128 implicit '
+          'exponential-leaf selectors, direct-sum exact amplitude; '
+          'best tested C=',str(best),'selector upper C=',str(selector_best))
+
+if __name__=='__main__':
+    check_linear_structural_pivot()
