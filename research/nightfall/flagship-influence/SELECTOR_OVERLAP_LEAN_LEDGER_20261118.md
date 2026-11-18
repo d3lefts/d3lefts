@@ -134,3 +134,16 @@ Q2/top-cover program, NOT an original or unrestricted UE2 result.
 **Missing breakthrough:** an effective switching-energy charge for
 dense, high-degree, overlapping control functions. No inference to
 N-UE2(6), N-UE2(2) or Turturean's real-row question.
+
+
+## v0.3 exact-head integrated six-theorem certificate (2026-11-18)
+
+**PINNED LEAN / SOURCE EXACT PASS**: [GitHub Actions run 44248959076](https://github.com/d3lefts/d3lefts/actions/runs/44248959076), source head `164666e94da621ee8d7f4100a747262aabedf084`. All named declarations compiled under pinned Lean 4.36.0-rc2 and the repository's pinned Mathlib; strict Lean bridge accepted only foundational axioms, and the independent original-law exact Fraction checker passed all 72 original-product cases, including variable-size overlapping supports and null atoms.
+
+A sixth unconditional named Lean theorem, `source_overlap_leaf_energy_le_activation_max`, now composes `finite_source_weighted_overlap_energy` and `source_activation_budget`. For arbitrary nonnegative normalized original address weights p, source sample weights q, active masks with at most t active leaf sites per address, and explicit original masked leaf energies J_i≤M, it proves the **total original source-weighted selector mean row energy ≤ tM**. No disjointness of active masks or atom floor.
+
+The six named kernel-checked declarations are: `finite_weighted_cauchy`, `finite_source_weighted_row_energy`, `finite_source_weighted_overlap_energy`, `source_activation_budget`, `source_overlap_leaf_energy_le_activation_max`, `selector_weighted_terminal_from_source_obligations` (last one **conditional**).
+
+**Precise terminal boundary:** It is incorrect to call this a full Lean-certified original-product selector theorem. The masked row energies have not yet been identified through a native Lean statement as the resampling influences of `f(A,Y)=g_A(Y_{L_A})`, and the finite-product total-variance tower plus original address/leaf Efron–Stein compositions are still not carried through the exact selector f in Lean. Existing proven original-source all-degree Efron–Stein: `Nightfall.Observability.ActualSourceEfronStein.original_source_all_degree_efron_stein` in `research/nightfall/formalization/observability/ActualSourceEfronStein.lean`. Certification of the six lemmas DOES NOT certify unrestricted N-UE2(6) or N-UE2(2).
+
+**Priority audit:** All main inputs weighted Cauchy–Schwarz, Efron–Stein and Popoviciu are classical; not a novelty or external peer-review receipt. This PR remains draft until native-source identification and independent audit, and no public breakthrough claim is made.
