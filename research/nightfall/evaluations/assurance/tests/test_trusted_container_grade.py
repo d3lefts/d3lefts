@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import shutil
 from pathlib import Path
 import sys
 import tempfile
@@ -11,7 +12,8 @@ import unittest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from trusted_container_grade import (InvalidEvidence, capture, tree_sha256,
                                      patch_paths, validate_result)
-from frozen_run_gate import sha_file, validate_grade
+from frozen_run_gate import sha_file, validate_grade, verify
+from join_grader_capture import joined_report
 
 
 def put(path, body):
@@ -192,6 +194,111 @@ class RealContainerSyntheticTests(unittest.TestCase):
             capture(self.plan, self.plan_sha, "try-1", self.seed,
                     patch_link, self.grader, self.root/"capture", 30)
         self.assertFalse((self.root/"capture").exists())
+
+    def assemble_synthetic_packet(self):
+        """Explicitly FAKE model trace, but REAL captured grader stdout."""
+        self.run_capture()
+        packet = self.root/"run"
+        packet.mkdir()
+        shutil.copyfile(self.plan, packet/"plan.json")
+        for aid,complete in (("try-1",True),("try-2",False)):
+            folder=packet/"attempts"/aid
+            folder.mkdir(parents=True)
+            trace={"schema":"nightfall.eval.trace.v1","attempt_id":aid,
+                   "events":([
+                       {"seq":0,"kind":"tool_call","tool":"edit_file"},
+                       {"seq":1,"kind":"tool_result","tool":"edit_file"}
+                   ] if complete else [
+                       {"seq":0,"kind":"assistant","tool":""}
+                   ])}
+            trace_path=folder/"trace.json"
+            trace_path.write_text(json.dumps(trace,sort_keys=True))
+            patch_file=folder/"patch.diff"
+            grade_file=folder/"grade.json"
+            if complete:
+                shutil.copyfile(self.patch,patch_file)
+                shutil.copyfile(self.root/"capture"/"grade.json",grade_file)
+            receipt={
+                "schema":"nightfall.eval.attempt.v1",
+                "attempt_id":aid,
+                "plan_sha256":self.plan_sha,
+                "task_commit":self.plan_data["task_commit"],
+                "model_id":self.plan_data["model_id"],
+                "outcome":"completed" if complete else "tool_failure",
+                "elapsed_seconds":4,
+                "tokens_used":20,
+                "tool_calls":1 if complete else 0,
+                "trace_path":f"attempts/{aid}/trace.json",
+                "trace_sha256":sha_file(trace_path),
+                "patch_path":f"attempts/{aid}/patch.diff" if complete else None,
+                "patch_sha256":sha_file(patch_file) if complete else None,
+                "grade_path":f"attempts/{aid}/grade.json" if complete else None,
+                "grade_sha256":sha_file(grade_file) if complete else None,
+            }
+            (folder/"receipt.json").write_text(json.dumps(receipt,sort_keys=True))
+        self.assertEqual(verify(packet,self.plan_sha)["planned_attempts"],2)
+        capsules=self.root/"capsules"
+        cap_dir=capsules/"attempts"/"try-1"
+        cap_dir.mkdir(parents=True)
+        shutil.copyfile(self.root/"capture"/"capture.json",cap_dir/"capture.json")
+        shutil.copyfile(self.root/"capture"/"grade.json",cap_dir/"grade.json")
+        manifest={
+            "schema":"nightfall.eval.capture-manifest.v1",
+            "plan_sha256":self.plan_sha,
+            "captures":[{"attempt_id":"try-1",
+                         "capture_sha256":sha_file(cap_dir/"capture.json"),
+                         "grade_sha256":sha_file(cap_dir/"grade.json")}]
+        }
+        (capsules/"capture-manifest.json").write_text(
+            json.dumps(manifest,sort_keys=True))
+        return packet,capsules,sha_file(capsules/"capture-manifest.json")
+
+    def test_score_join_after_real_synthetic_grader(self):
+        packet,capsules,pin=self.assemble_synthetic_packet()
+        report=joined_report(packet,self.plan_sha,capsules,pin)
+        self.assertEqual((report["planned_attempts"],
+                          report["graded_completed_attempts"],
+                          report["failed_or_incomplete_attempts"]),(2,1,1))
+        self.assertIn("unattested",report["decision"])
+
+    def test_posthoc_inflated_score_passes_format_but_fails_execution_join(self):
+        packet,capsules,pin=self.assemble_synthetic_packet()
+        a=packet/"attempts"/"try-1"
+        grade=json.loads((a/"grade.json").read_text())
+        grade["score_points"]=99
+        (a/"grade.json").write_text(json.dumps(grade,sort_keys=True))
+        receipt=json.loads((a/"receipt.json").read_text())
+        receipt["grade_sha256"]=sha_file(a/"grade.json")
+        (a/"receipt.json").write_text(json.dumps(receipt,sort_keys=True))
+        # Deliberately prove receipt-only v2 admits this self-reported change.
+        self.assertEqual(verify(packet,self.plan_sha)["completed_with_tool_and_grade"],1)
+        with self.assertRaises(InvalidEvidence):
+            joined_report(packet,self.plan_sha,capsules,pin)
+
+    def test_posthoc_patch_substitution_is_rejected(self):
+        packet,capsules,pin=self.assemble_synthetic_packet()
+        a=packet/"attempts"/"try-1"
+        (a/"patch.diff").write_text((a/"patch.diff").read_text().replace(
+            "+ANSWER=1","+ANSWER=2"))
+        receipt=json.loads((a/"receipt.json").read_text())
+        receipt["patch_sha256"]=sha_file(a/"patch.diff")
+        (a/"receipt.json").write_text(json.dumps(receipt,sort_keys=True))
+        self.assertEqual(verify(packet,self.plan_sha)["completed_with_tool_and_grade"],1)
+        with self.assertRaises(InvalidEvidence):
+            joined_report(packet,self.plan_sha,capsules,pin)
+
+    def test_capture_manifest_freeze_and_complete_denominator(self):
+        packet,capsules,pin=self.assemble_synthetic_packet()
+        manifest_path=capsules/"capture-manifest.json"
+        manifest=json.loads(manifest_path.read_text())
+        manifest["captures"]=[]
+        manifest_path.write_text(json.dumps(manifest,sort_keys=True))
+        with self.assertRaises(InvalidEvidence):
+            joined_report(packet,self.plan_sha,capsules,pin)
+        # Even deliberately repinning a now-empty posthoc manifest must fail
+        # because the actual planned completed attempt still needs a capsule.
+        with self.assertRaises(InvalidEvidence):
+            joined_report(packet,self.plan_sha,capsules,sha_file(manifest_path))
 
     def test_network_is_disabled_in_real_container(self):
         src = (
