@@ -8,6 +8,8 @@ import InfinitePiQ2SourceHilbertTensor
 import InfinitePiQ2AllL2LabelIntertwining
 import InfinitePiQ2RangeProjectionTransfer
 import InfinitePiQ2UnconditionalTerminal
+import InfinitePiAAProductTerminal
+import CubePrintedAA
 import Q2ShiftedConditionalTargets
 
 /-!
@@ -76,3 +78,14 @@ hypothesis is discharged by printing an axiom list.
 #print axioms Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_ae
 #print axioms Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional
 #print axioms Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional_variance
+
+-- All-degree original-product AA and the printed fair-cube conjecture, in one Lake graph.
+-- The cube specialization uses upstream auxiliary lemmas, not the upstream terminal proof.
+#check Nightfall.InfinitePiAAProductTerminal.infinitePi_aa_product
+#check Nightfall.ProductSpace.CubeAA.mainTheorem_of_productSpace
+#check Nightfall.ProductSpace.CubeAA.printedConjecture
+#check Nightfall.ProductSpace.CubeAA.explicitBound
+#print axioms Nightfall.InfinitePiAAProductTerminal.infinitePi_aa_product
+#print axioms Nightfall.ProductSpace.CubeAA.mainTheorem_of_productSpace
+#print axioms Nightfall.ProductSpace.CubeAA.printedConjecture
+#print axioms Nightfall.ProductSpace.CubeAA.explicitBound
