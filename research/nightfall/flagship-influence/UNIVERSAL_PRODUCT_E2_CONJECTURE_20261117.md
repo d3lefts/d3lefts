@@ -55,6 +55,13 @@ B(f)=\inf_{c\in\mathbb R}\|f-c\|_{L^\infty}.
 
 Here \(\operatorname{Inf}_i(f)=\|f-\mathbb E[f\mid X_{I\setminus\{i\}}]\|_2^2\) is the **original-law resampling influence**, not Boolean flip influence, and all supports and bounds are understood modulo measure-zero sets. Degree is the largest order of a nonzero canonical ANOVA component; at finite \(I\) this is unambiguous even with zero-mass atoms. The case \(B=0\) has both sides zero. Writing \(B\) as half the essential oscillation makes the claim translation-invariant and exactly homogeneous.
 
+**Sharp-degree landmark, N-UE2(2) (OPEN).** Under precisely the same arbitrary-independent-product assumptions and centered essential radius, conjecture
+\[
+\tag{N-UE2(2)}
+\operatorname{Var}(f)^2\le C_2\,d^2\,B(f)^2\,\sup_i\operatorname{Inf}_i(f).
+\]
+Here \(C_2\) is an absolute constant independent of the number, laws and alphabets of coordinates and the degree. Since \(d^2\le d^6\) for \(d\ge1\), **N-UE2(2) implies N-UE2(6) with the same constant**. The degree exponent \(2\) is necessary by the exact classical Chebyshev construction below. Neither conjecture is proved for unrestricted cubic functions.
+
 **Arbitrary-index extension, N-UE2(6)-infinite.** Use \(\sup_i\) (not a possibly unattained maximum), and define degree \(\le d\) as the \(L^2\)-closed span of genuine Hoeffding components supported on at most \(d\) coordinates. The infinite statement follows by the standard finite-cylinder conditional approximation **if the finite conjecture holds**; sketch below. It is not a separate proven bound.
 
 **Weaker backup claim** (distinct from the flagship): existence of some finite exponent \(k\) in place of 6 while retaining variance exponent two. This would still strengthen the qualitative original Aaronson–Ambainis conjecture on the uniform cube, but for \(k>6\) it would not preserve Turturean's quantitative degree dependence. Do not silently substitute this weaker claim for N-UE2(6).
@@ -130,14 +137,14 @@ Let \(I\) be any index set and \(P=\bigotimes_i\mu_i\). For finite \(F\subset I\
   https://www.cs.cmu.edu/~odonnell/boolean-analysis/lecture14.pdf
 * **Other relevant scope**: completely bounded polynomial influence theorems, Grothendieck, decoupling, and original 2014 statement (see repo Q2 priority dossier). Two purported Nov 2026 Zenodo product claims remain **unverified leads**, not established precedence.
 * **Internal verified dependency:** merged PR #776 (finite/infinite arbitrary-product \(d\le2\) and coefficient about 105.416), Claude's PR #801 degree-two Hoeffding source bridge (its own exact-head CI status must be verified before promotion). Restricted cubic top-cover PR #787 and fair-block anchored PR #804 do NOT imply this conjecture.
-* **Current unrestricted obstruction:** PRs #799/#803 reduce degree-three exponent-two to a source-consistent mean-coupled quadratic inequality; it remains unproved. A proof of N-UE2(6) for all degrees would of course settle degree three, but cannot be obtained by asserting the reduction's missing hypothesis.
+* **Current unrestricted obstruction:** merged PR #799 and draft #803 reduce degree-three exponent-two to a source-consistent mean-coupled quadratic inequality; it remains unproved. The unstructured annealed inequality is false and the coefficient-one spike-tail shortcut was retired by PR #802. A proof of N-UE2(6) for all degrees would of course settle degree three, but cannot be obtained by asserting the reduction's missing hypothesis.
 
 **Novelty gate:** A theorem subsumes prior results mathematically only if its statement and proof are verified and its hypotheses/normalizations line up. We have not established originality of this exact conjecture or its proof (there is no proof). Conduct exhaustive dated full-text search, compare quantitative constants, seek non-author referee assessment, and obtain human authorization before submission.
 
 ## Discovery contract, audit and stop rule
 
 1. **Representation:** separate \(\alpha=2\) (necessary), degree penalty \(k=6\) (flagship) or \(k=2\) (sharp candidate, with \(k\ge2\) necessary by Chebyshev), arbitrary-product law, canonical degree, resampling influence and centered radius.
-2. **Strongest externally checked this session:** Turturean 2026 theorem \(V^{5/2}/d^6\) on the uniform cube; GMNR distributional equivalence; classical tribes lower bound. Neither proves N-UE2(6).
+2. **Strongest externally checked this session:** Turturean 2026 theorem \(V^{5/2}/d^6\) on the uniform cube; GMNR distributional equivalence; classical tribes and Chebyshev lower bounds. Neither proves N-UE2(6).
 3. **Best verified construction:** fair-degree-one sharp ratio 1, classical tribes exact degree-penalty obstruction; existing Lean Q2 on arbitrary products and author-side restricted cubic. No all-degree exponent-two candidate proof.
 4. **Remaining central gap:** find a single original-product, dimension-free mechanism that upgrades the coupled two-replica quadratic route, or an alternative all-degree inequality, without illicit \(\mathbb E[\max_i]\leftrightarrow\max_i\mathbb E\) interchange or lost bias/alphabet dependence.
 5. **Cheapest decisive experiments:** (a) vary rare categorical routing selectors and balanced tribes in exact rational finite models; (b) attempt a source-coupled rather than arbitrary random-family inequality; (c) search finite small-degree cases for ratios exceeding any proposed \(C d^6\). Finite searches can falsify a proposed constant, never certify all-degree truth.
@@ -145,6 +152,6 @@ Let \(I\) be any index set and \(P=\bigotimes_i\mu_i\). For finite \(F\subset I\
 7. **Budget/stop rule:** limit Lean to conditional implications unless a full analytic proof is found; prioritize PR #799/#803 source-consistent Q3 gate rather than polishing Q2 constants; switch mechanism after repeated failures; do not merge either conjecture as a proven theorem. Reserve exploration budget for counterexamples and independent prior-art checks.
 8. **Completion gate:** complete paper proof → independent reproduction and adversarial proof review → strict Lean source and exact-head build/axiom check → novelty/priority clearance → owner-approved publication.
 
-Mechanism graph: original product ANOVA → coordinate heat-bath influence → two-replica lift / anchor range or new operator → source-coupled energy control (OPEN) → \(V^2/(B^2M)\le Cd^6\) (OPEN) → finite-cylinder limit (conditional, standard) → finite/infinite all-degree theorem (OPEN).
+Mechanism graph: sharp Chebyshev degree obstruction k>=2 → original product ANOVA → coordinate heat-bath influence → two-replica lift / anchor range or new operator → source-coupled energy control (OPEN) → \(V^2/(B^2M)\le Cd^6\) (OPEN) → finite-cylinder limit (conditional, standard) → finite/infinite all-degree theorem (OPEN).
 
 **Do not label this conjecture proved, original, or competitive until its independent gates pass.**
