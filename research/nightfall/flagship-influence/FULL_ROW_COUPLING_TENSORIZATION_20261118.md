@@ -56,6 +56,55 @@ This reduction does not require a degree bound, variance threshold, fair input l
 
 **Equality control:** f=sum_(i=1)^n X_i, Xi independent fair Bernoulli(1/2), has V=n/4, K=n, M=1/4, and \`4V²/(K²M)=1\` for every n. Therefore any sharp coefficient for the full-row conjecture is at least 1/4 under the original-law resampling convention. The direct-sum bound is sharp under this control and produces arbitrarily many output levels, avoiding any m^4 output-level loss on this structured family. This is a classical additive calculation, not a world-priority claim.
 
+## Corollary: all-degree real-valued sums of independent Boolean blocks
+
+This actually closes the **sharp full-row real inequality on a substantial,
+but restricted, all-degree class**. Let the coordinates partition into
+independent original-product blocks B_j (arbitrary block dimensions,
+biases and categorical alphabets), let g_j:X_{B_j}->{0,1} be arbitrary
+Boolean-valued functions, and let c_j be any real coefficients. Define
+
+  f(x)=c_0+sum_j c_j*g_j(x_{B_j}).
+
+The total f can have arbitrary Efron–Stein degree, and exponentially
+many real output levels with arbitrarily spaced values.
+
+Turturean's already-proved *Boolean* full fractional row inequality,
+ported to positive finite product laws in merged NIGHTFALL PRs #298
+and #309, states
+
+  Var(g_j) <= K(g_j)² M(g_j).
+
+Because Var(g_j)<=1/4, it follows that
+
+  4 Var(g_j)² <= K(g_j)² M(g_j).
+
+For h_j=c_j*g_j, the exact scaling identities are
+  K(h_j)=|c_j| K(g_j), Var(h_j)=c_j² Var(g_j),
+  M(h_j)=c_j² M(g_j).
+Hence 4 Var(h_j)² <= K(h_j)² M(h_j). Apply Theorem B
+to these independent components to obtain
+
+  **4 Var(f)² <= K(f)² max_i Inf_i(f)**
+
+under the TRUE original resampling influence convention, for this
+entire read-once real-output all-degree class. The coefficient 1/4
+is optimal on this class: independent fair one-bit g_j with all
+c_j equal satisfy equality for any block count.
+
+This is a mathematical consequence of Turturean's preexisting Boolean
+theorem and elementary direct-sum tensorization, NOT a proof of the
+real-valued full-row inequality for arbitrary functions. A connected
+high-degree real-valued component is still entirely uncontrolled.
+
+**Product-law qualification:** #298's full Boolean two-sided theorem
+is for strictly positive finite marginal masses. Delete null atoms
+and formulate rows on the actual supported product before invoking it;
+no artificial positive weight is assigned to a zero-mass point.
+A named end-to-end Lean source theorem for the above real-valued block
+corollary has not been compiled in this PR; its proof is author-side
+composition of the cited Lean-certified Boolean theorem and Theorem A.
+
 ## Theorem C: exact two-threshold coupling, and its non-diagonal obstruction
 
 Let the supported real values be \`v_0<...<v_m\`, with positive gaps \`δ_k=v_{k+1}-v_k\`. Define nested thresholds \`g_k(x)=1_{f(x)>v_k}\`; for any two supported worlds x,y put \`h_k(x,y)=|g_k(x)-g_k(y)|\`. All h_k are 0 or 1, and the nonzero ones form an interval of levels. Hence, EXACTLY,
