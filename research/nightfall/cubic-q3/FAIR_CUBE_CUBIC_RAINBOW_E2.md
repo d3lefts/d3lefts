@@ -1,51 +1,71 @@
-# FAIR-CUBE CUBIC EXPONENT-TWO: N-RAINBOW-Q3 v1.0
+# NIGHTFALL rainbow influence theorem: fair-cube Q3 (v1.1)
 
-**2026-11-17, NIGHTFALL / AI-assisted mathematics.** Status: **author-side analytic deduction with exact finite replay, NOT a Lean certificate or an independently reviewed theorem**. No claim of novelty or unrestricted arbitrary-product Q3. Ingredients: existing author-side sharp anchored multipartite inequality [PR #804](https://github.com/d3lefts/d3lefts/pull/804), original-product Q2 C105.416 [merged PR #776](https://github.com/d3lefts/d3lefts/pull/776), classical sharp Hilbert Khintchine–Kahane (Latała–Oleszkiewicz 1994).
+**2026-11-17/18. Status: author-side analytic theorem with exact finite rational replay, not Lean-certified, not independent external review, not novelty-cleared.** Earlier v1.0 C<3661 obtained by using general Q2 with a fivefold amplitude loss; v1.1 sharpens this **16.6x** by using degree-parity selection *before* quadratic control. No all-product or all-degree total-variance claim.
 
-## Main theorem: finite fair cube, mixed Fourier degree <= 3
+## Theorem: entire degree-<=3 polynomial, uniform fair cube
 
-Let f : {−1,+1}^n -> R have Fourier degree <= 3, and define B := (max f − min f)/2, V := Var(f), M := max_i Inf_i(f) with **original fair resampling influence** Inf_i(f)=sum_{S contains i} hat_f(S)^2. Write V3 = sum_{|S|=3} hat_f(S)^2.
+For arbitrary n, f:{-1,+1}^n -> R of Fourier degree at most 3, let B=(max_x f(x)-min_x f(x))/2 (half-range), V=Var(f) and M=max_i Inf_i(f), with fair *resampling* influence Inf_i(f)=sum_{S contains i} hat_f(S)^2. Write V_s=sum_{|S|=s} hat_f(S)^2.
 
-**(A) Top cubic energy:** V3^2 <= 81 B^2 M.
+**Three simultaneous sector inequalities:**
+- V1 <= 3 B sqrt(M).
+- V2 <= 2 sqrt(2) B sqrt(M).
+- V3 <= 9 B sqrt(M).
 
-**(B) Total cubic variance:**
-V^2 <= (5 sqrt(C2) + 9)^2 B^2 M < 3661 B^2 M
-with C2 = (2 sqrt(3)(1+sqrt(2)) + 11901/6250)^2 approximately 105.41623982, the Q2 result of #776. This improves Turturean's 5/2 variance dependence **when restricted to degree 3 on the fair Boolean cube**. It does not improve his unrestricted all-degree polynomial-in-degree theorem.
+Consequently
 
-## Proof A: random rainbow parity projection
+**Var(f)^2 <= (12+2sqrt(2))^2 B^2 M = (152+48sqrt(2)) B^2 M < 220 B^2 M.**
 
-Let h=f−(max f+min f)/2, so ||h||∞=B. Independently color each variable c(i) in {1,2,3}. For sigma in {−1,+1}^3 put x^(sigma)_i=sigma_{c(i)} x_i, and define
+At B=0 or M=0, all nonconstant coefficients vanish and the inequality holds with equality. This is stronger in variance exponent, and numerically stronger at degree 3, than the all-degree uniform-cube displayed bound of Turturean (arXiv:2611.09773). It is **strictly narrower in degree and source law**, and does not subsume the all-degree theorem.
 
-R_c h(x) = (1/8) sum_sigma (sigma_1 sigma_2 sigma_3) h(x^(sigma)).
+## Exact norm-one r-color projector
 
-Being an average of signed bounded values, ||R_c h||∞ <= B, **with no loss in B**. Walsh character orthogonality means R_c h retains exactly those supports containing an odd number of variables in each of the three colors. Because deg(f)<=3, these are exactly rainbow triples with one coordinate from each group. Thus R_c h is a homogeneous three-partite cubic with fair signs in all groups.
+Choose the midpoint m=(max f+min f)/2 and h=f-m, so ||h||∞=B. For r in {2,3}, independently color all coordinates c(i) uniformly in {1,...,r}. Define
 
-Fourier orthogonality gives Inf_i(R_c h) <= Inf_i(f) <= M. The previously established anchored tripartite inequality of PR #804 gives Var(R_c h)^2 <= 4 B^2 M, hence Var(R_c h) <= 2 B sqrt(M).
+R_(r,c) h(x) := (1/2^r) sum_(sigma in {-1,+1}^r) (prod_(a=1)^r sigma_a) h( (sigma_(c(i)) x_i)_i ).
 
-A fixed 3-set of coordinates is rainbow under independent three-coloring with probability 3!/3^3=2/9. Orthogonal Fourier energies therefore give E_c Var(R_c h) = (2/9) V3. Averaging the **already-uniform upper bound** on variance, NOT swapping E max_i with max_i E, gives (2/9) V3 <= 2 B sqrt(M), proving A.
+This is a signed average of values of h and hence ||R_(r,c)h||∞<=B. On a Walsh monomial x_S the coefficient is preserved exactly when S contains an **odd** number of variables of each color. Because deg(h)<=3:
 
-## Proof B: remove odd cubic by source-preserving noise
+- r=2 selects exactly the **rainbow degree-two** monomials (one variable in each of two groups). Neither linear nor cubic monomials survive: the sum of two positive odd integers is even and must be <=3.
+- r=3 selects exactly the **rainbow degree-three** monomials (one variable in each of three groups). Neither linear nor quadratic monomials survive.
 
-Write h_odd(x)=(h(x)−h(−x))/2 = h1(x)+h3(x). Then ||h_odd||∞<=B. For the fair-cube noise operator T_t, ||T_t h_odd||∞<=B (0<=t<=1) and T_t h_odd=t h1+t^3 h3. At t=1/2 one has the exact identity
+Both are homogeneous multipartite polynomials in fair signs and their original coordinate influences obey Inf_i(R_(r,c)h)<=Inf_i(f)<=M by Walsh orthogonality.
 
-h3 = (4/3) h_odd − (8/3) T_(1/2) h_odd,
+## Anchored multipartite theorem + averaging (no max/expectation interchange)
 
-so ||h3||∞<=4B. Define g=h−h3: it is Fourier degree <=2, ||g||∞<=5B, and Inf_i(g)<=Inf_i(f) for every i. Apply #776's degree-2 inequality to obtain V_<=2 = Var(g) <= 5 sqrt(C2) B sqrt(M). By A, V3 <= 9 B sqrt(M). Orthogonal sector decomposition gives V=V_<=2+V3 and proves B. Exact rational margin: C2<106, 5sqrt(106)+9<121/2, and (121/2)^2=14641/4<3661.
+The existing author-side anchored multipartite theorem in [PR #804](https://github.com/d3lefts/d3lefts/pull/804), derived from classical sharp vector Khintchine–Kahane, says that any bounded homogeneous r-partite fair-sign polynomial q has
 
-## All-degree *top-sector*, not all-degree total-variance, theorem
+Var(q)^2 <= 2^(r-1) ||q||∞^2 max_i Inf_i(q).
 
-For deg(f)<=d and d>=1, color each coordinate uniformly in {1,...,d} and use the analogous signed parity average (1/2^d) sum_sigma (product_r sigma_r) h(sigma_color(i) x_i). It is a norm-one projection onto rainbow Fourier monomials of *exact* degree d. Every d-set survives with probability p_d=d!/d^d. The degree-d anchored multipartite theorem from #804 gives Var(R_c h) <= 2^((d−1)/2) B sqrt(M). Therefore
+Hence, *for each coloring independently*, Var(R_(r,c)h) <= 2^((r-1)/2) B sqrt(M). Any fixed r-set of Fourier coordinates receives r distinct colors with probability p_r=r!/r^r. By Parseval,
 
-**(C) V_d^2 <= 2^(d−1) (d^d/d!)^2 B^2 M.**
+E_c Var(R_(r,c)h) = p_r V_r.
 
-At d=1 coefficient 1, d=2 coefficient 8, d=3 coefficient 81. Dependence on d is exponential, not Turturean's polynomial d^6. Lower Fourier levels are not controlled by (C) alone. The mixed cubic bound (B) specifically uses the separate Q2 theorem.
+Therefore V_r <= (1/p_r) 2^((r-1)/2) B sqrt(M). At r=2, p2=1/2 yields V2<=2sqrt(2)Bsqrt(M). At r=3, p3=2/9 yields V3<=9Bsqrt(M).
 
-## Audits, provenance, novelty, remaining gap
+**Critical audit:** we average the variance after obtaining a uniform-in-coloring upper bound; we do NOT infer E[max_i Inf_i] <= max_i E[Inf_i]. That invalid move remains an obstruction under arbitrary-law replica lifts.
 
-- Exact enumerations: check_cubic_fair_rainbow.py; 45 seeded rational models, exhaustive d-colorings for n<=6, independent physical-table influence calculation, **independent direct parity-sign projector evaluation** against Fourier selection, explicit eight-sign router.
-- For any infinite product of independent fair signs, the finite Q3 inequality transports through finite-coordinate conditional expectations, L2 convergence, boundedness and original-influence contraction. This is an author-side corollary, **not a new Lean declaration**.
-- Prior art: DFKO 2006/07, O'Donnell–Zhao 2016 and Defant–Mastyło–Pérez 2019 prove exponential-in-degree influence bounds; Escudero Gutiérrez 2023 proves stronger inequalities for *completely bounded* homogeneous forms. Our derivation is an explicit mixed-degree d=3 quantitative deduction from classical tools, not a global-originality claim. Compare [Turturean 2611.09773](https://arxiv.org/abs/2611.09773) and [Stanford exposition 2611.11626](https://arxiv.org/abs/2611.11626).
-- **Open:** extend (B) to arbitrary biased/categorical original source laws. The two-replica fair orientation does not justify E(max_i I_i) <= O(max_i E I_i); that is precisely the source-coupled gate in [PR #803](https://github.com/d3lefts/d3lefts/pull/803). Neither N-UE2(6) nor N-UE2(2) is established.
-- No Lean kernel run, nonauthor independent proof sign-off, global priority clearance, or paper submission is claimed.
+## Linear level: exact odd-noise filter
 
-**Discovery graph:** finite fair cube -> random grouping -> signed norm-one parity projector -> anchored multipartite bound -> exact 2/9 energy retention -> top-level exponent 2 -> odd-noise decomposition -> mixed cubic exponent 2 -> arbitrary-law obstruction.
+Define h_odd(x)=(h(x)-h(-x))/2 = h1(x)+h3(x), so ||h_odd||∞<=B. The fair-cube heat bath/noise T_t is an L∞ contraction for 0<=t<=1 and T_t h_odd=t h1+t^3 h3. At t=1/2,
+
+**h1 = (8/3) T_(1/2) h_odd - (1/3) h_odd.**
+
+Thus ||h1||∞<=3B. Since h1=sum_i a_i x_i is linear, ||h1||∞=sum_i |a_i| and V1=sum_i a_i^2 <= sqrt(M) sum_i |a_i| <=3B sqrt(M). Summing the orthogonal variances V=V1+V2+V3 yields the C<220 theorem. The coefficient is exact: (3+2sqrt(2)+9)^2=152+48sqrt(2)≈219.882251, strictly less than 220.
+
+## All-degree homogeneous *top-sector* consequence (NOT all-degree mixed)
+
+For a degree-<=d fair-cube f, use d colors and the same signed norm-one character projection. The expected rainbow d-level energy retention is p_d=d!/d^d; the anchored d-partite theorem of #804 gives
+
+**V_d^2 <= 2^(d-1) (d^d/d!)^2 B^2 M**, for any integer d>=1.
+
+At d=1,2,3 the coefficients are 1, 8, 81. This has exponential degree dependence and controls **only the highest Fourier sector**. It does not prove Var(f)^2<=C d^6 B^2 M for unrestricted degree.
+
+## Reproduction and independent criticism gates
+
+- Exact on-repo checker: check_cubic_fair_rainbow.py; 45 seeded Fraction models, exhaustive r-colorings/vertices (up to six fair coordinates), a separate **direct table-value parity projection evaluator** against independent Fourier support calculations, all original flip influences from actual values, and the eight-variable routing stress case with V=1 and M=1/2.
+- A CI workflow is provided; its green check, if achieved, proves only these finite replays, **not** the theorem for every n. The analytic argument invokes classical Hilbert-valued Khintchine and previously author-side PR #804, so **no new Lean kernel theorem is claimed**.
+- Infinite products of fair-sign coordinates admit an author-side transfer by finite-coordinate conditional expectations (L∞, degree and influence contraction; L² convergence). A named Lean proof for this new cubic result is not yet present.
+- Prior art: DFKO (2006/07), O'Donnell–Zhao (2016), Defant–Mastyło–Pérez (2019) give earlier exponential-in-degree influence results. Escudero Gutiérrez (2023) proves degree-independent influence for the distinct completely bounded homogeneous class. These are substantive comparators; **novelty, optimal constants and global priority remain unresolved**.
+- The unrestricted arbitrary-bias/categorical Q3 exponent-two theorem remains **OPEN**, as do universal N-UE2(6) and N-UE2(2). Replicated fair orientations produce environment-dependent maxima and cannot be averaged into original-law max influence without a new source-consistent coupled theorem (see [PR #803](https://github.com/d3lefts/d3lefts/pull/803)).
+
+**Discovery graph:** low-degree cube -> exact parity representations -> norm-one r-color projectors -> multipartite Khintchine -> 1/2 and 2/9 Fourier energy survival -> noise-extracted degree-one amplitude -> sector recombination -> cubic exponent-two -> unresolved arbitrary-law transfer.
