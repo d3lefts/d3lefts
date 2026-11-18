@@ -7,6 +7,7 @@ on:
     paths:
       - 'research/nightfall/formalization/universal/Q2BernsteinFamilySharpLower.lean'
       - 'research/nightfall/flagship-influence/Q2_BERNSTEIN_LOWER_LEAN_20261118.md'
+      - 'research/nightfall/flagship-influence/check_q2_bernstein_sqrt2_worlds.py'
       - '.github/workflows/nightfall-q2-bernstein-all-n-lower-lean.yml'
   workflow_dispatch:
 
@@ -53,6 +54,7 @@ jobs:
           python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT/named-proof.json"
       - name: Independent original Bernoulli rational checker
         run: |
+          python3 -I research/nightfall/flagship-influence/check_q2_bernstein_sqrt2_worlds.py
           python3 -I research/nightfall/flagship-influence/check_q2_biased_bernstein_priority.py
           python3 -I research/nightfall/flagship-influence/check_ue2_bernstein_saturation.py
       - name: Preserve precise source custody
@@ -65,7 +67,8 @@ jobs:
           git rev-parse HEAD > "$OUT/commit.txt"
           git -C /tmp/mathlib4 rev-parse HEAD > "$OUT/mathlib.txt" 2>/dev/null || true
           cat lean-toolchain > "$OUT/toolchain.txt" || true
-          sha256sum research/nightfall/formalization/universal/Q2BernsteinFamilySharpLower.lean > "$OUT/SHA256SUMS"
+          sha256sum research/nightfall/formalization/universal/Q2BernsteinFamilySharpLower.lean \
+            research/nightfall/flagship-influence/check_q2_bernstein_sqrt2_worlds.py > "$OUT/SHA256SUMS"
       - name: Preserve proof receipt
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
