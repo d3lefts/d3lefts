@@ -4,6 +4,7 @@ on:
     branches: [nightfall-fair-cubic-rainbow-e2-20261117]
     paths:
       - 'research/nightfall/cubic-q3/check_cubic_fair_rainbow.py'
+      - 'research/nightfall/cubic-q3/check_cubic_mixed_anchor.py'
       - 'research/nightfall/cubic-q3/FAIR_CUBE_CUBIC_RAINBOW_E2.md'
       - '.github/workflows/nightfall-fair-cubic-rainbow-exact.yml'
   pull_request:
@@ -24,6 +25,9 @@ jobs:
         with:
           persist-credentials: false
       - name: Source custody hash
-        run: sha256sum research/nightfall/cubic-q3/check_cubic_fair_rainbow.py research/nightfall/cubic-q3/FAIR_CUBE_CUBIC_RAINBOW_E2.md
+        run: sha256sum research/nightfall/cubic-q3/check_cubic_fair_rainbow.py research/nightfall/cubic-q3/check_cubic_mixed_anchor.py research/nightfall/cubic-q3/FAIR_CUBE_CUBIC_RAINBOW_E2.md
       - name: Exact independent physical-vs-Walsh replay
         run: python3 -I research/nightfall/cubic-q3/check_cubic_fair_rainbow.py
+
+      - name: Exact original-law mixed categorical/fair replay
+        run: python3 -I research/nightfall/cubic-q3/check_cubic_mixed_anchor.py
