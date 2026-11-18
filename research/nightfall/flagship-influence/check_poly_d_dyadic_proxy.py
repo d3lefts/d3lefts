@@ -118,3 +118,75 @@ if __name__ == '__main__':
               'exact',str(ratio) if d<=8 else '(rational exact, omitted)')
     assert parity_certificate(16) > 6
     print('PASS: finite spectral/direct equality, dyadic bounds, parity obstruction')
+
+
+# v0.4: independently replay the NEW first-chaos proxy from full source-pair
+# selector truth tables (not merely from Fourier/binomial formulas).
+
+def spectral_linear(n, d, coeff, t):
+    u = F(0)
+    j = [F(0) for _ in range(n)]
+    for s, a in coeff.items():
+        order = pop(s)
+        if not order:continue
+        assert order<=d
+        vs=t*(1-t)**(order-1)
+        u+=a*a*order*vs
+        for i in range(n):
+            if s >> i & 1:j[i]+=a*a*vs
+    return u,j
+
+def direct_linear(n, fvals, t):
+    size = 1 << n
+    u,j=F(0),[F(0) for _ in range(n)]
+    A=F(0)
+    for x in range(size):
+        for y in range(size):
+            ndiff=pop(x^y)
+            wt=t**ndiff*(1-t)**(n-ndiff)/size
+            if not wt:continue
+            vals=[fvals[(x & z) | (y & ((size-1)^z))]
+                  for z in range(size)]
+            cs=fwht(vals)
+            for s in range(1,size):
+                if pop(s)==1:
+                    q=cs[s]**2
+                    u+=wt*q
+                    j[s.bit_length()-1]+=wt*q
+            # For linear selector polynomials max_sigma abs(L)=sum_i abs(alpha_i).
+            A=max(A,sum(abs(cs[1<<i]) for i in range(n)))
+    return u,j,A
+
+def test_linear_source_replay():
+    cases=[
+      (3,1,{1:F(2),2:F(-1),4:F(3)}),
+      (4,3,{1:F(3),2:F(-1),3:F(2),5:F(1),7:F(-2)}),
+      (5,5,{1:F(2),4:F(-3),3:F(2),21:F(-1),31:F(1)}),
+      (5,5,{31:F(1)}),
+      (4,2,{3:F(2),12:F(-3)}),
+    ]
+    matched=0
+    for n,d,c in cases:
+        vals=characters(n,c)
+        B=(max(vals)-min(vals))/2
+        V=sum(v*v for s,v in c.items() if s)
+        M=[sum(v*v for s,v in c.items() if s>>i&1) for i in range(n)]
+        m=max(1,(d-1).bit_length())
+        U,Js,A=F(0),[F(0)]*n,F(0)
+        for k in range(1,m+1):
+            t=F(1,2**k)
+            us,js=spectral_linear(n,d,c,t)
+            ud,jd,ad=direct_linear(n,vals,t)
+            assert (us,js)==(ud,jd),(n,d,k,us,ud,js,jd)
+            U+=us/m
+            Js=[x+y/m for x,y in zip(Js,js)]
+            A=max(A,ad)
+            matched+=1
+        assert 6*m*U>=V, (n,d,'variance retention')
+        assert all(m*Js[i]<=M[i] for i in range(n)),(n,d,'influence cap')
+        assert A<=d*B,(n,d,'Bernstein amplitude')
+    print('PASS: genuine source (X,Y) selector-table vs spectral first-chaos,',
+          matched,'exact independent scale-model identities; dyadic bounds')
+
+if __name__ == '__main__':
+    test_linear_source_replay()
