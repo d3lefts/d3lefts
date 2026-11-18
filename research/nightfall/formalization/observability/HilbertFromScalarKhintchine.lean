@@ -116,11 +116,7 @@ theorem vector_khintchine_from_scalar_coordinates
           _ = (∑ ω, C * (p ω * (∑ k, b k * |e ω k|))) := by
             apply Finset.sum_congr rfl
             intro ω _
-            calc
-              _ = C * (∑ k, p ω * (b k * |e ω k|)) := by
-                rw [Finset.mul_sum]
-              _ = C * (p ω * (∑ k, b k * |e ω k|)) := by
-                rw [Finset.mul_sum]
+            simp only [Finset.mul_sum]
           _ = C * (∑ ω, p ω * (∑ k, b k * |e ω k|)) := by
             rw [Finset.mul_sum]
   have hsumCS :
