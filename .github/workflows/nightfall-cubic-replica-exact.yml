@@ -1,0 +1,30 @@
+name: NIGHTFALL Q3 two-replica exact rational replay (not Lean)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/cubic-q3/**'
+      - '.github/workflows/nightfall-cubic-replica-exact.yml'
+  push:
+    branches: [nightfall-cubic-replica-bernstein-20261117]
+    paths:
+      - 'research/nightfall/cubic-q3/**'
+      - '.github/workflows/nightfall-cubic-replica-exact.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  rational-replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify exact source digests
+        working-directory: research/nightfall/cubic-q3
+        run: sha256sum -c SOURCE_SHA256SUMS
+      - name: Replay exact biased binary source/replica ANOVA and no-go
+        run: python3 research/nightfall/cubic-q3/check_cubic_replicalift_exact.py
+      - name: Independent heterogeneous categorical pure-cubic replay
+        run: python3 research/nightfall/cubic-q3/check_cubic_replicalift_categorical.py
