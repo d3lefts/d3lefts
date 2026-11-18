@@ -8,7 +8,7 @@ Let V be any nonempty finite coordinate type and \(\nu\) a full-support probabil
 
 Assume a heat-bath Poincaré gap \(0<\gamma\le 1\) with \(\gamma\operatorname{Var}_\nu(h)\le\sum_i I_{\nu,i}(h)\) for all h. Assume \(v_i\ge v>0\) and \(L\ge\lVert I+C^\mathsf T\rVert_{2\to2}\), where \(C_{ij}\) is the maximal conditional-TV response of the conditional law at i to flipping j, and \(C_{ii}=0\). We may take \(L=1+\sqrt{\lVert C\rVert_1\lVert C\rVert_\infty}\), even if the Dobrushin row/column sums exceed one.
 
-For every algebraic quadratic \(f=c+\sum_i a_iX_i+\sum_{i<j}b_{ij}X_iX_j\), pointwise bounded \(|f|\le B\), the independent finite product Q2 theorem (coefficient \(K_0\)) implies
+For every algebraic quadratic \(f=c+\sum_i a_iX_i+\sum_{i<j}b_{ij}X_iX_j\), essentially bounded \(|f|\le B\) under \(\nu\), the independent finite product Q2 theorem (coefficient \(K_0\)) implies
 
 \[
 \boxed{\operatorname{Var}_{\nu}(f)^2\le \frac{4L^2}{v^7\gamma^5} K_0 B^2\max_i I_{\nu,i}(f).}
