@@ -8,6 +8,7 @@ on:
       - 'research/nightfall/formalization/product_space/LatentProductInterpolationDegree.lean'
       - 'research/nightfall/formalization/product_space/LatentExpectationEvaluation.lean'
       - 'research/nightfall/formalization/product_space/StrongMixtureTerminalConditional.lean'
+      - 'research/nightfall/formalization/product_space/StrongSeedFixing.lean'
       - 'research/nightfall/formalization/product_space/LatentLikelihoodRatio.lean'
       - 'research/nightfall/formalization/product_space/StrongSmoothingAmplifier.lean'
       - 'research/nightfall/formalization/product_space/StrongMarkovEndpoint.lean'
@@ -40,6 +41,7 @@ jobs:
           cp research/nightfall/formalization/product_space/LatentProductInterpolationDegree.lean /tmp/mathlib4/LatentProductInterpolationDegree.lean
           cp research/nightfall/formalization/product_space/LatentExpectationEvaluation.lean /tmp/mathlib4/LatentExpectationEvaluation.lean
           cp research/nightfall/formalization/product_space/StrongMixtureTerminalConditional.lean /tmp/mathlib4/StrongMixtureTerminalConditional.lean
+          cp research/nightfall/formalization/product_space/StrongSeedFixing.lean /tmp/mathlib4/StrongSeedFixing.lean
           cp research/nightfall/formalization/product_space/LatentLikelihoodRatio.lean /tmp/mathlib4/LatentLikelihoodRatio.lean
           cp research/nightfall/formalization/product_space/StrongSmoothingAmplifier.lean /tmp/mathlib4/StrongSmoothingAmplifier.lean
           cp research/nightfall/formalization/product_space/StrongMarkovEndpoint.lean /tmp/mathlib4/StrongMarkovEndpoint.lean
@@ -58,9 +60,10 @@ jobs:
           lake env lean -o .lake/build/lib/lean/StrongSmoothingPolynomial.olean StrongSmoothingPolynomial.lean 2>&1 | tee /tmp/ci-smooth-poly.log
           lake env lean -o .lake/build/lib/lean/StrongSmoothingUniform.olean StrongSmoothingUniform.lean 2>&1 | tee /tmp/ci-smooth-uniform.log
           lake env lean -o .lake/build/lib/lean/StrongMixtureTerminalConditional.olean StrongMixtureTerminalConditional.lean 2>&1 | tee /tmp/ci-terminal.log
+          lake env lean -o .lake/build/lib/lean/StrongSeedFixing.olean StrongSeedFixing.lean 2>&1 | tee /tmp/ci-seed.log
           lake env lean -o .lake/build/lib/lean/StrongMarkovRescale.olean StrongMarkovRescale.lean 2>&1 | tee /tmp/ci-markov-rescale.log
-          if grep -q "declaration uses .sorry" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-eval.log /tmp/ci-lr.log /tmp/ci-smooth.log /tmp/ci-markov.log /tmp/ci-smooth-poly.log /tmp/ci-smooth-uniform.log /tmp/ci-terminal.log /tmp/ci-markov-rescale.log; then echo "sorry found"; exit 1; fi
-          if grep -q "error" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-eval.log /tmp/ci-lr.log /tmp/ci-smooth.log /tmp/ci-markov.log /tmp/ci-smooth-poly.log /tmp/ci-smooth-uniform.log /tmp/ci-terminal.log /tmp/ci-markov-rescale.log; then exit 1; fi
+          if grep -q "declaration uses .sorry" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-eval.log /tmp/ci-lr.log /tmp/ci-smooth.log /tmp/ci-markov.log /tmp/ci-smooth-poly.log /tmp/ci-smooth-uniform.log /tmp/ci-terminal.log /tmp/ci-seed.log /tmp/ci-markov-rescale.log; then echo "sorry found"; exit 1; fi
+          if grep -q "error" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-eval.log /tmp/ci-lr.log /tmp/ci-smooth.log /tmp/ci-markov.log /tmp/ci-smooth-poly.log /tmp/ci-smooth-uniform.log /tmp/ci-terminal.log /tmp/ci-seed.log /tmp/ci-markov-rescale.log; then exit 1; fi
           cat > CIAxioms.lean <<'LEAN'
           import ComponentIdentification
           import ComponentIdentificationWeightedTournament
@@ -73,6 +76,7 @@ jobs:
           import StrongSmoothingPolynomial
           import StrongSmoothingUniform
           import StrongMixtureTerminalConditional
+          import StrongSeedFixing
           import StrongMarkovRescale
           open Nightfall.ComponentIdentification
           #print axioms component_identification_core
@@ -100,6 +104,8 @@ jobs:
           #print axioms Nightfall.StrongSmoothing.smoothPoly_small
           #print axioms Nightfall.StrongSmoothing.smoothPoly_large
           #print axioms Nightfall.StrongMixtureTerminal.strong_latent_mixture_terminal_conditional
+          #print axioms Nightfall.StrongSimulation.SeedFixing.exists_seed_le_average
+          #print axioms Nightfall.StrongSimulation.SeedFixing.exists_deterministic_seed
           #print axioms Nightfall.BiasFreeMarkov.normalizedEndpointPoly_natDegree_le
           #print axioms Nightfall.BiasFreeMarkov.normalizedEndpointPoly_derivative_eval_one
           LEAN
