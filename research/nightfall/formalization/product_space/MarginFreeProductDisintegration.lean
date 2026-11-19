@@ -69,7 +69,12 @@ theorem observed_then_pin_mass (A : Finset ι) (a0 : α)
           (observedLaw A a0 p i (x i) *
            (if i ∈ A then delta (x i) (y i) else p i (y i)))) =
       ∏ i : ι, p i (y i) := by
-    rw [Nightfall.ProductSpace.RowBound.sum_prod_eq_prod_sum]
+    let F : ι → α → ℝ := fun i a =>
+      observedLaw A a0 p i a *
+        (if i ∈ A then delta a (y i) else p i (y i))
+    change (∑ x : ι → α, ∏ i : ι, F i (x i)) =
+      ∏ i : ι, p i (y i)
+    rw [Nightfall.ProductSpace.RowBound.sum_prod_eq_prod_sum F]
     exact Finset.prod_congr rfl (fun i _ => hcollapse i)
   calc
     (∑ x : ι → α, prodMass (observedLaw A a0 p) x *
