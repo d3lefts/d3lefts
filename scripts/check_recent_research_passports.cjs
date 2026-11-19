@@ -9,5 +9,5 @@ assert.match(c.source,/^https:\/\/github.com\/d3lefts\/d3lefts\/pull\/\d+$/);if(
 const p="research/nightfall/2026-11-recent-passports/"+c.id+".md";const m=read(p);assert.ok(m.includes(c.claim)&&m.includes(c.limit)&&m.includes(c.source),c.id+" passport drift");}
 const page=read("docs/recent-research.html"),js=read("docs/recent-research.js");assert.ok(page.includes("recent-research.json")&&page.includes("recent-research.js"));
 assert.ok(!js.includes(".innerHTML"));new (require("node:vm").Script)(js,{filename:"recent-research.js"});
-for(const p of ["docs/index.html","docs/theory.html","docs/active-proof-passport.html","docs/sitemap.xml"])assert.ok(read(p).includes("recent-research.html"),p+" missing recent ledger link");
+for(const p of ["docs/research.html","docs/theory.html","docs/active-proof-passport.html","docs/atlas.html","docs/sitemap.xml"])assert.ok(read(p).includes("recent-research.html"),p+" missing recent ledger link");
 console.log("PASS "+d.claims.length+" source-scoped passports, evidence tiers, links and page renderer");
