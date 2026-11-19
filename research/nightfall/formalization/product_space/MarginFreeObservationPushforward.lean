@@ -71,7 +71,8 @@ theorem observedLaw_eq_canonical_pushforward
     · simp [G, observedLaw, hi]
     · by_cases hy : a0 = y i
       · simp [G, observedLaw, hi, hy, hp1 i, delta]
-      · simp [G, observedLaw, hi, hy, delta]
+      · have hy' : y i ≠ a0 := Ne.symm hy
+        simp [G, observedLaw, hi, hy, hy', delta]
   calc
     (∑ x : ι → α, prodMass p x *
       (if canonicalObservation S a0 x = y then (1 : ℝ) else 0)) =
