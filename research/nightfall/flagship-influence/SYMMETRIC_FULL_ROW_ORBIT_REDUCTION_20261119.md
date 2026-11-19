@@ -52,6 +52,29 @@ No distribution is used in the row LP. Under iid Bernoulli(p) source, independen
 
 At p=1/2, M=(1/4) E_{Bin(n-1,1/2)}[(Δh)^2]. For any nonconstant h, the candidate sharp row inequality is K²M/V²>=4; ***this remains unproved*** even for all symmetric profiles.
 
+## Exact product-feature quotient isometry (author mathematical proof)
+
+**General lemma: arbitrary finite alphabets, not just binary.** Let each original independent coordinate X_i have an arbitrary finite alphabet A_i and probability mass, possibly with zero atoms. Restrict each coordinate to its positive-probability support A_i^+. Let φ_i:A_i^+→B_i be any surjective finite feature map. Define h on the entire supported feature product ∏B_i and f(x)=h(φ_1(x_1),...,φ_n(x_n)). Then:
+
+1. For **every** supported categorical source point x, its optimal genuine full pairwise fractional-row cost is exactly the feature-row cost at φ(x): κ_f(x)=κ_h(φ(x)). Consequently **K(f)=K(h)** with no alphabet-size or minimum-atom factor.
+2. The original source variance of f equals the variance of h under the product of feature-pushforward laws.
+3. For each i, the original-law resampling influence I_i(f)=E Var(f|X_{-i}) equals I_i(h) under the feature-pushforward law, even when source-letter weights are unequal.
+
+**Proof of (1), both directions.** If w is a feasible feature row at b=φ(x), then for every categorical y, the set of differing feature coordinates is contained in the set of differing categorical coordinates. Since w_i≥0, the feature row inequality immediately supplies a categorical row of equal cost. Conversely, given a categorical row w at x, and any feature target b', choose y_i=x_i when b'_i=b_i, and otherwise choose a letter in A_i^+ mapping to b'_i (surjectivity). Then the categorical-difference set between x and y equals the feature-difference set between b and b', exactly. The categorical row inequality therefore certifies the feature row with the SAME weights and cost. Minima agree at every point. Surjectivity of the product maps gives equality of maximal row costs.
+
+**Proof of (2)-(3).** A coordinatewise image of independent variables is independent and has exactly the pushforward marginal. The full distribution of h(φ(X)) equals the resulting feature-product law; conditioning on the other coordinates, the two-point (or multi-feature) random variable h(b_{-i}, φ_i(X_i)) has exactly the feature-pushforward conditional variance. No positive atom floor or lift sampling is required.
+
+**Corollary: categorical symmetric-feature all-degree exponent two.** Take B_i={0,1} on the active feature coordinates and h(b)=g(Σ_i b_i), any arbitrary real function. The full-row and original-source influence/variance identities lift the proved binary theorem to the original categorical product:
+
+    Var_p(f)² <= [m/(m+1)]² K_p(f)² max_i Inf_i^p(f)
+              <= K_p(f)² max_i Inf_i^p(f),
+
+where m is the number of active feature coordinates (those whose pushforward gives positive mass to both bits). Frozen-feature coordinates are removed and shift g by their fixed bit sum; if m=0, f is constant. This covers independently sampled, heterogeneous alphabet sizes, zero-mass source symbols, and unbounded categorical labels. It still does NOT prove the unrestricted Turturean row conjecture: general f need not factor through one binary feature per coordinate, much less a symmetric aggregate.
+
+**Transfer frontier:** Exact quotient invariance is reusable when a system representation really factors through independent coordinate features. It cannot be applied by claiming an arbitrary f has such a factorization, nor by replacing exact feature maps with lossy encoders. Novelty relative to classical quotient/LP symmetry literature remains unassessed.
+
+---
+
 ## General orbit-density mechanism (author proof, conditional structural class)
 
 The symmetric theorem is a corollary of a more general *maximal-edge multiplicity* certificate for arbitrary real functions on the binary cube with any independent product source (including heterogeneous biases).
