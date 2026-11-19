@@ -55,6 +55,24 @@ jobs:
           echo "POLARIS_IMAGE_ID=$IMAGE_ID" >> "$GITHUB_ENV"
           echo "Local content-addressed image: $IMAGE_ID"
           echo "Source revision: $(cat "$RUNNER_TEMP/polaris-source-commit.txt")"
+      - name: Verify thin Mathlib workspace under exact restricted runtime policy
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run --rm --network none --read-only \
+            --cap-drop ALL --security-opt no-new-privileges \
+            --user 10001:10001 --pids-limit 256 --memory 8g --cpus 2 \
+            --tmpfs /tmp:rw,nosuid,nodev,size=512m,mode=1777 \
+            --env HOME=/tmp \
+            "$POLARIS_IMAGE_ID" sh -euc '
+              cp -as /opt/mathlib4 /tmp/mathlib4
+              test "$(git -C /tmp/mathlib4 rev-parse HEAD)" = 9d581dfff2e41de989072ea63abf3daf69311520
+              test -L /tmp/mathlib4/.lake/build/lib/lean/Mathlib.olean
+              test -f /tmp/mathlib4/.lake/build/lib/lean/Mathlib.olean
+              test -w /tmp/mathlib4
+              du -sh /tmp/mathlib4
+              echo "PASS: lightweight writable Mathlib workspace uses read-only pinned artifact links"
+            '
       - name: Evaluate valid and invalid Lean proofs in isolated image
         shell: bash
         run: |
