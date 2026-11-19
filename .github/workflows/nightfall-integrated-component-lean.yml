@@ -1,0 +1,79 @@
+name: NIGHTFALL margin-free component identification integrated source Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/MarginFreeIntegrated.lean'
+      - 'research/nightfall/formalization/product_space/PinnedConditionalStability.lean'
+      - 'research/nightfall/formalization/product_space/LatentComponentCertifiedCore.lean'
+      - 'research/nightfall/formalization/aa_product/CLOSURE_PINNED.txt'
+      - '.github/workflows/nightfall-integrated-component-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  marginfree-integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Source pinned dependency closure (minimal 56 modules)
+        shell: bash
+        run: |
+          set -euo pipefail
+          counter=0
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="${M//.//}"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean" >/tmp/closure-current.log 2>&1) || { echo "FAILED: $M"; tail -160 /tmp/closure-current.log; exit 1; }
+            if grep -E 'error:|sorryAx|declaration uses .sorry' /tmp/closure-current.log; then exit 1; fi
+            counter=$((counter + 1))
+          done < research/nightfall/formalization/aa_product/CLOSURE_PINNED.txt
+          echo "PASS: compiled $counter source modules"
+          test "$counter" -eq 56
+      - name: Compile integrated low-TV and high-TV source theorems
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd /tmp/mathlib4
+          for M in ComponentIdentification MarginFreeCertificate MarginFreeFiniteTests MarginFreeBhattacharyya MarginFreeTVHellinger MarginFreeLargeGaps LatentComponentCertifiedCore PinnedConditionalStability MarginFreeIntegrated; do
+            cp "$GITHUB_WORKSPACE/research/nightfall/formalization/product_space/$M.lean" "$M.lean"
+            lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean" 2>&1 | tee "/tmp/$M.log"
+            if grep -E 'error:|sorryAx|declaration uses .sorry' "/tmp/$M.log"; then exit 1; fi
+          done
+          cat > IntegratedAxioms.lean <<'LEAN'
+          import MarginFreeIntegrated
+          import MarginFreeLargeGaps
+          #print axioms Nightfall.MarginFreeIntegrated.pinned_failure_mean_near
+          #print axioms Nightfall.MarginFreeIntegrated.weighted_pinned_component_overlap
+          #print axioms Nightfall.ProductSpace.PinnedConditional.pinned_small_mean_shift
+          #print axioms Nightfall.MarginFreeLargeGaps.high_tv_product_bayes_error
+          LEAN
+          sed -i 's/^          //' IntegratedAxioms.lean
+          lake env lean IntegratedAxioms.lean 2>&1 | tee /tmp/integration-axioms.log
+          if grep -E 'error:|sorryAx|declaration uses .sorry' /tmp/integration-axioms.log; then exit 1; fi
+          sha256sum MarginFreeIntegrated.lean PinnedConditionalStability.lean LatentComponentCertifiedCore.lean MarginFreeLargeGaps.lean | tee /tmp/integration-sha256.txt
+      - name: Preserve complete integration receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: component-integrated-kernel
+          path: |
+            /tmp/closure-current.log
+            /tmp/ComponentIdentification.log
+            /tmp/MarginFreeCertificate.log
+            /tmp/MarginFreeFiniteTests.log
+            /tmp/MarginFreeBhattacharyya.log
+            /tmp/MarginFreeTVHellinger.log
+            /tmp/MarginFreeLargeGaps.log
+            /tmp/LatentComponentCertifiedCore.log
+            /tmp/PinnedConditionalStability.log
+            /tmp/MarginFreeIntegrated.log
+            /tmp/integration-axioms.log
+            /tmp/integration-sha256.txt
+          retention-days: 60
+          if-no-files-found: warn
