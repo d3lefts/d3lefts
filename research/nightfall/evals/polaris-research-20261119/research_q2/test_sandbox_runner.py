@@ -5,9 +5,9 @@ import tempfile
 import unittest
 from unittest import mock
 
-from grade_research_q2 import BERNSTEIN, MATHLIB_COMMIT, candidate_check
+from grade_research_q2 import BERNSTEIN, MATHLIB_COMMIT, LEAN_SOURCE_COMMIT, DECL, TOOLCHAIN, candidate_check
 from sandbox_runner import (GRADER_REL, REQUIRED_FILES, docker_argv,
-                            sealed_sources, evaluate)
+                            sealed_sources, evaluate, verify_grader_receipt)
 
 REF = BERNSTEIN.parent / "ShiftedC4Scalar.lean"
 DIGEST_IMAGE = "example.invalid/polaris-q2@sha256:" + "a" * 64
@@ -95,6 +95,87 @@ class SandboxContractTests(unittest.TestCase):
         self.assertNotIn("/var/tmp/output", " ".join(mounts))
         self.assertTrue(any("src=/var/tmp/input" in m for m in mounts))
         self.assertTrue(any("readonly" in m for m in mounts))
+
+
+def synthetic_positive_receipt(manifest):
+    """Schema fixture only. NOT evidence that Lean commands executed."""
+    lake="/opt/elan/bin/lake"
+    out="/tmp/mathlib4/.lake/build/lib/lean/"
+    argv = [
+        [lake,"env","lean","--version"],
+        [lake,"env","lean","-o",out+"ShiftedC4Bernstein.olean","ShiftedC4Bernstein.lean"],
+        [lake,"env","lean","-o",out+"ShiftedC4Scalar.olean","ShiftedC4Scalar.lean"],
+        [lake,"env","lean","-o",out+"NightfallPolarisQ2Target.olean","NightfallPolarisQ2Target.lean"],
+        [lake,"env","lean","NightfallPolarisQ2Audit.lean"],
+        [lake,"env","leanchecker","NightfallPolarisQ2Target"],
+    ]
+    return {
+        "schema": "nightfall.polaris.research-q2.v1",
+        "status": "pass",
+        "benchmark_status": "unscored-development-calibration",
+        "certification": "pinned-Lean-kernel-replay; not externally audited",
+        "independent_implementation_review": False,
+        "target": DECL, "pin": TOOLCHAIN,
+        "candidate_sha256": manifest["candidate_sha256"],
+        "mathlib_commit": MATHLIB_COMMIT, "lean_source_commit": LEAN_SOURCE_COMMIT,
+        "trusted_sources": {
+            "ShiftedC4Bernstein.lean": {"sha256": manifest["source_files"]["research/nightfall/formalization/observability/ShiftedC4Bernstein.lean"]},
+            "NightfallPolarisQ2Target.lean": {"sha256": manifest["source_files"]["research/nightfall/evals/polaris-research-20261119/research_q2/NightfallPolarisQ2Target.lean"]},
+        },
+        "axioms": ["propext", "Classical.choice", "Quot.sound"],
+        "steps": [{"argv": a, "exit_code": 0, "output_sha256": "a"*64} for a in argv],
+    }
+
+
+class SandboxReceiptTests(unittest.TestCase):
+    def setUp(self):
+        self.folder = tempfile.TemporaryDirectory()
+        self.addCleanup(self.folder.cleanup)
+        self.manifest = sealed_sources(REF, Path(self.folder.name) / "sealed")
+        self.ok = synthetic_positive_receipt(self.manifest)
+
+    def test_complete_synthetic_schema_accepted_only_as_schema(self):
+        verify_grader_receipt(self.ok, self.manifest)
+
+    def test_missing_kernel_replay_fails(self):
+        self.ok["steps"].pop()
+        with self.assertRaisesRegex(RuntimeError, "incomplete"):
+            verify_grader_receipt(self.ok, self.manifest)
+
+    def test_forged_theorem_name_fails(self):
+        self.ok["target"] = "Nightfall.Polaris.ResearchQ2.easy"
+        with self.assertRaisesRegex(RuntimeError, "target"):
+            verify_grader_receipt(self.ok, self.manifest)
+
+    def test_forged_axiom_fails(self):
+        self.ok["axioms"].append("Nightfall.falseAxiom")
+        with self.assertRaisesRegex(RuntimeError, "axiom"):
+            verify_grader_receipt(self.ok, self.manifest)
+
+    def test_wrong_candidate_digest_fails(self):
+        self.ok["candidate_sha256"] = "0" * 64
+        with self.assertRaisesRegex(RuntimeError, "candidate"):
+            verify_grader_receipt(self.ok, self.manifest)
+
+    def test_wrong_mathlib_commit_fails(self):
+        self.ok["mathlib_commit"] = "0" * 40
+        with self.assertRaisesRegex(RuntimeError, "compiler/Mathlib"):
+            verify_grader_receipt(self.ok, self.manifest)
+
+    def test_unverified_success_step_fails(self):
+        self.ok["steps"][5]["exit_code"] = 1
+        with self.assertRaisesRegex(RuntimeError, "failed proof step"):
+            verify_grader_receipt(self.ok, self.manifest)
+
+    def test_invalid_proof_output_hash_fails(self):
+        self.ok["steps"][2]["output_sha256"] = "not-a-hash"
+        with self.assertRaisesRegex(RuntimeError, "hash"):
+            verify_grader_receipt(self.ok, self.manifest)
+
+    def test_model_score_cannot_be_injected(self):
+        self.ok["benchmark_status"] = "certified-frontier-solver"
+        with self.assertRaisesRegex(RuntimeError, "unexpectedly scored"):
+            verify_grader_receipt(self.ok, self.manifest)
 
 
 if __name__ == "__main__":
