@@ -23,7 +23,8 @@ class SandboxContractTests(unittest.TestCase):
                              REQUIRED_FILES)
             self.assertFalse((stage / "research/nightfall/formalization/observability/ShiftedC4Scalar.lean").exists())
             self.assertEqual(manifest["candidate_sha256"], candidate_check(REF))
-            self.assertFalse(manifest["reference_proof_included"])
+            self.assertFalse(manifest["reference_solution_preloaded"])
+            self.assertTrue(manifest["candidate_matches_public_reference"])
             self.assertEqual(manifest["mathlib_commit"], MATHLIB_COMMIT)
 
     def test_stage_refuses_extra_file(self):
