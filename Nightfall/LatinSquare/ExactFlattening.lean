@@ -110,6 +110,131 @@ theorem weighted_flatten_normalizes
     rw [flattenMass_eq]
     ring
 
+/-!
+## Finite kernel bridge
+
+These definitions describe exact finite subprobability *masses*.
+There is no random executable, measure-space cost bound, or positivity
+certificate in this module. The identities make explicit which atoms
+the weighted multiscale correction must preserve.
+-/
+
+/-- Total forward mass after a scale-a soft gate on a finite history set. -/
+def softForwardKernelMass (η : Type*) [Fintype η]
+    (q t : η → ℚ) (a : ℚ) : ℚ :=
+  ∑ z, q z * (t z / (t z + a))
+
+/-- Total reverse soft-coin mass at scale a. -/
+def softReverseKernelMass (η : Type*) [Fintype η]
+    (r t : η → ℚ) (a : ℚ) : ℚ :=
+  ∑ z, r z * (a / (t z + a))
+
+/-- The actual finite-history forward and reverse soft gates agree by
+the weighted likelihood-ratio balance q(z)*t(z)=w*r(z).
+This assumes only exact finite rational atoms, a nonzero scale,
+and nonzero local denominators; it does not assert a sampler exists. -/
+theorem softKernelMass_balance
+    (η : Type*) [Fintype η]
+    (q r t : η → ℚ) (w a : ℚ)
+    (ha : a ≠ 0)
+    (hden : ∀ z, t z + a ≠ 0)
+    (hbalance : ∀ z, q z * t z = w * r z) :
+    softForwardKernelMass η q t a =
+      (w / a) * softReverseKernelMass η r t a := by
+  unfold softForwardKernelMass softReverseKernelMass
+  calc
+    (∑ z, q z * (t z / (t z + a))) =
+        ∑ z, (w * r z) / (t z + a) := by
+          apply Finset.sum_congr rfl
+          intro z hz
+          exact soft_forward_atom (q z) (r z) w (t z) a (hbalance z)
+    _ = ∑ z, (w / a) * (r z * (a / (t z + a))) := by
+          apply Finset.sum_congr rfl
+          intro z hz
+          field_simp [ha, hden z]
+          ring
+    _ = (w / a) * ∑ z, r z * (a / (t z + a)) := by
+          rw [Finset.mul_sum]
+
+/-- The observable reverse coin times its integer scale is the
+calibration f_m used in the multiscale proof. -/
+def scaledReverseKernelMass (η : Type*) [Fintype η]
+    (r t : η → ℚ) (H m : ℚ) : ℚ :=
+  m * softReverseKernelMass η r t (H / m)
+
+/-- The scale-H/m forward proposal mass for a prescribed target is
+w*f_m/H, where f_m is computed solely from the reverse kernel. -/
+theorem scaledKernelMass_balance
+    (η : Type*) [Fintype η]
+    (q r t : η → ℚ) (w H m : ℚ)
+    (hH : H ≠ 0) (hm : m ≠ 0)
+    (hden : ∀ z, t z + H / m ≠ 0)
+    (hbalance : ∀ z, q z * t z = w * r z) :
+    softForwardKernelMass η q t (H / m) =
+      (w / H) * scaledReverseKernelMass η r t H m := by
+  have ha : H / m ≠ 0 := div_ne_zero hH hm
+  rw [softKernelMass_balance η q r t w (H / m) ha hden hbalance]
+  unfold scaledReverseKernelMass
+  have hcoeff : w / (H / m) = (w / H) * m := by
+    field_simp [hH, hm]
+    ring
+  rw [hcoeff]
+  ring
+
+/-- A finite-level correction in operational form: the actual soft
+forward mass w*f/H is multiplied by the race bias u/(u+f).
+If that attempt fails at the race, the next scale is considered.
+The empty list is the final exact inverse u/f gate's mass. -/
+def correctedLevelMass (w H u : ℚ) : List ℚ → ℚ
+  | [] => w * u / H
+  | f :: fs =>
+      (w * f / H) * (u / (u + f)) +
+        (u / (u + f)) * correctedLevelMass w H u fs
+
+/-- The concrete finite-level correction telescopes without assuming
+the f values are constant across targets or scales. -/
+theorem correctedLevelMass_eq
+    (w H u : ℚ) (hH : H ≠ 0) (fs : List ℚ) :
+    (∀ f ∈ fs, u + f ≠ 0) →
+    correctedLevelMass w H u fs = w * u / H := by
+  induction fs with
+  | nil =>
+      intro _
+      rfl
+  | cons f fs ih =>
+      intro hden
+      have hf : u + f ≠ 0 := hden f (by simp)
+      have ht : ∀ g ∈ fs, u + g ≠ 0 := by
+        intro g hg
+        exact hden g (by simp [hg])
+      simp only [correctedLevelMass]
+      rw [ih ht]
+      field_simp [hH, hf]
+      ring
+
+/-- A finite exact non-null output law for target-dependent lists of
+kernel calibration values is the prescribed target-weight distribution.
+This assumes the denominator hypotheses and does not infer them. -/
+theorem correctedKernelMass_normalizes
+    (α : Type*) [Fintype α]
+    (weight : α → ℚ) (H u : ℚ)
+    (hH : H ≠ 0) (hu : u ≠ 0)
+    (hweight : (∑ z, weight z) ≠ 0)
+    (calibrations : α → List ℚ)
+    (hden : ∀ s f, f ∈ calibrations s → u + f ≠ 0)
+    (s : α) :
+    correctedLevelMass (weight s) H u (calibrations s) /
+      (∑ z, correctedLevelMass (weight z) H u (calibrations z)) =
+        weight s / (∑ z, weight z) := by
+  apply normalize_weighted_mass α
+    (fun z => correctedLevelMass (weight z) H u (calibrations z))
+    weight (u / H) (div_ne_zero hu hH) hweight
+  · intro z
+    rw [correctedLevelMass_eq (weight z) H u hH (calibrations z)]
+    · ring
+    · intro f hf
+      exact hden z f hf
+
 #print axioms Nightfall.LatinSquare.weighted_ratio_balance
 #print axioms Nightfall.LatinSquare.soft_forward_atom
 #print axioms Nightfall.LatinSquare.soft_forward_sum
@@ -118,5 +243,9 @@ theorem weighted_flatten_normalizes
 #print axioms Nightfall.LatinSquare.normalized_flatten_mass
 #print axioms Nightfall.LatinSquare.normalize_weighted_mass
 #print axioms Nightfall.LatinSquare.weighted_flatten_normalizes
+#print axioms Nightfall.LatinSquare.softKernelMass_balance
+#print axioms Nightfall.LatinSquare.scaledKernelMass_balance
+#print axioms Nightfall.LatinSquare.correctedLevelMass_eq
+#print axioms Nightfall.LatinSquare.correctedKernelMass_normalizes
 
 end Nightfall.LatinSquare
