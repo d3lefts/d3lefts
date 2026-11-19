@@ -13,5 +13,5 @@
   "schema": "nightfall.proofgraph.task.v1",
   "target_module": "ProofGraph.TrustedTarget",
   "toolchain": "leanprover/lean4:v4.36.0-rc2",
-  "trusted_tree_sha256": "892b44410c220b864fbb05c5f668dc6823e676904bff3254185609e67bd45e0d"
+  "trusted_tree_sha256": "73bdac506fccb57a5d34d55a00f31aa5a892502fe8836cbcdf441874f7e7ec97"
 }
