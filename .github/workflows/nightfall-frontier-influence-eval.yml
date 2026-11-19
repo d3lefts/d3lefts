@@ -1,0 +1,21 @@
+name: NIGHTFALL frontier influence evaluation smoke tests
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/evals/polaris-research-20261119/**'
+      - '.github/workflows/nightfall-frontier-influence-eval.yml'
+  workflow_dispatch:
+jobs:
+  exact-oracles:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Exact rational unit and cross-oracle checks
+        working-directory: research/nightfall/evals/polaris-research-20261119
+        run: |
+          python -m unittest discover -p 'test*.py' -v
+          python grade_correlated_influence.py examples/correlated_influence_witness.json
+          python audit_frontier.py examples/correlated_influence_witness.json
