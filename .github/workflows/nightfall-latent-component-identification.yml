@@ -43,10 +43,11 @@ jobs:
             --decl Nightfall.LatentComponent.bernoulli_variance_le_quarter \
             --json-out lean-receipts/latent-component/scalar-strict.json
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/latent-component/scalar-strict.json
-      - name: Compile full 179-module product-plus-mixture dependencies
+      - name: Compile minimal exact transitive product-plus-mixture dependencies
         shell: bash
         run: |
           set -euo pipefail
+          python3 research/nightfall/latent_component_identification/select_closure.py MixtureSimulation > /tmp/latent-closure.txt
           while read -r M P; do
             [ -z "$M" ] && continue
             REL="${M//.//}"
@@ -54,7 +55,7 @@ jobs:
             cp "$P" "/tmp/mathlib4/$REL.lean"
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean" >"/tmp/log-$M.txt" 2>&1) || { tail -120 "/tmp/log-$M.txt"; exit 1; }
             if grep -E 'declaration uses .sorry|sorryAx|error:' "/tmp/log-$M.txt"; then exit 1; fi
-          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+          done < /tmp/latent-closure.txt
       - name: Strict no-minimum-mass separation certificate
         shell: bash
         run: |
