@@ -1,5 +1,5 @@
 # Proof Passport — Mira exact Latin-square sampling / independent theorem audit
-Version: **2.0**, 2026-11-19. Status: **PARTIAL AUTHOR-SIDE THEOREMS + EARLIER FINITE LEAN LEMMAS; MAIN CLAIM UNVERIFIED**.
+Version: **2.1**, 2026-11-19. Status: **PARTIAL AUTHOR-SIDE THEOREMS + EARLIER FINITE LEAN LEMMAS; MAIN CLAIM UNVERIFIED**.
 
 ## Original source, ownership, objective
 - External source: **Mira Cult, _Exact uniform sampling of Latin squares_**, immutable [Mira-Cult/math@30ddaaad27b48df2002225c3e3f40cffd02c5253](https://github.com/Mira-Cult/math/tree/30ddaaad27b48df2002225c3e3f40cffd02c5253/notes/combinatorics/exact-latin-square-sampling). Mira's source credits six GPT-6.2 Astra instances for mathematical development. NIGHTFALL does **not** claim to have independently discovered her proposed sampler, nor joint authorship or collaborator approval.
@@ -17,6 +17,7 @@ Version: **2.0**, 2026-11-19. Status: **PARTIAL AUTHOR-SIDE THEOREMS + EARLIER F
 | MIRA-COUNT | For c_*>0, |L_n| >= c_* product_d m_d | **CONDITIONAL ONLY** | New theorem below reduces to the bulk chi-square budget, given external fixed-c contiguity |
 | MIRA-ORB-EXACT | Exact permutation cycle-type orbit formula for E_{U_d} per(A)^2 | **AUTHOR-SIDE PROVED** | Independent combinatorial double count; exact checker all n<=5 |
 | MIRA-CYCLE-EDGE | Exact pair completion count is NOT a function only of shared-edge count | **CERTIFIED FINITE COUNTEREXAMPLE** | n=4,d=3: C_(2,2)=4, C_(4)=2 although both have zero common edges |
+| MIRA-DENSE-GROW | Explicit high-density bound t_(n-r) <= [exp((r/n)log(2*pi*n)+1/(3n))-1]/2 for d=n-r>=n/2; summed o(1) for r<=o(sqrt(n/log n)) | **AUTHOR-SIDE PROVED, NOT LEAN** | Classical van der Waerden / Bregman / Stirling sandwich; independent of Poisson route; still not full dense strip |
 | MIRA-DENSE-FIXED | For every fixed r, sup_{A in G(n,n-r)} |per(A)/n! - exp(-r)| -> 0, so t_(n-r)->0 | **AUTHOR-SIDE PROVED** | Uniform fixed-k factorial moments of forbidden hits plus Bonferroni; no growing-r conclusion |
 | MIRA-ENDPOINT | Fixed-c endpoint lower-tail for F_c and R_c ~ product_{i=0}^{c-1} m_(n-i) | **AUTHOR-SIDE DERIVED WITH PUBLISHED INPUT** | GKW mutual contiguity (c fixed >=3), Brégman / van der Waerden + Stirling |
 | MIRA-CHI-BUDGET | Sum_{d=c+1}^{n-c} sqrt(chi^2(Uhat_d||U_d)) <= 1/4 for one fixed c>=3 | **UNPROVED** | Alternative sufficient bulk certificate; may be strictly stronger than Mira's original TV objective |
@@ -51,6 +52,29 @@ For every *fixed* r>=0, uniformly over all A in G_(n,n-r),
     product_{j=0}^{k-1}(rn-(2r-1)j) <= k! R_k(B) <= (rn)^k,
 
 uniformly for n sufficiently large (r>=1). Thus E binom(X,k)=R_k(B)/(n)_k -> r^k/k!, uniformly in B. Odd/even Bonferroni sums squeeze P(X=0)=per(A)/n! to exp(-r). Average over A and divide to obtain Uhat/U->1 uniformly. For r=0 the result is exact. **Not** a growing-deficit or full dense-strip theorem.
+
+## Stronger author-side theorem 2.1: explicit growing-defect dense tail
+For every n>=2 and integer 0<=r<=n/2, put d=n-r. For every d-regular board A, the classical van der Waerden and Bregman bounds give L=n!(d/n)^n <= per(A) <= U=(d!)^(n/d). Stirling with positive remainder 0<eps_k<1/(12k) yields the exact deterministic estimate
+
+    log(U/L)
+      = 0.5[(n/d)log(2*pi*d)-log(2*pi*n)] + (n/d)eps_d - eps_n
+      <= (r/n)log(2*pi*n) + 1/(3n).
+
+Consequently, uniformly over every such board,
+
+    n log(1-r/n) <= log(per(A)/n!)
+      <= n log(1-r/n) + (r/n)log(2*pi*n) + 1/(3n),
+    t_(n-r) <= 0.5[exp((r/n)log(2*pi*n)+1/(3n))-1].
+
+Since the biased-to-unbiased Radon–Nikodym ratio is per(A)/m_d, and both per(A) and m_d lie in [L,U], this TV estimate is immediate from the ratio bound. For any growing R_n=o(sqrt(n/log n)),
+
+    sum_{r=0}^{R_n} t_(n-r)
+      <= (R_n+1)/2 * [exp((R_n/n)log(2*pi*n)+1/(3n))-1]
+      = o(1).
+
+Likewise if R_n=o(sqrt(n)), the uniform log sandwich yields per(A)/(n! exp(-r)) -> 1 uniformly for 0<=r<=R_n. This independently strengthens and cross-checks the earlier fixed-r Bonferroni theorem, without assuming a spectral event. **This covers only the near-complete high-density tail, not the whole dense strip from d ~ sqrt(n) polylog(n) upward.** These inequalities follow from classical permanent bounds and carry NO novelty claim; the combination is an author-side proof contribution to this source audit.
+
+The v2.1 manuscript contains the full derived inequality and sum, and the fixed-defect checker additionally verifies both classic permanent inequalities in exact integer arithmetic for all 2,292 finite instances.
 
 ## One explicit conditional theorem isolating the bulk gap
 Fix c>=3. Assume the published GKW fixed-c mutual contiguity. Define rho_(n,d) exactly by the cycle-type expression in theorem 1, i.e., rho=chi^2(Uhat||U). If for all sufficiently large n>2c,
