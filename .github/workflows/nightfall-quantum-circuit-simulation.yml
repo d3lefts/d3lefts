@@ -1,12 +1,14 @@
-name: NIGHTFALL quantum circuit simulation end-to-end (pinned Lean)
+name: NIGHTFALL quantum circuit to Jensen mixture and TV (pinned Lean)
 on:
   push:
-    branches: [nightfall-unitary-query-uniform-simulation-terminal-20261119]
+    branches: [nightfall-circuit-mixture-jensen-tv-20261119]
     paths:
       - 'research/nightfall/formalization/product_space/QuantumCircuitPaths.lean'
       - 'research/nightfall/formalization/product_space/QuantumPathDegree.lean'
       - 'research/nightfall/formalization/product_space/QuantumCircuitSimulation.lean'
       - 'research/nightfall/formalization/product_space/QuantumCircuitNormalization.lean'
+      - 'research/nightfall/formalization/product_space/MixtureSimulation.lean'
+      - 'research/nightfall/formalization/product_space/QuantumCircuitMixtureSimulation.lean'
       - '.github/workflows/nightfall-quantum-circuit-simulation.yml'
   pull_request:
     paths:
@@ -83,6 +85,56 @@ jobs:
           LEAN
           (cd /tmp/mathlib4 && lake env lean QuantumSimulationAudit.lean) | tee lean-receipts/quantum-simulation/axioms.txt
           ! grep -E 'sorryAx|unknown constant|error:' lean-receipts/quantum-simulation/axioms.txt
+      - name: Compile Jensen product-mixture simulator and quantum composition
+        shell: bash
+        run: |
+          set -euo pipefail
+          for M in MixtureSimulation QuantumCircuitMixtureSimulation; do
+            cp "research/nightfall/formalization/product_space/$M.lean" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean" 2>&1 | tee "$GITHUB_WORKSPACE/quantum-$M-compile.log")
+            ! grep -E 'sorryAx|declaration uses .sorry|error:' "quantum-$M-compile.log"
+          done
+      - name: Strict pinned Lean audit of full circuit-to-Jensen-mixture and TV theorem
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/quantum-mixture
+          python3 scripts/lean_bridge.py research/nightfall/formalization/product_space/QuantumCircuitMixtureSimulation.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 2400 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl "Nightfall.ProductSpace.Mixture.mixture_simulation_jensen" \
+            --decl "Nightfall.ProductSpace.QuantumCircuitSimulation.acceptance_degree" \
+            --decl "Nightfall.QuantumCircuitNormalization.probability_in_unit_interval" \
+            --decl "Nightfall.ProductSpace.QuantumCircuitMixture.mixtureMass_sum_one" \
+            --decl "Nightfall.ProductSpace.QuantumCircuitMixture.mixtureEx_eq_mass" \
+            --decl "Nightfall.ProductSpace.QuantumCircuitMixture.finiteTV_bounded_transfer" \
+            --decl "Nightfall.ProductSpace.QuantumCircuitMixture.circuit_mixture_simulation_jensen" \
+            --decl "Nightfall.ProductSpace.QuantumCircuitMixture.circuit_tv_approx_mixture_jensen" \
+            --json-out lean-receipts/quantum-mixture/receipt.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/quantum-mixture/receipt.json
+          cat >/tmp/mathlib4/NightfallQuantumMixtureAudit.lean <<'LEAN'
+          import QuantumCircuitMixtureSimulation
+          #check @Nightfall.ProductSpace.QuantumCircuitMixture.circuit_mixture_simulation_jensen
+          #check @Nightfall.ProductSpace.QuantumCircuitMixture.circuit_tv_approx_mixture_jensen
+          #print axioms Nightfall.ProductSpace.QuantumCircuitMixture.circuit_mixture_simulation_jensen
+          #print axioms Nightfall.ProductSpace.QuantumCircuitMixture.circuit_tv_approx_mixture_jensen
+          LEAN
+          (cd /tmp/mathlib4 && lake env lean NightfallQuantumMixtureAudit.lean) | tee lean-receipts/quantum-mixture/types-axioms.txt
+          ! grep -E 'sorryAx|error:|unknown constant' lean-receipts/quantum-mixture/types-axioms.txt
+      - name: Archive exact combined source and compiler pin for review
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/quantum-mixture
+          git rev-parse HEAD > lean-receipts/quantum-mixture/commit
+          sha256sum research/nightfall/formalization/product_space/{MixtureSimulation,QuantumCircuitPaths,QuantumCircuitNormalization,QuantumPathDegree,QuantumCircuitSimulation,QuantumCircuitMixtureSimulation}.lean > lean-receipts/quantum-mixture/source.sha256
+          cp lean-toolchain lean-receipts/quantum-mixture/lean-toolchain
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: nightfall-quantum-mixture-jensen-tv-${{ github.run_id }}
+          path: lean-receipts/quantum-mixture
+          if-no-files-found: warn
       - name: Preserve exact sources and pinned compiler head
         if: always()
         shell: bash
