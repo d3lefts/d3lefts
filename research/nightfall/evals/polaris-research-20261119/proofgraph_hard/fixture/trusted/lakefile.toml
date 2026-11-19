@@ -1,0 +1,6 @@
+name = "proofgraph_fixture"
+version = "0.1.0"
+defaultTargets = ["ProofGraph"]
+
+[[lean_lib]]
+name = "ProofGraph"
