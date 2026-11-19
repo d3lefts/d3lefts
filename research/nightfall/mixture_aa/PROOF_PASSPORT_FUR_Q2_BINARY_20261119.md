@@ -4,7 +4,7 @@ Date 2026-11-19 | Original independent author-side research lane PR #926 | Coord
 ## Claim and conditions
 For an arbitrary finite posterior pi on a mixture of **binary** independent-product input laws, including zero-probability atoms, and a **globally** bounded quadratic f:{-1,+1}^n→[0,1], define the shared monotone threshold latent lift G(theta,U)=f(h_theta(U)). The input mean-absolute increment on the hidden coordinate (exactly the repository's ProductInfluence.pincr with coordinate theta) obeys
 
-    Imax := max_i I(theta;X_i) >= 1/2 * (L_theta(G)/(1+8 K_G))^4,
+    Imax := max_i I(theta;X_i) >= (L_theta(G)/(1+8 K_G))^4,
 
 where K_G is any universal real Grothendieck constant and information is in nats. K_G<1.783 is independently documented by the standard Grothendieck literature; using K_G=2 yields a conservative numerical instance.
 
@@ -14,7 +14,7 @@ Under product mean_increment applied to G of global degree≤3, either an observ
 - Normalize f=c+a·x+B(x,x). Bound ||a||_1≤1/2 and bilinear cut norm ||B||_{∞→∞}≤2 by f∈[0,1] and polarization.
 - For arbitrary correlated input pair (X,Y), Delta=X−Y, Mid=(X+Y)/2, p=max_i Pr[Xi≠Yi], use Hilbert vectors Delta_i/(2√p) and sign(B(Delta,Mid)) Mid_j in H=L²(pair law).
 - Real Grothendieck gives E|B(Delta,Mid)|≤4K_G√p. Therefore E|f(X)−f(Y)|≤p+8K_G√p.
-- Under the latent threshold coupling p_i=Eθθ' TV(muθi,muθ'i)≤√(2 I(theta;X_i)), yielding Imax≥Lθ^4/[2(1+8K_G)^4].
+- Under the latent threshold coupling p_i=Eθθ' |biasθi-biasθ'i|, Cauchy-Schwarz gives p_i²≤2Varθ(biasθi)≤I(theta;X_i) by Bernoulli Pinsker in nats. Hence Imax≥Lθ^4/(1+8K_G)^4 without a triangle-inequality loss.
 - The dependence on M disappears because the norm comparison is dimension-free even when pair coordinates are globally correlated by theta.
 
 ## Verification and source custody
@@ -25,14 +25,15 @@ Proof source:
 Executable checks:
 - fur_q2_grothendieck_exact_audit.py: exact rational norm calculations, 16 correlated joint-pair quadratic examples, 2,048-label one-hot obstruction to naive max-swapping (not FUR).
 - fur_pointwise_exact_audit.py: exact rational polynomial mismatch-thinning for 16 product-pair quadratic examples and degree-five parity negative control.
-- test_fur_q2_grothendieck_exact_audit.py / test_fur_pointwise_exact_audit.py: ten falsifier and adversarial regression tests total.
+- test_fur_q2_grothendieck_exact_audit.py / test_fur_pointwise_exact_audit.py / test_fur_binary_information_proxy_exact.py: fifteen falsifier and adversarial regression tests total.
+- fur_binary_information_proxy_exact.py: 24 exact finite posterior checks of q²≤2 Var(bias), including asymmetric weights and zero atoms; Pinsker itself is an external analytic dependency.
 - Workflow .github/workflows/nightfall-fur-q2-coupling-audit.yml.
 
 CI (exact head c21f97fc8de847d2b2a5d795f5f71eaaa20fbe7f):
-https://github.com/d3lefts/d3lefts/actions/runs/44639924684
-Status: success; 10/10 tests; two exact 16-instance trial families.
-Artifact: https://github.com/d3lefts/d3lefts/actions/runs/44639924684/artifacts/14586360209
-Artifact SHA256: 4bbfe51c0fbdc8130e242dc7058bfe731e64e446a8510b3cb3efc42298b46141.
+https://github.com/d3lefts/d3lefts/actions/runs/44640686460
+Status: success; 15/15 tests; two exact 16-instance coupling families and 24 exact finite posterior bias-variance audits.
+Artifact: https://github.com/d3lefts/d3lefts/actions/runs/44640686460/artifacts/14585154088
+Artifact SHA256: 08f8d24db6988a6f39c1ed1703b0ab9805654b11fb25aef5b81ce402d2ace72c.
 All tests are **finite falsification only**; neither Grothendieck nor the universal quantum theorem is proved by the numeric computations.
 
 External theorem source checked this session:
@@ -52,7 +53,7 @@ Its Theorem 1 gives the required matrix-to-Hilbert inequality and a classical K_
 1. Inspect the expansion and polarization: ensure Q has no diagonal and its cube bound implies cut norm ≤2.
 2. Confirm the sign-weighted Hilbert vectors have unit L² norms even when X,Y have fully correlated coordinates.
 3. Verify the precise Grothendieck matrix/Hilbert formulation (not the complex variant) and no hidden dimension/alphabet dependence.
-4. Verify Pinsker inequality uses nats and correct square-root constants; check zero-posterior and zero-atom edge cases.
+4. Verify the sharper Bernoulli variance bridge: q_i²≤E(pθ-pθ\')²=2Varθ(pθ)≤I_i by Pinsker in nats; check zero posterior and zero atoms.
 5. Inspect the exact ProductInfluence.pincr normalization and conditional lift degree≤3 for arbitrary posterior sections.
 6. Try counterexamples with arbitrary binary correlated sources before assuming all-alphabet transfer.
 7. Check the precise entropy-potential/Markov stopping-time and deterministic-query simulator statement, including prior-art overlap.
