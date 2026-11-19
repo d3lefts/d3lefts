@@ -1,0 +1,55 @@
+name: NIGHTFALL Q3 scalar-to-Hilbert Khintchine lifting Lean
+on:
+  push:
+    branches: [nightfall-anchored-multipartite-e2-20261117]
+    paths:
+      - 'research/nightfall/formalization/observability/HilbertFromScalarKhintchine.lean'
+      - '.github/workflows/nightfall-q3-scalar-to-hilbert-lean.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/HilbertFromScalarKhintchine.lean'
+      - '.github/workflows/nightfall-q3-scalar-to-hilbert-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  scalar-to-hilbert:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Strict scalar-to-vector L1/L2 reduction kernel
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/HilbertFromScalarKhintchine.lean \
+            --workspace /tmp/mathlib4 --timeout 480 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.CubicQ3.ScalarToHilbert.finite_cauchy_norm \
+            --decl Nightfall.CubicQ3.ScalarToHilbert.vector_khintchine_from_scalar_coordinates \
+            --json-out lean-receipts/q3-scalar-to-hilbert.json || {
+              cat lean-receipts/q3-scalar-to-hilbert.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q3-scalar-to-hilbert.json
+      - name: Preserve source/compiler
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/observability/HilbertFromScalarKhintchine.lean > lean-receipts/SHA256SUMS
+          git rev-parse HEAD > lean-receipts/repository-head.txt
+          (git -C /tmp/mathlib4 rev-parse HEAD || true) > lean-receipts/mathlib-head.txt
+          cat lean-toolchain > lean-receipts/lean-toolchain.txt
+      - name: Upload receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-q3-scalar-hilbert-lean
+          path: lean-receipts/
+          retention-days: 45
+          if-no-files-found: warn
