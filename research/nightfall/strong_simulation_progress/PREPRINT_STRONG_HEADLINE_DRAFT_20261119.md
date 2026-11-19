@@ -37,7 +37,8 @@ acceptance probability to fixed additive accuracy with failure at most `δ`,
 using polynomial dependence on `M, t, 1/ε, 1/c` and **polylogarithmic**
 dependence on `1/δ` for every fixed number of quantum query rounds. The proof
 uses a dimension-independent component-identification lemma, dyadic
-uniform-source encoding, uniform-cube strong simulation, and Bernstein
+uniform-source encoding, uniform-cube strong simulation, an explicit
+block-length bound, weighted conditional likelihood tests, and Bernstein
 interpolation of an approximating failure-event polynomial. The
 component-identification finite arithmetic has been kernel checked in Lean,
 but the full analytic and simulator-transfer proof remains unverified.
@@ -62,9 +63,10 @@ depth(T) ≤ M · 2^{O(d²)}
 ```
 
 Constants in the `O(·)` notation are universal in the intended BDST
-parameter regime; the displayed asymptotic is **not yet independently
-verified** pending an explicit fixed-point choice of dyadic block length and
-full conditional duel accounting. No polynomial-time implementation is claimed.
+parameter regime; the displayed asymptotic has an **author-side explicit fixed-point derivation
+and weighted conditional duel proof**, recorded in
+[STRONG_TRANSFER_CLOSURE_20261119.md](STRONG_TRANSFER_CLOSURE_20261119.md),
+but has **not been independently reviewed or kernel certified**. No polynomial-time implementation is claimed.
 For unbounded `d` this display does not imply a useful efficient simulator.
 The dependence on `c` excludes zero-mass atoms; the baseline general
 mixture theorem continues to cover them at polynomial inverse-failure cost.
@@ -115,8 +117,11 @@ and evaluated without allowing prior duel outcomes to alter the future
 conditioning. The true component, when its own simulator is correct,
 wins all decisive duels except on a small weighted exceptional set.
 Therefore an undefeated candidate, when present, outputs within `5ε`
-of `f`. The **weighted conditional testing error bound** is currently a
-paper argument and still requires an independently checked full proof.
+of `f`. The weighted conditional testing error bound now has an explicit
+transcript-by-transcript paper derivation in
+[STRONG_TRANSFER_CLOSURE_20261119.md](STRONG_TRANSFER_CLOSURE_20261119.md).
+In particular, it avoids the false factorization of weighted overlap
+under unequal transcript probabilities. Independent review remains required.
 Choosing the internal failure parameter at scale `εδ/M²` gives the
 advertised `log(M/(εδ))` tests.
 
@@ -127,12 +132,12 @@ advertised `log(M/(εδ))` tests.
 | Previously published-in-repo general mixture theorem, polynomial in 1/δ | Existing Lean certification; keep unchanged |
 | Finite conditional mean/failure and Hellinger cutoff in Lemma 1 | Lean kernel compile + standard axioms, run 44487229739 |
 | Complete Lemma 1 with Bernstein law interpolation and product tensorization | Paper proof, incomplete Lean bridge |
-| Dyadic product transfer with log(1/c) | Paper construction + independent analytic audit; fixed-point bound still outstanding |
-| Weighted conditional M-component tournament | Paper argument; independent proof and counterexample tests outstanding |
+| Dyadic product transfer with log(1/c) | Paper construction + explicit author-side fixed-point bound; independent verification and Lean certification outstanding |
+| Weighted conditional M-component tournament | Explicit paper proof with weighted transcript priors; independent critical review and Lean certification outstanding |
 | Full strong bounded-round mixture theorem | **PROVISIONAL; neither Lean certified nor independently reviewed** |
 | Novelty of any complete theorem | Preliminary literature comparison only; not certified |
 
-**Promotion gate:** Explicit constants/fixed-point proof; fully grounded
+**Promotion gate:** Independent check of explicit constants/fixed-point proof; fully grounded
 coherent finite-alphabet query model; separate conditional duel audit;
 nonvacuous adversarial exact tests; complete analytic formalization;
 independent non-author mathematical review; dated specialist prior-art
