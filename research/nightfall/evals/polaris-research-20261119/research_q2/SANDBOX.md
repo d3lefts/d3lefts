@@ -1,12 +1,12 @@
 # ProofGraph-Hard Q2 — sealed-container execution gate (experimental)
 
-**Status:** source and CLI policy implemented; static/unit tests are part of PR CI. This document is **not evidence that a Docker image has been built, inspected, signed, or run successfully**. The established trusted Lean reference CI uses a hosted runner and does not exercise this path.
+**Status (2026-11-19):** an ephemeral pinned-source image **was built** in [isolated CI run 44575864049](https://github.com/d3lefts/d3lefts/actions/runs/44575864049), but **all three proof controls failed before producing grader JSON**. This is an infrastructure failure, not proof rejection; [failure receipts](https://github.com/d3lefts/d3lefts/actions/runs/44575864049/artifacts/14557991714). The source has since been revised to replace the multi-GB Mathlib workspace copy with a symlink-backed writable file tree, to retain Docker stderr, and to create individual negative-case Lean receipts. These revisions have not yet passed a new container run. No independently audited image or security certification exists.
 
 ## Why this gate exists
 
 Lean 4 permits metaprogram execution during elaboration. Compiling an untrusted candidate directly in the repository or the reusable Mathlib workspace is unsafe. Reusing the workspace also risks contamination of subsequent trials by leftover .olean files. The container runner stages exactly five files: trusted Bernstein lemma, frozen terminal theorem, grading script, Lean pin, and the **candidate-submitted** proof. It never mounts the source repository or the known public reference proof as an extra source.
 
-The `sandbox_runner.py` wrapper refuses any unpinned image, refuses a missing Docker runtime, refuses unexpected staging files, and ensures only the sealed task is bind-mounted read-only. Docker is configured without network access, as nonroot uid 10001, with read-only root filesystem, no capabilities, no-new-privileges, a PID cap, CPU/memory caps, and fresh tmpfs for a copied Mathlib workspace. The compiled objects cannot survive into another run. The only host receipt is written by the trusted wrapper after validation of the grader's JSON result.
+The `sandbox_runner.py` wrapper refuses any unpinned image, refuses a missing Docker runtime, refuses unexpected staging files, and ensures only the sealed task is bind-mounted read-only. Docker is configured without network access, as nonroot uid 10001, with read-only root filesystem, no capabilities, no-new-privileges, a PID cap, CPU/memory caps, and fresh tmpfs for a **symlink-backed** Mathlib workspace. Original pinned compiled artifacts remain in the read-only image; only new proof outputs are writable in the trial's tmpfs. The compiled objects cannot survive into another run. The only host receipt is written by the trusted wrapper after validation of the grader's JSON result.
 
 **Security limitations:** Docker is not a virtual machine. The Docker daemon, image, kernel, host wrapper, Linux isolation settings, and grader remain in the trusted computing base. This runner has not been penetration-tested; do not run hostile submissions on privileged or sensitive hosts. For high-stakes evaluation use a dedicated disposable VM with rootless container runtime, independent artifact rebuild, enforced resource quotas, and external auditing. An image pinned by digest is not automatically trustworthy.
 
@@ -38,7 +38,7 @@ This is a **template**, not an executed command. The image must expose a pinned 
 python3 -m unittest discover -s research/nightfall/evals/polaris-research-20261119/research_q2 -p 'test*.py' -v
 ```
 
-Tests inspect the sealed file set, immutable-image syntax, required Docker flags, compiler identity, and fail-closed behavior. They do **not** test container escape resistance or prove that the preliminary Dockerfile builds.
+Tests inspect the sealed file set, immutable-image syntax, required Docker flags, compiler identity, and fail-closed behavior. They do **not** test container escape resistance. The initial Dockerfile **has built in CI**, but none of the three original runtime checks succeeded; a revised image/control run is mandatory.
 
 ## Scoring boundary
 
