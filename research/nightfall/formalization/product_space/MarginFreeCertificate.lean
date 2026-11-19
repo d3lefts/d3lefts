@@ -77,7 +77,7 @@ theorem rounding_mass_balance {α : Type*} [DecidableEq α]
     ring
   have hsplit : (∑ i ∈ s.erase anchor, (q i - p i)) +
       (q anchor - p anchor) = ∑ i ∈ s, (q i - p i) := by
-    exact Finset.sum_erase_add ha
+    exact Finset.sum_erase_add s ha
   linarith
 
 /-- Exact finite-dimensional rounding displacement, with no positivity floor
@@ -102,7 +102,7 @@ theorem rounding_mass_bound {α : Type*} [DecidableEq α]
       _ = ((s.erase anchor).card : ℝ) * ρ := by simp
       _ ≤ (s.card : ℝ) * ρ := by
         gcongr
-        exact Finset.card_le_card (Finset.erase_subset anchor s)
+        exact Finset.erase_subset anchor s
 
 /-- If the reserved anchor has probability at least 1/|Σ|, its conditional
     mismatch probability is bounded by |Σ|² ρ. No lower bound is assumed
@@ -120,8 +120,8 @@ theorem rounding_conditional_mismatch {α : Type*} [DecidableEq α]
   have hp_pos : 0 < p anchor := by
     have : 0 < 1 / (s.card : ℝ) := by positivity
     linarith
-  have hlow : 1 ≤ (s.card : ℝ) * p anchor :=
-    (div_le_iff₀ hcard).mp hanchor
+  have hlow : 1 ≤ (s.card : ℝ) * p anchor := by
+    simpa [mul_comm] using ((div_le_iff₀ hcard).mp hanchor)
   have hmass := (rounding_mass_bound s anchor p q ρ ha hρ hp hq hround).2
   have hnonneg : 0 ≤ (s.card : ℝ) * ρ :=
     mul_nonneg (le_of_lt hcard) hρ
