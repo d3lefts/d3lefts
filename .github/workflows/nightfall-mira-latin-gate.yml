@@ -42,6 +42,24 @@ jobs:
           git rev-parse HEAD > lean-receipts/latin/repo-head.txt
           git -C .lake/packages/mathlib rev-parse HEAD > lean-receipts/latin/mathlib-head.txt
           sha256sum Nightfall/LatinSquare/ExactFlattening.lean lean-toolchain docs/lean-compiler-lock.json > lean-receipts/latin/source-sha256.txt
+      - name: NIGHTFALL strict compiler bridge receipt and axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py Nightfall/LatinSquare/ExactFlattening.lean \
+            --strict --timeout 600 \
+            --allow-axiom propext \
+            --allow-axiom Classical.choice \
+            --allow-axiom Quot.sound \
+            --decl Nightfall.LatinSquare.weighted_ratio_balance \
+            --decl Nightfall.LatinSquare.soft_forward_atom \
+            --decl Nightfall.LatinSquare.soft_forward_sum \
+            --decl Nightfall.LatinSquare.stage_gate_identity \
+            --decl Nightfall.LatinSquare.flattenMass_eq \
+            --decl Nightfall.LatinSquare.normalized_flatten_mass \
+            --decl Nightfall.LatinSquare.normalize_weighted_mass \
+            --decl Nightfall.LatinSquare.weighted_flatten_normalizes \
+            --json-out lean-receipts/latin/bridge.json 2>&1 | tee lean-receipts/latin/bridge.log
       - name: Preserve theorem-source and compiler evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
