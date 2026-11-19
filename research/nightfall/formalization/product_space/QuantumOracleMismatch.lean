@@ -17,7 +17,7 @@ namespace Nightfall.QuantumOracleMismatch
 
 open Finset
 
-variable {ι α V : Type*} [Fintype ι] [NormedAddCommGroup V]
+variable {ι α V : Type*} [Fintype ι] [DecidableEq α] [NormedAddCommGroup V]
 
 /-- A symbol-controlled isometry costs at most four times the norm-squared
 budget concentrated on the indices where two input strings differ. -/
