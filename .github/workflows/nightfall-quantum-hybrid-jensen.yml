@@ -1,0 +1,35 @@
+name: NIGHTFALL quantum hybrid finite Jensen bridge
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/QuantumHybridWeightedExpectation.lean'
+      - '.github/workflows/nightfall-quantum-hybrid-jensen.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  hybrid-mismatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile finite hybrid-Jensen bridge and audit exact axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/product_space/QuantumHybridWeightedExpectation.lean
+          cp "$SRC" /tmp/mathlib4/QuantumHybridWeightedExpectation.lean
+          cd /tmp/mathlib4
+          lake env lean -o .lake/build/lib/lean/QuantumHybridWeightedExpectation.olean QuantumHybridWeightedExpectation.lean 2>&1 | tee /tmp/hybrid.log
+          if grep -q "error:\|declaration uses .sorry" /tmp/hybrid.log; then exit 1; fi
+          printf '%s\n' 'import QuantumHybridWeightedExpectation' \
+            '#print axioms Nightfall.QuantumHybridWeightedExpectation.weighted_sqrt_le_sqrt_budget' \
+            '#print axioms Nightfall.QuantumHybridWeightedExpectation.query_weighted_mismatch_mean_le' \
+            '#print axioms Nightfall.QuantumHybridWeightedExpectation.query_weighted_sqrt_discrepancy_le' > HybridAxioms.lean
+          lake env lean HybridAxioms.lean | tee /tmp/hybrid-axioms.log
+          if grep -q "sorryAx" /tmp/hybrid-axioms.log; then exit 1; fi
