@@ -70,8 +70,8 @@ theorem observedLaw_eq_canonical_pushforward
     by_cases hi : i ∈ S
     · simp [G, observedLaw, hi]
     · by_cases hy : a0 = y i
-      · simp [G, observedLaw, hi, hy, hp1 i]
-      · simp [G, observedLaw, hi, hy]
+      · simp [G, observedLaw, delta, hi, hy, hp1 i]
+      · simp [G, observedLaw, delta, hi, hy]
   calc
     (∑ x : ι → α, prodMass p x *
       (if canonicalObservation S a0 x = y then (1 : ℝ) else 0)) =
