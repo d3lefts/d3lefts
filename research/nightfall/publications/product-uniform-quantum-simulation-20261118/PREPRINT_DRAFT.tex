@@ -29,7 +29,7 @@ We construct deterministic classical query trees that approximate bounded low-de
 \quad\text{with}\quad
 \Prb_\mu\!\left[|f(X)-\widetilde f(X)|>\varepsilon\right]\le\delta.
 \]
-Because a $T$-query quantum algorithm's acceptance probability has degree at most $2T$, this yields a \emph{paper-level} query simulation bound $O(T^6\varepsilon^{-3}\delta^{-5/2})$ simultaneously for all product laws. The quantitative real-function theorem, including its decision-tree construction, row bound, and error estimate, is formalized in Lean; the final quantum-circuit-to-polynomial step remains a mathematical argument rather than a Lean theorem. A competing-symbol selector transports the bounded-polynomial fractional-certificate bound from Boolean to arbitrary alphabets, and a separate infinite-product theorem transports influence inequalities to $L^2$. We distinguish these certificates from claims of priority: a weighted extension of the recent Huffstutler--Miloschewsky--Podder completion method remains a specific external-review risk.
+Because a $T$-query quantum algorithm's acceptance probability has degree at most $2T$, this yields a query simulation bound $O(T^6\varepsilon^{-3}\delta^{-5/2})$ simultaneously for all product laws. Both the low-degree real-function simulator and the semantic finite complex matrix-oracle circuit-to-polynomial degree bridge are now formalized in Lean. In the end-to-end circuit theorem the Born acceptance range $[0,1]$ is an explicit premise. A separate Lean certificate derives this bound from unit-norm starting states and norm-preserving gates/oracles; integration of that normalization into the complete simulator terminal is tracked separately. A competing-symbol selector transports the bounded-polynomial fractional-certificate bound from Boolean to arbitrary alphabets, and a separate infinite-product theorem transports influence inequalities to $L^2$. We distinguish these certificates from claims of priority: a weighted extension of the recent Huffstutler--Miloschewsky--Podder completion method remains a specific external-review risk.
 \end{abstract}
 
 \section{Statement and context}
@@ -170,7 +170,7 @@ O_x=\sum_{i,s}\one[x_i=s]\,A_{i,s}+A_\perp,
 \]
 where the matrices $A_{i,s},A_\perp$ are independent of $x$ and the oracle unitary property is imposed in the query model. Every amplitude starts with indicator degree zero, fixed unitaries preserve its degree, and an oracle call raises it by at most one. Thus all amplitudes after $T$ calls have indicator degree at most $T$. The acceptance probability is a sum of squared moduli and therefore has degree at most $2T$. Products of indicators at one coordinate collapse to zero or a single indicator. This is the familiar Beals--Buhrman--Cleve--Mosca--de Wolf polynomial-method argument \cite{Beals01} in a finite-alphabet indicator basis.
 
-\begin{corollary}[Quantum simulation; paper-level bridge]\label{cor:quantum}
+\begin{corollary}[Quantum simulation; formally certified matrix-oracle bridge]\label{cor:quantum}
 For any $T\ge1$, any product input law $\mu$ on finite alphabets, and any $T$-query quantum algorithm with acceptance probability $Q$, there exists a deterministic classical query tree making no more than
 \[
 \left\lceil\frac{384\sqrt2\,\pi^6T^6}{\varepsilon^3\delta^{5/2}}\right\rceil
@@ -179,7 +179,7 @@ whole-symbol queries on every input and satisfying
 $\Prb_{\mu}(|Q-\widetilde Q|>\varepsilon)\le\delta$.
 \end{corollary}
 
-\emph{Formalization boundary.} The Lean theorem takes $Q$ as a bounded degree-$2T$ real function. The abstract unitary/oracle model and the amplitude-degree bridge above have \emph{not yet} been encoded in Lean. This boundary must appear in any public abstract, certification table and release.
+\emph{Formalization boundary.} The Lean declaration \texttt{QuantumCircuitSimulation.acceptance\_degree} derives degree at most $2T$ directly from the semantics of finite complex matrix-oracle circuits whose input-dependent oracle entries are finite linear combinations of single-symbol indicators. The separate \texttt{circuit\_uniform\_simulation} declaration then proves the displayed query bound, under the explicit premise that the circuit's measured Born acceptance probability lies in $[0,1]$. The proof contains no assumed low-degree hypothesis. \texttt{QuantumCircuitNormalization.execute\_energy\_one} and \texttt{probability\_in\_unit\_interval} have separately passed the pinned Lean audit for norm-preserving (unitary) gates/oracles; their final combined terminal is under an additional exact-head integration check. The result does not provide polynomial-time classical computation or cover correlated input laws.
 
 \section{Infinite-product influence and cube consistency}
 The infinite-product result is distinct from the finite decision-tree theorem. Let $(X_i,\mu_i)_{i\in I}$ be measurable probability spaces indexed by any type $I$, and let $G\in L^2(\bigotimes_i\mu_i)$ have Efron--Stein degree at most $d$, essential bound $|G|\le B$, and every coordinate influence at most $M$. The Lean terminal
@@ -199,7 +199,7 @@ Huffstutler, Miloschewsky and Podder \cite{HMP26} prove a stronger quantitative 
 
 Escudero Guti\'errez, Saucedo and Palazuelos \cite{ESP26} prove nonadaptive randomized simulation for a restricted class of parallel quantum query algorithms. Liu and Mutreja \cite{LM26} establish simulation results in parallel or constant-adaptivity models. These are related but do not explicitly imply the fully adaptive, distribution-uniform statement above.
 
-Our construction is a worst-case \emph{query-depth} guarantee, not a polynomial-time simulator. Its bounds are not asserted optimal. Independent proof review, a comprehensive priority determination, and an exact-head strict Lean receipt for the new simulator are still required before submission.
+Our construction is a worst-case \emph{query-depth} guarantee, not a polynomial-time simulator. Its bounds are not asserted optimal. Independent proof review, a comprehensive priority determination, validation of the final normalization-integrated receipt, and contributor authorization are still required before submission. The degree-to-quantum conditional terminal already has an exact-head strict Lean receipt.
 
 \section{Lean certificate crosswalk}
 \small
@@ -221,8 +221,12 @@ Infinite-product influence
 & \texttt{InfinitePiAAProductTerminal.infinitePi\_aa\_product} (\texttt{InfinitePiAAProductTerminal.lean})\\
 Printed AA conjecture consistency
 & \texttt{CubeAA.printedConjecture} (\texttt{CubePrintedAA.lean})\\
-Quantum amplitude degree $\le2T$
-& \emph{Paper-level only; no Lean declaration yet}\\
+Quantum path-sum degree $\le2T$ and exact circuit semantics
+& \texttt{QuantumCircuitPaths.execute\_eq\_path\_sum}, \texttt{QuantumPath.pathBorn\_degree}, \texttt{QuantumCircuitSimulation.acceptance\_degree}\\
+Quantum acceptance simulation with Born-range premise
+& \texttt{QuantumCircuitSimulation.circuit\_uniform\_simulation}\\
+Derived normalization of unitary finite circuits
+& \texttt{QuantumCircuitNormalization.execute\_energy\_one}, \texttt{QuantumCircuitNormalization.probability\_in\_unit\_interval}\\
 \bottomrule
 \end{tabular}
 \normalsize
@@ -230,7 +234,7 @@ Quantum amplitude degree $\le2T$
 \paragraph{Evidence and review gate.}
 Frozen source head: \texttt{771d11af21896aa83f481b332d21d7d706b56927}. Lean: \texttt{4.36.0-rc2}; Mathlib: \texttt{9d581dfff2e41de989072ea63abf3daf69311520}. The named-theorem strict audit runs at
 \url{https://github.com/d3lefts/d3lefts/actions/runs/44433153026}.
-This exact-head, 178-module run has \emph{completed successfully}: the compiler closure, strict \texttt{simulation\_degree} named-declaration/axiom audit and receipt capture all passed. Frozen artifact: \texttt{aa-product-terminal-44433153026}, ID \texttt{14487982785}. Allowed axioms were \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}. The older integrated Lake success did not contain this new module, and the quantum-amplitude degree bridge remains paper-only. The report \texttt{PRIORITY\_AUDIT.md} records the exact external comparisons and the missing adversarial checks.
+This exact-head, 178-module run has \emph{completed successfully}: the compiler closure, strict \texttt{simulation\_degree} named-declaration/axiom audit and receipt capture all passed. Frozen artifact: \texttt{aa-product-terminal-44433153026}, ID \texttt{14487982785}. Allowed axioms were \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}. The older integrated Lake success did not contain this simulator module. The later direct finite-circuit bridge is source-exact at commit \texttt{eac7f4a83efd0a0ab7e4dd28ccc56bc84c13b888}: [run \#44447261048](https://github.com/d3lefts/d3lefts/actions/runs/44447261048), receipt artifact ID \texttt{14494179023}, verified for the same three standard axioms. Separately, the unitary norm-preservation theorem is certified at \texttt{052dd6bd36448c8f333e79350e0616306351747d} (run \#44460155695, artifact \texttt{14499941606}). The review note \texttt{PRIORITY\_AUDIT.md} records the exact external comparisons and the missing adversarial checks.
 
 \section*{Acknowledgment and contribution transparency}
 The row and influence chain builds on Turturean's proof and uses credited, pinned, license-compatible vendored upstream Lean modules. The degree-to-quantum simulation step uses the established polynomial method. NIGHTFALL's author-side analysis and AI-assisted formalization require the responsible human authors to determine accurate contribution credit and independently review the arguments before public deposition. This draft names no unconsenting expert as a reviewer or author.
