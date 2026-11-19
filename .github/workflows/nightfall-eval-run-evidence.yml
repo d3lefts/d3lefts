@@ -1,0 +1,30 @@
+name: NIGHTFALL SWE frozen-run evidence acceptance
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/evaluations/assurance/**"
+      - ".github/workflows/nightfall-eval-run-evidence.yml"
+  push:
+    branches: [main]
+    paths:
+      - "research/nightfall/evaluations/assurance/**"
+      - ".github/workflows/nightfall-eval-run-evidence.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit-receipt-gate:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Verify syntax and 28+ synthetic attack cases, no agent execution
+        run: |
+          python -m py_compile research/nightfall/evaluations/assurance/frozen_run_gate.py
+          python -m unittest discover -s research/nightfall/evaluations/assurance/tests -v

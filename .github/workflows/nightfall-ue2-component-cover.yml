@@ -1,0 +1,30 @@
+name: NIGHTFALL componentwise fractional cover influence exact audit (scoped)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/flagship-influence/check_component_cover_ue2.py'
+      - 'research/nightfall/flagship-influence/COMPONENT_FRACTIONAL_COVER_UE2_20261117.md'
+      - '.github/workflows/nightfall-ue2-component-cover.yml'
+  push:
+    branches: [nightfall-ue2-component-fractional-cover-20261117]
+    paths:
+      - 'research/nightfall/flagship-influence/check_component_cover_ue2.py'
+      - 'research/nightfall/flagship-influence/COMPONENT_FRACTIONAL_COVER_UE2_20261117.md'
+      - '.github/workflows/nightfall-ue2-component-cover.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-fraction-cover:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Source-exact categorical ANOVA and cover regression
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/flagship-influence/check_component_cover_ue2.py
+          sha256sum research/nightfall/flagship-influence/check_component_cover_ue2.py
+          git rev-parse HEAD

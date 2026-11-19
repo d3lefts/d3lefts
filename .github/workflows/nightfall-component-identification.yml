@@ -3,6 +3,19 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/product_space/ComponentIdentification.lean'
+      - 'research/nightfall/formalization/product_space/ComponentIdentificationWeightedTournament.lean'
+      - 'research/nightfall/formalization/product_space/StrongMixtureDuel.lean'
+      - 'research/nightfall/formalization/product_space/LatentProductInterpolationDegree.lean'
+      - 'research/nightfall/formalization/product_space/LatentExpectationEvaluation.lean'
+      - 'research/nightfall/formalization/product_space/StrongMixtureTerminalConditional.lean'
+      - 'research/nightfall/formalization/product_space/StrongMixtureTournament.lean'
+      - 'research/nightfall/formalization/product_space/StrongSeedFixing.lean'
+      - 'research/nightfall/formalization/product_space/LatentLikelihoodRatio.lean'
+      - 'research/nightfall/formalization/product_space/StrongSmoothingAmplifier.lean'
+      - 'research/nightfall/formalization/product_space/StrongMarkovEndpoint.lean'
+      - 'research/nightfall/formalization/product_space/StrongSmoothingPolynomial.lean'
+      - 'research/nightfall/formalization/product_space/StrongSmoothingUniform.lean'
+      - 'research/nightfall/formalization/product_space/StrongMarkovRescale.lean'
       - 'research/nightfall/strong_simulation_progress/component_id_nonvacuous_check.py'
       - '.github/workflows/nightfall-component-identification.yml'
   workflow_dispatch:
@@ -24,17 +37,88 @@ jobs:
         run: |
           set -euo pipefail
           cp research/nightfall/formalization/product_space/ComponentIdentification.lean /tmp/mathlib4/ComponentIdentification.lean
+          cp research/nightfall/formalization/product_space/ComponentIdentificationWeightedTournament.lean /tmp/mathlib4/ComponentIdentificationWeightedTournament.lean
+          cp research/nightfall/formalization/product_space/StrongMixtureDuel.lean /tmp/mathlib4/StrongMixtureDuel.lean
+          cp research/nightfall/formalization/product_space/LatentProductInterpolationDegree.lean /tmp/mathlib4/LatentProductInterpolationDegree.lean
+          cp research/nightfall/formalization/product_space/LatentExpectationEvaluation.lean /tmp/mathlib4/LatentExpectationEvaluation.lean
+          cp research/nightfall/formalization/product_space/StrongMixtureTerminalConditional.lean /tmp/mathlib4/StrongMixtureTerminalConditional.lean
+          cp research/nightfall/formalization/product_space/StrongMixtureTournament.lean /tmp/mathlib4/StrongMixtureTournament.lean
+          cp research/nightfall/formalization/product_space/StrongSeedFixing.lean /tmp/mathlib4/StrongSeedFixing.lean
+          cp research/nightfall/formalization/product_space/LatentLikelihoodRatio.lean /tmp/mathlib4/LatentLikelihoodRatio.lean
+          cp research/nightfall/formalization/product_space/StrongSmoothingAmplifier.lean /tmp/mathlib4/StrongSmoothingAmplifier.lean
+          cp research/nightfall/formalization/product_space/StrongMarkovEndpoint.lean /tmp/mathlib4/StrongMarkovEndpoint.lean
+          cp research/nightfall/formalization/product_space/StrongSmoothingPolynomial.lean /tmp/mathlib4/StrongSmoothingPolynomial.lean
+          cp research/nightfall/formalization/product_space/StrongSmoothingUniform.lean /tmp/mathlib4/StrongSmoothingUniform.lean
+          cp research/nightfall/formalization/product_space/StrongMarkovRescale.lean /tmp/mathlib4/StrongMarkovRescale.lean
           cd /tmp/mathlib4
           lake env lean -o .lake/build/lib/lean/ComponentIdentification.olean ComponentIdentification.lean 2>&1 | tee /tmp/ci.log
-          if grep -q "declaration uses .sorry" /tmp/ci.log; then echo "sorry found"; exit 1; fi
-          if grep -q "error" /tmp/ci.log; then exit 1; fi
+          lake env lean -o .lake/build/lib/lean/ComponentIdentificationWeightedTournament.olean ComponentIdentificationWeightedTournament.lean 2>&1 | tee /tmp/ci-weighted.log
+          lake env lean -o .lake/build/lib/lean/StrongMixtureDuel.olean StrongMixtureDuel.lean 2>&1 | tee /tmp/ci-duel.log
+          lake env lean -o .lake/build/lib/lean/LatentProductInterpolationDegree.olean LatentProductInterpolationDegree.lean 2>&1 | tee /tmp/ci-interp.log
+          lake env lean -o .lake/build/lib/lean/LatentExpectationEvaluation.olean LatentExpectationEvaluation.lean 2>&1 | tee /tmp/ci-eval.log
+          lake env lean -o .lake/build/lib/lean/LatentLikelihoodRatio.olean LatentLikelihoodRatio.lean 2>&1 | tee /tmp/ci-lr.log
+          lake env lean -o .lake/build/lib/lean/StrongSmoothingAmplifier.olean StrongSmoothingAmplifier.lean 2>&1 | tee /tmp/ci-smooth.log
+          lake env lean -o .lake/build/lib/lean/StrongMarkovEndpoint.olean StrongMarkovEndpoint.lean 2>&1 | tee /tmp/ci-markov.log
+          lake env lean -o .lake/build/lib/lean/StrongSmoothingPolynomial.olean StrongSmoothingPolynomial.lean 2>&1 | tee /tmp/ci-smooth-poly.log
+          lake env lean -o .lake/build/lib/lean/StrongSmoothingUniform.olean StrongSmoothingUniform.lean 2>&1 | tee /tmp/ci-smooth-uniform.log
+          lake env lean -o .lake/build/lib/lean/StrongMixtureTerminalConditional.olean StrongMixtureTerminalConditional.lean 2>&1 | tee /tmp/ci-terminal.log
+          lake env lean -o .lake/build/lib/lean/StrongMixtureTournament.olean StrongMixtureTournament.lean 2>&1 | tee /tmp/ci-tournament.log
+          lake env lean -o .lake/build/lib/lean/StrongSeedFixing.olean StrongSeedFixing.lean 2>&1 | tee /tmp/ci-seed.log
+          lake env lean -o .lake/build/lib/lean/StrongMarkovRescale.olean StrongMarkovRescale.lean 2>&1 | tee /tmp/ci-markov-rescale.log
+          if grep -q "declaration uses .sorry" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-eval.log /tmp/ci-lr.log /tmp/ci-smooth.log /tmp/ci-markov.log /tmp/ci-smooth-poly.log /tmp/ci-smooth-uniform.log /tmp/ci-terminal.log /tmp/ci-tournament.log /tmp/ci-seed.log /tmp/ci-markov-rescale.log; then echo "sorry found"; exit 1; fi
+          if grep -q "error" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-eval.log /tmp/ci-lr.log /tmp/ci-smooth.log /tmp/ci-markov.log /tmp/ci-smooth-poly.log /tmp/ci-smooth-uniform.log /tmp/ci-terminal.log /tmp/ci-tournament.log /tmp/ci-seed.log /tmp/ci-markov-rescale.log; then exit 1; fi
           cat > CIAxioms.lean <<'LEAN'
           import ComponentIdentification
+          import ComponentIdentificationWeightedTournament
+          import StrongMixtureDuel
+          import LatentProductInterpolationDegree
+          import LatentExpectationEvaluation
+          import LatentLikelihoodRatio
+          import StrongSmoothingAmplifier
+          import StrongMarkovEndpoint
+          import StrongSmoothingPolynomial
+          import StrongSmoothingUniform
+          import StrongMixtureTerminalConditional
+          import StrongMixtureTournament
+          import StrongSeedFixing
+          import StrongMarkovRescale
           open Nightfall.ComponentIdentification
           #print axioms component_identification_core
           #print axioms hellinger_K_le
           #print axioms mean_near
           #print axioms min_le_sqrt_mul
+          #print axioms WeightedTournament.weighted_overlap_from_pointwise_cost
+          #print axioms WeightedTournament.pair_error_budget
+          #print axioms WeightedTournament.strong_rounding_four_eta
+          #print axioms WeightedTournament.undefeated_output_accuracy
+          #print axioms Nightfall.StrongMixtureDuel.weighted_posterior_duel
+          #print axioms Nightfall.StrongMixtureDuel.undefeated_is_accurate
+          #print axioms Nightfall.StrongMixtureTournament.tournament_good
+          #print axioms Nightfall.StrongMixtureTournament.duel_loss_le_sum_pairs
+          #print axioms Nightfall.StrongMixtureTournament.strong_latent_mixture_terminal_tournament
+          #print axioms Nightfall.LatentProductInterpolationDegree.sparseExpectationPoly_natDegree_le
+          #print axioms Nightfall.LatentProductInterpolationDegree.affineMarginal_eval
+          #print axioms Nightfall.LatentProductInterpolationDegree.sparseExpectationPoly_eval
+          #print axioms Nightfall.LatentLikelihoodRatio.likelihood_two_sided_error_eq_overlap
+          #print axioms Nightfall.LatentLikelihoodRatio.likelihood_error_le_weighted_budget
+          #print axioms Nightfall.StrongSmoothing.amp_low_tail
+          #print axioms Nightfall.StrongSmoothing.amp_high_tail
+          #print axioms Nightfall.BiasFreeMarkov.chebyshev_endpoint_derivative_bound
+          #print axioms Nightfall.StrongSmoothing.ampPoly_natDegree_le
+          #print axioms Nightfall.StrongSmoothing.ampPoly_low_tail
+          #print axioms Nightfall.StrongSmoothing.ampPoly_high_tail
+          #print axioms Nightfall.StrongSmoothing.smoothPoly_natDegree_le
+          #print axioms Nightfall.StrongSmoothing.smoothPoly_small
+          #print axioms Nightfall.StrongSmoothing.smoothPoly_large
+          #print axioms Nightfall.StrongMixtureTerminal.strong_latent_mixture_terminal_conditional
+          #print axioms Nightfall.StrongSimulation.SeedFixing.exists_seed_le_average
+          #print axioms Nightfall.StrongSimulation.SeedFixing.exists_deterministic_seed
+          #print axioms Nightfall.StrongSimulation.SeedFixing.exists_weighted_seed
+          #print axioms Nightfall.StrongSimulation.SeedFixing.deterministicMapWeights_nonneg
+          #print axioms Nightfall.StrongSimulation.SeedFixing.deterministicMapWeights_sum_one
+          #print axioms Nightfall.StrongSimulation.SeedFixing.deterministicMapWeights_marginal
+          #print axioms Nightfall.BiasFreeMarkov.normalizedEndpointPoly_natDegree_le
+          #print axioms Nightfall.BiasFreeMarkov.normalizedEndpointPoly_derivative_eval_one
           LEAN
           sed -i 's/^          //' CIAxioms.lean
           lake env lean CIAxioms.lean | tee /tmp/axioms.txt

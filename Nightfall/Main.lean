@@ -1,6 +1,7 @@
 import Nightfall.Targets
 import ActualSourceQ2107Terminal
 import CubicTopCover105416
+import HighOrderCoreCover105416
 import CubicTopCoverEnergy
 import CubicTopCoverProjection
 import InfinitePiQ2Limit
@@ -9,6 +10,12 @@ import InfinitePiQ2AllL2LabelIntertwining
 import InfinitePiQ2RangeProjectionTransfer
 import InfinitePiQ2UnconditionalTerminal
 import InfinitePiQ2HoeffdingDegree
+import InfinitePiAAProductTerminal
+import CubePrintedAA
+import ProductSimulation
+import MixtureSimulation
+import InfinitePiAllDegreeLabelTransfer
+import InfinitePiAllDegreeFiniteResidualBridge
 import Q2ShiftedConditionalTargets
 
 /-!
@@ -28,6 +35,8 @@ The theorem audit below prints axioms for ACTUAL imported declarations; no
 hypothesis is discharged by printing an axiom list.
 -/
 
+#check Nightfall.Observability.HighOrderCoreCover105416.high_order_core_projection_degree_two
+#check Nightfall.Observability.HighOrderCoreCover105416.original_source_all_degree_high_order_core_105416
 #check Nightfall.Observability.CubicTopCover105416.actual_source_cubic_top_cover_105416
 #check Nightfall.Observability.CubicTopCoverProjection.actual_source_cubic_top_cover_107
 #check Nightfall.Observability.CubicTopCoverProjection.projected_variance_eq_outside_energy
@@ -47,6 +56,8 @@ hypothesis is discharged by printing an axiom list.
 #check Nightfall.InfinitePiQ2ConditionalSourceTest.source_condExp_coordinate_mul_other
 #check Nightfall.InfinitePiQ2SourceHilbertTensor.sourceOtherProjection_tensor_ae
 
+#print axioms Nightfall.Observability.HighOrderCoreCover105416.high_order_core_projection_degree_two
+#print axioms Nightfall.Observability.HighOrderCoreCover105416.original_source_all_degree_high_order_core_105416
 #print axioms Nightfall.Observability.CubicTopCover105416.actual_source_cubic_top_cover_105416
 #print axioms Nightfall.Observability.CubicTopCoverProjection.actual_source_cubic_top_cover_107
 #print axioms Nightfall.Observability.CubicTopCoverProjection.projected_variance_eq_outside_energy
@@ -85,3 +96,41 @@ hypothesis is discharged by printing an axiom list.
 #check Nightfall.InfinitePiQ2HoeffdingDegree.infinitePi_q2_105416_hoeffding
 #print axioms Nightfall.InfinitePiQ2HoeffdingDegree.hoeffdingDegreeLeTwo_tripleResidualZero
 #print axioms Nightfall.InfinitePiQ2HoeffdingDegree.infinitePi_q2_105416_hoeffding
+
+-- All-degree original-product AA and the printed fair-cube conjecture, in one Lake graph.
+-- The cube specialization uses upstream auxiliary lemmas, not the upstream terminal proof.
+#check Nightfall.InfinitePiAAProductTerminal.infinitePi_aa_product
+#check Nightfall.ProductSpace.CubeAA.mainTheorem_of_productSpace
+#check Nightfall.ProductSpace.CubeAA.printedConjecture
+#check Nightfall.ProductSpace.CubeAA.explicitBound
+#print axioms Nightfall.InfinitePiAAProductTerminal.infinitePi_aa_product
+#print axioms Nightfall.ProductSpace.CubeAA.mainTheorem_of_productSpace
+#print axioms Nightfall.ProductSpace.CubeAA.printedConjecture
+#print axioms Nightfall.ProductSpace.CubeAA.explicitBound
+
+-- Source-level, finite-product low-degree decision tree (separate from quantum oracle step).
+#check Nightfall.ProductSpace.Simulation.simulation_degree
+#check Nightfall.ProductSpace.Simulation.simulation_rows
+#print axioms Nightfall.ProductSpace.Simulation.simulation_degree
+#print axioms Nightfall.ProductSpace.Simulation.simulation_rows
+
+-- Source-exact #847 all-degree transfer intermediates. These are scoped statements,
+-- not the unresolved universal supported-cell/ANOVA semantic identification.
+#check Nightfall.InfinitePiAllDegreeLabelTransfer.original_source_label_all_degree
+#check Nightfall.InfinitePiAllDegreeLabelTransfer.original_cell_average_all_degree_zero
+#check Nightfall.InfinitePiAllDegreeFiniteIndicators.esDegreeLE_implies_indicatorDegreeLE
+#check Nightfall.InfinitePiAllDegreeFiniteResidualBridge.nativeResidualWords_imply_ESDegreeLE
+#check Nightfall.InfinitePiAllDegreeFiniteResidualBridge.nativeResidualWords_imply_indicatorDegreeLE
+#print axioms Nightfall.InfinitePiAllDegreeLabelTransfer.original_source_label_all_degree
+#print axioms Nightfall.InfinitePiAllDegreeLabelTransfer.original_cell_average_all_degree_zero
+#print axioms Nightfall.InfinitePiAllDegreeFiniteIndicators.esDegreeLE_implies_indicatorDegreeLE
+#print axioms Nightfall.InfinitePiAllDegreeFiniteResidualBridge.nativeResidualWords_imply_ESDegreeLE
+#print axioms Nightfall.InfinitePiAllDegreeFiniteResidualBridge.nativeResidualWords_imply_indicatorDegreeLE
+
+-- Jensen mixture term: separate certified query-tree bound, not quantum-circuit semantics.
+#check Nightfall.ProductSpace.Mixture.mixture_simulation_jensen
+#check Nightfall.ProductSpace.Mixture.increment_good_jensen
+#check Nightfall.ProductSpace.Mixture.power_mean
+#print axioms Nightfall.ProductSpace.Mixture.mixture_simulation_jensen
+#print axioms Nightfall.ProductSpace.Mixture.increment_good_jensen
+#print axioms Nightfall.ProductSpace.Mixture.power_mean

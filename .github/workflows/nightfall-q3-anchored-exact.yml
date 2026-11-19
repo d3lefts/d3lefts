@@ -1,0 +1,22 @@
+name: NIGHTFALL anchored tripartite exact rational audit (not Lean)
+on:
+  push:
+    branches: [nightfall-anchored-multipartite-e2-20261117]
+    paths:
+      - 'research/nightfall/cubic-q3/check_anchored_tripartite_exact.py'
+      - '.github/workflows/nightfall-q3-anchored-exact.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/cubic-q3/check_anchored_tripartite_exact.py'
+      - '.github/workflows/nightfall-q3-anchored-exact.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-anchored-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Exact original-law Fraction checker
+        run: python3 research/nightfall/cubic-q3/check_anchored_tripartite_exact.py

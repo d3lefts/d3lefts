@@ -25,6 +25,7 @@ Authoritative machine ledger: [docs/recent-research.json](../../../docs/recent-r
 - [Fair-cube cubic exponent-two explicit constant and k-anchor hybrid](fair-cubic.md) — Paper or exact-test candidate; [PR #807](https://github.com/d3lefts/d3lefts/pull/807)
 - [Strong simulation: candidate tail improvement and falsified shortcut](strong-simulation-frontier.md) — Paper or exact-test candidate; [PR #881](https://github.com/d3lefts/d3lefts/pull/881)
 - [Unified Lean/Lake source graph and receipt custody](lake-and-custody.md) — Integration or compiler gate open; [PR #859](https://github.com/d3lefts/d3lefts/pull/859)
+- [Mira Latin sampling: independent exact cycle-orbit moments and fixed-defect theorem](mira-latin-exact-sampling.md) — Author-side restricted proofs and finite exact replay; full n^25 theorem **unverified**; [separate proof receipts](https://github.com/d3lefts/d3lefts/actions/runs/44573134450)
 - [Original-product influence pinning decrement](source-pin-decrement.md) — PR-head / named Lean; [PR #861](https://github.com/d3lefts/d3lefts/pull/861)
 
 ## Review gate

@@ -1,0 +1,26 @@
+name: NIGHTFALL Q3 conditional energy transport exact audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/cubic-q3/check_q3_energy_transport.py'
+      - 'research/nightfall/cubic-q3/Q3_ENERGY_TRANSPORT_AND_COVER_AUDIT_20261118.md'
+      - '.github/workflows/nightfall-q3-energy-transport-audit.yml'
+  push:
+    branches:
+      - nightfall-q3-energy-transport-audit-20261118
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-rational-fixtures:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Source custody and full exact replay
+        run: |
+          set -euo pipefail
+          sha256sum research/nightfall/cubic-q3/check_q3_energy_transport.py research/nightfall/cubic-q3/Q3_ENERGY_TRANSPORT_AND_COVER_AUDIT_20261118.md
+          python3 -I research/nightfall/cubic-q3/check_q3_energy_transport.py

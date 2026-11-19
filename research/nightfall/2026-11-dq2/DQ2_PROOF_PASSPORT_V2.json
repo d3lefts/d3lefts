@@ -1,0 +1,92 @@
+{
+  "schema": "nightfall-dq2-research-passport-v1",
+  "id": "NF-DQ2-WEIGHTED-TREE-20261117",
+  "version": "v2",
+  "date": "2026-11-17",
+  "status": "author-analytic-provisional",
+  "promotion_allowed": false,
+  "claimed_novelty": false,
+  "independent_human_review": false,
+  "lean_terminal_checked": false,
+  "title": "Dimension-free Q2 influence transfer on heterogeneous zero-field Ising trees",
+  "question": "Can a bounded degree-two function retain a dimension-free Var²/max-coordinate-influence guarantee under genuine overlapping coordinate dependence?",
+  "mechanism": [
+    "independent edge-bond representation on trees",
+    "unique overlap orientation of pair paths",
+    "quadratic-sector covariance Schur bound",
+    "weighted-tree covariance precision inverse",
+    "native single-site conditional-variance lower bound",
+    "finite product Q2 transfer"
+  ],
+  "theorem": {
+    "law": "finite tree V; signed finite J_e; nu(x)=2^(-|V|) prod_edges(1+t_e*x_u*x_v); t_e=tanh(J_e)",
+    "f": "algebraic degree<=2 in original physical spin variables, |f|<=B on full cube",
+    "influence": "I_i=E_nu Var_nu(f(X)|X_{V\\{i}})",
+    "budgets": "S=max_u sum_v prod_{e in path(u,v)} |t_e|; D=max_u(1+sum_{e incident u} |t_e|/(1-|t_e|)); H=max_u sum_{e incident u} atanh|t_e|",
+    "conclusion": "Var_nu(f)^2 <= K0 * S^4 * D * cosh(H)^2 * B^2 * max_i I_i",
+    "K0": "existing finite uniform-independent-product Q2 coefficient, e.g. (2(1+sqrt(2))*sqrt(3)+11901/6250)^2",
+    "dimension_free_when": "S,D,H are uniformly bounded across the finite tree family",
+    "status": "author-analytic-proof-written-not-Lean-certified"
+  },
+  "comparison": {
+    "old": "whole-law density ratio b^2/a, exponential in chain length for fixed nonzero coupling",
+    "new": "dimension-free under weighted path summability, bounded precision and conditional uncertainty budgets",
+    "chain_r_1over3": "50*K0",
+    "chain_r_1over2": "675*K0",
+    "no_claim": "constant is not shown optimal; prior-art priority unresolved"
+  },
+  "dependencies": {
+    "finite_product_q2": "https://github.com/d3lefts/d3lefts/pull/587",
+    "infinite_product_integration_separate": "https://github.com/d3lefts/d3lefts/pull/776",
+    "prior_art_dossier": "https://github.com/d3lefts/d3lefts/pull/749",
+    "active_note": "research/nightfall/2026-11-dq2/DQ2_WEIGHTED_TREE_V2.md",
+    "frozen_v1_note": "research/nightfall/2026-11-dq2/DQ2_DEPENDENT_TREE_V1.md"
+  },
+  "exact_checks": [
+    {
+      "file": "dq2_chain_exact_checker.py",
+      "status": "PASS",
+      "scope": "150 finite models; 675 coordinate comparisons; six sharp witnesses"
+    },
+    {
+      "file": "dq2_chain_independent_audit.py",
+      "status": "PASS",
+      "scope": "742 exact symbolic pair covariances"
+    },
+    {
+      "file": "dq2_tree_independent_audit.py",
+      "status": "PASS",
+      "scope": "4 tree shapes and 8 configurations, geodesic overlap identity"
+    },
+    {
+      "file": "dq2_weighted_tree_checker.py",
+      "status": "PASS",
+      "scope": "4 heterogeneous signed-coupling finite trees; 32 quadratic polynomials"
+    }
+  ],
+  "independent_audit": {
+    "numerical_independent_implementation": true,
+    "external_human": false,
+    "proof_attack_targets": [
+      "unique geodesic endpoint orientation and no double counting",
+      "native single-coordinate conditional variance vs product reference",
+      "exact inverse precision matrix including zero edges",
+      "distinguish algebraic degree<=2 from dependent Hoeffding degree"
+    ],
+    "largest_gap": "full pinned Lean terminal / external formal proof review / exact prior-art implications"
+  },
+  "source_credit": [
+    "Koehler–Lifshitz–Minzer–Mossel STOC 2024",
+    "Chen–Chen–Zhang 2026",
+    "Il Idrissi et al 2025",
+    "NIGHTFALL finite Q2 sources and independent collaborators"
+  ],
+  "limitations": [
+    "finite trees/forests; cycles not covered by bond factorization",
+    "real finite couplings; no infinite-volume limit established here",
+    "algebraic spin degree-two only",
+    "tests do not prove universality",
+    "not a novel-priority or published claim"
+  ],
+  "cheapest_next_test": "Lean-certify weighted-path covariance row bound and exact inverse precision matrix before composing the full terminal"
+}

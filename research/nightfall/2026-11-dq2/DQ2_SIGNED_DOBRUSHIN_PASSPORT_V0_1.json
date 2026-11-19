@@ -1,0 +1,136 @@
+{
+  "schema": "nightfall-proof-passport-v1",
+  "id": "NF-DQ2-SIGNED-SANDWICH-20261117",
+  "version": "0.3",
+  "date": "2026-11-17",
+  "status": "AUTHOR_ANALYTIC_PROVISIONAL",
+  "promotion_allowed": false,
+  "novelty": "unresolved",
+  "independent_external_mathematical_review": false,
+  "lean_kernel_terminal": false,
+  "source_parent": "https://github.com/d3lefts/d3lefts/pull/788",
+  "claims": [
+    {
+      "id": "DQ2-S1",
+      "statement": "Abstract Q2 transfer on any finite full-support, mean-zero binary law: Var_nu(f)^2 <= 4 K0 A^4/(v gamma) B^2 max_i I_i^nu(f) for quadratic f",
+      "premises": [
+        "full-function true-site variance tensorization with A",
+        "Cov(X)>=gamma I",
+        "conditional Var(Xi|X_-i)>=v",
+        "existing finite independent-sign Q2"
+      ],
+      "evidence": "written exact algebraic derivation",
+      "status": "analytic_unreviewed"
+    },
+    {
+      "id": "DQ2-S2",
+      "statement": "Graph-sparse dual conditional scores for general signed Ising yield covariance floor Cov(X)>=D^-1 I",
+      "premises": [
+        "strictly positive signed pairwise Ising law",
+        "bounded local absolute interaction budget"
+      ],
+      "evidence": "native two-atom exact rational matrix tests",
+      "status": "analytic_unreviewed"
+    },
+    {
+      "id": "DQ2-S3",
+      "statement": "For signed zero-field Ising graphs with Dobrushin alpha<1, quadratic Q2 bound with alpha-only coefficient F(alpha)=4[1+alpha(1+alpha)^2]/[(1-alpha)^4(1-alpha^2)^2]",
+      "premises": [
+        "DQ2-S1",
+        "DQ2-S2",
+        "classical Wu Dobrushin Poincare gap 1-alpha"
+      ],
+      "evidence": "proof and exact finite-model full-function PSD audits",
+      "status": "external_premise_conditional_unreviewed"
+    },
+    {
+      "id": "DQ2-S4",
+      "statement": "Countable locally finite signed Gibbs uniqueness-regime extension for quadratic cylinders and bounded L2 closure",
+      "premises": [
+        "DQ2-S3",
+        "Dobrushin uniqueness",
+        "DLR single-site conditional law and finite-volume weak convergence",
+        "uniform L2 influence contraction"
+      ],
+      "evidence": "analytic extension; no kernel or independent measure theory check",
+      "status": "provisional_analytic"
+    },
+    {
+      "id": "DQ2-S5",
+      "statement": "For connected uniform r Ising chain, bounded cubic f_k=X0*k^-1 sum Y_jY_{j+1} has Var_nu/Var_mu=1+(k-1)r^2 unbounded at fixed r<1/2",
+      "status": "exact analytic no-go and rational enumeration",
+      "scope": "This refutes uniform cubic covariance comparison only; it does not refute actual-law cubic influence Q2; true influence at X0 is (1-r^2) Var_nu."
+    },
+    {
+      "id": "DQ2-S6",
+      "statement": "Unrestricted dimension-free Q2 with constant independent of interaction strength is impossible even for linear f on n-site zero-field Ising paths: with r_n=1-1/n^2 and f_n=n^-1 sum X_i, Var(f_n)^2/max_i I_i(f_n) >= (n-1)^2/(2/n^2-1/n^4) ~ n^4/2",
+      "premises": [
+        "native conditional-resampling influence",
+        "full-support path Ising law with finite but n-dependent couplings"
+      ],
+      "evidence": "elementary all-n analytic proof, independently implemented rational full-state enumeration n=2,3,4,5,7,9, exact closed-form rational checks n=12,24,50,100",
+      "status": "exact_analytic_obstruction_finite_replay_not_lean",
+      "scope": "No restriction on all graph topologies alone can yield an interaction-uniform coefficient; this does not refute the quantitative Dobrushin regime."
+    }
+  ],
+  "finite_exact_checker": {
+    "path": "scripts/check_dq2_signed_dobrushin_exact.py",
+    "method": "full 2^n state enumeration; exact Fraction LDL on (L-(1-alpha)V) quotient, C-D^-1 I, quadratic covariance, all site gradient forms",
+    "models": [
+      "signed frustrated triangle n=3 alpha=11/30",
+      "signed frustrated square n=4 alpha=13/40",
+      "frustrated square with chord n=4 alpha=257/770",
+      "frustrated pentagon with chord n=5 alpha=157/520",
+      "signed K4 n=4 alpha=43/195",
+      "Connected Ising chain cubic negative controls with r=1/3, k=2,3,4,6,10"
+    ],
+    "observed": "local independent-model implementation PASS; PR-head CI pending after new cubic negative control",
+    "local_original_source_sha256": "5d7b2589cb730ffebb792481d6054abd146c8035d5b09211a44668d9edd8f385",
+    "limits": "Finite instances do not prove universally quantified statements; exact LDL verifies each enumerated model only."
+  },
+  "external_sources": [
+    {
+      "author": "Liming Wu",
+      "year": 2006,
+      "url": "https://arxiv.org/abs/math/0611635",
+      "role": "Dobrushin spectral-gap Poincare estimate"
+    },
+    {
+      "author": "Eldan, Koehler, Zeitouni",
+      "year": 2022,
+      "url": "https://arxiv.org/abs/2007.08200",
+      "role": "High-temperature Ising Poincare theory / comparator"
+    },
+    {
+      "author": "Koehler, Lifshitz, Minzer, Mossel",
+      "year": 2024,
+      "url": "https://arxiv.org/abs/2307.07625",
+      "role": "Existing dependent measure influence theory / priority comparator"
+    }
+  ],
+  "limitations": [
+    "zero external field needed for mean-zero transfer as stated",
+    "physical algebraic quadratic degree, not native dependent ANOVA",
+    "Dobrushin alpha<1 for unconditional Ising specialization",
+    "full support/finite interactions",
+    "not valid novelty clearance, sharp constant, external review or Lean formalization"
+  ],
+  "independent_audit_plan": [
+    "Recheck continuous-time versus discrete Glauber normalization",
+    "Independently derive C<=AI via native influences",
+    "Check all graph-sparse score cross terms including negative edges",
+    "Prove alpha-to-H superadditivity",
+    "Independent infinite Gibbs/DLR cylinder limit review",
+    "Lean abstract theorem with explicit hypotheses, then discharge external premises",
+    "Attempt to invalidate exact path-Ising native influence formulas and n^4 obstruction; verify unrestricted all-interaction reading is excluded"
+  ],
+  "next_decisive_test": "Current-head CI of signed checker plus no-go checker; named Lean interface for heat-bath Poincare, score covariance, and finite product Q2; human statement-level prior-art review",
+  "unrestricted_no_go_checker": {
+    "path": "scripts/check_dq2_all_graphs_no_go_exact.py",
+    "note": "research/nightfall/2026-11-dq2/DQ2_ALL_GRAPHS_SCOPE_AND_NO_GO_V0_1.md",
+    "command": "python3 scripts/check_dq2_all_graphs_no_go_exact.py",
+    "source_sha256": "4f8b062a487b0a27040bd2651c67f2691e4bb56086e5d1443de224f55f821421",
+    "status": "locally_exact_replayed_ci_pending",
+    "limitations": "Finite instances are not theorem proof; all-n claim rests on elementary symbolic argument"
+  }
+}

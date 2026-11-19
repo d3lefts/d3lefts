@@ -1,0 +1,59 @@
+name: NIGHTFALL bias-free Markov analytic kernel
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/StrongMarkovEndpoint.lean'
+      - 'research/nightfall/formalization/product_space/StrongMarkovRescale.lean'
+      - 'research/nightfall/formalization/product_space/StrongMarkovInterior.lean'
+      - 'research/nightfall/formalization/product_space/StrongMarkovInterval.lean'
+      - 'research/nightfall/formalization/product_space/StrongMarkovPathStability.lean'
+      - 'research/nightfall/formalization/product_space/StrongMarkovTwoPath.lean'
+      - '.github/workflows/nightfall-markov-analytic.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  markov-analytic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile analytic Markov lemmas without sorry or supplied derivative bound
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/product_space/StrongMarkovEndpoint.lean /tmp/mathlib4/StrongMarkovEndpoint.lean
+          cp research/nightfall/formalization/product_space/StrongMarkovRescale.lean /tmp/mathlib4/StrongMarkovRescale.lean
+          cp research/nightfall/formalization/product_space/StrongMarkovInterior.lean /tmp/mathlib4/StrongMarkovInterior.lean
+          cp research/nightfall/formalization/product_space/StrongMarkovInterval.lean /tmp/mathlib4/StrongMarkovInterval.lean
+          cp research/nightfall/formalization/product_space/StrongMarkovPathStability.lean /tmp/mathlib4/StrongMarkovPathStability.lean
+          cp research/nightfall/formalization/product_space/StrongMarkovTwoPath.lean /tmp/mathlib4/StrongMarkovTwoPath.lean
+          cd /tmp/mathlib4
+          lake env lean -o .lake/build/lib/lean/StrongMarkovEndpoint.olean StrongMarkovEndpoint.lean | tee /tmp/markov-endpoint.log
+          lake env lean -o .lake/build/lib/lean/StrongMarkovRescale.olean StrongMarkovRescale.lean | tee /tmp/markov-rescale.log
+          lake env lean -o .lake/build/lib/lean/StrongMarkovInterior.olean StrongMarkovInterior.lean | tee /tmp/markov-interior.log
+          lake env lean -o .lake/build/lib/lean/StrongMarkovInterval.olean StrongMarkovInterval.lean | tee /tmp/markov-interval.log
+          lake env lean -o .lake/build/lib/lean/StrongMarkovPathStability.olean StrongMarkovPathStability.lean | tee /tmp/markov-path.log
+          lake env lean -o .lake/build/lib/lean/StrongMarkovTwoPath.olean StrongMarkovTwoPath.lean | tee /tmp/markov-two-path.log
+          cat > MarkovAxioms.lean <<'LEAN'
+          import StrongMarkovEndpoint
+          import StrongMarkovRescale
+          import StrongMarkovInterior
+          import StrongMarkovInterval
+          import StrongMarkovPathStability
+          import StrongMarkovTwoPath
+          #print axioms Nightfall.BiasFreeMarkov.chebyshev_endpoint_derivative_bound
+          #print axioms Nightfall.BiasFreeMarkov.normalizedEndpointPoly_natDegree_le
+          #print axioms Nightfall.BiasFreeMarkov.normalizedEndpointPoly_derivative_eval_one
+          #print axioms Nightfall.BiasFreeMarkov.markov_endpoint_affine
+          #print axioms Nightfall.BiasFreeMarkov.markov_derivative_interval
+          #print axioms Nightfall.BiasFreeMarkov.markov_path_stability
+          #print axioms Nightfall.BiasFreeMarkov.bias_free_two_path_stability
+          LEAN
+          sed -i 's/^          //' MarkovAxioms.lean
+          lake env lean MarkovAxioms.lean | tee /tmp/markov-axioms.log
+          ! grep -q sorryAx /tmp/markov-axioms.log
+          ! grep -q 'declaration uses .sorry' /tmp/markov-endpoint.log /tmp/markov-rescale.log /tmp/markov-interior.log /tmp/markov-interval.log /tmp/markov-path.log /tmp/markov-two-path.log

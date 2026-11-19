@@ -1,0 +1,45 @@
+name: NIGHTFALL finite-level full-row influence exact audit
+
+on:
+  push:
+    branches: [nightfall-row-bilinear-finite-level-20261117]
+    paths:
+      - 'research/nightfall/flagship-influence/check_finite_level_rows_exact.py'
+      - 'research/nightfall/flagship-influence/check_two_address_row_l2_no_go.py'
+      - 'research/nightfall/flagship-influence/check_row_threshold_brownian_bridge.py'
+      - 'research/nightfall/flagship-influence/FINITE_LEVEL_ROW_TRANSFER_20261117.md'
+      - '.github/workflows/nightfall-finite-level-row-audit.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/flagship-influence/check_finite_level_rows_exact.py'
+      - 'research/nightfall/flagship-influence/check_two_address_row_l2_no_go.py'
+      - 'research/nightfall/flagship-influence/check_row_threshold_brownian_bridge.py'
+      - 'research/nightfall/flagship-influence/FINITE_LEVEL_ROW_TRANSFER_20261117.md'
+      - '.github/workflows/nightfall-finite-level-row-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-full-rows:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Checker and proof note SHA256
+        run: |
+          sha256sum research/nightfall/flagship-influence/check_finite_level_rows_exact.py
+          sha256sum research/nightfall/flagship-influence/check_two_address_row_l2_no_go.py
+          sha256sum research/nightfall/flagship-influence/check_row_threshold_brownian_bridge.py
+          sha256sum research/nightfall/flagship-influence/FINITE_LEVEL_ROW_TRANSFER_20261117.md
+      - name: Rational fourbit primal-dual and finite-valued source test
+        run: python3 -I research/nightfall/flagship-influence/check_finite_level_rows_exact.py
+      - name: True-source degree-three categorical selector L1-L2 bilinear no-go
+        run: python3 -I research/nightfall/flagship-influence/check_two_address_row_l2_no_go.py
+      - name: Exact threshold covariance matrices, Brownian bridge Green inverse and full row dual
+        run: python3 -I research/nightfall/flagship-influence/check_row_threshold_brownian_bridge.py
+

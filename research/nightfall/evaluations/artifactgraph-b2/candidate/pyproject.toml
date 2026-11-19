@@ -1,0 +1,5 @@
+[project]
+name = "nightfall-artifactgraph-b2"
+version = "0.1.0"
+requires-python = ">=3.10"
+description = "ArtifactGraph incremental build repair benchmark (agent-visible starter)"

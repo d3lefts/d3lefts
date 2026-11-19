@@ -1,0 +1,33 @@
+name: NIGHTFALL anchored multipartite sharp exponent-two exact audit
+
+on:
+  push:
+    branches:
+      - nightfall-anchored-multipartite-e2-20261117
+    paths:
+      - 'research/nightfall/cubic-q3/check_anchor_*.py'
+      - '.github/workflows/nightfall-anchor-multipartite-exact.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/cubic-q3/check_anchor_*.py'
+      - '.github/workflows/nightfall-anchor-multipartite-exact.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  anchored-sharp:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Exact source checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Archive source hashes for independent replay
+        run: sha256sum research/nightfall/cubic-q3/check_anchor_multipartite_exact.py research/nightfall/cubic-q3/check_anchor_routing_exact.py
+      - name: 72 heterogeneous original-source models incl zero-mass atoms
+        run: python3 -I research/nightfall/cubic-q3/check_anchor_multipartite_exact.py
+      - name: Full-state exact sharpness at degrees 1, 2, 3 and 4
+        run: python3 -I research/nightfall/cubic-q3/check_anchor_routing_exact.py
