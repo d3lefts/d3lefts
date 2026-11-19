@@ -1,0 +1,45 @@
+name: NIGHTFALL coherent block oracle finite unitary gate
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/CoherentBlockOraclePullback.lean'
+      - '.github/workflows/nightfall-coherent-block-oracle-pullback.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  coherent-oracle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile source theorem and inspect exact axiom dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC="research/nightfall/formalization/product_space/CoherentBlockOraclePullback.lean"
+          test -f "$SRC"
+          if grep -En '\bsorry\b|\badmit\b|sorryAx|^\s*axiom\b|native_decide|unsafe' "$SRC"; then
+            echo "Forbidden gap marker"; exit 1
+          fi
+          cp "$SRC" /tmp/mathlib4/CoherentBlockOraclePullback.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/CoherentBlockOraclePullback.olean CoherentBlockOraclePullback.lean) 2>&1 | tee /tmp/coherent-oracle-lean.log
+          if grep -E 'error:|sorryAx|declaration uses .sorry' /tmp/coherent-oracle-lean.log; then exit 1; fi
+          sha256sum "$SRC" | tee /tmp/coherent-oracle-sha256.txt
+          for name in compiledOracle_zero coherent_pullback permutation_energy compiledOracle_unitary bit_fetch_coordinate; do
+            grep -q "axioms Nightfall.CoherentBlockOracle.$name" /tmp/coherent-oracle-lean.log
+          done
+          if grep -E '^\s*\[.*(sorryAx|Lean\.ofReduceBool).*\]' /tmp/coherent-oracle-lean.log; then exit 1; fi
+      - name: Preserve exact source and compiler receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coherent-block-oracle-kernel
+          path: |
+            /tmp/coherent-oracle-lean.log
+            /tmp/coherent-oracle-sha256.txt
+          if-no-files-found: warn
+          retention-days: 60
