@@ -85,13 +85,20 @@ L-coordinates, with weights p_i(ell),p_j(ell). Its joint conditional
 Bayes risk obeys
 
     e_ij(ell)
-      <= min(p_i(ell),p_j(ell)) *
-         sum_x min(P_i(x_L|ell),P_j(x_L|ell))
+      = sum_x min(p_i(ell)*P_i(x_L|ell),
+                  p_j(ell)*P_j(x_L|ell))
       <= [p_i(ell)*alpha_i(ell)
           +p_j(ell)*alpha_j(ell)] / eps.
 
-The second inequality follows from Lemma 1's weighted pointwise
-failure-mass argument and Delta>=eps.
+**Important:** do *not* replace this expression by
+`min(p_i(ell),p_j(ell))*sum_x min(P_i(x_L|ell),P_j(x_L|ell))`:
+that inequality is false for unequal transcript probabilities.
+Instead, the pointwise conditional Step-3 bound
+`Delta<=alpha_i(ell,x_L)+alpha_j(ell,x_L)` is multiplied by
+`min(p_i(ell)P_i(x_L|ell),p_j(ell)P_j(x_L|ell))` directly.
+Nonnegativity gives
+`min(A,B)*(alpha_i+alpha_j)<=A*alpha_i+B*alpha_j`.
+Summing over x_L yields the displayed weighted Bayes bound.
 
 For |L(ell)|>K, choose any K of the large-gap coordinates.
 By the product Hellinger affinity bound the conditional Bhattacharyya
