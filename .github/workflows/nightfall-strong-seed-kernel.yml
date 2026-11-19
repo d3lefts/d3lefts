@@ -1,0 +1,49 @@
+name: NIGHTFALL finite weighted seed kernel
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/StrongSeedFixing.lean'
+      - '.github/workflows/nightfall-strong-seed-kernel.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  weighted-seed:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Kernel-check real-weighted seed fixing and deterministic kernel representation
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/product_space/StrongSeedFixing.lean /tmp/mathlib4/StrongSeedFixing.lean
+          cd /tmp/mathlib4
+          sha256sum StrongSeedFixing.lean | tee /tmp/seed-source.sha256
+          lake env lean -o .lake/build/lib/lean/StrongSeedFixing.olean StrongSeedFixing.lean 2>&1 | tee /tmp/seed-compile.log
+          if grep -E 'error:|sorryAx|declaration uses .sorry' /tmp/seed-compile.log; then exit 1; fi
+          cat > SeedAxioms.lean <<'LEAN'
+          import StrongSeedFixing
+          #print axioms Nightfall.StrongSimulation.SeedFixing.exists_seed_le_average
+          #print axioms Nightfall.StrongSimulation.SeedFixing.exists_deterministic_seed
+          #print axioms Nightfall.StrongSimulation.SeedFixing.exists_weighted_seed
+          #print axioms Nightfall.StrongSimulation.SeedFixing.deterministicMapWeights_nonneg
+          #print axioms Nightfall.StrongSimulation.SeedFixing.deterministicMapWeights_sum_one
+          #print axioms Nightfall.StrongSimulation.SeedFixing.deterministicMapWeights_marginal
+          LEAN
+          sed -i 's/^          //' SeedAxioms.lean
+          lake env lean SeedAxioms.lean 2>&1 | tee /tmp/seed-axioms.log
+          if grep -E 'error:|sorryAx|declaration uses .sorry' /tmp/seed-axioms.log; then exit 1; fi
+      - name: Preserve auditable seed certificate
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-weighted-seed-kernel
+          path: |
+            /tmp/seed-source.sha256
+            /tmp/seed-compile.log
+            /tmp/seed-axioms.log
+          retention-days: 60
