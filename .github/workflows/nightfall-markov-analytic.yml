@@ -1,0 +1,40 @@
+name: NIGHTFALL bias-free Markov analytic kernel
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/StrongMarkovEndpoint.lean'
+      - 'research/nightfall/formalization/product_space/StrongMarkovRescale.lean'
+      - 'research/nightfall/formalization/product_space/StrongMarkovInterior.lean'
+      - '.github/workflows/nightfall-markov-analytic.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  markov-analytic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile analytic Markov lemmas without sorry or supplied derivative bound
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/product_space/StrongMarkovEndpoint.lean /tmp/mathlib4/StrongMarkovEndpoint.lean
+          cp research/nightfall/formalization/product_space/StrongMarkovRescale.lean /tmp/mathlib4/StrongMarkovRescale.lean
+          cd /tmp/mathlib4
+          lake env lean -o .lake/build/lib/lean/StrongMarkovEndpoint.olean StrongMarkovEndpoint.lean | tee /tmp/markov-endpoint.log
+          lake env lean -o .lake/build/lib/lean/StrongMarkovRescale.olean StrongMarkovRescale.lean | tee /tmp/markov-rescale.log
+          cat > MarkovAxioms.lean <<'LEAN'
+          import StrongMarkovEndpoint
+          import StrongMarkovRescale
+          #print axioms Nightfall.BiasFreeMarkov.chebyshev_endpoint_derivative_bound
+          #print axioms Nightfall.BiasFreeMarkov.normalizedEndpointPoly_natDegree_le
+          #print axioms Nightfall.BiasFreeMarkov.normalizedEndpointPoly_derivative_eval_one
+          LEAN
+          sed -i 's/^          //' MarkovAxioms.lean
+          lake env lean MarkovAxioms.lean | tee /tmp/markov-axioms.log
+          ! grep -q sorryAx /tmp/markov-axioms.log
+          ! grep -q 'declaration uses .sorry' /tmp/markov-endpoint.log /tmp/markov-rescale.log
