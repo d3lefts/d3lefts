@@ -136,7 +136,7 @@ theorem fix_random_tape {R : Type*} [Fintype R]
     linarith
   obtain ⟨r0, hr0⟩ := hex
   have hpos : (0 : ℝ) < ∑ r : R, w r * (cost r - δ) := by
-    apply Finset.sum_pos
+    apply Finset.sum_pos'
     · intro r _
       exact mul_nonneg (hw0 r) (le_of_lt (sub_pos.mpr (hlarge r)))
     · exact ⟨r0, Finset.mem_univ _,
