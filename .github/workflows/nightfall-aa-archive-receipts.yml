@@ -1,0 +1,99 @@
+name: Archive exact AA Lean proof receipts (2026-11-18)
+
+on:
+  push:
+    branches: [nightfall-lake-aa-integration-20261118]
+    paths:
+      - ".github/workflows/nightfall-aa-archive-receipts.yml"
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  archive:
+    if: github.repository == 'd3lefts/d3lefts'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: true
+      - name: Recover pinned successful original AA workflow artifact
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          curl --fail --location --silent --show-error --retry 3 \
+            --header "Authorization: Bearer ${GH_TOKEN}" \
+            --header "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/d3lefts/d3lefts/actions/artifacts/14487982785/zip" \
+            --output /tmp/nightfall-aa-44433153026.zip
+          python3 - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+          from zipfile import ZipFile
+
+          source = Path("/tmp/nightfall-aa-44433153026.zip")
+          dest = Path("docs/nightfall-aa-receipts-20261118")
+          dest.mkdir(parents=True, exist_ok=True)
+          expected = {
+              "receipt.json": "693497f5f4ad5aa53cb5f9ebee1da80c1fd410463e43effe5af23011f6c5958f",
+              "printed-receipt.json": "fc4f7fbfb4ca97eea2e4abcbf795400f5bee49fbd949bb1dce6c1cc4d30f7481",
+              "simulation-receipt.json": "c4e675bcd1e70c267087e1235be8384f6c5cd585cd4db63c73d1f0e9c813d099",
+          }
+          named = {
+              "receipt.json": "Nightfall.InfinitePiAAProductTerminal.infinitePi_aa_product",
+              "printed-receipt.json": "Nightfall.ProductSpace.CubeAA.printedConjecture",
+              "simulation-receipt.json": "Nightfall.ProductSpace.Simulation.simulation_degree",
+          }
+          with ZipFile(source) as z:
+              archive_head = z.read("head").decode("utf-8").strip()
+              assert archive_head == "6b2cda54c503cceb2411528275289360c33d81d1", archive_head
+              for name, digest in expected.items():
+                  raw = z.read(name)
+                  assert hashlib.sha256(raw).hexdigest() == digest, name
+                  proof = json.loads(raw)
+                  assert proof.get("status") == "COMPILED", name
+                  assert proof.get("compiler_exit_code") == 0, name
+                  assert proof.get("version_matches_pin") is True, name
+                  assert not proof.get("policy_findings"), name
+                  theorem = named[name]
+                  assert theorem in proof.get("declarations_requested", []), name
+                  for axioms in proof.get("axiom_dependencies", {}).values():
+                      assert set(axioms) <= {"propext", "Classical.choice", "Quot.sound"}, name
+                  source_path = Path(proof["source_relpath"])
+                  assert source_path.is_file(), str(source_path)
+                  assert hashlib.sha256(source_path.read_bytes()).hexdigest() == proof["source_sha256"], name
+                  (dest / name).write_bytes(raw)  # preserve raw CI receipt exactly, including whitespace
+
+          manifest = {
+              "schema": "nightfall-aa-lean-receipt-register-v1",
+              "source_workflow_run": 44433153026,
+              "source_workflow_head": "771d11af21896aa83f481b332d21d7d706b56927",
+              "artifact_id": 14487982785,
+              "artifact_checkout_head": "6b2cda54c503cceb2411528275289360c33d81d1",
+              "toolchain": "leanprover/lean4:v4.36.0-rc2",
+              "raw_sha256": expected,
+              "certifies": named,
+              "scope": "Only three original named source Lean audits, not a unified Lake proof, independent review or a Lean quantum-to-polynomial theorem.",
+          }
+          (dest / "register.json").write_text(json.dumps(manifest, indent=2) + "\n")
+          print("PASS: byte-identical raw receipts, named axioms, compiler and source hashes")
+          PY
+      - name: Commit the checked raw receipts and dated register
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/nightfall-aa-receipts-20261118/
+          if git diff --cached --quiet; then
+            echo "Raw receipts already committed unchanged"
+          else
+            git commit -m "Archive source-exact AA product and simulation Lean receipts from run 44433153026"
+            git push origin HEAD:nightfall-lake-aa-integration-20261118
+          fi
