@@ -72,7 +72,7 @@ For `η=1/100`, this gives the explicit reproducible inequality
         log M ≥ 0.176247028226125 N − 0.112003068709695.
 ```
 
-The exponent is positive. More generally `η` must be a fixed *sufficiently small* number; the result is **not** an exponential rank obstruction for arbitrary approximation tolerance.
+The exponent coefficient `(2/π−2η)^2/2−2η log 2` is positive only for `0≤η<0.0811465034766…` under this bound, and the additive entropy term is `−2h(η)`; for fixed `η` below that threshold the conclusion is `M≥exp(Ω(N))` as `N→∞`. More generally `η` must be a fixed *sufficiently small* number; the result is **not** an exponential rank obstruction for arbitrary approximation tolerance.
 
 ## Generalization (reuse, not novelty claim)
 
