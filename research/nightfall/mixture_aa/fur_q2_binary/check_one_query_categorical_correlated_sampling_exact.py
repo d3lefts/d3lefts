@@ -73,9 +73,10 @@ def shared_sampler(ps):
 
 def quantum_f(x,k):
     n=len(x)
-    # uniform superposition over query indices, 1 phase query of chi_i(x_i),
-    # project onto the same uniform vector
-    amp=sum((1 if (x[i]+i)%2==0 else -1 for i in range(n)))
+    # Actual ONE standard additive symbol-value oracle query:
+    # prepare |psi> = n^(-1/2) sum_i |i,0>, query |i,z> -> |i,z+x_i mod k>,
+    # then project onto |psi> again. Amplitude is (# coordinates x_i=0)/n.
+    amp=sum(x[i]==0 for i in range(n))
     return F(amp*amp,n*n)
 
 for n,k,M,cases in [(2,3,3,24),(3,3,3,8),(2,4,4,8)]:
