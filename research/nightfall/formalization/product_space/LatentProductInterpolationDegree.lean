@@ -21,7 +21,7 @@ open Polynomial Finset
 variable {ι α β : Type*}
 
 /-- The marginal probability weight along a line from p to q. -/
-def affineMarginal (p q : ι → α → ℝ) (i : ι) (a : α) : Polynomial ℝ :=
+noncomputable def affineMarginal (p q : ι → α → ℝ) (i : ι) (a : α) : Polynomial ℝ :=
   C (p i a) + C (q i a - p i a) * X
 
 /-- Every affine marginal has ordinary polynomial degree at most one. -/
@@ -32,15 +32,16 @@ theorem affineMarginal_natDegree_le_one
   have hc : (C (p i a) : Polynomial ℝ).natDegree = 0 := by simp
   have hd : (C (q i a - p i a) : Polynomial ℝ).natDegree = 0 := by simp
   have hx : (X : Polynomial ℝ).natDegree = 1 := by simp
-  have hm := Polynomial.natDegree_mul_le
-    (C (q i a - p i a) : Polynomial ℝ) (X : Polynomial ℝ)
+  have hm : ((C (q i a - p i a) : Polynomial ℝ) * X).natDegree ≤
+      (C (q i a - p i a) : Polynomial ℝ).natDegree +
+      (X : Polynomial ℝ).natDegree := Polynomial.natDegree_mul_le
   have ha := Polynomial.natDegree_add_le
     (C (p i a) : Polynomial ℝ)
     ((C (q i a - p i a) : Polynomial ℝ) * X)
   omega
 
 /-- Product expectation of a one-hot interaction supported on S. -/
-def interactionPoly (S : Finset ι) (a : ι → α)
+noncomputable def interactionPoly (S : Finset ι) (a : ι → α)
     (p q : ι → α → ℝ) : Polynomial ℝ :=
   ∏ i ∈ S, affineMarginal p q i (a i)
 
@@ -64,14 +65,15 @@ theorem interactionPoly_natDegree_le_card
 theorem weightedInteraction_natDegree_le_card
     (S : Finset ι) (a : ι → α) (c : ℝ) (p q : ι → α → ℝ) :
     (C c * interactionPoly S a p q).natDegree ≤ S.card := by
-  have h := Polynomial.natDegree_mul_le (C c : Polynomial ℝ)
-    (interactionPoly S a p q)
+  have h : (C c * interactionPoly S a p q).natDegree ≤
+      (C c : Polynomial ℝ).natDegree +
+      (interactionPoly S a p q).natDegree := Polynomial.natDegree_mul_le
   have hc : (C c : Polynomial ℝ).natDegree = 0 := by simp
   have hs := interactionPoly_natDegree_le_card S a p q
   omega
 
 /-- Finite sparse interaction expansion of product expectations. -/
-def sparseExpectationPoly
+noncomputable def sparseExpectationPoly
     (terms : Finset β) (support : β → Finset ι)
     (assignment : β → ι → α) (coeff : β → ℝ)
     (p q : ι → α → ℝ) : Polynomial ℝ :=
