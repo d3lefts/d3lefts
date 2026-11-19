@@ -62,10 +62,18 @@ def execute(image: str, out: Path, timeout: int) -> int:
                          and data.get("host_sandbox_wrapper", {}).get("image") == image
                          and len(data.get("steps", [])) == 6)
             else:
+                rejection = folder / "rejected-proof.json"
+                negative = json.loads(rejection.read_text()) if rejection.is_file() else {}
+                graded = negative.get("grader_report", {})
                 valid = (result.returncode != 0 and not success_receipt.exists()
-                         and "sandbox candidate rejected:" in result.stderr
-                         and "Lean command failure" in result.stderr
-                         and marker in result.stderr)
+                         and negative.get("status") == "rejected-not-certified"
+                         and negative.get("candidate_sha256") == sha(candidate)
+                         and negative.get("image") == image
+                         and negative.get("classification") == "Lean-build-failure"
+                         and graded.get("status") == "fail"
+                         and "Lean command failure" in graded.get("error", "")
+                         and marker in graded.get("error", "")
+                         and "sandbox candidate rejected:" in result.stderr)
             outcome = {
                 "name": name,
                 "candidate_sha256": sha(candidate),
@@ -75,7 +83,7 @@ def execute(image: str, out: Path, timeout: int) -> int:
                 "passed": valid,
                 "stderr_tail": result.stderr[-2500:],
                 "stdout_sha256": hashlib.sha256(result.stdout.encode()).hexdigest(),
-                "host_receipt_path": str(success_receipt.relative_to(out)) if success_receipt.exists() else None,
+                "host_receipt_path": str(success_receipt.relative_to(out)) if success_receipt.exists() else (str((folder / "rejected-proof.json").relative_to(out)) if (folder / "rejected-proof.json").exists() else None),
             }
             if not valid:
                 failures.append(name)
