@@ -5,6 +5,8 @@ on:
     paths:
       - 'Nightfall/LatinSquare/**'
       - 'scripts/audit_mira_latin_incidence.py'
+      - 'scripts/check_mira_latin_cycle_second_moment.py'
+      - 'scripts/check_mira_latin_fixed_defect.py'
       - '.github/workflows/nightfall-mira-latin-gate.yml'
       - 'lean-toolchain'
       - 'lakefile.toml'
@@ -107,6 +109,15 @@ jobs:
           python3 scripts/audit_mira_latin_incidence.py 2>&1 | tee lean-receipts/latin/incidence-exact.log
           grep -F 'FINITE_EXACT_INCIDENCE_CHECK_PASS' lean-receipts/latin/incidence-exact.log
           sha256sum scripts/audit_mira_latin_incidence.py >> lean-receipts/latin/source-sha256.txt
+      - name: Independent cycle-orbit and dense fixed-defect exact replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/check_mira_latin_cycle_second_moment.py 2>&1 | tee lean-receipts/latin/cycle-second-moment.log
+          grep -F 'CYCLE_TYPE_MOMENT_EXACT_PASS' lean-receipts/latin/cycle-second-moment.log
+          python3 scripts/check_mira_latin_fixed_defect.py 2>&1 | tee lean-receipts/latin/fixed-defect-bonferroni.log
+          grep -F 'FIXED_DEFECT_BONFERRONI_EXACT_PASS' lean-receipts/latin/fixed-defect-bonferroni.log
+          sha256sum scripts/check_mira_latin_cycle_second_moment.py scripts/check_mira_latin_fixed_defect.py >> lean-receipts/latin/source-sha256.txt
       - name: Build connected Latin target theorem through Lake import graph
         shell: bash
         run: |
