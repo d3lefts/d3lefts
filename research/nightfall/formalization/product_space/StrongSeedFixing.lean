@@ -16,6 +16,7 @@ sampling is hidden inside the conclusion.
 namespace Nightfall.StrongSimulation.SeedFixing
 
 open Finset
+open Classical
 
 /-- When the mean of finitely many real failure masses is bounded,
 at least one deterministic seed has no larger failure mass. -/
@@ -30,14 +31,13 @@ theorem exists_seed_le_average
   have hpositive : 0 < (∑ s : S, (failure s - δ)) := by
     apply Finset.sum_pos
     · intro s hs
-      exact le_of_lt (sub_pos.mpr (hnone s))
+      exact sub_pos.mpr (hnone s)
     · let s₀ : S := Classical.choice inferInstance
-      exact ⟨s₀, Finset.mem_univ _, sub_pos.mpr (hnone s₀)⟩
+      exact ⟨s₀, Finset.mem_univ _⟩
   have hidentity :
-      (∑ s : S, failure s - δ) =
+      (∑ s : S, (failure s - δ)) =
         (∑ s : S, failure s) - (Fintype.card S : ℝ) * δ := by
-    simp only [Finset.sum_sub_distrib, Finset.sum_const,
-      Finset.card_univ, nsmul_eq_mul]
+    simp [Finset.sum_sub_distrib, nsmul_eq_mul]
   rw [hidentity] at hpositive
   linarith
 
@@ -89,12 +89,11 @@ theorem exists_weighted_seed
     · have hs : 0 < weight s := lt_of_le_of_ne (hw s) (Ne.symm hzero)
       exact mul_nonneg (hw s) (le_of_lt (sub_pos.mpr (hnone s hs)))
   have hpositive : 0 < (∑ s : S, weight s * (failure s - δ)) := by
-    apply Finset.sum_pos
-    · intro s hs
-      exact hterm s
-    · obtain ⟨s, hs⟩ := hex
-      exact ⟨s, Finset.mem_univ s,
-        mul_pos hs (sub_pos.mpr (hnone s hs))⟩
+    obtain ⟨s, hs⟩ := hex
+    have hpoint : 0 < weight s * (failure s - δ) :=
+      mul_pos hs (sub_pos.mpr (hnone s hs))
+    exact lt_of_lt_of_le hpoint
+      (Finset.single_le_sum (fun t _ => hterm t) (Finset.mem_univ s))
   have hidentity : (∑ s : S, weight s * (failure s - δ)) =
       (∑ s : S, weight s * failure s) - δ := by
     calc
@@ -104,7 +103,7 @@ theorem exists_weighted_seed
             intro s hs
             ring
       _ = (∑ s : S, weight s * failure s) -
-          (∑ s : S, weight s * δ) := Finset.sum_sub_distrib
+          (∑ s : S, weight s * δ) := by rw [Finset.sum_sub_distrib]
       _ = (∑ s : S, weight s * failure s) - δ := by
             rw [← Finset.sum_mul, hsum, one_mul]
   rw [hidentity] at hpositive
