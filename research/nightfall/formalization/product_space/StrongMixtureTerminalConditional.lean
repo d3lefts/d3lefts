@@ -47,13 +47,13 @@ theorem final_bad_le_source_bad_add_duel
   unfold failIndicator
   by_cases hbad : 5 * ε < |f x - estimate (select x) x|
   · by_cases hs : ε < |f x - estimate θ x|
-    · simp [hbad, hs]
+    · simp [hbad, hs] <;> split_ifs <;> norm_num
     · have hd : duelLost θ x := by
         by_contra hnd
         have hg := hgood (le_of_not_gt hs) hnd
         exact (not_lt_of_ge hg) hbad
       simp [hbad, hs, hd]
-  · simp [hbad]
+  · simp [hbad] <;> split_ifs <;> norm_num
 
 /-- Main final terminal: under the explicit product-source and pairwise
 duel error certificates, the mixture failure event at tolerance 5ε is
