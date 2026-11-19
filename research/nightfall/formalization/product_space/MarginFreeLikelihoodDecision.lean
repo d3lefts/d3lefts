@@ -16,6 +16,7 @@ namespace Nightfall.MarginFreeLikelihood
 
 open Finset
 open Nightfall.ProductSpace.Transfer
+open Nightfall.ProductSpace.Mixture
 open Nightfall.MarginFreeDisintegration
 
 variable {ι α : Type} [Fintype ι] [DecidableEq ι]
@@ -69,5 +70,66 @@ theorem likelihood_observed_locality
       (prodMass (observedLaw S a0 q))
       (canonicalObservation S a0 y) := by
   rw [canonicalObservation_agrees S a0 x y hxy]
+
+/-- A noncanonical transcript has zero mass under every observed-source
+product law: all unobserved coordinates are fixed to the dummy atom. -/
+theorem observedMass_zero_off_canonical
+    (S : Finset ι) (a0 : α) (p : ι → α → ℝ) (x : ι → α)
+    (hnoncanonical : canonicalObservation S a0 x ≠ x) :
+    prodMass (observedLaw S a0 p) x = 0 := by
+  classical
+  have hex : ∃ i : ι, i ∉ S ∧ x i ≠ a0 := by
+    by_contra hnone
+    apply hnoncanonical
+    funext i
+    by_cases hi : i ∈ S
+    · simp [canonicalObservation, hi]
+    · have hxi : x i = a0 := by
+        by_contra hneq
+        exact hnone ⟨i, hi, hneq⟩
+      simp [canonicalObservation, hi, hxi]
+  obtain ⟨i, hi, hneq⟩ := hex
+  have hz : observedLaw S a0 p i (x i) = 0 := by
+    simp [observedLaw, hi, delta, Ne.symm hneq]
+  unfold prodMass
+  exact Finset.prod_eq_zero (Finset.mem_univ i) hz
+
+/-- The actual observed-source two-sided failure mass is unchanged
+when the likelihood decision rule canonically replaces all unqueried
+symbols by a dummy value. This upgrades algebraic overlap into a
+decision which provably does not query outside S. -/
+theorem canonical_likelihood_error_eq_overlap
+    (S : Finset ι) (a0 : α) (p q : ι → α → ℝ) :
+    (∑ x : ι → α,
+      if chooseP
+          (prodMass (observedLaw S a0 p))
+          (prodMass (observedLaw S a0 q))
+          (canonicalObservation S a0 x)
+      then prodMass (observedLaw S a0 q) x
+      else prodMass (observedLaw S a0 p) x) =
+      (∑ x : ι → α,
+        min (prodMass (observedLaw S a0 p) x)
+          (prodMass (observedLaw S a0 q) x)) := by
+  classical
+  let P : (ι → α) → ℝ := prodMass (observedLaw S a0 p)
+  let Q : (ι → α) → ℝ := prodMass (observedLaw S a0 q)
+  change (∑ x : ι → α,
+    if chooseP P Q (canonicalObservation S a0 x) then Q x else P x) =
+      ∑ x : ι → α, min (P x) (Q x)
+  calc
+    (∑ x : ι → α,
+      if chooseP P Q (canonicalObservation S a0 x) then Q x else P x) =
+        ∑ x : ι → α, if chooseP P Q x then Q x else P x := by
+          apply Finset.sum_congr rfl
+          intro x hx
+          by_cases hc : canonicalObservation S a0 x = x
+          · simp [hc]
+          · have hP : P x = 0 :=
+              observedMass_zero_off_canonical S a0 p x hc
+            have hQ : Q x = 0 :=
+              observedMass_zero_off_canonical S a0 q x hc
+            simp [hP, hQ]
+    _ = (∑ x : ι → α, min (P x) (Q x)) :=
+      likelihood_two_sided_error_eq_overlap P Q
 
 end Nightfall.MarginFreeLikelihood
