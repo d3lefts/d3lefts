@@ -23,6 +23,7 @@ open Nightfall.ProductSpace.Mixture
 open Nightfall.ProductSpace.LatentComponent
 open Nightfall.ProductSpace.RowBound
 open Nightfall.ProductSpace.Transfer
+open Nightfall.ProductSpace.Influence
 
 variable {ι α : Type} [Fintype ι] [DecidableEq ι] [Fintype α] [DecidableEq α]
 
