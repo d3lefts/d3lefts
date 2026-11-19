@@ -1,5 +1,5 @@
 # Proof Passport — Mira exact Latin-square sampling / independent theorem audit
-Version: **2.2**, 2026-11-19. Status: **PARTIAL AUTHOR-SIDE THEOREMS + EARLIER FINITE LEAN LEMMAS; MAIN CLAIM UNVERIFIED**.
+Version: **2.3**, 2026-11-19. Status: **PARTIAL AUTHOR-SIDE THEOREMS + EARLIER FINITE LEAN LEMMAS; MAIN CLAIM UNVERIFIED**.
 
 ## Original source, ownership, objective
 - External source: **Mira Cult, _Exact uniform sampling of Latin squares_**, immutable [Mira-Cult/math@30ddaaad27b48df2002225c3e3f40cffd02c5253](https://github.com/Mira-Cult/math/tree/30ddaaad27b48df2002225c3e3f40cffd02c5253/notes/combinatorics/exact-latin-square-sampling). Mira's source credits six GPT-6.2 Astra instances for mathematical development. NIGHTFALL does **not** claim to have independently discovered her proposed sampler, nor joint authorship or collaborator approval.
@@ -22,6 +22,8 @@ Version: **2.2**, 2026-11-19. Status: **PARTIAL AUTHOR-SIDE THEOREMS + EARLIER F
 | MIRA-DENSE-FIXED | For every fixed r, sup_{A in G(n,n-r)} |per(A)/n! - exp(-r)| -> 0, so t_(n-r)->0 | **AUTHOR-SIDE PROVED** | Uniform fixed-k factorial moments of forbidden hits plus Bonferroni; no growing-r conclusion |
 | MIRA-ENDPOINT | Fixed-c endpoint lower-tail for F_c and R_c ~ product_{i=0}^{c-1} m_(n-i) | **AUTHOR-SIDE DERIVED WITH PUBLISHED INPUT** | GKW mutual contiguity (c fixed >=3), Brégman / van der Waerden + Stirling |
 | MIRA-CHI-BUDGET | Sum_{d=c+1}^{n-c} sqrt(chi^2(Uhat_d||U_d)) <= 1/4 for one fixed c>=3 | **UNPROVED** | Alternative sufficient bulk certificate; may be strictly stronger than Mira's original TV objective |
+| MIRA-DEG2-ENDPOINT | At degree 2, the uniform regular-board law and its permanent-size bias are asymptotically singular: t_2 -> 1, and F_2/E F_2 -> 0 in U_2-probability | **AUTHOR-SIDE PROVED; NOT LEAN** | Exact cycle-species generating function, coefficient transfer and probabilistic separation; independent exact n<=5 checker; boundary only, not a counterexample to c>=3 |
+| MIRA-WFILL-CANCEL | Balanced lookahead hard/soft matching fills exactly cancel prior-free-fill interactions; reverse-mean grade gain -1/2-1/(2b) with controlled remainder | **AUTHOR-SIDE PROVED UNDER EXPLICIT LOCAL/EXCHANGEABILITY CONDITIONS; NOT LEAN** | Independent quantitative dense-permanent expansion, cyclic Latin witness with nonzero cross terms; still need scalar grade normalizer and other mean-cover components |
 | MIRA-CUBIC | Raw cubic-head moment Z*_3/(n!)^3 <= C n(4/3)^n | **AUTHOR-SIDE PROVED, NOT LEAN** | Prior v1 independently reconstructed proof; checker exact n<=13 |
 | MIRA-WDENSE | Dense weighted-permanent log estimate, explicit <=4K^2/s (K<=s/8) | **AUTHOR-SIDE PROVED, NOT LEAN** | Prior v1 independent switching argument |
 | MIRA-FLAT-FINITE | 14 finite likelihood/soft-gate/telescope lemmas | **LEAN KERNEL-CHECKED** | Dedicated pinned PR #900 run 44573134450, only propext, Classical.choice, Quot.sound |
@@ -30,6 +32,15 @@ Version: **2.2**, 2026-11-19. Status: **PARTIAL AUTHOR-SIDE THEOREMS + EARLIER F
 | MIRA-MIX-TARGET | Finite latent-product Latin target normalization under explicit kernel hypotheses | **LEAN KERNEL-CHECKED AS CONDITIONAL ALGEBRA** | 2 named declarations in same run; NOT program semantics |
 
 **Important:** 25/25 existing Lean declarations cover only finite probability/combinatorial identities, *not* the analytic asymptotics, exact runtime or executable sampler. This v2 work has NOT been Lean-certified.
+
+## Author-side v2.3: independent boundary and marked-fill cancellation
+
+The standalone proof addendum [mira-latin-author-side-v23.md](mira-latin-author-side-v23.md) contains two new independently reconstructed results, complete statements, explicit scope and local checkers:
+
+- **Exact degree-two obstruction.** By the labeled 2-regular cycle species identity, t_2 -> 1, and typical ordered 2-factorization counts fall to o(E F_2). This shows why the fixed-c endpoint must not be replaced by c=2; it does not refute the c>=3 result Mira invokes.
+- **Marked-block cancellation.** For balanced size-b blocks after q rows and n>=16(q+3b), all earlier free-fill log-weight terms cancel, with error <=22b(q+3b)^2/n. Under explicit reverse-law exterior exchangeability, the grade mean is bounded by log(Z_b/(n!)^b)-mu_b(S)-1/2-1/(2b)+40b(q+3b)^2/n. The sum of these errors is o(1) over b<=n^(1/200), q=O(n^(1/100)), but the scalar Z_b/m_b asymptotics and other mean-cover components are still open.
+
+Dedicated replay scripts: `scripts/audit_mira_degree_two_endpoint.py` and `scripts/audit_mira_weighted_fill_cancellation.py`. **No v2.3 result has been Lean certified or externally reviewed.** The principal O-tilde(n^25) claim remains unverified.
 
 ## New unconditional theorem 1: exact cycle-type second moment
 Let G_(n,d) be n-by-n labeled d-regular boards, N_d its count, W(A)=per A, m_d=E_U W. For a relative permutation pi let C_(n,d)(pi) count boards containing identity matching and pi. This depends on the entire cycle type lambda of pi, not just fixed-point count; write z_lambda=product_j j^{a_j} a_j! for lambda=(1^{a_1}2^{a_2}...). Then:
