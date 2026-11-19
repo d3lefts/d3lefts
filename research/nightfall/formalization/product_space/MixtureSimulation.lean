@@ -1085,6 +1085,159 @@ theorem exists_sep_coord (f : (ι → α) → ℝ) (hf01 : ∀ x, 0 ≤ f x ∧ 
 end Analysis
 
 
+/-! ## Jensen improvement of the increment step -/
+
+section Jensen
+
+variable {Θ : Type} [Fintype Θ] (P : Θ → ι → α → ℝ)
+variable (hP0 : ∀ θ i a, 0 ≤ P θ i a) (hP1 : ∀ θ i, ∑ a, P θ i a = 1)
+
+omit [Fintype ι] [DecidableEq ι] [Fintype α] [DecidableEq α] in
+/-- Power means: `(∑ v a²)³ ≤ (∑ v) (∑ v a³)²` for `v, a ≥ 0`. -/
+theorem power_mean (v a : Θ → ℝ) (hv : ∀ θ, 0 ≤ v θ) (ha : ∀ θ, 0 ≤ a θ) :
+    (∑ θ, v θ * a θ ^ 2) ^ 3 ≤ (∑ θ, v θ) * (∑ θ, v θ * a θ ^ 3) ^ 2 := by
+  set S1 := ∑ θ, v θ * a θ
+  set S2 := ∑ θ, v θ * a θ ^ 2
+  set S3 := ∑ θ, v θ * a θ ^ 3
+  set V := ∑ θ, v θ
+  have h1 : S2 ^ 2 ≤ S1 * S3 :=
+    Finset.sum_sq_le_sum_mul_sum_of_sq_le_mul univ
+      (fun θ _ => mul_nonneg (hv θ) (ha θ)) (fun θ _ => mul_nonneg (hv θ) (pow_nonneg (ha θ) 3))
+      (fun θ _ => le_of_eq (by ring))
+  have h2 : S1 ^ 2 ≤ V * S2 :=
+    Finset.sum_sq_le_sum_mul_sum_of_sq_le_mul univ (fun θ _ => hv θ)
+      (fun θ _ => mul_nonneg (hv θ) (sq_nonneg (a θ))) (fun θ _ => le_of_eq (by ring))
+  have hS1 : 0 ≤ S1 := Finset.sum_nonneg fun θ _ => mul_nonneg (hv θ) (ha θ)
+  have hS2 : 0 ≤ S2 := Finset.sum_nonneg fun θ _ => mul_nonneg (hv θ) (sq_nonneg _)
+  have hS3 : 0 ≤ S3 := Finset.sum_nonneg fun θ _ => mul_nonneg (hv θ) (pow_nonneg (ha θ) 3)
+  have hV : 0 ≤ V := Finset.sum_nonneg fun θ _ => hv θ
+  rcases hS2.eq_or_lt with h0 | hpos
+  · rw [← h0, show (0 : ℝ) ^ 3 = 0 by norm_num]
+    exact mul_nonneg hV (sq_nonneg _)
+  · -- S2⁴ ≤ S1² S3² ≤ V S2 S3²
+    have h3 : S2 ^ 4 ≤ S1 ^ 2 * S3 ^ 2 := by
+      have := pow_le_pow_left₀ (sq_nonneg S2) h1 2
+      calc S2 ^ 4 = (S2 ^ 2) ^ 2 := by ring
+        _ ≤ (S1 * S3) ^ 2 := this
+        _ = S1 ^ 2 * S3 ^ 2 := by ring
+    have h4 : S1 ^ 2 * S3 ^ 2 ≤ V * S2 * S3 ^ 2 := mul_le_mul_of_nonneg_right h2 (sq_nonneg _)
+    have h5 : S2 * S2 ^ 3 ≤ S2 * (V * S3 ^ 2) := by nlinarith
+    exact le_of_mul_le_mul_left h5 hpos
+
+include hP0 hP1 in
+/-- **Jensen increment step.** If the within-component variance exceeds `τ V / 2`, some query
+outside `A` lowers the posterior-averaged increment by at least
+`(τ/2)^{3/2} V / (12 K² M)`. -/
+theorem increment_good_jensen (K τ gb : ℝ) (hK : 0 < K) (hτ : 0 < τ) (hM : 0 < Fintype.card Θ)
+    (hgb : 0 < gb) (A : Finset ι) (v : Θ → ℝ) (hv : ∀ θ, 0 ≤ v θ) (hV : 0 < Vs v)
+    (g : (ι → α) → ℝ) (hinv : ∀ i ∈ A, Inv g i) (hrows : HasRows g K)
+    (hW : τ * Vs v / 2 < ∑ θ, v θ * pvar (P θ) g) :
+    ∃ j, j ∉ A ∧ Good P (τ / 2 * Real.sqrt (τ / 2) / (12 * K ^ 2 * Fintype.card Θ)) gb v g j := by
+  obtain ⟨a, hr, hKa⟩ := hrows
+  have hMpos : (0 : ℝ) < Fintype.card Θ := Nat.cast_pos.mpr hM
+  -- some component has positive variance, which gives a coordinate
+  obtain ⟨θ0, hθ0⟩ : ∃ θ, 0 < pvar (P θ) g := by
+    by_contra hcon
+    push_neg at hcon
+    have : ∑ θ, v θ * pvar (P θ) g ≤ 0 :=
+      Finset.sum_nonpos fun θ _ => mul_nonpos_of_nonneg_of_nonpos (hv θ) (hcon θ)
+    have : 0 < τ * Vs v / 2 := by positivity
+    linarith
+  obtain ⟨j0, -⟩ := mean_increment (P θ0) (hP0 θ0) (hP1 θ0) g a hr K hKa hθ0
+  -- a coordinate for each component
+  have hsel : ∀ θ, ∃ j, pvar (P θ) g ^ 3 ≤ 144 * K ^ 4 * pincr (P θ) g j ^ 2 := by
+    intro θ
+    rcases (pvar_nonneg (P θ) (hP0 θ) g).eq_or_lt with h0 | hpos
+    · exact ⟨j0, by rw [← h0, show (0 : ℝ) ^ 3 = 0 by norm_num]; positivity⟩
+    · exact mean_increment (P θ) (hP0 θ) (hP1 θ) g a hr K hKa hpos
+  choose J hJ using hsel
+  set sa : Θ → ℝ := fun θ => Real.sqrt (pvar (P θ) g) with hsadef
+  have hsa0 : ∀ θ, 0 ≤ sa θ := fun θ => Real.sqrt_nonneg _
+  have hsa2 : ∀ θ, sa θ ^ 2 = pvar (P θ) g := fun θ => Real.sq_sqrt (pvar_nonneg (P θ) (hP0 θ) g)
+  -- pincr at J θ is at least sa³ / (12 K²)
+  have hpJ : ∀ θ, sa θ ^ 3 ≤ 12 * K ^ 2 * pincr (P θ) g (J θ) := by
+    intro θ
+    have h := hJ θ
+    rw [← hsa2 θ] at h
+    have hp0 := pincr_nonneg (P θ) (hP0 θ) g (J θ)
+    have hsq : (sa θ ^ 3) ^ 2 ≤ (12 * K ^ 2 * pincr (P θ) g (J θ)) ^ 2 := by
+      calc (sa θ ^ 3) ^ 2 = (sa θ ^ 2) ^ 3 := by ring
+        _ ≤ 144 * K ^ 4 * pincr (P θ) g (J θ) ^ 2 := h
+        _ = (12 * K ^ 2 * pincr (P θ) g (J θ)) ^ 2 := by ring
+    exact (pow_le_pow_iff_left₀ (pow_nonneg (hsa0 θ) 3) (by positivity) two_ne_zero).mp hsq
+  -- D j := ∑ θ v θ pincr θ j
+  set D : ι → ℝ := fun j => ∑ θ, v θ * pincr (P θ) g j with hDdef
+  have hD0 : ∀ j, 0 ≤ D j := fun j =>
+    Finset.sum_nonneg fun θ _ => mul_nonneg (hv θ) (pincr_nonneg (P θ) (hP0 θ) g j)
+  have hDJ : ∀ θ', v θ' * pincr (P θ') g (J θ') ≤ D (J θ') := fun θ' =>
+    Finset.single_le_sum (f := fun θ => v θ * pincr (P θ) g (J θ'))
+      (fun θ _ => mul_nonneg (hv θ) (pincr_nonneg (P θ) (hP0 θ) g (J θ'))) (mem_univ θ')
+  set S3 := ∑ θ, v θ * sa θ ^ 3 with hS3def
+  have hsumD : S3 ≤ 12 * K ^ 2 * ∑ θ', D (J θ') := by
+    rw [Finset.mul_sum]
+    refine Finset.sum_le_sum fun θ' _ => ?_
+    calc v θ' * sa θ' ^ 3 ≤ v θ' * (12 * K ^ 2 * pincr (P θ') g (J θ')) :=
+          mul_le_mul_of_nonneg_left (hpJ θ') (hv θ')
+      _ = 12 * K ^ 2 * (v θ' * pincr (P θ') g (J θ')) := by ring
+      _ ≤ 12 * K ^ 2 * D (J θ') := mul_le_mul_of_nonneg_left (hDJ θ') (by positivity)
+  -- the best candidate is at least the average
+  obtain ⟨θb, hθb⟩ : ∃ θb, (∑ θ', D (J θ')) / Fintype.card Θ ≤ D (J θb) := by
+    by_contra hcon
+    push_neg at hcon
+    have hlt := Finset.sum_lt_sum_of_nonempty
+      (Finset.univ_nonempty_iff.mpr (Fintype.card_pos_iff.mp hM)) fun θ (_ : θ ∈ univ) => hcon θ
+    simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul] at hlt
+    rw [mul_div_cancel₀ _ hMpos.ne'] at hlt
+    exact lt_irrefl _ hlt
+  -- power mean: S3 ≥ (τ/2)^{3/2} V
+  have hpm := power_mean v sa hv hsa0
+  simp only [hsa2] at hpm
+  have hVs : ∑ θ, v θ = Vs v := rfl
+  rw [hVs, ← hS3def] at hpm
+  set c := τ / 2 * Real.sqrt (τ / 2) with hcdef
+  have hc2 : c ^ 2 = (τ / 2) ^ 3 := by
+    rw [hcdef, mul_pow, Real.sq_sqrt (by positivity)]; ring
+  have hS3 : c * Vs v ≤ S3 := by
+    have hS30 : 0 ≤ S3 := Finset.sum_nonneg fun θ _ => mul_nonneg (hv θ) (pow_nonneg (hsa0 θ) 3)
+    have hW3 : (τ * Vs v / 2) ^ 3 ≤ (∑ θ, v θ * pvar (P θ) g) ^ 3 :=
+      pow_le_pow_left₀ (by positivity) hW.le 3
+    have key : (c * Vs v) ^ 2 * Vs v ≤ S3 ^ 2 * Vs v := by
+      calc (c * Vs v) ^ 2 * Vs v = (τ * Vs v / 2) ^ 3 := by rw [mul_pow, hc2]; ring
+        _ ≤ (∑ θ, v θ * pvar (P θ) g) ^ 3 := hW3
+        _ ≤ Vs v * S3 ^ 2 := hpm
+        _ = S3 ^ 2 * Vs v := by ring
+    have key2 : (c * Vs v) ^ 2 ≤ S3 ^ 2 := le_of_mul_le_mul_right key hV
+    exact (pow_le_pow_iff_left₀ (by positivity) hS30 two_ne_zero).mp key2
+  set j := J θb
+  have hga : 0 < c / (12 * K ^ 2 * Fintype.card Θ) := by positivity
+  have hstep : Vs v ≤ D j / (c / (12 * K ^ 2 * Fintype.card Θ)) := by
+    rw [le_div_iff₀ hga]
+    have h1 : c * Vs v / (12 * K ^ 2 * Fintype.card Θ) ≤ (∑ θ', D (J θ')) / Fintype.card Θ := by
+      rw [div_le_div_iff₀ (by positivity) hMpos]
+      have := mul_le_mul_of_nonneg_right (hS3.trans hsumD) hMpos.le
+      nlinarith
+    calc Vs v * (c / (12 * K ^ 2 * Fintype.card Θ)) = c * Vs v / (12 * K ^ 2 * Fintype.card Θ) := by
+          ring
+      _ ≤ D j := h1.trans hθb
+  have hjA : j ∉ A := by
+    intro hjA
+    have hz : D j = 0 := Finset.sum_eq_zero fun θ _ => by
+      rw [pincr_eq_zero_of_inv (P θ) (hinv j hjA), mul_zero]
+    rw [hz, zero_div] at hstep
+    linarith
+  refine ⟨j, hjA, ?_⟩
+  unfold Good
+  rw [Psi_children P hP0 hP1]
+  have hgini : (Vs v - ∑ b, Sq (upd P v j b)) / gb ≤ (Vs v - Sq v) / gb :=
+    div_le_div_of_nonneg_right (by linarith [Sq_mono P hP0 hP1 v hv j]) hgb.le
+  unfold Psi
+  rw [sub_div]
+  have : D j = ∑ θ, v θ * pincr (P θ) g j := rfl
+  rw [← this]
+  linarith
+
+end Jensen
+
 /-! ## Main theorem -/
 
 section Main
@@ -1316,9 +1469,221 @@ theorem mixture_simulation [Nonempty α] (w : Θ → ℝ) (hw0 : ∀ θ, 0 ≤ w
     div_le_div_of_nonneg_right herr hε2.le
   linarith
 
+include hP0 hP1 in
+/-- **A good query exists** (Jensen form of the increment step). -/
+theorem good_exists_jensen (f : (ι → α) → ℝ) (hf01 : ∀ x, 0 ≤ f x ∧ f x ≤ 1) (d : ℕ) (hd : 1 ≤ d)
+    (hdeg : HasProdDegreeLE f d) (τ : ℝ) (hτ : 0 < τ) (hτ2 : τ ≤ 1 / 2)
+    (hM : 0 < Fintype.card Θ) (A : Finset ι) (v : Θ → ℝ) (g : (ι → α) → ℝ)
+    (hS : St f (Real.pi ^ 2 * (d : ℝ) ^ 2 / 2) A v g) (hvar : τ * Vs v < mvar P v g) :
+    ∃ j, j ∉ A ∧ Good P (τ / 2 * Real.sqrt (τ / 2) / (12 * (Real.pi ^ 2 * (d : ℝ) ^ 2 / 2) ^ 2 * Fintype.card Θ))
+      ((τ / (2 * (Fintype.card Θ : ℝ) ^ 2)) ^ 2 *
+        (Real.sqrt (τ / 2) / (8 * (d : ℝ) ^ 2)) ^ 2) v g j := by
+  obtain ⟨hv, hinv, hrows, hrep, hg⟩ := hS
+  have hMpos : (0 : ℝ) < (Fintype.card Θ : ℝ) := Nat.cast_pos.mpr hM
+  have hdpos : (0 : ℝ) < d := by exact_mod_cast hd
+  have hV0 : 0 ≤ Vs v := Finset.sum_nonneg fun θ _ => hv θ
+  have hVpos : 0 < Vs v := by
+    rcases hV0.eq_or_lt with h0 | h
+    · exfalso
+      have hz : ∀ θ, v θ = 0 := by
+        intro θ
+        have := Finset.single_le_sum (fun θ (_ : θ ∈ univ) => hv θ) (mem_univ θ)
+        have h0' : ∑ θ, v θ = 0 := h0.symm
+        exact le_antisymm (by linarith) (hv θ)
+      have : mvar P v g = 0 := by unfold mvar Ex; simp [hz]
+      rw [← h0] at hvar
+      linarith
+    · exact h
+  have hs0 : 0 < Real.sqrt (τ / 2) := Real.sqrt_pos.mpr (by positivity)
+  have hgb : 0 < (τ / (2 * (Fintype.card Θ : ℝ) ^ 2)) ^ 2 *
+      (Real.sqrt (τ / 2) / (8 * (d : ℝ) ^ 2)) ^ 2 := by positivity
+  have hdec := mvar_decomp P hP1 v g
+  by_cases hW : τ * Vs v / 2 < ∑ θ, v θ * pvar (P θ) g
+  · exact increment_good_jensen P hP0 hP1 _ τ _ (by positivity) hτ hM hgb A v hv hVpos g hinv
+      hrows hW
+  · push_neg at hW
+    set m : Θ → ℝ := fun θ => pexp (P θ) g with hmdef
+    have hB : τ * Vs v / 2 < ∑ θ, v θ * (m θ - mmean P v g) ^ 2 := by
+      rw [hdec] at hvar; simp only [hmdef]; linarith
+    have hmmean : mmean P v g = (∑ θ', v θ' * m θ') / Vs v := rfl
+    have hpair := pair_identity v m hVpos
+    rw [← hmmean] at hpair
+    have hbig : τ * Vs v ^ 2 < ∑ θ, ∑ θ', v θ * v θ' * (m θ - m θ') ^ 2 := by
+      rw [hpair]; nlinarith
+    have hm01 : ∀ θ, 0 ≤ m θ ∧ m θ ≤ 1 := fun θ => pexp_bounds (P θ) (hP0 θ) (hP1 θ) g hg
+    obtain ⟨θ1, θ2, hw12, hm12⟩ := exists_pair v m hv hm01 τ hτ hM hbig
+    set c := τ / (2 * (Fintype.card Θ : ℝ) ^ 2) with hcdef
+    have hc : 0 < c := by positivity
+    have hw1 : c * Vs v ≤ v θ1 := by
+      have hle : v θ2 ≤ Vs v := Finset.single_le_sum (fun θ (_ : θ ∈ univ) => hv θ) (mem_univ θ2)
+      have h1 : v θ1 * v θ2 ≤ v θ1 * Vs v := mul_le_mul_of_nonneg_left hle (hv θ1)
+      have h2 : c * Vs v * Vs v = τ * Vs v ^ 2 / (2 * (Fintype.card Θ : ℝ) ^ 2) := by
+        rw [hcdef]; ring
+      nlinarith
+    have hw2 : c * Vs v ≤ v θ2 := by
+      have hle : v θ1 ≤ Vs v := Finset.single_le_sum (fun θ (_ : θ ∈ univ) => hv θ) (mem_univ θ1)
+      have h1 : v θ1 * v θ2 ≤ Vs v * v θ2 := mul_le_mul_of_nonneg_right hle (hv θ2)
+      have h2 : c * Vs v * Vs v = τ * Vs v ^ 2 / (2 * (Fintype.card Θ : ℝ) ^ 2) := by
+        rw [hcdef]; ring
+      nlinarith
+    set s := Real.sqrt (τ / 2) with hsdef
+    have hss : s ^ 2 = τ / 2 := Real.sq_sqrt (by positivity)
+    have hdiff : s < |pexp (P θ1) g - pexp (P θ2) g| := by
+      by_contra hcon
+      push_neg at hcon
+      have : (m θ1 - m θ2) ^ 2 ≤ s ^ 2 := by
+        rw [← sq_abs]; exact pow_le_pow_left₀ (abs_nonneg _) hcon 2
+      linarith
+    have hs1 : s ≤ 1 / 2 := by
+      have : s ^ 2 ≤ (1 / 2) ^ 2 := by rw [hss]; nlinarith
+      nlinarith [hs0]
+    obtain ⟨i, hiA, hi⟩ := exists_sep_coord P hP0 hP1 f hf01 d hd hdeg A g hrep θ1 θ2 s hs0 hs1
+      hdiff
+    set γ := s / (8 * (d : ℝ) ^ 2) with hγdef
+    have hγ : 0 < γ := by positivity
+    have hl1 : 2 * γ < ∑ b, |P θ1 i b - P θ2 i b| := by
+      rw [l1_eq_two_tvd _ _ (hP1 θ1 i) (hP1 θ2 i)]; linarith
+    have htri : ∑ b, |P θ1 i b - P θ2 i b| ≤
+        ∑ b, |P θ1 i b - Vs (upd P v i b) / Vs v| + ∑ b, |P θ2 i b - Vs (upd P v i b) / Vs v| := by
+      rw [← Finset.sum_add_distrib]
+      refine Finset.sum_le_sum fun b _ => ?_
+      calc |P θ1 i b - P θ2 i b| = |(P θ1 i b - Vs (upd P v i b) / Vs v) -
+            (P θ2 i b - Vs (upd P v i b) / Vs v)| := by ring_nf
+        _ ≤ _ := abs_sub _ _
+    by_cases h1 : γ < ∑ b, |P θ1 i b - Vs (upd P v i b) / Vs v|
+    · exact separation_good P hP0 hP1 _ _ γ c (by positivity) hγ hc rfl A v hv hVpos g i hiA θ1
+        hw1 h1
+    · push_neg at h1
+      have h2 : γ < ∑ b, |P θ2 i b - Vs (upd P v i b) / Vs v| := by linarith
+      exact separation_good P hP0 hP1 _ _ γ c (by positivity) hγ hc rfl A v hv hVpos g i hiA θ2
+        hw2 h2
+
+include hP0 hP1 in
+/-- **Mixture simulation, Jensen form.** Same tree and hypotheses as `mixture_simulation`, with the
+increment step charged by Jensen's inequality across components:
+
+  `Pr_{x∼ν}[ |f x - Q̃ x| > ε ] ≤ (3 √2 π⁶ d⁶ M / (τ √τ) + 512 d⁴ M⁴ / τ³) / n + τ / ε²`.
+
+With `τ = ε² δ / 2` the first term gives depth `24 π⁶ d⁶ M ε⁻³ δ^{-5/2}`. -/
+theorem mixture_simulation_jensen [Nonempty α] (w : Θ → ℝ) (hw0 : ∀ θ, 0 ≤ w θ) (hw1 : ∑ θ, w θ = 1)
+    (f : (ι → α) → ℝ) (hf01 : ∀ x, 0 ≤ f x ∧ f x ≤ 1) (d : ℕ) (hd : 1 ≤ d)
+    (hdeg : HasProdDegreeLE f d) (τ : ℝ) (hτ : 0 < τ) (hτ2 : τ ≤ 1 / 2) (ε : ℝ) (hε : 0 < ε)
+    (n : ℕ) (hn : 0 < n) :
+    ∃ t : DTree ι α, (∀ x, t.queries x ≤ n) ∧
+      Ex P w (fun x => if ε < |f x - t.eval x| then (1 : ℝ) else 0) ≤
+        (3 * Real.sqrt 2 * Real.pi ^ 6 * (d : ℝ) ^ 6 * Fintype.card Θ / (τ * Real.sqrt τ) +
+          512 * (d : ℝ) ^ 4 * (Fintype.card Θ : ℝ) ^ 4 / τ ^ 3) / n + τ / ε ^ 2 := by
+  have hM : 0 < Fintype.card Θ := by
+    rcases Nat.eq_zero_or_pos (Fintype.card Θ) with h0 | h
+    · exfalso
+      have : IsEmpty Θ := Fintype.card_eq_zero_iff.mp h0
+      simp at hw1
+    · exact h
+  have hMpos : (0 : ℝ) < Fintype.card Θ := Nat.cast_pos.mpr hM
+  have hdpos : (0 : ℝ) < d := by exact_mod_cast hd
+  set K : ℝ := Real.pi ^ 2 * (d : ℝ) ^ 2 / 2 with hKdef
+  have hK : 0 < K := by positivity
+  have hsτ : 0 < Real.sqrt τ := Real.sqrt_pos.mpr hτ
+  have hsτ2 : Real.sqrt τ ^ 2 = τ := Real.sq_sqrt hτ.le
+  set ga : ℝ := τ / 2 * Real.sqrt (τ / 2) / (12 * K ^ 2 * Fintype.card Θ) with hgadef
+  set gb : ℝ := (τ / (2 * (Fintype.card Θ : ℝ) ^ 2)) ^ 2 *
+    (Real.sqrt (τ / 2) / (8 * (d : ℝ) ^ 2)) ^ 2 with hgbdef
+  have hs2' : 0 < Real.sqrt (τ / 2) := Real.sqrt_pos.mpr (by positivity)
+  have hga : 0 < ga := by positivity
+  have hs2 : 0 < Real.sqrt (τ / 2) := Real.sqrt_pos.mpr (by positivity)
+  have hgb : 0 < gb := by positivity
+  set t := mbuild P τ ga gb n ∅ w f with htdef
+  refine ⟨t, mqueries_le P τ ga gb n ∅ w f, ?_⟩
+  have hS0 : St f K ∅ w f :=
+    ⟨hw0, fun i hi => absurd hi (Finset.notMem_empty i), hasRows_of_degree f d hf01 hdeg,
+      rep_empty f, hf01⟩
+  have hbq := mbad_queries P τ ga gb (St f K)
+    (fun A v g j b hS hj => St_pres P hP0 f K A v g j b hS hj)
+    (fun A v g hS hvar => good_exists_jensen P hP0 hP1 f hf01 d hd hdeg τ hτ hτ2 hM A v g hS
+      hvar) n ∅ w f hS0
+  have hq := mexpected P τ ga gb hP0 hP1 hga hgb n ∅ w f hw0
+  have herr := mleaf_error P τ ga gb hP0 hP1 hτ.le n ∅ w f hw0
+  have hVw : Vs w = 1 := hw1
+  rw [hVw, mul_one] at herr
+  have hε2 : 0 < ε ^ 2 := by positivity
+  have hn' : (0 : ℝ) < n := by exact_mod_cast hn
+  -- pointwise split
+  have hpt : ∀ x, (if ε < |f x - t.eval x| then (1 : ℝ) else 0) ≤
+      (t.queries x : ℝ) / n + (if t.bad x then 0 else (f x - t.eval x) ^ 2) / ε ^ 2 := by
+    intro x
+    by_cases hb : t.bad x = true
+    · have hqn : (t.queries x : ℝ) = n := by exact_mod_cast hbq x hb
+      rw [hqn, div_self hn'.ne']
+      simp only [hb, ite_true, zero_div, add_zero]
+      split_ifs <;> norm_num
+    · simp only [hb, Bool.false_eq_true, ite_false]
+      have hq0 : 0 ≤ (t.queries x : ℝ) / n := by positivity
+      split_ifs with hlt
+      · have h1 : ε ^ 2 < (f x - t.eval x) ^ 2 := by
+          have := pow_lt_pow_left₀ hlt hε.le two_ne_zero; rwa [sq_abs] at this
+        have : 1 ≤ (f x - t.eval x) ^ 2 / ε ^ 2 := by rw [le_div_iff₀ hε2, one_mul]; exact h1.le
+        linarith
+      · have : 0 ≤ (f x - t.eval x) ^ 2 / ε ^ 2 := by positivity
+        linarith
+  have hmono := Ex_mono P w hw0 hP0 _ _ hpt
+  have hsplit : Ex P w (fun x => (t.queries x : ℝ) / n +
+      (if t.bad x then 0 else (f x - t.eval x) ^ 2) / ε ^ 2) =
+      Ex P w (fun x => (t.queries x : ℝ)) / n +
+        Ex P w (fun x => if t.bad x then 0 else (f x - t.eval x) ^ 2) / ε ^ 2 := by
+    rw [Ex_add]
+    unfold Ex pexp
+    congr 1
+    · rw [Finset.sum_div]
+      refine Finset.sum_congr rfl fun θ _ => ?_
+      rw [mul_div_assoc, Finset.sum_div]
+      congr 1
+      exact Finset.sum_congr rfl fun x _ => by ring
+    · rw [Finset.sum_div]
+      refine Finset.sum_congr rfl fun θ _ => ?_
+      rw [mul_div_assoc, Finset.sum_div]
+      congr 1
+      exact Finset.sum_congr rfl fun x _ => by ring
+  rw [hsplit] at hmono
+  -- the potential at the root
+  have hPsi : Psi P ga gb w f ≤ K / ga + 1 / gb := by
+    unfold Psi
+    have hPhi : Phi P w f ≤ K := by
+      unfold Phi
+      obtain ⟨a, hr, hKa⟩ := hasRows_of_degree f d hf01 hdeg
+      calc ∑ θ, w θ * Ltot (P θ) f ≤ ∑ θ, w θ * K :=
+            Finset.sum_le_sum fun θ _ => mul_le_mul_of_nonneg_left
+              (sum_pincr_le (P θ) (hP0 θ) (hP1 θ) f a hr K hKa) (hw0 θ)
+        _ = K := by rw [← Finset.sum_mul, hw1, one_mul]
+    have hSq0 : 0 ≤ Sq w := div_nonneg (Finset.sum_nonneg fun θ _ => sq_nonneg _) (by rw [hVw]; norm_num)
+    have h1 : Phi P w f / ga ≤ K / ga := div_le_div_of_nonneg_right hPhi hga.le
+    have h2 : (Vs w - Sq w) / gb ≤ 1 / gb := div_le_div_of_nonneg_right (by rw [hVw]; linarith) hgb.le
+    linarith
+  have hKga : K / ga = 3 * Real.sqrt 2 * Real.pi ^ 6 * (d : ℝ) ^ 6 * Fintype.card Θ /
+      (τ * Real.sqrt τ) := by
+    have hsd : Real.sqrt (τ / 2) = Real.sqrt τ / Real.sqrt 2 := Real.sqrt_div hτ.le 2
+    have h22 : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+    have h2p : 0 < Real.sqrt 2 := by positivity
+    rw [hgadef, hsd, hKdef]
+    field_simp
+    norm_num
+  have hgb' : 1 / gb = 512 * (d : ℝ) ^ 4 * (Fintype.card Θ : ℝ) ^ 4 / τ ^ 3 := by
+    rw [hgbdef, div_pow (Real.sqrt (τ / 2)), Real.sq_sqrt (by positivity : (0 : ℝ) ≤ τ / 2)]
+    field_simp; ring
+  have hfinal : Ex P w (fun x => (t.queries x : ℝ)) / n ≤
+      (3 * Real.sqrt 2 * Real.pi ^ 6 * (d : ℝ) ^ 6 * Fintype.card Θ / (τ * Real.sqrt τ) +
+        512 * (d : ℝ) ^ 4 * (Fintype.card Θ : ℝ) ^ 4 / τ ^ 3) / n := by
+    apply div_le_div_of_nonneg_right _ hn'.le
+    rw [← hKga, ← hgb']
+    exact hq.trans hPsi
+  have herr' : Ex P w (fun x => if t.bad x then 0 else (f x - t.eval x) ^ 2) / ε ^ 2 ≤ τ / ε ^ 2 :=
+    div_le_div_of_nonneg_right herr hε2.le
+  linarith
+
 end Main
+
 
 end Nightfall.ProductSpace.Mixture
 
 #print axioms Nightfall.ProductSpace.Mixture.fooling_tv
 #print axioms Nightfall.ProductSpace.Mixture.mixture_simulation
+#print axioms Nightfall.ProductSpace.Mixture.mixture_simulation_jensen

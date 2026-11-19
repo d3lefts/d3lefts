@@ -1,7 +1,7 @@
 name: NIGHTFALL Aaronson–Ambainis product-space terminal (pinned 4.36)
 on:
   push:
-    branches: [q-all-degree-lift]
+    branches: [q-all-degree-lift, nightfall-mixture-jensen]
     paths:
       - 'research/nightfall/formalization/**'
       - '.github/workflows/nightfall-aa-product-terminal.yml'
@@ -135,6 +135,9 @@ jobs:
             --workspace /tmp/mathlib4 --strict --timeout 2400 \
             --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
             --decl "$X.mixture_simulation" \
+            --decl "$X.mixture_simulation_jensen" \
+            --decl "$X.increment_good_jensen" \
+            --decl "$X.power_mean" \
             --decl "$X.good_exists" \
             --decl "$X.fooling_tv" \
             --decl "$X.Sq_gain" \
