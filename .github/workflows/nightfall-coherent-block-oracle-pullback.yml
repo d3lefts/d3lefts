@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/product_space/CoherentBlockOraclePullback.lean'
+      - 'research/nightfall/strong_simulation_progress/check_coherent_block_oracle_exact.py'
       - '.github/workflows/nightfall-coherent-block-oracle-pullback.yml'
   workflow_dispatch:
 permissions:
@@ -16,6 +17,8 @@ jobs:
         with:
           persist-credentials: false
       - uses: ./.github/actions/setup-nightfall-lean
+      - name: Exact independent coherent-permutation regression
+        run: python3 research/nightfall/strong_simulation_progress/check_coherent_block_oracle_exact.py
       - name: Compile source theorem and inspect exact axiom dependencies
         shell: bash
         run: |
