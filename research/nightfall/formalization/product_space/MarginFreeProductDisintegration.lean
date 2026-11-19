@@ -84,7 +84,7 @@ theorem observed_then_pin_mass (A : Finset ι) (a0 : α)
            (if i ∈ A then delta (x i) (y i) else p i (y i))) := by
             apply Finset.sum_congr rfl
             intro x _
-            simp only [prodMass, pin, Finset.prod_mul_distrib]
+            simp [prodMass, pin, Finset.prod_mul_distrib]
     _ = ∏ i : ι, p i (y i) := hfactor
     _ = prodMass p y := rfl
 
