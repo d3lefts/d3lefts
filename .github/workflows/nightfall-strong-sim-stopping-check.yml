@@ -1,0 +1,32 @@
+name: NIGHTFALL strong simulation stopping-tail falsifier
+on:
+  push:
+    branches: [nightfall-strong-simulation-exponential-stopping-20261119]
+    paths:
+      - 'research/nightfall/formalization/product_space/check_strong_stopping_tail.py'
+      - 'research/nightfall/formalization/product_space/STRONG_SIMULATION_EXPONENTIAL_STOPPING_20261119.md'
+      - '.github/workflows/nightfall-strong-sim-stopping-check.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/check_strong_stopping_tail.py'
+      - 'research/nightfall/formalization/product_space/STRONG_SIMULATION_EXPONENTIAL_STOPPING_20261119.md'
+      - '.github/workflows/nightfall-strong-sim-stopping-check.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-rational-falsifier:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Exact rational edge tests and drift coefficient check
+        run: |
+          set -euo pipefail
+          python3 -m py_compile research/nightfall/formalization/product_space/check_strong_stopping_tail.py
+          python3 research/nightfall/formalization/product_space/check_strong_stopping_tail.py
+          git rev-parse HEAD
+          sha256sum research/nightfall/formalization/product_space/check_strong_stopping_tail.py
+          echo "Finite test only; strong simulation conjecture and new tail theorem NOT Lean certified."
