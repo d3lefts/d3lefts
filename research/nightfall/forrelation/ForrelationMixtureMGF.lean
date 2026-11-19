@@ -236,14 +236,12 @@ theorem latent_exp_component_lower_bound
       _ = (N * c) * c := by rw [hmean]
   rw [hweighted] at hbase
   have hkappa : ((N * c) ^ 2) / (2 * N) = N * c ^ 2 / 2 := by
-    field_simp [hN.ne']
-    ring
+    field_simp [hN.ne'] <;> ring
   rw [hkappa] at hbase
   have hbound : Real.exp (N * c ^ 2) ≤
       (Fintype.card Θ : ℝ) * Real.exp (N * c ^ 2 / 2) := by
     convert hbase using 1
-    congr 1
-    ring
+    congr 1 <;> ring
   have hratio :
       Real.exp (N * c ^ 2) / Real.exp (N * c ^ 2 / 2) ≤
         (Fintype.card Θ : ℝ) :=
@@ -252,8 +250,7 @@ theorem latent_exp_component_lower_bound
     Real.exp (N * c ^ 2 / 2) =
         Real.exp (N * c ^ 2) / Real.exp (N * c ^ 2 / 2) := by
           rw [← Real.exp_sub]
-          congr 1
-          ring
+          congr 1 <;> ring
     _ ≤ _ := hratio
 
 end Nightfall.Forrelation.Information
