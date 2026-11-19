@@ -1,0 +1,64 @@
+name: NIGHTFALL pinned margin-free conditional stability (source-exact Lean)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/PinnedConditionalStability.lean'
+      - '.github/workflows/nightfall-pinned-conditional-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  pinned-conditional:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile source-level pinned product dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="${M//.//}"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean" >"/tmp/closure-$M.log" 2>&1) || { tail -100 "/tmp/closure-$M.log"; exit 1; }
+            if grep -E 'declaration uses .sorry|sorryAx|error:' "/tmp/closure-$M.log"; then exit 1; fi
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+      - name: Compile pinned stability and audit axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/product_space/LatentComponentCertifiedCore.lean /tmp/mathlib4/LatentComponentCertifiedCore.lean
+          cp research/nightfall/formalization/product_space/PinnedConditionalStability.lean /tmp/mathlib4/PinnedConditionalStability.lean
+          cd /tmp/mathlib4
+          lake env lean -o .lake/build/lib/lean/LatentComponentCertifiedCore.olean LatentComponentCertifiedCore.lean 2>&1 | tee /tmp/latent-core.log
+          lake env lean -o .lake/build/lib/lean/PinnedConditionalStability.olean PinnedConditionalStability.lean 2>&1 | tee /tmp/pin-stability.log
+          cat > PinAxioms.lean <<'LEAN'
+          import PinnedConditionalStability
+          #print axioms Nightfall.ProductSpace.PinnedConditional.pin_nonneg
+          #print axioms Nightfall.ProductSpace.PinnedConditional.pin_sum_one
+          #print axioms Nightfall.ProductSpace.PinnedConditional.same_pin_tv_zero
+          #print axioms Nightfall.ProductSpace.PinnedConditional.pin_tvd_le
+          #print axioms Nightfall.ProductSpace.PinnedConditional.pinned_expectation_stability
+          #print axioms Nightfall.ProductSpace.PinnedConditional.pinned_small_mean_shift
+          LEAN
+          sed -i 's/^          //' PinAxioms.lean
+          lake env lean PinAxioms.lean | tee /tmp/pin-axioms.log
+          if grep -E 'error:|sorryAx|declaration uses .sorry' /tmp/latent-core.log /tmp/pin-stability.log /tmp/pin-axioms.log; then exit 1; fi
+          sha256sum PinnedConditionalStability.lean | tee /tmp/pin-hash.txt
+      - name: Preserve proof receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pinned-conditional-lean
+          path: |
+            /tmp/latent-core.log
+            /tmp/pin-stability.log
+            /tmp/pin-axioms.log
+            /tmp/pin-hash.txt
+          retention-days: 60
+          if-no-files-found: warn
