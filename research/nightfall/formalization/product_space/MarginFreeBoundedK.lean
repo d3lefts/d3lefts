@@ -20,6 +20,7 @@ namespace Nightfall.MarginFreeBoundedK
 
 open Finset
 open Nightfall.ProductSpace.Transfer
+open Nightfall.ProductSpace.Mixture
 open Nightfall.ProductSpace.RowBound
 open Nightfall.ProductSpace.Influence
 open Nightfall.MarginFreeTVHellinger
