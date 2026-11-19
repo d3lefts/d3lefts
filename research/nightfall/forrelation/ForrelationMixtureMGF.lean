@@ -162,7 +162,7 @@ theorem latentJoint_nonneg
     is the stated exponential-moment inequality under the first-block law. -/
 theorem latent_mixture_exp_certificate
     (w : Θ → ℝ) (a : Θ → F → ℝ) (b : Θ → G → ℝ)
-    (u : F → ℝ) (S : F → G → ℝ) (λ κ : ℝ)
+    (u : F → ℝ) (S : F → G → ℝ) (lam κ : ℝ)
     (hw : ∀ θ, 0 ≤ w θ)
     (ha : ∀ θ f, 0 ≤ a θ f)
     (hb : ∀ θ g, 0 ≤ b θ g)
@@ -170,24 +170,24 @@ theorem latent_mixture_exp_certificate
     (ha1 : ∀ θ, (∑ f : F, a θ f) = 1)
     (hb1 : ∀ θ, (∑ g : G, b θ g) = 1)
     (hmarg : ∀ f, (∑ θ : Θ, w θ * a θ f) = u f)
-    (hmgf : ∀ g, (∑ f : F, u f * Real.exp (λ * S f g)) ≤ Real.exp κ) :
-    Real.exp (∑ t : Θ × (F × G), latentJoint w a b t * (λ * S t.2.1 t.2.2)) ≤
+    (hmgf : ∀ g, (∑ f : F, u f * Real.exp (lam * S f g)) ≤ Real.exp κ) :
+    Real.exp (∑ t : Θ × (F × G), latentJoint w a b t * (lam * S t.2.1 t.2.2)) ≤
       (Fintype.card Θ : ℝ) * Real.exp κ := by
   calc
     _ ≤ ∑ t : Θ × (F × G), latentJoint w a b t *
-          Real.exp (λ * S t.2.1 t.2.2) :=
+          Real.exp (lam * S t.2.1 t.2.2) :=
           finite_exp_jensen (latentJoint w a b)
             (latentJoint_nonneg w a b hw ha hb)
             (latentJoint_sum_one w a b hw1 ha1 hb1)
-            (fun t => λ * S t.2.1 t.2.2)
+            (fun t => lam * S t.2.1 t.2.2)
     _ = ∑ θ : Θ, w θ * (∑ f : F, a θ f *
-          (∑ g : G, b θ g * Real.exp (λ * S f g))) :=
-          latentJoint_sum_kernel w a b (fun f g => Real.exp (λ * S f g))
+          (∑ g : G, b θ g * Real.exp (lam * S f g))) :=
+          latentJoint_sum_kernel w a b (fun f g => Real.exp (lam * S f g))
     _ ≤ (Fintype.card Θ : ℝ) * Real.exp κ :=
           mixture_kernel_domination w a b u
-            (fun f g => Real.exp (λ * S f g)) (Real.exp κ)
+            (fun f g => Real.exp (lam * S f g)) (Real.exp κ)
             hw ha hb hb1 hmarg
-            (fun f g => (Real.exp_pos (λ * S f g)).le) hmgf
+            (fun f g => (Real.exp_pos (lam * S f g)).le) hmgf
 
 end Nightfall.Forrelation.Information
 
@@ -199,7 +199,7 @@ variable {Θ F G : Type*} [Fintype Θ] [Fintype F] [Fintype G]
 
 /-- **Abstract exponential lower bound on mixture size.**
 The only analytic hypothesis is the single-block MGF estimate
-at the discriminating scale λ = N*c; the rest is kernel-checked
+at the discriminating scale lam = N*c; the rest is kernel-checked
 finite latent-mixture algebra and exponential Jensen. The theorem
 does not assume Gaussianity, Hadamard matrices or independent coordinates. -/
 theorem latent_exp_component_lower_bound
