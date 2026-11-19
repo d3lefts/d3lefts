@@ -118,6 +118,7 @@ def synthetic_positive_receipt(manifest):
         "target": DECL, "pin": TOOLCHAIN,
         "candidate_sha256": manifest["candidate_sha256"],
         "mathlib_commit": MATHLIB_COMMIT, "lean_source_commit": LEAN_SOURCE_COMMIT,
+        "lake_binary_sha256": "f"*64, "limits": "synthetic schema test only",
         "trusted_sources": {
             "ShiftedC4Bernstein.lean": {"sha256": manifest["source_files"]["research/nightfall/formalization/observability/ShiftedC4Bernstein.lean"]},
             "NightfallPolarisQ2Target.lean": {"sha256": manifest["source_files"]["research/nightfall/evals/polaris-research-20261119/research_q2/NightfallPolarisQ2Target.lean"]},
@@ -170,6 +171,11 @@ class SandboxReceiptTests(unittest.TestCase):
     def test_invalid_proof_output_hash_fails(self):
         self.ok["steps"][2]["output_sha256"] = "not-a-hash"
         with self.assertRaisesRegex(RuntimeError, "hash"):
+            verify_grader_receipt(self.ok, self.manifest)
+
+    def test_extra_model_success_claim_is_rejected(self):
+        self.ok["frontier_success_rate"] = 1.0
+        with self.assertRaisesRegex(RuntimeError, "receipt fields"):
             verify_grader_receipt(self.ok, self.manifest)
 
     def test_model_score_cannot_be_injected(self):
