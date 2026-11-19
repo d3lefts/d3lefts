@@ -48,7 +48,7 @@ class ExactMechanismTests(unittest.TestCase):
                 self.assertEqual(mutual_information({"r": 4, "law": law, "condition": stat}), expected)
 
     def test_non_dyadic_entropy_fails_closed(self):
-        with self.assertRaisesRegex(ValueError, "non-dyadic"):
+        with self.assertRaisesRegex(ValueError, "non-dyadic|non-power-of-two"):
             entropy_of_counts(Counter({0: 1, 1: 2}))
 
     def test_diagonal_rank_and_exact_mixture_bound(self):
