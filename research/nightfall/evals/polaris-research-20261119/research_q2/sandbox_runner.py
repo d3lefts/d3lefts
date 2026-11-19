@@ -98,8 +98,9 @@ def docker_argv(image: str, stage: Path, output: Path, *, memory: str = "8g",
     # Mathlib .olean files and compiler. Installed tools include python3, git, lake.
     # Runtime copies this image-owned workspace to ephemeral tmpfs.
     task = (
-        "cp -r /opt/mathlib4 /tmp/mathlib4; "
+        "cp -as /opt/mathlib4 /tmp/mathlib4; "
         "test \"$(git -C /tmp/mathlib4 rev-parse HEAD)\" = " + MATHLIB_COMMIT + "; "
+        "test -f /tmp/mathlib4/.lake/build/lib/lean/Mathlib.olean; "
         "python3 /task/" + GRADER_REL +
         " --candidate /task/candidate/ShiftedC4Scalar.lean"
         " --workspace /tmp/mathlib4 --receipt /results/proofgraph-q2.json"
@@ -223,8 +224,20 @@ def evaluate(candidate: Path, image: str, output: Path) -> dict:
         # Parse the grader output as data, not as host-executable instructions.
         # Receipt on host is written ONLY by this wrapper after post-run validation.
         if not completed.stdout.strip():
-            raise RuntimeError("sandbox produced no JSON report")
-        report = json.loads(completed.stdout)
+            raise RuntimeError(
+                "sandbox produced no JSON report; docker_exit_code=" +
+                str(completed.returncode) +
+                "; docker_stderr_tail=" + repr(completed.stderr[-2500:])
+            )
+        try:
+            report = json.loads(completed.stdout)
+        except json.JSONDecodeError as exc:
+            raise RuntimeError(
+                "sandbox produced invalid JSON; docker_exit_code=" +
+                str(completed.returncode) +
+                "; docker_stderr_tail=" + repr(completed.stderr[-2500:]) +
+                "; docker_stdout_tail=" + repr(completed.stdout[-1000:])
+            ) from exc
         if completed.returncode:
             if not isinstance(report, dict) or report.get("status") != "fail":
                 raise RuntimeError("sandbox failed without a valid rejection report")
