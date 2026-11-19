@@ -1085,4 +1085,240 @@ theorem exists_sep_coord (f : (ι → α) → ℝ) (hf01 : ∀ x, 0 ≤ f x ∧ 
 end Analysis
 
 
+/-! ## Main theorem -/
+
+section Main
+
+variable {Θ : Type} [Fintype Θ] (P : Θ → ι → α → ℝ)
+variable (hP0 : ∀ θ i a, 0 ≤ P θ i a) (hP1 : ∀ θ i, ∑ a, P θ i a = 1)
+
+include hP0 hP1 in
+/-- **A good query exists** whenever the variance exceeds `τ V`. -/
+theorem good_exists (f : (ι → α) → ℝ) (hf01 : ∀ x, 0 ≤ f x ∧ f x ≤ 1) (d : ℕ) (hd : 1 ≤ d)
+    (hdeg : HasProdDegreeLE f d) (τ η : ℝ) (hτ : 0 < τ) (hτ2 : τ ≤ 1 / 2) (hη : 0 < η)
+    (hητ : 144 * (Real.pi ^ 2 * (d : ℝ) ^ 2 / 2) ^ 4 * η ^ 2 ≤ (τ / 4) ^ 3)
+    (hM : 0 < Fintype.card Θ) (A : Finset ι) (v : Θ → ℝ) (g : (ι → α) → ℝ)
+    (hS : St f (Real.pi ^ 2 * (d : ℝ) ^ 2 / 2) A v g) (hvar : τ * Vs v < mvar P v g) :
+    ∃ j, j ∉ A ∧ Good P (τ * η / Fintype.card Θ)
+      ((τ / (2 * (Fintype.card Θ : ℝ) ^ 2)) ^ 2 *
+        (Real.sqrt (τ / 2) / (8 * (d : ℝ) ^ 2)) ^ 2) v g j := by
+  obtain ⟨hv, hinv, hrows, hrep, hg⟩ := hS
+  have hMpos : (0 : ℝ) < (Fintype.card Θ : ℝ) := Nat.cast_pos.mpr hM
+  have hdpos : (0 : ℝ) < d := by exact_mod_cast hd
+  have hV0 : 0 ≤ Vs v := Finset.sum_nonneg fun θ _ => hv θ
+  have hVpos : 0 < Vs v := by
+    rcases hV0.eq_or_lt with h0 | h
+    · exfalso
+      have hz : ∀ θ, v θ = 0 := by
+        intro θ
+        have := Finset.single_le_sum (fun θ (_ : θ ∈ univ) => hv θ) (mem_univ θ)
+        have h0' : ∑ θ, v θ = 0 := h0.symm
+        exact le_antisymm (by linarith) (hv θ)
+      have : mvar P v g = 0 := by unfold mvar Ex; simp [hz]
+      rw [← h0] at hvar
+      linarith
+    · exact h
+  have hs0 : 0 < Real.sqrt (τ / 2) := Real.sqrt_pos.mpr (by positivity)
+  have hgb : 0 < (τ / (2 * (Fintype.card Θ : ℝ) ^ 2)) ^ 2 *
+      (Real.sqrt (τ / 2) / (8 * (d : ℝ) ^ 2)) ^ 2 := by positivity
+  have hdec := mvar_decomp P hP1 v g
+  by_cases hW : τ * Vs v / 2 < ∑ θ, v θ * pvar (P θ) g
+  · obtain ⟨θs, h1, h2⟩ := exists_heavy_var v (fun θ => pvar (P θ) g) hv
+      (fun θ => pvar_nonneg (P θ) (hP0 θ) g)
+      (fun θ => pvar_le_quarter (P θ) (hP0 θ) (hP1 θ) g hg) τ hτ hM hW
+    exact increment_good P hP0 hP1 _ τ η _ _ (by positivity) hτ hη hMpos hgb hητ A v hv g hinv
+      hrows θs h1 h2
+  · push_neg at hW
+    set m : Θ → ℝ := fun θ => pexp (P θ) g with hmdef
+    have hB : τ * Vs v / 2 < ∑ θ, v θ * (m θ - mmean P v g) ^ 2 := by
+      rw [hdec] at hvar; simp only [hmdef]; linarith
+    have hmmean : mmean P v g = (∑ θ', v θ' * m θ') / Vs v := rfl
+    have hpair := pair_identity v m hVpos
+    rw [← hmmean] at hpair
+    have hbig : τ * Vs v ^ 2 < ∑ θ, ∑ θ', v θ * v θ' * (m θ - m θ') ^ 2 := by
+      rw [hpair]; nlinarith
+    have hm01 : ∀ θ, 0 ≤ m θ ∧ m θ ≤ 1 := fun θ => pexp_bounds (P θ) (hP0 θ) (hP1 θ) g hg
+    obtain ⟨θ1, θ2, hw12, hm12⟩ := exists_pair v m hv hm01 τ hτ hM hbig
+    set c := τ / (2 * (Fintype.card Θ : ℝ) ^ 2) with hcdef
+    have hc : 0 < c := by positivity
+    have hw1 : c * Vs v ≤ v θ1 := by
+      have hle : v θ2 ≤ Vs v := Finset.single_le_sum (fun θ (_ : θ ∈ univ) => hv θ) (mem_univ θ2)
+      have h1 : v θ1 * v θ2 ≤ v θ1 * Vs v := mul_le_mul_of_nonneg_left hle (hv θ1)
+      have h2 : c * Vs v * Vs v = τ * Vs v ^ 2 / (2 * (Fintype.card Θ : ℝ) ^ 2) := by
+        rw [hcdef]; ring
+      nlinarith
+    have hw2 : c * Vs v ≤ v θ2 := by
+      have hle : v θ1 ≤ Vs v := Finset.single_le_sum (fun θ (_ : θ ∈ univ) => hv θ) (mem_univ θ1)
+      have h1 : v θ1 * v θ2 ≤ Vs v * v θ2 := mul_le_mul_of_nonneg_right hle (hv θ2)
+      have h2 : c * Vs v * Vs v = τ * Vs v ^ 2 / (2 * (Fintype.card Θ : ℝ) ^ 2) := by
+        rw [hcdef]; ring
+      nlinarith
+    set s := Real.sqrt (τ / 2) with hsdef
+    have hss : s ^ 2 = τ / 2 := Real.sq_sqrt (by positivity)
+    have hdiff : s < |pexp (P θ1) g - pexp (P θ2) g| := by
+      by_contra hcon
+      push_neg at hcon
+      have : (m θ1 - m θ2) ^ 2 ≤ s ^ 2 := by
+        rw [← sq_abs]; exact pow_le_pow_left₀ (abs_nonneg _) hcon 2
+      linarith
+    have hs1 : s ≤ 1 / 2 := by
+      have : s ^ 2 ≤ (1 / 2) ^ 2 := by rw [hss]; nlinarith
+      nlinarith [hs0]
+    obtain ⟨i, hiA, hi⟩ := exists_sep_coord P hP0 hP1 f hf01 d hd hdeg A g hrep θ1 θ2 s hs0 hs1
+      hdiff
+    set γ := s / (8 * (d : ℝ) ^ 2) with hγdef
+    have hγ : 0 < γ := by positivity
+    have hl1 : 2 * γ < ∑ b, |P θ1 i b - P θ2 i b| := by
+      rw [l1_eq_two_tvd _ _ (hP1 θ1 i) (hP1 θ2 i)]; linarith
+    have htri : ∑ b, |P θ1 i b - P θ2 i b| ≤
+        ∑ b, |P θ1 i b - Vs (upd P v i b) / Vs v| + ∑ b, |P θ2 i b - Vs (upd P v i b) / Vs v| := by
+      rw [← Finset.sum_add_distrib]
+      refine Finset.sum_le_sum fun b _ => ?_
+      calc |P θ1 i b - P θ2 i b| = |(P θ1 i b - Vs (upd P v i b) / Vs v) -
+            (P θ2 i b - Vs (upd P v i b) / Vs v)| := by ring_nf
+        _ ≤ _ := abs_sub _ _
+    by_cases h1 : γ < ∑ b, |P θ1 i b - Vs (upd P v i b) / Vs v|
+    · exact separation_good P hP0 hP1 _ _ γ c (by positivity) hγ hc rfl A v hv hVpos g i hiA θ1
+        hw1 h1
+    · push_neg at h1
+      have h2 : γ < ∑ b, |P θ2 i b - Vs (upd P v i b) / Vs v| := by linarith
+      exact separation_good P hP0 hP1 _ _ γ c (by positivity) hγ hc rfl A v hv hVpos g i hiA θ2
+        hw2 h2
+
+theorem Ex_mono (v : Θ → ℝ) (hv : ∀ θ, 0 ≤ v θ) (hP0' : ∀ θ i a, 0 ≤ P θ i a)
+    (F G : (ι → α) → ℝ) (h : ∀ x, F x ≤ G x) : Ex P v F ≤ Ex P v G := by
+  unfold Ex pexp
+  refine Finset.sum_le_sum fun θ _ => mul_le_mul_of_nonneg_left ?_ (hv θ)
+  exact Finset.sum_le_sum fun x _ =>
+    mul_le_mul_of_nonneg_left (h x) (prodMass_nonneg' (P θ) (hP0' θ) x)
+
+include hP0 hP1 in
+/-- **Classical simulation over mixtures of product laws.** Let `ν = ∑_θ w_θ ⊗_i P θ i` be a
+mixture of `M` product laws on a finite `ι → α` (any masses, zeros allowed), and let `f` take
+values in `[0,1]` with interaction degree at most `d ≥ 1`. For `τ ∈ (0, 1/2]` and `n ≥ 1` the
+tree `mbuild` makes at most `n` queries on every input, and
+
+  `Pr_{x∼ν}[ |f x - Q̃ x| > ε ] ≤ (12 π⁶ d⁶ M / (τ² √τ) + 512 d⁴ M⁴ / τ³) / n + τ / ε²`.
+
+With `τ = ε² δ / 2` this is depth `O(d⁶ M ε⁻⁵ δ^{-7/2} + d⁴ M⁴ ε⁻⁶ δ⁻⁴)` for error probability
+`δ`, with no dependence on the masses, the alphabet or the number of coordinates. -/
+theorem mixture_simulation [Nonempty α] (w : Θ → ℝ) (hw0 : ∀ θ, 0 ≤ w θ) (hw1 : ∑ θ, w θ = 1)
+    (f : (ι → α) → ℝ) (hf01 : ∀ x, 0 ≤ f x ∧ f x ≤ 1) (d : ℕ) (hd : 1 ≤ d)
+    (hdeg : HasProdDegreeLE f d) (τ : ℝ) (hτ : 0 < τ) (hτ2 : τ ≤ 1 / 2) (ε : ℝ) (hε : 0 < ε)
+    (n : ℕ) (hn : 0 < n) :
+    ∃ t : DTree ι α, (∀ x, t.queries x ≤ n) ∧
+      Ex P w (fun x => if ε < |f x - t.eval x| then (1 : ℝ) else 0) ≤
+        (12 * Real.pi ^ 6 * (d : ℝ) ^ 6 * Fintype.card Θ / (τ ^ 2 * Real.sqrt τ) +
+          512 * (d : ℝ) ^ 4 * (Fintype.card Θ : ℝ) ^ 4 / τ ^ 3) / n + τ / ε ^ 2 := by
+  have hM : 0 < Fintype.card Θ := by
+    rcases Nat.eq_zero_or_pos (Fintype.card Θ) with h0 | h
+    · exfalso
+      have : IsEmpty Θ := Fintype.card_eq_zero_iff.mp h0
+      simp at hw1
+    · exact h
+  have hMpos : (0 : ℝ) < Fintype.card Θ := Nat.cast_pos.mpr hM
+  have hdpos : (0 : ℝ) < d := by exact_mod_cast hd
+  set K : ℝ := Real.pi ^ 2 * (d : ℝ) ^ 2 / 2 with hKdef
+  have hK : 0 < K := by positivity
+  have hsτ : 0 < Real.sqrt τ := Real.sqrt_pos.mpr hτ
+  have hsτ2 : Real.sqrt τ ^ 2 = τ := Real.sq_sqrt hτ.le
+  set η : ℝ := τ * Real.sqrt τ / (96 * K ^ 2) with hηdef
+  have hη : 0 < η := by positivity
+  have hητ : 144 * K ^ 4 * η ^ 2 ≤ (τ / 4) ^ 3 := by
+    have hsq : (τ * Real.sqrt τ) ^ 2 = τ ^ 3 := by rw [mul_pow, hsτ2]; ring
+    have : 144 * K ^ 4 * η ^ 2 = (τ / 4) ^ 3 := by
+      rw [hηdef, div_pow (τ * Real.sqrt τ), hsq]; field_simp; ring
+    exact this.le
+  set ga : ℝ := τ * η / Fintype.card Θ with hgadef
+  set gb : ℝ := (τ / (2 * (Fintype.card Θ : ℝ) ^ 2)) ^ 2 *
+    (Real.sqrt (τ / 2) / (8 * (d : ℝ) ^ 2)) ^ 2 with hgbdef
+  have hga : 0 < ga := by positivity
+  have hs2 : 0 < Real.sqrt (τ / 2) := Real.sqrt_pos.mpr (by positivity)
+  have hgb : 0 < gb := by positivity
+  set t := mbuild P τ ga gb n ∅ w f with htdef
+  refine ⟨t, mqueries_le P τ ga gb n ∅ w f, ?_⟩
+  have hS0 : St f K ∅ w f :=
+    ⟨hw0, fun i hi => absurd hi (Finset.notMem_empty i), hasRows_of_degree f d hf01 hdeg,
+      rep_empty f, hf01⟩
+  have hbq := mbad_queries P τ ga gb (St f K)
+    (fun A v g j b hS hj => St_pres P hP0 f K A v g j b hS hj)
+    (fun A v g hS hvar => good_exists P hP0 hP1 f hf01 d hd hdeg τ η hτ hτ2 hη hητ hM A v g hS
+      hvar) n ∅ w f hS0
+  have hq := mexpected P τ ga gb hP0 hP1 hga hgb n ∅ w f hw0
+  have herr := mleaf_error P τ ga gb hP0 hP1 hτ.le n ∅ w f hw0
+  have hVw : Vs w = 1 := hw1
+  rw [hVw, mul_one] at herr
+  have hε2 : 0 < ε ^ 2 := by positivity
+  have hn' : (0 : ℝ) < n := by exact_mod_cast hn
+  -- pointwise split
+  have hpt : ∀ x, (if ε < |f x - t.eval x| then (1 : ℝ) else 0) ≤
+      (t.queries x : ℝ) / n + (if t.bad x then 0 else (f x - t.eval x) ^ 2) / ε ^ 2 := by
+    intro x
+    by_cases hb : t.bad x = true
+    · have hqn : (t.queries x : ℝ) = n := by exact_mod_cast hbq x hb
+      rw [hqn, div_self hn'.ne']
+      simp only [hb, ite_true, zero_div, add_zero]
+      split_ifs <;> norm_num
+    · simp only [hb, Bool.false_eq_true, ite_false]
+      have hq0 : 0 ≤ (t.queries x : ℝ) / n := by positivity
+      split_ifs with hlt
+      · have h1 : ε ^ 2 < (f x - t.eval x) ^ 2 := by
+          have := pow_lt_pow_left₀ hlt hε.le two_ne_zero; rwa [sq_abs] at this
+        have : 1 ≤ (f x - t.eval x) ^ 2 / ε ^ 2 := by rw [le_div_iff₀ hε2, one_mul]; exact h1.le
+        linarith
+      · have : 0 ≤ (f x - t.eval x) ^ 2 / ε ^ 2 := by positivity
+        linarith
+  have hmono := Ex_mono P w hw0 hP0 _ _ hpt
+  have hsplit : Ex P w (fun x => (t.queries x : ℝ) / n +
+      (if t.bad x then 0 else (f x - t.eval x) ^ 2) / ε ^ 2) =
+      Ex P w (fun x => (t.queries x : ℝ)) / n +
+        Ex P w (fun x => if t.bad x then 0 else (f x - t.eval x) ^ 2) / ε ^ 2 := by
+    rw [Ex_add]
+    unfold Ex pexp
+    congr 1
+    · rw [Finset.sum_div]
+      refine Finset.sum_congr rfl fun θ _ => ?_
+      rw [mul_div_assoc, Finset.sum_div]
+      congr 1
+      exact Finset.sum_congr rfl fun x _ => by ring
+    · rw [Finset.sum_div]
+      refine Finset.sum_congr rfl fun θ _ => ?_
+      rw [mul_div_assoc, Finset.sum_div]
+      congr 1
+      exact Finset.sum_congr rfl fun x _ => by ring
+  rw [hsplit] at hmono
+  -- the potential at the root
+  have hPsi : Psi P ga gb w f ≤ K / ga + 1 / gb := by
+    unfold Psi
+    have hPhi : Phi P w f ≤ K := by
+      unfold Phi
+      obtain ⟨a, hr, hKa⟩ := hasRows_of_degree f d hf01 hdeg
+      calc ∑ θ, w θ * Ltot (P θ) f ≤ ∑ θ, w θ * K :=
+            Finset.sum_le_sum fun θ _ => mul_le_mul_of_nonneg_left
+              (sum_pincr_le (P θ) (hP0 θ) (hP1 θ) f a hr K hKa) (hw0 θ)
+        _ = K := by rw [← Finset.sum_mul, hw1, one_mul]
+    have hSq0 : 0 ≤ Sq w := div_nonneg (Finset.sum_nonneg fun θ _ => sq_nonneg _) (by rw [hVw]; norm_num)
+    have h1 : Phi P w f / ga ≤ K / ga := div_le_div_of_nonneg_right hPhi hga.le
+    have h2 : (Vs w - Sq w) / gb ≤ 1 / gb := div_le_div_of_nonneg_right (by rw [hVw]; linarith) hgb.le
+    linarith
+  have hKga : K / ga = 12 * Real.pi ^ 6 * (d : ℝ) ^ 6 * Fintype.card Θ / (τ ^ 2 * Real.sqrt τ) := by
+    rw [hgadef, hηdef, hKdef]; field_simp; ring
+  have hgb' : 1 / gb = 512 * (d : ℝ) ^ 4 * (Fintype.card Θ : ℝ) ^ 4 / τ ^ 3 := by
+    rw [hgbdef, div_pow (Real.sqrt (τ / 2)), Real.sq_sqrt (by positivity : (0 : ℝ) ≤ τ / 2)]
+    field_simp; ring
+  have hfinal : Ex P w (fun x => (t.queries x : ℝ)) / n ≤
+      (12 * Real.pi ^ 6 * (d : ℝ) ^ 6 * Fintype.card Θ / (τ ^ 2 * Real.sqrt τ) +
+        512 * (d : ℝ) ^ 4 * (Fintype.card Θ : ℝ) ^ 4 / τ ^ 3) / n := by
+    apply div_le_div_of_nonneg_right _ hn'.le
+    rw [← hKga, ← hgb']
+    exact hq.trans hPsi
+  have herr' : Ex P w (fun x => if t.bad x then 0 else (f x - t.eval x) ^ 2) / ε ^ 2 ≤ τ / ε ^ 2 :=
+    div_le_div_of_nonneg_right herr hε2.le
+  linarith
+
+end Main
+
 end Nightfall.ProductSpace.Mixture
+
+#print axioms Nightfall.ProductSpace.Mixture.fooling_tv
+#print axioms Nightfall.ProductSpace.Mixture.mixture_simulation

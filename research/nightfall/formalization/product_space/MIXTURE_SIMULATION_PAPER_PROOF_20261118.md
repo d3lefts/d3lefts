@@ -1,8 +1,40 @@
-# Quantum speedups need many correlated components: simulation over mixtures of product distributions — paper proof (2026-11-18)
+# Classical simulation of quantum queries under bounded product-mixture complexity (2026-11-18)
 
-Status: complete proof on paper; not yet in Lean. Not yet reviewed by a second reader.
-Priority: no prior statement found (searches 2026-11-18 for simulation over mixtures of product
-distributions returned only the uniform/biased/slice literature). To be rechecked before any claim.
+## Status (updated after review)
+
+* **Lean-certified** (`MixtureSimulation.lean`, `Mixture.mixture_simulation`, axioms `propext`,
+  `Classical.choice`, `Quot.sound` only; local strict audit passed; CI step added). For any mixture
+  `ν = ∑_θ w_θ ⊗_i P θ i` of `M` product laws on a finite `ι → α` (any masses, zeros allowed),
+  `f : ι → α → [0,1]` of interaction degree `d ≥ 1`, `τ ∈ (0, 1/2]`, `n ≥ 1`: some decision tree
+  makes at most `n` queries on every input and
+
+      Pr_{x∼ν}[ |f x − Q̃ x| > ε ] ≤ (12 π⁶ d⁶ M / (τ² √τ) + 512 d⁴ M⁴ / τ³) / n + τ / ε².
+
+  With `τ = ε²δ/2` the depth is `O(d⁶ M ε⁻⁵ δ^{−7/2} + d⁴ M⁴ ε⁻⁶ δ⁻⁴)`. The Lean fooling lemma
+  (`fooling_tv`) has constant `16 d² γ` (paper: `2 d² γ`), via the vendored endpoint Markov bound on a
+  cube of `⌊1/γ⌋` bits; this is why the second term's constant is `512` per unit of `τ⁻³`
+  rather than `32`. The quantum-to-polynomial step (degree `≤ 2T`) remains on paper.
+* **Edge cases raised by reviewers, resolved in the formalization.** Posterior weights are kept
+  unnormalized (`upd`, `Vs`), so zero-weight components never divide by zero; `x / 0 = 0` terms are
+  checked explicitly in `chi_sq_bound`. The fooling lemma assumes `0 < γ ≤ 1/2`; larger `γ` is never
+  needed.
+* **Headline corrected.** The theorem rules out superpolynomial classical-versus-quantum query
+  separations on input distributions whose product-mixture complexity `M` is polynomial in the
+  quantum query count `T` (at fixed `ε, δ`). It does *not* say anything about `M` polynomial in the
+  input length `n`. Correct headline: *superpolynomial distributional quantum query advantages
+  require product-mixture complexity superpolynomial in the quantum query budget.* The earlier
+  wording in §1 and §6 below ("not mixtures of polynomially many product distributions") overstated
+  this and is superseded.
+* **Reviewer improvements (paper level, not in Lean).** Second readers report a sharper bound from
+  Jensen across component variances and an entropy potential, e.g.
+  `O(d⁶ M ε⁻⁵ δ^{−7/2} + d⁴ M² log M ε⁻⁴ δ⁻³)`, and a direct rank argument showing the Gaussian-sign
+  Forrelation law needs exactly `M ≥ N` components (cross-moment matrix of full rank vs. rank `≤ M`
+  for any mixture of `M` products). Both are recorded in the PR #858 review thread; neither is
+  formalized here.
+* **Prior art to address.** Blais–O'Donnell–Wimmer (low-degree polynomial regression under
+  mixtures of product distributions): different task (learning), must be discussed.
+
+The original paper proof follows unchanged.
 
 ## 1. Statement
 
