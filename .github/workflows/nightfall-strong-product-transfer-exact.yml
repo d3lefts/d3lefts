@@ -41,7 +41,7 @@ jobs:
           cp "$ROUND" /tmp/mathlib4/StrongDyadicRounding.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/StrongDyadicRounding.olean StrongDyadicRounding.lean) 2>&1 | tee product-transfer-lean-receipts/dyadic-rounding.log
           ! grep -E 'error:|sorryAx|declaration uses .sorry' product-transfer-lean-receipts/dyadic-rounding.log
-          for name in upperGrid_ge upperGrid_lt increment_nonneg increment_lt anchor_survives; do
+          for name in upperGrid_ge upperGrid_lt increment_nonneg increment_lt anchor_survives roundedMass_nonneg roundedMass_support roundedMass_sum; do
             grep -Fq "Nightfall.StrongDyadicRounding.$name' depends on axioms:" product-transfer-lean-receipts/dyadic-rounding.log
           done
           ! grep -E 'sorryAx|Lean.ofReduceBool' product-transfer-lean-receipts/dyadic-rounding.log
