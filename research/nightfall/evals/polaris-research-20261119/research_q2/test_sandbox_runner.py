@@ -111,15 +111,23 @@ class SandboxRuntimeFailureTests(unittest.TestCase):
             return "sha256:" + "a" * 64 + "\n"
         return self._real_check_output(argv, *args, **kwargs)
 
+    def _fake_docker_run(self, result):
+        def dispatch(argv, *args, **kwargs):
+            if argv[:2] == ["docker", "run"]:
+                return result
+            return self._real_run(argv, *args, **kwargs)
+        return dispatch
+
     def test_docker_setup_failure_preserves_actual_stderr(self):
         self._real_check_output = subprocess.check_output
+        self._real_run = subprocess.run
         with tempfile.TemporaryDirectory() as temp, \
              mock.patch("sandbox_runner.shutil.which", return_value="/usr/bin/docker"), \
              mock.patch("sandbox_runner.subprocess.check_output", side_effect=self._fake_image_inspect), \
              mock.patch("sandbox_runner.subprocess.run",
-                        return_value=subprocess.CompletedProcess(
+                        side_effect=self._fake_docker_run(subprocess.CompletedProcess(
                             ["docker", "run"], 137, "",
-                            "cp: writing /tmp/mathlib4/.lake/cache: No space left on device")):
+                            "cp: writing /tmp/mathlib4/.lake/cache: No space left on device"))):
             with self.assertRaises(RuntimeError) as caught:
                 evaluate(REF, DIGEST_IMAGE, Path(temp) / "output")
             self.assertIn("docker_exit_code=137", str(caught.exception))
@@ -127,6 +135,7 @@ class SandboxRuntimeFailureTests(unittest.TestCase):
 
     def test_real_lean_rejection_is_persisted_not_certified(self):
         self._real_check_output = subprocess.check_output
+        self._real_run = subprocess.run
         with tempfile.TemporaryDirectory() as temp:
             manifest = sealed_sources(REF, Path(temp) / "fixture")
             grader_failure = {
@@ -146,8 +155,8 @@ class SandboxRuntimeFailureTests(unittest.TestCase):
             with mock.patch("sandbox_runner.shutil.which", return_value="/usr/bin/docker"), \
                  mock.patch("sandbox_runner.subprocess.check_output", side_effect=self._fake_image_inspect), \
                  mock.patch("sandbox_runner.subprocess.run",
-                            return_value=subprocess.CompletedProcess(
-                                ["docker", "run"], 1, json.dumps(grader_failure), "")):
+                            side_effect=self._fake_docker_run(subprocess.CompletedProcess(
+                                ["docker", "run"], 1, json.dumps(grader_failure), ""))):
                 with self.assertRaisesRegex(RuntimeError, "sandbox candidate rejected"):
                     evaluate(REF, DIGEST_IMAGE, Path(temp) / "output")
             rejected = json.loads((Path(temp) / "output/rejected-proof.json").read_text())
