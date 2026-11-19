@@ -20,6 +20,7 @@ compiled in MarginFreeLargeGaps.
 namespace Nightfall.MarginFreeIntegrated
 
 open Finset
+open Nightfall.ProductSpace.Transfer
 open Nightfall.ProductSpace.Mixture
 open Nightfall.ProductSpace.Influence
 open Nightfall.ProductSpace.PinnedConditional
@@ -43,7 +44,7 @@ theorem pinned_failure_nonneg (A : Finset ι) (ρ : ι → α)
     0 ≤ pinnedFailure A ρ p f u ε := by
   unfold pinnedFailure
   exact Finset.sum_nonneg (fun x _ =>
-    prodMass_nonneg' (pin A ρ p) (pin_nonneg A ρ p hp0) x)
+    prodMass_nonneg' (pin A ρ p) (Nightfall.ProductSpace.Mixture.pin_nonneg A ρ p hp0) x)
 
 /-- The conditional mean-to-failure estimate is proved directly with
 `mean_near` and the true pinned product mass, not a supplied hypothesis. -/
@@ -56,7 +57,7 @@ theorem pinned_failure_mean_near (A : Finset ι) (ρ : ι → α)
     (hu : 0 ≤ u ∧ u ≤ 1)
     (hε : 0 ≤ ε) :
     |pexp (pin A ρ p) f - u| ≤ ε + pinnedFailure A ρ p f u ε := by
-  have hpinned0 := pin_nonneg A ρ p hp0
+  have hpinned0 := Nightfall.ProductSpace.Mixture.pin_nonneg A ρ p hp0
   have hpinned1 := pin_sum_one A ρ p hp1
   have hm := Nightfall.ComponentIdentification.mean_near
     (Finset.univ : Finset (ι → α))
