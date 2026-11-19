@@ -57,7 +57,8 @@ class SandboxContractTests(unittest.TestCase):
         self.assertIn("type=bind,src=/var/tmp/task,dst=/task,readonly", args)
         self.assertNotIn("type=bind,src=/var/tmp/receipt,dst=/results", args)
         self.assertIn(DIGEST_IMAGE, args)
-        self.assertIn("cp -r /opt/mathlib4 /tmp/mathlib4;", args[-1])
+        self.assertIn("cp -as /opt/mathlib4 /tmp/mathlib4;", args[-1])
+        self.assertIn("test -f /tmp/mathlib4/.lake/build/lib/lean/Mathlib.olean", args[-1])
         self.assertIn(GRADER_REL, args[-1])
 
     def test_unpinned_image_rejected(self):
