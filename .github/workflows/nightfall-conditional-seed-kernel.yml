@@ -4,6 +4,7 @@ on:
     paths:
       - 'research/nightfall/formalization/product_space/StrongConditionalSeedKernel.lean'
       - 'research/nightfall/formalization/product_space/StrongAdaptiveSeedCompiler.lean'
+      - 'research/nightfall/formalization/product_space/StrongSeedDerandomize.lean'
       - 'research/nightfall/strong_simulation_progress/check_conditional_seed_kernel_exact.py'
       - '.github/workflows/nightfall-conditional-seed-kernel.yml'
   push:
@@ -43,7 +44,18 @@ jobs:
           for lemma in exact_tree_output exact_tree_queries exact_tree_depth; do
             grep -Fq "Nightfall.StrongAdaptiveSeedCompiler.$lemma' depends on axioms:" /tmp/seed-compiler.log
           done
-          sha256sum "$SRC" "$SRC2" | tee /tmp/seed-kernel-sha256.txt
+          SRC3="research/nightfall/formalization/product_space/StrongSeedDerandomize.lean"
+          cp research/nightfall/formalization/product_space/StrongSeedFixing.lean /tmp/mathlib4/StrongSeedFixing.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/StrongSeedFixing.olean StrongSeedFixing.lean) 2>&1 | tee /tmp/seed-fixing.log
+          if grep -E 'error:|sorryAx|declaration uses .sorry' /tmp/seed-fixing.log; then exit 1; fi
+          if grep -En '\bsorry\b|\badmit\b|sorryAx|^[[:space:]]*axiom\b|native_decide|unsafe' "$SRC3"; then exit 1; fi
+          cp "$SRC3" /tmp/mathlib4/StrongSeedDerandomize.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/StrongSeedDerandomize.olean StrongSeedDerandomize.lean) 2>&1 | tee /tmp/seed-derandomize.log
+          if grep -E 'error:|sorryAx|declaration uses .sorry' /tmp/seed-derandomize.log; then exit 1; fi
+          for lemma in compiled_failure_mass_eq exists_strong_symbol_tree; do
+            grep -Fq "Nightfall.StrongSeedDerandomize.$lemma' depends on axioms:" /tmp/seed-derandomize.log
+          done
+          sha256sum "$SRC" "$SRC2" "$SRC3" | tee /tmp/seed-kernel-sha256.txt
       - name: Preserve source receipt
         if: always()
         uses: actions/upload-artifact@v4
@@ -52,6 +64,8 @@ jobs:
           path: |
             /tmp/seed-kernel.log
             /tmp/seed-compiler.log
+            /tmp/seed-fixing.log
+            /tmp/seed-derandomize.log
             /tmp/seed-kernel-sha256.txt
           retention-days: 60
           if-no-files-found: warn
