@@ -30,6 +30,8 @@ jobs:
           printf '%s\n' 'import QuantumHybridWeightedExpectation' \
             '#print axioms Nightfall.QuantumHybridWeightedExpectation.weighted_sqrt_le_sqrt_budget' \
             '#print axioms Nightfall.QuantumHybridWeightedExpectation.query_weighted_mismatch_mean_le' \
-            '#print axioms Nightfall.QuantumHybridWeightedExpectation.query_weighted_sqrt_discrepancy_le' > HybridAxioms.lean
+            '#print axioms Nightfall.QuantumHybridWeightedExpectation.query_weighted_sqrt_discrepancy_le' \
+            '#print axioms Nightfall.QuantumHybridWeightedExpectation.conditional_hybrid_mean_le' \
+            '#print axioms Nightfall.QuantumHybridWeightedExpectation.conditional_hybrid_failure_le' > HybridAxioms.lean
           lake env lean HybridAxioms.lean | tee /tmp/hybrid-axioms.log
           if grep -q "sorryAx" /tmp/hybrid-axioms.log; then exit 1; fi
