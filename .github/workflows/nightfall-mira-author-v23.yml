@@ -1,0 +1,45 @@
+name: NIGHTFALL Mira v2.3 author-side independent finite audit
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/audit_mira_degree_two_endpoint.py'
+      - 'scripts/audit_mira_weighted_fill_cancellation.py'
+      - 'research/nightfall/2026-11-recent-passports/mira-latin-author-side-v23.md'
+      - 'research/nightfall/2026-11-recent-passports/mira-latin-exact-sampling.md'
+      - '.github/workflows/nightfall-mira-author-v23.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  independent-author-side:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Replay independent exact finite checks and create provenance receipt
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p mira-author-receipt
+          python3 scripts/audit_mira_degree_two_endpoint.py 2>&1 | tee mira-author-receipt/degree-two.log
+          python3 scripts/audit_mira_weighted_fill_cancellation.py 2>&1 | tee mira-author-receipt/weighted-fill.log
+          grep -F 'DEGREE_TWO_EXACT_CYCLE_SPECIES_REPLAY_PASS' mira-author-receipt/degree-two.log
+          grep -F 'WEIGHTED_FILL_FIRST_ORDER_EXACT_REPLAY_PASS' mira-author-receipt/weighted-fill.log
+          sha256sum scripts/audit_mira_degree_two_endpoint.py scripts/audit_mira_weighted_fill_cancellation.py \
+            research/nightfall/2026-11-recent-passports/mira-latin-author-side-v23.md \
+            > mira-author-receipt/SHA256SUMS
+          git rev-parse HEAD > mira-author-receipt/revision.txt
+          printf '%s\n' 'SCOPE: finite replay only; asymptotic propositions not certified' > mira-author-receipt/limit.txt
+      - name: Preserve exact-check receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nightfall-mira-author-v23-${{ github.run_id }}-${{ github.run_attempt }}
+          path: mira-author-receipt/
+          if-no-files-found: warn
+          retention-days: 30
