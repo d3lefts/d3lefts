@@ -19,3 +19,31 @@ jobs:
           python -m unittest discover -p 'test*.py' -v
           python grade_correlated_influence.py examples/correlated_influence_witness.json
           python audit_frontier.py examples/correlated_influence_witness.json
+  proofgraph-pinned-lean-smoke:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: research/nightfall/evals/polaris-research-20261119/proofgraph_hard/fixture/trusted
+          auto-config: 'false'
+          build: 'false'
+          test: 'false'
+      - name: ProofGraph grader unit tests (simulated runner only)
+        working-directory: research/nightfall/evals/polaris-research-20261119/proofgraph_hard
+        run: python3 -m unittest test_proofgraph.py -v
+      - name: ProofGraph pinned Lean fixture
+        working-directory: research/nightfall/evals/polaris-research-20261119/proofgraph_hard
+        run: |
+          python3 grade_proofgraph.py --manifest fixture/task.json --trusted-root fixture/trusted --submission fixture/submission --receipt "$RUNNER_TEMP/proofgraph-receipt.json"
+      - name: Archive smoke-test receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: proofgraph-smoke-receipt
+          path: ${{ runner.temp }}/proofgraph-receipt.json
