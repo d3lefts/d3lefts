@@ -19,6 +19,7 @@ VENDOR = SOURCE / "vendor"
 SEEDS = (
     "ActualSourceQ2107Terminal",
     "CubicTopCover105416",
+    "HighOrderCoreCover105416",
     "CubicTopCoverEnergy",
     "CubicTopCoverProjection",
     "InfinitePiQ2Limit",

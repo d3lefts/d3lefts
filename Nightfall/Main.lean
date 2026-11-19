@@ -1,6 +1,7 @@
 import Nightfall.Targets
 import ActualSourceQ2107Terminal
 import CubicTopCover105416
+import HighOrderCoreCover105416
 import CubicTopCoverEnergy
 import CubicTopCoverProjection
 import InfinitePiQ2Limit
@@ -34,6 +35,8 @@ The theorem audit below prints axioms for ACTUAL imported declarations; no
 hypothesis is discharged by printing an axiom list.
 -/
 
+#check Nightfall.Observability.HighOrderCoreCover105416.high_order_core_projection_degree_two
+#check Nightfall.Observability.HighOrderCoreCover105416.original_source_all_degree_high_order_core_105416
 #check Nightfall.Observability.CubicTopCover105416.actual_source_cubic_top_cover_105416
 #check Nightfall.Observability.CubicTopCoverProjection.actual_source_cubic_top_cover_107
 #check Nightfall.Observability.CubicTopCoverProjection.projected_variance_eq_outside_energy
@@ -53,6 +56,8 @@ hypothesis is discharged by printing an axiom list.
 #check Nightfall.InfinitePiQ2ConditionalSourceTest.source_condExp_coordinate_mul_other
 #check Nightfall.InfinitePiQ2SourceHilbertTensor.sourceOtherProjection_tensor_ae
 
+#print axioms Nightfall.Observability.HighOrderCoreCover105416.high_order_core_projection_degree_two
+#print axioms Nightfall.Observability.HighOrderCoreCover105416.original_source_all_degree_high_order_core_105416
 #print axioms Nightfall.Observability.CubicTopCover105416.actual_source_cubic_top_cover_105416
 #print axioms Nightfall.Observability.CubicTopCoverProjection.actual_source_cubic_top_cover_107
 #print axioms Nightfall.Observability.CubicTopCoverProjection.projected_variance_eq_outside_energy

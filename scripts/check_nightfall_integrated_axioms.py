@@ -7,6 +7,8 @@ import sys
 ALLOWED = {"propext", "Classical.choice", "Quot.sound"}
 TARGETS = [
     "Nightfall.Observability.CubicTopCover105416.actual_source_cubic_top_cover_105416",
+    "Nightfall.Observability.HighOrderCoreCover105416.high_order_core_projection_degree_two",
+    "Nightfall.Observability.HighOrderCoreCover105416.original_source_all_degree_high_order_core_105416",
     "Nightfall.Observability.CubicTopCoverProjection.actual_source_cubic_top_cover_107",
     "Nightfall.Observability.CubicTopCoverProjection.projected_variance_eq_outside_energy",
     "Nightfall.Observability.CubicTopCoverEnergy.source_variance_loss_le_cover_influences",
