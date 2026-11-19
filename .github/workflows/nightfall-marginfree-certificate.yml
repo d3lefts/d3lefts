@@ -7,6 +7,7 @@ on:
       - 'research/nightfall/formalization/product_space/MarginFreeFiniteTests.lean'
       - 'research/nightfall/formalization/product_space/LatentProductInterpolationDegree.lean'
       - 'research/nightfall/formalization/product_space/StrongMixtureDuel.lean'
+      - 'research/nightfall/strong_simulation_progress/conditional_seed_exact_check.py'
       - '.github/workflows/nightfall-marginfree-certificate.yml'
   workflow_dispatch:
 permissions:
@@ -19,6 +20,11 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
+      - name: Exact conditional-seed coupling and zero-atom checker
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/strong_simulation_progress/conditional_seed_exact_check.py
       - uses: ./.github/actions/setup-nightfall-lean
       - name: Kernel-compile exact-head source and print dependencies
         shell: bash
