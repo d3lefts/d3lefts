@@ -36,12 +36,14 @@ theorem chebyshev_endpoint_derivative_bound
     simp only [Function.iterate_one] at hupper
     rw [hT] at hupper
     norm_cast at hupper
-    exact hupper
+    simpa only [Nat.cast_pow] using hupper
   have hl : -(n : ℝ) ^ 2 ≤ (derivative P).eval 1 := by
     simp only [Function.iterate_one] at hlower
     rw [hT] at hlower
     simp only [derivative_neg, eval_neg] at hlower
     norm_cast at hlower
+    have hlower' : -(derivative P).eval 1 ≤ (n : ℝ) ^ 2 := by
+      simpa only [Nat.cast_pow] using hlower
     linarith
   exact abs_le.mpr ⟨hl, hu⟩
 
