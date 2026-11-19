@@ -109,6 +109,7 @@ jobs:
           #print axioms Nightfall.StrongSimulation.SeedFixing.exists_weighted_seed
           #print axioms Nightfall.StrongSimulation.SeedFixing.deterministicMapWeights_nonneg
           #print axioms Nightfall.StrongSimulation.SeedFixing.deterministicMapWeights_sum_one
+          #print axioms Nightfall.StrongSimulation.SeedFixing.deterministicMapWeights_marginal
           #print axioms Nightfall.BiasFreeMarkov.normalizedEndpointPoly_natDegree_le
           #print axioms Nightfall.BiasFreeMarkov.normalizedEndpointPoly_derivative_eval_one
           LEAN
