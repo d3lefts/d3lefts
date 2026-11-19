@@ -4,8 +4,8 @@ from pathlib import Path
 import unittest
 
 from grade_research_q2 import (
-    ALLOW_AXIOMS, BERNSTEIN, TARGET, GradingError, axioms_from_output,
-    candidate_check, verify_trusted,
+    ALLOW_AXIOMS, BERNSTEIN, TARGET, GradingError, LEAN_SOURCE_COMMIT,
+    axioms_from_output, candidate_check, check_compiler_identity, verify_trusted,
 )
 
 
@@ -68,6 +68,26 @@ class ResearchQ2PreflightTests(unittest.TestCase):
         text = TARGET.read_text(encoding="utf-8")
         self.assertIn("shifted_c4_from_strong_moments", text)
         self.assertIn("Real.sqrt e ≤ Real.sqrt 3*u+c/4", text)
+
+    def test_real_lean_compiler_identity_is_accepted(self):
+        check_compiler_identity(
+            "Lean (version 4.36.0-rc2, x86_64-unknown-linux-gnu, commit "
+            + LEAN_SOURCE_COMMIT + ", Release)"
+        )
+
+    def test_modified_lean_source_commit_fails(self):
+        with self.assertRaisesRegex(GradingError, "compiler"):
+            check_compiler_identity(
+                "Lean (version 4.36.0-rc2, x86_64, commit "
+                + "0" * 40 + ", Release)"
+            )
+
+    def test_modified_lean_release_fails(self):
+        with self.assertRaisesRegex(GradingError, "compiler"):
+            check_compiler_identity(
+                "Lean (version 4.35.0, x86_64, commit "
+                + LEAN_SOURCE_COMMIT + ", Release)"
+            )
 
     def test_allowlist_is_standard_only(self):
         self.assertEqual(ALLOW_AXIOMS, {"Classical.choice", "Quot.sound", "propext"})
