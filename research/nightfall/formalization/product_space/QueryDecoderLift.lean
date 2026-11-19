@@ -130,7 +130,7 @@ theorem truncate_queries (n : ℕ) (t : DTree I α) (x : I → α) :
       | leaf v b => simp [truncate, DTree.queries]
       | node i children =>
           change (truncate n (children (x i))).queries x + 1 ≤ n + 1
-          omega
+          exact Nat.succ_le_succ (ih (children (x i)))
 
 /-- Truncation preserves output on paths already within the budget. -/
 theorem truncate_eval (n : ℕ) (t : DTree I α) (x : I → α)
