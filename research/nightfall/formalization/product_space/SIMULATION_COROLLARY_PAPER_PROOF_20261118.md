@@ -163,7 +163,13 @@ constants or exponents.
 * **Open priority questions, to check before claiming:**
   1. Whether the HMP completion/adversary argument already works, or is easily adapted, for
      arbitrary product distributions. If it is, it would likely give a better uniform bound and
-     subsume this corollary. This is the main risk.
+     subsume this corollary. This is the main risk. First reading (2026-11-18, of the arXiv
+     PDF, to be confirmed by a person): HMP state no result for biased, product or non-binary
+     inputs, and their proof uses uniformity in several places — the swap symmetry of `(X, X^i)`
+     in their Lemma 3, uniform counting of densities and subcubes in Lemma 4 and Theorem 2, and
+     "resampling a uniform bit flips it with probability 1/2" in the appendix. Several of these
+     steps look adaptable to product measures with weighted counting (OSSS itself holds for
+     product measures), so the risk stands until someone attempts the adaptation.
   2. Whether GMNR or the limited-adaptivity paper arXiv:2608.20297 (which works with "dense
      distributions") contains a uniform-in-bias statement.
   3. Whether the k-ary indicator-polynomial form of (A) is stated in the literature, to cite
