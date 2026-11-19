@@ -33,7 +33,7 @@ def visit(name):
     visited.add(name)
     lines = (ROOT / by_name[name]).read_text().splitlines()
     for line in lines:
-        match = re.match(r"^\\s*import\\s+(.+?)\\s*(?:--.*)?$", line)
+        match = re.match(r"^\s*import\s+(.+?)\s*(?:--.*)?$", line)
         if not match:
             continue
         for dep in match.group(1).split():
