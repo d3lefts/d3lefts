@@ -9,6 +9,7 @@ on:
       - 'scripts/audit_mira_multiscale.py'
       - 'scripts/audit_mira_nb_soft.py'
       - 'research/nightfall/2026-11-recent-passports/mira-latin-soft-gate-v27.md'
+      - 'research/nightfall/2026-11-recent-passports/mira-latin-soft-gate-v27.md'
       - 'research/nightfall/2026-11-recent-passports/mira-latin-multiscale-abstract-v26.md'
       - 'research/nightfall/2026-11-recent-passports/mira-latin-matching-bit-clock-v25.md'
       - 'research/nightfall/2026-11-recent-passports/mira-latin-sparse-second-moment-v24.md'
@@ -48,6 +49,7 @@ jobs:
             research/nightfall/2026-11-recent-passports/mira-latin-sparse-second-moment-v24.md \
             research/nightfall/2026-11-recent-passports/mira-latin-matching-bit-clock-v25.md \
             research/nightfall/2026-11-recent-passports/mira-latin-multiscale-abstract-v26.md \
+            research/nightfall/2026-11-recent-passports/mira-latin-soft-gate-v27.md \
             research/nightfall/2026-11-recent-passports/mira-latin-soft-gate-v27.md \
             > mira-author-receipt/SHA256SUMS
           git rev-parse HEAD > mira-author-receipt/revision.txt
