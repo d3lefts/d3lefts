@@ -34,3 +34,7 @@ Validity is a hard gate. For a task with a complete oracle: 35% correctness, 25%
 3. Independently verify TheoremBreak held-out instances and establish failure baselines.
 4. Audit InvariantLab's support/rank proof and source attribution.
 5. Keep PotentialForge quarantined pending independent mathematical audit and prior-art review.
+
+## Frontier-agent challenge: correlated influence under full support
+
+See [FRONTIER_TASK.md](FRONTIER_TASK.md) and [grade_correlated_influence.py](grade_correlated_influence.py). This task tests whether an agent can construct a full-support, three-component latent-product law that refutes a tempting **distribution-free** extension of the independent-product influence theorem. The exact rational grader enumerates the full joint law and evaluates conditional influences under that law. Public fixture: [correlated_influence_witness.json](examples/correlated_influence_witness.json). Test file: [test_frontier.py](test_frontier.py). The mathematical explanation and any repaired theorem require separate human/independent assessment. Public fixture success is not a model benchmark score.
