@@ -97,9 +97,10 @@ theorem factor_mixture_simulation_jensen
       (fun z : J → β =>
           if ε < |g z - u.eval z| then (1 : ℝ) else 0) := by
     funext z
-    have heval := substitute_eval dec Phi hdec r hcost n u hu z
-    simp only [t, g] at *
-    rw [heval]
+    change (if ε < |f (Phi z) - (substitute dec r n u).eval (Phi z)|
+             then (1 : ℝ) else 0) =
+      (if ε < |f (Phi z) - u.eval z| then (1 : ℝ) else 0)
+    rw [substitute_eval dec Phi hdec r hcost n u hu z]
   change Mixture.Ex P w
     (fun z => if ε < |f (Phi z) - t.eval (Phi z)| then (1 : ℝ) else 0) ≤
     (3 * Real.sqrt 2 * Real.pi ^ 6 * (D : ℝ) ^ 6 * Fintype.card Θ /
