@@ -128,6 +128,31 @@
 </div>
 <div class="eng-callout" style="margin-top:20px"><h3>What these numbers are not.</h3><p>Counts are from finite public negative/positive controls executed against deliberately defective starter code. They are not model accuracy rates, hidden grader scores, independent human acceptances, production safety properties, or mathematical certification. The historical fixes are already public; a defensible blind version must mitigate source contamination and validate alternative correct solutions. Do not rank AI models with these receipts.</p></div>
 </section>
+<section class="eng-section" id="independent-alternates" aria-labelledby="alternate-repairs-heading">
+<p class="eng-kicker">VALIDATOR AUDIT / SOURCE-FROZEN LEGITIMATE ALTERNATIVES</p>
+<h2 id="alternate-repairs-heading">The author reference<br><em>is not the only correct answer.</em></h2>
+<p class="eng-section-lead">An internal second implementation of each benchmark was built from the public task contract and defective starter <strong>before inspecting its private tests or author reference</strong>. Source hashes were frozen, then the private graders were used strictly as acceptance tests. The repaired implementations and grader bodies remain private to preserve future blind trials. This is independent-of-reference construction within the same AI-assisted research program, <strong>not independent human review</strong>.</p>
+<div class="eng-grid two">
+<article class="eng-card">
+<span class="eng-number">DISPATCHQ-B1 / PRIVATE GRADER v0.3</span><span class="eng-tag pending">Internally replayed alternate</span>
+<h3>37 of 37 held-out tests.</h3>
+<p>A separately written queue implementation passed <strong>37/37 private v0.3 tests (100/100 weighted points)</strong> on Python 3.13.5. Independent public-contract attacks also passed 32 seeded state-machine histories (3,840 operations) and ten six-process concurrent claim rounds without observed duplicate leasing. The source was frozen before scoring, with SHA-256 published in the evidence record.</p>
+<p><strong>Adversarial context:</strong> a separate author-side proof attack found twelve new wrong repairs that still scored 100/100 on v0.2; the author's v0.3 revision reportedly rejects all 24 tested defects. Those fault-corpus outcomes have <strong>not</strong> been independently reexecuted by public CI.</p>
+</article>
+<article class="eng-card">
+<span class="eng-number">ARTIFACTGRAPH-B2 / PRIVATE GRADER v0.1</span><span class="eng-tag pending">Internally replayed alternate</span>
+<h3>25 of 25 held-out tests.</h3>
+<p>A separately written manifest validator, cache, and build engine passed <strong>25/25 private author tests</strong> on Python 3.13.5 after the implementation source hashes were frozen. A further independent public audit passed 16 metamorphic/contract groups, including 80 randomized DAGs, exact byte identity versus timestamps, corruption recovery, atomic index replacement, and Boolean version rejection. This is not a proof that every permitted alternative will pass.</p>
+<p><strong>Grader validity limit:</strong> both scorers still require external review of the withheld tests and additional semantically distinct correct solutions.</p>
+</article>
+</div>
+<p class="eng-section-lead"><strong>Do not confuse three things:</strong> these privately scored alternatives are not Qwen model outputs; public CI checks only a redacted metadata receipt rather than executing withheld grader code; and the generic same-process Docker score adapter in draft #841 has an independently reproduced score-origin exploit (#843) and must not be used for accepted agent scores. <strong>Zero validated blind-agent benchmark scores.</strong></p>
+<div class="eng-source-list">
+<a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/evaluations/independent-alternates-20261118/PUBLIC_EVIDENCE.json">Public source hashes and validation status ↗</a>
+<a href="https://github.com/d3lefts/d3lefts/pull/842">v0.3 grader adversarial audit · author-side draft ↗</a>
+<a href="https://github.com/d3lefts/d3lefts/pull/843">Independently reproduced grader-origin exploit ↗</a>
+</div>
+</section>
 <section class="eng-section" id="run-evidence" aria-labelledby="run-evidence-title">
 <p class="eng-kicker">EVALUATION INSTRUMENT / ATTEMPT AND SCORING PROVENANCE</p>
 <h2 id="run-evidence-title">The denominator is<br><em>part of the experiment.</em></h2>
