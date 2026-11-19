@@ -37,7 +37,9 @@ private theorem traceWeight_eq_ofReal {T : ℕ}
   rw [Complex.ofReal_prod]
   apply Finset.prod_congr rfl
   intro j _
-  simp [QuantumCircuitPaths.symbol]
+  by_cases h : x (σ j).1 = (σ j).2
+  · simp [QuantumCircuitPaths.symbol, h]
+  · simp [QuantumCircuitPaths.symbol, h]
 
 /-- Actual circuit amplitudes have the real-component path expansion. -/
 theorem execute_re_eq_path_amplitude {T : ℕ}
@@ -107,8 +109,10 @@ theorem acceptance_eq_pathBorn {T : ℕ}
   by_cases hk : accept k = true
   · simp only [hk, ite_true]
     simp only [QuantumPath.amplitudeRe, acceptedRe, acceptedIm, hk, ite_true]
-    rw [← execute_re_eq_path_amplitude c x k,
-      ← execute_im_eq_path_amplitude c x k]
+    have hre := execute_re_eq_path_amplitude c x k
+    have him := execute_im_eq_path_amplitude c x k
+    simp only [QuantumPath.amplitudeRe] at hre him
+    rw [hre, him]
   · have hf : accept k = false := Bool.eq_false_of_ne_true hk
     simp [QuantumPath.amplitudeRe, acceptedRe, acceptedIm, hf]
 
