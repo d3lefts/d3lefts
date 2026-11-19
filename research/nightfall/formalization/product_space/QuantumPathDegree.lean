@@ -151,7 +151,7 @@ imaginary amplitude components. -/
 theorem pathBorn_eq_squares (T : ℕ)
     (cRe cIm : κ → Trace T ι α → ℝ) (x : ι → α) :
     pathBorn T cRe cIm x =
-    ∑ k : κ, (amplitudeRe T cRe x k) ^ 2 + (amplitudeRe T cIm x k) ^ 2 := by
+    ∑ k : κ, ((amplitudeRe T cRe x k) ^ 2 + (amplitudeRe T cIm x k) ^ 2) := by
   unfold pathBorn amplitudeRe
   apply Finset.sum_congr rfl
   intro k _
