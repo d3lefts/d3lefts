@@ -177,7 +177,7 @@ theorem conditional_hybrid_mean_le
               (π y * Real.sqrt (∑ i : ι, w q i * mismatch i y)) := by
                 apply Finset.sum_congr rfl
                 intro y hy
-                rw [Finset.mul_sum]
+                rw [Finset.mul_sum, Finset.mul_sum]
                 apply Finset.sum_congr rfl
                 intro q hq
                 ring
