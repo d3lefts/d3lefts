@@ -1,0 +1,68 @@
+name: NIGHTFALL all-degree finite ANOVA-to-indicator formal bridge
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/universal/InfinitePiAllDegreeFiniteIndicators.lean'
+      - '.github/workflows/nightfall-all-degree-indicators.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: product-all-degree-indicators-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  exact-native-bridge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Build pinned source canonical ANOVA and new finite indicator theorem
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from scripts.nightfall_q2_certify import local_sources, closure
+          from pathlib import Path
+          import shutil, subprocess
+          files=local_sources()
+          ws=Path("/tmp/mathlib4")
+          out=ws/".lake/build/lib/lean"
+          out.mkdir(parents=True,exist_ok=True)
+          for name in closure("ActualSourceANOVA",files):
+              print("BUILD SOURCE",name,flush=True)
+              shutil.copyfile(files[name],ws/(name+".lean"))
+              subprocess.run(["lake","env","lean","-o",str(out/(name+".olean")),name+".lean"],cwd=ws,check=True,timeout=1200)
+          name="InfinitePiAllDegreeFiniteIndicators"
+          src=Path("research/nightfall/formalization/universal")/(name+".lean")
+          shutil.copyfile(src,ws/(name+".lean"))
+          print("BUILD BRIDGE",name,flush=True)
+          subprocess.run(["lake","env","lean","-o",str(out/(name+".olean")),name+".lean"],cwd=ws,check=True,timeout=1200)
+          PY
+      - name: Named kernel axiom gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/product-all-degree-indicators
+          python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiAllDegreeFiniteIndicators.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InfinitePiAllDegreeFiniteIndicators.indicator_expansion_of_dependsOn \
+            --decl Nightfall.InfinitePiAllDegreeFiniteIndicators.esDegreeLE_implies_indicatorDegreeLE \
+            --json-out lean-receipts/product-all-degree-indicators/theorems.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/product-all-degree-indicators/theorems.json
+      - name: Source identity
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/product-all-degree-indicators
+          git rev-parse HEAD > lean-receipts/product-all-degree-indicators/COMMIT
+          sha256sum research/nightfall/formalization/universal/InfinitePiAllDegreeFiniteIndicators.lean research/nightfall/formalization/observability/ActualSourceANOVA.lean > lean-receipts/product-all-degree-indicators/SHA256SUMS
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: product-all-degree-indicators-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/product-all-degree-indicators
+          if-no-files-found: warn
