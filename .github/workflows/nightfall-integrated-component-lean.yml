@@ -11,6 +11,7 @@ on:
       - 'research/nightfall/formalization/product_space/MarginFreeObservationPushforward.lean'
       - 'research/nightfall/formalization/product_space/MarginFreeOriginalClassifier.lean'
       - 'research/nightfall/formalization/product_space/MarginFreeWeightedOriginal.lean'
+      - 'research/nightfall/formalization/product_space/MarginFreeWeightedTree.lean'
       - 'research/nightfall/formalization/product_space/PinnedConditionalStability.lean'
       - 'research/nightfall/formalization/product_space/LatentComponentCertifiedCore.lean'
       - 'research/nightfall/formalization/aa_product/CLOSURE_PINNED.txt'
@@ -48,7 +49,7 @@ jobs:
         run: |
           set -euo pipefail
           cd /tmp/mathlib4
-          for M in ComponentIdentification MarginFreeCertificate LatentProductInterpolationDegree MarginFreeFiniteTests MarginFreeBhattacharyya MarginFreeTVHellinger MarginFreeLargeGaps LatentComponentCertifiedCore PinnedConditionalStability MarginFreeIntegrated MarginFreeProductDisintegration MarginFreeBoundedK MarginFreeLikelihoodDecision MarginFreeClassifierTerminal MarginFreeObservationPushforward MarginFreeOriginalClassifier MarginFreeWeightedOriginal; do
+          for M in ComponentIdentification MarginFreeCertificate LatentProductInterpolationDegree MarginFreeFiniteTests MarginFreeBhattacharyya MarginFreeTVHellinger MarginFreeLargeGaps LatentComponentCertifiedCore PinnedConditionalStability MarginFreeIntegrated MarginFreeProductDisintegration MarginFreeBoundedK MarginFreeLikelihoodDecision MarginFreeClassifierTerminal MarginFreeObservationPushforward MarginFreeOriginalClassifier MarginFreeWeightedOriginal MarginFreeWeightedTree; do
             cp "$GITHUB_WORKSPACE/research/nightfall/formalization/product_space/$M.lean" "$M.lean"
             lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean" 2>&1 | tee "/tmp/$M.log"
             if grep -E 'error:|sorryAx|declaration uses .sorry' "/tmp/$M.log"; then exit 1; fi
@@ -62,6 +63,7 @@ jobs:
           import MarginFreeObservationPushforward
           import MarginFreeOriginalClassifier
           import MarginFreeWeightedOriginal
+          import MarginFreeWeightedTree
           #print axioms Nightfall.MarginFreeIntegrated.pinned_failure_mean_near
           #print axioms Nightfall.MarginFreeIntegrated.weighted_pinned_component_overlap
           #print axioms Nightfall.MarginFreeDisintegration.observed_then_pin_mass
@@ -85,6 +87,8 @@ jobs:
           #print axioms Nightfall.MarginFreeWeightedOriginal.weighted_likelihood_error_eq_overlap
           #print axioms Nightfall.MarginFreeWeightedOriginal.weighted_original_locality
           #print axioms Nightfall.MarginFreeWeightedOriginal.weighted_original_likelihood_error_eq_overlap
+          #print axioms Nightfall.MarginFreeWeightedTree.exists_local_decision_tree
+          #print axioms Nightfall.MarginFreeWeightedTree.weighted_original_likelihood_tree
           LEAN
           sed -i 's/^          //' IntegratedAxioms.lean
           lake env lean IntegratedAxioms.lean 2>&1 | tee /tmp/integration-axioms.log
@@ -114,6 +118,7 @@ jobs:
             /tmp/MarginFreeObservationPushforward.log
             /tmp/MarginFreeOriginalClassifier.log
             /tmp/MarginFreeWeightedOriginal.log
+            /tmp/MarginFreeWeightedTree.log
             /tmp/integration-axioms.log
             /tmp/integration-sha256.txt
           retention-days: 60
