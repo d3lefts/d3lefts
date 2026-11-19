@@ -1,4 +1,4 @@
-name: NIGHTFALL approximate-product-mixture TV terminal (pinned Lean)
+name: NIGHTFALL certified Jensen + quantum circuit TV extension (pinned Lean)
 on:
   push:
     branches: [nightfall-approximate-mixture-tv-20261118]
@@ -33,6 +33,15 @@ jobs:
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean" 2>&1 | tee "/tmp/log-$M.txt")
             ! grep -q 'declaration uses .sorry' "/tmp/log-$M.txt"
           done < research/nightfall/formalization/aa_product/CLOSURE.txt
+      - name: Reuse merged source-exact circuit and quantum-mixture certificate chain
+        shell: bash
+        run: |
+          set -euo pipefail
+          for M in QuantumCircuitPaths QuantumPathDegree QuantumCircuitNormalization QuantumCircuitSimulation QuantumMixtureSimulation; do
+            cp "research/nightfall/formalization/product_space/$M.lean" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean" 2>&1 | tee "$GITHUB_WORKSPACE/tv-$M-compile.log")
+            ! grep -E 'sorryAx|declaration uses .sorry|error:' "tv-$M-compile.log"
+          done
       - name: Compile finite TV corollary
         shell: bash
         run: |
@@ -55,6 +64,7 @@ jobs:
             --decl "$A.two_tvPositive_eq_l1" \
             --decl "$A.tv_event_transfer" \
             --decl "$A.approximate_mixture_simulation_jensen" \
+            --decl "$A.quantum_circuit_tv_mixture_jensen" \
             --json-out lean-receipts/approx-mixture/receipt.json
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/approx-mixture/receipt.json
           (cd /tmp/mathlib4 && lake env lean ApproximateMixtureSimulation.lean) \
@@ -67,9 +77,9 @@ jobs:
           mkdir -p lean-receipts/approx-mixture
           git rev-parse HEAD > lean-receipts/approx-mixture/head
           sha256sum research/nightfall/formalization/aa_product/CLOSURE.txt \
-            research/nightfall/formalization/product_space/{MixtureSimulation,ApproximateMixtureSimulation}.lean \
+            research/nightfall/formalization/product_space/{MixtureSimulation,QuantumCircuitPaths,QuantumPathDegree,QuantumCircuitNormalization,QuantumCircuitSimulation,QuantumMixtureSimulation,ApproximateMixtureSimulation}.lean \
             > lean-receipts/approx-mixture/source-sha256
-          cp approx-mixture-compile.log lean-receipts/approx-mixture/ 2>/dev/null || true
+          cp approx-mixture-compile.log tv-Quantum*-compile.log lean-receipts/approx-mixture/ 2>/dev/null || true
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
