@@ -1,0 +1,43 @@
+name: NIGHTFALL FUR2 conditional transport Lean gate
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/FUR2TransportAudit.lean'
+      - '.github/workflows/nightfall-fur2-lean-transport-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  lean-fur2-conditional-transport:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Install exact pinned Lean and Mathlib cache
+        uses: leanprover/lean-action@fe408643ea7367d8c0404a8be3975bb145f5fb64
+        with:
+          auto-config: false
+          use-mathlib-cache: true
+          use-github-cache: true
+      - name: Kernel-check FUR2 conditional sublemmas and print axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake env lean research/nightfall/formalization/product_space/FUR2TransportAudit.lean | tee fur2-transport-lean.log
+          ! grep -Eq '(admit|sorryAx|unknown constant|error:)' fur2-transport-lean.log
+          grep -q 'four_point_bound' fur2-transport-lean.log
+          grep -q 'joint_transport_of_rows' fur2-transport-lean.log
+          grep -q 'fixed_weight_of_coupling_factorization' fur2-transport-lean.log
+          sha256sum research/nightfall/formalization/product_space/FUR2TransportAudit.lean > fur2-transport-sha256.txt
+      - name: Preserve attempted kernel gate receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fur2-conditional-transport-lean-receipt
+          path: |
+            fur2-transport-lean.log
+            fur2-transport-sha256.txt
+          if-no-files-found: warn
+          retention-days: 60
