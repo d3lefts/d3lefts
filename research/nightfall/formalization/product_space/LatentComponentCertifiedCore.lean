@@ -12,6 +12,7 @@ namespace Nightfall.ProductSpace.LatentComponent
 open Finset
 open Nightfall.ProductSpace.Transfer
 open Nightfall.ProductSpace.RowBound
+open Nightfall.ProductSpace.Influence
 open Nightfall.ProductSpace.Mixture
 
 variable {ι α : Type} [Fintype ι] [DecidableEq ι] [Fintype α] [DecidableEq α]
