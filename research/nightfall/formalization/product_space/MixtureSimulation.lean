@@ -499,7 +499,6 @@ theorem Ex_split (v : Θ → ℝ) (j : ι) (H : α → (ι → α) → ℝ)
   refine Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun θ _ => ?_
   exact Finset.sum_congr rfl fun x _ => by ring
 
-omit [DecidableEq ι] [DecidableEq α] in
 include hP1 in
 theorem Ex_const (v : Θ → ℝ) (c : ℝ) : Ex P v (fun _ => c) = c * Vs v := by
   unfold Ex Vs pexp
@@ -508,7 +507,6 @@ theorem Ex_const (v : Θ → ℝ) (c : ℝ) : Ex P v (fun _ => c) = c * Vs v := 
   rw [← Finset.sum_mul, sum_prodMass (P θ) (hP1 θ)]
   ring
 
-omit [DecidableEq ι] [DecidableEq α] in
 theorem Ex_add (v : Θ → ℝ) (F G : (ι → α) → ℝ) :
     Ex P v (fun x => F x + G x) = Ex P v F + Ex P v G := by
   unfold Ex pexp
@@ -518,7 +516,6 @@ theorem Ex_add (v : Θ → ℝ) (F G : (ι → α) → ℝ) :
   congr 1
   exact Finset.sum_congr rfl fun x _ => by ring
 
-omit [DecidableEq ι] in
 include hP1 in
 theorem Vs_upd_sum (v : Θ → ℝ) (j : ι) : ∑ b, Vs (upd P v j b) = Vs v := by
   unfold Vs upd
@@ -526,7 +523,6 @@ theorem Vs_upd_sum (v : Θ → ℝ) (j : ι) : ∑ b, Vs (upd P v j b) = Vs v :=
   refine Finset.sum_congr rfl fun θ _ => ?_
   rw [← Finset.mul_sum, hP1 θ j, mul_one]
 
-omit [Fintype ι] [DecidableEq ι] [Fintype α] [DecidableEq α] in
 theorem Sq_le_Vs (v : Θ → ℝ) (hv : ∀ θ, 0 ≤ v θ) : Sq v ≤ Vs v := by
   unfold Sq
   have hV : 0 ≤ Vs v := Finset.sum_nonneg fun θ _ => hv θ
@@ -670,5 +666,423 @@ theorem mbad_queries (S : Finset ι → (Θ → ℝ) → ((ι → α) → ℝ) �
       exact h ⟨j, hjA, hb, hj⟩
 
 end Tree
+
+/-! ## Posterior impurity -/
+
+section Gini
+
+/-- `∑ u²/c - (∑u)²/V ≥ (∑ |u - r c|)² / V` with `r = ∑u / V`, for `0 ≤ u ≤ c`, `∑ c = V > 0`. -/
+theorem chi_sq_bound {β : Type} [Fintype β] (u c : β → ℝ) (hu : ∀ b, 0 ≤ u b)
+    (huc : ∀ b, u b ≤ c b) (V : ℝ) (hV : 0 < V) (hcV : ∑ b, c b = V) :
+    (∑ b, |u b - (∑ b', u b') / V * c b|) ^ 2 / V ≤
+      ∑ b, u b ^ 2 / c b - (∑ b, u b) ^ 2 / V := by
+  set r := (∑ b', u b') / V with hr
+  have hc0 : ∀ b, 0 ≤ c b := fun b => (hu b).trans (huc b)
+  have hterm : ∀ b, (u b - r * c b) ^ 2 / c b = u b ^ 2 / c b - 2 * r * u b + r ^ 2 * c b := by
+    intro b
+    rcases (hc0 b).eq_or_lt with h0 | hpos
+    · have hu0 : u b = 0 := le_antisymm (by rw [h0]; exact huc b) (hu b)
+      rw [← h0, hu0]; simp
+    · field_simp; ring
+  have hid : ∑ b, (u b - r * c b) ^ 2 / c b = ∑ b, u b ^ 2 / c b - (∑ b, u b) ^ 2 / V := by
+    rw [Finset.sum_congr rfl fun b _ => hterm b, Finset.sum_add_distrib, Finset.sum_sub_distrib,
+      ← Finset.mul_sum, ← Finset.mul_sum, hcV, hr]
+    field_simp; ring
+  rw [← hid, div_le_iff₀ hV]
+  -- Cauchy–Schwarz with f = |u - r c| / √c and g = √c
+  have hcs := Finset.sum_mul_sq_le_sq_mul_sq univ (fun b => |u b - r * c b| / Real.sqrt (c b))
+    (fun b => Real.sqrt (c b))
+  have h1 : ∀ b, |u b - r * c b| / Real.sqrt (c b) * Real.sqrt (c b) = |u b - r * c b| := by
+    intro b
+    rcases (hc0 b).eq_or_lt with h0 | hpos
+    · have hu0 : u b = 0 := le_antisymm (by rw [h0]; exact huc b) (hu b)
+      rw [← h0, hu0]; simp
+    · rw [div_mul_cancel₀ _ (Real.sqrt_pos.mpr hpos).ne']
+  have h2 : ∀ b, (|u b - r * c b| / Real.sqrt (c b)) ^ 2 = (u b - r * c b) ^ 2 / c b := by
+    intro b
+    rw [div_pow, sq_abs, Real.sq_sqrt (hc0 b)]
+  have h3 : ∀ b, Real.sqrt (c b) ^ 2 = c b := fun b => Real.sq_sqrt (hc0 b)
+  simp only [h1, h2, h3, hcV] at hcs
+  exact hcs
+
+variable {Θ : Type} [Fintype Θ] (P : Θ → ι → α → ℝ)
+
+/-- Impurity drop: for every component `θ`,
+`∑_b Sq(v_b) - Sq(v) ≥ (v_θ² / V) (∑_b |P θ j b - V_b / V|)²`, and the drop is nonnegative. -/
+theorem Sq_gain (hP0 : ∀ θ i a, 0 ≤ P θ i a) (hP1 : ∀ θ i, ∑ a, P θ i a = 1)
+    (v : Θ → ℝ) (hv : ∀ θ, 0 ≤ v θ) (hV : 0 < Vs v) (j : ι) (θ0 : Θ) :
+    v θ0 ^ 2 / Vs v * (∑ b, |P θ0 j b - Vs (upd P v j b) / Vs v|) ^ 2 ≤
+      ∑ b, Sq (upd P v j b) - Sq v := by
+  have hsplit : ∑ b, Sq (upd P v j b) - Sq v =
+      ∑ θ, (∑ b, (v θ * P θ j b) ^ 2 / Vs (upd P v j b) - (∑ b, v θ * P θ j b) ^ 2 / Vs v) := by
+    unfold Sq
+    have hsum : ∀ θ, ∑ b, v θ * P θ j b = v θ := fun θ => by rw [← Finset.mul_sum, hP1, mul_one]
+    simp only [hsum]
+    rw [Finset.sum_sub_distrib, ← Finset.sum_div]
+    congr 1
+    rw [Finset.sum_comm]
+    refine Finset.sum_congr rfl fun b _ => ?_
+    unfold upd
+    rw [Finset.sum_div]
+  have hterm : ∀ θ, (∑ b, |v θ * P θ j b - (∑ b', v θ * P θ j b') / Vs v * Vs (upd P v j b)|) ^ 2
+      / Vs v ≤ ∑ b, (v θ * P θ j b) ^ 2 / Vs (upd P v j b) - (∑ b, v θ * P θ j b) ^ 2 / Vs v := by
+    intro θ
+    refine chi_sq_bound (fun b => v θ * P θ j b) (fun b => Vs (upd P v j b))
+      (fun b => mul_nonneg (hv θ) (hP0 θ j b)) (fun b => ?_) (Vs v) hV (Vs_upd_sum P hP1 v j)
+    unfold Vs upd
+    exact Finset.single_le_sum (f := fun θ' => v θ' * P θ' j b)
+      (fun θ' _ => mul_nonneg (hv θ') (hP0 θ' j b)) (mem_univ θ)
+  rw [hsplit]
+  have hθ0 := hterm θ0
+  have hrest : ∀ θ ∈ univ, 0 ≤ ∑ b, (v θ * P θ j b) ^ 2 / Vs (upd P v j b) -
+      (∑ b, v θ * P θ j b) ^ 2 / Vs v := fun θ _ => le_trans (by positivity) (hterm θ)
+  have hsingle := Finset.single_le_sum hrest (mem_univ θ0)
+  refine le_trans (le_of_eq ?_) (hθ0.trans hsingle)
+  have hs0 : ∑ b', v θ0 * P θ0 j b' = v θ0 := by rw [← Finset.mul_sum, hP1, mul_one]
+  rw [hs0]
+  have : ∀ b, |v θ0 * P θ0 j b - v θ0 / Vs v * Vs (upd P v j b)| =
+      v θ0 * |P θ0 j b - Vs (upd P v j b) / Vs v| := by
+    intro b
+    rw [show v θ0 * P θ0 j b - v θ0 / Vs v * Vs (upd P v j b) =
+      v θ0 * (P θ0 j b - Vs (upd P v j b) / Vs v) by ring, abs_mul, abs_of_nonneg (hv θ0)]
+  simp only [this, ← Finset.mul_sum]
+  ring
+
+theorem Sq_mono (hP0 : ∀ θ i a, 0 ≤ P θ i a) (hP1 : ∀ θ i, ∑ a, P θ i a = 1)
+    (v : Θ → ℝ) (hv : ∀ θ, 0 ≤ v θ) (j : ι) : Sq v ≤ ∑ b, Sq (upd P v j b) := by
+  have hV : 0 ≤ Vs v := Finset.sum_nonneg fun θ _ => hv θ
+  rcases hV.eq_or_lt with h0 | hpos
+  · have : Sq v = 0 := by unfold Sq; rw [← h0, div_zero]
+    rw [this]
+    exact Finset.sum_nonneg fun b _ => div_nonneg (Finset.sum_nonneg fun θ _ => sq_nonneg _)
+      (Finset.sum_nonneg fun θ _ => mul_nonneg (hv θ) (hP0 θ j b))
+  · rcases isEmpty_or_nonempty Θ with hΘ | ⟨⟨θ0⟩⟩
+    · unfold Vs at hpos; simp at hpos
+    · have := Sq_gain P hP0 hP1 v hv hpos j θ0
+      have h0 : 0 ≤ v θ0 ^ 2 / Vs v * (∑ b, |P θ0 j b - Vs (upd P v j b) / Vs v|) ^ 2 := by
+        positivity
+      linarith
+
+end Gini
+
+/-! ## Analysis: a good query exists while the variance is large -/
+
+section Analysis
+
+theorem pexp_bounds (p : ι → α → ℝ) (hp : ∀ i a, 0 ≤ p i a) (hp1 : ∀ i, ∑ a, p i a = 1)
+    (g : (ι → α) → ℝ) (hg : ∀ x, 0 ≤ g x ∧ g x ≤ 1) : 0 ≤ pexp p g ∧ pexp p g ≤ 1 := by
+  unfold pexp
+  constructor
+  · exact Finset.sum_nonneg fun x _ => mul_nonneg (prodMass_nonneg' p hp x) (hg x).1
+  · calc ∑ x, prodMass p x * g x ≤ ∑ x, prodMass p x * 1 :=
+          Finset.sum_le_sum fun x _ => mul_le_mul_of_nonneg_left (hg x).2 (prodMass_nonneg' p hp x)
+      _ = 1 := by simp only [mul_one]; exact sum_prodMass p hp1
+
+theorem pvar_le_quarter (p : ι → α → ℝ) (hp : ∀ i a, 0 ≤ p i a) (hp1 : ∀ i, ∑ a, p i a = 1)
+    (g : (ι → α) → ℝ) (hg : ∀ x, 0 ≤ g x ∧ g x ≤ 1) : pvar p g ≤ 1 / 4 := by
+  refine (pvar_le_shift p hp1 g (1 / 2)).trans ?_
+  calc ∑ x, prodMass p x * (g x - 1 / 2) ^ 2 ≤ ∑ x, prodMass p x * (1 / 4) := by
+        refine Finset.sum_le_sum fun x _ => mul_le_mul_of_nonneg_left ?_ (prodMass_nonneg' p hp x)
+        nlinarith [(hg x).1, (hg x).2]
+    _ = 1 / 4 := by rw [← Finset.sum_mul, sum_prodMass p hp1, one_mul]
+
+theorem pexp_affine (p : ι → α → ℝ) (hp1 : ∀ i, ∑ a, p i a = 1) (g : (ι → α) → ℝ) :
+    pexp p (fun x => 2 * g x - 1) = 2 * pexp p g - 1 := by
+  unfold pexp
+  have : ∀ x, prodMass p x * (2 * g x - 1) = 2 * (prodMass p x * g x) - prodMass p x :=
+    fun x => by ring
+  rw [Finset.sum_congr rfl fun x _ => this x, Finset.sum_sub_distrib, ← Finset.mul_sum,
+    sum_prodMass p hp1]
+
+theorem l1_eq_two_tvd (q q' : α → ℝ) (hq : ∑ s, q s = 1) (hq' : ∑ s, q' s = 1) :
+    ∑ s, |q s - q' s| = 2 * tvd q q' := by
+  unfold tvd
+  have hmin : ∀ s, min (q s) (q' s) = (q s + q' s - |q s - q' s|) / 2 := by
+    intro s
+    rcases le_total (q s) (q' s) with h | h
+    · rw [min_eq_left h, abs_of_nonpos (by linarith)]; ring
+    · rw [min_eq_right h, abs_of_nonneg (by linarith)]; ring
+  simp only [hmin, ← Finset.sum_div, Finset.sum_sub_distrib, Finset.sum_add_distrib, hq, hq']
+  ring
+
+theorem tvd_self (q : α → ℝ) (hq : ∑ s, q s = 1) : tvd q q = 0 := by
+  simp [tvd, hq]
+
+theorem pin_nonneg (A : Finset ι) (ρ : ι → α) (p : ι → α → ℝ) (hp : ∀ i a, 0 ≤ p i a) :
+    ∀ i a, 0 ≤ pin A ρ p i a := by
+  intro i a
+  by_cases h : i ∈ A
+  · simp only [pin, h, if_true, delta]; split_ifs <;> norm_num
+  · simp only [pin, h, if_false]; exact hp i a
+
+theorem pin_sum (A : Finset ι) (ρ : ι → α) (p : ι → α → ℝ) (hp1 : ∀ i, ∑ a, p i a = 1) :
+    ∀ i, ∑ a, pin A ρ p i a = 1 := by
+  intro i
+  unfold pin
+  split_ifs
+  · exact delta_sum _
+  · exact hp1 i
+
+variable {Θ : Type} [Fintype Θ] (P : Θ → ι → α → ℝ)
+variable (hP0 : ∀ θ i a, 0 ≤ P θ i a) (hP1 : ∀ θ i, ∑ a, P θ i a = 1)
+
+include hP1 in
+theorem mvar_decomp (v : Θ → ℝ) (g : (ι → α) → ℝ) :
+    mvar P v g = ∑ θ, v θ * pvar (P θ) g + ∑ θ, v θ * (pexp (P θ) g - mmean P v g) ^ 2 := by
+  unfold mvar Ex
+  rw [← Finset.sum_add_distrib]
+  refine Finset.sum_congr rfl fun θ _ => ?_
+  rw [← mul_add]
+  congr 1
+  exact sum_sq_shift (P θ) (hP1 θ) g (mmean P v g)
+
+theorem pair_identity (v m : Θ → ℝ) (hV : 0 < Vs v) :
+    ∑ θ, ∑ θ', v θ * v θ' * (m θ - m θ') ^ 2 =
+      2 * Vs v * ∑ θ, v θ * (m θ - (∑ θ', v θ' * m θ') / Vs v) ^ 2 := by
+  set a := ∑ θ', v θ' * m θ'
+  set b := ∑ θ, v θ * m θ ^ 2
+  have hL : ∑ θ, ∑ θ', v θ * v θ' * (m θ - m θ') ^ 2 = 2 * Vs v * b - 2 * a ^ 2 := by
+    have e : ∀ θ θ', v θ * v θ' * (m θ - m θ') ^ 2 =
+        (v θ * m θ ^ 2) * v θ' - 2 * ((v θ * m θ) * (v θ' * m θ')) + v θ * (v θ' * m θ' ^ 2) :=
+      fun θ θ' => by ring
+    simp only [e, Finset.sum_add_distrib, Finset.sum_sub_distrib, ← Finset.mul_sum,
+      ← Finset.sum_mul]
+    unfold Vs
+    ring
+  have hR : ∑ θ, v θ * (m θ - a / Vs v) ^ 2 = b - a ^ 2 / Vs v := by
+    have e : ∀ θ, v θ * (m θ - a / Vs v) ^ 2 =
+        v θ * m θ ^ 2 - 2 * (a / Vs v) * (v θ * m θ) + (a / Vs v) ^ 2 * v θ := fun θ => by ring
+    simp only [e, Finset.sum_add_distrib, Finset.sum_sub_distrib, ← Finset.mul_sum]
+    have hVs : ∑ θ, v θ = Vs v := rfl
+    rw [hVs]
+    field_simp
+    ring
+  rw [hL, hR]
+  field_simp
+
+include hP1 in
+theorem Phi_sum (v : Θ → ℝ) (g : (ι → α) → ℝ) (j : ι) :
+    ∑ b, Phi P (upd P v j b) (sect g j b) = Phi P v g - ∑ θ, v θ * pincr (P θ) g j := by
+  unfold Phi upd
+  rw [Finset.sum_comm, ← Finset.sum_sub_distrib]
+  refine Finset.sum_congr rfl fun θ _ => ?_
+  have h := sum_mul_Ltot_sect (P θ) (hP1 θ) g j
+  calc ∑ b, v θ * P θ j b * Ltot (P θ) (sect g j b)
+      = v θ * ∑ b, P θ j b * Ltot (P θ) (sect g j b) := by
+        rw [Finset.mul_sum]; exact Finset.sum_congr rfl fun b _ => by ring
+    _ = v θ * Ltot (P θ) g - v θ * pincr (P θ) g j := by rw [h]; ring
+
+/-- The state invariant along the tree. -/
+def St (f : (ι → α) → ℝ) (K : ℝ) (A : Finset ι) (v : Θ → ℝ) (g : (ι → α) → ℝ) : Prop :=
+  (∀ θ, 0 ≤ v θ) ∧ (∀ i ∈ A, Inv g i) ∧ HasRows g K ∧ Rep f A g ∧ (∀ x, 0 ≤ g x ∧ g x ≤ 1)
+
+include hP0 in
+theorem St_pres (f : (ι → α) → ℝ) (K : ℝ) (A : Finset ι) (v : Θ → ℝ) (g : (ι → α) → ℝ)
+    (j : ι) (b : α) (h : St f K A v g) (hj : j ∉ A) :
+    St f K (insert j A) (upd P v j b) (sect g j b) := by
+  obtain ⟨hv, hinv, hrows, hrep, hg⟩ := h
+  refine ⟨fun θ => mul_nonneg (hv θ) (hP0 θ j b), fun i hi => ?_, hasRows_sect hrows j b,
+    rep_sect hrep j hj b, fun x => hg _⟩
+  rcases Finset.mem_insert.mp hi with rfl | hiA
+  · exact inv_sect_self g i b
+  · exact inv_sect (hinv i hiA) j (fun h' => hj (h' ▸ hiA)) b
+
+include hP0 hP1 in
+/-- Splitting the potential of the children. -/
+theorem Psi_children (ga gb : ℝ) (v : Θ → ℝ) (g : (ι → α) → ℝ) (j : ι) :
+    ∑ b, Psi P ga gb (upd P v j b) (sect g j b) =
+      (Phi P v g - ∑ θ, v θ * pincr (P θ) g j) / ga + (Vs v - ∑ b, Sq (upd P v j b)) / gb := by
+  unfold Psi
+  rw [Finset.sum_add_distrib, ← Finset.sum_div, ← Finset.sum_div, Finset.sum_sub_distrib,
+    Phi_sum P hP1 v g j, Vs_upd_sum P hP1 v j]
+
+include hP0 hP1 in
+/-- **Increment step.** A heavy component with variance above `τ/4` yields a good query. -/
+theorem increment_good (K τ η M gb : ℝ) (hK : 0 < K) (hτ : 0 < τ) (hη : 0 < η) (hM : 0 < M)
+    (hgb : 0 < gb) (hητ : 144 * K ^ 4 * η ^ 2 ≤ (τ / 4) ^ 3)
+    (A : Finset ι) (v : Θ → ℝ) (hv : ∀ θ, 0 ≤ v θ) (g : (ι → α) → ℝ)
+    (hinv : ∀ i ∈ A, Inv g i) (hrows : HasRows g K)
+    (θs : Θ) (hθvar : τ / 4 < pvar (P θs) g) (hθw : τ * Vs v / M < v θs) :
+    ∃ j, j ∉ A ∧ Good P (τ * η / M) gb v g j := by
+  obtain ⟨a, hr, hKa⟩ := hrows
+  obtain ⟨j, hj⟩ := mean_increment (P θs) (hP0 θs) (hP1 θs) g a hr K hKa
+    (lt_trans (by positivity) hθvar)
+  have hpj : η ≤ pincr (P θs) g j := by
+    by_contra hlt
+    push_neg at hlt
+    have h0 := pincr_nonneg (P θs) (hP0 θs) g j
+    have h1 : pincr (P θs) g j ^ 2 < η ^ 2 := pow_lt_pow_left₀ hlt h0 two_ne_zero
+    have h2 : (τ / 4) ^ 3 < pvar (P θs) g ^ 3 :=
+      pow_lt_pow_left₀ hθvar (by positivity) (by norm_num)
+    have hK4 : 0 < 144 * K ^ 4 := by positivity
+    have h3 := mul_lt_mul_of_pos_left h1 hK4
+    linarith
+  have hjA : j ∉ A := by
+    intro hjA
+    have := pincr_eq_zero_of_inv (P θs) (hinv j hjA)
+    linarith
+  refine ⟨j, hjA, ?_⟩
+  unfold Good
+  rw [Psi_children P hP0 hP1]
+  have hga : 0 < τ * η / M := by positivity
+  have hDj : v θs * η ≤ ∑ θ, v θ * pincr (P θ) g j := by
+    have h1 : v θs * η ≤ v θs * pincr (P θs) g j := mul_le_mul_of_nonneg_left hpj (hv θs)
+    have h2 := Finset.single_le_sum (fun θ (_ : θ ∈ univ) =>
+      mul_nonneg (hv θ) (pincr_nonneg (P θ) (hP0 θ) g j)) (mem_univ θs)
+    linarith
+  have hstep : Vs v ≤ (∑ θ, v θ * pincr (P θ) g j) / (τ * η / M) := by
+    rw [le_div_iff₀ hga]
+    have : Vs v * (τ * η / M) = (τ * Vs v / M) * η := by ring
+    rw [this]
+    nlinarith [mul_le_mul_of_nonneg_right hθw.le hη.le]
+  have hgini : (Vs v - ∑ b, Sq (upd P v j b)) / gb ≤ (Vs v - Sq v) / gb :=
+    div_le_div_of_nonneg_right (by linarith [Sq_mono P hP0 hP1 v hv j]) hgb.le
+  unfold Psi
+  rw [sub_div]
+  linarith
+
+include hP0 hP1 in
+/-- **Separation step.** A coordinate outside `A` where a heavy component's marginal is far from
+the posterior marginal yields a good query. -/
+theorem separation_good (ga gb γ c : ℝ) (hga : 0 < ga) (hγ : 0 < γ) (hc : 0 < c)
+    (hgb : gb = c ^ 2 * γ ^ 2) (A : Finset ι) (v : Θ → ℝ) (hv : ∀ θ, 0 ≤ v θ)
+    (hV : 0 < Vs v) (g : (ι → α) → ℝ) (j : ι) (hjA : j ∉ A) (θ1 : Θ) (hw : c * Vs v ≤ v θ1)
+    (hsep : γ < ∑ b, |P θ1 j b - Vs (upd P v j b) / Vs v|) :
+    ∃ j, j ∉ A ∧ Good P ga gb v g j := by
+  refine ⟨j, hjA, ?_⟩
+  unfold Good
+  rw [Psi_children P hP0 hP1]
+  have hgain := Sq_gain P hP0 hP1 v hv hV j θ1
+  have hgbpos : 0 < gb := by rw [hgb]; positivity
+  have hl : gb * Vs v ≤ v θ1 ^ 2 / Vs v * (∑ b, |P θ1 j b - Vs (upd P v j b) / Vs v|) ^ 2 := by
+    rw [hgb]
+    have h1 : (c * Vs v) ^ 2 ≤ v θ1 ^ 2 := pow_le_pow_left₀ (by positivity) hw 2
+    have h2 : γ ^ 2 ≤ (∑ b, |P θ1 j b - Vs (upd P v j b) / Vs v|) ^ 2 :=
+      pow_le_pow_left₀ hγ.le hsep.le 2
+    have h3 : c ^ 2 * Vs v ≤ v θ1 ^ 2 / Vs v := by
+      rw [le_div_iff₀ hV]; nlinarith
+    calc c ^ 2 * γ ^ 2 * Vs v = (c ^ 2 * Vs v) * γ ^ 2 := by ring
+      _ ≤ v θ1 ^ 2 / Vs v * (∑ b, |P θ1 j b - Vs (upd P v j b) / Vs v|) ^ 2 :=
+        mul_le_mul h3 h2 (sq_nonneg _) (by positivity)
+  have hD0 : 0 ≤ ∑ θ, v θ * pincr (P θ) g j :=
+    Finset.sum_nonneg fun θ _ => mul_nonneg (hv θ) (pincr_nonneg (P θ) (hP0 θ) g j)
+  have hphi : (Phi P v g - ∑ θ, v θ * pincr (P θ) g j) / ga ≤ Phi P v g / ga :=
+    div_le_div_of_nonneg_right (by linarith) hga.le
+  have hgini : (Vs v - ∑ b, Sq (upd P v j b)) / gb + Vs v ≤ (Vs v - Sq v) / gb := by
+    rw [div_add' _ _ _ hgbpos.ne', div_le_div_iff_of_pos_right hgbpos]
+    linarith
+  unfold Psi
+  linarith
+
+/-- Heavy high-variance component when the within-component variance is large. -/
+theorem exists_heavy_var (v q : Θ → ℝ) (hv : ∀ θ, 0 ≤ v θ) (hq0 : ∀ θ, 0 ≤ q θ)
+    (hq : ∀ θ, q θ ≤ 1 / 4) (τ : ℝ) (hτ : 0 < τ) (hM : 0 < Fintype.card Θ)
+    (hW : τ * Vs v / 2 < ∑ θ, v θ * q θ) :
+    ∃ θ, τ / 4 < q θ ∧ τ * Vs v / (Fintype.card Θ : ℝ) < v θ := by
+  set M : ℝ := (Fintype.card Θ : ℝ)
+  have hMpos : (0 : ℝ) < M := Nat.cast_pos.mpr hM
+  by_contra hcon
+  push_neg at hcon
+  have hterm : ∀ θ, v θ * q θ ≤ τ * Vs v / (4 * M) + v θ * (τ / 4) := by
+    intro θ
+    by_cases hc : τ / 4 < q θ
+    · have hvle := hcon θ hc
+      have : v θ * q θ ≤ τ * Vs v / M * (1 / 4) :=
+        mul_le_mul hvle (hq θ) (hq0 θ) (le_trans (hv θ) hvle)
+      have h2 : 0 ≤ v θ * (τ / 4) := mul_nonneg (hv θ) (by positivity)
+      have h3 : τ * Vs v / M * (1 / 4) = τ * Vs v / (4 * M) := by field_simp
+      linarith
+    · push_neg at hc
+      have : v θ * q θ ≤ v θ * (τ / 4) := mul_le_mul_of_nonneg_left hc (hv θ)
+      have hV0 : 0 ≤ Vs v := Finset.sum_nonneg fun θ _ => hv θ
+      have h2 : 0 ≤ τ * Vs v / (4 * M) := by positivity
+      linarith
+  have hsum := Finset.sum_le_sum fun θ (_ : θ ∈ univ) => hterm θ
+  rw [Finset.sum_add_distrib, ← Finset.sum_mul] at hsum
+  simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul] at hsum
+  have h1 : (Fintype.card Θ : ℝ) * (τ * Vs v / (4 * M)) = τ * Vs v / 4 := by
+    simp only [M]; field_simp
+  have h2 : ∑ θ, v θ = Vs v := rfl
+  rw [h1, h2] at hsum
+  linarith
+
+/-- A heavy pair of components with separated means when the between-component variance is
+large. -/
+theorem exists_pair (v m : Θ → ℝ) (hv : ∀ θ, 0 ≤ v θ) (hm : ∀ θ, 0 ≤ m θ ∧ m θ ≤ 1)
+    (τ : ℝ) (hτ : 0 < τ) (hM : 0 < Fintype.card Θ)
+    (hbig : τ * Vs v ^ 2 < ∑ θ, ∑ θ', v θ * v θ' * (m θ - m θ') ^ 2) :
+    ∃ θ1 θ2, τ * Vs v ^ 2 / (2 * (Fintype.card Θ : ℝ) ^ 2) ≤ v θ1 * v θ2 ∧
+      τ / 2 < (m θ1 - m θ2) ^ 2 := by
+  set M : ℝ := (Fintype.card Θ : ℝ)
+  have hMpos : (0 : ℝ) < M := Nat.cast_pos.mpr hM
+  by_contra hcon
+  push_neg at hcon
+  have hterm : ∀ θ θ', v θ * v θ' * (m θ - m θ') ^ 2 ≤
+      τ * Vs v ^ 2 / (2 * M ^ 2) + v θ * v θ' * (τ / 2) := by
+    intro θ θ'
+    have hvv : 0 ≤ v θ * v θ' := mul_nonneg (hv θ) (hv θ')
+    have hsq : (m θ - m θ') ^ 2 ≤ 1 := by
+      nlinarith [(hm θ).1, (hm θ).2, (hm θ').1, (hm θ').2]
+    by_cases hc : τ * Vs v ^ 2 / (2 * M ^ 2) ≤ v θ * v θ'
+    · have := mul_le_mul_of_nonneg_left (hcon θ θ' hc) hvv
+      have h2 : 0 ≤ τ * Vs v ^ 2 / (2 * M ^ 2) := by positivity
+      linarith
+    · push_neg at hc
+      have := mul_le_mul_of_nonneg_left hsq hvv
+      have h2 : 0 ≤ v θ * v θ' * (τ / 2) := by positivity
+      linarith
+  have hsum := Finset.sum_le_sum fun θ (_ : θ ∈ univ) =>
+    Finset.sum_le_sum fun θ' (_ : θ' ∈ univ) => hterm θ θ'
+  have hdouble : ∑ θ, ∑ θ', (τ * Vs v ^ 2 / (2 * M ^ 2) + v θ * v θ' * (τ / 2)) =
+      τ * Vs v ^ 2 := by
+    simp only [Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ, nsmul_eq_mul,
+      ← Finset.sum_mul, ← Finset.mul_sum]
+    have h2 : ∑ θ, v θ = Vs v := rfl
+    rw [h2]
+    field_simp
+    ring
+  linarith
+
+include hP0 hP1 in
+/-- Separated means give a coordinate outside `A` with separated marginals (fooling lemma). -/
+theorem exists_sep_coord (f : (ι → α) → ℝ) (hf01 : ∀ x, 0 ≤ f x ∧ f x ≤ 1) (d : ℕ)
+    (hd : 1 ≤ d) (hdeg : HasProdDegreeLE f d) (A : Finset ι) (g : (ι → α) → ℝ)
+    (hrep : Rep f A g) (θ1 θ2 : Θ) (s : ℝ) (hs : 0 < s) (hs1 : s ≤ 1 / 2)
+    (hdiff : s < |pexp (P θ1) g - pexp (P θ2) g|) :
+    ∃ i, i ∉ A ∧ s / (8 * (d : ℝ) ^ 2) < tvd (P θ1 i) (P θ2 i) := by
+  obtain ⟨ρ, hρ⟩ := hrep
+  have hdpos : (0 : ℝ) < d := by exact_mod_cast hd
+  set γ := s / (8 * (d : ℝ) ^ 2) with hγdef
+  have hγ0 : 0 < γ := by positivity
+  have hγ1 : γ ≤ 1 / 2 := by
+    rw [hγdef, div_le_iff₀ (by positivity)]
+    have hd1 : (1 : ℝ) ≤ d := by exact_mod_cast hd
+    have : (1 : ℝ) ≤ (d : ℝ) ^ 2 := by nlinarith
+    linarith
+  obtain ⟨i, hi⟩ : ∃ i, γ < tvd (pin A ρ (P θ1) i) (pin A ρ (P θ2) i) := by
+    by_contra hcon
+    push_neg at hcon
+    have hf1 : ∀ x, |2 * f x - 1| ≤ 1 := fun x =>
+      abs_le.mpr ⟨by linarith [(hf01 x).1], by linarith [(hf01 x).2]⟩
+    have hfo := fooling_tv (pin A ρ (P θ1)) (pin A ρ (P θ2)) (pin_nonneg A ρ _ (hP0 θ1))
+      (pin_nonneg A ρ _ (hP0 θ2)) (pin_sum A ρ _ (hP1 θ1)) (pin_sum A ρ _ (hP1 θ2)) γ hγ0 hγ1
+      hcon d (fun x => 2 * f x - 1) hf1 (hasProdDegreeLE_two_mul_sub_one f d hdeg)
+    rw [pexp_affine _ (pin_sum A ρ _ (hP1 θ1)), pexp_affine _ (pin_sum A ρ _ (hP1 θ2)),
+      ← hρ (P θ1) (hP1 θ1), ← hρ (P θ2) (hP1 θ2)] at hfo
+    have e : 2 * pexp (P θ1) g - 1 - (2 * pexp (P θ2) g - 1) =
+        2 * (pexp (P θ1) g - pexp (P θ2) g) := by ring
+    rw [e, abs_mul, abs_of_pos (by norm_num : (0 : ℝ) < 2)] at hfo
+    have : 16 * (d : ℝ) ^ 2 * γ = 2 * s := by rw [hγdef]; field_simp; ring
+    linarith
+  have hiA : i ∉ A := by
+    intro hiA
+    simp only [pin, hiA, if_true] at hi
+    rw [tvd_self _ (delta_sum _)] at hi
+    linarith
+  refine ⟨i, hiA, ?_⟩
+  simpa [pin, hiA] using hi
+
+end Analysis
+
 
 end Nightfall.ProductSpace.Mixture
