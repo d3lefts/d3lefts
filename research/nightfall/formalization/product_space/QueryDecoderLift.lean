@@ -56,7 +56,7 @@ theorem bind_queries (u : DecoderTree I α β)
     (bind u k).queries x =
       u.queries x + (k (u.eval x)).queries x := by
   induction u with
-  | leaf b => rfl
+  | leaf b => simp [bind, DecoderTree.queries, DecoderTree.eval]
   | node i t ih =>
       change (bind (t (x i)) k).queries x + 1 =
         ((t (x i)).queries x + 1) + (k ((t (x i)).eval x)).queries x
@@ -111,7 +111,12 @@ theorem lift_queries_le (dec : J → DecoderTree I α β)
       rw [DecoderTree.bind_queries, hdec j z]
       have h1 := hcost j (Phi z)
       have h2 := ih (z j) z
-      omega
+      calc
+        (dec j).queries (Phi z) +
+            (lift dec (children (z j))).queries (Phi z) ≤
+            r + r * (children (z j)).queries z := Nat.add_le_add h1 h2
+        _ = r * ((children (z j)).queries z + 1) := by
+          simp [Nat.mul_add, Nat.add_comm]
 
 /-- Prune every observed path at a fixed global query budget. -/
 def truncate : ℕ → DTree I α → DTree I α
@@ -212,7 +217,12 @@ theorem lift_queries_le_at (dec : J → DecoderTree I α β)
       rw [DecoderTree.bind_queries, hdec_z j]
       have h1 := hcost j (Phi z)
       have h2 := ih (z j)
-      omega
+      calc
+        (dec j).queries (Phi z) +
+            (lift dec (children (z j))).queries (Phi z) ≤
+            r + r * (children (z j)).queries z := Nat.add_le_add h1 h2
+        _ = r * ((children (z j)).queries z + 1) := by
+          simp [Nat.mul_add, Nat.add_comm]
 
 /-- On any one decodable source input, truncation preserves the simulator's
 exact value, even if decoding is not valid on other (zero-mass) inputs. -/
