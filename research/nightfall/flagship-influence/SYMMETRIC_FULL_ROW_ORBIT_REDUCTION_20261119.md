@@ -90,6 +90,17 @@ Ordinary Efron–Stein yields V<=sum_i I_i<=nM. Consequently
 
 For any family with m>=rho*n for a fixed rho>0, this is a dimension-free all-degree exponent-two bound with c=4*rho². Symmetric h(|x|) has m>=max(n-k,k+1)>=(n+1)/2 for an edge attaining D, recovering c=(n+1)²/n².
 
+### Connectedness alone does not guarantee maximal-edge orbit density
+
+**Exact adversarial family.** On the fair n-cube, for any n>=2 and 0<ε<1, take
+
+    f_ε(x) = x_1 + ε (∏_{j=1}^n x_j),     x_j∈{0,1}.
+
+The highest-order Fourier/ANOVA coefficient is nonzero (proportional to ε), so its interaction support hypergraph contains all n coordinates in one **connected** high-order edge. Nonetheless the largest singleton flip magnitude is D=1+ε and occurs ONLY on the edge changing x_1 while all other bits are 1. Thus **at every vertex the number of incident edges of size D is at most one**, and the maximal-edge multiplicity parameter m=1 for arbitrarily large n. This blocks any attempted implication “connected ANOVA support => m≥ρn” with universal ρ>0. It does NOT refute the row conjecture: the family approaches a dictator as ε→0 and remains covered by other mechanisms.
+
+Exact Fraction enumeration on n=3,5,10 at ε=1/n² returned D=1+ε and m=1 in every case. Its all-n derivation is elementary, but not formally Lean checked or externally reviewed. A genuine all-degree solution must combine orbit-density and other structural operators **quantitatively**, rather than assume that connectedness forces density.
+
+
 **Scope and proof-attack:** This is useful only when maximal edges have a large common-vertex orbit. A dictator has m=1 and n arbitrarily large despite satisfying the sharp row inequality by a different (direct-sum) argument. A universal conclusion cannot follow by assuming a dimension-free rho. The natural next operator is a decomposition of f into orbit-dense components and low-dimensional direct-sum components *without losing the row K budget*. This is a proposed generalization target, not an established universal decomposition theorem.
 
 ---
