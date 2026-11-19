@@ -1,0 +1,20 @@
+{
+  "artifact_id": 14498869454,
+  "artifact_sha256": "4f3a54fd348a3d7972559e656eec06aa59efaf6326f5d62bba957c9d8172af76",
+  "named_declarations": [
+    "Nightfall.Forrelation.EntropyCore.exact_conditional_terminal",
+    "Nightfall.Forrelation.EntropyCore.tv_robust_conditional_terminal"
+  ],
+  "raw_receipt_sha256": "c6601c3bb2c0b8e5d770fdaa6a43c40e32b22eb22f87db08d0c6f0c6db389322",
+  "schema": "nightfall-forrelation-conditional-lean-receipt-v1",
+  "scope": "CONDITIONAL information-to-exponential arithmetic only; Gaussian/KL/latent capacity premises UNPROVED in Lean",
+  "source_PR": 871,
+  "source_commit": "0bf1949c4d7fbbc6188dbb1a41e1f43cdb26b73c",
+  "source_sha256": "e5c06bd4b9a8578aa254bb0c37da4a4b6d0a75281965f0d005ef3693e2abc9aa",
+  "source_workflow_run": 44459067834,
+  "standard_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ]
+}

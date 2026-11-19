@@ -1,0 +1,89 @@
+{
+  "axiom_audit": {
+    "Nightfall.Forrelation.EntropyCore.exact_conditional_terminal": "allowlisted_dependencies",
+    "Nightfall.Forrelation.EntropyCore.tv_robust_conditional_terminal": "allowlisted_dependencies"
+  },
+  "axiom_dependencies": {
+    "Nightfall.Forrelation.EntropyCore.exact_conditional_terminal": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Nightfall.Forrelation.EntropyCore.tv_robust_conditional_terminal": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "compiler": [
+    "lake",
+    "env",
+    "lean"
+  ],
+  "compiler_exit_code": 0,
+  "compiler_version": "Lean (version 4.36.0-rc2, x86_64-unknown-linux-gnu, commit b35cb10cf2ced51a2fd1880cfdbf75c71ab7a35a, Release)",
+  "contract_relpath": null,
+  "contract_sha256": null,
+  "contract_targets": [],
+  "contract_workspace_commit": null,
+  "declarations_requested": [
+    "Nightfall.Forrelation.EntropyCore.exact_conditional_terminal",
+    "Nightfall.Forrelation.EntropyCore.tv_robust_conditional_terminal"
+  ],
+  "diagnostics": [
+    {
+      "column": 8,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/forrelation/.lean_bridge_p4j_3m8l.lean",
+      "line": 53,
+      "message": "this tactic is never executed",
+      "severity": "warning"
+    },
+    {
+      "column": 4,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/forrelation/.lean_bridge_p4j_3m8l.lean",
+      "line": 53,
+      "message": "Unused tactic linter: `<;>` can be removed.",
+      "severity": "warning"
+    },
+    {
+      "column": 8,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/forrelation/.lean_bridge_p4j_3m8l.lean",
+      "line": 53,
+      "message": "Unused tactic linter: `ring` is never executed.",
+      "severity": "warning"
+    },
+    {
+      "column": 5,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/forrelation/.lean_bridge_p4j_3m8l.lean",
+      "line": 75,
+      "message": "Variable name `hEta0` is not explicitly referenced.",
+      "severity": "warning"
+    }
+  ],
+  "expected_toolchain": "leanprover/lean4:v4.36.0-rc2",
+  "explicit_allowed_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "invocation": [
+    "lake",
+    "env",
+    "lean",
+    "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/forrelation/.lean_bridge_p4j_3m8l.lean"
+  ],
+  "parsed_compiler_toolchain": "leanprover/lean4:v4.36.0-rc2",
+  "policy_findings": [],
+  "proof_scope": "named declarations compile; only explicitly allowed axioms reported",
+  "protocol": "nightfall-lean-bridge/v2",
+  "source": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/forrelation/ForrelationEntropyObstruction.lean",
+  "source_relpath": "research/nightfall/formalization/forrelation/ForrelationEntropyObstruction.lean",
+  "source_sha256": "e5c06bd4b9a8578aa254bb0c37da4a4b6d0a75281965f0d005ef3693e2abc9aa",
+  "status": "COMPILED",
+  "stderr": "",
+  "stdout": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/forrelation/.lean_bridge_p4j_3m8l.lean:53:8: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/forrelation/.lean_bridge_p4j_3m8l.lean:53:4: warning: Unused tactic linter: `<;>` can be removed.\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/forrelation/.lean_bridge_p4j_3m8l.lean:53:8: warning: Unused tactic linter: `ring` is never executed.\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/forrelation/.lean_bridge_p4j_3m8l.lean:75:5: warning: Variable name `hEta0` is not explicitly referenced.\n\nHint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:\n  [apply] _hEta0\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\n'Nightfall.Forrelation.EntropyCore.exact_conditional_terminal' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n'Nightfall.Forrelation.EntropyCore.tv_robust_conditional_terminal' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n'Nightfall.Forrelation.EntropyCore.exact_conditional_terminal' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n'Nightfall.Forrelation.EntropyCore.tv_robust_conditional_terminal' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n",
+  "time_utc": "2026-11-19T04:34:30.343464+00:00",
+  "version_matches_pin": true,
+  "workspace": "/tmp/mathlib4",
+  "workspace_commit": null
+}
