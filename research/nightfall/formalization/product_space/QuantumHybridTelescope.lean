@@ -109,7 +109,7 @@ theorem hybrid_telescope
                 (oracleY j (evolve gate oracleX initial j))) +
             dist (oracleX n (evolve gate oracleX initial n))
               (oracleY n (evolve gate oracleX initial n)) :=
-                add_le_add_right ih _
+                add_le_add ih (le_refl _)
         _ = ∑ j ∈ Finset.range (n + 1),
               dist (oracleX j (evolve gate oracleX initial j))
                 (oracleY j (evolve gate oracleX initial j)) := by
