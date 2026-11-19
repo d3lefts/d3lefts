@@ -213,7 +213,22 @@ def evaluate(candidate: Path, image: str, output: Path) -> dict:
             raise RuntimeError("sandbox produced no JSON report")
         report = json.loads(completed.stdout)
         if completed.returncode:
-            raise RuntimeError("sandbox exited unsuccessfully")
+            if not isinstance(report, dict) or report.get("status") != "fail":
+                raise RuntimeError("sandbox failed without a valid rejection report")
+            if (report.get("target") != DECL or report.get("pin") != TOOLCHAIN or
+                    report.get("candidate_sha256") != manifest["candidate_sha256"]):
+                raise RuntimeError("sandbox rejected but failed candidate/target provenance checks")
+            trusted = report.get("trusted_sources", {})
+            if not isinstance(trusted, dict) or any(
+                trusted.get(name, {}).get("sha256") != manifest["source_files"][rel]
+                for name, rel in (("ShiftedC4Bernstein.lean", BERNSTEIN_REL),
+                                  ("NightfallPolarisQ2Target.lean", TARGET_REL))
+            ):
+                raise RuntimeError("sandbox rejected without matching trusted-source hashes")
+            error = report.get("error", "")
+            if not isinstance(error, str) or not error:
+                raise RuntimeError("sandbox rejected without an error reason")
+            raise RuntimeError("sandbox candidate rejected: " + error[:1800])
         verify_grader_receipt(report, manifest)
         report["host_sandbox_wrapper"] = {
             "mode": "docker-nonprivileged-network-disabled",
