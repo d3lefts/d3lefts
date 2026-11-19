@@ -1,5 +1,32 @@
 # Symmetric full-row orbit reduction — exact certificate operator (v1)
 
+## New unconditional restricted theorem: exponent two for ALL symmetric binary functions
+
+**Theorem (author mathematical proof, not yet Lean formalized).** For every n>=1, arbitrary independent Bernoulli marginals p_i in [0,1], and every real symmetric h(|x|) on the full binary cube, let K be the maximum *full pairwise fractional-row* cost over the cube, V the variance under the ORIGINAL product law, and M=max_i E Var(f|X_{-i}) the maximum original-law resampling influence. Then
+
+    V² <= (n/(n+1))² K² M <= K² M,
+
+**without ANY degree, range, output-level count or marginal-bias restriction.** In particular the bound c=1 (in the theorem's normalization I>=c V²/K²) holds uniformly for this entire high-degree real-valued class. For strictly positive sources K may equivalently be computed over the supported product. If some marginals are deterministic and K is defined only on the actual support, discard the frozen coordinates and translate h by their fixed number of ones; the same conclusion holds with the number of active coordinates in place of n. If no active coordinates or V=0 the conclusion is trivial.
+
+**Proof.** Set D=max_{0<=k<n}|h(k+1)-h(k)|. If D=0 then f is constant. Otherwise let k attain D. From any source-independent full row at an x of Hamming weight k, each of its (n-k) zero coordinates has a singleton flip that changes f by D, so **each of those row entries is >=D**; hence K>=(n-k)D. At any x' of weight k+1, likewise every one of its (k+1) one coordinates has a singleton flip of size D, so K>=(k+1)D. Therefore
+
+    K >= max(n-k,k+1) D >= (n+1) D/2.
+
+For each i, conditional on all other coordinates, the function of X_i takes two values separated by |h(S+1)-h(S)|<=D, where S is the number of ones elsewhere. Thus **under the ORIGINAL p_i**, including p_i=0 or 1,
+
+    I_i = p_i(1-p_i) E[(h(S+1)-h(S))²]
+        <= D²/4 <= K²/(n+1)².
+
+Consequently M<=K²/(n+1)². Ordinary Efron–Stein on independent sources gives V<=sum_i I_i<=nM. Multiply this by itself and use one factor M<=K²/(n+1)² to conclude V²<=n² M²<=n² K² M/(n+1)². QED.
+
+**Independent consistency checks.** The exact rational primal/dual verifier includes symmetric linear, parity, majority, quadratic and oscillating multilevel controls through n=24; every case satisfies the stronger c=4 candidate, hence also this restricted c=1 theorem. Its 20 low-n full-cube LP comparisons independently confirm the K used here is the *genuine* full pairwise row cost. The proof itself does not depend on those tests.
+
+**Sharper auxiliaries must be audited separately.** The tempting stronger bound K>=n sqrt(E_{Bin(n-1,1/2)}[(Delta h)²]) is FALSE already for the n=3 fair majority threshold h=(0,0,1,1): exact K=2, while n sqrt(E Delta²)=3 sqrt(1/2)>2. This counterexample does NOT refute the theorem above or the c=4 target. It demonstrates why the robust proof uses maximal-edge multiplicity and the (n+1)/2 factor rather than an invalid global edge RMS estimate.
+
+**Mechanism / transfer:** an entire permutation orbit of maximum-size edges forces a distributed pointwise row budget. Combine orbit multiplicity with original-law conditional variance and Efron–Stein. For arbitrary nonsymmetric f, the maximum edge may have orbit size one (a dictator); direct-sum reduction handles isolated dictators, but no universal orbit-multiplicity lower bound holds. **The remaining target is a decomposition or cross-threshold operator covering all connected high-overlap components, not another symmetric reduction.** This result is a restricted family theorem, not a resolution of Turturean §9.5 and not yet independently reviewed or checked against full prior art.
+
+---
+
 **2026-11-19 · NIGHTFALL research.** Status: elementary exact symmetry reduction plus reproducible finite falsification. **NOT** a proof of Turturean §9.5, the optimal exponent-two polynomial-degree conjecture, or its product-law strengthening. No independent human review or novelty sign-off.
 
 ## Exact theorem (finite combinatorics, author proof)
