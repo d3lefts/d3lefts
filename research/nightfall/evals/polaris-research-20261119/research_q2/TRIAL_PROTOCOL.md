@@ -16,6 +16,10 @@ One task bundle, two independent agents, one attempt each, in fresh VM environme
 
 Before seeing any agent result, freeze the grader commit, exact task files and source SHA-256s, model identifiers and versions, prompts, allowed tools, evaluator environment, trial-start timestamps, timeouts, and pass/fail policy. Obtain two truly separate agent execution sessions rather than asking one model to simulate two reviewers.
 
+## Evaluator isolation prerequisite
+
+An experimental [sealed-container entrypoint](SANDBOX.md) now packages the five required input files, specifies digest-pinned Docker execution without network or host-repository mounts, and host-validates reported proof steps. It is **NOT operationally certified**: no independently audited image, real sandbox execution, hostile-code penetration test or security review has been completed. Do not use the raw Python grader on untrusted agents. Runtime authentication and genuinely separate VM-based audit remain mandatory before any scored trial.
+
 ## Acceptance and independent attack
 
 1. Exact locked theorem builds from trusted copies plus the candidate-only overlay. An authored proof is not allowed to edit target, source, theorem statement, imports, or axiom policy.
