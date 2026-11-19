@@ -61,7 +61,7 @@ jobs:
           python-version: '3.11'
       - name: Research-Q2 trusted-source and bypass preflight tests
         run: |
-          python3 -m unittest discover -s research/nightfall/evals/polaris-research-20261119/research_q2 -p 'test_research_q2.py' -v
+          python3 -m unittest discover -s research/nightfall/evals/polaris-research-20261119/research_q2 -p 'test*.py' -v
       - name: Exact-rational shifted c/4 polynomial certificate audit
         run: python3 research/nightfall/2026-11-quadratic-law-free-audit/check_shifted_owner_moment_107.py
       - name: Install and independently pin compiler and Mathlib source
