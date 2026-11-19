@@ -1,6 +1,6 @@
-# Polaris benchmark portfolio card — ProofGraph-Hard v0.1
+# Polaris benchmark portfolio — ProofGraph-Hard v0.2
 
-**Artifact ID:** POLARIS-PROOFGRAPH-HARD-20261119-v0.1
+**Artifact ID:** POLARIS-PROOFGRAPH-HARD-20261119-v0.2
 **Class:** formal proof integration / research-engineering evaluation
 **Claim status:** validated *calibration harness*, not a scored frontier-agent benchmark
 **Maintainer:** NIGHTFALL; not affiliated with Meta FAIR or Vals AI
@@ -19,14 +19,25 @@
 
 This verifies tooling only. There are **zero** measured frontier-agent trials, no hidden holdout task, no independent-implementation proof audit, and no expert novelty review. One trivial theorem is not a research-grade benchmark.
 
+## Tier 2: genuine NIGHTFALL Q2 scalar proof integration — verified reference
+
+- **Statement:** `Nightfall.Polaris.ResearchQ2.locked_shifted_c4_interpolation`, exact shifted-c/4 real moment interpolation under Hölder and strong fourth-moment hypotheses; part of the merged finite-product degree-two coefficient C107 proof (#558).
+- **Trusted inputs:** frozen `ShiftedC4Bernstein.lean` (Git blob `d29a1e5f0396ca7f29fde24a34325fc324a3d3c0`) and evaluator-owned `NightfallPolarisQ2Target.lean` (Git blob `7f0c86d5e6e04e0f6330f017aceff6bbb141c747`).
+- **Known-correct public positive control:** original `ShiftedC4Scalar.lean` successfully compiled with Lean 4.36.0-rc2 and Mathlib `9d581dfff2e41de989072ea63abf3daf69311520`. The trusted target compiled and printed exactly `Classical.choice`, `Quot.sound`, `propext`; separate `leanchecker` returned exit code 0. CI run https://github.com/d3lefts/d3lefts/actions/runs/44564272576 ; receipt https://github.com/d3lefts/d3lefts/actions/runs/44564272576/artifacts/14551751354 .
+- **Adversarial semantic negative:** replacing the candidate with a theorem of the correct name but conclusion `True` was **rejected by the frozen Lean target**, not merely a lexical scan. Verified in run https://github.com/d3lefts/d3lefts/actions/runs/44565025248 ; both positive and negative receipt files https://github.com/d3lefts/d3lefts/actions/runs/44565025248/artifacts/14551063562 .
+- **Separate exact audit:** the existing Fraction-based c/4 Bernstein checker is integrated into the CI job, independently recomputing its own polynomial positivity certificate. This checks that polynomial only, not the full source-product inequality.
+- **Task and reproducibility:** [research-Q2 task](../research_q2/TASK.md), [equal-budget trial protocol](../research_q2/TRIAL_PROTOCOL.md), [minimal input preparer](../research_q2/prepare_agent_bundle.py), and [grade script](../research_q2/grade_research_q2.py).
+
+The research target is **not** the full original-source Q2 terminal theorem and not a new mathematical discovery. No blind agent attempted it, and no external referee independently audited the proof. Public-source access makes memorization and answer leakage possible; an unpublished task variant and isolated agent execution are required before performance scoring.
+
 ## Integrity mechanism
 
 Immutable source tree hash -> allowlisted .lean submission overlay -> fresh trusted-target Lake build -> evaluator-owned #print axioms -> separate leanchecker replay -> hashed receipt. The simulated-runner tests attack unapproved files, source changes, symlinks, path traversal, axiom injection, sorry, forged/missing reports, build failures and checker failures.
 
 ## Upgrade threshold: when it becomes a real hard benchmark
 
-1. Freeze a *nontrivial*, already-established NIGHTFALL theorem from a pinned source and a known-correct reference build.
-2. Withhold a substantive supporting module, segregate all ground-truth proofs and mutation tests from agent-visible inputs.
+1. Completed for the Q2 scalar development tier; a truly unpublished research target is still needed for a clean hidden evaluation.
+2. The source-minimal input generator excludes the known proof; physically segregate ground truth and block public-source leakage before any blind scored trial.
 3. Run arbitrary agent Lean code in an ephemeral nonprivileged VM/container without network, with explicit CPU/memory/time/tool budgets. The current Python adapter alone is NOT a sandbox.
 4. Independently audit task truth, target equivalence and checker coverage. Test adversarial proof-bypass attempts and hidden task-family generalization.
 5. Execute at least two blinded agent baselines on the SAME target and budgets; report the full outcomes, costs and recovery paths.
