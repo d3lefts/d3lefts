@@ -53,17 +53,26 @@ theorem Ex_eq_mass_sum (P : Θ → ι → α → ℝ) (w : Θ → ℝ)
     (F : (ι → α) → ℝ) :
     Mixture.Ex P w F =
       ∑ x : ι → α, mixMass P w x * F x := by
-  unfold Mixture.Ex Transfer.pexp mixMass
+  classical
+  unfold Mixture.Ex Influence.pexp mixMass
   calc
     (∑ θ : Θ, w θ * ∑ x : ι → α, Transfer.prodMass (P θ) x * F x) =
-      ∑ θ : Θ, ∑ x : ι → α, w θ * (Transfer.prodMass (P θ) x * F x) := by
-        exact Finset.sum_congr rfl fun θ _ => Finset.mul_sum _ _ _
-    _ = ∑ x : ι → α, ∑ θ : Θ, w θ * (Transfer.prodMass (P θ) x * F x) :=
-      Finset.sum_comm
-    _ = ∑ x : ι → α, (∑ θ : Θ, w θ * Transfer.prodMass (P θ) x) * F x := by
-      exact Finset.sum_congr rfl fun x _ => by
-        rw [Finset.sum_mul]
-        exact Finset.sum_congr rfl fun θ _ => by ring
+      ∑ θ : Θ, ∑ x : ι → α,
+        (w θ * Transfer.prodMass (P θ) x) * F x := by
+          apply Finset.sum_congr rfl
+          intro θ _
+          rw [Finset.mul_sum]
+          apply Finset.sum_congr rfl
+          intro x _
+          ring
+    _ = ∑ x : ι → α, ∑ θ : Θ,
+        (w θ * Transfer.prodMass (P θ) x) * F x :=
+          Finset.sum_comm
+    _ = ∑ x : ι → α,
+        (∑ θ : Θ, w θ * Transfer.prodMass (P θ) x) * F x := by
+          apply Finset.sum_congr rfl
+          intro x _
+          rw [Finset.sum_mul]
 
 /-- The positive-variation formula for finite total-variation distance. -/
 noncomputable def tvPositive {Ω : Type} [Fintype Ω]
