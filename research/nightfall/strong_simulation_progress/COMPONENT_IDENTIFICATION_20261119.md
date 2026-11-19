@@ -1,5 +1,7 @@
 # Component identification for product laws, and strong simulation over M-mixtures
 
+> **2026-11-19 independent audit:** The component lemma and strong-product transfer are provisional paper arguments, not Lean-certified or peer-reviewed results. See [INDEPENDENT_AUDIT_20261119.md](INDEPENDENT_AUDIT_20261119.md). The previous strong-product proof below has been sharpened to make the threshold polynomial and the encoding-length fixed point explicit. The general polynomial-in-1/δ mixture theorem in the earlier preprint remains a separate, certified result even if this bounded-round improvement ultimately fails.
+
 Date: 2026-11-19.
 
 **Status.**
@@ -38,7 +40,7 @@ Date: 2026-11-19.
 
 - P and Q are product laws with margin c ∈ (0, ½], 0 < δ < 1, d ≥ 1, and ε ≤ 1/4 (the regime needed when comparing [0,1]-valued candidate outputs separated by ≥4ε).
 - The function f has degree ≤ d and values in [0,1].
-- There are u, v with Pr_P[|f − u| > ε] ≤ δ, Pr_Q[|f − v| > ε] ≤ δ, and Δ := |u − v| − 3ε > 0.
+- There are u, v ∈ [0, 1] with Pr_P[|f − u| > ε] ≤ δ, Pr_Q[|f − v| > ε] ≤ δ, and Δ := |u − v| − 3ε > 0.
 
 **Conclusion.** There is a set S of coordinates with |S| ≤ K := ⌈π²d² ln(1/δ)/(8ε²c²)⌉, and a test
 φ(x_S), such that
@@ -145,42 +147,51 @@ been verified here.
 If D is polynomial in log(1/δ), this is **strong (log 1/δ) simulation over M-mixtures of margin-c
 products**, with only polynomial overhead in M, t, 1/ε and 1/c.
 
-## Lemma 3 (strong product simulation via uniform bits; corrected paper-level argument)
+## Lemma 3 (strong biased-product simulation: audited paper construction, conditional on closing the fixed-point estimate)
 
-**Assumptions.** P is a finite-alphabet product law of atom margin c>0; f is the acceptance probability of a t-query, d-round quantum algorithm. Let S(t,d,η,τ) be the uniform-bit strong simulator of BDST. Fix output tolerance ε∈(0,1/2] and failure target δ₀∈(0,1); put τ=δ₀/8.
+**Sources and scope.** BDST Theorem 1 (arXiv:2608.19158) gives strong simulation on the uniform Boolean cube. GMNR Proposition 3.6 (arXiv:2609.35327) transfers *average-error* simulation across biased source distributions. Their 1/a block-length cost arises from **biased source bits**; uniform source bits give dyadic error at most 2^{-m}. Neither reference explicitly proves the strong arbitrary-product result here. Novelty is not established.
 
-**Claim (conditional on the stated polynomial-smoother construction).** There is a deterministic depth-D product-law simulator with Pr_P[|f−T|≥ε]≤δ₀ and D≤S(2mt,2d,ε/2,τ), where m is any integer satisfying
+**Parameters.** Fix 0<ε≤1/2, 0<η<1/2, original t queries and d rounds, and original product atom margin c>0. Let S(t,d,ε,η) denote a uniform-cube simulator with worst-case classical query depth at most S and failure probability at most η. Define D(m):=S(2mt,2d,ε,η). Choose
 
-    2^(−m) ≤ min(c/2, 2cτ/(π k(2t+D))),
-    k = O(log(1/τ)/ε).
+- k = ceil((2/(9 ε^4)) ln(1/η));
+- h(m) = 2k (2t + D(m));
+- an integer m with 2^{-m} ≤ min(c/2, cη/h(m)).
 
-The self-reference of D and m must be eliminated explicitly to obtain a closed asymptotic bound; since S grows polynomially in m for fixed d, a polylogarithmic choice of m suffices.
+Such an integer **exists** because, for fixed d and fixed other parameters, the BDST bound makes h(m) grow polynomially in m while 2^m grows exponentially. To certify the displayed final O-bound, an explicit quantitative choice of m and its dependence on d remains to be written.
 
-**Proof.**
+**Construction and proof steps.**
 
-1. For each alphabet Σ_i, partition the 2^m uniform m-bit strings into groups of integer sizes whose normalized sizes p'_i(a) approximate p_i(a) to within 2^(−m) (balanced rounding). The pushforward product P' has atom floor ≥c/2.
-2. Simulate each quantum query to x_i=g_i(y_i) by reading all m bits of block i in parallel, computing the symbol reversibly and uncomputing. This uses at most 2mt bit queries in at most 2d rounds. Its acceptance function on uniform y is f(g(y)).
-3. Apply BDST at tolerance ε/2 and failure τ to obtain a uniform-bit decision tree of depth D.
-4. Given a symbol query x_i, sample the whole y_i block uniformly among its preimages under g_i (reusing it on future queries). When x∼P', the induced y is uniform. Average over all decoder seeds and fix one deterministic seed with Pr_{P'}[|f−T|>ε/2]≤τ. Clip T's outputs to [0,1]; this cannot increase error.
-5. **Named analytic dependency:** there exists a real polynomial φ of degree k=O(log(1/τ)/ε) satisfying 0≤φ≤1 on [−1,1], φ(z)≤τ for |z|≤ε/2, and φ(z)≥1−τ for |z|≥ε. This is a standard gap-threshold approximation statement, not yet proved in Lean here.
-6. Put G(x)=φ(f(x)−T(x)). The function G takes values in [0,1] and has one-hot coordinate degree at most k(2t+D). The interpolation r_i(λ)=p'_i+λ(p_i−p'_i)/γ, γ=max_{i,a}|p_i(a)−p'_i(a)|, stays probabilistic for |λ|≤c/2. The Bernstein interior derivative estimate gives |E_P G−E_{P'} G|≤(π/4)k(2t+D)γ/(c/2)≤τ.
-7. Hence E_{P'}G≤2τ, E_P G≤3τ, and Pr_P[|f−T|≥ε]≤3τ/(1−τ)≤δ₀. QED, **pending independent verification of the smoothing polynomial, parameter fixed point, and quantum-oracle substitution**.
+1. **Dyadic encodings.** For each finite alphabet Σ_i, partition {0,1}^m into cells and let g_i map each block uniformly onto symbol i with probability p'_i(a) satisfying |p'_i(a)-p_i(a)| ≤ 2^{-m}. Because p_i(a)≥c, all p'_i(a)≥c/2. The encoding covers every atom without alphabet-size dependence beyond c.
+2. **Quantum pullback.** Replace a coherent query to an original symbol by queries to all m block bits, reversible computation of g_i, and uncomputation. This gives a 2mt-query, 2d-round Boolean-oracle algorithm with acceptance f(g(Y)).
+3. **Uniform strong simulation and decoding.** Apply BDST to obtain a deterministic bit-query tree of depth D(m), approximating f(g(Y)) within ε except with probability η for uniform Y. For X∼P', sample **one fixed latent block per original coordinate** from Y_i conditioned on g_i(Y_i)=X_i, consistently reusing it at every later bit query. Averaging over the latent-block seeds and then fixing one global seed gives a deterministic X-query tree T of depth at most D(m), with Pr_{P'}[|f-T|>ε] ≤ η. Clip all leaf values to [0,1].
+4. **Explicit failure-event polynomial.** Let r=floor(5kε²/2) and let
 
-**Source comparison.** GMNR Proposition 3.6 and Lemma 3.7 use a *p-biased gadget source*, with largest atom ≤(1−a)^m≤2^(−am), hence their displayed factor 1/a. The present encoding uses exactly uniform source blocks, whose largest atom is 2^(−m). This explains why a log(1/c) block size is plausible without contradicting GMNR. A comparison against GMNR alone does not establish novelty.
+       φ(z) = Σ_{j=r+1}^k binom(k,j) (z²)^j (1-z²)^(k-j).
 
-**Status:** paper proof with explicitly named analytic dependencies; not Lean-certified, independently refereed, or established as novel.
+   This polynomial has degree ≤2k and, for all z∈[-1,1], takes values in [0,1]. Hoeffding's inequality for Binomial(k,z²), using the gap between ε² and 4ε², shows φ(z)≤η if |z|≤ε and φ(z)≥1−η if |z|≥2ε. Consequently G(x)=φ(f(x)-T(x)) has indicator degree at most h(m) and satisfies 0≤G≤1 everywhere.
+5. **Dimension-free Bernstein rounding.** Write γ=max_{i,a}|p_i(a)-p'_i(a)| ≤2^{-m}. If γ=0 then P=P'. Otherwise the interpolation r_i(s)=p'_i+s(p_i-p'_i) consists of probability vectors for s in [−c/(2γ),1+c/(2γ)]. The function H(s)=E_{⊗r_i(s)} G has degree ≤h(m) and remains in [0,1] throughout this interval. Bernstein's derivative inequality implies |H'(s)|≤h(m)γ/c for 0≤s≤1, hence |E_P G-E_{P'}G|≤h(m)2^{-m}/c≤η.
+6. **Strong-error transfer.** By the polynomial sandwich,
+
+       Pr_P[|f−T|>2ε] ≤ E_P G+η
+                           ≤ E_{P'}G+2η
+                           ≤ Pr_{P'}[|f−T|>ε]+3η
+                           ≤ 4η.
+
+   Invoke this lemma with internal ε/2 and η=desiredFailure/4 to obtain ε-accurate per-component trees.
+
+**Remaining proof obligations.** Prove the exact binomial polynomial tail bounds (including boundary conventions), supply a quantitative fixed-point bound for m, verify the coherent finite-alphabet oracle translation, and complete weighted conditional pairwise-tournament accounting. An unreviewed paper construction is not a Lean certificate.
 
 ## Theorem 2, instantiated (paper level)
 
 Inputs: d-round, t-query algorithms, and M-mixtures of margin-c products over finite alphabets.
 
-- **Approximation:** 5ε.
+- **Approximation:** 5ε (with Lemma 3 invoked at internal accuracy ε/2 and its failure parameter set to a sufficiently small fraction of the per-component budget).
 - **Failure:** ≤ δ.
 - **Depth:**
 
       M·2^{O(d²)}·(t·log(M/(εδc))/ε)^{O(d)} + M²·O(t²·log(M/(εδ))/(ε²c²)).
 
-This is strong (polylog 1/δ) simulation over latent product sources for every constant number of rounds.
+**Provisional:** the proposed bound has polylog(1/δ) dependence for fixed d, but its final asymptotic form requires the quantitative encoding-length fixed-point proof and the weighted conditional-tournament lemma.
 
 **Prior art.**
 
@@ -193,9 +204,8 @@ This is strong (polylog 1/δ) simulation over latent product sources for every c
 
 ## What remains
 
-1. **Prior-art check.** Do BDST or the concurrent papers already handle product or mixture inputs?
-2. **Verify the product black box.** Check that BDST Theorem 1 plus the gadget gives D with polylog(1/δ)
-   dependence for margin-c biased products, and record the exact c-dependence.
+1. **Prior-art check.** Initial comparison covers BDST Theorem 1 and GMNR Proposition 3.6/Remark 3.5; specialist novelty review remains open.
+2. **Finish the product black box.** Complete the explicit fixed-point inequality, coherent alphabet reduction and event-polynomial tails; see the independent audit.
 3. **Lean.**
    - Steps 3–5 are finite combinatorics and fit the existing posterior and TV infrastructure.
    - Step 2 needs Bernstein's inequality for real polynomials, which is probably not in Mathlib. The plan
