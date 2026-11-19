@@ -1,5 +1,51 @@
 # NIGHTFALL Lean certificates — consolidated audit
 
+## 18 November 2026: arbitrary product AA and classical simulation (PR #858)
+
+**Review baseline:** branch `q-all-degree-lift`, original source commit
+[`771d11af21896aa83f481b332d21d7d706b56927`](https://github.com/d3lefts/d3lefts/commit/771d11af21896aa83f481b332d21d7d706b56927).
+All proof claims below name the precise verified run; **a currently executing run is not a certificate**. The simulation run below has now finished successfully.
+The historic 14–16 November source-custody records below remain unchanged.
+
+| Claim | Principal named declaration(s) and source | Evidence and exact scope |
+| --- | --- | --- |
+| **Finite product-space AA, including zero-mass and arbitrarily small atoms** | `Nightfall.ProductSpace.Influence.product_influence` in `product_space/ProductInfluence.lean`; `Nightfall.ProductSpace.Heterogeneous.heterogeneous_influence` in `product_space/HeterogeneousAlphabets.lean` | [pinned AA run 44393215489](https://github.com/d3lefts/d3lefts/actions/runs/44393215489), **success**, `d596301450a51a1de3383933f64bc8b2705c2bab`; finite source laws and indicator degree, not a quantum statement |
+| **Arbitrary infinite-product AA** | `Nightfall.InfinitePiAAProductTerminal.infinitePi_aa_product` in `universal/InfinitePiAAProductTerminal.lean` | [run 44393215489](https://github.com/d3lefts/d3lefts/actions/runs/44393215489), **success**, `d596301450a51a1de3383933f64bc8b2705c2bab`; arbitrary index type, original infinite-product measure and iterated-residual `L²` degree |
+| **Printed AA conjecture recovered as the uniform-cube special case** | `Nightfall.ProductSpace.CubeAA.printedConjecture`, `explicitBound`, `mainTheorem_of_productSpace` in `product_space/CubePrintedAA.lean` | [pinned AA run 44406881226](https://github.com/d3lefts/d3lefts/actions/runs/44406881226), **success**, `d8e2016`; shares upstream Turturean auxiliary lemmas, **not an independent proof** |
+| **Deterministic classical simulation of bounded low-degree functions over product laws** | `Nightfall.ProductSpace.Simulation.simulation_rows`, `simulation_degree` in `product_space/ProductSimulation.lean` | [head run 44433153026](https://github.com/d3lefts/d3lefts/actions/runs/44433153026), **strict named-declaration CI SUCCESS**, head `771d11af21896aa83f481b332d21d7d706b56927`. Source provides finite common-alphabet product-law decision tree with `n ε³ δ² √δ ≥ 6√2 π⁶ d⁶`. The exact-head audit for `simulation_degree`, `simulation_rows`, `expected_queries`, `leaf_error`, `bad_queries`, and `hasRows_of_degree` **passed** with only standard logical axioms. |
+
+The all-degree influence premise and classical tree are different declarations. The simulator uses the
+total **mean-absolute-increment** potential and fractional-certificate rows, rather than the
+older total Efron–Stein influence potential. Its quantitative bound is
+`O(d^6 ε^-3 δ^-5/2)` at fixed target failure; query count only, not runtime.
+The inference that a standard `T`-query quantum oracle algorithm has an indicator polynomial
+of degree at most `2T` remains a *paper-level* bridge, not a Lean theorem. For unequal finite
+coordinate alphabets, padding to one common alphabet is likewise a paper-level semantic
+reduction for the named `simulation_degree` statement.
+
+**Provenance/custody:** the pinned compiler is Lean 4.36.0-rc2 and Mathlib commit
+`9d581dfff2e41de989072ea63abf3daf69311520`; the successful named audits
+allow only `propext`, `Classical.choice`, and `Quot.sound`.
+The AA theorem's previous closure had 177 modules; the simulator adds module 178.
+The three **unaltered original named-audit JSON files**, plus their
+[dated receipt register](../../../docs/nightfall-aa-receipts-20261118/register.json),
+are committed by the independently successful
+[archive workflow run 44436629265](https://github.com/d3lefts/d3lefts/actions/runs/44436629265)
+on stacked Lake [PR #859](https://github.com/d3lefts/d3lefts/pull/859).
+They include [product/infinite](../../../docs/nightfall-aa-receipts-20261118/receipt.json),
+[printed-cube](../../../docs/nightfall-aa-receipts-20261118/printed-receipt.json),
+and [simulation](../../../docs/nightfall-aa-receipts-20261118/simulation-receipt.json)
+receipts from successful source run `44433153026`, artifact `14487982785`.
+Register SHA-256 hashes identify exact original JSON bytes. The CI checkout SHA
+`6b2cda54` is GitHub's pull-request synthetic merge commit, **not** the authored
+source head `771d11a`; the register identifies both.
+These are source-scoped custody records, not a standalone repeat of the global
+`lake build Nightfall` or an independent priority review. Do not conflate the
+source theorem gate with #859's separate 204-module Lake gate.
+Neither certificates nor the index establish global novelty or independent expert review.
+
+---
+
 **Additional strictly compiled Lean support (#520):** [run 43637631337](https://github.com/d3lefts/d3lefts/actions/runs/43637631337) proves arbitrary product sigma-algebra cylinder generation, measurable-event countable coordinate support, and real measurable-observable countable coordinate support. Exact blobs tracked in [unrestricted terminal proof-scope manifest](../../../docs/unrestricted-terminal-proof-scope-20261114.json). The all-L² original-source unconditional Lean endpoint remains OPEN.
 
 ## 14 November 2026 supplemental current-source certification
