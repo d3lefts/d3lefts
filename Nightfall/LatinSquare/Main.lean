@@ -45,11 +45,12 @@ def latentProductSquareWeight (n M : ℕ)
   ∑ latent : Fin M, mix latent *
     ∏ row : Fin n, ∏ col : Fin n, cell latent row col (S.val row col)
 
-/-- For actual positive finite forward atoms q and target-specific
-reverse atoms r, the weighted likelihood ratio is w*r/q.
-The exact soft-gated forward mass at a scale H/m is w*f_m/H.
-This is an equation of finite rational masses, NOT an executable
-Bernoulli factory or an expected cost estimate. -/
+/-- For finite forward atoms with vetoed/null histories, and
+target-specific reverse atoms supported wherever the forward law is
+nonzero, the weighted likelihood ratio T is w*r/q on support and
+zero off support. At scale H/m the soft-gated forward mass equals
+w*f_m/H. This is exact finite algebra, NOT an executable Bernoulli
+factory or a certified expected-cost estimate. -/
 theorem latinMixture_softKernelMass
     (n M : ℕ) (η : Type*) [Fintype η]
     (mix : Fin M → ℚ)
@@ -57,22 +58,26 @@ theorem latinMixture_softKernelMass
     (q r : LabeledSquare n → η → ℚ)
     (S : LabeledSquare n) (H m : ℚ)
     (hH : H ≠ 0) (hm : m ≠ 0)
-    (hq : ∀ z, q S z ≠ 0)
+    (hSupport : ∀ z, q S z = 0 → r S z = 0)
     (hden : ∀ z,
-      latentProductSquareWeight n M mix cell S * r S z / q S z + H / m ≠ 0) :
+      supportedLikelihood (q S z) (r S z)
+        (latentProductSquareWeight n M mix cell S) + H / m ≠ 0) :
     softForwardKernelMass η (q S)
-        (fun z => latentProductSquareWeight n M mix cell S * r S z / q S z)
+        (fun z => supportedLikelihood (q S z) (r S z)
+          (latentProductSquareWeight n M mix cell S))
         (H / m) =
       (latentProductSquareWeight n M mix cell S / H) *
         scaledReverseKernelMass η (r S)
-          (fun z => latentProductSquareWeight n M mix cell S * r S z / q S z)
+          (fun z => supportedLikelihood (q S z) (r S z)
+            (latentProductSquareWeight n M mix cell S))
           H m := by
   apply scaledKernelMass_balance η (q S) (r S)
-    (fun z => latentProductSquareWeight n M mix cell S * r S z / q S z)
+    (fun z => supportedLikelihood (q S z) (r S z)
+      (latentProductSquareWeight n M mix cell S))
     (latentProductSquareWeight n M mix cell S) H m hH hm hden
   intro z
-  exact weighted_ratio_balance (q S z) (r S z)
-    (latentProductSquareWeight n M mix cell S) (hq z)
+  exact supportedLikelihood_balance (q S z) (r S z)
+    (latentProductSquareWeight n M mix cell S) (hSupport z)
 
 /-- Terminal finite target-law certificate: for any list of
 target-specific finite calibration masses satisfying the stated
