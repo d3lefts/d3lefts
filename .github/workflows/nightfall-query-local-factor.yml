@@ -1,7 +1,7 @@
 name: NIGHTFALL query-local factor theorem (pinned Lean)
 on:
   push:
-    branches: [nightfall-query-local-factor-transfer-lean-20261119]
+    branches: [nightfall-query-local-factor-transfer-lean-20261119, nightfall-query-decoder-lift-tactic-fix-20261119]
     paths:
       - 'research/nightfall/formalization/product_space/QueryLocalDegree.lean'
       - 'research/nightfall/formalization/product_space/QueryDecoderLift.lean'
