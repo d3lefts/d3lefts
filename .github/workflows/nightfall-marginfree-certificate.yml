@@ -7,6 +7,7 @@ on:
       - 'research/nightfall/formalization/product_space/MarginFreeFiniteTests.lean'
       - 'research/nightfall/formalization/product_space/MarginFreeBhattacharyya.lean'
       - 'research/nightfall/formalization/product_space/MarginFreeTVHellinger.lean'
+      - 'research/nightfall/formalization/product_space/MarginFreeLargeGaps.lean'
       - 'research/nightfall/formalization/product_space/LatentProductInterpolationDegree.lean'
       - 'research/nightfall/formalization/product_space/StrongMixtureDuel.lean'
       - 'research/nightfall/strong_simulation_progress/conditional_seed_exact_check.py'
@@ -37,6 +38,7 @@ jobs:
           cp research/nightfall/formalization/product_space/MarginFreeFiniteTests.lean /tmp/mathlib4/MarginFreeFiniteTests.lean
           cp research/nightfall/formalization/product_space/MarginFreeBhattacharyya.lean /tmp/mathlib4/MarginFreeBhattacharyya.lean
           cp research/nightfall/formalization/product_space/MarginFreeTVHellinger.lean /tmp/mathlib4/MarginFreeTVHellinger.lean
+          cp research/nightfall/formalization/product_space/MarginFreeLargeGaps.lean /tmp/mathlib4/MarginFreeLargeGaps.lean
           cp research/nightfall/formalization/product_space/LatentProductInterpolationDegree.lean /tmp/mathlib4/LatentProductInterpolationDegree.lean
           cp research/nightfall/formalization/product_space/StrongMixtureDuel.lean /tmp/mathlib4/StrongMixtureDuel.lean
           cd /tmp/mathlib4
@@ -47,11 +49,12 @@ jobs:
           lake env lean -o .lake/build/lib/lean/MarginFreeFiniteTests.olean MarginFreeFiniteTests.lean 2>&1 | tee /tmp/finite-tests.log
           lake env lean -o .lake/build/lib/lean/MarginFreeBhattacharyya.olean MarginFreeBhattacharyya.lean 2>&1 | tee /tmp/bhattacharyya.log
           lake env lean -o .lake/build/lib/lean/MarginFreeTVHellinger.olean MarginFreeTVHellinger.lean 2>&1 | tee /tmp/tv-hellinger.log
-          if grep -E '(error:|declaration uses .sorry)' /tmp/tv-hellinger.log /tmp/bhattacharyya.log /tmp/finite-core.log /tmp/marginfree.log /tmp/interpolation.log /tmp/duel.log /tmp/finite-tests.log; then exit 1; fi
+          lake env lean -o .lake/build/lib/lean/MarginFreeLargeGaps.olean MarginFreeLargeGaps.lean 2>&1 | tee /tmp/large-gaps.log
+          if grep -E '(error:|declaration uses .sorry)' /tmp/large-gaps.log /tmp/tv-hellinger.log /tmp/bhattacharyya.log /tmp/finite-core.log /tmp/marginfree.log /tmp/interpolation.log /tmp/duel.log /tmp/finite-tests.log; then exit 1; fi
           cat > PrintMarginFreeAxioms.lean <<'LEAN'
           import MarginFreeFiniteTests
           import StrongMixtureDuel
-          import MarginFreeTVHellinger
+          import MarginFreeLargeGaps
           #print axioms Nightfall.MarginFreeCertificate.weighted_overlap
           #print axioms Nightfall.MarginFreeCertificate.rounding_mass_balance
           #print axioms Nightfall.MarginFreeCertificate.rounding_mass_bound
@@ -65,6 +68,7 @@ jobs:
           #print axioms Nightfall.MarginFreeBhattacharyya.bayes_error_le_product_affinity
           #print axioms Nightfall.MarginFreeTVHellinger.tv_eq_half_l1
           #print axioms Nightfall.MarginFreeTVHellinger.tv_sq_le_two_hellinger
+          #print axioms Nightfall.MarginFreeLargeGaps.high_tv_product_bayes_error
           #print axioms Nightfall.LatentProductInterpolationDegree.sparseExpectationPoly_natDegree_le
           #print axioms Nightfall.StrongMixtureDuel.weighted_posterior_duel
           #print axioms Nightfall.StrongMixtureDuel.undefeated_is_accurate
@@ -72,7 +76,7 @@ jobs:
           sed -i 's/^          //' PrintMarginFreeAxioms.lean
           lake env lean PrintMarginFreeAxioms.lean 2>&1 | tee /tmp/axioms.txt
           if grep -E '(error:|sorryAx)' /tmp/axioms.txt; then exit 1; fi
-          sha256sum MarginFreeTVHellinger.lean MarginFreeBhattacharyya.lean MarginFreeCertificate.lean MarginFreeFiniteTests.lean LatentProductInterpolationDegree.lean StrongMixtureDuel.lean | tee /tmp/source-hash.txt
+          sha256sum MarginFreeLargeGaps.lean MarginFreeTVHellinger.lean MarginFreeBhattacharyya.lean MarginFreeCertificate.lean MarginFreeFiniteTests.lean LatentProductInterpolationDegree.lean StrongMixtureDuel.lean | tee /tmp/source-hash.txt
       - name: Save exact compiler receipts
         if: always()
         uses: actions/upload-artifact@v4
@@ -88,5 +92,6 @@ jobs:
             /tmp/finite-tests.log
             /tmp/bhattacharyya.log
             /tmp/tv-hellinger.log
+            /tmp/large-gaps.log
           retention-days: 60
           if-no-files-found: warn
