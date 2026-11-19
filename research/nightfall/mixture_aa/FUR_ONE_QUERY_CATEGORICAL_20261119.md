@@ -96,7 +96,7 @@ with a universal constant, no alphabet-size or minimum-atom penalty. This is **o
 
 ## Independent checks / objections and stop rule
 
-- Implement an independent **exact Fraction** finite categorical correlated-sampler using an absorbing Markov chain of marked Poisson event types; verify its marginals for every component and its all-pair TV error `≤2TV/(1+TV)` including zero atoms. Check the weighted Q1 bound for phase-oracle one-query circuits `f(x)=(mean_i χ_i(x_i))²` with query weights `w_i=1/n`.
+- Implement an independent **exact Fraction** finite categorical correlated-sampler using an absorbing Markov chain of marked Poisson event types; verify its marginals for every component and its all-pair TV error `≤2TV/(1+TV)` including zero atoms. Check the weighted Q1 bound for a **genuine one-query additive k-ary value oracle**: initialize `|ψ>=n^{-1/2}Σ_i|i,0>`, apply `O_x|i,z>=|i,z+x_i (mod k)>` ONCE, and project onto `|ψ>`. Its exact rational acceptance is `f(x)=(#{i:x_i=0}/n)^2`, with pre-query weights `w_i=1/n` for every finite k (including odd alphabets). This avoids any unsupported one-query phase-kickback claim for arbitrary symbol predicates.
 - Insist on **original source** conditional laws at every posterior transcript. The universal sampler must be the same for all theta for each observable coordinate; pairwise maximal couplings chosen independently for different theta-pairs do NOT suffice.
 - Use information in nats; if bits, insert ln2 factors.
 - Explicitly preserve the distinction: generic Boolean Q2 uses Grothendieck, arbitrary categorical T=1 uses query weights; categorical degree-two selectors disprove the naïve universal pointwise row.
