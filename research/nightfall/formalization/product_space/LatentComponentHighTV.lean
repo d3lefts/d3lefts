@@ -24,7 +24,7 @@ theorem finite_product_overlap_le_power
   have hprod : finiteProductAffinity p q ≤
       ∏ i : ι, (1 - θ ^ 2 / 2) := by
     unfold finiteProductAffinity
-    apply Finset.prod_le_prod
+    apply Finset.prod_le_prod₀
     · intro i hi
       exact finiteAffinity_nonneg (p i) (q i)
     · intro i hi
