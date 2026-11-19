@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/product_space/ComponentIdentification.lean'
+      - 'research/nightfall/strong_simulation_progress/component_id_nonvacuous_check.py'
       - '.github/workflows/nightfall-component-identification.yml'
   workflow_dispatch:
 permissions:
@@ -15,6 +16,8 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
+      - name: Exact nonvacuous component identification witness
+        run: python3 research/nightfall/strong_simulation_progress/component_id_nonvacuous_check.py
       - uses: ./.github/actions/setup-nightfall-lean
       - name: Compile and audit axioms
         shell: bash
