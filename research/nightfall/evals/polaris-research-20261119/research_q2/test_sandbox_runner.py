@@ -1,5 +1,6 @@
 """Offline checks of the isolated submission contract. Does NOT run Docker."""
 import json
+import subprocess
 from pathlib import Path
 import tempfile
 import unittest
@@ -102,6 +103,59 @@ class SandboxContractTests(unittest.TestCase):
         self.assertNotIn("/var/tmp/output", " ".join(mounts))
         self.assertTrue(any("src=/var/tmp/input" in m for m in mounts))
         self.assertTrue(any("readonly" in m for m in mounts))
+
+
+class SandboxRuntimeFailureTests(unittest.TestCase):
+    def _fake_image_inspect(self, argv, *args, **kwargs):
+        if argv[:3] == ["docker", "image", "inspect"]:
+            return "sha256:" + "a" * 64 + "\n"
+        return self._real_check_output(argv, *args, **kwargs)
+
+    def test_docker_setup_failure_preserves_actual_stderr(self):
+        self._real_check_output = subprocess.check_output
+        with tempfile.TemporaryDirectory() as temp, \
+             mock.patch("sandbox_runner.shutil.which", return_value="/usr/bin/docker"), \
+             mock.patch("sandbox_runner.subprocess.check_output", side_effect=self._fake_image_inspect), \
+             mock.patch("sandbox_runner.subprocess.run",
+                        return_value=subprocess.CompletedProcess(
+                            ["docker", "run"], 137, "",
+                            "cp: writing /tmp/mathlib4/.lake/cache: No space left on device")):
+            with self.assertRaises(RuntimeError) as caught:
+                evaluate(REF, DIGEST_IMAGE, Path(temp) / "output")
+            self.assertIn("docker_exit_code=137", str(caught.exception))
+            self.assertIn("No space left on device", str(caught.exception))
+
+    def test_real_lean_rejection_is_persisted_not_certified(self):
+        self._real_check_output = subprocess.check_output
+        with tempfile.TemporaryDirectory() as temp:
+            manifest = sealed_sources(REF, Path(temp) / "fixture")
+            grader_failure = {
+                "schema": "nightfall.polaris.research-q2.v1",
+                "status": "fail", "target": DECL, "pin": TOOLCHAIN,
+                "candidate_sha256": manifest["candidate_sha256"],
+                "mathlib_commit": MATHLIB_COMMIT,
+                "trusted_sources": {
+                    name: {"sha256": manifest["source_files"][rel]}
+                    for name, rel in (
+                        ("ShiftedC4Bernstein.lean", "research/nightfall/formalization/observability/ShiftedC4Bernstein.lean"),
+                        ("NightfallPolarisQ2Target.lean", "research/nightfall/evals/polaris-research-20261119/research_q2/NightfallPolarisQ2Target.lean"),
+                    )
+                },
+                "error": "Lean command failure: ShiftedC4Scalar.lean: type mismatch",
+            }
+            with mock.patch("sandbox_runner.shutil.which", return_value="/usr/bin/docker"), \
+                 mock.patch("sandbox_runner.subprocess.check_output", side_effect=self._fake_image_inspect), \
+                 mock.patch("sandbox_runner.subprocess.run",
+                            return_value=subprocess.CompletedProcess(
+                                ["docker", "run"], 1, json.dumps(grader_failure), "")):
+                with self.assertRaisesRegex(RuntimeError, "sandbox candidate rejected"):
+                    evaluate(REF, DIGEST_IMAGE, Path(temp) / "output")
+            rejected = json.loads((Path(temp) / "output/rejected-proof.json").read_text())
+            self.assertEqual(rejected["status"], "rejected-not-certified")
+            self.assertEqual(rejected["classification"], "Lean-build-failure")
+            self.assertEqual(rejected["grader_report"]["candidate_sha256"],
+                             manifest["candidate_sha256"])
+            self.assertFalse((Path(temp) / "output/proofgraph-q2.json").exists())
 
 
 def synthetic_positive_receipt(manifest):
