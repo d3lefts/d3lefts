@@ -7,6 +7,8 @@ on:
       - 'scripts/audit_mira_weighted_fill_cancellation.py'
       - 'scripts/audit_mira_sparse_moment.py'
       - 'scripts/audit_mira_multiscale.py'
+      - 'scripts/audit_mira_nb_soft.py'
+      - 'research/nightfall/2026-11-recent-passports/mira-latin-soft-gate-v27.md'
       - 'research/nightfall/2026-11-recent-passports/mira-latin-multiscale-abstract-v26.md'
       - 'research/nightfall/2026-11-recent-passports/mira-latin-matching-bit-clock-v25.md'
       - 'research/nightfall/2026-11-recent-passports/mira-latin-sparse-second-moment-v24.md'
@@ -35,15 +37,18 @@ jobs:
           python3 scripts/audit_mira_weighted_fill_cancellation.py 2>&1 | tee mira-author-receipt/weighted-fill.log
           python3 scripts/audit_mira_sparse_moment.py 2>&1 | tee mira-author-receipt/sparse-moment.log
           python3 scripts/audit_mira_multiscale.py 2>&1 | tee mira-author-receipt/multiscale.log
+          python3 scripts/audit_mira_nb_soft.py 2>&1 | tee mira-author-receipt/nb-soft.log
+          grep -F 'MIRA_NB_SIZE_BIAS_AND_SOFT_RACE_EXACT_PASS' mira-author-receipt/nb-soft.log
           grep -F 'MIRA_MULTISCALE_EXACT_RATIONAL_REPLAY_PASS' mira-author-receipt/multiscale.log
           grep -F 'SPARSE_SECOND_MOMENT_AUDIT_PASS' mira-author-receipt/sparse-moment.log
           grep -F 'DEGREE_TWO_EXACT_CYCLE_SPECIES_REPLAY_PASS' mira-author-receipt/degree-two.log
           grep -F 'WEIGHTED_FILL_FIRST_ORDER_EXACT_REPLAY_PASS' mira-author-receipt/weighted-fill.log
-          sha256sum scripts/audit_mira_degree_two_endpoint.py scripts/audit_mira_weighted_fill_cancellation.py scripts/audit_mira_sparse_moment.py scripts/audit_mira_multiscale.py \
+          sha256sum scripts/audit_mira_degree_two_endpoint.py scripts/audit_mira_weighted_fill_cancellation.py scripts/audit_mira_sparse_moment.py scripts/audit_mira_multiscale.py scripts/audit_mira_nb_soft.py \
             research/nightfall/2026-11-recent-passports/mira-latin-author-side-v23.md \
             research/nightfall/2026-11-recent-passports/mira-latin-sparse-second-moment-v24.md \
             research/nightfall/2026-11-recent-passports/mira-latin-matching-bit-clock-v25.md \
             research/nightfall/2026-11-recent-passports/mira-latin-multiscale-abstract-v26.md \
+            research/nightfall/2026-11-recent-passports/mira-latin-soft-gate-v27.md \
             > mira-author-receipt/SHA256SUMS
           git rev-parse HEAD > mira-author-receipt/revision.txt
           printf '%s\n' 'SCOPE: finite replay only; asymptotic propositions not certified' > mira-author-receipt/limit.txt
