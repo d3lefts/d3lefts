@@ -1,5 +1,5 @@
 # Proof Passport — Mira exact Latin-square sampling / independent theorem audit
-Version: **2.3**, 2026-11-19. Status: **PARTIAL AUTHOR-SIDE THEOREMS + EARLIER FINITE LEAN LEMMAS; MAIN CLAIM UNVERIFIED**.
+Version: **2.4**, 2026-11-19. Status: **PARTIAL AUTHOR-SIDE THEOREMS + EARLIER FINITE LEAN LEMMAS; MAIN CLAIM UNVERIFIED**.
 
 ## Original source, ownership, objective
 - External source: **Mira Cult, _Exact uniform sampling of Latin squares_**, immutable [Mira-Cult/math@30ddaaad27b48df2002225c3e3f40cffd02c5253](https://github.com/Mira-Cult/math/tree/30ddaaad27b48df2002225c3e3f40cffd02c5253/notes/combinatorics/exact-latin-square-sampling). Mira's source credits six GPT-6.2 Astra instances for mathematical development. NIGHTFALL does **not** claim to have independently discovered her proposed sampler, nor joint authorship or collaborator approval.
@@ -24,6 +24,7 @@ Version: **2.3**, 2026-11-19. Status: **PARTIAL AUTHOR-SIDE THEOREMS + EARLIER F
 | MIRA-CHI-BUDGET | Sum_{d=c+1}^{n-c} sqrt(chi^2(Uhat_d||U_d)) <= 1/4 for one fixed c>=3 | **UNPROVED** | Alternative sufficient bulk certificate; may be strictly stronger than Mira's original TV objective |
 | MIRA-DEG2-ENDPOINT | At degree 2, the uniform regular-board law and its permanent-size bias are asymptotically singular: t_2 -> 1, and F_2/E F_2 -> 0 in U_2-probability | **AUTHOR-SIDE PROVED; NOT LEAN** | Exact cycle-species generating function, coefficient transfer and probabilistic separation; independent exact n<=5 checker; boundary only, not a counterexample to c>=3 |
 | MIRA-WFILL-CANCEL | Balanced lookahead hard/soft matching fills exactly cancel prior-free-fill interactions; reverse-mean grade gain -1/2-1/(2b) with controlled remainder | **AUTHOR-SIDE PROVED UNDER EXPLICIT LOCAL/EXCHANGEABILITY CONDITIONS; NOT LEAN** | Independent quantitative dense-permanent expansion, cyclic Latin witness with nonzero cross terms; still need scalar grade normalizer and other mean-cover components |
+| MIRA-SPARSE-TV | Uniform sparse-strip TV bound `t_d <= C(d^-2+d^(3/2)/sqrt(n)+(nd)^(-1/4))`, summed `c<d<=n^(1/10)` <= C/c+o(1) | **INDEPENDENT AUTHOR-SIDE DERIVATION; EXTERNAL GHIM THEOREMS 2.1-2.2 IMPORTED; NOT LEAN** | Uniform j-wise enumerative cancellation to negative-binomial second moment; exact checker; [full proof](mira-latin-sparse-second-moment-v24.md) |
 | MIRA-CUBIC | Raw cubic-head moment Z*_3/(n!)^3 <= C n(4/3)^n | **AUTHOR-SIDE PROVED, NOT LEAN** | Prior v1 independently reconstructed proof; checker exact n<=13 |
 | MIRA-WDENSE | Dense weighted-permanent log estimate, explicit <=4K^2/s (K<=s/8) | **AUTHOR-SIDE PROVED, NOT LEAN** | Prior v1 independent switching argument |
 | MIRA-FLAT-FINITE | 14 finite likelihood/soft-gate/telescope lemmas | **LEAN KERNEL-CHECKED** | Dedicated pinned PR #900 run 44573134450, only propext, Classical.choice, Quot.sound |
@@ -41,6 +42,12 @@ The standalone proof addendum [mira-latin-author-side-v23.md](mira-latin-author-
 - **Marked-block cancellation.** For balanced size-b blocks after q rows and n>=16(q+3b), all earlier free-fill log-weight terms cancel, with error <=22b(q+3b)^2/n. Under explicit reverse-law exterior exchangeability, the grade mean is bounded by log(Z_b/(n!)^b)-mu_b(S)-1/2-1/(2b)+40b(q+3b)^2/n. The sum of these errors is o(1) over b<=n^(1/200), q=O(n^(1/100)), but the scalar Z_b/m_b asymptotics and other mean-cover components are still open.
 
 Dedicated replay scripts: `scripts/audit_mira_degree_two_endpoint.py` and `scripts/audit_mira_weighted_fill_cancellation.py`. **No v2.3 result has been Lean certified or externally reviewed.** The principal O-tilde(n^25) claim remains unverified.
+
+## v2.4: complete independent sparse-strip argument (conditional on verified GHIM input)
+
+[Full author-side proof](mira-latin-sparse-second-moment-v24.md). Using GHIM's **uniform** sparse enumeration with prescribed forbidden edges, the 0-,1-,2-planted matching probability ratio factors into a negative-binomial mass. The large Q and forbidden-edge exponents cancel **exactly** to 1-u²/2, uniformly in the number j of shared edges and actual pair cycle type. The remaining negative-binomial fluctuation gives chi² <= C(d^-4+d³/n+(nd)^-1/2) for 3<=d<=n^(1/10) and therefore the required sparse TV sum <=C/c+o(1).
+
+This result is neither a new theorem attributed to NIGHTFALL (Mira's source states the same bound) nor a claim about the other degree regimes. It **does not** import Mira's conclusion: GHIM Theorems 2.1–2.2 were verified as the only non-elementary external counting input. Local checker `scripts/audit_mira_sparse_moment.py` validates exact algebra, not the external asymptotic theorem.
 
 ## New unconditional theorem 1: exact cycle-type second moment
 Let G_(n,d) be n-by-n labeled d-regular boards, N_d its count, W(A)=per A, m_d=E_U W. For a relative permutation pi let C_(n,d)(pi) count boards containing identity matching and pi. This depends on the entire cycle type lambda of pi, not just fixed-point count; write z_lambda=product_j j^{a_j} a_j! for lambda=(1^{a_1}2^{a_2}...). Then:
