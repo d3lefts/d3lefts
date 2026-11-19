@@ -21,6 +21,7 @@ ROOT = Path(__file__).resolve().parents[5]
 HERE = Path(__file__).resolve().parent
 TOOLCHAIN = "leanprover/lean4:v4.36.0-rc2"
 MATHLIB_COMMIT = "9d581dfff2e41de989072ea63abf3daf69311520"
+LEAN_SOURCE_COMMIT = "b35cb10cf2ced51a2fd1880cfdbf75c71ab7a35a"
 BERNSTEIN = ROOT / "research/nightfall/formalization/observability/ShiftedC4Bernstein.lean"
 BERNSTEIN_BLOB = "d29a1e5f0396ca7f29fde24a34325fc324a3d3c0"
 TARGET = HERE / "NightfallPolarisQ2Target.lean"
@@ -100,6 +101,11 @@ def run(argv: list[str], cwd: Path, timeout: int) -> tuple[dict, str]:
     return rec, output
 
 
+def check_compiler_identity(output: str) -> None:
+    if "version 4.36.0-rc2" not in output or LEAN_SOURCE_COMMIT not in output:
+        raise GradingError("installed Lean compiler does not match pinned source identity")
+
+
 def axioms_from_output(output: str) -> list[str]:
     regex = (r"(?<![\w.])'?" + re.escape(DECL) +
              r"'?\s+(?:depends on axioms:\s*\[([^\]]*)\]|does not depend on any axioms)")
@@ -127,6 +133,10 @@ def grade(candidate: Path, workspace: Path, timeout: int = 1200) -> dict:
         receipt["lake_binary_sha256"] = digest(Path(lake).resolve())
         out = workspace / ".lake/build/lib/lean"
         steps = []
+        identity_step, identity_output = run([lake, "env", "lean", "--version"], workspace, timeout)
+        check_compiler_identity(identity_output)
+        steps.append(identity_step)
+        receipt["lean_source_commit"] = LEAN_SOURCE_COMMIT
         for name, source in (
             ("ShiftedC4Bernstein", BERNSTEIN),
             ("ShiftedC4Scalar", candidate),
