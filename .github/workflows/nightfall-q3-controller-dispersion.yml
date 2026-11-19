@@ -1,0 +1,30 @@
+name: NIGHTFALL Q3 sharp dispersion exact audit
+on:
+  push:
+    branches: [nightfall-q3-energy-transport-audit-20261118]
+    paths:
+      - 'research/nightfall/cubic-q3/CONTROLLER_DISPERSION_SHARP_20261118.md'
+      - 'research/nightfall/cubic-q3/check_q3_transport_dispersion.py'
+      - '.github/workflows/nightfall-q3-controller-dispersion.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/cubic-q3/CONTROLLER_DISPERSION_SHARP_20261118.md'
+      - 'research/nightfall/cubic-q3/check_q3_transport_dispersion.py'
+      - '.github/workflows/nightfall-q3-controller-dispersion.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-dispersion:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Exact source identity
+        run: |
+          git rev-parse HEAD
+          sha256sum research/nightfall/cubic-q3/check_q3_transport_dispersion.py research/nightfall/cubic-q3/CONTROLLER_DISPERSION_SHARP_20261118.md
+      - name: Independent original-law rational checker
+        run: python3 -I research/nightfall/cubic-q3/check_q3_transport_dispersion.py
