@@ -7,7 +7,7 @@ Each task has a prompt, inputs, machine-checkable oracle, and limitations. Agent
 
 | Task | Objective | Checkable output | Status |
 |---|---|---|---|
-| ProofGraph | Integrate pinned Lean modules without assuming CI of isolated modules implies unified Lake closure | Exact module imports, axiom report, fresh-build log, source/commit hashes | Trusted-target grader + 17 simulated-runner tests + pinned-Lean CI smoke and leanchecker replay pass; real research integration and blind runs pending |
+| ProofGraph | Integrate pinned Lean modules without assuming CI of isolated modules implies unified Lake closure | Exact module imports, axiom report, fresh-build log, source/commit hashes | Toy calibration + nontrivial Q2 scalar reference compiled/replayed; weakened theorem rejected; 17 toy + 14 research preflight tests; no model trials |
 | TheoremBreak | Find counterexamples to unjustified mixture/conditioning inference | Finite rational counterexample verified by checker | Executable starter fixture |
 | InvariantLab | Demonstrate product-mixture rank can grow exponentially while deterministic query depth stays one | Explicit finite product-mixture rank lower bound and query decoder | Specification; proof obligations open |
 | PotentialForge | Audit an entropy-potential improvement, not reproduce an unverified claimed theorem | Independently reviewed proof or finite counterexample | Research candidate; no benchmark ground truth |
@@ -17,9 +17,9 @@ Run `python3 check_theorembreak.py examples/counterexample.json`. A valid answer
 
 The supplied example is a smoke test. For scored evaluation, create held-out variants and ensure the prompt does not disclose the witness.
 
-## ProofGraph-Hard v0.1 grading prototype
+## ProofGraph-Hard v0.2: calibration and research-Q2 prototype
 
-The [evidence-backed ProofGraph-Hard portfolio card](proofgraph_hard/PORTFOLIO_CARD.md) and [ProofGraph-Hard protocol](proofgraph_hard/PROTOCOL.md) defines a SHA-256-pinned trusted theorem, narrow proof-only overlay, grader-owned axiom audit, fake-runner mutation tests, and pinned Lean CI smoke + leanchecker replay. The public example proves only natural-number addition commutativity; it is **not a research-level task**. No model evaluation, independent proof review, or research-grade unified Lake integration is claimed. The Python harness is **not a security sandbox**; execute candidate Lean code only in restricted isolation.
+The [ProofGraph-Hard evidence card](proofgraph_hard/PORTFOLIO_CARD.md) documents two distinct calibration tiers: (1) the original toy addition-commutativity target with trusted source and separate `leanchecker`, and (2) the real [Q2 shifted-c/4 scalar theorem task](research_q2/TASK.md) from the certified NIGHTFALL Q2 research chain. The nontrivial Q2 reference proof compiled with pinned Mathlib, the locked target used exactly three standard axioms, and `leanchecker` replay passed. A same-named **weakened-to-True** theorem was correctly rejected by the locked target. The exact-rational Bernstein polynomial checker and 14 research preflight tests also passed (run [44565495738](https://github.com/d3lefts/d3lefts/actions/runs/44565495738)). The [agent bundle generator](research_q2/prepare_agent_bundle.py) removes the reference proof from a development input; it cannot prevent public-source contamination. No blinded agent evaluations, independent external implementation review, or full original-source Q2 integration replay are claimed. Both Python graders are **not security sandboxes**.
 
 ## ProofGraph task specification
 Input: a clean checkout pinned to a stated commit, a fixed Lean toolchain, and a manifest of required declaration names, modules, and allowed axioms. Agent task: integrate imports into the generated Lake manifest, resolve conflicts without weakening declarations, and provide machine-readable receipts.
@@ -34,7 +34,7 @@ Validity is a hard gate. For a task with a complete oracle: 35% correctness, 25%
 
 ## Next gates
 1. Reconcile this directory with the repository's existing evaluation lab; avoid duplicate public navigation.
-2. Pinned toy Lean fixture and separate leanchecker replay passed in run 44560021054. Next: add a restricted VM/container, withheld research-level integration task, independent implementation audit, and blind agent baselines.
+2. Pinned toy and nontrivial shifted-c/4 scalar reference controls pass. Next: non-public held-out variants, restricted container/VM, independent implementation audit, end-to-end Q2 integration tier, and two budget-matched independent agent trials.
 3. Independently verify TheoremBreak held-out instances and establish failure baselines.
 4. Audit InvariantLab's support/rank proof and source attribution.
 5. Keep PotentialForge quarantined pending independent mathematical audit and prior-art review.
