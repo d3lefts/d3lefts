@@ -61,16 +61,18 @@ theorem traceWeight_cons (n : ℕ) (s : ι × α)
 theorem trace_sum_succ (n : ℕ) (F : Trace (n + 1) ι α → ℂ) :
     (∑ σ : Trace (n + 1) ι α, F σ) =
       ∑ s : ι × α, ∑ τ : Trace n ι α, F (Fin.cons s τ) := by
+  let e : ((ι × α) × Trace n ι α) ≃ Trace (n + 1) ι α :=
+    Fin.consEquiv (fun _ : Fin (n + 1) => ι × α)
   calc
     (∑ σ : Trace (n + 1) ι α, F σ) =
-      ∑ p : (ι × α) × Trace n ι α, F ((Equiv.piFinSucc n (ι × α)).symm p) := by
-        apply Fintype.sum_equiv (Equiv.piFinSucc n (ι × α))
+      ∑ p : (ι × α) × Trace n ι α, F (e p) := by
+        apply Fintype.sum_equiv e.symm
           (fun σ => F σ)
-          (fun p => F ((Equiv.piFinSucc n (ι × α)).symm p))
+          (fun p => F (e p))
         intro σ
         simp
     _ = ∑ s : ι × α, ∑ τ : Trace n ι α, F (Fin.cons s τ) := by
-        simp [Fintype.sum_prod_type, Equiv.piFinSucc_symm_apply]
+        simp [e, Fintype.sum_prod_type, Fin.consEquiv_apply]
 
 /-- Pure Fubini exchange for the four finite sums appearing in one query. -/
 private theorem reorder_four (n : ℕ)
@@ -129,10 +131,12 @@ theorem execute_eq_path_sum : ∀ {n : ℕ}
         intro v _
         change U k b * (∑ s : ι × α, symbol s x * A s b v) *
             (∑ τ : Trace n ι α, pathCoeff prev τ v * traceWeight τ x) = _
-        rw [Finset.mul_sum, Finset.sum_mul]
+        rw [Finset.mul_sum]
+        rw [Finset.mul_sum]
+        rw [Finset.sum_mul]
+        rw [Finset.sum_comm]
         apply Finset.sum_congr rfl
         intro s _
-        rw [Finset.mul_sum]
         apply Finset.sum_congr rfl
         intro τ _
         dsimp [F]
@@ -155,9 +159,6 @@ theorem execute_eq_path_sum : ∀ {n : ℕ}
         apply Finset.sum_congr rfl
         intro b _
         rw [Finset.sum_mul]
-        apply Finset.sum_congr rfl
-        intro v _
-        dsimp [F]
       exact hL.trans ((reorder_four n F).trans hR.symm)
 
 end Nightfall.QuantumCircuitPaths
