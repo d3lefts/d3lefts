@@ -127,6 +127,16 @@ def verify_grader_receipt(report: dict, manifest: dict) -> None:
     """
     if not isinstance(report, dict) or report.get("schema") != "nightfall.polaris.research-q2.v1":
         raise RuntimeError("wrong grader receipt schema")
+    expected_keys = {
+        "schema", "status", "benchmark_status", "target", "pin",
+        "independent_implementation_review", "trusted_sources",
+        "candidate_sha256", "mathlib_commit", "lake_binary_sha256",
+        "lean_source_commit", "axioms", "steps", "certification", "limits",
+    }
+    if set(report) != expected_keys:
+        raise RuntimeError("unexpected or missing receipt fields")
+    if not re.fullmatch(r"[a-f0-9]{64}", str(report["lake_binary_sha256"])):
+        raise RuntimeError("invalid Lake executable hash")
     if report.get("status") != "pass" or report.get("benchmark_status") != "unscored-development-calibration":
         raise RuntimeError("nonpassing or unexpectedly scored grader receipt")
     if report.get("certification") != "pinned-Lean-kernel-replay; not externally audited":
