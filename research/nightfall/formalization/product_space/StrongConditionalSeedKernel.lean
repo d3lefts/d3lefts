@@ -89,7 +89,7 @@ theorem composeKernel_pushforward
 coordinatewise. This is the crucial joint-law equality for a cached
 block-per-coordinate sampler; marginal correctness alone is insufficient. -/
 theorem productKernel_pushforward
-    {ι A B : Type*} [Fintype ι] [Fintype A] [Fintype B]
+    {ι A B : Type*} [Fintype ι] [DecidableEq ι] [Fintype A] [Fintype B]
     (p : ι → A → ℝ) (K : ι → A → B → ℝ) (r : ι → B → ℝ)
     (hpush : ∀ i u,
       (∑ x : A, p i x * K i x u) = r i u)
@@ -115,7 +115,7 @@ theorem productKernel_pushforward
 
 /-- Uniformity is a special case of the exact joint product pushforward. -/
 theorem uniformProductSeed
-    {ι A B : Type*} [Fintype ι] [Fintype A] [Fintype B]
+    {ι A B : Type*} [Fintype ι] [DecidableEq ι] [Fintype A] [Fintype B]
     (p : ι → A → ℝ) (K : ι → A → B → ℝ)
     (hpush : ∀ i u,
       (∑ x : A, p i x * K i x u) = 1 / (Fintype.card B : ℝ))
