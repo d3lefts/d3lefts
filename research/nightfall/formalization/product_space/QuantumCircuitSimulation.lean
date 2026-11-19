@@ -1,5 +1,6 @@
 import QuantumCircuitPaths
 import QuantumPathDegree
+import QuantumCircuitNormalization
 
 /-!
 # NIGHTFALL — uniform classical simulation of finite quantum query circuits
@@ -161,5 +162,33 @@ theorem circuit_uniform_simulation (p : ι → α → ℝ)
     hP ε δ hε hδ n hn
   refine ⟨t, ht, ?_⟩
   simpa only [← acceptance_eq_pathBorn] using herr
+
+
+/-- **Physical quantum circuit terminal.** A norm-one initial state and
+norm-preserving fixed/oracle matrices imply that the computed Born acceptance
+probability lies in [0,1]. Therefore the law-uniform simulation theorem needs
+no independent acceptance-probability boundedness premise.
+
+The matrix-oracle formalism encompasses standard finite-dimensional
+whole-symbol quantum query algorithms. -/
+theorem unitary_circuit_uniform_simulation (p : ι → α → ℝ)
+    (hp : ∀ i a, 0 ≤ p i a) (hp1 : ∀ i, ∑ a, p i a = 1)
+    (T : ℕ) (hT : 1 ≤ T)
+    (c : QuantumCircuitPaths.Circuit ι α κ T)
+    (hc : QuantumCircuitNormalization.WellFormed c)
+    (accept : κ → Bool)
+    (ε δ : ℝ) (hε : 0 < ε) (hδ : 0 < δ)
+    (n : ℕ)
+    (hn : 384 * Real.sqrt 2 * Real.pi ^ 6 * (T : ℝ) ^ 6 ≤
+      n * (ε ^ 3 * δ ^ 2 * Real.sqrt δ)) :
+    ∃ t : Simulation.DTree ι α, (∀ x, t.queries x ≤ n) ∧
+      ∑ x, Transfer.prodMass p x *
+        (if ε < |acceptanceProbability c accept x - t.eval x| then (1 : ℝ) else 0) ≤ δ := by
+  have hb : ∀ x, 0 ≤ acceptanceProbability c accept x ∧
+      acceptanceProbability c accept x ≤ 1 := by
+    intro x
+    simpa only [QuantumCircuitNormalization.probability, acceptanceProbability] using
+      QuantumCircuitNormalization.probability_in_unit_interval hc accept x
+  exact circuit_uniform_simulation p hp hp1 T hT c accept hb ε δ hε hδ n hn
 
 end Nightfall.ProductSpace.QuantumCircuitSimulation
