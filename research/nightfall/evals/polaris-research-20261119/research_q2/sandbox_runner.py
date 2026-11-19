@@ -19,8 +19,8 @@ import sys
 import tempfile
 
 from grade_research_q2 import (
-    BERNSTEIN, TARGET, TOOLCHAIN, MATHLIB_COMMIT, digest, git_blob,
-    verify_trusted, candidate_check,
+    BERNSTEIN, TARGET, TOOLCHAIN, MATHLIB_COMMIT, LEAN_SOURCE_COMMIT,
+    ALLOW_AXIOMS, DECL, digest, git_blob, verify_trusted, candidate_check,
 )
 
 IMAGE_PIN = re.compile(r"^[a-zA-Z0-9][a-zA-Z0-9._:/-]*@sha256:[a-f0-9]{64}$")
@@ -117,6 +117,67 @@ def docker_argv(image: str, stage: Path, output: Path, *, memory: str = "8g",
     ]
 
 
+
+def verify_grader_receipt(report: dict, manifest: dict) -> None:
+    """Structural post-run audit of the *reported* command trace.
+
+    This cannot establish runtime honesty independently of the pinned
+    evaluator image. It does reject partial/malformed or forged-looking
+    success receipts before any host-side score is recorded.
+    """
+    if not isinstance(report, dict) or report.get("schema") != "nightfall.polaris.research-q2.v1":
+        raise RuntimeError("wrong grader receipt schema")
+    if report.get("status") != "pass" or report.get("benchmark_status") != "unscored-development-calibration":
+        raise RuntimeError("nonpassing or unexpectedly scored grader receipt")
+    if report.get("certification") != "pinned-Lean-kernel-replay; not externally audited":
+        raise RuntimeError("unexpected grader certification")
+    if report.get("independent_implementation_review") is not False:
+        raise RuntimeError("external review cannot be self-certified")
+    if report.get("target") != DECL or report.get("pin") != TOOLCHAIN:
+        raise RuntimeError("target/toolchain mismatch")
+    if report.get("candidate_sha256") != manifest["candidate_sha256"]:
+        raise RuntimeError("candidate hash differs from sealed source")
+    if report.get("mathlib_commit") != MATHLIB_COMMIT or report.get("lean_source_commit") != LEAN_SOURCE_COMMIT:
+        raise RuntimeError("compiler/Mathlib source identity mismatch")
+    trusted = report.get("trusted_sources", {})
+    if not isinstance(trusted, dict):
+        raise RuntimeError("trusted sources absent")
+    for filename, rel in (("ShiftedC4Bernstein.lean", BERNSTEIN_REL),
+                          ("NightfallPolarisQ2Target.lean", TARGET_REL)):
+        source_record = trusted.get(filename, {})
+        if not isinstance(source_record, dict) or source_record.get("sha256") != manifest["source_files"][rel]:
+            raise RuntimeError("trusted source digest mismatch: " + filename)
+    axioms = report.get("axioms")
+    if not isinstance(axioms, list) or len(axioms) != len(set(axioms)) or not set(axioms) <= ALLOW_AXIOMS:
+        raise RuntimeError("invalid axiom report")
+    steps = report.get("steps")
+    if not isinstance(steps, list) or len(steps) != 6:
+        raise RuntimeError("incomplete Lean build/axiom/kernel trace")
+    expect = [
+        ("lean", "--version"),
+        ("lean", "ShiftedC4Bernstein.lean"),
+        ("lean", "ShiftedC4Scalar.lean"),
+        ("lean", "NightfallPolarisQ2Target.lean"),
+        ("lean", "NightfallPolarisQ2Audit.lean"),
+        ("leanchecker", "NightfallPolarisQ2Target"),
+    ]
+    for item, (tool, terminal) in zip(steps, expect):
+        if not isinstance(item, dict) or item.get("exit_code") != 0:
+            raise RuntimeError("missing or failed proof step")
+        argv = item.get("argv", [])
+        if (not isinstance(argv, list) or len(argv) < 4 or
+                not argv[0].endswith("/lake") or argv[1] != "env" or
+                argv[2] != tool or argv[-1] != terminal):
+            raise RuntimeError("unexpected Lean command sequence")
+        if tool == "lean" and terminal.endswith(".lean") and terminal != "NightfallPolarisQ2Audit.lean":
+            if len(argv) != 6 or argv[3] != "-o":
+                raise RuntimeError("missing .olean output from compiled proof")
+            if Path(argv[4]).name != terminal.replace(".lean", ".olean"):
+                raise RuntimeError("compiled .olean output does not match source")
+        if not re.fullmatch(r"[a-f0-9]{64}", str(item.get("output_sha256", ""))):
+            raise RuntimeError("invalid command output hash")
+
+
 def evaluate(candidate: Path, image: str, output: Path) -> dict:
     if not IMAGE_PIN.fullmatch(image):
         raise ValueError("explicit immutable image digest required")
@@ -141,18 +202,9 @@ def evaluate(candidate: Path, image: str, output: Path) -> dict:
         if not completed.stdout.strip():
             raise RuntimeError("sandbox produced no JSON report")
         report = json.loads(completed.stdout)
-        if completed.returncode or report.get("status") != "pass":
-            raise RuntimeError("sandbox rejected submission or exited unsuccessfully")
-        if report.get("candidate_sha256") != manifest["candidate_sha256"]:
-            raise RuntimeError("candidate hash differs between host and sandbox receipt")
-        if report.get("mathlib_commit") != MATHLIB_COMMIT:
-            raise RuntimeError("Mathlib commit differs from host pin")
-        trusted = report.get("trusted_sources", {})
-        if (trusted.get("ShiftedC4Bernstein.lean", {}).get("sha256") != manifest["source_files"][BERNSTEIN_REL]
-                or trusted.get("NightfallPolarisQ2Target.lean", {}).get("sha256") != manifest["source_files"][TARGET_REL]):
-            raise RuntimeError("sandbox report does not match trusted-source hashes")
-        if report.get("certification") != "pinned-Lean-kernel-replay; not externally audited":
-            raise RuntimeError("unexpected grader claim")
+        if completed.returncode:
+            raise RuntimeError("sandbox exited unsuccessfully")
+        verify_grader_receipt(report, manifest)
         report["host_sandbox_wrapper"] = {
             "mode": "docker-nonprivileged-network-disabled",
             "image": image, "sealed_files": manifest["source_files"],
