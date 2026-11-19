@@ -50,16 +50,16 @@ Set G(theta,U)=f(h(theta,U)). For independent theta,theta' sampled from pi while
     q_i = E_(theta,theta') |p_(theta,i)-p_(theta',i)|
         = E_(theta,theta') TV(mu_(theta,i),mu_(theta',i)).
 
-Let bar_mu_i = E_theta mu_(theta,i), I_i=I(theta;X_i) in natural-log units, and Imax=max_i I_i. By triangle inequality, Pinsker and Jensen,
-    q_i <= 2 E_theta TV(mu_(theta,i),bar_mu_i)
-        <= sqrt(2 I_i).
-Let q=max_i q_i <= min(1, sqrt(2 Imax)). QG applies to the **unconditional**, correlated coupling (X,Y) induced by theta,theta',U. Therefore its *mean absolute resampling increment*
+Let bar_p_i=E_theta p_(theta,i), I_i=I(theta;X_i) in natural-log units, and Imax=max_i I_i. There is a sharper **exact rational variance identity** for binary laws:
+    q_i^2 <= E_(theta,theta') (p_(theta,i)-p_(theta',i))^2
+          = 2 Var_theta(p_(theta,i)) <= I_i.
+The first bound is Cauchy-Schwarz, the equality is an exact two-replica variance identity, and the last uses the standard Bernoulli Pinsker bound KL(Ber(p)||Ber(q))>=2(p-q)^2 (nats). Thus q=max_i q_i<=min(1,sqrt(Imax)); no triangle-inequality loss is needed. QG applies to the **unconditional**, correlated coupling (X,Y) induced by theta,theta',U. Therefore its *mean absolute resampling increment*
     L_theta(G) := E_(theta,theta',U) |G(theta,U)-G(theta',U)|
 satisfies
     L_theta(G) <= q+8 K_G sqrt(q)
                <= (1+8 K_G) sqrt(q).
 Rearrangement proves the quantitative information alternative
-    Imax >= (L_theta(G)/(1+8 K_G))^4 / 2.
+    Imax >= (L_theta(G)/(1+8 K_G))^4.
 This is independent of M, n, the prior weights, component biases, and zero-probability atoms.
 
 **Definition audit:** the repository's ProductInfluence.lean defines pincr as E |g(X)-g(X^(i))|, with an independent resampling of coordinate i. The latent-coordinate resampling L_theta above is exactly that definition for the product law pi x product_i Law(U_i).
@@ -70,11 +70,18 @@ Apply the existing product-space mean_increment theorem at degree 3 to G. If its
 
 The mixture simulation brief states that this crux plus the potential Phi+H yields depth poly(d,log M,1/epsilon,1/delta). That simulation step is already an author-side reduction; the present note does NOT recertify its chain rule, stopping-time proof, or circuit bridge. In particular, it does not establish the full quantum theorem for T>1 or arbitrary alphabets.
 
+## Conditional query-simulation consequence (not certified here)
+Assuming the existing product-space mean_increment theorem and the two-potential stopping argument from the Mixture-AA brief compose without further model/conditioning gaps, let f be any globally bounded binary degree-two acceptance polynomial under an M-component binary product mixture. The lift has degree at most three, so a coordinate has mean-absolute increment at least a constant multiple of tau^(3/2) (d=2 fixed). The binary information alternative gives a corresponding observable entropy drop at least a constant multiple of tau^6. Potential descent, Chebyshev leaf error, and Markov truncation with tau proportional to epsilon^2 delta give an idealized deterministic classical query bound of form
+
+    O((1+ln M) * epsilon^(-12) * delta^(-7))
+
+for epsilon,delta in (0,1). Constants depend on the existing product-space row bound and real Grothendieck constant, but not on M, n or component biases. This would cover the acceptance probability of a one-query (T=1) quantum algorithm on **binary** product mixtures. It is a CONDITIONAL PAPER COROLLARY pending the exact entropy-chain-rule, tree, circuit, and independent review; it is NOT a finished Lean theorem or all-T breakthrough.
+
 ## Important exactness and formalization obligations
 1. Verify the real Grothendieck inequality in the exact form for finite signed matrices and real Hilbert vectors with norms <=1. Cite the source, verify numerical upper bound if replacing K_G symbolically by a constant, and preferably prove/verify the statement in a dedicated Lean dependency.
 2. Establish the global quadratic multilinear representation and sup-norm bounds on a Boolean cube in Lean, including the polarization identity and ||B||_{infty x infty}<=2.
 3. Formalize the L2 joint-probability construction for arbitrary correlated pairs; the sign of B(Delta,Mid) is a valid bounded measurable test function.
-4. Formalize Pinsker for binary finite distributions, Jensen and monotone shared-seed coupling. Exact finite probability seed construction is possible by partitioning [0,1] at the finitely many component bias thresholds; no atom lower bound is needed.
+4. Formalize Bernoulli Pinsker, the exact two-replica variance identity, Cauchy-Schwarz, and monotone shared-seed coupling. An exact rational proxy checker is supplied in fur_binary_information_proxy_exact.py. Exact finite probability seed construction is possible by partitioning [0,1] at the finitely many component bias thresholds; no atom lower bound is needed.
 5. Confirm lift degree<=3 under the repository's HasProdDegreeLE definition and discharge the product mean_increment parameters.
 6. Compose entropy-potential reduction and binary mixture simulator with an independent end-to-end proof audit. No automatic status promotion until CI and expert review pass.
 7. Search prior art on Grothendieck, multilinear low-degree noise sensitivity, correlated-pair stability and quantum query simulation. This proof mechanism may be known; no novelty is certified.
