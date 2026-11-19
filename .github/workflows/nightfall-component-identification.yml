@@ -5,6 +5,9 @@ on:
       - nightfall-fixedpoint-closure-20261119
     paths:
       - 'research/nightfall/formalization/product_space/StrongSmoothingBase.lean'
+      - 'research/nightfall/formalization/product_space/StrongSmoothingPolynomial.lean'
+      - 'research/nightfall/formalization/product_space/StrongSmoothingUniform.lean'
+      - 'research/nightfall/formalization/product_space/StrongSmoothingTerminal.lean'
       - 'research/nightfall/formalization/product_space/StrongSmoothingMoment.lean'
       - '.github/workflows/nightfall-component-identification.yml'
   pull_request:
@@ -47,6 +50,9 @@ jobs:
           cp research/nightfall/formalization/product_space/StrongSmoothing.lean /tmp/mathlib4/StrongSmoothing.lean
           cp research/nightfall/formalization/product_space/StrongSmoothingMoment.lean /tmp/mathlib4/StrongSmoothingMoment.lean
           cp research/nightfall/formalization/product_space/StrongSmoothingBase.lean /tmp/mathlib4/StrongSmoothingBase.lean
+          cp research/nightfall/formalization/product_space/StrongSmoothingPolynomial.lean /tmp/mathlib4/StrongSmoothingPolynomial.lean
+          cp research/nightfall/formalization/product_space/StrongSmoothingUniform.lean /tmp/mathlib4/StrongSmoothingUniform.lean
+          cp research/nightfall/formalization/product_space/StrongSmoothingTerminal.lean /tmp/mathlib4/StrongSmoothingTerminal.lean
           cp research/nightfall/formalization/product_space/LatentProductInterpolationDegree.lean /tmp/mathlib4/LatentProductInterpolationDegree.lean
           cp research/nightfall/formalization/product_space/LatentLikelihoodRatio.lean /tmp/mathlib4/LatentLikelihoodRatio.lean
           cp research/nightfall/formalization/product_space/StrongSmoothingAmplifier.lean /tmp/mathlib4/StrongSmoothingAmplifier.lean
@@ -62,9 +68,12 @@ jobs:
           lake env lean -o .lake/build/lib/lean/LatentProductInterpolationDegree.olean LatentProductInterpolationDegree.lean 2>&1 | tee /tmp/ci-interp.log
           lake env lean -o .lake/build/lib/lean/LatentLikelihoodRatio.olean LatentLikelihoodRatio.lean 2>&1 | tee /tmp/ci-lr.log
           lake env lean -o .lake/build/lib/lean/StrongSmoothingAmplifier.olean StrongSmoothingAmplifier.lean 2>&1 | tee /tmp/ci-smooth.log
+          lake env lean -o .lake/build/lib/lean/StrongSmoothingPolynomial.olean StrongSmoothingPolynomial.lean 2>&1 | tee /tmp/ci-poly.log
+          lake env lean -o .lake/build/lib/lean/StrongSmoothingUniform.olean StrongSmoothingUniform.lean 2>&1 | tee /tmp/ci-uniform.log
+          lake env lean -o .lake/build/lib/lean/StrongSmoothingTerminal.olean StrongSmoothingTerminal.lean 2>&1 | tee /tmp/ci-terminal.log
           lake env lean -o .lake/build/lib/lean/StrongMarkovEndpoint.olean StrongMarkovEndpoint.lean 2>&1 | tee /tmp/ci-markov.log
-          if grep -q "declaration uses .sorry" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-lr.log /tmp/ci-fixedpoint.log /tmp/ci-smoothing.log /tmp/ci-moment.log /tmp/ci-base.log /tmp/ci-smooth.log /tmp/ci-markov.log; then echo "sorry found"; exit 1; fi
-          if grep -q "error" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-lr.log /tmp/ci-fixedpoint.log /tmp/ci-smoothing.log /tmp/ci-moment.log /tmp/ci-base.log /tmp/ci-smooth.log /tmp/ci-markov.log; then exit 1; fi
+          if grep -q "declaration uses .sorry" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-lr.log /tmp/ci-fixedpoint.log /tmp/ci-smoothing.log /tmp/ci-moment.log /tmp/ci-base.log /tmp/ci-smooth.log /tmp/ci-poly.log /tmp/ci-uniform.log /tmp/ci-terminal.log /tmp/ci-markov.log; then echo "sorry found"; exit 1; fi
+          if grep -q "error" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-lr.log /tmp/ci-fixedpoint.log /tmp/ci-smoothing.log /tmp/ci-moment.log /tmp/ci-base.log /tmp/ci-smooth.log /tmp/ci-poly.log /tmp/ci-uniform.log /tmp/ci-terminal.log /tmp/ci-markov.log; then exit 1; fi
           cat > CIAxioms.lean <<'LEAN'
           import ComponentIdentification
           import ComponentIdentificationWeightedTournament
@@ -72,6 +81,7 @@ jobs:
           import StrongFixedPoint
           import StrongSmoothing
           import StrongSmoothingMoment
+          import StrongSmoothingTerminal
           import StrongSmoothingBase
           import LatentProductInterpolationDegree
           import LatentLikelihoodRatio
@@ -100,6 +110,9 @@ jobs:
           #print axioms Nightfall.StrongSimulation.SmoothingBase.base_gap_of_integer_budget
           #print axioms Nightfall.StrongSimulation.SmoothingBase.thresholdCount_budget
           #print axioms Nightfall.StrongSimulation.SmoothingBase.base_separator
+          #print axioms Nightfall.StrongSimulation.SmoothingTerminal.eventPoly_degree
+          #print axioms Nightfall.StrongSimulation.SmoothingTerminal.eventPoly_tails
+          #print axioms Nightfall.StrongSimulation.SmoothingTerminal.eventPoly_failure_bounds
           #print axioms Nightfall.LatentProductInterpolationDegree.sparseExpectationPoly_natDegree_le
           #print axioms Nightfall.LatentProductInterpolationDegree.affineMarginal_eval
           #print axioms Nightfall.LatentLikelihoodRatio.likelihood_two_sided_error_eq_overlap
