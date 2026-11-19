@@ -1,0 +1,131 @@
+{
+  "axiom_audit": {
+    "Nightfall.ProductSpace.CubeAA.explicitBound": "allowlisted_dependencies",
+    "Nightfall.ProductSpace.CubeAA.hasProdDegreeLE_of_hasDegreeLE": "allowlisted_dependencies",
+    "Nightfall.ProductSpace.CubeAA.mainTheorem_of_productSpace": "allowlisted_dependencies",
+    "Nightfall.ProductSpace.CubeAA.printedConjecture": "allowlisted_dependencies",
+    "Nightfall.ProductSpace.CubeAA.sum_pincr_unif_le": "allowlisted_dependencies"
+  },
+  "axiom_dependencies": {
+    "Nightfall.ProductSpace.CubeAA.explicitBound": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Nightfall.ProductSpace.CubeAA.hasProdDegreeLE_of_hasDegreeLE": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Nightfall.ProductSpace.CubeAA.mainTheorem_of_productSpace": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Nightfall.ProductSpace.CubeAA.printedConjecture": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Nightfall.ProductSpace.CubeAA.sum_pincr_unif_le": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "compiler": [
+    "lake",
+    "env",
+    "lean"
+  ],
+  "compiler_exit_code": 0,
+  "compiler_version": "Lean (version 4.36.0-rc2, x86_64-unknown-linux-gnu, commit b35cb10cf2ced51a2fd1880cfdbf75c71ab7a35a, Release)",
+  "contract_relpath": null,
+  "contract_sha256": null,
+  "contract_targets": [],
+  "contract_workspace_commit": null,
+  "declarations_requested": [
+    "Nightfall.ProductSpace.CubeAA.printedConjecture",
+    "Nightfall.ProductSpace.CubeAA.explicitBound",
+    "Nightfall.ProductSpace.CubeAA.mainTheorem_of_productSpace",
+    "Nightfall.ProductSpace.CubeAA.hasProdDegreeLE_of_hasDegreeLE",
+    "Nightfall.ProductSpace.CubeAA.sum_pincr_unif_le"
+  ],
+  "diagnostics": [
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_vpeg20ck.lean",
+      "line": 55,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.CubeAA.unif_nonneg`:",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_vpeg20ck.lean",
+      "line": 58,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.CubeAA.unif_sum`:",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_vpeg20ck.lean",
+      "line": 61,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.CubeAA.prodMass_unif`:",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_vpeg20ck.lean",
+      "line": 70,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.CubeAA.update_not_eq_flipSet`:",
+      "severity": "warning"
+    },
+    {
+      "column": 10,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_vpeg20ck.lean",
+      "line": 146,
+      "message": "`if_pos` has been deprecated: Use `ite_eq_left` instead",
+      "severity": "warning"
+    },
+    {
+      "column": 10,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_vpeg20ck.lean",
+      "line": 152,
+      "message": "`push_neg` has been deprecated. Prefer using `push Not` instead.",
+      "severity": "warning"
+    },
+    {
+      "column": 12,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_vpeg20ck.lean",
+      "line": 165,
+      "message": "`if_neg` has been deprecated: Use `ite_eq_right` instead",
+      "severity": "warning"
+    }
+  ],
+  "expected_toolchain": "leanprover/lean4:v4.36.0-rc2",
+  "explicit_allowed_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "invocation": [
+    "lake",
+    "env",
+    "lean",
+    "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_vpeg20ck.lean"
+  ],
+  "parsed_compiler_toolchain": "leanprover/lean4:v4.36.0-rc2",
+  "policy_findings": [],
+  "proof_scope": "named declarations compile; only explicitly allowed axioms reported",
+  "protocol": "nightfall-lean-bridge/v2",
+  "source": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/CubePrintedAA.lean",
+  "source_relpath": "research/nightfall/formalization/product_space/CubePrintedAA.lean",
+  "source_sha256": "b0da006fba89b670c7dffa11f5bec526cf3a644a0a3fade71b0628ebc2e0925b",
+  "status": "COMPILED",
+  "stderr": "",
+  "stdout": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_vpeg20ck.lean:55:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.CubeAA.unif_nonneg`:\n  [Fintype \u03b9]\n  [DecidableEq \u03b9]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [Fintype \u03b9] [DecidableEq \u03b9] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_vpeg20ck.lean:58:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.CubeAA.unif_sum`:\n  [Fintype \u03b9]\n  [DecidableEq \u03b9]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [Fintype \u03b9] [DecidableEq \u03b9] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_vpeg20ck.lean:61:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.CubeAA.prodMass_unif`:\n  [DecidableEq \u03b9]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [DecidableEq \u03b9] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_vpeg20ck.lean:70:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.CubeAA.update_not_eq_flipSet`:\n  [Fintype \u03b9]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [Fintype \u03b9] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_vpeg20ck.lean:146:10: warning: `if_pos` has been deprecated: Use `ite_eq_left` instead\n\nHint: Replace the deprecated name:\n  i\u0335f\u0335_\u0335p\u0335o\u0335s\u0335i\u0332t\u0332e\u0332_\u0332e\u0332q\u0332_\u0332l\u0332e\u0332f\u0332t\u0332\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_vpeg20ck.lean:152:10: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_vpeg20ck.lean:165:12: warning: `if_neg` has been deprecated: Use `ite_eq_right` instead\n\nHint: Replace the deprecated name:\n  i\u0335f\u0335_\u0335n\u0335e\u0335g\u0335i\u0332t\u0332e\u0332_\u0332e\u0332q\u0332_\u0332r\u0332i\u0332g\u0332h\u0332t\u0332\n'Nightfall.ProductSpace.CubeAA.mainTheorem_of_productSpace' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.CubeAA.printedConjecture' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.CubeAA.explicitBound' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.CubeAA.printedConjecture' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.CubeAA.explicitBound' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.CubeAA.mainTheorem_of_productSpace' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.CubeAA.hasProdDegreeLE_of_hasDegreeLE' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n'Nightfall.ProductSpace.CubeAA.sum_pincr_unif_le' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+  "time_utc": "2026-11-19T01:13:23.137166+00:00",
+  "version_matches_pin": true,
+  "workspace": "/tmp/mathlib4",
+  "workspace_commit": null
+}

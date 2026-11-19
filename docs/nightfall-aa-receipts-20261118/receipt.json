@@ -1,0 +1,152 @@
+{
+  "axiom_audit": {
+    "Nightfall.InfinitePiAAProductTerminal.infinitePi_aa_product": "allowlisted_dependencies",
+    "Nightfall.InfinitePiQ2CellAverage.CellLabels.dinfl_rtable": "allowlisted_dependencies",
+    "Nightfall.InfinitePiQ2CellAverage.CellLabels.mdelta_table_zero": "allowlisted_dependencies",
+    "Nightfall.InfinitePiQ2CellAverage.CellLabels.rtable_degree": "allowlisted_dependencies",
+    "Nightfall.InfinitePiQ2CellAverage.CellLabels.table_aa": "allowlisted_dependencies",
+    "Nightfall.ProductSpace.Heterogeneous.heterogeneous_influence": "allowlisted_dependencies",
+    "Nightfall.ProductSpace.MixedDifference.depDegree_of_mdelta": "allowlisted_dependencies",
+    "Nightfall.ProductSpace.MixedDifference.dinfl_eq_heatBath": "allowlisted_dependencies"
+  },
+  "axiom_dependencies": {
+    "Nightfall.InfinitePiAAProductTerminal.infinitePi_aa_product": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Nightfall.InfinitePiQ2CellAverage.CellLabels.dinfl_rtable": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Nightfall.InfinitePiQ2CellAverage.CellLabels.mdelta_table_zero": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Nightfall.InfinitePiQ2CellAverage.CellLabels.rtable_degree": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Nightfall.InfinitePiQ2CellAverage.CellLabels.table_aa": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Nightfall.ProductSpace.Heterogeneous.heterogeneous_influence": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Nightfall.ProductSpace.MixedDifference.depDegree_of_mdelta": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Nightfall.ProductSpace.MixedDifference.dinfl_eq_heatBath": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "compiler": [
+    "lake",
+    "env",
+    "lean"
+  ],
+  "compiler_exit_code": 0,
+  "compiler_version": "Lean (version 4.36.0-rc2, x86_64-unknown-linux-gnu, commit b35cb10cf2ced51a2fd1880cfdbf75c71ab7a35a, Release)",
+  "contract_relpath": null,
+  "contract_sha256": null,
+  "contract_targets": [],
+  "contract_workspace_commit": null,
+  "declarations_requested": [
+    "Nightfall.InfinitePiAAProductTerminal.infinitePi_aa_product",
+    "Nightfall.InfinitePiQ2CellAverage.CellLabels.table_aa",
+    "Nightfall.InfinitePiQ2CellAverage.CellLabels.rtable_degree",
+    "Nightfall.InfinitePiQ2CellAverage.CellLabels.mdelta_table_zero",
+    "Nightfall.InfinitePiQ2CellAverage.CellLabels.dinfl_rtable",
+    "Nightfall.ProductSpace.MixedDifference.depDegree_of_mdelta",
+    "Nightfall.ProductSpace.MixedDifference.dinfl_eq_heatBath",
+    "Nightfall.ProductSpace.Heterogeneous.heterogeneous_influence"
+  ],
+  "diagnostics": [
+    {
+      "column": 22,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/universal/.lean_bridge_6uh8hx79.lean",
+      "line": 145,
+      "message": "`if_pos` has been deprecated: Use `ite_eq_left` instead",
+      "severity": "warning"
+    },
+    {
+      "column": 4,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/universal/.lean_bridge_6uh8hx79.lean",
+      "line": 162,
+      "message": "`push_neg` has been deprecated. Prefer using `push Not` instead.",
+      "severity": "warning"
+    },
+    {
+      "column": 4,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/universal/.lean_bridge_6uh8hx79.lean",
+      "line": 202,
+      "message": "`push_neg` has been deprecated. Prefer using `push Not` instead.",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/universal/.lean_bridge_6uh8hx79.lean",
+      "line": 224,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.InfinitePiQ2CellAverage.CellLabels.dvar_smul`:",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/universal/.lean_bridge_6uh8hx79.lean",
+      "line": 233,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.InfinitePiQ2CellAverage.CellLabels.dinfl_smul`:",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/universal/.lean_bridge_6uh8hx79.lean",
+      "line": 241,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.InfinitePiQ2CellAverage.CellLabels.depDegree_smul`:",
+      "severity": "warning"
+    },
+    {
+      "column": 13,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/universal/.lean_bridge_6uh8hx79.lean",
+      "line": 258,
+      "message": "Variable name `hM` is not explicitly referenced.",
+      "severity": "warning"
+    }
+  ],
+  "expected_toolchain": "leanprover/lean4:v4.36.0-rc2",
+  "explicit_allowed_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "invocation": [
+    "lake",
+    "env",
+    "lean",
+    "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/universal/.lean_bridge_6uh8hx79.lean"
+  ],
+  "parsed_compiler_toolchain": "leanprover/lean4:v4.36.0-rc2",
+  "policy_findings": [],
+  "proof_scope": "named declarations compile; only explicitly allowed axioms reported",
+  "protocol": "nightfall-lean-bridge/v2",
+  "source": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/universal/InfinitePiAAProductTerminal.lean",
+  "source_relpath": "research/nightfall/formalization/universal/InfinitePiAAProductTerminal.lean",
+  "source_sha256": "bf3db1bc2973c2177efa2480f62bc7975c79d996ff71dbe69fe6dbe4aee38ef9",
+  "status": "COMPILED",
+  "stderr": "",
+  "stdout": "Try this:\n  [apply] abel_nf\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/universal/.lean_bridge_6uh8hx79.lean:145:22: warning: `if_pos` has been deprecated: Use `ite_eq_left` instead\n\nHint: Replace the deprecated name:\n  i\u0335f\u0335_\u0335p\u0335o\u0335s\u0335i\u0332t\u0332e\u0332_\u0332e\u0332q\u0332_\u0332l\u0332e\u0332f\u0332t\u0332\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/universal/.lean_bridge_6uh8hx79.lean:162:4: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/universal/.lean_bridge_6uh8hx79.lean:202:4: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/universal/.lean_bridge_6uh8hx79.lean:224:0: warning: automatically included section variable(s) unused in theorem `Nightfall.InfinitePiQ2CellAverage.CellLabels.dvar_smul`:\n  [DecidableEq \u03b9]\n  [\u2200 (i : \u03b9), IsProbabilityMeasure (\u03bc i)]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [DecidableEq \u03b9] [\u2200 (i : \u03b9), IsProbabilityMeasure (\u03bc i)] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/universal/.lean_bridge_6uh8hx79.lean:233:0: warning: automatically included section variable(s) unused in theorem `Nightfall.InfinitePiQ2CellAverage.CellLabels.dinfl_smul`:\n  [DecidableEq \u03b9]\n  [\u2200 (i : \u03b9), IsProbabilityMeasure (\u03bc i)]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [DecidableEq \u03b9] [\u2200 (i : \u03b9), IsProbabilityMeasure (\u03bc i)] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/universal/.lean_bridge_6uh8hx79.lean:241:0: warning: automatically included section variable(s) unused in theorem `Nightfall.InfinitePiQ2CellAverage.CellLabels.depDegree_smul`:\n  [DecidableEq \u03b9]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [DecidableEq \u03b9] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/universal/.lean_bridge_6uh8hx79.lean:258:13: warning: Variable name `hM` is not explicitly referenced.\n\nHint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:\n  [apply] _hM\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\n'Nightfall.InfinitePiAAProductTerminal.infinitePi_aa_product' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.InfinitePiQ2CellAverage.CellLabels.table_aa' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.InfinitePiQ2CellAverage.CellLabels.rtable_degree' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.InfinitePiQ2CellAverage.CellLabels.mdelta_table_zero' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n'Nightfall.InfinitePiQ2CellAverage.CellLabels.dinfl_rtable' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.MixedDifference.depDegree_of_mdelta' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.MixedDifference.dinfl_eq_heatBath' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.Heterogeneous.heterogeneous_influence' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n",
+  "time_utc": "2026-11-19T01:13:14.493819+00:00",
+  "version_matches_pin": true,
+  "workspace": "/tmp/mathlib4",
+  "workspace_commit": null
+}
