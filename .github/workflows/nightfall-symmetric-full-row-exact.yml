@@ -6,6 +6,7 @@ on:
     paths:
       - 'research/nightfall/flagship-influence/SYMMETRIC_FULL_ROW_ORBIT_REDUCTION_20261119.md'
       - 'research/nightfall/flagship-influence/check_symmetric_full_row_exact.py'
+      - 'research/nightfall/flagship-influence/check_feature_quotient_exact.py'
       - '.github/workflows/nightfall-symmetric-full-row-exact.yml'
   pull_request:
     types: [opened, synchronize, reopened]
@@ -13,6 +14,7 @@ on:
     paths:
       - 'research/nightfall/flagship-influence/SYMMETRIC_FULL_ROW_ORBIT_REDUCTION_20261119.md'
       - 'research/nightfall/flagship-influence/check_symmetric_full_row_exact.py'
+      - 'research/nightfall/flagship-influence/check_feature_quotient_exact.py'
       - '.github/workflows/nightfall-symmetric-full-row-exact.yml'
   workflow_dispatch:
 
@@ -40,8 +42,17 @@ jobs:
           mkdir -p proof-receipts/symmetric-full-row
           P=research/nightfall/flagship-influence
           git rev-parse HEAD > proof-receipts/symmetric-full-row/HEAD.txt
-          sha256sum "$P/SYMMETRIC_FULL_ROW_ORBIT_REDUCTION_20261119.md" "$P/check_symmetric_full_row_exact.py" > proof-receipts/symmetric-full-row/SHA256SUMS
+          sha256sum "$P/SYMMETRIC_FULL_ROW_ORBIT_REDUCTION_20261119.md" "$P/check_symmetric_full_row_exact.py" "$P/check_feature_quotient_exact.py" > proof-receipts/symmetric-full-row/SHA256SUMS
           python -I "$P/check_symmetric_full_row_exact.py" > proof-receipts/symmetric-full-row/exact.json
+          python -I "$P/check_feature_quotient_exact.py" > proof-receipts/symmetric-full-row/feature-quotient.json
+          python - <<'PY'
+          import json
+          y=json.load(open('proof-receipts/symmetric-full-row/feature-quotient.json'))
+          assert y['status']=='FINITE_EXACT_PRIMAL_DUAL_AND_SOURCE_ONLY'
+          assert y['checks']==3078 and len(y['families'])==3
+          assert y['source_support_count']==18 and y['feature_support_count']==12
+          print('PASS: exact categorical feature quotient; no universal theorem certificate.')
+          PY
           python - <<'PY'
           import json
           x=json.load(open('proof-receipts/symmetric-full-row/exact.json'))
