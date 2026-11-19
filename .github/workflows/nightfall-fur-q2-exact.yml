@@ -8,6 +8,8 @@ on:
       - 'research/nightfall/mixture_aa/FUR_Q2_GROTHENDIECK_BINARY_20261119.md'
       - 'research/nightfall/mixture_aa/fur_q2_binary/check_binary_fur_q2_exact.py'
       - 'research/nightfall/mixture_aa/fur_q2_binary/check_categorical_fixed_row_nogo.py'
+      - 'research/nightfall/mixture_aa/fur_q2_binary/check_one_query_categorical_correlated_sampling_exact.py'
+      - 'research/nightfall/mixture_aa/FUR_ONE_QUERY_CATEGORICAL_20261119.md'
       - '.github/workflows/nightfall-fur-q2-exact.yml'
   workflow_dispatch:
 permissions:
@@ -29,7 +31,9 @@ jobs:
           grep -Fq "LIMIT: universal GP factorization" /tmp/fur-q2-exact.log
           python3 -I research/nightfall/mixture_aa/fur_q2_binary/check_categorical_fixed_row_nogo.py | tee /tmp/fur-q2-categorical-no-go.log
           grep -Fq "PASS exact categorical selector obstruction, including N=579 > 2*289." /tmp/fur-q2-categorical-no-go.log
-          sha256sum research/nightfall/mixture_aa/fur_q2_binary/check_binary_fur_q2_exact.py research/nightfall/mixture_aa/fur_q2_binary/check_categorical_fixed_row_nogo.py research/nightfall/mixture_aa/FUR_Q2_GROTHENDIECK_BINARY_20261119.md | tee /tmp/fur-q2-sha256.txt
+          python3 -I research/nightfall/mixture_aa/fur_q2_binary/check_one_query_categorical_correlated_sampling_exact.py | tee /tmp/fur-q1-categorical.log
+          grep -Fq "PASS 4338 exact rational assertions; 40 categorical latent models; 299 zero-mass atoms." /tmp/fur-q1-categorical.log
+          sha256sum research/nightfall/mixture_aa/fur_q2_binary/check_binary_fur_q2_exact.py research/nightfall/mixture_aa/fur_q2_binary/check_categorical_fixed_row_nogo.py research/nightfall/mixture_aa/fur_q2_binary/check_one_query_categorical_correlated_sampling_exact.py research/nightfall/mixture_aa/FUR_Q2_GROTHENDIECK_BINARY_20261119.md research/nightfall/mixture_aa/FUR_ONE_QUERY_CATEGORICAL_20261119.md | tee /tmp/fur-q2-sha256.txt
           echo "CI_HEAD_SHA=$GITHUB_SHA" | tee /tmp/fur-q2-head.txt
       - name: Immutable reproducibility receipt
         if: always()
@@ -39,6 +43,7 @@ jobs:
           path: |
             /tmp/fur-q2-exact.log
             /tmp/fur-q2-categorical-no-go.log
+            /tmp/fur-q1-categorical.log
             /tmp/fur-q2-sha256.txt
             /tmp/fur-q2-head.txt
           retention-days: 60
