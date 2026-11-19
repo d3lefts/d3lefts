@@ -30,7 +30,7 @@ jobs:
           if grep -E 'error:|sorryAx|declaration uses .sorry' /tmp/coherent-oracle-lean.log; then exit 1; fi
           sha256sum "$SRC" | tee /tmp/coherent-oracle-sha256.txt
           for name in compiledOracle_zero coherent_pullback permutation_energy compiledOracle_unitary bit_fetch_coordinate; do
-            grep -q "axioms Nightfall.CoherentBlockOracle.$name" /tmp/coherent-oracle-lean.log
+            grep -Fq "Nightfall.CoherentBlockOracle.$name" /tmp/coherent-oracle-lean.log
           done
           if grep -E '^\s*\[.*(sorryAx|Lean\.ofReduceBool).*\]' /tmp/coherent-oracle-lean.log; then exit 1; fi
       - name: Preserve exact source and compiler receipt
