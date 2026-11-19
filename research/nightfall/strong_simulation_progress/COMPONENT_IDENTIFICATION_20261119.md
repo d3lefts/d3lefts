@@ -6,8 +6,17 @@ Date: 2026-11-19.
 
 - **Lemma 1:** paper proof. It relies only on Bernstein's inequality, which is classical. It is checked
   numerically by `component_id_check.py`, on 3 seeds and 1200 random instances: the Bernstein ratio is at
-  most 0.49, and the TV bound held in all 148 separated cases. It has **not** been reviewed or formalized
-  in Lean.
+  most 0.49, and the TV bound held in all 148 separated cases. The audit found that last check
+  **vacuous**, because the right-hand side exceeded 1 there. See `component_id_nonvacuous_check.py` for
+  an exact nonvacuous instance.
+  - **Steps 3–5 are Lean-certified**, with standard axioms only, in
+    `formalization/product_space/ComponentIdentification.lean`. The certified theorems are
+    `component_identification_core`, `mean_near`, `cell_cost`, `pay_per_cell`, `min_le_sqrt_mul`,
+    `prod_one_sub_le_exp` and `hellinger_K_le`.
+  - Step 2 (Bernstein) enters as the explicit hypothesis `hBern`.
+  - `mean_near` assumes u ∈ [0,1]. The audit's u ∈ [−ε, 1+ε] variant is not yet covered; clipping the
+    centres reduces to it.
+  - Not yet reviewed by a person.
 - **Theorem 2:** a conditional composition. It takes strong per-component product simulation as a black
   box.
 - **Novelty is provisional.** BDST arXiv:2608.19158 and GMNR arXiv:2609.35327 were inspected on 2026-11-19. Comprehensive priority and human reviews remain outstanding.

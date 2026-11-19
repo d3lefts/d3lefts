@@ -1,0 +1,38 @@
+name: NIGHTFALL component identification core (pinned 4.36)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/ComponentIdentification.lean'
+      - '.github/workflows/nightfall-component-identification.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  component-identification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile and audit axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/product_space/ComponentIdentification.lean /tmp/mathlib4/ComponentIdentification.lean
+          cd /tmp/mathlib4
+          lake env lean -o .lake/build/lib/lean/ComponentIdentification.olean ComponentIdentification.lean 2>&1 | tee /tmp/ci.log
+          if grep -q "declaration uses .sorry" /tmp/ci.log; then echo "sorry found"; exit 1; fi
+          if grep -q "error" /tmp/ci.log; then exit 1; fi
+          cat > CIAxioms.lean <<'LEAN'
+          import ComponentIdentification
+          open Nightfall.ComponentIdentification
+          #print axioms component_identification_core
+          #print axioms hellinger_K_le
+          #print axioms mean_near
+          #print axioms min_le_sqrt_mul
+          LEAN
+          sed -i 's/^          //' CIAxioms.lean
+          lake env lean CIAxioms.lean | tee /tmp/axioms.txt
+          if grep -q "sorryAx" /tmp/axioms.txt; then exit 1; fi
