@@ -140,10 +140,11 @@ def grade(candidate: Path, workspace: Path, timeout: int = 1200) -> dict:
             command = [lake, "env", "lean", "-o", str(out / (name + ".olean")), dest.name]
             result, _ = run(command, workspace, timeout)
             steps.append(result)
-            # In particular, reject changes that Lean metaprograms make to trusted sources.
-            if digest(source) != (receipt["trusted_sources"].get(source.name, {}) or {}).get(
-                    "sha256", digest(source)):
-                raise GradingError("trusted source was changed during compilation")
+            # Untrusted elaborator code may write to the staged file tree.
+            if source in (BERNSTEIN, TARGET):
+                expected = receipt["trusted_sources"][source.name]["sha256"]
+                if digest(source) != expected or digest(dest) != expected:
+                    raise GradingError("trusted source/staged copy changed during compilation")
         audit = workspace / "NightfallPolarisQ2Audit.lean"
         audit.write_text("import NightfallPolarisQ2Target\n#print axioms " + DECL +
                          "\n#check " + DECL + "\n", encoding="utf-8")
@@ -152,6 +153,11 @@ def grade(candidate: Path, workspace: Path, timeout: int = 1200) -> dict:
         receipt["axioms"] = axioms_from_output(output)
         result, _ = run([lake, "env", "leanchecker", "NightfallPolarisQ2Target"], workspace, timeout)
         steps.append(result)
+        for name, source in (("ShiftedC4Bernstein", BERNSTEIN),
+                             ("NightfallPolarisQ2Target", TARGET)):
+            expected = receipt["trusted_sources"][source.name]["sha256"]
+            if digest(source) != expected or digest(workspace / f"{name}.lean") != expected:
+                raise GradingError("trusted source/staged copy changed after kernel replay")
         receipt["steps"] = steps
         receipt["status"] = "pass"
         receipt["certification"] = "pinned-Lean-kernel-replay; not externally audited"
