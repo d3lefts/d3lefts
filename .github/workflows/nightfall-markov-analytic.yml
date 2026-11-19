@@ -24,17 +24,21 @@ jobs:
           set -euo pipefail
           cp research/nightfall/formalization/product_space/StrongMarkovEndpoint.lean /tmp/mathlib4/StrongMarkovEndpoint.lean
           cp research/nightfall/formalization/product_space/StrongMarkovRescale.lean /tmp/mathlib4/StrongMarkovRescale.lean
+          cp research/nightfall/formalization/product_space/StrongMarkovInterior.lean /tmp/mathlib4/StrongMarkovInterior.lean
           cd /tmp/mathlib4
           lake env lean -o .lake/build/lib/lean/StrongMarkovEndpoint.olean StrongMarkovEndpoint.lean | tee /tmp/markov-endpoint.log
           lake env lean -o .lake/build/lib/lean/StrongMarkovRescale.olean StrongMarkovRescale.lean | tee /tmp/markov-rescale.log
+          lake env lean -o .lake/build/lib/lean/StrongMarkovInterior.olean StrongMarkovInterior.lean | tee /tmp/markov-interior.log
           cat > MarkovAxioms.lean <<'LEAN'
           import StrongMarkovEndpoint
           import StrongMarkovRescale
+          import StrongMarkovInterior
           #print axioms Nightfall.BiasFreeMarkov.chebyshev_endpoint_derivative_bound
           #print axioms Nightfall.BiasFreeMarkov.normalizedEndpointPoly_natDegree_le
           #print axioms Nightfall.BiasFreeMarkov.normalizedEndpointPoly_derivative_eval_one
+          #print axioms Nightfall.BiasFreeMarkov.markov_endpoint_affine
           LEAN
           sed -i 's/^          //' MarkovAxioms.lean
           lake env lean MarkovAxioms.lean | tee /tmp/markov-axioms.log
           ! grep -q sorryAx /tmp/markov-axioms.log
-          ! grep -q 'declaration uses .sorry' /tmp/markov-endpoint.log /tmp/markov-rescale.log
+          ! grep -q 'declaration uses .sorry' /tmp/markov-endpoint.log /tmp/markov-rescale.log /tmp/markov-interior.log
