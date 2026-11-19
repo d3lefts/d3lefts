@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/product_space/MarginFreeIntegrated.lean'
+      - 'research/nightfall/formalization/product_space/LatentProductInterpolationDegree.lean'
       - 'research/nightfall/formalization/product_space/MarginFreeProductDisintegration.lean'
       - 'research/nightfall/formalization/product_space/PinnedConditionalStability.lean'
       - 'research/nightfall/formalization/product_space/LatentComponentCertifiedCore.lean'
