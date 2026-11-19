@@ -6,6 +6,7 @@ on:
       - 'research/nightfall/formalization/product_space/ComponentIdentificationWeightedTournament.lean'
       - 'research/nightfall/formalization/product_space/StrongMixtureDuel.lean'
       - 'research/nightfall/formalization/product_space/LatentProductInterpolationDegree.lean'
+      - 'research/nightfall/formalization/product_space/LatentExpectationEvaluation.lean'
       - 'research/nightfall/formalization/product_space/LatentLikelihoodRatio.lean'
       - 'research/nightfall/formalization/product_space/StrongSmoothingAmplifier.lean'
       - 'research/nightfall/formalization/product_space/StrongMarkovEndpoint.lean'
@@ -36,6 +37,7 @@ jobs:
           cp research/nightfall/formalization/product_space/ComponentIdentificationWeightedTournament.lean /tmp/mathlib4/ComponentIdentificationWeightedTournament.lean
           cp research/nightfall/formalization/product_space/StrongMixtureDuel.lean /tmp/mathlib4/StrongMixtureDuel.lean
           cp research/nightfall/formalization/product_space/LatentProductInterpolationDegree.lean /tmp/mathlib4/LatentProductInterpolationDegree.lean
+          cp research/nightfall/formalization/product_space/LatentExpectationEvaluation.lean /tmp/mathlib4/LatentExpectationEvaluation.lean
           cp research/nightfall/formalization/product_space/LatentLikelihoodRatio.lean /tmp/mathlib4/LatentLikelihoodRatio.lean
           cp research/nightfall/formalization/product_space/StrongSmoothingAmplifier.lean /tmp/mathlib4/StrongSmoothingAmplifier.lean
           cp research/nightfall/formalization/product_space/StrongMarkovEndpoint.lean /tmp/mathlib4/StrongMarkovEndpoint.lean
@@ -47,19 +49,21 @@ jobs:
           lake env lean -o .lake/build/lib/lean/ComponentIdentificationWeightedTournament.olean ComponentIdentificationWeightedTournament.lean 2>&1 | tee /tmp/ci-weighted.log
           lake env lean -o .lake/build/lib/lean/StrongMixtureDuel.olean StrongMixtureDuel.lean 2>&1 | tee /tmp/ci-duel.log
           lake env lean -o .lake/build/lib/lean/LatentProductInterpolationDegree.olean LatentProductInterpolationDegree.lean 2>&1 | tee /tmp/ci-interp.log
+          lake env lean -o .lake/build/lib/lean/LatentExpectationEvaluation.olean LatentExpectationEvaluation.lean 2>&1 | tee /tmp/ci-eval.log
           lake env lean -o .lake/build/lib/lean/LatentLikelihoodRatio.olean LatentLikelihoodRatio.lean 2>&1 | tee /tmp/ci-lr.log
           lake env lean -o .lake/build/lib/lean/StrongSmoothingAmplifier.olean StrongSmoothingAmplifier.lean 2>&1 | tee /tmp/ci-smooth.log
           lake env lean -o .lake/build/lib/lean/StrongMarkovEndpoint.olean StrongMarkovEndpoint.lean 2>&1 | tee /tmp/ci-markov.log
           lake env lean -o .lake/build/lib/lean/StrongSmoothingPolynomial.olean StrongSmoothingPolynomial.lean 2>&1 | tee /tmp/ci-smooth-poly.log
           lake env lean -o .lake/build/lib/lean/StrongSmoothingUniform.olean StrongSmoothingUniform.lean 2>&1 | tee /tmp/ci-smooth-uniform.log
           lake env lean -o .lake/build/lib/lean/StrongMarkovRescale.olean StrongMarkovRescale.lean 2>&1 | tee /tmp/ci-markov-rescale.log
-          if grep -q "declaration uses .sorry" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-lr.log /tmp/ci-smooth.log /tmp/ci-markov.log /tmp/ci-smooth-poly.log /tmp/ci-smooth-uniform.log /tmp/ci-markov-rescale.log; then echo "sorry found"; exit 1; fi
-          if grep -q "error" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-lr.log /tmp/ci-smooth.log /tmp/ci-markov.log /tmp/ci-smooth-poly.log /tmp/ci-smooth-uniform.log /tmp/ci-markov-rescale.log; then exit 1; fi
+          if grep -q "declaration uses .sorry" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-eval.log /tmp/ci-lr.log /tmp/ci-smooth.log /tmp/ci-markov.log /tmp/ci-smooth-poly.log /tmp/ci-smooth-uniform.log /tmp/ci-markov-rescale.log; then echo "sorry found"; exit 1; fi
+          if grep -q "error" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-eval.log /tmp/ci-lr.log /tmp/ci-smooth.log /tmp/ci-markov.log /tmp/ci-smooth-poly.log /tmp/ci-smooth-uniform.log /tmp/ci-markov-rescale.log; then exit 1; fi
           cat > CIAxioms.lean <<'LEAN'
           import ComponentIdentification
           import ComponentIdentificationWeightedTournament
           import StrongMixtureDuel
           import LatentProductInterpolationDegree
+          import LatentExpectationEvaluation
           import LatentLikelihoodRatio
           import StrongSmoothingAmplifier
           import StrongMarkovEndpoint
@@ -79,6 +83,7 @@ jobs:
           #print axioms Nightfall.StrongMixtureDuel.undefeated_is_accurate
           #print axioms Nightfall.LatentProductInterpolationDegree.sparseExpectationPoly_natDegree_le
           #print axioms Nightfall.LatentProductInterpolationDegree.affineMarginal_eval
+          #print axioms Nightfall.LatentProductInterpolationDegree.sparseExpectationPoly_eval
           #print axioms Nightfall.LatentLikelihoodRatio.likelihood_two_sided_error_eq_overlap
           #print axioms Nightfall.LatentLikelihoodRatio.likelihood_error_le_weighted_budget
           #print axioms Nightfall.StrongSmoothing.amp_low_tail
