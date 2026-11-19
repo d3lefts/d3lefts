@@ -19,7 +19,6 @@ noncomputable def cubicPoly : Polynomial ℝ :=
 theorem cubicPoly_eval (x : ℝ) :
     cubicPoly.eval x = cubic x := by
   simp [cubicPoly, cubic]
-  ring
 
 noncomputable def ampPoly : ℕ → Polynomial ℝ
   | 0 => X
