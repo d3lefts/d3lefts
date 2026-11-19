@@ -1,6 +1,6 @@
 # ProofGraph-Hard v0.1 — trusted-target Lean integration
 
-Status (2026-11-19): PROTOTYPE, UNSCORED. Public toy fixture and simulated-runner tests are not a frontier benchmark or formal Lean certification. No research-level Lean integration target has yet been wired.
+Status (2026-11-19): PROTOTYPE, UNSCORED. The public toy target PASSED a pinned Lean 4.36.0-rc2 build, standard-axiom audit (no dependencies), and separate leanchecker replay in CI run 44560021054. The 17 fake-runner adversarial tests also passed. This is not a frontier-model score or mathematical research result; no research-level integration target has yet been wired.
 
 ## Objective
 
@@ -13,7 +13,7 @@ The fixture uses ProofGraph.terminal, elementary commutativity of natural-number
     python3 -m unittest test_proofgraph.py -v
     python3 grade_proofgraph.py --manifest fixture/task.json --trusted-root fixture/trusted --submission fixture/submission --receipt /tmp/proofgraph-receipt.json
 
-The first uses a FAKE Lake runner to test checker behavior. The second requires Lake and the pinned Lean toolchain, with a separate CI job to run it. Fake-Lake success is labeled harness-smoke-only. Real Lake success is labeled automated-kernel-check-pending-independent-replay, NOT certified independently.
+The first uses a FAKE Lake runner to test checker behavior. The second requires Lake and the pinned Lean toolchain, with a separate CI job to run it. Fake-Lake success is labeled harness-smoke-only. Real Lake success is labeled leanchecker-kernel-replay-pending-external-review. It means a separate Lean kernel replay passed; this is neither independent implementation verification nor external mathematical review.
 
 ## Security boundary
 
