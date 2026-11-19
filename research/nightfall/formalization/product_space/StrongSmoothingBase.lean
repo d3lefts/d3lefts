@@ -110,8 +110,15 @@ theorem base_gap_of_integer_budget
     have hn0 : 0 ≤ (n : ℝ) := Nat.cast_nonneg _
     positivity
   have hb : (1 - 4 * p) ^ k ≤ 2 / 5 := by
-    apply (mul_le_mul_right hden).mp
-    exact le_trans hmul hthreshold_n
+    have hm : (1 - 4 * p) ^ k * (1 + (n : ℝ) * (4 * p)) ≤
+        (2 / 5 : ℝ) * (1 + (n : ℝ) * (4 * p)) :=
+      le_trans hmul hthreshold_n
+    by_contra hnle
+    have hh : (2 / 5 : ℝ) < (1 - 4 * p) ^ k := lt_of_not_ge hnle
+    have hc : 0 < ((1 - 4 * p) ^ k - (2 / 5 : ℝ)) *
+        (1 + (n : ℝ) * (4 * p)) :=
+      mul_pos (sub_pos.mpr hh) hden
+    nlinarith
   exact ⟨hlow, by linarith⟩
 
 /-- Concrete integer selection, no circular choice. -/
@@ -136,7 +143,7 @@ theorem thresholdCount_budget (ε : ℝ)
       (Nat.lt_floor_add_one ((2 / 5 : ℝ) / ε ^ 2))
   have hcount : 1 ≤ thresholdCount ε := by
     unfold thresholdCount
-    exact Nat.le_floor hq
+    exact Nat.le_floor (show ((1 : ℕ) : ℝ) ≤ (2 / 5 : ℝ) / ε ^ 2 by simpa using hq)
   constructor
   · exact hcount
   constructor
@@ -161,14 +168,18 @@ theorem base_separator (ε z : ℝ)
   constructor
   · intro hsmall
     have hsq : z ^ 2 ≤ ε ^ 2 := by
-      nlinarith [sq_nonneg (ε - |z|), sq_abs z]
+      have hh := mul_nonneg (sub_nonneg.mpr hsmall)
+        (add_nonneg (le_of_lt hε) (abs_nonneg z))
+      nlinarith [hh, sq_abs z]
     unfold base
     have hm := base_mono (thresholdCount ε) (z ^ 2) (ε ^ 2)
       hsq0 hsq (by nlinarith)
     exact le_trans hm hgap.1
   · intro hlarge
     have hsq : 4 * ε ^ 2 ≤ z ^ 2 := by
-      nlinarith [sq_nonneg (|z| - 2 * ε), sq_abs z]
+      have hh := mul_nonneg (sub_nonneg.mpr hlarge)
+        (add_nonneg (abs_nonneg z) (by positivity : 0 ≤ 2 * ε))
+      nlinarith [hh, sq_abs z]
     unfold base
     have hm := base_mono (thresholdCount ε) (4 * ε ^ 2) (z ^ 2)
       (by positivity) hsq hzsq
