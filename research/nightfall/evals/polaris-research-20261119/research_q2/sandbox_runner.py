@@ -254,6 +254,25 @@ def evaluate(candidate: Path, image: str, output: Path) -> dict:
             error = report.get("error", "")
             if not isinstance(error, str) or not error:
                 raise RuntimeError("sandbox rejected without an error reason")
+            if report.get("mathlib_commit") != MATHLIB_COMMIT:
+                raise RuntimeError("sandbox rejection Mathlib commit mismatch")
+            reject_path = output / "rejected-proof.json"
+            if reject_path.exists() or reject_path.is_symlink():
+                raise RuntimeError("rejection receipt already exists: refusing overwrite")
+            negative = {
+                "schema": "nightfall.polaris.negative-control-receipt.v1",
+                "status": "rejected-not-certified",
+                "candidate_sha256": manifest["candidate_sha256"],
+                "image": image,
+                "resolved_image_id": identity,
+                "source_files": manifest["source_files"],
+                "docker_exit_code": completed.returncode,
+                "docker_stdout_sha256": hashlib.sha256(completed.stdout.encode()).hexdigest(),
+                "docker_stderr_sha256": hashlib.sha256(completed.stderr.encode()).hexdigest(),
+                "grader_report": report,
+                "classification": "Lean-build-failure" if "Lean command failure:" in error else "non-Lean-preflight-failure",
+            }
+            reject_path.write_text(json.dumps(negative, indent=2, sort_keys=True) + "\n")
             raise RuntimeError("sandbox candidate rejected: " + error[:1800])
         verify_grader_receipt(report, manifest)
         report["host_sandbox_wrapper"] = {
