@@ -86,6 +86,20 @@ jobs:
           python3 scripts/audit_mira_latin_incidence.py 2>&1 | tee lean-receipts/latin/incidence-exact.log
           grep -F 'FINITE_EXACT_INCIDENCE_CHECK_PASS' lean-receipts/latin/incidence-exact.log
           sha256sum scripts/audit_mira_latin_incidence.py >> lean-receipts/latin/source-sha256.txt
+      - name: Build connected Latin target theorem through Lake import graph
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build Nightfall.LatinSquare.Main 2>&1 | tee lean-receipts/latin/latin-main-build.log
+          python3 scripts/lean_bridge.py Nightfall/LatinSquare/Main.lean \
+            --strict --timeout 600 \
+            --allow-axiom propext \
+            --allow-axiom Classical.choice \
+            --allow-axiom Quot.sound \
+            --decl Nightfall.LatinSquare.latinMixture_softKernelMass \
+            --decl Nightfall.LatinSquare.latentProductLatin_correctedLaw \
+            --json-out lean-receipts/latin/latin-main-bridge.json 2>&1 | tee lean-receipts/latin/latin-main-bridge.log
+          sha256sum Nightfall/LatinSquare/Main.lean >> lean-receipts/latin/source-sha256.txt
       - name: Preserve theorem-source and compiler evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
