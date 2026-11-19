@@ -1,0 +1,80 @@
+name: NIGHTFALL Forrelation conditional one-shot receipt archive
+on:
+  push:
+    branches: [nightfall-forrelation-entropy-lean-20261118]
+    paths:
+      - '.github/workflows/nightfall-forrelation-conditional-archive.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  exact-receipt-archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Download original completed pinned Lean artifact
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fLsS --retry 3 \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/d3lefts/d3lefts/actions/artifacts/14498869454/zip \
+            -o /tmp/forrelation-conditional-44459067834.zip
+      - name: Verify exact artifact, source, theorem types and axioms; preserve JSON byte-for-byte
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib,json,zipfile
+          path=Path('/tmp/forrelation-conditional-44459067834.zip')
+          assert hashlib.sha256(path.read_bytes()).hexdigest() == '4f3a54fd348a3d7972559e656eec06aa59efaf6326f5d62bba957c9d8172af76'
+          source=Path('research/nightfall/formalization/forrelation/ForrelationEntropyObstruction.lean')
+          want_source='e5c06bd4b9a8578aa254bb0c37da4a4b6d0a75281965f0d005ef3693e2abc9aa'
+          assert hashlib.sha256(source.read_bytes()).hexdigest()==want_source
+          with zipfile.ZipFile(path) as z:
+              raw=z.read('conditional-receipt.json')
+              expected='c6601c3bb2c0b8e5d770fdaa6a43c40e32b22eb22f87db08d0c6f0c6db389322'
+              assert hashlib.sha256(raw).hexdigest()==expected
+              j=json.loads(raw)
+              assert j['status']=='COMPILED' and j['compiler_exit_code']==0 and j['version_matches_pin']
+              assert j['source_sha256']==want_source
+              names=['Nightfall.Forrelation.EntropyCore.exact_conditional_terminal',
+                     'Nightfall.Forrelation.EntropyCore.tv_robust_conditional_terminal']
+              allowed={'propext','Classical.choice','Quot.sound'}
+              assert all(name in j['declarations_requested'] for name in names)
+              assert all(set(j['axiom_dependencies'][name])<=allowed for name in names)
+              assert all(j['axiom_audit'][name]=='allowlisted_dependencies' for name in names)
+              out=Path('docs/nightfall-forrelation-conditional-receipts-20261118')
+              out.mkdir(parents=True,exist_ok=True)
+              (out/'conditional-receipt.json').write_bytes(raw)
+              reg={
+                'schema':'nightfall-forrelation-conditional-lean-receipt-v1',
+                'source_PR':871,
+                'source_commit':'0bf1949c4d7fbbc6188dbb1a41e1f43cdb26b73c',
+                'source_workflow_run':44459067834,
+                'artifact_id':14498869454,
+                'artifact_sha256':'4f3a54fd348a3d7972559e656eec06aa59efaf6326f5d62bba957c9d8172af76',
+                'raw_receipt_sha256':expected,
+                'source_sha256':want_source,
+                'named_declarations':names,
+                'standard_axioms':sorted(allowed),
+                'scope':'CONDITIONAL information-to-exponential arithmetic only; Gaussian/KL/latent capacity premises UNPROVED in Lean',
+              }
+              (out/'register.json').write_text(json.dumps(reg,sort_keys=True,indent=2)+'\n')
+          print('PASS: exact original conditional Lean receipt archived')
+          PY
+      - name: Commit raw receipt without modifying source
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/nightfall-forrelation-conditional-receipts-20261118/
+          git diff --cached --check
+          git commit -m "Archive exact conditional Forrelation Lean receipt (run 44459067834)"
+          git push origin HEAD:nightfall-forrelation-entropy-lean-20261118
