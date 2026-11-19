@@ -61,15 +61,22 @@ theorem tv_sq_le_two_hellinger (p q : α → ℝ)
       exact Real.sq_sqrt (hq0 a)
     simp_rw [h]
     exact hq1
+  have hcoeff : (∑ a : α, 2 * u a * v a) = 2 * B := by
+    calc
+      (∑ a : α, 2 * u a * v a) = ∑ a : α, 2 * (u a * v a) := by
+        apply Finset.sum_congr rfl
+        intro a _
+        ring
+      _ = 2 * B := by
+        dsimp [B]
+        rw [Finset.mul_sum]
   have hminus : (∑ a : α, (u a - v a)^2) = 2 - 2 * B := by
     have h : ∀ a, (u a - v a)^2 =
         (u a)^2 + (v a)^2 - 2 * u a * v a := by
       intro a
       ring
     simp_rw [h]
-    rw [Finset.sum_sub_distrib, Finset.sum_add_distrib,
-      ← Finset.mul_sum, hu2, hv2]
-    dsimp [B]
+    rw [Finset.sum_sub_distrib, Finset.sum_add_distrib, hu2, hv2, hcoeff]
     ring
   have hplus : (∑ a : α, (u a + v a)^2) = 2 + 2 * B := by
     have h : ∀ a, (u a + v a)^2 =
@@ -77,9 +84,7 @@ theorem tv_sq_le_two_hellinger (p q : α → ℝ)
       intro a
       ring
     simp_rw [h]
-    rw [Finset.sum_add_distrib, Finset.sum_add_distrib,
-      ← Finset.mul_sum, hu2, hv2]
-    dsimp [B]
+    rw [Finset.sum_add_distrib, Finset.sum_add_distrib, hu2, hv2, hcoeff]
     ring
   have habs : ∀ a, |p a - q a| = |u a - v a| * (u a + v a) := by
     intro a
@@ -107,6 +112,7 @@ theorem tv_sq_le_two_hellinger (p q : α → ℝ)
     dsimp [B, u, v]
     exact Finset.sum_congr rfl (fun a _ => (Real.sqrt_mul (hp0 a) (q a)).symm)
   rw [hB] at hcs
+  rw [← htvd] at hcs
   nlinarith [sq_nonneg (1 - ∑ a : α, Real.sqrt (p a * q a))]
 
 end Nightfall.MarginFreeTVHellinger
