@@ -6,6 +6,8 @@ on:
       - 'research/nightfall/formalization/product_space/ComponentIdentificationWeightedTournament.lean'
       - 'research/nightfall/formalization/product_space/StrongMixtureDuel.lean'
       - 'research/nightfall/formalization/product_space/StrongFixedPoint.lean'
+      - 'research/nightfall/formalization/product_space/LatentProductInterpolationDegree.lean'
+      - 'research/nightfall/formalization/product_space/LatentLikelihoodRatio.lean'
       - 'research/nightfall/strong_simulation_progress/component_id_nonvacuous_check.py'
       - '.github/workflows/nightfall-component-identification.yml'
   workflow_dispatch:
@@ -30,18 +32,24 @@ jobs:
           cp research/nightfall/formalization/product_space/ComponentIdentificationWeightedTournament.lean /tmp/mathlib4/ComponentIdentificationWeightedTournament.lean
           cp research/nightfall/formalization/product_space/StrongMixtureDuel.lean /tmp/mathlib4/StrongMixtureDuel.lean
           cp research/nightfall/formalization/product_space/StrongFixedPoint.lean /tmp/mathlib4/StrongFixedPoint.lean
+          cp research/nightfall/formalization/product_space/LatentProductInterpolationDegree.lean /tmp/mathlib4/LatentProductInterpolationDegree.lean
+          cp research/nightfall/formalization/product_space/LatentLikelihoodRatio.lean /tmp/mathlib4/LatentLikelihoodRatio.lean
           cd /tmp/mathlib4
           lake env lean -o .lake/build/lib/lean/ComponentIdentification.olean ComponentIdentification.lean 2>&1 | tee /tmp/ci.log
           lake env lean -o .lake/build/lib/lean/ComponentIdentificationWeightedTournament.olean ComponentIdentificationWeightedTournament.lean 2>&1 | tee /tmp/ci-weighted.log
           lake env lean -o .lake/build/lib/lean/StrongMixtureDuel.olean StrongMixtureDuel.lean 2>&1 | tee /tmp/ci-duel.log
           lake env lean -o .lake/build/lib/lean/StrongFixedPoint.olean StrongFixedPoint.lean 2>&1 | tee /tmp/ci-fixedpoint.log
-          if grep -q "declaration uses .sorry" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-fixedpoint.log; then echo "sorry found"; exit 1; fi
-          if grep -q "error" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-fixedpoint.log; then exit 1; fi
+          lake env lean -o .lake/build/lib/lean/LatentProductInterpolationDegree.olean LatentProductInterpolationDegree.lean 2>&1 | tee /tmp/ci-interp.log
+          lake env lean -o .lake/build/lib/lean/LatentLikelihoodRatio.olean LatentLikelihoodRatio.lean 2>&1 | tee /tmp/ci-lr.log
+          if grep -q "declaration uses .sorry" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-lr.log /tmp/ci-fixedpoint.log; then echo "sorry found"; exit 1; fi
+          if grep -q "error" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-lr.log /tmp/ci-fixedpoint.log; then exit 1; fi
           cat > CIAxioms.lean <<'LEAN'
           import ComponentIdentification
           import ComponentIdentificationWeightedTournament
           import StrongMixtureDuel
           import StrongFixedPoint
+          import LatentProductInterpolationDegree
+          import LatentLikelihoodRatio
           open Nightfall.ComponentIdentification
           #print axioms component_identification_core
           #print axioms hellinger_K_le
@@ -57,6 +65,10 @@ jobs:
           #print axioms Nightfall.StrongSimulation.FixedPoint.quadratic_nat_growth
           #print axioms Nightfall.StrongSimulation.FixedPoint.explicit_dyadic_fixed_point
           #print axioms Nightfall.StrongSimulation.FixedPoint.explicit_rounding_condition
+          #print axioms Nightfall.LatentProductInterpolationDegree.sparseExpectationPoly_natDegree_le
+          #print axioms Nightfall.LatentProductInterpolationDegree.affineMarginal_eval
+          #print axioms Nightfall.LatentLikelihoodRatio.likelihood_two_sided_error_eq_overlap
+          #print axioms Nightfall.LatentLikelihoodRatio.likelihood_error_le_weighted_budget
           LEAN
           sed -i 's/^          //' CIAxioms.lean
           lake env lean CIAxioms.lean | tee /tmp/axioms.txt

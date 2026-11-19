@@ -72,7 +72,6 @@ theorem weighted_posterior_duel
       _ = (ε * ζ / 2) * ((∑ i ∈ s, p i) + (∑ i ∈ s, q i)) +
           (∑ i ∈ s, badP i) + (∑ i ∈ s, badQ i) := by
             simp only [Finset.sum_add_distrib, ← Finset.mul_sum]
-            ring
   have hs : (∑ i ∈ s, p i) + (∑ i ∈ s, q i) ≤ (2 : ℝ) := by linarith
   have hc : 0 ≤ ε * ζ / 2 :=
     div_nonneg (mul_nonneg (le_of_lt hε) hζ) (by norm_num)
