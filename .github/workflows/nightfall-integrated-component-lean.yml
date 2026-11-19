@@ -41,7 +41,7 @@ jobs:
         run: |
           set -euo pipefail
           cd /tmp/mathlib4
-          for M in ComponentIdentification MarginFreeCertificate MarginFreeFiniteTests MarginFreeBhattacharyya MarginFreeTVHellinger MarginFreeLargeGaps LatentComponentCertifiedCore PinnedConditionalStability MarginFreeIntegrated MarginFreeProductDisintegration; do
+          for M in ComponentIdentification MarginFreeCertificate LatentProductInterpolationDegree MarginFreeFiniteTests MarginFreeBhattacharyya MarginFreeTVHellinger MarginFreeLargeGaps LatentComponentCertifiedCore PinnedConditionalStability MarginFreeIntegrated MarginFreeProductDisintegration; do
             cp "$GITHUB_WORKSPACE/research/nightfall/formalization/product_space/$M.lean" "$M.lean"
             lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean" 2>&1 | tee "/tmp/$M.log"
             if grep -E 'error:|sorryAx|declaration uses .sorry' "/tmp/$M.log"; then exit 1; fi
@@ -71,6 +71,7 @@ jobs:
             /tmp/ComponentIdentification.log
             /tmp/MarginFreeCertificate.log
             /tmp/MarginFreeFiniteTests.log
+            /tmp/LatentProductInterpolationDegree.log
             /tmp/MarginFreeBhattacharyya.log
             /tmp/MarginFreeTVHellinger.log
             /tmp/MarginFreeLargeGaps.log
