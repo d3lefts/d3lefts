@@ -31,7 +31,8 @@ noncomputable finite enumeration interface, not an efficient sampler. -/
 noncomputable instance labeledSquareFintype (n : ℕ) :
     Fintype (LabeledSquare n) := by
   classical
-  exact Fintype.ofFinite (LabeledSquare n)
+  change Fintype {S : Fin n → Fin n → Fin n // IsLabeledLatin n S}
+  infer_instance
 
 /-- Unnormalized probability weight assigned to a Latin square by a
 finite mixture of independent cell sources. The individual component
