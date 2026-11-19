@@ -136,6 +136,7 @@ theorem kernel_pushforward
     simp only [if_pos rfl, zero_add]
     rw [hkernel_aa]
     field_simp [ne_of_gt hpa] <;> ring
+    all_goals simp
   · have hkernel_ay :
         kernel N p a a y = increment N (p y) / p a := by
       simp [kernel, hy]
