@@ -147,6 +147,73 @@ theorem roundedMass_sum (N : ℕ) (p : α → ℝ) (a : α) :
           ring
     _ = ∑ b : α, p b := (hsplit p).symm
 
+
+/-- A normalized finite source always has an anchor that can cover every
+nonanchor one-grid-unit rounding budget once N exceeds alphabet-size squared.
+This is the complete finite pigeonhole step; it requires NO atom floor. -/
+theorem exists_anchor_room (N : ℕ) (hN : 0 < N)
+    (hgrid : (Fintype.card α : ℝ) ^ 2 < (N : ℝ))
+    (p : α → ℝ) (hpSum : (∑ a : α, p a) = 1) :
+    ∃ a : α,
+      (∑ b ∈ Finset.univ.erase a, (1 : ℝ) / (N : ℝ)) < p a := by
+  classical
+  let A : ℝ := Fintype.card α
+  have hn : (0 : ℝ) < (N : ℝ) := by exact_mod_cast hN
+  have hbudget (a : α) :
+      (∑ b ∈ Finset.univ.erase a, (1 : ℝ) / (N : ℝ)) ≤
+        A / (N : ℝ) := by
+    let E : Finset α := Finset.univ.erase a
+    have hsubset : E ⊆ (Finset.univ : Finset α) := by
+      intro b hb
+      exact Finset.mem_univ b
+    have hcNat : E.card ≤ Fintype.card α := by
+      simpa using Finset.card_le_card hsubset
+    have hc : (E.card : ℝ) ≤ A := by
+      exact_mod_cast hcNat
+    calc
+      (∑ b ∈ Finset.univ.erase a, (1 : ℝ) / (N : ℝ)) =
+          (E.card : ℝ) * (1 / (N : ℝ)) := by
+            simp [E, nsmul_eq_mul]
+      _ ≤ A * (1 / (N : ℝ)) :=
+          mul_le_mul_of_nonneg_right hc (by positivity)
+      _ = A / (N : ℝ) := by ring
+  have hsmall : A * (A / (N : ℝ)) < 1 := by
+    have hsq : A * A < (N : ℝ) := by
+      simpa [A, pow_two] using hgrid
+    calc
+      A * (A / (N : ℝ)) = (A * A) / (N : ℝ) := by ring
+      _ < 1 := (div_lt_iff₀ hn).2 (by nlinarith)
+  by_contra h
+  push_neg at h
+  have hpUpper (a : α) : p a ≤ A / (N : ℝ) :=
+    (h a).trans (hbudget a)
+  have hsumUpper : (∑ a : α, p a) ≤
+      ∑ _a : α, A / (N : ℝ) :=
+    Finset.sum_le_sum (fun a _ => hpUpper a)
+  have hconst : (∑ _a : α, A / (N : ℝ)) =
+      A * (A / (N : ℝ)) := by
+    simp [A, nsmul_eq_mul]
+  rw [hpSum, hconst] at hsumUpper
+  linarith
+
+/-- Universal finite one-sided rounded law, including zero source atoms,
+with no additional anchor supplied by the caller. -/
+theorem exists_rounded_law (N : ℕ) (hN : 0 < N)
+    (hgrid : (Fintype.card α : ℝ) ^ 2 < (N : ℝ))
+    (p : α → ℝ) (hp : ∀ b, 0 ≤ p b)
+    (hpSum : (∑ b : α, p b) = 1) :
+    ∃ a : α,
+      (∀ b, 0 ≤ roundedMass N p a b) ∧
+      (∑ b : α, roundedMass N p a b) = 1 ∧
+      (∀ b, 0 < p b → 0 < roundedMass N p a b) := by
+  obtain ⟨a, ha⟩ := exists_anchor_room N hN hgrid p hpSum
+  refine ⟨a, ?_, ?_, ?_⟩
+  · exact roundedMass_nonneg N hN p hp a ha
+  · rw [roundedMass_sum]
+    exact hpSum
+  · intro b hb
+    exact roundedMass_support N hN p hp a ha b hb
+
 end Nightfall.StrongDyadicRounding
 
 #print axioms Nightfall.StrongDyadicRounding.upperGrid_ge
@@ -158,3 +225,6 @@ end Nightfall.StrongDyadicRounding
 #print axioms Nightfall.StrongDyadicRounding.roundedMass_nonneg
 #print axioms Nightfall.StrongDyadicRounding.roundedMass_support
 #print axioms Nightfall.StrongDyadicRounding.roundedMass_sum
+
+#print axioms Nightfall.StrongDyadicRounding.exists_anchor_room
+#print axioms Nightfall.StrongDyadicRounding.exists_rounded_law
