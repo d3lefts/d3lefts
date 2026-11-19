@@ -60,7 +60,7 @@ theorem overlapMass_eq_one_sub_tv
 theorem killedMass_eq_totalVariation
     (α : Type*) [Fintype α] (p q : α → ℚ)
     (hp : (∑ x, p x) = 1) (hq : (∑ x, q x) = 1) :
-    (∑ x, p x - min (p x) (q x)) =
+    (∑ x : α, p x - min (p x) (q x)) =
       totalVariationMass α p q := by
   rw [Finset.sum_sub_distrib, hp,
       overlapMass_eq_one_sub_tv α p q hp hq]
