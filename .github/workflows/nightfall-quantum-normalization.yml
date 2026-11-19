@@ -1,0 +1,60 @@
+name: NIGHTFALL quantum unitary normalization (pinned Lean)
+on:
+  push:
+    branches: [nightfall-quantum-unitary-normalization-20261119]
+    paths:
+      - 'research/nightfall/formalization/product_space/QuantumCircuitNormalization.lean'
+      - '.github/workflows/nightfall-quantum-normalization.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/QuantumCircuitNormalization.lean'
+      - '.github/workflows/nightfall-quantum-normalization.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  unitary-normalization:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Kernel-check finite complex unitary normalization
+        shell: bash
+        run: |
+          set -euo pipefail
+          for M in QuantumCircuitPaths QuantumCircuitNormalization; do
+            cp "research/nightfall/formalization/product_space/$M.lean" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean" 2>&1 | tee "$GITHUB_WORKSPACE/$M-compile.log")
+          done
+      - name: Normalized quantum acceptance named-axiom check
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat >/tmp/mathlib4/QuantumNormalizationAudit.lean <<'LEAN'
+          import QuantumCircuitNormalization
+          #check @Nightfall.QuantumCircuitNormalization.execute_energy_one
+          #check @Nightfall.QuantumCircuitNormalization.probability_in_unit_interval
+          #print axioms Nightfall.QuantumCircuitNormalization.execute_energy_one
+          #print axioms Nightfall.QuantumCircuitNormalization.probability_in_unit_interval
+          LEAN
+          (cd /tmp/mathlib4 && lake env lean QuantumNormalizationAudit.lean) | tee quantum-normalization-axioms.txt
+          ! grep -E 'sorryAx|error:' quantum-normalization-axioms.txt
+      - name: Preserve source/axioms/identity
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/quantum-normalization
+          git rev-parse HEAD > lean-receipts/quantum-normalization/head
+          sha256sum research/nightfall/formalization/product_space/QuantumCircuitNormalization.lean > lean-receipts/quantum-normalization/source.sha256
+          cp quantum-normalization-axioms.txt lean-receipts/quantum-normalization/axioms.txt 2>/dev/null || true
+          cp QuantumCircuitNormalization-compile.log lean-receipts/quantum-normalization/compile.log 2>/dev/null || true
+          cp /tmp/nightfall-lean-version.txt lean-receipts/quantum-normalization/compiler.txt 2>/dev/null || true
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: nightfall-quantum-normalization-${{ github.run_id }}
+          path: lean-receipts/quantum-normalization
+          if-no-files-found: warn
