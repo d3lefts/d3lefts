@@ -88,9 +88,10 @@ theorem kernel_sum_one
     have hqa : roundedMass N p a a =
         p a - ∑ y ∈ E, increment N (p y) := by
       simp [roundedMass, E]
-    change (∑ y ∈ E, increment N (p y)) / p a +
-      roundedMass N p a a / p a = 1
-    rw [hqa]
+    have hkernel_aa :
+        kernel N p a a a = roundedMass N p a a / p a := by
+      simp [kernel]
+    rw [hkernel_aa, hqa]
     field_simp [ne_of_gt hpa] <;> ring
   · simp [kernel, hx]
 
@@ -129,11 +130,17 @@ theorem kernel_pushforward
   rw [hsplit (fun x => p x * kernel N p a x y), hother]
   by_cases hy : y = a
   · subst y
-    change p a * (roundedMass N p a a / p a) =
-      roundedMass N p a a
+    have hkernel_aa :
+        kernel N p a a a = roundedMass N p a a / p a := by
+      simp [kernel]
+    simp only [if_pos rfl, zero_add]
+    rw [hkernel_aa]
     field_simp [ne_of_gt hpa] <;> ring
-  · change p y + p a * (increment N (p y) / p a) =
-      roundedMass N p a y
+  · have hkernel_ay :
+        kernel N p a a y = increment N (p y) / p a := by
+      simp [kernel, hy]
+    simp only [if_neg hy]
+    rw [hkernel_ay]
     rw [show roundedMass N p a y = upperGrid N (p y) by
       simp [roundedMass, hy]]
     unfold increment
