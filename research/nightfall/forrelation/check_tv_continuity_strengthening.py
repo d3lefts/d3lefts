@@ -39,7 +39,7 @@ def mi(p):
 
 
 def tv(p, q):
-    return sum((abs(p.get(k, F(0)) - q.get(k, F(0))
+    return sum((abs(p.get(k, F(0)) - q.get(k, F(0)))
                 for k in p.keys() | q.keys()), F(0)) / 2
 
 
