@@ -1,0 +1,53 @@
+name: NIGHTFALL AA simulation actual-product semantic gate
+
+on:
+  push:
+    branches: [nightfall-aa-simulator-semantic-cert-20261118]
+    paths:
+      - 'research/nightfall/formalization/product_space/SimulationOriginalLaw.lean'
+      - '.github/workflows/nightfall-aa-simulation-semantic-lean.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/SimulationOriginalLaw.lean'
+      - '.github/workflows/nightfall-aa-simulation-semantic-lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  simulation-original-law:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact product-source prerequisites and query semantics
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/observability/ActualProductMergeTower.lean /tmp/mathlib4/ActualProductMergeTower.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ActualProductMergeTower.olean ActualProductMergeTower.lean)
+          cp research/nightfall/formalization/product_space/SimulationOriginalLaw.lean /tmp/mathlib4/SimulationOriginalLaw.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/SimulationOriginalLaw.olean SimulationOriginalLaw.lean)
+          cat > /tmp/mathlib4/SimulationSemanticAudit.lean <<'LEAN'
+          import SimulationOriginalLaw
+          #check @Nightfall.QuerySimulation.OriginalLaw.source_pin_tower
+          #check @Nightfall.QuerySimulation.OriginalLaw.doubleInfluence_pin_self
+          #check @Nightfall.QuerySimulation.OriginalLaw.doubleInfluence_pin_other_expectation
+          #print axioms Nightfall.QuerySimulation.OriginalLaw.source_pin_tower
+          #print axioms Nightfall.QuerySimulation.OriginalLaw.doubleInfluence_pin_self
+          #print axioms Nightfall.QuerySimulation.OriginalLaw.doubleInfluence_pin_other_expectation
+          LEAN
+          (cd /tmp/mathlib4 && lake env lean SimulationSemanticAudit.lean) | tee semantic-axioms.txt
+          ! grep -E 'sorryAx|Lean\.ofReduceBool|native_decide' semantic-axioms.txt
+          sha256sum research/nightfall/formalization/product_space/SimulationOriginalLaw.lean
+          git rev-parse HEAD
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: aa-query-semantic-lean-receipts
+          path: |
+            semantic-axioms.txt
