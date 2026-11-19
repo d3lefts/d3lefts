@@ -30,6 +30,10 @@ This verifies tooling only. There are **zero** measured frontier-agent trials, n
 
 The research target is **not** the full original-source Q2 terminal theorem and not a new mathematical discovery. No blind agent attempted it, and no external referee independently audited the proof. Public-source access makes memorization and answer leakage possible; an unpublished task variant and isolated agent execution are required before performance scoring.
 
+## Tier 3: sealed submission and untrusted-code isolation (experimental)
+
+A [restricted container entrypoint](../research_q2/sandbox_runner.py), [preliminary image recipe](../research_q2/Dockerfile), and [threat-model protocol](../research_q2/SANDBOX.md) have been added. The input set contains exactly five named files, protects the trusted theorem and Bernstein source with immutable hashes, uses a network-disabled read-only container with non-root uid and resource limits, and validates all six reported proof/axiom/kernel steps before writing a host receipt. The container is supposed to use a fresh ephemeral Mathlib workspace per candidate. The source/policy/receipt tests are CI-exercised, but **no immutable image has been built and independently audited, and no real container-based candidate has been executed**. This is an implementation gate, not a security certification or scored agent result.
+
 ## Integrity mechanism
 
 Immutable source tree hash -> allowlisted .lean submission overlay -> fresh trusted-target Lake build -> evaluator-owned #print axioms -> separate leanchecker replay -> hashed receipt. The simulated-runner tests attack unapproved files, source changes, symlinks, path traversal, axiom injection, sorry, forged/missing reports, build failures and checker failures.
