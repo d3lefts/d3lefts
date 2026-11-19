@@ -43,8 +43,9 @@ theorem mixMass_sum_one (P : Θ → ι → α → ℝ) (w : Θ → ℝ)
       ∑ θ : Θ, w θ * ∑ x : ι → α, Transfer.prodMass (P θ) x := by
         exact Finset.sum_congr rfl fun θ _ => (Finset.mul_sum).symm
     _ = ∑ θ : Θ, w θ := by
-      simp_rw [Influence.sum_prodMass (p := P _) (hP1 _)]
-      simp
+      apply Finset.sum_congr rfl
+      intro θ _
+      rw [Influence.sum_prodMass (P θ) (hP1 θ), mul_one]
     _ = 1 := hw1
 
 /-- Unnormalized mixture expectation equals its explicit mass-table integral. -/
