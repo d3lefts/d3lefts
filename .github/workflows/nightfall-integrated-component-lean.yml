@@ -1,5 +1,11 @@
 name: NIGHTFALL margin-free component identification integrated source Lean
 on:
+  push:
+    branches:
+      - nightfall-original-classifier-terminal-cert-20261119
+    paths:
+      - '.github/workflows/nightfall-integrated-component-lean.yml'
+      - 'research/nightfall/formalization/product_space/MarginFreeOriginalClassifier.lean'
   pull_request:
     paths:
       - 'research/nightfall/formalization/product_space/MarginFreeIntegrated.lean'
@@ -84,7 +90,8 @@ jobs:
           sed -i 's/^          //' IntegratedAxioms.lean
           lake env lean IntegratedAxioms.lean 2>&1 | tee /tmp/integration-axioms.log
           if grep -E 'error:|sorryAx|declaration uses .sorry' /tmp/integration-axioms.log; then exit 1; fi
-          sha256sum MarginFreeProductDisintegration.lean MarginFreeIntegrated.lean PinnedConditionalStability.lean LatentComponentCertifiedCore.lean MarginFreeLargeGaps.lean | tee /tmp/integration-sha256.txt
+          echo "CI_HEAD_SHA=$GITHUB_SHA" | tee /tmp/classifier-cert-head.txt
+          sha256sum MarginFreeOriginalClassifier.lean MarginFreeClassifierTerminal.lean MarginFreeObservationPushforward.lean MarginFreeProductDisintegration.lean MarginFreeIntegrated.lean PinnedConditionalStability.lean LatentComponentCertifiedCore.lean MarginFreeLargeGaps.lean | tee /tmp/integration-sha256.txt
       - name: Preserve complete integration receipt
         if: always()
         uses: actions/upload-artifact@v4
@@ -110,5 +117,6 @@ jobs:
             /tmp/MarginFreeOriginalClassifier.log
             /tmp/integration-axioms.log
             /tmp/integration-sha256.txt
+            /tmp/classifier-cert-head.txt
           retention-days: 60
           if-no-files-found: warn
