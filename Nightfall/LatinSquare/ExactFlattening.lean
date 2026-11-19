@@ -233,6 +233,50 @@ theorem correctedKernelMass_normalizes
     · intro f hf
       exact hden z f hf
 
+/-!
+## Support-correct likelihood ratios
+
+Mira's proposal has vetoed (null) paths. The source assumption is
+reverse-support inclusion: r(z) != 0 implies q(z) != 0.
+A total function with zero likelihood off the forward support makes
+that assumption explicit without artificially requiring q(z) != 0
+for every possible decoration.
+-/
+
+/-- Weighted likelihood ratio on forward-supported histories,
+defined as zero off support. -/
+def supportedLikelihood (q r w : ℚ) : ℚ :=
+  if q = 0 then 0 else w * r / q
+
+/-- Under reverse-support inclusion the balance q*T=w*r holds even
+at zero-proposal atoms. This is a genuine support reduction rather
+than a full-support assumption. -/
+theorem supportedLikelihood_balance
+    (q r w : ℚ) (hSupport : q = 0 → r = 0) :
+    q * supportedLikelihood q r w = w * r := by
+  by_cases hzero : q = 0
+  · simp [supportedLikelihood, hzero, hSupport hzero]
+  · simp only [supportedLikelihood, if_neg hzero]
+    exact weighted_ratio_balance q r w hzero
+
+/-- Forward/reverse finite-history exact soft-gate balance with the
+paper's reverse-support inclusion condition. Nonzero denominators
+remain an explicit analytic/probabilistic premise. -/
+theorem supportedKernelMass_balance
+    (η : Type*) [Fintype η]
+    (q r : η → ℚ) (w a : ℚ)
+    (ha : a ≠ 0)
+    (hSupport : ∀ z, q z = 0 → r z = 0)
+    (hden : ∀ z, supportedLikelihood (q z) (r z) w + a ≠ 0) :
+    softForwardKernelMass η q
+      (fun z => supportedLikelihood (q z) (r z) w) a =
+    (w / a) * softReverseKernelMass η r
+      (fun z => supportedLikelihood (q z) (r z) w) a := by
+  apply softKernelMass_balance η q r
+    (fun z => supportedLikelihood (q z) (r z) w) w a ha hden
+  intro z
+  exact supportedLikelihood_balance (q z) (r z) w (hSupport z)
+
 #print axioms Nightfall.LatinSquare.weighted_ratio_balance
 #print axioms Nightfall.LatinSquare.soft_forward_atom
 #print axioms Nightfall.LatinSquare.soft_forward_sum
@@ -245,5 +289,7 @@ theorem correctedKernelMass_normalizes
 #print axioms Nightfall.LatinSquare.scaledKernelMass_balance
 #print axioms Nightfall.LatinSquare.correctedLevelMass_eq
 #print axioms Nightfall.LatinSquare.correctedKernelMass_normalizes
+#print axioms Nightfall.LatinSquare.supportedLikelihood_balance
+#print axioms Nightfall.LatinSquare.supportedKernelMass_balance
 
 end Nightfall.LatinSquare
