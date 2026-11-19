@@ -1,0 +1,17 @@
+{
+  "allowed_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "allowed_submission_paths": [
+    "ProofGraph/Submission.lean"
+  ],
+  "required_theorems": [
+    "ProofGraph.terminal"
+  ],
+  "schema": "nightfall.proofgraph.task.v1",
+  "target_module": "ProofGraph.TrustedTarget",
+  "toolchain": "leanprover/lean4:v4.36.0-rc2",
+  "trusted_tree_sha256": "892b44410c220b864fbb05c5f668dc6823e676904bff3254185609e67bd45e0d"
+}
