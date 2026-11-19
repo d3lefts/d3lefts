@@ -53,7 +53,8 @@ theorem kernel_nonneg
       exact div_nonneg
         (increment_nonneg N hN (p y)) hpa.le
   · by_cases hxy : x = y
-    · simp [kernel, hx, hxy]
+    · subst y
+      simp [kernel, hx]
     · simp [kernel, hx, hxy]
 
 /-- Every row is a probability law; the nonanchor rows are Dirac masses,
@@ -87,10 +88,10 @@ theorem kernel_sum_one
     have hqa : roundedMass N p a a =
         p a - ∑ y ∈ E, increment N (p y) := by
       simp [roundedMass, E]
-    simp only [kernel, if_pos rfl]
+    change (∑ y ∈ E, increment N (p y)) / p a +
+      roundedMass N p a a / p a = 1
     rw [hqa]
-    field_simp [ne_of_gt hpa]
-    ring
+    field_simp [ne_of_gt hpa] <;> ring
   · simp [kernel, hx]
 
 /-- Under the source p, the constructed coupling has exactly the
@@ -120,7 +121,7 @@ theorem kernel_pushforward
       _ = if y = a then 0 else p y := by
             by_cases hy : y = a
             · subst y
-              have haE : a ∉ E := Finset.not_mem_erase a _
+              have haE : a ∉ E := by simp [E]
               simp [haE, E]
             · have hyE : y ∈ E :=
                 Finset.mem_erase.mpr ⟨hy, Finset.mem_univ y⟩
@@ -128,14 +129,15 @@ theorem kernel_pushforward
   rw [hsplit (fun x => p x * kernel N p a x y), hother]
   by_cases hy : y = a
   · subst y
-    simp only [if_pos rfl, zero_add, kernel, roundedMass]
-    simp [div_mul_eq_mul_div]
-    field_simp [ne_of_gt hpa]
-  · simp only [if_neg hy]
-    simp only [kernel, if_pos rfl, if_neg hy, roundedMass]
+    change p a * (roundedMass N p a a / p a) =
+      roundedMass N p a a
+    field_simp [ne_of_gt hpa] <;> ring
+  · change p y + p a * (increment N (p y) / p a) =
+      roundedMass N p a y
+    rw [show roundedMass N p a y = upperGrid N (p y) by
+      simp [roundedMass, hy]]
     unfold increment
-    field_simp [ne_of_gt hpa]
-    ring
+    field_simp [ne_of_gt hpa] <;> ring
 
 end Nightfall.StrongOneSidedCoupling
 
