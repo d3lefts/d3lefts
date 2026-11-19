@@ -169,6 +169,7 @@ theorem exists_anchor_room (N : ℕ) (hN : 0 < N)
     have hcNat : E.card ≤ Fintype.card α := by
       simpa using Finset.card_le_card hsubset
     have hc : (E.card : ℝ) ≤ A := by
+      dsimp [A]
       exact_mod_cast hcNat
     calc
       (∑ b ∈ Finset.univ.erase a, (1 : ℝ) / (N : ℝ)) =
