@@ -33,3 +33,41 @@ for label, v in [
     ("overlap", overlap), ("bound", bound), ("slack", bound-overlap),
 ]:
     print(f"{label}: {v} = {float(v):.12g}")
+
+# Nonempty small-gap set R: append one almost-identical coordinate.
+# The restricted low-degree function retains a nonzero conditional mean shift.
+# Its failure events remain exactly the nine-bit majority failures.
+from math import pi
+d = 9
+c = Fraction(1, 10)
+pR = Fraction(5001, 10000)
+qR = Fraction(4999, 10000)
+gammaR = pR - qR
+eta0 = 4 * eps * c / (pi * d)
+assert 0 < float(gammaR) < eta0
+# f'(x)=(19/20)*majority9(x[0:9])+(1/20)*x[9].
+# Under either law, deviation from u=1 or v=0 can occur only when
+# majority9 picks the wrong class; the last bit never creates a failure.
+assert Fraction(19,20) >= 1-eps
+assert Fraction(1,20) <= eps
+conditional_shift = Fraction(1,20)*gammaR
+assert conditional_shift == Fraction(1, 100000)
+assert float(conditional_shift) < eps
+print("PASS: nonempty small-gap coordinates with nonzero exact mean shift")
+
+# Regression against the incorrect min(prior_i,prior_j)*overlap factorization.
+# Under unequal transcript weights, this naive factorization is false.
+prior_i, prior_j = Fraction(9,10), Fraction(1,10)
+cond_i = [Fraction(1,10), Fraction(9,10)]
+cond_j = [Fraction(9,10), Fraction(1,10)]
+weighted_bayes = sum(
+    (min(prior_i*cond_i[x], prior_j*cond_j[x]) for x in range(2)),
+    Fraction(0),
+)
+naive = min(prior_i,prior_j)*sum(
+    (min(cond_i[x],cond_j[x]) for x in range(2)), Fraction(0)
+)
+assert weighted_bayes == Fraction(1,10)
+assert naive == Fraction(1,50)
+assert weighted_bayes > naive
+print("PASS: unequal-transcript-prior regression rejects naive overlap factorization")
