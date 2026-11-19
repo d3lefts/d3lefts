@@ -12,10 +12,9 @@ bits.
 Certification scope: rows 1–5 were compiled in Lean at commit `d8e2016` ([run
 44406881226](https://github.com/d3lefts/d3lefts/actions/runs/44406881226), 177-module closure,
 only `propext`, `Classical.choice`, `Quot.sound`); row 6 compares constants and has no
-independent certificate. Row 7 is **new on commit `771d11a`**: the code and reported local
-strict audit exist, but [current simulation run
-44433153026](https://github.com/d3lefts/d3lefts/actions/runs/44433153026) must complete
-successfully before the new named theorem is labeled GitHub-CI certified. Treat every run as scoped
+independent certificate. Row 7 was **compiled and strictly audited in GitHub Actions on commit `771d11a`**:
+[run 44433153026](https://github.com/d3lefts/d3lefts/actions/runs/44433153026), 178-module
+closure; all named audits succeeded, artifact `14487982785`. Treat every run as scoped
 to its exact source commit and compiler pin, not automatically to later heads.
 
 | # | Claim | Form | Lean declaration |
@@ -26,7 +25,7 @@ to its exact source commit and compiler pin, not automatically to later heads.
 | 4 | Product-space row bound, via the competing-symbol selector | a fractional-certificate row of cost `≤ π² d²` at every point, the same cost as Turturean's cube Theorem 6.8 | `RowBound.product_row_bound` |
 | 5 | Recovers the printed conjecture as the fair-bit case, with Turturean's constant | `PrintedConjecture`, `ExplicitBound`, `MainTheorem` (`50000 π⁸ d¹²`); the statements are Turturean's Mathlib-only `Conjecture.lean`, byte-identical | `CubeAA.printedConjecture`, `CubeAA.explicitBound`, `CubeAA.mainTheorem_of_productSpace` |
 | 6 | Constant on the cube | the headline form (row 1) is about 5× weaker in `Inf` than Turturean; the sharper `12500 K⁴ L² Inf²` form with `L ≤ 2d²` gives his constant exactly | via `Influence.influence_bound` and `CubeAA.sum_pincr_unif_le` |
-| 7 | **Distribution-uniform function simulation:** a deterministic decision tree for `[0,1]`-valued interaction-degree-`d ≥ 1` functions on arbitrary finite product weights (including zero masses) | `q ε³ δ² √δ ≥ 6√2 π⁶ d⁶` ensures depth `≤ q` and `Pr[|f−A|>ε] ≤ δ`; no dependence on coordinate count, alphabet size or marginal atom masses. Common alphabet in Lean; heterogeneous alphabets via paper padding | `Simulation.simulation_degree`; semantic tree `Simulation.build`, potential and leaf gates in `ProductSimulation.lean`; current exact-head CI pending |
+| 7 | **Distribution-uniform function simulation:** a deterministic decision tree for `[0,1]`-valued interaction-degree-`d ≥ 1` functions on arbitrary finite product weights (including zero masses) | `q ε³ δ² √δ ≥ 6√2 π⁶ d⁶` ensures depth `≤ q` and `Pr[|f−A|>ε] ≤ δ`; no dependence on coordinate count, alphabet size or marginal atom masses. Common alphabet in Lean; heterogeneous alphabets via paper padding | `Simulation.simulation_degree`; semantic tree `Simulation.build`, potential and leaf gates in `ProductSimulation.lean`; [run 44433153026](https://github.com/d3lefts/d3lefts/actions/runs/44433153026) successful on `771d11a` |
 
 Row 5 uses none of Turturean's cube proof (`Chain`, `Main`, `MainTheorem` are not in the compiled
 closure; CI checks this). It reuses his vendored Chebyshev/Markov block lemmas and his transport
@@ -156,7 +155,7 @@ GMNR citations verified against the 23-page PDF by external review (2026-11-18):
 Remarks 3.4, 3.5, 4.4, Proposition 3.10, Theorem 4.3, Corollary 4.8. Turturean's fixed-bias remark
 is on printed page 9 of arXiv:2611.09773.
 
-Next steps: finish exact-head simulation CI, commit the authentic nonexpiring receipts, run the
+Next steps: archive the authentic nonexpiring receipts, run the
 product-space quantum-simulation priority check, obtain independent review of the selector,
 and integrate the hierarchical vendor closure into the standard Lake build.
 
