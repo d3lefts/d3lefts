@@ -70,10 +70,10 @@ theorem diagonal_requires_components
       mul_pos (mul_pos hwpos hap) hbp
     have hterm : (w (pick f) * a (pick f) f) * b (pick f) g ≤
         ∑ θ : Θ, (w θ * a θ f) * b θ g := by
-      apply Finset.single_le_sum
-      · intro θ _
-        exact mul_nonneg (mul_nonneg (hw θ) (ha θ f)) (hb θ g)
-      · exact Finset.mem_univ (pick f)
+      exact Finset.single_le_sum
+        (fun θ (_ : θ ∈ Finset.univ) =>
+          mul_nonneg (mul_nonneg (hw θ) (ha θ f)) (hb θ g))
+        (Finset.mem_univ (pick f))
     rw [hoff f g hfg] at hterm
     linarith
   exact Fintype.card_le_of_injective pick hinj
