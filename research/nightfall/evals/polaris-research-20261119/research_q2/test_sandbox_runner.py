@@ -67,6 +67,12 @@ class SandboxContractTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "pinned"):
                     docker_argv(image, Path("/tmp/task"), Path("/tmp/out"))
 
+    def test_local_content_addressed_image_is_accepted_for_ephemeral_smoke(self):
+        local = "sha256:" + "1"*64
+        argv = docker_argv(local, Path("/tmp/input"), Path("/tmp/output"))
+        self.assertIn(local, argv)
+        self.assertNotIn("--network=host", argv)
+
     def test_relative_mount_rejected(self):
         with self.assertRaisesRegex(ValueError, "absolute"):
             docker_argv(DIGEST_IMAGE, Path("relative"), Path("/tmp/out"))
