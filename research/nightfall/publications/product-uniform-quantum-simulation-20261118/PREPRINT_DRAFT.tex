@@ -1,0 +1,248 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Prb}{\mathbb P}
+\newcommand{\Inf}{\operatorname{Inf}}
+\newcommand{\one}{\mathbf 1}
+\title{\textbf{Classical Query Simulation Uniformly over Product Distributions}\\[0.3em]\large Fractional Certificates, Mean Increments, and Lean Formalization}
+\author{NIGHTFALL research collaboration\\\small Author list and contributor credit subject to review}
+\date{Technical review draft, November 18, 2026\\\small Not submitted or independently refereed}
+\begin{document}
+\maketitle
+\begin{abstract}
+We construct deterministic classical query trees that approximate bounded low-degree functions under \emph{arbitrary finite product probability distributions}, with query complexity independent of the dimension, alphabet size, and smallest coordinate mass. Specifically, if $f$ takes values in $[0,1]$ and has interaction degree at most $d\ge1$, then for any $\varepsilon,\delta\in(0,1)$ there is a decision tree of depth at most
+\[
+\left\lceil\frac{6\sqrt2\,\pi^6 d^6}{\varepsilon^3\delta^{5/2}}\right\rceil
+\quad\text{with}\quad
+\Prb_\mu\!\left[|f(X)-\widetilde f(X)|>\varepsilon\right]\le\delta.
+\]
+Because a $T$-query quantum algorithm's acceptance probability has degree at most $2T$, this yields a \emph{paper-level} query simulation bound $O(T^6\varepsilon^{-3}\delta^{-5/2})$ simultaneously for all product laws. The quantitative real-function theorem, including its decision-tree construction, row bound, and error estimate, is formalized in Lean; the final quantum-circuit-to-polynomial step remains a mathematical argument rather than a Lean theorem. A competing-symbol selector transports the bounded-polynomial fractional-certificate bound from Boolean to arbitrary alphabets, and a separate infinite-product theorem transports influence inequalities to $L^2$. We distinguish these certificates from claims of priority: a weighted extension of the recent Huffstutler--Miloschewsky--Podder completion method remains a specific external-review risk.
+\end{abstract}
+
+\section{Statement and context}
+Aaronson and Ambainis connected classical query simulation of quantum acceptance probabilities on the uniformly random Boolean cube to influence bounds for bounded low-degree polynomials \cite{AA14}. Turturean recently proved the influence conjecture on that cube \cite{Tur26}. Girish, Mittal, Nehoran and Raz \cite{GMNR26} transferred simulation to fixed-bias binary product measures and Hamming slices, but their quantitative transfer depends on inverse bias. Here \emph{uniform} means \emph{one query bound valid for every product distribution}, not that the inputs themselves must be uniformly distributed.
+
+Fix a finite coordinate set $I$ and finite sets $\Sigma_i$. Write
+\[
+\Omega=\prod_{i\in I}\Sigma_i,\qquad
+\mu=\bigotimes_{i\in I}\mu_i,
+\]
+where the $\mu_i$ are arbitrary probability measures, including vanishing atoms. A coordinate query reads one entire symbol $x_i$. The classical tree may depend on $f$ and $\mu$ and is not required to run in polynomial computation time between queries.
+
+A function $f:\Omega\to\mathbb R$ has \emph{indicator interaction degree} at most $d$ if it is a linear combination of monomials
+\[
+x\longmapsto \prod_{i\in S}\one[x_i=s_i], \qquad |S|\le d.
+\]
+For the formal Lean theorem the alphabet is a common finite type $\alpha$; heterogeneous $\Sigma_i$ reduce mathematically to this case by disjoint-union padding and coordinatewise pullback, preserving the degree and the measure.
+
+\begin{theorem}[Distribution-uniform simulation; Lean real-function theorem]\label{thm:simulation}
+Let $f:\Omega\to[0,1]$ have indicator interaction degree at most $d\ge1$, and let $\varepsilon,\delta\in(0,1)$. There is a deterministic decision tree $D$ such that for all $x$, its number of coordinate queries is bounded by
+\[
+n=\left\lceil\frac{6\sqrt2\,\pi^6d^6}{\varepsilon^3\delta^{5/2}}\right\rceil,
+\]
+and, writing $\widetilde f=D(x)$,
+\[
+\Prb_{X\sim\mu}\bigl[|\widetilde f(X)-f(X)|>\varepsilon\bigr]\le\delta.
+\]
+The bound is independent of $|I|$, $|\Sigma_i|$ and $\min_{i,s:\mu_i(s)>0}\mu_i(s)$.
+\end{theorem}
+
+The explicit finite-common-alphabet theorem is
+\texttt{Nightfall.ProductSpace.Simulation.simulation\_degree}
+in \texttt{ProductSimulation.lean} at frozen source commit \texttt{771d11af21896aa83f481b332d21d7d706b56927}. The derivation below explains the exact constant.
+
+\section{A source-law-free fractional-certificate row}
+For any $g:\Omega\to\mathbb R$, a \emph{row} at $x$ is a nonnegative vector $a_x=(a_{x,i})_{i\in I}$ satisfying
+\[
+|g(x)-g(y)|\le\sum_{i:x_i\ne y_i}a_{x,i}
+\quad\text{for every }y\in\Omega.
+\]
+Its cost is $\sum_i a_{x,i}$. Unlike Fourier coefficients or biased influences, the row condition is a pointwise inequality with no input-law parameter.
+
+\begin{theorem}[Product row bound; Lean]\label{thm:row}
+If $|g(x)|\le1$ everywhere and $\deg(g)\le d$, then every $x$ has a row of cost at most $\pi^2d^2$.
+If $0\le f\le1$, its rows have cost at most $K=\pi^2d^2/2$ by applying the result to $g=2f-1$.
+\end{theorem}
+
+\paragraph{Competing-symbol selector.}
+The cube proof in \cite{Tur26} can flip one bit in each chosen block, but on a larger alphabet two overlapping blocks may propose different replacement symbols at the same coordinate. At a fixed base word $x$ let block $b$ propose a word $y_b$. For auxiliary Boolean block choices $w$, put $c_{i,s}(w)$ for the number of active blocks proposing symbol $s$ at coordinate $i$ and $c_i(w)=\sum_s c_{i,s}(w)$. The Chebyshev gate supplies $q,H$ with $H(t)=tq(t)$ and the appropriate positivity and endpoint conditions. Define
+\[
+P_i(w)(s)=\one[s=x_i]\bigl(1-H(c_i(w))\bigr)
++c_{i,s}(w)\,q(c_i(w)).
+\]
+For the parameter range in the row proof, $P_i(w)$ is a probability vector, and
+\[
+G(w)=\sum_{\sigma\in\Omega}g(\sigma)\prod_{i\in I}P_i(w)(\sigma_i)
+\]
+is bounded by $1$, equals $g(x)$ at the auxiliary origin, and equals $g(y_b)$ when only block $b$ is activated. Expanding each indicator monomial shows that the auxiliary degree is at most $dm$. Turturean's endpoint, packing and linear-programming-duality steps then give Theorem~\ref{thm:row}. The new part is accommodating simultaneous competing symbol proposals without depending on $|\Sigma_i|$.
+
+The source-identifiable Lean declarations are \texttt{RowBound.Pv},
+\texttt{RowBound.Gsel}, \texttt{RowBound.product\_block\_inequality}
+and \texttt{RowBound.product\_row\_bound}. The remaining analytic dependencies reuse and credit vendored Turturean modules; this is \emph{not} an independent proof of the original conjecture.
+
+\section{Mean-increment descent}
+For the fixed product law $\mu$, define the mean absolute resampling increment at coordinate $j$ by
+\[
+L_j(g)=\E_{X\sim\mu,\;B\sim\mu_j}
+\bigl|g(X)-g(X_{j\leftarrow B})\bigr|,
+\qquad
+L(g)=\sum_{j\in I}L_j(g),
+\]
+where $B$ is independent of $X$. Let $\Var_\mu(g)=\E_\mu(g-\E_\mu g)^2$.
+
+The following statements hold for arbitrary product laws, including zero-mass atoms.
+
+\begin{lemma}[Mean-increment inequality; Lean]\label{lem:increment}
+Suppose $g$ has a row of cost at most $K>0$ at every point and $\Var_\mu(g)>0$. Then some coordinate $j$ satisfies
+\[
+\Var_\mu(g)^3\le144K^4 L_j(g)^2.
+\]
+Moreover, $L(g)\le K$.
+\end{lemma}
+
+The first assertion is \texttt{Influence.mean\_increment}; the second is \texttt{Influence.sum\_pincr\_le} in \texttt{ProductInfluence.lean}.
+
+Let $g|_{j=b}$ denote the section obtained by fixing coordinate $j$ to $b$. A row for $g$ restricts to a row of no greater cost for the section. Product independence also gives the \emph{exact} identity
+\begin{equation}\label{eq:decrement}
+\E_{B\sim\mu_j}\!\left[L(g|_{j=B})\right]=L(g)-L_j(g).
+\end{equation}
+For $k\ne j$, $L_k(g|_{j=B})$ averages to $L_k(g)$, while $L_j(g|_{j=B})=0$. Equation~\eqref{eq:decrement} is \texttt{Simulation.sum\_mul\_Ltot\_sect}.
+
+\section{Constructing the simulator}
+Fix a variance threshold $\tau>0$, increment threshold $\eta>0$ and query cap $n$. At a section $g$:
+\begin{enumerate}[leftmargin=1.6em]
+\item If $\Var_\mu(g)\le\tau$, output its conditional mean and stop.
+\item Otherwise choose $j$ with $L_j(g)\ge\eta$, query $x_j$, and recur on the section $g|_{j=x_j}$.
+\item If $n$ queries have been used, output the conditional mean and mark the leaf as unfinished.
+\end{enumerate}
+The construction is deterministic given $f$ and $\mu$, but the choice of coordinate may be noncomputable in the chosen formal representation; computational running time is not bounded.
+
+When
+\[
+144K^4\eta^2\le\tau^3,
+\]
+Lemma~\ref{lem:increment} guarantees a qualifying coordinate whenever the current variance exceeds $\tau$. A coordinate already fixed cannot be chosen since its increment is zero. By Equation~\eqref{eq:decrement}, the potential $L(g)$ drops by at least $\eta$ \emph{in conditional expectation} at each unfinished query. Since $L(g)\ge0$,
+\begin{equation}\label{eq:expected-depth}
+\eta\,\E_\mu[N]\le L(f)\le K.
+\end{equation}
+Every unfinished leaf uses exactly $n$ queries, so Markov's inequality bounds the probability of reaching one by $K/(\eta n)$. On finished leaves the squared error of the conditional-mean output has conditional expectation at most $\tau$, whence Chebyshev yields
+\begin{equation}\label{eq:master}
+\Prb_\mu(|f-\widetilde f|>\varepsilon)
+\le\frac{K}{\eta n}+\frac{\tau}{\varepsilon^2}.
+\end{equation}
+The tree, its query bound, \eqref{eq:expected-depth} and \eqref{eq:master} correspond respectively to
+\texttt{Simulation.build}, \texttt{Simulation.queries\_le},
+\texttt{Simulation.expected\_queries} and \texttt{Simulation.simulation\_rows}.
+
+\begin{proof}[Proof of Theorem~\ref{thm:simulation} from \eqref{eq:master}]
+By Theorem~\ref{thm:row}, $K=\pi^2d^2/2$. Set
+\[
+\tau=\frac{\varepsilon^2\delta}{2},
+\qquad
+\eta=\frac{\tau^{3/2}}{12K^2}.
+\]
+Then $144K^4\eta^2=\tau^3$ and
+\[
+\frac{K}{\eta n}=\frac{12K^3}{\tau^{3/2}n}
+=\frac{3\sqrt2\,\pi^6d^6}{n\varepsilon^3\delta^{3/2}}
+\le\frac{\delta}{2}
+\]
+under the stated lower bound on $n$. The other term in \eqref{eq:master} is $\tau/\varepsilon^2=\delta/2$. The proof uses no lower bounds on masses and no alphabet-size factor.
+\end{proof}
+
+\section{Quantum acceptance-probability corollary}
+Let a finite-dimensional quantum query algorithm make $T\ge1$ queries to a classical word $x\in\Omega$. Its oracle can be written as a finite sum of the form
+\[
+O_x=\sum_{i,s}\one[x_i=s]\,A_{i,s}+A_\perp,
+\]
+where the matrices $A_{i,s},A_\perp$ are independent of $x$ and the oracle unitary property is imposed in the query model. Every amplitude starts with indicator degree zero, fixed unitaries preserve its degree, and an oracle call raises it by at most one. Thus all amplitudes after $T$ calls have indicator degree at most $T$. The acceptance probability is a sum of squared moduli and therefore has degree at most $2T$. Products of indicators at one coordinate collapse to zero or a single indicator. This is the familiar Beals--Buhrman--Cleve--Mosca--de Wolf polynomial-method argument \cite{Beals01} in a finite-alphabet indicator basis.
+
+\begin{corollary}[Quantum simulation; paper-level bridge]\label{cor:quantum}
+For any $T\ge1$, any product input law $\mu$ on finite alphabets, and any $T$-query quantum algorithm with acceptance probability $Q$, there exists a deterministic classical query tree making no more than
+\[
+\left\lceil\frac{384\sqrt2\,\pi^6T^6}{\varepsilon^3\delta^{5/2}}\right\rceil
+\]
+whole-symbol queries on every input and satisfying
+$\Prb_{\mu}(|Q-\widetilde Q|>\varepsilon)\le\delta$.
+\end{corollary}
+
+\emph{Formalization boundary.} The Lean theorem takes $Q$ as a bounded degree-$2T$ real function. The abstract unitary/oracle model and the amplitude-degree bridge above have \emph{not yet} been encoded in Lean. This boundary must appear in any public abstract, certification table and release.
+
+\section{Infinite-product influence and cube consistency}
+The infinite-product result is distinct from the finite decision-tree theorem. Let $(X_i,\mu_i)_{i\in I}$ be measurable probability spaces indexed by any type $I$, and let $G\in L^2(\bigotimes_i\mu_i)$ have Efron--Stein degree at most $d$, essential bound $|G|\le B$, and every coordinate influence at most $M$. The Lean terminal
+\texttt{Nightfall.InfinitePiAAProductTerminal.infinitePi\_aa\_product}
+gives
+\[
+3\Var_\mu(G)^5\le12500(\pi^2d^2)^6B^6M^2.
+\]
+A finite-cell approximation and mixed-difference degree transport carry this inequality to arbitrary index sets. This is \emph{not} an infinite-product quantum-simulation algorithm.
+
+On uniformly random Boolean inputs, \texttt{CubeAA.printedConjecture} recovers Turturean's exact printed Aaronson--Ambainis statement as a consistency check. Its proof invokes the credited product-space chain and the vendored upstream analytic building blocks; it is not an independently originated cube proof.
+
+\section{Comparison, limitations and priority}
+GMNR \cite{GMNR26}, Theorem 3.3 and Remarks 3.4--3.5, establish the fixed-bias binary simulation and extensions where heterogeneous biases are bounded away from zero by a shared positive constant. Their bound deteriorates with that constant. Our result eliminates this dependence and also treats finite alphabets of arbitrary sizes. Importantly, it is \emph{not} a theorem for correlated distributions.
+
+Huffstutler, Miloschewsky and Podder \cite{HMP26} prove a stronger quantitative \emph{different task}: completion of a partial Boolean function over the uniformly random cube. Their Lemma 4 exploits exact uniform counts of subcubes and determinant-weighted edge boundaries. A product-weighted version might imply a similar or better law-uniform result; it has \emph{not been ruled out}. A weighted adaptation is the primary external priority question, and the present draft must not claim an independently confirmed novelty verdict.
+
+Escudero Guti\'errez, Saucedo and Palazuelos \cite{ESP26} prove nonadaptive randomized simulation for a restricted class of parallel quantum query algorithms. Liu and Mutreja \cite{LM26} establish simulation results in parallel or constant-adaptivity models. These are related but do not explicitly imply the fully adaptive, distribution-uniform statement above.
+
+Our construction is a worst-case \emph{query-depth} guarantee, not a polynomial-time simulator. Its bounds are not asserted optimal. Independent proof review, a comprehensive priority determination, and an exact-head strict Lean receipt for the new simulator are still required before submission.
+
+\section{Lean certificate crosswalk}
+\small
+\begin{tabular}{@{}p{0.34\linewidth}p{0.59\linewidth}@{}}
+\toprule
+Claim & Exact source declaration(s) at commit \texttt{771d11af} \\
+\midrule
+Competing-symbol selector / product row
+& \texttt{RowBound.Pv}, \texttt{RowBound.Gsel}, \texttt{RowBound.product\_row\_bound} (\texttt{ProductRowBound.lean}) \\
+Mean-increment inequality / row cost
+& \texttt{Influence.mean\_increment}, \texttt{Influence.sum\_pincr\_le} (\texttt{ProductInfluence.lean})\\
+Exact potential decrement
+& \texttt{Simulation.sum\_mul\_Ltot\_sect} (\texttt{ProductSimulation.lean})\\
+Decision tree / depth
+& \texttt{Simulation.build}, \texttt{Simulation.queries\_le}, \texttt{Simulation.expected\_queries}\\
+Error / quantitative simulation
+& \texttt{Simulation.simulation\_rows}, \texttt{Simulation.simulation\_degree}\\
+Infinite-product influence
+& \texttt{InfinitePiAAProductTerminal.infinitePi\_aa\_product} (\texttt{InfinitePiAAProductTerminal.lean})\\
+Printed AA conjecture consistency
+& \texttt{CubeAA.printedConjecture} (\texttt{CubePrintedAA.lean})\\
+Quantum amplitude degree $\le2T$
+& \emph{Paper-level only; no Lean declaration yet}\\
+\bottomrule
+\end{tabular}
+\normalsize
+
+\paragraph{Evidence and review gate.}
+Frozen source head: \texttt{771d11af21896aa83f481b332d21d7d706b56927}. Lean: \texttt{4.36.0-rc2}; Mathlib: \texttt{9d581dfff2e41de989072ea63abf3daf69311520}. The named-theorem strict audit runs at
+\url{https://github.com/d3lefts/d3lefts/actions/runs/44433153026}.
+At the time this draft was prepared its 178-module run was \emph{in progress}; a receipt for \texttt{simulation\_degree} is not claimed here. The older integrated Lake success did not contain this new module. The report \texttt{PRIORITY\_AUDIT.md} records the exact external comparisons and the missing adversarial checks.
+
+\section*{Acknowledgment and contribution transparency}
+The row and influence chain builds on Turturean's proof and uses credited, pinned, license-compatible vendored upstream Lean modules. The degree-to-quantum simulation step uses the established polynomial method. NIGHTFALL's author-side analysis and AI-assisted formalization require the responsible human authors to determine accurate contribution credit and independently review the arguments before public deposition. This draft names no unconsenting expert as a reviewer or author.
+
+\begin{thebibliography}{10}
+\bibitem{AA14} S. Aaronson and A. Ambainis, \emph{The Need for Structure in Quantum Speedups}, Theory of Computing 10 (2014), 133--166.
+\bibitem{Beals01} R. Beals, H. Buhrman, R. Cleve, M. Mosca and R. de Wolf, \emph{Quantum Lower Bounds by Polynomials}, Journal of the ACM 48 (2001), 778--797.
+\bibitem{Tur26} D. Turturean, \emph{A proof of the Aaronson--Ambainis conjecture}, arXiv:2611.09773 (2026).
+\bibitem{GMNR26} U. Girish, K. Mittal, B. Nehoran and R. Raz, \emph{Distributional Variants of the Aaronson--Ambainis Conjecture}, arXiv:2609.35327 (2026).
+\bibitem{HMP26} T. Huffstutler, D. Miloschewsky and S. Podder, \emph{A short proof of the Aaronson--Ambainis Conjecture via the completion framework}, arXiv:2611.12795 (2026).
+\bibitem{ESP26} F. Escudero Guti\'errez, M. Saucedo and C. Palazuelos, \emph{Optimal inequalities for completely bounded polynomials and the limitations of quantum query algorithms}, arXiv:2609.05201 (2026).
+\bibitem{LM26} Q. Liu and S. Mutreja, \emph{Parallel Quantum Advantage with Limited Adaptivity Requires Structure}, arXiv:2608.20297v2 (2026).
+\bibitem{BDST26} G. Blanc, J. Docter, C. Strassle and L.-Y. Tan, \emph{Proof of the Aaronson--Ambainis Conjecture: An Exposition}, arXiv:2611.11626 (2026).
+\end{thebibliography}
+\end{document}
