@@ -10,6 +10,7 @@ on:
       - 'research/nightfall/formalization/product_space/StrongSmoothingAmplifier.lean'
       - 'research/nightfall/formalization/product_space/StrongMarkovEndpoint.lean'
       - 'research/nightfall/formalization/product_space/StrongSmoothingPolynomial.lean'
+      - 'research/nightfall/formalization/product_space/StrongSmoothingUniform.lean'
       - 'research/nightfall/strong_simulation_progress/component_id_nonvacuous_check.py'
       - '.github/workflows/nightfall-component-identification.yml'
   workflow_dispatch:
@@ -38,6 +39,7 @@ jobs:
           cp research/nightfall/formalization/product_space/StrongSmoothingAmplifier.lean /tmp/mathlib4/StrongSmoothingAmplifier.lean
           cp research/nightfall/formalization/product_space/StrongMarkovEndpoint.lean /tmp/mathlib4/StrongMarkovEndpoint.lean
           cp research/nightfall/formalization/product_space/StrongSmoothingPolynomial.lean /tmp/mathlib4/StrongSmoothingPolynomial.lean
+          cp research/nightfall/formalization/product_space/StrongSmoothingUniform.lean /tmp/mathlib4/StrongSmoothingUniform.lean
           cd /tmp/mathlib4
           lake env lean -o .lake/build/lib/lean/ComponentIdentification.olean ComponentIdentification.lean 2>&1 | tee /tmp/ci.log
           lake env lean -o .lake/build/lib/lean/ComponentIdentificationWeightedTournament.olean ComponentIdentificationWeightedTournament.lean 2>&1 | tee /tmp/ci-weighted.log
@@ -47,8 +49,9 @@ jobs:
           lake env lean -o .lake/build/lib/lean/StrongSmoothingAmplifier.olean StrongSmoothingAmplifier.lean 2>&1 | tee /tmp/ci-smooth.log
           lake env lean -o .lake/build/lib/lean/StrongMarkovEndpoint.olean StrongMarkovEndpoint.lean 2>&1 | tee /tmp/ci-markov.log
           lake env lean -o .lake/build/lib/lean/StrongSmoothingPolynomial.olean StrongSmoothingPolynomial.lean 2>&1 | tee /tmp/ci-smooth-poly.log
-          if grep -q "declaration uses .sorry" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-lr.log /tmp/ci-smooth.log /tmp/ci-markov.log /tmp/ci-smooth-poly.log; then echo "sorry found"; exit 1; fi
-          if grep -q "error" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-lr.log /tmp/ci-smooth.log /tmp/ci-markov.log /tmp/ci-smooth-poly.log; then exit 1; fi
+          lake env lean -o .lake/build/lib/lean/StrongSmoothingUniform.olean StrongSmoothingUniform.lean 2>&1 | tee /tmp/ci-smooth-uniform.log
+          if grep -q "declaration uses .sorry" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-lr.log /tmp/ci-smooth.log /tmp/ci-markov.log /tmp/ci-smooth-poly.log /tmp/ci-smooth-uniform.log; then echo "sorry found"; exit 1; fi
+          if grep -q "error" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-lr.log /tmp/ci-smooth.log /tmp/ci-markov.log /tmp/ci-smooth-poly.log /tmp/ci-smooth-uniform.log; then exit 1; fi
           cat > CIAxioms.lean <<'LEAN'
           import ComponentIdentification
           import ComponentIdentificationWeightedTournament
@@ -58,6 +61,7 @@ jobs:
           import StrongSmoothingAmplifier
           import StrongMarkovEndpoint
           import StrongSmoothingPolynomial
+          import StrongSmoothingUniform
           open Nightfall.ComponentIdentification
           #print axioms component_identification_core
           #print axioms hellinger_K_le
@@ -79,6 +83,9 @@ jobs:
           #print axioms Nightfall.StrongSmoothing.ampPoly_natDegree_le
           #print axioms Nightfall.StrongSmoothing.ampPoly_low_tail
           #print axioms Nightfall.StrongSmoothing.ampPoly_high_tail
+          #print axioms Nightfall.StrongSmoothing.smoothPoly_natDegree_le
+          #print axioms Nightfall.StrongSmoothing.smoothPoly_small
+          #print axioms Nightfall.StrongSmoothing.smoothPoly_large
           LEAN
           sed -i 's/^          //' CIAxioms.lean
           lake env lean CIAxioms.lean | tee /tmp/axioms.txt
