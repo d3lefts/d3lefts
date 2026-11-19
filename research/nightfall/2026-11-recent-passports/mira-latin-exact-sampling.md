@@ -1,5 +1,5 @@
 # Proof Passport — Mira exact Latin-square sampling / independent theorem audit
-Version: **2.5**, 2026-11-19. Status: **PARTIAL AUTHOR-SIDE THEOREMS + EARLIER FINITE LEAN LEMMAS; MAIN CLAIM UNVERIFIED**.
+Version: **2.6**, 2026-11-19. Status: **PARTIAL AUTHOR-SIDE THEOREMS + EARLIER FINITE LEAN LEMMAS; MAIN CLAIM UNVERIFIED**.
 
 ## Original source, ownership, objective
 - External source: **Mira Cult, _Exact uniform sampling of Latin squares_**, immutable [Mira-Cult/math@30ddaaad27b48df2002225c3e3f40cffd02c5253](https://github.com/Mira-Cult/math/tree/30ddaaad27b48df2002225c3e3f40cffd02c5253/notes/combinatorics/exact-latin-square-sampling). Mira's source credits six GPT-6.2 Astra instances for mathematical development. NIGHTFALL does **not** claim to have independently discovered her proposed sampler, nor joint authorship or collaborator approval.
@@ -26,6 +26,7 @@ Version: **2.5**, 2026-11-19. Status: **PARTIAL AUTHOR-SIDE THEOREMS + EARLIER F
 | MIRA-WFILL-CANCEL | Balanced lookahead hard/soft matching fills exactly cancel prior-free-fill interactions; reverse-mean grade gain -1/2-1/(2b) with controlled remainder | **AUTHOR-SIDE PROVED UNDER EXPLICIT LOCAL/EXCHANGEABILITY CONDITIONS; NOT LEAN** | Independent quantitative dense-permanent expansion, cyclic Latin witness with nonzero cross terms; still need scalar grade normalizer and other mean-cover components |
 | MIRA-SPARSE-TV | Uniform sparse-strip TV bound `t_d <= C(d^-2+d^(3/2)/sqrt(n)+(nd)^(-1/4))`, summed `c<d<=n^(1/10)` <= C/c+o(1) | **INDEPENDENT AUTHOR-SIDE DERIVATION; EXTERNAL GHIM THEOREMS 2.1-2.2 IMPORTED; NOT LEAN** | Uniform j-wise enumerative cancellation to negative-binomial second moment; exact checker; [full proof](mira-latin-sparse-second-moment-v24.md) |
 | MIRA-PM-BITCLOCK | Exact fair-bit uniform matching via rational JSV cooling, dyadic lazy Markov transitions and rare exact GLMP correction with expected O-tilde(s^21) bit work | **AUTHOR-SIDE CONDITIONAL RECONSTRUCTION; JSV GAP AND GLMP CORRECTION IMPORTED; NOT LEAN** | [Full bit-clock derivation](mira-latin-matching-bit-clock-v25.md). Needs independent referee on phase calibration, precision and slow-table complexity. Does not close O-tilde(n^25) Latin sampler. |
+| MIRA-MULTISCALE-ABSTRACT | Conditional exact uniform target law and a.s. termination with `O((W+log²M)(1+H/N)log²M)` expected work | **INDEPENDENT AUTHOR-SIDE ABSTRACT PROOF; HUBER FIXED-SLACK FACTORY IMPORTED; NOT LEAN** | [Explicit full proof and hypotheses](mira-latin-multiscale-abstract-v26.md); rational checker; missing source-specific Q/R law, W cost, mean-cover, H/N. |
 | MIRA-CUBIC | Raw cubic-head moment Z*_3/(n!)^3 <= C n(4/3)^n | **AUTHOR-SIDE PROVED, NOT LEAN** | Prior v1 independently reconstructed proof; checker exact n<=13 |
 | MIRA-WDENSE | Dense weighted-permanent log estimate, explicit <=4K^2/s (K<=s/8) | **AUTHOR-SIDE PROVED, NOT LEAN** | Prior v1 independent switching argument |
 | MIRA-FLAT-FINITE | 14 finite likelihood/soft-gate/telescope lemmas | **LEAN KERNEL-CHECKED** | Dedicated pinned PR #900 run 44573134450, only propext, Classical.choice, Quot.sound |
@@ -55,6 +56,12 @@ This result is neither a new theorem attributed to NIGHTFALL (Mira's source stat
 [Matching-clock proof](mira-latin-matching-bit-clock-v25.md) gives an explicit rational/dyadic version of the JSV/GLMP exact matching sampler, including factor-two calibrated hole weights, very small dyadic total-variation error, finite exact distribution table, rare exact correction, polynomial-size denominator and `s^15` Markov transitions per attempt x `s^2` mean attempts x `s^4` expected bit-cost per transition = `O-tilde(s^21)`. Importing JSV Lemmas 4.1 and 4.4 and the GLMP finite-table correction is *permitted external input*, not an independent reproduction of their deep mixing proofs. **Author-side conditional reconstruction, not Lean or independent human certification.**
 
 This closes one *backend* proof obligation at paper level only; it does NOT verify Mira's `O-tilde(n^4)` matching calls per fully specified decorated soft gate, nor the mean-cover / bulk-count laws needed for the main theorem.
+
+## v2.6: independent complete abstract multiscale transformer
+
+[Author-side abstract theorem](mira-latin-multiscale-abstract-v26.md) derives exact one-trial target mass `u/[H(J+1)]`, a.s. termination by independent restarts and `O((W+log²(2M))(1+H/N)log²(2M))` expected work from normalized forward/reverse atoms, all-target mean-log bound, polynomial upper log envelope and **uniformly bounded exact soft-coin implementations**. It explicitly proves terminal `f_J>=1/3`, coin validity, rare-target amortization and restarts, and imports only Huber fixed-slack linear Bernoulli factory. Two exact rational finite laws (including a heavy-tail example) independently verify telescoping, but are not the asymptotic proof.
+
+This closes the *abstract* probability/cost transformer, **not** the crucial instantiated Mira decorated Q/R and its `W=O-tilde(n^4 P(n)+n^24)` uniformly-costed implementation. In particular it does **not** prove Mira's all-target mean coverage or all-degree constant-loss counting.
 
 ## New unconditional theorem 1: exact cycle-type second moment
 Let G_(n,d) be n-by-n labeled d-regular boards, N_d its count, W(A)=per A, m_d=E_U W. For a relative permutation pi let C_(n,d)(pi) count boards containing identity matching and pi. This depends on the entire cycle type lambda of pi, not just fixed-point count; write z_lambda=product_j j^{a_j} a_j! for lambda=(1^{a_1}2^{a_2}...). Then:
