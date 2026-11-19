@@ -90,3 +90,103 @@ theorem finite_exp_jensen {Ω : Type*} [Fintype Ω]
   simpa only [smul_eq_mul] using h
 
 end Nightfall.Forrelation.Information
+
+namespace Nightfall.Forrelation.Information
+
+open Finset
+
+variable {Θ F G : Type*} [Fintype Θ] [Fintype F] [Fintype G]
+
+/-- Unnormalized nonnegative density on a product of the latent state
+    and two conditionally independent blocks. -/
+noncomputable def latentJoint (w : Θ → ℝ) (a : Θ → F → ℝ) (b : Θ → G → ℝ)
+    (t : Θ × (F × G)) : ℝ := w t.1 * a t.1 t.2.1 * b t.1 t.2.2
+
+/-- Fubini for the latent mixture, formulated entirely as finite sums. -/
+theorem latentJoint_sum_kernel
+    (w : Θ → ℝ) (a : Θ → F → ℝ) (b : Θ → G → ℝ)
+    (K : F → G → ℝ) :
+    (∑ t : Θ × (F × G), latentJoint w a b t * K t.2.1 t.2.2) =
+      ∑ θ : Θ, w θ * (∑ f : F, a θ f * (∑ g : G, b θ g * K f g)) := by
+  classical
+  calc
+    _ = ∑ θ : Θ, ∑ f : F, ∑ g : G,
+          (w θ * a θ f * b θ g) * K f g := by
+          simp only [Fintype.sum_prod_type, latentJoint]
+    _ = ∑ θ : Θ, w θ * (∑ f : F, a θ f * (∑ g : G, b θ g * K f g)) := by
+          apply Finset.sum_congr rfl
+          intro θ _
+          calc
+            _ = ∑ f : F, ∑ g : G, (w θ * a θ f) * (b θ g * K f g) := by
+                  apply Finset.sum_congr rfl
+                  intro f _
+                  apply Finset.sum_congr rfl
+                  intro g _
+                  ring
+            _ = ∑ f : F, (w θ * a θ f) * (∑ g : G, b θ g * K f g) := by
+                  apply Finset.sum_congr rfl
+                  intro f _
+                  rw [Finset.mul_sum]
+            _ = _ := by
+                  rw [Finset.mul_sum]
+                  apply Finset.sum_congr rfl
+                  intro f _
+                  ring
+
+/-- Normalization is proved from the actual component/source mass identities. -/
+theorem latentJoint_sum_one
+    (w : Θ → ℝ) (a : Θ → F → ℝ) (b : Θ → G → ℝ)
+    (hw1 : (∑ θ : Θ, w θ) = 1)
+    (ha1 : ∀ θ, (∑ f : F, a θ f) = 1)
+    (hb1 : ∀ θ, (∑ g : G, b θ g) = 1) :
+    (∑ t : Θ × (F × G), latentJoint w a b t) = 1 := by
+  have h := latentJoint_sum_kernel w a b (fun _ _ => (1 : ℝ))
+  simp only [mul_one] at h
+  rw [h]
+  have hx (θ : Θ) :
+      (∑ f : F, a θ f * (∑ g : G, b θ g)) = 1 := by
+    simp [hb1 θ, ha1 θ]
+  simpa [hx, hw1]
+
+/-- All zero weights are legal; a latent product table is nonnegative. -/
+theorem latentJoint_nonneg
+    (w : Θ → ℝ) (a : Θ → F → ℝ) (b : Θ → G → ℝ)
+    (hw : ∀ θ, 0 ≤ w θ) (ha : ∀ θ f, 0 ≤ a θ f)
+    (hb : ∀ θ g, 0 ≤ b θ g)
+    (t : Θ × (F × G)) : 0 ≤ latentJoint w a b t := by
+  unfold latentJoint
+  exact mul_nonneg (mul_nonneg (hw t.1) (ha t.1 t.2.1)) (hb t.1 t.2.2)
+
+/-- Entire finite latent-mixture exponential certificate, with *no* KL,
+    positive-atom, Gaussian or quantum assumption. The only analytic input
+    is the stated exponential-moment inequality under the first-block law. -/
+theorem latent_mixture_exp_certificate
+    (w : Θ → ℝ) (a : Θ → F → ℝ) (b : Θ → G → ℝ)
+    (u : F → ℝ) (S : F → G → ℝ) (λ κ : ℝ)
+    (hw : ∀ θ, 0 ≤ w θ)
+    (ha : ∀ θ f, 0 ≤ a θ f)
+    (hb : ∀ θ g, 0 ≤ b θ g)
+    (hw1 : (∑ θ : Θ, w θ) = 1)
+    (ha1 : ∀ θ, (∑ f : F, a θ f) = 1)
+    (hb1 : ∀ θ, (∑ g : G, b θ g) = 1)
+    (hmarg : ∀ f, (∑ θ : Θ, w θ * a θ f) = u f)
+    (hmgf : ∀ g, (∑ f : F, u f * Real.exp (λ * S f g)) ≤ Real.exp κ) :
+    Real.exp (∑ t : Θ × (F × G), latentJoint w a b t * (λ * S t.2.1 t.2.2)) ≤
+      (Fintype.card Θ : ℝ) * Real.exp κ := by
+  calc
+    _ ≤ ∑ t : Θ × (F × G), latentJoint w a b t *
+          Real.exp (λ * S t.2.1 t.2.2) :=
+          finite_exp_jensen (latentJoint w a b)
+            (latentJoint_nonneg w a b hw ha hb)
+            (latentJoint_sum_one w a b hw1 ha1 hb1)
+            (fun t => λ * S t.2.1 t.2.2)
+    _ = ∑ θ : Θ, w θ * (∑ f : F, a θ f *
+          (∑ g : G, b θ g * Real.exp (λ * S f g))) :=
+          latentJoint_sum_kernel w a b (fun f g => Real.exp (λ * S f g))
+    _ ≤ (Fintype.card Θ : ℝ) * Real.exp κ :=
+          mixture_kernel_domination w a b u
+            (fun f g => Real.exp (λ * S f g)) (Real.exp κ)
+            hw ha hb hb1 hmarg
+            (fun f g => (Real.exp_pos (λ * S f g)).le) hmgf
+
+end Nightfall.Forrelation.Information
