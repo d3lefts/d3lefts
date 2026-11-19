@@ -1,0 +1,59 @@
+name: NIGHTFALL symmetric full-row exact orbit certificates (finite only)
+
+on:
+  push:
+    branches: [nightfall-symmetric-full-row-orbit-exact-20261119]
+    paths:
+      - 'research/nightfall/flagship-influence/SYMMETRIC_FULL_ROW_ORBIT_REDUCTION_20261119.md'
+      - 'research/nightfall/flagship-influence/check_symmetric_full_row_exact.py'
+      - '.github/workflows/nightfall-symmetric-full-row-exact.yml'
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+    paths:
+      - 'research/nightfall/flagship-influence/SYMMETRIC_FULL_ROW_ORBIT_REDUCTION_20261119.md'
+      - 'research/nightfall/flagship-influence/check_symmetric_full_row_exact.py'
+      - '.github/workflows/nightfall-symmetric-full-row-exact.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-symmetric-row-orbits:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.12'
+      - name: Install exact audit candidate generator
+        run: |
+          python -m pip install --disable-pip-version-check numpy==2.2.6 scipy==1.15.3
+      - name: Compute and independently replay Fraction primal and dual certificates
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p proof-receipts/symmetric-full-row
+          P=research/nightfall/flagship-influence
+          git rev-parse HEAD > proof-receipts/symmetric-full-row/HEAD.txt
+          sha256sum "$P/SYMMETRIC_FULL_ROW_ORBIT_REDUCTION_20261119.md" "$P/check_symmetric_full_row_exact.py" > proof-receipts/symmetric-full-row/SHA256SUMS
+          python -I "$P/check_symmetric_full_row_exact.py" > proof-receipts/symmetric-full-row/exact.json
+          python - <<'PY'
+          import json
+          x=json.load(open('proof-receipts/symmetric-full-row/exact.json'))
+          assert x['status']=='FINITE_EXACT_PRIMAL_DUAL_ONLY'
+          assert len(x['cases'])==40
+          assert x['exact_constraints']==48810
+          assert x['full_cube_matches']==20
+          print('PASS: scoped exact rational primal/dual and full-row orbit checks. NOT universal theorem.')
+          PY
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nightfall-symmetric-full-row-exact-${{ github.run_id }}
+          path: proof-receipts/symmetric-full-row/
+          retention-days: 60
