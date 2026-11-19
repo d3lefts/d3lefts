@@ -1,6 +1,8 @@
 # Switching-time fooling lemma, and a gap in the brief's reduction (2026-11-19)
 
-Status: Lemma S proved on paper (short). It settles the "pointwise fooling bound" that
+Status: Lemma S proved on paper (short). The switching-time coupling is a standard device; Lemma S is
+likely folklore and should be cited as such, not claimed. Constant: `∑_j osc_j ≤ 4d²` for `[0,1]`-valued
+`f` (the `8d²` below is loose but valid). It settles the "pointwise fooling bound" that
 `MIXTURE_AA_POLYLOG_M_BRIEF_20261119.md` §4 lists as the open step. It does **not** close route 1:
 the brief's reduction from that bound to the crux has a gap (below), which is exactly where FUR is
 needed. Not reviewed, no Lean.

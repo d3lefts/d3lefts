@@ -3,6 +3,16 @@
 Status: complete paper proof, conditional only on BDST Theorem 1 as a black box. Not reviewed,
 no Lean. Uses the Hellinger–Bernstein transfer lemma (`HELLINGER_BERNSTEIN_TRANSFER_20261119.md`).
 
+> **CORRECTION (self-audit, 2026-11-19 18:50): this is not a new result.** Theorem P
+> (`../STRONG_PRODUCT_TRANSFER_THEOREM_P_REVISED_20261119.md`, integrated as #917 at 17:44, before this
+> note was written) already proves strong bounded-round simulation for arbitrary finite product laws
+> with zero atoms and no bias floor, depth `S(2mt, 2d, ε/2, δ/2)` with
+> `m = O(log A + log(t/(εδ)))`, by a one-sided dyadic coupling anchored at each coordinate's mode
+> (`p(anchor) ≥ 1/A`) and the quantum hybrid argument. The "Comparison" paragraph below relied on the
+> older `PRIOR_ART_CHECK_20261119.md`, which predates Theorem P. This note is at most an **alternative
+> proof** of Theorem P (classical Hellinger–Bernstein transfer of a smoothed event instead of the
+> quantum hybrid), with a worse `m` (it needs `log` of the degree `h` of the smoothed event).
+
 ## Theorem
 
 Let `Ω = Σ_1 × ⋯ × Σ_n` with finite alphabets, `K = max_j |Σ_j|`, and `μ = ⊗ μ_j` **any** product

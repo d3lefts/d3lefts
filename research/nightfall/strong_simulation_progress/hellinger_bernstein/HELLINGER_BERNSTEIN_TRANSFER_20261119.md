@@ -3,6 +3,12 @@
 Status: paper proof (short, below) plus a numerical check. Not reviewed, not in Lean, priority
 not checked.
 
+> **Self-audit (2026-11-19 18:50).** The lemma stands, but the "bias floor" it was meant to remove had
+> already been removed on `main` by Theorem P (#917) with a different coupling. Its remaining value is
+> as a tool: an `n`-, alphabet- and mass-free transfer bound linear in `h`. The switching-time
+> Lemma S (`mixture_aa/fiber_uniform_rows/SWITCHING_FOOLING_20261119.md`) gives a comparable bound,
+> `|E_μ G − E_μ̄ G| ≤ 4h² max_j TV(μ_j, μ̄_j)`, by an elementary argument.
+
 ## Lemma
 
 Let `μ = ⊗ μ_j`, `μ̄ = ⊗ μ̄_j` be product laws on a finite product `∏ Σ_j` (any alphabets, any
