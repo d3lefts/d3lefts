@@ -28,11 +28,12 @@ class ProofGraphHarnessTests(unittest.TestCase):
     def save_task(self):
         self.manifest.write_text(json.dumps(self.task))
 
-    def fake_lake(self, axiom_line="'ProofGraph.terminal' depends on axioms: [propext, Quot.sound]", fail=False, mutate=False):
+    def fake_lake(self, axiom_line="'ProofGraph.terminal' depends on axioms: [propext, Quot.sound]", fail=False, mutate=False, checker_fail=False):
         source = (
             "#!/usr/bin/env python3\n"
             "import sys, pathlib\n"
             + ("sys.exit(2)\n" if fail else "")
+            + ("if len(sys.argv)>2 and sys.argv[2]=='leanchecker': sys.exit(3)\n" if checker_fail else "")
             + ("pathlib.Path('ProofGraph/TrustedTarget.lean').write_text('corrupted')\n" if mutate else "")
             + "if len(sys.argv)>1 and sys.argv[1]=='env':\n"
             + f"    print({axiom_line!r})\n"
@@ -109,6 +110,10 @@ class ProofGraphHarnessTests(unittest.TestCase):
     def test_reject_build_time_mutation_of_target(self):
         self.fake_lake(mutate=True)
         self.assertIn('trusted source mutated', self.run_grade()['error'])
+
+    def test_reject_failed_kernel_replay(self):
+        self.fake_lake(checker_fail=True)
+        self.assertIn("Lean command failed", self.run_grade()["error"])
 
     def test_no_axiom_grammar(self):
         self.assertEqual(parse_axioms("'ProofGraph.terminal' does not depend on any axioms", ['ProofGraph.terminal']), {'ProofGraph.terminal': []})
