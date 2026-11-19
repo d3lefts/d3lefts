@@ -14,6 +14,16 @@
   (`fooling_tv`) has constant `16 d² γ` (paper: `2 d² γ`), via the vendored endpoint Markov bound on a
   cube of `⌊1/γ⌋` bits; this is why the second term's constant is `512` per unit of `τ⁻³`
   rather than `32`. The quantum-to-polynomial step (degree `≤ 2T`) remains on paper.
+* **Jensen form, Lean-certified** (`Mixture.mixture_simulation_jensen`, same tree, same axioms).
+  The increment step averages the per-component guarantees `L_{θ,j_θ} ≥ Var_θ^{3/2}/(12K²)` over
+  the best of the `M` candidate coordinates and applies the power-mean inequality
+  `(∑ v a²)³ ≤ (∑ v)(∑ v a³)²` (`power_mean`): the gain is `(τ/2)^{3/2} V / (12 K² M)`
+  (`increment_good_jensen`). Result:
+
+      Pr_{x∼ν}[ |f x − Q̃ x| > ε ] ≤ (3√2 π⁶ d⁶ M / (τ √τ) + 512 d⁴ M⁴ / τ³) / n + τ / ε²,
+
+  i.e. depth `24 π⁶ d⁶ M ε⁻³ δ^{−5/2} + 8192 d⁴ M⁴ ε⁻⁶ δ⁻⁴` at `τ = ε²δ/2`, matching the reviewer's
+  paper-level candidate. The entropy separator (`M² log M`) is still paper-level.
 * **Edge cases raised by reviewers, resolved in the formalization.** Posterior weights are kept
   unnormalized (`upd`, `Vs`), so zero-weight components never divide by zero; `x / 0 = 0` terms are
   checked explicitly in `chi_sq_bound`. The fooling lemma assumes `0 < γ ≤ 1/2`; larger `γ` is never
