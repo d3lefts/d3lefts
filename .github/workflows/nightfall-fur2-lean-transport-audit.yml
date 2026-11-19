@@ -15,18 +15,27 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
-      - name: Install exact pinned Lean and Mathlib cache
-        uses: leanprover/lean-action@fe408643ea7367d8c0404a8be3975bb145f5fb64
-        with:
-          auto-config: false
-          use-mathlib-cache: true
-          use-github-cache: true
+      - name: Install pinned Lean and resolve exact Mathlib commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh |
+            sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          "$HOME/.elan/bin/lean" --version
+          "$HOME/.elan/bin/lake" update
+          test -s lake-manifest.json
+      - name: Get pinned Mathlib build cache
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake exe cache get
       - name: Kernel-check FUR2 conditional sublemmas and print axioms
         shell: bash
         run: |
           set -euo pipefail
-          lake env lean research/nightfall/formalization/product_space/FUR2TransportAudit.lean | tee fur2-transport-lean.log
-          ! grep -Eq '(admit|sorryAx|unknown constant|error:)' fur2-transport-lean.log
+          lake env lean research/nightfall/formalization/product_space/FUR2TransportAudit.lean 2>&1 | tee fur2-transport-lean.log
+          ! grep -Eq '(sorryAx|unknown constant|error:)' fur2-transport-lean.log
           grep -q 'four_point_bound' fur2-transport-lean.log
           grep -q 'joint_transport_of_rows' fur2-transport-lean.log
           grep -q 'fixed_weight_of_coupling_factorization' fur2-transport-lean.log
