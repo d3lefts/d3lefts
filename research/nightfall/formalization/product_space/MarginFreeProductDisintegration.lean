@@ -17,6 +17,7 @@ namespace Nightfall.MarginFreeDisintegration
 
 open Finset
 open Nightfall.ProductSpace.Mixture
+open Nightfall.ProductSpace.Transfer
 open Nightfall.ProductSpace.Influence
 open Nightfall.ProductSpace.RowBound
 open Nightfall.MarginFreeIntegrated
