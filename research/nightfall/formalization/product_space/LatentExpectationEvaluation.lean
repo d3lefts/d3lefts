@@ -20,7 +20,9 @@ theorem interactionPoly_eval
     (p q : ι → α → ℝ) (s : ℝ) :
     (interactionPoly S a p q).eval s =
       ∏ i ∈ S, (p i (a i) + (q i (a i) - p i (a i)) * s) := by
-  simp [interactionPoly, affineMarginal_eval]
+  unfold interactionPoly
+  rw [Polynomial.eval_prod]
+  exact Finset.prod_congr rfl (fun i _ => affineMarginal_eval p q i (a i) s)
 
 theorem sparseExpectationPoly_eval
     {ι α β : Type*}
@@ -32,6 +34,9 @@ theorem sparseExpectationPoly_eval
         ∏ i ∈ support t,
           (p i (assignment t i) +
             (q i (assignment t i) - p i (assignment t i)) * s) := by
-  simp [sparseExpectationPoly, interactionPoly_eval]
+  unfold sparseExpectationPoly
+  rw [Polynomial.eval_finsetSum]
+  refine Finset.sum_congr rfl (fun t _ => ?_)
+  rw [Polynomial.eval_mul, Polynomial.eval_C, interactionPoly_eval]
 
 end Nightfall.LatentProductInterpolationDegree
