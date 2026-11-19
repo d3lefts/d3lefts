@@ -1,0 +1,31 @@
+name: NIGHTFALL recent research Proof Passport integrity
+on:
+  pull_request:
+    paths:
+      - 'docs/recent-research*'
+      - 'research/nightfall/2026-11-recent-passports/**'
+      - 'scripts/check_recent_research_passports.cjs'
+      - 'docs/index.html'
+      - 'docs/theory.html'
+      - 'docs/active-proof-passport.html'
+      - 'docs/research.html'
+      - 'docs/atlas.html'
+      - 'docs/sitemap.xml'
+      - '.github/workflows/nightfall-recent-passports.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/recent-research*'
+      - 'research/nightfall/2026-11-recent-passports/**'
+      - 'scripts/check_recent_research_passports.cjs'
+jobs:
+  provenance-and-renderer:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify evidence tiers, source links and passports
+        run: node scripts/check_recent_research_passports.cjs
+      - name: Preserve the 24-node theory atlas snapshot
+        run: node --test tests/nightfall-theory-atlas.test.cjs
