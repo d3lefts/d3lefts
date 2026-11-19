@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'Nightfall/LatinSquare/**'
+      - 'scripts/audit_mira_latin_incidence.py'
       - '.github/workflows/nightfall-mira-latin-gate.yml'
       - 'lean-toolchain'
       - 'lakefile.toml'
@@ -78,6 +79,13 @@ jobs:
             --decl Nightfall.LatinSquare.latin_iff_ordered_one_factorization \
             --json-out lean-receipts/latin/representation-bridge.json 2>&1 | tee lean-receipts/latin/representation-bridge.log
           sha256sum Nightfall/LatinSquare/Representation.lean >> lean-receipts/latin/source-sha256.txt
+      - name: Independent exact combinatorial incidence audit (n=1..5)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/audit_mira_latin_incidence.py 2>&1 | tee lean-receipts/latin/incidence-exact.log
+          grep -F 'FINITE_EXACT_INCIDENCE_CHECK_PASS' lean-receipts/latin/incidence-exact.log
+          sha256sum scripts/audit_mira_latin_incidence.py >> lean-receipts/latin/source-sha256.txt
       - name: Preserve theorem-source and compiler evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
