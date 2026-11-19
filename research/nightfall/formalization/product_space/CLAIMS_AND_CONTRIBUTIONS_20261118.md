@@ -83,7 +83,13 @@ thresholding `A(x)` at `1/2` recovers `F(x)`, since
 The query count is therefore `O(T^6 θ^{-5/2} η^{-5/2})`,
 independent of alphabet and symbol masses. This **does not assert** that
 `μ(·|S)` is product; the `θ^{-5/2}` loss comes from conditioning a
-product-source approximation on the promise domain.
+product-source approximation on the promise domain. **This is not a
+better dense-promise exponent on the uniform cube:** Huffstutler,
+Miloschewsky and Podder (arXiv:2611.12795v1, Theorem 2) prove
+`O(Q(f)^6 / (η θ)^2)` queries for a partially defined Boolean
+function under **uniform Boolean** counting measure. The additional
+scope here is the parameter-uniform original product law and
+non-Boolean inputs; the quantitative dense-promise exponent is weaker.
 
 **Random-oracle limitation.** The finite-query theorem alone does *not*
 prove a new complexity-class inclusion for independently biased random
