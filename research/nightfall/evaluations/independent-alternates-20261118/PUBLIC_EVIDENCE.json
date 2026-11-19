@@ -1,0 +1,56 @@
+{
+  "schema": "nightfall.swe.independent-alternate-internal-evidence.v1",
+  "as_of": "2026-11-18",
+  "claim_status": "source_frozen_internal_private_grader_replay_not_external_certification",
+  "source_authoring": "Public task contracts and defective starters only before source freeze; private test and reference contents not consulted during construction",
+  "author_ref_used_for_construction": false,
+  "accepted_blind_agent_scores": 0,
+  "two_alternates_source_public": false,
+  "b1": {
+    "task": "DispatchQ-B1",
+    "grader_version": "private-author-v0.3",
+    "grader_archive_sha256": "61fe5511fc9fbe94118b3d3d5a1feb5b9f200dd86ff994384503b546054e11c5",
+    "private_grader_source_sha256": "9cd1b34e8c347acf88d86e96a5d9dd553378a60951d79a6c409b3423a8f94abc",
+    "frozen_independent_repair_source_sha256": "086a3fa9cb22fe3c8a8a693b11c04ca89ec660e673db13d339eef755b89e7f39",
+    "private_grader_cases_passed": 37,
+    "private_grader_cases_total": 37,
+    "private_grader_points": 100,
+    "private_grader_max_points": 100,
+    "independent_public_contract_groups_passed": 6,
+    "random_state_machine_seeds": 32,
+    "state_machine_operations": 3840,
+    "process_race_rounds": 10,
+    "process_workers_per_round": 6,
+    "observed_duplicate_leases": 0,
+    "python_version": "3.13.5",
+    "private_score_evidence_status": "bounded-local-execution-with-stripped-environment-nonroot-no-process-attestation"
+  },
+  "b2": {
+    "task": "ArtifactGraph-B2",
+    "grader_version": "private-author-v0.1",
+    "grader_archive_sha256": "6814e96544d330ff8f1d6320bf74e15194e0835b1a692996f9a11fd87acfb3d0",
+    "frozen_independent_source_hashes": {
+      "manifest.py": "d28f0655c3f0ded569b14ad3b647212523c4ff987a70459c5c6f4a33988fa6c8",
+      "cache.py": "bb68f926f88e150597d225c90842334df87bb9acf809522a7bab280e0bf9a98c",
+      "engine.py": "f47f7ef6fad592e1124163ce577b8d0b4bab919a69f23aa02e03e091b9fb3a01"
+    },
+    "private_grader_cases_passed": 25,
+    "private_grader_cases_total": 25,
+    "independent_public_metamorphic_groups_passed": 16,
+    "random_dags": 80,
+    "python_version": "3.13.5",
+    "private_score_evidence_status": "bounded-local-unittest-execution-with-stripped-environment-nonroot-no-process-attestation"
+  },
+  "private_replay_packet_sha256": "325845324f999320c9112cc062282d1ab68b6f17a75bfeb197a50ff260800f1b",
+  "v03_separate_author_proof_attack_pr": "https://github.com/d3lefts/d3lefts/pull/842",
+  "source_scope": "These alternates were independently implemented by an AI research assistant, not by an independent human reviewer; validation is internal to the NIGHTFALL program.",
+  "limitations": [
+    "The repaired code is withheld; public metadata CI does not independently replay private graders",
+    "An internally scored alternate cannot certify completeness of hidden-grader coverage",
+    "The private grading environment was not hardened against an arbitrary malicious agent patch",
+    "The 37/37 and 25/25 refer to alternate source written separately from model attempts, never Qwen outputs",
+    "Source freeze preceded private test inspection; individual authorship and independent human review remain unverified",
+    "The separate same-process Docker grader in draft PR #841 is compromised by the two false-perfect cases reproduced in draft PR #843 and is not approved for real scoring",
+    "Task difficulty, external novelty, and frontier-model performance remain unestablished"
+  ]
+}

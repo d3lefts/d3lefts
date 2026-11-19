@@ -1,0 +1,124 @@
+{
+  "schema": "nightfall-proof-passport-v1",
+  "id": "NF-CUBIC-CONTRACTION-20261117",
+  "version": "0.4",
+  "date": "2026-11-17",
+  "status": "DRAFT_AUTHOR_ANALYTIC_WITH_SCOPED_SCALAR_AND_BINARY_FIBER_LEAN",
+  "novelty": "no novelty claimed; prior art strongly overlaps",
+  "independent_human_review": false,
+  "claims": [
+    {
+      "id": "CUBIC-H1",
+      "statement": "Finite dependent binary law with full-function heat-bath Poincare constant A has Var(f)<=sum_{k=1}^d A^k k! sum_{|T|=k}(E D_T f)^2 for every algebraic degree<=d polynomial.",
+      "evidence": "analytic conditional-variance identity and inductive Poincare; exact finite rational tests",
+      "lean_status": "scalar recursion only; original-law statement not compiled"
+    },
+    {
+      "id": "CUBIC-H2",
+      "statement": "Under mean-zero spins, cubic degree<=3 has Var(f)<=A sum_i (a_i+sum_jk c_ijk C_jk)^2+2 A² sum b_ij²+6 A³ sum c_ijk².",
+      "evidence": "direct algebraic expansion of derivative expectation tensors",
+      "lean_status": "not formalized"
+    },
+    {
+      "id": "CUBIC-H3",
+      "statement": "Wick-like correction a_i=-sum_jk c_ijk C_jk cancels mean gradients; pure cubic+linear corrected functions have Var<=6 A³ sum c².",
+      "evidence": "symbolic identity + exact finite Ising checks",
+      "lean_status": "not formalized"
+    },
+    {
+      "id": "CUBIC-H4",
+      "statement": "Connected Ising-chain uncorrected cubic has Varν/Varμ=1+(k−1)r², proving naive degree3 covariance comparison impossible at fixed Dobrushin r.",
+      "evidence": "independent edge bond exact formula, finite rational replay",
+      "lean_status": "not formalized"
+    },
+    {
+      "id": "CUBIC-H5",
+      "statement": "Scalar finite-energy telescoping and hierarchy induction.",
+      "evidence": "Lean proof source on draft branch",
+      "lean_status": "current-head pinned CI pending; does NOT prove H1 original-law premise"
+    },
+    {
+      "id": "CUBIC-H6",
+      "statement": "Exact two-atom weighted conditional variance identity and its coefficient <= 1/4 times total atom mass; finite-fiber original-law sum comparison",
+      "evidence": "CubicContractionBinarySource.lean, named pinned Lean 4.36.0-rc2 proof CI run 44209594975",
+      "lean_status": "kernel-checked source-scoped four declarations, only standard axioms; no Poincare law formalized"
+    },
+    {
+      "id": "CUBIC-H7",
+      "statement": "On fixed-r connected Ising chains, complete Wick gradient-centering does not yield a uniform native-to-fair root influence comparison: ratio=(1-r²)^2/(1+k*r²) -> 0.",
+      "evidence": "exact analytical endpoint conditional variance + independent bond moments, Fraction checker over k=2..6",
+      "lean_status": "not formalized"
+    },
+    {
+      "id": "CUBIC-H8",
+      "statement": "Abstract all-degree functional operator inequality: second=mean^2+variance, variance<=A sum_i second(D_i g), DegreeZero(k,g) implies variance(g)<=Cost(k,g) via recursive derivative expectation energy; no supplied energy recurrence",
+      "evidence": "CubicContractionOperator.lean",
+      "lean_status": "Lean source on branch; current exact-head pinned compilation required. Does not instantiate native original-law probabilities or show physical degree termination"
+    },
+    {
+      "id": "CUBIC-H9",
+      "statement": "Conditional centered cubic Q3 with top-degree vertex cover H: Varν(f°)<=6A³ |H|/(v beta) max_i I_iν(f°) and Varν(f°)^2<=6A³ |H|/(v beta) B² max_i I_iν(f°)",
+      "premises": [
+        "full-function native heat-bath Poincare A",
+        "conditional spin variance floor v",
+        "all-quadratic Gram lower eigenbound beta",
+        "zero-mean spins",
+        "pure cubic with all mean-gradient linear contractions canceled",
+        "triple support covered by H"
+      ],
+      "external_source": "Diakonikolas–Kane–Stewart–Sun COLT 2021 arXiv:2102.02171 Theorem 4.2 supplies beta=c(M,0)/2 in (M,0)-bounded Ising",
+      "evidence": "Analytic proof and exact full state tests: signed square (n=4, h=1, beta=1/2), pentagon (n=5, h=1, beta=1/2), six-cycle (n=6, h=2, beta=1/2); success on source head 3faf01f7, workflow 44211643144",
+      "lean_status": "NOT Lean-certified source-level; scalar and local fiber subtheorems separately compiled",
+      "scope": "restricted pure cubic+compensating linear functions with finite cover size, not arbitrary cubic functions"
+    }
+  ],
+  "dependencies": [
+    "Original-source Poincare (not formalized)",
+    "Mathlib pinned Lean 4.36.0-rc2",
+    "finite algebraic derivatives",
+    "previous DQ2 research #788 and draft #789"
+  ],
+  "prior_art": [
+    "Adamczak & Wolff (2015) arXiv:1304.1826",
+    "Götze, Sambale, Sinulis (2018) arXiv:1801.06348",
+    "Adamczak et al. arXiv:1809.03187",
+    "Diakonikolas et al. (2021) arXiv:2102.02171"
+  ],
+  "files": [
+    "research/nightfall/2026-11-dq2/CUBIC_CONTRACTION_HIERARCHY_V0_1.md",
+    "research/nightfall/formalization/observability/CubicContractionHierarchyScalar.lean",
+    "scripts/check_cubic_contraction_hierarchy_exact.py",
+    ".github/workflows/nightfall-cubic-contraction.yml",
+    "research/nightfall/formalization/observability/CubicContractionBinarySource.lean",
+    "research/nightfall/formalization/observability/CubicContractionOperator.lean",
+    "scripts/check_cubic_centered_cover_exact.py"
+  ],
+  "no_claims": [
+    "Not unrestricted cubic exponent-two",
+    "No independent original-law Lean terminal",
+    "No novel first discovery",
+    "Not a competitive coefficient improvement"
+  ],
+  "cheapest_next_experiment": "Source-matched Lean proof of original-law derivative identity and Poincare recurrence, then adversarial test of any proposed cubic influence lower comparison",
+  "certificates": {
+    "prior_source_head": "8c12f1524539aba5baf16758cdd64ff98f834108",
+    "run": "https://github.com/d3lefts/d3lefts/actions/runs/44209594975",
+    "checked_declarations": [
+      "Nightfall.CubicContractionHierarchy.finite_energy_telescoping",
+      "Nightfall.CubicContractionHierarchy.scalar_contraction_hierarchy",
+      "Nightfall.CubicContractionBinarySource.weighted_pair_variance_eq",
+      "Nightfall.CubicContractionBinarySource.summed_fiber_influence_le_derivative"
+    ],
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "scope": "Lean proofs are scalar telescoping and exact two-atom/source-fiber algebra only; no universal probabilistic recurrence or cubic Q3 theorem",
+    "current_head_replay": "This passport update alone changes branch head; previous source-file head 3faf01f7 passed exactly, but newest metadata-only head archive CI should be checked separately.",
+    "latest_successful_checker_and_lean_head": "3faf01f7ed66d77314d04dc130ec4313d8213f8a",
+    "latest_successful_workflow": "https://github.com/d3lefts/d3lefts/actions/runs/44211643144",
+    "latest_successful_scope": "full strict source-scope scalar+binary-fiber+abstract operator Lean, exact finite hierarchy, exact full-quadratic Gram and centered-cubic top-cover checker; NOT native-law Q3 Lean terminal"
+  },
+  "next_decisive_test": "Independent audit of DKSS 2021 normalization beta, exact-head CI, then formalize source-level dependent cubic top-cover with Poincare and quadratic coercivity as explicit Lean premises; do not claim unrestricted Q3 or novelty."
+}

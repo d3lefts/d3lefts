@@ -1,0 +1,304 @@
+# Full fractional-row direct-sum coupling and the remaining real-row gate
+
+2026-11-18 • NIGHTFALL structural research v1.0 • **Author-side mathematical theorem, exact rational replay; not a new universal exponent-two theorem, not independently refereed or novel-priority cleared.**
+
+## Problem and source
+
+Turturean, *A proof of the Aaronson–Ambainis conjecture* (arXiv:2611.09773v1), §9.5, asks whether for any real f on a fair Boolean cube admitting a **full pairwise fractional row** of cost at most K at every point, original fair max influence M obeys \`V²<=C K²M\` for some absolute C. His degree-to-full-row bound K=O(d² B) would imply all-degree variance exponent 2 with polynomial d^4 loss. **This remains OPEN.** We do not promote a true representation or subfamily theorem into a claim that this gate is solved.
+
+Our previous #814 records the threshold-Gram representation and a coupled conic inequality still missing; #823 provides an exact dual row LP and invalidates the attempted singleton R replacement on biased AND.
+
+## Theorem A: true full-row cost tensorizes EXACTLY
+
+Let the independent coordinate space split into disjoint finite blocks A and B, each under its own positive-support original product law. Let \`f(a,b)=g(a)+h(b)\` for real arbitrary-output g,h, with no degree bound and no restriction on number or spacing of output values. For each supported point x define the actual full fractional row LP
+
+  K_f(x) = min_{w_i>=0} sum_i w_i,
+    subject to |f(x)-f(y)| <= sum_(i:x_i!=y_i) w_i
+    for EVERY supported y.
+
+Then for EVERY supported pair (a,b),
+
+  **K_f(a,b)=K_g(a)+K_h(b).**
+
+Proof, direction ≥: restrict any feasible row of f at (a,b) to the coordinates in A and compare only to (a',b). The restricted row is feasible for g at a. Ditto B. Since the coordinates are disjoint, total row cost >=K_g(a)+K_h(b). This works for arbitrary heterogeneous alphabets and zero-probability letters by restricting to the positive support.
+
+Proof, direction ≤: concatenate optimal rows for g at a and h at b. Triangle inequality gives
+  |g(a)+h(b)-g(a')-h(b')|
+  <=|g(a)-g(a')|+|h(b)-h(b')|
+  <=sum_(i in D_A) w_i^g+sum_(i in D_B) w_i^h.
+Thus the concatenated row is feasible at cost K_g(a)+K_h(b).
+
+Taking maxima across the Cartesian supported product gives
+
+  **K(f)=K(g)+K(h).**
+
+Under the genuine original independent law, the orthogonal variance and true-law original resampling influences satisfy
+
+  V(f)=V(g)+V(h),
+  I_i(f)=I_i(g) (i in A); I_i(f)=I_i(h) (i in B),
+  M(f)=max(M(g),M(h)).
+
+## Theorem B: coefficient-preserving real-row tensorization
+
+For any absolute constant C>=0, if both components satisfy
+  V(g)^2<=C K(g)^2 M(g),
+  V(h)^2<=C K(h)^2 M(h),
+then f satisfies **the SAME coefficient C**:
+  V(f) <= sqrt(C) [K(g)sqrt(M(g))+K(h)sqrt(M(h))]
+       <= sqrt(C) (K(g)+K(h)) sqrt(M(f)).
+The result iterates over any finite disjoint family. In particular the *optimal* universal constant is the supremum over indecomposable/connected product-interaction components, not over direct sums.
+
+When a finite independent product f has a canonical original-source Hoeffding/ANOVA decomposition \`f=E f + sum_{S≠∅} f_S\`, partition the nonzero support hypergraph into connected components. Distinct components use independent disjoint coordinate blocks. Apply Theorems A and B to obtain:
+
+  **Any strict counterexample to \`V²<=C K² M\` has a strict counterexample in ONE connected canonical ANOVA component.**
+
+This reduction does not require a degree bound, variance threshold, fair input laws, or a fractional-cover cap. It does not say that such a connected counterexample exists. The connected high-overlap case remains exactly the difficult frontier.
+
+**Equality control:** f=sum_(i=1)^n X_i, Xi independent fair Bernoulli(1/2), has V=n/4, K=n, M=1/4, and \`4V²/(K²M)=1\` for every n. Therefore any sharp coefficient for the full-row conjecture is at least 1/4 under the original-law resampling convention. The direct-sum bound is sharp under this control and produces arbitrarily many output levels, avoiding any m^4 output-level loss on this structured family. This is a classical additive calculation, not a world-priority claim.
+
+## Corollary: all-degree real-valued sums of independent Boolean blocks
+
+This actually closes the **sharp full-row real inequality on a substantial,
+but restricted, all-degree class**. Let the coordinates partition into
+independent original-product blocks B_j (arbitrary block dimensions,
+biases and categorical alphabets), let g_j:X_{B_j}->{0,1} be arbitrary
+Boolean-valued functions, and let c_j be any real coefficients. Define
+
+  f(x)=c_0+sum_j c_j*g_j(x_{B_j}).
+
+The total f can have arbitrary Efron–Stein degree, and exponentially
+many real output levels with arbitrarily spaced values.
+
+Turturean's already-proved *Boolean* full fractional row inequality,
+ported to positive finite product laws in merged NIGHTFALL PRs #298
+and #309, states
+
+  Var(g_j) <= K(g_j)² M(g_j).
+
+Because Var(g_j)<=1/4, it follows that
+
+  4 Var(g_j)² <= K(g_j)² M(g_j).
+
+For h_j=c_j*g_j, the exact scaling identities are
+  K(h_j)=|c_j| K(g_j), Var(h_j)=c_j² Var(g_j),
+  M(h_j)=c_j² M(g_j).
+Hence 4 Var(h_j)² <= K(h_j)² M(h_j). Apply Theorem B
+to these independent components to obtain
+
+  **4 Var(f)² <= K(f)² max_i Inf_i(f)**
+
+under the TRUE original resampling influence convention, for this
+entire read-once real-output all-degree class. The coefficient 1/4
+is optimal on this class: independent fair one-bit g_j with all
+c_j equal satisfy equality for any block count.
+
+This is a mathematical consequence of Turturean's preexisting Boolean
+theorem and elementary direct-sum tensorization, NOT a proof of the
+real-valued full-row inequality for arbitrary functions. A connected
+high-degree real-valued component is still entirely uncontrolled.
+
+**Product-law qualification:** #298's full Boolean two-sided theorem
+is for strictly positive finite marginal masses. Delete null atoms
+and formulate rows on the actual supported product before invoking it;
+no artificial positive weight is assigned to a zero-mass point.
+A named end-to-end Lean source theorem for the above real-valued block
+corollary has not been compiled in this PR; its proof is author-side
+composition of the cited Lean-certified Boolean theorem and Theorem A.
+
+## Theorem C: exact two-threshold coupling, and its non-diagonal obstruction
+
+Let the supported real values be \`v_0<...<v_m\`, with positive gaps \`δ_k=v_{k+1}-v_k\`. Define nested thresholds \`g_k(x)=1_{f(x)>v_k}\`; for any two supported worlds x,y put \`h_k(x,y)=|g_k(x)-g_k(y)|\`. All h_k are 0 or 1, and the nonzero ones form an interval of levels. Hence, EXACTLY,
+
+  |f(x)-f(y)| = sum_k δ_k h_k(x,y),
+  (f(x)-f(y))² = sum_{k,l} δ_k δ_l h_k(x,y)h_l(x,y).
+
+This retains both threshold indices, rather than choosing a best single cut. For **any genuine feasible full rows** \`a^x,a^y\`, multiply their two independent same-pair constraints to get the unconditional quadratic *cross-coordinate* coupling
+
+  **sum_{k,l} δ_k δ_l h_kh_l
+    <= [sum_(i in D(x,y)) a_i^x][sum_(j in D(x,y)) a_j^y]
+    =sum_(i,j in D(x,y)) a_i^x a_j^y.**
+
+No degree, Boolean range, or input-law restriction is needed. This is a valid universal deterministic inequality, but NOT the desired max original-coordinate influence bound: the RHS couples **different** coordinates i and j. It is not sufficient for Turturean §9.5.
+
+**Exact off-diagonal impossibility:** For f=sum_i X_i on {0,1}^n, take x=all ones and y=all zeros, with minimal feasible endpoint rows a_i^x=a_i^y=1. The squared difference is n², the total double-row energy is n², but the same-coordinate diagonal \`sum_i a_i^x a_i^y=n\`. Thus NO dimension-free pointwise inequality can replace the double sum by C times its diagonal. An all-degree solution necessarily needs a non-pointwise matching/routing/averaging operator that charges i≠j terms to genuine original-law coordinate resampling influences. Turturean's Boolean determinant routing is relevant prior machinery; a real-valued, cross-level squared-energy version remains OPEN.
+
+**Negative cut-separability control:** For one three-letter categorical coordinate with real values -1,0,+1 and base x at 0, the genuine full row cost K_x is 1. Independent per-threshold envelope maximization costs 2: one other letter crosses the lower threshold and a different letter crosses the upper threshold. Their separate maxima cannot be simultaneously charged to one adversarial y. The correct mask-coupled row LP keeps the max over y **outside** the sum of level gaps:
+  b_x(S)=max_{y:D(x,y)=S} sum_k δ_k h_k(x,y),
+NOT \`sum_k δ_k max_y h_k(x,y)\`.
+This confirms why #814's single-threshold m^4 shortcut must not be presumed sharp.
+
+## Exact standalone checker and reproducibility
+
+\`research/nightfall/flagship-influence/check_full_row_tensorization_exact.py\` independently computes TRUE product-state resampling influences from physical conditional and independent two-replica formulas, exact full fractional row costs by an enumerated PRIMAL linear program and a separately implemented DUAL packing polytope. The checker verifies 20 heterogeneous and zero-mass categorical direct sums with up to 3 coordinates, all per-state K identities and coupled real threshold moments; fair additive equality controls; and the one-coordinate three-output level-separability falsifier. Exact rational arithmetic only.
+
+**Certification levels:** Theorems A/B/C have complete elementary author-side proofs above and exact finite regression. Their full generality is NOT yet a named integrated Lean theorem or independent non-author review. A conditional scalar Lean tensorization gate may be added, explicitly retaining its component hypotheses. The **global** real-row constant is unproved, and no \`N-UE2(6)\` or \`N-UE2(2)\` claim is certified by this PR.
+
+## v1.1 exact Hilbert transport dual: a stronger, UNPROVED coupling gate
+
+There is an informative **representation-level** candidate which
+uses the actual source heat-bath projections and bypasses explicit
+threshold counts. It is not in Turturean's paper as a proved theorem.
+
+For a finite, supported independent product with Hilbert space
+H=L²_0(mu), let D_i=Id-E_i be the genuine original-law
+orthogonal coordinate residual projection and define
+
+  G_mu(g) = max_i ||D_i g||_2
+          = sqrt(max_i Inf_i(g)).
+
+Define the source-preserving coordinate-transport norm
+
+  T_mu(f) = inf {sum_i ||h_i||_2 :
+       f-E_mu f=sum_i h_i, E_i h_i=0 for every i}.
+
+Every centered finite f admits such a decomposition: its canonical
+ANOVA term f_S belongs to the degenerate subspace of every i in S;
+assign each nonempty S to any i in S.
+
+**EXACT HILBERT DUALITY** (elementary finite-dimensional
+Hahn–Banach / polar of the convex hull of union of unit balls):
+
+  T_mu(f)=sup {Cov_mu(f,g): G_mu(g)<=1}.
+
+Proof: the unit ball of T is the convex hull of the union over i
+of unit L² balls in H_i=ran(D_i); its polar consists precisely of
+mean-zero g satisfying ||P_(H_i)g||_2=||D_i g||_2<=1 for every i.
+Bipolarity in finite dimensions proves the displayed equality.
+All weights, projections, variances and correlations use the
+ORIGINAL source. This is an **exact classical functional-analytic
+identity**, not a novel influence theorem.
+
+**STRONGER OPEN OPERATOR CONJECTURE (not established):**
+
+  T_mu(f) <= K(f)/2
+
+for every real f on a finite original product, with K the TRUE
+full pairwise fractional row cost on positive support.
+
+If proved, taking g=f in the dual gives
+
+  Var(f) <= T_mu(f) sqrt(M(f))
+          <= (K(f)/2) sqrt(M(f)),
+  hence 4 Var(f)^2 <= K(f)^2 M(f).
+
+It would solve the original product-law version of Turturean's
+§9.5 sharp real-row conjecture, and the uniform cube exponent-two
+all-degree theorem with d^4 dependence. **It is strictly stronger
+than the self-paired inequality and could be false**, so it must
+first survive an adversarial f,g search and a real proof attack;
+do not report a breakthrough from its formulation.
+
+**Source-exact bilinear testable consequence:** for all f,g,
+
+  4 Cov_mu(f,g)^2 <= K(f)^2 max_i Inf_i(g).
+
+Failure of this inequality refutes the stronger T gate but
+NOT the original self-paired full-row conjecture. This is a
+particularly cheap decisive finite-rational witness test. Fair
+additive f=g=sum_i X_i attains equality. For one arbitrary
+categorical coordinate, T(f)=sqrt(Var(f)) and K(f)=range(f),
+so K>=2T follows from Popoviciu; by tensorization it holds
+for arbitrary sums of independent single-coordinate functions.
+
+T also tensorizes on disjoint independent blocks:
+  T_mu(g(A)+h(B))=T_A(g)+T_B(h).
+The ≤ direction concatenates feasible decompositions. For ≥,
+choose independent dual witness functions with G<=1 in each block;
+their sum still has global G<=1, and their covariances add.
+Thus the stronger gate, if true, can again be reduced to connected
+ANOVA components. This exact tensorization is purely classical
+Hilbert duality; priority/novelty unresolved.
+
+**Key distinction:** \`T(f)<=K/2\` is an independent hypothesis;
+the exact polar identity does NOT imply it. This is not a
+rephrasing that proves exponent two. We record it to expose
+the missing source-consistent *off-diagonal transport factorization*
+in a form that can be attacked with SOCP/dual certificates, unlike
+unstructured threshold-by-threshold searches.
+
+## v1.2 EXACT 3-bit NO-GO: even optimal Boolean atomic decompositions lose K
+
+This is a concrete **new proof-attack** against a proposed shortcut
+to the cross-threshold real-row theorem. It is NOT a falsification
+of Turturean's real-row K-to-influence conjecture. Prior-art/novelty
+of the small witness has not been independently checked.
+
+On three independent fair Boolean bits in lexicographic word order
+
+  000,001,010,011,100,101,110,111,
+
+take the integer-valued real function
+
+  f=(-2,-2,3,-1,2,-4,4,-2).
+
+Independent **PRIMAL** full pairwise row optimization over all eight
+worlds gives the exact pointwise costs
+
+  K_x(f)=(9,7,10,7,12,10,12,9), so K(f)=12.
+
+Define the Boolean atomic decomposition cost
+
+  A(f) = inf {sum_j |c_j| K(g_j) :
+                 f=constant+sum_j c_j*g_j,
+                 g_j:{0,1}³->{0,1}}.
+
+By triangle inequality for genuine full rows, K(f)<=A(f) always.
+A plausible but FALSE shortcut was A(f)=K(f), since then every real
+function would be a *lossless* weighted mixture of Boolean cuts. The
+exact counterexample here gives
+
+  **A(f)=13 > K(f)=12.**
+
+**Lower bound certificate independent of a numerical solver:**
+Define the rational linear functional on eight real values
+
+  L(v)=v(001)-v(011)-v(101)+2v(110)-v(000).
+
+Direct calculation yields L(f)=13. For each of the 254 nonconstant
+Boolean functions g on the three-bit cube, the exact source-free
+full row LP satisfies **|L(g)|<=K(g)**. The checker enumerates all
+254 and computes each K(g) using an INDEPENDENT dual fractional
+packing enumeration with exactly 16 vertices on three coordinates.
+Thus, for every signed Boolean expansion of f,
+
+  13 = |L(f)| <=sum_j |c_j| |L(g_j)|
+                 <=sum_j |c_j| K(g_j),
+
+so A(f)>=13. This argument works for arbitrary numbers of Boolean
+atoms; it is a rigorous *dual certificate*, not heuristic search.
+
+**Matching six-term exact primal decomposition:** modulo an
+irrelevant constant, take Boolean word-value vectors b_j and their
+signed rational coefficients:
+
+  b1=(0,0,1,0,1,0,1,0),    c1=5/2, K(b1)=2;
+  b2=(0,0,1,1,0,0,1,1),    c2=3/2, K(b2)=1;
+  b3=(0,1,0,1,1,0,1,0),    c3=1,   K(b3)=2;
+  b4=(0,1,1,0,1,0,1,1),    c4=1/2, K(b4)=3;
+  b5=(0,1,1,1,0,0,1,0),    c5=1/2, K(b5)=2;
+  b6=(1,0,1,0,1,0,1,0),    c6=2,   K(b6)=1.
+
+The exact reconstructed differences from the base world 000 are
+  (0,5,1,4,-2,6,0),
+identical to those of f; every atom cost is independently verified
+by both PRIMAL and DUAL row LPs; the total weighted cost is
+  5 + 3/2 + 2 + 3/2 + 1 + 2 = 13.
+Therefore A(f)<=13, completing an exact min/max certificate.
+
+**Implication:** Not merely choosing one best threshold, but choosing
+an *arbitrary optimized signed Boolean expansion* can introduce a
+strict certificate overhead. Thus no all-degree exponent-two proof
+may assume that full real rows can be decomposed into Boolean rows
+with zero multiplicative loss. This does not exclude a bounded
+universal overhead C>1, nor refute any stronger Hilbert-source
+factorization gate. The off-diagonal real coupling still needs proof.
+
+This witness is embedded in the same fail-closed exact original
+checker and remains a finite explicit rational result, not a Lean
+all-functions theorem or a prior-art novelty certificate.
+
+## Discovery graph / next decisive operator
+
+Turturean real full-row K gate → actual supported-pair constraints → exact row/direct-sum tensorization → connected component localization → nested two-threshold squared difference → cross-coordinate row-pair coupling → **missing routing of off-diagonal i≠j energy into original source I_i(f)** → original-product and all-degree exponent-two problem.
+
+The next constructive proof experiment should target a **global coupled flow/kernel**, not a pointwise diagonal replacement. Pre-register: Given actual full rows, find a nonnegative source-preserving routing of the i,j row-pair terms to physical edges with total per-coordinate energy ≤ const*K²*I_i; reject any formulation which fails on additive fair n→∞, biased AND, or source-coupled selectors. Use #814's positive-semidefinite threshold Gram and #823's exact row dual as separate independent primal/dual checks. Do not label a new theorem until this routing inequality is independently proved and Lean checked.

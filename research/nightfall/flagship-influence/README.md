@@ -21,6 +21,7 @@ The exact coefficient-one conjecture is deliberately falsifiable: a single valid
 
 ## Documents and evidence
 
+- [Componentwise fractional-cover theorem](COMPONENT_FRACTIONAL_COVER_UE2_20261117.md) and [exact categorical checker](check_component_cover_ue2.py): a **scoped, author-side proved** product-space inequality with coefficient given by the maximum fractional vertex-cover cost of connected ANOVA support components; provides a high-cover necessary condition for any counterexample to N-UE2(2,1). This does **not** close the universal conjecture.
 - [Universal Product E2 Conjecture](UNIVERSAL_PRODUCT_E2_CONJECTURE_20261117.md): definitions, AA/Turturean normalization, conditional finite-to-infinite transfer and prior-art boundaries.
 - [Bernstein-sharp conjecture](BERNSTEIN_SHARP_UE2_CONJECTURE_20261117.md): coefficient-one target; bias-tuned Chebyshev every-degree sharpness (author-side asymptotic proof), spectral-degree counterexample, the classical arcsine-path Bernstein operator, and its limitation.
 - [Classical Chebyshev degree obstruction](CHEBYSHEV_DEGREE_SHARPNESS_20261117.md): rigorous author-side parity-restricted CLT argument, necessary \(d^2\) degree penalty.

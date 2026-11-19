@@ -1,0 +1,73 @@
+name: NIGHTFALL cubic contraction scalar Lean and exact replay
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/CubicContractionHierarchyScalar.lean'
+      - 'research/nightfall/formalization/observability/CubicContractionBinarySource.lean'
+      - 'research/nightfall/formalization/observability/CubicContractionOperator.lean'
+      - 'research/nightfall/2026-11-dq2/CUBIC_CONTRACTION_HIERARCHY_V0_1.md'
+      - 'research/nightfall/2026-11-dq2/CUBIC_CONTRACTION_PASSPORT_V0_1.json'
+      - 'scripts/check_cubic_contraction_hierarchy_exact.py'
+      - 'scripts/check_cubic_centered_cover_exact.py'
+      - '.github/workflows/nightfall-cubic-contraction.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-finite:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Independently replay exact rational derivative hierarchy
+        run: python3 scripts/check_cubic_contraction_hierarchy_exact.py
+      - name: Replay conditional centered cubic cover inequality
+        run: python3 scripts/check_cubic_centered_cover_exact.py
+      - name: Record source digest
+        run: sha256sum scripts/check_cubic_centered_cover_exact.py scripts/check_cubic_contraction_hierarchy_exact.py research/nightfall/formalization/observability/CubicContractionHierarchyScalar.lean research/nightfall/formalization/observability/CubicContractionBinarySource.lean research/nightfall/formalization/observability/CubicContractionOperator.lean
+
+  lean-scalar:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install repo-pinned Lean via elan
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Resolve exact pinned Mathlib and get olean cache
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake update
+          lake exe cache get
+      - name: Check exact pinned Lean source and named scalar declarations
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "Toolchain: $(cat lean-toolchain)"
+          lake env lean research/nightfall/formalization/observability/CubicContractionHierarchyScalar.lean 2>&1 | tee scalar-lean.log
+          grep -q 'finite_energy_telescoping' scalar-lean.log
+          grep -q 'scalar_contraction_hierarchy' scalar-lean.log
+          lake env lean research/nightfall/formalization/observability/CubicContractionBinarySource.lean 2>&1 | tee binary-source-lean.log
+          grep -q 'weighted_pair_variance_eq' binary-source-lean.log
+          grep -q 'summed_fiber_influence_le_derivative' binary-source-lean.log
+          lake env lean research/nightfall/formalization/observability/CubicContractionOperator.lean 2>&1 | tee operator-lean.log
+          grep -q 'variance_le_derivative_cost' operator-lean.log
+          if grep -E '(sorryAx|^error:|error:)' scalar-lean.log binary-source-lean.log operator-lean.log; then
+            echo "Lean source contains a sorry axiom or error"
+            exit 1
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cubic-contraction-scalar-lean
+          path: |
+            scalar-lean.log
+            binary-source-lean.log
+            operator-lean.log

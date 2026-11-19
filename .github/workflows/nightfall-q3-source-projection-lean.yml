@@ -1,0 +1,76 @@
+name: NIGHTFALL Q3 original-source projection contraction Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/SourceProjectionContraction.lean'
+      - 'research/nightfall/formalization/observability/SourceTotalVariance.lean'
+      - '.github/workflows/nightfall-q3-source-projection-lean.yml'
+  push:
+    branches: [nightfall-fair-cubic-rainbow-e2-20261117]
+    paths:
+      - 'research/nightfall/formalization/observability/SourceProjectionContraction.lean'
+      - 'research/nightfall/formalization/observability/SourceTotalVariance.lean'
+      - '.github/workflows/nightfall-q3-source-projection-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-projection-kernel:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Kernel check weighted Jensen and source-projection contraction
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/SourceProjectionContraction.lean \
+            --workspace /tmp/mathlib4 --timeout 480 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.CubicQ3.SourceProjection.weighted_square_jensen \
+            --decl Nightfall.CubicQ3.SourceProjection.pointwise_projection_difference_contracts \
+            --decl Nightfall.CubicQ3.SourceProjection.weighted_flip_energy_contracts \
+            --json-out lean-receipts/q3-source-projection.json || {
+              cat lean-receipts/q3-source-projection.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q3-source-projection.json
+      - name: Kernel check exact original-law total-variance decomposition
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/SourceTotalVariance.lean \
+            --workspace /tmp/mathlib4 --timeout 480 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.CubicQ3.SourceVariance.weighted_square_shift \
+            --decl Nightfall.CubicQ3.SourceVariance.weighted_source_total_variance_at \
+            --decl Nightfall.CubicQ3.SourceVariance.finite_source_conditional_total_variance \
+            --json-out lean-receipts/q3-source-total-variance.json || {
+              cat lean-receipts/q3-source-total-variance.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q3-source-total-variance.json
+      - name: Source and pinned compiler custody
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts
+          sha256sum research/nightfall/formalization/observability/SourceProjectionContraction.lean research/nightfall/formalization/observability/SourceTotalVariance.lean > lean-receipts/SHA256SUMS
+          git rev-parse HEAD > lean-receipts/repository-head.txt
+          (git -C /tmp/mathlib4 rev-parse HEAD || true) > lean-receipts/mathlib-head.txt
+          cat lean-toolchain > lean-receipts/lean-toolchain.txt
+      - name: Archive proof receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-q3-source-projection-lean
+          path: lean-receipts/
+          retention-days: 45
+          if-no-files-found: warn

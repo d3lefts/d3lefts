@@ -1,0 +1,98 @@
+{
+  "schema": "nightfall-dq2-active-research-passport-v4",
+  "id": "NF-DQ2-DEPENDENT-SPECTRAL-SCORE-20261118",
+  "date": "2026-11-18",
+  "branch": "nightfall-dq2-tree-transfer-20261117",
+  "pull_request": "https://github.com/d3lefts/d3lefts/pull/786",
+  "status": "analytic-all-finite-law-with-kernel-checked-scalar-and-section-sublemmas",
+  "main_claim": "For finite full-support binary law nu with native heat-bath gap gamma>0, uniform conditional variance v>0, and score sensitivity L>=||I+C^T||_2, every pointwise bounded algebraic quadratic f satisfies Var_nu(f)^2 <= 4*K0*L^2/(v^7*gamma^5)*B^2*max_i nativeInf_nu_i(f), by the existing finite independent product Q2 theorem.",
+  "qualification": "Mathematical all-law proof is author-analytic, not yet a Lean theorem. The Lean declarations certify only scalar implications and local/global finite-section identities, with key probability/operator comparison hypotheses still external.",
+  "previous_v3": "research/nightfall/2026-11-dq2/DQ2_CYCLES_V3.md",
+  "full_proof_note": "research/nightfall/2026-11-dq2/DQ2_GENERAL_SPECTRAL_GAP_V4.md",
+  "retired_hypotheses": [
+    "tree or forest",
+    "cycle-free",
+    "pairwise Ising/Gibbs graph assumption",
+    "global signflip symmetry",
+    "zero marginal means",
+    "delta<1 as a necessary condition",
+    "separate marginal beta floor"
+  ],
+  "not_removed": [
+    "finite coordinates",
+    "binary coordinates in checked proof",
+    "algebraic degree at most 2",
+    "bounded |f|<=B",
+    "positive heat-bath spectral gap",
+    "positive conditional variance floor",
+    "bounded score-sensitivity norm",
+    "source-certified product Q2 theorem"
+  ],
+  "dimension_free_scope": "gamma,v bounded away from zero and L uniformly bounded on the entire finite-law family; neither arbitrary dependence nor criticality claimed.",
+  "mechanism": [
+    "marginal-matched product reference",
+    "binary physical conditional residuals",
+    "heat-bath Poincare",
+    "score-duality coercivity",
+    "restricted quadratic covariance upper comparison",
+    "native-coordinate influence lower comparison",
+    "finite Q2 transfer"
+  ],
+  "lean": {
+    "toolchain": "leanprover/lean4:v4.36.0-rc2",
+    "mathlib_revision": "9d581dfff2e41de989072ea63abf3daf69311520",
+    "scalar_source": "research/nightfall/formalization/dq2/DQ2HeatBathScoreTransfer.lean",
+    "scalar_source_sha256": "2e619eea0c471004822de8e15439e223a33393be2663ec55975094bec37c5d0d",
+    "scalar_axiom_receipt": "https://github.com/d3lefts/d3lefts/actions/runs/44209385471",
+    "binary_section_source": "research/nightfall/formalization/dq2/DQ2BinarySection.lean",
+    "source_status": "11 named scalar and actual two-atom/finite-section declarations compiled and axiom-audited on exact source. No unconditional dependent-law Lean terminal.",
+    "no_custom_axioms": true,
+    "no_sorry": true,
+    "still_missing": [
+      "finite native law implementation inside Lean",
+      "heat-bath Poincare theorem on that law (from Dobrushin or certified gap)",
+      "global covariance matrix operator comparison",
+      "full q2 source-declaration composition",
+      "full Lake build / exact named DQ2 terminal"
+    ],
+    "binary_section_source_sha256": "bc046d8a2242587bd5248865d26461967227e212a10198d4286466017fda3b0a",
+    "latest_11_declaration_ci": "https://github.com/d3lefts/d3lefts/actions/runs/44210901748",
+    "named_declaration_count": 11,
+    "named_declarations": [
+      "score_duality_from_heatbath_contract",
+      "reference_q2_transfer",
+      "biased_heatbath_q2_scalar_terminal",
+      "local_floor_heatbath_q2_scalar_terminal",
+      "binary_section_score_mean_zero",
+      "binary_section_variance_eq",
+      "binary_section_variance_pos",
+      "binary_section_score_energy",
+      "binary_section_spin_score",
+      "binary_global_residual_orthogonal",
+      "binary_global_spin_score"
+    ],
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "certification_scope": "Four scalar conditional implications, five exact two-atom conditional-law identities, two finite-section global-sum/orthogonality identities; NOT the full dependent-likelihood finite-product Q2 comparison."
+  },
+  "exact_tests": {
+    "source": "dq2_v4_bias_gap_exact.py (repro package attached in current conversation)",
+    "source_sha256": "29a386e1e4d6e302d8c0e00722c515a1677df60951ac64574e55e944ef792ceb",
+    "result_sha256": "d9679a24fc6303134c091e11127adc0e716977d45a14e505c8d2c9bfd3b73db3",
+    "finite_models": 8,
+    "models_with_delta_ge_one": 2,
+    "coefficient_space_psd": true,
+    "source_comparison": "exact rational source and output, no external reviewer",
+    "repro_bundle": "DQ2_v4_lean_and_exact_evidence.zip in current conversation"
+  },
+  "prior_art": [
+    "Diakonikolas/Kane/Stewart/Sun 2021 robust Ising learning with fields",
+    "Koehler/Lifshitz/Minzer/Mossel mixing-measure influences STOC 2024",
+    "spectral independence mixing results"
+  ],
+  "priority": "unresolved; no novelty or competitive-record claim",
+  "next_test": "Lean implement finite probability weights and conditional-site projections; prove Poincare and section-score lifting on same law; then compose the matched biased-product Q2 source theorem. Compare operator contract to categorical Gram/score basis before dropping binary assumption."
+}

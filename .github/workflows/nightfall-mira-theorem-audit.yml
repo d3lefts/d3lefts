@@ -1,0 +1,51 @@
+name: NIGHTFALL Mira theorem-level finite audit (not main sampler)
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-recent-passports/mira-latin-exact-sampling.md'
+      - 'research/nightfall/2026-11-recent-passports/README.md'
+      - 'scripts/check_mira_latin_cycle_second_moment.py'
+      - 'scripts/check_mira_latin_fixed_defect.py'
+      - '.github/workflows/nightfall-mira-theorem-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  author-side-finite-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Reproduce exact cycle-orbit second moment and counterexample
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p theorem-receipts/mira-latin
+          python3 scripts/check_mira_latin_cycle_second_moment.py 2>&1 | tee theorem-receipts/mira-latin/cycle-second-moment.log
+          grep -F 'CYCLE_TYPE_MOMENT_EXACT_PASS' theorem-receipts/mira-latin/cycle-second-moment.log
+      - name: Reproduce forbidden-rook Bonferroni exact identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/check_mira_latin_fixed_defect.py 2>&1 | tee theorem-receipts/mira-latin/fixed-defect.log
+          grep -F 'FIXED_DEFECT_BONFERRONI_EXACT_PASS' theorem-receipts/mira-latin/fixed-defect.log
+      - name: Preserve exact source and outcome receipts
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p theorem-receipts/mira-latin
+          git rev-parse HEAD > theorem-receipts/mira-latin/source-head.txt
+          sha256sum scripts/check_mira_latin_cycle_second_moment.py scripts/check_mira_latin_fixed_defect.py research/nightfall/2026-11-recent-passports/mira-latin-exact-sampling.md > theorem-receipts/mira-latin/SHA256SUMS
+      - name: Upload proof-audit evidence (finite only)
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: mira-latin-finite-audit-${{ github.run_id }}-${{ github.run_attempt }}
+          path: theorem-receipts/mira-latin/
+          if-no-files-found: warn
+          retention-days: 30

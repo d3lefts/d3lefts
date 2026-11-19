@@ -1,0 +1,30 @@
+name: NIGHTFALL UE2 fixed-block and selector no-go exact replay
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/flagship-influence/**'
+      - '.github/workflows/nightfall-ue2-structural-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-rational-replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify source-byte SHA256 manifest
+        working-directory: research/nightfall/flagship-influence
+        run: sha256sum -c SOURCE_SHA256SUMS_STRUCTURAL_20261117
+      - name: Independently check biased two-block quadratic resampling
+        run: python3 -I research/nightfall/flagship-influence/check_fixed_block_meanfield_no_go.py
+      - name: Independent full-state small-interaction-component positive theorem control
+        run: python3 -I research/nightfall/flagship-influence/check_ue2_small_components_exact.py
+      - name: Independent source-weighted overlapping-leaf selector revealment
+        run: python3 -I research/nightfall/flagship-influence/check_selector_overlap_revealment_exact.py
+      - name: Independent all-degree categorical-selector charge terminal
+        run: python3 -I research/nightfall/flagship-influence/check_categorical_selector_terminal_exact.py
+      - name: Independent categorical degree-two full-state selector proof-attack
+        run: python3 -I research/nightfall/flagship-influence/check_categorical_address_resolvent_exact.py
+      - name: Exact fair-address Walsh and inverse-degree gradient falsifier
+        run: python3 -I research/nightfall/flagship-influence/check_address_resolvent_no_go.py

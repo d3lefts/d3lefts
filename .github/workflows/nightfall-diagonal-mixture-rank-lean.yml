@@ -1,0 +1,48 @@
+name: NIGHTFALL diagonal-source exponential mixture-rank Lean certificate
+on:
+  push:
+    branches: [nightfall-diagonal-mixture-rank-counterexample-20261119]
+    paths:
+      - 'research/nightfall/formalization/product_space/DiagonalMixtureRank.lean'
+      - '.github/workflows/nightfall-diagonal-mixture-rank-lean.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/DiagonalMixtureRank.lean'
+      - '.github/workflows/nightfall-diagonal-mixture-rank-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-diagonal-rank:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact diagonal rank and print kernel axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/product_space/DiagonalMixtureRank.lean /tmp/mathlib4/DiagonalMixtureRank.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/DiagonalMixtureRank.olean DiagonalMixtureRank.lean) | tee diagonal-mixture-rank-compile.log
+          cat > /tmp/mathlib4/DiagonalMixtureAudit.lean <<'LEAN'
+          import DiagonalMixtureRank
+          #check @Nightfall.Structure.DiagonalMixtureRank.diagonal_requires_components
+          #check @Nightfall.Structure.DiagonalMixtureRank.boolean_diagonal_exponential
+          #print axioms Nightfall.Structure.DiagonalMixtureRank.diagonal_requires_components
+          #print axioms Nightfall.Structure.DiagonalMixtureRank.boolean_diagonal_exponential
+          LEAN
+          (cd /tmp/mathlib4 && lake env lean DiagonalMixtureAudit.lean) | tee diagonal-mixture-rank-axioms.txt
+          ! grep -E 'sorryAx|Lean\.ofReduceBool|native_decide|error:' diagonal-mixture-rank-axioms.txt
+          git rev-parse HEAD
+          sha256sum research/nightfall/formalization/product_space/DiagonalMixtureRank.lean
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: nightfall-diagonal-mixture-rank-${{ github.run_id }}
+          path: |
+            diagonal-mixture-rank-compile.log
+            diagonal-mixture-rank-axioms.txt
+          if-no-files-found: warn

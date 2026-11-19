@@ -1,0 +1,45 @@
+name: NIGHTFALL poly-d dyadic first-chaos and quadratic proxies — exact source replay
+
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/flagship-influence/POLY_D_DYADIC_QUADRATIC_PROXY_20261118.md"
+      - "research/nightfall/flagship-influence/check_poly_d_dyadic_proxy.py"
+      - "research/nightfall/flagship-influence/check_poly_d_proxy_gate_stress.py"
+      - "research/nightfall/flagship-influence/check_product_linear_selector_exact.py"
+      - ".github/workflows/nightfall-poly-d-dyadic-proxy.yml"
+  workflow_dispatch:
+
+jobs:
+  exact-rational-proxy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Report immutable source identifiers
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD
+          sha256sum research/nightfall/flagship-influence/check_poly_d_dyadic_proxy.py
+          sha256sum research/nightfall/flagship-influence/POLY_D_DYADIC_QUADRATIC_PROXY_20261118.md
+      - name: Exact rational spectral versus independent selector-table replay
+        run: |
+          set -euo pipefail
+          python3 -I research/nightfall/flagship-influence/check_poly_d_dyadic_proxy.py
+      - name: Adversarial exact gate stress (does not prove it)
+        run: |
+          set -euo pipefail
+          sha256sum research/nightfall/flagship-influence/check_poly_d_proxy_gate_stress.py
+          python3 -I research/nightfall/flagship-influence/check_poly_d_proxy_gate_stress.py
+      - name: Original-product heterogeneous/zero-atom two-replica exact audit
+        run: |
+          set -euo pipefail
+          sha256sum research/nightfall/flagship-influence/check_product_linear_selector_exact.py
+          python3 -I research/nightfall/flagship-influence/check_product_linear_selector_exact.py
+      - name: Verify no unsafe theorem promotion
+        run: |
+          set -euo pipefail
+          grep -q "not a proof of exponent two" research/nightfall/flagship-influence/POLY_D_DYADIC_QUADRATIC_PROXY_20261118.md

@@ -1,0 +1,51 @@
+name: NIGHTFALL sealed alternate repairs — public metadata integrity only
+
+on:
+  push:
+    branches:
+      - nightfall-swe-alternate-validator-evidence-20261118
+    paths:
+      - 'research/nightfall/evaluations/independent-alternates-20261118/**'
+      - '.github/workflows/nightfall-swe-alternate-public-receipt.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/evaluations/independent-alternates-20261118/**'
+      - '.github/workflows/nightfall-swe-alternate-public-receipt.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-public-custody-metadata:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        py: ['3.10', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.py }}
+      - name: Freeze actual source SHA and receipt file identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD | tee exact-head.txt
+          sha256sum research/nightfall/evaluations/independent-alternates-20261118/*.json research/nightfall/evaluations/independent-alternates-20261118/*.py research/nightfall/evaluations/independent-alternates-20261118/*.md | tee public-source-sha256.txt
+      - name: Assert narrowly scoped internal report with no private grader run
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -I research/nightfall/evaluations/independent-alternates-20261118/check_public_evidence.py | tee metadata-check-receipt.json
+      - name: Preserve metadata-only proof-audit trace
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-private-alt-public-metadata-${{ matrix.py }}
+          path: |
+            exact-head.txt
+            public-source-sha256.txt
+            metadata-check-receipt.json
+          if-no-files-found: warn

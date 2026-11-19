@@ -1,0 +1,37 @@
+name: NIGHTFALL AuthorityEpoch-C3 candidate calibration
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/evaluations/authorityepoch-c3/**"
+      - ".github/workflows/nightfall-authorityepoch-c3.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-exact-calibration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Three intentionally shallow public smoke cases
+        run: |
+          cd research/nightfall/evaluations/authorityepoch-c3
+          PYTHONPATH=candidate python -m unittest discover -s candidate/tests -v
+      - name: Independently attack known defective seed by public API
+        run: |
+          python research/nightfall/evaluations/authorityepoch-c3/audit/public_contract_probe.py --mode seed --output authorityepoch-c3-public-receipt.json
+      - name: Preserve exact seed audit record
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: authorityepoch-c3-calibration-${{ matrix.python-version }}
+          path: authorityepoch-c3-public-receipt.json
+          retention-days: 30
+          if-no-files-found: warn
