@@ -90,7 +90,7 @@ theorem observedMass_zero_off_canonical
       simp [canonicalObservation, hi, hxi]
   obtain ⟨i, hi, hneq⟩ := hex
   have hz : observedLaw S a0 p i (x i) = 0 := by
-    simp [observedLaw, hi, delta, Ne.symm hneq]
+    simp [observedLaw, hi, delta, hneq]
   unfold prodMass
   exact Finset.prod_eq_zero (Finset.mem_univ i) hz
 
