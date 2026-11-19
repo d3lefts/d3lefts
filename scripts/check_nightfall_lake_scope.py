@@ -6,7 +6,7 @@ This is an import-custody check, not a proof or a compiler certificate.
 from pathlib import Path
 from generate_nightfall_lake import ROOT, SOURCE, discover, closure
 
-AA_SEEDS = ("InfinitePiAAProductTerminal", "CubePrintedAA")
+AA_SEEDS = ("InfinitePiAAProductTerminal", "CubePrintedAA", "ProductSimulation")
 DENIED_UPSTREAM_TERMINALS = {
     "AaronsonAmbainis.Chain",
     "AaronsonAmbainis.Main",

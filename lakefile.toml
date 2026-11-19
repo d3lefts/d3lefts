@@ -237,6 +237,7 @@ roots = [
   "MixedDifferenceDegree",
   "ProductInfluence",
   "ProductRowBound",
+  "ProductSimulation",
   "ProductSpaceTwoSidedBridge"
 ]
 globs = [
@@ -246,6 +247,7 @@ globs = [
   "MixedDifferenceDegree",
   "ProductInfluence",
   "ProductRowBound",
+  "ProductSimulation",
   "ProductSpaceTwoSidedBridge"
 ]
 

@@ -29,6 +29,7 @@ SEEDS = (
     "Q2ShiftedConditionalTargets",
     "InfinitePiAAProductTerminal",
     "CubePrintedAA",
+    "ProductSimulation",
     "InfinitePiAllDegreeLabelTransfer",
     "InfinitePiAllDegreeFiniteIndicators",
     "InfinitePiAllDegreeFiniteResidualBridge",

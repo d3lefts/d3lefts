@@ -10,6 +10,7 @@ import InfinitePiQ2RangeProjectionTransfer
 import InfinitePiQ2UnconditionalTerminal
 import InfinitePiAAProductTerminal
 import CubePrintedAA
+import ProductSimulation
 import InfinitePiAllDegreeLabelTransfer
 import InfinitePiAllDegreeFiniteResidualBridge
 import Q2ShiftedConditionalTargets
@@ -91,6 +92,12 @@ hypothesis is discharged by printing an axiom list.
 #print axioms Nightfall.ProductSpace.CubeAA.mainTheorem_of_productSpace
 #print axioms Nightfall.ProductSpace.CubeAA.printedConjecture
 #print axioms Nightfall.ProductSpace.CubeAA.explicitBound
+
+-- Source-level, finite-product low-degree decision tree (separate from quantum oracle step).
+#check Nightfall.ProductSpace.Simulation.simulation_degree
+#check Nightfall.ProductSpace.Simulation.simulation_rows
+#print axioms Nightfall.ProductSpace.Simulation.simulation_degree
+#print axioms Nightfall.ProductSpace.Simulation.simulation_rows
 
 -- Source-exact #847 all-degree transfer intermediates. These are scoped statements,
 -- not the unresolved universal supported-cell/ANOVA semantic identification.
